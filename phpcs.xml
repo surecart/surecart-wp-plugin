@@ -2,7 +2,7 @@
 <ruleset name="CheckoutEngine">
 	<description>Plugin Coding Standard</description>
 
-	<exclude-pattern>app/src</exclude-pattern>
+	<!-- <exclude-pattern>app/src</exclude-pattern> -->
 	<exclude-pattern>dist</exclude-pattern>
 	<exclude-pattern>node_modules</exclude-pattern>
 	<exclude-pattern>resources</exclude-pattern>
@@ -15,6 +15,10 @@
 
 	<rule ref="WordPress-Core">
 		<exclude name="Generic.Arrays.DisallowShortArraySyntax" />
+		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase" />
+		<exclude name="Squiz.Commenting.FileComment" />
+		<exclude name="WordPress.Files.FileName.InvalidClassFileName" />
+		<exclude name="WordPress.NamingConventions.ValidFunctionName.MethodNameInvalid" />
 		<exclude name="Squiz.PHP.CommentedOutCode.Found" />
 	</rule>
 
