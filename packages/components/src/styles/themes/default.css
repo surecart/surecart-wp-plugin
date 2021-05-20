@@ -1,0 +1,620 @@
+/* stylelint-disable docusaurus/copyright-header */
+/**
+ * Any CSS included here will be global.
+ */
+
+.presto-toast-stack {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: var(--presto-z-index-toast);
+  width: 28rem;
+  max-width: 100%;
+  max-height: 100%;
+  overflow: auto;
+}
+
+.presto-toast-stack presto-alert {
+  --box-shadow: var(--presto-shadow-large);
+  margin: var(--presto-spacing-medium);
+}
+
+presto-button-group > presto-button:first-child::part(base),
+presto-button-group > presto-dropdown:first-child > presto-button[slot='trigger']::part(base),
+presto-button-group > presto-tooltip:first-child > presto-button::part(base) {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+presto-button-group > presto-button:last-child::part(base),
+presto-button-group > presto-dropdown:last-child > presto-button[slot='trigger']::part(base),
+presto-button-group > presto-tooltip:last-child > presto-button::part(base) {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+presto-button-group > presto-button:not(:first-child):not(:last-child)::part(base),
+presto-button-group > presto-dropdown:not(:first-child):not(:last-child) > presto-button[slot='trigger']::part(base),
+presto-button-group > presto-tooltip:not(:first-child):not(:last-child) > presto-button::part(base) {
+  border-radius: 0;
+}
+
+presto-button-group > presto-button:not(:first-child),
+presto-button-group > presto-dropdown:not(:first-child) > presto-button[slot='trigger'],
+presto-button-group > presto-tooltip:not(:first-child) > presto-button {
+  margin-left: calc(-1 * var(--presto-input-border-width));
+}
+
+presto-button-group > presto-button:not(:first-child):not([type='default'])::part(base):not(:hover):not(:active):not(:focus):after,
+presto-button-group > presto-dropdown:not(:first-child) > presto-button[slot='trigger']:not([type='default'])::part(base):not(:hover):not(:active):not(:focus):after,
+presto-button-group > presto-tooltip:not(:first-child) > presto-button:not([type='default'])::part(base):not(:hover):not(:active):not(:focus):after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  border-left: solid 1px #ffffff40;
+}
+
+presto-button-group > presto-button:hover,
+presto-button-group > presto-dropdown:hover > presto-button[slot='trigger'],
+presto-button-group > presto-tooltip:hover > presto-button {
+  z-index: 1;
+}
+
+presto-button-group > presto-button.presto-focus,
+presto-button-group > presto-dropdown > presto-button[slot='trigger'].presto-focus,
+presto-button-group > presto-tooltip > presto-button.presto-focus {
+  z-index: 2;
+}
+
+:root {
+  --presto-color-black: #000;
+  --presto-color-white: #fff;
+  --presto-color-gray-50: #f9fafb;
+  --presto-color-gray-100: #f3f4f6;
+  --presto-color-gray-200: #e5e7eb;
+  --presto-color-gray-300: #d1d5db;
+  --presto-color-gray-400: #9ca3af;
+  --presto-color-gray-500: #6b7280;
+  --presto-color-gray-600: #4b5563;
+  --presto-color-gray-700: #374151;
+  --presto-color-gray-800: #1f2937;
+  --presto-color-gray-900: #111827;
+  --presto-color-gray-950: #0d131e;
+  --presto-color-primary-50: #eff6ff;
+  --presto-color-primary-100: #dbeafe;
+  --presto-color-primary-200: #bfdbfe;
+  --presto-color-primary-300: #93c5fd;
+  --presto-color-primary-400: #60a5fa;
+  --presto-color-primary-500: #3b82f6;
+  --presto-color-primary-600: #2563eb;
+  --presto-color-primary-700: #1d4ed8;
+  --presto-color-primary-800: #1e40af;
+  --presto-color-primary-900: #1e3a8a;
+  --presto-color-primary-950: #082e45;
+  --presto-color-primary-text: var(--presto-color-white);
+  --presto-color-success-50: #f0fdf4;
+  --presto-color-success-100: #dcfce7;
+  --presto-color-success-200: #bbf7d0;
+  --presto-color-success-300: #86efac;
+  --presto-color-success-400: #4ade80;
+  --presto-color-success-500: #22c55e;
+  --presto-color-success-600: #16a34a;
+  --presto-color-success-700: #15803d;
+  --presto-color-success-800: #166534;
+  --presto-color-success-900: #14532d;
+  --presto-color-success-950: #0d381e;
+  --presto-color-success-text: var(--presto-color-white);
+  --presto-color-info-50: #f9fafb;
+  --presto-color-info-100: #f3f4f6;
+  --presto-color-info-200: #e5e7eb;
+  --presto-color-info-300: #d1d5db;
+  --presto-color-info-400: #9ca3af;
+  --presto-color-info-500: #6b7280;
+  --presto-color-info-600: #4b5563;
+  --presto-color-info-700: #374151;
+  --presto-color-info-800: #1f2937;
+  --presto-color-info-900: #111827;
+  --presto-color-info-950: #0d131e;
+  --presto-color-info-text: var(--presto-color-white);
+  --presto-color-warning-50: #fffbeb;
+  --presto-color-warning-100: #fef3c7;
+  --presto-color-warning-200: #fde68a;
+  --presto-color-warning-300: #fcd34d;
+  --presto-color-warning-400: #fbbf24;
+  --presto-color-warning-500: #f59e0b;
+  --presto-color-warning-600: #d97706;
+  --presto-color-warning-700: #b45309;
+  --presto-color-warning-800: #92400e;
+  --presto-color-warning-900: #78350f;
+  --presto-color-warning-950: #4d220a;
+  --presto-color-warning-text: var(--presto-color-white);
+  --presto-color-danger-50: #fef2f2;
+  --presto-color-danger-100: #fee2e2;
+  --presto-color-danger-200: #fecaca;
+  --presto-color-danger-300: #fca5a5;
+  --presto-color-danger-400: #f87171;
+  --presto-color-danger-500: #ef4444;
+  --presto-color-danger-600: #dc2626;
+  --presto-color-danger-700: #b91c1c;
+  --presto-color-danger-800: #991b1b;
+  --presto-color-danger-900: #7f1d1d;
+  --presto-color-danger-950: #481111;
+  --presto-color-danger-text: var(--presto-color-white);
+  --presto-border-radius-small: 0.125rem;
+  --presto-border-radius-medium: 0.25rem;
+  --presto-border-radius-large: 0.5rem;
+  --presto-border-radius-x-large: 1rem;
+  --presto-border-radius-circle: 50%;
+  --presto-border-radius-pill: 9999px;
+  --presto-shadow-x-small: 0 1px 0 #0d131e0d;
+  --presto-shadow-small: 0 1px 2px #0d131e1a;
+  --presto-shadow-medium: 0 2px 4px #0d131e1a;
+  --presto-shadow-large: 0 2px 8px #0d131e1a;
+  --presto-shadow-x-large: 0 4px 16px #0d131e1a;
+  --presto-spacing-xxx-small: 0.125rem;
+  --presto-spacing-xx-small: 0.25rem;
+  --presto-spacing-x-small: 0.5rem;
+  --presto-spacing-small: 0.75rem;
+  --presto-spacing-medium: 1rem;
+  --presto-spacing-large: 1.25rem;
+  --presto-spacing-x-large: 1.75rem;
+  --presto-spacing-xx-large: 2.25rem;
+  --presto-spacing-xxx-large: 3rem;
+  --presto-spacing-xxxx-large: 4.5rem;
+  --presto-transition-x-slow: 1000ms;
+  --presto-transition-slow: 500ms;
+  --presto-transition-medium: 250ms;
+  --presto-transition-fast: 150ms;
+  --presto-transition-x-fast: 50ms;
+  --presto-font-mono: SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
+  --presto-font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  --presto-font-serif: Georgia, 'Times New Roman', serif;
+  --presto-font-size-xx-small: 0.625rem;
+  --presto-font-size-x-small: 0.75rem;
+  --presto-font-size-small: 0.875rem;
+  --presto-font-size-medium: 1rem;
+  --presto-font-size-large: 1.25rem;
+  --presto-font-size-x-large: 1.5rem;
+  --presto-font-size-xx-large: 2.25rem;
+  --presto-font-size-xxx-large: 3rem;
+  --presto-font-size-xxxx-large: 4.5rem;
+  --presto-font-weight-light: 300;
+  --presto-font-weight-normal: 400;
+  --presto-font-weight-semibold: 500;
+  --presto-font-weight-bold: 700;
+  --presto-letter-spacing-dense: -0.015em;
+  --presto-letter-spacing-normal: normal;
+  --presto-letter-spacing-loose: 0.075em;
+  --presto-line-height-dense: 1.4;
+  --presto-line-height-normal: 1.8;
+  --presto-line-height-loose: 2.2;
+  --presto-focus-ring-color-primary: #3b82f654;
+  --presto-focus-ring-color-success: #22c55e54;
+  --presto-focus-ring-color-info: #6b728054;
+  --presto-focus-ring-color-warning: #f59e0b54;
+  --presto-focus-ring-color-danger: #ef444454;
+  --presto-focus-ring-width: 3px;
+  --presto-button-font-size-small: var(--presto-font-size-x-small);
+  --presto-button-font-size-medium: var(--presto-font-size-small);
+  --presto-button-font-size-large: var(--presto-font-size-medium);
+  --presto-form-section-font-size: var(--presto-font-size-large);
+  --presto-input-height-small: 1.875rem;
+  --presto-input-height-medium: 2.5rem;
+  --presto-input-height-large: 3.125rem;
+  --presto-input-background-color: var(--presto-color-white);
+  --presto-input-background-color-hover: var(--presto-color-white);
+  --presto-input-background-color-focus: var(--presto-color-white);
+  --presto-input-background-color-disabled: var(--presto-color-gray-100);
+  --presto-input-border-color: var(--presto-color-gray-300);
+  --presto-input-border-color-hover: var(--presto-color-gray-400);
+  --presto-input-border-color-focus: var(--presto-color-primary-500);
+  --presto-input-border-color-disabled: var(--presto-color-gray-300);
+  --presto-input-border-width: 1px;
+  --presto-input-border-radius-small: var(--presto-border-radius-medium);
+  --presto-input-border-radius-medium: var(--presto-border-radius-medium);
+  --presto-input-border-radius-large: var(--presto-border-radius-medium);
+  --presto-input-font-family: var(--presto-font-sans);
+  --presto-input-font-weight: var(--presto-font-weight-normal);
+  --presto-input-font-size-small: var(--presto-font-size-small);
+  --presto-input-font-size-medium: var(--presto-font-size-medium);
+  --presto-input-font-size-large: var(--presto-font-size-large);
+  --presto-input-letter-spacing: var(--presto-letter-spacing-normal);
+  --presto-input-color: var(--presto-color-gray-700);
+  --presto-input-color-hover: var(--presto-color-gray-700);
+  --presto-input-color-focus: var(--presto-color-gray-700);
+  --presto-input-color-disabled: var(--presto-color-gray-900);
+  --presto-input-icon-color: var(--presto-color-gray-400);
+  --presto-input-icon-color-hover: var(--presto-color-gray-600);
+  --presto-input-icon-color-focus: var(--presto-color-gray-600);
+  --presto-input-placeholder-color: var(--presto-color-gray-400);
+  --presto-input-placeholder-color-disabled: var(--presto-color-gray-600);
+  --presto-input-spacing-small: var(--presto-spacing-small);
+  --presto-input-spacing-medium: var(--presto-spacing-medium);
+  --presto-input-spacing-large: var(--presto-spacing-large);
+  --presto-input-label-font-size-small: var(--presto-font-size-small);
+  --presto-input-label-font-size-medium: var(--presto-font-size-medium);
+  --presto-input-label-font-size-large: var(--presto-font-size-large);
+  --presto-input-label-color: inherit;
+  --presto-input-help-text-font-size-small: var(--presto-font-size-x-small);
+  --presto-input-help-text-font-size-medium: var(--presto-font-size-small);
+  --presto-input-help-text-font-size-large: var(--presto-font-size-medium);
+  --presto-input-help-text-color: var(--presto-color-gray-400);
+  --presto-toggle-size: 1.2rem;
+  --presto-radio-size: 1rem;
+  --presto-overlay-background-color: #37415180;
+  --presto-panel-background-color: var(--presto-color-white);
+  --presto-panel-border-color: var(--presto-color-gray-200);
+  --presto-tooltip-border-radius: var(--presto-border-radius-medium);
+  --presto-tooltip-background-color: var(--presto-color-gray-900);
+  --presto-tooltip-color: var(--presto-color-white);
+  --presto-tooltip-font-family: var(--presto-font-sans);
+  --presto-tooltip-font-weight: var(--presto-font-weight-normal);
+  --presto-tooltip-font-size: var(--presto-font-size-small);
+  --presto-tooltip-line-height: var(--presto-line-height-dense);
+  --presto-tooltip-padding: var(--presto-spacing-xx-small) var(--presto-spacing-x-small);
+  --presto-tooltip-arrow-size: 5px;
+  --presto-tooltip-arrow-start-end-offset: 8px;
+  --presto-z-index-drawer: 700;
+  --presto-z-index-dialog: 800;
+  --presto-z-index-dropdown: 900;
+  --presto-z-index-toast: 950;
+  --presto-z-index-tooltip: 1000;
+}
+
+/* You can override the default Infima variables here. */
+:root {
+  --ifm-color-primary: var(--presto-color-primary-500);
+  --ifm-color-primary-dark: var(--presto-color-primary-600);
+  --ifm-color-primary-darker: var(--presto-color-primary-700);
+  --ifm-color-primary-darkest: var(--presto-color-primary-800);
+  --ifm-color-primary-light: var(--presto-color-primary-400);
+  --ifm-color-primary-lighter: var(--presto-color-primary-300);
+  --ifm-color-primary-lightest: var(--presto-color-primary-200);
+  --ifm-code-font-size: 95%;
+  --ifm-pre-line-height: 2em;
+  --ifm-color-warning: var(--presto-color-warning-500);
+}
+
+.markdown {
+  --ifm-h1-vertical-rhythm-top: 4;
+  --ifm-h2-vertical-rhythm-top: 4;
+  --ifm-h3-vertical-rhythm-top: 4;
+  --ifm-heading-vertical-rhythm-top: 1.25;
+  --ifm-h1-vertical-rhythm-bottom: 1.25;
+  --ifm-heading-vertical-rhythm-bottom: 1;
+}
+
+.tabs {
+  font-size: 14px;
+  box-shadow: inset 0px -3px 0px var(--ifm-toc-border-color);
+}
+
+article {
+  padding: 5%;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+.presto-scroll-lock {
+  overflow: hidden !important;
+}
+
+html[data-theme='dark'] {
+  --ifm-background-color: var(--presto-color-gray-950, --ifm-background-color);
+  --ifm-navbar-background-color: var(--presto-color-gray-900, --ifm-navbar-background-color);
+}
+
+html[data-theme='dark'] {
+  /* Inputs */
+  --presto-input-background-color: var(--presto-color-gray-900);
+  --presto-input-background-color-hover: var(--presto-color-gray-900);
+  --presto-input-background-color-focus: var(--presto-color-gray-900);
+  --presto-input-background-color-disabled: var(--presto-color-gray-800);
+  --presto-input-border-color: var(--presto-color-gray-700);
+  --presto-input-border-color-hover: var(--presto-color-gray-600);
+  --presto-input-border-color-focus: var(--presto-color-primary-500);
+  --presto-input-border-color-disabled: var(--presto-color-gray-200);
+  --presto-input-border-color-invalid: var(--presto-color-danger-500);
+  --presto-input-font-family: var(--presto-font-sans);
+  --presto-input-font-weight: var(--presto-font-weight-normal);
+  --presto-input-font-size-small: var(--presto-font-size-small);
+  --presto-input-font-size-medium: var(--presto-font-size-medium);
+  --presto-input-font-size-large: var(--presto-font-size-large);
+  --presto-input-letter-spacing: var(--presto-letter-spacing-normal);
+  --presto-input-border-color: var(--presto-color-gray-700);
+  --presto-input-border-color-hover: var(--presto-color-gray-600);
+  --presto-input-border-color-focus: var(--presto-color-primary-400);
+  --presto-input-border-color-disabled: var(--presto-color-gray-700);
+  --presto-input-border-color-invalid: var(--presto-color-danger-500);
+  --presto-input-color: var(--presto-color-gray-200);
+  --presto-input-color-hover: var(--presto-color-gray-200);
+  --presto-input-color-focus: var(--presto-color-gray-200);
+  --presto-input-color-disabled: var(--presto-color-gray-100);
+  --presto-input-color-invalid: var(--presto-color-danger-600);
+  --presto-input-icon-color: var(--presto-color-gray-500);
+  --presto-input-icon-color-hover: var(--presto-color-gray-300);
+  --presto-input-icon-color-focus: var(--presto-color-gray-300);
+  --presto-input-placeholder-color: var(--presto-color-gray-600);
+  --presto-input-placeholder-color-disabled: var(--presto-color-gray-500);
+
+  /* Overlays */
+  --presto-overlay-background-color: #d1d5db22;
+
+  /*  Panels */
+  --presto-panel-background-color: var(--presto-color-gray-900);
+  --presto-panel-border-color: var(--presto-color-gray-800);
+
+  /* Tooltips */
+  --presto-tooltip-background-color: var(--presto-color-gray-200);
+  --presto-tooltip-color: var(--presto-color-black);
+}
+
+/* Alert */
+html[data-theme='dark'] presto-alert::part(base) {
+  background-color: var(--presto-color-gray-900);
+  border-left-color: var(--presto-color-gray-800);
+  border-right-color: var(--presto-color-gray-800);
+  border-bottom-color: var(--presto-color-gray-800);
+  color: var(--presto-color-gray-200);
+}
+
+/* Avatar */
+html[data-theme='dark'] presto-avatar::part(base) {
+  background-color: var(--presto-color-gray-700);
+  color: var(--presto-color-gray-300);
+}
+
+/* Button */
+html[data-theme='dark'] presto-button[type='default']::part(base) {
+  background-color: var(--presto-color-gray-900);
+  border-color: var(--presto-color-gray-700);
+  color: var(--presto-color-gray-400);
+}
+
+html[data-theme='dark'] presto-button[type='default']:not([disabled])::part(base):hover {
+  background-color: var(--presto-color-primary-950);
+  border-color: var(--presto-color-primary-800);
+  color: var(--presto-color-primary-400);
+}
+
+html[data-theme='dark'] presto-button[type='default']:not([disabled])::part(base):focus {
+  background-color: var(--presto-color-primary-950);
+  border-color: var(--presto-color-primary-800);
+  color: var(--presto-color-primary-400);
+  box-shadow: 0 0 0 var(--presto-focus-ring-width) hsla(var(--presto-color-primary-hue), var(--presto-color-primary-saturation), 50%, var(--presto-focus-ring-alpha));
+}
+
+html[data-theme='dark'] presto-button[type='default']:not([disabled])::part(base):active {
+  background-color: var(--presto-color-primary-900);
+  border-color: var(--presto-color-primary-700);
+  color: var(--presto-color-primary-300);
+}
+
+/* Card */
+html[data-theme='dark'] presto-card::part(base) {
+  background-color: var(--presto-color-gray-900);
+  --border-color: var(--presto-color-gray-800);
+}
+
+/* Checkbox & radio */
+html[data-theme='dark'] presto-checkbox::part(control),
+html[data-theme='dark'] presto-radio::part(control) {
+  color: var(--presto-color-gray-900);
+}
+
+/* Color picker */
+html[data-theme='dark'] presto-color-picker::part(format-button) {
+  background-color: var(--presto-color-gray-900);
+  border-color: var(--presto-color-gray-700);
+  color: var(--presto-color-gray-400);
+}
+
+html[data-theme='dark'] presto-color-picker::part(format-button):hover {
+  background-color: var(--presto-color-primary-950);
+  border-color: var(--presto-color-primary-800);
+  color: var(--presto-color-primary-400);
+}
+
+html[data-theme='dark'] presto-color-picker::part(format-button):focus {
+  background-color: var(--presto-color-primary-950);
+  border-color: var(--presto-color-primary-800);
+  color: var(--presto-color-primary-400);
+  box-shadow: 0 0 0 var(--presto-focus-ring-width) hsla(var(--presto-color-primary-hue), var(--presto-color-primary-saturation), 50%, var(--presto-focus-ring-alpha));
+}
+
+html[data-theme='dark'] presto-color-picker::part(format-button):active {
+  background-color: var(--presto-color-primary-900);
+  border-color: var(--presto-color-primary-700);
+  color: var(--presto-color-primary-300);
+}
+
+html[data-theme='dark'] presto-color-picker::part(panel) {
+  background-color: var(--presto-color-gray-900);
+  border-color: var(--presto-color-gray-800);
+}
+
+html[data-theme='dark'] presto-color-picker::part(slider-handle) {
+  background-color: var(--presto-color-gray-800);
+  box-shadow: 0 0 0 1px var(--presto-color-gray-600);
+}
+
+html[data-theme='dark'] presto-color-picker::part(slider-handle):focus {
+  box-shadow: 0 0 0 1px var(--presto-color-primary-500), 0 0 0 var(--presto-focus-ring-width) var(--presto-focus-ring-color-primary);
+}
+
+html[data-theme='dark'] presto-color-picker::part(grid-handle) {
+  border-color: var(--presto-color-gray-900);
+}
+
+html[data-theme='dark'] presto-color-picker::part(preview),
+html[data-theme='dark'] presto-color-picker::part(opacity-slider),
+html[data-theme='dark'] presto-color-picker::part(trigger) {
+  background-image: linear-gradient(45deg, #333 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #333 75%), linear-gradient(45deg, transparent 75%, #333 75%),
+    linear-gradient(45deg, #333 25%, transparent 25%);
+}
+
+html[data-theme='dark'] presto-color-picker::part(swatches) {
+  border-top-color: var(--presto-color-gray-800);
+}
+
+/* Details */
+html[data-theme='dark'] presto-details::part(base) {
+  border-color: var(--presto-color-gray-800);
+}
+
+/* Icon button */
+html[data-theme='dark'] presto-icon-button::part(base) {
+  color: var(--presto-color-gray-400);
+}
+
+html[data-theme='dark'] presto-icon-button:not([disabled])::part(base):hover,
+html[data-theme='dark'] presto-icon-button:not([disabled])::part(base):focus {
+  color: var(--presto-color-primary-500);
+}
+
+html[data-theme='dark'] presto-icon-button:not([disabled])::part(base):active {
+  color: var(--presto-color-primary-400);
+}
+
+/* Image comparer */
+html[data-theme='dark'] presto-image-comparer::part(divider),
+html[data-theme='dark'] presto-image-comparer::part(handle) {
+  background-color: var(--presto-color-gray-900);
+  color: var(--presto-color-gray-400);
+}
+
+/* Menu item */
+html[data-theme='dark'] presto-menu-item::part(base) {
+  color: var(--presto-color-gray-200);
+}
+
+html[data-theme='dark'] presto-menu-item::part(base):focus {
+  background-color: var(--presto-color-primary-600);
+  color: var(--presto-color-white);
+}
+
+html[data-theme='dark'] presto-menu-item[disabled]::part(base) {
+  color: var(--presto-color-gray-600);
+}
+
+/* Menu label */
+html[data-theme='dark'] presto-menu-label::part(base) {
+  color: var(--presto-color-gray-600);
+}
+
+/* Progress bar */
+html[data-theme='dark'] presto-progress-bar::part(base) {
+  background-color: var(--presto-color-gray-800);
+}
+
+html[data-theme='dark'] presto-progress-bar::part(indicator) {
+  color: var(--presto-color-gray-900);
+}
+
+/* Progress ring */
+html[data-theme='dark'] presto-progress-ring::part(base) {
+  --track-color: var(--presto-color-gray-800);
+}
+
+/* Range */
+html[data-theme='dark'] presto-range {
+  --track-color: var(--presto-color-gray-800);
+}
+
+/* Rating */
+html[data-theme='dark'] presto-rating {
+  --symbol-color: var(--presto-color-gray-700);
+}
+
+/* Select */
+html[data-theme='dark'] presto-select::part(tag) {
+  background-color: var(--presto-color-info-800);
+  border-color: var(--presto-color-info-700);
+  color: var(--presto-color-info-300);
+}
+
+/* Skeleton */
+html[data-theme='dark'] presto-skeleton {
+  --color: var(--presto-color-gray-800);
+  --sheen-color: var(--presto-color-gray-700);
+}
+
+/* Spinner */
+html[data-theme='dark'] presto-spinner {
+  --track-color: #f9fafb20;
+}
+
+/* Switch */
+html[data-theme='dark'] presto-switch::part(thumb) {
+  background-color: var(--presto-color-gray-900);
+}
+
+html[data-theme='dark'] presto-switch::part(control) {
+  background-color: var(--presto-color-gray-700);
+  border-color: var(--presto-color-gray-700);
+}
+
+html[data-theme='dark'] presto-switch:not([disabled])::part(control):hover {
+  background-color: var(--presto-color-gray-600);
+  border-color: var(--presto-color-gray-600);
+}
+
+html[data-theme='dark'] presto-switch[checked]::part(control) {
+  background-color: var(--presto-color-primary-600);
+  border-color: var(--presto-color-primary-600);
+}
+
+html[data-theme='dark'] presto-switch[checked]::part(control):hover {
+  background-color: var(--presto-color-primary-500);
+  border-color: var(--presto-color-primary-500);
+}
+
+/* Tab group */
+html[data-theme='dark'] presto-tab-group::part(tabs) {
+  --tabs-border-color: var(--presto-color-gray-800);
+}
+
+/* Tab */
+html[data-theme='dark'] presto-tab::part(base) {
+  color: var(--presto-color-gray-400);
+}
+
+html[data-theme='dark'] presto-tab:not([disabled])::part(base):hover,
+html[data-theme='dark'] presto-tab[active]::part(base) {
+  color: var(--presto-color-primary-500);
+}
+
+/* Tag */
+html[data-theme='dark'] presto-tag[type='primary']::part(base) {
+  background-color: var(--presto-color-primary-950);
+  border-color: var(--presto-color-primary-900);
+  color: var(--presto-color-primary-300);
+}
+
+html[data-theme='dark'] presto-tag[type='success']::part(base) {
+  background-color: var(--presto-color-success-950);
+  border-color: var(--presto-color-success-900);
+  color: var(--presto-color-success-300);
+}
+
+html[data-theme='dark'] presto-tag[type='info']::part(base) {
+  background-color: var(--presto-color-info-800);
+  border-color: var(--presto-color-info-700);
+  color: var(--presto-color-info-300);
+}
+
+html[data-theme='dark'] presto-tag[type='warning']::part(base) {
+  background-color: var(--presto-color-warning-950);
+  border-color: var(--presto-color-warning-900);
+  color: var(--presto-color-warning-300);
+}
+
+html[data-theme='dark'] presto-tag[type='danger']::part(base) {
+  background-color: var(--presto-color-danger-950);
+  border-color: var(--presto-color-danger-900);
+  color: var(--presto-color-danger-300);
+}

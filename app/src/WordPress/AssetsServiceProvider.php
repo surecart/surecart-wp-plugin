@@ -8,6 +8,7 @@ use WPEmerge\ServiceProviders\ServiceProviderInterface;
  * Register and enqueues assets.
  */
 class AssetsServiceProvider implements ServiceProviderInterface {
+	protected $container;
 
 	/**
 	 * {@inheritDoc}
@@ -20,99 +21,64 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 	 * {@inheritDoc}
 	 */
 	public function bootstrap( $container ) {
-		// general
-		add_action( 'wp_enqueue_scripts', array( $this, 'enqueueFrontendAssets' ) );
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueueAdminAssets' ) );
-		add_action( 'wp_footer', array( $this, 'loadSvgSprite' ) );
+		$this->container = $container;
+		add_action( 'wp_enqueue_scripts', [ $this, 'registerComponents' ] );
+		add_action( 'admin_enqueue_scripts', [ $this, 'registerComponents' ] );
+		add_filter( 'script_loader_tag', [ $this, 'componentsTag' ], 10, 3 );
 
-		// register block editor assets
-		add_action( 'enqueue_block_editor_assets', [ $this, 'enqueueBlockEditorAssets' ] );
+		add_action( 'enqueue_block_editor_assets', [ $this, 'editorAssets' ] );
 	}
 
 	/**
-	 * Enqueue frontend assets.
+	 * Add module to the components tag
 	 *
-	 * @return void
+	 * @param string $tag Tag output.
+	 * @param string $handle Script handle.
+	 * @param string $source Script source.
+	 *
+	 * @return string
 	 */
-	public function enqueueFrontendAssets() {
-		// Enqueue scripts.
-		\CheckoutEngine::core()->assets()->enqueueScript(
-			'theme-js-bundle',
-			\CheckoutEngine::core()->assets()->getBundleUrl( 'frontend', '.js' ),
-			array( 'jquery' ),
-			true
-		);
-
-		// Enqueue styles.
-		$style = \CheckoutEngine::core()->assets()->getBundleUrl( 'frontend', '.css' );
-
-		if ( $style ) {
-			\CheckoutEngine::core()->assets()->enqueueStyle(
-				'theme-css-bundle',
-				$style
-			);
+	public function componentsTag( $tag, $handle, $source ) {
+		if ( 'checkout-engine-components' === $handle ) {
+			// phpcs:ignore
+			$tag = '<script src="' . $source . '" type="module" defer></script>';
 		}
+
+		return $tag;
 	}
 
 	/**
-	 * Enqueue admin assets.
+	 * Registers the components script module
 	 *
 	 * @return void
 	 */
-	public function enqueueAdminAssets() {
-		// Enqueue scripts.
-		\CheckoutEngine::core()->assets()->enqueueScript(
-			'theme-admin-js-bundle',
-			\CheckoutEngine::core()->assets()->getBundleUrl( 'admin', '.js' ),
-			array( 'jquery' ),
+	public function registerComponents() {
+		wp_register_script(
+			'checkout-engine-components',
+			trailingslashit( \CheckoutEngine::core()->assets()->getUrl() ) . 'dist/dist/components/presto-components/presto-components.esm.js',
+			[],
+			filemtime( trailingslashit( $this->container[ WPEMERGE_CONFIG_KEY ]['app_core']['path'] ) . 'dist/dist/components/presto-components/presto-components.esm.js' ),
 			true
 		);
 
-		// Enqueue styles.
-		$style = \CheckoutEngine::core()->assets()->getBundleUrl( 'admin', '.css' );
-
-		if ( $style ) {
-			\CheckoutEngine::core()->assets()->enqueueStyle(
-				'theme-admin-css-bundle',
-				$style
-			);
-		}
-	}
-
-	public function enqueueBlockEditorAssets() {
-		$asset_file = \CheckoutEngine::core()->assets()->getAssetUrl( 'blocks/checkout-form.asset.php' );
-
-		// Enqueue scripts.
-		\CheckoutEngine::core()->assets()->enqueueScript(
-			'checkout-engine-block-editor',
-			\CheckoutEngine::core()->assets()->getAssetUrl( 'blocks/checkout-form.js' ),
-			array( 'jquery' ),
-			true
+		// Register styles.
+		wp_register_style(
+			'checkout-engine-default-theme',
+			trailingslashit( \CheckoutEngine::core()->assets()->getUrl() ) . 'dist/styles/gutenberg.css',
+			[],
+			filemtime( trailingslashit( $this->container[ WPEMERGE_CONFIG_KEY ]['app_core']['path'] ) . 'dist/styles/gutenberg.css' ),
 		);
 	}
 
 	/**
-	 * Load SVG sprite.
+	 * Enqueue default theme
 	 *
 	 * @return void
 	 */
-	public function loadSvgSprite() {
-		$file_path = implode(
-			DIRECTORY_SEPARATOR,
-			array_filter(
-				array(
-					plugin_dir_url( CHECKOUT_ENGINE_PLUGIN_FILE ),
-					'dist',
-					'images',
-					'sprite.svg',
-				)
-			)
+	public function editorAssets() {
+		\CheckoutEngine::core()->assets()->enqueueStyle(
+			'checkout-engine-editor',
+			trailingslashit( \CheckoutEngine::core()->assets()->getUrl() ) . 'dist/styles/gutenberg.css'
 		);
-
-		if ( ! file_exists( $file_path ) ) {
-			return;
-		}
-
-		readfile( $file_path );
 	}
 }

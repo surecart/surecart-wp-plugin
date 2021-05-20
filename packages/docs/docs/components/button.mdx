@@ -1,0 +1,155 @@
+# Button
+
+```html
+<presto-button></presto-button>
+```
+
+Buttons let users take actions and make choices with a single click or tap.
+
+import DemoTabs from "../../components/Demo-Tabs.js";
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+<DemoTabs>
+  <DemoTabs.Code>
+    {'<presto-button type="primary">Click Me</presto-button>'}
+  </DemoTabs.Code>
+  <presto-button type="primary">Click Me</presto-button>
+</DemoTabs>
+
+## Type
+
+Use the `type` property to set the button's type.
+
+<DemoTabs>
+  <DemoTabs.Code>
+    {`
+<presto-button>Default</presto-button>
+<presto-button type="primary">Primary</presto-button>
+<presto-button type="success">Success</presto-button>
+<presto-button type="info">Info</presto-button>
+<presto-button type="warning">Warning</presto-button>
+<presto-button type="danger">Danger</presto-button>
+    `}
+  </DemoTabs.Code>
+  <presto-button>Default</presto-button> <presto-button type="primary">
+    Primary
+  </presto-button> <presto-button type="success">Success</presto-button> <presto-button type="info">
+    Info
+  </presto-button> <presto-button type="warning">Warning</presto-button> <presto-button type="danger">Danger</presto-button>
+</DemoTabs>
+
+## Size
+
+Use the `size` property to set the button's size.
+
+<DemoTabs>
+  <DemoTabs.Code>
+{`
+<presto-button size="small">Small</presto-button>
+<presto-button>Default</presto-button>
+<presto-button size="large">Large</presto-button>
+`}
+  </DemoTabs.Code>
+
+<presto-button size="small">Small</presto-button>
+<presto-button>Default</presto-button>
+<presto-button size="large">Large</presto-button>
+
+</DemoTabs>
+
+## Pill
+
+Use the `pill` property to make the button rounded
+
+<DemoTabs>
+  <DemoTabs.Code>
+{`
+<presto-button size="small" pill>Small</presto-button>
+<presto-button pill>Default</presto-button>
+<presto-button size="large" pill>Large</presto-button>
+`}
+  </DemoTabs.Code>
+
+<presto-button size="small" pill>Small</presto-button>
+<presto-button pill>Default</presto-button>
+<presto-button size="large" pill>Large</presto-button>
+
+</DemoTabs>
+
+## Circle
+
+Use the `circle` property to create a circular button
+
+<DemoTabs>
+  <DemoTabs.Code>
+    {`
+<presto-button size="small" circle>👍🏻</presto-button>
+<presto-button circle>👍🏻</presto-button>
+<presto-button size="large" circle>👍🏻</presto-button>  
+    `}
+  </DemoTabs.Code>
+
+<presto-button size="small" circle>👍🏻</presto-button>
+<presto-button circle>👍🏻</presto-button>
+<presto-button size="large" circle>👍🏻</presto-button>
+
+</DemoTabs>
+
+## Loading
+
+<DemoTabs>
+  <DemoTabs.Code>
+    {`
+<presto-button loading>Click Me</presto-button>
+<presto-button loading type="primary">Click Me</presto-button>
+<presto-button loading type="success">Click Me</presto-button>
+<presto-button loading type="info">Click Me</presto-button>
+<presto-button loading type="warning">Click Me</presto-button>
+<presto-button loading type="danger">Click Me</presto-button>
+    `}
+  </DemoTabs.Code>
+  <presto-button loading>Default</presto-button> <presto-button
+    loading
+    type="primary"
+  >
+    Click Me
+  </presto-button> <presto-button loading type="success">
+    Click Me
+  </presto-button> <presto-button loading type="info">
+    Click Me
+  </presto-button> <presto-button loading type="warning">
+    Click Me
+  </presto-button> <presto-button loading type="danger">
+    Click Me
+  </presto-button>
+</DemoTabs>
+
+## Disabled
+
+<DemoTabs>
+  <DemoTabs.Code>
+    {`
+<presto-button disabled>Disabled</presto-button>
+<presto-button disabled type="primary">Disabled</presto-button>
+<presto-button disabled type="success">Disabled</presto-button>
+<presto-button disabled type="info">Disabled</presto-button>
+<presto-button disabled type="warning">Disabled</presto-button>
+<presto-button disabled type="danger">Disabled</presto-button>
+    `}
+  </DemoTabs.Code>
+  <presto-button disabled>Disabled</presto-button> <presto-button
+    disabled
+    type="primary"
+  >
+    Disabled
+  </presto-button> <presto-button disabled type="success">
+    Disabled
+  </presto-button> <presto-button disabled type="info">
+    Disabled
+  </presto-button> <presto-button disabled type="warning">
+    Disabled
+  </presto-button> <presto-button disabled type="danger">
+    Disabled
+  </presto-button>
+</DemoTabs>

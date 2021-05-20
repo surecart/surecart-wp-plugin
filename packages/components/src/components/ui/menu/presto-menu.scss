@@ -1,0 +1,11 @@
+:host {
+  display: block;
+}
+
+.menu {
+  padding: var(--presto-spacing-x-small) 0;
+
+  &:focus {
+    outline: none;
+  }
+}

@@ -1,16 +1,36 @@
 <?php
 
+/**
+ * Block Service Provider
+ */
+
 namespace CheckoutEngine\WordPress;
 
-use CheckoutEngine\Blocks\Checkout\CheckoutBlock;
 use WPEmerge\ServiceProviders\ServiceProviderInterface;
 
 /**
- * Registers block entities, like scripts and styles
+ * Undocumented class
+ *
+ * @author  Checkout Engine <andre@checkoutengine.com>
+ * @since   1.0.0
+ * @license GPL
  */
 class BlockServiceProvider implements ServiceProviderInterface {
+
+	/**
+	 * List of blocks to include
+	 *
+	 * @var array
+	 */
+	protected $blocks = [
+		\CheckoutEngine\Blocks\Checkout\CheckoutBlock::class,
+		\CheckoutEngine\Blocks\Button\ButtonBlock::class,
+	];
+
 	/**
 	 * {@inheritDoc}
+	 *
+	 *  @param  \Pimple\Container $container Service Container.
 	 */
 	public function register( $container ) {
 		// Nothing to register.
@@ -18,13 +38,27 @@ class BlockServiceProvider implements ServiceProviderInterface {
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @param  \Pimple\Container $container Service Container.
+	 *
+	 * @return void
+	 *
+	 * phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter
 	 */
 	public function bootstrap( $container ) {
 		$this->registerBlocks();
 	}
 
+	/**
+	 * Something
+	 *
+	 * @return  void
+	 * @since   1.0.0
+	 * @license GPL
+	 */
 	public function registerBlocks() {
-		( new CheckoutBlock() )->register();
+		foreach ( $this->blocks as $block ) {
+			( new $block() )->register();
+		}
 	}
-
 }

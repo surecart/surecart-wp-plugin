@@ -1,5 +1,6 @@
 {
-	"packages": [ ".", "app/src/Blocks/Checkout" ],
+	"packages": [ ".", "app/src/Blocks/*", "packages/*" ],
 	"version": "independent",
+	"useWorkspaces": true,
 	"npmClient": "yarn"
 }

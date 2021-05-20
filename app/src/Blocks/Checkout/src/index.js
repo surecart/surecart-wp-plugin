@@ -1,23 +1,21 @@
 import { __ } from '@wordpress/i18n';
 import { registerBlockType } from '@wordpress/blocks';
-import edit from './edit';
+import { InnerBlocks } from '@wordpress/block-editor';
 
-const blockStyle = {
-	backgroundColor: '#900',
-	color: '#fff',
-	padding: '20px',
-};
+import edit from './edit';
 
 registerBlockType( 'checkout-engine/checkout-form', {
 	title: __( 'Checkout Engine Form', 'checkout_engine' ),
 	icon: 'cart',
-	category: 'layout',
+	category: 'design',
 	example: {},
 	edit,
 	save() {
 		return (
-			<div style={ blockStyle }>
-				Hello World, step 1 (from the frontend).
+			<div>
+				<presto-checkout>
+					<InnerBlocks.Content />
+				</presto-checkout>
 			</div>
 		);
 	},

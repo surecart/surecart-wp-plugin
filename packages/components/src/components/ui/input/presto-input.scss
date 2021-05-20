@@ -1,0 +1,236 @@
+/**
+ * @prop --focus-ring: The focus ring style to use when the control receives focus, a `box-shadow` property.
+ */
+:host {
+  --focus-ring: 0 0 0 var(--presto-focus-ring-width) var(--presto-focus-ring-color-primary);
+  display: block;
+}
+
+.input {
+  flex: 1 1 auto;
+  display: inline-flex;
+  align-items: stretch;
+  justify-content: start;
+  position: relative;
+  width: 100%;
+  font-family: var(--presto-input-font-family);
+  font-weight: var(--presto-input-font-weight);
+  letter-spacing: var(--presto-input-letter-spacing);
+  background-color: var(--presto-input-background-color);
+  border: var(--presto-input-border);
+  vertical-align: middle;
+  overflow: hidden;
+  box-shadow: var(--presto-input-box-shadow);
+  transition: var(--presto-transition-fast) color, var(--presto-transition-fast) border, var(--presto-transition-fast) box-shadow;
+  cursor: text;
+
+  &:hover:not(.input--disabled) {
+    background-color: var(--presto-input-background-color-hover);
+    border-color: var(--presto-input-border-color-hover);
+
+    .input__control {
+      color: var(--presto-input-color-hover);
+    }
+  }
+
+  &.input--focused:not(.input--disabled) {
+    background-color: var(--presto-input-background-color-focus);
+    border-color: var(--presto-input-border-color-focus);
+    box-shadow: var(--focus-ring);
+
+    .input__control {
+      color: var(--presto-input-color-focus);
+    }
+  }
+
+  &.input--disabled {
+    background-color: var(--presto-input-background-color-disabled);
+    border-color: var(--presto-input-border-color-disabled);
+    opacity: 0.5;
+    cursor: not-allowed;
+
+    .input__control {
+      color: var(--presto-input-color-disabled);
+
+      &::placeholder {
+        color: var(--presto-input-placeholder-color-disabled);
+      }
+    }
+  }
+}
+
+.input__control {
+  flex: 1 1 auto;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  min-width: 0;
+  height: 100%;
+  color: var(--presto-input-color);
+  border: none;
+  background: none;
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
+  cursor: inherit;
+  -webkit-appearance: none;
+
+  &::-webkit-search-decoration,
+  &::-webkit-search-cancel-button,
+  &::-webkit-search-results-button,
+  &::-webkit-search-results-decoration {
+    -webkit-appearance: none;
+  }
+
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus,
+  &:-webkit-autofill:active {
+    box-shadow: 0 0 0 var(--presto-input-height-large) var(--presto-input-background-color-hover) inset !important;
+    -webkit-text-fill-color: var(--presto-input-color);
+  }
+
+  &::placeholder {
+    color: var(--presto-input-placeholder-color);
+    user-select: none;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.input__prefix,
+.input__suffix {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  cursor: default;
+
+  ::slotted(presto-icon) {
+    color: var(--presto-input-icon-color);
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Size modifiers
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+.input--small {
+  border-radius: var(--presto-input-border-radius-small);
+  font-size: var(--presto-input-font-size-small);
+  height: var(--presto-input-height-small);
+
+  .input__control {
+    height: calc(var(--presto-input-height-small) - var(--presto-input-border-width) * 2);
+    margin: 0 var(--presto-input-spacing-small);
+  }
+
+  .input__clear,
+  .input__password-toggle {
+    margin-right: var(--presto-input-spacing-small);
+  }
+
+  .input__prefix ::slotted(*) {
+    margin-left: var(--presto-input-spacing-small);
+  }
+
+  .input__suffix ::slotted(*) {
+    margin-right: var(--presto-input-spacing-small);
+  }
+}
+
+.input--medium {
+  border-radius: var(--presto-input-border-radius-medium);
+  font-size: var(--presto-input-font-size-medium);
+  height: var(--presto-input-height-medium);
+
+  .input__control {
+    height: calc(var(--presto-input-height-medium) - var(--presto-input-border-width) * 2);
+    margin: 0 var(--presto-input-spacing-medium);
+  }
+
+  .input__clear,
+  .input__password-toggle {
+    margin-right: var(--presto-input-spacing-medium);
+  }
+
+  .input__prefix ::slotted(*) {
+    margin-left: var(--presto-input-spacing-medium);
+  }
+
+  .input__suffix ::slotted(*) {
+    margin-right: var(--presto-input-spacing-medium);
+  }
+}
+
+.input--large {
+  border-radius: var(--presto-input-border-radius-large);
+  font-size: var(--presto-input-font-size-large);
+  height: var(--presto-input-height-large);
+
+  .input__control {
+    height: calc(var(--presto-input-height-large) - var(--presto-input-border-width) * 2);
+    margin: 0 var(--presto-input-spacing-large);
+  }
+
+  .input__clear,
+  .input__password-toggle {
+    margin-right: var(--presto-input-spacing-large);
+  }
+
+  .input__prefix ::slotted(*) {
+    margin-left: var(--presto-input-spacing-large);
+  }
+
+  .input__suffix ::slotted(*) {
+    margin-right: var(--presto-input-spacing-large);
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Pill modifier
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+.input--pill {
+  &.input--small {
+    border-radius: var(--presto-input-height-small);
+  }
+
+  &.input--medium {
+    border-radius: var(--presto-input-height-medium);
+  }
+
+  &.input--large {
+    border-radius: var(--presto-input-height-large);
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Clearable + Password Toggle
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+.input__clear,
+.input__password-toggle {
+  display: inline-flex;
+  align-items: center;
+  font-size: inherit;
+  color: var(--presto-input-icon-color);
+  border: none;
+  background: none;
+  padding: 0;
+  transition: var(--presto-transition-fast) color;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--presto-input-icon-color-hover);
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.input--empty .input__clear {
+  visibility: hidden;
+}

@@ -1,0 +1,181 @@
+---
+sidebar_position: 2
+---
+
+# Creating A Checkout Form
+
+Presto Pay takes a more modern approach to checkout. It's allows for much more dynamic switching of products in a checkout form, in real-time. This lets a user shop directly on the checkout form, and modify their purchase with the click of a few buttons.
+
+In order to define and modify different products that can occur in a checkout form, we've provided a concise syntax to allow for these types of actions with little effort.
+
+## Add A New Checkout Form
+
+To add a new checkout form you can use the `presto_pay()->checkout_form->display()` method in your plugin.
+This method displays the checkout form on a page with a list of available options.
+
+```php
+presto_pay()->checkout_form->display([
+    /**
+     * Give your form a unique id
+     * Defaults to checkout-form-{$post_id}
+     */
+    'id' => 'my-custom-form-id',
+
+    /**
+     * CSS Classname
+     */
+    'class' => 'my-custom-form-class',
+
+    /**
+     * Automatically apply a coupon to this form
+     */
+    'coupon' => ''
+
+    /**
+     * Available prices at checkout
+     */
+    'products' => [
+        [
+            /**
+            * Product section title
+            */
+            'title' => 'Your Products',
+
+            /**
+            * Show product images
+            */
+            'images' => false,
+
+            /**
+            * Price choices
+            */
+            'choices' => [
+                /**
+                * Purchase condition.
+                * 'all' => User must purchase all prices
+                * 'single' => User must choose a price
+                * 'multiple' => User can select multiple products from all options
+                *
+                *  Defaults to 'single'
+                */
+                'condition' => 'single',
+
+                /**
+                * Add a list of prices and options, using the price id
+                * as the key
+                */
+                'prices' => [
+                    /**
+                    * You can pass just the price id if you have no options
+                    */
+                    "price_1Iqjad2eZvKYlo2C5D7L2luA",
+
+                    /**
+                    * The price also accepts an array of options
+                    */
+                    "price_1Iqjad2eZvKYlo2C5D7L2luM" => [
+                        /** Whether this should be the default selected product (not applicable to 'all' condition) */
+                        'default' => true,
+
+                        /** Optional quantity for this price. Defaults to 1 */
+                        'quantity' => 1,
+
+                        /** Store any custom fields you want when the order is completed with this product */
+                        'custom_fields' => [
+                            'my_prefix_membership_id' => 1
+                        ],
+
+                        /** Change the display priority */
+                        'priority' => 5
+                    ],
+                ]
+            ]
+        ]
+    ]
+]);
+```
+
+## Product Choice Options
+
+There are times when you want to let the user select a specific price or subscription,
+force the user to purchase all of the pre-selected options, or allow them to pick and choose options.
+You can set this with the product choices option.
+
+### Select a Single Option
+
+To have the user select a single option from a list of options, pass the
+`'single'` string.
+
+```php
+presto_pay()->checkout_form->display([
+    ...
+    'products' => [
+        'choices' => [
+            'condition' => 'single'
+            ...
+        ]
+    ]
+]);
+```
+
+### Pick and Choose Multiple Options
+
+To have the user select a multiple options from a list of options, pass the
+`'multiple'` string.
+
+```php
+presto_pay()->checkout_form->display([
+    ...
+    'products' => [
+        'choices' => [
+            'condition' => 'multiple'
+            ...
+        ]
+    ]
+]);
+```
+
+### Require all options
+
+To force the user to select all the option from a list of options, pass the
+`'all'` string.
+
+```php
+presto_pay()->checkout_form->display([
+    ...
+    'products' => [
+        'choices' => [
+            'condition' => 'all'
+            ...
+        ]
+    ]
+]);
+```
+
+### Adding Order Bump Functionality
+
+To add an order-bump type of functionality, where the user can choose to add or remove
+a specific price from checkout, first pass an array or arrays to the products field.
+Each array will display as a section in the checkout menu.
+
+```php
+presto_pay()->checkout_form->display([
+    ...
+    'products' => [
+        [
+            'title' => 'Your Order',
+            'choices' => [
+                'condition' => 'single'
+                ...
+            ]
+        ],
+        [
+            'title' => 'Your Order',
+            'choices' => [
+                'condition' => 'multiple'
+                'prices' => ['price_1Iqjad2eZvKYlo2C5D7L2luM']
+            ]
+        ]
+    ]
+]);
+```

@@ -1,0 +1,149 @@
+:host {
+  display: block;
+}
+
+/**
+ * @prop --width: The width of the switch.
+ * @prop --height: The height of the switch.
+ * @prop --thumb-size: The size of the thumb.
+ */
+:host {
+  --height: var(--presto-toggle-size);
+  --thumb-size: calc(var(--presto-toggle-size) - 2px);
+  --width: calc(var(--height) * 2);
+
+  display: inline-block;
+}
+
+.switch {
+  display: inline-flex;
+  align-items: flex-start;
+  font-family: var(--presto-input-font-family);
+  font-size: var(--presto-input-font-size-medium);
+  font-weight: var(--presto-input-font-weight);
+  color: var(--presto-input-color);
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.switch__control {
+  flex: 0 0 auto;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--width);
+  height: var(--height);
+  background-color: var(--presto-color-gray-300);
+  border: solid var(--presto-input-border-width) var(--presto-color-gray-300);
+  border-radius: var(--height);
+  transition: var(--presto-transition-fast) border-color, var(--presto-transition-fast) background-color;
+
+  .switch__thumb {
+    width: var(--thumb-size);
+    height: var(--thumb-size);
+    background-color: var(--presto-color-white);
+    border-radius: 50%;
+    border: solid var(--presto-input-border-width) var(--presto-input-border-color);
+    transform: translateX(calc(var(--width) / -2 + var(--thumb-size) / 2 - (var(--thumb-size) - var(--height)) / 2));
+    transition: var(--presto-transition-fast) transform ease, var(--presto-transition-fast) background-color, var(--presto-transition-fast) border-color,
+      var(--presto-transition-fast) box-shadow;
+  }
+
+  input[type='checkbox'] {
+    position: absolute;
+    opacity: 0;
+    padding: 0;
+    margin: 0;
+    pointer-events: none;
+  }
+}
+
+// Hover
+.switch:not(.switch--checked):not(.switch--disabled) .switch__control:hover {
+  background-color: var(--presto-color-gray-200);
+  border-color: var(--presto-color-gray-200);
+
+  .switch__thumb {
+    background-color: var(--presto-color-white);
+    border-color: var(--presto-input-border-color);
+  }
+}
+
+// Focus
+.switch.switch--focused:not(.switch--checked):not(.switch--disabled) .switch__control {
+  background-color: var(--presto-color-gray-200);
+  border-color: var(--presto-color-gray-200);
+
+  .switch__thumb {
+    background-color: var(--presto-color-white);
+    border-color: var(--presto-color-primary-500);
+    box-shadow: 0 0 0 var(--presto-focus-ring-width) var(--presto-focus-ring-color-primary);
+  }
+}
+
+// Checked
+.switch--checked .switch__control {
+  background-color: var(--presto-color-primary-500);
+  border-color: var(--presto-color-primary-500);
+
+  .switch__thumb {
+    background-color: var(--presto-color-white);
+    border-color: var(--presto-color-primary-500);
+    transform: translateX(calc(var(--width) / 2 - var(--thumb-size) / 2 + (var(--thumb-size) - var(--height)) / 2));
+  }
+}
+
+// Checked + hover
+.switch.switch--checked:not(.switch--disabled) .switch__control:hover {
+  background-color: var(--presto-color-primary-400);
+  border-color: var(--presto-color-primary-400);
+
+  .switch__thumb {
+    background-color: var(--presto-color-white);
+    border-color: var(--presto-color-primary-500);
+  }
+}
+
+// Checked + focus
+.switch.switch--checked:not(.switch--disabled).switch--focused .switch__control {
+  background-color: var(--presto-color-primary-400);
+  border-color: var(--presto-color-primary-400);
+
+  .switch__thumb {
+    background-color: var(--presto-color-white);
+    border-color: var(--presto-color-primary-500);
+    box-shadow: 0 0 0 var(--presto-focus-ring-width) var(--presto-focus-ring-color-primary);
+  }
+}
+
+// Disabled
+.switch--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.switch__label {
+  margin-left: 0.7em;
+  user-select: none;
+  line-height: var(--height);
+}
+
+.switch__title {
+  color: var(--presto-input-label-color);
+  font-weight: var(--presto-input-label-font-weight);
+  font-size: var(--presto-input-label-font-size-medium);
+}
+
+.switch__description {
+  display: block;
+  color: var(--presto-color-gray-500);
+  line-height: 1em;
+  margin: 0.5em 0 0;
+  font-size: var(--presto-font-size-small);
+}
+slot[name='description']::slotted(*) {
+  margin: 0.75em 0;
+  line-height: 1em;
+  vertical-align: center;
+}

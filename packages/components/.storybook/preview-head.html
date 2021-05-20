@@ -1,0 +1,285 @@
+<style>
+  .presto-toast-stack {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: var(--presto-z-index-toast);
+    width: 28rem;
+    max-width: 100%;
+    max-height: 100%;
+    overflow: auto;
+  }
+
+  .presto-toast-stack presto-alert {
+    --box-shadow: var(--presto-shadow-large);
+    margin: var(--presto-spacing-medium);
+  }
+
+  presto-button-group>presto-button:first-child::part(base),
+  presto-button-group>presto-dropdown:first-child>presto-button[slot=trigger]::part(base),
+  presto-button-group>presto-tooltip:first-child>presto-button::part(base) {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  presto-button-group>presto-button:last-child::part(base),
+  presto-button-group>presto-dropdown:last-child>presto-button[slot=trigger]::part(base),
+  presto-button-group>presto-tooltip:last-child>presto-button::part(base) {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  presto-button-group>presto-button:not(:first-child):not(:last-child)::part(base),
+  presto-button-group>presto-dropdown:not(:first-child):not(:last-child)>presto-button[slot=trigger]::part(base),
+  presto-button-group>presto-tooltip:not(:first-child):not(:last-child)>presto-button::part(base) {
+    border-radius: 0;
+  }
+
+  presto-button-group>presto-button:not(:first-child),
+  presto-button-group>presto-dropdown:not(:first-child)>presto-button[slot=trigger],
+  presto-button-group>presto-tooltip:not(:first-child)>presto-button {
+    margin-left: calc(-1 * var(--presto-input-border-width));
+  }
+
+  presto-button-group>presto-button:not(:first-child):not([type=default])::part(base):not(:hover):not(:active):not(:focus):after,
+  presto-button-group>presto-dropdown:not(:first-child)>presto-button[slot=trigger]:not([type=default])::part(base):not(:hover):not(:active):not(:focus):after,
+  presto-button-group>presto-tooltip:not(:first-child)>presto-button:not([type=default])::part(base):not(:hover):not(:active):not(:focus):after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    border-left: solid 1px #ffffff40;
+  }
+
+  presto-button-group>presto-button:hover,
+  presto-button-group>presto-dropdown:hover>presto-button[slot=trigger],
+  presto-button-group>presto-tooltip:hover>presto-button {
+    z-index: 1;
+  }
+
+  presto-button-group>presto-button.presto-focus,
+  presto-button-group>presto-dropdown>presto-button[slot=trigger].presto-focus,
+  presto-button-group>presto-tooltip>presto-button.presto-focus {
+    z-index: 2;
+  }
+
+  :root {
+    --presto-color-black: #000;
+    --presto-color-white: #fff;
+    --presto-color-gray-50: #f9fafb;
+    --presto-color-gray-100: #f3f4f6;
+    --presto-color-gray-200: #e5e7eb;
+    --presto-color-gray-300: #d1d5db;
+    --presto-color-gray-400: #9ca3af;
+    --presto-color-gray-500: #6b7280;
+    --presto-color-gray-600: #4b5563;
+    --presto-color-gray-700: #374151;
+    --presto-color-gray-800: #1f2937;
+    --presto-color-gray-900: #111827;
+    --presto-color-gray-950: #0d131e;
+    --presto-color-primary-50: #f0f9ff;
+    --presto-color-primary-100: #e0f2fe;
+    --presto-color-primary-200: #bae6fd;
+    --presto-color-primary-300: #7dd3fc;
+    --presto-color-primary-400: #38bdf8;
+    --presto-color-primary-500: #0ea5e9;
+    --presto-color-primary-600: #0284c7;
+    --presto-color-primary-700: #0369a1;
+    --presto-color-primary-800: #075985;
+    --presto-color-primary-900: #0c4a6e;
+    --presto-color-primary-950: #082e45;
+    --presto-color-primary-text: var(--presto-color-white);
+    --presto-color-success-50: #f0fdf4;
+    --presto-color-success-100: #dcfce7;
+    --presto-color-success-200: #bbf7d0;
+    --presto-color-success-300: #86efac;
+    --presto-color-success-400: #4ade80;
+    --presto-color-success-500: #22c55e;
+    --presto-color-success-600: #16a34a;
+    --presto-color-success-700: #15803d;
+    --presto-color-success-800: #166534;
+    --presto-color-success-900: #14532d;
+    --presto-color-success-950: #0d381e;
+    --presto-color-success-text: var(--presto-color-white);
+    --presto-color-info-50: #f9fafb;
+    --presto-color-info-100: #f3f4f6;
+    --presto-color-info-200: #e5e7eb;
+    --presto-color-info-300: #d1d5db;
+    --presto-color-info-400: #9ca3af;
+    --presto-color-info-500: #6b7280;
+    --presto-color-info-600: #4b5563;
+    --presto-color-info-700: #374151;
+    --presto-color-info-800: #1f2937;
+    --presto-color-info-900: #111827;
+    --presto-color-info-950: #0d131e;
+    --presto-color-info-text: var(--presto-color-white);
+    --presto-color-warning-50: #fffbeb;
+    --presto-color-warning-100: #fef3c7;
+    --presto-color-warning-200: #fde68a;
+    --presto-color-warning-300: #fcd34d;
+    --presto-color-warning-400: #fbbf24;
+    --presto-color-warning-500: #f59e0b;
+    --presto-color-warning-600: #d97706;
+    --presto-color-warning-700: #b45309;
+    --presto-color-warning-800: #92400e;
+    --presto-color-warning-900: #78350f;
+    --presto-color-warning-950: #4d220a;
+    --presto-color-warning-text: var(--presto-color-white);
+    --presto-color-danger-50: #fef2f2;
+    --presto-color-danger-100: #fee2e2;
+    --presto-color-danger-200: #fecaca;
+    --presto-color-danger-300: #fca5a5;
+    --presto-color-danger-400: #f87171;
+    --presto-color-danger-500: #ef4444;
+    --presto-color-danger-600: #dc2626;
+    --presto-color-danger-700: #b91c1c;
+    --presto-color-danger-800: #991b1b;
+    --presto-color-danger-900: #7f1d1d;
+    --presto-color-danger-950: #481111;
+    --presto-color-danger-text: var(--presto-color-white);
+    --presto-border-radius-small: 0.125rem;
+    --presto-border-radius-medium: 0.25rem;
+    --presto-border-radius-large: 0.5rem;
+    --presto-border-radius-x-large: 1rem;
+    --presto-border-radius-circle: 50%;
+    --presto-border-radius-pill: 9999px;
+    --presto-shadow-x-small: 0 1px 0 #0d131e0d;
+    --presto-shadow-small: 0 1px 2px #0d131e1a;
+    --presto-shadow-medium: 0 2px 4px #0d131e1a;
+    --presto-shadow-large: 0 2px 8px #0d131e1a;
+    --presto-shadow-x-large: 0 4px 16px #0d131e1a;
+    --presto-spacing-xxx-small: 0.125rem;
+    --presto-spacing-xx-small: 0.25rem;
+    --presto-spacing-x-small: 0.5rem;
+    --presto-spacing-small: 0.75rem;
+    --presto-spacing-medium: 1rem;
+    --presto-spacing-large: 1.25rem;
+    --presto-spacing-x-large: 1.75rem;
+    --presto-spacing-xx-large: 2.25rem;
+    --presto-spacing-xxx-large: 3rem;
+    --presto-spacing-xxxx-large: 4.5rem;
+    --presto-transition-x-slow: 1000ms;
+    --presto-transition-slow: 500ms;
+    --presto-transition-medium: 250ms;
+    --presto-transition-fast: 150ms;
+    --presto-transition-x-fast: 50ms;
+    --presto-font-mono:
+      SFMono-Regular,
+      Consolas,
+      "Liberation Mono",
+      Menlo,
+      monospace;
+    --presto-font-sans:
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      Roboto,
+      Helvetica,
+      Arial,
+      sans-serif,
+      "Apple Color Emoji",
+      "Segoe UI Emoji",
+      "Segoe UI Symbol";
+    --presto-font-serif:
+      Georgia,
+      "Times New Roman",
+      serif;
+    --presto-font-size-xx-small: 0.625rem;
+    --presto-font-size-x-small: 0.75rem;
+    --presto-font-size-small: 0.875rem;
+    --presto-font-size-medium: 1rem;
+    --presto-font-size-large: 1.25rem;
+    --presto-font-size-x-large: 1.5rem;
+    --presto-font-size-xx-large: 2.25rem;
+    --presto-font-size-xxx-large: 3rem;
+    --presto-font-size-xxxx-large: 4.5rem;
+    --presto-font-weight-light: 300;
+    --presto-font-weight-normal: 400;
+    --presto-font-weight-semibold: 500;
+    --presto-font-weight-bold: 700;
+    --presto-letter-spacing-dense: -0.015em;
+    --presto-letter-spacing-normal: normal;
+    --presto-letter-spacing-loose: 0.075em;
+    --presto-line-height-dense: 1.4;
+    --presto-line-height-normal: 1.8;
+    --presto-line-height-loose: 2.2;
+    --presto-focus-ring-color-primary: #0ea5e954;
+    --presto-focus-ring-color-success: #22c55e54;
+    --presto-focus-ring-color-info: #6b728054;
+    --presto-focus-ring-color-warning: #f59e0b54;
+    --presto-focus-ring-color-danger: #ef444454;
+    --presto-focus-ring-width: 3px;
+    --presto-button-font-size-small: var(--presto-font-size-x-small);
+    --presto-button-font-size-medium: var(--presto-font-size-small);
+    --presto-button-font-size-large: var(--presto-font-size-medium);
+    --presto-input-height-small: 1.875rem;
+    --presto-input-height-medium: 2.5rem;
+    --presto-input-height-large: 3.125rem;
+    --presto-input-background-color: var(--presto-color-white);
+    --presto-input-background-color-hover: var(--presto-color-white);
+    --presto-input-background-color-focus: var(--presto-color-white);
+    --presto-input-background-color-disabled: var(--presto-color-gray-100);
+    --presto-input-border-color: var(--presto-color-gray-300);
+    --presto-input-border-color-hover: var(--presto-color-gray-400);
+    --presto-input-border-color-focus: var(--presto-color-primary-500);
+    --presto-input-border-color-disabled: var(--presto-color-gray-300);
+    --presto-input-border-width: 1px;
+    --presto-input-border-radius-small: var(--presto-border-radius-medium);
+    --presto-input-border-radius-medium: var(--presto-border-radius-medium);
+    --presto-input-border-radius-large: var(--presto-border-radius-medium);
+    --presto-input-font-family: var(--presto-font-sans);
+    --presto-input-font-weight: var(--presto-font-weight-normal);
+    --presto-input-font-size-small: var(--presto-font-size-small);
+    --presto-input-font-size-medium: var(--presto-font-size-medium);
+    --presto-input-font-size-large: var(--presto-font-size-large);
+    --presto-input-letter-spacing: var(--presto-letter-spacing-normal);
+    --presto-input-color: var(--presto-color-gray-700);
+    --presto-input-color-hover: var(--presto-color-gray-700);
+    --presto-input-color-focus: var(--presto-color-gray-700);
+    --presto-input-color-disabled: var(--presto-color-gray-900);
+    --presto-input-icon-color: var(--presto-color-gray-400);
+    --presto-input-icon-color-hover: var(--presto-color-gray-600);
+    --presto-input-icon-color-focus: var(--presto-color-gray-600);
+    --presto-input-placeholder-color: var(--presto-color-gray-400);
+    --presto-input-placeholder-color-disabled: var(--presto-color-gray-600);
+    --presto-input-spacing-small: var(--presto-spacing-small);
+    --presto-input-spacing-medium: var(--presto-spacing-medium);
+    --presto-input-spacing-large: var(--presto-spacing-large);
+    --presto-input-label-font-size-small: var(--presto-font-size-small);
+    --presto-input-label-font-size-medium: var(--presto-font-size-medium);
+    --presto-input-label-font-size-large: var(--presto-font-size-large);
+    --presto-input-label-color: inherit;
+    --presto-input-help-text-font-size-small: var(--presto-font-size-x-small);
+    --presto-input-help-text-font-size-medium: var(--presto-font-size-small);
+    --presto-input-help-text-font-size-large: var(--presto-font-size-medium);
+    --presto-input-help-text-color: var(--presto-color-gray-400);
+    --presto-toggle-size: 1rem;
+    --presto-overlay-background-color: #37415180;
+    --presto-panel-background-color: var(--presto-color-white);
+    --presto-panel-border-color: var(--presto-color-gray-200);
+    --presto-tooltip-border-radius: var(--presto-border-radius-medium);
+    --presto-tooltip-background-color: var(--presto-color-gray-900);
+    --presto-tooltip-color: var(--presto-color-white);
+    --presto-tooltip-font-family: var(--presto-font-sans);
+    --presto-tooltip-font-weight: var(--presto-font-weight-normal);
+    --presto-tooltip-font-size: var(--presto-font-size-small);
+    --presto-tooltip-line-height: var(--presto-line-height-dense);
+    --presto-tooltip-padding: var(--presto-spacing-xx-small) var(--presto-spacing-x-small);
+    --presto-tooltip-arrow-size: 5px;
+    --presto-tooltip-arrow-start-end-offset: 8px;
+    --presto-z-index-drawer: 700;
+    --presto-z-index-dialog: 800;
+    --presto-z-index-dropdown: 900;
+    --presto-z-index-toast: 950;
+    --presto-z-index-tooltip: 1000;
+  }
+
+  [hidden] {
+    display: none !important;
+  }
+
+  .presto-scroll-lock {
+    overflow: hidden !important;
+  }
+</style>

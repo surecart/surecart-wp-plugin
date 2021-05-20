@@ -1,0 +1,64 @@
+{
+  "name": "@presto-pay/components",
+  "version": "0.0.1",
+  "description": "Stencil Component Starter",
+  "main": "dist/index.cjs.js",
+  "docs": "docs/docs.json",
+  "module": "dist/custom-elements/index.js",
+  "es2015": "dist/esm/index.mjs",
+  "es2017": "dist/esm/index.mjs",
+  "types": "dist/custom-elements/index.d.ts",
+  "collection": "dist/collection/collection-manifest.json",
+  "collection:main": "dist/collection/index.js",
+  "unpkg": "dist/presto-components/presto-components.js",
+  "repository": {
+    "url": "git@github.com:Presto-Pay/presto-pay-components.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "files": [
+    "dist/",
+    "loader/"
+  ],
+  "scripts": {
+    "stencil": "stencil",
+    "start": "stencil build --dev --watch",
+    "build": "stencil build --docs",
+    "docs": "stencil build --watch",
+    "docs.data": "stencil build --docs-json ./docs/docs.json",
+    "start:serve": "stencil build --dev --watch --serve",
+    "test": "stencil test --spec --e2e",
+    "test.watch": "stencil test --spec --e2e --watchAll",
+    "generate": "stencil generate"
+  },
+  "dependencies": {
+    "@stencil/core": "2.5.2",
+    "@stencil/sass": "^1.4.0",
+    "@stripe/stripe-js": "^1.14.0",
+    "clsx": "^1.1.1",
+    "sass": "^1.29.0",
+    "stencil-fragment": "^1.0.1"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.13.16",
+    "@babel/plugin-proposal-decorators": "^7.13.15",
+    "@babel/preset-env": "^7.13.15",
+    "@rollup/plugin-babel": "^5.3.0",
+    "@stencil/react-output-target": "0.0.9",
+    "@stencil/state-tunnel": "^1.0.1",
+    "@stencil/store": "^1.4.1",
+    "@types/jest": "^26.0.15",
+    "@types/node": "^15.0.3",
+    "@types/puppeteer": "^5.4.0",
+    "babel-jest": "^26.6.3",
+    "babel-loader": "^8.2.2",
+    "case": "^1.6.3",
+    "jest": "^26.6.3",
+    "jest-cli": "^26.6.3",
+    "npm-run-all": "^4.1.5",
+    "puppeteer": "^5.4.1",
+    "stencil-context": "0.0.3"
+  }
+}

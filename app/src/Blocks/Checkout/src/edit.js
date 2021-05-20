@@ -1,9 +1,18 @@
-const blockStyle = {
-	backgroundColor: '#900',
-	color: '#fff',
-	padding: '20px',
-};
+import { InnerBlocks } from '@wordpress/block-editor';
 
-export default () => {
-	return <div style={ blockStyle }>Edit Me</div>;
+export const ALLOWED_BLOCKS = [ 'checkout-engine/button', 'core/paragraph' ];
+export const TEMPLATE = [
+	[ 'checkout-engine/button', { placeholder: 'test' } ],
+];
+
+export default ( { className } ) => {
+	return (
+		<div className={ className }>
+			<InnerBlocks
+				renderAppender={ InnerBlocks.ButtonBlockAppender }
+				template={ TEMPLATE }
+				allowedBlocks={ ALLOWED_BLOCKS }
+			/>
+		</div>
+	);
 };

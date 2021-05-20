@@ -1,0 +1,27 @@
+/// <reference types="react" />
+export declare const PrestoButton: import("react").ForwardRefExoticComponent<Pick<any, string | number | symbol> & import("react").RefAttributes<HTMLPrestoButtonElement>>;
+export declare const PrestoCheckbox: import("react").ForwardRefExoticComponent<Pick<any, string | number | symbol> & import("react").RefAttributes<HTMLPrestoCheckboxElement>>;
+export declare const PrestoCheckout: import("react").ForwardRefExoticComponent<Pick<any, string | number | symbol> & import("react").RefAttributes<HTMLPrestoCheckoutElement>>;
+export declare const PrestoChoice: import("react").ForwardRefExoticComponent<Pick<any, string | number | symbol> & import("react").RefAttributes<HTMLPrestoChoiceElement>>;
+export declare const PrestoChoices: import("react").ForwardRefExoticComponent<Pick<any, string | number | symbol> & import("react").RefAttributes<HTMLPrestoChoicesElement>>;
+export declare const PrestoDivider: import("react").ForwardRefExoticComponent<Pick<any, string | number | symbol> & import("react").RefAttributes<HTMLPrestoDividerElement>>;
+export declare const PrestoDropdown: import("react").ForwardRefExoticComponent<Pick<any, string | number | symbol> & import("react").RefAttributes<HTMLPrestoDropdownElement>>;
+export declare const PrestoForm: import("react").ForwardRefExoticComponent<Pick<any, string | number | symbol> & import("react").RefAttributes<HTMLPrestoFormElement>>;
+export declare const PrestoFormControl: import("react").ForwardRefExoticComponent<Pick<any, string | number | symbol> & import("react").RefAttributes<HTMLPrestoFormControlElement>>;
+export declare const PrestoFormRow: import("react").ForwardRefExoticComponent<Pick<any, string | number | symbol> & import("react").RefAttributes<HTMLPrestoFormRowElement>>;
+export declare const PrestoFormSection: import("react").ForwardRefExoticComponent<Pick<any, string | number | symbol> & import("react").RefAttributes<HTMLPrestoFormSectionElement>>;
+export declare const PrestoInput: import("react").ForwardRefExoticComponent<Pick<any, string | number | symbol> & import("react").RefAttributes<HTMLPrestoInputElement>>;
+export declare const PrestoLineItem: import("react").ForwardRefExoticComponent<Pick<any, string | number | symbol> & import("react").RefAttributes<HTMLPrestoLineItemElement>>;
+export declare const PrestoMenu: import("react").ForwardRefExoticComponent<Pick<any, string | number | symbol> & import("react").RefAttributes<HTMLPrestoMenuElement>>;
+export declare const PrestoMenuDivider: import("react").ForwardRefExoticComponent<Pick<any, string | number | symbol> & import("react").RefAttributes<HTMLPrestoMenuDividerElement>>;
+export declare const PrestoMenuItem: import("react").ForwardRefExoticComponent<Pick<any, string | number | symbol> & import("react").RefAttributes<HTMLPrestoMenuItemElement>>;
+export declare const PrestoOrderSummary: import("react").ForwardRefExoticComponent<Pick<any, string | number | symbol> & import("react").RefAttributes<HTMLPrestoOrderSummaryElement>>;
+export declare const PrestoRadio: import("react").ForwardRefExoticComponent<Pick<any, string | number | symbol> & import("react").RefAttributes<HTMLPrestoRadioElement>>;
+export declare const PrestoRadioGroup: import("react").ForwardRefExoticComponent<Pick<any, string | number | symbol> & import("react").RefAttributes<HTMLPrestoRadioGroupElement>>;
+export declare const PrestoSecureNotice: import("react").ForwardRefExoticComponent<Pick<any, string | number | symbol> & import("react").RefAttributes<HTMLPrestoSecureNoticeElement>>;
+export declare const PrestoSelect: import("react").ForwardRefExoticComponent<Pick<any, string | number | symbol> & import("react").RefAttributes<HTMLPrestoSelectElement>>;
+export declare const PrestoSkeleton: import("react").ForwardRefExoticComponent<Pick<any, string | number | symbol> & import("react").RefAttributes<HTMLPrestoSkeletonElement>>;
+export declare const PrestoSpinner: import("react").ForwardRefExoticComponent<Pick<any, string | number | symbol> & import("react").RefAttributes<HTMLPrestoSpinnerElement>>;
+export declare const PrestoStripeElement: import("react").ForwardRefExoticComponent<Pick<any, string | number | symbol> & import("react").RefAttributes<HTMLPrestoStripeElementElement>>;
+export declare const PrestoStripePaymentRequest: import("react").ForwardRefExoticComponent<Pick<any, string | number | symbol> & import("react").RefAttributes<HTMLPrestoStripePaymentRequestElement>>;
+export declare const PrestoSwitch: import("react").ForwardRefExoticComponent<Pick<any, string | number | symbol> & import("react").RefAttributes<HTMLPrestoSwitchElement>>;

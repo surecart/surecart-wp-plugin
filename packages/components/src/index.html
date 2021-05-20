@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+  <title>Stencil Component Starter</title>
+  <style>
+    body {
+      color: #101010;
+    }
+  </style>
+  <link href="/build/presto-components.css" rel="stylesheet">
+  <script type="module" src="/build/presto-components.esm.js"></script>
+  <script nomodule src="/build/presto-components.js"></script>
+</head>
+
+<body>
+
+  <div style="width: 500px; margin:90px auto;">
+    <presto-checkout id="checkout-one" style="margin-bottom: 80px;">
+      <presto-form>
+        <div class="presto-area-main-header">
+          <presto-form-section label="Choose A Plan">
+            <span slot="description">Start for free. Cancel anytime.</span>
+            <presto-form-row>
+              <presto-choices tabindex="1">
+                <presto-choice name="test" required checked>
+                  Gold Plan
+                  <span slot="description">$9.99, then $49.99 per month</span>
+                </presto-choice>
+                <presto-choice name="test">Silver Plan
+                  <span slot="description">$39.99 per month</span>
+                </presto-choice>
+                <presto-choice name="test">Bronze Plan
+                  <span slot="description">$9.99 per month</span>
+                </presto-choice>
+              </presto-choices>
+            </presto-form-row>
+          </presto-form-section>
+
+          <presto-form-section>
+            <presto-stripe-payment-request amount="12500"
+              publishable-key="pk_test_51IGqEQFOGhs5FBqkukQRgXOUWl4zEUF8t9NAEz9QdTozrZ9QlWNXbKROsKICnpY808sEfhZYLfSAeSX3arrT8A6K00gf5F5845">
+              <presto-divider>Or</presto-divider>
+            </presto-stripe-payment-request>
+          </presto-form-section>
+
+          <presto-form-section label="Contact Information">
+            <span slot="description">Use a permanent address where you can recieve mail.</span>
+            <presto-form-row>
+              <presto-input name="email" type="email" label="Email Address" placeholder="you@youremail.com" required>
+              </presto-input>
+            </presto-form-row>
+            <presto-form-row>
+              <presto-input label="First Name" name="firstname" help="Optional"></presto-input>
+              <presto-input label="Last Name" name="lastname" help="Optional"></presto-input>
+            </presto-form-row>
+          </presto-form-section>
+
+          <presto-form-section label="Card Details">
+            <presto-secure-notice slot="description">This is a secure, encrypted payment.</presto-secure-notice>
+
+            <presto-form-row>
+              <presto-stripe-element
+                publishable-key="pk_test_51IGqEQFOGhs5FBqkukQRgXOUWl4zEUF8t9NAEz9QdTozrZ9QlWNXbKROsKICnpY808sEfhZYLfSAeSX3arrT8A6K00gf5F5845">
+              </presto-stripe-element>
+            </presto-form-row>
+          </presto-form-section>
+
+          <!-- <presto-form-section>
+            <presto-form-row>
+              <presto-switch name="subscribe" value="subscribe" required>Subscribe to our email list
+                <span slot="description">We will never spam you. Unsubscribe at any time.</span>
+              </presto-switch>
+            </presto-form-row>
+          </presto-form-section> -->
+
+          <!-- <presto-form-section>
+            <presto-form-row>
+              <presto-checkbox name="terms" value="terms" required indeterminate>
+                I agree to the terms.
+              </presto-checkbox>
+            </presto-form-row>
+          </presto-form-section> -->
+        </div>
+
+
+
+
+        <!-- <presto-order-summary class="presto-area-main"></presto-order-summary> -->
+
+        <div class="presto-area-main-footer">
+          <presto-form-section label="Totals">
+            <presto-divider style="--spacing: 20px;"></presto-divider>
+            <presto-line-item>
+              Gold Plan
+              <span slot="price">$20.00</span>
+            </presto-line-item>
+            <presto-divider style="--spacing: 20px;"></presto-divider>
+            <presto-line-item price="$20.00" currency="CAD">
+              Total
+            </presto-line-item>
+          </presto-form-section>
+
+          <presto-button full type="primary" size="large" submit>Pay $20.00</presto-button>
+        </div>
+      </presto-form>
+    </presto-checkout>
+  </div>
+
+  <!-- <div style="width: 1180px; margin:auto;">
+    <presto-checkout id="checkout-two"
+      style="margin-bottom: 80px; --presto-checkout-columns: 2; --presto-checkout-column-gap: 2rem;">
+      <presto-form>
+        <div class="position-main">
+
+          <presto-form-row>
+            <presto-input label="Email address" type="email" required></presto-input>
+          </presto-form-row>
+
+          <presto-form-row>
+            <presto-stripe-element label="Credit Card"
+              publishable-key="pk_test_51IGqEQFOGhs5FBqkukQRgXOUWl4zEUF8t9NAEz9QdTozrZ9QlWNXbKROsKICnpY808sEfhZYLfSAeSX3arrT8A6K00gf5F5845">
+            </presto-stripe-element>
+          </presto-form-row>
+
+          <presto-form-row>
+            <presto-input label="First Name"></presto-input>
+            <presto-input label="Last Name"></presto-input>
+          </presto-form-row>
+
+          <presto-form-row>
+            <presto-input type="text" label="Address" placeholder="185 Berry St" required autocomplete="address-line1">
+            </presto-input>
+          </presto-form-row>
+
+          <presto-form-row>
+            <presto-input type="text" label="City" placeholder="Madison" required autocomplete="address-level2">
+            </presto-input>
+            <presto-input type="text" label="State" placeholder="Wisconsin" required autocomplete="address-level1">
+            </presto-input>
+            <presto-input type="text" label="Zip" placeholder="54716" required autocomplete="postal-code">
+            </presto-input>
+          </presto-form-row>
+
+          <br>
+          <presto-form-row>
+            <presto-switch>Subscribe to our email list</presto-switch>
+          </presto-form-row>
+          <br>
+
+        </div>
+
+        <presto-order-summary class="position-sidebar"></presto-order-summary>
+
+        <div class="presto-area-main-footer">
+          <presto-button full type="primary" size="large">Purchase</presto-button>
+        </div>
+      </presto-form>
+    </presto-checkout>
+  </div> -->
+
+
+  <script>
+    var one = document.querySelector('#checkout-one');
+    one.productIds = [1, 2, 3];
+
+    one.addEventListener('prestoSubmit', (e) => {
+      let formData = e.detail.formData;
+      console.log(formData);
+      console.log(JSON.stringify(Object.fromEntries(formData)));
+    });
+    // var two = document.querySelector('#checkout-two');
+    // two.productIds = [4, 5, 6];
+  </script>
+</body>
+
+</html>

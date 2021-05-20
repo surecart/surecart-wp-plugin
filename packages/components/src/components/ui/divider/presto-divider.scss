@@ -1,0 +1,37 @@
+:host {
+  display: block;
+  --spacing: 0;
+}
+
+.divider {
+  position: relative;
+  margin: var(--spacing) 0;
+}
+
+.line__container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+}
+
+.line {
+  width: 100%;
+  border-top: 1px solid var(--presto-color-gray-200);
+}
+
+.text__container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  font-size: var(--presto-font-size-small);
+}
+
+.text {
+  padding: 0 var(--presto-spacing-small);
+  background: var(--presto-color-white);
+  color: var(--presto-color-gray-500);
+}

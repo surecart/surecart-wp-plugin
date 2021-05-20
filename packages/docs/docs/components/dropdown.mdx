@@ -1,0 +1,118 @@
+# Dropdown
+
+```html
+<presto-dropdown></presto-dropdown>
+```
+
+Dropdown is a component that opens a floating content panel when a trigger element is clicked.
+This components takes care of updating the state of the dropdown menu (opened/closed) as well as handles
+closing the menu when clicking outside.
+
+import DemoTabs from "../../components/Demo-Tabs.js";
+
+<DemoTabs>
+  <DemoTabs.Code>
+    {`
+  <presto-dropdown>
+    <presto-button slot="trigger" caret>
+      Click Here
+    </presto-button>
+    <presto-menu>
+      <presto-menu-item>Option 1</presto-menu-item>
+      <presto-menu-item>Option 2</presto-menu-item>
+      <presto-menu-item>Option 3</presto-menu-item>
+      <presto-menu-divider></presto-menu-divider>
+      <presto-menu-item checked>Checked</presto-menu-item>
+      <presto-menu-item disabled>Disabled</presto-menu-item>
+      <presto-menu-divider></presto-menu-divider>
+      <presto-menu-item>
+        <span slot="prefix">👍🏻</span>Prefix
+      </presto-menu-item>
+      <presto-menu-item>
+        Suffix <span slot="suffix">👍🏻</span>
+      </presto-menu-item>
+    </presto-menu>
+  </presto-dropdown>
+    `}
+
+  </DemoTabs.Code>
+  <presto-dropdown>
+    <presto-button slot="trigger" caret>
+      Click Here
+    </presto-button>
+    <presto-menu>
+      <presto-menu-item>Option 1</presto-menu-item>
+      <presto-menu-item>Option 2</presto-menu-item>
+      <presto-menu-item>Option 3</presto-menu-item>
+      <presto-menu-divider></presto-menu-divider>
+      <presto-menu-item checked>Checked</presto-menu-item>
+      <presto-menu-item disabled>Disabled</presto-menu-item>
+      <presto-menu-divider></presto-menu-divider>
+      <presto-menu-item>
+        <span slot="prefix">👍🏻</span>Prefix
+      </presto-menu-item>
+      <presto-menu-item>
+        Suffix <span slot="suffix">👍🏻</span>
+      </presto-menu-item>
+    </presto-menu>
+  </presto-dropdown>
+</DemoTabs>
+
+## Examples
+
+### Position
+
+<DemoTabs>
+  <DemoTabs.Code>
+{`
+<presto-dropdown placement="top-left">
+  <presto-button slot="trigger" caret>Edit</presto-button>
+  <presto-menu>
+    <presto-menu-item>Cut</presto-menu-item>
+    <presto-menu-item>Copy</presto-menu-item>
+    <presto-menu-item>Paste</presto-menu-item>
+    <presto-menu-divider></presto-menu-divider>
+    <presto-menu-item>Find</presto-menu-item>
+    <presto-menu-item>Replace</presto-menu-item>
+  </presto-menu>
+</presto-dropdown>
+`}
+</DemoTabs.Code>
+
+<presto-dropdown position="top-left">
+  <presto-button slot="trigger" caret>
+    Edit
+  </presto-button>
+  <presto-menu>
+    <presto-menu-item>Cut</presto-menu-item>
+    <presto-menu-item>Copy</presto-menu-item>
+    <presto-menu-item>Paste</presto-menu-item>
+    <presto-menu-divider></presto-menu-divider>
+    <presto-menu-item>Find</presto-menu-item>
+    <presto-menu-item>Replace</presto-menu-item>
+  </presto-menu>
+</presto-dropdown>
+
+</DemoTabs>
+
+## Properties
+
+| Property        | Attribute         | Description                                                                                       | Type                                                           | Default     |
+| --------------- | ----------------- | ------------------------------------------------------------------------------------------------- | -------------------------------------------------------------- | ----------- |
+| `closeOnSelect` | `close-on-select` | Determines whether the dropdown should hide when a menu item is selected                          | `boolean`                                                      | `true`      |
+| `open`          | `open`            | Indicates whether or not the dropdown is open. You can use this in lieu of the show/hide methods. | `boolean`                                                      | `false`     |
+| `position`      | `position`        | The placement of the dropdown panel                                                               | `"bottom-left" \| "bottom-right" \| "top-left" \| "top-right"` | `undefined` |
+
+## Events
+
+| Event        | Description                                                                                           | Type                |
+| ------------ | ----------------------------------------------------------------------------------------------------- | ------------------- |
+| `prestoHide` | Emitted when the dropdown closes. Calling `event.preventDefault()` will prevent it from being closed. | `CustomEvent<void>` |
+| `prestoShow` | Emitted when the dropdown opens. Calling `event.preventDefault()` will prevent it from being opened.  | `CustomEvent<void>` |
+
+## Shadow Parts
+
+| Part        | Description |
+| ----------- | ----------- |
+| `"panel"`   |             |
+| `"trigger"` |             |
