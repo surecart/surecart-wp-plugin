@@ -7,8 +7,8 @@ use WPEmerge\ServiceProviders\ServiceProviderInterface;
 /**
  * Register widgets and sidebars.
  */
-class ContentTypesServiceProvider implements ServiceProviderInterface
-{
+class ContentTypesServiceProvider implements ServiceProviderInterface {
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -20,8 +20,8 @@ class ContentTypesServiceProvider implements ServiceProviderInterface
 	 * {@inheritDoc}
 	 */
 	public function bootstrap( $container ) {
-		add_action( 'init', [$this, 'registerPostTypes'] );
-		add_action( 'init', [$this, 'registerTaxonomies'] );
+		add_action( 'init', array( $this, 'registerPostTypes' ) );
+		add_action( 'init', array( $this, 'registerTaxonomies' ) );
 	}
 
 	/**

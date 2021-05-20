@@ -8,12 +8,21 @@
 		}
 	],
 	"settings": {
+		"editor.defaultFormatter": "wongjn.php-sniffer",
+		// "phpcbf.enable": true,
+		"phpSniffer.autoDetect": true,
+		// "phpcbf.documentFormattingProvider": true,
+		"phpSniffer.standard": "./phpcs.xml",
+		// "phpcbf.onsave": true,
+		// "phpcbf.standard": "WordPress-Core",
 		"phpcs.enable": true,
-		"phpcs.standard": "WordPress",
+		// "phpcs.standard": "WordPress-Core",
 		"phpcs.executablePath": "./vendor/bin/phpcs",
-		"phpcs.showWarnings": true,
-		"phpcs.composerJsonPath": "composer.json",
-		"phpcs.errorSeverity": 5,
-		"php.suggest.basic": true
+		"[php]": {
+			"editor.defaultFormatter": "wongjn.php-sniffer"
+		}
+		// "phpcs.showWarnings": true,
+		// "phpcs.composerJsonPath": "composer.json",
+		// "phpcs.errorSeverity": 5
 	}
 }

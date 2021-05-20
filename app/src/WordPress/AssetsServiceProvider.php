@@ -7,8 +7,8 @@ use WPEmerge\ServiceProviders\ServiceProviderInterface;
 /**
  * Register and enqueues assets.
  */
-class AssetsServiceProvider implements ServiceProviderInterface
-{
+class AssetsServiceProvider implements ServiceProviderInterface {
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -20,9 +20,13 @@ class AssetsServiceProvider implements ServiceProviderInterface
 	 * {@inheritDoc}
 	 */
 	public function bootstrap( $container ) {
-		add_action( 'wp_enqueue_scripts', [$this, 'enqueueFrontendAssets'] );
-		add_action( 'admin_enqueue_scripts', [$this, 'enqueueAdminAssets'] );
-		add_action( 'wp_footer', [$this, 'loadSvgSprite'] );
+		// general
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueueFrontendAssets' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueueAdminAssets' ) );
+		add_action( 'wp_footer', array( $this, 'loadSvgSprite' ) );
+
+		// register block editor assets
+		add_action( 'enqueue_block_editor_assets', [ $this, 'enqueueBlockEditorAssets' ] );
 	}
 
 	/**
@@ -35,7 +39,7 @@ class AssetsServiceProvider implements ServiceProviderInterface
 		\CheckoutEngine::core()->assets()->enqueueScript(
 			'theme-js-bundle',
 			\CheckoutEngine::core()->assets()->getBundleUrl( 'frontend', '.js' ),
-			[ 'jquery' ],
+			array( 'jquery' ),
 			true
 		);
 
@@ -60,7 +64,7 @@ class AssetsServiceProvider implements ServiceProviderInterface
 		\CheckoutEngine::core()->assets()->enqueueScript(
 			'theme-admin-js-bundle',
 			\CheckoutEngine::core()->assets()->getBundleUrl( 'admin', '.js' ),
-			[ 'jquery' ],
+			array( 'jquery' ),
 			true
 		);
 
@@ -75,6 +79,18 @@ class AssetsServiceProvider implements ServiceProviderInterface
 		}
 	}
 
+	public function enqueueBlockEditorAssets() {
+		$asset_file = \CheckoutEngine::core()->assets()->getAssetUrl( 'blocks/checkout-form.asset.php' );
+
+		// Enqueue scripts.
+		\CheckoutEngine::core()->assets()->enqueueScript(
+			'checkout-engine-block-editor',
+			\CheckoutEngine::core()->assets()->getAssetUrl( 'blocks/checkout-form.js' ),
+			array( 'jquery' ),
+			true
+		);
+	}
+
 	/**
 	 * Load SVG sprite.
 	 *
@@ -84,12 +100,12 @@ class AssetsServiceProvider implements ServiceProviderInterface
 		$file_path = implode(
 			DIRECTORY_SEPARATOR,
 			array_filter(
-				[
+				array(
 					plugin_dir_url( CHECKOUT_ENGINE_PLUGIN_FILE ),
 					'dist',
 					'images',
-					'sprite.svg'
-				]
+					'sprite.svg',
+				)
 			)
 		);
 

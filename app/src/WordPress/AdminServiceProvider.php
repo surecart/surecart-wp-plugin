@@ -19,7 +19,7 @@ class AdminServiceProvider implements ServiceProviderInterface {
 	 * {@inheritDoc}
 	 */
 	public function bootstrap( $container ) {
-		add_action( 'admin_menu', [$this, 'registerAdminPages'] );
+		add_action( 'admin_menu', array( $this, 'registerAdminPages' ) );
 	}
 
 	/**
@@ -28,6 +28,6 @@ class AdminServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function registerAdminPages() {
-		add_menu_page( __('Dashboard', 'checkout-engine'), __('Checkout Engine', 'checkout-engine'), 'manage_options', 'checkout-engine-settings', function() {} );
+		add_menu_page( __( 'Dashboard', 'checkout_engine' ), __( 'Checkout Engine', 'checkout_engine' ), 'manage_options', 'checkout-engine-settings', function() {} );
 	}
 }
