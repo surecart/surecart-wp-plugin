@@ -32,6 +32,8 @@ import { supportsCollections } from './utils/block-helpers';
 
 // Register Blocks
 import * as checkout from './blocks/checkout';
+import * as button from './blocks/button';
+import * as input from './blocks/input';
 
 /**
  * Function to register an individual block.
@@ -62,7 +64,7 @@ const registerBlock = ( block ) => {
  * Function to register blocks provided by Checkout Engine.
  */
 export const registerCheckoutEngineBlocks = () => {
-	[ checkout ].forEach( registerBlock );
+	[ checkout, button, input ].forEach( registerBlock );
 };
 
 registerCheckoutEngineBlocks();

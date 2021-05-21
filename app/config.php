@@ -22,7 +22,7 @@ return [
 		\CheckoutEngine\View\ViewServiceProvider::class,
 		\CheckoutEngine\WordPress\AdminServiceProvider::class,
 		\CheckoutEngine\WordPress\AssetsServiceProvider::class,
-		\CheckoutEngine\WordPress\BlockServiceProvider::class,
+		// \CheckoutEngine\WordPress\BlockServiceProvider::class,
 		\CheckoutEngine\WordPress\ContentTypesServiceProvider::class,
 		\CheckoutEngine\WordPress\ShortcodesServiceProvider::class,
 		\CheckoutEngine\WordPress\PluginServiceProvider::class,

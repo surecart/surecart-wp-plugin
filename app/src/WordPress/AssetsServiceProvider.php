@@ -8,6 +8,11 @@ use WPEmerge\ServiceProviders\ServiceProviderInterface;
  * Register and enqueues assets.
  */
 class AssetsServiceProvider implements ServiceProviderInterface {
+	/**
+	 * Holds the service container
+	 *
+	 * @var \Pimple\Container
+	 */
 	protected $container;
 
 	/**
@@ -22,6 +27,7 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 	 */
 	public function bootstrap( $container ) {
 		$this->container = $container;
+
 		add_action( 'wp_enqueue_scripts', [ $this, 'registerComponents' ] );
 		add_action( 'admin_enqueue_scripts', [ $this, 'registerComponents' ] );
 		add_filter( 'script_loader_tag', [ $this, 'componentsTag' ], 10, 3 );
@@ -76,7 +82,6 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function editorAssets() {
-
 		$asset_file = include trailingslashit( $this->container[ WPEMERGE_CONFIG_KEY ]['app_core']['path'] ) . 'dist/blocks/blocks.asset.php';
 
 		\CheckoutEngine::core()->assets()->enqueueScript(

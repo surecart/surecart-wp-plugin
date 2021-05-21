@@ -1,7 +1,11 @@
 {
-	"name": "checkout-engine/checkout",
+	"name": "checkout-engine/checkout-form",
 	"category": "layout",
 	"attributes": {
+		"isPremium": {
+			"type": "boolean",
+			"default": false
+		},
 		"items": {
 			"type": "number",
 			"default": "2"

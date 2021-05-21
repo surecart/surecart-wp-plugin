@@ -1,18 +1,24 @@
 import { InnerBlocks } from '@wordpress/block-editor';
 
-export const ALLOWED_BLOCKS = [ 'checkout-engine/button', 'core/paragraph' ];
-export const TEMPLATE = [
-	[ 'checkout-engine/button', { placeholder: 'test' } ],
-];
+/**
+ * Component Dependencies
+ */
+import { PrestoCheckout } from '@presto-pay/react/dist/index';
 
-export default ( { className } ) => {
+import { allowed, template } from './template.json';
+import withIsPremium from '../../higher-order/withIsPremium';
+
+export default withIsPremium( ( { className, isPremium } ) => {
 	return (
-		<div className={ className }>
-			<InnerBlocks
-				renderAppender={ InnerBlocks.ButtonBlockAppender }
-				template={ TEMPLATE }
-				allowedBlocks={ ALLOWED_BLOCKS }
-			/>
+		<div className={ className } style={ { padding: '20px' } }>
+			<PrestoCheckout>
+				<InnerBlocks
+					renderAppender={ InnerBlocks.ButtonBlockAppender }
+					template={ template }
+					templateLock={ isPremium ? false : 'insert' }
+					allowedBlocks={ allowed }
+				/>
+			</PrestoCheckout>
 		</div>
 	);
-};
+} );
