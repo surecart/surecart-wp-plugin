@@ -36,7 +36,7 @@
 		"rebrand": "node resources/build/rebrand/rebrand.js",
 		"release": "run-s build release:zip",
 		"release:zip": "node resources/build/release/release.js wpemerge-release",
-		"build:blocks": "wp-scripts build ./resources/scripts/blocks/index.js --output-path=dist/blocks",
+		"build:blocks": "wp-scripts build ./resources/scripts/blocks/blocks.js --output-path=dist/blocks",
 		"check-engines": "wp-scripts check-engines",
 		"check-licenses": "wp-scripts check-licenses",
 		"format": "wp-scripts format",
@@ -54,6 +54,7 @@
 		"last 3 versions"
 	],
 	"dependencies": {
+		"@wordpress/icons": "^4.0.0",
 		"autoprefixer": "^9.8.0",
 		"babel-core": "^6.26.3",
 		"babel-loader": "^7.1.4",

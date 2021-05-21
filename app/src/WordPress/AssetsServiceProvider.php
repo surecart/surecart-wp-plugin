@@ -76,6 +76,16 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function editorAssets() {
+
+		$asset_file = include trailingslashit( $this->container[ WPEMERGE_CONFIG_KEY ]['app_core']['path'] ) . 'dist/blocks/blocks.asset.php';
+
+		\CheckoutEngine::core()->assets()->enqueueScript(
+			'checkout-engine-blocks',
+			trailingslashit( \CheckoutEngine::core()->assets()->getUrl() ) . 'dist/blocks/blocks.js',
+			array_merge( [ 'checkout-engine-components' ], $asset_file['dependencies'] ),
+			$asset_file['version']
+		);
+
 		\CheckoutEngine::core()->assets()->enqueueStyle(
 			'checkout-engine-editor',
 			trailingslashit( \CheckoutEngine::core()->assets()->getUrl() ) . 'dist/styles/gutenberg.css'
