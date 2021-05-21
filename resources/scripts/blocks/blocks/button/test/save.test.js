@@ -25,30 +25,9 @@ describe( 'checkout-engine/buttons', () => {
 		// Reset the reused variables.
 		serializedBlock = '';
 	} );
-	it( 'Should render with defaults', () => {
+	it( 'Should render', () => {
 		serializedBlock = serialize( block );
 		expect( serializedBlock ).toBeDefined();
-		expect( serializedBlock ).toContain( `<presto-button` );
-		expect( serializedBlock ).toContain( `type="primary"` );
-		expect( serializedBlock ).toContain( `size="large"` );
-		expect( serializedBlock ).toContain( `Purchase` );
-	} );
-
-	it( 'should render with types', () => {
-		[
-			'default',
-			'primary',
-			'success',
-			'info',
-			'warning',
-			'danger',
-		].forEach( ( type ) => {
-			block.attributes.type = type;
-			serializedBlock = serialize( block );
-			expect( serializedBlock ).toBeDefined();
-			expect( serializedBlock ).toContain( `type="${ type }"` );
-			expect( serializedBlock ).toMatchSnapshot();
-		} );
 	} );
 
 	it( 'should render with custom class name', () => {

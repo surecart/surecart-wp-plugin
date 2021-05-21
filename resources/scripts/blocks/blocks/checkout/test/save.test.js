@@ -28,7 +28,9 @@ describe( 'checkout-engine/checkout-form', () => {
 	it( 'Should render with defaults', () => {
 		serializedBlock = serialize( block );
 		expect( serializedBlock ).toBeDefined();
-		expect( serializedBlock ).toContain( `<presto-checkout` );
+		expect( serializedBlock ).toContain(
+			`wp:checkout-engine/checkout-form`
+		);
 	} );
 
 	it( 'should render with custom class name', () => {

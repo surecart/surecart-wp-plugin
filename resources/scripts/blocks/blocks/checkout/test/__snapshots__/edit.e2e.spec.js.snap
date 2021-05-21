@@ -2,12 +2,8 @@
 
 exports[`checkout-engine/checkout-form Should render 1`] = `
 "<!-- wp:checkout-engine/checkout-form -->
-<div class=\\"wp-block-checkout-engine-checkout-form\\"><presto-checkout><!-- wp:checkout-engine/button {\\"text\\":\\"purchase\\"} -->
-<div class=\\"wp-block-checkout-engine-button\\"><div><presto-button type=\\"primary\\" size=\\"large\\">purchase</presto-button></div></div>
-<!-- /wp:checkout-engine/button -->
+<div class=\\"wp-block-checkout-engine-checkout-form\\"><!-- wp:checkout-engine/button /-->
 
-<!-- wp:checkout-engine/button {\\"text\\":\\"purchase\\"} -->
-<div class=\\"wp-block-checkout-engine-button\\"><div><presto-button type=\\"primary\\" size=\\"large\\">purchase</presto-button></div></div>
-<!-- /wp:checkout-engine/button --></presto-checkout></div>
+<!-- wp:checkout-engine/button /--></div>
 <!-- /wp:checkout-engine/checkout-form -->"
 `;
