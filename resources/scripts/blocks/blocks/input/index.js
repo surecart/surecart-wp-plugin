@@ -17,9 +17,9 @@ const { name, category, attributes } = metadata;
 
 const settings = {
 	/* translators: block name */
-	title: __( 'Checkout Button', 'checkout_engine' ),
+	title: __( 'Input', 'checkout_engine' ),
 	/* translators: block description */
-	description: __( 'Display a checkout form button', 'checkout_engine' ),
+	description: __( 'Display a checkout form input', 'checkout_engine' ),
 	parent: [ 'checkout-engine/checkout-form' ],
 	icon,
 	keywords: [

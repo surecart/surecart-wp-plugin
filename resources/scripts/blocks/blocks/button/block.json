@@ -1,9 +1,6 @@
 {
 	"name": "checkout-engine/button",
 	"category": "layout",
-	"supports": {
-		"reusable": false
-	},
 	"attributes": {
 		"text": {
 			"type": "string",

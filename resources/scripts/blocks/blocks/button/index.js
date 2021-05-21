@@ -13,14 +13,17 @@ import { button as icon } from '@wordpress/icons';
 /**
  * Block constants
  */
-const { name, category, attributes } = metadata;
+const { name, category, attributes, supports } = metadata;
 
 const settings = {
 	/* translators: block name */
-	title: __( 'Checkout Button', 'checkout_engine' ),
+	title: __( 'Button', 'checkout_engine' ),
 	/* translators: block description */
 	description: __( 'Display a checkout form button', 'checkout_engine' ),
 	parent: [ 'checkout-engine/checkout-form' ],
+	supports: {
+		reusable: false,
+	},
 	icon,
 	keywords: [
 		'checkout',
