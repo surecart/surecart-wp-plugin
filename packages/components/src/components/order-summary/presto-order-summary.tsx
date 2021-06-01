@@ -1,9 +1,9 @@
 import { Component, Host, h } from '@stencil/core';
 
-import { createContext } from 'stencil-context';
+// import { createContext } from 'stencil-context';
 
-const defaultValue = { products: [] };
-const { Consumer } = createContext(defaultValue);
+// const defaultValue = { products: [] };
+// const { Consumer } = createContext(defaultValue);
 
 @Component({
   tag: 'presto-order-summary',
@@ -14,11 +14,9 @@ export class PrestoOrderSummary {
   render() {
     return (
       <Host>
-        <Consumer>
-          {({ products }) => {
-            return JSON.stringify(products);
-          }}
-        </Consumer>
+        {({ products }) => {
+          return JSON.stringify(products);
+        }}
         <slot></slot>
       </Host>
     );

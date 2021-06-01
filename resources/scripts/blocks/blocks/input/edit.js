@@ -7,7 +7,7 @@ import { RichText } from '@wordpress/block-editor';
 /**
  * Component Dependencies
  */
-import { PrestoInput } from '@presto-pay/react/dist/index';
+import { PrestoInput } from '@checkout-engine/react/dist/index';
 
 export default ( { className } ) => {
 	return (

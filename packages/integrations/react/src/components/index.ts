@@ -3,7 +3,9 @@
 /* auto-generated react proxies */
 import { createReactComponent } from './react-component-lib';
 
-import type { JSX } from '@presto-pay/components';
+import type { JSX } from '@checkout-engine/components';
+
+
 
 export const PrestoButton = /*@__PURE__*/createReactComponent<JSX.PrestoButton, HTMLPrestoButtonElement>('presto-button');
 export const PrestoCheckbox = /*@__PURE__*/createReactComponent<JSX.PrestoCheckbox, HTMLPrestoCheckboxElement>('presto-checkbox');

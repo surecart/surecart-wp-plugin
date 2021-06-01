@@ -1,9 +1,9 @@
 import { Component, Host, h, Prop, Element } from '@stencil/core';
 
-import { createContext } from 'stencil-context';
+// import { createContext } from 'stencil-context';
 
-const defaultValue = { products: [] };
-const { Provider } = createContext(defaultValue);
+// const defaultValue = { products: [] };
+// const { Provider } = createContext(defaultValue);
 
 @Component({
   tag: 'presto-checkout',
@@ -17,11 +17,11 @@ export class PrestoCheckout {
   render() {
     return (
       <Host>
-        <Provider value={{ products: this.productIds }}>
-          <div class="presto-checkout-container">
-            <slot></slot>
-          </div>
-        </Provider>
+        {/* <Provider value={{ products: this.productIds }}> */}
+        <div class="presto-checkout-container">
+          <slot></slot>
+        </div>
+        {/* </Provider> */}
       </Host>
     );
   }

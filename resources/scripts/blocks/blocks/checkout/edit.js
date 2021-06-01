@@ -3,7 +3,7 @@ import { InnerBlocks } from '@wordpress/block-editor';
 /**
  * Component Dependencies
  */
-import { PrestoCheckout } from '@presto-pay/react/dist/index';
+import { PrestoCheckout } from '@checkout-engine/react/dist/index';
 
 import { allowed, template } from './template.json';
 import withIsPremium from '../../higher-order/withIsPremium';

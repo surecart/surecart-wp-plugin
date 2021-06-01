@@ -7,7 +7,7 @@ import { RichText } from '@wordpress/block-editor';
 /**
  * Component Dependencies
  */
-import { PrestoButton } from '@presto-pay/react/dist/index';
+import { PrestoButton } from '@checkout-engine/react/dist/index';
 
 export default ( { className, attributes, setAttributes } ) => {
 	const { type, text, submit, full, size } = attributes;

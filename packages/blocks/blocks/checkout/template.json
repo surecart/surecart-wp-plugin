@@ -1,0 +1,21 @@
+{
+	"allowed": [ "checkout-engine/button" ],
+	"template": [
+		[
+			"checkout-engine/button",
+			{
+				"submit": true,
+				"text": "Purchase",
+				"type": "primary"
+			}
+		],
+		[
+			"checkout-engine/button",
+			{
+				"submit": true,
+				"text": "Purchase",
+				"type": "primary"
+			}
+		]
+	]
+}

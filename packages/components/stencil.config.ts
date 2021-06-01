@@ -4,7 +4,7 @@ import { sass } from '@stencil/sass';
 import { readFileSync } from 'fs';
 
 export const config: Config = {
-  namespace: 'presto-components',
+  namespace: 'checkout-engine',
   globalStyle: './src/themes/base.css',
   devServer: {
     https: {
@@ -20,8 +20,8 @@ export const config: Config = {
   },
   outputTargets: [
     reactOutputTarget({
-      componentCorePackage: '@presto-pay/components',
-      proxiesFile: '../react/src/components/index.ts',
+      componentCorePackage: '@checkout-engine/components',
+      proxiesFile: '../integrations/react/src/components/index.ts',
     }),
     {
       type: 'dist',
@@ -34,9 +34,6 @@ export const config: Config = {
       type: 'docs-readme',
       dir: 'docs',
     },
-    // {
-    //   type: 'docs-json',
-    // },
     {
       type: 'www',
       serviceWorker: null, // disable service workers

@@ -5,68 +5,71 @@
  * work well for content-centric websites.
  */
 
-@import "~@presto-pay/components/dist/presto-components/presto-components.css";
+@import '~@checkout-engine/components/dist/presto-components/presto-components.css';
 
 .docusaurus-highlight-code-line {
-  background-color: rgb(72, 77, 91);
-  display: block;
-  margin: 0 calc(-1 * var(--ifm-pre-padding));
-  padding: 0 var(--ifm-pre-padding);
+	background-color: rgb(72, 77, 91);
+	display: block;
+	margin: 0 calc(-1 * var(--ifm-pre-padding));
+	padding: 0 var(--ifm-pre-padding);
 }
 body {
-  color: var(--presto-color-gray-950);
+	color: var(--presto-color-gray-950);
 }
 
 /* You can override the default Infima variables here. */
 :root {
-  --ifm-color-primary: var(--presto-color-primary-500);
-  --ifm-color-primary-dark: var(--presto-color-primary-600);
-  --ifm-color-primary-darker: var(--presto-color-primary-700);
-  --ifm-color-primary-darkest: var(--presto-color-primary-800);
-  --ifm-color-primary-light: var(--presto-color-primary-400);
-  --ifm-color-primary-lighter: var(--presto-color-primary-300);
-  --ifm-color-primary-lightest: var(--presto-color-primary-200);
-  --ifm-code-font-size: 95%;
-  --ifm-pre-line-height: 2em;
-  --ifm-color-warning: var(--presto-color-warning-500);
-  --ifm-color-info: var(--presto-color-primary-500);
-  --ifm-code-background: rgba(0, 0, 0, 0.05);
+	--ifm-color-primary: var(--presto-color-primary-500);
+	--ifm-color-primary-dark: var(--presto-color-primary-600);
+	--ifm-color-primary-darker: var(--presto-color-primary-700);
+	--ifm-color-primary-darkest: var(--presto-color-primary-800);
+	--ifm-color-primary-light: var(--presto-color-primary-400);
+	--ifm-color-primary-lighter: var(--presto-color-primary-300);
+	--ifm-color-primary-lightest: var(--presto-color-primary-200);
+	--ifm-code-font-size: 95%;
+	--ifm-pre-line-height: 2em;
+	--ifm-color-warning: var(--presto-color-warning-500);
+	--ifm-color-info: var(--presto-color-primary-500);
+	--ifm-code-background: rgba(0, 0, 0, 0.05);
 }
 
 .markdown {
-  --ifm-h1-vertical-rhythm-top: 4;
-  --ifm-h2-vertical-rhythm-top: 4;
-  --ifm-h3-vertical-rhythm-top: 4;
-  --ifm-heading-vertical-rhythm-top: 1.25;
-  --ifm-h1-vertical-rhythm-bottom: 1.25;
-  --ifm-heading-vertical-rhythm-bottom: 1;
+	--ifm-h1-vertical-rhythm-top: 4;
+	--ifm-h2-vertical-rhythm-top: 4;
+	--ifm-h3-vertical-rhythm-top: 4;
+	--ifm-heading-vertical-rhythm-top: 1.25;
+	--ifm-h1-vertical-rhythm-bottom: 1.25;
+	--ifm-heading-vertical-rhythm-bottom: 1;
 }
 
 .tabs {
-  font-size: 14px;
-  box-shadow: inset 0px -3px 0px var(--ifm-toc-border-color);
+	font-size: 14px;
+	box-shadow: inset 0px -3px 0px var(--ifm-toc-border-color);
 }
 
 article {
-  padding: 5%;
+	padding: 5%;
 }
 
 [hidden] {
-  display: none !important;
+	display: none !important;
 }
 
 .presto-scroll-lock {
-  overflow: hidden !important;
+	overflow: hidden !important;
 }
 
-html[data-theme="dark"] {
-  --ifm-background-color: var(--presto-color-gray-950, --ifm-background-color);
-  --ifm-navbar-background-color: var(
-    --presto-color-gray-900,
-    --ifm-navbar-background-color
-  );
-  --ifm-heading-color: var(--presto-color-white);
+html[data-theme='dark'] {
+	--ifm-background-color: var(
+		--presto-color-gray-950,
+		--ifm-background-color
+	);
+	--ifm-navbar-background-color: var(
+		--presto-color-gray-900,
+		--ifm-navbar-background-color
+	);
+	--ifm-heading-color: var(--presto-color-white);
 }
-html[data-theme="dark"] body {
-  color: var(--presto-color-gray-300);
+html[data-theme='dark'] body {
+	color: var(--presto-color-gray-300);
 }

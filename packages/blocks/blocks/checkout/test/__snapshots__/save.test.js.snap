@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`checkout-engine/checkout-form should render with custom class name 1`] = `
+"<!-- wp:checkout-engine/checkout-form {\\"className\\":\\"my-custom-class\\"} -->
+<div class=\\"wp-block-checkout-engine-checkout-form my-custom-class\\"></div>
+<!-- /wp:checkout-engine/checkout-form -->"
+`;

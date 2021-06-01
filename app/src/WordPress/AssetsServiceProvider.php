@@ -28,11 +28,15 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 	public function bootstrap( $container ) {
 		$this->container = $container;
 
-		add_action( 'wp_enqueue_scripts', [ $this, 'registerComponents' ] );
-		add_action( 'admin_enqueue_scripts', [ $this, 'registerComponents' ] );
+		// add module to components tag.
 		add_filter( 'script_loader_tag', [ $this, 'componentsTag' ], 10, 3 );
 
+		// register component scripts.
+		add_action( 'init', [ $this, 'registerComponents' ] );
+
+		// enqueue assets on front end and editor.
 		add_action( 'enqueue_block_editor_assets', [ $this, 'editorAssets' ] );
+		add_action( 'wp_enqueue_scripts', [ $this, 'frontAssets' ] );
 	}
 
 	/**
@@ -45,7 +49,7 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 	 * @return string
 	 */
 	public function componentsTag( $tag, $handle, $source ) {
-		if ( 'checkout-engine-components' === $handle ) {
+		if ( 'checkout-engine/components' === $handle ) {
 			// phpcs:ignore
 			$tag = '<script src="' . $source . '" type="module" defer></script>';
 		}
@@ -59,21 +63,55 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function registerComponents() {
-		wp_register_script(
-			'checkout-engine-components',
-			trailingslashit( \CheckoutEngine::core()->assets()->getUrl() ) . 'dist/dist/components/presto-components/presto-components.esm.js',
+		$this->registerComponentScripts();
+		$this->registerDefaultTheme();
+	}
+
+	/**
+	 * Register the default theme
+	 *
+	 * @return void
+	 */
+	public function registerDefaultTheme() {
+		wp_register_style(
+			'checkout-engine/themes/default',
+			trailingslashit( \CheckoutEngine::core()->assets()->getUrl() ) . 'dist/components/checkout-engine/checkout-engine.css',
 			[],
-			filemtime( trailingslashit( $this->container[ WPEMERGE_CONFIG_KEY ]['app_core']['path'] ) . 'dist/dist/components/presto-components/presto-components.esm.js' ),
+			filemtime( trailingslashit( $this->container[ WPEMERGE_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/checkout-engine/checkout-engine.css' ),
+		);
+	}
+
+	/**
+	 * Register the component scripts
+	 *
+	 * @return void
+	 */
+	public function registerComponentScripts() {
+		wp_register_script(
+			'checkout-engine/components',
+			trailingslashit( \CheckoutEngine::core()->assets()->getUrl() ) . 'dist/components/checkout-engine/checkout-engine.esm.js',
+			[],
+			filemtime( trailingslashit( $this->container[ WPEMERGE_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/checkout-engine/checkout-engine.esm.js' ),
 			true
 		);
+	}
 
-		// Register styles.
-		wp_register_style(
-			'checkout-engine-default-theme',
-			trailingslashit( \CheckoutEngine::core()->assets()->getUrl() ) . 'dist/styles/gutenberg.css',
-			[],
-			filemtime( trailingslashit( $this->container[ WPEMERGE_CONFIG_KEY ]['app_core']['path'] ) . 'dist/styles/gutenberg.css' ),
-		);
+	/**
+	 * Enqueue default theme
+	 *
+	 * @return void
+	 */
+	public function enqueueDefaultTheme() {
+		 wp_enqueue_style( 'checkout-engine/themes/default' );
+	}
+
+	/**
+	 * Enqueue components
+	 *
+	 * @return void
+	 */
+	public function enqueueComponents() {
+		wp_enqueue_script( 'checkout-engine/components' );
 	}
 
 	/**
@@ -85,15 +123,25 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 		$asset_file = include trailingslashit( $this->container[ WPEMERGE_CONFIG_KEY ]['app_core']['path'] ) . 'dist/blocks/blocks.asset.php';
 
 		\CheckoutEngine::core()->assets()->enqueueScript(
-			'checkout-engine-blocks',
+			'checkout-engine/blocks',
 			trailingslashit( \CheckoutEngine::core()->assets()->getUrl() ) . 'dist/blocks/blocks.js',
-			array_merge( [ 'checkout-engine-components' ], $asset_file['dependencies'] ),
+			array_merge( [ 'checkout-engine/components' ], $asset_file['dependencies'] ),
 			$asset_file['version']
 		);
 
-		\CheckoutEngine::core()->assets()->enqueueStyle(
-			'checkout-engine-editor',
-			trailingslashit( \CheckoutEngine::core()->assets()->getUrl() ) . 'dist/styles/gutenberg.css'
-		);
+		wp_enqueue_style( 'checkout-engine/themes/default' );
+
+		$this->enqueueDefaultTheme();
+	}
+
+	/**
+	 * Output front-end assets
+	 *
+	 * @return void
+	 */
+	public function frontAssets() {
+		// TODO: only enqueue when block renders.
+		$this->enqueueComponents();
+		$this->enqueueDefaultTheme();
 	}
 }

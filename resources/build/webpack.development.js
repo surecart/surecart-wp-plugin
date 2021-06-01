@@ -78,8 +78,13 @@ const plugins = [
 	new CopyPlugin( {
 		patterns: [
 			{
-				from: './packages/components/dist/',
-				to: './dist/components/',
+				from: './packages/components/dist',
+				to: './components/',
+				toType: 'dir',
+			},
+			{
+				from: './packages/blocks/dist',
+				to: './blocks/',
 				toType: 'dir',
 			},
 		],

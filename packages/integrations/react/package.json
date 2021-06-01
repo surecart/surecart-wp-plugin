@@ -1,9 +1,9 @@
 {
-	"name": "@presto-pay/react",
+	"name": "@checkout-engine/react",
 	"sideEffects": false,
 	"version": "0.0.1",
 	"private": true,
-	"description": "React specific wrapper for presto-pay/components",
+	"description": "React specific wrapper for checkout-engine/components",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/ionic-team/ionic.git"
@@ -15,7 +15,7 @@
 		"tsc": "tsc -p .",
 		"rollup": "rollup -c"
 	},
-	"main": "./dist/index.cjs.js",
+	"main": "./dist/index.js",
 	"module": "./dist/index.es.js",
 	"types": "./dist/index.d.ts",
 	"files": [
@@ -34,7 +34,7 @@
 		"typescript": "^3.3.4000"
 	},
 	"dependencies": {
-		"@presto-pay/components": "^0.0.1"
+		"@checkout-engine/components": "file:../../components"
 	},
 	"peerDependencies": {
 		"react": "^16.7.0",

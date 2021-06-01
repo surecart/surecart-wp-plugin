@@ -1,6 +1,5 @@
 {
-	"packages": [ ".", "app/src/Blocks/*", "packages/*" ],
+	"packages": [ ".", "packages/**/*" ],
 	"version": "independent",
-	"useWorkspaces": true,
 	"npmClient": "yarn"
 }

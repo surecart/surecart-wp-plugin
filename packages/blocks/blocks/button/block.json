@@ -1,0 +1,26 @@
+{
+	"name": "checkout-engine/button",
+	"category": "layout",
+	"attributes": {
+		"text": {
+			"type": "string",
+			"default": "Purchase"
+		},
+		"type": {
+			"type": "string",
+			"default": "primary"
+		},
+		"submit": {
+			"type": "boolean",
+			"default": true
+		},
+		"size": {
+			"type": "string",
+			"default": "large"
+		},
+		"full": {
+			"type": "boolean",
+			"default": true
+		}
+	}
+}
