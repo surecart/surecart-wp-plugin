@@ -2,7 +2,6 @@
  * Internal dependencies
  */
 import edit from './edit';
-import save from './save';
 import metadata from './block.json';
 
 /**
@@ -14,17 +13,14 @@ import { button as icon } from '@wordpress/icons';
 /**
  * Block constants
  */
-const { name, category, attributes, supports } = metadata;
+const { name, category, attributes } = metadata;
 
 const settings = {
 	/* translators: block name */
-	title: __( 'Button', 'checkout_engine' ),
+	title: __( 'Email', 'checkout_engine' ),
 	/* translators: block description */
-	description: __( 'Display a checkout form button', 'checkout_engine' ),
+	description: __( 'Display a checkout form input', 'checkout_engine' ),
 	parent: [ 'checkout-engine/checkout-form' ],
-	supports: {
-		reusable: false,
-	},
 	icon,
 	keywords: [
 		'checkout',
@@ -36,7 +32,6 @@ const settings = {
 	],
 	attributes,
 	edit,
-	save,
 };
 
 export { name, category, metadata, settings };

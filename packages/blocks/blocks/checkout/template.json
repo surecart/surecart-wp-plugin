@@ -2,20 +2,11 @@
 	"allowed": [ "checkout-engine/button" ],
 	"template": [
 		[
-			"checkout-engine/button",
+			"checkout-engine/email",
 			{
-				"submit": true,
-				"text": "Purchase",
-				"type": "primary"
+				"label": "Email Address"
 			}
 		],
-		[
-			"checkout-engine/button",
-			{
-				"submit": true,
-				"text": "Purchase",
-				"type": "primary"
-			}
-		]
+		[ "checkout-engine/submit" ]
 	]
 }

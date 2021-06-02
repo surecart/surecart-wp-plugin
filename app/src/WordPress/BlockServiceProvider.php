@@ -23,8 +23,8 @@ class BlockServiceProvider implements ServiceProviderInterface {
 	 * @var array
 	 */
 	protected $blocks = [
-		\CheckoutEngine\Blocks\Checkout\CheckoutBlock::class,
-		\CheckoutEngine\Blocks\Button\ButtonBlock::class,
+		\CheckoutEngine\Blocks\CheckoutForm::class,
+		\CheckoutEngine\Blocks\Submit::class,
 	];
 
 	/**

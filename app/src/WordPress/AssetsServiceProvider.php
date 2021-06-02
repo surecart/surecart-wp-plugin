@@ -17,6 +17,8 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @param  \Pimple\Container $container Service Container.
 	 */
 	public function register( $container ) {
 		// Nothing to register.
@@ -24,6 +26,8 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @param  \Pimple\Container $container Service Container.
 	 */
 	public function bootstrap( $container ) {
 		$this->container = $container;
@@ -49,12 +53,12 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 	 * @return string
 	 */
 	public function componentsTag( $tag, $handle, $source ) {
-		if ( 'checkout-engine/components' === $handle ) {
-			// phpcs:ignore
-			$tag = '<script src="' . $source . '" type="module" defer></script>';
+		if ( 'checkout-engine/components' !== $handle ) {
+			return $tag;
 		}
 
-		return $tag;
+		// phpcs:ignore
+		return '<script src="' . $source . '" type="module" defer></script>';
 	}
 
 	/**
@@ -128,8 +132,6 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 			array_merge( [ 'checkout-engine/components' ], $asset_file['dependencies'] ),
 			$asset_file['version']
 		);
-
-		wp_enqueue_style( 'checkout-engine/themes/default' );
 
 		$this->enqueueDefaultTheme();
 	}
