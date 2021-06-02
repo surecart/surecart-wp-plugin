@@ -9,11 +9,9 @@ describe('presto-checkout', () => {
     });
     expect(page.root).toEqualHtml(`
       <presto-checkout>
-        <stencil-provider>
-          <div class="presto-checkout-container">
-            test
-          </div>
-        </stencil-provider>
+        <div class="presto-checkout-container">
+          test
+        </div>
       </presto-checkout>
     `);
   });

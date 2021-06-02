@@ -14,9 +14,6 @@ export class PrestoOrderSummary {
   render() {
     return (
       <Host>
-        {({ products }) => {
-          return JSON.stringify(products);
-        }}
         <slot></slot>
       </Host>
     );

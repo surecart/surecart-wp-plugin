@@ -10,7 +10,6 @@ describe('presto-order-summary', () => {
     expect(page.root).toEqualHtml(`
       <presto-order-summary>
         <mock:shadow-root>
-          <stencil-consumer></stencil-consumer>
           <slot></slot>
         </mock:shadow-root>
       </presto-order-summary>

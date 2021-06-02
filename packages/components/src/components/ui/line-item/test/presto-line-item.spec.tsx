@@ -10,7 +10,18 @@ describe('presto-line-item', () => {
     expect(page.root).toEqualHtml(`
       <presto-line-item>
         <mock:shadow-root>
-          <slot></slot>
+          <div class="item" part="base">
+            <div class="item__title" part="title">
+              <slot></slot>
+            </div>
+            <div class="item__price" part="price">
+              <slot name="price">
+                <div class="item__price-layout">
+                  <span class="item_currency"></span>
+                </div>
+              </slot>
+            </div>
+          </div>
         </mock:shadow-root>
       </presto-line-item>
     `);
