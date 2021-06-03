@@ -1,13 +1,13 @@
 import { Component, Element, Prop, Event, EventEmitter, Watch, State, h } from '@stencil/core';
-import { PrestoMenu } from '../menu/presto-menu';
+import { CEMenu } from '../menu/ce-menu';
 import { clickOutside } from '../../../functions/click';
 
 @Component({
-  tag: 'presto-dropdown',
+  tag: 'ce-dropdown',
   styleUrl: 'dropdown.scss',
   shadow: true,
 })
-export class PrestoDropdown {
+export class CEDropdown {
   @Element() el: HTMLDivElement;
   private panel?: HTMLElement;
 
@@ -23,10 +23,10 @@ export class PrestoDropdown {
   @Prop({ attribute: 'close-on-select', reflect: true }) closeOnSelect: boolean = true;
 
   /** Emitted when the dropdown opens. Calling `event.preventDefault()` will prevent it from being opened. */
-  @Event() prestoShow: EventEmitter<void>;
+  @Event() ceShow: EventEmitter<void>;
 
   /** Emitted when the dropdown closes. Calling `event.preventDefault()` will prevent it from being closed. */
-  @Event() prestoHide: EventEmitter<void>;
+  @Event() ceHide: EventEmitter<void>;
 
   /* Internal visible state */
   @State() isVisible: boolean;
@@ -45,7 +45,7 @@ export class PrestoDropdown {
     this.isVisible = true;
     this.open = true;
     this.panel.focus();
-    this.prestoShow.emit();
+    this.ceShow.emit();
   }
 
   hide() {
@@ -56,7 +56,7 @@ export class PrestoDropdown {
 
     this.isVisible = false;
     this.open = false;
-    this.prestoHide.emit();
+    this.ceHide.emit();
   }
 
   handleClick() {
@@ -68,9 +68,9 @@ export class PrestoDropdown {
   /* Get the slotted menu */
   getMenu() {
     let slotted = this.el.shadowRoot.querySelector('slot') as HTMLSlotElement;
-    return (slotted.assignedNodes().find(node => {
-      return node.nodeName === 'presto-menu';
-    }) as unknown) as PrestoMenu;
+    return slotted.assignedNodes().find(node => {
+      return node.nodeName === 'ce-menu';
+    }) as unknown as CEMenu;
   }
 
   componentDidLoad() {

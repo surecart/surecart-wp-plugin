@@ -24,7 +24,6 @@ class BlockServiceProvider implements ServiceProviderInterface {
 	 */
 	protected $blocks = [
 		\CheckoutEngine\Blocks\CheckoutForm::class,
-		\CheckoutEngine\Blocks\Submit::class,
 	];
 
 	/**

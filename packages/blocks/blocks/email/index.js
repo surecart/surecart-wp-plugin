@@ -2,6 +2,7 @@
  * Internal dependencies
  */
 import edit from './edit';
+import save from './save';
 import metadata from './block.json';
 
 /**
@@ -20,7 +21,7 @@ const settings = {
 	title: __( 'Email', 'checkout_engine' ),
 	/* translators: block description */
 	description: __( 'Display a checkout form input', 'checkout_engine' ),
-	parent: [ 'checkout-engine/checkout-form' ],
+	parent: [ 'checkout-engine/form-row' ],
 	icon,
 	keywords: [
 		'checkout',
@@ -32,6 +33,7 @@ const settings = {
 	],
 	attributes,
 	edit,
+	save,
 };
 
 export { name, category, metadata, settings };

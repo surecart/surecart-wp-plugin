@@ -1,0 +1,12 @@
+ce-checkout {
+  display: block;
+  font-family: var(--ce-font-sans);
+
+  h3 {
+    font-size: var(--ce-input-label-font-size-medium);
+  }
+}
+
+::slotted(*) {
+  font-family: var(--ce-font-sans);
+}

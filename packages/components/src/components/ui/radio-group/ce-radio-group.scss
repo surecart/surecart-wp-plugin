@@ -1,0 +1,36 @@
+@use '../../../styles/mixins/hide';
+
+:host {
+  display: block;
+}
+
+.radio-group {
+  border: solid var(--ce-input-border-width) var(--ce-input-border-color);
+  border-radius: var(--ce-border-radius-medium);
+  padding: var(--ce-spacing-large);
+  padding-top: var(--ce-spacing-x-small);
+
+  .radio-group__label {
+    font-family: var(--ce-input-font-family);
+    font-size: var(--ce-input-font-size-medium);
+    font-weight: var(--ce-input-font-weight);
+    color: var(--ce-input-color);
+    padding: 0 var(--ce-spacing-xx-small);
+  }
+}
+
+::slotted(ce-radio:not(:last-of-type)) {
+  display: block;
+  margin-bottom: var(--ce-spacing-xx-small);
+}
+
+.radio-group--no-fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+
+  .radio-group__label {
+    @include hide.visually-hidden;
+  }
+}

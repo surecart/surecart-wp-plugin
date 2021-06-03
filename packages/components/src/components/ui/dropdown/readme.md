@@ -1,9 +1,6 @@
-# presto-dropdown
-
-
+# ce-dropdown
 
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -13,14 +10,12 @@
 | `open`          | `open`            | Indicates whether or not the dropdown is open. You can use this in lieu of the show/hide methods. | `boolean`                                                      | `false`     |
 | `position`      | `position`        | The placement of the dropdown panel                                                               | `"bottom-left" \| "bottom-right" \| "top-left" \| "top-right"` | `undefined` |
 
-
 ## Events
 
-| Event        | Description                                                                                           | Type                |
-| ------------ | ----------------------------------------------------------------------------------------------------- | ------------------- |
-| `prestoHide` | Emitted when the dropdown closes. Calling `event.preventDefault()` will prevent it from being closed. | `CustomEvent<void>` |
-| `prestoShow` | Emitted when the dropdown opens. Calling `event.preventDefault()` will prevent it from being opened.  | `CustomEvent<void>` |
-
+| Event    | Description                                                                                           | Type                |
+| -------- | ----------------------------------------------------------------------------------------------------- | ------------------- |
+| `ceHide` | Emitted when the dropdown closes. Calling `event.preventDefault()` will prevent it from being closed. | `CustomEvent<void>` |
+| `ceShow` | Emitted when the dropdown opens. Calling `event.preventDefault()` will prevent it from being opened.  | `CustomEvent<void>` |
 
 ## Shadow Parts
 
@@ -29,7 +24,6 @@
 | `"panel"`   |             |
 | `"trigger"` |             |
 
+---
 
-----------------------------------------------
-
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

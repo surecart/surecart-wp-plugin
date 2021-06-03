@@ -1,4 +1,4 @@
-# presto-select
+# ce-select
 
 
 
@@ -26,12 +26,12 @@
 
 ## Events
 
-| Event          | Description                                 | Type                |
-| -------------- | ------------------------------------------- | ------------------- |
-| `prestoBlur`   | Emitted when the control loses focus.       | `CustomEvent<void>` |
-| `prestoChange` | Emitted when the control's value changes.   | `CustomEvent<void>` |
-| `prestoClear`  | Emitted when the clear button is activated. | `CustomEvent<void>` |
-| `prestoFocus`  | Emitted when the control gains focus.       | `CustomEvent<void>` |
+| Event      | Description                                 | Type                |
+| ---------- | ------------------------------------------- | ------------------- |
+| `ceBlur`   | Emitted when the control loses focus.       | `CustomEvent<void>` |
+| `ceChange` | Emitted when the control's value changes.   | `CustomEvent<void>` |
+| `ceClear`  | Emitted when the clear button is activated. | `CustomEvent<void>` |
+| `ceFocus`  | Emitted when the control gains focus.       | `CustomEvent<void>` |
 
 
 ## Shadow Parts
@@ -46,17 +46,17 @@
 
 ### Depends on
 
-- [presto-form-control](../form-control)
-- [presto-dropdown](../dropdown)
-- [presto-menu](../menu)
+- [ce-form-control](../form-control)
+- [ce-dropdown](../dropdown)
+- [ce-menu](../menu)
 
 ### Graph
 ```mermaid
 graph TD;
-  presto-select --> presto-form-control
-  presto-select --> presto-dropdown
-  presto-select --> presto-menu
-  style presto-select fill:#f9f,stroke:#333,stroke-width:4px
+  ce-select --> ce-form-control
+  ce-select --> ce-dropdown
+  ce-select --> ce-menu
+  style ce-select fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

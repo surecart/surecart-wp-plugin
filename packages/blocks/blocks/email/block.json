@@ -22,7 +22,8 @@
 			"default": "large"
 		},
 		"label": {
-			"type": "string"
+			"type": "string",
+			"default": "Email Address"
 		},
 		"help": {
 			"type": "string"

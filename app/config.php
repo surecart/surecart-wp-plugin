@@ -27,7 +27,6 @@ return [
 		\CheckoutEngine\WordPress\ShortcodesServiceProvider::class,
 		\CheckoutEngine\WordPress\PluginServiceProvider::class,
 		\CheckoutEngine\WordPress\WidgetsServiceProvider::class,
-		\WPEmergeBlade\View\ServiceProvider::class,
 	],
 
 	/**

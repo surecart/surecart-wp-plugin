@@ -1,0 +1,37 @@
+:host {
+  display: block;
+  --spacing: 0;
+}
+
+.divider {
+  position: relative;
+  margin: var(--spacing) 0;
+}
+
+.line__container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+}
+
+.line {
+  width: 100%;
+  border-top: 1px solid var(--ce-color-gray-200);
+}
+
+.text__container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  font-size: var(--ce-font-size-small);
+}
+
+.text {
+  padding: 0 var(--ce-spacing-small);
+  background: var(--ce-color-white);
+  color: var(--ce-color-gray-500);
+}

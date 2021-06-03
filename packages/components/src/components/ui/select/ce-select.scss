@@ -1,0 +1,280 @@
+// A transition-friendly alternative to `display: none` for hiding content
+@mixin hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  overflow: hidden;
+  pointer-events: none;
+  visibility: hidden; // prevent tab stops and screen reader discovery
+}
+
+// Hides content visually while still making it available to screen readers
+@mixin visually-hidden {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+// Hides the scrollbar
+@mixin hide-scrollbar() {
+  scrollbar-width: none; // Firefox
+  -ms-overflow-style: none; // IE 10+
+
+  // WebKit
+  &::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
+}
+
+:host {
+  --focus-ring: 0 0 0 var(--ce-focus-ring-width) var(--ce-focus-ring-color-primary);
+
+  display: block;
+}
+
+// full width here
+ce-dropdown::part(panel) {
+  width: 100%;
+}
+
+.select {
+  display: block;
+}
+
+.select__box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: start;
+  position: relative;
+  width: 100%;
+  font-family: var(--ce-input-font-family);
+  font-weight: var(--ce-input-font-weight);
+  letter-spacing: var(--ce-input-letter-spacing);
+  background-color: var(--ce-input-background-color);
+  border: solid var(--ce-input-border-width) var(--ce-input-border-color);
+  vertical-align: middle;
+  overflow: hidden;
+  transition: var(--ce-transition-fast) color, var(--ce-transition-fast) border, var(--ce-transition-fast) box-shadow;
+  cursor: pointer;
+}
+
+.select:not(.select--disabled) .select__box:hover {
+  background-color: var(--ce-input-background-color-hover);
+  border-color: var(--ce-input-border-color-hover);
+  color: var(--ce-input-color-hover);
+}
+
+.select:not(.select--disabled) .select__box:focus {
+  background-color: var(--ce-input-background-color-focus);
+  border-color: var(--ce-input-border-color-focus);
+  box-shadow: var(--focus-ring);
+  outline: none;
+  color: var(--ce-input-color-focus);
+}
+
+.select--disabled {
+  .select__box {
+    background-color: var(--ce-input-background-color-disabled);
+    border-color: var(--ce-input-border-color-disabled);
+    color: var(--ce-input-color-disabled);
+    opacity: 0.5;
+    cursor: not-allowed;
+    outline: none;
+  }
+
+  .select__tags,
+  .select__clear {
+    pointer-events: none;
+  }
+}
+
+.select__label {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  user-select: none;
+
+  @include hide-scrollbar;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+}
+
+.select__clear {
+  flex: 0 0 auto;
+}
+
+.select__icon {
+  flex: 0 0 auto;
+  display: inline-flex;
+  transition: var(--ce-transition-medium) transform ease;
+}
+
+.select--open .select__icon {
+  transform: rotate(-180deg);
+}
+
+// Placeholder
+.select--placeholder-visible .select__label {
+  color: var(--ce-input-placeholder-color);
+}
+
+.select--disabled.select--placeholder-visible .select__label {
+  color: var(--ce-input-placeholder-color-disabled);
+}
+
+// Tags
+.select__tags {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: left;
+  margin-left: var(--ce-spacing-xx-small);
+}
+
+// Hidden input (for form control validation to show)
+.select__hidden-select {
+  @include visually-hidden();
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Size modifiers
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+.select--small {
+  .select__box {
+    border-radius: var(--ce-input-border-radius-small);
+    font-size: var(--ce-input-font-size-small);
+    min-height: var(--ce-input-height-small);
+  }
+
+  .select__label {
+    margin: 0 var(--ce-input-spacing-small);
+  }
+
+  .select__clear {
+    margin-right: var(--ce-input-spacing-small);
+  }
+
+  .select__icon {
+    margin-right: var(--ce-input-spacing-small);
+  }
+
+  .select__tags {
+    padding-bottom: 2px;
+
+    sl-tag {
+      padding-top: 2px;
+    }
+
+    sl-tag:not(:last-of-type) {
+      margin-right: var(--ce-spacing-xx-small);
+    }
+  }
+
+  &.select--has-tags .select__label {
+    margin-left: 0;
+  }
+}
+
+.select--medium {
+  .select__box {
+    border-radius: var(--ce-input-border-radius-medium);
+    font-size: var(--ce-input-font-size-medium);
+    min-height: var(--ce-input-height-medium);
+  }
+
+  .select__label {
+    margin: 0 var(--ce-input-spacing-medium);
+  }
+
+  .select__clear {
+    margin-right: var(--ce-input-spacing-medium);
+  }
+
+  .select__icon {
+    margin-right: var(--ce-input-spacing-medium);
+  }
+
+  .select__tags {
+    padding-bottom: 3px;
+
+    sl-tag {
+      padding-top: 3px;
+    }
+
+    sl-tag:not(:last-of-type) {
+      margin-right: var(--ce-spacing-xx-small);
+    }
+  }
+
+  &.select--has-tags .select__label {
+    margin-left: 0;
+  }
+}
+
+.select--large {
+  .select__box {
+    border-radius: var(--ce-input-border-radius-large);
+    font-size: var(--ce-input-font-size-large);
+    min-height: var(--ce-input-height-large);
+  }
+
+  .select__label {
+    margin: 0 var(--ce-input-spacing-large);
+  }
+
+  .select__clear {
+    margin-right: var(--ce-input-spacing-large);
+  }
+
+  .select__icon {
+    margin-right: var(--ce-input-spacing-large);
+  }
+
+  .select__tags {
+    padding-bottom: 4px;
+
+    sl-tag {
+      padding-top: 4px;
+    }
+
+    sl-tag:not(:last-of-type) {
+      margin-right: var(--ce-spacing-xx-small);
+    }
+  }
+
+  &.select--has-tags .select__label {
+    margin-left: 0;
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Pill modifier
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+.select--pill {
+  &.select--small .select__box {
+    border-radius: var(--ce-input-height-small);
+  }
+
+  &.select--medium .select__box {
+    border-radius: var(--ce-input-height-medium);
+  }
+
+  &.select--large .select__box {
+    border-radius: var(--ce-input-height-large);
+  }
+}

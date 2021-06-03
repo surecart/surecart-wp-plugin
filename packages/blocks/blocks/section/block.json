@@ -1,0 +1,14 @@
+{
+	"name": "checkout-engine/form-section",
+	"category": "layout",
+	"attributes": {
+		"label": {
+			"type": "string",
+			"default": ""
+		},
+		"description": {
+			"type": "string",
+			"default": ""
+		}
+	}
+}

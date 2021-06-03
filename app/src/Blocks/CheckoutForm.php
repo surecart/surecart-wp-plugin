@@ -19,9 +19,16 @@ class CheckoutForm extends Block {
 	 * @param array  $attributes Block attributes.
 	 * @param string $content Post content.
 	 *
-	 * @return void
+	 * @return string
 	 */
 	public function render( $attributes, $content ) {
-		return $content;
+		ob_start();
+		\CheckoutEngine::render(
+			'checkout-block',
+			[
+				'blocks' => $content,
+			]
+		);
+		return ob_get_clean();
 	}
 }

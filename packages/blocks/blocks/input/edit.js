@@ -7,12 +7,12 @@ import { RichText } from '@wordpress/block-editor';
 /**
  * Component Dependencies
  */
-import { PrestoInput } from '@checkout-engine/react';
+import { CeInput } from '@checkout-engine/react';
 
 export default ( { className } ) => {
 	return (
 		<div className={ className }>
-			<PrestoInput></PrestoInput>
+			<CeInput></CeInput>
 		</div>
 	);
 };

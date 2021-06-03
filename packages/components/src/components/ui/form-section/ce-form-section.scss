@@ -1,0 +1,32 @@
+:host {
+  display: block;
+  margin-bottom: var(--ce-form-section-spacing);
+}
+
+::slotted(ce-form-row:not(:last-of-type)) {
+  margin-bottom: var(--ce-form-row-spacing, 0.75em);
+}
+
+.section___title,
+h3.section__title {
+  font-size: var(--ce-form-section-font-size);
+  font-weight: var(--ce-form-section-font-weight);
+  margin: 0;
+}
+
+.section__description {
+  color: var(--ce-color-gray-500);
+  line-height: 1em;
+  margin: 0.75em 0;
+  font-size: var(--ce-font-size-small);
+}
+
+slot[name='description']::slotted(*) {
+  margin: 0.75em 0;
+  line-height: 1em;
+  vertical-align: center;
+}
+
+.section__label {
+  margin-bottom: var(--ce-form-section-title-spacing);
+}

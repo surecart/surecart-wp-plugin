@@ -21,7 +21,7 @@ const settings = {
 	title: __( 'Button', 'checkout_engine' ),
 	/* translators: block description */
 	description: __( 'Display a checkout form button', 'checkout_engine' ),
-	parent: [ 'checkout-engine/checkout-form' ],
+	parent: [ 'checkout-engine/form-row' ],
 	supports: {
 		reusable: false,
 	},

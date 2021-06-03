@@ -6,7 +6,7 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
-    interface PrestoButton {
+    interface CeButton {
         /**
           * Draws the button with a caret for use with dropdowns, popovers, etc.
          */
@@ -64,7 +64,7 @@ export namespace Components {
          */
         "value": string;
     }
-    interface PrestoCheckbox {
+    interface CeCheckbox {
         /**
           * Draws the checkbox in a checked state.
          */
@@ -110,10 +110,10 @@ export namespace Components {
          */
         "value": string;
     }
-    interface PrestoCheckout {
+    interface CeCheckout {
         "productIds": Array<any>;
     }
-    interface PrestoChoice {
+    interface CeChoice {
         /**
           * Draws the choice in a checked state.
          */
@@ -155,7 +155,7 @@ export namespace Components {
          */
         "value": string;
     }
-    interface PrestoChoices {
+    interface CeChoices {
         /**
           * Hides the fieldset and legend that surrounds the group. The label will still be read by screen readers.
          */
@@ -165,9 +165,9 @@ export namespace Components {
          */
         "label": string;
     }
-    interface PrestoDivider {
+    interface CeDivider {
     }
-    interface PrestoDropdown {
+    interface CeDropdown {
         "clickEl"?: HTMLElement;
         /**
           * Determines whether the dropdown should hide when a menu item is selected
@@ -182,7 +182,7 @@ export namespace Components {
          */
         "position": 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
     }
-    interface PrestoForm {
+    interface CeForm {
         /**
           * Serializes all form controls elements and returns a `FormData` object.
          */
@@ -193,11 +193,11 @@ export namespace Components {
          */
         "novalidate": boolean;
         /**
-          * Submits the form. If all controls are valid, the `presto-submit` event will be emitted and the promise will resolve with `true`. If any form control is invalid, the promise will resolve with `false` and no event will be emitted.
+          * Submits the form. If all controls are valid, the `ce-submit` event will be emitted and the promise will resolve with `true`. If any form control is invalid, the promise will resolve with `false` and no event will be emitted.
          */
         "submit": () => Promise<boolean>;
     }
-    interface PrestoFormControl {
+    interface CeFormControl {
         "help": string;
         "helpId": string;
         "inputId": string;
@@ -206,12 +206,12 @@ export namespace Components {
         "showLabel": boolean;
         "size": 'small' | 'medium' | 'large';
     }
-    interface PrestoFormRow {
+    interface CeFormRow {
     }
-    interface PrestoFormSection {
+    interface CeFormSection {
         "label": string;
     }
-    interface PrestoInput {
+    interface CeInput {
         /**
           * The input's autocomplete attribute.
          */
@@ -330,7 +330,7 @@ export namespace Components {
          */
         "value": string;
     }
-    interface PrestoLineItem {
+    interface CeLineItem {
         /**
           * Currency symbol
          */
@@ -340,11 +340,11 @@ export namespace Components {
          */
         "price": string;
     }
-    interface PrestoMenu {
+    interface CeMenu {
     }
-    interface PrestoMenuDivider {
+    interface CeMenuDivider {
     }
-    interface PrestoMenuItem {
+    interface CeMenuItem {
         /**
           * Draws the item in a checked state.
          */
@@ -366,9 +366,13 @@ export namespace Components {
          */
         "value": string;
     }
-    interface PrestoOrderSummary {
+    interface CeOrderSummary {
     }
-    interface PrestoRadio {
+    interface CeRadio {
+        /**
+          * Simulates a click on the radio.
+         */
+        "ceClick": () => Promise<void>;
         /**
           * Draws the radio in a checked state.
          */
@@ -386,10 +390,6 @@ export namespace Components {
          */
         "name": string;
         /**
-          * Simulates a click on the radio.
-         */
-        "prestoClick": () => Promise<void>;
-        /**
           * Checks for validity and shows the browser's validation message if the control is invalid.
          */
         "reportValidity": () => Promise<boolean>;
@@ -402,7 +402,7 @@ export namespace Components {
          */
         "value": string;
     }
-    interface PrestoRadioGroup {
+    interface CeRadioGroup {
         /**
           * The radio group label. Required for proper accessibility.
          */
@@ -412,9 +412,9 @@ export namespace Components {
          */
         "noFieldset": boolean;
     }
-    interface PrestoSecureNotice {
+    interface CeSecureNotice {
     }
-    interface PrestoSelect {
+    interface CeSelect {
         /**
           * Adds a clear button when the select is populated.
          */
@@ -468,15 +468,15 @@ export namespace Components {
          */
         "value": string | Array<string>;
     }
-    interface PrestoSkeleton {
+    interface CeSkeleton {
         /**
           * Animation effect
          */
         "effect": 'pulse' | 'sheen' | 'none';
     }
-    interface PrestoSpinner {
+    interface CeSpinner {
     }
-    interface PrestoStripeElement {
+    interface CeStripeElement {
         /**
           * Inputs focus
          */
@@ -502,7 +502,7 @@ export namespace Components {
          */
         "size": 'small' | 'medium' | 'large';
     }
-    interface PrestoStripePaymentRequest {
+    interface CeStripePaymentRequest {
         /**
           * Amount
          */
@@ -528,7 +528,7 @@ export namespace Components {
          */
         "theme": string;
     }
-    interface PrestoSwitch {
+    interface CeSwitch {
         /**
           * Draws the switch in a checked state.
          */
@@ -560,193 +560,193 @@ export namespace Components {
     }
 }
 declare global {
-    interface HTMLPrestoButtonElement extends Components.PrestoButton, HTMLStencilElement {
+    interface HTMLCeButtonElement extends Components.CeButton, HTMLStencilElement {
     }
-    var HTMLPrestoButtonElement: {
-        prototype: HTMLPrestoButtonElement;
-        new (): HTMLPrestoButtonElement;
+    var HTMLCeButtonElement: {
+        prototype: HTMLCeButtonElement;
+        new (): HTMLCeButtonElement;
     };
-    interface HTMLPrestoCheckboxElement extends Components.PrestoCheckbox, HTMLStencilElement {
+    interface HTMLCeCheckboxElement extends Components.CeCheckbox, HTMLStencilElement {
     }
-    var HTMLPrestoCheckboxElement: {
-        prototype: HTMLPrestoCheckboxElement;
-        new (): HTMLPrestoCheckboxElement;
+    var HTMLCeCheckboxElement: {
+        prototype: HTMLCeCheckboxElement;
+        new (): HTMLCeCheckboxElement;
     };
-    interface HTMLPrestoCheckoutElement extends Components.PrestoCheckout, HTMLStencilElement {
+    interface HTMLCeCheckoutElement extends Components.CeCheckout, HTMLStencilElement {
     }
-    var HTMLPrestoCheckoutElement: {
-        prototype: HTMLPrestoCheckoutElement;
-        new (): HTMLPrestoCheckoutElement;
+    var HTMLCeCheckoutElement: {
+        prototype: HTMLCeCheckoutElement;
+        new (): HTMLCeCheckoutElement;
     };
-    interface HTMLPrestoChoiceElement extends Components.PrestoChoice, HTMLStencilElement {
+    interface HTMLCeChoiceElement extends Components.CeChoice, HTMLStencilElement {
     }
-    var HTMLPrestoChoiceElement: {
-        prototype: HTMLPrestoChoiceElement;
-        new (): HTMLPrestoChoiceElement;
+    var HTMLCeChoiceElement: {
+        prototype: HTMLCeChoiceElement;
+        new (): HTMLCeChoiceElement;
     };
-    interface HTMLPrestoChoicesElement extends Components.PrestoChoices, HTMLStencilElement {
+    interface HTMLCeChoicesElement extends Components.CeChoices, HTMLStencilElement {
     }
-    var HTMLPrestoChoicesElement: {
-        prototype: HTMLPrestoChoicesElement;
-        new (): HTMLPrestoChoicesElement;
+    var HTMLCeChoicesElement: {
+        prototype: HTMLCeChoicesElement;
+        new (): HTMLCeChoicesElement;
     };
-    interface HTMLPrestoDividerElement extends Components.PrestoDivider, HTMLStencilElement {
+    interface HTMLCeDividerElement extends Components.CeDivider, HTMLStencilElement {
     }
-    var HTMLPrestoDividerElement: {
-        prototype: HTMLPrestoDividerElement;
-        new (): HTMLPrestoDividerElement;
+    var HTMLCeDividerElement: {
+        prototype: HTMLCeDividerElement;
+        new (): HTMLCeDividerElement;
     };
-    interface HTMLPrestoDropdownElement extends Components.PrestoDropdown, HTMLStencilElement {
+    interface HTMLCeDropdownElement extends Components.CeDropdown, HTMLStencilElement {
     }
-    var HTMLPrestoDropdownElement: {
-        prototype: HTMLPrestoDropdownElement;
-        new (): HTMLPrestoDropdownElement;
+    var HTMLCeDropdownElement: {
+        prototype: HTMLCeDropdownElement;
+        new (): HTMLCeDropdownElement;
     };
-    interface HTMLPrestoFormElement extends Components.PrestoForm, HTMLStencilElement {
+    interface HTMLCeFormElement extends Components.CeForm, HTMLStencilElement {
     }
-    var HTMLPrestoFormElement: {
-        prototype: HTMLPrestoFormElement;
-        new (): HTMLPrestoFormElement;
+    var HTMLCeFormElement: {
+        prototype: HTMLCeFormElement;
+        new (): HTMLCeFormElement;
     };
-    interface HTMLPrestoFormControlElement extends Components.PrestoFormControl, HTMLStencilElement {
+    interface HTMLCeFormControlElement extends Components.CeFormControl, HTMLStencilElement {
     }
-    var HTMLPrestoFormControlElement: {
-        prototype: HTMLPrestoFormControlElement;
-        new (): HTMLPrestoFormControlElement;
+    var HTMLCeFormControlElement: {
+        prototype: HTMLCeFormControlElement;
+        new (): HTMLCeFormControlElement;
     };
-    interface HTMLPrestoFormRowElement extends Components.PrestoFormRow, HTMLStencilElement {
+    interface HTMLCeFormRowElement extends Components.CeFormRow, HTMLStencilElement {
     }
-    var HTMLPrestoFormRowElement: {
-        prototype: HTMLPrestoFormRowElement;
-        new (): HTMLPrestoFormRowElement;
+    var HTMLCeFormRowElement: {
+        prototype: HTMLCeFormRowElement;
+        new (): HTMLCeFormRowElement;
     };
-    interface HTMLPrestoFormSectionElement extends Components.PrestoFormSection, HTMLStencilElement {
+    interface HTMLCeFormSectionElement extends Components.CeFormSection, HTMLStencilElement {
     }
-    var HTMLPrestoFormSectionElement: {
-        prototype: HTMLPrestoFormSectionElement;
-        new (): HTMLPrestoFormSectionElement;
+    var HTMLCeFormSectionElement: {
+        prototype: HTMLCeFormSectionElement;
+        new (): HTMLCeFormSectionElement;
     };
-    interface HTMLPrestoInputElement extends Components.PrestoInput, HTMLStencilElement {
+    interface HTMLCeInputElement extends Components.CeInput, HTMLStencilElement {
     }
-    var HTMLPrestoInputElement: {
-        prototype: HTMLPrestoInputElement;
-        new (): HTMLPrestoInputElement;
+    var HTMLCeInputElement: {
+        prototype: HTMLCeInputElement;
+        new (): HTMLCeInputElement;
     };
-    interface HTMLPrestoLineItemElement extends Components.PrestoLineItem, HTMLStencilElement {
+    interface HTMLCeLineItemElement extends Components.CeLineItem, HTMLStencilElement {
     }
-    var HTMLPrestoLineItemElement: {
-        prototype: HTMLPrestoLineItemElement;
-        new (): HTMLPrestoLineItemElement;
+    var HTMLCeLineItemElement: {
+        prototype: HTMLCeLineItemElement;
+        new (): HTMLCeLineItemElement;
     };
-    interface HTMLPrestoMenuElement extends Components.PrestoMenu, HTMLStencilElement {
+    interface HTMLCeMenuElement extends Components.CeMenu, HTMLStencilElement {
     }
-    var HTMLPrestoMenuElement: {
-        prototype: HTMLPrestoMenuElement;
-        new (): HTMLPrestoMenuElement;
+    var HTMLCeMenuElement: {
+        prototype: HTMLCeMenuElement;
+        new (): HTMLCeMenuElement;
     };
-    interface HTMLPrestoMenuDividerElement extends Components.PrestoMenuDivider, HTMLStencilElement {
+    interface HTMLCeMenuDividerElement extends Components.CeMenuDivider, HTMLStencilElement {
     }
-    var HTMLPrestoMenuDividerElement: {
-        prototype: HTMLPrestoMenuDividerElement;
-        new (): HTMLPrestoMenuDividerElement;
+    var HTMLCeMenuDividerElement: {
+        prototype: HTMLCeMenuDividerElement;
+        new (): HTMLCeMenuDividerElement;
     };
-    interface HTMLPrestoMenuItemElement extends Components.PrestoMenuItem, HTMLStencilElement {
+    interface HTMLCeMenuItemElement extends Components.CeMenuItem, HTMLStencilElement {
     }
-    var HTMLPrestoMenuItemElement: {
-        prototype: HTMLPrestoMenuItemElement;
-        new (): HTMLPrestoMenuItemElement;
+    var HTMLCeMenuItemElement: {
+        prototype: HTMLCeMenuItemElement;
+        new (): HTMLCeMenuItemElement;
     };
-    interface HTMLPrestoOrderSummaryElement extends Components.PrestoOrderSummary, HTMLStencilElement {
+    interface HTMLCeOrderSummaryElement extends Components.CeOrderSummary, HTMLStencilElement {
     }
-    var HTMLPrestoOrderSummaryElement: {
-        prototype: HTMLPrestoOrderSummaryElement;
-        new (): HTMLPrestoOrderSummaryElement;
+    var HTMLCeOrderSummaryElement: {
+        prototype: HTMLCeOrderSummaryElement;
+        new (): HTMLCeOrderSummaryElement;
     };
-    interface HTMLPrestoRadioElement extends Components.PrestoRadio, HTMLStencilElement {
+    interface HTMLCeRadioElement extends Components.CeRadio, HTMLStencilElement {
     }
-    var HTMLPrestoRadioElement: {
-        prototype: HTMLPrestoRadioElement;
-        new (): HTMLPrestoRadioElement;
+    var HTMLCeRadioElement: {
+        prototype: HTMLCeRadioElement;
+        new (): HTMLCeRadioElement;
     };
-    interface HTMLPrestoRadioGroupElement extends Components.PrestoRadioGroup, HTMLStencilElement {
+    interface HTMLCeRadioGroupElement extends Components.CeRadioGroup, HTMLStencilElement {
     }
-    var HTMLPrestoRadioGroupElement: {
-        prototype: HTMLPrestoRadioGroupElement;
-        new (): HTMLPrestoRadioGroupElement;
+    var HTMLCeRadioGroupElement: {
+        prototype: HTMLCeRadioGroupElement;
+        new (): HTMLCeRadioGroupElement;
     };
-    interface HTMLPrestoSecureNoticeElement extends Components.PrestoSecureNotice, HTMLStencilElement {
+    interface HTMLCeSecureNoticeElement extends Components.CeSecureNotice, HTMLStencilElement {
     }
-    var HTMLPrestoSecureNoticeElement: {
-        prototype: HTMLPrestoSecureNoticeElement;
-        new (): HTMLPrestoSecureNoticeElement;
+    var HTMLCeSecureNoticeElement: {
+        prototype: HTMLCeSecureNoticeElement;
+        new (): HTMLCeSecureNoticeElement;
     };
-    interface HTMLPrestoSelectElement extends Components.PrestoSelect, HTMLStencilElement {
+    interface HTMLCeSelectElement extends Components.CeSelect, HTMLStencilElement {
     }
-    var HTMLPrestoSelectElement: {
-        prototype: HTMLPrestoSelectElement;
-        new (): HTMLPrestoSelectElement;
+    var HTMLCeSelectElement: {
+        prototype: HTMLCeSelectElement;
+        new (): HTMLCeSelectElement;
     };
-    interface HTMLPrestoSkeletonElement extends Components.PrestoSkeleton, HTMLStencilElement {
+    interface HTMLCeSkeletonElement extends Components.CeSkeleton, HTMLStencilElement {
     }
-    var HTMLPrestoSkeletonElement: {
-        prototype: HTMLPrestoSkeletonElement;
-        new (): HTMLPrestoSkeletonElement;
+    var HTMLCeSkeletonElement: {
+        prototype: HTMLCeSkeletonElement;
+        new (): HTMLCeSkeletonElement;
     };
-    interface HTMLPrestoSpinnerElement extends Components.PrestoSpinner, HTMLStencilElement {
+    interface HTMLCeSpinnerElement extends Components.CeSpinner, HTMLStencilElement {
     }
-    var HTMLPrestoSpinnerElement: {
-        prototype: HTMLPrestoSpinnerElement;
-        new (): HTMLPrestoSpinnerElement;
+    var HTMLCeSpinnerElement: {
+        prototype: HTMLCeSpinnerElement;
+        new (): HTMLCeSpinnerElement;
     };
-    interface HTMLPrestoStripeElementElement extends Components.PrestoStripeElement, HTMLStencilElement {
+    interface HTMLCeStripeElementElement extends Components.CeStripeElement, HTMLStencilElement {
     }
-    var HTMLPrestoStripeElementElement: {
-        prototype: HTMLPrestoStripeElementElement;
-        new (): HTMLPrestoStripeElementElement;
+    var HTMLCeStripeElementElement: {
+        prototype: HTMLCeStripeElementElement;
+        new (): HTMLCeStripeElementElement;
     };
-    interface HTMLPrestoStripePaymentRequestElement extends Components.PrestoStripePaymentRequest, HTMLStencilElement {
+    interface HTMLCeStripePaymentRequestElement extends Components.CeStripePaymentRequest, HTMLStencilElement {
     }
-    var HTMLPrestoStripePaymentRequestElement: {
-        prototype: HTMLPrestoStripePaymentRequestElement;
-        new (): HTMLPrestoStripePaymentRequestElement;
+    var HTMLCeStripePaymentRequestElement: {
+        prototype: HTMLCeStripePaymentRequestElement;
+        new (): HTMLCeStripePaymentRequestElement;
     };
-    interface HTMLPrestoSwitchElement extends Components.PrestoSwitch, HTMLStencilElement {
+    interface HTMLCeSwitchElement extends Components.CeSwitch, HTMLStencilElement {
     }
-    var HTMLPrestoSwitchElement: {
-        prototype: HTMLPrestoSwitchElement;
-        new (): HTMLPrestoSwitchElement;
+    var HTMLCeSwitchElement: {
+        prototype: HTMLCeSwitchElement;
+        new (): HTMLCeSwitchElement;
     };
     interface HTMLElementTagNameMap {
-        "presto-button": HTMLPrestoButtonElement;
-        "presto-checkbox": HTMLPrestoCheckboxElement;
-        "presto-checkout": HTMLPrestoCheckoutElement;
-        "presto-choice": HTMLPrestoChoiceElement;
-        "presto-choices": HTMLPrestoChoicesElement;
-        "presto-divider": HTMLPrestoDividerElement;
-        "presto-dropdown": HTMLPrestoDropdownElement;
-        "presto-form": HTMLPrestoFormElement;
-        "presto-form-control": HTMLPrestoFormControlElement;
-        "presto-form-row": HTMLPrestoFormRowElement;
-        "presto-form-section": HTMLPrestoFormSectionElement;
-        "presto-input": HTMLPrestoInputElement;
-        "presto-line-item": HTMLPrestoLineItemElement;
-        "presto-menu": HTMLPrestoMenuElement;
-        "presto-menu-divider": HTMLPrestoMenuDividerElement;
-        "presto-menu-item": HTMLPrestoMenuItemElement;
-        "presto-order-summary": HTMLPrestoOrderSummaryElement;
-        "presto-radio": HTMLPrestoRadioElement;
-        "presto-radio-group": HTMLPrestoRadioGroupElement;
-        "presto-secure-notice": HTMLPrestoSecureNoticeElement;
-        "presto-select": HTMLPrestoSelectElement;
-        "presto-skeleton": HTMLPrestoSkeletonElement;
-        "presto-spinner": HTMLPrestoSpinnerElement;
-        "presto-stripe-element": HTMLPrestoStripeElementElement;
-        "presto-stripe-payment-request": HTMLPrestoStripePaymentRequestElement;
-        "presto-switch": HTMLPrestoSwitchElement;
+        "ce-button": HTMLCeButtonElement;
+        "ce-checkbox": HTMLCeCheckboxElement;
+        "ce-checkout": HTMLCeCheckoutElement;
+        "ce-choice": HTMLCeChoiceElement;
+        "ce-choices": HTMLCeChoicesElement;
+        "ce-divider": HTMLCeDividerElement;
+        "ce-dropdown": HTMLCeDropdownElement;
+        "ce-form": HTMLCeFormElement;
+        "ce-form-control": HTMLCeFormControlElement;
+        "ce-form-row": HTMLCeFormRowElement;
+        "ce-form-section": HTMLCeFormSectionElement;
+        "ce-input": HTMLCeInputElement;
+        "ce-line-item": HTMLCeLineItemElement;
+        "ce-menu": HTMLCeMenuElement;
+        "ce-menu-divider": HTMLCeMenuDividerElement;
+        "ce-menu-item": HTMLCeMenuItemElement;
+        "ce-order-summary": HTMLCeOrderSummaryElement;
+        "ce-radio": HTMLCeRadioElement;
+        "ce-radio-group": HTMLCeRadioGroupElement;
+        "ce-secure-notice": HTMLCeSecureNoticeElement;
+        "ce-select": HTMLCeSelectElement;
+        "ce-skeleton": HTMLCeSkeletonElement;
+        "ce-spinner": HTMLCeSpinnerElement;
+        "ce-stripe-element": HTMLCeStripeElementElement;
+        "ce-stripe-payment-request": HTMLCeStripePaymentRequestElement;
+        "ce-switch": HTMLCeSwitchElement;
     }
 }
 declare namespace LocalJSX {
-    interface PrestoButton {
+    interface CeButton {
         /**
           * Draws the button with a caret for use with dropdowns, popovers, etc.
          */
@@ -782,11 +782,11 @@ declare namespace LocalJSX {
         /**
           * Emitted when the button loses focus.
          */
-        "onPrestoBlur"?: (event: CustomEvent<void>) => void;
+        "onCeBlur"?: (event: CustomEvent<void>) => void;
         /**
           * Emitted when the button gains focus.
          */
-        "onPrestoFocus"?: (event: CustomEvent<void>) => void;
+        "onCeFocus"?: (event: CustomEvent<void>) => void;
         /**
           * Draws a pill-style button with rounded edges.
          */
@@ -812,7 +812,7 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
-    interface PrestoCheckbox {
+    interface CeCheckbox {
         /**
           * Draws the checkbox in a checked state.
          */
@@ -836,15 +836,15 @@ declare namespace LocalJSX {
         /**
           * Emitted when the control loses focus.
          */
-        "onPrestoBlur"?: (event: CustomEvent<void>) => void;
+        "onCeBlur"?: (event: CustomEvent<void>) => void;
         /**
           * Emitted when the control's checked state changes.
          */
-        "onPrestoChange"?: (event: CustomEvent<void>) => void;
+        "onCeChange"?: (event: CustomEvent<void>) => void;
         /**
           * Emitted when the control gains focus.
          */
-        "onPrestoFocus"?: (event: CustomEvent<void>) => void;
+        "onCeFocus"?: (event: CustomEvent<void>) => void;
         /**
           * Makes the checkbox a required field.
          */
@@ -854,10 +854,10 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
-    interface PrestoCheckout {
+    interface CeCheckout {
         "productIds"?: Array<any>;
     }
-    interface PrestoChoice {
+    interface CeChoice {
         /**
           * Draws the choice in a checked state.
          */
@@ -877,15 +877,15 @@ declare namespace LocalJSX {
         /**
           * Emitted when the control loses focus.
          */
-        "onPrestoBlur"?: (event: CustomEvent<void>) => void;
+        "onCeBlur"?: (event: CustomEvent<void>) => void;
         /**
           * Emitted when the control's checked state changes.
          */
-        "onPrestoChange"?: (event: CustomEvent<void>) => void;
+        "onCeChange"?: (event: CustomEvent<void>) => void;
         /**
           * Emitted when the control gains focus.
          */
-        "onPrestoFocus"?: (event: CustomEvent<void>) => void;
+        "onCeFocus"?: (event: CustomEvent<void>) => void;
         /**
           * Is this required
          */
@@ -899,7 +899,7 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
-    interface PrestoChoices {
+    interface CeChoices {
         /**
           * Hides the fieldset and legend that surrounds the group. The label will still be read by screen readers.
          */
@@ -909,9 +909,9 @@ declare namespace LocalJSX {
          */
         "label"?: string;
     }
-    interface PrestoDivider {
+    interface CeDivider {
     }
-    interface PrestoDropdown {
+    interface CeDropdown {
         "clickEl"?: HTMLElement;
         /**
           * Determines whether the dropdown should hide when a menu item is selected
@@ -920,11 +920,11 @@ declare namespace LocalJSX {
         /**
           * Emitted when the dropdown closes. Calling `event.preventDefault()` will prevent it from being closed.
          */
-        "onPrestoHide"?: (event: CustomEvent<void>) => void;
+        "onCeHide"?: (event: CustomEvent<void>) => void;
         /**
           * Emitted when the dropdown opens. Calling `event.preventDefault()` will prevent it from being opened.
          */
-        "onPrestoShow"?: (event: CustomEvent<void>) => void;
+        "onCeShow"?: (event: CustomEvent<void>) => void;
         /**
           * Indicates whether or not the dropdown is open. You can use this in lieu of the show/hide methods.
          */
@@ -934,7 +934,7 @@ declare namespace LocalJSX {
          */
         "position"?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
     }
-    interface PrestoForm {
+    interface CeForm {
         /**
           * Prevent the form from validating inputs before submitting.
          */
@@ -942,9 +942,9 @@ declare namespace LocalJSX {
         /**
           * Emitted when the form is submitted. This event will not be emitted if any form control inside of it is in an invalid state, unless the form has the `novalidate` attribute. Note that there is never a need to prevent this event, since it doen't send a GET or POST request like native forms. To "prevent" submission, use a conditional around the XHR request you use to submit the form's data with.
          */
-        "onPrestoSubmit"?: (event: CustomEvent<{ formData: FormData; formControls: HTMLElement[] }>) => void;
+        "onCeSubmit"?: (event: CustomEvent<{ formData: FormData; formControls: HTMLElement[] }>) => void;
     }
-    interface PrestoFormControl {
+    interface CeFormControl {
         "help"?: string;
         "helpId"?: string;
         "inputId"?: string;
@@ -953,12 +953,12 @@ declare namespace LocalJSX {
         "showLabel"?: boolean;
         "size"?: 'small' | 'medium' | 'large';
     }
-    interface PrestoFormRow {
+    interface CeFormRow {
     }
-    interface PrestoFormSection {
+    interface CeFormSection {
         "label"?: string;
     }
-    interface PrestoInput {
+    interface CeInput {
         /**
           * The input's autocomplete attribute.
          */
@@ -1022,23 +1022,23 @@ declare namespace LocalJSX {
         /**
           * Emitted when the control loses focus.
          */
-        "onPrestoBlur"?: (event: CustomEvent<void>) => void;
+        "onCeBlur"?: (event: CustomEvent<void>) => void;
         /**
           * Emitted when the control's value changes.
          */
-        "onPrestoChange"?: (event: CustomEvent<void>) => void;
+        "onCeChange"?: (event: CustomEvent<void>) => void;
         /**
           * Emitted when the clear button is activated.
          */
-        "onPrestoClear"?: (event: CustomEvent<void>) => void;
+        "onCeClear"?: (event: CustomEvent<void>) => void;
         /**
           * Emitted when the control gains focus.
          */
-        "onPrestoFocus"?: (event: CustomEvent<void>) => void;
+        "onCeFocus"?: (event: CustomEvent<void>) => void;
         /**
           * Emitted when the control receives input.
          */
-        "onPrestoInput"?: (event: CustomEvent<void>) => void;
+        "onCeInput"?: (event: CustomEvent<void>) => void;
         /**
           * A pattern to validate input against.
          */
@@ -1088,7 +1088,7 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
-    interface PrestoLineItem {
+    interface CeLineItem {
         /**
           * Currency symbol
          */
@@ -1098,12 +1098,12 @@ declare namespace LocalJSX {
          */
         "price"?: string;
     }
-    interface PrestoMenu {
-        "onPrestoSelect"?: (event: CustomEvent<{ item: HTMLPrestoMenuItemElement }>) => void;
+    interface CeMenu {
+        "onCeSelect"?: (event: CustomEvent<{ item: HTMLCeMenuItemElement }>) => void;
     }
-    interface PrestoMenuDivider {
+    interface CeMenuDivider {
     }
-    interface PrestoMenuItem {
+    interface CeMenuItem {
         /**
           * Draws the item in a checked state.
          */
@@ -1117,9 +1117,9 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
-    interface PrestoOrderSummary {
+    interface CeOrderSummary {
     }
-    interface PrestoRadio {
+    interface CeRadio {
         /**
           * Draws the radio in a checked state.
          */
@@ -1139,15 +1139,15 @@ declare namespace LocalJSX {
         /**
           * Emitted when the control loses focus.
          */
-        "onPrestoBlur"?: (event: CustomEvent<void>) => void;
+        "onCeBlur"?: (event: CustomEvent<void>) => void;
         /**
           * Emitted when the control's checked state changes.
          */
-        "onPrestoChange"?: (event: CustomEvent<void>) => void;
+        "onCeChange"?: (event: CustomEvent<void>) => void;
         /**
           * Emitted when the control gains focus.
          */
-        "onPrestoFocus"?: (event: CustomEvent<void>) => void;
+        "onCeFocus"?: (event: CustomEvent<void>) => void;
         /**
           * Is this required
          */
@@ -1157,7 +1157,7 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
-    interface PrestoRadioGroup {
+    interface CeRadioGroup {
         /**
           * The radio group label. Required for proper accessibility.
          */
@@ -1167,9 +1167,9 @@ declare namespace LocalJSX {
          */
         "noFieldset"?: boolean;
     }
-    interface PrestoSecureNotice {
+    interface CeSecureNotice {
     }
-    interface PrestoSelect {
+    interface CeSelect {
         /**
           * Adds a clear button when the select is populated.
          */
@@ -1205,19 +1205,19 @@ declare namespace LocalJSX {
         /**
           * Emitted when the control loses focus.
          */
-        "onPrestoBlur"?: (event: CustomEvent<void>) => void;
+        "onCeBlur"?: (event: CustomEvent<void>) => void;
         /**
           * Emitted when the control's value changes.
          */
-        "onPrestoChange"?: (event: CustomEvent<void>) => void;
+        "onCeChange"?: (event: CustomEvent<void>) => void;
         /**
           * Emitted when the clear button is activated.
          */
-        "onPrestoClear"?: (event: CustomEvent<void>) => void;
+        "onCeClear"?: (event: CustomEvent<void>) => void;
         /**
           * Emitted when the control gains focus.
          */
-        "onPrestoFocus"?: (event: CustomEvent<void>) => void;
+        "onCeFocus"?: (event: CustomEvent<void>) => void;
         /**
           * Draws a pill-style select with rounded edges.
          */
@@ -1239,15 +1239,15 @@ declare namespace LocalJSX {
          */
         "value"?: string | Array<string>;
     }
-    interface PrestoSkeleton {
+    interface CeSkeleton {
         /**
           * Animation effect
          */
         "effect"?: 'pulse' | 'sheen' | 'none';
     }
-    interface PrestoSpinner {
+    interface CeSpinner {
     }
-    interface PrestoStripeElement {
+    interface CeStripeElement {
         /**
           * Inputs focus
          */
@@ -1273,7 +1273,7 @@ declare namespace LocalJSX {
          */
         "size"?: 'small' | 'medium' | 'large';
     }
-    interface PrestoStripePaymentRequest {
+    interface CeStripePaymentRequest {
         /**
           * Amount
          */
@@ -1299,7 +1299,7 @@ declare namespace LocalJSX {
          */
         "theme"?: string;
     }
-    interface PrestoSwitch {
+    interface CeSwitch {
         /**
           * Draws the switch in a checked state.
          */
@@ -1319,15 +1319,15 @@ declare namespace LocalJSX {
         /**
           * Emitted when the control loses focus.
          */
-        "onPrestoBlur"?: (event: CustomEvent<void>) => void;
+        "onCeBlur"?: (event: CustomEvent<void>) => void;
         /**
           * Emitted when the control's checked state changes.
          */
-        "onPrestoChange"?: (event: CustomEvent<void>) => void;
+        "onCeChange"?: (event: CustomEvent<void>) => void;
         /**
           * Emitted when the control gains focus.
          */
-        "onPrestoFocus"?: (event: CustomEvent<void>) => void;
+        "onCeFocus"?: (event: CustomEvent<void>) => void;
         /**
           * Makes the switch a required field.
          */
@@ -1338,64 +1338,64 @@ declare namespace LocalJSX {
         "value"?: string;
     }
     interface IntrinsicElements {
-        "presto-button": PrestoButton;
-        "presto-checkbox": PrestoCheckbox;
-        "presto-checkout": PrestoCheckout;
-        "presto-choice": PrestoChoice;
-        "presto-choices": PrestoChoices;
-        "presto-divider": PrestoDivider;
-        "presto-dropdown": PrestoDropdown;
-        "presto-form": PrestoForm;
-        "presto-form-control": PrestoFormControl;
-        "presto-form-row": PrestoFormRow;
-        "presto-form-section": PrestoFormSection;
-        "presto-input": PrestoInput;
-        "presto-line-item": PrestoLineItem;
-        "presto-menu": PrestoMenu;
-        "presto-menu-divider": PrestoMenuDivider;
-        "presto-menu-item": PrestoMenuItem;
-        "presto-order-summary": PrestoOrderSummary;
-        "presto-radio": PrestoRadio;
-        "presto-radio-group": PrestoRadioGroup;
-        "presto-secure-notice": PrestoSecureNotice;
-        "presto-select": PrestoSelect;
-        "presto-skeleton": PrestoSkeleton;
-        "presto-spinner": PrestoSpinner;
-        "presto-stripe-element": PrestoStripeElement;
-        "presto-stripe-payment-request": PrestoStripePaymentRequest;
-        "presto-switch": PrestoSwitch;
+        "ce-button": CeButton;
+        "ce-checkbox": CeCheckbox;
+        "ce-checkout": CeCheckout;
+        "ce-choice": CeChoice;
+        "ce-choices": CeChoices;
+        "ce-divider": CeDivider;
+        "ce-dropdown": CeDropdown;
+        "ce-form": CeForm;
+        "ce-form-control": CeFormControl;
+        "ce-form-row": CeFormRow;
+        "ce-form-section": CeFormSection;
+        "ce-input": CeInput;
+        "ce-line-item": CeLineItem;
+        "ce-menu": CeMenu;
+        "ce-menu-divider": CeMenuDivider;
+        "ce-menu-item": CeMenuItem;
+        "ce-order-summary": CeOrderSummary;
+        "ce-radio": CeRadio;
+        "ce-radio-group": CeRadioGroup;
+        "ce-secure-notice": CeSecureNotice;
+        "ce-select": CeSelect;
+        "ce-skeleton": CeSkeleton;
+        "ce-spinner": CeSpinner;
+        "ce-stripe-element": CeStripeElement;
+        "ce-stripe-payment-request": CeStripePaymentRequest;
+        "ce-switch": CeSwitch;
     }
 }
 export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
-            "presto-button": LocalJSX.PrestoButton & JSXBase.HTMLAttributes<HTMLPrestoButtonElement>;
-            "presto-checkbox": LocalJSX.PrestoCheckbox & JSXBase.HTMLAttributes<HTMLPrestoCheckboxElement>;
-            "presto-checkout": LocalJSX.PrestoCheckout & JSXBase.HTMLAttributes<HTMLPrestoCheckoutElement>;
-            "presto-choice": LocalJSX.PrestoChoice & JSXBase.HTMLAttributes<HTMLPrestoChoiceElement>;
-            "presto-choices": LocalJSX.PrestoChoices & JSXBase.HTMLAttributes<HTMLPrestoChoicesElement>;
-            "presto-divider": LocalJSX.PrestoDivider & JSXBase.HTMLAttributes<HTMLPrestoDividerElement>;
-            "presto-dropdown": LocalJSX.PrestoDropdown & JSXBase.HTMLAttributes<HTMLPrestoDropdownElement>;
-            "presto-form": LocalJSX.PrestoForm & JSXBase.HTMLAttributes<HTMLPrestoFormElement>;
-            "presto-form-control": LocalJSX.PrestoFormControl & JSXBase.HTMLAttributes<HTMLPrestoFormControlElement>;
-            "presto-form-row": LocalJSX.PrestoFormRow & JSXBase.HTMLAttributes<HTMLPrestoFormRowElement>;
-            "presto-form-section": LocalJSX.PrestoFormSection & JSXBase.HTMLAttributes<HTMLPrestoFormSectionElement>;
-            "presto-input": LocalJSX.PrestoInput & JSXBase.HTMLAttributes<HTMLPrestoInputElement>;
-            "presto-line-item": LocalJSX.PrestoLineItem & JSXBase.HTMLAttributes<HTMLPrestoLineItemElement>;
-            "presto-menu": LocalJSX.PrestoMenu & JSXBase.HTMLAttributes<HTMLPrestoMenuElement>;
-            "presto-menu-divider": LocalJSX.PrestoMenuDivider & JSXBase.HTMLAttributes<HTMLPrestoMenuDividerElement>;
-            "presto-menu-item": LocalJSX.PrestoMenuItem & JSXBase.HTMLAttributes<HTMLPrestoMenuItemElement>;
-            "presto-order-summary": LocalJSX.PrestoOrderSummary & JSXBase.HTMLAttributes<HTMLPrestoOrderSummaryElement>;
-            "presto-radio": LocalJSX.PrestoRadio & JSXBase.HTMLAttributes<HTMLPrestoRadioElement>;
-            "presto-radio-group": LocalJSX.PrestoRadioGroup & JSXBase.HTMLAttributes<HTMLPrestoRadioGroupElement>;
-            "presto-secure-notice": LocalJSX.PrestoSecureNotice & JSXBase.HTMLAttributes<HTMLPrestoSecureNoticeElement>;
-            "presto-select": LocalJSX.PrestoSelect & JSXBase.HTMLAttributes<HTMLPrestoSelectElement>;
-            "presto-skeleton": LocalJSX.PrestoSkeleton & JSXBase.HTMLAttributes<HTMLPrestoSkeletonElement>;
-            "presto-spinner": LocalJSX.PrestoSpinner & JSXBase.HTMLAttributes<HTMLPrestoSpinnerElement>;
-            "presto-stripe-element": LocalJSX.PrestoStripeElement & JSXBase.HTMLAttributes<HTMLPrestoStripeElementElement>;
-            "presto-stripe-payment-request": LocalJSX.PrestoStripePaymentRequest & JSXBase.HTMLAttributes<HTMLPrestoStripePaymentRequestElement>;
-            "presto-switch": LocalJSX.PrestoSwitch & JSXBase.HTMLAttributes<HTMLPrestoSwitchElement>;
+            "ce-button": LocalJSX.CeButton & JSXBase.HTMLAttributes<HTMLCeButtonElement>;
+            "ce-checkbox": LocalJSX.CeCheckbox & JSXBase.HTMLAttributes<HTMLCeCheckboxElement>;
+            "ce-checkout": LocalJSX.CeCheckout & JSXBase.HTMLAttributes<HTMLCeCheckoutElement>;
+            "ce-choice": LocalJSX.CeChoice & JSXBase.HTMLAttributes<HTMLCeChoiceElement>;
+            "ce-choices": LocalJSX.CeChoices & JSXBase.HTMLAttributes<HTMLCeChoicesElement>;
+            "ce-divider": LocalJSX.CeDivider & JSXBase.HTMLAttributes<HTMLCeDividerElement>;
+            "ce-dropdown": LocalJSX.CeDropdown & JSXBase.HTMLAttributes<HTMLCeDropdownElement>;
+            "ce-form": LocalJSX.CeForm & JSXBase.HTMLAttributes<HTMLCeFormElement>;
+            "ce-form-control": LocalJSX.CeFormControl & JSXBase.HTMLAttributes<HTMLCeFormControlElement>;
+            "ce-form-row": LocalJSX.CeFormRow & JSXBase.HTMLAttributes<HTMLCeFormRowElement>;
+            "ce-form-section": LocalJSX.CeFormSection & JSXBase.HTMLAttributes<HTMLCeFormSectionElement>;
+            "ce-input": LocalJSX.CeInput & JSXBase.HTMLAttributes<HTMLCeInputElement>;
+            "ce-line-item": LocalJSX.CeLineItem & JSXBase.HTMLAttributes<HTMLCeLineItemElement>;
+            "ce-menu": LocalJSX.CeMenu & JSXBase.HTMLAttributes<HTMLCeMenuElement>;
+            "ce-menu-divider": LocalJSX.CeMenuDivider & JSXBase.HTMLAttributes<HTMLCeMenuDividerElement>;
+            "ce-menu-item": LocalJSX.CeMenuItem & JSXBase.HTMLAttributes<HTMLCeMenuItemElement>;
+            "ce-order-summary": LocalJSX.CeOrderSummary & JSXBase.HTMLAttributes<HTMLCeOrderSummaryElement>;
+            "ce-radio": LocalJSX.CeRadio & JSXBase.HTMLAttributes<HTMLCeRadioElement>;
+            "ce-radio-group": LocalJSX.CeRadioGroup & JSXBase.HTMLAttributes<HTMLCeRadioGroupElement>;
+            "ce-secure-notice": LocalJSX.CeSecureNotice & JSXBase.HTMLAttributes<HTMLCeSecureNoticeElement>;
+            "ce-select": LocalJSX.CeSelect & JSXBase.HTMLAttributes<HTMLCeSelectElement>;
+            "ce-skeleton": LocalJSX.CeSkeleton & JSXBase.HTMLAttributes<HTMLCeSkeletonElement>;
+            "ce-spinner": LocalJSX.CeSpinner & JSXBase.HTMLAttributes<HTMLCeSpinnerElement>;
+            "ce-stripe-element": LocalJSX.CeStripeElement & JSXBase.HTMLAttributes<HTMLCeStripeElementElement>;
+            "ce-stripe-payment-request": LocalJSX.CeStripePaymentRequest & JSXBase.HTMLAttributes<HTMLCeStripePaymentRequestElement>;
+            "ce-switch": LocalJSX.CeSwitch & JSXBase.HTMLAttributes<HTMLCeSwitchElement>;
         }
     }
 }

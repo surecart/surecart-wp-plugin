@@ -1,12 +1,24 @@
+/** @jsx jsx */
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
 /**
  * Component Dependencies
  */
-import { PrestoCheckout } from '@checkout-engine/react';
-import { __ } from '@wordpress/i18n';
-import FormBlocks from './components/form-blocks';
-import { InnerBlocks } from '@wordpress/block-editor';
+import { CeCheckout } from '@checkout-engine/react';
+import { TabPanel } from '@wordpress/components';
 
-export default ( { className, clientId } ) => {
+/**
+ * React components
+ */
+import FormBlocks from './components/form-blocks';
+
+import { css, jsx } from '@emotion/core';
+
+export default ( { className, clientId, isSelected } ) => {
 	// these blocks are required in order to submit an order
 	const requiredBlocks = {
 		// needs an email field
@@ -24,19 +36,36 @@ export default ( { className, clientId } ) => {
 	};
 
 	return (
-		<div className={ className } style={ { padding: '20px' } }>
-			<PrestoCheckout>
-				<InnerBlocks
-					renderAppender={ InnerBlocks.ButtonBlockAppender }
-					// template={ template }
-					// templateLock={ isPremium ? false : 'insert' }
-					// allowedBlocks={ allowed }
-				/>
-				{ /* <FormBlocks
-					requiredBlocks={ requiredBlocks }
-					clientId={ clientId }
-				/> */ }
-			</PrestoCheckout>
+		<div className={ className }>
+			<TabPanel
+				tabs={ [
+					{
+						name: 'form',
+						title: __( 'Form', 'checkout-engine' ),
+					},
+					{
+						name: 'products',
+						title: __( 'Products', 'checkout-engine' ),
+					},
+				] }
+			>
+				{ ( tab ) => {
+					switch ( tab.name ) {
+						case 'products':
+							return <div>products</div>;
+						default:
+							return (
+								<CeCheckout>
+									<FormBlocks
+										isSelected={ isSelected }
+										requiredBlocks={ requiredBlocks }
+										clientId={ clientId }
+									/>
+								</CeCheckout>
+							);
+					}
+				} }
+			</TabPanel>
 		</div>
 	);
 };

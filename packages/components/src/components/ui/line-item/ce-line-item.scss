@@ -1,0 +1,28 @@
+:host {
+  display: block;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.item__title {
+  color: var(--ce-color-gray-600);
+}
+
+.item__price-layout {
+  font-size: var(--ce-font-size-large);
+  font-weight: var(--ce-font-weight-semibold);
+  line-height: var(--ce-line-height-dense);
+  display: flex;
+  align-items: center;
+}
+
+.item_currency {
+  font-weight: var(--ce-font-weight-normal);
+  font-size: var(--ce-font-size-small);
+  color: var(--ce-color-gray-500);
+  margin-right: var(--ce-spacing-small);
+}

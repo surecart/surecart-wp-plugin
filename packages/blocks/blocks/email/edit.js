@@ -6,7 +6,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Component Dependencies
  */
-import { PrestoInput } from '@checkout-engine/react';
+import { CeInput } from '@checkout-engine/react';
 import Inspector from './components/Inspector';
 
 export default ( { className, attributes, setAttributes } ) => {
@@ -19,11 +19,11 @@ export default ( { className, attributes, setAttributes } ) => {
 				setAttributes={ setAttributes }
 			/>
 
-			<PrestoInput
+			<CeInput
 				type="email"
 				label={ label }
 				placeholder={ placeholder }
-			></PrestoInput>
+			></CeInput>
 		</div>
 	);
 };

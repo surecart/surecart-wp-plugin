@@ -10,155 +10,155 @@
       color: #101010;
     }
   </style>
-  <link href="/build/presto-components.css" rel="stylesheet">
-  <script type="module" src="/build/presto-components.esm.js"></script>
-  <script nomodule src="/build/presto-components.js"></script>
+  <link href="/build/checkout-engine.css" rel="stylesheet">
+  <script type="module" src="/build/checkout-engine.esm.js"></script>
+  <script nomodule src="/build/checkout-engine.js"></script>
 </head>
 
 <body>
 
   <div style="width: 500px; margin:90px auto;">
-    <presto-checkout id="checkout-one" style="margin-bottom: 80px;">
-      <presto-form>
-        <div class="presto-area-main-header">
-          <presto-form-section label="Choose A Plan">
+    <ce-checkout id="checkout-one" style="margin-bottom: 80px;">
+      <ce-form>
+        <div class="ce-area-main-header">
+          <ce-form-section label="Choose A Plan">
             <span slot="description">Start for free. Cancel anytime.</span>
-            <presto-form-row>
-              <presto-choices tabindex="1">
-                <presto-choice name="test" required checked>
+            <ce-form-row>
+              <ce-choices tabindex="1">
+                <ce-choice name="test" required checked>
                   Gold Plan
                   <span slot="description">$9.99, then $49.99 per month</span>
-                </presto-choice>
-                <presto-choice name="test">Silver Plan
+                </ce-choice>
+                <ce-choice name="test">Silver Plan
                   <span slot="description">$39.99 per month</span>
-                </presto-choice>
-                <presto-choice name="test">Bronze Plan
+                </ce-choice>
+                <ce-choice name="test">Bronze Plan
                   <span slot="description">$9.99 per month</span>
-                </presto-choice>
-              </presto-choices>
-            </presto-form-row>
-          </presto-form-section>
+                </ce-choice>
+              </ce-choices>
+            </ce-form-row>
+          </ce-form-section>
 
-          <presto-form-section>
-            <presto-stripe-payment-request amount="12500"
+          <ce-form-section>
+            <ce-stripe-payment-request amount="12500"
               publishable-key="pk_test_51IGqEQFOGhs5FBqkukQRgXOUWl4zEUF8t9NAEz9QdTozrZ9QlWNXbKROsKICnpY808sEfhZYLfSAeSX3arrT8A6K00gf5F5845">
-              <presto-divider>Or</presto-divider>
-            </presto-stripe-payment-request>
-          </presto-form-section>
+              <ce-divider>Or</ce-divider>
+            </ce-stripe-payment-request>
+          </ce-form-section>
 
-          <presto-form-section label="Contact Information">
+          <ce-form-section label="Contact Information">
             <span slot="description">Use a permanent address where you can recieve mail.</span>
-            <presto-form-row>
-              <presto-input name="email" type="email" label="Email Address" placeholder="you@youremail.com" required>
-              </presto-input>
-            </presto-form-row>
-            <presto-form-row>
-              <presto-input label="First Name" name="firstname" help="Optional"></presto-input>
-              <presto-input label="Last Name" name="lastname" help="Optional"></presto-input>
-            </presto-form-row>
-          </presto-form-section>
+            <ce-form-row>
+              <ce-input name="email" type="email" label="Email Address" placeholder="you@youremail.com" required>
+              </ce-input>
+            </ce-form-row>
+            <ce-form-row>
+              <ce-input label="First Name" name="firstname" help="Optional"></ce-input>
+              <ce-input label="Last Name" name="lastname" help="Optional"></ce-input>
+            </ce-form-row>
+          </ce-form-section>
 
-          <presto-form-section label="Card Details">
-            <presto-secure-notice slot="description">This is a secure, encrypted payment.</presto-secure-notice>
+          <ce-form-section label="Card Details">
+            <ce-secure-notice slot="description">This is a secure, encrypted payment.</ce-secure-notice>
 
-            <presto-form-row>
-              <presto-stripe-element
+            <ce-form-row>
+              <ce-stripe-element
                 publishable-key="pk_test_51IGqEQFOGhs5FBqkukQRgXOUWl4zEUF8t9NAEz9QdTozrZ9QlWNXbKROsKICnpY808sEfhZYLfSAeSX3arrT8A6K00gf5F5845">
-              </presto-stripe-element>
-            </presto-form-row>
-          </presto-form-section>
+              </ce-stripe-element>
+            </ce-form-row>
+          </ce-form-section>
 
-          <!-- <presto-form-section>
-            <presto-form-row>
-              <presto-switch name="subscribe" value="subscribe" required>Subscribe to our email list
+          <!-- <ce-form-section>
+            <ce-form-row>
+              <ce-switch name="subscribe" value="subscribe" required>Subscribe to our email list
                 <span slot="description">We will never spam you. Unsubscribe at any time.</span>
-              </presto-switch>
-            </presto-form-row>
-          </presto-form-section> -->
+              </ce-switch>
+            </ce-form-row>
+          </ce-form-section> -->
 
-          <!-- <presto-form-section>
-            <presto-form-row>
-              <presto-checkbox name="terms" value="terms" required indeterminate>
+          <!-- <ce-form-section>
+            <ce-form-row>
+              <ce-checkbox name="terms" value="terms" required indeterminate>
                 I agree to the terms.
-              </presto-checkbox>
-            </presto-form-row>
-          </presto-form-section> -->
+              </ce-checkbox>
+            </ce-form-row>
+          </ce-form-section> -->
         </div>
 
 
 
 
-        <!-- <presto-order-summary class="presto-area-main"></presto-order-summary> -->
+        <!-- <ce-order-summary class="ce-area-main"></ce-order-summary> -->
 
-        <div class="presto-area-main-footer">
-          <presto-form-section label="Totals">
-            <presto-divider style="--spacing: 20px;"></presto-divider>
-            <presto-line-item>
+        <div class="ce-area-main-footer">
+          <ce-form-section label="Totals">
+            <ce-divider style="--spacing: 20px;"></ce-divider>
+            <ce-line-item>
               Gold Plan
               <span slot="price">$20.00</span>
-            </presto-line-item>
-            <presto-divider style="--spacing: 20px;"></presto-divider>
-            <presto-line-item price="$20.00" currency="CAD">
+            </ce-line-item>
+            <ce-divider style="--spacing: 20px;"></ce-divider>
+            <ce-line-item price="$20.00" currency="CAD">
               Total
-            </presto-line-item>
-          </presto-form-section>
+            </ce-line-item>
+          </ce-form-section>
 
-          <presto-button full type="primary" size="large" submit>Pay $20.00</presto-button>
+          <ce-button full type="primary" size="large" submit>Pay $20.00</ce-button>
         </div>
-      </presto-form>
-    </presto-checkout>
+      </ce-form>
+    </ce-checkout>
   </div>
 
   <!-- <div style="width: 1180px; margin:auto;">
-    <presto-checkout id="checkout-two"
-      style="margin-bottom: 80px; --presto-checkout-columns: 2; --presto-checkout-column-gap: 2rem;">
-      <presto-form>
+    <ce-checkout id="checkout-two"
+      style="margin-bottom: 80px; --ce-checkout-columns: 2; --ce-checkout-column-gap: 2rem;">
+      <ce-form>
         <div class="position-main">
 
-          <presto-form-row>
-            <presto-input label="Email address" type="email" required></presto-input>
-          </presto-form-row>
+          <ce-form-row>
+            <ce-input label="Email address" type="email" required></ce-input>
+          </ce-form-row>
 
-          <presto-form-row>
-            <presto-stripe-element label="Credit Card"
+          <ce-form-row>
+            <ce-stripe-element label="Credit Card"
               publishable-key="pk_test_51IGqEQFOGhs5FBqkukQRgXOUWl4zEUF8t9NAEz9QdTozrZ9QlWNXbKROsKICnpY808sEfhZYLfSAeSX3arrT8A6K00gf5F5845">
-            </presto-stripe-element>
-          </presto-form-row>
+            </ce-stripe-element>
+          </ce-form-row>
 
-          <presto-form-row>
-            <presto-input label="First Name"></presto-input>
-            <presto-input label="Last Name"></presto-input>
-          </presto-form-row>
+          <ce-form-row>
+            <ce-input label="First Name"></ce-input>
+            <ce-input label="Last Name"></ce-input>
+          </ce-form-row>
 
-          <presto-form-row>
-            <presto-input type="text" label="Address" placeholder="185 Berry St" required autocomplete="address-line1">
-            </presto-input>
-          </presto-form-row>
+          <ce-form-row>
+            <ce-input type="text" label="Address" placeholder="185 Berry St" required autocomplete="address-line1">
+            </ce-input>
+          </ce-form-row>
 
-          <presto-form-row>
-            <presto-input type="text" label="City" placeholder="Madison" required autocomplete="address-level2">
-            </presto-input>
-            <presto-input type="text" label="State" placeholder="Wisconsin" required autocomplete="address-level1">
-            </presto-input>
-            <presto-input type="text" label="Zip" placeholder="54716" required autocomplete="postal-code">
-            </presto-input>
-          </presto-form-row>
+          <ce-form-row>
+            <ce-input type="text" label="City" placeholder="Madison" required autocomplete="address-level2">
+            </ce-input>
+            <ce-input type="text" label="State" placeholder="Wisconsin" required autocomplete="address-level1">
+            </ce-input>
+            <ce-input type="text" label="Zip" placeholder="54716" required autocomplete="postal-code">
+            </ce-input>
+          </ce-form-row>
 
           <br>
-          <presto-form-row>
-            <presto-switch>Subscribe to our email list</presto-switch>
-          </presto-form-row>
+          <ce-form-row>
+            <ce-switch>Subscribe to our email list</ce-switch>
+          </ce-form-row>
           <br>
 
         </div>
 
-        <presto-order-summary class="position-sidebar"></presto-order-summary>
+        <ce-order-summary class="position-sidebar"></ce-order-summary>
 
-        <div class="presto-area-main-footer">
-          <presto-button full type="primary" size="large">Purchase</presto-button>
+        <div class="ce-area-main-footer">
+          <ce-button full type="primary" size="large">Purchase</ce-button>
         </div>
-      </presto-form>
-    </presto-checkout>
+      </ce-form>
+    </ce-checkout>
   </div> -->
 
 
@@ -166,7 +166,7 @@
     var one = document.querySelector('#checkout-one');
     one.productIds = [1, 2, 3];
 
-    one.addEventListener('prestoSubmit', (e) => {
+    one.addEventListener('ceSubmit', (e) => {
       let formData = e.detail.formData;
       console.log(formData);
       console.log(JSON.stringify(Object.fromEntries(formData)));

@@ -2,15 +2,15 @@ export default ( { className, attributes } ) => {
 	const { type, submit, full, size, text } = attributes;
 
 	return (
-		<div className={ className }>
-			<presto-button
+		<ce-form-row className={ className }>
+			<ce-button
 				type={ type }
 				submit={ submit }
 				full={ full }
 				size={ size }
 			>
 				{ text }
-			</presto-button>
-		</div>
+			</ce-button>
+		</ce-form-row>
 	);
 };

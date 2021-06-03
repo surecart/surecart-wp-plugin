@@ -1,9 +1,6 @@
-# presto-form-control
-
-
+# ce-form-control
 
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -17,7 +14,6 @@
 | `showLabel` | `show-label` |             | `boolean`                        | `true`      |
 | `size`      | `size`       |             | `"large" \| "medium" \| "small"` | `'medium'`  |
 
-
 ## Shadow Parts
 
 | Part             | Description |
@@ -26,20 +22,20 @@
 | `"help-text"`    |             |
 | `"label"`        |             |
 
-
 ## Dependencies
 
 ### Used by
 
- - [presto-input](../input)
+- [ce-input](../input)
 
 ### Graph
+
 ```mermaid
 graph TD;
-  presto-input --> presto-form-control
-  style presto-form-control fill:#f9f,stroke:#333,stroke-width:4px
+  ce-input --> ce-form-control
+  style ce-form-control fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
-----------------------------------------------
+---
 
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

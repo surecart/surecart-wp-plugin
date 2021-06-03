@@ -1,6 +1,4 @@
-# presto-form-control
-
-
+# ce-form-control
 
 <!-- Auto Generated Below -->
 
@@ -31,15 +29,15 @@
 
 ### Used by
 
- - [presto-input](../input)
- - [presto-select](../select)
+ - [ce-input](../input)
+ - [ce-select](../select)
 
 ### Graph
 ```mermaid
 graph TD;
-  presto-input --> presto-form-control
-  presto-select --> presto-form-control
-  style presto-form-control fill:#f9f,stroke:#333,stroke-width:4px
+  ce-input --> ce-form-control
+  ce-select --> ce-form-control
+  style ce-form-control fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

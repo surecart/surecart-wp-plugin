@@ -1,9 +1,6 @@
-# presto-select
-
-
+# ce-select
 
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -23,16 +20,14 @@
 | `size`           | `size`             | The select's size.                                                                                                                                                                             | `"large" \| "medium" \| "small"` | `'medium'`  |
 | `value`          | `value`            | The value of the control. This will be a string or an array depending on `multiple`.                                                                                                           | `string \| string[]`             | `''`        |
 
-
 ## Events
 
-| Event          | Description                                 | Type                |
-| -------------- | ------------------------------------------- | ------------------- |
-| `prestoBlur`   | Emitted when the control loses focus.       | `CustomEvent<void>` |
-| `prestoChange` | Emitted when the control's value changes.   | `CustomEvent<void>` |
-| `prestoClear`  | Emitted when the clear button is activated. | `CustomEvent<void>` |
-| `prestoFocus`  | Emitted when the control gains focus.       | `CustomEvent<void>` |
-
+| Event      | Description                                 | Type                |
+| ---------- | ------------------------------------------- | ------------------- |
+| `ceBlur`   | Emitted when the control loses focus.       | `CustomEvent<void>` |
+| `ceChange` | Emitted when the control's value changes.   | `CustomEvent<void>` |
+| `ceClear`  | Emitted when the clear button is activated. | `CustomEvent<void>` |
+| `ceFocus`  | Emitted when the control gains focus.       | `CustomEvent<void>` |
 
 ## Shadow Parts
 
@@ -40,22 +35,22 @@
 | -------- | ----------- |
 | `"base"` |             |
 
-
 ## Dependencies
 
 ### Depends on
 
-- [presto-form-control](../form-control)
-- [presto-dropdown](../dropdown)
+- [ce-form-control](../form-control)
+- [ce-dropdown](../dropdown)
 
 ### Graph
+
 ```mermaid
 graph TD;
-  presto-select --> presto-form-control
-  presto-select --> presto-dropdown
-  style presto-select fill:#f9f,stroke:#333,stroke-width:4px
+  ce-select --> ce-form-control
+  ce-select --> ce-dropdown
+  style ce-select fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
-----------------------------------------------
+---
 
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

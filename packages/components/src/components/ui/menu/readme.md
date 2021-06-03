@@ -1,9 +1,6 @@
-# presto-menu
-
-
+# ce-menu
 
 <!-- Auto Generated Below -->
-
 
 ## Shadow Parts
 
@@ -11,7 +8,6 @@
 | -------- | ----------- |
 | `"base"` |             |
 
+---
 
-----------------------------------------------
-
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

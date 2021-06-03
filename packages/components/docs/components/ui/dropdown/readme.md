@@ -1,6 +1,4 @@
-# presto-dropdown
-
-
+# ce-dropdown
 
 <!-- Auto Generated Below -->
 
@@ -17,10 +15,10 @@
 
 ## Events
 
-| Event        | Description                                                                                           | Type                |
-| ------------ | ----------------------------------------------------------------------------------------------------- | ------------------- |
-| `prestoHide` | Emitted when the dropdown closes. Calling `event.preventDefault()` will prevent it from being closed. | `CustomEvent<void>` |
-| `prestoShow` | Emitted when the dropdown opens. Calling `event.preventDefault()` will prevent it from being opened.  | `CustomEvent<void>` |
+| Event    | Description                                                                                           | Type                |
+| -------- | ----------------------------------------------------------------------------------------------------- | ------------------- |
+| `ceHide` | Emitted when the dropdown closes. Calling `event.preventDefault()` will prevent it from being closed. | `CustomEvent<void>` |
+| `ceShow` | Emitted when the dropdown opens. Calling `event.preventDefault()` will prevent it from being opened.  | `CustomEvent<void>` |
 
 
 ## Shadow Parts
@@ -35,13 +33,13 @@
 
 ### Used by
 
- - [presto-select](../select)
+ - [ce-select](../select)
 
 ### Graph
 ```mermaid
 graph TD;
-  presto-select --> presto-dropdown
-  style presto-dropdown fill:#f9f,stroke:#333,stroke-width:4px
+  ce-select --> ce-dropdown
+  style ce-dropdown fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

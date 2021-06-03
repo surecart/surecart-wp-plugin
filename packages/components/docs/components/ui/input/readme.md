@@ -1,6 +1,4 @@
-# presto-input
-
-
+# ce-input
 
 <!-- Auto Generated Below -->
 
@@ -40,13 +38,13 @@
 
 ## Events
 
-| Event          | Description                                 | Type                |
-| -------------- | ------------------------------------------- | ------------------- |
-| `prestoBlur`   | Emitted when the control loses focus.       | `CustomEvent<void>` |
-| `prestoChange` | Emitted when the control's value changes.   | `CustomEvent<void>` |
-| `prestoClear`  | Emitted when the clear button is activated. | `CustomEvent<void>` |
-| `prestoFocus`  | Emitted when the control gains focus.       | `CustomEvent<void>` |
-| `prestoInput`  | Emitted when the control receives input.    | `CustomEvent<void>` |
+| Event      | Description                                 | Type                |
+| ---------- | ------------------------------------------- | ------------------- |
+| `ceBlur`   | Emitted when the control loses focus.       | `CustomEvent<void>` |
+| `ceChange` | Emitted when the control's value changes.   | `CustomEvent<void>` |
+| `ceClear`  | Emitted when the clear button is activated. | `CustomEvent<void>` |
+| `ceFocus`  | Emitted when the control gains focus.       | `CustomEvent<void>` |
+| `ceInput`  | Emitted when the control receives input.    | `CustomEvent<void>` |
 
 
 ## Methods
@@ -104,18 +102,18 @@ Type: `Promise<void>`
 
 ### Used by
 
- - [presto-stripe-element](../stripe-element)
+ - [ce-stripe-element](../stripe-element)
 
 ### Depends on
 
-- [presto-form-control](../form-control)
+- [ce-form-control](../form-control)
 
 ### Graph
 ```mermaid
 graph TD;
-  presto-input --> presto-form-control
-  presto-stripe-element --> presto-input
-  style presto-input fill:#f9f,stroke:#333,stroke-width:4px
+  ce-input --> ce-form-control
+  ce-stripe-element --> ce-input
+  style ce-input fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

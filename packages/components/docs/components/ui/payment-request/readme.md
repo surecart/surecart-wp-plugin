@@ -1,4 +1,4 @@
-# presto-stripe-payment-request
+# ce-stripe-payment-request
 
 
 

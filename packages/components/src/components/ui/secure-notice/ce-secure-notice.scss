@@ -1,0 +1,15 @@
+:host {
+  display: block;
+}
+
+.notice {
+  color: var(--ce-color-gray-500);
+  font-size: var(--ce-font-size-small);
+  display: flex;
+  align-items: center;
+}
+
+.notice__icon {
+  color: var(--ce-color-gray-300);
+  margin-right: 5px;
+}

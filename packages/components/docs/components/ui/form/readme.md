@@ -1,4 +1,4 @@
-# presto-form
+# ce-form
 
 
 
@@ -14,9 +14,9 @@
 
 ## Events
 
-| Event          | Description                                                                                                                                                                                                                                                                                                                                                                                                | Type                                                                |
-| -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| `prestoSubmit` | Emitted when the form is submitted. This event will not be emitted if any form control inside of it is in an invalid state, unless the form has the `novalidate` attribute. Note that there is never a need to prevent this event, since it doen't send a GET or POST request like native forms. To "prevent" submission, use a conditional around the XHR request you use to submit the form's data with. | `CustomEvent<{ formData: FormData; formControls: HTMLElement[]; }>` |
+| Event      | Description                                                                                                                                                                                                                                                                                                                                                                                                | Type                                                                |
+| ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `ceSubmit` | Emitted when the form is submitted. This event will not be emitted if any form control inside of it is in an invalid state, unless the form has the `novalidate` attribute. Note that there is never a need to prevent this event, since it doen't send a GET or POST request like native forms. To "prevent" submission, use a conditional around the XHR request you use to submit the form's data with. | `CustomEvent<{ formData: FormData; formControls: HTMLElement[]; }>` |
 
 
 ## Methods
@@ -43,7 +43,7 @@ Type: `Promise<{ [k: string]: FormDataEntryValue; }>`
 
 ### `submit() => Promise<boolean>`
 
-Submits the form. If all controls are valid, the `presto-submit` event will be emitted and the promise will resolve
+Submits the form. If all controls are valid, the `ce-submit` event will be emitted and the promise will resolve
 with `true`. If any form control is invalid, the promise will resolve with `false` and no event will be emitted.
 
 #### Returns

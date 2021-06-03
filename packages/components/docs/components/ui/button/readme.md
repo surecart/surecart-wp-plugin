@@ -1,6 +1,4 @@
-# presto-button
-
-
+# ce-button
 
 <!-- Auto Generated Below -->
 
@@ -27,10 +25,10 @@
 
 ## Events
 
-| Event         | Description                          | Type                |
-| ------------- | ------------------------------------ | ------------------- |
-| `prestoBlur`  | Emitted when the button loses focus. | `CustomEvent<void>` |
-| `prestoFocus` | Emitted when the button gains focus. | `CustomEvent<void>` |
+| Event     | Description                          | Type                |
+| --------- | ------------------------------------ | ------------------- |
+| `ceBlur`  | Emitted when the button loses focus. | `CustomEvent<void>` |
+| `ceFocus` | Emitted when the button gains focus. | `CustomEvent<void>` |
 
 
 ## Shadow Parts
@@ -48,13 +46,13 @@
 
 ### Depends on
 
-- [presto-spinner](../spinner)
+- [ce-spinner](../spinner)
 
 ### Graph
 ```mermaid
 graph TD;
-  presto-button --> presto-spinner
-  style presto-button fill:#f9f,stroke:#333,stroke-width:4px
+  ce-button --> ce-spinner
+  style ce-button fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

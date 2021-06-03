@@ -1,4 +1,4 @@
-# presto-checkout
+# ce-checkout
 
 
 

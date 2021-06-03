@@ -2,6 +2,7 @@
  * Internal dependencies
  */
 import edit from './edit';
+import save from './save';
 import metadata from './block.json';
 
 /**
@@ -23,7 +24,7 @@ const settings = {
 		'Display a checkout form submit button',
 		'checkout_engine'
 	),
-	parent: [ 'checkout-engine/checkout-form' ],
+	parent: [ 'checkout-engine/form-row' ],
 	supports: {
 		reusable: false,
 	},
@@ -38,6 +39,7 @@ const settings = {
 	],
 	attributes,
 	edit,
+	save,
 };
 
 export { name, category, metadata, settings };

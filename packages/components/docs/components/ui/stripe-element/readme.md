@@ -1,4 +1,4 @@
-# presto-stripe-element
+# ce-stripe-element
 
 
 
@@ -21,14 +21,14 @@
 
 ### Depends on
 
-- [presto-input](../input)
+- [ce-input](../input)
 
 ### Graph
 ```mermaid
 graph TD;
-  presto-stripe-element --> presto-input
-  presto-input --> presto-form-control
-  style presto-stripe-element fill:#f9f,stroke:#333,stroke-width:4px
+  ce-stripe-element --> ce-input
+  ce-input --> ce-form-control
+  style ce-stripe-element fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

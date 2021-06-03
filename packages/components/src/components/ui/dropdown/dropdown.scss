@@ -19,7 +19,7 @@
 }
 
 .dropdown__panel {
-  z-index: var(--presto-z-index-dropdown);
+  z-index: var(--ce-z-index-dropdown);
   transform-origin: top left;
   min-width: 10rem;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
@@ -28,21 +28,21 @@
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
   max-height: 75vh;
-  font-family: var(--presto-font-sans);
-  font-size: var(--presto-font-size-medium);
-  font-weight: var(--presto-font-weight-normal);
+  font-family: var(--ce-font-sans);
+  font-size: var(--ce-font-size-medium);
+  font-weight: var(--ce-font-weight-normal);
   color: var(--color);
-  background-color: var(--presto-panel-background-color);
-  border: solid 1px var(--presto-panel-border-color);
-  border-radius: var(--presto-border-radius-medium);
-  box-shadow: var(--presto-shadow-large);
+  background-color: var(--ce-panel-background-color);
+  border: solid 1px var(--ce-panel-border-color);
+  border-radius: var(--ce-border-radius-medium);
+  box-shadow: var(--ce-shadow-large);
   opacity: 0;
   visibility: hidden;
   overflow: auto;
   overscroll-behavior: none;
   // pointer-events: none;
   transform: scale(0.9);
-  transition: var(--presto-transition-fast) opacity, var(--presto-transition-fast) transform;
+  transition: var(--ce-transition-fast) opacity, var(--ce-transition-fast) transform;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

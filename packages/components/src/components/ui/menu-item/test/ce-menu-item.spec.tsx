@@ -1,0 +1,62 @@
+import { newSpecPage } from '@stencil/core/testing';
+import { CEMenuItem } from '../ce-menu-item';
+
+describe('ce-menu-item', () => {
+  it('renders', async () => {
+    const page = await newSpecPage({
+      components: [CEMenuItem],
+      html: `<ce-menu-item></ce-menu-item>`,
+    });
+    expect(page.root).toEqualHtml(`
+      <ce-menu-item>
+        <mock:shadow-root>
+          <div aria-checked="false" aria-disabled="false" class="menu-item" part="base" role="menuitem" tabindex="0">
+           <span class="menu-item__check" part="checked-icon">
+             <svg class="bi bi-check" fill="currentColor" height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
+               <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"></path>
+             </svg>
+           </span>
+           <span class="menu-item__prefix" part="prefix">
+             <slot name="prefix"></slot>
+           </span>
+           <span class="menu-item__label" part="label">
+             <slot></slot>
+           </span>
+           <span class="menu-item__suffix" part="suffix">
+             <slot name="suffix"></slot>
+           </span>
+         </div>
+        </mock:shadow-root>
+      </ce-menu-item>
+    `);
+  });
+
+  it('Can be checked', async () => {
+    const page = await newSpecPage({
+      components: [CEMenuItem],
+      html: `<ce-menu-item checked></ce-menu-item>`,
+    });
+    expect(page.root).toEqualHtml(`
+      <ce-menu-item checked="">
+        <mock:shadow-root>
+          <div aria-checked="true" aria-disabled="false" class="menu-item menu-item--checked" part="base" role="menuitem" tabindex="0">
+           <span class="menu-item__check" part="checked-icon">
+             <svg class="bi bi-check" fill="currentColor" height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
+               <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"></path>
+             </svg>
+           </span>
+           <span class="menu-item__prefix" part="prefix">
+             <slot name="prefix"></slot>
+           </span>
+           <span class="menu-item__label" part="label">
+             <slot></slot>
+           </span>
+           <span class="menu-item__suffix" part="suffix">
+             <slot name="suffix"></slot>
+           </span>
+         </div>
+        </mock:shadow-root>
+      </ce-menu-item>
+    `);
+  });
+});

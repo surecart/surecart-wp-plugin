@@ -1,0 +1,506 @@
+:host {
+  display: inline-block;
+  width: auto;
+  cursor: pointer;
+}
+:host([full]) {
+  display: block;
+}
+
+.button {
+  display: inline-flex;
+  align-items: stretch;
+  justify-content: center;
+  width: 100%;
+  border-style: solid;
+  border-width: var(--ce-input-border-width);
+  font-family: var(--ce-input-font-family);
+  font-weight: var(--ce-font-weight-semibold);
+  text-decoration: none;
+  user-select: none;
+  white-space: nowrap;
+  vertical-align: middle;
+  padding: 0;
+  box-shadow: var(--ce-shadow-small);
+  transition: var(--ce-transition-fast) background-color, var(--ce-transition-fast) color, var(--ce-transition-fast) border, var(--ce-transition-fast) box-shadow;
+  cursor: inherit;
+
+  &::-moz-focus-inner {
+    border: 0;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &.button--disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+
+    // When disabled, prevent mouse events from bubbling up
+    * {
+      pointer-events: none;
+    }
+  }
+
+  // Clicks on icons shouldn't prevent the button from gaining focus
+  ::slotted(.ce--icon) {
+    pointer-events: none;
+  }
+}
+
+.button__prefix,
+.button__suffix {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+}
+
+.button__label {
+  display: flex;
+  align-items: center;
+
+  ::slotted(ce-icon) {
+    vertical-align: -2px;
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Standard buttons
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+.button {
+  &.button--default {
+    background-color: var(--ce-color-white);
+    border-color: var(--ce-color-gray-300);
+    color: var(--ce-color-gray-600);
+
+    &:hover:not(.button--disabled) {
+      background-color: var(--ce-color-primary-50);
+      border-color: var(--ce-color-primary-300);
+      color: var(--ce-color-primary-600);
+    }
+
+    &:focus:not(.button--disabled) {
+      background-color: var(--ce-color-primary-50);
+      border-color: var(--ce-color-primary-300);
+      color: var(--ce-color-primary-600);
+      box-shadow: 0 0 0 var(--ce-focus-ring-width) var(--ce-focus-ring-color-primary);
+    }
+
+    &:active:not(.button--disabled) {
+      background-color: var(--ce-color-primary-100);
+      border-color: var(--ce-color-primary-400);
+      color: var(--ce-color-primary-700);
+    }
+  }
+
+  &.button--primary {
+    background-color: var(--ce-color-primary-500);
+    border-color: var(--ce-color-primary-500);
+    color: var(--ce-color-primary-text);
+
+    &:hover:not(.button--disabled) {
+      background-color: var(--ce-color-primary-400);
+      border-color: var(--ce-color-primary-400);
+      color: var(--ce-color-primary-text);
+    }
+
+    &:focus:not(.button--disabled) {
+      background-color: var(--ce-color-primary-400);
+      border-color: var(--ce-color-primary-400);
+      color: var(--ce-color-primary-text);
+      box-shadow: 0 0 0 var(--ce-focus-ring-width) var(--ce-focus-ring-color-primary);
+    }
+
+    &:active:not(.button--disabled) {
+      background-color: var(--ce-color-primary-500);
+      border-color: var(--ce-color-primary-500);
+      color: var(--ce-color-primary-text);
+    }
+  }
+
+  &.button--success {
+    background-color: var(--ce-color-success-500);
+    border-color: var(--ce-color-success-500);
+    color: var(--ce-color-success-text);
+
+    &:hover:not(.button--disabled) {
+      background-color: var(--ce-color-success-400);
+      border-color: var(--ce-color-success-400);
+      color: var(--ce-color-success-text);
+    }
+
+    &:focus:not(.button--disabled) {
+      background-color: var(--ce-color-success-400);
+      border-color: var(--ce-color-success-400);
+      color: var(--ce-color-success-text);
+      box-shadow: 0 0 0 var(--ce-focus-ring-width) var(--ce-focus-ring-color-success);
+    }
+
+    &:active:not(.button--disabled) {
+      background-color: var(--ce-color-success-500);
+      border-color: var(--ce-color-success-500);
+      color: var(--ce-color-success-text);
+    }
+  }
+
+  &.button--info {
+    background-color: var(--ce-color-info-500);
+    border-color: var(--ce-color-info-500);
+    color: var(--ce-color-info-text);
+
+    &:hover:not(.button--disabled) {
+      background-color: var(--ce-color-info-400);
+      border-color: var(--ce-color-info-400);
+      color: var(--ce-color-info-text);
+    }
+
+    &:focus:not(.button--disabled) {
+      background-color: var(--ce-color-info-400);
+      border-color: var(--ce-color-info-400);
+      color: var(--ce-color-info-text);
+      box-shadow: 0 0 0 var(--ce-focus-ring-width) var(--ce-focus-ring-color-info);
+    }
+
+    &:active:not(.button--disabled) {
+      background-color: var(--ce-color-info-500);
+      border-color: var(--ce-color-info-500);
+      color: var(--ce-color-info-text);
+    }
+  }
+
+  &.button--warning {
+    background-color: var(--ce-color-warning-500);
+    border-color: var(--ce-color-warning-500);
+    color: var(--ce-color-warning-text);
+
+    &:hover:not(.button--disabled) {
+      background-color: var(--ce-color-warning-400);
+      border-color: var(--ce-color-warning-400);
+      color: var(--ce-color-warning-text);
+    }
+
+    &:focus:not(.button--disabled) {
+      background-color: var(--ce-color-warning-400);
+      border-color: var(--ce-color-warning-400);
+      color: var(--ce-color-warning-text);
+      box-shadow: 0 0 0 var(--ce-focus-ring-width) var(--ce-focus-ring-color-warning);
+    }
+
+    &:active:not(.button--disabled) {
+      background-color: var(--ce-color-warning-500);
+      border-color: var(--ce-color-warning-500);
+      color: var(--ce-color-warning-text);
+    }
+  }
+
+  &.button--danger {
+    background-color: var(--ce-color-danger-500);
+    border-color: var(--ce-color-danger-500);
+    color: var(--ce-color-danger-text);
+
+    &:hover:not(.button--disabled) {
+      background-color: var(--ce-color-danger-400);
+      border-color: var(--ce-color-danger-400);
+      color: var(--ce-color-danger-text);
+    }
+
+    &:focus:not(.button--disabled) {
+      background-color: var(--ce-color-danger-400);
+      border-color: var(--ce-color-danger-400);
+      color: var(--ce-color-danger-text);
+      box-shadow: 0 0 0 var(--ce-focus-ring-width) var(--ce-focus-ring-color-danger);
+    }
+
+    &:active:not(.button--disabled) {
+      background-color: var(--ce-color-danger-500);
+      border-color: var(--ce-color-danger-500);
+      color: var(--ce-color-danger-text);
+    }
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Text buttons
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+.button--text {
+  background-color: transparent;
+  border-color: transparent;
+  color: var(--ce-color-primary-500);
+
+  &:hover:not(.button--disabled) {
+    background-color: transparent;
+    border-color: transparent;
+    color: var(--ce-color-primary-400);
+  }
+
+  &:focus:not(.button--disabled) {
+    background-color: transparent;
+    border-color: transparent;
+    color: var(--ce-color-primary-400);
+    box-shadow: 0 0 0 var(--ce-focus-ring-width) var(--ce-focus-ring-color-primary);
+  }
+
+  &:active:not(.button--disabled) {
+    background-color: transparent;
+    border-color: transparent;
+    color: var(--ce-color-primary-600);
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Size modifiers
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+.button--small {
+  font-size: var(--ce-button-font-size-small);
+  height: var(--ce-input-height-small);
+  line-height: calc(var(--ce-input-height-small) - var(--ce-input-border-width) * 2);
+  border-radius: var(--ce-input-border-radius-small);
+}
+
+.button--medium {
+  font-size: var(--ce-button-font-size-medium);
+  height: var(--ce-input-height-medium);
+  line-height: calc(var(--ce-input-height-medium) - var(--ce-input-border-width) * 2);
+  border-radius: var(--ce-input-border-radius-medium);
+}
+
+.button--large {
+  font-size: var(--ce-button-font-size-large);
+  height: var(--ce-input-height-large);
+  line-height: calc(var(--ce-input-height-large) - var(--ce-input-border-width) * 2);
+  border-radius: var(--ce-input-border-radius-large);
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Full modifier
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+.button--full {
+  display: block;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Pill modifier
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+.button--pill {
+  &.button--small {
+    border-radius: var(--ce-input-height-small);
+  }
+
+  &.button--medium {
+    border-radius: var(--ce-input-height-medium);
+  }
+
+  &.button--large {
+    border-radius: var(--ce-input-height-large);
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Circle modifier
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+.button--circle {
+  padding-left: 0;
+  padding-right: 0;
+
+  &.button--small {
+    width: var(--ce-input-height-small);
+    border-radius: 50%;
+  }
+
+  &.button--medium {
+    width: var(--ce-input-height-medium);
+    border-radius: 50%;
+  }
+
+  &.button--large {
+    width: var(--ce-input-height-large);
+    border-radius: 50%;
+  }
+
+  .button__prefix,
+  .button__suffix,
+  .button__caret {
+    display: none;
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Caret modifier
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+.button--caret {
+  .button__suffix {
+    display: none;
+  }
+
+  .button__caret {
+    display: flex;
+    align-items: center;
+
+    svg {
+      width: 1em;
+      height: 1em;
+    }
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Loading modifier
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+.button--loading {
+  position: relative;
+  cursor: wait;
+
+  .button__prefix,
+  .button__label,
+  .button__suffix,
+  .button__caret {
+    visibility: hidden;
+  }
+
+  ce-spinner {
+    --indicator-color: currentColor;
+    position: absolute;
+    line-height: 1;
+    height: 1em !important;
+    width: 1em !important;
+    top: calc(50% - 0.5em);
+    left: calc(50% - 0.5em);
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Badges
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+.button ::slotted(ce-badge) {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translateY(-50%) translateX(50%);
+  pointer-events: none;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Button spacing
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+.button--has-label {
+  &.button--small .button__label {
+    padding: 0 var(--ce-spacing-small);
+  }
+
+  &.button--medium .button__label {
+    padding: 0 var(--ce-spacing-medium);
+  }
+
+  &.button--large .button__label {
+    padding: 0 var(--ce-spacing-large);
+  }
+}
+
+.button--has-prefix {
+  &.button--small {
+    padding-left: var(--ce-spacing-x-small);
+
+    .button__label {
+      padding-left: var(--ce-spacing-x-small);
+    }
+  }
+
+  &.button--medium {
+    padding-left: var(--ce-spacing-small);
+
+    .button__label {
+      padding-left: var(--ce-spacing-small);
+    }
+  }
+
+  &.button--large {
+    padding-left: var(--ce-spacing-small);
+
+    .button__label {
+      padding-left: var(--ce-spacing-small);
+    }
+  }
+}
+
+.button--has-suffix,
+.button--caret {
+  &.button--small {
+    padding-right: var(--ce-spacing-x-small);
+
+    .button__label {
+      padding-right: var(--ce-spacing-x-small);
+    }
+  }
+
+  &.button--medium {
+    padding-right: var(--ce-spacing-small);
+
+    .button__label {
+      padding-right: var(--ce-spacing-small);
+    }
+  }
+
+  &.button--large {
+    padding-right: var(--ce-spacing-small);
+
+    .button__label {
+      padding-right: var(--ce-spacing-small);
+    }
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Button groups support a variety of button types (e.g. buttons with tooltips, buttons as dropdown triggers, etc.).
+// This means buttons aren't always direct descendants of the button group, thus we can't target them with the ::slotted
+// selector. To work around this, the button group component does some magic to add these special classes to buttons and
+// we style them here instead.
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+:host(.ce-button-group__button--first) .button {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+:host(.ce-button-group__button--inner) .button {
+  border-radius: 0;
+}
+
+:host(.ce-button-group__button--last) .button {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+// All except the first
+:host(.ce-button-group__button:not(.ce-button-group__button--first)) {
+  margin-left: calc(-1 * var(--ce-input-border-width));
+}
+
+// Add a visual separator between solid buttons
+:host(.ce-button-group__button:not(.ce-button-group__button--focus, .ce-button-group__button--first, [type='default']):not(:hover, :active, :focus)) .button:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  border-left: solid 1px #fff4;
+  mix-blend-mode: lighten;
+}
+
+// Bump focused buttons up so their focus ring isn't clipped
+:host(.ce-button-group__button--hover) {
+  z-index: 1;
+}
+
+:host(.ce-button-group__button--focus) {
+  z-index: 2;
+}

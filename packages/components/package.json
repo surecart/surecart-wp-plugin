@@ -10,7 +10,7 @@
   "types": "dist/custom-elements/index.d.ts",
   "collection": "dist/collection/collection-manifest.json",
   "collection:main": "dist/collection/index.js",
-  "unpkg": "dist/presto-components/presto-components.js",
+  "unpkg": "dist/ce-components/ce-components.js",
   "repository": {
     "url": "git@github.com:checkout-engine/checkout-engine-components.git"
   },

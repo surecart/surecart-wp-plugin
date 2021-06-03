@@ -1,15 +1,13 @@
-# presto-menu
-
-
+# ce-menu
 
 <!-- Auto Generated Below -->
 
 
 ## Events
 
-| Event          | Description | Type                                                |
-| -------------- | ----------- | --------------------------------------------------- |
-| `prestoSelect` |             | `CustomEvent<{ item: HTMLPrestoMenuItemElement; }>` |
+| Event      | Description | Type                                            |
+| ---------- | ----------- | ----------------------------------------------- |
+| `ceSelect` |             | `CustomEvent<{ item: HTMLCeMenuItemElement; }>` |
 
 
 ## Shadow Parts
@@ -23,13 +21,13 @@
 
 ### Used by
 
- - [presto-select](../select)
+ - [ce-select](../select)
 
 ### Graph
 ```mermaid
 graph TD;
-  presto-select --> presto-menu
-  style presto-menu fill:#f9f,stroke:#333,stroke-width:4px
+  ce-select --> ce-menu
+  style ce-menu fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

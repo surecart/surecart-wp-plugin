@@ -1,9 +1,6 @@
-# presto-input
-
-
+# ce-input
 
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -36,17 +33,15 @@
 | `type`           | `type`            | The input's type.                                                                                                                                                                                             | `"email" \| "number" \| "password" \| "search" \| "tel" \| "text" \| "url"`           | `'text'`    |
 | `value`          | `value`           | The input's value attribute.                                                                                                                                                                                  | `string`                                                                              | `''`        |
 
-
 ## Events
 
-| Event          | Description                                 | Type                |
-| -------------- | ------------------------------------------- | ------------------- |
-| `prestoBlur`   | Emitted when the control loses focus.       | `CustomEvent<void>` |
-| `prestoChange` | Emitted when the control's value changes.   | `CustomEvent<void>` |
-| `prestoClear`  | Emitted when the clear button is activated. | `CustomEvent<void>` |
-| `prestoFocus`  | Emitted when the control gains focus.       | `CustomEvent<void>` |
-| `prestoInput`  | Emitted when the control receives input.    | `CustomEvent<void>` |
-
+| Event      | Description                                 | Type                |
+| ---------- | ------------------------------------------- | ------------------- |
+| `ceBlur`   | Emitted when the control loses focus.       | `CustomEvent<void>` |
+| `ceChange` | Emitted when the control's value changes.   | `CustomEvent<void>` |
+| `ceClear`  | Emitted when the clear button is activated. | `CustomEvent<void>` |
+| `ceFocus`  | Emitted when the control gains focus.       | `CustomEvent<void>` |
+| `ceInput`  | Emitted when the control receives input.    | `CustomEvent<void>` |
 
 ## Methods
 
@@ -58,8 +53,6 @@ Removes focus from the input.
 
 Type: `Promise<void>`
 
-
-
 ### `setFocus(options?: FocusOptions) => Promise<void>`
 
 Sets focus on the input.
@@ -67,9 +60,6 @@ Sets focus on the input.
 #### Returns
 
 Type: `Promise<void>`
-
-
-
 
 ## Shadow Parts
 
@@ -80,27 +70,26 @@ Type: `Promise<void>`
 | `"prefix"` |             |
 | `"suffix"` |             |
 
-
 ## CSS Custom Properties
 
 | Name           | Description                                                                           |
 | -------------- | ------------------------------------------------------------------------------------- |
 | `--focus-ring` | The focus ring style to use when the control receives focus, a `box-shadow` property. |
 
-
 ## Dependencies
 
 ### Depends on
 
-- [presto-form-control](../form-control)
+- [ce-form-control](../form-control)
 
 ### Graph
+
 ```mermaid
 graph TD;
-  presto-input --> presto-form-control
-  style presto-input fill:#f9f,stroke:#333,stroke-width:4px
+  ce-input --> ce-form-control
+  style ce-input fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
-----------------------------------------------
+---
 
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

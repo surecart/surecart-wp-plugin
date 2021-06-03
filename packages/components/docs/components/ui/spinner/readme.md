@@ -1,6 +1,4 @@
-# presto-spinner
-
-
+# ce-spinner
 
 <!-- Auto Generated Below -->
 
@@ -25,13 +23,13 @@
 
 ### Used by
 
- - [presto-button](../button)
+ - [ce-button](../button)
 
 ### Graph
 ```mermaid
 graph TD;
-  presto-button --> presto-spinner
-  style presto-spinner fill:#f9f,stroke:#333,stroke-width:4px
+  ce-button --> ce-spinner
+  style ce-spinner fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

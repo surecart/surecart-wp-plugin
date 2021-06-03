@@ -1,0 +1,240 @@
+import { Component, Prop, State, Watch, h, Event, EventEmitter, Method } from '@stencil/core';
+let id = 0;
+
+/**
+ * @part base - The elements base wrapper.
+ * @part input - The html input element.
+ * @part base - The elements base wrapper.
+ * @part prefix - Used to prepend an icon or element to the input.
+ * @part suffix - Used to prepend an icon or element to the input.
+ * @part help-text - Help text that describes how to use the input.
+ */
+@Component({
+  tag: 'ce-input',
+  styleUrl: 'ce-input.scss',
+  shadow: true,
+})
+export class CEInput {
+  private input: HTMLInputElement;
+  private inputId: string = `input-${++id}`;
+  private helpId = `input-help-text-${id}`;
+  private labelId = `input-label-${id}`;
+
+  /** The input's type. */
+  @Prop({ reflect: true }) type: 'email' | 'number' | 'password' | 'search' | 'tel' | 'text' | 'url' = 'text';
+
+  /** The input's size. */
+  @Prop({ reflect: true }) size: 'small' | 'medium' | 'large' = 'medium';
+
+  /** The input's name attribute. */
+  @Prop() name: string;
+
+  /** The input's value attribute. */
+  @Prop({ mutable: true }) value = '';
+
+  /** Draws a pill-style input with rounded edges. */
+  @Prop({ reflect: true }) pill = false;
+
+  /** The input's label. */
+  @Prop() label: string;
+
+  /** Should we show the label */
+  @Prop() showLabel: boolean = true;
+
+  /** The input's help text. */
+  @Prop() help: string = '';
+
+  /** Adds a clear button when the input is populated. */
+  @Prop() clearable = false;
+
+  /** Adds a password toggle button to password inputs. */
+  @Prop() togglePassword: boolean = false;
+
+  /** The input's placeholder text. */
+  @Prop() placeholder: string;
+
+  /** Disables the input. */
+  @Prop({ reflect: true }) disabled: boolean = false;
+
+  /** Makes the input readonly. */
+  @Prop({ reflect: true }) readonly: boolean = false;
+
+  /** The minimum length of input that will be considered valid. */
+  @Prop() minlength: number;
+
+  /** The maximum length of input that will be considered valid. */
+  @Prop() maxlength: number;
+
+  /** The input's minimum value. */
+  @Prop() min: number | string;
+
+  /** The input's maximum value. */
+  @Prop() max: number | string;
+
+  /** The input's step attribute. */
+  @Prop() step: number;
+
+  /** A pattern to validate input against. */
+  @Prop() pattern: string;
+
+  /** Makes the input a required field. */
+  @Prop({ reflect: true }) required = false;
+
+  /**
+   * This will be true when the control is in an invalid state. Validity is determined by props such as `type`,
+   * `required`, `minlength`, `maxlength`, and `pattern` using the browser's constraint validation API.
+   */
+  @Prop({ mutable: true, reflect: true }) invalid = false;
+
+  /** The input's autocorrect attribute. */
+  @Prop() autocorrect: string;
+
+  /** The input's autocomplete attribute. */
+  @Prop() autocomplete: string;
+
+  /** The input's autofocus attribute. */
+  @Prop() autofocus: boolean;
+
+  /** Enables spell checking on the input. */
+  @Prop() spellcheck: boolean;
+
+  /** The input's inputmode attribute. */
+  @Prop() inputmode: 'none' | 'text' | 'decimal' | 'numeric' | 'tel' | 'search' | 'email' | 'url';
+
+  /** Inputs focus */
+  @Prop({ mutable: true, reflect: true }) hasFocus: boolean;
+
+  /** Is the password visible */
+  @State() isPasswordVisible = false;
+
+  /** Emitted when the control's value changes. */
+  @Event({ composed: true })
+  ceChange: EventEmitter<void>;
+
+  /** Emitted when the clear button is activated. */
+  @Event() ceClear: EventEmitter<void>;
+
+  /** Emitted when the control receives input. */
+  @Event() ceInput: EventEmitter<void>;
+
+  /** Emitted when the control gains focus. */
+  @Event() ceFocus: EventEmitter<void>;
+
+  /** Emitted when the control loses focus. */
+  @Event() ceBlur: EventEmitter<void>;
+
+  @Method('reportValidity')
+  async reportValidity() {
+    return this.input.reportValidity();
+  }
+
+  /** Sets focus on the input. */
+  @Method()
+  async triggerFocus(options?: FocusOptions) {
+    return this.input.focus(options);
+  }
+
+  /** Removes focus from the input. */
+  @Method()
+  async triggerBlur() {
+    return this.input.blur();
+  }
+
+  /** Selects all the text in the input. */
+  select() {
+    return this.input.select();
+  }
+
+  handleBlur() {
+    this.hasFocus = false;
+    this.ceBlur.emit();
+  }
+
+  handleFocus() {
+    this.hasFocus = true;
+    this.ceFocus.emit();
+  }
+
+  handleChange() {
+    this.value = this.input.value;
+    this.ceChange.emit();
+  }
+
+  handlePasswordToggle() {
+    this.isPasswordVisible = !this.isPasswordVisible;
+  }
+
+  @Watch('hasFocus')
+  handleFocusChange() {
+    this.hasFocus ? this.input.focus() : this.input.blur();
+  }
+
+  @Watch('value')
+  handleValueChange() {
+    this.invalid = !this.input.checkValidity();
+  }
+
+  render() {
+    return (
+      <ce-form-control size={this.size} label={this.label} showLabel={this.showLabel} help={this.help} inputId={this.inputId} helpId={this.helpId} labelId={this.labelId}>
+        <div
+          part="base"
+          class={{
+            'input': true,
+
+            // Sizes
+            'input--small': this.size === 'small',
+            'input--medium': this.size === 'medium',
+            'input--large': this.size === 'large',
+
+            // States
+            'input--focused': this.hasFocus,
+          }}
+        >
+          <span part="prefix" class="input__prefix">
+            <slot name="prefix"></slot>
+          </span>
+
+          <slot>
+            <input
+              part="input"
+              id={this.inputId}
+              class="input__control"
+              ref={el => (this.input = el as HTMLInputElement)}
+              type={this.type === 'password' && this.isPasswordVisible ? 'text' : this.type}
+              name={this.name}
+              disabled={this.disabled}
+              readonly={this.readonly}
+              required={this.required}
+              placeholder={this.placeholder}
+              minlength={this.minlength}
+              maxlength={this.maxlength}
+              min={this.min}
+              max={this.max}
+              step={this.step}
+              // TODO: Test These below
+              autocomplete={this.autocomplete}
+              autocorrect={this.autocorrect}
+              autofocus={this.autofocus}
+              spellcheck={this.spellcheck}
+              pattern={this.pattern}
+              inputmode={this.inputmode}
+              aria-labelledby={this.label}
+              aria-invalid={this.invalid ? true : false}
+              value={this.value}
+              onChange={() => this.handleChange()}
+              // onInput={this.handleInput}
+              // onInvalid={this.handleInvalid}
+              onFocus={() => this.handleFocus()}
+              onBlur={() => this.handleBlur()}
+            />
+          </slot>
+
+          <span part="suffix" class="input__suffix">
+            <slot name="suffix"></slot>
+          </span>
+        </div>
+      </ce-form-control>
+    );
+  }
+}

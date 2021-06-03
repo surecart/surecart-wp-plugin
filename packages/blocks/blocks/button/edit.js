@@ -7,14 +7,14 @@ import { RichText } from '@wordpress/block-editor';
 /**
  * Component Dependencies
  */
-import { PrestoButton } from '@checkout-engine/react';
+import { CeButton } from '@checkout-engine/react';
 
 export default ( { className, attributes, setAttributes } ) => {
 	const { type, text, submit, full, size } = attributes;
 
 	return (
 		<div className={ className }>
-			<PrestoButton
+			<CeButton
 				type={ type }
 				submit={ submit }
 				full={ full }
@@ -28,7 +28,7 @@ export default ( { className, attributes, setAttributes } ) => {
 					withoutInteractiveFormatting
 					allowedFormats={ [ 'core/bold', 'core/italic' ] }
 				/>
-			</PrestoButton>
+			</CeButton>
 		</div>
 	);
 };
