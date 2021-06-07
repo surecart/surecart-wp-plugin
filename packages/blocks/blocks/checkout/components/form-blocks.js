@@ -3,7 +3,7 @@ import { useEffect } from '@wordpress/element';
 import { createBlock } from '@wordpress/blocks';
 import { InnerBlocks } from '@wordpress/block-editor';
 
-import { allowed } from '../template.json';
+import { template } from '../template.json';
 import findBlock from '../../../utils/find-block';
 import withIsPremium from '../../../higher-order/withIsPremium';
 
@@ -35,8 +35,8 @@ export default withIsPremium(
 				renderAppender={
 					isSelected ? InnerBlocks.ButtonBlockAppender : false
 				}
-				templateLock={ isPremium ? false : 'insert' }
-				allowedBlocks={ allowed }
+				templateLock={ isPremium ? 'insert' : 'all' }
+				template={ template }
 			/>
 		);
 	}

@@ -19,7 +19,7 @@ class SessionServiceProvider implements ServiceProviderInterface {
 	 * {@inheritDoc}
 	 */
 	public function bootstrap( $container ) {
-		add_action( 'init', [$this, 'startSession'] );
+		add_action( 'init', [ $this, 'startSession' ] );
 	}
 
 	/**

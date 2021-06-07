@@ -1,0 +1,22 @@
+{
+	"name": "checkout-engine/name",
+	"category": "layout",
+	"attributes": {
+		"firstnameLabel": {
+			"type": "string",
+			"default": "First Name"
+		},
+		"firstnameHelp": {
+			"type": "string",
+			"default": "optional"
+		},
+		"lastnameLabel": {
+			"type": "string",
+			"default": "Last Name"
+		},
+		"lastnameHelp": {
+			"type": "string",
+			"default": "optional"
+		}
+	}
+}

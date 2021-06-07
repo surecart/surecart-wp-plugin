@@ -7,8 +7,8 @@ use WPEmerge\ServiceProviders\ServiceProviderInterface;
 /**
  * Register plugin options.
  */
-class PluginServiceProvider implements ServiceProviderInterface
-{
+class PluginServiceProvider implements ServiceProviderInterface {
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -20,10 +20,10 @@ class PluginServiceProvider implements ServiceProviderInterface
 	 * {@inheritDoc}
 	 */
 	public function bootstrap( $container ) {
-		register_activation_hook( CHECKOUT_ENGINE_PLUGIN_FILE, [$this, 'activate'] );
-		register_deactivation_hook( CHECKOUT_ENGINE_PLUGIN_FILE, [$this, 'deactivate'] );
+		register_activation_hook( CHECKOUT_ENGINE_PLUGIN_FILE, [ $this, 'activate' ] );
+		register_deactivation_hook( CHECKOUT_ENGINE_PLUGIN_FILE, [ $this, 'deactivate' ] );
 
-		add_action( 'plugins_loaded', [$this, 'loadTextdomain'] );
+		add_action( 'plugins_loaded', [ $this, 'loadTextdomain' ] );
 	}
 
 	/**

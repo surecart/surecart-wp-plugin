@@ -5,8 +5,7 @@
   margin: calc(-1 * var(--ce-form-row-spacing, 0.75em)) 0 0 calc(-1 * var(--ce-form-row-spacing, 0.75em));
 }
 
-::slotted(*),
-::slotted(.block-editor-block-list__layout > *) {
+::slotted(*) {
   flex: 1;
   margin: var(--ce-form-row-spacing, 0.75em);
   width: 0;

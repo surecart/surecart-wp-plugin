@@ -5,13 +5,13 @@ namespace CheckoutEngine\Blocks;
 /**
  * Checkout block
  */
-class CheckoutForm extends Block {
+class PricingSection extends Block {
 	/**
 	 * Block name
 	 *
 	 * @var string
 	 */
-	protected $name = 'checkout-form';
+	protected $name = 'pricing-section';
 
 	/**
 	 * Render the block
@@ -25,9 +25,8 @@ class CheckoutForm extends Block {
 		return \CheckoutEngine::blocks()->render(
 			"blocks/$this->name",
 			[
-				'label'       => $attributes['label'] ?? '',
-				'description' => $attributes['description'] ?? '',
-				'content'     => $content,
+				'attributes' => $attributes,
+				'content'    => $content,
 			]
 		);
 	}

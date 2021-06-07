@@ -1,0 +1,24 @@
+{
+	"name": "checkout-engine/totals-section",
+	"category": "layout",
+	"attributes": {
+		"label": {
+			"type": "string",
+			"default": "Total"
+		},
+		"description": {
+			"type": "string"
+		},
+		"default": {
+			"type": "string",
+			"default": ""
+		},
+		"choices": {
+			"type": "array"
+		},
+		"type": {
+			"type": "string",
+			"default": "radio"
+		}
+	}
+}

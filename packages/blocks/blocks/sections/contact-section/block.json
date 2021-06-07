@@ -1,0 +1,13 @@
+{
+	"name": "checkout-engine/contact-section",
+	"category": "layout",
+	"attributes": {
+		"label": {
+			"type": "string",
+			"default": "Contact Information"
+		},
+		"description": {
+			"type": "string"
+		}
+	}
+}

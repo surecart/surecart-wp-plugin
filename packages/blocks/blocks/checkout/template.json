@@ -1,12 +1,9 @@
 {
 	"allowed": [ "checkout-engine/button" ],
 	"template": [
-		[
-			"checkout-engine/email",
-			{
-				"label": "Email Address"
-			}
-		],
+		[ "checkout-engine/pricing-section" ],
+		[ "checkout-engine/contact-section" ],
+		[ "checkout-engine/totals-section" ],
 		[ "checkout-engine/submit" ]
 	]
 }

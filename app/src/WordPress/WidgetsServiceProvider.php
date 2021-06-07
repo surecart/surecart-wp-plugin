@@ -19,7 +19,7 @@ class WidgetsServiceProvider implements ServiceProviderInterface {
 	 * {@inheritDoc}
 	 */
 	public function bootstrap( $container ) {
-		add_action( 'widgets_init', [$this, 'registerWidgets'] );
+		add_action( 'widgets_init', [ $this, 'registerWidgets' ] );
 	}
 
 	/**
