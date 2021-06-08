@@ -2,6 +2,7 @@
  * Internal dependencies
  */
 import edit from './edit';
+import save from './save';
 import metadata from './block.json';
 
 /**
@@ -35,7 +36,7 @@ const settings = {
 	],
 	attributes,
 	edit,
-	// this is a dynamic block
+	save,
 };
 
 export { name, category, metadata, settings };

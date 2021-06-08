@@ -25,8 +25,26 @@ class PricingSection extends Block {
 		return \CheckoutEngine::blocks()->render(
 			"blocks/$this->name",
 			[
-				'attributes' => $attributes,
-				'content'    => $content,
+				'label'       => $attributes['label'] ?? __( 'Choose A Plan', 'checkout_engine' ),
+				'description' => $attributes['description'] ?? '',
+				'type'        => $attributes['type'] ?? 'radio',
+				'prices'      => [
+					[
+						'name'        => 'test',
+						'required'    => true,
+						'default'     => true,
+						'title'       => 'Gold Plan',
+						'description' => '$9.99, then $49.99 per month',
+					],
+					[
+						'name'        => 'test',
+						'required'    => true,
+						'title'       => 'Silver Plan',
+						'description' => '$9.99, then $49.99 per month',
+					],
+				],
+				'attributes'  => $attributes,
+				'content'     => $content,
 			]
 		);
 	}

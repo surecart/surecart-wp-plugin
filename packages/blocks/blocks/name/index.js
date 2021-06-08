@@ -32,7 +32,7 @@ const settings = {
 	],
 	attributes,
 	edit,
-	save,
+	// save,
 };
 
 export { name, category, metadata, settings };

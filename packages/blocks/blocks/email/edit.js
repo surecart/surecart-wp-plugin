@@ -10,7 +10,7 @@ import { CeInput } from '@checkout-engine/react';
 import Inspector from './components/Inspector';
 
 export default ( { className, attributes, setAttributes } ) => {
-	const { label, placeholder } = attributes;
+	const { label, placeholder, help } = attributes;
 
 	return (
 		<div className={ className }>
@@ -23,6 +23,7 @@ export default ( { className, attributes, setAttributes } ) => {
 				type="email"
 				label={ label }
 				placeholder={ placeholder }
+				help={ help }
 			></CeInput>
 		</div>
 	);

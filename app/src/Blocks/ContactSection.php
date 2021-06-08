@@ -5,13 +5,13 @@ namespace CheckoutEngine\Blocks;
 /**
  * Checkout block
  */
-class Input extends Block {
+class ContactSection extends Block {
 	/**
 	 * Block name
 	 *
 	 * @var string
 	 */
-	protected $name = 'input';
+	protected $name = 'contact-section';
 
 	/**
 	 * Render the block
@@ -25,9 +25,9 @@ class Input extends Block {
 		return \CheckoutEngine::blocks()->render(
 			"blocks/$this->name",
 			[
-				'label'   => $attributes['label'] || '',
-				'help'    => $attributes['help'] || '',
-				'content' => $content,
+				'label'       => $attributes['label'] ?? __( 'Contact Information', 'checkout_engine' ),
+				'description' => $attributes['description'] ?? '',
+				'content'     => $content,
 			]
 		);
 	}

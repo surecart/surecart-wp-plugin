@@ -6,7 +6,7 @@ import { InspectorControls } from '@wordpress/editor';
 import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
 
 export default ( { attributes, setAttributes } ) => {
-	const { label, placeholder } = attributes;
+	const { label, placeholder, help } = attributes;
 
 	return (
 		<InspectorControls>
@@ -25,6 +25,13 @@ export default ( { attributes, setAttributes } ) => {
 						onChange={ ( placeholder ) =>
 							setAttributes( { placeholder } )
 						}
+					/>
+				</PanelRow>
+				<PanelRow>
+					<TextControl
+						label={ __( 'Help', 'checkout-engine' ) }
+						value={ help }
+						onChange={ ( help ) => setAttributes( { help } ) }
 					/>
 				</PanelRow>
 			</PanelBody>

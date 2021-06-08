@@ -26,7 +26,7 @@ return [
 		\CheckoutEngine\WordPress\PluginServiceProvider::class,
 		\CheckoutEngine\WordPress\WidgetsServiceProvider::class,
 		\CheckoutEngine\View\ViewServiceProvider::class,
-		// \WPEmergeBlade\View\ServiceProvider::class,
+		\WPEmergeBlade\View\ServiceProvider::class,
 		\CheckoutEngine\Blocks\BlockServiceProvider::class,
 	],
 
@@ -112,29 +112,22 @@ return [
 		// \CheckoutEngine\Middleware\MyMiddlewareThatShouldRunSecond::class,
 	],
 
+	/**
+	 * Custom directories to search for views.
+	 * Use absolute paths or leave blank to disable.
+	 * Applies only to the default PhpViewEngine.
+	 */
+	'views'               => [ dirname( __DIR__ ) . DIRECTORY_SEPARATOR . 'views' ],
 
 	/**
 	 * Blade options
 	 */
-	// 'blade'               => [
-	// Automatically replace the default view engine for WP Emerge.
-	// 'replace_default_engine' => true,
-
-	// Pass .php views to the default view engine.
-	// replace_default_engine must be true for this to take effect.
-	// 'proxy_php_views'        => true,
-
-	// This is only necessary in themes.
-	// 'filter_core_templates'  => false,
-
-	// Options passed directly to Blade.
-	// 'options'                => [
-	// 'views' defaults to the main ['views'] key of the configuration.
-	// 'views' => [ get_stylesheet_directory(), get_template_directory() ],
-	// 'cache' defaults to the main ['cache']['path'] key of the configuration.
-	// 'cache' => 'wp-content/uploads/checkout-engine/cache/blade',
-	// ],
-	// ],
+	'blade'               => [
+		'options' => [
+			// 'cache' defaults to the main ['cache']['path'] key of the configuration.
+			'cache' => 'wp-content/uploads/checkout-engine/cache/blade',
+		],
+	],
 
 	/**
 	 * App Core configuration.
@@ -149,8 +142,11 @@ return [
 	 */
 	'blocks'              => [
 		\CheckoutEngine\Blocks\CheckoutForm::class,
+		\CheckoutEngine\Blocks\Email::class,
+		\CheckoutEngine\Blocks\Name::class,
 		\CheckoutEngine\Blocks\Input::class,
 		\CheckoutEngine\Blocks\FormSection::class,
 		\CheckoutEngine\Blocks\PricingSection::class,
+		\CheckoutEngine\Blocks\ContactSection::class,
 	],
 ];

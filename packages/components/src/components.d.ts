@@ -558,6 +558,543 @@ export namespace Components {
          */
         "value": string;
     }
+    interface PrestoButton {
+        /**
+          * Draws the button with a caret for use with dropdowns, popovers, etc.
+         */
+        "caret"?: boolean;
+        /**
+          * Draws a circle button.
+         */
+        "circle"?: boolean;
+        /**
+          * Disables the button.
+         */
+        "disabled"?: boolean;
+        /**
+          * Tells the browser to download the linked file as this filename. Only used when `href` is set.
+         */
+        "download": string;
+        /**
+          * Draws the button with a caret for use with dropdowns, popovers, etc.
+         */
+        "full"?: boolean;
+        /**
+          * When set, the underlying button will be rendered as an `<a>` with this `href` instead of a `<button>`.
+         */
+        "href": string;
+        /**
+          * Draws the button in a loading state.
+         */
+        "loading"?: boolean;
+        /**
+          * An optional name for the button. Ignored when `href` is set.
+         */
+        "name": string;
+        /**
+          * Draws a pill-style button with rounded edges.
+         */
+        "pill"?: boolean;
+        /**
+          * The button's size.
+         */
+        "size": 'small' | 'medium' | 'large';
+        /**
+          * Indicates if activating the button should submit the form. Ignored when `href` is set.
+         */
+        "submit"?: boolean;
+        /**
+          * Tells the browser where to open the link. Only used when `href` is set.
+         */
+        "target": '_blank' | '_parent' | '_self' | '_top';
+        /**
+          * The button's type.
+         */
+        "type": 'default' | 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text';
+        /**
+          * An optional value for the button. Ignored when `href` is set.
+         */
+        "value": string;
+    }
+    interface PrestoCheckbox {
+        /**
+          * Draws the checkbox in a checked state.
+         */
+        "checked": boolean;
+        /**
+          * Disables the checkbox.
+         */
+        "disabled": boolean;
+        /**
+          * Draws the checkbox in an indeterminate state.
+         */
+        "indeterminate": boolean;
+        /**
+          * This will be true when the control is in an invalid state. Validity is determined by the `required` prop.
+         */
+        "invalid": boolean;
+        /**
+          * The checkbox's name attribute.
+         */
+        "name": string;
+        /**
+          * Checks for validity and shows the browser's validation message if the control is invalid.
+         */
+        "reportValidity": () => Promise<boolean>;
+        /**
+          * Makes the checkbox a required field.
+         */
+        "required": boolean;
+        /**
+          * Removes focus from the checkbox.
+         */
+        "triggerBlur": () => Promise<void>;
+        /**
+          * Simulates a click on the checkbox.
+         */
+        "triggerClick": () => Promise<void>;
+        /**
+          * Sets focus on the checkbox.
+         */
+        "triggerFocus": (options?: FocusOptions) => Promise<void>;
+        /**
+          * The checkbox's value attribute.
+         */
+        "value": string;
+    }
+    interface PrestoCheckout {
+        "productIds": Array<any>;
+    }
+    interface PrestoChoice {
+        /**
+          * Draws the choice in a checked state.
+         */
+        "checked": boolean;
+        /**
+          * Is the choice disabled
+         */
+        "disabled": boolean;
+        /**
+          * This will be true when the control is in an invalid state. Validity is determined by the `required` prop.
+         */
+        "invalid": boolean;
+        /**
+          * The choice name attribute
+         */
+        "name": string;
+        /**
+          * Checks for validity and shows the browser's validation message if the control is invalid.
+         */
+        "reportValidity": () => Promise<boolean>;
+        /**
+          * Is this required
+         */
+        "required": boolean;
+        /**
+          * Sets a custom validation message. If `message` is not empty, the field will be considered invalid.
+         */
+        "setCustomValidity": (message: string) => Promise<void>;
+        /**
+          * Simulates a click on the choice.
+         */
+        "triggerClick": () => Promise<void>;
+        /**
+          * The choice name attribute
+         */
+        "type": 'radio' | 'checkbox';
+        /**
+          * The choice value
+         */
+        "value": string;
+    }
+    interface PrestoChoices {
+        /**
+          * Hides the fieldset and legend that surrounds the group. The label will still be read by screen readers.
+         */
+        "hideLabel": boolean;
+        /**
+          * The group label. Required for proper accessibility. Alternatively, you can use the label slot.
+         */
+        "label": string;
+    }
+    interface PrestoDivider {
+    }
+    interface PrestoForm {
+        /**
+          * Serializes all form controls elements and returns a `FormData` object.
+         */
+        "getFormData": () => Promise<FormData>;
+        "getFormJson": () => Promise<{ [k: string]: FormDataEntryValue; }>;
+        /**
+          * Prevent the form from validating inputs before submitting.
+         */
+        "novalidate": boolean;
+        /**
+          * Submits the form. If all controls are valid, the `presto-submit` event will be emitted and the promise will resolve with `true`. If any form control is invalid, the promise will resolve with `false` and no event will be emitted.
+         */
+        "submit": () => Promise<boolean>;
+    }
+    interface PrestoFormControl {
+        "help": string;
+        "helpId": string;
+        "inputId": string;
+        "label": string;
+        "labelId": string;
+        "showLabel": boolean;
+        "size": 'small' | 'medium' | 'large';
+    }
+    interface PrestoFormRow {
+    }
+    interface PrestoFormSection {
+        "label": string;
+    }
+    interface PrestoInput {
+        /**
+          * The input's autocomplete attribute.
+         */
+        "autocomplete": string;
+        /**
+          * The input's autocorrect attribute.
+         */
+        "autocorrect": string;
+        /**
+          * The input's autofocus attribute.
+         */
+        "autofocus": boolean;
+        /**
+          * Adds a clear button when the input is populated.
+         */
+        "clearable": boolean;
+        /**
+          * Disables the input.
+         */
+        "disabled": boolean;
+        /**
+          * Inputs focus
+         */
+        "hasFocus": boolean;
+        /**
+          * The input's help text.
+         */
+        "help": string;
+        /**
+          * The input's inputmode attribute.
+         */
+        "inputmode": 'none' | 'text' | 'decimal' | 'numeric' | 'tel' | 'search' | 'email' | 'url';
+        /**
+          * This will be true when the control is in an invalid state. Validity is determined by props such as `type`, `required`, `minlength`, `maxlength`, and `pattern` using the browser's constraint validation API.
+         */
+        "invalid": boolean;
+        /**
+          * The input's label.
+         */
+        "label": string;
+        /**
+          * The input's maximum value.
+         */
+        "max": number | string;
+        /**
+          * The maximum length of input that will be considered valid.
+         */
+        "maxlength": number;
+        /**
+          * The input's minimum value.
+         */
+        "min": number | string;
+        /**
+          * The minimum length of input that will be considered valid.
+         */
+        "minlength": number;
+        /**
+          * The input's name attribute.
+         */
+        "name": string;
+        /**
+          * A pattern to validate input against.
+         */
+        "pattern": string;
+        /**
+          * Draws a pill-style input with rounded edges.
+         */
+        "pill": boolean;
+        /**
+          * The input's placeholder text.
+         */
+        "placeholder": string;
+        /**
+          * Makes the input readonly.
+         */
+        "readonly": boolean;
+        "reportValidity": () => Promise<boolean>;
+        /**
+          * Makes the input a required field.
+         */
+        "required": boolean;
+        /**
+          * Should we show the label
+         */
+        "showLabel": boolean;
+        /**
+          * The input's size.
+         */
+        "size": 'small' | 'medium' | 'large';
+        /**
+          * Enables spell checking on the input.
+         */
+        "spellcheck": boolean;
+        /**
+          * The input's step attribute.
+         */
+        "step": number;
+        /**
+          * Adds a password toggle button to password inputs.
+         */
+        "togglePassword": boolean;
+        /**
+          * Removes focus from the input.
+         */
+        "triggerBlur": () => Promise<void>;
+        /**
+          * Sets focus on the input.
+         */
+        "triggerFocus": (options?: FocusOptions) => Promise<void>;
+        /**
+          * The input's type.
+         */
+        "type": 'email' | 'number' | 'password' | 'search' | 'tel' | 'text' | 'url';
+        /**
+          * The input's value attribute.
+         */
+        "value": string;
+    }
+    interface PrestoLineItem {
+        /**
+          * Currency symbol
+         */
+        "currency": string;
+        /**
+          * Price of the item
+         */
+        "price": string;
+    }
+    interface PrestoMenu {
+    }
+    interface PrestoMenuDivider {
+    }
+    interface PrestoMenuItem {
+        /**
+          * Draws the item in a checked state.
+         */
+        "checked": boolean;
+        /**
+          * Draws the menu item in a disabled state.
+         */
+        "disabled": boolean;
+        /**
+          * Removes focus from the button.
+         */
+        "setBlur": () => Promise<void>;
+        /**
+          * Sets focus on the button.
+         */
+        "setFocus": (options?: FocusOptions) => Promise<void>;
+        /**
+          * A unique value to store in the menu item. This can be used as a way to identify menu items when selected.
+         */
+        "value": string;
+    }
+    interface PrestoOrderSummary {
+    }
+    interface PrestoRadio {
+        /**
+          * Draws the radio in a checked state.
+         */
+        "checked": boolean;
+        /**
+          * Is the radio disabled
+         */
+        "disabled": boolean;
+        /**
+          * This will be true when the control is in an invalid state. Validity is determined by the `required` prop.
+         */
+        "invalid": boolean;
+        /**
+          * The radios name attribute
+         */
+        "name": string;
+        /**
+          * Simulates a click on the radio.
+         */
+        "prestoClick": () => Promise<void>;
+        /**
+          * Checks for validity and shows the browser's validation message if the control is invalid.
+         */
+        "reportValidity": () => Promise<boolean>;
+        /**
+          * Is this required
+         */
+        "required": boolean;
+        /**
+          * The radios value
+         */
+        "value": string;
+    }
+    interface PrestoRadioGroup {
+        /**
+          * The radio group label. Required for proper accessibility.
+         */
+        "label": string;
+        /**
+          * Hides the fieldset and legend that surrounds the radio group. The label will still be read by screen readers.
+         */
+        "noFieldset": boolean;
+    }
+    interface PrestoSecureNotice {
+    }
+    interface PrestoSelect {
+        /**
+          * Adds a clear button when the select is populated.
+         */
+        "clearable": boolean;
+        /**
+          * Disables the select control.
+         */
+        "disabled": boolean;
+        /**
+          * The select's help text.
+         */
+        "help": string;
+        /**
+          * This will be true when the control is in an invalid state. Validity is determined by the `required` prop.
+         */
+        "invalid": boolean;
+        /**
+          * The select's label. Alternatively, you can use the label slot.
+         */
+        "label": string;
+        /**
+          * The maximum number of tags to show when `multiple` is true. After the maximum, "+n" will be shown to indicate the number of additional items that are selected. Set to -1 to remove the limit.
+         */
+        "maxTagsVisible": number;
+        /**
+          * Enables multiselect. With this enabled, value will be an array.
+         */
+        "multiple": boolean;
+        /**
+          * The select's name.
+         */
+        "name": string;
+        /**
+          * Draws a pill-style select with rounded edges.
+         */
+        "pill": boolean;
+        /**
+          * The select's placeholder text.
+         */
+        "placeholder": string;
+        /**
+          * The select's required attribute.
+         */
+        "required": boolean;
+        /**
+          * The select's size.
+         */
+        "size": 'small' | 'medium' | 'large';
+        /**
+          * The value of the control. This will be a string or an array depending on `multiple`.
+         */
+        "value": string | Array<string>;
+    }
+    interface PrestoSkeleton {
+        /**
+          * Animation effect
+         */
+        "effect": 'pulse' | 'sheen' | 'none';
+    }
+    interface PrestoSpinner {
+    }
+    interface PrestoStripeElement {
+        /**
+          * Inputs focus
+         */
+        "hasFocus": boolean;
+        /**
+          * The input's help text. Alternatively, you can use the help-text slot.
+         */
+        "help": string;
+        /**
+          * The input's label. Alternatively, you can use the label slot.
+         */
+        "label": string;
+        /**
+          * Stripe publishable key
+         */
+        "publishableKey": string;
+        /**
+          * Should we show the label
+         */
+        "showLabel": boolean;
+        /**
+          * The input's size.
+         */
+        "size": 'small' | 'medium' | 'large';
+    }
+    interface PrestoStripePaymentRequest {
+        /**
+          * Amount
+         */
+        "amount": number;
+        /**
+          * Country
+         */
+        "country": string;
+        /**
+          * Currency
+         */
+        "currency": string;
+        /**
+          * Label
+         */
+        "label": string;
+        /**
+          * Stripe publishable key
+         */
+        "publishableKey": string;
+        /**
+          * Payment request theme
+         */
+        "theme": string;
+    }
+    interface PrestoSwitch {
+        /**
+          * Draws the switch in a checked state.
+         */
+        "checked": boolean;
+        /**
+          * Disables the switch.
+         */
+        "disabled": boolean;
+        /**
+          * This will be true when the control is in an invalid state. Validity is determined by the `required` prop.
+         */
+        "invalid": boolean;
+        /**
+          * The switch's name attribute.
+         */
+        "name": string;
+        /**
+          * Checks for validity and shows the browser's validation message if the control is invalid.
+         */
+        "reportValidity": () => Promise<boolean>;
+        /**
+          * Makes the switch a required field.
+         */
+        "required": boolean;
+        /**
+          * The switch's value attribute.
+         */
+        "value": string;
+    }
 }
 declare global {
     interface HTMLCeButtonElement extends Components.CeButton, HTMLStencilElement {
@@ -716,6 +1253,156 @@ declare global {
         prototype: HTMLCeSwitchElement;
         new (): HTMLCeSwitchElement;
     };
+    interface HTMLPrestoButtonElement extends Components.PrestoButton, HTMLStencilElement {
+    }
+    var HTMLPrestoButtonElement: {
+        prototype: HTMLPrestoButtonElement;
+        new (): HTMLPrestoButtonElement;
+    };
+    interface HTMLPrestoCheckboxElement extends Components.PrestoCheckbox, HTMLStencilElement {
+    }
+    var HTMLPrestoCheckboxElement: {
+        prototype: HTMLPrestoCheckboxElement;
+        new (): HTMLPrestoCheckboxElement;
+    };
+    interface HTMLPrestoCheckoutElement extends Components.PrestoCheckout, HTMLStencilElement {
+    }
+    var HTMLPrestoCheckoutElement: {
+        prototype: HTMLPrestoCheckoutElement;
+        new (): HTMLPrestoCheckoutElement;
+    };
+    interface HTMLPrestoChoiceElement extends Components.PrestoChoice, HTMLStencilElement {
+    }
+    var HTMLPrestoChoiceElement: {
+        prototype: HTMLPrestoChoiceElement;
+        new (): HTMLPrestoChoiceElement;
+    };
+    interface HTMLPrestoChoicesElement extends Components.PrestoChoices, HTMLStencilElement {
+    }
+    var HTMLPrestoChoicesElement: {
+        prototype: HTMLPrestoChoicesElement;
+        new (): HTMLPrestoChoicesElement;
+    };
+    interface HTMLPrestoDividerElement extends Components.PrestoDivider, HTMLStencilElement {
+    }
+    var HTMLPrestoDividerElement: {
+        prototype: HTMLPrestoDividerElement;
+        new (): HTMLPrestoDividerElement;
+    };
+    interface HTMLPrestoFormElement extends Components.PrestoForm, HTMLStencilElement {
+    }
+    var HTMLPrestoFormElement: {
+        prototype: HTMLPrestoFormElement;
+        new (): HTMLPrestoFormElement;
+    };
+    interface HTMLPrestoFormControlElement extends Components.PrestoFormControl, HTMLStencilElement {
+    }
+    var HTMLPrestoFormControlElement: {
+        prototype: HTMLPrestoFormControlElement;
+        new (): HTMLPrestoFormControlElement;
+    };
+    interface HTMLPrestoFormRowElement extends Components.PrestoFormRow, HTMLStencilElement {
+    }
+    var HTMLPrestoFormRowElement: {
+        prototype: HTMLPrestoFormRowElement;
+        new (): HTMLPrestoFormRowElement;
+    };
+    interface HTMLPrestoFormSectionElement extends Components.PrestoFormSection, HTMLStencilElement {
+    }
+    var HTMLPrestoFormSectionElement: {
+        prototype: HTMLPrestoFormSectionElement;
+        new (): HTMLPrestoFormSectionElement;
+    };
+    interface HTMLPrestoInputElement extends Components.PrestoInput, HTMLStencilElement {
+    }
+    var HTMLPrestoInputElement: {
+        prototype: HTMLPrestoInputElement;
+        new (): HTMLPrestoInputElement;
+    };
+    interface HTMLPrestoLineItemElement extends Components.PrestoLineItem, HTMLStencilElement {
+    }
+    var HTMLPrestoLineItemElement: {
+        prototype: HTMLPrestoLineItemElement;
+        new (): HTMLPrestoLineItemElement;
+    };
+    interface HTMLPrestoMenuElement extends Components.PrestoMenu, HTMLStencilElement {
+    }
+    var HTMLPrestoMenuElement: {
+        prototype: HTMLPrestoMenuElement;
+        new (): HTMLPrestoMenuElement;
+    };
+    interface HTMLPrestoMenuDividerElement extends Components.PrestoMenuDivider, HTMLStencilElement {
+    }
+    var HTMLPrestoMenuDividerElement: {
+        prototype: HTMLPrestoMenuDividerElement;
+        new (): HTMLPrestoMenuDividerElement;
+    };
+    interface HTMLPrestoMenuItemElement extends Components.PrestoMenuItem, HTMLStencilElement {
+    }
+    var HTMLPrestoMenuItemElement: {
+        prototype: HTMLPrestoMenuItemElement;
+        new (): HTMLPrestoMenuItemElement;
+    };
+    interface HTMLPrestoOrderSummaryElement extends Components.PrestoOrderSummary, HTMLStencilElement {
+    }
+    var HTMLPrestoOrderSummaryElement: {
+        prototype: HTMLPrestoOrderSummaryElement;
+        new (): HTMLPrestoOrderSummaryElement;
+    };
+    interface HTMLPrestoRadioElement extends Components.PrestoRadio, HTMLStencilElement {
+    }
+    var HTMLPrestoRadioElement: {
+        prototype: HTMLPrestoRadioElement;
+        new (): HTMLPrestoRadioElement;
+    };
+    interface HTMLPrestoRadioGroupElement extends Components.PrestoRadioGroup, HTMLStencilElement {
+    }
+    var HTMLPrestoRadioGroupElement: {
+        prototype: HTMLPrestoRadioGroupElement;
+        new (): HTMLPrestoRadioGroupElement;
+    };
+    interface HTMLPrestoSecureNoticeElement extends Components.PrestoSecureNotice, HTMLStencilElement {
+    }
+    var HTMLPrestoSecureNoticeElement: {
+        prototype: HTMLPrestoSecureNoticeElement;
+        new (): HTMLPrestoSecureNoticeElement;
+    };
+    interface HTMLPrestoSelectElement extends Components.PrestoSelect, HTMLStencilElement {
+    }
+    var HTMLPrestoSelectElement: {
+        prototype: HTMLPrestoSelectElement;
+        new (): HTMLPrestoSelectElement;
+    };
+    interface HTMLPrestoSkeletonElement extends Components.PrestoSkeleton, HTMLStencilElement {
+    }
+    var HTMLPrestoSkeletonElement: {
+        prototype: HTMLPrestoSkeletonElement;
+        new (): HTMLPrestoSkeletonElement;
+    };
+    interface HTMLPrestoSpinnerElement extends Components.PrestoSpinner, HTMLStencilElement {
+    }
+    var HTMLPrestoSpinnerElement: {
+        prototype: HTMLPrestoSpinnerElement;
+        new (): HTMLPrestoSpinnerElement;
+    };
+    interface HTMLPrestoStripeElementElement extends Components.PrestoStripeElement, HTMLStencilElement {
+    }
+    var HTMLPrestoStripeElementElement: {
+        prototype: HTMLPrestoStripeElementElement;
+        new (): HTMLPrestoStripeElementElement;
+    };
+    interface HTMLPrestoStripePaymentRequestElement extends Components.PrestoStripePaymentRequest, HTMLStencilElement {
+    }
+    var HTMLPrestoStripePaymentRequestElement: {
+        prototype: HTMLPrestoStripePaymentRequestElement;
+        new (): HTMLPrestoStripePaymentRequestElement;
+    };
+    interface HTMLPrestoSwitchElement extends Components.PrestoSwitch, HTMLStencilElement {
+    }
+    var HTMLPrestoSwitchElement: {
+        prototype: HTMLPrestoSwitchElement;
+        new (): HTMLPrestoSwitchElement;
+    };
     interface HTMLElementTagNameMap {
         "ce-button": HTMLCeButtonElement;
         "ce-checkbox": HTMLCeCheckboxElement;
@@ -743,6 +1430,31 @@ declare global {
         "ce-stripe-element": HTMLCeStripeElementElement;
         "ce-stripe-payment-request": HTMLCeStripePaymentRequestElement;
         "ce-switch": HTMLCeSwitchElement;
+        "presto-button": HTMLPrestoButtonElement;
+        "presto-checkbox": HTMLPrestoCheckboxElement;
+        "presto-checkout": HTMLPrestoCheckoutElement;
+        "presto-choice": HTMLPrestoChoiceElement;
+        "presto-choices": HTMLPrestoChoicesElement;
+        "presto-divider": HTMLPrestoDividerElement;
+        "presto-form": HTMLPrestoFormElement;
+        "presto-form-control": HTMLPrestoFormControlElement;
+        "presto-form-row": HTMLPrestoFormRowElement;
+        "presto-form-section": HTMLPrestoFormSectionElement;
+        "presto-input": HTMLPrestoInputElement;
+        "presto-line-item": HTMLPrestoLineItemElement;
+        "presto-menu": HTMLPrestoMenuElement;
+        "presto-menu-divider": HTMLPrestoMenuDividerElement;
+        "presto-menu-item": HTMLPrestoMenuItemElement;
+        "presto-order-summary": HTMLPrestoOrderSummaryElement;
+        "presto-radio": HTMLPrestoRadioElement;
+        "presto-radio-group": HTMLPrestoRadioGroupElement;
+        "presto-secure-notice": HTMLPrestoSecureNoticeElement;
+        "presto-select": HTMLPrestoSelectElement;
+        "presto-skeleton": HTMLPrestoSkeletonElement;
+        "presto-spinner": HTMLPrestoSpinnerElement;
+        "presto-stripe-element": HTMLPrestoStripeElementElement;
+        "presto-stripe-payment-request": HTMLPrestoStripePaymentRequestElement;
+        "presto-switch": HTMLPrestoSwitchElement;
     }
 }
 declare namespace LocalJSX {
@@ -1337,6 +2049,574 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
+    interface PrestoButton {
+        /**
+          * Draws the button with a caret for use with dropdowns, popovers, etc.
+         */
+        "caret"?: boolean;
+        /**
+          * Draws a circle button.
+         */
+        "circle"?: boolean;
+        /**
+          * Disables the button.
+         */
+        "disabled"?: boolean;
+        /**
+          * Tells the browser to download the linked file as this filename. Only used when `href` is set.
+         */
+        "download"?: string;
+        /**
+          * Draws the button with a caret for use with dropdowns, popovers, etc.
+         */
+        "full"?: boolean;
+        /**
+          * When set, the underlying button will be rendered as an `<a>` with this `href` instead of a `<button>`.
+         */
+        "href"?: string;
+        /**
+          * Draws the button in a loading state.
+         */
+        "loading"?: boolean;
+        /**
+          * An optional name for the button. Ignored when `href` is set.
+         */
+        "name"?: string;
+        /**
+          * Emitted when the button loses focus.
+         */
+        "onPrestoBlur"?: (event: CustomEvent<void>) => void;
+        /**
+          * Emitted when the button gains focus.
+         */
+        "onPrestoFocus"?: (event: CustomEvent<void>) => void;
+        /**
+          * Draws a pill-style button with rounded edges.
+         */
+        "pill"?: boolean;
+        /**
+          * The button's size.
+         */
+        "size"?: 'small' | 'medium' | 'large';
+        /**
+          * Indicates if activating the button should submit the form. Ignored when `href` is set.
+         */
+        "submit"?: boolean;
+        /**
+          * Tells the browser where to open the link. Only used when `href` is set.
+         */
+        "target"?: '_blank' | '_parent' | '_self' | '_top';
+        /**
+          * The button's type.
+         */
+        "type"?: 'default' | 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text';
+        /**
+          * An optional value for the button. Ignored when `href` is set.
+         */
+        "value"?: string;
+    }
+    interface PrestoCheckbox {
+        /**
+          * Draws the checkbox in a checked state.
+         */
+        "checked"?: boolean;
+        /**
+          * Disables the checkbox.
+         */
+        "disabled"?: boolean;
+        /**
+          * Draws the checkbox in an indeterminate state.
+         */
+        "indeterminate"?: boolean;
+        /**
+          * This will be true when the control is in an invalid state. Validity is determined by the `required` prop.
+         */
+        "invalid"?: boolean;
+        /**
+          * The checkbox's name attribute.
+         */
+        "name"?: string;
+        /**
+          * Emitted when the control loses focus.
+         */
+        "onPrestoBlur"?: (event: CustomEvent<void>) => void;
+        /**
+          * Emitted when the control's checked state changes.
+         */
+        "onPrestoChange"?: (event: CustomEvent<void>) => void;
+        /**
+          * Emitted when the control gains focus.
+         */
+        "onPrestoFocus"?: (event: CustomEvent<void>) => void;
+        /**
+          * Makes the checkbox a required field.
+         */
+        "required"?: boolean;
+        /**
+          * The checkbox's value attribute.
+         */
+        "value"?: string;
+    }
+    interface PrestoCheckout {
+        "productIds"?: Array<any>;
+    }
+    interface PrestoChoice {
+        /**
+          * Draws the choice in a checked state.
+         */
+        "checked"?: boolean;
+        /**
+          * Is the choice disabled
+         */
+        "disabled"?: boolean;
+        /**
+          * This will be true when the control is in an invalid state. Validity is determined by the `required` prop.
+         */
+        "invalid"?: boolean;
+        /**
+          * The choice name attribute
+         */
+        "name"?: string;
+        /**
+          * Emitted when the control loses focus.
+         */
+        "onPrestoBlur"?: (event: CustomEvent<void>) => void;
+        /**
+          * Emitted when the control's checked state changes.
+         */
+        "onPrestoChange"?: (event: CustomEvent<void>) => void;
+        /**
+          * Emitted when the control gains focus.
+         */
+        "onPrestoFocus"?: (event: CustomEvent<void>) => void;
+        /**
+          * Is this required
+         */
+        "required"?: boolean;
+        /**
+          * The choice name attribute
+         */
+        "type"?: 'radio' | 'checkbox';
+        /**
+          * The choice value
+         */
+        "value"?: string;
+    }
+    interface PrestoChoices {
+        /**
+          * Hides the fieldset and legend that surrounds the group. The label will still be read by screen readers.
+         */
+        "hideLabel"?: boolean;
+        /**
+          * The group label. Required for proper accessibility. Alternatively, you can use the label slot.
+         */
+        "label"?: string;
+    }
+    interface PrestoDivider {
+    }
+    interface PrestoForm {
+        /**
+          * Prevent the form from validating inputs before submitting.
+         */
+        "novalidate"?: boolean;
+        /**
+          * Emitted when the form is submitted. This event will not be emitted if any form control inside of it is in an invalid state, unless the form has the `novalidate` attribute. Note that there is never a need to prevent this event, since it doen't send a GET or POST request like native forms. To "prevent" submission, use a conditional around the XHR request you use to submit the form's data with.
+         */
+        "onPrestoSubmit"?: (event: CustomEvent<{ formData: FormData; formControls: HTMLElement[] }>) => void;
+    }
+    interface PrestoFormControl {
+        "help"?: string;
+        "helpId"?: string;
+        "inputId"?: string;
+        "label"?: string;
+        "labelId"?: string;
+        "showLabel"?: boolean;
+        "size"?: 'small' | 'medium' | 'large';
+    }
+    interface PrestoFormRow {
+    }
+    interface PrestoFormSection {
+        "label"?: string;
+    }
+    interface PrestoInput {
+        /**
+          * The input's autocomplete attribute.
+         */
+        "autocomplete"?: string;
+        /**
+          * The input's autocorrect attribute.
+         */
+        "autocorrect"?: string;
+        /**
+          * The input's autofocus attribute.
+         */
+        "autofocus"?: boolean;
+        /**
+          * Adds a clear button when the input is populated.
+         */
+        "clearable"?: boolean;
+        /**
+          * Disables the input.
+         */
+        "disabled"?: boolean;
+        /**
+          * Inputs focus
+         */
+        "hasFocus"?: boolean;
+        /**
+          * The input's help text.
+         */
+        "help"?: string;
+        /**
+          * The input's inputmode attribute.
+         */
+        "inputmode"?: 'none' | 'text' | 'decimal' | 'numeric' | 'tel' | 'search' | 'email' | 'url';
+        /**
+          * This will be true when the control is in an invalid state. Validity is determined by props such as `type`, `required`, `minlength`, `maxlength`, and `pattern` using the browser's constraint validation API.
+         */
+        "invalid"?: boolean;
+        /**
+          * The input's label.
+         */
+        "label"?: string;
+        /**
+          * The input's maximum value.
+         */
+        "max"?: number | string;
+        /**
+          * The maximum length of input that will be considered valid.
+         */
+        "maxlength"?: number;
+        /**
+          * The input's minimum value.
+         */
+        "min"?: number | string;
+        /**
+          * The minimum length of input that will be considered valid.
+         */
+        "minlength"?: number;
+        /**
+          * The input's name attribute.
+         */
+        "name"?: string;
+        /**
+          * Emitted when the control loses focus.
+         */
+        "onPrestoBlur"?: (event: CustomEvent<void>) => void;
+        /**
+          * Emitted when the control's value changes.
+         */
+        "onPrestoChange"?: (event: CustomEvent<void>) => void;
+        /**
+          * Emitted when the clear button is activated.
+         */
+        "onPrestoClear"?: (event: CustomEvent<void>) => void;
+        /**
+          * Emitted when the control gains focus.
+         */
+        "onPrestoFocus"?: (event: CustomEvent<void>) => void;
+        /**
+          * Emitted when the control receives input.
+         */
+        "onPrestoInput"?: (event: CustomEvent<void>) => void;
+        /**
+          * A pattern to validate input against.
+         */
+        "pattern"?: string;
+        /**
+          * Draws a pill-style input with rounded edges.
+         */
+        "pill"?: boolean;
+        /**
+          * The input's placeholder text.
+         */
+        "placeholder"?: string;
+        /**
+          * Makes the input readonly.
+         */
+        "readonly"?: boolean;
+        /**
+          * Makes the input a required field.
+         */
+        "required"?: boolean;
+        /**
+          * Should we show the label
+         */
+        "showLabel"?: boolean;
+        /**
+          * The input's size.
+         */
+        "size"?: 'small' | 'medium' | 'large';
+        /**
+          * Enables spell checking on the input.
+         */
+        "spellcheck"?: boolean;
+        /**
+          * The input's step attribute.
+         */
+        "step"?: number;
+        /**
+          * Adds a password toggle button to password inputs.
+         */
+        "togglePassword"?: boolean;
+        /**
+          * The input's type.
+         */
+        "type"?: 'email' | 'number' | 'password' | 'search' | 'tel' | 'text' | 'url';
+        /**
+          * The input's value attribute.
+         */
+        "value"?: string;
+    }
+    interface PrestoLineItem {
+        /**
+          * Currency symbol
+         */
+        "currency"?: string;
+        /**
+          * Price of the item
+         */
+        "price"?: string;
+    }
+    interface PrestoMenu {
+        "onPrestoSelect"?: (event: CustomEvent<{ item: HTMLPrestoMenuItemElement }>) => void;
+    }
+    interface PrestoMenuDivider {
+    }
+    interface PrestoMenuItem {
+        /**
+          * Draws the item in a checked state.
+         */
+        "checked"?: boolean;
+        /**
+          * Draws the menu item in a disabled state.
+         */
+        "disabled"?: boolean;
+        /**
+          * A unique value to store in the menu item. This can be used as a way to identify menu items when selected.
+         */
+        "value"?: string;
+    }
+    interface PrestoOrderSummary {
+    }
+    interface PrestoRadio {
+        /**
+          * Draws the radio in a checked state.
+         */
+        "checked"?: boolean;
+        /**
+          * Is the radio disabled
+         */
+        "disabled"?: boolean;
+        /**
+          * This will be true when the control is in an invalid state. Validity is determined by the `required` prop.
+         */
+        "invalid"?: boolean;
+        /**
+          * The radios name attribute
+         */
+        "name"?: string;
+        /**
+          * Emitted when the control loses focus.
+         */
+        "onPrestoBlur"?: (event: CustomEvent<void>) => void;
+        /**
+          * Emitted when the control's checked state changes.
+         */
+        "onPrestoChange"?: (event: CustomEvent<void>) => void;
+        /**
+          * Emitted when the control gains focus.
+         */
+        "onPrestoFocus"?: (event: CustomEvent<void>) => void;
+        /**
+          * Is this required
+         */
+        "required"?: boolean;
+        /**
+          * The radios value
+         */
+        "value"?: string;
+    }
+    interface PrestoRadioGroup {
+        /**
+          * The radio group label. Required for proper accessibility.
+         */
+        "label"?: string;
+        /**
+          * Hides the fieldset and legend that surrounds the radio group. The label will still be read by screen readers.
+         */
+        "noFieldset"?: boolean;
+    }
+    interface PrestoSecureNotice {
+    }
+    interface PrestoSelect {
+        /**
+          * Adds a clear button when the select is populated.
+         */
+        "clearable"?: boolean;
+        /**
+          * Disables the select control.
+         */
+        "disabled"?: boolean;
+        /**
+          * The select's help text.
+         */
+        "help"?: string;
+        /**
+          * This will be true when the control is in an invalid state. Validity is determined by the `required` prop.
+         */
+        "invalid"?: boolean;
+        /**
+          * The select's label. Alternatively, you can use the label slot.
+         */
+        "label"?: string;
+        /**
+          * The maximum number of tags to show when `multiple` is true. After the maximum, "+n" will be shown to indicate the number of additional items that are selected. Set to -1 to remove the limit.
+         */
+        "maxTagsVisible"?: number;
+        /**
+          * Enables multiselect. With this enabled, value will be an array.
+         */
+        "multiple"?: boolean;
+        /**
+          * The select's name.
+         */
+        "name"?: string;
+        /**
+          * Emitted when the control loses focus.
+         */
+        "onPrestoBlur"?: (event: CustomEvent<void>) => void;
+        /**
+          * Emitted when the control's value changes.
+         */
+        "onPrestoChange"?: (event: CustomEvent<void>) => void;
+        /**
+          * Emitted when the clear button is activated.
+         */
+        "onPrestoClear"?: (event: CustomEvent<void>) => void;
+        /**
+          * Emitted when the control gains focus.
+         */
+        "onPrestoFocus"?: (event: CustomEvent<void>) => void;
+        /**
+          * Draws a pill-style select with rounded edges.
+         */
+        "pill"?: boolean;
+        /**
+          * The select's placeholder text.
+         */
+        "placeholder"?: string;
+        /**
+          * The select's required attribute.
+         */
+        "required"?: boolean;
+        /**
+          * The select's size.
+         */
+        "size"?: 'small' | 'medium' | 'large';
+        /**
+          * The value of the control. This will be a string or an array depending on `multiple`.
+         */
+        "value"?: string | Array<string>;
+    }
+    interface PrestoSkeleton {
+        /**
+          * Animation effect
+         */
+        "effect"?: 'pulse' | 'sheen' | 'none';
+    }
+    interface PrestoSpinner {
+    }
+    interface PrestoStripeElement {
+        /**
+          * Inputs focus
+         */
+        "hasFocus"?: boolean;
+        /**
+          * The input's help text. Alternatively, you can use the help-text slot.
+         */
+        "help"?: string;
+        /**
+          * The input's label. Alternatively, you can use the label slot.
+         */
+        "label"?: string;
+        /**
+          * Stripe publishable key
+         */
+        "publishableKey"?: string;
+        /**
+          * Should we show the label
+         */
+        "showLabel"?: boolean;
+        /**
+          * The input's size.
+         */
+        "size"?: 'small' | 'medium' | 'large';
+    }
+    interface PrestoStripePaymentRequest {
+        /**
+          * Amount
+         */
+        "amount"?: number;
+        /**
+          * Country
+         */
+        "country"?: string;
+        /**
+          * Currency
+         */
+        "currency"?: string;
+        /**
+          * Label
+         */
+        "label"?: string;
+        /**
+          * Stripe publishable key
+         */
+        "publishableKey"?: string;
+        /**
+          * Payment request theme
+         */
+        "theme"?: string;
+    }
+    interface PrestoSwitch {
+        /**
+          * Draws the switch in a checked state.
+         */
+        "checked"?: boolean;
+        /**
+          * Disables the switch.
+         */
+        "disabled"?: boolean;
+        /**
+          * This will be true when the control is in an invalid state. Validity is determined by the `required` prop.
+         */
+        "invalid"?: boolean;
+        /**
+          * The switch's name attribute.
+         */
+        "name"?: string;
+        /**
+          * Emitted when the control loses focus.
+         */
+        "onPrestoBlur"?: (event: CustomEvent<void>) => void;
+        /**
+          * Emitted when the control's checked state changes.
+         */
+        "onPrestoChange"?: (event: CustomEvent<void>) => void;
+        /**
+          * Emitted when the control gains focus.
+         */
+        "onPrestoFocus"?: (event: CustomEvent<void>) => void;
+        /**
+          * Makes the switch a required field.
+         */
+        "required"?: boolean;
+        /**
+          * The switch's value attribute.
+         */
+        "value"?: string;
+    }
     interface IntrinsicElements {
         "ce-button": CeButton;
         "ce-checkbox": CeCheckbox;
@@ -1364,6 +2644,31 @@ declare namespace LocalJSX {
         "ce-stripe-element": CeStripeElement;
         "ce-stripe-payment-request": CeStripePaymentRequest;
         "ce-switch": CeSwitch;
+        "presto-button": PrestoButton;
+        "presto-checkbox": PrestoCheckbox;
+        "presto-checkout": PrestoCheckout;
+        "presto-choice": PrestoChoice;
+        "presto-choices": PrestoChoices;
+        "presto-divider": PrestoDivider;
+        "presto-form": PrestoForm;
+        "presto-form-control": PrestoFormControl;
+        "presto-form-row": PrestoFormRow;
+        "presto-form-section": PrestoFormSection;
+        "presto-input": PrestoInput;
+        "presto-line-item": PrestoLineItem;
+        "presto-menu": PrestoMenu;
+        "presto-menu-divider": PrestoMenuDivider;
+        "presto-menu-item": PrestoMenuItem;
+        "presto-order-summary": PrestoOrderSummary;
+        "presto-radio": PrestoRadio;
+        "presto-radio-group": PrestoRadioGroup;
+        "presto-secure-notice": PrestoSecureNotice;
+        "presto-select": PrestoSelect;
+        "presto-skeleton": PrestoSkeleton;
+        "presto-spinner": PrestoSpinner;
+        "presto-stripe-element": PrestoStripeElement;
+        "presto-stripe-payment-request": PrestoStripePaymentRequest;
+        "presto-switch": PrestoSwitch;
     }
 }
 export { LocalJSX as JSX };
@@ -1396,6 +2701,31 @@ declare module "@stencil/core" {
             "ce-stripe-element": LocalJSX.CeStripeElement & JSXBase.HTMLAttributes<HTMLCeStripeElementElement>;
             "ce-stripe-payment-request": LocalJSX.CeStripePaymentRequest & JSXBase.HTMLAttributes<HTMLCeStripePaymentRequestElement>;
             "ce-switch": LocalJSX.CeSwitch & JSXBase.HTMLAttributes<HTMLCeSwitchElement>;
+            "presto-button": LocalJSX.PrestoButton & JSXBase.HTMLAttributes<HTMLPrestoButtonElement>;
+            "presto-checkbox": LocalJSX.PrestoCheckbox & JSXBase.HTMLAttributes<HTMLPrestoCheckboxElement>;
+            "presto-checkout": LocalJSX.PrestoCheckout & JSXBase.HTMLAttributes<HTMLPrestoCheckoutElement>;
+            "presto-choice": LocalJSX.PrestoChoice & JSXBase.HTMLAttributes<HTMLPrestoChoiceElement>;
+            "presto-choices": LocalJSX.PrestoChoices & JSXBase.HTMLAttributes<HTMLPrestoChoicesElement>;
+            "presto-divider": LocalJSX.PrestoDivider & JSXBase.HTMLAttributes<HTMLPrestoDividerElement>;
+            "presto-form": LocalJSX.PrestoForm & JSXBase.HTMLAttributes<HTMLPrestoFormElement>;
+            "presto-form-control": LocalJSX.PrestoFormControl & JSXBase.HTMLAttributes<HTMLPrestoFormControlElement>;
+            "presto-form-row": LocalJSX.PrestoFormRow & JSXBase.HTMLAttributes<HTMLPrestoFormRowElement>;
+            "presto-form-section": LocalJSX.PrestoFormSection & JSXBase.HTMLAttributes<HTMLPrestoFormSectionElement>;
+            "presto-input": LocalJSX.PrestoInput & JSXBase.HTMLAttributes<HTMLPrestoInputElement>;
+            "presto-line-item": LocalJSX.PrestoLineItem & JSXBase.HTMLAttributes<HTMLPrestoLineItemElement>;
+            "presto-menu": LocalJSX.PrestoMenu & JSXBase.HTMLAttributes<HTMLPrestoMenuElement>;
+            "presto-menu-divider": LocalJSX.PrestoMenuDivider & JSXBase.HTMLAttributes<HTMLPrestoMenuDividerElement>;
+            "presto-menu-item": LocalJSX.PrestoMenuItem & JSXBase.HTMLAttributes<HTMLPrestoMenuItemElement>;
+            "presto-order-summary": LocalJSX.PrestoOrderSummary & JSXBase.HTMLAttributes<HTMLPrestoOrderSummaryElement>;
+            "presto-radio": LocalJSX.PrestoRadio & JSXBase.HTMLAttributes<HTMLPrestoRadioElement>;
+            "presto-radio-group": LocalJSX.PrestoRadioGroup & JSXBase.HTMLAttributes<HTMLPrestoRadioGroupElement>;
+            "presto-secure-notice": LocalJSX.PrestoSecureNotice & JSXBase.HTMLAttributes<HTMLPrestoSecureNoticeElement>;
+            "presto-select": LocalJSX.PrestoSelect & JSXBase.HTMLAttributes<HTMLPrestoSelectElement>;
+            "presto-skeleton": LocalJSX.PrestoSkeleton & JSXBase.HTMLAttributes<HTMLPrestoSkeletonElement>;
+            "presto-spinner": LocalJSX.PrestoSpinner & JSXBase.HTMLAttributes<HTMLPrestoSpinnerElement>;
+            "presto-stripe-element": LocalJSX.PrestoStripeElement & JSXBase.HTMLAttributes<HTMLPrestoStripeElementElement>;
+            "presto-stripe-payment-request": LocalJSX.PrestoStripePaymentRequest & JSXBase.HTMLAttributes<HTMLPrestoStripePaymentRequestElement>;
+            "presto-switch": LocalJSX.PrestoSwitch & JSXBase.HTMLAttributes<HTMLPrestoSwitchElement>;
         }
     }
 }
