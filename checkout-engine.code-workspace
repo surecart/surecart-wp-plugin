@@ -22,6 +22,7 @@
 		},
 		"phpcs.showWarnings": true,
 		"phpcs.composerJsonPath": "composer.json",
-		"phpcs.errorSeverity": 5
+		"phpcs.errorSeverity": 5,
+		"bladeFormatter.format.wrapAttributes": "force"
 	}
 }

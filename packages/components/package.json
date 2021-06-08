@@ -37,6 +37,7 @@
     "@stencil/sass": "^1.4.0",
     "@stripe/stripe-js": "^1.14.0",
     "clsx": "^1.1.1",
+    "currency-symbol-map": "^5.0.1",
     "sass": "^1.29.0",
     "stencil-fragment": "^1.0.1"
   },

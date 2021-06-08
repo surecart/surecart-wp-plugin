@@ -9,6 +9,7 @@
 }
 
 .item__title {
+  font-size: var(--ce-font-size-medium);
   color: var(--ce-color-gray-600);
 }
 
@@ -22,7 +23,7 @@
 
 .item_currency {
   font-weight: var(--ce-font-weight-normal);
-  font-size: var(--ce-font-size-small);
+  font-size: var(--ce-font-size-x-small);
   color: var(--ce-color-gray-500);
   margin-right: var(--ce-spacing-small);
 }

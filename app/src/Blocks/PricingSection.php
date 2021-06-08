@@ -30,14 +30,16 @@ class PricingSection extends Block {
 				'type'        => $attributes['type'] ?? 'radio',
 				'prices'      => [
 					[
-						'name'        => 'test',
+						'name'        => 'price',
+						'value'       => 'gold',
 						'required'    => true,
 						'default'     => true,
 						'title'       => 'Gold Plan',
 						'description' => '$9.99, then $49.99 per month',
 					],
 					[
-						'name'        => 'test',
+						'name'        => 'price',
+						'value'       => 'silver',
 						'required'    => true,
 						'title'       => 'Silver Plan',
 						'description' => '$9.99, then $49.99 per month',

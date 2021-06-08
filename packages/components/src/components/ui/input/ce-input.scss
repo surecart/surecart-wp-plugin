@@ -115,7 +115,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Size modifiers
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 .input--small {
   border-radius: var(--ce-input-border-radius-small);
   font-size: var(--ce-input-font-size-small);
@@ -123,7 +122,7 @@
 
   .input__control {
     height: calc(var(--ce-input-height-small) - var(--ce-input-border-width) * 2);
-    margin: 0 var(--ce-input-spacing-small);
+    padding: 0 var(--ce-input-spacing-small);
   }
 
   .input__clear,
@@ -147,7 +146,7 @@
 
   .input__control {
     height: calc(var(--ce-input-height-medium) - var(--ce-input-border-width) * 2);
-    margin: 0 var(--ce-input-spacing-medium);
+    padding: 0 var(--ce-input-spacing-medium);
   }
 
   .input__clear,
@@ -171,7 +170,7 @@
 
   .input__control {
     height: calc(var(--ce-input-height-large) - var(--ce-input-border-width) * 2);
-    margin: 0 var(--ce-input-spacing-large);
+    padding: 0 var(--ce-input-spacing-large);
   }
 
   .input__clear,

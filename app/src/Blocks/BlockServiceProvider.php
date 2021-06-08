@@ -10,7 +10,8 @@ use CheckoutEngine\Blocks\BlockService;
 use WPEmerge\ServiceProviders\ServiceProviderInterface;
 
 /**
- * Undocumented class
+ * Block Service Provider Class
+ * Registers block service used throughout the plugin
  *
  * @author  Checkout Engine <andre@checkoutengine.com>
  * @since   1.0.0
@@ -74,7 +75,7 @@ class BlockServiceProvider implements ServiceProviderInterface {
 	}
 
 	/**
-	 * Something
+	 * Register blocks from config
 	 *
 	 * @return  void
 	 * @since   1.0.0

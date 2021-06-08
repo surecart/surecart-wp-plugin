@@ -24,18 +24,12 @@
           <ce-form-section label="Choose A Plan">
             <span slot="description">Start for free. Cancel anytime.</span>
             <ce-form-row>
-              <ce-choices tabindex="1">
-                <ce-choice name="test" required checked>
-                  Gold Plan
-                  <span slot="description">$9.99, then $49.99 per month</span>
-                </ce-choice>
-                <ce-choice name="test">Silver Plan
-                  <span slot="description">$39.99 per month</span>
-                </ce-choice>
-                <ce-choice name="test">Bronze Plan
-                  <span slot="description">$9.99 per month</span>
-                </ce-choice>
-              </ce-choices>
+              <ce-price-choices>
+                <script>
+                  var list = document.querySelector("#checkout-one ce-price-choices");
+                  list.priceIds = [1, 2, 3];
+                </script>
+              </ce-price-choices>
             </ce-form-row>
           </ce-form-section>
 

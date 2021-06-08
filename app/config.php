@@ -25,8 +25,8 @@ return [
 		\CheckoutEngine\WordPress\ShortcodesServiceProvider::class,
 		\CheckoutEngine\WordPress\PluginServiceProvider::class,
 		\CheckoutEngine\WordPress\WidgetsServiceProvider::class,
-		\CheckoutEngine\View\ViewServiceProvider::class,
 		\WPEmergeBlade\View\ServiceProvider::class,
+		\CheckoutEngine\View\ViewServiceProvider::class,
 		\CheckoutEngine\Blocks\BlockServiceProvider::class,
 	],
 
@@ -145,8 +145,10 @@ return [
 		\CheckoutEngine\Blocks\Email::class,
 		\CheckoutEngine\Blocks\Name::class,
 		\CheckoutEngine\Blocks\Input::class,
+		\CheckoutEngine\Blocks\Submit::class,
 		\CheckoutEngine\Blocks\FormSection::class,
 		\CheckoutEngine\Blocks\PricingSection::class,
+		\CheckoutEngine\Blocks\TotalsSection::class,
 		\CheckoutEngine\Blocks\ContactSection::class,
 	],
 ];

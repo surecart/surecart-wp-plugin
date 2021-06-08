@@ -27,7 +27,7 @@ export class CELineItem {
           <slot name="price">
             <div class="item__price-layout">
               <span class="item_currency">{this.currency}</span>
-              {this.price}
+              <span class="item__price">{this.price}</span>
             </div>
           </slot>
         </div>
