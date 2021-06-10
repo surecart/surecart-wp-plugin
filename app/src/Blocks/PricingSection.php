@@ -44,6 +44,13 @@ class PricingSection extends Block {
 						'title'       => 'Silver Plan',
 						'description' => '$9.99, then $49.99 per month',
 					],
+					[
+						'name'        => 'price',
+						'value'       => 'silver',
+						'required'    => true,
+						'title'       => 'Silver Plan',
+						'description' => '$9.99, then $49.99 per month',
+					],
 				],
 				'attributes'  => $attributes,
 				'content'     => $content,

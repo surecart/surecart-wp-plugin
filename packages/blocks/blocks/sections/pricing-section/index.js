@@ -9,7 +9,7 @@ import metadata from './block.json';
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { currencyDollar as icon } from '@wordpress/icons';
+import { buttons as icon } from '@wordpress/icons';
 
 /**
  * Block constants

@@ -35,6 +35,7 @@ import * as checkout from './blocks/checkout';
 
 // sections
 import * as pricingSection from './blocks/sections/pricing-section';
+import * as paymentSection from './blocks/sections/payment-section';
 import * as totalsSection from './blocks/sections/totals-section';
 import * as contactSection from './blocks/sections/contact-section';
 
@@ -80,6 +81,7 @@ export const registerCheckoutEngineBlocks = () => {
 		section,
 		pricingSection,
 		totalsSection,
+		paymentSection,
 		contactSection,
 		submit,
 		button,

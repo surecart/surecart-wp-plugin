@@ -7,11 +7,22 @@ namespace CheckoutEngine\Blocks;
  */
 abstract class Block {
 	/**
+	 * App Service container
+	 *
+	 * @var \Pimple\Container
+	 */
+	protected $container;
+
+	/**
 	 * Register the block for dynamic output
+	 *
+	 * @param \Pimple\Container $container Service container.
 	 *
 	 * @return void
 	 */
-	public function register() {
+	public function register( $container ) {
+		$this->container = $container;
+
 		register_block_type(
 			"checkout-engine/$this->name",
 			[

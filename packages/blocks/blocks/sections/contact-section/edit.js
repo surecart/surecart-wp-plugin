@@ -39,7 +39,7 @@ export default ( {
 	}
 
 	return (
-		<CeFormSection label="Card Details">
+		<CeFormSection>
 			<RichText
 				slot="label"
 				aria-label={ __( 'Label' ) }

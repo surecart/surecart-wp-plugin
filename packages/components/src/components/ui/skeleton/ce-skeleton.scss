@@ -16,8 +16,8 @@
  */
 :host {
   --border-radius: var(--ce-border-radius-pill);
-  --color: #e5e7eb;
-  --sheen-color: #f3f4f6;
+  --color: var(--ce-color-gray-300);
+  --sheen-color: var(--ce-color-gray-400);
 
   display: block;
   position: relative;

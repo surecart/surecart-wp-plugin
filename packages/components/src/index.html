@@ -18,18 +18,51 @@
 <body>
 
   <div style="width: 500px; margin:90px auto;">
+    <ce-table>
+      <table>
+        <thead>
+          <tr>
+            <th>Eläkeaika, v</th>
+            <th>Tavoite-eläke/kk</th>
+            <th>Eläkearvio/kk</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>55–65</td>
+            <td>1 660,24 €</td>
+            <td>1 433,95 €</td>
+          </tr>
+          <tr>
+            <td>65–75</td>
+            <td>553,42 €</td>
+            <td>477,99 €</td>
+          </tr>
+          <tr>
+            <td>55–65</td>
+            <td>1 660,24 €</td>
+            <td>1 433,95 €</td>
+          </tr>
+          <tr>
+            <td>65–75</td>
+            <td>553,42 €</td>
+            <td>477,99 €</td>
+          </tr>
+          <tr>
+            <td>65–75</td>
+            <td>553,42 €</td>
+            <td>477,99 €</td>
+          </tr>
+        </tbody>
+      </table>
+    </ce-table>
     <ce-checkout id="checkout-one" style="margin-bottom: 80px;">
       <ce-form>
         <div class="ce-area-main-header">
           <ce-form-section label="Choose A Plan">
             <span slot="description">Start for free. Cancel anytime.</span>
             <ce-form-row>
-              <ce-price-choices>
-                <script>
-                  var list = document.querySelector("#checkout-one ce-price-choices");
-                  list.priceIds = [1, 2, 3];
-                </script>
-              </ce-price-choices>
+              <ce-price-choices type="checkbox"></ce-price-choices>
             </ce-form-row>
           </ce-form-section>
 
@@ -97,11 +130,14 @@
             </ce-line-item>
           </ce-form-section>
 
-          <ce-button full type="primary" size="large" submit>Pay $20.00</ce-button>
+          <ce-submit text="Purchase"></ce-submit>
+
         </div>
       </ce-form>
     </ce-checkout>
   </div>
+
+
 
   <!-- <div style="width: 1180px; margin:auto;">
     <ce-checkout id="checkout-two"

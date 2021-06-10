@@ -3,7 +3,7 @@
  */
 import { __ } from '@wordpress/i18n';
 import { RichText } from '@wordpress/block-editor';
-import { InnerBlocks } from '@wordpress/block-editor';
+import InnerBlocks from '../../../components/InnerBlocks';
 
 /**
  * Component Dependencies
@@ -49,10 +49,7 @@ export default ( { className, attributes, setAttributes, isSelected } ) => {
 				Total
 			</CeLineItem>
 
-			<InnerBlocks
-				renderAppender={ InnerBlocks.ButtonBlockAppender }
-				templateLock={ false }
-			/>
+			<InnerBlocks templateLock={ false } />
 		</CeFormSection>
 	);
 };

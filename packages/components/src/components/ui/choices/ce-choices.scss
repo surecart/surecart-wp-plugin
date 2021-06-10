@@ -19,12 +19,10 @@
   }
 }
 
-::slotted(ce-choice) {
-  display: block;
-}
-
-::slotted(ce-choice:not(:last-of-type)) {
-  margin-bottom: var(--ce-spacing-small);
+.choices__items {
+  display: grid;
+  grid-template-columns: repeat(var(--columns, 1), 1fr);
+  gap: 10px;
 }
 
 .choices--hide-label {

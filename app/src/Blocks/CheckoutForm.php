@@ -2,16 +2,50 @@
 
 namespace CheckoutEngine\Blocks;
 
+use CheckoutEngine\Traits\HasBlockTheme;
+
 /**
  * Checkout block
  */
 class CheckoutForm extends Block {
+	use HasblockTheme;
+
+	/**
+	 * Keep track of checkout form instances
+	 * on the page with an id.
+	 *
+	 * @var integer
+	 */
+	private static $instance = 1;
+
 	/**
 	 * Block name
 	 *
 	 * @var string
 	 */
 	protected $name = 'checkout-form';
+
+	/**
+	 * Register the block for dynamic output
+	 *
+	 * @param \Pimple\Container $container Service container.
+	 *
+	 * @return void
+	 */
+	public function register( $container ) {
+		add_filter( 'init', [ $this, 'registerStyles' ] );
+
+		parent::register( $container );
+	}
+
+	/**
+	 * Register checkout form styles
+	 *
+	 * @return void
+	 */
+	public function registerStyles() {
+		$this->registerBlockTheme( $this->name, 'elegant', __( 'Elegant', 'checkout_engine' ), 'dist/styles/themes/elegant.css' );
+	}
 
 	/**
 	 * Render the block
@@ -28,6 +62,7 @@ class CheckoutForm extends Block {
 				'label'       => $attributes['label'] ?? '',
 				'description' => $attributes['description'] ?? '',
 				'content'     => $content,
+				'instance'    => self::$instance++,
 			]
 		);
 	}

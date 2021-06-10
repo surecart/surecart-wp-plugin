@@ -19,6 +19,8 @@
     color: var(--ce-input-label-color);
     margin-bottom: var(--ce-input-label-margin);
     font-weight: var(--ce-input-label-font-weight);
+    text-transform: var(--ce-input-label-text-transform, none);
+    letter-spacing: var(--ce-input-label-letter-spacing, 0);
   }
 
   &.form-control--small .form-control__label {

@@ -23,7 +23,7 @@ class Submit extends Block {
 	 */
 	public function render( $attributes, $content ) {
 		return \CheckoutEngine::blocks()->render(
-			'blocks/button',
+			"blocks/$this->name",
 			[
 				'text'   => $attributes['text'] ?? __( 'Purchase', 'checkout_engine' ),
 				'type'   => $attributes['type'] ?? 'primary',

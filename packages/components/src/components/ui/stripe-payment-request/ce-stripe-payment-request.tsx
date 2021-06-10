@@ -70,19 +70,25 @@ export class CEStripePaymentRequest {
       },
     });
 
-    this.paymentRequest.canMakePayment().then(result => {
-      if (!result) {
-        return;
-      }
-      paymentRequestElement.mount(this.request);
-      this.loaded = true;
-    });
+    this.paymentRequest
+      .canMakePayment()
+      .then(result => {
+        console.log(result);
+        if (!result) {
+          return;
+        }
+        paymentRequestElement.mount(this.request);
+        this.loaded = true;
+      })
+      .catch(e => {
+        console.error(e);
+      });
   }
 
   render() {
     return (
       <div class={{ 'request': true, 'request--loaded': this.loaded }}>
-        <div class="button" part="button" ref={el => (this.request = el as HTMLDivElement)}></div>
+        <div class="ce-payment-request-button" part="button" ref={el => (this.request = el as HTMLDivElement)}></div>
         <div class="or" part="or">
           <slot></slot>
         </div>

@@ -5,6 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { Price } from "./types";
 export namespace Components {
     interface CeButton {
         /**
@@ -111,7 +112,8 @@ export namespace Components {
         "value": string;
     }
     interface CeCheckout {
-        "productIds": Array<any>;
+        "priceIds": Array<string>;
+        "publishableKey": string;
     }
     interface CeChoice {
         /**
@@ -156,6 +158,7 @@ export namespace Components {
         "value": string;
     }
     interface CeChoices {
+        "columns": number;
         /**
           * Hides the fieldset and legend that surrounds the group. The label will still be read by screen readers.
          */
@@ -164,6 +167,9 @@ export namespace Components {
           * The group label. Required for proper accessibility. Alternatively, you can use the label slot.
          */
         "label": string;
+    }
+    interface CeConsumer {
+        "renderer": any;
     }
     interface CeDivider {
     }
@@ -368,8 +374,19 @@ export namespace Components {
     }
     interface CeOrderSummary {
     }
+    interface CePaymentRequest {
+    }
     interface CePriceChoices {
-        "priceIds": Array<string>;
+        "columns": number;
+        "default": string;
+        "loading": boolean;
+        "price_ids": Array<string>;
+        "prices": Array<Price>;
+        "submitting": boolean;
+        "type": 'radio' | 'checkbox';
+    }
+    interface CeProvider {
+        "STENCIL_CONTEXT": { [key: string]: any };
     }
     interface CeRadio {
         /**
@@ -531,6 +548,20 @@ export namespace Components {
          */
         "theme": string;
     }
+    interface CeSubmit {
+        /**
+          * Draws the button full-width
+         */
+        "full"?: boolean;
+        /**
+          * The button's size.
+         */
+        "size": 'small' | 'medium' | 'large';
+        /**
+          * Draws the button full-width
+         */
+        "text": string;
+    }
     interface CeSwitch {
         /**
           * Draws the switch in a checked state.
@@ -592,6 +623,12 @@ declare global {
     var HTMLCeChoicesElement: {
         prototype: HTMLCeChoicesElement;
         new (): HTMLCeChoicesElement;
+    };
+    interface HTMLCeConsumerElement extends Components.CeConsumer, HTMLStencilElement {
+    }
+    var HTMLCeConsumerElement: {
+        prototype: HTMLCeConsumerElement;
+        new (): HTMLCeConsumerElement;
     };
     interface HTMLCeDividerElement extends Components.CeDivider, HTMLStencilElement {
     }
@@ -665,11 +702,23 @@ declare global {
         prototype: HTMLCeOrderSummaryElement;
         new (): HTMLCeOrderSummaryElement;
     };
+    interface HTMLCePaymentRequestElement extends Components.CePaymentRequest, HTMLStencilElement {
+    }
+    var HTMLCePaymentRequestElement: {
+        prototype: HTMLCePaymentRequestElement;
+        new (): HTMLCePaymentRequestElement;
+    };
     interface HTMLCePriceChoicesElement extends Components.CePriceChoices, HTMLStencilElement {
     }
     var HTMLCePriceChoicesElement: {
         prototype: HTMLCePriceChoicesElement;
         new (): HTMLCePriceChoicesElement;
+    };
+    interface HTMLCeProviderElement extends Components.CeProvider, HTMLStencilElement {
+    }
+    var HTMLCeProviderElement: {
+        prototype: HTMLCeProviderElement;
+        new (): HTMLCeProviderElement;
     };
     interface HTMLCeRadioElement extends Components.CeRadio, HTMLStencilElement {
     }
@@ -719,6 +768,12 @@ declare global {
         prototype: HTMLCeStripePaymentRequestElement;
         new (): HTMLCeStripePaymentRequestElement;
     };
+    interface HTMLCeSubmitElement extends Components.CeSubmit, HTMLStencilElement {
+    }
+    var HTMLCeSubmitElement: {
+        prototype: HTMLCeSubmitElement;
+        new (): HTMLCeSubmitElement;
+    };
     interface HTMLCeSwitchElement extends Components.CeSwitch, HTMLStencilElement {
     }
     var HTMLCeSwitchElement: {
@@ -731,6 +786,7 @@ declare global {
         "ce-checkout": HTMLCeCheckoutElement;
         "ce-choice": HTMLCeChoiceElement;
         "ce-choices": HTMLCeChoicesElement;
+        "ce-consumer": HTMLCeConsumerElement;
         "ce-divider": HTMLCeDividerElement;
         "ce-dropdown": HTMLCeDropdownElement;
         "ce-form": HTMLCeFormElement;
@@ -743,7 +799,9 @@ declare global {
         "ce-menu-divider": HTMLCeMenuDividerElement;
         "ce-menu-item": HTMLCeMenuItemElement;
         "ce-order-summary": HTMLCeOrderSummaryElement;
+        "ce-payment-request": HTMLCePaymentRequestElement;
         "ce-price-choices": HTMLCePriceChoicesElement;
+        "ce-provider": HTMLCeProviderElement;
         "ce-radio": HTMLCeRadioElement;
         "ce-radio-group": HTMLCeRadioGroupElement;
         "ce-secure-notice": HTMLCeSecureNoticeElement;
@@ -752,6 +810,7 @@ declare global {
         "ce-spinner": HTMLCeSpinnerElement;
         "ce-stripe-element": HTMLCeStripeElementElement;
         "ce-stripe-payment-request": HTMLCeStripePaymentRequestElement;
+        "ce-submit": HTMLCeSubmitElement;
         "ce-switch": HTMLCeSwitchElement;
     }
 }
@@ -865,7 +924,8 @@ declare namespace LocalJSX {
         "value"?: string;
     }
     interface CeCheckout {
-        "productIds"?: Array<any>;
+        "priceIds"?: Array<string>;
+        "publishableKey"?: string;
     }
     interface CeChoice {
         /**
@@ -910,6 +970,7 @@ declare namespace LocalJSX {
         "value"?: string;
     }
     interface CeChoices {
+        "columns"?: number;
         /**
           * Hides the fieldset and legend that surrounds the group. The label will still be read by screen readers.
          */
@@ -918,6 +979,10 @@ declare namespace LocalJSX {
           * The group label. Required for proper accessibility. Alternatively, you can use the label slot.
          */
         "label"?: string;
+    }
+    interface CeConsumer {
+        "onMountConsumer"?: (event: CustomEvent<any>) => void;
+        "renderer"?: any;
     }
     interface CeDivider {
     }
@@ -1129,8 +1194,20 @@ declare namespace LocalJSX {
     }
     interface CeOrderSummary {
     }
+    interface CePaymentRequest {
+    }
     interface CePriceChoices {
-        "priceIds"?: Array<string>;
+        "columns"?: number;
+        "default"?: string;
+        "loading"?: boolean;
+        "price_ids"?: Array<string>;
+        "prices"?: Array<Price>;
+        "submitting"?: boolean;
+        "type"?: 'radio' | 'checkbox';
+    }
+    interface CeProvider {
+        "STENCIL_CONTEXT"?: { [key: string]: any };
+        "onMountConsumer"?: (event: CustomEvent<any>) => void;
     }
     interface CeRadio {
         /**
@@ -1312,6 +1389,20 @@ declare namespace LocalJSX {
          */
         "theme"?: string;
     }
+    interface CeSubmit {
+        /**
+          * Draws the button full-width
+         */
+        "full"?: boolean;
+        /**
+          * The button's size.
+         */
+        "size"?: 'small' | 'medium' | 'large';
+        /**
+          * Draws the button full-width
+         */
+        "text"?: string;
+    }
     interface CeSwitch {
         /**
           * Draws the switch in a checked state.
@@ -1356,6 +1447,7 @@ declare namespace LocalJSX {
         "ce-checkout": CeCheckout;
         "ce-choice": CeChoice;
         "ce-choices": CeChoices;
+        "ce-consumer": CeConsumer;
         "ce-divider": CeDivider;
         "ce-dropdown": CeDropdown;
         "ce-form": CeForm;
@@ -1368,7 +1460,9 @@ declare namespace LocalJSX {
         "ce-menu-divider": CeMenuDivider;
         "ce-menu-item": CeMenuItem;
         "ce-order-summary": CeOrderSummary;
+        "ce-payment-request": CePaymentRequest;
         "ce-price-choices": CePriceChoices;
+        "ce-provider": CeProvider;
         "ce-radio": CeRadio;
         "ce-radio-group": CeRadioGroup;
         "ce-secure-notice": CeSecureNotice;
@@ -1377,6 +1471,7 @@ declare namespace LocalJSX {
         "ce-spinner": CeSpinner;
         "ce-stripe-element": CeStripeElement;
         "ce-stripe-payment-request": CeStripePaymentRequest;
+        "ce-submit": CeSubmit;
         "ce-switch": CeSwitch;
     }
 }
@@ -1389,6 +1484,7 @@ declare module "@stencil/core" {
             "ce-checkout": LocalJSX.CeCheckout & JSXBase.HTMLAttributes<HTMLCeCheckoutElement>;
             "ce-choice": LocalJSX.CeChoice & JSXBase.HTMLAttributes<HTMLCeChoiceElement>;
             "ce-choices": LocalJSX.CeChoices & JSXBase.HTMLAttributes<HTMLCeChoicesElement>;
+            "ce-consumer": LocalJSX.CeConsumer & JSXBase.HTMLAttributes<HTMLCeConsumerElement>;
             "ce-divider": LocalJSX.CeDivider & JSXBase.HTMLAttributes<HTMLCeDividerElement>;
             "ce-dropdown": LocalJSX.CeDropdown & JSXBase.HTMLAttributes<HTMLCeDropdownElement>;
             "ce-form": LocalJSX.CeForm & JSXBase.HTMLAttributes<HTMLCeFormElement>;
@@ -1401,7 +1497,9 @@ declare module "@stencil/core" {
             "ce-menu-divider": LocalJSX.CeMenuDivider & JSXBase.HTMLAttributes<HTMLCeMenuDividerElement>;
             "ce-menu-item": LocalJSX.CeMenuItem & JSXBase.HTMLAttributes<HTMLCeMenuItemElement>;
             "ce-order-summary": LocalJSX.CeOrderSummary & JSXBase.HTMLAttributes<HTMLCeOrderSummaryElement>;
+            "ce-payment-request": LocalJSX.CePaymentRequest & JSXBase.HTMLAttributes<HTMLCePaymentRequestElement>;
             "ce-price-choices": LocalJSX.CePriceChoices & JSXBase.HTMLAttributes<HTMLCePriceChoicesElement>;
+            "ce-provider": LocalJSX.CeProvider & JSXBase.HTMLAttributes<HTMLCeProviderElement>;
             "ce-radio": LocalJSX.CeRadio & JSXBase.HTMLAttributes<HTMLCeRadioElement>;
             "ce-radio-group": LocalJSX.CeRadioGroup & JSXBase.HTMLAttributes<HTMLCeRadioGroupElement>;
             "ce-secure-notice": LocalJSX.CeSecureNotice & JSXBase.HTMLAttributes<HTMLCeSecureNoticeElement>;
@@ -1410,6 +1508,7 @@ declare module "@stencil/core" {
             "ce-spinner": LocalJSX.CeSpinner & JSXBase.HTMLAttributes<HTMLCeSpinnerElement>;
             "ce-stripe-element": LocalJSX.CeStripeElement & JSXBase.HTMLAttributes<HTMLCeStripeElementElement>;
             "ce-stripe-payment-request": LocalJSX.CeStripePaymentRequest & JSXBase.HTMLAttributes<HTMLCeStripePaymentRequestElement>;
+            "ce-submit": LocalJSX.CeSubmit & JSXBase.HTMLAttributes<HTMLCeSubmitElement>;
             "ce-switch": LocalJSX.CeSwitch & JSXBase.HTMLAttributes<HTMLCeSwitchElement>;
         }
     }

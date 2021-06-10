@@ -3,7 +3,6 @@
  */
 import { __ } from '@wordpress/i18n';
 import { RichText } from '@wordpress/block-editor';
-// import { InnerBlocks } from '@wordpress/block-editor';
 import InnerBlocks from '../../../components/InnerBlocks';
 
 /**

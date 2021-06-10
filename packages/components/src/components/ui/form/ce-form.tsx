@@ -202,6 +202,7 @@ export class CEForm {
    */
   @Method('submit')
   async submit() {
+    console.log('submit');
     let formData = await this.getFormData();
     const formControls = this.getFormControls();
     const formControlsThatReport = formControls.filter((el: any) => typeof el.reportValidity === 'function') as any;

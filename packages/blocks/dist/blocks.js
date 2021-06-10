@@ -104,14 +104,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_block_helpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./utils/block-helpers */ "./utils/block-helpers.js");
 /* harmony import */ var _blocks_checkout__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./blocks/checkout */ "./blocks/checkout/index.js");
 /* harmony import */ var _blocks_sections_pricing_section__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./blocks/sections/pricing-section */ "./blocks/sections/pricing-section/index.js");
-/* harmony import */ var _blocks_sections_totals_section__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./blocks/sections/totals-section */ "./blocks/sections/totals-section/index.js");
-/* harmony import */ var _blocks_sections_contact_section__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./blocks/sections/contact-section */ "./blocks/sections/contact-section/index.js");
-/* harmony import */ var _blocks_section__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./blocks/section */ "./blocks/section/index.js");
-/* harmony import */ var _blocks_email__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./blocks/email */ "./blocks/email/index.js");
-/* harmony import */ var _blocks_name__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./blocks/name */ "./blocks/name/index.js");
-/* harmony import */ var _blocks_button__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./blocks/button */ "./blocks/button/index.js");
-/* harmony import */ var _blocks_submit__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./blocks/submit */ "./blocks/submit/index.js");
-/* harmony import */ var _blocks_input__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./blocks/input */ "./blocks/input/index.js");
+/* harmony import */ var _blocks_sections_payment_section__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./blocks/sections/payment-section */ "./blocks/sections/payment-section/index.js");
+/* harmony import */ var _blocks_sections_totals_section__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./blocks/sections/totals-section */ "./blocks/sections/totals-section/index.js");
+/* harmony import */ var _blocks_sections_contact_section__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./blocks/sections/contact-section */ "./blocks/sections/contact-section/index.js");
+/* harmony import */ var _blocks_section__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./blocks/section */ "./blocks/section/index.js");
+/* harmony import */ var _blocks_email__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./blocks/email */ "./blocks/email/index.js");
+/* harmony import */ var _blocks_name__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./blocks/name */ "./blocks/name/index.js");
+/* harmony import */ var _blocks_button__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./blocks/button */ "./blocks/button/index.js");
+/* harmony import */ var _blocks_submit__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./blocks/submit */ "./blocks/submit/index.js");
+/* harmony import */ var _blocks_input__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./blocks/input */ "./blocks/input/index.js");
 
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
@@ -148,6 +149,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
  // Register Blocks
 
  // sections
+
 
 
 
@@ -189,7 +191,7 @@ var registerBlock = function registerBlock(block) {
 
 
 var registerCheckoutEngineBlocks = function registerCheckoutEngineBlocks() {
-  [_blocks_checkout__WEBPACK_IMPORTED_MODULE_4__, _blocks_section__WEBPACK_IMPORTED_MODULE_8__, _blocks_sections_pricing_section__WEBPACK_IMPORTED_MODULE_5__, _blocks_sections_totals_section__WEBPACK_IMPORTED_MODULE_6__, _blocks_sections_contact_section__WEBPACK_IMPORTED_MODULE_7__, _blocks_submit__WEBPACK_IMPORTED_MODULE_12__, _blocks_button__WEBPACK_IMPORTED_MODULE_11__, _blocks_input__WEBPACK_IMPORTED_MODULE_13__, _blocks_name__WEBPACK_IMPORTED_MODULE_10__, _blocks_email__WEBPACK_IMPORTED_MODULE_9__].forEach(registerBlock);
+  [_blocks_checkout__WEBPACK_IMPORTED_MODULE_4__, _blocks_section__WEBPACK_IMPORTED_MODULE_9__, _blocks_sections_pricing_section__WEBPACK_IMPORTED_MODULE_5__, _blocks_sections_totals_section__WEBPACK_IMPORTED_MODULE_7__, _blocks_sections_payment_section__WEBPACK_IMPORTED_MODULE_6__, _blocks_sections_contact_section__WEBPACK_IMPORTED_MODULE_8__, _blocks_submit__WEBPACK_IMPORTED_MODULE_13__, _blocks_button__WEBPACK_IMPORTED_MODULE_12__, _blocks_input__WEBPACK_IMPORTED_MODULE_14__, _blocks_name__WEBPACK_IMPORTED_MODULE_11__, _blocks_email__WEBPACK_IMPORTED_MODULE_10__].forEach(registerBlock);
 };
 registerCheckoutEngineBlocks();
 
@@ -617,7 +619,7 @@ function save(_ref) {
 /*! exports provided: allowed, template, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"allowed\":[\"checkout-engine/button\"],\"template\":[[\"checkout-engine/pricing-section\"],[\"checkout-engine/contact-section\"],[\"checkout-engine/totals-section\"],[\"checkout-engine/submit\"]]}");
+module.exports = JSON.parse("{\"allowed\":[\"checkout-engine/button\"],\"template\":[[\"checkout-engine/pricing-section\"],[\"checkout-engine/contact-section\"],[\"checkout-engine/payment-section\"],[\"checkout-engine/totals-section\"],[\"checkout-engine/submit\"]]}");
 
 /***/ }),
 
@@ -1521,9 +1523,7 @@ __webpack_require__.r(__webpack_exports__);
     });
   }
 
-  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_4__["CeFormSection"], {
-    label: "Card Details"
-  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["RichText"], {
+  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_4__["CeFormSection"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["RichText"], {
     slot: "label",
     "aria-label": Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Label'),
     placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Add a title'),
@@ -1660,6 +1660,149 @@ function save(_ref) {
 
 /***/ }),
 
+/***/ "./blocks/sections/payment-section/block.json":
+/*!****************************************************!*\
+  !*** ./blocks/sections/payment-section/block.json ***!
+  \****************************************************/
+/*! exports provided: name, category, attributes, default */
+/***/ (function(module) {
+
+module.exports = JSON.parse("{\"name\":\"checkout-engine/payment-section\",\"category\":\"layout\",\"attributes\":{\"label\":{\"type\":\"string\",\"default\":\"Card Details\"},\"description\":{\"type\":\"string\",\"default\":\"This is a secure, encrypted payment\"}}}");
+
+/***/ }),
+
+/***/ "./blocks/sections/payment-section/edit.js":
+/*!*************************************************!*\
+  !*** ./blocks/sections/payment-section/edit.js ***!
+  \*************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _components_InnerBlocks__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../components/InnerBlocks */ "./components/InnerBlocks.js");
+/* harmony import */ var _checkout_engine_react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @checkout-engine/react */ "./node_modules/@checkout-engine/react/dist/index.js");
+
+
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Component Dependencies
+ */
+
+
+/* harmony default export */ __webpack_exports__["default"] = (function (_ref) {
+  var className = _ref.className,
+      attributes = _ref.attributes,
+      setAttributes = _ref.setAttributes,
+      isSelected = _ref.isSelected;
+  var label = attributes.label,
+      description = attributes.description;
+  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_4__["CeFormSection"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["RichText"], {
+    slot: "label",
+    "aria-label": Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Label'),
+    placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Add a title'),
+    value: label,
+    onChange: function onChange(value) {
+      return setAttributes({
+        label: value
+      });
+    },
+    withoutInteractiveFormatting: true,
+    allowedFormats: ['core/bold', 'core/italic']
+  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_4__["CeSecureNotice"], {
+    slot: "description"
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["RichText"], {
+    "aria-label": Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Description'),
+    placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Add a description'),
+    value: description,
+    onChange: function onChange(value) {
+      return setAttributes({
+        description: value
+      });
+    },
+    withoutInteractiveFormatting: true,
+    allowedFormats: ['core/bold', 'core/italic']
+  })), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_4__["CeFormRow"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_4__["CeStripeElement"], {
+    "publishable-key": "pk_test_51IGqEQFOGhs5FBqkukQRgXOUWl4zEUF8t9NAEz9QdTozrZ9QlWNXbKROsKICnpY808sEfhZYLfSAeSX3arrT8A6K00gf5F5845"
+  })), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_components_InnerBlocks__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    templateLock: false
+  }));
+});
+
+/***/ }),
+
+/***/ "./blocks/sections/payment-section/index.js":
+/*!**************************************************!*\
+  !*** ./blocks/sections/payment-section/index.js ***!
+  \**************************************************/
+/*! exports provided: name, category, metadata, settings */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "name", function() { return name; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "category", function() { return category; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "settings", function() { return settings; });
+/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./edit */ "./blocks/sections/payment-section/edit.js");
+/* harmony import */ var _block_json__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./block.json */ "./blocks/sections/payment-section/block.json");
+var _block_json__WEBPACK_IMPORTED_MODULE_1___namespace = /*#__PURE__*/__webpack_require__.t(/*! ./block.json */ "./blocks/sections/payment-section/block.json", 1);
+/* harmony reexport (default from named exports) */ __webpack_require__.d(__webpack_exports__, "metadata", function() { return _block_json__WEBPACK_IMPORTED_MODULE_1__; });
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/index.js");
+/**
+ * Internal dependencies
+ */
+
+
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Block constants
+ */
+
+var name = _block_json__WEBPACK_IMPORTED_MODULE_1__.name,
+    category = _block_json__WEBPACK_IMPORTED_MODULE_1__.category,
+    attributes = _block_json__WEBPACK_IMPORTED_MODULE_1__.attributes,
+    supports = _block_json__WEBPACK_IMPORTED_MODULE_1__.supports;
+var settings = {
+  /* translators: block name */
+  title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Payment Section', 'checkout_engine'),
+
+  /* translators: block description */
+  description: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Order payment section.', 'checkout_engine'),
+  supports: {
+    reusable: false,
+    inserter: false
+  },
+  icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_3__["payment"],
+  keywords: ['checkout', 'engine',
+  /* translators: block keyword */
+  Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('shop', 'checkout_engine'),
+  /* translators: block keyword */
+  Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('button', 'checkout_engine')],
+  attributes: attributes,
+  edit: _edit__WEBPACK_IMPORTED_MODULE_0__["default"]
+};
+
+
+/***/ }),
+
 /***/ "./blocks/sections/pricing-section/block.json":
 /*!****************************************************!*\
   !*** ./blocks/sections/pricing-section/block.json ***!
@@ -1667,7 +1810,7 @@ function save(_ref) {
 /*! exports provided: name, category, attributes, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"name\":\"checkout-engine/pricing-section\",\"category\":\"layout\",\"attributes\":{\"label\":{\"type\":\"string\",\"default\":\"Choose A Plan\"},\"description\":{\"type\":\"string\"},\"default\":{\"type\":\"string\",\"default\":\"\"},\"choices\":{\"type\":\"array\"},\"type\":{\"type\":\"string\",\"default\":\"radio\"}}}");
+module.exports = JSON.parse("{\"name\":\"checkout-engine/pricing-section\",\"category\":\"layout\",\"attributes\":{\"label\":{\"type\":\"string\",\"default\":\"Choose A Plan\"},\"description\":{\"type\":\"string\"},\"default\":{\"type\":\"string\",\"default\":\"\"},\"choices\":{\"type\":\"array\"},\"type\":{\"type\":\"string\",\"default\":\"radio\"},\"columns\":{\"type\":\"number\",\"default\":1}}}");
 
 /***/ }),
 
@@ -1694,7 +1837,6 @@ __webpack_require__.r(__webpack_exports__);
  * WordPress dependencies
  */
 
- // import { InnerBlocks } from '@wordpress/block-editor';
 
 
 /**
@@ -1816,7 +1958,7 @@ var settings = {
     reusable: false // inserter: false,
 
   },
-  icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_3__["currencyDollar"],
+  icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_3__["buttons"],
   keywords: ['checkout', 'engine',
   /* translators: block keyword */
   Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('shop', 'checkout_engine'),
@@ -1856,7 +1998,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _checkout_engine_react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @checkout-engine/react */ "./node_modules/@checkout-engine/react/dist/index.js");
+/* harmony import */ var _components_InnerBlocks__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../components/InnerBlocks */ "./components/InnerBlocks.js");
+/* harmony import */ var _checkout_engine_react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @checkout-engine/react */ "./node_modules/@checkout-engine/react/dist/index.js");
 
 
 /**
@@ -1877,7 +2020,7 @@ __webpack_require__.r(__webpack_exports__);
       isSelected = _ref.isSelected;
   var label = attributes.label,
       description = attributes.description;
-  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_3__["CeFormSection"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["RichText"], {
+  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_4__["CeFormSection"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["RichText"], {
     slot: "label",
     "aria-label": Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Label'),
     placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Add a title'),
@@ -1901,21 +2044,20 @@ __webpack_require__.r(__webpack_exports__);
     },
     withoutInteractiveFormatting: true,
     allowedFormats: ['core/bold', 'core/italic']
-  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_3__["CeDivider"], {
+  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_4__["CeDivider"], {
     style: {
       '--spacing': '20px'
     }
-  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_3__["CeLineItem"], null, "Gold Plan", Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("span", {
+  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_4__["CeLineItem"], null, "Gold Plan", Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("span", {
     slot: "price"
-  }, "$20.00")), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_3__["CeDivider"], {
+  }, "$20.00")), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_4__["CeDivider"], {
     style: {
       '--spacing': '20px'
     }
-  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_3__["CeLineItem"], {
+  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_4__["CeLineItem"], {
     price: "$20.00",
     currency: "CAD"
-  }, "Total"), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["InnerBlocks"], {
-    renderAppender: _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["InnerBlocks"].ButtonBlockAppender,
+  }, "Total"), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_components_InnerBlocks__WEBPACK_IMPORTED_MODULE_3__["default"], {
     templateLock: false
   }));
 });
