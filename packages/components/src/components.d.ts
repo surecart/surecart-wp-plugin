@@ -113,7 +113,7 @@ export namespace Components {
     }
     interface CeCheckout {
         "priceIds": Array<string>;
-        "publishableKey": string;
+        "stripePublishableKey": string;
     }
     interface CeChoice {
         /**
@@ -373,6 +373,8 @@ export namespace Components {
         "value": string;
     }
     interface CeOrderSummary {
+    }
+    interface CePayment {
     }
     interface CePaymentRequest {
     }
@@ -702,6 +704,12 @@ declare global {
         prototype: HTMLCeOrderSummaryElement;
         new (): HTMLCeOrderSummaryElement;
     };
+    interface HTMLCePaymentElement extends Components.CePayment, HTMLStencilElement {
+    }
+    var HTMLCePaymentElement: {
+        prototype: HTMLCePaymentElement;
+        new (): HTMLCePaymentElement;
+    };
     interface HTMLCePaymentRequestElement extends Components.CePaymentRequest, HTMLStencilElement {
     }
     var HTMLCePaymentRequestElement: {
@@ -799,6 +807,7 @@ declare global {
         "ce-menu-divider": HTMLCeMenuDividerElement;
         "ce-menu-item": HTMLCeMenuItemElement;
         "ce-order-summary": HTMLCeOrderSummaryElement;
+        "ce-payment": HTMLCePaymentElement;
         "ce-payment-request": HTMLCePaymentRequestElement;
         "ce-price-choices": HTMLCePriceChoicesElement;
         "ce-provider": HTMLCeProviderElement;
@@ -925,7 +934,7 @@ declare namespace LocalJSX {
     }
     interface CeCheckout {
         "priceIds"?: Array<string>;
-        "publishableKey"?: string;
+        "stripePublishableKey"?: string;
     }
     interface CeChoice {
         /**
@@ -1194,6 +1203,8 @@ declare namespace LocalJSX {
     }
     interface CeOrderSummary {
     }
+    interface CePayment {
+    }
     interface CePaymentRequest {
     }
     interface CePriceChoices {
@@ -1460,6 +1471,7 @@ declare namespace LocalJSX {
         "ce-menu-divider": CeMenuDivider;
         "ce-menu-item": CeMenuItem;
         "ce-order-summary": CeOrderSummary;
+        "ce-payment": CePayment;
         "ce-payment-request": CePaymentRequest;
         "ce-price-choices": CePriceChoices;
         "ce-provider": CeProvider;
@@ -1497,6 +1509,7 @@ declare module "@stencil/core" {
             "ce-menu-divider": LocalJSX.CeMenuDivider & JSXBase.HTMLAttributes<HTMLCeMenuDividerElement>;
             "ce-menu-item": LocalJSX.CeMenuItem & JSXBase.HTMLAttributes<HTMLCeMenuItemElement>;
             "ce-order-summary": LocalJSX.CeOrderSummary & JSXBase.HTMLAttributes<HTMLCeOrderSummaryElement>;
+            "ce-payment": LocalJSX.CePayment & JSXBase.HTMLAttributes<HTMLCePaymentElement>;
             "ce-payment-request": LocalJSX.CePaymentRequest & JSXBase.HTMLAttributes<HTMLCePaymentRequestElement>;
             "ce-price-choices": LocalJSX.CePriceChoices & JSXBase.HTMLAttributes<HTMLCePriceChoicesElement>;
             "ce-provider": LocalJSX.CeProvider & JSXBase.HTMLAttributes<HTMLCeProviderElement>;

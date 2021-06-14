@@ -10,7 +10,7 @@ describe('ce-stripe-payment-request', () => {
     expect(page.root).toEqualHtml(`
       <ce-stripe-payment-request>
         <div class="request">
-          <div class="button" part="button"></div>
+          <div class="ce-payment-request-button" part="button"></div>
           <div class="or" part="or"></div>
         </div>
       </ce-stripe-payment-request>

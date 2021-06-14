@@ -14,7 +14,9 @@ describe('ce-choices', () => {
             <div class="choices__label" part="label">
               <slot name="label"></slot>
             </div>
-            <slot></slot>
+            <div class="choices__items" part="choices">
+              <slot></slot>
+            </div>
           </fieldset>
         </mock:shadow-root>
       </ce-choices>

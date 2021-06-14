@@ -7,7 +7,7 @@ const DefaultValue: {
   price_ids: Array<string>;
   total: number;
   paymentMethod: 'stripe' | 'paypal';
-  publishableKey?: string;
+  stripePublishableKey?: string;
 } = {
   loading: false,
   submitting: false,

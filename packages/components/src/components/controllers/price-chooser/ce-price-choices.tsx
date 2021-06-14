@@ -18,18 +18,13 @@ export class CePriceChoices {
   @Prop() type: 'radio' | 'checkbox' = 'radio';
   @Prop() columns: number = 1;
 
-  // TODO: translations needed here - do this in provider
-  choicePrice(price: Price) {
-    const formatted = getFormattedPrice(price);
-    return `${formatted} ${price.recurring_interval ? `per ${price.recurring_interval}` : 'once'}`;
-  }
-
   renderHTML = ({ price_ids, loading, prices }) => {
     if (!price_ids?.length) {
       return;
     }
 
     if (loading) {
+      // TODO: translations needed here - do this in provider
       return (
         <ce-choices style={{ '--columns': this.columns.toString() }}>
           {price_ids.map((id, index) => {
@@ -54,7 +49,9 @@ export class CePriceChoices {
           return (
             <ce-choice name={price.product_id} value={price.id} type={this.type} checked={this.default ? this.default === price.id : index === 0}>
               {price.name}
-              <span slot="description">{this.choicePrice(price)}</span>
+              <span slot="description">{price.description}</span>
+              <span slot="price">{getFormattedPrice(price)}</span>
+              <span slot="per">{price.recurring_interval ? `/${price.recurring_interval}` : `once`}</span>
             </ce-choice>
           );
         })}

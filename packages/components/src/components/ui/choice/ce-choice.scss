@@ -10,8 +10,9 @@
   font-weight: var(--ce-input-font-weight);
   -webkit-user-select: none;
   user-select: none;
-  border: solid var(--ce-input-border-width) transparent;
+  border: var(--ce-choice-border);
   border-radius: var(--ce-input-border-radius-large);
+  box-shadow: var(--ce-choice-box-shadow);
   cursor: pointer;
   padding: 1.3em 1.1em;
   position: relative;
@@ -120,7 +121,8 @@
 }
 
 .choice__label {
-  display: block;
+  display: flex;
+  justify-content: space-between;
   width: 100%;
   line-height: var(--ce-radio-size);
   margin-left: 0.75em;
@@ -128,7 +130,17 @@
 }
 
 .choice__description {
-  margin-top: var(--ce-spacing-small);
+  margin-top: var(--ce-spacing-x-small);
   color: var(--ce-color-gray-500);
   font-size: var(--ce-font-size-small);
+  line-height: var(--ce-line-height-dense);
+}
+
+.choice__label-text {
+  padding-right: 20px;
+}
+
+.choice__price {
+  text-align: right;
+  white-space: nowrap;
 }

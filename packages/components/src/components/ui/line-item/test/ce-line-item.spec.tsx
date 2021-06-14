@@ -18,6 +18,7 @@ describe('ce-line-item', () => {
               <slot name="price">
                 <div class="item__price-layout">
                   <span class="item_currency"></span>
+                  <span class="item__price"></span>
                 </div>
               </slot>
             </div>

@@ -8,14 +8,14 @@ const { Consumer } = createContext({});
   shadow: false,
 })
 export class CePaymentRequest {
-  renderHTML = ({ total, paymentMethod, publishableKey }) => {
+  renderHTML = ({ total, paymentMethod, stripePublishableKey }) => {
     if (!paymentMethod) {
       return;
     }
 
     if ('stripe' === paymentMethod) {
       return (
-        <ce-stripe-payment-request amount={total} publishable-key={publishableKey}>
+        <ce-stripe-payment-request amount={total} publishable-key={stripePublishableKey}>
           <ce-divider>Or</ce-divider>
         </ce-stripe-payment-request>
       );

@@ -24,12 +24,21 @@ describe('ce-choice', () => {
               <input aria-checked="false" aria-disabled="false" aria-labelledby="choice-label-1" id="choice-1" type="radio">
             </span>
             <span class="choice__label" id="choice-label-1" part="label">
-              <div class="choice__title" part="title">
-                <slot></slot>
-              </div>
-              <div class="choice__description" part="description">
-                <slot name="description"></slot>
-              </div>
+              <span class="choice__label-text">
+                <span class="choice__title" part="title">
+                  <slot></slot>
+                </span>
+                <span class="choice__description description" part="description">
+                  <slot name="description"></slot>
+                </span>
+              </span>
+              <span class="choice__price">
+                <span class="choice__title">
+                  <slot name="price"></slot>
+                </span>
+                <span class="choice__description">
+                  <slot name="per"></slot>
+                </span>
             </span>
           </label>
         </mock:shadow-root>

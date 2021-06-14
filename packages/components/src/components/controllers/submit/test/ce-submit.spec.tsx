@@ -8,10 +8,8 @@ describe('ce-submit', () => {
       html: `<ce-submit></ce-submit>`,
     });
     expect(page.root).toEqualHtml(`
-      <ce-submit>
-        <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
+      <ce-submit full="" size="large">
+        <ce-consumer></ce-consumer>
       </ce-submit>
     `);
   });
