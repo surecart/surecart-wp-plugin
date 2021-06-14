@@ -23,11 +23,12 @@ class PricingSection extends Block {
 	 */
 	public function render( $attributes, $content ) {
 		return \CheckoutEngine::blocks()->render(
-			"blocks/$this->name",
+			'blocks/section-pricing',
 			[
 				'label'       => $attributes['label'] ?? __( 'Choose A Plan', 'checkout_engine' ),
 				'description' => $attributes['description'] ?? '',
 				'type'        => $attributes['type'] ?? 'radio',
+				'columns'     => $attributes['columns'] ?? 1,
 				'prices'      => [
 					[
 						'name'        => 'price',

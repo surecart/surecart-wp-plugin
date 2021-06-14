@@ -148,6 +148,7 @@ return [
 		\CheckoutEngine\Blocks\Submit::class,
 		\CheckoutEngine\Blocks\FormSection::class,
 		\CheckoutEngine\Blocks\PricingSection::class,
+		\CheckoutEngine\Blocks\PaymentSection::class,
 		\CheckoutEngine\Blocks\TotalsSection::class,
 		\CheckoutEngine\Blocks\ContactSection::class,
 	],

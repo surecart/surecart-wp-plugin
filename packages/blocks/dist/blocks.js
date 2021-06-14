@@ -1814,6 +1814,69 @@ module.exports = JSON.parse("{\"name\":\"checkout-engine/pricing-section\",\"cat
 
 /***/ }),
 
+/***/ "./blocks/sections/pricing-section/components/Inspector.js":
+/*!*****************************************************************!*\
+  !*** ./blocks/sections/pricing-section/components/Inspector.js ***!
+  \*****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_editor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/editor */ "@wordpress/editor");
+/* harmony import */ var _wordpress_editor__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_editor__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__);
+
+
+/**
+ * WordPress dependencies
+ */
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = (function (_ref) {
+  var attributes = _ref.attributes,
+      setAttributes = _ref.setAttributes;
+  var columns = attributes.columns,
+      type = attributes.type;
+  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_editor__WEBPACK_IMPORTED_MODULE_2__["InspectorControls"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
+    title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Attributes', 'checkout_engine')
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelRow"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RadioControl"], {
+    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Type', 'checkout_engine'),
+    help: "The type of product selection",
+    selected: type,
+    options: [{
+      label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Choose one', 'checkout_egine'),
+      value: 'radio'
+    }, {
+      label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Choose many', 'checkout_engine'),
+      value: 'checkbox'
+    }],
+    onChange: function onChange(type) {
+      return setAttributes({
+        type: type
+      });
+    }
+  })), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelRow"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
+    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Columns', 'checkout_engine'),
+    value: columns,
+    onChange: function onChange(columns) {
+      return setAttributes({
+        columns: columns
+      });
+    },
+    min: 1,
+    max: 5
+  }))));
+});
+
+/***/ }),
+
 /***/ "./blocks/sections/pricing-section/edit.js":
 /*!*************************************************!*\
   !*** ./blocks/sections/pricing-section/edit.js ***!
@@ -1830,12 +1893,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _components_InnerBlocks__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../components/InnerBlocks */ "./components/InnerBlocks.js");
-/* harmony import */ var _checkout_engine_react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @checkout-engine/react */ "./node_modules/@checkout-engine/react/dist/index.js");
+/* harmony import */ var _components_Inspector__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/Inspector */ "./blocks/sections/pricing-section/components/Inspector.js");
+/* harmony import */ var _checkout_engine_react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @checkout-engine/react */ "./node_modules/@checkout-engine/react/dist/index.js");
 
 
 /**
  * WordPress dependencies
  */
+
 
 
 
@@ -1851,6 +1916,7 @@ __webpack_require__.r(__webpack_exports__);
       isSelected = _ref.isSelected;
   var defaultChoice = attributes.default,
       products = attributes.products,
+      columns = attributes.columns,
       type = attributes.type,
       label = attributes.label,
       description = attributes.description;
@@ -1859,16 +1925,19 @@ __webpack_require__.r(__webpack_exports__);
     // if ( ! products?.length ) {
     // 	return <p>Please add a product.</p>;
     // }
-    return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_4__["CeChoices"], {
-      className: className
-    }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_4__["CeChoice"], {
+    return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_5__["CeChoices"], {
+      className: className,
+      style: {
+        '--columns': columns
+      }
+    }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_5__["CeChoice"], {
       name: "plan",
       type: type,
       required: true,
       checked: true
     }, "Gold Plan", Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("span", {
       slot: "description"
-    }, "$9.99, then $49.99 per month")), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_4__["CeChoice"], {
+    }, "$9.99, then $49.99 per month")), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_5__["CeChoice"], {
       name: "plan",
       type: type,
       required: true
@@ -1877,7 +1946,10 @@ __webpack_require__.r(__webpack_exports__);
     }, "$39.99 per month")));
   };
 
-  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_4__["CeFormSection"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["RichText"], {
+  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_components_Inspector__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    attributes: attributes,
+    setAttributes: setAttributes
+  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_5__["CeFormSection"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["RichText"], {
     slot: "label",
     "aria-label": Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Label'),
     placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Add a title'),
@@ -1903,7 +1975,7 @@ __webpack_require__.r(__webpack_exports__);
     allowedFormats: ['core/bold', 'core/italic']
   }), productsSelector(), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_components_InnerBlocks__WEBPACK_IMPORTED_MODULE_3__["default"], {
     templateLock: false
-  }));
+  })));
 });
 
 /***/ }),

@@ -1,11 +1,11 @@
 <ce-form-section>
-	@isset($label)
-	<span slot="label"><?php echo wp_kses_post($label); ?></span>
-	@endisset
+    @if (!empty($label))
+        <span slot="label"><?php echo wp_kses_post($label); ?></span>
+    @endif
 
-	@isset($description)
-	<span slot="description"><?php echo wp_kses_post($description); ?></span>
-	@endisset
+    @if (!empty($description))
+        <span slot="description"><?php echo wp_kses_post($description); ?></span>
+    @endif
 
-	{{ $slot }}
+    {{ $slot }}
 </ce-form-section>
