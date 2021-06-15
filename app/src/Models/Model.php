@@ -4,12 +4,12 @@ namespace CheckoutEngine\Models;
 
 use ArrayAccess;
 use JsonSerializable;
-use JsonEncodingException;
+use CheckoutEngine\Concerns\Arrayable;
 
 /**
  * Model class
  */
-abstract class Model implements ArrayAccess, JsonSerializable {
+abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 	/**
 	 * Keeps track of booted models
 	 *
@@ -72,7 +72,7 @@ abstract class Model implements ArrayAccess, JsonSerializable {
 	 *
 	 * @var array
 	 */
-	protected $guarded = [];
+	protected $guarded = [ 'id' ];
 
 	/**
 	 * Model constructor
@@ -250,6 +250,9 @@ abstract class Model implements ArrayAccess, JsonSerializable {
 		$called_class = static::getCalledClassName();
 		$event_name   = "model.{$called_class}.{$event}";
 
+		// fire global event
+		\do_action( "checkout_engine/models/{$called_class}/{$event}", $this );
+
 		if ( isset( static::$events[ $event_name ] ) ) {
 			return call_user_func( static::$events[ $event_name ], $this );
 		}
@@ -415,17 +418,41 @@ abstract class Model implements ArrayAccess, JsonSerializable {
 			return $items;
 		}
 
-		return $items->data;
-
 		$models = [];
 		foreach ( $items->data as $data ) {
 			$models[] = new static( $data );
 		}
-
-		$this->items = $models;
-
-		return $this->items;
+		return $models;
 	}
+
+	public function getAttributes() {
+		return $this->attributes;
+	}
+
+	public function getAttribute( $key ) {
+		$attribute = null;
+
+		if ( $this->hasAttribute( $key ) ) {
+			$attribute = $this->attributes[ $key ];
+		}
+
+		$getter = $this->getMutator( $key, 'get' );
+
+		if ( $getter ) {
+			return $this->{$getter}( $attribute );
+		} elseif ( ! is_null( $attribute ) ) {
+			return $attribute;
+		}
+
+		// if ($this->relationLoaded($key)) {
+		// return $this->getRelation($key);
+		// }
+
+		// if ($this->relationshipExists($key)) {
+		// return $this->getRelationFromMethod($key);
+		// }
+	}
+
 
 	/**
 	 * Serialize to json.
