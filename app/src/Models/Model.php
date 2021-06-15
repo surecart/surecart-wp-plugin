@@ -425,10 +425,22 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 		return $models;
 	}
 
+	/**
+	 * Get the model attributes
+	 *
+	 * @return array
+	 */
 	public function getAttributes() {
 		return $this->attributes;
 	}
 
+	/**
+	 * Get a specific attribute
+	 *
+	 * @param string $key Attribute name.
+	 *
+	 * @return mixed
+	 */
 	public function getAttribute( $key ) {
 		$attribute = null;
 
