@@ -25,6 +25,8 @@ return [
 		\CheckoutEngine\WordPress\ShortcodesServiceProvider::class,
 		\CheckoutEngine\WordPress\PluginServiceProvider::class,
 		\CheckoutEngine\WordPress\WidgetsServiceProvider::class,
+		\CheckoutEngine\Request\RequestServiceProvider::class,
+		\CheckoutEngine\Rest\PriceRestServiceProvider::class,
 		\WPEmergeBlade\View\ServiceProvider::class,
 		\CheckoutEngine\View\ViewServiceProvider::class,
 		\CheckoutEngine\Blocks\BlockServiceProvider::class,

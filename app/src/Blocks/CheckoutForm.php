@@ -2,7 +2,7 @@
 
 namespace CheckoutEngine\Blocks;
 
-use CheckoutEngine\Traits\HasBlockTheme;
+use CheckoutEngine\Concerns\HasBlockTheme;
 
 /**
  * Checkout block

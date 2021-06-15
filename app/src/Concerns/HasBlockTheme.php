@@ -1,6 +1,6 @@
 <?php
 
-namespace CheckoutEngine\Traits;
+namespace CheckoutEngine\Concerns;
 
 use WPEmerge\Helpers\MixedType;
 
