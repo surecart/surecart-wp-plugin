@@ -17,6 +17,12 @@ export class CEChoice {
   /** Does the choice have focus */
   @State() hasFocus: boolean = false;
 
+  /** Does the choice have focus */
+  @State() hasDescription: boolean = false;
+
+  /** Does the choice have focus */
+  @State() isStacked: boolean = false;
+
   /** The choice name attribute */
   @Prop() name: string;
 
@@ -129,6 +135,23 @@ export class CEChoice {
     this.input.focus();
   }
 
+  componentDidLoad() {
+    this.hasDescription = !!(this.el.shadowRoot.querySelector('[slot="description"]') as HTMLSlotElement);
+    this.handleResize();
+  }
+
+  handleResize() {
+    const resizeObserver = new ResizeObserver(entries => {
+      for (let entry of entries) {
+        if (entry.contentBoxSize) {
+          const contentBoxSize = Array.isArray(entry.contentBoxSize) ? entry.contentBoxSize[0] : entry.contentBoxSize;
+          setTimeout(() => (this.isStacked = contentBoxSize?.inlineSize < 250), 0);
+        }
+      }
+    });
+    resizeObserver.observe(this.el);
+  }
+
   render() {
     return (
       <label
@@ -138,6 +161,8 @@ export class CEChoice {
           'choice--checked': this.checked,
           'choice--disabled': this.disabled,
           'choice--focused': this.hasFocus,
+          'choice--has-description': this.hasDescription,
+          'choice--layout-columns': !this.isStacked,
         }}
         htmlFor={this.inputId}
         onKeyDown={e => this.handleKeyDown(e)}

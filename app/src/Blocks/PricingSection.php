@@ -29,30 +29,6 @@ class PricingSection extends Block {
 				'description' => $attributes['description'] ?? '',
 				'type'        => $attributes['type'] ?? 'radio',
 				'columns'     => $attributes['columns'] ?? 1,
-				'prices'      => [
-					[
-						'name'        => 'price',
-						'value'       => 'gold',
-						'required'    => true,
-						'default'     => true,
-						'title'       => 'Gold Plan',
-						'description' => '$9.99, then $49.99 per month',
-					],
-					[
-						'name'        => 'price',
-						'value'       => 'silver',
-						'required'    => true,
-						'title'       => 'Silver Plan',
-						'description' => '$9.99, then $49.99 per month',
-					],
-					[
-						'name'        => 'price',
-						'value'       => 'silver',
-						'required'    => true,
-						'title'       => 'Silver Plan',
-						'description' => '$9.99, then $49.99 per month',
-					],
-				],
 				'attributes'  => $attributes,
 				'content'     => $content,
 			]

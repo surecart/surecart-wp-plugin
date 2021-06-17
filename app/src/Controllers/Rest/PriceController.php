@@ -9,6 +9,23 @@ use CheckoutEngine\Models\Price;
  */
 class PriceController {
 	/**
+	 * Create price
+	 *
+	 * @param \WP_REST_Request $request Rest Request.
+	 *
+	 * @return \WP_REST_Response
+	 */
+	public function create( \WP_REST_Request $request ) {
+		$price = Price::create();
+
+		if ( is_wp_error( $price ) ) {
+			return $price;
+		}
+
+		return rest_ensure_response( $price );
+	}
+
+	/**
 	 * Price index
 	 *
 	 * @param \WP_REST_Request $request Rest Request.
@@ -28,5 +45,28 @@ class PriceController {
 		}
 
 		return rest_ensure_response( $prices );
+	}
+
+	/**
+	 * Get Price
+	 *
+	 * @param \WP_REST_Request $request Rest Request.
+	 *
+	 * @return \WP_REST_Response
+	 */
+	public function get( \WP_REST_Request $request ) {
+		$price = Price::get( $request['id'] );
+
+		if ( is_wp_error( $price ) ) {
+			return $price;
+		}
+
+		return rest_ensure_response( $price );
+	}
+
+	public function edit( \WP_REST_Request $request ) {
+	}
+
+	public function delete( \WP_REST_Request $request ) {
 	}
 }

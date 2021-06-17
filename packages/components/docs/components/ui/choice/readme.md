@@ -72,6 +72,19 @@ Type: `Promise<void>`
 | `"title"`        |             |
 
 
+## Dependencies
+
+### Used by
+
+ - [ce-price-choices](../../controllers/price-chooser)
+
+### Graph
+```mermaid
+graph TD;
+  ce-price-choices --> ce-choice
+  style ce-choice fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

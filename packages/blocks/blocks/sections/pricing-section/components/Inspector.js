@@ -2,7 +2,7 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { InspectorControls } from '@wordpress/editor';
+import { InspectorControls } from '@wordpress/block-editor';
 
 import {
 	RangeControl,
@@ -41,7 +41,7 @@ export default ( { attributes, setAttributes } ) => {
 						value={ columns }
 						onChange={ ( columns ) => setAttributes( { columns } ) }
 						min={ 1 }
-						max={ 5 }
+						max={ 3 }
 					/>
 				</PanelRow>
 			</PanelBody>

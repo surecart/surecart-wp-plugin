@@ -5,6 +5,7 @@ const DefaultValue: {
   loading: boolean;
   submitting: boolean;
   price_ids: Array<string>;
+  selectedPriceIds?: Array<string>;
   total: number;
   paymentMethod: 'stripe' | 'paypal';
   stripePublishableKey?: string;

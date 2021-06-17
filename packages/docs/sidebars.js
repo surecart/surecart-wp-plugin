@@ -18,6 +18,18 @@ module.exports = {
       label: "Checkout Forms",
       items: ["checkout-form/creating", "checkout-form/form-fields"],
     },
+    {
+      type: "category",
+      label: "Models",
+      items: [
+        "models/models",
+        {
+        type: 'category',
+        label: 'Prices',
+        items: ["models/prices/intro", "models/prices/list", "models/prices/create", "models/prices/edit"]
+        }
+      ],
+    },
   ],
   componentsSidebar: [
     "components",

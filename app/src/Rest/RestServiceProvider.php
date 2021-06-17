@@ -7,7 +7,7 @@ use CheckoutEngine\Rest\RestServiceInterface;
 /**
  * Abstract Rest Service Provider interface
  */
-abstract class RestServiceProvider implements RestServiceInterface {
+abstract class RestServiceProvider extends \WP_REST_Controller implements RestServiceInterface {
 	/**
 	 * Plugin namespace.
 	 *

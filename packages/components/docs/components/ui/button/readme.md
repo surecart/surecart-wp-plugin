@@ -44,6 +44,10 @@
 
 ## Dependencies
 
+### Used by
+
+ - [ce-submit](../../controllers/submit)
+
 ### Depends on
 
 - [ce-spinner](../spinner)
@@ -52,6 +56,7 @@
 ```mermaid
 graph TD;
   ce-button --> ce-spinner
+  ce-submit --> ce-button
   style ce-button fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

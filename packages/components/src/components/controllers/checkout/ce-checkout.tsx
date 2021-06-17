@@ -3,82 +3,8 @@ import { createContext } from '../../context/utils/createContext';
 import { Price } from '../../../types';
 import state from './state';
 const { Provider } = createContext(state);
-// import prices from './test/fixtures/prices.json';
-const prices = [
-  {
-    id: 'dd514523-297b-4a86-b5ff-6db0a70d7e16',
-    name: 'Yearly',
-    description: 'Yearly for 1 Site',
-    amount: 9999,
-    currency: 'usd',
-    recurring: true,
-    recurring_interval: 'year',
-    recurring_interval_count: 0,
-    active: true,
-    metadata: {},
-    product_id: 'b5eb983f-93fe-429b-afcb-de7d1db2f2e4',
-    created_at: '2021-05-26T19:12:53.667Z',
-    updated_at: '2021-05-26T19:12:53.667Z',
-    product: {
-      id: 'b5eb983f-93fe-429b-afcb-de7d1db2f2e4',
-      name: 'Updated Product',
-      description: 'Updated Product Description',
-      active: true,
-      metadata: {},
-      created_at: '2021-05-26T19:06:34.907Z',
-      updated_at: '2021-05-26T19:12:53.670Z',
-    },
-  },
-  {
-    id: 'dd514523-297b-4a86-b5ff-6db0a70d7e17',
-    name: 'Monthly',
-    description: 'Yearly for 25 Sites',
-    amount: 999,
-    currency: 'usd',
-    recurring: true,
-    recurring_interval: 'month',
-    recurring_interval_count: 2,
-    active: true,
-    metadata: {},
-    product_id: 'b5eb983f-93fe-429b-afcb-de7d1db2f2e4',
-    created_at: '2021-05-26T19:12:53.667Z',
-    updated_at: '2021-05-26T19:12:53.667Z',
-    product: {
-      id: 'b5eb983f-93fe-429b-afcb-de7d1db2f2e4',
-      name: 'Updated Product',
-      description: 'Updated Product Description',
-      active: true,
-      metadata: {},
-      created_at: '2021-05-26T19:06:34.907Z',
-      updated_at: '2021-05-26T19:12:53.670Z',
-    },
-  },
-  {
-    id: '85109619-529d-47b3-98c3-ca90d22913e4',
-    name: 'Lifetime',
-    description: 'Lifetime updates for 25 Sites and 3 years of priority support.',
-    amount: 49999,
-    currency: 'usd',
-    recurring: false,
-    recurring_interval: null,
-    recurring_interval_count: null,
-    active: true,
-    metadata: {},
-    product_id: 'b5eb983f-93fe-429b-afcb-de7d1db2f2e4',
-    created_at: '2021-06-08T18:54:59.297Z',
-    updated_at: '2021-06-08T18:54:59.297Z',
-    product: {
-      id: 'b5eb983f-93fe-429b-afcb-de7d1db2f2e4',
-      name: 'Updated Product',
-      description: 'Updated Product Description',
-      active: true,
-      metadata: {},
-      created_at: '2021-05-26T19:06:34.907Z',
-      updated_at: '2021-06-08T18:54:59.302Z',
-    },
-  },
-];
-
+import apiFetch from '../../../functions/fetch';
+import { addQueryArgs } from '@wordpress/url';
 @Component({
   tag: 'ce-checkout',
   styleUrl: 'ce-checkout.scss',
@@ -87,11 +13,12 @@ const prices = [
 export class CECheckout {
   @Element() el: HTMLElement;
 
-  @Prop() priceIds: Array<string> = ['dd514523-297b-4a86-b5ff-6db0a70d7e16', 'dd514523-297b-4a86-b5ff-6db0a70d7e17', '85109619-529d-47b3-98c3-ca90d22913e4'];
+  @Prop() priceIds: Array<string>;
   @Prop() stripePublishableKey: string;
 
   @State() message: string = '';
   @State() prices: Array<Price>;
+  @State() selectedPriceIds: Array<string>;
   @State() loading: boolean;
   @State() total: number;
   @State() submitting: boolean;
@@ -101,12 +28,20 @@ export class CECheckout {
   }
 
   @Watch('priceIds')
-  fetchPrices() {
+  async fetchPrices() {
     this.loading = true;
-    setTimeout(() => {
-      this.prices = prices as Array<Price>;
+
+    try {
+      let res = await apiFetch({
+        path: addQueryArgs('price', {
+          active: true,
+          ids: this.priceIds,
+        }),
+      });
+      this.prices = res as Array<Price>;
+    } finally {
       this.loading = false;
-    }, 1000);
+    }
   }
 
   render() {
@@ -116,6 +51,7 @@ export class CECheckout {
           value={{
             price_ids: this.priceIds,
             prices: this.prices,
+            selectedPriceIds: this.selectedPriceIds,
             submitting: this.submitting,
             loading: this.loading,
             total: this.total,
@@ -123,6 +59,7 @@ export class CECheckout {
             stripePublishableKey: this.stripePublishableKey,
           }}
         >
+          {JSON.stringify(this.selectedPriceIds)}
           <slot />
         </Provider>
       </div>

@@ -19,6 +19,10 @@
 
 ## Dependencies
 
+### Used by
+
+ - [ce-payment](../../controllers/payment)
+
 ### Depends on
 
 - [ce-input](../input)
@@ -28,6 +32,7 @@
 graph TD;
   ce-stripe-element --> ce-input
   ce-input --> ce-form-control
+  ce-payment --> ce-stripe-element
   style ce-stripe-element fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

@@ -381,7 +381,6 @@ export namespace Components {
     interface CePriceChoices {
         "columns": number;
         "default": string;
-        "loading": boolean;
         "price_ids": Array<string>;
         "prices": Array<Price>;
         "submitting": boolean;
@@ -1210,7 +1209,6 @@ declare namespace LocalJSX {
     interface CePriceChoices {
         "columns"?: number;
         "default"?: string;
-        "loading"?: boolean;
         "price_ids"?: Array<string>;
         "prices"?: Array<Price>;
         "submitting"?: boolean;

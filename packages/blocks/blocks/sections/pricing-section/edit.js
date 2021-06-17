@@ -9,7 +9,7 @@ import Inspector from './components/Inspector';
 /**
  * Component Dependencies
  */
-import { CeChoices, CeChoice, CeFormSection } from '@checkout-engine/react';
+import { CePriceChoices, CeFormSection } from '@checkout-engine/react';
 
 export default ( { className, attributes, setAttributes, isSelected } ) => {
 	const {
@@ -20,28 +20,6 @@ export default ( { className, attributes, setAttributes, isSelected } ) => {
 		label,
 		description,
 	} = attributes;
-
-	const productsSelector = () => {
-		// if ( ! products?.length ) {
-		// 	return <p>Please add a product.</p>;
-		// }
-
-		return (
-			<CeChoices
-				className={ className }
-				style={ { '--columns': columns } }
-			>
-				<CeChoice name="plan" type={ type } required checked>
-					Gold Plan
-					<span slot="description">$9.99, then $49.99 per month</span>
-				</CeChoice>
-				<CeChoice name="plan" type={ type } required>
-					Silver Plan
-					<span slot="description">$39.99 per month</span>
-				</CeChoice>
-			</CeChoices>
-		);
-	};
 
 	return (
 		<div>
@@ -71,7 +49,11 @@ export default ( { className, attributes, setAttributes, isSelected } ) => {
 					allowedFormats={ [ 'core/bold', 'core/italic' ] }
 				/>
 
-				{ productsSelector() }
+				<CePriceChoices
+					columns={ columns }
+					type={ type }
+					default={ defaultChoice }
+				></CePriceChoices>
 
 				<InnerBlocks templateLock={ false } />
 			</CeFormSection>

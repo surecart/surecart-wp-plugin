@@ -1,9 +1,7 @@
-import { Component, Host, h } from '@stencil/core';
+import { Component, h } from '@stencil/core';
 
-// import { createContext } from 'stencil-context';
-
-// const defaultValue = { products: [] };
-// const { Consumer } = createContext(defaultValue);
+import { createContext } from '../../context/utils/createContext';
+const { Consumer } = createContext({});
 
 @Component({
   tag: 'ce-order-summary',
@@ -11,11 +9,15 @@ import { Component, Host, h } from '@stencil/core';
   shadow: true,
 })
 export class CEOrderSummary {
-  render() {
+  renderHTML({ total, subtotal }) {
     return (
-      <Host>
-        <slot></slot>
-      </Host>
+      <div>
+        <div>Total{total}</div>
+        <div>Subtotal{subtotal}</div>
+      </div>
     );
+  }
+  render() {
+    return <Consumer>{({ total, subtotal }) => this.renderHTML({ total, subtotal })}</Consumer>;
   }
 }

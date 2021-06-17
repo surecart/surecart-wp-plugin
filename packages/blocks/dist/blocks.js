@@ -508,7 +508,9 @@ __webpack_require__.r(__webpack_exports__);
         return Object(_emotion_core__WEBPACK_IMPORTED_MODULE_5__["jsx"])("div", null, "products");
 
       default:
-        return Object(_emotion_core__WEBPACK_IMPORTED_MODULE_5__["jsx"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_2__["CeCheckout"], null, Object(_emotion_core__WEBPACK_IMPORTED_MODULE_5__["jsx"])(_components_form_blocks__WEBPACK_IMPORTED_MODULE_4__["default"], {
+        return Object(_emotion_core__WEBPACK_IMPORTED_MODULE_5__["jsx"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_2__["CeCheckout"], {
+          priceIds: ['85109619-529d-47b3-98c3-ca90d22913e4', 'dd514523-297b-4a86-b5ff-6db0a70d7e17', 'ead419c4-18e6-43f8-85b4-09e4e2f87de0']
+        }, Object(_emotion_core__WEBPACK_IMPORTED_MODULE_5__["jsx"])(_components_form_blocks__WEBPACK_IMPORTED_MODULE_4__["default"], {
           isSelected: isSelected,
           requiredBlocks: requiredBlocks,
           clientId: clientId
@@ -1827,8 +1829,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _wordpress_editor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/editor */ "@wordpress/editor");
-/* harmony import */ var _wordpress_editor__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_editor__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__);
 
@@ -1844,7 +1846,7 @@ __webpack_require__.r(__webpack_exports__);
       setAttributes = _ref.setAttributes;
   var columns = attributes.columns,
       type = attributes.type;
-  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_editor__WEBPACK_IMPORTED_MODULE_2__["InspectorControls"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
+  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["InspectorControls"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
     title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Attributes', 'checkout_engine')
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelRow"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RadioControl"], {
     label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Type', 'checkout_engine'),
@@ -1871,7 +1873,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     min: 1,
-    max: 5
+    max: 3
   }))));
 });
 
@@ -1920,32 +1922,6 @@ __webpack_require__.r(__webpack_exports__);
       type = attributes.type,
       label = attributes.label,
       description = attributes.description;
-
-  var productsSelector = function productsSelector() {
-    // if ( ! products?.length ) {
-    // 	return <p>Please add a product.</p>;
-    // }
-    return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_5__["CeChoices"], {
-      className: className,
-      style: {
-        '--columns': columns
-      }
-    }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_5__["CeChoice"], {
-      name: "plan",
-      type: type,
-      required: true,
-      checked: true
-    }, "Gold Plan", Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("span", {
-      slot: "description"
-    }, "$9.99, then $49.99 per month")), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_5__["CeChoice"], {
-      name: "plan",
-      type: type,
-      required: true
-    }, "Silver Plan", Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("span", {
-      slot: "description"
-    }, "$39.99 per month")));
-  };
-
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_components_Inspector__WEBPACK_IMPORTED_MODULE_4__["default"], {
     attributes: attributes,
     setAttributes: setAttributes
@@ -1973,7 +1949,11 @@ __webpack_require__.r(__webpack_exports__);
     },
     withoutInteractiveFormatting: true,
     allowedFormats: ['core/bold', 'core/italic']
-  }), productsSelector(), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_components_InnerBlocks__WEBPACK_IMPORTED_MODULE_3__["default"], {
+  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_5__["CePriceChoices"], {
+    columns: columns,
+    type: type,
+    default: defaultChoice
+  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_components_InnerBlocks__WEBPACK_IMPORTED_MODULE_3__["default"], {
     templateLock: false
   })));
 });
@@ -2820,7 +2800,7 @@ module.exports["default"] = module.exports, module.exports.__esModule = true;
 /*!**********************************************************************!*\
   !*** ./node_modules/@checkout-engine/react/dist/components/index.js ***!
   \**********************************************************************/
-/*! exports provided: CeButton, CeCheckbox, CeCheckout, CeChoice, CeChoices, CeDivider, CeDropdown, CeForm, CeFormControl, CeFormRow, CeFormSection, CeInput, CeLineItem, CeMenu, CeMenuDivider, CeMenuItem, CeOrderSummary, CeRadio, CeRadioGroup, CeSecureNotice, CeSelect, CeSkeleton, CeSpinner, CeStripeElement, CeStripePaymentRequest, CeSwitch */
+/*! exports provided: CeButton, CeCheckbox, CeCheckout, CeChoice, CeChoices, CeConsumer, CeDivider, CeDropdown, CeForm, CeFormControl, CeFormRow, CeFormSection, CeInput, CeLineItem, CeMenu, CeMenuDivider, CeMenuItem, CeOrderSummary, CePayment, CePaymentRequest, CePriceChoices, CeProvider, CeRadio, CeRadioGroup, CeSecureNotice, CeSelect, CeSkeleton, CeSpinner, CeStripeElement, CeStripePaymentRequest, CeSubmit, CeSwitch */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2830,6 +2810,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CeCheckout", function() { return CeCheckout; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CeChoice", function() { return CeChoice; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CeChoices", function() { return CeChoices; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CeConsumer", function() { return CeConsumer; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CeDivider", function() { return CeDivider; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CeDropdown", function() { return CeDropdown; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CeForm", function() { return CeForm; });
@@ -2842,6 +2823,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CeMenuDivider", function() { return CeMenuDivider; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CeMenuItem", function() { return CeMenuItem; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CeOrderSummary", function() { return CeOrderSummary; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CePayment", function() { return CePayment; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CePaymentRequest", function() { return CePaymentRequest; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CePriceChoices", function() { return CePriceChoices; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CeProvider", function() { return CeProvider; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CeRadio", function() { return CeRadio; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CeRadioGroup", function() { return CeRadioGroup; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CeSecureNotice", function() { return CeSecureNotice; });
@@ -2850,6 +2835,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CeSpinner", function() { return CeSpinner; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CeStripeElement", function() { return CeStripeElement; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CeStripePaymentRequest", function() { return CeStripePaymentRequest; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CeSubmit", function() { return CeSubmit; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CeSwitch", function() { return CeSwitch; });
 /* harmony import */ var _react_component_lib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./react-component-lib */ "./node_modules/@checkout-engine/react/dist/components/react-component-lib/index.js");
 /* eslint-disable */
@@ -2861,6 +2847,7 @@ const CeCheckbox = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_M
 const CeCheckout = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-checkout');
 const CeChoice = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-choice');
 const CeChoices = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-choices');
+const CeConsumer = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-consumer');
 const CeDivider = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-divider');
 const CeDropdown = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-dropdown');
 const CeForm = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-form');
@@ -2873,6 +2860,10 @@ const CeMenu = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODUL
 const CeMenuDivider = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-menu-divider');
 const CeMenuItem = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-menu-item');
 const CeOrderSummary = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-order-summary');
+const CePayment = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-payment');
+const CePaymentRequest = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-payment-request');
+const CePriceChoices = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-price-choices');
+const CeProvider = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-provider');
 const CeRadio = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-radio');
 const CeRadioGroup = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-radio-group');
 const CeSecureNotice = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-secure-notice');
@@ -2881,6 +2872,7 @@ const CeSkeleton = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_M
 const CeSpinner = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-spinner');
 const CeStripeElement = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-stripe-element');
 const CeStripePaymentRequest = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-stripe-payment-request');
+const CeSubmit = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-submit');
 const CeSwitch = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-switch');
 //# sourceMappingURL=index.js.map
 
@@ -3278,7 +3270,7 @@ const createForwardRef = (ReactComponent, displayName) => {
 /*!***********************************************************!*\
   !*** ./node_modules/@checkout-engine/react/dist/index.js ***!
   \***********************************************************/
-/*! exports provided: CeButton, CeCheckbox, CeCheckout, CeChoice, CeChoices, CeDivider, CeDropdown, CeForm, CeFormControl, CeFormRow, CeFormSection, CeInput, CeLineItem, CeMenu, CeMenuDivider, CeMenuItem, CeOrderSummary, CeRadio, CeRadioGroup, CeSecureNotice, CeSelect, CeSkeleton, CeSpinner, CeStripeElement, CeStripePaymentRequest, CeSwitch */
+/*! exports provided: CeButton, CeCheckbox, CeCheckout, CeChoice, CeChoices, CeConsumer, CeDivider, CeDropdown, CeForm, CeFormControl, CeFormRow, CeFormSection, CeInput, CeLineItem, CeMenu, CeMenuDivider, CeMenuItem, CeOrderSummary, CePayment, CePaymentRequest, CePriceChoices, CeProvider, CeRadio, CeRadioGroup, CeSecureNotice, CeSelect, CeSkeleton, CeSpinner, CeStripeElement, CeStripePaymentRequest, CeSubmit, CeSwitch */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3293,6 +3285,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CeChoice", function() { return _components__WEBPACK_IMPORTED_MODULE_0__["CeChoice"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CeChoices", function() { return _components__WEBPACK_IMPORTED_MODULE_0__["CeChoices"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CeConsumer", function() { return _components__WEBPACK_IMPORTED_MODULE_0__["CeConsumer"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CeDivider", function() { return _components__WEBPACK_IMPORTED_MODULE_0__["CeDivider"]; });
 
@@ -3318,6 +3312,14 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CeOrderSummary", function() { return _components__WEBPACK_IMPORTED_MODULE_0__["CeOrderSummary"]; });
 
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CePayment", function() { return _components__WEBPACK_IMPORTED_MODULE_0__["CePayment"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CePaymentRequest", function() { return _components__WEBPACK_IMPORTED_MODULE_0__["CePaymentRequest"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CePriceChoices", function() { return _components__WEBPACK_IMPORTED_MODULE_0__["CePriceChoices"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CeProvider", function() { return _components__WEBPACK_IMPORTED_MODULE_0__["CeProvider"]; });
+
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CeRadio", function() { return _components__WEBPACK_IMPORTED_MODULE_0__["CeRadio"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CeRadioGroup", function() { return _components__WEBPACK_IMPORTED_MODULE_0__["CeRadioGroup"]; });
@@ -3333,6 +3335,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CeStripeElement", function() { return _components__WEBPACK_IMPORTED_MODULE_0__["CeStripeElement"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CeStripePaymentRequest", function() { return _components__WEBPACK_IMPORTED_MODULE_0__["CeStripePaymentRequest"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CeSubmit", function() { return _components__WEBPACK_IMPORTED_MODULE_0__["CeSubmit"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CeSwitch", function() { return _components__WEBPACK_IMPORTED_MODULE_0__["CeSwitch"]; });
 

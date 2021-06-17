@@ -1,0 +1,73 @@
+# Listing Prices
+
+You can list prices using the `get` method of the `\CheckoutEngine\Models\Price` model.
+By default, it will list the latest 20 prices (both active and inactive) that were created.
+
+## Examples
+
+### Get the latest prices
+
+You can get the latest 20 prices by using the get method:
+```php
+\CheckoutEngine\Models\Price::get();
+```
+
+### Get the latest x number of prices
+You can also specify your query using the api query variables along with the `where` method.
+
+```php
+\CheckoutEngine\Models\Price::where([
+	'limit' => 30
+])->get();
+```
+
+### Get only active prices
+
+```php
+\CheckoutEngine\Models\Price::where([
+	'active' => true
+])->get();
+```
+
+### Get all inactive prices
+
+```php
+\CheckoutEngine\Models\Price::where([
+	'active' => false
+])->get();
+```
+
+### Get prices using a list of price ids.
+
+```php
+\CheckoutEngine\Models\Price::where([
+	'ids' => [
+		'85109619-529d-47b3-98c3-ca90d22913e4',
+		'dd514523-297b-4a86-b5ff-6db0a70d7e17'
+	]
+])->get();
+```
+
+## Where Parameters
+
+import Attribute from '../../../components/Attribute';
+
+### limit <Attribute>INTEGER</Attribute>
+A limit on the number of objects to be returned, between 1 and 100.
+Minimum value is 0, maximum value is 100. Default value is 20.
+
+### starting_after <Attribute>STRING</Attribute>
+A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `"starting_after" => "obj_foo"` in order to fetch the next page of the list.
+
+### ending_before <Attribute>STRING</Attribute>
+A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with obj_bar, your subsequent call can include `"ending_before" => "obj_bar"` in order to fetch the previous page of the list.
+
+### active <Attribute>BOOLEAN</Attribute>
+Only return objects that are active or inactive (e.g., pass false to list all inactive objects).
+
+### ids[] <Attribute>ARRAY[]</Attribute>
+Only return objects with the given IDs.
+
+The `where` method supports parameters allowed by the API, which can be seen here:
+
+[List Price Parameters](https://bump.sh/doc/presto-pay#operation-get-prices)

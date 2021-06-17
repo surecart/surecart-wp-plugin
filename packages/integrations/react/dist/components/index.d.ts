@@ -4,6 +4,7 @@ export declare const CeCheckbox: import("react").ForwardRefExoticComponent<Pick<
 export declare const CeCheckout: import("react").ForwardRefExoticComponent<Pick<any, string | number | symbol> & import("react").RefAttributes<HTMLCeCheckoutElement>>;
 export declare const CeChoice: import("react").ForwardRefExoticComponent<Pick<any, string | number | symbol> & import("react").RefAttributes<HTMLCeChoiceElement>>;
 export declare const CeChoices: import("react").ForwardRefExoticComponent<Pick<any, string | number | symbol> & import("react").RefAttributes<HTMLCeChoicesElement>>;
+export declare const CeConsumer: import("react").ForwardRefExoticComponent<Pick<any, string | number | symbol> & import("react").RefAttributes<HTMLCeConsumerElement>>;
 export declare const CeDivider: import("react").ForwardRefExoticComponent<Pick<any, string | number | symbol> & import("react").RefAttributes<HTMLCeDividerElement>>;
 export declare const CeDropdown: import("react").ForwardRefExoticComponent<Pick<any, string | number | symbol> & import("react").RefAttributes<HTMLCeDropdownElement>>;
 export declare const CeForm: import("react").ForwardRefExoticComponent<Pick<any, string | number | symbol> & import("react").RefAttributes<HTMLCeFormElement>>;
@@ -16,6 +17,10 @@ export declare const CeMenu: import("react").ForwardRefExoticComponent<Pick<any,
 export declare const CeMenuDivider: import("react").ForwardRefExoticComponent<Pick<any, string | number | symbol> & import("react").RefAttributes<HTMLCeMenuDividerElement>>;
 export declare const CeMenuItem: import("react").ForwardRefExoticComponent<Pick<any, string | number | symbol> & import("react").RefAttributes<HTMLCeMenuItemElement>>;
 export declare const CeOrderSummary: import("react").ForwardRefExoticComponent<Pick<any, string | number | symbol> & import("react").RefAttributes<HTMLCeOrderSummaryElement>>;
+export declare const CePayment: import("react").ForwardRefExoticComponent<Pick<any, string | number | symbol> & import("react").RefAttributes<HTMLCePaymentElement>>;
+export declare const CePaymentRequest: import("react").ForwardRefExoticComponent<Pick<any, string | number | symbol> & import("react").RefAttributes<HTMLCePaymentRequestElement>>;
+export declare const CePriceChoices: import("react").ForwardRefExoticComponent<Pick<any, string | number | symbol> & import("react").RefAttributes<HTMLCePriceChoicesElement>>;
+export declare const CeProvider: import("react").ForwardRefExoticComponent<Pick<any, string | number | symbol> & import("react").RefAttributes<HTMLCeProviderElement>>;
 export declare const CeRadio: import("react").ForwardRefExoticComponent<Pick<any, string | number | symbol> & import("react").RefAttributes<HTMLCeRadioElement>>;
 export declare const CeRadioGroup: import("react").ForwardRefExoticComponent<Pick<any, string | number | symbol> & import("react").RefAttributes<HTMLCeRadioGroupElement>>;
 export declare const CeSecureNotice: import("react").ForwardRefExoticComponent<Pick<any, string | number | symbol> & import("react").RefAttributes<HTMLCeSecureNoticeElement>>;
@@ -24,4 +29,5 @@ export declare const CeSkeleton: import("react").ForwardRefExoticComponent<Pick<
 export declare const CeSpinner: import("react").ForwardRefExoticComponent<Pick<any, string | number | symbol> & import("react").RefAttributes<HTMLCeSpinnerElement>>;
 export declare const CeStripeElement: import("react").ForwardRefExoticComponent<Pick<any, string | number | symbol> & import("react").RefAttributes<HTMLCeStripeElementElement>>;
 export declare const CeStripePaymentRequest: import("react").ForwardRefExoticComponent<Pick<any, string | number | symbol> & import("react").RefAttributes<HTMLCeStripePaymentRequestElement>>;
+export declare const CeSubmit: import("react").ForwardRefExoticComponent<Pick<any, string | number | symbol> & import("react").RefAttributes<HTMLCeSubmitElement>>;
 export declare const CeSwitch: import("react").ForwardRefExoticComponent<Pick<any, string | number | symbol> & import("react").RefAttributes<HTMLCeSwitchElement>>;
