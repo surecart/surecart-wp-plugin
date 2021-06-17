@@ -112,6 +112,7 @@ export namespace Components {
         "value": string;
     }
     interface CeCheckout {
+        "currencyCode": string;
         "priceIds": Array<string>;
         "stripePublishableKey": string;
     }
@@ -373,17 +374,23 @@ export namespace Components {
         "value": string;
     }
     interface CeOrderSummary {
+        "currencyCode": string;
+        "subtotal": number;
+        "total": number;
     }
     interface CePayment {
+        "paymentMethod": string;
+        "stripePublishableKey": string;
     }
     interface CePaymentRequest {
     }
     interface CePriceChoices {
         "columns": number;
         "default": string;
-        "price_ids": Array<string>;
+        "loading": boolean;
+        "priceIds": Array<string>;
         "prices": Array<Price>;
-        "submitting": boolean;
+        "selectedPriceIds": Array<string>;
         "type": 'radio' | 'checkbox';
     }
     interface CeProvider {
@@ -554,6 +561,10 @@ export namespace Components {
           * Draws the button full-width
          */
         "full"?: boolean;
+        /**
+          * Is the button loading
+         */
+        "loading": boolean;
         /**
           * The button's size.
          */
@@ -932,6 +943,7 @@ declare namespace LocalJSX {
         "value"?: string;
     }
     interface CeCheckout {
+        "currencyCode"?: string;
         "priceIds"?: Array<string>;
         "stripePublishableKey"?: string;
     }
@@ -1201,17 +1213,24 @@ declare namespace LocalJSX {
         "value"?: string;
     }
     interface CeOrderSummary {
+        "currencyCode"?: string;
+        "subtotal"?: number;
+        "total"?: number;
     }
     interface CePayment {
+        "paymentMethod"?: string;
+        "stripePublishableKey"?: string;
     }
     interface CePaymentRequest {
     }
     interface CePriceChoices {
         "columns"?: number;
         "default"?: string;
-        "price_ids"?: Array<string>;
+        "loading"?: boolean;
+        "onCePriceChange"?: (event: CustomEvent<Array<string>>) => void;
+        "priceIds"?: Array<string>;
         "prices"?: Array<Price>;
-        "submitting"?: boolean;
+        "selectedPriceIds"?: Array<string>;
         "type"?: 'radio' | 'checkbox';
     }
     interface CeProvider {
@@ -1403,6 +1422,10 @@ declare namespace LocalJSX {
           * Draws the button full-width
          */
         "full"?: boolean;
+        /**
+          * Is the button loading
+         */
+        "loading"?: boolean;
         /**
           * The button's size.
          */

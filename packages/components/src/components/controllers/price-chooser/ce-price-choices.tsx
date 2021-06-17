@@ -1,8 +1,7 @@
-import { Component, h, Prop, Element, State, Watch } from '@stencil/core';
+import { Component, h, Prop, Element, Watch, Event, EventEmitter } from '@stencil/core';
 import { Price } from '../../../types';
 import { getFormattedPrice } from '../../../functions/price';
-import { createContext } from '../../context/utils/createContext';
-const { Consumer, injectProps } = createContext({});
+import { openWormhole } from 'stencil-wormhole';
 
 @Component({
   tag: 'ce-price-choices',
@@ -12,14 +11,15 @@ const { Consumer, injectProps } = createContext({});
 export class CePriceChoices {
   @Element() el: HTMLCePriceChoicesElement;
 
-  @Prop() submitting: boolean = true;
+  @Prop() loading: boolean = false;
   @Prop() prices: Array<Price>;
-  @Prop() price_ids: Array<string>;
+  @Prop() priceIds: Array<string>;
   @Prop() default: string;
   @Prop() type: 'radio' | 'checkbox' = 'radio';
   @Prop() columns: number = 1;
+  @Prop() selectedPriceIds: Array<string>;
 
-  @State() loading: boolean = true;
+  @Event() cePriceChange: EventEmitter<Array<string>>;
 
   @Watch('loading')
   handleLoadingChange() {
@@ -33,23 +33,20 @@ export class CePriceChoices {
     const selected = Array.from(choices).filter(choice => {
       return choice.name && choice.checked && !choice.disabled;
     });
-
     let ids = (selected || []).map(item => item.value);
-    console.log(ids);
+    this.cePriceChange.emit(ids);
   }
 
-  renderHTML = ({ price_ids, loading, prices }) => {
-    this.loading = loading;
-
-    if (!price_ids?.length) {
+  render() {
+    if (!this.priceIds?.length) {
       return;
     }
 
-    if (loading) {
+    if (this.loading) {
       // TODO: translations needed here - do this in provider
       return (
         <ce-choices style={{ '--columns': this.columns.toString() }}>
-          {price_ids.map((id, index) => {
+          {this.priceIds.map((id, index) => {
             return (
               <ce-choice name="loading" disabled type={this.type} checked={this.default ? this.default === id : index === 0}>
                 <ce-skeleton style={{ width: '60px', display: 'inline-block' }}></ce-skeleton>
@@ -63,13 +60,13 @@ export class CePriceChoices {
       );
     }
 
-    if (!prices?.length) {
+    if (!this.prices?.length) {
       return;
     }
 
     return (
       <ce-choices style={{ '--columns': this.columns.toString() }}>
-        {prices.map((price, index) => {
+        {this.prices.map((price, index) => {
           return (
             <ce-choice
               onCeChange={() => this.updateSelected()}
@@ -80,18 +77,14 @@ export class CePriceChoices {
             >
               {price.name}
               <span slot="description">{price.description}</span>
-              <span slot="price">{getFormattedPrice(price)}</span>
-              <span slot="per">{price.recurring_interval ? `/${price.recurring_interval}` : `once`}</span>
+              <span slot="price">{getFormattedPrice({ amount: price.amount, currency: price.currency })}</span>
+              <span slot="per">{price.recurring_interval ? `/ ${price.recurring_interval}` : `once`}</span>
             </ce-choice>
           );
         })}
       </ce-choices>
     );
-  };
-
-  render() {
-    return <Consumer>{({ price_ids, loading, prices }) => this.renderHTML({ price_ids, loading, prices })}</Consumer>;
   }
 }
 
-injectProps(CePriceChoices, ['message', 'increment']);
+openWormhole(CePriceChoices, ['prices', 'priceIds', 'loading', 'selectedPriceIds']);

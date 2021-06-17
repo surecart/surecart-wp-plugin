@@ -1,8 +1,7 @@
-import { Component, h, Prop, Element, State, Watch } from '@stencil/core';
-import { createContext } from '../../context/utils/createContext';
-import { Price } from '../../../types';
-import state from './state';
-const { Provider } = createContext(state);
+import { Component, h, Prop, Element, State, Watch, Listen } from '@stencil/core';
+import { Price, Coupon } from '../../../types';
+import { applyCoupon } from '../../../functions/total';
+import { Universe } from 'stencil-wormhole';
 import apiFetch from '../../../functions/fetch';
 import { addQueryArgs } from '@wordpress/url';
 @Component({
@@ -15,15 +14,46 @@ export class CECheckout {
 
   @Prop() priceIds: Array<string>;
   @Prop() stripePublishableKey: string;
+  @Prop() currencyCode: string = 'usd';
 
   @State() message: string = '';
   @State() prices: Array<Price>;
-  @State() selectedPriceIds: Array<string>;
+  @State() selectedPriceIds: Set<string>;
+  @State() coupon: Coupon;
   @State() loading: boolean;
-  @State() total: number;
+  @State() subtotal: number = 0;
+  @State() total: number = 0;
   @State() submitting: boolean;
 
+  @Listen('cePriceChange')
+  handlePriceChange(e) {
+    this.selectedPriceIds = e.detail;
+  }
+
+  @Watch('selectedPriceIds')
+  handleSelectChange() {
+    this.subtotal = 0;
+    this.selectedPriceIds.forEach(id => {
+      const price = this.prices.find(price => price.id === id);
+      this.subtotal = this.subtotal + price.amount;
+    });
+  }
+
+  @Watch('coupon')
+  @Watch('subtotal')
+  handleTotalCalculation() {
+    this.total = applyCoupon(this.subtotal, this.coupon);
+  }
+
+  @Watch('ceCouponChange')
+  handleCouponChange(e) {
+    this.coupon = e.detail;
+  }
+
   componentWillLoad() {
+    // @ts-ignore
+    Universe.create(this, this.state());
+
     this.fetchPrices();
   }
 
@@ -32,36 +62,42 @@ export class CECheckout {
     this.loading = true;
 
     try {
-      let res = await apiFetch({
+      let res = (await apiFetch({
         path: addQueryArgs('price', {
           active: true,
           ids: this.priceIds,
         }),
+      })) as Array<Price>;
+
+      // this does not allow prices witha different currency than provided
+      this.prices = res.filter(price => {
+        return price.currency === this.currencyCode;
       });
-      this.prices = res as Array<Price>;
     } finally {
       this.loading = false;
     }
   }
 
+  state() {
+    return {
+      paymentMethod: 'stripe',
+      stripePublishableKey: this.stripePublishableKey,
+      priceIds: this.priceIds,
+      selectedPriceIds: this.selectedPriceIds,
+      currencyCode: this.currencyCode,
+      prices: this.prices,
+      loading: this.loading,
+      subtotal: this.subtotal,
+      total: this.total,
+    };
+  }
+
   render() {
     return (
       <div class="ce-checkout-container">
-        <Provider
-          value={{
-            price_ids: this.priceIds,
-            prices: this.prices,
-            selectedPriceIds: this.selectedPriceIds,
-            submitting: this.submitting,
-            loading: this.loading,
-            total: this.total,
-            paymentMethod: 'stripe',
-            stripePublishableKey: this.stripePublishableKey,
-          }}
-        >
-          {JSON.stringify(this.selectedPriceIds)}
+        <Universe.Provider state={this.state()}>
           <slot />
-        </Provider>
+        </Universe.Provider>
       </div>
     );
   }

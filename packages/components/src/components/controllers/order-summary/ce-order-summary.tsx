@@ -1,7 +1,7 @@
-import { Component, h } from '@stencil/core';
+import { Component, h, Prop } from '@stencil/core';
 
-import { createContext } from '../../context/utils/createContext';
-const { Consumer } = createContext({});
+import { getFormattedPrice } from '../../../functions/price';
+import { openWormhole } from 'stencil-wormhole';
 
 @Component({
   tag: 'ce-order-summary',
@@ -9,15 +9,24 @@ const { Consumer } = createContext({});
   shadow: true,
 })
 export class CEOrderSummary {
-  renderHTML({ total, subtotal }) {
+  @Prop() total: number = 0;
+  @Prop() subtotal: number = 0;
+  @Prop() currencyCode: string = 'USD';
+
+  render() {
     return (
       <div>
-        <div>Total{total}</div>
-        <div>Subtotal{subtotal}</div>
+        <ce-line-item>
+          Subtotal
+          <span slot="price">{getFormattedPrice({ amount: this.subtotal, currency: this.currencyCode })}</span>
+        </ce-line-item>
+        <ce-divider style={{ '--spacing': '20px' }}></ce-divider>
+        <ce-line-item price={getFormattedPrice({ amount: this.total, currency: this.currencyCode })} currency={this.currencyCode}>
+          Total
+        </ce-line-item>
       </div>
     );
   }
-  render() {
-    return <Consumer>{({ total, subtotal }) => this.renderHTML({ total, subtotal })}</Consumer>;
-  }
 }
+
+openWormhole(CEOrderSummary, ['total', 'subtotal', 'currencyCode']);

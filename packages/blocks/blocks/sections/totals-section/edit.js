@@ -3,14 +3,13 @@
  */
 import { __ } from '@wordpress/i18n';
 import { RichText } from '@wordpress/block-editor';
-import InnerBlocks from '../../../components/InnerBlocks';
 
 /**
  * Component Dependencies
  */
-import { CeLineItem, CeDivider, CeFormSection } from '@checkout-engine/react';
+import { CeOrderSummary, CeFormSection } from '@checkout-engine/react';
 
-export default ( { className, attributes, setAttributes, isSelected } ) => {
+export default ( { attributes, setAttributes } ) => {
 	const { label, description } = attributes;
 
 	return (
@@ -36,20 +35,7 @@ export default ( { className, attributes, setAttributes, isSelected } ) => {
 				allowedFormats={ [ 'core/bold', 'core/italic' ] }
 			/>
 
-			<CeDivider style={ { '--spacing': '20px' } }></CeDivider>
-
-			<CeLineItem>
-				Gold Plan
-				<span slot="price">$20.00</span>
-			</CeLineItem>
-
-			<CeDivider style={ { '--spacing': '20px' } }></CeDivider>
-
-			<CeLineItem price="$20.00" currency="CAD">
-				Total
-			</CeLineItem>
-
-			<InnerBlocks templateLock={ false } />
+			<CeOrderSummary></CeOrderSummary>
 		</CeFormSection>
 	);
 };

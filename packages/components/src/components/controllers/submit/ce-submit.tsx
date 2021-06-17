@@ -1,13 +1,14 @@
 import { Component, h, Prop, Element } from '@stencil/core';
-import { createContext } from '../../context/utils/createContext';
-const { Consumer } = createContext({}); // Import the Tunnel
-
+import { openWormhole } from 'stencil-wormhole';
 @Component({
   tag: 'ce-submit',
   shadow: false,
 })
 export class CeSubmit {
   @Element() host: HTMLDivElement;
+
+  /** Is the button loading */
+  @Prop() loading: boolean;
 
   /** The button's size. */
   @Prop({ reflect: true }) size: 'small' | 'medium' | 'large' = 'large';
@@ -20,13 +21,11 @@ export class CeSubmit {
 
   render() {
     return (
-      <Consumer>
-        {({ loading }) => (
-          <ce-button loading={loading} disabled={loading} type="primary" submit full={this.full} size={this.size}>
-            {this.text}
-          </ce-button>
-        )}
-      </Consumer>
+      <ce-button loading={this.loading} disabled={this.loading} type="primary" submit full={this.full} size={this.size}>
+        {this.text}
+      </ce-button>
     );
   }
 }
+
+openWormhole(CeSubmit, ['loading']);

@@ -54,8 +54,6 @@ export default ( { className, attributes, setAttributes, isSelected } ) => {
 					type={ type }
 					default={ defaultChoice }
 				></CePriceChoices>
-
-				<InnerBlocks templateLock={ false } />
 			</CeFormSection>
 		</div>
 	);

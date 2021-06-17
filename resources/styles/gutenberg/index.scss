@@ -1,0 +1,8 @@
+.wp-block-checkout-engine-checkout-form {
+  border-radius: 4px;
+  padding: 15px 30px 30px;
+  border: 1px solid transparent;
+}
+.has-child-selected .wp-block-checkout-engine-checkout-form {
+  border: 1px solid var(--wp-admin-theme-color);
+}
