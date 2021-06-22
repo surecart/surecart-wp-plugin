@@ -20,4 +20,4 @@ export class CePayment {
   }
 }
 
-openWormhole(CePayment, ['paymentMethod', 'stripePublishableKey']);
+openWormhole(CePayment, ['paymentMethod', 'stripePublishableKey'], false);

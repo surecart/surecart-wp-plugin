@@ -28,4 +28,4 @@ export class CeSubmit {
   }
 }
 
-openWormhole(CeSubmit, ['loading']);
+openWormhole(CeSubmit, ['loading'], false);

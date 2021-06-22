@@ -29,4 +29,4 @@ export class CEOrderSummary {
   }
 }
 
-openWormhole(CEOrderSummary, ['total', 'subtotal', 'currencyCode']);
+openWormhole(CEOrderSummary, ['total', 'subtotal', 'currencyCode'], false);

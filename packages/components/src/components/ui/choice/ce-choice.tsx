@@ -141,7 +141,10 @@ export class CEChoice {
   }
 
   handleResize() {
-    const resizeObserver = new ResizeObserver(entries => {
+    if (!window?.ResizeObserver) {
+      return;
+    }
+    const resizeObserver = new window.ResizeObserver(entries => {
       for (let entry of entries) {
         if (entry.contentBoxSize) {
           const contentBoxSize = Array.isArray(entry.contentBoxSize) ? entry.contentBoxSize[0] : entry.contentBoxSize;

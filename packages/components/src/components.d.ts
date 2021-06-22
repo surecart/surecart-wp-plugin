@@ -383,6 +383,9 @@ export namespace Components {
         "stripePublishableKey": string;
     }
     interface CePaymentRequest {
+        "paymentMethod": 'stripe' | 'paypal';
+        "stripePublishableKey": string;
+        "total": number;
     }
     interface CePriceChoices {
         "columns": number;
@@ -944,6 +947,7 @@ declare namespace LocalJSX {
     }
     interface CeCheckout {
         "currencyCode"?: string;
+        "onCeLoaded"?: (event: CustomEvent<void>) => void;
         "priceIds"?: Array<string>;
         "stripePublishableKey"?: string;
     }
@@ -1222,6 +1226,9 @@ declare namespace LocalJSX {
         "stripePublishableKey"?: string;
     }
     interface CePaymentRequest {
+        "paymentMethod"?: 'stripe' | 'paypal';
+        "stripePublishableKey"?: string;
+        "total"?: number;
     }
     interface CePriceChoices {
         "columns"?: number;

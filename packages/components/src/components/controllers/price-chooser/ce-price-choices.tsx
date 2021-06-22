@@ -69,6 +69,7 @@ export class CePriceChoices {
         {this.prices.map((price, index) => {
           return (
             <ce-choice
+              class="loaded"
               onCeChange={() => this.updateSelected()}
               name={price.product_id}
               value={price.id}
@@ -87,4 +88,4 @@ export class CePriceChoices {
   }
 }
 
-openWormhole(CePriceChoices, ['prices', 'priceIds', 'loading', 'selectedPriceIds']);
+openWormhole(CePriceChoices, ['prices', 'priceIds', 'loading', 'selectedPriceIds'], false);

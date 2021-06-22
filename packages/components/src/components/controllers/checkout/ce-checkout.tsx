@@ -1,4 +1,4 @@
-import { Component, h, Prop, Element, State, Watch, Listen } from '@stencil/core';
+import { Component, h, Prop, Element, State, Watch, Listen, Event, EventEmitter } from '@stencil/core';
 import { Price, Coupon } from '../../../types';
 import { applyCoupon } from '../../../functions/total';
 import { Universe } from 'stencil-wormhole';
@@ -25,6 +25,8 @@ export class CECheckout {
   @State() total: number = 0;
   @State() submitting: boolean;
 
+  @Event() ceLoaded: EventEmitter<void>;
+
   @Listen('cePriceChange')
   handlePriceChange(e) {
     this.selectedPriceIds = e.detail;
@@ -43,11 +45,6 @@ export class CECheckout {
   @Watch('subtotal')
   handleTotalCalculation() {
     this.total = applyCoupon(this.subtotal, this.coupon);
-  }
-
-  @Watch('ceCouponChange')
-  handleCouponChange(e) {
-    this.coupon = e.detail;
   }
 
   componentWillLoad() {
@@ -73,6 +70,9 @@ export class CECheckout {
       this.prices = res.filter(price => {
         return price.currency === this.currencyCode;
       });
+
+      // emit loaded
+      this.ceLoaded.emit();
     } finally {
       this.loading = false;
     }

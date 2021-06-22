@@ -1,4 +1,5 @@
 import { newE2EPage } from '@stencil/core/testing';
+import priceResponse from './fixtures/prices.js';
 
 describe('ce-checkout', () => {
   it('renders', async () => {

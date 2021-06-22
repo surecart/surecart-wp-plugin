@@ -1,7 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`checkout-engine/checkout-form Should render 1`] = `
-"<!-- wp:checkout-engine/button -->
-<div class=\\"wp-block-checkout-engine-button\\"><div><presto-button type=\\"primary\\" size=\\"large\\">Purchase</presto-button></div></div>
-<!-- /wp:checkout-engine/button -->"
-`;

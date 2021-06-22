@@ -22,6 +22,10 @@ const settings = {
 	title: __( 'Checkout Form', 'checkout_engine' ),
 	/* translators: block description */
 	description: __( 'Display a checkout form', 'checkout_engine' ),
+	supports: {
+		align: [ 'wide', 'full' ],
+		html: false,
+	},
 	icon,
 	keywords: [
 		'checkout',

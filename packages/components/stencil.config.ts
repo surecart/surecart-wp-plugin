@@ -13,6 +13,7 @@ export const config: Config = {
     },
   },
   testing: {
+    // browserHeadless: false,
     transform: {
       '^.+\\.js': 'babel-jest',
     },

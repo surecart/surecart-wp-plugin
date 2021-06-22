@@ -10,15 +10,17 @@ describe('ce-form-section', () => {
     expect(page.root).toEqualHtml(`
       <ce-form-section>
         <mock:shadow-root>
-          <div class="section__label">
-            <h3 class="section__title" part="title">
-              <slot name="label"></slot>
-            </h3>
-            <div class="section__description" part="description">
-              <slot name="description"></slot>
+          <div class="section">
+            <div class="section__label">
+              <h3 class="section__title" part="title">
+                <slot name="label"></slot>
+              </h3>
+              <div class="section__description" part="description">
+                <slot name="description"></slot>
+              </div>
             </div>
+            <slot></slot>
           </div>
-          <slot></slot>
         </mock:shadow-root>
       </ce-form-section>
     `);

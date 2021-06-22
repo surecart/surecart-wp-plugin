@@ -1,3 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`checkout-engine/buttons should render with custom class name 1`] = `"<!-- wp:checkout-engine/button {\\"className\\":\\"my-custom-class\\"} /-->"`;
