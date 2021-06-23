@@ -1,6 +1,4 @@
 import { Component, h, Prop } from '@stencil/core';
-import { createContext } from '../../context/utils/createContext';
-const { Consumer } = createContext({});
 import { openWormhole } from 'stencil-wormhole';
 
 @Component({
@@ -13,7 +11,7 @@ export class CePaymentRequest {
   @Prop() total: number;
   @Prop() stripePublishableKey: string;
 
-  render(){
+  render() {
     if (!this.paymentMethod) {
       return;
     }
@@ -25,7 +23,7 @@ export class CePaymentRequest {
         </ce-stripe-payment-request>
       );
     }
-  };
+  }
 }
 
 openWormhole(CePaymentRequest, ['total', 'paymentMethod', 'stripePublishableKey'], false);

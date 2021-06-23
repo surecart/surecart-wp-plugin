@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit
-	bootstrap="./tests/php/bootstrap.php"
+	bootstrap="./tests/bootstrap.php"
 	colors="true"
 	stopOnError="false"
 	beStrictAboutOutputDuringTests="true"
@@ -11,8 +11,8 @@
 	backupGlobals="false"
 	>
 	<testsuites>
-		<testsuite name="WP Emerge Test Suite">
-			<directory suffix=".php">./tests/php/unit-tests/</directory>
+		<testsuite name="Unit">
+			<directory suffix=".php">./tests/unit/</directory>
 		</testsuite>
 	</testsuites>
 	<filter>

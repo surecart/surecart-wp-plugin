@@ -19,7 +19,7 @@ class RequestServiceProvider implements ServiceProviderInterface {
 		$container['requests'] = function () {
 			// TODO: get these from database.
 			$mode  = 'staging';
-			$token = 'v9sLcTPrz9woXxNBcQZFKsPs';
+			$token = 'ErRgdMLPJTPuQZDi88wedjPN';
 			return new RequestService( $token, $mode );
 		};
 

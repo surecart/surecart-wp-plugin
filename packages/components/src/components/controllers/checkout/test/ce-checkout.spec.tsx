@@ -1,4 +1,4 @@
-import { mockFetch, newSpecPage } from '@stencil/core/testing';
+import { newSpecPage } from '@stencil/core/testing';
 import { CECheckout } from '../ce-checkout';
 
 describe('ce-checkout', () => {

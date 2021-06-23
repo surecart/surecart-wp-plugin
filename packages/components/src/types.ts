@@ -41,3 +41,23 @@ export interface Coupon extends Object {
   times_redeemed: number;
   valid: boolean;
 }
+
+export interface LineItem extends Object {
+  id: string;
+  object: string;
+  quantity: number;
+  amount_subtotal: number;
+  amount_total: number;
+  created_at: number;
+  updated_at: number;
+  price: Price;
+}
+
+export interface CheckoutSession extends Object {
+  id: string;
+  customer_first_name: string;
+  customer_last_name: string;
+  customer_email: string;
+  currency: string;
+  line_items: Array<LineItem>;
+}

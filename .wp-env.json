@@ -1,0 +1,11 @@
+{
+	"core": null,
+	"plugins": [ "../checkout-engine" ],
+	"env": {
+		"tests": {
+			"config": {
+				"FS_METHOD": "direct"
+			}
+		}
+	}
+}

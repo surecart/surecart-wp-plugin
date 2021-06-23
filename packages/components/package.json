@@ -35,7 +35,6 @@
     "generate": "stencil generate"
   },
   "dependencies": {
-    "@checkout-engine/context": "file:../tunnel",
     "@stencil/core": "2.5.2",
     "@stencil/sass": "^1.4.0",
     "@stripe/stripe-js": "^1.14.0",

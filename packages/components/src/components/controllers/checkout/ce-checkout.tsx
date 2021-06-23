@@ -1,6 +1,5 @@
 import { Component, h, Prop, Element, State, Watch, Listen, Event, EventEmitter } from '@stencil/core';
-import { Price, Coupon } from '../../../types';
-import { applyCoupon } from '../../../functions/total';
+import { Price, Coupon, CheckoutSession } from '../../../types';
 import { Universe } from 'stencil-wormhole';
 import apiFetch from '../../../functions/fetch';
 import { addQueryArgs } from '@wordpress/url';
@@ -21,15 +20,22 @@ export class CECheckout {
   @State() selectedPriceIds: Set<string>;
   @State() coupon: Coupon;
   @State() loading: boolean;
+  @State() calculating: boolean;
   @State() subtotal: number = 0;
   @State() total: number = 0;
   @State() submitting: boolean;
+  @State() checkoutSession: CheckoutSession;
 
   @Event() ceLoaded: EventEmitter<void>;
 
   @Listen('cePriceChange')
   handlePriceChange(e) {
     this.selectedPriceIds = e.detail;
+  }
+
+  @Listen('ceChange')
+  handleInputChange(e) {
+    console.log(e);
   }
 
   @Watch('selectedPriceIds')
@@ -41,23 +47,38 @@ export class CECheckout {
     });
   }
 
-  @Watch('coupon')
-  @Watch('subtotal')
-  handleTotalCalculation() {
-    this.total = applyCoupon(this.subtotal, this.coupon);
-  }
-
   componentWillLoad() {
     // @ts-ignore
     Universe.create(this, this.state());
 
+    // fetch prices
     this.fetchPrices();
   }
 
+  /**
+   * Create or update a session based on chosen line items
+   */
+  async createOrUpdateSession() {
+    this.calculating = true;
+    try {
+      this.checkoutSession = (await apiFetch({
+        method: this.checkoutSession?.id ? 'PATCH' : 'POST', // create or update
+        path: this.checkoutSession?.id ? `session/${this.checkoutSession.id}` : `session`,
+        data: {
+          checkout_session: this.checkoutSession,
+        },
+      })) as CheckoutSession;
+    } finally {
+      this.calculating = false;
+    }
+  }
+
+  /**
+   * Fetch prices based on ids
+   */
   @Watch('priceIds')
   async fetchPrices() {
     this.loading = true;
-
     try {
       let res = (await apiFetch({
         path: addQueryArgs('price', {
@@ -65,14 +86,10 @@ export class CECheckout {
           ids: this.priceIds,
         }),
       })) as Array<Price>;
-
       // this does not allow prices witha different currency than provided
       this.prices = res.filter(price => {
         return price.currency === this.currencyCode;
       });
-
-      // emit loaded
-      this.ceLoaded.emit();
     } finally {
       this.loading = false;
     }
