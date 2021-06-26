@@ -39,6 +39,7 @@ class RequestService {
 	 *
 	 * @param string $token to make the request.
 	 * @param string $mode Request mode.
+	 * @param string $base_path The rest api base path
 	 */
 	public function __construct( $token, $mode = 'live', $base_path = '/api/v1' ) {
 		$this->mode      = $mode;
@@ -122,7 +123,7 @@ class RequestService {
 		// check for errors.
 		// TODO: run through translations.
 		if ( ! in_array( $response_code, [ 200, 201 ], true ) ) {
-			$response_body = json_decode( $response_body );
+			$response_body = json_decode( $response_body, true );
 			if ( is_object( $response_body ) && ! empty( $response_body->message ) ) {
 				return new \WP_Error( 'error', $response_body->message, [ 'status' => $response_code ] );
 			}

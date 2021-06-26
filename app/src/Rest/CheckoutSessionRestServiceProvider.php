@@ -3,7 +3,7 @@
 namespace CheckoutEngine\Rest;
 
 use CheckoutEngine\Rest\RestServiceInterface;
-use CheckoutEngine\Controllers\Rest\PriceController;
+use CheckoutEngine\Controllers\Rest\CheckoutSessionController;
 
 /**
  * Service provider for Price Rest Requests
@@ -27,13 +27,8 @@ class CheckoutSessionRestServiceProvider extends RestServiceProvider implements 
 			"$this->endpoint",
 			[
 				[
-					'methods'             => \WP_REST_Server::READABLE,
-					'callback'            => \CheckoutEngine::closure()->method( PriceController::class, 'index' ),
-					'permission_callback' => [ $this, 'get_item_permissions_check' ],
-				],
-				[
 					'methods'             => \WP_REST_Server::CREATABLE,
-					'callback'            => \CheckoutEngine::closure()->method( PriceController::class, 'create' ),
+					'callback'            => \CheckoutEngine::closure()->method( CheckoutSessionController::class, 'create' ),
 					'permission_callback' => [ $this, 'create_item_permissions_check' ],
 				],
 				'schema' => [ $this, 'get_item_schema' ],
@@ -42,22 +37,31 @@ class CheckoutSessionRestServiceProvider extends RestServiceProvider implements 
 
 		register_rest_route(
 			"$this->name/v$this->version",
-			$this->endpoint . '/(?P<id>[\d]+)',
+			$this->endpoint . '/(?P<id>[\S]+)',
 			[
 				[
 					'methods'             => \WP_REST_Server::READABLE,
-					'callback'            => \CheckoutEngine::closure()->method( PriceController::class, 'get' ),
-					'permission_callback' => [ $this, 'get_item_permissions_check' ],
+					'callback'            => \CheckoutEngine::closure()->method( CheckoutSessionController::class, 'get' ),
+					'permission_callback' => [ $this, 'permissions_check' ],
 				],
 				[
 					'methods'             => \WP_REST_Server::EDITABLE,
-					'callback'            => \CheckoutEngine::closure()->method( PriceController::class, 'edit' ),
-					'permission_callback' => [ $this, 'get_item_permissions_check' ],
+					'callback'            => \CheckoutEngine::closure()->method( CheckoutSessionController::class, 'edit' ),
+					'permission_callback' => [ $this, 'permissions_check' ],
 				],
+				// Register our schema callback.
+				'schema' => [ $this, 'get_item_schema' ],
+			]
+		);
+
+		register_rest_route(
+			"$this->name/v$this->version",
+			$this->endpoint . '/(?P<id>[\S]+)/prepare/(?P<processor_type>[\S]+)',
+			[
 				[
-					'methods'             => \WP_REST_Server::DELETABLE,
-					'callback'            => \CheckoutEngine::closure()->method( PriceController::class, 'delete' ),
-					'permission_callback' => [ $this, 'get_item_permissions_check' ],
+					'methods'             => \WP_REST_Server::EDITABLE,
+					'callback'            => \CheckoutEngine::closure()->method( CheckoutSessionController::class, 'prepare' ),
+					'permission_callback' => [ $this, 'permissions_check' ],
 				],
 				// Register our schema callback.
 				'schema' => [ $this, 'get_item_schema' ],
@@ -101,12 +105,11 @@ class CheckoutSessionRestServiceProvider extends RestServiceProvider implements 
 	}
 
 	/**
-	 * Anyone can get prices
+	 * Anyone can get create checkout sessions
 	 *
-	 * @param \WP_REST_Request $request Full details about the request.
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
-	public function get_item_permissions_check( $request ) {
+	public function permissions_check() {
 		return true;
 	}
 }

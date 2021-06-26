@@ -45,6 +45,14 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 	 */
 	protected $endpoint = '';
 
+
+	/**
+	 * Object name
+	 *
+	 * @var string
+	 */
+	protected $object_name = '';
+
 	/**
 	 * Query arguments
 	 *
@@ -72,7 +80,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 	 *
 	 * @var array
 	 */
-	protected $guarded = [ 'id' ];
+	protected $guarded = [];
 
 	/**
 	 * Model constructor
@@ -125,6 +133,17 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 	 */
 	public static function boot() {
 		// Note: Don't remove this method.
+	}
+
+	/**
+	 * Does it have the attribute
+	 *
+	 * @param string $key Attribute key.
+	 *
+	 * @return boolean
+	 */
+	public function hasAttribute( $key ) {
+		return array_key_exists( $key, $this->attributes );
 	}
 
 	/**
@@ -469,11 +488,13 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 			return false;
 		}
 
-		$created = $this->makeRequest(
+		$created = \CheckoutEngine::request(
 			$this->endpoint,
 			[
 				'method' => 'POST',
-				'body'   => $this->attributes,
+				'body'   => [
+					$this->object_name => $this->attributes,
+				],
 			]
 		);
 
@@ -487,24 +508,10 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 		// fill.
 		$this->fill( $created );
 
+		// fire event.
 		$this->fireModelEvent( 'created' );
 
 		return $this;
-	}
-
-	/**
-	 * Make the API request
-	 *
-	 * @param string $endpoint Endpoint string.
-	 * @param array  $args Arguments for request.
-	 *
-	 * @return mixed
-	 */
-	public function makeRequest( $endpoint, $args = [] ) {
-		return \CheckoutEngine::request(
-			$endpoint,
-			$args
-		);
 	}
 
 	/**
@@ -521,13 +528,17 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 			$this->endpoint . '/' . $this->id,
 			[
 				'method' => 'PATCH',
-				'body'   => $this->attributes,
+				'body'   => [
+					$this->object_name => $this->attributes,
+				],
 			]
 		);
 
 		if ( is_wp_error( $updated ) ) {
 			return $updated;
 		}
+
+		$this->resetAttributes();
 
 		$this->fill( $updated );
 

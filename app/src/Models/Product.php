@@ -5,20 +5,20 @@ namespace CheckoutEngine\Models;
 /**
  * Price model
  */
-class Price extends Model {
+class Product extends Model {
 	/**
 	 * Rest API endpoint
 	 *
 	 * @var string
 	 */
-	protected $endpoint = 'prices';
+	protected $endpoint = 'products';
 
 	/**
 	 * Object name
 	 *
 	 * @var string
 	 */
-	protected $object_name = 'price';
+	protected $object_name = 'product';
 
 	/**
 	 * Don't fill product
