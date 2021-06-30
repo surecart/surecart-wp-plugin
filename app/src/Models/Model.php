@@ -45,6 +45,14 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 	 */
 	protected $endpoint = '';
 
+
+	/**
+	 * Object name
+	 *
+	 * @var string
+	 */
+	protected $object_name = '';
+
 	/**
 	 * Query arguments
 	 *
@@ -72,7 +80,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 	 *
 	 * @var array
 	 */
-	protected $guarded = [ 'id' ];
+	protected $guarded = [];
 
 	/**
 	 * Model constructor
@@ -125,6 +133,17 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 	 */
 	public static function boot() {
 		// Note: Don't remove this method.
+	}
+
+	/**
+	 * Does it have the attribute
+	 *
+	 * @param string $key Attribute key.
+	 *
+	 * @return boolean
+	 */
+	public function hasAttribute( $key ) {
+		return array_key_exists( $key, $this->attributes );
 	}
 
 	/**
@@ -250,7 +269,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 		$called_class = static::getCalledClassName();
 		$event_name   = "model.{$called_class}.{$event}";
 
-		// fire global event
+		// fire global event.
 		\do_action( "checkout_engine/models/{$called_class}/{$event}", $this );
 
 		if ( isset( static::$events[ $event_name ] ) ) {
@@ -267,6 +286,16 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 	 */
 	public function fill( $attributes ) {
 		return $this->setAttributes( $attributes );
+	}
+
+	/**
+	 * Reset attributes to blank.
+	 *
+	 * @return $this
+	 */
+	public function resetAttributes() {
+		$this->attributes = [];
+		return $this;
 	}
 
 	/**
@@ -423,6 +452,99 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 			$models[] = new static( $data );
 		}
 		return $models;
+	}
+
+	/**
+	 * Save model
+	 *
+	 * @return $this|false
+	 */
+	protected function save() {
+		if ( $this->fireModelEvent( 'saving' ) === false ) {
+			return false;
+		}
+
+		// update or create.
+		if ( $this->id ) {
+			$saved = $this->isDirty() ? $this->update() : true;
+		} else {
+			$saved = $this->create();
+		}
+
+		$this->fireModelEvent( 'saved' );
+
+		$this->syncOriginal();
+
+		return $saved;
+	}
+
+	/**
+	 * Create a new model
+	 *
+	 * @return $this|false
+	 */
+	public function create() {
+		if ( $this->fireModelEvent( 'creating' ) === false ) {
+			return false;
+		}
+
+		$created = \CheckoutEngine::request(
+			$this->endpoint,
+			[
+				'method' => 'POST',
+				'body'   => [
+					$this->object_name => $this->attributes,
+				],
+			]
+		);
+
+		if ( is_wp_error( $created ) ) {
+			return $created;
+		}
+
+		// reset.
+		$this->resetAttributes();
+
+		// fill.
+		$this->fill( $created );
+
+		// fire event.
+		$this->fireModelEvent( 'created' );
+
+		return $this;
+	}
+
+	/**
+	 * Update the model.
+	 *
+	 * @return $this|false
+	 */
+	protected function update() {
+		if ( $this->fireModelEvent( 'updating' ) === false ) {
+			return false;
+		}
+
+		$updated = \CheckoutEngine::request(
+			$this->endpoint . '/' . $this->id,
+			[
+				'method' => 'PATCH',
+				'body'   => [
+					$this->object_name => $this->attributes,
+				],
+			]
+		);
+
+		if ( is_wp_error( $updated ) ) {
+			return $updated;
+		}
+
+		$this->resetAttributes();
+
+		$this->fill( $updated );
+
+		$this->fireModelEvent( 'updated' );
+
+		return $this;
 	}
 
 	/**

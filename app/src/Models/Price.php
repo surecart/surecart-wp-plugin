@@ -14,6 +14,13 @@ class Price extends Model {
 	protected $endpoint = 'prices';
 
 	/**
+	 * Object name
+	 *
+	 * @var string
+	 */
+	protected $object_name = 'price';
+
+	/**
 	 * Don't fill product
 	 *
 	 * @var array

@@ -20,20 +20,11 @@ import { css, jsx } from '@emotion/core';
 
 export default ( { className, clientId, isSelected } ) => {
 	// these blocks are required in order to submit an order
-	const requiredBlocks = {
-		// needs an email field
-		'checkout-engine/email': {
-			props: {
-				label: __( 'Email Address', 'checkout-engine' ),
-			},
-			priority: 0,
-		},
-		// needs a submit button
-		'checkout-engine/submit': {
-			props: {},
-			priority: 9999,
-		},
-	};
+	const requiredBlocks = [
+		'checkout-engine/pricing-section',
+		'checkout-engine/payment-section',
+		'checkout-engine/submit',
+	];
 
 	return (
 		<div className={ className }>

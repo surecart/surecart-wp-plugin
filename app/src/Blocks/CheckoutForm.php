@@ -55,14 +55,14 @@ class CheckoutForm extends Block {
 	 *
 	 * @return string
 	 */
-	public function render( $attributes, $content ) {
+	public function render( $attributes, $content) {
 		return \CheckoutEngine::blocks()->render(
 			"blocks/$this->name",
 			[
 				'label'       => $attributes['label'] ?? '',
 				'description' => $attributes['description'] ?? '',
 				'content'     => $content,
-				'price_ids'   => [ '85109619-529d-47b3-98c3-ca90d22913e4', 'dd514523-297b-4a86-b5ff-6db0a70d7e17' ],
+				'price_ids'   => [ '6b6f10b8-1054-455b-83e5-86be0e6fa74e' ],
 				'instance'    => self::$instance++,
 			]
 		);

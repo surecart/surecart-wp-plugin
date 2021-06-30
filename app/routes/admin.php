@@ -15,4 +15,5 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // Using our ExampleController to handle a custom admin page registered using add_menu_page(), for example.
 // phpcs:ignore
-\CheckoutEngine::route()->get()->where( 'admin', 'checkout-engine-settings' )->handle( 'Dashboard@show' );
+\CheckoutEngine::route()->get()->where( 'admin', 'ce-settings' )->handle( 'Dashboard@show' );
+\CheckoutEngine::route()->get()->where( 'admin', 'ce-products' )->handle( 'Products@list' );

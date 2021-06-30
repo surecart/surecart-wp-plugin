@@ -9,24 +9,17 @@
 
 | Property               | Attribute                | Description | Type       | Default     |
 | ---------------------- | ------------------------ | ----------- | ---------- | ----------- |
+| `currencyCode`         | `currency-code`          |             | `string`   | `'usd'`     |
 | `priceIds`             | --                       |             | `string[]` | `undefined` |
 | `stripePublishableKey` | `stripe-publishable-key` |             | `string`   | `undefined` |
 
 
-## Dependencies
+## Events
 
-### Depends on
+| Event      | Description | Type                |
+| ---------- | ----------- | ------------------- |
+| `ceLoaded` |             | `CustomEvent<void>` |
 
-- [ce-provider](../../context/provider)
-- [ce-consumer](../../context/consumer)
-
-### Graph
-```mermaid
-graph TD;
-  ce-checkout --> ce-provider
-  ce-checkout --> ce-consumer
-  style ce-checkout fill:#f9f,stroke:#333,stroke-width:4px
-```
 
 ----------------------------------------------
 

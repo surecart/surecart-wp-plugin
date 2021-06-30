@@ -28,6 +28,7 @@ class AdminServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function registerAdminPages() {
-		add_menu_page( __( 'Dashboard', 'checkout_engine' ), __( 'Checkout Engine', 'checkout_engine' ), 'manage_options', 'checkout-engine-settings', function() {} );
+		add_menu_page( __( 'Dashboard', 'checkout_engine' ), __( 'Checkout Engine', 'checkout_engine' ), 'manage_options', 'ce-settings', function() {} );
+		add_submenu_page( 'ce-settings', __( 'Products', 'checkout_engine' ), __( 'Products', 'checkout_engine' ), 'manage_options', 'ce-products', function() {} );
 	}
 }

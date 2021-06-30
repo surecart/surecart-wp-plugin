@@ -43,7 +43,7 @@ class PriceRestServiceProvider extends RestServiceProvider implements RestServic
 
 		register_rest_route(
 			"$this->name/v$this->version",
-			$this->endpoint . '/(?P<id>[\d]+)',
+			$this->endpoint . '/(?P<id>[\S]+)',
 			[
 				[
 					'methods'             => \WP_REST_Server::READABLE,

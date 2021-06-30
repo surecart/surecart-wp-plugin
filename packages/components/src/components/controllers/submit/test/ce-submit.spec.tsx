@@ -9,7 +9,7 @@ describe('ce-submit', () => {
     });
     expect(page.root).toEqualHtml(`
       <ce-submit full="" size="large">
-        <ce-consumer></ce-consumer>
+        <ce-button full="" size="large" submit="" type="primary"></ce-button>
       </ce-submit>
     `);
   });

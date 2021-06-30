@@ -26,10 +26,12 @@ return [
 		\CheckoutEngine\WordPress\PluginServiceProvider::class,
 		\CheckoutEngine\WordPress\WidgetsServiceProvider::class,
 		\CheckoutEngine\Request\RequestServiceProvider::class,
-		\CheckoutEngine\Rest\PriceRestServiceProvider::class,
 		\WPEmergeBlade\View\ServiceProvider::class,
 		\CheckoutEngine\View\ViewServiceProvider::class,
 		\CheckoutEngine\Blocks\BlockServiceProvider::class,
+		// REST providers.
+		\CheckoutEngine\Rest\PriceRestServiceProvider::class,
+		\CheckoutEngine\Rest\CheckoutSessionRestServiceProvider::class,
 	],
 
 	/**

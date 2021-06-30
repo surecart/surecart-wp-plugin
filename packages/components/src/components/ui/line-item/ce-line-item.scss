@@ -26,4 +26,5 @@
   font-size: var(--ce-font-size-x-small);
   color: var(--ce-color-gray-500);
   margin-right: var(--ce-spacing-small);
+  text-transform: var(--ce-currency-text-transform, uppercase);
 }

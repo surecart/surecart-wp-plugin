@@ -10,7 +10,7 @@ describe('ce-choice', () => {
     expect(page.root).toEqualHtml(`
       <ce-choice>
         <mock:shadow-root>
-          <label class="choice" htmlfor="choice-1" part="base">
+          <label class="choice choice--layout-columns" htmlfor="choice-1" part="base">
             <span class="choice__control choice__radio" part="control">
               <span class="choice__icon" part="checked-icon">
                 <svg viewBox="0 0 16 16">

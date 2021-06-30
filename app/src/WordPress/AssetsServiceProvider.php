@@ -53,7 +53,7 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 	 * @return string
 	 */
 	public function componentsTag( $tag, $handle, $source ) {
-		if ( 'checkout-engine/components' !== $handle ) {
+		if ( 'checkout-engine-components' !== $handle ) {
 			return $tag;
 		}
 
@@ -78,7 +78,7 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 	 */
 	public function registerDefaultTheme() {
 		wp_register_style(
-			'checkout-engine/themes/default',
+			'checkout-engine-themes-default',
 			trailingslashit( \CheckoutEngine::core()->assets()->getUrl() ) . 'dist/components/checkout-engine/checkout-engine.css',
 			[],
 			filemtime( trailingslashit( $this->container[ WPEMERGE_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/checkout-engine/checkout-engine.css' ),
@@ -92,7 +92,7 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 	 */
 	public function registerComponentScripts() {
 		wp_register_script(
-			'checkout-engine/components',
+			'checkout-engine-components',
 			trailingslashit( \CheckoutEngine::core()->assets()->getUrl() ) . 'dist/components/checkout-engine/checkout-engine.esm.js',
 			[],
 			filemtime( trailingslashit( $this->container[ WPEMERGE_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/checkout-engine/checkout-engine.esm.js' ),
@@ -106,7 +106,7 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function enqueueDefaultTheme() {
-		 wp_enqueue_style( 'checkout-engine/themes/default' );
+		 wp_enqueue_style( 'checkout-engine-themes-default' );
 	}
 
 	/**
@@ -115,7 +115,7 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function enqueueComponents() {
-		wp_enqueue_script( 'checkout-engine/components' );
+		wp_enqueue_script( 'checkout-engine-components' );
 	}
 
 	/**
@@ -127,10 +127,16 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 		$asset_file = include trailingslashit( $this->container[ WPEMERGE_CONFIG_KEY ]['app_core']['path'] ) . 'dist/blocks/blocks.asset.php';
 
 		\CheckoutEngine::core()->assets()->enqueueScript(
-			'checkout-engine/blocks',
+			'checkout-engine-blocks',
 			trailingslashit( \CheckoutEngine::core()->assets()->getUrl() ) . 'dist/blocks/blocks.js',
-			array_merge( [ 'checkout-engine/components' ], $asset_file['dependencies'] ),
-			$asset_file['version']
+			array_merge( [ 'checkout-engine-components' ], $asset_file['dependencies'] ),
+			true
+		);
+
+		\CheckoutEngine::core()->assets()->enqueueStyle(
+			'checkout-engine-blocks-style',
+			trailingslashit( \CheckoutEngine::core()->assets()->getUrl() ) . 'dist/blocks/style-blocks.css',
+			[],
 		);
 
 		$this->enqueueDefaultTheme();

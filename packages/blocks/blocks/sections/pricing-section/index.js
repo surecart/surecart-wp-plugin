@@ -27,6 +27,8 @@ const settings = {
 	parent: [ 'checkout-engine/checkout-form' ],
 	supports: {
 		reusable: false,
+		multiple: false,
+		html: false,
 		// inserter: false,
 	},
 	icon,

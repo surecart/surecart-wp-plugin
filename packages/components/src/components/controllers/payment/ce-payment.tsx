@@ -1,6 +1,5 @@
-import { Component, h } from '@stencil/core';
-import { createContext } from '../../context/utils/createContext';
-const { Consumer } = createContext({});
+import { Component, h, Prop } from '@stencil/core';
+import { openWormhole } from 'stencil-wormhole';
 
 @Component({
   tag: 'ce-payment',
@@ -8,17 +7,17 @@ const { Consumer } = createContext({});
   shadow: false,
 })
 export class CePayment {
-  renderHTML = ({ paymentMethod, stripePublishableKey }) => {
-    if (!paymentMethod) {
-      return;
-    }
-
-    if ('stripe' === paymentMethod) {
-      return <ce-stripe-element publishable-key={stripePublishableKey}></ce-stripe-element>;
-    }
-  };
+  @Prop() paymentMethod: string = 'stripe';
+  @Prop() stripePublishableKey: string;
 
   render() {
-    return <Consumer>{this.renderHTML}</Consumer>;
+    if (!this.paymentMethod) {
+      return <div>Please contact us for payment</div>;
+    }
+    if ('stripe' === this.paymentMethod) {
+      return <ce-stripe-element publishable-key={this.stripePublishableKey}></ce-stripe-element>;
+    }
   }
 }
+
+openWormhole(CePayment, ['paymentMethod', 'stripePublishableKey'], false);

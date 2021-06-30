@@ -23,37 +23,8 @@ export const createContext = <T extends { [key: string]: any }>(defaultValue: T)
     return <ce-consumer renderer={renderer} />;
   };
 
-  const injectProps = (Cstr: any, fieldList: any) => {
-    const CstrPrototype = Cstr.prototype;
-    console.log(CstrPrototype);
-    const cstrConnectedCallback = CstrPrototype.connectedCallback;
-    const cstrDisconnectedCallback = CstrPrototype.disconnectedCallback;
-
-    // CstrPrototype.constructor = function() {
-    //   this.promise = new Promise(resolve => {
-    //     this.resolvePromise = resolve;
-    //   });
-    // }
-
-    CstrPrototype.connectedCallback = function () {
-      // subscribe(this, fieldList);
-
-      if (cstrConnectedCallback) {
-        return cstrConnectedCallback.call(this);
-      }
-    };
-
-    CstrPrototype.disconnectedCallback = function () {
-      // listeners.delete(this);
-      if (cstrDisconnectedCallback) {
-        cstrDisconnectedCallback.call(this);
-      }
-    };
-  };
-
   return {
     Provider,
     Consumer,
-    injectProps,
   };
 };

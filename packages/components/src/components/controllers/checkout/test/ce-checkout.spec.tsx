@@ -10,9 +10,7 @@ describe('ce-checkout', () => {
     expect(page.root).toEqualHtml(`
       <ce-checkout>
         <div class="ce-checkout-container">
-          <ce-provider>
-            test
-          </ce-provider>
+          test
         </div>
       </ce-checkout>
     `);
