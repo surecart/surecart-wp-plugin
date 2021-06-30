@@ -4,6 +4,7 @@ namespace CheckoutEngine\Models;
 
 use ArrayAccess;
 use JsonSerializable;
+use CheckoutEngine\Models\Model;
 use CheckoutEngine\Concerns\Arrayable;
 
 /**
@@ -506,7 +507,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 		$this->resetAttributes();
 
 		// fill.
-		$this->fill( $created );
+		$this->fill( $created ?? [] );
 
 		// fire event.
 		$this->fireModelEvent( 'created' );
@@ -620,6 +621,18 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 					$key                = implode( '_', $pieces );
 					$value              = array_key_exists( $key, $this->attributes ) ? $this->attributes[ $key ] : null;
 					$attributes[ $key ] = $this->{$method}( $value );
+				}
+			}
+		}
+
+		foreach ( $attributes as $key => $attribute ) {
+			if ( is_a( $attribute, self::class ) ) {
+				$attributes[ $key ] = $attribute->toArray();
+			} elseif ( is_array( $attribute ) ) {
+				foreach ( $attribute as $nested_key => $nested ) {
+					if ( is_a( $nested, self::class ) ) {
+						$attributes[ $key ][ $nested_key ] = $nested->toArray();
+					}
 				}
 			}
 		}

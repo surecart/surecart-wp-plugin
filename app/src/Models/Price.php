@@ -2,6 +2,8 @@
 
 namespace CheckoutEngine\Models;
 
+use CheckoutEngine\Models\Product;
+
 /**
  * Price model
  */
@@ -21,9 +23,12 @@ class Price extends Model {
 	protected $object_name = 'price';
 
 	/**
-	 * Don't fill product
+	 * Set the product attribute
 	 *
-	 * @var array
+	 * @param  string $value Product properties.
+	 * @return void
 	 */
-	protected $guarded = [ 'product' ];
+	public function setProductAttribute( $value ) {
+		$this->attributes['product'] = new Product( $value );
+	}
 }
