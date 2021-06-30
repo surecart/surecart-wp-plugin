@@ -21,9 +21,18 @@ class Product extends Model {
 	protected $object_name = 'product';
 
 	/**
-	 * Don't fill product
+	 * Set the prices attribute.
 	 *
-	 * @var array
+	 * @param  array $value Array of price objects.
+	 * @return void
 	 */
-	protected $guarded = [ 'product' ];
+	public function setPricesAttribute( $value ) {
+		$models = [];
+		if ( ! empty( $value ) && is_array( $value ) ) {
+			foreach ( $value as $attributes ) {
+				$models[] = new Price( $attributes );
+			}
+		}
+		$this->attributes['prices'] = $models;
+	}
 }

@@ -1,12 +1,12 @@
 <?php
 
-namespace CheckoutEngine\Tests;
+namespace CheckoutEngine\Tests\Models;
 
-use WP_UnitTestCase;
 use CheckoutEngine\Models\CheckoutSession;
 use CheckoutEngine\Request\RequestService;
+use CheckoutEngine\Tests\CheckoutEngineUnitTestCase;
 
-class CheckoutSessionTest extends WP_UnitTestCase
+class CheckoutSessionTest extends CheckoutEngineUnitTestCase
 {
 	protected $requests;
 
@@ -22,14 +22,17 @@ class CheckoutSessionTest extends WP_UnitTestCase
 			]
 		], false);
 
-		// mock the requests in the container
-		$requests = $this->createMock(RequestService::class);
-		\CheckoutEngine::alias('request', function () use ($requests) {
-			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
-		});
-		$this->requests = $requests;
+		// setup mock requests
+		$this->setupMockRequests();
 
 		parent::setUp();
+	}
+
+	/**
+	 * Tear down our test app instance.
+	 */
+	public function tearDown() {
+		\CheckoutEngine::setApplication( null );
 	}
 
 	public function test_can_create_session()
@@ -92,7 +95,7 @@ class CheckoutSessionTest extends WP_UnitTestCase
 			"processor_intent": null
 		  }', true);
 
-		$this->requests->expects($this->once())
+		$this->mock_requests->expects($this->once())
 			->method('makeRequest')
 			->with(
 				$this->equalTo('checkout_sessions'),
@@ -187,7 +190,7 @@ class CheckoutSessionTest extends WP_UnitTestCase
 			}
 		  }', true);
 
-		$this->requests->expects($this->once())
+		$this->mock_requests->expects($this->once())
 			->method('makeRequest')
 			->with(
 				$this->equalTo('checkout_sessions/test_session/prepare/custom'),

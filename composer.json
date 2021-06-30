@@ -30,6 +30,11 @@
 			"CheckoutEngine\\": "app/src/"
 		}
 	},
+	"autoload-dev": {
+		"psr-4": {
+			"CheckoutEngine\\Tests\\": "tests/"
+		}
+	},
 	"scripts": {
 		"install-test-env": [
 			"wpemerge config:create"
