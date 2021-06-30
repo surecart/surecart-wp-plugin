@@ -43,7 +43,7 @@ class CheckoutSession extends Model {
 	 *
 	 * @return $this|\WP_Error
 	 */
-	protected function prepare( $ ) {
+	protected function prepare() {
 		if ( $this->fireModelEvent( 'preparing' ) === false ) {
 			return false;
 		}
