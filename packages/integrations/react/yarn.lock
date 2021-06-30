@@ -41,6 +41,7 @@
     clsx "^1.1.1"
     sass "^1.29.0"
     stencil-fragment "^1.0.1"
+    stencil-wormhole "^3.4.1"
 
 "@jest/types@^24.9.0":
   version "24.9.0"
@@ -4583,6 +4584,11 @@ stencil-fragment@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/stencil-fragment/-/stencil-fragment-1.0.1.tgz#101fecda1bcd476bdf92ee2819fe961ecc04c970"
   integrity sha512-ih2X+LDaIB3ybQxXvtGeOS3BfwPB4ZJFuiQnv8Gf1JJGNZHB5XH54EyOa19g5brLQYdjPrzzLsgfuzUz8YWEkw==
+
+stencil-wormhole@^3.4.1:
+  version "3.4.1"
+  resolved "https://registry.yarnpkg.com/stencil-wormhole/-/stencil-wormhole-3.4.1.tgz#f6c74d38cca38470884fca7353486620072d3734"
+  integrity sha512-ppYTcWTJnIl4ZAKwF39LTA9f/ypHfbVefsHdN2hpMQGrR57wt1TieZo9tlCM/r1Y4SFiZ5yz/cjho564C921Xw==
 
 string-length@^2.0.0:
   version "2.0.0"
