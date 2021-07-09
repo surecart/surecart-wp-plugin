@@ -53,6 +53,11 @@ export interface Coupon extends Object {
   valid: boolean;
 }
 
+export interface LineItemData extends Object {
+  price_id: string;
+  quantity: number
+}
+
 export interface LineItem extends Object {
   id?: string;
   name: string;

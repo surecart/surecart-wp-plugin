@@ -1,4 +1,4 @@
-import { Component, h, Prop, Element } from '@stencil/core';
+import { Component, h, Prop, Element, Event, EventEmitter, Watch } from '@stencil/core';
 
 @Component({
   tag: 'ce-quantity-select',
@@ -12,10 +12,19 @@ export class CeQuantitySelect {
 
   @Prop() max: number = 100;
   @Prop() min: number = 1;
-  @Prop({ mutable: true }) quantity: number = 0;
+  @Prop({ mutable: true, reflect: true }) quantity: number = 0;
+
+  @Event() ceChange: EventEmitter<number>;
+
+  @Watch('quantity')
+  handleQuantityChange() {
+    this.ceChange.emit(this.quantity);
+  }
 
   componentWillLoad() {
-    this.quantity = this.min;
+    if (!this.quantity) {
+      this.quantity = this.min;
+    }
   }
 
   render() {

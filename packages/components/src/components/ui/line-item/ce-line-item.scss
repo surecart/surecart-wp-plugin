@@ -3,7 +3,7 @@
 
   --mobile-size: 380px;
   --price-size: var(--ce-font-size-medium);
-  line-height:1;
+  line-height: var(--ce-line-height-dense);
 }
 
 .item {
@@ -30,12 +30,16 @@
 .item__price-description {
   font-size: var(--ce-font-size-small);
   color: var(--ce-color-gray-500);
+}
+
+::slotted([slot="price-description"]) {
   margin-top: var(--ce-line-item-text-margin, 5px);
 }
 
 .item__end {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   flex-wrap: wrap;
   width: 100%;
   margin-top: 20px;
@@ -56,6 +60,7 @@
 .item__price-currency {
   font-size: var(--ce-font-size-small);
   color: var(--ce-color-gray-500);
+  text-transform: var(--ce-currency-transform, uppercase);
   margin-right: 8px;
 }
 
@@ -91,7 +96,6 @@
 .item__price-layout {
   font-size: var(--ce-font-size-x-large);
   font-weight: var(--ce-font-weight-semibold);
-  line-height: var(--ce-line-height-dense);
   display: flex;
   align-items: center;
 }

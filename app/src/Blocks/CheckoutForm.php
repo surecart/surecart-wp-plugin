@@ -62,6 +62,7 @@ class CheckoutForm extends Block {
 				'label'       => $attributes['label'] ?? '',
 				'description' => $attributes['description'] ?? '',
 				'content'     => $content,
+				'i18n'        => [],
 				'price_ids'   => [ '6b6f10b8-1054-455b-83e5-86be0e6fa74e', 'b20c81ce-0fd8-4ef6-8a1d-870691906682' ],
 				'instance'    => self::$instance++,
 			]

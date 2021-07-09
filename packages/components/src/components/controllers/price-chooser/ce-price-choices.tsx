@@ -1,5 +1,5 @@
-import { Component, h, Prop, Element, Watch, Event, EventEmitter } from '@stencil/core';
-import { Price } from '../../../types';
+import { Component, h, Prop, Element, Event, EventEmitter } from '@stencil/core';
+import { Price, LineItemData } from '../../../types';
 import { getFormattedPrice } from '../../../functions/price';
 import { openWormhole } from 'stencil-wormhole';
 
@@ -17,24 +17,25 @@ export class CePriceChoices {
   @Prop() default: string;
   @Prop() type: 'radio' | 'checkbox' = 'radio';
   @Prop() columns: number = 1;
-  @Prop() selectedPriceIds: Array<string>;
+  @Prop() lineItemData: Array<LineItemData>;
 
-  @Event() cePriceChange: EventEmitter<Array<string>>;
-
-  @Watch('loading')
-  handleLoadingChange() {
-    if (!this.loading) {
-      setTimeout(() => this.updateSelected(), 1);
-    }
-  }
+  @Event() ceUpdateLineItems: EventEmitter<Array<LineItemData>>;
 
   updateSelected() {
     const choices = this.el.querySelectorAll('ce-choice');
+
+    // get selected choices
     const selected = Array.from(choices).filter(choice => {
       return choice.name && choice.checked && !choice.disabled;
     });
-    let ids = (selected || []).map(item => item.value);
-    this.cePriceChange.emit(ids);
+
+    // convert to line item data
+    const data = (selected || []).map(item => {
+      return { price_id: item.value, quantity: 1 } as LineItemData;
+    });
+
+    // emit update event
+    this.ceUpdateLineItems.emit(data);
   }
 
   render() {
@@ -69,7 +70,14 @@ export class CePriceChoices {
         {this.prices.map((price, index) => {
           const isDefault = this.prices.find(price => price.id === this.default)?.id;
           return (
-            <ce-choice class="loaded" onCeChange={() => this.updateSelected()} name={'price'} value={price.id} type={this.type} checked={isDefault ? true : index === 0}>
+            <ce-choice
+              class="loaded"
+              onCeChange={() => setTimeout(() => this.updateSelected(), 500)}
+              name={'price'}
+              value={price.id}
+              type={this.type}
+              checked={isDefault ? true : index === 0}
+            >
               {price.name}
               <span slot="description">{price.description}</span>
               <span slot="price">{getFormattedPrice({ amount: price.amount, currency: price.currency })}</span>
@@ -82,4 +90,4 @@ export class CePriceChoices {
   }
 }
 
-openWormhole(CePriceChoices, ['prices', 'priceIds', 'loading', 'selectedPriceIds'], false);
+openWormhole(CePriceChoices, ['prices', 'priceIds', 'loading', 'lineItemData'], false);

@@ -1,5 +1,6 @@
 import { Component, h, Prop, Element, State, Watch, Listen, Event, EventEmitter } from '@stencil/core';
-import { Price, Coupon, CheckoutSession, Customer, LineItem } from '../../../types';
+import { Price, Coupon, CheckoutSession, Customer, LineItemData } from '../../../types';
+import { pick } from '../../../functions/util';
 import { Universe } from 'stencil-wormhole';
 import apiFetch from '../../../functions/fetch';
 import { addQueryArgs } from '@wordpress/url';
@@ -14,6 +15,8 @@ export class CECheckout {
   @Prop() priceIds: Array<string>;
   @Prop() stripePublishableKey: string;
   @Prop() currencyCode: string = 'usd';
+  @Prop({ mutable: true }) lineItemData: Array<LineItemData>;
+  @Prop() i18n: Object;
 
   @State() message: string = '';
   @State() prices: Array<Price>;
@@ -29,15 +32,16 @@ export class CECheckout {
   @State() metaData: Object;
   @Event() ceLoaded: EventEmitter<void>;
 
-  @Listen('ceUpdateCheckoutSession')
-  handleCheckoutSessionChange(e) {
-    this.checkoutSession = e.detail;
+  @Listen('ceUpdateLineItems')
+  handleLineItemChange(e) {
+    console.log(e.detail);
+    this.lineItemData = e.detail;
   }
 
   /**
    * Update checkout session on server when it changes here
    */
-  @Watch('checkoutSession')
+  @Watch('lineItemData')
   handleSelectChange() {
     this.updateSession();
   }
@@ -48,6 +52,7 @@ export class CECheckout {
 
     // fetch prices and create session
     this.loading = true;
+    this.calculating = true;
     Promise.all([this.fetchPrices(), this.startSession()]).finally(() => (this.loading = false));
   }
 
@@ -55,10 +60,15 @@ export class CECheckout {
    * Create a new checkout session
    */
   async startSession() {
+    const data = {
+      ...pick(this.checkoutSession || {}, ['customer_email', 'customer_first_name', 'customer_last_name', 'currency', 'meta_data']),
+      line_items: this.lineItemData,
+    };
+
     this.checkoutSession = (await apiFetch({
       method: 'POST', // create or update
       path: 'checkout-engine/v1/checkout_sessions',
-      data: this.checkoutSession,
+      data,
     })) as CheckoutSession;
   }
 
@@ -70,12 +80,17 @@ export class CECheckout {
       return;
     }
 
+    const data = {
+      ...pick(this.checkoutSession, ['customer_email', 'customer_first_name', 'customer_last_name', 'currency', 'meta_data']),
+      line_items: this.lineItemData,
+    };
+
     this.calculating = true;
     try {
       this.checkoutSession = (await apiFetch({
         method: 'PATCH', // create or update
         path: `checkout-engine/v1/checkout_sessions/${this.checkoutSession.id}`,
-        data: this.checkoutSession,
+        data,
       })) as CheckoutSession;
     } finally {
       this.calculating = false;
@@ -105,7 +120,7 @@ export class CECheckout {
       checkoutSession: this.checkoutSession,
       stripePublishableKey: this.stripePublishableKey,
       priceIds: this.priceIds,
-      selectedPriceIds: this.selectedPriceIds,
+      lineItemData: this.lineItemData,
       currencyCode: this.currencyCode,
       prices: this.prices,
       loading: this.loading,

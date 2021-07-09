@@ -1,0 +1,30 @@
+:host {
+  display: block;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow:hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  > * {
+    z-index: 1;
+  }
+
+  &:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--ce-color-white);
+    opacity: var(--ce-block-ui-opacity, 0.65);
+  }
+}

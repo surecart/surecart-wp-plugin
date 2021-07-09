@@ -5,8 +5,10 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { CheckoutSession, Price } from "./types";
+import { CheckoutSession, LineItemData, Price } from "./types";
 export namespace Components {
+    interface CeBlockUi {
+    }
     interface CeButton {
         /**
           * Draws the button with a caret for use with dropdowns, popovers, etc.
@@ -113,6 +115,8 @@ export namespace Components {
     }
     interface CeCheckout {
         "currencyCode": string;
+        "i18n": Object;
+        "lineItemData": Array<LineItemData>;
         "priceIds": Array<string>;
         "stripePublishableKey": string;
     }
@@ -347,6 +351,12 @@ export namespace Components {
          */
         "price": string;
     }
+    interface CeLineItems {
+        "calculating": boolean;
+        "checkoutSession": CheckoutSession;
+        "lineItemData": Array<LineItemData>;
+        "loading": boolean;
+    }
     interface CeMenu {
     }
     interface CeMenuDivider {
@@ -375,8 +385,6 @@ export namespace Components {
     }
     interface CeOrderSummary {
         "calculating": boolean;
-        "checkoutSession": CheckoutSession;
-        "loading": boolean;
     }
     interface CePayment {
         "paymentMethod": string;
@@ -390,10 +398,10 @@ export namespace Components {
     interface CePriceChoices {
         "columns": number;
         "default": string;
+        "lineItemData": Array<LineItemData>;
         "loading": boolean;
         "priceIds": Array<string>;
         "prices": Array<Price>;
-        "selectedPriceIds": Array<string>;
         "type": 'radio' | 'checkbox';
     }
     interface CeProvider {
@@ -635,8 +643,21 @@ export namespace Components {
          */
         "type": 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text';
     }
+    interface CeTotal {
+        "checkoutSession": CheckoutSession;
+        "loading": boolean;
+        "showCurrency": boolean;
+        "size": 'large' | 'medium';
+        "total": string;
+    }
 }
 declare global {
+    interface HTMLCeBlockUiElement extends Components.CeBlockUi, HTMLStencilElement {
+    }
+    var HTMLCeBlockUiElement: {
+        prototype: HTMLCeBlockUiElement;
+        new (): HTMLCeBlockUiElement;
+    };
     interface HTMLCeButtonElement extends Components.CeButton, HTMLStencilElement {
     }
     var HTMLCeButtonElement: {
@@ -720,6 +741,12 @@ declare global {
     var HTMLCeLineItemElement: {
         prototype: HTMLCeLineItemElement;
         new (): HTMLCeLineItemElement;
+    };
+    interface HTMLCeLineItemsElement extends Components.CeLineItems, HTMLStencilElement {
+    }
+    var HTMLCeLineItemsElement: {
+        prototype: HTMLCeLineItemsElement;
+        new (): HTMLCeLineItemsElement;
     };
     interface HTMLCeMenuElement extends Components.CeMenu, HTMLStencilElement {
     }
@@ -847,7 +874,14 @@ declare global {
         prototype: HTMLCeTagElement;
         new (): HTMLCeTagElement;
     };
+    interface HTMLCeTotalElement extends Components.CeTotal, HTMLStencilElement {
+    }
+    var HTMLCeTotalElement: {
+        prototype: HTMLCeTotalElement;
+        new (): HTMLCeTotalElement;
+    };
     interface HTMLElementTagNameMap {
+        "ce-block-ui": HTMLCeBlockUiElement;
         "ce-button": HTMLCeButtonElement;
         "ce-checkbox": HTMLCeCheckboxElement;
         "ce-checkout": HTMLCeCheckoutElement;
@@ -862,6 +896,7 @@ declare global {
         "ce-form-section": HTMLCeFormSectionElement;
         "ce-input": HTMLCeInputElement;
         "ce-line-item": HTMLCeLineItemElement;
+        "ce-line-items": HTMLCeLineItemsElement;
         "ce-menu": HTMLCeMenuElement;
         "ce-menu-divider": HTMLCeMenuDividerElement;
         "ce-menu-item": HTMLCeMenuItemElement;
@@ -883,9 +918,12 @@ declare global {
         "ce-switch": HTMLCeSwitchElement;
         "ce-table": HTMLCeTableElement;
         "ce-tag": HTMLCeTagElement;
+        "ce-total": HTMLCeTotalElement;
     }
 }
 declare namespace LocalJSX {
+    interface CeBlockUi {
+    }
     interface CeButton {
         /**
           * Draws the button with a caret for use with dropdowns, popovers, etc.
@@ -996,6 +1034,8 @@ declare namespace LocalJSX {
     }
     interface CeCheckout {
         "currencyCode"?: string;
+        "i18n"?: Object;
+        "lineItemData"?: Array<LineItemData>;
         "onCeLoaded"?: (event: CustomEvent<void>) => void;
         "priceIds"?: Array<string>;
         "stripePublishableKey"?: string;
@@ -1246,6 +1286,13 @@ declare namespace LocalJSX {
          */
         "price"?: string;
     }
+    interface CeLineItems {
+        "calculating"?: boolean;
+        "checkoutSession"?: CheckoutSession;
+        "lineItemData"?: Array<LineItemData>;
+        "loading"?: boolean;
+        "onCeUpdateLineItems"?: (event: CustomEvent<Array<LineItemData>>) => void;
+    }
     interface CeMenu {
         "onCeSelect"?: (event: CustomEvent<{ item: HTMLCeMenuItemElement }>) => void;
     }
@@ -1267,8 +1314,6 @@ declare namespace LocalJSX {
     }
     interface CeOrderSummary {
         "calculating"?: boolean;
-        "checkoutSession"?: CheckoutSession;
-        "loading"?: boolean;
     }
     interface CePayment {
         "paymentMethod"?: string;
@@ -1282,11 +1327,11 @@ declare namespace LocalJSX {
     interface CePriceChoices {
         "columns"?: number;
         "default"?: string;
+        "lineItemData"?: Array<LineItemData>;
         "loading"?: boolean;
-        "onCePriceChange"?: (event: CustomEvent<Array<string>>) => void;
+        "onCeUpdateLineItems"?: (event: CustomEvent<Array<LineItemData>>) => void;
         "priceIds"?: Array<string>;
         "prices"?: Array<Price>;
-        "selectedPriceIds"?: Array<string>;
         "type"?: 'radio' | 'checkbox';
     }
     interface CeProvider {
@@ -1297,6 +1342,7 @@ declare namespace LocalJSX {
         "clickEl"?: HTMLElement;
         "max"?: number;
         "min"?: number;
+        "onCeChange"?: (event: CustomEvent<number>) => void;
         "quantity"?: number;
     }
     interface CeRadio {
@@ -1558,7 +1604,15 @@ declare namespace LocalJSX {
          */
         "type"?: 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text';
     }
+    interface CeTotal {
+        "checkoutSession"?: CheckoutSession;
+        "loading"?: boolean;
+        "showCurrency"?: boolean;
+        "size"?: 'large' | 'medium';
+        "total"?: string;
+    }
     interface IntrinsicElements {
+        "ce-block-ui": CeBlockUi;
         "ce-button": CeButton;
         "ce-checkbox": CeCheckbox;
         "ce-checkout": CeCheckout;
@@ -1573,6 +1627,7 @@ declare namespace LocalJSX {
         "ce-form-section": CeFormSection;
         "ce-input": CeInput;
         "ce-line-item": CeLineItem;
+        "ce-line-items": CeLineItems;
         "ce-menu": CeMenu;
         "ce-menu-divider": CeMenuDivider;
         "ce-menu-item": CeMenuItem;
@@ -1594,12 +1649,14 @@ declare namespace LocalJSX {
         "ce-switch": CeSwitch;
         "ce-table": CeTable;
         "ce-tag": CeTag;
+        "ce-total": CeTotal;
     }
 }
 export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "ce-block-ui": LocalJSX.CeBlockUi & JSXBase.HTMLAttributes<HTMLCeBlockUiElement>;
             "ce-button": LocalJSX.CeButton & JSXBase.HTMLAttributes<HTMLCeButtonElement>;
             "ce-checkbox": LocalJSX.CeCheckbox & JSXBase.HTMLAttributes<HTMLCeCheckboxElement>;
             "ce-checkout": LocalJSX.CeCheckout & JSXBase.HTMLAttributes<HTMLCeCheckoutElement>;
@@ -1614,6 +1671,7 @@ declare module "@stencil/core" {
             "ce-form-section": LocalJSX.CeFormSection & JSXBase.HTMLAttributes<HTMLCeFormSectionElement>;
             "ce-input": LocalJSX.CeInput & JSXBase.HTMLAttributes<HTMLCeInputElement>;
             "ce-line-item": LocalJSX.CeLineItem & JSXBase.HTMLAttributes<HTMLCeLineItemElement>;
+            "ce-line-items": LocalJSX.CeLineItems & JSXBase.HTMLAttributes<HTMLCeLineItemsElement>;
             "ce-menu": LocalJSX.CeMenu & JSXBase.HTMLAttributes<HTMLCeMenuElement>;
             "ce-menu-divider": LocalJSX.CeMenuDivider & JSXBase.HTMLAttributes<HTMLCeMenuDividerElement>;
             "ce-menu-item": LocalJSX.CeMenuItem & JSXBase.HTMLAttributes<HTMLCeMenuItemElement>;
@@ -1635,6 +1693,7 @@ declare module "@stencil/core" {
             "ce-switch": LocalJSX.CeSwitch & JSXBase.HTMLAttributes<HTMLCeSwitchElement>;
             "ce-table": LocalJSX.CeTable & JSXBase.HTMLAttributes<HTMLCeTableElement>;
             "ce-tag": LocalJSX.CeTag & JSXBase.HTMLAttributes<HTMLCeTagElement>;
+            "ce-total": LocalJSX.CeTotal & JSXBase.HTMLAttributes<HTMLCeTotalElement>;
         }
     }
 }

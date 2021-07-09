@@ -1,0 +1,7 @@
+:host {
+  display: block;
+}
+
+ce-line-item ~ ce-line-item {
+  margin-top: 20px;
+}
