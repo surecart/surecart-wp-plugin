@@ -67,15 +67,9 @@ export class CePriceChoices {
     return (
       <ce-choices style={{ '--columns': this.columns.toString() }}>
         {this.prices.map((price, index) => {
+          const isDefault = this.prices.find(price => price.id === this.default)?.id;
           return (
-            <ce-choice
-              class="loaded"
-              onCeChange={() => this.updateSelected()}
-              name={price.product_id}
-              value={price.id}
-              type={this.type}
-              checked={this.default ? this.default === price.id : index === 0}
-            >
+            <ce-choice class="loaded" onCeChange={() => this.updateSelected()} name={'price'} value={price.id} type={this.type} checked={isDefault ? true : index === 0}>
               {price.name}
               <span slot="description">{price.description}</span>
               <span slot="price">{getFormattedPrice({ amount: price.amount, currency: price.currency })}</span>

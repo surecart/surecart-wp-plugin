@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Price } from "./types";
+import { CheckoutSession, Price } from "./types";
 export namespace Components {
     interface CeButton {
         /**
@@ -374,9 +374,9 @@ export namespace Components {
         "value": string;
     }
     interface CeOrderSummary {
-        "currencyCode": string;
-        "subtotal": number;
-        "total": number;
+        "calculating": boolean;
+        "checkoutSession": CheckoutSession;
+        "loading": boolean;
     }
     interface CePayment {
         "paymentMethod": string;
@@ -398,6 +398,12 @@ export namespace Components {
     }
     interface CeProvider {
         "STENCIL_CONTEXT": { [key: string]: any };
+    }
+    interface CeQuantitySelect {
+        "clickEl"?: HTMLElement;
+        "max": number;
+        "min": number;
+        "quantity": number;
     }
     interface CeRadio {
         /**
@@ -607,6 +613,28 @@ export namespace Components {
          */
         "value": string;
     }
+    interface CeTable {
+        "data": Array<any>;
+        "headers": Array<string>;
+    }
+    interface CeTag {
+        /**
+          * Makes the tag clearable.
+         */
+        "clearable": boolean;
+        /**
+          * Draws a pill-style tag with rounded edges.
+         */
+        "pill": boolean;
+        /**
+          * The tag's size.
+         */
+        "size": 'small' | 'medium' | 'large';
+        /**
+          * The tag's type.
+         */
+        "type": 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text';
+    }
 }
 declare global {
     interface HTMLCeButtonElement extends Components.CeButton, HTMLStencilElement {
@@ -741,6 +769,12 @@ declare global {
         prototype: HTMLCeProviderElement;
         new (): HTMLCeProviderElement;
     };
+    interface HTMLCeQuantitySelectElement extends Components.CeQuantitySelect, HTMLStencilElement {
+    }
+    var HTMLCeQuantitySelectElement: {
+        prototype: HTMLCeQuantitySelectElement;
+        new (): HTMLCeQuantitySelectElement;
+    };
     interface HTMLCeRadioElement extends Components.CeRadio, HTMLStencilElement {
     }
     var HTMLCeRadioElement: {
@@ -801,6 +835,18 @@ declare global {
         prototype: HTMLCeSwitchElement;
         new (): HTMLCeSwitchElement;
     };
+    interface HTMLCeTableElement extends Components.CeTable, HTMLStencilElement {
+    }
+    var HTMLCeTableElement: {
+        prototype: HTMLCeTableElement;
+        new (): HTMLCeTableElement;
+    };
+    interface HTMLCeTagElement extends Components.CeTag, HTMLStencilElement {
+    }
+    var HTMLCeTagElement: {
+        prototype: HTMLCeTagElement;
+        new (): HTMLCeTagElement;
+    };
     interface HTMLElementTagNameMap {
         "ce-button": HTMLCeButtonElement;
         "ce-checkbox": HTMLCeCheckboxElement;
@@ -824,6 +870,7 @@ declare global {
         "ce-payment-request": HTMLCePaymentRequestElement;
         "ce-price-choices": HTMLCePriceChoicesElement;
         "ce-provider": HTMLCeProviderElement;
+        "ce-quantity-select": HTMLCeQuantitySelectElement;
         "ce-radio": HTMLCeRadioElement;
         "ce-radio-group": HTMLCeRadioGroupElement;
         "ce-secure-notice": HTMLCeSecureNoticeElement;
@@ -834,6 +881,8 @@ declare global {
         "ce-stripe-payment-request": HTMLCeStripePaymentRequestElement;
         "ce-submit": HTMLCeSubmitElement;
         "ce-switch": HTMLCeSwitchElement;
+        "ce-table": HTMLCeTableElement;
+        "ce-tag": HTMLCeTagElement;
     }
 }
 declare namespace LocalJSX {
@@ -1217,9 +1266,9 @@ declare namespace LocalJSX {
         "value"?: string;
     }
     interface CeOrderSummary {
-        "currencyCode"?: string;
-        "subtotal"?: number;
-        "total"?: number;
+        "calculating"?: boolean;
+        "checkoutSession"?: CheckoutSession;
+        "loading"?: boolean;
     }
     interface CePayment {
         "paymentMethod"?: string;
@@ -1243,6 +1292,12 @@ declare namespace LocalJSX {
     interface CeProvider {
         "STENCIL_CONTEXT"?: { [key: string]: any };
         "onMountConsumer"?: (event: CustomEvent<any>) => void;
+    }
+    interface CeQuantitySelect {
+        "clickEl"?: HTMLElement;
+        "max"?: number;
+        "min"?: number;
+        "quantity"?: number;
     }
     interface CeRadio {
         /**
@@ -1480,6 +1535,29 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
+    interface CeTable {
+        "data"?: Array<any>;
+        "headers"?: Array<string>;
+    }
+    interface CeTag {
+        /**
+          * Makes the tag clearable.
+         */
+        "clearable"?: boolean;
+        "onPrestoClear"?: (event: CustomEvent<CeTag>) => void;
+        /**
+          * Draws a pill-style tag with rounded edges.
+         */
+        "pill"?: boolean;
+        /**
+          * The tag's size.
+         */
+        "size"?: 'small' | 'medium' | 'large';
+        /**
+          * The tag's type.
+         */
+        "type"?: 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text';
+    }
     interface IntrinsicElements {
         "ce-button": CeButton;
         "ce-checkbox": CeCheckbox;
@@ -1503,6 +1581,7 @@ declare namespace LocalJSX {
         "ce-payment-request": CePaymentRequest;
         "ce-price-choices": CePriceChoices;
         "ce-provider": CeProvider;
+        "ce-quantity-select": CeQuantitySelect;
         "ce-radio": CeRadio;
         "ce-radio-group": CeRadioGroup;
         "ce-secure-notice": CeSecureNotice;
@@ -1513,6 +1592,8 @@ declare namespace LocalJSX {
         "ce-stripe-payment-request": CeStripePaymentRequest;
         "ce-submit": CeSubmit;
         "ce-switch": CeSwitch;
+        "ce-table": CeTable;
+        "ce-tag": CeTag;
     }
 }
 export { LocalJSX as JSX };
@@ -1541,6 +1622,7 @@ declare module "@stencil/core" {
             "ce-payment-request": LocalJSX.CePaymentRequest & JSXBase.HTMLAttributes<HTMLCePaymentRequestElement>;
             "ce-price-choices": LocalJSX.CePriceChoices & JSXBase.HTMLAttributes<HTMLCePriceChoicesElement>;
             "ce-provider": LocalJSX.CeProvider & JSXBase.HTMLAttributes<HTMLCeProviderElement>;
+            "ce-quantity-select": LocalJSX.CeQuantitySelect & JSXBase.HTMLAttributes<HTMLCeQuantitySelectElement>;
             "ce-radio": LocalJSX.CeRadio & JSXBase.HTMLAttributes<HTMLCeRadioElement>;
             "ce-radio-group": LocalJSX.CeRadioGroup & JSXBase.HTMLAttributes<HTMLCeRadioGroupElement>;
             "ce-secure-notice": LocalJSX.CeSecureNotice & JSXBase.HTMLAttributes<HTMLCeSecureNoticeElement>;
@@ -1551,6 +1633,8 @@ declare module "@stencil/core" {
             "ce-stripe-payment-request": LocalJSX.CeStripePaymentRequest & JSXBase.HTMLAttributes<HTMLCeStripePaymentRequestElement>;
             "ce-submit": LocalJSX.CeSubmit & JSXBase.HTMLAttributes<HTMLCeSubmitElement>;
             "ce-switch": LocalJSX.CeSwitch & JSXBase.HTMLAttributes<HTMLCeSwitchElement>;
+            "ce-table": LocalJSX.CeTable & JSXBase.HTMLAttributes<HTMLCeTableElement>;
+            "ce-tag": LocalJSX.CeTag & JSXBase.HTMLAttributes<HTMLCeTagElement>;
         }
     }
 }

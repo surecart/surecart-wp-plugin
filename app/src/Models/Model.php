@@ -4,7 +4,6 @@ namespace CheckoutEngine\Models;
 
 use ArrayAccess;
 use JsonSerializable;
-use CheckoutEngine\Models\Model;
 use CheckoutEngine\Concerns\Arrayable;
 
 /**
@@ -89,9 +88,23 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 	 * @param array $attributes Optional attributes.
 	 */
 	public function __construct( $attributes = [] ) {
+		// filter meta data setting.
+		add_filter( "checkout_engine/$this->object_name/set_meta_data", [ $this, 'filterMetaData' ], 9 );
+
 		$this->bootModel();
 		$this->syncOriginal();
 		$this->fill( $attributes );
+	}
+
+	/**
+	 * Filter meta data setting
+	 *
+	 * @param object $meta_data Meta data.
+	 *
+	 * @return function
+	 */
+	public function filterMetaData( $meta_data ) {
+		return $meta_data;
 	}
 
 	/**
@@ -318,7 +331,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 			}
 		}
 
-		return $this;
+		return apply_filters( "checkout_engine/{$this->object_name}/set_attributes", $this );
 	}
 
 	/**
@@ -356,6 +369,17 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 		if ( method_exists( $this, $method ) ) {
 			return $method;
 		}
+	}
+
+	/**
+	 * Set the meta data attribute.
+	 *
+	 * @param array $meta_data Model meta data.
+	 *
+	 * @return void
+	 */
+	public function setMetaDataAttribute( $meta_data ) {
+		$this->attributes['meta_data'] = apply_filters( "checkout_engine/$this->object_name/set_meta_data", $meta_data );
 	}
 
 	/**
@@ -456,6 +480,30 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 	}
 
 	/**
+	 * Find a specific model with and id
+	 *
+	 * @param string $id Id of the model.
+	 *
+	 * @return $this
+	 */
+	protected function find( $id = '' ) {
+		if ( ! $id ) {
+			return $this;
+		}
+
+		$attributes = \CheckoutEngine::request( $this->endpoint . '/' . $id );
+
+		if ( is_wp_error( $attributes ) ) {
+			return $attributes;
+		}
+
+		$this->syncOriginal();
+		$this->fill( $attributes );
+
+		return $this;
+	}
+
+	/**
 	 * Save model
 	 *
 	 * @return $this|false
@@ -484,9 +532,14 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 	 *
 	 * @return $this|false
 	 */
-	public function create() {
+	protected function create( $attributes = [] ) {
 		if ( $this->fireModelEvent( 'creating' ) === false ) {
 			return false;
+		}
+
+		if ( $attributes ) {
+			$this->syncOriginal();
+			$this->fill( $attributes );
 		}
 
 		$created = \CheckoutEngine::request(
@@ -520,9 +573,14 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 	 *
 	 * @return $this|false
 	 */
-	protected function update() {
+	protected function update( $attributes = [] ) {
 		if ( $this->fireModelEvent( 'updating' ) === false ) {
 			return false;
+		}
+
+		if ( $attributes ) {
+			$this->syncOriginal();
+			$this->fill( $attributes );
 		}
 
 		$updated = \CheckoutEngine::request(
@@ -578,16 +636,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 		} elseif ( ! is_null( $attribute ) ) {
 			return $attribute;
 		}
-
-		// if ($this->relationLoaded($key)) {
-		// return $this->getRelation($key);
-		// }
-
-		// if ($this->relationshipExists($key)) {
-		// return $this->getRelationFromMethod($key);
-		// }
 	}
-
 
 	/**
 	 * Serialize to json.
@@ -597,7 +646,6 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 	public function jsonSerialize() {
 		return $this->toArray();
 	}
-
 
 	/**
 	 * Calls accessors during toArray.

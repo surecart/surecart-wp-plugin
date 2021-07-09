@@ -23,7 +23,7 @@ class FormSection extends Block {
 	 */
 	public function render( $attributes, $content ) {
 		return \CheckoutEngine::blocks()->render(
-			"blocks/$this->name",
+			"components/$this->name",
 			[
 				'attributes' => $attributes,
 				'content'    => $content,

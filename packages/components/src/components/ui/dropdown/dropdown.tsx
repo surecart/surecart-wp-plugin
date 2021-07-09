@@ -68,16 +68,16 @@ export class CEDropdown {
   /* Get the slotted menu */
   getMenu() {
     let slotted = this.el.shadowRoot.querySelector('slot') as HTMLSlotElement;
-    return slotted.assignedNodes().find(node => {
+    return (slotted.assignedNodes().find(node => {
       return node.nodeName === 'ce-menu';
-    }) as unknown as CEMenu;
+    }) as unknown) as CEMenu;
   }
 
   componentDidLoad() {
     // close when clicked outside
-    clickOutside(this.clickEl || this.el, () => {
-      this.open = false;
-    });
+    // clickOutside(this.clickEl || this.el, () => {
+    //   this.open = false;
+    // });
   }
 
   render() {

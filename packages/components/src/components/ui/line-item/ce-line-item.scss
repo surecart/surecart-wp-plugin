@@ -1,29 +1,108 @@
 :host {
   display: block;
+
+  --mobile-size: 380px;
+  --price-size: var(--ce-font-size-medium);
+  line-height:1;
 }
 
 .item {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
 }
 
-.item__title {
+@media screen and (min-width: var(--mobile-size)) {
+  .item {
+    flex-wrap: no-wrap;
+  }
+}
+
+.item__title,
+.item__price {
   font-size: var(--ce-font-size-medium);
-  color: var(--ce-color-gray-600);
+  font-weight: var(--ce-font-weight-semibold);
+  color: var(--ce-color-gray-800);
+}
+
+.item__description,
+.item__price-description {
+  font-size: var(--ce-font-size-small);
+  color: var(--ce-color-gray-500);
+  margin-top: var(--ce-line-item-text-margin, 5px);
+}
+
+.item__end {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+  margin-top: 20px;
+}
+
+@media screen and (min-width: 280px) {
+  .item__end {
+    width: auto;
+    text-align: right;
+    margin-left: 20px;
+    margin-top: 0;
+  }
+  .item__price-text {
+    text-align: right;
+  }
+}
+
+.item__price-currency {
+  font-size: var(--ce-font-size-small);
+  color: var(--ce-color-gray-500);
+  margin-right: 8px;
+}
+
+.item__text {
+  flex: 1;
+}
+
+
+.item__image{
+  display: none;
+}
+
+@media screen and (min-width: 380px) {
+  .item--has-image .item__image {
+    display: block;
+  }
+}
+.item__price-description {
+  display: -webkit-box;
+}
+
+::slotted([slot="image"])  {
+  margin-right: 20px;
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid var(--ce-color-gray-200);
+  display: block;
+  box-shadow: var(--ce-input-box-shadow);
 }
 
 .item__price-layout {
-  font-size: var(--ce-font-size-large);
+  font-size: var(--ce-font-size-x-large);
   font-weight: var(--ce-font-weight-semibold);
   line-height: var(--ce-line-height-dense);
   display: flex;
   align-items: center;
 }
 
+.item__price {
+  font-size: var(--price-size);
+}
+
 .item_currency {
   font-weight: var(--ce-font-weight-normal);
-  font-size: var(--ce-font-size-x-small);
+  font-size: var(--ce-font-size-xx-small);
   color: var(--ce-color-gray-500);
   margin-right: var(--ce-spacing-small);
   text-transform: var(--ce-currency-text-transform, uppercase);

@@ -29,7 +29,7 @@ class CheckoutSessionRestServiceProvider extends RestServiceProvider implements 
 				[
 					'methods'             => \WP_REST_Server::CREATABLE,
 					'callback'            => \CheckoutEngine::closure()->method( CheckoutSessionController::class, 'create' ),
-					'permission_callback' => [ $this, 'create_item_permissions_check' ],
+					'permission_callback' => [ $this, 'permissions_check' ],
 				],
 				'schema' => [ $this, 'get_item_schema' ],
 			]
@@ -46,7 +46,7 @@ class CheckoutSessionRestServiceProvider extends RestServiceProvider implements 
 				],
 				[
 					'methods'             => \WP_REST_Server::EDITABLE,
-					'callback'            => \CheckoutEngine::closure()->method( CheckoutSessionController::class, 'edit' ),
+					'callback'            => \CheckoutEngine::closure()->method( CheckoutSessionController::class, 'update' ),
 					'permission_callback' => [ $this, 'permissions_check' ],
 				],
 				// Register our schema callback.
@@ -88,16 +88,20 @@ class CheckoutSessionRestServiceProvider extends RestServiceProvider implements 
 			'type'       => 'object',
 			// In JSON Schema you can specify object properties in the properties attribute.
 			'properties' => [
-				'id'      => [
+				'id'         => [
 					'description' => esc_html__( 'Unique identifier for the object.', 'my-textdomain' ),
 					'type'        => 'string',
-					'context'     => array( 'view', 'edit', 'embed' ),
+					'context'     => [ 'view', 'edit', 'embed' ],
 					'readonly'    => true,
 				],
-				'content' => array(
-					'description' => esc_html__( 'The content for the object.', 'my-textdomain' ),
+				'currency'   => [
+					'description' => esc_html__( 'The currency for the session.', 'my-textdomain' ),
 					'type'        => 'string',
-				),
+				],
+				'line_items' => [
+					'description' => esc_html__( 'The line items for the session.', 'my-textdomain' ),
+					'type'        => 'object',
+				],
 			],
 		];
 

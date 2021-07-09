@@ -124,8 +124,8 @@ class RequestService {
 		// TODO: run through translations.
 		if ( ! in_array( $response_code, [ 200, 201 ], true ) ) {
 			$response_body = json_decode( $response_body, true );
-			if ( is_object( $response_body ) && ! empty( $response_body->message ) ) {
-				return new \WP_Error( 'error', $response_body->message, [ 'status' => $response_code ] );
+			if ( ! empty( $response_body['message'] ) ) {
+				return new \WP_Error( 'error', $response_body['message'], [ 'status' => $response_code ] );
 			}
 			// last resort if something else went wrong.
 			return new \WP_Error( 'error', esc_url( $url ) . ':  ' . print_r( $response_body, 1 ), [ 'status' => $response_code ] );

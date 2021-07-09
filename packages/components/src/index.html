@@ -17,9 +17,72 @@
 
 <body>
 
-  <div style="width: 500px; margin:90px auto;">
+  <!-- <ce-table>
+    <table>
+      <thead part="head">
+        <tr>
+          <th part="th">Test</th>
+          <th part="th">Test</th>
+          <th part="th">Test</th>
+          <th part="th">Test</th>
+        </tr>
+      </thead>
+
+      <tbody part="body">
+        <tr>
+          <td part="td">Test</td>
+          <td part="td">Test</td>
+          <td part="td">Test</td>
+          <td part="td">Test</td>
+        </tr>
+      </tbody>
+    </table>
+  </ce-table> -->
+
+  <div style="max-width: 500px; margin:90px auto;">
     <ce-checkout id="checkout-one" style="margin-bottom: 80px;">
-      <ce-form>
+      <ce-form-section label="Totals">
+        <ce-divider style="--spacing: 20px;"></ce-divider>
+        <ce-line-item style="margin-bottom: 20px;">
+          <img src="http://placekitten.com/200/300" slot="image" />
+          <span slot="title">Subscription </span>
+          <ce-quantity-select quantity="1" max="10" slot="description"></ce-quantity-select>
+          <span slot="price">$10.00</span>
+          <span slot="price-description">Monthly</span>
+        </ce-line-item>
+        <ce-line-item style="margin-bottom: 20px;">
+          <img src="http://placekitten.com/200/300" slot="image" />
+          <span slot="title">One Time</span>
+          <ce-quantity-select quantity="1" max="100" min="10" slot="description"></ce-quantity-select>
+          <span slot="price">$10.00</span>
+          <span slot="price-description">Once</span>
+        </ce-line-item>
+
+        <ce-divider style="--spacing: 20px;"></ce-divider>
+
+        <ce-line-item style="margin-bottom: 20px;">
+          <span slot="description">Subtotal</span>
+          <span slot="price">$20.00</span>
+        </ce-line-item>
+
+        <ce-line-item>
+          <span slot="description">
+            <ce-tag clearable style="margin-right: 8px;">Save 10</ce-tag> 10% off
+          </span>
+          <span slot="price">-$5.00</span>
+        </ce-line-item>
+
+        <ce-divider style="--spacing: 20px;"></ce-divider>
+
+        <ce-line-item style="--price-size: var(--ce-font-size-x-large)">
+          <span slot="title">Total</span>
+          <span slot="price">$15.00</span>
+          <span slot="currency">USD</span>
+        </ce-line-item>
+      </ce-form-section>
+
+      <ce-submit text="Purchase"></ce-submit>
+      <!-- <ce-form>
         <div class="ce-area-main-header">
           <ce-form-section label="Choose A Plan">
             <span slot="description">Start for free. Cancel anytime.</span>
@@ -71,18 +134,16 @@
                 I agree to the terms.
               </ce-checkbox>
             </ce-form-row>
-          </ce-form-section> -->
+          </ce-form-section>
         </div>
 
 
-
-
-        <!-- <ce-order-summary class="ce-area-main"></ce-order-summary> -->
 
         <div class="ce-area-main-footer">
           <ce-form-section label="Totals">
             <ce-divider style="--spacing: 20px;"></ce-divider>
             <ce-line-item>
+              <img src="http://placekitten.com/200/300" slot="image" />
               Gold Plan
               <span slot="price">$20.00</span>
             </ce-line-item>
@@ -95,7 +156,7 @@
           <ce-submit text="Purchase"></ce-submit>
 
         </div>
-      </ce-form>
+      </ce-form> -->
     </ce-checkout>
   </div>
 

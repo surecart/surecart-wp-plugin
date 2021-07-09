@@ -88,17 +88,13 @@ class CheckoutSessionController {
 	 */
 	public function update( \WP_REST_Request $request ) {
 		$args = wp_parse_args(
-			$request,
+			$request->get_params(),
 			[
 				'currency' => 'usd',
 			]
 		);
 
-		$session = CheckoutSession::update(
-			[
-				'checkout_session' => $args,
-			]
-		);
+		$session = CheckoutSession::update( $args );
 
 		if ( is_wp_error( $session ) ) {
 			return $session;

@@ -1,3 +1,25 @@
 :host {
   display: block;
 }
+
+.item__product + .item__product {
+  margin-top: 20px;
+}
+
+.summary {
+  position: relative;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #fff;
+  opacity: 0.5;
+}
+
+ce-line-item ~ ce-line-item {
+  margin-top: 20px;
+}

@@ -1,10 +1,11 @@
 <?php
 
-namespace CheckoutEngine\Controllers\Admin;
+namespace CheckoutEngine\Controllers\Admin\Tables;
 
 use NumberFormatter;
 use CheckoutEngine\Models\Product;
 use CheckoutEngine\Support\Currency;
+use CheckoutEngine\Models\CheckoutSession;
 
 // WP_List_Table is not loaded automatically so we need to load it in our application.
 if ( ! class_exists( 'WP_List_Table' ) ) {
@@ -14,7 +15,7 @@ if ( ! class_exists( 'WP_List_Table' ) ) {
 /**
  * Create a new table class that will extend the WP_List_Table
  */
-class ProductsListTable extends \WP_List_Table {
+class OrdersListTable extends \WP_List_Table {
 	public $checkbox = true;
 
 	/**
@@ -64,6 +65,8 @@ class ProductsListTable extends \WP_List_Table {
 	 * @global string $comment_type
 	 */
 	protected function get_views() {
+		return false;
+
 		$stati = [
 			'active'   => __( 'Active', 'checkout_engine' ),
 			'archived' => __( 'Archived', 'checkout_engine' ),
@@ -79,6 +82,8 @@ class ProductsListTable extends \WP_List_Table {
 				if ( $status === $_GET['product_status'] ) {
 					$current_link_attributes = ' class="current" aria-current="page"';
 				}
+			} elseif ( 'active' === $status ) {
+				$current_link_attributes = ' class="current" aria-current="page"';
 			}
 
 			$link = add_query_arg( 'product_status', $status, $link );
@@ -150,20 +155,20 @@ class ProductsListTable extends \WP_List_Table {
 	 */
 	private function table_data() {
 		$where = [];
-		if ( ! empty( $_GET['product_status'] ) ) {
-			switch ( $_GET['product_status'] ) {
-				case 'active':
-					$where = [ 'active' => true ];
-					break;
-				case 'archived':
-					$where = [ 'active' => false ];
-					break;
-			}
-		} else {
-			$where = [ 'active' => true ];
-		}
+		// if ( ! empty( $_GET['product_status'] ) ) {
+		// switch ( $_GET['product_status'] ) {
+		// case 'active':
+		// $where = [ 'active' => true ];
+		// break;
+		// case 'archived':
+		// $where = [ 'active' => false ];
+		// break;
+		// }
+		// } else {
+		// $where = [ 'active' => true ];
+		// }
 
-		return Product::where( $where )->get();
+		return CheckoutSession::where( $where )->get();
 	}
 
 	/**

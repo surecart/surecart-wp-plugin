@@ -150,7 +150,31 @@ module.exports = {
 			{
 				test: utils.tests.scripts,
 				exclude: /node_modules/,
-				use: babelLoader,
+				use: [
+          require.resolve( 'thread-loader' ),
+					{
+						loader: require.resolve( 'babel-loader' ),
+						options: {
+							// Babel uses a directory within local node_modules
+							// by default. Use the environment variable option
+							// to enable more persistent caching.
+							cacheDirectory:
+								process.env.BABEL_CACHE_DIRECTORY || true,
+
+							// Provide a fallback configuration if there's not
+							// one explicitly available in the project.
+							...{
+								babelrc: false,
+								configFile: false,
+								presets: [
+									require.resolve(
+										'@wordpress/babel-preset-default'
+									),
+								],
+							},
+						},
+					},
+				],
 			},
 
 			/**

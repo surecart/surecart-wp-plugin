@@ -1986,7 +1986,7 @@
 "@checkout-engine/blocks@file:packages/blocks":
   version "0.0.1"
   dependencies:
-    "@checkout-engine/react" "file:../../../../../../Library/Caches/Yarn/v6/npm-@checkout-engine-blocks-0.0.1-efd80a03-3fac-4598-a6d9-d67bf154cd91-1624397382963/node_modules/@checkout-engine/integrations/react"
+    "@checkout-engine/react" "file:../../../../../../Library/Caches/Yarn/v6/npm-@checkout-engine-blocks-0.0.1-4674cd63-177d-4c37-ae66-2483bf019994-1625256185589/node_modules/@checkout-engine/integrations/react"
     "@wordpress/compose" "^4.1.2"
     "@wordpress/element" "^3.1.1"
     "@wordpress/icons" "^4.0.1"
@@ -2037,7 +2037,7 @@
 "@checkout-engine/docs@file:packages/docs":
   version "0.0.0"
   dependencies:
-    "@checkout-engine/components" "file:../../../../../../Library/Caches/Yarn/v6/npm-@checkout-engine-docs-0.0.0-0d97ea14-254d-475f-b285-baa211332bd5-1624397383348/node_modules/@checkout-engine/components"
+    "@checkout-engine/components" "file:../../../../../../Library/Caches/Yarn/v6/npm-@checkout-engine-docs-0.0.0-787bbdbb-f81a-4973-b289-0ffe53aa80ef-1625256185745/node_modules/@checkout-engine/components"
     "@docusaurus/core" "2.0.0-alpha.73"
     "@docusaurus/preset-classic" "2.0.0-alpha.73"
     "@mdx-js/react" "^1.6.21"
@@ -2051,7 +2051,7 @@
 "@checkout-engine/react@file:packages/integrations/react":
   version "0.0.1"
   dependencies:
-    "@checkout-engine/components" "file:../../../../../../Library/Caches/Yarn/v6/npm-@checkout-engine-react-0.0.1-d21a155b-16de-4d22-8030-5051c5e16b5a-1624397383335/node_modules/components"
+    "@checkout-engine/components" "file:../../../../../../Library/Caches/Yarn/v6/npm-@checkout-engine-react-0.0.1-415cb986-1a79-4f53-af10-06304179e347-1625256185738/node_modules/components"
 
 "@choojs/findup@^0.2.1":
   version "0.2.1"
@@ -17987,7 +17987,7 @@ text-table@0.2.0, text-table@^0.2.0:
   resolved "https://registry.yarnpkg.com/text-table/-/text-table-0.2.0.tgz#7f5ee823ae805207c00af2df4a84ec3fcfa570b4"
   integrity sha1-f17oI66AUgfACvLfSoTsP8+lcLQ=
 
-thread-loader@^3.0.1:
+thread-loader@^3.0.1, thread-loader@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/thread-loader/-/thread-loader-3.0.4.tgz#c392e4c0241fbc80430eb680e4886819b504a31b"
   integrity sha512-ByaL2TPb+m6yArpqQUZvP+5S1mZtXsEP7nWKKlAUTm7fCml8kB5s1uI3+eHRP2bk5mVYfRSBI7FFf+tWEyLZwA==

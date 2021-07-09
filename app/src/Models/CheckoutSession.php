@@ -2,6 +2,8 @@
 
 namespace CheckoutEngine\Models;
 
+use CheckoutEngine\Models\LineItem;
+
 /**
  * CheckoutSession model
  */
@@ -73,5 +75,21 @@ class CheckoutSession extends Model {
 		$this->fireModelEvent( 'prepared' );
 
 		return $this;
+	}
+
+	/**
+	 * Set the product attribute
+	 *
+	 * @param  array $value Product properties.
+	 * @return void
+	 */
+	public function setLineItemsAttribute( $value ) {
+		$line_items = [];
+		if ( ! empty( $value ) ) {
+			foreach ( $value as $item ) {
+				$line_items[] = new LineItem( $item );
+			}
+			$this->attributes['line_items'] = $line_items;
+		}
 	}
 }

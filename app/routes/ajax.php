@@ -13,6 +13,4 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-// Using our ExampleController to handle a custom ajax action, for example.
-// phpcs:ignore
-// \CheckoutEngine::route()->get()->where( 'ajax', 'my-custom-ajax-action' )->handle( 'ExampleController@ajax' );
+\CheckoutEngine::route()->get()->where( 'ajax', 'ce-rest-nonce', true, true )->handle( 'NonceController@get' );

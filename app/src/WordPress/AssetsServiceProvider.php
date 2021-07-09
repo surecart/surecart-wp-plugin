@@ -57,8 +57,7 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 			return $tag;
 		}
 
-		// phpcs:ignore
-		return '<script src="' . $source . '" type="module" defer></script>';
+		return str_replace( '<script src', '<script type="module" defer src', $tag );
 	}
 
 	/**
@@ -94,7 +93,7 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 		wp_register_script(
 			'checkout-engine-components',
 			trailingslashit( \CheckoutEngine::core()->assets()->getUrl() ) . 'dist/components/checkout-engine/checkout-engine.esm.js',
-			[],
+			[ 'wp-api-fetch' ],
 			filemtime( trailingslashit( $this->container[ WPEMERGE_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/checkout-engine/checkout-engine.esm.js' ),
 			true
 		);
@@ -116,6 +115,40 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 	 */
 	public function enqueueComponents() {
 		wp_enqueue_script( 'checkout-engine-components' );
+
+		wp_add_inline_script(
+			'wp-api-fetch',
+			implode(
+				"\n",
+				[
+					'window.ce = window.ce || {};',
+					sprintf(
+						'wp.apiFetch.use( wp.apiFetch.createRootURLMiddleware( "%s" ) );',
+						esc_url_raw( get_rest_url() ) . 'checkout_engine/v1/'
+					),
+				]
+			)
+		);
+
+		// add our own middleware to api fetch.
+		wp_add_inline_script(
+			'wp-api-fetch',
+			implode(
+				"\n",
+				[
+					sprintf(
+						'wp.apiFetch.nonceMiddleware = wp.apiFetch.createNonceMiddleware( "%s" );',
+						( wp_installing() && ! is_multisite() ) ? '' : wp_create_nonce( 'wp_rest' )
+					),
+					'wp.apiFetch.use( wp.apiFetch.nonceMiddleware );',
+					'wp.apiFetch.use( wp.apiFetch.mediaUploadMiddleware );',
+					sprintf(
+						'wp.apiFetch.nonceEndpoint = "%s";',
+						admin_url( 'admin-ajax.php?action=ce-rest-nonce' )
+					),
+				]
+			),
+		);
 	}
 
 	/**
