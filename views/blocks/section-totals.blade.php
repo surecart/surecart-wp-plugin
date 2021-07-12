@@ -22,6 +22,10 @@
             </span>
         </ce-total>
 
+        <ce-coupon-form label="{{ __('Add Coupon Code') }}">
+            {{ __('Apply Coupon', 'checkout_engine') }}
+        </ce-coupon-form>
+
         <ce-divider></ce-divider>
 
         <ce-total class="ce-total"
