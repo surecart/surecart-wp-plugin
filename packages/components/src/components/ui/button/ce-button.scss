@@ -364,16 +364,17 @@
   .button__caret {
     visibility: hidden;
   }
+}
 
-  ce-spinner {
-    --indicator-color: currentColor;
-    position: absolute;
-    line-height: 1;
-    height: 1em !important;
-    width: 1em !important;
-    top: calc(50% - 0.5em);
-    left: calc(50% - 0.5em);
-  }
+ce-spinner::part(base) {
+  --indicator-color: currentColor;
+  --spinner-size: 0.75em;
+  // position: absolute;
+  // line-height: 1;
+  // height: 0.75em !important;
+  // width: 0.75em !important;
+  // top: calc(50% - 0.5em);
+  // left: calc(50% - 0.5em);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

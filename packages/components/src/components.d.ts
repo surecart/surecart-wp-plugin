@@ -176,6 +176,11 @@ export namespace Components {
     interface CeConsumer {
         "renderer": any;
     }
+    interface CeCouponForm {
+        "calculating": boolean;
+        "label": string;
+        "loading": boolean;
+    }
     interface CeDivider {
     }
     interface CeDropdown {
@@ -575,11 +580,15 @@ export namespace Components {
     }
     interface CeSubmit {
         /**
+          * Are the totals calculating
+         */
+        "calculating": boolean;
+        /**
           * Draws the button full-width
          */
         "full"?: boolean;
         /**
-          * Is the button loading
+          * Is the form loading
          */
         "loading": boolean;
         /**
@@ -693,6 +702,12 @@ declare global {
     var HTMLCeConsumerElement: {
         prototype: HTMLCeConsumerElement;
         new (): HTMLCeConsumerElement;
+    };
+    interface HTMLCeCouponFormElement extends Components.CeCouponForm, HTMLStencilElement {
+    }
+    var HTMLCeCouponFormElement: {
+        prototype: HTMLCeCouponFormElement;
+        new (): HTMLCeCouponFormElement;
     };
     interface HTMLCeDividerElement extends Components.CeDivider, HTMLStencilElement {
     }
@@ -888,6 +903,7 @@ declare global {
         "ce-choice": HTMLCeChoiceElement;
         "ce-choices": HTMLCeChoicesElement;
         "ce-consumer": HTMLCeConsumerElement;
+        "ce-coupon-form": HTMLCeCouponFormElement;
         "ce-divider": HTMLCeDividerElement;
         "ce-dropdown": HTMLCeDropdownElement;
         "ce-form": HTMLCeFormElement;
@@ -1096,6 +1112,12 @@ declare namespace LocalJSX {
     interface CeConsumer {
         "onMountConsumer"?: (event: CustomEvent<any>) => void;
         "renderer"?: any;
+    }
+    interface CeCouponForm {
+        "calculating"?: boolean;
+        "label"?: string;
+        "loading"?: boolean;
+        "onCeApplyCoupon"?: (event: CustomEvent<string>) => void;
     }
     interface CeDivider {
     }
@@ -1527,11 +1549,15 @@ declare namespace LocalJSX {
     }
     interface CeSubmit {
         /**
+          * Are the totals calculating
+         */
+        "calculating"?: boolean;
+        /**
           * Draws the button full-width
          */
         "full"?: boolean;
         /**
-          * Is the button loading
+          * Is the form loading
          */
         "loading"?: boolean;
         /**
@@ -1619,6 +1645,7 @@ declare namespace LocalJSX {
         "ce-choice": CeChoice;
         "ce-choices": CeChoices;
         "ce-consumer": CeConsumer;
+        "ce-coupon-form": CeCouponForm;
         "ce-divider": CeDivider;
         "ce-dropdown": CeDropdown;
         "ce-form": CeForm;
@@ -1663,6 +1690,7 @@ declare module "@stencil/core" {
             "ce-choice": LocalJSX.CeChoice & JSXBase.HTMLAttributes<HTMLCeChoiceElement>;
             "ce-choices": LocalJSX.CeChoices & JSXBase.HTMLAttributes<HTMLCeChoicesElement>;
             "ce-consumer": LocalJSX.CeConsumer & JSXBase.HTMLAttributes<HTMLCeConsumerElement>;
+            "ce-coupon-form": LocalJSX.CeCouponForm & JSXBase.HTMLAttributes<HTMLCeCouponFormElement>;
             "ce-divider": LocalJSX.CeDivider & JSXBase.HTMLAttributes<HTMLCeDividerElement>;
             "ce-dropdown": LocalJSX.CeDropdown & JSXBase.HTMLAttributes<HTMLCeDropdownElement>;
             "ce-form": LocalJSX.CeForm & JSXBase.HTMLAttributes<HTMLCeFormElement>;

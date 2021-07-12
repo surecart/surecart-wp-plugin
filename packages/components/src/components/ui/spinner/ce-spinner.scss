@@ -7,14 +7,15 @@
   --track-color: #0d131e20;
   --indicator-color: var(--ce-color-primary-500);
   --stroke-width: 2px;
+  --spinner-size: 1em;
 
   display: inline-block;
 }
 
 .spinner {
   display: inline-block;
-  width: 1em;
-  height: 1em;
+  width: var(--spinner-size);
+  height: var(--spinner-size);
   border-radius: 50%;
   border: solid var(--stroke-width) var(--track-color);
   border-top-color: var(--indicator-color);
