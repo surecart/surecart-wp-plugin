@@ -102,6 +102,7 @@ Type: `Promise<void>`
 
 ### Used by
 
+ - [ce-coupon-form](../../controllers/coupon-form)
  - [ce-stripe-element](../stripe-element)
 
 ### Depends on
@@ -112,6 +113,7 @@ Type: `Promise<void>`
 ```mermaid
 graph TD;
   ce-input --> ce-form-control
+  ce-coupon-form --> ce-input
   ce-stripe-element --> ce-input
   style ce-input fill:#f9f,stroke:#333,stroke-width:4px
 ```

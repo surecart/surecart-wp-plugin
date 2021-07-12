@@ -7,11 +7,13 @@
 
 ## Properties
 
-| Property               | Attribute                | Description | Type       | Default     |
-| ---------------------- | ------------------------ | ----------- | ---------- | ----------- |
-| `currencyCode`         | `currency-code`          |             | `string`   | `'usd'`     |
-| `priceIds`             | --                       |             | `string[]` | `undefined` |
-| `stripePublishableKey` | `stripe-publishable-key` |             | `string`   | `undefined` |
+| Property               | Attribute                | Description | Type             | Default     |
+| ---------------------- | ------------------------ | ----------- | ---------------- | ----------- |
+| `currencyCode`         | `currency-code`          |             | `string`         | `'usd'`     |
+| `i18n`                 | --                       |             | `Object`         | `undefined` |
+| `lineItemData`         | --                       |             | `LineItemData[]` | `undefined` |
+| `priceIds`             | --                       |             | `string[]`       | `undefined` |
+| `stripePublishableKey` | `stripe-publishable-key` |             | `string`         | `undefined` |
 
 
 ## Events

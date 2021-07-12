@@ -46,6 +46,19 @@ Type: `Promise<void>`
 | `"suffix"`       |             |
 
 
+## Dependencies
+
+### Used by
+
+ - [ce-quantity-select](../quantity-select)
+
+### Graph
+```mermaid
+graph TD;
+  ce-quantity-select --> ce-menu-item
+  style ce-menu-item fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

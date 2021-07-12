@@ -23,11 +23,13 @@
 
 ### Used by
 
+ - [ce-block-ui](../block-ui)
  - [ce-button](../button)
 
 ### Graph
 ```mermaid
 graph TD;
+  ce-block-ui --> ce-spinner
   ce-button --> ce-spinner
   style ce-spinner fill:#f9f,stroke:#333,stroke-width:4px
 ```

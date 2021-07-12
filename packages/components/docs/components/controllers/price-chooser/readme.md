@@ -7,22 +7,22 @@
 
 ## Properties
 
-| Property           | Attribute | Description | Type                    | Default     |
-| ------------------ | --------- | ----------- | ----------------------- | ----------- |
-| `columns`          | `columns` |             | `number`                | `1`         |
-| `default`          | `default` |             | `string`                | `undefined` |
-| `loading`          | `loading` |             | `boolean`               | `false`     |
-| `priceIds`         | --        |             | `string[]`              | `undefined` |
-| `prices`           | --        |             | `Price[]`               | `undefined` |
-| `selectedPriceIds` | --        |             | `string[]`              | `undefined` |
-| `type`             | `type`    |             | `"checkbox" \| "radio"` | `'radio'`   |
+| Property       | Attribute | Description | Type                    | Default     |
+| -------------- | --------- | ----------- | ----------------------- | ----------- |
+| `columns`      | `columns` |             | `number`                | `1`         |
+| `default`      | `default` |             | `string`                | `undefined` |
+| `lineItemData` | --        |             | `LineItemData[]`        | `undefined` |
+| `loading`      | `loading` |             | `boolean`               | `false`     |
+| `priceIds`     | --        |             | `string[]`              | `undefined` |
+| `prices`       | --        |             | `Price[]`               | `undefined` |
+| `type`         | `type`    |             | `"checkbox" \| "radio"` | `'radio'`   |
 
 
 ## Events
 
-| Event           | Description | Type                    |
-| --------------- | ----------- | ----------------------- |
-| `cePriceChange` |             | `CustomEvent<string[]>` |
+| Event               | Description | Type                          |
+| ------------------- | ----------- | ----------------------------- |
+| `ceUpdateLineItems` |             | `CustomEvent<LineItemData[]>` |
 
 
 ## Dependencies

@@ -18,20 +18,23 @@
 | Part      | Description |
 | --------- | ----------- |
 | `"base"`  |             |
+| `"image"` |             |
 | `"price"` |             |
-| `"title"` |             |
+| `"text"`  |             |
 
 
 ## Dependencies
 
 ### Used by
 
- - [ce-order-summary](../../controllers/order-summary)
+ - [ce-line-items](../../controllers/line-items)
+ - [ce-total](../../controllers/total)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-order-summary --> ce-line-item
+  ce-line-items --> ce-line-item
+  ce-total --> ce-line-item
   style ce-line-item fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

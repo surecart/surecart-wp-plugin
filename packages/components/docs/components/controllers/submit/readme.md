@@ -7,12 +7,13 @@
 
 ## Properties
 
-| Property  | Attribute | Description                 | Type                             | Default     |
-| --------- | --------- | --------------------------- | -------------------------------- | ----------- |
-| `full`    | `full`    | Draws the button full-width | `boolean`                        | `true`      |
-| `loading` | `loading` | Is the button loading       | `boolean`                        | `undefined` |
-| `size`    | `size`    | The button's size.          | `"large" \| "medium" \| "small"` | `'large'`   |
-| `text`    | `text`    | Draws the button full-width | `string`                         | `''`        |
+| Property      | Attribute     | Description                 | Type                             | Default     |
+| ------------- | ------------- | --------------------------- | -------------------------------- | ----------- |
+| `calculating` | `calculating` | Are the totals calculating  | `boolean`                        | `undefined` |
+| `full`        | `full`        | Draws the button full-width | `boolean`                        | `true`      |
+| `loading`     | `loading`     | Is the form loading         | `boolean`                        | `undefined` |
+| `size`        | `size`        | The button's size.          | `"large" \| "medium" \| "small"` | `'large'`   |
+| `text`        | `text`        | Draws the button full-width | `string`                         | `''`        |
 
 
 ## Dependencies
