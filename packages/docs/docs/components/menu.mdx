@@ -1,47 +1,47 @@
 # Menu
 
 ```html
-<presto-menu></presto-menu>
+<ce-menu></ce-menu>
 ```
 
 This component is a container component for menu items, menu dividers, and menu labels.
 
-import DemoTabs from "../../components/Demo-Tabs.js";
+import DemoTabs from '../../components/Demo-Tabs.js';
 
 <DemoTabs>
   <DemoTabs.Code>
 {`
-<presto-menu style="max-width: 200px; border: solid 1px var(--presto-panel-border-color); border-radius: var(--presto-border-radius-medium);">
-    <presto-menu-item>Option 1</presto-menu-item>
-    <presto-menu-item>Option 2</presto-menu-item>
-    <presto-menu-item>Option 3</presto-menu-item>
-    <presto-menu-divider></presto-menu-divider>
-    <presto-menu-item checked>Checked</presto-menu-item>
-    <presto-menu-item disabled>Disabled</presto-menu-item>
-    <presto-menu-divider></presto-menu-divider>
-    <presto-menu-item>
+<ce-menu style="max-width: 200px; border: solid 1px var(--ce-panel-border-color); border-radius: var(--ce-border-radius-medium);">
+    <ce-menu-item>Option 1</ce-menu-item>
+    <ce-menu-item>Option 2</ce-menu-item>
+    <ce-menu-item>Option 3</ce-menu-item>
+    <ce-menu-divider></ce-menu-divider>
+    <ce-menu-item checked>Checked</ce-menu-item>
+    <ce-menu-item disabled>Disabled</ce-menu-item>
+    <ce-menu-divider></ce-menu-divider>
+    <ce-menu-item>
     <span slot="prefix">👍🏻</span>Prefix
-    </presto-menu-item>
-    <presto-menu-item>
+    </ce-menu-item>
+    <ce-menu-item>
     Suffix <span slot="suffix">👍🏻</span>
-    </presto-menu-item>
-</presto-menu>
+    </ce-menu-item>
+</ce-menu>
 `}
 
   </DemoTabs.Code>
-  <presto-menu style={{"max-width": "200px", "border" : "solid 1px var(--presto-panel-border-color)",  "border-radius" : "var(--presto-border-radius-medium)"}}>
-      <presto-menu-item>Option 1</presto-menu-item>
-      <presto-menu-item>Option 2</presto-menu-item>
-      <presto-menu-item>Option 3</presto-menu-item>
-      <presto-menu-divider></presto-menu-divider>
-      <presto-menu-item checked>Checked</presto-menu-item>
-      <presto-menu-item disabled>Disabled</presto-menu-item>
-      <presto-menu-divider></presto-menu-divider>
-      <presto-menu-item>
+  <ce-menu style={{"max-width": "200px", "border" : "solid 1px var(--ce-panel-border-color)",  "border-radius" : "var(--ce-border-radius-medium)"}}>
+      <ce-menu-item>Option 1</ce-menu-item>
+      <ce-menu-item>Option 2</ce-menu-item>
+      <ce-menu-item>Option 3</ce-menu-item>
+      <ce-menu-divider></ce-menu-divider>
+      <ce-menu-item checked>Checked</ce-menu-item>
+      <ce-menu-item disabled>Disabled</ce-menu-item>
+      <ce-menu-divider></ce-menu-divider>
+      <ce-menu-item>
         <span slot="prefix">👍🏻</span>Prefix
-      </presto-menu-item>
-      <presto-menu-item>
+      </ce-menu-item>
+      <ce-menu-item>
         Suffix <span slot="suffix">👍🏻</span>
-      </presto-menu-item>
-    </presto-menu>
+      </ce-menu-item>
+    </ce-menu>
 </DemoTabs>

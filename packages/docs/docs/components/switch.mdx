@@ -1,14 +1,14 @@
 # Switch
 
 ```html
-<presto-switch></presto-switch>
+<ce-switch></ce-switch>
 ```
 
-import DemoTabs from "../../components/Demo-Tabs.js";
+import DemoTabs from '../../components/Demo-Tabs.js';
 
 <DemoTabs>
-  <DemoTabs.Code>{"<presto-switch>Toggle Me</presto-switch>"}</DemoTabs.Code>
-  <presto-switch>Toggle Me</presto-switch>
+	<DemoTabs.Code>{ '<ce-switch>Toggle Me</ce-switch>' }</DemoTabs.Code>
+	<ce-switch>Toggle Me</ce-switch>
 </DemoTabs>
 
 ## Disabled
@@ -16,10 +16,10 @@ import DemoTabs from "../../components/Demo-Tabs.js";
 Use the `disabled` property to disable the switch
 
 <DemoTabs>
-  <DemoTabs.Code>
-    {"<presto-switch disabled>Disabled</presto-switch>"}
-  </DemoTabs.Code>
-  <presto-switch disabled>Disabled</presto-switch>
+	<DemoTabs.Code>
+		{ '<ce-switch disabled>Disabled</ce-switch>' }
+	</DemoTabs.Code>
+	<ce-switch disabled>Disabled</ce-switch>
 </DemoTabs>
 
 ## Custom Size
@@ -27,12 +27,16 @@ Use the `disabled` property to disable the switch
 Use the `disabled` property to disable the switch
 
 <DemoTabs>
-  <DemoTabs.Code>
-    {
-      '<presto-switch style="--width: 80px; --height: 32px; --thumb-size: 26px;"></presto-switch>'
-    }
-  </DemoTabs.Code>
-  <presto-switch
-    style={{ "--width": "80px", "--height": "32px", "--thumb-size": "26px" }}
-  ></presto-switch>
+	<DemoTabs.Code>
+		{
+			'<ce-switch style="--width: 80px; --height: 32px; --thumb-size: 26px;"></ce-switch>'
+		}
+	</DemoTabs.Code>
+	<ce-switch
+		style={ {
+			'--width': '80px',
+			'--height': '32px',
+			'--thumb-size': '26px',
+		} }
+	></ce-switch>
 </DemoTabs>

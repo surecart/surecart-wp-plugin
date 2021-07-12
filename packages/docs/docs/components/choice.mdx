@@ -1,7 +1,7 @@
 # Choice
 
 ```html
-<presto-choice></presto-choice>
+<ce-choice></ce-choice>
 ```
 
 Choice buttons allow selection of a single or multiple options
@@ -9,43 +9,43 @@ from a set of predefined options. They are a good alternative to
 radio buttons, checkboxes, and select menus.
 
 :::info
-Choice components must be wrapped in the `<presto-choices></presto-choices>` component.
+Choice components must be wrapped in the `<ce-choices></ce-choices>` component.
 :::
 
-import DemoTabs from "../../components/Demo-Tabs.js";
+import DemoTabs from '../../components/Demo-Tabs.js';
 
 <DemoTabs>
   <DemoTabs.Code>
 {`
-<presto-choices>
-    <presto-choice>
+<ce-choices>
+    <ce-choice>
         Gold Plan
         <span slot="description">$9.99, then $49.99 per month</span>
-    </presto-choice>
-    <presto-choice checked>
+    </ce-choice>
+    <ce-choice checked>
         Silver Plan
         <span slot="description">$39.99 per month</span>
-    </presto-choice>
-    <presto-choice>
+    </ce-choice>
+    <ce-choice>
         Bronze Plan
         <span slot="description">$9.99 per month</span>
-    </presto-choice>
-</presto-choices>
+    </ce-choice>
+</ce-choices>
 `}
 
   </DemoTabs.Code>
-    <presto-choices>
-        <presto-choice>
+    <ce-choices>
+        <ce-choice>
             Gold Plan
             <span slot="description">$9.99, then $49.99 per month</span>
-        </presto-choice>
-        <presto-choice checked>Silver Plan
+        </ce-choice>
+        <ce-choice checked>Silver Plan
             <span slot="description">$39.99 per month</span>
-        </presto-choice>
-        <presto-choice>Bronze Plan
+        </ce-choice>
+        <ce-choice>Bronze Plan
             <span slot="description">$9.99 per month</span>
-        </presto-choice>
-    </presto-choices>
+        </ce-choice>
+    </ce-choices>
 </DemoTabs>
 
 ## Checkbox Type
@@ -57,35 +57,35 @@ any number of options, or none at all.
 <DemoTabs>
   <DemoTabs.Code>
 {`
-<presto-choices>
-    <presto-choice type="checkbox">
+<ce-choices>
+    <ce-choice type="checkbox">
         Gold Plan
         <span slot="description">$9.99, then $49.99 per month</span>
-    </presto-choice>
-    <presto-choice checked>
+    </ce-choice>
+    <ce-choice checked>
         Silver Plan
         <span slot="description">$39.99 per month</span>
-    </presto-choice>
-    <presto-choice type="checkbox">
+    </ce-choice>
+    <ce-choice type="checkbox">
         Bronze Plan
         <span slot="description">$9.99 per month</span>
-    </presto-choice>
-</presto-choices>
+    </ce-choice>
+</ce-choices>
 `}
 
   </DemoTabs.Code>
-    <presto-choices>
-        <presto-choice type="checkbox">
+    <ce-choices>
+        <ce-choice type="checkbox">
             Gold Plan
             <span slot="description">$9.99, then $49.99 per month</span>
-        </presto-choice>
-        <presto-choice type="checkbox" checked>Silver Plan
+        </ce-choice>
+        <ce-choice type="checkbox" checked>Silver Plan
             <span slot="description">$39.99 per month</span>
-        </presto-choice>
-        <presto-choice type="checkbox">Bronze Plan
+        </ce-choice>
+        <ce-choice type="checkbox">Bronze Plan
             <span slot="description">$9.99 per month</span>
-        </presto-choice>
-    </presto-choices>
+        </ce-choice>
+    </ce-choices>
 </DemoTabs>
 
 ## Disabled Choices
@@ -93,33 +93,33 @@ any number of options, or none at all.
 <DemoTabs>
   <DemoTabs.Code>
 {`
-<presto-choices>
-    <presto-choice>
+<ce-choices>
+    <ce-choice>
         Gold Plan
         <span slot="description">$9.99, then $49.99 per month</span>
-    </presto-choice>
-    <presto-choice checked>
+    </ce-choice>
+    <ce-choice checked>
         Silver Plan
         <span slot="description">$39.99 per month</span>
-    </presto-choice>
-    <presto-choice disabled>
+    </ce-choice>
+    <ce-choice disabled>
         Bronze Plan
         <span slot="description">$9.99 per month</span>
-    </presto-choice>
-</presto-choices>
+    </ce-choice>
+</ce-choices>
 `}
 
   </DemoTabs.Code>
-    <presto-choices>
-        <presto-choice>
+    <ce-choices>
+        <ce-choice>
             Gold Plan
             <span slot="description">$9.99, then $49.99 per month</span>
-        </presto-choice>
-        <presto-choice checked>Silver Plan
+        </ce-choice>
+        <ce-choice checked>Silver Plan
             <span slot="description">$39.99 per month</span>
-        </presto-choice>
-        <presto-choice disabled>Bronze Plan
+        </ce-choice>
+        <ce-choice disabled>Bronze Plan
             <span slot="description">$9.99 per month</span>
-        </presto-choice>
-    </presto-choices>
+        </ce-choice>
+    </ce-choices>
 </DemoTabs>

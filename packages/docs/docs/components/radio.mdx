@@ -1,32 +1,32 @@
 # Radio
 
 ```html
-<presto-radio></presto-radio>
+<ce-radio></ce-radio>
 ```
 
 This component lets the user select one option from a group of many.
 
-import DemoTabs from "../../components/Demo-Tabs.js";
+import DemoTabs from '../../components/Demo-Tabs.js';
 
 <DemoTabs>
-  <DemoTabs.Code>
-    {`
-<presto-radio-group label="Choose an Option" no-fieldset>
-    <presto-radio value="1" name="test" checked>Option 1</presto-radio>
-    <presto-radio value="2" name="test">Option 2</presto-radio>
-    <presto-radio value="3" name="test" disabled>Option 3</presto-radio>
-</presto-radio-group>
-`}
-  </DemoTabs.Code>
-  <presto-radio-group label="Choose an Option" no-fieldset>
-    <presto-radio value="1" name="test" checked>
-      Option 1
-    </presto-radio>
-    <presto-radio value="2" name="test">
-      Option 2
-    </presto-radio>
-    <presto-radio value="3" name="test" disabled>
-      Option 3
-    </presto-radio>
-  </presto-radio-group>
+	<DemoTabs.Code>
+		{ `
+<ce-radio-group label="Choose an Option" no-fieldset>
+    <ce-radio value="1" name="test" checked>Option 1</ce-radio>
+    <ce-radio value="2" name="test">Option 2</ce-radio>
+    <ce-radio value="3" name="test" disabled>Option 3</ce-radio>
+</ce-radio-group>
+` }
+	</DemoTabs.Code>
+	<ce-radio-group label="Choose an Option" no-fieldset>
+		<ce-radio value="1" name="test" checked>
+			Option 1
+		</ce-radio>
+		<ce-radio value="2" name="test">
+			Option 2
+		</ce-radio>
+		<ce-radio value="3" name="test" disabled>
+			Option 3
+		</ce-radio>
+	</ce-radio-group>
 </DemoTabs>

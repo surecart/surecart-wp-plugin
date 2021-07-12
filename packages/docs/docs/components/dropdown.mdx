@@ -1,61 +1,61 @@
 # Dropdown
 
 ```html
-<presto-dropdown></presto-dropdown>
+<ce-dropdown></ce-dropdown>
 ```
 
 Dropdown is a component that opens a floating content panel when a trigger element is clicked.
 This components takes care of updating the state of the dropdown menu (opened/closed) as well as handles
 closing the menu when clicking outside.
 
-import DemoTabs from "../../components/Demo-Tabs.js";
+import DemoTabs from '../../components/Demo-Tabs.js';
 
 <DemoTabs>
   <DemoTabs.Code>
     {`
-  <presto-dropdown>
-    <presto-button slot="trigger" caret>
+  <ce-dropdown>
+    <ce-button slot="trigger" caret>
       Click Here
-    </presto-button>
-    <presto-menu>
-      <presto-menu-item>Option 1</presto-menu-item>
-      <presto-menu-item>Option 2</presto-menu-item>
-      <presto-menu-item>Option 3</presto-menu-item>
-      <presto-menu-divider></presto-menu-divider>
-      <presto-menu-item checked>Checked</presto-menu-item>
-      <presto-menu-item disabled>Disabled</presto-menu-item>
-      <presto-menu-divider></presto-menu-divider>
-      <presto-menu-item>
+    </ce-button>
+    <ce-menu>
+      <ce-menu-item>Option 1</ce-menu-item>
+      <ce-menu-item>Option 2</ce-menu-item>
+      <ce-menu-item>Option 3</ce-menu-item>
+      <ce-menu-divider></ce-menu-divider>
+      <ce-menu-item checked>Checked</ce-menu-item>
+      <ce-menu-item disabled>Disabled</ce-menu-item>
+      <ce-menu-divider></ce-menu-divider>
+      <ce-menu-item>
         <span slot="prefix">👍🏻</span>Prefix
-      </presto-menu-item>
-      <presto-menu-item>
+      </ce-menu-item>
+      <ce-menu-item>
         Suffix <span slot="suffix">👍🏻</span>
-      </presto-menu-item>
-    </presto-menu>
-  </presto-dropdown>
+      </ce-menu-item>
+    </ce-menu>
+  </ce-dropdown>
     `}
 
   </DemoTabs.Code>
-  <presto-dropdown>
-    <presto-button slot="trigger" caret>
+  <ce-dropdown>
+    <ce-button slot="trigger" caret>
       Click Here
-    </presto-button>
-    <presto-menu>
-      <presto-menu-item>Option 1</presto-menu-item>
-      <presto-menu-item>Option 2</presto-menu-item>
-      <presto-menu-item>Option 3</presto-menu-item>
-      <presto-menu-divider></presto-menu-divider>
-      <presto-menu-item checked>Checked</presto-menu-item>
-      <presto-menu-item disabled>Disabled</presto-menu-item>
-      <presto-menu-divider></presto-menu-divider>
-      <presto-menu-item>
+    </ce-button>
+    <ce-menu>
+      <ce-menu-item>Option 1</ce-menu-item>
+      <ce-menu-item>Option 2</ce-menu-item>
+      <ce-menu-item>Option 3</ce-menu-item>
+      <ce-menu-divider></ce-menu-divider>
+      <ce-menu-item checked>Checked</ce-menu-item>
+      <ce-menu-item disabled>Disabled</ce-menu-item>
+      <ce-menu-divider></ce-menu-divider>
+      <ce-menu-item>
         <span slot="prefix">👍🏻</span>Prefix
-      </presto-menu-item>
-      <presto-menu-item>
+      </ce-menu-item>
+      <ce-menu-item>
         Suffix <span slot="suffix">👍🏻</span>
-      </presto-menu-item>
-    </presto-menu>
-  </presto-dropdown>
+      </ce-menu-item>
+    </ce-menu>
+  </ce-dropdown>
 </DemoTabs>
 
 ## Examples
@@ -65,33 +65,33 @@ import DemoTabs from "../../components/Demo-Tabs.js";
 <DemoTabs>
   <DemoTabs.Code>
 {`
-<presto-dropdown placement="top-left">
-  <presto-button slot="trigger" caret>Edit</presto-button>
-  <presto-menu>
-    <presto-menu-item>Cut</presto-menu-item>
-    <presto-menu-item>Copy</presto-menu-item>
-    <presto-menu-item>Paste</presto-menu-item>
-    <presto-menu-divider></presto-menu-divider>
-    <presto-menu-item>Find</presto-menu-item>
-    <presto-menu-item>Replace</presto-menu-item>
-  </presto-menu>
-</presto-dropdown>
+<ce-dropdown placement="top-left">
+  <ce-button slot="trigger" caret>Edit</ce-button>
+  <ce-menu>
+    <ce-menu-item>Cut</ce-menu-item>
+    <ce-menu-item>Copy</ce-menu-item>
+    <ce-menu-item>Paste</ce-menu-item>
+    <ce-menu-divider></ce-menu-divider>
+    <ce-menu-item>Find</ce-menu-item>
+    <ce-menu-item>Replace</ce-menu-item>
+  </ce-menu>
+</ce-dropdown>
 `}
 </DemoTabs.Code>
 
-<presto-dropdown position="top-left">
-  <presto-button slot="trigger" caret>
-    Edit
-  </presto-button>
-  <presto-menu>
-    <presto-menu-item>Cut</presto-menu-item>
-    <presto-menu-item>Copy</presto-menu-item>
-    <presto-menu-item>Paste</presto-menu-item>
-    <presto-menu-divider></presto-menu-divider>
-    <presto-menu-item>Find</presto-menu-item>
-    <presto-menu-item>Replace</presto-menu-item>
-  </presto-menu>
-</presto-dropdown>
+<ce-dropdown position="top-left">
+	<ce-button slot="trigger" caret>
+		Edit
+	</ce-button>
+	<ce-menu>
+		<ce-menu-item>Cut</ce-menu-item>
+		<ce-menu-item>Copy</ce-menu-item>
+		<ce-menu-item>Paste</ce-menu-item>
+		<ce-menu-divider></ce-menu-divider>
+		<ce-menu-item>Find</ce-menu-item>
+		<ce-menu-item>Replace</ce-menu-item>
+	</ce-menu>
+</ce-dropdown>
 
 </DemoTabs>
 
