@@ -5,7 +5,7 @@
 	"scripts": {
 		"docusaurus": "docusaurus",
 		"docs": "docusaurus start",
-    "docs:build": "docusaurus build",
+    "docs.build": "docusaurus build",
 		"start": "docusaurus start",
 		"build": "docusaurus build",
 		"swizzle": "docusaurus swizzle",
