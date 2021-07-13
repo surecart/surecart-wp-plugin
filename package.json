@@ -10,6 +10,7 @@
 		"wp-env": "wp-env",
 		"start": "lerna run watch --stream --parallel",
 		"docs": "lerna run docs --stream --parallel --ignore @checkout-engine/plugin",
+    "docs:build": "lerna run docs:build --ignore @checkout-engine/plugin",
 		"watch": "cross-env NODE_ENV=development webpack --colors --config resources/build/webpack.development.js",
 		"hot": "cross-env NODE_ENV=development WPEMERGE_ENV=hot webpack-dev-server --colors --config resources/build/webpack.development.js",
 		"build": "lerna run build --stream",

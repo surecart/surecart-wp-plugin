@@ -26,6 +26,7 @@
     "watch": "stencil build --dev --watch",
     "build": "stencil build --docs",
     "docs": "stencil build --watch",
+    "docs:build": "stencil build --docs",
     "docs.data": "stencil build --docs-json ./docs/docs.json",
     "start": "stencil build --dev --watch --serve",
     "test": "stencil test --spec --e2e",
