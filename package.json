@@ -7,7 +7,7 @@
 	"prettier": "@wordpress/prettier-config",
 	"scripts": {
 		"lerna": "lerna",
-		"bootstrap": "lerna exec yarn && lerna link",
+		"bootstrap": "lerna bootstrap",
 		"wp-env": "wp-env",
 		"start": "lerna run watch --stream --parallel",
 		"docs": "lerna run docs --stream --parallel --ignore @checkout-engine/plugin",
