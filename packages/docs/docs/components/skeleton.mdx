@@ -9,6 +9,7 @@
 Skeletons are purposly simple and minimal to give you the most flexibility to designing layouts. You'll likely use more than one skeleton to achieve your desired effect.
 
 import DemoTabs from '../../components/Demo-Tabs.js';
+import ComponentDoc from '../../components/Component-Doc.js';
 
 <DemoTabs>
 	<DemoTabs.Code>
@@ -54,32 +55,6 @@ import DemoTabs from '../../components/Demo-Tabs.js';
 
 </DemoTabs>
 
-## Properties
+## Component Codex
 
-| Property | Attribute | Description      | Type                         | Default   |
-| -------- | --------- | ---------------- | ---------------------------- | --------- |
-| `effect` | `effect`  | Animation effect | `"none"` `"pulse"` `"sheen"` | `'sheen'` |
-
-## Shadow Parts
-
-| Part          | Description        |
-| ------------- | ------------------ |
-| `"base"`      | Component base div |
-| `"indicator"` | Indicator div      |
-
-## CSS Custom Properties
-
-| Name              | Description                                                |
-| ----------------- | ---------------------------------------------------------- |
-| `--border-radius` | The skeleton's border radius.                              |
-| `--color`         | The color of the skeleton.                                 |
-| `--sheen-color`   | The sheen color when the skeleton is in its loading state. |
-
-## Dependencies
-
-### Used by
-
--   ce-coupon-form
--   ce-line-items
--   ce-price-choices
--   ce-total
+<ComponentDoc tag="ce-skeleton" />

@@ -9,6 +9,7 @@ This is a low-level component used simply to display information - for more enha
 use those appropriate components.
 
 import DemoTabs from '../../components/Demo-Tabs.js';
+import ComponentDoc from '../../components/Component-Doc.js';
 
 <DemoTabs>
 	<DemoTabs.Code>
@@ -20,15 +21,25 @@ import DemoTabs from '../../components/Demo-Tabs.js';
           <span slot="price">$10.00</span>
           <span slot="price-description">Monthly</span>
     </ce-line-item>
+	<ce-divider style="--spacing: 20px;"></ce-divider>
+	<ce-line-item>
+          <img src="http://placekitten.com/200/300" slot="image" />
+          <span slot="title">Subscription </span>
+          <ce-quantity-select quantity="1" max="10" slot="description"></ce-quantity-select>
+          <span slot="price">$10.00</span>
+          <span slot="price-description">Monthly</span>
+    </ce-line-item>
 ` }
 	</DemoTabs.Code>
 
-<ce-line-item>
-	<span slot="title">Total</span>
-	<span slot="description">Total Price Description</span>
-	<span slot="price">$10.00</span>
-	<span slot="price-description">Monthly</span>
-</ce-line-item>
+<div>
+	<ce-line-item>
+		<span slot="title">Total</span>
+		<span slot="description">Total Price Description</span>
+		<span slot="price">$10.00</span>
+		<span slot="price-description">Monthly</span>
+	</ce-line-item>
+</div>
 
 </DemoTabs>
 
@@ -68,36 +79,6 @@ so you can be creative with your markup to create and enhance UI.
 
 </DemoTabs>
 
-## Properties
+## Component Codex
 
-| Property   | Attribute  | Description       | Type     | Default     |
-| ---------- | ---------- | ----------------- | -------- | ----------- |
-| `currency` | `currency` | Currency symbol   | `string` | `undefined` |
-| `price`    | `price`    | Price of the item | `string` | `undefined` |
-
-## Slots
-
-| Slot                  | Description                              |
-| --------------------- | ---------------------------------------- |
-| `"currency"`          | Used for the 3 character currency code.  |
-| `"description"`       | Line item description (below the title)  |
-| `"image"`             | Line item image                          |
-| `"price"`             | Price amount, including currency sign.   |
-| `"price-description"` | Description for the price (i.e. monthly) |
-| `"title"`             | Line item title.                         |
-
-## Shadow Parts
-
-| Part      | Description |
-| --------- | ----------- |
-| `"base"`  |             |
-| `"image"` |             |
-| `"price"` |             |
-| `"text"`  |             |
-
-## Dependencies
-
-### Used by
-
--   ce-line-items
--   ce-total
+<ComponentDoc tag="ce-line-item" />

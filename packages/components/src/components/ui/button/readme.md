@@ -2,6 +2,7 @@
 
 <!-- Auto Generated Below -->
 
+
 ## Properties
 
 | Property   | Attribute  | Description                                                                                            | Type                                                                               | Default     |
@@ -21,12 +22,14 @@
 | `type`     | `type`     | The button's type.                                                                                     | `"danger" \| "default" \| "info" \| "primary" \| "success" \| "text" \| "warning"` | `'default'` |
 | `value`    | `value`    | An optional value for the button. Ignored when `href` is set.                                          | `string`                                                                           | `undefined` |
 
+
 ## Events
 
 | Event     | Description                          | Type                |
 | --------- | ------------------------------------ | ------------------- |
 | `ceBlur`  | Emitted when the button loses focus. | `CustomEvent<void>` |
 | `ceFocus` | Emitted when the button gains focus. | `CustomEvent<void>` |
+
 
 ## Shadow Parts
 
@@ -38,20 +41,27 @@
 | `"prefix"` |             |
 | `"suffix"` |             |
 
+
 ## Dependencies
+
+### Used by
+
+ - [ce-coupon-form](../../controllers/coupon-form)
+ - [ce-submit](../../controllers/submit)
 
 ### Depends on
 
 - [ce-spinner](../spinner)
 
 ### Graph
-
 ```mermaid
 graph TD;
   ce-button --> ce-spinner
+  ce-coupon-form --> ce-button
+  ce-submit --> ce-button
   style ce-button fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
----
+----------------------------------------------
 
-_Built with [StencilJS](https://stenciljs.com/)_
+*Built with [StencilJS](https://stenciljs.com/)*

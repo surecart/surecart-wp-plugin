@@ -2,11 +2,13 @@
 
 <!-- Auto Generated Below -->
 
+
 ## Shadow Parts
 
 | Part     | Description |
 | -------- | ----------- |
 | `"base"` |             |
+
 
 ## CSS Custom Properties
 
@@ -16,20 +18,22 @@
 | `--stroke-width`    | The width of the indicator.           |
 | `--track-color`     | The color of the spinner's track.     |
 
+
 ## Dependencies
 
 ### Used by
 
-- [ce-button](../button)
+ - [ce-block-ui](../block-ui)
+ - [ce-button](../button)
 
 ### Graph
-
 ```mermaid
 graph TD;
+  ce-block-ui --> ce-spinner
   ce-button --> ce-spinner
   style ce-spinner fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
----
+----------------------------------------------
 
-_Built with [StencilJS](https://stenciljs.com/)_
+*Built with [StencilJS](https://stenciljs.com/)*

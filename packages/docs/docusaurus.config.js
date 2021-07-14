@@ -56,6 +56,7 @@ module.exports = {
 			{
 				docs: {
 					sidebarPath: require.resolve('./sidebars.js'),
+          remarkPlugins: [require('remark-import-partial')],
 					// remarkPlugins: [remarkImport],
 					// Please change this to your repo.
 					editUrl:

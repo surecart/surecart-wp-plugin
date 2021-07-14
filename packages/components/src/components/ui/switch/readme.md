@@ -2,6 +2,7 @@
 
 <!-- Auto Generated Below -->
 
+
 ## Properties
 
 | Property   | Attribute  | Description                                                                                               | Type      | Default     |
@@ -13,6 +14,7 @@
 | `required` | `required` | Makes the switch a required field.                                                                        | `boolean` | `false`     |
 | `value`    | `value`    | The switch's value attribute.                                                                             | `string`  | `undefined` |
 
+
 ## Events
 
 | Event      | Description                                       | Type                |
@@ -21,14 +23,30 @@
 | `ceChange` | Emitted when the control's checked state changes. | `CustomEvent<void>` |
 | `ceFocus`  | Emitted when the control gains focus.             | `CustomEvent<void>` |
 
+
+## Methods
+
+### `reportValidity() => Promise<boolean>`
+
+Checks for validity and shows the browser's validation message if the control is invalid.
+
+#### Returns
+
+Type: `Promise<boolean>`
+
+
+
+
 ## Shadow Parts
 
-| Part        | Description |
-| ----------- | ----------- |
-| `"base"`    |             |
-| `"control"` |             |
-| `"label"`   |             |
-| `"thumb"`   |             |
+| Part            | Description |
+| --------------- | ----------- |
+| `"base"`        |             |
+| `"control"`     |             |
+| `"description"` |             |
+| `"thumb"`       |             |
+| `"title"`       |             |
+
 
 ## CSS Custom Properties
 
@@ -38,6 +56,7 @@
 | `--thumb-size` | The size of the thumb.    |
 | `--width`      | The width of the switch.  |
 
----
 
-_Built with [StencilJS](https://stenciljs.com/)_
+----------------------------------------------
+
+*Built with [StencilJS](https://stenciljs.com/)*

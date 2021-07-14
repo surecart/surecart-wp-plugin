@@ -2,6 +2,7 @@
 
 <!-- Auto Generated Below -->
 
+
 ## Properties
 
 | Property    | Attribute    | Description | Type                             | Default     |
@@ -14,6 +15,7 @@
 | `showLabel` | `show-label` |             | `boolean`                        | `true`      |
 | `size`      | `size`       |             | `"large" \| "medium" \| "small"` | `'medium'`  |
 
+
 ## Shadow Parts
 
 | Part             | Description |
@@ -22,20 +24,22 @@
 | `"help-text"`    |             |
 | `"label"`        |             |
 
+
 ## Dependencies
 
 ### Used by
 
-- [ce-input](../input)
+ - [ce-input](../input)
+ - [ce-select](../select)
 
 ### Graph
-
 ```mermaid
 graph TD;
   ce-input --> ce-form-control
+  ce-select --> ce-form-control
   style ce-form-control fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
----
+----------------------------------------------
 
-_Built with [StencilJS](https://stenciljs.com/)_
+*Built with [StencilJS](https://stenciljs.com/)*

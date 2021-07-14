@@ -1,4 +1,5 @@
 import { Config } from '@stencil/core';
+import { generateMarkdown } from '@stencil/core/src/compiler/docs/readme/output-docs.ts';
 import { reactOutputTarget } from '@stencil/react-output-target';
 import { sass } from '@stencil/sass';
 import { readFileSync } from 'fs';
@@ -31,10 +32,18 @@ export const config: Config = {
     {
       type: 'dist-custom-elements-bundle',
     },
-    {
-      type: 'docs-readme',
-      dir: 'docs',
-    },
+    // {
+    //   type: 'docs-readme',
+    //   footer: 'test 1'
+    // },
+    // {
+    //   type: 'docs-custom',
+    //   generator: (docs) => {
+    //     docs.components.forEach((doc) => {
+    //       generateMarkdown('test', doc, docs, {type: 'docs-readme' });
+    //     });
+    //   }
+    // },
     {
       type: 'www',
       serviceWorker: null, // disable service workers
