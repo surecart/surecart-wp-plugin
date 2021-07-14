@@ -1,0 +1,137 @@
+import Link from '@docusaurus/Link';
+
+# Creating Static Forms
+
+There are times when you want to create a checkout form that you do not wish
+to be **editable** by site users. A common example of this is if you're developing a
+plugin, and want to use Checkout Engine to power your plugin's checkout solution.
+
+## Add A New Checkout Form
+
+We've streamlined creating a custom checkout form through the use of web components.
+This lets you create a custom form with minimal configuration.
+
+At the minimum, a <Link to="/components/email">`ce-email`</Link>, <Link to="/components/payment">`ce-payment`</Link> and <Link to="/components/submit">`ce-submit`</Link> component are needed in the form:
+
+```html
+<ce-checkout id="my-checkout">
+	<ce-email></ce-email>
+	<ce-payment></ce-payment>
+	<ce-submit><ce-submit>
+</ce-checkout>
+```
+
+### Pre-Populating Prices
+
+However, in the example above, clicking "submit" won't actually purchase any products.
+In order to add a product to the form, you must pass an array of prices to the `prices`
+attribute of the <Link to="/components/checkout">`ce-checkout`</Link> component.
+
+```html
+<ce-checkout id="my-checkout">
+	<ce-email></ce-email>
+	<ce-payment></ce-payment>
+	<ce-submit><ce-submit>
+</ce-checkout>
+
+<script>
+	var checkout = document.querySelector( '#my-checkout' );
+	// set checkout prices
+	checkout.prices = [
+		{
+			price_id: '6b6f10b8-1054-455b-83e5-86be0e6fa74e',
+			quantity: 1,
+			removeable: false
+		},
+	];
+</script>
+```
+
+## Product Choice Options
+
+There are times when you want to let the user select a specific price or subscription,
+force the user to purchase all of the pre-selected options, or allow them to pick and choose options.
+You can set this with the product choices option.
+
+### Select a Single Option
+
+```html
+<ce-checkout id="my-checkout">
+	<ce-price-choices default="6b6f10b8-1054-455b-83e5-86be0e6fa74e">
+	</ce-price-choices>
+	<ce-payment></ce-payment>
+	<ce-email></ce-email>
+	<ce-submit><ce-submit>
+</ce-checkout>
+
+<script>
+	var choiceComponent = document.querySelector("#my-checkout ce-price-choices");
+
+	choiceComponent.choices = [
+		{
+			price_id: '6b6f10b8-1054-455b-83e5-86be0e6fa74e',
+			quantity: 1
+		},
+		{
+			price_id: '6b6f10b8-1054-455b-83e5-86be0e6fa74e',
+			quantity: 1
+		}
+	];
+</script>
+```
+
+### Pick and Choose Multiple Options
+
+To have the user select a single option from a list of options, pass the "checkbox"
+option in the `ce-price-choices` component.
+
+```html
+<ce-checkout id="my-checkout">
+	<ce-price-choices
+		type="checkbox"
+		default="6b6f10b8-1054-455b-83e5-86be0e6fa74e">
+	</ce-price-choices>
+	<ce-payment></ce-payment>
+	<ce-email></ce-email>
+	<ce-submit><ce-submit>
+</ce-checkout>
+
+<script>
+	var choiceComponent = document.querySelector("#my-checkout ce-price-choices");
+
+	choiceComponent.choices = [
+		{
+			price_id: '6b6f10b8-1054-455b-83e5-86be0e6fa74e',
+			quantity: 1
+		},
+		{
+			price_id: '6b6f10b8-1054-455b-83e5-86be0e6fa74e',
+			quantity: 1
+		}
+	];
+</script>
+```
+
+### Adding Order Bump Functionality
+
+To add an order-bump type of functionality, where the user can choose to add or remove
+a specific price from checkout, you can use the `addPrice`, `removePrice` or `togglePrice` methods
+on the `ce-checkout` component.
+
+```html
+<ce-checkout id="my-checkout">
+	<ce-payment></ce-payment>
+	<ce-email></ce-email>
+	<ce-button class="my-order-bump">Add Something to my order</ce-button>
+	<ce-submit><ce-submit>
+</ce-checkout>
+
+<script>
+	var checkout = document.querySelector("#my-checkout");
+	var orderBump = checkout.querySelector(".my-order-bump");
+
+	orderBump.addEventListener("click", function() {
+		checkout.togglePrice('6b6f10b8-1054-455b-83e5-86be0e6fa74e')
+	});
+</script>
+```

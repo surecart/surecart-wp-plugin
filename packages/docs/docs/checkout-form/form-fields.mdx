@@ -2,48 +2,15 @@
 sidebar_position: 1
 ---
 
-# Form Fields
+# Add A Custom Form Field
 
-Checkout forms are rendered and processed using the `presto-checkout-form` component. This component serializes both Presto form controls and native form controls located inside when the form is submitted.
+Checkout forms are rendered and processed using the `ce-checkout-form` component. This component serializes both Presto form controls and native form controls located inside when the form is submitted.
 
 Adding an additional form field will let you do additional order validation, as well as append custom field data to the order when it's submitted.
 
-## Adding Form Fields
+## Adding a Form Field Block
 
-To add a form field to a checkout form, or all checkout forms you should use one of the following filters:
-
-```php
-add_filter('presto_pay/checkout/fields/coupon', 'your_custom_function');
-add_filter('presto_pay/checkout/fields/billing', 'your_custom_function');
-add_filter('presto_pay/checkout/fields/shipping', 'your_custom_function');
-add_filter('presto_pay/checkout/fields/payment', 'your_custom_function');
-```
-
-## Add A Field
-
-Many times you'll want to collect additional billing information from the user. To do this, you can use the `presto_pay/checkout/fields/billing` filter to add your own field.
-
-```php
-add_filter('presto_pay/checkout/fields/billing', 'my_custom_field', 10, 2);
-
-function my_custom_field($fields, $checkout_form_id) {
-
-
-    $fields['my_custom_id'] = [
-        'label'         => 'Phone', // the name for your field
-        'required'      => true, // whether it's required
-        'type'          => 'tel', // the field type
-		'validate'      => [ // client side validation using the Contraint Validation API
-            'pattern' => '[0-9]{3}'
-        ],
-        'part'          => 'my-phone', // allows it to be styled via presto-pay::part(my-phone)
-        'autocomplete'  => 'tel', // autocomplete rules
-		'priority'      => 100, // where to show it priority-wise
-    ];
-
-    return $fields;
-});
-```
+To add a form field to checkout, you'll want to add your own Gutenberg block and specify the parent as `'checkout-engine/checkout-form'` or `'checkout-engine/form-section'` (likely both).
 
 ## Validating Client-Side
 
@@ -55,7 +22,7 @@ All form controls support validation, but not all validation props are available
 
 Note that validity is not checked until the user interacts with the control or its containing form is submitted. This prevents required controls from being rendered as invalid right away, which can result in a poor user experience. If you need this behavior, set the invalid attribute initially.
 
-:::caution
+:::note
 Client-side validation can be used to improve the UX of forms, but it is not a replacement for server-side validation. You should always validate and sanitize user input on the server!
 :::
 
@@ -63,12 +30,8 @@ Client-side validation can be used to improve the UX of forms, but it is not a r
 
 When a form is first submitted, it's sent to validation on server side. Validation will let you check all the submitted data, including your own field for validation. This lets you check your field or combinations of fields to make sure the data submitted is valid. The checkout form will not submit if there are any validation errors.
 
-:::note
-If you add the `'required' => true` when you add your field, it will already be checked to see if it has a value before this hook is run.
-:::
-
 ```php
-add_filter('presto_pay/checkout/validate', 'my_custom_validation', 10, 3);
+add_filter('checkout_engine/checkout/validate', 'my_custom_validation', 10, 3);
 
 function my_custom_validation($errors, $fields, $checkout_form_id) {
     // check to see if it's valid
@@ -90,10 +53,10 @@ function my_custom_validation($errors, $fields, $checkout_form_id) {
 ## Transforming User Input
 
 You may also want to dynamically add, update or pull data before an order is submitted. This lets you take
-the users input and transform or change it before being added to the order when it's submitted. This is run after all validation has passed. Any validation should occur in the `presto_pay/checkout/validate` filter.
+the users input and transform or change it before being added to the order when it's submitted. This is run after all validation has passed. Any validation should occur in the `checkout_engine/checkout/validate` filter.
 
 ```php
-add_filter('presto_pay/checkout/submit', 'my_custom_dynamic_field', 10, 2);
+add_filter('checkout_engine/checkout/submit', 'my_custom_dynamic_field', 10, 2);
 
 function my_custom_dynamic_field($fields, $checkout_form_id) {
     // transform user input
@@ -108,7 +71,7 @@ function my_custom_dynamic_field($fields, $checkout_form_id) {
 When an order is submitted, your fields are saved in with the order's custom fields. Once an order has been successfully made, you can access your custom field data from the `custom_fields` key in the order. Note: this specific hook is an `action` where the previous have been `filters`.
 
 ```php
-add_action('presto_pay/checkout/complete', 'my_custom_action', 10, 2);
+add_action('checkout_engine/checkout/complete', 'my_custom_action', 10, 2);
 
 function my_custom_action($order, $checkout_form_id) {
     // only look for our field
@@ -127,7 +90,7 @@ function my_custom_action($order, $checkout_form_id) {
 Similar to order success, you can perform an action when the initial checkout order fails.
 
 ```php
-add_action('presto_pay/checkout/failed', 'my_custom_failure_action', 10, 2);
+add_action('checkout_engine/checkout/failed', 'my_custom_failure_action', 10, 2);
 
 function my_custom_failure_action($order, $checkout_form_id) {
     // only look for our field

@@ -1,0 +1,34 @@
+import Link from '@docusaurus/Link';
+
+# Add A Form Template
+
+A form template is a default set of form fields for a particular form. This lets the
+user choose between a few types of checkout forms that are "pre-made", that they can edit
+and customize, vs creating their own from scratch. The user will be prompted to choose a template
+when they create a checkout form.
+
+If you wish to create a form that a user cannot edit, you may want to try creating a <Link to="/docs/checkout-form/creating-static-forms">Static Form</Link> instead.
+
+## Register Your Form Template
+
+You can register your form template using Checkout Engines `checkout_engine_register_form_template` function:
+
+```php
+checkout_engine_register_form_template([
+	'name' => 'Donation Form',
+	'category' => 'Donation',
+	'post_type' => 'any',
+	'template' => [
+		[ "checkout-engine/pricing-section",
+			[
+				'label' => 'My Label',
+				'columns' = 2
+			]
+		],
+		[ "checkout-engine/contact-section" ],
+		[ "checkout-engine/payment-section" ],
+		[ "checkout-engine/totals-section" ],
+		[ "checkout-engine/submit" ]
+	]
+]);
+```

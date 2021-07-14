@@ -14,22 +14,22 @@
 	padding: 0 var(--ifm-pre-padding);
 }
 body {
-	color: var(--presto-color-gray-950);
+	color: var(--ce-color-gray-950);
 }
 
 /* You can override the default Infima variables here. */
 :root {
-	--ifm-color-primary: var(--presto-color-primary-500);
-	--ifm-color-primary-dark: var(--presto-color-primary-600);
-	--ifm-color-primary-darker: var(--presto-color-primary-700);
-	--ifm-color-primary-darkest: var(--presto-color-primary-800);
-	--ifm-color-primary-light: var(--presto-color-primary-400);
-	--ifm-color-primary-lighter: var(--presto-color-primary-300);
-	--ifm-color-primary-lightest: var(--presto-color-primary-200);
+	--ifm-color-primary: var(--ce-color-primary-500);
+	--ifm-color-primary-dark: var(--ce-color-primary-600);
+	--ifm-color-primary-darker: var(--ce-color-primary-700);
+	--ifm-color-primary-darkest: var(--ce-color-primary-800);
+	--ifm-color-primary-light: var(--ce-color-primary-400);
+	--ifm-color-primary-lighter: var(--ce-color-primary-300);
+	--ifm-color-primary-lightest: var(--ce-color-primary-200);
 	--ifm-code-font-size: 95%;
 	--ifm-pre-line-height: 2em;
-	--ifm-color-warning: var(--presto-color-warning-500);
-	--ifm-color-info: var(--presto-color-primary-500);
+	--ifm-color-warning: var(--ce-color-warning-500);
+	--ifm-color-info: var(--ce-color-primary-500);
 	--ifm-code-background: rgba(0, 0, 0, 0.05);
 }
 
@@ -55,21 +55,21 @@ article {
 	display: none !important;
 }
 
-.presto-scroll-lock {
+.ce-scroll-lock {
 	overflow: hidden !important;
 }
 
 html[data-theme='dark'] {
 	--ifm-background-color: var(
-		--presto-color-gray-950,
+		--ce-color-gray-950,
 		--ifm-background-color
 	);
 	--ifm-navbar-background-color: var(
-		--presto-color-gray-900,
+		--ce-color-gray-900,
 		--ifm-navbar-background-color
 	);
-	--ifm-heading-color: var(--presto-color-white);
+	--ifm-heading-color: var(--ce-color-white);
 }
 html[data-theme='dark'] body {
-	color: var(--presto-color-gray-300);
+	color: var(--ce-color-gray-300);
 }
