@@ -1,6 +1,6 @@
 import { Component, Element, Prop, Event, EventEmitter, Watch, State, h } from '@stencil/core';
 import { CEMenu } from '../menu/ce-menu';
-// import { clickOutside } from '../../../functions/click';
+import { clickOutside } from '../../../functions/click';
 
 @Component({
   tag: 'ce-dropdown',
@@ -75,9 +75,9 @@ export class CEDropdown {
 
   componentDidLoad() {
     // close when clicked outside
-    // clickOutside(this.clickEl || this.el, () => {
-    //   this.open = false;
-    // });
+    clickOutside(this.clickEl || this.el, () => {
+      this.open = false;
+    });
   }
 
   render() {

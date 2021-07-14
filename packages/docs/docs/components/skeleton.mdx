@@ -4,7 +4,9 @@
 <ce-skeleton></ce-skeleton>
 ```
 
-This component lets the user select one option from a group of many.
+#### Skeletons are use to show the loading state of UI elements that will eventually be redrawn.
+
+Skeletons are purposly simple and minimal to give you the most flexibility to designing layouts. You'll likely use more than one skeleton to achieve your desired effect.
 
 import DemoTabs from '../../components/Demo-Tabs.js';
 
@@ -52,13 +54,32 @@ import DemoTabs from '../../components/Demo-Tabs.js';
 
 </DemoTabs>
 
+## Properties
+
+| Property | Attribute | Description      | Type                         | Default   |
+| -------- | --------- | ---------------- | ---------------------------- | --------- |
+| `effect` | `effect`  | Animation effect | `"none"` `"pulse"` `"sheen"` | `'sheen'` |
+
+## Shadow Parts
+
+| Part          | Description        |
+| ------------- | ------------------ |
+| `"base"`      | Component base div |
+| `"indicator"` | Indicator div      |
+
 ## CSS Custom Properties
 
-| Name | Description |
-|--border-radius | The skeleton's border radius. |
---color The color of the skeleton.
---sheen-color The sheen color when the skeleton is in its loading state.
-CSS Parts
-Name Description
-base The component's base wrapper.
-indicator The skeleton's indicator which is responsible for its color and animation.
+| Name              | Description                                                |
+| ----------------- | ---------------------------------------------------------- |
+| `--border-radius` | The skeleton's border radius.                              |
+| `--color`         | The color of the skeleton.                                 |
+| `--sheen-color`   | The sheen color when the skeleton is in its loading state. |
+
+## Dependencies
+
+### Used by
+
+-   ce-coupon-form
+-   ce-line-items
+-   ce-price-choices
+-   ce-total

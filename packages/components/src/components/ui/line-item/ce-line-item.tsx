@@ -1,5 +1,13 @@
 import { Component, Prop, h, Element, State } from '@stencil/core';
 
+/**
+ * @slot image - Line item image
+ * @slot title - Line item title.
+ * @slot description - Line item description (below the title)
+ * @slot currency - Used for the 3 character currency code.
+ * @slot price - Price amount, including currency sign.
+ * @slot price-description - Description for the price (i.e. monthly)
+ */
 @Component({
   tag: 'ce-line-item',
   styleUrl: 'ce-line-item.scss',
