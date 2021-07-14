@@ -1174,7 +1174,7 @@
 "@checkout-engine/blocks@file:packages/blocks":
   version "0.0.1"
   dependencies:
-    "@checkout-engine/react" "file:../../../Library/Caches/Yarn/v6/npm-@checkout-engine-blocks-0.0.1-ad097a68-4aea-4277-bb58-577bb5e3d5bd-1626204503119/node_modules/@checkout-engine/integrations/react"
+    "@checkout-engine/react" "file:../../../Library/Caches/Yarn/v6/npm-@checkout-engine-blocks-0.0.1-419b1cbd-08a7-4804-8c1d-6621ecd17773-1626227612779/node_modules/@checkout-engine/integrations/react"
     "@wordpress/compose" "^4.1.2"
     "@wordpress/element" "^3.1.1"
     "@wordpress/icons" "^4.0.1"
@@ -1225,10 +1225,10 @@
 "@checkout-engine/docs@file:packages/docs":
   version "0.0.0"
   dependencies:
-    "@checkout-engine/components" "file:../../../Library/Caches/Yarn/v6/npm-@checkout-engine-docs-0.0.0-2499e836-e15f-42ed-bea4-2ca194e8d86a-1626204503275/node_modules/@checkout-engine/components"
+    "@checkout-engine/components" "file:../../../Library/Caches/Yarn/v6/npm-@checkout-engine-docs-0.0.0-070b17cb-c192-401f-9ffa-424430d430f8-1626227612932/node_modules/@checkout-engine/components"
     "@docusaurus/core" "2.0.0-beta.3"
     "@docusaurus/preset-classic" "2.0.0-beta.3"
-    "@mdx-js/react" "^1.6.21"
+    "@mdx-js/react" "^1.6.22"
     clsx "^1.1.1"
     docusaurus-plugin-sass "^0.1.14"
     dotenv "^8.2.0"
@@ -1239,7 +1239,7 @@
 "@checkout-engine/react@file:packages/integrations/react":
   version "0.0.1"
   dependencies:
-    "@checkout-engine/components" "file:../../../Library/Caches/Yarn/v6/npm-@checkout-engine-react-0.0.1-358fda41-28b8-42ac-90ce-7227ee210511-1626204503270/node_modules/components"
+    "@checkout-engine/components" "file:../../../Library/Caches/Yarn/v6/npm-@checkout-engine-react-0.0.1-18dba5b4-e746-4577-bc73-4638c6c95d79-1626227612926/node_modules/components"
 
 "@cnakazawa/watch@^1.0.3":
   version "1.0.4"
@@ -2592,7 +2592,7 @@
     unist-builder "2.0.3"
     unist-util-visit "2.0.3"
 
-"@mdx-js/react@^1.6.21":
+"@mdx-js/react@^1.6.21", "@mdx-js/react@^1.6.22":
   version "1.6.22"
   resolved "https://registry.yarnpkg.com/@mdx-js/react/-/react-1.6.22.tgz#ae09b4744fddc74714ee9f9d6f17a66e77c43573"
   integrity sha512-TDoPum4SHdfPiGSAaRBw7ECyI8VaHpK8GJugbJIJuqyh6kzw9ZLJZW3HGL3NNrJGxcAixUvqROm+YuQOo5eXtg==
