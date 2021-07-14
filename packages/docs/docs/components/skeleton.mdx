@@ -11,10 +11,54 @@ import DemoTabs from '../../components/Demo-Tabs.js';
 <DemoTabs>
 	<DemoTabs.Code>
 		{ `
-<ce-skeleton></ce-skeleton>
+<div>
+  <header style="display: flex; align-items: center; margin-bottom: 1rem;">
+    <ce-skeleton style="width: 3rem; height: 3rem; margin-right: 1rem; vertical-align: middle;"></ce-skeleton>
+    <ce-skeleton style="width: 30%;"></ce-skeleton>
+  </header>
+  <ce-skeleton style="margin-bottom: 1rem;"></ce-skeleton>
+  <ce-skeleton style="margin-bottom: 1rem; width: 95%;"></ce-skeleton>
+  <ce-skeleton style="margin-bottom: 1rem; width: 80%;"></ce-skeleton>
+</div>
 ` }
 	</DemoTabs.Code>
 
-    <ce-skeleton></ce-skeleton>
+<div>
+	<header
+		style={ {
+			display: 'flex',
+			alignItems: 'center',
+			marginBottom: '1rem',
+		} }
+	>
+		<ce-skeleton
+			style={ {
+				width: '3rem',
+				height: '3rem',
+				marginRight: '1rem',
+				verticalAlign: 'middle',
+			} }
+		></ce-skeleton>
+		<ce-skeleton
+			style={ {
+				width: '30%',
+			} }
+		></ce-skeleton>
+	</header>
+	<ce-skeleton style={ { marginBottom: '1rem' } }></ce-skeleton>
+	<ce-skeleton style={ { marginBottom: '1rem', width: '95%' } }></ce-skeleton>
+	<ce-skeleton style={ { marginBottom: '1rem', width: '80%' } }></ce-skeleton>
+</div>
 
 </DemoTabs>
+
+## CSS Custom Properties
+
+| Name | Description |
+|--border-radius | The skeleton's border radius. |
+--color The color of the skeleton.
+--sheen-color The sheen color when the skeleton is in its loading state.
+CSS Parts
+Name Description
+base The component's base wrapper.
+indicator The skeleton's indicator which is responsible for its color and animation.
