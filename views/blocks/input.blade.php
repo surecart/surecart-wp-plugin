@@ -5,7 +5,7 @@
     size="<?php echo esc_attr($size ?? 'medium'); ?>"
     placeholder="<?php echo esc_attr($placeholder ?? ''); ?>"
     inputmode="<?php echo esc_attr($inputmode ?? 'text'); ?>"
-    pattern="<?php echo esc_attr($pattern ?? ''); ?>"
+	{{ !empty($pattern) ? 'pattern="' . esc_attr($pattern ?? '') . '"' : ''}}
     {{ !empty($required) ? 'required' : '' }}
     {{ !empty($pill) ? 'pill' : '' }}
     {{ !empty($clearable) ? 'clearable' : '' }}

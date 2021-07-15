@@ -179,7 +179,7 @@ export default ( { tag } ) => {
 
 				{ !! item.dependents.length && (
 					<div>
-						<h3 className={ styles.h3 }>Dependents</h3>
+						<h3 className={ styles.h3 }>Used By</h3>
 						<ul>
 							{ item.dependents.map( ( dependent ) => {
 								return (
@@ -201,7 +201,7 @@ export default ( { tag } ) => {
 
 				{ !! item.dependencies.length && (
 					<div>
-						<h3 className={ styles.h3 }>Used By</h3>
+						<h3 className={ styles.h3 }>Uses</h3>
 						<ul>
 							{ item.dependencies.map( ( dependent ) => {
 								return (
