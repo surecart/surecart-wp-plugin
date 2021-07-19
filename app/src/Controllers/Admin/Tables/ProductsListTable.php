@@ -28,6 +28,10 @@ class ProductsListTable extends \WP_List_Table {
 		$sortable = $this->get_sortable_columns();
 
 		$data = $this->table_data();
+		if ( is_wp_error($data)) {
+			$data = [];
+		}
+		
 		usort( $data, array( &$this, 'sort_data' ) );
 
 		$perPage     = 2;

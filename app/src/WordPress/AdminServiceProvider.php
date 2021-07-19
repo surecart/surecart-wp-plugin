@@ -3,30 +3,32 @@
 namespace CheckoutEngine\WordPress;
 
 use WPEmerge\ServiceProviders\ServiceProviderInterface;
+use CheckoutEngine\WordPress\Admin\AdminMenuPageService;
 
 /**
  * Register admin-related entities, like admin menu pages.
  */
 class AdminServiceProvider implements ServiceProviderInterface {
 	/**
-	 * Holds pages
-	 *
-	 * @var array
-	 */
-	protected $pages = [];
-
-	/**
 	 * {@inheritDoc}
+	 *
+	 *  @param  \Pimple\Container $container Service Container.
 	 */
 	public function register( $container ) {
-		// Nothing to register.
+		$app = $container[ WPEMERGE_APPLICATION_KEY ];
+
+		$container['admin_pages'] = function () {
+			return new AdminMenuPageService();
+		};
+
+		$app->alias( 'admin_pages', 'admin_pages' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function bootstrap( $container ) {
-		add_action( 'admin_menu', array( $this, 'registerAdminPages' ) );
+		\CheckoutEngine::admin_pages()->register();
 	}
 
 	/**
@@ -71,6 +73,7 @@ class AdminServiceProvider implements ServiceProviderInterface {
 				'wp-codemirror',
 				'wp-api',
 				'wp-i18n',
+				'wp-edit-post',
 				'wp-editor',
 				'wp-blob',
 				'wp-blocks',

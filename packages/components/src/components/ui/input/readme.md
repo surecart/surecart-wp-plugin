@@ -59,6 +59,16 @@ Type: `Promise<boolean>`
 
 
 
+### `setCustomValidity(message: string) => Promise<void>`
+
+Sets a custom validation message. If `message` is not empty, the field will be considered invalid.
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
 ### `triggerBlur() => Promise<void>`
 
 Removes focus from the input.
@@ -103,6 +113,7 @@ Type: `Promise<void>`
 ### Used by
 
  - [ce-coupon-form](../../controllers/coupon-form)
+ - [ce-email](../../controllers/email)
  - [ce-stripe-element](../stripe-element)
 
 ### Depends on
@@ -114,6 +125,7 @@ Type: `Promise<void>`
 graph TD;
   ce-input --> ce-form-control
   ce-coupon-form --> ce-input
+  ce-email --> ce-input
   ce-stripe-element --> ce-input
   style ce-input fill:#f9f,stroke:#333,stroke-width:4px
 ```

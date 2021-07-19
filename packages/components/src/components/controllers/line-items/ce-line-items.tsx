@@ -1,6 +1,5 @@
 import { Component, h, Prop, Event, EventEmitter } from '@stencil/core';
 
-import { getFormattedPrice } from '../../../functions/price';
 import { CheckoutSession, LineItem, LineItemData } from '../../../types';
 import { openWormhole } from 'stencil-wormhole';
 

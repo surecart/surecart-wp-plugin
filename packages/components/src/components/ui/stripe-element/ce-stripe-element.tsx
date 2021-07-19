@@ -1,4 +1,4 @@
-import { Component, Prop, Element, Method, State, Watch, h } from '@stencil/core';
+import { Component, Prop, Element, State, Watch, h } from '@stencil/core';
 import { loadStripe } from '@stripe/stripe-js/pure';
 import { CheckoutSession } from '../../../types';
 
@@ -9,7 +9,6 @@ import { CheckoutSession } from '../../../types';
 })
 export class CEStripeElement {
   @Element() el: HTMLElement;
-  private input: HTMLCeInputElement;
   private container: HTMLDivElement;
   private stripe: any;
   private elements: any;
@@ -65,7 +64,7 @@ export class CEStripeElement {
 
     this.confirming = true;
     try {
-      const paid = await this.stripe.confirmCardPayment(val.processor_intent.external_client_secret, {
+      await this.stripe.confirmCardPayment(val.processor_intent.external_client_secret, {
         payment_method: {
           card: this.element,
           billing_details: {
@@ -125,7 +124,7 @@ export class CEStripeElement {
 
   render() {
     return (
-      <ce-input ref={el => (this.input = el as HTMLCeInputElement)} class="ce-stripe" size={this.size} label={this.label} help={this.help} hasFocus={this.hasFocus} invalid>
+      <ce-input class="ce-stripe" size={this.size} label={this.label} help={this.help} hasFocus={this.hasFocus} invalid>
         <div ref={el => (this.container = el as HTMLDivElement)}></div>
       </ce-input>
     );

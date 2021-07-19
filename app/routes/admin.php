@@ -19,4 +19,32 @@ if ( ! defined( 'ABSPATH' ) ) {
 \CheckoutEngine::route()->get()->where( 'admin', 'ce-dashboard' )->handle( 'Dashboard@show' );
 \CheckoutEngine::route()->get()->where( 'admin', 'ce-products' )->handle( 'Products@page' );
 \CheckoutEngine::route()->get()->where( 'admin', 'ce-orders' )->handle( 'Orders@list' );
-\CheckoutEngine::route()->get()->where( 'admin', 'ce-settings' )->handle( 'Settings@show' );
+// \CheckoutEngine::route()->get()->where( 'admin', 'ce-settings' )->handle( 'Settings@show' );
+
+/*
+|--------------------------------------------------------------------------
+| Settings
+|--------------------------------------------------------------------------
+*/
+\CheckoutEngine::route()
+->where( 'admin', 'ce-settings' )
+->middleware( 'user.can:manage_options' )
+->group(
+	function() {
+		/*
+		|--------------------------------------------------------------------------
+		| Account
+		|--------------------------------------------------------------------------
+		*/
+		\CheckoutEngine::route()->where(
+			function() {
+                return ! empty( $_GET['tab'] ) && 'account' ===  $_GET['tab']; // phpcs:ignore
+			}
+		)->group(
+			function() {
+				\CheckoutEngine::route()->get()->handle( 'Account@show' );
+				\CheckoutEngine::route()->post()->handle( 'Account@update' );
+			}
+		);
+	}
+);

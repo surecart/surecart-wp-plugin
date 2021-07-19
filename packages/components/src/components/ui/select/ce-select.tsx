@@ -85,7 +85,7 @@ export class CESelect {
   }
 
   getItems() {
-    return [...this.el.querySelectorAll('sl-menu-item')] as unknown[] as CEMenuItem[];
+    return ([...this.el.querySelectorAll('sl-menu-item')] as unknown[]) as CEMenuItem[];
   }
 
   getItemLabel(item: CEMenuItem) {
@@ -207,6 +207,7 @@ export class CESelect {
     return (
       <ce-form-control size={this.size} label={this.label} help={this.help} inputId={this.inputId} helpId={this.helpId} labelId={this.labelId}>
         <ce-dropdown
+          style={{ '--panel-height': '175px' }}
           part="base"
           closeOnSelect={!this.multiple}
           clickEl={this.el}

@@ -5,8 +5,6 @@ import { updateSession, createSession, finalizeSession } from '../../../services
 import { getPrices } from '../../../services/price/index';
 
 import { Universe } from 'stencil-wormhole';
-import apiFetch from '../../../functions/fetch';
-import { addQueryArgs } from '@wordpress/url';
 @Component({
   tag: 'ce-checkout',
   styleUrl: 'ce-checkout.scss',
@@ -65,7 +63,7 @@ export class CECheckout {
    * @param e
    */
   @Listen('ceFormSubmit')
-  async handleFormSubmit(e) {
+  async handleFormSubmit() {
     // first validate server-side and get key
     this.checkoutSession = await finalizeSession({
       id: this.checkoutSession.id,

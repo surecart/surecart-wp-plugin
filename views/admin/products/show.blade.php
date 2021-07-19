@@ -21,12 +21,23 @@
                     </div>
                 </div>
             </div>
+            <div id="postbox-container-1"
+                class="postbox-container">
+                <div id="side-sortables"
+                    class="meta-box-sortables">
+                </div>
+            </div>
         </div>
     </div>
+
+    <?php do_meta_boxes('product', 'normal', $product); ?>
+
     <h2>Prices:</h2>
     @forelse ($product->prices as $price)
         <p>{{ $price->name }}</p>
     @empty
         <p>No Prices</p>
     @endforelse
+
+    <?php do_meta_boxes('product', 'advanced', $product); ?>
 </div>

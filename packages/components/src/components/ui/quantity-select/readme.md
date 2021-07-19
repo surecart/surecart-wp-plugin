@@ -26,7 +26,7 @@
 
 ### Used by
 
- - [ce-line-items](../../controllers/line-items)
+ - [ce-product-line-item](../product-line-item)
 
 ### Depends on
 
@@ -40,7 +40,7 @@ graph TD;
   ce-quantity-select --> ce-dropdown
   ce-quantity-select --> ce-menu
   ce-quantity-select --> ce-menu-item
-  ce-line-items --> ce-quantity-select
+  ce-product-line-item --> ce-quantity-select
   style ce-quantity-select fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

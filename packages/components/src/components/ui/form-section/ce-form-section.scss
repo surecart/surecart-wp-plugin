@@ -1,6 +1,11 @@
 :host {
   display: block;
-  margin-bottom: var(--ce-form-section-spacing);
+}
+
+.section {
+  font-family: var(--ce-font-sans);
+  font-size: var(--ce-font-size-medium);
+  font-weight: var(--ce-font-weight-normal);
 }
 
 ::slotted(ce-form-row:not(:last-of-type)) {

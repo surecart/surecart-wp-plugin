@@ -11,3 +11,7 @@ ce-checkout {
 ::slotted(*) {
   font-family: var(--ce-font-sans);
 }
+
+::slotted(ce-form-section) {
+  margin-bottom: var(--ce-form-section-spacing);
+}

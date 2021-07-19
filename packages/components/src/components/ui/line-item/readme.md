@@ -40,12 +40,14 @@
 ### Used by
 
  - [ce-line-items](../../controllers/line-items)
+ - [ce-product-line-item](../product-line-item)
  - [ce-total](../../controllers/total)
 
 ### Graph
 ```mermaid
 graph TD;
   ce-line-items --> ce-line-item
+  ce-product-line-item --> ce-line-item
   ce-total --> ce-line-item
   style ce-line-item fill:#f9f,stroke:#333,stroke-width:4px
 ```
