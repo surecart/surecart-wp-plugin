@@ -198,6 +198,64 @@ export namespace Components {
          */
         "position": 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
     }
+    interface CeEmail {
+        /**
+          * The input's autofocus attribute.
+         */
+        "autofocus": boolean;
+        /**
+          * (passed from the ce-checkout component automatically)
+         */
+        "checkoutSession": CheckoutSession;
+        /**
+          * Disables the input.
+         */
+        "disabled": boolean;
+        /**
+          * Inputs focus
+         */
+        "hasFocus": boolean;
+        /**
+          * The input's help text.
+         */
+        "help": string;
+        /**
+          * This will be true when the control is in an invalid state. Validity is determined by props such as `type`, `required`, `minlength`, `maxlength`, and `pattern` using the browser's constraint validation API.
+         */
+        "invalid": boolean;
+        /**
+          * The input's label.
+         */
+        "label": string;
+        /**
+          * Draws a pill-style input with rounded edges.
+         */
+        "pill": boolean;
+        /**
+          * The input's placeholder text.
+         */
+        "placeholder": string;
+        /**
+          * Makes the input readonly.
+         */
+        "readonly": boolean;
+        /**
+          * Makes the input a required field.
+         */
+        "required": boolean;
+        /**
+          * Should we show the label
+         */
+        "showLabel": boolean;
+        /**
+          * The input's size.
+         */
+        "size": 'small' | 'medium' | 'large';
+        /**
+          * The input's value attribute.
+         */
+        "value": string;
+    }
     interface CeForm {
         /**
           * Serializes all form controls elements and returns a `FormData` object.
@@ -310,6 +368,10 @@ export namespace Components {
          */
         "required": boolean;
         /**
+          * Sets a custom validation message. If `message` is not empty, the field will be considered invalid.
+         */
+        "setCustomValidity": (message: string) => Promise<void>;
+        /**
           * Should we show the label
          */
         "showLabel": boolean;
@@ -392,7 +454,21 @@ export namespace Components {
         "calculating": boolean;
     }
     interface CePayment {
+        /**
+          * Checkout Session from ce-checkout.
+         */
+        "checkoutSession": CheckoutSession;
+        /**
+          * The current payment method for the payment
+         */
         "paymentMethod": string;
+        /**
+          * Your stripe connected account id.
+         */
+        "stripeAccountId": string;
+        /**
+          * Your stripe publishable key.
+         */
         "stripePublishableKey": string;
     }
     interface CePaymentRequest {
@@ -408,6 +484,32 @@ export namespace Components {
         "priceIds": Array<string>;
         "prices": Array<Price>;
         "type": 'radio' | 'checkbox';
+    }
+    interface CeProductLineItem {
+        /**
+          * Product monetary amount
+         */
+        "amount": number;
+        /**
+          * Currency for the product
+         */
+        "currency": string;
+        /**
+          * Url for the product image
+         */
+        "imageUrl": string;
+        /**
+          * Recurring interval (i.e. monthly, once, etc.)
+         */
+        "interval": string;
+        /**
+          * Product name
+         */
+        "name": string;
+        /**
+          * Quantity
+         */
+        "quantity": number;
     }
     interface CeProvider {
         "STENCIL_CONTEXT": { [key: string]: any };
@@ -528,6 +630,10 @@ export namespace Components {
     }
     interface CeStripeElement {
         /**
+          * The checkout session object for finalizing intents
+         */
+        "checkoutSession": CheckoutSession;
+        /**
           * Inputs focus
          */
         "hasFocus": boolean;
@@ -551,6 +657,10 @@ export namespace Components {
           * The input's size.
          */
         "size": 'small' | 'medium' | 'large';
+        /**
+          * Your stripe connected account id.
+         */
+        "stripeAccountId": string;
     }
     interface CeStripePaymentRequest {
         /**
@@ -721,6 +831,12 @@ declare global {
         prototype: HTMLCeDropdownElement;
         new (): HTMLCeDropdownElement;
     };
+    interface HTMLCeEmailElement extends Components.CeEmail, HTMLStencilElement {
+    }
+    var HTMLCeEmailElement: {
+        prototype: HTMLCeEmailElement;
+        new (): HTMLCeEmailElement;
+    };
     interface HTMLCeFormElement extends Components.CeForm, HTMLStencilElement {
     }
     var HTMLCeFormElement: {
@@ -804,6 +920,12 @@ declare global {
     var HTMLCePriceChoicesElement: {
         prototype: HTMLCePriceChoicesElement;
         new (): HTMLCePriceChoicesElement;
+    };
+    interface HTMLCeProductLineItemElement extends Components.CeProductLineItem, HTMLStencilElement {
+    }
+    var HTMLCeProductLineItemElement: {
+        prototype: HTMLCeProductLineItemElement;
+        new (): HTMLCeProductLineItemElement;
     };
     interface HTMLCeProviderElement extends Components.CeProvider, HTMLStencilElement {
     }
@@ -906,6 +1028,7 @@ declare global {
         "ce-coupon-form": HTMLCeCouponFormElement;
         "ce-divider": HTMLCeDividerElement;
         "ce-dropdown": HTMLCeDropdownElement;
+        "ce-email": HTMLCeEmailElement;
         "ce-form": HTMLCeFormElement;
         "ce-form-control": HTMLCeFormControlElement;
         "ce-form-row": HTMLCeFormRowElement;
@@ -920,6 +1043,7 @@ declare global {
         "ce-payment": HTMLCePaymentElement;
         "ce-payment-request": HTMLCePaymentRequestElement;
         "ce-price-choices": HTMLCePriceChoicesElement;
+        "ce-product-line-item": HTMLCeProductLineItemElement;
         "ce-provider": HTMLCeProviderElement;
         "ce-quantity-select": HTMLCeQuantitySelectElement;
         "ce-radio": HTMLCeRadioElement;
@@ -1144,6 +1268,85 @@ declare namespace LocalJSX {
          */
         "position"?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
     }
+    interface CeEmail {
+        /**
+          * The input's autofocus attribute.
+         */
+        "autofocus"?: boolean;
+        /**
+          * (passed from the ce-checkout component automatically)
+         */
+        "checkoutSession"?: CheckoutSession;
+        /**
+          * Disables the input.
+         */
+        "disabled"?: boolean;
+        /**
+          * Inputs focus
+         */
+        "hasFocus"?: boolean;
+        /**
+          * The input's help text.
+         */
+        "help"?: string;
+        /**
+          * This will be true when the control is in an invalid state. Validity is determined by props such as `type`, `required`, `minlength`, `maxlength`, and `pattern` using the browser's constraint validation API.
+         */
+        "invalid"?: boolean;
+        /**
+          * The input's label.
+         */
+        "label"?: string;
+        /**
+          * Emitted when the control loses focus.
+         */
+        "onCeBlur"?: (event: CustomEvent<void>) => void;
+        /**
+          * Emitted when the control's value changes.
+         */
+        "onCeChange"?: (event: CustomEvent<void>) => void;
+        /**
+          * Emitted when the clear button is activated.
+         */
+        "onCeClear"?: (event: CustomEvent<void>) => void;
+        /**
+          * Emitted when the control gains focus.
+         */
+        "onCeFocus"?: (event: CustomEvent<void>) => void;
+        /**
+          * Emitted when the control receives input.
+         */
+        "onCeInput"?: (event: CustomEvent<void>) => void;
+        "onCeUpdateCustomer"?: (event: CustomEvent<{ email: string }>) => void;
+        /**
+          * Draws a pill-style input with rounded edges.
+         */
+        "pill"?: boolean;
+        /**
+          * The input's placeholder text.
+         */
+        "placeholder"?: string;
+        /**
+          * Makes the input readonly.
+         */
+        "readonly"?: boolean;
+        /**
+          * Makes the input a required field.
+         */
+        "required"?: boolean;
+        /**
+          * Should we show the label
+         */
+        "showLabel"?: boolean;
+        /**
+          * The input's size.
+         */
+        "size"?: 'small' | 'medium' | 'large';
+        /**
+          * The input's value attribute.
+         */
+        "value"?: string;
+    }
     interface CeForm {
         /**
           * Prevent the form from validating inputs before submitting.
@@ -1152,7 +1355,7 @@ declare namespace LocalJSX {
         /**
           * Emitted when the form is submitted. This event will not be emitted if any form control inside of it is in an invalid state, unless the form has the `novalidate` attribute. Note that there is never a need to prevent this event, since it doen't send a GET or POST request like native forms. To "prevent" submission, use a conditional around the XHR request you use to submit the form's data with.
          */
-        "onCeSubmit"?: (event: CustomEvent<{ formData: FormData; formControls: HTMLElement[] }>) => void;
+        "onCeFormSubmit"?: (event: CustomEvent<Object>) => void;
     }
     interface CeFormControl {
         "help"?: string;
@@ -1338,7 +1541,21 @@ declare namespace LocalJSX {
         "calculating"?: boolean;
     }
     interface CePayment {
+        /**
+          * Checkout Session from ce-checkout.
+         */
+        "checkoutSession"?: CheckoutSession;
+        /**
+          * The current payment method for the payment
+         */
         "paymentMethod"?: string;
+        /**
+          * Your stripe connected account id.
+         */
+        "stripeAccountId"?: string;
+        /**
+          * Your stripe publishable key.
+         */
         "stripePublishableKey"?: string;
     }
     interface CePaymentRequest {
@@ -1355,6 +1572,36 @@ declare namespace LocalJSX {
         "priceIds"?: Array<string>;
         "prices"?: Array<Price>;
         "type"?: 'radio' | 'checkbox';
+    }
+    interface CeProductLineItem {
+        /**
+          * Product monetary amount
+         */
+        "amount"?: number;
+        /**
+          * Currency for the product
+         */
+        "currency"?: string;
+        /**
+          * Url for the product image
+         */
+        "imageUrl"?: string;
+        /**
+          * Recurring interval (i.e. monthly, once, etc.)
+         */
+        "interval"?: string;
+        /**
+          * Product name
+         */
+        "name"?: string;
+        /**
+          * Emitted when the quantity changes.
+         */
+        "onCeUpdateQuantity"?: (event: CustomEvent<number>) => void;
+        /**
+          * Quantity
+         */
+        "quantity"?: number;
     }
     interface CeProvider {
         "STENCIL_CONTEXT"?: { [key: string]: any };
@@ -1497,6 +1744,10 @@ declare namespace LocalJSX {
     }
     interface CeStripeElement {
         /**
+          * The checkout session object for finalizing intents
+         */
+        "checkoutSession"?: CheckoutSession;
+        /**
           * Inputs focus
          */
         "hasFocus"?: boolean;
@@ -1520,6 +1771,10 @@ declare namespace LocalJSX {
           * The input's size.
          */
         "size"?: 'small' | 'medium' | 'large';
+        /**
+          * Your stripe connected account id.
+         */
+        "stripeAccountId"?: string;
     }
     interface CeStripePaymentRequest {
         /**
@@ -1648,6 +1903,7 @@ declare namespace LocalJSX {
         "ce-coupon-form": CeCouponForm;
         "ce-divider": CeDivider;
         "ce-dropdown": CeDropdown;
+        "ce-email": CeEmail;
         "ce-form": CeForm;
         "ce-form-control": CeFormControl;
         "ce-form-row": CeFormRow;
@@ -1662,6 +1918,7 @@ declare namespace LocalJSX {
         "ce-payment": CePayment;
         "ce-payment-request": CePaymentRequest;
         "ce-price-choices": CePriceChoices;
+        "ce-product-line-item": CeProductLineItem;
         "ce-provider": CeProvider;
         "ce-quantity-select": CeQuantitySelect;
         "ce-radio": CeRadio;
@@ -1693,6 +1950,7 @@ declare module "@stencil/core" {
             "ce-coupon-form": LocalJSX.CeCouponForm & JSXBase.HTMLAttributes<HTMLCeCouponFormElement>;
             "ce-divider": LocalJSX.CeDivider & JSXBase.HTMLAttributes<HTMLCeDividerElement>;
             "ce-dropdown": LocalJSX.CeDropdown & JSXBase.HTMLAttributes<HTMLCeDropdownElement>;
+            "ce-email": LocalJSX.CeEmail & JSXBase.HTMLAttributes<HTMLCeEmailElement>;
             "ce-form": LocalJSX.CeForm & JSXBase.HTMLAttributes<HTMLCeFormElement>;
             "ce-form-control": LocalJSX.CeFormControl & JSXBase.HTMLAttributes<HTMLCeFormControlElement>;
             "ce-form-row": LocalJSX.CeFormRow & JSXBase.HTMLAttributes<HTMLCeFormRowElement>;
@@ -1707,6 +1965,7 @@ declare module "@stencil/core" {
             "ce-payment": LocalJSX.CePayment & JSXBase.HTMLAttributes<HTMLCePaymentElement>;
             "ce-payment-request": LocalJSX.CePaymentRequest & JSXBase.HTMLAttributes<HTMLCePaymentRequestElement>;
             "ce-price-choices": LocalJSX.CePriceChoices & JSXBase.HTMLAttributes<HTMLCePriceChoicesElement>;
+            "ce-product-line-item": LocalJSX.CeProductLineItem & JSXBase.HTMLAttributes<HTMLCeProductLineItemElement>;
             "ce-provider": LocalJSX.CeProvider & JSXBase.HTMLAttributes<HTMLCeProviderElement>;
             "ce-quantity-select": LocalJSX.CeQuantitySelect & JSXBase.HTMLAttributes<HTMLCeQuantitySelectElement>;
             "ce-radio": LocalJSX.CeRadio & JSXBase.HTMLAttributes<HTMLCeRadioElement>;

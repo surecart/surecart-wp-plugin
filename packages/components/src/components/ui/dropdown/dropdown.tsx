@@ -1,6 +1,5 @@
 import { Component, Element, Prop, Event, EventEmitter, Watch, State, h } from '@stencil/core';
 import { CEMenu } from '../menu/ce-menu';
-import { clickOutside } from '../../../functions/click';
 
 @Component({
   tag: 'ce-dropdown',
@@ -36,6 +35,21 @@ export class CEDropdown {
     this.open ? this.show() : this.hide();
   }
 
+  handleOutsideClick(evt) {
+    let targetElement = evt.target as HTMLElement; // clicked element
+    do {
+      if (targetElement == this.el) {
+        // This is a click inside. Do nothing, just return.
+        return;
+      }
+      targetElement = targetElement.parentNode as HTMLElement; // Go up the DOM
+    } while (targetElement);
+
+    if (this.open) {
+      this.open = false;
+    }
+  }
+
   show() {
     // Prevent subsequent calls to the method, whether manually or triggered by the `open` watcher
     if (this.isVisible) {
@@ -65,19 +79,16 @@ export class CEDropdown {
     }
   }
 
+  componentWillLoad() {
+    document.addEventListener('click', evt => this.handleOutsideClick(evt));
+  }
+
   /* Get the slotted menu */
   getMenu() {
     let slotted = this.el.shadowRoot.querySelector('slot') as HTMLSlotElement;
     return (slotted.assignedNodes().find(node => {
       return node.nodeName === 'ce-menu';
     }) as unknown) as CEMenu;
-  }
-
-  componentDidLoad() {
-    // close when clicked outside
-    clickOutside(this.clickEl || this.el, () => {
-      this.open = false;
-    });
   }
 
   render() {
@@ -92,7 +103,13 @@ export class CEDropdown {
           part="trigger"
           class="dropdown__trigger"
           onClick={() => {
-            this.open ? this.hide() : this.show();
+            if (this.open) {
+              this.hide();
+            } else {
+              setTimeout(() => {
+                this.show();
+              }, 0);
+            }
           }}
           aria-expanded="true"
           aria-haspopup="true"

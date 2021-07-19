@@ -134,6 +134,13 @@ export class CEInput {
     return this.input.focus(options);
   }
 
+  /** Sets a custom validation message. If `message` is not empty, the field will be considered invalid. */
+  @Method()
+  async setCustomValidity(message: string) {
+    this.input.setCustomValidity(message);
+    this.invalid = !this.input.checkValidity();
+  }
+
   /** Removes focus from the input. */
   @Method()
   async triggerBlur() {

@@ -45,13 +45,17 @@ class CheckoutSession extends Model {
 	 *
 	 * @return $this|\WP_Error
 	 */
-	protected function prepare() {
+	protected function finalize() {
 		if ( $this->fireModelEvent( 'preparing' ) === false ) {
 			return false;
 		}
 
 		if ( empty( $this->attributes['id'] ) ) {
 			return new \WP_Error( 'not_saved', 'Please create the checkout session.' );
+		}
+
+		if ( empty( $this->processor_type ) ) {
+			return new \WP_Error( 'no_processor', 'Please provide a processor' );
 		}
 
 		$prepared = \CheckoutEngine::request(

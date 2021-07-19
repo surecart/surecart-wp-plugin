@@ -8,6 +8,8 @@
         </ce-secure-notice>
     @endif
 
-    <ce-payment></ce-payment>
+    <ce-payment stripe-account-id="<?php echo esc_attr(\CheckoutEngine\Models\Account::getStripeAccountId()); ?>"
+        stripe-publishable-key="pk_test_51FrVhTKIxBDlEhovnzFUjE1K3e8s9QInYW4a2S1BrYYgePmNIFZUCSvUY90MmD10PNh0ZxYFoxkW6P1xsfPofCYG00JTdSKWFO">
+    </ce-payment>
 
 @endcomponent

@@ -49,13 +49,15 @@ export class CeLineItems {
 
     return this.checkoutSession?.line_items.map(item => {
       return (
-        <ce-line-item>
-          {!!item?.price?.meta_data?.wp_attachment_src && <img src={item?.price?.meta_data?.wp_attachment_src} slot="image" />}
-          <span slot="title">{item.price.name}</span>
-          <ce-quantity-select quantity={item.quantity} slot="description" onCeChange={e => this.updateQuantity(item, e.detail)}></ce-quantity-select>
-          <span slot="price">{getFormattedPrice({ amount: item.amount_subtotal, currency: this.checkoutSession?.currency })}</span>
-          <span slot="price-description">{item.price.recurring_interval ? `${item.price.recurring_interval}` : `once`}</span>
-        </ce-line-item>
+        <ce-product-line-item
+          imageUrl={item?.price?.meta_data?.wp_attachment_src}
+          name={item?.price?.name}
+          quantity={item.quantity}
+          amount={item.amount_subtotal}
+          currency={this.checkoutSession?.currency}
+          interval={item.price.recurring_interval ? `${item.price.recurring_interval}` : `once`}
+          onCeUpdateQuantity={e => this.updateQuantity(item, e.detail)}
+        ></ce-product-line-item>
       );
     });
   }

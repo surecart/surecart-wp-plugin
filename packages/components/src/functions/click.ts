@@ -1,5 +1,6 @@
 export function clickOutside(el: HTMLElement | ShadowRoot, callback: () => void) {
   document.addEventListener('click', evt => {
+    console.log(evt);
     let targetElement = evt.target as HTMLElement; // clicked element
     do {
       if (targetElement == el) {

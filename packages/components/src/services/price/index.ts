@@ -1,0 +1,17 @@
+import { Price } from '../../types';
+import apiFetch from '../../functions/fetch';
+import { addQueryArgs } from '@wordpress/url';
+const path = 'checkout-engine/v1/price/';
+
+/**
+ * Get prices
+ */
+export const getPrices = async ({ query, currencyCode = 'usd' }: { query: Object; currencyCode: string }) => {
+  const res = (await apiFetch({
+    path: addQueryArgs(path, query),
+  })) as Array<Price>;
+  // this does not allow prices witha different currency than provided
+  return res.filter(price => {
+    return price.currency === currencyCode;
+  });
+};

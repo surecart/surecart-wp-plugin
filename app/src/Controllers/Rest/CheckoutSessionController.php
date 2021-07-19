@@ -56,15 +56,15 @@ class CheckoutSessionController {
 	 *
 	 * @return \WP_REST_Response
 	 */
-	public function prepare( \WP_REST_Request $request ) {
+	public function finalize( \WP_REST_Request $request ) {
 		$args = wp_parse_args(
 			$request,
-			[
-				'currency' => 'usd',
-			]
+			[]
 		);
 
-		// don't send with request
+		// do any validations here.
+
+		// don't send with request.
 		if ( $args['processor_type'] ) {
 			unset( $args['processor_type'] );
 		}

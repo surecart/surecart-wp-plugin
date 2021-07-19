@@ -1,5 +1,6 @@
-import { Component, Prop, Element, h } from '@stencil/core';
+import { Component, Prop, Element, Method, State, Watch, h } from '@stencil/core';
 import { loadStripe } from '@stripe/stripe-js/pure';
+import { CheckoutSession } from '../../../types';
 
 @Component({
   tag: 'ce-stripe-element',
@@ -8,10 +9,17 @@ import { loadStripe } from '@stripe/stripe-js/pure';
 })
 export class CEStripeElement {
   @Element() el: HTMLElement;
-  private input: HTMLDivElement;
+  private input: HTMLCeInputElement;
+  private container: HTMLDivElement;
   private stripe: any;
   private elements: any;
   private element: any;
+
+  /** The checkout session object for finalizing intents */
+  @Prop() checkoutSession: CheckoutSession;
+
+  /** Your stripe connected account id. */
+  @Prop() stripeAccountId: string;
 
   /** Stripe publishable key */
   @Prop() publishableKey: string;
@@ -31,13 +39,57 @@ export class CEStripeElement {
   /** Inputs focus */
   @Prop({ mutable: true, reflect: true }) hasFocus: boolean;
 
+  @State() error: string;
+  @State() confirming: boolean;
+
   async componentWillLoad() {
     if (!this.publishableKey) {
       return;
     }
-    this.stripe = await loadStripe(this.publishableKey);
+    this.stripe = await loadStripe(this.publishableKey, { stripeAccount: this.stripeAccountId });
     this.elements = this.stripe.elements();
   }
+
+  @Watch('checkoutSession')
+  async confirmCardPayment(val: CheckoutSession) {
+    // must be finalized
+    if (val?.status !== 'finalized') return;
+    // must be a stripe session
+    if (val?.processor_intent?.processor_type !== 'stripe') return;
+    // must have a secret
+    if (!val?.processor_intent?.external_client_secret) return;
+    // must have an external intent id
+    if (!val?.processor_intent?.external_intent_id) return;
+    // prevent possible double-charges
+    if (this.confirming) return;
+
+    this.confirming = true;
+    try {
+      const paid = await this.stripe.confirmCardPayment(val.processor_intent.external_client_secret, {
+        payment_method: {
+          card: this.element,
+          billing_details: {
+            ...(this.checkoutSession.name ? { name: this.checkoutSession?.name } : {}),
+          },
+        },
+      });
+    } finally {
+      this.confirming = false;
+    }
+  }
+
+  /** Checks for validity and shows the browser's validation message if the control is invalid. */
+  // @Method()
+  // async reportValidity() {
+  //   // empty
+  //   if (this.container.classList.contains('StripeElement--empty')) {
+  //     this.input.setCustomValidity('You must enter your credit card.');
+  //   } else {
+  //     this.input.setCustomValidity(!!this.error.length ? this.error : '');
+  //   }
+
+  //   return this.input.reportValidity();
+  // }
 
   componentDidLoad() {
     if (!this.elements) {
@@ -62,22 +114,19 @@ export class CEStripeElement {
           },
         },
       })
-      .mount(this.input);
+      .mount(this.container);
 
     this.element = this.elements.getElement('card');
 
-    this.element.on('focus', () => {
-      this.hasFocus = true;
-    });
-    this.element.on('blur', () => {
-      this.hasFocus = false;
-    });
+    this.element.on('change', event => (this.error = event?.error?.message ? event.error.message : ''));
+    this.element.on('focus', () => (this.hasFocus = true));
+    this.element.on('blur', () => (this.hasFocus = false));
   }
 
   render() {
     return (
-      <ce-input class="ce-stripe" size={this.size} label={this.label} help={this.help} hasFocus={this.hasFocus}>
-        <div ref={el => (this.input = el as HTMLDivElement)}></div>
+      <ce-input ref={el => (this.input = el as HTMLCeInputElement)} class="ce-stripe" size={this.size} label={this.label} help={this.help} hasFocus={this.hasFocus} invalid>
+        <div ref={el => (this.container = el as HTMLDivElement)}></div>
       </ce-input>
     );
   }

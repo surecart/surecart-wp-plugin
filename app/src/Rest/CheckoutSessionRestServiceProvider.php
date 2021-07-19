@@ -56,11 +56,11 @@ class CheckoutSessionRestServiceProvider extends RestServiceProvider implements 
 
 		register_rest_route(
 			"$this->name/v$this->version",
-			$this->endpoint . '/(?P<id>[\S]+)/prepare/(?P<processor_type>[\S]+)',
+			$this->endpoint . '/(?P<id>[\S]+)/finalize/(?P<processor_type>[\S]+)',
 			[
 				[
 					'methods'             => \WP_REST_Server::EDITABLE,
-					'callback'            => \CheckoutEngine::closure()->method( CheckoutSessionController::class, 'prepare' ),
+					'callback'            => \CheckoutEngine::closure()->method( CheckoutSessionController::class, 'finalize' ),
 					'permission_callback' => [ $this, 'permissions_check' ],
 				],
 				// Register our schema callback.

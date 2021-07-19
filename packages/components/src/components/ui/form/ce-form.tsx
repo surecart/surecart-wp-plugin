@@ -24,7 +24,7 @@ export class CEForm {
    * this event, since it doen't send a GET or POST request like native forms. To "prevent" submission, use a conditional
    * around the XHR request you use to submit the form's data with.
    */
-  @Event() ceSubmit: EventEmitter<{ formData: FormData; formControls: HTMLElement[] }>;
+  @Event() ceFormSubmit: EventEmitter<Object>;
 
   private formControls: FormControl[];
 
@@ -122,6 +122,21 @@ export class CEForm {
         },
       },
       {
+        tag: 'ce-stripe-element',
+        serialize: (el: any, formData) => {
+          if (el.name && !el.disabled) {
+            return formData.append(el.name, el.value);
+          } else {
+            null;
+          }
+        },
+        keyDown: event => {
+          if (event.key === 'Enter' && !event.defaultPrevented) {
+            this.submit();
+          }
+        },
+      },
+      {
         tag: 'ce-radio',
         serialize: (el: any, formData) => (el.name && el.checked && !el.disabled ? formData.append(el.name, el.value) : null),
       },
@@ -202,8 +217,7 @@ export class CEForm {
    */
   @Method('submit')
   async submit() {
-    console.log('submit');
-    let formData = await this.getFormData();
+    let data = await this.getFormJson();
     const formControls = this.getFormControls();
     const formControlsThatReport = formControls.filter((el: any) => typeof el.reportValidity === 'function') as any;
 
@@ -217,7 +231,7 @@ export class CEForm {
       }
     }
 
-    this.ceSubmit.emit({ formData, formControls });
+    this.ceFormSubmit.emit({ data, formControls });
 
     return true;
   }

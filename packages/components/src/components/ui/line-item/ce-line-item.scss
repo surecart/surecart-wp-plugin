@@ -69,15 +69,6 @@
 }
 
 
-.item__image{
-  display: none;
-}
-
-@media screen and (min-width: 380px) {
-  .item--has-image .item__image {
-    display: block;
-  }
-}
 .item__price-description {
   display: -webkit-box;
 }

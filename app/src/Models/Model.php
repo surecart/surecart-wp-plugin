@@ -487,10 +487,6 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 	 * @return $this
 	 */
 	protected function find( $id = '' ) {
-		if ( ! $id ) {
-			return $this;
-		}
-
 		$attributes = \CheckoutEngine::request( $this->endpoint . '/' . $id );
 
 		if ( is_wp_error( $attributes ) ) {

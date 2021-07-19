@@ -2,9 +2,11 @@ declare global {
   interface Window {
     wp: {
       apiFetch: any;
-    },
+    };
     checkout_engine: {
-      ajaxurl: string;
+      root_url: string;
+      nonce: string;
+      nonce_endpoint: string;
     };
   }
 }
@@ -23,7 +25,7 @@ export interface Price extends Object {
   created_at: string;
   updated_at: string;
   product: Product;
-  meta_data: {[key: string]: string};
+  meta_data: { [key: string]: string };
 }
 
 export interface Product extends Object {
@@ -55,7 +57,7 @@ export interface Coupon extends Object {
 
 export interface LineItemData extends Object {
   price_id: string;
-  quantity: number
+  quantity: number;
 }
 
 export interface LineItem extends Object {
@@ -73,14 +75,25 @@ export interface LineItem extends Object {
 
 export interface CheckoutSession extends Object {
   id?: string;
-  customer_first_name?: string;
-  customer_last_name?: string;
-  customer_email?: string;
+  status?: 'finalized' | 'draft' | 'paid';
+  name?: string;
+  email?: string;
   currency?: string;
   amount_total?: number;
   amount_subtotal?: number;
   line_items: Array<LineItem>;
-  metadata?: Object
+  metadata?: Object;
+  processor_intent?: ProcessorIntent;
+}
+
+export interface ProcessorIntent extends Object {
+  id: string;
+  object: string;
+  processor_type: string;
+  external_intent_id: string;
+  external_client_secret: string;
+  created_at: number;
+  updated_at: number;
 }
 
 export interface Customer extends Object {

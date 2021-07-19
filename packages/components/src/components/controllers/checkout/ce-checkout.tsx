@@ -1,6 +1,9 @@
 import { Component, h, Prop, Element, State, Watch, Listen, Event, EventEmitter } from '@stencil/core';
 import { Price, Coupon, CheckoutSession, Customer, LineItemData } from '../../../types';
 import { pick } from '../../../functions/util';
+import { updateSession, createSession, finalizeSession } from '../../../services/session/index';
+import { getPrices } from '../../../services/price/index';
+
 import { Universe } from 'stencil-wormhole';
 import apiFetch from '../../../functions/fetch';
 import { addQueryArgs } from '@wordpress/url';
@@ -32,10 +35,43 @@ export class CECheckout {
   @State() metaData: Object;
   @Event() ceLoaded: EventEmitter<void>;
 
+  /**
+   * Handles line items update.
+   */
   @Listen('ceUpdateLineItems')
   handleLineItemChange(e) {
-    console.log(e.detail);
     this.lineItemData = e.detail;
+  }
+
+  /**
+   * Handles the customer update.
+   * @param e
+   */
+  @Listen('ceUpdateCustomer')
+  async handleCustomerChange(e) {
+    const { email, name } = e.detail;
+    this.checkoutSession = {
+      ...this.checkoutSession,
+      ...{ email, name },
+    };
+    this.checkoutSession = await updateSession({
+      id: this.checkoutSession.id,
+      data: { email, name },
+    });
+  }
+
+  /**
+   * Handles the form submission.
+   * @param e
+   */
+  @Listen('ceFormSubmit')
+  async handleFormSubmit(e) {
+    // first validate server-side and get key
+    this.checkoutSession = await finalizeSession({
+      id: this.checkoutSession.id,
+      data: this.getSessionSaveData(),
+      processor: 'stripe',
+    });
   }
 
   /**
@@ -46,6 +82,13 @@ export class CECheckout {
     this.updateSession();
   }
 
+  getSessionSaveData() {
+    return {
+      ...pick(this.checkoutSession || {}, ['customer_email', 'customer_first_name', 'customer_last_name', 'currency', 'meta_data']),
+      line_items: this.lineItemData,
+    };
+  }
+
   componentWillLoad() {
     // @ts-ignore
     Universe.create(this, this.state());
@@ -53,23 +96,14 @@ export class CECheckout {
     // fetch prices and create session
     this.loading = true;
     this.calculating = true;
-    Promise.all([this.fetchPrices(), this.startSession()]).finally(() => (this.loading = false));
+    Promise.all([this.fetchPrices(), this.createSession()]).finally(() => (this.loading = false));
   }
 
   /**
    * Create a new checkout session
    */
-  async startSession() {
-    const data = {
-      ...pick(this.checkoutSession || {}, ['customer_email', 'customer_first_name', 'customer_last_name', 'currency', 'meta_data']),
-      line_items: this.lineItemData,
-    };
-
-    this.checkoutSession = (await apiFetch({
-      method: 'POST', // create or update
-      path: 'checkout-engine/v1/checkout_sessions',
-      data,
-    })) as CheckoutSession;
+  async createSession() {
+    this.checkoutSession = await createSession(this.getSessionSaveData());
   }
 
   /**
@@ -80,18 +114,12 @@ export class CECheckout {
       return;
     }
 
-    const data = {
-      ...pick(this.checkoutSession, ['customer_email', 'customer_first_name', 'customer_last_name', 'currency', 'meta_data']),
-      line_items: this.lineItemData,
-    };
-
     this.calculating = true;
     try {
-      this.checkoutSession = (await apiFetch({
-        method: 'PATCH', // create or update
-        path: `checkout-engine/v1/checkout_sessions/${this.checkoutSession.id}`,
-        data,
-      })) as CheckoutSession;
+      this.checkoutSession = await updateSession({
+        id: this.checkoutSession.id,
+        data: this.getSessionSaveData(),
+      });
     } finally {
       this.calculating = false;
     }
@@ -102,15 +130,12 @@ export class CECheckout {
    */
   @Watch('priceIds')
   async fetchPrices() {
-    let res = (await apiFetch({
-      path: addQueryArgs('checkout-engine/v1/price', {
+    this.prices = await getPrices({
+      query: {
         active: true,
         ids: this.priceIds,
-      }),
-    })) as Array<Price>;
-    // this does not allow prices witha different currency than provided
-    this.prices = res.filter(price => {
-      return price.currency === this.currencyCode;
+      },
+      currencyCode: this.currencyCode,
     });
   }
 
