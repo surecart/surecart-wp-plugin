@@ -2068,6 +2068,11 @@ electron-to-chromium@^1.3.723:
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.774.tgz#4d6661a23119e35151646c9543b346bb3beca423"
   integrity sha512-Fggh17Q1yyv1uMzq8Qn1Ci58P50qcRXMXd2MBcB9sxo6rJxjUutWcNw8uCm3gFWMdcblBO6mDT5HzX/RVRRECA==
 
+element-internals-polyfill@^0.1.40:
+  version "0.1.40"
+  resolved "https://registry.yarnpkg.com/element-internals-polyfill/-/element-internals-polyfill-0.1.40.tgz#2d16b217b97d72fcd72d6ca2dbf8026b30223892"
+  integrity sha512-/NkpYIzQxgqFBrMMvEEwVleOxK7pA/z7jtWKMOTN2g8h80Bdz8XR6vxmgkDrqlUGNXGTL7dzrXN4tiM1oxOcbQ==
+
 emittery@^0.7.1:
   version "0.7.2"
   resolved "https://registry.yarnpkg.com/emittery/-/emittery-0.7.2.tgz#25595908e13af0f5674ab419396e2fb394cdfa82"
