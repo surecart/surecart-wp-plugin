@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 // Using our ExampleController to handle a custom admin page registered using add_menu_page(), for example.
 // phpcs:ignore
 
-\CheckoutEngine::route()->get()->where( 'admin', 'ce-dashboard' )->handle( 'Dashboard@show' );
+\CheckoutEngine::route()->get()->where( 'admin', 'ce-dashboard' )->name('dashboard')->handle( 'Dashboard@show' );
 \CheckoutEngine::route()->get()->where( 'admin', 'ce-products' )->handle( 'Products@page' );
 \CheckoutEngine::route()->get()->where( 'admin', 'ce-orders' )->handle( 'Orders@list' );
 // \CheckoutEngine::route()->get()->where( 'admin', 'ce-settings' )->handle( 'Settings@show' );
@@ -26,11 +26,27 @@ if ( ! defined( 'ABSPATH' ) ) {
 | Settings
 |--------------------------------------------------------------------------
 */
+
 \CheckoutEngine::route()
 ->where( 'admin', 'ce-settings' )
 ->middleware( 'user.can:manage_options' )
 ->group(
 	function() {
+		/*
+		|--------------------------------------------------------------------------
+		| General
+		|--------------------------------------------------------------------------
+		*/
+		\CheckoutEngine::route()->where(
+			function() {
+                return empty( $_GET['tab'] ); // phpcs:ignore
+			}
+		)->group(
+			function() {
+				\CheckoutEngine::route()->get()->handle( 'Settings@show' );
+			}
+		);
+
 		/*
 		|--------------------------------------------------------------------------
 		| Account

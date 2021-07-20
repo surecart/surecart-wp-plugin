@@ -3,17 +3,16 @@
 namespace CheckoutEngine\WordPress\Admin;
 
 class AdminMenuPageService {
-    protected $slug = 'ce-dashboard';
+	protected $slug = 'ce-dashboard';
 
-    /**
-     * Add menu items.
-     */
-    public function register()
-    {
-        add_action( 'admin_menu', [ $this, 'registerAdminPages' ] );
-    }
+	/**
+	 * Add menu items.
+	 */
+	public function register() {
+		add_action( 'admin_menu', [ $this, 'registerAdminPages' ] );
+	}
 
-    /**
+	/**
 	 * Register admin pages.
 	 *
 	 * @return void
@@ -29,23 +28,28 @@ class AdminMenuPageService {
 			'settings'  => \add_submenu_page( $this->slug, __( 'Settings', 'checkout_engine' ), __( 'Settings', 'checkout_engine' ), 'manage_options', 'ce-settings', function() {} ),
 		];
 
-        $this->registerScripts();
+		$this->registerScripts();
 	}
 
-    public function getPageHooks()
-    {
-        return $this->pages;
-    }
+	public function getPageHooks() {
+		return $this->pages;
+	}
 
-    /**
-     * Get the admin page hook suffix.
-     */
-    public function getPageHook($name) {
-        return $this->pages[$name];
-    }
+	/**
+	 * Get the admin page hook suffix.
+	 */
+	public function getPageHook( $name ) {
+		return $this->pages[ $name ];
+	}
 
-    public function registerScripts() {
+	public function registerScripts() {
 		add_action( "admin_print_scripts-{$this->pages['products']}", [ $this, 'productsPageScripts' ] );
+		add_action( "admin_print_scripts-{$this->pages['settings']}", [ $this, 'settingsPageScripts' ] );
+	}
+
+	public function settingsPageScripts() {
+		wp_enqueue_script( 'checkout-engine-components' );
+		wp_enqueue_style( 'checkout-engine-themes-default' );
 	}
 
 	public function productsPageScripts() {

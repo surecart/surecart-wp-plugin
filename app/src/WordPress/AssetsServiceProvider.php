@@ -41,8 +41,6 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 		// enqueue assets on front end and editor.
 		add_action( 'enqueue_block_editor_assets', [ $this, 'editorAssets' ] );
 		add_action( 'wp_enqueue_scripts', [ $this, 'frontAssets' ] );
-		
-		// add_action( "admin_print_scripts-{$this->pages['products']}", [ $this, 'productsPageScripts' ] );
 	}
 
 	/**
@@ -84,6 +82,18 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 			[],
 			filemtime( trailingslashit( $this->container[ WPEMERGE_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/checkout-engine/checkout-engine.css' ),
 		);
+		wp_add_inline_style('checkout-engine-themes-default', '
+			ce-form, ce-checkout {
+				visibility: hidden;
+				opacity: 0;
+				transition: opacity 0.1s ease;
+			}
+			ce-checkout.hydrated,
+			ce-form.hydrated {
+				visibility: visible;
+				opacity: 1;
+			}
+		');
 	}
 
 	/**

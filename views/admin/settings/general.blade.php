@@ -5,4 +5,6 @@
         'tab' => $tab ?? '',
         ])
     @endcomponent
+
+    General
 </div>

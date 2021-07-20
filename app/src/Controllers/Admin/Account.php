@@ -2,6 +2,8 @@
 
 namespace CheckoutEngine\Controllers\Admin;
 
+use CheckoutEngine\Models\Account as AccountModel;
+
 /**
  * Handles account actions.
  */
@@ -15,9 +17,13 @@ class Account {
 	 * @return mixed
 	 */
 	public function show( \WPEmerge\Requests\RequestInterface $request ) {
+		$account = AccountModel::find();
+
 		return \CheckoutEngine::view( 'admin.settings.account' )->with(
 			[
-				'tab' => $request->query( 'tab' ),
+				'tab'      => $request->query( 'tab' ),
+				'name'     => $account->name,
+				'currency' => $account->currency,
 			]
 		);
 	}
