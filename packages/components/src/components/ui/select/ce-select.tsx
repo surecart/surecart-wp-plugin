@@ -345,17 +345,8 @@ export class CeSelect implements IChoicesProps, IChoicesMethods {
     this.destroy();
 
     return (
-      <ce-form-control
-        onClick={() => this.showDropdown()}
-        size={this.size}
-        label={this.label}
-        showLabel={this.showLabel}
-        help={this.help}
-        inputId={this.inputId}
-        helpId={this.helpId}
-        labelId={this.labelId}
-      >
-        {this.renderElement()}
+      <ce-form-control size={this.size} label={this.label} showLabel={this.showLabel} help={this.help} inputId={this.inputId} helpId={this.helpId} labelId={this.labelId}>
+        <div onClick={() => this.showDropdown()}>{this.renderElement()}</div>
       </ce-form-control>
     );
   }
