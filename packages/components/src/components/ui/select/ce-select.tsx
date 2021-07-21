@@ -1,6 +1,23 @@
-import { Component, Prop, h, Event, EventEmitter, State, Element } from '@stencil/core';
-import { CEMenuItem } from '../menu-item/ce-menu-item';
-// import { getTextContent } from '../../../functions/slot';
+import { h, Component, Method, Prop } from '@stencil/core';
+import { HTMLStencilElement } from '@stencil/core/internal';
+import {
+  AjaxFn,
+  ClassNames,
+  FuseOptions,
+  IChoicesProps,
+  IChoicesMethods,
+  ItemFilterFn,
+  NoResultsTextFn,
+  NoChoicesTextFn,
+  AddItemTextFn,
+  MaxItemTextFn,
+  SortFn,
+  OnInit,
+  OnCreateTemplates,
+  ValueCompareFunction,
+} from './interfaces';
+import { getValues, filterObject, isDefined } from './utils';
+import Choices from 'choices.js';
 let id = 0;
 
 @Component({
@@ -8,264 +25,401 @@ let id = 0;
   styleUrl: 'ce-select.scss',
   shadow: true,
 })
-export class CESelect {
-  @Element() el: HTMLElement;
-  private input: HTMLInputElement;
+export class CeSelect implements IChoicesProps, IChoicesMethods {
+  private inputId: string = `input-${++id}`;
+  private helpId = `input-help-text-${id}`;
+  private labelId = `input-label-${id}`;
+  private input: HTMLSelectElement | HTMLInputElement;
 
-  private inputId: string = `select-${++id}`;
-  private helpId = `select-help-text-${id}`;
-  private labelId = `select-label-${id}`;
+  /** The type of input */
+  @Prop() public type?: 'single' | 'multiple' | 'text' = 'single';
 
-  /** Enables multiselect. With this enabled, value will be an array. */
-  @Prop({ reflect: true }) multiple: boolean = false;
+  /** The input's size. */
+  @Prop({ reflect: true }) size: 'small' | 'medium' | 'large' = 'medium';
 
-  /**
-   * The maximum number of tags to show when `multiple` is true. After the maximum, "+n" will be shown to indicate the
-   * number of additional items that are selected. Set to -1 to remove the limit.
-   */
-  @Prop({ attribute: 'max-tags-visible' }) maxTagsVisible: number = 3;
+  /** The input's name attribute. */
+  @Prop() name: string;
 
-  /** Disables the select control. */
-  @Prop({ reflect: true }) disabled: boolean = false;
+  /** The input's value attribute. */
+  @Prop({ mutable: true }) value = '';
 
-  /** The select's name. */
-  @Prop() name = '';
+  /** Draws a pill-style input with rounded edges. */
+  @Prop({ reflect: true }) pill = false;
 
-  /** The select's placeholder text. */
-  @Prop() placeholder = '';
-
-  /** The select's size. */
-  @Prop() size: 'small' | 'medium' | 'large' = 'medium';
-
-  /** The value of the control. This will be a string or an array depending on `multiple`. */
-  @Prop() value: string | Array<string> = '';
-
-  /** Draws a pill-style select with rounded edges. */
-  @Prop({ reflect: true }) pill: boolean = false;
-
-  /** The select's label. Alternatively, you can use the label slot. */
+  /** The input's label. */
   @Prop() label: string;
 
-  /** The select's help text.  */
-  @Prop({ attribute: 'help' }) help: string;
+  /** Should we show the label */
+  @Prop() showLabel: boolean = true;
 
-  /** The select's required attribute. */
-  @Prop({ reflect: true }) required: boolean = false;
+  /** The input's help text. */
+  @Prop() help: string = '';
 
-  /** Adds a clear button when the select is populated. */
-  @Prop() clearable: boolean = false;
+  /** Optionally suppress console errors and warnings. */
+  @Prop() public silent: boolean = false;
 
-  /** This will be true when the control is in an invalid state. Validity is determined by the `required` prop. */
-  @Prop({ reflect: true }) invalid: boolean = false;
+  /** Add pre-selected items to text input */
+  @Prop() public items: Array<any> = [];
 
-  /** Emitted when the clear button is activated. */
-  @Event() ceClear: EventEmitter<void>;
+  /** Add choices to select input. */
+  @Prop() public choices: Array<any> = [];
 
-  /** Emitted when the control's value changes. */
-  @Event() ceChange: EventEmitter<void>;
+  /** A The amount of choices to be rendered within the dropdown list ("-1" indicates no limit). This is useful if you have a lot of choices where it is easier for a user to use the search area to find a choice. */
+  @Prop() public renderChoiceLimit: number = -1;
 
-  /** Emitted when the control gains focus. */
-  @Event() ceFocus: EventEmitter<void>;
+  /** The amount of items a user can input/select ("-1" indicates no limit). */
+  @Prop() public maxItemCount: number;
 
-  /** Emitted when the control loses focus. */
-  @Event() ceBlur: EventEmitter<void>;
+  /** Whether a user can add items. */
+  @Prop() public addItems: boolean;
 
-  @State() private hasFocus = false;
-  @State() private isOpen = false;
-  @State() private displayLabel = '';
-  // @State() private displayTags: TemplateResult[] = [];
+  /** Whether a user can remove items. */
+  @Prop() public removeItems: boolean;
 
-  handleMenuShow(event: CustomEvent) {
-    // if (this.disabled) {
-    //   event.preventDefault();
-    //   return;
-    // }
-    console.log(event);
-    this.isOpen = true;
+  /** Whether each item should have a remove button. */
+  @Prop() public removeItemButton: boolean;
+
+  /** Whether a user can edit items. An item's value can be edited by pressing the backspace. */
+  @Prop() public editItems: boolean;
+
+  /** Whether duplicate inputted/chosen items are allowed. */
+  @Prop() public duplicateItemsAllowed: boolean;
+
+  /** What divides each value. The default delimiter separates each value with a comma: "Value 1, Value 2, Value 3" */
+  @Prop() public delimiter: string = ',';
+
+  /** Whether a user can paste into the input. */
+  @Prop() public paste: boolean = true;
+
+  /** Whether a search area should be shown. Note: Multiple select boxes will always show search areas. */
+  @Prop() public searchEnabled: boolean = true;
+
+  /** Whether choices should be filtered by input or not. If false, the search event will still emit, but choices will not be filtered. */
+  @Prop() public searchChoices: boolean = true;
+
+  /** Specify which fields should be used when a user is searching. If you have added custom properties to your choices, you can add these values thus: ['label', 'value', 'customProperties.example']. */
+  @Prop() public searchFields: Array<string> | string;
+
+  /** The minimum length a search value should be before choices are searched. */
+  @Prop() public searchFloor: number;
+
+  /** The maximum amount of search results to show.  */
+  @Prop() public searchResultLimit: number;
+
+  /** Whether the dropdown should appear above (top) or below (bottom) the input. By default, if there is not enough space within the window the dropdown will appear above the input, otherwise below it. */
+  @Prop() public position: 'auto' | 'top' | 'bottom';
+
+  /** Whether the scroll position should reset after adding an item. */
+  @Prop() public resetScrollPosition: boolean;
+
+  /** A RegExp or string (will be passed to RegExp constructor internally) or filter function that will need to return true for a user to successfully add an item. */
+  @Prop() public shouldSort: boolean;
+
+  /** Whether choices and groups should be sorted. If false, choices/groups will appear in the order they were given. */
+  @Prop() public shouldSortItems: boolean;
+
+  /** The function that will sort choices and items before they are displayed (unless a user is searching). By default choices and items are sorted by alphabetical order. */
+  @Prop() public sorter: SortFn;
+
+  /** Whether the input should show a placeholder. Used in conjunction with placeholderValue. If placeholder is set to true and no value is passed to placeholderValue, the passed input's placeholder attribute will be used as the placeholder value. */
+  @Prop() public placeholder: boolean | string;
+
+  /** The value of the inputs placeholder. */
+  @Prop() public placeholderValue: string;
+
+  /** The value of the search inputs placeholder. */
+  @Prop() public searchPlaceholderValue: string;
+
+  /** Prepend a value to each item added/selected. */
+  @Prop() public prependValue: string;
+
+  /** Append a value to each item added/selected. */
+  @Prop() public appendValue: string;
+
+  /** Whether selected choices should be removed from the list. By default choices are removed when they are selected in multiple select box. To always render choices pass always. */
+  @Prop() public renderSelectedChoices: 'always' | 'auto' = 'auto';
+
+  /** The text that is shown whilst choices are being populated via AJAX. */
+  @Prop() public loadingText: string = 'Loading...';
+
+  /** The text that is shown when a user's search has returned no results. Optionally pass a function returning a string. */
+  @Prop() public noResultsText: string | NoResultsTextFn = 'No results found.';
+
+  /** The text that is shown when a user has selected all possible choices. Optionally pass a function returning a string. */
+  @Prop() public noChoicesText: string | NoChoicesTextFn = 'No choices found.';
+
+  /** The text that is shown when a user hovers over a selectable choice. */
+  @Prop() public itemSelectText: string = 'Press to select';
+
+  /** The text that is shown when a user has inputted a new item but has not pressed the enter key. To access the current input value, pass a function with a value argument (see the default config for an example), otherwise pass a string. */
+  @Prop() public addItemText: string | AddItemTextFn;
+
+  /** The text that is shown when a user has focus on the input but has already reached the max item count. To access the max item count, pass a function with a maxItemCount argument (see the default config for an example), otherwise pass a string. */
+  @Prop() public maxItemText: string | MaxItemTextFn;
+
+  /** Classnames to use */
+  @Prop() public classNames: ClassNames;
+
+  /** Fuse.js options */
+  @Prop() public fuseOptions: FuseOptions;
+
+  /** A RegExp or string (will be passed to RegExp constructor internally) or filter function that will need to return true for a user to successfully add an item. */
+  @Prop() public addItemFilter: string | RegExp | ItemFilterFn;
+  @Prop() public callbackOnInit: OnInit;
+  @Prop() public callbackOnCreateTemplates: OnCreateTemplates;
+  @Prop() public valueComparer: ValueCompareFunction;
+
+  private choice;
+  private element;
+
+  @Method()
+  public async highlightItem(item: HTMLElement, runEvent?: boolean) {
+    this.choice.highlightItem(item, runEvent);
+
+    return this;
   }
 
-  getItems() {
-    return ([...this.el.querySelectorAll('sl-menu-item')] as unknown[]) as CEMenuItem[];
+  @Method()
+  public async unhighlightItem(item: HTMLElement) {
+    this.choice.unhighlightItem(item);
+
+    return this;
   }
 
-  getItemLabel(item: CEMenuItem) {
-    console.log(item);
-    // const slot = item.shadowRoot.querySelector('slot:not([name])') as HTMLSlotElement;
-    // return getTextContent(CEMenuItem);
+  @Method()
+  public async highlightAll() {
+    this.choice.highlightAll();
+
+    return this;
   }
 
-  syncItemsFromValue() {
-    const items = this.getItems();
-    const value = this.getValueAsArray();
+  @Method()
+  public async unhighlightAll() {
+    this.choice.unhighlightAll();
 
-    // Sync checked states
-    items.map(item => (item.checked = value.includes(item.value)));
-
-    const checkedItem = items.filter(item => item.value === value[0])[0];
-
-    checkedItem ? this.getItemLabel(checkedItem) : '';
-    // this.displayLabel = checkedItem ? this.getItemLabel(checkedItem) : '';
-    // }
+    return this;
   }
 
-  getValueAsArray() {
-    return Array.isArray(this.value) ? this.value : [this.value];
+  @Method()
+  public async removeActiveItemsByValue(value: string) {
+    this.choice.removeActiveItemsByValue(value);
+
+    return this;
   }
 
-  handleMenuHide() {
-    this.isOpen = false;
+  @Method()
+  public async removeActiveItems(excludedId?: number) {
+    this.choice.removeActiveItems(excludedId);
+
+    return this;
   }
 
-  handleMenuSelect(event: CustomEvent) {
-    const item = event.detail.item;
+  @Method()
+  public async removeHighlightedItems(runEvent?: boolean) {
+    this.choice.removeHighlightedItems(runEvent);
 
-    if (this.multiple) {
-      this.value = this.value.includes(item.value) ? (this.value as []).filter(v => v !== item.value) : [...this.value, item.value];
-    } else {
-      this.value = item.value;
+    return this;
+  }
+
+  @Method()
+  public async showDropdown(focusInput?: boolean) {
+    this.choice.showDropdown(focusInput);
+
+    return this;
+  }
+
+  @Method()
+  public async hideDropdown(blurInput?: boolean) {
+    this.choice.hideDropdown(blurInput);
+
+    return this;
+  }
+
+  @Method()
+  public async getValue(valueOnly?: boolean): Promise<string | Array<string>> {
+    return this.choice.getValue(valueOnly);
+  }
+
+  @Method()
+  public async setValue(args: Array<any>) {
+    this.choice.setValue(args);
+
+    return this;
+  }
+
+  @Method()
+  public async setChoiceByValue(value: string | Array<string>) {
+    this.choice.setChoiceByValue(value);
+
+    return this;
+  }
+
+  @Method()
+  public async setChoices(choices: Array<any>, value: string, label: string, replaceChoices?: boolean) {
+    this.choice.setChoices(choices, value, label, replaceChoices);
+
+    return this;
+  }
+
+  @Method()
+  public async clearChoices() {
+    this.choice.clearChoices();
+
+    return this;
+  }
+
+  @Method()
+  public async clearStore() {
+    this.choice.clearStore();
+
+    return this;
+  }
+
+  @Method()
+  public async clearInput() {
+    this.choice.clearInput();
+
+    return this;
+  }
+
+  @Method()
+  public async enable() {
+    this.choice.enable();
+
+    return this;
+  }
+
+  @Method()
+  public async disable() {
+    this.choice.disable();
+
+    return this;
+  }
+
+  @Method()
+  public async ajax(fn: AjaxFn) {
+    this.choice.ajax(fn);
+
+    return this;
+  }
+
+  protected componentDidLoad() {
+    this.init();
+  }
+
+  protected componentDidUpdate() {
+    this.init();
+  }
+
+  protected disconnectedCallback() {
+    this.destroy();
+  }
+
+  renderElement() {
+    const attributes = {
+      name: this.name || null,
+    };
+
+    switch (this.type) {
+      case 'single':
+        return (
+          <select {...attributes} ref={el => (this.input = el as HTMLSelectElement)}>
+            {this.value ? this.createSelectOptions(this.value) : null}
+          </select>
+        );
+      case 'multiple':
+        return (
+          <select {...attributes} multiple ref={el => (this.input = el as HTMLSelectElement)}>
+            {this.value ? this.createSelectOptions(this.value) : null}
+          </select>
+        );
+      case 'text':
+      default:
+        return <input type="text" value={this.value} ref={el => (this.input = el as HTMLInputElement)} {...attributes} />;
     }
-
-    this.syncItemsFromValue();
   }
 
-  handleBlur() {
-    this.hasFocus = false;
-    this.ceBlur.emit();
-  }
-
-  handleFocus() {
-    this.hasFocus = true;
-    this.ceFocus.emit();
-  }
-
-  handleClearClick(event: MouseEvent) {
-    event.stopPropagation();
-    this.value = this.multiple ? [] : '';
-    this.ceClear.emit();
-    this.syncItemsFromValue();
-  }
-
-  handleKeyDown(event: KeyboardEvent) {
-    const target = event.target as HTMLElement;
-    console.log(target);
-    return;
-    // const items = this.getItems();
-    // const firstItem = items[0];
-    // const lastItem = items[items.length - 1];
-
-    // // Ignore key presses on tags
-    // if (target.tagName.toLowerCase() === 'sl-tag') {
-    //   return;
-    // }
-
-    // // Tabbing out of the control closes it
-    // if (event.key === 'Tab') {
-    //   if (this.isOpen) {
-    //     this.dropdown.hide();
-    //   }
-    //   return;
-    // }
-
-    // // Up/down opens the menu
-    // if (['ArrowDown', 'ArrowUp'].includes(event.key)) {
-    //   event.preventDefault();
-
-    //   // Show the menu if it's not already open
-    //   if (!this.isOpen) {
-    //     this.dropdown.show();
-    //   }
-
-    //   // Focus on a menu item
-    //   if (event.key === 'ArrowDown' && firstItem) {
-    //     firstItem.focus();
-    //     return;
-    //   }
-
-    //   if (event.key === 'ArrowUp' && lastItem) {
-    //     lastItem.focus();
-    //     return;
-    //   }
-    // }
-
-    // // All other keys open the menu and initiate type to select
-    // if (!this.isOpen) {
-    //   event.stopPropagation();
-    //   event.preventDefault();
-    //   this.dropdown.show();
-    //   this.menu.typeToSelect(event.key);
-    // }
-  }
-
-  /** Checks for validity and shows the browser's validation message if the control is invalid. */
-  reportValidity() {
-    return this.input.reportValidity();
-  }
-
-  render() {
-    const hasSelection = this.multiple ? this.value.length > 0 : this.value !== '';
+  protected render(): any {
+    // destroy choices element to restore previous dom structure
+    // so vdom can replace the element correctly
+    this.destroy();
 
     return (
-      <ce-form-control size={this.size} label={this.label} help={this.help} inputId={this.inputId} helpId={this.helpId} labelId={this.labelId}>
-        <ce-dropdown
-          style={{ '--panel-height': '175px' }}
-          part="base"
-          closeOnSelect={!this.multiple}
-          clickEl={this.el}
-          class={{
-            'select': true,
-            'select--open': this.isOpen,
-            'select--empty': this.value?.length === 0,
-            'select--focused': this.hasFocus,
-            'select--clearable': this.clearable,
-            'select--disabled': this.disabled,
-            'select--multiple': this.multiple,
-            // 'select--has-tags': this.multiple && this.displayTags.length > 0,
-            'select--placeholder-visible': this.displayLabel === '',
-            'select--small': this.size === 'small',
-            'select--medium': this.size === 'medium',
-            'select--large': this.size === 'large',
-            'select--pill': this.pill,
-            'select--invalid': this.invalid,
-          }}
-          onCeShow={e => this.handleMenuShow(e)}
-          onCeHide={() => this.handleMenuHide()}
-        >
-          <div
-            slot="trigger"
-            id={this.inputId}
-            class="select__box"
-            role="combobox"
-            aria-haspopup="true"
-            aria-expanded={this.isOpen ? 'true' : 'false'}
-            tabindex={this.disabled ? '-1' : '0'}
-            onBlur={() => this.handleBlur()}
-            onFocus={() => this.handleFocus()}
-            onKeyDown={e => this.handleKeyDown(e)}
-          >
-            <div class="select__label">{this.displayLabel || this.placeholder}</div>
-            {this.clearable && hasSelection ? (
-              <sl-icon-button exportparts="base:clear-button" class="select__clear" name="x-circle" library="system" onClick={this.handleClearClick} tabindex="-1"></sl-icon-button>
-            ) : (
-              ''
-            )}
-          </div>
-
-          <ce-menu part="menu" class="select__menu">
-            <slot></slot>
-          </ce-menu>
-        </ce-dropdown>
-
-        {/*The hidden input tricks the browser's built-in validation so it works as expected. We use an input
-            instead of a select because, otherwise, iOS will show a list of options during validation. */}
-        <input
-          ref={el => (this.input = el as HTMLInputElement)}
-          class="select__hidden-select"
-          aria-hidden="true"
-          required={this.required}
-          value={hasSelection ? '1' : ''}
-          tabindex="-1"
-        />
+      <ce-form-control
+        onClick={() => this.showDropdown()}
+        size={this.size}
+        label={this.label}
+        showLabel={this.showLabel}
+        help={this.help}
+        inputId={this.inputId}
+        helpId={this.helpId}
+        labelId={this.labelId}
+      >
+        {this.renderElement()}
       </ce-form-control>
     );
+  }
+
+  private init() {
+    const props = {
+      silent: this.silent,
+      items: this.items,
+      choices: this.choices,
+      renderChoiceLimit: this.renderChoiceLimit,
+      maxItemCount: this.maxItemCount,
+      addItems: this.addItems,
+      removeItems: this.removeItems,
+      removeItemButton: this.removeItemButton,
+      editItems: this.editItems,
+      duplicateItemsAllowed: this.duplicateItemsAllowed,
+      delimiter: this.delimiter,
+      paste: this.paste,
+      searchEnabled: this.searchEnabled,
+      searchChoices: this.searchChoices,
+      searchFields: this.searchFields,
+      searchFloor: this.searchFloor,
+      searchResultLimit: this.searchResultLimit,
+      position: this.position,
+      resetScrollPosition: this.resetScrollPosition,
+      shouldSort: this.shouldSort,
+      shouldSortItems: this.shouldSortItems,
+      sorter: this.sorter,
+      placeholder: true,
+      placeholderValue: this.placeholderValue || (typeof this.placeholder === 'string' && this.placeholder) || ' ',
+      searchPlaceholderValue: this.searchPlaceholderValue,
+      prependValue: this.prependValue,
+      appendValue: this.appendValue,
+      renderSelectedChoices: this.renderSelectedChoices,
+      loadingText: this.loadingText,
+      noResultsText: this.noResultsText,
+      noChoicesText: this.noChoicesText,
+      itemSelectText: this.itemSelectText,
+      addItemText: this.addItemText,
+      maxItemText: this.maxItemText,
+      classNames: this.classNames,
+      fuseOptions: this.fuseOptions,
+      callbackOnInit: this.callbackOnInit,
+      callbackOnCreateTemplates: this.callbackOnCreateTemplates,
+      valueComparer: this.valueComparer,
+      addItemFilter: this.addItemFilter,
+    };
+    const settings = filterObject(props, isDefined);
+
+    this.choice = new Choices(this.input, settings);
+  }
+
+  private destroy() {
+    if (this.element) {
+      this.element = null;
+    }
+
+    if (this.choice) {
+      this.choice.destroy();
+      this.choice = null;
+    }
+  }
+
+  private createSelectOptions(values: string | Array<string>): Array<HTMLStencilElement> {
+    return getValues(values).map(value => <option value={value}>{value}</option>);
   }
 }

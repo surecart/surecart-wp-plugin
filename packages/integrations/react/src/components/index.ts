@@ -9,6 +9,7 @@ import type { JSX } from '@checkout-engine/components';
 
 export const CeBlockUi = /*@__PURE__*/createReactComponent<JSX.CeBlockUi, HTMLCeBlockUiElement>('ce-block-ui');
 export const CeButton = /*@__PURE__*/createReactComponent<JSX.CeButton, HTMLCeButtonElement>('ce-button');
+export const CeCard = /*@__PURE__*/createReactComponent<JSX.CeCard, HTMLCeCardElement>('ce-card');
 export const CeCheckbox = /*@__PURE__*/createReactComponent<JSX.CeCheckbox, HTMLCeCheckboxElement>('ce-checkbox');
 export const CeCheckout = /*@__PURE__*/createReactComponent<JSX.CeCheckout, HTMLCeCheckoutElement>('ce-checkout');
 export const CeChoice = /*@__PURE__*/createReactComponent<JSX.CeChoice, HTMLCeChoiceElement>('ce-choice');

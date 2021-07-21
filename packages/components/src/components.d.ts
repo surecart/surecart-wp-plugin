@@ -6,6 +6,7 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { CheckoutSession, LineItemData, Price } from "./types";
+import { AddItemTextFn, AjaxFn, ClassNames, FuseOptions, ItemFilterFn, MaxItemTextFn, NoChoicesTextFn, NoResultsTextFn, OnCreateTemplates, OnInit, SortFn, ValueCompareFunction } from "./components/ui/select/interfaces";
 export namespace Components {
     interface CeBlockUi {
     }
@@ -570,57 +571,207 @@ export namespace Components {
     }
     interface CeSelect {
         /**
-          * Adds a clear button when the select is populated.
+          * A RegExp or string (will be passed to RegExp constructor internally) or filter function that will need to return true for a user to successfully add an item.
          */
-        "clearable": boolean;
+        "addItemFilter": string | RegExp | ItemFilterFn;
         /**
-          * Disables the select control.
+          * The text that is shown when a user has inputted a new item but has not pressed the enter key. To access the current input value, pass a function with a value argument (see the default config for an example), otherwise pass a string.
          */
-        "disabled": boolean;
+        "addItemText": string | AddItemTextFn;
         /**
-          * The select's help text.
+          * Whether a user can add items.
+         */
+        "addItems": boolean;
+        "ajax": (fn: AjaxFn) => Promise<this>;
+        /**
+          * Append a value to each item added/selected.
+         */
+        "appendValue": string;
+        "callbackOnCreateTemplates": OnCreateTemplates;
+        "callbackOnInit": OnInit;
+        /**
+          * Add choices to select input.
+         */
+        "choices": Array<any>;
+        /**
+          * Classnames to use
+         */
+        "classNames": ClassNames;
+        "clearChoices": () => Promise<this>;
+        "clearInput": () => Promise<this>;
+        "clearStore": () => Promise<this>;
+        /**
+          * What divides each value. The default delimiter separates each value with a comma: "Value 1, Value 2, Value 3"
+         */
+        "delimiter": string;
+        "disable": () => Promise<this>;
+        /**
+          * Whether duplicate inputted/chosen items are allowed.
+         */
+        "duplicateItemsAllowed": boolean;
+        /**
+          * Whether a user can edit items. An item's value can be edited by pressing the backspace.
+         */
+        "editItems": boolean;
+        "enable": () => Promise<this>;
+        /**
+          * Fuse.js options
+         */
+        "fuseOptions": FuseOptions;
+        "getValue": (valueOnly?: boolean) => Promise<string | Array<string>>;
+        /**
+          * The input's help text.
          */
         "help": string;
+        "hideDropdown": (blurInput?: boolean) => Promise<this>;
+        "highlightAll": () => Promise<this>;
+        "highlightItem": (item: HTMLElement, runEvent?: boolean) => Promise<this>;
         /**
-          * This will be true when the control is in an invalid state. Validity is determined by the `required` prop.
+          * The text that is shown when a user hovers over a selectable choice.
          */
-        "invalid": boolean;
+        "itemSelectText": string;
         /**
-          * The select's label. Alternatively, you can use the label slot.
+          * Add pre-selected items to text input
+         */
+        "items": Array<any>;
+        /**
+          * The input's label.
          */
         "label": string;
         /**
-          * The maximum number of tags to show when `multiple` is true. After the maximum, "+n" will be shown to indicate the number of additional items that are selected. Set to -1 to remove the limit.
+          * The text that is shown whilst choices are being populated via AJAX.
          */
-        "maxTagsVisible": number;
+        "loadingText": string;
         /**
-          * Enables multiselect. With this enabled, value will be an array.
+          * The amount of items a user can input/select ("-1" indicates no limit).
          */
-        "multiple": boolean;
+        "maxItemCount": number;
         /**
-          * The select's name.
+          * The text that is shown when a user has focus on the input but has already reached the max item count. To access the max item count, pass a function with a maxItemCount argument (see the default config for an example), otherwise pass a string.
+         */
+        "maxItemText": string | MaxItemTextFn;
+        /**
+          * The input's name attribute.
          */
         "name": string;
         /**
-          * Draws a pill-style select with rounded edges.
+          * The text that is shown when a user has selected all possible choices. Optionally pass a function returning a string.
+         */
+        "noChoicesText": string | NoChoicesTextFn;
+        /**
+          * The text that is shown when a user's search has returned no results. Optionally pass a function returning a string.
+         */
+        "noResultsText": string | NoResultsTextFn;
+        /**
+          * Whether a user can paste into the input.
+         */
+        "paste": boolean;
+        /**
+          * Draws a pill-style input with rounded edges.
          */
         "pill": boolean;
         /**
-          * The select's placeholder text.
+          * Whether the input should show a placeholder. Used in conjunction with placeholderValue. If placeholder is set to true and no value is passed to placeholderValue, the passed input's placeholder attribute will be used as the placeholder value.
          */
-        "placeholder": string;
+        "placeholder": boolean | string;
         /**
-          * The select's required attribute.
+          * The value of the inputs placeholder.
          */
-        "required": boolean;
+        "placeholderValue": string;
         /**
-          * The select's size.
+          * Whether the dropdown should appear above (top) or below (bottom) the input. By default, if there is not enough space within the window the dropdown will appear above the input, otherwise below it.
+         */
+        "position": 'auto' | 'top' | 'bottom';
+        /**
+          * Prepend a value to each item added/selected.
+         */
+        "prependValue": string;
+        "removeActiveItems": (excludedId?: number) => Promise<this>;
+        "removeActiveItemsByValue": (value: string) => Promise<this>;
+        "removeHighlightedItems": (runEvent?: boolean) => Promise<this>;
+        /**
+          * Whether each item should have a remove button.
+         */
+        "removeItemButton": boolean;
+        /**
+          * Whether a user can remove items.
+         */
+        "removeItems": boolean;
+        /**
+          * A The amount of choices to be rendered within the dropdown list ("-1" indicates no limit). This is useful if you have a lot of choices where it is easier for a user to use the search area to find a choice.
+         */
+        "renderChoiceLimit": number;
+        /**
+          * Whether selected choices should be removed from the list. By default choices are removed when they are selected in multiple select box. To always render choices pass always.
+         */
+        "renderSelectedChoices": 'always' | 'auto';
+        /**
+          * Whether the scroll position should reset after adding an item.
+         */
+        "resetScrollPosition": boolean;
+        /**
+          * Whether choices should be filtered by input or not. If false, the search event will still emit, but choices will not be filtered.
+         */
+        "searchChoices": boolean;
+        /**
+          * Whether a search area should be shown. Note: Multiple select boxes will always show search areas.
+         */
+        "searchEnabled": boolean;
+        /**
+          * Specify which fields should be used when a user is searching. If you have added custom properties to your choices, you can add these values thus: ['label', 'value', 'customProperties.example'].
+         */
+        "searchFields": Array<string> | string;
+        /**
+          * The minimum length a search value should be before choices are searched.
+         */
+        "searchFloor": number;
+        /**
+          * The value of the search inputs placeholder.
+         */
+        "searchPlaceholderValue": string;
+        /**
+          * The maximum amount of search results to show.
+         */
+        "searchResultLimit": number;
+        "setChoiceByValue": (value: string | Array<string>) => Promise<this>;
+        "setChoices": (choices: Array<any>, value: string, label: string, replaceChoices?: boolean) => Promise<this>;
+        "setValue": (args: Array<any>) => Promise<this>;
+        /**
+          * A RegExp or string (will be passed to RegExp constructor internally) or filter function that will need to return true for a user to successfully add an item.
+         */
+        "shouldSort": boolean;
+        /**
+          * Whether choices and groups should be sorted. If false, choices/groups will appear in the order they were given.
+         */
+        "shouldSortItems": boolean;
+        "showDropdown": (focusInput?: boolean) => Promise<this>;
+        /**
+          * Should we show the label
+         */
+        "showLabel": boolean;
+        /**
+          * Optionally suppress console errors and warnings.
+         */
+        "silent": boolean;
+        /**
+          * The input's size.
          */
         "size": 'small' | 'medium' | 'large';
         /**
-          * The value of the control. This will be a string or an array depending on `multiple`.
+          * The function that will sort choices and items before they are displayed (unless a user is searching). By default choices and items are sorted by alphabetical order.
          */
-        "value": string | Array<string>;
+        "sorter": SortFn;
+        /**
+          * The type of input
+         */
+        "type"?: 'single' | 'multiple' | 'text';
+        "unhighlightAll": () => Promise<this>;
+        "unhighlightItem": (item: HTMLElement) => Promise<this>;
+        /**
+          * The input's value attribute.
+         */
+        "value": string;
+        "valueComparer": ValueCompareFunction;
     }
     interface CeSkeleton {
         /**
@@ -1677,73 +1828,188 @@ declare namespace LocalJSX {
     }
     interface CeSelect {
         /**
-          * Adds a clear button when the select is populated.
+          * A RegExp or string (will be passed to RegExp constructor internally) or filter function that will need to return true for a user to successfully add an item.
          */
-        "clearable"?: boolean;
+        "addItemFilter"?: string | RegExp | ItemFilterFn;
         /**
-          * Disables the select control.
+          * The text that is shown when a user has inputted a new item but has not pressed the enter key. To access the current input value, pass a function with a value argument (see the default config for an example), otherwise pass a string.
          */
-        "disabled"?: boolean;
+        "addItemText"?: string | AddItemTextFn;
         /**
-          * The select's help text.
+          * Whether a user can add items.
+         */
+        "addItems"?: boolean;
+        /**
+          * Append a value to each item added/selected.
+         */
+        "appendValue"?: string;
+        "callbackOnCreateTemplates"?: OnCreateTemplates;
+        "callbackOnInit"?: OnInit;
+        /**
+          * Add choices to select input.
+         */
+        "choices"?: Array<any>;
+        /**
+          * Classnames to use
+         */
+        "classNames"?: ClassNames;
+        /**
+          * What divides each value. The default delimiter separates each value with a comma: "Value 1, Value 2, Value 3"
+         */
+        "delimiter"?: string;
+        /**
+          * Whether duplicate inputted/chosen items are allowed.
+         */
+        "duplicateItemsAllowed"?: boolean;
+        /**
+          * Whether a user can edit items. An item's value can be edited by pressing the backspace.
+         */
+        "editItems"?: boolean;
+        /**
+          * Fuse.js options
+         */
+        "fuseOptions"?: FuseOptions;
+        /**
+          * The input's help text.
          */
         "help"?: string;
         /**
-          * This will be true when the control is in an invalid state. Validity is determined by the `required` prop.
+          * The text that is shown when a user hovers over a selectable choice.
          */
-        "invalid"?: boolean;
+        "itemSelectText"?: string;
         /**
-          * The select's label. Alternatively, you can use the label slot.
+          * Add pre-selected items to text input
+         */
+        "items"?: Array<any>;
+        /**
+          * The input's label.
          */
         "label"?: string;
         /**
-          * The maximum number of tags to show when `multiple` is true. After the maximum, "+n" will be shown to indicate the number of additional items that are selected. Set to -1 to remove the limit.
+          * The text that is shown whilst choices are being populated via AJAX.
          */
-        "maxTagsVisible"?: number;
+        "loadingText"?: string;
         /**
-          * Enables multiselect. With this enabled, value will be an array.
+          * The amount of items a user can input/select ("-1" indicates no limit).
          */
-        "multiple"?: boolean;
+        "maxItemCount"?: number;
         /**
-          * The select's name.
+          * The text that is shown when a user has focus on the input but has already reached the max item count. To access the max item count, pass a function with a maxItemCount argument (see the default config for an example), otherwise pass a string.
+         */
+        "maxItemText"?: string | MaxItemTextFn;
+        /**
+          * The input's name attribute.
          */
         "name"?: string;
         /**
-          * Emitted when the control loses focus.
+          * The text that is shown when a user has selected all possible choices. Optionally pass a function returning a string.
          */
-        "onCeBlur"?: (event: CustomEvent<void>) => void;
+        "noChoicesText"?: string | NoChoicesTextFn;
         /**
-          * Emitted when the control's value changes.
+          * The text that is shown when a user's search has returned no results. Optionally pass a function returning a string.
          */
-        "onCeChange"?: (event: CustomEvent<void>) => void;
+        "noResultsText"?: string | NoResultsTextFn;
         /**
-          * Emitted when the clear button is activated.
+          * Whether a user can paste into the input.
          */
-        "onCeClear"?: (event: CustomEvent<void>) => void;
+        "paste"?: boolean;
         /**
-          * Emitted when the control gains focus.
-         */
-        "onCeFocus"?: (event: CustomEvent<void>) => void;
-        /**
-          * Draws a pill-style select with rounded edges.
+          * Draws a pill-style input with rounded edges.
          */
         "pill"?: boolean;
         /**
-          * The select's placeholder text.
+          * Whether the input should show a placeholder. Used in conjunction with placeholderValue. If placeholder is set to true and no value is passed to placeholderValue, the passed input's placeholder attribute will be used as the placeholder value.
          */
-        "placeholder"?: string;
+        "placeholder"?: boolean | string;
         /**
-          * The select's required attribute.
+          * The value of the inputs placeholder.
          */
-        "required"?: boolean;
+        "placeholderValue"?: string;
         /**
-          * The select's size.
+          * Whether the dropdown should appear above (top) or below (bottom) the input. By default, if there is not enough space within the window the dropdown will appear above the input, otherwise below it.
+         */
+        "position"?: 'auto' | 'top' | 'bottom';
+        /**
+          * Prepend a value to each item added/selected.
+         */
+        "prependValue"?: string;
+        /**
+          * Whether each item should have a remove button.
+         */
+        "removeItemButton"?: boolean;
+        /**
+          * Whether a user can remove items.
+         */
+        "removeItems"?: boolean;
+        /**
+          * A The amount of choices to be rendered within the dropdown list ("-1" indicates no limit). This is useful if you have a lot of choices where it is easier for a user to use the search area to find a choice.
+         */
+        "renderChoiceLimit"?: number;
+        /**
+          * Whether selected choices should be removed from the list. By default choices are removed when they are selected in multiple select box. To always render choices pass always.
+         */
+        "renderSelectedChoices"?: 'always' | 'auto';
+        /**
+          * Whether the scroll position should reset after adding an item.
+         */
+        "resetScrollPosition"?: boolean;
+        /**
+          * Whether choices should be filtered by input or not. If false, the search event will still emit, but choices will not be filtered.
+         */
+        "searchChoices"?: boolean;
+        /**
+          * Whether a search area should be shown. Note: Multiple select boxes will always show search areas.
+         */
+        "searchEnabled"?: boolean;
+        /**
+          * Specify which fields should be used when a user is searching. If you have added custom properties to your choices, you can add these values thus: ['label', 'value', 'customProperties.example'].
+         */
+        "searchFields"?: Array<string> | string;
+        /**
+          * The minimum length a search value should be before choices are searched.
+         */
+        "searchFloor"?: number;
+        /**
+          * The value of the search inputs placeholder.
+         */
+        "searchPlaceholderValue"?: string;
+        /**
+          * The maximum amount of search results to show.
+         */
+        "searchResultLimit"?: number;
+        /**
+          * A RegExp or string (will be passed to RegExp constructor internally) or filter function that will need to return true for a user to successfully add an item.
+         */
+        "shouldSort"?: boolean;
+        /**
+          * Whether choices and groups should be sorted. If false, choices/groups will appear in the order they were given.
+         */
+        "shouldSortItems"?: boolean;
+        /**
+          * Should we show the label
+         */
+        "showLabel"?: boolean;
+        /**
+          * Optionally suppress console errors and warnings.
+         */
+        "silent"?: boolean;
+        /**
+          * The input's size.
          */
         "size"?: 'small' | 'medium' | 'large';
         /**
-          * The value of the control. This will be a string or an array depending on `multiple`.
+          * The function that will sort choices and items before they are displayed (unless a user is searching). By default choices and items are sorted by alphabetical order.
          */
-        "value"?: string | Array<string>;
+        "sorter"?: SortFn;
+        /**
+          * The type of input
+         */
+        "type"?: 'single' | 'multiple' | 'text';
+        /**
+          * The input's value attribute.
+         */
+        "value"?: string;
+        "valueComparer"?: ValueCompareFunction;
     }
     interface CeSkeleton {
         /**
