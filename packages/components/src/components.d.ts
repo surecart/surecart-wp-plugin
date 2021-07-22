@@ -1909,6 +1909,7 @@ declare namespace LocalJSX {
           * The text that is shown when a user's search has returned no results. Optionally pass a function returning a string.
          */
         "noResultsText"?: string | NoResultsTextFn;
+        "onCeChange"?: (event: CustomEvent<any>) => void;
         /**
           * Whether a user can paste into the input.
          */

@@ -1,4 +1,4 @@
-import { h, Component, Method, Prop } from '@stencil/core';
+import { h, Component, Method, Prop, Event, EventEmitter } from '@stencil/core';
 import { HTMLStencilElement } from '@stencil/core/internal';
 import {
   AjaxFn,
@@ -165,9 +165,12 @@ export class CeSelect implements IChoicesProps, IChoicesMethods {
 
   /** A RegExp or string (will be passed to RegExp constructor internally) or filter function that will need to return true for a user to successfully add an item. */
   @Prop() public addItemFilter: string | RegExp | ItemFilterFn;
+
   @Prop() public callbackOnInit: OnInit;
   @Prop() public callbackOnCreateTemplates: OnCreateTemplates;
   @Prop() public valueComparer: ValueCompareFunction;
+
+  @Event() ceChange: EventEmitter<any>;
 
   private choice;
   private element;
@@ -315,6 +318,10 @@ export class CeSelect implements IChoicesProps, IChoicesMethods {
     this.destroy();
   }
 
+  handleChange(e: Event) {
+    this.ceChange.emit(e);
+  }
+
   renderElement() {
     const attributes = {
       name: this.name || null,
@@ -322,17 +329,18 @@ export class CeSelect implements IChoicesProps, IChoicesMethods {
 
     switch (this.type) {
       case 'single':
-        return (
-          <select {...attributes} ref={el => (this.input = el as HTMLSelectElement)}>
-            {this.value ? this.createSelectOptions(this.value) : null}
-          </select>
-        );
       case 'multiple':
         return (
-          <select {...attributes} multiple ref={el => (this.input = el as HTMLSelectElement)}>
+          <select {...attributes} multiple={this.type === 'multiple'} ref={el => (this.input = el as HTMLSelectElement)} onChange={e => this.handleChange(e)}>
             {this.value ? this.createSelectOptions(this.value) : null}
           </select>
         );
+      // case 'multiple':
+      //   return (
+      //     <select {...attributes} multiple ref={el => (this.input = el as HTMLSelectElement)}>
+      //       {this.value ? this.createSelectOptions(this.value) : null}
+      //     </select>
+      //   );
       case 'text':
       default:
         return <input type="text" value={this.value} ref={el => (this.input = el as HTMLInputElement)} {...attributes} />;
@@ -344,6 +352,7 @@ export class CeSelect implements IChoicesProps, IChoicesMethods {
     // so vdom can replace the element correctly
     this.destroy();
 
+    // @ts-ignore
     return (
       <ce-form-control size={this.size} label={this.label} showLabel={this.showLabel} help={this.help} inputId={this.inputId} helpId={this.helpId} labelId={this.labelId}>
         <div onClick={() => this.showDropdown()}>{this.renderElement()}</div>
