@@ -18,6 +18,8 @@ export default () => {
 		return <Spinner />;
 	}
 
+	const currency = settings?.checkout_engine_account?.currency?.toUpperCase();
+
 	return (
 		<ce-card>
 			<ce-form-section>
@@ -35,21 +37,28 @@ export default () => {
 					<CeInput
 						label="Account Name"
 						value={ settings?.checkout_engine_account?.name }
-						onCeChange={ ( e ) => {
-							console.log( e.target.value );
+						onCeChange={ ( e ) =>
 							dispatch(
 								'checkout-engine/settings'
 							).updateSetting(
 								{ name: e.target.value },
 								'account'
-							);
-						} }
+							)
+						}
 					></CeInput>
 				</ce-form-row>
 				<ce-form-row>
 					<CeSelect
 						label={ __( 'Default currency', 'checkout_engine' ) }
-						value={ settings?.checkout_engine_account?.currency?.toUpperCase() }
+						onChoice={ ( e ) => console.log( e ) }
+						onCeChange={ ( e ) =>
+							dispatch(
+								'checkout-engine/settings'
+							).updateSetting(
+								{ currency: e.target.value },
+								'account'
+							)
+						}
 						choices={ [
 							{
 								value: 'AUD',
@@ -57,6 +66,7 @@ export default () => {
 									'Australia Dollars',
 									'checkout_engine'
 								),
+								selected: currency === 'AUD',
 							},
 							{
 								value: 'BRL',
@@ -64,6 +74,7 @@ export default () => {
 									'Brazilian Real',
 									'checkout_engine'
 								),
+								selected: currency === 'BRL',
 							},
 							{
 								value: 'CAD',
@@ -71,22 +82,27 @@ export default () => {
 									'Canadian Dollars',
 									'checkout_engine'
 								),
+								selected: currency === 'CAD',
 							},
 							{
 								value: 'CNY',
 								label: __( 'Chinese Yuan', 'checkout_engine' ),
+								selected: currency === 'CNY',
 							},
 							{
 								value: 'CZK',
 								label: __( 'Czech Koruna', 'checkout_engine' ),
+								selected: currency === 'CZK',
 							},
 							{
 								value: 'DKK',
 								label: __( 'Danish Krone', 'checkout_engine' ),
+								selected: currency === 'DKK',
 							},
 							{
 								value: 'EUR',
 								label: __( 'Euros', 'checkout_engine' ),
+								selected: currency === 'EUR',
 							},
 							{
 								value: 'HKD',
@@ -94,6 +110,7 @@ export default () => {
 									'Hong Kong Dollar',
 									'checkout_engine'
 								),
+								selected: currency === 'HKD',
 							},
 							{
 								value: 'HUF',
@@ -101,10 +118,12 @@ export default () => {
 									'Hungarian Forint',
 									'checkout_engine'
 								),
+								selected: currency === 'HUF',
 							},
 							{
 								value: 'INR',
 								label: __( 'Indian Rupee', 'checkout_engine' ),
+								selected: currency === 'INR',
 							},
 							{
 								value: 'IDR',
@@ -112,6 +131,7 @@ export default () => {
 									'Indonesia Rupiah',
 									'checkout_engine'
 								),
+								selected: currency === 'IDR',
 							},
 							{
 								value: 'ILS',
@@ -119,14 +139,17 @@ export default () => {
 									'Israeli Shekel',
 									'checkout_engine'
 								),
+								selected: currency === 'ILS',
 							},
 							{
 								value: 'JPY',
 								label: __( 'Japanese Yen', 'checkout_engine' ),
+								selected: currency === 'JPY',
 							},
 							{
 								value: 'MXN',
 								label: __( 'Mexican Peso', 'checkout_engine' ),
+								selected: currency === 'MXN',
 							},
 							{
 								value: 'NZD',
@@ -134,6 +157,7 @@ export default () => {
 									'New Zealand Dollar',
 									'checkout_engine'
 								),
+								selected: currency === 'NZD',
 							},
 							{
 								value: 'NOK',
@@ -141,6 +165,7 @@ export default () => {
 									'Norwegian Krone',
 									'checkout_engine'
 								),
+								selected: currency === 'NOK',
 							},
 							{
 								value: 'PHP',
@@ -148,10 +173,12 @@ export default () => {
 									'Philippine Pesos',
 									'checkout_engine'
 								),
+								selected: currency === 'PHP',
 							},
 							{
 								value: 'PLN',
 								label: __( 'Polish Zloty', 'checkout_engine' ),
+								selected: currency === 'PLN',
 							},
 							{
 								value: 'GBP',
@@ -159,6 +186,7 @@ export default () => {
 									'Pounds Sterling',
 									'checkout_engine'
 								),
+								selected: currency === 'GBP',
 							},
 							{
 								value: 'SGD',
@@ -166,6 +194,7 @@ export default () => {
 									'Singapore Dollar',
 									'checkout_engine'
 								),
+								selected: currency === 'SGD',
 							},
 							{
 								value: 'ZAR',
@@ -173,6 +202,7 @@ export default () => {
 									'South African Rand',
 									'checkout_engine'
 								),
+								selected: currency === 'ZAR',
 							},
 							{
 								value: 'KRW',
@@ -180,14 +210,17 @@ export default () => {
 									'South Korean Won',
 									'checkout_engine'
 								),
+								selected: currency === 'KRN',
 							},
 							{
 								value: 'SEK',
 								label: __( 'Swedish Krona', 'checkout_engine' ),
+								selected: currency === 'SEK',
 							},
 							{
 								value: 'CHF',
 								label: __( 'Swiss Franc', 'checkout_engine' ),
+								selected: currency === 'CHF',
 							},
 							{
 								value: 'TWD',
@@ -195,18 +228,22 @@ export default () => {
 									'Taiwan New Dollars',
 									'checkout_engine'
 								),
+								selected: currency === 'TWD',
 							},
 							{
 								value: 'THB',
 								label: __( 'Thai Baht', 'checkout_engine' ),
+								selected: currency === 'THB',
 							},
 							{
 								value: 'TRY',
 								label: __( 'Turkish Lira', 'checkout_engine' ),
+								selected: currency === 'TRY',
 							},
 							{
 								value: 'USD',
 								label: __( 'US Dollars', 'checkout_engine' ),
+								selected: currency === 'USD',
 							},
 							{
 								value: 'VND',
@@ -214,6 +251,7 @@ export default () => {
 									'Vietnamese Dong',
 									'checkout_engine'
 								),
+								selected: currency === 'VND',
 							},
 						] }
 					></CeSelect>

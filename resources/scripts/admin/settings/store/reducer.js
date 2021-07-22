@@ -8,11 +8,12 @@ const settingsReducer = ( state = {}, action ) => {
 			return action.settings;
 
 		case 'UPDATE_SETTING':
+			const update = action.data;
 			return {
 				...state,
-				[ `checkout_engine${ action.optionName }` ]: {
-					...state[ `checkout_engine${ action.optionName }` ],
-					...action.data,
+				[ `checkout_engine_${ action.optionName }` ]: {
+					...state[ `checkout_engine_${ action.optionName }` ],
+					...update,
 				},
 			};
 
