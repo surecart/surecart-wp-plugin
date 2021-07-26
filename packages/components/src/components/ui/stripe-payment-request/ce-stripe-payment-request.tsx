@@ -1,5 +1,6 @@
 import { Component, Prop, State, h, Element } from '@stencil/core';
 import { loadStripe } from '@stripe/stripe-js/pure';
+import { Stripe } from '@stripe/stripe-js';
 
 @Component({
   tag: 'ce-stripe-payment-request',
@@ -9,12 +10,15 @@ import { loadStripe } from '@stripe/stripe-js/pure';
 export class CEStripePaymentRequest {
   @Element() el: HTMLElement;
   private request: HTMLDivElement;
-  private stripe: any;
+  private stripe: Stripe;
   private paymentRequest: any;
   private elements: any;
 
   /** Stripe publishable key */
-  @Prop() publishableKey: string;
+  @Prop() stripePublishableKey: string;
+
+  /** Stripe account id */
+  @Prop() stripeAccountId: string;
 
   /** Country */
   @Prop() country: string = 'US';
@@ -35,10 +39,10 @@ export class CEStripePaymentRequest {
   @State() loaded: boolean = false;
 
   async componentWillLoad() {
-    if (!this.publishableKey) {
+    if (!this.stripePublishableKey) {
       return true;
     }
-    this.stripe = await loadStripe(this.publishableKey);
+    this.stripe = await loadStripe(this.stripePublishableKey);
     this.elements = this.stripe.elements();
 
     this.paymentRequest = this.stripe.paymentRequest({
@@ -73,7 +77,6 @@ export class CEStripePaymentRequest {
     this.paymentRequest
       .canMakePayment()
       .then(result => {
-        console.log(result);
         if (!result) {
           return;
         }

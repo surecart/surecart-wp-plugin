@@ -10,6 +10,7 @@ export class CePaymentRequest {
   @Prop() paymentMethod: 'stripe' | 'paypal';
   @Prop() total: number;
   @Prop() stripePublishableKey: string;
+  @Prop() stripeAccountId: string;
 
   render() {
     if (!this.paymentMethod) {

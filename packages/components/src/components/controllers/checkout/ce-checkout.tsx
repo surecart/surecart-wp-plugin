@@ -94,7 +94,9 @@ export class CECheckout {
     // fetch prices and create session
     this.loading = true;
     this.calculating = true;
-    Promise.all([this.fetchPrices(), this.createSession()]).finally(() => (this.loading = false));
+    if (this.priceIds) {
+      Promise.all([this.fetchPrices(), this.createSession()]).finally(() => (this.loading = false));
+    }
   }
 
   /**

@@ -361,6 +361,10 @@ export class CeSelect implements IChoicesProps, IChoicesMethods {
   }
 
   private init() {
+    if (!this.items.length) {
+      return;
+    }
+
     const props = {
       silent: this.silent,
       items: this.items,

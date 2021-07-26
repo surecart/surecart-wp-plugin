@@ -42,7 +42,7 @@ export class CeLineItems {
       );
     }
 
-    if (!this.checkoutSession.line_items || !this.checkoutSession.line_items.length) {
+    if (!this?.checkoutSession?.line_items || !this?.checkoutSession?.line_items.length) {
       return '';
     }
 

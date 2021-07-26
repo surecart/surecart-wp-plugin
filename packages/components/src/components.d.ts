@@ -476,6 +476,7 @@ export namespace Components {
     }
     interface CePaymentRequest {
         "paymentMethod": 'stripe' | 'paypal';
+        "stripeAccountId": string;
         "stripePublishableKey": string;
         "total": number;
     }
@@ -833,9 +834,13 @@ export namespace Components {
          */
         "label": string;
         /**
+          * Stripe account id
+         */
+        "stripeAccountId": string;
+        /**
           * Stripe publishable key
          */
-        "publishableKey": string;
+        "stripePublishableKey": string;
         /**
           * Payment request theme
          */
@@ -892,10 +897,6 @@ export namespace Components {
           * The switch's value attribute.
          */
         "value": string;
-    }
-    interface CeTable {
-        "data": Array<any>;
-        "headers": Array<string>;
     }
     interface CeTag {
         /**
@@ -1158,12 +1159,6 @@ declare global {
         prototype: HTMLCeSwitchElement;
         new (): HTMLCeSwitchElement;
     };
-    interface HTMLCeTableElement extends Components.CeTable, HTMLStencilElement {
-    }
-    var HTMLCeTableElement: {
-        prototype: HTMLCeTableElement;
-        new (): HTMLCeTableElement;
-    };
     interface HTMLCeTagElement extends Components.CeTag, HTMLStencilElement {
     }
     var HTMLCeTagElement: {
@@ -1216,7 +1211,6 @@ declare global {
         "ce-stripe-payment-request": HTMLCeStripePaymentRequestElement;
         "ce-submit": HTMLCeSubmitElement;
         "ce-switch": HTMLCeSwitchElement;
-        "ce-table": HTMLCeTableElement;
         "ce-tag": HTMLCeTagElement;
         "ce-total": HTMLCeTotalElement;
     }
@@ -1722,6 +1716,7 @@ declare namespace LocalJSX {
     }
     interface CePaymentRequest {
         "paymentMethod"?: 'stripe' | 'paypal';
+        "stripeAccountId"?: string;
         "stripePublishableKey"?: string;
         "total"?: number;
     }
@@ -2072,9 +2067,13 @@ declare namespace LocalJSX {
          */
         "label"?: string;
         /**
+          * Stripe account id
+         */
+        "stripeAccountId"?: string;
+        /**
           * Stripe publishable key
          */
-        "publishableKey"?: string;
+        "stripePublishableKey"?: string;
         /**
           * Payment request theme
          */
@@ -2139,10 +2138,6 @@ declare namespace LocalJSX {
           * The switch's value attribute.
          */
         "value"?: string;
-    }
-    interface CeTable {
-        "data"?: Array<any>;
-        "headers"?: Array<string>;
     }
     interface CeTag {
         /**
@@ -2210,7 +2205,6 @@ declare namespace LocalJSX {
         "ce-stripe-payment-request": CeStripePaymentRequest;
         "ce-submit": CeSubmit;
         "ce-switch": CeSwitch;
-        "ce-table": CeTable;
         "ce-tag": CeTag;
         "ce-total": CeTotal;
     }
@@ -2258,7 +2252,6 @@ declare module "@stencil/core" {
             "ce-stripe-payment-request": LocalJSX.CeStripePaymentRequest & JSXBase.HTMLAttributes<HTMLCeStripePaymentRequestElement>;
             "ce-submit": LocalJSX.CeSubmit & JSXBase.HTMLAttributes<HTMLCeSubmitElement>;
             "ce-switch": LocalJSX.CeSwitch & JSXBase.HTMLAttributes<HTMLCeSwitchElement>;
-            "ce-table": LocalJSX.CeTable & JSXBase.HTMLAttributes<HTMLCeTableElement>;
             "ce-tag": LocalJSX.CeTag & JSXBase.HTMLAttributes<HTMLCeTagElement>;
             "ce-total": LocalJSX.CeTotal & JSXBase.HTMLAttributes<HTMLCeTotalElement>;
         }

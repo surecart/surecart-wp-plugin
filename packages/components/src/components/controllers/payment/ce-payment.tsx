@@ -25,7 +25,13 @@ export class CePayment {
       return <div>Please contact us for payment</div>;
     }
     if ('stripe' === this.paymentMethod) {
-      return <ce-stripe-element checkoutSession={this.checkoutSession} stripeAccountId={this.stripeAccountId} publishableKey={this.stripePublishableKey}></ce-stripe-element>;
+      return (
+        <div>
+          <slot name="before" />
+          <ce-stripe-element checkoutSession={this.checkoutSession} stripeAccountId={this.stripeAccountId} publishableKey={this.stripePublishableKey}></ce-stripe-element>
+          <slot name="after" />
+        </div>
+      );
     }
   }
 }

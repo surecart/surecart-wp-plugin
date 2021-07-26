@@ -8,10 +8,8 @@ describe('ce-email', () => {
       html: `<ce-email></ce-email>`,
     });
     expect(page.root).toEqualHtml(`
-      <ce-email>
-        <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
+      <ce-email size="medium">
+        <ce-input autocomplete="email" help="" name="customer_email" type="email" value=""></ce-input>
       </ce-email>
     `);
   });

@@ -124,7 +124,7 @@ export class CEStripeElement {
 
   render() {
     return (
-      <ce-input class="ce-stripe" size={this.size} label={this.label} help={this.help} hasFocus={this.hasFocus} invalid>
+      <ce-input class="ce-stripe" size={this.size} label={this.label} help={this.help} hasFocus={this.hasFocus}>
         <div ref={el => (this.container = el as HTMLDivElement)}></div>
       </ce-input>
     );

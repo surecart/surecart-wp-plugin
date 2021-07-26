@@ -10,7 +10,9 @@ describe('ce-block-ui', () => {
     expect(page.root).toEqualHtml(`
       <ce-block-ui>
         <mock:shadow-root>
-          <slot></slot>
+          <div class="overlay">
+            <ce-spinner></ce-spinner>
+          </div>
         </mock:shadow-root>
       </ce-block-ui>
     `);

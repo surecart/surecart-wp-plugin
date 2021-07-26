@@ -10,17 +10,8 @@ describe('ce-order-summary', () => {
     expect(page.root).toEqualHtml(`
       <ce-order-summary>
         <mock:shadow-root>
-          <div>
-            <ce-line-item>
-              Subtotal
-              <span slot="price">
-                $0.00
-              </span>
-            </ce-line-item>
-            <ce-divider style="--spacing: 20px;"></ce-divider>
-            <ce-line-item currency="USD" price="$0.00">
-              Total
-            </ce-line-item>
+          <div class="summary">
+            <slot></slot>
           </div>
         </mock:shadow-root>
       </ce-order-summary>

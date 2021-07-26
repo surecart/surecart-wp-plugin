@@ -32,18 +32,6 @@ export const config: Config = {
     {
       type: 'dist-custom-elements-bundle',
     },
-    // {
-    //   type: 'docs-readme',
-    //   footer: 'test 1'
-    // },
-    // {
-    //   type: 'docs-custom',
-    //   generator: (docs) => {
-    //     docs.components.forEach((doc) => {
-    //       generateMarkdown('test', doc, docs, {type: 'docs-readme' });
-    //     });
-    //   }
-    // },
     {
       type: 'www',
       serviceWorker: null, // disable service workers

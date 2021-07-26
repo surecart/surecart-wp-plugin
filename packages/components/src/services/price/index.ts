@@ -10,6 +10,7 @@ export const getPrices = async ({ query, currencyCode = 'usd' }: { query: Object
   const res = (await apiFetch({
     path: addQueryArgs(path, query),
   })) as Array<Price>;
+
   // this does not allow prices witha different currency than provided
   return res.filter(price => {
     return price.currency === currencyCode;

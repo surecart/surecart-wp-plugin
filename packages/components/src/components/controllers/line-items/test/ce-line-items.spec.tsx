@@ -9,9 +9,7 @@ describe('ce-line-items', () => {
     });
     expect(page.root).toEqualHtml(`
       <ce-line-items>
-        <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
+        <mock:shadow-root></mock:shadow-root>
       </ce-line-items>
     `);
   });

@@ -18,7 +18,7 @@ describe('ce-form', () => {
       <ce-button submit>Test CE</ce-button>
     </ce-form>
     `);
-    const ceSubmit = await page.spyOnEvent('ceSubmit');
+    const ceSubmit = await page.spyOnEvent('ceFormSubmit');
     const form = await page.find('ce-form');
     await form.callMethod('submit');
     await page.waitForChanges();
