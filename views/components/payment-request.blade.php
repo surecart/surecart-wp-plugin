@@ -1,1 +1,3 @@
-<ce-payment-request></ce-payment-request>
+<ce-stripe-payment-request stripe-account-id="<?php echo esc_attr(\CheckoutEngine\Models\Account::getStripeAccountId()); ?>"
+    stripe-publishable-key="pk_test_51FrVhTKIxBDlEhovnzFUjE1K3e8s9QInYW4a2S1BrYYgePmNIFZUCSvUY90MmD10PNh0ZxYFoxkW6P1xsfPofCYG00JTdSKWFO">
+</ce-stripe-payment-request>

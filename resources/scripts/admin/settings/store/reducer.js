@@ -11,16 +11,16 @@ const settingsReducer = ( state = {}, action ) => {
 			const update = action.data;
 			return {
 				...state,
-				[ `checkout_engine_${ action.optionName }` ]: {
-					...state[ `checkout_engine_${ action.optionName }` ],
+				[ action.optionName ]: {
+					...state[ action.optionName ],
 					...update,
 				},
 			};
 
 		case 'SAVE_SETTINGS':
 			apiFetch( {
-				path: 'wp/v2/settings',
-				method: 'POST',
+				path: 'checkout-engine/v1/settings',
+				method: 'PATCH',
 				data: state,
 			} )
 				.then( () => {

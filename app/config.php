@@ -25,15 +25,23 @@ return [
 		\CheckoutEngine\WordPress\ShortcodesServiceProvider::class,
 		\CheckoutEngine\WordPress\PluginServiceProvider::class,
 		// \CheckoutEngine\WordPress\WidgetsServiceProvider::class,
-		\CheckoutEngine\WordPress\SettingsServiceProvider::class,
+		\CheckoutEngine\Settings\SettingsServiceProvider::class,
 		\CheckoutEngine\Request\RequestServiceProvider::class,
 		\WPEmergeBlade\View\ServiceProvider::class,
 		\CheckoutEngine\View\ViewServiceProvider::class,
 		\CheckoutEngine\Blocks\BlockServiceProvider::class,
 
 		// REST providers.
+		\CheckoutEngine\Rest\SettingsRestServiceProvider::class,
 		\CheckoutEngine\Rest\PriceRestServiceProvider::class,
 		\CheckoutEngine\Rest\CheckoutSessionRestServiceProvider::class,
+	],
+
+	/**
+	 * And array of plugin settings to register
+	 */
+	'settings'            => [
+		\CheckoutEngine\Settings\Setting\AccountSetting::class,
 	],
 
 	/**

@@ -1,5 +1,5 @@
-export function getSettings( state ) {
-	return state.settingsReducer;
+export function getSetting( state, name ) {
+	return state.settingsReducer?.name;
 }
 export function ui( state ) {
 	return state.uiReducer;

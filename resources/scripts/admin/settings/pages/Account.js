@@ -7,9 +7,11 @@ import { CeInput, CeSelect } from '@checkout-engine/react';
 export default () => {
 	const { settings, loading } = useSelect( ( select ) => {
 		return {
-			settings: select( 'checkout-engine/settings' ).getSettings(),
+			settings: select( 'checkout-engine/settings' ).getSetting(
+				'account'
+			),
 			loading: select( 'checkout-engine/settings' ).isResolving(
-				'getSettings'
+				'getSetting'
 			),
 		};
 	} );
@@ -18,7 +20,7 @@ export default () => {
 		return <Spinner />;
 	}
 
-	const currency = settings?.checkout_engine_account?.currency?.toUpperCase();
+	const currency = settings?.currency?.toUpperCase();
 
 	return (
 		<ce-card>
@@ -33,10 +35,10 @@ export default () => {
 					) }
 				</span>
 				<ce-form-row>
-					{ /* { settings?.checkout_engine_account?.name } */ }
+					test: { JSON.stringify( settings ) }
 					<CeInput
 						label="Account Name"
-						value={ settings?.checkout_engine_account?.name }
+						value={ settings?.name }
 						onCeChange={ ( e ) =>
 							dispatch(
 								'checkout-engine/settings'
