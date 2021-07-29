@@ -1,5 +1,6 @@
-import { Component, h, Prop, Element, Event, EventEmitter } from '@stencil/core';
+import { Component, h, Prop, Element, Watch, Event, EventEmitter, State } from '@stencil/core';
 import { Price, LineItemData } from '../../../types';
+import { getPrices } from '../../../services/price/index';
 import { getFormattedPrice } from '../../../functions/price';
 import { openWormhole } from 'stencil-wormhole';
 
@@ -11,15 +12,52 @@ import { openWormhole } from 'stencil-wormhole';
 export class CePriceChoices {
   @Element() el: HTMLCePriceChoicesElement;
 
-  @Prop() loading: boolean = false;
-  @Prop() prices: Array<Price>;
-  @Prop() priceIds: Array<string>;
+  private _priceIds: Array<string>;
+  @Prop() priceIds: Array<string> | string;
+
   @Prop() default: string;
   @Prop() type: 'radio' | 'checkbox' = 'radio';
   @Prop() columns: number = 1;
   @Prop() lineItemData: Array<LineItemData>;
+  @Prop() currencyCode: string;
 
+  @State() loading: boolean;
+  @State() prices: Array<Price>;
+
+  /** Update line items event. */
   @Event() ceUpdateLineItems: EventEmitter<Array<LineItemData>>;
+
+  /** Fetch prices event. */
+  @Event() ceFetchPrices: EventEmitter<Array<string>>;
+
+  /** Watch price ids and possibly turn string to json. */
+  @Watch('priceIds')
+  handlePriceIds(val: Array<string> | string) {
+    this._priceIds = typeof val === 'string' ? JSON.parse(val) : val;
+    this.fetchPrices();
+  }
+
+  async fetchPrices() {
+    this.loading = true;
+    try {
+      this.prices = await getPrices({
+        query: {
+          active: true,
+          ids: this.priceIds,
+        },
+        currencyCode: this.currencyCode,
+      });
+    } finally {
+      this.loading = false;
+    }
+  }
+
+  /** Parse price ids and maybe fetch. */
+  componentWillLoad() {
+    if (this.priceIds) {
+      this.handlePriceIds(this.priceIds);
+    }
+  }
 
   updateSelected() {
     const choices = this.el.querySelectorAll('ce-choice');
@@ -39,15 +77,14 @@ export class CePriceChoices {
   }
 
   render() {
-    if (!this.priceIds?.length) {
+    if (!this._priceIds?.length) {
       return;
     }
 
     if (this.loading) {
-      // TODO: translations needed here - do this in provider
       return (
         <ce-choices style={{ '--columns': this.columns.toString() }}>
-          {this.priceIds.map((id, index) => {
+          {this._priceIds.map((id, index) => {
             return (
               <ce-choice name="loading" disabled type={this.type} checked={this.default ? this.default === id : index === 0}>
                 <ce-skeleton style={{ width: '60px', display: 'inline-block' }}></ce-skeleton>
@@ -66,7 +103,7 @@ export class CePriceChoices {
     }
 
     return (
-      <ce-choices style={{ '--columns': this.columns.toString() }}>
+      <ce-choices class="loaded" style={{ '--columns': this.columns.toString() }}>
         {this.prices.map((price, index) => {
           const isDefault = this.prices.find(price => price.id === this.default)?.id;
           return (
@@ -90,4 +127,4 @@ export class CePriceChoices {
   }
 }
 
-openWormhole(CePriceChoices, ['prices', 'priceIds', 'loading', 'lineItemData'], false);
+openWormhole(CePriceChoices, ['currencyCode'], false);

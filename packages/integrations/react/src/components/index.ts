@@ -46,6 +46,5 @@ export const CeStripeElement = /*@__PURE__*/createReactComponent<JSX.CeStripeEle
 export const CeStripePaymentRequest = /*@__PURE__*/createReactComponent<JSX.CeStripePaymentRequest, HTMLCeStripePaymentRequestElement>('ce-stripe-payment-request');
 export const CeSubmit = /*@__PURE__*/createReactComponent<JSX.CeSubmit, HTMLCeSubmitElement>('ce-submit');
 export const CeSwitch = /*@__PURE__*/createReactComponent<JSX.CeSwitch, HTMLCeSwitchElement>('ce-switch');
-export const CeTable = /*@__PURE__*/createReactComponent<JSX.CeTable, HTMLCeTableElement>('ce-table');
 export const CeTag = /*@__PURE__*/createReactComponent<JSX.CeTag, HTMLCeTagElement>('ce-tag');
 export const CeTotal = /*@__PURE__*/createReactComponent<JSX.CeTotal, HTMLCeTotalElement>('ce-total');

@@ -59,6 +59,13 @@
 | `valueComparer`             | --                         |                                                                                                                                                                                                                                                    | `(value1: string, value2: string) => boolean`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | `undefined`           |
 
 
+## Events
+
+| Event      | Description | Type               |
+| ---------- | ----------- | ------------------ |
+| `ceChange` |             | `CustomEvent<any>` |
+
+
 ## Methods
 
 ### `ajax(fn: AjaxFn) => Promise<this>`

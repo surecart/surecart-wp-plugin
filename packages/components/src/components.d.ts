@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { CheckoutSession, LineItemData, Price } from "./types";
+import { CheckoutSession, Coupon, LineItemData, Loading, PriceData } from "./types";
 import { AddItemTextFn, AjaxFn, ClassNames, FuseOptions, ItemFilterFn, MaxItemTextFn, NoChoicesTextFn, NoResultsTextFn, OnCreateTemplates, OnInit, SortFn, ValueCompareFunction } from "./components/ui/select/interfaces";
 export namespace Components {
     interface CeBlockUi {
@@ -117,10 +117,33 @@ export namespace Components {
         "value": string;
     }
     interface CeCheckout {
+        /**
+          * Pass an array of ids for choice fields
+         */
+        "choicePriceIds": Array<string>;
+        /**
+          * Optionally pass a coupon.
+         */
+        "coupon": Coupon;
+        /**
+          * Currency to use for this checkout.
+         */
         "currencyCode": string;
+        /**
+          * Translation object.
+         */
         "i18n": Object;
+        /**
+          * Pass line item data to create with session.
+         */
         "lineItemData": Array<LineItemData>;
-        "priceIds": Array<string>;
+        /**
+          * Pass an array of price information to load into the form.
+         */
+        "priceData": Array<PriceData>;
+        /**
+          * Stripe publishable key
+         */
         "stripePublishableKey": string;
     }
     interface CeChoice {
@@ -182,7 +205,7 @@ export namespace Components {
     interface CeCouponForm {
         "calculating": boolean;
         "label": string;
-        "loading": boolean;
+        "loading": Loading;
     }
     interface CeDivider {
     }
@@ -425,7 +448,7 @@ export namespace Components {
         "calculating": boolean;
         "checkoutSession": CheckoutSession;
         "lineItemData": Array<LineItemData>;
-        "loading": boolean;
+        "loading": Loading;
     }
     interface CeMenu {
     }
@@ -482,11 +505,10 @@ export namespace Components {
     }
     interface CePriceChoices {
         "columns": number;
+        "currencyCode": string;
         "default": string;
         "lineItemData": Array<LineItemData>;
-        "loading": boolean;
-        "priceIds": Array<string>;
-        "prices": Array<Price>;
+        "priceIds": Array<string> | string;
         "type": 'radio' | 'checkbox';
     }
     interface CeProductLineItem {
@@ -858,7 +880,7 @@ export namespace Components {
         /**
           * Is the form loading
          */
-        "loading": boolean;
+        "loading": Loading;
         /**
           * The button's size.
          */
@@ -918,7 +940,7 @@ export namespace Components {
     }
     interface CeTotal {
         "checkoutSession": CheckoutSession;
-        "loading": boolean;
+        "loading": Loading;
         "showCurrency": boolean;
         "size": 'large' | 'medium';
         "total": string;
@@ -1329,11 +1351,33 @@ declare namespace LocalJSX {
         "value"?: string;
     }
     interface CeCheckout {
+        /**
+          * Pass an array of ids for choice fields
+         */
+        "choicePriceIds"?: Array<string>;
+        /**
+          * Optionally pass a coupon.
+         */
+        "coupon"?: Coupon;
+        /**
+          * Currency to use for this checkout.
+         */
         "currencyCode"?: string;
+        /**
+          * Translation object.
+         */
         "i18n"?: Object;
+        /**
+          * Pass line item data to create with session.
+         */
         "lineItemData"?: Array<LineItemData>;
-        "onCeLoaded"?: (event: CustomEvent<void>) => void;
-        "priceIds"?: Array<string>;
+        /**
+          * Pass an array of price information to load into the form.
+         */
+        "priceData"?: Array<PriceData>;
+        /**
+          * Stripe publishable key
+         */
         "stripePublishableKey"?: string;
     }
     interface CeChoice {
@@ -1396,7 +1440,7 @@ declare namespace LocalJSX {
     interface CeCouponForm {
         "calculating"?: boolean;
         "label"?: string;
-        "loading"?: boolean;
+        "loading"?: Loading;
         "onCeApplyCoupon"?: (event: CustomEvent<string>) => void;
     }
     interface CeDivider {
@@ -1671,7 +1715,7 @@ declare namespace LocalJSX {
         "calculating"?: boolean;
         "checkoutSession"?: CheckoutSession;
         "lineItemData"?: Array<LineItemData>;
-        "loading"?: boolean;
+        "loading"?: Loading;
         "onCeUpdateLineItems"?: (event: CustomEvent<Array<LineItemData>>) => void;
     }
     interface CeMenu {
@@ -1722,12 +1766,18 @@ declare namespace LocalJSX {
     }
     interface CePriceChoices {
         "columns"?: number;
+        "currencyCode"?: string;
         "default"?: string;
         "lineItemData"?: Array<LineItemData>;
-        "loading"?: boolean;
+        /**
+          * Fetch prices event.
+         */
+        "onCeFetchPrices"?: (event: CustomEvent<Array<string>>) => void;
+        /**
+          * Update line items event.
+         */
         "onCeUpdateLineItems"?: (event: CustomEvent<Array<LineItemData>>) => void;
-        "priceIds"?: Array<string>;
-        "prices"?: Array<Price>;
+        "priceIds"?: Array<string> | string;
         "type"?: 'radio' | 'checkbox';
     }
     interface CeProductLineItem {
@@ -2091,7 +2141,7 @@ declare namespace LocalJSX {
         /**
           * Is the form loading
          */
-        "loading"?: boolean;
+        "loading"?: Loading;
         /**
           * The button's size.
          */
@@ -2160,7 +2210,7 @@ declare namespace LocalJSX {
     }
     interface CeTotal {
         "checkoutSession"?: CheckoutSession;
-        "loading"?: boolean;
+        "loading"?: Loading;
         "showCurrency"?: boolean;
         "size"?: 'large' | 'medium';
         "total"?: string;

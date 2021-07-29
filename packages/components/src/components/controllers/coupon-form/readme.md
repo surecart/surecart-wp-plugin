@@ -7,11 +7,11 @@
 
 ## Properties
 
-| Property      | Attribute     | Description | Type      | Default     |
-| ------------- | ------------- | ----------- | --------- | ----------- |
-| `calculating` | `calculating` |             | `boolean` | `undefined` |
-| `label`       | `label`       |             | `string`  | `undefined` |
-| `loading`     | `loading`     |             | `boolean` | `undefined` |
+| Property      | Attribute     | Description | Type      | Default                             |
+| ------------- | ------------- | ----------- | --------- | ----------------------------------- |
+| `calculating` | `calculating` |             | `boolean` | `undefined`                         |
+| `label`       | `label`       |             | `string`  | `undefined`                         |
+| `loading`     | --            |             | `Loading` | `{ prices: false, session: false }` |
 
 
 ## Events

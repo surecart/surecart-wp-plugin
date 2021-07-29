@@ -1,8 +1,8 @@
 {
-  "timestamp": "2021-07-21T21:02:55",
+  "timestamp": "2021-07-29T17:01:40",
   "compiler": {
     "name": "@stencil/core",
-    "version": "2.5.2",
+    "version": "2.7.0-0",
     "typescriptVersion": "4.2.3"
   },
   "components": [
@@ -1183,15 +1183,15 @@
         },
         {
           "name": "loading",
-          "type": "boolean",
+          "type": "Loading",
           "mutable": false,
-          "attr": "loading",
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
+          "default": "{ prices: false, session: false }",
           "values": [
             {
-              "type": "boolean"
+              "type": "Loading"
             }
           ],
           "optional": false,
@@ -2936,16 +2936,15 @@
         },
         {
           "name": "loading",
-          "type": "boolean",
+          "type": "Loading",
           "mutable": false,
-          "attr": "loading",
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
-          "default": "false",
+          "default": "{ prices: false, session: false }",
           "values": [
             {
-              "type": "boolean"
+              "type": "Loading"
             }
           ],
           "optional": false,
@@ -3349,6 +3348,22 @@
           "required": false
         },
         {
+          "name": "stripeAccountId",
+          "type": "string",
+          "mutable": false,
+          "attr": "stripe-account-id",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "stripePublishableKey",
           "type": "string",
           "mutable": false,
@@ -3458,16 +3473,15 @@
         },
         {
           "name": "loading",
-          "type": "boolean",
+          "type": "Loading",
           "mutable": false,
-          "attr": "loading",
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
-          "default": "false",
+          "default": "{ prices: false, session: false }",
           "values": [
             {
-              "type": "boolean"
+              "type": "Loading"
             }
           ],
           "optional": false,
@@ -5207,7 +5221,17 @@
           "docsTags": []
         }
       ],
-      "events": [],
+      "events": [
+        {
+          "event": "ceChange",
+          "detail": "any",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        }
+      ],
       "listeners": [],
       "styles": [],
       "slots": [],
@@ -5612,10 +5636,26 @@
           "required": false
         },
         {
-          "name": "publishableKey",
+          "name": "stripeAccountId",
           "type": "string",
           "mutable": false,
-          "attr": "publishable-key",
+          "attr": "stripe-account-id",
+          "reflectToAttr": false,
+          "docs": "Stripe account id",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "stripePublishableKey",
+          "type": "string",
+          "mutable": false,
+          "attr": "stripe-publishable-key",
           "reflectToAttr": false,
           "docs": "Stripe publishable key",
           "docsTags": [],
@@ -5714,15 +5754,15 @@
         },
         {
           "name": "loading",
-          "type": "boolean",
+          "type": "Loading",
           "mutable": false,
-          "attr": "loading",
           "reflectToAttr": false,
           "docs": "Is the form loading",
           "docsTags": [],
+          "default": "{ prices: false, session: false }",
           "values": [
             {
-              "type": "boolean"
+              "type": "Loading"
             }
           ],
           "optional": false,
@@ -5984,57 +6024,6 @@
           "docs": ""
         }
       ],
-      "dependents": [],
-      "dependencies": [],
-      "dependencyGraph": {}
-    },
-    {
-      "filePath": "./src/components/ui/table/ce-table.tsx",
-      "encapsulation": "shadow",
-      "tag": "ce-table",
-      "readme": "# ce-table\n\n\n",
-      "docs": "",
-      "docsTags": [],
-      "usage": {},
-      "props": [
-        {
-          "name": "data",
-          "type": "any[]",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "any[]"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "headers",
-          "type": "string[]",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "default": "[]",
-          "values": [
-            {
-              "type": "string[]"
-            }
-          ],
-          "optional": false,
-          "required": false
-        }
-      ],
-      "methods": [],
-      "events": [],
-      "listeners": [],
-      "styles": [],
-      "slots": [],
-      "parts": [],
       "dependents": [],
       "dependencies": [],
       "dependencyGraph": {}

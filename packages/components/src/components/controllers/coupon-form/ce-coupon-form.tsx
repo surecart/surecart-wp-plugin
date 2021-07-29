@@ -1,6 +1,6 @@
 import { Component, State, h, Watch, Prop, Event, EventEmitter } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
-
+import { Loading } from '../../../types';
 @Component({
   tag: 'ce-coupon-form',
   styleUrl: 'ce-coupon-form.scss',
@@ -10,7 +10,7 @@ export class CeCouponForm {
   private input: HTMLCeInputElement;
 
   @Prop() label: string;
-  @Prop() loading: boolean;
+  @Prop() loading: Loading = { prices: false, session: false };
   @Prop() calculating: boolean;
 
   @State() open: boolean;
@@ -36,7 +36,7 @@ export class CeCouponForm {
   }
 
   render() {
-    if (this.loading) {
+    if (this.loading.session) {
       return <ce-skeleton style={{ width: '120px', display: 'inline-block' }}></ce-skeleton>;
     }
 
@@ -66,7 +66,7 @@ export class CeCouponForm {
           </ce-button>
         </div>
 
-        {this.loading && <ce-block-ui></ce-block-ui>}
+        {this.loading.session && <ce-block-ui></ce-block-ui>}
       </div>
     );
   }

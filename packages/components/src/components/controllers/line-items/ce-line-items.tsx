@@ -1,6 +1,6 @@
 import { Component, h, Prop, Event, EventEmitter } from '@stencil/core';
 
-import { CheckoutSession, LineItem, LineItemData } from '../../../types';
+import { CheckoutSession, LineItem, LineItemData, Loading } from '../../../types';
 import { openWormhole } from 'stencil-wormhole';
 
 @Component({
@@ -10,7 +10,7 @@ import { openWormhole } from 'stencil-wormhole';
 })
 export class CeLineItems {
   @Prop() checkoutSession: CheckoutSession;
-  @Prop() loading: boolean = false;
+  @Prop() loading: Loading = { prices: false, session: false };
   @Prop() calculating: boolean = false;
   @Prop() lineItemData: Array<LineItemData>;
 
@@ -30,7 +30,7 @@ export class CeLineItems {
   }
 
   render() {
-    if (this.loading || (this.calculating && !this?.checkoutSession?.line_items?.length)) {
+    if (this.loading.session || (this.calculating && !this?.checkoutSession?.line_items?.length)) {
       return (
         <ce-line-item>
           <ce-skeleton style={{ 'width': '50px', 'height': '50px', '--border-radius': '0' }} slot="image"></ce-skeleton>

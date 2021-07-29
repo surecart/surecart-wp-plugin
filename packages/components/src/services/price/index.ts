@@ -11,8 +11,8 @@ export const getPrices = async ({ query, currencyCode = 'usd' }: { query: Object
     path: addQueryArgs(path, query),
   })) as Array<Price>;
 
-  // this does not allow prices witha different currency than provided
+  // this does not allow prices with a different currency than provided.
   return res.filter(price => {
-    return price.currency === currencyCode;
+    return price.currency && price.currency === currencyCode;
   });
 };

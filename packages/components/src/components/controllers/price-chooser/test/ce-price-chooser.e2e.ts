@@ -1,5 +1,6 @@
 import { newE2EPage } from '@stencil/core/testing';
-import prices from './fixtures/prices';
+import prices from '../../../../testing/fixtures/prices';
+import { setResponses } from '../../../../testing';
 
 describe('ce-price-choices', () => {
   it('renders', async () => {
@@ -9,8 +10,21 @@ describe('ce-price-choices', () => {
     expect(element).toHaveClass('hydrated');
   });
 
-  it('Displays prices', async () => {
+  it('Fetches and displays prices', async () => {
     const page = await newE2EPage();
+
+    await page.setRequestInterception(true);
+    setResponses(
+      [
+        {
+          path: '/price/',
+          data: {
+            body: JSON.stringify(prices),
+          },
+        },
+      ],
+      page,
+    );
 
     await page.setContent('<ce-price-choices loading></ce-price-choices>');
     await page.waitForChanges();
@@ -20,20 +34,12 @@ describe('ce-price-choices', () => {
     element.setProperty('priceIds', ['a', 'b', 'c']);
     await page.waitForChanges();
 
-    // loading state
-    const skeleton = await page.$$('ce-skeleton');
-    expect(skeleton).toBeDefined();
-    expect(skeleton).toHaveLength(12);
-
-    element.setProperty('prices', prices);
-    await page.waitForChanges();
-
     // renders choices
     const choices = await page.find('ce-choices');
     expect(choices).toBeDefined();
 
-    // should be 3 prices loaded
+    // should be 2 prices loaded
     let choice = await page.$$('ce-choice');
-    expect(choice).toHaveLength(3);
+    expect(choice).toHaveLength(2);
   });
 });

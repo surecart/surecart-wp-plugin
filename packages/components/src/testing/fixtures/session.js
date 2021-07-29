@@ -1,0 +1,18 @@
+export default {
+  id: '2de84382-3453-4cfa-b836-0735cac4435a',
+  object: 'checkout_session',
+  email: null,
+  name: null,
+  currency: 'usd',
+  amount_subtotal: 2900,
+  discount_amount: 0,
+  amount_total: 2800,
+  status: 'draft',
+  metadata: {},
+  customer: null,
+  discount: null,
+  line_items: [],
+  processor_intent: null,
+  created_at: 1626716118,
+  updated_at: 1626716118,
+};

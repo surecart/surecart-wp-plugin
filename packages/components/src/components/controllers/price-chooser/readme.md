@@ -7,15 +7,15 @@
 
 ## Properties
 
-| Property       | Attribute | Description | Type                    | Default     |
-| -------------- | --------- | ----------- | ----------------------- | ----------- |
-| `columns`      | `columns` |             | `number`                | `1`         |
-| `default`      | `default` |             | `string`                | `undefined` |
-| `lineItemData` | --        |             | `LineItemData[]`        | `undefined` |
-| `loading`      | `loading` |             | `boolean`               | `false`     |
-| `priceIds`     | --        |             | `string[]`              | `undefined` |
-| `prices`       | --        |             | `Price[]`               | `undefined` |
-| `type`         | `type`    |             | `"checkbox" \| "radio"` | `'radio'`   |
+| Property       | Attribute | Description | Type                    | Default                             |
+| -------------- | --------- | ----------- | ----------------------- | ----------------------------------- |
+| `columns`      | `columns` |             | `number`                | `1`                                 |
+| `default`      | `default` |             | `string`                | `undefined`                         |
+| `lineItemData` | --        |             | `LineItemData[]`        | `undefined`                         |
+| `loading`      | --        |             | `Loading`               | `{ prices: false, session: false }` |
+| `priceIds`     | --        |             | `string[]`              | `undefined`                         |
+| `prices`       | --        |             | `Price[]`               | `undefined`                         |
+| `type`         | `type`    |             | `"checkbox" \| "radio"` | `'radio'`                           |
 
 
 ## Events

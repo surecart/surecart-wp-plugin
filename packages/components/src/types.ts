@@ -114,3 +114,14 @@ export interface Address extends Object {
   country?: string;
   destroy?: boolean;
 }
+
+export interface PriceData extends Object {
+  price_id: string;
+  quantity: number;
+  removeable: boolean;
+}
+
+export interface Loading extends Object {
+  prices: boolean;
+  session: boolean;
+}

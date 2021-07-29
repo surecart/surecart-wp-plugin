@@ -1,5 +1,4 @@
 import { Config } from '@stencil/core';
-import { generateMarkdown } from '@stencil/core/src/compiler/docs/readme/output-docs.ts';
 import { reactOutputTarget } from '@stencil/react-output-target';
 import { sass } from '@stencil/sass';
 import { readFileSync } from 'fs';
@@ -19,6 +18,7 @@ export const config: Config = {
       '^.+\\.js': 'babel-jest',
     },
     transformIgnorePatterns: ['node_modules/(?!stencil-fragment)'],
+    // setupFilesAfterEnv: ['./src/test/setup-tests.js'],
   },
   outputTargets: [
     reactOutputTarget({

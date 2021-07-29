@@ -1,8 +1,8 @@
-import { Component, h, Prop, Element, State, Watch, Listen, Event, EventEmitter } from '@stencil/core';
-import { Price, Coupon, CheckoutSession, Customer, LineItemData } from '../../../types';
+import { Component, h, Prop, Element, State, Watch, Listen } from '@stencil/core';
+import { Price, Coupon, CheckoutSession, Customer, LineItemData, Loading, PriceData } from '../../../types';
 import { pick } from '../../../functions/util';
-import { updateSession, createSession, finalizeSession } from '../../../services/session/index';
 import { getPrices } from '../../../services/price/index';
+import { updateSession, createSession, finalizeSession } from '../../../services/session/index';
 
 import { Universe } from 'stencil-wormhole';
 @Component({
@@ -13,25 +13,55 @@ import { Universe } from 'stencil-wormhole';
 export class CECheckout {
   @Element() el: HTMLElement;
 
-  @Prop() priceIds: Array<string>;
-  @Prop() stripePublishableKey: string;
+  /** Pass an array of ids for choice fields */
+  @Prop() choicePriceIds: Array<string>;
+
+  /** Pass an array of price information to load into the form. */
+  @Prop({ attribute: 'prices' }) priceData: Array<PriceData>;
+
+  /** Currency to use for this checkout. */
   @Prop() currencyCode: string = 'usd';
+
+  /** Pass line item data to create with session. */
   @Prop({ mutable: true }) lineItemData: Array<LineItemData>;
+
+  /** Optionally pass a coupon. */
+  @Prop({ mutable: true }) coupon: Coupon;
+
+  /** Translation object. */
   @Prop() i18n: Object;
 
-  @State() message: string = '';
+  /** Stripe publishable key */
+  @Prop() stripePublishableKey: string;
+
+  /** Stores fetched prices for use throughout component.  */
   @State() prices: Array<Price>;
-  @State() selectedPriceIds: Set<string>;
+
+  /** Stores the users's selected price ids. */
+  @State() selectedchoicePriceIds: Set<string>;
+
+  /** Stores the customer. */
   @State() customer: Customer;
-  @State() coupon: Coupon;
-  @State() loading: boolean;
+
+  /** Loading states for different parts of the form. */
+  @State() loading: Loading = { prices: false, session: false };
+
+  /** Calculation state for totals. */
   @State() calculating: boolean;
-  @State() subtotal: number = 0;
-  @State() total: number = 0;
+
+  /** State for form submission */
   @State() submitting: boolean;
+
+  /** Stores the current CheckoutSession */
   @State() checkoutSession: CheckoutSession;
-  @State() metaData: Object;
-  @Event() ceLoaded: EventEmitter<void>;
+
+  /** Error to display. */
+  @State() error: string;
+
+  @Listen('ceFetchPrices')
+  handleFetchPrices(e) {
+    console.log(e);
+  }
 
   /**
    * Handles line items update.
@@ -91,19 +121,29 @@ export class CECheckout {
     // @ts-ignore
     Universe.create(this, this.state());
 
-    // fetch prices and create session
-    this.loading = true;
-    this.calculating = true;
-    if (this.priceIds) {
-      Promise.all([this.fetchPrices(), this.createSession()]).finally(() => (this.loading = false));
-    }
+    // create the checkout session.
+    this.createSession();
+
+    // maybe fetch prices for choice.
+    // if (this?.choicePriceIds?.length || this?.priceData?.length) {
+    //   this.fetchPrices();
+    // }
   }
 
   /**
    * Create a new checkout session
    */
   async createSession() {
-    this.checkoutSession = await createSession(this.getSessionSaveData());
+    this.calculating = true;
+    this.loading.session = true;
+    try {
+      this.checkoutSession = await createSession(this.getSessionSaveData());
+    } catch (e) {
+      this.error = 'Something went wrong';
+    } finally {
+      this.loading.session = false;
+      this.calculating = false;
+    }
   }
 
   /**
@@ -128,15 +168,20 @@ export class CECheckout {
   /**
    * Fetch prices based on ids
    */
-  @Watch('priceIds')
+  @Watch('choicePriceIds')
   async fetchPrices() {
-    this.prices = await getPrices({
-      query: {
-        active: true,
-        ids: this.priceIds,
-      },
-      currencyCode: this.currencyCode,
-    });
+    this.loading.prices = true;
+    try {
+      this.prices = await getPrices({
+        query: {
+          active: true,
+          ids: this.choicePriceIds,
+        },
+        currencyCode: this.currencyCode,
+      });
+    } finally {
+      this.loading.prices = false;
+    }
   }
 
   state() {
@@ -144,14 +189,12 @@ export class CECheckout {
       paymentMethod: 'stripe',
       checkoutSession: this.checkoutSession,
       stripePublishableKey: this.stripePublishableKey,
-      priceIds: this.priceIds,
+      choicePriceIds: this.choicePriceIds,
+      prices: this.prices,
       lineItemData: this.lineItemData,
       currencyCode: this.currencyCode,
-      prices: this.prices,
       loading: this.loading,
       calculating: this.calculating,
-      subtotal: this.subtotal,
-      total: this.total,
     };
   }
 

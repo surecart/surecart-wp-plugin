@@ -7,12 +7,12 @@
 
 ## Properties
 
-| Property          | Attribute     | Description | Type              | Default     |
-| ----------------- | ------------- | ----------- | ----------------- | ----------- |
-| `calculating`     | `calculating` |             | `boolean`         | `false`     |
-| `checkoutSession` | --            |             | `CheckoutSession` | `undefined` |
-| `lineItemData`    | --            |             | `LineItemData[]`  | `undefined` |
-| `loading`         | `loading`     |             | `boolean`         | `false`     |
+| Property          | Attribute     | Description | Type              | Default                             |
+| ----------------- | ------------- | ----------- | ----------------- | ----------------------------------- |
+| `calculating`     | `calculating` |             | `boolean`         | `false`                             |
+| `checkoutSession` | --            |             | `CheckoutSession` | `undefined`                         |
+| `lineItemData`    | --            |             | `LineItemData[]`  | `undefined`                         |
+| `loading`         | --            |             | `Loading`         | `{ prices: false, session: false }` |
 
 
 ## Events
