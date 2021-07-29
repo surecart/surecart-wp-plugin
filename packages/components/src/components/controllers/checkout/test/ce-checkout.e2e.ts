@@ -33,21 +33,6 @@ describe('ce-checkout', () => {
     expect(element).toHaveClass('hydrated');
   });
 
-  // it('fetches prices', async () => {
-  //   const page = await newE2EPage();
-  //   await setRequests(page);
-
-  //   await page.setContent('<ce-checkout><ce-price-choices></ce-price-choices></ce-checkout>');
-  //   const element = await page.find('ce-checkout');
-  //   const prices = await page.find('ce-price-choices');
-  //   prices.setProperty('priceIds', ['1', '2', '3']);
-  //   await page.waitForChanges();
-
-  //   // should only have 2 since euros should not be part of it.
-  //   const choice = await page.$$('ce-choice');
-  //   expect(choice).toHaveLength(2);
-  // });
-
   it('Creates a session', async () => {
     const page = await newE2EPage();
     await setRequests(page);

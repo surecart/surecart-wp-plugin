@@ -38,7 +38,7 @@ describe('ce-price-choices', () => {
     const choices = await page.find('ce-choices');
     expect(choices).toBeDefined();
 
-    // should be 2 prices loaded
+    // should be 2 prices loaded because we discard EUR currency.
     let choice = await page.$$('ce-choice');
     expect(choice).toHaveLength(2);
   });
