@@ -1,7 +1,7 @@
 import { Component, h, Prop } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
 import { getFormattedPrice } from '../../../functions/price';
-import { CheckoutSession, Loading } from '../../../types';
+import { CheckoutSession } from '../../../types';
 
 @Component({
   tag: 'ce-total',
@@ -10,7 +10,7 @@ import { CheckoutSession, Loading } from '../../../types';
 })
 export class CeTotal {
   @Prop() total: string = 'total';
-  @Prop() loading: Loading = { prices: false, session: false };
+  @Prop() loading: boolean;
   @Prop() checkoutSession: CheckoutSession;
   @Prop() showCurrency: boolean;
   @Prop() size: 'large' | 'medium';
@@ -22,7 +22,7 @@ export class CeTotal {
 
   render() {
     // loading state
-    if (this.loading.session || !this.checkoutSession?.currency) {
+    if (this.loading || !this.checkoutSession?.currency) {
       return (
         <ce-line-item>
           <ce-skeleton slot="title" style={{ width: '120px', display: 'inline-block' }}></ce-skeleton>

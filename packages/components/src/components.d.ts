@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { CheckoutSession, Coupon, LineItemData, Loading, PriceData } from "./types";
+import { CheckoutSession, Coupon, LineItemData, PriceData } from "./types";
 import { AddItemTextFn, AjaxFn, ClassNames, FuseOptions, ItemFilterFn, MaxItemTextFn, NoChoicesTextFn, NoResultsTextFn, OnCreateTemplates, OnInit, SortFn, ValueCompareFunction } from "./components/ui/select/interfaces";
 export namespace Components {
     interface CeBlockUi {
@@ -204,8 +204,9 @@ export namespace Components {
     }
     interface CeCouponForm {
         "calculating": boolean;
+        "checkoutSession": CheckoutSession;
         "label": string;
-        "loading": Loading;
+        "loading": boolean;
     }
     interface CeDivider {
     }
@@ -448,7 +449,7 @@ export namespace Components {
         "calculating": boolean;
         "checkoutSession": CheckoutSession;
         "lineItemData": Array<LineItemData>;
-        "loading": Loading;
+        "loading": boolean;
     }
     interface CeMenu {
     }
@@ -880,7 +881,7 @@ export namespace Components {
         /**
           * Is the form loading
          */
-        "loading": Loading;
+        "loading": boolean;
         /**
           * The button's size.
          */
@@ -940,7 +941,7 @@ export namespace Components {
     }
     interface CeTotal {
         "checkoutSession": CheckoutSession;
-        "loading": Loading;
+        "loading": boolean;
         "showCurrency": boolean;
         "size": 'large' | 'medium';
         "total": string;
@@ -1439,8 +1440,9 @@ declare namespace LocalJSX {
     }
     interface CeCouponForm {
         "calculating"?: boolean;
+        "checkoutSession"?: CheckoutSession;
         "label"?: string;
-        "loading"?: Loading;
+        "loading"?: boolean;
         "onCeApplyCoupon"?: (event: CustomEvent<string>) => void;
     }
     interface CeDivider {
@@ -1715,7 +1717,7 @@ declare namespace LocalJSX {
         "calculating"?: boolean;
         "checkoutSession"?: CheckoutSession;
         "lineItemData"?: Array<LineItemData>;
-        "loading"?: Loading;
+        "loading"?: boolean;
         "onCeUpdateLineItems"?: (event: CustomEvent<Array<LineItemData>>) => void;
     }
     interface CeMenu {
@@ -2141,7 +2143,7 @@ declare namespace LocalJSX {
         /**
           * Is the form loading
          */
-        "loading"?: Loading;
+        "loading"?: boolean;
         /**
           * The button's size.
          */
@@ -2194,7 +2196,7 @@ declare namespace LocalJSX {
           * Makes the tag clearable.
          */
         "clearable"?: boolean;
-        "onPrestoClear"?: (event: CustomEvent<CeTag>) => void;
+        "onCeClear"?: (event: CustomEvent<CeTag>) => void;
         /**
           * Draws a pill-style tag with rounded edges.
          */
@@ -2210,7 +2212,7 @@ declare namespace LocalJSX {
     }
     interface CeTotal {
         "checkoutSession"?: CheckoutSession;
-        "loading"?: Loading;
+        "loading"?: boolean;
         "showCurrency"?: boolean;
         "size"?: 'large' | 'medium';
         "total"?: string;

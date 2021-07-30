@@ -1,6 +1,6 @@
 import { Component, State, h, Watch, Prop, Event, EventEmitter } from '@stencil/core';
+import { CheckoutSession } from '../../../types';
 import { openWormhole } from 'stencil-wormhole';
-import { Loading } from '../../../types';
 @Component({
   tag: 'ce-coupon-form',
   styleUrl: 'ce-coupon-form.scss',
@@ -10,8 +10,9 @@ export class CeCouponForm {
   private input: HTMLCeInputElement;
 
   @Prop() label: string;
-  @Prop() loading: Loading = { prices: false, session: false };
+  @Prop() loading: boolean;
   @Prop() calculating: boolean;
+  @Prop() checkoutSession: CheckoutSession;
 
   @State() open: boolean;
   @State() value: string;
@@ -36,8 +37,22 @@ export class CeCouponForm {
   }
 
   render() {
-    if (this.loading.session) {
+    if (this.loading) {
       return <ce-skeleton style={{ width: '120px', display: 'inline-block' }}></ce-skeleton>;
+    }
+
+    if (this.checkoutSession?.discount?.promotion) {
+      return (
+        <ce-tag
+          clearable
+          onCeClear={() => {
+            this.ceApplyCoupon.emit(null);
+            this.open = false;
+          }}
+        >
+          {this.checkoutSession.discount?.promotion?.code}
+        </ce-tag>
+      );
     }
 
     return (
@@ -66,7 +81,7 @@ export class CeCouponForm {
           </ce-button>
         </div>
 
-        {this.loading.session && <ce-block-ui></ce-block-ui>}
+        {this.loading && <ce-block-ui></ce-block-ui>}
       </div>
     );
   }

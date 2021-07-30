@@ -17,8 +17,11 @@ class Currency {
 	 * @return string
 	 */
 	public static function format( $amount, $currency_code = 'USD' ) {
-		$fmt = new NumberFormatter( get_locale(), NumberFormatter::CURRENCY );
-		return $fmt->formatCurrency( $amount, $currency_code );
+		if ( class_exists( 'NumberFormatter' ) ) {
+			$fmt = new NumberFormatter( get_locale(), NumberFormatter::CURRENCY );
+			return $fmt->formatCurrency( $amount, $currency_code );
+		}
+		return $amount;
 	}
 
 	/**

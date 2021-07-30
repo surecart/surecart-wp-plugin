@@ -6,7 +6,7 @@ import { Component, h, Prop, Event, EventEmitter } from '@stencil/core';
   shadow: true,
 })
 export class CeTag {
-  @Event() prestoClear: EventEmitter<CeTag>;
+  @Event() ceClear: EventEmitter<CeTag>;
 
   /** The tag's type. */
   @Prop({ reflect: true }) type: 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text' = 'info';
@@ -21,13 +21,14 @@ export class CeTag {
   @Prop() clearable: boolean = false;
 
   handleClearClick() {
-    this.prestoClear.emit(this);
+    this.ceClear.emit(this);
   }
 
   render() {
     return (
       <span
         part="base"
+        onClick={() => this.handleClearClick()}
         class={{
           'tag': true,
           // Types

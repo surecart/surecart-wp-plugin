@@ -57,7 +57,7 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 			return $tag;
 		}
 
-		return str_replace( '<script src', '<script type="module" defer src', $tag );
+		return str_replace( '<script src', '<script type="module" src', $tag );
 	}
 
 	/**
@@ -82,7 +82,9 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 			[],
 			filemtime( trailingslashit( $this->container[ WPEMERGE_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/checkout-engine/checkout-engine.css' ),
 		);
-		wp_add_inline_style('checkout-engine-themes-default', '
+		wp_add_inline_style(
+			'checkout-engine-themes-default',
+			'
 			ce-form, ce-checkout {
 				visibility: hidden;
 				opacity: 0;
@@ -93,7 +95,8 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 				visibility: visible;
 				opacity: 1;
 			}
-		');
+		'
+		);
 	}
 
 	/**

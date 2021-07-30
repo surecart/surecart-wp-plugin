@@ -1,7 +1,6 @@
 import { Component, h, Prop, Element, State, Watch, Listen } from '@stencil/core';
-import { Price, Coupon, CheckoutSession, Customer, LineItemData, Loading, PriceData } from '../../../types';
+import { Price, Coupon, CheckoutSession, Customer, LineItemData, PriceData } from '../../../types';
 import { pick } from '../../../functions/util';
-import { getPrices } from '../../../services/price/index';
 import { updateSession, createSession, finalizeSession } from '../../../services/session/index';
 
 import { Universe } from 'stencil-wormhole';
@@ -44,7 +43,7 @@ export class CECheckout {
   @State() customer: Customer;
 
   /** Loading states for different parts of the form. */
-  @State() loading: Loading = { prices: false, session: false };
+  @State() loading: boolean;
 
   /** Calculation state for totals. */
   @State() calculating: boolean;
@@ -58,9 +57,25 @@ export class CECheckout {
   /** Error to display. */
   @State() error: string;
 
-  @Listen('ceFetchPrices')
-  handleFetchPrices(e) {
-    console.log(e);
+  /**
+   * Handles coupon updates.
+   */
+  @Listen('ceApplyCoupon')
+  async handleFetchPrices(e) {
+    this.calculating = true;
+    const promotion_code = e.detail;
+    try {
+      this.checkoutSession = await updateSession({
+        id: this.checkoutSession.id,
+        data: {
+          discount: {
+            ...(promotion_code ? { promotion_code } : {}),
+          },
+        },
+      });
+    } finally {
+      this.calculating = false;
+    }
   }
 
   /**
@@ -123,11 +138,6 @@ export class CECheckout {
 
     // create the checkout session.
     this.createSession();
-
-    // maybe fetch prices for choice.
-    // if (this?.choicePriceIds?.length || this?.priceData?.length) {
-    //   this.fetchPrices();
-    // }
   }
 
   /**
@@ -135,13 +145,13 @@ export class CECheckout {
    */
   async createSession() {
     this.calculating = true;
-    this.loading.session = true;
+    this.loading = true;
     try {
       this.checkoutSession = await createSession(this.getSessionSaveData());
     } catch (e) {
       this.error = 'Something went wrong';
     } finally {
-      this.loading.session = false;
+      this.loading = false;
       this.calculating = false;
     }
   }
@@ -162,25 +172,6 @@ export class CECheckout {
       });
     } finally {
       this.calculating = false;
-    }
-  }
-
-  /**
-   * Fetch prices based on ids
-   */
-  @Watch('choicePriceIds')
-  async fetchPrices() {
-    this.loading.prices = true;
-    try {
-      this.prices = await getPrices({
-        query: {
-          active: true,
-          ids: this.choicePriceIds,
-        },
-        currencyCode: this.currencyCode,
-      });
-    } finally {
-      this.loading.prices = false;
     }
   }
 

@@ -84,6 +84,28 @@ export interface CheckoutSession extends Object {
   line_items: Array<LineItem>;
   metadata?: Object;
   processor_intent?: ProcessorIntent;
+  discount?: DiscountResponse;
+}
+
+export interface Promotion extends Object {
+  code: string;
+  created_at: number;
+  expired: boolean;
+  id: string;
+  max_redemptions: number;
+  metadata: Object;
+  object: 'promotion';
+  redeem_by: string;
+  times_redeemed: number;
+}
+
+export interface DiscountResponse extends Object {
+  coupon?: Coupon;
+  created_at: string;
+  updated_at: string;
+  id: string;
+  object: string;
+  promotion: Promotion;
 }
 
 export interface ProcessorIntent extends Object {
@@ -119,9 +141,4 @@ export interface PriceData extends Object {
   price_id: string;
   quantity: number;
   removeable: boolean;
-}
-
-export interface Loading extends Object {
-  prices: boolean;
-  session: boolean;
 }

@@ -1,5 +1,4 @@
 import { Component, h, Prop, Element } from '@stencil/core';
-import { Loading } from '../../../types';
 import { openWormhole } from 'stencil-wormhole';
 @Component({
   tag: 'ce-submit',
@@ -9,7 +8,7 @@ export class CeSubmit {
   @Element() host: HTMLDivElement;
 
   /** Is the form loading */
-  @Prop() loading: Loading = { prices: false, session: false };
+  @Prop() loading: boolean;
 
   /** Are the totals calculating */
   @Prop() calculating: boolean;
@@ -25,7 +24,7 @@ export class CeSubmit {
 
   render() {
     return (
-      <ce-button loading={this.loading.session || this.calculating} disabled={this.loading.session || this.calculating} type="primary" submit full={this.full} size={this.size}>
+      <ce-button loading={this.loading || this.calculating} disabled={this.loading || this.calculating} type="primary" submit full={this.full} size={this.size}>
         {this.text}
       </ce-button>
     );

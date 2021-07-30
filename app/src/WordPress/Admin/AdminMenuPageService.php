@@ -24,6 +24,7 @@ class AdminMenuPageService {
 			'dashboard' => \add_submenu_page( $this->slug, __( 'Dashboard', 'checkout_engine' ), __( 'Dashboard', 'checkout_engine' ), 'manage_options', $this->slug, function() {} ),
 			'orders'    => \add_submenu_page( $this->slug, __( 'Orders', 'checkout_engine' ), __( 'Orders', 'checkout_engine' ), 'manage_options', 'ce-orders', function() {} ),
 			'products'  => \add_submenu_page( $this->slug, __( 'Products', 'checkout_engine' ), __( 'Products', 'checkout_engine' ), 'manage_options', 'ce-products', function() {} ),
+			'coupons'   => \add_submenu_page( $this->slug, __( 'Coupons', 'checkout_engine' ), __( 'Coupons', 'checkout_engine' ), 'manage_options', 'ce-coupons', function() {} ),
 			'abandoned' => \add_submenu_page( $this->slug, __( 'Abandoned Orders', 'checkout_engine' ), __( 'Abandoned Orders', 'checkout_engine' ), 'manage_options', 'ce-abandoned-orders', function() {} ),
 			'settings'  => \add_submenu_page( $this->slug, __( 'Settings', 'checkout_engine' ), __( 'Settings', 'checkout_engine' ), 'manage_options', 'ce-settings', function() {} ),
 		];
@@ -48,8 +49,8 @@ class AdminMenuPageService {
 	}
 
 	// public function settingsPageScripts() {
-	// 	wp_enqueue_script( 'checkout-engine-components' );
-	// 	wp_enqueue_style( 'checkout-engine-themes-default' );
+	// wp_enqueue_script( 'checkout-engine-components' );
+	// wp_enqueue_style( 'checkout-engine-themes-default' );
 	// }
 
 	/**

@@ -115,6 +115,8 @@ class RequestService {
 			}
 		}
 
+		// wp_die( esc_url_raw( $url ) );
+
 		// make request.
 		$response      = wp_remote_request( esc_url_raw( $url ), $args );
 		$response_code = wp_remote_retrieve_response_code( $response );
@@ -209,6 +211,11 @@ class RequestService {
 		foreach ( $args as $key => $arg ) {
 			// unset null.
 			if ( null === $arg ) {
+				unset( $args[ $key ] );
+			}
+
+			// filter out wp params.
+			if ( in_array( $key, [ 'locale', 'rest_route' ], true ) ) {
 				unset( $args[ $key ] );
 			}
 

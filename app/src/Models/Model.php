@@ -322,6 +322,12 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 	 */
 	public function setAttributes( $attributes, $is_guarded = true ) {
 		foreach ( $attributes as $key => $value ) {
+			// remove api attributes.
+			if ( in_array( $key, [ '_locale', 'rest_route' ], true ) ) {
+				continue;
+			}
+
+			// set attribute.
 			if ( ! $is_guarded ) {
 				$this->setAttribute( $key, $value );
 			} else {
@@ -579,12 +585,15 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 			$this->fill( $attributes );
 		}
 
+		$attributes = $this->attributes;
+		unset( $attributes['id'] );
+
 		$updated = \CheckoutEngine::request(
 			$this->endpoint . '/' . $this->id,
 			[
 				'method' => 'PATCH',
 				'body'   => [
-					$this->object_name => $this->attributes,
+					$this->object_name => $attributes,
 				],
 			]
 		);
