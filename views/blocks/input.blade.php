@@ -5,7 +5,8 @@
     size="<?php echo esc_attr($size ?? 'medium'); ?>"
     placeholder="<?php echo esc_attr($placeholder ?? ''); ?>"
     inputmode="<?php echo esc_attr($inputmode ?? 'text'); ?>"
-	{{ !empty($pattern) ? 'pattern="' . esc_attr($pattern ?? '') . '"' : ''}}
+    <?php echo !empty($pattern) ? 'pattern="' . esc_attr($pattern ?? '') . '"' : ''; ?>
+    <?php echo !empty($autocomplete) ? 'autocomplete="' . esc_attr($autocomplete ?? '') . '"' : ''; ?>
     {{ !empty($required) ? 'required' : '' }}
     {{ !empty($pill) ? 'pill' : '' }}
     {{ !empty($clearable) ? 'clearable' : '' }}
@@ -13,5 +14,4 @@
     {{ !empty($disabled) ? 'disabled' : '' }}
     {{ !empty($spellcheck) ? 'spellcheck' : '' }}
     {{ !empty($autofocus) ? 'autofocus' : '' }}
-    {{ !empty($autocomplete) ? 'autocomplete' : '' }}
     {{ !empty($autocorrect) ? 'autocorrect' : '' }}></ce-input>
