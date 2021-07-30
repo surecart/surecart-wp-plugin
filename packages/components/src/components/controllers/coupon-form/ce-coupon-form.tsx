@@ -45,13 +45,14 @@ export class CeCouponForm {
     if (this.checkoutSession?.discount?.promotion?.code) {
       let humanDiscount = '';
 
-      // if (this.checkoutSession.discount?.coupon) {
-      //   humanDiscount = getHumanDiscount(this.checkoutSession.discount?.coupon);
-      // }
+      if (this.checkoutSession.discount?.coupon) {
+        humanDiscount = getHumanDiscount(this.checkoutSession.discount?.coupon);
+      }
 
       return (
         <ce-line-item>
           <ce-tag
+            type="success"
             class="coupon-tag"
             slot="title"
             clearable
