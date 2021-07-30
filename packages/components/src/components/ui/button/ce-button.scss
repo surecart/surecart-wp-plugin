@@ -368,13 +368,10 @@
 
 ce-spinner::part(base) {
   --indicator-color: currentColor;
-  --spinner-size: 0.75em;
-  // position: absolute;
-  // line-height: 1;
-  // height: 0.75em !important;
-  // width: 0.75em !important;
-  // top: calc(50% - 0.5em);
-  // left: calc(50% - 0.5em);
+  --spinner-size: 12px;
+  position: absolute;
+  top: calc(50% - var(--spinner-size) + (var(--spinner-size) / 4));
+  left: calc(50% - var(--spinner-size) + (var(--spinner-size) / 4));
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
