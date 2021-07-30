@@ -84,6 +84,7 @@ export interface CheckoutSession extends Object {
   line_items: Array<LineItem>;
   metadata?: Object;
   processor_intent?: ProcessorIntent;
+  discount_amount?: number;
   discount?: DiscountResponse;
 }
 

@@ -1,5 +1,6 @@
 import { Component, State, h, Watch, Prop, Event, EventEmitter } from '@stencil/core';
 import { CheckoutSession } from '../../../types';
+import { getFormattedPrice, getHumanDiscount } from '../../../functions/price';
 import { openWormhole } from 'stencil-wormhole';
 @Component({
   tag: 'ce-coupon-form',
@@ -41,17 +42,37 @@ export class CeCouponForm {
       return <ce-skeleton style={{ width: '120px', display: 'inline-block' }}></ce-skeleton>;
     }
 
-    if (this.checkoutSession?.discount?.promotion) {
+    if (this.checkoutSession?.discount?.promotion?.code) {
+      let humanDiscount = '';
+
+      // if (this.checkoutSession.discount?.coupon) {
+      //   humanDiscount = getHumanDiscount(this.checkoutSession.discount?.coupon);
+      // }
+
       return (
-        <ce-tag
-          clearable
-          onCeClear={() => {
-            this.ceApplyCoupon.emit(null);
-            this.open = false;
-          }}
-        >
-          {this.checkoutSession.discount?.promotion?.code}
-        </ce-tag>
+        <ce-line-item>
+          <ce-tag
+            class="coupon-tag"
+            slot="title"
+            clearable
+            onCeClear={() => {
+              this.ceApplyCoupon.emit(null);
+              this.open = false;
+            }}
+          >
+            {this.checkoutSession.discount?.promotion?.code}
+          </ce-tag>
+
+          {humanDiscount && (
+            <span class="coupon-human-discount" slot="description">
+              ({humanDiscount})
+            </span>
+          )}
+
+          <span slot="price">-{getFormattedPrice({ amount: this.checkoutSession?.discount_amount, currency: this.checkoutSession?.currency })}</span>
+
+          <span slot="price-description">&nbsp;</span>
+        </ce-line-item>
       );
     }
 
