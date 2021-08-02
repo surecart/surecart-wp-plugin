@@ -13,4 +13,8 @@ class Coupons {
 		$table->prepare_items();
 		return \CheckoutEngine::view( 'admin.coupons.index' )->with( [ 'table' => $table ] );
 	}
+
+	public function edit( $request ) {
+		return \CheckoutEngine::view( 'admin.coupons.edit' );
+	}
 }

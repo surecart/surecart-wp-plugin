@@ -34,6 +34,7 @@ return [
 		// REST providers.
 		\CheckoutEngine\Rest\SettingsRestServiceProvider::class,
 		\CheckoutEngine\Rest\PriceRestServiceProvider::class,
+		\CheckoutEngine\Rest\CouponRestServiceProvider::class,
 		\CheckoutEngine\Rest\CheckoutSessionRestServiceProvider::class,
 	],
 

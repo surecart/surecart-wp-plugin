@@ -19,7 +19,49 @@ if ( ! defined( 'ABSPATH' ) ) {
 \CheckoutEngine::route()->get()->where( 'admin', 'ce-dashboard' )->name( 'dashboard' )->handle( 'Dashboard@show' );
 \CheckoutEngine::route()->get()->where( 'admin', 'ce-products' )->handle( 'Products@page' );
 \CheckoutEngine::route()->get()->where( 'admin', 'ce-orders' )->handle( 'Orders@list' );
-\CheckoutEngine::route()->get()->where( 'admin', 'ce-coupons' )->handle( 'Coupons@index' );
+// \CheckoutEngine::route()->get()->where( 'admin', 'ce-coupons' )->handle( 'Coupons@index' );
+
+/*
+|--------------------------------------------------------------------------
+| Coupons
+|--------------------------------------------------------------------------
+*/
+\CheckoutEngine::route()
+->where( 'admin', 'ce-coupons' )
+->middleware( 'user.can:manage_options' ) // manage coupons.
+->group(
+	function() {
+		/*
+		|--------------------------------------------------------------------------
+		| General
+		|--------------------------------------------------------------------------
+		*/
+		\CheckoutEngine::route()->where(
+			function() {
+                return empty( $_GET['action'] ); // phpcs:ignore
+			}
+		)->group(
+			function() {
+				\CheckoutEngine::route()->get()->handle( 'Coupons@index' );
+			}
+		);
+
+		/*
+		|--------------------------------------------------------------------------
+		| Edit
+		|--------------------------------------------------------------------------
+		*/
+		\CheckoutEngine::route()->where(
+			function() {
+                return ! empty( $_GET['action'] ) && 'edit' ===  $_GET['action']; // phpcs:ignore
+			}
+		)->group(
+			function() {
+				\CheckoutEngine::route()->get()->handle( 'Coupons@edit' );
+			}
+		);
+	}
+);
 
 /*
 |--------------------------------------------------------------------------

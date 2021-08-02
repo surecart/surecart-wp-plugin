@@ -656,7 +656,7 @@ var settings = {
   /* translators: block description */
   description: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])('Display a checkout form', 'checkout_engine'),
   supports: {
-    align: ['wide', 'full'],
+    align: ['center', 'wide', 'full'],
     html: false
   },
   icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_5__["receipt"],

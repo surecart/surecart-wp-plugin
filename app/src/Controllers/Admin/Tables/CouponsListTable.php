@@ -3,6 +3,7 @@
 namespace CheckoutEngine\Controllers\Admin\Tables;
 
 use NumberFormatter;
+use CheckoutEngine\Models\Coupon;
 use CheckoutEngine\Models\Product;
 use CheckoutEngine\Models\Promotion;
 use CheckoutEngine\Support\Currency;
@@ -113,9 +114,9 @@ class CouponsListTable extends \WP_List_Table {
 	public function get_columns() {
 		return [
 			// 'cb'          => '<input type="checkbox" />',
-			'name'  => __( 'Name', 'checkout_engine' ),
-			'code'  => __( 'Code', 'checkout_engine' ),
-			'price' => __( 'Price', 'checkout_engine' ),
+			'name'     => __( 'Name', 'checkout_engine' ),
+			'redeemed' => __( 'Times Redeemed', 'checkout_engine' ),
+			'price'    => __( 'Price', 'checkout_engine' ),
 			// 'status'      => __( 'Status', 'checkout_engine' ),
 		];
 	}
@@ -156,7 +157,7 @@ class CouponsListTable extends \WP_List_Table {
 	 * @return Array
 	 */
 	private function table_data() {
-		return Promotion::where( [ 'limit' => 20 ] )->get();
+		return Coupon::where( [ 'limit' => 20 ] )->get();
 	}
 
 	/**
@@ -187,8 +188,8 @@ class CouponsListTable extends \WP_List_Table {
 	 *
 	 * @return string
 	 */
-	public function column_code( $promotion ) {
-		return '<code>' . $promotion->code . '</code>';
+	public function column_redeemed( $promotion ) {
+		return $promotion->times_redeemed;
 	}
 
 	/**
@@ -211,13 +212,18 @@ class CouponsListTable extends \WP_List_Table {
 	 *
 	 * @return Mixed
 	 */
-	public function column_default( $promotion, $column_name ) {
+	public function column_default( $coupon, $column_name ) {
 		switch ( $column_name ) {
 			case 'name':
-				return '<a href="' . add_query_arg( 'coupon', $promotion->id ) . '">' . $promotion->coupon->name . '</a>';
+				return '<a href="' . add_query_arg(
+					[
+						'action' => 'edit',
+						'id'     => $coupon->id,
+					]
+				) . '">' . $coupon->name . '</a>';
 			case 'name':
 			case 'description':
-				return $promotion->$column_name ?? '';
+				return $coupon->$column_name ?? '';
 		}
 	}
 

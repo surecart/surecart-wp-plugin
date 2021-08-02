@@ -47,6 +47,11 @@ class CheckoutForm extends Block {
 		$this->registerBlockTheme( $this->name, 'elegant', __( 'Elegant', 'checkout_engine' ), 'dist/styles/themes/elegant.css' );
 	}
 
+	public function getClasses( $attributes ) {
+		$block_alignment = isset( $attributes['align'] ) ? sanitize_text_field( $attributes['align'] ) : '';
+		return ! empty( $block_alignment ) ? 'align' . $block_alignment : '';
+	}
+
 	/**
 	 * Render the block
 	 *
@@ -60,6 +65,7 @@ class CheckoutForm extends Block {
 			"blocks/$this->name",
 			[
 				'label'       => $attributes['label'] ?? '',
+				'classes'     => $this->getClasses( $attributes ),
 				'description' => $attributes['description'] ?? '',
 				'content'     => $content,
 				'i18n'        => [],

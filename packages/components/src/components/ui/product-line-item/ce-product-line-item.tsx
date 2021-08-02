@@ -34,7 +34,9 @@ export class CeProductLineItem {
     return (
       <ce-line-item>
         {!!this.imageUrl && <img src={this.imageUrl} slot="image" />}
-        <span slot="title">{this.name}</span>
+        <span slot="title">
+          {this.name} <ce-tag size="small">Remove</ce-tag>
+        </span>
         <ce-quantity-select clickEl={this.el} quantity={this.quantity} slot="description" onCeChange={e => this.ceUpdateQuantity.emit(e.detail)}></ce-quantity-select>
         <span slot="price">{getFormattedPrice({ amount: this.amount, currency: this.currency })}</span>
         {!!this.interval && <span slot="price-description">{this.interval}</span>}

@@ -44,15 +44,44 @@ class AdminMenuPageService {
 	}
 
 	public function registerScripts() {
+		add_action( "admin_print_scripts-{$this->pages['coupons']}", [ $this, 'couponsPageScripts' ] );
 		add_action( "admin_print_scripts-{$this->pages['products']}", [ $this, 'productsPageScripts' ] );
 		add_action( "admin_print_scripts-{$this->pages['settings']}", [ $this, 'settingsPageScripts' ] );
 	}
 
-	// public function settingsPageScripts() {
-	// wp_enqueue_script( 'checkout-engine-components' );
-	// wp_enqueue_style( 'checkout-engine-themes-default' );
-	// }
+	public function couponsPageScripts() {
+		if ( ! isset( $_GET['action'] ) || 'edit' !== $_GET['action'] ) {
+			return;
+		}
 
+		wp_enqueue_script( 'checkout-engine-components' );
+		wp_enqueue_style( 'checkout-engine-themes-default' );
+
+		// upload media
+		wp_enqueue_media();
+
+		// component styles
+		wp_enqueue_style( 'wp-components' );
+
+		// Enqueue scripts.
+		\CheckoutEngine::core()->assets()->enqueueScript(
+			'checkoutengine/scripts/admin/coupons',
+			trailingslashit( \CheckoutEngine::core()->assets()->getUrl() ) . 'dist/admin/coupons.js',
+			[
+				'wp-components',
+				'wp-element',
+				'wp-codemirror',
+				'wp-api',
+				'wp-i18n',
+				'wp-editor',
+				'wp-blob',
+				'wp-blocks',
+				'wp-data',
+				'wp-core-data',
+			],
+			true
+		);
+	}
 	/**
 	 * Products page scripts.
 	 */

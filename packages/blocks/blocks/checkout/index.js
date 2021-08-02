@@ -23,7 +23,7 @@ const settings = {
 	/* translators: block description */
 	description: __( 'Display a checkout form', 'checkout_engine' ),
 	supports: {
-		align: [ 'wide', 'full' ],
+		align: [ 'center', 'wide', 'full' ],
 		html: false,
 	},
 	icon,
