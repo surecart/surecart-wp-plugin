@@ -2,28 +2,20 @@
 import { css, jsx } from '@emotion/core';
 
 const { __ } = wp.i18n;
+const { format } = wp.date;
 const { withSelect, dispatch } = wp.data;
-const { useState } = wp.element;
-const {
-	DateTimePicker,
-	CheckboxControl,
-	Button,
-	TextControl,
-	SelectControl,
-	BaseControl,
-	Card,
-	Icon,
-	RadioControl,
-	CardBody,
-	CardFooter,
-	CardHeader,
-	Flex,
-	FlexItem,
-	FlexBlock,
-} = wp.components;
+const { useEffect, Fragment } = wp.element;
+const { SnackbarList, Icon } = wp.components;
 const { getQueryArg } = wp.url;
 
+import Template from '../templates/SingleModel';
 import SaveButton from './components/SaveButton';
+import Codes from './modules/Codes';
+import Types from './modules/Types';
+import Limits from './modules/Limits';
+import Box from '../ui/Box';
+import Definition from '../ui/Definition';
+import Sidebar from './Sidebar';
 
 export default withSelect( ( select ) => {
 	const id = getQueryArg( window.location, 'id' );
@@ -31,22 +23,49 @@ export default withSelect( ( select ) => {
 	return {
 		coupon: select( 'checkout-engine/coupon' ).getCoupon( id ),
 		loading: isResolving( 'checkout-engine/coupon', 'getCoupon', [ id ] ),
-		updateCoupon: ( data ) => {
-			dispatch( 'checkout-engine/coupon' ).updateCoupon( data );
-		},
+		notices: select( 'checkout-engine/notices' ).notices(),
+		updateCoupon: ( data ) =>
+			dispatch( 'checkout-engine/coupon' ).updateCoupon( data ),
+		removeNotice: ( id ) =>
+			dispatch( 'checkout-engine/notices' ).removeNotice( id ),
+		addNotice: ( notice ) =>
+			dispatch( 'checkout-engine/notices' ).addNotice( notice ),
 	};
 } )( ( props ) => {
-	const { coupon, loading, updateCoupon } = props;
+	const { coupon, loading, updateCoupon, notices, removeNotice } = props;
 
-	const [ type, setType ] = useState( 'percentage' );
-
-	const controlCSS = css`
-		margin-bottom: 20px;
-	`;
+	return (
+		<Template
+			title={
+				<>
+					<Icon icon="tag" style={ { opacity: '0.25' } } />{ ' ' }
+					{ coupon?.name
+						? sprintf(
+								__( 'Edit %s', 'checkout_engine' ),
+								coupon.name
+						  )
+						: __( 'Add Coupon', 'checkout_engine' ) }
+				</>
+			}
+			button={
+				<SaveButton>
+					{ __( 'Save Coupon', 'checkout_engine' ) }
+				</SaveButton>
+			}
+			notices={ notices }
+			sidebar={ <Sidebar coupon={ coupon } /> }
+			removeNotice={ removeNotice }
+		>
+			<Fragment>
+				<Codes coupon={ coupon } updateCoupon={ updateCoupon } />
+				<Types coupon={ coupon } updateCoupon={ updateCoupon } />
+				<Limits coupon={ coupon } updateCoupon={ updateCoupon } />
+			</Fragment>
+		</Template>
+	);
 
 	return (
 		<div
-			className="presto-settings"
 			css={ css`
 				font-size: 15px;
 				margin-right: 20px;
@@ -100,7 +119,9 @@ export default withSelect( ( select ) => {
 				css={ css`
 					padding: 0 5px;
 					display: grid;
-					grid-template-columns: 1fr 380px;
+					margin: auto;
+					max-width: 960px;
+					grid-template-columns: 1fr 320px;
 					grid-gap: 2em;
 					grid-template-areas: 'nav    sidebar';
 				` }
@@ -108,211 +129,89 @@ export default withSelect( ( select ) => {
 				{ loading ? (
 					<ce-skeleton></ce-skeleton>
 				) : (
-					<div>
-						<BaseControl css={ controlCSS }>
-							<TextControl
-								label={ __( 'Coupon Name', 'checkout_engine' ) }
-								value={ coupon?.name }
-								onChange={ ( name ) =>
-									updateCoupon( { name } )
-								}
-							/>
-						</BaseControl>
-						<BaseControl css={ controlCSS }>
-							<RadioControl
-								label={ __( 'Type', 'checkout_engine' ) }
-								selected={ type }
-								options={ [
-									{
-										label: __(
-											'Percentage Discount',
-											'checkout_engine'
-										),
-										value: 'percentage',
-									},
-									{
-										label: __(
-											'Fixed Discount',
-											'checkout_engine'
-										),
-										value: 'fixed',
-									},
-								] }
-								onChange={ ( val ) => {
-									setType( val );
-								} }
-							/>
-						</BaseControl>
-						<BaseControl css={ controlCSS }>
-							{ type === 'percentage' ? (
-								<TextControl
-									label={ __(
-										'Percent Off',
-										'checkout-engine'
-									) }
-									value={ coupon?.percent_off }
-									onChange={ ( percent_off ) =>
-										updateCoupon( { percent_off } )
-									}
-								/>
-							) : (
-								<TextControl
-									label={ __(
-										'Amount Off',
-										'checkout-engine'
-									) }
-									value={ coupon?.amount_off }
-									onChange={ ( amount_off ) =>
-										updateCoupon( { amount_off } )
-									}
-								/>
-							) }
-						</BaseControl>
-
-						<BaseControl css={ controlCSS }>
-							<SelectControl
-								label={ __( 'Duration', 'checkout_engine' ) }
-								value={ coupon?.duration }
-								onChange={ ( duration ) =>
-									updateCoupon( { duration } )
-								}
-								options={ [
-									{
-										label: __(
-											'Forever',
-											'checkout_engine'
-										),
-										value: 'forever',
-									},
-									{
-										label: __( 'Once', 'checkout_engine' ),
-										value: 'once',
-									},
-									{
-										label: __(
-											'Multiple Months',
-											'checkout_engine'
-										),
-										value: 'repeating',
-									},
-								] }
-							/>
-						</BaseControl>
-
-						{ coupon?.duration === 'repeating' && (
-							<BaseControl css={ controlCSS }>
-								<TextControl
-									label={ __(
-										'Number of Months',
-										'checkout_engine'
-									) }
-									value={ coupon?.duration_in_months || 1 }
-									type="number"
-								/>
-							</BaseControl>
-						) }
-
-						<BaseControl css={ controlCSS }>
-							<BaseControl.VisualLabel
-								css={ css`
-									display: block;
-									margin-bottom: 10px;
-								` }
-							>
-								{ __( 'Redemption Limits', 'checkout_engine' ) }
-							</BaseControl.VisualLabel>
-							<BaseControl css={ controlCSS }>
-								<CheckboxControl
-									label={ __(
-										'Limit the date range when customers can redeem this coupon.'
-									) }
-									checked={ coupon?.redeem_by }
-									onChange={ ( val ) => {
-										updateCoupon( {
-											redeem_by: val ? new Date() : null,
-										} );
-									} }
-								/>
-								{ !! coupon?.redeem_by && (
-									<div
-										css={ css`
-											max-width: 288px;
-										` }
-									>
-										<DateTimePicker
-											currentDate={ coupon?.redeem_by }
-											onChange={ ( redeem_by ) =>
-												updateCoupon( { redeem_by } )
-											}
-										/>
-									</div>
-								) }
-								<CheckboxControl
-									label={ __(
-										'Limit the total number of times this coupon can be redeemed'
-									) }
-									checked={ false }
-									checked={ coupon?.max_redemptions }
-									onChange={ ( val ) => {
-										updateCoupon( {
-											max_redemptions: val ? 1 : null,
-										} );
-									} }
-								/>
-							</BaseControl>
-							{ !! coupon?.max_redemptions && (
-								<BaseControl css={ controlCSS }>
-									<TextControl
-										label={ __(
-											'Number of Months',
-											'checkout_engine'
-										) }
-										value={ coupon?.max_redemptions || 1 }
-										type="number"
-									/>
-								</BaseControl>
-							) }
-						</BaseControl>
-
-						<BaseControl css={ controlCSS }>
-							<BaseControl.VisualLabel>
-								Promo Codes
-							</BaseControl.VisualLabel>
-							<div
-								css={ css`
-									margin-top: 15px;
-								` }
-							>
-								<Button isPrimary>Add Promo Code</Button>
-							</div>
-						</BaseControl>
+					<div
+						css={ css`
+							> * ~ * {
+								margin-top: 1em;
+							}
+						` }
+					>
+						<Codes
+							coupon={ coupon }
+							updateCoupon={ updateCoupon }
+						/>
+						<Types
+							coupon={ coupon }
+							updateCoupon={ updateCoupon }
+						/>
+						<Limits
+							coupon={ coupon }
+							updateCoupon={ updateCoupon }
+						/>
 					</div>
 				) }
 				<div>
-					<Card size="small">
-						<CardHeader>
-							<h4
-								css={ css`
-									margin: 0;
-								` }
-							>
-								Coupon
-							</h4>
-						</CardHeader>
-						<CardBody>
-							<Flex>
-								<FlexItem style={ { marginRight: '20px' } }>
-									Label
-								</FlexItem>
-								<FlexBlock>Something</FlexBlock>
-							</Flex>
-						</CardBody>
-						<CardFooter size="small">
-							<SaveButton />
-						</CardFooter>
-					</Card>
+					<Box
+						title={ __( 'Summary', 'checkout_engine' ) }
+						css={ css`
+							font-size: 14px;
+						` }
+					>
+						<Definition title={ __( 'Status', 'checkout_engine' ) }>
+							{ !! coupon?.expired ? (
+								<ce-tag type="danger">
+									{ __( 'Expired', 'checkout_engine' ) }
+								</ce-tag>
+							) : (
+								<ce-tag type="success">
+									{ __( 'Active', 'checkout_engine' ) }
+								</ce-tag>
+							) }
+						</Definition>
+						<Definition title={ __( 'Uses', 'checkout_engine' ) }>
+							{ coupon?.times_redeemed || 0 } /
+							{ !! coupon?.max_redemptions ? (
+								coupon?.max_redemptions
+							) : (
+								<span>&infin;</span>
+							) }
+						</Definition>
+						<hr />
+						<Definition
+							title={ __( 'Created', 'checkout_engine' ) }
+						>
+							{ !! coupon.created_at
+								? format(
+										'F j, Y',
+										new Date( coupon.created_at * 1000 )
+								  )
+								: '' }
+						</Definition>
+						<Definition
+							title={ __( 'Updated', 'checkout_engine' ) }
+						>
+							{ !! coupon.updated_at
+								? format(
+										'F j, Y',
+										new Date( coupon.updated_at * 1000 )
+								  )
+								: '' }
+						</Definition>
+					</Box>
 				</div>
 			</div>
+
+			<SnackbarList
+				css={ css`
+					position: fixed !important;
+					left: auto !important;
+					right: 40px;
+					bottom: 40px;
+					width: auto !important;
+				` }
+				notices={ notices }
+				onRemove={ removeNotice }
+			/>
 		</div>
 	);
 } );

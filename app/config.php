@@ -24,6 +24,7 @@ return [
 		\CheckoutEngine\WordPress\ContentTypesServiceProvider::class,
 		\CheckoutEngine\WordPress\ShortcodesServiceProvider::class,
 		\CheckoutEngine\WordPress\PluginServiceProvider::class,
+		\CheckoutEngine\Routing\AdminRouteServiceProvider::class,
 		// \CheckoutEngine\WordPress\WidgetsServiceProvider::class,
 		\CheckoutEngine\Settings\SettingsServiceProvider::class,
 		\CheckoutEngine\Request\RequestServiceProvider::class,

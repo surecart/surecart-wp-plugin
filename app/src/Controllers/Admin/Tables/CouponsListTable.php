@@ -205,26 +205,14 @@ class CouponsListTable extends \WP_List_Table {
 	}
 
 	/**
-	 * Define what data to show on each column of the table
+	 * Name of the coupon
 	 *
-	 * @param \CheckoutEngine\Models\Product $product Product model.
-	 * @param String                         $column_name - Current column name.
+	 * @param \CheckoutEngine\Models\Promotion $promotion Promotion model.
 	 *
-	 * @return Mixed
+	 * @return string
 	 */
-	public function column_default( $coupon, $column_name ) {
-		switch ( $column_name ) {
-			case 'name':
-				return '<a href="' . add_query_arg(
-					[
-						'action' => 'edit',
-						'id'     => $coupon->id,
-					]
-				) . '">' . $coupon->name . '</a>';
-			case 'name':
-			case 'description':
-				return $coupon->$column_name ?? '';
-		}
+	public function column_name( $promotion ) {
+		return '<a href="' . \CheckoutEngine::getEditUrl( 'coupon', $promotion->id ) . '">' . $promotion->name . '</a>';
 	}
 
 	/**

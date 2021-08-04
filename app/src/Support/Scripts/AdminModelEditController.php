@@ -1,0 +1,92 @@
+<?php
+
+namespace CheckoutEngine\Support\Scripts;
+
+/**
+ * Class for model edit pages to extend.
+ */
+abstract class AdminModelEditController {
+	/**
+	 * Are we editing a single page?
+	 *
+	 * @var array
+	 */
+	protected $url_query = [ 'action' => 'edit' ];
+
+	/**
+	 * Additional dependencies
+	 *
+	 * @var array
+	 */
+	protected $dependencies = [];
+
+	/**
+	 * Admin pages use the same dependencies.
+	 *
+	 * @var array
+	 */
+	protected $core_dependencies = [
+		'wp-components',
+		'wp-element',
+		'wp-codemirror',
+		'wp-api',
+		'wp-i18n',
+		'wp-date',
+		'wp-editor',
+		'wp-blob',
+		'wp-blocks',
+		'wp-data',
+		'wp-core-data',
+	];
+
+	/**
+	 * Optional conditionally load.
+	 */
+	protected function condition() {
+		return true;
+	}
+
+	/**
+	 * Enqueue needed scripts
+	 *
+	 * @return void
+	 */
+	public function enqueueScriptDependencies() {
+		wp_enqueue_script( 'checkout-engine-components' );
+		wp_enqueue_style( 'checkout-engine-themes-default' );
+		wp_enqueue_media();
+		wp_enqueue_style( 'wp-components' );
+	}
+
+	/**
+	 * Enqueue scripts
+	 *
+	 * @return void
+	 */
+	public function enqueue() {
+		if ( ! $this->condition() ) {
+			return;
+		}
+
+		// match url query for the scripts.
+		if ( ! empty( $this->url_query ) ) {
+			foreach ( $this->url_query as $param => $value ) {
+				// phpcs:ignore
+				if ( ! isset( $_GET[ $param ] ) || $value !== $_GET[ $param ] ) {
+					return;
+				}
+			}
+		}
+
+		// enqueue dependencies.
+		$this->enqueueScriptDependencies();
+
+		// Enqueue scripts.
+		\CheckoutEngine::core()->assets()->enqueueScript(
+			$this->handle,
+			trailingslashit( \CheckoutEngine::core()->assets()->getUrl() ) . $this->path,
+			array_merge( $this->core_dependencies, $this->core_dependencies ),
+			true
+		);
+	}
+}

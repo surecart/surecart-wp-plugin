@@ -1,6 +1,6 @@
 <?php
 
-namespace CheckoutEngine\Controllers\Admin\Tables;
+namespace CheckoutEngine\Controllers\Admin\Products;
 
 use NumberFormatter;
 use CheckoutEngine\Models\Product;
@@ -28,10 +28,10 @@ class ProductsListTable extends \WP_List_Table {
 		$sortable = $this->get_sortable_columns();
 
 		$data = $this->table_data();
-		if ( is_wp_error($data)) {
+		if ( is_wp_error( $data ) ) {
 			$data = [];
 		}
-		
+
 		usort( $data, array( &$this, 'sort_data' ) );
 
 		$perPage     = 2;
@@ -206,6 +206,17 @@ class ProductsListTable extends \WP_List_Table {
 	public function column_status( $product ) {
 		// TODO: Add Badge.
 		return $product->active ? __( 'Active', 'checkout_engine' ) : __( 'Archived', 'checkout_engine' );
+	}
+
+	/**
+	 * Name column
+	 *
+	 * @param \CheckoutEngine\Models\Product $product Product model.
+	 *
+	 * @return string
+	 */
+	public function column_name( $product ) {
+		return '<a href="' . \CheckoutEngine::getEditUrl( 'product', $product->id ) . '">' . $product->name . '</a>';
 	}
 
 	/**
