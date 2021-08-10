@@ -5,7 +5,7 @@ use WP_UnitTestCase;
 use CheckoutEngine\Request\RequestService;
 
 abstract class CheckoutEngineUnitTestCase extends WP_UnitTestCase {
-	protected $mock_requests;
+	public $mock_requests;
 
 	public function setupMockRequests()
 	{

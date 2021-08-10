@@ -109,10 +109,11 @@ class CheckoutSessionTest extends CheckoutEngineUnitTestCase
 		$instance = new CheckoutSession($data['checkout_session']);
 		$created = $instance->create();
 
-		$this->assertEquals($created->toArray(), $response);
+		// we don't care about the order.
+		$this->assertEqualsCanonicalizing($created->toArray(), $response);
 	}
 
-	public function test_can_prepare_session()
+	public function test_can_finalize_session()
 	{
 		$request = json_decode('{
 			"checkout_session": {
@@ -193,7 +194,7 @@ class CheckoutSessionTest extends CheckoutEngineUnitTestCase
 		$this->mock_requests->expects($this->once())
 			->method('makeRequest')
 			->with(
-				$this->equalTo('checkout_sessions/test_session/prepare/custom'),
+				$this->equalTo('checkout_sessions/test_session/finalize/custom'),
 				$this->equalTo([
 					'method' => 'PATCH',
 					'body' => $request
@@ -202,7 +203,7 @@ class CheckoutSessionTest extends CheckoutEngineUnitTestCase
 			->willReturn($response);
 
 		$instance = new CheckoutSession($request['checkout_session'], 'custom');
-		$prepared = $instance->prepare();
+		$prepared = $instance->finalize();
 
 		$this->assertEquals($prepared->toArray(), $response);
 	}

@@ -115,8 +115,6 @@ class RequestService {
 			}
 		}
 
-		// wp_die( esc_url_raw( $url ) );
-
 		// make request.
 		$response      = wp_remote_request( esc_url_raw( $url ), $args );
 		$response_code = wp_remote_retrieve_response_code( $response );

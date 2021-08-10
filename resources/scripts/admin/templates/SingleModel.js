@@ -1,16 +1,17 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 
-const { SnackbarList } = wp.components;
+const { SnackbarList, Notice } = wp.components;
 
 export default ( {
 	children,
 	title,
 	button,
 	footer,
+	noticeUI,
 	notices,
-	sidebar,
 	removeNotice,
+	sidebar,
 } ) => {
 	return (
 		<div
@@ -25,14 +26,10 @@ export default ( {
 			<div
 				css={ css`
 					background: #fff;
-					padding: 20px;
 					margin-left: -20px;
 					margin-right: -20px;
 					margin-bottom: 30px;
 					position: sticky;
-					display: flex;
-					align-items: center;
-					justify-content: space-between;
 					top: 32px;
 					z-index: 99;
 
@@ -41,17 +38,35 @@ export default ( {
 					}
 				` }
 			>
-				<h1
+				<div
 					css={ css`
-						margin: 0;
-						font-size: 1.3em;
-						font-weight: normal;
+						padding: 20px;
+						display: flex;
+						align-items: center;
+						justify-content: space-between;
 					` }
 				>
-					{ title }
-				</h1>
+					<h1
+						css={ css`
+							margin: 0;
+							font-size: 1.3em;
+							font-weight: normal;
+						` }
+					>
+						{ title }
+					</h1>
 
-				{ button }
+					{ button }
+				</div>
+				<div
+					css={ css`
+						.components-notice {
+							margin: 0;
+						}
+					` }
+				>
+					{ noticeUI }
+				</div>
 			</div>
 
 			<div

@@ -4,3 +4,10 @@ export function setSaving( value ) {
 		value,
 	};
 }
+
+export function setFlash( value ) {
+	return {
+		type: 'SET_FLASH',
+		value,
+	};
+}

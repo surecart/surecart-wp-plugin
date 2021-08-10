@@ -3,7 +3,13 @@ import { css, jsx } from '@emotion/core';
 
 const { Card, CardBody } = wp.components;
 
-export default ( { title, children, size = 'large', isBorderLess = true } ) => {
+export default ( {
+	title,
+	children,
+	size = 'large',
+	isBorderLess = true,
+	loading,
+} ) => {
 	return (
 		<Card
 			css={ css`
@@ -34,10 +40,37 @@ export default ( { title, children, size = 'large', isBorderLess = true } ) => {
 						fontWeight: 600,
 					} }
 				>
-					{ title }
+					{ loading ? (
+						<ce-skeleton
+							style={ {
+								width: '120px',
+								display: 'inline-block',
+							} }
+						></ce-skeleton>
+					) : (
+						title
+					) }
 				</div>
 
-				{ children }
+				{ loading ? (
+					<div>
+						<ce-skeleton
+							style={ {
+								width: '100%',
+								marginBottom: '15px',
+								display: 'inline-block',
+							} }
+						></ce-skeleton>
+						<ce-skeleton
+							style={ {
+								width: '40%',
+								display: 'inline-block',
+							} }
+						></ce-skeleton>
+					</div>
+				) : (
+					children
+				) }
 			</CardBody>
 		</Card>
 	);

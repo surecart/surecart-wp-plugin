@@ -8,9 +8,10 @@ const { Fragment } = wp.element;
 import Box from '../ui/Box';
 import Definition from '../ui/Definition';
 
-export default ( { coupon } ) => {
+export default ( { coupon, loading } ) => {
 	return (
 		<Box
+			loading={ loading }
 			title={
 				<div
 					css={ css`

@@ -1,20 +1,35 @@
 export function setCoupon( coupon ) {
 	return {
-		type: 'SET_MODEL',
+		type: 'SET_COUPON',
 		value: coupon,
 	};
 }
 
 export function updateCoupon( value ) {
 	return {
-		type: 'UPDATE_MODEL',
+		type: 'UPDATE_COUPON',
 		value,
 	};
 }
 
-export function fetch( path ) {
+export function setPromotions( promotion ) {
+	return {
+		type: 'SET_PROMOTIONS',
+		value: promotion,
+	};
+}
+
+export function updatePromotion( item ) {
+	return {
+		type: 'UPDATE_PROMOTION',
+		item,
+	};
+}
+
+export function fetch( path, query ) {
 	return {
 		type: 'FETCH_FROM_API',
 		path,
+		query,
 	};
 }

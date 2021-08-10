@@ -2,13 +2,12 @@
 
 namespace CheckoutEngine\Controllers\Rest;
 
-use CheckoutEngine\Models\Coupon;
 use CheckoutEngine\Models\Promotion;
 
 /**
  * Handle coupon requests through the REST API
  */
-class CouponsController {
+class PromotionsController {
 	/**
 	 * Create price
 	 *
@@ -18,7 +17,7 @@ class CouponsController {
 	 */
 	public function create( \WP_REST_Request $request ) {
 		// first create a coupon.
-		$coupon = Coupon::create( $request );
+		$coupon = Promotion::create( $request );
 
 		if ( is_wp_error( $coupon ) ) {
 			return $coupon;
@@ -64,7 +63,7 @@ class CouponsController {
 	 * @return \WP_REST_Response
 	 */
 	public function find( \WP_REST_Request $request ) {
-		$coupon = Coupon::find( $request['id'] );
+		$coupon = Promotion::find( $request['id'] );
 
 		if ( is_wp_error( $coupon ) ) {
 			return $coupon;
@@ -74,13 +73,6 @@ class CouponsController {
 	}
 
 	public function edit( \WP_REST_Request $request ) {
-		$coupon = Coupon::update( $request->get_params() );
-
-		if ( is_wp_error( $coupon ) ) {
-			return $coupon;
-		}
-
-		return rest_ensure_response( $coupon->toArray() );
 	}
 
 	public function delete( \WP_REST_Request $request ) {

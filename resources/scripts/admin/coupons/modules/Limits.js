@@ -12,9 +12,12 @@ const {
 
 import Box from '../../ui/Box';
 
-export default ( { coupon, updateCoupon } ) => {
+export default ( { coupon, updateCoupon, loading } ) => {
 	return (
-		<Box title={ __( 'Redemption Limits', 'checkout_engine' ) }>
+		<Box
+			title={ __( 'Redemption Limits', 'checkout_engine' ) }
+			loading={ loading }
+		>
 			<BaseControl>
 				<CheckboxControl
 					label={ __(

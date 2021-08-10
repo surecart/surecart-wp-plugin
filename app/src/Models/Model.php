@@ -384,8 +384,8 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 	 *
 	 * @return void
 	 */
-	public function setMetaDataAttribute( $meta_data ) {
-		$this->attributes['meta_data'] = apply_filters( "checkout_engine/$this->object_name/set_meta_data", $meta_data );
+	public function setMetadataAttribute( $meta_data ) {
+		$this->attributes['metadata'] = apply_filters( "checkout_engine/$this->object_name/set_meta_data", $meta_data );
 	}
 
 	/**
@@ -549,7 +549,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 			[
 				'method' => 'POST',
 				'body'   => [
-					$this->object_name => $this->attributes,
+					$this->object_name => $this->toArray(),
 				],
 			]
 		);

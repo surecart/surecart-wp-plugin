@@ -41,12 +41,13 @@ class CheckoutSession extends Model {
 	}
 
 	/**
-	 * Prepare the session for checkout.
+	 * Finalize the session for checkout.
 	 *
 	 * @return $this|\WP_Error
 	 */
 	protected function finalize() {
-		if ( $this->fireModelEvent( 'preparing' ) === false ) {
+
+		if ( $this->fireModelEvent( 'finalizing' ) === false ) {
 			return false;
 		}
 
@@ -58,25 +59,25 @@ class CheckoutSession extends Model {
 			return new \WP_Error( 'no_processor', 'Please provide a processor' );
 		}
 
-		$prepared = \CheckoutEngine::request(
-			$this->endpoint . '/' . $this->attributes['id'] . '/prepare/' . $this->processor_type,
+		$finalized = \CheckoutEngine::request(
+			$this->endpoint . '/' . $this->attributes['id'] . '/finalize/' . $this->processor_type,
 			[
 				'method' => 'PATCH',
 				'body'   => [
-					$this->object_name => $this->attributes,
+					$this->object_name => $this->toArray(),
 				],
 			]
 		);
 
-		if ( is_wp_error( $prepared ) ) {
-			return $prepared;
+		if ( is_wp_error( $finalized ) ) {
+			return $finalized;
 		}
 
 		$this->resetAttributes();
 
-		$this->fill( $prepared );
+		$this->fill( $finalized );
 
-		$this->fireModelEvent( 'prepared' );
+		$this->fireModelEvent( 'finalized' );
 
 		return $this;
 	}

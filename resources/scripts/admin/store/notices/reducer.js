@@ -1,6 +1,6 @@
 export default ( state = [], action ) => {
 	switch ( action.type ) {
-		case 'ADD_NOTICE':
+		case 'ADD_SNACKBAR_NOTICE':
 			return [
 				...state,
 				{
@@ -12,7 +12,7 @@ export default ( state = [], action ) => {
 					...action.notice,
 				},
 			];
-		case 'REMOVE_NOTICE':
+		case 'REMOVE_SNACKBAR_NOTICE':
 			return state.filter( ( notice ) => notice.id !== action.id );
 	}
 	return state;

@@ -45,7 +45,7 @@
 		"packages-update": "wp-scripts packages-update",
 		"watch:blocks": "wp-scripts start ./resources/scripts/blocks/blocks.js --output-path=dist/blocks",
 		"test:e2e": "wp-scripts test-e2e e2e.spec.js",
-		"test:php": "wp-env run phpunit 'phpunit -c /var/www/html/wp-content/plugins/checkout-engine/phpunit.xml'",
+		"test:php": "wp-env run phpunit 'phpunit -c /var/www/html/wp-content/plugins/checkout-engine/phpunit.xml --testdox'",
 		"test:php:failing": "wp-env run phpunit 'phpunit -c /var/www/html/wp-content/plugins/checkout-engine/phpunit.xml --group=failing' --verbose",
 		"test:js": "wp-scripts test-unit-js --config ./resources/tests/jest/jest.config.js",
 		"test:js:coverage": "wp-scripts test-unit-js --config ./resources/tests/jest/jest.config.js --coverage"

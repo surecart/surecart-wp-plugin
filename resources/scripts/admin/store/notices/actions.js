@@ -1,13 +1,13 @@
-export function addNotice( notice ) {
+export function addSnackbarNotice( notice ) {
 	return {
-		type: 'ADD_NOTICE',
+		type: 'ADD_SNACKBAR_NOTICE',
 		notice,
 	};
 }
 
-export function removeNotice( id ) {
+export function removeSnackbarNotice( id ) {
 	return {
-		type: 'REMOVE_NOTICE',
+		type: 'REMOVE_SNACKBAR_NOTICE',
 		id,
 	};
 }

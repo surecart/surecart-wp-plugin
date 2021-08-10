@@ -14,10 +14,13 @@ const {
 
 import Box from '../../ui/Box';
 
-export default ( { coupon, updateCoupon } ) => {
+export default ( { coupon, updateCoupon, loading } ) => {
 	const [ type, setType ] = useState( 'percentage' );
 	return (
-		<Box title={ __( 'Coupon Type', 'checkout_engine' ) }>
+		<Box
+			title={ __( 'Coupon Type', 'checkout_engine' ) }
+			loading={ loading }
+		>
 			<BaseControl>
 				<RadioControl
 					label={ __( 'Choose a type', 'checkout_engine' ) }

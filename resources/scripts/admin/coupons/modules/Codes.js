@@ -3,12 +3,15 @@ const { BaseControl, TextControl } = wp.components;
 
 import Box from '../../ui/Box';
 
-export default ( { coupon, updateCoupon } ) => {
+export default ( { promotion, updatePromotion, loading } ) => {
 	return (
-		<Box title={ __( 'Discount Code', 'checkout_engine' ) }>
+		<Box
+			title={ __( 'Discount Code', 'checkout_engine' ) }
+			loading={ loading }
+		>
 			<BaseControl>
 				<TextControl
-					value={ coupon?.percent_off }
+					value={ promotion?.code }
 					help={ __(
 						'Customers will enter this discount code at checkout.',
 						'checkout_engine'
