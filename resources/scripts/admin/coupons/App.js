@@ -11,20 +11,19 @@ import Types from './modules/Types';
 import Limits from './modules/Limits';
 import Sidebar from './Sidebar';
 import useSnackbar from '../hooks/useSnackbar';
+import { getCoupon } from '../products/store/selectors';
 
 export default withNotices( ( { noticeOperations, noticeUI } ) => {
 	const { snackbarNotices, removeSnackbarNotice } = useSnackbar();
 
 	const {
-		coupon,
 		loading,
+		promotion,
+		coupon,
 		updateCoupon,
 		updatePromotion,
-		promotions,
 	} = useSelect( ( select ) => {
-		const id = getQueryArg( window.location, 'id' );
-
-		const { isResolving, getCoupon, getPromotions } = select(
+		const { isResolving, getPromotion, getCoupon } = select(
 			'checkout-engine/coupon'
 		);
 		const { updateCoupon, updatePromotion } = dispatch(
@@ -32,25 +31,18 @@ export default withNotices( ( { noticeOperations, noticeUI } ) => {
 		);
 
 		return {
-			coupon: getCoupon( id ),
+			loading: isResolving( 'getPromotion' ),
+			promotion: getPromotion(),
+			coupon: getCoupon(),
 			updateCoupon,
-			promotions: getPromotions( {
-				coupon_ids: [ id ],
-			} ),
 			updatePromotion,
-			loading: {
-				coupon: isResolving( 'getCoupon', [ id ] ),
-				promotion: isResolving( 'getPromotions', [
-					{ coupon_ids: [ id ] },
-				] ),
-			},
 		};
 	} );
 
 	return (
 		<Template
 			title={
-				loading?.coupon ? (
+				loading ? (
 					<ce-skeleton
 						style={ { width: '120px', display: 'inline-block' } }
 					></ce-skeleton>
@@ -67,7 +59,7 @@ export default withNotices( ( { noticeOperations, noticeUI } ) => {
 				)
 			}
 			button={
-				loading?.coupon || loading?.promotion ? (
+				loading ? (
 					<ce-skeleton
 						style={ {
 							width: '120px',
@@ -84,26 +76,21 @@ export default withNotices( ( { noticeOperations, noticeUI } ) => {
 			notices={ snackbarNotices }
 			removeNotice={ removeSnackbarNotice }
 			noticeUI={ noticeUI }
-			sidebar={
-				<Sidebar
-					coupon={ coupon }
-					loading={ loading?.coupon || loading?.promotion }
-				/>
-			}
+			sidebar={ <Sidebar coupon={ coupon } loading={ loading } /> }
 		>
 			<Fragment>
 				<Codes
-					loading={ loading?.promotion }
-					promotion={ promotions?.[ 0 ] }
+					loading={ loading }
+					promotion={ promotion }
 					updatePromotion={ updatePromotion }
 				/>
 				<Types
-					loading={ loading?.coupon }
+					loading={ loading }
 					coupon={ coupon }
 					updateCoupon={ updateCoupon }
 				/>
 				<Limits
-					loading={ loading?.coupon }
+					loading={ loading }
 					coupon={ coupon }
 					updateCoupon={ updateCoupon }
 				/>

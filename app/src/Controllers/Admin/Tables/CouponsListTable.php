@@ -157,7 +157,7 @@ class CouponsListTable extends \WP_List_Table {
 	 * @return Array
 	 */
 	private function table_data() {
-		return Coupon::where( [ 'limit' => 20 ] )->get();
+		return Promotion::where( [ 'limit' => 20 ] )->get();
 	}
 
 	/**
@@ -212,7 +212,7 @@ class CouponsListTable extends \WP_List_Table {
 	 * @return string
 	 */
 	public function column_name( $promotion ) {
-		return '<a href="' . \CheckoutEngine::getEditUrl( 'coupon', $promotion->id ) . '">' . $promotion->name . '</a>';
+		return '<a href="' . \CheckoutEngine::getEditUrl( 'coupon', $promotion->id ) . '">' . $promotion->code . '</a>';
 	}
 
 	/**

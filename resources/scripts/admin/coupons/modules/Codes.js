@@ -16,9 +16,7 @@ export default ( { promotion, updatePromotion, loading } ) => {
 						'Customers will enter this discount code at checkout.',
 						'checkout_engine'
 					) }
-					onChange={ ( percent_off ) =>
-						updateCoupon( { percent_off } )
-					}
+					onChange={ ( code ) => updatePromotion( { code } ) }
 				/>
 			</BaseControl>
 		</Box>

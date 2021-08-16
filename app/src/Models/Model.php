@@ -506,6 +506,28 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 	}
 
 	/**
+	 * Get fresh instance from DB.
+	 *
+	 * @return this
+	 */
+	protected function fresh() {
+		if ( ! $this->attributes['id'] ) {
+			return $this;
+		}
+
+		$attributes = \CheckoutEngine::request( $this->endpoint . '/' . $this->attributes['id'] );
+
+		if ( is_wp_error( $attributes ) ) {
+			return $attributes;
+		}
+
+		$this->syncOriginal();
+		$this->fill( $attributes );
+
+		return $this;
+	}
+
+	/**
 	 * Save model
 	 *
 	 * @return $this|false

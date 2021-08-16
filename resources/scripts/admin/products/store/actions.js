@@ -11,3 +11,31 @@ export function updateProduct( value ) {
 		value,
 	};
 }
+
+export function setSaving( value ) {
+	return {
+		type: 'SET_SAVING',
+		value,
+	};
+}
+
+export function addNotice( notice ) {
+	return {
+		type: 'SET_NOTICE',
+		notice,
+	};
+}
+
+export function removeNotice( id ) {
+	return {
+		type: 'REMOVE_NOTICE',
+		id,
+	};
+}
+
+export function fetchFromAPI( path ) {
+	return {
+		type: 'FETCH_FROM_API',
+		path,
+	};
+}

@@ -24,13 +24,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 */
 \CheckoutEngine::route()
 ->where( 'admin', 'ce-products' )
-->name( 'products' )
 ->middleware( 'user.can:manage_options' ) // TODO: change to manage products.
 ->setNamespace( '\\CheckoutEngine\\Controllers\\Admin\\Products\\' )
 ->group(
 	function() {
-		\CheckoutEngine::route()->get()->where( 'ce_url_var', false, 'action' )->name( 'index' )->handle( 'ProductsViewController@index' );
-		\CheckoutEngine::route()->get()->where( 'ce_url_var', 'edit', 'action' )->name( 'edit' )->handle( 'ProductsViewController@edit' );
+		\CheckoutEngine::route()->get()->where( 'ce_url_var', false, 'action' )->name( 'products.index' )->handle( 'ProductsViewController@index' );
+		\CheckoutEngine::route()->get()->where( 'ce_url_var', 'edit', 'action' )->name( 'product.edit' )->handle( 'ProductsViewController@edit' );
 	}
 );
 

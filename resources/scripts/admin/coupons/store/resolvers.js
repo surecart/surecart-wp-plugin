@@ -2,15 +2,14 @@ import * as actions from './actions';
 const { getQueryArg } = wp.url;
 
 export default {
-	*getCoupon( id = 0 ) {
-		if ( ! id ) {
-			id = getQueryArg( window.location, 'id' );
-		}
-		const coupon = yield actions.fetch( `coupons/${ id }` );
-		return actions.updateCoupon( coupon );
-	},
-	*getPromotions( query ) {
-		const promotion = yield actions.fetch( 'promotions', query );
-		return actions.setPromotions( promotion );
+	*getPromotion() {
+		// maybe get from url.
+		const id = getQueryArg( window.location, 'id' );
+		if ( ! id ) return {};
+
+		// fetch promotion
+		const promotion = yield actions.fetch( `promotions/${ id }` );
+
+		return actions.setPromotion( promotion );
 	},
 };

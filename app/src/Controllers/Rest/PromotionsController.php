@@ -2,6 +2,7 @@
 
 namespace CheckoutEngine\Controllers\Rest;
 
+use CheckoutEngine\Models\Coupon;
 use CheckoutEngine\Models\Promotion;
 
 /**
@@ -16,19 +17,15 @@ class PromotionsController {
 	 * @return \WP_REST_Response
 	 */
 	public function create( \WP_REST_Request $request ) {
-		// first create a coupon.
-		$coupon = Promotion::create( $request );
+		// first, create the coupon.
+		$coupon = Coupon::create( $request->get_param( 'coupon' ) );
 
-		if ( is_wp_error( $coupon ) ) {
-			return $coupon;
+		// then create the promotion for the coupon.
+		$promotion = Promotion::create( array_merge( $request->get_params(), [ 'coupon_id' => $coupon->id ] ) );
+
+		if ( is_wp_error( $promotion ) ) {
+			return $promotion;
 		}
-
-		$promotion = Promotion::create(
-			[
-				'code'      => $request['code'],
-				'coupon_id' => $request['coupon_id'],
-			]
-		);
 
 		return rest_ensure_response( $promotion );
 	}
@@ -72,7 +69,33 @@ class PromotionsController {
 		return rest_ensure_response( $coupon );
 	}
 
+	/**
+	 * Edit a promotion.
+	 *
+	 * @param \WP_REST_Request $request
+	 *
+	 * @return void
+	 */
 	public function edit( \WP_REST_Request $request ) {
+
+		return rest_ensure_response( $request['coupon'] );
+		// update coupon if nested.
+		if ( ! empty( $request['coupon'] ) ) {
+			$coupon = Coupon::update( $request['coupon'] );
+		}
+
+		if ( is_wp_error( $coupon ) ) {
+			return $coupon;
+		}
+
+		// update promotion.
+		$promotion = Promotion::update( $request->get_params() );
+
+		if ( is_wp_error( $promotion ) ) {
+			return $promotion;
+		}
+
+		return rest_ensure_response( $promotion->toArray() );
 	}
 
 	public function delete( \WP_REST_Request $request ) {

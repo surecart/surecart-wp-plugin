@@ -19,7 +19,5 @@ export default {
 	selectors,
 	controls,
 	resolvers,
-	actions: {
-		...actions,
-	},
+	actions,
 };

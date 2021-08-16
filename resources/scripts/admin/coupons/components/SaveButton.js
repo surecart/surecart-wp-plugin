@@ -14,8 +14,9 @@ export default ( { style, className, children } ) => {
 	const save = async ( e ) => {
 		e.preventDefault();
 		dispatch( 'checkout-engine/ui' ).setSaving( true );
+
 		try {
-			await saveCoupon();
+			await savePromotion();
 			addSnackbarNotice( {
 				content: __( 'Coupon Saved', 'checkout_engine' ),
 			} );
@@ -31,16 +32,22 @@ export default ( { style, className, children } ) => {
 		}
 	};
 
-	const saveCoupon = async () => {
-		const id = wp.url.getQueryArg( window.location, 'id' );
+	/**
+	 * Save the promotion.
+	 * @returns promise
+	 */
+	const savePromotion = async () => {
+		let promotion = select( 'checkout-engine/coupon' ).getPromotion();
 
-		const coupon = await apiFetch( {
-			path: `checkout-engine/v1/coupons/${ id }`,
-			method: 'PATCH',
-			data: select( 'checkout-engine/coupon' ).getCoupon( id ),
+		const response = await apiFetch( {
+			path: promotion?.id
+				? `checkout-engine/v1/promotions/${ promotion?.id }`
+				: 'checkout-engine/v1/promotions',
+			method: promotion?.id ? 'PATCH' : 'POST',
+			data: promotion,
 		} );
 
-		dispatch( 'checkout-engine/coupon' ).setCoupon( coupon );
+		return response;
 	};
 
 	return (

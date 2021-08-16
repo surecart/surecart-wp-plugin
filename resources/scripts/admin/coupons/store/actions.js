@@ -1,7 +1,23 @@
-export function setCoupon( coupon ) {
+export function setPromotion( value ) {
 	return {
-		type: 'SET_COUPON',
-		value: coupon,
+		type: 'SET_PROMOTION',
+		value,
+	};
+}
+
+export function updatePromotion( value ) {
+	return {
+		type: 'UPDATE_PROMOTION',
+		value,
+	};
+}
+
+export function setCoupon( value ) {
+	return ( dispatch ) => {
+		dispatch( {
+			type: 'SET_COUPON',
+			value,
+		} );
 	};
 }
 
@@ -9,20 +25,6 @@ export function updateCoupon( value ) {
 	return {
 		type: 'UPDATE_COUPON',
 		value,
-	};
-}
-
-export function setPromotions( promotion ) {
-	return {
-		type: 'SET_PROMOTIONS',
-		value: promotion,
-	};
-}
-
-export function updatePromotion( item ) {
-	return {
-		type: 'UPDATE_PROMOTION',
-		item,
 	};
 }
 

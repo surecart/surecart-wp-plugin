@@ -1,6 +1,6 @@
 export function getCoupon( state ) {
-	return state.coupon;
+	return state.promotion?.coupon || {};
 }
-export function getPromotions( state ) {
-	return state.promotions;
+export function getPromotion( state ) {
+	return state.promotion;
 }
