@@ -21,6 +21,12 @@ export default ( {
 				.components-snackbar.is-snackbar-error {
 					background: #cc1818;
 				}
+
+				.is-error {
+					.components-text-control__input {
+						border-color: #cc1818;
+					}
+				}
 			` }
 		>
 			<div
@@ -101,6 +107,10 @@ export default ( {
 					right: 40px;
 					bottom: 40px;
 					width: auto !important;
+
+					:first-letter {
+						text-transform: uppercase;
+					}
 				` }
 				notices={ notices }
 				onRemove={ removeNotice }

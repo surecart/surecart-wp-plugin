@@ -1,43 +1,27 @@
 const { __ } = wp.i18n;
-const { useSelect, dispatch } = wp.data;
-const { Fragment, useEffect } = wp.element;
-const { Icon, withNotices, Button } = wp.components;
-const { getQueryArg } = wp.url;
+const { Fragment } = wp.element;
+const { Icon, withNotices } = wp.components;
 
 import Template from '../templates/SingleModel';
 import SaveButton from './components/SaveButton';
+import Name from './modules/Name';
 import Codes from './modules/Codes';
 import Types from './modules/Types';
 import Limits from './modules/Limits';
 import Sidebar from './Sidebar';
 import useSnackbar from '../hooks/useSnackbar';
-import { getCoupon } from '../products/store/selectors';
+import useCouponData from './hooks/useCouponData';
 
 export default withNotices( ( { noticeOperations, noticeUI } ) => {
 	const { snackbarNotices, removeSnackbarNotice } = useSnackbar();
 
 	const {
-		loading,
 		promotion,
 		coupon,
+		loading,
 		updateCoupon,
 		updatePromotion,
-	} = useSelect( ( select ) => {
-		const { isResolving, getPromotion, getCoupon } = select(
-			'checkout-engine/coupon'
-		);
-		const { updateCoupon, updatePromotion } = dispatch(
-			'checkout-engine/coupon'
-		);
-
-		return {
-			loading: isResolving( 'getPromotion' ),
-			promotion: getPromotion(),
-			coupon: getCoupon(),
-			updateCoupon,
-			updatePromotion,
-		};
-	} );
+	} = useCouponData();
 
 	return (
 		<Template
@@ -49,12 +33,17 @@ export default withNotices( ( { noticeOperations, noticeUI } ) => {
 				) : (
 					<div>
 						<Icon icon="tag" style={ { opacity: '0.25' } } />{ ' ' }
-						{ coupon?.name
+						{ coupon?.id
 							? sprintf(
 									__( 'Edit %s', 'checkout_engine' ),
-									coupon.name
+									coupon?.name ||
+										__( 'Coupon', 'checkout_engine' )
 							  )
-							: __( 'Add Coupon', 'checkout_engine' ) }
+							: sprintf(
+									__( 'Add %s', 'checkout_engine' ),
+									coupon?.name ||
+										__( 'Coupon', 'checkout_engine' )
+							  ) }
 					</div>
 				)
 			}
@@ -76,9 +65,14 @@ export default withNotices( ( { noticeOperations, noticeUI } ) => {
 			notices={ snackbarNotices }
 			removeNotice={ removeSnackbarNotice }
 			noticeUI={ noticeUI }
-			sidebar={ <Sidebar coupon={ coupon } loading={ loading } /> }
+			sidebar={ <Sidebar promotion={ promotion } loading={ loading } /> }
 		>
 			<Fragment>
+				<Name
+					loading={ loading }
+					coupon={ coupon }
+					updateCoupon={ updateCoupon }
+				/>
 				<Codes
 					loading={ loading }
 					promotion={ promotion }

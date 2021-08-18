@@ -29,34 +29,29 @@ class CouponsListTable extends \WP_List_Table {
 		$hidden   = $this->get_hidden_columns();
 		$sortable = $this->get_sortable_columns();
 
-		$data = $this->table_data();
-		if ( is_wp_error( $data ) ) {
-			$data = [];
+		$this->_column_headers = array( $columns, $hidden, $sortable );
+
+		$query = $this->table_data();
+		if ( is_wp_error( $query ) ) {
+			$this->items = [];
+			return;
 		}
 
-		usort( $data, array( &$this, 'sort_data' ) );
-
-		$perPage     = 2;
-		$currentPage = $this->get_pagenum();
-		$totalItems  = count( $data );
-
 		$this->set_pagination_args(
-			array(
-				'total_items' => $totalItems,
-				'per_page'    => $perPage,
-			)
+			[
+				'total_items' => $query->pagination->count,
+				'per_page'    => $this->get_items_per_page( 'coupons' ),
+			]
 		);
 
-		// $data = array_slice( $data, ( ( $currentPage - 1 ) * $perPage ), $perPage );
-
-		$this->_column_headers = array( $columns, $hidden, $sortable );
-		$this->items           = $data;
+		$this->items = $query->data;
 	}
 
-	public function search() { ?>
+	public function search() {
+		?>
 	<form class="search-form"
 		method="get">
-		<?php $this->search_box( __( 'Search Products' ), 'user' ); ?>
+		<?php $this->search_box( __( 'Search Coupons', 'checkout_engine' ), 'coupon' ); ?>
 		<input type="hidden"
 			name="id"
 			value="1" />
@@ -115,6 +110,7 @@ class CouponsListTable extends \WP_List_Table {
 		return [
 			// 'cb'          => '<input type="checkbox" />',
 			'name'     => __( 'Name', 'checkout_engine' ),
+			'code'     => __( 'Code', 'checkout_engine' ),
 			'redeemed' => __( 'Times Redeemed', 'checkout_engine' ),
 			'price'    => __( 'Price', 'checkout_engine' ),
 			// 'status'      => __( 'Status', 'checkout_engine' ),
@@ -157,7 +153,12 @@ class CouponsListTable extends \WP_List_Table {
 	 * @return Array
 	 */
 	private function table_data() {
-		return Promotion::where( [ 'limit' => 20 ] )->get();
+		return Promotion::where(
+			[
+				'limit' => $this->get_items_per_page( 'coupons' ),
+				'page'  => $this->get_pagenum(),
+			]
+		)->paginate();
 	}
 
 	/**
@@ -212,7 +213,18 @@ class CouponsListTable extends \WP_List_Table {
 	 * @return string
 	 */
 	public function column_name( $promotion ) {
-		return '<a href="' . \CheckoutEngine::getEditUrl( 'coupon', $promotion->id ) . '">' . $promotion->code . '</a>';
+		return '<a href="' . \CheckoutEngine::getEditUrl( 'coupon', $promotion->id ) . '">' . $promotion->coupon->name ?? $promotion->code . '</a>';
+	}
+
+	/**
+	 * Name of the coupon
+	 *
+	 * @param \CheckoutEngine\Models\Promotion $promotion Promotion model.
+	 *
+	 * @return string
+	 */
+	public function column_code( $promotion ) {
+		return '<code>' . $promotion->code . '</code>';
 	}
 
 	/**

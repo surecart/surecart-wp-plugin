@@ -33,12 +33,14 @@
 ### Depends on
 
 - [ce-line-item](../line-item)
+- [ce-tag](../tag)
 - [ce-quantity-select](../quantity-select)
 
 ### Graph
 ```mermaid
 graph TD;
   ce-product-line-item --> ce-line-item
+  ce-product-line-item --> ce-tag
   ce-product-line-item --> ce-quantity-select
   ce-quantity-select --> ce-dropdown
   ce-quantity-select --> ce-menu

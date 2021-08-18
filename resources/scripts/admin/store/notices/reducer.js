@@ -14,6 +14,17 @@ export default ( state = [], action ) => {
 			];
 		case 'REMOVE_SNACKBAR_NOTICE':
 			return state.filter( ( notice ) => notice.id !== action.id );
+		case 'SAVE_ERROR':
+			return [
+				...state,
+				{
+					id: state.length,
+					className: 'is-snackbar-error',
+					content:
+						action?.message ||
+						__( 'Something went wrong.', 'checkout_engine' ),
+				},
+			];
 	}
 	return state;
 };

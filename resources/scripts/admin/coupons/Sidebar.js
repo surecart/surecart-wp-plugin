@@ -8,7 +8,27 @@ const { Fragment } = wp.element;
 import Box from '../ui/Box';
 import Definition from '../ui/Definition';
 
-export default ( { coupon, loading } ) => {
+export default ( { promotion, loading } ) => {
+	const coupon = promotion?.coupon;
+
+	const promotionTag = () => {
+		if ( promotion.active ) {
+			return (
+				<ce-tag type="success">
+					{ __( 'Active', 'checkout_engine' ) }
+				</ce-tag>
+			);
+		}
+
+		if ( ! promotion?.id ) {
+			return <ce-tag>{ __( 'Draft', 'checkout_engine' ) }</ce-tag>;
+		}
+
+		if ( ! promotion.active ) {
+			return <ce-tag>{ __( 'Disabled', 'checkout_engine' ) }</ce-tag>;
+		}
+	};
+
 	return (
 		<Box
 			loading={ loading }
@@ -28,19 +48,12 @@ export default ( { coupon, loading } ) => {
 			` }
 		>
 			<Fragment>
-				<Definition title={ 'TEST' }>
-					<Fragment>
-						{ !! coupon?.id && !! coupon?.expired && (
-							<ce-tag type="danger">
-								{ __( 'Expired', 'checkout_engine' ) }
-							</ce-tag>
-						) }
-						{ /* { !! coupon?.id && ! coupon?.expired && ( */ }
-						<ce-tag type="success">
-							{ __( 'Active', 'checkout_engine' ) }
-						</ce-tag>
-						{ /* ) } */ }
-					</Fragment>
+				<Definition
+					title={
+						promotion?.code || __( 'Coupon', 'checkout_engine' )
+					}
+				>
+					<Fragment>{ promotionTag() }</Fragment>
 				</Definition>
 
 				<Definition title={ __( 'Discount', 'checkout_engine' ) }>
@@ -55,7 +68,7 @@ export default ( { coupon, loading } ) => {
 					) }
 				</Definition>
 				<Definition title={ __( 'Active', 'checkout_engine' ) }>
-					{ !! coupon.updated_at
+					{ !! coupon?.updated_at
 						? format(
 								'F j, Y',
 								new Date( coupon.updated_at * 1000 )
@@ -63,7 +76,7 @@ export default ( { coupon, loading } ) => {
 						: '' }
 				</Definition>
 				<Definition title={ __( 'Created', 'checkout_engine' ) }>
-					{ !! coupon.created_at
+					{ !! coupon?.created_at
 						? format(
 								'F j, Y',
 								new Date( coupon.created_at * 1000 )

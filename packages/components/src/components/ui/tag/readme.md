@@ -17,9 +17,9 @@
 
 ## Events
 
-| Event         | Description | Type                 |
-| ------------- | ----------- | -------------------- |
-| `prestoClear` |             | `CustomEvent<CeTag>` |
+| Event     | Description | Type                 |
+| --------- | ----------- | -------------------- |
+| `ceClear` |             | `CustomEvent<CeTag>` |
 
 
 ## Shadow Parts
@@ -29,6 +29,21 @@
 | `"base"`    |             |
 | `"content"` |             |
 
+
+## Dependencies
+
+### Used by
+
+ - [ce-coupon-form](../../controllers/coupon-form)
+ - [ce-product-line-item](../product-line-item)
+
+### Graph
+```mermaid
+graph TD;
+  ce-coupon-form --> ce-tag
+  ce-product-line-item --> ce-tag
+  style ce-tag fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 

@@ -35,7 +35,7 @@ abstract class RestServiceProvider extends \WP_REST_Controller implements RestSe
 	 * @param  \Pimple\Container $container Service Container.
 	 */
 	public function register( $container ) {
-		// Nothing to register.
+		// nothing to register.
 	}
 
 	/**

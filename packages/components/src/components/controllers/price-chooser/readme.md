@@ -7,22 +7,22 @@
 
 ## Properties
 
-| Property       | Attribute | Description | Type                    | Default                             |
-| -------------- | --------- | ----------- | ----------------------- | ----------------------------------- |
-| `columns`      | `columns` |             | `number`                | `1`                                 |
-| `default`      | `default` |             | `string`                | `undefined`                         |
-| `lineItemData` | --        |             | `LineItemData[]`        | `undefined`                         |
-| `loading`      | --        |             | `Loading`               | `{ prices: false, session: false }` |
-| `priceIds`     | --        |             | `string[]`              | `undefined`                         |
-| `prices`       | --        |             | `Price[]`               | `undefined`                         |
-| `type`         | `type`    |             | `"checkbox" \| "radio"` | `'radio'`                           |
+| Property       | Attribute       | Description | Type                    | Default     |
+| -------------- | --------------- | ----------- | ----------------------- | ----------- |
+| `columns`      | `columns`       |             | `number`                | `1`         |
+| `currencyCode` | `currency-code` |             | `string`                | `undefined` |
+| `default`      | `default`       |             | `string`                | `undefined` |
+| `lineItemData` | --              |             | `LineItemData[]`        | `undefined` |
+| `priceIds`     | `price-ids`     |             | `string \| string[]`    | `undefined` |
+| `type`         | `type`          |             | `"checkbox" \| "radio"` | `'radio'`   |
 
 
 ## Events
 
-| Event               | Description | Type                          |
-| ------------------- | ----------- | ----------------------------- |
-| `ceUpdateLineItems` |             | `CustomEvent<LineItemData[]>` |
+| Event               | Description              | Type                          |
+| ------------------- | ------------------------ | ----------------------------- |
+| `ceFetchPrices`     | Fetch prices event.      | `CustomEvent<string[]>`       |
+| `ceUpdateLineItems` | Update line items event. | `CustomEvent<LineItemData[]>` |
 
 
 ## Dependencies

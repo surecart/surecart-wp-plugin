@@ -1001,12 +1001,14 @@
 "@checkout-engine/components@file:../components":
   version "0.0.1"
   dependencies:
-    "@stencil/core" "2.5.2"
+    "@stencil/core" "2.6.0"
     "@stencil/sass" "^1.4.0"
     "@stripe/stripe-js" "^1.14.0"
     "@wordpress/api-fetch" "^5.1.1"
     "@wordpress/url" "^3.1.1"
+    choices.js "^9.0.1"
     clsx "^1.1.1"
+    element-internals-polyfill "^0.1.40"
     sass "^1.29.0"
     stencil-fragment "^1.0.1"
     stencil-wormhole "^3.4.1"
@@ -1014,7 +1016,7 @@
 "@checkout-engine/react@file:../integrations/react":
   version "0.0.1"
   dependencies:
-    "@checkout-engine/components" "file:../../../../../Library/Caches/Yarn/v6/npm-@checkout-engine-react-0.0.1-e42fcf22-0fcb-445c-beed-b3010a1ce9b3-1626203952415/node_modules/components"
+    "@checkout-engine/components" "file:../../../../Library/Caches/Yarn/v6/npm-@checkout-engine-react-0.0.1-fab96b71-6b1d-409c-953f-69c4746fcc62-1629237469499/node_modules/components"
 
 "@cnakazawa/watch@^1.0.3":
   version "1.0.4"
@@ -2355,10 +2357,10 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
-"@stencil/core@2.5.2":
-  version "2.5.2"
-  resolved "https://registry.yarnpkg.com/@stencil/core/-/core-2.5.2.tgz#ad00d495ee37bbed4044524d59c7f22de15ab4a7"
-  integrity sha512-bgjPXkSzzg1WnTgVUm6m5ZzpKt602WmA/QljODAW1xVN40OHJdbGblzF/F6MFzqv2c5Cy30CB41arc8qADIdcQ==
+"@stencil/core@2.6.0":
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/@stencil/core/-/core-2.6.0.tgz#29da96d8b6fc83e689b9f297ef3e8b59b90a676a"
+  integrity sha512-QsxWayZyusnqSZrlCl81R71rA3KqFjVVQSH4E0rGN15F1GdQaFonKlHLyCOLKLig1zzC+DQkLLiUuocexuvdeQ==
 
 "@stencil/sass@^1.4.0":
   version "1.4.1"
@@ -6020,6 +6022,15 @@ cheerio@^1.0.0-rc.3:
     parse5-htmlparser2-tree-adapter "^6.0.1"
     tslib "^2.2.0"
 
+choices.js@^9.0.1:
+  version "9.0.1"
+  resolved "https://registry.yarnpkg.com/choices.js/-/choices.js-9.0.1.tgz#745fb29af8670428fdc0bf1cc9dfaa404e9d0510"
+  integrity sha512-JgpeDY0Tmg7tqY6jaW/druSklJSt7W68tXFJIw0GSGWmO37SDAL8o60eICNGbzIODjj02VNNtf5h6TgoHDtCsA==
+  dependencies:
+    deepmerge "^4.2.0"
+    fuse.js "^3.4.5"
+    redux "^4.0.4"
+
 "chokidar@>=3.0.0 <4.0.0", chokidar@^3.4.0, chokidar@^3.4.1:
   version "3.5.2"
   resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-3.5.2.tgz#dba3976fcadb016f66fd365021d91600d01c1e75"
@@ -7301,7 +7312,7 @@ deepmerge@^1.5.2:
   resolved "https://registry.yarnpkg.com/deepmerge/-/deepmerge-1.5.2.tgz#10499d868844cdad4fee0842df8c7f6f0c95a753"
   integrity sha512-95k0GDqvBjZavkuvzx/YqVLv/6YYa17fz6ILMSf7neqQITCPbnfEnQvEgMPNjH4kgobe7+WIL0yJEHku+H3qtQ==
 
-deepmerge@^4.2.2:
+deepmerge@^4.2.0, deepmerge@^4.2.2:
   version "4.2.2"
   resolved "https://registry.yarnpkg.com/deepmerge/-/deepmerge-4.2.2.tgz#44d2ea3679b8f4d4ffba33f03d865fc1e7bf4955"
   integrity sha512-FJ3UgI4gIl+PHZm53knsuSFpE+nESMr7M4v9QcgB7S63Kj/6WqMiFQJpBBYz1Pt+66bZpP3Q7Lye0Oo9MPKEdg==
@@ -7746,6 +7757,11 @@ electron-to-chromium@^1.3.47, electron-to-chromium@^1.3.723:
   version "1.3.774"
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.774.tgz#4d6661a23119e35151646c9543b346bb3beca423"
   integrity sha512-Fggh17Q1yyv1uMzq8Qn1Ci58P50qcRXMXd2MBcB9sxo6rJxjUutWcNw8uCm3gFWMdcblBO6mDT5HzX/RVRRECA==
+
+element-internals-polyfill@^0.1.40:
+  version "0.1.43"
+  resolved "https://registry.yarnpkg.com/element-internals-polyfill/-/element-internals-polyfill-0.1.43.tgz#b5c5493ab40d6025a886da29ff803dd43556da8c"
+  integrity sha512-oxb7n/Vyv/3FOMczpWUtj8LJZfK9Fsydat5A8RVP7LJyWSI63D/zCozg9jByqIX6s5KEr1TcyIaJUSPde57xlg==
 
 elliptic@^6.5.3:
   version "6.5.4"
@@ -9258,6 +9274,11 @@ functions-have-names@^1.2.2:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/functions-have-names/-/functions-have-names-1.2.2.tgz#98d93991c39da9361f8e50b337c4f6e41f120e21"
   integrity sha512-bLgc3asbWdwPbx2mNk2S49kmJCuQeu0nfmaOgbs8WIyzzkw3r4htszdIi9Q9EMezDPTYuJx2wvjZ/EwgAthpnA==
+
+fuse.js@^3.4.5:
+  version "3.6.1"
+  resolved "https://registry.yarnpkg.com/fuse.js/-/fuse.js-3.6.1.tgz#7de85fdd6e1b3377c23ce010892656385fd9b10c"
+  integrity sha512-hT9yh/tiinkmirKrlv4KWOjztdoZo1mx9Qh4KvWqC7isoXwdUY3PNWUxceF4/qO9R6riA2C29jdTOeQOIROjgw==
 
 gauge@~2.7.3:
   version "2.7.4"
@@ -15815,6 +15836,13 @@ redux-multi@^0.1.12:
   version "0.1.12"
   resolved "https://registry.yarnpkg.com/redux-multi/-/redux-multi-0.1.12.tgz#28e1fe5e49672cbc5bd8a07f0b2aeaf0ef8355c2"
   integrity sha1-KOH+XklnLLxb2KB/Cyrq8O+DVcI=
+
+redux@^4.0.4:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/redux/-/redux-4.1.1.tgz#76f1c439bb42043f985fbd9bf21990e60bd67f47"
+  integrity sha512-hZQZdDEM25UY2P493kPYuKqviVwZ58lEmGQNeQ+gXa+U0gYPUBf7NKYazbe3m+bs/DzM/ahN12DbF+NG8i0CWw==
+  dependencies:
+    "@babel/runtime" "^7.9.2"
 
 redux@^4.1.0:
   version "4.1.0"

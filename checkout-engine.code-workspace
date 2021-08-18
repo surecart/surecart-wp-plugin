@@ -3,9 +3,6 @@
 		{
 			"path": "."
 		},
-		{
-			"path": "../../.."
-		}
 	],
 	"settings": {
 		"phpSniffer.autoDetect": true,
@@ -25,5 +22,19 @@
 		"phpcs.errorSeverity": 5,
 		"bladeFormatter.format.wrapAttributes": "force",
 		"git.ignoreLimitWarning": true
+	},
+	"launch": {
+		"version": "0.2.0",
+		"configurations": [
+			{
+				"name": "Listen for XDebug",
+				"type": "php",
+				"request": "launch",
+				"port": 9003,
+				"pathMappings": {
+					"/var/www/html/wp-content/plugins/checkout-engine": "${workspaceRoot}/"
+				}
+			}
+		]
 	}
 }

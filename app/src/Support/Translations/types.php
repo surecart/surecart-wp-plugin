@@ -2,12 +2,11 @@
 /**
  * Type translations
  *
- * @link https://docs.wpemerge.com/#/framework/configuration
- *
  * @package CheckoutEngine
  */
 
 return [
-	// translators: code is invalid.
-	'invalid_code' => __( '%s is invalid.', 'checkout_engine' ),
+	'invalid_code' => __( 'Invalid.', 'checkout_engine' ),
+	'blank'        => __( "Can't be blank.", 'checkout_engine' ),
+	'not_found'    => __( 'Not found.', 'checkout_engine' ),
 ];

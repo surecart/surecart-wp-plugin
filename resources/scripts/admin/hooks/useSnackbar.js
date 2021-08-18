@@ -1,17 +1,19 @@
-const { useSelect, dispatch } = wp.data;
+const { useSelect, useDispatch } = wp.data;
+import { STORE_KEY } from '../store/notices';
 
 export default function useSnackbar() {
-	return useSelect( ( select ) => {
-		const { snackbarNotices } = select( 'checkout-engine/notices' );
-		const { addSnackbarNotice, removeSnackbarNotice } = dispatch(
-			'checkout-engine/notices'
-		);
-		return {
-			snackbarNotices: snackbarNotices(),
-			addSnackbarNotice,
-			removeSnackbarNotice,
-		};
-	} );
+	const { addSnackbarNotice, removeSnackbarNotice } = useDispatch(
+		STORE_KEY
+	);
+	const snackbarNotices = useSelect( ( select ) =>
+		select( STORE_KEY ).snackbarNotices()
+	);
+
+	return {
+		addSnackbarNotice,
+		removeSnackbarNotice,
+		snackbarNotices,
+	};
 }
 
 window.ce = window.ce || {};

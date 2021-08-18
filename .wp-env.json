@@ -1,11 +1,13 @@
 {
 	"core": null,
 	"plugins": [ "../checkout-engine" ],
+  "port": 8181,
 	"env": {
 		"tests": {
 			"config": {
 				"FS_METHOD": "direct"
-			}
+			},
+      "port": 8180
 		}
 	}
 }

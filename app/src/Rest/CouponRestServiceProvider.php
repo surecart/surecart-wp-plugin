@@ -85,14 +85,14 @@ class CouponRestServiceProvider extends RestServiceProvider implements RestServi
 			'type'       => 'object',
 			// In JSON Schema you can specify object properties in the properties attribute.
 			'properties' => [
-				'id'      => [
+				'id'   => [
 					'description' => esc_html__( 'Unique identifier for the object.', 'my-textdomain' ),
 					'type'        => 'string',
 					'context'     => array( 'view', 'edit', 'embed' ),
 					'readonly'    => true,
 				],
-				'content' => array(
-					'description' => esc_html__( 'The content for the object.', 'my-textdomain' ),
+				'name' => array(
+					'description' => esc_html__( 'The name for the object.', 'my-textdomain' ),
 					'type'        => 'string',
 				),
 			],
@@ -112,12 +112,12 @@ class CouponRestServiceProvider extends RestServiceProvider implements RestServi
 	}
 
 	/**
-	 * Anyone can get prices
+	 * Create coupons.
 	 *
 	 * @param \WP_REST_Request $request Full details about the request.
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function create_item_permissions_check( $request ) {
-		return current_user_can( 'manage_options' ); // TODO: add cap.
+		return current_user_can( 'edit_posts' ); // TODO: add cap.
 	}
 }

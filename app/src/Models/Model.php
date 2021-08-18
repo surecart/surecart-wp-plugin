@@ -32,6 +32,11 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 	protected $attributes = [];
 
 	/**
+	 * Default attributes.
+	 */
+	protected $defaults = [];
+
+	/**
 	 * Original attributes for dirty handling
 	 *
 	 * @var array
@@ -59,7 +64,6 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 	 * @var array
 	 */
 	protected $query = [];
-
 
 	/**
 	 * Stores model relations
@@ -459,7 +463,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 	protected function paginate() {
 		$items = \CheckoutEngine::request( $this->endpoint, [ 'query' => $this->query ] );
 
-		if ( is_wp_error( $items ) ) {
+		if ( $this->isError( $items ) ) {
 			return $items;
 		}
 
@@ -474,7 +478,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 	protected function get() {
 		$items = \CheckoutEngine::request( $this->endpoint, [ 'query' => $this->query ] );
 
-		if ( is_wp_error( $items ) ) {
+		if ( $this->isError( $items ) ) {
 			return $items;
 		}
 
@@ -482,6 +486,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 		foreach ( $items->data as $data ) {
 			$models[] = new static( $data );
 		}
+
 		return $models;
 	}
 
@@ -495,7 +500,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 	protected function find( $id = '' ) {
 		$attributes = \CheckoutEngine::request( $this->endpoint . '/' . $id );
 
-		if ( is_wp_error( $attributes ) ) {
+		if ( $this->isError( $attributes ) ) {
 			return $attributes;
 		}
 
@@ -503,6 +508,17 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 		$this->fill( $attributes );
 
 		return $this;
+	}
+
+	/**
+	 * Is the response an Error?
+	 *
+	 * @param Array|\WP_Error|\WP_REST_Response $response Response from request.
+	 *
+	 * @return boolean
+	 */
+	public function isError( $response ) {
+		return is_wp_error( $response ) || ( $response instanceof \WP_REST_Response && ! in_array( $response->get_status(), [ 200, 201 ], true ) );
 	}
 
 	/**
@@ -517,7 +533,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 
 		$attributes = \CheckoutEngine::request( $this->endpoint . '/' . $this->attributes['id'] );
 
-		if ( is_wp_error( $attributes ) ) {
+		if ( $this->isError( $attributes ) ) {
 			return $attributes;
 		}
 
@@ -542,6 +558,10 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 			$saved = $this->isDirty() ? $this->update() : true;
 		} else {
 			$saved = $this->create();
+		}
+
+		if ( $this->isError( $saved ) ) {
+			return $saved;
 		}
 
 		$this->fireModelEvent( 'saved' );
@@ -576,7 +596,8 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 			]
 		);
 
-		if ( is_wp_error( $created ) ) {
+		// bail if error.
+		if ( $this->isError( $created ) ) {
 			return $created;
 		}
 
@@ -620,7 +641,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 			]
 		);
 
-		if ( is_wp_error( $updated ) ) {
+		if ( $this->isError( $updated ) ) {
 			return $updated;
 		}
 

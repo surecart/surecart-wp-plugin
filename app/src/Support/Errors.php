@@ -2,247 +2,141 @@
 
 namespace CheckoutEngine\Support;
 
-use ArrayAccess;
-use JsonSerializable;
-
 /**
  * Handles error translations from the API.
  */
-class Errors implements ArrayAccess {
+class Errors {
 	/**
-	 * Https status code.
+	 * Translate Errors
 	 *
-	 * @var integer
-	 */
-	protected $code;
-
-	/**
-	 * Error response.
+	 * @param array   $response Respons from platform.
+	 * @param integer $code Status code.
 	 *
-	 * @var array
+	 * @return \WP_Error
 	 */
-	protected $response;
-
-	/**
-	 * Stores the errors.
-	 *
-	 * @var array
-	 */
-	protected $errors;
-
-	/**
-	 * Stores the model types for translation.
-	 *
-	 * @var array
-	 */
-	protected $types = [];
-
-	/**
-	 * Holds generic error translations
-	 *
-	 * @var array
-	 */
-	protected $type_errors = [];
-
-	/**
-	 * Holds static error translations
-	 *
-	 * @var array
-	 */
-	protected $status_errors = [];
-
-	/**
-	 * Coded errors
-	 *
-	 * @var array
-	 */
-	protected $code_errors = [];
-
-	/**
-	 * Attribute translations.
-	 *
-	 * @var array
-	 */
-	protected $attributes = [];
-
-	/**
-	 * Get things going.
-	 *
-	 * @param array $response Error response.
-	 */
-	public function __construct( $response ) {
-		$this->type_errors = [
-			'bad_request'          => __( 'Bad request.', 'checkout_engine' ),
-			'unauthorized'         => __( 'You are not allowed to do this.', 'checkout_engine' ),
-			'not_found'            => __( 'Not found.', 'checkout_engine' ),
-			'unprocessable_entity' => __( 'Could not complete the request. Please try again.', 'checkout_engine' ),
-			'server_error'         => __( 'Something went wrong.', 'checkout_engine' ),
-		];
-
-		$this->status_errors = array_merge( [], $this->type_errors );
-
-		$this->code_errors = [
-			// translators: field name.
-			'blank' => __( "%1s can't be blank.", 'checkout_engine' ),
-		];
-
-		$this->attributes = [
-			'name' => __( 'Name', 'checkout_engine' ),
-		];
-
-		$response['message'] = $this->translateError( $response );
+	public static function formatAndTranslate( $response, $code ) {
+		$formatted = new \WP_Error(
+			$response['code'] ?? '',
+			self::translateErrorMessage( $response ) ?? '',
+			[
+				'status'      => $code,
+				'type'        => $response['type'] ?? '',
+				'http_status' => $response['http_status'] ?? '',
+			]
+		);
 
 		if ( ! empty( $response['validation_errors'] ) ) {
-			foreach ( $response['validation_errors'] as $key => $validation_error ) {
-				$response['validation_errors'][ $key ]['message'] = $this->translateValidationError( $validation_error );
+			foreach ( $response['validation_errors']  as $error ) {
+				$formatted->add(
+					$error['code'] ?? 'invalid',
+					self::translateErrorMessage( $error, __( 'Invalid', 'checkout_engine' ) ),
+					[
+						'attribute' => $error['attribute'] ?? '',
+						'type'      => $error['type'] ?? '',
+						'options'   => $error['options'] ?? [],
+					]
+				);
 			}
 		}
 
-		$this->errors = $response;
-
-		return $this;
+		return $formatted;
 	}
 
 	/**
-	 * Translate a specific error.
+	 * Translate a specific error response
 	 *
-	 * @param array $error Error array.
+	 * @param array $response Error response.
+	 * @return \WP_Error
 	 */
-	protected function translateError( $error ) {
-		// give it the generic catch-all.
-		$translated = __( 'Something went wrong.', 'checkout_engine' );
-
-		// check for type error.
-		if ( ! empty( $error['type'] ) && ! empty( $this->type_errors[ $error['type'] ] ) ) {
-			$translated = $this->type_errors[ $error['type'] ];
+	public static function translateErrorMessage( $response, $fallback = 'Error' ) {
+		// translate specific error code.
+		$translated = self::translateCode( $response['code'] ?? '' );
+		if ( $translated ) {
+			return $translated;
 		}
 
-		// check for attribute error.
-		if ( ! empty( $error['code'] ) && ! empty( $error['attribute'] ) ) {
-			if ( ! empty( $this->code_errors[ $error['code'] ] ) && ! empty( $this->attributes[ $error['attribute'] ] ) ) {
-				$translated = sprintf( $this->code_errors[ $error['code'] ], $this->attributes[ $error['attribute'] ] );
+		// translate attribute.
+		$translated = self::attributeTranslation( $response['attribute'] ?? '', $response['type'] ?? '' );
+		if ( $translated ) {
+			return $translated;
+		}
+
+		// translate type.
+		$translated = self::typeTranslation( $response['type'] || '' );
+		if ( $translated ) {
+			return $translated;
+		}
+
+		// fallback.
+		return $fallback ?? __( 'Error', 'checkout_engine' );
+	}
+
+	/**
+	 * Translate based on specific error code.
+	 *
+	 * @param string $code
+	 * @return void
+	 */
+	public static function translateCode( $code = '' ) {
+		if ( ! $code ) {
+			return false;
+		}
+
+		// very specific.
+		$code_translations = include 'Translations/codes.php';
+		if ( ! empty( $code_translations[ $code ] ) ) {
+			return $code_translations[ $code ];
+		}
+
+		return false;
+	}
+
+	/**
+	 * Replaceable attribute translation
+	 *
+	 * @param string $attribute Attribute name.
+	 * @param string $type Type of validation.
+	 *
+	 * @return string|false
+	 */
+	public static function attributeTranslation( $attribute, $type ) {
+		// if both are empty, return.
+		if ( empty( $attribute ) && empty( $type ) ) {
+			return false;
+		}
+
+		$attribute_translations        = include 'Translations/attributes.php';
+		$type_translations_replaceable = include 'Translations/types-replaceable.php';
+
+		// we have an attribute.
+		if ( ! empty( $attribute_translations[ $attribute ] ) ) {
+			// we have a type.
+			if ( ! empty( $type_translations_replaceable[ $type ] ) ) {
+				return sprintf( $type_translations_replaceable[ $type ], $attribute_translations[ $attribute ] );
 			}
+			// translators: field name.
+			return sprintf( __( '%s is invalid.', 'checkount_engine' ), $attribute_translations[ $attribute ] );
 		}
 
-		return $translated;
+		return false;
 	}
 
 	/**
-	 * Translate the validation error.
+	 * Translate just the type field
 	 *
-	 * @return void
+	 * @param string $type Type sting.
+	 * @return string|false
 	 */
-	public function translateValidationError() {
-	}
+	public static function typeTranslation( $type = '' ) {
+		if ( ! $type ) {
+			return false;
+		}
 
-	/**
-	 * Get an error attribute
-	 *
-	 * @return void
-	 */
-	public function get( $key = '' ) {
-		return $key ? $this->errors[ $key ] : $this->errors;
-	}
+		// we have no attribute.
+		$type_translations = include 'Translations/types.php';
 
-	/**
-	 * Get validation errors.
-	 *
-	 * @return array
-	 */
-	public function getValidationErrors() {
-		 return $this->errors['validation_errors'];
-	}
-
-	/**
-	 * Get the error attribute
-	 *
-	 * @param string $key Attribute name.
-	 *
-	 * @return void
-	 */
-	public function __get( $key ) {
-		return $key ? $this->errors[ $key ] : $this->errors;
-	}
-
-	/**
-	 * Set the attribute
-	 *
-	 * @param string $key Attribute name.
-	 * @param mixed  $value Value of attribute.
-	 *
-	 * @return void
-	 */
-	public function __set( $key, $value ) {
-		$this->errors[ $key ] = $value;
-	}
-
-	/**
-	 * Determine if the given attribute exists.
-	 *
-	 * @param  mixed $offset Name.
-	 * @return bool
-	 */
-	public function offsetExists( $offset ) {
-		return ! is_null( $this->errors[ $offset ] );
-	}
-
-	/**
-	 * Get the value for a given offset.
-	 *
-	 * @param  mixed $offset Name.
-	 * @return mixed
-	 */
-	public function offsetGet( $offset ) {
-		return $this->errors[ $offset ];
-	}
-
-	/**
-	 * Set the value for a given offset.
-	 *
-	 * @param  mixed $offset Name.
-	 * @param  mixed $value Value.
-	 * @return void
-	 */
-	public function offsetSet( $offset, $value ) {
-		$this->errors[ $offset ] = $value;
-	}
-
-	/**
-	 * Unset the value for a given offset.
-	 *
-	 * @param  mixed $offset Name.
-	 * @return void
-	 */
-	public function offsetUnset( $offset ) {
-		unset( $this->errors[ $offset ] );
-	}
-
-	/**
-	 * Determine if an attribute or relation exists on the model.
-	 *
-	 * @param  string $key Name.
-	 * @return bool
-	 */
-	public function __isset( $key ) {
-		return $this->errors[ $key ];
-	}
-
-	/**
-	 * Unset an attribute on the model.
-	 *
-	 * @param  string $key Name.
-	 * @return void
-	 */
-	public function __unset( $key ) {
-		$this->offsetUnset( $key );
-	}
-
-	/**
-	 * Serialize to json.
-	 *
-	 * @return Array
-	 */
-	public function jsonSerialize() {
-		return $this->errors;
+		if ( ! empty( $type_translations[ $type ] ) ) {
+			return $type_translations[ $type ];
+		}
 	}
 }

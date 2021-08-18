@@ -2,20 +2,24 @@
 import { css, jsx } from '@emotion/core';
 
 const { __ } = wp.i18n;
-const { useState } = wp.element;
-const {
-	BaseControl,
-	RadioControl,
-	TextControl,
-	Flex,
-	FlexItem,
-	FlexBlock,
-} = wp.components;
+const { useState, useEffect } = wp.element;
+const { BaseControl, RadioControl, TextControl } = wp.components;
 
 import Box from '../../ui/Box';
+import useCouponData from '../hooks/useCouponData';
 
 export default ( { coupon, updateCoupon, loading } ) => {
 	const [ type, setType ] = useState( 'percentage' );
+
+	useEffect( () => {
+		if ( coupon?.percent_off ) {
+			updateCoupon( { amount_off: null } );
+		}
+		if ( coupon?.amount_off ) {
+			updateCoupon( { percent_off: null } );
+		}
+	}, [ coupon?.percent_off, coupon?.amount_off ] );
+
 	return (
 		<Box
 			title={ __( 'Coupon Type', 'checkout_engine' ) }
@@ -56,10 +60,13 @@ export default ( { coupon, updateCoupon, loading } ) => {
 									padding-right: 20px;
 								}
 							` }
+							type="number"
 							label={ __( 'Percent Off', 'checkout-engine' ) }
-							value={ coupon?.percent_off }
+							value={ coupon?.percent_off || null }
 							onChange={ ( percent_off ) =>
-								updateCoupon( { percent_off } )
+								updateCoupon( {
+									percent_off: parseFloat( percent_off ),
+								} )
 							}
 						/>
 
@@ -77,9 +84,11 @@ export default ( { coupon, updateCoupon, loading } ) => {
 				) : (
 					<TextControl
 						label={ __( 'Amount Off', 'checkout-engine' ) }
-						value={ coupon?.amount_off }
+						value={ coupon?.amount_off || null }
 						onChange={ ( amount_off ) =>
-							updateCoupon( { amount_off } )
+							updateCoupon( {
+								amount_off: parseFloat( amount_off ),
+							} )
 						}
 					/>
 				) }

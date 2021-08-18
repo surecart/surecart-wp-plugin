@@ -39,6 +39,7 @@
 
 ### Used by
 
+ - [ce-coupon-form](../../controllers/coupon-form)
  - [ce-line-items](../../controllers/line-items)
  - [ce-product-line-item](../product-line-item)
  - [ce-total](../../controllers/total)
@@ -46,6 +47,7 @@
 ### Graph
 ```mermaid
 graph TD;
+  ce-coupon-form --> ce-line-item
   ce-line-items --> ce-line-item
   ce-product-line-item --> ce-line-item
   ce-total --> ce-line-item

@@ -7,12 +7,12 @@
 
 ## Properties
 
-| Property          | Attribute     | Description | Type              | Default                             |
-| ----------------- | ------------- | ----------- | ----------------- | ----------------------------------- |
-| `calculating`     | `calculating` |             | `boolean`         | `false`                             |
-| `checkoutSession` | --            |             | `CheckoutSession` | `undefined`                         |
-| `lineItemData`    | --            |             | `LineItemData[]`  | `undefined`                         |
-| `loading`         | --            |             | `Loading`         | `{ prices: false, session: false }` |
+| Property          | Attribute     | Description | Type              | Default     |
+| ----------------- | ------------- | ----------- | ----------------- | ----------- |
+| `calculating`     | `calculating` |             | `boolean`         | `false`     |
+| `checkoutSession` | --            |             | `CheckoutSession` | `undefined` |
+| `lineItemData`    | --            |             | `LineItemData[]`  | `undefined` |
+| `loading`         | `loading`     |             | `boolean`         | `undefined` |
 
 
 ## Events
@@ -37,6 +37,7 @@ graph TD;
   ce-line-items --> ce-skeleton
   ce-line-items --> ce-product-line-item
   ce-product-line-item --> ce-line-item
+  ce-product-line-item --> ce-tag
   ce-product-line-item --> ce-quantity-select
   ce-quantity-select --> ce-dropdown
   ce-quantity-select --> ce-menu

@@ -1,6 +1,11 @@
-export function getCoupon( state ) {
-	return state.promotion?.coupon || {};
-}
-export function getPromotion( state ) {
+const { createRegistrySelector } = wp.data;
+
+export const getCoupon = ( state ) => {
+	return state.coupon;
+};
+export const getPromotion = ( state ) => {
 	return state.promotion;
-}
+};
+export const isSaving = createRegistrySelector( ( select ) => () => {
+	return select( 'checkout-engine/ui' ).isSaving();
+} );

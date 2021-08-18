@@ -8,7 +8,11 @@ import * as selectors from './selectors';
 import * as actions from './actions';
 import resolvers from './resolvers';
 
-export default {
+// export store key.
+export { default as STORE_KEY } from './constants.js';
+
+// export config.
+export const STORE_CONFIG = {
 	reducer,
 	selectors,
 	controls,

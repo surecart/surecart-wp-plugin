@@ -11,3 +11,16 @@ export function setFlash( value ) {
 		value,
 	};
 }
+
+export function addValidationErrors( value ) {
+	return {
+		type: 'ADD_VALIDATION_ERRORS',
+		value,
+	};
+}
+
+export function clearValidationErrors() {
+	return {
+		type: 'CLEAR_VALIDATION_ERRORS',
+	};
+}

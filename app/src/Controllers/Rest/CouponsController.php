@@ -3,35 +3,20 @@
 namespace CheckoutEngine\Controllers\Rest;
 
 use CheckoutEngine\Models\Coupon;
-use CheckoutEngine\Models\Promotion;
 
 /**
  * Handle coupon requests through the REST API
  */
-class CouponsController {
+class CouponsController extends RestController {
 	/**
 	 * Create price
 	 *
 	 * @param \WP_REST_Request $request Rest Request.
 	 *
-	 * @return \WP_REST_Response
+	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function create( \WP_REST_Request $request ) {
-		// first create a coupon.
-		$coupon = Coupon::create( $request );
-
-		if ( is_wp_error( $coupon ) ) {
-			return $coupon;
-		}
-
-		$promotion = Promotion::create(
-			[
-				'code'      => $request['code'],
-				'coupon_id' => $request['coupon_id'],
-			]
-		);
-
-		return rest_ensure_response( $promotion );
+		return rest_ensure_response( Coupon::create( $request->get_params() ) );
 	}
 
 	/**
@@ -39,50 +24,49 @@ class CouponsController {
 	 *
 	 * @param \WP_REST_Request $request Rest Request.
 	 *
-	 * @return \WP_REST_Response
+	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function index( \WP_REST_Request $request ) {
-		$prices = Promotion::where(
-			[
-				'active' => $request['active'] ?? null,
-				'ids'    => $request['ids'] ?? null,
-			]
-		)->get();
-
-		if ( is_wp_error( $prices ) ) {
-			return $prices;
-		}
-
-		return rest_ensure_response( $prices );
+		return rest_ensure_response(
+			Coupon::where(
+				[
+					'active' => $request['active'] ?? null,
+					'ids'    => $request['ids'] ?? null,
+				]
+			)->get()
+		);
 	}
 
 	/**
-	 * Get Price
+	 * Find model.
 	 *
 	 * @param \WP_REST_Request $request Rest Request.
 	 *
-	 * @return \WP_REST_Response
+	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function find( \WP_REST_Request $request ) {
-		$coupon = Coupon::find( $request['id'] );
-
-		if ( is_wp_error( $coupon ) ) {
-			return $coupon;
-		}
-
-		return rest_ensure_response( $coupon );
+		return rest_ensure_response( Coupon::find( $request['id'] ) );
 	}
 
+	/**
+	 * Edit model.
+	 *
+	 * @param \WP_REST_Request $request Rest Request.
+	 *
+	 * @return \WP_REST_Response|\WP_Error
+	 */
 	public function edit( \WP_REST_Request $request ) {
-		$coupon = Coupon::update( $request->get_params() );
-
-		if ( is_wp_error( $coupon ) ) {
-			return $coupon;
-		}
-
-		return rest_ensure_response( $coupon->toArray() );
+		return rest_ensure_response( Coupon::update( $request->get_params() ) );
 	}
 
+	/**
+	 * Delete model.
+	 *
+	 * @param \WP_REST_Request $request Rest Request.
+	 *
+	 * @return \WP_REST_Response|\WP_Error
+	 */
 	public function delete( \WP_REST_Request $request ) {
+		return rest_ensure_response( Coupon::delete( $request['id'] ) );
 	}
 }

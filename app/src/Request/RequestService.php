@@ -2,10 +2,13 @@
 
 namespace CheckoutEngine\Request;
 
+use CheckoutEngine\Support\Errors;
+
 /**
  * Provide api request functionality.
  */
 class RequestService {
+
 	/**
 	 * Request mode
 	 *
@@ -121,14 +124,9 @@ class RequestService {
 		$response_body = wp_remote_retrieve_body( $response );
 
 		// check for errors.
-		// TODO: run through translations.
 		if ( ! in_array( $response_code, [ 200, 201 ], true ) ) {
 			$response_body = json_decode( $response_body, true );
-			if ( ! empty( $response_body['message'] ) ) {
-				return new \WP_Error( 'error', $response_body['message'], [ 'status' => $response_code ] );
-			}
-			// last resort if something else went wrong.
-			return new \WP_Error( 'error', esc_url( $url ) . ':  ' . print_r( $response_body, 1 ), [ 'status' => $response_code ] );
+			return Errors::formatAndTranslate( $response_body, $response_code );
 		}
 
 		// return response.

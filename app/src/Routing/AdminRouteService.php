@@ -29,7 +29,7 @@ class AdminRouteService {
 	 *
 	 * @return string Url.
 	 */
-	public function getEditUrl( $name, $id ) {
+	public function getEditUrl( $name, $id = null ) {
 		return esc_url_raw(
 			add_query_arg(
 				[

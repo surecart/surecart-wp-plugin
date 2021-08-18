@@ -1,5 +1,3 @@
 const { registerStore } = wp.data;
-
-import store from './index';
-
-registerStore( 'checkout-engine/ui', store );
+import { STORE_KEY, STORE_CONFIG } from './index';
+registerStore( STORE_KEY, STORE_CONFIG );
