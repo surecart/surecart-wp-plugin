@@ -12,70 +12,88 @@ const {
 
 import Box from '../../ui/Box';
 
-export default ( { coupon, updateCoupon, loading } ) => {
+export default ( { promotion, updatePromotion, loading } ) => {
 	return (
 		<Box
 			title={ __( 'Redemption Limits', 'checkout_engine' ) }
 			loading={ loading }
 		>
 			<BaseControl>
-				<CheckboxControl
-					label={ __(
-						'Limit the end date when customers can redeem this coupon.'
-					) }
-					checked={ coupon?.redeem_by }
-					onChange={ ( val ) => {
-						updateCoupon( {
-							redeem_by: val ? new Date() : null,
-						} );
-					} }
-				/>
-				{ !! coupon?.redeem_by && (
-					<div
-						css={ css`
-							max-width: 288px;
-							margin-top: 30px;
-						` }
-					>
-						<BaseControl.VisualLabel>
-							Redeem By
-						</BaseControl.VisualLabel>
-						<DateTimePicker
-							currentDate={ coupon?.redeem_by }
-							onChange={ ( redeem_by ) =>
-								updateCoupon( {
-									redeem_by,
-								} )
-							}
-						/>
-					</div>
-				) }
-				<CheckboxControl
-					label={ __(
-						'Limit the total number of times this coupon can be redeemed'
-					) }
-					checked={ false }
-					checked={ coupon?.max_redemptions }
-					onChange={ ( val ) => {
-						updateCoupon( {
-							max_redemptions: val ? 1 : null,
-						} );
-					} }
-				/>
-			</BaseControl>
-			{ !! coupon?.max_redemptions && (
-				<BaseControl>
-					<TextControl
-						label={ __( 'Number of Times', 'checkout_engine' ) }
-						help={ __(
-							"This limit applies across customers so it won't prevent a single customer from redeeming multiple times.",
-							'checkout_engine'
+				<div className="ce-redeem-by">
+					<CheckboxControl
+						label={ __(
+							'Limit the end date when customers can redeem this coupon.'
 						) }
-						value={ coupon?.max_redemptions || 1 }
-						type="number"
+						checked={ promotion?.redeem_by }
+						onChange={ ( val ) => {
+							updatePromotion( {
+								redeem_by: val ? Date.now() : null,
+							} );
+						} }
 					/>
-				</BaseControl>
-			) }
+					{ !! promotion?.redeem_by && (
+						<div
+							css={ css`
+								max-width: 288px;
+								margin-top: 30px;
+							` }
+						>
+							<BaseControl.VisualLabel>
+								{ __(
+									'Users must redeem this coupon by:',
+									'checkout_engine'
+								) }
+							</BaseControl.VisualLabel>
+							<DateTimePicker
+								currentDate={ new Date( promotion?.redeem_by ) }
+								onChange={ ( redeem_by ) => {
+									updatePromotion( {
+										redeem_by: new Date(
+											redeem_by
+										).getTime(),
+									} );
+								} }
+							/>
+						</div>
+					) }
+				</div>
+				<div className="ce-max-redemptions">
+					<CheckboxControl
+						label={ __(
+							'Limit the total number of times this coupon can be redeemed'
+						) }
+						checked={ false }
+						checked={ promotion?.max_redemptions }
+						onChange={ ( val ) => {
+							updatePromotion( {
+								max_redemptions: val ? 1 : null,
+							} );
+						} }
+					/>
+
+					{ !! promotion?.max_redemptions && (
+						<BaseControl>
+							<TextControl
+								label={ __(
+									'Number of Times',
+									'checkout_engine'
+								) }
+								help={ __(
+									"This limit applies across customers so it won't prevent a single customer from redeeming multiple times.",
+									'checkout_engine'
+								) }
+								value={ promotion?.max_redemptions || 1 }
+								onChange={ ( max_redemptions ) => {
+									updatePromotion( {
+										max_redemptions,
+									} );
+								} }
+								type="number"
+							/>
+						</BaseControl>
+					) }
+				</div>
+			</BaseControl>
 		</Box>
 	);
 };

@@ -1,3 +1,4 @@
 {
-    "editor.defaultFormatter": "wongjn.php-sniffer"
+    "editor.defaultFormatter": "wongjn.php-sniffer",
+    "editor.acceptSuggestionOnCommitCharacter": false
 }

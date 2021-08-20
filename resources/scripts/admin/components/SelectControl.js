@@ -1,5 +1,5 @@
 const { useRef } = wp.element;
-const { TextControl } = wp.components;
+const { SelectControl } = wp.components;
 import classNames from 'classnames';
 
 import useValidationErrors from '../hooks/useValidationErrors';
@@ -15,7 +15,7 @@ export default ( props ) => {
 	);
 
 	return (
-		<TextControl
+		<SelectControl
 			className={ classNames( hasErrors ? 'is-error' : '', className ) }
 			onChange={ ( ...args ) => {
 				clearValidation();

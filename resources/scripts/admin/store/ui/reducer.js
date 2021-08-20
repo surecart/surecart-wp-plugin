@@ -19,6 +19,14 @@ export default (
 				validation: [ ...state.validation, ...action.value ],
 			};
 		case 'CLEAR_VALIDATION_ERRORS':
+			if ( action.attribute ) {
+				return {
+					...state,
+					validation: state.validation.filter(
+						( item ) => item?.data?.attribute !== action.attribute
+					),
+				};
+			}
 			return {
 				...state,
 				validation: [],

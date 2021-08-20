@@ -1,12 +1,10 @@
 const { __ } = wp.i18n;
-const { BaseControl, TextControl } = wp.components;
+const { BaseControl } = wp.components;
 
 import Box from '../../ui/Box';
-import useCouponData from '../hooks/useCouponData';
+import TextControl from '../../components/TextControl';
 
 export default ( { promotion, updatePromotion, loading } ) => {
-	const { getValidationErrors } = useCouponData();
-
 	return (
 		<Box
 			title={ __( 'Discount Code', 'checkout_engine' ) }
@@ -14,16 +12,14 @@ export default ( { promotion, updatePromotion, loading } ) => {
 		>
 			<BaseControl>
 				<TextControl
+					className="ce-promotion-code"
 					value={ promotion?.code }
-					help={
-						<div>
-							{ getValidationErrors( 'code' ) }
-							{ __(
-								'Customers will enter this discount code at checkout. Leave this blank and we will generate one for you.',
-								'checkout_engine'
-							) }
-						</div>
-					}
+					className={ 'ce-promotion-code' }
+					attribute="code"
+					help={ __(
+						'Customers will enter this discount code at checkout. Leave this blank and we will generate one for you.',
+						'checkout_engine'
+					) }
 					onChange={ ( code ) => updatePromotion( { code } ) }
 				/>
 			</BaseControl>

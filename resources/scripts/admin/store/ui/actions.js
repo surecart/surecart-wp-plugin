@@ -19,8 +19,9 @@ export function addValidationErrors( value ) {
 	};
 }
 
-export function clearValidationErrors() {
+export function clearValidationErrors( attribute = '' ) {
 	return {
 		type: 'CLEAR_VALIDATION_ERRORS',
+		attribute,
 	};
 }

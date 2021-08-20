@@ -109,10 +109,10 @@ class CouponsListTable extends \WP_List_Table {
 	public function get_columns() {
 		return [
 			// 'cb'          => '<input type="checkbox" />',
-			'name'     => __( 'Name', 'checkout_engine' ),
-			'code'     => __( 'Code', 'checkout_engine' ),
-			'redeemed' => __( 'Times Redeemed', 'checkout_engine' ),
-			'price'    => __( 'Price', 'checkout_engine' ),
+			'name'  => __( 'Name', 'checkout_engine' ),
+			'code'  => __( 'Code', 'checkout_engine' ),
+			'price' => __( 'Price', 'checkout_engine' ),
+			'usage' => __( 'Usage', 'checkout_engine' ),
 			// 'status'      => __( 'Status', 'checkout_engine' ),
 		];
 	}
@@ -169,17 +169,18 @@ class CouponsListTable extends \WP_List_Table {
 	 * @return string
 	 */
 	public function column_price( $promotion ) {
-		if ( ! empty( $promotion->coupon->percent_off ) ) {
-			// translators: Coupon % off.
-			return sprintf( esc_html( __( '%1d%% off', 'checkout_engine' ) ), $promotion->coupon->percent_off );
-		}
 
-		if ( ! empty( $promotion->coupon->amount_off ) ) {
-			// translators: Coupon amount off.
-			return sprintf( esc_html( __( '%1d off', 'checkout_engine' ) ), $promotion->coupon->percent_off );
-		}
+		ob_start();
+		?>
 
-		return __( 'No discount.', 'checkout_engine' );
+		<?php
+		// phpcs:ignore
+		echo $this->get_price_string( $promotion->coupon ?? false ); // this is already escaped. ?>
+		<br />
+		<div style="opacity: 0.75"><?php echo esc_html( $this->get_duration_string( $promotion->coupon ?? false ) ); ?></div>
+		<?php
+		return ob_get_clean();
+
 	}
 
 	/**
@@ -189,8 +190,68 @@ class CouponsListTable extends \WP_List_Table {
 	 *
 	 * @return string
 	 */
-	public function column_redeemed( $promotion ) {
-		return $promotion->times_redeemed;
+	public function column_usage( $promotion ) {
+		$max = $promotion->max_redemptions ?? '&infin;';
+		ob_start();
+		?>
+		<?php echo \esc_html( "$promotion->times_redeemed / $max" ); ?>
+		<br />
+		<div style="opacity: 0.75"><?php echo \esc_html( $this->get_expiration_string( $promotion->redeem_by ) ); ?></div>
+		<?php
+		return ob_get_clean();
+	}
+
+	/**
+	 * Render the "Redeem By"
+	 *
+	 * @param string $timestamp Redeem timestamp
+	 * @return void
+	 */
+	public function get_expiration_string( $timestamp = '' ) {
+		if ( ! $timestamp ) {
+			return '';
+		}
+		// translators: coupon expiration date.
+		return sprintf( __( 'Valid until %s', 'checkout_engine' ), date_i18n( get_option( 'date_format' ), $timestamp / 1000 ) );
+	}
+
+	public function get_price_string( $coupon = '' ) {
+		if ( ! $coupon || empty( $coupon->duration ) ) {
+			return;
+		}
+		if ( ! empty( $coupon->percent_off ) ) {
+			// translators: Coupon % off.
+			return sprintf( esc_html( __( '%1d%% off', 'checkout_engine' ) ), $coupon->percent_off );
+		}
+
+		if ( ! empty( $coupon->amount_off ) ) {
+			// translators: Coupon amount off.
+			return Currency::formatCurrencyNumber( $coupon->amount_off ) . ' <small style="opacity: 0.75;">' . strtoupper( esc_html( $coupon->currency ) ) . '</small>';
+		}
+
+		return esc_html_( 'No discount.', 'checkout_engine' );
+	}
+
+	/**
+	 * Get the duration string
+	 *
+	 * @param Coupon|boolean $coupon Coupon object.
+	 * @return string|void;
+	 */
+	public function get_duration_string( $coupon = '' ) {
+		if ( ! $coupon || empty( $coupon->duration ) ) {
+			return;
+		}
+
+		if ( 'forever' === $coupon->duration ) {
+			return __( 'Forever', 'checkout_engine' );
+		}
+		if ( 'repeating' === $coupon->duration ) {
+			// translators: number of months.
+			return sprintf( __( 'For %d months', 'checkout_engine' ), $coupon->duration_in_months ?? 1 );
+		}
+
+		return __( 'Once', 'checkout_engine' );
 	}
 
 	/**
@@ -213,7 +274,22 @@ class CouponsListTable extends \WP_List_Table {
 	 * @return string
 	 */
 	public function column_name( $promotion ) {
-		return '<a href="' . \CheckoutEngine::getEditUrl( 'coupon', $promotion->id ) . '">' . $promotion->coupon->name ?? $promotion->code . '</a>';
+		ob_start();
+		?>
+		<a class="row-title" aria-label="Edit Coupon" href="<?php echo esc_url( \CheckoutEngine::getEditUrl( 'coupon', $promotion->id ) ); ?>">
+			<?php echo esc_html_e( $promotion->coupon->name ?? $promotion->code ); ?>
+		</a>
+		<?php
+		// TODO: Add disable functionality.
+		// echo $this->row_actions(
+		// [
+		// 'edit'  => '<a href="' . esc_url( \CheckoutEngine::getEditUrl( 'coupon', $promotion->id ) ) . '" aria-label="Edit Coupon">Edit</a>',
+		// 'trash' => '<a class="submitdelete" href="' . esc_url( \CheckoutEngine::getEditUrl( 'coupon', $promotion->id ) ) . '" aria-label="Edit Coupon">Disable</a>',
+		// ],
+		// );
+		?>
+		<?php
+		return ob_get_clean();
 	}
 
 	/**

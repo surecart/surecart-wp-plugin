@@ -173,6 +173,591 @@ __webpack_require__.r(__webpack_exports__);
 /************************************************************************/
 /******/ ({
 
+/***/ "../../node_modules/@checkout-engine/react/dist/components/index.js":
+/*!******************************************************************************************************!*\
+  !*** /Users/andre/code/checkout-engine/node_modules/@checkout-engine/react/dist/components/index.js ***!
+  \******************************************************************************************************/
+/*! exports provided: CeBlockUi, CeButton, CeCard, CeCheckbox, CeCheckout, CeChoice, CeChoices, CeConsumer, CeCouponForm, CeDivider, CeDropdown, CeEmail, CeForm, CeFormControl, CeFormRow, CeFormSection, CeInput, CeLineItem, CeLineItems, CeMenu, CeMenuDivider, CeMenuItem, CeOrderSummary, CePayment, CePaymentRequest, CePriceChoices, CeProductLineItem, CeProvider, CeQuantitySelect, CeRadio, CeRadioGroup, CeSecureNotice, CeSelect, CeSkeleton, CeSpinner, CeStripeElement, CeStripePaymentRequest, CeSubmit, CeSwitch, CeTag, CeTotal */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CeBlockUi", function() { return CeBlockUi; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CeButton", function() { return CeButton; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CeCard", function() { return CeCard; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CeCheckbox", function() { return CeCheckbox; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CeCheckout", function() { return CeCheckout; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CeChoice", function() { return CeChoice; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CeChoices", function() { return CeChoices; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CeConsumer", function() { return CeConsumer; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CeCouponForm", function() { return CeCouponForm; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CeDivider", function() { return CeDivider; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CeDropdown", function() { return CeDropdown; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CeEmail", function() { return CeEmail; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CeForm", function() { return CeForm; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CeFormControl", function() { return CeFormControl; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CeFormRow", function() { return CeFormRow; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CeFormSection", function() { return CeFormSection; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CeInput", function() { return CeInput; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CeLineItem", function() { return CeLineItem; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CeLineItems", function() { return CeLineItems; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CeMenu", function() { return CeMenu; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CeMenuDivider", function() { return CeMenuDivider; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CeMenuItem", function() { return CeMenuItem; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CeOrderSummary", function() { return CeOrderSummary; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CePayment", function() { return CePayment; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CePaymentRequest", function() { return CePaymentRequest; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CePriceChoices", function() { return CePriceChoices; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CeProductLineItem", function() { return CeProductLineItem; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CeProvider", function() { return CeProvider; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CeQuantitySelect", function() { return CeQuantitySelect; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CeRadio", function() { return CeRadio; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CeRadioGroup", function() { return CeRadioGroup; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CeSecureNotice", function() { return CeSecureNotice; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CeSelect", function() { return CeSelect; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CeSkeleton", function() { return CeSkeleton; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CeSpinner", function() { return CeSpinner; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CeStripeElement", function() { return CeStripeElement; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CeStripePaymentRequest", function() { return CeStripePaymentRequest; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CeSubmit", function() { return CeSubmit; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CeSwitch", function() { return CeSwitch; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CeTag", function() { return CeTag; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CeTotal", function() { return CeTotal; });
+/* harmony import */ var _react_component_lib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./react-component-lib */ "../../node_modules/@checkout-engine/react/dist/components/react-component-lib/index.js");
+/* eslint-disable */
+/* tslint:disable */
+/* auto-generated react proxies */
+
+const CeBlockUi = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-block-ui');
+const CeButton = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-button');
+const CeCard = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-card');
+const CeCheckbox = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-checkbox');
+const CeCheckout = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-checkout');
+const CeChoice = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-choice');
+const CeChoices = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-choices');
+const CeConsumer = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-consumer');
+const CeCouponForm = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-coupon-form');
+const CeDivider = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-divider');
+const CeDropdown = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-dropdown');
+const CeEmail = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-email');
+const CeForm = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-form');
+const CeFormControl = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-form-control');
+const CeFormRow = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-form-row');
+const CeFormSection = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-form-section');
+const CeInput = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-input');
+const CeLineItem = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-line-item');
+const CeLineItems = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-line-items');
+const CeMenu = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-menu');
+const CeMenuDivider = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-menu-divider');
+const CeMenuItem = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-menu-item');
+const CeOrderSummary = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-order-summary');
+const CePayment = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-payment');
+const CePaymentRequest = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-payment-request');
+const CePriceChoices = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-price-choices');
+const CeProductLineItem = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-product-line-item');
+const CeProvider = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-provider');
+const CeQuantitySelect = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-quantity-select');
+const CeRadio = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-radio');
+const CeRadioGroup = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-radio-group');
+const CeSecureNotice = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-secure-notice');
+const CeSelect = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-select');
+const CeSkeleton = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-skeleton');
+const CeSpinner = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-spinner');
+const CeStripeElement = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-stripe-element');
+const CeStripePaymentRequest = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-stripe-payment-request');
+const CeSubmit = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-submit');
+const CeSwitch = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-switch');
+const CeTag = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-tag');
+const CeTotal = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-total');
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+
+/***/ "../../node_modules/@checkout-engine/react/dist/components/react-component-lib/createComponent.js":
+/*!************************************************************************************************************************************!*\
+  !*** /Users/andre/code/checkout-engine/node_modules/@checkout-engine/react/dist/components/react-component-lib/createComponent.js ***!
+  \************************************************************************************************************************************/
+/*! exports provided: createReactComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createReactComponent", function() { return createReactComponent; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./utils */ "../../node_modules/@checkout-engine/react/dist/components/react-component-lib/utils/index.js");
+var __rest = (undefined && undefined.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
+
+
+const createReactComponent = (tagName, ReactComponentContext, manipulatePropsFunction) => {
+    const displayName = Object(_utils__WEBPACK_IMPORTED_MODULE_1__["dashToPascalCase"])(tagName);
+    const ReactComponent = class extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
+        constructor(props) {
+            super(props);
+            this.setComponentElRef = (element) => {
+                this.componentEl = element;
+            };
+        }
+        componentDidMount() {
+            this.componentDidUpdate(this.props);
+        }
+        componentDidUpdate(prevProps) {
+            Object(_utils__WEBPACK_IMPORTED_MODULE_1__["attachProps"])(this.componentEl, this.props, prevProps);
+        }
+        render() {
+            const _a = this.props, { children, forwardedRef, style, className, ref } = _a, cProps = __rest(_a, ["children", "forwardedRef", "style", "className", "ref"]);
+            let propsToPass = Object.keys(cProps).reduce((acc, name) => {
+                if (name.indexOf('on') === 0 && name[2] === name[2].toUpperCase()) {
+                    const eventName = name.substring(2).toLowerCase();
+                    if (typeof document !== 'undefined' && Object(_utils__WEBPACK_IMPORTED_MODULE_1__["isCoveredByReact"])(eventName, document)) {
+                        acc[name] = cProps[name];
+                    }
+                }
+                else {
+                    acc[name] = cProps[name];
+                }
+                return acc;
+            }, {});
+            if (manipulatePropsFunction) {
+                propsToPass = manipulatePropsFunction(this.props, propsToPass);
+            }
+            let newProps = Object.assign(Object.assign({}, propsToPass), { ref: Object(_utils__WEBPACK_IMPORTED_MODULE_1__["mergeRefs"])(forwardedRef, this.setComponentElRef), style });
+            return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(tagName, newProps, children);
+        }
+        static get displayName() {
+            return displayName;
+        }
+    };
+    // If context was passed to createReactComponent then conditionally add it to the Component Class
+    if (ReactComponentContext) {
+        ReactComponent.contextType = ReactComponentContext;
+    }
+    return Object(_utils__WEBPACK_IMPORTED_MODULE_1__["createForwardRef"])(ReactComponent, displayName);
+};
+//# sourceMappingURL=createComponent.js.map
+
+/***/ }),
+
+/***/ "../../node_modules/@checkout-engine/react/dist/components/react-component-lib/createOverlayComponent.js":
+/*!*******************************************************************************************************************************************!*\
+  !*** /Users/andre/code/checkout-engine/node_modules/@checkout-engine/react/dist/components/react-component-lib/createOverlayComponent.js ***!
+  \*******************************************************************************************************************************************/
+/*! exports provided: createOverlayComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createOverlayComponent", function() { return createOverlayComponent; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "react-dom");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./utils */ "../../node_modules/@checkout-engine/react/dist/components/react-component-lib/utils/index.js");
+var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __rest = (undefined && undefined.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
+
+
+
+const createOverlayComponent = (displayName, controller) => {
+    const didDismissEventName = `on${displayName}DidDismiss`;
+    const didPresentEventName = `on${displayName}DidPresent`;
+    const willDismissEventName = `on${displayName}WillDismiss`;
+    const willPresentEventName = `on${displayName}WillPresent`;
+    class Overlay extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
+        constructor(props) {
+            super(props);
+            this.el = document.createElement('div');
+            this.handleDismiss = this.handleDismiss.bind(this);
+        }
+        static get displayName() {
+            return displayName;
+        }
+        componentDidMount() {
+            if (this.props.isOpen) {
+                this.present();
+            }
+        }
+        componentWillUnmount() {
+            if (this.overlay) {
+                this.overlay.dismiss();
+            }
+        }
+        handleDismiss(event) {
+            if (this.props.onDidDismiss) {
+                this.props.onDidDismiss(event);
+            }
+            if (this.props.forwardedRef) {
+                this.props.forwardedRef.current = undefined;
+            }
+        }
+        componentDidUpdate(prevProps) {
+            return __awaiter(this, void 0, void 0, function* () {
+                if (this.overlay) {
+                    Object(_utils__WEBPACK_IMPORTED_MODULE_2__["attachProps"])(this.overlay, this.props, prevProps);
+                }
+                if (prevProps.isOpen !== this.props.isOpen && this.props.isOpen === true) {
+                    this.present(prevProps);
+                }
+                if (this.overlay && prevProps.isOpen !== this.props.isOpen && this.props.isOpen === false) {
+                    yield this.overlay.dismiss();
+                }
+            });
+        }
+        present(prevProps) {
+            return __awaiter(this, void 0, void 0, function* () {
+                const _a = this.props, { children, isOpen, onDidDismiss, onDidPresent, onWillDismiss, onWillPresent } = _a, cProps = __rest(_a, ["children", "isOpen", "onDidDismiss", "onDidPresent", "onWillDismiss", "onWillPresent"]);
+                const elementProps = Object.assign(Object.assign({}, cProps), { ref: this.props.forwardedRef, [didDismissEventName]: this.handleDismiss, [didPresentEventName]: (e) => this.props.onDidPresent && this.props.onDidPresent(e), [willDismissEventName]: (e) => this.props.onWillDismiss && this.props.onWillDismiss(e), [willPresentEventName]: (e) => this.props.onWillPresent && this.props.onWillPresent(e) });
+                this.overlay = yield controller.create(Object.assign(Object.assign({}, elementProps), { component: this.el, componentProps: {} }));
+                if (this.props.forwardedRef) {
+                    this.props.forwardedRef.current = this.overlay;
+                }
+                Object(_utils__WEBPACK_IMPORTED_MODULE_2__["attachProps"])(this.overlay, elementProps, prevProps);
+                yield this.overlay.present();
+            });
+        }
+        render() {
+            return react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.createPortal(this.props.isOpen ? this.props.children : null, this.el);
+        }
+    }
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.forwardRef((props, ref) => {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Overlay, Object.assign({}, props, { forwardedRef: ref }));
+    });
+};
+//# sourceMappingURL=createOverlayComponent.js.map
+
+/***/ }),
+
+/***/ "../../node_modules/@checkout-engine/react/dist/components/react-component-lib/index.js":
+/*!**************************************************************************************************************************!*\
+  !*** /Users/andre/code/checkout-engine/node_modules/@checkout-engine/react/dist/components/react-component-lib/index.js ***!
+  \**************************************************************************************************************************/
+/*! exports provided: createReactComponent, createOverlayComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _createComponent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./createComponent */ "../../node_modules/@checkout-engine/react/dist/components/react-component-lib/createComponent.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "createReactComponent", function() { return _createComponent__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"]; });
+
+/* harmony import */ var _createOverlayComponent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./createOverlayComponent */ "../../node_modules/@checkout-engine/react/dist/components/react-component-lib/createOverlayComponent.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "createOverlayComponent", function() { return _createOverlayComponent__WEBPACK_IMPORTED_MODULE_1__["createOverlayComponent"]; });
+
+
+
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+
+/***/ "../../node_modules/@checkout-engine/react/dist/components/react-component-lib/utils/attachProps.js":
+/*!**************************************************************************************************************************************!*\
+  !*** /Users/andre/code/checkout-engine/node_modules/@checkout-engine/react/dist/components/react-component-lib/utils/attachProps.js ***!
+  \**************************************************************************************************************************************/
+/*! exports provided: attachProps, getClassName, isCoveredByReact, syncEvent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "attachProps", function() { return attachProps; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getClassName", function() { return getClassName; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isCoveredByReact", function() { return isCoveredByReact; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "syncEvent", function() { return syncEvent; });
+/* harmony import */ var _case__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./case */ "../../node_modules/@checkout-engine/react/dist/components/react-component-lib/utils/case.js");
+
+const attachProps = (node, newProps, oldProps = {}) => {
+    // some test frameworks don't render DOM elements, so we test here to make sure we are dealing with DOM first
+    if (node instanceof Element) {
+        // add any classes in className to the class list
+        const className = getClassName(node.classList, newProps, oldProps);
+        if (className !== '') {
+            node.className = className;
+        }
+        Object.keys(newProps).forEach((name) => {
+            if (name === 'children' ||
+                name === 'style' ||
+                name === 'ref' ||
+                name === 'class' ||
+                name === 'className' ||
+                name === 'forwardedRef') {
+                return;
+            }
+            if (name.indexOf('on') === 0 && name[2] === name[2].toUpperCase()) {
+                const eventName = name.substring(2);
+                const eventNameLc = eventName[0].toLowerCase() + eventName.substring(1);
+                if (typeof document !== 'undefined' && !isCoveredByReact(eventNameLc, document)) {
+                    syncEvent(node, eventNameLc, newProps[name]);
+                }
+            }
+            else {
+                node[name] = newProps[name];
+                const propType = typeof newProps[name];
+                if (propType === 'string') {
+                    node.setAttribute(Object(_case__WEBPACK_IMPORTED_MODULE_0__["camelToDashCase"])(name), newProps[name]);
+                }
+                else {
+                    node[name] = newProps[name];
+                }
+            }
+        });
+    }
+};
+const getClassName = (classList, newProps, oldProps) => {
+    const newClassProp = newProps.className || newProps.class;
+    const oldClassProp = oldProps.className || oldProps.class;
+    // map the classes to Maps for performance
+    const currentClasses = arrayToMap(classList);
+    const incomingPropClasses = arrayToMap(newClassProp ? newClassProp.split(' ') : []);
+    const oldPropClasses = arrayToMap(oldClassProp ? oldClassProp.split(' ') : []);
+    const finalClassNames = [];
+    // loop through each of the current classes on the component
+    // to see if it should be a part of the classNames added
+    currentClasses.forEach((currentClass) => {
+        if (incomingPropClasses.has(currentClass)) {
+            // add it as its already included in classnames coming in from newProps
+            finalClassNames.push(currentClass);
+            incomingPropClasses.delete(currentClass);
+        }
+        else if (!oldPropClasses.has(currentClass)) {
+            // add it as it has NOT been removed by user
+            finalClassNames.push(currentClass);
+        }
+    });
+    incomingPropClasses.forEach((s) => finalClassNames.push(s));
+    return finalClassNames.join(' ');
+};
+/**
+ * Checks if an event is supported in the current execution environment.
+ * @license Modernizr 3.0.0pre (Custom Build) | MIT
+ */
+const isCoveredByReact = (eventNameSuffix, doc) => {
+    const eventName = 'on' + eventNameSuffix;
+    let isSupported = eventName in doc;
+    if (!isSupported) {
+        const element = doc.createElement('div');
+        element.setAttribute(eventName, 'return;');
+        isSupported = typeof element[eventName] === 'function';
+    }
+    return isSupported;
+};
+const syncEvent = (node, eventName, newEventHandler) => {
+    const eventStore = node.__events || (node.__events = {});
+    const oldEventHandler = eventStore[eventName];
+    // Remove old listener so they don't double up.
+    if (oldEventHandler) {
+        node.removeEventListener(eventName, oldEventHandler);
+    }
+    // Bind new listener.
+    node.addEventListener(eventName, (eventStore[eventName] = function handler(e) {
+        if (newEventHandler) {
+            newEventHandler.call(this, e);
+        }
+    }));
+};
+const arrayToMap = (arr) => {
+    const map = new Map();
+    arr.forEach((s) => map.set(s, s));
+    return map;
+};
+//# sourceMappingURL=attachProps.js.map
+
+/***/ }),
+
+/***/ "../../node_modules/@checkout-engine/react/dist/components/react-component-lib/utils/case.js":
+/*!*******************************************************************************************************************************!*\
+  !*** /Users/andre/code/checkout-engine/node_modules/@checkout-engine/react/dist/components/react-component-lib/utils/case.js ***!
+  \*******************************************************************************************************************************/
+/*! exports provided: dashToPascalCase, camelToDashCase */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "dashToPascalCase", function() { return dashToPascalCase; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "camelToDashCase", function() { return camelToDashCase; });
+const dashToPascalCase = (str) => str
+    .toLowerCase()
+    .split('-')
+    .map((segment) => segment.charAt(0).toUpperCase() + segment.slice(1))
+    .join('');
+const camelToDashCase = (str) => str.replace(/([A-Z])/g, (m) => `-${m[0].toLowerCase()}`);
+//# sourceMappingURL=case.js.map
+
+/***/ }),
+
+/***/ "../../node_modules/@checkout-engine/react/dist/components/react-component-lib/utils/index.js":
+/*!********************************************************************************************************************************!*\
+  !*** /Users/andre/code/checkout-engine/node_modules/@checkout-engine/react/dist/components/react-component-lib/utils/index.js ***!
+  \********************************************************************************************************************************/
+/*! exports provided: mergeRefs, createForwardRef, attachProps, getClassName, isCoveredByReact, syncEvent, dashToPascalCase, camelToDashCase */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mergeRefs", function() { return mergeRefs; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createForwardRef", function() { return createForwardRef; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _attachProps__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./attachProps */ "../../node_modules/@checkout-engine/react/dist/components/react-component-lib/utils/attachProps.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "attachProps", function() { return _attachProps__WEBPACK_IMPORTED_MODULE_1__["attachProps"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getClassName", function() { return _attachProps__WEBPACK_IMPORTED_MODULE_1__["getClassName"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "isCoveredByReact", function() { return _attachProps__WEBPACK_IMPORTED_MODULE_1__["isCoveredByReact"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "syncEvent", function() { return _attachProps__WEBPACK_IMPORTED_MODULE_1__["syncEvent"]; });
+
+/* harmony import */ var _case__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./case */ "../../node_modules/@checkout-engine/react/dist/components/react-component-lib/utils/case.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "dashToPascalCase", function() { return _case__WEBPACK_IMPORTED_MODULE_2__["dashToPascalCase"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "camelToDashCase", function() { return _case__WEBPACK_IMPORTED_MODULE_2__["camelToDashCase"]; });
+
+
+// The comma in the type is to trick typescript because it things a single generic in a tsx file is jsx
+const mergeRefs = (...refs) => (value) => refs.forEach((ref) => {
+    if (typeof ref === 'function') {
+        ref(value);
+    }
+    else if (ref != null) {
+        // This is typed as readonly so we need to allow for override
+        ref.current = value;
+    }
+});
+const createForwardRef = (ReactComponent, displayName) => {
+    const forwardRef = (props, ref) => {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(ReactComponent, Object.assign({}, props, { forwardedRef: ref }));
+    };
+    forwardRef.displayName = displayName;
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.forwardRef(forwardRef);
+};
+
+
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+
+/***/ "../../node_modules/@checkout-engine/react/dist/index.js":
+/*!*******************************************************************************************!*\
+  !*** /Users/andre/code/checkout-engine/node_modules/@checkout-engine/react/dist/index.js ***!
+  \*******************************************************************************************/
+/*! exports provided: CeBlockUi, CeButton, CeCard, CeCheckbox, CeCheckout, CeChoice, CeChoices, CeConsumer, CeCouponForm, CeDivider, CeDropdown, CeEmail, CeForm, CeFormControl, CeFormRow, CeFormSection, CeInput, CeLineItem, CeLineItems, CeMenu, CeMenuDivider, CeMenuItem, CeOrderSummary, CePayment, CePaymentRequest, CePriceChoices, CeProductLineItem, CeProvider, CeQuantitySelect, CeRadio, CeRadioGroup, CeSecureNotice, CeSelect, CeSkeleton, CeSpinner, CeStripeElement, CeStripePaymentRequest, CeSubmit, CeSwitch, CeTag, CeTotal */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components */ "../../node_modules/@checkout-engine/react/dist/components/index.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CeBlockUi", function() { return _components__WEBPACK_IMPORTED_MODULE_0__["CeBlockUi"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CeButton", function() { return _components__WEBPACK_IMPORTED_MODULE_0__["CeButton"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CeCard", function() { return _components__WEBPACK_IMPORTED_MODULE_0__["CeCard"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CeCheckbox", function() { return _components__WEBPACK_IMPORTED_MODULE_0__["CeCheckbox"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CeCheckout", function() { return _components__WEBPACK_IMPORTED_MODULE_0__["CeCheckout"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CeChoice", function() { return _components__WEBPACK_IMPORTED_MODULE_0__["CeChoice"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CeChoices", function() { return _components__WEBPACK_IMPORTED_MODULE_0__["CeChoices"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CeConsumer", function() { return _components__WEBPACK_IMPORTED_MODULE_0__["CeConsumer"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CeCouponForm", function() { return _components__WEBPACK_IMPORTED_MODULE_0__["CeCouponForm"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CeDivider", function() { return _components__WEBPACK_IMPORTED_MODULE_0__["CeDivider"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CeDropdown", function() { return _components__WEBPACK_IMPORTED_MODULE_0__["CeDropdown"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CeEmail", function() { return _components__WEBPACK_IMPORTED_MODULE_0__["CeEmail"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CeForm", function() { return _components__WEBPACK_IMPORTED_MODULE_0__["CeForm"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CeFormControl", function() { return _components__WEBPACK_IMPORTED_MODULE_0__["CeFormControl"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CeFormRow", function() { return _components__WEBPACK_IMPORTED_MODULE_0__["CeFormRow"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CeFormSection", function() { return _components__WEBPACK_IMPORTED_MODULE_0__["CeFormSection"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CeInput", function() { return _components__WEBPACK_IMPORTED_MODULE_0__["CeInput"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CeLineItem", function() { return _components__WEBPACK_IMPORTED_MODULE_0__["CeLineItem"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CeLineItems", function() { return _components__WEBPACK_IMPORTED_MODULE_0__["CeLineItems"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CeMenu", function() { return _components__WEBPACK_IMPORTED_MODULE_0__["CeMenu"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CeMenuDivider", function() { return _components__WEBPACK_IMPORTED_MODULE_0__["CeMenuDivider"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CeMenuItem", function() { return _components__WEBPACK_IMPORTED_MODULE_0__["CeMenuItem"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CeOrderSummary", function() { return _components__WEBPACK_IMPORTED_MODULE_0__["CeOrderSummary"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CePayment", function() { return _components__WEBPACK_IMPORTED_MODULE_0__["CePayment"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CePaymentRequest", function() { return _components__WEBPACK_IMPORTED_MODULE_0__["CePaymentRequest"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CePriceChoices", function() { return _components__WEBPACK_IMPORTED_MODULE_0__["CePriceChoices"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CeProductLineItem", function() { return _components__WEBPACK_IMPORTED_MODULE_0__["CeProductLineItem"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CeProvider", function() { return _components__WEBPACK_IMPORTED_MODULE_0__["CeProvider"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CeQuantitySelect", function() { return _components__WEBPACK_IMPORTED_MODULE_0__["CeQuantitySelect"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CeRadio", function() { return _components__WEBPACK_IMPORTED_MODULE_0__["CeRadio"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CeRadioGroup", function() { return _components__WEBPACK_IMPORTED_MODULE_0__["CeRadioGroup"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CeSecureNotice", function() { return _components__WEBPACK_IMPORTED_MODULE_0__["CeSecureNotice"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CeSelect", function() { return _components__WEBPACK_IMPORTED_MODULE_0__["CeSelect"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CeSkeleton", function() { return _components__WEBPACK_IMPORTED_MODULE_0__["CeSkeleton"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CeSpinner", function() { return _components__WEBPACK_IMPORTED_MODULE_0__["CeSpinner"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CeStripeElement", function() { return _components__WEBPACK_IMPORTED_MODULE_0__["CeStripeElement"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CeStripePaymentRequest", function() { return _components__WEBPACK_IMPORTED_MODULE_0__["CeStripePaymentRequest"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CeSubmit", function() { return _components__WEBPACK_IMPORTED_MODULE_0__["CeSubmit"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CeSwitch", function() { return _components__WEBPACK_IMPORTED_MODULE_0__["CeSwitch"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CeTag", function() { return _components__WEBPACK_IMPORTED_MODULE_0__["CeTag"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CeTotal", function() { return _components__WEBPACK_IMPORTED_MODULE_0__["CeTotal"]; });
+
+
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+
 /***/ "./blocks.js":
 /*!*******************!*\
   !*** ./blocks.js ***!
@@ -310,7 +895,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__);
-!(function webpackMissingModule() { var e = new Error("Cannot find module '@checkout-engine/react'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
+/* harmony import */ var _checkout_engine_react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @checkout-engine/react */ "../../node_modules/@checkout-engine/react/dist/index.js");
 
 
 /**
@@ -334,7 +919,7 @@ __webpack_require__.r(__webpack_exports__);
       size = attributes.size;
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     className: className
-  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(!(function webpackMissingModule() { var e = new Error("Cannot find module '@checkout-engine/react'"); e.code = 'MODULE_NOT_FOUND'; throw e; }()), {
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_3__["CeButton"], {
     type: type,
     submit: submit,
     full: full,
@@ -548,7 +1133,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
-!(function webpackMissingModule() { var e = new Error("Cannot find module '@checkout-engine/react'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
+/* harmony import */ var _checkout_engine_react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @checkout-engine/react */ "../../node_modules/@checkout-engine/react/dist/index.js");
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _components_form_blocks__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/form-blocks */ "./blocks/checkout/components/form-blocks.js");
@@ -595,7 +1180,7 @@ __webpack_require__.r(__webpack_exports__);
         return Object(_emotion_core__WEBPACK_IMPORTED_MODULE_5__["jsx"])("div", null, "products");
 
       default:
-        return Object(_emotion_core__WEBPACK_IMPORTED_MODULE_5__["jsx"])(!(function webpackMissingModule() { var e = new Error("Cannot find module '@checkout-engine/react'"); e.code = 'MODULE_NOT_FOUND'; throw e; }()), {
+        return Object(_emotion_core__WEBPACK_IMPORTED_MODULE_5__["jsx"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_2__["CeCheckout"], {
           priceIds: ['85109619-529d-47b3-98c3-ca90d22913e4', 'dd514523-297b-4a86-b5ff-6db0a70d7e17', 'ead419c4-18e6-43f8-85b4-09e4e2f87de0']
         }, Object(_emotion_core__WEBPACK_IMPORTED_MODULE_5__["jsx"])(_components_form_blocks__WEBPACK_IMPORTED_MODULE_4__["default"], {
           isSelected: isSelected,
@@ -804,7 +1389,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
-!(function webpackMissingModule() { var e = new Error("Cannot find module '@checkout-engine/react'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
+/* harmony import */ var _checkout_engine_react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @checkout-engine/react */ "../../node_modules/@checkout-engine/react/dist/index.js");
 /* harmony import */ var _components_Inspector__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/Inspector */ "./blocks/email/components/Inspector.js");
 
 
@@ -830,7 +1415,7 @@ __webpack_require__.r(__webpack_exports__);
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_components_Inspector__WEBPACK_IMPORTED_MODULE_3__["default"], {
     attributes: attributes,
     setAttributes: setAttributes
-  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(!(function webpackMissingModule() { var e = new Error("Cannot find module '@checkout-engine/react'"); e.code = 'MODULE_NOT_FOUND'; throw e; }()), {
+  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_2__["CeInput"], {
     type: "email",
     label: label,
     placeholder: placeholder,
@@ -960,7 +1545,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__);
-!(function webpackMissingModule() { var e = new Error("Cannot find module '@checkout-engine/react'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
+/* harmony import */ var _checkout_engine_react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @checkout-engine/react */ "../../node_modules/@checkout-engine/react/dist/index.js");
 
 
 /**
@@ -977,7 +1562,7 @@ __webpack_require__.r(__webpack_exports__);
   var className = _ref.className;
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     className: className
-  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(!(function webpackMissingModule() { var e = new Error("Cannot find module '@checkout-engine/react'"); e.code = 'MODULE_NOT_FOUND'; throw e; }()), null));
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_3__["CeInput"], null));
 });
 
 /***/ }),
@@ -1202,7 +1787,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
-!(function webpackMissingModule() { var e = new Error("Cannot find module '@checkout-engine/react'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
+/* harmony import */ var _checkout_engine_react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @checkout-engine/react */ "../../node_modules/@checkout-engine/react/dist/index.js");
 /* harmony import */ var _components_Inspector__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/Inspector */ "./blocks/name/components/Inspector.js");
 
 
@@ -1226,14 +1811,14 @@ __webpack_require__.r(__webpack_exports__);
       lastnameLabel = attributes.lastnameLabel,
       firstnameHelp = attributes.firstnameHelp,
       lastnameHelp = attributes.lastnameHelp;
-  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(!(function webpackMissingModule() { var e = new Error("Cannot find module '@checkout-engine/react'"); e.code = 'MODULE_NOT_FOUND'; throw e; }()), null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_components_Inspector__WEBPACK_IMPORTED_MODULE_3__["default"], {
+  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_2__["CeFormRow"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_components_Inspector__WEBPACK_IMPORTED_MODULE_3__["default"], {
     attributes: attributes,
     setAttributes: setAttributes
-  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(!(function webpackMissingModule() { var e = new Error("Cannot find module '@checkout-engine/react'"); e.code = 'MODULE_NOT_FOUND'; throw e; }()), {
+  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_2__["CeInput"], {
     label: firstnameLabel,
     name: "firstname",
     help: firstnameHelp
-  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(!(function webpackMissingModule() { var e = new Error("Cannot find module '@checkout-engine/react'"); e.code = 'MODULE_NOT_FOUND'; throw e; }()), {
+  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_2__["CeInput"], {
     label: lastnameLabel,
     name: "lastname",
     help: lastnameHelp
@@ -1392,7 +1977,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__);
-!(function webpackMissingModule() { var e = new Error("Cannot find module '@checkout-engine/react'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
+/* harmony import */ var _checkout_engine_react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @checkout-engine/react */ "../../node_modules/@checkout-engine/react/dist/index.js");
 
 
 /**
@@ -1413,7 +1998,7 @@ __webpack_require__.r(__webpack_exports__);
       isSelected = _ref.isSelected;
   var label = attributes.label,
       description = attributes.description;
-  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(!(function webpackMissingModule() { var e = new Error("Cannot find module '@checkout-engine/react'"); e.code = 'MODULE_NOT_FOUND'; throw e; }()), {
+  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_3__["CeFormSection"], {
     label: label,
     className: className
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["RichText"], {
@@ -1575,7 +2160,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__);
-!(function webpackMissingModule() { var e = new Error("Cannot find module '@checkout-engine/react'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
+/* harmony import */ var _checkout_engine_react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @checkout-engine/react */ "../../node_modules/@checkout-engine/react/dist/index.js");
 
 
 /**
@@ -1618,7 +2203,7 @@ __webpack_require__.r(__webpack_exports__);
     });
   }
 
-  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(!(function webpackMissingModule() { var e = new Error("Cannot find module '@checkout-engine/react'"); e.code = 'MODULE_NOT_FOUND'; throw e; }()), null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["RichText"], {
+  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_4__["CeFormSection"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["RichText"], {
     slot: "label",
     "aria-label": Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Label'),
     placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Add a title'),
@@ -1781,7 +2366,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__);
-!(function webpackMissingModule() { var e = new Error("Cannot find module '@checkout-engine/react'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
+/* harmony import */ var _checkout_engine_react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @checkout-engine/react */ "../../node_modules/@checkout-engine/react/dist/index.js");
 
 
 /**
@@ -1799,7 +2384,7 @@ __webpack_require__.r(__webpack_exports__);
       setAttributes = _ref.setAttributes;
   var label = attributes.label,
       description = attributes.description;
-  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(!(function webpackMissingModule() { var e = new Error("Cannot find module '@checkout-engine/react'"); e.code = 'MODULE_NOT_FOUND'; throw e; }()), null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["RichText"], {
+  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_3__["CeFormSection"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["RichText"], {
     slot: "label",
     "aria-label": Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Label'),
     placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Add a title'),
@@ -1811,7 +2396,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     withoutInteractiveFormatting: true,
     allowedFormats: ['core/bold', 'core/italic']
-  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(!(function webpackMissingModule() { var e = new Error("Cannot find module '@checkout-engine/react'"); e.code = 'MODULE_NOT_FOUND'; throw e; }()), {
+  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_3__["CeSecureNotice"], {
     slot: "description"
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["RichText"], {
     "aria-label": Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Description'),
@@ -1824,7 +2409,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     withoutInteractiveFormatting: true,
     allowedFormats: ['core/bold', 'core/italic']
-  })), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(!(function webpackMissingModule() { var e = new Error("Cannot find module '@checkout-engine/react'"); e.code = 'MODULE_NOT_FOUND'; throw e; }()), null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(!(function webpackMissingModule() { var e = new Error("Cannot find module '@checkout-engine/react'"); e.code = 'MODULE_NOT_FOUND'; throw e; }()), {
+  })), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_3__["CeFormRow"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_3__["CeStripeElement"], {
     "publishable-key": "pk_test_51IGqEQFOGhs5FBqkukQRgXOUWl4zEUF8t9NAEz9QdTozrZ9QlWNXbKROsKICnpY808sEfhZYLfSAeSX3arrT8A6K00gf5F5845"
   })));
 });
@@ -1983,7 +2568,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _components_InnerBlocks__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../components/InnerBlocks */ "./components/InnerBlocks.js");
 /* harmony import */ var _components_Inspector__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/Inspector */ "./blocks/sections/pricing-section/components/Inspector.js");
-!(function webpackMissingModule() { var e = new Error("Cannot find module '@checkout-engine/react'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
+/* harmony import */ var _checkout_engine_react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @checkout-engine/react */ "../../node_modules/@checkout-engine/react/dist/index.js");
 
 
 /**
@@ -2012,7 +2597,7 @@ __webpack_require__.r(__webpack_exports__);
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_components_Inspector__WEBPACK_IMPORTED_MODULE_4__["default"], {
     attributes: attributes,
     setAttributes: setAttributes
-  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(!(function webpackMissingModule() { var e = new Error("Cannot find module '@checkout-engine/react'"); e.code = 'MODULE_NOT_FOUND'; throw e; }()), null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["RichText"], {
+  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_5__["CeFormSection"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["RichText"], {
     slot: "label",
     "aria-label": Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Label'),
     placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Add a title'),
@@ -2036,7 +2621,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     withoutInteractiveFormatting: true,
     allowedFormats: ['core/bold', 'core/italic']
-  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(!(function webpackMissingModule() { var e = new Error("Cannot find module '@checkout-engine/react'"); e.code = 'MODULE_NOT_FOUND'; throw e; }()), {
+  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_5__["CePriceChoices"], {
     columns: columns,
     type: type,
     default: defaultChoice
@@ -2137,7 +2722,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__);
-!(function webpackMissingModule() { var e = new Error("Cannot find module '@checkout-engine/react'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
+/* harmony import */ var _checkout_engine_react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @checkout-engine/react */ "../../node_modules/@checkout-engine/react/dist/index.js");
 
 
 /**
@@ -2155,7 +2740,7 @@ __webpack_require__.r(__webpack_exports__);
       setAttributes = _ref.setAttributes;
   var label = attributes.label,
       description = attributes.description;
-  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(!(function webpackMissingModule() { var e = new Error("Cannot find module '@checkout-engine/react'"); e.code = 'MODULE_NOT_FOUND'; throw e; }()), null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["RichText"], {
+  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_3__["CeFormSection"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["RichText"], {
     slot: "label",
     "aria-label": Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Label'),
     placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Add a title'),
@@ -2179,7 +2764,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     withoutInteractiveFormatting: true,
     allowedFormats: ['core/bold', 'core/italic']
-  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(!(function webpackMissingModule() { var e = new Error("Cannot find module '@checkout-engine/react'"); e.code = 'MODULE_NOT_FOUND'; throw e; }()), null));
+  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_3__["CeOrderSummary"], null));
 });
 
 /***/ }),
@@ -2272,7 +2857,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__);
-!(function webpackMissingModule() { var e = new Error("Cannot find module '@checkout-engine/react'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
+/* harmony import */ var _checkout_engine_react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @checkout-engine/react */ "../../node_modules/@checkout-engine/react/dist/index.js");
 
 
 /**
@@ -2296,7 +2881,7 @@ __webpack_require__.r(__webpack_exports__);
       size = attributes.size;
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     className: className
-  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(!(function webpackMissingModule() { var e = new Error("Cannot find module '@checkout-engine/react'"); e.code = 'MODULE_NOT_FOUND'; throw e; }()), {
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_3__["CeButton"], {
     type: type,
     submit: submit,
     full: full,
@@ -12498,6 +13083,17 @@ function notice(_ref2) {
 /***/ (function(module, exports) {
 
 (function() { module.exports = window["React"]; }());
+
+/***/ }),
+
+/***/ "react-dom":
+/*!***************************!*\
+  !*** external "ReactDOM" ***!
+  \***************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+(function() { module.exports = window["ReactDOM"]; }());
 
 /***/ })
 

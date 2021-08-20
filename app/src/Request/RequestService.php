@@ -119,7 +119,13 @@ class RequestService {
 		}
 
 		// make request.
-		$response      = wp_remote_request( esc_url_raw( $url ), $args );
+		$response = wp_remote_request( esc_url_raw( $url ), $args );
+
+		// bail early if it's a wp_error.
+		if ( is_wp_error( $response ) ) {
+			return $response;
+		}
+
 		$response_code = wp_remote_retrieve_response_code( $response );
 		$response_body = wp_remote_retrieve_body( $response );
 

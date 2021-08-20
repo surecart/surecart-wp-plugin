@@ -6,6 +6,7 @@ export default ( { errors } ) => {
 	return ( errors || [] ).map( ( error ) => {
 		return (
 			<p
+				className="ce-validation-error"
 				css={ css`
 					color: #cc1818;
 					margin-top: 0;

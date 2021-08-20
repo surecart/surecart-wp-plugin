@@ -9,6 +9,7 @@ export default ( {
 	size = 'large',
 	isBorderLess = true,
 	loading,
+	className,
 } ) => {
 	return (
 		<Card
@@ -39,6 +40,7 @@ export default ( {
 						marginBottom: '25px',
 						fontWeight: 600,
 					} }
+					className={ className }
 				>
 					{ loading ? (
 						<ce-skeleton

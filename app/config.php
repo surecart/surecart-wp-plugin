@@ -33,6 +33,7 @@ return [
 		\CheckoutEngine\Blocks\BlockServiceProvider::class,
 
 		// REST providers.
+		\CheckoutEngine\Rest\AccountRestServiceProvider::class,
 		\CheckoutEngine\Rest\SettingsRestServiceProvider::class,
 		\CheckoutEngine\Rest\PriceRestServiceProvider::class,
 		\CheckoutEngine\Rest\CouponRestServiceProvider::class,

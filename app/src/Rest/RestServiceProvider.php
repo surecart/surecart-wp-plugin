@@ -109,4 +109,24 @@ abstract class RestServiceProvider extends \WP_REST_Controller implements RestSe
 
 		return new \WP_REST_Response( $data, $status );
 	}
+
+	/**
+	 * Process the callback for the route.
+	 *
+	 * @param string $class Class name.
+	 * @param string $method Class method.
+	 * @return callback
+	 */
+	public function callback( $class, $method ) {
+		return function ( $request ) use ( $class, $method ) {
+			// get and call controller with request.
+			$controller = \CheckoutEngine::closure()->method( $class, $method );
+			$model      = $controller( $request );
+
+			// check and filter context.
+			$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
+
+			return rest_ensure_response( $this->filter_response_by_context( $model->toArray(), $context ) );
+		};
+	}
 }

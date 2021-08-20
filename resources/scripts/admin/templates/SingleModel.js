@@ -1,7 +1,9 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 
-const { SnackbarList, Notice } = wp.components;
+const { __ } = wp.i18n;
+
+const { SnackbarList, Notice, Button, Tooltip } = wp.components;
 
 export default ( {
 	children,
@@ -9,15 +11,25 @@ export default ( {
 	button,
 	footer,
 	noticeUI,
+	backUrl,
+	backText,
 	notices,
 	removeNotice,
+	onSubmit,
 	sidebar,
 } ) => {
 	return (
-		<div
+		<form
+			className="ce-model-form"
+			onSubmit={ onSubmit }
 			css={ css`
 				font-size: 15px;
 				margin-right: 20px;
+
+				select {
+					max-width: none;
+				}
+
 				.components-snackbar.is-snackbar-error {
 					background: #cc1818;
 				}
@@ -25,6 +37,10 @@ export default ( {
 				.is-error {
 					.components-text-control__input {
 						border-color: #cc1818;
+					}
+					.components-text-control__input:focus {
+						border-color: #cc1818;
+						box-shadow: 0 0 0 1px #cc1818;
 					}
 				}
 			` }
@@ -52,15 +68,36 @@ export default ( {
 						justify-content: space-between;
 					` }
 				>
-					<h1
+					<div
 						css={ css`
-							margin: 0;
-							font-size: 1.3em;
-							font-weight: normal;
+							display: flex;
+							align-items: center;
+							column-gap: 1em;
 						` }
 					>
-						{ title }
-					</h1>
+						{ !! backUrl && (
+							<Tooltip
+								text={
+									backText ||
+									__( 'Go back.', 'checkout_engine' )
+								}
+							>
+								<Button isSmall isSecondary href={ backUrl }>
+									&larr;
+								</Button>
+							</Tooltip>
+						) }
+
+						<h1
+							css={ css`
+								margin: 0;
+								font-size: 1.3em;
+								font-weight: normal;
+							` }
+						>
+							{ title }
+						</h1>
+					</div>
 
 					{ button }
 				</div>
@@ -94,11 +131,28 @@ export default ( {
 					` }
 				>
 					{ children }
+					{ footer && (
+						<div>
+							<hr
+								css={ css`
+									margin: 1.5em 0;
+								` }
+							/>
+							{ footer }
+						</div>
+					) }
 				</div>
-				<div>{ sidebar }</div>
+				<div>
+					<div
+						css={ css`
+							position: sticky;
+							top: 135px;
+						` }
+					>
+						{ sidebar }
+					</div>
+				</div>
 			</div>
-
-			{ footer }
 
 			<SnackbarList
 				css={ css`
@@ -115,6 +169,6 @@ export default ( {
 				notices={ notices }
 				onRemove={ removeNotice }
 			/>
-		</div>
+		</form>
 	);
 };

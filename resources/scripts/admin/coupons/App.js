@@ -1,19 +1,30 @@
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
+
 const { __ } = wp.i18n;
-const { Fragment } = wp.element;
-const { Icon, withNotices } = wp.components;
+const { Fragment, useState } = wp.element;
+const { useSelect } = wp.data;
+const { Button, Modal } = wp.components;
 
 import Template from '../templates/SingleModel';
 import SaveButton from './components/SaveButton';
 import Name from './modules/Name';
 import Codes from './modules/Codes';
 import Types from './modules/Types';
+import Duration from './modules/Duration';
 import Limits from './modules/Limits';
 import Sidebar from './Sidebar';
 import useSnackbar from '../hooks/useSnackbar';
 import useCouponData from './hooks/useCouponData';
 
-export default withNotices( ( { noticeOperations, noticeUI } ) => {
+export default ( { noticeOperations, noticeUI } ) => {
 	const { snackbarNotices, removeSnackbarNotice } = useSnackbar();
+	const [ confirmDestroy, setConfirmDestroy ] = useState( false );
+	const [ confirmDisable, setConfirmDisable ] = useState( false );
+
+	const currency = useSelect( ( select ) =>
+		select( 'checkout-engine/account' ).getCurrency()
+	);
 
 	const {
 		promotion,
@@ -21,10 +32,29 @@ export default withNotices( ( { noticeOperations, noticeUI } ) => {
 		loading,
 		updateCoupon,
 		updatePromotion,
+		saveCoupon,
 	} = useCouponData();
+
+	const onSubmit = ( e ) => {
+		e.preventDefault();
+		saveCoupon();
+	};
+
+	const deleteCoupon = () => {
+		setConfirmDestroy( true );
+		console.log( 'delete' );
+	};
+
+	const disableCoupon = () => {
+		setConfirmDisable( true );
+		console.log( 'delete' );
+	};
 
 	return (
 		<Template
+			onSubmit={ onSubmit }
+			backUrl={ 'admin.php?page=ce-coupons' }
+			backText={ __( 'Back to All Coupons', 'checkout_engine' ) }
 			title={
 				loading ? (
 					<ce-skeleton
@@ -32,7 +62,6 @@ export default withNotices( ( { noticeOperations, noticeUI } ) => {
 					></ce-skeleton>
 				) : (
 					<div>
-						<Icon icon="tag" style={ { opacity: '0.25' } } />{ ' ' }
 						{ coupon?.id
 							? sprintf(
 									__( 'Edit %s', 'checkout_engine' ),
@@ -65,7 +94,40 @@ export default withNotices( ( { noticeOperations, noticeUI } ) => {
 			notices={ snackbarNotices }
 			removeNotice={ removeSnackbarNotice }
 			noticeUI={ noticeUI }
-			sidebar={ <Sidebar promotion={ promotion } loading={ loading } /> }
+			sidebar={
+				<Sidebar
+					promotion={ promotion }
+					coupon={ coupon }
+					loading={ loading }
+				/>
+			}
+			footer={
+				! loading &&
+				!! promotion?.id && (
+					<div
+						css={ css`
+							display: flex;
+							justify-content: space-between;
+							align-items: center;
+						` }
+					>
+						<Button
+							className="ce-disable"
+							isSecondary
+							onClick={ disableCoupon }
+						>
+							{ __( 'Disable', 'checkout_engine' ) }
+						</Button>
+						<Button
+							className="ce-disable"
+							isDestructive
+							onClick={ deleteCoupon }
+						>
+							{ __( 'Delete', 'checkout_engine' ) }
+						</Button>
+					</div>
+				)
+			}
 		>
 			<Fragment>
 				<Name
@@ -83,12 +145,77 @@ export default withNotices( ( { noticeOperations, noticeUI } ) => {
 					coupon={ coupon }
 					updateCoupon={ updateCoupon }
 				/>
-				<Limits
+				<Duration
 					loading={ loading }
 					coupon={ coupon }
 					updateCoupon={ updateCoupon }
 				/>
+				<Limits
+					loading={ loading }
+					promotion={ promotion }
+					updatePromotion={ updatePromotion }
+				/>
+
+				{ confirmDestroy && (
+					<Modal
+						className={ 'ce-delete-confirm' }
+						title={ sprintf(
+							__( 'Delete "%s"?', 'checkout_engine' ),
+							promotion?.code || 'Coupon'
+						) }
+						onRequestClose={ () => setConfirmDestroy( false ) }
+					>
+						<p>
+							{ __(
+								'Are you sure you want to delete this coupon? This can’t be undone.',
+								'checkout_engine'
+							) }
+						</p>
+						<Button
+							isDestructive
+							onClick={ () => setConfirmDestroy( false ) }
+						>
+							Delete
+						</Button>
+						<Button
+							variant="secondary"
+							onClick={ () => setConfirmDestroy( false ) }
+						>
+							Cancel
+						</Button>
+					</Modal>
+				) }
+
+				{ confirmDisable && (
+					<Modal
+						className={ 'ce-disable-confirm' }
+						title={ sprintf(
+							__( 'Disable "%s"?', 'checkout_engine' ),
+							promotion?.code || 'Coupon'
+						) }
+						onRequestClose={ () => setConfirmDisable( false ) }
+					>
+						<p>
+							{ __(
+								'This discount code will not be usable and all unsaved changes will be lost.',
+								'checkout_engine'
+							) }
+						</p>
+						<Button
+							isDestructive
+							onClick={ () => setConfirmDisable( false ) }
+						>
+							Delete
+						</Button>
+						<Button
+							variant="secondary"
+							onClick={ () => setConfirmDisable( false ) }
+						>
+							Cancel
+						</Button>
+					</Modal>
+				) }
 			</Fragment>
 		</Template>
 	);
-} );
+};

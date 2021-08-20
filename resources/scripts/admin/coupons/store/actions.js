@@ -66,13 +66,12 @@ export function* save() {
 			url
 		);
 
-		console.log( url, promotion );
-
 		// add notice error.
 		yield controls.dispatch( NOTICES_STORE_KEY, 'addSnackbarNotice', {
 			content: __( 'Saved.', 'checkout_engine' ),
 		} );
 	} catch ( e ) {
+		// log error.
 		console.error( e );
 		// add notice error.
 		yield controls.dispatch( NOTICES_STORE_KEY, 'addSnackbarNotice', {

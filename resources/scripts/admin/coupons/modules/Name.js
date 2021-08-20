@@ -1,15 +1,10 @@
 const { __ } = wp.i18n;
-const { BaseControl, TextControl } = wp.components;
-const { useSelect } = wp.data;
-import { STORE_KEY as UI_STORE_KEY } from '../../store/ui';
+const { BaseControl } = wp.components;
 
 import Box from '../../ui/Box';
-import ValidationErrors from '../../components/ValidationErrors';
-import useValidationErrors from '../../hooks/useValidationErrors';
+import TextControl from '../../components/TextControl';
 
 export default ( { coupon, updateCoupon, loading } ) => {
-	const { errors, hasErrors } = useValidationErrors( 'name' );
-
 	return (
 		<Box
 			title={ __( 'Coupon Name', 'checkout_engine' ) }
@@ -17,18 +12,19 @@ export default ( { coupon, updateCoupon, loading } ) => {
 		>
 			<BaseControl>
 				<TextControl
-					value={ coupon?.name }
-					className={ hasErrors ? 'is-error' : '' }
+					className="ce-coupon-name"
 					help={
 						<div>
-							<ValidationErrors errors={ errors } />
 							{ __(
 								'This is an internal name for your coupon. This is not visible to customers.',
 								'checkout_engine'
 							) }
 						</div>
 					}
+					attribute="name"
+					value={ coupon?.name }
 					onChange={ ( name ) => updateCoupon( { name } ) }
+					required
 				/>
 			</BaseControl>
 		</Box>

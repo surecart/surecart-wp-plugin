@@ -5,26 +5,19 @@ import useSnackbar from '../../hooks/useSnackbar';
 import { STORE_KEY as UI_STORE_KEY } from '../../store/ui';
 import useCouponData from '../hooks/useCouponData';
 
-export default ( { style, className, children } ) => {
-	const { addSnackbarNotice } = useSnackbar();
-	const { coupon, promotion, saveCoupon } = useCouponData();
+export default ( { style, children } ) => {
 	const isSaving = useSelect( ( select ) =>
 		select( UI_STORE_KEY ).isSaving()
 	);
 
-	const save = async ( e ) => {
-		e.preventDefault();
-		await saveCoupon();
-	};
-
 	return (
 		<Button
 			isPrimary
+			type="submit"
 			style={ style }
-			className={ className }
+			className={ 'ce-save-model' }
 			disabled={ isSaving }
 			isBusy={ isSaving }
-			onClick={ save }
 		>
 			{ children }
 		</Button>

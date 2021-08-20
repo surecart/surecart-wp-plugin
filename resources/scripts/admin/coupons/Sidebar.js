@@ -1,16 +1,15 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 
-const { __ } = wp.i18n;
+const { __, sprintf } = wp.i18n;
 const { format } = wp.date;
 const { Fragment } = wp.element;
 
 import Box from '../ui/Box';
 import Definition from '../ui/Definition';
+import { getFormattedPrice } from '../util';
 
-export default ( { promotion, loading } ) => {
-	const coupon = promotion?.coupon;
-
+export default ( { promotion, coupon, loading } ) => {
 	const promotionTag = () => {
 		if ( promotion.active ) {
 			return (
@@ -27,6 +26,34 @@ export default ( { promotion, loading } ) => {
 		if ( ! promotion.active ) {
 			return <ce-tag>{ __( 'Disabled', 'checkout_engine' ) }</ce-tag>;
 		}
+	};
+
+	const formattedDiscount = () => {
+		if ( coupon?.percent_off ) {
+			return sprintf(
+				__( '%1s%% off', 'checkout_engine' ),
+				coupon?.percent_off
+			);
+		}
+		if ( coupon?.amount_off ) {
+			return getFormattedPrice( {
+				amount: coupon?.amount_off,
+				currency: 'usd',
+			} );
+		}
+	};
+
+	const renderDuration = () => {
+		if ( coupon?.duration === 'once' ) {
+			return __( 'Once', 'checkout_engine' );
+		}
+		if ( coupon?.duration === 'repeating' && coupon?.duration_in_months ) {
+			return sprintf(
+				__( '%d months', 'checkout_engine' ),
+				coupon?.duration_in_months
+			);
+		}
+		return __( 'Forever', 'checkout_engine' );
 	};
 
 	return (
@@ -56,33 +83,52 @@ export default ( { promotion, loading } ) => {
 					<Fragment>{ promotionTag() }</Fragment>
 				</Definition>
 
-				<Definition title={ __( 'Discount', 'checkout_engine' ) }>
-					25% off
-				</Definition>
+				{ formattedDiscount() && (
+					<Definition title={ __( 'Discount', 'checkout_engine' ) }>
+						{ formattedDiscount() }
+					</Definition>
+				) }
+
 				<Definition title={ __( 'Uses', 'checkout_engine' ) }>
-					{ coupon?.times_redeemed || 0 } /
-					{ !! coupon?.max_redemptions ? (
-						coupon?.max_redemptions
+					{ promotion?.times_redeemed || 0 } /{ ' ' }
+					{ !! promotion?.max_redemptions ? (
+						promotion?.max_redemptions
 					) : (
 						<span>&infin;</span>
 					) }
 				</Definition>
-				<Definition title={ __( 'Active', 'checkout_engine' ) }>
-					{ !! coupon?.updated_at
-						? format(
-								'F j, Y',
-								new Date( coupon.updated_at * 1000 )
-						  )
-						: '' }
+
+				<Definition title={ __( 'Duration', 'checkout_engine' ) }>
+					{ renderDuration() }
 				</Definition>
-				<Definition title={ __( 'Created', 'checkout_engine' ) }>
-					{ !! coupon?.created_at
-						? format(
-								'F j, Y',
-								new Date( coupon.created_at * 1000 )
-						  )
-						: '' }
-				</Definition>
+
+				{ !! promotion?.redeem_by && (
+					<Definition title={ __( 'Redeem By', 'checkout_engine' ) }>
+						{ format( 'F j, Y', new Date( promotion.redeem_by ) ) }
+					</Definition>
+				) }
+
+				{ !! promotion?.id && <hr /> }
+
+				{ !! promotion?.updated_at && (
+					<Definition
+						title={ __( 'Last Updated', 'checkout_engine' ) }
+					>
+						{ format(
+							'F j, Y',
+							new Date( promotion.updated_at * 1000 )
+						) }
+					</Definition>
+				) }
+
+				{ !! promotion?.created_at && (
+					<Definition title={ __( 'Created', 'checkout_engine' ) }>
+						{ format(
+							'F j, Y',
+							new Date( promotion.created_at * 1000 )
+						) }
+					</Definition>
+				) }
 			</Fragment>
 		</Box>
 	);
