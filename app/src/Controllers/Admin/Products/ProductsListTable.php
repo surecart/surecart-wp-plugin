@@ -2,19 +2,13 @@
 
 namespace CheckoutEngine\Controllers\Admin\Products;
 
-use NumberFormatter;
 use CheckoutEngine\Models\Product;
 use CheckoutEngine\Support\Currency;
-
-// WP_List_Table is not loaded automatically so we need to load it in our application.
-if ( ! class_exists( 'WP_List_Table' ) ) {
-	require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
-}
-
+use CheckoutEngine\Controllers\Admin\Tables\ListTable;
 /**
  * Create a new table class that will extend the WP_List_Table
  */
-class ProductsListTable extends \WP_List_Table {
+class ProductsListTable extends ListTable {
 	public $checkbox = true;
 
 	/**
@@ -190,7 +184,9 @@ class ProductsListTable extends \WP_List_Table {
 		}
 
 		if ( ! empty( $product->prices[0]->amount ) ) {
-			return Currency::format( $product->prices[0]->amount, $product->prices[0]->currency );
+			$amount = Currency::formatCurrencyNumber( $product->prices[0]->amount ) . ' <small style="opacity: 0.75;">' . strtoupper( esc_html( $product->prices[0]->currency ) ) . '</small>';
+			// translators: Price starting at.
+			return count( $product->prices ) > 1 ? sprintf( __( 'Starting at %s', 'checkout_engine' ), $amount ) : $amount;
 		}
 
 		return __( 'No price', 'checkout_engine' );

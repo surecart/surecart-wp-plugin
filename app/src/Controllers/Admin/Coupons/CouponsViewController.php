@@ -2,7 +2,7 @@
 
 namespace CheckoutEngine\Controllers\Admin\Coupons;
 
-use CheckoutEngine\Controllers\Admin\Tables\CouponsListTable;
+use CheckoutEngine\Controllers\Admin\Coupons\CouponsListTable;
 
 /**
  * Handles product admin requests.

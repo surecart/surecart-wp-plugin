@@ -1,34 +1,48 @@
 const { combineReducers } = wp.data;
 import { omit } from 'lodash';
 
-const promotion = ( state = {}, action ) => {
+const product = ( state = {}, action ) => {
 	switch ( action.type ) {
-		case 'SET_PROMOTION':
+		case 'SET_PRODUCT':
 			return action.value;
-		case 'UPDATE_PROMOTION':
+		case 'UPDATE_PRODUCT':
 			return { ...state, ...action.value };
-		// set coupon id in promotion when set.
-		case 'SET_COUPON':
-		case 'UPDATE_COUPON':
-			return {
-				...state,
-				coupon_id: action?.value?.id,
-			};
 	}
 	return state;
 };
 
-const coupon = (
-	state = { name: '', currency: ceData?.currency_code || 'usd' },
+const prices = (
+	state = [
+		{
+			recurring: false,
+		},
+	],
 	action
 ) => {
 	switch ( action.type ) {
-		case 'SET_COUPON':
+		case 'SET_PRICES':
 			return action.value;
-		case 'UPDATE_COUPON':
-			return { ...state, ...action.value };
-		case 'SET_PROMOTION':
-			return action.value.coupon;
+		case 'ADD_PRICE':
+			return [
+				...state.slice( 0, action.index ),
+				action.item,
+				...state.slice( action.index ),
+			];
+		case 'UPDATE_PRICE':
+			return state.map( ( item, index ) => {
+				if ( index !== action.index ) {
+					return item;
+				}
+				return {
+					...item,
+					...action.item,
+				};
+			} );
+		case 'REMOVE_PRICE':
+			return state.filter( ( item, index ) => index !== action.index );
+		case 'SET_PRODUCT':
+			// TODO: update product id in all prices without an product_id
+			return action.value.prices;
 	}
 	return state;
 };
@@ -77,8 +91,8 @@ const postSavingLock = ( state = {}, action ) => {
 };
 
 export default combineReducers( {
-	coupon,
-	promotion,
+	product,
+	prices,
 	saving,
 	postSavingLock,
 } );

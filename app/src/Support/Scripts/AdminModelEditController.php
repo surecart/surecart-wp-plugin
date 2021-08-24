@@ -2,10 +2,20 @@
 
 namespace CheckoutEngine\Support\Scripts;
 
+use CheckoutEngine\Models\Account;
+use CheckoutEngine\Support\Currency;
+
 /**
  * Class for model edit pages to extend.
  */
 abstract class AdminModelEditController {
+	/**
+	 * What types of data to add the the page.
+	 *
+	 * @var array
+	 */
+	protected $with_data = [];
+
 	/**
 	 * Are we editing a single page?
 	 *
@@ -88,5 +98,27 @@ abstract class AdminModelEditController {
 			array_merge( $this->core_dependencies, $this->core_dependencies ),
 			true
 		);
+
+		$data = [];
+
+		if ( in_array( 'currency', $this->with_data ) ) {
+			$data['currency_code'] = Account::find()->currency;
+		}
+		if ( in_array( 'supported_currencies', $this->with_data ) ) {
+			$data['supported_currencies'] = Currency::getSupportedCurrencies();
+		}
+
+		// common localizations.
+		wp_localize_script(
+			$this->handle,
+			'ceData',
+			$data
+		);
+
+		// custom localizations.
+		$this->localize( $this->handle );
+	}
+
+	protected function localize( $handle ) {
 	}
 }

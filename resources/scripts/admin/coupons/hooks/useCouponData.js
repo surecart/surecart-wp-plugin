@@ -6,21 +6,26 @@ export default () => {
 	const { updateCoupon, updatePromotion, save } = useDispatch(
 		COUPON_STORE_KEY
 	);
-	const { promotion, coupon, loading, getValidationErrors } = useSelect(
-		( select ) => {
-			const { getCoupon, getPromotion, isResolving } = select(
-				COUPON_STORE_KEY
-			);
-			const { getValidationErrors } = select( UI_STORE_KEY );
+	const {
+		promotion,
+		coupon,
+		loading,
+		getValidationErrors,
+		isSaving,
+	} = useSelect( ( select ) => {
+		const { getCoupon, getPromotion, isResolving, isSaving } = select(
+			COUPON_STORE_KEY
+		);
+		const { getValidationErrors } = select( UI_STORE_KEY );
 
-			return {
-				getValidationErrors,
-				promotion: getPromotion(),
-				coupon: getCoupon(),
-				loading: isResolving( 'getPromotion' ),
-			};
-		}
-	);
+		return {
+			isSaving,
+			getValidationErrors,
+			promotion: getPromotion(),
+			coupon: getCoupon(),
+			loading: isResolving( 'getPromotion' ),
+		};
+	} );
 
 	return {
 		updateCoupon,
@@ -28,6 +33,7 @@ export default () => {
 		promotion,
 		coupon,
 		loading,
+		isSaving,
 		getValidationErrors,
 		saveCoupon: save,
 	};

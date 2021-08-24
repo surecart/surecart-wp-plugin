@@ -109,9 +109,7 @@ export default ( { coupon, updateCoupon, loading } ) => {
 								top: 36px;
 								opacity: 0.5;
 							` }
-						>
-							$
-						</div>
+						></div>
 						<TextControl
 							css={ css`
 								.components-text-control__input[type='number'] {

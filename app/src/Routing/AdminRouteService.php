@@ -40,4 +40,8 @@ class AdminRouteService {
 			)
 		);
 	}
+
+	public function getIndexUrl( $name ) {
+		 return esc_url_raw( menu_page_url( $this->page_names[ $name ], false ) );
+	}
 }

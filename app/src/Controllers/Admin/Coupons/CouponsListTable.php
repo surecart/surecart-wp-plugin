@@ -1,12 +1,13 @@
 <?php
 
-namespace CheckoutEngine\Controllers\Admin\Tables;
+namespace CheckoutEngine\Controllers\Admin\Coupons;
 
 use NumberFormatter;
 use CheckoutEngine\Models\Coupon;
 use CheckoutEngine\Models\Product;
 use CheckoutEngine\Models\Promotion;
 use CheckoutEngine\Support\Currency;
+use CheckoutEngine\Controllers\Admin\Tables\ListTable;
 
 // WP_List_Table is not loaded automatically so we need to load it in our application.
 if ( ! class_exists( 'WP_List_Table' ) ) {
@@ -16,7 +17,7 @@ if ( ! class_exists( 'WP_List_Table' ) ) {
 /**
  * Create a new table class that will extend the WP_List_Table
  */
-class CouponsListTable extends \WP_List_Table {
+class CouponsListTable extends ListTable {
 	public $checkbox = true;
 
 	/**
@@ -71,7 +72,7 @@ class CouponsListTable extends \WP_List_Table {
 			'all'      => __( 'All', 'checkout_engine' ),
 		];
 
-		$link = admin_url( 'admin.php?page=ce-products' );
+		$link = \CheckoutEngine::getIndexUrl( 'coupon' );
 
 		foreach ( $stati as $status => $label ) {
 			$current_link_attributes = '';
@@ -264,6 +265,12 @@ class CouponsListTable extends \WP_List_Table {
 	public function column_status( $promotion ) {
 		// TODO: Add Badge.
 		return $promotion->expired ? __( 'Expired', 'checkout_engine' ) : __( 'Active', 'checkout_engine' );
+	}
+
+	protected function extra_tablenav( $which ) {
+		if ( 'top' === $which ) {
+			return $this->views();
+		}
 	}
 
 	/**

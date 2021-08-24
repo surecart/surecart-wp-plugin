@@ -8,10 +8,8 @@ import ValidationErrors from './ValidationErrors';
 export default ( props ) => {
 	const { attribute, onChange, className, help, ...rest } = props;
 
-	const input = useRef();
 	const { clearValidation, hasErrors, errors } = useValidationErrors(
-		attribute,
-		input
+		attribute
 	);
 
 	return (
@@ -31,7 +29,6 @@ export default ( props ) => {
 					help
 				)
 			}
-			ref={ input }
 			{ ...rest }
 		/>
 	);

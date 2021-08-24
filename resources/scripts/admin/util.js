@@ -17,9 +17,9 @@ export const getFormattedPrice = ( { amount, currency = 'usd' } ) => {
 
 // get the currency symbol for a currency code.
 export const getCurrencySymbol = ( code = 'usd' ) => {
-	const { currency } = new Intl.NumberFormat( undefined, {
+	const [ currency ] = new Intl.NumberFormat( undefined, {
 		style: 'currency',
 		currency: code,
 	} ).formatToParts();
-	return currency;
+	return currency?.value;
 };

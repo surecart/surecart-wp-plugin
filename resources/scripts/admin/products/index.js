@@ -1,15 +1,16 @@
 const { render } = wp.element;
-// const { registerStore } = wp.data;
 
-// import store from "./store";
-// registerStore("presto-player/settings", store);
+import '../store/account/register';
+import '../store/ui/register';
+import '../store/notices/register';
+import './store/register';
 
 /**
  * App
  */
-import App from "./app";
+import Product from './Product';
 
 /**
  * Render
  */
-render(<App />, document.getElementById("app"));
+render( <Product />, document.getElementById( 'app' ) );

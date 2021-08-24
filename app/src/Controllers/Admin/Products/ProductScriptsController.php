@@ -9,6 +9,13 @@ use CheckoutEngine\Support\Scripts\AdminModelEditController;
  */
 class ProductScriptsController extends AdminModelEditController {
 	/**
+	 * What types of data to add the the page.
+	 *
+	 * @var array
+	 */
+	protected $with_data = [ 'currency', 'supported_currencies' ];
+
+	/**
 	 * Script handle.
 	 *
 	 * @var string

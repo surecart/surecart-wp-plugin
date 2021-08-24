@@ -2,12 +2,13 @@
 import { css, jsx } from '@emotion/core';
 
 const { __ } = wp.i18n;
-const { Fragment, useState } = wp.element;
+const { Fragment, useState, useEffect } = wp.element;
 const { useSelect } = wp.data;
 const { Button, Modal } = wp.components;
 
 import Template from '../templates/SingleModel';
 import SaveButton from './components/SaveButton';
+import DisableModal from './components/DisableModal';
 import Name from './modules/Name';
 import Codes from './modules/Codes';
 import Types from './modules/Types';
@@ -22,10 +23,6 @@ export default ( { noticeOperations, noticeUI } ) => {
 	const [ confirmDestroy, setConfirmDestroy ] = useState( false );
 	const [ confirmDisable, setConfirmDisable ] = useState( false );
 
-	const currency = useSelect( ( select ) =>
-		select( 'checkout-engine/account' ).getCurrency()
-	);
-
 	const {
 		promotion,
 		coupon,
@@ -33,6 +30,7 @@ export default ( { noticeOperations, noticeUI } ) => {
 		updateCoupon,
 		updatePromotion,
 		saveCoupon,
+		isSaving,
 	} = useCouponData();
 
 	const onSubmit = ( e ) => {
@@ -45,9 +43,10 @@ export default ( { noticeOperations, noticeUI } ) => {
 		console.log( 'delete' );
 	};
 
-	const disableCoupon = () => {
-		setConfirmDisable( true );
-		console.log( 'delete' );
+	const disableCoupon = async () => {
+		updatePromotion( { active: false } );
+		await saveCoupon();
+		setConfirmDisable( false );
 	};
 
 	return (
@@ -87,7 +86,9 @@ export default ( { noticeOperations, noticeUI } ) => {
 					></ce-skeleton>
 				) : (
 					<SaveButton>
-						{ __( 'Save Coupon', 'checkout_engine' ) }
+						{ coupon?.id
+							? __( 'Update Coupon', 'checkout_engine' )
+							: __( 'Create Coupon', 'checkout_engine' ) }
 					</SaveButton>
 				)
 			}
@@ -114,7 +115,7 @@ export default ( { noticeOperations, noticeUI } ) => {
 						<Button
 							className="ce-disable"
 							isSecondary
-							onClick={ disableCoupon }
+							onClick={ () => setConfirmDisable( true ) }
 						>
 							{ __( 'Disable', 'checkout_engine' ) }
 						</Button>
@@ -186,35 +187,13 @@ export default ( { noticeOperations, noticeUI } ) => {
 					</Modal>
 				) }
 
-				{ confirmDisable && (
-					<Modal
-						className={ 'ce-disable-confirm' }
-						title={ sprintf(
-							__( 'Disable "%s"?', 'checkout_engine' ),
-							promotion?.code || 'Coupon'
-						) }
-						onRequestClose={ () => setConfirmDisable( false ) }
-					>
-						<p>
-							{ __(
-								'This discount code will not be usable and all unsaved changes will be lost.',
-								'checkout_engine'
-							) }
-						</p>
-						<Button
-							isDestructive
-							onClick={ () => setConfirmDisable( false ) }
-						>
-							Delete
-						</Button>
-						<Button
-							variant="secondary"
-							onClick={ () => setConfirmDisable( false ) }
-						>
-							Cancel
-						</Button>
-					</Modal>
-				) }
+				<DisableModal
+					open={ confirmDisable }
+					name={ promotion?.code }
+					isSaving={ isSaving }
+					onRequestClose={ () => setConfirmDisable( false ) }
+					onRequestDisable={ () => {} }
+				/>
 			</Fragment>
 		</Template>
 	);

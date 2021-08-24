@@ -8,9 +8,9 @@ import './store/register';
 /**
  * App
  */
-import App from './app';
+import Coupons from './Coupons';
 
 /**
  * Render
  */
-render( <App />, document.getElementById( 'app' ) );
+render( <Coupons />, document.getElementById( 'app' ) );
