@@ -102,6 +102,13 @@ export default ( { noticeOperations, noticeUI } ) => {
 					loading={ loading }
 				/>
 			}
+			archive={ {
+				open: confirmDisable,
+				name: promotion?.code || __( 'Coupon', 'checkout_engine' ),
+				isSaving,
+				onRequestClose: () => setConfirmDisable( false ),
+				onRequestDisable: () => {},
+			} }
 			footer={
 				! loading &&
 				!! promotion?.id && (
@@ -113,11 +120,11 @@ export default ( { noticeOperations, noticeUI } ) => {
 						` }
 					>
 						<Button
-							className="ce-disable"
+							className="ce-archive"
 							isSecondary
 							onClick={ () => setConfirmDisable( true ) }
 						>
-							{ __( 'Disable', 'checkout_engine' ) }
+							{ __( 'Archive', 'checkout_engine' ) }
 						</Button>
 						<Button
 							className="ce-disable"

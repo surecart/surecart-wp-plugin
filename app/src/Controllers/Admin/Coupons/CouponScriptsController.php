@@ -13,7 +13,7 @@ class CouponScriptsController extends AdminModelEditController {
 	 *
 	 * @var array
 	 */
-	protected $with_data = [ 'currency' ];
+	protected $with_data = [ 'currency', 'supported_currencies' ];
 
 	/**
 	 * Script handle.

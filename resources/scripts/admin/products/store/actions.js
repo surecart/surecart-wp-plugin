@@ -1,6 +1,7 @@
 const { __ } = wp.i18n;
 import { fetch as apiFetch } from '../../store/model/controls';
 const { controls } = wp.data;
+const { __unstableAwaitPromise } = wp.dataControls;
 import { STORE_KEY as UI_STORE_KEY } from '../../store/ui';
 import { STORE_KEY as NOTICES_STORE_KEY } from '../../store/notices';
 
@@ -59,9 +60,22 @@ export function* save() {
 		);
 
 		// save fresh prices
-		yield savePrices(
-			yield controls.select( 'checkout-engine/product', 'getPrices' )
+		const prices = yield controls.select(
+			'checkout-engine/product',
+			'getPrices'
 		);
+
+		yield Promise.all( [
+			yield controls.dispatch(
+				'checkout-engine/product',
+				'savePrice',
+				prices[ 0 ]
+			),
+		] );
+
+		// yield savePrices(
+		// 	yield controls.select( 'checkout-engine/product', 'getPrices' )
+		// );
 
 		const product = yield controls.select(
 			'checkout-engine/product',
@@ -132,11 +146,12 @@ export function* saveProduct( data ) {
 	};
 }
 
-export async function savePrice( data ) {
+export function* savePrice( data ) {
 	let price;
 
 	try {
-		price = await apiFetch( {
+		console.log( 'save' );
+		price = yield apiFetch( {
 			path: data.id ? `prices/${ data.id }` : 'prices',
 			method: data.id ? 'PATCH' : 'POST',
 			data,
@@ -147,7 +162,7 @@ export async function savePrice( data ) {
 
 	// success.
 	if ( price ) {
-		await controls.dispatch(
+		yield controls.dispatch(
 			'checkout-engine/product',
 			'updatePrice',
 			price
@@ -160,13 +175,10 @@ export async function savePrice( data ) {
 	};
 }
 
-export async function savePrices( data ) {
-	// prepare all prices to save
-	let pricesToSave = [];
-	data.foreach( ( price ) => {
-		const fn = ( _ ) => savePrice( price );
-		pricesToSave.push( fn );
-	} );
-
-	return Promise.all( pricesToSave );
+export function* savePrices( prices ) {
+	const resultPromises = prices.map( ( price ) => savePrice( price ) );
+	const results = yield __unstableAwaitPromise(
+		Promise.all( resultPromises )
+	);
+	return results;
 }

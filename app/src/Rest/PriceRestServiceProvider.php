@@ -3,7 +3,7 @@
 namespace CheckoutEngine\Rest;
 
 use CheckoutEngine\Rest\RestServiceInterface;
-use CheckoutEngine\Controllers\Rest\PriceController;
+use CheckoutEngine\Controllers\Rest\PricesController;
 
 /**
  * Service provider for Price Rest Requests
@@ -15,56 +15,14 @@ class PriceRestServiceProvider extends RestServiceProvider implements RestServic
 	 *
 	 * @var string
 	 */
-	protected $endpoint = 'price';
+	protected $endpoint = 'prices';
 
 	/**
-	 * Register REST Routes
+	 * Rest Controller
 	 *
-	 * @return void
+	 * @var string
 	 */
-	public function registerRoutes() {
-		register_rest_route(
-			"$this->name/v$this->version",
-			"$this->endpoint",
-			[
-				[
-					'methods'             => \WP_REST_Server::READABLE,
-					'callback'            => \CheckoutEngine::closure()->method( PriceController::class, 'index' ),
-					'permission_callback' => [ $this, 'get_item_permissions_check' ],
-				],
-				[
-					'methods'             => \WP_REST_Server::CREATABLE,
-					'callback'            => \CheckoutEngine::closure()->method( PriceController::class, 'create' ),
-					'permission_callback' => [ $this, 'create_item_permissions_check' ],
-				],
-				'schema' => [ $this, 'get_item_schema' ],
-			]
-		);
-
-		register_rest_route(
-			"$this->name/v$this->version",
-			$this->endpoint . '/(?P<id>[\S]+)',
-			[
-				[
-					'methods'             => \WP_REST_Server::READABLE,
-					'callback'            => \CheckoutEngine::closure()->method( PriceController::class, 'get' ),
-					'permission_callback' => [ $this, 'get_item_permissions_check' ],
-				],
-				[
-					'methods'             => \WP_REST_Server::EDITABLE,
-					'callback'            => \CheckoutEngine::closure()->method( PriceController::class, 'edit' ),
-					'permission_callback' => [ $this, 'get_item_permissions_check' ],
-				],
-				[
-					'methods'             => \WP_REST_Server::DELETABLE,
-					'callback'            => \CheckoutEngine::closure()->method( PriceController::class, 'delete' ),
-					'permission_callback' => [ $this, 'get_item_permissions_check' ],
-				],
-				// Register our schema callback.
-				'schema' => [ $this, 'get_item_schema' ],
-			]
-		);
-	}
+	protected $controller = PricesController::class;
 
 	/**
 	 * Get our sample schema for a post.
@@ -102,12 +60,57 @@ class PriceRestServiceProvider extends RestServiceProvider implements RestServic
 	}
 
 	/**
-	 * Anyone can get prices
+	 * Anyone can get a specific price.
 	 *
 	 * @param \WP_REST_Request $request Full details about the request.
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_item_permissions_check( $request ) {
 		return true;
+	}
+
+	/**
+	 * Who can list prices
+	 *
+	 * @param \WP_REST_Request $request Full details about the request.
+	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
+	 */
+	public function get_items_permissions_check( $request ) {
+		// anyone can get them if they have the ids.
+		if ( ! empty( $request['ids'] ) ) {
+			return true;
+		}
+
+		return current_user_can( 'read' ); // TODO: add cap.
+	}
+
+	/**
+	 * Create model.
+	 *
+	 * @param \WP_REST_Request $request Full details about the request.
+	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
+	 */
+	public function create_item_permissions_check( $request ) {
+		return current_user_can( 'publish_posts' ); // TODO: add cap.
+	}
+
+	/**
+	 * Update model.
+	 *
+	 * @param \WP_REST_Request $request Full details about the request.
+	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
+	 */
+	public function update_item_permissions_check( $request ) {
+		return current_user_can( 'edit_posts' ); // TODO: add cap.
+	}
+
+	/**
+	 * Delete model.
+	 *
+	 * @param \WP_REST_Request $request Full details about the request.
+	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
+	 */
+	public function delete_item_permissions_check( $request ) {
+		return current_user_can( 'delete_posts' ); // TODO: add cap.
 	}
 }

@@ -149,21 +149,22 @@ class ProductsListTable extends ListTable {
 	 * @return Array
 	 */
 	private function table_data() {
-		$where = [];
-		// if ( ! empty( $_GET['product_status'] ) ) {
-		// switch ( $_GET['product_status'] ) {
-		// case 'active':
-		// $where = [ 'active' => true ];
-		// break;
-		// case 'archived':
-		// $where = [ 'active' => false ];
-		// break;
-		// }
-		// } else {
-		// $where = [ 'active' => true ];
-		// }
+		return Product::where(
+			[
+				'archived' => $this->getArchiveStatus(),
+				'limit'    => $this->get_items_per_page( 'products' ),
+				'page'     => $this->get_pagenum(),
+			]
+		)->get();
+	}
 
-		return Product::where( $where )->get();
+	/**
+	 * Nothing found.
+	 *
+	 * @return string
+	 */
+	public function no_items() {
+		echo esc_html_e( 'No products found.', 'checkout_engine' );
 	}
 
 	/**

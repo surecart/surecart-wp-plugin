@@ -24,4 +24,23 @@ abstract class ListTable extends \WP_List_Table {
 			return $this->views();
 		}
 	}
+
+	/**
+	 * Get the archive query status.
+	 *
+	 * @return boolean|null
+	 */
+	public function getArchiveStatus() {
+		$status = sanitize_text_field( $_GET['product_status'] ?? 'active' );
+
+		$archived = false;
+		if ( 'archived' === $status ) {
+			$archived = true;
+		}
+		if ( 'all' === $status ) {
+			$archived = null;
+		}
+
+		return $archived;
+	}
 }

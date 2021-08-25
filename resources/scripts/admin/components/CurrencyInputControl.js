@@ -2,7 +2,7 @@
 import classNames from 'classnames';
 import { css, jsx } from '@emotion/core';
 import SelectControl from './SelectControl';
-const { __experimentalInputControl: InputControl } = wp.components;
+const { __experimentalInputControl: InputControl, BaseControl } = wp.components;
 import useValidationErrors from '../hooks/useValidationErrors';
 import { getCurrencySymbol } from '../util';
 import ValidationErrors from './ValidationErrors';
@@ -12,6 +12,7 @@ export default ( props ) => {
 		currency,
 		currencies,
 		attribute,
+		label,
 		currencyAttribute = 'currency',
 		value,
 		onChange,
@@ -25,7 +26,16 @@ export default ( props ) => {
 	);
 
 	return (
-		<div>
+		<BaseControl>
+			{ !! label && (
+				<BaseControl.VisualLabel
+					css={ css`
+						display: block;
+					` }
+				>
+					{ label }
+				</BaseControl.VisualLabel>
+			) }
 			<div
 				css={ css`
 					margin: 1em 0;
@@ -76,6 +86,6 @@ export default ( props ) => {
 				) }
 			</div>
 			<ValidationErrors errors={ errors } />
-		</div>
+		</BaseControl>
 	);
 };

@@ -2,53 +2,59 @@
 import { css, jsx } from '@emotion/core';
 
 const { __ } = wp.i18n;
-const { Fragment, useState } = wp.element;
-const { Button, Modal } = wp.components;
+const { Fragment } = wp.element;
+const { Button } = wp.components;
 
+// template
 import Template from '../templates/SingleModel';
-import SaveButton from './components/SaveButton';
-// import DisableModal from './components/DisableModal';
-import Details from './modules/Details';
-// import Codes from './modules/Codes';
-import Prices from './modules/Prices';
-// import Duration from './modules/Duration';
-// import Limits from './modules/Limits';
 
+// components
+import SaveButton from './components/SaveButton';
+
+// modules
+import Details from './modules/Details';
+import Prices from './modules/Prices';
+
+// parts
+import Sidebar from './Sidebar';
+
+// hooks
 import useSnackbar from '../hooks/useSnackbar';
 import useProductData from './hooks/useProductData';
 
-export default ( { noticeOperations, noticeUI } ) => {
+// hocs
+import withConfirm from '../hocs/withConfirm';
+
+export default withConfirm( ( { setConfirm, noticeUI } ) => {
 	const { snackbarNotices, removeSnackbarNotice } = useSnackbar();
-	const [ confirmDestroy, setConfirmDestroy ] = useState( false );
-	const [ confirmDisable, setConfirmDisable ] = useState( false );
 
 	const {
-		prices,
 		product,
-		loading,
+		saveProduct,
 		updateProduct,
-		updatePromotion,
-		saveCoupon,
+		prices,
 		addPrice,
 		removePrice,
 		updatePrice,
+		loading,
 		isSaving,
 	} = useProductData();
 
-	const onSubmit = ( e ) => {
+	const onSubmit = async ( e ) => {
 		e.preventDefault();
-		saveCoupon();
+		await saveProduct();
 	};
 
-	const deleteCoupon = () => {
-		setConfirmDestroy( true );
-		console.log( 'delete' );
-	};
+	// const deleteProduct = () => {
+	// 	setConfirmDestroy( true );
+	// 	console.log( 'delete' );
+	// };
 
-	const disableCoupon = async () => {
-		updatePromotion( { active: false } );
-		await saveCoupon();
-		setConfirmDisable( false );
+	const toggleArchive = async () => {
+		updateProduct( { archived: ! product?.archived } );
+		await saveProduct();
+
+		setConfirm( {} );
 	};
 
 	return (
@@ -97,6 +103,7 @@ export default ( { noticeOperations, noticeUI } ) => {
 			notices={ snackbarNotices }
 			removeNotice={ removeSnackbarNotice }
 			noticeUI={ noticeUI }
+			sidebar={ <Sidebar loading={ loading } product={ product } /> }
 			footer={
 				! loading &&
 				!! product?.id && (
@@ -108,16 +115,66 @@ export default ( { noticeOperations, noticeUI } ) => {
 						` }
 					>
 						<Button
-							className="ce-disable"
+							className="ce-archive"
 							isSecondary
-							onClick={ () => setConfirmDisable( true ) }
+							onClick={ () =>
+								setConfirm( {
+									title: product?.archived_at
+										? sprintf(
+												__(
+													'Un-Archive %s?',
+													'checkout_engine'
+												),
+												product?.name || 'Product'
+										  )
+										: sprintf(
+												__(
+													'Archive %s?',
+													'checkout_engine'
+												),
+												product?.name || 'Product'
+										  ),
+									message: product?.archived_at
+										? __(
+												'This will make the product purchaseable again.',
+												'checkout_engine'
+										  )
+										: __(
+												'This product will not be purchaseable and all unsaved changes will be lost.',
+												'checkout_engine'
+										  ),
+									confirmButtonText: product?.archived_at
+										? sprintf(
+												__(
+													'Un-Archive %s?',
+													'checkout_engine'
+												),
+												product?.name || 'Product'
+										  )
+										: sprintf(
+												__(
+													'Archive %s?',
+													'checkout_engine'
+												),
+												product?.name || 'Product'
+										  ),
+									open: true,
+									isSaving,
+									className: 'ce-disable-confirm',
+									isDestructive: true,
+									onRequestClose: () => setConfirm( {} ),
+									onRequestConfirm: toggleArchive,
+								} )
+							}
 						>
-							{ __( 'Disable', 'checkout_engine' ) }
+							{ product?.archived_at
+								? __( 'Un-Archive', 'checkout_engine' )
+								: __( 'Archive', 'checkout_engine' ) }
 						</Button>
 						<Button
 							className="ce-disable"
 							isDestructive
-							onClick={ deleteCoupon }
+							onClick={ () => {} }
 						>
 							{ __( 'Delete', 'checkout_engine' ) }
 						</Button>
@@ -200,4 +257,4 @@ export default ( { noticeOperations, noticeUI } ) => {
 			</Fragment>
 		</Template>
 	);
-};
+} );

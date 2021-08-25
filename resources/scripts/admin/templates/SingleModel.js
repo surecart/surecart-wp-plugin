@@ -3,7 +3,7 @@ import { css, jsx } from '@emotion/core';
 
 const { __ } = wp.i18n;
 
-const { SnackbarList, Notice, Button, Tooltip } = wp.components;
+const { SnackbarList, Modal, Button, Tooltip } = wp.components;
 
 export default ( {
 	children,
@@ -16,6 +16,7 @@ export default ( {
 	notices,
 	removeNotice,
 	onSubmit,
+	archive,
 	sidebar,
 } ) => {
 	return (
@@ -153,7 +154,6 @@ export default ( {
 					</div>
 				</div>
 			</div>
-
 			<SnackbarList
 				css={ css`
 					position: fixed !important;

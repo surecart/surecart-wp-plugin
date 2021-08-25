@@ -2,15 +2,17 @@
 import { css, jsx } from '@emotion/core';
 import SelectControl from '../../components/SelectControl';
 const { __ } = wp.i18n;
+const { useSelect } = wp.data;
 const {
 	BaseControl,
+	Button,
 	RadioControl,
 	ToggleControl,
+	DropdownMenu,
 	__experimentalInputControl: InputControl,
 } = wp.components;
 import TextControl from '../../components/TextControl';
-import CurrencySelectControl from '../../components/CurrencySelectControl';
-import { getCurrencySymbol } from '../../util';
+import CurrencyInputControl from '../../components/CurrencyInputControl';
 
 export default ( { price, updatePrice, index } ) => {
 	const currencies = Object.keys( ceData.supported_currencies || {} ).map(
@@ -25,22 +27,52 @@ export default ( { price, updatePrice, index } ) => {
 	return (
 		<div>
 			<BaseControl>
-				<TextControl
-					label={ __( 'Name', 'checkout_engine' ) }
-					className="ce-price-name"
-					help={
-						<div>
-							{ __(
-								'A short name for your price (i.e Professional Plan).',
-								'checkout_engine'
-							) }
-						</div>
-					}
-					attribute="name"
-					value={ price?.name }
-					onChange={ ( name ) => updatePrice( { name }, index ) }
-					required
-				/>
+				<div
+					css={ css`
+						display: flex;
+						gap: 1em;
+						align-items: center;
+					` }
+				>
+					<TextControl
+						css={ css`
+							flex: 1;
+							margin-top: 8px;
+						` }
+						label={ __( 'Name', 'checkout_engine' ) }
+						className="ce-price-name"
+						help={
+							<div>
+								{ __(
+									'A short name for your price (i.e Professional Plan).',
+									'checkout_engine'
+								) }
+							</div>
+						}
+						attribute="name"
+						value={ price?.name }
+						onChange={ ( name ) => updatePrice( { name }, index ) }
+						required
+					/>
+					<DropdownMenu
+						icon={ 'ellipsis' }
+						label="Select a direction"
+						controls={ [
+							{
+								title: 'Archive',
+								icon: 'archive',
+							},
+							{
+								title: 'Delete',
+								icon: 'trash',
+							},
+							{
+								title: 'Duplicate',
+								icon: 'welcome-add-page',
+							},
+						] }
+					/>
+				</div>
 			</BaseControl>
 
 			<BaseControl
@@ -110,7 +142,7 @@ export default ( { price, updatePrice, index } ) => {
 				/>
 			</BaseControl>
 
-			<CurrencySelectControl
+			<CurrencyInputControl
 				attribute={ 'amount' }
 				currency={ price?.currency }
 				currencies={ currencies }
@@ -199,6 +231,11 @@ export default ( { price, updatePrice, index } ) => {
 					</div>
 				</BaseControl>
 			) }
+			<BaseControl>
+				<Button isSecondary variant="secondary">
+					Add Automation
+				</Button>
+			</BaseControl>
 		</div>
 	);
 };

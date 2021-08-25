@@ -156,8 +156,9 @@ class CouponsListTable extends ListTable {
 	private function table_data() {
 		return Promotion::where(
 			[
-				'limit' => $this->get_items_per_page( 'coupons' ),
-				'page'  => $this->get_pagenum(),
+				'archived' => $this->getArchiveStatus(),
+				'limit'    => $this->get_items_per_page( 'coupons' ),
+				'page'     => $this->get_pagenum(),
 			]
 		)->paginate();
 	}

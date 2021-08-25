@@ -30,6 +30,20 @@ abstract class RestServiceProvider extends \WP_REST_Controller implements RestSe
 	protected $endpoint = '';
 
 	/**
+	 * Controller class
+	 *
+	 * @var string
+	 */
+	protected $controller = '';
+
+	/**
+	 * Methods allowed for the model.
+	 *
+	 * @var array
+	 */
+	protected $methods = [ 'index', 'create', 'find', 'edit', 'delete' ];
+
+	/**
 	 * {@inheritDoc}
 	 *
 	 * @param  \Pimple\Container $container Service Container.
@@ -46,7 +60,7 @@ abstract class RestServiceProvider extends \WP_REST_Controller implements RestSe
 	 * @return void
 	 */
 	public function bootstrap( $container ) {
-		add_action( 'rest_api_init', [ $this, 'registerRoutes' ] );
+		add_action( 'rest_api_init', [ $this, 'registerModelRoutes' ] );
 	}
 
 	/**
@@ -54,60 +68,58 @@ abstract class RestServiceProvider extends \WP_REST_Controller implements RestSe
 	 *
 	 * @return void
 	 */
-	public function registerRoutes() {
+	public function registerModelRoutes() {
+		register_rest_route(
+			"$this->name/v$this->version",
+			"$this->endpoint",
+			[
+				( in_array( 'index', $this->methods, true ) ? [
+					'methods'             => \WP_REST_Server::READABLE,
+					'callback'            => $this->callback( $this->controller, 'index' ),
+					'permission_callback' => [ $this, 'get_items_permissions_check' ],
+				] : null ),
+				( in_array( 'create', $this->methods, true ) ? [
+					'methods'             => \WP_REST_Server::CREATABLE,
+					'callback'            => $this->callback( $this->controller, 'create' ),
+					'permission_callback' => [ $this, 'create_item_permissions_check' ],
+				] : null ),
+				'schema' => [ $this, 'get_item_schema' ],
+			]
+		);
+
+		register_rest_route(
+			"$this->name/v$this->version",
+			$this->endpoint . '/(?P<id>[\S]+)',
+			[
+				( in_array( 'find', $this->methods, true ) ? [
+					'methods'             => \WP_REST_Server::READABLE,
+					'callback'            => $this->callback( $this->controller, 'find' ),
+					'permission_callback' => [ $this, 'get_item_permissions_check' ],
+				] : null ),
+				( in_array( 'edit', $this->methods, true ) ? [
+					'methods'             => \WP_REST_Server::EDITABLE,
+					'callback'            => $this->callback( $this->controller, 'edit' ),
+					'permission_callback' => [ $this, 'update_item_permissions_check' ],
+				] : null ),
+				( in_array( 'delete', $this->methods, true ) ? [
+					'methods'             => \WP_REST_Server::DELETABLE,
+					'callback'            => $this->callback( $this->controller, 'delete' ),
+					'permission_callback' => [ $this, 'delete_item_permissions_check' ],
+				] : null ),
+				// Register our schema callback.
+				'schema' => [ $this, 'get_item_schema' ],
+			]
+		);
+
+		$this->registerRoutes();
 	}
 
 	/**
-	 * Converts an error to a response object.
+	 * Additional routes to register for the model.
 	 *
-	 * This iterates over all error codes and messages to change it into a flat
-	 * array. This enables simpler client behaviour, as it is represented as a
-	 * list in JSON rather than an object/map.
-	 *
-	 * @since 5.7.0
-	 *
-	 * @param WP_Error $error WP_Error instance.
-	 *
-	 * @return WP_REST_Response List of associative arrays with code and message keys.
+	 * @return void
 	 */
-	protected function errorResponse( $error, $validation_errors ) {
-		$status = array_reduce(
-			$error->get_all_error_data(),
-			function ( $status, $error_data ) {
-				return is_array( $error_data ) && isset( $error_data['status'] ) ? $error_data['status'] : $status;
-			},
-			500
-		);
-
-		$errors = array();
-
-		foreach ( (array) $error->errors as $code => $messages ) {
-			$all_data  = $error->get_all_error_data( $code );
-			$last_data = array_pop( $all_data );
-
-			foreach ( (array) $messages as $message ) {
-				$formatted = array(
-					'code'    => $code,
-					'message' => $message,
-					'data'    => $last_data,
-				);
-
-				if ( $all_data ) {
-					$formatted['additional_data'] = $all_data;
-				}
-
-				$errors[] = $formatted;
-			}
-		}
-
-		$data = $errors[0];
-		if ( count( $errors ) > 1 ) {
-			// Remove the primary error.
-			array_shift( $errors );
-			$data['additional_errors'] = $errors;
-		}
-
-		return new \WP_REST_Response( $data, $status );
+	public function registerRoutes() {
 	}
 
 	/**
@@ -125,6 +137,10 @@ abstract class RestServiceProvider extends \WP_REST_Controller implements RestSe
 
 			// check and filter context.
 			$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
+
+			if ( is_wp_error( $model ) ) {
+				return $model;
+			}
 
 			return rest_ensure_response( $this->filter_response_by_context( $model->toArray(), $context ) );
 		};

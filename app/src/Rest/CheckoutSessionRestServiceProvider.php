@@ -17,6 +17,20 @@ class CheckoutSessionRestServiceProvider extends RestServiceProvider implements 
 	protected $endpoint = 'checkout_sessions';
 
 	/**
+	 * Rest Controller
+	 *
+	 * @var string
+	 */
+	protected $controller = CouponsController::class;
+
+	/**
+	 * Methods allowed for the model.
+	 *
+	 * @var array
+	 */
+	protected $methods = [ 'create', 'find', 'edit' ];
+
+	/**
 	 * Register REST Routes
 	 *
 	 * @return void
@@ -24,43 +38,11 @@ class CheckoutSessionRestServiceProvider extends RestServiceProvider implements 
 	public function registerRoutes() {
 		register_rest_route(
 			"$this->name/v$this->version",
-			"$this->endpoint",
-			[
-				[
-					'methods'             => \WP_REST_Server::CREATABLE,
-					'callback'            => \CheckoutEngine::closure()->method( CheckoutSessionController::class, 'create' ),
-					'permission_callback' => [ $this, 'permissions_check' ],
-				],
-				'schema' => [ $this, 'get_item_schema' ],
-			]
-		);
-
-		register_rest_route(
-			"$this->name/v$this->version",
-			$this->endpoint . '/(?P<id>[\S]+)',
-			[
-				[
-					'methods'             => \WP_REST_Server::READABLE,
-					'callback'            => \CheckoutEngine::closure()->method( CheckoutSessionController::class, 'get' ),
-					'permission_callback' => [ $this, 'permissions_check' ],
-				],
-				[
-					'methods'             => \WP_REST_Server::EDITABLE,
-					'callback'            => \CheckoutEngine::closure()->method( CheckoutSessionController::class, 'update' ),
-					'permission_callback' => [ $this, 'permissions_check' ],
-				],
-				// Register our schema callback.
-				'schema' => [ $this, 'get_item_schema' ],
-			]
-		);
-
-		register_rest_route(
-			"$this->name/v$this->version",
 			$this->endpoint . '/(?P<id>[\S]+)/finalize/(?P<processor_type>[\S]+)',
 			[
 				[
 					'methods'             => \WP_REST_Server::EDITABLE,
-					'callback'            => \CheckoutEngine::closure()->method( CheckoutSessionController::class, 'finalize' ),
+					'callback'            => $this->callback( CheckoutSessionController::class, 'finalize' ),
 					'permission_callback' => [ $this, 'permissions_check' ],
 				],
 				// Register our schema callback.

@@ -10,6 +10,7 @@ export default () => {
 		removePrice,
 		save,
 	} = useDispatch( PRODUCT_STORE_KEY );
+
 	const {
 		product,
 		prices,

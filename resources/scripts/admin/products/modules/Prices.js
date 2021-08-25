@@ -19,8 +19,13 @@ export default ( { prices, loading, updatePrice, addPrice } ) => {
 					return (
 						<PanelBody
 							title={
-								price?.name ||
-								__( 'Price details', 'checkout_engine' )
+								<div>
+									{ price?.name ||
+										__(
+											'Price details',
+											'checkout_engine'
+										) }
+								</div>
 							}
 						>
 							<Price

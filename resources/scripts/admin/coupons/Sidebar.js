@@ -11,21 +11,19 @@ import { getFormattedPrice } from '../util';
 
 export default ( { promotion, coupon, loading } ) => {
 	const promotionTag = () => {
-		if ( promotion.active ) {
-			return (
-				<ce-tag type="success">
-					{ __( 'Active', 'checkout_engine' ) }
-				</ce-tag>
-			);
-		}
-
 		if ( ! promotion?.id ) {
 			return <ce-tag>{ __( 'Draft', 'checkout_engine' ) }</ce-tag>;
 		}
 
-		if ( ! promotion.active ) {
-			return <ce-tag>{ __( 'Disabled', 'checkout_engine' ) }</ce-tag>;
+		if ( promotion.archived ) {
+			return <ce-tag>{ __( 'Archived', 'checkout_engine' ) }</ce-tag>;
 		}
+
+		return (
+			<ce-tag type="success">
+				{ __( 'Active', 'checkout_engine' ) }
+			</ce-tag>
+		);
 	};
 
 	const formattedDiscount = () => {
@@ -38,7 +36,7 @@ export default ( { promotion, coupon, loading } ) => {
 		if ( coupon?.amount_off ) {
 			return getFormattedPrice( {
 				amount: coupon?.amount_off,
-				currency: 'usd',
+				currency: coupon?.currency,
 			} );
 		}
 	};

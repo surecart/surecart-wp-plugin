@@ -9,7 +9,6 @@ use CheckoutEngine\Controllers\Rest\PromotionsController;
  * Service provider for Price Rest Requests
  */
 class PromotionRestServiceProvider extends RestServiceProvider implements RestServiceInterface {
-
 	/**
 	 * Endpoint.
 	 *
@@ -18,53 +17,11 @@ class PromotionRestServiceProvider extends RestServiceProvider implements RestSe
 	protected $endpoint = 'promotions';
 
 	/**
-	 * Register REST Routes
+	 * Rest Controller
 	 *
-	 * @return void
+	 * @var string
 	 */
-	public function registerRoutes() {
-		register_rest_route(
-			"$this->name/v$this->version",
-			"$this->endpoint",
-			[
-				[
-					'methods'             => \WP_REST_Server::READABLE,
-					'callback'            => \CheckoutEngine::closure()->method( PromotionsController::class, 'index' ),
-					'permission_callback' => [ $this, 'get_item_permissions_check' ],
-				],
-				[
-					'methods'             => \WP_REST_Server::CREATABLE,
-					'callback'            => \CheckoutEngine::closure()->method( PromotionsController::class, 'create' ),
-					'permission_callback' => [ $this, 'create_item_permissions_check' ],
-				],
-				'schema' => [ $this, 'get_item_schema' ],
-			]
-		);
-
-		register_rest_route(
-			"$this->name/v$this->version",
-			$this->endpoint . '/(?P<id>[\S]+)',
-			[
-				[
-					'methods'             => \WP_REST_Server::READABLE,
-					'callback'            => \CheckoutEngine::closure()->method( PromotionsController::class, 'find' ),
-					'permission_callback' => [ $this, 'get_item_permissions_check' ],
-				],
-				[
-					'methods'             => \WP_REST_Server::EDITABLE,
-					'callback'            => \CheckoutEngine::closure()->method( PromotionsController::class, 'edit' ),
-					'permission_callback' => [ $this, 'get_item_permissions_check' ],
-				],
-				[
-					'methods'             => \WP_REST_Server::DELETABLE,
-					'callback'            => \CheckoutEngine::closure()->method( PromotionsController::class, 'delete' ),
-					'permission_callback' => [ $this, 'get_item_permissions_check' ],
-				],
-				// Register our schema callback.
-				'schema' => [ $this, 'get_item_schema' ],
-			]
-		);
-	}
+	protected $controller = PromotionsController::class;
 
 	/**
 	 * Get our sample schema for a post.
@@ -85,20 +42,11 @@ class PromotionRestServiceProvider extends RestServiceProvider implements RestSe
 			'type'       => 'object',
 			// In JSON Schema you can specify object properties in the properties attribute.
 			'properties' => [
-				'id'     => [
+				'id' => [
 					'description' => esc_html__( 'Unique identifier for the object.', 'my-textdomain' ),
 					'type'        => 'string',
 					'readonly'    => true,
 				],
-				'coupon' => array(
-					'description' => esc_html__( 'The content for the object.', 'my-textdomain' ),
-					'type'        => 'object',
-					'properties'  => [
-						'percent_off' => [
-							'type' => 'integer',
-						],
-					],
-				),
 			],
 		];
 
@@ -106,7 +54,7 @@ class PromotionRestServiceProvider extends RestServiceProvider implements RestSe
 	}
 
 	/**
-	 * Anyone can get promotions
+	 * Promotions are "private"
 	 *
 	 * @param \WP_REST_Request $request Full details about the request.
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
@@ -116,12 +64,43 @@ class PromotionRestServiceProvider extends RestServiceProvider implements RestSe
 	}
 
 	/**
-	 * Create coupons.
+	 * Get items
+	 *
+	 * @param \WP_REST_Request $request Full details about the request.
+	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
+	 */
+	public function get_items_permissions_check( $request ) {
+		// anyone can get them if they have the ids.
+		$this->get_item_permissions_check( $request );
+	}
+
+	/**
+	 * Create model.
 	 *
 	 * @param \WP_REST_Request $request Full details about the request.
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function create_item_permissions_check( $request ) {
+		return current_user_can( 'publish_posts' ); // TODO: add cap.
+	}
+
+	/**
+	 * Update model.
+	 *
+	 * @param \WP_REST_Request $request Full details about the request.
+	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
+	 */
+	public function update_item_permissions_check( $request ) {
 		return current_user_can( 'edit_posts' ); // TODO: add cap.
+	}
+
+	/**
+	 * Delete model.
+	 *
+	 * @param \WP_REST_Request $request Full details about the request.
+	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
+	 */
+	public function delete_item_permissions_check( $request ) {
+		return current_user_can( 'delete_posts' ); // TODO: add cap.
 	}
 }

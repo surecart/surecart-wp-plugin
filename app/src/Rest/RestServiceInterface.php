@@ -10,5 +10,5 @@ interface RestServiceInterface extends ServiceProviderInterface {
 	 *
 	 * @return void
 	 */
-	public function registerRoutes();
+	public function registerModelRoutes();
 }

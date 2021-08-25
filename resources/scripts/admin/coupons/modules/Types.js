@@ -7,6 +7,7 @@ const { BaseControl, RadioControl } = wp.components;
 
 import Box from '../../ui/Box';
 import TextControl from '../../components/TextControl';
+import CurrencyInputControl from '../../components/CurrencyInputControl';
 
 export default ( { coupon, updateCoupon, loading } ) => {
 	const [ type, setType ] = useState( 'percentage' );
@@ -25,6 +26,15 @@ export default ( { coupon, updateCoupon, loading } ) => {
 			setType( 'fixed' );
 		}
 	}, [ coupon?.amount_off ] );
+
+	const currencies = Object.keys( ceData.supported_currencies || {} ).map(
+		( code ) => {
+			return {
+				value: code,
+				label: ceData.supported_currencies[ code ],
+			};
+		}
+	);
 
 	return (
 		<Box title={ __( 'Amount', 'checkout_engine' ) } loading={ loading }>
@@ -96,41 +106,23 @@ export default ( { coupon, updateCoupon, loading } ) => {
 						</div>
 					</div>
 				) : (
-					<div
-						css={ css`
-							position: relative;
-						` }
-					>
-						<div
-							css={ css`
-								position: absolute;
-								left: 10px;
-								height: 35px;
-								top: 36px;
-								opacity: 0.5;
-							` }
-						></div>
-						<TextControl
-							css={ css`
-								.components-text-control__input[type='number'] {
-									padding-left: 18px;
-								}
-							` }
-							className="ce-amount-off"
-							attribute="amount_off"
-							label={ __( 'Amount Off', 'checkout-engine' ) }
-							type="number"
-							min="0.00"
-							step="0.001"
-							value={ coupon?.amount_off / 100 || null }
-							onChange={ ( amount_off ) => {
-								updateCoupon( {
-									amount_off: amount_off * 100,
-								} );
-							} }
-							required={ type === 'fixed' }
-						/>
-					</div>
+					<CurrencyInputControl
+						className="ce-amount-off"
+						attribute="amount_off"
+						label={ __( 'Amount Off', 'checkout-engine' ) }
+						currencies={ currencies }
+						onChangeCurrency={ ( currency ) =>
+							updateCoupon( { currency } )
+						}
+						currency={ coupon?.currency }
+						value={ coupon?.amount_off || null }
+						onChange={ ( amount_off ) => {
+							updateCoupon( {
+								amount_off,
+							} );
+						} }
+						required={ type === 'fixed' }
+					/>
 				) }
 			</BaseControl>
 		</Box>
