@@ -31,7 +31,7 @@ class CheckoutSessionController extends RestController {
 
 		if ( ! empty( $errors ) ) {
 			$error = [
-				'code'              => 'validation_error',
+				'code'              => 'invalid',
 				'message'           => __( 'Whoops! Something is not quite right.', 'checkout_engine' ),
 				'validation_errors' => $errors,
 			];

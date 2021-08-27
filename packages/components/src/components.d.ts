@@ -12,6 +12,10 @@ export namespace Components {
     }
     interface CeButton {
         /**
+          * Draws the button in a busy state.
+         */
+        "busy"?: boolean;
+        /**
           * Draws the button with a caret for use with dropdowns, popovers, etc.
          */
         "caret"?: boolean;
@@ -297,8 +301,10 @@ export namespace Components {
           * Submits the form. If all controls are valid, the `ce-submit` event will be emitted and the promise will resolve with `true`. If any form control is invalid, the promise will resolve with `false` and no event will be emitted.
          */
         "submit": () => Promise<boolean>;
+        "validate": () => Promise<boolean>;
     }
     interface CeFormControl {
+        "errorMessages": Array<string>;
         "help": string;
         "helpId": string;
         "inputId": string;
@@ -511,6 +517,97 @@ export namespace Components {
         "lineItemData": Array<LineItemData>;
         "priceIds": Array<string> | string;
         "type": 'radio' | 'checkbox';
+    }
+    interface CePriceInput {
+        /**
+          * The input's autofocus attribute.
+         */
+        "autofocus": boolean;
+        /**
+          * Adds a clear button when the input is populated.
+         */
+        "clearable": boolean;
+        /**
+          * 3 letter currency code for input
+         */
+        "currencyCode": string;
+        /**
+          * Disables the input.
+         */
+        "disabled": boolean;
+        /**
+          * Inputs focus
+         */
+        "hasFocus": boolean;
+        /**
+          * The input's help text.
+         */
+        "help": string;
+        /**
+          * This will be true when the control is in an invalid state. Validity is determined by props such as `type`, `required`, `minlength`, `maxlength`, and `pattern` using the browser's constraint validation API.
+         */
+        "invalid": boolean;
+        /**
+          * The input's label.
+         */
+        "label": string;
+        /**
+          * The input's maximum value.
+         */
+        "max": number | string;
+        /**
+          * The maximum length of input that will be considered valid.
+         */
+        "maxlength": number;
+        /**
+          * The minimum length of input that will be considered valid.
+         */
+        "minlength": number;
+        /**
+          * The input's name attribute.
+         */
+        "name": string;
+        /**
+          * Draws a pill-style input with rounded edges.
+         */
+        "pill": boolean;
+        /**
+          * The input's placeholder text.
+         */
+        "placeholder": string;
+        /**
+          * Makes the input readonly.
+         */
+        "readonly": boolean;
+        "reportValidity": () => Promise<boolean>;
+        /**
+          * Makes the input a required field.
+         */
+        "required": boolean;
+        /**
+          * Sets a custom validation message. If `message` is not empty, the field will be considered invalid.
+         */
+        "setCustomValidity": (message: string) => Promise<void>;
+        /**
+          * Should we show the label
+         */
+        "showLabel": boolean;
+        /**
+          * The input's size.
+         */
+        "size": 'small' | 'medium' | 'large';
+        /**
+          * Removes focus from the input.
+         */
+        "triggerBlur": () => Promise<void>;
+        /**
+          * Sets focus on the input.
+         */
+        "triggerFocus": (options?: FocusOptions) => Promise<void>;
+        /**
+          * The input's value attribute.
+         */
+        "value": string;
     }
     interface CeProductLineItem {
         /**
@@ -1104,6 +1201,12 @@ declare global {
         prototype: HTMLCePriceChoicesElement;
         new (): HTMLCePriceChoicesElement;
     };
+    interface HTMLCePriceInputElement extends Components.CePriceInput, HTMLStencilElement {
+    }
+    var HTMLCePriceInputElement: {
+        prototype: HTMLCePriceInputElement;
+        new (): HTMLCePriceInputElement;
+    };
     interface HTMLCeProductLineItemElement extends Components.CeProductLineItem, HTMLStencilElement {
     }
     var HTMLCeProductLineItemElement: {
@@ -1221,6 +1324,7 @@ declare global {
         "ce-payment": HTMLCePaymentElement;
         "ce-payment-request": HTMLCePaymentRequestElement;
         "ce-price-choices": HTMLCePriceChoicesElement;
+        "ce-price-input": HTMLCePriceInputElement;
         "ce-product-line-item": HTMLCeProductLineItemElement;
         "ce-provider": HTMLCeProviderElement;
         "ce-quantity-select": HTMLCeQuantitySelectElement;
@@ -1242,6 +1346,10 @@ declare namespace LocalJSX {
     interface CeBlockUi {
     }
     interface CeButton {
+        /**
+          * Draws the button in a busy state.
+         */
+        "busy"?: boolean;
         /**
           * Draws the button with a caret for use with dropdowns, popovers, etc.
          */
@@ -1555,11 +1663,16 @@ declare namespace LocalJSX {
          */
         "novalidate"?: boolean;
         /**
+          * Emitted when the form is invalid.
+         */
+        "onCeFormInvalid"?: (event: CustomEvent<Object>) => void;
+        /**
           * Emitted when the form is submitted. This event will not be emitted if any form control inside of it is in an invalid state, unless the form has the `novalidate` attribute. Note that there is never a need to prevent this event, since it doen't send a GET or POST request like native forms. To "prevent" submission, use a conditional around the XHR request you use to submit the form's data with.
          */
         "onCeFormSubmit"?: (event: CustomEvent<Object>) => void;
     }
     interface CeFormControl {
+        "errorMessages"?: Array<string>;
         "help"?: string;
         "helpId"?: string;
         "inputId"?: string;
@@ -1781,6 +1894,88 @@ declare namespace LocalJSX {
         "onCeUpdateLineItems"?: (event: CustomEvent<Array<LineItemData>>) => void;
         "priceIds"?: Array<string> | string;
         "type"?: 'radio' | 'checkbox';
+    }
+    interface CePriceInput {
+        /**
+          * The input's autofocus attribute.
+         */
+        "autofocus"?: boolean;
+        /**
+          * Adds a clear button when the input is populated.
+         */
+        "clearable"?: boolean;
+        /**
+          * 3 letter currency code for input
+         */
+        "currencyCode"?: string;
+        /**
+          * Disables the input.
+         */
+        "disabled"?: boolean;
+        /**
+          * Inputs focus
+         */
+        "hasFocus"?: boolean;
+        /**
+          * The input's help text.
+         */
+        "help"?: string;
+        /**
+          * This will be true when the control is in an invalid state. Validity is determined by props such as `type`, `required`, `minlength`, `maxlength`, and `pattern` using the browser's constraint validation API.
+         */
+        "invalid"?: boolean;
+        /**
+          * The input's label.
+         */
+        "label"?: string;
+        /**
+          * The input's maximum value.
+         */
+        "max"?: number | string;
+        /**
+          * The maximum length of input that will be considered valid.
+         */
+        "maxlength"?: number;
+        /**
+          * The minimum length of input that will be considered valid.
+         */
+        "minlength"?: number;
+        /**
+          * The input's name attribute.
+         */
+        "name"?: string;
+        /**
+          * Emitted when the control's value changes.
+         */
+        "onCeChange"?: (event: CustomEvent<void>) => void;
+        /**
+          * Draws a pill-style input with rounded edges.
+         */
+        "pill"?: boolean;
+        /**
+          * The input's placeholder text.
+         */
+        "placeholder"?: string;
+        /**
+          * Makes the input readonly.
+         */
+        "readonly"?: boolean;
+        /**
+          * Makes the input a required field.
+         */
+        "required"?: boolean;
+        /**
+          * Should we show the label
+         */
+        "showLabel"?: boolean;
+        /**
+          * The input's size.
+         */
+        "size"?: 'small' | 'medium' | 'large';
+        /**
+          * The input's value attribute.
+         */
+        "value"?: string;
     }
     interface CeProductLineItem {
         /**
@@ -2244,6 +2439,7 @@ declare namespace LocalJSX {
         "ce-payment": CePayment;
         "ce-payment-request": CePaymentRequest;
         "ce-price-choices": CePriceChoices;
+        "ce-price-input": CePriceInput;
         "ce-product-line-item": CeProductLineItem;
         "ce-provider": CeProvider;
         "ce-quantity-select": CeQuantitySelect;
@@ -2291,6 +2487,7 @@ declare module "@stencil/core" {
             "ce-payment": LocalJSX.CePayment & JSXBase.HTMLAttributes<HTMLCePaymentElement>;
             "ce-payment-request": LocalJSX.CePaymentRequest & JSXBase.HTMLAttributes<HTMLCePaymentRequestElement>;
             "ce-price-choices": LocalJSX.CePriceChoices & JSXBase.HTMLAttributes<HTMLCePriceChoicesElement>;
+            "ce-price-input": LocalJSX.CePriceInput & JSXBase.HTMLAttributes<HTMLCePriceInputElement>;
             "ce-product-line-item": LocalJSX.CeProductLineItem & JSXBase.HTMLAttributes<HTMLCeProductLineItemElement>;
             "ce-provider": LocalJSX.CeProvider & JSXBase.HTMLAttributes<HTMLCeProviderElement>;
             "ce-quantity-select": LocalJSX.CeQuantitySelect & JSXBase.HTMLAttributes<HTMLCeQuantitySelectElement>;

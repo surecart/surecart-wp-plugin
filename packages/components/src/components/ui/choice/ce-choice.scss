@@ -22,7 +22,7 @@
   position: relative;
   text-decoration: none;
   color: var(--ce-input-color);
-  transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease;
+  transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease, box-shadow 150ms ease;;
 
   &--checked {
     background: transparent;
@@ -146,13 +146,16 @@
 .choice__description {
   display: block;
   color: var(--ce-color-gray-500);
-  font-size: var(--ce-font-size-small);
+  font-size: var(--ce-font-size-medium);
   line-height: var(--ce-line-height-dense);
 }
 
 .choice__label-text {
   display: block;
   padding-right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2em;
 }
 
 .choice__price {

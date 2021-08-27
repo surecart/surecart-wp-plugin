@@ -23,3 +23,12 @@ export const getFormattedPrice = ({ amount, currency }: { amount: number; curren
     currency: currency,
   }).format(parseFloat(converted.toFixed(2)))}`;
 };
+
+// get the currency symbol for a currency code.
+export const getCurrencySymbol = (code: string = 'usd') => {
+  const [currency] = new Intl.NumberFormat(undefined, {
+    style: 'currency',
+    currency: code,
+  }).formatToParts();
+  return currency?.value;
+};

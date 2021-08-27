@@ -4,6 +4,7 @@ import { css, jsx } from '@emotion/core';
 const { __ } = wp.i18n;
 
 const { SnackbarList, Modal, Button, Tooltip } = wp.components;
+import { CeForm, CeButton } from '@checkout-engine/react';
 
 export default ( {
 	children,
@@ -16,16 +17,27 @@ export default ( {
 	notices,
 	removeNotice,
 	onSubmit,
+	onInvalid,
 	archive,
 	sidebar,
 } ) => {
 	return (
-		<form
+		<CeForm
 			className="ce-model-form"
-			onSubmit={ onSubmit }
+			onCeFormSubmit={ onSubmit }
+			onCeFormInvalid={ onInvalid }
 			css={ css`
-				font-size: 15px;
+				font-size: 14px;
 				margin-right: 20px;
+
+				// change theme color
+				--wp-admin-theme-color: var( --ce-color-primary-500 );
+				--wp-admin-theme-color-darker-10: var( -ce-color-primary-600 );
+				--wp-admin-theme-color-darker-20: var( -ce-color-primary-700 );
+
+				ce-form-row:not( :last-child ) {
+					margin-bottom: 20px;
+				}
 
 				select {
 					max-width: none;
@@ -33,6 +45,33 @@ export default ( {
 
 				.components-snackbar.is-snackbar-error {
 					background: #cc1818;
+				}
+				.components-snackbar-list__notice-container {
+					float: right;
+				}
+
+				.components-text-control__input,
+				.components-input-control__container
+					.components-input-control__input {
+					&[type='text'],
+					&[type='tel'],
+					&[type='time'],
+					&[type='url'],
+					&[type='week'],
+					&[type='password'],
+					&[type='color'],
+					&[type='date'],
+					&[type='datetime'],
+					&[type='datetime-local'],
+					&[type='email'],
+					&[type='month'],
+					&[type='number'] {
+						height: 40px;
+						border-radius: 4px;
+						border: 1px solid #9898a0;
+						padding: 10px 12px;
+						box-shadow: rgb( 0 0 0 / 5% ) 0px 1px 2px 0px;
+					}
 				}
 
 				.is-error {
@@ -83,9 +122,9 @@ export default ( {
 									__( 'Go back.', 'checkout_engine' )
 								}
 							>
-								<Button isSmall isSecondary href={ backUrl }>
+								<CeButton circle size="small" href={ backUrl }>
 									&larr;
-								</Button>
+								</CeButton>
 							</Tooltip>
 						) }
 
@@ -118,14 +157,17 @@ export default ( {
 					padding: 0 5px;
 					display: grid;
 					margin: auto;
-					max-width: 960px;
-					grid-template-columns: 1fr 320px;
-					grid-gap: 2em;
-					grid-template-areas: 'nav    sidebar';
+					max-width: 1280px;
+					@media screen and ( min-width: 960px ) {
+						grid-template-columns: 1fr 380px;
+						grid-gap: 2em;
+						grid-template-areas: 'nav    sidebar';
+					}
 				` }
 			>
 				<div
 					css={ css`
+						margin-bottom: 3em;
 						> * ~ * {
 							margin-top: 1em;
 						}
@@ -169,6 +211,6 @@ export default ( {
 				notices={ notices }
 				onRemove={ removeNotice }
 			/>
-		</form>
+		</CeForm>
 	);
 };

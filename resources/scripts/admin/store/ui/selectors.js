@@ -4,6 +4,9 @@ export function isSaving( state ) {
 export function flash( state ) {
 	return state.flash;
 }
+export function isInvalid( state ) {
+	return state.isInvalid;
+}
 export function getValidationErrors( state, name = '' ) {
 	if ( ! name ) {
 		return state.validation;

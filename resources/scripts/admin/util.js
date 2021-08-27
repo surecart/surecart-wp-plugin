@@ -1,3 +1,5 @@
+const { __ } = wp.i18n;
+
 export const convertAmount = ( amount, currency ) => {
 	return [ 'bif', 'clp', 'djf', 'gnf', 'jpy', 'kmf', 'krw' ].includes(
 		currency
@@ -22,4 +24,13 @@ export const getCurrencySymbol = ( code = 'usd' ) => {
 		currency: code,
 	} ).formatToParts();
 	return currency?.value;
+};
+
+export const translate = ( key ) => {
+	const map = {
+		day: __( 'Day', 'checkout_engine' ),
+		month: __( 'Month', 'checkout_engine' ),
+		year: __( 'Year', 'checkout_engine' ),
+	};
+	return map?.[ key ] || key;
 };

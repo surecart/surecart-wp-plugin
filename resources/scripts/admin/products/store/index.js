@@ -4,6 +4,7 @@
 import controls from '../../store/model/controls';
 
 import reducer from './reducer';
+import localControls from './controls';
 import * as selectors from './selectors';
 import * as actions from './actions';
 import resolvers from './resolvers';
@@ -15,7 +16,7 @@ export { default as STORE_KEY } from './constants.js';
 export const STORE_CONFIG = {
 	reducer,
 	selectors,
-	controls,
+	controls: { ...controls, ...localControls },
 	resolvers,
 	actions,
 };

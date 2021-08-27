@@ -1,7 +1,6 @@
 const { __ } = wp.i18n;
-import { fetch as apiFetch } from '../../store/model/controls';
+import { fetch as apiFetch, savePrices } from '../../store/model/controls';
 const { controls } = wp.data;
-const { __unstableAwaitPromise } = wp.dataControls;
 import { STORE_KEY as UI_STORE_KEY } from '../../store/ui';
 import { STORE_KEY as NOTICES_STORE_KEY } from '../../store/notices';
 
@@ -19,10 +18,24 @@ export function updateProduct( value ) {
 	};
 }
 
-export function addPrice( item, index ) {
+/**
+ * Add a price to the list of prices.
+ */
+export function* addPrice( item, index ) {
+	const product = yield controls.select(
+		'checkout-engine/product',
+		'getProduct'
+	);
+
+	// also add sensible defaults.
 	return {
 		type: 'ADD_PRICE',
-		item,
+		item: {
+			...item,
+			product_id: item.product_id || product?.id,
+			recurring_interval: item.recurring_interval || 'year',
+			recurring_interval_count: item.recurring_interval_count || 1,
+		},
 		index,
 	};
 }
@@ -33,12 +46,36 @@ export function updatePrice( item, index ) {
 		index,
 	};
 }
+export function updatePrices( item ) {
+	return {
+		type: 'UPDATE_PRICES',
+		item,
+	};
+}
 export function removePrice( item, index ) {
 	return {
 		type: 'REMOVE_PRICE',
 		item,
 		index,
 	};
+}
+
+export function* duplicatePrice( price ) {
+	const prices = yield controls.select(
+		'checkout-engine/product',
+		'getPrices'
+	);
+	return yield addPrice(
+		{
+			...price,
+			name: sprintf(
+				__( '%s (Duplicate)', 'checkout_engine' ),
+				price.name
+			),
+			id: null,
+		},
+		prices.length
+	);
 }
 
 export function* save() {
@@ -51,35 +88,21 @@ export function* save() {
 	yield controls.dispatch( UI_STORE_KEY, 'clearValidationErrors' );
 	yield controls.dispatch( UI_STORE_KEY, 'setSaving', true );
 
-	let updatedRecord;
-
 	try {
-		// save fresh product
 		yield saveProduct(
 			yield controls.select( 'checkout-engine/product', 'getProduct' )
 		);
 
-		// save fresh prices
-		const prices = yield controls.select(
-			'checkout-engine/product',
-			'getPrices'
-		);
-
-		yield Promise.all( [
-			yield controls.dispatch(
-				'checkout-engine/product',
-				'savePrice',
-				prices[ 0 ]
-			),
-		] );
-
-		// yield savePrices(
-		// 	yield controls.select( 'checkout-engine/product', 'getPrices' )
-		// );
-
+		// make sure product id is in price.
 		const product = yield controls.select(
 			'checkout-engine/product',
 			'getProduct'
+		);
+		// update id relationship in prices.
+		yield updatePrices( { product_id: product.id } );
+
+		yield savePrices(
+			yield controls.select( 'checkout-engine/product', 'getPrices' )
 		);
 
 		const url = wp.url.addQueryArgs( window.location.href, {
@@ -91,7 +114,7 @@ export function* save() {
 			url
 		);
 
-		// add notice error.
+		// add notice.
 		yield controls.dispatch( NOTICES_STORE_KEY, 'addSnackbarNotice', {
 			content: __( 'Saved.', 'checkout_engine' ),
 		} );
@@ -113,12 +136,16 @@ export function* save() {
 	} finally {
 		yield controls.dispatch( UI_STORE_KEY, 'setSaving', false );
 	}
-
-	return updatedRecord;
 }
 
-export function* saveProduct( data ) {
+export function* saveProduct() {
 	let product;
+
+	// get fresh data.
+	const data = yield controls.select(
+		'checkout-engine/product',
+		'getProduct'
+	);
 
 	try {
 		product = yield apiFetch( {
@@ -146,39 +173,49 @@ export function* saveProduct( data ) {
 	};
 }
 
-export function* savePrice( data ) {
-	let price;
+export function* deletePrice( price, index ) {
+	// unsaved, just remove
+	if ( ! price.id ) {
+		yield controls.dispatch(
+			'checkout-engine/product',
+			'removePrice',
+			price,
+			index
+		);
+		return;
+	}
+
+	yield controls.dispatch( UI_STORE_KEY, 'setSaving', true );
+
+	let response;
 
 	try {
-		console.log( 'save' );
-		price = yield apiFetch( {
-			path: data.id ? `prices/${ data.id }` : 'prices',
-			method: data.id ? 'PATCH' : 'POST',
-			data,
+		response = yield apiFetch( {
+			path: `prices/${ price.id }`,
+			method: 'DELETE',
+		} );
+		// success.
+		if ( response?.deleted ) {
+			yield controls.dispatch(
+				'checkout-engine/product',
+				'removePrice',
+				price,
+				index
+			);
+			return price;
+		}
+
+		// add notice.
+		yield controls.dispatch( NOTICES_STORE_KEY, 'addSnackbarNotice', {
+			content: __( 'Deleted.', 'checkout_engine' ),
 		} );
 	} catch ( error ) {
 		throw error;
-	}
-
-	// success.
-	if ( price ) {
-		yield controls.dispatch(
-			'checkout-engine/product',
-			'updatePrice',
-			price
-		);
-		return price;
+	} finally {
+		yield controls.dispatch( UI_STORE_KEY, 'setSaving', false );
 	}
 
 	throw {
-		message: 'Failed to save.',
+		message: 'Failed to delete.',
 	};
-}
-
-export function* savePrices( prices ) {
-	const resultPromises = prices.map( ( price ) => savePrice( price ) );
-	const results = yield __unstableAwaitPromise(
-		Promise.all( resultPromises )
-	);
-	return results;
 }

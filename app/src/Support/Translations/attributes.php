@@ -10,4 +10,5 @@ return [
 	'name'           => __( 'Name', 'checkout_engine' ),
 	'amount_off'     => __( 'Amount Off', 'checkout_engine' ),
 	'percent_off'    => __( 'Percent Off', 'checkout_engine' ),
+	'amount'         => __( 'Amount', 'checkout_engine' ),
 ];

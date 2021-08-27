@@ -655,6 +655,34 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 	}
 
 	/**
+	 * Delete the model.
+	 *
+	 * @return $this|false
+	 */
+	protected function delete( $id = 0 ) {
+		$id = $id ? $id : $this->id;
+
+		if ( $this->fireModelEvent( 'deleting' ) === false ) {
+			return false;
+		}
+
+		$deleted = \CheckoutEngine::request(
+			$this->endpoint . '/' . $id,
+			[
+				'method' => 'DELETE',
+			]
+		);
+
+		if ( $this->isError( $deleted ) ) {
+			return $deleted;
+		}
+
+		$this->fireModelEvent( 'deleted' );
+
+		return $deleted;
+	}
+
+	/**
 	 * Get the model attributes
 	 *
 	 * @return array

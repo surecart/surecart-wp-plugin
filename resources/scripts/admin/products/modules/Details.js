@@ -2,50 +2,41 @@ const { __ } = wp.i18n;
 const { BaseControl } = wp.components;
 
 import Box from '../../ui/Box';
-import TextControl from '../../components/TextControl';
+
+import { CeInput, CeFormRow } from '@checkout-engine/react';
 
 export default ( { product, updateProduct, loading } ) => {
 	return (
 		<Box title={ __( 'General', 'checkout_engine' ) } loading={ loading }>
 			<div>
-				<BaseControl>
-					<TextControl
+				<CeFormRow>
+					<CeInput
 						label={ __( 'Name', 'checkout_engine' ) }
 						className="ce-product-name"
-						help={
-							<div>
-								{ __(
-									'A short name for your product.',
-									'checkout_engine'
-								) }
-							</div>
-						}
-						attribute="name"
+						help={ __(
+							'A name for your product.',
+							'checkout_engine'
+						) }
 						value={ product?.name }
-						onChange={ ( name ) => updateProduct( { name } ) }
+						onCeChange={ ( e ) => {
+							updateProduct( { name: e.target.value } );
+						} }
 						required
 					/>
-				</BaseControl>
-				<BaseControl>
-					<TextControl
+					<CeInput
 						label={ __( 'Description', 'checkout_engine' ) }
 						className="ce-product-description"
-						help={
-							<div>
-								{ __(
-									'A short description for your product.',
-									'checkout_engine'
-								) }
-							</div>
-						}
-						attribute="description"
+						help={ __(
+							'A short description for your product.',
+							'checkout_engine'
+						) }
 						value={ product?.description }
-						onChange={ ( description ) =>
-							updateProduct( { description } )
-						}
+						onCeChange={ ( e ) => {
+							updateProduct( { description: e.target.value } );
+						} }
 						required
 					/>
-				</BaseControl>
+				</CeFormRow>
 			</div>
 		</Box>
 	);

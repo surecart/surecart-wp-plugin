@@ -5,6 +5,13 @@ export function setSaving( value ) {
 	};
 }
 
+export function setInvalid( value ) {
+	return {
+		type: 'SET_INVALID',
+		value,
+	};
+}
+
 export function setFlash( value ) {
 	return {
 		type: 'SET_FLASH',

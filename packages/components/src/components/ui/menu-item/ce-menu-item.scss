@@ -41,7 +41,8 @@
     align-items: center;
 
     ::slotted(*) {
-      margin-right: var(--ce-spacing-x-small);
+      display: inline-flex;
+      margin-right: var(--ce-spacing-small);
     }
   }
 

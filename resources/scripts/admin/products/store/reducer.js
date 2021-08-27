@@ -15,6 +15,7 @@ const prices = (
 	state = [
 		{
 			recurring: false,
+			name: 'Default',
 		},
 	],
 	action
@@ -33,6 +34,13 @@ const prices = (
 				if ( index !== action.index ) {
 					return item;
 				}
+				return {
+					...item,
+					...action.item,
+				};
+			} );
+		case 'UPDATE_PRICES':
+			return state.map( ( item ) => {
 				return {
 					...item,
 					...action.item,

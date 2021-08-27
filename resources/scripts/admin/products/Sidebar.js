@@ -7,6 +7,8 @@ const { Fragment } = wp.element;
 
 import Box from '../ui/Box';
 import Definition from '../ui/Definition';
+import { CeFormRow } from '@checkout-engine/react';
+
 import { getFormattedPrice } from '../util';
 
 export default ( { loading, product } ) => {
@@ -43,44 +45,48 @@ export default ( { loading, product } ) => {
 			css={ css`
 				font-size: 14px;
 			` }
+			footer={
+				<div style={ { width: '100%' } }>
+					{ !! product?.archived_at && (
+						<Definition
+							css={ css`
+								margin-bottom: 1em;
+							` }
+							title={ __( 'Archived On', 'checkout_engine' ) }
+						>
+							{ format(
+								'F j, Y',
+								new Date( product?.archived_at * 1000 )
+							) }
+						</Definition>
+					) }
+					{ !! product?.updated_at && (
+						<Definition
+							title={ __( 'Last Updated', 'checkout_engine' ) }
+						>
+							{ format(
+								'F j, Y',
+								new Date( product.updated_at * 1000 )
+							) }
+						</Definition>
+					) }
+					{ !! product?.created_at && (
+						<Definition
+							title={ __( 'Created', 'checkout_engine' ) }
+						>
+							{ format(
+								'F j, Y',
+								new Date( product.created_at * 1000 )
+							) }
+						</Definition>
+					) }
+				</div>
+			}
 		>
 			<Fragment>
 				<Definition title={ __( 'Status', 'checkout_engine' ) }>
 					{ statusTag() }
 				</Definition>
-
-				{ !! product?.archived_at && (
-					<Definition
-						title={ __( 'Archived On', 'checkout_engine' ) }
-					>
-						{ format(
-							'F j, Y',
-							new Date( product?.archived_at * 1000 )
-						) }
-					</Definition>
-				) }
-
-				{ !! product?.id && <hr /> }
-
-				{ !! product?.updated_at && (
-					<Definition
-						title={ __( 'Last Updated', 'checkout_engine' ) }
-					>
-						{ format(
-							'F j, Y',
-							new Date( product.updated_at * 1000 )
-						) }
-					</Definition>
-				) }
-
-				{ !! product?.created_at && (
-					<Definition title={ __( 'Created', 'checkout_engine' ) }>
-						{ format(
-							'F j, Y',
-							new Date( product.created_at * 1000 )
-						) }
-					</Definition>
-				) }
 			</Fragment>
 		</Box>
 	);

@@ -26,6 +26,11 @@ export class CEForm {
    */
   @Event() ceFormSubmit: EventEmitter<Object>;
 
+  /**
+   * Emitted when the form is invalid.
+   */
+  @Event() ceFormInvalid: EventEmitter<Object>;
+
   private formControls: FormControl[];
 
   componentWillLoad() {
@@ -105,6 +110,21 @@ export class CEForm {
       {
         tag: 'ce-color-picker',
         serialize: (el: any, formData) => (el.name && !el.disabled ? formData.append(el.name, el.value) : null),
+      },
+      {
+        tag: 'ce-price-input',
+        serialize: (el: any, formData) => {
+          if (el.name && !el.disabled) {
+            return formData.append(el.name, el.value);
+          } else {
+            null;
+          }
+        },
+        keyDown: event => {
+          if (event.key === 'Enter' && !event.defaultPrevented) {
+            this.submit();
+          }
+        },
       },
       {
         tag: 'ce-input',
@@ -211,13 +231,8 @@ export class CEForm {
     return Object.fromEntries(formData);
   }
 
-  /**
-   * Submits the form. If all controls are valid, the `ce-submit` event will be emitted and the promise will resolve
-   * with `true`. If any form control is invalid, the promise will resolve with `false` and no event will be emitted.
-   */
-  @Method('submit')
-  async submit() {
-    let data = await this.getFormJson();
+  @Method('validate')
+  async validate() {
     const formControls = this.getFormControls();
     const formControlsThatReport = formControls.filter((el: any) => typeof el.reportValidity === 'function') as any;
 
@@ -226,12 +241,30 @@ export class CEForm {
         const isValid = await el.reportValidity();
 
         if (!isValid) {
+          this.ceFormInvalid.emit();
+          await el.reportValidity();
           return false;
         }
       }
     }
 
-    this.ceFormSubmit.emit({ data, formControls });
+    return true;
+  }
+
+  /**
+   * Submits the form. If all controls are valid, the `ce-submit` event will be emitted and the promise will resolve
+   * with `true`. If any form control is invalid, the promise will resolve with `false` and no event will be emitted.
+   */
+  @Method('submit')
+  async submit() {
+    let data = await this.getFormJson();
+    const isValid = await this.validate();
+
+    if (!isValid) {
+      return false;
+    }
+
+    this.ceFormSubmit.emit(data);
 
     return true;
   }

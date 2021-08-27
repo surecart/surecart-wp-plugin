@@ -142,9 +142,9 @@ ce-button-group > ce-tooltip > ce-button.ce-focus {
   --ce-color-danger-900: #7f1d1d;
   --ce-color-danger-950: #481111;
   --ce-color-danger-text: var(--ce-color-white);
-  --ce-border-radius-small: 0.125em;
-  --ce-border-radius-medium: 0.25em;
-  --ce-border-radius-large: 0.5em;
+  --ce-border-radius-small: 0.25em;
+  --ce-border-radius-medium: 0.5em;
+  --ce-border-radius-large: 0.75em;
   --ce-border-radius-x-large: 1em;
   --ce-border-radius-circle: 50%;
   --ce-border-radius-pill: 9999px;
@@ -197,7 +197,7 @@ ce-button-group > ce-tooltip > ce-button.ce-focus {
   --ce-focus-ring-color-danger: #ef444454;
   --ce-focus-ring-width: 3px;
   --ce-button-font-size-small: var(--ce-font-size-x-small);
-  --ce-button-font-size-medium: var(--ce-font-size-small);
+  --ce-button-font-size-medium: var(--ce-font-size-medium);
   --ce-button-font-size-large: var(--ce-font-size-medium);
   --ce-form-section-font-size: var(--ce-font-size-large);
   --ce-input-height-small: 1.875em;
@@ -238,7 +238,7 @@ ce-button-group > ce-tooltip > ce-button.ce-focus {
   --ce-input-label-font-size-large: var(--ce-font-size-large);
   --ce-input-label-color: inherit;
   --ce-input-help-text-font-size-small: var(--ce-font-size-x-small);
-  --ce-input-help-text-font-size-medium: var(--ce-font-size-small);
+  --ce-input-help-text-font-size-medium: var(--ce-font-size-medium);
   --ce-input-help-text-font-size-large: var(--ce-font-size-medium);
   --ce-input-help-text-color: var(--ce-color-gray-400);
   --ce-toggle-size: 1.2em;

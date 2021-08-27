@@ -1,241 +1,427 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import SelectControl from '../../components/SelectControl';
 const { __ } = wp.i18n;
-const { useSelect } = wp.data;
-const {
-	BaseControl,
-	Button,
-	RadioControl,
-	ToggleControl,
-	DropdownMenu,
-	__experimentalInputControl: InputControl,
-} = wp.components;
-import TextControl from '../../components/TextControl';
-import CurrencyInputControl from '../../components/CurrencyInputControl';
+const { useState, useEffect, useRef } = wp.element;
 
-export default ( { price, updatePrice, index } ) => {
-	const currencies = Object.keys( ceData.supported_currencies || {} ).map(
-		( code ) => {
-			return {
-				value: code,
-				label: ceData.supported_currencies[ code ],
-			};
+import useProductData from '../hooks/useProductData';
+
+import {
+	CeInput,
+	CeFormRow,
+	CeChoice,
+	CePriceInput,
+	CeSwitch,
+	CeFormControl,
+	CeButton,
+	CeDropdown,
+	CeMenu,
+	CeMenuItem,
+	CeChoices,
+} from '@checkout-engine/react';
+
+import ToggleHeader from '../../components/ToggleHeader';
+import { translate } from '../../util';
+
+export default ( { price, prices, index, open = true } ) => {
+	const {
+		updatePrice,
+		deletePrice,
+		duplicatePrice,
+		isInvalid,
+	} = useProductData();
+	const [ isOpen, setIsOpen ] = useState( true );
+	const input = useRef();
+
+	useEffect( () => {
+		if ( open && input?.current ) {
+			setTimeout( () => {
+				input.current.triggerFocus();
+			}, 50 );
 		}
+		setIsOpen( open );
+	}, [ open ] );
+
+	// check for validity errors.
+	useEffect( () => {
+		if ( isInvalid ) {
+			setIsOpen( true );
+		}
+	}, [ isInvalid ] );
+
+	const headerName = () => {
+		if ( ! price?.name || prices?.length === 1 ) {
+			return __( 'Pricing Details', 'checkout_engine' );
+		}
+
+		if ( isOpen ) {
+			return price?.name;
+		}
+
+		return `${ price?.name } - ${ ( price?.amount || 0 ) / 100 } ${ (
+			price?.currency || ceData.currency_code
+		)?.toUpperCase() } ${
+			price?.recurring && price?.recurring_interval ? '/' : ''
+		} ${ translate( price?.recurring_interval ) || '' }`;
+	};
+
+	const buttons = (
+		<CeDropdown slot="suffix" position="bottom-right">
+			<CeButton type="text" slot="trigger" circle>
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="16"
+					height="16"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					class="feather feather-more-horizontal"
+				>
+					<circle cx="12" cy="12" r="1"></circle>
+					<circle cx="19" cy="12" r="1"></circle>
+					<circle cx="5" cy="12" r="1"></circle>
+				</svg>
+			</CeButton>
+			<CeMenu>
+				<CeMenuItem
+					onClick={ ( e ) => {
+						e.preventDefault();
+						duplicatePrice( price );
+					} }
+				>
+					<span
+						slot="prefix"
+						style={ {
+							opacity: 0.5,
+						} }
+					>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="16"
+							height="16"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							class="feather feather-copy"
+						>
+							<rect
+								x="9"
+								y="9"
+								width="13"
+								height="13"
+								rx="2"
+								ry="2"
+							></rect>
+							<path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+						</svg>
+					</span>
+					{ __( 'Duplicate', 'checkout_engine' ) }
+				</CeMenuItem>
+				{ price?.id && (
+					<CeMenuItem onClick={ () => deletePrice( price, index ) }>
+						<span
+							slot="prefix"
+							style={ {
+								opacity: 0.5,
+							} }
+						>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="16"
+								height="16"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								class="feather feather-archive"
+							>
+								<polyline points="21 8 21 21 3 21 3 8"></polyline>
+								<rect x="1" y="3" width="22" height="5"></rect>
+								<line x1="10" y1="12" x2="14" y2="12"></line>
+							</svg>
+						</span>
+						{ __( 'Archive', 'checkout_engine' ) }
+					</CeMenuItem>
+				) }
+				<CeMenuItem
+					onClick={ ( e ) => {
+						e.preventDefault();
+						deletePrice( price, index );
+					} }
+				>
+					<span
+						slot="prefix"
+						style={ {
+							opacity: 0.5,
+						} }
+					>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="16"
+							height="16"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							class="feather feather-trash-2"
+						>
+							<polyline points="3 6 5 6 21 6"></polyline>
+							<path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+							<line x1="10" y1="11" x2="10" y2="17"></line>
+							<line x1="14" y1="11" x2="14" y2="17"></line>
+						</svg>
+					</span>
+					{ __( 'Delete', 'checkout_engine' ) }
+				</CeMenuItem>
+			</CeMenu>
+		</CeDropdown>
 	);
 
 	return (
 		<div>
-			<BaseControl>
-				<div
-					css={ css`
-						display: flex;
-						gap: 1em;
-						align-items: center;
-					` }
-				>
-					<TextControl
-						css={ css`
-							flex: 1;
-							margin-top: 8px;
-						` }
-						label={ __( 'Name', 'checkout_engine' ) }
-						className="ce-price-name"
-						help={
-							<div>
-								{ __(
-									'A short name for your price (i.e Professional Plan).',
-									'checkout_engine'
-								) }
-							</div>
-						}
-						attribute="name"
-						value={ price?.name }
-						onChange={ ( name ) => updatePrice( { name }, index ) }
-						required
-					/>
-					<DropdownMenu
-						icon={ 'ellipsis' }
-						label="Select a direction"
-						controls={ [
-							{
-								title: 'Archive',
-								icon: 'archive',
-							},
-							{
-								title: 'Delete',
-								icon: 'trash',
-							},
-							{
-								title: 'Duplicate',
-								icon: 'welcome-add-page',
-							},
-						] }
-					/>
-				</div>
-			</BaseControl>
+			<ToggleHeader
+				isOpen={ isOpen }
+				setIsOpen={ setIsOpen }
+				buttons={ buttons }
+				shadowed
+			>
+				{ headerName() }
+			</ToggleHeader>
 
-			<BaseControl
+			<div
 				css={ css`
-					margin-top: 10px;
+					margin-top: ${ isOpen ? '2em' : '0' };
+					height: ${ isOpen ? 'auto' : 0 };
+					overflow: ${ isOpen ? 'visible' : 'hidden' };
+					visibility: ${ isOpen ? 'visibile' : 'hidden' };
 				` }
 			>
-				<BaseControl.VisualLabel
-					css={ css`
-						display: block;
-					` }
-				>
-					{ __( 'Pricing', 'checkout_engine' ) }
-				</BaseControl.VisualLabel>
-				{ /* <ToggleControl
-					label={ __( 'Recurring Subscription', 'checkout_engine' ) }
-					checked={ price?.recurring }
-					onChange={ ( recurring ) => {
-						updatePrice( { recurring }, index );
-					} }
-				/> */ }
-				<RadioControl
-					css={ css`
-						.components-base-control__field {
-							display: flex;
-							align-items: stretch;
-							gap: 1em;
-						}
-						.components-radio-control__option {
-							display: flex;
-							flex: 1 1 50%;
-							margin-bottom: 4px;
-							border: 1px solid #dcdcdc;
-							border-radius: 2px;
-							padding: 15px;
-						}
-					` }
-					selected={ price?.recurring ? 'recurring' : 'once' }
-					options={ [
-						{
-							label: (
-								<span>
-									<strong>Single Payment</strong>
-									<br />
-									Charge a one-time fee.
-								</span>
-							),
-							value: 'once',
-						},
-						{
-							label: (
-								<span>
-									<strong>Subscription</strong>
-									<br />
-									Charge an ongoing fee.
-								</span>
-							),
-							value: 'recurring',
-						},
-					] }
-					onChange={ ( value ) => {
-						updatePrice(
-							{ recurring: value === 'recurring' },
-							index
-						);
-					} }
-				/>
-			</BaseControl>
+				{ prices?.length > 1 && (
+					<CeFormRow>
+						<CeInput
+							ref={ input }
+							label={ __( 'Name', 'checkout_engine' ) }
+							className="ce-price-name"
+							help={ __(
+								'A short name for your price (i.e Professional Plan).',
+								'checkout_engine'
+							) }
+							value={ price?.name }
+							onCeChange={ ( e ) => {
+								updatePrice( { name: e.target.value }, index );
+							} }
+							required
+						/>
+					</CeFormRow>
+				) }
 
-			<CurrencyInputControl
-				attribute={ 'amount' }
-				currency={ price?.currency }
-				currencies={ currencies }
-				onChangeCurrency={ ( currency ) =>
-					updatePrice( { currency }, index )
-				}
-				value={ price?.amount }
-				onChange={ ( amount ) => {
-					updatePrice(
-						{
-							amount,
-						},
-						index
-					);
-				} }
-			/>
-
-			<div>
-				<ToggleControl
-					label={ __(
-						'Allow customers to pay what they want?',
-						'checkout_engine'
-					) }
-					checked={ price?.ad_hoc }
-					onChange={ ( ad_hoc ) => {
-						updatePrice( { ad_hoc }, index );
-					} }
-				/>
-			</div>
-
-			{ price?.recurring && (
-				<BaseControl>
-					<BaseControl.VisualLabel
-						css={ css`
-							display: block;
-						` }
-					>
-						{ __( 'Repeat Payment Every', 'checkout_engine' ) }
-					</BaseControl.VisualLabel>
-					<div
-						css={ css`
-							display: flex;
-						` }
-					>
-						<InputControl
-							value={ price?.recurring_interval_count || 1 }
-							onChange={ ( recurring_interval_count ) =>
+				<CeFormRow>
+					<CeChoices style={ { '--columns': 2 } }>
+						<CeChoice
+							checked={ ! price?.recurring }
+							value="single"
+							onCeChange={ ( e ) =>
+								e.target.value === 'single' &&
 								updatePrice(
-									{ recurring_interval_count },
+									{
+										recurring: false,
+									},
 									index
 								)
 							}
-							css={ css`
-								flex: 1;
-								margin-right: -2px;
-								z-index: 1;
-								border-radius: 2px 0 0 2px !important;
-							` }
-						/>
-						<SelectControl
-							attribute="recurring_interval"
-							value={ price?.recurring_interval || 'month' }
-							options={ [
-								{
-									value: 'day',
-									label: __( 'Day', 'checkout_engine' ),
-								},
-								{
-									value: 'week',
-									label: __( 'Week', 'checkout_engine' ),
-								},
-								{
-									value: 'month',
-									label: __( 'Month', 'checkout_engine' ),
-								},
-								{
-									value: 'year',
-									label: __( 'Year', 'checkout_engine' ),
-								},
-							] }
-							onChange={ ( recurring_interval ) =>
-								updatePrice( { recurring_interval }, index )
+						>
+							Single Payment
+							<span slot="description">
+								Charge a one-time fee.
+							</span>
+						</CeChoice>
+						<CeChoice
+							checked={ price?.recurring }
+							value="subscription"
+							onCeChange={ ( e ) =>
+								e.target.checked &&
+								updatePrice(
+									{
+										recurring: true,
+										recurring_interval:
+											price?.recurring_interval || 'year',
+										recurring_interval_count:
+											price?.recurring_interval_count ||
+											1,
+									},
+									index
+								)
 							}
-							required={ price?.recurring }
+						>
+							Subscription
+							<span slot="description">
+								Charge an ongoing fee.
+							</span>
+						</CeChoice>
+					</CeChoices>
+				</CeFormRow>
+
+				<CeFormRow>
+					<CePriceInput
+						label={
+							price?.ad_hoc
+								? __( 'Recommended Price', 'checkout_engine' )
+								: __( 'Price', 'checkout_engine' )
+						}
+						className="ce-price-amount"
+						currencyCode={ ceData.currecy_code }
+						value={ price?.amount }
+						onCeChange={ ( e ) => {
+							updatePrice( { amount: e.target.value }, index );
+						} }
+						required
+					/>
+				</CeFormRow>
+
+				{ price?.ad_hoc && (
+					<CeFormRow
+						css={ css`
+							margin-top: -20px;
+						` }
+					>
+						<CePriceInput
+							label={ __( 'Min Amount', 'checkout_engine' ) }
+							className="ce-ad-hoc-min-amount"
+							value={ price?.ad_hoc_min_amount }
+							onCeChange={ ( e ) => {
+								updatePrice(
+									{ ad_hoc_min_amount: e.target.value },
+									index
+								);
+							} }
+							required
 						/>
-					</div>
-				</BaseControl>
-			) }
-			<BaseControl>
-				<Button isSecondary variant="secondary">
-					Add Automation
-				</Button>
-			</BaseControl>
+						<CePriceInput
+							label={ __( 'Max Amount', 'checkout_engine' ) }
+							className="ce-ad-hoc-max-amount"
+							value={ price?.ad_hoc_max_amount }
+							onCeChange={ ( e ) => {
+								updatePrice(
+									{ ad_hoc_max_amount: e.target.value },
+									index
+								);
+							} }
+						/>
+					</CeFormRow>
+				) }
+				<CeFormRow
+					css={ css`
+						margin-top: -20px;
+					` }
+				>
+					<CeSwitch
+						value={ price?.ad_hoc }
+						onCeChange={ ( e ) => {
+							console.log( e );
+							updatePrice( { ad_hoc: e.target.checked }, index );
+						} }
+					>
+						{ __(
+							'Allow customers to pay what they want',
+							'checkout_engine'
+						) }
+					</CeSwitch>
+				</CeFormRow>
+
+				{ price?.recurring && (
+					<CeFormRow>
+						<div
+							css={ css`
+								display: flex;
+								align-items: flex-end;
+							` }
+						>
+							<CeInput
+								css={ css`
+									flex: 1;
+								` }
+								label={ __(
+									'Repeat payment every',
+									'checkout_engine'
+								) }
+								value={ price?.recurring_interval_count }
+								onCeChange={ ( e ) =>
+									updatePrice(
+										{
+											recurring_interval_count:
+												e.target.value,
+										},
+										index
+									)
+								}
+								required
+							></CeInput>
+							<CeDropdown slot="suffix" position="bottom-right">
+								<CeButton slot="trigger" caret>
+									{ price?.recurring_interval }
+								</CeButton>
+								<CeMenu>
+									<CeMenuItem
+										onClick={ () =>
+											updatePrice(
+												{
+													recurring_interval: 'day',
+												},
+												index
+											)
+										}
+									>
+										{ __( 'Day', 'checkout_engine' ) }
+									</CeMenuItem>
+									<CeMenuItem
+										onClick={ () =>
+											updatePrice(
+												{
+													recurring_interval: 'month',
+												},
+												index
+											)
+										}
+									>
+										{ __( 'Month', 'checkout_engine' ) }
+									</CeMenuItem>
+									<CeMenuItem
+										onClick={ () =>
+											updatePrice(
+												{
+													recurring_interval: 'year',
+												},
+												index
+											)
+										}
+									>
+										{ __( 'Year', 'checkout_engine' ) }
+									</CeMenuItem>
+								</CeMenu>
+							</CeDropdown>
+						</div>
+					</CeFormRow>
+				) }
+
+				<CeFormRow>
+					<CeFormControl
+						label={ __( 'Automations', 'checkout_engine' ) }
+					>
+						<CeButton>
+							{ __( 'Add Automation', 'checkout_engine' ) }
+						</CeButton>
+					</CeFormControl>
+				</CeFormRow>
+			</div>
 		</div>
 	);
 };

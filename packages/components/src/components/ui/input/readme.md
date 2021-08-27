@@ -114,6 +114,7 @@ Type: `Promise<void>`
 
  - [ce-coupon-form](../../controllers/coupon-form)
  - [ce-email](../../controllers/email)
+ - [ce-price-input](../price-input)
  - [ce-stripe-element](../stripe-element)
 
 ### Depends on
@@ -126,6 +127,7 @@ graph TD;
   ce-input --> ce-form-control
   ce-coupon-form --> ce-input
   ce-email --> ce-input
+  ce-price-input --> ce-input
   ce-stripe-element --> ce-input
   style ce-input fill:#f9f,stroke:#333,stroke-width:4px
 ```

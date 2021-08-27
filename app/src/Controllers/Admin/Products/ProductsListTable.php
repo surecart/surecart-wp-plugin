@@ -179,13 +179,9 @@ class ProductsListTable extends ListTable {
 			return __( 'No price', 'checkout_engine' );
 		}
 
-		if ( count( $product->prices ) > 1 ) {
-			// translators: Number of prices.
-			return sprintf( __( '%1d Prices', 'checkout_engine' ), count( $product->prices ) );
-		}
-
 		if ( ! empty( $product->prices[0]->amount ) ) {
-			$amount = Currency::formatCurrencyNumber( $product->prices[0]->amount ) . ' <small style="opacity: 0.75;">' . strtoupper( esc_html( $product->prices[0]->currency ) ) . '</small>';
+			$min_price = min( array_column( $product->prices, 'amount' ) );
+			$amount    = Currency::formatCurrencyNumber( $min_price ) . ' <small style="opacity: 0.75;">' . strtoupper( esc_html( $product->prices[0]->currency ) ) . '</small>';
 			// translators: Price starting at.
 			return count( $product->prices ) > 1 ? sprintf( __( 'Starting at %s', 'checkout_engine' ), $amount ) : $amount;
 		}

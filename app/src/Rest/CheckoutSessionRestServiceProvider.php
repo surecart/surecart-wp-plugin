@@ -43,7 +43,7 @@ class CheckoutSessionRestServiceProvider extends RestServiceProvider implements 
 				[
 					'methods'             => \WP_REST_Server::EDITABLE,
 					'callback'            => $this->callback( CheckoutSessionController::class, 'finalize' ),
-					'permission_callback' => [ $this, 'permissions_check' ],
+					'permission_callback' => [ $this, 'finalize_permissions_check' ],
 				],
 				// Register our schema callback.
 				'schema' => [ $this, 'get_item_schema' ],
@@ -95,7 +95,7 @@ class CheckoutSessionRestServiceProvider extends RestServiceProvider implements 
 	 *
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
-	public function permissions_check() {
+	public function finalize_permissions_check() {
 		return true;
 	}
 }

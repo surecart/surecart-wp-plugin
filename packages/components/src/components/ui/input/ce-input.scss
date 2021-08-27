@@ -6,10 +6,20 @@
   display: block;
 }
 
+.input__control[type='number'] {
+  -moz-appearance:textfield;
+}
+
+.input__control::-webkit-outer-spin-button,
+.input__control::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+
 .input {
   flex: 1 1 auto;
   display: inline-flex;
-  align-items: stretch;
+  align-items: center;
   justify-content: start;
   position: relative;
   width: 100%;
@@ -19,7 +29,6 @@
   background-color: var(--ce-input-background-color);
   border: var(--ce-input-border);
   vertical-align: middle;
-  overflow: hidden;
   box-shadow: var(--ce-input-box-shadow);
   transition: var(--ce-transition-fast) color, var(--ce-transition-fast) border, var(--ce-transition-fast) box-shadow;
   cursor: text;
@@ -137,6 +146,10 @@
   .input__suffix ::slotted(*) {
     margin-right: var(--ce-input-spacing-small);
   }
+
+  .input__suffix ::slotted(ce-dropdown) {
+    margin: 3px;
+  }
 }
 
 .input--medium {
@@ -161,6 +174,10 @@
   .input__suffix ::slotted(*) {
     margin-right: var(--ce-input-spacing-medium);
   }
+
+  .input__suffix ::slotted(ce-dropdown) {
+    margin: 3px;
+  }
 }
 
 .input--large {
@@ -184,6 +201,10 @@
 
   .input__suffix ::slotted(*) {
     margin-right: var(--ce-input-spacing-large);
+  }
+
+  .input__suffix ::slotted(ce-dropdown) {
+    margin: 3px;
   }
 }
 

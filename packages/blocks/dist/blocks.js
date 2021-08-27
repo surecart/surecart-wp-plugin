@@ -177,7 +177,7 @@ __webpack_require__.r(__webpack_exports__);
 /*!******************************************************************************************************!*\
   !*** /Users/andre/code/checkout-engine/node_modules/@checkout-engine/react/dist/components/index.js ***!
   \******************************************************************************************************/
-/*! exports provided: CeBlockUi, CeButton, CeCard, CeCheckbox, CeCheckout, CeChoice, CeChoices, CeConsumer, CeCouponForm, CeDivider, CeDropdown, CeEmail, CeForm, CeFormControl, CeFormRow, CeFormSection, CeInput, CeLineItem, CeLineItems, CeMenu, CeMenuDivider, CeMenuItem, CeOrderSummary, CePayment, CePaymentRequest, CePriceChoices, CeProductLineItem, CeProvider, CeQuantitySelect, CeRadio, CeRadioGroup, CeSecureNotice, CeSelect, CeSkeleton, CeSpinner, CeStripeElement, CeStripePaymentRequest, CeSubmit, CeSwitch, CeTag, CeTotal */
+/*! exports provided: CeBlockUi, CeButton, CeCard, CeCheckbox, CeCheckout, CeChoice, CeChoices, CeConsumer, CeCouponForm, CeDivider, CeDropdown, CeEmail, CeForm, CeFormControl, CeFormRow, CeFormSection, CeInput, CeLineItem, CeLineItems, CeMenu, CeMenuDivider, CeMenuItem, CeOrderSummary, CePayment, CePaymentRequest, CePriceChoices, CePriceInput, CeProductLineItem, CeProvider, CeQuantitySelect, CeRadio, CeRadioGroup, CeSecureNotice, CeSelect, CeSkeleton, CeSpinner, CeStripeElement, CeStripePaymentRequest, CeSubmit, CeSwitch, CeTag, CeTotal */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -208,6 +208,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CePayment", function() { return CePayment; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CePaymentRequest", function() { return CePaymentRequest; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CePriceChoices", function() { return CePriceChoices; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CePriceInput", function() { return CePriceInput; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CeProductLineItem", function() { return CeProductLineItem; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CeProvider", function() { return CeProvider; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CeQuantitySelect", function() { return CeQuantitySelect; });
@@ -254,6 +255,7 @@ const CeOrderSummary = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORT
 const CePayment = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-payment');
 const CePaymentRequest = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-payment-request');
 const CePriceChoices = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-price-choices');
+const CePriceInput = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-price-input');
 const CeProductLineItem = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-product-line-item');
 const CeProvider = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-provider');
 const CeQuantitySelect = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-quantity-select');
@@ -270,6 +272,7 @@ const CeSwitch = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MOD
 const CeTag = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-tag');
 const CeTotal = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-total');
 //# sourceMappingURL=index.js.map
+
 
 /***/ }),
 
@@ -665,7 +668,7 @@ const createForwardRef = (ReactComponent, displayName) => {
 /*!*******************************************************************************************!*\
   !*** /Users/andre/code/checkout-engine/node_modules/@checkout-engine/react/dist/index.js ***!
   \*******************************************************************************************/
-/*! exports provided: CeBlockUi, CeButton, CeCard, CeCheckbox, CeCheckout, CeChoice, CeChoices, CeConsumer, CeCouponForm, CeDivider, CeDropdown, CeEmail, CeForm, CeFormControl, CeFormRow, CeFormSection, CeInput, CeLineItem, CeLineItems, CeMenu, CeMenuDivider, CeMenuItem, CeOrderSummary, CePayment, CePaymentRequest, CePriceChoices, CeProductLineItem, CeProvider, CeQuantitySelect, CeRadio, CeRadioGroup, CeSecureNotice, CeSelect, CeSkeleton, CeSpinner, CeStripeElement, CeStripePaymentRequest, CeSubmit, CeSwitch, CeTag, CeTotal */
+/*! exports provided: CeBlockUi, CeButton, CeCard, CeCheckbox, CeCheckout, CeChoice, CeChoices, CeConsumer, CeCouponForm, CeDivider, CeDropdown, CeEmail, CeForm, CeFormControl, CeFormRow, CeFormSection, CeInput, CeLineItem, CeLineItems, CeMenu, CeMenuDivider, CeMenuItem, CeOrderSummary, CePayment, CePaymentRequest, CePriceChoices, CePriceInput, CeProductLineItem, CeProvider, CeQuantitySelect, CeRadio, CeRadioGroup, CeSecureNotice, CeSelect, CeSkeleton, CeSpinner, CeStripeElement, CeStripePaymentRequest, CeSubmit, CeSwitch, CeTag, CeTotal */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -722,6 +725,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CePaymentRequest", function() { return _components__WEBPACK_IMPORTED_MODULE_0__["CePaymentRequest"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CePriceChoices", function() { return _components__WEBPACK_IMPORTED_MODULE_0__["CePriceChoices"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CePriceInput", function() { return _components__WEBPACK_IMPORTED_MODULE_0__["CePriceInput"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CeProductLineItem", function() { return _components__WEBPACK_IMPORTED_MODULE_0__["CeProductLineItem"]; });
 

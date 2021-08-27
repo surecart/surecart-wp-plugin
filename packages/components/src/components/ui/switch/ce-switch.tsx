@@ -1,4 +1,4 @@
-import { Component, Prop, Event, EventEmitter, h, State, Method } from '@stencil/core';
+import { Component, Prop, Event, EventEmitter, h, State, Method, Watch } from '@stencil/core';
 
 let id = 0;
 
@@ -78,6 +78,11 @@ export class CESwitch {
     // Prevent clicks on the label from briefly blurring the input
     event.preventDefault();
     this.input.focus();
+  }
+
+  @Watch('checked')
+  handleCheckedChange() {
+    this.ceChange.emit();
   }
 
   render() {

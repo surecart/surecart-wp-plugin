@@ -1,13 +1,6 @@
 const { apiFetch } = wp;
-const { addQueryArgs } = wp.url;
 const { dispatch } = wp.data;
 
-export const fetch = ( options = {} ) => {
-	return {
-		type: 'FETCH_FROM_API',
-		options,
-	};
-};
 export const savePrices = ( prices = [] ) => {
 	return {
 		type: 'SAVE_PRICES',
@@ -16,13 +9,6 @@ export const savePrices = ( prices = [] ) => {
 };
 
 export default {
-	FETCH_FROM_API( { options } ) {
-		const { path, query } = options;
-		return apiFetch( {
-			...( options || {} ),
-			path: addQueryArgs( `checkout-engine/v1/${ path }`, query ),
-		} );
-	},
 	async SAVE_PRICES( { prices } ) {
 		return await Promise.all(
 			prices.map( async ( data, index ) => {

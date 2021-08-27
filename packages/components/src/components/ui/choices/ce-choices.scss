@@ -21,8 +21,14 @@
 
 .choices__items {
   display: grid;
-  grid-template-columns: repeat(var(--columns, 1), 1fr);
   gap: 10px;
+}
+
+.breakpoint-lg,
+.breakpoint-xl {
+  .choices__items {
+    grid-template-columns: repeat(var(--columns, 1), 1fr);
+  }
 }
 
 .choices--hide-label {

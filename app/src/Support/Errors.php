@@ -17,7 +17,7 @@ class Errors {
 	public static function formatAndTranslate( $response, $code ) {
 		$formatted = new \WP_Error(
 			$response['code'] ?? '',
-			self::translateErrorMessage( $response ) ?? '',
+			self::translateErrorMessage( $response, $response['message'] ) ?? '',
 			[
 				'status'      => $code,
 				'type'        => $response['type'] ?? '',
@@ -27,9 +27,24 @@ class Errors {
 
 		if ( ! empty( $response['validation_errors'] ) ) {
 			foreach ( $response['validation_errors']  as $error ) {
+				// not a validation error.
+				if ( empty( $error['attribute'] ) ) {
+					$formatted = new \WP_Error(
+						$response['code'] ?? '',
+						self::translateErrorMessage( $error, $error['message'] ) ?? '',
+						[
+							'status'      => $code,
+							'type'        => $error['type'] ?? '',
+							'http_status' => $response['http_status'] ?? '',
+						]
+					);
+
+					wp_die( self::translateErrorMessage( $error, $error['message'] ) );
+				}
+
 				$formatted->add(
 					$error['code'] ?? 'invalid',
-					self::translateErrorMessage( $error, __( 'Invalid', 'checkout_engine' ) ),
+					self::translateErrorMessage( $error, $error['message'] ),
 					[
 						'attribute' => $error['attribute'] ?? '',
 						'type'      => $error['type'] ?? '',

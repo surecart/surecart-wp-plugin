@@ -1,5 +1,5 @@
 {
-  "timestamp": "2021-08-17T22:02:43",
+  "timestamp": "2021-08-26T19:47:52",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.6.0",
@@ -2769,6 +2769,7 @@
       "dependents": [
         "ce-coupon-form",
         "ce-email",
+        "ce-price-input",
         "ce-stripe-element"
       ],
       "dependencies": [
@@ -2782,6 +2783,9 @@
           "ce-input"
         ],
         "ce-email": [
+          "ce-input"
+        ],
+        "ce-price-input": [
           "ce-input"
         ],
         "ce-stripe-element": [
@@ -3614,6 +3618,436 @@
           "ce-choices",
           "ce-choice",
           "ce-skeleton"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/ui/price-input/ce-price-input.tsx",
+      "encapsulation": "shadow",
+      "tag": "ce-price-input",
+      "readme": "# ce-price-input\n\n\n",
+      "docs": "",
+      "docsTags": [
+        {
+          "text": "base - The elements base wrapper.",
+          "name": "part"
+        },
+        {
+          "text": "input - The html input element.",
+          "name": "part"
+        },
+        {
+          "text": "base - The elements base wrapper.",
+          "name": "part"
+        },
+        {
+          "text": "prefix - Used to prepend an icon or element to the input.",
+          "name": "part"
+        },
+        {
+          "text": "suffix - Used to prepend an icon or element to the input.",
+          "name": "part"
+        },
+        {
+          "text": "help-text - Help text that describes how to use the input.",
+          "name": "part"
+        }
+      ],
+      "usage": {},
+      "props": [
+        {
+          "name": "autofocus",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "autofocus",
+          "reflectToAttr": false,
+          "docs": "The input's autofocus attribute.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "clearable",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "clearable",
+          "reflectToAttr": false,
+          "docs": "Adds a clear button when the input is populated.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "disabled",
+          "reflectToAttr": true,
+          "docs": "Disables the input.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "hasFocus",
+          "type": "boolean",
+          "mutable": true,
+          "attr": "has-focus",
+          "reflectToAttr": true,
+          "docs": "Inputs focus",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "help",
+          "type": "string",
+          "mutable": false,
+          "attr": "help",
+          "reflectToAttr": false,
+          "docs": "The input's help text.",
+          "docsTags": [],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "invalid",
+          "type": "boolean",
+          "mutable": true,
+          "attr": "invalid",
+          "reflectToAttr": true,
+          "docs": "This will be true when the control is in an invalid state. Validity is determined by props such as `type`,\n`required`, `minlength`, `maxlength`, and `pattern` using the browser's constraint validation API.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "label",
+          "type": "string",
+          "mutable": false,
+          "attr": "label",
+          "reflectToAttr": false,
+          "docs": "The input's label.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "max",
+          "type": "number | string",
+          "mutable": false,
+          "attr": "max",
+          "reflectToAttr": false,
+          "docs": "The input's maximum value.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "maxlength",
+          "type": "number",
+          "mutable": false,
+          "attr": "maxlength",
+          "reflectToAttr": false,
+          "docs": "The maximum length of input that will be considered valid.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "minlength",
+          "type": "number",
+          "mutable": false,
+          "attr": "minlength",
+          "reflectToAttr": false,
+          "docs": "The minimum length of input that will be considered valid.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "mutable": false,
+          "attr": "name",
+          "reflectToAttr": false,
+          "docs": "The input's name attribute.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "pill",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "pill",
+          "reflectToAttr": true,
+          "docs": "Draws a pill-style input with rounded edges.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "placeholder",
+          "type": "string",
+          "mutable": false,
+          "attr": "placeholder",
+          "reflectToAttr": false,
+          "docs": "The input's placeholder text.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "readonly",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "readonly",
+          "reflectToAttr": true,
+          "docs": "Makes the input readonly.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "required",
+          "reflectToAttr": true,
+          "docs": "Makes the input a required field.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "showLabel",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "show-label",
+          "reflectToAttr": false,
+          "docs": "Should we show the label",
+          "docsTags": [],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "size",
+          "type": "\"large\" | \"medium\" | \"small\"",
+          "mutable": false,
+          "attr": "size",
+          "reflectToAttr": true,
+          "docs": "The input's size.",
+          "docsTags": [],
+          "default": "'medium'",
+          "values": [
+            {
+              "value": "large",
+              "type": "string"
+            },
+            {
+              "value": "medium",
+              "type": "string"
+            },
+            {
+              "value": "small",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "mutable": true,
+          "attr": "value",
+          "reflectToAttr": false,
+          "docs": "The input's value attribute.",
+          "docsTags": [],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [
+        {
+          "name": "reportValidity",
+          "returns": {
+            "type": "Promise<boolean>",
+            "docs": ""
+          },
+          "signature": "reportValidity() => Promise<boolean>",
+          "parameters": [],
+          "docs": "",
+          "docsTags": []
+        },
+        {
+          "name": "setCustomValidity",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "signature": "setCustomValidity(message: string) => Promise<void>",
+          "parameters": [],
+          "docs": "Sets a custom validation message. If `message` is not empty, the field will be considered invalid.",
+          "docsTags": []
+        },
+        {
+          "name": "triggerBlur",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "signature": "triggerBlur() => Promise<void>",
+          "parameters": [],
+          "docs": "Removes focus from the input.",
+          "docsTags": []
+        },
+        {
+          "name": "triggerFocus",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "signature": "triggerFocus(options?: FocusOptions) => Promise<void>",
+          "parameters": [],
+          "docs": "Sets focus on the input.",
+          "docsTags": []
+        }
+      ],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [
+        {
+          "name": "base",
+          "docs": "The elements base wrapper."
+        },
+        {
+          "name": "help-text",
+          "docs": "Help text that describes how to use the input."
+        },
+        {
+          "name": "input",
+          "docs": "The html input element."
+        },
+        {
+          "name": "prefix",
+          "docs": "Used to prepend an icon or element to the input."
+        },
+        {
+          "name": "suffix",
+          "docs": "Used to prepend an icon or element to the input."
+        }
+      ],
+      "dependents": [],
+      "dependencies": [
+        "ce-input"
+      ],
+      "dependencyGraph": {
+        "ce-price-input": [
+          "ce-input"
+        ],
+        "ce-input": [
+          "ce-form-control"
         ]
       }
     },

@@ -173,12 +173,18 @@ export class CEInput {
 
   @Watch('hasFocus')
   handleFocusChange() {
-    this.hasFocus ? this.input.focus() : this.input.blur();
+    setTimeout(() => {
+      this.hasFocus ? this.input.focus() : this.input.blur();
+    }, 0);
   }
 
   @Watch('value')
   handleValueChange() {
     this.invalid = !this.input.checkValidity();
+  }
+
+  componentDidLoad() {
+    this.handleFocusChange();
   }
 
   render() {
@@ -196,6 +202,7 @@ export class CEInput {
 
             // States
             'input--focused': this.hasFocus,
+            'input--invalid': this.invalid,
           }}
         >
           <span part="prefix" class="input__prefix">

@@ -28,7 +28,7 @@
   }
 
   &.form-control--medium .form-control__label {
-    font-size: var(--ce-input-label-font-size-small);
+    font-size: var(--ce-input-label-font-size-medium);
   }
 
   &.form-control--large .form-control_label {
@@ -41,10 +41,10 @@
   .form-control__help-text {
     display: block;
     color: var(--ce-input-help-text-color);
-    margin-top: var(--ce-spacing-xx-small);
+    margin-top: var(--ce-spacing-small);
 
     ::slotted(*) {
-      margin-top: var(--ce-spacing-xx-small);
+      margin-top: var(--ce-spacing-small);
     }
   }
 
@@ -58,5 +58,34 @@
 
   &.form-control--large .form-control__help-text {
     font-size: var(--ce-input-help-text-font-size-large);
+  }
+}
+
+// Error messages
+.form-control--has-error {
+  .form-control__error-text {
+    display: block;
+    color: var(--ce-input-error-text-color);
+    margin-top: var(--ce-spacing-small);
+
+    ::slotted(*) {
+      margin-top: var(--ce-spacing-small);
+    }
+  }
+
+  &.form-control--small .form-control__error-text {
+    font-size: var(--ce-input-error-text-font-size-small);
+  }
+
+  &.form-control--medium .form-control__error-text {
+    font-size: var(--ce-input-error-text-font-size-medium);
+  }
+
+  &.form-control--large .form-control__error-text {
+    font-size: var(--ce-input-error-text-font-size-large);
+  }
+
+  ::part(base) {
+    border-color: rgb(var(--sl-color-danger-500));
   }
 }

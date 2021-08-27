@@ -6,6 +6,7 @@ const { __experimentalInputControl: InputControl, BaseControl } = wp.components;
 import useValidationErrors from '../hooks/useValidationErrors';
 import { getCurrencySymbol } from '../util';
 import ValidationErrors from './ValidationErrors';
+import { CeInput } from '@checkout-engine/react';
 
 export default ( props ) => {
 	const {
@@ -23,6 +24,32 @@ export default ( props ) => {
 
 	const { clearValidation, hasErrors, errors } = useValidationErrors(
 		attribute
+	);
+
+	return (
+		<CeInput
+			label={ label }
+			className="ce-price-amount"
+			value={ value / 100 || null }
+			onChange={ ( e ) => {
+				clearValidation();
+				onChange( e.detail * 100 );
+			} }
+			type="number"
+			min="0.00"
+			step="0.001"
+			required
+			{ ...rest }
+		>
+			<span
+				slot="prefix"
+				css={ css`
+					opacity: 0.65;
+				` }
+			>
+				{ getCurrencySymbol( currency ) }
+			</span>
+		</CeInput>
 	);
 
 	return (
@@ -50,7 +77,7 @@ export default ( props ) => {
 					) }
 					css={ css`
 						flex: 1;
-						margin-right: -2px;
+						${ currencies?.length && 'margin-right: -2px' }
 						z-index: 1;
 						border-radius: 2px 0 0 2px !important;
 					` }

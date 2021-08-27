@@ -32,6 +32,9 @@ export class CEButton {
   /** Draws the button in a loading state. */
   @Prop({ reflect: true }) loading?: boolean = false;
 
+  /** Draws the button in a busy state. */
+  @Prop({ reflect: true }) busy?: boolean = false;
+
   /** Draws a pill-style button with rounded edges. */
   @Prop({ reflect: true }) pill?: boolean = false;
 
@@ -151,12 +154,13 @@ export class CEButton {
           'button--disabled': this.disabled,
           'button--focused': this.hasFocus,
           'button--loading': this.loading,
+          'button--busy': this.busy,
           'button--pill': this.pill,
           'button--has-label': this.hasLabel,
           'button--has-prefix': this.hasPrefix,
           'button--has-suffix': this.hasSuffix,
         }}
-        disabled={this.disabled}
+        disabled={this.disabled || this.busy}
         type={this.submit ? 'submit' : 'button'}
         name={this.name}
         value={this.value}

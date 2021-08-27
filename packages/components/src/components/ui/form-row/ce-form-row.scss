@@ -1,12 +1,12 @@
-:host {
+.form-row {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
-  margin: calc(-1 * var(--ce-form-row-spacing, 0.75em)) 0 0 calc(-1 * var(--ce-form-row-spacing, 0.75em));
+  gap: calc(var(--ce-form-row-spacing, 0.75em) * 2.5);
+  margin: calc(var(--ce-form-row-spacing, 0.75em) * 2.5) 0;
 }
 
 ::slotted(*) {
   flex: 1;
-  margin: var(--ce-form-row-spacing, 0.75em);
   width: 0;
 }
