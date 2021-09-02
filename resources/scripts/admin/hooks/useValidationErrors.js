@@ -1,18 +1,17 @@
 const { useSelect, dispatch } = wp.data;
-const { useEffect } = wp.element;
 import { STORE_KEY } from '../store/ui';
 
-export default function useValidationErrors( attribute ) {
+export default function useErrors( attribute ) {
 	// get errors associated with this attribute.
 	const errors = useSelect( ( select ) =>
-		attribute ? select( STORE_KEY ).getValidationErrors( attribute ) : []
+		attribute ? select( STORE_KEY ).getErrors( attribute ) : []
 	);
 
 	return {
 		errors,
 		hasErrors: errors && !! errors.length,
-		clearValidation: () => {
-			dispatch( STORE_KEY ).clearValidationErrors( attribute );
+		clearErrors: () => {
+			dispatch( STORE_KEY ).clearErrors( attribute );
 		},
 	};
 }

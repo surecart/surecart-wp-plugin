@@ -2,6 +2,9 @@
 import { css, jsx } from '@emotion/core';
 const { __ } = wp.i18n;
 const { useState, useEffect, useRef } = wp.element;
+import FlashError from '../../components/FlashError';
+const { useSelect, dispatch } = wp.data;
+import { STORE_KEY as UI_STORE_KEY } from '../../store/ui';
 
 import useProductData from '../hooks/useProductData';
 
@@ -29,9 +32,20 @@ export default ( { price, prices, index, open = true } ) => {
 		duplicatePrice,
 		isInvalid,
 	} = useProductData();
+
+	// get model errors
+	const errors = useSelect( ( select ) =>
+		select( UI_STORE_KEY ).selectErrors( 'price', index )
+	);
+
+	const validation = useSelect( ( select ) =>
+		select( UI_STORE_KEY ).selectValidationErrors( 'price', index )
+	);
+
 	const [ isOpen, setIsOpen ] = useState( true );
 	const input = useRef();
 
+	// focus on input when opened by default.
 	useEffect( () => {
 		if ( open && input?.current ) {
 			setTimeout( () => {
@@ -41,12 +55,25 @@ export default ( { price, prices, index, open = true } ) => {
 		setIsOpen( open );
 	}, [ open ] );
 
-	// check for validity errors.
+	// useEffect( () => {
+	// 	if ( FlashErrors?.length ) {
+	// 		dispatch( UI_STORE_KEY ).clearErrors();
+	// 	}
+	// }, [ price ] );
+
+	// if invalid, toggle open.
 	useEffect( () => {
 		if ( isInvalid ) {
 			setIsOpen( true );
 		}
 	}, [ isInvalid ] );
+
+	// if invalid, toggle open.
+	useEffect( () => {
+		if ( errors?.length ) {
+			setIsOpen( true );
+		}
+	}, [ errors ] );
 
 	const headerName = () => {
 		if ( ! price?.name || prices?.length === 1 ) {
@@ -74,10 +101,9 @@ export default ( { price, prices, index, open = true } ) => {
 					viewBox="0 0 24 24"
 					fill="none"
 					stroke="currentColor"
-					stroke-width="2"
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					class="feather feather-more-horizontal"
+					strokeWidth="2"
+					strokeLinecap="round"
+					strokeLinejoin="round"
 				>
 					<circle cx="12" cy="12" r="1"></circle>
 					<circle cx="19" cy="12" r="1"></circle>
@@ -104,10 +130,9 @@ export default ( { price, prices, index, open = true } ) => {
 							viewBox="0 0 24 24"
 							fill="none"
 							stroke="currentColor"
-							stroke-width="2"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							class="feather feather-copy"
+							strokeWidth="2"
+							strokeLinecap="round"
+							strokeLinejoin="round"
 						>
 							<rect
 								x="9"
@@ -137,10 +162,9 @@ export default ( { price, prices, index, open = true } ) => {
 								viewBox="0 0 24 24"
 								fill="none"
 								stroke="currentColor"
-								stroke-width="2"
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								class="feather feather-archive"
+								strokeWidth="2"
+								strokeLinecap="round"
+								strokeLinejoin="round"
 							>
 								<polyline points="21 8 21 21 3 21 3 8"></polyline>
 								<rect x="1" y="3" width="22" height="5"></rect>
@@ -169,10 +193,9 @@ export default ( { price, prices, index, open = true } ) => {
 							viewBox="0 0 24 24"
 							fill="none"
 							stroke="currentColor"
-							stroke-width="2"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							class="feather feather-trash-2"
+							strokeWidth="2"
+							strokeLinecap="round"
+							strokeLinejoin="round"
 						>
 							<polyline points="3 6 5 6 21 6"></polyline>
 							<path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
@@ -205,6 +228,20 @@ export default ( { price, prices, index, open = true } ) => {
 					visibility: ${ isOpen ? 'visibile' : 'hidden' };
 				` }
 			>
+				<FlashError
+					error={ errors?.[ 0 ] }
+					onShow={ ( e ) => {
+						e.target.scrollIntoView( {
+							behavior: 'smooth',
+							block: 'start',
+							inline: 'nearest',
+						} );
+					} }
+					onClose={ ( e ) => {
+						dispatch( UI_STORE_KEY ).clearErrors( index );
+					} }
+				/>
+
 				{ prices?.length > 1 && (
 					<CeFormRow>
 						<CeInput
@@ -239,9 +276,12 @@ export default ( { price, prices, index, open = true } ) => {
 								)
 							}
 						>
-							Single Payment
+							{ __( 'Single Payment', 'checkout_engine' ) }
 							<span slot="description">
-								Charge a one-time fee.
+								{ __(
+									'Charge a one-time fee.',
+									'checkout_engine'
+								) }
 							</span>
 						</CeChoice>
 						<CeChoice
@@ -262,9 +302,12 @@ export default ( { price, prices, index, open = true } ) => {
 								)
 							}
 						>
-							Subscription
+							{ __( 'Subscription', 'checkout_engine' ) }
 							<span slot="description">
-								Charge an ongoing fee.
+								{ __(
+									'Charge an ongoing fee.',
+									'checkout_engine'
+								) }
 							</span>
 						</CeChoice>
 					</CeChoices>
@@ -287,7 +330,7 @@ export default ( { price, prices, index, open = true } ) => {
 					/>
 				</CeFormRow>
 
-				{ price?.ad_hoc && (
+				{ !! price?.ad_hoc && (
 					<CeFormRow
 						css={ css`
 							margin-top: -20px;
@@ -309,6 +352,7 @@ export default ( { price, prices, index, open = true } ) => {
 							label={ __( 'Max Amount', 'checkout_engine' ) }
 							className="ce-ad-hoc-max-amount"
 							value={ price?.ad_hoc_max_amount }
+							min={ price?.ad_hoc_min_amount / 100 }
 							onCeChange={ ( e ) => {
 								updatePrice(
 									{ ad_hoc_max_amount: e.target.value },
@@ -318,109 +362,117 @@ export default ( { price, prices, index, open = true } ) => {
 						/>
 					</CeFormRow>
 				) }
-				<CeFormRow
-					css={ css`
-						margin-top: -20px;
-					` }
-				>
-					<CeSwitch
-						value={ price?.ad_hoc }
-						onCeChange={ ( e ) => {
-							console.log( e );
-							updatePrice( { ad_hoc: e.target.checked }, index );
-						} }
-					>
-						{ __(
-							'Allow customers to pay what they want',
-							'checkout_engine'
-						) }
-					</CeSwitch>
-				</CeFormRow>
 
-				{ price?.recurring && (
-					<CeFormRow>
-						<div
-							css={ css`
-								display: flex;
-								align-items: flex-end;
-							` }
+				{ ! price?.recurring && (
+					<CeFormRow
+						css={ css`
+							margin-top: -20px;
+						` }
+					>
+						<CeSwitch
+							checked={ price?.ad_hoc }
+							onCeChange={ ( e ) => {
+								updatePrice(
+									{ ad_hoc: e.target.checked },
+									index
+								);
+							} }
 						>
-							<CeInput
-								css={ css`
-									flex: 1;
-								` }
-								label={ __(
-									'Repeat payment every',
-									'checkout_engine'
-								) }
-								value={ price?.recurring_interval_count }
-								onCeChange={ ( e ) =>
-									updatePrice(
-										{
-											recurring_interval_count:
-												e.target.value,
-										},
-										index
-									)
-								}
-								required
-							></CeInput>
-							<CeDropdown slot="suffix" position="bottom-right">
-								<CeButton slot="trigger" caret>
-									{ price?.recurring_interval }
-								</CeButton>
-								<CeMenu>
-									<CeMenuItem
-										onClick={ () =>
-											updatePrice(
-												{
-													recurring_interval: 'day',
-												},
-												index
-											)
-										}
-									>
-										{ __( 'Day', 'checkout_engine' ) }
-									</CeMenuItem>
-									<CeMenuItem
-										onClick={ () =>
-											updatePrice(
-												{
-													recurring_interval: 'month',
-												},
-												index
-											)
-										}
-									>
-										{ __( 'Month', 'checkout_engine' ) }
-									</CeMenuItem>
-									<CeMenuItem
-										onClick={ () =>
-											updatePrice(
-												{
-													recurring_interval: 'year',
-												},
-												index
-											)
-										}
-									>
-										{ __( 'Year', 'checkout_engine' ) }
-									</CeMenuItem>
-								</CeMenu>
-							</CeDropdown>
-						</div>
+							{ __(
+								'Allow customers to pay what they want',
+								'checkout_engine'
+							) }
+						</CeSwitch>
 					</CeFormRow>
 				) }
 
-				<CeFormRow>
-					<CeFormControl
-						label={ __( 'Automations', 'checkout_engine' ) }
-					>
-						<CeButton>
-							{ __( 'Add Automation', 'checkout_engine' ) }
-						</CeButton>
-					</CeFormControl>
-				</CeFormRow>
+				{ price?.recurring && (
+					<CeFormRow>
+						<CeFormControl
+							label={ __(
+								'Repeat payment every',
+								'checkout_engine'
+							) }
+						>
+							<div
+								css={ css`
+									display: flex;
+									align-items: center;
+									gap: 0.5em;
+								` }
+							>
+								<CeInput
+									css={ css`
+										flex: 1;
+										max-width: 150px;
+									` }
+									value={ price?.recurring_interval_count }
+									onCeChange={ ( e ) =>
+										updatePrice(
+											{
+												recurring_interval_count:
+													e.target.value,
+											},
+											index
+										)
+									}
+									required
+								></CeInput>
+								<CeDropdown
+									slot="suffix"
+									position="bottom-right"
+								>
+									<CeButton slot="trigger" caret>
+										{ translate(
+											price?.recurring_interval
+										) }
+									</CeButton>
+									<CeMenu>
+										<CeMenuItem
+											onClick={ () =>
+												updatePrice(
+													{
+														recurring_interval:
+															'day',
+													},
+													index
+												)
+											}
+										>
+											{ __( 'Day', 'checkout_engine' ) }
+										</CeMenuItem>
+										<CeMenuItem
+											onClick={ () =>
+												updatePrice(
+													{
+														recurring_interval:
+															'month',
+													},
+													index
+												)
+											}
+										>
+											{ __( 'Month', 'checkout_engine' ) }
+										</CeMenuItem>
+										<CeMenuItem
+											onClick={ () =>
+												updatePrice(
+													{
+														recurring_interval:
+															'year',
+													},
+													index
+												)
+											}
+										>
+											{ __( 'Year', 'checkout_engine' ) }
+										</CeMenuItem>
+									</CeMenu>
+								</CeDropdown>
+							</div>
+						</CeFormControl>
+					</CeFormRow>
+				) }
 			</div>
 		</div>
 	);

@@ -1,0 +1,105 @@
+:host {
+  display: block;
+}
+[hidden] {
+  display: none !important;
+}
+
+::slotted(ul) {
+  line-height: 1.4em;
+  list-style-type: disc;
+  margin: 0;
+  padding: 0;
+  padding-left: 20px;
+}
+
+.alert {
+  font-family: var(--ce-input-font-family);
+  font-weight: var(--ce-font-weight-normal);
+  font-size: var(--ce-button-font-size-medium);
+  border-radius: var(--ce-border-radius-medium);
+  padding: var(--ce-spacing-large);
+  display: flex;
+  align-items: flex-start;
+
+  &.alert--primary {
+    background-color: var(--ce-color-primary-100);
+    color: var(--ce-color-primary-800);
+
+    .alert__title {
+      color: var(--ce-color-primary-900);
+    }
+    .alert__icon {
+      color: var(--ce-color-primary-600);
+    }
+  }
+  &.alert--info {
+    background-color: var(--ce-color-info-100);
+    color: var(--ce-color-info-800);
+
+    .alert__title {
+      color: var(--ce-color-info-900);
+    }
+  }
+  &.alert--danger {
+    background-color: var(--ce-color-danger-100);
+    color: var(--ce-color-danger-800);
+
+    .alert__title {
+      color: var(--ce-color-danger-900);
+    }
+    .alert__icon {
+      color: var(--ce-color-danger-600);
+    }
+    .alert__close:hover {
+      background-color: var(--ce-color-danger-200);
+    }
+  }
+  &.alert--success {
+    background-color: var(--ce-color-success-100);
+    color: var(--ce-color-success-800);
+
+    .alert__title {
+      color: var(--ce-color-success-900);
+    }
+  }
+}
+
+.alert__icon {
+  flex-shrink: 1;
+  margin-right: var(--ce-spacing-medium);
+
+  svg, slot[name=icon] {
+    width: 1em;
+    height: 1em;
+  }
+}
+
+.alert__title {
+  font-weight: var(--ce-font-weight-semibold);
+  margin-bottom: var(--ce-spacing-small);
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  border: 0;
+}
+.alert__close {
+  transition: background-color var(--ce-transition-fast) ease;
+  display: inline-flex;
+  border-radius: var(--ce-border-radius-small);
+  padding: var(--ce-spacing-x-small);
+  margin-left: auto;
+  cursor:pointer;
+  svg {
+    width: 1em;
+    height: 1em;
+  }
+}
+
+

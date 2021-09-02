@@ -112,7 +112,13 @@ export default withConfirm( ( { setConfirm, noticeUI } ) => {
 			notices={ snackbarNotices }
 			removeNotice={ removeSnackbarNotice }
 			noticeUI={ noticeUI }
-			sidebar={ <Sidebar loading={ loading } product={ product } /> }
+			sidebar={
+				<Sidebar
+					loading={ loading }
+					product={ product }
+					isSaving={ isSaving }
+				/>
+			}
 		>
 			<Fragment>
 				<Details

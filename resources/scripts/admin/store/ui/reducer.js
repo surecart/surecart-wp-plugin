@@ -1,5 +1,11 @@
 export default (
-	state = { isSaving: false, flash: {}, validation: [], isInvalid: 0 },
+	state = {
+		isSaving: false,
+		flash: {},
+		validation: [],
+		isInvalid: 0,
+		errors: [],
+	},
 	action
 ) => {
 	switch ( action.type ) {
@@ -17,6 +23,24 @@ export default (
 			return {
 				...state,
 				flash: action.value,
+			};
+		case 'ADD_ERRORS':
+			return {
+				...state,
+				errors: [ ...state.errors, ...action.value ],
+			};
+		case 'CLEAR_ERRORS':
+			if ( action?.index !== null ) {
+				return {
+					...state,
+					errors: ( state.errors || [] ).filter(
+						( error ) => error.index !== action.index
+					),
+				};
+			}
+			return {
+				...state,
+				errors: [],
 			};
 		case 'ADD_VALIDATION_ERRORS':
 			return {

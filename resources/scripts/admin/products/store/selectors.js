@@ -6,8 +6,11 @@ export const getProduct = ( state ) => {
 export const getPrices = ( state ) => {
 	return state.prices;
 };
-export const getPrice = ( state ) => {
-	return state.prices?.[ 0 ];
+export const getPrice = ( state, index ) => {
+	return state.prices?.[ index ];
+};
+export const getUnsavedPrice = ( state, index ) => {
+	return state?.lastSavedPrices?.[ index ];
 };
 export const getVariations = ( state ) => {
 	return ( state.prices || [] ).slice( 1 );

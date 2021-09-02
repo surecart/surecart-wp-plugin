@@ -1,11 +1,160 @@
 {
-  "timestamp": "2021-08-26T19:47:52",
+  "timestamp": "2021-09-01T18:37:28",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.6.0",
     "typescriptVersion": "4.2.3"
   },
   "components": [
+    {
+      "filePath": "./src/components/alert/ce-alert.tsx",
+      "encapsulation": "shadow",
+      "tag": "ce-alert",
+      "readme": "# ce-alert\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "closable",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "closable",
+          "reflectToAttr": true,
+          "docs": "Makes the alert closable.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "duration",
+          "type": "number",
+          "mutable": false,
+          "attr": "duration",
+          "reflectToAttr": false,
+          "docs": "The length of time, in milliseconds, the alert will show before closing itself. If the user interacts with\nthe alert before it closes (e.g. moves the mouse over it), the timer will restart. Defaults to `Infinity`.",
+          "docsTags": [],
+          "default": "Infinity",
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "open",
+          "type": "boolean",
+          "mutable": true,
+          "attr": "open",
+          "reflectToAttr": true,
+          "docs": "Indicates whether or not the alert is open. You can use this in lieu of the show/hide methods.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "type",
+          "type": "\"danger\" | \"info\" | \"primary\" | \"success\" | \"warning\"",
+          "mutable": false,
+          "attr": "type",
+          "reflectToAttr": true,
+          "docs": "The type of alert.",
+          "docsTags": [],
+          "default": "'primary'",
+          "values": [
+            {
+              "value": "danger",
+              "type": "string"
+            },
+            {
+              "value": "info",
+              "type": "string"
+            },
+            {
+              "value": "primary",
+              "type": "string"
+            },
+            {
+              "value": "success",
+              "type": "string"
+            },
+            {
+              "value": "warning",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [
+        {
+          "name": "hide",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "signature": "hide() => Promise<void>",
+          "parameters": [],
+          "docs": "Hides the alert",
+          "docsTags": []
+        },
+        {
+          "name": "show",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "signature": "show() => Promise<void>",
+          "parameters": [],
+          "docs": "Shows the alert.",
+          "docsTags": []
+        }
+      ],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [
+        {
+          "name": "base",
+          "docs": ""
+        },
+        {
+          "name": "icon",
+          "docs": ""
+        },
+        {
+          "name": "message",
+          "docs": ""
+        },
+        {
+          "name": "text",
+          "docs": ""
+        },
+        {
+          "name": "title",
+          "docs": ""
+        }
+      ],
+      "dependents": [],
+      "dependencies": [],
+      "dependencyGraph": {}
+    },
     {
       "filePath": "./src/components/ui/block-ui/ce-block-ui.tsx",
       "encapsulation": "shadow",
@@ -49,6 +198,23 @@
       "docsTags": [],
       "usage": {},
       "props": [
+        {
+          "name": "busy",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "busy",
+          "reflectToAttr": true,
+          "docs": "Draws the button in a busy state.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": true,
+          "required": false
+        },
         {
           "name": "caret",
           "type": "boolean",
@@ -1838,9 +2004,29 @@
           "parameters": [],
           "docs": "Submits the form. If all controls are valid, the `ce-submit` event will be emitted and the promise will resolve\nwith `true`. If any form control is invalid, the promise will resolve with `false` and no event will be emitted.",
           "docsTags": []
+        },
+        {
+          "name": "validate",
+          "returns": {
+            "type": "Promise<boolean>",
+            "docs": ""
+          },
+          "signature": "validate() => Promise<boolean>",
+          "parameters": [],
+          "docs": "",
+          "docsTags": []
         }
       ],
       "events": [
+        {
+          "event": "ceFormInvalid",
+          "detail": "Object",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Emitted when the form is invalid.",
+          "docsTags": []
+        },
         {
           "event": "ceFormSubmit",
           "detail": "Object",
@@ -3689,6 +3875,22 @@
           "required": false
         },
         {
+          "name": "currencyCode",
+          "type": "string",
+          "mutable": false,
+          "attr": "currency-code",
+          "reflectToAttr": false,
+          "docs": "3 letter currency code for input",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "disabled",
           "type": "boolean",
           "mutable": false,
@@ -4012,7 +4214,17 @@
           "docsTags": []
         }
       ],
-      "events": [],
+      "events": [
+        {
+          "event": "ceChange",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Emitted when the control's value changes.",
+          "docsTags": []
+        }
+      ],
       "listeners": [],
       "styles": [],
       "slots": [],

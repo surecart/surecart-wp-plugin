@@ -177,11 +177,12 @@ __webpack_require__.r(__webpack_exports__);
 /*!******************************************************************************************************!*\
   !*** /Users/andre/code/checkout-engine/node_modules/@checkout-engine/react/dist/components/index.js ***!
   \******************************************************************************************************/
-/*! exports provided: CeBlockUi, CeButton, CeCard, CeCheckbox, CeCheckout, CeChoice, CeChoices, CeConsumer, CeCouponForm, CeDivider, CeDropdown, CeEmail, CeForm, CeFormControl, CeFormRow, CeFormSection, CeInput, CeLineItem, CeLineItems, CeMenu, CeMenuDivider, CeMenuItem, CeOrderSummary, CePayment, CePaymentRequest, CePriceChoices, CePriceInput, CeProductLineItem, CeProvider, CeQuantitySelect, CeRadio, CeRadioGroup, CeSecureNotice, CeSelect, CeSkeleton, CeSpinner, CeStripeElement, CeStripePaymentRequest, CeSubmit, CeSwitch, CeTag, CeTotal */
+/*! exports provided: CeAlert, CeBlockUi, CeButton, CeCard, CeCheckbox, CeCheckout, CeChoice, CeChoices, CeConsumer, CeCouponForm, CeDivider, CeDropdown, CeEmail, CeForm, CeFormControl, CeFormRow, CeFormSection, CeInput, CeLineItem, CeLineItems, CeMenu, CeMenuDivider, CeMenuItem, CeOrderSummary, CePayment, CePaymentRequest, CePriceChoices, CePriceInput, CeProductLineItem, CeProvider, CeQuantitySelect, CeRadio, CeRadioGroup, CeSecureNotice, CeSelect, CeSkeleton, CeSpinner, CeStripeElement, CeStripePaymentRequest, CeSubmit, CeSwitch, CeTag, CeTotal */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CeAlert", function() { return CeAlert; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CeBlockUi", function() { return CeBlockUi; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CeButton", function() { return CeButton; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CeCard", function() { return CeCard; });
@@ -229,6 +230,7 @@ __webpack_require__.r(__webpack_exports__);
 /* tslint:disable */
 /* auto-generated react proxies */
 
+const CeAlert = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-alert');
 const CeBlockUi = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-block-ui');
 const CeButton = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-button');
 const CeCard = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-card');
@@ -272,7 +274,6 @@ const CeSwitch = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MOD
 const CeTag = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-tag');
 const CeTotal = /*@__PURE__*/ Object(_react_component_lib__WEBPACK_IMPORTED_MODULE_0__["createReactComponent"])('ce-total');
 //# sourceMappingURL=index.js.map
-
 
 /***/ }),
 
@@ -668,12 +669,14 @@ const createForwardRef = (ReactComponent, displayName) => {
 /*!*******************************************************************************************!*\
   !*** /Users/andre/code/checkout-engine/node_modules/@checkout-engine/react/dist/index.js ***!
   \*******************************************************************************************/
-/*! exports provided: CeBlockUi, CeButton, CeCard, CeCheckbox, CeCheckout, CeChoice, CeChoices, CeConsumer, CeCouponForm, CeDivider, CeDropdown, CeEmail, CeForm, CeFormControl, CeFormRow, CeFormSection, CeInput, CeLineItem, CeLineItems, CeMenu, CeMenuDivider, CeMenuItem, CeOrderSummary, CePayment, CePaymentRequest, CePriceChoices, CePriceInput, CeProductLineItem, CeProvider, CeQuantitySelect, CeRadio, CeRadioGroup, CeSecureNotice, CeSelect, CeSkeleton, CeSpinner, CeStripeElement, CeStripePaymentRequest, CeSubmit, CeSwitch, CeTag, CeTotal */
+/*! exports provided: CeAlert, CeBlockUi, CeButton, CeCard, CeCheckbox, CeCheckout, CeChoice, CeChoices, CeConsumer, CeCouponForm, CeDivider, CeDropdown, CeEmail, CeForm, CeFormControl, CeFormRow, CeFormSection, CeInput, CeLineItem, CeLineItems, CeMenu, CeMenuDivider, CeMenuItem, CeOrderSummary, CePayment, CePaymentRequest, CePriceChoices, CePriceInput, CeProductLineItem, CeProvider, CeQuantitySelect, CeRadio, CeRadioGroup, CeSecureNotice, CeSelect, CeSkeleton, CeSpinner, CeStripeElement, CeStripePaymentRequest, CeSubmit, CeSwitch, CeTag, CeTotal */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components */ "../../node_modules/@checkout-engine/react/dist/components/index.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CeAlert", function() { return _components__WEBPACK_IMPORTED_MODULE_0__["CeAlert"]; });
+
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CeBlockUi", function() { return _components__WEBPACK_IMPORTED_MODULE_0__["CeBlockUi"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CeButton", function() { return _components__WEBPACK_IMPORTED_MODULE_0__["CeButton"]; });

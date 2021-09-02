@@ -32,7 +32,7 @@ export function* save() {
 	// }
 
 	// clear any validation errors and set saving
-	yield controls.dispatch( UI_STORE_KEY, 'clearValidationErrors' );
+	yield controls.dispatch( UI_STORE_KEY, 'clearErrors' );
 	yield controls.dispatch( UI_STORE_KEY, 'setSaving', true );
 
 	// abstract this for other pages.

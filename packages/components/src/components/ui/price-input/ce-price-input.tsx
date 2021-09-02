@@ -59,6 +59,9 @@ export class CePriceInput {
   /** The input's maximum value. */
   @Prop() max: number | string;
 
+  /** The input's minimum value. */
+  @Prop() min: number | string;
+
   /** Makes the input a required field. */
   @Prop({ reflect: true }) required = false;
 
@@ -131,7 +134,7 @@ export class CePriceInput {
           placeholder={this.placeholder}
           minlength={this.minlength}
           maxlength={this.maxlength}
-          min={0.0}
+          min={this.min || 0.0}
           step={0.001}
           max={this.max}
           // TODO: Test These below

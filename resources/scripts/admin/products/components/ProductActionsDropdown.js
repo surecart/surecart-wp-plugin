@@ -60,10 +60,9 @@ export default ( { setConfirm, product, isSaving, toggleArchive } ) => {
 					viewBox="0 0 24 24"
 					fill="none"
 					stroke="currentColor"
-					stroke-width="2"
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					class="feather feather-more-horizontal"
+					strokeWidth="2"
+					strokeLinecap="round"
+					strokeLinejoin="round"
 				>
 					<circle cx="12" cy="12" r="1"></circle>
 					<circle cx="19" cy="12" r="1"></circle>
@@ -86,10 +85,9 @@ export default ( { setConfirm, product, isSaving, toggleArchive } ) => {
 								viewBox="0 0 24 24"
 								fill="none"
 								stroke="currentColor"
-								stroke-width="2"
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								class="feather feather-archive"
+								strokeWidth="2"
+								strokeLinecap="round"
+								strokeLinejoin="round"
 							>
 								<polyline points="21 8 21 21 3 21 3 8"></polyline>
 								<rect x="1" y="3" width="22" height="5"></rect>
@@ -121,10 +119,9 @@ export default ( { setConfirm, product, isSaving, toggleArchive } ) => {
 								viewBox="0 0 24 24"
 								fill="none"
 								stroke="currentColor"
-								stroke-width="2"
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								class="feather feather-trash-2"
+								strokeWidth="2"
+								strokeLinecap="round"
+								strokeLinejoin="round"
 							>
 								<polyline points="3 6 5 6 21 6"></polyline>
 								<path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>

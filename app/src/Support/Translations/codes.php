@@ -6,6 +6,7 @@
  */
 
 return [
+	'http_request_failed'       => __( 'Could not complete the request. Please try again.', 'checkout_engine' ),
 	'coupon.invalid'            => __( 'Failed to save coupon', 'checkout_engine' ),
 	'price.amount.not_a_number' => __( 'Price amount is not a number', 'checkout_engine' ),
 	'price.amount.blank'        => __( "Price amount can't be blank", 'checkout_engine' ),

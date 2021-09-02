@@ -36,6 +36,16 @@
   }
 }
 
+::slotted(.control--errors) {
+  margin-top: var(--ce-spacing-small);
+  color: var(--ce-color-danger-500);
+}
+
+.form-control--is-required .form-control__label:after {
+  content: " *";
+  color: var(--ce-color-danger-500);
+}
+
 // Help text
 .form-control--has-help-text {
   .form-control__help-text {

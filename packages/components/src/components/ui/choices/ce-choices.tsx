@@ -1,4 +1,4 @@
-import { Component, Prop, h, State, Element, Watch } from '@stencil/core';
+import { Component, Prop, h, State, Element } from '@stencil/core';
 
 @Component({
   tag: 'ce-choices',

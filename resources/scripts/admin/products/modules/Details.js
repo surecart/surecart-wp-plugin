@@ -21,6 +21,7 @@ export default ( { product, updateProduct, loading } ) => {
 						onCeChange={ ( e ) => {
 							updateProduct( { name: e.target.value } );
 						} }
+						name="name"
 						required
 					/>
 					<CeInput
@@ -31,6 +32,7 @@ export default ( { product, updateProduct, loading } ) => {
 							'checkout_engine'
 						) }
 						value={ product?.description }
+						name="description"
 						onCeChange={ ( e ) => {
 							updateProduct( { description: e.target.value } );
 						} }

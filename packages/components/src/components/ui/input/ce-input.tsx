@@ -189,7 +189,16 @@ export class CEInput {
 
   render() {
     return (
-      <ce-form-control size={this.size} label={this.label} showLabel={this.showLabel} help={this.help} inputId={this.inputId} helpId={this.helpId} labelId={this.labelId}>
+      <ce-form-control
+        size={this.size}
+        required={this.required}
+        label={this.label}
+        showLabel={this.showLabel}
+        help={this.help}
+        inputId={this.inputId}
+        helpId={this.helpId}
+        labelId={this.labelId}
+      >
         <div
           part="base"
           class={{

@@ -8,6 +8,32 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { CheckoutSession, Coupon, LineItemData, PriceData } from "./types";
 import { AddItemTextFn, AjaxFn, ClassNames, FuseOptions, ItemFilterFn, MaxItemTextFn, NoChoicesTextFn, NoResultsTextFn, OnCreateTemplates, OnInit, SortFn, ValueCompareFunction } from "./components/ui/select/interfaces";
 export namespace Components {
+    interface CeAlert {
+        /**
+          * Makes the alert closable.
+         */
+        "closable": boolean;
+        /**
+          * The length of time, in milliseconds, the alert will show before closing itself. If the user interacts with the alert before it closes (e.g. moves the mouse over it), the timer will restart. Defaults to `Infinity`.
+         */
+        "duration": number;
+        /**
+          * Hides the alert
+         */
+        "hide": () => Promise<void>;
+        /**
+          * Indicates whether or not the alert is open. You can use this in lieu of the show/hide methods.
+         */
+        "open": boolean;
+        /**
+          * Shows the alert.
+         */
+        "show": () => Promise<void>;
+        /**
+          * The type of alert.
+         */
+        "type": 'primary' | 'success' | 'info' | 'warning' | 'danger';
+    }
     interface CeBlockUi {
     }
     interface CeButton {
@@ -304,12 +330,13 @@ export namespace Components {
         "validate": () => Promise<boolean>;
     }
     interface CeFormControl {
-        "errorMessages": Array<string>;
+        "errorMessage": string;
         "help": string;
         "helpId": string;
         "inputId": string;
         "label": string;
         "labelId": string;
+        "required": boolean;
         "showLabel": boolean;
         "size": 'small' | 'medium' | 'large';
     }
@@ -559,6 +586,10 @@ export namespace Components {
           * The maximum length of input that will be considered valid.
          */
         "maxlength": number;
+        /**
+          * The input's minimum value.
+         */
+        "min": number | string;
         /**
           * The minimum length of input that will be considered valid.
          */
@@ -1045,6 +1076,12 @@ export namespace Components {
     }
 }
 declare global {
+    interface HTMLCeAlertElement extends Components.CeAlert, HTMLStencilElement {
+    }
+    var HTMLCeAlertElement: {
+        prototype: HTMLCeAlertElement;
+        new (): HTMLCeAlertElement;
+    };
     interface HTMLCeBlockUiElement extends Components.CeBlockUi, HTMLStencilElement {
     }
     var HTMLCeBlockUiElement: {
@@ -1298,6 +1335,7 @@ declare global {
         new (): HTMLCeTotalElement;
     };
     interface HTMLElementTagNameMap {
+        "ce-alert": HTMLCeAlertElement;
         "ce-block-ui": HTMLCeBlockUiElement;
         "ce-button": HTMLCeButtonElement;
         "ce-card": HTMLCeCardElement;
@@ -1343,6 +1381,32 @@ declare global {
     }
 }
 declare namespace LocalJSX {
+    interface CeAlert {
+        /**
+          * Makes the alert closable.
+         */
+        "closable"?: boolean;
+        /**
+          * The length of time, in milliseconds, the alert will show before closing itself. If the user interacts with the alert before it closes (e.g. moves the mouse over it), the timer will restart. Defaults to `Infinity`.
+         */
+        "duration"?: number;
+        /**
+          * When alert is hidden
+         */
+        "onCeHide"?: (event: CustomEvent<void>) => void;
+        /**
+          * When alert is shown
+         */
+        "onCeShow"?: (event: CustomEvent<void>) => void;
+        /**
+          * Indicates whether or not the alert is open. You can use this in lieu of the show/hide methods.
+         */
+        "open"?: boolean;
+        /**
+          * The type of alert.
+         */
+        "type"?: 'primary' | 'success' | 'info' | 'warning' | 'danger';
+    }
     interface CeBlockUi {
     }
     interface CeButton {
@@ -1672,12 +1736,13 @@ declare namespace LocalJSX {
         "onCeFormSubmit"?: (event: CustomEvent<Object>) => void;
     }
     interface CeFormControl {
-        "errorMessages"?: Array<string>;
+        "errorMessage"?: string;
         "help"?: string;
         "helpId"?: string;
         "inputId"?: string;
         "label"?: string;
         "labelId"?: string;
+        "required"?: boolean;
         "showLabel"?: boolean;
         "size"?: 'small' | 'medium' | 'large';
     }
@@ -1936,6 +2001,10 @@ declare namespace LocalJSX {
           * The maximum length of input that will be considered valid.
          */
         "maxlength"?: number;
+        /**
+          * The input's minimum value.
+         */
+        "min"?: number | string;
         /**
           * The minimum length of input that will be considered valid.
          */
@@ -2413,6 +2482,7 @@ declare namespace LocalJSX {
         "total"?: string;
     }
     interface IntrinsicElements {
+        "ce-alert": CeAlert;
         "ce-block-ui": CeBlockUi;
         "ce-button": CeButton;
         "ce-card": CeCard;
@@ -2461,6 +2531,7 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "ce-alert": LocalJSX.CeAlert & JSXBase.HTMLAttributes<HTMLCeAlertElement>;
             "ce-block-ui": LocalJSX.CeBlockUi & JSXBase.HTMLAttributes<HTMLCeBlockUiElement>;
             "ce-button": LocalJSX.CeButton & JSXBase.HTMLAttributes<HTMLCeButtonElement>;
             "ce-card": LocalJSX.CeCard & JSXBase.HTMLAttributes<HTMLCeCardElement>;

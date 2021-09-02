@@ -19,6 +19,19 @@ export function setFlash( value ) {
 	};
 }
 
+export function addErrors( value ) {
+	return {
+		type: 'ADD_ERRORS',
+		value,
+	};
+}
+export function clearErrors( index = null ) {
+	return {
+		type: 'CLEAR_ERRORS',
+		index,
+	};
+}
+
 export function addValidationErrors( value ) {
 	return {
 		type: 'ADD_VALIDATION_ERRORS',

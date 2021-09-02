@@ -11,6 +11,14 @@ const product = ( state = {}, action ) => {
 	return state;
 };
 
+const lastSavedPrices = ( state = [], action ) => {
+	switch ( action.type ) {
+		case 'SET_PRICES':
+			return action.value;
+	}
+	return state;
+};
+
 const prices = (
 	state = [
 		{
@@ -102,5 +110,6 @@ export default combineReducers( {
 	product,
 	prices,
 	saving,
+	lastSavedPrices,
 	postSavingLock,
 } );

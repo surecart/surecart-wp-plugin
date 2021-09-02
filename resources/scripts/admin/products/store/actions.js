@@ -39,7 +39,12 @@ export function* addPrice( item, index ) {
 		index,
 	};
 }
-export function updatePrice( item, index ) {
+export function* updatePrice( item, index ) {
+	// cannot use ad_hoce with recurring.
+	if ( item?.recurring ) {
+		item.ad_hoc = false;
+	}
+
 	return {
 		type: 'UPDATE_PRICE',
 		item,
@@ -85,7 +90,7 @@ export function* save() {
 	// }
 
 	// clear any validation errors and set saving
-	yield controls.dispatch( UI_STORE_KEY, 'clearValidationErrors' );
+	yield controls.dispatch( UI_STORE_KEY, 'clearErrors' );
 	yield controls.dispatch( UI_STORE_KEY, 'setSaving', true );
 
 	try {

@@ -7,6 +7,7 @@
 
 | Property   | Attribute  | Description                                                                                            | Type                                                                               | Default     |
 | ---------- | ---------- | ------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------- | ----------- |
+| `busy`     | `busy`     | Draws the button in a busy state.                                                                      | `boolean`                                                                          | `false`     |
 | `caret`    | `caret`    | Draws the button with a caret for use with dropdowns, popovers, etc.                                   | `boolean`                                                                          | `false`     |
 | `circle`   | `circle`   | Draws a circle button.                                                                                 | `boolean`                                                                          | `false`     |
 | `disabled` | `disabled` | Disables the button.                                                                                   | `boolean`                                                                          | `false`     |

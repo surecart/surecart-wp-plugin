@@ -27,8 +27,12 @@ export default ( {
 			onCeFormSubmit={ onSubmit }
 			onCeFormInvalid={ onInvalid }
 			css={ css`
-				font-size: 14px;
+				font-size: 13px;
 				margin-right: 20px;
+
+				button {
+					font-size: 13px;
+				}
 
 				// change theme color
 				--wp-admin-theme-color: var( --ce-color-primary-500 );
@@ -91,9 +95,6 @@ export default ( {
 					margin-left: -20px;
 					margin-right: -20px;
 					margin-bottom: 30px;
-					position: sticky;
-					top: 32px;
-					z-index: 99;
 
 					@media screen and ( max-width: 782px ) {
 						top: 46px;
@@ -188,8 +189,10 @@ export default ( {
 				<div>
 					<div
 						css={ css`
-							position: sticky;
-							top: 135px;
+							margin-bottom: 3em;
+							> * ~ * {
+								margin-top: 1em;
+							}
 						` }
 					>
 						{ sidebar }

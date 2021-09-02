@@ -149,7 +149,7 @@ export class CECheckout {
     try {
       this.checkoutSession = await createSession(this.getSessionSaveData());
     } catch (e) {
-      this.error = 'Something went wrong';
+      this.error = e;
     } finally {
       this.loading = false;
       this.calculating = false;
@@ -178,6 +178,7 @@ export class CECheckout {
   state() {
     return {
       paymentMethod: 'stripe',
+      error: this.error,
       checkoutSession: this.checkoutSession,
       stripePublishableKey: this.stripePublishableKey,
       choicePriceIds: this.choicePriceIds,
