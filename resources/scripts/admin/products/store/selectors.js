@@ -1,20 +1,44 @@
 const { createRegistrySelector } = wp.data;
+import { selectModel } from '../../store/data/selectors';
 
-export const getProduct = ( state ) => {
-	return state.product;
+/**
+ * Get the product
+ */
+export const selectProduct = ( state ) => {
+	return selectModel( state, 'product' );
 };
-export const getPrices = ( state ) => {
-	return state.prices;
+
+/**
+ * Get prices
+ */
+export const selectPrices = ( state ) => {
+	return selectModel( state, 'product.prices' );
 };
-export const getPrice = ( state, index ) => {
-	return state.prices?.[ index ];
+
+/**
+ * Get a specific price.
+ */
+export const selectPrice = ( state, index ) => {
+	return selectModel( state, `product.prices.${ index }` );
 };
-export const getUnsavedPrice = ( state, index ) => {
-	return state?.lastSavedPrices?.[ index ];
+
+/**
+ * Get the product status
+ */
+export const selectProductStatus = ( state ) => {
+	const product = selectProduct( state );
+	if ( ! product?.id ) {
+		return 'draft';
+	}
+	if ( product?.archived ) {
+		return 'archived';
+	}
+	return 'active';
 };
-export const getVariations = ( state ) => {
-	return ( state.prices || [] ).slice( 1 );
-};
+
+/**
+ * Is the model saving?
+ */
 export const isSaving = createRegistrySelector( ( select ) => () => {
 	return select( 'checkout-engine/ui' ).isSaving();
 } );

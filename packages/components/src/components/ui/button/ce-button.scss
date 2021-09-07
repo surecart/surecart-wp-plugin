@@ -1,5 +1,5 @@
 :host {
-  display: block;
+  display: inline-block;
   width: auto;
   cursor: pointer;
 }
@@ -223,6 +223,18 @@
       border-color: var(--ce-color-danger-500);
       color: var(--ce-color-danger-text);
     }
+
+    &.button--busy {
+      // Disable reason: This function call looks nicer when each argument is on its own line.
+      /* stylelint-disable */
+      background-image: linear-gradient(
+        -45deg,
+          var(--ce-color-danger-400) 33%,
+          var(--ce-color-danger-500) 33%,
+          var(--ce-color-danger-500) 70%,
+          var(--ce-color-danger-400) 70%
+      );
+    }
   }
 }
 
@@ -383,31 +395,25 @@
   }
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Loading modifier
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Busy modifier
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 .button--busy {
   position: relative;
   cursor: wait;
   animation: busy-animation 2500ms infinite linear;
 	opacity: 1;
 	background-size: 100px 100%;
-  // Disable reason: This function call looks nicer when each argument is on its own line.
-  /* stylelint-disable */
-  background-image: linear-gradient(
-    -45deg,
-      var(--ce-color-primary-400) 33%,
-      var(--ce-color-primary-500) 33%,
-      var(--ce-color-primary-500) 70%,
-      var(--ce-color-primary-400) 70%
-  );
    // When disabled, prevent mouse events from bubbling up
    * {
     pointer-events: none;
   }
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Loading modifier
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 .button--loading {
   position: relative;
   cursor: wait;

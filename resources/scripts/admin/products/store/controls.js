@@ -9,8 +9,17 @@ export const savePrices = ( prices = [] ) => {
 		prices,
 	};
 };
+export const testControl = () => {
+	return {
+		type: 'TEST',
+	};
+};
 
 export default {
+	async TEST() {
+		console.log( 'test' );
+	},
+	async SAVE_MODELS( { models } ) {},
 	async SAVE_PRICES( { prices } ) {
 		return await Promise.all(
 			prices.map( async ( data, index ) => {

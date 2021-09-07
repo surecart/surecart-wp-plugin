@@ -29,6 +29,13 @@ class AdminRouteServiceProvider implements ServiceProviderInterface {
 		);
 
 		$app->alias(
+			'getArchiveUrl',
+			function () use ( $container ) {
+				return call_user_func_array( [ $container['checkout_engine.admin.route'], 'getArchiveUrl' ], func_get_args() );
+			}
+		);
+
+		$app->alias(
 			'getIndexUrl',
 			function () use ( $container ) {
 				return call_user_func_array( [ $container['checkout_engine.admin.route'], 'getIndexUrl' ], func_get_args() );

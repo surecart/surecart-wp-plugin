@@ -3,7 +3,8 @@ import { css, jsx } from '@emotion/core';
 
 const { __ } = wp.i18n;
 
-const { SnackbarList, Modal, Button, Tooltip } = wp.components;
+const { SnackbarList, Tooltip } = wp.components;
+import StatusBadge from '../components/StatusBadge';
 import { CeForm, CeButton } from '@checkout-engine/react';
 
 export default ( {
@@ -14,11 +15,12 @@ export default ( {
 	noticeUI,
 	backUrl,
 	backText,
+	status,
 	notices,
 	removeNotice,
 	onSubmit,
 	onInvalid,
-	archive,
+	loading,
 	sidebar,
 } ) => {
 	return (
@@ -91,10 +93,13 @@ export default ( {
 		>
 			<div
 				css={ css`
+					position: sticky;
 					background: #fff;
 					margin-left: -20px;
 					margin-right: -20px;
 					margin-bottom: 30px;
+					top: 32px;
+					z-index: 4;
 
 					@media screen and ( max-width: 782px ) {
 						top: 46px;
@@ -138,6 +143,7 @@ export default ( {
 						>
 							{ title }
 						</h1>
+						{ ! loading && <StatusBadge status={ status } /> }
 					</div>
 
 					{ button }

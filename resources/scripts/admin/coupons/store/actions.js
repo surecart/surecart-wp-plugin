@@ -1,5 +1,5 @@
 const { __ } = wp.i18n;
-import { fetch as apiFetch } from '../../store/model/controls';
+import { fetch as apiFetch } from '../../store/data/controls';
 const { controls } = wp.data;
 import { STORE_KEY as UI_STORE_KEY } from '../../store/ui';
 import { STORE_KEY as NOTICES_STORE_KEY } from '../../store/notices';

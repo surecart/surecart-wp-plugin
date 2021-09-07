@@ -26,6 +26,7 @@ return [
 		\CheckoutEngine\WordPress\PluginServiceProvider::class,
 		\CheckoutEngine\Routing\AdminRouteServiceProvider::class,
 		// \CheckoutEngine\WordPress\WidgetsServiceProvider::class,
+		\CheckoutEngine\Permissions\RolesServiceProvider::class,
 		\CheckoutEngine\Settings\SettingsServiceProvider::class,
 		\CheckoutEngine\Request\RequestServiceProvider::class,
 		\WPEmergeBlade\View\ServiceProvider::class,

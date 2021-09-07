@@ -1,16 +1,17 @@
 import * as actions from './actions';
-import { fetch as apiFetch } from '../../store/model/controls';
+import { fetch as apiFetch } from '../../store/data/controls';
 const { getQueryArg } = wp.url;
 
 export default {
-	*getProduct() {
+	*selectProduct() {
 		// maybe get from url.
 		const id = getQueryArg( window.location, 'id' );
 		if ( ! id ) return {};
 
 		// fetch
-		const product = yield apiFetch( { path: `products/${ id }` } );
+		const payload = yield apiFetch( { path: `products/${ id }` } );
 
-		return actions.setProduct( product );
+		// store.
+		return actions.setProduct( payload );
 	},
 };

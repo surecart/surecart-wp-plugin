@@ -1174,7 +1174,7 @@
 "@checkout-engine/blocks@file:packages/blocks":
   version "0.0.1"
   dependencies:
-    "@checkout-engine/react" "file:../../Library/Caches/Yarn/v6/npm-@checkout-engine-blocks-0.0.1-f007b316-9bfd-4784-983d-f9857f2c89f3-1629467955956/node_modules/@checkout-engine/integrations/react"
+    "@checkout-engine/react" "file:../../Library/Caches/Yarn/v6/npm-@checkout-engine-blocks-0.0.1-806fbe51-24b5-4f42-9d91-337f1a64aefd-1630854554405/node_modules/@checkout-engine/integrations/react"
     "@wordpress/compose" "^4.1.2"
     "@wordpress/element" "^3.1.1"
     "@wordpress/icons" "^4.0.1"
@@ -1227,8 +1227,8 @@
 "@checkout-engine/docs@file:packages/docs":
   version "0.0.0"
   dependencies:
-    "@checkout-engine/components" "file:../../Library/Caches/Yarn/v6/npm-@checkout-engine-docs-0.0.0-59cd75a6-3cad-40fd-928d-e296ebed826a-1629467956109/node_modules/@checkout-engine/components"
-    "@checkout-engine/react" "file:../../Library/Caches/Yarn/v6/npm-@checkout-engine-docs-0.0.0-59cd75a6-3cad-40fd-928d-e296ebed826a-1629467956109/node_modules/@checkout-engine/integrations/react"
+    "@checkout-engine/components" "file:../../Library/Caches/Yarn/v6/npm-@checkout-engine-docs-0.0.0-621d50e1-2818-41a3-94d3-abb22cf7a5eb-1630854554558/node_modules/@checkout-engine/components"
+    "@checkout-engine/react" "file:../../Library/Caches/Yarn/v6/npm-@checkout-engine-docs-0.0.0-621d50e1-2818-41a3-94d3-abb22cf7a5eb-1630854554558/node_modules/@checkout-engine/integrations/react"
     "@docusaurus/core" "2.0.0-beta.3"
     "@docusaurus/preset-classic" "2.0.0-beta.3"
     "@mdx-js/react" "^1.6.22"
@@ -1242,7 +1242,7 @@
 "@checkout-engine/react@file:packages/integrations/react":
   version "0.0.1"
   dependencies:
-    "@checkout-engine/components" "file:../../Library/Caches/Yarn/v6/npm-@checkout-engine-react-0.0.1-7c7b876d-2b87-4d63-9dcb-6b10577adc70-1629467956103/node_modules/components"
+    "@checkout-engine/components" "file:../../Library/Caches/Yarn/v6/npm-@checkout-engine-react-0.0.1-67f4c899-c430-4ac6-b5c7-1819cdbb94c0-1630854554552/node_modules/components"
 
 "@cnakazawa/watch@^1.0.3":
   version "1.0.4"
@@ -8393,6 +8393,11 @@ dot-case@^3.0.4:
   dependencies:
     no-case "^3.0.4"
     tslib "^2.0.3"
+
+dot-prop-immutable@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/dot-prop-immutable/-/dot-prop-immutable-2.1.1.tgz#3a8902c3a009acad9e595fa6d92db659e645966f"
+  integrity sha512-e8PVQj1TKXwfeBPP71xvdQUR0ETh9gyhwEBX7VLIuOV7B2bLnrDyTqOzZt7P5zWgrPK+pbZbptK9Q4wZEJTb7Q==
 
 dot-prop@^5.1.0, dot-prop@^5.2.0:
   version "5.3.0"

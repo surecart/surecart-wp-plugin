@@ -27,19 +27,15 @@ import { translate } from '../../util';
 
 export default ( { price, prices, index, open = true } ) => {
 	const {
+		duplicatePrice,
 		updatePrice,
 		deletePrice,
-		duplicatePrice,
 		isInvalid,
 	} = useProductData();
 
 	// get model errors
 	const errors = useSelect( ( select ) =>
 		select( UI_STORE_KEY ).selectErrors( 'price', index )
-	);
-
-	const validation = useSelect( ( select ) =>
-		select( UI_STORE_KEY ).selectValidationErrors( 'price', index )
 	);
 
 	const [ isOpen, setIsOpen ] = useState( true );
@@ -54,12 +50,6 @@ export default ( { price, prices, index, open = true } ) => {
 		}
 		setIsOpen( open );
 	}, [ open ] );
-
-	// useEffect( () => {
-	// 	if ( FlashErrors?.length ) {
-	// 		dispatch( UI_STORE_KEY ).clearErrors();
-	// 	}
-	// }, [ price ] );
 
 	// if invalid, toggle open.
 	useEffect( () => {
@@ -148,7 +138,7 @@ export default ( { price, prices, index, open = true } ) => {
 					{ __( 'Duplicate', 'checkout_engine' ) }
 				</CeMenuItem>
 				{ price?.id && (
-					<CeMenuItem onClick={ () => deletePrice( price, index ) }>
+					<CeMenuItem onClick={ () => deletePrice( index ) }>
 						<span
 							slot="prefix"
 							style={ {
@@ -177,7 +167,7 @@ export default ( { price, prices, index, open = true } ) => {
 				<CeMenuItem
 					onClick={ ( e ) => {
 						e.preventDefault();
-						deletePrice( price, index );
+						deletePrice( index );
 					} }
 				>
 					<span
@@ -230,13 +220,7 @@ export default ( { price, prices, index, open = true } ) => {
 			>
 				<FlashError
 					error={ errors?.[ 0 ] }
-					onShow={ ( e ) => {
-						e.target.scrollIntoView( {
-							behavior: 'smooth',
-							block: 'start',
-							inline: 'nearest',
-						} );
-					} }
+					scrollIntoView
 					onClose={ ( e ) => {
 						dispatch( UI_STORE_KEY ).clearErrors( index );
 					} }

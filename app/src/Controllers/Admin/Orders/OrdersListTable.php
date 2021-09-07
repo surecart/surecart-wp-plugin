@@ -1,21 +1,22 @@
 <?php
 
-namespace CheckoutEngine\Controllers\Admin\Products;
+namespace CheckoutEngine\Controllers\Admin\Orders;
 
-use CheckoutEngine\Models\Product;
 use CheckoutEngine\Support\Currency;
+use CheckoutEngine\Models\CheckoutSession;
 use CheckoutEngine\Controllers\Admin\Tables\ListTable;
+
 /**
  * Create a new table class that will extend the WP_List_Table
  */
-class ProductsListTable extends ListTable {
+class OrdersListTable extends ListTable {
 	public $checkbox = true;
 
-		/**
-		 * Prepare the items for the table to process
-		 *
-		 * @return Void
-		 */
+	/**
+	 * Prepare the items for the table to process
+	 *
+	 * @return Void
+	 */
 	public function prepare_items() {
 		$columns  = $this->get_columns();
 		$hidden   = $this->get_hidden_columns();
@@ -32,17 +33,18 @@ class ProductsListTable extends ListTable {
 		$this->set_pagination_args(
 			[
 				'total_items' => $query->pagination->count,
-				'per_page'    => $this->get_items_per_page( 'products' ),
+				'per_page'    => $this->get_items_per_page( 'coupons' ),
 			]
 		);
 
 		$this->items = $query->data;
 	}
 
-	public function search() { ?>
+	public function search() {
+		?>
 	<form class="search-form"
 		method="get">
-		<?php $this->search_box( __( 'Search Products' ), 'user' ); ?>
+		<?php $this->search_box( __( 'Search Coupons', 'checkout_engine' ), 'coupon' ); ?>
 		<input type="hidden"
 			name="id"
 			value="1" />
@@ -57,12 +59,12 @@ class ProductsListTable extends ListTable {
 	 */
 	protected function get_views() {
 		$stati = [
-			'active'   => __( 'Active', 'checkout_engine' ),
-			'archived' => __( 'Archived', 'checkout_engine' ),
-			'all'      => __( 'All', 'checkout_engine' ),
+			'paid'      => __( 'Paid', 'checkout_engine' ),
+			'abandoned' => __( 'Abandoned', 'checkout_engine' ),
+			'all'       => __( 'All', 'checkout_engine' ),
 		];
 
-		$link = admin_url( 'admin.php?page=ce-products' );
+		$link = \CheckoutEngine::getIndexUrl( 'product' );
 
 		foreach ( $stati as $status => $label ) {
 			$current_link_attributes = '';
@@ -100,10 +102,11 @@ class ProductsListTable extends ListTable {
 	public function get_columns() {
 		return [
 			// 'cb'          => '<input type="checkbox" />',
-			'name'        => __( 'Name', 'checkout_engine' ),
-			'description' => __( 'Description', 'checkout_engine' ),
-			'price'       => __( 'Price', 'checkout_engine' ),
-			'created'     => __( 'Created', 'checkout_engine' ),
+			'name' => __( 'Name', 'checkout_engine' ),
+			// 'code'  => __( 'Code', 'checkout_engine' ),
+			// 'price' => __( 'Price', 'checkout_engine' ),
+			// 'usage' => __( 'Usage', 'checkout_engine' ),
+			// 'status'      => __( 'Status', 'checkout_engine' ),
 		];
 	}
 
@@ -143,22 +146,22 @@ class ProductsListTable extends ListTable {
 	 * @return Array
 	 */
 	private function table_data() {
-		return Product::where(
+		return CheckoutSession::where(
 			[
-				'archived' => $this->getArchiveStatus(),
-				'limit'    => $this->get_items_per_page( 'products' ),
-				'page'     => $this->get_pagenum(),
+				'status' => $this->getStatus(),
+				'limit'  => $this->get_items_per_page( 'coupons' ),
+				'page'   => $this->get_pagenum(),
 			]
 		)->paginate();
 	}
 
 	/**
-	 * Nothing found.
+	 * Get the archive query status.
 	 *
-	 * @return string
+	 * @return boolean|null
 	 */
-	public function no_items() {
-		echo esc_html_e( 'No products found.', 'checkout_engine' );
+	public function getStatus() {
+		return sanitize_text_field( $_GET['status'] ?? 'paid' );
 	}
 
 	/**
@@ -168,19 +171,90 @@ class ProductsListTable extends ListTable {
 	 *
 	 * @return string
 	 */
-	public function column_price( $product ) {
-		if ( empty( $product->prices ) ) {
-			return __( 'No price', 'checkout_engine' );
+	public function column_price( $promotion ) {
+
+		ob_start();
+		?>
+
+		<?php
+		// phpcs:ignore
+		echo $this->get_price_string( $promotion->coupon ?? false ); // this is already escaped. ?>
+		<br />
+		<div style="opacity: 0.75"><?php echo esc_html( $this->get_duration_string( $promotion->coupon ?? false ) ); ?></div>
+		<?php
+		return ob_get_clean();
+
+	}
+
+	/**
+	 * Output the Promo Code
+	 *
+	 * @param Promotion $promotion Promotion model.
+	 *
+	 * @return string
+	 */
+	public function column_usage( $promotion ) {
+		$max = $promotion->max_redemptions ?? '&infin;';
+		ob_start();
+		?>
+		<?php echo \esc_html( "$promotion->times_redeemed / $max" ); ?>
+		<br />
+		<div style="opacity: 0.75"><?php echo \esc_html( $this->get_expiration_string( $promotion->redeem_by ) ); ?></div>
+		<?php
+		return ob_get_clean();
+	}
+
+	/**
+	 * Render the "Redeem By"
+	 *
+	 * @param string $timestamp Redeem timestamp
+	 * @return void
+	 */
+	public function get_expiration_string( $timestamp = '' ) {
+		if ( ! $timestamp ) {
+			return '';
+		}
+		// translators: coupon expiration date.
+		return sprintf( __( 'Valid until %s', 'checkout_engine' ), date_i18n( get_option( 'date_format' ), $timestamp / 1000 ) );
+	}
+
+	public function get_price_string( $coupon = '' ) {
+		if ( ! $coupon || empty( $coupon->duration ) ) {
+			return;
+		}
+		if ( ! empty( $coupon->percent_off ) ) {
+			// translators: Coupon % off.
+			return sprintf( esc_html( __( '%1d%% off', 'checkout_engine' ) ), $coupon->percent_off );
 		}
 
-		if ( ! empty( $product->prices[0]->amount ) ) {
-			$min_price = min( array_column( $product->prices, 'amount' ) );
-			$amount    = Currency::formatCurrencyNumber( $min_price ) . ' <small style="opacity: 0.75;">' . strtoupper( esc_html( $product->prices[0]->currency ) ) . '</small>';
-			// translators: Price starting at.
-			return count( $product->prices ) > 1 ? sprintf( __( 'Starting at %s', 'checkout_engine' ), $amount ) : $amount;
+		if ( ! empty( $coupon->amount_off ) ) {
+			// translators: Coupon amount off.
+			return Currency::formatCurrencyNumber( $coupon->amount_off ) . ' <small style="opacity: 0.75;">' . strtoupper( esc_html( $coupon->currency ) ) . '</small>';
 		}
 
-		return __( 'No price', 'checkout_engine' );
+		return esc_html_( 'No discount.', 'checkout_engine' );
+	}
+
+	/**
+	 * Get the duration string
+	 *
+	 * @param Coupon|boolean $coupon Coupon object.
+	 * @return string|void;
+	 */
+	public function get_duration_string( $coupon = '' ) {
+		if ( ! $coupon || empty( $coupon->duration ) ) {
+			return;
+		}
+
+		if ( 'forever' === $coupon->duration ) {
+			return __( 'Forever', 'checkout_engine' );
+		}
+		if ( 'repeating' === $coupon->duration ) {
+			// translators: number of months.
+			return sprintf( __( 'For %d months', 'checkout_engine' ), $coupon->duration_in_months ?? 1 );
+		}
+
+		return __( 'Once', 'checkout_engine' );
 	}
 
 	/**
@@ -190,53 +264,52 @@ class ProductsListTable extends ListTable {
 	 *
 	 * @return string
 	 */
-	public function column_created( $product ) {
-		return wp_date( get_option( 'date_format' ), $product->created_at );
+	public function column_status( $promotion ) {
+		// TODO: Add Badge.
+		return $promotion->expired ? __( 'Expired', 'checkout_engine' ) : __( 'Active', 'checkout_engine' );
+	}
+
+	protected function extra_tablenav( $which ) {
+		if ( 'top' === $which ) {
+			return $this->views();
+		}
 	}
 
 	/**
-	 * Name column
+	 * Name of the coupon
 	 *
-	 * @param \CheckoutEngine\Models\Product $product Product model.
+	 * @param \CheckoutEngine\Models\Promotion $promotion Promotion model.
 	 *
 	 * @return string
 	 */
-	public function column_name( $product ) {
+	public function column_name( $session ) {
 		ob_start();
 		?>
-		<a class="row-title" aria-label="<?php echo esc_attr( 'Edit Product', 'checkout_engine' ); ?>" href="<?php echo esc_url( \CheckoutEngine::getEditUrl( 'product', $product->id ) ); ?>">
-			<?php echo esc_html_e( $product->name ); ?>
+		<a class="row-title" aria-label="Edit Coupon" href="<?php echo esc_url( \CheckoutEngine::getEditUrl( 'coupon', $session->id ) ); ?>">
+			<?php echo esc_html_e( $session->name ); ?>
 		</a>
-
 		<?php
-		echo $this->row_actions(
-			[
-				'edit'  => '<a href="' . esc_url( \CheckoutEngine::getEditUrl( 'product', $product->id ) ) . '" aria-label="' . esc_attr( 'Edit Product', 'checkout_engine' ) . '">' . __( 'Edit', 'checkout_engine' ) . '</a>',
-				'trash' => '<a class="submitdelete" onclick="return confirm(\'' . __( 'Are you sure you want to archive this? This will be unavailable for purchase.' ) . '\')" href="' . esc_url( \CheckoutEngine::getEditUrl( 'coupon', $product->id ) ) . '" aria-label="Edit Coupon">' . __( 'Archive', 'checkout_engine' ) . '</a>',
-			],
-		);
+		// TODO: Add disable functionality.
+		// echo $this->row_actions(
+		// [
+		// 'edit'  => '<a href="' . esc_url( \CheckoutEngine::getEditUrl( 'coupon', $promotion->id ) ) . '" aria-label="Edit Coupon">Edit</a>',
+		// 'trash' => '<a class="submitdelete" href="' . esc_url( \CheckoutEngine::getEditUrl( 'coupon', $promotion->id ) ) . '" aria-label="Edit Coupon">Disable</a>',
+		// ],
+		// );
 		?>
-
 		<?php
 		return ob_get_clean();
 	}
 
 	/**
-	 * Define what data to show on each column of the table
+	 * Name of the coupon
 	 *
-	 * @param \CheckoutEngine\Models\Product $product Product model.
-	 * @param String                         $column_name - Current column name.
+	 * @param \CheckoutEngine\Models\Promotion $promotion Promotion model.
 	 *
-	 * @return Mixed
+	 * @return string
 	 */
-	public function column_default( $product, $column_name ) {
-		switch ( $column_name ) {
-			case 'name':
-				return '<a href="' . add_query_arg( 'product', $product->id ) . '">' . $product->name . '</a>';
-			case 'name':
-			case 'description':
-				return $product->$column_name ?? '';
-		}
+	public function column_code( $promotion ) {
+		return '<code>' . $promotion->code . '</code>';
 	}
 
 	/**

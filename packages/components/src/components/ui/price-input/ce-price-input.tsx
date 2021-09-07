@@ -146,6 +146,9 @@ export class CePriceInput {
           <span style={{ opacity: '0.5' }} slot="prefix">
             {getCurrencySymbol(this.currencyCode)}
           </span>
+          {/* <span style={{ opacity: '0.5' }} slot="suffix">
+            {(this.currencyCode || '').toUpperCase()}
+          </span> */}
         </ce-input>
       </Fragment>
     );

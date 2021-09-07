@@ -31,6 +31,14 @@ export const translate = ( key ) => {
 		day: __( 'Day', 'checkout_engine' ),
 		month: __( 'Month', 'checkout_engine' ),
 		year: __( 'Year', 'checkout_engine' ),
+		archived: __( 'Archived', 'checkout_engine' ),
+		draft: __( 'Draft', 'checkout_engine' ),
+		active: __( 'Active', 'checkout_engine' ),
 	};
 	return map?.[ key ] || key;
 };
+
+export const filterObject = ( obj, predicate ) =>
+	Object.keys( obj )
+		.filter( ( key ) => predicate( obj[ key ] ) )
+		.reduce( ( res, key ) => ( ( res[ key ] = obj[ key ] ), res ), {} );

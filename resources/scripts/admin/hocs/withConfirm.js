@@ -5,6 +5,7 @@ const { __ } = wp.i18n;
 const { createHigherOrderComponent } = wp.compose;
 const { useState, Fragment } = wp.element;
 const { Modal, Button } = wp.components;
+import { CeButton } from '@checkout-engine/react';
 
 /**
  * Higher order component factory for injecting the editor colors as the
@@ -25,6 +26,7 @@ export default createHigherOrderComponent( ( OriginalComponent ) => {
 			onRequestClose: () => {},
 			onRequestConfirm: () => {},
 		} );
+
 		return (
 			<Fragment>
 				<OriginalComponent
@@ -39,21 +41,17 @@ export default createHigherOrderComponent( ( OriginalComponent ) => {
 						onRequestClose={ modal?.onRequestClose }
 					>
 						<p>{ modal?.message }</p>
-						<Button
-							isDestructive={ modal?.isDestructive }
-							disabled={ modal?.isSaving === true }
-							isBusy={ modal?.isSaving === true }
+						<CeButton
+							type={ modal?.isDestructive ? 'danger' : 'primary' }
+							busy={ modal?.isSaving }
 							onClick={ modal?.onRequestConfirm }
 						>
 							{ modal?.confirmButtonText ||
 								__( 'Confirm', 'checkout_engine' ) }
-						</Button>
-						<Button
-							variant="secondary"
-							onClick={ modal?.onRequestClose }
-						>
+						</CeButton>
+						<CeButton type="text" onClick={ modal?.onRequestClose }>
 							{ __( 'Cancel', 'checkout_engine' ) }
-						</Button>
+						</CeButton>
 					</Modal>
 				) }
 			</Fragment>

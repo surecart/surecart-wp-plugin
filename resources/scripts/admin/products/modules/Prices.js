@@ -3,6 +3,7 @@ import { css, jsx } from '@emotion/core';
 
 const { __ } = wp.i18n;
 const { useState } = wp.element;
+const { useSelect, dispatch } = wp.data;
 
 import Box from '../../ui/Box';
 import Price from '../components/Price';
@@ -11,7 +12,7 @@ import useProductData from '../hooks/useProductData';
 import { CeButton } from '@checkout-engine/react';
 
 export default () => {
-	const { prices, addPrice, loading } = useProductData();
+	const { loading, prices, addPrice } = useProductData();
 	const [ open, setOpen ] = useState();
 
 	return (
@@ -24,15 +25,12 @@ export default () => {
 						<CeButton
 							onClick={ ( e ) => {
 								e.preventDefault();
-								addPrice(
-									{
-										recurring: false,
-										name: ! prices?.length
-											? __( 'Default', 'checkout_engine' )
-											: '',
-									},
-									prices.length
-								);
+								addPrice( {
+									recurring: false,
+									name: ! prices?.length
+										? __( 'Default', 'checkout_engine' )
+										: '',
+								} );
 								setOpen( prices.length );
 							} }
 						>
@@ -56,18 +54,19 @@ export default () => {
 					)
 				}
 			>
-				{ prices.map( ( price, index ) => {
-					return (
-						<Price
-							price={ price }
-							prices={ prices }
-							index={ index }
-							key={ index }
-							focused={ index === open }
-							open={ index === open || prices?.length === 1 }
-						/>
-					);
-				} ) }
+				{ prices &&
+					prices.map( ( price, index ) => {
+						return (
+							<Price
+								price={ price }
+								prices={ prices }
+								index={ index }
+								key={ index }
+								focused={ index === open }
+								open={ index === open || prices?.length === 1 }
+							/>
+						);
+					} ) }
 			</Box>
 		</div>
 	);

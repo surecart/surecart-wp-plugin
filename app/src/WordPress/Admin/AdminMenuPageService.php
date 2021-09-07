@@ -6,7 +6,7 @@ use CheckoutEngine\Controllers\Admin\Coupons\CouponScriptsController;
 use CheckoutEngine\Controllers\Admin\Products\ProductScriptsController;
 
 class AdminMenuPageService {
-	protected $slug = 'ce-dashboard';
+	protected $slug = 'ce-getting-started';
 
 	/**
 	 * Add menu items.
@@ -21,15 +21,16 @@ class AdminMenuPageService {
 	 * @return void
 	 */
 	public function registerAdminPages() {
-		\add_menu_page( __( 'Dashboard', 'checkout_engine' ), __( 'Checkout Engine', 'checkout_engine' ), 'manage_options', $this->slug, function() {} );
+		\add_menu_page( __( 'Dashboard', 'checkout_engine' ), __( 'Checkout Engine', 'checkout_engine' ), 'edit_pk_products', $this->slug, '__return_false' );
 
 		$this->pages = [
-			'dashboard' => \add_submenu_page( $this->slug, __( 'Dashboard', 'checkout_engine' ), __( 'Dashboard', 'checkout_engine' ), 'manage_options', $this->slug, function() {} ),
-			'orders'    => \add_submenu_page( $this->slug, __( 'Orders', 'checkout_engine' ), __( 'Orders', 'checkout_engine' ), 'manage_options', 'ce-orders', function() {} ),
-			'products'  => \add_submenu_page( $this->slug, __( 'Products', 'checkout_engine' ), __( 'Products', 'checkout_engine' ), 'manage_options', 'ce-products', function() {} ),
-			'coupons'   => \add_submenu_page( $this->slug, __( 'Coupons', 'checkout_engine' ), __( 'Coupons', 'checkout_engine' ), 'manage_options', 'ce-coupons', function() {} ),
-			'abandoned' => \add_submenu_page( $this->slug, __( 'Abandoned Orders', 'checkout_engine' ), __( 'Abandoned Orders', 'checkout_engine' ), 'manage_options', 'ce-abandoned-orders', function() {} ),
-			'settings'  => \add_submenu_page( $this->slug, __( 'Settings', 'checkout_engine' ), __( 'Settings', 'checkout_engine' ), 'manage_options', 'ce-settings', function() {} ),
+			'get-started' => \add_submenu_page( $this->slug, __( 'Getting Started', 'checkout_engine' ), __( 'Getting Started', 'checkout_engine' ), 'edit_pk_products', $this->slug, '__return_false' ),
+			// 'dashboard' => \add_submenu_page( $this->slug, __( 'Dashboard', 'checkout_engine' ), __( 'Dashboard', 'checkout_engine' ), 'manage_options', $this->slug, '__return_false' ),
+			'orders'      => \add_submenu_page( $this->slug, __( 'Orders', 'checkout_engine' ), __( 'Orders', 'checkout_engine' ), 'edit_pk_orders', 'ce-orders', '__return_false' ),
+			'products'    => \add_submenu_page( $this->slug, __( 'Products', 'checkout_engine' ), __( 'Products', 'checkout_engine' ), 'edit_pk_products', 'ce-products', '__return_false' ),
+			'coupons'     => \add_submenu_page( $this->slug, __( 'Coupons', 'checkout_engine' ), __( 'Coupons', 'checkout_engine' ), 'edit_pk_coupons', 'ce-coupons', '__return_false' ),
+			'abandoned'   => \add_submenu_page( $this->slug, __( 'Abandoned Orders', 'checkout_engine' ), __( 'Abandoned Orders', 'checkout_engine' ), 'edit_pk_orders', 'ce-abandoned-orders', '__return_false' ),
+			'settings'    => \add_submenu_page( $this->slug, __( 'Settings', 'checkout_engine' ), __( 'Settings', 'checkout_engine' ), 'manage_account_settings', 'ce-settings', '__return_false' ),
 		];
 
 		$this->registerScripts();

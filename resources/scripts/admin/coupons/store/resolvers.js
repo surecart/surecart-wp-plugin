@@ -1,5 +1,5 @@
 import * as actions from './actions';
-import { fetch as apiFetch } from '../../store/model/controls';
+import { fetch as apiFetch } from '../../store/data/controls';
 const { getQueryArg } = wp.url;
 
 export default {

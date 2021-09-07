@@ -3,16 +3,10 @@ import { css, jsx } from '@emotion/core';
 
 const { __ } = wp.i18n;
 const { Fragment } = wp.element;
-const { dispatch } = wp.data;
+const { dispatch, useSelect, useDispatch } = wp.data;
 
+import { STORE_KEY } from './store';
 import { STORE_KEY as STORE_UI_KEY } from '../store/ui';
-
-import {
-	CeButton,
-	CeDropdown,
-	CeMenu,
-	CeMenuItem,
-} from '@checkout-engine/react';
 
 // template
 import Template from '../templates/SingleModel';
@@ -40,15 +34,16 @@ export default withConfirm( ( { setConfirm, noticeUI } ) => {
 
 	const {
 		product,
-		saveProduct,
+		save,
 		updateProduct,
 		loading,
+		status,
 		isSaving,
 	} = useProductData();
 
 	const onSubmit = async ( e ) => {
 		e.preventDefault();
-		await saveProduct();
+		await save();
 	};
 
 	const onInvalid = () => {
@@ -63,6 +58,7 @@ export default withConfirm( ( { setConfirm, noticeUI } ) => {
 
 	return (
 		<Template
+			status={ status }
 			onSubmit={ onSubmit }
 			onInvalid={ onInvalid }
 			backUrl={ 'admin.php?page=ce-products' }

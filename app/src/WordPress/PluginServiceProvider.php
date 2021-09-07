@@ -32,7 +32,7 @@ class PluginServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function activate() {
-		// Nothing to do right now.
+		\CheckoutEngine::createRoles();
 	}
 
 	/**

@@ -14,7 +14,8 @@ export default ( { style, children } ) => {
 			submit
 			style={ style }
 			className={ 'ce-save-model' }
-			busy={ isSaving }
+			disabled={ isSaving }
+			loading={ isSaving }
 		>
 			{ children }
 		</CeButton>

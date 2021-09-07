@@ -13,9 +13,40 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/*
+|--------------------------------------------------------------------------
+| Onboarding
+|--------------------------------------------------------------------------
+*/
+\CheckoutEngine::route()
+->get()
+->where( 'admin', 'ce-getting-started' )
+->middleware( 'user.can:edit_pk_products' )
+->handle( 'Onboarding@show' );
+
+/*
+|--------------------------------------------------------------------------
+| Dashboard
+|--------------------------------------------------------------------------
+*/
 \CheckoutEngine::route()->get()->where( 'admin', 'ce-dashboard' )->name( 'dashboard' )->handle( 'Dashboard@show' );
-// \CheckoutEngine::route()->get()->where( 'admin', 'ce-products' )->handle( 'Products@page' );
-\CheckoutEngine::route()->get()->where( 'admin', 'ce-orders' )->handle( 'Orders@list' );
+
+
+/*
+|--------------------------------------------------------------------------
+| Orders
+|--------------------------------------------------------------------------
+*/
+\CheckoutEngine::route()
+->where( 'admin', 'ce-orders' )
+->middleware( 'user.can:edit_pk_orders' ) // TODO: change to manage coupons.
+->setNamespace( '\\CheckoutEngine\\Controllers\\Admin\\Orders\\' )
+->group(
+	function() {
+		\CheckoutEngine::route()->get()->where( 'ce_url_var', false, 'action' )->name( 'orders.index' )->handle( 'OrdersViewController@index' );
+		\CheckoutEngine::route()->get()->where( 'ce_url_var', 'edit', 'action' )->name( 'orders.edit' )->handle( 'OrdersViewController@edit' );
+	}
+);
 
 /*
 |--------------------------------------------------------------------------
@@ -24,7 +55,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 */
 \CheckoutEngine::route()
 ->where( 'admin', 'ce-products' )
-->middleware( 'user.can:manage_options' ) // TODO: change to manage products.
+->middleware( 'user.can:edit_pk_products' ) // TODO: change to manage products.
 ->setNamespace( '\\CheckoutEngine\\Controllers\\Admin\\Products\\' )
 ->group(
 	function() {
@@ -40,7 +71,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 */
 \CheckoutEngine::route()
 ->where( 'admin', 'ce-coupons' )
-->middleware( 'user.can:manage_options' ) // TODO: change to manage coupons.
+->middleware( 'user.can:edit_pk_coupons' ) // TODO: change to manage coupons.
 ->setNamespace( '\\CheckoutEngine\\Controllers\\Admin\\Coupons\\' )
 ->group(
 	function() {
@@ -57,5 +88,5 @@ if ( ! defined( 'ABSPATH' ) ) {
 \CheckoutEngine::route()
 ->get()
 ->where( 'admin', 'ce-settings' )
-->middleware( 'user.can:manage_options' )
+->middleware( 'user.can:manage_pk_account_settings' )
 ->handle( 'Settings@show' );

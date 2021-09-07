@@ -345,6 +345,19 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 	}
 
 	/**
+	 * Get the person who created it.
+	 *
+	 * @return int|false
+	 */
+	public function getCreatedByAttribute() {
+		if ( empty( $this->attributes['metadata']['wp_created_by'] ) ) {
+			return false;
+		}
+
+		return (int) $this->attributes['metadata']['wp_created_by'];
+	}
+
+	/**
 	 * Sets an attribute
 	 * Optionally calls a mutator based on set{Attribute}Attribute
 	 *
@@ -386,10 +399,23 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 	 *
 	 * @param array $meta_data Model meta data.
 	 *
-	 * @return void
+	 * @return this
 	 */
-	public function setMetadataAttribute( $meta_data ) {
+	public function setMetadataAttributes( $meta_data ) {
 		$this->attributes['metadata'] = apply_filters( "checkout_engine/$this->object_name/set_meta_data", $meta_data );
+		return $this;
+	}
+
+	/**
+	 * Set a single meta data attribute
+	 *
+	 * @param string $key
+	 * @param string $data
+	 * @return this
+	 */
+	public function addToMetaData( $key, $data ) {
+		$this->setMetaDataAttributes( array_merge( $this->attributes['metadata'], [ $key => $data ] ) );
+		return $this;
 	}
 
 	/**
@@ -584,6 +610,11 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 		if ( $attributes ) {
 			$this->syncOriginal();
 			$this->fill( $attributes );
+		}
+
+		// add created by WordPress param
+		if ( $user_id = get_current_user_id() ) {
+			$this->addToMetaData( 'wp_created_by', $user_id );
 		}
 
 		$created = \CheckoutEngine::request(
