@@ -1,21 +1,22 @@
 /**
  * The external dependencies.
  */
-const { ProvidePlugin, WatchIgnorePlugin } = require('webpack');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const ImageminPlugin = require('imagemin-webpack-plugin').default;
-const ManifestPlugin = require('webpack-assets-manifest');
-const CopyPlugin = require('copy-webpack-plugin');
+const { ProvidePlugin, WatchIgnorePlugin } = require( 'webpack' );
+const CleanWebpackPlugin = require( 'clean-webpack-plugin' );
+const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' );
+const DependencyExtractionWebpackPlugin = require( '@wordpress/dependency-extraction-webpack-plugin' );
+const ImageminPlugin = require( 'imagemin-webpack-plugin' ).default;
+const ManifestPlugin = require( 'webpack-assets-manifest' );
+const CopyPlugin = require( 'copy-webpack-plugin' );
 
 /**
  * The internal dependencies.
  */
-const utils = require('./lib/utils');
-const configLoader = require('./config-loader');
-const spriteSmith = require('./spritesmith');
-const spriteSvg = require('./spritesvg');
-const postcss = require('./postcss');
+const utils = require( './lib/utils' );
+const configLoader = require( './config-loader' );
+const spriteSmith = require( './spritesmith' );
+const spriteSvg = require( './spritesvg' );
+const postcss = require( './postcss' );
 
 /**
  * Setup the env.
@@ -42,7 +43,7 @@ const babelLoader = {
  * Setup webpack plugins.
  */
 const plugins = [
-	new CopyPlugin({
+	new CopyPlugin( {
 		patterns: [
 			{
 				from: './packages/components/dist',
@@ -55,21 +56,21 @@ const plugins = [
 				toType: 'dir',
 			},
 		],
-	}),
-	new WatchIgnorePlugin([
-		utils.distImagesPath('sprite.png'),
-		utils.distImagesPath('sprite@2x.png'),
-	]),
-	new ProvidePlugin({
+	} ),
+	new WatchIgnorePlugin( [
+		utils.distImagesPath( 'sprite.png' ),
+		utils.distImagesPath( 'sprite@2x.png' ),
+	] ),
+	new ProvidePlugin( {
 		$: 'jquery',
 		jQuery: 'jquery',
-	}),
-	new MiniCssExtractPlugin({
-		filename: `styles/[name]${env.filenameSuffix}.css`,
-	}),
+	} ),
+	new MiniCssExtractPlugin( {
+		filename: `styles/[name]${ env.filenameSuffix }.css`,
+	} ),
 	spriteSmith,
 	spriteSvg,
-	new ImageminPlugin({
+	new ImageminPlugin( {
 		optipng: {
 			optimizationLevel: 7,
 		},
@@ -96,20 +97,21 @@ const plugins = [
 			],
 		},
 		plugins: [
-			require('imagemin-mozjpeg')({
+			require( 'imagemin-mozjpeg' )( {
 				quality: 100,
-			}),
+			} ),
 		],
-	}),
+	} ),
 	new ManifestPlugin(),
+	new DependencyExtractionWebpackPlugin(),
 ];
 
 // When doing a combined build, only clean up the first time.
-if (env.isCombined && env.isDebug) {
+if ( env.isCombined && env.isDebug ) {
 	plugins.push(
-		new CleanWebpackPlugin(utils.distPath(), {
+		new CleanWebpackPlugin( utils.distPath(), {
 			root: utils.rootPath(),
-		})
+		} )
 	);
 }
 
@@ -120,22 +122,22 @@ module.exports = {
 	/**
 	 * The input.
 	 */
-	entry: require('./webpack/entry'),
+	entry: require( './webpack/entry' ),
 
 	/**
 	 * The output.
 	 */
-	output: require('./webpack/output'),
+	output: require( './webpack/output' ),
 
 	/**
 	 * Resolve utilities.
 	 */
-	resolve: require('./webpack/resolve'),
+	resolve: require( './webpack/resolve' ),
 
 	/**
 	 * Resolve the dependencies that are available in the global scope.
 	 */
-	externals: require('./webpack/externals'),
+	externals: require( './webpack/externals' ),
 
 	/**
 	 * Setup the transformations.
@@ -156,7 +158,7 @@ module.exports = {
 			 */
 			{
 				type: 'javascript/auto',
-				test: utils.rootPath('config.json'),
+				test: utils.rootPath( 'config.json' ),
 				use: configLoader,
 			},
 
@@ -204,7 +206,7 @@ module.exports = {
 			 */
 			{
 				test: utils.tests.images,
-				exclude: [utils.srcImagesPath('sprite-svg')],
+				exclude: [ utils.srcImagesPath( 'sprite-svg' ) ],
 				use: [
 					{
 						loader: 'file-loader',
@@ -221,7 +223,7 @@ module.exports = {
 			 */
 			{
 				test: utils.tests.svgs,
-				include: [utils.srcImagesPath('sprite-svg')],
+				include: [ utils.srcImagesPath( 'sprite-svg' ) ],
 				use: [
 					{
 						loader: 'svg-sprite-loader',
@@ -260,7 +262,7 @@ module.exports = {
 	 * Setup optimizations.
 	 */
 	optimization: {
-		minimize: !env.isDebug,
+		minimize: ! env.isDebug,
 	},
 
 	/**

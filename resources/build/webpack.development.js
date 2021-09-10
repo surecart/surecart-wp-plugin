@@ -4,6 +4,7 @@
 const url = require( 'url' );
 const { ProvidePlugin, WatchIgnorePlugin } = require( 'webpack' );
 const CleanWebpackPlugin = require( 'clean-webpack-plugin' );
+const DependencyExtractionWebpackPlugin = require( '@wordpress/dependency-extraction-webpack-plugin' );
 const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' );
 const ManifestPlugin = require( 'webpack-assets-manifest' );
 const chokidar = require( 'chokidar' );
@@ -89,6 +90,7 @@ const plugins = [
 			},
 		],
 	} ),
+	new DependencyExtractionWebpackPlugin(),
 ];
 
 /**
@@ -151,7 +153,7 @@ module.exports = {
 				test: utils.tests.scripts,
 				exclude: /node_modules/,
 				use: [
-          require.resolve( 'thread-loader' ),
+					require.resolve( 'thread-loader' ),
 					{
 						loader: require.resolve( 'babel-loader' ),
 						options: {
