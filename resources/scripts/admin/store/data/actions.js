@@ -155,57 +155,89 @@ export function* saveModel( key, { with: saveWith = [] } ) {
 		key
 	);
 
-	// save main model
-	if ( ! main?.id || dirty?.[ main?.id ] ) {
-		yield apiFetch( {
-			path: main?.id ? `${ key }s/${ main.id }` : `${ key }s`,
-			method: main?.id ? 'PATCH' : 'POST',
-			data: main,
-		} );
-	}
+	try {
+		// save main model
+		if ( ! main?.id || dirty?.[ main?.id ] ) {
+			let response = yield apiFetch( {
+				path: main?.id ? `${ key }s/${ main.id }` : `${ key }s`,
+				method: main?.id ? 'PATCH' : 'POST',
+				data: main,
+			} );
 
-	// replace history state
-	setHistory( main?.id );
+			if ( response ) {
+				// don't overwrite "with" subcollections.
+				saveWith.forEach( ( key ) => {
+					if ( response?.[ key ] ) {
+						delete response[ key ];
+					}
+				} );
 
-	// batch request others if dirty
-	let batch = [];
-	saveWith.forEach( ( withKey ) => {
-		if ( allModels?.[ withKey ] ) {
-			const models = allModels?.[ withKey ];
-			if ( Array.isArray( models ) ) {
-				models.forEach( ( model, index ) => {
+				yield controls.dispatch(
+					DATA_STORE_KEY,
+					'updateModel',
+					key,
+					response
+				);
+			} else {
+				// didn't update.
+				throw {
+					message: 'Failed to save.',
+				};
+			}
+		}
+
+		// replace history state
+		setHistory( main?.id );
+
+		// batch request others if dirty
+		let batch = [];
+		saveWith.forEach( ( withKey ) => {
+			if ( allModels?.[ withKey ] ) {
+				const models = allModels?.[ withKey ];
+				if ( Array.isArray( models ) ) {
+					models.forEach( ( model, index ) => {
+						if ( isDirty( model, dirty ) ) {
+							batch.push( {
+								key: withKey,
+								request: prepareSaveRequest( model ),
+								index,
+							} );
+						}
+					} );
+				} else {
 					if ( isDirty( model, dirty ) ) {
 						batch.push( {
 							key: withKey,
-							request: prepareSaveRequest( model ),
-							index,
+							request: prepareSaveRequest( models, withKey ),
 						} );
 					}
-				} );
-			} else {
-				if ( isDirty( model, dirty ) ) {
-					batch.push( {
-						key: withKey,
-						request: prepareSaveRequest( models, withKey ),
-					} );
 				}
 			}
-		}
+		} );
+
+		yield batchSave( batch );
+
+		yield clearDirty();
+	} catch ( e ) {
+		throw e;
+	} finally {
+		// add notice.
+		yield controls.dispatch(
+			'checkout-engine/notices',
+			'addSnackbarNotice',
+			{
+				content: __( 'Saved.', 'checkout_engine' ),
+			}
+		);
+	}
+}
+
+export function* test( main, key ) {
+	return yield apiFetch( {
+		path: main?.id ? `${ key }s/${ main.id }` : `${ key }s`,
+		method: main?.id ? 'PATCH' : 'POST',
+		data: main,
 	} );
-
-	yield batchSave( batch );
-
-	yield clearDirty();
-
-	// add notice.
-	yield controls.dispatch( 'checkout-engine/notices', 'addSnackbarNotice', {
-		content: __( 'Saved.', 'checkout_engine' ),
-	} );
-	// } catch ( e ) {
-	// 	throw e;
-	// } finally {
-	// 	yield controls.dispatch( UI_STORE_KEY, 'setSaving', false );
-	// }
 }
 
 export function* setHistory( id ) {
@@ -242,12 +274,6 @@ export function prepareSaveRequest( data ) {
  * Save the main model
  */
 export function* saveMainModel( data, saveWith ) {
-	yield apiFetch( {
-		path: data.id ? `${ key }s/${ data.id }` : `${ key }s`,
-		method: data.id ? 'PATCH' : 'POST',
-		data,
-	} );
-
 	let response;
 	try {
 		response = yield apiFetch( {

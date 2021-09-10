@@ -193,6 +193,19 @@ describe( 'actions', () => {
 			} );
 		} );
 
+		// TODO: not working.
+		it( 'updates main model from api request', () => {
+			const { value } = fulfillment.next( product );
+			expect( value ).toEqual(
+				controls.dispatch(
+					DATA_STORE_KEY,
+					'updateModel',
+					'product',
+					product
+				)
+			);
+		} );
+
 		it( 'yields expected action for batch api calls', () => {
 			const { value } = fulfillment.next( allModels );
 			expect( value ).toEqual( {
@@ -213,6 +226,26 @@ describe( 'actions', () => {
 					},
 				],
 			} );
+		} );
+
+		it( 'clears dirty all posts after saving', () => {
+			const { value } = fulfillment.next();
+			expect( value ).toEqual( {
+				type: 'CLEAR_DIRTY',
+			} );
+		} );
+
+		it( 'adds a snackbar notice', () => {
+			const { value } = fulfillment.next();
+			expect( value ).toEqual(
+				controls.dispatch(
+					'checkout-engine/notices',
+					'addSnackbarNotice',
+					{
+						content: 'Saved.',
+					}
+				)
+			);
 		} );
 	} );
 } );
