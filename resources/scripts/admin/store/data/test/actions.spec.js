@@ -125,6 +125,17 @@ describe( 'actions', () => {
 	describe( 'saveModel', () => {
 		let fulfillment;
 		const product = { id: 'testmodel', content: 'foo' };
+		const allModels = {
+			product,
+			prices: [
+				{ id: 'cleanprice', name: 'clean', object: 'price' },
+				{ id: 'dirtyprice', name: 'dirty', object: 'price' },
+			],
+		};
+		const dirty = {
+			[ product?.id ]: product,
+			dirtyprice: allModels.prices[ 1 ],
+		};
 
 		const reset = () =>
 			( fulfillment = saveModel( 'product', { with: [ 'prices' ] } ) );
@@ -151,9 +162,16 @@ describe( 'actions', () => {
 			);
 		} );
 
+		it( 'selects all models', () => {
+			let { value } = fulfillment.next( dirty );
+			expect( value ).toEqual(
+				controls.resolveSelect( DATA_STORE_KEY, 'selectAllModels' )
+			);
+		} );
+
 		// gets fresh model
 		it( 'selects model', () => {
-			let { value } = fulfillment.next();
+			let { value } = fulfillment.next( allModels );
 			expect( value ).toEqual(
 				controls.resolveSelect(
 					DATA_STORE_KEY,
@@ -163,15 +181,8 @@ describe( 'actions', () => {
 			);
 		} );
 
-		it( 'selects all models', () => {
-			let { value } = fulfillment.next( product );
-			expect( value ).toEqual(
-				controls.resolveSelect( DATA_STORE_KEY, 'selectAllModels' )
-			);
-		} );
-
 		it( 'yields expected action for the api fetch call', () => {
-			const { value } = fulfillment.next();
+			const { value } = fulfillment.next( product );
 			expect( value ).toEqual( {
 				type: 'FETCH_FROM_API',
 				options: {
@@ -182,9 +193,26 @@ describe( 'actions', () => {
 			} );
 		} );
 
-		// it( 'yields expected action for batch api calls', () => {
-		// 	const { value } = fulfillment.next();
-		// 	expect( value ).toEqual( {} );
-		// } );
+		it( 'yields expected action for batch api calls', () => {
+			const { value } = fulfillment.next( allModels );
+			expect( value ).toEqual( {
+				type: 'BATCH_SAVE',
+				batches: [
+					{
+						index: 1,
+						key: 'prices',
+						request: {
+							data: {
+								id: 'dirtyprice',
+								name: 'dirty',
+								object: 'price',
+							},
+							method: 'PATCH',
+							path: 'checkout-engine/v1/prices/dirtyprice',
+						},
+					},
+				],
+			} );
+		} );
 	} );
 } );

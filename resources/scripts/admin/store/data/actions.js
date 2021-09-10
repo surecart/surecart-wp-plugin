@@ -142,6 +142,12 @@ export function* saveModel( key, { with: saveWith = [] } ) {
 	// get dirty models
 	const dirty = yield controls.resolveSelect( DATA_STORE_KEY, 'selectDirty' );
 
+	// get all models
+	const allModels = yield controls.resolveSelect(
+		DATA_STORE_KEY,
+		'selectAllModels'
+	);
+
 	// get fresh model.
 	const main = yield controls.resolveSelect(
 		DATA_STORE_KEY,
@@ -149,29 +155,21 @@ export function* saveModel( key, { with: saveWith = [] } ) {
 		key
 	);
 
-	// get all models
-	const allModels = yield controls.resolveSelect(
-		DATA_STORE_KEY,
-		'selectAllModels'
-	);
-
 	// save main model
-	// if ( ! main?.id || dirty?.[ model?.id ] ) {
-	yield apiFetch( {
-		path: main?.id ? `${ key }s/${ main.id }` : `${ key }s`,
-		method: main?.id ? 'PATCH' : 'POST',
-		data: main,
-	} );
-	// }
-
-	return;
+	if ( ! main?.id || dirty?.[ main?.id ] ) {
+		yield apiFetch( {
+			path: main?.id ? `${ key }s/${ main.id }` : `${ key }s`,
+			method: main?.id ? 'PATCH' : 'POST',
+			data: main,
+		} );
+	}
 
 	// replace history state
-	yield setHistory( main?.id );
+	setHistory( main?.id );
 
+	// batch request others if dirty
 	let batch = [];
-
-	yield saveWith.forEach( ( withKey ) => {
+	saveWith.forEach( ( withKey ) => {
 		if ( allModels?.[ withKey ] ) {
 			const models = allModels?.[ withKey ];
 			if ( Array.isArray( models ) ) {
@@ -196,6 +194,7 @@ export function* saveModel( key, { with: saveWith = [] } ) {
 	} );
 
 	yield batchSave( batch );
+
 	yield clearDirty();
 
 	// add notice.
