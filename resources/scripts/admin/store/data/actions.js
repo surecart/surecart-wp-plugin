@@ -156,11 +156,15 @@ export function* saveModel( key, { with: saveWith = [] } ) {
 	);
 
 	// save main model
+	// if ( ! main?.id || dirty?.[ model?.id ] ) {
 	yield apiFetch( {
 		path: main?.id ? `${ key }s/${ main.id }` : `${ key }s`,
 		method: main?.id ? 'PATCH' : 'POST',
 		data: main,
 	} );
+	// }
+
+	return;
 
 	// replace history state
 	yield setHistory( main?.id );

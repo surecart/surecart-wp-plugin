@@ -124,7 +124,8 @@ describe( 'actions', () => {
 
 	describe( 'saveModel', () => {
 		let fulfillment;
-		const product = { id: 10, content: 'foo' };
+		const product = { id: 'testmodel', content: 'foo' };
+
 		const reset = () =>
 			( fulfillment = saveModel( 'product', { with: [ 'prices' ] } ) );
 
@@ -144,7 +145,7 @@ describe( 'actions', () => {
 		} );
 
 		it( 'gets dirty models', () => {
-			let { value } = fulfillment.next( true );
+			let { value } = fulfillment.next();
 			expect( value ).toEqual(
 				controls.resolveSelect( DATA_STORE_KEY, 'selectDirty' )
 			);
@@ -176,9 +177,14 @@ describe( 'actions', () => {
 				options: {
 					data: product,
 					method: 'PATCH',
-					path: 'products/10',
+					path: `products/${ product.id }`,
 				},
 			} );
 		} );
+
+		// it( 'yields expected action for batch api calls', () => {
+		// 	const { value } = fulfillment.next();
+		// 	expect( value ).toEqual( {} );
+		// } );
 	} );
 } );
