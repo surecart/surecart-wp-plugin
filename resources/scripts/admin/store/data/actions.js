@@ -1,15 +1,25 @@
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 import { fetch as apiFetch, batchSave } from './controls';
-const { controls } = wp.data;
+import { controls } from '@wordpress/data';
+import { addQueryArgs } from '@wordpress/url';
 import { STORE_KEY as UI_STORE_KEY } from '../ui';
+import { STORE_KEY as DATA_STORE_KEY } from '../data';
+
+export function setEntities( payload ) {
+	return {
+		type: 'SET_ENTITIES',
+		payload,
+	};
+}
 
 /**
  * Set model by path
  */
-export function setModel( key, payload ) {
+export function setModel( key, payload, index = null ) {
+	const keyIndex = index !== null ? `.${ index }` : '';
 	return {
 		type: 'SET_MODEL',
-		key,
+		key: `${ key }${ keyIndex }`,
 		payload,
 	};
 }
@@ -17,10 +27,11 @@ export function setModel( key, payload ) {
 /**
  * Add model by path.
  */
-export function addModel( key, payload ) {
+export function addModel( key, payload, index = null ) {
+	const keyIndex = index !== null ? `.${ index }` : '';
 	return {
 		type: 'ADD_MODEL',
-		key,
+		key: `${ key }${ keyIndex }`,
 		payload,
 	};
 }
@@ -43,7 +54,7 @@ export function* updateModel( key, payload ) {
  */
 export function* updateDirty( key, payload ) {
 	const model = yield controls.resolveSelect(
-		'checkout-engine/data',
+		DATA_STORE_KEY,
 		'selectModel',
 		key
 	);
@@ -63,7 +74,7 @@ export function* updateDirty( key, payload ) {
  */
 export function* deleteModel( key ) {
 	const data = yield controls.resolveSelect(
-		'checkout-engine/data',
+		DATA_STORE_KEY,
 		'selectModel',
 		key
 	);
@@ -105,6 +116,11 @@ export function* deleteModel( key ) {
 			message: 'Failed to delete.',
 		};
 	}
+
+	return {
+		type: 'DELETE_MODEL',
+		key,
+	};
 }
 
 /**
@@ -120,89 +136,80 @@ export function clearDirty() {
  * Save model with optional subcollections.
  */
 export function* saveModel( key, { with: saveWith = [] } ) {
-	// // is saveable.
-	// // if ( ! ( yield controls.select( STORE_NAME, 'isEditedPostSaveable' ) ) ) {
-	// // 	return;
-	// // }
 	yield controls.dispatch( UI_STORE_KEY, 'clearErrors' );
 	yield controls.dispatch( UI_STORE_KEY, 'setSaving', true );
 
-	try {
-		// save main model if dirty.
-		if (
-			yield controls.resolveSelect(
-				'checkout-engine/data',
-				'isDirty',
-				key
-			)
-		) {
-			yield saveMainModel( key, saveWith );
-		}
+	// get dirty models
+	const dirty = yield controls.resolveSelect( DATA_STORE_KEY, 'selectDirty' );
 
-		// get fresh model.
-		const main = yield controls.resolveSelect(
-			'checkout-engine/data',
-			'selectModel',
-			key
-		);
+	// get fresh model.
+	const main = yield controls.resolveSelect(
+		DATA_STORE_KEY,
+		'selectModel',
+		key
+	);
 
-		// replace history state
-		const url = wp.url.addQueryArgs( window.location.href, {
-			id: main?.id,
-		} );
-		yield window.history.replaceState(
-			{ id: main?.id },
-			'Model ' + main?.id,
-			url
-		);
+	// get all models
+	const allModels = yield controls.resolveSelect(
+		DATA_STORE_KEY,
+		'selectAllModels'
+	);
 
-		const dirty = yield controls.resolveSelect(
-			'checkout-engine/data',
-			'selectDirty'
-		);
+	// save main model
+	yield apiFetch( {
+		path: main?.id ? `${ key }s/${ main.id }` : `${ key }s`,
+		method: main?.id ? 'PATCH' : 'POST',
+		data: main,
+	} );
 
-		let batch = [];
+	// replace history state
+	yield setHistory( main?.id );
 
-		yield saveWith.forEach( ( withKey ) => {
-			if ( main?.[ withKey ] ) {
-				const models = main?.[ withKey ];
-				if ( Array.isArray( models ) ) {
-					models.forEach( ( model, index ) => {
-						if ( isDirty( model, dirty ) ) {
-							batch.push( {
-								key: `${ key }.${ withKey }`,
-								request: prepareSaveRequest( model ),
-								index,
-							} );
-						}
-					} );
-				} else {
+	let batch = [];
+
+	yield saveWith.forEach( ( withKey ) => {
+		if ( allModels?.[ withKey ] ) {
+			const models = allModels?.[ withKey ];
+			if ( Array.isArray( models ) ) {
+				models.forEach( ( model, index ) => {
 					if ( isDirty( model, dirty ) ) {
 						batch.push( {
-							key: `${ key }.${ withKey }`,
-							request: prepareSaveRequest( models, withKey ),
+							key: withKey,
+							request: prepareSaveRequest( model ),
+							index,
 						} );
 					}
+				} );
+			} else {
+				if ( isDirty( model, dirty ) ) {
+					batch.push( {
+						key: withKey,
+						request: prepareSaveRequest( models, withKey ),
+					} );
 				}
 			}
-		} );
+		}
+	} );
 
-		yield batchSave( batch );
-		yield clearDirty();
+	yield batchSave( batch );
+	yield clearDirty();
 
-		// add notice.
-		yield controls.dispatch(
-			'checkout-engine/notices',
-			'addSnackbarNotice',
-			{
-				content: __( 'Saved.', 'checkout_engine' ),
-			}
-		);
-	} catch ( e ) {
-		throw e;
-	} finally {
-		yield controls.dispatch( UI_STORE_KEY, 'setSaving', false );
-	}
+	// add notice.
+	yield controls.dispatch( 'checkout-engine/notices', 'addSnackbarNotice', {
+		content: __( 'Saved.', 'checkout_engine' ),
+	} );
+	// } catch ( e ) {
+	// 	throw e;
+	// } finally {
+	// 	yield controls.dispatch( UI_STORE_KEY, 'setSaving', false );
+	// }
+}
+
+export function* setHistory( id ) {
+	const url = addQueryArgs( window.location.href, {
+		id,
+	} );
+	yield window.history.replaceState( { id }, 'Model ' + id, url );
 }
 
 /**
@@ -231,12 +238,12 @@ export function prepareSaveRequest( data ) {
 /**
  * Save the main model
  */
-export function* saveMainModel( key, saveWith ) {
-	const data = yield controls.resolveSelect(
-		'checkout-engine/data',
-		'selectModel',
-		key
-	);
+export function* saveMainModel( data, saveWith ) {
+	yield apiFetch( {
+		path: data.id ? `${ key }s/${ data.id }` : `${ key }s`,
+		method: data.id ? 'PATCH' : 'POST',
+		data,
+	} );
 
 	let response;
 	try {
@@ -257,6 +264,7 @@ export function* saveMainModel( key, saveWith ) {
 				delete response[ key ];
 			}
 		} );
+
 		return yield updateModel( key, response );
 	}
 

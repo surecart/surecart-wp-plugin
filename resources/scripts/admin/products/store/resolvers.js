@@ -1,6 +1,7 @@
-import * as actions from './actions';
+const { controls } = wp.data;
 import { fetch as apiFetch } from '../../store/data/controls';
 const { getQueryArg } = wp.url;
+import { STORE_KEY } from '../../store/data';
 
 export default {
 	*selectProduct() {
@@ -8,10 +9,15 @@ export default {
 		const id = getQueryArg( window.location, 'id' );
 		if ( ! id ) return {};
 
-		// fetch
-		const payload = yield apiFetch( { path: `products/${ id }` } );
+		// fetch and normalize
+		const { prices, ...product } = yield apiFetch( {
+			path: `products/${ id }`,
+		} );
 
 		// store.
-		return actions.setProduct( payload );
+		return yield controls.dispatch( STORE_KEY, 'setEntities', {
+			prices,
+			product,
+		} );
 	},
 };

@@ -35,10 +35,6 @@ export function* save() {
 	yield controls.dispatch( UI_STORE_KEY, 'clearErrors' );
 	yield controls.dispatch( UI_STORE_KEY, 'setSaving', true );
 
-	// abstract this for other pages.
-	// yield controls.dispatch('checkout-engine/core', 'saveModel', 'coupons', coupon,  'UPDATE_COUPON');
-	// yield controls.dispatch('checkout-engine/core', 'saveModel', 'coupons', coupon,  'UPDATE_COUPON');
-
 	let updatedRecord;
 
 	try {

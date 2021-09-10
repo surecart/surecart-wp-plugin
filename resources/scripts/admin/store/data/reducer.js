@@ -1,10 +1,12 @@
-const { combineReducers } = wp.data;
+import { combineReducers } from '@wordpress/data';
 
 import dotProp from 'dot-prop-immutable';
 
 // Store based on nested key. (i.e. product.price)
 export const entities = ( state = {}, { type, key, payload } ) => {
 	switch ( type ) {
+		case 'SET_ENTITIES':
+			return payload;
 		case 'SET_MODEL':
 			return dotProp.set( state, key, payload );
 		case 'ADD_MODEL':

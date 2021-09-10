@@ -1,25 +1,29 @@
 const { createRegistrySelector } = wp.data;
-import { selectModel } from '../../store/data/selectors';
+import { selectModel as modelSelector } from '../../store/data/selectors';
+
+export const selectModel = ( state, name ) => {
+	return modelSelector( state, name );
+};
 
 /**
  * Get the product
  */
 export const selectProduct = ( state ) => {
-	return selectModel( state, 'product' );
+	return modelSelector( state, 'product' );
 };
 
 /**
  * Get prices
  */
 export const selectPrices = ( state ) => {
-	return selectModel( state, 'product.prices' );
+	return modelSelector( state, 'prices' );
 };
 
 /**
  * Get a specific price.
  */
 export const selectPrice = ( state, index ) => {
-	return selectModel( state, `product.prices.${ index }` );
+	return modelSelector( state, `prices.${ index }` );
 };
 
 /**

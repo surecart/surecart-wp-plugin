@@ -30,6 +30,7 @@ export default ( { price, prices, index, open = true } ) => {
 		duplicatePrice,
 		updatePrice,
 		deletePrice,
+		updateModel,
 		isInvalid,
 	} = useProductData();
 
@@ -238,7 +239,10 @@ export default ( { price, prices, index, open = true } ) => {
 							) }
 							value={ price?.name }
 							onCeChange={ ( e ) => {
-								updatePrice( { name: e.target.value }, index );
+								updateModel( `prices.${ index }`, {
+									name: e.target.value,
+								} );
+								// updatePrice( { name: e.target.value }, index );
 							} }
 							required
 						/>

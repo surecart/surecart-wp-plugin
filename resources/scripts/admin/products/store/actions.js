@@ -9,8 +9,16 @@ import { STORE_KEY } from './index';
 /**
  * Set product in store.
  */
-export function setProduct( payload ) {
-	return modelActions.setModel( 'product', payload );
+export function setEntities( payload ) {
+	return modelActions.setEntities( payload );
+}
+
+export function setModel( path, payload ) {
+	return modelActions.setModel( path, payload );
+}
+
+export function updateModel( path, payload ) {
+	return modelActions.updateModel( path, payload );
 }
 
 /**
@@ -26,7 +34,7 @@ export function updateProduct( payload ) {
 export function* addPrice( payload ) {
 	const product = yield controls.select( STORE_KEY, 'selectProduct' );
 
-	return modelActions.addModel( 'product.prices', {
+	return modelActions.addModel( 'prices', {
 		...payload,
 		object: 'price',
 		product_id: payload.product_id || product?.id,
@@ -50,11 +58,11 @@ export function updatePrice( payload, index ) {
 	if ( payload?.recurring ) {
 		payload.ad_hoc = false;
 	}
-	return modelActions.updateModel( `product.prices.${ index }`, payload );
+	return modelActions.updateModel( `prices.${ index }`, payload );
 }
 
 export function deletePrice( index ) {
-	return modelActions.deleteModel( `product.prices.${ index }` );
+	return modelActions.deleteModel( `prices.${ index }` );
 }
 
 export function save() {
