@@ -1,9 +1,8 @@
-const { __ } = wp.i18n;
-const { BaseControl } = wp.components;
-
-import Box from '../../ui/Box';
+import { __ } from '@wordpress/i18n';
 
 import { CeInput, CeFormRow } from '@checkout-engine/react';
+import Box from '../../ui/Box';
+
 import useProductData from '../hooks/useProductData';
 
 export default () => {

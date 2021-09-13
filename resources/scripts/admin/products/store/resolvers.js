@@ -1,6 +1,6 @@
-const { controls } = wp.data;
+import { controls } from '@wordpress/data';
 import { fetch as apiFetch } from '../../store/data/controls';
-const { getQueryArg } = wp.url;
+import { getQueryArg } from '@wordpress/url';
 import { STORE_KEY } from '../../store/data';
 
 export default {

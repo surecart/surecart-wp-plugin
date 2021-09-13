@@ -1,9 +1,9 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 
-const { __ } = wp.i18n;
-const { Fragment } = wp.element;
-const { dispatch, useSelect, useDispatch } = wp.data;
+import { __ } from '@wordpress/i18n';
+import { Fragment } from '@wordpress/element';
+import { dispatch } from '@wordpress/data';
 
 import { STORE_KEY as NOTICES_STORE_KEY } from '../store/notices';
 import { STORE_KEY as UI_STORE_KEY } from '../store/ui';
@@ -29,7 +29,6 @@ import useProductData from './hooks/useProductData';
 
 // hocs
 import withConfirm from '../hocs/withConfirm';
-import { STORE_CONFIG } from '../store/data';
 
 export default withConfirm( ( { setConfirm, noticeUI } ) => {
 	const { snackbarNotices, removeSnackbarNotice } = useSnackbar();

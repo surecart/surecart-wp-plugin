@@ -1,4 +1,4 @@
-const { render } = wp.element;
+import { render } from '@wordpress/element';
 
 import '../store/ui/register';
 import '../store/notices/register';

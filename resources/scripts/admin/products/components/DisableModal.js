@@ -1,5 +1,5 @@
-const { __, sprintf } = wp.i18n;
-const { Button, Modal } = wp.components;
+import { __, sprintf } from '@wordpress/i18n';
+import { Button, Modal } from '@wordpress/components';
 
 export default ( {
 	open,

@@ -179,7 +179,7 @@ describe( 'actions', () => {
 		it( 'should yield the DELETE_MODEL action', () => {
 			const { value } = fulfillment.next();
 			expect( value ).toEqual( {
-				key,
+				key: `${ key }.1`,
 				type: 'DELETE_MODEL',
 			} );
 		} );

@@ -1,6 +1,7 @@
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 import { CeButton } from '@checkout-engine/react';
-const { useSelect } = wp.data;
+import { useSelect } from '@wordpress/data';
+
 import { STORE_KEY as UI_STORE_KEY } from '../../store/ui';
 
 export default ( { style, children } ) => {

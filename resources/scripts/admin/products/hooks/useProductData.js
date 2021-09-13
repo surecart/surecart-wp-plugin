@@ -1,4 +1,4 @@
-const { useSelect, useDispatch } = wp.data;
+import { useSelect, useDispatch } from '@wordpress/data';
 import { STORE_KEY } from '../store';
 import { STORE_KEY as UI_STORE_KEY } from '../../store/ui';
 

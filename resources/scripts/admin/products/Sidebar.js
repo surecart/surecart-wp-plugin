@@ -1,21 +1,14 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 
-const { __, sprintf } = wp.i18n;
-const { format } = wp.date;
-const { Fragment } = wp.element;
+import { __ } from '@wordpress/i18n';
+import { format } from '@wordpress/date';
+import { Fragment } from '@wordpress/element';
 
 import Box from '../ui/Box';
 import ArchiveToggle from './components/ArchiveToggle';
 import Definition from '../ui/Definition';
-import {
-	CeFormRow,
-	CeButton,
-	CeFormControl,
-	CeSwitch,
-} from '@checkout-engine/react';
-
-import { getFormattedPrice } from '../util';
+import { CeButton } from '@checkout-engine/react';
 
 export default ( { loading, product } ) => {
 	return (
@@ -116,7 +109,10 @@ export default ( { loading, product } ) => {
 					</CeButton>
 				}
 			>
-				To get started, add an automation.
+				{ __(
+					'To get started, add an automation.',
+					'checkout_engine'
+				) }
 			</Box>
 		</Fragment>
 	);

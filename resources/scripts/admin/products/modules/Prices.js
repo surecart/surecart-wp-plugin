@@ -1,9 +1,8 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 
-const { __ } = wp.i18n;
-const { useState } = wp.element;
-const { useSelect, dispatch } = wp.data;
+import { __ } from '@wordpress/i18n';
+import { useState } from '@wordpress/element';
 
 import Box from '../../ui/Box';
 import Price from '../components/Price';
