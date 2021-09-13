@@ -27,10 +27,16 @@ export default createHigherOrderComponent( ( OriginalComponent ) => {
 			onRequestConfirm: () => {},
 		} );
 
+		const updateConfirm = ( data ) => {
+			console.log( { modal } );
+			// setModal( { ...modal, ...data } );
+		};
+
 		return (
 			<Fragment>
 				<OriginalComponent
 					confirmModal={ modal }
+					updateConfirm={ updateConfirm }
 					setConfirm={ setModal }
 					{ ...props }
 				/>
@@ -43,7 +49,8 @@ export default createHigherOrderComponent( ( OriginalComponent ) => {
 						<p>{ modal?.message }</p>
 						<CeButton
 							type={ modal?.isDestructive ? 'danger' : 'primary' }
-							busy={ modal?.isSaving }
+							loading={ modal?.isSaving }
+							disabled={ modal?.isSaving }
 							onClick={ modal?.onRequestConfirm }
 						>
 							{ modal?.confirmButtonText ||

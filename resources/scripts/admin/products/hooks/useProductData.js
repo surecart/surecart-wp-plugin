@@ -11,7 +11,7 @@ export default () => {
 				isSaving: select( STORE_KEY ).isSaving(),
 				status: select( STORE_KEY ).selectProductStatus(),
 				isInvalid: select( UI_STORE_KEY ).isInvalid(),
-				prices: select( STORE_KEY ).selectPrices(),
+				prices: select( STORE_KEY ).selectModel( 'prices' ),
 			};
 		} ),
 		...useDispatch( STORE_KEY ),

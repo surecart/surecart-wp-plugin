@@ -4,8 +4,10 @@ const { BaseControl } = wp.components;
 import Box from '../../ui/Box';
 
 import { CeInput, CeFormRow } from '@checkout-engine/react';
+import useProductData from '../hooks/useProductData';
 
-export default ( { product, updateProduct, loading } ) => {
+export default () => {
+	const { product, updateModel, loading } = useProductData();
 	return (
 		<Box title={ __( 'General', 'checkout_engine' ) } loading={ loading }>
 			<div>
@@ -19,7 +21,7 @@ export default ( { product, updateProduct, loading } ) => {
 						) }
 						value={ product?.name }
 						onCeChange={ ( e ) => {
-							updateProduct( { name: e.target.value } );
+							updateModel( 'product', { name: e.target.value } );
 						} }
 						name="name"
 						required
@@ -34,7 +36,9 @@ export default ( { product, updateProduct, loading } ) => {
 						value={ product?.description }
 						name="description"
 						onCeChange={ ( e ) => {
-							updateProduct( { description: e.target.value } );
+							updateModel( 'product', {
+								description: e.target.value,
+							} );
 						} }
 						required
 					/>

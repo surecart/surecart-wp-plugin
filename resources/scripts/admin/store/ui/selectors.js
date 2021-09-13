@@ -7,13 +7,13 @@ export function flash( state ) {
 export function isInvalid( state ) {
 	return state.isInvalid;
 }
-export function selectErrors( state, model, index = null ) {
-	if ( ! model ) {
+export function selectErrors( state, key, index = null ) {
+	if ( ! key ) {
 		return state.errors;
 	}
 
 	const filtered = state.errors.filter(
-		( error ) => error?.model && error.model === model
+		( error ) => error?.key && error.key === key
 	);
 
 	if ( index === null ) {

@@ -39,12 +39,20 @@ export function addModel( key, payload, index = null ) {
 /**
  * Update model by path.
  */
-export function* updateModel( key, payload ) {
-	yield updateDirty( key, payload );
+export function* updateModel( key, payload, index = null ) {
+	const keyIndex = index !== null ? `.${ index }` : '';
+
+	yield controls.dispatch(
+		DATA_STORE_KEY,
+		'updateDirty',
+		key,
+		payload,
+		index
+	);
 
 	return {
 		type: 'UPDATE_MODEL',
-		key,
+		key: `${ key }${ keyIndex }`,
 		payload,
 	};
 }
@@ -52,11 +60,12 @@ export function* updateModel( key, payload ) {
 /**
  * Update dirty stuff.
  */
-export function* updateDirty( key, payload ) {
+export function* updateDirty( key, payload, index ) {
 	const model = yield controls.resolveSelect(
 		DATA_STORE_KEY,
 		'selectModel',
-		key
+		key,
+		index
 	);
 
 	// set dirty.
@@ -72,11 +81,14 @@ export function* updateDirty( key, payload ) {
 /**
  * Delete model by path.
  */
-export function* deleteModel( key ) {
+export function* deleteModel( key, index = null ) {
+	const keyIndex = index !== null ? `.${ index }` : '';
+
 	const data = yield controls.resolveSelect(
 		DATA_STORE_KEY,
 		'selectModel',
-		key
+		key,
+		index
 	);
 
 	if ( data?.id ) {
@@ -107,7 +119,7 @@ export function* deleteModel( key ) {
 			);
 			return {
 				type: 'DELETE_MODEL',
-				key,
+				key: `${ key }${ keyIndex }`,
 			};
 		}
 
@@ -119,7 +131,7 @@ export function* deleteModel( key ) {
 
 	return {
 		type: 'DELETE_MODEL',
-		key,
+		key: `${ key }${ keyIndex }`,
 	};
 }
 
@@ -135,7 +147,7 @@ export function clearDirty() {
 /**
  * Save model with optional subcollections.
  */
-export function* saveModel( key, { with: saveWith = [] } ) {
+export function* saveModel( key, { with: saveWith = [] } = {} ) {
 	yield controls.dispatch( UI_STORE_KEY, 'clearErrors' );
 	yield controls.dispatch( UI_STORE_KEY, 'setSaving', true );
 
@@ -216,11 +228,7 @@ export function* saveModel( key, { with: saveWith = [] } ) {
 		} );
 
 		yield batchSave( batch );
-
 		yield clearDirty();
-	} catch ( e ) {
-		throw e;
-	} finally {
 		// add notice.
 		yield controls.dispatch(
 			'checkout-engine/notices',
@@ -229,6 +237,20 @@ export function* saveModel( key, { with: saveWith = [] } ) {
 				content: __( 'Saved.', 'checkout_engine' ),
 			}
 		);
+	} catch ( e ) {
+		yield controls.dispatch(
+			'checkout-engine/notices',
+			'addSnackbarNotice',
+			{
+				className: 'is-snackbar-error',
+				content:
+					e?.message || __( 'Failed to save.', 'checkout_engine' ),
+			}
+		);
+
+		throw e;
+	} finally {
+		yield controls.dispatch( UI_STORE_KEY, 'setSaving', false );
 	}
 }
 
@@ -262,9 +284,7 @@ export function isDirty( model, dirty ) {
  */
 export function prepareSaveRequest( data ) {
 	return {
-		path: data.id
-			? `checkout-engine/v1/${ data.object }s/${ data.id }`
-			: `checkout-engine/v1/${ data.object }s`,
+		path: data.id ? `${ data.object }s/${ data.id }` : `${ data.object }s`,
 		method: data.id ? 'PATCH' : 'POST',
 		data,
 	};

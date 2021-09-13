@@ -1,46 +1,47 @@
-const { __ } = wp.i18n;
-const { controls } = wp.data;
+import { controls } from '@wordpress/data';
 
 import * as modelActions from '../../store/data/actions';
 export * from '../../store/data/actions';
 
 import { STORE_KEY } from './index';
+import { STORE_KEY as DATA_STORE_KEY } from '../../store/data';
 
 /**
- * Set product in store.
+ * Overwrite updateModel action creator to sanitize input
  */
-export function setEntities( payload ) {
-	return modelActions.setEntities( payload );
-}
+export function updateModel( key, payload, index ) {
+	// handle prices
+	if ( key === 'prices' ) {
+		// cannot use ad_hoc with recurring.
+		if ( payload?.recurring ) {
+			payload.ad_hoc = false;
+		}
+	}
 
-export function setModel( path, payload ) {
-	return modelActions.setModel( path, payload );
-}
-
-export function updateModel( path, payload ) {
-	return modelActions.updateModel( path, payload );
-}
-
-/**
- * Update product in store.
- */
-export function updateProduct( payload ) {
-	return modelActions.updateModel( 'product', payload );
+	return modelActions.updateModel( key, payload, index );
 }
 
 /**
- * Add nested price.
+ * Overwrite addModel action creator to sanitize prices.
  */
-export function* addPrice( payload ) {
-	const product = yield controls.select( STORE_KEY, 'selectProduct' );
+export function* addModel( path, payload, index ) {
+	if ( path === 'prices' ) {
+		const product = yield controls.select( STORE_KEY, 'selectProduct' );
 
-	return modelActions.addModel( 'prices', {
-		...payload,
-		object: 'price',
-		product_id: payload.product_id || product?.id,
-		recurring_interval: payload.recurring_interval || 'year',
-		recurring_interval_count: payload.recurring_interval_count || 1,
-	} );
+		return modelActions.addModel(
+			'prices',
+			{
+				...payload,
+				object: 'price',
+				product_id: payload.product_id || product?.id,
+				recurring_interval: payload.recurring_interval || 'year',
+				recurring_interval_count: payload.recurring_interval_count || 1,
+			},
+			index
+		);
+	}
+
+	return modelActions.addModel( path, payload );
 }
 
 /**
@@ -50,25 +51,6 @@ export function duplicatePrice( payload ) {
 	return addPrice( payload );
 }
 
-/**
- * Update nested price.
- */
-export function updatePrice( payload, index ) {
-	// cannot use ad_hoce with recurring.
-	if ( payload?.recurring ) {
-		payload.ad_hoc = false;
-	}
-	return modelActions.updateModel( `prices.${ index }`, payload );
-}
-
-export function deletePrice( index ) {
-	return modelActions.deleteModel( `prices.${ index }` );
-}
-
 export function save() {
 	return modelActions.saveModel( 'product', { with: [ 'prices' ] } );
-}
-
-export function saveProduct() {
-	return modelActions.saveModel( 'product' );
 }

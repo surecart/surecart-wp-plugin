@@ -5,7 +5,7 @@ import triggerFetch from '@wordpress/api-fetch';
 import { controls } from '@wordpress/data';
 import { STORE_KEY as DATA_STORE_KEY } from '../index';
 import { STORE_KEY as UI_STORE_KEY } from '../../ui';
-import { fetch as apiFetch } from '../controls';
+import { STORE_KEY as NOTICES_STORE_KEY } from '../../notices';
 
 import * as actions from '../actions';
 
@@ -80,11 +80,23 @@ describe( 'actions', () => {
 	} );
 
 	describe( 'updateModel', () => {
-		it( 'should yield the UPDATE_MODEL action', () => {
-			const payload = { id: 'test', name: 'test' };
-			const fulfillment = updateModel( 'product', payload );
+		const payload = { id: 'test', name: 'test' };
+		let fulfillment;
+		it( 'should yield the UPDATE_DIRTY action', () => {
+			fulfillment = updateModel( 'product', payload );
 			// dirty update
-			expect( fulfillment.next().value ).toMatchObject( {} );
+			expect( fulfillment.next().value ).toMatchObject(
+				controls.dispatch(
+					DATA_STORE_KEY,
+					'updateDirty',
+					'product',
+					payload,
+					null
+				)
+			);
+		} );
+
+		it( 'should yield the UPDATE_MODEL action', () => {
 			// update model
 			expect( fulfillment.next().value ).toEqual( {
 				key: 'product',
@@ -102,23 +114,79 @@ describe( 'actions', () => {
 			const fulfillment = updateDirty( key, payload );
 			// dirty should first selectModel
 			expect( fulfillment.next().value ).toEqual(
-				controls.resolveSelect( DATA_STORE_KEY, 'selectModel', key )
+				controls.resolveSelect(
+					DATA_STORE_KEY,
+					'selectModel',
+					key,
+					undefined
+				)
 			);
 		} );
 	} );
 
 	describe( 'deleteModel', () => {
-		it( 'should yield the DELETE_MODEL action', () => {
-			const key = 'product';
-			const fulfillment = deleteModel( key );
+		let key = 'product';
+		let fulfillment;
+		it( 'should yield the SELECT_MODEL action', () => {
+			fulfillment = deleteModel( key, 1 );
+			const { value } = fulfillment.next();
 			// should first selectModel
-			expect( fulfillment.next().value ).toEqual(
-				controls.resolveSelect( DATA_STORE_KEY, 'selectModel', key )
+			expect( value ).toEqual(
+				controls.resolveSelect( DATA_STORE_KEY, 'selectModel', key, 1 )
 			);
-			expect( fulfillment.next().value ).toEqual( {
+		} );
+
+		it( 'should set saving to true', () => {
+			const { value } = fulfillment.next( {
+				id: 'asdf',
+				object: 'price',
+			} );
+			expect( value ).toEqual(
+				controls.dispatch( UI_STORE_KEY, 'setSaving', true )
+			);
+		} );
+
+		it( 'should delete the model on the server', () => {
+			const { value } = fulfillment.next();
+			expect( value ).toEqual( {
+				type: 'FETCH_FROM_API',
+				options: {
+					method: 'DELETE',
+					path: `prices/asdf`,
+				},
+			} );
+		} );
+
+		it( 'should set saving to false', () => {
+			const { value } = fulfillment.next( {
+				id: 'asdf',
+				object: 'price',
+			} );
+			expect( value ).toEqual(
+				controls.dispatch( UI_STORE_KEY, 'setSaving', false )
+			);
+		} );
+
+		it( 'should show a notice', () => {
+			const { value } = fulfillment.next();
+			expect( value ).toEqual(
+				controls.dispatch( NOTICES_STORE_KEY, 'addSnackbarNotice', {
+					content: 'Deleted.',
+				} )
+			);
+		} );
+
+		it( 'should yield the DELETE_MODEL action', () => {
+			const { value } = fulfillment.next();
+			expect( value ).toEqual( {
 				key,
 				type: 'DELETE_MODEL',
 			} );
+		} );
+
+		it( 'should be complete', () => {
+			const { done } = fulfillment.next();
+			expect( done ).toBeTruthy();
 		} );
 	} );
 
@@ -221,7 +289,7 @@ describe( 'actions', () => {
 								object: 'price',
 							},
 							method: 'PATCH',
-							path: 'checkout-engine/v1/prices/dirtyprice',
+							path: 'prices/dirtyprice',
 						},
 					},
 				],
@@ -246,6 +314,18 @@ describe( 'actions', () => {
 					}
 				)
 			);
+		} );
+
+		it( 'sets saving to false', () => {
+			const { value } = fulfillment.next();
+			expect( value ).toEqual(
+				controls.dispatch( UI_STORE_KEY, 'setSaving', false )
+			);
+		} );
+
+		it( 'finishes', () => {
+			const { done } = fulfillment.next();
+			expect( done ).toBeTruthy();
 		} );
 	} );
 } );

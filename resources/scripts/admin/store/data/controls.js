@@ -2,6 +2,7 @@ import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
 import { dispatch } from '@wordpress/data';
 import { STORE_KEY as DATA_STORE_KEY } from '../data';
+import { STORE_KEY as UI_STORE_KEY } from '../ui';
 
 export const fetch = ( options = {} ) => {
 	return {
@@ -34,12 +35,29 @@ export default {
 	async BATCH_SAVE( { batches } ) {
 		return await Promise.all(
 			batches.map( async ( { key, request, index = null } ) => {
-				const updated = await fetchFromAPI( request );
-				if ( updated ) {
-					dispatch( DATA_STORE_KEY ).updateModel(
-						`${ key }.${ index }`,
-						updated
-					);
+				try {
+					const updated = await fetchFromAPI( request );
+					if ( updated ) {
+						dispatch( DATA_STORE_KEY ).updateModel(
+							key,
+							updated,
+							index
+						);
+					}
+				} catch ( error ) {
+					// add validation error.
+					if ( error?.message ) {
+						dispatch( UI_STORE_KEY ).addErrors( [
+							{
+								index,
+								key,
+								index,
+								error,
+							},
+						] );
+					}
+
+					throw error;
 				}
 			} )
 		);

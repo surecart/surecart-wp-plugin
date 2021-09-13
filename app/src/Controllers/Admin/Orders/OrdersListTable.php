@@ -33,7 +33,7 @@ class OrdersListTable extends ListTable {
 		$this->set_pagination_args(
 			[
 				'total_items' => $query->pagination->count,
-				'per_page'    => $this->get_items_per_page( 'coupons' ),
+				'per_page'    => $this->get_items_per_page( 'orders' ),
 			]
 		);
 
@@ -44,7 +44,7 @@ class OrdersListTable extends ListTable {
 		?>
 	<form class="search-form"
 		method="get">
-		<?php $this->search_box( __( 'Search Coupons', 'checkout_engine' ), 'coupon' ); ?>
+		<?php $this->search_box( __( 'Search Orders', 'checkout_engine' ), 'order' ); ?>
 		<input type="hidden"
 			name="id"
 			value="1" />
@@ -64,20 +64,20 @@ class OrdersListTable extends ListTable {
 			'all'       => __( 'All', 'checkout_engine' ),
 		];
 
-		$link = \CheckoutEngine::getIndexUrl( 'product' );
+		$link = \CheckoutEngine::getIndexUrl( 'orders' );
 
 		foreach ( $stati as $status => $label ) {
 			$current_link_attributes = '';
 
-			if ( ! empty( $_GET['product_status'] ) ) {
-				if ( $status === $_GET['product_status'] ) {
+			if ( ! empty( $_GET['status'] ) ) {
+				if ( $status === $_GET['status'] ) {
 					$current_link_attributes = ' class="current" aria-current="page"';
 				}
 			} elseif ( 'active' === $status ) {
 				$current_link_attributes = ' class="current" aria-current="page"';
 			}
 
-			$link = add_query_arg( 'product_status', $status, $link );
+			$link = add_query_arg( 'status', $status, $link );
 
 			$status_links[ $status ] = "<a href='$link'$current_link_attributes>" . $label . '</a>';
 		}
@@ -149,7 +149,7 @@ class OrdersListTable extends ListTable {
 		return CheckoutSession::where(
 			[
 				'status' => $this->getStatus(),
-				'limit'  => $this->get_items_per_page( 'coupons' ),
+				'limit'  => $this->get_items_per_page( 'orders' ),
 				'page'   => $this->get_pagenum(),
 			]
 		)->paginate();
@@ -161,7 +161,11 @@ class OrdersListTable extends ListTable {
 	 * @return boolean|null
 	 */
 	public function getStatus() {
-		return sanitize_text_field( $_GET['status'] ?? 'paid' );
+		$status = sanitize_text_field( $_GET['status'] ) ?? '';
+		if ( $status === 'all' ) {
+			$status = '';
+		}
+		return $status ? [ sanitize_text_field( $status ) ] : [];
 	}
 
 	/**

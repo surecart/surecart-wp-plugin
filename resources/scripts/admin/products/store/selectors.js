@@ -1,36 +1,15 @@
-const { createRegistrySelector } = wp.data;
-import { selectModel as modelSelector } from '../../store/data/selectors';
+import { createRegistrySelector } from '@wordpress/data';
+import { STORE_KEY } from './index';
 
-export const selectModel = ( state, name ) => {
-	return modelSelector( state, name );
-};
-
-/**
- * Get the product
- */
-export const selectProduct = ( state ) => {
-	return modelSelector( state, 'product' );
-};
-
-/**
- * Get prices
- */
-export const selectPrices = ( state ) => {
-	return modelSelector( state, 'prices' );
-};
-
-/**
- * Get a specific price.
- */
-export const selectPrice = ( state, index ) => {
-	return modelSelector( state, `prices.${ index }` );
-};
+export const selectProduct = createRegistrySelector( ( select ) => () =>
+	select( STORE_KEY ).selectModel( 'product' )
+);
 
 /**
  * Get the product status
  */
-export const selectProductStatus = ( state ) => {
-	const product = selectProduct( state );
+export const selectProductStatus = createRegistrySelector( ( select ) => () => {
+	const product = select( STORE_KEY ).selectModel( 'product' );
 	if ( ! product?.id ) {
 		return 'draft';
 	}
@@ -38,7 +17,7 @@ export const selectProductStatus = ( state ) => {
 		return 'archived';
 	}
 	return 'active';
-};
+} );
 
 /**
  * Is the model saving?

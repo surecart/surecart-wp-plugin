@@ -12,7 +12,7 @@ import useProductData from '../hooks/useProductData';
 import { CeButton } from '@checkout-engine/react';
 
 export default () => {
-	const { loading, prices, addPrice } = useProductData();
+	const { loading, prices, addModel } = useProductData();
 	const [ open, setOpen ] = useState();
 
 	return (
@@ -25,7 +25,7 @@ export default () => {
 						<CeButton
 							onClick={ ( e ) => {
 								e.preventDefault();
-								addPrice( {
+								addModel( 'prices', {
 									recurring: false,
 									name: ! prices?.length
 										? __( 'Default', 'checkout_engine' )
@@ -54,7 +54,7 @@ export default () => {
 					)
 				}
 			>
-				{ prices &&
+				{ !! prices?.length &&
 					prices.map( ( price, index ) => {
 						return (
 							<Price

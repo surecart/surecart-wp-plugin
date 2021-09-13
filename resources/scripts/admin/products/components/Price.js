@@ -1,10 +1,14 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-const { __ } = wp.i18n;
-const { useState, useEffect, useRef } = wp.element;
+
+import { __ } from '@wordpress/i18n';
+import { useState, useEffect, useRef } from '@wordpress/element';
+import { useSelect, dispatch } from '@wordpress/data';
+
 import FlashError from '../../components/FlashError';
-const { useSelect, dispatch } = wp.data;
+
 import { STORE_KEY as UI_STORE_KEY } from '../../store/ui';
+import { STORE_KEY as DATA_STORE_KEY } from '../../store/data';
 
 import useProductData from '../hooks/useProductData';
 
@@ -26,17 +30,11 @@ import ToggleHeader from '../../components/ToggleHeader';
 import { translate } from '../../util';
 
 export default ( { price, prices, index, open = true } ) => {
-	const {
-		duplicatePrice,
-		updatePrice,
-		deletePrice,
-		updateModel,
-		isInvalid,
-	} = useProductData();
+	const { duplicatePrice, updateModel, isInvalid } = useProductData();
 
 	// get model errors
 	const errors = useSelect( ( select ) =>
-		select( UI_STORE_KEY ).selectErrors( 'price', index )
+		select( UI_STORE_KEY ).selectErrors( 'prices', index )
 	);
 
 	const [ isOpen, setIsOpen ] = useState( true );
@@ -65,6 +63,10 @@ export default ( { price, prices, index, open = true } ) => {
 			setIsOpen( true );
 		}
 	}, [ errors ] );
+
+	const deletePrice = ( index ) => {
+		dispatch( DATA_STORE_KEY ).deleteModel( 'prices', index );
+	};
 
 	const headerName = () => {
 		if ( ! price?.name || prices?.length === 1 ) {
@@ -239,10 +241,21 @@ export default ( { price, prices, index, open = true } ) => {
 							) }
 							value={ price?.name }
 							onCeChange={ ( e ) => {
-								updateModel( `prices.${ index }`, {
-									name: e.target.value,
-								} );
-								// updatePrice( { name: e.target.value }, index );
+								console.log(
+									'prices',
+									{
+										name: e.target.value,
+									},
+									index
+								);
+								updateModel(
+									'prices',
+									{
+										name: e.target.value,
+									},
+									index
+								);
+								// updateModel( 'prices', { name: e.target.value }, index );
 							} }
 							required
 						/>
@@ -256,7 +269,8 @@ export default ( { price, prices, index, open = true } ) => {
 							value="single"
 							onCeChange={ ( e ) =>
 								e.target.value === 'single' &&
-								updatePrice(
+								updateModel(
+									'prices',
 									{
 										recurring: false,
 									},
@@ -277,7 +291,8 @@ export default ( { price, prices, index, open = true } ) => {
 							value="subscription"
 							onCeChange={ ( e ) =>
 								e.target.checked &&
-								updatePrice(
+								updateModel(
+									'prices',
 									{
 										recurring: true,
 										recurring_interval:
@@ -312,7 +327,11 @@ export default ( { price, prices, index, open = true } ) => {
 						currencyCode={ ceData.currecy_code }
 						value={ price?.amount }
 						onCeChange={ ( e ) => {
-							updatePrice( { amount: e.target.value }, index );
+							updateModel(
+								'prices',
+								{ amount: e.target.value },
+								index
+							);
 						} }
 						required
 					/>
@@ -329,7 +348,8 @@ export default ( { price, prices, index, open = true } ) => {
 							className="ce-ad-hoc-min-amount"
 							value={ price?.ad_hoc_min_amount }
 							onCeChange={ ( e ) => {
-								updatePrice(
+								updateModel(
+									'prices',
 									{ ad_hoc_min_amount: e.target.value },
 									index
 								);
@@ -342,7 +362,8 @@ export default ( { price, prices, index, open = true } ) => {
 							value={ price?.ad_hoc_max_amount }
 							min={ price?.ad_hoc_min_amount / 100 }
 							onCeChange={ ( e ) => {
-								updatePrice(
+								updateModel(
+									'prices',
 									{ ad_hoc_max_amount: e.target.value },
 									index
 								);
@@ -360,7 +381,8 @@ export default ( { price, prices, index, open = true } ) => {
 						<CeSwitch
 							checked={ price?.ad_hoc }
 							onCeChange={ ( e ) => {
-								updatePrice(
+								updateModel(
+									'prices',
 									{ ad_hoc: e.target.checked },
 									index
 								);
@@ -396,7 +418,8 @@ export default ( { price, prices, index, open = true } ) => {
 									` }
 									value={ price?.recurring_interval_count }
 									onCeChange={ ( e ) =>
-										updatePrice(
+										updateModel(
+											'prices',
 											{
 												recurring_interval_count:
 													e.target.value,
@@ -418,7 +441,8 @@ export default ( { price, prices, index, open = true } ) => {
 									<CeMenu>
 										<CeMenuItem
 											onClick={ () =>
-												updatePrice(
+												updateModel(
+													'prices',
 													{
 														recurring_interval:
 															'day',
@@ -431,7 +455,8 @@ export default ( { price, prices, index, open = true } ) => {
 										</CeMenuItem>
 										<CeMenuItem
 											onClick={ () =>
-												updatePrice(
+												updateModel(
+													'prices',
 													{
 														recurring_interval:
 															'month',
@@ -444,7 +469,8 @@ export default ( { price, prices, index, open = true } ) => {
 										</CeMenuItem>
 										<CeMenuItem
 											onClick={ () =>
-												updatePrice(
+												updateModel(
+													'prices',
 													{
 														recurring_interval:
 															'year',

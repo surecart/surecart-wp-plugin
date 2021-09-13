@@ -1,4 +1,6 @@
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
+import { dispatch } from '@wordpress/data';
+import { STORE_KEY as DATA_STORE_KEY } from '../../store/data';
 
 import { CeSwitch } from '@checkout-engine/react';
 
@@ -7,13 +9,13 @@ import useProductData from '../hooks/useProductData';
 // hocs
 import withConfirm from '../../hocs/withConfirm';
 
-export default withConfirm( ( { setConfirm, children } ) => {
-	const { product, saveProduct, updateProduct, isSaving } = useProductData();
+export default withConfirm( ( { setConfirm, children, updateConfirm } ) => {
+	const { product, updateModel, isSaving } = useProductData();
 
 	const toggleArchive = async () => {
-		updateProduct( { archived: ! product?.archived } );
-		await saveProduct();
+		updateModel( 'product', { archived: ! product?.archived } );
 		setConfirm( {} );
+		await dispatch( DATA_STORE_KEY ).saveModel( 'product' );
 	};
 
 	const confirmArchive = () => {
@@ -57,7 +59,8 @@ export default withConfirm( ( { setConfirm, children } ) => {
 	return (
 		<CeSwitch
 			checked={ ! product?.archived }
-			onCeChange={ () => {
+			onClick={ ( e ) => {
+				e.preventDefault();
 				confirmArchive();
 			} }
 		>

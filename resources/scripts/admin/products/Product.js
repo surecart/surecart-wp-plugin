@@ -5,8 +5,9 @@ const { __ } = wp.i18n;
 const { Fragment } = wp.element;
 const { dispatch, useSelect, useDispatch } = wp.data;
 
-import { STORE_KEY } from './store';
-import { STORE_KEY as STORE_UI_KEY } from '../store/ui';
+import { STORE_KEY as NOTICES_STORE_KEY } from '../store/notices';
+import { STORE_KEY as UI_STORE_KEY } from '../store/ui';
+import { STORE_KEY as DATA_STORE_KEY } from '../store/data';
 
 // template
 import Template from '../templates/SingleModel';
@@ -28,14 +29,15 @@ import useProductData from './hooks/useProductData';
 
 // hocs
 import withConfirm from '../hocs/withConfirm';
+import { STORE_CONFIG } from '../store/data';
 
 export default withConfirm( ( { setConfirm, noticeUI } ) => {
 	const { snackbarNotices, removeSnackbarNotice } = useSnackbar();
 
 	const {
 		product,
-		save,
-		updateProduct,
+		updateModel,
+		prices,
 		loading,
 		status,
 		isSaving,
@@ -43,16 +45,29 @@ export default withConfirm( ( { setConfirm, noticeUI } ) => {
 
 	const onSubmit = async ( e ) => {
 		e.preventDefault();
-		await save();
+		if ( ! prices?.length ) {
+			return handlePricesError();
+		}
+		dispatch( DATA_STORE_KEY ).saveModel( 'product', {
+			with: [ 'prices' ],
+		} );
+	};
+
+	const handlePricesError = () => {
+		dispatch( NOTICES_STORE_KEY ).addSnackbarNotice( {
+			className: 'is-snackbar-error',
+			content: __( 'You must have a price.', 'checkout_engine' ),
+		} );
+		dispatch( DATA_STORE_KEY ).addModel( 'prices', {} );
 	};
 
 	const onInvalid = () => {
-		dispatch( STORE_UI_KEY ).setInvalid( true );
+		dispatch( UI_STORE_KEY ).setInvalid( true );
 	};
 
 	const toggleArchive = async () => {
-		updateProduct( { archived: ! product?.archived } );
-		await saveProduct();
+		updateModel( 'product', { archived: ! product?.archived } );
+		await dispatch( DATA_STORE_KEY ).saveModel( 'product' );
 		setConfirm( {} );
 	};
 
@@ -117,11 +132,7 @@ export default withConfirm( ( { setConfirm, noticeUI } ) => {
 			}
 		>
 			<Fragment>
-				<Details
-					loading={ loading }
-					product={ product }
-					updateProduct={ updateProduct }
-				/>
+				<Details />
 				<Prices />
 			</Fragment>
 		</Template>
