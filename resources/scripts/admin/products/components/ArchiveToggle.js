@@ -40,11 +40,11 @@ export default withConfirm( ( { setConfirm, children } ) => {
 			confirmButtonText: product?.archived_at
 				? sprintf(
 						__( 'Un-Archive %s?', 'checkout_engine' ),
-						product?.name || 'Product'
+						product?.name || __( 'Product', 'checkout_engine' )
 				  )
 				: sprintf(
 						__( 'Archive %s?', 'checkout_engine' ),
-						product?.name || 'Product'
+						product?.name || __( 'Product', 'checkout_engine' )
 				  ),
 			open: true,
 			isSaving,
