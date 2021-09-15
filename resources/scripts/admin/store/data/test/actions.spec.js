@@ -40,18 +40,18 @@ describe( 'actions', () => {
 	describe( 'setModel', () => {
 		it( 'should return the SET_MODEL action', () => {
 			const payload = { id: 'test' };
-			const result = setModel( 'product', payload );
+			const result = setModel( 'products', payload );
 			expect( result ).toEqual( {
-				key: 'product',
+				key: 'products.0',
 				type: 'SET_MODEL',
 				payload,
 			} );
 		} );
 		it( 'should return the SET_MODEL action with index', () => {
 			const payload = { id: 'test' };
-			const result = setModel( 'product', payload, 5 );
+			const result = setModel( 'products', payload, 5 );
 			expect( result ).toEqual( {
-				key: 'product.5',
+				key: 'products.5',
 				type: 'SET_MODEL',
 				payload,
 			} );
@@ -61,9 +61,9 @@ describe( 'actions', () => {
 	describe( 'addModel', () => {
 		it( 'should return the ADD_MODEL action', () => {
 			const payload = { id: 'test' };
-			const result = addModel( 'product', payload );
+			const result = addModel( 'products', payload );
 			expect( result ).toEqual( {
-				key: 'product',
+				key: 'products.0',
 				type: 'ADD_MODEL',
 				payload,
 			} );
@@ -83,15 +83,15 @@ describe( 'actions', () => {
 		const payload = { id: 'test', name: 'test' };
 		let fulfillment;
 		it( 'should yield the UPDATE_DIRTY action', () => {
-			fulfillment = updateModel( 'product', payload );
+			fulfillment = updateModel( 'products', payload );
 			// dirty update
 			expect( fulfillment.next().value ).toMatchObject(
 				controls.dispatch(
 					DATA_STORE_KEY,
 					'updateDirty',
-					'product',
+					'products',
 					payload,
-					null
+					0
 				)
 			);
 		} );
@@ -99,7 +99,7 @@ describe( 'actions', () => {
 		it( 'should yield the UPDATE_MODEL action', () => {
 			// update model
 			expect( fulfillment.next().value ).toEqual( {
-				key: 'product',
+				key: 'products.0',
 				type: 'UPDATE_MODEL',
 				payload,
 			} );
@@ -109,23 +109,18 @@ describe( 'actions', () => {
 	describe( 'updateDirty', () => {
 		it( 'should yield the UPDATE_DIRTY action', () => {
 			const payload = { id: 'test', name: 'test' };
-			const key = 'product';
+			const key = 'products';
 
 			const fulfillment = updateDirty( key, payload );
 			// dirty should first selectModel
 			expect( fulfillment.next().value ).toEqual(
-				controls.resolveSelect(
-					DATA_STORE_KEY,
-					'selectModel',
-					key,
-					undefined
-				)
+				controls.resolveSelect( DATA_STORE_KEY, 'selectModel', key, 0 )
 			);
 		} );
 	} );
 
 	describe( 'deleteModel', () => {
-		let key = 'product';
+		let key = 'products';
 		let fulfillment;
 		it( 'should yield the SELECT_MODEL action', () => {
 			fulfillment = deleteModel( key, 1 );
@@ -192,7 +187,9 @@ describe( 'actions', () => {
 
 	describe( 'saveModel', () => {
 		let fulfillment;
+
 		const product = { id: 'testmodel', content: 'foo' };
+
 		const allModels = {
 			product,
 			prices: [
@@ -200,13 +197,14 @@ describe( 'actions', () => {
 				{ id: 'dirtyprice', name: 'dirty', object: 'price' },
 			],
 		};
+
 		const dirty = {
 			[ product?.id ]: product,
 			dirtyprice: allModels.prices[ 1 ],
 		};
 
 		const reset = () =>
-			( fulfillment = saveModel( 'product', { with: [ 'prices' ] } ) );
+			( fulfillment = saveModel( 'products', { with: [ 'prices' ] } ) );
 
 		it( 'clears errors', () => {
 			reset();
@@ -224,27 +222,21 @@ describe( 'actions', () => {
 		} );
 
 		it( 'gets dirty models', () => {
-			let { value } = fulfillment.next();
+			let { value } = fulfillment.next( dirty );
 			expect( value ).toEqual(
 				controls.resolveSelect( DATA_STORE_KEY, 'selectDirty' )
 			);
 		} );
 
-		it( 'selects all models', () => {
-			let { value } = fulfillment.next( dirty );
-			expect( value ).toEqual(
-				controls.resolveSelect( DATA_STORE_KEY, 'selectAllModels' )
-			);
-		} );
-
 		// gets fresh model
 		it( 'selects model', () => {
-			let { value } = fulfillment.next( allModels );
+			let { value } = fulfillment.next( dirty );
 			expect( value ).toEqual(
 				controls.resolveSelect(
 					DATA_STORE_KEY,
 					'selectModel',
-					'product'
+					'products',
+					0
 				)
 			);
 		} );
@@ -261,16 +253,23 @@ describe( 'actions', () => {
 			} );
 		} );
 
-		// TODO: not working.
 		it( 'updates main model from api request', () => {
 			const { value } = fulfillment.next( product );
 			expect( value ).toEqual(
 				controls.dispatch(
 					DATA_STORE_KEY,
 					'updateModel',
-					'product',
-					product
+					'products',
+					product,
+					0
 				)
+			);
+		} );
+
+		it( 'selects all models', () => {
+			let { value } = fulfillment.next( product );
+			expect( value ).toEqual(
+				controls.resolveSelect( DATA_STORE_KEY, 'selectAllModels' )
 			);
 		} );
 

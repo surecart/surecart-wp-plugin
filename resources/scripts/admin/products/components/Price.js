@@ -18,6 +18,7 @@ import {
 	CeChoice,
 	CePriceInput,
 	CeSwitch,
+	CeTag,
 	CeFormControl,
 	CeButton,
 	CeDropdown,
@@ -30,7 +31,12 @@ import ToggleHeader from '../../components/ToggleHeader';
 import { translate } from '../../util';
 
 export default ( { price, prices, index, open = true } ) => {
-	const { duplicatePrice, updateModel, isInvalid } = useProductData();
+	const {
+		duplicateModel,
+		updateModel,
+		isInvalid,
+		toggleArchiveModel,
+	} = useProductData();
 
 	// get model errors
 	const errors = useSelect( ( select ) =>
@@ -68,6 +74,10 @@ export default ( { price, prices, index, open = true } ) => {
 		dispatch( DATA_STORE_KEY ).deleteModel( 'prices', index );
 	};
 
+	const toggleArchive = async ( index ) => {
+		toggleArchiveModel( 'prices', index );
+	};
+
 	const headerName = () => {
 		if ( ! price?.name || prices?.length === 1 ) {
 			return __( 'Pricing Details', 'checkout_engine' );
@@ -85,63 +95,37 @@ export default ( { price, prices, index, open = true } ) => {
 	};
 
 	const buttons = (
-		<CeDropdown slot="suffix" position="bottom-right">
-			<CeButton type="text" slot="trigger" circle>
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					width="16"
-					height="16"
-					viewBox="0 0 24 24"
-					fill="none"
-					stroke="currentColor"
-					strokeWidth="2"
-					strokeLinecap="round"
-					strokeLinejoin="round"
-				>
-					<circle cx="12" cy="12" r="1"></circle>
-					<circle cx="19" cy="12" r="1"></circle>
-					<circle cx="5" cy="12" r="1"></circle>
-				</svg>
-			</CeButton>
-			<CeMenu>
-				<CeMenuItem
-					onClick={ ( e ) => {
-						e.preventDefault();
-						duplicatePrice( price );
-					} }
-				>
-					<span
-						slot="prefix"
-						style={ {
-							opacity: 0.5,
+		<div>
+			{ price?.archived && (
+				<CeTag type="warning">
+					{ __( 'Archived', 'checkout_engine' ) }
+				</CeTag>
+			) }
+			<CeDropdown slot="suffix" position="bottom-right">
+				<CeButton type="text" slot="trigger" circle>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="16"
+						height="16"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						strokeWidth="2"
+						strokeLinecap="round"
+						strokeLinejoin="round"
+					>
+						<circle cx="12" cy="12" r="1"></circle>
+						<circle cx="19" cy="12" r="1"></circle>
+						<circle cx="5" cy="12" r="1"></circle>
+					</svg>
+				</CeButton>
+				<CeMenu>
+					<CeMenuItem
+						onClick={ ( e ) => {
+							e.preventDefault();
+							duplicateModel( 'prices', price );
 						} }
 					>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							width="16"
-							height="16"
-							viewBox="0 0 24 24"
-							fill="none"
-							stroke="currentColor"
-							strokeWidth="2"
-							strokeLinecap="round"
-							strokeLinejoin="round"
-						>
-							<rect
-								x="9"
-								y="9"
-								width="13"
-								height="13"
-								rx="2"
-								ry="2"
-							></rect>
-							<path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-						</svg>
-					</span>
-					{ __( 'Duplicate', 'checkout_engine' ) }
-				</CeMenuItem>
-				{ price?.id && (
-					<CeMenuItem onClick={ () => deletePrice( index ) }>
 						<span
 							slot="prefix"
 							style={ {
@@ -159,47 +143,92 @@ export default ( { price, prices, index, open = true } ) => {
 								strokeLinecap="round"
 								strokeLinejoin="round"
 							>
-								<polyline points="21 8 21 21 3 21 3 8"></polyline>
-								<rect x="1" y="3" width="22" height="5"></rect>
-								<line x1="10" y1="12" x2="14" y2="12"></line>
+								<rect
+									x="9"
+									y="9"
+									width="13"
+									height="13"
+									rx="2"
+									ry="2"
+								></rect>
+								<path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
 							</svg>
 						</span>
-						{ __( 'Archive', 'checkout_engine' ) }
+						{ __( 'Duplicate', 'checkout_engine' ) }
 					</CeMenuItem>
-				) }
-				<CeMenuItem
-					onClick={ ( e ) => {
-						e.preventDefault();
-						deletePrice( index );
-					} }
-				>
-					<span
-						slot="prefix"
-						style={ {
-							opacity: 0.5,
+					{ price?.id && (
+						<CeMenuItem onClick={ () => toggleArchive( index ) }>
+							<span
+								slot="prefix"
+								style={ {
+									opacity: 0.5,
+								} }
+							>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="16"
+									height="16"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									strokeWidth="2"
+									strokeLinecap="round"
+									strokeLinejoin="round"
+								>
+									<polyline points="21 8 21 21 3 21 3 8"></polyline>
+									<rect
+										x="1"
+										y="3"
+										width="22"
+										height="5"
+									></rect>
+									<line
+										x1="10"
+										y1="12"
+										x2="14"
+										y2="12"
+									></line>
+								</svg>
+							</span>
+							{ price?.archived
+								? __( 'Un-Archive', 'checkout_engine' )
+								: __( 'Archive', 'checkout_engine' ) }
+						</CeMenuItem>
+					) }
+					<CeMenuItem
+						onClick={ ( e ) => {
+							e.preventDefault();
+							deletePrice( index );
 						} }
 					>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							width="16"
-							height="16"
-							viewBox="0 0 24 24"
-							fill="none"
-							stroke="currentColor"
-							strokeWidth="2"
-							strokeLinecap="round"
-							strokeLinejoin="round"
+						<span
+							slot="prefix"
+							style={ {
+								opacity: 0.5,
+							} }
 						>
-							<polyline points="3 6 5 6 21 6"></polyline>
-							<path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-							<line x1="10" y1="11" x2="10" y2="17"></line>
-							<line x1="14" y1="11" x2="14" y2="17"></line>
-						</svg>
-					</span>
-					{ __( 'Delete', 'checkout_engine' ) }
-				</CeMenuItem>
-			</CeMenu>
-		</CeDropdown>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="16"
+								height="16"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								strokeWidth="2"
+								strokeLinecap="round"
+								strokeLinejoin="round"
+							>
+								<polyline points="3 6 5 6 21 6"></polyline>
+								<path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+								<line x1="10" y1="11" x2="10" y2="17"></line>
+								<line x1="14" y1="11" x2="14" y2="17"></line>
+							</svg>
+						</span>
+						{ __( 'Delete', 'checkout_engine' ) }
+					</CeMenuItem>
+				</CeMenu>
+			</CeDropdown>
+		</div>
 	);
 
 	return (

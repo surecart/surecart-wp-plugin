@@ -22,19 +22,19 @@ describe( 'selectors', () => {
 		it( 'should return a model', () => {
 			const state = {
 				entities: {
-					product: { id: 'product_id', name: 'test' },
+					products: [ { id: 'product_id', name: 'test' } ],
 					prices: [
 						{ id: 'price_id_1', name: 'test' },
 						{ id: 'price_id_2', name: 'test' },
 					],
 				},
 			};
-			expect( selectModel( state, 'prices', 0 ) ).toEqual(
+			expect( selectModel( state, 'prices' ) ).toEqual(
 				state.entities.prices[ 0 ]
 			);
-			expect( selectModel( state, 'prices.2' ) ).toEqual( undefined );
-			expect( selectModel( state, 'product' ) ).toEqual(
-				state.entities.product
+			expect( selectModel( state, 'prices', 2 ) ).toEqual( undefined );
+			expect( selectModel( state, 'products' ) ).toEqual(
+				state.entities.products[ 0 ]
 			);
 		} );
 

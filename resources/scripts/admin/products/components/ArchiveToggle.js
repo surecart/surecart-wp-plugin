@@ -9,13 +9,12 @@ import useProductData from '../hooks/useProductData';
 // hocs
 import withConfirm from '../../hocs/withConfirm';
 
-export default withConfirm( ( { setConfirm, children, updateConfirm } ) => {
-	const { product, updateModel, isSaving } = useProductData();
+export default withConfirm( ( { setConfirm, children } ) => {
+	const { product, isSaving, toggleArchiveModel } = useProductData();
 
 	const toggleArchive = async () => {
-		updateModel( 'product', { archived: ! product?.archived } );
 		setConfirm( {} );
-		await dispatch( DATA_STORE_KEY ).saveModel( 'product' );
+		toggleArchiveModel( 'products', 0 );
 	};
 
 	const confirmArchive = () => {

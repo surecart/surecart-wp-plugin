@@ -4,7 +4,6 @@ import * as modelActions from '../../store/data/actions';
 export * from '../../store/data/actions';
 
 import { STORE_KEY } from './index';
-import { STORE_KEY as DATA_STORE_KEY } from '../../store/data';
 
 /**
  * Overwrite updateModel action creator to sanitize input
@@ -33,6 +32,7 @@ export function* addModel( path, payload, index ) {
 			{
 				...payload,
 				object: 'price',
+				currency: ceData?.currency_code || 'usd',
 				product_id: payload.product_id || product?.id,
 				recurring_interval: payload.recurring_interval || 'year',
 				recurring_interval_count: payload.recurring_interval_count || 1,
@@ -47,8 +47,8 @@ export function* addModel( path, payload, index ) {
 /**
  * Duplicate price. (Alias for Add Price)
  */
-export function duplicatePrice( payload ) {
-	return addPrice( payload );
+export function duplicatePrice( { id, ...payload } ) {
+	return addModel( 'prices', payload );
 }
 
 export function save() {

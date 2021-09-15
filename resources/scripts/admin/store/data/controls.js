@@ -38,6 +38,7 @@ export default {
 				try {
 					const updated = await fetchFromAPI( request );
 					if ( updated ) {
+						console.log( { updated } );
 						dispatch( DATA_STORE_KEY ).updateModel(
 							key,
 							updated,

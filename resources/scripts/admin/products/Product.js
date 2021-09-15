@@ -29,13 +29,14 @@ import useProductData from './hooks/useProductData';
 
 // hocs
 import withConfirm from '../hocs/withConfirm';
+import { toggleArchiveModel } from './store/actions';
 
 export default withConfirm( ( { setConfirm, noticeUI } ) => {
 	const { snackbarNotices, removeSnackbarNotice } = useSnackbar();
 
 	const {
 		product,
-		updateModel,
+		toggleArchiveModel,
 		prices,
 		loading,
 		status,
@@ -44,10 +45,10 @@ export default withConfirm( ( { setConfirm, noticeUI } ) => {
 
 	const onSubmit = async ( e ) => {
 		e.preventDefault();
-		if ( ! prices?.length ) {
+		if ( ! prices.some( ( price ) => ! price.archived ) ) {
 			return handlePricesError();
 		}
-		dispatch( DATA_STORE_KEY ).saveModel( 'product', {
+		dispatch( DATA_STORE_KEY ).saveModel( 'products', {
 			with: [ 'prices' ],
 		} );
 	};
@@ -65,14 +66,14 @@ export default withConfirm( ( { setConfirm, noticeUI } ) => {
 	};
 
 	const toggleArchive = async () => {
-		updateModel( 'product', { archived: ! product?.archived } );
-		await dispatch( DATA_STORE_KEY ).saveModel( 'product' );
 		setConfirm( {} );
+		toggleArchiveModel( 'products', 0 );
 	};
 
 	return (
 		<Template
 			status={ status }
+			pageModelName={ 'product' }
 			onSubmit={ onSubmit }
 			onInvalid={ onInvalid }
 			backUrl={ 'admin.php?page=ce-products' }

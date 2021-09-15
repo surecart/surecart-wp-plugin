@@ -17,7 +17,7 @@ export default {
 		// store.
 		return yield controls.dispatch( STORE_KEY, 'setEntities', {
 			prices: prices.reverse(), // reverse the order
-			product,
+			products: [ product ],
 		} );
 	},
 };

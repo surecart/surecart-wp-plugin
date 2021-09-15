@@ -23,7 +23,7 @@ describe( 'selectors', () => {
 
 			const defaultRegistry = selectProduct.registry;
 			selectProduct.registry = registry;
-			expect( selectProduct() ).toBe( 'product' );
+			expect( selectProduct() ).toBe( 'products' );
 
 			selectProduct.registry = defaultRegistry;
 		} );

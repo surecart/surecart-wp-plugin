@@ -1,5 +1,3 @@
-import { combineReducers } from '@wordpress/data';
-
 import dotProp from 'dot-prop-immutable';
 
 // Store based on nested key. (i.e. product.price)
@@ -10,7 +8,10 @@ export const entities = ( state = {}, { type, key, payload } ) => {
 		case 'SET_MODEL':
 			return dotProp.set( state, key, payload );
 		case 'ADD_MODEL':
-			return dotProp.set( state, key, ( list ) => [ ...list, payload ] );
+			return dotProp.set( state, key, ( list ) => [
+				...( list || [] ),
+				payload,
+			] );
 		case 'UPDATE_MODEL':
 			return dotProp.merge( state, key, payload );
 		case 'DELETE_MODEL':
@@ -54,28 +55,3 @@ export function saving( state = {}, action ) {
 
 	return state;
 }
-
-/**
- * Post saving lock.
- *
- * When post saving is locked, the post cannot be published or updated.
- *
- * @param {PostLockState} state  Current state.
- * @param {Object}        action Dispatched action.
- *
- * @return {PostLockState} Updated state.
- */
-const postSavingLock = ( state = {}, action ) => {
-	switch ( action.type ) {
-		case 'LOCK_POST_SAVING':
-			return { ...state, [ action.lockName ]: true };
-
-		case 'UNLOCK_POST_SAVING':
-			return omit( state, action.lockName );
-	}
-	return state;
-};
-
-export default combineReducers( {
-	entities,
-} );

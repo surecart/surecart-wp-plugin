@@ -97,6 +97,8 @@
 		"node-wp-i18n": "^1.2.1",
 		"prettier": "npm:wp-prettier@latest",
 		"replace-in-file": "^6.0.0",
+    "react": "17.0.1",
+		"react-dom": "17.0.1",
 		"shelljs": "^0.8.3",
 		"stylelint": "^13.3.3",
 		"stylelint-config-recommended-scss": "^4.2.0",

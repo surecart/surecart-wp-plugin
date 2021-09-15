@@ -1,12 +1,13 @@
-// import dotProp from 'dot-prop-immutable';
+import { get } from 'dot-prop-immutable';
 
-export const selectAllModels = ( state, path ) => {
+export const selectAllModels = ( state ) => {
 	return state.entities;
 };
-export const selectModel = ( state, path, index = null ) => {
-	return index !== null
-		? state.entities?.[ path ][ index ]
-		: state.entities?.[ path ];
+export const selectCollection = ( state, path ) => {
+	return state.entities?.[ path ];
+};
+export const selectModel = ( state, path, index = 0 ) => {
+	return get( state.entities, `${ path }.${ index }` );
 };
 export const selectDirty = ( state ) => {
 	return state.dirty;

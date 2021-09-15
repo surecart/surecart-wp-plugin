@@ -20,7 +20,7 @@ export default () => {
 						) }
 						value={ product?.name }
 						onCeChange={ ( e ) => {
-							updateModel( 'product', { name: e.target.value } );
+							updateModel( 'products', { name: e.target.value } );
 						} }
 						name="name"
 						required
@@ -35,7 +35,7 @@ export default () => {
 						value={ product?.description }
 						name="description"
 						onCeChange={ ( e ) => {
-							updateModel( 'product', {
+							updateModel( 'products', {
 								description: e.target.value,
 							} );
 						} }

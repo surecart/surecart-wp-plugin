@@ -27,5 +27,5 @@ class ProductScriptsController extends AdminModelEditController {
 	 *
 	 * @var string
 	 */
-	protected $path = 'dist/admin/products.js';
+	protected $path = 'admin/products';
 }

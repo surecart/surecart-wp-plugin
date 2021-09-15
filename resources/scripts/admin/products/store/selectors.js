@@ -2,14 +2,14 @@ import { createRegistrySelector } from '@wordpress/data';
 import { STORE_KEY } from './index';
 
 export const selectProduct = createRegistrySelector( ( select ) => () =>
-	select( STORE_KEY ).selectModel( 'product' )
+	select( STORE_KEY ).selectModel( 'products', 0 )
 );
 
 /**
  * Get the product status
  */
 export const selectProductStatus = createRegistrySelector( ( select ) => () => {
-	const product = select( STORE_KEY ).selectModel( 'product' );
+	const product = select( STORE_KEY ).selectModel( 'products' );
 	if ( ! product?.id ) {
 		return 'draft';
 	}

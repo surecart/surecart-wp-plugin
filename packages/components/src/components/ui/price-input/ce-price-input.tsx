@@ -1,4 +1,4 @@
-import { Component, Prop, Event, EventEmitter, h, Method, Fragment, Watch } from '@stencil/core';
+import { Component, Prop, Event, EventEmitter, h, Method, Watch, forceUpdate, Element } from '@stencil/core';
 import { getCurrencySymbol } from '../../../functions/price';
 
 /**
@@ -15,6 +15,7 @@ import { getCurrencySymbol } from '../../../functions/price';
   shadow: true,
 })
 export class CePriceInput {
+  @Element() el: HTMLCePriceInputElement;
   private ceInput: HTMLCeInputElement;
 
   /** The input's size. */
@@ -114,12 +115,11 @@ export class CePriceInput {
 
   handleChange() {
     this.value = (parseFloat(this.ceInput.value) * 100).toString();
-    this.ceChange.emit();
   }
 
   render() {
     return (
-      <Fragment>
+      <div>
         <ce-input
           size={this.size}
           label={this.label}
@@ -150,7 +150,7 @@ export class CePriceInput {
             {(this.currencyCode || '').toUpperCase()}
           </span> */}
         </ce-input>
-      </Fragment>
+      </div>
     );
   }
 }

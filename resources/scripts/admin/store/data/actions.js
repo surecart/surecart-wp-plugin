@@ -1,10 +1,12 @@
 import { __ } from '@wordpress/i18n';
 import { fetch as apiFetch, batchSave } from './controls';
 import { controls } from '@wordpress/data';
-import { addQueryArgs } from '@wordpress/url';
 import { STORE_KEY as UI_STORE_KEY } from '../ui';
 import { STORE_KEY as DATA_STORE_KEY } from '../data';
 
+/**
+ * Bulk set all entities
+ */
 export function setEntities( payload ) {
 	return {
 		type: 'SET_ENTITIES',
@@ -15,11 +17,10 @@ export function setEntities( payload ) {
 /**
  * Set model by path
  */
-export function setModel( key, payload, index = null ) {
-	const keyIndex = index !== null ? `.${ index }` : '';
+export function setModel( key, payload, index = 0 ) {
 	return {
 		type: 'SET_MODEL',
-		key: `${ key }${ keyIndex }`,
+		key: `${ key }.${ index }`,
 		payload,
 	};
 }
@@ -27,21 +28,26 @@ export function setModel( key, payload, index = null ) {
 /**
  * Add model by path.
  */
-export function addModel( key, payload, index = null ) {
-	const keyIndex = index !== null ? `.${ index }` : '';
+export function addModel( key, payload ) {
 	return {
 		type: 'ADD_MODEL',
-		key: `${ key }${ keyIndex }`,
+		key,
 		payload,
 	};
 }
 
 /**
+ * Duplicate price. (Alias for Add Price)
+ */
+export function duplicateModel( key, { id, ...payload } ) {
+	return addModel( key, payload );
+}
+
+/**
  * Update model by path.
  */
-export function* updateModel( key, payload, index = null ) {
-	const keyIndex = index !== null ? `.${ index }` : '';
-
+export function* updateModel( key, payload, index = 0 ) {
+	// first update dirty so we know to save.
 	yield controls.dispatch(
 		DATA_STORE_KEY,
 		'updateDirty',
@@ -52,15 +58,15 @@ export function* updateModel( key, payload, index = null ) {
 
 	return {
 		type: 'UPDATE_MODEL',
-		key: `${ key }${ keyIndex }`,
+		key: `${ key }.${ index }`,
 		payload,
 	};
 }
 
 /**
- * Update dirty stuff.
+ * Update dirty list.
  */
-export function* updateDirty( key, payload, index ) {
+export function* updateDirty( key, payload, index = 0 ) {
 	const model = yield controls.resolveSelect(
 		DATA_STORE_KEY,
 		'selectModel',
@@ -81,9 +87,7 @@ export function* updateDirty( key, payload, index ) {
 /**
  * Delete model by path.
  */
-export function* deleteModel( key, index = null ) {
-	const keyIndex = index !== null ? `.${ index }` : '';
-
+export function* deleteModel( key, index = 0 ) {
 	const data = yield controls.resolveSelect(
 		DATA_STORE_KEY,
 		'selectModel',
@@ -119,7 +123,7 @@ export function* deleteModel( key, index = null ) {
 			);
 			return {
 				type: 'DELETE_MODEL',
-				key: `${ key }${ keyIndex }`,
+				key: `${ key }.${ index }`,
 			};
 		}
 
@@ -131,7 +135,7 @@ export function* deleteModel( key, index = null ) {
 
 	return {
 		type: 'DELETE_MODEL',
-		key: `${ key }${ keyIndex }`,
+		key: `${ key }.${ index }`,
 	};
 }
 
@@ -144,34 +148,53 @@ export function clearDirty() {
 	};
 }
 
+export function* toggleArchiveModel( key, index = 0, save = true ) {
+	const model = yield controls.resolveSelect(
+		DATA_STORE_KEY,
+		'selectModel',
+		key,
+		index
+	);
+
+	// change to archived.
+	yield controls.dispatch(
+		DATA_STORE_KEY,
+		'updateModel',
+		key,
+		{ archived: ! model.archived },
+		index
+	);
+
+	if ( model.id && save ) {
+		return yield controls.dispatch( DATA_STORE_KEY, 'saveModel', key, {
+			index,
+		} );
+	}
+}
+
 /**
  * Save model with optional subcollections.
  */
-export function* saveModel( key, { with: saveWith = [] } = {} ) {
+export function* saveModel( key, { with: saveWith = [], index = 0 } = {} ) {
 	yield controls.dispatch( UI_STORE_KEY, 'clearErrors' );
 	yield controls.dispatch( UI_STORE_KEY, 'setSaving', true );
 
 	// get dirty models
 	const dirty = yield controls.resolveSelect( DATA_STORE_KEY, 'selectDirty' );
 
-	// get all models
-	const allModels = yield controls.resolveSelect(
-		DATA_STORE_KEY,
-		'selectAllModels'
-	);
-
 	// get fresh model.
 	const main = yield controls.resolveSelect(
 		DATA_STORE_KEY,
 		'selectModel',
-		key
+		key,
+		index
 	);
 
 	try {
 		// save main model
 		if ( ! main?.id || dirty?.[ main?.id ] ) {
 			let response = yield apiFetch( {
-				path: main?.id ? `${ key }s/${ main.id }` : `${ key }s`,
+				path: main?.id ? `${ key }/${ main.id }` : `${ key }`,
 				method: main?.id ? 'PATCH' : 'POST',
 				data: main,
 			} );
@@ -188,7 +211,8 @@ export function* saveModel( key, { with: saveWith = [] } = {} ) {
 					DATA_STORE_KEY,
 					'updateModel',
 					key,
-					response
+					response,
+					index
 				);
 			} else {
 				// didn't update.
@@ -198,8 +222,11 @@ export function* saveModel( key, { with: saveWith = [] } = {} ) {
 			}
 		}
 
-		// replace history state
-		setHistory( main?.id );
+		// get all models
+		const allModels = yield controls.resolveSelect(
+			DATA_STORE_KEY,
+			'selectAllModels'
+		);
 
 		// batch request others if dirty
 		let batch = [];
@@ -234,7 +261,9 @@ export function* saveModel( key, { with: saveWith = [] } = {} ) {
 			'checkout-engine/notices',
 			'addSnackbarNotice',
 			{
-				content: __( 'Saved.', 'checkout_engine' ),
+				content: main?.id
+					? __( 'Updated.', 'checkout_engine' )
+					: __( 'Saved.', 'checkout_engine' ),
 			}
 		);
 	} catch ( e ) {
@@ -252,21 +281,6 @@ export function* saveModel( key, { with: saveWith = [] } = {} ) {
 	} finally {
 		yield controls.dispatch( UI_STORE_KEY, 'setSaving', false );
 	}
-}
-
-export function* test( main, key ) {
-	return yield apiFetch( {
-		path: main?.id ? `${ key }s/${ main.id }` : `${ key }s`,
-		method: main?.id ? 'PATCH' : 'POST',
-		data: main,
-	} );
-}
-
-export function* setHistory( id ) {
-	const url = addQueryArgs( window.location.href, {
-		id,
-	} );
-	yield window.history.replaceState( { id }, 'Model ' + id, url );
 }
 
 /**
@@ -287,38 +301,5 @@ export function prepareSaveRequest( data ) {
 		path: data.id ? `${ data.object }s/${ data.id }` : `${ data.object }s`,
 		method: data.id ? 'PATCH' : 'POST',
 		data,
-	};
-}
-
-/**
- * Save the main model
- */
-export function* saveMainModel( data, saveWith ) {
-	let response;
-	try {
-		response = yield apiFetch( {
-			path: data.id ? `${ key }s/${ data.id }` : `${ key }s`,
-			method: data.id ? 'PATCH' : 'POST',
-			data,
-		} );
-	} catch ( error ) {
-		throw error;
-	}
-
-	// success.
-	if ( response ) {
-		// don't overwrite "with" subcollections.
-		saveWith.forEach( ( key ) => {
-			if ( response?.[ key ] ) {
-				delete response[ key ];
-			}
-		} );
-
-		return yield updateModel( key, response );
-	}
-
-	// didn't update.
-	throw {
-		message: 'Failed to save.',
 	};
 }

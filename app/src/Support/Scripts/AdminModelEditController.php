@@ -31,25 +31,6 @@ abstract class AdminModelEditController {
 	protected $dependencies = [];
 
 	/**
-	 * Admin pages use the same dependencies.
-	 *
-	 * @var array
-	 */
-	protected $core_dependencies = [
-		'wp-components',
-		'wp-element',
-		'wp-codemirror',
-		'wp-api',
-		'wp-i18n',
-		'wp-date',
-		'wp-editor',
-		'wp-blob',
-		'wp-blocks',
-		'wp-data',
-		'wp-core-data',
-	];
-
-	/**
 	 * Optional conditionally load.
 	 */
 	protected function condition() {
@@ -91,12 +72,15 @@ abstract class AdminModelEditController {
 		// enqueue dependencies.
 		$this->enqueueScriptDependencies();
 
+		// automatically load dependencies and version
+		$asset_file = include plugin_dir_path( CHECKOUT_ENGINE_PLUGIN_FILE ) . "dist/$this->path.asset.php";
+
 		// Enqueue scripts.
 		\CheckoutEngine::core()->assets()->enqueueScript(
 			$this->handle,
-			trailingslashit( \CheckoutEngine::core()->assets()->getUrl() ) . $this->path,
-			array_merge( $this->core_dependencies, $this->core_dependencies ),
-			true
+			trailingslashit( \CheckoutEngine::core()->assets()->getUrl() ) . "dist/$this->path.js",
+			array_merge( $asset_file['dependencies'], $this->dependencies ),
+			$asset_file['version']
 		);
 
 		$data = [];
