@@ -6,6 +6,7 @@ import { Fragment } from '@wordpress/element';
 import { SnackbarList, Tooltip } from '@wordpress/components';
 import StatusBadge from '../components/StatusBadge';
 import BrowserUrl from '../components/browser-url';
+import UnsavedChangesWarning from '../components/unsaved-changes-warning';
 import { CeForm, CeButton } from '@checkout-engine/react';
 
 export default ( {
@@ -28,6 +29,7 @@ export default ( {
 	return (
 		<Fragment>
 			<BrowserUrl path={ pageModelName } />
+			<UnsavedChangesWarning />
 			<CeForm
 				className="ce-model-form"
 				onCeFormSubmit={ onSubmit }
