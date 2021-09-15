@@ -29,7 +29,6 @@ import useProductData from './hooks/useProductData';
 
 // hocs
 import withConfirm from '../hocs/withConfirm';
-import { toggleArchiveModel } from './store/actions';
 
 export default withConfirm( ( { setConfirm, noticeUI } ) => {
 	const { snackbarNotices, removeSnackbarNotice } = useSnackbar();
