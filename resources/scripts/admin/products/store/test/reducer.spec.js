@@ -20,7 +20,7 @@ describe( 'entities', () => {
 		expect(
 			entities( undefined, {
 				type: 'UPDATE_MODEL',
-				key: 'product',
+				key: 'products.0',
 				payload: {
 					id: 'test_id',
 				},
@@ -35,8 +35,10 @@ describe( 'entities', () => {
 					product_id: 'test_id',
 				},
 			],
-			product: {
-				id: 'test_id',
+			products: {
+				0: {
+					id: 'test_id',
+				},
 			},
 		} );
 	} );
