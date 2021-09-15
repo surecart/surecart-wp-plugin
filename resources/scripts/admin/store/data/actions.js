@@ -150,6 +150,8 @@ export function* removeDirty( key, index = 0 ) {
 		index
 	);
 
+	// console.log( key, index, model );
+
 	// set dirty.
 	if ( model?.id ) {
 		yield {
@@ -219,7 +221,7 @@ export function* saveModel( key, { with: saveWith = [], index = 0 } = {} ) {
 				data: main,
 			} );
 
-			if ( response ) {
+			if ( response && response?.id ) {
 				// don't overwrite "with" subcollections.
 				saveWith.forEach( ( key ) => {
 					if ( response?.[ key ] ) {
@@ -233,6 +235,11 @@ export function* saveModel( key, { with: saveWith = [], index = 0 } = {} ) {
 					key,
 					response,
 					index
+				);
+				yield controls.dispatch(
+					DATA_STORE_KEY,
+					'removeDirty',
+					response?.id
 				);
 			} else {
 				// didn't update.
@@ -275,7 +282,7 @@ export function* saveModel( key, { with: saveWith = [], index = 0 } = {} ) {
 		} );
 
 		yield batchSave( batch );
-		yield clearDirty();
+
 		// add notice.
 		yield controls.dispatch(
 			'checkout-engine/notices',

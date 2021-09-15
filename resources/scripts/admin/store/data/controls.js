@@ -37,11 +37,14 @@ export default {
 			batches.map( async ( { key, request, index = null } ) => {
 				try {
 					const updated = await fetchFromAPI( request );
-					if ( updated ) {
-						console.log( { updated } );
-						dispatch( DATA_STORE_KEY ).updateModel(
+					if ( updated && updated?.id ) {
+						await dispatch( DATA_STORE_KEY ).updateModel(
 							key,
 							updated,
+							index
+						);
+						await dispatch( DATA_STORE_KEY ).removeDirty(
+							key,
 							index
 						);
 					}
