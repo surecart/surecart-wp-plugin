@@ -142,6 +142,26 @@ export function* deleteModel( key, index = 0 ) {
 /**
  * Clear dirty state.
  */
+export function* removeDirty( key, index = 0 ) {
+	const model = yield controls.resolveSelect(
+		DATA_STORE_KEY,
+		'selectModel',
+		key,
+		index
+	);
+
+	// set dirty.
+	if ( model?.id ) {
+		yield {
+			type: 'REMOVE_DIRTY',
+			id: model?.id,
+		};
+	}
+}
+
+/**
+ * Clear dirty state.
+ */
 export function clearDirty() {
 	return {
 		type: 'CLEAR_DIRTY',

@@ -17,6 +17,7 @@ const {
 	updateDirty,
 	deleteModel,
 	saveModel,
+	removeDirty,
 } = actions;
 
 jest.mock( '@wordpress/api-fetch' );
@@ -63,16 +64,16 @@ describe( 'actions', () => {
 			const payload = { id: 'test' };
 			const result = addModel( 'products', payload );
 			expect( result ).toEqual( {
-				key: 'products.0',
+				key: 'products',
 				type: 'ADD_MODEL',
 				payload,
 			} );
 		} );
 		it( 'should return the ADD_MODEL action with index', () => {
 			const payload = { id: 'test' };
-			const result = addModel( 'product', payload, 5 );
+			const result = addModel( 'products', payload );
 			expect( result ).toEqual( {
-				key: 'product.5',
+				key: 'products',
 				type: 'ADD_MODEL',
 				payload,
 			} );
@@ -309,7 +310,7 @@ describe( 'actions', () => {
 					'checkout-engine/notices',
 					'addSnackbarNotice',
 					{
-						content: 'Saved.',
+						content: 'Updated.',
 					}
 				)
 			);
@@ -325,6 +326,29 @@ describe( 'actions', () => {
 		it( 'finishes', () => {
 			const { done } = fulfillment.next();
 			expect( done ).toBeTruthy();
+		} );
+	} );
+
+	describe( 'removeDirty', () => {
+		let fulfillment;
+		it( 'selects the model in the state', () => {
+			fulfillment = removeDirty( 'prices', 2 );
+			const { value } = fulfillment.next();
+			expect( value ).toMatchObject(
+				controls.resolveSelect(
+					DATA_STORE_KEY,
+					'selectModel',
+					'prices',
+					2
+				)
+			);
+		} );
+		it( 'Yields the CLEAR_DIRTY_MODEL action', () => {
+			const { value } = fulfillment.next( { id: 'asdf' } );
+			expect( value ).toMatchObject( {
+				type: 'REMOVE_DIRTY',
+				id: 'asdf',
+			} );
 		} );
 	} );
 } );

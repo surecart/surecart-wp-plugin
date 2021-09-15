@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { entities } from '../reducer';
+import { entities, dirty } from '../reducer';
 
 describe( 'entities', () => {
 	it( 'can set entities', () => {
@@ -94,7 +94,7 @@ describe( 'entities', () => {
 		} );
 	} );
 
-	it( 'can add delete a model', () => {
+	it( 'can delete a model', () => {
 		const state = entities(
 			{
 				product: { id: 'product_id', name: 'test' },
@@ -112,6 +112,25 @@ describe( 'entities', () => {
 		expect( state ).toEqual( {
 			product: { id: 'product_id', name: 'test' },
 			prices: [ { id: 'price_id_2', name: 'test' } ],
+		} );
+	} );
+
+	it( 'can remove a dirty model', () => {
+		const state = dirty(
+			{
+				product_id_2: { name: 'test' },
+				price_id_1: { name: 'test' },
+				price_id_2: { name: 'test' },
+			},
+			{
+				type: 'REMOVE_DIRTY',
+				id: 'price_id_2',
+			}
+		);
+
+		expect( state ).toEqual( {
+			product_id_2: { name: 'test' },
+			price_id_1: { name: 'test' },
 		} );
 	} );
 } );
