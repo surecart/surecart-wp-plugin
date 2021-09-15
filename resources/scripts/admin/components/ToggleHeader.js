@@ -3,7 +3,7 @@ import { css, jsx } from '@emotion/core';
 const { __ } = wp.i18n;
 import { CeButton } from '@checkout-engine/react';
 
-export default ( { isOpen, setIsOpen, children, buttons, shadowed } ) => {
+export default ( { isOpen, setIsOpen, children, buttons, type } ) => {
 	return (
 		<div
 			className="ce-toggle-header"
@@ -11,11 +11,14 @@ export default ( { isOpen, setIsOpen, children, buttons, shadowed } ) => {
 				display: flex;
 				justify-content: space-between;
 				align-items: center;
-				${ shadowed
-					? `padding: 10px 16px;
-				background: var( --ce-color-gray-100, #f9fafb );
-				border-radius: 8px;`
-					: `` }
+				padding: 10px 16px;
+				border-radius: 8px;
+				border: 1px solid transparent;
+				${ type === 'warning'
+					? `background-color: var(--ce-color-warning-50);
+        border-color: var(--ce-color-warning-200);
+        color: var(--ce-color-warning-700);`
+					: `background: var( --ce-color-gray-100, #f9fafb )` }
 			` }
 		>
 			<div
