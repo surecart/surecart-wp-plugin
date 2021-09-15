@@ -1,4 +1,4 @@
-import { Component, Prop, Event, EventEmitter, h, Method, Watch, forceUpdate, Element } from '@stencil/core';
+import { Component, Prop, Event, EventEmitter, h, Method, Watch, Element } from '@stencil/core';
 import { getCurrencySymbol } from '../../../functions/price';
 
 /**
