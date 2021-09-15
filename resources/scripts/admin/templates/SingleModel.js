@@ -7,6 +7,7 @@ import { SnackbarList, Tooltip } from '@wordpress/components';
 import StatusBadge from '../components/StatusBadge';
 import BrowserUrl from '../components/browser-url';
 import UnsavedChangesWarning from '../components/unsaved-changes-warning';
+import ErrorBoundary from '../components/error-boundary';
 import { CeForm, CeButton } from '@checkout-engine/react';
 
 export default ( {
@@ -25,9 +26,10 @@ export default ( {
 	onInvalid,
 	loading,
 	sidebar,
+	onError,
 } ) => {
 	return (
-		<Fragment>
+		<ErrorBoundary onError={ onError }>
 			<BrowserUrl path={ pageModelName } />
 			<UnsavedChangesWarning />
 			<CeForm
@@ -235,6 +237,6 @@ export default ( {
 					onRemove={ removeNotice }
 				/>
 			</CeForm>
-		</Fragment>
+		</ErrorBoundary>
 	);
 };
