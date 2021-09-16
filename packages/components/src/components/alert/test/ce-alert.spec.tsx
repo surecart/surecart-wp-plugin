@@ -7,12 +7,6 @@ describe('ce-alert', () => {
       components: [CeAlert],
       html: `<ce-alert></ce-alert>`,
     });
-    expect(page.root).toEqualHtml(`
-      <ce-alert>
-        <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
-      </ce-alert>
-    `);
+    expect(page.root).toMatchSnapshot();
   });
 });

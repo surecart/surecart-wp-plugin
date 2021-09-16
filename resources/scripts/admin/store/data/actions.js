@@ -236,10 +236,12 @@ export function* saveModel( key, { with: saveWith = [], index = 0 } = {} ) {
 					response,
 					index
 				);
+
 				yield controls.dispatch(
 					DATA_STORE_KEY,
 					'removeDirty',
-					response?.id
+					key,
+					index
 				);
 			} else {
 				// didn't update.

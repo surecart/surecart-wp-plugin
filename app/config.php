@@ -98,8 +98,7 @@ return [
 	 * - 'user.can'
 	 */
 	'middleware'          => [
-		// phpcs:ignore
-		// 'mymiddleware' => \CheckoutEngine\Middleware\MyMiddleware::class,
+		'archive_model' => \CheckoutEngine\Middleware\ArchiveModelMiddleware::class,
 	],
 
 	/**

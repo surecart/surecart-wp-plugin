@@ -3,6 +3,7 @@
 namespace CheckoutEngine\Controllers\Admin\Orders;
 
 use CheckoutEngine\Support\Currency;
+use CheckoutEngine\Support\TimeDate;
 use CheckoutEngine\Models\CheckoutSession;
 use CheckoutEngine\Controllers\Admin\Tables\ListTable;
 
@@ -64,7 +65,7 @@ class OrdersListTable extends ListTable {
 			'all'       => __( 'All', 'checkout_engine' ),
 		];
 
-		$link = \CheckoutEngine::getIndexUrl( 'orders' );
+		$link = \CheckoutEngine::getUrl()->index( 'orders' );
 
 		foreach ( $stati as $status => $label ) {
 			$current_link_attributes = '';
@@ -73,7 +74,7 @@ class OrdersListTable extends ListTable {
 				if ( $status === $_GET['status'] ) {
 					$current_link_attributes = ' class="current" aria-current="page"';
 				}
-			} elseif ( 'active' === $status ) {
+			} elseif ( 'paid' === $status ) {
 				$current_link_attributes = ' class="current" aria-current="page"';
 			}
 
@@ -102,11 +103,12 @@ class OrdersListTable extends ListTable {
 	public function get_columns() {
 		return [
 			// 'cb'          => '<input type="checkbox" />',
-			'name' => __( 'Name', 'checkout_engine' ),
-			// 'code'  => __( 'Code', 'checkout_engine' ),
-			// 'price' => __( 'Price', 'checkout_engine' ),
+			'name'   => __( 'Name', 'checkout_engine' ),
+			'date'   => __( 'Date', 'checkout_engine' ),
+			'status' => __( 'Status', 'checkout_engine' ),
+			'total'  => __( 'Total', 'checkout_engine' ),
 			// 'usage' => __( 'Usage', 'checkout_engine' ),
-			// 'status'      => __( 'Status', 'checkout_engine' ),
+
 		];
 	}
 
@@ -161,7 +163,7 @@ class OrdersListTable extends ListTable {
 	 * @return boolean|null
 	 */
 	public function getStatus() {
-		$status = sanitize_text_field( $_GET['status'] ) ?? '';
+		$status = $_GET['status'] ?? 'paid';
 		if ( $status === 'all' ) {
 			$status = '';
 		}
@@ -169,25 +171,30 @@ class OrdersListTable extends ListTable {
 	}
 
 	/**
-	 * Handle the price column.
+	 * Handle the total column
 	 *
-	 * @param \CheckoutEngine\Models\Price $product Product model.
+	 * @param \CheckoutEngine\Models\CheckoutSession $session Checkout Session Model.
 	 *
 	 * @return string
 	 */
-	public function column_price( $promotion ) {
+	public function column_total( $session ) {
+		return Currency::format( $session->amount_total ) . ' <small style="opacity: 0.75;">' . strtoupper( esc_html( $session->currency ) ) . '</small>';
+	}
 
-		ob_start();
-		?>
-
-		<?php
-		// phpcs:ignore
-		echo $this->get_price_string( $promotion->coupon ?? false ); // this is already escaped. ?>
-		<br />
-		<div style="opacity: 0.75"><?php echo esc_html( $this->get_duration_string( $promotion->coupon ?? false ) ); ?></div>
-		<?php
-		return ob_get_clean();
-
+	/**
+	 * Handle the total column
+	 *
+	 * @param \CheckoutEngine\Models\CheckoutSession $session Checkout Session Model.
+	 *
+	 * @return string
+	 */
+	public function column_date( $session ) {
+		return sprintf(
+			'<time datetime="%1$s" title="%2$s">%3$s</time>',
+			esc_attr( $session->updated_at ),
+			esc_html( TimeDate::formatDateAndTime( $session->updated_at ) ),
+			esc_html( TimeDate::humanTimeDiff( $session->updated_at ) )
+		);
 	}
 
 	/**
@@ -268,15 +275,8 @@ class OrdersListTable extends ListTable {
 	 *
 	 * @return string
 	 */
-	public function column_status( $promotion ) {
-		// TODO: Add Badge.
-		return $promotion->expired ? __( 'Expired', 'checkout_engine' ) : __( 'Active', 'checkout_engine' );
-	}
-
-	protected function extra_tablenav( $which ) {
-		if ( 'top' === $which ) {
-			return $this->views();
-		}
+	public function column_status( $order ) {
+		return $order->status;
 	}
 
 	/**
@@ -289,94 +289,10 @@ class OrdersListTable extends ListTable {
 	public function column_name( $session ) {
 		ob_start();
 		?>
-		<a class="row-title" aria-label="Edit Coupon" href="<?php echo esc_url( \CheckoutEngine::getEditUrl( 'coupon', $session->id ) ); ?>">
+		<a class="row-title" aria-label="Edit Coupon" href="<?php echo esc_url( \CheckoutEngine::getUrl()->edit( 'coupon', $session->id ) ); ?>">
 			<?php echo esc_html_e( $session->name ); ?>
 		</a>
-		<?php
-		// TODO: Add disable functionality.
-		// echo $this->row_actions(
-		// [
-		// 'edit'  => '<a href="' . esc_url( \CheckoutEngine::getEditUrl( 'coupon', $promotion->id ) ) . '" aria-label="Edit Coupon">Edit</a>',
-		// 'trash' => '<a class="submitdelete" href="' . esc_url( \CheckoutEngine::getEditUrl( 'coupon', $promotion->id ) ) . '" aria-label="Edit Coupon">Disable</a>',
-		// ],
-		// );
-		?>
-		<?php
-		return ob_get_clean();
-	}
-
-	/**
-	 * Name of the coupon
-	 *
-	 * @param \CheckoutEngine\Models\Promotion $promotion Promotion model.
-	 *
-	 * @return string
-	 */
-	public function column_code( $promotion ) {
-		return '<code>' . $promotion->code . '</code>';
-	}
-
-	/**
-	 * Allows you to sort the data by the variables set in the $_GET.
-	 *
-	 * @return Mixed
-	 */
-	private function sort_data( $a, $b ) {
-		// Set defaults
-		$orderby = 'title';
-		$order   = 'asc';
-
-		// If orderby is set, use this as the sort column
-		if ( ! empty( $_GET['orderby'] ) ) {
-			$orderby = $_GET['orderby'];
-		}
-
-		// If order is set use this as the order
-		if ( ! empty( $_GET['order'] ) ) {
-			$order = $_GET['order'];
-		}
-
-		$result = strcmp( $a[ $orderby ], $b[ $orderby ] );
-
-		if ( $order === 'asc' ) {
-			return $result;
-		}
-
-		return -$result;
-	}
-
-	/**
-	 * @global string $comment_status
-	 *
-	 * @return array
-	 */
-	protected function get_bulk_actions() {
-		return false;
-		global $comment_status;
-
-		$actions = array();
-		if ( in_array( $comment_status, array( 'all', 'approved' ), true ) ) {
-			$actions['unapprove'] = __( 'Unapprove' );
-		}
-		if ( in_array( $comment_status, array( 'all', 'moderated' ), true ) ) {
-			$actions['approve'] = __( 'Approve' );
-		}
-		if ( in_array( $comment_status, array( 'all', 'moderated', 'approved', 'trash' ), true ) ) {
-			$actions['spam'] = _x( 'Mark as spam', 'comment' );
-		}
-
-		if ( 'trash' === $comment_status ) {
-			$actions['untrash'] = __( 'Restore' );
-		} elseif ( 'spam' === $comment_status ) {
-			$actions['unspam'] = _x( 'Not spam', 'comment' );
-		}
-
-		if ( in_array( $comment_status, array( 'trash', 'spam' ), true ) || ! EMPTY_TRASH_DAYS ) {
-			$actions['delete'] = __( 'Delete permanently' );
-		} else {
-			$actions['trash'] = __( 'Move to Trash' );
-		}
-
-		return $actions;
+				<?php
+				return ob_get_clean();
 	}
 }

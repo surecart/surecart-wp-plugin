@@ -1,0 +1,87 @@
+<?php
+
+namespace CheckoutEngine\Routing;
+
+/**
+ * Generates links for specific amdin urls.
+ */
+class AdminURLService {
+	/**
+	 * Stores the admin page names.
+	 *
+	 * @var array
+	 */
+	protected $page_names = [];
+
+	public function __construct( $page_names ) {
+		$this->page_names = $page_names;
+	}
+
+	/**
+	 * New page url
+	 *
+	 * @param string $name Model lowercase name.
+	 * @return string URL for the page.
+	 */
+	public function new( $name ) {
+		return esc_url(
+			add_query_arg(
+				[
+					'action' => 'edit',
+				],
+				menu_page_url( $this->page_names[ $name ], false )
+			)
+		);
+	}
+
+	/**
+	 * Edit page url
+	 *
+	 * @param string $name Model lowercase name.
+	 * @param string $id Model id.
+	 *
+	 * @return string URL for the page.
+	 */
+	public function edit( $name, $id = null ) {
+		return esc_url(
+			add_query_arg(
+				[
+					'action' => 'edit',
+					'id'     => $id,
+				],
+				menu_page_url( $this->page_names[ $name ], false )
+			)
+		);
+	}
+
+	/**
+	 * Admin index page url
+	 *
+	 * @param string $name Model lowercase name.
+	 * @return string URL for the page.
+	 */
+	public function index( $name ) {
+		return esc_url( menu_page_url( $this->page_names[ $name ], false ) );
+	}
+
+	/**
+	 * Archive page url
+	 *
+	 * @param string $name Model lowercase name.
+	 * @param string $id Model id.
+	 *
+	 * @return string URL for the page.
+	 */
+	public function toggleArchive( $name, $id ) {
+		return esc_url(
+			add_query_arg(
+				[
+					'action' => 'toggle_archive',
+					'nonce'  => wp_create_nonce( "archive_$name" ),
+					'id'     => $id,
+				],
+				$this->index( $name )
+			)
+		);
+	}
+}

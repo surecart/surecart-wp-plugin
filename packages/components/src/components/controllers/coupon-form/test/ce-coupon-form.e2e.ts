@@ -62,7 +62,7 @@ describe('ce-coupon-form', () => {
     });
     await page.waitForChanges();
     const line = await page.find(`${selector} >>> ce-line-item`);
-    expect(line).toEqualText('TESTCODE-$7.25');
+    expect(line).toEqualText('TESTCODE(25% off)-$7.25');
     const tag = await page.find(`${selector} >>> ce-tag`);
     expect(tag).toEqualText('TESTCODE');
 

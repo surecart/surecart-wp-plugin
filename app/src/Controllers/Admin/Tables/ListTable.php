@@ -30,8 +30,8 @@ abstract class ListTable extends \WP_List_Table {
 	 *
 	 * @return boolean|null
 	 */
-	public function getArchiveStatus() {
-		$status = sanitize_text_field( $_GET['product_status'] ?? 'active' );
+	public function getArchiveStatus( $default = 'active' ) {
+		$status = sanitize_text_field( $_GET['status'] ?? $default );
 
 		$archived = false;
 		if ( 'archived' === $status ) {

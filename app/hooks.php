@@ -11,6 +11,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+// handle sessions in admin for flash messages.
+add_action(
+	'admin_init',
+	function() {
+		if ( ! session_id() ) {
+			session_start();
+		}
+	}
+);
+
 // redirect to an admin page that they can't access instead of homepage.
 // Otherwise the homepage if they cannot access admin.
 add_filter(

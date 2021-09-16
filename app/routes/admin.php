@@ -45,6 +45,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	function() {
 		\CheckoutEngine::route()->get()->where( 'ce_url_var', false, 'action' )->name( 'orders.index' )->handle( 'OrdersViewController@index' );
 		\CheckoutEngine::route()->get()->where( 'ce_url_var', 'edit', 'action' )->name( 'orders.edit' )->handle( 'OrdersViewController@edit' );
+		\CheckoutEngine::route()->get()->where( 'ce_url_var', 'archive', 'action' )->name( 'orders.archive' )->handle( 'OrdersViewController@archive' );
 	}
 );
 
@@ -61,6 +62,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	function() {
 		\CheckoutEngine::route()->get()->where( 'ce_url_var', false, 'action' )->name( 'products.index' )->handle( 'ProductsViewController@index' );
 		\CheckoutEngine::route()->get()->where( 'ce_url_var', 'edit', 'action' )->name( 'product.edit' )->handle( 'ProductsViewController@edit' );
+		\CheckoutEngine::route()->get()->where( 'ce_url_var', 'toggle_archive', 'action' )->name( 'product.archive' )->middleware( 'archive_model:product' )->handle( 'ProductsViewController@toggleArchive' );
 	}
 );
 

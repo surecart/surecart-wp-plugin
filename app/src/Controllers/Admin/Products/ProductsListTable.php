@@ -4,6 +4,7 @@ namespace CheckoutEngine\Controllers\Admin\Products;
 
 use CheckoutEngine\Models\Product;
 use CheckoutEngine\Support\Currency;
+use CheckoutEngine\Support\TimeDate;
 use CheckoutEngine\Controllers\Admin\Tables\ListTable;
 /**
  * Create a new table class that will extend the WP_List_Table
@@ -11,11 +12,11 @@ use CheckoutEngine\Controllers\Admin\Tables\ListTable;
 class ProductsListTable extends ListTable {
 	public $checkbox = true;
 
-		/**
-		 * Prepare the items for the table to process
-		 *
-		 * @return Void
-		 */
+	/**
+	 * Prepare the items for the table to process
+	 *
+	 * @return Void
+	 */
 	public function prepare_items() {
 		$columns  = $this->get_columns();
 		$hidden   = $this->get_hidden_columns();
@@ -67,15 +68,15 @@ class ProductsListTable extends ListTable {
 		foreach ( $stati as $status => $label ) {
 			$current_link_attributes = '';
 
-			if ( ! empty( $_GET['product_status'] ) ) {
-				if ( $status === $_GET['product_status'] ) {
+			if ( ! empty( $_GET['status'] ) ) {
+				if ( $status === $_GET['status'] ) {
 					$current_link_attributes = ' class="current" aria-current="page"';
 				}
 			} elseif ( 'active' === $status ) {
 				$current_link_attributes = ' class="current" aria-current="page"';
 			}
 
-			$link = add_query_arg( 'product_status', $status, $link );
+			$link = add_query_arg( 'status', $status, $link );
 
 			$status_links[ $status ] = "<a href='$link'$current_link_attributes>" . $label . '</a>';
 		}
@@ -103,7 +104,7 @@ class ProductsListTable extends ListTable {
 			'name'        => __( 'Name', 'checkout_engine' ),
 			'description' => __( 'Description', 'checkout_engine' ),
 			'price'       => __( 'Price', 'checkout_engine' ),
-			'created'     => __( 'Created', 'checkout_engine' ),
+			'date'        => __( 'Date', 'checkout_engine' ),
 		];
 	}
 
@@ -170,12 +171,12 @@ class ProductsListTable extends ListTable {
 	 */
 	public function column_price( $product ) {
 		if ( empty( $product->prices ) ) {
-			return __( 'No price', 'checkout_engine' );
+			return '<ce-tag type="warning">' . __( 'No price', 'checkout_engine' ) . '</ce-tag>';
 		}
 
 		if ( ! empty( $product->prices[0]->amount ) ) {
 			$min_price = min( array_column( $product->prices, 'amount' ) );
-			$amount    = Currency::formatCurrencyNumber( $min_price ) . ' <small style="opacity: 0.75;">' . strtoupper( esc_html( $product->prices[0]->currency ) ) . '</small>';
+			$amount    = Currency::format( $min_price ) . ' <small style="opacity: 0.75;">' . strtoupper( esc_html( $product->prices[0]->currency ) ) . '</small>';
 			// translators: Price starting at.
 			return count( $product->prices ) > 1 ? sprintf( __( 'Starting at %s', 'checkout_engine' ), $amount ) : $amount;
 		}
@@ -190,8 +191,21 @@ class ProductsListTable extends ListTable {
 	 *
 	 * @return string
 	 */
-	public function column_created( $product ) {
-		return wp_date( get_option( 'date_format' ), $product->created_at );
+	public function column_date( $product ) {
+		$created = sprintf(
+			'<time datetime="%1$s" title="%2$s">%3$s</time>',
+			esc_attr( $product->created_at ),
+			esc_html( TimeDate::formatDateAndTime( $product->created_at ) ),
+			esc_html( TimeDate::humanTimeDiff( $product->created_at ) )
+		);
+		$updated = sprintf(
+			'%1$s <time datetime="%2$s" title="%3$s">%4$s</time>',
+			__( 'Updated', 'checkout_engine' ),
+			esc_attr( $product->updated_at ),
+			esc_html( TimeDate::formatDateAndTime( $product->updated_at ) ),
+			esc_html( TimeDate::humanTimeDiff( $product->updated_at ) )
+		);
+		return $created . '<br /><small style="opacity: 0.75">' . $updated . '</small>';
 	}
 
 	/**
@@ -204,21 +218,41 @@ class ProductsListTable extends ListTable {
 	public function column_name( $product ) {
 		ob_start();
 		?>
-		<a class="row-title" aria-label="<?php echo esc_attr( 'Edit Product', 'checkout_engine' ); ?>" href="<?php echo esc_url( \CheckoutEngine::getEditUrl( 'product', $product->id ) ); ?>">
+		<a class="row-title" aria-label="<?php echo esc_attr( 'Edit Product', 'checkout_engine' ); ?>" href="<?php echo esc_url( \CheckoutEngine::getUrl()->edit( 'product', $product->id ) ); ?>">
 			<?php echo esc_html_e( $product->name ); ?>
 		</a>
 
 		<?php
 		echo $this->row_actions(
 			[
-				'edit'  => '<a href="' . esc_url( \CheckoutEngine::getEditUrl( 'product', $product->id ) ) . '" aria-label="' . esc_attr( 'Edit Product', 'checkout_engine' ) . '">' . __( 'Edit', 'checkout_engine' ) . '</a>',
-				'trash' => '<a class="submitdelete" onclick="return confirm(\'' . __( 'Are you sure you want to archive this? This will be unavailable for purchase.' ) . '\')" href="' . esc_url( \CheckoutEngine::getEditUrl( 'coupon', $product->id ) ) . '" aria-label="Edit Coupon">' . __( 'Archive', 'checkout_engine' ) . '</a>',
+				'edit'  => '<a href="' . esc_url( \CheckoutEngine::getUrl()->edit( 'product', $product->id ) ) . '" aria-label="' . esc_attr( 'Edit Product', 'checkout_engine' ) . '">' . __( 'Edit', 'checkout_engine' ) . '</a>',
+				'trash' => $this->action_toggle_archive( $product ),
 			],
 		);
 		?>
 
 		<?php
 		return ob_get_clean();
+	}
+
+	/**
+	 * Toggle archive action link and text.
+	 *
+	 * @param \CheckoutEngine\Models\Product $product Product model.
+	 * @return string
+	 */
+	public function action_toggle_archive( $product ) {
+		$text            = $product->archived ? __( 'Un-Archive', 'checkout_engine' ) : __( 'Archive', 'checkout_engine' );
+		$confirm_message = $product->archived ? __( 'Are you sure you want to restore this product? This will be be available to purchase.', 'checkout_engine' ) : __( 'Are you sure you want to archive this product? This will be unavailable for purchase.', 'checkout_engine' );
+		$link            = \CheckoutEngine::getUrl()->toggleArchive( 'product', $product->id );
+
+		return sprintf(
+			'<a class="submitdelete" onclick="return confirm(\'%1s\')" href="%2s" aria-label="%3s">%4s</a>',
+			esc_attr( $confirm_message ),
+			esc_url( $link ),
+			esc_attr__( 'Toggle Product Archive', 'checkout_engine' ),
+			esc_html( $text )
+		);
 	}
 
 	/**
@@ -232,74 +266,10 @@ class ProductsListTable extends ListTable {
 	public function column_default( $product, $column_name ) {
 		switch ( $column_name ) {
 			case 'name':
-				return '<a href="' . add_query_arg( 'product', $product->id ) . '">' . $product->name . '</a>';
+				return '<a href="' . \CheckoutEngine::getUrl()->edit( 'product', $product->id ) . '">' . $product->name . '</a>';
 			case 'name':
 			case 'description':
 				return $product->$column_name ?? '';
 		}
-	}
-
-	/**
-	 * Allows you to sort the data by the variables set in the $_GET.
-	 *
-	 * @return Mixed
-	 */
-	private function sort_data( $a, $b ) {
-		// Set defaults
-		$orderby = 'title';
-		$order   = 'asc';
-
-		// If orderby is set, use this as the sort column
-		if ( ! empty( $_GET['orderby'] ) ) {
-			$orderby = $_GET['orderby'];
-		}
-
-		// If order is set use this as the order
-		if ( ! empty( $_GET['order'] ) ) {
-			$order = $_GET['order'];
-		}
-
-		$result = strcmp( $a[ $orderby ], $b[ $orderby ] );
-
-		if ( $order === 'asc' ) {
-			return $result;
-		}
-
-		return -$result;
-	}
-
-	/**
-	 * @global string $comment_status
-	 *
-	 * @return array
-	 */
-	protected function get_bulk_actions() {
-		return false;
-		global $comment_status;
-
-		$actions = array();
-		if ( in_array( $comment_status, array( 'all', 'approved' ), true ) ) {
-			$actions['unapprove'] = __( 'Unapprove' );
-		}
-		if ( in_array( $comment_status, array( 'all', 'moderated' ), true ) ) {
-			$actions['approve'] = __( 'Approve' );
-		}
-		if ( in_array( $comment_status, array( 'all', 'moderated', 'approved', 'trash' ), true ) ) {
-			$actions['spam'] = _x( 'Mark as spam', 'comment' );
-		}
-
-		if ( 'trash' === $comment_status ) {
-			$actions['untrash'] = __( 'Restore' );
-		} elseif ( 'spam' === $comment_status ) {
-			$actions['unspam'] = _x( 'Not spam', 'comment' );
-		}
-
-		if ( in_array( $comment_status, array( 'trash', 'spam' ), true ) || ! EMPTY_TRASH_DAYS ) {
-			$actions['delete'] = __( 'Delete permanently' );
-		} else {
-			$actions['trash'] = __( 'Move to Trash' );
-		}
-
-		return $actions;
 	}
 }

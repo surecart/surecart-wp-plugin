@@ -20,7 +20,7 @@ export class CEChoices {
 
   componentDidLoad() {
     // Only run if ResizeObserver is supported.
-    if ('ResizeObserver' in self) {
+    if ('ResizeObserver' in window) {
       var ro = new ResizeObserver(entries => {
         entries.forEach(entry => {
           this.width = entry.contentRect.width;

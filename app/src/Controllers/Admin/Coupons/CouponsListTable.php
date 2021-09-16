@@ -72,7 +72,7 @@ class CouponsListTable extends ListTable {
 			'all'      => __( 'All', 'checkout_engine' ),
 		];
 
-		$link = \CheckoutEngine::getIndexUrl( 'coupon' );
+		$link = \CheckoutEngine::getUrl()->index( 'coupon' );
 
 		foreach ( $stati as $status => $label ) {
 			$current_link_attributes = '';
@@ -284,20 +284,11 @@ class CouponsListTable extends ListTable {
 	public function column_name( $promotion ) {
 		ob_start();
 		?>
-		<a class="row-title" aria-label="Edit Coupon" href="<?php echo esc_url( \CheckoutEngine::getEditUrl( 'coupon', $promotion->id ) ); ?>">
+		<a class="row-title" aria-label="Edit Coupon" href="<?php echo esc_url( \CheckoutEngine::getUrl()->edit( 'coupon', $promotion->id ) ); ?>">
 			<?php echo esc_html_e( $promotion->coupon->name ?? $promotion->code ); ?>
 		</a>
-		<?php
-		// TODO: Add disable functionality.
-		// echo $this->row_actions(
-		// [
-		// 'edit'  => '<a href="' . esc_url( \CheckoutEngine::getEditUrl( 'coupon', $promotion->id ) ) . '" aria-label="Edit Coupon">Edit</a>',
-		// 'trash' => '<a class="submitdelete" href="' . esc_url( \CheckoutEngine::getEditUrl( 'coupon', $promotion->id ) ) . '" aria-label="Edit Coupon">Disable</a>',
-		// ],
-		// );
-		?>
-		<?php
-		return ob_get_clean();
+				<?php
+				return ob_get_clean();
 	}
 
 	/**

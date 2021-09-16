@@ -15,7 +15,7 @@ export const config: Config = {
   testing: {
     // browserHeadless: false,
     transform: {
-      '^.+\\.js': 'babel-jest',
+      '^.+\\.(ts|tsx|js|jsx|css)$': '@stencil/core/testing/jest-preprocessor',
     },
     transformIgnorePatterns: ['node_modules/(?!stencil-fragment)'],
     // setupFilesAfterEnv: ['./src/test/setup-tests.js'],

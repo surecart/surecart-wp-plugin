@@ -43,10 +43,13 @@ abstract class AdminModelEditController {
 	 * @return void
 	 */
 	public function enqueueScriptDependencies() {
-		wp_enqueue_script( 'checkout-engine-components' );
-		wp_enqueue_style( 'checkout-engine-themes-default' );
 		wp_enqueue_media();
 		wp_enqueue_style( 'wp-components' );
+	}
+
+	public function enqueueComponents() {
+		wp_enqueue_script( 'checkout-engine-components' );
+		wp_enqueue_style( 'checkout-engine-themes-default' );
 	}
 
 	/**
@@ -58,6 +61,9 @@ abstract class AdminModelEditController {
 		if ( ! $this->condition() ) {
 			return;
 		}
+
+		// components are also used on index pages.
+		$this->enqueueComponents();
 
 		// match url query for the scripts.
 		if ( ! empty( $this->url_query ) ) {

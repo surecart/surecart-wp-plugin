@@ -2,6 +2,8 @@
 
 namespace CheckoutEngine\Routing;
 
+use CheckoutEngine\Routing\AdminURLService;
+
 /**
  * Provide custom route conditions.
  * This is an example class so feel free to modify or remove it.
@@ -22,6 +24,15 @@ class AdminRouteService {
 	];
 
 	/**
+	 * Get URL function
+	 *
+	 * @return AdminURLService
+	 */
+	public function getUrl() {
+		return new AdminURLService( $this->page_names );
+	}
+
+	/**
 	 * Get the Edit url for a model.
 	 *
 	 * @param string $name Name of the model.
@@ -30,7 +41,7 @@ class AdminRouteService {
 	 * @return string Url.
 	 */
 	public function getEditUrl( $name, $id = null ) {
-		return esc_url_raw(
+		return esc_url(
 			add_query_arg(
 				[
 					'action' => 'edit',
@@ -42,6 +53,25 @@ class AdminRouteService {
 	}
 
 	public function getIndexUrl( $name ) {
-		 return esc_url_raw( menu_page_url( $this->page_names[ $name ], false ) );
+		 return esc_url( menu_page_url( $this->page_names[ $name ], false ) );
+	}
+
+	/**
+	 * Get the Archive URL
+	 *
+	 * @param string $name Lowercase name of the model.
+	 * @return string
+	 */
+	public function getArchiveUrl( $name, $id ) {
+		return esc_url(
+			add_query_arg(
+				[
+					'action' => 'archive',
+					'nonce'  => wp_create_nonce( "archive_$name" ),
+					'id'     => $id,
+				],
+				$this->getIndexUrl()
+			)
+		);
 	}
 }

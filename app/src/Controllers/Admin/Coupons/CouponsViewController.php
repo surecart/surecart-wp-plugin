@@ -14,7 +14,11 @@ class CouponsViewController {
 	public function index() {
 		$table = new CouponsListTable();
 		$table->prepare_items();
-		return \CheckoutEngine::view( 'admin.coupons.index' )->with( [ 'table' => $table ] );
+		return \CheckoutEngine::view( 'admin.coupons.index' )->with(
+			[
+				'table' => $table,
+			]
+		);
 	}
 
 	/**

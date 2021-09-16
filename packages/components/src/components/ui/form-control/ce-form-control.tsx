@@ -19,7 +19,7 @@ export class CEFormControl {
   @Prop() helpId: string;
 
   componentDidLoad() {
-    this.el.firstElementChild.setAttribute('isvalid', 'true');
+    this.el.firstElementChild && this.el.firstElementChild.setAttribute('isvalid', 'true');
   }
 
   render() {

@@ -11,7 +11,11 @@ describe('ce-product-line-item', () => {
     <ce-product-line-item amount="1000" currency="CAD">
        <mock:shadow-root>
          <ce-line-item>
-           <span slot="title"></span>
+         <span slot="title">
+                  <ce-tag size="small">
+                    Remove
+                  </ce-tag>
+                </span>
            <ce-quantity-select slot="description"></ce-quantity-select>
            <span slot="price">
              CA$10.00

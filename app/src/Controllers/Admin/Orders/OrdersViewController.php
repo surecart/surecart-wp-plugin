@@ -14,7 +14,11 @@ class OrdersViewController {
 	public function index() {
 		$table = new OrdersListTable();
 		$table->prepare_items();
-		return \CheckoutEngine::view( 'admin.orders.index' )->with( [ 'table' => $table ] );
+		return \CheckoutEngine::view( 'admin.orders.index' )->with(
+			[
+				'table' => $table,
+			]
+		);
 	}
 
 	/**
@@ -22,5 +26,12 @@ class OrdersViewController {
 	 */
 	public function edit() {
 		return \CheckoutEngine::view( 'admin.orders.edit' );
+	}
+
+	public function archive( $request ) {
+		// flash an error message
+		\CheckoutEngine::flash()->add( 'errors', 'Please enter a valid email address.' );
+		// redirect to order index page.
+		return \CheckoutEngine::redirect()->to( \CheckoutEngine::getUrl()->index( 'order' ) );
 	}
 }

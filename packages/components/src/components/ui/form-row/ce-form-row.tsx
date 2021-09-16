@@ -13,7 +13,7 @@ export class CEFormRow {
   @State() width: number;
 
   componentDidLoad() {
-    if ('ResizeObserver' in self) {
+    if ('ResizeObserver' in window) {
       this.observer = new ResizeObserver(entries => {
         this.width = entries?.[0].contentRect.width;
       });

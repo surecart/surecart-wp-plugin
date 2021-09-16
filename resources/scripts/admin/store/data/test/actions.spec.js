@@ -270,7 +270,12 @@ describe( 'actions', () => {
 		it( 'removes the dirty record', () => {
 			const { value } = fulfillment.next();
 			expect( value ).toEqual(
-				controls.dispatch( DATA_STORE_KEY, 'removeDirty', product.id )
+				controls.dispatch(
+					DATA_STORE_KEY,
+					'removeDirty',
+					'products',
+					0
+				)
 			);
 		} );
 
