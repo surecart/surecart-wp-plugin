@@ -7,14 +7,6 @@ describe('ce-order-summary', () => {
       components: [CEOrderSummary],
       html: `<ce-order-summary></ce-order-summary>`,
     });
-    expect(page.root).toEqualHtml(`
-      <ce-order-summary>
-        <mock:shadow-root>
-          <div class="summary">
-            <slot></slot>
-          </div>
-        </mock:shadow-root>
-      </ce-order-summary>
-    `);
+    expect(page.root).toMatchSnapshot();
   });
 });

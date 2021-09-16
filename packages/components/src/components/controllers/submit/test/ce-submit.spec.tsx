@@ -7,10 +7,6 @@ describe('ce-submit', () => {
       components: [CeSubmit],
       html: `<ce-submit></ce-submit>`,
     });
-    expect(page.root).toEqualHtml(`
-      <ce-submit full="" size="large">
-        <ce-button full="" size="large" submit="" type="primary"></ce-button>
-      </ce-submit>
-    `);
+    expect(page.root).toMatchSnapshot();
   });
 });

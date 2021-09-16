@@ -1,11 +1,11 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { CeLineItems } from '../ce-line-items';
+import { CePayment } from '../ce-payment';
 
-describe('ce-line-items', () => {
+describe('ce-payment', () => {
   it('renders', async () => {
     const page = await newSpecPage({
-      components: [CeLineItems],
-      html: `<ce-line-items></ce-line-items>`,
+      components: [CePayment],
+      html: `<ce-payment></ce-payment>`,
     });
     expect(page.root).toMatchSnapshot();
   });

@@ -7,10 +7,6 @@ describe('ce-email', () => {
       components: [CeEmail],
       html: `<ce-email></ce-email>`,
     });
-    expect(page.root).toEqualHtml(`
-      <ce-email size="medium">
-        <ce-input autocomplete="email" help="" name="customer_email" type="email" value=""></ce-input>
-      </ce-email>
-    `);
+    expect(page.root).toMatchSnapshot();
   });
 });

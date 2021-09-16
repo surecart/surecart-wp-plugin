@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ce-submit renders 1`] = `
+<ce-submit full="" size="large">
+  <ce-button full="" size="large" submit="" type="primary"></ce-button>
+</ce-submit>
+`;

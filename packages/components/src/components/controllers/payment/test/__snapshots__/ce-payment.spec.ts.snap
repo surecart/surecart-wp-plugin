@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ce-payment renders 1`] = `
+<ce-payment>
+  <!---->
+  <div>
+    <ce-stripe-element></ce-stripe-element>
+  </div>
+</ce-payment>
+`;

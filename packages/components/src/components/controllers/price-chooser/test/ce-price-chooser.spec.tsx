@@ -11,8 +11,6 @@ describe('ce-price-choices', () => {
       components: [CePriceChoices],
       html: `<ce-price-choices></ce-price-choices>`,
     });
-    expect(page.root).toEqualHtml(`
-      <ce-price-choices></ce-price-choices>
-    `);
+    expect(page.root).toMatchSnapshot();
   });
 });
