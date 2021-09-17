@@ -37,6 +37,10 @@
     <li>Your password must include at least one pro wrestling finishing move</li></ul>
   </ce-alert>
 
+  <div style="text-align: center">
+  <ce-tooltip text="Please fill this one out." type="danger">Test</ce-tooltip>
+</div>
+
 <div style="max-width: 960px; margin: auto;">
   <div style=" display: grid; grid-template-columns: 1fr 1fr 1fr; margin: auto; gap: 40px;">
   <ce-card>
@@ -59,7 +63,7 @@
      <span slot="description">View and adjust settings for this website.</span>
 
     <ce-form-row>
-      <ce-input label="Account Name" help="The full name, business name, or other short descriptor for this account."></ce-input>
+        <ce-input label="Account Name" help="The full name, business name, or other short descriptor for this account."></ce-input>
     </ce-form-row>
     <ce-form-row>
       <ce-select id="test" label="Default Currency" help="The default currency for this site. New products will default to this currency."></ce-select>

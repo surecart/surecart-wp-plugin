@@ -1,4 +1,4 @@
-import { Component, h, Prop, Element } from '@stencil/core';
+import { Component, h, Prop, Element, Listen } from '@stencil/core';
 
 @Component({
   tag: 'ce-form-control',
@@ -18,8 +18,9 @@ export class CEFormControl {
   @Prop() help: string;
   @Prop() helpId: string;
 
-  componentDidLoad() {
-    this.el.firstElementChild && this.el.firstElementChild.setAttribute('isvalid', 'true');
+  @Listen('ceChange')
+  handleInputChange() {
+    this.errorMessage = '';
   }
 
   render() {
@@ -40,7 +41,13 @@ export class CEFormControl {
           <slot name="label">{this.label}</slot>
         </label>
         <div class="form-control__input">
-          <slot></slot>
+          {this.errorMessage ? (
+            <ce-tooltip text={this.errorMessage} type="danger" freeze open>
+              <slot></slot>
+            </ce-tooltip>
+          ) : (
+            <slot></slot>
+          )}
         </div>
         {this.help && (
           <div part="help-text" id={this.helpId} class="form-control__help-text">

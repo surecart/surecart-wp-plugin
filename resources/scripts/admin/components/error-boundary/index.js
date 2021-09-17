@@ -28,6 +28,7 @@ export default class ErrorBoundary extends Component {
 	}
 
 	componentDidCatch( error ) {
+		console.log({error});
 		this.setState( { error } );
 	}
 
@@ -37,6 +38,7 @@ export default class ErrorBoundary extends Component {
 
 	render() {
 		const { error } = this.state;
+		
 		if ( ! error ) {
 			return this.props.children;
 		}

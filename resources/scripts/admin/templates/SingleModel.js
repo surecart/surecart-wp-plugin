@@ -2,7 +2,6 @@
 import { css, jsx } from '@emotion/core';
 
 import { __ } from '@wordpress/i18n';
-import { Fragment } from '@wordpress/element';
 import { SnackbarList, Tooltip } from '@wordpress/components';
 import StatusBadge from '../components/StatusBadge';
 import BrowserUrl from '../components/browser-url';

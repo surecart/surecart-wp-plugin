@@ -4,7 +4,8 @@
 	"env": {
 		"tests": {
 			"config": {
-				"FS_METHOD": "direct"
+				"FS_METHOD": "direct",
+				"CE_TESTING": true
 			}
 		}
 	}

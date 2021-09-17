@@ -23,6 +23,11 @@ class PluginServiceProvider implements ServiceProviderInterface {
 		register_activation_hook( CHECKOUT_ENGINE_PLUGIN_FILE, [ $this, 'activate' ] );
 		register_deactivation_hook( CHECKOUT_ENGINE_PLUGIN_FILE, [ $this, 'deactivate' ] );
 
+		// run activation automatically if testing.
+		if ( defined('CE_TESTING')) {
+			$this->activate();
+		}
+
 		add_action( 'plugins_loaded', [ $this, 'loadTextdomain' ] );
 	}
 

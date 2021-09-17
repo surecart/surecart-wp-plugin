@@ -9,7 +9,7 @@ export class CeTag {
   @Event() ceClear: EventEmitter<CeTag>;
 
   /** The tag's type. */
-  @Prop({ reflect: true }) type: 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text' = 'info';
+  @Prop({ reflect: true }) type: 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text';
 
   /** The tag's size. */
   @Prop({ reflect: true }) size: 'small' | 'medium' | 'large' = 'medium';

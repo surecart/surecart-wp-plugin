@@ -1,3 +1,4 @@
-const { registerStore } = wp.data;
+import { createReduxStore, register } from '@wordpress/data';
 import { STORE_KEY, STORE_CONFIG } from './index';
-registerStore( STORE_KEY, STORE_CONFIG );
+const store = createReduxStore(STORE_CONFIG);
+register( STORE_KEY, store );

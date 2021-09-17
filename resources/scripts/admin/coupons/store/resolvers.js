@@ -1,5 +1,6 @@
 import * as actions from './actions';
 import { fetch as apiFetch } from '../../store/data/controls';
+import { STORE_KEY as UI_STORE_KEY } from '../../store/ui';
 const { getQueryArg } = wp.url;
 
 export default {
@@ -9,7 +10,18 @@ export default {
 		if ( ! id ) return {};
 
 		// fetch promotion
-		const promotion = yield apiFetch( { path: `promotions/${ id }` } );
+		try {
+			const promotion = yield apiFetch( { path: `promotions/${ id }` } );
+		} catch ( e ) {
+			dispatch( UI_STORE_KEY ).addErrors( [
+				{
+					index,
+					key,
+					index,
+					error,
+				},
+			] );
+		}
 
 		return actions.setPromotion( promotion );
 	},

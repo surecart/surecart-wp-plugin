@@ -39,7 +39,6 @@ export default withConfirm(
 			duplicateModel,
 			updateModel,
 			isInvalid,
-			isSaving,
 			toggleArchiveModel,
 		} = useProductData();
 
@@ -415,6 +414,7 @@ export default withConfirm(
 							className="ce-price-amount"
 							currencyCode={ ceData.currecy_code }
 							value={ price?.amount }
+							name="price"
 							onCeChange={ ( e ) => {
 								updateModel(
 									'prices',

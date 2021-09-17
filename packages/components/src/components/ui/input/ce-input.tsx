@@ -104,6 +104,9 @@ export class CEInput {
   /** Inputs focus */
   @Prop({ mutable: true, reflect: true }) hasFocus: boolean;
 
+  /** Validation error message. */
+  @Prop() errorMessage: string = '';
+
   /** Is the password visible */
   @State() isPasswordVisible = false;
 
@@ -174,7 +177,7 @@ export class CEInput {
   @Watch('hasFocus')
   handleFocusChange() {
     setTimeout(() => {
-      this.hasFocus ? this.input.focus() : this.input.blur();
+      this.hasFocus && this.input ? this.input.focus() : this.input.blur();
     }, 0);
   }
 
@@ -198,6 +201,7 @@ export class CEInput {
         inputId={this.inputId}
         helpId={this.helpId}
         labelId={this.labelId}
+        errorMessage={this.errorMessage}
       >
         <div
           part="base"

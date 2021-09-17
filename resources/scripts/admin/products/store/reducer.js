@@ -12,6 +12,7 @@ export const entities = (
 				recurring_interval_count: 1,
 			},
 		],
+		products: [],
 	},
 	args
 ) => {

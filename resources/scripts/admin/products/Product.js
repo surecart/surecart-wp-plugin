@@ -3,7 +3,7 @@ import { css, jsx } from '@emotion/core';
 
 import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';
-import { dispatch } from '@wordpress/data';
+import { dispatch, useSelect } from '@wordpress/data';
 
 import { STORE_KEY as NOTICES_STORE_KEY } from '../store/notices';
 import { STORE_KEY as UI_STORE_KEY } from '../store/ui';
@@ -15,6 +15,7 @@ import Template from '../templates/SingleModel';
 // components
 import SaveButton from './components/SaveButton';
 import ProductActionsDropdown from './components/ProductActionsDropdown';
+import FlashError from '../components/FlashError';
 
 // modules
 import Details from './modules/Details';
@@ -41,6 +42,11 @@ export default withConfirm( ( { setConfirm, noticeUI } ) => {
 		status,
 		isSaving,
 	} = useProductData();
+
+	// get model errors
+	const errors = useSelect( ( select ) =>
+		select( UI_STORE_KEY ).selectErrors( 'products', 0 )
+	);
 
 	const onSubmit = async ( e ) => {
 		e.preventDefault();
@@ -72,7 +78,7 @@ export default withConfirm( ( { setConfirm, noticeUI } ) => {
 	return (
 		<Template
 			status={ status }
-			pageModelName={ 'product' }
+			pageModelName={ 'products' }
 			onSubmit={ onSubmit }
 			onInvalid={ onInvalid }
 			backUrl={ 'admin.php?page=ce-products' }
@@ -131,6 +137,13 @@ export default withConfirm( ( { setConfirm, noticeUI } ) => {
 			}
 		>
 			<Fragment>
+				<FlashError
+					error={ errors?.[ 0 ] }
+					scrollIntoView
+					onClose={ ( e ) => {
+						dispatch( UI_STORE_KEY ).clearErrors( 0 );
+					} }
+				/>
 				<Details />
 				<Prices />
 			</Fragment>

@@ -367,6 +367,10 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
+          * Validation error message.
+         */
+        "errorMessage": string;
+        /**
           * Inputs focus
          */
         "hasFocus": boolean;
@@ -1067,6 +1071,28 @@ export namespace Components {
          */
         "type": 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text';
     }
+    interface CeTooltip {
+        /**
+          * Freeze open or closed.
+         */
+        "freeze": boolean;
+        /**
+          * Open or not
+         */
+        "open": boolean;
+        /**
+          * The tooltip's padding.
+         */
+        "padding": number;
+        /**
+          * Tooltip text
+         */
+        "text": string;
+        /**
+          * The tooltip's type.
+         */
+        "type": 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text';
+    }
     interface CeTotal {
         "checkoutSession": CheckoutSession;
         "loading": boolean;
@@ -1328,6 +1354,12 @@ declare global {
         prototype: HTMLCeTagElement;
         new (): HTMLCeTagElement;
     };
+    interface HTMLCeTooltipElement extends Components.CeTooltip, HTMLStencilElement {
+    }
+    var HTMLCeTooltipElement: {
+        prototype: HTMLCeTooltipElement;
+        new (): HTMLCeTooltipElement;
+    };
     interface HTMLCeTotalElement extends Components.CeTotal, HTMLStencilElement {
     }
     var HTMLCeTotalElement: {
@@ -1377,6 +1409,7 @@ declare global {
         "ce-submit": HTMLCeSubmitElement;
         "ce-switch": HTMLCeSwitchElement;
         "ce-tag": HTMLCeTagElement;
+        "ce-tooltip": HTMLCeTooltipElement;
         "ce-total": HTMLCeTotalElement;
     }
 }
@@ -1772,6 +1805,10 @@ declare namespace LocalJSX {
           * Disables the input.
          */
         "disabled"?: boolean;
+        /**
+          * Validation error message.
+         */
+        "errorMessage"?: string;
         /**
           * Inputs focus
          */
@@ -2474,6 +2511,28 @@ declare namespace LocalJSX {
          */
         "type"?: 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text';
     }
+    interface CeTooltip {
+        /**
+          * Freeze open or closed.
+         */
+        "freeze"?: boolean;
+        /**
+          * Open or not
+         */
+        "open"?: boolean;
+        /**
+          * The tooltip's padding.
+         */
+        "padding"?: number;
+        /**
+          * Tooltip text
+         */
+        "text"?: string;
+        /**
+          * The tooltip's type.
+         */
+        "type"?: 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text';
+    }
     interface CeTotal {
         "checkoutSession"?: CheckoutSession;
         "loading"?: boolean;
@@ -2524,6 +2583,7 @@ declare namespace LocalJSX {
         "ce-submit": CeSubmit;
         "ce-switch": CeSwitch;
         "ce-tag": CeTag;
+        "ce-tooltip": CeTooltip;
         "ce-total": CeTotal;
     }
 }
@@ -2573,6 +2633,7 @@ declare module "@stencil/core" {
             "ce-submit": LocalJSX.CeSubmit & JSXBase.HTMLAttributes<HTMLCeSubmitElement>;
             "ce-switch": LocalJSX.CeSwitch & JSXBase.HTMLAttributes<HTMLCeSwitchElement>;
             "ce-tag": LocalJSX.CeTag & JSXBase.HTMLAttributes<HTMLCeTagElement>;
+            "ce-tooltip": LocalJSX.CeTooltip & JSXBase.HTMLAttributes<HTMLCeTooltipElement>;
             "ce-total": LocalJSX.CeTotal & JSXBase.HTMLAttributes<HTMLCeTotalElement>;
         }
     }

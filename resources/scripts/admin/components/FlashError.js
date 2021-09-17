@@ -14,7 +14,7 @@ export default ( { error: errorObject, onClose, onShow, scrollIntoView } ) => {
 						inline: 'nearest',
 					} );
 				}
-				onShow( e );
+				onShow && onShow( e );
 			} }
 			onCeHide={ onClose }
 		>
