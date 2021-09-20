@@ -1,146 +1,24 @@
-const { __ } = wp.i18n;
-import { fetch as apiFetch } from '../../store/data/controls';
-const { controls } = wp.data;
-import { STORE_KEY as UI_STORE_KEY } from '../../store/ui';
-import { STORE_KEY as NOTICES_STORE_KEY } from '../../store/notices';
+import { controls } from '@wordpress/data';
 
-export function setPromotion( value ) {
-	return {
-		type: 'SET_PROMOTION',
-		value,
-	};
-}
+import * as modelActions from '../../store/data/actions';
+export * from '../../store/data/actions';
+import { STORE_KEY } from '../../store/data';
 
-export function updatePromotion( value ) {
-	return {
-		type: 'UPDATE_PROMOTION',
-		value,
-	};
-}
-
-export function updateCoupon( value ) {
-	return {
-		type: 'UPDATE_COUPON',
-		value,
-	};
-}
-
-export function* save() {
-	// is saveable.
-	// if ( ! ( yield controls.select( STORE_NAME, 'isEditedPostSaveable' ) ) ) {
-	// 	return;
-	// }
-
-	// clear any validation errors and set saving
-	yield controls.dispatch( UI_STORE_KEY, 'clearErrors' );
-	yield controls.dispatch( UI_STORE_KEY, 'setSaving', true );
-
-	let updatedRecord;
-
-	try {
-		// save coupon first.
-		yield saveCoupon(
-			yield controls.select( 'checkout-engine/coupon', 'getCoupon' )
-		);
-
-		// save promotion
-		yield savePromotion(
-			yield controls.select( 'checkout-engine/coupon', 'getPromotion' )
-		); // then save promotion.
-
-		const promotion = yield controls.select(
-			'checkout-engine/coupon',
-			'getPromotion'
-		);
-
-		const url = wp.url.addQueryArgs( window.location.href, {
-			id: promotion?.id,
-		} );
-		yield window.history.replaceState(
-			{ id: promotion?.id },
-			'Promotion ' + promotion?.id,
-			url
-		);
-
-		// add notice error.
-		yield controls.dispatch( NOTICES_STORE_KEY, 'addSnackbarNotice', {
-			content: __( 'Saved.', 'checkout_engine' ),
-		} );
-	} catch ( e ) {
-		// log error.
-		console.error( e );
-		// add notice error.
-		yield controls.dispatch( NOTICES_STORE_KEY, 'addSnackbarNotice', {
-			className: 'is-snackbar-error',
-			content:
-				e?.message || __( 'Something went wrong.', 'checkout_engine' ),
-		} );
-		// add validation error.
-		yield controls.dispatch(
-			UI_STORE_KEY,
-			'addValidationErrors',
-			e?.additional_errors || []
-		);
-	} finally {
-		yield controls.dispatch( UI_STORE_KEY, 'setSaving', false );
+export function updateModel( key, payload, index ) {
+	if ( key === 'coupons' ) {
+		// cannot use ad_hoc with recurring.
+		if ( payload?.percent_off ) {
+			payload.amount_off = null;
+		}
+		if ( payload?.amount_off ) {
+			payload.percent_off = null;
+		}
 	}
-
-	return updatedRecord;
+	return modelActions.updateModel( key, payload, index );
 }
-
-export function* saveCoupon( data ) {
-	let coupon;
-
-	try {
-		coupon = yield apiFetch( {
-			path: data.id ? `coupons/${ data.id }` : 'coupons',
-			method: data.id ? 'PATCH' : 'POST',
-			data,
-		} );
-	} catch ( error ) {
-		throw error;
-	}
-
-	// success.
-	if ( coupon ) {
-		yield controls.dispatch(
-			'checkout-engine/coupon',
-			'updateCoupon',
-			coupon
-		);
-		return coupon;
-	}
-
-	// didn't update.
-	throw {
-		message: 'Failed to save.',
-	};
+export function updateCoupon( payload, index = 0 ) {
+	return modelActions.updateModel( 'coupons', payload, index );
 }
-
-export function* savePromotion( data ) {
-	let promotion;
-
-	try {
-		promotion = yield apiFetch( {
-			path: data.id ? `promotions/${ data.id }` : 'promotions',
-			method: data.id ? 'PATCH' : 'POST',
-			data,
-		} );
-	} catch ( error ) {
-		throw error;
-	}
-
-	// success.
-	if ( promotion ) {
-		yield controls.dispatch(
-			'checkout-engine/coupon',
-			'updatePromotion',
-			promotion
-		);
-		return promotion;
-	}
-
-	throw {
-		message: 'Failed to save.',
-	};
+export function updatePromotion( payload, index = 0 ) {
+	return modelActions.updateModel( 'promotions', payload, index );
 }

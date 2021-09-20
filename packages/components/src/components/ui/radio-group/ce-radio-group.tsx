@@ -9,8 +9,8 @@ export class CERadioGroup {
   /** The radio group label. Required for proper accessibility. */
   @Prop() label = '';
 
-  /** Hides the fieldset and legend that surrounds the radio group. The label will still be read by screen readers. */
-  @Prop({ attribute: 'no-fieldset' }) noFieldset: boolean = false;
+  /** Shows the fieldset and legend that surrounds the radio group. */
+  @Prop({ attribute: 'fieldset' }) fieldset: boolean = false;
 
   render() {
     return (
@@ -18,7 +18,7 @@ export class CERadioGroup {
         part="base"
         class={{
           'radio-group': true,
-          'radio-group--no-fieldset': this.noFieldset,
+          'radio-group--has-fieldset': this.fieldset,
         }}
         role="radiogroup"
       >

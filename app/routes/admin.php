@@ -60,9 +60,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->setNamespace( '\\CheckoutEngine\\Controllers\\Admin\\Products\\' )
 ->group(
 	function() {
-		\CheckoutEngine::route()->get()->where( 'ce_url_var', false, 'action' )->name( 'products.index' )->handle( 'ProductsViewController@index' );
-		\CheckoutEngine::route()->get()->where( 'ce_url_var', 'edit', 'action' )->name( 'product.edit' )->handle( 'ProductsViewController@edit' );
-		\CheckoutEngine::route()->get()->where( 'ce_url_var', 'toggle_archive', 'action' )->name( 'product.archive' )->middleware( 'archive_model:product' )->handle( 'ProductsViewController@toggleArchive' );
+		\CheckoutEngine::route()->get()->where( 'ce_url_var', false, 'action' )->name( 'products.index' )->handle( 'ProductsController@index' );
+		\CheckoutEngine::route()->get()->where( 'ce_url_var', 'edit', 'action' )->name( 'product.edit' )->handle( 'ProductsController@edit' );
+		\CheckoutEngine::route()->get()->where( 'ce_url_var', 'toggle_archive', 'action' )->name( 'product.archive' )->middleware( 'archive_model:product' )->handle( 'ProductsController@toggleArchive' );
 	}
 );
 
@@ -77,8 +77,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->setNamespace( '\\CheckoutEngine\\Controllers\\Admin\\Coupons\\' )
 ->group(
 	function() {
-		\CheckoutEngine::route()->get()->where( 'ce_url_var', false, 'action' )->name( 'coupons.index' )->handle( 'CouponsViewController@index' );
-		\CheckoutEngine::route()->get()->where( 'ce_url_var', 'edit', 'action' )->name( 'coupons.edit' )->handle( 'CouponsViewController@edit' );
+		\CheckoutEngine::route()->get()->where( 'ce_url_var', false, 'action' )->name( 'coupons.index' )->handle( 'CouponsController@index' );
+		\CheckoutEngine::route()->get()->where( 'ce_url_var', 'edit', 'action' )->name( 'coupons.edit' )->handle( 'CouponsController@edit' );
+	}
+);
+
+/*
+|--------------------------------------------------------------------------
+| Customers
+|--------------------------------------------------------------------------
+*/
+\CheckoutEngine::route()
+->where( 'admin', 'ce-customers' )
+->middleware( 'user.can:edit_pk_customers' ) // TODO: change to manage products.
+->setNamespace( '\\CheckoutEngine\\Controllers\\Admin\\Customers\\' )
+->group(
+	function() {
+		\CheckoutEngine::route()->get()->where( 'ce_url_var', false, 'action' )->name( 'customer.index' )->handle( 'CustomersController@index' );
+		\CheckoutEngine::route()->get()->where( 'ce_url_var', 'edit', 'action' )->name( 'customer.edit' )->handle( 'CustomersController@edit' );
 	}
 );
 

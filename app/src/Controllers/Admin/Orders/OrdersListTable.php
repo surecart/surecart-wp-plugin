@@ -289,7 +289,7 @@ class OrdersListTable extends ListTable {
 	public function column_name( $session ) {
 		ob_start();
 		?>
-		<a class="row-title" aria-label="Edit Coupon" href="<?php echo esc_url( \CheckoutEngine::getUrl()->edit( 'coupon', $session->id ) ); ?>">
+		<a class="row-title" aria-label="<?php echo esc_attr__( 'Edit Order', 'checkout_engine' ); ?>" href="<?php echo esc_url( \CheckoutEngine::getUrl()->edit( 'order', $session->id ) ); ?>">
 			<?php echo esc_html_e( $session->name ); ?>
 		</a>
 				<?php

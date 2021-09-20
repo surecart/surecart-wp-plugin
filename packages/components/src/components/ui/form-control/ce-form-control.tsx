@@ -14,14 +14,9 @@ export class CEFormControl {
   @Prop() labelId: string;
   @Prop() inputId: string;
   @Prop() required: boolean = false;
-  @Prop() errorMessage: string = '';
+  @Prop({ mutable: true }) errorMessage: string = '';
   @Prop() help: string;
   @Prop() helpId: string;
-
-  @Listen('ceChange')
-  handleInputChange() {
-    this.errorMessage = '';
-  }
 
   render() {
     return (
@@ -41,8 +36,8 @@ export class CEFormControl {
           <slot name="label">{this.label}</slot>
         </label>
         <div class="form-control__input">
-          {this.errorMessage ? (
-            <ce-tooltip text={this.errorMessage} type="danger" freeze open>
+          {!!this.errorMessage ? (
+            <ce-tooltip text={this.errorMessage} type="danger" padding={10} freeze open onClick={() => (this.errorMessage = '')}>
               <slot></slot>
             </ce-tooltip>
           ) : (

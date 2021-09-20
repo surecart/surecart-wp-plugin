@@ -25,7 +25,6 @@ export class CeTooltip {
   @Prop({ reflect: true }) type: 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text' = 'info';
 
   @State() top: number = -10000;
-
   @State() left: number = -10000;
 
   componentDidLoad() {

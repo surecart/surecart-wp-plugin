@@ -1,5 +1,3 @@
-@use '../../../styles/mixins/hide';
-
 :host {
   display: block;
 }
@@ -24,13 +22,18 @@
   margin-bottom: var(--ce-spacing-xx-small);
 }
 
-.radio-group--no-fieldset {
+.radio-group:not(.radio-group--has-fieldset) {
   border: none;
   padding: 0;
   margin: 0;
   min-width: 0;
-
-  .radio-group__label {
-    @include hide.visually-hidden;
-  }
+}
+.radio-group:not(.radio-group--has-fieldset) .radio-group__label {
+  position: absolute;
+  width: 0;
+  height: 0;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  overflow: hidden;
+  white-space: nowrap;
 }

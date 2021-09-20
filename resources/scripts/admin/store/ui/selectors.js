@@ -23,18 +23,38 @@ export function selectErrors( state, key, index = null ) {
 	return filtered.filter( ( error ) => error?.index === index );
 }
 
-export function selectValidationErrors( state, model, index, attribute = '' ) {
-	const errors = selectErrors( state, model, index );
+export function selectValidationErrors(
+	state,
+	key,
+	index = null,
+	attribute = ''
+) {
+	const errors = selectErrors( state, key, index );
 
-	if ( ! errors?.additional_errors?.length ) {
-		return [];
+	let validationErrors = [];
+
+	if ( ! errors.length ) {
+		return validationErrors;
 	}
 
-	if ( ! attribute ) {
-		return errors?.additional_errors;
-	}
+	errors.forEach( ( { error } ) => {
+		if ( ! error?.additional_errors?.length ) {
+			return;
+		}
+		if ( ! attribute ) {
+			validationErrors = [
+				...validationErrors,
+				...error?.additional_errors,
+			];
+			return;
+		}
+		validationErrors = [
+			...validationErrors,
+			...error?.additional_errors?.filter(
+				( error ) => error?.data?.attribute === attribute
+			),
+		];
+	} );
 
-	return errors?.additional_errors?.filter(
-		( error ) => error?.data?.attribute === attribute
-	);
+	return validationErrors;
 }

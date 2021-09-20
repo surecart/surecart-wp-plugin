@@ -13,6 +13,11 @@ class AdminURLService {
 	 */
 	protected $page_names = [];
 
+	/**
+	 * Initialize page names
+	 *
+	 * @param array $page_names Array of page names and their admin query names.
+	 */
 	public function __construct( $page_names ) {
 		$this->page_names = $page_names;
 	}
@@ -49,7 +54,7 @@ class AdminURLService {
 					'action' => 'edit',
 					'id'     => $id,
 				],
-				menu_page_url( $this->page_names[ $name ], false )
+				menu_page_url( $this->page_names[ $name ] ?? '', false )
 			)
 		);
 	}

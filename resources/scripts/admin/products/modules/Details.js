@@ -4,9 +4,11 @@ import { CeInput, CeFormRow } from '@checkout-engine/react';
 import Box from '../../ui/Box';
 
 import useProductData from '../hooks/useProductData';
+import useValidationErrors from '../../hooks/useValidationErrors';
 
 export default () => {
 	const { product, updateModel, loading } = useProductData();
+	const { errors, getValidation } = useValidationErrors( 'products' );
 	return (
 		<Box title={ __( 'General', 'checkout_engine' ) } loading={ loading }>
 			<div>
@@ -22,6 +24,7 @@ export default () => {
 						onCeChange={ ( e ) => {
 							updateModel( 'products', { name: e.target.value } );
 						} }
+						errorMessage={ getValidation( 'name' ) }
 						name="name"
 						required
 					/>
@@ -33,6 +36,7 @@ export default () => {
 							'checkout_engine'
 						) }
 						value={ product?.description }
+						errorMessage={ getValidation( 'description' ) }
 						name="description"
 						onCeChange={ ( e ) => {
 							updateModel( 'products', {

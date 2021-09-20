@@ -3,14 +3,13 @@
 namespace CheckoutEngine\Controllers\Admin\Products;
 
 use CheckoutEngine\Models\Product;
-use WPEmerge\Requests\RequestInterface;
 use WPEmerge\Responses\RedirectResponse;
 use CheckoutEngine\Controllers\Admin\Products\ProductsListTable;
 
 /**
  * Handles product admin requests.
  */
-class ProductsViewController {
+class ProductsController {
 
 	/**
 	 * Products index.

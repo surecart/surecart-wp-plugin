@@ -7,7 +7,7 @@ use CheckoutEngine\Controllers\Admin\Coupons\CouponsListTable;
 /**
  * Handles product admin requests.
  */
-class CouponsViewController {
+class CouponsController {
 	/**
 	 * Coupons index.
 	 */

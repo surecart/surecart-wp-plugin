@@ -45,10 +45,20 @@ export function* addModel( path, payload, index ) {
 }
 
 /**
- * Duplicate price. (Alias for Add Price)
+ * Extend duplicate model to add product_id to prices.
  */
-export function duplicatePrice( { id, ...payload } ) {
-	return addModel( 'prices', payload );
+export function* duplicateModel( key, payload, index ) {
+	if ( key === 'prices' ) {
+		if ( ! payload?.product_id ) {
+			const product = yield controls.resolveSelect(
+				STORE_KEY,
+				'selectProduct'
+			);
+			payload.product_id = product?.id;
+		}
+	}
+
+	return yield modelActions.duplicateModel( key, payload, index );
 }
 
 export function save() {

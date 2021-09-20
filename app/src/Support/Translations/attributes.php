@@ -13,4 +13,5 @@ return [
 	'amount'                   => __( 'Amount', 'checkout_engine' ),
 	'ad_hoc'                   => __( 'Pay what you want', 'checkout_engine' ),
 	'recurring_interval_count' => __( 'Repeat payment', 'checkout_engine' ),
+	'product'                  => __( 'Product', 'checkout_engine' ),
 ];

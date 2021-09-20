@@ -29,6 +29,7 @@
 		"@checkout-engine/react": "file:../integrations/react",
 		"@wordpress/compose": "^4.1.2",
 		"@wordpress/element": "^3.1.1",
+    "@wordpress/components": "^17.0.0",
 		"@wordpress/icons": "^4.0.1",
 		"autoprefixer": "^9.8.0",
 		"babel-core": "^6.26.3",

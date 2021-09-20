@@ -142,6 +142,7 @@ class RolesService {
 			'pk_coupon',
 			'pk_promotion',
 			'pk_product',
+			'pk_checkout_session',
 			'pk_price',
 			'pk_order',
 			'pk_charge',
@@ -164,6 +165,14 @@ class RolesService {
 				"view_{$capability_type}_stats",
 			);
 		}
+
+		$capabilities['pk_customer'] = [
+			'edit_pk_customer', // edit.
+			'read_pk_customer', // read.
+			'delete_pk_customer', // delete.
+			'edit_pk_customers', // edit all.
+			'delete_pk_customers', // delete.
+		];
 
 		return $capabilities;
 	}

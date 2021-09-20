@@ -11,6 +11,7 @@
   white-space: nowrap;
   line-height: 1;
   color: var(--ce-color-white);
+  z-index: 99999;
 
   &:after {
     content: '';

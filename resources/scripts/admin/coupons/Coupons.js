@@ -1,41 +1,66 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 
-const { __ } = wp.i18n;
-const { Fragment, useState, useEffect } = wp.element;
-const { useSelect } = wp.data;
-const { Button, Modal } = wp.components;
+import { __ } from '@wordpress/i18n';
+import { Fragment } from '@wordpress/element';
+import { useSelect } from '@wordpress/data';
+import { Button, Modal } from '@wordpress/components';
+
+import { STORE_KEY as NOTICES_STORE_KEY } from '../store/notices';
+import { STORE_KEY as UI_STORE_KEY } from '../store/ui';
+import { STORE_KEY as DATA_STORE_KEY } from '../store/data';
 
 import Template from '../templates/SingleModel';
 import SaveButton from './components/SaveButton';
 import DisableModal from './components/DisableModal';
+
+// modules
 import Name from './modules/Name';
 import Codes from './modules/Codes';
 import Types from './modules/Types';
 import Duration from './modules/Duration';
 import Limits from './modules/Limits';
+
+// parts
 import Sidebar from './Sidebar';
+
+// hooks
 import useSnackbar from '../hooks/useSnackbar';
 import useCouponData from './hooks/useCouponData';
 
-export default ( { noticeOperations, noticeUI } ) => {
+// hocs
+import withConfirm from '../hocs/withConfirm';
+
+export default withConfirm( ( { setConfirm, noticeUI } ) => {
 	const { snackbarNotices, removeSnackbarNotice } = useSnackbar();
-	const [ confirmDestroy, setConfirmDestroy ] = useState( false );
-	const [ confirmDisable, setConfirmDisable ] = useState( false );
 
 	const {
 		promotion,
 		coupon,
 		loading,
-		updateCoupon,
-		updatePromotion,
 		saveCoupon,
+		updateModel,
 		isSaving,
 	} = useCouponData();
 
-	const onSubmit = ( e ) => {
+	const updatePromotion = ( data ) => {
+		return updateModel( 'promotions', data, 0 );
+	};
+
+	const updateCoupon = ( data ) => {
+		return updateModel( 'coupons', data, 0 );
+	};
+
+	// get model errors
+	const errors = useSelect( ( select ) =>
+		select( UI_STORE_KEY ).selectErrors( 'products', 0 )
+	);
+
+	const onSubmit = async ( e ) => {
 		e.preventDefault();
-		saveCoupon();
+		dispatch( DATA_STORE_KEY ).saveModel( 'coupons', {
+			with: [ 'promotions' ],
+		} );
 	};
 
 	const deleteCoupon = () => {
@@ -102,13 +127,6 @@ export default ( { noticeOperations, noticeUI } ) => {
 					loading={ loading }
 				/>
 			}
-			archive={ {
-				open: confirmDisable,
-				name: promotion?.code || __( 'Coupon', 'checkout_engine' ),
-				isSaving,
-				onRequestClose: () => setConfirmDisable( false ),
-				onRequestDisable: () => {},
-			} }
 			footer={
 				! loading &&
 				!! promotion?.id && (
@@ -163,45 +181,7 @@ export default ( { noticeOperations, noticeUI } ) => {
 					promotion={ promotion }
 					updatePromotion={ updatePromotion }
 				/>
-
-				{ confirmDestroy && (
-					<Modal
-						className={ 'ce-delete-confirm' }
-						title={ sprintf(
-							__( 'Delete "%s"?', 'checkout_engine' ),
-							promotion?.code || 'Coupon'
-						) }
-						onRequestClose={ () => setConfirmDestroy( false ) }
-					>
-						<p>
-							{ __(
-								'Are you sure you want to delete this coupon? This can’t be undone.',
-								'checkout_engine'
-							) }
-						</p>
-						<Button
-							isDestructive
-							onClick={ () => setConfirmDestroy( false ) }
-						>
-							Delete
-						</Button>
-						<Button
-							variant="secondary"
-							onClick={ () => setConfirmDestroy( false ) }
-						>
-							Cancel
-						</Button>
-					</Modal>
-				) }
-
-				<DisableModal
-					open={ confirmDisable }
-					name={ promotion?.code }
-					isSaving={ isSaving }
-					onRequestClose={ () => setConfirmDisable( false ) }
-					onRequestDisable={ () => {} }
-				/>
 			</Fragment>
 		</Template>
 	);
-};
+} );

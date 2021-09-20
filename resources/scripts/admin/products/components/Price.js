@@ -10,8 +10,6 @@ import FlashError from '../../components/FlashError';
 import { STORE_KEY as UI_STORE_KEY } from '../../store/ui';
 import { STORE_KEY as DATA_STORE_KEY } from '../../store/data';
 
-import useProductData from '../hooks/useProductData';
-
 import {
 	CeInput,
 	CeFormRow,
@@ -30,6 +28,10 @@ import {
 import ToggleHeader from '../../components/ToggleHeader';
 import { translate } from '../../util';
 
+// hooks
+import useProductData from '../hooks/useProductData';
+import useValidationErrors from '../../hooks/useValidationErrors';
+
 // hocs
 import withConfirm from '../../hocs/withConfirm';
 
@@ -42,9 +44,9 @@ export default withConfirm(
 			toggleArchiveModel,
 		} = useProductData();
 
-		// get model errors
-		const errors = useSelect( ( select ) =>
-			select( UI_STORE_KEY ).selectErrors( 'prices', index )
+		const { errors, getValidation } = useValidationErrors(
+			'prices',
+			index
 		);
 
 		const [ isOpen, setIsOpen ] = useState( true );
@@ -339,7 +341,6 @@ export default withConfirm(
 										},
 										index
 									);
-									// updateModel( 'prices', { name: e.target.value }, index );
 								} }
 								required
 							/>
@@ -508,6 +509,9 @@ export default withConfirm(
 										value={
 											price?.recurring_interval_count
 										}
+										errorMessage={ getValidation(
+											'recurring_interval_count'
+										) }
 										onCeChange={ ( e ) =>
 											updateModel(
 												'prices',
@@ -518,8 +522,14 @@ export default withConfirm(
 												index
 											)
 										}
+										type="number"
+										max={
+											price?.recurring_interval === 'year'
+												? 1
+												: null
+										}
 										required
-									></CeInput>
+									/>
 									<CeDropdown
 										slot="suffix"
 										position="bottom-right"

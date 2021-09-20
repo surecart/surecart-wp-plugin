@@ -1,28 +1,39 @@
-import * as actions from './actions';
+import { __ } from '@wordpress/i18n';
+import { controls, dispatch } from '@wordpress/data';
 import { fetch as apiFetch } from '../../store/data/controls';
+import { getQueryArg } from '@wordpress/url';
+import { STORE_KEY } from '../../store/data';
 import { STORE_KEY as UI_STORE_KEY } from '../../store/ui';
-const { getQueryArg } = wp.url;
+import { STORE_KEY as NOTICES_STORE_KEY } from '../../store/notices';
 
 export default {
-	*getPromotion() {
+	*selectPromotion() {
 		// maybe get from url.
 		const id = getQueryArg( window.location, 'id' );
 		if ( ! id ) return {};
 
-		// fetch promotion
+		// fetch and normalize
 		try {
-			const promotion = yield apiFetch( { path: `promotions/${ id }` } );
-		} catch ( e ) {
-			dispatch( UI_STORE_KEY ).addErrors( [
+			const { coupon, ...promotion } = yield apiFetch( {
+				path: `promotions/${ id }`,
+			} );
+			return yield controls.dispatch( STORE_KEY, 'setEntities', {
+				promotions: [ promotion ],
+				coupons: [ coupon ],
+			} );
+		} catch ( error ) {
+			// add notice error.
+			yield controls.dispatch( NOTICES_STORE_KEY, 'addSnackbarNotice', {
+				className: 'is-snackbar-error',
+				content: __( 'Something went wrong.', 'checkout_engine' ),
+			} );
+			return yield dispatch( UI_STORE_KEY ).addErrors( [
 				{
-					index,
-					key,
-					index,
+					index: 0,
+					key: 'promotions',
 					error,
 				},
 			] );
 		}
-
-		return actions.setPromotion( promotion );
 	},
 };

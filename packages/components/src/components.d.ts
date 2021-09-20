@@ -715,13 +715,13 @@ export namespace Components {
     }
     interface CeRadioGroup {
         /**
+          * Shows the fieldset and legend that surrounds the radio group.
+         */
+        "fieldset": boolean;
+        /**
           * The radio group label. Required for proper accessibility.
          */
         "label": string;
-        /**
-          * Hides the fieldset and legend that surrounds the radio group. The label will still be read by screen readers.
-         */
-        "noFieldset": boolean;
     }
     interface CeSecureNotice {
     }
@@ -2164,13 +2164,13 @@ declare namespace LocalJSX {
     }
     interface CeRadioGroup {
         /**
+          * Shows the fieldset and legend that surrounds the radio group.
+         */
+        "fieldset"?: boolean;
+        /**
           * The radio group label. Required for proper accessibility.
          */
         "label"?: string;
-        /**
-          * Hides the fieldset and legend that surrounds the radio group. The label will still be read by screen readers.
-         */
-        "noFieldset"?: boolean;
     }
     interface CeSecureNotice {
     }

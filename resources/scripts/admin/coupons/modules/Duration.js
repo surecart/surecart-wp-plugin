@@ -1,12 +1,12 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
-
-const { __ } = wp.i18n;
-const { BaseControl } = wp.components;
+import { __ } from '@wordpress/i18n';
 
 import Box from '../../ui/Box';
-import SelectControl from '../../components/SelectControl';
-import TextControl from '../../components/TextControl';
+import {
+	CeChoices,
+	CeChoice,
+	CeFormRow,
+	CeInput,
+} from '@checkout-engine/react';
 
 export default ( { coupon, updateCoupon, loading } ) => {
 	return (
@@ -14,7 +14,62 @@ export default ( { coupon, updateCoupon, loading } ) => {
 			title={ __( 'Discount Duration', 'checkout_engine' ) }
 			loading={ loading }
 		>
-			<BaseControl>
+			<CeFormRow>
+				<CeChoices
+					style={ { '--columns': 3 } }
+					onCeChange={ ( e ) => {
+						let duration_in_months = coupon?.duration_in_months;
+						const duration = e.target.value;
+						if (
+							! duration_in_months &&
+							duration === 'repeating'
+						) {
+							duration_in_months = 1;
+						}
+						updateCoupon( { duration, duration_in_months } );
+					} }
+				>
+					<CeChoice
+						value="forever"
+						checked={
+							coupon?.duration == 'forever' || ! coupon?.duration
+						}
+					>
+						{ __( 'Forever', 'checkout_engine' ) }
+						<span slot="description">
+							{ __(
+								'Discount will be applied forever.',
+								'checkout_engine'
+							) }
+						</span>
+					</CeChoice>
+					<CeChoice
+						value="once"
+						checked={ coupon?.duration == 'once' }
+					>
+						{ __( 'Once', 'checkout_engine' ) }
+						<span slot="description">
+							{ __(
+								'Discount will be applied once.',
+								'checkout_engine'
+							) }
+						</span>
+					</CeChoice>
+					<CeChoice
+						value="repeating"
+						checked={ coupon?.duration == 'repeating' }
+					>
+						{ __( 'Repeating', 'checkout_engine' ) }
+						<span slot="description">
+							{ __(
+								'Discount will repeat a specific number of times.',
+								'checkout_engine'
+							) }
+						</span>
+					</CeChoice>
+				</CeChoices>
+			</CeFormRow>
+			{ /* <BaseControl>
 				<SelectControl
 					className="ce-duration"
 					value={ coupon?.duration || 'once' }
@@ -49,22 +104,23 @@ export default ( { coupon, updateCoupon, loading } ) => {
 					} }
 					required
 				/>
-			</BaseControl>
+			</BaseControl> */ }
 			{ coupon?.duration === 'repeating' && (
-				<BaseControl>
-					<TextControl
+				<CeFormRow>
+					<CeInput
 						label={ __( 'Number of months', 'checkout_engine' ) }
 						className="ce-duration-in-months"
 						value={ coupon?.duration_in_months || null }
-						attribute="duration_in_months"
-						onChange={ ( duration_in_months ) =>
-							updateCoupon( { duration_in_months } )
+						onCeChange={ ( e ) =>
+							updateCoupon( {
+								duration_in_months: e.target.value,
+							} )
 						}
 						min="1"
 						type="number"
 						required={ coupon?.duration === 'repeating' }
 					/>
-				</BaseControl>
+				</CeFormRow>
 			) }
 		</Box>
 	);

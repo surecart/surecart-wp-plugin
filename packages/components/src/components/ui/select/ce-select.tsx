@@ -335,12 +335,6 @@ export class CeSelect implements IChoicesProps, IChoicesMethods {
             {this.value ? this.createSelectOptions(this.value) : null}
           </select>
         );
-      // case 'multiple':
-      //   return (
-      //     <select {...attributes} multiple ref={el => (this.input = el as HTMLSelectElement)}>
-      //       {this.value ? this.createSelectOptions(this.value) : null}
-      //     </select>
-      //   );
       case 'text':
       default:
         return <input type="text" value={this.value} ref={el => (this.input = el as HTMLInputElement)} {...attributes} />;
@@ -361,7 +355,7 @@ export class CeSelect implements IChoicesProps, IChoicesMethods {
   }
 
   private init() {
-    if (!this.items.length) {
+    if (!this.choices.length) {
       return;
     }
 

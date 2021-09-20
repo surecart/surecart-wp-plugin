@@ -1,13 +1,13 @@
 <?php
 
-namespace CheckoutEngine\Controllers\Admin\Coupons;
+namespace CheckoutEngine\Controllers\Admin\Customers;
 
 use CheckoutEngine\Support\Scripts\AdminModelEditController;
 
 /**
- * Coupon page
+ * Customers Page
  */
-class CouponScriptsController extends AdminModelEditController {
+class CustomersScriptsController extends AdminModelEditController {
 	/**
 	 * What types of data to add the the page.
 	 *
@@ -20,12 +20,12 @@ class CouponScriptsController extends AdminModelEditController {
 	 *
 	 * @var string
 	 */
-	protected $handle = 'checkoutengine/scripts/admin/coupon';
+	protected $handle = 'checkoutengine/scripts/admin/customers';
 
 	/**
 	 * Script path.
 	 *
 	 * @var string
 	 */
-	protected $path = 'admin/coupons';
+	protected $path = 'admin/customers';
 }

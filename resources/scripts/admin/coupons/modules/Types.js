@@ -6,20 +6,17 @@ const { useState, useEffect } = wp.element;
 const { BaseControl, RadioControl } = wp.components;
 
 import Box from '../../ui/Box';
-import TextControl from '../../components/TextControl';
-import CurrencyInputControl from '../../components/CurrencyInputControl';
+
+import {
+	CeFormRow,
+	CeInput,
+	CePriceInput,
+	CeRadioGroup,
+	CeRadio,
+} from '@checkout-engine/react';
 
 export default ( { coupon, updateCoupon, loading } ) => {
 	const [ type, setType ] = useState( 'percentage' );
-
-	useEffect( () => {
-		if ( coupon?.percent_off ) {
-			updateCoupon( { amount_off: null } );
-		}
-		if ( coupon?.amount_off ) {
-			updateCoupon( { percent_off: null } );
-		}
-	}, [ coupon?.percent_off, coupon?.amount_off ] );
 
 	useEffect( () => {
 		if ( coupon?.amount_off ) {
@@ -27,104 +24,83 @@ export default ( { coupon, updateCoupon, loading } ) => {
 		}
 	}, [ coupon?.amount_off ] );
 
-	const currencies = Object.keys( ceData.supported_currencies || {} ).map(
-		( code ) => {
-			return {
-				value: code,
-				label: ceData.supported_currencies[ code ],
-			};
-		}
-	);
-
 	return (
 		<Box title={ __( 'Amount', 'checkout_engine' ) } loading={ loading }>
-			<BaseControl>
-				<RadioControl
-					className="ce-type"
+			<CeFormRow>
+				<CeRadioGroup
 					label={ __( 'Choose a type', 'checkout_engine' ) }
-					selected={ type }
-					options={ [
-						{
-							label: __(
-								'Percentage Discount',
-								'checkout_engine'
-							),
-							value: 'percentage',
-						},
-						{
-							label: __( 'Fixed Discount', 'checkout_engine' ),
-							value: 'fixed',
-						},
-					] }
-					onChange={ ( val ) => {
-						setType( val );
-					} }
-				/>
-			</BaseControl>
-			<BaseControl>
-				{ type === 'percentage' ? (
-					<div
-						css={ css`
-							position: relative;
-						` }
+					onCeChange={ ( e ) => setType( e.target.value ) }
+				>
+					<CeRadio
+						value="percentage"
+						checked={ type === 'percentage' }
 					>
-						<TextControl
-							css={ css`
-								.components-text-control__input {
-									padding-right: 20px;
-									&:focus,
-									&:hover,
-									&:active {
-										padding-right: 30px;
-									}
-								}
-							` }
-							className="ce-percent-off"
-							type="number"
-							min="0"
-							max="100"
-							attribute="percent_off"
-							label={ __( 'Percent Off', 'checkout-engine' ) }
-							value={ coupon?.percent_off || null }
-							onChange={ ( percent_off ) =>
-								updateCoupon( {
-									percent_off: parseFloat( percent_off ),
-								} )
-							}
-							required={ type === 'percentage' }
-						/>
-
-						<div
-							css={ css`
-								position: absolute;
-								right: 10px;
-								height: 35px;
-								top: 35px;
-							` }
-						>
-							%
-						</div>
-					</div>
+						{ __( 'Percentage Discount', 'checkout_engine' ) }
+					</CeRadio>
+					<CeRadio value="fixed" checked={ type === 'fixed' }>
+						{ __( 'Fixed Discount', 'checkout_engine' ) }
+					</CeRadio>
+					{ /* <RadioControl
+						className="ce-type"
+						label={ __( 'Choose a type', 'checkout_engine' ) }
+						selected={ type }
+						options={ [
+							{
+								label: __(
+									'Percentage Discount',
+									'checkout_engine'
+								),
+								value: 'percentage',
+							},
+							{
+								label: __(
+									'Fixed Discount',
+									'checkout_engine'
+								),
+								value: 'fixed',
+							},
+						] }
+						onChange={ ( val ) => {
+							setType( val );
+						} }
+					/> */ }
+				</CeRadioGroup>
+			</CeFormRow>
+			<CeFormRow>
+				{ type === 'percentage' ? (
+					<CeInput
+						className="ce-percent-off"
+						type="number"
+						min="0"
+						max="100"
+						attribute="percent_off"
+						label={ __( 'Percent Off', 'checkout-engine' ) }
+						value={ coupon?.percent_off || null }
+						onChange={ ( e ) =>
+							updateCoupon( {
+								percent_off: e.target.detail,
+							} )
+						}
+						required={ type === 'percentage' }
+					>
+						<span slot="suffix">%</span>
+					</CeInput>
 				) : (
-					<CurrencyInputControl
+					<CePriceInput
 						className="ce-amount-off"
+						currencyCode={ coupon?.currency }
 						attribute="amount_off"
 						label={ __( 'Amount Off', 'checkout-engine' ) }
-						currencies={ currencies }
-						onChangeCurrency={ ( currency ) =>
-							updateCoupon( { currency } )
-						}
-						currency={ coupon?.currency }
 						value={ coupon?.amount_off || null }
-						onChange={ ( amount_off ) => {
+						required={ type === 'fixed' }
+						onCeChange={ ( e ) => {
 							updateCoupon( {
-								amount_off,
+								amount_off: e.target.value,
 							} );
 						} }
-						required={ type === 'fixed' }
 					/>
 				) }
-			</BaseControl>
+			</CeFormRow>
 		</Box>
 	);
 };

@@ -6,6 +6,10 @@
 			"type": "boolean",
 			"default": false
 		},
+    "choices": {
+      "tyoe": "array",
+      "default": [{ "id": null, "type": "all", "prices": [ "" ] }]
+    },
 		"items": {
 			"type": "number",
 			"default": "2"

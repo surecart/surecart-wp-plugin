@@ -17,8 +17,15 @@ import { TabPanel } from '@wordpress/components';
 import FormBlocks from './components/form-blocks';
 
 import { css, jsx } from '@emotion/core';
+import Options from './components/Options';
 
-export default ( { className, clientId, isSelected } ) => {
+export default ( {
+	className,
+	clientId,
+	isSelected,
+	attributes,
+	setAttributes,
+} ) => {
 	// these blocks are required in order to submit an order
 	const requiredBlocks = [
 		'checkout-engine/pricing-section',
@@ -27,7 +34,12 @@ export default ( { className, clientId, isSelected } ) => {
 	];
 
 	return (
-		<div className={ className }>
+		<div
+			className={ className }
+			css={ css`
+				font-size: 14px;
+			` }
+		>
 			<TabPanel
 				tabs={ [
 					{
@@ -43,7 +55,12 @@ export default ( { className, clientId, isSelected } ) => {
 				{ ( tab ) => {
 					switch ( tab.name ) {
 						case 'products':
-							return <div>products</div>;
+							return (
+								<Options
+									attributes={ attributes }
+									setAttributes={ setAttributes }
+								/>
+							);
 						default:
 							return (
 								<CeCheckout

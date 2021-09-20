@@ -21,14 +21,14 @@ class CheckoutSessionRestServiceProvider extends RestServiceProvider implements 
 	 *
 	 * @var string
 	 */
-	protected $controller = CouponsController::class;
+	protected $controller = CheckoutSessionController::class;
 
 	/**
 	 * Methods allowed for the model.
 	 *
 	 * @var array
 	 */
-	protected $methods = [ 'create', 'find', 'edit' ];
+	protected $methods = [ 'index', 'create', 'find', 'edit' ];
 
 	/**
 	 * Register REST Routes
@@ -91,11 +91,61 @@ class CheckoutSessionRestServiceProvider extends RestServiceProvider implements 
 	}
 
 	/**
-	 * Anyone can get create checkout sessions
+	 * Anyone can finalize checkout sessions.
 	 *
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function finalize_permissions_check() {
 		return true;
+	}
+
+	/**
+	 * Anyone can get a specific session
+	 *
+	 * @param \WP_REST_Request $request Full details about the request.
+	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
+	 */
+	public function get_item_permissions_check( $request ) {
+		return true;
+	}
+
+	/**
+	 * Need priveleges to read checkout sessions.
+	 *
+	 * @param \WP_REST_Request $request Full details about the request.
+	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
+	 */
+	public function get_items_permissions_check( $request ) {
+		return current_user_can( 'read_pk_checkout_sessions' );
+	}
+
+	/**
+	 * Anyone can create.
+	 *
+	 * @param \WP_REST_Request $request Full details about the request.
+	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
+	 */
+	public function create_item_permissions_check( $request ) {
+		return true;
+	}
+
+	/**
+	 * Anyone can update.
+	 *
+	 * @param \WP_REST_Request $request Full details about the request.
+	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
+	 */
+	public function update_item_permissions_check( $request ) {
+		return true;
+	}
+
+	/**
+	 * Nobody can delete.
+	 *
+	 * @param \WP_REST_Request $request Full details about the request.
+	 * @return false
+	 */
+	public function delete_item_permissions_check( $request ) {
+		return false;
 	}
 }

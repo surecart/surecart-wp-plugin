@@ -25,7 +25,6 @@ class AdminMenuPageService {
 
 		$this->pages = [
 			'get-started' => \add_submenu_page( $this->slug, __( 'Getting Started', 'checkout_engine' ), __( 'Getting Started', 'checkout_engine' ), 'edit_pk_products', $this->slug, '__return_false' ),
-			// 'dashboard' => \add_submenu_page( $this->slug, __( 'Dashboard', 'checkout_engine' ), __( 'Dashboard', 'checkout_engine' ), 'manage_options', $this->slug, '__return_false' ),
 			'orders'      => \add_submenu_page( $this->slug, __( 'Orders', 'checkout_engine' ), __( 'Orders', 'checkout_engine' ), 'edit_pk_orders', 'ce-orders', '__return_false' ),
 			'products'    => \add_submenu_page( $this->slug, __( 'Products', 'checkout_engine' ), __( 'Products', 'checkout_engine' ), 'edit_pk_products', 'ce-products', '__return_false' ),
 			'coupons'     => \add_submenu_page( $this->slug, __( 'Coupons', 'checkout_engine' ), __( 'Coupons', 'checkout_engine' ), 'edit_pk_coupons', 'ce-coupons', '__return_false' ),
