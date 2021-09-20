@@ -1,4 +1,4 @@
-import { Component, h, Prop, Element, Listen } from '@stencil/core';
+import { Component, h, Prop, Element } from '@stencil/core';
 
 @Component({
   tag: 'ce-form-control',
