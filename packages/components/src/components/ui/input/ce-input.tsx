@@ -170,6 +170,21 @@ export class CEInput {
     this.ceChange.emit();
   }
 
+  handleInput() {
+    this.value = this.input.value;
+    this.ceInput.emit();
+  }
+
+  handleClearClick(event: MouseEvent) {
+    this.value = '';
+    this.ceClear.emit();
+    this.ceInput.emit();
+    this.ceChange.emit();
+    this.input.focus();
+
+    event.stopPropagation();
+  }
+
   handlePasswordToggle() {
     this.isPasswordVisible = !this.isPasswordVisible;
   }
@@ -250,7 +265,7 @@ export class CEInput {
               aria-invalid={this.invalid ? true : false}
               value={this.value}
               onChange={() => this.handleChange()}
-              // onInput={this.handleInput}
+              onInput={() => this.handleInput()}
               // onInvalid={this.handleInvalid}
               onFocus={() => this.handleFocus()}
               onBlur={() => this.handleBlur()}
@@ -260,6 +275,28 @@ export class CEInput {
           <span part="suffix" class="input__suffix">
             <slot name="suffix"></slot>
           </span>
+
+          {this.clearable && this.value?.length > 0 && (
+            <button part="clear-button" class="input__clear" type="button" onClick={e => this.handleClearClick(e)} tabindex="-1">
+              <slot name="clear-icon">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="feather feather-x"
+                >
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              </slot>
+            </button>
+          )}
         </div>
       </ce-form-control>
     );

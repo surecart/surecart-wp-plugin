@@ -36,6 +36,7 @@ abstract class RestController {
 			[
 				'active' => $request['active'] ?? null,
 				'ids'    => $request['ids'] ?? null,
+				'query'  => $request['query'] ?? null,
 			]
 		)->get();
 	}

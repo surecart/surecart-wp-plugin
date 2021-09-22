@@ -48,6 +48,7 @@
 graph TD;
   ce-email --> ce-input
   ce-input --> ce-form-control
+  ce-form-control --> ce-tooltip
   style ce-email fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

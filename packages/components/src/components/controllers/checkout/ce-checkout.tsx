@@ -1,5 +1,5 @@
 import { Component, h, Prop, Element, State, Watch, Listen } from '@stencil/core';
-import { Price, Coupon, CheckoutSession, Customer, LineItemData, PriceData } from '../../../types';
+import { Price, Coupon, CheckoutSession, Customer, LineItemData, PriceData, ProductChoices } from '../../../types';
 import { pick } from '../../../functions/util';
 import { updateSession, createSession, finalizeSession } from '../../../services/session/index';
 
@@ -14,6 +14,9 @@ export class CECheckout {
 
   /** Pass an array of ids for choice fields */
   @Prop() choicePriceIds: Array<string>;
+
+  /** Pass an array of choices */
+  @Prop() choices: ProductChoices;
 
   /** Pass an array of price information to load into the form. */
   @Prop({ attribute: 'prices' }) priceData: Array<PriceData>;
@@ -181,6 +184,7 @@ export class CECheckout {
       error: this.error,
       checkoutSession: this.checkoutSession,
       stripePublishableKey: this.stripePublishableKey,
+      choices: this.choices,
       choicePriceIds: this.choicePriceIds,
       prices: this.prices,
       lineItemData: this.lineItemData,

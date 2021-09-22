@@ -43,6 +43,7 @@ graph TD;
   ce-coupon-form --> ce-button
   ce-coupon-form --> ce-block-ui
   ce-input --> ce-form-control
+  ce-form-control --> ce-tooltip
   ce-button --> ce-spinner
   ce-block-ui --> ce-spinner
   style ce-coupon-form fill:#f9f,stroke:#333,stroke-width:4px

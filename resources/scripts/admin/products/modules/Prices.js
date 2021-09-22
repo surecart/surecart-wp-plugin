@@ -106,7 +106,6 @@ export default () => {
 								</svg>
 								{ __( 'Add Another Price', 'checkout_engine' ) }
 							</CeButton>
-
 							{ !! hasArchivedPrices && (
 								<div
 									css={ css`

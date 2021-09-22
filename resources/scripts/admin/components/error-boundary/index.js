@@ -3,17 +3,12 @@
  */
 import { Component } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-import { Button } from '@wordpress/components';
-import { Warning } from '@wordpress/block-editor';
+import { CeButton, CeAlert } from '@checkout-engine/react';
 import { useCopyToClipboard } from '@wordpress/compose';
 
 function CopyButton( { text, children } ) {
 	const ref = useCopyToClipboard( text );
-	return (
-		<Button variant="secondary" ref={ ref }>
-			{ children }
-		</Button>
-	);
+	return <CeButton ref={ ref }>{ children }</CeButton>;
 }
 
 export default class ErrorBoundary extends Component {
@@ -43,23 +38,21 @@ export default class ErrorBoundary extends Component {
 		}
 
 		return (
-			<Warning
-				className="edit-widgets-error-boundary"
-				actions={ [
-					<Button
-						key="recovery"
-						onClick={ this.reboot }
-						variant="secondary"
-					>
+			<div>
+				<CeAlert type="danger">
+					{ __(
+						'The editor has encountered an unexpected error.',
+						'checkout_engine'
+					) }
+					<CeButton key="recovery" onClick={ this.reboot }>
 						{ __( 'Attempt Recovery' ) }
-					</Button>,
+					</CeButton>
 					<CopyButton key="copy-error" text={ error.stack }>
 						{ __( 'Copy Error' ) }
-					</CopyButton>,
-				] }
-			>
-				{ __( 'The editor has encountered an unexpected error.' ) }
-			</Warning>
+					</CopyButton>
+				</CeAlert>
+				{ this.props.children }
+			</div>
 		);
 	}
 }

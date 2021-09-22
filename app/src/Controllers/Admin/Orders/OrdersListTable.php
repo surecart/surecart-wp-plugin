@@ -61,7 +61,7 @@ class OrdersListTable extends ListTable {
 	protected function get_views() {
 		$stati = [
 			'paid'      => __( 'Paid', 'checkout_engine' ),
-			'abandoned' => __( 'Abandoned', 'checkout_engine' ),
+			'finalized' => __( 'Pending Payment', 'checkout_engine' ),
 			'all'       => __( 'All', 'checkout_engine' ),
 		];
 
@@ -165,7 +165,7 @@ class OrdersListTable extends ListTable {
 	public function getStatus() {
 		$status = $_GET['status'] ?? 'paid';
 		if ( $status === 'all' ) {
-			$status = '';
+			return [ 'paid', 'finalized' ];
 		}
 		return $status ? [ sanitize_text_field( $status ) ] : [];
 	}

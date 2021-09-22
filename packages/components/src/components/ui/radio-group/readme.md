@@ -7,10 +7,10 @@
 
 ## Properties
 
-| Property     | Attribute     | Description                                                                                                   | Type      | Default |
-| ------------ | ------------- | ------------------------------------------------------------------------------------------------------------- | --------- | ------- |
-| `label`      | `label`       | The radio group label. Required for proper accessibility.                                                     | `string`  | `''`    |
-| `noFieldset` | `no-fieldset` | Hides the fieldset and legend that surrounds the radio group. The label will still be read by screen readers. | `boolean` | `false` |
+| Property   | Attribute  | Description                                                   | Type      | Default |
+| ---------- | ---------- | ------------------------------------------------------------- | --------- | ------- |
+| `fieldset` | `fieldset` | Shows the fieldset and legend that surrounds the radio group. | `boolean` | `false` |
+| `label`    | `label`    | The radio group label. Required for proper accessibility.     | `string`  | `''`    |
 
 
 ## Shadow Parts

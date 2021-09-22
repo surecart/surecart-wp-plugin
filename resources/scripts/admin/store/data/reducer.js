@@ -1,12 +1,30 @@
 import dotProp from 'dot-prop-immutable';
 
+function unique( array = [], propertyName ) {
+	return array.filter(
+		( e, i ) =>
+			array.findIndex(
+				( a ) => a[ propertyName ] === e[ propertyName ]
+			) === i
+	);
+}
+
 // Store based on nested key. (i.e. product.price)
-export const entities = ( state = {}, { type, key, payload } ) => {
+export const entities = ( state = {}, { type, key, payload, id } ) => {
 	switch ( type ) {
 		case 'SET_ENTITIES':
 			return payload;
+		case 'UPDATE_ENTITIES':
+			const merged = dotProp.merge( state, key, payload );
+			const uniqueEntities = unique( merged?.[ key ] || [], 'id' );
+			return dotProp.set( state, key, uniqueEntities );
 		case 'SET_MODEL':
 			return dotProp.set( state, key, payload );
+		case 'SET_MODEL_BY_ID':
+			const items = dotProp.get( state, key, payload );
+			const item = items.find( ( item ) => ( item.id = id ) );
+			const index = items.findIndex( item );
+			return dotProp.set( state, `${ key }.${ index }`, payload );
 		case 'ADD_MODEL':
 			return dotProp.set( state, key, ( list ) => [
 				...( list || [] ),

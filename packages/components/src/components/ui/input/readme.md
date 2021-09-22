@@ -12,6 +12,7 @@
 | `autofocus`      | `autofocus`       | The input's autofocus attribute.                                                                                                                                                                              | `boolean`                                                                             | `undefined` |
 | `clearable`      | `clearable`       | Adds a clear button when the input is populated.                                                                                                                                                              | `boolean`                                                                             | `false`     |
 | `disabled`       | `disabled`        | Disables the input.                                                                                                                                                                                           | `boolean`                                                                             | `false`     |
+| `errorMessage`   | `error-message`   | Validation error message.                                                                                                                                                                                     | `string`                                                                              | `''`        |
 | `hasFocus`       | `has-focus`       | Inputs focus                                                                                                                                                                                                  | `boolean`                                                                             | `undefined` |
 | `help`           | `help`            | The input's help text.                                                                                                                                                                                        | `string`                                                                              | `''`        |
 | `inputmode`      | `inputmode`       | The input's inputmode attribute.                                                                                                                                                                              | `"decimal" \| "email" \| "none" \| "numeric" \| "search" \| "tel" \| "text" \| "url"` | `undefined` |
@@ -115,6 +116,7 @@ Type: `Promise<void>`
  - [ce-coupon-form](../../controllers/coupon-form)
  - [ce-email](../../controllers/email)
  - [ce-price-input](../price-input)
+ - [ce-select](../select)
  - [ce-stripe-element](../stripe-element)
 
 ### Depends on
@@ -125,9 +127,11 @@ Type: `Promise<void>`
 ```mermaid
 graph TD;
   ce-input --> ce-form-control
+  ce-form-control --> ce-tooltip
   ce-coupon-form --> ce-input
   ce-email --> ce-input
   ce-price-input --> ce-input
+  ce-select --> ce-input
   ce-stripe-element --> ce-input
   style ce-input fill:#f9f,stroke:#333,stroke-width:4px
 ```

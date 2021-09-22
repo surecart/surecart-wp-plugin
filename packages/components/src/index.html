@@ -57,6 +57,36 @@
   </ce-card>
 </div>
 
+<ce-select-dropdown placeholder="Choose something" search></ce-select-dropdown>
+<script>
+  const dropdown = document.querySelector('ce-select-dropdown');
+  dropdown.choices = [
+  {
+    value: 'samantha',
+    label: 'Product: ProjectHuddle Plugin',
+  },
+  {
+    value: 'weber',
+    label: 'Weber Henderson',
+  },
+  {
+    value: 'samantha1',
+    label: 'Product: ProjectHuddle Plugin',
+  },
+  {
+    value: 'weber2',
+    label: 'Weber Henderson',
+  },
+  {
+    value: 'samantha2',
+    label: 'Product: ProjectHuddle Plugin',
+  },
+  {
+    value: 'weber3',
+    label: 'Weber Henderson',
+  }];
+</script>
+
   <ce-card style="margin: 40px auto;">
    <ce-form-section>
      <span slot="label">Site Account Info</span>
@@ -66,7 +96,7 @@
         <ce-input label="Account Name" help="The full name, business name, or other short descriptor for this account."></ce-input>
     </ce-form-row>
     <ce-form-row>
-      <ce-select id="test" label="Default Currency" help="The default currency for this site. New products will default to this currency."></ce-select>
+      <ce-select id="test" search label="Default Currency" help="The default currency for this site. New products will default to this currency."></ce-select>
       <script>document.querySelector('#test').choices = [
   { "value": "superstar", "label": "Superstar", "selected": false, "disabled": false },
   { "value": "adizero", "label": "adizero", "selected": false, "disabled": false },

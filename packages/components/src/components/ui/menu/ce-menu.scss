@@ -9,3 +9,7 @@
     outline: none;
   }
 }
+
+::slotted(ce-input) {
+  margin-top: -var(--ce-spacing-x-small);
+}

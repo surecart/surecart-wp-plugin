@@ -34,11 +34,13 @@
 ### Used by
 
  - [ce-quantity-select](../quantity-select)
+ - [ce-select](../select)
 
 ### Graph
 ```mermaid
 graph TD;
   ce-quantity-select --> ce-dropdown
+  ce-select --> ce-dropdown
   style ce-dropdown fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

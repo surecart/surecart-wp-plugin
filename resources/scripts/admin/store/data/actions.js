@@ -14,6 +14,14 @@ export function setEntities( payload ) {
 	};
 }
 
+export function updateModels( key, payload ) {
+	return {
+		type: 'UPDATE_ENTITIES',
+		payload,
+		key,
+	};
+}
+
 /**
  * Set model by path
  */
@@ -60,6 +68,15 @@ export function* updateModel( key, payload, index = 0 ) {
 		type: 'UPDATE_MODEL',
 		key: `${ key }.${ index }`,
 		payload,
+	};
+}
+
+export function setModelById( key, payload, index = 0 ) {
+	return {
+		type: 'SET_MODEL_BY_ID',
+		key,
+		payload,
+		id,
 	};
 }
 

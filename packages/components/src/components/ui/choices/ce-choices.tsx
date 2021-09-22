@@ -1,5 +1,7 @@
 import { Component, Prop, h, State, Element } from '@stencil/core';
 
+let id = 0;
+
 @Component({
   tag: 'ce-choices',
   styleUrl: 'ce-choices.scss',
@@ -8,13 +10,33 @@ import { Component, Prop, h, State, Element } from '@stencil/core';
 export class CEChoices {
   @Element() el: HTMLCeChoicesElement;
 
+  private inputId: string = `choices-${++id}`;
+  private helpId = `choices-help-text-${id}`;
+  private labelId = `choices-label-${id}`;
+
   /** The group label. Required for proper accessibility. Alternatively, you can use the label slot. */
   @Prop() label = '';
+
+  /** Input size */
+  @Prop({ reflect: true }) size: 'small' | 'medium' | 'large' = 'medium';
+
+  /** Required */
+  @Prop() required: boolean = false;
+
+  /** Should we show the label */
+  @Prop() showLabel: boolean = true;
+
+  /** The input's help text. */
+  @Prop() help: string = '';
 
   /** Hides the fieldset and legend that surrounds the group. The label will still be read by screen readers. */
   @Prop({ attribute: 'hide-label' }) hideLabel: boolean = false;
 
+  /** Number of columns on desktop */
   @Prop() columns: number = 1;
+
+  /** Validation error message. */
+  @Prop() errorMessage: string = '';
 
   @State() width: number;
 
@@ -44,12 +66,21 @@ export class CEChoices {
         }}
         role="radiogroup"
       >
-        <div part="label" class="choices__label">
-          <slot name="label">{this.label}</slot>
-        </div>
-        <div part="choices" class="choices__items">
-          <slot></slot>
-        </div>
+        <ce-form-control
+          size={this.size}
+          required={this.required}
+          label={this.label}
+          showLabel={this.showLabel}
+          help={this.help}
+          inputId={this.inputId}
+          helpId={this.helpId}
+          labelId={this.labelId}
+          errorMessage={this.errorMessage}
+        >
+          <div part="choices" class="choices__items">
+            <slot></slot>
+          </div>
+        </ce-form-control>
       </fieldset>
     );
   }

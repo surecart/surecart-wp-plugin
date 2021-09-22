@@ -6,6 +6,8 @@ import metadata from './block.json';
 import save from './save';
 import '../../style.scss';
 
+import './store';
+
 /**
  * WordPress dependencies
  */

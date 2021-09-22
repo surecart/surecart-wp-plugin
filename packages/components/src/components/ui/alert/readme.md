@@ -15,6 +15,14 @@
 | `type`     | `type`     | The type of alert.                                                                                                                                                                                                    | `"danger" \| "info" \| "primary" \| "success" \| "warning"` | `'primary'` |
 
 
+## Events
+
+| Event    | Description          | Type                |
+| -------- | -------------------- | ------------------- |
+| `ceHide` | When alert is hidden | `CustomEvent<void>` |
+| `ceShow` | When alert is shown  | `CustomEvent<void>` |
+
+
 ## Methods
 
 ### `hide() => Promise<void>`

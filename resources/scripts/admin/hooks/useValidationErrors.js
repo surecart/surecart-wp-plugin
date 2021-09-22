@@ -1,4 +1,4 @@
-const { useSelect } = wp.data;
+const { useSelect, dispatch } = wp.data;
 import { STORE_KEY } from '../store/ui';
 
 export default ( path, index = 0 ) => {
@@ -18,5 +18,6 @@ export default ( path, index = 0 ) => {
 	return {
 		errors,
 		getValidation,
+		clearErrors: ( index ) => dispatch( STORE_KEY ).clearErrors( index ),
 	};
 };

@@ -19,6 +19,7 @@
 | `label`        | `label`         | The input's label.                                                                                                                                                                                            | `string`                         | `undefined` |
 | `max`          | `max`           | The input's maximum value.                                                                                                                                                                                    | `number \| string`               | `undefined` |
 | `maxlength`    | `maxlength`     | The maximum length of input that will be considered valid.                                                                                                                                                    | `number`                         | `undefined` |
+| `min`          | `min`           | The input's minimum value.                                                                                                                                                                                    | `number \| string`               | `undefined` |
 | `minlength`    | `minlength`     | The minimum length of input that will be considered valid.                                                                                                                                                    | `number`                         | `undefined` |
 | `name`         | `name`          | The input's name attribute.                                                                                                                                                                                   | `string`                         | `undefined` |
 | `pill`         | `pill`          | Draws a pill-style input with rounded edges.                                                                                                                                                                  | `boolean`                        | `false`     |
@@ -102,6 +103,7 @@ Type: `Promise<void>`
 graph TD;
   ce-price-input --> ce-input
   ce-input --> ce-form-control
+  ce-form-control --> ce-tooltip
   style ce-price-input fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

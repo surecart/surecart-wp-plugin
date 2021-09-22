@@ -43,11 +43,6 @@ export default withConfirm( ( { setConfirm, noticeUI } ) => {
 		isSaving,
 	} = useProductData();
 
-	// get model errors
-	const errors = useSelect( ( select ) =>
-		select( UI_STORE_KEY ).selectErrors( 'products', 0 )
-	);
-
 	const onSubmit = async ( e ) => {
 		e.preventDefault();
 		if ( ! prices.some( ( price ) => ! price.archived ) ) {
@@ -137,13 +132,7 @@ export default withConfirm( ( { setConfirm, noticeUI } ) => {
 			}
 		>
 			<Fragment>
-				<FlashError
-					error={ errors?.[ 0 ] }
-					scrollIntoView
-					onClose={ ( e ) => {
-						dispatch( UI_STORE_KEY ).clearErrors( 0 );
-					} }
-				/>
+				<FlashError path="products" scrollIntoView />
 				<Details />
 				<Prices />
 			</Fragment>

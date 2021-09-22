@@ -19,7 +19,7 @@ export default ( { path } ) => {
 	const [ historyId, setHistoryId ] = useState( null );
 	let id;
 	const model = useSelect( ( select ) =>
-		select( STORE_KEY ).selectModel( path )
+		select( STORE_KEY ).selectModel( path, 0 )
 	);
 	if ( model?.id ) {
 		id = model?.id;

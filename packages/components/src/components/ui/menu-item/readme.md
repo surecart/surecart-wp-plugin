@@ -51,11 +51,13 @@ Type: `Promise<void>`
 ### Used by
 
  - [ce-quantity-select](../quantity-select)
+ - [ce-select](../select)
 
 ### Graph
 ```mermaid
 graph TD;
   ce-quantity-select --> ce-menu-item
+  ce-select --> ce-menu-item
   style ce-menu-item fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

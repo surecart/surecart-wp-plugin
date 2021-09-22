@@ -7,8 +7,8 @@
 			"default": false
 		},
     "choices": {
-      "tyoe": "array",
-      "default": [{ "id": null, "type": "all", "prices": [ "" ] }]
+      "tyoe": "object",
+      "default": {}
     },
 		"items": {
 			"type": "number",

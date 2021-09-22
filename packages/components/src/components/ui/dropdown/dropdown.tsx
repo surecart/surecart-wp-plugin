@@ -36,16 +36,12 @@ export class CEDropdown {
   }
 
   handleOutsideClick(evt) {
-    let targetElement = evt.target as HTMLElement; // clicked element
-    do {
-      if (targetElement == this.el) {
-        // This is a click inside. Do nothing, just return.
-        return;
-      }
-      targetElement = targetElement.parentNode as HTMLElement; // Go up the DOM
-    } while (targetElement);
-
-    if (this.open) {
+    const path = evt.composedPath();
+    if (
+      !path.some(item => {
+        return item === this.el;
+      })
+    ) {
       this.open = false;
     }
   }
@@ -73,14 +69,21 @@ export class CEDropdown {
     this.ceHide.emit();
   }
 
-  handleClick() {
+  handleClick(e) {
     if (this.closeOnSelect) {
-      this.open = false;
+      const path = e.composedPath();
+      if (
+        path.some(item => {
+          return item.classList && item.classList.contains('menu-item');
+        })
+      ) {
+        this.open = false;
+      }
     }
   }
 
   componentWillLoad() {
-    document.addEventListener('click', evt => this.handleOutsideClick(evt));
+    document.addEventListener('mousedown', evt => this.handleOutsideClick(evt));
   }
 
   /* Get the slotted menu */
@@ -130,7 +133,7 @@ export class CEDropdown {
           aria-orientation="vertical"
           aria-labelledby="menu-button"
           tabindex="-1"
-          onClick={() => this.handleClick()}
+          onClick={e => this.handleClick(e)}
           ref={el => (this.panel = el as HTMLElement)}
         >
           <slot></slot>

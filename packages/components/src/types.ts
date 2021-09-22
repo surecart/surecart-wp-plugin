@@ -10,6 +10,11 @@ declare global {
     };
   }
 }
+
+export interface ChoiceItem extends Object {
+  value: string;
+  label: string;
+}
 export interface Price extends Object {
   id: string;
   name: string;
@@ -34,6 +39,7 @@ export interface Product extends Object {
   description: string;
   active: boolean;
   metadata: any;
+  prices: Array<Price>;
   created_at: string;
   updated_at: string;
 }
@@ -71,6 +77,13 @@ export interface LineItem extends Object {
   updated_at: number;
   price?: Price;
   price_id: string;
+}
+
+export interface ProductChoices {
+  [id: string]: {
+    type: string;
+    prices: Array<string>;
+  };
 }
 
 export interface CheckoutSession extends Object {

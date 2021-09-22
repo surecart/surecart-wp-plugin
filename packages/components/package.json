@@ -44,6 +44,7 @@
     "choices.js": "^9.0.1",
     "clsx": "^1.1.1",
     "element-internals-polyfill": "^0.1.40",
+    "fuse.js": "^6.4.6",
     "sass": "^1.29.0",
     "stencil-fragment": "^1.0.1",
     "stencil-wormhole": "^3.4.1"

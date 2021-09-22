@@ -34,6 +34,7 @@
 graph TD;
   ce-stripe-element --> ce-input
   ce-input --> ce-form-control
+  ce-form-control --> ce-tooltip
   ce-payment --> ce-stripe-element
   style ce-stripe-element fill:#f9f,stroke:#333,stroke-width:4px
 ```

@@ -27,16 +27,10 @@ export default createHigherOrderComponent( ( OriginalComponent ) => {
 			onRequestConfirm: () => {},
 		} );
 
-		const updateConfirm = ( data ) => {
-			console.log( { modal } );
-			// setModal( { ...modal, ...data } );
-		};
-
 		return (
 			<Fragment>
 				<OriginalComponent
 					confirmModal={ modal }
-					updateConfirm={ updateConfirm }
 					setConfirm={ setModal }
 					{ ...props }
 				/>

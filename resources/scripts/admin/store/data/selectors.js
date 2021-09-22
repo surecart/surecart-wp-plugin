@@ -9,6 +9,13 @@ export const selectCollection = ( state, path ) => {
 export const selectModel = ( state, path, index = 0 ) => {
 	return get( state.entities, `${ path }.${ index }` );
 };
+export const selectModelById = ( state, path, id ) => {
+	const models = get( state.entities, path );
+	if ( ! models || ! Array.isArray( models ) ) {
+		return false;
+	}
+	return ( models || [] ).find( ( model ) => model.id === id );
+};
 export const selectDirty = ( state ) => {
 	return state.dirty;
 };

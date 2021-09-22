@@ -1,11 +1,18 @@
 import { CeAlert } from '@checkout-engine/react';
+import useValidationErrors from '../hooks/useValidationErrors';
 
-export default ( { error: errorObject, onClose, onShow, scrollIntoView } ) => {
+export default ( { onShow, scrollIntoView, path = '', index = 0 } ) => {
+	const { errors, clearErrors } = useValidationErrors( path, index );
+
+	if ( ! errors?.[ 0 ]?.error?.message ) {
+		return '';
+	}
+
 	return (
 		<CeAlert
 			type="danger"
 			closable
-			open={ errorObject?.error?.message }
+			open={ errors?.[ 0 ]?.error?.message }
 			onCeShow={ ( e ) => {
 				if ( scrollIntoView ) {
 					e.target.scrollIntoView( {
@@ -16,12 +23,12 @@ export default ( { error: errorObject, onClose, onShow, scrollIntoView } ) => {
 				}
 				onShow && onShow( e );
 			} }
-			onCeHide={ onClose }
+			onCeHide={ () => clearErrors( index ) }
 		>
-			<span slot="title">{ errorObject?.error?.message }</span>
-			{ errorObject?.error?.additional_errors?.length && (
+			<span slot="title">{ errors?.[ 0 ]?.error?.message }</span>
+			{ errors?.[ 0 ]?.error?.additional_errors?.length && (
 				<ul>
-					{ ( errorObject?.error?.additional_errors || [] ).map(
+					{ ( errors?.[ 0 ]?.error?.additional_errors || [] ).map(
 						( error, index ) => (
 							<ul key={ index }>{ error?.message }</ul>
 						)

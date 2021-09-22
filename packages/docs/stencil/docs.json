@@ -1,5 +1,5 @@
 {
-  "timestamp": "2021-09-01T18:37:28",
+  "timestamp": "2021-09-21T18:07:20",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.6.0",
@@ -7,7 +7,7 @@
   },
   "components": [
     {
-      "filePath": "./src/components/alert/ce-alert.tsx",
+      "filePath": "./src/components/ui/alert/ce-alert.tsx",
       "encapsulation": "shadow",
       "tag": "ce-alert",
       "readme": "# ce-alert\n\n\n",
@@ -125,7 +125,26 @@
           "docsTags": []
         }
       ],
-      "events": [],
+      "events": [
+        {
+          "event": "ceHide",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "When alert is hidden",
+          "docsTags": []
+        },
+        {
+          "event": "ceShow",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "When alert is shown",
+          "docsTags": []
+        }
+      ],
       "listeners": [],
       "styles": [],
       "slots": [],
@@ -544,6 +563,7 @@
       ],
       "dependents": [
         "ce-coupon-form",
+        "ce-select",
         "ce-submit"
       ],
       "dependencies": [
@@ -554,6 +574,9 @@
           "ce-spinner"
         ],
         "ce-coupon-form": [
+          "ce-button"
+        ],
+        "ce-select": [
           "ce-button"
         ],
         "ce-submit": [
@@ -1441,6 +1464,9 @@
         "ce-input": [
           "ce-form-control"
         ],
+        "ce-form-control": [
+          "ce-tooltip"
+        ],
         "ce-button": [
           "ce-spinner"
         ],
@@ -1610,11 +1636,15 @@
         }
       ],
       "dependents": [
-        "ce-quantity-select"
+        "ce-quantity-select",
+        "ce-select"
       ],
       "dependencies": [],
       "dependencyGraph": {
         "ce-quantity-select": [
+          "ce-dropdown"
+        ],
+        "ce-select": [
           "ce-dropdown"
         ]
       }
@@ -1941,6 +1971,9 @@
         ],
         "ce-input": [
           "ce-form-control"
+        ],
+        "ce-form-control": [
+          "ce-tooltip"
         ]
       }
     },
@@ -2060,6 +2093,23 @@
       "usage": {},
       "props": [
         {
+          "name": "errorMessage",
+          "type": "string",
+          "mutable": true,
+          "attr": "error-message",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "help",
           "type": "string",
           "mutable": false,
@@ -2140,6 +2190,23 @@
           "required": false
         },
         {
+          "name": "required",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "required",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "showLabel",
           "type": "boolean",
           "mutable": false,
@@ -2204,14 +2271,19 @@
       ],
       "dependents": [
         "ce-input",
-        "ce-select"
+        "ce-select-old"
       ],
-      "dependencies": [],
+      "dependencies": [
+        "ce-tooltip"
+      ],
       "dependencyGraph": {
+        "ce-form-control": [
+          "ce-tooltip"
+        ],
         "ce-input": [
           "ce-form-control"
         ],
-        "ce-select": [
+        "ce-select-old": [
           "ce-form-control"
         ]
       }
@@ -2391,6 +2463,23 @@
           "values": [
             {
               "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "errorMessage",
+          "type": "string",
+          "mutable": false,
+          "attr": "error-message",
+          "reflectToAttr": false,
+          "docs": "Validation error message.",
+          "docsTags": [],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
             }
           ],
           "optional": false,
@@ -2956,6 +3045,7 @@
         "ce-coupon-form",
         "ce-email",
         "ce-price-input",
+        "ce-select",
         "ce-stripe-element"
       ],
       "dependencies": [
@@ -2965,6 +3055,9 @@
         "ce-input": [
           "ce-form-control"
         ],
+        "ce-form-control": [
+          "ce-tooltip"
+        ],
         "ce-coupon-form": [
           "ce-input"
         ],
@@ -2972,6 +3065,9 @@
           "ce-input"
         ],
         "ce-price-input": [
+          "ce-input"
+        ],
+        "ce-select": [
           "ce-input"
         ],
         "ce-stripe-element": [
@@ -3260,11 +3356,15 @@
         }
       ],
       "dependents": [
-        "ce-quantity-select"
+        "ce-quantity-select",
+        "ce-select"
       ],
       "dependencies": [],
       "dependencyGraph": {
         "ce-quantity-select": [
+          "ce-menu"
+        ],
+        "ce-select": [
           "ce-menu"
         ]
       }
@@ -3405,11 +3505,15 @@
         }
       ],
       "dependents": [
-        "ce-quantity-select"
+        "ce-quantity-select",
+        "ce-select"
       ],
       "dependencies": [],
       "dependencyGraph": {
         "ce-quantity-select": [
+          "ce-menu-item"
+        ],
+        "ce-select": [
           "ce-menu-item"
         ]
       }
@@ -3553,6 +3657,9 @@
         ],
         "ce-input": [
           "ce-form-control"
+        ],
+        "ce-form-control": [
+          "ce-tooltip"
         ]
       }
     },
@@ -4009,6 +4116,25 @@
           "required": false
         },
         {
+          "name": "min",
+          "type": "number | string",
+          "mutable": false,
+          "attr": "min",
+          "reflectToAttr": false,
+          "docs": "The input's minimum value.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "minlength",
           "type": "number",
           "mutable": false,
@@ -4260,6 +4386,9 @@
         ],
         "ce-input": [
           "ce-form-control"
+        ],
+        "ce-form-control": [
+          "ce-tooltip"
         ]
       }
     },
@@ -4769,6 +4898,23 @@
       "usage": {},
       "props": [
         {
+          "name": "fieldset",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "fieldset",
+          "reflectToAttr": false,
+          "docs": "Shows the fieldset and legend that surrounds the radio group.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "label",
           "type": "string",
           "mutable": false,
@@ -4780,23 +4926,6 @@
           "values": [
             {
               "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "noFieldset",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "no-fieldset",
-          "reflectToAttr": false,
-          "docs": "Hides the fieldset and legend that surrounds the radio group. The label will still be read by screen readers.",
-          "docsTags": [],
-          "default": "false",
-          "values": [
-            {
-              "type": "boolean"
             }
           ],
           "optional": false,
@@ -4858,6 +4987,213 @@
       "filePath": "./src/components/ui/select/ce-select.tsx",
       "encapsulation": "shadow",
       "tag": "ce-select",
+      "readme": "# ce-select-dropdown\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "choices",
+          "type": "ChoiceItem[]",
+          "mutable": true,
+          "reflectToAttr": false,
+          "docs": "The input's value attribute.",
+          "docsTags": [],
+          "default": "[]",
+          "values": [
+            {
+              "type": "ChoiceItem[]"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "invalid",
+          "type": "boolean",
+          "mutable": true,
+          "attr": "invalid",
+          "reflectToAttr": true,
+          "docs": "This will be true when the control is in an invalid state. Validity is determined by props such as `type`,\n`required`, `minlength`, `maxlength`, and `pattern` using the browser's constraint validation API.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "loading",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "loading",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "placeholder",
+          "type": "string",
+          "mutable": false,
+          "attr": "placeholder",
+          "reflectToAttr": false,
+          "docs": "Placeholder for no value",
+          "docsTags": [],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "required",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "search",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "search",
+          "reflectToAttr": false,
+          "docs": "Is search enabled?",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "mutable": true,
+          "attr": "value",
+          "reflectToAttr": false,
+          "docs": "The input's value attribute.",
+          "docsTags": [],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [
+        {
+          "name": "reportValidity",
+          "returns": {
+            "type": "Promise<boolean>",
+            "docs": ""
+          },
+          "signature": "reportValidity() => Promise<boolean>",
+          "parameters": [],
+          "docs": "",
+          "docsTags": []
+        },
+        {
+          "name": "setCustomValidity",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "signature": "setCustomValidity(message: string) => Promise<void>",
+          "parameters": [],
+          "docs": "Sets a custom validation message. If `message` is not empty, the field will be considered invalid.",
+          "docsTags": []
+        }
+      ],
+      "events": [
+        {
+          "event": "ceChange",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Emitted when the control's value changes.",
+          "docsTags": []
+        },
+        {
+          "event": "ceSearch",
+          "detail": "string",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Emitted whent the components search query changes",
+          "docsTags": []
+        }
+      ],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [
+        {
+          "name": "search",
+          "docs": ""
+        }
+      ],
+      "dependents": [],
+      "dependencies": [
+        "ce-dropdown",
+        "ce-button",
+        "ce-input",
+        "ce-spinner",
+        "ce-menu",
+        "ce-menu-item"
+      ],
+      "dependencyGraph": {
+        "ce-select": [
+          "ce-dropdown",
+          "ce-button",
+          "ce-input",
+          "ce-spinner",
+          "ce-menu",
+          "ce-menu-item"
+        ],
+        "ce-button": [
+          "ce-spinner"
+        ],
+        "ce-input": [
+          "ce-form-control"
+        ],
+        "ce-form-control": [
+          "ce-tooltip"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/ui/select-old/ce-select.tsx",
+      "encapsulation": "shadow",
+      "tag": "ce-select-old",
       "readme": "# ce-select\n\n\n",
       "docs": "",
       "docsTags": [],
@@ -5936,8 +6272,11 @@
         "ce-form-control"
       ],
       "dependencyGraph": {
-        "ce-select": [
+        "ce-select-old": [
           "ce-form-control"
+        ],
+        "ce-form-control": [
+          "ce-tooltip"
         ]
       }
     },
@@ -6068,7 +6407,8 @@
       ],
       "dependents": [
         "ce-block-ui",
-        "ce-button"
+        "ce-button",
+        "ce-select"
       ],
       "dependencies": [],
       "dependencyGraph": {
@@ -6076,6 +6416,9 @@
           "ce-spinner"
         ],
         "ce-button": [
+          "ce-spinner"
+        ],
+        "ce-select": [
           "ce-spinner"
         ]
       }
@@ -6247,6 +6590,9 @@
         ],
         "ce-input": [
           "ce-form-control"
+        ],
+        "ce-form-control": [
+          "ce-tooltip"
         ],
         "ce-payment": [
           "ce-stripe-element"
@@ -6800,7 +7146,6 @@
           "reflectToAttr": true,
           "docs": "The tag's type.",
           "docsTags": [],
-          "default": "'info'",
           "values": [
             {
               "value": "danger",
@@ -6867,6 +7212,157 @@
         ],
         "ce-product-line-item": [
           "ce-tag"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/ui/tooltip/ce-tooltip.tsx",
+      "encapsulation": "shadow",
+      "tag": "ce-tooltip",
+      "readme": "# ce-tooltip\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "freeze",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "freeze",
+          "reflectToAttr": false,
+          "docs": "Freeze open or closed.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "open",
+          "type": "boolean",
+          "mutable": true,
+          "attr": "open",
+          "reflectToAttr": false,
+          "docs": "Open or not",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "padding",
+          "type": "number",
+          "mutable": false,
+          "attr": "padding",
+          "reflectToAttr": false,
+          "docs": "The tooltip's padding.",
+          "docsTags": [],
+          "default": "5",
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "text",
+          "type": "string",
+          "mutable": false,
+          "attr": "text",
+          "reflectToAttr": false,
+          "docs": "Tooltip text",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "type",
+          "type": "\"danger\" | \"info\" | \"primary\" | \"success\" | \"text\" | \"warning\"",
+          "mutable": false,
+          "attr": "type",
+          "reflectToAttr": true,
+          "docs": "The tooltip's type.",
+          "docsTags": [],
+          "default": "'info'",
+          "values": [
+            {
+              "value": "danger",
+              "type": "string"
+            },
+            {
+              "value": "info",
+              "type": "string"
+            },
+            {
+              "value": "primary",
+              "type": "string"
+            },
+            {
+              "value": "success",
+              "type": "string"
+            },
+            {
+              "value": "text",
+              "type": "string"
+            },
+            {
+              "value": "warning",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [
+        {
+          "event": "scroll",
+          "target": "window",
+          "capture": false,
+          "passive": true
+        },
+        {
+          "event": "resize",
+          "target": "window",
+          "capture": false,
+          "passive": true
+        }
+      ],
+      "styles": [],
+      "slots": [],
+      "parts": [
+        {
+          "name": "base",
+          "docs": ""
+        },
+        {
+          "name": "text",
+          "docs": ""
+        }
+      ],
+      "dependents": [
+        "ce-form-control"
+      ],
+      "dependencies": [],
+      "dependencyGraph": {
+        "ce-form-control": [
+          "ce-tooltip"
         ]
       }
     },

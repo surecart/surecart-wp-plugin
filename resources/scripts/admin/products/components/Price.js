@@ -307,13 +307,7 @@ export default withConfirm(
 						visibility: ${ isOpen ? 'visibile' : 'hidden' };
 					` }
 				>
-					<FlashError
-						error={ errors?.[ 0 ] }
-						scrollIntoView
-						onClose={ ( e ) => {
-							dispatch( UI_STORE_KEY ).clearErrors( index );
-						} }
-					/>
+					<FlashError path="prices" index={ index } scrollIntoView />
 
 					{ prices?.length > 1 && (
 						<CeFormRow>
@@ -327,13 +321,6 @@ export default withConfirm(
 								) }
 								value={ price?.name }
 								onCeChange={ ( e ) => {
-									console.log(
-										'prices',
-										{
-											name: e.target.value,
-										},
-										index
-									);
 									updateModel(
 										'prices',
 										{
