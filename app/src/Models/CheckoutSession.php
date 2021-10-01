@@ -41,12 +41,21 @@ class CheckoutSession extends Model {
 	}
 
 	/**
+	 * Always set discount as object.
+	 *
+	 * @param array|object $value Value to set.
+	 * @return object
+	 */
+	protected function setDiscountAttribute( $value ) {
+		$this->attributes['discount'] = (object) $value;
+	}
+
+	/**
 	 * Finalize the session for checkout.
 	 *
 	 * @return $this|\WP_Error
 	 */
 	protected function finalize() {
-
 		if ( $this->fireModelEvent( 'finalizing' ) === false ) {
 			return false;
 		}
