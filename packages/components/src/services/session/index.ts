@@ -2,26 +2,20 @@ import { CheckoutSession } from '../../types';
 import apiFetch from '../../functions/fetch';
 const path = 'checkout-engine/v1/checkout_sessions/';
 
-/**
- * Update a checkout session.
- */
-export const updateSession = async ({ id, data }) => {
-  return (await apiFetch({
-    method: 'PATCH', // create or update
-    path: path + id,
-    data,
-  })) as CheckoutSession;
+export const getOrCreateSession = async ({ id, data }) => {
+  return await apiFetch({
+    method: id ? 'GET' : 'POST', // create or update
+    path: id ? path + id : path,
+    ...(data && !id ? { data } : {}),
+  });
 };
 
-/**
- * Create a checkout session.
- */
-export const createSession = async data => {
-  return (await apiFetch({
-    method: 'POST',
-    path,
+export const createOrUpdateSession = async ({ id, data }) => {
+  return await apiFetch({
+    method: id ? 'PATCH' : 'POST', // create or update
+    path: id ? path + id : path,
     data,
-  })) as CheckoutSession;
+  });
 };
 
 /**
@@ -32,5 +26,11 @@ export const finalizeSession = async ({ id, data, processor }) => {
     method: 'POST',
     path: `${path}${id}/finalize/${processor}`,
     data,
+  })) as CheckoutSession;
+};
+
+export const getSession = async id => {
+  return (await apiFetch({
+    path: path + id,
   })) as CheckoutSession;
 };

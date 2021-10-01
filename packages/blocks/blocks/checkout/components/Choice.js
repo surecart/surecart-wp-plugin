@@ -1,13 +1,69 @@
 import dotProp from 'dot-prop-immutable';
-import { useSelect } from '@wordpress/data';
-import { CeChoice, CeChoices, CeFormSection } from '@checkout-engine/react';
+import apiFetch from '@wordpress/api-fetch';
+import { useEffect, useState } from '@wordpress/element';
+import {
+	CeCheckbox,
+	CeFormControl,
+	CeFormRow,
+	CeFormatNumber,
+} from '@checkout-engine/react';
 
 export default ( { choice, attributes, setAttributes, id } ) => {
 	const { choices } = attributes;
+	const [ product, setProduct ] = useState( null );
+	const [ loading, setLoading ] = useState( false );
+	const [ error, setError ] = useState( null );
 
-	const product = useSelect( ( select ) =>
-		select( 'checkout-engine/data' ).selectModelById( 'products', id )
-	);
+	useEffect( () => {
+		fetchProduct();
+	}, [ id ] );
+
+	const fetchProduct = async () => {
+		setLoading( true );
+		let result;
+
+		try {
+			result = await apiFetch( {
+				path: `checkout-engine/v1/products/${ id }`,
+			} );
+		} catch ( e ) {
+			setError(
+				e?.message || __( 'Something went wrong', 'checkout_engine' )
+			);
+		} finally {
+			setLoading( false );
+		}
+
+		setProduct( result );
+	};
+
+	if ( loading ) {
+		console.log( { choice } );
+		return (
+			<CeFormRow>
+				<CeFormControl>
+					<ce-skeleton
+						slot="label"
+						style={ { width: '20px', display: 'block' } }
+					></ce-skeleton>
+					{ choice.prices.map( () => {
+						return (
+							<ce-skeleton
+								style={ {
+									width: '140px',
+									display: 'block',
+								} }
+							></ce-skeleton>
+						);
+					} ) }
+				</CeFormControl>
+			</CeFormRow>
+		);
+	}
+
+	if ( error ) {
+		return <div>{ error }</div>;
+	}
 
 	if ( ! product ) {
 		return (
@@ -33,33 +89,33 @@ export default ( { choice, attributes, setAttributes, id } ) => {
 		);
 	}
 
-	const addPrice = ( id ) => {
+	const addPrice = ( priceId ) => {
 		setAttributes( {
 			choices: dotProp.set( choices, `${ id }.prices`, ( list ) => [
 				...list,
-				id,
+				priceId,
 			] ),
 		} );
 	};
 
-	const removePrice = ( id ) => {
+	const removePrice = ( priceId ) => {
 		setAttributes( {
 			choices: dotProp.set(
 				choices,
 				`${ id }.prices`,
-				choices[ index ].prices.filter( ( price ) => price !== id )
+				choices[ id ].prices.filter( ( price ) => price !== priceId )
 			),
 		} );
 	};
 
 	return (
-		<CeFormSection label={ product.name }>
-			<CeChoices>
+		<CeFormRow>
+			<CeFormControl label={ product.name }>
 				{ product.prices.map( ( price, index ) => {
 					return (
-						<CeChoice
+						<CeCheckbox
+							style={ { display: 'block' } }
 							key={ price.id }
-							type="checkbox"
 							value={ price.id }
 							onCeChange={ ( e ) => {
 								if ( e.target.checked ) {
@@ -72,12 +128,18 @@ export default ( { choice, attributes, setAttributes, id } ) => {
 								( id ) => id === price.id
 							) }
 						>
-							{ price.name }
-							<span slot="description">{ price.amount }</span>
-						</CeChoice>
+							{ price.name }{ ' ' }
+							<span style={ { opacity: '0.5' } }>
+								<CeFormatNumber
+									type="currency"
+									currency={ price.currency }
+									value={ price.amount }
+								/>
+							</span>
+						</CeCheckbox>
 					);
 				} ) }
-			</CeChoices>
-		</CeFormSection>
+			</CeFormControl>
+		</CeFormRow>
 	);
 };

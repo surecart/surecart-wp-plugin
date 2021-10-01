@@ -24,6 +24,7 @@ export default ( { className, attributes, setAttributes } ) => {
 				label={ label }
 				placeholder={ placeholder }
 				help={ help }
+				required
 			></CeInput>
 		</div>
 	);

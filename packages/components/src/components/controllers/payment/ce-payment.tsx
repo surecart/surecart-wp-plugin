@@ -1,10 +1,10 @@
-import { Component, h, Prop } from '@stencil/core';
+import { Component, h, Prop, Host } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
-import { CheckoutSession } from '../../../types';
+import { CheckoutSession, Keys } from '../../../types';
 
 @Component({
   tag: 'ce-payment',
-  styleUrl: 'ce-payment.css',
+  styleUrl: 'ce-payment.scss',
   shadow: false,
 })
 export class CePayment {
@@ -15,10 +15,22 @@ export class CePayment {
   @Prop() checkoutSession: CheckoutSession;
 
   /** Your stripe publishable key. */
-  @Prop() stripePublishableKey: string;
+  @Prop() keys: Keys = {
+    stripe: '',
+    paypal: '',
+  };
 
   /** Your stripe connected account id. */
   @Prop() stripeAccountId: string;
+
+  /** Is this created in "test" mode */
+  @Prop({ reflect: true }) mode: 'test' | 'live' = 'live';
+
+  /** Secure notice */
+  @Prop() secureNotice: string;
+
+  /** The input's label. */
+  @Prop() label: string;
 
   render() {
     if (!this.paymentMethod) {
@@ -26,14 +38,13 @@ export class CePayment {
     }
     if ('stripe' === this.paymentMethod) {
       return (
-        <div>
-          <slot name="before" />
-          <ce-stripe-element checkoutSession={this.checkoutSession} stripeAccountId={this.stripeAccountId} publishableKey={this.stripePublishableKey}></ce-stripe-element>
-          <slot name="after" />
-        </div>
+        <Host>
+          <ce-stripe-element label={this.label} checkoutSession={this.checkoutSession} stripeAccountId={this.stripeAccountId} publishableKey={this.keys.stripe}></ce-stripe-element>
+          {this.secureNotice && <ce-secure-notice>{this.secureNotice}</ce-secure-notice>}
+        </Host>
       );
     }
   }
 }
 
-openWormhole(CePayment, ['paymentMethod', 'checkoutSession'], false);
+openWormhole(CePayment, ['paymentMethod', 'checkoutSession', 'mode', 'keys'], false);

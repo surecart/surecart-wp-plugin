@@ -13,20 +13,12 @@ export class CeLineItems {
   @Prop() loading: boolean;
   @Prop() calculating: boolean = false;
   @Prop() lineItemData: Array<LineItemData>;
+  @Prop() edit: boolean = true;
 
-  @Event() ceUpdateLineItems: EventEmitter<Array<LineItemData>>;
+  @Event() ceUpdateLineItem: EventEmitter<{ id: string; amount: number }>;
 
   updateQuantity(item: LineItem, amount: number) {
-    const data = this.lineItemData.map(line => {
-      // increase quantity
-      if (item?.price?.id === line?.price_id) {
-        line.quantity = amount;
-      }
-      return line;
-    });
-
-    // emit update event
-    this.ceUpdateLineItems.emit(data);
+    this.ceUpdateLineItem.emit({ id: item.id, amount });
   }
 
   render() {
@@ -42,15 +34,12 @@ export class CeLineItems {
       );
     }
 
-    if (!this?.checkoutSession?.line_items || !this?.checkoutSession?.line_items.length) {
-      return '';
-    }
-
     return this.checkoutSession?.line_items.map(item => {
       return (
         <ce-product-line-item
           imageUrl={item?.price?.meta_data?.wp_attachment_src}
-          name={item?.price?.name}
+          name={`${item?.price?.product?.name} \u2013 ${item?.price?.name}`}
+          edit={this.edit}
           quantity={item.quantity}
           amount={item.amount_subtotal}
           currency={this.checkoutSession?.currency}

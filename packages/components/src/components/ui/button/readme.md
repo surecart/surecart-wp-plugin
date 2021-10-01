@@ -48,7 +48,6 @@
 ### Used by
 
  - [ce-coupon-form](../../controllers/coupon-form)
- - [ce-select](../select)
  - [ce-submit](../../controllers/submit)
 
 ### Depends on
@@ -60,7 +59,6 @@
 graph TD;
   ce-button --> ce-spinner
   ce-coupon-form --> ce-button
-  ce-select --> ce-button
   ce-submit --> ce-button
   style ce-button fill:#f9f,stroke:#333,stroke-width:4px
 ```

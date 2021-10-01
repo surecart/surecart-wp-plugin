@@ -7,5 +7,5 @@
         <span slot="description"><?php echo wp_kses_post($description); ?></span>
     @endif
 
-    {{ $slot }}
+    {{ $slot ?? ''}}
 </ce-form-section>

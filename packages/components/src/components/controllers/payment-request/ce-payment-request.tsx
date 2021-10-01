@@ -8,9 +8,6 @@ import { openWormhole } from 'stencil-wormhole';
 })
 export class CePaymentRequest {
   @Prop() paymentMethod: 'stripe' | 'paypal';
-  @Prop() total: number;
-  @Prop() stripePublishableKey: string;
-  @Prop() stripeAccountId: string;
 
   render() {
     if (!this.paymentMethod) {
@@ -19,12 +16,14 @@ export class CePaymentRequest {
 
     if ('stripe' === this.paymentMethod) {
       return (
-        <ce-stripe-payment-request amount={this.total} publishable-key={this.stripePublishableKey}>
-          <ce-divider>Or</ce-divider>
+        <ce-stripe-payment-request>
+          <ce-divider>
+            <slot />
+          </ce-divider>
         </ce-stripe-payment-request>
       );
     }
   }
 }
 
-openWormhole(CePaymentRequest, ['total', 'paymentMethod', 'stripePublishableKey'], false);
+openWormhole(CePaymentRequest, ['paymentMethod'], false);

@@ -31,8 +31,8 @@
 
 ### Used by
 
+ - [ce-choices](../choices)
  - [ce-input](../input)
- - [ce-select-old](../select-old)
 
 ### Depends on
 
@@ -42,8 +42,8 @@
 ```mermaid
 graph TD;
   ce-form-control --> ce-tooltip
+  ce-choices --> ce-form-control
   ce-input --> ce-form-control
-  ce-select-old --> ce-form-control
   style ce-form-control fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

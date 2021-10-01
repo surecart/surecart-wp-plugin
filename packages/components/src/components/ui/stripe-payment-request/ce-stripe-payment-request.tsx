@@ -1,13 +1,15 @@
 import { Component, Prop, State, h, Element } from '@stencil/core';
 import { loadStripe } from '@stripe/stripe-js/pure';
 import { Stripe } from '@stripe/stripe-js';
+import { openWormhole } from 'stencil-wormhole';
+import { Keys } from '../../../types';
 
 @Component({
   tag: 'ce-stripe-payment-request',
   styleUrl: 'ce-stripe-payment-request.scss',
   shadow: false,
 })
-export class CEStripePaymentRequest {
+export class CeStripePaymentRequest {
   @Element() el: HTMLElement;
   private request: HTMLDivElement;
   private stripe: Stripe;
@@ -15,7 +17,9 @@ export class CEStripePaymentRequest {
   private elements: any;
 
   /** Stripe publishable key */
-  @Prop() stripePublishableKey: string;
+  @Prop() keys: Keys = {
+    stripe: '',
+  };
 
   /** Stripe account id */
   @Prop() stripeAccountId: string;
@@ -39,10 +43,10 @@ export class CEStripePaymentRequest {
   @State() loaded: boolean = false;
 
   async componentWillLoad() {
-    if (!this.stripePublishableKey) {
+    if (!this.keys.stripe) {
       return true;
     }
-    this.stripe = await loadStripe(this.stripePublishableKey);
+    this.stripe = await loadStripe(this.keys.stripe);
     this.elements = this.stripe.elements();
 
     this.paymentRequest = this.stripe.paymentRequest({
@@ -99,3 +103,5 @@ export class CEStripePaymentRequest {
     );
   }
 }
+
+openWormhole(CeStripePaymentRequest, ['keys', 'total'], false);

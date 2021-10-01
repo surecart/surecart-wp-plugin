@@ -21,7 +21,11 @@ const settings = {
 	title: __( 'Email', 'checkout_engine' ),
 	/* translators: block description */
 	description: __( 'Display a checkout form input', 'checkout_engine' ),
-	parent: [ 'checkout-engine/form-row' ],
+	parent: [
+		'checkout-engine/form-row',
+		'checkout-engine/form-section',
+		'checkout-engine/checkout-form',
+	],
 	icon,
 	keywords: [
 		'checkout',

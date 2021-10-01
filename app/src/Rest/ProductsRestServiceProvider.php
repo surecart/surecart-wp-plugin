@@ -81,7 +81,7 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 			return true;
 		}
 
-		return current_user_can( 'read' ); // TODO: add cap.
+		return current_user_can( 'edit_pk_products' );
 	}
 
 	/**

@@ -43,6 +43,8 @@ import * as contactSection from './blocks/sections/contact-section';
 import * as section from './blocks/section';
 import * as email from './blocks/email';
 import * as name from './blocks/name';
+import * as payment from './blocks/payment';
+import * as paymentRequest from './blocks/payment-request';
 import * as button from './blocks/button';
 import * as submit from './blocks/submit';
 import * as input from './blocks/input';
@@ -84,6 +86,8 @@ export const registerCheckoutEngineBlocks = () => {
 		paymentSection,
 		contactSection,
 		submit,
+		payment,
+		paymentRequest,
 		button,
 		input,
 		name,

@@ -28,10 +28,11 @@
     background: transparent;
     border-color: var(--ce-color-primary-500);
     box-shadow: 0 0 0 2px var(--ce-color-primary-500);
+    z-index:1;
   }
 
   &__title {
-    display: block;
+    display: inline-block;
     font-weight: var(--ce-input-label-font-weight);
     font-size: var(--ce-input-label-font-size-medium);
   }
@@ -136,6 +137,7 @@
   .choice__label {
     display: flex;
     justify-content: space-between;
+    flex: wrap;
   }
   .choice__price {
     text-align: right;
@@ -144,7 +146,7 @@
 }
 
 .choice__description {
-  display: block;
+  display: inline-block;
   color: var(--ce-color-gray-500);
   font-size: var(--ce-font-size-medium);
   line-height: var(--ce-line-height-dense);
@@ -167,7 +169,7 @@
 .choice--has-description {
   .choice__price,
   .choice__text {
-    display: flex;
-    flex-direction: column;
+    // display: flex;
+    // flex-direction: column;
   }
 }

@@ -34,9 +34,9 @@ abstract class RestController {
 	public function index( \WP_REST_Request $request ) {
 		return $this->class::where(
 			[
-				'active' => $request['active'] ?? null,
-				'ids'    => $request['ids'] ?? null,
-				'query'  => $request['query'] ?? null,
+				'archived' => $request['archived'] ?? null,
+				'ids'      => $request['ids'] ?? null,
+				'query'    => $request['query'] ?? null,
 			]
 		)->get();
 	}

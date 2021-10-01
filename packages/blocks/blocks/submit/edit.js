@@ -2,7 +2,14 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
+import { InspectorControls } from '@wordpress/editor';
 import { RichText } from '@wordpress/block-editor';
+import {
+	PanelBody,
+	PanelRow,
+	TextControl,
+	ToggleControl,
+} from '@wordpress/components';
 
 /**
  * Component Dependencies
@@ -14,10 +21,36 @@ export default ( { className, attributes, setAttributes } ) => {
 
 	return (
 		<div className={ className }>
+			<InspectorControls>
+				<PanelBody title={ __( 'Attributes', 'checkout-engine' ) }>
+					<PanelRow>
+						<TextControl
+							label={ __( 'Button Text', 'checkout-engine' ) }
+							value={ text }
+							onChange={ ( text ) => setAttributes( { text } ) }
+						/>
+					</PanelRow>
+					<PanelRow>
+						<ToggleControl
+							label={ __( 'Full', 'checkout-engine' ) }
+							checked={ full }
+							onChange={ ( full ) => setAttributes( { full } ) }
+						/>
+					</PanelRow>
+					<PanelRow>
+						<TextControl
+							label={ __( 'Size', 'checkout-engine' ) }
+							value={ size }
+							onChange={ ( size ) => setAttributes( { size } ) }
+						/>
+					</PanelRow>
+				</PanelBody>
+			</InspectorControls>
+
 			<CeButton
 				type={ type }
 				submit={ submit }
-				full={ full }
+				full={ !! full }
 				size={ size }
 			>
 				<RichText

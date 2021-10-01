@@ -25,8 +25,9 @@ class Input extends Block {
 		return \CheckoutEngine::blocks()->render(
 			"blocks/$this->name",
 			[
-				'label'   => $attributes['label'] || '',
-				'help'    => $attributes['help'] || '',
+				'label'   => $attributes['label'] ?? '',
+				'help'    => $attributes['help'] ?? '',
+				'name'    => $attributes['name'] ?? '',
 				'content' => $content,
 			]
 		);

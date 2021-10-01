@@ -181,6 +181,16 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 			true
 		);
 
+		wp_localize_script(
+			'checkout-engine-blocks',
+			'ceData',
+			[
+				'keys' => [
+					'stripe' => 'pk_test_51FrVhTKIxBDlEhovnzFUjE1K3e8s9QInYW4a2S1BrYYgePmNIFZUCSvUY90MmD10PNh0ZxYFoxkW6P1xsfPofCYG00JTdSKWFO',
+				],
+			]
+		);
+
 		\CheckoutEngine::core()->assets()->enqueueStyle(
 			'checkout-engine-blocks-style',
 			trailingslashit( \CheckoutEngine::core()->assets()->getUrl() ) . 'dist/blocks/style-blocks.css',

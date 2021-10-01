@@ -30,7 +30,7 @@ export class CEStripeElement {
   @Prop() label: string;
 
   /** The input's help text. Alternatively, you can use the help-text slot. */
-  @Prop() help: string = '';
+  @Prop() secureText: string = '';
 
   /** Should we show the label */
   @Prop() showLabel: boolean = true;
@@ -77,19 +77,6 @@ export class CEStripeElement {
     }
   }
 
-  /** Checks for validity and shows the browser's validation message if the control is invalid. */
-  // @Method()
-  // async reportValidity() {
-  //   // empty
-  //   if (this.container.classList.contains('StripeElement--empty')) {
-  //     this.input.setCustomValidity('You must enter your credit card.');
-  //   } else {
-  //     this.input.setCustomValidity(!!this.error.length ? this.error : '');
-  //   }
-
-  //   return this.input.reportValidity();
-  // }
-
   componentDidLoad() {
     if (!this.elements) {
       return;
@@ -124,7 +111,7 @@ export class CEStripeElement {
 
   render() {
     return (
-      <ce-input class="ce-stripe" size={this.size} label={this.label} help={this.help} hasFocus={this.hasFocus}>
+      <ce-input class="ce-stripe" size={this.size} label={this.label} hasFocus={this.hasFocus}>
         <div ref={el => (this.container = el as HTMLDivElement)}></div>
       </ce-input>
     );

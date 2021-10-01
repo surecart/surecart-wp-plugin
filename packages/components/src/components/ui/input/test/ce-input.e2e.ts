@@ -11,6 +11,8 @@ describe('ce-input', () => {
     element = await page.find(`${selector}`);
     wrapper = await page.find(`${selector} >>> .input`);
     input = await page.find(`${selector} >>> .input__control`);
+    input.focus = jest.fn();
+    input.blur = jest.fn();
   });
 
   it('renders', async () => {

@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ce-input renders 1`] = `
+<ce-input size="medium" type="text">
+  <mock:shadow-root>
+    <ce-form-control errormessage="" help="" helpid="input-help-text-1" inputid="input-1" labelid="input-label-1" showlabel="" size="medium">
+      <div class="input input--medium" part="base">
+        <span class="input__prefix" part="prefix">
+          <slot name="prefix"></slot>
+        </span>
+        <slot>
+          <input class="input__control" id="input-1" part="input" type="text" value="">
+        </slot>
+        <span class="input__suffix" part="suffix">
+          <slot name="suffix"></slot>
+        </span>
+      </div>
+    </ce-form-control>
+  </mock:shadow-root>
+</ce-input>
+`;

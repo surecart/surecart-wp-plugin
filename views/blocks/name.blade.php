@@ -1,6 +1,6 @@
 <ce-form-row>
     @component('blocks.input', [
-        'name' => 'customer_name',
+        'name' => 'name',
         'label' => 'Your Name',
         'autocomplete' => 'name',
         ])

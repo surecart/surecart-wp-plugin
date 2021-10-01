@@ -7,12 +7,6 @@ describe('ce-select-dropdown', () => {
       components: [CeSelectDropdown],
       html: `<ce-select-dropdown></ce-select-dropdown>`,
     });
-    expect(page.root).toEqualHtml(`
-      <ce-select-dropdown>
-        <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
-      </ce-select-dropdown>
-    `);
+    expect(page.root).toMatchSnapshot();
   });
 });

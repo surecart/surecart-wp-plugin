@@ -1,7 +1,6 @@
-import { Component, h, Prop, Element, Watch, Event, EventEmitter, State } from '@stencil/core';
-import { Product, LineItemData, ProductChoices } from '../../../types';
-import { getProducts } from '../../../services/fetch';
-import { getFormattedPrice } from '../../../functions/price';
+import { Component, h, Prop, Element, Event, EventEmitter, State } from '@stencil/core';
+import { Product, Price, LineItemData, ProductChoices, CheckoutSession } from '../../../types';
+import { getAvailablePricesForProduct, getSiblings, isProductSelected, isPriceSelected } from './functions';
 import { openWormhole } from 'stencil-wormhole';
 
 @Component({
@@ -14,65 +13,66 @@ export class CePriceChoices {
 
   @Prop() default: string;
   @Prop() type: 'radio' | 'checkbox' = 'radio';
+  @Prop() calculating: boolean;
   @Prop() choices: ProductChoices;
   @Prop() columns: number = 1;
+  @Prop() checkoutSession: CheckoutSession;
   @Prop() lineItemData: Array<LineItemData>;
   @Prop() currencyCode: string;
+  @Prop() products: Array<Product>;
+  @Prop() loading: boolean;
+  @Prop() label: string;
 
-  @State() loading: boolean;
-  @State() products: Array<Product>;
   @State() selectedProducts: Array<Product>;
+  @State() selectedPriceIds: Array<string>;
+  @State() availablePrices: Array<Price>;
 
   /** Update line items event. */
   @Event() ceUpdateLineItems: EventEmitter<Array<LineItemData>>;
 
-  @Watch('products')
-  handleDefaultProductSelection() {
-    if (!this.products) return;
-    this.selectedProducts = [this.products[0]];
-  }
+  /** Add line items event. */
+  @Event() ceAddLineItems: EventEmitter<Array<LineItemData>>;
 
-  /** Watch choices and fetch if changed */
-  @Watch('choices')
-  async fetchProducts() {
-    this.loading = true;
-    try {
-      this.products = await getProducts({
-        query: {
-          active: true,
-          ids: Object.keys(this.choices),
+  // @Watch('selectedProducts')
+  // handlePriceSelection(_, oldVal) {
+  //   if (!oldVal) {
+  //     return;
+  //   }
+  //   if (this?.selectedProducts?.[0]?.id) {
+  //     this.selectedPriceIds = [this.choices[this.selectedProducts?.[0]?.id].prices?.[0]];
+  //   }
+  // }
+
+  /**
+   * Maybe automatically add the product if radio type.
+   */
+  maybeUpdateSelectedPrices(e: any) {
+    if (this.type !== 'radio') return;
+    if (e.target.checked) {
+      const firstPriceChoice = this.choices[e.target.value].prices?.[0];
+      this.ceUpdateLineItems.emit([
+        {
+          price_id: firstPriceChoice,
+          quantity: 1,
         },
+      ]);
+    }
+  }
+
+  updateSelectedPrices(e) {
+    const choices = getSiblings(e.target);
+    const selected = Array.from(choices)
+      .filter(choice => {
+        return choice.checked && !choice.disabled;
+      })
+      .map(item => {
+        return {
+          price_id: item.value,
+          quantity: 1,
+        } as LineItemData;
       });
-    } finally {
-      this.loading = false;
-    }
-  }
 
-  /** Maybe fetch products on load */
-  componentWillLoad() {
-    if (this.choices) {
-      this.fetchProducts();
-    }
-  }
-
-  updateSelected() {
-    const choices = this.el.querySelectorAll('ce-choice');
-
-    // get selected choices
-    const selected = Array.from(choices).filter(choice => {
-      return choice.name && choice.checked && !choice.disabled;
-    });
-
-    this.selectedProducts = selected.map(item => this.products.find(product => product.id === item.value)).filter(n => n);
-
-    console.log(this.selectedProducts);
-    // // convert to line item data
-    // const data = (selected || []).map(item => {
-    //   return { price_id: item.value, quantity: 1 } as LineItemData;
-    // });
-
-    // emit update event
-    // this.ceUpdateLineItems.emit(data);
+    this.ceUpdateLineItems.emit(selected);
   }
 
   renderLoading(number: number) {
@@ -102,24 +102,30 @@ export class CePriceChoices {
       return this.renderLoading(length);
     }
 
-    if (this.products?.length <= 1) {
+    if (!this.products || this.products?.length <= 1) {
       return;
     }
 
     return (
-      <ce-choices class="loaded" style={{ '--columns': this.columns.toString() }}>
+      <ce-choices label={this.label} class="loaded product-selector" style={{ '--columns': this.columns.toString() }}>
         {this.products.map(product => {
+          const availablePrices = getAvailablePricesForProduct(product, this.choices);
           return (
             <ce-choice
               class="loaded"
-              onCeChange={() => this.updateSelected()}
-              name={'product'}
               value={product.id}
               type={this.type}
-              checked={this.selectedProducts.some(selected => selected.id === product.id)}
+              onCeChange={e => this.maybeUpdateSelectedPrices(e)}
+              checked={isProductSelected(product, this.checkoutSession)}
             >
               {product.name}
               <span slot="description">{product.description}</span>
+              {availablePrices.length === 1 && (
+                <span slot="price">
+                  <ce-format-number type="currency" value={availablePrices[0].amount} currency={availablePrices[0].currency}></ce-format-number>
+                </span>
+              )}
+              {availablePrices.length === 1 && <span slot="per">{availablePrices[0].recurring_interval ? `/ ${availablePrices[0].recurring_interval}` : `once`}</span>}
             </ce-choice>
           );
         })}
@@ -127,34 +133,47 @@ export class CePriceChoices {
     );
   }
 
+  /**
+   * Render each price selector.
+   */
   renderPriceSelectors() {
-    if (!this?.selectedProducts?.length) {
-      return;
-    }
-
-    // render each price selector
-    return this.selectedProducts.map(product => {
-      if (!product?.prices) return;
-      return this.renderPriceSelector(product);
+    return (this.products || []).map(product => {
+      if (!product || !product?.prices) return;
+      // only if product is selected
+      if (isProductSelected(product, this.checkoutSession)) {
+        return this.renderPriceSelector(product);
+      }
     });
   }
 
+  /**
+   * Render an individual price selector
+   * @param product
+   * @returns
+   */
   renderPriceSelector(product: Product) {
-    if (this.loading && !!this.choices?.[0]?.prices?.length) {
-      return this.renderLoading(this.choices[0].prices.length);
+    const prices = getAvailablePricesForProduct(product, this.choices);
+    if (!prices || prices?.length < 2) return;
+
+    if (this.loading) {
+      return this.renderLoading(prices?.length);
     }
 
-    if (!product?.prices) return;
-    const prices = product.prices;
+    let label = 'Choose';
+    if (this.type === 'checkbox') {
+      label = label + ' ' + product.name;
+    }
 
     return (
       <ce-form-row>
-        <ce-choices label={product.name} class="loaded" style={{ '--columns': this.columns.toString() }}>
+        <ce-choices label={label} class="loaded" style={{ '--columns': this.columns.toString() }}>
           {prices.map(price => {
             return (
-              <ce-choice class="loaded" onCeChange={() => {}} name={'price'} value={price.id} type={this.type}>
+              <ce-choice class="loaded" value={price.id} type={this.type} onCeChange={e => this.updateSelectedPrices(e)} checked={isPriceSelected(price, this.checkoutSession)}>
                 {price.name}
-                <span slot="price">{getFormattedPrice({ amount: price.amount, currency: price.currency })}</span>
+                <span slot="price">
+                  <ce-format-number type="currency" value={price.amount} currency={price.currency}></ce-format-number>
+                </span>
                 <span slot="per">{price.recurring_interval ? `/ ${price.recurring_interval}` : `once`}</span>
               </ce-choice>
             );
@@ -166,12 +185,13 @@ export class CePriceChoices {
 
   render() {
     return (
-      <div>
+      <div class="price-choices">
         {this.renderProductSelector()}
         {this.renderPriceSelectors()}
+        {this.calculating && <ce-block-ui z-index={2}></ce-block-ui>}
       </div>
     );
   }
 }
 
-openWormhole(CePriceChoices, ['currencyCode', 'choices'], false);
+openWormhole(CePriceChoices, ['currencyCode', 'choices', 'products', 'calculating', 'checkoutSession', 'loading'], false);

@@ -138,7 +138,7 @@ export class CeSelectDropdown {
     }
   }
 
-  componentDidLoad() {
+  componentWillLoad() {
     this.handleSearchChange();
   }
 

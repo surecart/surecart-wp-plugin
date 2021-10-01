@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { CheckoutSession, ChoiceItem, Coupon, LineItemData, PriceData, ProductChoices } from "./types";
+import { CheckoutSession, ChoiceItem, Coupon, Keys, LineItemData, PriceData, Product, ProductChoices } from "./types";
 export namespace Components {
     interface CeAlert {
         /**
@@ -34,6 +34,7 @@ export namespace Components {
         "type": 'primary' | 'success' | 'info' | 'warning' | 'danger';
     }
     interface CeBlockUi {
+        "zIndex": number;
     }
     interface CeButton {
         /**
@@ -147,6 +148,10 @@ export namespace Components {
     }
     interface CeCheckout {
         /**
+          * Alignment
+         */
+        "alignment": 'center' | 'wide' | 'full';
+        /**
           * Pass an array of ids for choice fields
          */
         "choicePriceIds": Array<string>;
@@ -166,6 +171,10 @@ export namespace Components {
           * Translation object.
          */
         "i18n": Object;
+        /**
+          * Publishable keys for providers
+         */
+        "keys": Keys;
         /**
           * Pass line item data to create with session.
          */
@@ -371,6 +380,53 @@ export namespace Components {
     interface CeFormSection {
         "label": string;
     }
+    interface CeFormatNumber {
+        /**
+          * The currency to use when formatting. Must be an ISO 4217 currency code such as `USD` or `EUR`.
+         */
+        "currency": string;
+        /**
+          * How to display the currency.
+         */
+        "currencyDisplay": 'symbol' | 'narrowSymbol' | 'code' | 'name';
+        /**
+          * The locale to use when formatting the number.
+         */
+        "locale": string;
+        /**
+          * The maximum number of fraction digits to use. Possible values are 0 - 20.
+         */
+        "maximumFractionDigits": number;
+        /**
+          * The maximum number of significant digits to use,. Possible values are 1 - 21.
+         */
+        "maximumSignificantDigits": number;
+        /**
+          * The minimum number of fraction digits to use. Possible values are 0 - 20.
+         */
+        "minimumFractionDigits": number;
+        /**
+          * The minimum number of integer digits to use. Possible values are 1 - 21.
+         */
+        "minimumIntegerDigits": number;
+        /**
+          * The minimum number of significant digits to use. Possible values are 1 - 21.
+         */
+        "minimumSignificantDigits": number;
+        "noConvert": boolean;
+        /**
+          * Turns off grouping separators.
+         */
+        "noGrouping": boolean;
+        /**
+          * The formatting style to use.
+         */
+        "type": 'currency' | 'decimal' | 'percent';
+        /**
+          * The number to format.
+         */
+        "value": number;
+    }
     interface CeInput {
         /**
           * The input's autocomplete attribute.
@@ -404,6 +460,10 @@ export namespace Components {
           * The input's help text.
          */
         "help": string;
+        /**
+          * Hidden
+         */
+        "hidden": boolean;
         /**
           * The input's inputmode attribute.
          */
@@ -511,6 +571,7 @@ export namespace Components {
     interface CeLineItems {
         "calculating": boolean;
         "checkoutSession": CheckoutSession;
+        "edit": boolean;
         "lineItemData": Array<LineItemData>;
         "loading": boolean;
     }
@@ -549,30 +610,44 @@ export namespace Components {
          */
         "checkoutSession": CheckoutSession;
         /**
+          * Your stripe publishable key.
+         */
+        "keys": Keys;
+        /**
+          * The input's label.
+         */
+        "label": string;
+        /**
+          * Is this created in "test" mode
+         */
+        "mode": 'test' | 'live';
+        /**
           * The current payment method for the payment
          */
         "paymentMethod": string;
         /**
+          * Secure notice
+         */
+        "secureNotice": string;
+        /**
           * Your stripe connected account id.
          */
         "stripeAccountId": string;
-        /**
-          * Your stripe publishable key.
-         */
-        "stripePublishableKey": string;
     }
     interface CePaymentRequest {
         "paymentMethod": 'stripe' | 'paypal';
-        "stripeAccountId": string;
-        "stripePublishableKey": string;
-        "total": number;
     }
     interface CePriceChoices {
+        "calculating": boolean;
+        "checkoutSession": CheckoutSession;
         "choices": ProductChoices;
         "columns": number;
         "currencyCode": string;
         "default": string;
+        "label": string;
         "lineItemData": Array<LineItemData>;
+        "loading": boolean;
+        "products": Array<Product>;
         "type": 'radio' | 'checkbox';
     }
     interface CePriceInput {
@@ -680,6 +755,10 @@ export namespace Components {
          */
         "currency": string;
         /**
+          * Can we select the quantity
+         */
+        "edit": boolean;
+        /**
           * Url for the product image
          */
         "imageUrl": string;
@@ -687,6 +766,10 @@ export namespace Components {
           * Recurring interval (i.e. monthly, once, etc.)
          */
         "interval": string;
+        /**
+          * Is the line item removable
+         */
+        "isRemovable": boolean;
         /**
           * Product name
          */
@@ -698,6 +781,8 @@ export namespace Components {
     }
     interface CeProvider {
         "STENCIL_CONTEXT": { [key: string]: any };
+    }
+    interface CePurchase {
     }
     interface CeQuantitySelect {
         "clickEl"?: HTMLElement;
@@ -802,10 +887,6 @@ export namespace Components {
          */
         "hasFocus": boolean;
         /**
-          * The input's help text. Alternatively, you can use the help-text slot.
-         */
-        "help": string;
-        /**
           * The input's label. Alternatively, you can use the label slot.
          */
         "label": string;
@@ -813,6 +894,10 @@ export namespace Components {
           * Stripe publishable key
          */
         "publishableKey": string;
+        /**
+          * The input's help text. Alternatively, you can use the help-text slot.
+         */
+        "secureText": string;
         /**
           * Should we show the label
          */
@@ -840,6 +925,10 @@ export namespace Components {
          */
         "currency": string;
         /**
+          * Stripe publishable key
+         */
+        "keys": Keys;
+        /**
           * Label
          */
         "label": string;
@@ -847,10 +936,6 @@ export namespace Components {
           * Stripe account id
          */
         "stripeAccountId": string;
-        /**
-          * Stripe publishable key
-         */
-        "stripePublishableKey": string;
         /**
           * Payment request theme
          */
@@ -1059,6 +1144,12 @@ declare global {
         prototype: HTMLCeFormSectionElement;
         new (): HTMLCeFormSectionElement;
     };
+    interface HTMLCeFormatNumberElement extends Components.CeFormatNumber, HTMLStencilElement {
+    }
+    var HTMLCeFormatNumberElement: {
+        prototype: HTMLCeFormatNumberElement;
+        new (): HTMLCeFormatNumberElement;
+    };
     interface HTMLCeInputElement extends Components.CeInput, HTMLStencilElement {
     }
     var HTMLCeInputElement: {
@@ -1136,6 +1227,12 @@ declare global {
     var HTMLCeProviderElement: {
         prototype: HTMLCeProviderElement;
         new (): HTMLCeProviderElement;
+    };
+    interface HTMLCePurchaseElement extends Components.CePurchase, HTMLStencilElement {
+    }
+    var HTMLCePurchaseElement: {
+        prototype: HTMLCePurchaseElement;
+        new (): HTMLCePurchaseElement;
     };
     interface HTMLCeQuantitySelectElement extends Components.CeQuantitySelect, HTMLStencilElement {
     }
@@ -1239,6 +1336,7 @@ declare global {
         "ce-form-control": HTMLCeFormControlElement;
         "ce-form-row": HTMLCeFormRowElement;
         "ce-form-section": HTMLCeFormSectionElement;
+        "ce-format-number": HTMLCeFormatNumberElement;
         "ce-input": HTMLCeInputElement;
         "ce-line-item": HTMLCeLineItemElement;
         "ce-line-items": HTMLCeLineItemsElement;
@@ -1252,6 +1350,7 @@ declare global {
         "ce-price-input": HTMLCePriceInputElement;
         "ce-product-line-item": HTMLCeProductLineItemElement;
         "ce-provider": HTMLCeProviderElement;
+        "ce-purchase": HTMLCePurchaseElement;
         "ce-quantity-select": HTMLCeQuantitySelectElement;
         "ce-radio": HTMLCeRadioElement;
         "ce-radio-group": HTMLCeRadioGroupElement;
@@ -1296,6 +1395,7 @@ declare namespace LocalJSX {
         "type"?: 'primary' | 'success' | 'info' | 'warning' | 'danger';
     }
     interface CeBlockUi {
+        "zIndex"?: number;
     }
     interface CeButton {
         /**
@@ -1413,6 +1513,10 @@ declare namespace LocalJSX {
     }
     interface CeCheckout {
         /**
+          * Alignment
+         */
+        "alignment"?: 'center' | 'wide' | 'full';
+        /**
           * Pass an array of ids for choice fields
          */
         "choicePriceIds"?: Array<string>;
@@ -1432,6 +1536,10 @@ declare namespace LocalJSX {
           * Translation object.
          */
         "i18n"?: Object;
+        /**
+          * Publishable keys for providers
+         */
+        "keys"?: Keys;
         /**
           * Pass line item data to create with session.
          */
@@ -1642,6 +1750,10 @@ declare namespace LocalJSX {
          */
         "novalidate"?: boolean;
         /**
+          * Emitted when the form is submitted. This event will not be emitted if any form control inside of it is in an invalid state, unless the form has the `novalidate` attribute. Note that there is never a need to prevent this event, since it doen't send a GET or POST request like native forms. To "prevent" submission, use a conditional around the XHR request you use to submit the form's data with.
+         */
+        "onCeFormChange"?: (event: CustomEvent<Object>) => void;
+        /**
           * Emitted when the form is invalid.
          */
         "onCeFormInvalid"?: (event: CustomEvent<Object>) => void;
@@ -1665,6 +1777,53 @@ declare namespace LocalJSX {
     }
     interface CeFormSection {
         "label"?: string;
+    }
+    interface CeFormatNumber {
+        /**
+          * The currency to use when formatting. Must be an ISO 4217 currency code such as `USD` or `EUR`.
+         */
+        "currency"?: string;
+        /**
+          * How to display the currency.
+         */
+        "currencyDisplay"?: 'symbol' | 'narrowSymbol' | 'code' | 'name';
+        /**
+          * The locale to use when formatting the number.
+         */
+        "locale"?: string;
+        /**
+          * The maximum number of fraction digits to use. Possible values are 0 - 20.
+         */
+        "maximumFractionDigits"?: number;
+        /**
+          * The maximum number of significant digits to use,. Possible values are 1 - 21.
+         */
+        "maximumSignificantDigits"?: number;
+        /**
+          * The minimum number of fraction digits to use. Possible values are 0 - 20.
+         */
+        "minimumFractionDigits"?: number;
+        /**
+          * The minimum number of integer digits to use. Possible values are 1 - 21.
+         */
+        "minimumIntegerDigits"?: number;
+        /**
+          * The minimum number of significant digits to use. Possible values are 1 - 21.
+         */
+        "minimumSignificantDigits"?: number;
+        "noConvert"?: boolean;
+        /**
+          * Turns off grouping separators.
+         */
+        "noGrouping"?: boolean;
+        /**
+          * The formatting style to use.
+         */
+        "type"?: 'currency' | 'decimal' | 'percent';
+        /**
+          * The number to format.
+         */
+        "value"?: number;
     }
     interface CeInput {
         /**
@@ -1699,6 +1858,10 @@ declare namespace LocalJSX {
           * The input's help text.
          */
         "help"?: string;
+        /**
+          * Hidden
+         */
+        "hidden"?: boolean;
         /**
           * The input's inputmode attribute.
          */
@@ -1813,9 +1976,10 @@ declare namespace LocalJSX {
     interface CeLineItems {
         "calculating"?: boolean;
         "checkoutSession"?: CheckoutSession;
+        "edit"?: boolean;
         "lineItemData"?: Array<LineItemData>;
         "loading"?: boolean;
-        "onCeUpdateLineItems"?: (event: CustomEvent<Array<LineItemData>>) => void;
+        "onCeUpdateLineItem"?: (event: CustomEvent<{ id: string; amount: number }>) => void;
     }
     interface CeMenu {
         "onCeSelect"?: (event: CustomEvent<{ item: HTMLCeMenuItemElement }>) => void;
@@ -1845,34 +2009,52 @@ declare namespace LocalJSX {
          */
         "checkoutSession"?: CheckoutSession;
         /**
+          * Your stripe publishable key.
+         */
+        "keys"?: Keys;
+        /**
+          * The input's label.
+         */
+        "label"?: string;
+        /**
+          * Is this created in "test" mode
+         */
+        "mode"?: 'test' | 'live';
+        /**
           * The current payment method for the payment
          */
         "paymentMethod"?: string;
         /**
+          * Secure notice
+         */
+        "secureNotice"?: string;
+        /**
           * Your stripe connected account id.
          */
         "stripeAccountId"?: string;
-        /**
-          * Your stripe publishable key.
-         */
-        "stripePublishableKey"?: string;
     }
     interface CePaymentRequest {
         "paymentMethod"?: 'stripe' | 'paypal';
-        "stripeAccountId"?: string;
-        "stripePublishableKey"?: string;
-        "total"?: number;
     }
     interface CePriceChoices {
+        "calculating"?: boolean;
+        "checkoutSession"?: CheckoutSession;
         "choices"?: ProductChoices;
         "columns"?: number;
         "currencyCode"?: string;
         "default"?: string;
+        "label"?: string;
         "lineItemData"?: Array<LineItemData>;
+        "loading"?: boolean;
+        /**
+          * Add line items event.
+         */
+        "onCeAddLineItems"?: (event: CustomEvent<Array<LineItemData>>) => void;
         /**
           * Update line items event.
          */
         "onCeUpdateLineItems"?: (event: CustomEvent<Array<LineItemData>>) => void;
+        "products"?: Array<Product>;
         "type"?: 'radio' | 'checkbox';
     }
     interface CePriceInput {
@@ -1971,6 +2153,10 @@ declare namespace LocalJSX {
          */
         "currency"?: string;
         /**
+          * Can we select the quantity
+         */
+        "edit"?: boolean;
+        /**
           * Url for the product image
          */
         "imageUrl"?: string;
@@ -1978,6 +2164,10 @@ declare namespace LocalJSX {
           * Recurring interval (i.e. monthly, once, etc.)
          */
         "interval"?: string;
+        /**
+          * Is the line item removable
+         */
+        "isRemovable"?: boolean;
         /**
           * Product name
          */
@@ -1994,6 +2184,8 @@ declare namespace LocalJSX {
     interface CeProvider {
         "STENCIL_CONTEXT"?: { [key: string]: any };
         "onMountConsumer"?: (event: CustomEvent<any>) => void;
+    }
+    interface CePurchase {
     }
     interface CeQuantitySelect {
         "clickEl"?: HTMLElement;
@@ -2114,10 +2306,6 @@ declare namespace LocalJSX {
          */
         "hasFocus"?: boolean;
         /**
-          * The input's help text. Alternatively, you can use the help-text slot.
-         */
-        "help"?: string;
-        /**
           * The input's label. Alternatively, you can use the label slot.
          */
         "label"?: string;
@@ -2125,6 +2313,10 @@ declare namespace LocalJSX {
           * Stripe publishable key
          */
         "publishableKey"?: string;
+        /**
+          * The input's help text. Alternatively, you can use the help-text slot.
+         */
+        "secureText"?: string;
         /**
           * Should we show the label
          */
@@ -2152,6 +2344,10 @@ declare namespace LocalJSX {
          */
         "currency"?: string;
         /**
+          * Stripe publishable key
+         */
+        "keys"?: Keys;
+        /**
           * Label
          */
         "label"?: string;
@@ -2159,10 +2355,6 @@ declare namespace LocalJSX {
           * Stripe account id
          */
         "stripeAccountId"?: string;
-        /**
-          * Stripe publishable key
-         */
-        "stripePublishableKey"?: string;
         /**
           * Payment request theme
          */
@@ -2294,6 +2486,7 @@ declare namespace LocalJSX {
         "ce-form-control": CeFormControl;
         "ce-form-row": CeFormRow;
         "ce-form-section": CeFormSection;
+        "ce-format-number": CeFormatNumber;
         "ce-input": CeInput;
         "ce-line-item": CeLineItem;
         "ce-line-items": CeLineItems;
@@ -2307,6 +2500,7 @@ declare namespace LocalJSX {
         "ce-price-input": CePriceInput;
         "ce-product-line-item": CeProductLineItem;
         "ce-provider": CeProvider;
+        "ce-purchase": CePurchase;
         "ce-quantity-select": CeQuantitySelect;
         "ce-radio": CeRadio;
         "ce-radio-group": CeRadioGroup;
@@ -2344,6 +2538,7 @@ declare module "@stencil/core" {
             "ce-form-control": LocalJSX.CeFormControl & JSXBase.HTMLAttributes<HTMLCeFormControlElement>;
             "ce-form-row": LocalJSX.CeFormRow & JSXBase.HTMLAttributes<HTMLCeFormRowElement>;
             "ce-form-section": LocalJSX.CeFormSection & JSXBase.HTMLAttributes<HTMLCeFormSectionElement>;
+            "ce-format-number": LocalJSX.CeFormatNumber & JSXBase.HTMLAttributes<HTMLCeFormatNumberElement>;
             "ce-input": LocalJSX.CeInput & JSXBase.HTMLAttributes<HTMLCeInputElement>;
             "ce-line-item": LocalJSX.CeLineItem & JSXBase.HTMLAttributes<HTMLCeLineItemElement>;
             "ce-line-items": LocalJSX.CeLineItems & JSXBase.HTMLAttributes<HTMLCeLineItemsElement>;
@@ -2357,6 +2552,7 @@ declare module "@stencil/core" {
             "ce-price-input": LocalJSX.CePriceInput & JSXBase.HTMLAttributes<HTMLCePriceInputElement>;
             "ce-product-line-item": LocalJSX.CeProductLineItem & JSXBase.HTMLAttributes<HTMLCeProductLineItemElement>;
             "ce-provider": LocalJSX.CeProvider & JSXBase.HTMLAttributes<HTMLCeProviderElement>;
+            "ce-purchase": LocalJSX.CePurchase & JSXBase.HTMLAttributes<HTMLCePurchaseElement>;
             "ce-quantity-select": LocalJSX.CeQuantitySelect & JSXBase.HTMLAttributes<HTMLCeQuantitySelectElement>;
             "ce-radio": LocalJSX.CeRadio & JSXBase.HTMLAttributes<HTMLCeRadioElement>;
             "ce-radio-group": LocalJSX.CeRadioGroup & JSXBase.HTMLAttributes<HTMLCeRadioGroupElement>;

@@ -2,6 +2,9 @@
   font-family: var(--ce-font-sans);
   font-size: var(--ce-font-size-medium);
   font-weight: var(--ce-font-weight-normal);
+  display: flex;
+  flex-direction: column;
+  gap: var(--ce-input-label-margin);
 
   .form-control__label {
     display: none;
@@ -17,7 +20,6 @@
   .form-control__label {
     display: inline-block;
     color: var(--ce-input-label-color);
-    margin-bottom: var(--ce-input-label-margin);
     font-weight: var(--ce-input-label-font-weight);
     text-transform: var(--ce-input-label-text-transform, none);
     letter-spacing: var(--ce-input-label-letter-spacing, 0);
@@ -51,11 +53,6 @@
   .form-control__help-text {
     display: block;
     color: var(--ce-input-help-text-color);
-    margin-top: var(--ce-spacing-small);
-
-    ::slotted(*) {
-      margin-top: var(--ce-spacing-small);
-    }
   }
 
   &.form-control--small .form-control__help-text {
@@ -76,11 +73,6 @@
   .form-control__error-text {
     display: block;
     color: var(--ce-input-error-text-color);
-    margin-top: var(--ce-spacing-small);
-
-    ::slotted(*) {
-      margin-top: var(--ce-spacing-small);
-    }
   }
 
   &.form-control--small .form-control__error-text {

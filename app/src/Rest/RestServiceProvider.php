@@ -4,6 +4,7 @@ namespace CheckoutEngine\Rest;
 
 use CheckoutEngine\Models\Model;
 use CheckoutEngine\Rest\RestServiceInterface;
+use CheckoutEngine\Controllers\Rest\CheckoutSessionController;
 
 /**
  * Abstract Rest Service Provider interface
@@ -99,19 +100,21 @@ abstract class RestServiceProvider extends \WP_REST_Controller implements RestSe
 			register_rest_route(
 				"$this->name/v$this->version",
 				"$this->endpoint",
-				[
-					( $this->hasMethod( 'index' ) ? [
-						'methods'             => \WP_REST_Server::READABLE,
-						'callback'            => $this->callback( $this->controller, 'index' ),
-						'permission_callback' => [ $this, 'get_items_permissions_check' ],
-					] : [] ),
-					( $this->hasMethod( 'create' ) ? [
-						'methods'             => \WP_REST_Server::CREATABLE,
-						'callback'            => $this->callback( $this->controller, 'create' ),
-						'permission_callback' => [ $this, 'create_item_permissions_check' ],
-					] : [] ),
-					'schema' => [ $this, 'get_item_schema' ],
-				]
+				array_filter(
+					[
+						( $this->hasMethod( 'index' ) ? [
+							'methods'             => \WP_REST_Server::READABLE,
+							'callback'            => $this->callback( $this->controller, 'index' ),
+							'permission_callback' => [ $this, 'get_items_permissions_check' ],
+						] : [] ),
+						( $this->hasMethod( 'create' ) ? [
+							'methods'             => \WP_REST_Server::CREATABLE,
+							'callback'            => $this->callback( $this->controller, 'create' ),
+							'permission_callback' => [ $this, 'create_item_permissions_check' ],
+						] : [] ),
+						'schema' => [ $this, 'get_item_schema' ],
+					]
+				)
 			);
 		}
 
@@ -119,25 +122,27 @@ abstract class RestServiceProvider extends \WP_REST_Controller implements RestSe
 			register_rest_route(
 				"$this->name/v$this->version",
 				$this->endpoint . '/(?P<id>[\S]+)',
-				[
-					( $this->hasMethod( 'find' ) ? [
-						'methods'             => \WP_REST_Server::READABLE,
-						'callback'            => $this->callback( $this->controller, 'find' ),
-						'permission_callback' => [ $this, 'get_item_permissions_check' ],
-					] : [] ),
-					( $this->hasMethod( 'edit' ) ? [
-						'methods'             => \WP_REST_Server::EDITABLE,
-						'callback'            => $this->callback( $this->controller, 'edit' ),
-						'permission_callback' => [ $this, 'update_item_permissions_check' ],
-					] : [] ),
-					( $this->hasMethod( 'delete' ) ? [
-						'methods'             => \WP_REST_Server::DELETABLE,
-						'callback'            => $this->callback( $this->controller, 'delete' ),
-						'permission_callback' => [ $this, 'delete_item_permissions_check' ],
-					] : [] ),
-					// Register our schema callback.
-					'schema' => [ $this, 'get_item_schema' ],
-				]
+				array_filter(
+					[
+						( $this->hasMethod( 'find' ) ? [
+							'methods'             => \WP_REST_Server::READABLE,
+							'callback'            => $this->callback( $this->controller, 'find' ),
+							'permission_callback' => [ $this, 'get_item_permissions_check' ],
+						] : [] ),
+						( $this->hasMethod( 'edit' ) ? [
+							'methods'             => \WP_REST_Server::EDITABLE,
+							'callback'            => $this->callback( $this->controller, 'edit' ),
+							'permission_callback' => [ $this, 'update_item_permissions_check' ],
+						] : [] ),
+						( $this->hasMethod( 'delete' ) ? [
+							'methods'             => \WP_REST_Server::DELETABLE,
+							'callback'            => $this->callback( $this->controller, 'delete' ),
+							'permission_callback' => [ $this, 'delete_item_permissions_check' ],
+						] : [] ),
+						// Register our schema callback.
+						'schema' => [ $this, 'get_item_schema' ],
+					]
+				)
 			);
 		}
 

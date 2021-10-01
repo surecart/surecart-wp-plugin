@@ -1,3 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ce-price-choices renders 1`] = `<ce-price-choices></ce-price-choices>`;
+exports[`ce-price-choices renders 1`] = `
+<ce-price-choices>
+  <div></div>
+</ce-price-choices>
+`;

@@ -7,15 +7,15 @@
 
 ## Properties
 
-| Property               | Attribute                | Description            | Type     | Default     |
-| ---------------------- | ------------------------ | ---------------------- | -------- | ----------- |
-| `amount`               | `amount`                 | Amount                 | `number` | `0`         |
-| `country`              | `country`                | Country                | `string` | `'US'`      |
-| `currency`             | `currency`               | Currency               | `string` | `'usd'`     |
-| `label`                | `label`                  | Label                  | `string` | `'total'`   |
-| `stripeAccountId`      | `stripe-account-id`      | Stripe account id      | `string` | `undefined` |
-| `stripePublishableKey` | `stripe-publishable-key` | Stripe publishable key | `string` | `undefined` |
-| `theme`                | `theme`                  | Payment request theme  | `string` | `'dark'`    |
+| Property          | Attribute           | Description            | Type     | Default                 |
+| ----------------- | ------------------- | ---------------------- | -------- | ----------------------- |
+| `amount`          | `amount`            | Amount                 | `number` | `0`                     |
+| `country`         | `country`           | Country                | `string` | `'US'`                  |
+| `currency`        | `currency`          | Currency               | `string` | `'usd'`                 |
+| `keys`            | --                  | Stripe publishable key | `Keys`   | `{     stripe: '',   }` |
+| `label`           | `label`             | Label                  | `string` | `'total'`               |
+| `stripeAccountId` | `stripe-account-id` | Stripe account id      | `string` | `undefined`             |
+| `theme`           | `theme`             | Payment request theme  | `string` | `'dark'`                |
 
 
 ## Shadow Parts

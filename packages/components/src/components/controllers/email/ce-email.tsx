@@ -71,24 +71,18 @@ export class CeEmail {
 
   @Event() ceUpdateCustomer: EventEmitter<{ email: string }>;
 
-  handleBlur() {
-    if (this.checkoutSession.email !== this.value) {
-      this.ceUpdateCustomer.emit({ email: this.value });
-    }
-    this.ceBlur.emit();
-  }
-
   handleChange() {
     this.value = this.input.value;
     this.ceChange.emit();
+    this.ceUpdateCustomer.emit({ email: this.value });
   }
 
   /** Sync customer email with session if it's updated by other means */
   @Watch('checkoutSession')
   handleSessionChange(val) {
-    if (val.customer_email) {
-      if (val.customer_email !== this.value) {
-        this.value = val.customer_email;
+    if (val.email) {
+      if (val.email !== this.value) {
+        this.value = val.email;
       }
     }
   }
@@ -113,7 +107,7 @@ export class CeEmail {
         onCeChange={() => this.handleChange()}
         onCeInput={() => this.ceInput.emit()}
         onCeFocus={() => this.ceFocus.emit()}
-        onCeBlur={() => this.handleBlur()}
+        onCeBlur={() => this.ceBlur.emit()}
       ></ce-input>
     );
   }

@@ -1,18 +1,18 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { PrestoTooltip } from '../ce-tooltip';
+import { CePurchase } from '../ce-purchase';
 
-describe('presto-tooltip', () => {
+describe('ce-purchase', () => {
   it('renders', async () => {
     const page = await newSpecPage({
-      components: [PrestoTooltip],
-      html: `<presto-tooltip></presto-tooltip>`,
+      components: [CePurchase],
+      html: `<ce-purchase></ce-purchase>`,
     });
     expect(page.root).toEqualHtml(`
-      <presto-tooltip>
+      <ce-purchase>
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>
-      </presto-tooltip>
+      </ce-purchase>
     `);
   });
 });

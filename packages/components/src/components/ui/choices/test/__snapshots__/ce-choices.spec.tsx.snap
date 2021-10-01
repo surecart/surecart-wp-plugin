@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ce-choices renders 1`] = `
+<ce-choices size="medium">
+  <mock:shadow-root>
+    <fieldset class="choices" part="base" role="radiogroup">
+      <ce-form-control errormessage="" help="" helpid="choices-help-text-1" inputid="choices-1" label="" labelid="choices-label-1" showlabel="" size="medium">
+        <div class="choices__items" part="choices">
+          <slot></slot>
+        </div>
+      </ce-form-control>
+    </fieldset>
+  </mock:shadow-root>
+</ce-choices>
+`;

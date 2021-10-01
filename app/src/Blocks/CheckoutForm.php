@@ -64,10 +64,14 @@ class CheckoutForm extends Block {
 		return \CheckoutEngine::blocks()->render(
 			"blocks/$this->name",
 			[
+				'align'       => $attributes['align'] ?? '',
 				'label'       => $attributes['label'] ?? '',
+				'font_size'   => $attributes['font_size'] ?? 16,
 				'classes'     => $this->getClasses( $attributes ),
 				'description' => $attributes['description'] ?? '',
 				'content'     => $content,
+				'choices'     => $attributes['choices'] ?? [],
+				'success_url' => $attributes['redirect'] ?? trailingslashit( get_home_url() ) . 'thank-you',
 				'i18n'        => [],
 				'instance'    => self::$instance++,
 			]

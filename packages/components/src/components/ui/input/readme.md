@@ -15,6 +15,7 @@
 | `errorMessage`   | `error-message`   | Validation error message.                                                                                                                                                                                     | `string`                                                                              | `''`        |
 | `hasFocus`       | `has-focus`       | Inputs focus                                                                                                                                                                                                  | `boolean`                                                                             | `undefined` |
 | `help`           | `help`            | The input's help text.                                                                                                                                                                                        | `string`                                                                              | `''`        |
+| `hidden`         | `hidden`          | Hidden                                                                                                                                                                                                        | `boolean`                                                                             | `false`     |
 | `inputmode`      | `inputmode`       | The input's inputmode attribute.                                                                                                                                                                              | `"decimal" \| "email" \| "none" \| "numeric" \| "search" \| "tel" \| "text" \| "url"` | `undefined` |
 | `invalid`        | `invalid`         | This will be true when the control is in an invalid state. Validity is determined by props such as `type`, `required`, `minlength`, `maxlength`, and `pattern` using the browser's constraint validation API. | `boolean`                                                                             | `false`     |
 | `label`          | `label`           | The input's label.                                                                                                                                                                                            | `string`                                                                              | `undefined` |
@@ -93,13 +94,14 @@ Type: `Promise<void>`
 
 ## Shadow Parts
 
-| Part          | Description                                      |
-| ------------- | ------------------------------------------------ |
-| `"base"`      | The elements base wrapper.                       |
-| `"help-text"` | Help text that describes how to use the input.   |
-| `"input"`     | The html input element.                          |
-| `"prefix"`    | Used to prepend an icon or element to the input. |
-| `"suffix"`    | Used to prepend an icon or element to the input. |
+| Part             | Description                                      |
+| ---------------- | ------------------------------------------------ |
+| `"base"`         | The elements base wrapper.                       |
+| `"clear-button"` |                                                  |
+| `"help-text"`    | Help text that describes how to use the input.   |
+| `"input"`        | The html input element.                          |
+| `"prefix"`       | Used to prepend an icon or element to the input. |
+| `"suffix"`       | Used to prepend an icon or element to the input. |
 
 
 ## CSS Custom Properties

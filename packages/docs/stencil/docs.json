@@ -1,5 +1,5 @@
 {
-  "timestamp": "2021-09-21T18:07:20",
+  "timestamp": "2021-09-30T19:26:54",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.6.0",
@@ -182,7 +182,25 @@
       "docs": "",
       "docsTags": [],
       "usage": {},
-      "props": [],
+      "props": [
+        {
+          "name": "zIndex",
+          "type": "number",
+          "mutable": false,
+          "attr": "z-index",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "1",
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
       "methods": [],
       "events": [],
       "listeners": [],
@@ -190,8 +208,10 @@
       "slots": [],
       "parts": [],
       "dependents": [
+        "ce-checkout",
         "ce-coupon-form",
-        "ce-order-summary"
+        "ce-order-summary",
+        "ce-price-choices"
       ],
       "dependencies": [
         "ce-spinner"
@@ -200,10 +220,16 @@
         "ce-block-ui": [
           "ce-spinner"
         ],
+        "ce-checkout": [
+          "ce-block-ui"
+        ],
         "ce-coupon-form": [
           "ce-block-ui"
         ],
         "ce-order-summary": [
+          "ce-block-ui"
+        ],
+        "ce-price-choices": [
           "ce-block-ui"
         ]
       }
@@ -563,7 +589,6 @@
       ],
       "dependents": [
         "ce-coupon-form",
-        "ce-select",
         "ce-submit"
       ],
       "dependencies": [
@@ -574,9 +599,6 @@
           "ce-spinner"
         ],
         "ce-coupon-form": [
-          "ce-button"
-        ],
-        "ce-select": [
           "ce-button"
         ],
         "ce-submit": [
@@ -859,6 +881,21 @@
           "required": false
         },
         {
+          "name": "choices",
+          "type": "ProductChoices",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "Pass an array of choices",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "ProductChoices"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "coupon",
           "type": "Coupon",
           "mutable": true,
@@ -900,6 +937,22 @@
           "values": [
             {
               "type": "Object"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "keys",
+          "type": "Keys",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "Publishable keys for providers",
+          "docsTags": [],
+          "default": "{\n    stripe: '',\n    paypal: '',\n  }",
+          "values": [
+            {
+              "type": "Keys"
             }
           ],
           "optional": false,
@@ -966,7 +1019,12 @@
           "passive": false
         },
         {
-          "event": "ceUpdateCustomer",
+          "event": "ceUpdateLineItem",
+          "capture": false,
+          "passive": false
+        },
+        {
+          "event": "ceFormChange",
           "capture": false,
           "passive": false
         },
@@ -980,8 +1038,17 @@
       "slots": [],
       "parts": [],
       "dependents": [],
-      "dependencies": [],
-      "dependencyGraph": {}
+      "dependencies": [
+        "ce-block-ui"
+      ],
+      "dependencyGraph": {
+        "ce-checkout": [
+          "ce-block-ui"
+        ],
+        "ce-block-ui": [
+          "ce-spinner"
+        ]
+      }
     },
     {
       "filePath": "./src/components/ui/choice/ce-choice.tsx",
@@ -1233,12 +1300,46 @@
           "mutable": false,
           "attr": "columns",
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "Number of columns on desktop",
           "docsTags": [],
           "default": "1",
           "values": [
             {
               "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "errorMessage",
+          "type": "string",
+          "mutable": false,
+          "attr": "error-message",
+          "reflectToAttr": false,
+          "docs": "Validation error message.",
+          "docsTags": [],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "help",
+          "type": "string",
+          "mutable": false,
+          "attr": "help",
+          "reflectToAttr": false,
+          "docs": "The input's help text.",
+          "docsTags": [],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
             }
           ],
           "optional": false,
@@ -1277,6 +1378,66 @@
           ],
           "optional": false,
           "required": false
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "required",
+          "reflectToAttr": false,
+          "docs": "Required",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "showLabel",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "show-label",
+          "reflectToAttr": false,
+          "docs": "Should we show the label",
+          "docsTags": [],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "size",
+          "type": "\"large\" | \"medium\" | \"small\"",
+          "mutable": false,
+          "attr": "size",
+          "reflectToAttr": true,
+          "docs": "Input size",
+          "docsTags": [],
+          "default": "'medium'",
+          "values": [
+            {
+              "value": "large",
+              "type": "string"
+            },
+            {
+              "value": "medium",
+              "type": "string"
+            },
+            {
+              "value": "small",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
         }
       ],
       "methods": [],
@@ -1292,17 +1453,21 @@
         {
           "name": "choices",
           "docs": ""
-        },
-        {
-          "name": "label",
-          "docs": ""
         }
       ],
       "dependents": [
         "ce-price-choices"
       ],
-      "dependencies": [],
+      "dependencies": [
+        "ce-form-control"
+      ],
       "dependencyGraph": {
+        "ce-choices": [
+          "ce-form-control"
+        ],
+        "ce-form-control": [
+          "ce-tooltip"
+        ],
         "ce-price-choices": [
           "ce-choices"
         ]
@@ -2052,6 +2217,15 @@
       ],
       "events": [
         {
+          "event": "ceFormChange",
+          "detail": "Object",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Emitted when the form is submitted. This event will not be emitted if any form control inside of\nit is in an invalid state, unless the form has the `novalidate` attribute. Note that there is never a need to prevent\nthis event, since it doen't send a GET or POST request like native forms. To \"prevent\" submission, use a conditional\naround the XHR request you use to submit the form's data with.",
+          "docsTags": []
+        },
+        {
           "event": "ceFormInvalid",
           "detail": "Object",
           "bubbles": true,
@@ -2070,7 +2244,13 @@
           "docsTags": []
         }
       ],
-      "listeners": [],
+      "listeners": [
+        {
+          "event": "ceChange",
+          "capture": false,
+          "passive": false
+        }
+      ],
       "styles": [],
       "slots": [],
       "parts": [
@@ -2270,8 +2450,8 @@
         }
       ],
       "dependents": [
-        "ce-input",
-        "ce-select-old"
+        "ce-choices",
+        "ce-input"
       ],
       "dependencies": [
         "ce-tooltip"
@@ -2280,10 +2460,10 @@
         "ce-form-control": [
           "ce-tooltip"
         ],
-        "ce-input": [
+        "ce-choices": [
           "ce-form-control"
         ],
-        "ce-select-old": [
+        "ce-input": [
           "ce-form-control"
         ]
       }
@@ -2303,9 +2483,15 @@
       "styles": [],
       "slots": [],
       "parts": [],
-      "dependents": [],
+      "dependents": [
+        "ce-price-choices"
+      ],
       "dependencies": [],
-      "dependencyGraph": {}
+      "dependencyGraph": {
+        "ce-price-choices": [
+          "ce-form-row"
+        ]
+      }
     },
     {
       "filePath": "./src/components/ui/form-section/ce-form-section.tsx",
@@ -2351,6 +2537,251 @@
       "dependents": [],
       "dependencies": [],
       "dependencyGraph": {}
+    },
+    {
+      "filePath": "./src/components/util/format-number/ce-format-number.tsx",
+      "encapsulation": "none",
+      "tag": "ce-format-number",
+      "readme": "# ce-format-number\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "currency",
+          "type": "string",
+          "mutable": false,
+          "attr": "currency",
+          "reflectToAttr": false,
+          "docs": "The currency to use when formatting. Must be an ISO 4217 currency code such as `USD` or `EUR`.",
+          "docsTags": [],
+          "default": "'USD'",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "currencyDisplay",
+          "type": "\"code\" | \"name\" | \"narrowSymbol\" | \"symbol\"",
+          "mutable": false,
+          "attr": "currency-display",
+          "reflectToAttr": false,
+          "docs": "How to display the currency.",
+          "docsTags": [],
+          "default": "'symbol'",
+          "values": [
+            {
+              "value": "code",
+              "type": "string"
+            },
+            {
+              "value": "name",
+              "type": "string"
+            },
+            {
+              "value": "narrowSymbol",
+              "type": "string"
+            },
+            {
+              "value": "symbol",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "locale",
+          "type": "string",
+          "mutable": false,
+          "attr": "locale",
+          "reflectToAttr": false,
+          "docs": "The locale to use when formatting the number.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "maximumFractionDigits",
+          "type": "number",
+          "mutable": false,
+          "attr": "maximum-fraction-digits",
+          "reflectToAttr": false,
+          "docs": "The maximum number of fraction digits to use. Possible values are 0 - 20.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "maximumSignificantDigits",
+          "type": "number",
+          "mutable": false,
+          "attr": "maximum-significant-digits",
+          "reflectToAttr": false,
+          "docs": "The maximum number of significant digits to use,. Possible values are 1 - 21.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "minimumFractionDigits",
+          "type": "number",
+          "mutable": false,
+          "attr": "minimum-fraction-digits",
+          "reflectToAttr": false,
+          "docs": "The minimum number of fraction digits to use. Possible values are 0 - 20.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "minimumIntegerDigits",
+          "type": "number",
+          "mutable": false,
+          "attr": "minimum-integer-digits",
+          "reflectToAttr": false,
+          "docs": "The minimum number of integer digits to use. Possible values are 1 - 21.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "minimumSignificantDigits",
+          "type": "number",
+          "mutable": false,
+          "attr": "minimum-significant-digits",
+          "reflectToAttr": false,
+          "docs": "The minimum number of significant digits to use. Possible values are 1 - 21.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "noConvert",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "no-convert",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "noGrouping",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "no-grouping",
+          "reflectToAttr": false,
+          "docs": "Turns off grouping separators.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "type",
+          "type": "\"currency\" | \"decimal\" | \"percent\"",
+          "mutable": false,
+          "attr": "type",
+          "reflectToAttr": false,
+          "docs": "The formatting style to use.",
+          "docsTags": [],
+          "default": "'decimal'",
+          "values": [
+            {
+              "value": "currency",
+              "type": "string"
+            },
+            {
+              "value": "decimal",
+              "type": "string"
+            },
+            {
+              "value": "percent",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "value",
+          "type": "number",
+          "mutable": false,
+          "attr": "value",
+          "reflectToAttr": false,
+          "docs": "The number to format.",
+          "docsTags": [],
+          "default": "0",
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "ce-price-choices"
+      ],
+      "dependencies": [],
+      "dependencyGraph": {
+        "ce-price-choices": [
+          "ce-format-number"
+        ]
+      }
     },
     {
       "filePath": "./src/components/ui/input/ce-input.tsx",
@@ -2454,7 +2885,7 @@
         {
           "name": "disabled",
           "type": "boolean",
-          "mutable": false,
+          "mutable": true,
           "attr": "disabled",
           "reflectToAttr": true,
           "docs": "Disables the input.",
@@ -2513,6 +2944,23 @@
           "values": [
             {
               "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "hidden",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "hidden",
+          "reflectToAttr": false,
+          "docs": "Hidden",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
             }
           ],
           "optional": false,
@@ -3025,6 +3473,10 @@
           "docs": "The elements base wrapper."
         },
         {
+          "name": "clear-button",
+          "docs": ""
+        },
+        {
           "name": "help-text",
           "docs": "Help text that describes how to use the input."
         },
@@ -3288,8 +3740,8 @@
       "methods": [],
       "events": [
         {
-          "event": "ceUpdateLineItems",
-          "detail": "LineItemData[]",
+          "event": "ceUpdateLineItem",
+          "detail": "{ id: string; amount: number; }",
           "bubbles": true,
           "cancelable": true,
           "composed": true,
@@ -3315,8 +3767,8 @@
         ],
         "ce-product-line-item": [
           "ce-line-item",
-          "ce-tag",
-          "ce-quantity-select"
+          "ce-quantity-select",
+          "ce-tag"
         ],
         "ce-quantity-select": [
           "ce-dropdown",
@@ -3589,6 +4041,28 @@
           "required": false
         },
         {
+          "name": "mode",
+          "type": "\"live\" | \"test\"",
+          "mutable": false,
+          "attr": "mode",
+          "reflectToAttr": true,
+          "docs": "Is this created in \"test\" mode",
+          "docsTags": [],
+          "default": "'live'",
+          "values": [
+            {
+              "value": "live",
+              "type": "string"
+            },
+            {
+              "value": "test",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "paymentMethod",
           "type": "string",
           "mutable": false,
@@ -3692,54 +4166,6 @@
           ],
           "optional": false,
           "required": false
-        },
-        {
-          "name": "stripeAccountId",
-          "type": "string",
-          "mutable": false,
-          "attr": "stripe-account-id",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "stripePublishableKey",
-          "type": "string",
-          "mutable": false,
-          "attr": "stripe-publishable-key",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "total",
-          "type": "number",
-          "mutable": false,
-          "attr": "total",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "number"
-            }
-          ],
-          "optional": false,
-          "required": false
         }
       ],
       "methods": [],
@@ -3769,6 +4195,52 @@
       "docsTags": [],
       "usage": {},
       "props": [
+        {
+          "name": "calculating",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "calculating",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "checkoutSession",
+          "type": "CheckoutSession",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "CheckoutSession"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "choices",
+          "type": "ProductChoices",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "ProductChoices"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
         {
           "name": "columns",
           "type": "number",
@@ -3819,6 +4291,22 @@
           "required": false
         },
         {
+          "name": "label",
+          "type": "string",
+          "mutable": false,
+          "attr": "label",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "lineItemData",
           "type": "LineItemData[]",
           "mutable": false,
@@ -3834,19 +4322,31 @@
           "required": false
         },
         {
-          "name": "priceIds",
-          "type": "string | string[]",
+          "name": "loading",
+          "type": "boolean",
           "mutable": false,
-          "attr": "price-ids",
+          "attr": "loading",
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
           "values": [
             {
-              "type": "string"
-            },
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "products",
+          "type": "Product[]",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
             {
-              "type": "string[]"
+              "type": "Product[]"
             }
           ],
           "optional": false,
@@ -3878,12 +4378,12 @@
       "methods": [],
       "events": [
         {
-          "event": "ceFetchPrices",
-          "detail": "string[]",
+          "event": "ceAddLineItems",
+          "detail": "LineItemData[]",
           "bubbles": true,
           "cancelable": true,
           "composed": true,
-          "docs": "Fetch prices event.",
+          "docs": "Add line items event.",
           "docsTags": []
         },
         {
@@ -3904,13 +4404,28 @@
       "dependencies": [
         "ce-choices",
         "ce-choice",
-        "ce-skeleton"
+        "ce-skeleton",
+        "ce-format-number",
+        "ce-form-row",
+        "ce-block-ui"
       ],
       "dependencyGraph": {
         "ce-price-choices": [
           "ce-choices",
           "ce-choice",
-          "ce-skeleton"
+          "ce-skeleton",
+          "ce-format-number",
+          "ce-form-row",
+          "ce-block-ui"
+        ],
+        "ce-choices": [
+          "ce-form-control"
+        ],
+        "ce-form-control": [
+          "ce-tooltip"
+        ],
+        "ce-block-ui": [
+          "ce-spinner"
         ]
       }
     },
@@ -4466,6 +4981,22 @@
           "required": false
         },
         {
+          "name": "isRemovable",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "is-removable",
+          "reflectToAttr": false,
+          "docs": "Is the line item removable",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "name",
           "type": "string",
           "mutable": false,
@@ -4519,14 +5050,14 @@
       ],
       "dependencies": [
         "ce-line-item",
-        "ce-tag",
-        "ce-quantity-select"
+        "ce-quantity-select",
+        "ce-tag"
       ],
       "dependencyGraph": {
         "ce-product-line-item": [
           "ce-line-item",
-          "ce-tag",
-          "ce-quantity-select"
+          "ce-quantity-select",
+          "ce-tag"
         ],
         "ce-quantity-select": [
           "ce-dropdown",
@@ -4582,6 +5113,24 @@
           "passive": false
         }
       ],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [],
+      "dependencyGraph": {}
+    },
+    {
+      "filePath": "./src/components/controllers/ce-purchase/ce-purchase.tsx",
+      "encapsulation": "shadow",
+      "tag": "ce-purchase",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [],
+      "methods": [],
+      "events": [],
+      "listeners": [],
       "styles": [],
       "slots": [],
       "parts": [],
@@ -5091,6 +5640,23 @@
           "required": false
         },
         {
+          "name": "searchPlaceholder",
+          "type": "string",
+          "mutable": false,
+          "attr": "search-placeholder",
+          "reflectToAttr": false,
+          "docs": "Placeholder for search",
+          "docsTags": [],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "value",
           "type": "string",
           "mutable": true,
@@ -5143,6 +5709,24 @@
           "docsTags": []
         },
         {
+          "event": "ceClose",
+          "detail": "string",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Emitted whent the components search query changes",
+          "docsTags": []
+        },
+        {
+          "event": "ceOpen",
+          "detail": "string",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Emitted whent the components search query changes",
+          "docsTags": []
+        },
+        {
           "event": "ceSearch",
           "detail": "string",
           "bubbles": true,
@@ -5157,6 +5741,10 @@
       "slots": [],
       "parts": [
         {
+          "name": "caret",
+          "docs": ""
+        },
+        {
           "name": "search",
           "docs": ""
         }
@@ -5164,7 +5752,6 @@
       "dependents": [],
       "dependencies": [
         "ce-dropdown",
-        "ce-button",
         "ce-input",
         "ce-spinner",
         "ce-menu",
@@ -5173,1106 +5760,12 @@
       "dependencyGraph": {
         "ce-select": [
           "ce-dropdown",
-          "ce-button",
           "ce-input",
           "ce-spinner",
           "ce-menu",
           "ce-menu-item"
         ],
-        "ce-button": [
-          "ce-spinner"
-        ],
         "ce-input": [
-          "ce-form-control"
-        ],
-        "ce-form-control": [
-          "ce-tooltip"
-        ]
-      }
-    },
-    {
-      "filePath": "./src/components/ui/select-old/ce-select.tsx",
-      "encapsulation": "shadow",
-      "tag": "ce-select-old",
-      "readme": "# ce-select\n\n\n",
-      "docs": "",
-      "docsTags": [],
-      "usage": {},
-      "props": [
-        {
-          "name": "addItemFilter",
-          "type": "((value: string) => boolean) | RegExp | string",
-          "mutable": false,
-          "attr": "add-item-filter",
-          "reflectToAttr": false,
-          "docs": "A RegExp or string (will be passed to RegExp constructor internally) or filter function that will need to return true for a user to successfully add an item.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "((value: string) => boolean)"
-            },
-            {
-              "type": "RegExp"
-            },
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "addItemText",
-          "type": "((value: string) => string) | string",
-          "mutable": false,
-          "attr": "add-item-text",
-          "reflectToAttr": false,
-          "docs": "The text that is shown when a user has inputted a new item but has not pressed the enter key. To access the current input value, pass a function with a value argument (see the default config for an example), otherwise pass a string.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "((value: string) => string)"
-            },
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "addItems",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "add-items",
-          "reflectToAttr": false,
-          "docs": "Whether a user can add items.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "appendValue",
-          "type": "string",
-          "mutable": false,
-          "attr": "append-value",
-          "reflectToAttr": false,
-          "docs": "Append a value to each item added/selected.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "callbackOnCreateTemplates",
-          "type": "(template: any) => any",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "(template: any) => any"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "callbackOnInit",
-          "type": "() => void",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "() => void"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "choices",
-          "type": "any[]",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "Add choices to select input.",
-          "docsTags": [],
-          "default": "[]",
-          "values": [
-            {
-              "type": "any[]"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "classNames",
-          "type": "{ containerOuter?: string; containerInner?: string; input?: string; inputCloned?: string; list?: string; listItems?: string; listSingle?: string; listDropdown?: string; item?: string; itemSelectable?: string; itemDisabled?: string; itemChoice?: string; placeholder?: string; group?: string; groupHeading?: string; button?: string; activeState?: string; focusState?: string; openState?: string; disabledState?: string; highlightedState?: string; selectedState: string; flippedState?: string; loadingState?: string; noResults?: string; noChoices?: string; }",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "Classnames to use",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "{ containerOuter?: string; containerInner?: string; input?: string; inputCloned?: string; list?: string; listItems?: string; listSingle?: string; listDropdown?: string; item?: string; itemSelectable?: string; itemDisabled?: string; itemChoice?: string; placeholder?: string; group?: string; groupHeading?: string; button?: string; activeState?: string; focusState?: string; openState?: string; disabledState?: string; highlightedState?: string; selectedState: string; flippedState?: string; loadingState?: string; noResults?: string; noChoices?: string; }"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "delimiter",
-          "type": "string",
-          "mutable": false,
-          "attr": "delimiter",
-          "reflectToAttr": false,
-          "docs": "What divides each value. The default delimiter separates each value with a comma: \"Value 1, Value 2, Value 3\"",
-          "docsTags": [],
-          "default": "','",
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "duplicateItemsAllowed",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "duplicate-items-allowed",
-          "reflectToAttr": false,
-          "docs": "Whether duplicate inputted/chosen items are allowed.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "editItems",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "edit-items",
-          "reflectToAttr": false,
-          "docs": "Whether a user can edit items. An item's value can be edited by pressing the backspace.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "fuseOptions",
-          "type": "{ id?: string; caseSensitive?: boolean; includeMatches?: boolean; includeScore?: boolean; shouldSort?: boolean; keys?: string[] | object[] | WeightedField[]; verbose?: boolean; tokenize?: boolean; tokenSeparator?: RegExp; matchAllTokens?: boolean; location?: number; distance?: number; threshold?: number; maxPatternLength?: number; minMatchCharLength?: number; findAllMatches?: boolean; sortFn?(a: { score: number; }, b: { score: number; }): number; getFn?(obj: any, path: string): any; }",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "Fuse.js options",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "{ id?: string; caseSensitive?: boolean; includeMatches?: boolean; includeScore?: boolean; shouldSort?: boolean; keys?: string[]"
-            },
-            {
-              "type": "object[]"
-            },
-            {
-              "type": "WeightedField[]; verbose?: boolean; tokenize?: boolean; tokenSeparator?: RegExp; matchAllTokens?: boolean; location?: number; distance?: number; threshold?: number; maxPatternLength?: number; minMatchCharLength?: number; findAllMatches?: boolean; sortFn?(a: { score: number; }, b: { score: number; }): number; getFn?(obj: any, path: string): any; }"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "help",
-          "type": "string",
-          "mutable": false,
-          "attr": "help",
-          "reflectToAttr": false,
-          "docs": "The input's help text.",
-          "docsTags": [],
-          "default": "''",
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "itemSelectText",
-          "type": "string",
-          "mutable": false,
-          "attr": "item-select-text",
-          "reflectToAttr": false,
-          "docs": "The text that is shown when a user hovers over a selectable choice.",
-          "docsTags": [],
-          "default": "'Press to select'",
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "items",
-          "type": "any[]",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "Add pre-selected items to text input",
-          "docsTags": [],
-          "default": "[]",
-          "values": [
-            {
-              "type": "any[]"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "label",
-          "type": "string",
-          "mutable": false,
-          "attr": "label",
-          "reflectToAttr": false,
-          "docs": "The input's label.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "loadingText",
-          "type": "string",
-          "mutable": false,
-          "attr": "loading-text",
-          "reflectToAttr": false,
-          "docs": "The text that is shown whilst choices are being populated via AJAX.",
-          "docsTags": [],
-          "default": "'Loading...'",
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "maxItemCount",
-          "type": "number",
-          "mutable": false,
-          "attr": "max-item-count",
-          "reflectToAttr": false,
-          "docs": "The amount of items a user can input/select (\"-1\" indicates no limit).",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "number"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "maxItemText",
-          "type": "((maxItemCount: number) => string) | string",
-          "mutable": false,
-          "attr": "max-item-text",
-          "reflectToAttr": false,
-          "docs": "The text that is shown when a user has focus on the input but has already reached the max item count. To access the max item count, pass a function with a maxItemCount argument (see the default config for an example), otherwise pass a string.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "((maxItemCount: number) => string)"
-            },
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "name",
-          "type": "string",
-          "mutable": false,
-          "attr": "name",
-          "reflectToAttr": false,
-          "docs": "The input's name attribute.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "noChoicesText",
-          "type": "(() => string) | string",
-          "mutable": false,
-          "attr": "no-choices-text",
-          "reflectToAttr": false,
-          "docs": "The text that is shown when a user has selected all possible choices. Optionally pass a function returning a string.",
-          "docsTags": [],
-          "default": "'No choices found.'",
-          "values": [
-            {
-              "type": "(() => string)"
-            },
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "noResultsText",
-          "type": "(() => string) | string",
-          "mutable": false,
-          "attr": "no-results-text",
-          "reflectToAttr": false,
-          "docs": "The text that is shown when a user's search has returned no results. Optionally pass a function returning a string.",
-          "docsTags": [],
-          "default": "'No results found.'",
-          "values": [
-            {
-              "type": "(() => string)"
-            },
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "paste",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "paste",
-          "reflectToAttr": false,
-          "docs": "Whether a user can paste into the input.",
-          "docsTags": [],
-          "default": "true",
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "pill",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "pill",
-          "reflectToAttr": true,
-          "docs": "Draws a pill-style input with rounded edges.",
-          "docsTags": [],
-          "default": "false",
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "placeholder",
-          "type": "boolean | string",
-          "mutable": false,
-          "attr": "placeholder",
-          "reflectToAttr": false,
-          "docs": "Whether the input should show a placeholder. Used in conjunction with placeholderValue. If placeholder is set to true and no value is passed to placeholderValue, the passed input's placeholder attribute will be used as the placeholder value.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "placeholderValue",
-          "type": "string",
-          "mutable": false,
-          "attr": "placeholder-value",
-          "reflectToAttr": false,
-          "docs": "The value of the inputs placeholder.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "position",
-          "type": "\"auto\" | \"bottom\" | \"top\"",
-          "mutable": false,
-          "attr": "position",
-          "reflectToAttr": false,
-          "docs": "Whether the dropdown should appear above (top) or below (bottom) the input. By default, if there is not enough space within the window the dropdown will appear above the input, otherwise below it.",
-          "docsTags": [],
-          "values": [
-            {
-              "value": "auto",
-              "type": "string"
-            },
-            {
-              "value": "bottom",
-              "type": "string"
-            },
-            {
-              "value": "top",
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "prependValue",
-          "type": "string",
-          "mutable": false,
-          "attr": "prepend-value",
-          "reflectToAttr": false,
-          "docs": "Prepend a value to each item added/selected.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "removeItemButton",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "remove-item-button",
-          "reflectToAttr": false,
-          "docs": "Whether each item should have a remove button.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "removeItems",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "remove-items",
-          "reflectToAttr": false,
-          "docs": "Whether a user can remove items.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "renderChoiceLimit",
-          "type": "number",
-          "mutable": false,
-          "attr": "render-choice-limit",
-          "reflectToAttr": false,
-          "docs": "A The amount of choices to be rendered within the dropdown list (\"-1\" indicates no limit). This is useful if you have a lot of choices where it is easier for a user to use the search area to find a choice.",
-          "docsTags": [],
-          "default": "-1",
-          "values": [
-            {
-              "type": "number"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "renderSelectedChoices",
-          "type": "\"always\" | \"auto\"",
-          "mutable": false,
-          "attr": "render-selected-choices",
-          "reflectToAttr": false,
-          "docs": "Whether selected choices should be removed from the list. By default choices are removed when they are selected in multiple select box. To always render choices pass always.",
-          "docsTags": [],
-          "default": "'auto'",
-          "values": [
-            {
-              "value": "always",
-              "type": "string"
-            },
-            {
-              "value": "auto",
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "resetScrollPosition",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "reset-scroll-position",
-          "reflectToAttr": false,
-          "docs": "Whether the scroll position should reset after adding an item.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "searchChoices",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "search-choices",
-          "reflectToAttr": false,
-          "docs": "Whether choices should be filtered by input or not. If false, the search event will still emit, but choices will not be filtered.",
-          "docsTags": [],
-          "default": "true",
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "searchEnabled",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "search-enabled",
-          "reflectToAttr": false,
-          "docs": "Whether a search area should be shown. Note: Multiple select boxes will always show search areas.",
-          "docsTags": [],
-          "default": "true",
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "searchFields",
-          "type": "string | string[]",
-          "mutable": false,
-          "attr": "search-fields",
-          "reflectToAttr": false,
-          "docs": "Specify which fields should be used when a user is searching. If you have added custom properties to your choices, you can add these values thus: ['label', 'value', 'customProperties.example'].",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "string[]"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "searchFloor",
-          "type": "number",
-          "mutable": false,
-          "attr": "search-floor",
-          "reflectToAttr": false,
-          "docs": "The minimum length a search value should be before choices are searched.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "number"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "searchPlaceholderValue",
-          "type": "string",
-          "mutable": false,
-          "attr": "search-placeholder-value",
-          "reflectToAttr": false,
-          "docs": "The value of the search inputs placeholder.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "searchResultLimit",
-          "type": "number",
-          "mutable": false,
-          "attr": "search-result-limit",
-          "reflectToAttr": false,
-          "docs": "The maximum amount of search results to show.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "number"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "shouldSort",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "should-sort",
-          "reflectToAttr": false,
-          "docs": "A RegExp or string (will be passed to RegExp constructor internally) or filter function that will need to return true for a user to successfully add an item.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "shouldSortItems",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "should-sort-items",
-          "reflectToAttr": false,
-          "docs": "Whether choices and groups should be sorted. If false, choices/groups will appear in the order they were given.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "showLabel",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "show-label",
-          "reflectToAttr": false,
-          "docs": "Should we show the label",
-          "docsTags": [],
-          "default": "true",
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "silent",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "silent",
-          "reflectToAttr": false,
-          "docs": "Optionally suppress console errors and warnings.",
-          "docsTags": [],
-          "default": "false",
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "size",
-          "type": "\"large\" | \"medium\" | \"small\"",
-          "mutable": false,
-          "attr": "size",
-          "reflectToAttr": true,
-          "docs": "The input's size.",
-          "docsTags": [],
-          "default": "'medium'",
-          "values": [
-            {
-              "value": "large",
-              "type": "string"
-            },
-            {
-              "value": "medium",
-              "type": "string"
-            },
-            {
-              "value": "small",
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "sorter",
-          "type": "(el1: any, el2: any) => number",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "The function that will sort choices and items before they are displayed (unless a user is searching). By default choices and items are sorted by alphabetical order.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "(el1: any, el2: any) => number"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "type",
-          "type": "\"multiple\" | \"single\" | \"text\"",
-          "mutable": false,
-          "attr": "type",
-          "reflectToAttr": false,
-          "docs": "The type of input",
-          "docsTags": [],
-          "default": "'single'",
-          "values": [
-            {
-              "value": "multiple",
-              "type": "string"
-            },
-            {
-              "value": "single",
-              "type": "string"
-            },
-            {
-              "value": "text",
-              "type": "string"
-            }
-          ],
-          "optional": true,
-          "required": false
-        },
-        {
-          "name": "value",
-          "type": "string",
-          "mutable": true,
-          "attr": "value",
-          "reflectToAttr": false,
-          "docs": "The input's value attribute.",
-          "docsTags": [],
-          "default": "''",
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "valueComparer",
-          "type": "(value1: string, value2: string) => boolean",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "(value1: string, value2: string) => boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        }
-      ],
-      "methods": [
-        {
-          "name": "ajax",
-          "returns": {
-            "type": "Promise<this>",
-            "docs": ""
-          },
-          "signature": "ajax(fn: AjaxFn) => Promise<this>",
-          "parameters": [],
-          "docs": "",
-          "docsTags": []
-        },
-        {
-          "name": "clearChoices",
-          "returns": {
-            "type": "Promise<this>",
-            "docs": ""
-          },
-          "signature": "clearChoices() => Promise<this>",
-          "parameters": [],
-          "docs": "",
-          "docsTags": []
-        },
-        {
-          "name": "clearInput",
-          "returns": {
-            "type": "Promise<this>",
-            "docs": ""
-          },
-          "signature": "clearInput() => Promise<this>",
-          "parameters": [],
-          "docs": "",
-          "docsTags": []
-        },
-        {
-          "name": "clearStore",
-          "returns": {
-            "type": "Promise<this>",
-            "docs": ""
-          },
-          "signature": "clearStore() => Promise<this>",
-          "parameters": [],
-          "docs": "",
-          "docsTags": []
-        },
-        {
-          "name": "disable",
-          "returns": {
-            "type": "Promise<this>",
-            "docs": ""
-          },
-          "signature": "disable() => Promise<this>",
-          "parameters": [],
-          "docs": "",
-          "docsTags": []
-        },
-        {
-          "name": "enable",
-          "returns": {
-            "type": "Promise<this>",
-            "docs": ""
-          },
-          "signature": "enable() => Promise<this>",
-          "parameters": [],
-          "docs": "",
-          "docsTags": []
-        },
-        {
-          "name": "getValue",
-          "returns": {
-            "type": "Promise<string | string[]>",
-            "docs": ""
-          },
-          "signature": "getValue(valueOnly?: boolean) => Promise<string | Array<string>>",
-          "parameters": [],
-          "docs": "",
-          "docsTags": []
-        },
-        {
-          "name": "hideDropdown",
-          "returns": {
-            "type": "Promise<this>",
-            "docs": ""
-          },
-          "signature": "hideDropdown(blurInput?: boolean) => Promise<this>",
-          "parameters": [],
-          "docs": "",
-          "docsTags": []
-        },
-        {
-          "name": "highlightAll",
-          "returns": {
-            "type": "Promise<this>",
-            "docs": ""
-          },
-          "signature": "highlightAll() => Promise<this>",
-          "parameters": [],
-          "docs": "",
-          "docsTags": []
-        },
-        {
-          "name": "highlightItem",
-          "returns": {
-            "type": "Promise<this>",
-            "docs": ""
-          },
-          "signature": "highlightItem(item: HTMLElement, runEvent?: boolean) => Promise<this>",
-          "parameters": [],
-          "docs": "",
-          "docsTags": []
-        },
-        {
-          "name": "removeActiveItems",
-          "returns": {
-            "type": "Promise<this>",
-            "docs": ""
-          },
-          "signature": "removeActiveItems(excludedId?: number) => Promise<this>",
-          "parameters": [],
-          "docs": "",
-          "docsTags": []
-        },
-        {
-          "name": "removeActiveItemsByValue",
-          "returns": {
-            "type": "Promise<this>",
-            "docs": ""
-          },
-          "signature": "removeActiveItemsByValue(value: string) => Promise<this>",
-          "parameters": [],
-          "docs": "",
-          "docsTags": []
-        },
-        {
-          "name": "removeHighlightedItems",
-          "returns": {
-            "type": "Promise<this>",
-            "docs": ""
-          },
-          "signature": "removeHighlightedItems(runEvent?: boolean) => Promise<this>",
-          "parameters": [],
-          "docs": "",
-          "docsTags": []
-        },
-        {
-          "name": "setChoiceByValue",
-          "returns": {
-            "type": "Promise<this>",
-            "docs": ""
-          },
-          "signature": "setChoiceByValue(value: string | Array<string>) => Promise<this>",
-          "parameters": [],
-          "docs": "",
-          "docsTags": []
-        },
-        {
-          "name": "setChoices",
-          "returns": {
-            "type": "Promise<this>",
-            "docs": ""
-          },
-          "signature": "setChoices(choices: Array<any>, value: string, label: string, replaceChoices?: boolean) => Promise<this>",
-          "parameters": [],
-          "docs": "",
-          "docsTags": []
-        },
-        {
-          "name": "setValue",
-          "returns": {
-            "type": "Promise<this>",
-            "docs": ""
-          },
-          "signature": "setValue(args: Array<any>) => Promise<this>",
-          "parameters": [],
-          "docs": "",
-          "docsTags": []
-        },
-        {
-          "name": "showDropdown",
-          "returns": {
-            "type": "Promise<this>",
-            "docs": ""
-          },
-          "signature": "showDropdown(focusInput?: boolean) => Promise<this>",
-          "parameters": [],
-          "docs": "",
-          "docsTags": []
-        },
-        {
-          "name": "unhighlightAll",
-          "returns": {
-            "type": "Promise<this>",
-            "docs": ""
-          },
-          "signature": "unhighlightAll() => Promise<this>",
-          "parameters": [],
-          "docs": "",
-          "docsTags": []
-        },
-        {
-          "name": "unhighlightItem",
-          "returns": {
-            "type": "Promise<this>",
-            "docs": ""
-          },
-          "signature": "unhighlightItem(item: HTMLElement) => Promise<this>",
-          "parameters": [],
-          "docs": "",
-          "docsTags": []
-        }
-      ],
-      "events": [
-        {
-          "event": "ceChange",
-          "detail": "any",
-          "bubbles": true,
-          "cancelable": true,
-          "composed": true,
-          "docs": "",
-          "docsTags": []
-        }
-      ],
-      "listeners": [],
-      "styles": [],
-      "slots": [],
-      "parts": [],
-      "dependents": [],
-      "dependencies": [
-        "ce-form-control"
-      ],
-      "dependencyGraph": {
-        "ce-select-old": [
           "ce-form-control"
         ],
         "ce-form-control": [
@@ -6660,6 +6153,22 @@
           "required": false
         },
         {
+          "name": "keys",
+          "type": "Keys",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "Stripe publishable key",
+          "docsTags": [],
+          "default": "{\n    stripe: '',\n  }",
+          "values": [
+            {
+              "type": "Keys"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "label",
           "type": "string",
           "mutable": false,
@@ -6683,22 +6192,6 @@
           "attr": "stripe-account-id",
           "reflectToAttr": false,
           "docs": "Stripe account id",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "stripePublishableKey",
-          "type": "string",
-          "mutable": false,
-          "attr": "stripe-publishable-key",
-          "reflectToAttr": false,
-          "docs": "Stripe publishable key",
           "docsTags": [],
           "values": [
             {

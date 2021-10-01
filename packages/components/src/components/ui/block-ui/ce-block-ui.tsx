@@ -1,4 +1,4 @@
-import { Component, h } from '@stencil/core';
+import { Component, h, Prop } from '@stencil/core';
 
 @Component({
   tag: 'ce-block-ui',
@@ -6,10 +6,13 @@ import { Component, h } from '@stencil/core';
   shadow: true,
 })
 export class CeBlockUi {
+  @Prop() zIndex: number = 1;
   render() {
     return (
-      <div class="overlay">
-        <ce-spinner></ce-spinner>
+      <div class="overlay" style={{ 'z-index': this.zIndex.toString() }}>
+        <slot>
+          <ce-spinner></ce-spinner>
+        </slot>
       </div>
     );
   }

@@ -152,9 +152,10 @@ class RolesService {
 		foreach ( $capability_types as $capability_type ) {
 			$capabilities[ $capability_type ] = array(
 				// Models.
-				"edit_{$capability_type}", // edit.
 				"read_{$capability_type}", // read.
+				"read_{$capability_types}s", // read.
 				"delete_{$capability_type}", // delete.
+				"edit_{$capability_type}", // edit.
 				"edit_{$capability_type}s", // edit all.
 				"edit_others_{$capability_type}s", // edit others.
 				"publish_{$capability_type}s", // publish.

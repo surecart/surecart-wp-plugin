@@ -1,34 +1,11 @@
-:host {
-  display: grid;
-  grid-template-columns: repeat(var(--ce-checkout-columns), 1fr);
-  grid-template-rows: auto auto auto;
-  column-gap: var(--ce-checkout-column-gap);
-  grid-template-areas:
-    'main-header sidebar-header'
-    'main sidebar'
-    'main-footer sidebar-footer';
-}
-
-::slotted(ce-form-row:not(:last-of-type)) {
+::slotted(*) {
   margin-bottom: var(--ce-form-row-spacing, 0.75em);
 }
-
-::slotted(.ce-area-sidebar-header) {
-  grid-area: sidebar-header;
-}
-::slotted(.ce-area-main-header) {
-  grid-area: main-header;
+::slotted(ce-form-section) {
+  margin-bottom:  var(--ce-form-section-spacing);
+  margin-top: var(--ce-form-section-spacing);
 }
 
-::slotted(.ce-area-main) {
-  grid-area: main;
-}
-::slotted(.ce-area-sidebar) {
-  grid-area: sidebar;
-}
-::slotted(.ce-area-sidebar-footer) {
-  grid-area: sidebar-footer;
-}
-::slotted(.ce-area-main-footer) {
-  grid-area: main-footer;
+::slotted(ce-form-section:first-child) {
+  margin-top: 0;
 }

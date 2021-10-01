@@ -1,11 +1,21 @@
 /** @jsx jsx */
 
 import { css, jsx } from '@emotion/core';
-import { InnerBlocks } from '@wordpress/block-editor';
+import {
+	InnerBlocks,
+	store as blockEditorStore,
+} from '@wordpress/block-editor';
 import withIsPremium from '../higher-order/withIsPremium';
 
-export default withIsPremium( ( props ) => {
+export default withIsPremium( ( props, clientId ) => {
 	const { isPremium } = props;
+	const hasChildBlocks = useSelect(
+		( select ) => {
+			const { getBlockOrder } = select( blockEditorStore );
+			return getBlockOrder( clientId ).length > 0;
+		},
+		[ clientId ]
+	);
 	return (
 		<div
 			css={ css`
@@ -18,7 +28,9 @@ export default withIsPremium( ( props ) => {
 			` }
 		>
 			<InnerBlocks
-				renderAppender={ InnerBlocks.ButtonBlockAppender }
+				renderAppender={
+					hasChildBlocks ? undefined : InnerBlocks.ButtonBlockAppender
+				}
 				templateLock={ isPremium ? 'insert' : 'all' }
 				allowedBlocks={ [
 					'checkout-engine/input',

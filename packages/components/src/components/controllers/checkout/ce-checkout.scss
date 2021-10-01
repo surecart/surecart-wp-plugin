@@ -8,6 +8,19 @@ ce-checkout {
   }
 }
 
+.ce-checkout-container {
+  &.ce-align-center {
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  &.ce-align-wide {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
 ::slotted(*) {
   font-family: var(--ce-font-sans);
 }

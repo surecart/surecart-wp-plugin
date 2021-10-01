@@ -1,0 +1,13 @@
+{
+	"name": "checkout-engine/payment-request",
+	"category": "layout",
+	"supports": {
+		"reusable": false
+	},
+	"attributes": {
+		"divider_text": {
+			"type": "string",
+			"default": "or"
+		}
+	}
+}

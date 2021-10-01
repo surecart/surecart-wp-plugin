@@ -2,59 +2,76 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { RichText } from '@wordpress/block-editor';
-import InnerBlocks from '../../../components/InnerBlocks';
-import Inspector from './components/Inspector';
+import { InspectorControls } from '@wordpress/editor';
+import { Fragment } from '@wordpress/element';
+import {
+	PanelBody,
+	PanelRow,
+	TextControl,
+	RadioControl,
+	RangeControl,
+} from '@wordpress/components';
 
 /**
  * Component Dependencies
  */
-import { CePriceChoices, CeFormSection } from '@checkout-engine/react';
+import { CePriceChoices } from '@checkout-engine/react';
 
-export default ( { className, attributes, setAttributes, isSelected } ) => {
-	const {
-		default: defaultChoice,
-		products,
-		columns,
-		type,
-		label,
-		description,
-	} = attributes;
+export default ( { attributes, setAttributes, isSelected } ) => {
+	const { default: defaultChoice, columns, type, label } = attributes;
 
 	return (
-		<div>
-			<Inspector
-				attributes={ attributes }
-				setAttributes={ setAttributes }
-			/>
-			<CeFormSection>
-				<RichText
-					slot="label"
-					aria-label={ __( 'Label' ) }
-					placeholder={ __( 'Add a title' ) }
-					value={ label }
-					onChange={ ( value ) => setAttributes( { label: value } ) }
-					withoutInteractiveFormatting
-					allowedFormats={ [ 'core/bold', 'core/italic' ] }
-				/>
-				<RichText
-					slot="description"
-					aria-label={ __( 'Description' ) }
-					placeholder={ __( 'Add a description' ) }
-					value={ description }
-					onChange={ ( value ) =>
-						setAttributes( { description: value } )
-					}
-					withoutInteractiveFormatting
-					allowedFormats={ [ 'core/bold', 'core/italic' ] }
-				/>
+		<Fragment>
+			<InspectorControls>
+				<PanelBody title={ __( 'Attributes', 'checkout-engine' ) }>
+					<PanelRow>
+						<TextControl
+							label={ __( 'Label', 'checkout-engine' ) }
+							value={ label }
+							onChange={ ( label ) => setAttributes( { label } ) }
+						/>
+					</PanelRow>
+					<PanelRow>
+						<RadioControl
+							label={ __( 'Type', 'checkout_engine' ) }
+							help="The type of product selection"
+							selected={ type }
+							options={ [
+								{
+									label: __( 'Choose one', 'checkout_egine' ),
+									value: 'radio',
+								},
+								{
+									label: __(
+										'Choose many',
+										'checkout_engine'
+									),
+									value: 'checkbox',
+								},
+							] }
+							onChange={ ( type ) => setAttributes( { type } ) }
+						/>
+					</PanelRow>
+					<PanelRow>
+						<RangeControl
+							label={ __( 'Columns', 'checkout_engine' ) }
+							value={ columns }
+							onChange={ ( columns ) =>
+								setAttributes( { columns } )
+							}
+							min={ 1 }
+							max={ 3 }
+						/>
+					</PanelRow>
+				</PanelBody>
+			</InspectorControls>
 
-				<CePriceChoices
-					columns={ columns }
-					type={ type }
-					default={ defaultChoice }
-				></CePriceChoices>
-			</CeFormSection>
-		</div>
+			<CePriceChoices
+				label={ label }
+				columns={ columns }
+				type={ type }
+				default={ defaultChoice }
+			></CePriceChoices>
+		</Fragment>
 	);
 };

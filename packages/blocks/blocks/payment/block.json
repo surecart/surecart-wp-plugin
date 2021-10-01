@@ -1,0 +1,16 @@
+{
+	"name": "checkout-engine/payment",
+	"category": "layout",
+	"supports": {
+		"reusable": false
+	},
+	"attributes": {
+		"secure_notice": {
+			"type": "string",
+			"default": ""
+		},
+		"label": {
+			"type": "string"
+		}
+	}
+}

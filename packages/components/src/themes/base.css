@@ -170,7 +170,7 @@ ce-button-group > ce-tooltip > ce-button.ce-focus {
   --ce-font-size-x-small: 0.75em;
   --ce-font-size-small: 0.875em;
   --ce-font-size-medium: 1em;
-  --ce-font-size-large: 1.25em;
+  --ce-font-size-large: 1.2em;
   --ce-font-size-x-large: 1.5em;
   --ce-font-size-xx-large: 2.25em;
   --ce-font-size-xxx-large: 3em;
@@ -194,17 +194,18 @@ ce-button-group > ce-tooltip > ce-button.ce-focus {
   --ce-button-font-size-small: var(--ce-font-size-x-small);
   --ce-button-font-size-medium: var(--ce-font-size-medium);
   --ce-button-font-size-large: var(--ce-font-size-large);
+  --ce-form-row-spacing: var(--ce-spacing-small);
   --ce-form-section-font-weight: var(--ce-font-weight-semibold);
   --ce-form-section-font-size: var(--ce-font-size-large);
-  --ce-form-section-spacing: var(--ce-spacing-xxx-large);
-  --ce-form-section-title-spacing: var(--ce-spacing-x-large);
+  --ce-form-section-spacing: var(--ce-spacing-xx-large);
+  --ce-form-section-title-spacing: var(--ce-spacing-large);
   --ce-choice-background-color: var(--ce-color-white);
   --ce-choice-border: solid var(--ce-input-border-width) var(--ce-input-border-color);
   --ce-choice-box-shadow: var(--ce-input-box-shadow);
   --ce-input-box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
   --ce-input-height-small: 1.875em;
   --ce-input-height-medium: 2.5em;
-  --ce-input-height-large: 3.125em;
+  --ce-input-height-large: 2.75em;
   --ce-input-background-color: var(--ce-color-white);
   --ce-input-background-color-hover: var(--ce-color-white);
   --ce-input-background-color-focus: var(--ce-color-white);
@@ -225,7 +226,7 @@ ce-button-group > ce-tooltip > ce-button.ce-focus {
   --ce-input-font-size-medium: var(--ce-font-size-medium);
   --ce-input-font-size-large: var(--ce-font-size-large);
   --ce-input-label-font-weight: var(--ce-font-weight-semibold);
-  --ce-input-label-margin: var(--ce-spacing-small);
+  --ce-input-label-margin: var(--ce-spacing-xx-small);
   --ce-input-letter-spacing: var(--ce-letter-spacing-normal);
   --ce-input-color: var(--ce-color-gray-700);
   --ce-input-color-hover: var(--ce-color-gray-700);
@@ -244,7 +245,7 @@ ce-button-group > ce-tooltip > ce-button.ce-focus {
   --ce-input-label-font-size-large: var(--ce-font-size-large);
   --ce-input-label-color: var(--ce-color-gray-600);
   --ce-input-help-text-font-size-small: var(--ce-font-size-x-small);
-  --ce-input-help-text-font-size-medium: var(--ce-font-size-medium);
+  --ce-input-help-text-font-size-medium: var(--ce-font-size-small);
   --ce-input-help-text-font-size-large: var(--ce-font-size-medium);
   --ce-input-help-text-color: var(--ce-color-gray-500);
   --ce-input-error-text-font-size-small: var(--ce-input-help-text-font-size-small);

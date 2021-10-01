@@ -1,4 +1,4 @@
-<ce-input name="<?php echo esc_attr($name ?? ''); ?>"
+<ce-input name="<?php echo esc_attr($name ?? strtolower($label)); ?>"
     label="<?php echo esc_attr($label ?? ''); ?>"
     type="<?php echo esc_attr($type ?? 'text'); ?>"
     help="<?php echo esc_attr($help ?? ''); ?>"

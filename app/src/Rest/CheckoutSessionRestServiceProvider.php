@@ -84,6 +84,10 @@ class CheckoutSessionRestServiceProvider extends RestServiceProvider implements 
 					'description' => esc_html__( 'The line items for the session.', 'my-textdomain' ),
 					'type'        => 'object',
 				],
+				'discount'   => [
+					'description' => esc_html__( 'The discount for the session.', 'my-textdomain' ),
+					'type'        => 'object',
+				],
 			],
 		];
 

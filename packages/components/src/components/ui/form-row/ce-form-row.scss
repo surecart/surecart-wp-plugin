@@ -3,7 +3,6 @@
   align-items: flex-start;
   justify-content: space-between;
   gap: calc(var(--ce-form-row-spacing, 0.75em) * 2.5);
-  margin: calc(var(--ce-form-row-spacing, 0.75em) * 2.5) 0;
 }
 
 ::slotted(*) {

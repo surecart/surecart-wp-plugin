@@ -21,33 +21,34 @@ export default ( { className, attributes } ) => {
 		togglePassword,
 		type,
 		value,
+		required,
 	} = attributes;
 
 	return (
-		<ce-form-row className={ className }>
-			<ce-input
-				label={ label }
-				clearable={ clearable }
-				disabled={ disabled }
-				help={ help }
-				autofocus={ autofocus }
-				autocomplete={ autocomplete }
-				inputmode={ inputmode }
-				max={ max }
-				maxlength={ maxlength }
-				min={ min }
-				minlength={ minlength }
-				name={ name }
-				placeholder={ placeholder }
-				readonly={ readonly }
-				showLabel={ showLabel }
-				size={ size }
-				spellcheck={ spellcheck }
-				step={ step }
-				togglePassword={ togglePassword }
-				type={ type }
-				value={ value }
-			></ce-input>
-		</ce-form-row>
+		<ce-input
+			class={ className || false }
+			label={ label || false }
+			clearable={ clearable || false }
+			disabled={ disabled || false }
+			help={ help || false }
+			autofocus={ autofocus || false }
+			autocomplete={ autocomplete || false }
+			inputmode={ inputmode || false }
+			max={ max || false }
+			maxlength={ maxlength || false }
+			min={ min || false }
+			minlength={ minlength || false }
+			name={ name || false }
+			placeholder={ placeholder || false }
+			readonly={ readonly || false }
+			showLabel={ showLabel || false }
+			size={ size || false }
+			spellcheck={ spellcheck || false }
+			step={ step || false }
+			togglePassword={ togglePassword }
+			type={ type || false }
+			value={ value || false }
+			required={ required || false }
+		></ce-input>
 	);
 };

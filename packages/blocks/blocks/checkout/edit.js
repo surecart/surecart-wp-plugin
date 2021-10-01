@@ -18,22 +18,14 @@ import FormBlocks from './components/form-blocks';
 
 import { css, jsx } from '@emotion/core';
 import Options from './components/Options';
+import { InspectorControls } from '@wordpress/block-editor';
+import { PanelBody, PanelRow, FontSizePicker } from '@wordpress/components';
 
-export default ( {
-	className,
-	clientId,
-	isSelected,
-	attributes,
-	setAttributes,
-} ) => {
+export default ( { clientId, isSelected, attributes, setAttributes } ) => {
 	// these blocks are required in order to submit an order
-	const requiredBlocks = [
-		'checkout-engine/pricing-section',
-		'checkout-engine/payment-section',
-		'checkout-engine/submit',
-	];
+	const requiredBlocks = [ 'checkout-engine/submit' ];
 
-	const { choices } = attributes;
+	const { choices, className, align, font_size } = attributes;
 
 	return (
 		<div
@@ -42,6 +34,36 @@ export default ( {
 				font-size: 14px;
 			` }
 		>
+			<InspectorControls>
+				<PanelBody title={ __( 'Size', 'checkout-engine' ) }>
+					<PanelRow>
+						<FontSizePicker
+							fontSizes={ [
+								{
+									name: __( 'Small' ),
+									slug: 'small',
+									size: 14,
+								},
+								{
+									name: __( 'Medium' ),
+									slug: 'big',
+									size: 16,
+								},
+								{
+									name: __( 'Big' ),
+									slug: 'big',
+									size: 18,
+								},
+							] }
+							value={ font_size }
+							fallbackFontSize={ 16 }
+							onChange={ ( font_size ) => {
+								setAttributes( { font_size } );
+							} }
+						/>
+					</PanelRow>
+				</PanelBody>
+			</InspectorControls>
 			<TabPanel
 				tabs={ [
 					{
@@ -65,7 +87,16 @@ export default ( {
 							);
 						default:
 							return (
-								<CeCheckout choices={ choices }>
+								<CeCheckout
+									keys={ ceData?.keys }
+									css={ css`
+										margin-top: 2em;
+										font-size: ${ font_size }px;
+									` }
+									alignment={ align }
+									className={ className }
+									choices={ choices }
+								>
 									<FormBlocks
 										isSelected={ isSelected }
 										requiredBlocks={ requiredBlocks }

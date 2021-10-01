@@ -15,6 +15,10 @@ export interface ChoiceItem extends Object {
   value: string;
   label: string;
 }
+
+export type RecursivePartial<T> = {
+  [P in keyof T]?: RecursivePartial<T[P]>;
+};
 export interface Price extends Object {
   id: string;
   name: string;
@@ -22,11 +26,11 @@ export interface Price extends Object {
   amount: number;
   currency: string;
   recurring: boolean;
-  recurring_interval: 'day' | 'week' | 'month' | 'year';
-  recurring_interval_count: number;
+  recurring_interval?: 'day' | 'week' | 'month' | 'year';
+  recurring_interval_count?: number;
   active: boolean;
-  metadata: any;
   product_id: string;
+  archived_at?: string;
   created_at: string;
   updated_at: string;
   product: Product;
@@ -84,6 +88,11 @@ export interface ProductChoices {
     type: string;
     prices: Array<string>;
   };
+}
+
+export interface Keys extends Object {
+  stripe?: string;
+  paypal?: string;
 }
 
 export interface CheckoutSession extends Object {

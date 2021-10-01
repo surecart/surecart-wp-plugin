@@ -1,4 +1,4 @@
-import { Component, Prop, State, Watch, h, Event, EventEmitter, Method } from '@stencil/core';
+import { Component, Prop, State, Watch, h, Event, EventEmitter, Method, Element, Host } from '@stencil/core';
 let id = 0;
 
 /**
@@ -19,6 +19,12 @@ export class CEInput {
   private inputId: string = `input-${++id}`;
   private helpId = `input-help-text-${id}`;
   private labelId = `input-label-${id}`;
+
+  /** Element */
+  @Element() el: HTMLCeInputElement;
+
+  /** Hidden */
+  @Prop() hidden: boolean = false;
 
   /** The input's type. */
   @Prop({ reflect: true }) type: 'email' | 'number' | 'password' | 'search' | 'tel' | 'text' | 'url' = 'text';
@@ -54,7 +60,7 @@ export class CEInput {
   @Prop() placeholder: string;
 
   /** Disables the input. */
-  @Prop({ reflect: true }) disabled: boolean = false;
+  @Prop({ reflect: true, mutable: true }) disabled: boolean = false;
 
   /** Makes the input readonly. */
   @Prop({ reflect: true }) readonly: boolean = false;
@@ -207,98 +213,100 @@ export class CEInput {
 
   render() {
     return (
-      <ce-form-control
-        size={this.size}
-        required={this.required}
-        label={this.label}
-        showLabel={this.showLabel}
-        help={this.help}
-        inputId={this.inputId}
-        helpId={this.helpId}
-        labelId={this.labelId}
-        errorMessage={this.errorMessage}
-      >
-        <div
-          part="base"
-          class={{
-            'input': true,
-
-            // Sizes
-            'input--small': this.size === 'small',
-            'input--medium': this.size === 'medium',
-            'input--large': this.size === 'large',
-
-            // States
-            'input--focused': this.hasFocus,
-            'input--invalid': this.invalid,
-          }}
+      <Host hidden={this.hidden}>
+        <ce-form-control
+          size={this.size}
+          required={this.required}
+          label={this.label}
+          showLabel={this.showLabel}
+          help={this.help}
+          inputId={this.inputId}
+          helpId={this.helpId}
+          labelId={this.labelId}
+          errorMessage={this.errorMessage}
         >
-          <span part="prefix" class="input__prefix">
-            <slot name="prefix"></slot>
-          </span>
+          <div
+            part="base"
+            class={{
+              'input': true,
 
-          <slot>
-            <input
-              part="input"
-              id={this.inputId}
-              class="input__control"
-              ref={el => (this.input = el as HTMLInputElement)}
-              type={this.type === 'password' && this.isPasswordVisible ? 'text' : this.type}
-              name={this.name}
-              disabled={this.disabled}
-              readonly={this.readonly}
-              required={this.required}
-              placeholder={this.placeholder}
-              minlength={this.minlength}
-              maxlength={this.maxlength}
-              min={this.min}
-              max={this.max}
-              step={this.step}
-              // TODO: Test These below
-              autocomplete={this.autocomplete}
-              autocorrect={this.autocorrect}
-              autofocus={this.autofocus}
-              spellcheck={this.spellcheck}
-              pattern={this.pattern}
-              inputmode={this.inputmode}
-              aria-labelledby={this.label}
-              aria-invalid={this.invalid ? true : false}
-              value={this.value}
-              onChange={() => this.handleChange()}
-              onInput={() => this.handleInput()}
-              // onInvalid={this.handleInvalid}
-              onFocus={() => this.handleFocus()}
-              onBlur={() => this.handleBlur()}
-            />
-          </slot>
+              // Sizes
+              'input--small': this.size === 'small',
+              'input--medium': this.size === 'medium',
+              'input--large': this.size === 'large',
 
-          <span part="suffix" class="input__suffix">
-            <slot name="suffix"></slot>
-          </span>
+              // States
+              'input--focused': this.hasFocus,
+              'input--invalid': this.invalid,
+            }}
+          >
+            <span part="prefix" class="input__prefix">
+              <slot name="prefix"></slot>
+            </span>
 
-          {this.clearable && this.value?.length > 0 && (
-            <button part="clear-button" class="input__clear" type="button" onClick={e => this.handleClearClick(e)} tabindex="-1">
-              <slot name="clear-icon">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="feather feather-x"
-                >
-                  <line x1="18" y1="6" x2="6" y2="18"></line>
-                  <line x1="6" y1="6" x2="18" y2="18"></line>
-                </svg>
-              </slot>
-            </button>
-          )}
-        </div>
-      </ce-form-control>
+            <slot>
+              <input
+                part="input"
+                id={this.inputId}
+                class="input__control"
+                ref={el => (this.input = el as HTMLInputElement)}
+                type={this.type === 'password' && this.isPasswordVisible ? 'text' : this.type}
+                name={this.name}
+                disabled={this.disabled}
+                readonly={this.readonly}
+                required={this.required}
+                placeholder={this.placeholder}
+                minlength={this.minlength}
+                maxlength={this.maxlength}
+                min={this.min}
+                max={this.max}
+                step={this.step}
+                // TODO: Test These below
+                autocomplete={this.autocomplete}
+                autocorrect={this.autocorrect}
+                autofocus={this.autofocus}
+                spellcheck={this.spellcheck}
+                pattern={this.pattern}
+                inputmode={this.inputmode}
+                aria-labelledby={this.label}
+                aria-invalid={this.invalid ? true : false}
+                value={this.value}
+                onChange={() => this.handleChange()}
+                onInput={() => this.handleInput()}
+                // onInvalid={this.handleInvalid}
+                onFocus={() => this.handleFocus()}
+                onBlur={() => this.handleBlur()}
+              />
+            </slot>
+
+            <span part="suffix" class="input__suffix">
+              <slot name="suffix"></slot>
+            </span>
+
+            {this.clearable && this.value?.length > 0 && (
+              <button part="clear-button" class="input__clear" type="button" onClick={e => this.handleClearClick(e)} tabindex="-1">
+                <slot name="clear-icon">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="feather feather-x"
+                  >
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg>
+                </slot>
+              </button>
+            )}
+          </div>
+        </ce-form-control>
+      </Host>
     );
   }
 }

@@ -8,3 +8,10 @@
   box-shadow: var(--ce-shadow-large);
   border-radius: var(--ce-input-border-radius-medium);
 }
+
+::slotted(*:first-child) {
+  margin-top:0;
+}
+::slotted(*:last-child) {
+  margin-bottom:0;
+}

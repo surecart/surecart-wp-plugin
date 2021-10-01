@@ -15,15 +15,15 @@
 		},
 		"disabled": {
 			"type": "boolean",
-			"default": true
+			"default": false
 		},
 		"size": {
 			"type": "string",
-			"default": "large"
+			"default": ""
 		},
 		"label": {
 			"type": "string",
-			"default": "Email Address"
+      "default": "Email"
 		},
 		"help": {
 			"type": "string"
@@ -36,6 +36,9 @@
 		},
 		"maxlength": {
 			"type": "number"
-		}
+		},
+    "name": {
+      "type": "string"
+    }
 	}
 }

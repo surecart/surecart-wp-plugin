@@ -24,7 +24,11 @@ const settings = {
 		'Display a price chooser for the checkout',
 		'checkout_engine'
 	),
-	parent: [ 'checkout-engine/checkout-form' ],
+	parent: [
+		'checkout-engine/form-row',
+		'checkout-engine/form-section',
+		'checkout-engine/checkout-form',
+	],
 	supports: {
 		reusable: false,
 		multiple: false,

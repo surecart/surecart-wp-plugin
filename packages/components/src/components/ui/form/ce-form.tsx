@@ -1,4 +1,4 @@
-import { Component, h, Element, Prop, Event, EventEmitter, Method } from '@stencil/core';
+import { Component, h, Element, Prop, Event, EventEmitter, Method, Listen } from '@stencil/core';
 
 interface FormControl {
   tag: string;
@@ -25,6 +25,14 @@ export class CEForm {
    * around the XHR request you use to submit the form's data with.
    */
   @Event() ceFormSubmit: EventEmitter<Object>;
+
+  /**
+   * Emitted when the form is submitted. This event will not be emitted if any form control inside of
+   * it is in an invalid state, unless the form has the `novalidate` attribute. Note that there is never a need to prevent
+   * this event, since it doen't send a GET or POST request like native forms. To "prevent" submission, use a conditional
+   * around the XHR request you use to submit the form's data with.
+   */
+  @Event() ceFormChange: EventEmitter<Object>;
 
   /**
    * Emitted when the form is invalid.
@@ -249,6 +257,12 @@ export class CEForm {
     }
 
     return true;
+  }
+
+  @Listen('ceChange')
+  async handleChange() {
+    let data = await this.getFormJson();
+    this.ceFormChange.emit(data);
   }
 
   /**

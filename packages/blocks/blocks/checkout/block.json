@@ -6,6 +6,10 @@
 			"type": "boolean",
 			"default": false
 		},
+    "font_size": {
+      "type": "number",
+      "default": 16
+    },
     "choices": {
       "tyoe": "object",
       "default": {}

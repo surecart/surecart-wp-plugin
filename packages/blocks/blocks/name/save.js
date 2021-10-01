@@ -11,7 +11,6 @@ export default ( { className, attributes } ) => {
 		maxlength,
 		min,
 		minlength,
-		name,
 		placeholder,
 		readonly,
 		showLabel,
@@ -19,35 +18,33 @@ export default ( { className, attributes } ) => {
 		spellcheck,
 		step,
 		togglePassword,
-		type,
 		value,
 	} = attributes;
 
 	return (
-		<ce-form-row className={ className }>
-			<ce-input
-				label={ label }
-				clearable={ clearable }
-				disabled={ disabled }
-				help={ help }
-				autofocus={ autofocus }
-				autocomplete={ autocomplete }
-				inputmode={ inputmode }
-				max={ max }
-				maxlength={ maxlength }
-				min={ min }
-				minlength={ minlength }
-				name={ name }
-				placeholder={ placeholder }
-				readonly={ readonly }
-				showLabel={ showLabel }
-				size={ size }
-				spellcheck={ spellcheck }
-				step={ step }
-				togglePassword={ togglePassword }
-				type={ type }
-				value={ value }
-			></ce-input>
-		</ce-form-row>
+		<ce-input
+			class={ className || false }
+			label={ label || false }
+			clearable={ clearable || false }
+			disabled={ disabled || false }
+			help={ help || false }
+			autofocus={ autofocus || false }
+			autocomplete={ autocomplete || false }
+			inputmode={ inputmode || false }
+			max={ max || false }
+			maxlength={ maxlength || false }
+			min={ min || false }
+			minlength={ minlength || false }
+			placeholder={ placeholder || false }
+			readonly={ readonly || false }
+			showLabel={ showLabel || false }
+			size={ size || false }
+			spellcheck={ spellcheck || false }
+			step={ step || false }
+			togglePassword={ togglePassword }
+			value={ value || false }
+			name={ 'name' }
+			type={ 'text' }
+		></ce-input>
 	);
 };

@@ -237,7 +237,7 @@ export class CEChoice {
           <span class="choice__price">
             <span class="choice__title">
               <slot name="price"></slot>
-            </span>
+            </span>{' '}
             <span class="choice__description">
               <slot name="per"></slot>
             </span>

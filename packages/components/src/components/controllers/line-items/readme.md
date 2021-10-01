@@ -17,9 +17,9 @@
 
 ## Events
 
-| Event               | Description | Type                          |
-| ------------------- | ----------- | ----------------------------- |
-| `ceUpdateLineItems` |             | `CustomEvent<LineItemData[]>` |
+| Event              | Description | Type                                           |
+| ------------------ | ----------- | ---------------------------------------------- |
+| `ceUpdateLineItem` |             | `CustomEvent<{ id: string; amount: number; }>` |
 
 
 ## Dependencies
@@ -37,8 +37,8 @@ graph TD;
   ce-line-items --> ce-skeleton
   ce-line-items --> ce-product-line-item
   ce-product-line-item --> ce-line-item
-  ce-product-line-item --> ce-tag
   ce-product-line-item --> ce-quantity-select
+  ce-product-line-item --> ce-tag
   ce-quantity-select --> ce-dropdown
   ce-quantity-select --> ce-menu
   ce-quantity-select --> ce-menu-item

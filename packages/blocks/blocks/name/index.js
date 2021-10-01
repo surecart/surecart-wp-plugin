@@ -22,6 +22,11 @@ const settings = {
 	/* translators: block description */
 	description: __( 'Display name collection fields', 'checkout_engine' ),
 	icon,
+	parent: [
+		'checkout-engine/form-row',
+		'checkout-engine/form-section',
+		'checkout-engine/checkout-form',
+	],
 	keywords: [
 		'checkout',
 		'engine',
@@ -32,7 +37,7 @@ const settings = {
 	],
 	attributes,
 	edit,
-	// save,
+	save,
 };
 
 export { name, category, metadata, settings };

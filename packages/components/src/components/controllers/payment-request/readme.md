@@ -7,12 +7,9 @@
 
 ## Properties
 
-| Property               | Attribute                | Description | Type                   | Default     |
-| ---------------------- | ------------------------ | ----------- | ---------------------- | ----------- |
-| `paymentMethod`        | `payment-method`         |             | `"paypal" \| "stripe"` | `undefined` |
-| `stripeAccountId`      | `stripe-account-id`      |             | `string`               | `undefined` |
-| `stripePublishableKey` | `stripe-publishable-key` |             | `string`               | `undefined` |
-| `total`                | `total`                  |             | `number`               | `undefined` |
+| Property        | Attribute        | Description | Type                   | Default     |
+| --------------- | ---------------- | ----------- | ---------------------- | ----------- |
+| `paymentMethod` | `payment-method` |             | `"paypal" \| "stripe"` | `undefined` |
 
 
 ## Dependencies
