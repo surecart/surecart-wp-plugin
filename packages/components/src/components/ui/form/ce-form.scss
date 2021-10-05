@@ -6,6 +6,9 @@
   margin-top: var(--ce-form-section-spacing);
 }
 
+::slotted(.wp-block-columns .wp-block-column) {
+  margin: 50px;
+}
 ::slotted(ce-form-section:first-child) {
   margin-top: 0;
 }

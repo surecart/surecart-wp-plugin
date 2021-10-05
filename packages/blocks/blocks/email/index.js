@@ -15,17 +15,19 @@ import { button as icon } from '@wordpress/icons';
  * Block constants
  */
 const { name, category, attributes } = metadata;
+import { BLOCK_PARENTS } from '../../blocks';
 
 const settings = {
 	/* translators: block name */
 	title: __( 'Email', 'checkout_engine' ),
 	/* translators: block description */
 	description: __( 'Display a checkout form input', 'checkout_engine' ),
-	parent: [
-		'checkout-engine/form-row',
-		'checkout-engine/form-section',
-		'checkout-engine/checkout-form',
-	],
+	parent: BLOCK_PARENTS,
+	supports: {
+		reusable: false,
+		multiple: false,
+		html: false,
+	},
 	icon,
 	keywords: [
 		'checkout',

@@ -18,6 +18,7 @@ import {
  * Component Dependencies
  */
 import { CeFormSection } from '@checkout-engine/react';
+import { ALLOWED_BLOCKS } from '../../blocks';
 
 export default ( {
 	className,
@@ -87,11 +88,7 @@ export default ( {
 							? undefined
 							: InnerBlocks.ButtonBlockAppender
 					}
-					allowedBlocks={ [
-						'checkout-engine/submit',
-						'checkout-engine/email',
-						'checkout-engine/input',
-					] }
+					allowedBlocks={ ALLOWED_BLOCKS }
 				/>
 			</CeFormSection>
 		</Fragment>

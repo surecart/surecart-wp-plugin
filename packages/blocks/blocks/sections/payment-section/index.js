@@ -14,15 +14,18 @@ import { payment as icon } from '@wordpress/icons';
  * Block constants
  */
 const { name, category, attributes, supports } = metadata;
+import { BLOCK_PARENTS } from '../../../blocks';
 
 const settings = {
 	/* translators: block name */
 	title: __( 'Payment Section', 'checkout_engine' ),
 	/* translators: block description */
 	description: __( 'Order payment section.', 'checkout_engine' ),
+	parent: BLOCK_PARENTS,
 	supports: {
 		reusable: false,
-		inserter: false,
+		multiple: false,
+		html: false,
 	},
 	icon,
 	keywords: [

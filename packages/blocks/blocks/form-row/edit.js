@@ -9,6 +9,7 @@ import { InnerBlocks } from '@wordpress/block-editor';
  * Component Dependencies
  */
 import { CeFormRow } from '@checkout-engine/react';
+import { ALLOWED_BLOCKS } from '../../blocks';
 
 export default ( { className, isSelected } ) => {
 	return (
@@ -17,10 +18,7 @@ export default ( { className, isSelected } ) => {
 				renderAppender={
 					isSelected ? InnerBlocks.ButtonBlockAppender : false
 				}
-				allowedBlocks={ [
-					'checkout-engine/submit',
-					'checkout-engine/email',
-				] }
+				allowedBlocks={ ALLOWED_BLOCKS }
 			/>
 		</CeFormRow>
 	);

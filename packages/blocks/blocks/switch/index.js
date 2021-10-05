@@ -15,17 +15,18 @@ import { edit as icon } from '@wordpress/icons';
  * Block constants
  */
 const { name, category, attributes } = metadata;
+import { BLOCK_PARENTS } from '../../blocks';
 
 const settings = {
 	/* translators: block name */
 	title: __( 'Switch', 'checkout_engine' ),
 	/* translators: block description */
 	description: __( 'Display a toggle switch.', 'checkout_engine' ),
-	parent: [
-		'checkout-engine/form-row',
-		'checkout-engine/form-section',
-		'checkout-engine/checkout-form',
-	],
+	parent: BLOCK_PARENTS,
+	supports: {
+		reusable: false,
+		html: false,
+	},
 	icon,
 	keywords: [
 		'checkout',

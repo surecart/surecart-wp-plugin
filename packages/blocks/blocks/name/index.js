@@ -15,6 +15,7 @@ import { receipt as icon } from '@wordpress/icons';
  * Block constants
  */
 const { name, category, attributes } = metadata;
+import { BLOCK_PARENTS } from '../../blocks';
 
 const settings = {
 	/* translators: block name */
@@ -22,11 +23,11 @@ const settings = {
 	/* translators: block description */
 	description: __( 'Display name collection fields', 'checkout_engine' ),
 	icon,
-	parent: [
-		'checkout-engine/form-row',
-		'checkout-engine/form-section',
-		'checkout-engine/checkout-form',
-	],
+	parent: BLOCK_PARENTS,
+	supports: {
+		reusable: false,
+		html: false,
+	},
 	keywords: [
 		'checkout',
 		'engine',

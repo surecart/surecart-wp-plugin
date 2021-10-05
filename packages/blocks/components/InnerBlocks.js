@@ -6,6 +6,7 @@ import {
 	store as blockEditorStore,
 } from '@wordpress/block-editor';
 import withIsPremium from '../higher-order/withIsPremium';
+import { ALLOWED_BLOCKS } from '../blocks';
 
 export default withIsPremium( ( props, clientId ) => {
 	const { isPremium } = props;
@@ -32,11 +33,7 @@ export default withIsPremium( ( props, clientId ) => {
 					hasChildBlocks ? undefined : InnerBlocks.ButtonBlockAppender
 				}
 				templateLock={ isPremium ? 'insert' : 'all' }
-				allowedBlocks={ [
-					'checkout-engine/input',
-					'checkout-engine/email',
-					'checkout-engine/button',
-				] }
+				allowedBlocks={ ALLOWED_BLOCKS }
 				{ ...props }
 			/>
 		</div>

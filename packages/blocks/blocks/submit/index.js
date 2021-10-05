@@ -14,6 +14,7 @@ import { button as icon } from '@wordpress/icons';
  * Block constants
  */
 const { name, category, attributes, supports } = metadata;
+import { BLOCK_PARENTS } from '../../blocks';
 
 const settings = {
 	/* translators: block name */
@@ -23,9 +24,11 @@ const settings = {
 		'Display a checkout form submit button',
 		'checkout_engine'
 	),
-	parent: [ 'checkout-engine/form-row' ],
+	parent: BLOCK_PARENTS,
 	supports: {
 		reusable: false,
+		// multiple: false,
+		html: false,
 	},
 	icon,
 	keywords: [

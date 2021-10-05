@@ -15,15 +15,17 @@ import { button as icon } from '@wordpress/icons';
  * Block constants
  */
 const { name, category, attributes, supports } = metadata;
+import { BLOCK_PARENTS } from '../../blocks';
 
 const settings = {
 	/* translators: block name */
 	title: __( 'Divider', 'checkout_engine' ),
 	/* translators: block description */
 	description: __( 'Display a form divider', 'checkout_engine' ),
-	parent: [ 'checkout-engine/form-row' ],
+	parent: BLOCK_PARENTS,
 	supports: {
 		reusable: false,
+		html: false,
 	},
 	icon,
 	keywords: [

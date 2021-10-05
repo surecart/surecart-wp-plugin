@@ -1833,11 +1833,12 @@ function selectValidationErrors(state, key) {
 /*!*******************!*\
   !*** ./blocks.js ***!
   \*******************/
-/*! exports provided: ALLOWED_BLOCKS, registerCheckoutEngineBlocks */
+/*! exports provided: BLOCK_PARENTS, ALLOWED_BLOCKS, registerCheckoutEngineBlocks */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "BLOCK_PARENTS", function() { return BLOCK_PARENTS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ALLOWED_BLOCKS", function() { return ALLOWED_BLOCKS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "registerCheckoutEngineBlocks", function() { return registerCheckoutEngineBlocks; });
 /* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/defineProperty.js");
@@ -1915,7 +1916,8 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 
 
-var ALLOWED_BLOCKS = ['core/spacer', 'checkout-engine/input', 'checkout-engine/checkbox', 'checkout-engine/divider', 'checkout-engine/button', 'checkout-engine/email', 'checkout-engine/form-row', 'checkout-engine/name', 'checkout-engine/payment', 'checkout-engine/price-chooser', 'checkout-engine/form-section', 'checkout-engine/submit'];
+var BLOCK_PARENTS = ['core/columns', 'checkout-engine/form-row', 'checkout-engine/form-section', 'checkout-engine/checkout-form'];
+var ALLOWED_BLOCKS = ['core/spacer', 'core/columns', 'checkout-engine/input', 'checkout-engine/checkbox', 'checkout-engine/divider', 'checkout-engine/button', 'checkout-engine/email', 'checkout-engine/form-row', 'checkout-engine/name', 'checkout-engine/payment', 'checkout-engine/pricing-section', 'checkout-engine/form-section', 'checkout-engine/submit'];
 /**
  * Function to register an individual block.
  *
@@ -2035,14 +2037,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "name", function() { return name; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "category", function() { return category; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "settings", function() { return settings; });
-/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./edit */ "./blocks/button/edit.js");
-/* harmony import */ var _save__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./save */ "./blocks/button/save.js");
-/* harmony import */ var _block_json__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./block.json */ "./blocks/button/block.json");
-var _block_json__WEBPACK_IMPORTED_MODULE_2___namespace = /*#__PURE__*/__webpack_require__.t(/*! ./block.json */ "./blocks/button/block.json", 1);
-/* harmony reexport (default from named exports) */ __webpack_require__.d(__webpack_exports__, "metadata", function() { return _block_json__WEBPACK_IMPORTED_MODULE_2__; });
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/index.js");
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/defineProperty.js");
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./edit */ "./blocks/button/edit.js");
+/* harmony import */ var _save__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./save */ "./blocks/button/save.js");
+/* harmony import */ var _block_json__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./block.json */ "./blocks/button/block.json");
+var _block_json__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PURE__*/__webpack_require__.t(/*! ./block.json */ "./blocks/button/block.json", 1);
+/* harmony reexport (default from named exports) */ __webpack_require__.d(__webpack_exports__, "metadata", function() { return _block_json__WEBPACK_IMPORTED_MODULE_3__; });
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/index.js");
+/* harmony import */ var _blocks__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../blocks */ "./blocks.js");
+
+
+var _settings;
+
 /**
  * Internal dependencies
  */
@@ -2059,30 +2068,26 @@ var _block_json__WEBPACK_IMPORTED_MODULE_2___namespace = /*#__PURE__*/__webpack_
  * Block constants
  */
 
-var name = _block_json__WEBPACK_IMPORTED_MODULE_2__.name,
-    category = _block_json__WEBPACK_IMPORTED_MODULE_2__.category,
-    attributes = _block_json__WEBPACK_IMPORTED_MODULE_2__.attributes,
-    supports = _block_json__WEBPACK_IMPORTED_MODULE_2__.supports;
-var settings = {
+var name = _block_json__WEBPACK_IMPORTED_MODULE_3__.name,
+    category = _block_json__WEBPACK_IMPORTED_MODULE_3__.category,
+    attributes = _block_json__WEBPACK_IMPORTED_MODULE_3__.attributes,
+    supports = _block_json__WEBPACK_IMPORTED_MODULE_3__.supports;
+
+var settings = (_settings = {
   /* translators: block name */
-  title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__["__"])('Button', 'checkout_engine'),
+  title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])('Button', 'checkout_engine'),
 
   /* translators: block description */
-  description: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__["__"])('Display a checkout form button', 'checkout_engine'),
-  parent: ['checkout-engine/form-row'],
-  supports: {
-    reusable: false
-  },
-  icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_4__["button"],
-  keywords: ['checkout', 'engine',
-  /* translators: block keyword */
-  Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__["__"])('shop', 'checkout_engine'),
-  /* translators: block keyword */
-  Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__["__"])('button', 'checkout_engine')],
-  attributes: attributes,
-  edit: _edit__WEBPACK_IMPORTED_MODULE_0__["default"],
-  save: _save__WEBPACK_IMPORTED_MODULE_1__["default"]
-};
+  description: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])('Display a checkout form button', 'checkout_engine'),
+  parent: ['checkout-engine/form-row']
+}, _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_settings, "parent", _blocks__WEBPACK_IMPORTED_MODULE_6__["BLOCK_PARENTS"]), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_settings, "supports", {
+  reusable: false,
+  html: false
+}), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_settings, "icon", _wordpress_icons__WEBPACK_IMPORTED_MODULE_5__["button"]), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_settings, "keywords", ['checkout', 'engine',
+/* translators: block keyword */
+Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])('shop', 'checkout_engine'),
+/* translators: block keyword */
+Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])('button', 'checkout_engine')]), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_settings, "attributes", attributes), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_settings, "edit", _edit__WEBPACK_IMPORTED_MODULE_1__["default"]), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_settings, "save", _save__WEBPACK_IMPORTED_MODULE_2__["default"]), _settings);
 
 
 /***/ }),
@@ -2254,6 +2259,7 @@ var _block_json__WEBPACK_IMPORTED_MODULE_2___namespace = /*#__PURE__*/__webpack_
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/index.js");
+/* harmony import */ var _blocks__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../blocks */ "./blocks.js");
 /**
  * Internal dependencies
  */
@@ -2273,13 +2279,18 @@ var _block_json__WEBPACK_IMPORTED_MODULE_2___namespace = /*#__PURE__*/__webpack_
 var name = _block_json__WEBPACK_IMPORTED_MODULE_2__.name,
     category = _block_json__WEBPACK_IMPORTED_MODULE_2__.category,
     attributes = _block_json__WEBPACK_IMPORTED_MODULE_2__.attributes;
+
 var settings = {
   /* translators: block name */
   title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__["__"])('Checkbox', 'checkout_engine'),
 
   /* translators: block description */
   description: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__["__"])('Display a checkbox input', 'checkout_engine'),
-  parent: ['checkout-engine/form-row', 'checkout-engine/form-section', 'checkout-engine/checkout-form'],
+  parent: _blocks__WEBPACK_IMPORTED_MODULE_5__["BLOCK_PARENTS"],
+  supports: {
+    reusable: false,
+    html: false
+  },
   icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_4__["edit"],
   keywords: ['checkout', 'engine',
   /* translators: block keyword */
@@ -2839,40 +2850,29 @@ var _template_json__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PURE__*/__webpa
       isPremium = _ref.isPremium,
       clientId = _ref.clientId,
       isSelected = _ref.isSelected;
-
-  var _useDispatch = Object(_wordpress_data__WEBPACK_IMPORTED_MODULE_1__["useDispatch"])('core/block-editor'),
-      replaceInnerBlocks = _useDispatch.replaceInnerBlocks;
-
-  var getBlockList = function getBlockList() {
-    var _select$getBlocksByCl, _select$getBlocksByCl2;
-
-    return (_select$getBlocksByCl = Object(_wordpress_data__WEBPACK_IMPORTED_MODULE_1__["select"])('core/block-editor').getBlocksByClientId(clientId)) === null || _select$getBlocksByCl === void 0 ? void 0 : (_select$getBlocksByCl2 = _select$getBlocksByCl[0]) === null || _select$getBlocksByCl2 === void 0 ? void 0 : _select$getBlocksByCl2.innerBlocks;
-  };
-
-  var blockList = getBlockList();
-  wp.data.subscribe(function () {
-    var newBlockList = getBlockList();
-
-    if (!newBlockList || newBlockList.length >= blockList.length) {
-      return;
-    } /// get just names
-
-
-    var blockNames = blockList.map(function (block) {
-      return block.name;
-    });
-    var newBlockNames = newBlockList.map(function (block) {
-      return block.name;
-    }); // get removed names
-
-    var removedRequiredBlocks = blockNames.filter(function (x) {
-      return !newBlockNames.includes(x) && requiredBlocks.includes(x);
-    });
-
-    if (removedRequiredBlocks.length) {
-      replaceInnerBlocks(clientId, blockList);
-    }
-  });
+  // const { replaceInnerBlocks } = useDispatch( 'core/block-editor' );
+  // const getBlockList = () =>
+  // 	select( 'core/block-editor' ).getBlocksByClientId( clientId )?.[ 0 ]
+  // 		?.innerBlocks;
+  // let blockList = getBlockList();
+  // wp.data.subscribe( () => {
+  // 	let newBlockList = getBlockList();
+  // 	if ( ! newBlockList || newBlockList.length >= blockList.length ) {
+  // 		return;
+  // 	}
+  // 	/// get just names
+  // 	let blockNames = blockList.map( ( block ) => block.name );
+  // 	let newBlockNames = newBlockList.map( ( block ) => block.name );
+  // 	// get removed names
+  // 	const removedRequiredBlocks = blockNames.filter(
+  // 		( x ) =>
+  // 			! newBlockNames.includes( x ) &&
+  // 			requiredBlocks.includes( x )
+  // 	);
+  // 	if ( removedRequiredBlocks.length ) {
+  // 		replaceInnerBlocks( clientId, blockList );
+  // 	}
+  // } );
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["InnerBlocks"], {
     renderAppender: _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["InnerBlocks"].ButtonBlockAppender // templateLock={ isPremium ? 'none' : 'insert' }
     ,
@@ -3303,6 +3303,7 @@ var _block_json__WEBPACK_IMPORTED_MODULE_2___namespace = /*#__PURE__*/__webpack_
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/index.js");
+/* harmony import */ var _blocks__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../blocks */ "./blocks.js");
 /**
  * Internal dependencies
  */
@@ -3323,15 +3324,17 @@ var name = _block_json__WEBPACK_IMPORTED_MODULE_2__.name,
     category = _block_json__WEBPACK_IMPORTED_MODULE_2__.category,
     attributes = _block_json__WEBPACK_IMPORTED_MODULE_2__.attributes,
     supports = _block_json__WEBPACK_IMPORTED_MODULE_2__.supports;
+
 var settings = {
   /* translators: block name */
   title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__["__"])('Divider', 'checkout_engine'),
 
   /* translators: block description */
   description: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__["__"])('Display a form divider', 'checkout_engine'),
-  parent: ['checkout-engine/form-row'],
+  parent: _blocks__WEBPACK_IMPORTED_MODULE_5__["BLOCK_PARENTS"],
   supports: {
-    reusable: false
+    reusable: false,
+    html: false
   },
   icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_4__["button"],
   keywords: ['checkout', 'engine',
@@ -3511,6 +3514,7 @@ var _block_json__WEBPACK_IMPORTED_MODULE_2___namespace = /*#__PURE__*/__webpack_
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/index.js");
+/* harmony import */ var _blocks__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../blocks */ "./blocks.js");
 /**
  * Internal dependencies
  */
@@ -3530,13 +3534,19 @@ var _block_json__WEBPACK_IMPORTED_MODULE_2___namespace = /*#__PURE__*/__webpack_
 var name = _block_json__WEBPACK_IMPORTED_MODULE_2__.name,
     category = _block_json__WEBPACK_IMPORTED_MODULE_2__.category,
     attributes = _block_json__WEBPACK_IMPORTED_MODULE_2__.attributes;
+
 var settings = {
   /* translators: block name */
   title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__["__"])('Email', 'checkout_engine'),
 
   /* translators: block description */
   description: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__["__"])('Display a checkout form input', 'checkout_engine'),
-  parent: ['checkout-engine/form-row', 'checkout-engine/form-section', 'checkout-engine/checkout-form'],
+  parent: _blocks__WEBPACK_IMPORTED_MODULE_5__["BLOCK_PARENTS"],
+  supports: {
+    reusable: false,
+    multiple: false,
+    html: false
+  },
   icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_4__["button"],
   keywords: ['checkout', 'engine',
   /* translators: block keyword */
@@ -3733,6 +3743,7 @@ var _block_json__WEBPACK_IMPORTED_MODULE_2___namespace = /*#__PURE__*/__webpack_
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/index.js");
+/* harmony import */ var _blocks__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../blocks */ "./blocks.js");
 /**
  * Internal dependencies
  */
@@ -3752,13 +3763,17 @@ var _block_json__WEBPACK_IMPORTED_MODULE_2___namespace = /*#__PURE__*/__webpack_
 var name = _block_json__WEBPACK_IMPORTED_MODULE_2__.name,
     category = _block_json__WEBPACK_IMPORTED_MODULE_2__.category,
     attributes = _block_json__WEBPACK_IMPORTED_MODULE_2__.attributes;
+
 var settings = {
   /* translators: block name */
   title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__["__"])('Input', 'checkout_engine'),
 
   /* translators: block description */
   description: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__["__"])('Display a checkout form input', 'checkout_engine'),
-  parent: ['checkout-engine/form-row', 'checkout-engine/form-section', 'checkout-engine/checkout-form'],
+  parent: _blocks__WEBPACK_IMPORTED_MODULE_5__["BLOCK_PARENTS"],
+  supports: {
+    html: false
+  },
   icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_4__["edit"],
   keywords: ['checkout', 'engine',
   /* translators: block keyword */
@@ -3945,6 +3960,7 @@ var _block_json__WEBPACK_IMPORTED_MODULE_1___namespace = /*#__PURE__*/__webpack_
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/index.js");
+/* harmony import */ var _blocks__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../blocks */ "./blocks.js");
 /**
  * Internal dependencies
  */
@@ -3964,6 +3980,7 @@ var _block_json__WEBPACK_IMPORTED_MODULE_1___namespace = /*#__PURE__*/__webpack_
 var name = _block_json__WEBPACK_IMPORTED_MODULE_1__.name,
     category = _block_json__WEBPACK_IMPORTED_MODULE_1__.category,
     attributes = _block_json__WEBPACK_IMPORTED_MODULE_1__.attributes;
+
 var settings = {
   /* translators: block name */
   title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__["__"])('Name', 'checkout_engine'),
@@ -3971,7 +3988,11 @@ var settings = {
   /* translators: block description */
   description: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__["__"])('Display name collection fields', 'checkout_engine'),
   icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_4__["receipt"],
-  parent: ['checkout-engine/form-row', 'checkout-engine/form-section', 'checkout-engine/checkout-form'],
+  parent: _blocks__WEBPACK_IMPORTED_MODULE_5__["BLOCK_PARENTS"],
+  supports: {
+    reusable: false,
+    html: false
+  },
   keywords: ['checkout', 'engine',
   /* translators: block keyword */
   Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__["__"])('shop', 'checkout_engine'),
@@ -4113,6 +4134,7 @@ var _block_json__WEBPACK_IMPORTED_MODULE_2___namespace = /*#__PURE__*/__webpack_
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/index.js");
+/* harmony import */ var _blocks__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../blocks */ "./blocks.js");
 /**
  * Internal dependencies
  */
@@ -4132,13 +4154,18 @@ var _block_json__WEBPACK_IMPORTED_MODULE_2___namespace = /*#__PURE__*/__webpack_
 var name = _block_json__WEBPACK_IMPORTED_MODULE_2__.name,
     category = _block_json__WEBPACK_IMPORTED_MODULE_2__.category,
     attributes = _block_json__WEBPACK_IMPORTED_MODULE_2__.attributes;
+
 var settings = {
   /* translators: block name */
   title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__["__"])('Payment Request', 'checkout_engine'),
 
   /* translators: block description */
   description: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__["__"])('Display an Google Pay/Apple Pay button', 'checkout_engine'),
-  parent: ['checkout-engine/form-row', 'checkout-engine/form-section', 'checkout-engine/checkout-form'],
+  parent: _blocks__WEBPACK_IMPORTED_MODULE_5__["BLOCK_PARENTS"],
+  supports: {
+    reusable: false,
+    html: false
+  },
   icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_4__["edit"],
   keywords: ['checkout', 'engine',
   /* translators: block keyword */
@@ -4278,6 +4305,7 @@ var _block_json__WEBPACK_IMPORTED_MODULE_2___namespace = /*#__PURE__*/__webpack_
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/index.js");
+/* harmony import */ var _blocks__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../blocks */ "./blocks.js");
 /**
  * Internal dependencies
  */
@@ -4297,13 +4325,18 @@ var _block_json__WEBPACK_IMPORTED_MODULE_2___namespace = /*#__PURE__*/__webpack_
 var name = _block_json__WEBPACK_IMPORTED_MODULE_2__.name,
     category = _block_json__WEBPACK_IMPORTED_MODULE_2__.category,
     attributes = _block_json__WEBPACK_IMPORTED_MODULE_2__.attributes;
+
 var settings = {
   /* translators: block name */
   title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__["__"])('Payment', 'checkout_engine'),
 
   /* translators: block description */
   description: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__["__"])('Displays a credit card payment section.', 'checkout_engine'),
-  parent: ['checkout-engine/form-row', 'checkout-engine/form-section', 'checkout-engine/checkout-form'],
+  parent: _blocks__WEBPACK_IMPORTED_MODULE_5__["BLOCK_PARENTS"],
+  supports: {
+    reusable: false,
+    html: false
+  },
   icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_4__["edit"],
   keywords: ['checkout', 'engine',
   /* translators: block keyword */
@@ -4375,6 +4408,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _checkout_engine_react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @checkout-engine/react */ "./node_modules/@checkout-engine/react/dist/index.js");
+/* harmony import */ var _blocks__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../blocks */ "./blocks.js");
 
 
 /**
@@ -4391,6 +4425,7 @@ __webpack_require__.r(__webpack_exports__);
 /**
  * Component Dependencies
  */
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = (function (_ref) {
@@ -4454,7 +4489,7 @@ __webpack_require__.r(__webpack_exports__);
     allowedFormats: ['core/bold', 'core/italic']
   }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["InnerBlocks"], {
     renderAppender: hasChildBlocks ? undefined : _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["InnerBlocks"].ButtonBlockAppender,
-    allowedBlocks: ['checkout-engine/submit', 'checkout-engine/email', 'checkout-engine/input']
+    allowedBlocks: _blocks__WEBPACK_IMPORTED_MODULE_6__["ALLOWED_BLOCKS"]
   })));
 });
 
@@ -4472,14 +4507,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "name", function() { return name; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "category", function() { return category; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "settings", function() { return settings; });
-/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./edit */ "./blocks/section/edit.js");
-/* harmony import */ var _save__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./save */ "./blocks/section/save.js");
-/* harmony import */ var _block_json__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./block.json */ "./blocks/section/block.json");
-var _block_json__WEBPACK_IMPORTED_MODULE_2___namespace = /*#__PURE__*/__webpack_require__.t(/*! ./block.json */ "./blocks/section/block.json", 1);
-/* harmony reexport (default from named exports) */ __webpack_require__.d(__webpack_exports__, "metadata", function() { return _block_json__WEBPACK_IMPORTED_MODULE_2__; });
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/index.js");
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/defineProperty.js");
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./edit */ "./blocks/section/edit.js");
+/* harmony import */ var _save__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./save */ "./blocks/section/save.js");
+/* harmony import */ var _block_json__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./block.json */ "./blocks/section/block.json");
+var _block_json__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PURE__*/__webpack_require__.t(/*! ./block.json */ "./blocks/section/block.json", 1);
+/* harmony reexport (default from named exports) */ __webpack_require__.d(__webpack_exports__, "metadata", function() { return _block_json__WEBPACK_IMPORTED_MODULE_3__; });
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/index.js");
+/* harmony import */ var _blocks__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../blocks */ "./blocks.js");
+
+
+var _settings;
+
 /**
  * Internal dependencies
  */
@@ -4496,30 +4538,26 @@ var _block_json__WEBPACK_IMPORTED_MODULE_2___namespace = /*#__PURE__*/__webpack_
  * Block constants
  */
 
-var name = _block_json__WEBPACK_IMPORTED_MODULE_2__.name,
-    category = _block_json__WEBPACK_IMPORTED_MODULE_2__.category,
-    attributes = _block_json__WEBPACK_IMPORTED_MODULE_2__.attributes,
-    supports = _block_json__WEBPACK_IMPORTED_MODULE_2__.supports;
-var settings = {
+var name = _block_json__WEBPACK_IMPORTED_MODULE_3__.name,
+    category = _block_json__WEBPACK_IMPORTED_MODULE_3__.category,
+    attributes = _block_json__WEBPACK_IMPORTED_MODULE_3__.attributes,
+    supports = _block_json__WEBPACK_IMPORTED_MODULE_3__.supports;
+
+var settings = (_settings = {
   /* translators: block name */
-  title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__["__"])('Form Section', 'checkout_engine'),
+  title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])('Form Section', 'checkout_engine'),
 
   /* translators: block description */
-  description: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__["__"])('Display a form section', 'checkout_engine'),
-  parent: ['checkout-engine/checkout-form'],
-  supports: {
-    reusable: false
-  },
-  icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_4__["stretchWide"],
-  keywords: ['checkout', 'engine',
-  /* translators: block keyword */
-  Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__["__"])('shop', 'checkout_engine'),
-  /* translators: block keyword */
-  Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__["__"])('button', 'checkout_engine')],
-  attributes: attributes,
-  edit: _edit__WEBPACK_IMPORTED_MODULE_0__["default"],
-  save: _save__WEBPACK_IMPORTED_MODULE_1__["default"]
-};
+  description: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])('Display a form section', 'checkout_engine'),
+  parent: ['checkout-engine/checkout-form']
+}, _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_settings, "parent", _blocks__WEBPACK_IMPORTED_MODULE_6__["BLOCK_PARENTS"]), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_settings, "supports", {
+  reusable: false,
+  html: false
+}), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_settings, "icon", _wordpress_icons__WEBPACK_IMPORTED_MODULE_5__["stretchWide"]), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_settings, "keywords", ['checkout', 'engine',
+/* translators: block keyword */
+Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])('shop', 'checkout_engine'),
+/* translators: block keyword */
+Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])('button', 'checkout_engine')]), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_settings, "attributes", attributes), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_settings, "edit", _edit__WEBPACK_IMPORTED_MODULE_1__["default"]), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_settings, "save", _save__WEBPACK_IMPORTED_MODULE_2__["default"]), _settings);
 
 
 /***/ }),
@@ -4863,6 +4901,7 @@ var _block_json__WEBPACK_IMPORTED_MODULE_1___namespace = /*#__PURE__*/__webpack_
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/index.js");
+/* harmony import */ var _blocks__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../blocks */ "./blocks.js");
 /**
  * Internal dependencies
  */
@@ -4882,15 +4921,18 @@ var name = _block_json__WEBPACK_IMPORTED_MODULE_1__.name,
     category = _block_json__WEBPACK_IMPORTED_MODULE_1__.category,
     attributes = _block_json__WEBPACK_IMPORTED_MODULE_1__.attributes,
     supports = _block_json__WEBPACK_IMPORTED_MODULE_1__.supports;
+
 var settings = {
   /* translators: block name */
   title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Payment Section', 'checkout_engine'),
 
   /* translators: block description */
   description: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Order payment section.', 'checkout_engine'),
+  parent: _blocks__WEBPACK_IMPORTED_MODULE_4__["BLOCK_PARENTS"],
   supports: {
     reusable: false,
-    inserter: false
+    multiple: false,
+    html: false
   },
   icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_3__["payment"],
   keywords: ['checkout', 'engine',
@@ -5021,6 +5063,7 @@ var _block_json__WEBPACK_IMPORTED_MODULE_1___namespace = /*#__PURE__*/__webpack_
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/index.js");
+/* harmony import */ var _blocks__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../blocks */ "./blocks.js");
 /**
  * Internal dependencies
  */
@@ -5041,18 +5084,18 @@ var name = _block_json__WEBPACK_IMPORTED_MODULE_1__.name,
     category = _block_json__WEBPACK_IMPORTED_MODULE_1__.category,
     attributes = _block_json__WEBPACK_IMPORTED_MODULE_1__.attributes,
     supports = _block_json__WEBPACK_IMPORTED_MODULE_1__.supports;
+
 var settings = {
   /* translators: block name */
   title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Pricing Section', 'checkout_engine'),
 
   /* translators: block description */
   description: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Display a price chooser for the checkout', 'checkout_engine'),
-  parent: ['checkout-engine/form-row', 'checkout-engine/form-section', 'checkout-engine/checkout-form'],
+  parent: _blocks__WEBPACK_IMPORTED_MODULE_4__["BLOCK_PARENTS"],
   supports: {
     reusable: false,
     multiple: false,
-    html: false // inserter: false,
-
+    html: false
   },
   icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_3__["buttons"],
   keywords: ['checkout', 'engine',
@@ -5176,6 +5219,7 @@ var _block_json__WEBPACK_IMPORTED_MODULE_1___namespace = /*#__PURE__*/__webpack_
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/index.js");
+/* harmony import */ var _blocks__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../blocks */ "./blocks.js");
 /**
  * Internal dependencies
  */
@@ -5184,6 +5228,7 @@ var _block_json__WEBPACK_IMPORTED_MODULE_1___namespace = /*#__PURE__*/__webpack_
 /**
  * WordPress dependencies
  */
+
 
 
 
@@ -5201,9 +5246,11 @@ var settings = {
 
   /* translators: block description */
   description: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Display a order total', 'checkout_engine'),
+  parent: _blocks__WEBPACK_IMPORTED_MODULE_4__["BLOCK_PARENTS"],
   supports: {
     reusable: false,
-    inserter: false
+    multiple: false,
+    html: false
   },
   icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_3__["currencyDollar"],
   keywords: ['checkout', 'engine',
@@ -5243,13 +5290,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _wordpress_editor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/editor */ "@wordpress/editor");
-/* harmony import */ var _wordpress_editor__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_editor__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
-/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _checkout_engine_react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @checkout-engine/react */ "./node_modules/@checkout-engine/react/dist/index.js");
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _checkout_engine_react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @checkout-engine/react */ "./node_modules/@checkout-engine/react/dist/index.js");
 
 
 /**
@@ -5275,9 +5320,9 @@ __webpack_require__.r(__webpack_exports__);
       size = attributes.size;
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     className: className
-  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_editor__WEBPACK_IMPORTED_MODULE_2__["InspectorControls"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__["PanelBody"], {
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["InspectorControls"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
     title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Attributes', 'checkout-engine')
-  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__["PanelRow"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__["TextControl"], {
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelRow"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["TextControl"], {
     label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Button Text', 'checkout-engine'),
     value: text,
     onChange: function onChange(text) {
@@ -5285,7 +5330,7 @@ __webpack_require__.r(__webpack_exports__);
         text: text
       });
     }
-  })), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__["PanelRow"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__["ToggleControl"], {
+  })), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelRow"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
     label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Full', 'checkout-engine'),
     checked: full,
     onChange: function onChange(full) {
@@ -5293,7 +5338,7 @@ __webpack_require__.r(__webpack_exports__);
         full: full
       });
     }
-  })), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__["PanelRow"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__["TextControl"], {
+  })), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelRow"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["TextControl"], {
     label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Size', 'checkout-engine'),
     value: size,
     onChange: function onChange(size) {
@@ -5301,12 +5346,12 @@ __webpack_require__.r(__webpack_exports__);
         size: size
       });
     }
-  })))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_5__["CeButton"], {
+  })))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_4__["CeButton"], {
     type: type,
     submit: submit,
     full: !!full,
     size: size
-  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__["RichText"], {
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["RichText"], {
     "aria-label": Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Button text'),
     placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Add text…'),
     value: text,
@@ -5341,6 +5386,7 @@ var _block_json__WEBPACK_IMPORTED_MODULE_1___namespace = /*#__PURE__*/__webpack_
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/index.js");
+/* harmony import */ var _blocks__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../blocks */ "./blocks.js");
 /**
  * Internal dependencies
  */
@@ -5360,15 +5406,18 @@ var name = _block_json__WEBPACK_IMPORTED_MODULE_1__.name,
     category = _block_json__WEBPACK_IMPORTED_MODULE_1__.category,
     attributes = _block_json__WEBPACK_IMPORTED_MODULE_1__.attributes,
     supports = _block_json__WEBPACK_IMPORTED_MODULE_1__.supports;
+
 var settings = {
   /* translators: block name */
   title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Submit', 'checkout_engine'),
 
   /* translators: block description */
   description: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Display a checkout form submit button', 'checkout_engine'),
-  parent: ['checkout-engine/form-row'],
+  parent: _blocks__WEBPACK_IMPORTED_MODULE_4__["BLOCK_PARENTS"],
   supports: {
-    reusable: false
+    reusable: false,
+    // multiple: false,
+    html: false
   },
   icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_3__["button"],
   keywords: ['checkout', 'engine',
@@ -5539,6 +5588,7 @@ var _block_json__WEBPACK_IMPORTED_MODULE_2___namespace = /*#__PURE__*/__webpack_
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/index.js");
+/* harmony import */ var _blocks__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../blocks */ "./blocks.js");
 /**
  * Internal dependencies
  */
@@ -5558,13 +5608,18 @@ var _block_json__WEBPACK_IMPORTED_MODULE_2___namespace = /*#__PURE__*/__webpack_
 var name = _block_json__WEBPACK_IMPORTED_MODULE_2__.name,
     category = _block_json__WEBPACK_IMPORTED_MODULE_2__.category,
     attributes = _block_json__WEBPACK_IMPORTED_MODULE_2__.attributes;
+
 var settings = {
   /* translators: block name */
   title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__["__"])('Switch', 'checkout_engine'),
 
   /* translators: block description */
   description: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__["__"])('Display a toggle switch.', 'checkout_engine'),
-  parent: ['checkout-engine/form-row', 'checkout-engine/form-section', 'checkout-engine/checkout-form'],
+  parent: _blocks__WEBPACK_IMPORTED_MODULE_5__["BLOCK_PARENTS"],
+  supports: {
+    reusable: false,
+    html: false
+  },
   icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_4__["edit"],
   keywords: ['checkout', 'engine',
   /* translators: block keyword */

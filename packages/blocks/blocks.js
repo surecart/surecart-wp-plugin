@@ -52,8 +52,15 @@ import * as divider from './blocks/divider';
 import * as checkbox from './blocks/checkbox';
 import * as switchBlock from './blocks/switch';
 
+export const BLOCK_PARENTS = [
+	'core/columns',
+	'checkout-engine/form-row',
+	'checkout-engine/form-section',
+	'checkout-engine/checkout-form',
+];
 export const ALLOWED_BLOCKS = [
 	'core/spacer',
+	'core/columns',
 	'checkout-engine/input',
 	'checkout-engine/checkbox',
 	'checkout-engine/divider',
@@ -62,7 +69,7 @@ export const ALLOWED_BLOCKS = [
 	'checkout-engine/form-row',
 	'checkout-engine/name',
 	'checkout-engine/payment',
-	'checkout-engine/price-chooser',
+	'checkout-engine/pricing-section',
 	'checkout-engine/form-section',
 	'checkout-engine/submit',
 ];

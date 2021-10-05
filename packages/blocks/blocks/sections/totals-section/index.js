@@ -9,6 +9,7 @@ import metadata from './block.json';
  */
 import { __ } from '@wordpress/i18n';
 import { currencyDollar as icon } from '@wordpress/icons';
+import { BLOCK_PARENTS } from '../../../blocks';
 
 /**
  * Block constants
@@ -20,9 +21,11 @@ const settings = {
 	title: __( 'Totals Section', 'checkout_engine' ),
 	/* translators: block description */
 	description: __( 'Display a order total', 'checkout_engine' ),
+	parent: BLOCK_PARENTS,
 	supports: {
 		reusable: false,
-		inserter: false,
+		multiple: false,
+		html: false,
 	},
 	icon,
 	keywords: [
