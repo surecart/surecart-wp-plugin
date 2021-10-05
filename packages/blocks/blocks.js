@@ -48,6 +48,24 @@ import * as paymentRequest from './blocks/payment-request';
 import * as button from './blocks/button';
 import * as submit from './blocks/submit';
 import * as input from './blocks/input';
+import * as divider from './blocks/divider';
+import * as checkbox from './blocks/checkbox';
+import * as switchBlock from './blocks/switch';
+
+export const ALLOWED_BLOCKS = [
+	'core/spacer',
+	'checkout-engine/input',
+	'checkout-engine/checkbox',
+	'checkout-engine/divider',
+	'checkout-engine/button',
+	'checkout-engine/email',
+	'checkout-engine/form-row',
+	'checkout-engine/name',
+	'checkout-engine/payment',
+	'checkout-engine/price-chooser',
+	'checkout-engine/form-section',
+	'checkout-engine/submit',
+];
 
 /**
  * Function to register an individual block.
@@ -90,6 +108,9 @@ export const registerCheckoutEngineBlocks = () => {
 		paymentRequest,
 		button,
 		input,
+		divider,
+		switchBlock,
+		checkbox,
 		name,
 		email,
 	].forEach( registerBlock );

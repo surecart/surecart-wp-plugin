@@ -1,0 +1,30 @@
+{
+	"name": "checkout-engine/checkbox",
+	"category": "layout",
+	"supports": {
+		"reusable": false
+	},
+	"attributes": {
+    "name" : {
+      "type": "string",
+      "default": "checkbox"
+    },
+		"value": {
+			"type": "string",
+			"default": ""
+		},
+		"label": {
+			"type": "string",
+      "default": "Enter some text."
+		},
+		"help": {
+			"type": "string"
+		},
+    "checked": {
+      "type": "boolean"
+    },
+    "required" : {
+      "type": "boolean"
+    }
+	}
+}

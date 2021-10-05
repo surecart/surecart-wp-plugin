@@ -1,5 +1,6 @@
 import { Component, h, Prop, Element } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
+import { CheckoutState } from '../../../types';
 @Component({
   tag: 'ce-submit',
   shadow: false,
@@ -8,10 +9,7 @@ export class CeSubmit {
   @Element() host: HTMLDivElement;
 
   /** Is the form loading */
-  @Prop() loading: boolean;
-
-  /** Are the totals calculating */
-  @Prop() calculating: boolean;
+  @Prop() state: CheckoutState;
 
   /** The button's size. */
   @Prop({ reflect: true }) size: 'small' | 'medium' | 'large' = 'large';
@@ -22,13 +20,17 @@ export class CeSubmit {
   /** Draws the button full-width */
   @Prop() text: string = '';
 
+  loading() {
+    return ['updating', 'paying', 'finalized'].includes(this.state);
+  }
+
   render() {
     return (
-      <ce-button loading={this.loading || this.calculating} disabled={this.loading || this.calculating} type="primary" submit full={this.full} size={this.size}>
+      <ce-button loading={this.loading()} disabled={this.loading()} type="primary" submit full={this.full} size={this.size}>
         {this.text}
       </ce-button>
     );
   }
 }
 
-openWormhole(CeSubmit, ['loading', 'calculating'], false);
+openWormhole(CeSubmit, ['state'], false);

@@ -1,0 +1,9 @@
+{
+	"name": "checkout-engine/divider",
+	"category": "layout",
+	"attributes": {
+		"text": {
+			"type": "string"
+		}
+	}
+}

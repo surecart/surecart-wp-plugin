@@ -252,8 +252,9 @@ ce-button-group > ce-tooltip > ce-button.ce-focus {
   --ce-input-error-text-font-size-medium: var(--ce-input-help-text-font-size-small);
   --ce-input-error-text-font-size-large: var(--ce-input-help-text-font-size-small);
   --ce-input-error-text-color: var(--ce-color-danger-500);
-  --ce-toggle-size: 1.2em;
-  --ce-radio-size: 0.75em;
+  --ce-toggle-size: 1em;
+  --ce-radio-size: 0.8em;
+  --ce-checkbox-size: 0.8em;
   --ce-overlay-background-color: #37415180;
   --ce-panel-background-color: var(--ce-color-white);
   --ce-panel-border-color: var(--ce-color-gray-200);

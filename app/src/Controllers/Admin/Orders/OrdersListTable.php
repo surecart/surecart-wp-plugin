@@ -107,6 +107,7 @@ class OrdersListTable extends ListTable {
 			'date'   => __( 'Date', 'checkout_engine' ),
 			'status' => __( 'Status', 'checkout_engine' ),
 			'total'  => __( 'Total', 'checkout_engine' ),
+			'mode'   => __( 'Mode', 'checkout_engine' ),
 			// 'usage' => __( 'Usage', 'checkout_engine' ),
 
 		];
@@ -147,7 +148,7 @@ class OrdersListTable extends ListTable {
 	 *
 	 * @return Array
 	 */
-	private function table_data() {
+	protected function table_data() {
 		return CheckoutSession::where(
 			[
 				'status' => $this->getStatus(),
@@ -178,7 +179,7 @@ class OrdersListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_total( $session ) {
-		return Currency::format( $session->amount_total ) . ' <small style="opacity: 0.75;">' . strtoupper( esc_html( $session->currency ) ) . '</small>';
+		return '<ce-format-number type="currency" currency="' . strtoupper( esc_html( $session->currency ) ) . '" value="' . (float) $session->amount_total . '"></ce-format-number>';
 	}
 
 	/**
@@ -213,6 +214,10 @@ class OrdersListTable extends ListTable {
 		<div style="opacity: 0.75"><?php echo \esc_html( $this->get_expiration_string( $promotion->redeem_by ) ); ?></div>
 		<?php
 		return ob_get_clean();
+	}
+
+	public function column_mode( $order ) {
+		return $order->live_mode ? '<ce-tag type="success">' . __( 'Live', 'checkout_engine' ) . '</ce-tag>' : '<ce-tag type="warning">' . __( 'Test', 'checkout_engine' ) . '</ce-tag>';
 	}
 
 	/**
@@ -276,6 +281,12 @@ class OrdersListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_status( $order ) {
+		switch ( $order->status ) {
+			case 'paid':
+				return '<ce-tag type="success">' . __( 'Paid', 'checkout_engine' ) . '</ce-tag>';
+			case 'finalized':
+				return '<ce-tag>' . __( 'Pending Payment', 'checkout_engine' ) . '</ce-tag>';
+		}
 		return $order->status;
 	}
 
@@ -290,7 +301,7 @@ class OrdersListTable extends ListTable {
 		ob_start();
 		?>
 		<a class="row-title" aria-label="<?php echo esc_attr__( 'Edit Order', 'checkout_engine' ); ?>" href="<?php echo esc_url( \CheckoutEngine::getUrl()->edit( 'order', $session->id ) ); ?>">
-			<?php echo esc_html_e( $session->name ); ?>
+			<?php echo esc_html_e( $session->name ?? 'No name provided.' ); ?>
 		</a>
 				<?php
 				return ob_get_clean();

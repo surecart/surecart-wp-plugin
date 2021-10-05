@@ -92,8 +92,11 @@ export interface ProductChoices {
 
 export interface Keys extends Object {
   stripe?: string;
+  stripeAccountId?: string;
   paypal?: string;
 }
+
+export type CheckoutState = 'idle' | 'loading' | 'draft' | 'updating' | 'finalized' | 'paid' | 'failure';
 
 export interface CheckoutSession extends Object {
   id?: string;
@@ -105,7 +108,7 @@ export interface CheckoutSession extends Object {
   amount_subtotal?: number;
   line_items: Array<LineItem>;
   metadata?: Object;
-  processor_intent?: ProcessorIntent;
+  payment_intent?: PaymentIntent;
   discount_amount?: number;
   discount?: DiscountResponse;
 }
@@ -131,7 +134,7 @@ export interface DiscountResponse extends Object {
   promotion: Promotion;
 }
 
-export interface ProcessorIntent extends Object {
+export interface PaymentIntent extends Object {
   id: string;
   object: string;
   processor_type: string;

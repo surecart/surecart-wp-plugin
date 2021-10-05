@@ -2,7 +2,7 @@ import { select, useDispatch } from '@wordpress/data';
 import { InnerBlocks } from '@wordpress/block-editor';
 
 import { template } from '../template.json';
-import { snackbarNotice } from '../../../utils/notices';
+import { ALLOWED_BLOCKS } from '../../../blocks';
 import withIsPremium from '../../../higher-order/withIsPremium';
 
 export default withIsPremium(
@@ -42,6 +42,7 @@ export default withIsPremium(
 			<InnerBlocks
 				renderAppender={ InnerBlocks.ButtonBlockAppender }
 				// templateLock={ isPremium ? 'none' : 'insert' }
+				allowedBlocks={ ALLOWED_BLOCKS }
 				template={ template }
 			/>
 		);

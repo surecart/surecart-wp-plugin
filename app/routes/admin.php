@@ -100,6 +100,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /*
 |--------------------------------------------------------------------------
+| Orders
+|--------------------------------------------------------------------------
+*/
+\CheckoutEngine::route()
+->where( 'admin', 'ce-abandoned-checkouts' )
+->middleware( 'user.can:edit_pk_orders' ) // TODO: change to manage coupons.
+->setNamespace( '\\CheckoutEngine\\Controllers\\Admin\\Abandoned\\' )
+->group(
+	function() {
+		\CheckoutEngine::route()->get()->where( 'ce_url_var', false, 'action' )->name( 'abandoned.index' )->handle( 'AbandonedCheckoutViewController@index' );
+		\CheckoutEngine::route()->get()->where( 'ce_url_var', 'edit', 'action' )->name( 'abandoned.edit' )->handle( 'AbandonedCheckoutViewController@edit' );
+	}
+);
+
+/*
+|--------------------------------------------------------------------------
 | Settings
 |--------------------------------------------------------------------------
 */

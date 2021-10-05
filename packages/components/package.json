@@ -41,10 +41,12 @@
     "@stripe/stripe-js": "^1.14.0",
     "@wordpress/api-fetch": "^5.1.1",
     "@wordpress/url": "^3.1.1",
+    "@xstate/fsm": "^1.6.2",
     "choices.js": "^9.0.1",
     "clsx": "^1.1.1",
     "element-internals-polyfill": "^0.1.40",
     "fuse.js": "^6.4.6",
+    "import": "^0.0.6",
     "sass": "^1.29.0",
     "stencil-fragment": "^1.0.1",
     "stencil-wormhole": "^3.4.1"

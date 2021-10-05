@@ -1,5 +1,6 @@
 import { Component, h, Prop } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
+import { CheckoutState } from '../../../types';
 
 @Component({
   tag: 'ce-order-summary',
@@ -7,16 +8,16 @@ import { openWormhole } from 'stencil-wormhole';
   shadow: true,
 })
 export class CEOrderSummary {
-  @Prop() calculating: boolean = false;
+  @Prop() state: CheckoutState;
 
   render() {
     return (
       <div class="summary">
         <slot />
-        {this.calculating && <ce-block-ui></ce-block-ui>}
+        {['updating', 'paying', 'finalized'].includes(this.state) && <ce-block-ui></ce-block-ui>}
       </div>
     );
   }
 }
 
-openWormhole(CEOrderSummary, ['calculating'], false);
+openWormhole(CEOrderSummary, ['state'], false);

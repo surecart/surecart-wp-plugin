@@ -17,6 +17,7 @@ export class CePayment {
   /** Your stripe publishable key. */
   @Prop() keys: Keys = {
     stripe: '',
+    stripeAccountId: '',
     paypal: '',
   };
 
@@ -39,8 +40,15 @@ export class CePayment {
     if ('stripe' === this.paymentMethod) {
       return (
         <Host>
-          <ce-stripe-element label={this.label} checkoutSession={this.checkoutSession} stripeAccountId={this.stripeAccountId} publishableKey={this.keys.stripe}></ce-stripe-element>
-          {this.secureNotice && <ce-secure-notice>{this.secureNotice}</ce-secure-notice>}
+          <ce-stripe-element
+            label={this.label}
+            checkoutSession={this.checkoutSession}
+            stripeAccountId={this.keys.stripeAccountId}
+            publishableKey={this.keys.stripe}
+          ></ce-stripe-element>
+          <ce-secure-notice>
+            <slot>{this.secureNotice}</slot>
+          </ce-secure-notice>
         </Host>
       );
     }

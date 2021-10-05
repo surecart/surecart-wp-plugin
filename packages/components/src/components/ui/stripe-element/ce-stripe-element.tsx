@@ -1,4 +1,4 @@
-import { Component, Prop, Element, State, Watch, h } from '@stencil/core';
+import { Component, Prop, Element, State, Watch, h, EventEmitter, Event } from '@stencil/core';
 import { loadStripe } from '@stripe/stripe-js/pure';
 import { CheckoutSession } from '../../../types';
 
@@ -38,11 +38,14 @@ export class CEStripeElement {
   /** Inputs focus */
   @Prop({ mutable: true, reflect: true }) hasFocus: boolean;
 
+  @Event() cePaid: EventEmitter<void>;
+  @Event() cePayError: EventEmitter<any>;
+
   @State() error: string;
   @State() confirming: boolean;
 
   async componentWillLoad() {
-    if (!this.publishableKey) {
+    if (!this.publishableKey || !this.stripeAccountId) {
       return;
     }
     this.stripe = await loadStripe(this.publishableKey, { stripeAccount: this.stripeAccountId });
@@ -54,24 +57,28 @@ export class CEStripeElement {
     // must be finalized
     if (val?.status !== 'finalized') return;
     // must be a stripe session
-    if (val?.processor_intent?.processor_type !== 'stripe') return;
+    if (val?.payment_intent?.processor_type !== 'stripe') return;
     // must have a secret
-    if (!val?.processor_intent?.external_client_secret) return;
+    if (!val?.payment_intent?.external_client_secret) return;
     // must have an external intent id
-    if (!val?.processor_intent?.external_intent_id) return;
+    if (!val?.payment_intent?.external_intent_id) return;
     // prevent possible double-charges
     if (this.confirming) return;
 
     this.confirming = true;
     try {
-      await this.stripe.confirmCardPayment(val.processor_intent.external_client_secret, {
+      await this.stripe.confirmCardPayment(val.payment_intent.external_client_secret, {
         payment_method: {
           card: this.element,
           billing_details: {
             ...(this.checkoutSession.name ? { name: this.checkoutSession?.name } : {}),
+            ...(this.checkoutSession.email ? { email: this.checkoutSession?.email } : {}),
           },
         },
       });
+      this.cePaid.emit();
+    } catch (e) {
+      this.cePayError.emit(e);
     } finally {
       this.confirming = false;
     }
@@ -111,7 +118,7 @@ export class CEStripeElement {
 
   render() {
     return (
-      <ce-input class="ce-stripe" size={this.size} label={this.label} hasFocus={this.hasFocus}>
+      <ce-input error-message={this.error} class="ce-stripe" size={this.size} label={this.label} hasFocus={this.hasFocus}>
         <div ref={el => (this.container = el as HTMLDivElement)}></div>
       </ce-input>
     );

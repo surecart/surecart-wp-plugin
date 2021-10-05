@@ -1,7 +1,3 @@
-:host {
-  display: block;
-}
-
 /**
  * @prop --width: The width of the switch.
  * @prop --height: The height of the switch.
@@ -12,7 +8,7 @@
   --thumb-size: calc(var(--ce-toggle-size) - 2px);
   --width: calc(var(--height) * 2);
 
-  display: inline-block;
+  display: block;
 }
 
 .switch {

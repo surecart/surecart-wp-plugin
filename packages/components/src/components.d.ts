@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { CheckoutSession, ChoiceItem, Coupon, Keys, LineItemData, PriceData, Product, ProductChoices } from "./types";
+import { CheckoutSession, CheckoutState, ChoiceItem, Coupon, Keys, LineItemData, PriceData, Product, ProductChoices } from "./types";
 export namespace Components {
     interface CeAlert {
         /**
@@ -187,6 +187,10 @@ export namespace Components {
           * Stripe publishable key
          */
         "stripePublishableKey": string;
+        /**
+          * Where to go on success
+         */
+        "successUrl": string;
     }
     interface CeChoice {
         /**
@@ -353,7 +357,7 @@ export namespace Components {
           * Serializes all form controls elements and returns a `FormData` object.
          */
         "getFormData": () => Promise<FormData>;
-        "getFormJson": () => Promise<{ [k: string]: FormDataEntryValue; }>;
+        "getFormJson": () => Promise<{}>;
         /**
           * Prevent the form from validating inputs before submitting.
          */
@@ -569,11 +573,10 @@ export namespace Components {
         "price": string;
     }
     interface CeLineItems {
-        "calculating": boolean;
         "checkoutSession": CheckoutSession;
         "edit": boolean;
         "lineItemData": Array<LineItemData>;
-        "loading": boolean;
+        "state": CheckoutState;
     }
     interface CeMenu {
     }
@@ -602,7 +605,7 @@ export namespace Components {
         "value": string;
     }
     interface CeOrderSummary {
-        "calculating": boolean;
+        "state": CheckoutState;
     }
     interface CePayment {
         /**
@@ -638,7 +641,6 @@ export namespace Components {
         "paymentMethod": 'stripe' | 'paypal';
     }
     interface CePriceChoices {
-        "calculating": boolean;
         "checkoutSession": CheckoutSession;
         "choices": ProductChoices;
         "columns": number;
@@ -646,8 +648,8 @@ export namespace Components {
         "default": string;
         "label": string;
         "lineItemData": Array<LineItemData>;
-        "loading": boolean;
         "products": Array<Product>;
+        "state": CheckoutState;
         "type": 'radio' | 'checkbox';
     }
     interface CePriceInput {
@@ -943,21 +945,17 @@ export namespace Components {
     }
     interface CeSubmit {
         /**
-          * Are the totals calculating
-         */
-        "calculating": boolean;
-        /**
           * Draws the button full-width
          */
         "full"?: boolean;
         /**
-          * Is the form loading
-         */
-        "loading": boolean;
-        /**
           * The button's size.
          */
         "size": 'small' | 'medium' | 'large';
+        /**
+          * Is the form loading
+         */
+        "state": CheckoutState;
         /**
           * Draws the button full-width
          */
@@ -1552,6 +1550,10 @@ declare namespace LocalJSX {
           * Stripe publishable key
          */
         "stripePublishableKey"?: string;
+        /**
+          * Where to go on success
+         */
+        "successUrl"?: string;
     }
     interface CeChoice {
         /**
@@ -1974,12 +1976,11 @@ declare namespace LocalJSX {
         "price"?: string;
     }
     interface CeLineItems {
-        "calculating"?: boolean;
         "checkoutSession"?: CheckoutSession;
         "edit"?: boolean;
         "lineItemData"?: Array<LineItemData>;
-        "loading"?: boolean;
         "onCeUpdateLineItem"?: (event: CustomEvent<{ id: string; amount: number }>) => void;
+        "state"?: CheckoutState;
     }
     interface CeMenu {
         "onCeSelect"?: (event: CustomEvent<{ item: HTMLCeMenuItemElement }>) => void;
@@ -2001,7 +2002,7 @@ declare namespace LocalJSX {
         "value"?: string;
     }
     interface CeOrderSummary {
-        "calculating"?: boolean;
+        "state"?: CheckoutState;
     }
     interface CePayment {
         /**
@@ -2037,7 +2038,6 @@ declare namespace LocalJSX {
         "paymentMethod"?: 'stripe' | 'paypal';
     }
     interface CePriceChoices {
-        "calculating"?: boolean;
         "checkoutSession"?: CheckoutSession;
         "choices"?: ProductChoices;
         "columns"?: number;
@@ -2045,7 +2045,6 @@ declare namespace LocalJSX {
         "default"?: string;
         "label"?: string;
         "lineItemData"?: Array<LineItemData>;
-        "loading"?: boolean;
         /**
           * Add line items event.
          */
@@ -2055,6 +2054,7 @@ declare namespace LocalJSX {
          */
         "onCeUpdateLineItems"?: (event: CustomEvent<Array<LineItemData>>) => void;
         "products"?: Array<Product>;
+        "state"?: CheckoutState;
         "type"?: 'radio' | 'checkbox';
     }
     interface CePriceInput {
@@ -2309,6 +2309,8 @@ declare namespace LocalJSX {
           * The input's label. Alternatively, you can use the label slot.
          */
         "label"?: string;
+        "onCePaid"?: (event: CustomEvent<void>) => void;
+        "onCePayError"?: (event: CustomEvent<any>) => void;
         /**
           * Stripe publishable key
          */
@@ -2362,21 +2364,17 @@ declare namespace LocalJSX {
     }
     interface CeSubmit {
         /**
-          * Are the totals calculating
-         */
-        "calculating"?: boolean;
-        /**
           * Draws the button full-width
          */
         "full"?: boolean;
         /**
-          * Is the form loading
-         */
-        "loading"?: boolean;
-        /**
           * The button's size.
          */
         "size"?: 'small' | 'medium' | 'large';
+        /**
+          * Is the form loading
+         */
+        "state"?: CheckoutState;
         /**
           * Draws the button full-width
          */

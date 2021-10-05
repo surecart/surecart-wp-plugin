@@ -2,7 +2,7 @@ import { Component, h, Element, Prop, Event, EventEmitter, Method, Listen } from
 
 interface FormControl {
   tag: string;
-  serialize: (el: HTMLElement, formData: FormData) => void;
+  serialize: (el: HTMLElement, formData: FormData | object) => void;
   click?: (event: MouseEvent) => any;
   keyDown?: (event: KeyboardEvent) => any;
 }
@@ -41,11 +41,15 @@ export class CEForm {
 
   private formControls: FormControl[];
 
+  appendData(formData: FormData | object, name: string, value: any) {
+    return formData instanceof FormData ? formData.append(name, value) : (formData[name] = value);
+  }
+
   componentWillLoad() {
     this.formControls = [
       {
         tag: 'button',
-        serialize: (el: HTMLButtonElement, formData) => (el.name && !el.disabled ? formData.append(el.name, el.value) : null),
+        serialize: (el: HTMLButtonElement, formData) => (el.name && !el.disabled ? this.appendData(formData, el.name, el.value) : null),
         click: event => {
           const target = event.target as HTMLButtonElement;
           if (target.type === 'submit') {
@@ -65,11 +69,11 @@ export class CEForm {
           }
 
           if (el.type === 'file') {
-            [...(el.files as FileList)].map(file => formData.append(el.name, file));
+            [...(el.files as FileList)].map(file => this.appendData(formData, el.name, file));
             return;
           }
 
-          formData.append(el.name, el.value);
+          this.appendData(formData, el.name, el.value);
         },
         click: event => {
           const target = event.target as HTMLInputElement;
@@ -91,19 +95,19 @@ export class CEForm {
             if (el.multiple) {
               const selectedOptions = [...el.querySelectorAll('option:checked')];
               if (selectedOptions.length) {
-                selectedOptions.map((option: HTMLOptionElement) => formData.append(el.name, option.value));
+                selectedOptions.map((option: HTMLOptionElement) => this.appendData(formData, el.name, option.value));
               } else {
-                formData.append(el.name, '');
+                this.appendData(formData, el.name, '');
               }
             } else {
-              formData.append(el.name, el.value);
+              this.appendData(formData, el.name, el.value);
             }
           }
         },
       },
       {
         tag: 'ce-button',
-        serialize: (el: any, formData) => (el.name && !el.disabled ? formData.append(el.name, el.value) : null),
+        serialize: (el: any, formData) => (el.name && !el.disabled ? this.appendData(formData, el.name, el.value) : null),
         click: event => {
           const target = event.target as any;
           if (target.submit) {
@@ -113,17 +117,17 @@ export class CEForm {
       },
       {
         tag: 'ce-checkbox',
-        serialize: (el: any, formData) => (el.name && el.checked && !el.disabled ? formData.append(el.name, el.value) : null),
+        serialize: (el: any, formData) => (el.name && el.checked && !el.disabled ? this.appendData(formData, el.name, el.value) : null),
       },
       {
         tag: 'ce-color-picker',
-        serialize: (el: any, formData) => (el.name && !el.disabled ? formData.append(el.name, el.value) : null),
+        serialize: (el: any, formData) => (el.name && !el.disabled ? this.appendData(formData, el.name, el.value) : null),
       },
       {
         tag: 'ce-price-input',
         serialize: (el: any, formData) => {
           if (el.name && !el.disabled) {
-            return formData.append(el.name, el.value);
+            return this.appendData(formData, el.name, el.value);
           } else {
             null;
           }
@@ -138,22 +142,7 @@ export class CEForm {
         tag: 'ce-input',
         serialize: (el: any, formData) => {
           if (el.name && !el.disabled) {
-            return formData.append(el.name, el.value);
-          } else {
-            null;
-          }
-        },
-        keyDown: event => {
-          if (event.key === 'Enter' && !event.defaultPrevented) {
-            this.submit();
-          }
-        },
-      },
-      {
-        tag: 'ce-stripe-element',
-        serialize: (el: any, formData) => {
-          if (el.name && !el.disabled) {
-            return formData.append(el.name, el.value);
+            return this.appendData(formData, el.name, el.value);
           } else {
             null;
           }
@@ -166,19 +155,11 @@ export class CEForm {
       },
       {
         tag: 'ce-radio',
-        serialize: (el: any, formData) => (el.name && el.checked && !el.disabled ? formData.append(el.name, el.value) : null),
+        serialize: (el: any, formData) => (el.name && el.checked && !el.disabled ? this.appendData(formData, el.name, el.value) : null),
       },
       {
         tag: 'ce-choice',
-        serialize: (el: any, formData) => (el.name && el.checked && !el.disabled ? formData.append(el.name, el.value) : null),
-      },
-      {
-        tag: 'ce-range',
-        serialize: (el: any, formData) => {
-          if (el.name && !el.disabled) {
-            formData.append(el.name, el.value + '');
-          }
-        },
+        serialize: (el: any, formData) => (el.name && el.checked && !el.disabled ? this.appendData(formData, el.name, el.value) : null),
       },
       {
         tag: 'ce-select',
@@ -187,27 +168,27 @@ export class CEForm {
             if (el.multiple) {
               const selectedOptions = [...el.value];
               if (selectedOptions.length) {
-                selectedOptions.map(value => formData.append(el.name, value));
+                selectedOptions.map(value => this.appendData(formData, el.name, value));
               } else {
-                formData.append(el.name, '');
+                this.appendData(formData, el.name, '');
               }
             } else {
-              formData.append(el.name, el.value + '');
+              this.appendData(formData, el.name, el.value + '');
             }
           }
         },
       },
       {
         tag: 'ce-switch',
-        serialize: (el: any, formData) => (el.name && el.checked && !el.disabled ? formData.append(el.name, el.value) : null),
+        serialize: (el: any, formData) => (el.name && el.checked && !el.disabled ? this.appendData(formData, el.name, el.value) : null),
       },
       {
         tag: 'ce-textarea',
-        serialize: (el: any, formData) => (el.name && !el.disabled ? formData.append(el.name, el.value) : null),
+        serialize: (el: any, formData) => (el.name && !el.disabled ? this.appendData(formData, el.name, el.value) : null),
       },
       {
         tag: 'textarea',
-        serialize: (el: HTMLTextAreaElement, formData) => (el.name && !el.disabled ? formData.append(el.name, el.value) : null),
+        serialize: (el: HTMLTextAreaElement, formData) => (el.name && !el.disabled ? this.appendData(formData, el.name, el.value) : null),
       },
     ];
   }
@@ -235,8 +216,10 @@ export class CEForm {
 
   @Method('getFormJson')
   async getFormJson() {
-    let formData = await this.getFormData();
-    return Object.fromEntries(formData);
+    const data = {};
+    const formControls = this.getFormControls();
+    formControls.map(el => this.serializeElement(el, data));
+    return data;
   }
 
   @Method('validate')
@@ -305,7 +288,7 @@ export class CEForm {
     }
   }
 
-  serializeElement(el: HTMLElement, formData: FormData) {
+  serializeElement(el: HTMLElement, formData: FormData | object) {
     const tag = el.tagName.toLowerCase();
 
     for (const formControl of this.formControls) {

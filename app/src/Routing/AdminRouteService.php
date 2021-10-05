@@ -15,14 +15,15 @@ class AdminRouteService {
 	 * @var array
 	 */
 	protected $page_names = [
-		'product'   => 'ce-products',
-		'products'  => 'ce-products',
-		'order'     => 'ce-orders',
-		'orders'    => 'ce-orders',
-		'customers' => 'ce-customers',
-		'customer'  => 'ce-customers',
-		'coupon'    => 'ce-coupons',
-		'coupons'   => 'ce-coupons',
+		'product'             => 'ce-products',
+		'products'            => 'ce-products',
+		'order'               => 'ce-orders',
+		'orders'              => 'ce-orders',
+		'customers'           => 'ce-customers',
+		'customer'            => 'ce-customers',
+		'abandoned_checkouts' => 'ce-abandoned-checkouts',
+		'coupon'              => 'ce-coupons',
+		'coupons'             => 'ce-coupons',
 	];
 
 	/**

@@ -19,8 +19,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: var(--ce-toggle-size);
-  height: var(--ce-toggle-size);
+  width: var(--ce-checkbox-size);
+  height: var(--ce-checkbox-size);
   border: solid var(--ce-input-border-width) var(--ce-input-border-color);
   border-radius: 2px;
   background-color: var(--ce-input-background-color);
@@ -37,8 +37,8 @@
 
   .checkbox__icon {
     display: inline-flex;
-    width: var(--ce-toggle-size);
-    height: var(--ce-toggle-size);
+    width: var(--ce-checkbox-size);
+    height: var(--ce-checkbox-size);
 
     svg {
       width: 100%;
@@ -89,7 +89,7 @@
 }
 
 .checkbox__label {
-  line-height: var(--ce-toggle-size);
+  line-height: var(--ce-checkbox-size);
   margin-left: 0.5em;
-  user-select: none;
+  // user-select: none;
 }

@@ -186,7 +186,8 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 			'ceData',
 			[
 				'keys' => [
-					'stripe' => 'pk_test_51FrVhTKIxBDlEhovnzFUjE1K3e8s9QInYW4a2S1BrYYgePmNIFZUCSvUY90MmD10PNh0ZxYFoxkW6P1xsfPofCYG00JTdSKWFO',
+					'stripe'          => 'pk_test_51FrVhTKIxBDlEhovnzFUjE1K3e8s9QInYW4a2S1BrYYgePmNIFZUCSvUY90MmD10PNh0ZxYFoxkW6P1xsfPofCYG00JTdSKWFO',
+					'stripeAccountId' => 'acct_1J8pDC2ejo5ZGM5Q',
 				],
 			]
 		);

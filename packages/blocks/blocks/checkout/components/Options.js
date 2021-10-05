@@ -1,6 +1,12 @@
 import { __ } from '@wordpress/i18n';
 import { useState, useEffect } from '@wordpress/element';
-import { CeButton, CeFormRow } from '@checkout-engine/react';
+import {
+	CeButton,
+	CeFormSection,
+	CeSelect,
+	CeRadioGroup,
+	CeRadio,
+} from '@checkout-engine/react';
 import SelectProduct from './SelectProduct';
 import Choice from './Choice';
 
@@ -14,27 +20,46 @@ export default ( { attributes, setAttributes } ) => {
 
 	return (
 		<div>
-			<CeButton onClick={ clear }>Clear</CeButton>
-			{ Object.keys( choices ).map( ( id ) => {
-				const product = choices[ id ];
-				return (
-					<Choice
-						attributes={ attributes }
-						setAttributes={ setAttributes }
-						id={ id }
-						key={ product.id }
-						choice={ product }
-					/>
-				);
-			} ) }
-			<CeFormRow>
-				<CeButton type="primary" onClick={ () => setOpen( true ) }>
-					{ __( 'Add Product', 'checkout_engine' ) }
-				</CeButton>
-				<CeButton onClick={ () => setOpen( true ) }>
-					{ __( 'Create Product', 'checkout_engine' ) }
-				</CeButton>
-			</CeFormRow>
+			<CeFormSection label="Products">
+				{ Object.keys( choices ).map( ( id ) => {
+					const product = choices[ id ];
+					return (
+						<Choice
+							attributes={ attributes }
+							setAttributes={ setAttributes }
+							id={ id }
+							key={ product.id }
+							choice={ product }
+						/>
+					);
+				} ) }
+				<ce-form-row>
+					<div>
+						<CeButton
+							type="primary"
+							onClick={ () => setOpen( true ) }
+						>
+							{ __( 'Add Product', 'checkout_engine' ) }
+						</CeButton>
+						<CeButton onClick={ () => setOpen( true ) }>
+							{ __( 'Create Product', 'checkout_engine' ) }
+						</CeButton>
+					</div>
+				</ce-form-row>
+			</CeFormSection>
+			<CeFormSection>
+				<CeRadioGroup label={ 'Product Options' }>
+					<CeRadio value="all">
+						Customer must purchase all products
+					</CeRadio>
+					<CeRadio value="radio">
+						Customer must select one price from the options.
+					</CeRadio>
+					<CeRadio value="checkbox">
+						Customer can select multiple prices.
+					</CeRadio>
+				</CeRadioGroup>
+			</CeFormSection>
 			{ open && (
 				<SelectProduct
 					attributes={ attributes }

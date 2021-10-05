@@ -1,5 +1,5 @@
 import { Component, h, Prop, Element, Event, EventEmitter, State } from '@stencil/core';
-import { Product, Price, LineItemData, ProductChoices, CheckoutSession } from '../../../types';
+import { Product, Price, LineItemData, ProductChoices, CheckoutSession, CheckoutState } from '../../../types';
 import { getAvailablePricesForProduct, getSiblings, isProductSelected, isPriceSelected } from './functions';
 import { openWormhole } from 'stencil-wormhole';
 
@@ -13,14 +13,13 @@ export class CePriceChoices {
 
   @Prop() default: string;
   @Prop() type: 'radio' | 'checkbox' = 'radio';
-  @Prop() calculating: boolean;
   @Prop() choices: ProductChoices;
   @Prop() columns: number = 1;
   @Prop() checkoutSession: CheckoutSession;
   @Prop() lineItemData: Array<LineItemData>;
   @Prop() currencyCode: string;
   @Prop() products: Array<Product>;
-  @Prop() loading: boolean;
+  @Prop() state: CheckoutState;
   @Prop() label: string;
 
   @State() selectedProducts: Array<Product>;
@@ -98,7 +97,7 @@ export class CePriceChoices {
       return;
     }
 
-    if (this.loading) {
+    if (this.state === 'loading') {
       return this.renderLoading(length);
     }
 
@@ -155,7 +154,7 @@ export class CePriceChoices {
     const prices = getAvailablePricesForProduct(product, this.choices);
     if (!prices || prices?.length < 2) return;
 
-    if (this.loading) {
+    if (this.state === 'loading') {
       return this.renderLoading(prices?.length);
     }
 
@@ -188,10 +187,10 @@ export class CePriceChoices {
       <div class="price-choices">
         {this.renderProductSelector()}
         {this.renderPriceSelectors()}
-        {this.calculating && <ce-block-ui z-index={2}></ce-block-ui>}
+        {this.state === 'updating' && <ce-block-ui z-index={2}></ce-block-ui>}
       </div>
     );
   }
 }
 
-openWormhole(CePriceChoices, ['currencyCode', 'choices', 'products', 'calculating', 'checkoutSession', 'loading'], false);
+openWormhole(CePriceChoices, ['currencyCode', 'choices', 'products', 'checkoutSession', 'state'], false);

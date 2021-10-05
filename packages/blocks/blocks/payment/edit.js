@@ -2,7 +2,7 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { InspectorControls } from '@wordpress/editor';
+import { InspectorControls, RichText } from '@wordpress/block-editor';
 import { Fragment } from '@wordpress/element';
 import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
 
@@ -37,11 +37,18 @@ export default ( { className, attributes, setAttributes } ) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<CePayment
-				className={ className }
-				label={ label }
-				secureNotice={ secure_notice }
-			></CePayment>
+			<CePayment className={ className } label={ label }>
+				<RichText
+					aria-label={ __( 'Secure Notice' ) }
+					placeholder={ __( 'Add some secure notice text...' ) }
+					value={ secure_notice }
+					onChange={ ( secure_notice ) =>
+						setAttributes( { secure_notice } )
+					}
+					withoutInteractiveFormatting
+					allowedFormats={ [ 'core/bold', 'core/italic' ] }
+				/>
+			</CePayment>
 		</Fragment>
 	);
 };

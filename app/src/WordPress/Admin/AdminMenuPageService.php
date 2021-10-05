@@ -2,8 +2,10 @@
 
 namespace CheckoutEngine\WordPress\Admin;
 
+use CheckoutEngine\Controllers\Admin\Orders\OrderScriptsController;
 use CheckoutEngine\Controllers\Admin\Coupons\CouponScriptsController;
 use CheckoutEngine\Controllers\Admin\Products\ProductScriptsController;
+use CheckoutEngine\Controllers\Admin\Abandoned\AbandonedCheckoutScriptsController;
 
 class AdminMenuPageService {
 	protected $slug = 'ce-getting-started';
@@ -29,7 +31,7 @@ class AdminMenuPageService {
 			'products'    => \add_submenu_page( $this->slug, __( 'Products', 'checkout_engine' ), __( 'Products', 'checkout_engine' ), 'edit_pk_products', 'ce-products', '__return_false' ),
 			'coupons'     => \add_submenu_page( $this->slug, __( 'Coupons', 'checkout_engine' ), __( 'Coupons', 'checkout_engine' ), 'edit_pk_coupons', 'ce-coupons', '__return_false' ),
 			'customers'   => \add_submenu_page( $this->slug, __( 'Customers', 'checkout_engine' ), __( 'Customers', 'checkout_engine' ), 'edit_pk_customers', 'ce-customers', '__return_false' ),
-			'abandoned'   => \add_submenu_page( $this->slug, __( 'Abandoned Orders', 'checkout_engine' ), __( 'Abandoned Orders', 'checkout_engine' ), 'edit_pk_orders', 'ce-abandoned-orders', '__return_false' ),
+			'abandoned'   => \add_submenu_page( $this->slug, __( 'Abandoned Orders', 'checkout_engine' ), __( 'Abandoned Orders', 'checkout_engine' ), 'edit_pk_orders', 'ce-abandoned-checkouts', '__return_false' ),
 			'settings'    => \add_submenu_page( $this->slug, __( 'Settings', 'checkout_engine' ), __( 'Settings', 'checkout_engine' ), 'manage_account_settings', 'ce-settings', '__return_false' ),
 		];
 
@@ -56,6 +58,8 @@ class AdminMenuPageService {
 
 	public function registerScripts() {
 		add_action( "admin_print_scripts-{$this->pages['coupons']}", \CheckoutEngine::closure()->method( CouponScriptsController::class, 'enqueue' ) );
+		add_action( "admin_print_scripts-{$this->pages['orders']}", \CheckoutEngine::closure()->method( OrderScriptsController::class, 'enqueue' ) );
+		add_action( "admin_print_scripts-{$this->pages['abandoned']}", \CheckoutEngine::closure()->method( AbandonedCheckoutScriptsController::class, 'enqueue' ) );
 		add_action( "admin_print_scripts-{$this->pages['products']}", \CheckoutEngine::closure()->method( ProductScriptsController::class, 'enqueue' ) );
 		add_action( "admin_print_scripts-{$this->pages['settings']}", [ $this, 'settingsPageScripts' ] );
 	}

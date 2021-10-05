@@ -9,6 +9,24 @@
 	border-radius: 4px;
 	box-shadow: 0 0 0 var( --wp-admin-border-width-focus ) transparent;
 }
+[data-type="checkout-engine/checkout-form"] {
+  .block-editor-block-list__layout * .block-editor-block-list__block {
+    padding: 0;
+  }
+}
+
+.ce-checkout-container {
+  .block-editor-block-list__layout {
+    > * {
+      margin-bottom: var(--ce-form-row-spacing, 0.75em);
+    }
+
+    [data-type="checkout-engine/form-section"] {
+      margin-bottom:  var(--ce-form-section-spacing);
+      margin-top: var(--ce-form-section-spacing);
+    }
+  }
+}
 
 .wp-block-checkout-engine-checkout-form {
   &[data-align="center"] {

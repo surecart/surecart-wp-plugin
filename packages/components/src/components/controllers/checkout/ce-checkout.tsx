@@ -3,8 +3,11 @@ import { Price, Product, Coupon, CheckoutSession, Customer, LineItemData, PriceD
 import { handleInputs } from './functions';
 import { getProducts } from '../../../services/fetch';
 import { calculateInitialLineItems } from '../../../functions/line-items';
-import { getOrCreateSession, createOrUpdateSession, finalizeSession } from '../../../services/session/index';
+import { getOrCreateSession, createOrUpdateSession, finalizeSession, getSession } from '../../../services/session/index';
 import { Universe } from 'stencil-wormhole';
+import { addQueryArgs } from '@wordpress/url';
+import { interpret } from '@xstate/fsm';
+import { checkoutMachine } from './helpers/checkout-machine';
 
 @Component({
   tag: 'ce-checkout',
@@ -12,6 +15,9 @@ import { Universe } from 'stencil-wormhole';
   shadow: false,
 })
 export class CECheckout {
+  /** Holds our state machine service */
+  private _stateService = interpret(checkoutMachine);
+
   @Element() el: HTMLElement;
 
   /** Pass an array of ids for choice fields */
@@ -25,6 +31,9 @@ export class CECheckout {
 
   /** Currency to use for this checkout. */
   @Prop() currencyCode: string = 'usd';
+
+  /** Where to go on success */
+  @Prop() successUrl: string = '';
 
   /** Pass line item data to create with session. */
   @Prop({ mutable: true }) lineItemData: Array<LineItemData>;
@@ -60,6 +69,8 @@ export class CECheckout {
   @State() customer: Customer;
 
   /** Loading states for different parts of the form. */
+  @State() checkoutState = checkoutMachine.initialState;
+
   @State() loading: boolean = true;
 
   /** Calculation state for totals. */
@@ -73,6 +84,9 @@ export class CECheckout {
 
   /** Error to display. */
   @State() error: string;
+
+  /** Is the checkout complete? */
+  @State() complete: boolean;
 
   /** Has the users nonce/session expired */
   @State() expired: boolean;
@@ -95,13 +109,27 @@ export class CECheckout {
     this.fetchProducts();
   }
 
+  @Listen('cePaid')
+  async handlePaid() {
+    this.setState('PAID');
+    window.localStorage.removeItem(this.el.id);
+    window.location.href = addQueryArgs(this.successUrl, { checkout_session: this.checkoutSession.id });
+  }
+
+  @Listen('cePayError')
+  handlePayError(e) {
+    this.makeDraft();
+  }
+
   /**
    * Handles coupon updates.
    */
   @Listen('ceApplyCoupon')
   async handleCouponApply(e) {
     const promotion_code = e.detail;
+    const { send } = this._stateService;
     try {
+      send('FETCH');
       this.calculating = true;
       this.checkoutSession = await createOrUpdateSession({
         id: this.checkoutSession.id,
@@ -111,9 +139,16 @@ export class CECheckout {
           },
         },
       });
+      send('REJECT');
     } finally {
+      send('REJECT');
       this.calculating = false;
     }
+  }
+
+  setState(name) {
+    const { send } = this._stateService;
+    return send(name);
   }
 
   /**
@@ -139,6 +174,7 @@ export class CECheckout {
   @Listen('ceFormChange')
   handleFormChange(e) {
     const data = e.detail;
+    if (!data) return;
     const { email, name, ...rest } = data;
     this.formState = {
       ...(data.email ? { email: data.email } : {}),
@@ -149,6 +185,13 @@ export class CECheckout {
     };
   }
 
+  @Watch('complete')
+  handleComplete(val) {
+    if (val && this.successUrl) {
+      window.location.href = addQueryArgs(this.successUrl, { checkout_session: this.checkoutSession.id });
+    }
+  }
+
   /**
    * Handles the form submission.
    * @param e
@@ -157,12 +200,48 @@ export class CECheckout {
   async handleFormSubmit(e) {
     this.handleFormChange(e);
 
+    const { send } = this._stateService;
+
     // first validate server-side and get key
-    this.checkoutSession = await finalizeSession({
+    try {
+      send('UPDATING');
+      this.checkoutSession = await finalizeSession({
+        id: this.checkoutSession.id,
+        data: {
+          ...this.getSessionSaveData(),
+          status: 'draft',
+        },
+        processor: 'stripe',
+      });
+      // send('FINALIZE');
+      // TODO: process payment with token
+    } catch (e) {
+      if (e?.code === 'checkout_session.invalid_status_transition') {
+        await createOrUpdateSession({
+          id: this.checkoutSession.id,
+          data: {
+            ...this.getSessionSaveData(),
+            status: 'draft',
+          },
+        });
+        this.handleFormSubmit(e);
+        return;
+      }
+      this.handleErrorResponse(e);
+      this.calculating = false;
+    }
+  }
+
+  async makeDraft() {
+    this.setState('DRAFT');
+    await createOrUpdateSession({
       id: this.checkoutSession.id,
-      data: this.getSessionSaveData(),
-      processor: 'stripe',
+      data: {
+        ...this.getSessionSaveData(),
+        status: 'draft',
+      },
     });
+    this.setState('RESOLVE');
   }
 
   /**
@@ -189,6 +268,10 @@ export class CECheckout {
       this.loaded.session = true; // session loaded
       localStorage.setItem(this.el.id, val.id);
     }
+    if (val.status === 'paid') {
+      window.localStorage.removeItem(this.el.id);
+    }
+
     handleInputs(this.el, val);
   }
 
@@ -198,12 +281,18 @@ export class CECheckout {
       email: this.checkoutSession.email,
       name: this.checkoutSession.name,
       metadata: this.checkoutSession.metadata,
+      live_mode: false,
+      group_key: this.el.id,
       line_items: this.lineItemData,
       ...this.formState,
     };
   }
 
   componentWillLoad() {
+    // Start state machine.
+    this._stateService.subscribe(state => (this.checkoutState = state));
+    this._stateService.start();
+
     // @ts-ignore
     Universe.create(this, this.state());
 
@@ -211,6 +300,11 @@ export class CECheckout {
     this.fetchProducts();
     // get or create session
     this.getOrCreateSession();
+  }
+
+  /** Remove state machine on disconnect. */
+  disconnectedCallback() {
+    this._stateService.stop();
   }
 
   handleErrorResponse(e) {
@@ -224,18 +318,24 @@ export class CECheckout {
   }
 
   async getOrCreateSession() {
+    const { send } = this._stateService;
+    const id = window.localStorage.getItem(this.el.id);
+
     try {
+      send('FETCH');
       this.checkoutSession = (await getOrCreateSession({
-        id: window.localStorage.getItem(this.el.id),
+        id,
         data: {
           currency: this.currencyCode || 'usd',
           line_items: calculateInitialLineItems(this.choices, this.priceData),
         },
       })) as CheckoutSession;
+      send('RESOLVE');
     } catch (e) {
+      send('REJECT');
       this.handleErrorResponse(e);
-    } finally {
-      this.calculating = false;
+      window.localStorage.removeItem(this.el.id);
+      this.getOrCreateSession();
     }
   }
 
@@ -243,16 +343,18 @@ export class CECheckout {
    * Create or update a session based on chosen line items
    */
   async createOrUpdateSession() {
+    const { send } = this._stateService;
     const id = localStorage.getItem(this.el.id) || this.checkoutSession?.id;
     try {
+      send('FETCH');
       this.checkoutSession = (await createOrUpdateSession({
         id,
         data: this.getSessionSaveData(),
       })) as CheckoutSession;
+      send('RESOLVE');
     } catch (e) {
+      send('REJECT');
       this.handleErrorResponse(e);
-    } finally {
-      this.calculating = false;
     }
   }
 
@@ -274,6 +376,7 @@ export class CECheckout {
   state() {
     return {
       paymentMethod: 'stripe',
+      state: this.checkoutState.value,
       keys: this.keys,
       error: this.error,
       checkoutSession: this.checkoutSession,
@@ -285,11 +388,21 @@ export class CECheckout {
       lineItemData: this.lineItemData,
       currencyCode: this.currencyCode,
       loading: !Object.keys(this.loaded).every(key => !!this.loaded[key]),
-      calculating: this.calculating,
     };
   }
 
   render() {
+    if (!this.complete && this.checkoutSession?.status === 'paid') {
+      return (
+        <ce-card>
+          <ce-alert type="success" open>
+            <span slot="title">Session Expired.</span>
+            Please reload the page.
+          </ce-alert>
+        </ce-card>
+      );
+    }
+
     if (this.expired) {
       return (
         <ce-block-ui>
@@ -307,6 +420,7 @@ export class CECheckout {
           'ce-align-full': this.alignment === 'full',
         }}
       >
+        {this.error && <ce-alert type="danger">{this.error}</ce-alert>}
         <Universe.Provider state={this.state()}>
           <slot />
         </Universe.Provider>

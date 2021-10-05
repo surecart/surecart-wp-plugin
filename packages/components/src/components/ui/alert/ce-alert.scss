@@ -17,6 +17,7 @@
   font-family: var(--ce-input-font-family);
   font-weight: var(--ce-font-weight-normal);
   font-size: var(--ce-button-font-size-medium);
+  line-height: var(--ce-line-height-dense);
   border-radius: var(--ce-border-radius-medium);
   padding: var(--ce-spacing-large);
   display: flex;
@@ -77,8 +78,9 @@
 
 .alert__title {
   font-weight: var(--ce-font-weight-semibold);
-  margin-bottom: var(--ce-spacing-small);
+  margin-bottom: var(--ce-spacing-x-small);
 }
+
 .sr-only {
   position: absolute;
   width: 1px;

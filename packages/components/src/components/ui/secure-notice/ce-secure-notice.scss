@@ -1,15 +1,18 @@
 :host {
   display: block;
+  --ce-secure-notice-icon-color: var(--ce-color-gray-300);
+  --ce-secure-notice-font-size: var(--ce-font-size-small);
+  --ce-secure-notice-color: var(--ce-color-gray-500);
 }
 
 .notice {
-  color: var(--ce-color-gray-500);
-  font-size: var(--ce-font-size-small);
+  color: var(--ce-secure-notice-color);
+  font-size: var(--ce-secure-notice-font-size);
   display: flex;
   align-items: center;
 }
 
 .notice__icon {
-  color: var(--ce-color-gray-300);
+  color: var(--ce-secure-notice-icon-color);
   margin-right: 5px;
 }

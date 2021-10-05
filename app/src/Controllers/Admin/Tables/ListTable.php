@@ -26,6 +26,15 @@ abstract class ListTable extends \WP_List_Table {
 	}
 
 	/**
+	 * Define which columns are hidden
+	 *
+	 * @return Array
+	 */
+	public function get_hidden_columns() {
+		return array();
+	}
+
+	/**
 	 * Get the archive query status.
 	 *
 	 * @return boolean|null

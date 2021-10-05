@@ -17,12 +17,9 @@ import { CeFormRow, CeButton, CeSelect } from '@checkout-engine/react';
 export default ( { onRequestClose, attributes, setAttributes } ) => {
 	const { choices } = attributes;
 	const [ product, setProduct ] = useState( {} );
+	const [ products, setProducts ] = useState( [] );
 	const [ query, setQuery ] = useState( '' );
 	const [ loading, setLoading ] = useState( false );
-
-	const products = useSelect( ( select ) =>
-		select( 'checkout-engine/data' ).selectCollection( 'products' )
-	);
 
 	const addProduct = () => {
 		setAttributes( {
@@ -60,10 +57,7 @@ export default ( { onRequestClose, attributes, setAttributes } ) => {
 					archived: false,
 				} ),
 			} );
-			dispatch( 'checkout-engine/data' ).updateModels(
-				'products',
-				response
-			);
+			setProducts( response );
 		} finally {
 			setLoading( false );
 		}
