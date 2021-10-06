@@ -2349,551 +2349,6 @@ module.exports = JSON.parse("{\"name\":\"checkout-engine/checkout-form\",\"categ
 
 /***/ }),
 
-/***/ "./blocks/checkout/components/Choice.js":
-/*!**********************************************!*\
-  !*** ./blocks/checkout/components/Choice.js ***!
-  \**********************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/toConsumableArray */ "./node_modules/@babel/runtime/helpers/toConsumableArray.js");
-/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/asyncToGenerator.js");
-/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "./node_modules/@babel/runtime/helpers/slicedToArray.js");
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/regenerator */ "@babel/runtime/regenerator");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var dot_prop_immutable__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! dot-prop-immutable */ "../../node_modules/dot-prop-immutable/lib/index.js");
-/* harmony import */ var dot_prop_immutable__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(dot_prop_immutable__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @wordpress/api-fetch */ "@wordpress/api-fetch");
-/* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _checkout_engine_react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @checkout-engine/react */ "./node_modules/@checkout-engine/react/dist/index.js");
-
-
-
-
-
-
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = (function (_ref) {
-  var choice = _ref.choice,
-      attributes = _ref.attributes,
-      setAttributes = _ref.setAttributes,
-      id = _ref.id;
-  var choices = attributes.choices;
-
-  var _useState = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__["useState"])(null),
-      _useState2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default()(_useState, 2),
-      product = _useState2[0],
-      setProduct = _useState2[1];
-
-  var _useState3 = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__["useState"])(false),
-      _useState4 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default()(_useState3, 2),
-      loading = _useState4[0],
-      setLoading = _useState4[1];
-
-  var _useState5 = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__["useState"])(null),
-      _useState6 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default()(_useState5, 2),
-      error = _useState6[0],
-      setError = _useState6[1];
-
-  Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__["useEffect"])(function () {
-    fetchProduct();
-  }, [id]);
-
-  var fetchProduct = /*#__PURE__*/function () {
-    var _ref2 = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default.a.mark(function _callee() {
-      var result;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default.a.wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              setLoading(true);
-              _context.prev = 1;
-              _context.next = 4;
-              return _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_6___default()({
-                path: "checkout-engine/v1/products/".concat(id)
-              });
-
-            case 4:
-              result = _context.sent;
-              _context.next = 10;
-              break;
-
-            case 7:
-              _context.prev = 7;
-              _context.t0 = _context["catch"](1);
-              setError((_context.t0 === null || _context.t0 === void 0 ? void 0 : _context.t0.message) || __('Something went wrong', 'checkout_engine'));
-
-            case 10:
-              _context.prev = 10;
-              setLoading(false);
-              return _context.finish(10);
-
-            case 13:
-              setProduct(result);
-
-            case 14:
-            case "end":
-              return _context.stop();
-          }
-        }
-      }, _callee, null, [[1, 7, 10, 13]]);
-    }));
-
-    return function fetchProduct() {
-      return _ref2.apply(this, arguments);
-    };
-  }();
-
-  if (loading) {
-    console.log({
-      choice: choice
-    });
-    return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__["createElement"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_7__["CeFormRow"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__["createElement"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_7__["CeFormControl"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__["createElement"])("ce-skeleton", {
-      slot: "label",
-      style: {
-        width: '20px',
-        display: 'block'
-      }
-    }), choice.prices.map(function () {
-      return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__["createElement"])("ce-skeleton", {
-        style: {
-          width: '140px',
-          display: 'block'
-        }
-      });
-    })));
-  }
-
-  if (error) {
-    return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__["createElement"])("div", null, error);
-  }
-
-  if (!product) {
-    return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__["createElement"])("ce-choices", null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__["createElement"])("ce-choice", {
-      name: "loading",
-      disabled: true
-    }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__["createElement"])("ce-skeleton", {
-      style: {
-        width: '60px',
-        display: 'inline-block'
-      }
-    }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__["createElement"])("ce-skeleton", {
-      style: {
-        width: '140px',
-        display: 'inline-block'
-      },
-      slot: "description"
-    }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__["createElement"])("ce-skeleton", {
-      style: {
-        width: '20px',
-        display: 'inline-block'
-      },
-      slot: "price"
-    }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__["createElement"])("ce-skeleton", {
-      style: {
-        width: '40px',
-        display: 'inline-block'
-      },
-      slot: "per"
-    })));
-  }
-
-  var addPrice = function addPrice(priceId) {
-    setAttributes({
-      choices: dot_prop_immutable__WEBPACK_IMPORTED_MODULE_5___default.a.set(choices, "".concat(id, ".prices"), function (list) {
-        return [].concat(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0___default()(list), [priceId]);
-      })
-    });
-  };
-
-  var removePrice = function removePrice(priceId) {
-    setAttributes({
-      choices: dot_prop_immutable__WEBPACK_IMPORTED_MODULE_5___default.a.set(choices, "".concat(id, ".prices"), choices[id].prices.filter(function (price) {
-        return price !== priceId;
-      }))
-    });
-  };
-
-  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__["createElement"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_7__["CeFormRow"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__["createElement"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_7__["CeFormControl"], {
-    label: product.name
-  }, product.prices.map(function (price, index) {
-    return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__["createElement"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_7__["CeCheckbox"], {
-      style: {
-        display: 'block'
-      },
-      key: price.id,
-      value: price.id,
-      onCeChange: function onCeChange(e) {
-        if (e.target.checked) {
-          addPrice(e.target.value);
-        } else {
-          removePrice(e.target.value);
-        }
-      },
-      checked: choice.prices.find(function (id) {
-        return id === price.id;
-      })
-    }, price.name, ' ', Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__["createElement"])("span", {
-      style: {
-        opacity: '0.5'
-      }
-    }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__["createElement"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_7__["CeFormatNumber"], {
-      type: "currency",
-      currency: price.currency,
-      value: price.amount
-    })));
-  })));
-});
-
-/***/ }),
-
-/***/ "./blocks/checkout/components/Options.js":
-/*!***********************************************!*\
-  !*** ./blocks/checkout/components/Options.js ***!
-  \***********************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "./node_modules/@babel/runtime/helpers/slicedToArray.js");
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _checkout_engine_react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @checkout-engine/react */ "./node_modules/@checkout-engine/react/dist/index.js");
-/* harmony import */ var _SelectProduct__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./SelectProduct */ "./blocks/checkout/components/SelectProduct.js");
-/* harmony import */ var _Choice__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Choice */ "./blocks/checkout/components/Choice.js");
-
-
-
-
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = (function (_ref) {
-  var attributes = _ref.attributes,
-      setAttributes = _ref.setAttributes;
-
-  var _useState = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["useState"])(false),
-      _useState2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState, 2),
-      open = _useState2[0],
-      setOpen = _useState2[1];
-
-  var choices = attributes.choices;
-
-  var clear = function clear() {
-    setAttributes({
-      choices: []
-    });
-  };
-
-  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("div", null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_3__["CeFormSection"], {
-    label: "Products"
-  }, Object.keys(choices).map(function (id) {
-    var product = choices[id];
-    return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_Choice__WEBPACK_IMPORTED_MODULE_5__["default"], {
-      attributes: attributes,
-      setAttributes: setAttributes,
-      id: id,
-      key: product.id,
-      choice: product
-    });
-  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("ce-form-row", null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])("div", null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_3__["CeButton"], {
-    type: "primary",
-    onClick: function onClick() {
-      return setOpen(true);
-    }
-  }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Add Product', 'checkout_engine')), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_3__["CeButton"], {
-    onClick: function onClick() {
-      return setOpen(true);
-    }
-  }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Create Product', 'checkout_engine'))))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_3__["CeFormSection"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_3__["CeRadioGroup"], {
-    label: 'Product Options'
-  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_3__["CeRadio"], {
-    value: "all"
-  }, "Customer must purchase all products"), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_3__["CeRadio"], {
-    value: "radio"
-  }, "Customer must select one price from the options."), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_3__["CeRadio"], {
-    value: "checkbox"
-  }, "Customer can select multiple prices."))), open && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_SelectProduct__WEBPACK_IMPORTED_MODULE_4__["default"], {
-    attributes: attributes,
-    setAttributes: setAttributes,
-    onRequestClose: function onRequestClose() {
-      return setOpen(false);
-    }
-  }));
-});
-
-/***/ }),
-
-/***/ "./blocks/checkout/components/SelectProduct.js":
-/*!*****************************************************!*\
-  !*** ./blocks/checkout/components/SelectProduct.js ***!
-  \*****************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/taggedTemplateLiteral */ "./node_modules/@babel/runtime/helpers/taggedTemplateLiteral.js");
-/* harmony import */ var _babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/asyncToGenerator.js");
-/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/defineProperty.js");
-/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "./node_modules/@babel/runtime/helpers/slicedToArray.js");
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/regenerator */ "@babel/runtime/regenerator");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @wordpress/api-fetch */ "@wordpress/api-fetch");
-/* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
-/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _wordpress_url__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @wordpress/url */ "@wordpress/url");
-/* harmony import */ var _wordpress_url__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_wordpress_url__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var _emotion_core__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @emotion/core */ "./node_modules/@emotion/core/dist/core.browser.esm.js");
-/* harmony import */ var dot_prop_immutable__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! dot-prop-immutable */ "../../node_modules/dot-prop-immutable/lib/index.js");
-/* harmony import */ var dot_prop_immutable__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(dot_prop_immutable__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var lodash_throttle__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! lodash/throttle */ "./node_modules/lodash/throttle.js");
-/* harmony import */ var lodash_throttle__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(lodash_throttle__WEBPACK_IMPORTED_MODULE_13__);
-/* harmony import */ var _checkout_engine_react__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @checkout-engine/react */ "./node_modules/@checkout-engine/react/dist/index.js");
-
-
-
-
-
-var _templateObject, _templateObject2;
-
-
-
-
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_2___default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-/** @jsx jsx */
-
-
-
-
-
-
-
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = (function (_ref) {
-  var onRequestClose = _ref.onRequestClose,
-      attributes = _ref.attributes,
-      setAttributes = _ref.setAttributes;
-  var choices = attributes.choices;
-
-  var _useState = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__["useState"])({}),
-      _useState2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_useState, 2),
-      product = _useState2[0],
-      setProduct = _useState2[1];
-
-  var _useState3 = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__["useState"])([]),
-      _useState4 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_useState3, 2),
-      products = _useState4[0],
-      setProducts = _useState4[1];
-
-  var _useState5 = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__["useState"])(''),
-      _useState6 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_useState5, 2),
-      query = _useState6[0],
-      setQuery = _useState6[1];
-
-  var _useState7 = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__["useState"])(false),
-      _useState8 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3___default()(_useState7, 2),
-      loading = _useState8[0],
-      setLoading = _useState8[1];
-
-  var addProduct = function addProduct() {
-    setAttributes({
-      choices: _objectSpread(_objectSpread({}, choices), {}, _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_2___default()({}, product.id, {
-        id: product.id,
-        type: 'any',
-        prices: product.prices.map(function (price) {
-          return price.id;
-        })
-      }))
-    });
-    onRequestClose();
-  };
-
-  Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__["useEffect"])(function () {
-    fetchProducts();
-  }, [query]);
-  var findProduct = lodash_throttle__WEBPACK_IMPORTED_MODULE_13___default()(function (value) {
-    setQuery(value);
-  }, 750, {
-    leading: false
-  });
-
-  var fetchProducts = /*#__PURE__*/function () {
-    var _ref2 = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_5___default.a.mark(function _callee() {
-      var response;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_5___default.a.wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              _context.prev = 0;
-              setLoading(true);
-              _context.next = 4;
-              return _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_6___default()({
-                path: Object(_wordpress_url__WEBPACK_IMPORTED_MODULE_9__["addQueryArgs"])('checkout-engine/v1/products', {
-                  query: query,
-                  archived: false
-                })
-              });
-
-            case 4:
-              response = _context.sent;
-              setProducts(response);
-
-            case 6:
-              _context.prev = 6;
-              setLoading(false);
-              return _context.finish(6);
-
-            case 9:
-            case "end":
-              return _context.stop();
-          }
-        }
-      }, _callee, null, [[0,, 6, 9]]);
-    }));
-
-    return function fetchProducts() {
-      return _ref2.apply(this, arguments);
-    };
-  }();
-
-  return Object(_emotion_core__WEBPACK_IMPORTED_MODULE_11__["jsx"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_10__["Modal"], {
-    css: Object(_emotion_core__WEBPACK_IMPORTED_MODULE_11__["css"])(_templateObject || (_templateObject = _babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_0___default()(["\n\t\t\t\toverflow: visible !important;\n\t\t\t"]))),
-    shouldCloseOnClickOutside: false,
-    title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_8__["__"])('Add Product', 'checkout_engine'),
-    onRequestClose: onRequestClose
-  }, Object(_emotion_core__WEBPACK_IMPORTED_MODULE_11__["jsx"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_14__["CeFormRow"], null, Object(_emotion_core__WEBPACK_IMPORTED_MODULE_11__["jsx"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_14__["CeSelect"], {
-    value: product.id,
-    onCeChange: function onCeChange(e) {
-      var product = products.find(function (product) {
-        return product.id === e.target.value;
-      });
-      setProduct(product);
-    },
-    loading: loading,
-    placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_8__["__"])('Choose a product', 'checkout_engine'),
-    searchPlaceholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_8__["__"])('Search for a product...', 'checkout_engine'),
-    search: true,
-    onCeSearch: function onCeSearch(e) {
-      return findProduct(e.detail);
-    },
-    choices: (products || []).map(function (product) {
-      return {
-        value: product.id,
-        label: "".concat(product.name, " ").concat(product.prices.length > 1 ? "(".concat(product.prices.length, " Prices)") : '')
-      };
-    })
-  })), Object(_emotion_core__WEBPACK_IMPORTED_MODULE_11__["jsx"])("div", {
-    css: Object(_emotion_core__WEBPACK_IMPORTED_MODULE_11__["css"])(_templateObject2 || (_templateObject2 = _babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_0___default()(["\n\t\t\t\t\tdisplay: flex;\n\t\t\t\t\talign-items: center;\n\t\t\t\t\tgap: 1em;\n\t\t\t\t"])))
-  }, Object(_emotion_core__WEBPACK_IMPORTED_MODULE_11__["jsx"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_14__["CeButton"], {
-    type: "primary",
-    onClick: addProduct
-  }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_8__["__"])('Add Product', 'checkout_engine')), Object(_emotion_core__WEBPACK_IMPORTED_MODULE_11__["jsx"])(_checkout_engine_react__WEBPACK_IMPORTED_MODULE_14__["CeButton"], null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_8__["__"])('Cancel', 'checkout_engine'))));
-});
-
-/***/ }),
-
-/***/ "./blocks/checkout/components/form-blocks.js":
-/*!***************************************************!*\
-  !*** ./blocks/checkout/components/form-blocks.js ***!
-  \***************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
-/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
-/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _blocks__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../blocks */ "./blocks.js");
-/* harmony import */ var _higher_order_withIsPremium__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../higher-order/withIsPremium */ "./higher-order/withIsPremium/index.js");
-
-
- // import { template } from '../template.json';
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = (Object(_higher_order_withIsPremium__WEBPACK_IMPORTED_MODULE_4__["default"])(function (_ref) {
-  var clientId = _ref.clientId;
-
-  var _useDispatch = Object(_wordpress_data__WEBPACK_IMPORTED_MODULE_1__["useDispatch"])('core/block-editor'),
-      removeBlock = _useDispatch.removeBlock;
-
-  var blockCount = Object(_wordpress_data__WEBPACK_IMPORTED_MODULE_1__["useSelect"])(function (select) {
-    return select('core/block-editor').getBlockCount(clientId);
-  });
-  var previousBlockCount = useRef(blockCount);
-  useEffect(function () {
-    if (previousBlockCount.current > 0 && blockCount === 0) {
-      removeBlock(clientId);
-    }
-
-    previousBlockCount.current = blockCount;
-  }, [blockCount, clientId]); // const { replaceInnerBlocks } = useDispatch( 'core/block-editor' );
-  // const getBlockList = () =>
-  // 	select( 'core/block-editor' ).getBlocksByClientId( clientId )?.[ 0 ]
-  // 		?.innerBlocks;
-  // let blockList = getBlockList();
-  // wp.data.subscribe( () => {
-  // 	let newBlockList = getBlockList();
-  // 	if ( ! newBlockList || newBlockList.length >= blockList.length ) {
-  // 		return;
-  // 	}
-  // 	/// get just names
-  // 	let blockNames = blockList.map( ( block ) => block.name );
-  // 	let newBlockNames = newBlockList.map( ( block ) => block.name );
-  // 	// get removed names
-  // 	const removedRequiredBlocks = blockNames.filter(
-  // 		( x ) =>
-  // 			! newBlockNames.includes( x ) &&
-  // 			requiredBlocks.includes( x )
-  // 	);
-  // 	if ( removedRequiredBlocks.length ) {
-  // 		replaceInnerBlocks( clientId, blockList );
-  // 	}
-  // } );
-
-  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["InnerBlocks"], {
-    renderAppender: _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["InnerBlocks"].ButtonBlockAppender // templateLock={ isPremium ? 'none' : 'insert' }
-    ,
-    allowedBlocks: _blocks__WEBPACK_IMPORTED_MODULE_3__["ALLOWED_BLOCKS"]
-  });
-}));
-
-/***/ }),
-
 /***/ "./blocks/checkout/edit.js":
 /*!*********************************!*\
   !*** ./blocks/checkout/edit.js ***!
@@ -2903,40 +2358,30 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/taggedTemplateLiteral */ "./node_modules/@babel/runtime/helpers/taggedTemplateLiteral.js");
-/* harmony import */ var _babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/asyncToGenerator.js");
-/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "./node_modules/@babel/runtime/helpers/slicedToArray.js");
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/regenerator */ "@babel/runtime/regenerator");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
-/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _components_form_blocks__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/form-blocks */ "./blocks/checkout/components/form-blocks.js");
-/* harmony import */ var _emotion_core__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @emotion/core */ "./node_modules/@emotion/core/dist/core.browser.esm.js");
-/* harmony import */ var _components_Options__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/Options */ "./blocks/checkout/components/Options.js");
-/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
-/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
-/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var _wordpress_core_data__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @wordpress/core-data */ "@wordpress/core-data");
-/* harmony import */ var _wordpress_core_data__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_13__);
-/* harmony import */ var _wordpress_notices__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @wordpress/notices */ "@wordpress/notices");
-/* harmony import */ var _wordpress_notices__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_wordpress_notices__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var _wordpress_reusable_blocks__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @wordpress/reusable-blocks */ "@wordpress/reusable-blocks");
-/* harmony import */ var _wordpress_reusable_blocks__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_wordpress_reusable_blocks__WEBPACK_IMPORTED_MODULE_15__);
+/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/asyncToGenerator.js");
+/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "./node_modules/@babel/runtime/helpers/slicedToArray.js");
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/regenerator */ "@babel/runtime/regenerator");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
+/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _emotion_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @emotion/core */ "./node_modules/@emotion/core/dist/core.browser.esm.js");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var _wordpress_core_data__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @wordpress/core-data */ "@wordpress/core-data");
+/* harmony import */ var _wordpress_core_data__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var _wordpress_notices__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @wordpress/notices */ "@wordpress/notices");
+/* harmony import */ var _wordpress_notices__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_wordpress_notices__WEBPACK_IMPORTED_MODULE_11__);
 
-
-
-
-var _templateObject;
 
 
 
@@ -2957,18 +2402,11 @@ var _templateObject;
  */
 
 
-/**
- * React components
- */
-
-
-
 
 
 
 
  // stores
-
 
 
 
@@ -2979,34 +2417,34 @@ var _templateObject;
       setAttributes = _ref.setAttributes;
 
   // these blocks are required in order to submit an order
-  var _useState = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__["useState"])(false),
-      _useState2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default()(_useState, 2),
+  var _useState = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["useState"])(false),
+      _useState2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1___default()(_useState, 2),
       loading = _useState2[0],
       setLoading = _useState2[1];
 
   var id = attributes.id,
-      align = attributes.align;
+      className = attributes.className;
 
-  var _useEntityBlockEditor = Object(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_13__["useEntityBlockEditor"])('postType', 'ce_form', {
+  var _useNoRecursiveRender = Object(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_9__["__experimentalUseNoRecursiveRenders"])(id),
+      _useNoRecursiveRender2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1___default()(_useNoRecursiveRender, 2),
+      hasAlreadyRendered = _useNoRecursiveRender2[0],
+      RecursionProvider = _useNoRecursiveRender2[1];
+
+  var _useEntityBlockEditor = Object(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_10__["useEntityBlockEditor"])('postType', 'ce_form', {
     id: id
   }),
-      _useEntityBlockEditor2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default()(_useEntityBlockEditor, 3),
+      _useEntityBlockEditor2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1___default()(_useEntityBlockEditor, 3),
       blocks = _useEntityBlockEditor2[0],
       onInput = _useEntityBlockEditor2[1],
       onChange = _useEntityBlockEditor2[2];
 
-  var _useEntityProp = Object(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_13__["useEntityProp"])('postType', 'ce_form', 'title', id),
-      _useEntityProp2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default()(_useEntityProp, 2),
+  var _useEntityProp = Object(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_10__["useEntityProp"])('postType', 'ce_form', 'title', id),
+      _useEntityProp2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1___default()(_useEntityProp, 2),
       title = _useEntityProp2[0],
       setTitle = _useEntityProp2[1];
 
-  var _useEntityProp3 = Object(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_13__["useEntityProp"])('postType', 'ce_form', 'meta', id),
-      _useEntityProp4 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default()(_useEntityProp3, 2),
-      meta = _useEntityProp4[0],
-      setMeta = _useEntityProp4[1];
-
-  var blockProps = Object(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_12__["useBlockProps"])();
-  var innerBlocksProps = Object(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_12__["__experimentalUseInnerBlocksProps"])({}, {
+  var blockProps = Object(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_9__["useBlockProps"])();
+  var innerBlocksProps = Object(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_9__["__experimentalUseInnerBlocksProps"])({}, {
     value: blocks,
     onInput: onInput,
     onChange: onChange,
@@ -3014,10 +2452,10 @@ var _templateObject;
     renderAppender: false
   });
 
-  var _useSelect = Object(_wordpress_data__WEBPACK_IMPORTED_MODULE_11__["useSelect"])(function (select) {
-    var hasResolved = select(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_13__["store"]).hasFinishedResolution('getEntityRecord', ['postType', 'ce_form', id]);
-    var form = select(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_13__["store"]).getEntityRecord('postType', 'ce_form', id);
-    var canEdit = select(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_13__["store"]).canUserEditEntityRecord('ce_form');
+  var _useSelect = Object(_wordpress_data__WEBPACK_IMPORTED_MODULE_8__["useSelect"])(function (select) {
+    var hasResolved = select(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_10__["store"]).hasFinishedResolution('getEntityRecord', ['postType', 'ce_form', id]);
+    var form = select(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_10__["store"]).getEntityRecord('postType', 'ce_form', id);
+    var canEdit = select(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_10__["store"]).canUserEditEntityRecord('ce_form');
     return {
       canEdit: canEdit,
       isMissing: hasResolved && !form,
@@ -3028,27 +2466,22 @@ var _templateObject;
       isMissing = _useSelect.isMissing,
       form = _useSelect.form,
       hasResolved = _useSelect.hasResolved,
-      canEdit = _useSelect.canEdit;
+      canEdit = _useSelect.canEdit; // save the form block.
 
-  Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__["useEffect"])(function () {
-    setMeta({
-      align: align
-    });
-  }, [align]); // save the form block.
 
   var saveFormBlock = /*#__PURE__*/function () {
-    var _ref2 = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default.a.mark(function _callee(title) {
+    var _ref2 = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default.a.mark(function _callee(title) {
       var updatedRecord;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default.a.wrap(function _callee$(_context) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default.a.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
               setLoading(true);
               _context.prev = 1;
               _context.next = 4;
-              return Object(_wordpress_data__WEBPACK_IMPORTED_MODULE_11__["dispatch"])('core').saveEntityRecord('postType', 'ce_form', {
-                title: title || Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])('Untitled Form'),
-                content: Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_6__["serialize"])(Object(_wordpress_data__WEBPACK_IMPORTED_MODULE_11__["select"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_12__["store"]).getBlocksByClientId(clientId)),
+              return Object(_wordpress_data__WEBPACK_IMPORTED_MODULE_8__["dispatch"])('core').saveEntityRecord('postType', 'ce_form', {
+                title: title || Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])('Untitled Form'),
+                content: Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_5__["serialize"])(Object(_wordpress_data__WEBPACK_IMPORTED_MODULE_8__["select"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_9__["store"]).getBlocksByClientId(clientId)),
                 status: 'publish'
               });
 
@@ -3057,13 +2490,14 @@ var _templateObject;
               setAttributes({
                 id: updatedRecord.id
               });
-              Object(_wordpress_data__WEBPACK_IMPORTED_MODULE_11__["dispatch"])('core').saveEntityRecord();
+              Object(_wordpress_data__WEBPACK_IMPORTED_MODULE_8__["dispatch"])('core').saveEntityRecord();
               _context.next = 12;
               break;
 
             case 9:
               _context.prev = 9;
               _context.t0 = _context["catch"](1);
+              // TODO: Add notice here.
               console.error(_context.t0);
 
             case 12:
@@ -3084,36 +2518,37 @@ var _templateObject;
     };
   }();
 
+  if (hasAlreadyRendered) {
+    return Object(_emotion_core__WEBPACK_IMPORTED_MODULE_7__["jsx"])("div", blockProps, Object(_emotion_core__WEBPACK_IMPORTED_MODULE_7__["jsx"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_9__["Warning"], null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])('Form cannot be rendered inside itself.', 'checkout_engine')));
+  }
+
   if (!hasResolved) {
-    return Object(_emotion_core__WEBPACK_IMPORTED_MODULE_9__["jsx"])("div", blockProps, Object(_emotion_core__WEBPACK_IMPORTED_MODULE_9__["jsx"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_7__["Placeholder"], null, Object(_emotion_core__WEBPACK_IMPORTED_MODULE_9__["jsx"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_7__["Spinner"], null)));
+    return Object(_emotion_core__WEBPACK_IMPORTED_MODULE_7__["jsx"])("div", blockProps, Object(_emotion_core__WEBPACK_IMPORTED_MODULE_7__["jsx"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__["Placeholder"], null, Object(_emotion_core__WEBPACK_IMPORTED_MODULE_7__["jsx"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__["Spinner"], null)));
   }
 
   if (isMissing) {
-    return Object(_emotion_core__WEBPACK_IMPORTED_MODULE_9__["jsx"])("div", blockProps, Object(_emotion_core__WEBPACK_IMPORTED_MODULE_9__["jsx"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_12__["Warning"], null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])('This form has been deleted or is unavailable.', 'checkout_engine')));
+    return Object(_emotion_core__WEBPACK_IMPORTED_MODULE_7__["jsx"])("div", blockProps, Object(_emotion_core__WEBPACK_IMPORTED_MODULE_7__["jsx"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_9__["Warning"], null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])('This form has been deleted or is unavailable.', 'checkout_engine')));
   }
 
   if (!form) {
-    return Object(_emotion_core__WEBPACK_IMPORTED_MODULE_9__["jsx"])("button", {
+    return Object(_emotion_core__WEBPACK_IMPORTED_MODULE_7__["jsx"])("button", {
       onClick: function onClick() {
         return saveFormBlock('Form');
       }
     }, "Save Form");
   }
 
-  return Object(_emotion_core__WEBPACK_IMPORTED_MODULE_9__["jsx"])("div", {
-    className: meta === null || meta === void 0 ? void 0 : meta.className,
-    css: Object(_emotion_core__WEBPACK_IMPORTED_MODULE_9__["css"])(_templateObject || (_templateObject = _babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_0___default()(["\n\t\t\t\tfont-size: 14px;\n\t\t\t"])))
-  }, Object(_emotion_core__WEBPACK_IMPORTED_MODULE_9__["jsx"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_12__["InspectorControls"], null, Object(_emotion_core__WEBPACK_IMPORTED_MODULE_9__["jsx"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_7__["PanelBody"], {
-    title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])('Form Title', 'checkout-engine')
-  }, Object(_emotion_core__WEBPACK_IMPORTED_MODULE_9__["jsx"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_7__["PanelRow"], null, Object(_emotion_core__WEBPACK_IMPORTED_MODULE_9__["jsx"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_7__["TextControl"], {
-    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])('Form Title', 'checkout-engine'),
+  return Object(_emotion_core__WEBPACK_IMPORTED_MODULE_7__["jsx"])(RecursionProvider, null, Object(_emotion_core__WEBPACK_IMPORTED_MODULE_7__["jsx"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_9__["InspectorControls"], null, Object(_emotion_core__WEBPACK_IMPORTED_MODULE_7__["jsx"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__["PanelBody"], {
+    title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])('Form Title', 'checkout-engine')
+  }, Object(_emotion_core__WEBPACK_IMPORTED_MODULE_7__["jsx"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__["PanelRow"], null, Object(_emotion_core__WEBPACK_IMPORTED_MODULE_7__["jsx"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__["TextControl"], {
+    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])('Form Title', 'checkout-engine'),
     value: title,
     onChange: function onChange(title) {
       return setTitle(title);
     }
-  })))), Object(_emotion_core__WEBPACK_IMPORTED_MODULE_9__["jsx"])("div", {
+  })))), Object(_emotion_core__WEBPACK_IMPORTED_MODULE_7__["jsx"])("div", {
     className: "block-library-block__reusable-block-container"
-  }, Object(_emotion_core__WEBPACK_IMPORTED_MODULE_9__["jsx"])("div", innerBlocksProps)));
+  }, Object(_emotion_core__WEBPACK_IMPORTED_MODULE_7__["jsx"])("div", innerBlocksProps)));
 });
 
 /***/ }),
@@ -5930,67 +5365,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./higher-order/withIsPremium/index.js":
-/*!*********************************************!*\
-  !*** ./higher-order/withIsPremium/index.js ***!
-  \*********************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/extends */ "./node_modules/@babel/runtime/helpers/extends.js");
-/* harmony import */ var _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/defineProperty.js");
-/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/compose */ "@wordpress/compose");
-/* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_compose__WEBPACK_IMPORTED_MODULE_3__);
-
-
-
-
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1___default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-
-
-/**
- * Detects if the premium plan is active which allows for specific
- *  items in the UI
- *
- * @param  {WPComponent} OriginalComponent Original component.
- *
- * @return {WPComponent} Wrapped component.
- */
-
-/* harmony default export */ __webpack_exports__["default"] = (Object(_wordpress_compose__WEBPACK_IMPORTED_MODULE_3__["createHigherOrderComponent"])(function (OriginalComponent) {
-  function Component(props, ref) {
-    // todo: maybe make a fetch call here
-    var propsOut = _objectSpread(_objectSpread({}, props), {}, {
-      isPremium: true
-    });
-
-    return isForwardRef ? Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(OriginalComponent, _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_0___default()({}, propsOut, {
-      ref: ref
-    })) : Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(OriginalComponent, propsOut);
-  }
-
-  var isForwardRef;
-  var render = OriginalComponent.render; // Returns a forwardRef if OriginalComponent appears to be a forwardRef
-
-  if (typeof render === 'function') {
-    isForwardRef = true;
-    return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["forwardRef"])(Component);
-  }
-
-  return Component;
-}));
-
-/***/ }),
-
 /***/ "./node_modules/@babel/runtime/helpers/arrayLikeToArray.js":
 /*!*****************************************************************!*\
   !*** ./node_modules/@babel/runtime/helpers/arrayLikeToArray.js ***!
@@ -6160,37 +5534,6 @@ function _setPrototypeOf(o, p) {
 
   return _setPrototypeOf(o, p);
 }
-
-/***/ }),
-
-/***/ "./node_modules/@babel/runtime/helpers/extends.js":
-/*!********************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/extends.js ***!
-  \********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-function _extends() {
-  module.exports = _extends = Object.assign || function (target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i];
-
-      for (var key in source) {
-        if (Object.prototype.hasOwnProperty.call(source, key)) {
-          target[key] = source[key];
-        }
-      }
-    }
-
-    return target;
-  };
-
-  module.exports["default"] = module.exports, module.exports.__esModule = true;
-  return _extends.apply(this, arguments);
-}
-
-module.exports = _extends;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
 
 /***/ }),
 
@@ -16343,792 +15686,6 @@ const wordpress = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["create
 
 /***/ }),
 
-/***/ "./node_modules/lodash/_Symbol.js":
-/*!****************************************!*\
-  !*** ./node_modules/lodash/_Symbol.js ***!
-  \****************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var root = __webpack_require__(/*! ./_root */ "./node_modules/lodash/_root.js");
-
-/** Built-in value references. */
-var Symbol = root.Symbol;
-
-module.exports = Symbol;
-
-
-/***/ }),
-
-/***/ "./node_modules/lodash/_baseGetTag.js":
-/*!********************************************!*\
-  !*** ./node_modules/lodash/_baseGetTag.js ***!
-  \********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var Symbol = __webpack_require__(/*! ./_Symbol */ "./node_modules/lodash/_Symbol.js"),
-    getRawTag = __webpack_require__(/*! ./_getRawTag */ "./node_modules/lodash/_getRawTag.js"),
-    objectToString = __webpack_require__(/*! ./_objectToString */ "./node_modules/lodash/_objectToString.js");
-
-/** `Object#toString` result references. */
-var nullTag = '[object Null]',
-    undefinedTag = '[object Undefined]';
-
-/** Built-in value references. */
-var symToStringTag = Symbol ? Symbol.toStringTag : undefined;
-
-/**
- * The base implementation of `getTag` without fallbacks for buggy environments.
- *
- * @private
- * @param {*} value The value to query.
- * @returns {string} Returns the `toStringTag`.
- */
-function baseGetTag(value) {
-  if (value == null) {
-    return value === undefined ? undefinedTag : nullTag;
-  }
-  return (symToStringTag && symToStringTag in Object(value))
-    ? getRawTag(value)
-    : objectToString(value);
-}
-
-module.exports = baseGetTag;
-
-
-/***/ }),
-
-/***/ "./node_modules/lodash/_baseTrim.js":
-/*!******************************************!*\
-  !*** ./node_modules/lodash/_baseTrim.js ***!
-  \******************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var trimmedEndIndex = __webpack_require__(/*! ./_trimmedEndIndex */ "./node_modules/lodash/_trimmedEndIndex.js");
-
-/** Used to match leading whitespace. */
-var reTrimStart = /^\s+/;
-
-/**
- * The base implementation of `_.trim`.
- *
- * @private
- * @param {string} string The string to trim.
- * @returns {string} Returns the trimmed string.
- */
-function baseTrim(string) {
-  return string
-    ? string.slice(0, trimmedEndIndex(string) + 1).replace(reTrimStart, '')
-    : string;
-}
-
-module.exports = baseTrim;
-
-
-/***/ }),
-
-/***/ "./node_modules/lodash/_freeGlobal.js":
-/*!********************************************!*\
-  !*** ./node_modules/lodash/_freeGlobal.js ***!
-  \********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(global) {/** Detect free variable `global` from Node.js. */
-var freeGlobal = typeof global == 'object' && global && global.Object === Object && global;
-
-module.exports = freeGlobal;
-
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
-
-/***/ }),
-
-/***/ "./node_modules/lodash/_getRawTag.js":
-/*!*******************************************!*\
-  !*** ./node_modules/lodash/_getRawTag.js ***!
-  \*******************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var Symbol = __webpack_require__(/*! ./_Symbol */ "./node_modules/lodash/_Symbol.js");
-
-/** Used for built-in method references. */
-var objectProto = Object.prototype;
-
-/** Used to check objects for own properties. */
-var hasOwnProperty = objectProto.hasOwnProperty;
-
-/**
- * Used to resolve the
- * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
- * of values.
- */
-var nativeObjectToString = objectProto.toString;
-
-/** Built-in value references. */
-var symToStringTag = Symbol ? Symbol.toStringTag : undefined;
-
-/**
- * A specialized version of `baseGetTag` which ignores `Symbol.toStringTag` values.
- *
- * @private
- * @param {*} value The value to query.
- * @returns {string} Returns the raw `toStringTag`.
- */
-function getRawTag(value) {
-  var isOwn = hasOwnProperty.call(value, symToStringTag),
-      tag = value[symToStringTag];
-
-  try {
-    value[symToStringTag] = undefined;
-    var unmasked = true;
-  } catch (e) {}
-
-  var result = nativeObjectToString.call(value);
-  if (unmasked) {
-    if (isOwn) {
-      value[symToStringTag] = tag;
-    } else {
-      delete value[symToStringTag];
-    }
-  }
-  return result;
-}
-
-module.exports = getRawTag;
-
-
-/***/ }),
-
-/***/ "./node_modules/lodash/_objectToString.js":
-/*!************************************************!*\
-  !*** ./node_modules/lodash/_objectToString.js ***!
-  \************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/** Used for built-in method references. */
-var objectProto = Object.prototype;
-
-/**
- * Used to resolve the
- * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
- * of values.
- */
-var nativeObjectToString = objectProto.toString;
-
-/**
- * Converts `value` to a string using `Object.prototype.toString`.
- *
- * @private
- * @param {*} value The value to convert.
- * @returns {string} Returns the converted string.
- */
-function objectToString(value) {
-  return nativeObjectToString.call(value);
-}
-
-module.exports = objectToString;
-
-
-/***/ }),
-
-/***/ "./node_modules/lodash/_root.js":
-/*!**************************************!*\
-  !*** ./node_modules/lodash/_root.js ***!
-  \**************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var freeGlobal = __webpack_require__(/*! ./_freeGlobal */ "./node_modules/lodash/_freeGlobal.js");
-
-/** Detect free variable `self`. */
-var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
-
-/** Used as a reference to the global object. */
-var root = freeGlobal || freeSelf || Function('return this')();
-
-module.exports = root;
-
-
-/***/ }),
-
-/***/ "./node_modules/lodash/_trimmedEndIndex.js":
-/*!*************************************************!*\
-  !*** ./node_modules/lodash/_trimmedEndIndex.js ***!
-  \*************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/** Used to match a single whitespace character. */
-var reWhitespace = /\s/;
-
-/**
- * Used by `_.trim` and `_.trimEnd` to get the index of the last non-whitespace
- * character of `string`.
- *
- * @private
- * @param {string} string The string to inspect.
- * @returns {number} Returns the index of the last non-whitespace character.
- */
-function trimmedEndIndex(string) {
-  var index = string.length;
-
-  while (index-- && reWhitespace.test(string.charAt(index))) {}
-  return index;
-}
-
-module.exports = trimmedEndIndex;
-
-
-/***/ }),
-
-/***/ "./node_modules/lodash/debounce.js":
-/*!*****************************************!*\
-  !*** ./node_modules/lodash/debounce.js ***!
-  \*****************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var isObject = __webpack_require__(/*! ./isObject */ "./node_modules/lodash/isObject.js"),
-    now = __webpack_require__(/*! ./now */ "./node_modules/lodash/now.js"),
-    toNumber = __webpack_require__(/*! ./toNumber */ "./node_modules/lodash/toNumber.js");
-
-/** Error message constants. */
-var FUNC_ERROR_TEXT = 'Expected a function';
-
-/* Built-in method references for those with the same name as other `lodash` methods. */
-var nativeMax = Math.max,
-    nativeMin = Math.min;
-
-/**
- * Creates a debounced function that delays invoking `func` until after `wait`
- * milliseconds have elapsed since the last time the debounced function was
- * invoked. The debounced function comes with a `cancel` method to cancel
- * delayed `func` invocations and a `flush` method to immediately invoke them.
- * Provide `options` to indicate whether `func` should be invoked on the
- * leading and/or trailing edge of the `wait` timeout. The `func` is invoked
- * with the last arguments provided to the debounced function. Subsequent
- * calls to the debounced function return the result of the last `func`
- * invocation.
- *
- * **Note:** If `leading` and `trailing` options are `true`, `func` is
- * invoked on the trailing edge of the timeout only if the debounced function
- * is invoked more than once during the `wait` timeout.
- *
- * If `wait` is `0` and `leading` is `false`, `func` invocation is deferred
- * until to the next tick, similar to `setTimeout` with a timeout of `0`.
- *
- * See [David Corbacho's article](https://css-tricks.com/debouncing-throttling-explained-examples/)
- * for details over the differences between `_.debounce` and `_.throttle`.
- *
- * @static
- * @memberOf _
- * @since 0.1.0
- * @category Function
- * @param {Function} func The function to debounce.
- * @param {number} [wait=0] The number of milliseconds to delay.
- * @param {Object} [options={}] The options object.
- * @param {boolean} [options.leading=false]
- *  Specify invoking on the leading edge of the timeout.
- * @param {number} [options.maxWait]
- *  The maximum time `func` is allowed to be delayed before it's invoked.
- * @param {boolean} [options.trailing=true]
- *  Specify invoking on the trailing edge of the timeout.
- * @returns {Function} Returns the new debounced function.
- * @example
- *
- * // Avoid costly calculations while the window size is in flux.
- * jQuery(window).on('resize', _.debounce(calculateLayout, 150));
- *
- * // Invoke `sendMail` when clicked, debouncing subsequent calls.
- * jQuery(element).on('click', _.debounce(sendMail, 300, {
- *   'leading': true,
- *   'trailing': false
- * }));
- *
- * // Ensure `batchLog` is invoked once after 1 second of debounced calls.
- * var debounced = _.debounce(batchLog, 250, { 'maxWait': 1000 });
- * var source = new EventSource('/stream');
- * jQuery(source).on('message', debounced);
- *
- * // Cancel the trailing debounced invocation.
- * jQuery(window).on('popstate', debounced.cancel);
- */
-function debounce(func, wait, options) {
-  var lastArgs,
-      lastThis,
-      maxWait,
-      result,
-      timerId,
-      lastCallTime,
-      lastInvokeTime = 0,
-      leading = false,
-      maxing = false,
-      trailing = true;
-
-  if (typeof func != 'function') {
-    throw new TypeError(FUNC_ERROR_TEXT);
-  }
-  wait = toNumber(wait) || 0;
-  if (isObject(options)) {
-    leading = !!options.leading;
-    maxing = 'maxWait' in options;
-    maxWait = maxing ? nativeMax(toNumber(options.maxWait) || 0, wait) : maxWait;
-    trailing = 'trailing' in options ? !!options.trailing : trailing;
-  }
-
-  function invokeFunc(time) {
-    var args = lastArgs,
-        thisArg = lastThis;
-
-    lastArgs = lastThis = undefined;
-    lastInvokeTime = time;
-    result = func.apply(thisArg, args);
-    return result;
-  }
-
-  function leadingEdge(time) {
-    // Reset any `maxWait` timer.
-    lastInvokeTime = time;
-    // Start the timer for the trailing edge.
-    timerId = setTimeout(timerExpired, wait);
-    // Invoke the leading edge.
-    return leading ? invokeFunc(time) : result;
-  }
-
-  function remainingWait(time) {
-    var timeSinceLastCall = time - lastCallTime,
-        timeSinceLastInvoke = time - lastInvokeTime,
-        timeWaiting = wait - timeSinceLastCall;
-
-    return maxing
-      ? nativeMin(timeWaiting, maxWait - timeSinceLastInvoke)
-      : timeWaiting;
-  }
-
-  function shouldInvoke(time) {
-    var timeSinceLastCall = time - lastCallTime,
-        timeSinceLastInvoke = time - lastInvokeTime;
-
-    // Either this is the first call, activity has stopped and we're at the
-    // trailing edge, the system time has gone backwards and we're treating
-    // it as the trailing edge, or we've hit the `maxWait` limit.
-    return (lastCallTime === undefined || (timeSinceLastCall >= wait) ||
-      (timeSinceLastCall < 0) || (maxing && timeSinceLastInvoke >= maxWait));
-  }
-
-  function timerExpired() {
-    var time = now();
-    if (shouldInvoke(time)) {
-      return trailingEdge(time);
-    }
-    // Restart the timer.
-    timerId = setTimeout(timerExpired, remainingWait(time));
-  }
-
-  function trailingEdge(time) {
-    timerId = undefined;
-
-    // Only invoke if we have `lastArgs` which means `func` has been
-    // debounced at least once.
-    if (trailing && lastArgs) {
-      return invokeFunc(time);
-    }
-    lastArgs = lastThis = undefined;
-    return result;
-  }
-
-  function cancel() {
-    if (timerId !== undefined) {
-      clearTimeout(timerId);
-    }
-    lastInvokeTime = 0;
-    lastArgs = lastCallTime = lastThis = timerId = undefined;
-  }
-
-  function flush() {
-    return timerId === undefined ? result : trailingEdge(now());
-  }
-
-  function debounced() {
-    var time = now(),
-        isInvoking = shouldInvoke(time);
-
-    lastArgs = arguments;
-    lastThis = this;
-    lastCallTime = time;
-
-    if (isInvoking) {
-      if (timerId === undefined) {
-        return leadingEdge(lastCallTime);
-      }
-      if (maxing) {
-        // Handle invocations in a tight loop.
-        clearTimeout(timerId);
-        timerId = setTimeout(timerExpired, wait);
-        return invokeFunc(lastCallTime);
-      }
-    }
-    if (timerId === undefined) {
-      timerId = setTimeout(timerExpired, wait);
-    }
-    return result;
-  }
-  debounced.cancel = cancel;
-  debounced.flush = flush;
-  return debounced;
-}
-
-module.exports = debounce;
-
-
-/***/ }),
-
-/***/ "./node_modules/lodash/isObject.js":
-/*!*****************************************!*\
-  !*** ./node_modules/lodash/isObject.js ***!
-  \*****************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/**
- * Checks if `value` is the
- * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
- * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
- *
- * @static
- * @memberOf _
- * @since 0.1.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is an object, else `false`.
- * @example
- *
- * _.isObject({});
- * // => true
- *
- * _.isObject([1, 2, 3]);
- * // => true
- *
- * _.isObject(_.noop);
- * // => true
- *
- * _.isObject(null);
- * // => false
- */
-function isObject(value) {
-  var type = typeof value;
-  return value != null && (type == 'object' || type == 'function');
-}
-
-module.exports = isObject;
-
-
-/***/ }),
-
-/***/ "./node_modules/lodash/isObjectLike.js":
-/*!*********************************************!*\
-  !*** ./node_modules/lodash/isObjectLike.js ***!
-  \*********************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/**
- * Checks if `value` is object-like. A value is object-like if it's not `null`
- * and has a `typeof` result of "object".
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
- * @example
- *
- * _.isObjectLike({});
- * // => true
- *
- * _.isObjectLike([1, 2, 3]);
- * // => true
- *
- * _.isObjectLike(_.noop);
- * // => false
- *
- * _.isObjectLike(null);
- * // => false
- */
-function isObjectLike(value) {
-  return value != null && typeof value == 'object';
-}
-
-module.exports = isObjectLike;
-
-
-/***/ }),
-
-/***/ "./node_modules/lodash/isSymbol.js":
-/*!*****************************************!*\
-  !*** ./node_modules/lodash/isSymbol.js ***!
-  \*****************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var baseGetTag = __webpack_require__(/*! ./_baseGetTag */ "./node_modules/lodash/_baseGetTag.js"),
-    isObjectLike = __webpack_require__(/*! ./isObjectLike */ "./node_modules/lodash/isObjectLike.js");
-
-/** `Object#toString` result references. */
-var symbolTag = '[object Symbol]';
-
-/**
- * Checks if `value` is classified as a `Symbol` primitive or object.
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a symbol, else `false`.
- * @example
- *
- * _.isSymbol(Symbol.iterator);
- * // => true
- *
- * _.isSymbol('abc');
- * // => false
- */
-function isSymbol(value) {
-  return typeof value == 'symbol' ||
-    (isObjectLike(value) && baseGetTag(value) == symbolTag);
-}
-
-module.exports = isSymbol;
-
-
-/***/ }),
-
-/***/ "./node_modules/lodash/now.js":
-/*!************************************!*\
-  !*** ./node_modules/lodash/now.js ***!
-  \************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var root = __webpack_require__(/*! ./_root */ "./node_modules/lodash/_root.js");
-
-/**
- * Gets the timestamp of the number of milliseconds that have elapsed since
- * the Unix epoch (1 January 1970 00:00:00 UTC).
- *
- * @static
- * @memberOf _
- * @since 2.4.0
- * @category Date
- * @returns {number} Returns the timestamp.
- * @example
- *
- * _.defer(function(stamp) {
- *   console.log(_.now() - stamp);
- * }, _.now());
- * // => Logs the number of milliseconds it took for the deferred invocation.
- */
-var now = function() {
-  return root.Date.now();
-};
-
-module.exports = now;
-
-
-/***/ }),
-
-/***/ "./node_modules/lodash/throttle.js":
-/*!*****************************************!*\
-  !*** ./node_modules/lodash/throttle.js ***!
-  \*****************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var debounce = __webpack_require__(/*! ./debounce */ "./node_modules/lodash/debounce.js"),
-    isObject = __webpack_require__(/*! ./isObject */ "./node_modules/lodash/isObject.js");
-
-/** Error message constants. */
-var FUNC_ERROR_TEXT = 'Expected a function';
-
-/**
- * Creates a throttled function that only invokes `func` at most once per
- * every `wait` milliseconds. The throttled function comes with a `cancel`
- * method to cancel delayed `func` invocations and a `flush` method to
- * immediately invoke them. Provide `options` to indicate whether `func`
- * should be invoked on the leading and/or trailing edge of the `wait`
- * timeout. The `func` is invoked with the last arguments provided to the
- * throttled function. Subsequent calls to the throttled function return the
- * result of the last `func` invocation.
- *
- * **Note:** If `leading` and `trailing` options are `true`, `func` is
- * invoked on the trailing edge of the timeout only if the throttled function
- * is invoked more than once during the `wait` timeout.
- *
- * If `wait` is `0` and `leading` is `false`, `func` invocation is deferred
- * until to the next tick, similar to `setTimeout` with a timeout of `0`.
- *
- * See [David Corbacho's article](https://css-tricks.com/debouncing-throttling-explained-examples/)
- * for details over the differences between `_.throttle` and `_.debounce`.
- *
- * @static
- * @memberOf _
- * @since 0.1.0
- * @category Function
- * @param {Function} func The function to throttle.
- * @param {number} [wait=0] The number of milliseconds to throttle invocations to.
- * @param {Object} [options={}] The options object.
- * @param {boolean} [options.leading=true]
- *  Specify invoking on the leading edge of the timeout.
- * @param {boolean} [options.trailing=true]
- *  Specify invoking on the trailing edge of the timeout.
- * @returns {Function} Returns the new throttled function.
- * @example
- *
- * // Avoid excessively updating the position while scrolling.
- * jQuery(window).on('scroll', _.throttle(updatePosition, 100));
- *
- * // Invoke `renewToken` when the click event is fired, but not more than once every 5 minutes.
- * var throttled = _.throttle(renewToken, 300000, { 'trailing': false });
- * jQuery(element).on('click', throttled);
- *
- * // Cancel the trailing throttled invocation.
- * jQuery(window).on('popstate', throttled.cancel);
- */
-function throttle(func, wait, options) {
-  var leading = true,
-      trailing = true;
-
-  if (typeof func != 'function') {
-    throw new TypeError(FUNC_ERROR_TEXT);
-  }
-  if (isObject(options)) {
-    leading = 'leading' in options ? !!options.leading : leading;
-    trailing = 'trailing' in options ? !!options.trailing : trailing;
-  }
-  return debounce(func, wait, {
-    'leading': leading,
-    'maxWait': wait,
-    'trailing': trailing
-  });
-}
-
-module.exports = throttle;
-
-
-/***/ }),
-
-/***/ "./node_modules/lodash/toNumber.js":
-/*!*****************************************!*\
-  !*** ./node_modules/lodash/toNumber.js ***!
-  \*****************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var baseTrim = __webpack_require__(/*! ./_baseTrim */ "./node_modules/lodash/_baseTrim.js"),
-    isObject = __webpack_require__(/*! ./isObject */ "./node_modules/lodash/isObject.js"),
-    isSymbol = __webpack_require__(/*! ./isSymbol */ "./node_modules/lodash/isSymbol.js");
-
-/** Used as references for various `Number` constants. */
-var NAN = 0 / 0;
-
-/** Used to detect bad signed hexadecimal string values. */
-var reIsBadHex = /^[-+]0x[0-9a-f]+$/i;
-
-/** Used to detect binary string values. */
-var reIsBinary = /^0b[01]+$/i;
-
-/** Used to detect octal string values. */
-var reIsOctal = /^0o[0-7]+$/i;
-
-/** Built-in method references without a dependency on `root`. */
-var freeParseInt = parseInt;
-
-/**
- * Converts `value` to a number.
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to process.
- * @returns {number} Returns the number.
- * @example
- *
- * _.toNumber(3.2);
- * // => 3.2
- *
- * _.toNumber(Number.MIN_VALUE);
- * // => 5e-324
- *
- * _.toNumber(Infinity);
- * // => Infinity
- *
- * _.toNumber('3.2');
- * // => 3.2
- */
-function toNumber(value) {
-  if (typeof value == 'number') {
-    return value;
-  }
-  if (isSymbol(value)) {
-    return NAN;
-  }
-  if (isObject(value)) {
-    var other = typeof value.valueOf == 'function' ? value.valueOf() : value;
-    value = isObject(other) ? (other + '') : other;
-  }
-  if (typeof value != 'string') {
-    return value === 0 ? value : +value;
-  }
-  value = baseTrim(value);
-  var isBinary = reIsBinary.test(value);
-  return (isBinary || reIsOctal.test(value))
-    ? freeParseInt(value.slice(2), isBinary ? 2 : 8)
-    : (reIsBadHex.test(value) ? NAN : +value);
-}
-
-module.exports = toNumber;
-
-
-/***/ }),
-
-/***/ "./node_modules/webpack/buildin/global.js":
-/*!***********************************!*\
-  !*** (webpack)/buildin/global.js ***!
-  \***********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || new Function("return this")();
-} catch (e) {
-	// This works if the window reference is available
-	if (typeof window === "object") g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-
 /***/ "./utils/block-category.js":
 /*!*********************************!*\
   !*** ./utils/block-category.js ***!
@@ -17355,17 +15912,6 @@ icons.categoryIcon = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["cre
 
 /***/ }),
 
-/***/ "@wordpress/compose":
-/*!*********************************!*\
-  !*** external ["wp","compose"] ***!
-  \*********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-(function() { module.exports = window["wp"]["compose"]; }());
-
-/***/ }),
-
 /***/ "@wordpress/core-data":
 /*!**********************************!*\
   !*** external ["wp","coreData"] ***!
@@ -17440,17 +15986,6 @@ icons.categoryIcon = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["cre
 /***/ (function(module, exports) {
 
 (function() { module.exports = window["wp"]["primitives"]; }());
-
-/***/ }),
-
-/***/ "@wordpress/reusable-blocks":
-/*!****************************************!*\
-  !*** external ["wp","reusableBlocks"] ***!
-  \****************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-(function() { module.exports = window["wp"]["reusableBlocks"]; }());
 
 /***/ }),
 

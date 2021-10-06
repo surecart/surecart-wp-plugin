@@ -12,33 +12,20 @@ import { serialize } from '@wordpress/blocks';
 /**
  * Component Dependencies
  */
-import { TabPanel, Placeholder, TextControl } from '@wordpress/components';
-
-/**
- * React components
- */
-import FormBlocks from './components/form-blocks';
+import { Placeholder, TextControl } from '@wordpress/components';
 
 import { css, jsx } from '@emotion/core';
-import Options from './components/Options';
-import { useCallback, useState, useEffect } from '@wordpress/element';
-import { useDispatch, useSelect, select, dispatch } from '@wordpress/data';
+import { useState } from '@wordpress/element';
+import { useSelect, select, dispatch } from '@wordpress/data';
 import {
 	__experimentalUseInnerBlocksProps as useInnerBlocksProps,
 	__experimentalUseNoRecursiveRenders as useNoRecursiveRenders,
-	__experimentalBlockContentOverlay as BlockContentOverlay,
-	InnerBlocks,
-	BlockControls,
+	__experimentalBlockContentOverlay as BlockContentOverlay, // TODO when gutenberg releases it: https://github.com/WordPress/gutenberg/blob/afee31ee020b8965e811f5d68a5ca8001780af9d/packages/block-editor/src/components/block-content-overlay/index.js#L17
 	InspectorControls,
 	useBlockProps,
 	Warning,
 } from '@wordpress/block-editor';
-import {
-	PanelBody,
-	PanelRow,
-	FontSizePicker,
-	Spinner,
-} from '@wordpress/components';
+import { PanelBody, PanelRow, Spinner } from '@wordpress/components';
 
 // stores
 import {
@@ -48,12 +35,14 @@ import {
 } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
 import { store as blockEditorStore } from '@wordpress/block-editor';
-import { store as reusableBlocksStore } from '@wordpress/reusable-blocks';
 
 export default ( { clientId, attributes, setAttributes } ) => {
 	// these blocks are required in order to submit an order
 	const [ loading, setLoading ] = useState( false );
-	const { id, align } = attributes;
+	const { id, className } = attributes;
+	const [ hasAlreadyRendered, RecursionProvider ] = useNoRecursiveRenders(
+		id
+	);
 
 	const [ blocks, onInput, onChange ] = useEntityBlockEditor(
 		'postType',
@@ -66,14 +55,9 @@ export default ( { clientId, attributes, setAttributes } ) => {
 		'title',
 		id
 	);
-	const [ meta, setMeta ] = useEntityProp(
-		'postType',
-		'ce_form',
-		'meta',
-		id
-	);
 
 	const blockProps = useBlockProps();
+
 	const innerBlocksProps = useInnerBlocksProps(
 		{},
 		{
@@ -109,10 +93,6 @@ export default ( { clientId, attributes, setAttributes } ) => {
 		};
 	} );
 
-	useEffect( () => {
-		setMeta( { align } );
-	}, [ align ] );
-
 	// save the form block.
 	const saveFormBlock = async ( title ) => {
 		setLoading( true );
@@ -133,11 +113,25 @@ export default ( { clientId, attributes, setAttributes } ) => {
 			setAttributes( { id: updatedRecord.id } );
 			dispatch( 'core' ).saveEntityRecord();
 		} catch ( e ) {
+			// TODO: Add notice here.
 			console.error( e );
 		} finally {
 			setLoading( false );
 		}
 	};
+
+	if ( hasAlreadyRendered ) {
+		return (
+			<div { ...blockProps }>
+				<Warning>
+					{ __(
+						'Form cannot be rendered inside itself.',
+						'checkout_engine'
+					) }
+				</Warning>
+			</div>
+		);
+	}
 
 	if ( ! hasResolved ) {
 		return (
@@ -169,12 +163,7 @@ export default ( { clientId, attributes, setAttributes } ) => {
 	}
 
 	return (
-		<div
-			className={ meta?.className }
-			css={ css`
-				font-size: 14px;
-			` }
-		>
+		<RecursionProvider>
 			<InspectorControls>
 				<PanelBody title={ __( 'Form Title', 'checkout-engine' ) }>
 					<PanelRow>
@@ -190,6 +179,6 @@ export default ( { clientId, attributes, setAttributes } ) => {
 			<div className="block-library-block__reusable-block-container">
 				{ <div { ...innerBlocksProps } /> }
 			</div>
-		</div>
+		</RecursionProvider>
 	);
 };
