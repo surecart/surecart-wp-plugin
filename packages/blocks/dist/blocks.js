@@ -2420,7 +2420,8 @@ __webpack_require__.r(__webpack_exports__);
   var _useState = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["useState"])(false),
       _useState2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1___default()(_useState, 2),
       loading = _useState2[0],
-      setLoading = _useState2[1];
+      setLoading = _useState2[1]; // TODO: Let's store a unique hash in both meta and attribute to find.
+
 
   var id = attributes.id,
       className = attributes.className;

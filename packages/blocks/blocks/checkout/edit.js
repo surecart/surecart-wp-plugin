@@ -39,6 +39,7 @@ import { store as blockEditorStore } from '@wordpress/block-editor';
 export default ( { clientId, attributes, setAttributes } ) => {
 	// these blocks are required in order to submit an order
 	const [ loading, setLoading ] = useState( false );
+	// TODO: Let's store a unique hash in both meta and attribute to find.
 	const { id, className } = attributes;
 	const [ hasAlreadyRendered, RecursionProvider ] = useNoRecursiveRenders(
 		id
