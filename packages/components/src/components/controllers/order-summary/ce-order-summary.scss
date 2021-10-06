@@ -11,8 +11,11 @@
 }
 
 ::slotted(*) {
-  margin-top: 20px;
+  margin: 4px 0 !important;
+}
+::slotted(ce-divider) {
+  margin: 16px 0 !important;
 }
 ce-line-item ~ ce-line-item {
-  margin-top: 20px;
+  margin-top: 14px;
 }

@@ -2,29 +2,8 @@
 	"name": "checkout-engine/checkout-form",
 	"category": "layout",
 	"attributes": {
-		"isPremium": {
-			"type": "boolean",
-			"default": false
-		},
-    "font_size": {
-      "type": "number",
-      "default": 16
-    },
-    "choices": {
-      "tyoe": "object",
-      "default": {}
-    },
-		"items": {
-			"type": "number",
-			"default": "2"
-		},
-		"contentAlign": {
-			"type": "string",
-			"default": "left"
-		},
-		"isStackedOnMobile": {
-			"type": "boolean",
-			"default": false
-		}
+    "id": {
+      "type": "number"
+    }
 	}
 }

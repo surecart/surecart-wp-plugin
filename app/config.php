@@ -160,6 +160,7 @@ return [
 	 * Blocks
 	 */
 	'blocks'              => [
+		\CheckoutEngine\Blocks\CheckoutFormPost::class,
 		\CheckoutEngine\Blocks\CheckoutForm::class,
 		// \CheckoutEngine\Blocks\Email::class,
 		// \CheckoutEngine\Blocks\Name::class,

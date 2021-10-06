@@ -1,0 +1,14 @@
+{
+	"name": "checkout-engine/form",
+	"category": "layout",
+  "attributes": {
+    "font_size": {
+      "type": "number",
+      "default": 16
+    },
+    "choices": {
+      "tyoe": "object",
+      "default": {}
+    }
+  }
+}

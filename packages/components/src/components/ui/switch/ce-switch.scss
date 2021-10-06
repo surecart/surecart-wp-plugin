@@ -124,6 +124,11 @@
   line-height: var(--height);
 }
 
+.switch--is-required .switch__title:after {
+  content: " *";
+  color: var(--ce-color-danger-500);
+}
+
 .switch__title {
   color: var(--ce-input-label-color);
   font-weight: var(--ce-input-label-font-weight);

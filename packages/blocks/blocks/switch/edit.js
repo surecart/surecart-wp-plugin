@@ -86,6 +86,7 @@ export default ( { className, attributes, setAttributes, isSelected } ) => {
 				required={ required }
 			>
 				<RichText
+					tagName="span"
 					aria-label={ __( 'Switch label' ) }
 					placeholder={ __( 'Add some text...' ) }
 					value={ label }
@@ -95,6 +96,7 @@ export default ( { className, attributes, setAttributes, isSelected } ) => {
 				/>
 				{ ( description || isSelected ) && (
 					<RichText
+						tagName="span"
 						slot="description"
 						aria-label={ __( 'Switch label' ) }
 						placeholder={ __(

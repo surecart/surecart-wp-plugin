@@ -110,7 +110,6 @@ export default ( {
 							position: sticky;
 							background: #fff;
 							margin-left: -20px;
-							margin-right: -20px;
 							margin-bottom: 30px;
 							top: 32px;
 							z-index: 4;
@@ -155,8 +154,12 @@ export default ( {
 								<h1
 									css={ css`
 										margin: 0;
-										font-size: 1.3em;
-										font-weight: normal;
+										font-size: var(
+											--ce-form-section-font-size
+										);
+										font-weight: var(
+											--ce-form-section-font-weight
+										);
 									` }
 								>
 									{ title }

@@ -92,6 +92,7 @@ export class CESwitch {
         htmlFor={this.switchId}
         class={{
           'switch': true,
+          'switch--is-required': this.required,
           'switch--checked': this.checked,
           'switch--disabled': this.disabled,
           'switch--focused': this.hasFocus,

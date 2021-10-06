@@ -225,7 +225,7 @@ class CustomersListTable extends ListTable {
 		ob_start();
 		?>
 		<a class="row-title" aria-label="<?php echo esc_attr( 'Edit Customer', 'checkout_engine' ); ?>" href="<?php echo esc_url( \CheckoutEngine::getUrl()->edit( 'customers', $customer->id ) ); ?>">
-			<?php echo wp_kses_post( $customer->name ?? __( 'Not provided', 'checkout_engine' ) ); ?>
+			<?php echo wp_kses_post( $customer->name ?? $customer->email ); ?>
 		</a>
 
 		<?php

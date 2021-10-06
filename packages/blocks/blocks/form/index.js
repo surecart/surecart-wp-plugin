@@ -4,9 +4,6 @@
 import edit from './edit';
 import metadata from './block.json';
 import save from './save';
-import '../../style.scss';
-
-import './store';
 
 /**
  * WordPress dependencies
@@ -21,10 +18,14 @@ const { name, category, attributes } = metadata;
 
 const settings = {
 	/* translators: block name */
-	title: __( 'Checkout Form', 'checkout_engine' ),
+	title: __( 'Form', 'checkout_engine' ),
 	/* translators: block description */
-	description: __( 'Display a checkout form', 'checkout_engine' ),
+	description: __( 'Displays the form', 'checkout_engine' ),
 	supports: {
+		align: [ 'center', 'wide', 'full' ],
+		fontSize: true,
+		multiple: false,
+		anchor: true,
 		html: false,
 	},
 	icon,

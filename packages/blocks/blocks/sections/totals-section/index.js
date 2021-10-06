@@ -24,7 +24,7 @@ const settings = {
 	parent: BLOCK_PARENTS,
 	supports: {
 		reusable: false,
-		multiple: false,
+		// multiple: false,
 		html: false,
 	},
 	icon,

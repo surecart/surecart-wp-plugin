@@ -3,7 +3,7 @@ import { css, jsx } from '@emotion/core';
 
 import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';
-import { useSelect } from '@wordpress/data';
+import { useSelect, dispatch } from '@wordpress/data';
 import { Button, Modal } from '@wordpress/components';
 
 import { STORE_KEY as NOTICES_STORE_KEY } from '../store/notices';

@@ -34,34 +34,34 @@ add_filter(
 );
 
 
-function maybe_create_or_update_form( $post_id ) {
-	if ( wp_is_post_revision( $post_id ) ) {
-		return;
-	}
+// function maybe_create_or_update_form( $post_id ) {
+// if ( wp_is_post_revision( $post_id ) ) {
+// return;
+// }
 
-	$post = get_post( $post_id );
+// $post = get_post( $post_id );
 
-	// get the form ids by the post id.
-	// $form_ids = get_form_ids_by_post_id($post_id);
-	$block_form_ids = [];
+// get the form ids by the post id.
+// $form_ids = get_form_ids_by_post_id($post_id);
+// $block_form_ids = [];
 
-	if ( has_block( 'checkout-engine/checkout-form', $post ) ) {
-		$blocks = parse_blocks( $post->post_content );
-		foreach ( $blocks as $block ) {
-			if ( 'checkout-engine/checkout-form' === $block['blockName'] ) {
-				// this is generated in the client.
-				$form_id          = $block['attrs']['form_id'];
-				$block_form_ids[] = $form_id;
+// if ( has_block( 'checkout-engine/checkout-form', $post ) ) {
+// $blocks = parse_blocks( $post->post_content );
+// foreach ( $blocks as $block ) {
+// if ( 'checkout-engine/checkout-form' === $block['blockName'] ) {
+// this is generated in the client.
+// $form_id          = $block['attrs']['form_id'];
+// $block_form_ids[] = $form_id;
 
-				// if ( in_array( $form_id, $form_ids ) ) {
-				// update
-				// } else {
-				// create
-				// }
-			}
-		}
-	}
+// if ( in_array( $form_id, $form_ids ) ) {
+// update
+// } else {
+// create
+// }
+// }
+// }
+// }
 
-	// soft delete the difference.
-}
-add_action( 'save_post', 'maybe_create_or_update_form' );
+// soft delete the difference.
+// }
+// add_action( 'save_post', 'maybe_create_or_update_form' );

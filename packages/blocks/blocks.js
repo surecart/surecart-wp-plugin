@@ -46,6 +46,7 @@ import * as name from './blocks/name';
 import * as payment from './blocks/payment';
 import * as paymentRequest from './blocks/payment-request';
 import * as button from './blocks/button';
+import * as form from './blocks/form';
 import * as submit from './blocks/submit';
 import * as input from './blocks/input';
 import * as divider from './blocks/divider';
@@ -66,10 +67,12 @@ export const ALLOWED_BLOCKS = [
 	'checkout-engine/divider',
 	'checkout-engine/button',
 	'checkout-engine/email',
+	'checkout-engine/switch',
 	'checkout-engine/form-row',
 	'checkout-engine/name',
 	'checkout-engine/payment',
 	'checkout-engine/pricing-section',
+	'checkout-engine/totals-section',
 	'checkout-engine/form-section',
 	'checkout-engine/submit',
 ];
@@ -114,6 +117,7 @@ export const registerCheckoutEngineBlocks = () => {
 		payment,
 		paymentRequest,
 		button,
+		form,
 		input,
 		divider,
 		switchBlock,
