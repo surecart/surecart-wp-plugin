@@ -4,6 +4,15 @@
 	"attributes": {
     "id": {
       "type": "number"
+    },
+    "title": {
+      "tyoe": "string"
+    },
+    "choices": {
+      "type": "object"
+    },
+    "prices": {
+      "type": "array"
     }
 	}
 }

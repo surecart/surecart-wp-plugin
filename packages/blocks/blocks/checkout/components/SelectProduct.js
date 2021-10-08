@@ -72,9 +72,15 @@ export default ( { onRequestClose, attributes, setAttributes } ) => {
 			title={ __( 'Add Product', 'checkout_engine' ) }
 			onRequestClose={ onRequestClose }
 		>
-			<CeFormRow>
+			<div
+				css={ css`
+					display: flex;
+					flex-direction: column;
+					gap: 1em;
+				` }
+			>
 				<CeSelect
-					value={ product.id }
+					value={ product?.id }
 					onCeChange={ ( e ) => {
 						const product = products.find(
 							( product ) => product.id === e.target.value
@@ -100,18 +106,19 @@ export default ( { onRequestClose, attributes, setAttributes } ) => {
 						};
 					} ) }
 				/>
-			</CeFormRow>
-			<div
-				css={ css`
-					display: flex;
-					align-items: center;
-					gap: 1em;
-				` }
-			>
-				<CeButton type="primary" onClick={ addProduct }>
-					{ __( 'Add Product', 'checkout_engine' ) }
-				</CeButton>
-				<CeButton>{ __( 'Cancel', 'checkout_engine' ) }</CeButton>
+
+				<div
+					css={ css`
+						display: flex;
+						align-items: center;
+						gap: 0.5em;
+					` }
+				>
+					<CeButton type="primary" onClick={ addProduct }>
+						{ __( 'Add Product', 'checkout_engine' ) }
+					</CeButton>
+					<CeButton>{ __( 'Cancel', 'checkout_engine' ) }</CeButton>
+				</div>
 			</div>
 		</Modal>
 	);

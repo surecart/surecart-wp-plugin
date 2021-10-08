@@ -7,7 +7,16 @@ use CheckoutEngine\Concerns\HasBlockTheme;
 /**
  * Checkout block
  */
-class CheckoutForm extends Block {
+class Form extends Block {
+	use HasblockTheme;
+
+	/**
+	 * Block name
+	 *
+	 * @var string
+	 */
+	protected $name = 'form';
+
 	/**
 	 * Keep track of checkout form instances
 	 * on the page with an id.
@@ -17,11 +26,26 @@ class CheckoutForm extends Block {
 	private static $instance = 1;
 
 	/**
-	 * Block name
+	 * Register the block for dynamic output
 	 *
-	 * @var string
+	 * @param \Pimple\Container $container Service container.
+	 *
+	 * @return void
 	 */
-	protected $name = 'checkout-form';
+	public function register( $container ) {
+		add_filter( 'init', [ $this, 'registerStyles' ] );
+
+		parent::register( $container );
+	}
+
+	/**
+	 * Register checkout form styles
+	 *
+	 * @return void
+	 */
+	public function registerStyles() {
+		$this->registerBlockTheme( $this->name, 'elegant', __( 'Elegant', 'checkout_engine' ), 'dist/styles/themes/elegant.css' );
+	}
 
 	public function getClasses( $attributes ) {
 		$block_alignment = isset( $attributes['align'] ) ? sanitize_text_field( $attributes['align'] ) : '';
@@ -37,7 +61,6 @@ class CheckoutForm extends Block {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
-		$post = get_post( $attributes['id'] );
 		return \CheckoutEngine::blocks()->render(
 			"blocks/$this->name",
 			[
@@ -46,7 +69,7 @@ class CheckoutForm extends Block {
 				'font_size'   => $attributes['font_size'] ?? 16,
 				'classes'     => $this->getClasses( $attributes ),
 				'description' => $attributes['description'] ?? '',
-				'content'     => $post->post_content,
+				'content'     => $content,
 				'choices'     => $attributes['choices'] ?? [],
 				'success_url' => $attributes['redirect'] ?? trailingslashit( get_home_url() ) . 'thank-you',
 				'i18n'        => [],

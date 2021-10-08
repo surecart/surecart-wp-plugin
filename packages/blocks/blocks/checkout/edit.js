@@ -15,7 +15,7 @@ import { serialize } from '@wordpress/blocks';
 import { Placeholder, TextControl } from '@wordpress/components';
 
 import { css, jsx } from '@emotion/core';
-import { useState } from '@wordpress/element';
+import { useState, useEffect } from '@wordpress/element';
 import { useSelect, select, dispatch } from '@wordpress/data';
 import {
 	__experimentalUseInnerBlocksProps as useInnerBlocksProps,
@@ -26,6 +26,7 @@ import {
 	Warning,
 } from '@wordpress/block-editor';
 import { PanelBody, PanelRow, Spinner } from '@wordpress/components';
+import Setup from './components/Setup';
 
 // stores
 import {
@@ -35,12 +36,13 @@ import {
 } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
 import { store as blockEditorStore } from '@wordpress/block-editor';
+import { createBlock } from '@wordpress/blocks';
 
 export default ( { clientId, attributes, setAttributes } ) => {
 	// these blocks are required in order to submit an order
 	const [ loading, setLoading ] = useState( false );
 	// TODO: Let's store a unique hash in both meta and attribute to find.
-	const { id, className } = attributes;
+	const { id, title: titleAttribute, choices } = attributes;
 	const [ hasAlreadyRendered, RecursionProvider ] = useNoRecursiveRenders(
 		id
 	);
@@ -95,24 +97,27 @@ export default ( { clientId, attributes, setAttributes } ) => {
 	} );
 
 	// save the form block.
-	const saveFormBlock = async ( title ) => {
+	const saveFormBlock = async () => {
 		setLoading( true );
 		try {
 			const updatedRecord = await dispatch( 'core' ).saveEntityRecord(
 				'postType',
 				'ce_form',
 				{
-					title: title || __( 'Untitled Form' ),
+					title: titleAttribute || __( 'Untitled Form' ),
 					content: serialize(
-						select( blockEditorStore ).getBlocksByClientId(
-							clientId
+						createBlock(
+							'checkout-engine/form', // name
+							{
+								choices, // attributes
+							},
+							[ [ 'checkout-engine/submit', {} ] ]
 						)
 					),
 					status: 'publish',
 				}
 			);
 			setAttributes( { id: updatedRecord.id } );
-			dispatch( 'core' ).saveEntityRecord();
 		} catch ( e ) {
 			// TODO: Add notice here.
 			console.error( e );
@@ -134,6 +139,27 @@ export default ( { clientId, attributes, setAttributes } ) => {
 		);
 	}
 
+	if ( loading ) {
+		return (
+			<div { ...blockProps }>
+				<Placeholder>
+					<Spinner />
+				</Placeholder>
+			</div>
+		);
+	}
+
+	if ( ! id ) {
+		return (
+			<Setup
+				attributes={ attributes }
+				setAttributes={ setAttributes }
+				onCreate={ saveFormBlock }
+			/>
+		);
+	}
+
+	// form has resolved
 	if ( ! hasResolved ) {
 		return (
 			<div { ...blockProps }>
@@ -144,6 +170,7 @@ export default ( { clientId, attributes, setAttributes } ) => {
 		);
 	}
 
+	// form is missing
 	if ( isMissing ) {
 		return (
 			<div { ...blockProps }>
@@ -154,12 +181,6 @@ export default ( { clientId, attributes, setAttributes } ) => {
 					) }
 				</Warning>
 			</div>
-		);
-	}
-
-	if ( ! form ) {
-		return (
-			<button onClick={ () => saveFormBlock( 'Form' ) }>Save Form</button>
 		);
 	}
 

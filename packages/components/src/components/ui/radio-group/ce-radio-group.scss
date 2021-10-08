@@ -19,7 +19,7 @@
 
 ::slotted(ce-radio:not(:last-of-type)) {
   display: block;
-  margin-bottom: var(--ce-spacing-xx-small);
+  margin-bottom: var(--ce-spacing-x-small);
 }
 
 .radio-group:not(.radio-group--has-fieldset) {

@@ -145,7 +145,7 @@ ce-button-group > ce-tooltip > ce-button.ce-focus {
   --ce-border-radius-pill: 9999px;
   --ce-shadow-x-small: 0 1px 0 #0d131e0d;
   --ce-shadow-small: 0 1px 2px #0d131e1a;
-  --ce-shadow-medium: 0 2px 4px #0d131e1a;
+  --ce-shadow-medium: 0 0 #0000,0 0 #0000,0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
   --ce-shadow-large: 0 2px 8px #0d131e1a;
   --ce-shadow-x-large: 0 4px 16px #0d131e1a;
   --ce-spacing-xxx-small: 0.125em;
@@ -178,7 +178,7 @@ ce-button-group > ce-tooltip > ce-button.ce-focus {
   --ce-font-weight-light: 300;
   --ce-font-weight-normal: 400;
   --ce-font-weight-semibold: 500;
-  --ce-font-weight-bold: 700;
+  --ce-font-weight-bold: 600;
   --ce-letter-spacing-dense: -0.015em;
   --ce-letter-spacing-normal: normal;
   --ce-letter-spacing-loose: 0.075em;

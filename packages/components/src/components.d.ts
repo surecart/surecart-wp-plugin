@@ -74,6 +74,10 @@ export namespace Components {
          */
         "name": string;
         /**
+          * Draws an outlined button.
+         */
+        "outline"?: boolean;
+        /**
           * Draws a pill-style button with rounded edges.
          */
         "pill"?: boolean;
@@ -1440,6 +1444,10 @@ declare namespace LocalJSX {
           * Emitted when the button gains focus.
          */
         "onCeFocus"?: (event: CustomEvent<void>) => void;
+        /**
+          * Draws an outlined button.
+         */
+        "outline"?: boolean;
         /**
           * Draws a pill-style button with rounded edges.
          */

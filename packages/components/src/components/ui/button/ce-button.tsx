@@ -32,6 +32,9 @@ export class CEButton {
   /** Draws the button in a loading state. */
   @Prop({ reflect: true }) loading?: boolean = false;
 
+  /** Draws an outlined button. */
+  @Prop({ reflect: true }) outline?: boolean = false;
+
   /** Draws the button in a busy state. */
   @Prop({ reflect: true }) busy?: boolean = false;
 
@@ -156,6 +159,8 @@ export class CEButton {
           'button--loading': this.loading,
           'button--busy': this.busy,
           'button--pill': this.pill,
+          'button--standard': !this.outline,
+          'button--outline': this.outline,
           'button--has-label': this.hasLabel,
           'button--has-prefix': this.hasPrefix,
           'button--has-suffix': this.hasSuffix,
