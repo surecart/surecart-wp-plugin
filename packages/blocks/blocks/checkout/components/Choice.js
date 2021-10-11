@@ -5,6 +5,7 @@
  */
 import { __ } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
+import { addQueryArgs } from '@wordpress/url';
 import { useEffect, useState } from '@wordpress/element';
 import { Icon, external, menu, moreHorizontal, close } from '@wordpress/icons';
 import { Container, Draggable } from 'react-smooth-dnd';
@@ -42,7 +43,6 @@ export default ( { choice, attributes, setAttributes, id } ) => {
 
 	useEffect( () => {
 		fetchProduct();
-		console.log( { choices } );
 	}, [ id ] );
 
 	const removeProduct = () => {
@@ -154,6 +154,14 @@ export default ( { choice, attributes, setAttributes, id } ) => {
 		return choices?.[ id ]?.prices?.[ price.id ]?.enabled;
 	};
 
+	const navigateToEditProduct = () => {
+		window.location.href = addQueryArgs( 'admin.php', {
+			page: 'ce-products',
+			action: 'edit',
+			id,
+		} );
+	};
+
 	const buttons = (
 		<div>
 			<CeDropdown slot="suffix" position="bottom-right">
@@ -161,7 +169,7 @@ export default ( { choice, attributes, setAttributes, id } ) => {
 					<Icon icon={ moreHorizontal } size={ 24 } />
 				</CeButton>
 				<CeMenu>
-					<CeMenuItem>
+					<CeMenuItem onClick={ navigateToEditProduct }>
 						<Icon
 							slot="prefix"
 							css={ css`
@@ -233,49 +241,8 @@ export default ( { choice, attributes, setAttributes, id } ) => {
 					{ product?.name }
 				</div>
 			</ToggleHeader>
-			{ /* <div
-					css={ css`
-						display: flex;
-						align-items: center;
-						gap: 1em;
-					` }
-				>
-					<div
-						css={ css`
-							font-size: 16px;
-							display: flex;
-							align-items: center;
-							gap: 0.5em;
 
-							svg {
-								fill: var( ${ muted } );
-							}
-						` }
-					>
-						<Icon
-							css={ css`
-								cursor: move;
-							` }
-							icon={ menu }
-							size={ 18 }
-						/>
-						{ product?.name }
-					</div>
-					<a className="product-choice__icon" href="#">
-						<Icon icon={ external } size={ 16 } />
-					</a>
-				</div>
-				<div
-					css={ css`
-						font-size: 16px;
-					` }
-				>
-					<CeButton pill size="small">
-						{ __( 'Remove', 'checkout_engine' ) }
-					</CeButton>
-				</div>*/ }
-
-			{ open && (
+			{ isOpen && (
 				<div
 					css={ css`
 						margin: 1em auto;
