@@ -70,22 +70,22 @@ export default ( { className, attributes, setAttributes, isSelected } ) => {
 			</InspectorControls>
 
 			{ ! isSelected && ! name && <div>Please add a name</div> }
-			<Disabled>
-				<CeCheckbox
-					className={ className }
-					name={ name }
-					required={ required }
-				>
-					<RichText
-						aria-label={ __( 'Secure Notice' ) }
-						placeholder={ __( 'Add some checkbox text...' ) }
-						value={ label }
-						onChange={ ( label ) => setAttributes( { label } ) }
-						withoutInteractiveFormatting
-						allowedFormats={ [ 'core/bold', 'core/italic' ] }
-					/>
-				</CeCheckbox>
-			</Disabled>
+			{ /* <Disabled> */ }
+			<CeCheckbox
+				className={ className }
+				name={ name }
+				required={ required }
+			>
+				<RichText
+					aria-label={ __( 'Secure Notice' ) }
+					placeholder={ __( 'Add some checkbox text...' ) }
+					value={ label }
+					onChange={ ( label ) => setAttributes( { label } ) }
+					withoutInteractiveFormatting
+					allowedFormats={ [ 'core/bold', 'core/italic' ] }
+				/>
+			</CeCheckbox>
+			{ /* </Disabled> */ }
 		</Fragment>
 	);
 };

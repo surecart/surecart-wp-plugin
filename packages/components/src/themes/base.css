@@ -164,13 +164,13 @@ ce-button-group > ce-tooltip > ce-button.ce-focus {
   --ce-transition-fast: 150ms;
   --ce-transition-x-fast: 50ms;
   --ce-font-mono: SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
-  --ce-font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  --ce-font-sans: "Inter", -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
   --ce-font-serif: Georgia, 'Times New Roman', serif;
   --ce-font-size-xx-small: 0.625em;
   --ce-font-size-x-small: 0.75em;
   --ce-font-size-small: 0.875em;
   --ce-font-size-medium: 1em;
-  --ce-font-size-large: 1.2em;
+  --ce-font-size-large: 1.3em;
   --ce-font-size-x-large: 1.5em;
   --ce-font-size-xx-large: 2.25em;
   --ce-font-size-xxx-large: 3em;
@@ -195,7 +195,7 @@ ce-button-group > ce-tooltip > ce-button.ce-focus {
   --ce-button-font-size-medium: var(--ce-font-size-medium);
   --ce-button-font-size-large: var(--ce-font-size-large);
   --ce-form-row-spacing: var(--ce-spacing-small);
-  --ce-form-section-font-weight: var(--ce-font-weight-bold);
+  --ce-form-section-font-weight: var(--ce-font-weight-normal);
   --ce-form-section-font-size: var(--ce-font-size-large);
   --ce-form-section-spacing: var(--ce-spacing-xxx-large);
   --ce-form-section-title-spacing: var(--ce-spacing-large);

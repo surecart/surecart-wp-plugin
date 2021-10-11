@@ -43,6 +43,7 @@ export default ( { clientId, attributes, setAttributes } ) => {
 	const [ loading, setLoading ] = useState( false );
 	// TODO: Let's store a unique hash in both meta and attribute to find.
 	const { id, title: titleAttribute, choices } = attributes;
+
 	const [ hasAlreadyRendered, RecursionProvider ] = useNoRecursiveRenders(
 		id
 	);

@@ -28,7 +28,13 @@ export default ( { onRequestClose, attributes, setAttributes } ) => {
 				[ product.id ]: {
 					id: product.id,
 					type: 'any',
-					prices: product.prices.map( ( price ) => price.id ),
+					prices: product.prices.reduce( ( add, curr ) => {
+						add[ curr.id ] = {
+							quantity: 1,
+							enabled: true,
+						};
+						return add;
+					}, {} ),
 				},
 			},
 		} );

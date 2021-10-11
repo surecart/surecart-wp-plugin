@@ -1,22 +1,64 @@
-import dotProp from 'dot-prop-immutable';
+/** @jsx jsx */
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
 import { useEffect, useState } from '@wordpress/element';
+import { Icon, external, menu, moreHorizontal, close } from '@wordpress/icons';
+import { Container, Draggable } from 'react-smooth-dnd';
+import ToggleHeader from '../../../../../resources/scripts/admin/components/ToggleHeader';
+
+import dotProp from 'dot-prop-immutable';
+
 import {
 	CeCheckbox,
 	CeFormControl,
 	CeFormRow,
+	CeButton,
+	CeQuantitySelect,
 	CeFormatNumber,
+	CeDropdown,
+	CeMenu,
+	CeMenuItem,
 } from '@checkout-engine/react';
 
+import { css, jsx } from '@emotion/core';
+
 export default ( { choice, attributes, setAttributes, id } ) => {
+	// styles
+	const border = '--ce-color-gray-200';
+	const bg = '--ce-color-white';
+	const bgHover = '--ce-color-gray-50';
+	const color = '--ce-color-gray-900';
+	const muted = '--ce-color-gray-500';
+
 	const { choices } = attributes;
 	const [ product, setProduct ] = useState( null );
+	const [ isOpen, setIsOpen ] = useState( true );
 	const [ loading, setLoading ] = useState( false );
 	const [ error, setError ] = useState( null );
 
 	useEffect( () => {
 		fetchProduct();
+		console.log( { choices } );
 	}, [ id ] );
+
+	const removeProduct = () => {
+		const r = confirm(
+			__(
+				'Are you sure you want to remove this product from the form?',
+				'checkout_engine'
+			)
+		);
+		if ( r ) {
+			const { [ id ]: value, ...withoutProduct } = choices;
+			setAttributes( {
+				choices: withoutProduct,
+			} );
+		}
+	};
 
 	const fetchProduct = async () => {
 		setLoading( true );
@@ -38,7 +80,6 @@ export default ( { choice, attributes, setAttributes, id } ) => {
 	};
 
 	if ( loading ) {
-		console.log( { choice } );
 		return (
 			<CeFormRow>
 				<CeFormControl>
@@ -46,7 +87,7 @@ export default ( { choice, attributes, setAttributes, id } ) => {
 						slot="label"
 						style={ { width: '20px', display: 'block' } }
 					></ce-skeleton>
-					{ choice.prices.map( () => {
+					{ Object.keys( choice.prices || {} ).map( () => {
 						return (
 							<ce-skeleton
 								style={ {
@@ -91,10 +132,11 @@ export default ( { choice, attributes, setAttributes, id } ) => {
 
 	const addPrice = ( priceId ) => {
 		setAttributes( {
-			choices: dotProp.set( choices, `${ id }.prices`, ( list ) => [
-				...list,
-				priceId,
-			] ),
+			choices: dotProp.set(
+				choices,
+				`${ id }.prices.${ priceId }.enabled`,
+				true
+			),
 		} );
 	};
 
@@ -102,44 +144,260 @@ export default ( { choice, attributes, setAttributes, id } ) => {
 		setAttributes( {
 			choices: dotProp.set(
 				choices,
-				`${ id }.prices`,
-				choices[ id ].prices.filter( ( price ) => price !== priceId )
+				`${ id }.prices.${ priceId }.enabled`,
+				false
 			),
 		} );
 	};
 
+	const priceIsChecked = ( price ) => {
+		return choices?.[ id ]?.prices?.[ price.id ]?.enabled;
+	};
+
+	const buttons = (
+		<div>
+			<CeDropdown slot="suffix" position="bottom-right">
+				<CeButton type="text" slot="trigger" circle>
+					<Icon icon={ moreHorizontal } size={ 24 } />
+				</CeButton>
+				<CeMenu>
+					<CeMenuItem>
+						<Icon
+							slot="prefix"
+							css={ css`
+								opacity: 0.5;
+								margin-right: 8px;
+							` }
+							icon={ external }
+							size={ 16 }
+						/>
+						{ __( 'Edit', 'checkout_engine' ) }
+					</CeMenuItem>
+					<CeMenuItem onClick={ removeProduct }>
+						<Icon
+							slot="prefix"
+							css={ css`
+								opacity: 0.5;
+								margin-right: 8px;
+							` }
+							icon={ close }
+							size={ 16 }
+						/>
+						{ __( 'Remove', 'checkout_engine' ) }
+					</CeMenuItem>
+				</CeMenu>
+			</CeDropdown>
+		</div>
+	);
+
 	return (
-		<CeFormRow>
-			<CeFormControl label={ product.name }>
-				{ product.prices.map( ( price, index ) => {
-					return (
-						<CeCheckbox
-							style={ { display: 'block' } }
-							key={ price.id }
-							value={ price.id }
-							onCeChange={ ( e ) => {
-								if ( e.target.checked ) {
-									addPrice( e.target.value );
-								} else {
-									removePrice( e.target.value );
-								}
-							} }
-							checked={ choice.prices.find(
-								( id ) => id === price.id
-							) }
-						>
-							{ price.name }{ ' ' }
-							<span style={ { opacity: '0.5' } }>
-								<CeFormatNumber
-									type="currency"
-									currency={ price.currency }
-									value={ price.amount }
-								/>
-							</span>
-						</CeCheckbox>
-					);
-				} ) }
-			</CeFormControl>
-		</CeFormRow>
+		<div
+			css={ css`
+				.product-choice__icon {
+					opacity: 0;
+					visibility: hidden;
+					transition: opacity 0.35s ease;
+				}
+
+				&:hover .product-choice__icon {
+					opacity: 1;
+					visibility: visible;
+				}
+			` }
+		>
+			<ToggleHeader
+				css={ css`
+					margin-bottom: 1em;
+				` }
+				isOpen={ isOpen }
+				setIsOpen={ setIsOpen }
+				buttons={ buttons }
+			>
+				<div
+					css={ css`
+						display: flex;
+						align-items: center;
+						gap: 1em;
+					` }
+				>
+					<Icon
+						css={ css`
+							cursor: move;
+							svg {
+								fill: var( ${ muted } );
+							}
+						` }
+						icon={ menu }
+						size={ 18 }
+					/>
+					{ product?.name }
+				</div>
+			</ToggleHeader>
+			{ /* <div
+					css={ css`
+						display: flex;
+						align-items: center;
+						gap: 1em;
+					` }
+				>
+					<div
+						css={ css`
+							font-size: 16px;
+							display: flex;
+							align-items: center;
+							gap: 0.5em;
+
+							svg {
+								fill: var( ${ muted } );
+							}
+						` }
+					>
+						<Icon
+							css={ css`
+								cursor: move;
+							` }
+							icon={ menu }
+							size={ 18 }
+						/>
+						{ product?.name }
+					</div>
+					<a className="product-choice__icon" href="#">
+						<Icon icon={ external } size={ 16 } />
+					</a>
+				</div>
+				<div
+					css={ css`
+						font-size: 16px;
+					` }
+				>
+					<CeButton pill size="small">
+						{ __( 'Remove', 'checkout_engine' ) }
+					</CeButton>
+				</div>*/ }
+
+			{ open && (
+				<div
+					css={ css`
+						margin: 1em auto;
+					` }
+				>
+					<Container>
+						{ product.prices.map( ( price, index ) => {
+							return (
+								<Draggable
+									key={ price.id }
+									css={ css`
+										overflow: visible !important;
+									` }
+								>
+									<div
+										css={ css`
+											background: var( ${ bg } );
+											&:hover {
+												background: var( ${ bgHover } );
+											}
+											color: var( ${ color } );
+											${ index === 0 &&
+											`border-top-right-radius: var(--ce-border-radius-medium); border-top-left-radius: var(--ce-border-radius-medium);` }
+											${ index ===
+												product?.prices?.length - 1 &&
+											`border-bottom-right-radius: var(--ce-border-radius-medium); border-bottom-left-radius: var(--ce-border-radius-medium);` }
+										  box-shadow: inset 0 0 0 1px var(${ border });
+											display: grid;
+											margin-top: -1px;
+											padding: 1.2em;
+											grid-template-columns: repeat(
+												3,
+												minmax( 0, 1fr )
+											);
+											justify-content: space-between;
+											align-content: center;
+											gap: 1em;
+											transition: background-color 0.35s
+												ease;
+										` }
+									>
+										<div
+											css={ css`
+												display: flex;
+												gap: 1em;
+												color: var( ${ color } );
+												align-items: center;
+											` }
+										>
+											<CeCheckbox
+												key={ price.id }
+												value={ price.id }
+												onCeChange={ ( e ) => {
+													if ( e.target.checked ) {
+														addPrice(
+															e.target.value
+														);
+													} else {
+														removePrice(
+															e.target.value
+														);
+													}
+												} }
+												checked={ priceIsChecked(
+													price
+												) }
+											>
+												{ price.name }
+											</CeCheckbox>
+											<CeQuantitySelect
+												css={ css`
+													color: var( ${ muted } );
+												` }
+											/>
+										</div>
+										<span
+											css={ css`
+												text-align: center;
+											` }
+										>
+											<CeFormatNumber
+												type="currency"
+												currency={ price.currency }
+												value={ price.amount }
+											/>{ ' ' }
+											<span
+												css={ css`
+													color: var( ${ muted } );
+												` }
+											>
+												{ price.recurring_interval
+													? `/ ${ price.recurring_interval }`
+													: __(
+															'once',
+															'checkout_engine'
+													  ) }
+											</span>
+										</span>
+										<span
+											css={ css`
+												text-align: right;
+												svg {
+													fill: var( ${ muted } );
+													stroke-width: 2;
+												}
+											` }
+										>
+											<Icon
+												css={ css`
+													cursor: move;
+												` }
+												icon={ menu }
+												size={ 18 }
+											/>
+										</span>
+									</div>
+								</Draggable>
+							);
+						} ) }
+					</Container>
+				</div>
+			) }
+		</div>
 	);
 };
