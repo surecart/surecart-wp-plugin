@@ -36,12 +36,13 @@ import * as checkout from './blocks/checkout';
 // sections
 import * as pricingSection from './blocks/sections/pricing-section';
 import * as paymentSection from './blocks/sections/payment-section';
-import * as totalsSection from './blocks/sections/totals-section';
+
 import * as contactSection from './blocks/sections/contact-section';
 
 // blocks
 import * as section from './blocks/section';
 import * as email from './blocks/email';
+import * as totals from './blocks/totals';
 import * as name from './blocks/name';
 import * as payment from './blocks/payment';
 import * as paymentRequest from './blocks/payment-request';
@@ -72,7 +73,7 @@ export const ALLOWED_BLOCKS = [
 	'checkout-engine/name',
 	'checkout-engine/payment',
 	'checkout-engine/pricing-section',
-	'checkout-engine/totals-section',
+	'checkout-engine/totals',
 	'checkout-engine/form-section',
 	'checkout-engine/submit',
 ];
@@ -110,7 +111,7 @@ export const registerCheckoutEngineBlocks = () => {
 		checkout,
 		section,
 		pricingSection,
-		totalsSection,
+		totals,
 		paymentSection,
 		contactSection,
 		submit,

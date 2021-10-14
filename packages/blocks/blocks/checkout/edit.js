@@ -1,101 +1,37 @@
-/** @jsx jsx */
-
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-/**
- * WordPress dependencies
- */
-import { serialize } from '@wordpress/blocks';
-
-/**
- * Component Dependencies
- */
-import { Placeholder, TextControl } from '@wordpress/components';
-
-import { css, jsx } from '@emotion/core';
-import { useState, useEffect } from '@wordpress/element';
-import { useSelect, select, dispatch } from '@wordpress/data';
+import { useState } from '@wordpress/element';
+import { dispatch } from '@wordpress/data';
+import { useBlockProps } from '@wordpress/block-editor';
+import { Spinner, Placeholder } from '@wordpress/components';
 import {
-	__experimentalUseInnerBlocksProps as useInnerBlocksProps,
-	__experimentalUseNoRecursiveRenders as useNoRecursiveRenders,
-	__experimentalBlockContentOverlay as BlockContentOverlay, // TODO when gutenberg releases it: https://github.com/WordPress/gutenberg/blob/afee31ee020b8965e811f5d68a5ca8001780af9d/packages/block-editor/src/components/block-content-overlay/index.js#L17
-	InspectorControls,
-	useBlockProps,
-	Warning,
-} from '@wordpress/block-editor';
-import { PanelBody, PanelRow, Spinner } from '@wordpress/components';
+	createBlock,
+	parse,
+	serialize,
+	createBlocksFromInnerBlocksTemplate,
+} from '@wordpress/blocks';
+
+/**
+ * Templates
+ */
+import * as templates from '../../templates';
+
+/**
+ * Components
+ */
 import Setup from './components/Setup';
+import Edit from './components/Edit';
 
-// stores
-import {
-	useEntityBlockEditor,
-	useEntityProp,
-	store as coreStore,
-} from '@wordpress/core-data';
-import { store as noticesStore } from '@wordpress/notices';
-import { store as blockEditorStore } from '@wordpress/block-editor';
-import { createBlock } from '@wordpress/blocks';
-
-export default ( { clientId, attributes, setAttributes } ) => {
+export default ( { attributes, setAttributes } ) => {
 	// these blocks are required in order to submit an order
 	const [ loading, setLoading ] = useState( false );
+
 	// TODO: Let's store a unique hash in both meta and attribute to find.
 	const { id, title: titleAttribute, choices } = attributes;
 
-	const [ hasAlreadyRendered, RecursionProvider ] = useNoRecursiveRenders(
-		id
-	);
-
-	const [ blocks, onInput, onChange ] = useEntityBlockEditor(
-		'postType',
-		'ce_form',
-		{ id }
-	);
-	const [ title, setTitle ] = useEntityProp(
-		'postType',
-		'ce_form',
-		'title',
-		id
-	);
-
 	const blockProps = useBlockProps();
-
-	const innerBlocksProps = useInnerBlocksProps(
-		{},
-		{
-			value: blocks,
-			onInput,
-			onChange,
-			template: [ [ 'checkout-engine/form', {} ] ],
-			renderAppender: false,
-		}
-	);
-
-	const { isMissing, form, hasResolved, canEdit } = useSelect( ( select ) => {
-		const hasResolved = select(
-			coreStore
-		).hasFinishedResolution( 'getEntityRecord', [
-			'postType',
-			'ce_form',
-			id,
-		] );
-		const form = select( coreStore ).getEntityRecord(
-			'postType',
-			'ce_form',
-			id
-		);
-		const canEdit = select( coreStore ).canUserEditEntityRecord(
-			'ce_form'
-		);
-		return {
-			canEdit,
-			isMissing: hasResolved && ! form,
-			hasResolved,
-			form,
-		};
-	} );
 
 	// save the form block.
 	const saveFormBlock = async () => {
@@ -105,14 +41,16 @@ export default ( { clientId, attributes, setAttributes } ) => {
 				'postType',
 				'ce_form',
 				{
-					title: titleAttribute || __( 'Untitled Form' ),
+					title: titleAttribute || __( 'Test' ),
 					content: serialize(
 						createBlock(
 							'checkout-engine/form', // name
 							{
 								choices, // attributes
 							},
-							[ [ 'checkout-engine/submit', {} ] ]
+							createBlocksFromInnerBlocksTemplate(
+								parse( templates.sections )
+							)
 						)
 					),
 					status: 'publish',
@@ -126,19 +64,6 @@ export default ( { clientId, attributes, setAttributes } ) => {
 			setLoading( false );
 		}
 	};
-
-	if ( hasAlreadyRendered ) {
-		return (
-			<div { ...blockProps }>
-				<Warning>
-					{ __(
-						'Form cannot be rendered inside itself.',
-						'checkout_engine'
-					) }
-				</Warning>
-			</div>
-		);
-	}
 
 	if ( loading ) {
 		return (
@@ -158,50 +83,9 @@ export default ( { clientId, attributes, setAttributes } ) => {
 				onCreate={ saveFormBlock }
 			/>
 		);
-	}
-
-	// form has resolved
-	if ( ! hasResolved ) {
+	} else {
 		return (
-			<div { ...blockProps }>
-				<Placeholder>
-					<Spinner />
-				</Placeholder>
-			</div>
+			<Edit attributes={ attributes } setAttributes={ setAttributes } />
 		);
 	}
-
-	// form is missing
-	if ( isMissing ) {
-		return (
-			<div { ...blockProps }>
-				<Warning>
-					{ __(
-						'This form has been deleted or is unavailable.',
-						'checkout_engine'
-					) }
-				</Warning>
-			</div>
-		);
-	}
-
-	return (
-		<RecursionProvider>
-			<InspectorControls>
-				<PanelBody title={ __( 'Form Title', 'checkout-engine' ) }>
-					<PanelRow>
-						<TextControl
-							label={ __( 'Form Title', 'checkout-engine' ) }
-							value={ title }
-							onChange={ ( title ) => setTitle( title ) }
-						/>
-					</PanelRow>
-				</PanelBody>
-			</InspectorControls>
-
-			<div className="block-library-block__reusable-block-container">
-				{ <div { ...innerBlocksProps } /> }
-			</div>
-		</RecursionProvider>
-	);
 };

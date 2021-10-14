@@ -15,16 +15,16 @@ import throttle from 'lodash/throttle';
 import { CeFormRow, CeButton, CeSelect } from '@checkout-engine/react';
 
 export default ( { onRequestClose, attributes, setAttributes } ) => {
-	const { choices } = attributes;
+	const { products } = attributes;
 	const [ product, setProduct ] = useState( {} );
-	const [ products, setProducts ] = useState( [] );
+	const [ productsData, setProductsData ] = useState( [] );
 	const [ query, setQuery ] = useState( '' );
 	const [ loading, setLoading ] = useState( false );
 
 	const addProduct = () => {
 		setAttributes( {
-			choices: {
-				...choices,
+			products: {
+				...products,
 				[ product.id ]: {
 					id: product.id,
 					type: 'any',
@@ -63,7 +63,7 @@ export default ( { onRequestClose, attributes, setAttributes } ) => {
 					archived: false,
 				} ),
 			} );
-			setProducts( response );
+			setProductsData( response );
 		} finally {
 			setLoading( false );
 		}
@@ -88,10 +88,10 @@ export default ( { onRequestClose, attributes, setAttributes } ) => {
 				<CeSelect
 					value={ product?.id }
 					onCeChange={ ( e ) => {
-						const product = products.find(
+						const productData = productsData.find(
 							( product ) => product.id === e.target.value
 						);
-						setProduct( product );
+						setProduct( productData );
 					} }
 					loading={ loading }
 					placeholder={ __( 'Choose a product', 'checkout_engine' ) }
@@ -101,7 +101,7 @@ export default ( { onRequestClose, attributes, setAttributes } ) => {
 					) }
 					search
 					onCeSearch={ ( e ) => findProduct( e.detail ) }
-					choices={ ( products || [] ).map( ( product ) => {
+					choices={ ( productsData || [] ).map( ( product ) => {
 						return {
 							value: product.id,
 							label: `${ product.name } ${

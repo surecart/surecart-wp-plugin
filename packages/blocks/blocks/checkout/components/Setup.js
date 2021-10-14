@@ -9,14 +9,31 @@ import {
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { css, jsx } from '@emotion/core';
-import { Placeholder } from '@wordpress/components';
-import SelectProduct from './SelectProduct';
-import Choice from './Choice';
+
+import dotProp from 'dot-prop-immutable';
 import { Container, Draggable } from 'react-smooth-dnd';
 
+import SelectProduct from './SelectProduct';
+import ProductChoice from './ProductChoice';
+
 export default ( { onCreate, attributes, setAttributes } ) => {
-	const { title, choices } = attributes;
+	const { title, products } = attributes;
 	const [ open, setOpen ] = useState( false );
+
+	const removeChoice = ( id ) => {
+		const r = confirm(
+			__(
+				'Are you sure you want to remove this product from the form?',
+				'checkout_engine'
+			)
+		);
+		if ( r ) {
+			const { [ id ]: value, ...withoutProduct } = products;
+			setAttributes( {
+				products: withoutProduct,
+			} );
+		}
+	};
 
 	return (
 		<div
@@ -26,132 +43,138 @@ export default ( { onCreate, attributes, setAttributes } ) => {
 				}
 			` }
 		>
-			<Placeholder isColumnLayout={ true }>
-				<div
+			<div
+				css={ css`
+					font-size: 14px;
+					display: flex;
+					flex-direction: column;
+					gap: 2em;
+					padding: 2em;
+				` }
+			>
+				<CeFormSection label={ __( 'Title', 'checkout_engine' ) }>
+					<CeInput
+						value={ title }
+						placeholder={ __(
+							'Enter a title for your form',
+							'checkout_engine'
+						) }
+						onChange={ ( e ) =>
+							setAttributes( { title: e.target.value } )
+						}
+					/>
+				</CeFormSection>
+
+				<CeFormSection
+					label="Products"
 					css={ css`
-						font-size: 14px;
-						display: flex;
-						flex-direction: column;
-						gap: 2em;
-						padding: 2em;
+						.ce-choice-item + .ce-choice-item {
+							margin-top: 2em;
+						}
 					` }
 				>
-					<CeFormSection label={ __( 'Title', 'checkout_engine' ) }>
-						<CeInput
-							value={ title }
-							placeholder={ __(
-								'Enter a title for your form',
-								'checkout_engine'
-							) }
-							onChange={ ( e ) =>
-								setAttributes( { title: e.target.value } )
-							}
-						/>
-					</CeFormSection>
-
-					<CeFormSection
-						label="Products"
+					<Container>
+						{ Object.keys( products || {} ).map( ( id ) => {
+							const product = products[ id ];
+							return (
+								<Draggable
+									key={ id }
+									className={ 'ce-choice-item' }
+									css={ css`
+										overflow: visible !important;
+									` }
+								>
+									<ProductChoice
+										id={ id }
+										choice={ product }
+										onRemove={ () => removeChoice( id ) }
+										onUpdateChoice={ ( key, value ) => {
+											setAttributes( {
+												products: dotProp.set(
+													attributes.products,
+													`${ id }.${ key }`,
+													value
+												),
+											} );
+										} }
+									/>
+								</Draggable>
+							);
+						} ) }
+					</Container>
+					<div
 						css={ css`
-							.ce-choice-item + .ce-choice-item {
-								margin-top: 2em;
-							}
+							display: flex;
+							gap: 0.5em;
+							align-items: center;
 						` }
 					>
-						<Container>
-							{ Object.keys( choices || {} ).map( ( id ) => {
-								const product = choices[ id ];
-								return (
-									<Draggable
-										key={ id }
-										className={ 'ce-choice-item' }
-										css={ css`
-											overflow: visible !important;
-										` }
-									>
-										<Choice
-											attributes={ attributes }
-											setAttributes={ setAttributes }
-											id={ id }
-											choice={ product }
-										/>
-									</Draggable>
-								);
-							} ) }
-						</Container>
-						<div
-							css={ css`
-								display: flex;
-								gap: 0.5em;
-								align-items: center;
-							` }
+						<CeButton
+							type="primary"
+							outline
+							onClick={ () => setOpen( true ) }
 						>
-							<CeButton
-								type="primary"
-								outline
-								onClick={ () => setOpen( true ) }
-							>
-								{ __( 'Add Product', 'checkout_engine' ) }
-							</CeButton>
-							<CeButton onClick={ () => setOpen( true ) }>
-								{ __( 'Create Product', 'checkout_engine' ) }
-							</CeButton>
-						</div>
-					</CeFormSection>
+							{ __( 'Add Product', 'checkout_engine' ) }
+						</CeButton>
+						<CeButton onClick={ () => setOpen( true ) }>
+							{ __( 'Create Product', 'checkout_engine' ) }
+						</CeButton>
+					</div>
+				</CeFormSection>
 
-					<CeFormSection
-						label={ __( 'Product Options', 'checkout_engine' ) }
-					>
-						<CeChoices style={ { '--columns': 3 } }>
-							<CeChoice value="all" checked={ true }>
+				<CeFormSection
+					label={ __( 'Product Options', 'checkout_engine' ) }
+				>
+					<CeChoices style={ { '--columns': 3 } }>
+						<CeChoice value="all" checked={ true }>
+							{ __(
+								'All Products And Prices',
+								'checkout_engine'
+							) }
+							<span slot="description">
 								{ __(
-									'All Products And Prices',
+									'Customer must purchase all products and their prices.',
 									'checkout_engine'
 								) }
-								<span slot="description">
-									{ __(
-										'Customer must purchase all products and their prices.',
-										'checkout_engine'
-									) }
-								</span>
-							</CeChoice>
-							<CeChoice value="radio">
-								{ __( 'Select One', 'checkout_engine' ) }
-								<span slot="description">
-									{ __(
-										'Customer must select one price from the options.',
-										'checkout_engine'
-									) }
-								</span>
-							</CeChoice>
-							<CeChoice value="checkbox">
-								{ __( 'Pick And Choose', 'checkout_engine' ) }
-								<span slot="description">
-									{ __(
-										'Customer can select multiple prices.',
-										'checkout_engine'
-									) }
-								</span>
-							</CeChoice>
-						</CeChoices>
-					</CeFormSection>
+							</span>
+						</CeChoice>
+						<CeChoice value="radio">
+							{ __( 'Select One', 'checkout_engine' ) }
+							<span slot="description">
+								{ __(
+									'Customer must select one price from the options.',
+									'checkout_engine'
+								) }
+							</span>
+						</CeChoice>
+						<CeChoice value="checkbox">
+							{ __( 'Pick And Choose', 'checkout_engine' ) }
+							<span slot="description">
+								{ __(
+									'Customer can select multiple prices.',
+									'checkout_engine'
+								) }
+							</span>
+						</CeChoice>
+					</CeChoices>
+				</CeFormSection>
 
-					<ce-divider style={ { width: '100%' } }></ce-divider>
-
+				{ !! onCreate && (
 					<div>
 						<CeButton type="primary" onClick={ onCreate }>
 							{ __( 'Create Form', 'checkout_engine' ) }
 						</CeButton>
 					</div>
-				</div>
-
-				{ open && (
-					<SelectProduct
-						attributes={ attributes }
-						setAttributes={ setAttributes }
-						onRequestClose={ () => setOpen( false ) }
-					/>
 				) }
-			</Placeholder>
+			</div>
+
+			{ open && (
+				<SelectProduct
+					attributes={ attributes }
+					setAttributes={ setAttributes }
+					onRequestClose={ () => setOpen( false ) }
+				/>
+			) }
 		</div>
 	);
 };

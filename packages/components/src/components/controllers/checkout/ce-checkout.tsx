@@ -1,5 +1,5 @@
 import { Component, h, Prop, Element, State, Watch, Listen } from '@stencil/core';
-import { Price, Product, Coupon, CheckoutSession, Customer, LineItemData, PriceData, ProductChoices, Keys } from '../../../types';
+import { Price, Product, Coupon, CheckoutSession, Customer, LineItemData, PriceData, ProductChoices, Keys, ChoiceType } from '../../../types';
 import { handleInputs } from './functions';
 import { getProducts } from '../../../services/fetch';
 import { calculateInitialLineItems } from '../../../functions/line-items';
@@ -18,6 +18,7 @@ export class CECheckout {
   /** Holds our state machine service */
   private _stateService = interpret(checkoutMachine);
 
+  /** Element */
   @Element() el: HTMLElement;
 
   /** Pass an array of ids for choice fields */
@@ -26,8 +27,11 @@ export class CECheckout {
   /** Pass an array of choices */
   @Prop() choices: ProductChoices;
 
-  /** Pass an array of price information to load into the form. */
-  @Prop({ attribute: 'prices' }) priceData: Array<PriceData>;
+  /** Pass an array of products */
+  @Prop() products: ProductChoices;
+
+  /** Give a user a choice to switch session prices */
+  @Prop() choiceType: ChoiceType = 'all';
 
   /** Currency to use for this checkout. */
   @Prop() currencyCode: string = 'usd';
@@ -60,7 +64,7 @@ export class CECheckout {
   @State() prices: Array<Price>;
 
   /** Stores fetched prices for use throughout component.  */
-  @State() products: Array<Product>;
+  @State() productsData: Array<Product>;
 
   /** Stores the users's selected price ids. */
   @State() selectedchoicePriceIds: Set<string>;
@@ -296,10 +300,10 @@ export class CECheckout {
     // @ts-ignore
     Universe.create(this, this.state());
 
-    // fetch products
-    this.fetchProducts();
-    // get or create session
-    this.getOrCreateSession();
+    // // fetch products
+    // this.fetchProducts();
+    // // get or create session
+    // this.getOrCreateSession();
   }
 
   /** Remove state machine on disconnect. */
@@ -327,7 +331,7 @@ export class CECheckout {
         id,
         data: {
           currency: this.currencyCode || 'usd',
-          line_items: calculateInitialLineItems(this.choices, this.priceData),
+          line_items: calculateInitialLineItems(this.choices, this.choiceType),
         },
       })) as CheckoutSession;
       send('RESOLVE');
@@ -360,7 +364,7 @@ export class CECheckout {
 
   async fetchProducts() {
     try {
-      this.products = await getProducts({
+      this.productsData = await getProducts({
         query: {
           active: true,
           ids: Object.keys(this.choices),
@@ -384,7 +388,7 @@ export class CECheckout {
       choices: this.choices,
       choicePriceIds: this.choicePriceIds,
       prices: this.prices,
-      products: this.products,
+      products: this.productsData,
       lineItemData: this.lineItemData,
       currencyCode: this.currencyCode,
       loading: !Object.keys(this.loaded).every(key => !!this.loaded[key]),

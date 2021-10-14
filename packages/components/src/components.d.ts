@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { CheckoutSession, CheckoutState, ChoiceItem, Coupon, Keys, LineItemData, PriceData, Product, ProductChoices } from "./types";
+import { CheckoutSession, CheckoutState, ChoiceItem, ChoiceType, Coupon, Keys, LineItemData, Product, ProductChoices } from "./types";
 export namespace Components {
     interface CeAlert {
         /**
@@ -160,6 +160,10 @@ export namespace Components {
          */
         "choicePriceIds": Array<string>;
         /**
+          * Give a user a choice to switch session prices
+         */
+        "choiceType": ChoiceType;
+        /**
           * Pass an array of choices
          */
         "choices": ProductChoices;
@@ -184,9 +188,9 @@ export namespace Components {
          */
         "lineItemData": Array<LineItemData>;
         /**
-          * Pass an array of price information to load into the form.
+          * Pass an array of products
          */
-        "priceData": Array<PriceData>;
+        "products": ProductChoices;
         /**
           * Stripe publishable key
          */
@@ -1527,6 +1531,10 @@ declare namespace LocalJSX {
          */
         "choicePriceIds"?: Array<string>;
         /**
+          * Give a user a choice to switch session prices
+         */
+        "choiceType"?: ChoiceType;
+        /**
           * Pass an array of choices
          */
         "choices"?: ProductChoices;
@@ -1551,9 +1559,9 @@ declare namespace LocalJSX {
          */
         "lineItemData"?: Array<LineItemData>;
         /**
-          * Pass an array of price information to load into the form.
+          * Pass an array of products
          */
-        "priceData"?: Array<PriceData>;
+        "products"?: ProductChoices;
         /**
           * Stripe publishable key
          */

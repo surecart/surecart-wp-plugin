@@ -15,6 +15,7 @@ export interface ChoiceItem extends Object {
   value: string;
   label: string;
 }
+export type ChoiceType = 'all' | 'single' | 'multiple';
 
 export type RecursivePartial<T> = {
   [P in keyof T]?: RecursivePartial<T[P]>;
@@ -85,8 +86,11 @@ export interface LineItem extends Object {
 
 export interface ProductChoices {
   [id: string]: {
-    type: string;
-    prices: Array<string>;
+    prices: {
+      [id: string]: {
+        quantity: number;
+      };
+    };
   };
 }
 
@@ -106,12 +110,14 @@ export interface CheckoutSession extends Object {
   currency?: string;
   amount_total?: number;
   amount_subtotal?: number;
-  line_items: Array<LineItem>;
+  line_items: lineItems;
   metadata?: Object;
   payment_intent?: PaymentIntent;
   discount_amount?: number;
   discount?: DiscountResponse;
 }
+
+export type lineItems = Array<LineItem>;
 
 export interface Promotion extends Object {
   code: string;

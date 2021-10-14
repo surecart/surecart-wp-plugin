@@ -1,6 +1,6 @@
 import { CheckoutSession, Product, Price, ProductChoices, RecursivePartial } from '../../../types';
 
-import { getLineItemPriceIds } from '../../../functions/line-items';
+import { getChoicePrices, getLineItemPriceIds } from '../../../functions/line-items';
 
 /**
  * Get all chosen price ids.
@@ -26,12 +26,12 @@ export const getAvailablePriceIds = (choices: RecursivePartial<ProductChoices>) 
  */
 export const getAvailablePricesForProduct = (product: RecursivePartial<Product>, choices: RecursivePartial<ProductChoices>) => {
   return product.prices.filter(price => {
-    return getAvailablePriceIds(choices).some(id => id == price.id);
+    return getChoicePrices(choices).some(choice => choice.id == price.id);
   });
 };
 
 export const getSelectedProducts = (products: Array<Product>, checkoutSession: CheckoutSession) => {
-  const priceIds = getLineItemPriceIds(checkoutSession);
+  const priceIds = getLineItemPriceIds(checkoutSession?.line_items);
   return (products || []).filter(product => (product?.prices || []).find(price => (priceIds || []).find(id => id == price.id)));
 };
 
@@ -39,13 +39,13 @@ export const getSelectedProducts = (products: Array<Product>, checkoutSession: C
  * Is the current product selected?
  */
 export const isProductSelected = (product: RecursivePartial<Product>, checkoutSession: CheckoutSession) => {
-  const priceIds = getLineItemPriceIds(checkoutSession);
+  const priceIds = getLineItemPriceIds(checkoutSession?.line_items);
   if (!priceIds) return false;
   return !!(product?.prices || []).find(price => priceIds.find(id => id == price?.id));
 };
 
 export const isPriceSelected = (price: RecursivePartial<Price>, checkoutSession: CheckoutSession) => {
-  const priceIds = getLineItemPriceIds(checkoutSession);
+  const priceIds = getLineItemPriceIds(checkoutSession?.line_items);
   return !!priceIds.find(id => price.id === id);
 };
 

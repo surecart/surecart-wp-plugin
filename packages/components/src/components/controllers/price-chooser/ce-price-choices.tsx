@@ -2,6 +2,7 @@ import { Component, h, Prop, Element, Event, EventEmitter, State } from '@stenci
 import { Product, Price, LineItemData, ProductChoices, CheckoutSession, CheckoutState } from '../../../types';
 import { getAvailablePricesForProduct, getSiblings, isProductSelected, isPriceSelected } from './functions';
 import { openWormhole } from 'stencil-wormhole';
+import { getProductsFirstPriceId } from '../../../functions/line-items';
 
 @Component({
   tag: 'ce-price-choices',
@@ -48,7 +49,7 @@ export class CePriceChoices {
   maybeUpdateSelectedPrices(e: any) {
     if (this.type !== 'radio') return;
     if (e.target.checked) {
-      const firstPriceChoice = this.choices[e.target.value].prices?.[0];
+      const firstPriceChoice = getProductsFirstPriceId(e.target.value, this.choices);
       this.ceUpdateLineItems.emit([
         {
           price_id: firstPriceChoice,
