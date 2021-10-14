@@ -1,6 +1,7 @@
 import { CheckoutSession, Product, Price, ProductChoices, RecursivePartial } from '../../../types';
 
-import { getChoicePrices, getLineItemPriceIds } from '../../../functions/line-items';
+import { getLineItemPriceIds } from '../../../functions/line-items';
+import { getChoicePrices } from '../../../functions/choices';
 
 /**
  * Get all chosen price ids.

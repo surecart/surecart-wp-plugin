@@ -7,6 +7,7 @@ import { RichText } from '@wordpress/block-editor';
 import {
 	PanelBody,
 	PanelRow,
+	SelectControl,
 	TextControl,
 	ToggleControl,
 } from '@wordpress/components';
@@ -17,7 +18,7 @@ import {
 import { CeButton } from '@checkout-engine/react';
 
 export default ( { className, attributes, setAttributes } ) => {
-	const { type, text, submit, full, size } = attributes;
+	const { type, text, submit, full, size, show_total } = attributes;
 
 	return (
 		<div className={ className }>
@@ -38,10 +39,43 @@ export default ( { className, attributes, setAttributes } ) => {
 						/>
 					</PanelRow>
 					<PanelRow>
-						<TextControl
-							label={ __( 'Size', 'checkout-engine' ) }
-							value={ size }
-							onChange={ ( size ) => setAttributes( { size } ) }
+						<ToggleControl
+							label={ __(
+								'Append Total to Button Text',
+								'checkout-engine'
+							) }
+							checked={ show_total }
+							onChange={ ( show_total ) =>
+								setAttributes( { show_total } )
+							}
+						/>
+					</PanelRow>
+					<PanelRow>
+						<SelectControl
+							label={ __( 'Size', 'checkout_engine' ) }
+							value={ size } // e.g: value = [ 'a', 'c' ]
+							onChange={ ( size ) => {
+								setAttributes( { size } );
+							} }
+							options={ [
+								{
+									value: null,
+									label: 'Select a Size',
+									disabled: true,
+								},
+								{
+									value: 'small',
+									label: __( 'Small', 'checkout_engine' ),
+								},
+								{
+									value: 'medium',
+									label: __( 'Medium', 'checkout_engine' ),
+								},
+								{
+									value: 'large',
+									label: __( 'Large', 'checkout_engine' ),
+								},
+							] }
 						/>
 					</PanelRow>
 				</PanelBody>
@@ -52,6 +86,7 @@ export default ( { className, attributes, setAttributes } ) => {
 				submit={ submit }
 				full={ !! full }
 				size={ size }
+				showTotal={ show_total }
 			>
 				<RichText
 					aria-label={ __( 'Button text' ) }

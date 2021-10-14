@@ -1,4 +1,4 @@
-import { ProductChoices, RecursivePartial, Product } from '../../types';
+import { ProductChoices, RecursivePartial } from '../../types';
 
 /**
  * Get a products first price id

@@ -953,9 +953,17 @@ export namespace Components {
     }
     interface CeSubmit {
         /**
+          * Checkout session object
+         */
+        "checkoutSession": CheckoutSession;
+        /**
           * Draws the button full-width
          */
         "full"?: boolean;
+        /**
+          * Total
+         */
+        "showTotal": boolean;
         /**
           * The button's size.
          */
@@ -2380,9 +2388,17 @@ declare namespace LocalJSX {
     }
     interface CeSubmit {
         /**
+          * Checkout session object
+         */
+        "checkoutSession"?: CheckoutSession;
+        /**
           * Draws the button full-width
          */
         "full"?: boolean;
+        /**
+          * Total
+         */
+        "showTotal"?: boolean;
         /**
           * The button's size.
          */
