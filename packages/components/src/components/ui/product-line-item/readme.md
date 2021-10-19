@@ -11,6 +11,7 @@
 | ------------- | -------------- | --------------------------------------------- | --------- | ----------- |
 | `amount`      | `amount`       | Product monetary amount                       | `number`  | `undefined` |
 | `currency`    | `currency`     | Currency for the product                      | `string`  | `undefined` |
+| `edit`        | `edit`         | Can we select the quantity                    | `boolean` | `true`      |
 | `imageUrl`    | `image-url`    | Url for the product image                     | `string`  | `undefined` |
 | `interval`    | `interval`     | Recurring interval (i.e. monthly, once, etc.) | `string`  | `undefined` |
 | `isRemovable` | `is-removable` | Is the line item removable                    | `boolean` | `undefined` |

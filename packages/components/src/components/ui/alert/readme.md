@@ -57,6 +57,19 @@ Type: `Promise<void>`
 | `"title"`   |             |
 
 
+## Dependencies
+
+### Used by
+
+ - [ce-checkout](../../controllers/checkout)
+
+### Graph
+```mermaid
+graph TD;
+  ce-checkout --> ce-alert
+  style ce-alert fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

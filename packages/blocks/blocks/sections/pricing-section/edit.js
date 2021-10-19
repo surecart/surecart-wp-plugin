@@ -69,7 +69,6 @@ export default ( { attributes, setAttributes, isSelected } ) => {
 			<CePriceChoices
 				label={ label }
 				columns={ columns }
-				type={ type }
 				default={ defaultChoice }
 			></CePriceChoices>
 		</Fragment>

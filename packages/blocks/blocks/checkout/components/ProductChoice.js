@@ -14,24 +14,29 @@ import ToggleHeader from '../../../../../resources/scripts/admin/components/Togg
 import dotProp from 'dot-prop-immutable';
 
 import {
-	CeCheckbox,
 	CeButton,
-	CeQuantitySelect,
 	CeFormatNumber,
 	CeDropdown,
 	CeMenu,
 	CeMenuItem,
 } from '@checkout-engine/react';
 
+import {
+	CheckboxControl,
+	__experimentalNumberControl as NumberControl,
+} from '@wordpress/components';
+
 import { css, jsx } from '@emotion/core';
 
-export default ( { choice, onRemove, id, onUpdateChoice } ) => {
+export default ( { attributes, setAttributes, id } ) => {
 	// styles
 	const border = '--ce-color-gray-200';
 	const bg = '--ce-color-white';
 	const bgHover = '--ce-color-gray-50';
 	const color = '--ce-color-gray-900';
 	const muted = '--ce-color-gray-500';
+
+	const { products } = attributes;
 
 	const [ product, setProduct ] = useState( null );
 	const [ isOpen, setIsOpen ] = useState( true );
@@ -59,6 +64,21 @@ export default ( { choice, onRemove, id, onUpdateChoice } ) => {
 		}
 
 		setProduct( result );
+	};
+
+	const removeChoice = ( id ) => {
+		const r = confirm(
+			__(
+				'Are you sure you want to remove this product from the form?',
+				'checkout_engine'
+			)
+		);
+		if ( r ) {
+			const { [ id ]: value, ...withoutProduct } = products;
+			setAttributes( {
+				products: withoutProduct,
+			} );
+		}
 	};
 
 	if ( loading || ! product ) {
@@ -95,11 +115,6 @@ export default ( { choice, onRemove, id, onUpdateChoice } ) => {
 		return <div>{ error }</div>;
 	}
 
-	const priceQuantity = ( price ) => {
-		console.log( choices?.[ id ]?.prices?.[ price.id ]?.quantity );
-		return parseInt( choices?.[ id ]?.prices?.[ price.id ]?.quantity );
-	};
-
 	const navigateToEditProduct = () => {
 		window.location.href = addQueryArgs( 'admin.php', {
 			page: 'ce-products',
@@ -127,7 +142,7 @@ export default ( { choice, onRemove, id, onUpdateChoice } ) => {
 						/>
 						{ __( 'Edit', 'checkout_engine' ) }
 					</CeMenuItem>
-					<CeMenuItem onClick={ onRemove }>
+					<CeMenuItem onClick={ removeChoice }>
 						<Icon
 							slot="prefix"
 							css={ css`
@@ -239,23 +254,52 @@ export default ( { choice, onRemove, id, onUpdateChoice } ) => {
 												align-items: center;
 											` }
 										>
-											<CeCheckbox
-												value={ price.id }
+											<CheckboxControl
+												css={ css`
+													white-space: nowrap;
+													.components-base-control__field {
+														margin-bottom: 0;
+													}
+												` }
+												label={ price.name }
 												checked={
-													!! choice?.prices?.[
+													!! products[ id ]?.prices?.[
 														price.id
 													]?.enabled
 												}
-												onCeChange={ ( e ) => {
-													onUpdateChoice(
-														`prices.${ price.id }.enabled`,
-														!! e.target.checked
-													);
+												onChange={ ( checked ) => {
+													setAttributes( {
+														products: dotProp.set(
+															products,
+															`${ id }.prices.${ price.id }.enabled`,
+															!! checked
+														),
+													} );
 												} }
-											>
-												{ price.name }
-											</CeCheckbox>
-											<CeQuantitySelect
+											/>
+											<NumberControl
+												label={ __(
+													'Qty:',
+													'checkout_engine'
+												) }
+												labelPosition="side"
+												onChange={ ( number ) => {
+													setAttributes( {
+														products: dotProp.set(
+															products,
+															`${ id }.prices.${ price.id }.quantity`,
+															parseInt( number )
+														),
+													} );
+												} }
+												shiftStep={ 10 }
+												value={
+													products?.[ id ]?.prices?.[
+														price.id
+													]?.quantity
+												}
+											/>
+											{ /* <CeQuantitySelect
 												onCeChange={ ( e ) => {
 													// setTimeout( () => {
 													// 	setAttributes( {
@@ -272,7 +316,7 @@ export default ( { choice, onRemove, id, onUpdateChoice } ) => {
 												css={ css`
 													color: var( ${ muted } );
 												` }
-											/>
+											/> */ }
 										</div>
 										<span
 											css={ css`

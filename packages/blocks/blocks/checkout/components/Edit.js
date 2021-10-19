@@ -8,7 +8,6 @@ import {
 	TextControl,
 	PanelBody,
 	PanelRow,
-	TabPanel,
 	Spinner,
 } from '@wordpress/components';
 import {
@@ -24,15 +23,30 @@ import {
 	useBlockProps,
 	Warning,
 } from '@wordpress/block-editor';
-import Setup from './Setup';
 
 export default ( { attributes, setAttributes } ) => {
 	// TODO: Let's store a unique hash in both meta and attribute to find.
 	const { id } = attributes;
+
 	const [ hasAlreadyRendered, RecursionProvider ] = useNoRecursiveRenders(
 		id
 	);
+
 	const blockProps = useBlockProps();
+
+	const [ blocks, onInput, onChange ] = useEntityBlockEditor(
+		'postType',
+		'ce_form',
+		{ id }
+	);
+
+	const [ title, setTitle ] = useEntityProp(
+		'postType',
+		'ce_form',
+		'title',
+		id
+	);
+
 	const innerBlocksProps = useInnerBlocksProps(
 		{},
 		{
@@ -43,18 +57,8 @@ export default ( { attributes, setAttributes } ) => {
 			renderAppender: false,
 		}
 	);
-	const [ blocks, onInput, onChange ] = useEntityBlockEditor(
-		'postType',
-		'ce_form',
-		{ id }
-	);
-	const [ title, setTitle ] = useEntityProp(
-		'postType',
-		'ce_form',
-		'title',
-		id
-	);
-	const { isMissing, form, hasResolved, canEdit } = useSelect( ( select ) => {
+
+	const { isMissing, hasResolved } = useSelect( ( select ) => {
 		const hasResolved = select(
 			coreStore
 		).hasFinishedResolution( 'getEntityRecord', [

@@ -16,8 +16,8 @@ export class CeTotal {
   @Prop() size: 'large' | 'medium';
 
   session_key = {
-    total: 'amount_total',
-    subtotal: 'amount_subtotal',
+    total: 'total_amount',
+    subtotal: 'subtotal_amount',
   };
 
   render() {

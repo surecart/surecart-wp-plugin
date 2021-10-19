@@ -24,10 +24,10 @@ export const config: Config = {
     reactOutputTarget({
       componentCorePackage: '@checkout-engine/components',
       proxiesFile: '../integrations/react/src/components/index.ts',
+      includeDefineCustomElements: false,
     }),
     {
       type: 'dist',
-      esmLoaderPath: '../loader',
     },
     {
       type: 'dist-custom-elements-bundle',

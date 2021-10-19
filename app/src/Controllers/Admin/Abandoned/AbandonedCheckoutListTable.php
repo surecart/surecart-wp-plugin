@@ -142,7 +142,7 @@ class AbandonedCheckoutListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_total( $abandoned ) {
-		return '<ce-format-number type="currency" currency="' . strtoupper( esc_html( $abandoned->latest_checkout_session->currency ) ) . '" value="' . (float) $abandoned->latest_checkout_session->amount_total . '"></ce-format-number>';
+		return '<ce-format-number type="currency" currency="' . strtoupper( esc_html( $abandoned->latest_checkout_session->currency ) ) . '" value="' . (float) $abandoned->latest_checkout_session->total_amount . '"></ce-format-number>';
 	}
 
 	/**

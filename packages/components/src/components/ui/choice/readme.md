@@ -20,11 +20,11 @@
 
 ## Events
 
-| Event      | Description                                       | Type                |
-| ---------- | ------------------------------------------------- | ------------------- |
-| `ceBlur`   | Emitted when the control loses focus.             | `CustomEvent<void>` |
-| `ceChange` | Emitted when the control's checked state changes. | `CustomEvent<void>` |
-| `ceFocus`  | Emitted when the control gains focus.             | `CustomEvent<void>` |
+| Event      | Description                                       | Type                   |
+| ---------- | ------------------------------------------------- | ---------------------- |
+| `ceBlur`   | Emitted when the control loses focus.             | `CustomEvent<void>`    |
+| `ceChange` | Emitted when the control's checked state changes. | `CustomEvent<boolean>` |
+| `ceFocus`  | Emitted when the control gains focus.             | `CustomEvent<void>`    |
 
 
 ## Methods

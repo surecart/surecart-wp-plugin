@@ -18,12 +18,11 @@
     "registry": "https://npm.pkg.github.com"
   },
   "files": [
-    "dist/",
-    "loader/"
+    "dist/"
   ],
   "scripts": {
     "stencil": "stencil",
-    "watch": "stencil build --dev --watch",
+    "watch": "stencil build --watch",
     "build": "stencil build --docs --docs-json ../docs/stencil/docs.json",
     "docs": "stencil build --watch",
     "docs.build": "stencil build --docs",
@@ -36,7 +35,7 @@
     "generate": "stencil generate"
   },
   "dependencies": {
-    "@stencil/core": "2.6.0",
+    "@stencil/core": "2.9.0",
     "@stencil/sass": "^1.4.0",
     "@stripe/stripe-js": "^1.14.0",
     "@wordpress/api-fetch": "^5.1.1",

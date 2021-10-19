@@ -5,7 +5,7 @@ import { dispatch, useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import { useEffect, useState } from '@wordpress/element';
 import { addQueryArgs } from '@wordpress/url';
-import { Modal } from '@wordpress/components';
+import { Button, Modal } from '@wordpress/components';
 import { css, jsx } from '@emotion/core';
 
 import dotProp from 'dot-prop-immutable';
@@ -120,10 +120,12 @@ export default ( { onRequestClose, attributes, setAttributes } ) => {
 						gap: 0.5em;
 					` }
 				>
-					<CeButton type="primary" onClick={ addProduct }>
+					<Button isPrimary onClick={ addProduct }>
 						{ __( 'Add Product', 'checkout_engine' ) }
-					</CeButton>
-					<CeButton>{ __( 'Cancel', 'checkout_engine' ) }</CeButton>
+					</Button>
+					<Button onClick={ onRequestClose }>
+						{ __( 'Cancel', 'checkout_engine' ) }
+					</Button>
 				</div>
 			</div>
 		</Modal>

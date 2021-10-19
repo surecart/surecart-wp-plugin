@@ -20,6 +20,7 @@
  - [ce-coupon-form](../../controllers/coupon-form)
  - [ce-order-summary](../../controllers/order-summary)
  - [ce-price-choices](../../controllers/price-chooser)
+ - [ce-purchase](../../controllers/ce-purchase)
 
 ### Depends on
 
@@ -33,6 +34,7 @@ graph TD;
   ce-coupon-form --> ce-block-ui
   ce-order-summary --> ce-block-ui
   ce-price-choices --> ce-block-ui
+  ce-purchase --> ce-block-ui
   style ce-block-ui fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

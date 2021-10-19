@@ -1,9 +1,10 @@
 import { Component, h, Prop, Element, State, Watch, Listen } from '@stencil/core';
-import { Price, Product, Coupon, CheckoutSession, Customer, LineItemData, PriceData, ProductChoices, Keys, ChoiceType } from '../../../types';
+import { Price, Product, Coupon, CheckoutSession, Customer, LineItemData, ProductChoices, Keys, ChoiceType } from '../../../types';
 import { handleInputs } from './functions';
+import { getSessionId } from './helpers/session';
 import { getProducts } from '../../../services/fetch';
 import { calculateInitialLineItems } from '../../../functions/line-items';
-import { getOrCreateSession, createOrUpdateSession, finalizeSession, getSession } from '../../../services/session/index';
+import { getOrCreateSession, createOrUpdateSession, finalizeSession } from '../../../services/session/index';
 import { Universe } from 'stencil-wormhole';
 import { addQueryArgs } from '@wordpress/url';
 import { interpret } from '@xstate/fsm';
@@ -21,17 +22,11 @@ export class CECheckout {
   /** Element */
   @Element() el: HTMLElement;
 
-  /** Pass an array of ids for choice fields */
-  @Prop() choicePriceIds: Array<string>;
-
-  /** Pass an array of choices */
-  @Prop() choices: ProductChoices;
-
   /** Pass an array of products */
   @Prop() products: ProductChoices;
 
   /** Give a user a choice to switch session prices */
-  @Prop() choiceType: ChoiceType = 'all';
+  @Prop({ attribute: 'choice-type' }) choiceType: ChoiceType = 'all';
 
   /** Currency to use for this checkout. */
   @Prop() currencyCode: string = 'usd';
@@ -64,7 +59,7 @@ export class CECheckout {
   @State() prices: Array<Price>;
 
   /** Stores fetched prices for use throughout component.  */
-  @State() productsData: Array<Product>;
+  @State() productsEntities: Array<Product>;
 
   /** Stores the users's selected price ids. */
   @State() selectedchoicePriceIds: Set<string>;
@@ -108,7 +103,7 @@ export class CECheckout {
   @State() updateSession: CheckoutSession;
 
   /** Watch choices and fetch if changed */
-  @Watch('choices')
+  @Watch('products')
   async handleChoicesChange() {
     this.fetchProducts();
   }
@@ -121,7 +116,7 @@ export class CECheckout {
   }
 
   @Listen('cePayError')
-  handlePayError(e) {
+  handlePayError() {
     this.makeDraft();
   }
 
@@ -165,11 +160,11 @@ export class CECheckout {
 
   @Listen('ceUpdateLineItem')
   handleLineItemChange(e) {
-    const { id, amount } = e.detail;
+    const { id, quantity } = e.detail;
     this.lineItemData = this.checkoutSession.line_items.map(item => {
       return {
         price_id: item.price.id,
-        quantity: item.id === id ? amount : item.quantity,
+        quantity: item.id === id ? quantity : item.quantity,
       };
     });
   }
@@ -252,15 +247,52 @@ export class CECheckout {
    * Update checkout session on server when it changes here
    */
   @Watch('lineItemData')
-  handleSelectChange() {
-    this.calculating = true;
-    this.createOrUpdateSession();
+  async handleLineItemsChange() {
+    const { send } = this._stateService;
+    try {
+      send('FETCH');
+      this.checkoutSession = (await createOrUpdateSession({
+        id: this.checkoutSession.id,
+        data: {
+          currency: this.currencyCode || 'usd',
+          line_items: this.lineItemData,
+        },
+      })) as CheckoutSession;
+      send('RESOLVE');
+    } catch (e) {
+      send('REJECT');
+      this.handleErrorResponse(e);
+      window.localStorage.removeItem(this.el.id);
+      this.getOrCreateSession();
+    }
   }
 
   @Watch('formState')
   handleDraftSessionChanges(val, oldVal) {
     if (oldVal && JSON.stringify(val) === JSON.stringify(oldVal)) return;
     this.createOrUpdateSession();
+  }
+
+  @Watch('products')
+  async createOrUpdateSession() {
+    const { send } = this._stateService;
+    const id = getSessionId(this.el.id, this.checkoutSession, true);
+    try {
+      send('FETCH');
+      this.checkoutSession = (await createOrUpdateSession({
+        id,
+        data: {
+          currency: this.currencyCode || 'usd',
+          line_items: calculateInitialLineItems(this.products, this.choiceType),
+        },
+      })) as CheckoutSession;
+      send('RESOLVE');
+    } catch (e) {
+      send('REJECT');
+      this.handleErrorResponse(e);
+      window.localStorage.removeItem(this.el.id);
+      this.getOrCreateSession();
+    }
   }
 
   /**
@@ -300,10 +332,10 @@ export class CECheckout {
     // @ts-ignore
     Universe.create(this, this.state());
 
-    // // fetch products
-    // this.fetchProducts();
-    // // get or create session
-    // this.getOrCreateSession();
+    // fetch products
+    this.fetchProducts();
+    // get or create session
+    this.createOrUpdateSession();
   }
 
   /** Remove state machine on disconnect. */
@@ -331,7 +363,7 @@ export class CECheckout {
         id,
         data: {
           currency: this.currencyCode || 'usd',
-          line_items: calculateInitialLineItems(this.choices, this.choiceType),
+          line_items: calculateInitialLineItems(this.products, this.choiceType),
         },
       })) as CheckoutSession;
       send('RESOLVE');
@@ -346,28 +378,28 @@ export class CECheckout {
   /**
    * Create or update a session based on chosen line items
    */
-  async createOrUpdateSession() {
-    const { send } = this._stateService;
-    const id = localStorage.getItem(this.el.id) || this.checkoutSession?.id;
-    try {
-      send('FETCH');
-      this.checkoutSession = (await createOrUpdateSession({
-        id,
-        data: this.getSessionSaveData(),
-      })) as CheckoutSession;
-      send('RESOLVE');
-    } catch (e) {
-      send('REJECT');
-      this.handleErrorResponse(e);
-    }
-  }
+  // async createOrUpdateSession() {
+  //   const { send } = this._stateService;
+  //   const id = localStorage.getItem(this.el.id) || this.checkoutSession?.id;
+  //   try {
+  //     send('FETCH');
+  //     this.checkoutSession = (await createOrUpdateSession({
+  //       id,
+  //       data: this.getSessionSaveData(),
+  //     })) as CheckoutSession;
+  //     send('RESOLVE');
+  //   } catch (e) {
+  //     send('REJECT');
+  //     this.handleErrorResponse(e);
+  //   }
+  // }
 
   async fetchProducts() {
     try {
-      this.productsData = await getProducts({
+      this.productsEntities = await getProducts({
         query: {
           active: true,
-          ids: Object.keys(this.choices),
+          ids: Object.keys(this.products),
         },
       });
     } catch (e) {
@@ -381,17 +413,18 @@ export class CECheckout {
     return {
       paymentMethod: 'stripe',
       state: this.checkoutState.value,
+      loading: this.checkoutState.value === 'loading',
+      busy: this.checkoutState.value === 'updating',
       keys: this.keys,
       error: this.error,
       checkoutSession: this.checkoutSession,
       stripePublishableKey: this.stripePublishableKey,
-      choices: this.choices,
-      choicePriceIds: this.choicePriceIds,
+      choiceType: this.choiceType,
       prices: this.prices,
-      products: this.productsData,
+      products: this.productsEntities,
+      productsChoices: this.products,
       lineItemData: this.lineItemData,
       currencyCode: this.currencyCode,
-      loading: !Object.keys(this.loaded).every(key => !!this.loaded[key]),
     };
   }
 

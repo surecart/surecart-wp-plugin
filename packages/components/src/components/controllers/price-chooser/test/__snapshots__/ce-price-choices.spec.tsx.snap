@@ -1,0 +1,140 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ce-price-choices has a busy state 1`] = `
+<ce-price-choices choice-type="single">
+  <mock:shadow-root>
+    <div class="price-choices">
+      <ce-choices class="loaded product-selector" style="--columns: 1;"></ce-choices>
+      <ce-block-ui z-index="2"></ce-block-ui>
+    </div>
+  </mock:shadow-root>
+</ce-price-choices>
+`;
+
+exports[`ce-price-choices has a loading state 1`] = `
+<ce-price-choices choice-type="single">
+  <mock:shadow-root>
+    <div class="price-choices">
+      <ce-choices style="--columns: 1;">
+        <ce-choice disabled="" name="loading">
+          <ce-skeleton style="width: 60px; display: inline-block;"></ce-skeleton>
+          <ce-skeleton slot="description" style="width: 140px; display: inline-block;"></ce-skeleton>
+          <ce-skeleton slot="price" style="width: 20px; display: inline-block;"></ce-skeleton>
+          <ce-skeleton slot="per" style="width: 40px; display: inline-block;"></ce-skeleton>
+        </ce-choice>
+      </ce-choices>
+    </div>
+  </mock:shadow-root>
+</ce-price-choices>
+`;
+
+exports[`ce-price-choices only renders checkboxes if choice type is "multiple" 1`] = `
+<ce-price-choices choice-type="multiple">
+  <mock:shadow-root>
+    <div class="price-choices">
+      <ce-choices class="loaded product-selector" style="--columns: 1;">
+        <ce-choice class="loaded" type="checkbox" value="product_1">
+          Product
+          <span slot="description">
+            description
+          </span>
+          <span slot="price">
+            <ce-format-number currency="eur" type="currency" value="2900"></ce-format-number>
+          </span>
+          <span slot="per">
+            / month
+          </span>
+        </ce-choice>
+        <ce-choice class="loaded" type="checkbox" value="product_2">
+          Product
+          <span slot="description">
+            description
+          </span>
+          <span slot="price">
+            <ce-format-number currency="eur" type="currency" value="2900"></ce-format-number>
+          </span>
+          <span slot="per">
+            / month
+          </span>
+        </ce-choice>
+      </ce-choices>
+    </div>
+  </mock:shadow-root>
+</ce-price-choices>
+`;
+
+exports[`ce-price-choices only renders if there are products, productsData and a choice type 1`] = `
+<ce-price-choices choice-type="single">
+  <mock:shadow-root>
+    <div class="price-choices">
+      <ce-choices class="loaded product-selector" style="--columns: 1;">
+        <ce-choice class="loaded" type="radio" value="product_1">
+          Product
+          <span slot="description">
+            description
+          </span>
+          <span slot="price">
+            <ce-format-number currency="eur" type="currency" value="2900"></ce-format-number>
+          </span>
+          <span slot="per">
+            / month
+          </span>
+        </ce-choice>
+        <ce-choice class="loaded" type="radio" value="product_2">
+          Product
+          <span slot="description">
+            description
+          </span>
+          <span slot="price">
+            <ce-format-number currency="eur" type="currency" value="2900"></ce-format-number>
+          </span>
+          <span slot="per">
+            / month
+          </span>
+        </ce-choice>
+      </ce-choices>
+    </div>
+  </mock:shadow-root>
+</ce-price-choices>
+`;
+
+exports[`ce-price-choices renders 1`] = `
+<ce-price-choices>
+  <mock:shadow-root></mock:shadow-root>
+</ce-price-choices>
+`;
+
+exports[`ce-price-choices selects the price and product based on the line item 1`] = `
+<ce-price-choices choice-type="single">
+  <mock:shadow-root>
+    <div class="price-choices">
+      <ce-choices class="loaded product-selector" style="--columns: 1;">
+        <ce-choice class="loaded" type="radio" value="product_1">
+          Product
+          <span slot="description">
+            description
+          </span>
+          <span slot="price">
+            <ce-format-number currency="eur" type="currency" value="2900"></ce-format-number>
+          </span>
+          <span slot="per">
+            / month
+          </span>
+        </ce-choice>
+        <ce-choice checked="" class="loaded" type="radio" value="product_2">
+          Product
+          <span slot="description">
+            description
+          </span>
+          <span slot="price">
+            <ce-format-number currency="eur" type="currency" value="2900"></ce-format-number>
+          </span>
+          <span slot="per">
+            / month
+          </span>
+        </ce-choice>
+      </ce-choices>
+    </div>
+  </mock:shadow-root>
+</ce-price-choices>
+`;

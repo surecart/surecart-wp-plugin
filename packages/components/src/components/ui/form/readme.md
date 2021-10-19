@@ -33,13 +33,13 @@ Type: `Promise<FormData>`
 
 
 
-### `getFormJson() => Promise<{ [k: string]: FormDataEntryValue; }>`
+### `getFormJson() => Promise<{}>`
 
 
 
 #### Returns
 
-Type: `Promise<{ [k: string]: FormDataEntryValue; }>`
+Type: `Promise<{}>`
 
 
 

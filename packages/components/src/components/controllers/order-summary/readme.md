@@ -7,9 +7,9 @@
 
 ## Properties
 
-| Property      | Attribute     | Description | Type      | Default |
-| ------------- | ------------- | ----------- | --------- | ------- |
-| `calculating` | `calculating` |             | `boolean` | `false` |
+| Property | Attribute | Description | Type                                                                                 | Default     |
+| -------- | --------- | ----------- | ------------------------------------------------------------------------------------ | ----------- |
+| `state`  | `state`   |             | `"draft" \| "failure" \| "finalized" \| "idle" \| "loading" \| "paid" \| "updating"` | `undefined` |
 
 
 ## Dependencies

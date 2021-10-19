@@ -179,7 +179,7 @@ class OrdersListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_total( $session ) {
-		return '<ce-format-number type="currency" currency="' . strtoupper( esc_html( $session->currency ) ) . '" value="' . (float) $session->amount_total . '"></ce-format-number>';
+		return '<ce-format-number type="currency" currency="' . strtoupper( esc_html( $session->currency ) ) . '" value="' . (float) $session->total_amount . '"></ce-format-number>';
 	}
 
 	/**

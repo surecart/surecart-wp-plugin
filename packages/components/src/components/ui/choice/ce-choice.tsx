@@ -48,7 +48,7 @@ export class CEChoice {
   @Event() ceBlur: EventEmitter<void>;
 
   /** Emitted when the control's checked state changes. */
-  @Event() ceChange: EventEmitter<void>;
+  @Event() ceChange: EventEmitter<boolean>;
 
   /** Emitted when the control gains focus. */
   @Event() ceFocus: EventEmitter<void>;
@@ -75,9 +75,9 @@ export class CEChoice {
 
     // we only want to emit this once when a radio button is selected
     if (this.type === 'radio') {
-      this.input.checked && this.ceChange.emit();
+      this.input.checked && this.ceChange.emit(this.input.checked);
     } else {
-      this.ceChange.emit();
+      this.ceChange.emit(this.input.checked);
     }
   }
 

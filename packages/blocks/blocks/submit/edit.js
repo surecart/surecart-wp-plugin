@@ -84,7 +84,7 @@ export default ( { className, attributes, setAttributes } ) => {
 			<CeButton
 				type={ type }
 				submit={ submit }
-				full={ !! full }
+				{ ...( full ? { full: true } : {} ) }
 				size={ size }
 				showTotal={ show_total }
 			>

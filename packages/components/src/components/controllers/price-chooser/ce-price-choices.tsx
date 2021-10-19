@@ -1,27 +1,29 @@
 import { Component, h, Prop, Element, Event, EventEmitter, State } from '@stencil/core';
-import { Product, Price, LineItemData, ProductChoices, CheckoutSession, CheckoutState } from '../../../types';
-import { getAvailablePricesForProduct, getSiblings, isProductSelected, isPriceSelected } from './functions';
+import { Product, Price, LineItemData, ProductChoices, CheckoutSession, ChoiceType } from '../../../types';
+import { getSiblings } from './functions';
 import { openWormhole } from 'stencil-wormhole';
-import { getProductsFirstPriceId } from '../../../functions/line-items';
+import { getAvailablePricesForProduct, getProductPriceByIndex, getChoicePrices } from '../../../functions/choices';
+import { isPriceInCheckoutSession, isProductInCheckoutSession } from '../../../functions/line-items';
 
 @Component({
   tag: 'ce-price-choices',
   styleUrl: 'ce-price-choices.css',
-  shadow: false,
+  shadow: true,
 })
 export class CePriceChoices {
   @Element() el: HTMLCePriceChoicesElement;
 
   @Prop() default: string;
-  @Prop() type: 'radio' | 'checkbox' = 'radio';
-  @Prop() choices: ProductChoices;
+  @Prop() productsChoices: ProductChoices;
+  @Prop() products: Array<Product>;
   @Prop() columns: number = 1;
   @Prop() checkoutSession: CheckoutSession;
   @Prop() lineItemData: Array<LineItemData>;
   @Prop() currencyCode: string;
-  @Prop() products: Array<Product>;
-  @Prop() state: CheckoutState;
+  @Prop() loading: boolean;
+  @Prop() busy: boolean;
   @Prop() label: string;
+  @Prop() choiceType: ChoiceType = 'all';
 
   @State() selectedProducts: Array<Product>;
   @State() selectedPriceIds: Array<string>;
@@ -33,48 +35,44 @@ export class CePriceChoices {
   /** Add line items event. */
   @Event() ceAddLineItems: EventEmitter<Array<LineItemData>>;
 
-  // @Watch('selectedProducts')
-  // handlePriceSelection(_, oldVal) {
-  //   if (!oldVal) {
-  //     return;
-  //   }
-  //   if (this?.selectedProducts?.[0]?.id) {
-  //     this.selectedPriceIds = [this.choices[this.selectedProducts?.[0]?.id].prices?.[0]];
-  //   }
-  // }
-
   /**
    * Maybe automatically add the product if radio type.
    */
   maybeUpdateSelectedPrices(e: any) {
-    if (this.type !== 'radio') return;
+    if (this.choiceType !== 'single') return;
     if (e.target.checked) {
-      const firstPriceChoice = getProductsFirstPriceId(e.target.value, this.choices);
+      const firstPriceChoice = getProductPriceByIndex(e.target.value, this.productsChoices, 0);
       this.ceUpdateLineItems.emit([
         {
-          price_id: firstPriceChoice,
-          quantity: 1,
+          price_id: firstPriceChoice.id,
+          quantity: firstPriceChoice.quantity,
         },
       ]);
     }
   }
 
+  /**
+   * Update selected prices when ce-choice changes
+   *
+   * @param e
+   */
   updateSelectedPrices(e) {
     const choices = getSiblings(e.target);
-    const selected = Array.from(choices)
-      .filter(choice => {
-        return choice.checked && !choice.disabled;
-      })
-      .map(item => {
-        return {
-          price_id: item.value,
-          quantity: 1,
-        } as LineItemData;
+    const prices = getChoicePrices(this.productsChoices);
+    const selectedChoices = Array.from(choices).filter(choice => choice.checked && !choice.disabled);
+    const selected = prices
+      .filter(price => selectedChoices.find(c => c.value === price.id))
+      .map(price => {
+        return { price_id: price.id, quantity: price.quantity };
       });
-
     this.ceUpdateLineItems.emit(selected);
   }
 
+  /**
+   * Render the loading indicator
+   * @param number
+   * @returns
+   */
   renderLoading(number: number) {
     return (
       <ce-choices style={{ '--columns': this.columns.toString() }}>
@@ -93,30 +91,31 @@ export class CePriceChoices {
   }
 
   renderProductSelector() {
-    const length = Object.keys(this.choices || {}).length;
-    if (length <= 1) {
-      return;
+    // bail if no products.
+    if (Object.keys(this.productsChoices || {})?.length < 2) return;
+
+    // render loading.
+    if (this.loading) {
+      return this.renderLoading(Object.keys(this.productsChoices || {}).length);
     }
 
-    if (this.state === 'loading') {
-      return this.renderLoading(length);
-    }
-
-    if (!this.products || this.products?.length <= 1) {
+    // bail if no products.
+    if (!this.products?.length) {
       return;
     }
 
     return (
       <ce-choices label={this.label} class="loaded product-selector" style={{ '--columns': this.columns.toString() }}>
-        {this.products.map(product => {
-          const availablePrices = getAvailablePricesForProduct(product, this.choices);
+        {(this.products || []).map(product => {
+          const availablePrices = getAvailablePricesForProduct(product, this.productsChoices);
           return (
             <ce-choice
               class="loaded"
+              key={product.id}
               value={product.id}
-              type={this.type}
+              type={this.choiceType === 'multiple' ? 'checkbox' : 'radio'}
               onCeChange={e => this.maybeUpdateSelectedPrices(e)}
-              checked={isProductSelected(product, this.checkoutSession)}
+              checked={isProductInCheckoutSession(product, this.checkoutSession)}
             >
               {product.name}
               <span slot="description">{product.description}</span>
@@ -137,10 +136,16 @@ export class CePriceChoices {
    * Render each price selector.
    */
   renderPriceSelectors() {
+    if (this.loading) {
+      const firstProduct = this.productsChoices?.[Object.keys(this.productsChoices)[0]];
+      const prices = Object.keys(firstProduct.prices).filter(priceId => firstProduct.prices[priceId].enabled);
+      return this.renderLoading(prices.length);
+    }
+
     return (this.products || []).map(product => {
       if (!product || !product?.prices) return;
       // only if product is selected
-      if (isProductSelected(product, this.checkoutSession)) {
+      if (isProductInCheckoutSession(product, this.checkoutSession)) {
         return this.renderPriceSelector(product);
       }
     });
@@ -152,15 +157,11 @@ export class CePriceChoices {
    * @returns
    */
   renderPriceSelector(product: Product) {
-    const prices = getAvailablePricesForProduct(product, this.choices);
+    const prices = getAvailablePricesForProduct(product, this.productsChoices);
     if (!prices || prices?.length < 2) return;
 
-    if (this.state === 'loading') {
-      return this.renderLoading(prices?.length);
-    }
-
     let label = 'Choose';
-    if (this.type === 'checkbox') {
+    if (this.choiceType === 'multiple') {
       label = label + ' ' + product.name;
     }
 
@@ -169,7 +170,13 @@ export class CePriceChoices {
         <ce-choices label={label} class="loaded" style={{ '--columns': this.columns.toString() }}>
           {prices.map(price => {
             return (
-              <ce-choice class="loaded" value={price.id} type={this.type} onCeChange={e => this.updateSelectedPrices(e)} checked={isPriceSelected(price, this.checkoutSession)}>
+              <ce-choice
+                class="loaded"
+                value={price.id}
+                type={this.choiceType === 'multiple' ? 'checkbox' : 'radio'}
+                onCeChange={e => this.updateSelectedPrices(e)}
+                checked={isPriceInCheckoutSession(price, this.checkoutSession)}
+              >
                 {price.name}
                 <span slot="price">
                   <ce-format-number type="currency" value={price.amount} currency={price.currency}></ce-format-number>
@@ -184,14 +191,25 @@ export class CePriceChoices {
   }
 
   render() {
+    // we don't want the user to choose.
+    if (this.choiceType === 'all') {
+      return;
+    }
+
+    // we need products to select.
+    if (!Object.keys(this.productsChoices || {}).length) {
+      return;
+    }
+
+    // render the product selector.
     return (
       <div class="price-choices">
         {this.renderProductSelector()}
         {this.renderPriceSelectors()}
-        {this.state === 'updating' && <ce-block-ui z-index={2}></ce-block-ui>}
+        {this.busy && <ce-block-ui z-index={2}></ce-block-ui>}
       </div>
     );
   }
 }
 
-openWormhole(CePriceChoices, ['currencyCode', 'choices', 'products', 'checkoutSession', 'state'], false);
+openWormhole(CePriceChoices, ['currencyCode', 'products', 'productsChoices', 'checkoutSession', 'loading', 'busy', 'choiceType'], false);

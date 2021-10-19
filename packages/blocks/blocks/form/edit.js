@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { useSelect, useDispatch } from '@wordpress/data';
 import {
@@ -6,7 +8,6 @@ import {
 	store as blockEditorStore,
 } from '@wordpress/block-editor';
 import { CeCheckout } from '@checkout-engine/react';
-import { css, jsx } from '@emotion/core';
 import { ALLOWED_BLOCKS } from '../../blocks';
 import { Fragment, useState } from '@wordpress/element';
 import { parse } from '@wordpress/blocks';
@@ -22,7 +23,7 @@ import * as templates from '../../templates';
 import Setup from '../checkout/components/Setup';
 
 export default function edit( { clientId, attributes, setAttributes } ) {
-	const { align, className, products, font_size } = attributes;
+	const { align, className, products, font_size, choice_type } = attributes;
 	const blockCount = useSelect( ( select ) =>
 		select( blockEditorStore ).getBlockCount( clientId )
 	);
@@ -91,9 +92,14 @@ export default function edit( { clientId, attributes, setAttributes } ) {
 							css={ css`
 								margin-top: 2em;
 								font-size: ${ font_size }px;
+								.wp-block {
+									margin-top: 2em;
+									margin-bottom: 2em;
+								}
 							` }
 							alignment={ align }
 							className={ className }
+							choiceType={ choice_type }
 							products={ products }
 						>
 							<InnerBlocks

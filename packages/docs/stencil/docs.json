@@ -1,8 +1,8 @@
 {
-  "timestamp": "2021-09-30T19:26:54",
+  "timestamp": "2021-10-18T16:22:45",
   "compiler": {
     "name": "@stencil/core",
-    "version": "2.6.0",
+    "version": "2.9.0",
     "typescriptVersion": "4.2.3"
   },
   "components": [
@@ -170,9 +170,15 @@
           "docs": ""
         }
       ],
-      "dependents": [],
+      "dependents": [
+        "ce-checkout"
+      ],
       "dependencies": [],
-      "dependencyGraph": {}
+      "dependencyGraph": {
+        "ce-checkout": [
+          "ce-alert"
+        ]
+      }
     },
     {
       "filePath": "./src/components/ui/block-ui/ce-block-ui.tsx",
@@ -211,7 +217,8 @@
         "ce-checkout",
         "ce-coupon-form",
         "ce-order-summary",
-        "ce-price-choices"
+        "ce-price-choices",
+        "ce-purchase"
       ],
       "dependencies": [
         "ce-spinner"
@@ -230,6 +237,9 @@
           "ce-block-ui"
         ],
         "ce-price-choices": [
+          "ce-block-ui"
+        ],
+        "ce-purchase": [
           "ce-block-ui"
         ]
       }
@@ -391,6 +401,23 @@
             }
           ],
           "optional": false,
+          "required": false
+        },
+        {
+          "name": "outline",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "outline",
+          "reflectToAttr": true,
+          "docs": "Draws an outlined button.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": true,
           "required": false
         },
         {
@@ -621,9 +648,15 @@
       "styles": [],
       "slots": [],
       "parts": [],
-      "dependents": [],
+      "dependents": [
+        "ce-checkout"
+      ],
       "dependencies": [],
-      "dependencyGraph": {}
+      "dependencyGraph": {
+        "ce-checkout": [
+          "ce-card"
+        ]
+      }
     },
     {
       "filePath": "./src/components/ui/checkbox/ce-checkbox.tsx",
@@ -866,30 +899,51 @@
       "usage": {},
       "props": [
         {
-          "name": "choicePriceIds",
-          "type": "string[]",
+          "name": "alignment",
+          "type": "\"center\" | \"full\" | \"wide\"",
           "mutable": false,
+          "attr": "alignment",
           "reflectToAttr": false,
-          "docs": "Pass an array of ids for choice fields",
+          "docs": "Alignment",
           "docsTags": [],
           "values": [
             {
-              "type": "string[]"
+              "value": "center",
+              "type": "string"
+            },
+            {
+              "value": "full",
+              "type": "string"
+            },
+            {
+              "value": "wide",
+              "type": "string"
             }
           ],
           "optional": false,
           "required": false
         },
         {
-          "name": "choices",
-          "type": "ProductChoices",
+          "name": "choiceType",
+          "type": "\"all\" | \"multiple\" | \"single\"",
           "mutable": false,
+          "attr": "choice-type",
           "reflectToAttr": false,
-          "docs": "Pass an array of choices",
+          "docs": "Give a user a choice to switch session prices",
           "docsTags": [],
+          "default": "'all'",
           "values": [
             {
-              "type": "ProductChoices"
+              "value": "all",
+              "type": "string"
+            },
+            {
+              "value": "multiple",
+              "type": "string"
+            },
+            {
+              "value": "single",
+              "type": "string"
             }
           ],
           "optional": false,
@@ -974,15 +1028,15 @@
           "required": false
         },
         {
-          "name": "priceData",
-          "type": "PriceData[]",
+          "name": "productsChoices",
+          "type": "ProductChoices",
           "mutable": false,
           "reflectToAttr": false,
-          "docs": "Pass an array of price information to load into the form.",
+          "docs": "Pass an array of products",
           "docsTags": [],
           "values": [
             {
-              "type": "PriceData[]"
+              "type": "ProductChoices"
             }
           ],
           "optional": false,
@@ -1003,11 +1057,38 @@
           ],
           "optional": false,
           "required": false
+        },
+        {
+          "name": "successUrl",
+          "type": "string",
+          "mutable": false,
+          "attr": "success-url",
+          "reflectToAttr": false,
+          "docs": "Where to go on success",
+          "docsTags": [],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
         }
       ],
       "methods": [],
       "events": [],
       "listeners": [
+        {
+          "event": "cePaid",
+          "capture": false,
+          "passive": false
+        },
+        {
+          "event": "cePayError",
+          "capture": false,
+          "passive": false
+        },
         {
           "event": "ceApplyCoupon",
           "capture": false,
@@ -1039,10 +1120,14 @@
       "parts": [],
       "dependents": [],
       "dependencies": [
+        "ce-card",
+        "ce-alert",
         "ce-block-ui"
       ],
       "dependencyGraph": {
         "ce-checkout": [
+          "ce-card",
+          "ce-alert",
           "ce-block-ui"
         ],
         "ce-block-ui": [
@@ -1229,7 +1314,7 @@
         },
         {
           "event": "ceChange",
-          "detail": "void",
+          "detail": "boolean",
           "bubbles": true,
           "cancelable": true,
           "composed": true,
@@ -2184,10 +2269,10 @@
         {
           "name": "getFormJson",
           "returns": {
-            "type": "Promise<{ [k: string]: FormDataEntryValue; }>",
+            "type": "Promise<{}>",
             "docs": ""
           },
-          "signature": "getFormJson() => Promise<{ [k: string]: FormDataEntryValue; }>",
+          "signature": "getFormJson() => Promise<{}>",
           "parameters": [],
           "docs": "",
           "docsTags": []
@@ -3674,23 +3759,6 @@
       "usage": {},
       "props": [
         {
-          "name": "calculating",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "calculating",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "default": "false",
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
           "name": "checkoutSession",
           "type": "CheckoutSession",
           "mutable": false,
@@ -3700,6 +3768,23 @@
           "values": [
             {
               "type": "CheckoutSession"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "edit",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "edit",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
             }
           ],
           "optional": false,
@@ -3721,16 +3806,41 @@
           "required": false
         },
         {
-          "name": "loading",
-          "type": "boolean",
+          "name": "state",
+          "type": "\"draft\" | \"failure\" | \"finalized\" | \"idle\" | \"loading\" | \"paid\" | \"updating\"",
           "mutable": false,
-          "attr": "loading",
+          "attr": "state",
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
           "values": [
             {
-              "type": "boolean"
+              "value": "draft",
+              "type": "string"
+            },
+            {
+              "value": "failure",
+              "type": "string"
+            },
+            {
+              "value": "finalized",
+              "type": "string"
+            },
+            {
+              "value": "idle",
+              "type": "string"
+            },
+            {
+              "value": "loading",
+              "type": "string"
+            },
+            {
+              "value": "paid",
+              "type": "string"
+            },
+            {
+              "value": "updating",
+              "type": "string"
             }
           ],
           "optional": false,
@@ -3980,17 +4090,41 @@
       "usage": {},
       "props": [
         {
-          "name": "calculating",
-          "type": "boolean",
+          "name": "state",
+          "type": "\"draft\" | \"failure\" | \"finalized\" | \"idle\" | \"loading\" | \"paid\" | \"updating\"",
           "mutable": false,
-          "attr": "calculating",
+          "attr": "state",
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
-          "default": "false",
           "values": [
             {
-              "type": "boolean"
+              "value": "draft",
+              "type": "string"
+            },
+            {
+              "value": "failure",
+              "type": "string"
+            },
+            {
+              "value": "finalized",
+              "type": "string"
+            },
+            {
+              "value": "idle",
+              "type": "string"
+            },
+            {
+              "value": "loading",
+              "type": "string"
+            },
+            {
+              "value": "paid",
+              "type": "string"
+            },
+            {
+              "value": "updating",
+              "type": "string"
             }
           ],
           "optional": false,
@@ -4041,6 +4175,38 @@
           "required": false
         },
         {
+          "name": "keys",
+          "type": "Keys",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "Your stripe publishable key.",
+          "docsTags": [],
+          "default": "{\n    stripe: '',\n    stripeAccountId: '',\n    paypal: '',\n  }",
+          "values": [
+            {
+              "type": "Keys"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "label",
+          "type": "string",
+          "mutable": false,
+          "attr": "label",
+          "reflectToAttr": false,
+          "docs": "The input's label.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "mode",
           "type": "\"live\" | \"test\"",
           "mutable": false,
@@ -4080,12 +4246,12 @@
           "required": false
         },
         {
-          "name": "stripeAccountId",
+          "name": "secureNotice",
           "type": "string",
           "mutable": false,
-          "attr": "stripe-account-id",
+          "attr": "secure-notice",
           "reflectToAttr": false,
-          "docs": "Your stripe connected account id.",
+          "docs": "Secure notice",
           "docsTags": [],
           "values": [
             {
@@ -4096,12 +4262,12 @@
           "required": false
         },
         {
-          "name": "stripePublishableKey",
+          "name": "stripeAccountId",
           "type": "string",
           "mutable": false,
-          "attr": "stripe-publishable-key",
+          "attr": "stripe-account-id",
           "reflectToAttr": false,
-          "docs": "Your stripe publishable key.",
+          "docs": "Your stripe connected account id.",
           "docsTags": [],
           "values": [
             {
@@ -4120,11 +4286,13 @@
       "parts": [],
       "dependents": [],
       "dependencies": [
-        "ce-stripe-element"
+        "ce-stripe-element",
+        "ce-secure-notice"
       ],
       "dependencyGraph": {
         "ce-payment": [
-          "ce-stripe-element"
+          "ce-stripe-element",
+          "ce-secure-notice"
         ],
         "ce-stripe-element": [
           "ce-input"
@@ -4188,7 +4356,7 @@
     },
     {
       "filePath": "./src/components/controllers/price-chooser/ce-price-choices.tsx",
-      "encapsulation": "none",
+      "encapsulation": "shadow",
       "tag": "ce-price-choices",
       "readme": "# ce-price-choices\n\n\n",
       "docs": "",
@@ -4196,10 +4364,10 @@
       "usage": {},
       "props": [
         {
-          "name": "calculating",
+          "name": "busy",
           "type": "boolean",
           "mutable": false,
-          "attr": "calculating",
+          "attr": "busy",
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
@@ -4227,15 +4395,26 @@
           "required": false
         },
         {
-          "name": "choices",
-          "type": "ProductChoices",
+          "name": "choiceType",
+          "type": "\"all\" | \"multiple\" | \"single\"",
           "mutable": false,
+          "attr": "choice-type",
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
+          "default": "'all'",
           "values": [
             {
-              "type": "ProductChoices"
+              "value": "all",
+              "type": "string"
+            },
+            {
+              "value": "multiple",
+              "type": "string"
+            },
+            {
+              "value": "single",
+              "type": "string"
             }
           ],
           "optional": false,
@@ -4353,22 +4532,15 @@
           "required": false
         },
         {
-          "name": "type",
-          "type": "\"checkbox\" | \"radio\"",
+          "name": "productsChoices",
+          "type": "ProductChoices",
           "mutable": false,
-          "attr": "type",
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
-          "default": "'radio'",
           "values": [
             {
-              "value": "checkbox",
-              "type": "string"
-            },
-            {
-              "value": "radio",
-              "type": "string"
+              "type": "ProductChoices"
             }
           ],
           "optional": false,
@@ -4949,6 +5121,23 @@
           "required": false
         },
         {
+          "name": "edit",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "edit",
+          "reflectToAttr": false,
+          "docs": "Can we select the quantity",
+          "docsTags": [],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "imageUrl",
           "type": "string",
           "mutable": false,
@@ -5124,6 +5313,7 @@
       "filePath": "./src/components/controllers/ce-purchase/ce-purchase.tsx",
       "encapsulation": "shadow",
       "tag": "ce-purchase",
+      "readme": "# ce-purchase\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -5135,8 +5325,17 @@
       "slots": [],
       "parts": [],
       "dependents": [],
-      "dependencies": [],
-      "dependencyGraph": {}
+      "dependencies": [
+        "ce-block-ui"
+      ],
+      "dependencyGraph": {
+        "ce-purchase": [
+          "ce-block-ui"
+        ],
+        "ce-block-ui": [
+          "ce-spinner"
+        ]
+      }
     },
     {
       "filePath": "./src/components/ui/quantity-select/ce-quantity-select.tsx",
@@ -5528,9 +5727,15 @@
           "docs": ""
         }
       ],
-      "dependents": [],
+      "dependents": [
+        "ce-payment"
+      ],
       "dependencies": [],
-      "dependencyGraph": {}
+      "dependencyGraph": {
+        "ce-payment": [
+          "ce-secure-notice"
+        ]
+      }
     },
     {
       "filePath": "./src/components/ui/select/ce-select.tsx",
@@ -5957,23 +6162,6 @@
           "required": false
         },
         {
-          "name": "help",
-          "type": "string",
-          "mutable": false,
-          "attr": "help",
-          "reflectToAttr": false,
-          "docs": "The input's help text. Alternatively, you can use the help-text slot.",
-          "docsTags": [],
-          "default": "''",
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
           "name": "label",
           "type": "string",
           "mutable": false,
@@ -5997,6 +6185,23 @@
           "reflectToAttr": false,
           "docs": "Stripe publishable key",
           "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "secureText",
+          "type": "string",
+          "mutable": false,
+          "attr": "secure-text",
+          "reflectToAttr": false,
+          "docs": "The input's help text. Alternatively, you can use the help-text slot.",
+          "docsTags": [],
+          "default": "''",
           "values": [
             {
               "type": "string"
@@ -6066,7 +6271,26 @@
         }
       ],
       "methods": [],
-      "events": [],
+      "events": [
+        {
+          "event": "cePaid",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        },
+        {
+          "event": "cePayError",
+          "detail": "any",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        }
+      ],
       "listeners": [],
       "styles": [],
       "slots": [],
@@ -6254,16 +6478,15 @@
       "usage": {},
       "props": [
         {
-          "name": "calculating",
-          "type": "boolean",
+          "name": "checkoutSession",
+          "type": "CheckoutSession",
           "mutable": false,
-          "attr": "calculating",
           "reflectToAttr": false,
-          "docs": "Are the totals calculating",
+          "docs": "Checkout session object",
           "docsTags": [],
           "values": [
             {
-              "type": "boolean"
+              "type": "CheckoutSession"
             }
           ],
           "optional": false,
@@ -6287,13 +6510,14 @@
           "required": false
         },
         {
-          "name": "loading",
+          "name": "showTotal",
           "type": "boolean",
           "mutable": false,
-          "attr": "loading",
+          "attr": "show-total",
           "reflectToAttr": false,
-          "docs": "Is the form loading",
+          "docs": "Total",
           "docsTags": [],
+          "default": "false",
           "values": [
             {
               "type": "boolean"
@@ -6322,6 +6546,47 @@
             },
             {
               "value": "small",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "state",
+          "type": "\"draft\" | \"failure\" | \"finalized\" | \"idle\" | \"loading\" | \"paid\" | \"updating\"",
+          "mutable": false,
+          "attr": "state",
+          "reflectToAttr": false,
+          "docs": "Is the form loading",
+          "docsTags": [],
+          "values": [
+            {
+              "value": "draft",
+              "type": "string"
+            },
+            {
+              "value": "failure",
+              "type": "string"
+            },
+            {
+              "value": "finalized",
+              "type": "string"
+            },
+            {
+              "value": "idle",
+              "type": "string"
+            },
+            {
+              "value": "loading",
+              "type": "string"
+            },
+            {
+              "value": "paid",
+              "type": "string"
+            },
+            {
+              "value": "updating",
               "type": "string"
             }
           ],

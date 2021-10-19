@@ -38,11 +38,12 @@ export class CeLineItems {
         {this.checkoutSession?.line_items.map(item => {
           return (
             <ce-product-line-item
-              imageUrl={item?.price?.meta_data?.wp_attachment_src}
+              key={item.id}
+              imageUrl={item?.price?.metadata?.wp_attachment_src}
               name={`${item?.price?.product?.name} \u2013 ${item?.price?.name}`}
               edit={this.edit}
               quantity={item.quantity}
-              amount={item.amount_subtotal}
+              amount={item.subtotal_amount}
               currency={this.checkoutSession?.currency}
               interval={item.price.recurring_interval ? `${item.price.recurring_interval}` : `once`}
               onCeUpdateQuantity={e => this.updateQuantity(item, e.detail)}

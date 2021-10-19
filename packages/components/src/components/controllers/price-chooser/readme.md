@@ -7,19 +7,19 @@
 
 ## Properties
 
-| Property          | Attribute       | Description | Type                    | Default     |
-| ----------------- | --------------- | ----------- | ----------------------- | ----------- |
-| `calculating`     | `calculating`   |             | `boolean`               | `undefined` |
-| `checkoutSession` | --              |             | `CheckoutSession`       | `undefined` |
-| `choices`         | --              |             | `ProductChoices`        | `undefined` |
-| `columns`         | `columns`       |             | `number`                | `1`         |
-| `currencyCode`    | `currency-code` |             | `string`                | `undefined` |
-| `default`         | `default`       |             | `string`                | `undefined` |
-| `label`           | `label`         |             | `string`                | `undefined` |
-| `lineItemData`    | --              |             | `LineItemData[]`        | `undefined` |
-| `loading`         | `loading`       |             | `boolean`               | `undefined` |
-| `products`        | --              |             | `Product[]`             | `undefined` |
-| `type`            | `type`          |             | `"checkbox" \| "radio"` | `'radio'`   |
+| Property          | Attribute       | Description | Type                              | Default     |
+| ----------------- | --------------- | ----------- | --------------------------------- | ----------- |
+| `busy`            | `busy`          |             | `boolean`                         | `undefined` |
+| `checkoutSession` | --              |             | `CheckoutSession`                 | `undefined` |
+| `choiceType`      | `choice-type`   |             | `"all" \| "multiple" \| "single"` | `'all'`     |
+| `columns`         | `columns`       |             | `number`                          | `1`         |
+| `currencyCode`    | `currency-code` |             | `string`                          | `undefined` |
+| `default`         | `default`       |             | `string`                          | `undefined` |
+| `label`           | `label`         |             | `string`                          | `undefined` |
+| `lineItemData`    | --              |             | `LineItemData[]`                  | `undefined` |
+| `loading`         | `loading`       |             | `boolean`                         | `undefined` |
+| `products`        | --              |             | `Product[]`                       | `undefined` |
+| `productsChoices` | --              |             | `ProductChoices`                  | `undefined` |
 
 
 ## Events

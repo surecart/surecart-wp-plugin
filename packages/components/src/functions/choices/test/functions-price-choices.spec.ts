@@ -1,4 +1,5 @@
-import { getChoicePrices, getProductsFirstPriceId } from '../index';
+import { ProductChoices } from '../../../types';
+import { getChoicePrices, getProductsFirstPriceId, getAvailablePricesForProduct } from '../index';
 
 const prices = {
   product1: {
@@ -21,7 +22,7 @@ const prices = {
       },
     },
   },
-};
+} as ProductChoices;
 
 describe('Price choice functions', () => {
   it('getChoicePrices', () => {
@@ -34,5 +35,32 @@ describe('Price choice functions', () => {
   });
   it('getProductsFirstPriceId', () => {
     expect(getProductsFirstPriceId('product2', prices)).toEqual('price3');
+  });
+  it('getAvailablePricesForProduct', () => {
+    expect(
+      getAvailablePricesForProduct(
+        {
+          id: 'product1',
+          prices: [
+            { id: 'price2', amount: 1000 },
+            { id: 'price3', amount: 2000 },
+          ],
+        },
+        prices,
+      ),
+    ).toEqual([{ id: 'price2', amount: 1000 }]);
+
+    expect(
+      getAvailablePricesForProduct(
+        {
+          id: 'product1',
+          prices: [
+            { id: 'priceasdf', amount: 1000 },
+            { id: 'priceghhhsh', amount: 2000 },
+          ],
+        },
+        prices,
+      ),
+    ).toEqual([]);
   });
 });

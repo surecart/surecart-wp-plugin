@@ -7,13 +7,14 @@
 
 ## Properties
 
-| Property      | Attribute     | Description                 | Type                             | Default     |
-| ------------- | ------------- | --------------------------- | -------------------------------- | ----------- |
-| `calculating` | `calculating` | Are the totals calculating  | `boolean`                        | `undefined` |
-| `full`        | `full`        | Draws the button full-width | `boolean`                        | `true`      |
-| `loading`     | `loading`     | Is the form loading         | `boolean`                        | `undefined` |
-| `size`        | `size`        | The button's size.          | `"large" \| "medium" \| "small"` | `'large'`   |
-| `text`        | `text`        | Draws the button full-width | `string`                         | `''`        |
+| Property          | Attribute    | Description                 | Type                                                                                 | Default     |
+| ----------------- | ------------ | --------------------------- | ------------------------------------------------------------------------------------ | ----------- |
+| `checkoutSession` | --           | Checkout session object     | `CheckoutSession`                                                                    | `undefined` |
+| `full`            | `full`       | Draws the button full-width | `boolean`                                                                            | `true`      |
+| `showTotal`       | `show-total` | Total                       | `boolean`                                                                            | `false`     |
+| `size`            | `size`       | The button's size.          | `"large" \| "medium" \| "small"`                                                     | `'large'`   |
+| `state`           | `state`      | Is the form loading         | `"draft" \| "failure" \| "finalized" \| "idle" \| "loading" \| "paid" \| "updating"` | `undefined` |
+| `text`            | `text`       | Draws the button full-width | `string`                                                                             | `''`        |
 
 
 ## Dependencies

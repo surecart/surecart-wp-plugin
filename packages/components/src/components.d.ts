@@ -156,17 +156,9 @@ export namespace Components {
          */
         "alignment": 'center' | 'wide' | 'full';
         /**
-          * Pass an array of ids for choice fields
-         */
-        "choicePriceIds": Array<string>;
-        /**
           * Give a user a choice to switch session prices
          */
         "choiceType": ChoiceType;
-        /**
-          * Pass an array of choices
-         */
-        "choices": ProductChoices;
         /**
           * Optionally pass a coupon.
          */
@@ -649,16 +641,17 @@ export namespace Components {
         "paymentMethod": 'stripe' | 'paypal';
     }
     interface CePriceChoices {
+        "busy": boolean;
         "checkoutSession": CheckoutSession;
-        "choices": ProductChoices;
+        "choiceType": ChoiceType;
         "columns": number;
         "currencyCode": string;
         "default": string;
         "label": string;
         "lineItemData": Array<LineItemData>;
+        "loading": boolean;
         "products": Array<Product>;
-        "state": CheckoutState;
-        "type": 'radio' | 'checkbox';
+        "productsChoices": ProductChoices;
     }
     interface CePriceInput {
         /**
@@ -1535,17 +1528,9 @@ declare namespace LocalJSX {
          */
         "alignment"?: 'center' | 'wide' | 'full';
         /**
-          * Pass an array of ids for choice fields
-         */
-        "choicePriceIds"?: Array<string>;
-        /**
           * Give a user a choice to switch session prices
          */
         "choiceType"?: ChoiceType;
-        /**
-          * Pass an array of choices
-         */
-        "choices"?: ProductChoices;
         /**
           * Optionally pass a coupon.
          */
@@ -1603,7 +1588,7 @@ declare namespace LocalJSX {
         /**
           * Emitted when the control's checked state changes.
          */
-        "onCeChange"?: (event: CustomEvent<void>) => void;
+        "onCeChange"?: (event: CustomEvent<boolean>) => void;
         /**
           * Emitted when the control gains focus.
          */
@@ -2062,13 +2047,15 @@ declare namespace LocalJSX {
         "paymentMethod"?: 'stripe' | 'paypal';
     }
     interface CePriceChoices {
+        "busy"?: boolean;
         "checkoutSession"?: CheckoutSession;
-        "choices"?: ProductChoices;
+        "choiceType"?: ChoiceType;
         "columns"?: number;
         "currencyCode"?: string;
         "default"?: string;
         "label"?: string;
         "lineItemData"?: Array<LineItemData>;
+        "loading"?: boolean;
         /**
           * Add line items event.
          */
@@ -2078,8 +2065,7 @@ declare namespace LocalJSX {
          */
         "onCeUpdateLineItems"?: (event: CustomEvent<Array<LineItemData>>) => void;
         "products"?: Array<Product>;
-        "state"?: CheckoutState;
-        "type"?: 'radio' | 'checkbox';
+        "productsChoices"?: ProductChoices;
     }
     interface CePriceInput {
         /**

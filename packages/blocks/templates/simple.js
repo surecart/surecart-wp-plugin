@@ -1,4 +1,6 @@
-export default `<!-- wp:checkout-engine/email -->
+export default `
+<!-- wp:checkout-engine/pricing-section /-->
+<!-- wp:checkout-engine/email -->
 <ce-input label="Email" autocomplete="false" inputmode="false" spellcheck="false" name="email" type="email" required class="wp-block-checkout-engine-email"></ce-input>
 <!-- /wp:checkout-engine/email -->
 

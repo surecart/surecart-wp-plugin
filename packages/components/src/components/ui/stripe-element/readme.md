@@ -11,12 +11,20 @@
 | ----------------- | ------------------- | --------------------------------------------------------------------- | -------------------------------- | ----------- |
 | `checkoutSession` | --                  | The checkout session object for finalizing intents                    | `CheckoutSession`                | `undefined` |
 | `hasFocus`        | `has-focus`         | Inputs focus                                                          | `boolean`                        | `undefined` |
-| `help`            | `help`              | The input's help text. Alternatively, you can use the help-text slot. | `string`                         | `''`        |
 | `label`           | `label`             | The input's label. Alternatively, you can use the label slot.         | `string`                         | `undefined` |
 | `publishableKey`  | `publishable-key`   | Stripe publishable key                                                | `string`                         | `undefined` |
+| `secureText`      | `secure-text`       | The input's help text. Alternatively, you can use the help-text slot. | `string`                         | `''`        |
 | `showLabel`       | `show-label`        | Should we show the label                                              | `boolean`                        | `true`      |
 | `size`            | `size`              | The input's size.                                                     | `"large" \| "medium" \| "small"` | `'medium'`  |
 | `stripeAccountId` | `stripe-account-id` | Your stripe connected account id.                                     | `string`                         | `undefined` |
+
+
+## Events
+
+| Event        | Description | Type                |
+| ------------ | ----------- | ------------------- |
+| `cePaid`     |             | `CustomEvent<void>` |
+| `cePayError` |             | `CustomEvent<any>`  |
 
 
 ## Dependencies

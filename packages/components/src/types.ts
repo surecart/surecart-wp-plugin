@@ -30,12 +30,12 @@ export interface Price extends Object {
   recurring_interval?: 'day' | 'week' | 'month' | 'year';
   recurring_interval_count?: number;
   active: boolean;
-  product_id: string;
+  product_id?: string;
   archived_at?: string;
-  created_at: string;
-  updated_at: string;
-  product: Product;
-  meta_data: { [key: string]: string };
+  created_at: number;
+  updated_at: number;
+  product?: Product;
+  metadata: { [key: string]: string };
 }
 
 export interface Product extends Object {
@@ -45,8 +45,8 @@ export interface Product extends Object {
   active: boolean;
   metadata: any;
   prices: Array<Price>;
-  created_at: string;
-  updated_at: string;
+  created_at: number;
+  updated_at: number;
 }
 
 export interface Coupon extends Object {
@@ -76,8 +76,8 @@ export interface LineItem extends Object {
   name: string;
   object: string;
   quantity: number;
-  amount_subtotal: number;
-  amount_total: number;
+  subtotal_amount: number;
+  total_amount: number;
   created_at: number;
   updated_at: number;
   price?: Price;
@@ -85,11 +85,14 @@ export interface LineItem extends Object {
 }
 
 export interface ProductChoices {
-  [id: string]: {
-    prices: {
-      [id: string]: {
-        quantity: number;
-      };
+  [id: string]: ProductChoice;
+}
+
+export interface ProductChoice {
+  prices: {
+    [id: string]: {
+      quantity: number;
+      enabled: boolean;
     };
   };
 }
@@ -108,8 +111,8 @@ export interface CheckoutSession extends Object {
   name?: string;
   email?: string;
   currency?: string;
-  amount_total?: number;
-  amount_subtotal?: number;
+  total_amount?: number;
+  subtotal_amount?: number;
   line_items: lineItems;
   metadata?: Object;
   payment_intent?: PaymentIntent;

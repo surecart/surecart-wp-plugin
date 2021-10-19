@@ -34,7 +34,7 @@ export class CeSubmit {
     return (
       <ce-button loading={this.loading()} disabled={this.loading()} type="primary" submit full={this.full} size={this.size}>
         <slot>{this.text}</slot>
-        {this.showTotal && <span class="total"> - {this.checkoutSession.amount_total}</span>}
+        {this.showTotal && <span class="total"> - {this.checkoutSession.total_amount}</span>}
       </ce-button>
     );
   }

@@ -9,6 +9,9 @@
     "products": {
       "tyoe": "object",
       "default": {}
+    },
+    "choice_type": {
+      "enum": [ "all", "multiple", "single" ]
     }
   }
 }
