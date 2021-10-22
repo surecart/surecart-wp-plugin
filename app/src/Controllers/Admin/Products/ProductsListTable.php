@@ -170,27 +170,21 @@ class ProductsListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_price( $product ) {
-		if ( empty( $product->prices ) ) {
+		if ( empty( $product->metrics->prices_count ) ) {
 			return '<ce-tag type="warning">' . __( 'No price', 'checkout_engine' ) . '</ce-tag>';
 		}
-
-		if ( ! empty( $product->prices[0]->amount ) ) {
-			$min_price = min( array_column( $product->prices, 'amount' ) );
-			$amount    = '<ce-format-number type="currency" currency="' . $product->prices[0]->currency . '" value="' . $min_price . '"></ce-format-number>';
-
-			$count = count( $product->prices );
-
-			if ( $count > 1 ) {
+		if ( ! empty( $product->metrics->min_price_amount ) ) {
+			$amount = '<ce-format-number type="currency" currency="' . $product->prices->data[0]->currency . '" value="' . $product->metrics->min_price_amount . '"></ce-format-number>';
+			if ( $product->metrics->prices_count > 1 ) {
 				// translators: Price starting at.
 				$starting_at = sprintf( __( 'Starting at %s', 'checkout_engine' ), $amount );
 				// translators: Other prices.
-				$others = sprintf( _n( 'and %d other price.', 'and %d other prices.', $count, 'checkout_engine' ), $count );
+				$others = sprintf( _n( 'and %d other price.', 'and %d other prices.', $product->metrics->prices_count - 1, 'checkout_engine' ), $product->metrics->prices_count - 1 );
 				return $starting_at . '<br /><small style="opacity: 0.75">' . $others . '</small>';
 			} else {
 				return $amount;
 			}
 		}
-
 		return __( 'No price', 'checkout_engine' );
 	}
 

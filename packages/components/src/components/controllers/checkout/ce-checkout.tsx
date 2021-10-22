@@ -2,13 +2,14 @@ import { Component, h, Prop, Element, State, Watch, Listen } from '@stencil/core
 import { Price, Product, Coupon, CheckoutSession, Customer, LineItemData, ProductChoices, Keys, ChoiceType } from '../../../types';
 import { handleInputs } from './functions';
 import { getSessionId } from './helpers/session';
-import { getProducts } from '../../../services/fetch';
+import { getPricesAndProducts } from '../../../services/fetch';
 import { calculateInitialLineItems } from '../../../functions/line-items';
 import { getOrCreateSession, createOrUpdateSession, finalizeSession } from '../../../services/session/index';
 import { Universe } from 'stencil-wormhole';
 import { addQueryArgs } from '@wordpress/url';
 import { interpret } from '@xstate/fsm';
 import { checkoutMachine } from './helpers/checkout-machine';
+import { getChoicePrices } from '../../../functions/choices';
 
 @Component({
   tag: 'ce-checkout',
@@ -277,13 +278,18 @@ export class CECheckout {
   async createOrUpdateSession() {
     const { send } = this._stateService;
     const id = getSessionId(this.el.id, this.checkoutSession, true);
+    const line_items = calculateInitialLineItems(this.products, this.choiceType);
+
+    if (!line_items) {
+      return;
+    }
     try {
       send('FETCH');
       this.checkoutSession = (await createOrUpdateSession({
         id,
         data: {
           currency: this.currencyCode || 'usd',
-          line_items: calculateInitialLineItems(this.products, this.choiceType),
+          line_items,
         },
       })) as CheckoutSession;
       send('RESOLVE');
@@ -396,12 +402,11 @@ export class CECheckout {
 
   async fetchProducts() {
     try {
-      this.productsEntities = await getProducts({
-        query: {
-          active: true,
-          ids: Object.keys(this.products),
-        },
+      const { products, prices } = await getPricesAndProducts({
+        active: true,
+        ids: getChoicePrices(this.products).map(p => p.id),
       });
+      console.log({ products, prices });
     } catch (e) {
       this.handleErrorResponse(e);
     } finally {

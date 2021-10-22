@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ce-block-ui renders 1`] = `
+<ce-block-ui>
+  <mock:shadow-root>
+    <div class="overlay" style="z-index: 1;">
+      <slot>
+        <ce-spinner></ce-spinner>
+      </slot>
+    </div>
+  </mock:shadow-root>
+</ce-block-ui>
+`;

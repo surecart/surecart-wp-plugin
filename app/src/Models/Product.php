@@ -23,16 +23,17 @@ class Product extends Model {
 	/**
 	 * Set the prices attribute.
 	 *
-	 * @param  array $value Array of price objects.
+	 * @param  object $value Array of price objects.
 	 * @return void
 	 */
 	public function setPricesAttribute( $value ) {
 		$models = [];
-		if ( ! empty( $value ) && is_array( $value ) ) {
-			foreach ( $value as $attributes ) {
+		if ( ! empty( $value->data ) && is_array( $value->data ) ) {
+			foreach ( $value->data as $attributes ) {
 				$models[] = new Price( $attributes );
 			}
 		}
-		$this->attributes['prices'] = $models;
+		$value->data                = $models;
+		$this->attributes['prices'] = $value;
 	}
 }

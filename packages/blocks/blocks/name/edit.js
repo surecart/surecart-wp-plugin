@@ -2,9 +2,14 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { InspectorControls } from '@wordpress/editor';
+import { InspectorControls } from '@wordpress/block-editor';
 import { Fragment } from '@wordpress/element';
-import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
+import {
+	PanelBody,
+	PanelRow,
+	TextControl,
+	Disabled,
+} from '@wordpress/components';
 
 /**
  * Component Dependencies
@@ -44,12 +49,14 @@ export default ( { attributes, setAttributes } ) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<CeInput
-				label={ label }
-				placeholder={ placeholder }
-				name="name"
-				help={ help }
-			></CeInput>
+			<Disabled>
+				<CeInput
+					label={ label }
+					placeholder={ placeholder }
+					name="name"
+					help={ help }
+				></CeInput>
+			</Disabled>
 		</Fragment>
 	);
 };

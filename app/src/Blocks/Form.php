@@ -33,7 +33,7 @@ class Form extends Block {
 	 * @return void
 	 */
 	public function register( $container ) {
-		// add_filter( 'init', [ $this, 'registerStyles' ] );
+		add_filter( 'init', [ $this, 'registerStyles' ] );
 
 		parent::register( $container );
 	}

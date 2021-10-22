@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ce-button renders 1`] = `
+<ce-button size="medium" type="default">
+  <mock:shadow-root>
+    <button class="button button--default button--has-label button--medium button--standard" part="base" type="button">
+      <span class="button__prefix" part="prefix">
+        <slot name="prefix"></slot>
+      </span>
+      <span class="button__label" part="label">
+        <slot></slot>
+      </span>
+      <span class="button__suffix" part="suffix">
+        <slot name="suffix"></slot>
+      </span>
+    </button>
+  </mock:shadow-root>
+</ce-button>
+`;
+
+exports[`ce-button renders slots 1`] = `
+<ce-button size="medium" type="default">
+  <mock:shadow-root>
+    <button class="button button--default button--has-label button--has-prefix button--has-suffix button--medium button--standard" part="base" type="button">
+      <span class="button__prefix" part="prefix">
+        <slot name="prefix"></slot>
+      </span>
+      <span class="button__label" part="label">
+        <slot></slot>
+      </span>
+      <span class="button__suffix" part="suffix">
+        <slot name="suffix"></slot>
+      </span>
+    </button>
+  </mock:shadow-root>
+  <span slot="prefix">
+    Prefix
+  </span>
+  Text
+  <span slot="suffix">
+    Suffix
+  </span>
+</ce-button>
+`;

@@ -1,25 +1,61 @@
-import STORE_KEY from '../../../../../resources/scripts/admin/store/data/constants';
 import { fetch as apiFetch } from '../../../../../resources/scripts/admin/store/data/controls';
-import { controls } from '@wordpress/data';
+import { mergeEntities } from './actions';
+import {
+	normalizeProducts,
+	normalizePrices,
+	normalizeProduct,
+} from '../../../utils/schema';
 
 export default {
-	*selectModelById( path, id ) {
-		if ( path != 'product' ) {
-			return;
-		}
-
-		// fetch
+	*searchProducts( query ) {
 		try {
-			const response = yield apiFetch( {
+			const products = yield apiFetch( {
+				path: 'products',
+				query: {
+					query,
+					archived: false,
+				},
+			} );
+			const { entities } = normalizeProducts( products );
+			return yield mergeEntities( entities );
+		} catch ( error ) {
+			console.error( error );
+		}
+	},
+
+	*selectPricesByProductId( id ) {
+		try {
+			const prices = yield apiFetch( {
+				path: 'prices',
+				product_ids: [ id ],
+			} );
+			const { entities } = normalizePrices( prices );
+			return yield mergeEntities( entities );
+		} catch ( error ) {
+			console.error( error );
+		}
+	},
+
+	*selectProductById( id ) {
+		try {
+			const product = yield apiFetch( {
 				path: `products/${ id }`,
 			} );
-			return yield controls.dispatch(
-				STORE_KEY,
-				'setModelById',
-				'products',
-				response,
-				id
-			);
+			const { entities } = normalizeProduct( product );
+			return yield mergeEntities( entities );
+		} catch ( error ) {
+			console.error( error );
+		}
+	},
+
+	*selectPricesByIds( ids ) {
+		try {
+			const product = yield apiFetch( {
+				path: `prices`,
+				ids,
+			} );
+			const { entities } = normalizePrices( product );
+			return yield mergeEntities( entities );
 		} catch ( error ) {
 			console.error( error );
 		}

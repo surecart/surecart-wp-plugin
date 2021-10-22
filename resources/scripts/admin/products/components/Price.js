@@ -124,7 +124,7 @@ export default withConfirm(
 		};
 
 		const headerName = () => {
-			if ( ! price?.name || prices?.length === 1 ) {
+			if ( ! price?.name ) {
 				return __( 'Pricing Details', 'checkout_engine' );
 			}
 
@@ -309,30 +309,28 @@ export default withConfirm(
 				>
 					<FlashError path="prices" index={ index } scrollIntoView />
 
-					{ prices?.length > 1 && (
-						<CeFormRow>
-							<CeInput
-								ref={ input }
-								label={ __( 'Name', 'checkout_engine' ) }
-								className="ce-price-name"
-								help={ __(
-									'A short name for your price (i.e Professional Plan).',
-									'checkout_engine'
-								) }
-								value={ price?.name }
-								onCeChange={ ( e ) => {
-									updateModel(
-										'prices',
-										{
-											name: e.target.value,
-										},
-										index
-									);
-								} }
-								required
-							/>
-						</CeFormRow>
-					) }
+					<CeFormRow>
+						<CeInput
+							ref={ input }
+							label={ __( 'Price Name', 'checkout_engine' ) }
+							className="ce-price-name"
+							help={ __(
+								'A short name for your price (i.e Professional Plan).',
+								'checkout_engine'
+							) }
+							value={ price?.name }
+							onCeChange={ ( e ) => {
+								updateModel(
+									'prices',
+									{
+										name: e.target.value,
+									},
+									index
+								);
+							} }
+							required
+						/>
+					</CeFormRow>
 
 					<CeFormRow>
 						<CeChoices style={ { '--columns': 2 } }>

@@ -205,7 +205,7 @@ ce-button-group > ce-tooltip > ce-button.ce-focus {
   --ce-input-box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
   --ce-input-height-small: 1.875em;
   --ce-input-height-medium: 2.5em;
-  --ce-input-height-large: 2.75em;
+  --ce-input-height-large: 2.7em;
   --ce-input-background-color: var(--ce-color-white);
   --ce-input-background-color-hover: var(--ce-color-white);
   --ce-input-background-color-focus: var(--ce-color-white);

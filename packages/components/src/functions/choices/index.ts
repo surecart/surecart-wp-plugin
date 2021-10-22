@@ -9,7 +9,7 @@ import { ProductChoices, RecursivePartial, Product } from '../../types';
  *
  * @returns string
  */
-export const getProductPriceIdByIndex = (productId: string, products: ProductChoices, index: number = 0) => {
+export const getProductChoicePriceIdByIndex = (productId: string, products: ProductChoices, index: number = 0) => {
   return Object.keys(products[productId].prices)[index];
 };
 
@@ -22,8 +22,8 @@ export const getProductPriceIdByIndex = (productId: string, products: ProductCho
  *
  * @returns string
  */
-export const getProductPriceByIndex = (productId: string, products: ProductChoices, index: number = 0) => {
-  const id = getProductPriceIdByIndex(productId, products, index);
+export const getProductChoicePriceByIndex = (productId: string, products: ProductChoices, index: number = 0) => {
+  const id = getProductChoicePriceIdByIndex(productId, products, index);
   return {
     id,
     ...products[productId].prices[id],
@@ -66,6 +66,6 @@ export const getAvailablePricesForProduct = (product: RecursivePartial<Product>,
     return [];
   }
   return (product.prices || []).filter(price => {
-    return choice.prices[price.id]?.enabled;
+    return choice.prices[price.id]?.enabled && !price.archived;
   });
 };

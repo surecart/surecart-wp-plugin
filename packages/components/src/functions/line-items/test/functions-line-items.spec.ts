@@ -5,9 +5,11 @@ const prices = {
     prices: {
       price1: {
         quantity: 1,
+        enabled: true,
       },
       price2: {
         quantity: 2,
+        enabled: true,
       },
     },
   },
@@ -15,9 +17,11 @@ const prices = {
     prices: {
       price3: {
         quantity: 3,
+        enabled: true,
       },
       price4: {
         quantity: 4,
+        enabled: true,
       },
     },
   },
@@ -39,13 +43,13 @@ const lineItems = [
 describe('Line items functions', () => {
   it('calculateInitialLineItems', () => {
     expect(calculateInitialLineItems(prices, 'all')).toEqual([
-      { id: 'price1', quantity: 1 },
-      { id: 'price2', quantity: 2 },
-      { id: 'price3', quantity: 3 },
-      { id: 'price4', quantity: 4 },
+      { price_id: 'price1', quantity: 1 },
+      { price_id: 'price2', quantity: 2 },
+      { price_id: 'price3', quantity: 3 },
+      { price_id: 'price4', quantity: 4 },
     ]);
-    expect(calculateInitialLineItems(prices, 'multiple')).toEqual([{ id: 'price1', quantity: 1 }]);
-    expect(calculateInitialLineItems(prices, 'single')).toEqual([{ id: 'price1', quantity: 1 }]);
+    expect(calculateInitialLineItems(prices, 'multiple')).toEqual([{ price_id: 'price1', quantity: 1 }]);
+    expect(calculateInitialLineItems(prices, 'single')).toEqual([{ price_id: 'price1', quantity: 1 }]);
   });
 
   it('getLineItemPriceIds', () => {

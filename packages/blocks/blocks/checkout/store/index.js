@@ -1,19 +1,21 @@
-import { registerStore, combineReducers } from '@wordpress/data';
+import { registerStore } from '@wordpress/data';
 
-import { entities } from '../../../../../resources/scripts/admin/store/data/reducer';
-import * as selectors from '../../../../../resources/scripts/admin/store/data/selectors';
-import * as actions from '../../../../../resources/scripts/admin/store/data/actions';
+import reducer from './reducer';
+import controls from './controls';
+import * as selectors from './selectors';
+import * as actions from './actions';
 import resolvers from './resolvers';
-
-// export store key.
-import STORE_KEY from '../../../../../resources/scripts/admin/store/data/constants';
 
 // export config.
 export const STORE_CONFIG = {
-	reducer: combineReducers( { entities } ),
+	reducer,
+	controls,
 	selectors,
 	resolvers,
 	actions,
 };
 
-export default registerStore( STORE_KEY, STORE_CONFIG );
+// export key
+export const BLOCKS_STORE_KEY = 'checkout-engine/blocks';
+
+export default registerStore( BLOCKS_STORE_KEY, STORE_CONFIG );

@@ -59,6 +59,6 @@ export class CePurchase {
       );
     }
 
-    return <div>Session not found</div>;
+    return '';
   }
 }

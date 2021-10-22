@@ -2,7 +2,7 @@ import { Component, h, Prop, Element, Event, EventEmitter, State } from '@stenci
 import { Product, Price, LineItemData, ProductChoices, CheckoutSession, ChoiceType } from '../../../types';
 import { getSiblings } from './functions';
 import { openWormhole } from 'stencil-wormhole';
-import { getAvailablePricesForProduct, getProductPriceByIndex, getChoicePrices } from '../../../functions/choices';
+import { getAvailablePricesForProduct, getProductChoicePriceByIndex, getChoicePrices } from '../../../functions/choices';
 import { isPriceInCheckoutSession, isProductInCheckoutSession } from '../../../functions/line-items';
 
 @Component({
@@ -41,7 +41,7 @@ export class CePriceChoices {
   maybeUpdateSelectedPrices(e: any) {
     if (this.choiceType !== 'single') return;
     if (e.target.checked) {
-      const firstPriceChoice = getProductPriceByIndex(e.target.value, this.productsChoices, 0);
+      const firstPriceChoice = getProductChoicePriceByIndex(e.target.value, this.productsChoices, 0);
       this.ceUpdateLineItems.emit([
         {
           price_id: firstPriceChoice.id,
@@ -108,6 +108,7 @@ export class CePriceChoices {
       <ce-choices label={this.label} class="loaded product-selector" style={{ '--columns': this.columns.toString() }}>
         {(this.products || []).map(product => {
           const availablePrices = getAvailablePricesForProduct(product, this.productsChoices);
+          if (product.archived) return;
           return (
             <ce-choice
               class="loaded"
@@ -167,8 +168,9 @@ export class CePriceChoices {
 
     return (
       <ce-form-row>
-        <ce-choices label={label} class="loaded" style={{ '--columns': this.columns.toString() }}>
+        <ce-choices label={label} class="loaded price-selector" style={{ '--columns': this.columns.toString() }}>
           {prices.map(price => {
+            if (price.archived) return;
             return (
               <ce-choice
                 class="loaded"

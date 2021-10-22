@@ -74,7 +74,6 @@ export default ( { attributes, setAttributes } ) => {
 						'checkout_engine'
 					) }
 					label={ __( 'Add a checkout form', 'checkout_engine' ) }
-					isColumnLayout={ false }
 				>
 					<div>
 						<Button
@@ -109,7 +108,6 @@ export default ( { attributes, setAttributes } ) => {
 				<Placeholder
 					icon={ icon }
 					label={ __( 'Select a checkout form', 'checkout_engine' ) }
-					isColumnLayout={ false }
 				>
 					<div>
 						<SelectForm form={ form } setForm={ setForm } />

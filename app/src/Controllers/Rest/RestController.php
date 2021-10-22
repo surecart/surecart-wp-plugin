@@ -25,20 +25,14 @@ abstract class RestController {
 	}
 
 	/**
-	 * Price index
+	 * index
 	 *
 	 * @param \WP_REST_Request $request Rest Request.
 	 *
 	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function index( \WP_REST_Request $request ) {
-		return $this->class::where(
-			[
-				'archived' => $request['archived'] ?? null,
-				'ids'      => $request['ids'] ?? null,
-				'query'    => $request['query'] ?? null,
-			]
-		)->get();
+		return $this->class::where( $request->get_params() )->get();
 	}
 
 	/**

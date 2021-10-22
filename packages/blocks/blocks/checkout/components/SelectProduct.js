@@ -1,49 +1,88 @@
 /** @jsx jsx */
 
 import apiFetch from '@wordpress/api-fetch';
-import { dispatch, useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
-import { useEffect, useState } from '@wordpress/element';
+import { useState, useEffect } from '@wordpress/element';
 import { addQueryArgs } from '@wordpress/url';
 import { Button, Modal } from '@wordpress/components';
 import { css, jsx } from '@emotion/core';
 
-import dotProp from 'dot-prop-immutable';
-
 import throttle from 'lodash/throttle';
 
-import { CeFormRow, CeButton, CeSelect } from '@checkout-engine/react';
+import { CeSelect } from '@checkout-engine/react';
+import { convertPricesToChoices } from '../../../utils/prices';
+import { useSelect, dispatch, select } from '@wordpress/data';
+import { BLOCKS_STORE_KEY } from '../store';
+import { unique } from '../../../utils/functions';
 
 export default ( { onRequestClose, attributes, setAttributes } ) => {
-	const { products } = attributes;
 	const [ product, setProduct ] = useState( {} );
-	const [ productsData, setProductsData ] = useState( [] );
 	const [ query, setQuery ] = useState( '' );
-	const [ loading, setLoading ] = useState( false );
+	const [ busy, setBusy ] = useState( false );
 
-	const addProduct = () => {
-		setAttributes( {
-			products: {
-				...products,
-				[ product.id ]: {
-					id: product.id,
-					type: 'any',
-					prices: product.prices.reduce( ( add, curr ) => {
-						add[ curr.id ] = {
-							quantity: 1,
-							enabled: true,
-						};
-						return add;
-					}, {} ),
-				},
-			},
-		} );
-		onRequestClose();
+	const { products, querying } = useSelect(
+		( select ) => {
+			const { isResolving, searchProducts } = select( BLOCKS_STORE_KEY );
+			return {
+				products: searchProducts( query ),
+				querying: isResolving( 'searchProducts', [ query ] ),
+			};
+		},
+		[ query ]
+	);
+
+	/**
+	 * Does the product have all loaded prices?
+	 */
+	const productHasAllPrices = ( product ) => {
+		// get all loaded prices by product id.
+		const prices = select( BLOCKS_STORE_KEY ).selectPricesByProductId(
+			product.id
+		);
+		// do the unarchived prices we have loaded match the prices_count metric?
+		return (
+			Object.keys( prices || {} ).filter(
+				( key ) => ! prices[ key ].archived
+			).length === product.metrics.prices_count
+		);
 	};
 
-	useEffect( () => {
-		fetchProducts();
-	}, [ query ] );
+	// add the product to the choices.
+	const addProduct = async () => {
+		// product needs to fetch the additional prices that were not included in the embedded collection.
+		if ( ! productHasAllPrices( product ) ) {
+			setBusy( true );
+			try {
+				// fetch product's prices.
+				const pricesResponse = await apiFetch( {
+					path: addQueryArgs( 'checkout-engine/v1/prices', {
+						product_ids: [ product.id ],
+						archived: false,
+					} ),
+				} );
+				dispatch( BLOCKS_STORE_KEY ).setPrices( pricesResponse );
+			} finally {
+				setBusy( false );
+			}
+		}
+
+		// get prices from redux store.
+		const prices = select( BLOCKS_STORE_KEY ).selectPricesByProductId(
+			product.id
+		);
+
+		setAttributes( {
+			prices: unique(
+				[
+					...( attributes.prices || [] ),
+					...convertPricesToChoices( prices ),
+				],
+				'id'
+			),
+		} );
+
+		onRequestClose();
+	};
 
 	const findProduct = throttle(
 		( value ) => {
@@ -52,22 +91,6 @@ export default ( { onRequestClose, attributes, setAttributes } ) => {
 		750,
 		{ leading: false }
 	);
-
-	const fetchProducts = async () => {
-		let response;
-		try {
-			setLoading( true );
-			response = await apiFetch( {
-				path: addQueryArgs( 'checkout-engine/v1/products', {
-					query,
-					archived: false,
-				} ),
-			} );
-			setProductsData( response );
-		} finally {
-			setLoading( false );
-		}
-	};
 
 	return (
 		<Modal
@@ -88,12 +111,9 @@ export default ( { onRequestClose, attributes, setAttributes } ) => {
 				<CeSelect
 					value={ product?.id }
 					onCeChange={ ( e ) => {
-						const productData = productsData.find(
-							( product ) => product.id === e.target.value
-						);
-						setProduct( productData );
+						setProduct( products?.[ e.target.value ] );
 					} }
-					loading={ loading }
+					loading={ querying }
 					placeholder={ __( 'Choose a product', 'checkout_engine' ) }
 					searchPlaceholder={ __(
 						'Search for a product...',
@@ -101,16 +121,19 @@ export default ( { onRequestClose, attributes, setAttributes } ) => {
 					) }
 					search
 					onCeSearch={ ( e ) => findProduct( e.detail ) }
-					choices={ ( productsData || [] ).map( ( product ) => {
-						return {
-							value: product.id,
-							label: `${ product.name } ${
-								product.prices.length > 1
-									? `(${ product.prices.length } Prices)`
-									: ''
-							}`,
-						};
-					} ) }
+					choices={ ( Object.keys( products ) || {} ).map(
+						( key ) => {
+							const product = products[ key ];
+							return {
+								value: key,
+								label: `${ product?.name } ${
+									product?.metrics?.prices_count > 1
+										? `(${ product?.metrics?.prices_count } Prices)`
+										: ''
+								}`,
+							};
+						}
+					) }
 				/>
 
 				<div
@@ -120,7 +143,7 @@ export default ( { onRequestClose, attributes, setAttributes } ) => {
 						gap: 0.5em;
 					` }
 				>
-					<Button isPrimary onClick={ addProduct }>
+					<Button isPrimary isBusy={ busy } onClick={ addProduct }>
 						{ __( 'Add Product', 'checkout_engine' ) }
 					</Button>
 					<Button onClick={ onRequestClose }>

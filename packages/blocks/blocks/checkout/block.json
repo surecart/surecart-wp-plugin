@@ -11,8 +11,8 @@
     "choice_type": {
       "enum": [ "all", "multiple", "single" ]
     },
-    "products": {
-      "type": "object"
+    "prices" : {
+      "type": "array"
     }
 	}
 }

@@ -6,12 +6,11 @@
       "type": "number",
       "default": 16
     },
-    "products": {
-      "tyoe": "object",
-      "default": {}
-    },
     "choice_type": {
       "enum": [ "all", "multiple", "single" ]
+    },
+    "prices": {
+      "type": "array"
     }
   }
 }

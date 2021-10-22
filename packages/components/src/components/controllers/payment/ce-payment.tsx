@@ -25,7 +25,7 @@ export class CePayment {
   @Prop() stripeAccountId: string;
 
   /** Is this created in "test" mode */
-  @Prop({ reflect: true }) mode: 'test' | 'live' = 'live';
+  @Prop() mode: 'test' | 'live' = 'live';
 
   /** Secure notice */
   @Prop() secureNotice: string;

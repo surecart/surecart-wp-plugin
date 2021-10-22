@@ -4,11 +4,11 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
-import { useEffect, useState } from '@wordpress/element';
+import { useState, useEffect } from '@wordpress/element';
 import { Icon, external, menu, moreHorizontal, close } from '@wordpress/icons';
 import { Container, Draggable } from 'react-smooth-dnd';
+import { useSelect, select } from '@wordpress/data';
 import ToggleHeader from '../../../../../resources/scripts/admin/components/ToggleHeader';
 
 import dotProp from 'dot-prop-immutable';
@@ -27,6 +27,8 @@ import {
 } from '@wordpress/components';
 
 import { css, jsx } from '@emotion/core';
+import { applyDrag } from '../../../utils/drag-drop';
+import { BLOCKS_STORE_KEY } from '../store';
 
 export default ( { attributes, setAttributes, id } ) => {
 	// styles
@@ -36,37 +38,45 @@ export default ( { attributes, setAttributes, id } ) => {
 	const color = '--ce-color-gray-900';
 	const muted = '--ce-color-gray-500';
 
-	const { products } = attributes;
-
-	const [ product, setProduct ] = useState( null );
+	const { prices } = attributes;
 	const [ isOpen, setIsOpen ] = useState( true );
-	const [ loading, setLoading ] = useState( false );
-	const [ error, setError ] = useState( null );
 
-	useEffect( () => {
-		fetchProduct();
-	}, [ id ] );
-
-	const fetchProduct = async () => {
-		setLoading( true );
-		let result;
-
-		try {
-			result = await apiFetch( {
-				path: `checkout-engine/v1/products/${ id }`,
-			} );
-		} catch ( e ) {
-			setError(
-				e?.message || __( 'Something went wrong', 'checkout_engine' )
+	const { pricesData, isResolvingPrices } = useSelect(
+		( select ) => {
+			const { isResolving, selectPricesByIds } = select(
+				BLOCKS_STORE_KEY
 			);
-		} finally {
-			setLoading( false );
-		}
+			const priceIds = prices.map( ( p ) => p.id );
+			return {
+				pricesData: selectPricesByIds( priceIds ),
+				isResolvingPrices: isResolving( 'selectPricesByIds', [
+					priceIds,
+				] ),
+			};
+		},
+		[ id ]
+	);
 
-		setProduct( result );
-	};
+	const { product } = useSelect(
+		( select ) => {
+			if ( ! Object.keys( pricesData ).length ) {
+				return {
+					product: null,
+					isResolvingProduct: false,
+				};
+			}
+			const { isResolving, selectProductById } = select(
+				BLOCKS_STORE_KEY
+			);
+			return {
+				product: selectProductById( id ),
+				isResolvingProduct: isResolving( 'selectProductById', [ id ] ),
+			};
+		},
+		[ pricesData ]
+	);
 
-	const removeChoice = ( id ) => {
+	const removeChoice = () => {
 		const r = confirm(
 			__(
 				'Are you sure you want to remove this product from the form?',
@@ -74,14 +84,13 @@ export default ( { attributes, setAttributes, id } ) => {
 			)
 		);
 		if ( r ) {
-			const { [ id ]: value, ...withoutProduct } = products;
 			setAttributes( {
-				products: withoutProduct,
+				prices: prices.filter( ( p ) => p.product_id !== id ),
 			} );
 		}
 	};
 
-	if ( loading || ! product ) {
+	if ( isResolvingPrices ) {
 		return (
 			<div
 				css={ css`
@@ -111,15 +120,21 @@ export default ( { attributes, setAttributes, id } ) => {
 		);
 	}
 
-	if ( error ) {
-		return <div>{ error }</div>;
-	}
-
 	const navigateToEditProduct = () => {
 		window.location.href = addQueryArgs( 'admin.php', {
 			page: 'ce-products',
 			action: 'edit',
 			id,
+		} );
+	};
+
+	const onDrop = ( dropResult ) => {
+		const removedIndex = prices.indexOf( dropResult.payload );
+		const offset = removedIndex - dropResult.removedIndex;
+		dropResult.addedIndex = dropResult.addedIndex + offset;
+		dropResult.removedIndex = removedIndex;
+		setAttributes( {
+			prices: applyDrag( prices, dropResult ),
 		} );
 	};
 
@@ -157,6 +172,10 @@ export default ( { attributes, setAttributes, id } ) => {
 				</CeMenu>
 			</CeDropdown>
 		</div>
+	);
+
+	const productPrices = ( prices || [] ).filter(
+		( price ) => price.product_id === id
 	);
 
 	return (
@@ -209,29 +228,32 @@ export default ( { attributes, setAttributes, id } ) => {
 						margin: 1em auto;
 					` }
 				>
-					<Container>
-						{ product.prices.map( ( price, index ) => {
+					<Container
+						onDrop={ onDrop }
+						getChildPayload={ ( index ) => {
+							return productPrices[ index ];
+						} }
+					>
+						{ productPrices.map( ( priceChoice, index ) => {
+							const price = pricesData[ priceChoice.id ];
+							if ( ! price ) return;
 							return (
 								<Draggable
-									key={ price.id }
+									key={ priceChoice.id }
 									css={ css`
 										overflow: visible !important;
 									` }
 								>
 									<div
-										key={ price.id }
+										key={ priceChoice.id }
 										css={ css`
 											background: var( ${ bg } );
 											&:hover {
 												background: var( ${ bgHover } );
 											}
 											color: var( ${ color } );
-											${ index === 0 &&
-											`border-top-right-radius: var(--ce-border-radius-medium); border-top-left-radius: var(--ce-border-radius-medium);` }
-											${ index ===
-												product?.prices?.length - 1 &&
-											`border-bottom-right-radius: var(--ce-border-radius-medium); border-bottom-left-radius: var(--ce-border-radius-medium);` }
-										  box-shadow: inset 0 0 0 1px var(${ border });
+											box-shadow: inset 0 0 0 1px
+												var( ${ border } );
 											display: grid;
 											margin-top: -1px;
 											padding: 1.2em;
@@ -263,15 +285,13 @@ export default ( { attributes, setAttributes, id } ) => {
 												` }
 												label={ price.name }
 												checked={
-													!! products[ id ]?.prices?.[
-														price.id
-													]?.enabled
+													!! priceChoice?.enabled
 												}
 												onChange={ ( checked ) => {
 													setAttributes( {
-														products: dotProp.set(
-															products,
-															`${ id }.prices.${ price.id }.enabled`,
+														prices: dotProp.set(
+															prices,
+															`${ index }.enabled`,
 															!! checked
 														),
 													} );
@@ -285,38 +305,16 @@ export default ( { attributes, setAttributes, id } ) => {
 												labelPosition="side"
 												onChange={ ( number ) => {
 													setAttributes( {
-														products: dotProp.set(
-															products,
-															`${ id }.prices.${ price.id }.quantity`,
+														prices: dotProp.set(
+															prices,
+															`${ index }.quanity`,
 															parseInt( number )
 														),
 													} );
 												} }
 												shiftStep={ 10 }
-												value={
-													products?.[ id ]?.prices?.[
-														price.id
-													]?.quantity
-												}
+												value={ priceChoice?.quantity }
 											/>
-											{ /* <CeQuantitySelect
-												onCeChange={ ( e ) => {
-													// setTimeout( () => {
-													// 	setAttributes( {
-													// 		choices: dotProp.set(
-													// 			attributes.choices,
-													// 			`${ id }.prices.${ price.id }.quantity`,
-													// 			parseInt(
-													// 				e.detail
-													// 			)
-													// 		),
-													// 	} );
-													// }, 50 );
-												} }
-												css={ css`
-													color: var( ${ muted } );
-												` }
-											/> */ }
 										</div>
 										<span
 											css={ css`

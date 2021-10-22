@@ -4,7 +4,7 @@ import { getChoicePrices } from '../choices';
 /**
  * Calculates the initial line items for the session.
  */
-export const calculateInitialLineItems = (choices: ProductChoices, choiceType: ChoiceType) => {
+export const calculateInitialLineItems = (choices: RecursivePartial<ProductChoices>, choiceType: ChoiceType) => {
   if (choiceType === 'all') {
     return getChoicePrices(choices).map(choice => {
       return {

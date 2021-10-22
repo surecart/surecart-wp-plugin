@@ -7,14 +7,6 @@ describe('ce-block-ui', () => {
       components: [CeBlockUi],
       html: `<ce-block-ui></ce-block-ui>`,
     });
-    expect(page.root).toEqualHtml(`
-      <ce-block-ui>
-        <mock:shadow-root>
-          <div class="overlay">
-            <ce-spinner></ce-spinner>
-          </div>
-        </mock:shadow-root>
-      </ce-block-ui>
-    `);
+    expect(page.root).toMatchSnapshot();
   });
 });

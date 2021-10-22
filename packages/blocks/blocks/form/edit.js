@@ -27,7 +27,7 @@ export default function edit( { clientId, attributes, setAttributes } ) {
 	const blockCount = useSelect( ( select ) =>
 		select( blockEditorStore ).getBlockCount( clientId )
 	);
-	const [ template, setTemplate ] = useState( '' );
+	const [ template, setTemplate ] = useState( 'sections' );
 	const { replaceInnerBlocks } = useDispatch( blockEditorStore );
 	const changeTemplate = async () => {
 		replaceInnerBlocks(
@@ -68,17 +68,25 @@ export default function edit( { clientId, attributes, setAttributes } ) {
 			</InspectorControls>
 
 			<TabPanel
-				initialTabName="form"
+				css={ css`
+					.components-tab-panel__tabs {
+						justify-content: center;
+					}
+				` }
+				initialTabName="settings"
 				tabs={ [
-					{ name: 'form', title: __( 'Form', 'checkout_engine' ) },
 					{
-						name: 'setup',
-						title: __( 'Products', 'checkout_engine' ),
+						name: 'layout',
+						title: __( 'Layout', 'checkout_engine' ),
+					},
+					{
+						name: 'settings',
+						title: __( 'Settings', 'checkout_engine' ),
 					},
 				] }
 			>
 				{ ( tab ) => {
-					if ( tab.name === 'setup' ) {
+					if ( tab.name === 'settings' ) {
 						return (
 							<Setup
 								attributes={ attributes }

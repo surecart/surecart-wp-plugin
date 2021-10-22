@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ce-stripe-element renders 1`] = `
+<ce-stripe-element size="medium">
+  <ce-input class="ce-stripe" size="medium">
+    <div></div>
+  </ce-input>
+</ce-stripe-element>
+`;

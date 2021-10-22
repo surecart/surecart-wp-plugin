@@ -29,7 +29,7 @@ export interface Price extends Object {
   recurring: boolean;
   recurring_interval?: 'day' | 'week' | 'month' | 'year';
   recurring_interval_count?: number;
-  active: boolean;
+  archived: boolean;
   product_id?: string;
   archived_at?: string;
   created_at: number;
@@ -42,7 +42,7 @@ export interface Product extends Object {
   id: string;
   name: string;
   description: string;
-  active: boolean;
+  archived: boolean;
   metadata: any;
   prices: Array<Price>;
   created_at: number;

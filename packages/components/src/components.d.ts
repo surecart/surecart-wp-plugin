@@ -944,32 +944,6 @@ export namespace Components {
          */
         "theme": string;
     }
-    interface CeSubmit {
-        /**
-          * Checkout session object
-         */
-        "checkoutSession": CheckoutSession;
-        /**
-          * Draws the button full-width
-         */
-        "full"?: boolean;
-        /**
-          * Total
-         */
-        "showTotal": boolean;
-        /**
-          * The button's size.
-         */
-        "size": 'small' | 'medium' | 'large';
-        /**
-          * Is the form loading
-         */
-        "state": CheckoutState;
-        /**
-          * Draws the button full-width
-         */
-        "text": string;
-    }
     interface CeSwitch {
         /**
           * Draws the switch in a checked state.
@@ -1295,12 +1269,6 @@ declare global {
         prototype: HTMLCeStripePaymentRequestElement;
         new (): HTMLCeStripePaymentRequestElement;
     };
-    interface HTMLCeSubmitElement extends Components.CeSubmit, HTMLStencilElement {
-    }
-    var HTMLCeSubmitElement: {
-        prototype: HTMLCeSubmitElement;
-        new (): HTMLCeSubmitElement;
-    };
     interface HTMLCeSwitchElement extends Components.CeSwitch, HTMLStencilElement {
     }
     var HTMLCeSwitchElement: {
@@ -1367,7 +1335,6 @@ declare global {
         "ce-spinner": HTMLCeSpinnerElement;
         "ce-stripe-element": HTMLCeStripeElementElement;
         "ce-stripe-payment-request": HTMLCeStripePaymentRequestElement;
-        "ce-submit": HTMLCeSubmitElement;
         "ce-switch": HTMLCeSwitchElement;
         "ce-tag": HTMLCeTagElement;
         "ce-tooltip": HTMLCeTooltipElement;
@@ -2372,32 +2339,6 @@ declare namespace LocalJSX {
          */
         "theme"?: string;
     }
-    interface CeSubmit {
-        /**
-          * Checkout session object
-         */
-        "checkoutSession"?: CheckoutSession;
-        /**
-          * Draws the button full-width
-         */
-        "full"?: boolean;
-        /**
-          * Total
-         */
-        "showTotal"?: boolean;
-        /**
-          * The button's size.
-         */
-        "size"?: 'small' | 'medium' | 'large';
-        /**
-          * Is the form loading
-         */
-        "state"?: CheckoutState;
-        /**
-          * Draws the button full-width
-         */
-        "text"?: string;
-    }
     interface CeSwitch {
         /**
           * Draws the switch in a checked state.
@@ -2526,7 +2467,6 @@ declare namespace LocalJSX {
         "ce-spinner": CeSpinner;
         "ce-stripe-element": CeStripeElement;
         "ce-stripe-payment-request": CeStripePaymentRequest;
-        "ce-submit": CeSubmit;
         "ce-switch": CeSwitch;
         "ce-tag": CeTag;
         "ce-tooltip": CeTooltip;
@@ -2578,7 +2518,6 @@ declare module "@stencil/core" {
             "ce-spinner": LocalJSX.CeSpinner & JSXBase.HTMLAttributes<HTMLCeSpinnerElement>;
             "ce-stripe-element": LocalJSX.CeStripeElement & JSXBase.HTMLAttributes<HTMLCeStripeElementElement>;
             "ce-stripe-payment-request": LocalJSX.CeStripePaymentRequest & JSXBase.HTMLAttributes<HTMLCeStripePaymentRequestElement>;
-            "ce-submit": LocalJSX.CeSubmit & JSXBase.HTMLAttributes<HTMLCeSubmitElement>;
             "ce-switch": LocalJSX.CeSwitch & JSXBase.HTMLAttributes<HTMLCeSwitchElement>;
             "ce-tag": LocalJSX.CeTag & JSXBase.HTMLAttributes<HTMLCeTagElement>;
             "ce-tooltip": LocalJSX.CeTooltip & JSXBase.HTMLAttributes<HTMLCeTooltipElement>;

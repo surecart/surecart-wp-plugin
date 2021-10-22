@@ -1,11 +1,11 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-describe('ce-select-dropdown', () => {
+describe('ce-select', () => {
   it('renders', async () => {
     const page = await newE2EPage();
-    await page.setContent('<ce-select-dropdown></ce-select-dropdown>');
+    await page.setContent('<ce-select></ce-select>');
 
-    const element = await page.find('ce-select-dropdown');
+    const element = await page.find('ce-select');
     expect(element).toHaveClass('hydrated');
   });
 });

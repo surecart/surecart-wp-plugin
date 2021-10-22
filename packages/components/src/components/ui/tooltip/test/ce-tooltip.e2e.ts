@@ -1,11 +1,11 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-describe('presto-tooltip', () => {
+describe('ce-tooltip', () => {
   it('renders', async () => {
     const page = await newE2EPage();
-    await page.setContent('<presto-tooltip></presto-tooltip>');
+    await page.setContent('<ce-tooltip></ce-tooltip>');
 
-    const element = await page.find('presto-tooltip');
+    const element = await page.find('ce-tooltip');
     expect(element).toHaveClass('hydrated');
   });
 });
