@@ -36,23 +36,24 @@ export default {
 		}
 	},
 
-	*selectProductById( id ) {
-		try {
-			const product = yield apiFetch( {
-				path: `products/${ id }`,
-			} );
-			const { entities } = normalizeProduct( product );
-			return yield mergeEntities( entities );
-		} catch ( error ) {
-			console.error( error );
-		}
-	},
+	// maybe not needed.
+	// *selectProductById( id ) {
+	// 	try {
+	// 		const product = yield apiFetch( {
+	// 			path: `products/${ id }`,
+	// 		} );
+	// 		const { entities } = normalizeProduct( product );
+	// 		return yield mergeEntities( entities );
+	// 	} catch ( error ) {
+	// 		console.error( error );
+	// 	}
+	// },
 
 	*selectPricesByIds( ids ) {
 		try {
 			const product = yield apiFetch( {
 				path: `prices`,
-				ids,
+				query: { ids },
 			} );
 			const { entities } = normalizePrices( product );
 			return yield mergeEntities( entities );
