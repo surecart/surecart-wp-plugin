@@ -1,31 +1,31 @@
-import { calculateInitialLineItems, getLineItemPriceIds } from '../index';
+import { calculateInitialLineItems, convertLineItemsToPriceIds, getSessionId } from '../index';
 
-const prices = {
-  product1: {
-    prices: {
-      price1: {
-        quantity: 1,
-        enabled: true,
-      },
-      price2: {
-        quantity: 2,
-        enabled: true,
-      },
-    },
+const prices = [
+  {
+    id: 'price1',
+    product_id: 'product1',
+    quantity: 1,
+    enabled: true,
   },
-  product2: {
-    prices: {
-      price3: {
-        quantity: 3,
-        enabled: true,
-      },
-      price4: {
-        quantity: 4,
-        enabled: true,
-      },
-    },
+  {
+    id: 'price2',
+    product_id: 'product1',
+    quantity: 2,
+    enabled: true,
   },
-};
+  {
+    id: 'price3',
+    product_id: 'product2',
+    quantity: 3,
+    enabled: true,
+  },
+  {
+    id: 'price4',
+    product_id: 'product2',
+    quantity: 4,
+    enabled: true,
+  },
+];
 
 const lineItems = [
   {
@@ -52,7 +52,30 @@ describe('Line items functions', () => {
     expect(calculateInitialLineItems(prices, 'single')).toEqual([{ price_id: 'price1', quantity: 1 }]);
   });
 
-  it('getLineItemPriceIds', () => {
-    expect(getLineItemPriceIds(lineItems)).toEqual(['price1', 'price2']);
+  it('convertLineItemsToPriceIds', () => {
+    expect(convertLineItemsToPriceIds(lineItems)).toEqual(['price1', 'price2']);
+  });
+
+  describe('getSessionId', () => {
+    it('Should be able to refresh', async () => {
+      expect(getSessionId('asdf', { id: 'existing' }, true)).toBe(false);
+    });
+
+    it('Should return the checkout session id if it already exists', async () => {
+      expect(getSessionId('asdf', { id: 'existing' })).toBe('existing');
+    });
+
+    it('Should get the checkout session from the url, first', async () => {
+      delete window.location;
+      window.location = new URL('https://www.example.com?checkout_session=urltest');
+      expect(getSessionId('asdf', {})).toBe('urltest');
+    });
+
+    it('Should get the checkout session from localstorage, second', async () => {
+      jest.spyOn(window.localStorage.__proto__, 'getItem');
+      window.localStorage.__proto__.getItem = jest.fn();
+      getSessionId('asdf', {});
+      expect(localStorage.getItem).toHaveBeenCalled();
+    });
   });
 });

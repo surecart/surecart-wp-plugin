@@ -22,7 +22,7 @@ export class CeTotal {
 
   render() {
     // loading state
-    if (this.loading || !this.checkoutSession?.currency) {
+    if (this.loading) {
       return (
         <ce-line-item>
           <ce-skeleton slot="title" style={{ width: '120px', display: 'inline-block' }}></ce-skeleton>
@@ -31,6 +31,8 @@ export class CeTotal {
         </ce-line-item>
       );
     }
+
+    if (!this.checkoutSession?.currency) return;
 
     return (
       <ce-line-item style={this.size === 'large' ? { '--price-size': 'var(--ce-font-size-x-large)' } : {}}>

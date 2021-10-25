@@ -1,33 +1,14 @@
-import { ProductChoices, RecursivePartial, Product } from '../../types';
+import { RecursivePartial, Product, PriceChoice, Prices } from '../../types';
 
-/**
- * Gets a product's price id by index
- *
- * @param productId string  The product id  (required)
- * @param products ProductChoices  The product choices  (required)
- * @param index number  The index of the product choice
- *
- * @returns string
- */
-export const getProductChoicePriceIdByIndex = (productId: string, products: ProductChoices, index: number = 0) => {
-  return Object.keys(products[productId].prices)[index];
+export const getProductIdsFromPriceChoices = (priceChoices: Array<PriceChoice>) => {
+  return priceChoices.filter(p => p?.enabled !== false).map(p => p.product_id);
 };
 
 /**
  * Gets a product's price id by index
- *
- * @param productId string  The product id  (required)
- * @param products ProductChoices  The product choices  (required)
- * @param index number  The index of the product choice
- *
- * @returns string
  */
-export const getProductChoicePriceByIndex = (productId: string, products: ProductChoices, index: number = 0) => {
-  const id = getProductChoicePriceIdByIndex(productId, products, index);
-  return {
-    id,
-    ...products[productId].prices[id],
-  };
+export const getProductChoicePriceByIndex = (productId: string, priceChoices: Array<PriceChoice>, index: number = 0) => {
+  return priceChoices.filter(price => price.product_id === productId)?.[index];
 };
 
 /**
@@ -36,22 +17,8 @@ export const getProductChoicePriceByIndex = (productId: string, products: Produc
  * @param choices Product choices.
  * @returns Array of ids.
  */
-export const getChoicePrices = (choices: RecursivePartial<ProductChoices>) => {
-  return Object.keys(choices)
-    .map(id => {
-      return Object.keys(choices[id].prices)
-        .filter(priceId => {
-          return choices[id].prices[priceId].enabled;
-        })
-        .map(priceId => {
-          const price = choices[id].prices[priceId];
-          return {
-            id: priceId,
-            quantity: price.quantity || 1,
-          };
-        });
-    })
-    .flat();
+export const getChoicePrices = (choices: Array<PriceChoice>) => {
+  return choices.filter(choice => choice.enabled);
 };
 
 /**
@@ -60,12 +27,7 @@ export const getChoicePrices = (choices: RecursivePartial<ProductChoices>) => {
  * @param product Product.
  * @param choices Product choices.
  */
-export const getAvailablePricesForProduct = (product: RecursivePartial<Product>, choices: RecursivePartial<ProductChoices>) => {
-  const choice = choices[product.id];
-  if (!choice || !Object.keys(choice?.prices || {}).length) {
-    return [];
-  }
-  return (product.prices || []).filter(price => {
-    return choice.prices[price.id]?.enabled && !price.archived;
-  });
+export const getAvailablePricesForProduct = (product: RecursivePartial<Product>, prices: Prices, choices: Array<PriceChoice>) => {
+  const priceIds = choices.filter(p => p?.enabled !== false && p?.product_id === product.id).map(p => p.id);
+  return Object.values(prices || {}).filter(p => (priceIds || []).includes(p.id));
 };

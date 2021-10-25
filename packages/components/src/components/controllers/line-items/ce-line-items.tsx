@@ -1,6 +1,6 @@
 import { Component, h, Prop, Event, EventEmitter } from '@stencil/core';
 
-import { CheckoutSession, CheckoutState, LineItem, LineItemData } from '../../../types';
+import { CheckoutSession, LineItem, LineItemData } from '../../../types';
 import { openWormhole } from 'stencil-wormhole';
 
 @Component({
@@ -10,7 +10,7 @@ import { openWormhole } from 'stencil-wormhole';
 })
 export class CeLineItems {
   @Prop() checkoutSession: CheckoutSession;
-  @Prop() state: CheckoutState;
+  @Prop() loading: boolean;
   @Prop() lineItemData: Array<LineItemData>;
   @Prop() edit: boolean = true;
 
@@ -21,7 +21,7 @@ export class CeLineItems {
   }
 
   render() {
-    if (this.state === 'loading') {
+    if (!!this.loading) {
       return (
         <ce-line-item>
           <ce-skeleton style={{ 'width': '50px', 'height': '50px', '--border-radius': '0' }} slot="image"></ce-skeleton>
@@ -35,7 +35,7 @@ export class CeLineItems {
 
     return (
       <div class="line-items">
-        {this.checkoutSession?.line_items.map(item => {
+        {this.checkoutSession?.line_items?.data.map(item => {
           return (
             <ce-product-line-item
               key={item.id}
@@ -55,4 +55,4 @@ export class CeLineItems {
   }
 }
 
-openWormhole(CeLineItems, ['checkoutSession', 'state', 'lineItemData'], false);
+openWormhole(CeLineItems, ['checkoutSession', 'loading', 'lineItemData'], false);

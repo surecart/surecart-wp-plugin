@@ -11,15 +11,17 @@ declare global {
   }
 }
 
+export type RecursivePartial<T> = {
+  [P in keyof T]?: RecursivePartial<T[P]>;
+};
+
 export interface ChoiceItem extends Object {
   value: string;
   label: string;
 }
+
 export type ChoiceType = 'all' | 'single' | 'multiple';
 
-export type RecursivePartial<T> = {
-  [P in keyof T]?: RecursivePartial<T[P]>;
-};
 export interface Price extends Object {
   id: string;
   name: string;
@@ -38,6 +40,10 @@ export interface Price extends Object {
   metadata: { [key: string]: string };
 }
 
+export type Prices = {
+  [id: string]: Price;
+};
+
 export interface Product extends Object {
   id: string;
   name: string;
@@ -48,6 +54,10 @@ export interface Product extends Object {
   created_at: number;
   updated_at: number;
 }
+
+export type Products = {
+  [id: string]: Product;
+};
 
 export interface Coupon extends Object {
   id: string;
@@ -83,18 +93,11 @@ export interface LineItem extends Object {
   price?: Price;
   price_id: string;
 }
-
-export interface ProductChoices {
-  [id: string]: ProductChoice;
-}
-
-export interface ProductChoice {
-  prices: {
-    [id: string]: {
-      quantity: number;
-      enabled: boolean;
-    };
-  };
+export interface PriceChoice {
+  id: string;
+  product_id: string;
+  quantity: number;
+  enabled: boolean;
 }
 
 export interface Keys extends Object {
@@ -120,7 +123,18 @@ export interface CheckoutSession extends Object {
   discount?: DiscountResponse;
 }
 
-export type lineItems = Array<LineItem>;
+export interface Pagination {
+  count: number;
+  limit: number;
+  page: number;
+  url: string;
+}
+
+export interface lineItems extends Object {
+  object: 'list';
+  pagination: Pagination;
+  data: Array<LineItem>;
+}
 
 export interface Promotion extends Object {
   code: string;
@@ -144,6 +158,16 @@ export interface DiscountResponse extends Object {
 }
 
 export interface PaymentIntent extends Object {
+  id: string;
+  object: string;
+  processor_type: string;
+  external_intent_id: string;
+  external_client_secret: string;
+  created_at: number;
+  updated_at: number;
+}
+
+export interface SetupIntent extends Object {
   id: string;
   object: string;
   processor_type: string;

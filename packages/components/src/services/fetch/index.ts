@@ -3,6 +3,8 @@ import apiFetch from '../../functions/fetch';
 import { addQueryArgs } from '@wordpress/url';
 const path = 'checkout-engine/v1/products/';
 
+import { normalizePrices } from '../../../../blocks/utils/schema';
+
 export const getPricesAndProducts = async ({ ids, active = true }: { ids: Array<string>; active: boolean }) => {
   const prices = (await apiFetch({
     path: addQueryArgs('checkout-engine/v1/prices/', {
@@ -11,29 +13,10 @@ export const getPricesAndProducts = async ({ ids, active = true }: { ids: Array<
     }),
   })) as Array<Price>;
 
-  const products = prices.map(price => {
-    return price.product;
-  });
-
-  let productsResult;
-  const map = new Map();
-  for (const item of products) {
-    if (!map.has(item.id)) {
-      map.set(item.id, true); // set any value to Map
-      productsResult.push({
-        ...item,
-      });
-    }
-  }
-
-  // return normalized products and prices
+  const { entities } = normalizePrices(prices);
   return {
-    products: Array.from(productsResult),
-    prices: prices.map(price => {
-      price.product_id = price.product.id;
-      delete price.product;
-      return price;
-    }),
+    prices: entities.prices,
+    products: entities.products,
   };
 };
 

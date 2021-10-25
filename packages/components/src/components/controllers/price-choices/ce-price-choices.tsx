@@ -1,8 +1,8 @@
 import { Component, h, Prop, Element, Event, EventEmitter, State } from '@stencil/core';
-import { Product, Price, LineItemData, ProductChoices, CheckoutSession, ChoiceType } from '../../../types';
+import { Product, Price, LineItemData, CheckoutSession, ChoiceType, PriceChoice, Prices, Products } from '../../../types';
 import { getSiblings } from './functions';
 import { openWormhole } from 'stencil-wormhole';
-import { getAvailablePricesForProduct, getProductChoicePriceByIndex, getChoicePrices } from '../../../functions/choices';
+import { getAvailablePricesForProduct, getChoicePrices, getProductIdsFromPriceChoices } from '../../../functions/choices';
 import { isPriceInCheckoutSession, isProductInCheckoutSession } from '../../../functions/line-items';
 
 @Component({
@@ -14,8 +14,9 @@ export class CePriceChoices {
   @Element() el: HTMLCePriceChoicesElement;
 
   @Prop() default: string;
-  @Prop() productsChoices: ProductChoices;
-  @Prop() products: Array<Product>;
+  @Prop() priceChoices: Array<PriceChoice>;
+  @Prop() products: Products;
+  @Prop() prices: Prices;
   @Prop() columns: number = 1;
   @Prop() checkoutSession: CheckoutSession;
   @Prop() lineItemData: Array<LineItemData>;
@@ -41,7 +42,7 @@ export class CePriceChoices {
   maybeUpdateSelectedPrices(e: any) {
     if (this.choiceType !== 'single') return;
     if (e.target.checked) {
-      const firstPriceChoice = getProductChoicePriceByIndex(e.target.value, this.productsChoices, 0);
+      const firstPriceChoice = this.priceChoices.filter(price => price.product_id === e.target.value)?.[0];
       this.ceUpdateLineItems.emit([
         {
           price_id: firstPriceChoice.id,
@@ -58,7 +59,7 @@ export class CePriceChoices {
    */
   updateSelectedPrices(e) {
     const choices = getSiblings(e.target);
-    const prices = getChoicePrices(this.productsChoices);
+    const prices = getChoicePrices(this.priceChoices);
     const selectedChoices = Array.from(choices).filter(choice => choice.checked && !choice.disabled);
     const selected = prices
       .filter(price => selectedChoices.find(c => c.value === price.id))
@@ -91,12 +92,13 @@ export class CePriceChoices {
   }
 
   renderProductSelector() {
-    // bail if no products.
-    if (Object.keys(this.productsChoices || {})?.length < 2) return;
+    // bail if no products or only one product
+    const productIds = getProductIdsFromPriceChoices(this.priceChoices);
+    if (productIds?.length < 2) return;
 
     // render loading.
     if (this.loading) {
-      return this.renderLoading(Object.keys(this.productsChoices || {}).length);
+      return this.renderLoading(productIds.length);
     }
 
     // bail if no products.
@@ -106,8 +108,9 @@ export class CePriceChoices {
 
     return (
       <ce-choices label={this.label} class="loaded product-selector" style={{ '--columns': this.columns.toString() }}>
-        {(this.products || []).map(product => {
-          const availablePrices = getAvailablePricesForProduct(product, this.productsChoices);
+        {Object.keys(this.products || {}).map(id => {
+          const product = this.products[id];
+          const availablePrices = getAvailablePricesForProduct(product, this.prices, this.priceChoices);
           if (product.archived) return;
           return (
             <ce-choice
@@ -119,12 +122,15 @@ export class CePriceChoices {
               checked={isProductInCheckoutSession(product, this.checkoutSession)}
             >
               {product.name}
+
               <span slot="description">{product.description}</span>
+
               {availablePrices.length === 1 && (
                 <span slot="price">
                   <ce-format-number type="currency" value={availablePrices[0].amount} currency={availablePrices[0].currency}></ce-format-number>
                 </span>
               )}
+
               {availablePrices.length === 1 && <span slot="per">{availablePrices[0].recurring_interval ? `/ ${availablePrices[0].recurring_interval}` : `once`}</span>}
             </ce-choice>
           );
@@ -138,13 +144,13 @@ export class CePriceChoices {
    */
   renderPriceSelectors() {
     if (this.loading) {
-      const firstProduct = this.productsChoices?.[Object.keys(this.productsChoices)[0]];
-      const prices = Object.keys(firstProduct.prices).filter(priceId => firstProduct.prices[priceId].enabled);
-      return this.renderLoading(prices.length);
+      const productId = this.priceChoices?.[0]?.product_id;
+      const firstProduct = this.priceChoices.filter(price => price.product_id === productId);
+      return this.renderLoading(firstProduct?.length);
     }
 
-    return (this.products || []).map(product => {
-      if (!product || !product?.prices) return;
+    return Object.keys(this.products || {}).map(id => {
+      const product = this.products[id];
       // only if product is selected
       if (isProductInCheckoutSession(product, this.checkoutSession)) {
         return this.renderPriceSelector(product);
@@ -158,7 +164,7 @@ export class CePriceChoices {
    * @returns
    */
   renderPriceSelector(product: Product) {
-    const prices = getAvailablePricesForProduct(product, this.productsChoices);
+    const prices = getAvailablePricesForProduct(product, this.prices, this.priceChoices);
     if (!prices || prices?.length < 2) return;
 
     let label = 'Choose';
@@ -199,7 +205,7 @@ export class CePriceChoices {
     }
 
     // we need products to select.
-    if (!Object.keys(this.productsChoices || {}).length) {
+    if (!this?.priceChoices?.length) {
       return;
     }
 
@@ -214,4 +220,4 @@ export class CePriceChoices {
   }
 }
 
-openWormhole(CePriceChoices, ['currencyCode', 'products', 'productsChoices', 'checkoutSession', 'loading', 'busy', 'choiceType'], false);
+openWormhole(CePriceChoices, ['currencyCode', 'products', 'prices', 'priceChoices', 'checkoutSession', 'loading', 'busy', 'choiceType'], false);

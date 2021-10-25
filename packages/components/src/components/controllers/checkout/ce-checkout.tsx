@@ -1,5 +1,5 @@
 import { Component, h, Prop, Element, State, Watch, Listen } from '@stencil/core';
-import { Price, Product, Coupon, CheckoutSession, Customer, LineItemData, ProductChoices, Keys, ChoiceType } from '../../../types';
+import { Price, Product, Coupon, CheckoutSession, Customer, LineItemData, Keys, ChoiceType, PriceChoice } from '../../../types';
 import { handleInputs } from './functions';
 import { getSessionId } from './helpers/session';
 import { getPricesAndProducts } from '../../../services/fetch';
@@ -23,8 +23,8 @@ export class CECheckout {
   /** Element */
   @Element() el: HTMLElement;
 
-  /** Pass an array of products */
-  @Prop() products: ProductChoices;
+  /** An array of prices to pre-fill in the form. */
+  @Prop({ attribute: 'prices' }) priceChoices: Array<PriceChoice>;
 
   /** Give a user a choice to switch session prices */
   @Prop({ attribute: 'choice-type' }) choiceType: ChoiceType = 'all';
@@ -53,31 +53,17 @@ export class CECheckout {
   /** Translation object. */
   @Prop() i18n: Object;
 
-  /** Stripe publishable key */
-  @Prop() stripePublishableKey: string;
-
   /** Stores fetched prices for use throughout component.  */
   @State() prices: Array<Price>;
 
-  /** Stores fetched prices for use throughout component.  */
-  @State() productsEntities: Array<Product>;
-
-  /** Stores the users's selected price ids. */
-  @State() selectedchoicePriceIds: Set<string>;
+  /** Stores fetched products for use throughout component.  */
+  @State() products: Array<Product>;
 
   /** Stores the customer. */
   @State() customer: Customer;
 
   /** Loading states for different parts of the form. */
   @State() checkoutState = checkoutMachine.initialState;
-
-  @State() loading: boolean = true;
-
-  /** Calculation state for totals. */
-  @State() calculating: boolean;
-
-  /** State for form submission */
-  @State() submitting: boolean;
 
   /** Stores the current CheckoutSession */
   @State() checkoutSession: CheckoutSession;
@@ -104,9 +90,9 @@ export class CECheckout {
   @State() updateSession: CheckoutSession;
 
   /** Watch choices and fetch if changed */
-  @Watch('products')
-  async handleChoicesChange() {
-    this.fetchProducts();
+  @Watch('priceChoices')
+  async handlePricesChange() {
+    this.fetchPrices();
   }
 
   @Listen('cePaid')
@@ -130,7 +116,6 @@ export class CECheckout {
     const { send } = this._stateService;
     try {
       send('FETCH');
-      this.calculating = true;
       this.checkoutSession = await createOrUpdateSession({
         id: this.checkoutSession.id,
         data: {
@@ -142,7 +127,6 @@ export class CECheckout {
       send('REJECT');
     } finally {
       send('REJECT');
-      this.calculating = false;
     }
   }
 
@@ -162,7 +146,7 @@ export class CECheckout {
   @Listen('ceUpdateLineItem')
   handleLineItemChange(e) {
     const { id, quantity } = e.detail;
-    this.lineItemData = this.checkoutSession.line_items.map(item => {
+    this.lineItemData = this.checkoutSession?.line_items?.data.map(item => {
       return {
         price_id: item.price.id,
         quantity: item.id === id ? quantity : item.quantity,
@@ -228,7 +212,6 @@ export class CECheckout {
         return;
       }
       this.handleErrorResponse(e);
-      this.calculating = false;
     }
   }
 
@@ -263,8 +246,8 @@ export class CECheckout {
     } catch (e) {
       send('REJECT');
       this.handleErrorResponse(e);
-      window.localStorage.removeItem(this.el.id);
-      this.getOrCreateSession();
+      // window.localStorage.removeItem(this.el.id);
+      // this.getOrCreateSession();
     }
   }
 
@@ -274,17 +257,20 @@ export class CECheckout {
     this.createOrUpdateSession();
   }
 
-  @Watch('products')
+  @Watch('priceChoices')
   async createOrUpdateSession() {
     const { send } = this._stateService;
     const id = getSessionId(this.el.id, this.checkoutSession, true);
-    const line_items = calculateInitialLineItems(this.products, this.choiceType);
+    const line_items = calculateInitialLineItems(this.priceChoices, this.choiceType);
 
-    if (!line_items) {
+    send('FETCH');
+
+    if (!line_items?.length) {
+      send('RESOLVE');
       return;
     }
+
     try {
-      send('FETCH');
       this.checkoutSession = (await createOrUpdateSession({
         id,
         data: {
@@ -292,12 +278,13 @@ export class CECheckout {
           line_items,
         },
       })) as CheckoutSession;
+      console.log(this.checkoutSession);
       send('RESOLVE');
     } catch (e) {
       send('REJECT');
       this.handleErrorResponse(e);
       window.localStorage.removeItem(this.el.id);
-      this.getOrCreateSession();
+      // this.getOrCreateSession();
     }
   }
 
@@ -339,7 +326,7 @@ export class CECheckout {
     Universe.create(this, this.state());
 
     // fetch products
-    this.fetchProducts();
+    this.fetchPrices();
     // get or create session
     this.createOrUpdateSession();
   }
@@ -369,7 +356,7 @@ export class CECheckout {
         id,
         data: {
           currency: this.currencyCode || 'usd',
-          line_items: calculateInitialLineItems(this.products, this.choiceType),
+          line_items: calculateInitialLineItems(this.priceChoices, this.choiceType),
         },
       })) as CheckoutSession;
       send('RESOLVE');
@@ -377,8 +364,13 @@ export class CECheckout {
       send('REJECT');
       this.handleErrorResponse(e);
       window.localStorage.removeItem(this.el.id);
-      this.getOrCreateSession();
+      // this.getOrCreateSession();
     }
+  }
+
+  @Watch('priceChoices')
+  test() {
+    console.log(this.priceChoices);
   }
 
   /**
@@ -400,13 +392,14 @@ export class CECheckout {
   //   }
   // }
 
-  async fetchProducts() {
+  async fetchPrices() {
     try {
       const { products, prices } = await getPricesAndProducts({
         active: true,
-        ids: getChoicePrices(this.products).map(p => p.id),
+        ids: getChoicePrices(this.priceChoices).map(p => p.id),
       });
-      console.log({ products, prices });
+      this.products = products;
+      this.prices = prices;
     } catch (e) {
       this.handleErrorResponse(e);
     } finally {
@@ -420,14 +413,14 @@ export class CECheckout {
       state: this.checkoutState.value,
       loading: this.checkoutState.value === 'loading',
       busy: this.checkoutState.value === 'updating',
+      empty: !['loading', 'updating'].includes(this.checkoutState.value) && !this.checkoutSession?.line_items?.pagination?.count,
       keys: this.keys,
       error: this.error,
       checkoutSession: this.checkoutSession,
-      stripePublishableKey: this.stripePublishableKey,
       choiceType: this.choiceType,
       prices: this.prices,
-      products: this.productsEntities,
-      productsChoices: this.products,
+      products: this.products,
+      priceChoices: this.priceChoices,
       lineItemData: this.lineItemData,
       currencyCode: this.currencyCode,
     };

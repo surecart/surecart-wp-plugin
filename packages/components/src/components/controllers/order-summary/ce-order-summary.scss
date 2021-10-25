@@ -10,6 +10,10 @@
   position: relative;
 }
 
+.summary__content.hidden {
+  display: none;
+}
+
 ::slotted(*) {
   margin: 4px 0 !important;
 }

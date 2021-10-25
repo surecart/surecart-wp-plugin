@@ -1,24 +1,46 @@
-import { ProductChoices, RecursivePartial, ChoiceType, lineItems, Product, CheckoutSession, Price } from '../../types';
-import { getChoicePrices } from '../choices';
+import { getQueryArg } from '@wordpress/url';
+import { RecursivePartial, ChoiceType, lineItems, Product, CheckoutSession, Price, PriceChoice, LineItemData } from '../../types';
+
+// Get only enabled price choices.
+export const getEnabledPriceChoices = (choices: Array<PriceChoice>): Array<PriceChoice> => {
+  return (choices || []).filter(choice => choice?.enabled !== false);
+};
+
+// convert price choice to line item data.
+export const convertPriceChoiceToLineItemData = (choice: PriceChoice): LineItemData => {
+  return {
+    price_id: choice.id,
+    quantity: choice.quantity,
+  };
+};
+
+// convert line items to price ids
+export const convertLineItemsToPriceIds = (lineItems: RecursivePartial<lineItems>): Array<string> => {
+  return (lineItems?.data || []).map(item => item.price.id);
+};
 
 /**
  * Calculates the initial line items for the session.
  */
-export const calculateInitialLineItems = (choices: RecursivePartial<ProductChoices>, choiceType: ChoiceType) => {
+export const calculateInitialLineItems = (choices: Array<PriceChoice>, choiceType: ChoiceType) => {
+  // check the url query first.
+  const prices = (getQueryArg(window.location.href, 'prices') as unknown) as Array<PriceChoice>;
+  if (prices) {
+    return prices.map(convertPriceChoiceToLineItemData);
+  }
+
+  // get prices from choices.
+  return getInitialChoiceLineItems(choices, choiceType);
+};
+
+/**
+ * Get the initial choice line items.
+ */
+export const getInitialChoiceLineItems = (choices: Array<PriceChoice>, choiceType: ChoiceType) => {
   if (choiceType === 'all') {
-    return getChoicePrices(choices).map(choice => {
-      return {
-        price_id: choice.id,
-        quantity: choice?.quantity || 1,
-      };
-    });
+    return getEnabledPriceChoices(choices).map(convertPriceChoiceToLineItemData);
   } else {
-    return [getChoicePrices(choices)?.[0]].map(choice => {
-      return {
-        price_id: choice.id,
-        quantity: choice?.quantity || 1,
-      };
-    });
+    return [getEnabledPriceChoices(choices).map(convertPriceChoiceToLineItemData)?.[0]];
   }
 };
 
@@ -28,22 +50,56 @@ export const calculateInitialLineItems = (choices: RecursivePartial<ProductChoic
  * @returns
  */
 export const getLineItemPriceIds = (line_items: RecursivePartial<lineItems>) => {
-  return (line_items || []).map(item => item.price.id);
+  return (line_items?.data || []).map(item => item.price.id);
+};
+
+export const getLineItemPrices = (line_items: RecursivePartial<lineItems>) => {
+  return (line_items?.data || []).map(item => item.price);
 };
 
 /**
  * Is this product in the checkout session?
  */
 export const isProductInCheckoutSession = (product: RecursivePartial<Product>, checkoutSession: CheckoutSession) => {
-  const priceIds = getLineItemPriceIds(checkoutSession?.line_items);
-  if (!priceIds) return false;
-  return !!(product?.prices || []).find(price => priceIds.find(id => id == price?.id));
+  const prices = getLineItemPrices(checkoutSession?.line_items);
+  if (!prices?.length) return false;
+  return !!prices.find(price => price?.product?.id === product.id);
 };
 
 /**
  * Is the price in a checkout session
  */
 export const isPriceInCheckoutSession = (price: RecursivePartial<Price>, checkoutSession: CheckoutSession) => {
-  const priceIds = getLineItemPriceIds(checkoutSession?.line_items);
+  const priceIds = getLineItemPriceIds(checkoutSession?.line_items?.data);
   return !!priceIds.find(id => price.id === id);
+};
+
+/**
+ * Attempt to get the session id
+ *
+ * @param formId The form id.
+ * @param checkoutSession The checkoutSession
+ * @param refresh Should we refresh?
+ *
+ * @returns string
+ */
+export const getSessionId = (formId, checkoutSession, refresh = false) => {
+  // if we want to get a fresh session, skip
+  if (refresh === true) {
+    return false;
+  }
+
+  // if we already have an ID set, return that:
+  if (checkoutSession?.id) {
+    return checkoutSession.id;
+  }
+
+  // check the url query first
+  const urlId = getQueryArg(window.location.href, 'checkout_session');
+  if (urlId) {
+    return urlId;
+  }
+
+  // check id in localstorage
+  return window.localStorage.getItem(formId);
 };

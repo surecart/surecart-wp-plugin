@@ -23,7 +23,7 @@ import * as templates from '../../templates';
 import Setup from '../checkout/components/Setup';
 
 export default function edit( { clientId, attributes, setAttributes } ) {
-	const { align, className, products, font_size, choice_type } = attributes;
+	const { align, className, prices, font_size, choice_type } = attributes;
 	const blockCount = useSelect( ( select ) =>
 		select( blockEditorStore ).getBlockCount( clientId )
 	);
@@ -108,7 +108,7 @@ export default function edit( { clientId, attributes, setAttributes } ) {
 							alignment={ align }
 							className={ className }
 							choiceType={ choice_type }
-							products={ products }
+							priceChoices={ prices }
 						>
 							<InnerBlocks
 								allowedBlocks={ ALLOWED_BLOCKS }

@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { CheckoutSession, CheckoutState, ChoiceItem, ChoiceType, Coupon, Keys, LineItemData, Product, ProductChoices } from "./types";
+import { CheckoutSession, ChoiceItem, ChoiceType, Coupon, Keys, LineItemData, PriceChoice, Prices, Products } from "./types";
 export namespace Components {
     interface CeAlert {
         /**
@@ -180,13 +180,9 @@ export namespace Components {
          */
         "lineItemData": Array<LineItemData>;
         /**
-          * Pass an array of products
+          * An array of prices to pre-fill in the form.
          */
-        "products": ProductChoices;
-        /**
-          * Stripe publishable key
-         */
-        "stripePublishableKey": string;
+        "priceChoices": Array<PriceChoice>;
         /**
           * Where to go on success
          */
@@ -576,7 +572,7 @@ export namespace Components {
         "checkoutSession": CheckoutSession;
         "edit": boolean;
         "lineItemData": Array<LineItemData>;
-        "state": CheckoutState;
+        "loading": boolean;
     }
     interface CeMenu {
     }
@@ -605,7 +601,10 @@ export namespace Components {
         "value": string;
     }
     interface CeOrderSummary {
-        "state": CheckoutState;
+        "calculating": boolean;
+        "checkoutSession": CheckoutSession;
+        "empty": boolean;
+        "loading": boolean;
     }
     interface CePayment {
         /**
@@ -650,8 +649,9 @@ export namespace Components {
         "label": string;
         "lineItemData": Array<LineItemData>;
         "loading": boolean;
-        "products": Array<Product>;
-        "productsChoices": ProductChoices;
+        "priceChoices": Array<PriceChoice>;
+        "prices": Prices;
+        "products": Products;
     }
     interface CePriceInput {
         /**
@@ -1519,13 +1519,9 @@ declare namespace LocalJSX {
          */
         "lineItemData"?: Array<LineItemData>;
         /**
-          * Pass an array of products
+          * An array of prices to pre-fill in the form.
          */
-        "products"?: ProductChoices;
-        /**
-          * Stripe publishable key
-         */
-        "stripePublishableKey"?: string;
+        "priceChoices"?: Array<PriceChoice>;
         /**
           * Where to go on success
          */
@@ -1955,8 +1951,8 @@ declare namespace LocalJSX {
         "checkoutSession"?: CheckoutSession;
         "edit"?: boolean;
         "lineItemData"?: Array<LineItemData>;
+        "loading"?: boolean;
         "onCeUpdateLineItem"?: (event: CustomEvent<{ id: string; amount: number }>) => void;
-        "state"?: CheckoutState;
     }
     interface CeMenu {
         "onCeSelect"?: (event: CustomEvent<{ item: HTMLCeMenuItemElement }>) => void;
@@ -1978,7 +1974,10 @@ declare namespace LocalJSX {
         "value"?: string;
     }
     interface CeOrderSummary {
-        "state"?: CheckoutState;
+        "calculating"?: boolean;
+        "checkoutSession"?: CheckoutSession;
+        "empty"?: boolean;
+        "loading"?: boolean;
     }
     interface CePayment {
         /**
@@ -2031,8 +2030,9 @@ declare namespace LocalJSX {
           * Update line items event.
          */
         "onCeUpdateLineItems"?: (event: CustomEvent<Array<LineItemData>>) => void;
-        "products"?: Array<Product>;
-        "productsChoices"?: ProductChoices;
+        "priceChoices"?: Array<PriceChoice>;
+        "prices"?: Prices;
+        "products"?: Products;
     }
     interface CePriceInput {
         /**
