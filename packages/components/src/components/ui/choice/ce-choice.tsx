@@ -27,7 +27,7 @@ export class CEChoice {
   @Prop() name: string;
 
   /** The choice value */
-  @Prop() value: string;
+  @Prop({ reflect: true }) value: string;
 
   /** The choice name attribute */
   @Prop() type: 'radio' | 'checkbox' = 'radio';

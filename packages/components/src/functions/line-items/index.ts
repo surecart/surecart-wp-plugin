@@ -19,6 +19,26 @@ export const convertLineItemsToPriceIds = (lineItems: RecursivePartial<lineItems
   return (lineItems?.data || []).map(item => item.price.id);
 };
 
+export const convertLineItemsToLineItemData = (
+  lineItems: RecursivePartial<lineItems>,
+): Array<{
+  price_id: string;
+  quantity: number;
+}> => {
+  return (lineItems?.data || []).map(item => {
+    return {
+      price_id: item.price.id,
+      quantity: item.quantity,
+    };
+  });
+};
+
+export const addLineItem = (lineItems: RecursivePartial<lineItems>, data: { price_id: string; quantity: number }) => {
+  const lineItemData = convertLineItemsToLineItemData(lineItems);
+  const index = lineItemData.findIndex(item => item.price_id === data.price_id);
+  lineItemData[index] = data;
+  return lineItemData;
+};
 /**
  * Calculates the initial line items for the session.
  */
@@ -70,7 +90,7 @@ export const isProductInCheckoutSession = (product: RecursivePartial<Product>, c
  * Is the price in a checkout session
  */
 export const isPriceInCheckoutSession = (price: RecursivePartial<Price>, checkoutSession: CheckoutSession) => {
-  const priceIds = getLineItemPriceIds(checkoutSession?.line_items?.data);
+  const priceIds = getLineItemPriceIds(checkoutSession?.line_items);
   return !!priceIds.find(id => price.id === id);
 };
 

@@ -39,8 +39,8 @@ describe('ce-checkout', () => {
   //   //     <ce-price-choices></ce-price-choices>
   //   //     <ce-order-summary>
   //   //       <ce-line-items></ce-line-items>
-  //   //       <ce-total class="ce-subtotal" total="subtotal"></ce-total>
-  //   //       <ce-total class="ce-total" total="total"></ce-total>
+  //   //       <ce-line-item-total class="ce-subtotal" total="subtotal"></ce-line-item-total>
+  //   //       <ce-line-item-total class="ce-line-item-total" total="total"></ce-line-item-total>
   //   //     </ce-order-summary>
   //   //   </ce-checkout>
   //   //   `);
@@ -49,7 +49,7 @@ describe('ce-checkout', () => {
   //   //   expect(subtotal).toEqualText('$29.00');
 
   //   //   // has subtotal
-  //   //   const total = await page.find('.ce-total >>> ce-line-item >>> .item__price');
+  //   //   const total = await page.find('.ce-line-item-total >>> ce-line-item >>> .item__price');
   //   //   expect(total).toEqualText('$28.00');
   //   // });
 
@@ -62,8 +62,8 @@ describe('ce-checkout', () => {
   //   //     <ce-coupon-form></ce-coupon-form>
   //   //     <ce-order-summary>
   //   //       <ce-line-items></ce-line-items>
-  //   //       <ce-total class="ce-subtotal" total="subtotal"></ce-total>
-  //   //       <ce-total class="ce-total" total="total"></ce-total>
+  //   //       <ce-line-item-total class="ce-subtotal" total="subtotal"></ce-line-item-total>
+  //   //       <ce-line-item-total class="ce-line-item-total" total="total"></ce-line-item-total>
   //   //     </ce-order-summary>
   //   //   </ce-checkout>
   //   //   `);

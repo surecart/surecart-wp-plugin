@@ -1,9 +1,9 @@
 import { Component, h, Prop, Element, State, Watch, Listen } from '@stencil/core';
-import { Price, Product, Coupon, CheckoutSession, Customer, LineItemData, Keys, ChoiceType, PriceChoice } from '../../../types';
+import { Price, Product, Coupon, CheckoutSession, Customer, LineItemData, Keys, ChoiceType, PriceChoice, LineItemsData } from '../../../types';
 import { handleInputs } from './functions';
 import { getSessionId } from './helpers/session';
 import { getPricesAndProducts } from '../../../services/fetch';
-import { calculateInitialLineItems } from '../../../functions/line-items';
+import { calculateInitialLineItems, convertLineItemsToLineItemData } from '../../../functions/line-items';
 import { getOrCreateSession, createOrUpdateSession, finalizeSession } from '../../../services/session/index';
 import { Universe } from 'stencil-wormhole';
 import { addQueryArgs } from '@wordpress/url';
@@ -89,6 +89,11 @@ export class CECheckout {
   @State() formState: any;
   @State() updateSession: CheckoutSession;
 
+  // stores line items data based on key.
+  @State() lineItemsData: LineItemsData = {
+    choices: [],
+  };
+
   /** Watch choices and fetch if changed */
   @Watch('priceChoices')
   async handlePricesChange() {
@@ -137,21 +142,41 @@ export class CECheckout {
 
   /**
    * Handles line items update.
+   * We use a key to store each line item change separately
+   * then flatten before we send the request. This makes sure
+   * components can't override line_item changes from other components.
    */
   @Listen('ceUpdateLineItems')
   handleUpdateLineItemChange(e) {
-    this.lineItemData = e.detail;
+    if (e.detail.key) {
+      this.lineItemsData = {
+        ...this.lineItemsData,
+        [e.detail.key]: e.detail.value,
+      };
+    }
   }
 
+  /**
+   * Update a specific line item by line item id.
+   */
   @Listen('ceUpdateLineItem')
   handleLineItemChange(e) {
-    const { id, quantity } = e.detail;
-    this.lineItemData = this.checkoutSession?.line_items?.data.map(item => {
-      return {
-        price_id: item.price.id,
-        quantity: item.id === id ? quantity : item.quantity,
-      };
-    });
+    const { id, data } = e.detail;
+    const line_item = this.checkoutSession.line_items.data.find(item => item.id === id);
+    if (!line_item?.id) return;
+    const price_id = line_item.price.id;
+    const lineItemData = convertLineItemsToLineItemData(this.checkoutSession.line_items);
+    this.updateSessionLineItems(
+      lineItemData.map(item => {
+        if (item.price_id === price_id) {
+          item = {
+            ...item,
+            ...data,
+          };
+        }
+        return item;
+      }),
+    );
   }
 
   /** Update form state when form data changes */
@@ -227,11 +252,7 @@ export class CECheckout {
     this.setState('RESOLVE');
   }
 
-  /**
-   * Update checkout session on server when it changes here
-   */
-  @Watch('lineItemData')
-  async handleLineItemsChange() {
+  async updateSessionLineItems(line_items) {
     const { send } = this._stateService;
     try {
       send('FETCH');
@@ -239,16 +260,20 @@ export class CECheckout {
         id: this.checkoutSession.id,
         data: {
           currency: this.currencyCode || 'usd',
-          line_items: this.lineItemData,
+          line_items,
         },
       })) as CheckoutSession;
       send('RESOLVE');
     } catch (e) {
       send('REJECT');
       this.handleErrorResponse(e);
-      // window.localStorage.removeItem(this.el.id);
-      // this.getOrCreateSession();
+      window.localStorage.removeItem(this.el.id);
     }
+  }
+
+  @Watch('lineItemsData')
+  async handleLineItemsDataChange(val) {
+    this.updateSessionLineItems(Object.values(val || {}).flat());
   }
 
   @Watch('formState')

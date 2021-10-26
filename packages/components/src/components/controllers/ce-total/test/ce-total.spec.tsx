@@ -7,6 +7,12 @@ describe('ce-total', () => {
       components: [CeTotal],
       html: `<ce-total></ce-total>`,
     });
-    expect(page.root).toMatchSnapshot();
+    expect(page.root).toEqualHtml(`
+      <ce-total>
+        <mock:shadow-root>
+          <slot></slot>
+        </mock:shadow-root>
+      </ce-total>
+    `);
   });
 });

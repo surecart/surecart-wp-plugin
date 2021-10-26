@@ -41,7 +41,7 @@ export default ( { className, attributes, setAttributes } ) => {
 					<PanelRow>
 						<ToggleControl
 							label={ __(
-								'Append Total to Button Text',
+								'Show total in button text.',
 								'checkout-engine'
 							) }
 							checked={ show_total }
@@ -53,7 +53,7 @@ export default ( { className, attributes, setAttributes } ) => {
 					<PanelRow>
 						<SelectControl
 							label={ __( 'Size', 'checkout_engine' ) }
-							value={ size } // e.g: value = [ 'a', 'c' ]
+							value={ size }
 							onChange={ ( size ) => {
 								setAttributes( { size } );
 							} }
@@ -96,6 +96,12 @@ export default ( { className, attributes, setAttributes } ) => {
 					withoutInteractiveFormatting
 					allowedFormats={ [ 'core/bold', 'core/italic' ] }
 				/>
+				{ show_total && (
+					<span>
+						{ '\u00A0' }
+						<ce-total></ce-total>
+					</span>
+				) }
 			</CeButton>
 		</div>
 	);

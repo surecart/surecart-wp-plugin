@@ -1,6 +1,5 @@
 import { Component, h, Prop } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
-import { CheckoutSession } from '../../../types';
 
 @Component({
   tag: 'ce-order-summary',
@@ -8,14 +7,9 @@ import { CheckoutSession } from '../../../types';
   shadow: true,
 })
 export class CEOrderSummary {
-  @Prop() calculating: boolean;
+  @Prop() busy: boolean;
   @Prop() loading: boolean;
   @Prop() empty: boolean;
-  @Prop() checkoutSession: CheckoutSession;
-
-  // isEmpty() {
-  //   return !this.loading && !this.checkoutSession?.line_items?.length;
-  // }
 
   render() {
     return (
@@ -29,10 +23,10 @@ export class CEOrderSummary {
           <slot />
         </div>
         {this.empty && <p>Your cart is empty.</p>}
-        {this.calculating && <ce-block-ui></ce-block-ui>}
+        {this.busy && <ce-block-ui></ce-block-ui>}
       </div>
     );
   }
 }
 
-openWormhole(CEOrderSummary, ['checkoutSession', 'calculating', 'loading', 'empty'], false);
+openWormhole(CEOrderSummary, ['checkoutSession', 'busy', 'loading', 'empty'], false);

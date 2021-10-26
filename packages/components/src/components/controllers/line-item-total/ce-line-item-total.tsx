@@ -1,15 +1,14 @@
 import { Component, h, Prop } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
-import { getFormattedPrice } from '../../../functions/price';
 import { CheckoutSession } from '../../../types';
 
 @Component({
-  tag: 'ce-total',
-  styleUrl: 'ce-total.scss',
+  tag: 'ce-line-item-total',
+  styleUrl: 'ce-line-item-total.scss',
   shadow: true,
 })
-export class CeTotal {
-  @Prop() total: string = 'total';
+export class CeLineItemTotal {
+  @Prop() total: 'total' | 'subtotal' = 'total';
   @Prop() loading: boolean;
   @Prop() checkoutSession: CheckoutSession;
   @Prop() showCurrency: boolean;
@@ -42,11 +41,13 @@ export class CeTotal {
         <span slot="description">
           <slot name="description" />
         </span>
-        <span slot="price">{getFormattedPrice({ amount: this.checkoutSession?.[this.session_key[this.total]], currency: this.checkoutSession?.currency })}</span>
+        <span slot="price">
+          <ce-total total={this.total}></ce-total>
+        </span>
         {this.showCurrency && <span slot="currency">{this.checkoutSession?.currency}</span>}
       </ce-line-item>
     );
   }
 }
 
-openWormhole(CeTotal, ['checkoutSession', 'loading', 'calculating'], false);
+openWormhole(CeLineItemTotal, ['checkoutSession', 'loading', 'calculating'], false);

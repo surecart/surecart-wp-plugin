@@ -11,16 +11,16 @@ wp_head(); ?>
 
 					<ce-divider></ce-divider>
 
-					<ce-total class="ce-subtotal"
+					<ce-line-item-total class="ce-subtotal"
 						total="subtotal">
 						<span slot="description">
 							{{ __('Subtotal', 'checkout_engine') }}
 						</span>
-					</ce-total>
+					</ce-line-item-total>
 
 					<ce-divider></ce-divider>
 
-					<ce-total class="ce-total"
+					<ce-line-item-total class="ce-line-item-total"
 					total="total"
 					size="large"
 					show-currency>
@@ -32,7 +32,7 @@ wp_head(); ?>
 						<span slot="subscription-title">
 							{{ __('Total', 'checkout_engine') }}
 						</span>
-					</ce-total>
+					</ce-line-item-total>
 
 			</ce-order-summary>
 		</ce-purchase>

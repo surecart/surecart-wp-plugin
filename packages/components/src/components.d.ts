@@ -568,6 +568,13 @@ export namespace Components {
          */
         "price": string;
     }
+    interface CeLineItemTotal {
+        "checkoutSession": CheckoutSession;
+        "loading": boolean;
+        "showCurrency": boolean;
+        "size": 'large' | 'medium';
+        "total": 'total' | 'subtotal';
+    }
     interface CeLineItems {
         "checkoutSession": CheckoutSession;
         "edit": boolean;
@@ -601,8 +608,7 @@ export namespace Components {
         "value": string;
     }
     interface CeOrderSummary {
-        "calculating": boolean;
-        "checkoutSession": CheckoutSession;
+        "busy": boolean;
         "empty": boolean;
         "loading": boolean;
     }
@@ -1016,10 +1022,7 @@ export namespace Components {
     }
     interface CeTotal {
         "checkoutSession": CheckoutSession;
-        "loading": boolean;
-        "showCurrency": boolean;
-        "size": 'large' | 'medium';
-        "total": string;
+        "total": 'total' | 'subtotal';
     }
 }
 declare global {
@@ -1142,6 +1145,12 @@ declare global {
     var HTMLCeLineItemElement: {
         prototype: HTMLCeLineItemElement;
         new (): HTMLCeLineItemElement;
+    };
+    interface HTMLCeLineItemTotalElement extends Components.CeLineItemTotal, HTMLStencilElement {
+    }
+    var HTMLCeLineItemTotalElement: {
+        prototype: HTMLCeLineItemTotalElement;
+        new (): HTMLCeLineItemTotalElement;
     };
     interface HTMLCeLineItemsElement extends Components.CeLineItems, HTMLStencilElement {
     }
@@ -1314,6 +1323,7 @@ declare global {
         "ce-format-number": HTMLCeFormatNumberElement;
         "ce-input": HTMLCeInputElement;
         "ce-line-item": HTMLCeLineItemElement;
+        "ce-line-item-total": HTMLCeLineItemTotalElement;
         "ce-line-items": HTMLCeLineItemsElement;
         "ce-menu": HTMLCeMenuElement;
         "ce-menu-divider": HTMLCeMenuDividerElement;
@@ -1947,12 +1957,19 @@ declare namespace LocalJSX {
          */
         "price"?: string;
     }
+    interface CeLineItemTotal {
+        "checkoutSession"?: CheckoutSession;
+        "loading"?: boolean;
+        "showCurrency"?: boolean;
+        "size"?: 'large' | 'medium';
+        "total"?: 'total' | 'subtotal';
+    }
     interface CeLineItems {
         "checkoutSession"?: CheckoutSession;
         "edit"?: boolean;
         "lineItemData"?: Array<LineItemData>;
         "loading"?: boolean;
-        "onCeUpdateLineItem"?: (event: CustomEvent<{ id: string; amount: number }>) => void;
+        "onCeUpdateLineItem"?: (event: CustomEvent<{ id: string; data: Object }>) => void;
     }
     interface CeMenu {
         "onCeSelect"?: (event: CustomEvent<{ item: HTMLCeMenuItemElement }>) => void;
@@ -1974,8 +1991,7 @@ declare namespace LocalJSX {
         "value"?: string;
     }
     interface CeOrderSummary {
-        "calculating"?: boolean;
-        "checkoutSession"?: CheckoutSession;
+        "busy"?: boolean;
         "empty"?: boolean;
         "loading"?: boolean;
     }
@@ -2029,7 +2045,7 @@ declare namespace LocalJSX {
         /**
           * Update line items event.
          */
-        "onCeUpdateLineItems"?: (event: CustomEvent<Array<LineItemData>>) => void;
+        "onCeUpdateLineItems"?: (event: CustomEvent<{ key: string; value: Array<LineItemData> }>) => void;
         "priceChoices"?: Array<PriceChoice>;
         "prices"?: Prices;
         "products"?: Products;
@@ -2420,10 +2436,7 @@ declare namespace LocalJSX {
     }
     interface CeTotal {
         "checkoutSession"?: CheckoutSession;
-        "loading"?: boolean;
-        "showCurrency"?: boolean;
-        "size"?: 'large' | 'medium';
-        "total"?: string;
+        "total"?: 'total' | 'subtotal';
     }
     interface IntrinsicElements {
         "ce-alert": CeAlert;
@@ -2446,6 +2459,7 @@ declare namespace LocalJSX {
         "ce-format-number": CeFormatNumber;
         "ce-input": CeInput;
         "ce-line-item": CeLineItem;
+        "ce-line-item-total": CeLineItemTotal;
         "ce-line-items": CeLineItems;
         "ce-menu": CeMenu;
         "ce-menu-divider": CeMenuDivider;
@@ -2497,6 +2511,7 @@ declare module "@stencil/core" {
             "ce-format-number": LocalJSX.CeFormatNumber & JSXBase.HTMLAttributes<HTMLCeFormatNumberElement>;
             "ce-input": LocalJSX.CeInput & JSXBase.HTMLAttributes<HTMLCeInputElement>;
             "ce-line-item": LocalJSX.CeLineItem & JSXBase.HTMLAttributes<HTMLCeLineItemElement>;
+            "ce-line-item-total": LocalJSX.CeLineItemTotal & JSXBase.HTMLAttributes<HTMLCeLineItemTotalElement>;
             "ce-line-items": LocalJSX.CeLineItems & JSXBase.HTMLAttributes<HTMLCeLineItemsElement>;
             "ce-menu": LocalJSX.CeMenu & JSXBase.HTMLAttributes<HTMLCeMenuElement>;
             "ce-menu-divider": LocalJSX.CeMenuDivider & JSXBase.HTMLAttributes<HTMLCeMenuDividerElement>;

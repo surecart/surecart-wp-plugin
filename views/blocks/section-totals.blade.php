@@ -15,12 +15,12 @@
 
         <?php do_action('checkout-engine/checkout/totals/before'); ?>
 
-        <ce-total class="ce-subtotal"
+        <ce-line-item-total class="ce-subtotal"
             total="subtotal">
             <span slot="description">
                 {{ __('Subtotal', 'checkout_engine') }}
             </span>
-        </ce-total>
+        </ce-line-item-total>
 
         <ce-coupon-form label="{{ __('Add Coupon Code') }}">
             {{ __('Apply Coupon', 'checkout_engine') }}
@@ -28,7 +28,7 @@
 
         <ce-divider></ce-divider>
 
-        <ce-total class="ce-total"
+        <ce-line-item-total class="ce-line-item-total"
             total="total"
             size="large"
             show-currency>
@@ -42,7 +42,7 @@
             <span slot="subscription-title">
                 {{ __('Total Due Today', 'checkout_engine') }}
             </span>
-        </ce-total>
+        </ce-line-item-total>
 
         <?php do_action('checkout_engine/checkout/totals/after'); ?>
 

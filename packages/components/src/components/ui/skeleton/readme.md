@@ -36,7 +36,7 @@
  - [ce-coupon-form](../../controllers/coupon-form)
  - [ce-line-items](../../controllers/line-items)
  - [ce-price-choices](../../controllers/price-chooser)
- - [ce-total](../../controllers/total)
+ - [ce-line-item-total](../../controllers/total)
 
 ### Graph
 ```mermaid
@@ -44,7 +44,7 @@ graph TD;
   ce-coupon-form --> ce-skeleton
   ce-line-items --> ce-skeleton
   ce-price-choices --> ce-skeleton
-  ce-total --> ce-skeleton
+  ce-line-item-total --> ce-skeleton
   style ce-skeleton fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

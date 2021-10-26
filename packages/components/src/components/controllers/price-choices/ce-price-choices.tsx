@@ -1,9 +1,9 @@
-import { Component, h, Prop, Element, Event, EventEmitter, State } from '@stencil/core';
+import { Component, h, Prop, Element, Event, EventEmitter, State, Watch } from '@stencil/core';
 import { Product, Price, LineItemData, CheckoutSession, ChoiceType, PriceChoice, Prices, Products } from '../../../types';
 import { getSiblings } from './functions';
 import { openWormhole } from 'stencil-wormhole';
 import { getAvailablePricesForProduct, getChoicePrices, getProductIdsFromPriceChoices } from '../../../functions/choices';
-import { isPriceInCheckoutSession, isProductInCheckoutSession } from '../../../functions/line-items';
+import { convertLineItemsToLineItemData, isPriceInCheckoutSession, isProductInCheckoutSession } from '../../../functions/line-items';
 
 @Component({
   tag: 'ce-price-choices',
@@ -26,12 +26,12 @@ export class CePriceChoices {
   @Prop() label: string;
   @Prop() choiceType: ChoiceType = 'all';
 
-  @State() selectedProducts: Array<Product>;
+  @State() selectedProductIds: Array<string>;
   @State() selectedPriceIds: Array<string>;
   @State() availablePrices: Array<Price>;
 
   /** Update line items event. */
-  @Event() ceUpdateLineItems: EventEmitter<Array<LineItemData>>;
+  @Event() ceUpdateLineItems: EventEmitter<{ key: string; value: Array<LineItemData> }>;
 
   /** Add line items event. */
   @Event() ceAddLineItems: EventEmitter<Array<LineItemData>>;
@@ -40,16 +40,46 @@ export class CePriceChoices {
    * Maybe automatically add the product if radio type.
    */
   maybeUpdateSelectedPrices(e: any) {
+    const choices = getSiblings(e.target);
+    const selectedChoices = Array.from(choices).filter(choice => choice.checked && !choice.disabled);
+    this.selectedProductIds = selectedChoices.map(choice => choice.value);
+
+    if (!e.target.checked) return;
+    this.maybeAutoChooseSinglePrice(e.target.value);
+  }
+
+  // when product selection changes, we need to maybe remove prices from cart
+  @Watch('selectedProductIds')
+  handleProductSwitch() {
+    const productIds = getProductIdsFromPriceChoices(this.priceChoices);
+    // get productIds that don't exist in the priceChoices
+    const unCheckedProductIds = productIds.filter(productId => !this.selectedProductIds.includes(productId));
+    const priceIdsToRemove = this.priceChoices.filter(choice => unCheckedProductIds.includes(choice.product_id)).map(choice => choice.id);
+    const lineItemData = convertLineItemsToLineItemData(this.checkoutSession.line_items);
+    const updatedLineItems = lineItemData.filter(lineItem => !priceIdsToRemove.includes(lineItem.price_id));
+    if (updatedLineItems.length !== lineItemData.length) {
+      this.ceUpdateLineItems.emit({ key: 'choices', value: updatedLineItems });
+    }
+  }
+
+  maybeAutoChooseSinglePrice(productId: string) {
     if (this.choiceType !== 'single') return;
-    if (e.target.checked) {
-      const firstPriceChoice = this.priceChoices.filter(price => price.product_id === e.target.value)?.[0];
-      this.ceUpdateLineItems.emit([
+    const firstPriceChoice = this.priceChoices.filter(price => price.product_id === productId)?.[0];
+
+    this.ceUpdateLineItems.emit({
+      key: 'choices',
+      value: [
         {
           price_id: firstPriceChoice.id,
           quantity: firstPriceChoice.quantity,
         },
-      ]);
-    }
+      ],
+    });
+  }
+
+  getSelectedChoices(target) {
+    const choices = getSiblings(target);
+    return Array.from(choices).filter(choice => choice.checked && !choice.disabled);
   }
 
   /**
@@ -58,15 +88,23 @@ export class CePriceChoices {
    * @param e
    */
   updateSelectedPrices(e) {
-    const choices = getSiblings(e.target);
+    const selectedChoices = this.getSelectedChoices(e.target);
     const prices = getChoicePrices(this.priceChoices);
-    const selectedChoices = Array.from(choices).filter(choice => choice.checked && !choice.disabled);
     const selected = prices
       .filter(price => selectedChoices.find(c => c.value === price.id))
       .map(price => {
         return { price_id: price.id, quantity: price.quantity };
       });
-    this.ceUpdateLineItems.emit(selected);
+
+    // only emit if changed
+    const existingPriceIds = this.checkoutSession.line_items.data.map(l => l.price.id);
+    const same = selected.every(item => existingPriceIds.includes(item.price_id));
+    if (same) return;
+
+    this.ceUpdateLineItems.emit({
+      key: 'choices',
+      value: selected,
+    });
   }
 
   /**
@@ -102,16 +140,16 @@ export class CePriceChoices {
     }
 
     // bail if no products.
-    if (!this.products?.length) {
+    if (!Object.keys(this.products || {})?.length) {
       return;
     }
 
     return (
       <ce-choices label={this.label} class="loaded product-selector" style={{ '--columns': this.columns.toString() }}>
-        {Object.keys(this.products || {}).map(id => {
-          const product = this.products[id];
+        {(productIds || []).map(id => {
+          const product = this.products?.[id];
+          if (!product || product?.archived) return;
           const availablePrices = getAvailablePricesForProduct(product, this.prices, this.priceChoices);
-          if (product.archived) return;
           return (
             <ce-choice
               class="loaded"
@@ -139,6 +177,19 @@ export class CePriceChoices {
     );
   }
 
+  isProductSelected(product: Product) {
+    if (this.busy) {
+      return this.selectedProductIds?.includes(product.id);
+    }
+
+    // it's selected if it's in the cart
+    if (isProductInCheckoutSession(product, this.checkoutSession)) {
+      return true;
+    }
+
+    return this.selectedProductIds?.includes(product.id);
+  }
+
   /**
    * Render each price selector.
    */
@@ -152,7 +203,7 @@ export class CePriceChoices {
     return Object.keys(this.products || {}).map(id => {
       const product = this.products[id];
       // only if product is selected
-      if (isProductInCheckoutSession(product, this.checkoutSession)) {
+      if (this.isProductSelected(product)) {
         return this.renderPriceSelector(product);
       }
     });

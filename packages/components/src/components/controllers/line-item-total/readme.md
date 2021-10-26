@@ -1,4 +1,4 @@
-# ce-total
+# ce-line-item-total
 
 
 
@@ -26,9 +26,9 @@
 ### Graph
 ```mermaid
 graph TD;
-  ce-total --> ce-line-item
-  ce-total --> ce-skeleton
-  style ce-total fill:#f9f,stroke:#333,stroke-width:4px
+  ce-line-item-total --> ce-line-item
+  ce-line-item-total --> ce-skeleton
+  style ce-line-item-total fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

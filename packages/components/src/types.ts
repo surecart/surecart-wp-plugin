@@ -81,6 +81,10 @@ export interface LineItemData extends Object {
   quantity: number;
 }
 
+export type LineItemsData = {
+  [id: string]: Array<LineItemData>;
+};
+
 export interface LineItem extends Object {
   id?: string;
   name: string;

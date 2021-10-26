@@ -14,10 +14,10 @@ export class CeLineItems {
   @Prop() lineItemData: Array<LineItemData>;
   @Prop() edit: boolean = true;
 
-  @Event() ceUpdateLineItem: EventEmitter<{ id: string; amount: number }>;
+  @Event() ceUpdateLineItem: EventEmitter<{ id: string; data: Object }>;
 
-  updateQuantity(item: LineItem, amount: number) {
-    this.ceUpdateLineItem.emit({ id: item.id, amount });
+  updateQuantity(item: LineItem, quantity: number) {
+    this.ceUpdateLineItem.emit({ id: item.id, data: { quantity } });
   }
 
   render() {

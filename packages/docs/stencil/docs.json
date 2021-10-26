@@ -3731,7 +3731,7 @@
         "ce-coupon-form",
         "ce-line-items",
         "ce-product-line-item",
-        "ce-total"
+        "ce-line-item-total"
       ],
       "dependencies": [],
       "dependencyGraph": {
@@ -3744,7 +3744,7 @@
         "ce-product-line-item": [
           "ce-line-item"
         ],
-        "ce-total": [
+        "ce-line-item-total": [
           "ce-line-item"
         ]
       }
@@ -6049,7 +6049,7 @@
         "ce-coupon-form",
         "ce-line-items",
         "ce-price-choices",
-        "ce-total"
+        "ce-line-item-total"
       ],
       "dependencies": [],
       "dependencyGraph": {
@@ -6062,7 +6062,7 @@
         "ce-price-choices": [
           "ce-skeleton"
         ],
-        "ce-total": [
+        "ce-line-item-total": [
           "ce-skeleton"
         ]
       }
@@ -7125,10 +7125,10 @@
       }
     },
     {
-      "filePath": "./src/components/controllers/total/ce-total.tsx",
+      "filePath": "./src/components/controllers/total/ce-line-item-total.tsx",
       "encapsulation": "shadow",
-      "tag": "ce-total",
-      "readme": "# ce-total\n\n\n",
+      "tag": "ce-line-item-total",
+      "readme": "# ce-line-item-total\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -7231,7 +7231,7 @@
         "ce-skeleton"
       ],
       "dependencyGraph": {
-        "ce-total": [
+        "ce-line-item-total": [
           "ce-line-item",
           "ce-skeleton"
         ]

@@ -73,7 +73,7 @@ export default function edit( { clientId, attributes, setAttributes } ) {
 						justify-content: center;
 					}
 				` }
-				initialTabName="settings"
+				initialTabName="layout"
 				tabs={ [
 					{
 						name: 'layout',
