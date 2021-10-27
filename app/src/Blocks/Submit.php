@@ -22,15 +22,14 @@ class Submit extends Block {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
-		return \CheckoutEngine::blocks()->render(
-			"blocks/$this->name",
-			[
-				'text'   => $attributes['text'] ?? __( 'Purchase', 'checkout_engine' ),
-				'type'   => $attributes['type'] ?? 'primary',
-				'size'   => $attributes['size'] ?? 'large',
-				'full'   => true,
-				'submit' => true,
-			]
-		);
+		var_dump( $attributes );
+		return '';
+		// return \CheckoutEngine::blocks()->render(
+		// "blocks/$this->name",
+		// [
+		// 'label'       => $attributes['label'] ?? __( 'Email Address', 'checkout_engine' ),
+		// 'description' => $attributes['description'] ?? '',
+		// ]
+		// );
 	}
 }

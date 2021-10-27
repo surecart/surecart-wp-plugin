@@ -77,6 +77,10 @@ export const getLineItemPrices = (line_items: RecursivePartial<lineItems>) => {
   return (line_items?.data || []).map(item => item.price);
 };
 
+export const getLineItemByPriceId = (line_items: RecursivePartial<lineItems>, priceId: string) => {
+  return (line_items?.data || []).find(item => item.price.id === priceId);
+};
+
 /**
  * Is this product in the checkout session?
  */

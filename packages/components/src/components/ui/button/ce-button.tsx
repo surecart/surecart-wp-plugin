@@ -23,7 +23,7 @@ export class CEButton {
   /** Draws the button with a caret for use with dropdowns, popovers, etc. */
   @Prop({ reflect: true }) caret?: boolean = false;
 
-  /** Draws the button with a caret for use with dropdowns, popovers, etc. */
+  /** Draws the button full-width. */
   @Prop({ reflect: true }) full?: boolean = false;
 
   /** Disables the button. */

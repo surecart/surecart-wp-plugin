@@ -108,7 +108,7 @@ export default function edit( { clientId, attributes, setAttributes } ) {
 							alignment={ align }
 							className={ className }
 							choiceType={ choice_type }
-							priceChoices={ prices }
+							prices={ prices }
 						>
 							<InnerBlocks
 								allowedBlocks={ ALLOWED_BLOCKS }

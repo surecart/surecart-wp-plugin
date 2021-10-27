@@ -1,9 +1,8 @@
 import { Component, h, Prop, Element, Event, EventEmitter, State, Watch } from '@stencil/core';
 import { Product, Price, LineItemData, CheckoutSession, ChoiceType, PriceChoice, Prices, Products } from '../../../types';
-import { getSiblings } from './functions';
 import { openWormhole } from 'stencil-wormhole';
-import { getAvailablePricesForProduct, getChoicePrices, getProductIdsFromPriceChoices } from '../../../functions/choices';
-import { convertLineItemsToLineItemData, isPriceInCheckoutSession, isProductInCheckoutSession } from '../../../functions/line-items';
+import { getAvailablePricesForProduct, getProductIdsFromPriceChoices } from '../../../functions/choices';
+import { getLineItemByPriceId, isPriceInCheckoutSession, isProductInCheckoutSession } from '../../../functions/line-items';
 
 @Component({
   tag: 'ce-price-choices',
@@ -26,8 +25,9 @@ export class CePriceChoices {
   @Prop() label: string;
   @Prop() choiceType: ChoiceType = 'all';
 
-  @State() selectedProductIds: Array<string>;
-  @State() selectedPriceIds: Array<string>;
+  @State() selectedProductIds: Array<string> = [];
+  @State() selectedPriceIds: Array<string> = [];
+
   @State() availablePrices: Array<Price>;
 
   /** Update line items event. */
@@ -36,74 +36,86 @@ export class CePriceChoices {
   /** Add line items event. */
   @Event() ceAddLineItems: EventEmitter<Array<LineItemData>>;
 
-  /**
-   * Maybe automatically add the product if radio type.
-   */
-  maybeUpdateSelectedPrices(e: any) {
-    const choices = getSiblings(e.target);
-    const selectedChoices = Array.from(choices).filter(choice => choice.checked && !choice.disabled);
-    this.selectedProductIds = selectedChoices.map(choice => choice.value);
+  /** Store the container ref */
+  container: HTMLDivElement;
 
-    if (!e.target.checked) return;
-    this.maybeAutoChooseSinglePrice(e.target.value);
+  /** get selected price ids in UI. */
+  getSelectedPriceIds(): Array<string> {
+    const choices = Array.from(this.container.querySelectorAll('.price-selector ce-choice') as NodeListOf<HTMLCeChoiceElement>);
+    return choices.filter(choice => choice.checked && !choice.disabled).map(choice => choice.value);
   }
 
-  // when product selection changes, we need to maybe remove prices from cart
+  /**  get seleted product ids in UI. */
+  getSelectedProductIds(): Array<string> {
+    const choices = Array.from(this.container.querySelectorAll('.product-selector ce-choice') as NodeListOf<HTMLCeChoiceElement>);
+    return choices.filter(choice => choice.checked && !choice.disabled).map(choice => choice.value);
+  }
+
+  /** Update selected products when choices change. */
+  updateSelectedPrices() {
+    this.selectedPriceIds = this.getSelectedPriceIds();
+  }
+
+  /** Update selected products when choices change. */
+  updateSelectedProducts() {
+    this.selectedProductIds = this.getSelectedProductIds();
+  }
+
   @Watch('selectedProductIds')
   handleProductSwitch() {
-    const productIds = getProductIdsFromPriceChoices(this.priceChoices);
-    // get productIds that don't exist in the priceChoices
-    const unCheckedProductIds = productIds.filter(productId => !this.selectedProductIds.includes(productId));
-    const priceIdsToRemove = this.priceChoices.filter(choice => unCheckedProductIds.includes(choice.product_id)).map(choice => choice.id);
-    const lineItemData = convertLineItemsToLineItemData(this.checkoutSession.line_items);
-    const updatedLineItems = lineItemData.filter(lineItem => !priceIdsToRemove.includes(lineItem.price_id));
-    if (updatedLineItems.length !== lineItemData.length) {
-      this.ceUpdateLineItems.emit({ key: 'choices', value: updatedLineItems });
+    setTimeout(() => {
+      this.selectedPriceIds = this.getSelectedPriceIds();
+      if (this.selectedPriceIds?.length) return;
+      if (this.choiceType !== 'single') return;
+      const firstPrice = this.container.querySelector('.price-selector ce-choice') as HTMLCeChoiceElement;
+      if (firstPrice) firstPrice.checked = true;
+    }, 50);
+  }
+
+  // // if we need to choose a single price, and there are no prices selected,
+  // // select a price
+  // if (!this.selectedPriceIds && this.choiceType === 'single') {
+  //   const firstPrice = this.container.querySelector('.price-selector ce-choice') as HTMLCeChoiceElement;
+  //   firstPrice.checked = true;
+  // }
+
+  // // convert to line item data.
+  // const value = (this.selectedPriceIds || []).map(price_id => {
+  //   const existingLineItem = getLineItemByPriceId(this.checkoutSession.line_items, price_id);
+  //   const quantity = existingLineItem?.quantity || this.priceChoices.find(choice => choice.id === price_id)?.quantity;
+  //   return { price_id, quantity };
+  // });
+  // }
+
+  @Watch('selectedPriceIds')
+  handlePriceSelectionChange(val, prev) {
+    if (!val?.length && !prev?.length) return;
+    if (prev?.length && val?.length) {
+      const unchanged = val.every((v, i) => v === prev[i]) && prev.every((v, i) => v === val[i]);
+      if (unchanged) return;
     }
-  }
+    // if we need to choose a single price, and there are no prices selected,
+    // select a price
+    if (!this.selectedPriceIds?.length && this.choiceType === 'single') {
+      const firstPrice = this.container.querySelector('.price-selector ce-choice') as HTMLCeChoiceElement;
+      if (firstPrice) firstPrice.checked = true;
+    }
 
-  maybeAutoChooseSinglePrice(productId: string) {
-    if (this.choiceType !== 'single') return;
-    const firstPriceChoice = this.priceChoices.filter(price => price.product_id === productId)?.[0];
-
-    this.ceUpdateLineItems.emit({
-      key: 'choices',
-      value: [
-        {
-          price_id: firstPriceChoice.id,
-          quantity: firstPriceChoice.quantity,
-        },
-      ],
+    // convert to line item data.
+    const value = (this.selectedPriceIds || []).map(price_id => {
+      const existingLineItem = getLineItemByPriceId(this.checkoutSession.line_items, price_id);
+      const quantity = existingLineItem?.quantity || this.priceChoices.find(choice => choice.id === price_id)?.quantity;
+      return { price_id, quantity };
     });
-  }
 
-  getSelectedChoices(target) {
-    const choices = getSiblings(target);
-    return Array.from(choices).filter(choice => choice.checked && !choice.disabled);
-  }
-
-  /**
-   * Update selected prices when ce-choice changes
-   *
-   * @param e
-   */
-  updateSelectedPrices(e) {
-    const selectedChoices = this.getSelectedChoices(e.target);
-    const prices = getChoicePrices(this.priceChoices);
-    const selected = prices
-      .filter(price => selectedChoices.find(c => c.value === price.id))
-      .map(price => {
-        return { price_id: price.id, quantity: price.quantity };
-      });
-
-    // only emit if changed
-    const existingPriceIds = this.checkoutSession.line_items.data.map(l => l.price.id);
-    const same = selected.every(item => existingPriceIds.includes(item.price_id));
-    if (same) return;
+    // // only emit if changed
+    // const existingPriceIds = this.checkoutSession.line_items.data.map(l => l.price.id);
+    // const same = selected.every(item => existingPriceIds.includes(item.price_id));
+    // if (same) return;
 
     this.ceUpdateLineItems.emit({
       key: 'choices',
-      value: selected,
+      value,
     });
   }
 
@@ -127,6 +139,13 @@ export class CePriceChoices {
         })}
       </ce-choices>
     );
+  }
+
+  @Watch('loading')
+  @Watch('products')
+  handleProductSelectChanges() {
+    if (this.loading || !Object.keys(this.products || {}).length) return;
+    setTimeout(() => this.updateSelectedProducts());
   }
 
   renderProductSelector() {
@@ -156,7 +175,7 @@ export class CePriceChoices {
               key={product.id}
               value={product.id}
               type={this.choiceType === 'multiple' ? 'checkbox' : 'radio'}
-              onCeChange={e => this.maybeUpdateSelectedPrices(e)}
+              onCeChange={() => this.updateSelectedProducts()}
               checked={isProductInCheckoutSession(product, this.checkoutSession)}
             >
               {product.name}
@@ -177,17 +196,9 @@ export class CePriceChoices {
     );
   }
 
+  /** Is the product selected in the UI */
   isProductSelected(product: Product) {
-    if (this.busy) {
-      return this.selectedProductIds?.includes(product.id);
-    }
-
-    // it's selected if it's in the cart
-    if (isProductInCheckoutSession(product, this.checkoutSession)) {
-      return true;
-    }
-
-    return this.selectedProductIds?.includes(product.id);
+    return this.getSelectedProductIds().includes(product.id);
   }
 
   /**
@@ -233,7 +244,7 @@ export class CePriceChoices {
                 class="loaded"
                 value={price.id}
                 type={this.choiceType === 'multiple' ? 'checkbox' : 'radio'}
-                onCeChange={e => this.updateSelectedPrices(e)}
+                onCeChange={() => this.updateSelectedPrices()}
                 checked={isPriceInCheckoutSession(price, this.checkoutSession)}
               >
                 {price.name}
@@ -262,7 +273,7 @@ export class CePriceChoices {
 
     // render the product selector.
     return (
-      <div class="price-choices">
+      <div class="price-choices" ref={el => (this.container = el as HTMLDivElement)}>
         {this.renderProductSelector()}
         {this.renderPriceSelectors()}
         {this.busy && <ce-block-ui z-index={2}></ce-block-ui>}

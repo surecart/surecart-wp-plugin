@@ -58,7 +58,7 @@ export namespace Components {
          */
         "download": string;
         /**
-          * Draws the button with a caret for use with dropdowns, popovers, etc.
+          * Draws the button full-width.
          */
         "full"?: boolean;
         /**
@@ -182,7 +182,7 @@ export namespace Components {
         /**
           * An array of prices to pre-fill in the form.
          */
-        "priceChoices": Array<PriceChoice>;
+        "prices": Array<PriceChoice>;
         /**
           * Where to go on success
          */
@@ -1403,7 +1403,7 @@ declare namespace LocalJSX {
          */
         "download"?: string;
         /**
-          * Draws the button with a caret for use with dropdowns, popovers, etc.
+          * Draws the button full-width.
          */
         "full"?: boolean;
         /**
@@ -1531,7 +1531,7 @@ declare namespace LocalJSX {
         /**
           * An array of prices to pre-fill in the form.
          */
-        "priceChoices"?: Array<PriceChoice>;
+        "prices"?: Array<PriceChoice>;
         /**
           * Where to go on success
          */

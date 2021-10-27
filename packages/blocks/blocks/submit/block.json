@@ -10,21 +10,20 @@
 			"type": "string",
 			"default": "primary"
 		},
-		"submit": {
-			"type": "boolean",
-			"default": true
-		},
     "show_total": {
 			"type": "boolean",
 			"default": false
 		},
+    "full": {
+			"type": "boolean",
+			"default": false,
+      "source": "attribute",
+      "selector": "ce-button",
+      "attribute": "full"
+		},
 		"size": {
 			"type": "string",
 			"default": "large"
-		},
-		"full": {
-			"type": "boolean",
-			"default": true
 		}
 	}
 }

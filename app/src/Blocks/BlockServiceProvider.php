@@ -52,6 +52,12 @@ class BlockServiceProvider implements ServiceProviderInterface {
 	public function bootstrap( $container ) {
 		// allow our web components in wp_kses contexts.
 		add_filter( 'wp_kses_allowed_html', [ $this, 'ksesComponents' ] );
+		add_filter(
+			'wp_kses_allowed_html',
+			function( $tags ) {
+				return [];
+			}
+		);
 
 		// register our blocks.
 		$this->registerBlocks( $container );
@@ -82,6 +88,11 @@ class BlockServiceProvider implements ServiceProviderInterface {
 		// add slot to defaults.
 		$tags['span']['slot'] = true;
 		$tags['div']['slot']  = true;
+
+		$tags['ce-button'] = [
+			'full'   => true,
+			'submit' => true,
+		];
 
 		return array_merge( $components, $tags );
 	}

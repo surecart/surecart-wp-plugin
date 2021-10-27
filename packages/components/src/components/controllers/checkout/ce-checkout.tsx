@@ -24,7 +24,7 @@ export class CECheckout {
   @Element() el: HTMLElement;
 
   /** An array of prices to pre-fill in the form. */
-  @Prop({ attribute: 'prices' }) priceChoices: Array<PriceChoice>;
+  @Prop() prices: Array<PriceChoice>;
 
   /** Give a user a choice to switch session prices */
   @Prop({ attribute: 'choice-type' }) choiceType: ChoiceType = 'all';
@@ -54,10 +54,10 @@ export class CECheckout {
   @Prop() i18n: Object;
 
   /** Stores fetched prices for use throughout component.  */
-  @State() prices: Array<Price>;
+  @State() pricesEntities: Array<Price>;
 
   /** Stores fetched products for use throughout component.  */
-  @State() products: Array<Product>;
+  @State() productsEntities: Array<Product>;
 
   /** Stores the customer. */
   @State() customer: Customer;
@@ -95,7 +95,7 @@ export class CECheckout {
   };
 
   /** Watch choices and fetch if changed */
-  @Watch('priceChoices')
+  @Watch('prices')
   async handlePricesChange() {
     this.fetchPrices();
   }
@@ -282,11 +282,11 @@ export class CECheckout {
     this.createOrUpdateSession();
   }
 
-  @Watch('priceChoices')
+  @Watch('prices')
   async createOrUpdateSession() {
     const { send } = this._stateService;
     const id = getSessionId(this.el.id, this.checkoutSession, true);
-    const line_items = calculateInitialLineItems(this.priceChoices, this.choiceType);
+    const line_items = calculateInitialLineItems(this.prices, this.choiceType);
 
     send('FETCH');
 
@@ -362,6 +362,7 @@ export class CECheckout {
   }
 
   handleErrorResponse(e) {
+    console.error(e);
     if (e?.code === 'rest_cookie_invalid_nonce') {
       this.expired = true;
       return;
@@ -381,7 +382,7 @@ export class CECheckout {
         id,
         data: {
           currency: this.currencyCode || 'usd',
-          line_items: calculateInitialLineItems(this.priceChoices, this.choiceType),
+          line_items: calculateInitialLineItems(this.prices, this.choiceType),
         },
       })) as CheckoutSession;
       send('RESOLVE');
@@ -393,9 +394,9 @@ export class CECheckout {
     }
   }
 
-  @Watch('priceChoices')
+  @Watch('prices')
   test() {
-    console.log(this.priceChoices);
+    console.log(this.prices);
   }
 
   /**
@@ -418,13 +419,14 @@ export class CECheckout {
   // }
 
   async fetchPrices() {
+    console.log(this.prices);
     try {
       const { products, prices } = await getPricesAndProducts({
         active: true,
-        ids: getChoicePrices(this.priceChoices).map(p => p.id),
+        ids: getChoicePrices(this.prices).map(p => p.id),
       });
-      this.products = products;
-      this.prices = prices;
+      this.productsEntities = products;
+      this.pricesEntities = prices;
     } catch (e) {
       this.handleErrorResponse(e);
     } finally {
@@ -443,9 +445,9 @@ export class CECheckout {
       error: this.error,
       checkoutSession: this.checkoutSession,
       choiceType: this.choiceType,
-      prices: this.prices,
-      products: this.products,
-      priceChoices: this.priceChoices,
+      priceChoices: this.prices,
+      products: this.productsEntities,
+      prices: this.pricesEntities,
       lineItemData: this.lineItemData,
       currencyCode: this.currencyCode,
     };

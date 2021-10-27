@@ -288,6 +288,11 @@ export default ( { attributes, setAttributes, id } ) => {
 													!! priceChoice?.enabled
 												}
 												onChange={ ( checked ) => {
+													const price =
+														productPrices[ index ];
+													const index = prices.indexOf(
+														price
+													);
 													setAttributes( {
 														prices: dotProp.set(
 															prices,

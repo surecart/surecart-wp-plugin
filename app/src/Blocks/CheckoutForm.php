@@ -9,24 +9,11 @@ use CheckoutEngine\Concerns\HasBlockTheme;
  */
 class CheckoutForm extends Block {
 	/**
-	 * Keep track of checkout form instances
-	 * on the page with an id.
-	 *
-	 * @var integer
-	 */
-	private static $instance = 1;
-
-	/**
 	 * Block name
 	 *
 	 * @var string
 	 */
 	protected $name = 'checkout-form';
-
-	public function getClasses( $attributes ) {
-		$block_alignment = isset( $attributes['align'] ) ? sanitize_text_field( $attributes['align'] ) : '';
-		return ! empty( $block_alignment ) ? 'align' . $block_alignment : '';
-	}
 
 	/**
 	 * Render the block
@@ -37,21 +24,37 @@ class CheckoutForm extends Block {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
-		$post = get_post( $attributes['id'] );
-		return \CheckoutEngine::blocks()->render(
-			"blocks/$this->name",
-			[
-				'align'       => $attributes['align'] ?? '',
-				'label'       => $attributes['label'] ?? '',
-				'font_size'   => $attributes['font_size'] ?? 16,
-				'classes'     => $this->getClasses( $attributes ),
-				'description' => $attributes['description'] ?? '',
-				'content'     => $post->post_content,
-				'choices'     => $attributes['choices'] ?? [],
-				'success_url' => $attributes['redirect'] ?? trailingslashit( get_home_url() ) . 'thank-you',
-				'i18n'        => [],
-				'instance'    => self::$instance++,
-			]
-		);
+		static $seen_forms = array();
+
+		if ( empty( $attributes['id'] ) ) {
+			return '';
+		}
+
+		$form = get_post( $attributes['id'] );
+		if ( ! $form || 'ce_form' !== $form->post_type ) {
+			return '';
+		}
+
+		if ( isset( $seen_forms[ $attributes['id'] ] ) ) {
+			// WP_DEBUG_DISPLAY must only be honored when WP_DEBUG. This precedent
+			// is set in `wp_debug_mode()`.
+			$is_debug = defined( 'WP_DEBUG' ) && WP_DEBUG &&
+			defined( 'WP_DEBUG_DISPLAY' ) && WP_DEBUG_DISPLAY;
+
+			return $is_debug ?
+			// translators: Visible only in the front end, this warning takes the place of a faulty block.
+			__( '[block rendering halted]' ) :
+			'';
+		}
+
+		if ( 'publish' !== $form->post_status || ! empty( $form->post_password ) ) {
+			return '';
+		}
+
+		$seen_forms[ $attributes['id'] ] = true;
+
+		$result = do_blocks( $form->post_content );
+		unset( $seen_forms[ $attributes['id'] ] );
+		return $result;
 	}
 }

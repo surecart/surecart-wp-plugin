@@ -1,5 +1,4 @@
-<ce-price-choices default="{{ $default ?? '' }}"
-    type="{{ $type ?? '' }}"
+<ce-price-choices
 	label="{{ $label ?? ''}}"
     columns="{{ $columns ?? 1 }}">
 </ce-price-choices>

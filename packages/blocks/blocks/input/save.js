@@ -26,29 +26,29 @@ export default ( { className, attributes } ) => {
 
 	return (
 		<ce-input
-			class={ className || false }
-			label={ label || false }
-			clearable={ clearable || false }
-			disabled={ disabled || false }
-			help={ help || false }
-			autofocus={ autofocus || false }
-			autocomplete={ autocomplete || false }
-			inputmode={ inputmode || false }
-			max={ max || false }
-			maxlength={ maxlength || false }
-			min={ min || false }
-			minlength={ minlength || false }
-			name={ name || false }
-			placeholder={ placeholder || false }
-			readonly={ readonly || false }
-			showLabel={ showLabel || false }
-			size={ size || false }
-			spellcheck={ spellcheck || false }
-			step={ step || false }
-			togglePassword={ togglePassword }
-			type={ type || false }
-			value={ value || false }
-			required={ required || false }
+			class={ className }
+			label={ label }
+			clearable={ clearable ? '1' : '' }
+			disabled={ disabled ? '1' : '' }
+			help={ help }
+			autofocus={ autofocus ? '1' : '' }
+			autocomplete={ autocomplete ? '1' : '' }
+			inputmode={ inputmode }
+			max={ max }
+			maxlength={ maxlength }
+			min={ min }
+			minlength={ minlength }
+			name={ name }
+			placeholder={ placeholder }
+			readonly={ readonly ? '1' : '' }
+			showLabel={ showLabel ? '1' : '' }
+			size={ size }
+			spellcheck={ spellcheck ? '1' : '' }
+			step={ step }
+			togglePassword={ togglePassword ? '1' : '' }
+			type={ type }
+			value={ value }
+			required={ required ? '1' : '' }
 		></ce-input>
 	);
 };

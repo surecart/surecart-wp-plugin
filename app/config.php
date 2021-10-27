@@ -165,7 +165,7 @@ return [
 		// \CheckoutEngine\Blocks\Email::class,
 		// \CheckoutEngine\Blocks\Name::class,
 		// \CheckoutEngine\Blocks\Input::class,
-		\CheckoutEngine\Blocks\Submit::class,
+		// \CheckoutEngine\Blocks\Submit::class,
 		// \CheckoutEngine\Blocks\FormSection::class,
 		\CheckoutEngine\Blocks\PricingSection::class,
 		\CheckoutEngine\Blocks\PaymentSection::class,
