@@ -1,8 +1,12 @@
 {
 	"name": "checkout-engine/email",
+	"title": "Email",
+  "description": "Displays an email form field.",
 	"category": "layout",
-	"supports": {
-		"reusable": false
+  "keywords": ["email", "mail"],
+  "supports": {
+		"reusable": false,
+		"html": false
 	},
 	"attributes": {
 		"value": {

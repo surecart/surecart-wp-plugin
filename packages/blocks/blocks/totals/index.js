@@ -1,44 +1,22 @@
 /**
- * Internal dependencies
- */
-import edit from './edit';
-import metadata from './block.json';
-
-/**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
 import { currencyDollar as icon } from '@wordpress/icons';
-import { BLOCK_PARENTS } from '../../blocks';
 
 /**
- * Block constants
+ * Internal dependencies
  */
-const { name, category, attributes, supports } = metadata;
+import edit from './edit';
+import save from './save';
+import metadata from './block.json';
 
-const settings = {
-	/* translators: block name */
-	title: __( 'Totals Section', 'checkout_engine' ),
-	/* translators: block description */
-	description: __( 'Display a order total', 'checkout_engine' ),
-	parent: BLOCK_PARENTS,
-	supports: {
-		reusable: false,
-		// multiple: false,
-		html: false,
-	},
+const { name } = metadata;
+
+export { metadata, name };
+
+export const settings = {
 	icon,
-	keywords: [
-		'checkout',
-		'engine',
-		/* translators: block keyword */
-		__( 'shop', 'checkout_engine' ),
-		/* translators: block keyword */
-		__( 'button', 'checkout_engine' ),
-	],
-	attributes,
 	edit,
-	// this is a dynamic block
+	save,
 };
-
-export { name, category, metadata, settings };

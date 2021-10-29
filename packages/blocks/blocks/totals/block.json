@@ -1,6 +1,12 @@
 {
-	"name": "checkout-engine/totals",
-	"category": "layout",
-	"attributes": {
-	}
+  "name": "checkout-engine/totals",
+  "title": "Totals",
+  "description": "Display the session totals.",
+  "category": "layout",
+  "keywords": ["totals", "summary"],
+  "supports": {
+    "reusable": false,
+    "html": false
+  },
+	"attributes": {}
 }

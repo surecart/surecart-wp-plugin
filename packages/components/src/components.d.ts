@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { CheckoutSession, ChoiceItem, ChoiceType, Coupon, Keys, LineItemData, PriceChoice, Prices, Products } from "./types";
+import { CheckoutSession, ChoiceItem, ChoiceType, Coupon, Keys, LineItemData, PriceChoice, Prices, Product, Products } from "./types";
 export namespace Components {
     interface CeAlert {
         /**
@@ -103,6 +103,12 @@ export namespace Components {
         "value": string;
     }
     interface CeCard {
+    }
+    interface CeCartProvider {
+        /**
+          * CheckoutSession Object
+         */
+        "checkoutSession": CheckoutSession;
     }
     interface CeCheckbox {
         /**
@@ -652,11 +658,12 @@ export namespace Components {
         "columns": number;
         "currencyCode": string;
         "default": string;
-        "label": string;
         "lineItemData": Array<LineItemData>;
         "loading": boolean;
         "priceChoices": Array<PriceChoice>;
+        "priceLabel": string;
         "prices": Prices;
+        "productLabel": string;
         "products": Products;
     }
     interface CePriceInput {
@@ -753,6 +760,36 @@ export namespace Components {
           * The input's value attribute.
          */
         "value": string;
+    }
+    interface CePriceSelector {
+        /**
+          * The current checkout session.
+         */
+        "checkoutSession": CheckoutSession;
+        /**
+          * ChoiceType
+         */
+        "choiceType": ChoiceType;
+        /**
+          * Choices to choose from
+         */
+        "choices": Array<PriceChoice>;
+        /**
+          * Number of columns
+         */
+        "columns": number;
+        /**
+          * Selector label
+         */
+        "label": string;
+        /**
+          * Price entities
+         */
+        "prices": Prices;
+        /**
+          * Product entity
+         */
+        "product": Product;
     }
     interface CeProductLineItem {
         /**
@@ -1050,6 +1087,12 @@ declare global {
         prototype: HTMLCeCardElement;
         new (): HTMLCeCardElement;
     };
+    interface HTMLCeCartProviderElement extends Components.CeCartProvider, HTMLStencilElement {
+    }
+    var HTMLCeCartProviderElement: {
+        prototype: HTMLCeCartProviderElement;
+        new (): HTMLCeCartProviderElement;
+    };
     interface HTMLCeCheckboxElement extends Components.CeCheckbox, HTMLStencilElement {
     }
     var HTMLCeCheckboxElement: {
@@ -1206,6 +1249,12 @@ declare global {
         prototype: HTMLCePriceInputElement;
         new (): HTMLCePriceInputElement;
     };
+    interface HTMLCePriceSelectorElement extends Components.CePriceSelector, HTMLStencilElement {
+    }
+    var HTMLCePriceSelectorElement: {
+        prototype: HTMLCePriceSelectorElement;
+        new (): HTMLCePriceSelectorElement;
+    };
     interface HTMLCeProductLineItemElement extends Components.CeProductLineItem, HTMLStencilElement {
     }
     var HTMLCeProductLineItemElement: {
@@ -1307,6 +1356,7 @@ declare global {
         "ce-block-ui": HTMLCeBlockUiElement;
         "ce-button": HTMLCeButtonElement;
         "ce-card": HTMLCeCardElement;
+        "ce-cart-provider": HTMLCeCartProviderElement;
         "ce-checkbox": HTMLCeCheckboxElement;
         "ce-checkout": HTMLCeCheckoutElement;
         "ce-choice": HTMLCeChoiceElement;
@@ -1333,6 +1383,7 @@ declare global {
         "ce-payment-request": HTMLCePaymentRequestElement;
         "ce-price-choices": HTMLCePriceChoicesElement;
         "ce-price-input": HTMLCePriceInputElement;
+        "ce-price-selector": HTMLCePriceSelectorElement;
         "ce-product-line-item": HTMLCeProductLineItemElement;
         "ce-provider": HTMLCeProviderElement;
         "ce-purchase": HTMLCePurchaseElement;
@@ -1456,6 +1507,16 @@ declare namespace LocalJSX {
         "value"?: string;
     }
     interface CeCard {
+    }
+    interface CeCartProvider {
+        /**
+          * CheckoutSession Object
+         */
+        "checkoutSession"?: CheckoutSession;
+        /**
+          * Update line items event
+         */
+        "onCeUpdateLineItems"?: (event: CustomEvent<Array<LineItemData>>) => void;
     }
     interface CeCheckbox {
         /**
@@ -2035,19 +2096,24 @@ declare namespace LocalJSX {
         "columns"?: number;
         "currencyCode"?: string;
         "default"?: string;
-        "label"?: string;
         "lineItemData"?: Array<LineItemData>;
         "loading"?: boolean;
         /**
           * Add line items event.
          */
-        "onCeAddLineItems"?: (event: CustomEvent<Array<LineItemData>>) => void;
+        "onCeAddLineItem"?: (event: CustomEvent<LineItemData>) => void;
+        /**
+          * Add line items event.
+         */
+        "onCeRemoveLineItem"?: (event: CustomEvent<LineItemData>) => void;
         /**
           * Update line items event.
          */
         "onCeUpdateLineItems"?: (event: CustomEvent<{ key: string; value: Array<LineItemData> }>) => void;
         "priceChoices"?: Array<PriceChoice>;
+        "priceLabel"?: string;
         "prices"?: Prices;
+        "productLabel"?: string;
         "products"?: Products;
     }
     interface CePriceInput {
@@ -2135,6 +2201,40 @@ declare namespace LocalJSX {
           * The input's value attribute.
          */
         "value"?: string;
+    }
+    interface CePriceSelector {
+        /**
+          * The current checkout session.
+         */
+        "checkoutSession"?: CheckoutSession;
+        /**
+          * ChoiceType
+         */
+        "choiceType"?: ChoiceType;
+        /**
+          * Choices to choose from
+         */
+        "choices"?: Array<PriceChoice>;
+        /**
+          * Number of columns
+         */
+        "columns"?: number;
+        /**
+          * Selector label
+         */
+        "label"?: string;
+        /**
+          * Toggle line item event
+         */
+        "onCeToggleLineItem"?: (event: CustomEvent<LineItemData>) => void;
+        /**
+          * Price entities
+         */
+        "prices"?: Prices;
+        /**
+          * Product entity
+         */
+        "product"?: Product;
     }
     interface CeProductLineItem {
         /**
@@ -2443,6 +2543,7 @@ declare namespace LocalJSX {
         "ce-block-ui": CeBlockUi;
         "ce-button": CeButton;
         "ce-card": CeCard;
+        "ce-cart-provider": CeCartProvider;
         "ce-checkbox": CeCheckbox;
         "ce-checkout": CeCheckout;
         "ce-choice": CeChoice;
@@ -2469,6 +2570,7 @@ declare namespace LocalJSX {
         "ce-payment-request": CePaymentRequest;
         "ce-price-choices": CePriceChoices;
         "ce-price-input": CePriceInput;
+        "ce-price-selector": CePriceSelector;
         "ce-product-line-item": CeProductLineItem;
         "ce-provider": CeProvider;
         "ce-purchase": CePurchase;
@@ -2495,6 +2597,7 @@ declare module "@stencil/core" {
             "ce-block-ui": LocalJSX.CeBlockUi & JSXBase.HTMLAttributes<HTMLCeBlockUiElement>;
             "ce-button": LocalJSX.CeButton & JSXBase.HTMLAttributes<HTMLCeButtonElement>;
             "ce-card": LocalJSX.CeCard & JSXBase.HTMLAttributes<HTMLCeCardElement>;
+            "ce-cart-provider": LocalJSX.CeCartProvider & JSXBase.HTMLAttributes<HTMLCeCartProviderElement>;
             "ce-checkbox": LocalJSX.CeCheckbox & JSXBase.HTMLAttributes<HTMLCeCheckboxElement>;
             "ce-checkout": LocalJSX.CeCheckout & JSXBase.HTMLAttributes<HTMLCeCheckoutElement>;
             "ce-choice": LocalJSX.CeChoice & JSXBase.HTMLAttributes<HTMLCeChoiceElement>;
@@ -2521,6 +2624,7 @@ declare module "@stencil/core" {
             "ce-payment-request": LocalJSX.CePaymentRequest & JSXBase.HTMLAttributes<HTMLCePaymentRequestElement>;
             "ce-price-choices": LocalJSX.CePriceChoices & JSXBase.HTMLAttributes<HTMLCePriceChoicesElement>;
             "ce-price-input": LocalJSX.CePriceInput & JSXBase.HTMLAttributes<HTMLCePriceInputElement>;
+            "ce-price-selector": LocalJSX.CePriceSelector & JSXBase.HTMLAttributes<HTMLCePriceSelectorElement>;
             "ce-product-line-item": LocalJSX.CeProductLineItem & JSXBase.HTMLAttributes<HTMLCeProductLineItemElement>;
             "ce-provider": LocalJSX.CeProvider & JSXBase.HTMLAttributes<HTMLCeProviderElement>;
             "ce-purchase": LocalJSX.CePurchase & JSXBase.HTMLAttributes<HTMLCePurchaseElement>;

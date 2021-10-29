@@ -19,35 +19,33 @@ export default ( { className, attributes } ) => {
 		spellcheck,
 		step,
 		togglePassword,
-		type,
-		value,
 	} = attributes;
 
 	return (
 		<ce-input
-			class={ className || false }
-			label={ label || false }
-			clearable={ clearable || false }
-			disabled={ disabled || false }
-			help={ help || false }
-			autofocus={ autofocus || false }
-			autocomplete={ autocomplete || false }
-			inputmode={ inputmode || false }
-			max={ max || false }
-			maxlength={ maxlength || false }
-			min={ min || false }
-			minlength={ minlength || false }
-			placeholder={ placeholder || false }
-			readonly={ readonly || false }
-			showLabel={ showLabel || false }
-			size={ size || false }
-			spellcheck={ spellcheck || false }
-			step={ step || false }
-			togglePassword={ togglePassword }
-			value={ value || false }
-			name={ 'email' }
-			type={ 'email' }
-			required
+			class={ className }
+			label={ label }
+			clearable={ clearable ? '1' : '' }
+			disabled={ disabled ? '1' : '' }
+			help={ help }
+			autofocus={ autofocus ? '1' : '' }
+			autocomplete={ autocomplete ? '1' : '' }
+			inputmode={ inputmode }
+			max={ max }
+			maxlength={ maxlength }
+			min={ min }
+			minlength={ minlength }
+			name={ name }
+			placeholder={ placeholder }
+			readonly={ readonly ? '1' : '' }
+			showLabel={ showLabel ? '1' : '' }
+			size={ size }
+			spellcheck={ spellcheck ? '1' : '' }
+			step={ step }
+			togglePassword={ togglePassword ? '1' : '' }
+			type="email"
+			name="email"
+			required="1"
 		></ce-input>
 	);
 };

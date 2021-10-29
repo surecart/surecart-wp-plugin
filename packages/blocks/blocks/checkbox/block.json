@@ -1,30 +1,35 @@
+
 {
+  "apiVersion": 2,
 	"name": "checkout-engine/checkbox",
+	"title": "Button",
+  "description": "Display a checkbox input",
 	"category": "layout",
-	"supports": {
-		"reusable": false
+  "keywords": ["checkbox", "toggle", "checkout", "engine"],
+  "supports": {
+		"reusable": false,
+		"html": false
 	},
 	"attributes": {
-    "name" : {
-      "type": "string",
-      "default": "checkbox"
-    },
-		"value": {
+		"text": {
 			"type": "string",
-			"default": ""
+			"default": "Purchase"
 		},
-		"label": {
+		"type": {
 			"type": "string",
-      "default": "Enter some text."
+			"default": "primary"
 		},
-		"help": {
-			"type": "string"
+		"submit": {
+			"type": "boolean",
+			"default": true
 		},
-    "checked": {
-      "type": "boolean"
-    },
-    "required" : {
-      "type": "boolean"
-    }
+		"size": {
+			"type": "string",
+			"default": "large"
+		},
+		"full": {
+			"type": "boolean",
+			"default": true
+		}
 	}
 }

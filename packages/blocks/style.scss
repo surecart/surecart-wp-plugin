@@ -9,13 +9,13 @@
 	border-radius: 4px;
 	box-shadow: 0 0 0 var( --wp-admin-border-width-focus ) transparent;
 }
-[data-type="checkout-engine/checkout-form"] {
-  .block-editor-block-list__layout * .block-editor-block-list__block {
-    padding: 0;
-  }
-}
 
 .ce-checkout-container {
+  .block-editor-block-list__layout * .block-editor-block-list__block {
+    padding: 0;
+    margin: 0 0 var(--ce-form-row-spacing, 0.75em) 0;
+  }
+
   .block-editor-block-list__layout {
     > * {
       margin-bottom: var(--ce-form-row-spacing, 0.75em);

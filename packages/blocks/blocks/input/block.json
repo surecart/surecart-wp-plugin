@@ -1,8 +1,12 @@
 {
-	"name": "checkout-engine/input",
+  "name": "checkout-engine/input",
+	"title": "Input",
+  "description": "Displays a form text input.",
 	"category": "layout",
-	"supports": {
-		"reusable": false
+  "keywords": ["email", "mail"],
+  "supports": {
+		"reusable": false,
+		"html": false
 	},
 	"attributes": {
 		"value": {

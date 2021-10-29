@@ -3,7 +3,7 @@ import { Price, Product, Coupon, CheckoutSession, Customer, LineItemData, Keys, 
 import { handleInputs } from './functions';
 import { getSessionId } from './helpers/session';
 import { getPricesAndProducts } from '../../../services/fetch';
-import { calculateInitialLineItems, convertLineItemsToLineItemData } from '../../../functions/line-items';
+import { calculateInitialLineItems } from '../../../functions/line-items';
 import { getOrCreateSession, createOrUpdateSession, finalizeSession } from '../../../services/session/index';
 import { Universe } from 'stencil-wormhole';
 import { addQueryArgs } from '@wordpress/url';
@@ -112,9 +112,14 @@ export class CECheckout {
     this.makeDraft();
   }
 
-  /**
-   * Handles coupon updates.
-   */
+  /** Toggle an individual line item */
+  // @Listen('ceToggleLineItem')
+  // handleLineItemToggle(e) {
+  //   e.detail = [e.detail];
+  //   this.handleLineItemsToggle(e);
+  // }
+
+  /** Handles coupon updates. */
   @Listen('ceApplyCoupon')
   async handleCouponApply(e) {
     const promotion_code = e.detail;
@@ -140,50 +145,11 @@ export class CECheckout {
     return send(name);
   }
 
-  /**
-   * Handles line items update.
-   * We use a key to store each line item change separately
-   * then flatten before we send the request. This makes sure
-   * components can't override line_item changes from other components.
-   */
-  @Listen('ceUpdateLineItems')
-  handleUpdateLineItemChange(e) {
-    if (e.detail.key) {
-      this.lineItemsData = {
-        ...this.lineItemsData,
-        [e.detail.key]: e.detail.value,
-      };
-    }
-  }
-
-  /**
-   * Update a specific line item by line item id.
-   */
-  @Listen('ceUpdateLineItem')
-  handleLineItemChange(e) {
-    const { id, data } = e.detail;
-    const line_item = this.checkoutSession.line_items.data.find(item => item.id === id);
-    if (!line_item?.id) return;
-    const price_id = line_item.price.id;
-    const lineItemData = convertLineItemsToLineItemData(this.checkoutSession.line_items);
-    this.updateSessionLineItems(
-      lineItemData.map(item => {
-        if (item.price_id === price_id) {
-          item = {
-            ...item,
-            ...data,
-          };
-        }
-        return item;
-      }),
-    );
-  }
-
   /** Update form state when form data changes */
   @Listen('ceFormChange')
   handleFormChange(e) {
     const data = e.detail;
-    if (!data) return;
+    if (Object.values(data || {}).every(item => item === undefined)) return;
     const { email, name, ...rest } = data;
     this.formState = {
       ...(data.email ? { email: data.email } : {}),
@@ -241,19 +207,20 @@ export class CECheckout {
   }
 
   async makeDraft() {
-    this.setState('DRAFT');
-    await createOrUpdateSession({
-      id: this.checkoutSession.id,
-      data: {
-        ...this.getSessionSaveData(),
-        status: 'draft',
-      },
-    });
-    this.setState('RESOLVE');
+    // this.setState('DRAFT');
+    // await createOrUpdateSession({
+    //   id: this.checkoutSession.id,
+    //   data: {
+    //     ...this.getSessionSaveData(),
+    //     status: 'draft',
+    //   },
+    // });
+    // this.setState('RESOLVE');
   }
 
   async updateSessionLineItems(line_items) {
     const { send } = this._stateService;
+    if (this.checkoutState.value !== 'draft') return;
     try {
       send('FETCH');
       this.checkoutSession = (await createOrUpdateSession({
@@ -271,18 +238,12 @@ export class CECheckout {
     }
   }
 
-  @Watch('lineItemsData')
-  async handleLineItemsDataChange(val) {
-    this.updateSessionLineItems(Object.values(val || {}).flat());
-  }
-
   @Watch('formState')
   handleDraftSessionChanges(val, oldVal) {
     if (oldVal && JSON.stringify(val) === JSON.stringify(oldVal)) return;
-    this.createOrUpdateSession();
+    // this.createOrUpdateSession();
   }
 
-  @Watch('prices')
   async createOrUpdateSession() {
     const { send } = this._stateService;
     const id = getSessionId(this.el.id, this.checkoutSession, true);
@@ -303,7 +264,6 @@ export class CECheckout {
           line_items,
         },
       })) as CheckoutSession;
-      console.log(this.checkoutSession);
       send('RESOLVE');
     } catch (e) {
       send('REJECT');
@@ -325,7 +285,6 @@ export class CECheckout {
     if (val.status === 'paid') {
       window.localStorage.removeItem(this.el.id);
     }
-
     handleInputs(this.el, val);
   }
 
@@ -362,7 +321,6 @@ export class CECheckout {
   }
 
   handleErrorResponse(e) {
-    console.error(e);
     if (e?.code === 'rest_cookie_invalid_nonce') {
       this.expired = true;
       return;
@@ -394,36 +352,13 @@ export class CECheckout {
     }
   }
 
-  @Watch('prices')
-  test() {
-    console.log(this.prices);
-  }
-
-  /**
-   * Create or update a session based on chosen line items
-   */
-  // async createOrUpdateSession() {
-  //   const { send } = this._stateService;
-  //   const id = localStorage.getItem(this.el.id) || this.checkoutSession?.id;
-  //   try {
-  //     send('FETCH');
-  //     this.checkoutSession = (await createOrUpdateSession({
-  //       id,
-  //       data: this.getSessionSaveData(),
-  //     })) as CheckoutSession;
-  //     send('RESOLVE');
-  //   } catch (e) {
-  //     send('REJECT');
-  //     this.handleErrorResponse(e);
-  //   }
-  // }
-
   async fetchPrices() {
-    console.log(this.prices);
+    const ids = getChoicePrices(this.prices).map(p => p.id);
+    if (!ids.length) return;
     try {
       const { products, prices } = await getPricesAndProducts({
         active: true,
-        ids: getChoicePrices(this.prices).map(p => p.id),
+        ids,
       });
       this.productsEntities = products;
       this.pricesEntities = prices;
@@ -484,7 +419,9 @@ export class CECheckout {
       >
         {this.error && <ce-alert type="danger">{this.error}</ce-alert>}
         <Universe.Provider state={this.state()}>
-          <slot />
+          <ce-cart-provider onCeUpdateLineItems={e => this.updateSessionLineItems(e.detail as Array<LineItemData>)}>
+            <slot />
+          </ce-cart-provider>
         </Universe.Provider>
       </div>
     );

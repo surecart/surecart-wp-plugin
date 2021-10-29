@@ -102,6 +102,7 @@ export interface PriceChoice {
   product_id: string;
   quantity: number;
   enabled: boolean;
+  selected?: boolean;
 }
 
 export interface Keys extends Object {

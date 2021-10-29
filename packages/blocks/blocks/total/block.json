@@ -1,0 +1,22 @@
+{
+	"name": "checkout-engine/total",
+	"title": "Total",
+  "description": "Displays the total line item.",
+	"category": "layout",
+	"parent": [ "checkout-engine/totals" ],
+  "keywords": ["checkout", "engine", "total", "subtotal"],
+  "supports": {
+    "reusable": false,
+		"html": false
+  },
+	"attributes": {
+    "text" : {
+      "type": "string",
+      "default": "Total"
+    },
+    "subscription_text": {
+      "type": "string",
+      "default": "Total Due Today"
+    }
+	}
+}

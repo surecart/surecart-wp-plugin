@@ -27,7 +27,7 @@ export default ( { attributes, setAttributes } ) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<CeDivider style={ { '--spacing': '40px' } }>{ text }</CeDivider>
+			<CeDivider>{ text }</CeDivider>
 		</Fragment>
 	);
 };

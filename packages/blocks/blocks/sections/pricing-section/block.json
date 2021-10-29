@@ -2,9 +2,13 @@
 	"name": "checkout-engine/pricing-section",
 	"category": "layout",
 	"attributes": {
-		"label": {
+		"product_label": {
 			"type": "string",
-			"default": "Choose A Plan"
+			"default": "Choose A Product"
+		},
+    "price_label": {
+			"type": "string",
+			"default": "Choose A Price"
 		},
 		"description": {
 			"type": "string"

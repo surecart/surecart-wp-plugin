@@ -1,6 +1,13 @@
 {
 	"name": "checkout-engine/submit",
+	"title": "Submit Button",
+  "description": "Display a submit button.",
 	"category": "layout",
+  "keywords": ["submit", "button"],
+  "supports": {
+		"reusable": false,
+		"html": false
+	},
 	"attributes": {
 		"text": {
 			"type": "string",

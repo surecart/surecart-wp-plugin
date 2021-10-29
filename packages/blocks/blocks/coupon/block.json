@@ -1,0 +1,21 @@
+{
+  "apiVersion": 2,
+	"name": "checkout-engine/coupon",
+	"title": "Coupon",
+  "description": "Display a coupon form.",
+	"category": "layout",
+  "keywords": ["coupon", "promo"],
+  "supports": {
+		"reusable": false,
+		"html": false,
+    "order-summary": true
+	},
+	"attributes": {
+		"text": {
+			"type": "string"
+		},
+    "button_text": {
+      "type": "string"
+    }
+	}
+}

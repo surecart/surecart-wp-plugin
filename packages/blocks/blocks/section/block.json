@@ -1,6 +1,13 @@
 {
 	"name": "checkout-engine/form-section",
+	"title": "Form Section",
+  "description": "Display a form section",
 	"category": "layout",
+  "keywords": ["section"],
+  "supports": {
+		"reusable": false,
+		"html": false
+	},
 	"attributes": {
 		"label": {
 			"type": "string",

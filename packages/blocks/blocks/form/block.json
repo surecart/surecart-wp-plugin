@@ -1,6 +1,13 @@
 {
 	"name": "checkout-engine/form",
+	"title": "Form",
+  "description": "Displays a form.",
 	"category": "layout",
+  "keywords": ["email", "mail"],
+  "supports": {
+		"reusable": false,
+		"html": false
+	},
   "attributes": {
     "font_size": {
       "type": "number",

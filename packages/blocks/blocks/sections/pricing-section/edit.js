@@ -2,7 +2,7 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { InspectorControls } from '@wordpress/editor';
+import { InspectorControls } from '@wordpress/block-editor';
 import { Fragment } from '@wordpress/element';
 import {
 	PanelBody,
@@ -18,7 +18,13 @@ import {
 import { CePriceChoices } from '@checkout-engine/react';
 
 export default ( { attributes, setAttributes, isSelected } ) => {
-	const { default: defaultChoice, columns, type, label } = attributes;
+	const {
+		default: defaultChoice,
+		columns,
+		type,
+		product_label,
+		price_label,
+	} = attributes;
 
 	return (
 		<Fragment>
@@ -27,8 +33,19 @@ export default ( { attributes, setAttributes, isSelected } ) => {
 					<PanelRow>
 						<TextControl
 							label={ __( 'Label', 'checkout-engine' ) }
-							value={ label }
-							onChange={ ( label ) => setAttributes( { label } ) }
+							value={ product_label }
+							onChange={ ( product_label ) =>
+								setAttributes( { product_label } )
+							}
+						/>
+					</PanelRow>
+					<PanelRow>
+						<TextControl
+							label={ __( 'Label', 'checkout-engine' ) }
+							value={ price_label }
+							onChange={ ( price_label ) =>
+								setAttributes( { price_label } )
+							}
 						/>
 					</PanelRow>
 					<PanelRow>
@@ -67,7 +84,8 @@ export default ( { attributes, setAttributes, isSelected } ) => {
 			</InspectorControls>
 
 			<CePriceChoices
-				label={ label }
+				productLabel={ product_label }
+				priceLabel={ price_label }
 				columns={ columns }
 				default={ defaultChoice }
 			></CePriceChoices>

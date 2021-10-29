@@ -1,51 +1,31 @@
 /**
  * WordPress dependencies
  */
-import { registerBlockType } from '@wordpress/blocks';
+import { __ } from '@wordpress/i18n';
+import { registerBlockType, registerBlockCollection } from '@wordpress/blocks';
 
-// Register block category
-import './utils/block-category';
-
-// Extensions
-// import './extensions/animation';
-// import './extensions/colors/inspector';
-// import './extensions/typography';
-// import './extensions/attributes';
-// import './extensions/advanced-controls';
-// import './extensions/padding-controls';
-// import './extensions/list-styles';
-// import './extensions/button-styles';
-// import './extensions/button-controls';
-// import './extensions/image-styles';
-// import './extensions/cover-styles';
-// import './extensions/media-text-styles';
-// import './extensions/lightbox-controls';
-// import './extensions/replace-image';
-// import './extensions/image-crop';
-// import './extensions/image-filter';
-// import './extensions/Checkout Engine-settings/';
-// import './extensions/layout-selector';
-// import './extensions/block-patterns';
-
-// Categories Helper
-import { supportsCollections } from './utils/block-helpers';
-
-// Register Blocks
-import * as checkout from './blocks/checkout';
+// Register block collection
+registerBlockCollection( 'checkout-engine', {
+	title: __( 'Checkout Engine', 'checkout_engine' ),
+} );
 
 // sections
 import * as pricingSection from './blocks/sections/pricing-section';
 import * as paymentSection from './blocks/sections/payment-section';
-
 import * as contactSection from './blocks/sections/contact-section';
 
 // blocks
+import * as checkout from './blocks/checkout';
 import * as section from './blocks/section';
 import * as email from './blocks/email';
+import * as total from './blocks/total';
+import * as subtotal from './blocks/subtotal';
 import * as totals from './blocks/totals';
 import * as name from './blocks/name';
 import * as payment from './blocks/payment';
 import * as paymentRequest from './blocks/payment-request';
+import * as coupon from './blocks/coupon';
+import * as lineItems from './blocks/line-items';
 import * as button from './blocks/button';
 import * as form from './blocks/form';
 import * as submit from './blocks/submit';
@@ -60,6 +40,7 @@ export const BLOCK_PARENTS = [
 	'checkout-engine/form-section',
 	'checkout-engine/checkout-form',
 ];
+
 export const ALLOWED_BLOCKS = [
 	'core/spacer',
 	'core/columns',
@@ -89,18 +70,18 @@ const registerBlock = ( block ) => {
 		return;
 	}
 
-	let { category } = block;
+	const { metadata, settings } = block;
 
-	const { name, settings } = block;
-
-	if ( ! supportsCollections() ) {
-		category = 'checkout-engine';
-	}
-
-	registerBlockType( name, {
-		category,
-		...settings,
-	} );
+	registerBlockType(
+		{
+			...metadata,
+			text_domain: 'checkout_engine', // set our textdomain for everything.
+		},
+		{
+			...settings,
+			title: metadata.title || settings.title,
+		}
+	);
 };
 
 /**
@@ -116,6 +97,8 @@ export const registerCheckoutEngineBlocks = () => {
 		contactSection,
 		submit,
 		payment,
+		coupon,
+		lineItems,
 		paymentRequest,
 		button,
 		form,
@@ -123,6 +106,8 @@ export const registerCheckoutEngineBlocks = () => {
 		divider,
 		switchBlock,
 		checkbox,
+		total,
+		subtotal,
 		name,
 		email,
 	].forEach( registerBlock );

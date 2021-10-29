@@ -22,6 +22,7 @@ export default ( { attributes, setAttributes, onCreate, onCancel, isNew } ) => {
 		title,
 		prices,
 		choice_type,
+		choice_group,
 		custom_success_url,
 		template,
 	} = attributes;
@@ -214,6 +215,22 @@ export default ( { attributes, setAttributes, onCreate, onCancel, isNew } ) => {
 						] }
 						onChange={ ( choice_type ) =>
 							setAttributes( { choice_type } )
+						}
+					/>
+				</div>
+
+				<div>
+					<div css={ label }>
+						{ __( 'Group By Product', 'checkout_engine' ) }
+					</div>
+					<ToggleControl
+						label={ __(
+							'Group prices by product',
+							'checkout_engine'
+						) }
+						checked={ choice_group }
+						onChange={ ( choice_group ) =>
+							setAttributes( { choice_group } )
 						}
 					/>
 				</div>

@@ -3,10 +3,10 @@
  */
 import { InnerBlocks } from '@wordpress/block-editor';
 
-export default function save( { className } ) {
+export default function save() {
 	return (
-		<ce-form-row className={ className }>
+		<ce-order-summary>
 			<InnerBlocks.Content />
-		</ce-form-row>
+		</ce-order-summary>
 	);
 }

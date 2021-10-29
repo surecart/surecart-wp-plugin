@@ -1,6 +1,15 @@
 {
+  "apiVersion": 2,
 	"name": "checkout-engine/divider",
+	"title": "Divider",
+  "description": "Displays a divider.",
 	"category": "layout",
+  "keywords": ["divider", "hr"],
+  "supports": {
+		"reusable": false,
+		"html": false,
+    "order-summary": true
+	},
 	"attributes": {
 		"text": {
 			"type": "string"

@@ -18,7 +18,7 @@ export const getProductChoicePriceByIndex = (productId: string, priceChoices: Ar
  * @returns Array of ids.
  */
 export const getChoicePrices = (choices: Array<PriceChoice>) => {
-  return choices.filter(choice => choice.enabled);
+  return (choices || []).filter(choice => choice.enabled);
 };
 
 export const getChoicePriceIds = (choices: Array<PriceChoice>) => {

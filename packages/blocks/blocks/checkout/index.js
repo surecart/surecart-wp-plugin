@@ -1,44 +1,24 @@
 /**
- * Internal dependencies
- */
-import edit from './edit';
-import metadata from './block.json';
-import save from './save';
-import '../../style.scss';
-
-import './store';
-
-/**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
 import { receipt as icon } from '@wordpress/icons';
 
 /**
- * Block constants
+ * Internal dependencies
  */
-const { name, category, attributes } = metadata;
+import edit from './edit';
+import save from './save';
+import metadata from './block.json';
+import '../../style.scss';
+import './store';
 
-const settings = {
-	/* translators: block name */
-	title: __( 'Checkout Form', 'checkout_engine' ),
-	/* translators: block description */
-	description: __( 'Display a checkout form', 'checkout_engine' ),
-	supports: {
-		html: false,
-	},
+const { name } = metadata;
+
+export { metadata, name };
+
+export const settings = {
 	icon,
-	keywords: [
-		'checkout',
-		'engine',
-		/* translators: block keyword */
-		__( 'shop', 'checkout_engine' ),
-		/* translators: block keyword */
-		__( 'cart', 'checkout_engine' ),
-	],
-	attributes,
 	edit,
 	save,
 };
-
-export { name, category, metadata, settings };
