@@ -22,7 +22,7 @@ export interface ChoiceItem extends Object {
 
 export type ChoiceType = 'all' | 'single' | 'multiple';
 
-export interface Price extends Object {
+export interface Price {
   id: string;
   name: string;
   description?: string;
@@ -36,12 +36,28 @@ export interface Price extends Object {
   archived_at?: string;
   created_at: number;
   updated_at: number;
-  product?: Product;
+  product?: Product | string;
   metadata: { [key: string]: string };
 }
 
 export type Prices = {
-  [id: string]: Price;
+  [id: string]: {
+    id: string;
+    name: string;
+    description?: string;
+    amount: number;
+    currency: string;
+    recurring: boolean;
+    recurring_interval?: 'day' | 'week' | 'month' | 'year';
+    recurring_interval_count?: number;
+    archived: boolean;
+    product_id?: string;
+    archived_at?: string;
+    created_at: number;
+    updated_at: number;
+    product?: string;
+    metadata: { [key: string]: string };
+  };
 };
 
 export interface Product extends Object {

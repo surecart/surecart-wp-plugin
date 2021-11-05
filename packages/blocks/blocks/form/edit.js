@@ -16,7 +16,6 @@ import {
 	PanelBody,
 	Button,
 	SelectControl,
-	TabPanel,
 } from '@wordpress/components';
 import { createBlocksFromInnerBlocksTemplate } from '@wordpress/blocks';
 import * as templates from '../../templates';
@@ -42,6 +41,11 @@ export default function edit( { clientId, attributes, setAttributes } ) {
 	return (
 		<Fragment>
 			<InspectorControls>
+				<PanelBody title={ __( 'Products', 'checkout_engine' ) }>
+					<PanelRow>
+						<p>Products</p>
+					</PanelRow>
+				</PanelBody>
 				<PanelBody title={ __( 'Form Template', 'checkout_engine' ) }>
 					<PanelRow>
 						<div>
@@ -67,61 +71,27 @@ export default function edit( { clientId, attributes, setAttributes } ) {
 				</PanelBody>
 			</InspectorControls>
 
-			<TabPanel
+			<CeCheckout
+				keys={ ceData?.keys }
 				css={ css`
-					.components-tab-panel__tabs {
-						justify-content: center;
-					}
+					margin-top: 2em;
+					font-size: ${ font_size }px;
 				` }
-				initialTabName="layout"
-				tabs={ [
-					{
-						name: 'layout',
-						title: __( 'Layout', 'checkout_engine' ),
-					},
-					{
-						name: 'settings',
-						title: __( 'Settings', 'checkout_engine' ),
-					},
-				] }
+				alignment={ align }
+				className={ className }
+				choiceType={ choice_type }
+				prices={ prices }
 			>
-				{ ( tab ) => {
-					if ( tab.name === 'settings' ) {
-						return (
-							<Setup
-								attributes={ attributes }
-								setAttributes={ setAttributes }
-							/>
-						);
+				<InnerBlocks
+					style={ {
+						'--global--spacing-vertical': '0',
+					} }
+					allowedBlocks={ ALLOWED_BLOCKS }
+					renderAppender={
+						blockCount ? undefined : InnerBlocks.ButtonBlockAppender
 					}
-					return (
-						<CeCheckout
-							keys={ ceData?.keys }
-							css={ css`
-								margin-top: 2em;
-								font-size: ${ font_size }px;
-								.wp-block {
-									margin-top: 2em;
-									margin-bottom: 2em;
-								}
-							` }
-							alignment={ align }
-							className={ className }
-							choiceType={ choice_type }
-							prices={ prices }
-						>
-							<InnerBlocks
-								allowedBlocks={ ALLOWED_BLOCKS }
-								renderAppender={
-									blockCount
-										? undefined
-										: InnerBlocks.ButtonBlockAppender
-								}
-							/>
-						</CeCheckout>
-					);
-				} }
-			</TabPanel>
+				/>
+			</CeCheckout>
 		</Fragment>
 	);
 }

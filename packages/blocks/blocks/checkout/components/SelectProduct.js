@@ -15,7 +15,7 @@ import { useSelect, dispatch, select } from '@wordpress/data';
 import { BLOCKS_STORE_KEY } from '../store';
 import { unique } from '../../../utils/functions';
 
-export default ( { onRequestClose, attributes, setAttributes } ) => {
+export default ( { onRequestClose, onChoose } ) => {
 	const [ product, setProduct ] = useState( {} );
 	const [ query, setQuery ] = useState( '' );
 	const [ busy, setBusy ] = useState( false );
@@ -71,15 +71,7 @@ export default ( { onRequestClose, attributes, setAttributes } ) => {
 			product.id
 		);
 
-		setAttributes( {
-			prices: unique(
-				[
-					...( attributes.prices || [] ),
-					...convertPricesToChoices( prices ),
-				],
-				'id'
-			),
-		} );
+		onChoose( convertPricesToChoices( prices ) );
 
 		onRequestClose();
 	};

@@ -7,9 +7,11 @@
 
 ## Properties
 
-| Property | Attribute | Description | Type                                                                                 | Default     |
-| -------- | --------- | ----------- | ------------------------------------------------------------------------------------ | ----------- |
-| `state`  | `state`   |             | `"draft" \| "failure" \| "finalized" \| "idle" \| "loading" \| "paid" \| "updating"` | `undefined` |
+| Property  | Attribute | Description | Type      | Default     |
+| --------- | --------- | ----------- | --------- | ----------- |
+| `busy`    | `busy`    |             | `boolean` | `undefined` |
+| `empty`   | `empty`   |             | `boolean` | `undefined` |
+| `loading` | `loading` |             | `boolean` | `undefined` |
 
 
 ## Dependencies

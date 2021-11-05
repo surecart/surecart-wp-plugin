@@ -2,7 +2,7 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { edit as icon } from '@wordpress/icons';
+import { receipt as icon } from '@wordpress/icons';
 
 /**
  * Internal dependencies

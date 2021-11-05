@@ -11,6 +11,10 @@
 }
 
 .ce-checkout-container {
+  .block-editor-block-list__layout > * {
+    min-width: 0;
+  }
+
   .block-editor-block-list__layout * .block-editor-block-list__block {
     padding: 0;
     margin: 0 0 var(--ce-form-row-spacing, 0.75em) 0;

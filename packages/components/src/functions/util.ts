@@ -7,3 +7,23 @@ export function deepEqual(o1, o2) {
     ? Object.keys(o1).length === Object.keys(o2).length && Object.keys(o1).every(p => deepEqual(o1[p], o2[p]))
     : o1 === o2;
 }
+
+export function closestElement(selector, base) {
+  function __closestFrom(el) {
+    if (!el || el === document || el === window) return null;
+    let found = el.closest(selector);
+    return found ? found : __closestFrom(el.getRootNode().host);
+  }
+  return __closestFrom(base);
+}
+
+export function findElements(selector, base) {
+  function __findFrom(el) {
+    console.log({ el });
+    if (!el) return null;
+    let found = el.querySelectorAll(selector);
+    console.log({ found: found.length });
+    return found && found?.length ? found : __findFrom(el?.shadowRoot);
+  }
+  return __findFrom(base);
+}

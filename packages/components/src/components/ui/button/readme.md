@@ -12,7 +12,7 @@
 | `circle`   | `circle`   | Draws a circle button.                                                                                 | `boolean`                                                                          | `false`     |
 | `disabled` | `disabled` | Disables the button.                                                                                   | `boolean`                                                                          | `false`     |
 | `download` | `download` | Tells the browser to download the linked file as this filename. Only used when `href` is set.          | `string`                                                                           | `undefined` |
-| `full`     | `full`     | Draws the button with a caret for use with dropdowns, popovers, etc.                                   | `boolean`                                                                          | `false`     |
+| `full`     | `full`     | Draws the button full-width.                                                                           | `boolean`                                                                          | `false`     |
 | `href`     | `href`     | When set, the underlying button will be rendered as an `<a>` with this `href` instead of a `<button>`. | `string`                                                                           | `undefined` |
 | `loading`  | `loading`  | Draws the button in a loading state.                                                                   | `boolean`                                                                          | `false`     |
 | `name`     | `name`     | An optional name for the button. Ignored when `href` is set.                                           | `string`                                                                           | `undefined` |
@@ -49,7 +49,6 @@
 ### Used by
 
  - [ce-coupon-form](../../controllers/coupon-form)
- - [ce-submit](../../controllers/submit)
 
 ### Depends on
 
@@ -60,7 +59,6 @@
 graph TD;
   ce-button --> ce-spinner
   ce-coupon-form --> ce-button
-  ce-submit --> ce-button
   style ce-button fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

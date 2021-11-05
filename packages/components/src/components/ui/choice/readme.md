@@ -76,12 +76,14 @@ Type: `Promise<void>`
 
 ### Used by
 
- - [ce-price-choices](../../controllers/price-chooser)
+ - [ce-price-choice](../../controllers/price-choice)
+ - [ce-price-selector](../../controllers/price-selector)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-price-choices --> ce-choice
+  ce-price-choice --> ce-choice
+  ce-price-selector --> ce-choice
   style ce-choice fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

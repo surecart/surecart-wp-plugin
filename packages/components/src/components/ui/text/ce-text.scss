@@ -1,0 +1,15 @@
+:host {
+  display: block;
+  --font-size: var(--font-size, var(--ce-font-size-medium));
+  --font-weight: var(--font-size, var(--ce-font-weight-normal));
+  --line-height: var(--font-size, var(--ce-line-height-medium));
+  --color: var(--color, inherit);
+}
+
+.title {
+  margin: 0;
+  font-size: var(--font-size);
+  font-weight: var(--font-weight);
+  line-height: var(--line-height);
+  color: var(--color);
+}

@@ -1,3 +1,6 @@
 :host {
   display: block;
 }
+ce-block-ui {
+  z-index: 3;
+}

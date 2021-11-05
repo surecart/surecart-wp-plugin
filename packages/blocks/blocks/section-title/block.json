@@ -1,0 +1,23 @@
+{
+  "apiVersion": 2,
+	"name": "checkout-engine/section-title",
+	"title": "Section Title",
+  "description": "Displays a section title",
+	"category": "layout",
+  "keywords": ["title", "text", "section", "checkout"],
+  "supports": {
+    "reusable": false,
+		"html": false
+  },
+	"attributes": {
+    "text": {
+			"type": "string"
+		},
+    "description": {
+			"type": "string"
+		},
+    "tag": {
+      "type": "string"
+    }
+	}
+}

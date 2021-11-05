@@ -34,17 +34,19 @@
 ### Used by
 
  - [ce-coupon-form](../../controllers/coupon-form)
+ - [ce-line-item-total](../../controllers/line-item-total)
  - [ce-line-items](../../controllers/line-items)
- - [ce-price-choices](../../controllers/price-chooser)
- - [ce-line-item-total](../../controllers/total)
+ - [ce-price-choice](../../controllers/price-choice)
+ - [ce-price-selector](../../controllers/price-selector)
 
 ### Graph
 ```mermaid
 graph TD;
   ce-coupon-form --> ce-skeleton
-  ce-line-items --> ce-skeleton
-  ce-price-choices --> ce-skeleton
   ce-line-item-total --> ce-skeleton
+  ce-line-items --> ce-skeleton
+  ce-price-choice --> ce-skeleton
+  ce-price-selector --> ce-skeleton
   style ce-skeleton fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

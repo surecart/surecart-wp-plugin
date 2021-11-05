@@ -2,7 +2,7 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { receipt as icon } from '@wordpress/icons';
+import { store as icon } from '@wordpress/icons';
 
 /**
  * Internal dependencies
@@ -10,13 +10,8 @@ import { receipt as icon } from '@wordpress/icons';
 import edit from './edit';
 import save from './save';
 import metadata from './block.json';
-import '../../style.scss';
-import './store';
 
-const { name } = metadata;
-
-export { metadata, name };
-
+export { metadata };
 export const settings = {
 	icon,
 	edit,

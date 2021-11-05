@@ -9,17 +9,15 @@ registerBlockCollection( 'checkout-engine', {
 	title: __( 'Checkout Engine', 'checkout_engine' ),
 } );
 
-// sections
-import * as pricingSection from './blocks/sections/pricing-section';
-import * as paymentSection from './blocks/sections/payment-section';
-import * as contactSection from './blocks/sections/contact-section';
-
 // blocks
 import * as checkout from './blocks/checkout';
 import * as section from './blocks/section';
 import * as email from './blocks/email';
 import * as total from './blocks/total';
 import * as subtotal from './blocks/subtotal';
+import * as priceSelector from './blocks/price-selector';
+import * as priceChoice from './blocks/price-choice';
+import * as title from './blocks/section-title';
 import * as totals from './blocks/totals';
 import * as name from './blocks/name';
 import * as payment from './blocks/payment';
@@ -36,8 +34,7 @@ import * as switchBlock from './blocks/switch';
 
 export const BLOCK_PARENTS = [
 	'core/columns',
-	'checkout-engine/form-row',
-	'checkout-engine/form-section',
+	'checkout-engine/form',
 	'checkout-engine/checkout-form',
 ];
 
@@ -45,17 +42,18 @@ export const ALLOWED_BLOCKS = [
 	'core/spacer',
 	'core/columns',
 	'checkout-engine/input',
+	'checkout-engine/price-selector',
 	'checkout-engine/checkbox',
 	'checkout-engine/divider',
 	'checkout-engine/button',
 	'checkout-engine/email',
 	'checkout-engine/switch',
-	'checkout-engine/form-row',
 	'checkout-engine/name',
 	'checkout-engine/payment',
 	'checkout-engine/pricing-section',
 	'checkout-engine/totals',
-	'checkout-engine/form-section',
+	'checkout-engine/form',
+	'checkout-engine/section-title',
 	'checkout-engine/submit',
 ];
 
@@ -91,15 +89,15 @@ export const registerCheckoutEngineBlocks = () => {
 	[
 		checkout,
 		section,
-		pricingSection,
 		totals,
-		paymentSection,
-		contactSection,
+		title,
 		submit,
 		payment,
+		paymentRequest,
+		priceSelector,
+		priceChoice,
 		coupon,
 		lineItems,
-		paymentRequest,
 		button,
 		form,
 		input,

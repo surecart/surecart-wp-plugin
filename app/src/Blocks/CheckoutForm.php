@@ -8,12 +8,33 @@ use CheckoutEngine\Concerns\HasBlockTheme;
  * Checkout block
  */
 class CheckoutForm extends Block {
+
 	/**
 	 * Block name
 	 *
 	 * @var string
 	 */
 	protected $name = 'checkout-form';
+
+	/**
+	 * Register the block for dynamic output
+	 *
+	 * @param \Pimple\Container $container Service container.
+	 *
+	 * @return void
+	 */
+	public function register( $container ) {
+		$this->container = $container;
+
+		$file = plugin_dir_path( CHECKOUT_ENGINE_PLUGIN_FILE ) . 'packages/blocks/blocks/checkout';
+
+		register_block_type(
+			$file,
+			[
+				'render_callback' => [ $this, 'render' ],
+			]
+		);
+	}
 
 	/**
 	 * Render the block
@@ -39,12 +60,12 @@ class CheckoutForm extends Block {
 			// WP_DEBUG_DISPLAY must only be honored when WP_DEBUG. This precedent
 			// is set in `wp_debug_mode()`.
 			$is_debug = defined( 'WP_DEBUG' ) && WP_DEBUG &&
-			defined( 'WP_DEBUG_DISPLAY' ) && WP_DEBUG_DISPLAY;
+				defined( 'WP_DEBUG_DISPLAY' ) && WP_DEBUG_DISPLAY;
 
 			return $is_debug ?
-			// translators: Visible only in the front end, this warning takes the place of a faulty block.
-			__( '[block rendering halted]' ) :
-			'';
+				// translators: Visible only in the front end, this warning takes the place of a faulty block.
+				__( '[block rendering halted]' ) :
+				'';
 		}
 
 		if ( 'publish' !== $form->post_status || ! empty( $form->post_password ) ) {

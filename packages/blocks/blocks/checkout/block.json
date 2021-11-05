@@ -1,4 +1,6 @@
 {
+  "$schema": "https://json.schemastore.org/block.json",
+  "apiVersion": 2,
 	"name": "checkout-engine/checkout-form",
 	"title": "Checkout Form",
   "description": "Display a checkout form",
@@ -14,12 +16,6 @@
     },
     "title": {
       "type": "string"
-    },
-    "choice_type": {
-      "enum": [ "all", "multiple", "single" ]
-    },
-    "prices" : {
-      "type": "array"
     }
 	}
 }

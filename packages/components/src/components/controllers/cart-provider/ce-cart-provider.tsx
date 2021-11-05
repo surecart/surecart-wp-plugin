@@ -59,7 +59,7 @@ export class CeCartProvider {
   /** Batch process items to sync before sending */
   processSyncItems() {
     // get existing line item data.
-    let existingData = convertLineItemsToLineItemData(this.checkoutSession.line_items);
+    let existingData = convertLineItemsToLineItemData(this?.checkoutSession?.line_items || []);
 
     const map = {
       toggle: this.toggleItem,

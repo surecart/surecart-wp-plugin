@@ -7,19 +7,19 @@
 
 ## Properties
 
-| Property          | Attribute | Description | Type                                                                                 | Default     |
-| ----------------- | --------- | ----------- | ------------------------------------------------------------------------------------ | ----------- |
-| `checkoutSession` | --        |             | `CheckoutSession`                                                                    | `undefined` |
-| `edit`            | `edit`    |             | `boolean`                                                                            | `true`      |
-| `lineItemData`    | --        |             | `LineItemData[]`                                                                     | `undefined` |
-| `state`           | `state`   |             | `"draft" \| "failure" \| "finalized" \| "idle" \| "loading" \| "paid" \| "updating"` | `undefined` |
+| Property          | Attribute | Description | Type              | Default     |
+| ----------------- | --------- | ----------- | ----------------- | ----------- |
+| `checkoutSession` | --        |             | `CheckoutSession` | `undefined` |
+| `edit`            | `edit`    |             | `boolean`         | `true`      |
+| `lineItemData`    | --        |             | `LineItemData[]`  | `undefined` |
+| `loading`         | `loading` |             | `boolean`         | `undefined` |
 
 
 ## Events
 
-| Event              | Description | Type                                           |
-| ------------------ | ----------- | ---------------------------------------------- |
-| `ceUpdateLineItem` |             | `CustomEvent<{ id: string; amount: number; }>` |
+| Event              | Description | Type                                         |
+| ------------------ | ----------- | -------------------------------------------- |
+| `ceUpdateLineItem` |             | `CustomEvent<{ id: string; data: Object; }>` |
 
 
 ## Dependencies

@@ -27,12 +27,16 @@
 
 ### Used by
 
- - [ce-price-choices](../../controllers/price-chooser)
+ - [ce-price-choice](../../controllers/price-choice)
+ - [ce-price-selector](../../controllers/price-selector)
+ - [ce-total](../../controllers/ce-total)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-price-choices --> ce-format-number
+  ce-price-choice --> ce-format-number
+  ce-price-selector --> ce-format-number
+  ce-total --> ce-format-number
   style ce-format-number fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

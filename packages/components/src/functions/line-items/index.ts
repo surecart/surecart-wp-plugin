@@ -87,7 +87,7 @@ export const getLineItemByPriceId = (line_items: RecursivePartial<lineItems>, pr
 export const isProductInCheckoutSession = (product: RecursivePartial<Product>, checkoutSession: CheckoutSession) => {
   const prices = getLineItemPrices(checkoutSession?.line_items);
   if (!prices?.length) return false;
-  return !!prices.find(price => price?.product?.id === product.id);
+  return !!prices.find(price => (price?.product as Product)?.id === product.id);
 };
 
 /**

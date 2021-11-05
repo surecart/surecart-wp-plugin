@@ -195,10 +195,10 @@ ce-button-group > ce-tooltip > ce-button.ce-focus {
   --ce-button-font-size-medium: var(--ce-font-size-medium);
   --ce-button-font-size-large: var(--ce-font-size-large);
   --ce-form-row-spacing: var(--ce-spacing-medium);
-  --ce-form-section-font-weight: var(--ce-font-weight-normal);
-  --ce-form-section-font-size: var(--ce-font-size-large);
-  --ce-form-section-spacing: var(--ce-spacing-xxx-large);
-  --ce-form-section-title-spacing: var(--ce-spacing-large);
+  --ce-form-title-font-weight: var(--ce-font-weight-semibold);
+  --ce-form-title-font-size: var(--ce-font-size-large);
+  --ce-form-title-description-color: var(--ce-color-gray-500);
+  --ce-form-title-description-size: var(--ce-font-size-medium);
   --ce-choice-background-color: var(--ce-color-white);
   --ce-choice-border: solid var(--ce-input-border-width) var(--ce-input-border-color);
   --ce-choice-box-shadow: var(--ce-input-box-shadow);

@@ -4,6 +4,7 @@
   align-items: stretch;
   justify-content: stretch;
   width: 100%;
+  min-width: 0;
 }
 
 .choice {
@@ -138,7 +139,8 @@
   .choice__label {
     display: flex;
     justify-content: space-between;
-    flex: wrap;
+    flex-wrap: wrap;
+    gap: 0.5em;
   }
   .choice__price {
     text-align: right;
@@ -159,18 +161,11 @@
   display: flex;
   flex-direction: column;
   gap: 0.2em;
+  flex: 1 0 200px;
 }
 
 .choice__price {
   display: block;
   white-space: nowrap;
   margin-top: var(--ce-spacing-small);
-}
-
-.choice--has-description {
-  .choice__price,
-  .choice__text {
-    // display: flex;
-    // flex-direction: column;
-  }
 }

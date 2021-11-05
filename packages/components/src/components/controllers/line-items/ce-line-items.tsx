@@ -1,6 +1,6 @@
 import { Component, h, Prop, Event, EventEmitter } from '@stencil/core';
 
-import { CheckoutSession, LineItem, LineItemData } from '../../../types';
+import { CheckoutSession, LineItem, LineItemData, Product } from '../../../types';
 import { openWormhole } from 'stencil-wormhole';
 
 @Component({
@@ -40,7 +40,7 @@ export class CeLineItems {
             <ce-product-line-item
               key={item.id}
               imageUrl={item?.price?.metadata?.wp_attachment_src}
-              name={`${item?.price?.product?.name} \u2013 ${item?.price?.name}`}
+              name={`${(item?.price?.product as Product)?.name} \u2013 ${item?.price?.name}`}
               edit={this.edit}
               quantity={item.quantity}
               amount={item.subtotal_amount}

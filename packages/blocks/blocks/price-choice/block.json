@@ -1,0 +1,34 @@
+{
+  "apiVersion": 2,
+	"name": "checkout-engine/price-choice",
+	"title": "Price Choice",
+  "description": "Displays a price choice for a product",
+	"category": "layout",
+	"parent": [ "checkout-engine/price-selector" ],
+  "keywords": ["price", "product", "choice", "checkout"],
+  "supports": {
+    "reusable": false,
+		"html": false
+  },
+	"attributes": {
+    "price_id": {
+			"type": "string"
+		},
+    "label" : {
+      "type": "string"
+    },
+    "description" : {
+      "type": "string"
+    },
+    "quantity": {
+			"type": "number"
+		},
+		"type": {
+			"type": "string",
+			"default": "radio"
+		},
+    "checked": {
+			"type": "boolean"
+		}
+	}
+}

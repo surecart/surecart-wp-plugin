@@ -1,5 +1,5 @@
 import { Component, h, Prop, Element, State, Watch, Listen } from '@stencil/core';
-import { Price, Product, Coupon, CheckoutSession, Customer, LineItemData, Keys, ChoiceType, PriceChoice, LineItemsData } from '../../../types';
+import { Coupon, CheckoutSession, Customer, LineItemData, Keys, ChoiceType, PriceChoice, LineItemsData, Prices, Products } from '../../../types';
 import { handleInputs } from './functions';
 import { getSessionId } from './helpers/session';
 import { getPricesAndProducts } from '../../../services/fetch';
@@ -54,10 +54,10 @@ export class CECheckout {
   @Prop() i18n: Object;
 
   /** Stores fetched prices for use throughout component.  */
-  @State() pricesEntities: Array<Price>;
+  @State() pricesEntities: Prices = {};
 
   /** Stores fetched products for use throughout component.  */
-  @State() productsEntities: Array<Product>;
+  @State() productsEntities: Products = {};
 
   /** Stores the customer. */
   @State() customer: Customer;
@@ -94,6 +94,8 @@ export class CECheckout {
     choices: [],
   };
 
+  observer = null;
+
   /** Watch choices and fetch if changed */
   @Watch('prices')
   async handlePricesChange() {
@@ -111,13 +113,6 @@ export class CECheckout {
   handlePayError() {
     this.makeDraft();
   }
-
-  /** Toggle an individual line item */
-  // @Listen('ceToggleLineItem')
-  // handleLineItemToggle(e) {
-  //   e.detail = [e.detail];
-  //   this.handleLineItemsToggle(e);
-  // }
 
   /** Handles coupon updates. */
   @Listen('ceApplyCoupon')
@@ -164,6 +159,23 @@ export class CECheckout {
   handleComplete(val) {
     if (val && this.successUrl) {
       window.location.href = addQueryArgs(this.successUrl, { checkout_session: this.checkoutSession.id });
+    }
+  }
+
+  @Listen('ceAddEntities')
+  handleAddEntities(e) {
+    const { products, prices } = e.detail;
+    if (Object.keys(products?.length || {})) {
+      this.productsEntities = {
+        ...this.productsEntities,
+        ...products,
+      };
+    }
+    if (Object.keys(prices?.length || {})) {
+      this.pricesEntities = {
+        ...this.pricesEntities,
+        ...prices,
+      };
     }
   }
 
@@ -220,16 +232,17 @@ export class CECheckout {
 
   async updateSessionLineItems(line_items) {
     const { send } = this._stateService;
-    if (this.checkoutState.value !== 'draft') return;
+
     try {
       send('FETCH');
       this.checkoutSession = (await createOrUpdateSession({
-        id: this.checkoutSession.id,
+        id: this.checkoutSession?.id,
         data: {
           currency: this.currencyCode || 'usd',
           line_items,
         },
       })) as CheckoutSession;
+      console.log(this.checkoutSession.line_items.data);
       send('RESOLVE');
     } catch (e) {
       send('REJECT');
@@ -301,6 +314,25 @@ export class CECheckout {
     };
   }
 
+  /** Looks through children and finds items needed for initial session. */
+  getChoicesForSession() {
+    const elements = this.el.querySelectorAll('[price-id]') as any;
+    let line_items = [];
+
+    elements.forEach(el => {
+      if (el.checked) {
+        line_items.push({
+          quantity: el.quantity || 1,
+          price_id: el.priceId,
+        });
+      }
+    });
+
+    if (line_items?.length) {
+      return this.updateSessionLineItems(line_items);
+    }
+  }
+
   componentWillLoad() {
     // Start state machine.
     this._stateService.subscribe(state => (this.checkoutState = state));
@@ -309,10 +341,8 @@ export class CECheckout {
     // @ts-ignore
     Universe.create(this, this.state());
 
-    // fetch products
-    this.fetchPrices();
-    // get or create session
-    this.createOrUpdateSession();
+    // get existing choices for session.
+    this.getChoicesForSession();
   }
 
   /** Remove state machine on disconnect. */
@@ -389,24 +419,24 @@ export class CECheckout {
   }
 
   render() {
-    if (!this.complete && this.checkoutSession?.status === 'paid') {
-      return (
-        <ce-card>
-          <ce-alert type="success" open>
-            <span slot="title">Session Expired.</span>
-            Please reload the page.
-          </ce-alert>
-        </ce-card>
-      );
-    }
+    // if (!this.complete && this.checkoutSession?.status === 'paid') {
+    //   return (
+    //     <ce-card>
+    //       <ce-alert type="success" open>
+    //         <span slot="title">Session Expired.</span>
+    //         Please reload the page.
+    //       </ce-alert>
+    //     </ce-card>
+    //   );
+    // }
 
-    if (this.expired) {
-      return (
-        <ce-block-ui>
-          <div>Please refresh the page.</div>
-        </ce-block-ui>
-      );
-    }
+    // if (this.expired) {
+    //   return (
+    //     <ce-block-ui>
+    //       <div>Please refresh the page.</div>
+    //     </ce-block-ui>
+    //   );
+    // }
 
     return (
       <div

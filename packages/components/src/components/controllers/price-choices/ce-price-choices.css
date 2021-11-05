@@ -1,12 +1,6 @@
-:host {
+ce-price-choices {
   display: block;
-}
-
-.price-choices {
   position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: var(--ce-form-row-spacing, 0.75em);
 }
 
 ce-block-ui {

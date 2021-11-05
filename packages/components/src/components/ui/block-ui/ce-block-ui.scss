@@ -23,4 +23,8 @@
     background: var(--ce-color-white);
     opacity: var(--ce-block-ui-opacity, 0.65);
   }
+
+  &.transparent:after {
+    background: transparent;
+  }
 }

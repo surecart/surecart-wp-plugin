@@ -1,0 +1,29 @@
+{
+  "apiVersion": 2,
+	"name": "checkout-engine/price-selector",
+	"title": "Price Selector",
+  "description": "Displays a selector for product prices.",
+	"category": "layout",
+  "keywords": ["price", "product", "choice", "checkout"],
+  "supports": {
+    "reusable": false,
+		"html": false
+  },
+	"attributes": {
+    "label": {
+			"type": "string"
+		},
+    "choices": {
+			"type": "array",
+      "default": []
+		},
+		"type": {
+			"type": "string",
+			"default": "radio"
+		},
+		"columns": {
+			"type": "number",
+			"default": 1
+		}
+	}
+}
