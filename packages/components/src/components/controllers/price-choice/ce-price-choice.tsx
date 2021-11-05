@@ -115,7 +115,7 @@ export class CePriceChoice {
   render() {
     if (this.loading) {
       return (
-        <ce-choice name="loading" checked={this.checked} disabled>
+        <ce-choice name="loading" disabled>
           <ce-skeleton style={{ width: '60px', display: 'inline-block' }}></ce-skeleton>
           <ce-skeleton style={{ width: '80px', display: 'inline-block' }} slot="price"></ce-skeleton>
           {this.description && <ce-skeleton style={{ width: '120px', display: 'inline-block' }} slot="description"></ce-skeleton>}

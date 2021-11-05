@@ -13,11 +13,21 @@ export class CeLineItems {
   @Prop() loading: boolean;
   @Prop() lineItemData: Array<LineItemData>;
   @Prop() edit: boolean = true;
+  @Prop() removeable: boolean = true;
 
-  @Event() ceUpdateLineItem: EventEmitter<{ id: string; data: Object }>;
+  /** Update the line item. */
+  @Event() ceUpdateLineItem: EventEmitter<LineItemData>;
 
+  /** Remove the line item. */
+  @Event() ceRemoveLineItem: EventEmitter<LineItemData>;
+
+  /** Update quantity for this line item. */
   updateQuantity(item: LineItem, quantity: number) {
-    this.ceUpdateLineItem.emit({ id: item.id, data: { quantity } });
+    this.ceUpdateLineItem.emit({ price_id: item.price.id, quantity });
+  }
+
+  removeLineItem(item: LineItem) {
+    this.ceRemoveLineItem.emit({ price_id: item.price.id, quantity: 1 });
   }
 
   render() {
@@ -42,11 +52,13 @@ export class CeLineItems {
               imageUrl={item?.price?.metadata?.wp_attachment_src}
               name={`${(item?.price?.product as Product)?.name} \u2013 ${item?.price?.name}`}
               edit={this.edit}
+              isRemovable={this.removeable}
               quantity={item.quantity}
-              amount={item.subtotal_amount}
+              amount={item.price.amount}
               currency={this.checkoutSession?.currency}
               interval={item.price.recurring_interval ? `${item.price.recurring_interval}` : `once`}
               onCeUpdateQuantity={e => this.updateQuantity(item, e.detail)}
+              onCeRemove={() => this.removeLineItem(item)}
             ></ce-product-line-item>
           );
         })}

@@ -1,4 +1,5 @@
-import { Component, h, Prop, Element } from '@stencil/core';
+import { Component, h, Prop, Element, Watch, State } from '@stencil/core';
+import { openWormhole } from 'stencil-wormhole';
 
 @Component({
   tag: 'ce-form-control',
@@ -8,15 +9,43 @@ import { Component, h, Prop, Element } from '@stencil/core';
 export class CEFormControl {
   @Element() el: HTMLCeFormControlElement;
 
+  /** Size of the label */
   @Prop({ reflect: true }) size: 'small' | 'medium' | 'large' = 'medium';
+
+  /** Name for the input. Used for validation errors. */
+  @Prop() name: string;
+
+  /** Display server-side validation errors. */
+  @Prop() errors: any;
+
+  /** Show the label. */
   @Prop() showLabel: boolean = true;
+
+  /** Input label. */
   @Prop() label: string;
+
+  /** Input label id. */
   @Prop() labelId: string;
+
+  /** Input id. */
   @Prop() inputId: string;
+
+  /** Whether the input is required. */
   @Prop() required: boolean = false;
-  @Prop({ mutable: true }) errorMessage: string = '';
+
+  /** Help text */
   @Prop() help: string;
+
+  /** Help id */
   @Prop() helpId: string;
+
+  /** Store the error message */
+  @State() errorMessage: string;
+
+  @Watch('errors')
+  handleErrors() {
+    this.errorMessage = this?.errors?.[this?.name];
+  }
 
   render() {
     return (
@@ -53,3 +82,5 @@ export class CEFormControl {
     );
   }
 }
+
+openWormhole(CEFormControl, ['errors']);

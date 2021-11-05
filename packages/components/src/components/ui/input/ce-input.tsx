@@ -223,7 +223,7 @@ export class CEInput {
           inputId={this.inputId}
           helpId={this.helpId}
           labelId={this.labelId}
-          errorMessage={this.errorMessage}
+          name={this.name}
         >
           <div
             part="base"

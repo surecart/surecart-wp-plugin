@@ -2,14 +2,11 @@ import { Component, h, Prop, Element, State, Watch, Listen } from '@stencil/core
 import { Coupon, CheckoutSession, Customer, LineItemData, Keys, ChoiceType, PriceChoice, LineItemsData, Prices, Products } from '../../../types';
 import { handleInputs } from './functions';
 import { getSessionId } from './helpers/session';
-import { getPricesAndProducts } from '../../../services/fetch';
-import { calculateInitialLineItems } from '../../../functions/line-items';
-import { getOrCreateSession, createOrUpdateSession, finalizeSession } from '../../../services/session/index';
+import { createOrUpdateSession, finalizeSession, getSession } from '../../../services/session/index';
 import { Universe } from 'stencil-wormhole';
 import { addQueryArgs } from '@wordpress/url';
 import { interpret } from '@xstate/fsm';
 import { checkoutMachine } from './helpers/checkout-machine';
-import { getChoicePrices } from '../../../functions/choices';
 
 @Component({
   tag: 'ce-checkout',
@@ -96,12 +93,6 @@ export class CECheckout {
 
   observer = null;
 
-  /** Watch choices and fetch if changed */
-  @Watch('prices')
-  async handlePricesChange() {
-    this.fetchPrices();
-  }
-
   @Listen('cePaid')
   async handlePaid() {
     this.setState('PAID');
@@ -118,9 +109,8 @@ export class CECheckout {
   @Listen('ceApplyCoupon')
   async handleCouponApply(e) {
     const promotion_code = e.detail;
-    const { send } = this._stateService;
     try {
-      send('FETCH');
+      this.setState('FETCH');
       this.checkoutSession = await createOrUpdateSession({
         id: this.checkoutSession.id,
         data: {
@@ -129,9 +119,9 @@ export class CECheckout {
           },
         },
       });
-      send('REJECT');
+      this.setState('REJECT');
     } finally {
-      send('REJECT');
+      this.setState('REJECT');
     }
   }
 
@@ -187,11 +177,9 @@ export class CECheckout {
   async handleFormSubmit(e) {
     this.handleFormChange(e);
 
-    const { send } = this._stateService;
-
     // first validate server-side and get key
     try {
-      send('UPDATING');
+      this.setState('UPDATING');
       this.checkoutSession = await finalizeSession({
         id: this.checkoutSession.id,
         data: {
@@ -200,7 +188,7 @@ export class CECheckout {
         },
         processor: 'stripe',
       });
-      // send('FINALIZE');
+      // this.setState('FINALIZE');
       // TODO: process payment with token
     } catch (e) {
       if (e?.code === 'checkout_session.invalid_status_transition') {
@@ -219,22 +207,19 @@ export class CECheckout {
   }
 
   async makeDraft() {
-    // this.setState('DRAFT');
-    // await createOrUpdateSession({
-    //   id: this.checkoutSession.id,
-    //   data: {
-    //     ...this.getSessionSaveData(),
-    //     status: 'draft',
-    //   },
-    // });
-    // this.setState('RESOLVE');
+    this.setState('DRAFT');
+    await createOrUpdateSession({
+      id: this.checkoutSession.id,
+      data: {
+        ...this.getSessionSaveData(),
+      },
+    });
+    this.setState('RESOLVE');
   }
 
   async updateSessionLineItems(line_items) {
-    const { send } = this._stateService;
-
     try {
-      send('FETCH');
+      this.setState('FETCH');
       this.checkoutSession = (await createOrUpdateSession({
         id: this.checkoutSession?.id,
         data: {
@@ -242,10 +227,9 @@ export class CECheckout {
           line_items,
         },
       })) as CheckoutSession;
-      console.log(this.checkoutSession.line_items.data);
-      send('RESOLVE');
+      this.setState('RESOLVE');
     } catch (e) {
-      send('REJECT');
+      this.setState('REJECT');
       this.handleErrorResponse(e);
       window.localStorage.removeItem(this.el.id);
     }
@@ -257,34 +241,32 @@ export class CECheckout {
     // this.createOrUpdateSession();
   }
 
-  async createOrUpdateSession() {
-    const { send } = this._stateService;
-    const id = getSessionId(this.el.id, this.checkoutSession, true);
-    const line_items = calculateInitialLineItems(this.prices, this.choiceType);
+  // async createOrUpdateSession() {
+  //   const id = getSessionId(this.el.id, this.checkoutSession, true);
+  //   const line_items = calculateInitialLineItems(this.prices, this.choiceType);
 
-    send('FETCH');
+  //   this.setState('FETCH');
 
-    if (!line_items?.length) {
-      send('RESOLVE');
-      return;
-    }
+  //   if (!line_items?.length) {
+  //     this.setState('RESOLVE');
+  //     return;
+  //   }
 
-    try {
-      this.checkoutSession = (await createOrUpdateSession({
-        id,
-        data: {
-          currency: this.currencyCode || 'usd',
-          line_items,
-        },
-      })) as CheckoutSession;
-      send('RESOLVE');
-    } catch (e) {
-      send('REJECT');
-      this.handleErrorResponse(e);
-      window.localStorage.removeItem(this.el.id);
-      // this.getOrCreateSession();
-    }
-  }
+  //   try {
+  //     this.checkoutSession = (await createOrUpdateSession({
+  //       id,
+  //       data: {
+  //         currency: this.currencyCode || 'usd',
+  //         line_items,
+  //       },
+  //     })) as CheckoutSession;
+  //     this.setState('RESOLVE');
+  //   } catch (e) {
+  //     this.setState('REJECT');
+  //     this.handleErrorResponse(e);
+  //     window.localStorage.removeItem(this.el.id);
+  //   }
+  // }
 
   /**
    * When we have a checkout session, we are done loading.
@@ -292,7 +274,6 @@ export class CECheckout {
   @Watch('checkoutSession')
   handleCheckoutSessionChange(val) {
     if (val?.id) {
-      this.loaded.session = true; // session loaded
       localStorage.setItem(this.el.id, val.id);
     }
     if (val.status === 'paid') {
@@ -315,9 +296,20 @@ export class CECheckout {
   }
 
   /** Looks through children and finds items needed for initial session. */
-  getChoicesForSession() {
-    const elements = this.el.querySelectorAll('[price-id]') as any;
+  getInitialSession() {
     let line_items = [];
+
+    // add prices that are set with form.
+    if (this.prices.length) {
+      line_items = this.prices.map(price => {
+        return {
+          price_id: price.id,
+          quantity: price.quantity,
+        };
+      });
+    }
+
+    const elements = this.el.querySelectorAll('[price-id]') as any;
 
     elements.forEach(el => {
       if (el.checked) {
@@ -341,8 +333,14 @@ export class CECheckout {
     // @ts-ignore
     Universe.create(this, this.state());
 
-    // get existing choices for session.
-    this.getChoicesForSession();
+    // find existing session.
+    const id = getSessionId(this.el.id, this.checkoutSession);
+
+    if (id) {
+      this.getSession(id);
+    } else {
+      this.getInitialSession();
+    }
   }
 
   /** Remove state machine on disconnect. */
@@ -360,42 +358,16 @@ export class CECheckout {
     }
   }
 
-  async getOrCreateSession() {
-    const { send } = this._stateService;
-    const id = window.localStorage.getItem(this.el.id);
-
+  async getSession(id) {
     try {
-      send('FETCH');
-      this.checkoutSession = (await getOrCreateSession({
-        id,
-        data: {
-          currency: this.currencyCode || 'usd',
-          line_items: calculateInitialLineItems(this.prices, this.choiceType),
-        },
-      })) as CheckoutSession;
-      send('RESOLVE');
+      this.setState('FETCH');
+      this.checkoutSession = (await getSession(id)) as CheckoutSession;
+      this.setState('RESOLVE');
     } catch (e) {
-      send('REJECT');
       this.handleErrorResponse(e);
       window.localStorage.removeItem(this.el.id);
-      // this.getOrCreateSession();
-    }
-  }
-
-  async fetchPrices() {
-    const ids = getChoicePrices(this.prices).map(p => p.id);
-    if (!ids.length) return;
-    try {
-      const { products, prices } = await getPricesAndProducts({
-        active: true,
-        ids,
-      });
-      this.productsEntities = products;
-      this.pricesEntities = prices;
-    } catch (e) {
-      this.handleErrorResponse(e);
-    } finally {
-      this.loaded.products = true;
+      this.setState('REJECT');
+      this.getInitialSession();
     }
   }
 

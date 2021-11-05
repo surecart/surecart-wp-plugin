@@ -372,14 +372,45 @@ export namespace Components {
         "validate": () => Promise<boolean>;
     }
     interface CeFormControl {
-        "errorMessage": string;
+        /**
+          * Display server-side validation errors.
+         */
+        "errors": any;
+        /**
+          * Help text
+         */
         "help": string;
+        /**
+          * Help id
+         */
         "helpId": string;
+        /**
+          * Input id.
+         */
         "inputId": string;
+        /**
+          * Input label.
+         */
         "label": string;
+        /**
+          * Input label id.
+         */
         "labelId": string;
+        /**
+          * Name for the input. Used for validation errors.
+         */
+        "name": string;
+        /**
+          * Whether the input is required.
+         */
         "required": boolean;
+        /**
+          * Show the label.
+         */
         "showLabel": boolean;
+        /**
+          * Size of the label
+         */
         "size": 'small' | 'medium' | 'large';
     }
     interface CeFormRow {
@@ -587,6 +618,7 @@ export namespace Components {
         "edit": boolean;
         "lineItemData": Array<LineItemData>;
         "loading": boolean;
+        "removeable": boolean;
     }
     interface CeMenu {
     }
@@ -1872,14 +1904,45 @@ declare namespace LocalJSX {
         "onCeFormSubmit"?: (event: CustomEvent<Object>) => void;
     }
     interface CeFormControl {
-        "errorMessage"?: string;
+        /**
+          * Display server-side validation errors.
+         */
+        "errors"?: any;
+        /**
+          * Help text
+         */
         "help"?: string;
+        /**
+          * Help id
+         */
         "helpId"?: string;
+        /**
+          * Input id.
+         */
         "inputId"?: string;
+        /**
+          * Input label.
+         */
         "label"?: string;
+        /**
+          * Input label id.
+         */
         "labelId"?: string;
+        /**
+          * Name for the input. Used for validation errors.
+         */
+        "name"?: string;
+        /**
+          * Whether the input is required.
+         */
         "required"?: boolean;
+        /**
+          * Show the label.
+         */
         "showLabel"?: boolean;
+        /**
+          * Size of the label
+         */
         "size"?: 'small' | 'medium' | 'large';
     }
     interface CeFormRow {
@@ -2094,7 +2157,15 @@ declare namespace LocalJSX {
         "edit"?: boolean;
         "lineItemData"?: Array<LineItemData>;
         "loading"?: boolean;
-        "onCeUpdateLineItem"?: (event: CustomEvent<{ id: string; data: Object }>) => void;
+        /**
+          * Remove the line item.
+         */
+        "onCeRemoveLineItem"?: (event: CustomEvent<LineItemData>) => void;
+        /**
+          * Update the line item.
+         */
+        "onCeUpdateLineItem"?: (event: CustomEvent<LineItemData>) => void;
+        "removeable"?: boolean;
     }
     interface CeMenu {
         "onCeSelect"?: (event: CustomEvent<{ item: HTMLCeMenuItemElement }>) => void;
@@ -2386,6 +2457,10 @@ declare namespace LocalJSX {
           * Product name
          */
         "name"?: string;
+        /**
+          * Emitted when the quantity changes.
+         */
+        "onCeRemove"?: (event: CustomEvent<void>) => void;
         /**
           * Emitted when the quantity changes.
          */

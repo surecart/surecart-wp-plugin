@@ -13,7 +13,7 @@ export class CeCartProvider {
   @Prop() checkoutSession: CheckoutSession;
 
   /** Holds items to sync */
-  @State() syncItems: Array<{ type: 'toggle' | 'add' | 'remove'; payload: LineItemData }> = [];
+  @State() syncItems: Array<{ type: 'toggle' | 'add' | 'remove' | 'update'; payload: LineItemData }> = [];
 
   /** Update line items event */
   @Event() ceUpdateLineItems: EventEmitter<Array<LineItemData>>;
@@ -39,6 +39,13 @@ export class CeCartProvider {
     this.addSyncItem('add', lineItem);
   }
 
+  /** Handle line item add */
+  @Listen('ceUpdateLineItem')
+  handleLineItemUpdate(e: CustomEvent) {
+    const lineItem = e.detail as LineItemData;
+    this.addSyncItem('update', lineItem);
+  }
+
   /** We listen to the syncItems array and run it on the next render in batch */
   @Watch('syncItems')
   async syncItemsHandler(val) {
@@ -52,7 +59,7 @@ export class CeCartProvider {
   }
 
   /** Add item to sync */
-  addSyncItem(type: 'add' | 'remove' | 'toggle', payload: LineItemData) {
+  addSyncItem(type: 'add' | 'remove' | 'toggle' | 'update', payload: LineItemData) {
     this.syncItems = [...this.syncItems, ...[{ type, payload }]];
   }
 
@@ -65,6 +72,7 @@ export class CeCartProvider {
       toggle: this.toggleItem,
       add: this.addItem,
       remove: this.removeItem,
+      update: this.updateItem,
     };
 
     // run existing data through chain of sync updates.
@@ -94,6 +102,18 @@ export class CeCartProvider {
   removeItem(item: LineItemData, existingLineData: Array<LineItemData>) {
     if (!item.price_id) return existingLineData;
     return existingLineData.filter(data => data.price_id !== item.price_id);
+  }
+
+  /** Update the item item */
+  updateItem(item: LineItemData, existingLineData: Array<LineItemData>) {
+    // find existing item.
+    const existingLineItem = existingLineData.findIndex(line => line.price_id === item.price_id);
+    // if we found it, update it
+    if (existingLineItem !== -1) {
+      existingLineData[existingLineItem] = item;
+    }
+
+    return existingLineData;
   }
 
   render() {

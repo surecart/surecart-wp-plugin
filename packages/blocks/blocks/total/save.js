@@ -5,7 +5,7 @@ export default ( { attributes } ) => {
 			class="ce-line-item-total"
 			total="total"
 			size="large"
-			show-currency
+			show-currency="1"
 		>
 			<span slot="description">{ text }</span>
 			<span slot="subscription-title">{ subscription_text || text }</span>

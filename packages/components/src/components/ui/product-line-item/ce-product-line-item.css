@@ -1,3 +1,14 @@
 :host {
   display: block;
 }
+
+.product__description {
+  display: flex;
+  gap: 0.5em;
+  align-items: center;
+}
+
+.price__remove {
+  cursor: pointer;
+  color: var(--ce-color-gray-500);
+}

@@ -9,12 +9,7 @@ import { getQueryArg } from '@wordpress/url';
  *
  * @returns string
  */
-export const getSessionId = (formId, checkoutSession, refresh = false) => {
-  // if we want to get a fresh session, skip
-  if (refresh === true) {
-    return false;
-  }
-
+export const getSessionId = (formId, checkoutSession) => {
   // if we already have an ID set, return that:
   if (checkoutSession?.id) {
     return checkoutSession.id;

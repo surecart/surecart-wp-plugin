@@ -75,7 +75,6 @@ export class CEChoices {
           inputId={this.inputId}
           helpId={this.helpId}
           labelId={this.labelId}
-          errorMessage={this.errorMessage}
         >
           <div part="choices" class="choices__items">
             <slot></slot>
