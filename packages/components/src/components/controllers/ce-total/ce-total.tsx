@@ -18,6 +18,7 @@ export class CeTotal {
 
   render() {
     if (!this.checkoutSession?.currency) return;
+    if (!this.checkoutSession?.line_items?.data?.length) return;
     return <ce-format-number type="currency" currency={this.checkoutSession.currency} value={this.checkoutSession?.[this.session_key[this.total]]}></ce-format-number>;
   }
 }

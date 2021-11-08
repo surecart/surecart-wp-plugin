@@ -1,5 +1,5 @@
 import { Component, h, Prop, Element, State, Watch, Listen } from '@stencil/core';
-import { Coupon, CheckoutSession, Customer, LineItemData, Keys, ChoiceType, PriceChoice, LineItemsData, Prices, Products } from '../../../types';
+import { Coupon, CheckoutSession, Customer, LineItemData, Keys, PriceChoice, LineItemsData, Prices, Products } from '../../../types';
 import { handleInputs } from './functions';
 import { getSessionId } from './helpers/session';
 import { createOrUpdateSession, finalizeSession, getSession } from '../../../services/session/index';
@@ -21,22 +21,22 @@ export class CECheckout {
   @Element() el: HTMLElement;
 
   /** An array of prices to pre-fill in the form. */
-  @Prop() prices: Array<PriceChoice>;
-
-  /** Give a user a choice to switch session prices */
-  @Prop({ attribute: 'choice-type' }) choiceType: ChoiceType = 'all';
+  @Prop() prices: Array<PriceChoice> = [];
 
   /** Currency to use for this checkout. */
   @Prop() currencyCode: string = 'usd';
 
   /** Where to go on success */
-  @Prop() successUrl: string = '';
+  @Prop() persistSession: boolean = true;
 
-  /** Pass line item data to create with session. */
-  @Prop({ mutable: true }) lineItemData: Array<LineItemData>;
+  /** Where to go on success */
+  @Prop() successUrl: string = '';
 
   /** Optionally pass a coupon. */
   @Prop({ mutable: true }) coupon: Coupon;
+
+  /** Stores the current customer */
+  @Prop({ mutable: true }) customer: Customer;
 
   /** Publishable keys for providers */
   @Prop() keys: Keys = {
@@ -56,9 +56,6 @@ export class CECheckout {
   /** Stores fetched products for use throughout component.  */
   @State() productsEntities: Products = {};
 
-  /** Stores the customer. */
-  @State() customer: Customer;
-
   /** Loading states for different parts of the form. */
   @State() checkoutState = checkoutMachine.initialState;
 
@@ -67,9 +64,6 @@ export class CECheckout {
 
   /** Error to display. */
   @State() error: string;
-
-  /** Is the checkout complete? */
-  @State() complete: boolean;
 
   /** Has the users nonce/session expired */
   @State() expired: boolean;
@@ -119,9 +113,9 @@ export class CECheckout {
           },
         },
       });
-      this.setState('REJECT');
-    } finally {
-      this.setState('REJECT');
+      this.setState('RESOLVE');
+    } catch (e) {
+      this.handleErrorResponse(e);
     }
   }
 
@@ -145,7 +139,6 @@ export class CECheckout {
     };
   }
 
-  @Watch('complete')
   handleComplete(val) {
     if (val && this.successUrl) {
       window.location.href = addQueryArgs(this.successUrl, { checkout_session: this.checkoutSession.id });
@@ -155,12 +148,15 @@ export class CECheckout {
   @Listen('ceAddEntities')
   handleAddEntities(e) {
     const { products, prices } = e.detail;
+    // add products.
     if (Object.keys(products?.length || {})) {
       this.productsEntities = {
         ...this.productsEntities,
         ...products,
       };
     }
+
+    // add prices.
     if (Object.keys(prices?.length || {})) {
       this.pricesEntities = {
         ...this.pricesEntities,
@@ -183,19 +179,16 @@ export class CECheckout {
       this.checkoutSession = await finalizeSession({
         id: this.checkoutSession.id,
         data: {
-          ...this.getSessionSaveData(),
           status: 'draft',
         },
         processor: 'stripe',
       });
-      // this.setState('FINALIZE');
       // TODO: process payment with token
     } catch (e) {
       if (e?.code === 'checkout_session.invalid_status_transition') {
         await createOrUpdateSession({
           id: this.checkoutSession.id,
           data: {
-            ...this.getSessionSaveData(),
             status: 'draft',
           },
         });
@@ -207,14 +200,18 @@ export class CECheckout {
   }
 
   async makeDraft() {
-    this.setState('DRAFT');
-    await createOrUpdateSession({
-      id: this.checkoutSession.id,
-      data: {
-        ...this.getSessionSaveData(),
-      },
-    });
-    this.setState('RESOLVE');
+    try {
+      this.setState('UPDATING');
+      await createOrUpdateSession({
+        id: this.checkoutSession.id,
+        data: {
+          status: 'draft',
+        },
+      });
+      this.setState('DRAFT');
+    } catch (e) {
+      this.handleErrorResponse(e);
+    }
   }
 
   async updateSessionLineItems(line_items) {
@@ -229,9 +226,7 @@ export class CECheckout {
       })) as CheckoutSession;
       this.setState('RESOLVE');
     } catch (e) {
-      this.setState('REJECT');
       this.handleErrorResponse(e);
-      window.localStorage.removeItem(this.el.id);
     }
   }
 
@@ -282,25 +277,12 @@ export class CECheckout {
     handleInputs(this.el, val);
   }
 
-  getSessionSaveData() {
-    return {
-      currency: this.currencyCode,
-      email: this.checkoutSession.email,
-      name: this.checkoutSession.name,
-      metadata: this.checkoutSession.metadata,
-      live_mode: false,
-      group_key: this.el.id,
-      line_items: this.lineItemData,
-      ...this.formState,
-    };
-  }
-
   /** Looks through children and finds items needed for initial session. */
   getInitialSession() {
     let line_items = [];
 
-    // add prices that are set with form.
-    if (this.prices.length) {
+    // add prices that are passed into this component.
+    if (this?.prices.length) {
       line_items = this.prices.map(price => {
         return {
           price_id: price.id,
@@ -336,7 +318,7 @@ export class CECheckout {
     // find existing session.
     const id = getSessionId(this.el.id, this.checkoutSession);
 
-    if (id) {
+    if (id && this.persistSession) {
       this.getSession(id);
     } else {
       this.getInitialSession();
@@ -349,13 +331,23 @@ export class CECheckout {
   }
 
   handleErrorResponse(e) {
+    // expired
     if (e?.code === 'rest_cookie_invalid_nonce') {
-      this.expired = true;
+      this.setState('EXPIRE');
       return;
     }
+
+    // something went wrong
     if (e?.message) {
       this.error = e.message;
     }
+
+    // handle curl timeout errors.
+    if (e?.code === 'http_request_failed') {
+      this.error = 'Something went wrong. Please reload the page and try again.';
+    }
+
+    this.setState('REJECT');
   }
 
   async getSession(id) {
@@ -365,9 +357,6 @@ export class CECheckout {
       this.setState('RESOLVE');
     } catch (e) {
       this.handleErrorResponse(e);
-      window.localStorage.removeItem(this.el.id);
-      this.setState('REJECT');
-      this.getInitialSession();
     }
   }
 
@@ -381,34 +370,32 @@ export class CECheckout {
       keys: this.keys,
       error: this.error,
       checkoutSession: this.checkoutSession,
-      choiceType: this.choiceType,
       priceChoices: this.prices,
       products: this.productsEntities,
       prices: this.pricesEntities,
-      lineItemData: this.lineItemData,
       currencyCode: this.currencyCode,
     };
   }
 
   render() {
-    // if (!this.complete && this.checkoutSession?.status === 'paid') {
-    //   return (
-    //     <ce-card>
-    //       <ce-alert type="success" open>
-    //         <span slot="title">Session Expired.</span>
-    //         Please reload the page.
-    //       </ce-alert>
-    //     </ce-card>
-    //   );
-    // }
+    if (this.checkoutState.value === 'paid') {
+      return (
+        <ce-card>
+          <ce-alert type="success" open>
+            <span slot="title">Session Expired.</span>
+            Please reload the page.
+          </ce-alert>
+        </ce-card>
+      );
+    }
 
-    // if (this.expired) {
-    //   return (
-    //     <ce-block-ui>
-    //       <div>Please refresh the page.</div>
-    //     </ce-block-ui>
-    //   );
-    // }
+    if (this.checkoutState.value === 'expired') {
+      return (
+        <ce-block-ui>
+          <div>Please refresh the page.</div>
+        </ce-block-ui>
+      );
+    }
 
     return (
       <div

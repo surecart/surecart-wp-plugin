@@ -10,5 +10,6 @@
 
 .price__remove {
   cursor: pointer;
+  line-height: 0;
   color: var(--ce-color-gray-500);
 }

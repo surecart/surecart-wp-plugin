@@ -138,9 +138,6 @@ export default ( { attributes, setAttributes, isSelected } ) => {
 				description={ description }
 				checked={ checked }
 				quantity={ quantity }
-				onClick={ ( e ) => {
-					e.preventDefault();
-				} }
 			/>
 		</Fragment>
 	);

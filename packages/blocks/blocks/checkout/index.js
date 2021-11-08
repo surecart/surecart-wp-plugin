@@ -3,6 +3,7 @@
  */
 import { __ } from '@wordpress/i18n';
 import { store as icon } from '@wordpress/icons';
+import '../../style.scss';
 
 /**
  * Internal dependencies

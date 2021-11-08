@@ -77,6 +77,7 @@ export default function edit( { clientId, attributes, setAttributes } ) {
 					margin-top: 2em;
 					font-size: ${ font_size }px;
 				` }
+				persistSession={ false }
 				alignment={ align }
 				className={ className }
 				choiceType={ choice_type }

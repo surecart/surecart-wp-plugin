@@ -48,15 +48,15 @@ export default ( { attributes, setAttributes, isSelected, clientId } ) => {
 	);
 
 	const blockProps = useBlockProps( {
-		style: {
-			display: 'block',
-			borderRadius: '4px',
-			transition: 'all 0.2s ease',
-			border:
-				( childSelected || isSelected ) &&
-				'1px dashed rgba(0,0,0,0.35)',
-			padding: childSelected || isSelected ? '2em' : 0,
-		},
+		// style: {
+		// 	display: 'block',
+		// 	borderRadius: '4px',
+		// 	transition: 'all 0.2s ease',
+		// 	border:
+		// 		( childSelected || isSelected ) &&
+		// 		'1px dashed rgba(0,0,0,0.35)',
+		// 	padding: childSelected || isSelected ? '2em' : 0,
+		// },
 	} );
 
 	const { replaceInnerBlocks } = useDispatch( blockEditorStore );

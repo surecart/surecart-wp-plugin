@@ -11,7 +11,6 @@ import { openWormhole } from 'stencil-wormhole';
 export class CeLineItems {
   @Prop() checkoutSession: CheckoutSession;
   @Prop() loading: boolean;
-  @Prop() lineItemData: Array<LineItemData>;
   @Prop() edit: boolean = true;
   @Prop() removeable: boolean = true;
 
@@ -67,4 +66,4 @@ export class CeLineItems {
   }
 }
 
-openWormhole(CeLineItems, ['checkoutSession', 'loading', 'lineItemData'], false);
+openWormhole(CeLineItems, ['checkoutSession', 'loading'], false);

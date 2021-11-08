@@ -1,4 +1,4 @@
-import { Component, h, Prop, State, Event, EventEmitter, Watch } from '@stencil/core';
+import { Component, h, Prop, Event, EventEmitter, Watch } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
 import { isPriceInCheckoutSession } from '../../../functions/line-items';
 import { getPricesAndProducts } from '../../../services/fetch';
@@ -12,6 +12,12 @@ import { CheckoutSession, LineItemData, Price, Prices, Products } from '../../..
 export class CePriceChoice {
   /** Id of the price. */
   @Prop({ reflect: true }) priceId: string;
+
+  /** Stores the price */
+  @Prop({ mutable: true }) price: Price;
+
+  /** Is this loading */
+  @Prop({ mutable: true }) loading: boolean = false;
 
   /** Label for the choice. */
   @Prop() label: string;
@@ -46,15 +52,10 @@ export class CePriceChoice {
   /** Add entities */
   @Event() ceAddEntities: EventEmitter<any>;
 
-  /** Is this loading */
-  @State() loading: boolean = true;
-
-  /** Stores the price */
-  @State() price: Price;
-
   /** Refetch if price changes */
   @Watch('priceId')
   handlePriceIdChage() {
+    if (this.price && this.price?.id === this.priceId) return;
     this.fetchPriceWithProduct();
   }
 
@@ -67,7 +68,9 @@ export class CePriceChoice {
 
   /** Fetch on load */
   componentWillLoad() {
-    this.fetchPriceWithProduct();
+    if (!this.price) {
+      this.fetchPriceWithProduct();
+    }
   }
 
   /** Fetch prices and products */
@@ -124,7 +127,7 @@ export class CePriceChoice {
     }
 
     // we need an active price.
-    if (!this.price || this.price?.archived) return null;
+    if (!this?.price?.id || this.price?.archived) return null;
 
     return (
       <ce-choice

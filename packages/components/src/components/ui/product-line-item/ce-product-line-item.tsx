@@ -53,9 +53,9 @@ export class CeProductLineItem {
           )}
           |
           {this.isRemovable && this.edit && (
-            <span onClick={() => this.ceRemove.emit()}>
-              <TrashIcon class="price__remove" size={18} />
-            </span>
+            <div class="price__remove" onClick={() => this.ceRemove.emit()}>
+              <TrashIcon size={15} strokeWidth={2.5} />
+            </div>
           )}
         </span>
         <span slot="price">

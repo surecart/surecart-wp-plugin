@@ -63,11 +63,24 @@ export class CEChoice {
   @Method()
   async reportValidity() {
     this.invalid = !this.input.checkValidity();
+
+    if (this.type === 'radio') {
+      const choices = this.getAllChoices();
+      if (!choices.some(c => c.checked)) {
+        this.input.setCustomValidity('Please choose one.');
+        this.invalid = !this.input.checkValidity();
+      } else {
+        this.input.setCustomValidity('');
+        this.invalid = !this.input.checkValidity();
+      }
+    }
+
     return this.input.reportValidity();
   }
 
   @Watch('checked')
   handleCheckedChange() {
+    this.input.setCustomValidity('');
     if (this.type === 'radio' && this.checked) {
       this.getSiblingChoices().map(choice => (choice.checked = false));
     }

@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { CheckoutSession, ChoiceItem, ChoiceType, Coupon, Keys, LineItemData, PriceChoice, Prices, Products } from "./types";
+import { CheckoutSession, ChoiceItem, Coupon, Customer, Keys, LineItemData, Price, PriceChoice, Prices, Products } from "./types";
 export namespace Components {
     interface CeAlert {
         /**
@@ -163,10 +163,6 @@ export namespace Components {
          */
         "alignment": 'center' | 'wide' | 'full';
         /**
-          * Give a user a choice to switch session prices
-         */
-        "choiceType": ChoiceType;
-        /**
           * Optionally pass a coupon.
          */
         "coupon": Coupon;
@@ -174,6 +170,10 @@ export namespace Components {
           * Currency to use for this checkout.
          */
         "currencyCode": string;
+        /**
+          * Stores the current customer
+         */
+        "customer": Customer;
         /**
           * Translation object.
          */
@@ -183,9 +183,9 @@ export namespace Components {
          */
         "keys": Keys;
         /**
-          * Pass line item data to create with session.
+          * Where to go on success
          */
-        "lineItemData": Array<LineItemData>;
+        "persistSession": boolean;
         /**
           * An array of prices to pre-fill in the form.
          */
@@ -616,7 +616,6 @@ export namespace Components {
     interface CeLineItems {
         "checkoutSession": CheckoutSession;
         "edit": boolean;
-        "lineItemData": Array<LineItemData>;
         "loading": boolean;
         "removeable": boolean;
     }
@@ -702,6 +701,14 @@ export namespace Components {
          */
         "label": string;
         /**
+          * Is this loading
+         */
+        "loading": boolean;
+        /**
+          * Stores the price
+         */
+        "price": Price;
+        /**
           * Id of the price.
          */
         "priceId": string;
@@ -735,6 +742,10 @@ export namespace Components {
           * Selector label
          */
         "label": string;
+        /**
+          * Required by default
+         */
+        "required": boolean;
     }
     interface CePriceInput {
         /**
@@ -1662,10 +1673,6 @@ declare namespace LocalJSX {
          */
         "alignment"?: 'center' | 'wide' | 'full';
         /**
-          * Give a user a choice to switch session prices
-         */
-        "choiceType"?: ChoiceType;
-        /**
           * Optionally pass a coupon.
          */
         "coupon"?: Coupon;
@@ -1673,6 +1680,10 @@ declare namespace LocalJSX {
           * Currency to use for this checkout.
          */
         "currencyCode"?: string;
+        /**
+          * Stores the current customer
+         */
+        "customer"?: Customer;
         /**
           * Translation object.
          */
@@ -1682,9 +1693,9 @@ declare namespace LocalJSX {
          */
         "keys"?: Keys;
         /**
-          * Pass line item data to create with session.
+          * Where to go on success
          */
-        "lineItemData"?: Array<LineItemData>;
+        "persistSession"?: boolean;
         /**
           * An array of prices to pre-fill in the form.
          */
@@ -2155,7 +2166,6 @@ declare namespace LocalJSX {
     interface CeLineItems {
         "checkoutSession"?: CheckoutSession;
         "edit"?: boolean;
-        "lineItemData"?: Array<LineItemData>;
         "loading"?: boolean;
         /**
           * Remove the line item.
@@ -2242,6 +2252,10 @@ declare namespace LocalJSX {
          */
         "label"?: string;
         /**
+          * Is this loading
+         */
+        "loading"?: boolean;
+        /**
           * Add entities
          */
         "onCeAddEntities"?: (event: CustomEvent<any>) => void;
@@ -2253,6 +2267,10 @@ declare namespace LocalJSX {
           * Toggle line item event
          */
         "onCeRemoveLineItem"?: (event: CustomEvent<LineItemData>) => void;
+        /**
+          * Stores the price
+         */
+        "price"?: Price;
         /**
           * Id of the price.
          */
@@ -2287,6 +2305,10 @@ declare namespace LocalJSX {
           * Selector label
          */
         "label"?: string;
+        /**
+          * Required by default
+         */
+        "required"?: boolean;
     }
     interface CePriceInput {
         /**

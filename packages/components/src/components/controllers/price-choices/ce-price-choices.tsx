@@ -17,10 +17,13 @@ export class CePriceChoices {
   /** Busy */
   @Prop() busy: boolean = false;
 
+  /** Required by default */
+  @Prop() required: boolean = true;
+
   render() {
     return (
       <Fragment>
-        <ce-choices label={this.label} class="loaded price-selector" style={{ '--columns': this.columns.toString() }}>
+        <ce-choices label={this.label} required={this.required} class="loaded price-selector" style={{ '--columns': this.columns.toString() }}>
           <slot />
         </ce-choices>
         {this.busy && <ce-block-ui z-index={4}></ce-block-ui>}

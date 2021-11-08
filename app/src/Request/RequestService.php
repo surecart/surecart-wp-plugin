@@ -93,7 +93,7 @@ class RequestService {
 		$args = wp_parse_args(
 			$args,
 			[
-				'timeout'   => 10,
+				'timeout'   => 20,
 				'sslverify' => true,
 			]
 		);

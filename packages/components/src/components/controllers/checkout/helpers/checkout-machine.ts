@@ -16,6 +16,7 @@ export const checkoutMachine = createMachine({
       on: {
         RESOLVE: 'draft',
         REJECT: 'failure',
+        EXPIRE: 'expired',
       },
     },
     draft: {
@@ -28,12 +29,13 @@ export const checkoutMachine = createMachine({
       on: {
         RESOLVE: 'draft',
         REJECT: 'draft',
+        EXPIRE: 'expired',
       },
     },
     finalized: {
       on: {
         PAYING: 'paying',
-        DRAFT: 'updating',
+        UPDATING: 'updating',
       },
     },
     paying: {
@@ -41,6 +43,7 @@ export const checkoutMachine = createMachine({
         PAID: 'paid',
       },
     },
+    expired: {},
     paid: {},
     failure: {
       on: {
