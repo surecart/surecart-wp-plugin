@@ -53,7 +53,8 @@ export class CEStripeElement {
   }
 
   @Watch('checkoutSession')
-  async confirmCardPayment(val: CheckoutSession) {
+  async confirmPayment(val: CheckoutSession) {
+    console.log(val);
     // must be finalized
     if (val?.status !== 'finalized') return;
     // must be a stripe session
@@ -62,26 +63,53 @@ export class CEStripeElement {
     if (!val?.payment_intent?.external_client_secret) return;
     // must have an external intent id
     if (!val?.payment_intent?.external_intent_id) return;
+    // need an external_type
+    if (!val?.payment_intent?.external_type) return;
     // prevent possible double-charges
     if (this.confirming) return;
 
+    console.log('confirm');
     this.confirming = true;
     try {
-      await this.stripe.confirmCardPayment(val.payment_intent.external_client_secret, {
-        payment_method: {
-          card: this.element,
-          billing_details: {
-            ...(this.checkoutSession.name ? { name: this.checkoutSession?.name } : {}),
-            ...(this.checkoutSession.email ? { email: this.checkoutSession?.email } : {}),
-          },
-        },
-      });
-      this.cePaid.emit();
+      if (val?.payment_intent?.external_type == 'setup') {
+        await this.confirmCardSetup(val.payment_intent.external_client_secret);
+      } else {
+        await this.confirmCardPayment(val.payment_intent.external_client_secret);
+      }
     } catch (e) {
+      console.error(e);
       this.cePayError.emit(e);
     } finally {
       this.confirming = false;
     }
+  }
+
+  /** Confirm card payment */
+  async confirmCardPayment(secret) {
+    console.log('card payment');
+    return this.stripe.confirmCardPayment(secret, {
+      payment_method: {
+        card: this.element,
+        billing_details: {
+          ...(this.checkoutSession.name ? { name: this.checkoutSession?.name } : {}),
+          ...(this.checkoutSession.email ? { email: this.checkoutSession?.email } : {}),
+        },
+      },
+    });
+  }
+
+  /** Confirm card setup. */
+  confirmCardSetup(secret) {
+    console.log('card setup');
+    return this.stripe.confirmCardSetup(secret, {
+      payment_method: {
+        card: this.element,
+        billing_details: {
+          ...(this.checkoutSession.name ? { name: this.checkoutSession?.name } : {}),
+          ...(this.checkoutSession.email ? { email: this.checkoutSession?.email } : {}),
+        },
+      },
+    });
   }
 
   componentDidLoad() {

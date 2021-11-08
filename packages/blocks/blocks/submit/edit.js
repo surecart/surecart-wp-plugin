@@ -86,7 +86,6 @@ export default ( { className, attributes, setAttributes } ) => {
 				submit={ submit }
 				{ ...( full ? { full: true } : {} ) }
 				size={ size }
-				showTotal={ show_total }
 			>
 				<RichText
 					aria-label={ __( 'Button text' ) }

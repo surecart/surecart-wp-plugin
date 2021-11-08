@@ -22,7 +22,7 @@ export class CEOrderSummary {
         >
           <slot />
         </div>
-        {this.empty && <p>Your cart is empty.</p>}
+        {this.empty && !this.loading && <p>Your cart is empty.</p>}
         {this.busy && <ce-block-ui></ce-block-ui>}
       </div>
     );

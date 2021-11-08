@@ -9,6 +9,7 @@ import {
 	PanelRow,
 	TextControl,
 	RangeControl,
+	ToggleControl,
 	RadioControl,
 } from '@wordpress/components';
 import { createBlocksFromInnerBlocksTemplate } from '@wordpress/blocks';
@@ -22,7 +23,8 @@ import {
 } from '@wordpress/block-editor';
 import { useSelect, select, dispatch, useDispatch } from '@wordpress/data';
 
-import { css, jsx } from '@emotion/core';
+import { css, jsx, Global } from '@emotion/core';
+import styles from './editor-styles';
 
 /**
  * Component Dependencies
@@ -132,6 +134,7 @@ export default ( { attributes, setAttributes, isSelected, clientId } ) => {
 
 	return (
 		<Fragment>
+			<Global styles={ styles } />
 			<InspectorControls>
 				<PanelBody title={ __( 'Attributes', 'checkout-engine' ) }>
 					<PanelRow>

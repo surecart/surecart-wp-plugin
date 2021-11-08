@@ -254,6 +254,7 @@ export class CEForm {
    */
   @Method('submit')
   async submit() {
+    console.log('submit');
     let data = await this.getFormJson();
     const isValid = await this.validate();
 

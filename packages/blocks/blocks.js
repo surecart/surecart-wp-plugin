@@ -28,6 +28,7 @@ import * as button from './blocks/button';
 import * as form from './blocks/form';
 import * as submit from './blocks/submit';
 import * as input from './blocks/input';
+import * as password from './blocks/password';
 import * as divider from './blocks/divider';
 import * as checkbox from './blocks/checkbox';
 import * as switchBlock from './blocks/switch';
@@ -42,6 +43,7 @@ export const ALLOWED_BLOCKS = [
 	'core/spacer',
 	'core/columns',
 	'checkout-engine/input',
+	'checkout-engine/password',
 	'checkout-engine/price-selector',
 	'checkout-engine/checkbox',
 	'checkout-engine/divider',
@@ -101,6 +103,7 @@ export const registerCheckoutEngineBlocks = () => {
 		button,
 		form,
 		input,
+		password,
 		divider,
 		switchBlock,
 		checkbox,

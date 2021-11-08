@@ -21,7 +21,7 @@ export const createOrUpdateSession = async ({ id, data }) => {
 /**
  * Finalize a checkout session
  */
-export const finalizeSession = async ({ id, data, processor }) => {
+export const finalizeSession = async ({ id, data = {}, processor }) => {
   return (await apiFetch({
     method: 'POST',
     path: `${path}${id}/finalize/${processor}`,

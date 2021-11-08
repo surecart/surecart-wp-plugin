@@ -1,14 +1,12 @@
 import { Component, h, State, Prop, Watch, Event, EventEmitter, Listen } from '@stencil/core';
 import { CheckoutSession, LineItemData } from '../../../types';
-import { openWormhole } from 'stencil-wormhole';
 import { convertLineItemsToLineItemData } from '../../../functions/line-items';
 
 @Component({
-  tag: 'ce-cart-provider',
-  styleUrl: 'ce-cart-provider.css',
+  tag: 'ce-line-items-provider',
   shadow: true,
 })
-export class CeCartProvider {
+export class CeLineItemsProvider {
   /** CheckoutSession Object */
   @Prop() checkoutSession: CheckoutSession;
 
@@ -120,5 +118,3 @@ export class CeCartProvider {
     return <slot />;
   }
 }
-
-openWormhole(CeCartProvider, ['checkoutSession'], false);

@@ -2,7 +2,7 @@ export default `<!-- wp:checkout-engine/section-title {"text":"Choose a Plan","d
 <ce-title style="--ce-font-size:var(--ce-text-x-large)">Choose a Plan</ce-title>
 <!-- /wp:checkout-engine/section-title -->
 
-<!-- wp:checkout-engine/price-selector -->
+<!-- wp:checkout-engine/price-selector {"required" true} -->
 <ce-price-choices></ce-price-choices>
 <!-- /wp:checkout-engine/price-selector -->
 

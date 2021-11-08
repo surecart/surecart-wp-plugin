@@ -30,6 +30,7 @@ export const checkoutMachine = createMachine({
         RESOLVE: 'draft',
         REJECT: 'draft',
         EXPIRE: 'expired',
+        FINALIZED: 'finalized',
       },
     },
     finalized: {

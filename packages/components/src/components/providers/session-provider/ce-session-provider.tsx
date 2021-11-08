@@ -1,0 +1,267 @@
+import { Component, h, Prop, Event, EventEmitter, Element, State, Watch, Listen } from '@stencil/core';
+import { CheckoutSession, LineItemData, PriceChoice } from '../../../types';
+import { getSessionId, populateInputs } from './helpers/session';
+import { createOrUpdateSession, finalizeSession } from '../../../services/session';
+
+@Component({
+  tag: 'ce-session-provider',
+  shadow: true,
+})
+export class CeSessionProvider {
+  /** Element */
+  @Element() el: HTMLElement;
+
+  /** CheckoutSession Object */
+  @Prop() checkoutSession: CheckoutSession;
+
+  /** Group id */
+  @Prop() groupId: string;
+
+  /** An array of prices to pre-fill in the form. */
+  @Prop() prices: Array<PriceChoice> = [];
+
+  /** Currency Code */
+  @Prop() currencyCode: string = 'usd';
+
+  /** Should we persist the session. */
+  @Prop() persist: boolean;
+
+  /** Set the checkout state */
+  @Prop() setState: (state: string) => void;
+
+  /** Update line items event */
+  @Event() ceUpdateSession: EventEmitter<CheckoutSession>;
+
+  /** Update line items event */
+  @Event() ceOnPaid: EventEmitter<string>;
+
+  /** Update line items event */
+  @Event() ceError: EventEmitter<string>;
+
+  /** Holds the checkout session to update. */
+  @State() session: CheckoutSession;
+
+  /** Sync this session back to parent. */
+  @Watch('session')
+  handleSessionUpdate(val) {
+    this.ceUpdateSession.emit(val);
+  }
+
+  /** Store checkout session in localstorage */
+  @Watch('checkoutSession')
+  handleCheckoutSessionChange(val) {
+    if (val?.id) {
+      localStorage.setItem(this.groupId, val.id);
+    }
+    if (val.status === 'paid') {
+      window.localStorage.removeItem(this.groupId);
+    }
+    /** Populate any inputs from the session */
+    populateInputs(this.el, val);
+  }
+
+  /** Update form state when form data changes */
+  @Listen('ceFormChange')
+  handleFormChange(e) {
+    const data = e.detail;
+    if (Object.values(data || {}).every(item => !item)) return;
+    // we update silently here since we parse form data on submit.
+    this.update(this.parseFormData(data));
+  }
+
+  parseFormData(data) {
+    const { email, name, password, ...rest } = data;
+    return {
+      email,
+      name,
+      password,
+      metadata: rest,
+    };
+  }
+
+  /**
+   * Handles the form submission.
+   * @param e
+   */
+  @Listen('ceFormSubmit')
+  async handleFormSubmit() {
+    // TODO: get current form state.
+    const data = await this.el.querySelector('ce-form').getFormJson();
+
+    // check to make sure credit card is entered.
+
+    // first validate server-side and get key
+    try {
+      this.setState('FETCH');
+      this.checkoutSession = await finalizeSession({
+        id: this.checkoutSession.id,
+        data: this.parseFormData(data),
+        processor: 'stripe',
+      });
+      console.log(this.checkoutSession);
+      if (this.checkoutSession.status === 'finalized') {
+        this.setState('FETCH');
+      } else {
+        this.setState('RESOLVE');
+      }
+      // TODO: process payment with token
+    } catch (e) {
+      if (e?.code === 'checkout_session.invalid_status_transition') {
+        await this.loadUpdate({
+          id: this.checkoutSession.id,
+          data: {
+            status: 'draft',
+          },
+        });
+        this.handleFormSubmit();
+        return;
+      }
+      this.handleErrorResponse(e);
+    }
+  }
+
+  @Listen('cePaid')
+  async handlePaid() {
+    this.setState('PAID');
+  }
+
+  /** Handles coupon updates. */
+  @Listen('ceApplyCoupon')
+  async handleCouponApply(e) {
+    const promotion_code = e.detail;
+    this.loadUpdate({
+      discount: {
+        ...(promotion_code ? { promotion_code } : {}),
+      },
+    });
+  }
+
+  /** Handle the error response. */
+  handleErrorResponse(e) {
+    // expired
+    if (e?.code === 'rest_cookie_invalid_nonce') {
+      this.setState('EXPIRE');
+      return;
+    }
+
+    // something went wrong
+    if (e?.message) {
+      this.ceError.emit(e.message);
+    }
+
+    // handle curl timeout errors.
+    if (e?.code === 'http_request_failed') {
+      this.ceError.emit('Something went wrong. Please reload the page and try again.');
+    }
+
+    this.setState('REJECT');
+  }
+
+  /** Default data always sent with the session. */
+  defaultFormData() {
+    return {
+      return_url: window.location.href,
+      currency: this.currencyCode,
+      group_key: this.groupId,
+    };
+  }
+
+  /** Find or create session on load. */
+  componentWillLoad() {
+    const id = getSessionId(this.groupId, this.checkoutSession);
+
+    // fetch or initialize a session.
+    if (id && this.persist) {
+      this.fetch();
+    } else {
+      this.initialize();
+    }
+  }
+
+  /** Looks through children and finds items needed for initial session. */
+  async initialize() {
+    let line_items = this.addInitialPrices() || [];
+    line_items = this.addPriceChoices(line_items);
+
+    if (line_items?.length) {
+      return this.loadUpdate({ line_items });
+    } else {
+      return this.loadUpdate();
+    }
+  }
+
+  /** Add prices that are passed into the component. */
+  addInitialPrices() {
+    if (!this?.prices.length) return [];
+
+    // add prices that are passed into this component.
+    return this.prices.map(price => {
+      return {
+        price_id: price.id,
+        quantity: price.quantity,
+      };
+    });
+  }
+
+  /** Add default prices that may be selected in form. */
+  addPriceChoices(line_items = []) {
+    const elements = this.el.querySelectorAll('[price-id]') as any;
+
+    elements.forEach(el => {
+      if (el.checked) {
+        line_items.push({
+          quantity: el.quantity || 1,
+          price_id: el.priceId,
+        });
+      }
+    });
+
+    return line_items;
+  }
+
+  getSessionId() {
+    if (this.checkoutSession?.id) {
+      return this.checkoutSession.id;
+    }
+
+    const id = getSessionId(this.groupId, this.checkoutSession);
+    if (this.persist) {
+      return id;
+    }
+  }
+
+  /** Fetch a session. */
+  async fetch() {
+    this.loadUpdate({ data: { status: 'draft' } });
+  }
+
+  /** Update a session */
+  async update(data = {}) {
+    this.session = (await createOrUpdateSession({
+      id: this.getSessionId(),
+      data: {
+        ...this.defaultFormData(),
+        ...data,
+      },
+    })) as CheckoutSession;
+  }
+
+  /** Updates a session with loading status changes. */
+  async loadUpdate(data = {}) {
+    try {
+      this.setState('FETCH');
+      await this.update(data);
+      this.setState('RESOLVE');
+    } catch (e) {
+      this.handleErrorResponse(e);
+    }
+  }
+
+  render() {
+    return (
+      <ce-line-items-provider checkoutSession={this.checkoutSession} onCeUpdateLineItems={e => this.loadUpdate({ line_items: e.detail as Array<LineItemData> })}>
+        <slot />
+      </ce-line-items-provider>
+    );
+  }
+}

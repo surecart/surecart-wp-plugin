@@ -44,6 +44,6 @@ class CheckoutSessionController extends RestController {
 		}
 
 		$session = new CheckoutSession( $args, $request['processor_type'] );
-		return $session->prepare();
+		return $session->finalize();
 	}
 }

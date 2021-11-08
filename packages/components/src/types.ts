@@ -184,6 +184,7 @@ export interface PaymentIntent extends Object {
   processor_type: string;
   external_intent_id: string;
   external_client_secret: string;
+  external_type: 'setup' | 'payment';
   created_at: number;
   updated_at: number;
 }
