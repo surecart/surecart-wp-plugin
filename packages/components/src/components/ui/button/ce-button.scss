@@ -7,6 +7,12 @@
   display: block;
 }
 
+// This is necessary to make sure clicks happen on button component, not children.
+// Without this, forms may not submit.
+::slotted(*) {
+  pointer-events: none;
+}
+
 .button {
   display: inline-flex;
   align-items: stretch;
