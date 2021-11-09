@@ -1,4 +1,4 @@
-import { Component, h, Prop, Element, Watch, State } from '@stencil/core';
+import { Component, h, Prop, Element, Watch } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
 
 @Component({
@@ -40,7 +40,7 @@ export class CEFormControl {
   @Prop() helpId: string;
 
   /** Store the error message */
-  @State() errorMessage: string;
+  @Prop({ mutable: true }) errorMessage: string;
 
   @Watch('errors')
   handleErrors() {
@@ -83,4 +83,4 @@ export class CEFormControl {
   }
 }
 
-openWormhole(CEFormControl, ['errors']);
+openWormhole(CEFormControl, ['errors'], false);

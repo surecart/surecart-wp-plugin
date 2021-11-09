@@ -8,5 +8,15 @@
 		"reusable": false,
 		"html": false,
     "order-summary": true
-	}
+	},
+  "attributes": {
+    "removable" : {
+      "type": "boolean",
+      "default": true
+    },
+    "editable" : {
+      "type": "boolean",
+      "default": true
+    }
+  }
 }

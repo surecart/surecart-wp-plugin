@@ -1,8 +1,8 @@
-import { Component, h, Prop, Event, EventEmitter, Watch } from '@stencil/core';
+import { Component, h, Prop, Event, EventEmitter, Watch, Fragment, State } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
 import { isPriceInCheckoutSession } from '../../../functions/line-items';
 import { getPricesAndProducts } from '../../../services/fetch';
-import { CheckoutSession, LineItemData, Price, Prices, Products } from '../../../types';
+import { CheckoutSession, LineItemData, Price, Prices, Products, ResponseError } from '../../../types';
 
 @Component({
   tag: 'ce-price-choice',
@@ -10,6 +10,8 @@ import { CheckoutSession, LineItemData, Price, Prices, Products } from '../../..
   shadow: false,
 })
 export class CePriceChoice {
+  private adHocInput: HTMLCePriceInputElement;
+
   /** Id of the price. */
   @Prop({ reflect: true }) priceId: string;
 
@@ -41,16 +43,28 @@ export class CePriceChoice {
   @Prop() type: 'checkbox' | 'radio';
 
   /** Is this checked by default */
-  @Prop({ reflect: true }) checked: boolean = false;
+  @Prop({ reflect: true, mutable: true }) checked: boolean = false;
+
+  /** Errors from response */
+  @Prop() error: ResponseError;
 
   /** Toggle line item event */
   @Event() ceAddLineItem: EventEmitter<LineItemData>;
+
+  /** Toggle line item event */
+  @Event() ceUpdateLineItem: EventEmitter<LineItemData>;
 
   /** Toggle line item event */
   @Event() ceRemoveLineItem: EventEmitter<LineItemData>;
 
   /** Add entities */
   @Event() ceAddEntities: EventEmitter<any>;
+
+  /** Stores the error message */
+  @State() errorMessage: string;
+
+  /** Stores the error message */
+  @State() adHocErrorMessage: string;
 
   /** Refetch if price changes */
   @Watch('priceId')
@@ -64,6 +78,19 @@ export class CePriceChoice {
   handlePricesChange() {
     if (!Object.keys(this.prices || {}).length) return;
     this.price = this?.prices?.[this.priceId];
+  }
+
+  @Watch('error')
+  handleErrorsChange() {
+    const error = (this.error.additional_errors || []).find(error => error?.data?.attribute === 'line_items.ad_hoc_amount');
+    this.adHocErrorMessage = error?.message ? error?.message : '';
+  }
+
+  @Watch('checkoutSession')
+  handleCheckoutSessionChange() {
+    if (this.isInCheckoutSession()) {
+      this.checked = true;
+    }
   }
 
   /** Fetch on load */
@@ -92,15 +119,26 @@ export class CePriceChoice {
 
   /** Handle choice change. */
   handleChange(checked) {
+    this.checked = checked;
+
     const inSession = this.isInCheckoutSession();
-    // if checked and not yet in session
-    if (!inSession && checked) {
-      this.ceAddLineItem.emit({ price_id: this.priceId, quantity: this.quantity });
-      return;
-    }
+
     // if in session and not checked
     if (inSession && !checked) {
       this.ceRemoveLineItem.emit({ price_id: this.priceId, quantity: this.quantity });
+      return;
+    }
+
+    if (this.price?.ad_hoc) {
+      setTimeout(() => {
+        this.adHocInput.triggerFocus();
+      }, 50);
+      return;
+    }
+
+    // if checked and not yet in session
+    if (!inSession && checked) {
+      this.ceAddLineItem.emit({ price_id: this.priceId, quantity: this.quantity });
       return;
     }
   }
@@ -113,6 +151,47 @@ export class CePriceChoice {
   /** Is this checked */
   isChecked() {
     return this.isInCheckoutSession();
+  }
+
+  onChangeAdHoc(e) {
+    const event = this.isInCheckoutSession() ? 'ceUpdateLineItem' : 'ceAddLineItem';
+    this[event].emit({ price_id: this.priceId, quantity: this.quantity, ad_hoc_amount: e.target.value });
+  }
+
+  getLineItem() {
+    return (this.checkoutSession?.line_items?.data || []).find(lineItem => lineItem.price.id === this.priceId);
+  }
+
+  renderAdHoc() {
+    return (
+      <ce-price-input
+        ref={el => (this.adHocInput = el as HTMLCePriceInputElement)}
+        required
+        label={'Enter an amount'}
+        value={this.getLineItem()?.ad_hoc_amount.toString()}
+        onCeChange={e => this.onChangeAdHoc(e)}
+        min={this.price.ad_hoc_min_amount}
+        max={this.price.ad_hoc_max_amount}
+      ></ce-price-input>
+    );
+  }
+
+  renderPrice() {
+    if (this.price?.ad_hoc) {
+      return <span slot="per">Name your price</span>;
+    }
+    return (
+      <Fragment>
+        <span slot="price">
+          <ce-format-number type="currency" value={this.price.amount} currency={this.price.currency}></ce-format-number>
+        </span>
+        <span slot="per">
+          {this.price.recurring_interval
+            ? `/ ${this.price.recurring_interval_count > 1 ? `every ${this.price.recurring_interval_count} ` : ''}${this.price.recurring_interval}`
+            : `once`}
+        </span>
+      </Fragment>
+    );
   }
 
   render() {
@@ -130,27 +209,31 @@ export class CePriceChoice {
     if (!this?.price?.id || this.price?.archived) return null;
 
     return (
-      <ce-choice
-        style={{ height: '100%' }}
-        value={this.priceId}
-        type={this.type}
-        checked={this.isChecked()}
-        onCeChange={e => {
-          this.handleChange(e.detail as boolean);
-        }}
-      >
-        {this.label || this.price.name}
-
-        <span slot="price">
-          <ce-format-number type="currency" value={this.price.amount} currency={this.price.currency}></ce-format-number>
-        </span>
-
-        <span slot="per">{this.price.recurring_interval ? `/ ${this.price.recurring_interval}` : `once`}</span>
-
-        {this.description && <span slot="description">{this.description}</span>}
-      </ce-choice>
+      <Fragment>
+        <ce-choice
+          value={this.priceId}
+          type={this.type}
+          checked={this.isChecked()}
+          onCeChange={e => {
+            this.handleChange(e.detail as boolean);
+          }}
+        >
+          {this.label || this.price.name}
+          {this.description && <span slot="description">{this.description}</span>}
+          {this.renderPrice()}
+        </ce-choice>
+        {this.price.ad_hoc &&
+          this.checked &&
+          (this.adHocErrorMessage ? (
+            <ce-tooltip text={this.adHocErrorMessage} type="danger" padding={10} freeze open onClick={() => (this.adHocErrorMessage = '')}>
+              {this.renderAdHoc()}
+            </ce-tooltip>
+          ) : (
+            this.renderAdHoc()
+          ))}
+      </Fragment>
     );
   }
 }
 
-openWormhole(CePriceChoice, ['prices', 'products', 'checkoutSession']);
+openWormhole(CePriceChoice, ['prices', 'products', 'checkoutSession', 'error'], false);

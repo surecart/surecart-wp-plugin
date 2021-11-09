@@ -29,6 +29,7 @@
 
  - [ce-price-choice](../../controllers/price-choice)
  - [ce-price-selector](../../controllers/price-selector)
+ - [ce-product-line-item](../../ui/product-line-item)
  - [ce-total](../../controllers/ce-total)
 
 ### Graph
@@ -36,6 +37,7 @@
 graph TD;
   ce-price-choice --> ce-format-number
   ce-price-selector --> ce-format-number
+  ce-product-line-item --> ce-format-number
   ce-total --> ce-format-number
   style ce-format-number fill:#f9f,stroke:#333,stroke-width:4px
 ```

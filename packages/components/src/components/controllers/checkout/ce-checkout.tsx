@@ -1,5 +1,5 @@
-import { Component, h, Prop, Element, State, Listen } from '@stencil/core';
-import { Coupon, CheckoutSession, Customer, Keys, PriceChoice, Prices, Products } from '../../../types';
+import { Component, h, Prop, Element, State, Listen, Watch } from '@stencil/core';
+import { Coupon, CheckoutSession, Customer, Keys, PriceChoice, Prices, Products, ResponseError } from '../../../types';
 import { Universe } from 'stencil-wormhole';
 import { addQueryArgs } from '@wordpress/url';
 import { interpret } from '@xstate/fsm';
@@ -60,12 +60,25 @@ export class CECheckout {
   @State() checkoutSession: CheckoutSession;
 
   /** Error to display. */
-  @State() error: string;
+  @State() error: ResponseError | null;
+
+  @Watch('checkoutSession')
+  handleCheckoutSessionChange() {
+    this.error = null;
+  }
 
   @Listen('cePaid')
   async handlePaid() {
     window.localStorage.removeItem(this.el.id);
     window.location.href = addQueryArgs(this.successUrl, { checkout_session: this.checkoutSession.id });
+  }
+
+  @Listen('cePayError')
+  handlePayError(e) {
+    this.error = e.detail?.message || {
+      code: '',
+      message: 'Something went wrong with your payment.',
+    };
   }
 
   setState(name) {
@@ -113,6 +126,13 @@ export class CECheckout {
     this._stateService.stop();
   }
 
+  errorMessage() {
+    if (this.error?.additional_errors?.[0]?.message) {
+      return this.error?.additional_errors?.[0]?.message;
+    }
+    return '';
+  }
+
   state() {
     return {
       paymentMethod: 'stripe',
@@ -127,18 +147,17 @@ export class CECheckout {
       products: this.productsEntities,
       prices: this.pricesEntities,
       currencyCode: this.currencyCode,
+      i18n: this.i18n,
     };
   }
 
   render() {
     if (this.checkoutState.value === 'paid') {
       return (
-        <ce-card>
-          <ce-alert type="success" open>
-            <span slot="title">Session Expired.</span>
-            Please reload the page.
-          </ce-alert>
-        </ce-card>
+        <ce-alert type="success" open>
+          <span slot="title">You have already paid for this order.</span>
+          Please visit your account dashboard to view your order.
+        </ce-alert>
       );
     }
 
@@ -159,7 +178,6 @@ export class CECheckout {
           'ce-align-full': this.alignment === 'full',
         }}
       >
-        {this.error && <ce-alert type="danger">{this.error}</ce-alert>}
         <Universe.Provider state={this.state()}>
           <ce-session-provider
             checkoutSession={this.checkoutSession}
@@ -168,11 +186,28 @@ export class CECheckout {
             group-id={this.el.id}
             currency-code={this.currencyCode}
             onCeUpdateSession={e => (this.checkoutSession = e.detail)}
-            onCeError={e => (this.error = e.detail)}
+            onCeError={e => {
+              this.error = e.detail as ResponseError;
+            }}
           >
             <slot />
           </ce-session-provider>
         </Universe.Provider>
+        <ce-alert
+          type="danger"
+          onCeShow={e => {
+            console.log(e);
+            const target = e.target as HTMLElement;
+            target.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start',
+              inline: 'nearest',
+            });
+          }}
+          open={!!this.errorMessage()}
+        >
+          <span slot="title">{this.errorMessage()}</span>
+        </ce-alert>
       </div>
     );
   }

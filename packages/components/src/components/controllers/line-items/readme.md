@@ -7,19 +7,20 @@
 
 ## Properties
 
-| Property          | Attribute | Description | Type              | Default     |
-| ----------------- | --------- | ----------- | ----------------- | ----------- |
-| `checkoutSession` | --        |             | `CheckoutSession` | `undefined` |
-| `edit`            | `edit`    |             | `boolean`         | `true`      |
-| `lineItemData`    | --        |             | `LineItemData[]`  | `undefined` |
-| `loading`         | `loading` |             | `boolean`         | `undefined` |
+| Property          | Attribute   | Description | Type              | Default     |
+| ----------------- | ----------- | ----------- | ----------------- | ----------- |
+| `checkoutSession` | --          |             | `CheckoutSession` | `undefined` |
+| `editable`        | `editable`  |             | `boolean`         | `true`      |
+| `loading`         | `loading`   |             | `boolean`         | `undefined` |
+| `removable`       | `removable` |             | `boolean`         | `true`      |
 
 
 ## Events
 
-| Event              | Description | Type                                         |
-| ------------------ | ----------- | -------------------------------------------- |
-| `ceUpdateLineItem` |             | `CustomEvent<{ id: string; data: Object; }>` |
+| Event              | Description           | Type                        |
+| ------------------ | --------------------- | --------------------------- |
+| `ceRemoveLineItem` | Remove the line item. | `CustomEvent<LineItemData>` |
+| `ceUpdateLineItem` | Update the line item. | `CustomEvent<LineItemData>` |
 
 
 ## Dependencies
@@ -38,7 +39,7 @@ graph TD;
   ce-line-items --> ce-product-line-item
   ce-product-line-item --> ce-line-item
   ce-product-line-item --> ce-quantity-select
-  ce-product-line-item --> ce-tag
+  ce-product-line-item --> ce-format-number
   ce-quantity-select --> ce-dropdown
   ce-quantity-select --> ce-menu
   ce-quantity-select --> ce-menu-item

@@ -6,6 +6,7 @@
  */
 
 return [
+	// 'discount.promotion_code'  => __( 'Promotion code', 'checkout_engine' ),
 	'promotion_code'           => __( 'Promotion code', 'checkout_engine' ),
 	'name'                     => __( 'Name', 'checkout_engine' ),
 	'amount_off'               => __( 'Amount Off', 'checkout_engine' ),

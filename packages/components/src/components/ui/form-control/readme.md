@@ -5,17 +5,18 @@
 
 ## Properties
 
-| Property       | Attribute       | Description | Type                             | Default     |
-| -------------- | --------------- | ----------- | -------------------------------- | ----------- |
-| `errorMessage` | `error-message` |             | `string`                         | `''`        |
-| `help`         | `help`          |             | `string`                         | `undefined` |
-| `helpId`       | `help-id`       |             | `string`                         | `undefined` |
-| `inputId`      | `input-id`      |             | `string`                         | `undefined` |
-| `label`        | `label`         |             | `string`                         | `undefined` |
-| `labelId`      | `label-id`      |             | `string`                         | `undefined` |
-| `required`     | `required`      |             | `boolean`                        | `false`     |
-| `showLabel`    | `show-label`    |             | `boolean`                        | `true`      |
-| `size`         | `size`          |             | `"large" \| "medium" \| "small"` | `'medium'`  |
+| Property    | Attribute    | Description                                     | Type                             | Default     |
+| ----------- | ------------ | ----------------------------------------------- | -------------------------------- | ----------- |
+| `errors`    | `errors`     | Display server-side validation errors.          | `any`                            | `undefined` |
+| `help`      | `help`       | Help text                                       | `string`                         | `undefined` |
+| `helpId`    | `help-id`    | Help id                                         | `string`                         | `undefined` |
+| `inputId`   | `input-id`   | Input id.                                       | `string`                         | `undefined` |
+| `label`     | `label`      | Input label.                                    | `string`                         | `undefined` |
+| `labelId`   | `label-id`   | Input label id.                                 | `string`                         | `undefined` |
+| `name`      | `name`       | Name for the input. Used for validation errors. | `string`                         | `undefined` |
+| `required`  | `required`   | Whether the input is required.                  | `boolean`                        | `false`     |
+| `showLabel` | `show-label` | Show the label.                                 | `boolean`                        | `true`      |
+| `size`      | `size`       | Size of the label                               | `"large" \| "medium" \| "small"` | `'medium'`  |
 
 
 ## Shadow Parts

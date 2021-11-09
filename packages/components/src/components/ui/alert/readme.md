@@ -62,11 +62,13 @@ Type: `Promise<void>`
 ### Used by
 
  - [ce-checkout](../../controllers/checkout)
+ - [ce-coupon-form](../../controllers/coupon-form)
 
 ### Graph
 ```mermaid
 graph TD;
   ce-checkout --> ce-alert
+  ce-coupon-form --> ce-alert
   style ce-alert fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

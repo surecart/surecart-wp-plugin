@@ -11,6 +11,7 @@
 | ----------------- | ------------- | ----------- | ----------------- | ----------- |
 | `calculating`     | `calculating` |             | `boolean`         | `undefined` |
 | `checkoutSession` | --            |             | `CheckoutSession` | `undefined` |
+| `error`           | `error`       |             | `any`             | `undefined` |
 | `label`           | `label`       |             | `string`          | `undefined` |
 | `loading`         | `loading`     |             | `boolean`         | `undefined` |
 
@@ -30,6 +31,7 @@
 - [ce-line-item](../../ui/line-item)
 - [ce-tag](../../ui/tag)
 - [ce-input](../../ui/input)
+- [ce-alert](../../ui/alert)
 - [ce-button](../../ui/button)
 - [ce-block-ui](../../ui/block-ui)
 
@@ -40,6 +42,7 @@ graph TD;
   ce-coupon-form --> ce-line-item
   ce-coupon-form --> ce-tag
   ce-coupon-form --> ce-input
+  ce-coupon-form --> ce-alert
   ce-coupon-form --> ce-button
   ce-coupon-form --> ce-block-ui
   ce-input --> ce-form-control

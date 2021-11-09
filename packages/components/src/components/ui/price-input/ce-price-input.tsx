@@ -93,7 +93,7 @@ export class CePriceInput {
   /** Sets focus on the input. */
   @Method()
   async triggerFocus(options?: FocusOptions) {
-    return this.ceInput.focus(options);
+    return this.ceInput.triggerFocus(options);
   }
 
   /** Sets a custom validation message. If `message` is not empty, the field will be considered invalid. */
@@ -146,9 +146,6 @@ export class CePriceInput {
           <span style={{ opacity: '0.5' }} slot="prefix">
             {getCurrencySymbol(this.currencyCode)}
           </span>
-          {/* <span style={{ opacity: '0.5' }} slot="suffix">
-            {(this.currencyCode || '').toUpperCase()}
-          </span> */}
         </ce-input>
       </div>
     );

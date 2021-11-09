@@ -110,9 +110,6 @@ export class CEInput {
   /** Inputs focus */
   @Prop({ mutable: true, reflect: true }) hasFocus: boolean;
 
-  /** Validation error message. */
-  @Prop() errorMessage: string = '';
-
   /** Is the password visible */
   @State() isPasswordVisible = false;
 

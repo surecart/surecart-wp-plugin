@@ -19,9 +19,6 @@ export class CeProductLineItem {
   /** Quantity */
   @Prop() quantity: number;
 
-  /** Can we select the quantity */
-  @Prop() edit: boolean = true;
-
   /** Product monetary amount */
   @Prop() amount: number;
 
@@ -32,7 +29,10 @@ export class CeProductLineItem {
   @Prop() interval: string;
 
   /** Is the line item removable */
-  @Prop() isRemovable: boolean;
+  @Prop() removable: boolean;
+
+  /** Can we select the quantity */
+  @Prop() editable: boolean = true;
 
   /** Emitted when the quantity changes. */
   @Event({ bubbles: false }) ceUpdateQuantity: EventEmitter<number>;
@@ -46,13 +46,10 @@ export class CeProductLineItem {
         {!!this.imageUrl && <img src={this.imageUrl} slot="image" />}
         <span slot="title">{this.name}</span>
         <span class="product__description" slot="description">
-          {this.edit ? (
-            <ce-quantity-select clickEl={this.el} quantity={this.quantity} onCeChange={e => this.ceUpdateQuantity.emit(e.detail)}></ce-quantity-select>
-          ) : (
-            <span>Qty: {this.quantity}</span>
-          )}
-          |
-          {this.isRemovable && this.edit && (
+          {this.editable && <ce-quantity-select clickEl={this.el} quantity={this.quantity} onCeChange={e => this.ceUpdateQuantity.emit(e.detail)}></ce-quantity-select>}
+          {!this.editable && <span>Qty: {this.quantity}</span>}
+
+          {this.removable && (
             <div class="price__remove" onClick={() => this.ceRemove.emit()}>
               <TrashIcon size={15} strokeWidth={2.5} />
             </div>

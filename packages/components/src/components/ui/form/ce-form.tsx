@@ -243,7 +243,8 @@ export class CEForm {
   }
 
   @Listen('ceChange')
-  async handleChange() {
+  async handleChange(e) {
+    if (!e.target.name) return;
     let data = await this.getFormJson();
     this.ceFormChange.emit(data);
   }
@@ -254,7 +255,6 @@ export class CEForm {
    */
   @Method('submit')
   async submit() {
-    console.log('submit');
     let data = await this.getFormJson();
     const isValid = await this.validate();
 

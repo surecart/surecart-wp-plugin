@@ -5,13 +5,13 @@
 .coupon-form {
   position: relative;
 }
-.coupon-tag {
-  margin-bottom: 4px;
-}
+// .coupon-tag {
+//   margin-bottom: 4px;
+// }
 
-ce-input {
-  margin-bottom: var(--ce-spacing-small);
-}
+// ce-input {
+//   margin-bottom: var(--ce-spacing-small);
+// }
 
 .form {
   opacity: 0;
@@ -26,7 +26,10 @@ ce-input {
     visibility: visible;
     height: auto;
     margin-top: var(--ce-spacing-small);
+    display: grid;
+    gap: var(--ce-spacing-small);
   }
+
   .trigger {
     color: var(--ce-input-label-color);
 

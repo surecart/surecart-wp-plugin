@@ -7,11 +7,12 @@
 
 ## Properties
 
-| Property  | Attribute | Description       | Type      | Default     |
-| --------- | --------- | ----------------- | --------- | ----------- |
-| `busy`    | `busy`    | Busy              | `boolean` | `false`     |
-| `columns` | `columns` | Number of columns | `number`  | `1`         |
-| `label`   | `label`   | Selector label    | `string`  | `undefined` |
+| Property   | Attribute  | Description         | Type      | Default     |
+| ---------- | ---------- | ------------------- | --------- | ----------- |
+| `busy`     | `busy`     | Busy                | `boolean` | `false`     |
+| `columns`  | `columns`  | Number of columns   | `number`  | `1`         |
+| `label`    | `label`    | Selector label      | `string`  | `undefined` |
+| `required` | `required` | Required by default | `boolean` | `true`      |
 
 
 ## Dependencies

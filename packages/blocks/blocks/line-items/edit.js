@@ -1,3 +1,50 @@
-export default () => {
-	return <ce-line-items></ce-line-items>;
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+import { Fragment } from '@wordpress/element';
+import { InspectorControls } from '@wordpress/block-editor';
+import { PanelBody, PanelRow, ToggleControl } from '@wordpress/components';
+
+export default ( { attributes, setAttributes } ) => {
+	const { removable, editable } = attributes;
+	return (
+		<Fragment>
+			<InspectorControls>
+				<PanelBody title={ __( 'Attributes', 'checkout-engine' ) }>
+					<PanelRow>
+						<ToggleControl
+							label={ __( 'Removable', 'checkout-engine' ) }
+							help={ __(
+								'Allow line items to be removed.',
+								'checkout_engine'
+							) }
+							checked={ removable }
+							onChange={ ( removable ) =>
+								setAttributes( { removable } )
+							}
+						/>
+					</PanelRow>
+					<PanelRow>
+						<ToggleControl
+							label={ __( 'Editable', 'checkout-engine' ) }
+							help={ __(
+								'Allow line item quantities to be editable.',
+								'checkout_engine'
+							) }
+							checked={ editable }
+							onChange={ ( editable ) =>
+								setAttributes( { editable } )
+							}
+						/>
+					</PanelRow>
+				</PanelBody>
+			</InspectorControls>
+
+			<ce-line-items
+				removable={ removable }
+				editable={ editable }
+			></ce-line-items>
+		</Fragment>
+	);
 };

@@ -17,6 +17,7 @@
 
 ### Used by
 
+ - [ce-checkout](../../controllers/checkout)
  - [ce-coupon-form](../../controllers/coupon-form)
  - [ce-order-summary](../../controllers/order-summary)
  - [ce-price-choices](../../controllers/price-choices)
@@ -31,6 +32,7 @@
 ```mermaid
 graph TD;
   ce-block-ui --> ce-spinner
+  ce-checkout --> ce-block-ui
   ce-coupon-form --> ce-block-ui
   ce-order-summary --> ce-block-ui
   ce-price-choices --> ce-block-ui

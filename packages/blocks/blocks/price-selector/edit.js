@@ -16,12 +16,11 @@ import { createBlocksFromInnerBlocksTemplate } from '@wordpress/blocks';
 import { buttons as icon } from '@wordpress/icons';
 import {
 	InspectorControls,
-	InnerBlocks,
 	useBlockProps,
 	__experimentalUseInnerBlocksProps as useInnerBlocksProps,
 	store as blockEditorStore,
 } from '@wordpress/block-editor';
-import { useSelect, select, dispatch, useDispatch } from '@wordpress/data';
+import { select, dispatch, useDispatch } from '@wordpress/data';
 
 import { css, jsx, Global } from '@emotion/core';
 import styles from './editor-styles';
@@ -32,14 +31,9 @@ import styles from './editor-styles';
 import { CePriceChoices } from '@checkout-engine/react';
 import SelectProduct from '../checkout/components/SelectProduct';
 
-export default ( { attributes, setAttributes, isSelected, clientId } ) => {
+export default ( { attributes, setAttributes, clientId } ) => {
 	const { choices, label, type, columns } = attributes;
 	const [ open, setOpen ] = useState( false );
-
-	// check if inner block is selected
-	const childSelected = useSelect( ( select ) =>
-		select( blockEditorStore ).hasSelectedInnerBlock( clientId, true )
-	);
 
 	const innerBlocksProps = useInnerBlocksProps(
 		{},
@@ -49,18 +43,7 @@ export default ( { attributes, setAttributes, isSelected, clientId } ) => {
 		}
 	);
 
-	const blockProps = useBlockProps( {
-		// style: {
-		// 	display: 'block',
-		// 	borderRadius: '4px',
-		// 	transition: 'all 0.2s ease',
-		// 	border:
-		// 		( childSelected || isSelected ) &&
-		// 		'1px dashed rgba(0,0,0,0.35)',
-		// 	padding: childSelected || isSelected ? '2em' : 0,
-		// },
-	} );
-
+	const blockProps = useBlockProps();
 	const { replaceInnerBlocks } = useDispatch( blockEditorStore );
 
 	// update children when type changes.

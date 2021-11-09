@@ -43,14 +43,14 @@ export const populateInputs = (el, session: CheckoutSession) => {
   // handle our our inputs.
   names.forEach(name => {
     const input = findInput(el, name) as any;
-    if (!input) return;
+    if (!input || !session[name]) return;
     input.value = session[name];
   });
 
   // update metadata.
   Object.keys(session.metadata).forEach(key => {
     const input = findInput(el, key) as any;
-    if (!input) return;
+    if (!input || !session.metadata[key]) return;
     input.value = session.metadata[key];
   });
 };

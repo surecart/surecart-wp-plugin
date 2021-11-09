@@ -7,22 +7,23 @@
 
 ## Properties
 
-| Property      | Attribute      | Description                                   | Type      | Default     |
-| ------------- | -------------- | --------------------------------------------- | --------- | ----------- |
-| `amount`      | `amount`       | Product monetary amount                       | `number`  | `undefined` |
-| `currency`    | `currency`     | Currency for the product                      | `string`  | `undefined` |
-| `edit`        | `edit`         | Can we select the quantity                    | `boolean` | `true`      |
-| `imageUrl`    | `image-url`    | Url for the product image                     | `string`  | `undefined` |
-| `interval`    | `interval`     | Recurring interval (i.e. monthly, once, etc.) | `string`  | `undefined` |
-| `isRemovable` | `is-removable` | Is the line item removable                    | `boolean` | `undefined` |
-| `name`        | `name`         | Product name                                  | `string`  | `undefined` |
-| `quantity`    | `quantity`     | Quantity                                      | `number`  | `undefined` |
+| Property    | Attribute   | Description                                   | Type      | Default     |
+| ----------- | ----------- | --------------------------------------------- | --------- | ----------- |
+| `amount`    | `amount`    | Product monetary amount                       | `number`  | `undefined` |
+| `currency`  | `currency`  | Currency for the product                      | `string`  | `undefined` |
+| `editable`  | `editable`  | Can we select the quantity                    | `boolean` | `true`      |
+| `imageUrl`  | `image-url` | Url for the product image                     | `string`  | `undefined` |
+| `interval`  | `interval`  | Recurring interval (i.e. monthly, once, etc.) | `string`  | `undefined` |
+| `name`      | `name`      | Product name                                  | `string`  | `undefined` |
+| `quantity`  | `quantity`  | Quantity                                      | `number`  | `undefined` |
+| `removable` | `removable` | Is the line item removable                    | `boolean` | `undefined` |
 
 
 ## Events
 
 | Event              | Description                        | Type                  |
 | ------------------ | ---------------------------------- | --------------------- |
+| `ceRemove`         | Emitted when the quantity changes. | `CustomEvent<void>`   |
 | `ceUpdateQuantity` | Emitted when the quantity changes. | `CustomEvent<number>` |
 
 
@@ -36,14 +37,14 @@
 
 - [ce-line-item](../line-item)
 - [ce-quantity-select](../quantity-select)
-- [ce-tag](../tag)
+- [ce-format-number](../../util/format-number)
 
 ### Graph
 ```mermaid
 graph TD;
   ce-product-line-item --> ce-line-item
   ce-product-line-item --> ce-quantity-select
-  ce-product-line-item --> ce-tag
+  ce-product-line-item --> ce-format-number
   ce-quantity-select --> ce-dropdown
   ce-quantity-select --> ce-menu
   ce-quantity-select --> ce-menu-item

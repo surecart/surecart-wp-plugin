@@ -36,7 +36,7 @@ export class CeSessionProvider {
   @Event() ceOnPaid: EventEmitter<string>;
 
   /** Update line items event */
-  @Event() ceError: EventEmitter<string>;
+  @Event() ceError: EventEmitter<{ message: string; code?: string; data?: any; additional_errors?: any } | {}>;
 
   /** Holds the checkout session to update. */
   @State() session: CheckoutSession;
@@ -65,6 +65,7 @@ export class CeSessionProvider {
   handleFormChange(e) {
     const data = e.detail;
     if (Object.values(data || {}).every(item => !item)) return;
+    console.log({ data });
     // we update silently here since we parse form data on submit.
     this.update(this.parseFormData(data));
   }
@@ -85,26 +86,24 @@ export class CeSessionProvider {
    */
   @Listen('ceFormSubmit')
   async handleFormSubmit() {
-    // TODO: get current form state.
-    const data = await this.el.querySelector('ce-form').getFormJson();
+    this.ceError.emit({});
 
-    // check to make sure credit card is entered.
+    // Get current form state.
+    const data = await this.el.querySelector('ce-form').getFormJson();
 
     // first validate server-side and get key
     try {
       this.setState('FETCH');
-      this.checkoutSession = await finalizeSession({
+      this.session = await finalizeSession({
         id: this.checkoutSession.id,
         data: this.parseFormData(data),
         processor: 'stripe',
       });
-      console.log(this.checkoutSession);
-      if (this.checkoutSession.status === 'finalized') {
+      if (this.session.status === 'finalized') {
         this.setState('FETCH');
       } else {
         this.setState('RESOLVE');
       }
-      // TODO: process payment with token
     } catch (e) {
       if (e?.code === 'checkout_session.invalid_status_transition') {
         await this.loadUpdate({
@@ -125,10 +124,16 @@ export class CeSessionProvider {
     this.setState('PAID');
   }
 
+  @Listen('cePayError')
+  async handlePayError() {
+    this.setState('REJECT');
+  }
+
   /** Handles coupon updates. */
   @Listen('ceApplyCoupon')
   async handleCouponApply(e) {
     const promotion_code = e.detail;
+    this.ceError.emit({});
     this.loadUpdate({
       discount: {
         ...(promotion_code ? { promotion_code } : {}),
@@ -144,14 +149,21 @@ export class CeSessionProvider {
       return;
     }
 
+    // paid
+    if (e?.code === 'readonly') {
+      window.localStorage.removeItem(this.groupId);
+      this.setState('PAID');
+      return;
+    }
+
     // something went wrong
     if (e?.message) {
-      this.ceError.emit(e.message);
+      this.ceError.emit(e);
     }
 
     // handle curl timeout errors.
     if (e?.code === 'http_request_failed') {
-      this.ceError.emit('Something went wrong. Please reload the page and try again.');
+      this.ceError.emit({ message: 'Something went wrong. Please reload the page and try again.' });
     }
 
     this.setState('REJECT');

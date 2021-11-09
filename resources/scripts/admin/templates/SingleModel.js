@@ -39,7 +39,7 @@ export default ( {
 					onCeFormSubmit={ onSubmit }
 					onCeFormInvalid={ onInvalid }
 					css={ css`
-						font-size: 13px;
+						font-size: 14px;
 						margin-right: 20px;
 
 						button {

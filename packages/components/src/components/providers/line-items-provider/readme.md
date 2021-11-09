@@ -23,13 +23,13 @@
 
 ### Used by
 
- - [ce-checkout](../checkout)
+ - [ce-session-provider](../session-provider)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-checkout --> ce-cart-provider
-  style ce-cart-provider fill:#f9f,stroke:#333,stroke-width:4px
+  ce-session-provider --> ce-line-items-provider
+  style ce-line-items-provider fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

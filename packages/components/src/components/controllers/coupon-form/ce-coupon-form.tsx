@@ -13,12 +13,20 @@ export class CeCouponForm {
   @Prop() label: string;
   @Prop() loading: boolean;
   @Prop() calculating: boolean;
+  @Prop() error: any;
   @Prop() checkoutSession: CheckoutSession;
 
   @State() open: boolean;
   @State() value: string;
+  @State() errorMessage: string;
 
   @Event() ceApplyCoupon: EventEmitter<string>;
+
+  @Watch('error')
+  handleErrorsChange() {
+    const error = (this.error.additional_errors || []).find(error => error?.data?.attribute === 'discount.promotion_code');
+    this.errorMessage = error?.message ? error?.message : '';
+  }
 
   @Watch('open')
   handleOpenChange(val) {
@@ -98,6 +106,11 @@ export class CeCouponForm {
 
         <div class="form">
           <ce-input onCeBlur={() => this.handleBlur()} autofocus ref={el => (this.input = el as HTMLCeInputElement)}></ce-input>
+          {!!this.errorMessage && (
+            <ce-alert type="danger" open>
+              <span slot="title">{this.errorMessage}</span>
+            </ce-alert>
+          )}
           <ce-button type="primary" full onClick={() => this.applyCoupon()}>
             <slot />
           </ce-button>
@@ -109,4 +122,4 @@ export class CeCouponForm {
   }
 }
 
-openWormhole(CeCouponForm, ['loading', 'checkoutSession'], false);
+openWormhole(CeCouponForm, ['loading', 'checkoutSession', 'error'], false);

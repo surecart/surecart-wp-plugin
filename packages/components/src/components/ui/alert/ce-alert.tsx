@@ -66,7 +66,6 @@ export class CeAlert {
   /** Emit event when showing or hiding changes */
   @Watch('open')
   handleOpenChange(val) {
-    console.log(val);
     val ? this.ceShow.emit() : this.ceHide.emit();
   }
 

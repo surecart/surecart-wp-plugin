@@ -17,6 +17,7 @@ export const checkoutMachine = createMachine({
         RESOLVE: 'draft',
         REJECT: 'failure',
         EXPIRE: 'expired',
+        PAID: 'paid',
       },
     },
     draft: {

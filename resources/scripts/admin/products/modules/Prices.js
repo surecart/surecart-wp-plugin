@@ -5,7 +5,7 @@ import { __, sprintf } from '@wordpress/i18n';
 import { useState, Fragment } from '@wordpress/element';
 
 import Box from '../../ui/Box';
-import Price from '../components/Price';
+import Price from '../components/price/index.js';
 import useProductData from '../hooks/useProductData';
 
 import { CeButton, CeSwitch } from '@checkout-engine/react';

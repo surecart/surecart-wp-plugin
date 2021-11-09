@@ -31,6 +31,9 @@ export interface Price {
   recurring: boolean;
   recurring_interval?: 'day' | 'week' | 'month' | 'year';
   recurring_interval_count?: number;
+  ad_hoc: boolean;
+  ad_hoc_max_amount: number;
+  ad_hoc_min_amount: number;
   archived: boolean;
   product_id?: string;
   archived_at?: string;
@@ -50,6 +53,9 @@ export type Prices = {
     recurring: boolean;
     recurring_interval?: 'day' | 'week' | 'month' | 'year';
     recurring_interval_count?: number;
+    ad_hoc: boolean;
+    ad_hoc_max_amount: number;
+    ad_hoc_min_amount: number;
     archived: boolean;
     product_id?: string;
     archived_at?: string;
@@ -95,6 +101,7 @@ export interface Coupon extends Object {
 export interface LineItemData extends Object {
   price_id: string;
   quantity: number;
+  ad_hoc_amount?: number;
 }
 
 export type LineItemsData = {
@@ -103,6 +110,7 @@ export type LineItemsData = {
 
 export interface LineItem extends Object {
   id?: string;
+  ad_hoc_amount?: number;
   name: string;
   object: string;
   quantity: number;
@@ -176,6 +184,25 @@ export interface DiscountResponse extends Object {
   id: string;
   object: string;
   promotion: Promotion;
+}
+
+export interface ResponseError {
+  code: string;
+  message: string;
+  data: {
+    http_status: string;
+    status?: number;
+    type: string;
+  };
+  additional_errors: Array<{
+    code: string;
+    message: string;
+    data: {
+      attribute: string;
+      options: Array<string>;
+      type: string;
+    };
+  }>;
 }
 
 export interface PaymentIntent extends Object {

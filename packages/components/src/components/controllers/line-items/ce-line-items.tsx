@@ -11,8 +11,8 @@ import { openWormhole } from 'stencil-wormhole';
 export class CeLineItems {
   @Prop() checkoutSession: CheckoutSession;
   @Prop() loading: boolean;
-  @Prop() edit: boolean = true;
-  @Prop() removeable: boolean = true;
+  @Prop() editable: boolean = true;
+  @Prop() removable: boolean = true;
 
   /** Update the line item. */
   @Event() ceUpdateLineItem: EventEmitter<LineItemData>;
@@ -50,10 +50,10 @@ export class CeLineItems {
               key={item.id}
               imageUrl={item?.price?.metadata?.wp_attachment_src}
               name={`${(item?.price?.product as Product)?.name} \u2013 ${item?.price?.name}`}
-              edit={this.edit}
-              isRemovable={this.removeable}
+              editable={this.editable}
+              removable={this.removable}
               quantity={item.quantity}
-              amount={item.price.amount}
+              amount={item.ad_hoc_amount !== null ? item.ad_hoc_amount : item.price.amount}
               currency={this.checkoutSession?.currency}
               interval={item.price.recurring_interval ? `${item.price.recurring_interval}` : `once`}
               onCeUpdateQuantity={e => this.updateQuantity(item, e.detail)}

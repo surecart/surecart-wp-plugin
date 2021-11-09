@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { CheckoutSession, ChoiceItem, Coupon, Customer, Keys, LineItemData, Price, PriceChoice, Prices, Products } from "./types";
+import { CheckoutSession, ChoiceItem, Coupon, Customer, Keys, LineItemData, Price, PriceChoice, Prices, Products, ResponseError } from "./types";
 export namespace Components {
     interface CeAlert {
         /**
@@ -271,6 +271,7 @@ export namespace Components {
     interface CeCouponForm {
         "calculating": boolean;
         "checkoutSession": CheckoutSession;
+        "error": any;
         "label": string;
         "loading": boolean;
     }
@@ -366,6 +367,10 @@ export namespace Components {
         "validate": () => Promise<boolean>;
     }
     interface CeFormControl {
+        /**
+          * Store the error message
+         */
+        "errorMessage": string;
         /**
           * Display server-side validation errors.
          */
@@ -480,10 +485,6 @@ export namespace Components {
           * Disables the input.
          */
         "disabled": boolean;
-        /**
-          * Validation error message.
-         */
-        "errorMessage": string;
         /**
           * Inputs focus
          */
@@ -609,9 +610,9 @@ export namespace Components {
     }
     interface CeLineItems {
         "checkoutSession": CheckoutSession;
-        "edit": boolean;
+        "editable": boolean;
         "loading": boolean;
-        "removeable": boolean;
+        "removable": boolean;
     }
     interface CeLineItemsProvider {
         /**
@@ -696,6 +697,10 @@ export namespace Components {
           * Label for the choice.
          */
         "description": string;
+        /**
+          * Errors from response
+         */
+        "error": ResponseError;
         /**
           * Label for the choice.
          */
@@ -892,7 +897,7 @@ export namespace Components {
         /**
           * Can we select the quantity
          */
-        "edit": boolean;
+        "editable": boolean;
         /**
           * Url for the product image
          */
@@ -902,10 +907,6 @@ export namespace Components {
          */
         "interval": string;
         /**
-          * Is the line item removable
-         */
-        "isRemovable": boolean;
-        /**
           * Product name
          */
         "name": string;
@@ -913,6 +914,10 @@ export namespace Components {
           * Quantity
          */
         "quantity": number;
+        /**
+          * Is the line item removable
+         */
+        "removable": boolean;
     }
     interface CeProvider {
         "STENCIL_CONTEXT": { [key: string]: any };
@@ -1811,6 +1816,7 @@ declare namespace LocalJSX {
     interface CeCouponForm {
         "calculating"?: boolean;
         "checkoutSession"?: CheckoutSession;
+        "error"?: any;
         "label"?: string;
         "loading"?: boolean;
         "onCeApplyCoupon"?: (event: CustomEvent<string>) => void;
@@ -1939,6 +1945,10 @@ declare namespace LocalJSX {
     }
     interface CeFormControl {
         /**
+          * Store the error message
+         */
+        "errorMessage"?: string;
+        /**
           * Display server-side validation errors.
          */
         "errors"?: any;
@@ -2052,10 +2062,6 @@ declare namespace LocalJSX {
           * Disables the input.
          */
         "disabled"?: boolean;
-        /**
-          * Validation error message.
-         */
-        "errorMessage"?: string;
         /**
           * Inputs focus
          */
@@ -2188,7 +2194,7 @@ declare namespace LocalJSX {
     }
     interface CeLineItems {
         "checkoutSession"?: CheckoutSession;
-        "edit"?: boolean;
+        "editable"?: boolean;
         "loading"?: boolean;
         /**
           * Remove the line item.
@@ -2198,7 +2204,7 @@ declare namespace LocalJSX {
           * Update the line item.
          */
         "onCeUpdateLineItem"?: (event: CustomEvent<LineItemData>) => void;
-        "removeable"?: boolean;
+        "removable"?: boolean;
     }
     interface CeLineItemsProvider {
         /**
@@ -2281,6 +2287,10 @@ declare namespace LocalJSX {
          */
         "description"?: string;
         /**
+          * Errors from response
+         */
+        "error"?: ResponseError;
+        /**
           * Label for the choice.
          */
         "label"?: string;
@@ -2300,6 +2310,10 @@ declare namespace LocalJSX {
           * Toggle line item event
          */
         "onCeRemoveLineItem"?: (event: CustomEvent<LineItemData>) => void;
+        /**
+          * Toggle line item event
+         */
+        "onCeUpdateLineItem"?: (event: CustomEvent<LineItemData>) => void;
         /**
           * Stores the price
          */
@@ -2495,7 +2509,7 @@ declare namespace LocalJSX {
         /**
           * Can we select the quantity
          */
-        "edit"?: boolean;
+        "editable"?: boolean;
         /**
           * Url for the product image
          */
@@ -2504,10 +2518,6 @@ declare namespace LocalJSX {
           * Recurring interval (i.e. monthly, once, etc.)
          */
         "interval"?: string;
-        /**
-          * Is the line item removable
-         */
-        "isRemovable"?: boolean;
         /**
           * Product name
          */
@@ -2524,6 +2534,10 @@ declare namespace LocalJSX {
           * Quantity
          */
         "quantity"?: number;
+        /**
+          * Is the line item removable
+         */
+        "removable"?: boolean;
     }
     interface CeProvider {
         "STENCIL_CONTEXT"?: { [key: string]: any };
@@ -2648,7 +2662,7 @@ declare namespace LocalJSX {
         /**
           * Update line items event
          */
-        "onCeError"?: (event: CustomEvent<string>) => void;
+        "onCeError"?: (event: CustomEvent<{ message: string; code?: string; data?: any; additional_errors?: any } | {}>) => void;
         /**
           * Update line items event
          */

@@ -54,7 +54,6 @@ export class CEStripeElement {
 
   @Watch('checkoutSession')
   async confirmPayment(val: CheckoutSession) {
-    console.log(val);
     // must be finalized
     if (val?.status !== 'finalized') return;
     // must be a stripe session
@@ -68,17 +67,24 @@ export class CEStripeElement {
     // prevent possible double-charges
     if (this.confirming) return;
 
-    console.log('confirm');
     this.confirming = true;
     try {
+      let response;
       if (val?.payment_intent?.external_type == 'setup') {
-        await this.confirmCardSetup(val.payment_intent.external_client_secret);
+        response = await this.confirmCardSetup(val.payment_intent.external_client_secret);
       } else {
-        await this.confirmCardPayment(val.payment_intent.external_client_secret);
+        response = await this.confirmCardPayment(val.payment_intent.external_client_secret);
       }
+      if (response?.error) {
+        throw response.error;
+      }
+      // paid
+      this.cePaid.emit();
     } catch (e) {
-      console.error(e);
       this.cePayError.emit(e);
+      if (e.message) {
+        this.error = e.message;
+      }
     } finally {
       this.confirming = false;
     }
