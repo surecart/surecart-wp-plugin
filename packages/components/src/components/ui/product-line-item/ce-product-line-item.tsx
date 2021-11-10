@@ -1,4 +1,5 @@
-import { Component, h, Prop, Event, EventEmitter, Element } from '@stencil/core';
+import { Component, h, Prop, Event, EventEmitter, Element, Fragment } from '@stencil/core';
+import { __, _n, sprintf } from '@wordpress/i18n';
 
 import { TrashIcon } from '../../icons';
 
@@ -28,6 +29,9 @@ export class CeProductLineItem {
   /** Recurring interval (i.e. monthly, once, etc.) */
   @Prop() interval: string;
 
+  /** Trial duration days */
+  @Prop() trialDurationDays: number;
+
   /** Is the line item removable */
   @Prop() removable: boolean;
 
@@ -39,6 +43,29 @@ export class CeProductLineItem {
 
   /** Emitted when the quantity changes. */
   @Event({ bubbles: false }) ceRemove: EventEmitter<void>;
+
+  renderPriceAndInterval() {
+    console.log(this.trialDurationDays);
+    if (this.trialDurationDays) {
+      return (
+        <Fragment>
+          <span slot="price">{sprintf(_n('%d day free', '%d days free', this.trialDurationDays), this.trialDurationDays)}</span>
+          <span slot="price-description">
+            {__('Then', 'checkout_engine')} <ce-format-number type="currency" currency={this.currency} value={this.amount}></ce-format-number> {!!this.interval && this.interval}
+          </span>
+        </Fragment>
+      );
+    }
+
+    return (
+      <Fragment>
+        <span slot="price">
+          <ce-format-number type="currency" currency={this.currency} value={this.amount}></ce-format-number>
+        </span>
+        {!!this.interval && <span slot="price-description">{this.interval}</span>}
+      </Fragment>
+    );
+  }
 
   render() {
     return (
@@ -55,10 +82,7 @@ export class CeProductLineItem {
             </div>
           )}
         </span>
-        <span slot="price">
-          <ce-format-number type="currency" currency={this.currency} value={this.amount}></ce-format-number>
-        </span>
-        {!!this.interval && <span slot="price-description">{this.interval}</span>}
+        {this.renderPriceAndInterval()}
       </ce-line-item>
 
       // <ce-line-item>

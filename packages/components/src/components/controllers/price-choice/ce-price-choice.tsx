@@ -1,6 +1,7 @@
 import { Component, h, Prop, Event, EventEmitter, Watch, Fragment, State } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
 import { isPriceInCheckoutSession } from '../../../functions/line-items';
+import { translatedInterval } from '../../../functions/price';
 import { getPricesAndProducts } from '../../../services/fetch';
 import { CheckoutSession, LineItemData, Price, Prices, Products, ResponseError } from '../../../types';
 
@@ -23,6 +24,15 @@ export class CePriceChoice {
 
   /** Label for the choice. */
   @Prop() label: string;
+
+  /** Show the label */
+  @Prop() showLabel: boolean = true;
+
+  /** Show the price amount */
+  @Prop() showPrice: boolean = true;
+
+  /** Show the radio/checkbox control */
+  @Prop() showControl: boolean = true;
 
   /** Label for the choice. */
   @Prop() description: string;
@@ -47,9 +57,6 @@ export class CePriceChoice {
 
   /** Errors from response */
   @Prop() error: ResponseError;
-
-  /** Toggle line item event */
-  @Event() ceAddLineItem: EventEmitter<LineItemData>;
 
   /** Toggle line item event */
   @Event() ceUpdateLineItem: EventEmitter<LineItemData>;
@@ -82,7 +89,7 @@ export class CePriceChoice {
 
   @Watch('error')
   handleErrorsChange() {
-    const error = (this.error.additional_errors || []).find(error => error?.data?.attribute === 'line_items.ad_hoc_amount');
+    const error = (this?.error?.additional_errors || []).find(error => error?.data?.attribute === 'line_items.ad_hoc_amount');
     this.adHocErrorMessage = error?.message ? error?.message : '';
   }
 
@@ -138,7 +145,7 @@ export class CePriceChoice {
 
     // if checked and not yet in session
     if (!inSession && checked) {
-      this.ceAddLineItem.emit({ price_id: this.priceId, quantity: this.quantity });
+      this.ceUpdateLineItem.emit({ price_id: this.priceId, quantity: this.quantity });
       return;
     }
   }
@@ -154,8 +161,7 @@ export class CePriceChoice {
   }
 
   onChangeAdHoc(e) {
-    const event = this.isInCheckoutSession() ? 'ceUpdateLineItem' : 'ceAddLineItem';
-    this[event].emit({ price_id: this.priceId, quantity: this.quantity, ad_hoc_amount: e.target.value });
+    this.ceUpdateLineItem.emit({ price_id: this.priceId, quantity: this.quantity, ad_hoc_amount: e.target.value });
   }
 
   getLineItem() {
@@ -185,11 +191,7 @@ export class CePriceChoice {
         <span slot="price">
           <ce-format-number type="currency" value={this.price.amount} currency={this.price.currency}></ce-format-number>
         </span>
-        <span slot="per">
-          {this.price.recurring_interval
-            ? `/ ${this.price.recurring_interval_count > 1 ? `every ${this.price.recurring_interval_count} ` : ''}${this.price.recurring_interval}`
-            : `once`}
-        </span>
+        <span slot="per">{translatedInterval(this.price.recurring_interval_count, this.price.recurring_interval, '/', '')}</span>
       </Fragment>
     );
   }
@@ -197,7 +199,7 @@ export class CePriceChoice {
   render() {
     if (this.loading) {
       return (
-        <ce-choice name="loading" disabled>
+        <ce-choice name="loading" showLabel={this.showLabel} showPrice={this.showPrice} showControl={this.showControl} disabled>
           <ce-skeleton style={{ width: '60px', display: 'inline-block' }}></ce-skeleton>
           <ce-skeleton style={{ width: '80px', display: 'inline-block' }} slot="price"></ce-skeleton>
           {this.description && <ce-skeleton style={{ width: '120px', display: 'inline-block' }} slot="description"></ce-skeleton>}
@@ -213,6 +215,9 @@ export class CePriceChoice {
         <ce-choice
           value={this.priceId}
           type={this.type}
+          showLabel={this.showLabel}
+          showPrice={this.showPrice}
+          showControl={this.showControl}
           checked={this.isChecked()}
           onCeChange={e => {
             this.handleChange(e.detail as boolean);

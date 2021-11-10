@@ -112,6 +112,7 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 			filemtime( trailingslashit( $this->container[ WPEMERGE_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/checkout-engine/checkout-engine.esm.js' ),
 			true
 		);
+		wp_set_script_translations( 'checkout-engine-components', 'checkout_engine' );
 	}
 
 	/**

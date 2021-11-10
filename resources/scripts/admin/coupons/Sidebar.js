@@ -7,7 +7,6 @@ const { Fragment } = wp.element;
 
 import Box from '../ui/Box';
 import Definition from '../ui/Definition';
-import { getFormattedPrice } from '../util';
 
 export default ( { promotion, coupon, loading } ) => {
 	const promotionTag = () => {
@@ -34,10 +33,13 @@ export default ( { promotion, coupon, loading } ) => {
 			);
 		}
 		if ( coupon?.amount_off ) {
-			return getFormattedPrice( {
-				amount: coupon?.amount_off,
-				currency: coupon?.currency,
-			} );
+			return (
+				<ce-format-number
+					type="currency"
+					currency={ coupon?.currency }
+					value={ coupon?.amount_off }
+				></ce-format-number>
+			);
 		}
 	};
 

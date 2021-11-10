@@ -1,7 +1,8 @@
 import { Component, h, Prop, Event, EventEmitter } from '@stencil/core';
 
-import { CheckoutSession, LineItem, LineItemData, Product } from '../../../types';
+import { CheckoutSession, LineItem, LineItemData, Prices, Product } from '../../../types';
 import { openWormhole } from 'stencil-wormhole';
+import { translatedInterval } from '../../../functions/price';
 
 @Component({
   tag: 'ce-line-items',
@@ -11,6 +12,7 @@ import { openWormhole } from 'stencil-wormhole';
 export class CeLineItems {
   @Prop() checkoutSession: CheckoutSession;
   @Prop() loading: boolean;
+  @Prop() prices: Prices;
   @Prop() editable: boolean = true;
   @Prop() removable: boolean = true;
 
@@ -27,6 +29,23 @@ export class CeLineItems {
 
   removeLineItem(item: LineItem) {
     this.ceRemoveLineItem.emit({ price_id: item.price.id, quantity: 1 });
+  }
+
+  /** Only append price name if there's more than one product price in the session. */
+  getName(item: LineItem) {
+    const otherPrices = Object.keys(this.prices || {}).filter(key => {
+      const price = this.prices[key];
+      // @ts-ignore
+      return price.product === item.price.product.id;
+    });
+
+    let name = '';
+    if (otherPrices.length > 1) {
+      name = `${(item?.price?.product as Product)?.name} \u2013 ${item?.price?.name}`;
+    } else {
+      name = (item?.price?.product as Product)?.name;
+    }
+    return name;
   }
 
   render() {
@@ -49,13 +68,14 @@ export class CeLineItems {
             <ce-product-line-item
               key={item.id}
               imageUrl={item?.price?.metadata?.wp_attachment_src}
-              name={`${(item?.price?.product as Product)?.name} \u2013 ${item?.price?.name}`}
+              name={this.getName(item)}
               editable={this.editable}
               removable={this.removable}
               quantity={item.quantity}
               amount={item.ad_hoc_amount !== null ? item.ad_hoc_amount : item.price.amount}
               currency={this.checkoutSession?.currency}
-              interval={item.price.recurring_interval ? `${item.price.recurring_interval}` : `once`}
+              trialDurationDays={item?.price?.trial_duration_days}
+              interval={translatedInterval(item.price.recurring_interval_count, item.price.recurring_interval)}
               onCeUpdateQuantity={e => this.updateQuantity(item, e.detail)}
               onCeRemove={() => this.removeLineItem(item)}
             ></ce-product-line-item>
@@ -66,4 +86,4 @@ export class CeLineItems {
   }
 }
 
-openWormhole(CeLineItems, ['checkoutSession', 'loading'], false);
+openWormhole(CeLineItems, ['checkoutSession', 'loading', 'prices'], false);

@@ -24,6 +24,9 @@ export default ( { attributes, setAttributes, isSelected } ) => {
 		description,
 		type,
 		quantity,
+		show_label,
+		show_price,
+		show_control,
 		checked,
 	} = attributes;
 
@@ -127,6 +130,36 @@ export default ( { attributes, setAttributes, isSelected } ) => {
 							}
 						/>
 					</PanelRow>
+					<PanelRow>
+						<ToggleControl
+							label={ __( 'Show Label', 'checkout-engine' ) }
+							checked={ show_label }
+							onChange={ ( show_label ) =>
+								setAttributes( { show_label } )
+							}
+						/>
+					</PanelRow>
+					<PanelRow>
+						<ToggleControl
+							label={ __(
+								'Show Price Amount',
+								'checkout-engine'
+							) }
+							checked={ show_price }
+							onChange={ ( show_price ) =>
+								setAttributes( { show_price } )
+							}
+						/>
+					</PanelRow>
+					<PanelRow>
+						<ToggleControl
+							label={ __( 'Show control', 'checkout-engine' ) }
+							checked={ show_control }
+							onChange={ ( show_control ) =>
+								setAttributes( { show_control } )
+							}
+						/>
+					</PanelRow>
 				</PanelBody>
 			</InspectorControls>
 
@@ -135,6 +168,9 @@ export default ( { attributes, setAttributes, isSelected } ) => {
 				priceId={ price_id }
 				type={ type }
 				label={ label }
+				showLabel={ show_label }
+				showPrice={ show_price }
+				showControl={ show_control }
 				description={ description }
 				checked={ checked }
 				quantity={ quantity }

@@ -1,6 +1,6 @@
 import { Component, State, h, Watch, Prop, Event, EventEmitter } from '@stencil/core';
 import { CheckoutSession } from '../../../types';
-import { getFormattedPrice, getHumanDiscount } from '../../../functions/price';
+import { getHumanDiscount } from '../../../functions/price';
 import { openWormhole } from 'stencil-wormhole';
 @Component({
   tag: 'ce-coupon-form',
@@ -24,7 +24,7 @@ export class CeCouponForm {
 
   @Watch('error')
   handleErrorsChange() {
-    const error = (this.error.additional_errors || []).find(error => error?.data?.attribute === 'discount.promotion_code');
+    const error = (this?.error?.additional_errors || []).find(error => error?.data?.attribute === 'discount.promotion_code');
     this.errorMessage = error?.message ? error?.message : '';
   }
 
@@ -78,7 +78,9 @@ export class CeCouponForm {
             </span>
           )}
 
-          <span slot="price">-{getFormattedPrice({ amount: this.checkoutSession?.discount_amount, currency: this.checkoutSession?.currency })}</span>
+          <span slot="price">
+            -<ce-format-number type="currency" currency={this.checkoutSession?.currency} value={this.checkoutSession?.discount_amount}></ce-format-number>
+          </span>
 
           <span slot="price-description">&nbsp;</span>
         </ce-line-item>

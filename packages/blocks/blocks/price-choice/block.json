@@ -29,6 +29,18 @@
 		},
     "checked": {
 			"type": "boolean"
-		}
+		},
+    "show_label": {
+      "type": "boolean",
+      "default": true
+    },
+    "show_price": {
+      "type": "boolean",
+      "default": true
+    },
+    "show_control": {
+      "type": "boolean",
+      "default": true
+    }
 	}
 }

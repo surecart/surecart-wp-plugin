@@ -7,6 +7,17 @@
   min-width: 0;
 }
 
+[hidden] {
+  border: 0 !important;
+  clip: rect(0 0 0 0)  !important;
+  height: 1px !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  position: absolute !important;
+  width: 1px !important;
+}
+
 .choice {
   background: var(--ce-choice-background-color);
   display: flex;
@@ -57,6 +68,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  margin-right: 0.75em;
   border: solid var(--ce-input-border-width) var(--ce-input-border-color);
   background-color: var(--ce-input-background-color);
   color: transparent;
@@ -131,7 +143,6 @@
 .choice__label {
   width: 100%;
   line-height: 1;
-  margin-left: 0.75em;
   user-select: none;
 }
 
@@ -152,7 +163,6 @@
   display: inline-block;
   color: var(--ce-color-gray-500);
   font-size: var(--ce-font-size-medium);
-  line-height: var(--ce-line-height-dense);
 }
 
 .choice__label-text {
@@ -167,5 +177,4 @@
 .choice__price {
   display: block;
   white-space: nowrap;
-  margin-top: var(--ce-spacing-small);
 }

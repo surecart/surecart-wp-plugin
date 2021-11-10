@@ -31,6 +31,7 @@ export interface Price {
   recurring: boolean;
   recurring_interval?: 'day' | 'week' | 'month' | 'year';
   recurring_interval_count?: number;
+  trial_duration_days?: number;
   ad_hoc: boolean;
   ad_hoc_max_amount: number;
   ad_hoc_min_amount: number;

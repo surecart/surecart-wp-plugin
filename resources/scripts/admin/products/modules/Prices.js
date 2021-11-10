@@ -78,7 +78,9 @@ export default () => {
 						<Fragment>
 							<CeButton
 								onClick={ ( e ) => {
+									console.log( e );
 									e.preventDefault();
+									e.stopPropagation();
 									addModel( 'prices', {
 										recurring: false,
 										name: __(

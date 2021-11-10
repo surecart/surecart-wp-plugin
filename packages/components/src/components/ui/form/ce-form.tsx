@@ -243,8 +243,7 @@ export class CEForm {
   }
 
   @Listen('ceChange')
-  async handleChange(e) {
-    if (!e.target.name) return;
+  async handleChange() {
     let data = await this.getFormJson();
     this.ceFormChange.emit(data);
   }

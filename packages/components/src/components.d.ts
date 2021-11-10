@@ -219,6 +219,18 @@ export namespace Components {
          */
         "setCustomValidity": (message: string) => Promise<void>;
         /**
+          * Show the radio/checkbox control
+         */
+        "showControl": boolean;
+        /**
+          * Show the label
+         */
+        "showLabel": boolean;
+        /**
+          * Show the price
+         */
+        "showPrice": boolean;
+        /**
           * Simulates a click on the choice.
          */
         "triggerClick": () => Promise<void>;
@@ -612,6 +624,7 @@ export namespace Components {
         "checkoutSession": CheckoutSession;
         "editable": boolean;
         "loading": boolean;
+        "prices": Prices;
         "removable": boolean;
     }
     interface CeLineItemsProvider {
@@ -729,6 +742,18 @@ export namespace Components {
           * Default quantity
          */
         "quantity": number;
+        /**
+          * Show the radio/checkbox control
+         */
+        "showControl": boolean;
+        /**
+          * Show the label
+         */
+        "showLabel": boolean;
+        /**
+          * Show the price amount
+         */
+        "showPrice": boolean;
         /**
           * Choice Type
          */
@@ -918,6 +943,10 @@ export namespace Components {
           * Is the line item removable
          */
         "removable": boolean;
+        /**
+          * Trial duration days
+         */
+        "trialDurationDays": number;
     }
     interface CeProvider {
         "STENCIL_CONTEXT": { [key: string]: any };
@@ -1767,6 +1796,18 @@ declare namespace LocalJSX {
          */
         "required"?: boolean;
         /**
+          * Show the radio/checkbox control
+         */
+        "showControl"?: boolean;
+        /**
+          * Show the label
+         */
+        "showLabel"?: boolean;
+        /**
+          * Show the price
+         */
+        "showPrice"?: boolean;
+        /**
           * The choice name attribute
          */
         "type"?: 'radio' | 'checkbox';
@@ -2204,6 +2245,7 @@ declare namespace LocalJSX {
           * Update the line item.
          */
         "onCeUpdateLineItem"?: (event: CustomEvent<LineItemData>) => void;
+        "prices"?: Prices;
         "removable"?: boolean;
     }
     interface CeLineItemsProvider {
@@ -2305,10 +2347,6 @@ declare namespace LocalJSX {
         /**
           * Toggle line item event
          */
-        "onCeAddLineItem"?: (event: CustomEvent<LineItemData>) => void;
-        /**
-          * Toggle line item event
-         */
         "onCeRemoveLineItem"?: (event: CustomEvent<LineItemData>) => void;
         /**
           * Toggle line item event
@@ -2334,6 +2372,18 @@ declare namespace LocalJSX {
           * Default quantity
          */
         "quantity"?: number;
+        /**
+          * Show the radio/checkbox control
+         */
+        "showControl"?: boolean;
+        /**
+          * Show the label
+         */
+        "showLabel"?: boolean;
+        /**
+          * Show the price amount
+         */
+        "showPrice"?: boolean;
         /**
           * Choice Type
          */
@@ -2475,15 +2525,15 @@ declare namespace LocalJSX {
         /**
           * Toggle line item event
          */
-        "onCeAddLineItem"?: (event: CustomEvent<LineItemData>) => void;
-        /**
-          * Toggle line item event
-         */
         "onCeRemoveLineItem"?: (event: CustomEvent<LineItemData>) => void;
         /**
           * Toggle line item event
          */
         "onCeToggleLineItem"?: (event: CustomEvent<LineItemData>) => void;
+        /**
+          * Toggle line item event
+         */
+        "onCeUpdateLineItem"?: (event: CustomEvent<LineItemData>) => void;
         /**
           * Price entities
          */
@@ -2538,6 +2588,10 @@ declare namespace LocalJSX {
           * Is the line item removable
          */
         "removable"?: boolean;
+        /**
+          * Trial duration days
+         */
+        "trialDurationDays"?: number;
     }
     interface CeProvider {
         "STENCIL_CONTEXT"?: { [key: string]: any };

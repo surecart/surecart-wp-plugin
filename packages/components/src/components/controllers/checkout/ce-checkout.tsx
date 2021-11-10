@@ -126,9 +126,12 @@ export class CECheckout {
     this._stateService.stop();
   }
 
+  /** First will display validation error, then main error if no validation errors. */
   errorMessage() {
     if (this.error?.additional_errors?.[0]?.message) {
       return this.error?.additional_errors?.[0]?.message;
+    } else if (this?.error?.message) {
+      return this?.error?.message;
     }
     return '';
   }

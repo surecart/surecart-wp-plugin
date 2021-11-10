@@ -1,5 +1,6 @@
 import { Component, h, Prop } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
+import { __ } from '@wordpress/i18n';
 
 @Component({
   tag: 'ce-order-summary',
@@ -22,7 +23,7 @@ export class CEOrderSummary {
         >
           <slot />
         </div>
-        {this.empty && !this.loading && <p>Your cart is empty.</p>}
+        {this.empty && !this.loading && <p class="empty">{__('Your cart is empty.', 'checkout_engine')}</p>}
         {this.busy && <ce-block-ui></ce-block-ui>}
       </div>
     );

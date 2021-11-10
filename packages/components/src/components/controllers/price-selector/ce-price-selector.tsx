@@ -43,7 +43,7 @@ export class CePriceSelector {
   @Event() ceToggleLineItem: EventEmitter<LineItemData>;
 
   /** Toggle line item event */
-  @Event() ceAddLineItem: EventEmitter<LineItemData>;
+  @Event() ceUpdateLineItem: EventEmitter<LineItemData>;
 
   /** Toggle line item event */
   @Event() ceRemoveLineItem: EventEmitter<LineItemData>;
@@ -126,7 +126,7 @@ export class CePriceSelector {
                   console.log(inSession, this.checkoutSession);
                   // if checked and not yet in session
                   if (!inSession && checked) {
-                    this.ceAddLineItem.emit({ price_id: choice.id, quantity: choice.quantity });
+                    this.ceUpdateLineItem.emit({ price_id: choice.id, quantity: choice.quantity });
                     return;
                   }
                   // if in session and not checked

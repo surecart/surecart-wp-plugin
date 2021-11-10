@@ -2,7 +2,7 @@
 import { css, jsx } from '@emotion/core';
 
 import { __ } from '@wordpress/i18n';
-import { useState, useEffect, useRef } from '@wordpress/element';
+import { useState, useEffect, useRef, Fragment } from '@wordpress/element';
 import { dispatch } from '@wordpress/data';
 
 import FlashError from '../../../components/FlashError';
@@ -445,7 +445,7 @@ export default withConfirm( ( { price, index, setConfirm } ) => {
 				) }
 
 				{ price?.recurring && (
-					<div>
+					<Fragment>
 						<CeFormControl
 							label={ __(
 								'Repeat payment every',
@@ -542,7 +542,32 @@ export default withConfirm( ( { price, index, setConfirm } ) => {
 								</CeDropdown>
 							</div>
 						</CeFormControl>
-					</div>
+						<CeInput
+							css={ css`
+								max-width: 350px;
+							` }
+							label={ __( 'Free Trial Days', 'checkout_engine' ) }
+							className="ce-free-trial"
+							help={ __(
+								'If you want to add a free trial, enter the number of days.',
+								'checkout_engine'
+							) }
+							value={ price?.trial_duration_days }
+							onCeChange={ ( e ) => {
+								updateModel(
+									'prices',
+									{
+										trial_duration_days: e.target.value,
+									},
+									index
+								);
+							} }
+						>
+							<span slot="suffix">
+								{ __( 'Days', 'checkout_engine' ) }
+							</span>
+						</CeInput>
+					</Fragment>
 				) }
 			</div>
 		</div>

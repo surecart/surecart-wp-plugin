@@ -18,9 +18,6 @@ export class CEChoice {
   @State() hasFocus: boolean = false;
 
   /** Does the choice have focus */
-  @State() hasDescription: boolean = false;
-
-  /** Does the choice have focus */
   @State() isStacked: boolean = false;
 
   /** The choice name attribute */
@@ -43,6 +40,15 @@ export class CEChoice {
 
   /** This will be true when the control is in an invalid state. Validity is determined by the `required` prop. */
   @Prop({ reflect: true, mutable: true }) invalid: boolean = false;
+
+  /** Show the label */
+  @Prop() showLabel: boolean = true;
+
+  /** Show the price */
+  @Prop() showPrice: boolean = true;
+
+  /** Show the radio/checkbox control */
+  @Prop() showControl: boolean = true;
 
   /** Emitted when the control loses focus. */
   @Event() ceBlur: EventEmitter<void>;
@@ -150,7 +156,6 @@ export class CEChoice {
   }
 
   componentDidLoad() {
-    this.hasDescription = !!(this.el.shadowRoot.querySelector('[slot="description"]') as HTMLSlotElement);
     this.handleResize();
   }
 
@@ -178,7 +183,6 @@ export class CEChoice {
           'choice--checked': this.checked,
           'choice--disabled': this.disabled,
           'choice--focused': this.hasFocus,
-          'choice--has-description': this.hasDescription,
           'choice--layout-columns': !this.isStacked,
         }}
         htmlFor={this.inputId}
@@ -192,6 +196,7 @@ export class CEChoice {
             choice__checkbox: this.type === 'checkbox',
             choice__radio: this.type === 'radio',
           }}
+          hidden={!this.showControl}
         >
           <span part="checked-icon" class="choice__icon">
             {this.type === 'checkbox' ? (
@@ -233,7 +238,7 @@ export class CEChoice {
           />
         </span>
         <span part="label" id={this.labelId} class="choice__label">
-          <span class="choice__label-text">
+          <span class="choice__label-text" hidden={!this.showLabel}>
             <span class="choice__title" part="title">
               <slot></slot>
             </span>
@@ -242,7 +247,7 @@ export class CEChoice {
             </span>
           </span>
 
-          <span class="choice__price">
+          <span class="choice__price" hidden={!this.showPrice}>
             <span class="choice__title">
               <slot name="price"></slot>
             </span>{' '}

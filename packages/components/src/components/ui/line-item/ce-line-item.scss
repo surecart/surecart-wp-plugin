@@ -85,6 +85,12 @@
   box-shadow: var(--ce-input-box-shadow);
 }
 
+::slotted([slot="price-description"]) {
+  display: inline-block;
+  width: 100%;
+  line-height: 1;
+}
+
 .item__price-layout {
   font-size: var(--ce-font-size-x-large);
   font-weight: var(--ce-font-weight-semibold);

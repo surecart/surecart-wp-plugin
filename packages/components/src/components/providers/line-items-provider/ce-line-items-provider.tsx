@@ -109,6 +109,9 @@ export class CeLineItemsProvider {
     // if we found it, update it
     if (existingLineItem !== -1) {
       existingLineData[existingLineItem] = item;
+      // otherwise, add it
+    } else {
+      return [...existingLineData, ...[item]];
     }
 
     return existingLineData;
