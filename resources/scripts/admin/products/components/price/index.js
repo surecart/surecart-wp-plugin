@@ -13,7 +13,6 @@ import {
 	CeChoice,
 	CePriceInput,
 	CeSwitch,
-	CeTag,
 	CeFormControl,
 	CeButton,
 	CeDropdown,
@@ -22,7 +21,7 @@ import {
 	CeChoices,
 } from '@checkout-engine/react';
 
-import ToggleHeader from '../../../components/ToggleHeader';
+import Header from './Header';
 import { translate } from '../../../util';
 
 // hooks
@@ -32,7 +31,7 @@ import useValidationErrors from '../../../hooks/useValidationErrors';
 // hocs
 import withConfirm from '../../../hocs/withConfirm';
 
-export default withConfirm( ( { price, index, setConfirm } ) => {
+export default withConfirm( ( { price, index, open } ) => {
 	const {
 		duplicateModel,
 		updateModel,
@@ -42,18 +41,8 @@ export default withConfirm( ( { price, index, setConfirm } ) => {
 
 	const { errors, getValidation } = useValidationErrors( 'prices', index );
 
-	const [ isOpen, setIsOpen ] = useState( true );
+	const [ isOpen, setIsOpen ] = useState( index === 0 );
 	const input = useRef();
-
-	// focus on input when opened by default.
-	useEffect( () => {
-		if ( open && input?.current ) {
-			setTimeout( () => {
-				input.current.triggerFocus();
-			}, 50 );
-		}
-		setIsOpen( open );
-	}, [ open ] );
 
 	// if invalid, toggle open.
 	useEffect( () => {
@@ -62,6 +51,17 @@ export default withConfirm( ( { price, index, setConfirm } ) => {
 		}
 	}, [ isInvalid ] );
 
+	// focus on first input when opened.
+	useEffect( () => {
+		if ( open === index && input?.current ) {
+			setIsOpen( true );
+			setTimeout( () => {
+				input.current.triggerFocus();
+			}, 50 );
+			return;
+		}
+	}, [ open ] );
+
 	// if invalid, toggle open.
 	useEffect( () => {
 		if ( errors?.length ) {
@@ -69,210 +69,31 @@ export default withConfirm( ( { price, index, setConfirm } ) => {
 		}
 	}, [ errors ] );
 
-	const deletePrice = ( index ) => {
+	// delete
+	const deletePrice = () => {
 		dispatch( DATA_STORE_KEY ).deleteModel( 'prices', index );
 	};
 
-	const toggleArchive = async () => {
-		setConfirm( {} );
+	// archive
+	const toggleArchive = () => {
 		toggleArchiveModel( 'prices', index );
 	};
 
-	const priceName = price?.name || __( 'Price', 'checkout_engine' );
-
-	const confirmToggleArchive = async () => {
-		setConfirm( {
-			title: price?.archived_at
-				? sprintf(
-						__( 'Un-Archive %s?', 'checkout_engine' ),
-						priceName
-				  )
-				: sprintf( __( 'Archive %s?', 'checkout_engine' ), priceName ),
-			message: price?.archived_at
-				? __(
-						'This will make the price purchaseable again.',
-						'checkout_engine'
-				  )
-				: __(
-						'This price will not be purchaseable and all unsaved changes to this price will be lost.',
-						'checkout_engine'
-				  ),
-			confirmButtonText: price?.archived_at
-				? sprintf(
-						__( 'Un-Archive %s?', 'checkout_engine' ),
-						priceName
-				  )
-				: sprintf( __( 'Archive %s?', 'checkout_engine' ), priceName ),
-			open: true,
-			isDestructive: true,
-			onRequestClose: () => setConfirm( {} ),
-			onRequestConfirm: toggleArchive,
-		} );
+	// duplicate
+	const duplicatePrice = () => {
+		duplicateModel( 'prices', price );
 	};
-
-	const headerName = () => {
-		if ( ! price?.name ) {
-			return __( 'Pricing Details', 'checkout_engine' );
-		}
-
-		if ( isOpen ) {
-			return price?.name;
-		}
-
-		return `${ price?.name } - ${ ( price?.amount || 0 ) / 100 } ${ (
-			price?.currency || ceData.currency_code
-		)?.toUpperCase() } ${
-			price?.recurring && price?.recurring_interval ? '/' : ''
-		} ${ translate( price?.recurring_interval ) || '' }`;
-	};
-
-	const buttons = (
-		<div>
-			{ price?.archived && (
-				<CeTag type="warning">
-					{ __( 'Archived', 'checkout_engine' ) }
-				</CeTag>
-			) }
-			<CeDropdown slot="suffix" position="bottom-right">
-				<CeButton type="text" slot="trigger" circle>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						width="16"
-						height="16"
-						viewBox="0 0 24 24"
-						fill="none"
-						stroke="currentColor"
-						strokeWidth="2"
-						strokeLinecap="round"
-						strokeLinejoin="round"
-					>
-						<circle cx="12" cy="12" r="1"></circle>
-						<circle cx="19" cy="12" r="1"></circle>
-						<circle cx="5" cy="12" r="1"></circle>
-					</svg>
-				</CeButton>
-				<CeMenu>
-					<CeMenuItem
-						onClick={ ( e ) => {
-							e.preventDefault();
-							duplicateModel( 'prices', price );
-						} }
-					>
-						<span
-							slot="prefix"
-							style={ {
-								opacity: 0.5,
-							} }
-						>
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								width="16"
-								height="16"
-								viewBox="0 0 24 24"
-								fill="none"
-								stroke="currentColor"
-								strokeWidth="2"
-								strokeLinecap="round"
-								strokeLinejoin="round"
-							>
-								<rect
-									x="9"
-									y="9"
-									width="13"
-									height="13"
-									rx="2"
-									ry="2"
-								></rect>
-								<path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-							</svg>
-						</span>
-						{ __( 'Duplicate', 'checkout_engine' ) }
-					</CeMenuItem>
-					{ price?.id && (
-						<CeMenuItem onClick={ () => confirmToggleArchive() }>
-							<span
-								slot="prefix"
-								style={ {
-									opacity: 0.5,
-								} }
-							>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									width="16"
-									height="16"
-									viewBox="0 0 24 24"
-									fill="none"
-									stroke="currentColor"
-									strokeWidth="2"
-									strokeLinecap="round"
-									strokeLinejoin="round"
-								>
-									<polyline points="21 8 21 21 3 21 3 8"></polyline>
-									<rect
-										x="1"
-										y="3"
-										width="22"
-										height="5"
-									></rect>
-									<line
-										x1="10"
-										y1="12"
-										x2="14"
-										y2="12"
-									></line>
-								</svg>
-							</span>
-							{ price?.archived
-								? __( 'Un-Archive', 'checkout_engine' )
-								: __( 'Archive', 'checkout_engine' ) }
-						</CeMenuItem>
-					) }
-					<CeMenuItem
-						onClick={ ( e ) => {
-							e.preventDefault();
-							deletePrice( index );
-						} }
-					>
-						<span
-							slot="prefix"
-							style={ {
-								opacity: 0.5,
-							} }
-						>
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								width="16"
-								height="16"
-								viewBox="0 0 24 24"
-								fill="none"
-								stroke="currentColor"
-								strokeWidth="2"
-								strokeLinecap="round"
-								strokeLinejoin="round"
-							>
-								<polyline points="3 6 5 6 21 6"></polyline>
-								<path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-								<line x1="10" y1="11" x2="10" y2="17"></line>
-								<line x1="14" y1="11" x2="14" y2="17"></line>
-							</svg>
-						</span>
-						{ __( 'Delete', 'checkout_engine' ) }
-					</CeMenuItem>
-				</CeMenu>
-			</CeDropdown>
-		</div>
-	);
 
 	return (
 		<div>
-			<ToggleHeader
+			<Header
 				isOpen={ isOpen }
 				setIsOpen={ setIsOpen }
-				buttons={ buttons }
-				type={ price.archived ? 'warning' : '' }
-			>
-				{ headerName() }
-			</ToggleHeader>
+				price={ price }
+				onDuplicate={ duplicatePrice }
+				onArchive={ toggleArchive }
+				onDelete={ deletePrice }
+			/>
 
 			<div
 				css={ css`
@@ -286,93 +107,76 @@ export default withConfirm( ( { price, index, setConfirm } ) => {
 			>
 				<FlashError path="prices" index={ index } scrollIntoView />
 
-				<div>
-					<CeInput
-						ref={ input }
-						label={ __( 'Price Name', 'checkout_engine' ) }
-						className="ce-price-name"
-						help={ __(
-							'A short name for your price (i.e Professional Plan).',
-							'checkout_engine'
-						) }
-						value={ price?.name }
-						onCeChange={ ( e ) => {
-							updateModel(
-								'prices',
-								{
-									name: e.target.value,
-								},
-								index
-							);
-						} }
-						required
-					/>
-				</div>
+				<CeInput
+					ref={ input }
+					label={ __( 'Price Name', 'checkout_engine' ) }
+					className="ce-price-name"
+					help={ __(
+						'A short name for your price (i.e Professional Plan).',
+						'checkout_engine'
+					) }
+					value={ price?.name }
+					onCeChange={ ( e ) =>
+						updateModel( 'prices', { name: e.target.value }, index )
+					}
+					required
+				/>
 
-				<div>
-					<CeChoices style={ { '--columns': 2 } }>
-						<div>
-							<CeChoice
-								checked={ ! price?.recurring }
-								value="single"
-								onCeChange={ ( e ) => {
-									if ( ! e.target.checked ) return;
-									updateModel(
-										'prices',
-										{
-											recurring: false,
-										},
-										index
-									);
-								} }
-							>
-								{ __( 'Single Payment', 'checkout_engine' ) }
-								<span slot="description">
-									{ __(
-										'Charge a one-time fee.',
-										'checkout_engine'
-									) }
-								</span>
-							</CeChoice>
-							<CeChoice
-								checked={ price?.recurring }
-								value="subscription"
-								onCeChange={ ( e ) => {
-									if ( ! e.target.checked ) return;
-									updateModel(
-										'prices',
-										{
-											recurring: true,
-											recurring_interval:
-												price?.recurring_interval ||
-												'year',
-											recurring_interval_count:
-												price?.recurring_interval_count ||
-												1,
-										},
-										index
-									);
-								} }
-							>
-								{ __( 'Subscription', 'checkout_engine' ) }
-								<span slot="description">
-									{ __(
-										'Charge an ongoing fee.',
-										'checkout_engine'
-									) }
-								</span>
-							</CeChoice>
-						</div>
-					</CeChoices>
-				</div>
+				<CeChoices style={ { '--columns': 2 } }>
+					<div>
+						<CeChoice
+							checked={ ! price?.recurring }
+							value="single"
+							onCeChange={ ( e ) => {
+								if ( ! e.target.checked ) return;
+								updateModel(
+									'prices',
+									{ recurring: false },
+									index
+								);
+							} }
+						>
+							{ __( 'Single Payment', 'checkout_engine' ) }
+							<span slot="description">
+								{ __(
+									'Charge a one-time fee.',
+									'checkout_engine'
+								) }
+							</span>
+						</CeChoice>
+						<CeChoice
+							checked={ price?.recurring }
+							value="subscription"
+							onCeChange={ ( e ) => {
+								if ( ! e.target.checked ) return;
+								updateModel(
+									'prices',
+									{
+										recurring: true,
+										recurring_interval:
+											price?.recurring_interval || 'year',
+										recurring_interval_count:
+											price?.recurring_interval_count ||
+											1,
+									},
+									index
+								);
+							} }
+						>
+							{ __( 'Subscription', 'checkout_engine' ) }
+							<span slot="description">
+								{ __(
+									'Charge an ongoing fee.',
+									'checkout_engine'
+								) }
+							</span>
+						</CeChoice>
+					</div>
+				</CeChoices>
 
-				<div>
+				{ ! price?.ad_hoc && (
 					<CePriceInput
-						label={
-							price?.ad_hoc
-								? __( 'Recommended Price', 'checkout_engine' )
-								: __( 'Price', 'checkout_engine' )
-						}
+						label={ __( 'Price', 'checkout_engine' ) }
 						className="ce-price-amount"
 						currencyCode={ ceData.currecy_code }
 						value={ price?.amount }
@@ -386,7 +190,7 @@ export default withConfirm( ( { price, index, setConfirm } ) => {
 						} }
 						required
 					/>
-				</div>
+				) }
 
 				{ !! price?.ad_hoc && (
 					<div

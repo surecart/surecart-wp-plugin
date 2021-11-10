@@ -13,7 +13,7 @@ export default () => {
 	const { product, updateModel, loading } = useProductData();
 	const { errors, getValidation } = useValidationErrors( 'products' );
 	return (
-		<Box title={ __( 'General', 'checkout_engine' ) } loading={ loading }>
+		<Box title={ __( 'Details', 'checkout_engine' ) } loading={ loading }>
 			<div
 				css={ css`
 					display: grid;
@@ -36,7 +36,7 @@ export default () => {
 					label={ __( 'Description', 'checkout_engine' ) }
 					className="ce-product-description"
 					help={ __(
-						'A short description for your product.',
+						'An optional description for your product.',
 						'checkout_engine'
 					) }
 					value={ product?.description }
@@ -47,7 +47,6 @@ export default () => {
 							description: e.target.value,
 						} );
 					} }
-					required
 				/>
 			</div>
 		</Box>

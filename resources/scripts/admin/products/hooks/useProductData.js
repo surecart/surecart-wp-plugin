@@ -11,8 +11,16 @@ export default () => {
 			);
 			const activePrices = prices.filter( ( price ) => ! price.archived );
 
+			let product;
+			try {
+				product = select( STORE_KEY ).selectProduct();
+			} catch ( e ) {
+				console.log( e );
+			}
+
 			return {
-				product: select( STORE_KEY ).selectProduct(),
+				product,
+				error: select( STORE_KEY ).selectError(),
 				loading: select( STORE_KEY ).isResolving( 'selectProduct' ),
 				isSaving: select( STORE_KEY ).isSaving(),
 				status: select( STORE_KEY ).selectProductStatus(),

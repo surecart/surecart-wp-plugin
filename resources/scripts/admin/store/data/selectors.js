@@ -1,5 +1,8 @@
 import { get } from 'dot-prop-immutable';
 
+export const selectError = ( state ) => {
+	return state.error;
+};
 export const selectAllModels = ( state ) => {
 	return state.entities;
 };

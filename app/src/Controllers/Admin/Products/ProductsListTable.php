@@ -11,6 +11,7 @@ use CheckoutEngine\Controllers\Admin\Tables\ListTable;
  */
 class ProductsListTable extends ListTable {
 	public $checkbox = true;
+	public $error    = '';
 
 	/**
 	 * Prepare the items for the table to process
@@ -26,6 +27,7 @@ class ProductsListTable extends ListTable {
 
 		$query = $this->table_data();
 		if ( is_wp_error( $query ) ) {
+			$this->error = $query->get_error_message();
 			$this->items = [];
 			return;
 		}
@@ -159,6 +161,10 @@ class ProductsListTable extends ListTable {
 	 * @return string
 	 */
 	public function no_items() {
+		if ( $this->error ) {
+			echo esc_html( $this->error );
+			return;
+		}
 		echo esc_html_e( 'No products found.', 'checkout_engine' );
 	}
 

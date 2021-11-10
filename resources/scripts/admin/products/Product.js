@@ -16,6 +16,7 @@ import Template from '../templates/SingleModel';
 import SaveButton from './components/SaveButton';
 import ProductActionsDropdown from './components/ProductActionsDropdown';
 import FlashError from '../components/FlashError';
+import { CeAlert } from '@checkout-engine/react';
 
 // modules
 import Details from './modules/Details';
@@ -30,12 +31,14 @@ import useProductData from './hooks/useProductData';
 
 // hocs
 import withConfirm from '../hocs/withConfirm';
+import useValidationErrors from '../hooks/useValidationErrors';
 
 export default withConfirm( ( { setConfirm, noticeUI } ) => {
 	const { snackbarNotices, removeSnackbarNotice } = useSnackbar();
 
 	const {
 		product,
+		error,
 		toggleArchiveModel,
 		prices,
 		loading,
@@ -69,6 +72,36 @@ export default withConfirm( ( { setConfirm, noticeUI } ) => {
 		setConfirm( {} );
 		toggleArchiveModel( 'products', 0 );
 	};
+
+	if ( error?.message ) {
+		return (
+			<CeAlert
+				css={ css`
+					margin-top: 20px;
+					margin-right: 20px;
+				` }
+				type="danger"
+				open={ error?.message }
+				onCeShow={ ( e ) => {
+					if ( scrollIntoView ) {
+						e.target.scrollIntoView( {
+							behavior: 'smooth',
+							block: 'start',
+							inline: 'nearest',
+						} );
+					}
+				} }
+			>
+				<span slot="title">
+					{ __(
+						'There was a critical error loading this page. Please reload the page and try again.',
+						'checkout_engine'
+					) }
+				</span>
+				{ error?.message }
+			</CeAlert>
+		);
+	}
 
 	return (
 		<Template

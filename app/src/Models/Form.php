@@ -27,7 +27,21 @@ class Form {
 	 */
 	protected function getProductIds( $id ) {
 		$this->post = get_post( $id );
-		return array_keys( (array) get_post_meta( $this->post->ID, 'choices', true ) );
+		$blocks     = parse_blocks( $this->post->post_content );
+		return $this->getNested( $blocks, 'product_id' );
+	}
+
+	protected function getNested( array $array, $nested_key ) {
+		$return = array();
+		array_walk_recursive(
+			$array,
+			function( $a, $key ) use ( &$return, $nested_key ) {
+				if ( $nested_key === $key ) {
+					$return[] = $a;
+				}
+			}
+		);
+		return $return;
 	}
 
 	/**
@@ -50,16 +64,15 @@ class Form {
 		)->get();
 	}
 
-	protected function getPosts() {
-		$posts = get_posts(
+	protected function getPosts( $id ) {
+		return get_posts(
 			[
-				's'         => '<!-- wp:checkout-engine/checkout-form ',
+				's'         => '<!-- wp:checkout-engine/checkout-form {"id":' . (int) $id . '}',
 				'sentence'  => 1,
 				'post_type' => 'any',
 				'per_page'  => -1,
 			]
 		);
-		return $this->getBlocksFromPosts( $posts );
 	}
 
 	/**

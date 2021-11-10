@@ -78,6 +78,19 @@ class FormListTable extends ListTable {
 		return '<a href="' . esc_url( get_edit_post_link( $form ) ) . '">' . wp_kses_post( get_the_title( $form ) ) . '</a>';
 	}
 
+	public function column_posts( $form ) {
+		$posts = Form::getPosts( $form->ID );
+
+		$post_names = array_map(
+			function ( $post ) {
+				return '<a href="' . get_edit_post_link( $post->ID ) . '">' . $post->post_title . '</a>';
+			},
+			$posts,
+		);
+
+		return implode( ', ', $post_names );
+	}
+
 	public function column_products( $form ) {
 		$products = Form::getProducts( $form );
 

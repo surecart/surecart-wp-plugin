@@ -1,5 +1,9 @@
 import { combineReducers } from '@wordpress/data';
-import { entities as modelEntities, dirty } from '../../store/data/reducer';
+import {
+	entities as modelEntities,
+	dirty,
+	error,
+} from '../../store/data/reducer';
 
 // set default model state.
 export const entities = (
@@ -37,6 +41,7 @@ export const entities = (
 
 // export reducers.
 export default combineReducers( {
+	error,
 	entities,
 	dirty,
 } );

@@ -4,6 +4,13 @@ import { controls } from '@wordpress/data';
 import { STORE_KEY as UI_STORE_KEY } from '../ui';
 import { STORE_KEY as DATA_STORE_KEY } from '../data';
 
+export function setError( payload ) {
+	return {
+		type: 'SET_ERROR',
+		payload,
+	};
+}
+
 /**
  * Bulk set all entities
  */

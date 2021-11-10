@@ -59,7 +59,7 @@ export default () => {
 					index={ index }
 					key={ index }
 					focused={ index === open }
-					open={ index === open || prices?.length === 1 }
+					open={ open }
 				/>
 			);
 		} );
@@ -78,15 +78,9 @@ export default () => {
 						<Fragment>
 							<CeButton
 								onClick={ ( e ) => {
-									console.log( e );
 									e.preventDefault();
-									e.stopPropagation();
 									addModel( 'prices', {
 										recurring: false,
-										name: __(
-											'Default',
-											'checkout_engine'
-										),
 									} );
 									setOpen( prices?.length );
 								} }

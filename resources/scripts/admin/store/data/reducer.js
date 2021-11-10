@@ -52,6 +52,15 @@ export const dirty = ( state = {}, { type, id, payload } ) => {
 	}
 };
 
+export const error = ( state = {}, { payload, type } ) => {
+	switch ( type ) {
+		case 'SET_ERROR':
+			return payload;
+	}
+
+	return state;
+};
+
 /**
  * Reducer returning current network request state (whether a request to
  * the WP REST API is in progress, successful, or failed).
