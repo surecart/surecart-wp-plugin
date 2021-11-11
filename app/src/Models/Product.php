@@ -32,8 +32,8 @@ class Product extends Model {
 			foreach ( $value->data as $attributes ) {
 				$models[] = new Price( $attributes );
 			}
+			$value->data = $models;
 		}
-		$value->data                = $models;
 		$this->attributes['prices'] = $value;
 	}
 }

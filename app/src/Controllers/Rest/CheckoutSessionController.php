@@ -35,7 +35,7 @@ class CheckoutSessionController extends RestController {
 				'message'           => __( 'Whoops! Something is not quite right.', 'checkout_engine' ),
 				'validation_errors' => $errors,
 			];
-			return Errors::formatAndTranslate( $error, 422 );
+			return \CheckoutEngine::errors()->translate( $error, 422 );
 		}
 
 		// don't send with request.

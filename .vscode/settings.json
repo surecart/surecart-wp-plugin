@@ -3,5 +3,8 @@
     "editor.acceptSuggestionOnCommitCharacter": false,
     "[php]": {
       "editor.defaultFormatter": "wongjn.php-sniffer"
+    },
+    "[json]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
     }
 }

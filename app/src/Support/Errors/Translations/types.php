@@ -8,7 +8,7 @@
 return [
 	'invalid_code'             => __( 'Invalid.', 'checkout_engine' ),
 	'invalid'                  => __( 'Whoops! Something is not quite right.', 'checkout_engine' ),
-	'empty'                    => __( "Can't be empty", 'checkout_engine' ),
+	'empty'                    => __( "Can't be empty.", 'checkout_engine' ),
 	'blank'                    => __( "Can't be blank.", 'checkout_engine' ),
 	'present'                  => __( 'Must be blank', 'checkout_engine' ),
 	'not_found'                => __( 'Not found.', 'checkout_engine' ),

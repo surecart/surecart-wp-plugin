@@ -65,9 +65,26 @@ class Form {
 	}
 
 	protected function getPosts( $id ) {
+		$blocks     = $this->searchBlocks( $id );
+		$shortcodes = $this->searchShortcodes( $id );
+		return array_merge( $blocks, $shortcodes );
+	}
+
+	public function searchBlocks( $id ) {
 		return get_posts(
 			[
 				's'         => '<!-- wp:checkout-engine/checkout-form {"id":' . (int) $id . '}',
+				'sentence'  => 1,
+				'post_type' => 'any',
+				'per_page'  => -1,
+			]
+		);
+	}
+
+	public function searchShortcodes( $id ) {
+		return get_posts(
+			[
+				's'         => '[ce_form id=' . (int) $id,
 				'sentence'  => 1,
 				'post_type' => 'any',
 				'per_page'  => -1,

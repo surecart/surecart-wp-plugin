@@ -58,7 +58,7 @@ class FormPostTypeServiceProvider implements ServiceProviderInterface {
 				),
 				'public'                => false,
 				'show_ui'               => true,
-				'show_in_menu'          => true,
+				'show_in_menu'          => false,
 				'rewrite'               => false,
 				'show_in_rest'          => true,
 				'rest_base'             => 'ce-forms',
@@ -91,7 +91,7 @@ class FormPostTypeServiceProvider implements ServiceProviderInterface {
 			$defaults,
 			array(
 				'title'     => $defaults['title'],
-				'posts'     => __( 'Posts', 'checkout_engine' ),
+				'public'    => __( 'Published In', 'checkout_engine' ),
 				'products'  => __( 'Products', 'checkout_engine' ),
 				'shortcode' => __( 'Shortcode', 'presto-player' ),
 			)
@@ -107,7 +107,7 @@ class FormPostTypeServiceProvider implements ServiceProviderInterface {
 		if ( 'shortcode' === $column_name ) {
 			return $this->columnShortcode( $post_ID );
 		}
-		if ( 'posts' === $column_name ) {
+		if ( 'public' === $column_name ) {
 			return $this->columnPosts( $post_ID );
 		}
 		if ( 'products' === $column_name ) {

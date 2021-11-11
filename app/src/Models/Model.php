@@ -325,6 +325,10 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 	 * @return Model
 	 */
 	public function setAttributes( $attributes, $is_guarded = true ) {
+		if ( empty( $attributes ) ) {
+			return $this;
+		}
+
 		foreach ( $attributes as $key => $value ) {
 			// remove api attributes.
 			if ( in_array( $key, [ '_locale', 'rest_route' ], true ) ) {
@@ -780,17 +784,15 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 			}
 		}
 
-		foreach ( $attributes as $key => $attribute ) {
-			if ( is_a( $attribute, self::class ) ) {
-				$attributes[ $key ] = $attribute->toArray();
-			} elseif ( is_array( $attribute ) ) {
-				foreach ( $attribute as $nested_key => $nested ) {
-					if ( is_a( $nested, self::class ) ) {
-						$attributes[ $key ][ $nested_key ] = $nested->toArray();
-					}
+		// Check if any attribute is a model and call toArray.
+		array_walk_recursive(
+			$attributes,
+			function ( &$value, $key ) {
+				if ( $value instanceof Model ) {
+					$value = $value->toArray();
 				}
 			}
-		}
+		);
 
 		return array_merge( $attributes, $this->relations );
 	}

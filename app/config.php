@@ -33,6 +33,7 @@ return [
 		\WPEmergeBlade\View\ServiceProvider::class,
 		\CheckoutEngine\View\ViewServiceProvider::class,
 		\CheckoutEngine\Blocks\BlockServiceProvider::class,
+		\CheckoutEngine\Support\Errors\ErrorsServiceProvider::class,
 
 		// REST providers.
 		\CheckoutEngine\Rest\AccountRestServiceProvider::class,

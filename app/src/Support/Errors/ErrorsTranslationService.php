@@ -1,0 +1,149 @@
+<?php
+
+namespace CheckoutEngine\Support\Errors;
+
+/**
+ * Handles error translations from the API.
+ */
+class ErrorsTranslationService {
+	/**
+	 * Translate based on specific error code.
+	 *
+	 * @param string $code
+	 * @return void
+	 */
+	public function codeTranslation( $code = '' ) {
+		if ( ! $code ) {
+			return false;
+		}
+
+		// very specific.
+		$code_translations = include 'Translations/codes.php';
+		if ( ! empty( $code_translations[ $code ] ) ) {
+			return $code_translations[ $code ];
+		}
+
+		return false;
+	}
+
+	/**
+	 * Replaceable attribute translation
+	 *
+	 * @param string $attribute Attribute name.
+	 * @param string $type Type of validation.
+	 *
+	 * @return string|false
+	 */
+	public function attributeTranslation( $attribute, $type ) {
+		// if both are empty, return.
+		if ( empty( $attribute ) && empty( $type ) ) {
+			return false;
+		}
+
+		$attribute_translations        = include 'Translations/attributes.php';
+		$type_translations_replaceable = include 'Translations/types-replaceable.php';
+
+		// we have an attribute.
+		if ( ! empty( $attribute_translations[ $attribute ] ) ) {
+			// we have a type.
+			if ( ! empty( $type_translations_replaceable[ $type ] ) ) {
+				return sprintf( $type_translations_replaceable[ $type ], $attribute_translations[ $attribute ] );
+			}
+			// translators: field name.
+			return sprintf( __( '%s is invalid.', 'checkount_engine' ), $attribute_translations[ $attribute ] );
+		}
+
+		return false;
+	}
+
+	/**
+	 * Translate just the type field
+	 *
+	 * @param string $type Type sting.
+	 * @return string|false
+	 */
+	public function typeTranslation( $type = '' ) {
+		if ( ! $type ) {
+			return false;
+		}
+
+		// we have no attribute.
+		$type_translations = include 'Translations/types.php';
+
+		if ( ! empty( $type_translations[ $type ] ) ) {
+			return $type_translations[ $type ];
+		}
+
+		return false;
+	}
+
+	/**
+	 * Translate a specific error response
+	 *
+	 * @param array $response Error response.
+	 * @return \WP_Error
+	 */
+	public function translateErrorMessage( $response, $fallback = null ) {
+		// translate specific error code.
+		$translated = $this->codeTranslation( $response['code'] ?? '' );
+		if ( $translated ) {
+			return $translated;
+		}
+
+		// translate attribute.
+		$translated = $this->attributeTranslation( $response['attribute'] ?? '', $response['type'] ?? '' );
+		if ( $translated ) {
+			return $translated;
+		}
+
+		// translate type.
+		$translated = $this->typeTranslation( $response['type'] ?? '' );
+		if ( $translated ) {
+			return $translated;
+		}
+
+		// fallback.
+		return $fallback ?? __( 'Error.', 'checkout_engine' );
+	}
+
+	/**
+	 * Translate Errors
+	 *
+	 * @param array   $response Respons from platform.
+	 * @param integer $code Status code.
+	 *
+	 * @return \WP_Error
+	 */
+	public function translate( $response = null, $code = null ) {
+		// fallback.
+		if ( ! $response ) {
+			return new \WP_Error( 'error', __( 'Error.', 'checkout_engine' ) );
+		}
+
+		$formatted = new \WP_Error(
+			$response['code'] ?? '',
+			$this->translateErrorMessage( $response, $response['message'] ) ?? '',
+			[
+				'status'      => $code,
+				'type'        => $response['type'] ?? '',
+				'http_status' => $response['http_status'] ?? '',
+			]
+		);
+
+		if ( ! empty( $response['validation_errors'] ) ) {
+			foreach ( $response['validation_errors']  as $error ) {
+				$formatted->add(
+					$error['code'] ?? 'invalid',
+					$this->translateErrorMessage( $error, $error['message'] ),
+					[
+						'attribute' => $error['attribute'] ?? '',
+						'type'      => $error['type'] ?? '',
+						'options'   => $error['options'] ?? [],
+					]
+				);
+			}
+		}
+
+		return $formatted;
+	}
+}

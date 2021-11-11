@@ -98,21 +98,13 @@ class CheckoutSession extends Model {
 	 * @return void
 	 */
 	public function setLineItemsAttribute( $value ) {
-		// $line_items = [];
-		// if ( ! empty( $value ) ) {
-		// foreach ( $value as $item ) {
-		// $line_items[] = new LineItem( $item );
-		// }
-		// $this->attributes['line_items'] = $line_items;
-		// }
-
 		$models = [];
 		if ( ! empty( $value->data ) && is_array( $value->data ) ) {
 			foreach ( $value->data as $attributes ) {
 				$models[] = new LineItem( $attributes );
 			}
+			$value->data = $models;
 		}
-		$value->data                    = $models;
 		$this->attributes['line_items'] = $value;
 	}
 }

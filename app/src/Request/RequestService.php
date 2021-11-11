@@ -133,7 +133,7 @@ class RequestService {
 		// check for errors.
 		if ( ! in_array( $response_code, [ 200, 201 ], true ) ) {
 			$response_body = json_decode( $response_body, true );
-			return Errors::formatAndTranslate( $response_body, $response_code );
+			return \CheckoutEngine::errors()->translate( $response_body, $response_code );
 		}
 
 		// return response.

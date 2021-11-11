@@ -65,7 +65,6 @@ export class CeSessionProvider {
   handleFormChange(e) {
     const data = e.detail;
     if (Object.values(data || {}).every(item => !item)) return;
-    console.log({ data });
     // we update silently here since we parse form data on submit.
     this.update(this.parseFormData(data));
   }

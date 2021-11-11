@@ -1,0 +1,16 @@
+{
+	"checkout_session": {
+		"id": "test_session",
+		"customer_first_name": "Joey",
+		"customer_last_name": "Smithy",
+		"customer_email": "joe@gmail.com",
+		"currency": "usd",
+		"metadata": {},
+		"line_items": [
+			{
+				"price_id": "85109619-529d-47b3-98c3-ca90d22913e4",
+				"quantity": 2
+			}
+		]
+	}
+}
