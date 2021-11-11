@@ -20,6 +20,7 @@ return [
 		// \WPEmergeAppCore\Sidebar\SidebarServiceProvider::class,
 		\CheckoutEngine\Routing\RouteConditionsServiceProvider::class,
 		\CheckoutEngine\WordPress\AdminServiceProvider::class,
+		\CheckoutEngine\WordPress\PostTypes\FormPostTypeServiceProvider::class,
 		\CheckoutEngine\WordPress\AssetsServiceProvider::class,
 		\CheckoutEngine\WordPress\ContentTypesServiceProvider::class,
 		\CheckoutEngine\WordPress\ShortcodesServiceProvider::class,

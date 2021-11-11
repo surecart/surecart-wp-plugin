@@ -32,7 +32,7 @@ class AdminMenuPageService {
 			'coupons'      => \add_submenu_page( $this->slug, __( 'Coupons', 'checkout_engine' ), __( 'Coupons', 'checkout_engine' ), 'edit_pk_coupons', 'ce-coupons', '__return_false' ),
 			'customers'    => \add_submenu_page( $this->slug, __( 'Customers', 'checkout_engine' ), __( 'Customers', 'checkout_engine' ), 'edit_pk_customers', 'ce-customers', '__return_false' ),
 			'subscription' => \add_submenu_page( $this->slug, __( 'Subscriptions', 'checkout_engine' ), __( 'Subscriptions', 'checkout_engine' ), 'edit_pk_subscriptions', 'ce-subscriptions', '__return_false' ),
-			'forms'        => \add_submenu_page( $this->slug, __( 'Forms', 'checkout_engine' ), __( 'Forms', 'checkout_engine' ), 'edit_pk_customers', 'ce-forms', '__return_false' ),
+			'forms'        => \add_submenu_page( $this->slug, __( 'Forms', 'checkout_engine' ), __( 'Forms', 'checkout_engine' ), 'edit_posts', 'edit.php?post_type=ce_form', '' ),
 			'abandoned'    => \add_submenu_page( $this->slug, __( 'Abandoned Orders', 'checkout_engine' ), __( 'Abandoned Orders', 'checkout_engine' ), 'edit_pk_orders', 'ce-abandoned-checkouts', '__return_false' ),
 			'settings'     => \add_submenu_page( $this->slug, __( 'Settings', 'checkout_engine' ), __( 'Settings', 'checkout_engine' ), 'manage_account_settings', 'ce-settings', '__return_false' ),
 		];

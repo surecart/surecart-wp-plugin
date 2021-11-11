@@ -116,22 +116,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /*
 |--------------------------------------------------------------------------
-| Forms
-|--------------------------------------------------------------------------
-*/
-\CheckoutEngine::route()
-->where( 'admin', 'ce-forms' )
-->middleware( 'user.can:edit_pk_orders' ) // TODO: change to manage coupons.
-->setNamespace( '\\CheckoutEngine\\Controllers\\Admin\\Forms\\' )
-->group(
-	function() {
-		\CheckoutEngine::route()->get()->where( 'ce_url_var', false, 'action' )->name( 'forms.index' )->handle( 'FormViewController@index' );
-		\CheckoutEngine::route()->get()->where( 'ce_url_var', 'edit', 'action' )->name( 'forms.edit' )->handle( 'FormViewController@edit' );
-	}
-);
-
-/*
-|--------------------------------------------------------------------------
 | Settings
 |--------------------------------------------------------------------------
 */
