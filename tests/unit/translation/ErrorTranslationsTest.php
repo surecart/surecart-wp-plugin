@@ -98,9 +98,9 @@ class ErrorsTranslationServiceTest extends WP_UnitTestCase
 		$error = json_decode(file_get_contents(dirname(__FILE__) . '/price-error.json'), true);
 		$translated = $errors->translate($error);
 		$this->assertEquals([
-			'price.invalid' => ['Whoops! Something is not quite right.'],
-			'price.amount.blank' => ["Price amount can't be blank."],
-			'price.amount.not_a_number' => ['Price amount is not a number.']
+			'price.invalid' => ['There were some validation errors.'],
+			'price.amount.blank' => ["Amount can't be blank."],
+			'price.amount.not_a_number' => ['Amount must be a number.']
 		], $translated->errors);
 	}
 }
