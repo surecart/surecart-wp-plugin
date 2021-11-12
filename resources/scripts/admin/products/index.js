@@ -1,21 +1,10 @@
 import { render } from '@wordpress/element';
-import { store as dataStore } from '../store/data';
-import { dispatch } from '@wordpress/data';
 
+/**
+ * register store and entities.
+ */
 import './store/register';
-
-dispatch( dataStore ).registerEntities( [
-	{
-		name: 'products',
-		baseURL: 'products',
-		baseURLParams: { context: 'edit' },
-	},
-	{
-		name: 'prices',
-		baseURL: 'prices',
-		baseURLParams: { context: 'edit' },
-	},
-] );
+import './store/entities';
 
 /**
  * App

@@ -36,7 +36,7 @@ export default withConfirm( ( { price, index, open } ) => {
 		duplicatePrice: duplicatePriceAction,
 		updatePrice: updatePriceAction,
 		isInvalid,
-		toggleArchiveModel,
+		togglePriceArchive,
 	} = useProductData();
 
 	const { errors, getValidation } = useValidationErrors( 'prices', index );
@@ -81,7 +81,7 @@ export default withConfirm( ( { price, index, open } ) => {
 
 	// archive
 	const toggleArchive = () => {
-		toggleArchiveModel( 'prices', index );
+		togglePriceArchive( index );
 	};
 
 	// duplicate

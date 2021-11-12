@@ -229,9 +229,7 @@ export function* toggleArchiveModel( key, index = 0, save = true ) {
 	);
 
 	if ( model.id && save ) {
-		return yield controls.dispatch( coreStore, 'saveModel', key, {
-			index,
-		} );
+		return yield controls.dispatch( coreStore, 'saveModel', key, index );
 	}
 }
 

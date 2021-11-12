@@ -1,5 +1,3 @@
 import { registerStore } from '@wordpress/data';
-
-// editor
 import { store, config } from './index';
 registerStore( store, config );

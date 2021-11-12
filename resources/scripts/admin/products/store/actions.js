@@ -21,12 +21,56 @@ export function* updateProduct( payload, index ) {
  * Toggle the product's visibility.
  */
 export function* toggleProductArchive( index ) {
-	return yield controls.dispatch(
-		coreStore,
-		'toggleArchiveModel',
-		'products',
-		index
-	);
+	yield controls.dispatch( uiStore, 'setSaving', true );
+	try {
+		yield controls.dispatch(
+			coreStore,
+			'toggleArchiveModel',
+			'products',
+			index
+		);
+		// add notice.
+		yield controls.dispatch( uiStore, 'addSnackbarNotice', {
+			content: __( 'Saved.', 'checkout_engine' ),
+		} );
+	} catch ( e ) {
+		yield controls.dispatch( uiStore, 'addSnackbarNotice', {
+			className: 'is-snackbar-error',
+			content:
+				error?.message || __( 'Failed to save.', 'checkout_engine' ),
+		} );
+		console.error( error );
+	} finally {
+		yield controls.dispatch( uiStore, 'setSaving', false );
+	}
+}
+
+/**
+ * Toggle the product's visibility.
+ */
+export function* togglePriceArchive( index ) {
+	yield controls.dispatch( uiStore, 'setSaving', true );
+	try {
+		yield controls.dispatch(
+			coreStore,
+			'toggleArchiveModel',
+			'prices',
+			index
+		);
+		// add notice.
+		yield controls.dispatch( uiStore, 'addSnackbarNotice', {
+			content: __( 'Saved.', 'checkout_engine' ),
+		} );
+	} catch ( e ) {
+		yield controls.dispatch( uiStore, 'addSnackbarNotice', {
+			className: 'is-snackbar-error',
+			content:
+				error?.message || __( 'Failed to save.', 'checkout_engine' ),
+		} );
+		console.error( error );
+	} finally {
+		yield controls.dispatch( uiStore, 'setSaving', false );
+	}
 }
 
 /**
