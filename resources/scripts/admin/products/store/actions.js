@@ -1,66 +1,119 @@
+import { __ } from '@wordpress/i18n';
 import { controls } from '@wordpress/data';
-
-import * as modelActions from '../../store/data/actions';
-export * from '../../store/data/actions';
-
-import { STORE_KEY } from './index';
+import { store as uiStore } from '../../store/ui';
+import { store as coreStore } from '../../store/data';
+import { store } from '../store';
 
 /**
- * Overwrite updateModel action creator to sanitize input
+ * Update the product's attributes.
  */
-export function updateModel( key, payload, index ) {
-	// handle prices
-	if ( key === 'prices' ) {
-		// cannot use ad_hoc with recurring.
-		if ( payload?.recurring ) {
-			payload.ad_hoc = false;
-		}
-	}
-
-	return modelActions.updateModel( key, payload, index );
+export function* updateProduct( payload, index ) {
+	return yield controls.dispatch(
+		coreStore,
+		'updateModel',
+		'products',
+		payload,
+		index
+	);
 }
 
 /**
- * Overwrite addModel action creator to sanitize prices.
+ * Toggle the product's visibility.
  */
-export function* addModel( path, payload, index ) {
-	if ( path === 'prices' ) {
-		const product = yield controls.select( STORE_KEY, 'selectProduct' );
+export function* toggleProductArchive( index ) {
+	return yield controls.dispatch(
+		coreStore,
+		'toggleArchiveModel',
+		'products',
+		index
+	);
+}
 
-		return modelActions.addModel(
+/**
+ * Update a specific price.
+ */
+export function* updatePrice( index, payload ) {
+	// cannot use ad_hoc with recurring.
+	if ( payload?.recurring ) {
+		payload.ad_hoc = false;
+	}
+
+	return yield controls.dispatch(
+		coreStore,
+		'updateModel',
+		'prices',
+		payload,
+		index
+	);
+}
+
+/**
+ * Add a new empty price.
+ */
+export function* addEmptyPrice() {
+	return yield controls.dispatch( coreStore, 'addModel', 'prices', {
+		recurring: false,
+		currency: ceData?.currency_code || 'usd',
+	} );
+}
+
+/**
+ * Add a price.
+ */
+export function* addPrice( payload, index ) {
+	const product = yield controls.select( store, 'selectProduct' );
+	return yield controls.dispatch(
+		coreStore,
+		'addModel',
+		'prices',
+		{
+			...payload,
+			object: 'price',
+			currency: ceData?.currency_code || 'usd',
+			product_id: payload?.product_id || product?.id,
+			recurring_interval: payload.recurring_interval || 'year',
+			recurring_interval_count: payload.recurring_interval_count || 1,
+		},
+		index
+	);
+}
+
+/**
+ * Save the page.
+ */
+export function* save() {
+	yield controls.dispatch( uiStore, 'clearErrors' );
+	yield controls.dispatch( uiStore, 'setSaving', true );
+
+	try {
+		// first save product.
+		yield controls.dispatch( coreStore, 'saveModel', 'products', 0 );
+
+		// update product_id in prices.
+		const product = yield controls.resolveSelect( store, 'selectProduct' );
+		yield controls.dispatch(
+			coreStore,
+			'updateModelsProperty',
 			'prices',
-			{
-				...payload,
-				object: 'price',
-				currency: ceData?.currency_code || 'usd',
-				product_id: payload.product_id || product?.id,
-				recurring_interval: payload.recurring_interval || 'year',
-				recurring_interval_count: payload.recurring_interval_count || 1,
-			},
-			index
+			'product_id',
+			product?.id
 		);
+
+		// then batch save prices.
+		yield controls.dispatch( coreStore, 'saveCollections', [ 'prices' ] );
+
+		// add notice.
+		yield controls.dispatch( uiStore, 'addSnackbarNotice', {
+			content: __( 'Saved.', 'checkout_engine' ),
+		} );
+	} catch ( error ) {
+		yield controls.dispatch( uiStore, 'addSnackbarNotice', {
+			className: 'is-snackbar-error',
+			content:
+				error?.message || __( 'Failed to save.', 'checkout_engine' ),
+		} );
+		console.error( error );
+	} finally {
+		yield controls.dispatch( uiStore, 'setSaving', false );
 	}
-
-	return modelActions.addModel( path, payload );
-}
-
-/**
- * Extend duplicate model to add product_id to prices.
- */
-export function* duplicateModel( key, payload, index ) {
-	if ( key === 'prices' ) {
-		if ( ! payload?.product_id ) {
-			const product = yield controls.resolveSelect(
-				STORE_KEY,
-				'selectProduct'
-			);
-			payload.product_id = product?.id;
-		}
-	}
-
-	return yield modelActions.duplicateModel( key, payload, index );
-}
-
-export function save() {
-	return modelActions.saveModel( 'product', { with: [ 'prices' ] } );
 }

@@ -6,7 +6,7 @@ import { useState, useEffect, useRef, Fragment } from '@wordpress/element';
 import { dispatch } from '@wordpress/data';
 
 import FlashError from '../../../components/FlashError';
-import { STORE_KEY as DATA_STORE_KEY } from '../../../store/data';
+import { store as coreStore } from '../../../store/data';
 
 import {
 	CeInput,
@@ -33,8 +33,8 @@ import withConfirm from '../../../hocs/withConfirm';
 
 export default withConfirm( ( { price, index, open } ) => {
 	const {
-		duplicateModel,
-		updateModel,
+		duplicatePrice: duplicatePriceAction,
+		updatePrice: updatePriceAction,
 		isInvalid,
 		toggleArchiveModel,
 	} = useProductData();
@@ -69,9 +69,14 @@ export default withConfirm( ( { price, index, open } ) => {
 		}
 	}, [ errors ] );
 
+	// update price
+	const updatePrice = ( value ) => {
+		updatePriceAction( index, value );
+	};
+
 	// delete
 	const deletePrice = () => {
-		dispatch( DATA_STORE_KEY ).deleteModel( 'prices', index );
+		dispatch( coreStore ).deleteModel( 'prices', index );
 	};
 
 	// archive
@@ -81,7 +86,7 @@ export default withConfirm( ( { price, index, open } ) => {
 
 	// duplicate
 	const duplicatePrice = () => {
-		duplicateModel( 'prices', price );
+		duplicatePriceAction( price );
 	};
 
 	return (
@@ -117,7 +122,7 @@ export default withConfirm( ( { price, index, open } ) => {
 					) }
 					value={ price?.name }
 					onCeChange={ ( e ) =>
-						updateModel( 'prices', { name: e.target.value }, index )
+						updatePrice( { name: e.target.value } )
 					}
 					required
 				/>
@@ -129,11 +134,7 @@ export default withConfirm( ( { price, index, open } ) => {
 							value="single"
 							onCeChange={ ( e ) => {
 								if ( ! e.target.checked ) return;
-								updateModel(
-									'prices',
-									{ recurring: false },
-									index
-								);
+								updatePrice( { recurring: false } );
 							} }
 						>
 							{ __( 'Single Payment', 'checkout_engine' ) }
@@ -149,18 +150,13 @@ export default withConfirm( ( { price, index, open } ) => {
 							value="subscription"
 							onCeChange={ ( e ) => {
 								if ( ! e.target.checked ) return;
-								updateModel(
-									'prices',
-									{
-										recurring: true,
-										recurring_interval:
-											price?.recurring_interval || 'year',
-										recurring_interval_count:
-											price?.recurring_interval_count ||
-											1,
-									},
-									index
-								);
+								updatePrice( {
+									recurring: true,
+									recurring_interval:
+										price?.recurring_interval || 'year',
+									recurring_interval_count:
+										price?.recurring_interval_count || 1,
+								} );
 							} }
 						>
 							{ __( 'Subscription', 'checkout_engine' ) }
@@ -182,11 +178,7 @@ export default withConfirm( ( { price, index, open } ) => {
 						value={ price?.amount }
 						name="price"
 						onCeChange={ ( e ) => {
-							updateModel(
-								'prices',
-								{ amount: e.target.value },
-								index
-							);
+							updatePrice( { amount: e.target.value } );
 						} }
 						required
 					/>
@@ -203,13 +195,11 @@ export default withConfirm( ( { price, index, open } ) => {
 							label={ __( 'Min Amount', 'checkout_engine' ) }
 							className="ce-ad-hoc-min-amount"
 							value={ price?.ad_hoc_min_amount }
-							onCeChange={ ( e ) => {
-								updateModel(
-									'prices',
-									{ ad_hoc_min_amount: e.target.value },
-									index
-								);
-							} }
+							onCeChange={ ( e ) =>
+								updatePrice( {
+									ad_hoc_min_amount: e.target.value,
+								} )
+							}
 							required
 						/>
 						<CePriceInput
@@ -217,13 +207,11 @@ export default withConfirm( ( { price, index, open } ) => {
 							className="ce-ad-hoc-max-amount"
 							value={ price?.ad_hoc_max_amount }
 							min={ price?.ad_hoc_min_amount / 100 }
-							onCeChange={ ( e ) => {
-								updateModel(
-									'prices',
-									{ ad_hoc_max_amount: e.target.value },
-									index
-								);
-							} }
+							onCeChange={ ( e ) =>
+								updatePrice( {
+									ad_hoc_max_amount: e.target.value,
+								} )
+							}
 						/>
 					</div>
 				) }
@@ -232,13 +220,9 @@ export default withConfirm( ( { price, index, open } ) => {
 					<div>
 						<CeSwitch
 							checked={ price?.ad_hoc }
-							onCeChange={ ( e ) => {
-								updateModel(
-									'prices',
-									{ ad_hoc: e.target.checked },
-									index
-								);
-							} }
+							onCeChange={ ( e ) =>
+								updatePrice( { ad_hoc: e.target.checked } )
+							}
 						>
 							{ __(
 								'Allow customers to pay what they want',
@@ -273,14 +257,10 @@ export default withConfirm( ( { price, index, open } ) => {
 										'recurring_interval_count'
 									) }
 									onCeChange={ ( e ) =>
-										updateModel(
-											'prices',
-											{
-												recurring_interval_count:
-													e.target.value,
-											},
-											index
-										)
+										updatePrice( {
+											recurring_interval_count:
+												e.target.value,
+										} )
 									}
 									type="number"
 									max={
@@ -302,42 +282,27 @@ export default withConfirm( ( { price, index, open } ) => {
 									<CeMenu>
 										<CeMenuItem
 											onClick={ () =>
-												updateModel(
-													'prices',
-													{
-														recurring_interval:
-															'day',
-													},
-													index
-												)
+												updatePrice( {
+													recurring_interval: 'day',
+												} )
 											}
 										>
 											{ __( 'Day', 'checkout_engine' ) }
 										</CeMenuItem>
 										<CeMenuItem
 											onClick={ () =>
-												updateModel(
-													'prices',
-													{
-														recurring_interval:
-															'month',
-													},
-													index
-												)
+												updatePrice( {
+													recurring_interval: 'month',
+												} )
 											}
 										>
 											{ __( 'Month', 'checkout_engine' ) }
 										</CeMenuItem>
 										<CeMenuItem
 											onClick={ () =>
-												updateModel(
-													'prices',
-													{
-														recurring_interval:
-															'year',
-													},
-													index
-												)
+												updatePrice( {
+													recurring_interval: 'yearl',
+												} )
 											}
 										>
 											{ __( 'Year', 'checkout_engine' ) }
@@ -357,15 +322,11 @@ export default withConfirm( ( { price, index, open } ) => {
 								'checkout_engine'
 							) }
 							value={ price?.trial_duration_days }
-							onCeChange={ ( e ) => {
-								updateModel(
-									'prices',
-									{
-										trial_duration_days: e.target.value,
-									},
-									index
-								);
-							} }
+							onCeChange={ ( e ) =>
+								updatePrice( {
+									trial_duration_days: e.target.value,
+								} )
+							}
 						>
 							<span slot="suffix">
 								{ __( 'Days', 'checkout_engine' ) }

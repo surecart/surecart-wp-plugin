@@ -1,3 +1,7 @@
+import { __ } from '@wordpress/i18n';
+
+import { combineReducers } from '@wordpress/data';
+
 import dotProp from 'dot-prop-immutable';
 
 function unique( array = [], propertyName ) {
@@ -10,14 +14,29 @@ function unique( array = [], propertyName ) {
 }
 
 // Store based on nested key. (i.e. product.price)
-export const entities = ( state = {}, { type, key, payload, id } ) => {
+export const entities = ( state = {}, { type, key, payload, id, prop } ) => {
 	switch ( type ) {
 		case 'SET_ENTITIES':
 			return payload;
+		case 'ADD_ENTITIES':
+			return {
+				...state,
+				...payload,
+			};
 		case 'UPDATE_ENTITIES':
 			const merged = dotProp.merge( state, key, payload );
 			const uniqueEntities = unique( merged?.[ key ] || [], 'id' );
 			return dotProp.set( state, key, uniqueEntities );
+		case 'UPDATE_ENTITIES_PROPERTY':
+			return {
+				...state,
+				[ key ]: state?.[ key ].map( ( entity ) => {
+					return {
+						...entity,
+						[ prop ]: payload,
+					};
+				} ),
+			};
 		case 'SET_MODEL':
 			return dotProp.set( state, key, payload );
 		case 'SET_MODEL_BY_ID':
@@ -26,10 +45,10 @@ export const entities = ( state = {}, { type, key, payload, id } ) => {
 			const index = items.findIndex( item );
 			return dotProp.set( state, `${ key }.${ index }`, payload );
 		case 'ADD_MODEL':
-			return dotProp.set( state, key, ( list ) => [
-				...( list || [] ),
-				payload,
-			] );
+			return {
+				...state,
+				[ key ]: [ ...( state[ key ] || [] ), payload ],
+			};
 		case 'UPDATE_MODEL':
 			return dotProp.merge( state, key, payload );
 		case 'DELETE_MODEL':
@@ -37,6 +56,14 @@ export const entities = ( state = {}, { type, key, payload, id } ) => {
 		default:
 			return state;
 	}
+};
+
+export const config = ( state = [], { type, payload } ) => {
+	switch ( type ) {
+		case 'REGISTER_ENTITIES':
+			return [ ...state, ...payload ];
+	}
+	return state;
 };
 
 export const dirty = ( state = {}, { type, id, payload } ) => {
@@ -82,3 +109,12 @@ export function saving( state = {}, action ) {
 
 	return state;
 }
+
+// export reducers.
+export default combineReducers( {
+	config,
+	error,
+	entities,
+	dirty,
+	saving,
+} );

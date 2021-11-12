@@ -10,7 +10,7 @@ import useProductData from '../hooks/useProductData';
 import useValidationErrors from '../../hooks/useValidationErrors';
 
 export default () => {
-	const { product, updateModel, loading } = useProductData();
+	const { product, updateProduct, loading } = useProductData();
 	const { errors, getValidation } = useValidationErrors( 'products' );
 	return (
 		<Box title={ __( 'Details', 'checkout_engine' ) } loading={ loading }>
@@ -26,7 +26,7 @@ export default () => {
 					help={ __( 'A name for your product.', 'checkout_engine' ) }
 					value={ product?.name }
 					onCeChange={ ( e ) => {
-						updateModel( 'products', { name: e.target.value } );
+						updateProduct( { name: e.target.value } );
 					} }
 					errorMessage={ getValidation( 'name' ) }
 					name="name"
@@ -42,11 +42,9 @@ export default () => {
 					value={ product?.description }
 					errorMessage={ getValidation( 'description' ) }
 					name="description"
-					onCeChange={ ( e ) => {
-						updateModel( 'products', {
-							description: e.target.value,
-						} );
-					} }
+					onCeChange={ ( e ) =>
+						updateProduct( { description: e.target.value } )
+					}
 				/>
 			</div>
 		</Box>

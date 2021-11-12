@@ -6,9 +6,8 @@ import { Fragment } from '@wordpress/element';
 import { useSelect, dispatch } from '@wordpress/data';
 import { Button, Modal } from '@wordpress/components';
 
-import { STORE_KEY as NOTICES_STORE_KEY } from '../store/notices';
-import { STORE_KEY as UI_STORE_KEY } from '../store/ui';
-import { STORE_KEY as DATA_STORE_KEY } from '../store/data';
+import { store as uiStore } from '../store/ui';
+import { store as dataStore } from '../store/data';
 
 import Template from '../templates/SingleModel';
 import SaveButton from './components/SaveButton';
@@ -53,12 +52,12 @@ export default withConfirm( ( { setConfirm, noticeUI } ) => {
 
 	// get model errors
 	const errors = useSelect( ( select ) =>
-		select( UI_STORE_KEY ).selectErrors( 'products', 0 )
+		select( uiStore ).selectErrors( 'products', 0 )
 	);
 
 	const onSubmit = async ( e ) => {
 		e.preventDefault();
-		dispatch( DATA_STORE_KEY ).saveModel( 'coupons', {
+		dispatch( dataStore ).saveModel( 'coupons', {
 			with: [ 'promotions' ],
 		} );
 	};

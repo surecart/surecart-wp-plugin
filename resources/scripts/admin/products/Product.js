@@ -2,12 +2,12 @@
 import { css, jsx } from '@emotion/core';
 
 import { __ } from '@wordpress/i18n';
-import { Fragment } from '@wordpress/element';
+import { Fragment, useEffect } from '@wordpress/element';
 import { dispatch } from '@wordpress/data';
 
-import { STORE_KEY as NOTICES_STORE_KEY } from '../store/notices';
-import { STORE_KEY as UI_STORE_KEY } from '../store/ui';
-import { STORE_KEY as DATA_STORE_KEY } from '../store/data';
+import { store as uiStore } from '../store/ui';
+import { store as dataStore } from '../store/data';
+import { store } from './store';
 
 // template
 import Template from '../templates/SingleModel';
@@ -39,38 +39,45 @@ export default withConfirm( ( { setConfirm, noticeUI } ) => {
 	const {
 		product,
 		error,
-		toggleArchiveModel,
+		toggleProductArchive,
 		prices,
 		loading,
+		isCreated,
 		status,
 		isSaving,
 	} = useProductData();
+
+	useEffect( () => {
+		if ( ! isCreated ) {
+			dispatch( store ).addEmptyPrice();
+		}
+	}, [] );
 
 	const onSubmit = async ( e ) => {
 		e.preventDefault();
 		if ( ! prices.some( ( price ) => ! price.archived ) ) {
 			return handlePricesError();
 		}
-		dispatch( DATA_STORE_KEY ).saveModel( 'products', {
-			with: [ 'prices' ],
-		} );
+		dispatch( store ).save();
 	};
 
 	const handlePricesError = () => {
-		dispatch( NOTICES_STORE_KEY ).addSnackbarNotice( {
+		dispatch( uiStore ).addSnackbarNotice( {
 			className: 'is-snackbar-error',
 			content: __( 'You must have a price.', 'checkout_engine' ),
 		} );
-		dispatch( DATA_STORE_KEY ).addModel( 'prices', {} );
+		dispatch( dataStore ).addPrice( 'prices', {
+			recurring: false,
+		} );
 	};
 
 	const onInvalid = () => {
-		dispatch( UI_STORE_KEY ).setInvalid( true );
+		dispatch( uiStore ).setInvalid( true );
 	};
 
 	const toggleArchive = async () => {
 		setConfirm( {} );
-		toggleArchiveModel( 'products', 0 );
+		toggleProductArchive( 0 );
 	};
 
 	if ( error?.message ) {

@@ -39,12 +39,16 @@
   }
 
   &.button--disabled:not(.button--busy) {
-    opacity: 0.5;
+
     cursor: not-allowed;
 
     // When disabled, prevent mouse events from bubbling up
     * {
       pointer-events: none;
+    }
+
+    .button__label {
+      opacity: 0.5;
     }
   }
 

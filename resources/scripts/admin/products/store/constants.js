@@ -1,1 +1,1 @@
-export default 'checkout-engine/product';
+export default 'checkout-engine/editor';

@@ -2,11 +2,13 @@ import { __ } from '@wordpress/i18n';
 import { CeButton } from '@checkout-engine/react';
 import { useSelect } from '@wordpress/data';
 
-import { STORE_KEY as UI_STORE_KEY } from '../../store/ui';
+import { store as uiStore } from '../../store/ui';
+import { store as coreStore } from '../../store/data';
 
 export default ( { style, children } ) => {
-	const isSaving = useSelect( ( select ) =>
-		select( UI_STORE_KEY ).isSaving()
+	const isSaving = useSelect( ( select ) => select( uiStore ).isSaving() );
+	const hasDirtyModels = useSelect( ( select ) =>
+		select( coreStore ).hasDirtyModels()
 	);
 
 	return (

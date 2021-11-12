@@ -1,1 +1,1 @@
-export default 'checkout-engine/data';
+export default 'checkout-engine/core-data';

@@ -37,10 +37,33 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 
 		// register component scripts.
 		add_action( 'init', [ $this, 'registerComponents' ] );
+		add_action( 'init', [ $this, 'registerDependencies' ] );
 
 		// enqueue assets on front end and editor.
 		add_action( 'enqueue_block_editor_assets', [ $this, 'editorAssets' ] );
 		add_action( 'wp_enqueue_scripts', [ $this, 'frontAssets' ] );
+	}
+
+	public function registerDependencies() {
+		// core-data
+		$asset_file = include trailingslashit( $this->container[ WPEMERGE_CONFIG_KEY ]['app_core']['path'] ) . 'dist/admin/store/data/register.asset.php';
+		wp_register_script(
+			'ce-core-data',
+			trailingslashit( \CheckoutEngine::core()->assets()->getUrl() ) . 'dist/admin/store/data/register.js',
+			array_merge( [ 'checkout-engine-components' ], $asset_file['dependencies'] ),
+			filemtime( trailingslashit( $this->container[ WPEMERGE_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/checkout-engine/checkout-engine.esm.js' ),
+			true
+		);
+
+		// ui
+		$asset_file = include trailingslashit( $this->container[ WPEMERGE_CONFIG_KEY ]['app_core']['path'] ) . 'dist/admin/store/ui/register.asset.php';
+		wp_register_script(
+			'ce-ui-data',
+			trailingslashit( \CheckoutEngine::core()->assets()->getUrl() ) . 'dist/admin/store/ui/register.js',
+			array_merge( [ 'checkout-engine-components' ], $asset_file['dependencies'] ),
+			filemtime( trailingslashit( $this->container[ WPEMERGE_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/checkout-engine/checkout-engine.esm.js' ),
+			true
+		);
 	}
 
 	/**

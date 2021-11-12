@@ -1,14 +1,14 @@
 /**
  * Internal dependencies
  */
-import * as reducer from './reducer';
+import reducer from './reducer';
 import controls from './controls';
 import * as selectors from './selectors';
 import * as actions from './actions';
 
-export { default as STORE_KEY } from './constants.js';
+export { default as store } from './constants.js';
 
-export const STORE_CONFIG = {
+export const config = {
 	reducer,
 	selectors,
 	controls,

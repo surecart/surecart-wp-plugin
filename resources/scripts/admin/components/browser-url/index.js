@@ -2,7 +2,7 @@ import { useState } from '@wordpress/element';
 import { useSelect } from '@wordpress/data';
 import { addQueryArgs } from '@wordpress/url';
 
-import { STORE_KEY } from '../../store/data';
+import { store } from '../../store/data';
 
 /**
  * Returns the Model Edit URL.
@@ -19,7 +19,7 @@ export default ( { path } ) => {
 	const [ historyId, setHistoryId ] = useState( null );
 	let id;
 	const model = useSelect( ( select ) =>
-		select( STORE_KEY ).selectModel( path, 0 )
+		select( store ).selectModel( path, 0 )
 	);
 	if ( model?.id ) {
 		id = model?.id;

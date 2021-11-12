@@ -1,5 +1,20 @@
 import { get } from 'dot-prop-immutable';
+import { createRegistrySelector } from '@wordpress/data';
+import { getQueryArg } from '@wordpress/url';
+import { store as uiStore } from '../ui';
 
+export const getEntity = ( state, name ) => {
+	return state.config.find( ( item ) => item.name === name );
+};
+export const getEntities = ( state ) => {
+	return state.config;
+};
+export const selectPageId = () => {
+	return getQueryArg( window.location, 'id' );
+};
+export const isCreated = () => {
+	return !! selectPageId();
+};
 export const selectError = ( state ) => {
 	return state.error;
 };
@@ -22,6 +37,11 @@ export const selectModelById = ( state, path, id ) => {
 export const selectDirty = ( state ) => {
 	return state.dirty;
 };
+
+export const hasDirtyModels = ( state ) => {
+	return !! Object.keys( state.dirty || {} ).length;
+};
+
 export const isDirty = ( state, path ) => {
 	let model = selectModel( state, path );
 	if ( ! model?.id ) {
@@ -29,3 +49,7 @@ export const isDirty = ( state, path ) => {
 	}
 	return Object.keys( state?.dirty?.[ model.id ] || {} )?.length;
 };
+
+export const isSaving = createRegistrySelector( ( select ) => () => {
+	return select( uiStore ).isSaving();
+} );

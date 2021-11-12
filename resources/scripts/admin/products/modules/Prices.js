@@ -14,7 +14,7 @@ export default () => {
 	const {
 		loading,
 		prices,
-		addModel,
+		addPrice,
 		archivedPrices,
 		hasArchivedPrices,
 		hasActivePrices,
@@ -79,7 +79,7 @@ export default () => {
 							<CeButton
 								onClick={ ( e ) => {
 									e.preventDefault();
-									addModel( 'prices', {
+									addPrice( {
 										recurring: false,
 									} );
 									setOpen( prices?.length );

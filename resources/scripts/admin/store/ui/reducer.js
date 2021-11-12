@@ -1,6 +1,18 @@
-export default (
+import { combineReducers } from '@wordpress/data';
+
+export const saving = ( state = { isSaving: false }, action ) => {
+	switch ( action.type ) {
+		case 'SET_SAVING':
+			return {
+				...state,
+				isSaving: action.value,
+			};
+	}
+	return state;
+};
+
+export const errors = (
 	state = {
-		isSaving: false,
 		flash: {},
 		validation: [],
 		isInvalid: 0,
@@ -65,3 +77,41 @@ export default (
 	}
 	return state;
 };
+
+export const snackbar = ( state = [], action ) => {
+	switch ( action.type ) {
+		case 'ADD_SNACKBAR_NOTICE':
+			return [
+				...state,
+				{
+					id: state.length,
+					className:
+						action?.notice?.type === 'error'
+							? 'is-snackbar-error'
+							: '',
+					...action.notice,
+				},
+			];
+		case 'REMOVE_SNACKBAR_NOTICE':
+			return state.filter( ( notice ) => notice.id !== action.id );
+		case 'SAVE_ERROR':
+			return [
+				...state,
+				{
+					id: state.length,
+					className: 'is-snackbar-error',
+					content:
+						action?.message ||
+						__( 'Something went wrong.', 'checkout_engine' ),
+				},
+			];
+	}
+	return state;
+};
+
+// export reducers.
+export default combineReducers( {
+	saving,
+	errors,
+	snackbar,
+} );

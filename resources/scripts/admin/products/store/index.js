@@ -7,10 +7,10 @@ import * as modelActions from '../../store/data/actions';
 import resolvers from './resolvers';
 
 // export store key.
-export { default as STORE_KEY } from '../../store/data/constants.js';
+export { default as store } from './constants.js';
 
 // export config.
-export const STORE_CONFIG = {
+export const config = {
 	reducer,
 	selectors: { ...modelSelectors, ...selectors },
 	controls,

@@ -1,12 +1,20 @@
 import { __ } from '@wordpress/i18n';
 import { fetch as apiFetch, batchSave } from './controls';
+import { addQueryArgs } from '@wordpress/url';
 import { controls } from '@wordpress/data';
-import { STORE_KEY as UI_STORE_KEY } from '../ui';
-import { STORE_KEY as DATA_STORE_KEY } from '../data';
+import { store as uiStore } from '../ui';
+import { store as coreStore } from '../data';
 
 export function setError( payload ) {
 	return {
 		type: 'SET_ERROR',
+		payload,
+	};
+}
+
+export function registerEntities( payload ) {
+	return {
+		type: 'REGISTER_ENTITIES',
 		payload,
 	};
 }
@@ -18,6 +26,25 @@ export function setEntities( payload ) {
 	return {
 		type: 'SET_ENTITIES',
 		payload,
+	};
+}
+
+/**
+ * Bulk add entities
+ */
+export function addEntities( payload ) {
+	return {
+		type: 'ADD_ENTITIES',
+		payload,
+	};
+}
+
+export function* updateModelsProperty( key, prop, payload ) {
+	return {
+		type: 'UPDATE_ENTITIES_PROPERTY',
+		payload,
+		key,
+		prop,
 	};
 }
 
@@ -63,13 +90,7 @@ export function duplicateModel( key, { id, ...payload } ) {
  */
 export function* updateModel( key, payload, index = 0 ) {
 	// first update dirty so we know to save.
-	yield controls.dispatch(
-		DATA_STORE_KEY,
-		'updateDirty',
-		key,
-		payload,
-		index
-	);
+	yield controls.dispatch( coreStore, 'updateDirty', key, payload, index );
 
 	return {
 		type: 'UPDATE_MODEL',
@@ -92,7 +113,7 @@ export function setModelById( key, payload, index = 0 ) {
  */
 export function* updateDirty( key, payload, index = 0 ) {
 	const model = yield controls.resolveSelect(
-		DATA_STORE_KEY,
+		coreStore,
 		'selectModel',
 		key,
 		index
@@ -113,7 +134,7 @@ export function* updateDirty( key, payload, index = 0 ) {
  */
 export function* deleteModel( key, index = 0 ) {
 	const data = yield controls.resolveSelect(
-		DATA_STORE_KEY,
+		coreStore,
 		'selectModel',
 		key,
 		index
@@ -122,7 +143,7 @@ export function* deleteModel( key, index = 0 ) {
 	if ( data?.id ) {
 		let response;
 		try {
-			yield controls.dispatch( UI_STORE_KEY, 'setSaving', true );
+			yield controls.dispatch( uiStore, 'setSaving', true );
 			response = yield apiFetch( {
 				path: data.id
 					? `${ data.object }s/${ data.id }`
@@ -132,19 +153,15 @@ export function* deleteModel( key, index = 0 ) {
 		} catch ( error ) {
 			throw error;
 		} finally {
-			yield controls.dispatch( UI_STORE_KEY, 'setSaving', false );
+			yield controls.dispatch( uiStore, 'setSaving', false );
 		}
 
 		// success.
 		if ( response ) {
 			// add notice.
-			yield controls.dispatch(
-				'checkout-engine/notices',
-				'addSnackbarNotice',
-				{
-					content: __( 'Deleted.', 'checkout_engine' ),
-				}
-			);
+			yield controls.dispatch( uiStore, 'addSnackbarNotice', {
+				content: __( 'Deleted.', 'checkout_engine' ),
+			} );
 			return {
 				type: 'DELETE_MODEL',
 				key: `${ key }.${ index }`,
@@ -168,7 +185,7 @@ export function* deleteModel( key, index = 0 ) {
  */
 export function* removeDirty( key, index = 0 ) {
 	const model = yield controls.resolveSelect(
-		DATA_STORE_KEY,
+		coreStore,
 		'selectModel',
 		key,
 		index
@@ -196,7 +213,7 @@ export function clearDirty() {
 
 export function* toggleArchiveModel( key, index = 0, save = true ) {
 	const model = yield controls.resolveSelect(
-		DATA_STORE_KEY,
+		coreStore,
 		'selectModel',
 		key,
 		index
@@ -204,7 +221,7 @@ export function* toggleArchiveModel( key, index = 0, save = true ) {
 
 	// change to archived.
 	yield controls.dispatch(
-		DATA_STORE_KEY,
+		coreStore,
 		'updateModel',
 		key,
 		{ archived: ! model.archived },
@@ -212,128 +229,95 @@ export function* toggleArchiveModel( key, index = 0, save = true ) {
 	);
 
 	if ( model.id && save ) {
-		return yield controls.dispatch( DATA_STORE_KEY, 'saveModel', key, {
+		return yield controls.dispatch( coreStore, 'saveModel', key, {
 			index,
 		} );
 	}
 }
 
-/**
- * Save model with optional subcollections.
- */
-export function* saveModel( key, { with: saveWith = [], index = 0 } = {} ) {
-	yield controls.dispatch( UI_STORE_KEY, 'clearErrors' );
-	yield controls.dispatch( UI_STORE_KEY, 'setSaving', true );
-
+export function* saveCollections( names = [] ) {
+	// get all models
+	const allModels = yield controls.resolveSelect(
+		coreStore,
+		'selectAllModels'
+	);
 	// get dirty models
-	const dirty = yield controls.resolveSelect( DATA_STORE_KEY, 'selectDirty' );
+	const dirty = yield controls.resolveSelect( coreStore, 'selectDirty' );
+	const entities = yield controls.resolveSelect( coreStore, 'getEntities' );
+
+	// batch request others if dirty
+	let batch = [];
+	names.forEach( ( name ) => {
+		const entity = entities.find( ( entity ) => entity.name === name );
+		if ( allModels?.[ name ] ) {
+			const models = allModels?.[ name ];
+			if ( Array.isArray( models ) ) {
+				models.forEach( ( model, index ) => {
+					if ( isDirty( model, dirty ) ) {
+						batch.push( {
+							key: name,
+							request: prepareSaveRequest( model, entity ),
+							index,
+						} );
+					}
+				} );
+			} else {
+				if ( isDirty( model, dirty ) ) {
+					batch.push( {
+						key: name,
+						request: prepareSaveRequest( models, entity ),
+					} );
+				}
+			}
+		}
+	} );
+
+	return yield batchSave( batch );
+}
+
+export function* saveModel( key, index ) {
+	// get dirty models
+	const dirty = yield controls.resolveSelect( coreStore, 'selectDirty' );
 
 	// get fresh model.
-	const main = yield controls.resolveSelect(
-		DATA_STORE_KEY,
+	const model = yield controls.resolveSelect(
+		coreStore,
 		'selectModel',
 		key,
 		index
 	);
 
-	try {
-		// save main model
-		if ( ! main?.id || dirty?.[ main?.id ] ) {
-			let response = yield apiFetch( {
-				path: main?.id ? `${ key }/${ main.id }` : `${ key }`,
-				method: main?.id ? 'PATCH' : 'POST',
-				data: main,
-			} );
+	console.log( { key, index } );
 
-			if ( response && response?.id ) {
-				// don't overwrite "with" subcollections.
-				saveWith.forEach( ( key ) => {
-					if ( response?.[ key ] ) {
-						delete response[ key ];
-					}
-				} );
-
-				yield controls.dispatch(
-					DATA_STORE_KEY,
-					'updateModel',
-					key,
-					response,
-					index
-				);
-
-				yield controls.dispatch(
-					DATA_STORE_KEY,
-					'removeDirty',
-					key,
-					index
-				);
-			} else {
-				// didn't update.
-				throw {
-					message: 'Failed to save.',
-				};
-			}
-		}
-
-		// get all models
-		const allModels = yield controls.resolveSelect(
-			DATA_STORE_KEY,
-			'selectAllModels'
-		);
-
-		// batch request others if dirty
-		let batch = [];
-		saveWith.forEach( ( withKey ) => {
-			if ( allModels?.[ withKey ] ) {
-				const models = allModels?.[ withKey ];
-				if ( Array.isArray( models ) ) {
-					models.forEach( ( model, index ) => {
-						if ( isDirty( model, dirty ) ) {
-							batch.push( {
-								key: withKey,
-								request: prepareSaveRequest( model ),
-								index,
-							} );
-						}
-					} );
-				} else {
-					if ( isDirty( model, dirty ) ) {
-						batch.push( {
-							key: withKey,
-							request: prepareSaveRequest( models, withKey ),
-						} );
-					}
-				}
-			}
+	// save main model if new or dirty.
+	if ( ! model?.id || dirty?.[ model?.id ] ) {
+		let response = yield apiFetch( {
+			path: model?.id ? `${ key }/${ model.id }` : `${ key }`,
+			method: model?.id ? 'PATCH' : 'POST',
+			data: model,
 		} );
 
-		yield batchSave( batch );
+		// didn't update.
+		if ( ! response || ! response?.id ) {
+			throw {
+				message: __( 'Failed to save.', 'checkout_engine' ),
+			};
+		}
 
-		// add notice.
+		// update model.
 		yield controls.dispatch(
-			'checkout-engine/notices',
-			'addSnackbarNotice',
-			{
-				content: main?.id
-					? __( 'Updated.', 'checkout_engine' )
-					: __( 'Saved.', 'checkout_engine' ),
-			}
+			coreStore,
+			'receiveModel',
+			key,
+			response,
+			index
 		);
-	} catch ( e ) {
-		yield controls.dispatch(
-			'checkout-engine/notices',
-			'addSnackbarNotice',
-			{
-				className: 'is-snackbar-error',
-				content:
-					e?.message || __( 'Failed to save.', 'checkout_engine' ),
-			}
-		);
-
-		throw e;
-	} finally {
-		yield controls.dispatch( UI_STORE_KEY, 'setSaving', false );
 	}
+}
+
+export function* receiveModel( key, data, index ) {
+	yield controls.dispatch( coreStore, 'updateModel', key, data, index );
+	return yield controls.dispatch( coreStore, 'removeDirty', key, index );
 }
 
 /**
@@ -349,9 +333,12 @@ export function isDirty( model, dirty ) {
 /**
  * Prepare the save request
  */
-export function prepareSaveRequest( data ) {
+export function prepareSaveRequest( data, entity ) {
+	const path = data.id
+		? `${ entity?.baseURL }/${ data.id }`
+		: entity?.baseURL;
 	return {
-		path: data.id ? `${ data.object }s/${ data.id }` : `${ data.object }s`,
+		path: addQueryArgs( path, entity.baseURLParams ),
 		method: data.id ? 'PATCH' : 'POST',
 		data,
 	};

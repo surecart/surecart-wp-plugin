@@ -1,8 +1,8 @@
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
 import { dispatch } from '@wordpress/data';
-import { STORE_KEY as DATA_STORE_KEY } from '../data';
-import { STORE_KEY as UI_STORE_KEY } from '../ui';
+import { store as dataStore } from '../data';
+import { store as uiStore } from '../ui';
 
 export const fetch = ( options = {} ) => {
 	return {
@@ -38,20 +38,17 @@ export default {
 				try {
 					const updated = await fetchFromAPI( request );
 					if ( updated && updated?.id ) {
-						await dispatch( DATA_STORE_KEY ).updateModel(
+						await dispatch( dataStore ).updateModel(
 							key,
 							updated,
 							index
 						);
-						await dispatch( DATA_STORE_KEY ).removeDirty(
-							key,
-							index
-						);
+						await dispatch( dataStore ).removeDirty( key, index );
 					}
 				} catch ( error ) {
 					// add validation error.
 					if ( error?.message ) {
-						dispatch( UI_STORE_KEY ).addErrors( [
+						dispatch( uiStore ).addErrors( [
 							{
 								index,
 								key,

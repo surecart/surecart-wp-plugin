@@ -28,7 +28,7 @@ abstract class AdminModelEditController {
 	 *
 	 * @var array
 	 */
-	protected $dependencies = [];
+	protected $dependencies = [ 'ce-core-data', 'ce-ui-data' ];
 
 	/**
 	 * Optional conditionally load.

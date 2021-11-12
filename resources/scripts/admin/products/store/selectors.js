@@ -1,15 +1,23 @@
 import { createRegistrySelector } from '@wordpress/data';
-import { STORE_KEY } from './index';
+import { store as coreStore } from '../../store/data';
 
 export const selectProduct = createRegistrySelector( ( select ) => () =>
-	select( STORE_KEY ).selectModel( 'products', 0 )
+	select( coreStore ).selectModel( 'products', 0 )
+);
+
+export const selectPrices = createRegistrySelector( ( select ) => () =>
+	select( coreStore ).selectCollection( 'prices' )
+);
+
+export const isCreated = createRegistrySelector( ( select ) => () =>
+	select( coreStore ).isCreated()
 );
 
 /**
  * Get the product status
  */
 export const selectProductStatus = createRegistrySelector( ( select ) => () => {
-	const product = select( STORE_KEY ).selectModel( 'products' );
+	const product = select( coreStore ).selectModel( 'products' );
 	if ( ! product?.id ) {
 		return 'draft';
 	}

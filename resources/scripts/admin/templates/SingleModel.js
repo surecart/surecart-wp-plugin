@@ -143,6 +143,7 @@ export default ( {
 									>
 										<CeButton
 											circle
+											outline
 											size="small"
 											href={ backUrl }
 										>

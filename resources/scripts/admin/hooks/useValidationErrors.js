@@ -1,13 +1,13 @@
 const { useSelect, dispatch } = wp.data;
-import { STORE_KEY } from '../store/ui';
+import { store } from '../store/ui';
 
 export default ( path, index = 0 ) => {
 	// get model errors
 	const { errors, getValidation } = useSelect( ( select ) => {
 		return {
-			errors: select( STORE_KEY ).selectErrors( path, index ),
+			errors: select( store ).selectErrors( path, index ),
 			getValidation: ( key ) =>
-				select( STORE_KEY ).selectValidationErrors(
+				select( store ).selectValidationErrors(
 					path,
 					index,
 					key
@@ -18,6 +18,6 @@ export default ( path, index = 0 ) => {
 	return {
 		errors,
 		getValidation,
-		clearErrors: ( index ) => dispatch( STORE_KEY ).clearErrors( index ),
+		clearErrors: ( index ) => dispatch( store ).clearErrors( index ),
 	};
 };

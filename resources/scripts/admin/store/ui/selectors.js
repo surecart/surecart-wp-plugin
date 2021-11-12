@@ -1,18 +1,21 @@
+export function snackbarNotices( state ) {
+	return state.snackbar || [];
+}
 export function isSaving( state ) {
-	return state.isSaving;
+	return state.saving.isSaving;
 }
 export function flash( state ) {
-	return state.flash;
+	return state.errors.flash;
 }
 export function isInvalid( state ) {
-	return state.isInvalid;
+	return state.errors.isInvalid;
 }
 export function selectErrors( state, key, index = null ) {
 	if ( ! key ) {
-		return state.errors;
+		return state.errors.errors;
 	}
 
-	const filtered = state.errors.filter(
+	const filtered = state.errors.errors.filter(
 		( error ) => error?.key && error.key === key
 	);
 
