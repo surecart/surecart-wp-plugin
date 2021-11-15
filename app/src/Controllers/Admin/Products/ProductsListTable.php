@@ -176,11 +176,14 @@ class ProductsListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_price( $product ) {
+		$currency = $product->metrics->currency ?? 'usd';
+
 		if ( empty( $product->metrics->prices_count ) ) {
 			return '<ce-tag type="warning">' . __( 'No price', 'checkout_engine' ) . '</ce-tag>';
 		}
+
 		if ( ! empty( $product->metrics->min_price_amount ) ) {
-			$amount = '<ce-format-number type="currency" currency="' . $product->prices->data[0]->currency . '" value="' . $product->metrics->min_price_amount . '"></ce-format-number>';
+			$amount = '<ce-format-number type="currency" currency="' . $currency . '" value="' . $product->metrics->min_price_amount . '"></ce-format-number>';
 			if ( $product->metrics->prices_count > 1 ) {
 				// translators: Price starting at.
 				$starting_at = sprintf( __( 'Starting at %s', 'checkout_engine' ), $amount );

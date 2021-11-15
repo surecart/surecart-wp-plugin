@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { css, jsx } from '@emotion/core';
+import { css, jsx, Global } from '@emotion/core';
 
 import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';
@@ -31,6 +31,15 @@ export default ( {
 } ) => {
 	return (
 		<Fragment>
+			<Global
+				styles={ css`
+					:root {
+						--ce-color-primary: 200 !important;
+						--ce-color-primary-luminance: 36% !important;
+						--ce-color-primary-saturation: 100% !important;
+					}
+				` }
+			/>
 			<ErrorBoundary onError={ onError }>
 				<BrowserUrl path={ pageModelName } />
 				<UnsavedChangesWarning />
@@ -46,14 +55,35 @@ export default ( {
 							font-size: 13px;
 						}
 
+						--ce-highlight-color: 200 !important;
+						--ce-color-luminance: 36% !important;
+
+						/* --ce-color-primary-300: hsl(
+							from var( --wp-admin-theme-color ) h s
+								calc( l - 5% )
+						);
+						--ce-color-primary-400: hsl(
+							from var( --wp-admin-theme-color ) h s
+								calc( l - 5% )
+						);
+						--ce-color-primary-500: var( --wp-admin-theme-color );
+						--ce-color-primary-600: hsl(
+							from var( --wp-admin-theme-color ) h s
+								calc( l - 5% )
+						);
+						--ce-color-primary-700: hsl(
+							from var( --wp-admin-theme-color ) h s
+								calc( l - 5% )
+						); */
+
 						// change theme color
-						--wp-admin-theme-color: var( --ce-color-primary-500 );
+						/* --wp-admin-theme-color: var( --ce-color-primary-500 );
 						--wp-admin-theme-color-darker-10: var(
 							-ce-color-primary-600
 						);
 						--wp-admin-theme-color-darker-20: var(
 							-ce-color-primary-700
-						);
+						); */
 
 						ce-form-row:not( :last-child ) {
 							margin-bottom: 20px;
@@ -165,7 +195,7 @@ export default ( {
 								>
 									{ title }
 								</h1>
-								{ ! loading && (
+								{ ! loading && status && (
 									<StatusBadge status={ status } />
 								) }
 							</div>

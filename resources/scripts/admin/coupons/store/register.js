@@ -1,3 +1,4 @@
-const { registerStore } = wp.data;
-import { STORE_KEY, STORE_CONFIG } from './index';
-registerStore( STORE_KEY, STORE_CONFIG );
+import { registerStore } from '@wordpress/data';
+import { store, config } from './index';
+import './entities';
+registerStore( store, config );

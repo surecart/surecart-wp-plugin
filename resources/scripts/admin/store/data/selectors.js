@@ -1,6 +1,6 @@
 import { get } from 'dot-prop-immutable';
 import { createRegistrySelector } from '@wordpress/data';
-import { getQueryArg } from '@wordpress/url';
+import { getQueryArg, addQueryArgs } from '@wordpress/url';
 import { store as uiStore } from '../ui';
 
 export const getEntity = ( state, name ) => {
@@ -53,3 +53,33 @@ export const isDirty = ( state, path ) => {
 export const isSaving = createRegistrySelector( ( select ) => () => {
 	return select( uiStore ).isSaving();
 } );
+
+/**
+ * Prepare the save request
+ */
+export function prepareUpdateRequest( state, name, data ) {
+	const path = data.id
+		? `${ entity?.baseURL }/${ data.id }`
+		: entity?.baseURL;
+	return {
+		path: addQueryArgs( path, entity.baseURLParams ),
+		method: data.id ? 'PATCH' : 'POST',
+		data,
+	};
+}
+
+/**
+ * Prepare the save request
+ */
+export function prepareFetchRequest( state, name, data ) {
+	// get id and params from data
+	const { id, ...params } = data;
+	// get the registered entity
+	const entity = getEntity( state, name );
+	// make the path.
+	const path = id ? `${ entity?.baseURL }/${ id }` : entity?.baseURL;
+	// return the request.
+	return {
+		path: addQueryArgs( path, { ...entity.baseURLParams, ...params } ),
+	};
+}

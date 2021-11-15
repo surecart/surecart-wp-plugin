@@ -20,28 +20,28 @@ export function registerEntities( payload ) {
 }
 
 /**
- * Bulk set all entities
+ * Bulk set all models
  */
-export function setEntities( payload ) {
+export function setModels( payload ) {
 	return {
-		type: 'SET_ENTITIES',
+		type: 'SET_MODELS',
 		payload,
 	};
 }
 
 /**
- * Bulk add entities
+ * Bulk add models
  */
-export function addEntities( payload ) {
+export function addModels( payload ) {
 	return {
-		type: 'ADD_ENTITIES',
+		type: 'ADD_MODELS',
 		payload,
 	};
 }
 
 export function* updateModelsProperty( key, prop, payload ) {
 	return {
-		type: 'UPDATE_ENTITIES_PROPERTY',
+		type: 'UPDATE_MODELS_PROPERTY',
 		payload,
 		key,
 		prop,
@@ -50,7 +50,7 @@ export function* updateModelsProperty( key, prop, payload ) {
 
 export function updateModels( key, payload ) {
 	return {
-		type: 'UPDATE_ENTITIES',
+		type: 'UPDATE_MODELS',
 		payload,
 		key,
 	};
@@ -284,8 +284,6 @@ export function* saveModel( key, index ) {
 		key,
 		index
 	);
-
-	console.log( { key, index } );
 
 	// save main model if new or dirty.
 	if ( ! model?.id || dirty?.[ model?.id ] ) {

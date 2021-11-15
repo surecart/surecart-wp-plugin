@@ -1,16 +1,21 @@
-const { useSelect, useDispatch } = wp.data;
-import { STORE_KEY } from '../../store/data';
+import { useSelect, useDispatch } from '@wordpress/data';
+import { store as coreStore } from '../../store/data';
+import { store as uiStore } from '../../store/ui';
+import { store } from '../store';
 
 export default () => {
 	return {
 		...useSelect( ( select ) => {
 			return {
-				isSaving: select( STORE_KEY ).isSaving(),
-				promotion: select( STORE_KEY ).selectPromotion(),
-				coupon: select( STORE_KEY ).selectModel( 'coupons', 0 ),
-				loading: select( STORE_KEY ).isResolving( 'selectPromotion' ),
+				isCreated: select( store ).isCreated(),
+				coupon: select( store ).selectCoupon(),
+				loading: select( store ).isResolving( 'selectCoupon' ),
+				error: select( coreStore ).selectError(),
+				isSaving: select( coreStore ).isSaving(),
+				status: select( store ).selectCouponStatus(),
+				isInvalid: select( uiStore ).isInvalid(),
 			};
 		} ),
-		...useDispatch( STORE_KEY ),
+		...useDispatch( store ),
 	};
 };

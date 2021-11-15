@@ -154,7 +154,7 @@ class CouponsListTable extends ListTable {
 	 * @return Array
 	 */
 	private function table_data() {
-		return Promotion::where(
+		return Coupon::where(
 			[
 				'archived' => $this->getArchiveStatus(),
 				'limit'    => $this->get_items_per_page( 'coupons' ),
@@ -170,19 +170,14 @@ class CouponsListTable extends ListTable {
 	 *
 	 * @return string
 	 */
-	public function column_price( $promotion ) {
-
+	public function column_price( $coupon ) {
 		ob_start();
-		?>
-
-		<?php
 		// phpcs:ignore
-		echo $this->get_price_string( $promotion->coupon ?? false ); // this is already escaped. ?>
+		echo $this->get_price_string( $coupon ?? false ); // this is already escaped. ?>
 		<br />
-		<div style="opacity: 0.75"><?php echo esc_html( $this->get_duration_string( $promotion->coupon ?? false ) ); ?></div>
+		<div style="opacity: 0.75"><?php echo esc_html( $this->get_duration_string( $coupon ?? false ) ); ?></div>
 		<?php
 		return ob_get_clean();
-
 	}
 
 	/**
@@ -192,13 +187,13 @@ class CouponsListTable extends ListTable {
 	 *
 	 * @return string
 	 */
-	public function column_usage( $promotion ) {
-		$max = $promotion->max_redemptions ?? '&infin;';
+	public function column_usage( $coupon ) {
+		$max = $coupon->max_redemptions ?? '&infin;';
 		ob_start();
+		echo \esc_html( "$coupon->times_redeemed / $max" );
 		?>
-		<?php echo \esc_html( "$promotion->times_redeemed / $max" ); ?>
 		<br />
-		<div style="opacity: 0.75"><?php echo \esc_html( $this->get_expiration_string( $promotion->redeem_by ) ); ?></div>
+		<div style="opacity: 0.75"><?php echo \esc_html( $this->get_expiration_string( $coupon->redeem_by ) ); ?></div>
 		<?php
 		return ob_get_clean();
 	}
@@ -228,7 +223,7 @@ class CouponsListTable extends ListTable {
 
 		if ( ! empty( $coupon->amount_off ) ) {
 			// translators: Coupon amount off.
-			return Currency::formatCurrencyNumber( $coupon->amount_off ) . ' <small style="opacity: 0.75;">' . strtoupper( esc_html( $coupon->currency ) ) . '</small>';
+			return '<ce-format-number type="currency" currency="' . $coupon->currency . '" value="' . $coupon->amount_off . '"></ce-format-number>';
 		}
 
 		return esc_html_( 'No discount.', 'checkout_engine' );
@@ -263,9 +258,9 @@ class CouponsListTable extends ListTable {
 	 *
 	 * @return string
 	 */
-	public function column_status( $promotion ) {
+	public function column_status( $coupon ) {
 		// TODO: Add Badge.
-		return $promotion->expired ? __( 'Expired', 'checkout_engine' ) : __( 'Active', 'checkout_engine' );
+		return $coupon->expired ? __( 'Expired', 'checkout_engine' ) : __( 'Active', 'checkout_engine' );
 	}
 
 	protected function extra_tablenav( $which ) {
@@ -281,11 +276,11 @@ class CouponsListTable extends ListTable {
 	 *
 	 * @return string
 	 */
-	public function column_name( $promotion ) {
+	public function column_name( $coupon ) {
 		ob_start();
 		?>
-		<a class="row-title" aria-label="Edit Coupon" href="<?php echo esc_url( \CheckoutEngine::getUrl()->edit( 'coupon', $promotion->id ) ); ?>">
-			<?php echo esc_html_e( $promotion->coupon->name ?? $promotion->code ); ?>
+		<a class="row-title" aria-label="Edit Coupon" href="<?php echo esc_url( \CheckoutEngine::getUrl()->edit( 'coupon', $coupon->id ) ); ?>">
+			<?php echo esc_html_e( $coupon->name ); ?>
 		</a>
 				<?php
 				return ob_get_clean();
@@ -298,8 +293,9 @@ class CouponsListTable extends ListTable {
 	 *
 	 * @return string
 	 */
-	public function column_code( $promotion ) {
-		return '<code>' . $promotion->code . '</code>';
+	public function column_code( $coupon ) {
+		$code = $coupon->code ?? __( 'No code specified', 'checkout_engine' );
+		return '<code>' . sanitize_text_field( $code ) . '</code>';
 	}
 
 	/**

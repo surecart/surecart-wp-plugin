@@ -9,16 +9,12 @@ export class CERadioGroup {
   /** The radio group label. Required for proper accessibility. */
   @Prop() label = '';
 
-  /** Shows the fieldset and legend that surrounds the radio group. */
-  @Prop({ attribute: 'fieldset' }) fieldset: boolean = false;
-
   render() {
     return (
       <fieldset
         part="base"
         class={{
           'radio-group': true,
-          'radio-group--has-fieldset': this.fieldset,
         }}
         role="radiogroup"
       >

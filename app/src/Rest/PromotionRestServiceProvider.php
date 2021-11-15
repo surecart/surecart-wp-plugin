@@ -71,7 +71,7 @@ class PromotionRestServiceProvider extends RestServiceProvider implements RestSe
 	 */
 	public function get_items_permissions_check( $request ) {
 		// anyone can get them if they have the ids.
-		$this->get_item_permissions_check( $request );
+		return $this->get_item_permissions_check( $request );
 	}
 
 	/**

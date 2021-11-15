@@ -995,10 +995,6 @@ export namespace Components {
     }
     interface CeRadioGroup {
         /**
-          * Shows the fieldset and legend that surrounds the radio group.
-         */
-        "fieldset": boolean;
-        /**
           * The radio group label. Required for proper accessibility.
          */
         "label": string;
@@ -2645,10 +2641,6 @@ declare namespace LocalJSX {
         "value"?: string;
     }
     interface CeRadioGroup {
-        /**
-          * Shows the fieldset and legend that surrounds the radio group.
-         */
-        "fieldset"?: boolean;
         /**
           * The radio group label. Required for proper accessibility.
          */

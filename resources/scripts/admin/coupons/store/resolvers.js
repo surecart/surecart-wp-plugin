@@ -1,39 +1,57 @@
 import { __ } from '@wordpress/i18n';
-import { controls, dispatch } from '@wordpress/data';
+import { controls } from '@wordpress/data';
 import { fetch as apiFetch } from '../../store/data/controls';
-import { getQueryArg } from '@wordpress/url';
-import { STORE_KEY } from '../../store/data';
-import { STORE_KEY as UI_STORE_KEY } from '../../store/ui';
-import { STORE_KEY as NOTICES_STORE_KEY } from '../../store/notices';
+import { store } from '../../store/data';
 
 export default {
-	*selectPromotion() {
+	*selectCoupon() {
 		// maybe get from url.
-		const id = getQueryArg( window.location, 'id' );
+		const id = yield controls.resolveSelect( store, 'selectPageId' );
 		if ( ! id ) return {};
+
+		const request = yield controls.resolveSelect(
+			store,
+			'prepareFetchRequest',
+			'coupons',
+			{ id }
+		);
 
 		// fetch and normalize
 		try {
-			const { coupon, ...promotion } = yield apiFetch( {
-				path: `promotions/${ id }`,
-			} );
-			return yield controls.dispatch( STORE_KEY, 'setEntities', {
-				promotions: [ promotion ],
+			// we need prices.
+			const coupon = yield apiFetch( request );
+			if ( ! coupon?.id ) return;
+			return yield controls.dispatch( store, 'addModels', {
 				coupons: [ coupon ],
 			} );
 		} catch ( error ) {
-			// add notice error.
-			yield controls.dispatch( NOTICES_STORE_KEY, 'addSnackbarNotice', {
-				className: 'is-snackbar-error',
-				content: __( 'Something went wrong.', 'checkout_engine' ),
+			// set critical error. We don't want to display the UI if we can't load the model.
+			yield controls.dispatch( store, 'setError', error );
+		}
+	},
+	*selectPromotions() {
+		// maybe get from url.
+		const id = yield controls.resolveSelect( store, 'selectPageId' );
+		if ( ! id ) return {};
+
+		const request = yield controls.resolveSelect(
+			store,
+			'prepareFetchRequest',
+			'promotions',
+			{ coupon_ids: [ id ] }
+		);
+
+		// fetch and normalize
+		try {
+			// we need prices.
+			const promotions = yield apiFetch( request );
+			if ( ! promotions?.length ) return;
+			return yield controls.dispatch( store, 'addModels', {
+				promotions: promotions.reverse(), // reverse the order
 			} );
-			return yield dispatch( UI_STORE_KEY ).addErrors( [
-				{
-					index: 0,
-					key: 'promotions',
-					error,
-				},
-			] );
+		} catch ( error ) {
+			// set critical error. We don't want to display the UI if we can't load the product.
+			yield controls.dispatch( store, 'setError', error );
 		}
 	},
 };

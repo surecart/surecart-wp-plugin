@@ -301,7 +301,7 @@ export default withConfirm( ( { price, index, open } ) => {
 										<CeMenuItem
 											onClick={ () =>
 												updatePrice( {
-													recurring_interval: 'yearl',
+													recurring_interval: 'year',
 												} )
 											}
 										>

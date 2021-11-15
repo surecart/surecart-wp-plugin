@@ -16,21 +16,21 @@ function unique( array = [], propertyName ) {
 // Store based on nested key. (i.e. product.price)
 export const entities = ( state = {}, { type, key, payload, id, prop } ) => {
 	switch ( type ) {
-		case 'SET_ENTITIES':
+		case 'SET_MODELS':
 			return payload;
-		case 'ADD_ENTITIES':
+		case 'ADD_MODELS':
 			return {
 				...state,
 				...payload,
 			};
-		case 'UPDATE_ENTITIES':
+		case 'UPDATE_MODELS':
 			const merged = dotProp.merge( state, key, payload );
 			const uniqueEntities = unique( merged?.[ key ] || [], 'id' );
 			return dotProp.set( state, key, uniqueEntities );
-		case 'UPDATE_ENTITIES_PROPERTY':
+		case 'UPDATE_MODELS_PROPERTY':
 			return {
 				...state,
-				[ key ]: state?.[ key ].map( ( entity ) => {
+				[ key ]: ( state?.[ key ] || [] ).map( ( entity ) => {
 					return {
 						...entity,
 						[ prop ]: payload,

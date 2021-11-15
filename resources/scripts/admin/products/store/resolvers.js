@@ -1,7 +1,6 @@
 import { __ } from '@wordpress/i18n';
 import { controls } from '@wordpress/data';
 import { fetch as apiFetch } from '../../store/data/controls';
-import { addQueryArgs } from '@wordpress/url';
 import { store } from '../../store/data';
 
 export default {
@@ -10,15 +9,19 @@ export default {
 		const id = yield controls.resolveSelect( store, 'selectPageId' );
 		if ( ! id ) return {};
 
+		const request = yield controls.resolveSelect(
+			store,
+			'prepareFetchRequest',
+			'products',
+			{ id }
+		);
+
 		// fetch and normalize
 		try {
 			// we need prices.
-			const product = yield apiFetch( {
-				path: `products/${ id }`,
-			} );
+			const product = yield apiFetch( request );
 			if ( ! product?.id ) return;
-
-			return yield controls.dispatch( store, 'addEntities', {
+			return yield controls.dispatch( store, 'addModels', {
 				products: [ product ],
 			} );
 		} catch ( error ) {
@@ -31,14 +34,19 @@ export default {
 		const id = yield controls.resolveSelect( store, 'selectPageId' );
 		if ( ! id ) return {};
 
+		const request = yield controls.resolveSelect(
+			store,
+			'prepareFetchRequest',
+			'prices',
+			{ product_ids: [ id ] }
+		);
+
 		// fetch and normalize
 		try {
 			// we need prices.
-			const prices = yield apiFetch( {
-				path: addQueryArgs( `prices`, { product_ids: [ id ] } ),
-			} );
+			const prices = yield apiFetch( request );
 			if ( ! prices?.length ) return;
-			return yield controls.dispatch( store, 'addEntities', {
+			return yield controls.dispatch( store, 'addModels', {
 				prices: prices.reverse(), // reverse the order
 			} );
 		} catch ( error ) {

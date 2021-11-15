@@ -1,12 +1,10 @@
 const { __ } = wp.i18n;
 const { Button } = wp.components;
 const { useSelect } = wp.data;
-import { STORE_KEY as UI_STORE_KEY } from '../../store/ui';
+import { store as uiStore } from '../../store/ui';
 
 export default ( { style, children } ) => {
-	const isSaving = useSelect( ( select ) =>
-		select( UI_STORE_KEY ).isSaving()
-	);
+	const isSaving = useSelect( ( select ) => select( uiStore ).isSaving() );
 
 	return (
 		<Button
