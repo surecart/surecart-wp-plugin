@@ -77,11 +77,22 @@ export default () => {
 							'checkout_engine'
 						) }
 					>
-						{ ( activePromotions || [] ).map( ( promotion ) => (
-							<div>
-								<code>{ promotion?.code }</code>
-							</div>
-						) ) }
+						<div
+							css={ css`
+								text-align: right;
+								display: grid;
+								gap: 0.5em;
+							` }
+						>
+							{ ( activePromotions || [] ).map( ( promotion ) => {
+								if ( ! promotion?.code ) return null;
+								return (
+									<div>
+										<code>{ promotion?.code }</code>
+									</div>
+								);
+							} ) }
+						</div>
 					</Definition>
 
 					<Definition title={ __( 'Active', 'checkout_engine' ) }>

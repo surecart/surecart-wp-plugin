@@ -196,11 +196,11 @@ export default () => {
 									{ sprintf(
 										! showArchived
 											? __(
-													'Show %d Archived Prices',
+													'Show %d Archived Promotion Codes',
 													'checkout_engine'
 											  )
 											: __(
-													'Hide %d Archived Prices',
+													'Hide %d Archived Promotion Codes',
 													'checkout_engine'
 											  ),
 										archivedPromotions?.length
