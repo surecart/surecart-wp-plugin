@@ -42,6 +42,7 @@ return [
 		\CheckoutEngine\Rest\PriceRestServiceProvider::class,
 		\CheckoutEngine\Rest\CouponRestServiceProvider::class,
 		\CheckoutEngine\Rest\PromotionRestServiceProvider::class,
+		\CheckoutEngine\Rest\SubscriptionRestServiceProvider::class,
 		\CheckoutEngine\Rest\CheckoutSessionRestServiceProvider::class,
 	],
 

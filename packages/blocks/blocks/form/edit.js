@@ -20,6 +20,7 @@ import {
 import { createBlocksFromInnerBlocksTemplate } from '@wordpress/blocks';
 import * as templates from '../../templates';
 import Setup from '../checkout/components/Setup';
+import SelectProduct from '../../components/SelectProduct';
 
 export default function edit( { clientId, attributes, setAttributes } ) {
 	const { align, className, prices, font_size, choice_type } = attributes;
@@ -38,12 +39,19 @@ export default function edit( { clientId, attributes, setAttributes } ) {
 		);
 	};
 
+	const onAddProduct = ( prices ) => {
+		setAttributes( { prices } );
+	};
+
 	return (
 		<Fragment>
 			<InspectorControls>
 				<PanelBody title={ __( 'Products', 'checkout_engine' ) }>
 					<PanelRow>
-						<p>Products</p>
+						<p>These products are added to the form by default.</p>
+					</PanelRow>
+					<PanelRow>
+						<SelectProduct onSelect={ onAddProduct } />
 					</PanelRow>
 				</PanelBody>
 				<PanelBody title={ __( 'Form Template', 'checkout_engine' ) }>

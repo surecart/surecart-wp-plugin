@@ -429,6 +429,15 @@ export namespace Components {
     interface CeFormSection {
         "label": string;
     }
+    interface CeFormatInterval {
+        "every": string;
+        "fallback": string;
+        "interval": string;
+        /**
+          * The number to format.
+         */
+        "value": number;
+    }
     interface CeFormatNumber {
         /**
           * The currency to use when formatting. Must be an ISO 4217 currency code such as `USD` or `EUR`.
@@ -1313,6 +1322,12 @@ declare global {
         prototype: HTMLCeFormSectionElement;
         new (): HTMLCeFormSectionElement;
     };
+    interface HTMLCeFormatIntervalElement extends Components.CeFormatInterval, HTMLStencilElement {
+    }
+    var HTMLCeFormatIntervalElement: {
+        prototype: HTMLCeFormatIntervalElement;
+        new (): HTMLCeFormatIntervalElement;
+    };
     interface HTMLCeFormatNumberElement extends Components.CeFormatNumber, HTMLStencilElement {
     }
     var HTMLCeFormatNumberElement: {
@@ -1535,6 +1550,7 @@ declare global {
         "ce-form-control": HTMLCeFormControlElement;
         "ce-form-row": HTMLCeFormRowElement;
         "ce-form-section": HTMLCeFormSectionElement;
+        "ce-format-interval": HTMLCeFormatIntervalElement;
         "ce-format-number": HTMLCeFormatNumberElement;
         "ce-input": HTMLCeInputElement;
         "ce-line-item": HTMLCeLineItemElement;
@@ -2030,6 +2046,15 @@ declare namespace LocalJSX {
     }
     interface CeFormSection {
         "label"?: string;
+    }
+    interface CeFormatInterval {
+        "every"?: string;
+        "fallback"?: string;
+        "interval"?: string;
+        /**
+          * The number to format.
+         */
+        "value"?: number;
     }
     interface CeFormatNumber {
         /**
@@ -2908,6 +2933,7 @@ declare namespace LocalJSX {
         "ce-form-control": CeFormControl;
         "ce-form-row": CeFormRow;
         "ce-form-section": CeFormSection;
+        "ce-format-interval": CeFormatInterval;
         "ce-format-number": CeFormatNumber;
         "ce-input": CeInput;
         "ce-line-item": CeLineItem;
@@ -2965,6 +2991,7 @@ declare module "@stencil/core" {
             "ce-form-control": LocalJSX.CeFormControl & JSXBase.HTMLAttributes<HTMLCeFormControlElement>;
             "ce-form-row": LocalJSX.CeFormRow & JSXBase.HTMLAttributes<HTMLCeFormRowElement>;
             "ce-form-section": LocalJSX.CeFormSection & JSXBase.HTMLAttributes<HTMLCeFormSectionElement>;
+            "ce-format-interval": LocalJSX.CeFormatInterval & JSXBase.HTMLAttributes<HTMLCeFormatIntervalElement>;
             "ce-format-number": LocalJSX.CeFormatNumber & JSXBase.HTMLAttributes<HTMLCeFormatNumberElement>;
             "ce-input": LocalJSX.CeInput & JSXBase.HTMLAttributes<HTMLCeInputElement>;
             "ce-line-item": LocalJSX.CeLineItem & JSXBase.HTMLAttributes<HTMLCeLineItemElement>;

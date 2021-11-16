@@ -25,9 +25,19 @@ export default ( { attributes, setAttributes } ) => {
 
 	if ( ! id ) {
 		return (
-			<Empty attributes={ attributes } setAttributes={ setAttributes } />
+			<Empty
+				{ ...blockProps }
+				attributes={ attributes }
+				setAttributes={ setAttributes }
+			/>
 		);
 	}
 
-	return <Edit attributes={ attributes } setAttributes={ setAttributes } />;
+	return (
+		<Edit
+			{ ...blockProps }
+			attributes={ attributes }
+			setAttributes={ setAttributes }
+		/>
+	);
 };

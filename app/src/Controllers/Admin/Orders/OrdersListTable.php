@@ -166,7 +166,7 @@ class OrdersListTable extends ListTable {
 	public function getStatus() {
 		$status = $_GET['status'] ?? 'paid';
 		if ( $status === 'all' ) {
-			return [ 'paid', 'finalized' ];
+			return [ 'paid', 'finalized', 'draft' ];
 		}
 		return $status ? [ sanitize_text_field( $status ) ] : [];
 	}
@@ -285,7 +285,9 @@ class OrdersListTable extends ListTable {
 			case 'paid':
 				return '<ce-tag type="success">' . __( 'Paid', 'checkout_engine' ) . '</ce-tag>';
 			case 'finalized':
-				return '<ce-tag>' . __( 'Pending Payment', 'checkout_engine' ) . '</ce-tag>';
+				return '<ce-tag type="warning">' . __( 'Pending Payment', 'checkout_engine' ) . '</ce-tag>';
+			case 'draft':
+				return '<ce-tag>' . __( 'Draft', 'checkout_engine' ) . '</ce-tag>';
 		}
 		return $order->status;
 	}
@@ -303,7 +305,8 @@ class OrdersListTable extends ListTable {
 		<a class="row-title" aria-label="<?php echo esc_attr__( 'Edit Order', 'checkout_engine' ); ?>" href="<?php echo esc_url( \CheckoutEngine::getUrl()->edit( 'order', $session->id ) ); ?>">
 			<?php echo esc_html_e( $session->name ?? 'No name provided.' ); ?>
 		</a>
-				<?php
-				return ob_get_clean();
+
+		<?php
+		return ob_get_clean();
 	}
 }

@@ -37,6 +37,10 @@ export const selectCouponStatus = createRegistrySelector( ( select ) => () => {
 	return 'active';
 } );
 
+export const selectError = ( state ) => {
+	return state.error;
+};
+
 /**
  * Is the model saving?
  */

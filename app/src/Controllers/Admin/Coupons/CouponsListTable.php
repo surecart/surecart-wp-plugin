@@ -114,7 +114,7 @@ class CouponsListTable extends ListTable {
 			'code'  => __( 'Code', 'checkout_engine' ),
 			'price' => __( 'Price', 'checkout_engine' ),
 			'usage' => __( 'Usage', 'checkout_engine' ),
-			// 'status'      => __( 'Status', 'checkout_engine' ),
+			'date'  => __( 'Date', 'checkout_engine' ),
 		];
 	}
 

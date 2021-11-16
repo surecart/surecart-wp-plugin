@@ -11,8 +11,6 @@ import { __ } from '@wordpress/i18n';
 import { css, jsx } from '@emotion/core';
 import { __experimentalLinkControl as LinkControl } from '@wordpress/block-editor';
 
-import { Container, Draggable } from 'react-smooth-dnd';
-
 import SelectProduct from './SelectProduct';
 import ProductChoice from './ProductChoice';
 import { getProductIdsFromChoices } from '../../../utils/prices';
@@ -21,8 +19,8 @@ export default ( { attributes, setAttributes, onCreate, onCancel, isNew } ) => {
 	const {
 		title,
 		prices,
-		choice_type,
-		choice_group,
+		choices,
+		create_user_account,
 		custom_success_url,
 		template,
 	} = attributes;
@@ -34,6 +32,10 @@ export default ( { attributes, setAttributes, onCreate, onCancel, isNew } ) => {
 	useEffect( () => {
 		setProductIds( getProductIdsFromChoices( prices ) );
 	}, [ prices ] );
+
+	const onAddProduct = ( choices ) => {
+		setAttributes( { choices } );
+	};
 
 	const label = css`
 		font-weight: 500;
@@ -85,7 +87,7 @@ export default ( { attributes, setAttributes, onCreate, onCancel, isNew } ) => {
 				{ isNew && (
 					<div>
 						<div css={ label }>
-							{ __( 'Title', 'checkout_engine' ) }
+							{ __( 'Form Title', 'checkout_engine' ) }
 						</div>
 						<TextControl
 							value={ title }
@@ -98,17 +100,12 @@ export default ( { attributes, setAttributes, onCreate, onCancel, isNew } ) => {
 					</div>
 				) }
 
-				<div
-					css={ css`
-						.ce-choice-item + .ce-choice-item {
-							margin-top: 2em;
-						}
-					` }
-				>
+				<div>
 					<div css={ label }>
 						{ __( 'Products', 'checkout_engine' ) }
 					</div>
-					{ ! productIds.length && (
+
+					{ ! choices?.length && (
 						<p
 							css={ css`
 								font-size: 13px;
@@ -116,37 +113,24 @@ export default ( { attributes, setAttributes, onCreate, onCancel, isNew } ) => {
 							` }
 						>
 							{ __(
-								'Click "Add Product" to add some products to this form.',
+								`Choose some products you want to always appear in the
+                cart when it's loaded.`,
 								'checkout_engine'
 							) }
 						</p>
 					) }
-					{ !! productIds.length && (
-						<Container
-						// onDrop={ onDrop }
-						// getChildPayload={ ( index ) => {
-						// 	return productPrices[ index ];
-						// } }
-						>
-							{ productIds.map( ( id ) => {
-								return (
-									<Draggable
-										key={ id }
-										className={ 'ce-choice-item' }
-										css={ css`
-											overflow: visible !important;
-										` }
-									>
-										<ProductChoice
-											id={ id }
-											attributes={ attributes }
-											setAttributes={ setAttributes }
-										/>
-									</Draggable>
-								);
-							} ) }
-						</Container>
-					) }
+
+					{ ( choices || [] ).map( ( choice ) => {
+						return (
+							<ProductChoice
+								key={ choice.id }
+								choice={ choice }
+								attributes={ attributes }
+								setAttributes={ setAttributes }
+							/>
+						);
+					} ) }
+
 					<div
 						css={ css`
 							display: flex;
@@ -163,82 +147,12 @@ export default ( { attributes, setAttributes, onCreate, onCancel, isNew } ) => {
 					</div>
 				</div>
 
-				<div>
-					<div css={ label }>
-						{ __( 'Product Options', 'checkout_engine' ) }
-					</div>
-					<RadioControl
-						selected={ choice_type || 'all' }
-						options={ [
-							{
-								label: (
-									<div css={ radio }>
-										{ __( 'All', 'checkout_engine' ) }
-										<span>
-											{ __(
-												'All the prices are added to the form.',
-												'checkout_engine'
-											) }
-										</span>
-									</div>
-								),
-								value: 'all',
-							},
-							{
-								label: (
-									<div css={ radio }>
-										{ __( 'Single', 'checkout_engine' ) }
-										<span>
-											{ __(
-												'Users must select one price.',
-												'checkout_engine'
-											) }
-										</span>
-									</div>
-								),
-								value: 'single',
-							},
-							{
-								label: (
-									<div css={ radio }>
-										{ __( 'Multiple', 'checkout_engine' ) }
-										<span>
-											{ __(
-												'Users can select multiple prices.',
-												'checkout_engine'
-											) }
-										</span>
-									</div>
-								),
-								value: 'multiple',
-							},
-						] }
-						onChange={ ( choice_type ) =>
-							setAttributes( { choice_type } )
-						}
-					/>
-				</div>
-
-				<div>
-					<div css={ label }>
-						{ __( 'Group By Product', 'checkout_engine' ) }
-					</div>
-					<ToggleControl
-						label={ __(
-							'Group prices by product',
-							'checkout_engine'
-						) }
-						checked={ choice_group }
-						onChange={ ( choice_group ) =>
-							setAttributes( { choice_group } )
-						}
-					/>
-				</div>
-
 				{ isNew && (
 					<div>
+						<div css={ label }>
+							{ __( 'Design', 'checkout_engine' ) }
+						</div>
 						<SelectControl
-							label={ __( 'Template' ) }
 							value={ template }
 							onChange={ ( template ) =>
 								setAttributes( { template } )
@@ -255,6 +169,22 @@ export default ( { attributes, setAttributes, onCreate, onCancel, isNew } ) => {
 						/>
 					</div>
 				) }
+
+				<div>
+					<div css={ label }>
+						{ __( 'User Account', 'checkout_engine' ) }
+					</div>
+					<ToggleControl
+						label={ __(
+							'Automatically create a user account when purchased.',
+							'checkout_engine'
+						) }
+						checked={ create_user_account }
+						onChange={ ( create_user_account ) =>
+							setAttributes( { create_user_account } )
+						}
+					/>
+				</div>
 
 				<div>
 					<div css={ label }>
@@ -296,8 +226,7 @@ export default ( { attributes, setAttributes, onCreate, onCancel, isNew } ) => {
 
 			{ open && (
 				<SelectProduct
-					attributes={ attributes }
-					setAttributes={ setAttributes }
+					onChoose={ onAddProduct }
 					onRequestClose={ () => setOpen( false ) }
 				/>
 			) }

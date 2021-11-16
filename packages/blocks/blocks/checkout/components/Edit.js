@@ -133,10 +133,7 @@ export default ( { attributes, setAttributes } ) => {
 					</PanelRow>
 				</PanelBody>
 			</InspectorControls>
-
-			<div className="block-library-block__reusable-block-container">
-				{ <div { ...innerBlocksProps } /> }
-			</div>
+			<div { ...blockProps }>{ <div { ...innerBlocksProps } /> }</div>
 		</RecursionProvider>
 	);
 };

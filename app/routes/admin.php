@@ -116,6 +116,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /*
 |--------------------------------------------------------------------------
+| Orders
+|--------------------------------------------------------------------------
+*/
+\CheckoutEngine::route()
+->where( 'admin', 'ce-subscriptions' )
+->middleware( 'user.can:edit_pk_subscriptions' ) // TODO: change to manage coupons.
+->setNamespace( '\\CheckoutEngine\\Controllers\\Admin\\Subscriptions\\' )
+->group(
+	function() {
+		\CheckoutEngine::route()->get()->where( 'ce_url_var', false, 'action' )->name( 'subscriptions.index' )->handle( 'SubscriptionsController@index' );
+		\CheckoutEngine::route()->get()->where( 'ce_url_var', 'edit', 'action' )->name( 'subscriptions.edit' )->handle( 'SubscriptionsController@edit' );
+	}
+);
+
+/*
+|--------------------------------------------------------------------------
 | Settings
 |--------------------------------------------------------------------------
 */

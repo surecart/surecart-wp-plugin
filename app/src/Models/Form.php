@@ -73,7 +73,7 @@ class Form {
 	public function searchBlocks( $id ) {
 		return get_posts(
 			[
-				's'         => '<!-- wp:checkout-engine/checkout-form {"id":' . (int) $id . '}',
+				's'         => '<!-- wp:checkout-engine/checkout-form {"id":' . (int) $id,
 				'sentence'  => 1,
 				'post_type' => 'any',
 				'per_page'  => -1,

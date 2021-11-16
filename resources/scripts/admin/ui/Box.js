@@ -28,6 +28,7 @@ export default ( {
 				<ce-text
 					tag="h2"
 					style={ {
+						'--font-size': '15px',
 						'--font-weight': 'var(--ce-font-weight-bold)',
 					} }
 				>

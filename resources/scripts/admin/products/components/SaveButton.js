@@ -3,13 +3,9 @@ import { CeButton } from '@checkout-engine/react';
 import { useSelect } from '@wordpress/data';
 
 import { store as uiStore } from '../../store/ui';
-import { store as coreStore } from '../../store/data';
 
 export default ( { style, children } ) => {
 	const isSaving = useSelect( ( select ) => select( uiStore ).isSaving() );
-	const hasDirtyModels = useSelect( ( select ) =>
-		select( coreStore ).hasDirtyModels()
-	);
 
 	return (
 		<CeButton

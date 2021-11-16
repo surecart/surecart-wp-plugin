@@ -2,6 +2,8 @@
 
 namespace CheckoutEngine\Controllers\Admin\Tables;
 
+use CheckoutEngine\Support\TimeDate;
+
 // WP_List_Table is not loaded automatically so we need to load it in our application.
 if ( ! class_exists( 'WP_List_Table' ) ) {
 	require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
@@ -51,5 +53,29 @@ abstract class ListTable extends \WP_List_Table {
 		}
 
 		return $archived;
+	}
+
+	/**
+	 * Handle the date
+	 *
+	 * @param \CheckoutEngine\Models\Model $model Model.
+	 *
+	 * @return string
+	 */
+	public function column_date( $model ) {
+		$created = sprintf(
+			'<time datetime="%1$s" title="%2$s">%3$s</time>',
+			esc_attr( $model->created_at ),
+			esc_html( TimeDate::formatDateAndTime( $model->created_at ) ),
+			esc_html( TimeDate::humanTimeDiff( $model->created_at ) )
+		);
+		$updated = sprintf(
+			'%1$s <time datetime="%2$s" title="%3$s">%4$s</time>',
+			__( 'Updated', 'checkout_engine' ),
+			esc_attr( $model->updated_at ),
+			esc_html( TimeDate::formatDateAndTime( $model->updated_at ) ),
+			esc_html( TimeDate::humanTimeDiff( $model->updated_at ) )
+		);
+		return $created . '<br /><small style="opacity: 0.75">' . $updated . '</small>';
 	}
 }

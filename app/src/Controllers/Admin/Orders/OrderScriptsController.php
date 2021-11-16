@@ -27,5 +27,5 @@ class OrderScriptsController extends AdminModelEditController {
 	 *
 	 * @var string
 	 */
-	protected $path = 'dist/admin/order.js';
+	protected $path = 'admin/orders';
 }

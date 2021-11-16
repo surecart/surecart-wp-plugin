@@ -1,21 +1,21 @@
 {
-  "$schema": "https://json.schemastore.org/block.json",
-  "apiVersion": 2,
+	"$schema": "https://json.schemastore.org/block.json",
+	"apiVersion": 2,
 	"name": "checkout-engine/checkout-form",
 	"title": "Checkout Form",
-  "description": "Display a checkout form",
+	"description": "Display a checkout form",
 	"category": "layout",
-  "keywords": ["checkout", "form"],
-  "supports": {
+	"keywords": [ "checkout", "form" ],
+	"supports": {
 		"reusable": false,
 		"html": false
 	},
 	"attributes": {
-    "id": {
-      "type": "number"
-    },
-    "title": {
-      "type": "string"
-    }
+		"id": {
+			"type": "number"
+		},
+		"title": {
+			"type": "string"
+		}
 	}
 }

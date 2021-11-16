@@ -11,6 +11,7 @@ import { Container, Draggable } from 'react-smooth-dnd';
 import { useSelect, select } from '@wordpress/data';
 import ToggleHeader from '../../../../../resources/scripts/admin/components/ToggleHeader';
 
+import apiFetch from '@wordpress/api-fetch';
 import dotProp from 'dot-prop-immutable';
 
 import {
@@ -30,7 +31,7 @@ import { css, jsx } from '@emotion/core';
 import { applyDrag } from '../../../utils/drag-drop';
 import { BLOCKS_STORE_KEY } from '../store';
 
-export default ( { attributes, setAttributes, id } ) => {
+export default ( { attributes, setAttributes, choice } ) => {
 	// styles
 	const border = '--ce-color-gray-200';
 	const bg = '--ce-color-white';
@@ -40,41 +41,40 @@ export default ( { attributes, setAttributes, id } ) => {
 
 	const { prices } = attributes;
 	const [ isOpen, setIsOpen ] = useState( true );
+	const [ isLoading, setIsLoading ] = useState( false );
+	const [ pricesData, setPricesData ] = useState( [] );
 
-	const { pricesData, isResolvingPrices } = useSelect(
-		( select ) => {
-			const { isResolving, selectPricesByIds } = select(
-				BLOCKS_STORE_KEY
-			);
-			const priceIds = prices.map( ( p ) => p.id );
-			return {
-				pricesData: selectPricesByIds( priceIds ),
-				isResolvingPrices: isResolving( 'selectPricesByIds', [
-					priceIds,
-				] ),
-			};
-		},
-		[ id ]
-	);
+	useEffect( () => {
+		if ( choice?.id ) {
+			fetchProduct( choice?.id );
+		}
+	}, [ choice ] );
 
-	const { product } = useSelect(
-		( select ) => {
-			if ( ! Object.keys( pricesData ).length ) {
+	const fetchProduct = async ( id ) => {
+		setIsLoading( true );
+		try {
+			const prices = await apiFetch( {
+				path: addQueryArgs( '/checkout-engine/v1/prices', {
+					ids: [ id ],
+				} ),
+			} );
+			const choices = prices.map( ( price ) => {
 				return {
-					product: null,
-					isResolvingProduct: false,
+					id: price.id,
+					product_id: price.product_id,
+					quantity: 1,
 				};
-			}
-			const { isResolving, selectProductById } = select(
-				BLOCKS_STORE_KEY
-			);
-			return {
-				product: selectProductById( id ),
-				isResolvingProduct: isResolving( 'selectProductById', [ id ] ),
-			};
-		},
-		[ pricesData ]
-	);
+			} );
+			setAttributes( {
+				prices: [ ...prices, ...choices ],
+			} );
+			setPricesData( [ ...pricesData, ...prices ] );
+		} catch ( e ) {
+			console.log( e );
+		} finally {
+			setIsLoading( false );
+		}
+	};
 
 	const removeChoice = () => {
 		const r = confirm(
@@ -90,7 +90,7 @@ export default ( { attributes, setAttributes, id } ) => {
 		}
 	};
 
-	if ( isResolvingPrices ) {
+	if ( isLoading ) {
 		return (
 			<div
 				css={ css`
@@ -128,18 +128,14 @@ export default ( { attributes, setAttributes, id } ) => {
 		} );
 	};
 
-	const onDrop = ( dropResult ) => {
-		const removedIndex = prices.indexOf( dropResult.payload );
-		const offset = removedIndex - dropResult.removedIndex;
-		dropResult.addedIndex = dropResult.addedIndex + offset;
-		dropResult.removedIndex = removedIndex;
-		setAttributes( {
-			prices: applyDrag( prices, dropResult ),
-		} );
-	};
-
 	const buttons = (
-		<div>
+		<div
+			css={ css`
+				display: flex;
+				align-items: flex-end;
+				flex: 0 1 50px;
+			` }
+		>
 			<CeDropdown slot="suffix" position="bottom-right">
 				<CeButton type="text" slot="trigger" circle>
 					<Icon icon={ moreHorizontal } size={ 24 } />
@@ -174,10 +170,6 @@ export default ( { attributes, setAttributes, id } ) => {
 		</div>
 	);
 
-	const productPrices = ( prices || [] ).filter(
-		( price ) => price.product_id === id
-	);
-
 	return (
 		<div
 			css={ css`
@@ -193,181 +185,95 @@ export default ( { attributes, setAttributes, id } ) => {
 				}
 			` }
 		>
-			<ToggleHeader
+			<div
 				css={ css`
-					margin-bottom: 1em;
+					margin: 1em auto;
 				` }
-				isOpen={ isOpen }
-				setIsOpen={ setIsOpen }
-				buttons={ buttons }
 			>
-				<div
-					css={ css`
-						display: flex;
-						align-items: center;
-						gap: 1em;
-					` }
-				>
-					<Icon
-						css={ css`
-							cursor: move;
-							svg {
-								fill: var( ${ muted } );
-							}
-						` }
-						icon={ menu }
-						size={ 18 }
-					/>
-					{ product?.name }
-				</div>
-			</ToggleHeader>
-
-			{ isOpen && (
-				<div
-					css={ css`
-						margin: 1em auto;
-					` }
-				>
-					<Container
-						onDrop={ onDrop }
-						getChildPayload={ ( index ) => {
-							return productPrices[ index ];
-						} }
-					>
-						{ productPrices.map( ( priceChoice, index ) => {
-							const price = pricesData[ priceChoice.id ];
-							if ( ! price ) return;
-							return (
-								<Draggable
-									key={ priceChoice.id }
+				{ ( prices || [] ).map( ( choice, index ) => {
+					const price = pricesData.find(
+						( p ) => p.id === choice.id
+					);
+					if ( ! price?.id ) return;
+					return (
+						<div
+							key={ price?.id }
+							css={ css`
+								background: var( ${ bg } );
+								&:hover {
+									background: var( ${ bgHover } );
+								}
+								color: var( ${ color } );
+								box-shadow: inset 0 0 0 1px var( ${ border } );
+								display: grid;
+								margin-top: -1px;
+								padding: 1.2em;
+								grid-template-columns: repeat(
+									3,
+									minmax( 0, 1fr )
+								);
+								justify-content: space-between;
+								align-content: center;
+								gap: 1em;
+								transition: background-color 0.35s ease;
+							` }
+						>
+							<div
+								css={ css`
+									display: flex;
+									gap: 1em;
+									color: var( ${ color } );
+									align-items: center;
+								` }
+							>
+								<div>
+									{
+										pricesData.find(
+											( data ) => data.id === price.id
+										)?.name
+									}
+								</div>
+								<NumberControl
+									label={ __( 'Qty:', 'checkout_engine' ) }
+									labelPosition="side"
+									onChange={ ( number ) => {
+										setAttributes( {
+											prices: dotProp.set(
+												prices,
+												`${ index }.quanity`,
+												parseInt( number )
+											),
+										} );
+									} }
+									shiftStep={ 10 }
+									value={ choice?.quantity }
+								/>
+							</div>
+							<span
+								css={ css`
+									text-align: center;
+								` }
+							>
+								<CeFormatNumber
+									type="currency"
+									currency={ price.currency }
+									value={ price.amount }
+								/>{ ' ' }
+								<span
 									css={ css`
-										overflow: visible !important;
+										color: var( ${ muted } );
 									` }
 								>
-									<div
-										key={ priceChoice.id }
-										css={ css`
-											background: var( ${ bg } );
-											&:hover {
-												background: var( ${ bgHover } );
-											}
-											color: var( ${ color } );
-											box-shadow: inset 0 0 0 1px
-												var( ${ border } );
-											display: grid;
-											margin-top: -1px;
-											padding: 1.2em;
-											grid-template-columns: repeat(
-												3,
-												minmax( 0, 1fr )
-											);
-											justify-content: space-between;
-											align-content: center;
-											gap: 1em;
-											transition: background-color 0.35s
-												ease;
-										` }
-									>
-										<div
-											css={ css`
-												display: flex;
-												gap: 1em;
-												color: var( ${ color } );
-												align-items: center;
-											` }
-										>
-											<CheckboxControl
-												css={ css`
-													white-space: nowrap;
-													.components-base-control__field {
-														margin-bottom: 0;
-													}
-												` }
-												label={ price.name }
-												checked={
-													!! priceChoice?.enabled
-												}
-												onChange={ ( checked ) => {
-													const price =
-														productPrices[ index ];
-													const index = prices.indexOf(
-														price
-													);
-													setAttributes( {
-														prices: dotProp.set(
-															prices,
-															`${ index }.enabled`,
-															!! checked
-														),
-													} );
-												} }
-											/>
-											<NumberControl
-												label={ __(
-													'Qty:',
-													'checkout_engine'
-												) }
-												labelPosition="side"
-												onChange={ ( number ) => {
-													setAttributes( {
-														prices: dotProp.set(
-															prices,
-															`${ index }.quanity`,
-															parseInt( number )
-														),
-													} );
-												} }
-												shiftStep={ 10 }
-												value={ priceChoice?.quantity }
-											/>
-										</div>
-										<span
-											css={ css`
-												text-align: center;
-											` }
-										>
-											<CeFormatNumber
-												type="currency"
-												currency={ price.currency }
-												value={ price.amount }
-											/>{ ' ' }
-											<span
-												css={ css`
-													color: var( ${ muted } );
-												` }
-											>
-												{ price.recurring_interval
-													? `/ ${ price.recurring_interval }`
-													: __(
-															'once',
-															'checkout_engine'
-													  ) }
-											</span>
-										</span>
-										<span
-											css={ css`
-												text-align: right;
-												svg {
-													fill: var( ${ muted } );
-													stroke-width: 2;
-												}
-											` }
-										>
-											<Icon
-												css={ css`
-													cursor: move;
-												` }
-												icon={ menu }
-												size={ 18 }
-											/>
-										</span>
-									</div>
-								</Draggable>
-							);
-						} ) }
-					</Container>
-				</div>
-			) }
+									{ price.recurring_interval
+										? `/ ${ price.recurring_interval }`
+										: __( 'once', 'checkout_engine' ) }
+								</span>
+							</span>
+							{ buttons }
+						</div>
+					);
+				} ) }
+			</div>
 		</div>
 	);
 };

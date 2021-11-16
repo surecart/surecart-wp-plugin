@@ -92,7 +92,7 @@ class FormPostTypeServiceProvider implements ServiceProviderInterface {
 			array(
 				'title'     => $defaults['title'],
 				'public'    => __( 'Published In', 'checkout_engine' ),
-				'products'  => __( 'Products', 'checkout_engine' ),
+				'products'  => __( 'Included Products', 'checkout_engine' ),
 				'shortcode' => __( 'Shortcode', 'presto-player' ),
 			)
 		);
