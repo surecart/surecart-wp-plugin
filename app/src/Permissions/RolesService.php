@@ -7,8 +7,8 @@ use CheckoutEngine\Models\Product;
  * Adds roles and capabilities.
  */
 class RolesService {
-	public function __construct() {
-		add_filter( 'map_meta_cap', [ $this, 'metaCaps' ], 10, 4 );
+	public function mapMetaCaps() {
+		 add_filter( 'map_meta_cap', [ $this, 'metaCaps' ], 10, 4 );
 	}
 
 	/**
@@ -176,38 +176,5 @@ class RolesService {
 		];
 
 		return $capabilities;
-	}
-
-
-	/**
-	 * Meta caps for models
-	 *
-	 * @param array  $caps Primitive capabilities required of the user.
-	 * @param string $cap     Capability being checked.
-	 * @param int    $user_id User ID.
-	 * @param mixed  $args Optional further parameters, typically starting with an object ID.
-	 * @return string[] Primitive capabilities required of the user.
-	 */
-	public function metaCaps( $caps, $cap, $user_id, $args ) {
-		switch ( $cap ) {
-			case 'view_product_stats':
-				if ( empty( $args[0] ) ) {
-					break;
-				}
-
-				$product = Product::find( $args[0] );
-				if ( empty( $product ) ) {
-					break;
-				}
-
-				// allowed if they can edit others products or they created it
-				if ( user_can( $user_id, 'edit_others_products' ) || $user_id == $product->created_by ) {
-					$caps = array();
-				}
-
-				break;
-		}
-
-		return $caps;
 	}
 }

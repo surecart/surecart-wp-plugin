@@ -2,6 +2,7 @@
 
 namespace CheckoutEngine\Permissions;
 
+use CheckoutEngine\Models\Subscription;
 use CheckoutEngine\Permissions\RolesService;
 use WPEmerge\ServiceProviders\ServiceProviderInterface;
 
@@ -9,6 +10,7 @@ use WPEmerge\ServiceProviders\ServiceProviderInterface;
  * Handles the request service
  */
 class RolesServiceProvider implements ServiceProviderInterface {
+
 	/**
 	 * {@inheritDoc}
 	 *
@@ -28,6 +30,8 @@ class RolesServiceProvider implements ServiceProviderInterface {
 				return call_user_func_array( [ $container['checkout_engine.permissions.roles'], 'createRoles' ], func_get_args() );
 			}
 		);
+
+		add_filter( 'map_meta_cap', [ $this, 'metaCaps' ], 10, 4 );
 	}
 
 	/**
@@ -40,5 +44,32 @@ class RolesServiceProvider implements ServiceProviderInterface {
 	 * phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter
 	 */
 	public function bootstrap( $container ) {
+	}
+
+	/**
+	 * Meta caps for models
+	 *
+	 * @param array  $caps Primitive capabilities required of the user.
+	 * @param string $cap     Capability being checked.
+	 * @param int    $user_id User ID.
+	 * @param mixed  $args Optional further parameters, typically starting with an object ID.
+	 * @return string[] Primitive capabilities required of the user.
+	 */
+	public function metaCaps( $caps, $cap, $user_id, $args ) {
+		switch ( $cap ) {
+			// TODO: Add more meta caps.
+			case 'read_pk_subscription':
+				$subscription = Subscription::find( $args[0] );
+				if ( ! $subscription ) {
+					$caps[] = 'do_not_allow';
+					break;
+				}
+
+				// check if user is the owner of the subscription.
+				// by checking the customer id against current user.
+				break;
+		}
+
+		return $caps;
 	}
 }
