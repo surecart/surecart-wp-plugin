@@ -79,65 +79,74 @@ class RequestService {
 	 * @return mixed
 	 */
 	public function makeRequest( $endpoint, $args = [] ) {
-		// make sure we send json.
-		if ( empty( $args['headers']['Content-Type'] ) ) {
-			$args['headers']['Content-Type'] = 'application/json';
-		}
+		// we cache this so we can request it several times.
+		$cache_key     = $endpoint . wp_json_encode( $args );
+		$response_body = wp_cache_get( $cache_key );
 
-		// add auth.
-		if ( empty( $args['headers']['Authorization'] ) ) {
-			$args['headers']['Authorization'] = "Bearer $this->token";
-		}
-
-		// parse args.
-		$args = wp_parse_args(
-			$args,
-			[
-				'timeout'   => 20,
-				'sslverify' => true,
-			]
-		);
-
-		// filter args and endpoint.
-		$args     = apply_filters( 'checkout_engine/request/args', $args, $endpoint );
-		$endpoint = apply_filters( 'checkout_engine/request/endpoint', $endpoint, $args );
-
-		// make url.
-		$url = trailingslashit( $this->base_url ) . untrailingslashit( $endpoint );
-
-		// add query args.
-		if ( ! empty( $args['query'] ) ) {
-			$url = add_query_arg( $this->parseArgs( $args['query'] ), $url );
-			$url = preg_replace( '/%5B[0-9]+%5D/', '%5B%5D', $url );
-			unset( $args['query'] );
-		}
-
-		// json encode body.
-		if ( ! empty( $args['body'] ) ) {
-			if ( 'application/json' === $args['headers']['Content-Type'] ) {
-				$args['body'] = wp_json_encode( $this->parseArgs( $args['body'] ) );
+		if ( false === $response_body ) {
+			// make sure we send json.
+			if ( empty( $args['headers']['Content-Type'] ) ) {
+				$args['headers']['Content-Type'] = 'application/json';
 			}
-		}
 
-		// make request.
-		$response = wp_remote_request( esc_url_raw( $url ), $args );
+			// add auth.
+			if ( empty( $args['headers']['Authorization'] ) ) {
+				$args['headers']['Authorization'] = "Bearer $this->token";
+			}
 
-		// bail early if it's a wp_error.
-		if ( is_wp_error( $response ) ) {
-			return $response;
-		}
+			// parse args.
+			$args = wp_parse_args(
+				$args,
+				[
+					'timeout'   => 20,
+					'sslverify' => true,
+				]
+			);
 
-		$response_code = wp_remote_retrieve_response_code( $response );
-		$response_body = wp_remote_retrieve_body( $response );
+			// filter args and endpoint.
+			$args     = apply_filters( 'checkout_engine/request/args', $args, $endpoint );
+			$endpoint = apply_filters( 'checkout_engine/request/endpoint', $endpoint, $args );
 
-		// check for errors.
-		if ( ! in_array( $response_code, [ 200, 201 ], true ) ) {
-			$response_body = json_decode( $response_body, true );
-			return \CheckoutEngine::errors()->translate( $response_body, $response_code );
+			// make url.
+			$url = trailingslashit( $this->base_url ) . untrailingslashit( $endpoint );
+
+			// add query args.
+			if ( ! empty( $args['query'] ) ) {
+				$url = add_query_arg( $this->parseArgs( $args['query'] ), $url );
+				$url = preg_replace( '/%5B[0-9]+%5D/', '%5B%5D', $url );
+				unset( $args['query'] );
+			}
+
+			// json encode body.
+			if ( ! empty( $args['body'] ) ) {
+				if ( 'application/json' === $args['headers']['Content-Type'] ) {
+					$args['body'] = wp_json_encode( $this->parseArgs( $args['body'] ) );
+				}
+			}
+
+			// make request.
+			$response = wp_remote_request( esc_url_raw( $url ), $args );
+
+			// bail early if it's a wp_error.
+			if ( is_wp_error( $response ) ) {
+				return $response;
+			}
+
+			$response_code = wp_remote_retrieve_response_code( $response );
+			$response_body = wp_remote_retrieve_body( $response );
+
+			// check for errors.
+			if ( ! in_array( $response_code, [ 200, 201 ], true ) ) {
+				$response_body = json_decode( $response_body, true );
+				return \CheckoutEngine::errors()->translate( $response_body, $response_code );
+			}
+
+			$response_body = json_decode( $response_body );
+			wp_cache_set( $cache_key, $response_body );
 		}
 
 		// return response.
-		return apply_filters( 'checkout_engine/request/response', json_decode( $response_body ), $args, $endpoint );
+		return apply_filters( 'checkout_engine/request/response', $response_body, $args, $endpoint );
 	}
 
 	/**
