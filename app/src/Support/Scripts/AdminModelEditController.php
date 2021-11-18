@@ -14,7 +14,7 @@ abstract class AdminModelEditController {
 	 *
 	 * @var array
 	 */
-	protected $with_data = [];
+	protected $with_data = [ 'links' ];
 
 	/**
 	 * Are we editing a single page?
@@ -96,6 +96,12 @@ abstract class AdminModelEditController {
 		}
 		if ( in_array( 'supported_currencies', $this->with_data ) ) {
 			$data['supported_currencies'] = Currency::getSupportedCurrencies();
+		}
+		if ( in_array( 'links', $this->with_data ) ) {
+			$data['links'] = [];
+			foreach ( array_keys( \CheckoutEngine::getAdminPageNames() ) as $name ) {
+				$data['links'][ $name ] = esc_url_raw( add_query_arg( [ 'action' => 'edit' ], \CheckoutEngine::getUrl()->index( $name ) ) );
+			}
 		}
 
 		// common localizations.

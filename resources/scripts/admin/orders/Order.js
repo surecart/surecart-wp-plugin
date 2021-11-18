@@ -17,6 +17,7 @@ import Details from './modules/Details';
 import useSnackbar from '../hooks/useSnackbar';
 import useOrderData from './hooks/useOrderData';
 import LineItems from './modules/LineItems';
+import Charges from './modules/Charges';
 
 export default () => {
 	const { snackbarNotices, removeSnackbarNotice } = useSnackbar();
@@ -83,6 +84,7 @@ export default () => {
 				<FlashError path="checkout_sessions" scrollIntoView />
 				<Details />
 				<LineItems />
+				<Charges />
 			</Fragment>
 		</Template>
 	);

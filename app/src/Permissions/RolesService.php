@@ -153,7 +153,7 @@ class RolesService {
 			$capabilities[ $capability_type ] = array(
 				// Models.
 				"read_{$capability_type}", // read.
-				"read_{$capability_types}s", // read.
+				"read_{$capability_type}s", // read.
 				"delete_{$capability_type}", // delete.
 				"edit_{$capability_type}", // edit.
 				"edit_{$capability_type}s", // edit all.

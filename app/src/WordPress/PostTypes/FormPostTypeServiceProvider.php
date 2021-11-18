@@ -3,6 +3,7 @@
 namespace CheckoutEngine\WordPress\PostTypes;
 
 use CheckoutEngine\Models\Form;
+use CheckoutEngine\WordPress\PageService;
 use WPEmerge\ServiceProviders\ServiceProviderInterface;
 
 /**
@@ -17,6 +18,13 @@ class FormPostTypeServiceProvider implements ServiceProviderInterface {
 	 *  @param  \Pimple\Container $container Service Container.
 	 */
 	public function register( $container ) {
+		$container['checkout_engine.forms'] = function () {
+			return new FormPostTypeService( new PageService() );
+		};
+
+		$container[ WPEMERGE_APPLICATION_KEY ]
+			->alias( 'forms', 'checkout_engine.forms' );
+
 		add_action( 'init', [ $this, 'registerPostType' ] );
 		add_filter( "manage_{$this->post_type}_posts_columns", [ $this, 'postTypeColumns' ], 1 );
 		add_action( "manage_{$this->post_type}_posts_custom_column", [ $this, 'postTypeContent' ], 10, 2 );

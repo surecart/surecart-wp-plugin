@@ -141,7 +141,6 @@ export default ( {
 									>
 										<CeButton
 											circle
-											outline
 											size="small"
 											href={ back?.url }
 										>

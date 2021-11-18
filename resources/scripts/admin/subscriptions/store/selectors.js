@@ -10,6 +10,14 @@ export const selectSubscription = createRegistrySelector( ( select ) => () =>
 );
 
 /**
+ * Select the session
+ */
+export const selectSubscriptionItems = createRegistrySelector(
+	( select ) => () =>
+		select( coreStore ).selectCollection( 'subscription_items' )
+);
+
+/**
  * Has this been created?
  */
 export const isCreated = createRegistrySelector( ( select ) => () =>

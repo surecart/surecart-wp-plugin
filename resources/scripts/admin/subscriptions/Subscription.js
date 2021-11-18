@@ -8,6 +8,8 @@ import { CeAlert } from '@checkout-engine/react';
 // template
 import Template from '../templates/Model';
 import useSubscriptionData from './hooks/useSubscriptionData';
+import Details from './modules/Details';
+import SubscriptionItems from './modules/SubscriptionItems';
 
 export default () => {
 	const { subscription, loading, error } = useSubscriptionData();
@@ -59,7 +61,8 @@ export default () => {
 			onInvalid={ onInvalid }
 		>
 			<FlashError path="subscriptions" scrollIntoView />
-			{ JSON.stringify( subscription ) }
+			<Details />
+			<SubscriptionItems />
 		</Template>
 	);
 };

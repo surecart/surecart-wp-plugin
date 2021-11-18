@@ -74,7 +74,9 @@ class CheckoutForm extends Block {
 
 		$seen_forms[ $attributes['id'] ] = true;
 
-		$result = do_blocks( $form->post_content );
+		global $ce_form_id;
+		$ce_form_id = $attributes['id'];
+		$result     = do_blocks( $form->post_content );
 		unset( $seen_forms[ $attributes['id'] ] );
 		return $result;
 	}

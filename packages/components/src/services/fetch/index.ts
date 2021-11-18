@@ -10,6 +10,7 @@ export const getPricesAndProducts = async ({ ids, active = true }: { ids: Array<
     path: addQueryArgs('checkout-engine/v1/prices/', {
       ids,
       active,
+      expand: ['product'],
     }),
   })) as Array<Price>;
 

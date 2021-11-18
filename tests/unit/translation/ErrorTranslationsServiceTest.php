@@ -4,12 +4,9 @@ namespace CheckoutEngine\Tests;
 
 use CheckoutEngine\Support\Errors\ErrorsTranslationService;
 use \Mockery;
-use WP_UnitTestCase;
 
-class ErrorsTranslationServiceTest extends WP_UnitTestCase
+class ErrorsTranslationServiceTest extends CheckoutEngineUnitTestCase
 {
-	use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
-
 	/**
 	 * Set up a new app instance to use for tests.
 	 */

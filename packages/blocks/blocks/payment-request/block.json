@@ -1,10 +1,10 @@
 {
 	"name": "checkout-engine/payment-request",
 	"title": "Payment Request",
-  "description": "Display google/apply pay",
+	"description": "Display google/apply pay",
 	"category": "layout",
-  "keywords": ["apple", "google", "android"],
-  "supports": {
+	"keywords": [ "apple", "google", "android" ],
+	"supports": {
 		"reusable": false,
 		"html": false
 	},

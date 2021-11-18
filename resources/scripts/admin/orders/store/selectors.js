@@ -26,6 +26,13 @@ export const selectSubscriptions = createRegistrySelector( ( select ) => () =>
 /**
  * Select the customer
  */
+export const selectCharges = createRegistrySelector( ( select ) => () =>
+	select( coreStore ).selectCollection( 'charges' )
+);
+
+/**
+ * Select the customer
+ */
 export const selectLineItems = createRegistrySelector( ( select ) => () =>
 	select( coreStore ).selectCollection( 'line_items' )
 );

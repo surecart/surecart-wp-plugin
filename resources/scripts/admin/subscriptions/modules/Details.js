@@ -1,30 +1,29 @@
 /** @jsx jsx */
 
 import { __, sprintf } from '@wordpress/i18n';
-
 import { css, jsx } from '@emotion/core';
-import useOrderData from '../hooks/useOrderData';
 import { formatTime } from '../../util/time';
+import useSubscriptionData from '../hooks/useSubscriptionData';
 
 export default () => {
-	const { order, loading } = useOrderData();
+	const { subscription, loading } = useSubscriptionData();
 
-	if ( ! order?.id ) {
+	if ( ! subscription?.id ) {
 		return null;
 	}
 
 	const renderBadge = ( status ) => {
 		switch ( status ) {
-			case 'paid':
+			case 'active':
 				return (
 					<ce-tag type="success">
-						{ __( 'Paid', 'checkout_engine' ) }
+						{ __( 'Active', 'checkout_engine' ) }
 					</ce-tag>
 				);
-			case 'finalized':
+			case 'canceled':
 				return (
 					<ce-tag type="warning">
-						{ __( 'Pending Payment', 'checkout_engine' ) }
+						{ __( 'Canceled', 'checkout_engine' ) }
 					</ce-tag>
 				);
 			default:
@@ -52,19 +51,19 @@ export default () => {
 					<h1>
 						<ce-format-number
 							type="currency"
-							currency={ order?.currency }
-							value={ order?.total_amount }
+							currency={ subscription?.currency }
+							value={ subscription?.total_amount }
 						></ce-format-number>
 					</h1>
-					{ renderBadge( order.status ) }
+					{ renderBadge( subscription.status ) }
 				</div>
 				{ sprintf(
 					__( 'Created on %s', 'checkout_engine' ),
-					formatTime( order.updated_at )
+					formatTime( subscription.created_at )
 				) }
 			</div>
 			<div>
-				{ order?.live_mode ? (
+				{ subscription?.live_mode ? (
 					<ce-tag type="success">
 						{ __( 'Live Mode', 'checkout_engine' ) }
 					</ce-tag>

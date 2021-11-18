@@ -2,6 +2,7 @@
 
 namespace CheckoutEngine\Permissions;
 
+use CheckoutEngine\Models\Charge;
 use CheckoutEngine\Models\Subscription;
 use CheckoutEngine\Permissions\RolesService;
 use WPEmerge\ServiceProviders\ServiceProviderInterface;
@@ -64,7 +65,17 @@ class RolesServiceProvider implements ServiceProviderInterface {
 					$caps[] = 'do_not_allow';
 					break;
 				}
+				// check if user is the owner of the subscription.
+				// by checking the customer id against current user.
+				break;
 
+				// TODO: Add more meta caps.
+			case 'read_pk_charge':
+				$charge = Charge::find( $args[0] );
+				if ( ! $charge ) {
+					$caps[] = 'do_not_allow';
+					break;
+				}
 				// check if user is the owner of the subscription.
 				// by checking the customer id against current user.
 				break;

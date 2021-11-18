@@ -41,7 +41,8 @@ class CheckoutSessionTest extends CheckoutEngineUnitTestCase
 	public function test_can_create_session()
 	{
 		$request = json_decode(file_get_contents(dirname(__FILE__) . '/session-create.json'), true);
-		$response = json_decode(file_get_contents(dirname(__FILE__) . '/session-created.json'), true);
+		$response = json_decode(file_get_contents(dirname(__FILE__) . '/session-created.json'));
+		$response_array = json_decode(file_get_contents(dirname(__FILE__) . '/session-created.json'), true);
 
 		$this->mock_requests->expects($this->once())
 			->method('makeRequest')
@@ -49,7 +50,8 @@ class CheckoutSessionTest extends CheckoutEngineUnitTestCase
 				$this->equalTo('checkout_sessions'),
 				$this->equalTo([
 					'method' => 'POST',
-					'body' => $request
+					'body' => $request,
+					'query' => []
 				])
 			)
 			->willReturn($response);
@@ -58,7 +60,7 @@ class CheckoutSessionTest extends CheckoutEngineUnitTestCase
 		$created = $instance->create();
 
 		// we don't care about the order.
-		$this->assertEqualsCanonicalizing($created->toArray(), $response);
+		$this->assertEqualsCanonicalizing($created->toArray(), $response_array);
 	}
 
 	/**

@@ -46,10 +46,10 @@ class Subscription extends Model {
 	 */
 	public function setCustomerAttribute( $value ) {
 		if ( is_string( $value ) ) {
-			$this->attributes['checkout_session'] = $value;
+			$this->attributes['customer'] = $value;
 			return;
 		}
-		$this->attributes['checkout_session'] = new Customer( $value );
+		$this->attributes['customer'] = new Customer( $value );
 	}
 
 	/**
@@ -66,7 +66,7 @@ class Subscription extends Model {
 			}
 			$value->data = $models;
 		}
-		$this->attributes['line_items'] = $value;
+		$this->attributes['subscription_items'] = $value;
 	}
 
 	/**

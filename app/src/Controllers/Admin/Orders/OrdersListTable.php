@@ -276,7 +276,7 @@ class OrdersListTable extends ListTable {
 	/**
 	 * Handle the status
 	 *
-	 * @param \CheckoutEngine\Models\Price $product Product model.
+	 * @param \CheckoutEngine\Models\Order $order Order Model.
 	 *
 	 * @return string
 	 */
@@ -303,7 +303,7 @@ class OrdersListTable extends ListTable {
 		ob_start();
 		?>
 		<a class="row-title" aria-label="<?php echo esc_attr__( 'Edit Order', 'checkout_engine' ); ?>" href="<?php echo esc_url( \CheckoutEngine::getUrl()->edit( 'order', $session->id ) ); ?>">
-			<?php echo esc_html_e( $session->name ?? 'No name provided.' ); ?>
+			<?php echo esc_html_e( $session->name ?? $session->email ); ?>
 		</a>
 
 		<?php

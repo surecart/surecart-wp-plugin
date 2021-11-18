@@ -486,6 +486,18 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 	}
 
 	/**
+	 * Build query query
+	 *
+	 * @param array $query Arguments.
+	 *
+	 * @return Model
+	 */
+	protected function with( $query = [] ) {
+		$this->query['expand'] = (array) $query;
+		return $this;
+	}
+
+	/**
 	 * Paginate results
 	 *
 	 * @return mixed
@@ -528,7 +540,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 	 * @return $this
 	 */
 	protected function find( $id = '' ) {
-		$attributes = \CheckoutEngine::request( $this->endpoint . '/' . $id );
+		$attributes = \CheckoutEngine::request( $this->endpoint . '/' . $id, [ 'query' => $this->query ] );
 
 		if ( $this->isError( $attributes ) ) {
 			return $attributes;
@@ -561,7 +573,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 			return $this;
 		}
 
-		$attributes = \CheckoutEngine::request( $this->endpoint . '/' . $this->attributes['id'] );
+		$attributes = \CheckoutEngine::request( $this->endpoint . '/' . $this->attributes['id'], [ 'query' => $this->query ] );
 
 		if ( $this->isError( $attributes ) ) {
 			return $attributes;
@@ -628,6 +640,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 				'body'   => [
 					$this->object_name => $this->toArray(),
 				],
+				'query'  => $this->query,
 			]
 		);
 
@@ -673,6 +686,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 				'body'   => [
 					$this->object_name => $attributes,
 				],
+				'query'  => $this->query,
 			]
 		);
 
@@ -705,6 +719,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 			$this->endpoint . '/' . $id,
 			[
 				'method' => 'DELETE',
+				'query'  => $this->query,
 			]
 		);
 
@@ -723,7 +738,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 	 * @return array
 	 */
 	public function getAttributes() {
-		return $this->attributes;
+		return json_decode( wp_json_encode( $this->attributes ), true );
 	}
 
 	/**

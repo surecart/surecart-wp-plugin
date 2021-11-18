@@ -171,7 +171,8 @@ class SubscriptionsListTable extends ListTable {
 				'limit'  => $this->get_items_per_page( 'subscriptions' ),
 				'page'   => $this->get_pagenum(),
 			]
-		)->paginate();
+		)->with( [ 'customer', 'subscription_items', 'subscription_item.price', 'price.product' ] )
+		->paginate();
 	}
 
 	/**
@@ -325,15 +326,6 @@ class SubscriptionsListTable extends ListTable {
 		<a class="row-title" aria-label="<?php echo esc_attr__( 'Edit Subscription', 'checkout_engine' ); ?>" href="<?php echo esc_url( \CheckoutEngine::getUrl()->edit( 'subscription', $subscription->id ) ); ?>">
 			<?php echo esc_html_e( $name ?? __( 'No name provided', 'checkout_engine' ) ); ?>
 		</a>
-
-		<?php
-		echo $this->row_actions(
-			[
-				'view' => '<a href="' . esc_url( \CheckoutEngine::getUrl()->edit( 'subscription', $subscription->id ) ) . '" aria-label="' . esc_attr( 'Edit Subscription', 'checkout_engine' ) . '">' . __( 'View', 'checkout_engine' ) . '</a>',
-				'edit' => '<a href="' . esc_url( \CheckoutEngine::getUrl()->edit( 'subscription', $subscription->id ) ) . '" aria-label="' . esc_attr( 'Edit Subscription', 'checkout_engine' ) . '">' . __( 'Edit', 'checkout_engine' ) . '</a>',
-			],
-		);
-		?>
 
 		<?php
 		return ob_get_clean();

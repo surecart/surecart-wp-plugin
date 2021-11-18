@@ -1,3 +1,6 @@
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
+
 import { CeButton } from '@checkout-engine/react';
 import { __ } from '@wordpress/i18n';
 
@@ -5,7 +8,7 @@ import Box from '../../ui/Box';
 import useCustomerData from '../hooks/useCustomerData';
 
 export default () => {
-	const { customer, loading } = useCustomerData();
+	const { customer, loading, editLink } = useCustomerData();
 
 	const renderLoading = () => {
 		return <ce-skeleton></ce-skeleton>;
@@ -16,15 +19,32 @@ export default () => {
 			title={ __( 'Customer', 'checkout_engine' ) }
 			footer={
 				<div>
-					<CeButton href="">Edit Customer</CeButton>
+					{ editLink && (
+						<CeButton href={ editLink }>
+							{ __( 'Edit Customer', 'checkout_engine' ) }
+						</CeButton>
+					) }
 				</div>
 			}
 		>
 			{ loading ? (
 				renderLoading()
 			) : (
-				<div>
-					<div>{ customer?.name }</div>
+				<div
+					css={ css`
+						display: grid;
+						gap: 0.5em;
+					` }
+				>
+					<ce-text
+						tag="h3"
+						style={ {
+							'--font-weight': 'var(--ce-font-weight-bold)',
+							'--font-size': 'var(--ce-font-size-medium)',
+						} }
+					>
+						{ customer?.name }
+					</ce-text>
 					<div>{ customer?.email }</div>
 					<div>{ customer?.billing_address }</div>
 				</div>

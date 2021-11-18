@@ -52,6 +52,7 @@ export const ALLOWED_BLOCKS = [
 	'checkout-engine/switch',
 	'checkout-engine/name',
 	'checkout-engine/payment',
+	'checkout-engine/payment-request',
 	'checkout-engine/pricing-section',
 	'checkout-engine/totals',
 	'checkout-engine/form',

@@ -50,11 +50,10 @@ export default ( {
 			</CardHeader>
 			<CardBody
 				css={ css`
+					display: grid;
+					gap: 10px;
 					> * {
-						margin-bottom: 10px;
-					}
-					> *:not( :last-child ) {
-						margin-bottom: 20px;
+						width: 100%;
 					}
 					.components-base-control__label {
 						font-weight: 500;

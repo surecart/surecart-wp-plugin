@@ -6,10 +6,10 @@ import { store } from '../store';
 export default () => {
 	return {
 		...useSelect( ( select ) => {
+			const charges = select( store ).selectCharges();
 			return {
-				isCreated: select( store ).isCreated(),
-				subscription: select( store ).selectSubscription(),
-				loading: select( store ).isResolving( 'selectSubscription' ),
+				charges,
+				loading: select( store ).isResolving( 'selectCharges' ),
 				error: select( coreStore ).selectError(),
 				isSaving: select( coreStore ).isSaving(),
 				isInvalid: select( uiStore ).isInvalid(),

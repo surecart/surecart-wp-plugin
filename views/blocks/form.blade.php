@@ -1,6 +1,6 @@
 <ce-checkout
 	class="checkout"
-	id="ce-checkout-{{ $instance }}"
+	id="{{ $id }}"
 	style="font-size: {{$font_size}}px"
     class="{{ $classes }}"
 	alignment="{{$align}}"

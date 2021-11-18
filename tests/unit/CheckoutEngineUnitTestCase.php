@@ -3,9 +3,17 @@ namespace CheckoutEngine\Tests;
 
 use WP_UnitTestCase;
 use CheckoutEngine\Request\RequestService;
+use \Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+use \Mockery;
 
 abstract class CheckoutEngineUnitTestCase extends WP_UnitTestCase {
 	public $mock_requests;
+
+	public function tearDown()
+	{
+	  parent::tearDown();
+	  Mockery::close();
+	}
 
 	public function setupMockRequests()
 	{

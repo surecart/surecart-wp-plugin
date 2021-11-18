@@ -31,6 +31,13 @@ class Form {
 		return $this->getNested( $blocks, 'product_id' );
 	}
 
+	/**
+	 * Get nested values from an array
+	 *
+	 * @param array  $array Array to search.
+	 * @param string $nested_key Nested key to search for.
+	 * @return array
+	 */
 	protected function getNested( array $array, $nested_key ) {
 		$return = array();
 		array_walk_recursive(

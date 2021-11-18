@@ -198,6 +198,8 @@ export class CEButton {
           'button--focused': this.hasFocus,
           'button--loading': this.loading,
           'button--pill': this.pill,
+          'button--standard': !this.outline,
+          'button--outline': this.outline,
           'button--has-label': this.hasLabel,
           'button--has-prefix': this.hasPrefix,
           'button--has-suffix': this.hasSuffix,

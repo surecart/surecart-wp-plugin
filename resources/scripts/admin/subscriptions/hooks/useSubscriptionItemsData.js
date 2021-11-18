@@ -8,7 +8,7 @@ export default () => {
 		...useSelect( ( select ) => {
 			return {
 				isCreated: select( store ).isCreated(),
-				subscription: select( store ).selectSubscription(),
+				items: select( store ).selectSubscriptionItems(),
 				loading: select( store ).isResolving( 'selectSubscription' ),
 				error: select( coreStore ).selectError(),
 				isSaving: select( coreStore ).isSaving(),

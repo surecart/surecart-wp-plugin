@@ -29,6 +29,15 @@ class AdminRouteService {
 	];
 
 	/**
+	 * Get the page names.
+	 *
+	 * @return void
+	 */
+	public function getPageNames() {
+		return $this->page_names;
+	}
+
+	/**
 	 * Get URL function
 	 *
 	 * @return AdminURLService

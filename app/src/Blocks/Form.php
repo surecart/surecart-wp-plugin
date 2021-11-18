@@ -61,6 +61,8 @@ class Form extends Block {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
+		global $ce_form_id;
+
 		return \CheckoutEngine::blocks()->render(
 			"blocks/$this->name",
 			[
@@ -70,6 +72,7 @@ class Form extends Block {
 				'classes'     => $this->getClasses( $attributes ),
 				'description' => $attributes['description'] ?? '',
 				'content'     => $content,
+				'id'          => 'ce-checkout-' . $ce_form_id,
 				'prices'      => $attributes['prices'] ?? [],
 				'choice_type' => $attributes['choice_type'] ?? 'all',
 				'success_url' => $attributes['redirect'] ?? trailingslashit( get_home_url() ) . 'thank-you',

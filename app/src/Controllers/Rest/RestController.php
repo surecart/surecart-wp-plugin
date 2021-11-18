@@ -21,7 +21,7 @@ abstract class RestController {
 	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function create( \WP_REST_Request $request ) {
-		return $this->class::create( $request->get_params() );
+		return $this->class::where( $request->get_query_params() )->create( $request->get_params() );
 	}
 
 	/**
@@ -43,7 +43,7 @@ abstract class RestController {
 	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function find( \WP_REST_Request $request ) {
-		return $this->class::find( $request['id'] );
+		return $this->class::where( $request->get_query_params() )->find( $request['id'] );
 	}
 
 	/**
@@ -54,7 +54,7 @@ abstract class RestController {
 	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function edit( \WP_REST_Request $request ) {
-		return $this->class::update( $request->get_params() );
+		return $this->class::where( $request->get_query_params() )->update( $request->get_params() );
 	}
 
 	/**

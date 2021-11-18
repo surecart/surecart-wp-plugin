@@ -1,12 +1,12 @@
 <?php
 
-namespace CheckoutEngine\Tests\Models\Product;
+namespace CheckoutEngine\Tests\Models;
 
-use CheckoutEngine\Models\Product;
 use CheckoutEngine\Models\Price;
+use CheckoutEngine\Models\Product;
 use CheckoutEngine\Tests\CheckoutEngineUnitTestCase;
 
-class ProductTest extends CheckoutEngineUnitTestCase
+class PriceTest extends CheckoutEngineUnitTestCase
 {
 	/**
 	 * Set up a new app instance to use for tests.
@@ -26,35 +26,29 @@ class ProductTest extends CheckoutEngineUnitTestCase
 		$this->setupMockRequests();
 	}
 
-	/**
-	 * @group failing
-	 *
-	 * @return void
-	 */
 	public function test_can_create_price()
 	{
-		$request = json_decode(file_get_contents(dirname(__FILE__) . '/product-create.json'), true);
-		$response = json_decode(file_get_contents(dirname(__FILE__) . '/product-created.json'));
+		$request = json_decode(file_get_contents(dirname(__FILE__) . '/price-create.json'), true);
+		$response = json_decode(file_get_contents(dirname(__FILE__) . '/price-created.json'));
 
 		$this->mock_requests->expects($this->once())
-		->method('makeRequest')
-		->with(
-			$this->equalTo('products'),
-			$this->equalTo([
-				'method' => 'POST',
-				'body' => $request,
-				'query' => []
-			])
-		)
-		->willReturn($response);
+			->method('makeRequest')
+			->with(
+				$this->equalTo('prices'),
+				$this->equalTo([
+					'method' => 'POST',
+					'body' => $request,
+					'query' => []
+				])
+			)
+			->willReturn($response);
 
-		$instance = new Product($request['product']);
+		$instance = new Price($request['price']);
 		$created = $instance->create();
 
 		// has a product
-		foreach($created->prices->data as $price) {
-			$this->assertInstanceOf(Price::class, $price);
-		}
+		$this->assertInstanceOf(Product::class, $created->product);
+
 		// response is correct
 		$this->assertEquals($created->toArray(), json_decode(json_encode($response), true));
 	}

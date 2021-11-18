@@ -8,12 +8,29 @@ use WPEmerge\ServiceProviders\ServiceProviderInterface;
  * Register plugin options.
  */
 class PluginServiceProvider implements ServiceProviderInterface {
-
 	/**
 	 * {@inheritDoc}
 	 */
 	public function register( $container ) {
-		// Nothing to register.
+		$container['checkout_engine.install'] = function () {
+			return new InstallService();
+		};
+
+		$container['checkout_engine.pages'] = function () {
+			return new PageService();
+		};
+
+		$app = $container[ WPEMERGE_APPLICATION_KEY ];
+
+		$app->alias( 'pages', 'checkout_engine.pages' );
+
+		// install alias.
+		$app->alias(
+			'install',
+			function () use ( $container ) {
+				return call_user_func_array( [ $container['checkout_engine.install'], 'install' ], func_get_args() );
+			}
+		);
 	}
 
 	/**
@@ -22,12 +39,6 @@ class PluginServiceProvider implements ServiceProviderInterface {
 	public function bootstrap( $container ) {
 		register_activation_hook( CHECKOUT_ENGINE_PLUGIN_FILE, [ $this, 'activate' ] );
 		register_deactivation_hook( CHECKOUT_ENGINE_PLUGIN_FILE, [ $this, 'deactivate' ] );
-
-		// run activation automatically if testing.
-		if ( defined('CE_TESTING')) {
-			$this->activate();
-		}
-
 		add_action( 'plugins_loaded', [ $this, 'loadTextdomain' ] );
 	}
 
@@ -38,6 +49,7 @@ class PluginServiceProvider implements ServiceProviderInterface {
 	 */
 	public function activate() {
 		\CheckoutEngine::createRoles();
+		\CheckoutEngine::install();
 	}
 
 	/**
