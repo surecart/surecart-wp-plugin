@@ -46,6 +46,19 @@ class PageService {
 	}
 
 	/**
+	 * Find the url for the given option and post type
+	 *
+	 * @param string $option Option name.
+	 * @param string $post_type Post type slug.
+	 *
+	 * @return string
+	 */
+	public function url( $option, $post_type = 'page' ) {
+		$post = $this->get( $option, $post_type );
+		return get_permalink( $post );
+	}
+
+	/**
 	 * Find the post for a given option and post type
 	 *
 	 * @param string $option Option name.

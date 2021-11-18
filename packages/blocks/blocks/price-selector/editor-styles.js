@@ -4,6 +4,9 @@
 import { css } from '@emotion/react';
 
 export const Wrapper = css`
+	.block-editor-button-block-appender {
+		box-sizing: border-box;
+	}
 	.editor-styles-wrapper {
 		ce-price-choices {
 			transition: border 0.2s ease, padding 0.2s ease;

@@ -1,26 +1,23 @@
 /** @jsx jsx */
 
 import { __ } from '@wordpress/i18n';
-import { useState, Fragment, useEffect } from '@wordpress/element';
+import { Fragment, useEffect } from '@wordpress/element';
 import {
-	Button,
-	Placeholder,
 	PanelBody,
 	PanelRow,
 	TextControl,
 	RangeControl,
-	ToggleControl,
 	RadioControl,
 } from '@wordpress/components';
-import { createBlocksFromInnerBlocksTemplate } from '@wordpress/blocks';
-import { buttons as icon } from '@wordpress/icons';
 import {
 	InspectorControls,
 	useBlockProps,
+	InnerBlocks,
 	__experimentalUseInnerBlocksProps as useInnerBlocksProps,
 	store as blockEditorStore,
 } from '@wordpress/block-editor';
-import { select, dispatch, useDispatch } from '@wordpress/data';
+import { createBlock } from '@wordpress/blocks';
+import { select, dispatch, useSelect } from '@wordpress/data';
 
 import { css, jsx, Global } from '@emotion/core';
 import styles from './editor-styles';
@@ -29,28 +26,59 @@ import styles from './editor-styles';
  * Component Dependencies
  */
 import { CePriceChoices } from '@checkout-engine/react';
-import SelectProduct from '../checkout/components/SelectProduct';
 
-export default ( { attributes, setAttributes, clientId } ) => {
-	const { choices, label, type, columns } = attributes;
-	const [ open, setOpen ] = useState( false );
+export default ( { attributes, setAttributes, clientId, isSelected } ) => {
+	const { label, type, columns } = attributes;
+
+	const insertPrice = () => {
+		const innerCount = select( 'core/editor' ).getBlocksByClientId(
+			clientId
+		)[ 0 ].innerBlocks.length;
+		let block = createBlock( 'checkout-engine/price-choice' );
+		dispatch( 'core/block-editor' ).insertBlock(
+			block,
+			innerCount,
+			clientId
+		);
+	};
+
+	const blockProps = useBlockProps();
+
+	const { children, childIsSelected } = useSelect( ( select ) => {
+		return {
+			children: select( blockEditorStore ).getBlocksByClientId(
+				clientId
+			)?.[ 0 ].innerBlocks,
+			childIsSelected: select( blockEditorStore ).hasSelectedInnerBlock(
+				clientId,
+				true
+			),
+		};
+	} );
+
+	const priceAppender = () => (
+		<a href="#" className="" onClick={ insertPrice }>
+			{ __( 'Add Product', 'checkout_engine' ) }
+		</a>
+	);
 
 	const innerBlocksProps = useInnerBlocksProps(
 		{},
 		{
 			className: 'ce-choices',
 			allowedBlocks: [ 'checkout-engine/price-choice' ],
+			renderAppender:
+				isSelected || childIsSelected
+					? InnerBlocks.ButtonBlockAppender
+					: false,
 		}
 	);
 
-	const blockProps = useBlockProps();
-	const { replaceInnerBlocks } = useDispatch( blockEditorStore );
-
-	// update children when type changes.
+	// update children when type or children changes.
 	useEffect( () => {
-		const children = select( blockEditorStore ).getBlocksByClientId(
-			clientId
-		)?.[ 0 ].innerBlocks;
+		if ( ! children.length ) {
+			insertPrice();
+		}
 		children.forEach( function ( child ) {
 			dispatch( blockEditorStore ).updateBlockAttributes(
 				child.clientId,
@@ -59,61 +87,11 @@ export default ( { attributes, setAttributes, clientId } ) => {
 				}
 			);
 		} );
-	}, [ type ] );
+	}, [ type, children ] );
 
-	const createTemplateFromChoices = ( choices ) => {
-		return choices.map( ( choice, index ) => {
-			return [
-				'checkout-engine/price-choice',
-				{
-					price_id: choice.id,
-					quantity: 1,
-					checked: index === 0,
-				},
-			];
-		} );
+	const hasOnePriceSelected = () => {
+		return !! children.find( ( child ) => child.attributes.price_id );
 	};
-
-	const onAddProduct = ( choices ) => {
-		setAttributes( { choices } );
-		replaceInnerBlocks(
-			clientId,
-			createBlocksFromInnerBlocksTemplate(
-				createTemplateFromChoices( choices )
-			),
-			false
-		);
-	};
-
-	if ( ! choices?.length ) {
-		return (
-			<Fragment>
-				<Placeholder
-					icon={ icon }
-					instructions={ __(
-						'Get started by selecting a form or start build a new form.',
-						'checkout_engine'
-					) }
-					label={ __( 'Price Choices', 'checkout_engine' ) }
-				>
-					<div>
-						<Button isPrimary onClick={ () => setOpen( true ) }>
-							{ __( 'Add Product', 'checkout_engine' ) }
-						</Button>
-						<Button isSecondary onClick={ () => setOpen( true ) }>
-							{ __( 'Create Product', 'checkout_engine' ) }
-						</Button>
-					</div>
-				</Placeholder>
-				{ open && (
-					<SelectProduct
-						onChoose={ onAddProduct }
-						onRequestClose={ () => setOpen( false ) }
-					/>
-				) }
-			</Fragment>
-		);
-	}
 
 	return (
 		<Fragment>
@@ -162,14 +140,16 @@ export default ( { attributes, setAttributes, clientId } ) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<CePriceChoices
-				{ ...blockProps }
-				label={ label }
-				type={ type }
-				columns={ columns }
-			>
-				<div { ...innerBlocksProps } />
-			</CePriceChoices>
+			<div>
+				<CePriceChoices
+					{ ...blockProps }
+					label={ label }
+					type={ type }
+					columns={ columns }
+				>
+					<div { ...innerBlocksProps } />
+				</CePriceChoices>
+			</div>
 		</Fragment>
 	);
 };

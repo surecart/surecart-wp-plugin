@@ -11,9 +11,11 @@ import { __ } from '@wordpress/i18n';
 import { css, jsx } from '@emotion/core';
 import { __experimentalLinkControl as LinkControl } from '@wordpress/block-editor';
 
-import SelectProduct from './SelectProduct';
+import SelectProductModal from './SelectProductModal';
 import ProductChoice from './ProductChoice';
 import { getProductIdsFromChoices } from '../../../utils/prices';
+import SelectProduct from '../../../components/SelectProduct';
+import PriceChoices from './PriceChoices';
 
 export default ( { attributes, setAttributes, onCreate, onCancel, isNew } ) => {
 	const {
@@ -104,47 +106,10 @@ export default ( { attributes, setAttributes, onCreate, onCancel, isNew } ) => {
 					<div css={ label }>
 						{ __( 'Products', 'checkout_engine' ) }
 					</div>
-
-					{ ! choices?.length && (
-						<p
-							css={ css`
-								font-size: 13px;
-								opacity: 0.75;
-							` }
-						>
-							{ __(
-								`Choose some products you want to always appear in the
-                cart when it's loaded.`,
-								'checkout_engine'
-							) }
-						</p>
-					) }
-
-					{ ( choices || [] ).map( ( choice ) => {
-						return (
-							<ProductChoice
-								key={ choice.id }
-								choice={ choice }
-								attributes={ attributes }
-								setAttributes={ setAttributes }
-							/>
-						);
-					} ) }
-
-					<div
-						css={ css`
-							display: flex;
-							gap: 0.5em;
-							align-items: center;
-						` }
-					>
-						<Button isPrimary onClick={ () => setOpen( true ) }>
-							{ __( 'Add Product', 'checkout_engine' ) }
-						</Button>
-						<Button isSecondary onClick={ () => setOpen( true ) }>
-							{ __( 'Create Product', 'checkout_engine' ) }
-						</Button>
-					</div>
+					<PriceChoices
+						attributes={ attributes }
+						setAttributes={ setAttributes }
+					/>
 				</div>
 
 				{ isNew && (
@@ -224,12 +189,7 @@ export default ( { attributes, setAttributes, onCreate, onCancel, isNew } ) => {
 				) }
 			</div>
 
-			{ open && (
-				<SelectProduct
-					onChoose={ onAddProduct }
-					onRequestClose={ () => setOpen( false ) }
-				/>
-			) }
+			{ open && <SelectProduct onSelect={ ( value ) => value() } /> }
 		</div>
 	);
 };

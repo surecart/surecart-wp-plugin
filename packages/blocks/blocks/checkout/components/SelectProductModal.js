@@ -13,7 +13,7 @@ import { CeSelect } from '@checkout-engine/react';
 import { convertPricesToChoices } from '../../../utils/prices';
 import { useSelect, dispatch, select } from '@wordpress/data';
 import { BLOCKS_STORE_KEY } from '../store';
-import { unique } from '../../../utils/functions';
+import SelectProduct from '../../../components/SelectProduct';
 
 export default ( { onRequestClose, onChoose } ) => {
 	const [ product, setProduct ] = useState( {} );
@@ -100,7 +100,10 @@ export default ( { onRequestClose, onChoose } ) => {
 					gap: 1em;
 				` }
 			>
-				<CeSelect
+				<SelectProduct
+					onSelect={ ( product ) => setProduct( product ) }
+				/>
+				{ /* <CeSelect
 					value={ product?.id }
 					onCeChange={ ( e ) => {
 						setProduct( products?.[ e.target.value ] );
@@ -126,7 +129,7 @@ export default ( { onRequestClose, onChoose } ) => {
 							};
 						}
 					) }
-				/>
+				/> */ }
 
 				<div
 					css={ css`

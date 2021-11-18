@@ -13,3 +13,6 @@
 ::slotted(ce-input) {
   margin-top: -var(--ce-spacing-x-small);
 }
+::slotted(ce-divider) {
+  --spacing: var(--ce-spacing-x-small);
+}

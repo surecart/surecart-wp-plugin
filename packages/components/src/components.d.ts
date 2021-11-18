@@ -668,6 +668,8 @@ export namespace Components {
          */
         "value": string;
     }
+    interface CeMenuLabel {
+    }
     interface CeOrderSummary {
         "busy": boolean;
         "empty": boolean;
@@ -1382,6 +1384,12 @@ declare global {
         prototype: HTMLCeMenuItemElement;
         new (): HTMLCeMenuItemElement;
     };
+    interface HTMLCeMenuLabelElement extends Components.CeMenuLabel, HTMLStencilElement {
+    }
+    var HTMLCeMenuLabelElement: {
+        prototype: HTMLCeMenuLabelElement;
+        new (): HTMLCeMenuLabelElement;
+    };
     interface HTMLCeOrderSummaryElement extends Components.CeOrderSummary, HTMLStencilElement {
     }
     var HTMLCeOrderSummaryElement: {
@@ -1560,6 +1568,7 @@ declare global {
         "ce-menu": HTMLCeMenuElement;
         "ce-menu-divider": HTMLCeMenuDividerElement;
         "ce-menu-item": HTMLCeMenuItemElement;
+        "ce-menu-label": HTMLCeMenuLabelElement;
         "ce-order-summary": HTMLCeOrderSummaryElement;
         "ce-payment": HTMLCePaymentElement;
         "ce-payment-request": HTMLCePaymentRequestElement;
@@ -2298,6 +2307,8 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
+    interface CeMenuLabel {
+    }
     interface CeOrderSummary {
         "busy"?: boolean;
         "empty"?: boolean;
@@ -2943,6 +2954,7 @@ declare namespace LocalJSX {
         "ce-menu": CeMenu;
         "ce-menu-divider": CeMenuDivider;
         "ce-menu-item": CeMenuItem;
+        "ce-menu-label": CeMenuLabel;
         "ce-order-summary": CeOrderSummary;
         "ce-payment": CePayment;
         "ce-payment-request": CePaymentRequest;
@@ -3001,6 +3013,7 @@ declare module "@stencil/core" {
             "ce-menu": LocalJSX.CeMenu & JSXBase.HTMLAttributes<HTMLCeMenuElement>;
             "ce-menu-divider": LocalJSX.CeMenuDivider & JSXBase.HTMLAttributes<HTMLCeMenuDividerElement>;
             "ce-menu-item": LocalJSX.CeMenuItem & JSXBase.HTMLAttributes<HTMLCeMenuItemElement>;
+            "ce-menu-label": LocalJSX.CeMenuLabel & JSXBase.HTMLAttributes<HTMLCeMenuLabelElement>;
             "ce-order-summary": LocalJSX.CeOrderSummary & JSXBase.HTMLAttributes<HTMLCeOrderSummaryElement>;
             "ce-payment": LocalJSX.CePayment & JSXBase.HTMLAttributes<HTMLCePaymentElement>;
             "ce-payment-request": LocalJSX.CePaymentRequest & JSXBase.HTMLAttributes<HTMLCePaymentRequestElement>;

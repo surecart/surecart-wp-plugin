@@ -76,6 +76,7 @@ const registerBlock = ( block ) => {
 	registerBlockType(
 		{
 			...metadata,
+			parent: BLOCK_PARENTS,
 			text_domain: 'checkout_engine', // set our textdomain for everything.
 		},
 		{

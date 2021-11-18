@@ -18,6 +18,9 @@ export type RecursivePartial<T> = {
 export interface ChoiceItem extends Object {
   value: string;
   label: string;
+  disabled?: boolean;
+  choices?: ChoiceItem[];
+  suffix?: string;
 }
 
 export type ChoiceType = 'all' | 'single' | 'multiple';

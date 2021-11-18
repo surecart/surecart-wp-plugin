@@ -18,7 +18,6 @@ if ( ! class_exists( 'WP_List_Table' ) ) {
  * Create a new table class that will extend the WP_List_Table
  */
 class CouponsListTable extends ListTable {
-	public $checkbox = true;
 
 	/**
 	 * Prepare the items for the table to process
@@ -48,6 +47,11 @@ class CouponsListTable extends ListTable {
 		$this->items = $query->data;
 	}
 
+	/**
+	 * Search form.
+	 *
+	 * @return void
+	 */
 	public function search() {
 		?>
 	<form class="search-form"
@@ -61,6 +65,8 @@ class CouponsListTable extends ListTable {
 	}
 
 	/**
+	 * Get the table views.
+	 *
 	 * @global int $post_id
 	 * @global string $comment_status
 	 * @global string $comment_type
@@ -125,7 +131,7 @@ class CouponsListTable extends ListTable {
 	 */
 	public function column_cb( $product ) {
 		?>
-		<label class="screen-reader-text" for="cb-select-<?php echo esc_attr( $product['id'] ); ?>"><?php _e( 'Select comment' ); ?></label>
+		<label class="screen-reader-text" for="cb-select-<?php echo esc_attr( $product['id'] ); ?>"><?php esc_html_e( 'Select comment' ); ?></label>
 		<input id="cb-select-<?php echo esc_attr( $product['id'] ); ?>" type="checkbox" name="delete_comments[]" value="<?php echo esc_attr( $product['id'] ); ?>" />
 			<?php
 	}
@@ -151,7 +157,7 @@ class CouponsListTable extends ListTable {
 	/**
 	 * Get the table data
 	 *
-	 * @return Array
+	 * @return Object
 	 */
 	private function table_data() {
 		return Coupon::where(
@@ -166,7 +172,7 @@ class CouponsListTable extends ListTable {
 	/**
 	 * Handle the price column.
 	 *
-	 * @param \CheckoutEngine\Models\Price $product Product model.
+	 * @param \CheckoutEngine\Models\Coupon $coupon Coupon model.
 	 *
 	 * @return string
 	 */

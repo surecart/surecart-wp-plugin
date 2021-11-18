@@ -1,0 +1,14 @@
+:host {
+  display: block;
+}
+.menu-label {
+  font-family: var(--ce-font-sans);
+  font-size: var(--ce-font-size-x-small);
+  font-weight: var(--ce-font-weight-semibold);
+  line-height: var(--ce-line-height-normal);
+  letter-spacing: var(--ce-letter-spacing-normal);
+  color: var(--ce-color-gray-500);
+  padding: var(--ce-spacing-small) var(--ce-spacing-large);
+  user-select: none;
+  text-transform: uppercase;
+}

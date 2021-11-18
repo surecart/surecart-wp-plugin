@@ -16,6 +16,7 @@ import throttle from 'lodash/throttle';
  */
 import { CePriceChoice, CeSelect } from '@checkout-engine/react';
 import PriceInfo from './components/PriceInfo';
+import SelectProduct from '../../components/SelectProduct';
 
 export default ( { attributes, setAttributes, isSelected } ) => {
 	const {
@@ -30,64 +31,15 @@ export default ( { attributes, setAttributes, isSelected } ) => {
 		checked,
 	} = attributes;
 
-	const [ query, setQuery ] = useState( '' );
-	const [ busy, setBusy ] = useState( false );
-	const [ prices, setPrices ] = useState( [] );
-
-	const findPrice = throttle(
-		( value ) => {
-			setQuery( value );
-		},
-		750,
-		{ leading: false }
-	);
-
-	useEffect( () => {
-		if ( ! query ) return;
-		fetchPrices();
-	}, [ query ] );
-
-	const fetchPrices = async () => {
-		setBusy( true );
-		try {
-			const response = await apiFetch( {
-				path: addQueryArgs( `checkout-engine/v1/prices`, {
-					query,
-					archived: false,
-				} ),
-			} );
-			setPrices( response );
-		} catch ( error ) {
-			console.log( error );
-		} finally {
-			setBusy( false );
-		}
-	};
-
-	const blockProps = useBlockProps();
+	const blockProps = useBlockProps( {
+		style: { width: '100%' },
+	} );
 
 	if ( ! price_id ) {
 		return (
 			<div { ...blockProps }>
-				<CeSelect
-					value={ price_id }
-					onCeChange={ ( e ) => {
-						setAttributes( { price_id: e.target.value } );
-					} }
-					loading={ busy }
-					placeholder={ __( 'Select a price', 'checkout_engine' ) }
-					searchPlaceholder={ __(
-						'Search for a price...',
-						'checkout_engine'
-					) }
-					search
-					onCeSearch={ ( e ) => findPrice( e.detail ) }
-					choices={ prices.map( ( price ) => {
-						return {
-							value: price.id,
-							label: `${ price?.product?.name } \u2013 ${ price?.name }`,
-						};
-					} ) }
+				<SelectProduct
+					onSelect={ ( price_id ) => setAttributes( { price_id } ) }
 				/>
 			</div>
 		);

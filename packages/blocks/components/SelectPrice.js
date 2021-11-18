@@ -1,5 +1,5 @@
 import { __ } from '@wordpress/i18n';
-import { CeSelect } from '@checkout-engine/react';
+import { CeSelect, CeDivider, CeMenuItem } from '@checkout-engine/react';
 import { useState, useEffect } from '@wordpress/element';
 import throttle from 'lodash/throttle';
 import apiFetch from '@wordpress/api-fetch';
@@ -7,7 +7,7 @@ import { addQueryArgs } from '@wordpress/url';
 import { translateInterval } from '../../../resources/scripts/admin/util/translations';
 import { formatNumber } from '../../../resources/scripts/admin/util';
 
-export default ( { onSelect } ) => {
+export default ( { onSelect, className } ) => {
 	const [ products, setProducts ] = useState( [] );
 	const [ query, setQuery ] = useState( '' );
 	const [ busy, setBusy ] = useState( false );
@@ -75,6 +75,7 @@ export default ( { onSelect } ) => {
 
 	return (
 		<CeSelect
+			className={ className }
 			loading={ busy }
 			placeholder={ __( 'Select a product', 'checkout_engine' ) }
 			searchPlaceholder={ __(
@@ -82,12 +83,22 @@ export default ( { onSelect } ) => {
 				'checkout_engine'
 			) }
 			search
-			onCeOpen={ () => findProduct() }
+			onCeOpen={ fetchProducts }
 			onCeSearch={ ( e ) => findProduct( e.detail ) }
 			onCeChange={ ( e ) => {
 				onSelect( e.target.value );
 			} }
 			choices={ choices }
-		/>
+		>
+			<span slot="prefix">
+				<CeMenuItem onClick={ () => console.log( 'new' ) }>
+					<span slot="prefix">+</span>
+					{ __( 'Add New Product' ) }
+				</CeMenuItem>
+				<CeDivider
+					style={ { '--spacing': 'var(--ce-spacing-x-small)' } }
+				></CeDivider>
+			</span>
+		</CeSelect>
 	);
 };

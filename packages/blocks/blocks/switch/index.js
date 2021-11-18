@@ -1,44 +1,37 @@
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
 import edit from './edit';
 import save from './save';
 import metadata from './block.json';
 
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-import { edit as icon } from '@wordpress/icons';
+const { name } = metadata;
 
-/**
- * Block constants
- */
-const { name, category, attributes } = metadata;
-import { BLOCK_PARENTS } from '../../blocks';
+export { metadata, name };
 
-const settings = {
-	/* translators: block name */
-	title: __( 'Switch', 'checkout_engine' ),
-	/* translators: block description */
-	description: __( 'Display a toggle switch.', 'checkout_engine' ),
-	parent: BLOCK_PARENTS,
-	supports: {
-		reusable: false,
-		html: false,
-	},
-	icon,
-	keywords: [
-		'checkout',
-		'engine',
-		/* translators: block keyword */
-		__( 'toggle', 'checkout_engine' ),
-		/* translators: block keyword */
-		__( 'switch', 'checkout_engine' ),
-	],
-	attributes,
+export const settings = {
+	icon: (
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			width="24"
+			height="24"
+			viewBox="0 0 24 24"
+			fill="none"
+			stroke="currentColor"
+			strokeWidth="2"
+			strokeLinecap="round"
+			strokeLinejoin="round"
+			style={ { fill: 'none' } }
+		>
+			<rect x="1" y="5" width="22" height="14" rx="7" ry="7"></rect>
+			<circle cx="8" cy="12" r="3"></circle>
+		</svg>
+	),
 	edit,
 	save,
 };
-
-export { name, category, metadata, settings };

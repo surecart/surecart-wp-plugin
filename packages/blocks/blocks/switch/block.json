@@ -1,14 +1,18 @@
 {
 	"name": "checkout-engine/switch",
+	"title": "Switch",
+	"description": "Display a toggle switch.",
 	"category": "layout",
+	"keywords": [ "submit", "button" ],
 	"supports": {
-		"reusable": false
+		"reusable": false,
+		"html": false
 	},
 	"attributes": {
-    "name" : {
-      "type": "string",
-      "default": "switch"
-    },
+		"name": {
+			"type": "string",
+			"default": "switch"
+		},
 		"value": {
 			"type": "string",
 			"default": ""
@@ -16,17 +20,17 @@
 		"label": {
 			"type": "string"
 		},
-    "description": {
+		"description": {
 			"type": "string"
 		},
 		"help": {
 			"type": "string"
 		},
-    "checked": {
-      "type": "boolean"
-    },
-    "required" : {
-      "type": "boolean"
-    }
+		"checked": {
+			"type": "boolean"
+		},
+		"required": {
+			"type": "boolean"
+		}
 	}
 }

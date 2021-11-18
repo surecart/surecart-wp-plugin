@@ -26,19 +26,6 @@ class Form extends Block {
 	private static $instance = 1;
 
 	/**
-	 * Register the block for dynamic output
-	 *
-	 * @param \Pimple\Container $container Service container.
-	 *
-	 * @return void
-	 */
-	public function register( $container ) {
-		// add_filter( 'init', [ $this, 'registerStyles' ] );
-
-		parent::register( $container );
-	}
-
-	/**
 	 * Register checkout form styles
 	 *
 	 * @return void
@@ -47,6 +34,12 @@ class Form extends Block {
 		$this->registerBlockTheme( $this->name, 'elegant', __( 'Elegant', 'checkout_engine' ), 'dist/styles/themes/elegant.css' );
 	}
 
+	/**
+	 * Get the classes for the block
+	 *
+	 * @param  array $attributes Block attributes.
+	 * @return string
+	 */
 	public function getClasses( $attributes ) {
 		$block_alignment = isset( $attributes['align'] ) ? sanitize_text_field( $attributes['align'] ) : '';
 		return ! empty( $block_alignment ) ? 'align' . $block_alignment : '';
@@ -75,16 +68,19 @@ class Form extends Block {
 				'id'          => 'ce-checkout-' . $ce_form_id,
 				'prices'      => $attributes['prices'] ?? [],
 				'choice_type' => $attributes['choice_type'] ?? 'all',
-				'success_url' => $attributes['redirect'] ?? trailingslashit( get_home_url() ) . 'thank-you',
+				'success_url' => $attributes['redirect'] ?? \CheckoutEngine::pages()->url( 'order-confirmation' ),
 				'i18n'        => $this->getTranslations(),
 				'instance'    => self::$instance++,
 			]
 		);
 	}
 
+	/**
+	 * Get translations for payment gateways.
+	 */
 	public function getTranslations() {
 		return [
-			// Stripe
+			// Stripe.
 			'account_already_exists'                     => __( 'The email address provided for the creation of a deferred account already has an account associated with it. Use the OAuth flow to connect the existing account to your platform.', 'checkout_engine' ),
 			'account_country_invalid_address'            => __( 'The country of the business address provided does not match the country of the account. Businesses must be located in the same country as the account.', 'checkout_engine' ),
 			'account_invalid'                            => __( 'The account ID provided as a value for the Stripe-Account header is invalid. Check that your requests are specifying a valid account ID.', 'checkout_engine' ),

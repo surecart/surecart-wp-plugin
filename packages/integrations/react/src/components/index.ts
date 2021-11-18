@@ -34,6 +34,7 @@ export const CeLineItemsProvider = /*@__PURE__*/createReactComponent<JSX.CeLineI
 export const CeMenu = /*@__PURE__*/createReactComponent<JSX.CeMenu, HTMLCeMenuElement>('ce-menu');
 export const CeMenuDivider = /*@__PURE__*/createReactComponent<JSX.CeMenuDivider, HTMLCeMenuDividerElement>('ce-menu-divider');
 export const CeMenuItem = /*@__PURE__*/createReactComponent<JSX.CeMenuItem, HTMLCeMenuItemElement>('ce-menu-item');
+export const CeMenuLabel = /*@__PURE__*/createReactComponent<JSX.CeMenuLabel, HTMLCeMenuLabelElement>('ce-menu-label');
 export const CeOrderSummary = /*@__PURE__*/createReactComponent<JSX.CeOrderSummary, HTMLCeOrderSummaryElement>('ce-order-summary');
 export const CePayment = /*@__PURE__*/createReactComponent<JSX.CePayment, HTMLCePaymentElement>('ce-payment');
 export const CePaymentRequest = /*@__PURE__*/createReactComponent<JSX.CePaymentRequest, HTMLCePaymentRequestElement>('ce-payment-request');

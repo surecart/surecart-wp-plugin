@@ -8,6 +8,14 @@ export const convertAmount = ( amount, currency ) => {
 		: amount / 100;
 };
 
+export const maybeConvertAmount = ( amount, currency ) => {
+	return [ 'BIF', 'CLP', 'DJF', 'GNF', 'JPY', 'KMF', 'KRW' ].includes(
+		currency
+	)
+		? amount
+		: amount / 100;
+};
+
 export const getFormattedPrice = ( { amount, currency = 'usd' } ) => {
 	const converted = convertAmount( parseFloat( amount ), currency );
 
@@ -16,6 +24,13 @@ export const getFormattedPrice = ( { amount, currency = 'usd' } ) => {
 		currency,
 	} ).format( parseFloat( converted.toFixed( 2 ) ) ) }`;
 };
+
+export const formatNumber = ( value, currency = '' ) =>
+	new Intl.NumberFormat( [], {
+		style: 'currency',
+		currency: currency.toUpperCase(),
+		currencyDisplay: 'symbol',
+	} ).format( maybeConvertAmount( value, currency.toUpperCase() ) );
 
 // get the currency symbol for a currency code.
 export const getCurrencySymbol = ( code = 'usd' ) => {
