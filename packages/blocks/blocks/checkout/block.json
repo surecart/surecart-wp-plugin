@@ -16,6 +16,24 @@
 		},
 		"title": {
 			"type": "string"
+		},
+		"choices": {
+			"type": "array"
+		},
+		"template": {
+			"type": "string"
+		},
+		"choice_type": {
+			"type": "string",
+			"enum": [ "all", "checkbox", "radio" ],
+			"default": "all"
+		},
+		"create_user_account": {
+			"type": "boolean",
+			"default": true
+		},
+		"custom_success_url": {
+			"type": "string"
 		}
 	}
 }
