@@ -1,67 +1,36 @@
 /** @jsx jsx */
-import { useState, useEffect } from '@wordpress/element';
-import {
-	RadioControl,
-	Button,
-	TextControl,
-	ToggleControl,
-	SelectControl,
-} from '@wordpress/components';
+import { Button, ToggleControl, SelectControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { css, jsx } from '@emotion/core';
 import { __experimentalLinkControl as LinkControl } from '@wordpress/block-editor';
 
-import SelectProductModal from './SelectProductModal';
-import ProductChoice from './ProductChoice';
-import { getProductIdsFromChoices } from '../../../utils/prices';
-import SelectProduct from '../../../components/SelectProduct';
+import { CeInput, CeSelect } from '@checkout-engine/react';
 import PriceChoices from './PriceChoices';
 
 export default ( { attributes, setAttributes, onCreate, onCancel, isNew } ) => {
 	const {
-		title,
-		prices,
 		choices,
+		title,
+		template,
 		create_user_account,
 		custom_success_url,
-		template,
 	} = attributes;
-
-	const [ open, setOpen ] = useState( false );
-	const [ productIds, setProductIds ] = useState( [] );
-
-	// get unique product ids when prices are set
-	useEffect( () => {
-		setProductIds( getProductIdsFromChoices( prices ) );
-	}, [ prices ] );
-
-	const onAddProduct = ( choices ) => {
-		setAttributes( { choices } );
-	};
 
 	const label = css`
 		font-weight: 500;
 		font-size: 1.2em;
-		margin-bottom: 0.5em;
+		margin-bottom: 1em;
 	`;
 
-	const radio = css`
-		margin: 0.5em 0;
-		display: inline-flex;
-		flex-direction: column;
-		font-weight: 600;
-
-		span {
-			font-weight: 400;
-		}
-	`;
+	const hasValidChoices = () => {
+		return !! ( choices || [] ).find( ( choice ) => !! choice.id );
+	};
 
 	return (
 		<div
 			css={ css`
 				font-family: var( --ce-font-sans );
 				font-size: 13px;
-
 				box-sizing: border-box;
 				position: relative;
 				padding: 3em;
@@ -78,6 +47,7 @@ export default ( { attributes, setAttributes, onCreate, onCancel, isNew } ) => {
 				outline: 1px solid transparent;
 			` }
 		>
+			{ JSON.stringify( attributes ) }
 			<div
 				css={ css`
 					font-size: 14px;
@@ -91,13 +61,18 @@ export default ( { attributes, setAttributes, onCreate, onCancel, isNew } ) => {
 						<div css={ label }>
 							{ __( 'Form Title', 'checkout_engine' ) }
 						</div>
-						<TextControl
+						<CeInput
+							css={ css`
+								max-width: 400px;
+							` }
 							value={ title }
 							placeholder={ __(
 								'Enter a title for your form',
 								'checkout_engine'
 							) }
-							onChange={ ( title ) => setAttributes( { title } ) }
+							onCeChange={ ( e ) =>
+								setAttributes( { title: e.target.value } )
+							}
 						/>
 					</div>
 				) }
@@ -112,28 +87,55 @@ export default ( { attributes, setAttributes, onCreate, onCancel, isNew } ) => {
 					/>
 				</div>
 
-				{ isNew && (
+				{ hasValidChoices() && (
 					<div>
 						<div css={ label }>
-							{ __( 'Design', 'checkout_engine' ) }
+							{ __( 'Product Options', 'checkout_engine' ) }
 						</div>
-						<SelectControl
-							value={ template }
-							onChange={ ( template ) =>
-								setAttributes( { template } )
-							}
-							options={ [
-								{
-									value: null,
-									label: 'Select a Template',
-									disabled: true,
-								},
-								{ value: 'sections', label: 'Sections' },
-								{ value: 'simple', label: 'Simple' },
+
+						<CeSelect
+							css={ css`
+								max-width: 400px;
+							` }
+							placeholder={ __(
+								'Product Options',
+								'checkout_engine'
+							) }
+							onCeChange={ ( e ) => {} }
+							choices={ [
+								{ value: 'single', label: 'Single' },
+								{ value: 'multiple', label: 'Multiple' },
+								{ value: 'all', label: 'All' },
 							] }
 						/>
 					</div>
 				) }
+
+				<div>
+					<div css={ label }>
+						{ __( 'Design', 'checkout_engine' ) }
+					</div>
+
+					<CeSelect
+						css={ css`
+							max-width: 400px;
+						` }
+						placeholder={ __(
+							'Select a Template',
+							'checkout_engine'
+						) }
+						value={ template }
+						onCeChange={ ( e ) =>
+							setAttributes( {
+								template: e.target.value,
+							} )
+						}
+						choices={ [
+							{ value: 'sections', label: 'Sections' },
+							{ value: 'simple', label: 'Simple' },
+						] }
+					/>
+				</div>
 
 				<div>
 					<div css={ label }>
@@ -188,8 +190,6 @@ export default ( { attributes, setAttributes, onCreate, onCancel, isNew } ) => {
 					</div>
 				) }
 			</div>
-
-			{ open && <SelectProduct onSelect={ ( value ) => value() } /> }
 		</div>
 	);
 };

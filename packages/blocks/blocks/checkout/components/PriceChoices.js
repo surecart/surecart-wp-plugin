@@ -16,6 +16,7 @@ export default ( { attributes, setAttributes } ) => {
 	};
 
 	const updateChoice = ( data, index ) => {
+		console.log( data );
 		setAttributes( {
 			choices: choices.map( ( item, i ) => {
 				if ( i !== index ) return item;
@@ -27,6 +28,108 @@ export default ( { attributes, setAttributes } ) => {
 		} );
 	};
 
+	const headerStyle = css`
+		border-bottom: 1px solid var( --ce-color-gray-300 );
+		border-top: 1px solid var( --ce-color-gray-300 );
+		padding: 0.5em 0 !important;
+		font-weight: bold;
+		font-size: 11px;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		color: var( --ce-color-gray-600 );
+	`;
+
+	const renderTable = () => {
+		return (
+			<table
+				css={ css`
+					border-spacing: 0;
+
+					tr td:first-child {
+						padding-left: 0;
+					}
+					tr td:last-child {
+						padding-right: 0;
+					}
+				` }
+			>
+				<thead>
+					<tr
+						css={ css`
+							text-align: left;
+						` }
+					>
+						<th
+							css={ css`
+								${ headerStyle };
+								width: auto;
+							` }
+						>
+							{ __( 'Product' ) }
+						</th>
+						<th
+							css={ css`
+								${ headerStyle };
+								max-width: 70px;
+								width: 70px;
+							` }
+						>
+							{ __( 'Quantity' ) }
+						</th>
+						<th
+							css={ css`
+								${ headerStyle };
+								text-align: right;
+							` }
+						>
+							{ __( 'Total' ) }
+						</th>
+						<th
+							css={ css`
+								${ headerStyle };
+								width: 0.1%;
+								white-space: nowrap;
+							` }
+						></th>
+					</tr>
+				</thead>
+
+				<tbody>
+					{ ( choices || [] ).map( ( choice, index ) => {
+						return (
+							<PriceChoice
+								key={ index }
+								choice={ choice }
+								onSelect={ ( id ) =>
+									updateChoice( { id }, index )
+								}
+								onRemove={ () => removeChoice( index ) }
+								onUpdate={ ( data ) =>
+									updateChoice( data, index )
+								}
+							/>
+						);
+					} ) }
+				</tbody>
+			</table>
+		);
+	};
+
+	const renderEmpty = () => {
+		return (
+			<div
+				css={ css`
+					color: var( --ce-color-gray-500 );
+				` }
+			>
+				{ __(
+					'To add some products to the form, click the "Add Products" button.',
+					'checkout-engine'
+				) }
+			</div>
+		);
+	};
+
 	return (
 		<div
 			css={ css`
@@ -34,16 +137,7 @@ export default ( { attributes, setAttributes } ) => {
 				gap: 1em;
 			` }
 		>
-			{ ( choices || [] ).map( ( choice, index ) => {
-				return (
-					<PriceChoice
-						choice={ choice }
-						onSelect={ ( id ) => updateChoice( { id }, index ) }
-						onRemove={ () => removeChoice( index ) }
-						onUpdate={ () => {} }
-					/>
-				);
-			} ) }
+			{ choices && choices.length > 0 ? renderTable() : renderEmpty() }
 
 			<div
 				css={ css`

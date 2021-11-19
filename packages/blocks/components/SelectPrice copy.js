@@ -1,28 +1,47 @@
 import { __ } from '@wordpress/i18n';
-import { useEffect, useRef } from '@wordpress/element';
 import { CeSelect, CeDivider, CeMenuItem } from '@checkout-engine/react';
+import { useState, useEffect } from '@wordpress/element';
 import throttle from 'lodash/throttle';
+import apiFetch from '@wordpress/api-fetch';
+import { addQueryArgs } from '@wordpress/url';
 import { translateInterval } from '../../../resources/scripts/admin/util/translations';
 import { formatNumber } from '../../../resources/scripts/admin/util';
 
-export default ( {
-	open,
-	required,
-	products,
-	onSelect,
-	className,
-	onQuery,
-	onFetch,
-	loading,
-} ) => {
-	const selectRef = useRef();
+export default ( { onSelect, className } ) => {
+	const [ products, setProducts ] = useState( [] );
+	const [ query, setQuery ] = useState( '' );
+	const [ busy, setBusy ] = useState( false );
+
 	const findProduct = throttle(
 		( value ) => {
-			onQuery( value );
+			setQuery( value );
 		},
 		750,
 		{ leading: false }
 	);
+
+	useEffect( () => {
+		if ( ! query ) return;
+		fetchProducts();
+	}, [ query ] );
+
+	const fetchProducts = async () => {
+		setBusy( true );
+		try {
+			const response = await apiFetch( {
+				path: addQueryArgs( `checkout-engine/v1/products`, {
+					query,
+					archived: false,
+					expand: [ 'prices' ],
+				} ),
+			} );
+			setProducts( response );
+		} catch ( error ) {
+			console.log( error );
+		} finally {
+			setBusy( false );
+		}
+	};
 
 	const displayPriceAmount = ( price ) => {
 		if ( price?.ad_hoc ) {
@@ -34,12 +53,12 @@ export default ( {
 		) }${ translateInterval(
 			price?.recurring_interval_count,
 			price?.recurring_interval,
-			' /',
+			'/',
 			''
 		) }`;
 	};
 
-	const choices = ( products || [] ).map( ( product ) => {
+	const choices = products.map( ( product ) => {
 		return {
 			label: product?.name,
 			id: product.id,
@@ -56,18 +75,15 @@ export default ( {
 
 	return (
 		<CeSelect
-			required={ required }
-			ref={ selectRef }
 			className={ className }
-			open={ open }
-			loading={ loading }
+			loading={ busy }
 			placeholder={ __( 'Select a product', 'checkout_engine' ) }
 			searchPlaceholder={ __(
 				'Search for a product...',
 				'checkout_engine'
 			) }
 			search
-			onCeOpen={ onFetch }
+			onCeOpen={ fetchProducts }
 			onCeSearch={ ( e ) => findProduct( e.detail ) }
 			onCeChange={ ( e ) => {
 				onSelect( e.target.value );

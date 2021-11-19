@@ -39,7 +39,7 @@ export class CeSelectDropdown {
   @Prop({ mutable: true, reflect: true }) invalid = false;
 
   /** Is this open */
-  @State() open: boolean;
+  @Prop({ mutable: true }) open: boolean;
 
   /** Search term */
   @State() searchTerm: string = '';
@@ -78,8 +78,8 @@ export class CeSelectDropdown {
   displayValue() {
     let chosen = this.choices.find(choice => choice.value == this.value);
     if (!chosen) {
-      const subchoices = this.choices.map(choice => choice.choices).flat();
-      chosen = subchoices.find(choice => choice.value == this.value);
+      const subchoices = (this.choices || []).map(choice => choice.choices).flat();
+      chosen = subchoices.find(choice => choice?.value == this.value);
     }
     return chosen?.label;
   }
@@ -139,6 +139,7 @@ export class CeSelectDropdown {
   handleOpenChange() {
     if (this.open) {
       this.ceOpen.emit();
+      this.searchInput && this.searchInput.triggerFocus();
     } else {
       this.ceClose.emit();
     }
@@ -146,6 +147,12 @@ export class CeSelectDropdown {
 
   componentWillLoad() {
     this.handleSearchChange();
+  }
+
+  componentDidLoad() {
+    if (this.open) {
+      this.searchInput.triggerFocus();
+    }
   }
 
   renderItem(choice: ChoiceItem) {
@@ -171,7 +178,7 @@ export class CeSelectDropdown {
           'select--has-choices': !!this?.choices?.length,
         }}
       >
-        <ce-dropdown position="bottom-right" style={{ '--panel-width': '100%' }} onCeShow={() => this.handleShow()} onCeHide={() => this.handleHide()}>
+        <ce-dropdown open={this.open} position="bottom-right" style={{ '--panel-width': '100%' }} onCeShow={() => this.handleShow()} onCeHide={() => this.handleHide()}>
           <div class="trigger" slot="trigger">
             <div class="select__value">{this.displayValue() || this.placeholder || 'Select...'}</div>
             <div part="caret" class="select__caret">

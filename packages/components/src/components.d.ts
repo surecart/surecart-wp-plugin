@@ -1023,6 +1023,10 @@ export namespace Components {
         "invalid": boolean;
         "loading": boolean;
         /**
+          * Is this open
+         */
+        "open": boolean;
+        /**
           * Placeholder for no value
          */
         "placeholder": string;
@@ -2710,6 +2714,10 @@ declare namespace LocalJSX {
           * Emitted whent the components search query changes
          */
         "onCeSearch"?: (event: CustomEvent<string>) => void;
+        /**
+          * Is this open
+         */
+        "open"?: boolean;
         /**
           * Placeholder for no value
          */

@@ -6,6 +6,11 @@ import { store as icon } from '@wordpress/icons';
 import '../../style.scss';
 
 /**
+ * Store entities
+ */
+import './entities';
+
+/**
  * Internal dependencies
  */
 import edit from './edit';
