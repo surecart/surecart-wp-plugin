@@ -30,6 +30,10 @@ class AbandonedCheckout extends CheckoutSession {
 	 * @return void
 	 */
 	protected function setLatestCheckoutSessionAttribute( $value ) {
+		if ( is_string( $value ) ) {
+			$this->attributes['latest_checkout_session'] = $value;
+			return;
+		}
 		$this->attributes['latest_checkout_session'] = new CheckoutSession( $value );
 	}
 
@@ -40,6 +44,10 @@ class AbandonedCheckout extends CheckoutSession {
 	 * @return void
 	 */
 	protected function setCustomerAttribute( $value ) {
+		if ( is_string( $value ) ) {
+			$this->attributes['customer'] = $value;
+			return;
+		}
 		$this->attributes['customer'] = new Customer( $value );
 	}
 }

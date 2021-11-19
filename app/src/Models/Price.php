@@ -49,6 +49,10 @@ class Price extends Model {
 	 * @return void
 	 */
 	public function setProductAttribute( $value ) {
+		if ( is_string( $value ) ) {
+			$this->attributes['product'] = $value;
+			return;
+		}
 		$this->attributes['product'] = new Product( $value );
 	}
 }

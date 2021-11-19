@@ -22,6 +22,10 @@ class LineItem extends Model {
 	 * @return void
 	 */
 	public function setPriceAttribute( $value ) {
+		if ( is_string( $value ) ) {
+			$this->attributes['price'] = $value;
+			return;
+		}
 		$this->attributes['price'] = new Price( $value );
 	}
 }
