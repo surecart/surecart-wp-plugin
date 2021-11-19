@@ -4,12 +4,18 @@ import { __ } from '@wordpress/i18n';
 import { css, jsx } from '@emotion/core';
 import { __experimentalLinkControl as LinkControl } from '@wordpress/block-editor';
 
-import { CeInput, CeSelect } from '@checkout-engine/react';
+import {
+	CeInput,
+	CeRadioGroup,
+	CeSelect,
+	CeRadio,
+} from '@checkout-engine/react';
 import PriceChoices from './PriceChoices';
 
 export default ( { attributes, setAttributes, onCreate, onCancel, isNew } ) => {
 	const {
 		choices,
+		choice_type,
 		title,
 		template,
 		create_user_account,
@@ -47,7 +53,6 @@ export default ( { attributes, setAttributes, onCreate, onCancel, isNew } ) => {
 				outline: 1px solid transparent;
 			` }
 		>
-			{ JSON.stringify( attributes ) }
 			<div
 				css={ css`
 					font-size: 14px;
@@ -93,21 +98,39 @@ export default ( { attributes, setAttributes, onCreate, onCancel, isNew } ) => {
 							{ __( 'Product Options', 'checkout_engine' ) }
 						</div>
 
-						<CeSelect
-							css={ css`
-								max-width: 400px;
-							` }
-							placeholder={ __(
-								'Product Options',
-								'checkout_engine'
-							) }
-							onCeChange={ ( e ) => {} }
-							choices={ [
-								{ value: 'single', label: 'Single' },
-								{ value: 'multiple', label: 'Multiple' },
-								{ value: 'all', label: 'All' },
-							] }
-						/>
+						<CeRadioGroup
+							onCeChange={ ( e ) =>
+								setAttributes( { choice_type: e.target.value } )
+							}
+						>
+							<CeRadio
+								value="all"
+								checked={ choice_type === 'all' }
+							>
+								{ __(
+									'Customer must purchase all products',
+									'checkout_engine'
+								) }
+							</CeRadio>
+							<CeRadio
+								value="radio"
+								checked={ choice_type === 'radio' }
+							>
+								{ __(
+									'Customer must select one price from the options.',
+									'checkout_engine'
+								) }
+							</CeRadio>
+							<CeRadio
+								value="checkbox"
+								checked={ choice_type === 'checkbox' }
+							>
+								{ __(
+									'Customer can select multiple prices.',
+									'checkout_engine'
+								) }
+							</CeRadio>
+						</CeRadioGroup>
 					</div>
 				) }
 
@@ -121,7 +144,7 @@ export default ( { attributes, setAttributes, onCreate, onCancel, isNew } ) => {
 							max-width: 400px;
 						` }
 						placeholder={ __(
-							'Select a Template',
+							'Select a Form Template',
 							'checkout_engine'
 						) }
 						value={ template }

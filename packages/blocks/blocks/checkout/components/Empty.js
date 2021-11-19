@@ -29,12 +29,78 @@ import Setup from './Setup';
 import SelectForm from './SelectForm';
 
 export default ( { attributes, setAttributes } ) => {
-	const { id, title, loading, step } = attributes;
+	const { title, step } = attributes;
 	const [ form, setForm ] = useState( {} );
+
+	/**
+	 * Maybe create the template for the form.
+	 */
+	const maybeCreateTemplate = ( attributes ) => {
+		const { template, choices, choice_type } = attributes;
+
+		// we need a template, choices, and the right type.
+		if (
+			! template ||
+			! choices?.length ||
+			! [ 'checkbox', 'radio' ].includes( choice_type )
+		)
+			return;
+
+		// parse blocks.
+		const parsed = parse( templates[ template ] );
+
+		// get the price selector block
+		const priceChoiceBlock = parsed.findIndex(
+			( block ) => block.name === 'checkout-engine/price-selector'
+		);
+
+		// add choices as inner blocks
+		parsed[ priceChoiceBlock ].innerBlocks = choices.map( ( choice ) => {
+			console.log(
+				{
+					price_id: choice?.id,
+					quantity: choice?.quantity || 1,
+					type: choice_type,
+				},
+				attributes
+			);
+			return [
+				'checkout-engine/price-choice',
+				{
+					price_id: choice?.id,
+					quantity: choice?.quantity || 1,
+					type: choice_type,
+				},
+			];
+		} );
+
+		return parsed;
+	};
+
+	/**
+	 * Create form attributes.
+	 */
+	const createFormAttributes = ( attributes ) => {
+		const { choices, choice_type } = attributes;
+
+		if ( choice_type !== 'all' ) {
+			return {};
+		}
+
+		return {
+			prices: choices,
+		};
+	};
 
 	// save the form block.
 	const saveFormBlock = async () => {
 		setAttributes( { loading: true } );
+
+		let innerBlocksTemplate = maybeCreateTemplate( attributes );
+		let formAttributes = createFormAttributes( attributes );
+
+		console.log( { innerBlocksTemplate } );
+
 		try {
 			const updatedRecord = await dispatch( 'core' ).saveEntityRecord(
 				'postType',
@@ -45,11 +111,13 @@ export default ( { attributes, setAttributes } ) => {
 						createBlock(
 							'checkout-engine/form', // name
 							{
-								...attributes,
+								...formAttributes,
 							},
-							createBlocksFromInnerBlocksTemplate(
-								parse( templates.sections )
-							)
+							innerBlocksTemplate
+								? createBlocksFromInnerBlocksTemplate(
+										innerBlocksTemplate
+								  )
+								: []
 						)
 					),
 					status: 'publish',
