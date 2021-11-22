@@ -33,11 +33,7 @@ import * as divider from './blocks/divider';
 import * as checkbox from './blocks/checkbox';
 import * as switchBlock from './blocks/switch';
 
-export const BLOCK_PARENTS = [
-	'core/columns',
-	'checkout-engine/form',
-	'checkout-engine/checkout-form',
-];
+export const BLOCK_PARENTS = [ 'core/columns', 'checkout-engine/form' ];
 
 export const ALLOWED_BLOCKS = [
 	'core/spacer',

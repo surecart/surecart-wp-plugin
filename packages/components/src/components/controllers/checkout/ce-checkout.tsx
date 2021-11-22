@@ -146,7 +146,7 @@ export class CECheckout {
       keys: this.keys,
       error: this.error,
       checkoutSession: this.checkoutSession,
-      priceChoices: this.prices,
+      lockedChoices: this.prices,
       products: this.productsEntities,
       prices: this.pricesEntities,
       currencyCode: this.currencyCode,
@@ -184,6 +184,7 @@ export class CECheckout {
         <Universe.Provider state={this.state()}>
           <ce-session-provider
             checkoutSession={this.checkoutSession}
+            prices={this.prices}
             persist={this.persistSession}
             setState={this._stateService.send}
             group-id={this.el.id}

@@ -8,22 +8,12 @@ use CheckoutEngine\Concerns\HasBlockTheme;
  * Checkout block
  */
 class Form extends Block {
-	use HasblockTheme;
-
 	/**
 	 * Block name
 	 *
 	 * @var string
 	 */
 	protected $name = 'form';
-
-	/**
-	 * Keep track of checkout form instances
-	 * on the page with an id.
-	 *
-	 * @var integer
-	 */
-	private static $instance = 1;
 
 	/**
 	 * Register checkout form styles
@@ -70,7 +60,6 @@ class Form extends Block {
 				'choice_type' => $attributes['choice_type'] ?? 'all',
 				'success_url' => $attributes['redirect'] ?? \CheckoutEngine::pages()->url( 'order-confirmation' ),
 				'i18n'        => $this->getTranslations(),
-				'instance'    => self::$instance++,
 			]
 		);
 	}

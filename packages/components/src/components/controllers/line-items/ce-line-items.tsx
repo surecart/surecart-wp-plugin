@@ -1,6 +1,6 @@
 import { Component, h, Prop, Event, EventEmitter } from '@stencil/core';
 
-import { CheckoutSession, LineItem, LineItemData, Prices, Product } from '../../../types';
+import { CheckoutSession, LineItem, LineItemData, PriceChoice, Prices, Product } from '../../../types';
 import { openWormhole } from 'stencil-wormhole';
 import { translatedInterval } from '../../../functions/price';
 
@@ -15,6 +15,7 @@ export class CeLineItems {
   @Prop() prices: Prices;
   @Prop() editable: boolean = true;
   @Prop() removable: boolean = true;
+  @Prop() lockedChoices: Array<PriceChoice> = [];
 
   /** Update the line item. */
   @Event() ceUpdateLineItem: EventEmitter<LineItemData>;
@@ -48,6 +49,11 @@ export class CeLineItems {
     return name;
   }
 
+  // Is this price choice locked?
+  isLocked(item) {
+    return this.lockedChoices.some(choice => choice.id === item.price.id);
+  }
+
   render() {
     if (!!this.loading) {
       return (
@@ -69,8 +75,8 @@ export class CeLineItems {
               key={item.id}
               imageUrl={item?.price?.metadata?.wp_attachment_src}
               name={this.getName(item)}
-              editable={this.editable}
-              removable={this.removable}
+              editable={this.isLocked(item) ? false : this.editable}
+              removable={this.isLocked(item) ? false : this.removable}
               quantity={item.quantity}
               amount={item.ad_hoc_amount !== null ? item.ad_hoc_amount : item.price.amount}
               currency={this.checkoutSession?.currency}
@@ -86,4 +92,4 @@ export class CeLineItems {
   }
 }
 
-openWormhole(CeLineItems, ['checkoutSession', 'loading', 'prices'], false);
+openWormhole(CeLineItems, ['checkoutSession', 'loading', 'prices', 'lockedChoices'], false);

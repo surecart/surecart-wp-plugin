@@ -1,12 +1,15 @@
 {
 	"name": "checkout-engine/payment",
 	"title": "Payment",
-  "description": "Display payment options",
+	"description": "Display payment options",
 	"category": "layout",
-  "keywords": ["credit", "card", "paypal", "stripe"],
-  "supports": {
+	"keywords": [ "credit", "card", "paypal", "stripe" ],
+	"supports": {
 		"reusable": false,
-		"html": false
+		"html": false,
+		"lock": {
+			"remove": true
+		}
 	},
 	"attributes": {
 		"secure_notice": {

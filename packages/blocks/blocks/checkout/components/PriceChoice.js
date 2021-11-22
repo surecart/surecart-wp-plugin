@@ -42,7 +42,8 @@ export default ( { choice, onUpdate, onSelect, onRemove } ) => {
 	useEffect( () => {
 		const prices = ( products || [] )
 			.map( ( product ) => product?.prices?.data )
-			.flat();
+			.flat()
+			.filter( ( price ) => price?.id );
 
 		if ( prices ) {
 			dispatch( coreStore ).receiveEntityRecords(
@@ -139,6 +140,7 @@ export default ( { choice, onUpdate, onSelect, onRemove } ) => {
 							flex: 0 1 50%;
 						` }
 						open={ true }
+						ad_hoc={ false }
 						products={ products }
 						onQuery={ setQuery }
 						onFetch={ () => setQuery( '' ) }
@@ -147,7 +149,18 @@ export default ( { choice, onUpdate, onSelect, onRemove } ) => {
 					/>
 				) : (
 					<div>
-						<div>{ `${ product?.name } – ${ price?.name }` }</div>
+						<div>
+							{ !! product?.name && !! price?.name ? (
+								`${ product?.name } – ${ price?.name }`
+							) : (
+								<ce-skeleton
+									style={ {
+										width: '120px',
+										display: 'inline-block',
+									} }
+								></ce-skeleton>
+							) }
+						</div>
 						<div
 							css={ css`
 								color: var( --ce-color-gray-500 );

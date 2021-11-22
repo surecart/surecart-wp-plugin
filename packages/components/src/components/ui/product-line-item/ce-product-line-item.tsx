@@ -45,7 +45,6 @@ export class CeProductLineItem {
   @Event({ bubbles: false }) ceRemove: EventEmitter<void>;
 
   renderPriceAndInterval() {
-    console.log(this.trialDurationDays);
     if (this.trialDurationDays) {
       return (
         <Fragment>

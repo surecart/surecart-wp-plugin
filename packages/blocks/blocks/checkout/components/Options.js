@@ -7,7 +7,7 @@ import {
 	CeRadioGroup,
 	CeRadio,
 } from '@checkout-engine/react';
-import SelectProduct from './SelectProduct';
+import SelectProduct from './SelectProductModal';
 import Choice from './Choice';
 
 export default ( { attributes, setAttributes } ) => {

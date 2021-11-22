@@ -13,6 +13,7 @@ export default ( {
 	className,
 	onQuery,
 	onFetch,
+	ad_hoc = true,
 	loading,
 } ) => {
 	const selectRef = useRef();
@@ -39,20 +40,29 @@ export default ( {
 		) }`;
 	};
 
-	const choices = ( products || [] ).map( ( product ) => {
-		return {
-			label: product?.name,
-			id: product.id,
-			disabled: false,
-			choices: ( product?.prices?.data || [] ).map( ( price ) => {
-				return {
-					value: price.id,
-					label: price.name,
-					suffix: displayPriceAmount( price ),
-				};
-			} ),
-		};
-	} );
+	const choices = ( products || [] )
+		.filter( ( product ) => !! product?.prices?.data?.length )
+		.map( ( product ) => {
+			return {
+				label: product?.name,
+				id: product.id,
+				disabled: false,
+				choices: ( product?.prices?.data || [] )
+					.filter( ( price ) => {
+						if ( ! ad_hoc && price.ad_hoc ) {
+							return false;
+						}
+						return true;
+					} )
+					.map( ( price ) => {
+						return {
+							value: price.id,
+							label: price.name,
+							suffix: displayPriceAmount( price ),
+						};
+					} ),
+			};
+		} );
 
 	return (
 		<CeSelect

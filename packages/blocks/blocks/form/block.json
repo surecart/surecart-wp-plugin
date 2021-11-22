@@ -1,23 +1,27 @@
 {
 	"name": "checkout-engine/form",
 	"title": "Form",
-  "description": "Displays a form.",
+	"description": "Displays a form.",
 	"category": "layout",
-  "keywords": ["email", "mail"],
-  "supports": {
+	"keywords": [ "email", "mail" ],
+	"supports": {
 		"reusable": false,
-		"html": false
+		"html": false,
+		"lock": {
+			"remove": true,
+			"move": true
+		}
 	},
-  "attributes": {
-    "font_size": {
-      "type": "number",
-      "default": 16
-    },
-    "choice_type": {
-      "enum": [ "all", "multiple", "single" ]
-    },
-    "prices": {
-      "type": "array"
-    }
-  }
+	"attributes": {
+		"font_size": {
+			"type": "number",
+			"default": 16
+		},
+		"choice_type": {
+			"enum": [ "all", "multiple", "single" ]
+		},
+		"prices": {
+			"type": "array"
+		}
+	}
 }

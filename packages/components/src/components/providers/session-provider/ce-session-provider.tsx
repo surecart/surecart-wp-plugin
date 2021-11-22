@@ -69,13 +69,24 @@ export class CeSessionProvider {
     this.update(this.parseFormData(data));
   }
 
+  @Watch('prices')
+  handlePricesChange() {
+    let line_items = this.addInitialPrices() || [];
+    line_items = this.addPriceChoices(line_items);
+
+    if (!line_items?.length) {
+      return;
+    }
+    return this.loadUpdate({ line_items });
+  }
+
   parseFormData(data) {
     const { email, name, password, ...rest } = data;
     return {
       email,
       name,
       password,
-      metadata: rest,
+      metadata: rest || {},
     };
   }
 
@@ -205,6 +216,11 @@ export class CeSessionProvider {
   addInitialPrices() {
     if (!this?.prices.length) return [];
 
+    // check for id
+    if (this.prices.some(p => !p?.id)) {
+      return;
+    }
+
     // add prices that are passed into this component.
     return this.prices.map(price => {
       return {
@@ -243,7 +259,8 @@ export class CeSessionProvider {
 
   /** Fetch a session. */
   async fetch() {
-    this.loadUpdate({ data: { status: 'draft' } });
+    let line_items = this.addInitialPrices() || [];
+    this.loadUpdate({ status: 'draft', line_items });
   }
 
   /** Update a session */

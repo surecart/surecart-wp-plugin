@@ -27,6 +27,11 @@ abstract class Block {
 			"checkout-engine/$this->name",
 			[
 				'render_callback' => [ $this, 'render' ],
+				'attributes'      => [
+					'prices' => [
+						'type' => 'array',
+					],
+				],
 			]
 		);
 	}

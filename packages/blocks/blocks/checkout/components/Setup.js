@@ -32,6 +32,35 @@ export default ( { attributes, setAttributes, onCreate, onCancel, isNew } ) => {
 		return !! ( choices || [] ).find( ( choice ) => !! choice.id );
 	};
 
+	const removeChoice = ( index ) => {
+		setAttributes( {
+			choices: choices.filter( ( item, i ) => i !== index ),
+		} );
+	};
+
+	const updateChoice = ( data, index ) => {
+		setAttributes( {
+			choices: choices.map( ( item, i ) => {
+				if ( i !== index ) return item;
+				return {
+					...item,
+					...data,
+				};
+			} ),
+		} );
+	};
+
+	const addProduct = () => {
+		setAttributes( {
+			choices: [
+				...( choices || [] ),
+				{
+					quantity: 1,
+				},
+			],
+		} );
+	};
+
 	return (
 		<div
 			css={ css`
@@ -44,7 +73,7 @@ export default ( { attributes, setAttributes, onCreate, onCancel, isNew } ) => {
 				width: 100%;
 				text-align: left;
 				margin: 0;
-				color: #1e1e1e;
+				color: var( --ce-color-gray-500 );
 				-moz-font-smoothing: subpixel-antialiased;
 				-webkit-font-smoothing: subpixel-antialiased;
 				border-radius: 2px;
@@ -87,8 +116,10 @@ export default ( { attributes, setAttributes, onCreate, onCancel, isNew } ) => {
 						{ __( 'Products', 'checkout_engine' ) }
 					</div>
 					<PriceChoices
-						attributes={ attributes }
-						setAttributes={ setAttributes }
+						choices={ choices }
+						onAddProduct={ addProduct }
+						onUpdate={ updateChoice }
+						onRemove={ removeChoice }
 					/>
 				</div>
 

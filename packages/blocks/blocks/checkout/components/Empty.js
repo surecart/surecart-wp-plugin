@@ -8,6 +8,7 @@ import { __ } from '@wordpress/i18n';
 import { Placeholder, Button } from '@wordpress/components';
 import { useState, Fragment } from '@wordpress/element';
 import { dispatch } from '@wordpress/data';
+import { useBlockProps } from '@wordpress/block-editor';
 import {
 	createBlock,
 	parse,
@@ -32,19 +33,13 @@ export default ( { attributes, setAttributes } ) => {
 	const { title, step } = attributes;
 	const [ form, setForm ] = useState( {} );
 
+	const blockProps = useBlockProps();
+
 	/**
 	 * Maybe create the template for the form.
 	 */
 	const maybeCreateTemplate = ( attributes ) => {
-		const { template, choices, choice_type } = attributes;
-
-		// we need a template, choices, and the right type.
-		if (
-			! template ||
-			! choices?.length ||
-			! [ 'checkbox', 'radio' ].includes( choice_type )
-		)
-			return;
+		const { template = 'standard', choices, choice_type } = attributes;
 
 		// parse blocks.
 		const parsed = parse( templates[ template ] );
@@ -54,25 +49,29 @@ export default ( { attributes, setAttributes } ) => {
 			( block ) => block.name === 'checkout-engine/price-selector'
 		);
 
+		// maybe create price selector choices.
+		if (
+			! choices?.length ||
+			! [ 'checkbox', 'radio' ].includes( choice_type )
+		) {
+			delete parsed[ priceChoiceBlock ];
+			return parsed;
+		}
+
 		// add choices as inner blocks
-		parsed[ priceChoiceBlock ].innerBlocks = choices.map( ( choice ) => {
-			console.log(
-				{
-					price_id: choice?.id,
-					quantity: choice?.quantity || 1,
-					type: choice_type,
-				},
-				attributes
-			);
-			return [
-				'checkout-engine/price-choice',
-				{
-					price_id: choice?.id,
-					quantity: choice?.quantity || 1,
-					type: choice_type,
-				},
-			];
-		} );
+		parsed[ priceChoiceBlock ].innerBlocks = choices.map(
+			( choice, index ) => {
+				return [
+					'checkout-engine/price-choice',
+					{
+						price_id: choice?.id,
+						quantity: choice?.quantity || 1,
+						type: choice_type,
+						checked: index === 0 && choice_type === 'radio',
+					},
+				];
+			}
+		);
 
 		return parsed;
 	};
@@ -99,7 +98,7 @@ export default ( { attributes, setAttributes } ) => {
 		let innerBlocksTemplate = maybeCreateTemplate( attributes );
 		let formAttributes = createFormAttributes( attributes );
 
-		console.log( { innerBlocksTemplate } );
+		console.log( { formAttributes } );
 
 		try {
 			const updatedRecord = await dispatch( 'core' ).saveEntityRecord(
@@ -132,37 +131,9 @@ export default ( { attributes, setAttributes } ) => {
 		}
 	};
 
-	return (
-		<Fragment>
-			{ ! step && (
-				<Placeholder
-					icon={ icon }
-					instructions={ __(
-						'Get started by selecting a form or start build a new form.',
-						'checkout_engine'
-					) }
-					label={ __( 'Add a checkout form', 'checkout_engine' ) }
-				>
-					<div>
-						<Button
-							isPrimary
-							onClick={ () => setAttributes( { step: 'new' } ) }
-						>
-							{ __( 'New Form', 'checkout_engine' ) }
-						</Button>
-						<Button
-							isSecondary
-							onClick={ () =>
-								setAttributes( { step: 'select' } )
-							}
-						>
-							{ __( 'Select Form', 'checkout_engine' ) }
-						</Button>
-					</div>
-				</Placeholder>
-			) }
-
-			{ step === 'new' && (
+	if ( step === 'new' ) {
+		return (
+			<div { ...blockProps }>
 				<Setup
 					attributes={ attributes }
 					setAttributes={ setAttributes }
@@ -170,32 +141,60 @@ export default ( { attributes, setAttributes } ) => {
 					isNew={ true }
 					onCancel={ () => setAttributes( { step: null } ) }
 				/>
-			) }
+			</div>
+		);
+	}
 
-			{ step === 'select' && (
-				<Placeholder
-					icon={ icon }
-					label={ __( 'Select a checkout form', 'checkout_engine' ) }
-				>
-					<div>
-						<SelectForm form={ form } setForm={ setForm } />
-						<Button
-							isPrimary
-							onClick={ () => {
-								console.log( { form } );
-								setAttributes( { id: form?.id } );
-							} }
-						>
-							{ __( 'Choose', 'checkout_engine' ) }
-						</Button>
-						<Button
-							onClick={ () => setAttributes( { step: null } ) }
-						>
-							{ __( 'Cancel', 'checkout_engine' ) }
-						</Button>
-					</div>
-				</Placeholder>
-			) }
-		</Fragment>
+	if ( step === 'select' ) {
+		<div { ...blockProps }>
+			<Placeholder
+				icon={ icon }
+				label={ __( 'Select a checkout form', 'checkout_engine' ) }
+			>
+				<div>
+					<SelectForm form={ form } setForm={ setForm } />
+					<Button
+						isPrimary
+						onClick={ () => {
+							console.log( { form } );
+							setAttributes( { id: form?.id } );
+						} }
+					>
+						{ __( 'Choose', 'checkout_engine' ) }
+					</Button>
+					<Button onClick={ () => setAttributes( { step: null } ) }>
+						{ __( 'Cancel', 'checkout_engine' ) }
+					</Button>
+				</div>
+			</Placeholder>
+		</div>;
+	}
+
+	return (
+		<div { ...blockProps }>
+			<Placeholder
+				icon={ icon }
+				instructions={ __(
+					'Get started by selecting a form or start build a new form.',
+					'checkout_engine'
+				) }
+				label={ __( 'Add a checkout form', 'checkout_engine' ) }
+			>
+				<div>
+					<Button
+						isPrimary
+						onClick={ () => setAttributes( { step: 'new' } ) }
+					>
+						{ __( 'New Form', 'checkout_engine' ) }
+					</Button>
+					<Button
+						isSecondary
+						onClick={ () => setAttributes( { step: 'select' } ) }
+					>
+						{ __( 'Select Form', 'checkout_engine' ) }
+					</Button>
+				</div>
+			</Placeholder>
+		</div>
 	);
 };

@@ -633,6 +633,7 @@ export namespace Components {
         "checkoutSession": CheckoutSession;
         "editable": boolean;
         "loading": boolean;
+        "lockedChoices": Array<PriceChoice>;
         "prices": Prices;
         "removable": boolean;
     }
@@ -2271,6 +2272,7 @@ declare namespace LocalJSX {
         "checkoutSession"?: CheckoutSession;
         "editable"?: boolean;
         "loading"?: boolean;
+        "lockedChoices"?: Array<PriceChoice>;
         /**
           * Remove the line item.
          */

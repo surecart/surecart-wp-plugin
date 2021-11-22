@@ -6,28 +6,7 @@ import { Button } from '@wordpress/components';
 
 import PriceChoice from './PriceChoice';
 
-export default ( { attributes, setAttributes } ) => {
-	const { choices } = attributes;
-
-	const removeChoice = ( index ) => {
-		setAttributes( {
-			choices: choices.filter( ( item, i ) => i !== index ),
-		} );
-	};
-
-	const updateChoice = ( data, index ) => {
-		console.log( data );
-		setAttributes( {
-			choices: choices.map( ( item, i ) => {
-				if ( i !== index ) return item;
-				return {
-					...item,
-					...data,
-				};
-			} ),
-		} );
-	};
-
+export default ( { choices, onUpdate, onRemove, onAddProduct } ) => {
 	const headerStyle = css`
 		border-bottom: 1px solid var( --ce-color-gray-300 );
 		border-top: 1px solid var( --ce-color-gray-300 );
@@ -100,13 +79,9 @@ export default ( { attributes, setAttributes } ) => {
 							<PriceChoice
 								key={ index }
 								choice={ choice }
-								onSelect={ ( id ) =>
-									updateChoice( { id }, index )
-								}
-								onRemove={ () => removeChoice( index ) }
-								onUpdate={ ( data ) =>
-									updateChoice( data, index )
-								}
+								onSelect={ ( id ) => onUpdate( { id }, index ) }
+								onRemove={ () => onRemove( index ) }
+								onUpdate={ ( data ) => onUpdate( data, index ) }
 							/>
 						);
 					} ) }
@@ -146,19 +121,7 @@ export default ( { attributes, setAttributes } ) => {
 					align-items: center;
 				` }
 			>
-				<Button
-					isPrimary
-					onClick={ () =>
-						setAttributes( {
-							choices: [
-								...( choices || [] ),
-								{
-									quantity: 1,
-								},
-							],
-						} )
-					}
-				>
+				<Button isPrimary onClick={ onAddProduct }>
 					{ __( 'Add Product', 'checkout_engine' ) }
 				</Button>
 			</div>

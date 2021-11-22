@@ -54,7 +54,7 @@ export default ( { attributes, setAttributes } ) => {
 			onInput,
 			onChange,
 			template: [ [ 'checkout-engine/form', {} ] ],
-			renderAppender: false,
+			templateLock: 'all',
 		}
 	);
 
