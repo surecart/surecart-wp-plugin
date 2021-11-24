@@ -1144,6 +1144,7 @@ export namespace Components {
           * Currency
          */
         "currencyCode": string;
+        "error": ResponseError | null;
         /**
           * Stripe publishable key
          */
@@ -2860,6 +2861,7 @@ declare namespace LocalJSX {
           * Currency
          */
         "currencyCode"?: string;
+        "error"?: ResponseError | null;
         /**
           * Stripe publishable key
          */

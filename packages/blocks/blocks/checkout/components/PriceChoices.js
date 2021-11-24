@@ -121,7 +121,7 @@ export default ( { choices, onUpdate, onRemove, onAddProduct, onNew } ) => {
 					align-items: center;
 				` }
 			>
-				<Button isPrimary onClick={ onAddProduct }>
+				<Button isSecondary onClick={ onAddProduct }>
 					{ __( 'Add Product', 'checkout_engine' ) }
 				</Button>
 			</div>

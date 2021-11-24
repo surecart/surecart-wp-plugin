@@ -26,6 +26,7 @@ import * as coupon from './blocks/coupon';
 import * as lineItems from './blocks/line-items';
 import * as button from './blocks/button';
 import * as form from './blocks/form';
+import * as buyButton from './blocks/buy-button';
 import * as submit from './blocks/submit';
 import * as input from './blocks/input';
 import * as password from './blocks/password';
@@ -72,7 +73,10 @@ const registerBlock = ( block ) => {
 	registerBlockType(
 		{
 			...metadata,
-			parent: metadata?.parent || BLOCK_PARENTS,
+			parent:
+				typeof metadata?.parent !== 'undefined'
+					? metadata.parent
+					: BLOCK_PARENTS,
 			text_domain: 'checkout_engine', // set our textdomain for everything.
 		},
 		{
@@ -99,6 +103,7 @@ export const registerCheckoutEngineBlocks = () => {
 		coupon,
 		lineItems,
 		button,
+		buyButton,
 		form,
 		input,
 		password,

@@ -22,10 +22,10 @@
 
 ## Events
 
-| Event                    | Description | Type                  |
-| ------------------------ | ----------- | --------------------- |
-| `ceFormSubmit`           |             | `CustomEvent<string>` |
-| `ceUpdateBillingAddress` |             | `CustomEvent<any>`    |
+| Event                    | Description | Type               |
+| ------------------------ | ----------- | ------------------ |
+| `ceFormSubmit`           |             | `CustomEvent<any>` |
+| `ceUpdateBillingAddress` |             | `CustomEvent<any>` |
 
 
 ## Shadow Parts

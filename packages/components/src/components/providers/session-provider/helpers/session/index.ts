@@ -1,6 +1,11 @@
 import { getQueryArg } from '@wordpress/url';
 import { CheckoutSession } from '../../../../../types';
 
+export const getURLLineItems = () => {
+  // check the url query first
+  return getQueryArg(window.location.href, 'line_items');
+};
+
 /**
  * Attempt to get the session id
  *

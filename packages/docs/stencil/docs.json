@@ -1,5 +1,5 @@
 {
-  "timestamp": "2021-11-24T22:07:01",
+  "timestamp": "2021-11-24T22:26:22",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.9.0",
@@ -7606,7 +7606,7 @@
       "events": [
         {
           "event": "ceFormSubmit",
-          "detail": "string",
+          "detail": "any",
           "bubbles": true,
           "cancelable": true,
           "composed": true,

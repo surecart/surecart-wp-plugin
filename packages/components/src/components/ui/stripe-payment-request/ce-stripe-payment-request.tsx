@@ -2,7 +2,7 @@ import { Component, Prop, State, h, Element, Watch, Event, EventEmitter } from '
 import { loadStripe } from '@stripe/stripe-js/pure';
 import { PaymentRequestOptions, Stripe } from '@stripe/stripe-js';
 import { openWormhole } from 'stencil-wormhole';
-import { CheckoutSession, Keys, LineItem, Prices, Product } from '../../../types';
+import { CheckoutSession, Keys, LineItem, Prices, Product, ResponseError } from '../../../types';
 import { __ } from '@wordpress/i18n';
 
 @Component({
@@ -45,12 +45,16 @@ export class CeStripePaymentRequest {
   /** Payment request theme */
   @Prop() theme: string = 'dark';
 
+  @Prop() error: ResponseError | null;
+
   /** Has this loaded */
   @State() loaded: boolean = false;
 
   @Event() ceFormSubmit: EventEmitter<any>;
 
   @Event() ceUpdateBillingAddress: EventEmitter<any>;
+
+  private pendingEvent: any;
 
   async componentWillLoad() {
     if (!this.keys.stripe) {
@@ -60,7 +64,8 @@ export class CeStripePaymentRequest {
     this.elements = this.stripe.elements();
     this.paymentRequest = this.stripe.paymentRequest({
       country: this.country,
-      requestShipping: true,
+      // requestShipping: true,
+      requestPayerEmail: true,
       ...(this.getRequestObject() as PaymentRequestOptions),
     });
   }
@@ -69,6 +74,13 @@ export class CeStripePaymentRequest {
   handleCheckoutSessionChange() {
     if (!this.paymentRequest) return;
     this.paymentRequest.update(this.getRequestObject());
+  }
+
+  @Watch('error')
+  handleErrorChange() {
+    if (Object.keys(this.error || {}).length) {
+      this.pendingEvent.complete('error');
+    }
   }
 
   /** Only append price name if there's more than one product price in the session. */
@@ -105,15 +117,15 @@ export class CeStripePaymentRequest {
       },
       displayItems,
       // `shippingOptions` is optional at this point:
-      shippingOptions: [
-        // The first shipping option in this list appears as the default
-        // option in the browser payment interface.
-        {
-          id: 'free-shipping',
-          label: __('Free shipping', 'checkout_engine'),
-          amount: 0,
-        },
-      ],
+      // shippingOptions: [
+      //   // The first shipping option in this list appears as the default
+      //   // option in the browser payment interface.
+      //   {
+      //     id: 'free-shipping',
+      //     label: __('Free shipping', 'checkout_engine'),
+      //     amount: 0,
+      //   },
+      // ],
     };
   }
 
@@ -122,12 +134,14 @@ export class CeStripePaymentRequest {
       return;
     }
 
-    this.paymentRequest.on('paymentmethod', function (ev) {
+    this.paymentRequest.on('paymentmethod', ev => {
+      this.pendingEvent = ev;
       const { billing_details } = ev?.paymentMethod;
       const { shippingAddress } = ev;
 
       // update billing and shipping from paymentRequest
       this.ceFormSubmit.emit({
+        email: ev?.payerEmail,
         shipping_address: {
           ...(shippingAddress?.name ? { name: shippingAddress?.name } : {}),
           ...(shippingAddress?.addressLine?.[0] ? { line_1: shippingAddress?.addressLine?.[0] } : {}),
@@ -173,10 +187,10 @@ export class CeStripePaymentRequest {
 
   @Watch('checkoutSession')
   async confirmPayment(val: CheckoutSession) {
+    // must have a pending payment event.
+    if (!this.pendingEvent) return;
     // must be finalized
     if (val?.status !== 'finalized') return;
-    // must be a stripe session
-    if (val?.payment_intent?.processor_type !== 'stripe') return;
     // must have a secret
     if (!val?.payment_intent?.external_client_secret) return;
     // must have an external intent id
@@ -185,6 +199,9 @@ export class CeStripePaymentRequest {
     if (!val?.payment_intent?.external_type) return;
     // // prevent possible double-charges
     // if (this.confirming) return;
+
+    this.pendingEvent.complete('success');
+    this.pendingEvent = null;
 
     // this.confirming = true;
     // try {

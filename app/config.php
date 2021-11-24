@@ -166,5 +166,6 @@ return [
 	'blocks'              => [
 		\CheckoutEngine\Blocks\CheckoutForm::class,
 		\CheckoutEngine\Blocks\Form::class,
+		\CheckoutEngine\Blocks\BuyButton::class,
 	],
 ];

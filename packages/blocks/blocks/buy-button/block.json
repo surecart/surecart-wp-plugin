@@ -1,0 +1,22 @@
+{
+	"name": "checkout-engine/buy-button",
+	"title": "Buy Button",
+	"description": "Display a button to immediately redirect to the checkout page with the product in the cart.",
+	"category": "layout",
+	"keywords": [ "name", "customer" ],
+	"parent": null,
+	"supports": {
+		"reusable": false,
+		"html": false
+	},
+	"attributes": {
+		"label": {
+			"type": "string",
+			"default": "Name"
+		},
+		"help": {
+			"type": "string",
+			"default": "Optional"
+		}
+	}
+}

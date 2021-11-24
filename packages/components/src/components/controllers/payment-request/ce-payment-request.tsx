@@ -17,7 +17,7 @@ export class CePaymentRequest {
     if ('stripe' === this.processor) {
       return (
         <ce-stripe-payment-request>
-          <ce-divider>
+          <ce-divider style={{ '--spacing': 'var(--ce-spacing-small)' }}>
             <slot />
           </ce-divider>
         </ce-stripe-payment-request>

@@ -1,6 +1,6 @@
 import { Component, h, Prop, Event, EventEmitter, Element, State, Watch, Listen } from '@stencil/core';
 import { CheckoutSession, LineItemData, PriceChoice } from '../../../types';
-import { getSessionId, populateInputs } from './helpers/session';
+import { getSessionId, getURLLineItems, populateInputs } from './helpers/session';
 import { createOrUpdateSession, finalizeSession } from '../../../services/session';
 
 @Component({
@@ -196,6 +196,12 @@ export class CeSessionProvider {
 
   /** Find or create session on load. */
   componentWillLoad() {
+    const line_items = getURLLineItems();
+
+    if (line_items && line_items?.length) {
+      return this.loadUpdate({ line_items });
+    }
+
     const id = getSessionId(this.groupId, this.checkoutSession);
 
     // fetch or initialize a session.
