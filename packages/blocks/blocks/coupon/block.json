@@ -1,21 +1,27 @@
 {
-  "apiVersion": 2,
+	"apiVersion": 2,
 	"name": "checkout-engine/coupon",
 	"title": "Coupon",
-  "description": "Display a coupon form.",
+	"description": "Display a coupon form.",
 	"category": "layout",
-  "keywords": ["coupon", "promo"],
-  "supports": {
+	"keywords": [ "coupon", "promo" ],
+	"supports": {
 		"reusable": false,
 		"html": false,
-    "order-summary": true
+		"order-summary": true
 	},
 	"attributes": {
+		"lock": {
+			"remove": true
+		},
 		"text": {
 			"type": "string"
 		},
-    "button_text": {
-      "type": "string"
-    }
+		"button_text": {
+			"type": "string"
+		},
+		"disabled": {
+			"type": "boolean"
+		}
 	}
 }

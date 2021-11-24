@@ -7,12 +7,14 @@
 
 ## Properties
 
-| Property          | Attribute   | Description | Type              | Default     |
-| ----------------- | ----------- | ----------- | ----------------- | ----------- |
-| `checkoutSession` | --          |             | `CheckoutSession` | `undefined` |
-| `editable`        | `editable`  |             | `boolean`         | `true`      |
-| `loading`         | `loading`   |             | `boolean`         | `undefined` |
-| `removable`       | `removable` |             | `boolean`         | `true`      |
+| Property          | Attribute   | Description | Type                                                                                                                                                                                                                                                                                                                                                                                                                                                              | Default     |
+| ----------------- | ----------- | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| `checkoutSession` | --          |             | `CheckoutSession`                                                                                                                                                                                                                                                                                                                                                                                                                                                 | `undefined` |
+| `editable`        | `editable`  |             | `boolean`                                                                                                                                                                                                                                                                                                                                                                                                                                                         | `true`      |
+| `loading`         | `loading`   |             | `boolean`                                                                                                                                                                                                                                                                                                                                                                                                                                                         | `undefined` |
+| `lockedChoices`   | --          |             | `PriceChoice[]`                                                                                                                                                                                                                                                                                                                                                                                                                                                   | `[]`        |
+| `prices`          | --          |             | `{ [id: string]: { id: string; name: string; description?: string; amount: number; currency: string; recurring: boolean; recurring_interval?: "day" \| "week" \| "month" \| "year"; recurring_interval_count?: number; ad_hoc: boolean; ad_hoc_max_amount: number; ad_hoc_min_amount: number; archived: boolean; product_id?: string; archived_at?: string; created_at: number; updated_at: number; product?: string; metadata: { [key: string]: string; }; }; }` | `undefined` |
+| `removable`       | `removable` |             | `boolean`                                                                                                                                                                                                                                                                                                                                                                                                                                                         | `true`      |
 
 
 ## Events
@@ -37,9 +39,9 @@ graph TD;
   ce-line-items --> ce-line-item
   ce-line-items --> ce-skeleton
   ce-line-items --> ce-product-line-item
+  ce-product-line-item --> ce-format-number
   ce-product-line-item --> ce-line-item
   ce-product-line-item --> ce-quantity-select
-  ce-product-line-item --> ce-format-number
   ce-quantity-select --> ce-dropdown
   ce-quantity-select --> ce-menu
   ce-quantity-select --> ce-menu-item

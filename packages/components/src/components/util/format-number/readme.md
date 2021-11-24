@@ -27,6 +27,7 @@
 
 ### Used by
 
+ - [ce-coupon-form](../../controllers/coupon-form)
  - [ce-price-choice](../../controllers/price-choice)
  - [ce-price-selector](../../controllers/price-selector)
  - [ce-product-line-item](../../ui/product-line-item)
@@ -35,6 +36,7 @@
 ### Graph
 ```mermaid
 graph TD;
+  ce-coupon-form --> ce-format-number
   ce-price-choice --> ce-format-number
   ce-price-selector --> ce-format-number
   ce-product-line-item --> ce-format-number

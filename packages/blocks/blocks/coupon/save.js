@@ -1,4 +1,7 @@
 export default ( { attributes } ) => {
-	const { text, button_text } = attributes;
+	const { text, button_text, disabled } = attributes;
+	if ( disabled ) {
+		return null;
+	}
 	return <ce-coupon-form label={ text }>{ button_text }</ce-coupon-form>;
 };

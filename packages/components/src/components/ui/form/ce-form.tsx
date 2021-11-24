@@ -24,7 +24,7 @@ export class CEForm {
    * this event, since it doen't send a GET or POST request like native forms. To "prevent" submission, use a conditional
    * around the XHR request you use to submit the form's data with.
    */
-  @Event() ceFormSubmit: EventEmitter<Object>;
+  @Event() ceFormSubmit: EventEmitter<void>;
 
   /**
    * Emitted when the form is submitted. This event will not be emitted if any form control inside of
@@ -254,14 +254,13 @@ export class CEForm {
    */
   @Method('submit')
   async submit() {
-    let data = await this.getFormJson();
     const isValid = await this.validate();
 
     if (!isValid) {
       return false;
     }
 
-    this.ceFormSubmit.emit(data);
+    this.ceFormSubmit.emit();
 
     return true;
   }

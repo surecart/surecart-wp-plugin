@@ -120,6 +120,7 @@ export default ( { attributes, setAttributes, onCreate, onCancel, isNew } ) => {
 						onAddProduct={ addProduct }
 						onUpdate={ updateChoice }
 						onRemove={ removeChoice }
+						onNew={ createNewPrice }
 					/>
 				</div>
 

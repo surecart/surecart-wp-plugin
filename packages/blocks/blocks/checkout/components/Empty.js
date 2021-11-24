@@ -54,7 +54,21 @@ export default ( { attributes, setAttributes } ) => {
 			! choices?.length ||
 			! [ 'checkbox', 'radio' ].includes( choice_type )
 		) {
+			// delete choices block.
 			delete parsed[ priceChoiceBlock ];
+
+			// maybe remove previous section title.
+			const prev = parsed?.[ priceChoiceBlock - 1 ];
+			if ( prev?.name === 'checkout-engine/section-title' ) {
+				delete parsed[ priceChoiceBlock - 1 ];
+			}
+
+			// maybe remove spacer.
+			const next = parsed?.[ priceChoiceBlock + 1 ];
+			console.log( next );
+			if ( next?.name === 'core/spacer' ) {
+				delete parsed[ priceChoiceBlock + 1 ];
+			}
 			return parsed;
 		}
 
@@ -97,8 +111,6 @@ export default ( { attributes, setAttributes } ) => {
 
 		let innerBlocksTemplate = maybeCreateTemplate( attributes );
 		let formAttributes = createFormAttributes( attributes );
-
-		console.log( { formAttributes } );
 
 		try {
 			const updatedRecord = await dispatch( 'core' ).saveEntityRecord(
@@ -146,28 +158,41 @@ export default ( { attributes, setAttributes } ) => {
 	}
 
 	if ( step === 'select' ) {
-		<div { ...blockProps }>
-			<Placeholder
-				icon={ icon }
-				label={ __( 'Select a checkout form', 'checkout_engine' ) }
-			>
-				<div>
-					<SelectForm form={ form } setForm={ setForm } />
-					<Button
-						isPrimary
-						onClick={ () => {
-							console.log( { form } );
-							setAttributes( { id: form?.id } );
-						} }
+		return (
+			<div { ...blockProps }>
+				<Placeholder
+					icon={ icon }
+					label={ __( 'Select a checkout form', 'checkout_engine' ) }
+				>
+					<div
+						css={ css`
+							display: grid;
+							gap: 0.5em;
+							width: 100%;
+						` }
 					>
-						{ __( 'Choose', 'checkout_engine' ) }
-					</Button>
-					<Button onClick={ () => setAttributes( { step: null } ) }>
-						{ __( 'Cancel', 'checkout_engine' ) }
-					</Button>
-				</div>
-			</Placeholder>
-		</div>;
+						<SelectForm form={ form } setForm={ setForm } />
+						<div>
+							<Button
+								isPrimary
+								onClick={ () => {
+									setAttributes( { id: form?.id } );
+								} }
+							>
+								{ __( 'Choose', 'checkout_engine' ) }
+							</Button>
+							<Button
+								onClick={ () =>
+									setAttributes( { step: null } )
+								}
+							>
+								{ __( 'Cancel', 'checkout_engine' ) }
+							</Button>
+						</div>
+					</div>
+				</Placeholder>
+			</div>
+		);
 	}
 
 	return (

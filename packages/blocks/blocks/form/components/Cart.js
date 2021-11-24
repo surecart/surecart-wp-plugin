@@ -40,6 +40,7 @@ export default ( { attributes, setAttributes } ) => {
 		<div
 			css={ css`
 				font-size: 13px;
+				padding-bottom: 8px;
 			` }
 		>
 			<PriceChoices

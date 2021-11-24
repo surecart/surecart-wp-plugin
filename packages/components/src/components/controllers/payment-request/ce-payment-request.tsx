@@ -7,14 +7,14 @@ import { openWormhole } from 'stencil-wormhole';
   shadow: false,
 })
 export class CePaymentRequest {
-  @Prop() paymentMethod: 'stripe' | 'paypal';
+  @Prop() processor: 'stripe' | 'paypal';
 
   render() {
-    if (!this.paymentMethod) {
+    if (!this.processor) {
       return;
     }
 
-    if ('stripe' === this.paymentMethod) {
+    if ('stripe' === this.processor) {
       return (
         <ce-stripe-payment-request>
           <ce-divider>
@@ -26,4 +26,4 @@ export class CePaymentRequest {
   }
 }
 
-openWormhole(CePaymentRequest, ['paymentMethod'], false);
+openWormhole(CePaymentRequest, ['processor'], false);

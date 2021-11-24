@@ -89,9 +89,20 @@ export default ( { attributes, setAttributes, clientId, isSelected } ) => {
 		} );
 	}, [ type, children ] );
 
-	const hasOnePriceSelected = () => {
-		return !! children.find( ( child ) => child.attributes.price_id );
-	};
+	// update children when type or children changes.
+	useEffect( () => {
+		if ( ! children.length ) {
+			insertPrice();
+		}
+		children.forEach( function ( child ) {
+			dispatch( blockEditorStore ).updateBlockAttributes(
+				child.clientId,
+				{
+					type,
+				}
+			);
+		} );
+	}, [ type, children ] );
 
 	return (
 		<Fragment>

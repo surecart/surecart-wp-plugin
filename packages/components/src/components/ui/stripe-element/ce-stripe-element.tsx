@@ -14,6 +14,9 @@ export class CEStripeElement {
   private elements: any;
   private element: any;
 
+  /** Whether this field is disabled */
+  @Prop() disabled: boolean;
+
   /** The checkout session object for finalizing intents */
   @Prop() checkoutSession: CheckoutSession;
 
@@ -54,6 +57,8 @@ export class CEStripeElement {
 
   @Watch('checkoutSession')
   async confirmPayment(val: CheckoutSession) {
+    // needs to be enabled
+    if (this.disabled) return;
     // must be finalized
     if (val?.status !== 'finalized') return;
     // must be a stripe session
@@ -92,7 +97,6 @@ export class CEStripeElement {
 
   /** Confirm card payment */
   async confirmCardPayment(secret) {
-    console.log('card payment');
     return this.stripe.confirmCardPayment(secret, {
       payment_method: {
         card: this.element,
@@ -106,7 +110,6 @@ export class CEStripeElement {
 
   /** Confirm card setup. */
   confirmCardSetup(secret) {
-    console.log('card setup');
     return this.stripe.confirmCardSetup(secret, {
       payment_method: {
         card: this.element,

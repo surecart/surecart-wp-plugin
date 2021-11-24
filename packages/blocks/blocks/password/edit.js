@@ -44,7 +44,6 @@ export default ( { className, attributes, setAttributes, isSelected } ) => {
 				</PanelBody>
 			</InspectorControls>
 
-			{ ! isSelected && ! name && <div>Please add a name</div> }
 			<CeInput
 				className={ className }
 				name={ 'password' }

@@ -284,6 +284,7 @@ export namespace Components {
         "calculating": boolean;
         "checkoutSession": CheckoutSession;
         "error": any;
+        "forceOpen": boolean;
         "label": string;
         "loading": boolean;
     }
@@ -694,9 +695,13 @@ export namespace Components {
          */
         "mode": 'test' | 'live';
         /**
+          * Payment mode inside individual payment method (i.e. Payment Buttons)
+         */
+        "paymentMethod": 'stripe-payment-request' | null;
+        /**
           * The current payment method for the payment
          */
-        "paymentMethod": string;
+        "processor": string;
         /**
           * Secure notice
          */
@@ -707,7 +712,7 @@ export namespace Components {
         "stripeAccountId": string;
     }
     interface CePaymentRequest {
-        "paymentMethod": 'stripe' | 'paypal';
+        "processor": 'stripe' | 'paypal';
     }
     interface CePriceChoice {
         /**
@@ -1090,6 +1095,10 @@ export namespace Components {
          */
         "checkoutSession": CheckoutSession;
         /**
+          * Whether this field is disabled
+         */
+        "disabled": boolean;
+        /**
           * Inputs focus
          */
         "hasFocus": boolean;
@@ -1124,13 +1133,17 @@ export namespace Components {
          */
         "amount": number;
         /**
+          * Checkout Session
+         */
+        "checkoutSession": CheckoutSession;
+        /**
           * Country
          */
         "country": string;
         /**
           * Currency
          */
-        "currency": string;
+        "currencyCode": string;
         /**
           * Stripe publishable key
          */
@@ -1139,6 +1152,7 @@ export namespace Components {
           * Label
          */
         "label": string;
+        "prices": Prices;
         /**
           * Stripe account id
          */
@@ -1884,6 +1898,7 @@ declare namespace LocalJSX {
         "calculating"?: boolean;
         "checkoutSession"?: CheckoutSession;
         "error"?: any;
+        "forceOpen"?: boolean;
         "label"?: string;
         "loading"?: boolean;
         "onCeApplyCoupon"?: (event: CustomEvent<string>) => void;
@@ -2008,7 +2023,7 @@ declare namespace LocalJSX {
         /**
           * Emitted when the form is submitted. This event will not be emitted if any form control inside of it is in an invalid state, unless the form has the `novalidate` attribute. Note that there is never a need to prevent this event, since it doen't send a GET or POST request like native forms. To "prevent" submission, use a conditional around the XHR request you use to submit the form's data with.
          */
-        "onCeFormSubmit"?: (event: CustomEvent<Object>) => void;
+        "onCeFormSubmit"?: (event: CustomEvent<void>) => void;
     }
     interface CeFormControl {
         /**
@@ -2338,9 +2353,13 @@ declare namespace LocalJSX {
          */
         "mode"?: 'test' | 'live';
         /**
+          * Payment mode inside individual payment method (i.e. Payment Buttons)
+         */
+        "paymentMethod"?: 'stripe-payment-request' | null;
+        /**
           * The current payment method for the payment
          */
-        "paymentMethod"?: string;
+        "processor"?: string;
         /**
           * Secure notice
          */
@@ -2351,7 +2370,7 @@ declare namespace LocalJSX {
         "stripeAccountId"?: string;
     }
     interface CePaymentRequest {
-        "paymentMethod"?: 'stripe' | 'paypal';
+        "processor"?: 'stripe' | 'paypal';
     }
     interface CePriceChoice {
         /**
@@ -2790,6 +2809,10 @@ declare namespace LocalJSX {
          */
         "checkoutSession"?: CheckoutSession;
         /**
+          * Whether this field is disabled
+         */
+        "disabled"?: boolean;
+        /**
           * Inputs focus
          */
         "hasFocus"?: boolean;
@@ -2826,13 +2849,17 @@ declare namespace LocalJSX {
          */
         "amount"?: number;
         /**
+          * Checkout Session
+         */
+        "checkoutSession"?: CheckoutSession;
+        /**
           * Country
          */
         "country"?: string;
         /**
           * Currency
          */
-        "currency"?: string;
+        "currencyCode"?: string;
         /**
           * Stripe publishable key
          */
@@ -2841,6 +2868,9 @@ declare namespace LocalJSX {
           * Label
          */
         "label"?: string;
+        "onCeFormSubmit"?: (event: CustomEvent<any>) => void;
+        "onCeUpdateBillingAddress"?: (event: CustomEvent<any>) => void;
+        "prices"?: Prices;
         /**
           * Stripe account id
          */

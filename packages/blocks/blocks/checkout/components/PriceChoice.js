@@ -15,46 +15,10 @@ import { Icon, trash, moreHorizontalMobile } from '@wordpress/icons';
 import { useSelect, dispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { translateInterval } from '../../../../../resources/scripts/admin/util/translations';
+import PriceSelector from './PriceSelector';
 
-export default ( { choice, onUpdate, onSelect, onRemove } ) => {
-	const [ query, setQuery ] = useState( null );
-	const priceSelector = useRef();
-
-	const { products, loading } = useSelect(
-		( select ) => {
-			const queryArgs = [
-				'root',
-				'product',
-				{ query, expand: [ 'prices' ] },
-			];
-			return {
-				products: select( coreStore ).getEntityRecords( ...queryArgs ),
-				loading: select( coreStore ).isResolving(
-					'getEntityRecord',
-					queryArgs
-				),
-			};
-		},
-		[ query ]
-	);
-
-	// set prices when products are loaded.
-	useEffect( () => {
-		const prices = ( products || [] )
-			.map( ( product ) => product?.prices?.data )
-			.flat()
-			.filter( ( price ) => price?.id );
-
-		if ( prices ) {
-			dispatch( coreStore ).receiveEntityRecords(
-				'root',
-				'price',
-				prices,
-				{ expand: [ 'product' ] }
-			);
-		}
-	}, [ products ] );
-
+export default ( { choice, onUpdate, onSelect, onRemove, onNew } ) => {
+	// get price from choice.
 	const price = useSelect(
 		( select ) => {
 			if ( ! choice?.id ) return;
@@ -67,6 +31,7 @@ export default ( { choice, onUpdate, onSelect, onRemove } ) => {
 		[ choice?.id ]
 	);
 
+	// get product from price.
 	const product = useSelect(
 		( select ) => {
 			if ( ! price?.product ) return;
@@ -133,18 +98,9 @@ export default ( { choice, onUpdate, onSelect, onRemove } ) => {
 				` }
 			>
 				{ ! choice?.id ? (
-					<SelectPrice
-						required
-						ref={ priceSelector }
-						css={ css`
-							flex: 0 1 50%;
-						` }
-						open={ true }
-						ad_hoc={ false }
-						products={ products }
-						onQuery={ setQuery }
-						onFetch={ () => setQuery( '' ) }
-						loading={ loading }
+					<PriceSelector
+						createNew={ true }
+						onNewProduct={ onNew }
 						onSelect={ onSelect }
 					/>
 				) : (

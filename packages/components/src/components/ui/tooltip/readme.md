@@ -29,11 +29,13 @@
 ### Used by
 
  - [ce-form-control](../form-control)
+ - [ce-price-choice](../../controllers/price-choice)
 
 ### Graph
 ```mermaid
 graph TD;
   ce-form-control --> ce-tooltip
+  ce-price-choice --> ce-tooltip
   style ce-tooltip fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

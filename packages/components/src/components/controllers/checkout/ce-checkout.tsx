@@ -62,9 +62,17 @@ export class CECheckout {
   /** Error to display. */
   @State() error: ResponseError | null;
 
+  /** Payment mode inside individual payment method (i.e. Payment Buttons) */
+  @State() paymentMethod: 'stripe-payment-request' | null;
+
   @Watch('checkoutSession')
   handleCheckoutSessionChange() {
     this.error = null;
+  }
+
+  @Listen('ceFormSubmit')
+  handlePaymentModeChange(e) {
+    this.paymentMethod = e.detail;
   }
 
   @Listen('cePaid')
@@ -138,7 +146,7 @@ export class CECheckout {
 
   state() {
     return {
-      paymentMethod: 'stripe',
+      processor: 'stripe',
       state: this.checkoutState.value,
       loading: this.checkoutState.value === 'loading',
       busy: this.checkoutState.value === 'updating',
@@ -149,7 +157,9 @@ export class CECheckout {
       lockedChoices: this.prices,
       products: this.productsEntities,
       prices: this.pricesEntities,
+      country: 'US',
       currencyCode: this.currencyCode,
+      paymentMethod: this.paymentMethod,
       i18n: this.i18n,
     };
   }

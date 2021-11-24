@@ -5,6 +5,7 @@ import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';
 import { InspectorControls } from '@wordpress/block-editor';
 import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
+import { useBlockProps } from '@wordpress/block-editor';
 /**
  * Component Dependencies
  */
@@ -12,6 +13,8 @@ import { CeDivider } from '@checkout-engine/react';
 
 export default ( { attributes, setAttributes } ) => {
 	const { text } = attributes;
+
+	const blockProps = useBlockProps();
 
 	return (
 		<Fragment>
@@ -27,7 +30,7 @@ export default ( { attributes, setAttributes } ) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<CeDivider>{ text }</CeDivider>
+			<CeDivider { ...blockProps }>{ text }</CeDivider>
 		</Fragment>
 	);
 };

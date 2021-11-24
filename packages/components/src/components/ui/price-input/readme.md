@@ -94,6 +94,10 @@ Type: `Promise<void>`
 
 ## Dependencies
 
+### Used by
+
+ - [ce-price-choice](../../controllers/price-choice)
+
 ### Depends on
 
 - [ce-input](../input)
@@ -104,6 +108,7 @@ graph TD;
   ce-price-input --> ce-input
   ce-input --> ce-form-control
   ce-form-control --> ce-tooltip
+  ce-price-choice --> ce-price-input
   style ce-price-input fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

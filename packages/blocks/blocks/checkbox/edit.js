@@ -9,7 +9,6 @@ import {
 	PanelRow,
 	TextControl,
 	ToggleControl,
-	Disabled,
 } from '@wordpress/components';
 
 /**
@@ -69,7 +68,6 @@ export default ( { className, attributes, setAttributes, isSelected } ) => {
 				</PanelBody>
 			</InspectorControls>
 
-			{ ! isSelected && ! name && <div>Please add a name</div> }
 			{ /* <Disabled> */ }
 			<CeCheckbox
 				className={ className }

@@ -1,22 +1,21 @@
 import { __ } from '@wordpress/i18n';
-import { Fragment, useState, useEffect } from '@wordpress/element';
+import { Fragment } from '@wordpress/element';
 import {
+	Disabled,
 	PanelBody,
 	PanelRow,
 	TextControl,
 	ToggleControl,
 } from '@wordpress/components';
 import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
-import apiFetch from '@wordpress/api-fetch';
-import { addQueryArgs } from '@wordpress/url';
-import throttle from 'lodash/throttle';
 
 /**
  * Component Dependencies
  */
-import { CePriceChoice, CeSelect } from '@checkout-engine/react';
+import { CePriceChoice } from '@checkout-engine/react';
 import PriceInfo from './components/PriceInfo';
-import SelectProduct from '../../components/SelectProduct';
+
+import PriceSelector from '../checkout/components/PriceSelector';
 
 export default ( { attributes, setAttributes, isSelected } ) => {
 	const {
@@ -38,7 +37,7 @@ export default ( { attributes, setAttributes, isSelected } ) => {
 	if ( ! price_id ) {
 		return (
 			<div { ...blockProps }>
-				<SelectProduct
+				<PriceSelector
 					onSelect={ ( price_id ) => setAttributes( { price_id } ) }
 				/>
 			</div>
@@ -117,6 +116,7 @@ export default ( { attributes, setAttributes, isSelected } ) => {
 
 			<CePriceChoice
 				{ ...blockProps }
+				onClick={ ( e ) => e.preventDefault() }
 				priceId={ price_id }
 				type={ type }
 				label={ label }

@@ -1,10 +1,10 @@
 {
-  "name": "checkout-engine/password",
+	"name": "checkout-engine/password",
 	"title": "Password",
-  "description": "Displays a password field.",
+	"description": "Displays a password field.",
 	"category": "layout",
-  "keywords": ["password", "input"],
-  "supports": {
+	"keywords": [ "password", "input" ],
+	"supports": {
 		"reusable": false,
 		"html": false
 	},
@@ -26,7 +26,8 @@
 			"default": ""
 		},
 		"label": {
-			"type": "string"
+			"type": "string",
+			"default": "Password"
 		},
 		"help": {
 			"type": "string"
@@ -40,8 +41,8 @@
 		"maxlength": {
 			"type": "number"
 		},
-    "name": {
-      "type": "string"
-    }
+		"name": {
+			"type": "string"
+		}
 	}
 }

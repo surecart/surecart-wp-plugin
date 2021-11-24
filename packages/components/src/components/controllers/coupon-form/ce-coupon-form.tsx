@@ -15,6 +15,7 @@ export class CeCouponForm {
   @Prop() calculating: boolean;
   @Prop() error: any;
   @Prop() checkoutSession: CheckoutSession;
+  @Prop() forceOpen: boolean;
 
   @State() open: boolean;
   @State() value: string;
@@ -91,7 +92,7 @@ export class CeCouponForm {
       <div
         class={{
           'coupon-form': true,
-          'coupon-form--is-open': this.open,
+          'coupon-form--is-open': this.open || this.forceOpen,
         }}
       >
         <div
@@ -103,11 +104,11 @@ export class CeCouponForm {
             this.open = true;
           }}
         >
-          {this.label}
+          <slot name="label">{this.label}</slot>
         </div>
 
         <div class="form">
-          <ce-input onCeBlur={() => this.handleBlur()} autofocus ref={el => (this.input = el as HTMLCeInputElement)}></ce-input>
+          <ce-input onCeBlur={() => this.handleBlur()} ref={el => (this.input = el as HTMLCeInputElement)}></ce-input>
           {!!this.errorMessage && (
             <ce-alert type="danger" open>
               <span slot="title">{this.errorMessage}</span>

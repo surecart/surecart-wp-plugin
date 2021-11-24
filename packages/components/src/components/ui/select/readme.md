@@ -12,6 +12,7 @@
 | `choices`           | --                   | The input's value attribute.                                                                                                                                                                                  | `ChoiceItem[]` | `[]`        |
 | `invalid`           | `invalid`            | This will be true when the control is in an invalid state. Validity is determined by props such as `type`, `required`, `minlength`, `maxlength`, and `pattern` using the browser's constraint validation API. | `boolean`      | `false`     |
 | `loading`           | `loading`            |                                                                                                                                                                                                               | `boolean`      | `undefined` |
+| `open`              | `open`               | Is this open                                                                                                                                                                                                  | `boolean`      | `undefined` |
 | `placeholder`       | `placeholder`        | Placeholder for no value                                                                                                                                                                                      | `string`       | `''`        |
 | `required`          | `required`           |                                                                                                                                                                                                               | `boolean`      | `undefined` |
 | `search`            | `search`             | Is search enabled?                                                                                                                                                                                            | `boolean`      | `undefined` |
@@ -64,20 +65,22 @@ Type: `Promise<void>`
 
 ### Depends on
 
+- [ce-menu-label](../menu-label)
+- [ce-menu-item](../menu-item)
 - [ce-dropdown](../dropdown)
 - [ce-input](../input)
 - [ce-spinner](../spinner)
 - [ce-menu](../menu)
-- [ce-menu-item](../menu-item)
 
 ### Graph
 ```mermaid
 graph TD;
+  ce-select --> ce-menu-label
+  ce-select --> ce-menu-item
   ce-select --> ce-dropdown
   ce-select --> ce-input
   ce-select --> ce-spinner
   ce-select --> ce-menu
-  ce-select --> ce-menu-item
   ce-input --> ce-form-control
   ce-form-control --> ce-tooltip
   style ce-select fill:#f9f,stroke:#333,stroke-width:4px

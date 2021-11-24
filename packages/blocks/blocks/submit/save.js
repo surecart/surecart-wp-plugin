@@ -5,7 +5,7 @@ export default ( { attributes } ) => {
 		<ce-button
 			submit="1"
 			type={ type }
-			full={ full ? '1' : '' }
+			full={ full ? '1' : false }
 			size={ size }
 		>
 			{ text }

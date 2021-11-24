@@ -13,6 +13,7 @@ export default ( {
 	className,
 	onQuery,
 	onFetch,
+	onNew,
 	ad_hoc = true,
 	loading,
 } ) => {
@@ -84,15 +85,17 @@ export default ( {
 			} }
 			choices={ choices }
 		>
-			<span slot="prefix">
-				<CeMenuItem onClick={ () => console.log( 'new' ) }>
-					<span slot="prefix">+</span>
-					{ __( 'Add New Product' ) }
-				</CeMenuItem>
-				<CeDivider
-					style={ { '--spacing': 'var(--ce-spacing-x-small)' } }
-				></CeDivider>
-			</span>
+			{ onNew && (
+				<span slot="prefix">
+					<CeMenuItem onClick={ onNew }>
+						<span slot="prefix">+</span>
+						{ __( 'Add New Product', 'checkout_engine' ) }
+					</CeMenuItem>
+					<CeDivider
+						style={ { '--spacing': 'var(--ce-spacing-x-small)' } }
+					></CeDivider>
+				</span>
+			) }
 		</CeSelect>
 	);
 };

@@ -7,9 +7,9 @@
 
 ## Properties
 
-| Property        | Attribute        | Description | Type                   | Default     |
-| --------------- | ---------------- | ----------- | ---------------------- | ----------- |
-| `paymentMethod` | `payment-method` |             | `"paypal" \| "stripe"` | `undefined` |
+| Property    | Attribute   | Description | Type                   | Default     |
+| ----------- | ----------- | ----------- | ---------------------- | ----------- |
+| `processor` | `processor` |             | `"paypal" \| "stripe"` | `undefined` |
 
 
 ## Dependencies

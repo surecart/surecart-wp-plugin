@@ -7,7 +7,7 @@ const DefaultValue: {
   price_ids: Array<string>;
   selectedPriceIds?: Array<string>;
   total: number;
-  paymentMethod: 'stripe' | 'paypal';
+  processor: 'stripe' | 'paypal';
   stripePublishableKey?: string;
 } = {
   loading: false,
@@ -15,7 +15,7 @@ const DefaultValue: {
   prices: [],
   price_ids: [],
   total: 0,
-  paymentMethod: 'stripe',
+  processor: 'stripe',
 };
 
 export default DefaultValue;

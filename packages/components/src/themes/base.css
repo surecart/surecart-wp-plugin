@@ -173,9 +173,9 @@ ce-button-group > ce-tooltip > ce-button.ce-focus {
   --ce-font-size-x-small: 0.75em;
   --ce-font-size-small: 0.875em;
   --ce-font-size-medium: 1em;
-  --ce-font-size-large: 1.3em;
-  --ce-font-size-x-large: 1.5em;
-  --ce-font-size-xx-large: 2.25em;
+  --ce-font-size-large: 1.15em;
+  --ce-font-size-x-large: 1.35em;
+  --ce-font-size-xx-large: 1.75em;
   --ce-font-size-xxx-large: 3em;
   --ce-font-size-xxxx-large: 4.5em;
   --ce-font-weight-light: 300;

@@ -26,11 +26,45 @@ class CheckoutForm extends Block {
 	public function register( $container ) {
 		$this->container = $container;
 
-		$file = plugin_dir_path( CHECKOUT_ENGINE_PLUGIN_FILE ) . 'packages/blocks/blocks/checkout';
-
 		register_block_type(
-			$file,
+			'checkout-engine/checkout-form',
 			[
+				'apiVersion'      => 2,
+				'name'            => 'checkout-engine/checkout-form',
+				'title'           => __( 'Checkout Form', 'checkout_engine' ),
+				'description'     => __( 'Display a checkout form', 'checkout_engine' ),
+				'category'        => 'layout',
+				'keywords'        => [ 'checkout', 'form' ],
+				'supports'        => [
+					'reusable' => false,
+					'html'     => false,
+				],
+				'attributes'      => [
+					'id'                  => [
+						'type' => 'number',
+					],
+					'title'               => [
+						'type' => 'string',
+					],
+					'choices'             => [
+						'type' => 'array',
+					],
+					'template'            => [
+						'type' => 'string',
+					],
+					'choice_type'         => [
+						'type'    => 'string',
+						'enum'    => [ 'all', 'checkbox', 'radio' ],
+						'default' => 'all',
+					],
+					'create_user_account' => [
+						'type'    => 'boolean',
+						'default' => true,
+					],
+					'custom_success_url'  => [
+						'type' => 'string',
+					],
+				],
 				'render_callback' => [ $this, 'render' ],
 			]
 		);

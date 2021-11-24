@@ -9,7 +9,7 @@ import { CheckoutSession, Keys } from '../../../types';
 })
 export class CePayment {
   /** The current payment method for the payment */
-  @Prop() paymentMethod: string = 'stripe';
+  @Prop() processor: string = 'stripe';
 
   /** Checkout Session from ce-checkout. */
   @Prop() checkoutSession: CheckoutSession;
@@ -33,11 +33,14 @@ export class CePayment {
   /** The input's label. */
   @Prop() label: string;
 
+  /** Payment mode inside individual payment method (i.e. Payment Buttons) */
+  @Prop() paymentMethod: 'stripe-payment-request' | null;
+
   render() {
-    if (!this.paymentMethod) {
+    if (!this.processor) {
       return <div>Please contact us for payment</div>;
     }
-    if ('stripe' === this.paymentMethod) {
+    if ('stripe' === this.processor) {
       return (
         <Host>
           <ce-stripe-element
@@ -45,6 +48,7 @@ export class CePayment {
             checkoutSession={this.checkoutSession}
             stripeAccountId={this.keys.stripeAccountId}
             publishableKey={this.keys.stripe}
+            disabled={!!this.paymentMethod}
           ></ce-stripe-element>
           <ce-secure-notice>
             <slot>{this.secureNotice}</slot>
@@ -55,4 +59,4 @@ export class CePayment {
   }
 }
 
-openWormhole(CePayment, ['paymentMethod', 'checkoutSession', 'mode', 'keys'], false);
+openWormhole(CePayment, ['processor', 'checkoutSession', 'mode', 'keys', 'paymentMethod'], false);

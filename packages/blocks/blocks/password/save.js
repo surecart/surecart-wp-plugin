@@ -1,27 +1,14 @@
 export default ( { className, attributes } ) => {
 	const {
 		label,
-		clearable,
-		disabled,
 		help,
 		autofocus,
-		autocomplete,
-		inputmode,
-		max,
 		maxlength,
-		min,
 		minlength,
-		name,
 		placeholder,
-		readonly,
 		showLabel,
 		size,
-		spellcheck,
-		step,
-		togglePassword,
-		type,
 		value,
-		required,
 	} = attributes;
 
 	return (

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2021-11-09T19:44:13",
+  "timestamp": "2021-11-24T22:07:01",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.9.0",
@@ -1070,6 +1070,11 @@
       "events": [],
       "listeners": [
         {
+          "event": "ceFormSubmit",
+          "capture": false,
+          "passive": false
+        },
+        {
           "event": "cePaid",
           "capture": false,
           "passive": false
@@ -1193,6 +1198,57 @@
           "docs": "Is this required",
           "docsTags": [],
           "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "showControl",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "show-control",
+          "reflectToAttr": false,
+          "docs": "Show the radio/checkbox control",
+          "docsTags": [],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "showLabel",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "show-label",
+          "reflectToAttr": false,
+          "docs": "Show the label",
+          "docsTags": [],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "showPrice",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "show-price",
+          "reflectToAttr": false,
+          "docs": "Show the price",
+          "docsTags": [],
+          "default": "true",
           "values": [
             {
               "type": "boolean"
@@ -1642,6 +1698,22 @@
           "required": false
         },
         {
+          "name": "forceOpen",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "force-open",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "label",
           "type": "string",
           "mutable": false,
@@ -1695,6 +1767,7 @@
         "ce-skeleton",
         "ce-line-item",
         "ce-tag",
+        "ce-format-number",
         "ce-input",
         "ce-alert",
         "ce-button",
@@ -1705,6 +1778,7 @@
           "ce-skeleton",
           "ce-line-item",
           "ce-tag",
+          "ce-format-number",
           "ce-input",
           "ce-alert",
           "ce-button",
@@ -2320,7 +2394,7 @@
         },
         {
           "event": "ceFormSubmit",
-          "detail": "Object",
+          "detail": "void",
           "bubbles": true,
           "cancelable": true,
           "composed": true,
@@ -2356,6 +2430,22 @@
       "docsTags": [],
       "usage": {},
       "props": [
+        {
+          "name": "errorMessage",
+          "type": "string",
+          "mutable": true,
+          "attr": "error-message",
+          "reflectToAttr": false,
+          "docs": "Store the error message",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
         {
           "name": "errors",
           "type": "any",
@@ -2632,6 +2722,94 @@
       "dependencyGraph": {}
     },
     {
+      "filePath": "./src/components/util/format-interval/ce-format-interval.tsx",
+      "encapsulation": "none",
+      "tag": "ce-format-interval",
+      "readme": "# ce-format-interval\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "every",
+          "type": "string",
+          "mutable": false,
+          "attr": "every",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "__('every', 'checkout_engine')",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "fallback",
+          "type": "string",
+          "mutable": false,
+          "attr": "fallback",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "__('once', 'checkout_engine')",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "interval",
+          "type": "string",
+          "mutable": false,
+          "attr": "interval",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "value",
+          "type": "number",
+          "mutable": false,
+          "attr": "value",
+          "reflectToAttr": false,
+          "docs": "The number to format.",
+          "docsTags": [],
+          "default": "0",
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [],
+      "dependencyGraph": {}
+    },
+    {
       "filePath": "./src/components/util/format-number/ce-format-number.tsx",
       "encapsulation": "none",
       "tag": "ce-format-number",
@@ -2867,6 +3045,7 @@
       "slots": [],
       "parts": [],
       "dependents": [
+        "ce-coupon-form",
         "ce-price-choice",
         "ce-price-selector",
         "ce-product-line-item",
@@ -2874,6 +3053,9 @@
       ],
       "dependencies": [],
       "dependencyGraph": {
+        "ce-coupon-form": [
+          "ce-format-number"
+        ],
         "ce-price-choice": [
           "ce-format-number"
         ],
@@ -3933,6 +4115,48 @@
           "required": false
         },
         {
+          "name": "lockedChoices",
+          "type": "PriceChoice[]",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "[]",
+          "values": [
+            {
+              "type": "PriceChoice[]"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "prices",
+          "type": "{ [id: string]: { id: string; name: string; description?: string; amount: number; currency: string; recurring: boolean; recurring_interval?: \"day\" | \"week\" | \"month\" | \"year\"; recurring_interval_count?: number; ad_hoc: boolean; ad_hoc_max_amount: number; ad_hoc_min_amount: number; archived: boolean; product_id?: string; archived_at?: string; created_at: number; updated_at: number; product?: string; metadata: { [key: string]: string; }; }; }",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "{ [id: string]: { id: string; name: string; description?: string; amount: number; currency: string; recurring: boolean; recurring_interval?: \"day\""
+            },
+            {
+              "value": "week",
+              "type": "string"
+            },
+            {
+              "value": "month",
+              "type": "string"
+            },
+            {
+              "type": "\"year\"; recurring_interval_count?: number; ad_hoc: boolean; ad_hoc_max_amount: number; ad_hoc_min_amount: number; archived: boolean; product_id?: string; archived_at?: string; created_at: number; updated_at: number; product?: string; metadata: { [key: string]: string; }; }; }"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "removable",
           "type": "boolean",
           "mutable": false,
@@ -3988,9 +4212,9 @@
           "ce-product-line-item"
         ],
         "ce-product-line-item": [
+          "ce-format-number",
           "ce-line-item",
-          "ce-quantity-select",
-          "ce-format-number"
+          "ce-quantity-select"
         ],
         "ce-quantity-select": [
           "ce-dropdown",
@@ -4265,6 +4489,36 @@
       }
     },
     {
+      "filePath": "./src/components/ui/menu-label/ce-menu-label.tsx",
+      "encapsulation": "shadow",
+      "tag": "ce-menu-label",
+      "readme": "# ce-menu-label\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [
+        {
+          "name": "base",
+          "docs": ""
+        }
+      ],
+      "dependents": [
+        "ce-select"
+      ],
+      "dependencies": [],
+      "dependencyGraph": {
+        "ce-select": [
+          "ce-menu-label"
+        ]
+      }
+    },
+    {
       "filePath": "./src/components/controllers/order-summary/ce-order-summary.tsx",
       "encapsulation": "shadow",
       "tag": "ce-order-summary",
@@ -4421,9 +4675,26 @@
         },
         {
           "name": "paymentMethod",
-          "type": "string",
+          "type": "\"stripe-payment-request\"",
           "mutable": false,
           "attr": "payment-method",
+          "reflectToAttr": false,
+          "docs": "Payment mode inside individual payment method (i.e. Payment Buttons)",
+          "docsTags": [],
+          "values": [
+            {
+              "value": "stripe-payment-request",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "processor",
+          "type": "string",
+          "mutable": false,
+          "attr": "processor",
           "reflectToAttr": false,
           "docs": "The current payment method for the payment",
           "docsTags": [],
@@ -4506,10 +4777,10 @@
       "usage": {},
       "props": [
         {
-          "name": "paymentMethod",
+          "name": "processor",
           "type": "\"paypal\" | \"stripe\"",
           "mutable": false,
-          "attr": "payment-method",
+          "attr": "processor",
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
@@ -4557,7 +4828,7 @@
         {
           "name": "checked",
           "type": "boolean",
-          "mutable": false,
+          "mutable": true,
           "attr": "checked",
           "reflectToAttr": true,
           "docs": "Is this checked by default",
@@ -4597,6 +4868,21 @@
           "values": [
             {
               "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "error",
+          "type": "ResponseError",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "Errors from response",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "ResponseError"
             }
           ],
           "optional": false,
@@ -4668,7 +4954,7 @@
         },
         {
           "name": "prices",
-          "type": "{ [id: string]: { id: string; name: string; description?: string; amount: number; currency: string; recurring: boolean; recurring_interval?: \"day\" | \"week\" | \"month\" | \"year\"; recurring_interval_count?: number; archived: boolean; product_id?: string; archived_at?: string; created_at: number; updated_at: number; product?: string; metadata: { [key: string]: string; }; }; }",
+          "type": "{ [id: string]: { id: string; name: string; description?: string; amount: number; currency: string; recurring: boolean; recurring_interval?: \"day\" | \"week\" | \"month\" | \"year\"; recurring_interval_count?: number; ad_hoc: boolean; ad_hoc_max_amount: number; ad_hoc_min_amount: number; archived: boolean; product_id?: string; archived_at?: string; created_at: number; updated_at: number; product?: string; metadata: { [key: string]: string; }; }; }",
           "mutable": false,
           "reflectToAttr": false,
           "docs": "Price entities",
@@ -4687,7 +4973,7 @@
               "type": "string"
             },
             {
-              "type": "\"year\"; recurring_interval_count?: number; archived: boolean; product_id?: string; archived_at?: string; created_at: number; updated_at: number; product?: string; metadata: { [key: string]: string; }; }; }"
+              "type": "\"year\"; recurring_interval_count?: number; ad_hoc: boolean; ad_hoc_max_amount: number; ad_hoc_min_amount: number; archived: boolean; product_id?: string; archived_at?: string; created_at: number; updated_at: number; product?: string; metadata: { [key: string]: string; }; }; }"
             }
           ],
           "optional": false,
@@ -4727,6 +5013,57 @@
           "required": false
         },
         {
+          "name": "showControl",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "show-control",
+          "reflectToAttr": false,
+          "docs": "Show the radio/checkbox control",
+          "docsTags": [],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "showLabel",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "show-label",
+          "reflectToAttr": false,
+          "docs": "Show the label",
+          "docsTags": [],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "showPrice",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "show-price",
+          "reflectToAttr": false,
+          "docs": "Show the price amount",
+          "docsTags": [],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "type",
           "type": "\"checkbox\" | \"radio\"",
           "mutable": false,
@@ -4760,7 +5097,7 @@
           "docsTags": []
         },
         {
-          "event": "ceAddLineItem",
+          "event": "ceRemoveLineItem",
           "detail": "LineItemData",
           "bubbles": true,
           "cancelable": true,
@@ -4769,7 +5106,7 @@
           "docsTags": []
         },
         {
-          "event": "ceRemoveLineItem",
+          "event": "ceUpdateLineItem",
           "detail": "LineItemData",
           "bubbles": true,
           "cancelable": true,
@@ -4784,15 +5121,28 @@
       "parts": [],
       "dependents": [],
       "dependencies": [
+        "ce-price-input",
+        "ce-format-number",
         "ce-choice",
         "ce-skeleton",
-        "ce-format-number"
+        "ce-tooltip"
       ],
       "dependencyGraph": {
         "ce-price-choice": [
+          "ce-price-input",
+          "ce-format-number",
           "ce-choice",
           "ce-skeleton",
-          "ce-format-number"
+          "ce-tooltip"
+        ],
+        "ce-price-input": [
+          "ce-input"
+        ],
+        "ce-input": [
+          "ce-form-control"
+        ],
+        "ce-form-control": [
+          "ce-tooltip"
         ]
       }
     },
@@ -5362,7 +5712,9 @@
           "docs": "Used to prepend an icon or element to the input."
         }
       ],
-      "dependents": [],
+      "dependents": [
+        "ce-price-choice"
+      ],
       "dependencies": [
         "ce-input"
       ],
@@ -5375,6 +5727,9 @@
         ],
         "ce-form-control": [
           "ce-tooltip"
+        ],
+        "ce-price-choice": [
+          "ce-price-input"
         ]
       }
     },
@@ -5485,7 +5840,7 @@
         },
         {
           "name": "prices",
-          "type": "{ [id: string]: { id: string; name: string; description?: string; amount: number; currency: string; recurring: boolean; recurring_interval?: \"day\" | \"week\" | \"month\" | \"year\"; recurring_interval_count?: number; archived: boolean; product_id?: string; archived_at?: string; created_at: number; updated_at: number; product?: string; metadata: { [key: string]: string; }; }; }",
+          "type": "{ [id: string]: { id: string; name: string; description?: string; amount: number; currency: string; recurring: boolean; recurring_interval?: \"day\" | \"week\" | \"month\" | \"year\"; recurring_interval_count?: number; ad_hoc: boolean; ad_hoc_max_amount: number; ad_hoc_min_amount: number; archived: boolean; product_id?: string; archived_at?: string; created_at: number; updated_at: number; product?: string; metadata: { [key: string]: string; }; }; }",
           "mutable": false,
           "reflectToAttr": false,
           "docs": "Price entities",
@@ -5503,7 +5858,7 @@
               "type": "string"
             },
             {
-              "type": "\"year\"; recurring_interval_count?: number; archived: boolean; product_id?: string; archived_at?: string; created_at: number; updated_at: number; product?: string; metadata: { [key: string]: string; }; }; }"
+              "type": "\"year\"; recurring_interval_count?: number; ad_hoc: boolean; ad_hoc_max_amount: number; ad_hoc_min_amount: number; archived: boolean; product_id?: string; archived_at?: string; created_at: number; updated_at: number; product?: string; metadata: { [key: string]: string; }; }; }"
             }
           ],
           "optional": false,
@@ -5558,15 +5913,6 @@
           "docsTags": []
         },
         {
-          "event": "ceAddLineItem",
-          "detail": "LineItemData",
-          "bubbles": true,
-          "cancelable": true,
-          "composed": true,
-          "docs": "Toggle line item event",
-          "docsTags": []
-        },
-        {
           "event": "ceRemoveLineItem",
           "detail": "LineItemData",
           "bubbles": true,
@@ -5577,6 +5923,15 @@
         },
         {
           "event": "ceToggleLineItem",
+          "detail": "LineItemData",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Toggle line item event",
+          "docsTags": []
+        },
+        {
+          "event": "ceUpdateLineItem",
           "detail": "LineItemData",
           "bubbles": true,
           "cancelable": true,
@@ -5753,6 +6108,22 @@
           ],
           "optional": false,
           "required": false
+        },
+        {
+          "name": "trialDurationDays",
+          "type": "number",
+          "mutable": false,
+          "attr": "trial-duration-days",
+          "reflectToAttr": false,
+          "docs": "Trial duration days",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
         }
       ],
       "methods": [],
@@ -5784,15 +6155,15 @@
         "ce-line-items"
       ],
       "dependencies": [
+        "ce-format-number",
         "ce-line-item",
-        "ce-quantity-select",
-        "ce-format-number"
+        "ce-quantity-select"
       ],
       "dependencyGraph": {
         "ce-product-line-item": [
+          "ce-format-number",
           "ce-line-item",
-          "ce-quantity-select",
-          "ce-format-number"
+          "ce-quantity-select"
         ],
         "ce-quantity-select": [
           "ce-dropdown",
@@ -6192,23 +6563,6 @@
       "usage": {},
       "props": [
         {
-          "name": "fieldset",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "fieldset",
-          "reflectToAttr": false,
-          "docs": "Shows the fieldset and legend that surrounds the radio group.",
-          "docsTags": [],
-          "default": "false",
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
           "name": "label",
           "type": "string",
           "mutable": false,
@@ -6332,6 +6686,22 @@
           "attr": "loading",
           "reflectToAttr": false,
           "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "open",
+          "type": "boolean",
+          "mutable": true,
+          "attr": "open",
+          "reflectToAttr": false,
+          "docs": "Is this open",
           "docsTags": [],
           "values": [
             {
@@ -6502,19 +6872,21 @@
       ],
       "dependents": [],
       "dependencies": [
+        "ce-menu-label",
+        "ce-menu-item",
         "ce-dropdown",
         "ce-input",
         "ce-spinner",
-        "ce-menu",
-        "ce-menu-item"
+        "ce-menu"
       ],
       "dependencyGraph": {
         "ce-select": [
+          "ce-menu-label",
+          "ce-menu-item",
           "ce-dropdown",
           "ce-input",
           "ce-spinner",
-          "ce-menu",
-          "ce-menu-item"
+          "ce-menu"
         ],
         "ce-input": [
           "ce-form-control"
@@ -6876,6 +7248,22 @@
           "required": false
         },
         {
+          "name": "disabled",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "disabled",
+          "reflectToAttr": false,
+          "docs": "Whether this field is disabled",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "hasFocus",
           "type": "boolean",
           "mutable": true,
@@ -7073,6 +7461,21 @@
           "required": false
         },
         {
+          "name": "checkoutSession",
+          "type": "CheckoutSession",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "Checkout Session",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "CheckoutSession"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "country",
           "type": "string",
           "mutable": false,
@@ -7090,10 +7493,10 @@
           "required": false
         },
         {
-          "name": "currency",
+          "name": "currencyCode",
           "type": "string",
           "mutable": false,
-          "attr": "currency",
+          "attr": "currency-code",
           "reflectToAttr": false,
           "docs": "Currency",
           "docsTags": [],
@@ -7140,6 +7543,32 @@
           "required": false
         },
         {
+          "name": "prices",
+          "type": "{ [id: string]: { id: string; name: string; description?: string; amount: number; currency: string; recurring: boolean; recurring_interval?: \"day\" | \"week\" | \"month\" | \"year\"; recurring_interval_count?: number; ad_hoc: boolean; ad_hoc_max_amount: number; ad_hoc_min_amount: number; archived: boolean; product_id?: string; archived_at?: string; created_at: number; updated_at: number; product?: string; metadata: { [key: string]: string; }; }; }",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "{ [id: string]: { id: string; name: string; description?: string; amount: number; currency: string; recurring: boolean; recurring_interval?: \"day\""
+            },
+            {
+              "value": "week",
+              "type": "string"
+            },
+            {
+              "value": "month",
+              "type": "string"
+            },
+            {
+              "type": "\"year\"; recurring_interval_count?: number; ad_hoc: boolean; ad_hoc_max_amount: number; ad_hoc_min_amount: number; archived: boolean; product_id?: string; archived_at?: string; created_at: number; updated_at: number; product?: string; metadata: { [key: string]: string; }; }; }"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "stripeAccountId",
           "type": "string",
           "mutable": false,
@@ -7174,7 +7603,26 @@
         }
       ],
       "methods": [],
-      "events": [],
+      "events": [
+        {
+          "event": "ceFormSubmit",
+          "detail": "string",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        },
+        {
+          "event": "ceUpdateBillingAddress",
+          "detail": "any",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        }
+      ],
       "listeners": [],
       "styles": [],
       "slots": [],
@@ -7541,6 +7989,7 @@
       "filePath": "./src/components/ui/text/ce-text.tsx",
       "encapsulation": "shadow",
       "tag": "ce-text",
+      "readme": "# ce-text\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -7739,11 +8188,15 @@
         }
       ],
       "dependents": [
-        "ce-form-control"
+        "ce-form-control",
+        "ce-price-choice"
       ],
       "dependencies": [],
       "dependencyGraph": {
         "ce-form-control": [
+          "ce-tooltip"
+        ],
+        "ce-price-choice": [
           "ce-tooltip"
         ]
       }

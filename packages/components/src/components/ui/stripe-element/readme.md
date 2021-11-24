@@ -10,6 +10,7 @@
 | Property          | Attribute           | Description                                                           | Type                             | Default     |
 | ----------------- | ------------------- | --------------------------------------------------------------------- | -------------------------------- | ----------- |
 | `checkoutSession` | --                  | The checkout session object for finalizing intents                    | `CheckoutSession`                | `undefined` |
+| `disabled`        | `disabled`          | Whether this field is disabled                                        | `boolean`                        | `undefined` |
 | `hasFocus`        | `has-focus`         | Inputs focus                                                          | `boolean`                        | `undefined` |
 | `label`           | `label`             | The input's label. Alternatively, you can use the label slot.         | `string`                         | `undefined` |
 | `publishableKey`  | `publishable-key`   | Stripe publishable key                                                | `string`                         | `undefined` |

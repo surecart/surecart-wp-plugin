@@ -7,6 +7,20 @@ namespace CheckoutEngine\Blocks;
  */
 abstract class Block {
 	/**
+	 * Parent blocks.
+	 *
+	 * @var array|null
+	 */
+	protected $parent = null;
+
+	/**
+	 * Block attributes
+	 *
+	 * @var array
+	 */
+	protected $attributes = [];
+
+	/**
 	 * App Service container
 	 *
 	 * @var \Pimple\Container
@@ -27,11 +41,8 @@ abstract class Block {
 			"checkout-engine/$this->name",
 			[
 				'render_callback' => [ $this, 'render' ],
-				'attributes'      => [
-					'prices' => [
-						'type' => 'array',
-					],
-				],
+				'attributes'      => $this->attributes,
+				'parent'          => $this->parent,
 			]
 		);
 	}

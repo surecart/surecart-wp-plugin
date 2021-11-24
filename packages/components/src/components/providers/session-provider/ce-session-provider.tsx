@@ -95,18 +95,24 @@ export class CeSessionProvider {
    * @param e
    */
   @Listen('ceFormSubmit')
-  async handleFormSubmit() {
+  async handleFormSubmit(e) {
     this.ceError.emit({});
 
     // Get current form state.
-    const data = await this.el.querySelector('ce-form').getFormJson();
+    const json = await this.el.querySelector('ce-form').getFormJson();
+    let data = this.parseFormData(json);
+
+    // add additional data passed with event
+    if (Object.keys(e.detail || {})?.length) {
+      data = { ...data, ...e.detail };
+    }
 
     // first validate server-side and get key
     try {
       this.setState('FETCH');
       this.session = await finalizeSession({
         id: this.checkoutSession.id,
-        data: this.parseFormData(data),
+        data,
         processor: 'stripe',
       });
       if (this.session.status === 'finalized') {
@@ -122,7 +128,7 @@ export class CeSessionProvider {
             status: 'draft',
           },
         });
-        this.handleFormSubmit();
+        this.handleFormSubmit(e);
         return;
       }
       this.handleErrorResponse(e);
@@ -259,8 +265,8 @@ export class CeSessionProvider {
 
   /** Fetch a session. */
   async fetch() {
-    let line_items = this.addInitialPrices() || [];
-    this.loadUpdate({ status: 'draft', line_items });
+    // let line_items = this.addInitialPrices() || [];
+    this.loadUpdate({ status: 'draft' });
   }
 
   /** Update a session */

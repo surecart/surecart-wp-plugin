@@ -9,6 +9,23 @@ use CheckoutEngine\Concerns\HasBlockTheme;
  */
 class Form extends Block {
 	/**
+	 * Only allowed in a checkout form.
+	 *
+	 * @var array
+	 */
+	protected $parent = [ 'checkout-engine/checkout-form' ];
+	/**
+	 * Block attributes
+	 *
+	 * @var array
+	 */
+	protected $attributes = [
+		'prices' => [
+			'type' => 'array',
+		],
+	];
+
+	/**
 	 * Block name
 	 *
 	 * @var string

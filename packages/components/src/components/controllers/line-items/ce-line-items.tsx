@@ -75,8 +75,8 @@ export class CeLineItems {
               key={item.id}
               imageUrl={item?.price?.metadata?.wp_attachment_src}
               name={this.getName(item)}
-              editable={this.isLocked(item) ? false : this.editable}
-              removable={this.isLocked(item) ? false : this.removable}
+              editable={this.editable}
+              removable={this.removable}
               quantity={item.quantity}
               amount={item.ad_hoc_amount !== null ? item.ad_hoc_amount : item.price.amount}
               currency={this.checkoutSession?.currency}

@@ -6,7 +6,7 @@ import { Button } from '@wordpress/components';
 
 import PriceChoice from './PriceChoice';
 
-export default ( { choices, onUpdate, onRemove, onAddProduct } ) => {
+export default ( { choices, onUpdate, onRemove, onAddProduct, onNew } ) => {
 	const headerStyle = css`
 		border-bottom: 1px solid var( --ce-color-gray-300 );
 		border-top: 1px solid var( --ce-color-gray-300 );
