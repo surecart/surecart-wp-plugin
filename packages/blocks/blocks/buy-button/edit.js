@@ -12,7 +12,6 @@ import {
 	PanelRow,
 	SelectControl,
 	TextControl,
-	Button,
 } from '@wordpress/components';
 
 /**
@@ -20,9 +19,10 @@ import {
  */
 import { CeButton } from '@checkout-engine/react';
 import PriceChoices from '../checkout/components/PriceChoices';
+import Placeholder from './Placeholder';
 
 export default ( { className, attributes, setAttributes } ) => {
-	const { type, text, submit, full, size, line_items } = attributes;
+	const { type, label, submit, size, line_items } = attributes;
 
 	const removeLineItem = ( index ) => {
 		setAttributes( {
@@ -54,42 +54,29 @@ export default ( { className, attributes, setAttributes } ) => {
 	};
 
 	const renderButton = () => {
-		if ( ! line_items || line_items?.length ) {
-			return (
-				<div
-					css={ css`
-						font-size: 14px;
-						display: grid;
-						gap: 0.5em;
-					` }
-				>
-					<PriceChoices
-						choices={ line_items }
-						onAddProduct={ addLineItem }
-						onUpdate={ updateLineItem }
-						onRemove={ removeLineItem }
-						onNew={ () => {} }
-					/>
-					<div>
-						<Button isPrimary>Done</Button>
-					</div>
-				</div>
-			);
+		if ( ! line_items || ! line_items?.length ) {
+			return <Placeholder setAttributes={ setAttributes } />;
 		}
 
 		return (
-			<CeButton type={ type } submit={ submit } size={ size }>
+			<CeButton
+				type={ type }
+				submit={ submit }
+				size={ size }
+				type={ type }
+			>
 				<RichText
 					aria-label={ __( 'Button text' ) }
 					placeholder={ __( 'Add text…' ) }
-					value={ text }
-					onChange={ ( value ) => setAttributes( { text: value } ) }
+					value={ label }
+					onChange={ ( label ) => setAttributes( { label } ) }
 					withoutInteractiveFormatting
 					allowedFormats={ [ 'core/bold', 'core/italic' ] }
 				/>
 			</CeButton>
 		);
 	};
+
 	return (
 		<div className={ className } css={ css`` }>
 			<InspectorControls>
@@ -97,8 +84,8 @@ export default ( { className, attributes, setAttributes } ) => {
 					<PanelRow>
 						<TextControl
 							label={ __( 'Button Text', 'checkout-engine' ) }
-							value={ text }
-							onChange={ ( text ) => setAttributes( { text } ) }
+							value={ label }
+							onChange={ ( label ) => setAttributes( { label } ) }
 						/>
 					</PanelRow>
 					<PanelRow>
@@ -125,6 +112,25 @@ export default ( { className, attributes, setAttributes } ) => {
 								{
 									value: 'large',
 									label: __( 'Large', 'checkout_engine' ),
+								},
+							] }
+						/>
+					</PanelRow>
+					<PanelRow>
+						<SelectControl
+							label={ __( 'Type', 'checkout_engine' ) }
+							value={ type }
+							onChange={ ( type ) => {
+								setAttributes( { type } );
+							} }
+							options={ [
+								{
+									value: 'primary',
+									label: __( 'Button', 'checkout_engine' ),
+								},
+								{
+									value: 'text',
+									label: __( 'Text Link', 'checkout_engine' ),
 								},
 							] }
 						/>

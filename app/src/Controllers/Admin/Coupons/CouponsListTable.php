@@ -166,7 +166,8 @@ class CouponsListTable extends ListTable {
 				'limit'    => $this->get_items_per_page( 'coupons' ),
 				'page'     => $this->get_pagenum(),
 			]
-		)->paginate();
+		)->with( [ 'promotions' ] )
+		->paginate();
 	}
 
 	/**
@@ -300,8 +301,10 @@ class CouponsListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_code( $coupon ) {
-		$code = $coupon->code ?? __( 'No code specified', 'checkout_engine' );
-		return '<code>' . sanitize_text_field( $code ) . '</code>';
+		if ( empty( $coupon->promotions->data[0]->code ) ) {
+			return __( 'No code specified', 'checkout_engine' );
+		}
+		return '<code>' . sanitize_text_field( $coupon->promotions->data[0]->code ) . '</code>';
 	}
 
 	/**

@@ -76,6 +76,7 @@ class BuyButton extends Block {
 			"blocks/$this->name",
 			[
 				'type'  => $attributes['type'] ?? 'primary',
+				'size'  => $attributes['size'] ?? 'medium',
 				'href'  => add_query_arg(
 					[
 						'line_items' => array_map(

@@ -61,6 +61,8 @@ export default ( { attributes, setAttributes, onCreate, onCancel, isNew } ) => {
 		} );
 	};
 
+	const createNewPrice = () => {};
+
 	return (
 		<div
 			css={ css`

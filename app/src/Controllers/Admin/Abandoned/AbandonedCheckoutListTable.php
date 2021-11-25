@@ -118,7 +118,9 @@ class AbandonedCheckoutListTable extends ListTable {
 				'limit'  => $this->get_items_per_page( 'abanodoned_checkout' ),
 				'page'   => $this->get_pagenum(),
 			]
-		)->paginate();
+		)
+		->with( [ 'latest_checkout_session', 'customer' ] )
+		->paginate();
 	}
 
 	/**
@@ -142,7 +144,7 @@ class AbandonedCheckoutListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_total( $abandoned ) {
-		return '<ce-format-number type="currency" currency="' . strtoupper( esc_html( $abandoned->latest_checkout_session->currency ) ) . '" value="' . (float) $abandoned->latest_checkout_session->total_amount . '"></ce-format-number>';
+		return '<ce-format-number type="currency" currency="' . strtoupper( esc_html( $abandoned->latest_checkout_session->currency ?? 'usd' ) ) . '" value="' . (float) $abandoned->latest_checkout_session->total_amount . '"></ce-format-number>';
 	}
 
 	/**
@@ -188,6 +190,6 @@ class AbandonedCheckoutListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_email( $abandoned ) {
-		return $abandoned->customer->email;
+		return $abandoned->customer->email ?? __( 'None', 'checkout_engine' );
 	}
 }

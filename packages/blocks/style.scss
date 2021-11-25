@@ -32,6 +32,11 @@
 // }
 
 .ce-checkout-container {
+  .wp-block {
+    margin-top: 30px !important;
+    margin-bottom: 30px !important;
+  }
+
   .block-editor-block-list__layout > * {
     min-width: 0;
   }
@@ -54,6 +59,8 @@
 }
 
 .wp-block-checkout-engine-checkout-form {
+
+
   &[data-align="center"] {
     max-width: 600px;
     margin: auto;

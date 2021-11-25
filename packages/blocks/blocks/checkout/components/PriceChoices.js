@@ -6,7 +6,13 @@ import { Button } from '@wordpress/components';
 
 import PriceChoice from './PriceChoice';
 
-export default ( { choices, onUpdate, onRemove, onAddProduct, onNew } ) => {
+export default ( {
+	choices,
+	onUpdate,
+	onRemove,
+	onAddProduct,
+	description,
+} ) => {
 	const headerStyle = css`
 		border-bottom: 1px solid var( --ce-color-gray-300 );
 		border-top: 1px solid var( --ce-color-gray-300 );
@@ -16,6 +22,7 @@ export default ( { choices, onUpdate, onRemove, onAddProduct, onNew } ) => {
 		text-transform: uppercase;
 		letter-spacing: 0.05em;
 		color: var( --ce-color-gray-600 );
+		border: none !important;
 	`;
 
 	const renderTable = () => {
@@ -97,10 +104,12 @@ export default ( { choices, onUpdate, onRemove, onAddProduct, onNew } ) => {
 					color: var( --ce-color-gray-500 );
 				` }
 			>
-				{ __(
-					'To add some products to the form, click the "Add Products" button.',
-					'checkout-engine'
-				) }
+				{ description
+					? description
+					: __(
+							'To add some products "Add Products" button.',
+							'checkout-engine'
+					  ) }
 			</div>
 		);
 	};

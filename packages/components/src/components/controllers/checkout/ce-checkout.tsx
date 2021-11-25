@@ -191,6 +191,20 @@ export class CECheckout {
           'ce-align-full': this.alignment === 'full',
         }}
       >
+        <ce-alert
+          type="danger"
+          onCeShow={e => {
+            const target = e.target as HTMLElement;
+            target.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start',
+              inline: 'nearest',
+            });
+          }}
+          open={!!this.errorMessage()}
+        >
+          <span slot="title">{this.errorMessage()}</span>
+        </ce-alert>
         <Universe.Provider state={this.state()}>
           <ce-session-provider
             checkoutSession={this.checkoutSession}
@@ -207,21 +221,6 @@ export class CECheckout {
             <slot />
           </ce-session-provider>
         </Universe.Provider>
-        <ce-alert
-          type="danger"
-          onCeShow={e => {
-            console.log(e);
-            const target = e.target as HTMLElement;
-            target.scrollIntoView({
-              behavior: 'smooth',
-              block: 'start',
-              inline: 'nearest',
-            });
-          }}
-          open={!!this.errorMessage()}
-        >
-          <span slot="title">{this.errorMessage()}</span>
-        </ce-alert>
       </div>
     );
   }

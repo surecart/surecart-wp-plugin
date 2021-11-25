@@ -64,7 +64,6 @@ export class CeStripePaymentRequest {
     this.elements = this.stripe.elements();
     this.paymentRequest = this.stripe.paymentRequest({
       country: this.country,
-      // requestShipping: true,
       requestPayerEmail: true,
       ...(this.getRequestObject() as PaymentRequestOptions),
     });
@@ -73,12 +72,13 @@ export class CeStripePaymentRequest {
   @Watch('checkoutSession')
   handleCheckoutSessionChange() {
     if (!this.paymentRequest) return;
+    if (this.pendingEvent) return;
     this.paymentRequest.update(this.getRequestObject());
   }
 
   @Watch('error')
   handleErrorChange() {
-    if (Object.keys(this.error || {}).length) {
+    if (this.pendingEvent) {
       this.pendingEvent.complete('error');
     }
   }
@@ -116,16 +116,6 @@ export class CeStripePaymentRequest {
         pending: true,
       },
       displayItems,
-      // `shippingOptions` is optional at this point:
-      // shippingOptions: [
-      //   // The first shipping option in this list appears as the default
-      //   // option in the browser payment interface.
-      //   {
-      //     id: 'free-shipping',
-      //     label: __('Free shipping', 'checkout_engine'),
-      //     amount: 0,
-      //   },
-      // ],
     };
   }
 
@@ -137,26 +127,26 @@ export class CeStripePaymentRequest {
     this.paymentRequest.on('paymentmethod', ev => {
       this.pendingEvent = ev;
       const { billing_details } = ev?.paymentMethod;
-      const { shippingAddress } = ev;
+      // const { shippingAddress } = ev;
 
       // update billing and shipping from paymentRequest
       this.ceFormSubmit.emit({
         email: ev?.payerEmail,
-        shipping_address: {
-          ...(shippingAddress?.name ? { name: shippingAddress?.name } : {}),
-          ...(shippingAddress?.addressLine?.[0] ? { line_1: shippingAddress?.addressLine?.[0] } : {}),
-          ...(shippingAddress?.addressLine?.[1] ? { line_2: shippingAddress?.addressLine?.[1] } : {}),
-          ...(shippingAddress?.city ? { city: shippingAddress?.city } : {}),
-          ...(shippingAddress?.country ? { country: shippingAddress?.country } : {}),
-          ...(shippingAddress?.postalCode ? { postal_code: shippingAddress?.postalCode } : {}),
-          ...(shippingAddress?.region ? { region: shippingAddress?.region } : {}),
-        },
+        // shipping_address: {
+        //   ...(shippingAddress?.name ? { name: shippingAddress?.name } : {}),
+        //   ...(shippingAddress?.addressLine?.[0] ? { line_1: shippingAddress?.addressLine?.[0] } : {}),
+        //   ...(shippingAddress?.addressLine?.[1] ? { line_2: shippingAddress?.addressLine?.[1] } : {}),
+        //   ...(shippingAddress?.city ? { city: shippingAddress?.city } : {}),
+        //   ...(shippingAddress?.country ? { country: shippingAddress?.country } : {}),
+        //   ...(shippingAddress?.postalCode ? { postal_code: shippingAddress?.postalCode } : {}),
+        //   ...(shippingAddress?.region ? { region: shippingAddress?.region } : {}),
+        // },
         billing_address: {
           ...(billing_details?.name ? { name: billing_details?.name } : {}),
           ...(billing_details?.address?.line_1 ? { line_1: billing_details?.address?.line_1 } : {}),
           ...(billing_details?.address?.line_2 ? { line_2: billing_details?.address?.line_2 } : {}),
           ...(billing_details?.address?.city ? { city: billing_details?.address?.city } : {}),
-          ...(billing_details?.address?.country ? { country: billing_details?.address?.city } : {}),
+          ...(billing_details?.address?.country ? { country: billing_details?.address?.country } : {}),
           ...(billing_details?.address?.postal_code ? { postal_code: billing_details?.address?.postal_code } : {}),
         },
       });

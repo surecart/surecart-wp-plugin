@@ -2,6 +2,7 @@ import { Component, h, Prop, Event, EventEmitter, Element, State, Watch, Listen 
 import { CheckoutSession, LineItemData, PriceChoice } from '../../../types';
 import { getSessionId, getURLLineItems, populateInputs } from './helpers/session';
 import { createOrUpdateSession, finalizeSession } from '../../../services/session';
+import { removeQueryArgs } from '@wordpress/url';
 
 @Component({
   tag: 'ce-session-provider',
@@ -107,6 +108,9 @@ export class CeSessionProvider {
       data = { ...data, ...e.detail };
     }
 
+    // first lets make sure the session is updated before we process it.
+    await this.loadUpdate(data);
+
     // first validate server-side and get key
     try {
       this.setState('FETCH');
@@ -199,6 +203,8 @@ export class CeSessionProvider {
     const line_items = getURLLineItems();
 
     if (line_items && line_items?.length) {
+      // remove line items from url
+      window.history.replaceState({}, document.title, removeQueryArgs(window.location.href, 'line_items'));
       return this.loadUpdate({ line_items });
     }
 
