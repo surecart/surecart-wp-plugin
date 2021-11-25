@@ -303,6 +303,8 @@ class SubscriptionsListTable extends ListTable {
 				return '<ce-tag type="success">' . __( 'Active', 'checkout_engine' ) . '</ce-tag>';
 			case 'canceled':
 				return '<ce-tag type="warning">' . __( 'Canceled', 'checkout_engine' ) . '</ce-tag>';
+			case 'trialing':
+				return '<ce-tag type="primary">' . __( 'Trialing', 'checkout_engine' ) . '</ce-tag>';
 			case 'draft':
 				return '<ce-tag>' . __( 'Draft', 'checkout_engine' ) . '</ce-tag>';
 		}
