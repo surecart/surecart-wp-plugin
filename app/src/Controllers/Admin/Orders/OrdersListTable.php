@@ -60,9 +60,9 @@ class OrdersListTable extends ListTable {
 	 */
 	protected function get_views() {
 		$stati = [
-			'paid'      => __( 'Paid', 'checkout_engine' ),
-			'finalized' => __( 'Pending Payment', 'checkout_engine' ),
-			'all'       => __( 'All', 'checkout_engine' ),
+			'complete'   => __( 'Complete', 'checkout_engine' ),
+			'incomplete' => __( 'Incomplete', 'checkout_engine' ),
+			'all'        => __( 'All', 'checkout_engine' ),
 		];
 
 		$link = \CheckoutEngine::getUrl()->index( 'orders' );
@@ -74,7 +74,7 @@ class OrdersListTable extends ListTable {
 				if ( $status === $_GET['status'] ) {
 					$current_link_attributes = ' class="current" aria-current="page"';
 				}
-			} elseif ( 'paid' === $status ) {
+			} elseif ( 'complete' === $status ) {
 				$current_link_attributes = ' class="current" aria-current="page"';
 			}
 
@@ -164,9 +164,15 @@ class OrdersListTable extends ListTable {
 	 * @return boolean|null
 	 */
 	public function getStatus() {
-		$status = $_GET['status'] ?? 'paid';
-		if ( $status === 'all' ) {
-			return [ 'paid', 'finalized', 'draft' ];
+		$status = $_GET['status'] ?? 'complete';
+		if ( 'complete' === $status ) {
+			return [ 'paid', 'completed' ];
+		}
+		if ( 'incomplete' === $status ) {
+			return [ 'finalized' ];
+		}
+		if ( 'all' === $status ) {
+			return [];
 		}
 		return $status ? [ sanitize_text_field( $status ) ] : [];
 	}
@@ -283,11 +289,11 @@ class OrdersListTable extends ListTable {
 	public function column_status( $order ) {
 		switch ( $order->status ) {
 			case 'paid':
-				return '<ce-tag type="success">' . __( 'Paid', 'checkout_engine' ) . '</ce-tag>';
+			case 'completed':
+				return '<ce-tag type="success">' . __( 'Complete', 'checkout_engine' ) . '</ce-tag>';
 			case 'finalized':
-				return '<ce-tag type="warning">' . __( 'Pending Payment', 'checkout_engine' ) . '</ce-tag>';
 			case 'draft':
-				return '<ce-tag>' . __( 'Draft', 'checkout_engine' ) . '</ce-tag>';
+				return '<ce-tag type="info">' . __( 'Draft', 'checkout_engine' ) . '</ce-tag>';
 		}
 		return $order->status;
 	}

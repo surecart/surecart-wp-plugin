@@ -95,9 +95,9 @@ export default () => {
 						</div>
 					</Definition>
 
-					<Definition title={ __( 'Active', 'checkout_engine' ) }>
+					{ /* <Definition title={ __( 'Active', 'checkout_engine' ) }>
 						<ArchiveToggle />
-					</Definition>
+					</Definition> */ }
 
 					{ formattedDiscount() && (
 						<Definition

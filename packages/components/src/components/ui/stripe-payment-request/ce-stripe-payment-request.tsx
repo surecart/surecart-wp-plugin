@@ -2,6 +2,7 @@ import { Component, Prop, State, h, Element, Watch, Event, EventEmitter } from '
 import { loadStripe } from '@stripe/stripe-js/pure';
 import { PaymentRequestOptions, Stripe } from '@stripe/stripe-js';
 import { openWormhole } from 'stencil-wormhole';
+import { createOrUpdateSession, finalizeSession } from '../../../services/session';
 import { CheckoutSession, Keys, LineItem, Prices, Product, ResponseError } from '../../../types';
 import { __ } from '@wordpress/i18n';
 
@@ -56,6 +57,7 @@ export class CeStripePaymentRequest {
 
   @Event() cePaid: EventEmitter<void>;
   @Event() cePayError: EventEmitter<any>;
+  @Event() ceSetState: EventEmitter<string>;
 
   private pendingEvent: any;
 
@@ -65,7 +67,7 @@ export class CeStripePaymentRequest {
     if (!this.keys.stripe) {
       return true;
     }
-    this.stripe = await loadStripe(this.keys.stripe);
+    this.stripe = await loadStripe(this.keys.stripe, { stripeAccount: this.keys.stripeAccountId });
     this.elements = this.stripe.elements();
     this.paymentRequest = this.stripe.paymentRequest({
       country: this.country,
@@ -138,15 +140,46 @@ export class CeStripePaymentRequest {
       return;
     }
 
-    this.paymentRequest.on('paymentmethod', ev => {
-      this.pendingEvent = ev;
-      const { billing_details } = ev?.paymentMethod;
-      const { shippingAddress } = ev;
+    const paymentRequestElement = this.elements.create('paymentRequestButton', {
+      paymentRequest: this.paymentRequest,
+      style: {
+        paymentRequestButton: {
+          theme: this.theme,
+        },
+      },
+    });
 
-      // update billing and shipping from paymentRequest
-      this.ceFormSubmit.emit({
+    // handle payment method.
+    this.paymentRequest.on('paymentmethod', e => this.handlePaymentMethod(e));
+
+    // mount button.
+    this.paymentRequest
+      .canMakePayment()
+      .then(result => {
+        if (!result) {
+          return;
+        }
+        paymentRequestElement.mount(this.request);
+        this.loaded = true;
+      })
+      .catch(e => {
+        console.error(e);
+      });
+  }
+
+  /** Handle the payment method. */
+  async handlePaymentMethod(ev) {
+    const { billing_details } = ev?.paymentMethod;
+    const { shippingAddress } = ev;
+    this.ceSetState.emit('FETCH');
+
+    try {
+      // update session with shipping/billing
+      (await createOrUpdateSession({
+        id: this.checkoutSession?.id,
         data: {
-          email: ev?.payerEmail,
+          email: billing_details?.email,
+          name: billing_details?.name,
           shipping_address: {
             ...(shippingAddress?.name ? { name: shippingAddress?.name } : {}),
             ...(shippingAddress?.addressLine?.[0] ? { line_1: shippingAddress?.addressLine?.[0] } : {}),
@@ -165,40 +198,36 @@ export class CeStripePaymentRequest {
             ...(billing_details?.address?.postal_code ? { postal_code: billing_details?.address?.postal_code } : {}),
           },
         },
-      });
-    });
+      })) as CheckoutSession;
 
-    const paymentRequestElement = this.elements.create('paymentRequestButton', {
-      paymentRequest: this.paymentRequest,
-      style: {
-        paymentRequestButton: {
-          theme: this.theme,
-        },
-      },
-    });
+      // finalize
+      const session = (await finalizeSession({
+        id: this.checkoutSession.id,
+        processor: 'stripe',
+      })) as CheckoutSession;
 
-    this.paymentRequest
-      .canMakePayment()
-      .then(result => {
-        if (!result) {
-          return;
-        }
-        paymentRequestElement.mount(this.request);
-        this.loaded = true;
-      })
-      .catch(e => {
-        console.error(e);
-      });
+      // confirm payment
+      await this.confirmPayment(session, ev);
+      // paid.
+      console.log('paid');
+      this.cePaid.emit();
+      // Report to the browser that the confirmation was successful, prompting
+      // it to close the browser payment method collection interface.
+      console.log('complete');
+      ev.complete('success');
+    } catch (e) {
+      console.error(e);
+      this.cePayError.emit(e);
+      ev.complete('fail');
+    } finally {
+      this.confirming = false;
+      this.ceSetState.emit('RESOLVE');
+    }
   }
 
-  @Watch('checkoutSession')
-  async confirmPayment(val: CheckoutSession) {
-    // must have a pending payment event.
-    if (!this.pendingEvent) return;
+  async confirmPayment(val: CheckoutSession, ev) {
     // must be finalized
     if (val?.status !== 'finalized') return;
-    // must be this payment method
-    if (this.paymentMethod !== 'stripe-payment-request') return;
     // must have a secret
     if (!val?.payment_intent?.external_client_secret) return;
     // must have an external intent id
@@ -209,54 +238,39 @@ export class CeStripePaymentRequest {
     if (this.confirming) return;
     this.confirming = true;
 
-    try {
-      let response;
-      if (val?.payment_intent?.external_type == 'setup') {
-        response = await this.confirmCardSetup(val.payment_intent.external_client_secret);
-      } else {
-        response = await this.confirmCardPayment(val.payment_intent.external_client_secret);
-      }
-      if (response?.error) {
-        throw response.error;
-      }
-
-      // Report to the browser that the confirmation was successful, prompting
-      // it to close the browser payment method collection interface.
-      this.pendingEvent.complete('success');
-      this.pendingEvent = null;
-
-      // Check if the PaymentIntent requires any actions and if so let Stripe.js
-      // handle the flow. If using an API version older than "2019-02-11"
-      // instead check for: `paymentIntent.status === "requires_source_action"`.
-      if (response.paymentIntent.status === 'requires_action') {
-        // Let Stripe.js handle the rest of the payment flow.
-        const result = await this.stripe.confirmCardPayment(val?.payment_intent?.external_client_secret);
-        // The payment failed -- ask your customer for a new payment method.
-        if (result.error) {
-          throw result.error;
-        }
-      }
-
-      // paid
-      this.cePaid.emit();
-    } catch (e) {
-      this.cePayError.emit(e);
-      if (e.message) {
-        this.error = e.message;
-      }
-    } finally {
-      this.confirming = false;
+    let response;
+    if (val?.payment_intent?.external_type == 'setup') {
+      response = await this.confirmCardSetup(val.payment_intent.external_client_secret, ev);
+    } else {
+      response = await this.confirmCardPayment(val.payment_intent.external_client_secret, ev);
     }
+    if (response?.error) {
+      throw response.error;
+    }
+    // Check if the PaymentIntent requires any actions and if so let Stripe.js
+    // handle the flow. If using an API version older than "2019-02-11"
+    // instead check for: `paymentIntent.status === "requires_source_action"`.
+    if (response?.paymentIntent?.status === 'requires_action' || response?.paymentIntent?.status === 'requires_source_action') {
+      // Let Stripe.js handle the rest of the payment flow.
+      const result = await this.stripe.confirmCardPayment(val?.payment_intent?.external_client_secret);
+      // The payment failed -- ask your customer for a new payment method.
+      if (result.error) {
+        throw result.error;
+      }
+      return result;
+    }
+
+    return response;
   }
 
   /** Confirm card payment. */
-  confirmCardPayment(secret) {
-    return this.stripe.confirmCardPayment(secret, { payment_method: this.pendingEvent.paymentMethod.id }, { handleActions: false });
+  confirmCardPayment(secret, ev) {
+    return this.stripe.confirmCardPayment(secret, { payment_method: ev.paymentMethod.id }, { handleActions: false });
   }
 
   /** Confirm card setup. */
-  confirmCardSetup(secret) {
-    return this.stripe.confirmCardSetup(secret, { payment_method: this.pendingEvent.paymentMethod.id }, { handleActions: false });
+  confirmCardSetup(secret, ev) {
+    return this.stripe.confirmCardSetup(secret, { payment_method: ev.paymentMethod.id }, { handleActions: false });
   }
 
   render() {

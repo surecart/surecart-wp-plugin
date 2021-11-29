@@ -1,6 +1,7 @@
 import { Component, h, Prop } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
 import { __ } from '@wordpress/i18n';
+import { CheckoutSession } from '../../../types';
 
 @Component({
   tag: 'ce-order-summary',
@@ -9,12 +10,52 @@ import { __ } from '@wordpress/i18n';
 })
 export class CEOrderSummary {
   @Prop() busy: boolean;
+  @Prop() checkoutSession: CheckoutSession;
   @Prop() loading: boolean;
   @Prop() empty: boolean;
+  @Prop() collapsible: boolean = false;
+  @Prop({ mutable: true }) collapsed: boolean;
+
+  handleClick(e) {
+    e.preventDefault();
+    this.collapsed = !this.collapsed;
+  }
+
+  renderHeader() {
+    // loading state
+    if (this.loading) {
+      return (
+        <ce-line-item>
+          <ce-skeleton slot="title" style={{ width: '120px', display: 'inline-block' }}></ce-skeleton>
+          <ce-skeleton slot="price" style={{ 'width': '70px', 'display': 'inline-block', '--border-radius': '6px' }}></ce-skeleton>
+          <ce-skeleton slot="currency" style={{ width: '30px', display: 'inline-block' }}></ce-skeleton>
+        </ce-line-item>
+      );
+    }
+
+    return (
+      <ce-line-item style={{ '--price-size': 'var(--ce-font-size-x-large)' }}>
+        <span class="collapse-link" slot="title" onClick={e => this.handleClick(e)}>
+          {this.collapsed ? __('Show Order Summary', 'checkout_engine') : __('Hide Order Summary', 'checkout_engine')}
+          <svg xmlns="http://www.w3.org/2000/svg" class="collapse-link__icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </span>
+        <span slot="description">
+          <slot name="description" />
+        </span>
+        <span slot="price">
+          <ce-total total={'total'}></ce-total>
+        </span>
+        <span slot="currency">{this.checkoutSession?.currency}</span>
+      </ce-line-item>
+    );
+  }
 
   render() {
     return (
-      <div class="summary">
+      <div class={{ 'summary': true, 'summary--collapsed': !!this.collapsed }}>
+        {this.collapsible && this.renderHeader()}
         <div
           class={{
             summary__content: true,

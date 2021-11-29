@@ -24,11 +24,12 @@
 
 ## Events
 
-| Event          | Description | Type                |
-| -------------- | ----------- | ------------------- |
-| `ceFormSubmit` |             | `CustomEvent<any>`  |
-| `cePaid`       |             | `CustomEvent<void>` |
-| `cePayError`   |             | `CustomEvent<any>`  |
+| Event          | Description | Type                  |
+| -------------- | ----------- | --------------------- |
+| `ceFormSubmit` |             | `CustomEvent<any>`    |
+| `cePaid`       |             | `CustomEvent<void>`   |
+| `cePayError`   |             | `CustomEvent<any>`    |
+| `ceSetState`   |             | `CustomEvent<string>` |
 
 
 ## Shadow Parts
@@ -43,12 +44,12 @@
 
 ### Used by
 
- - [ce-payment-request](../../controllers/payment-request)
+ - [ce-express-payment](../../controllers/express-payment)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-payment-request --> ce-stripe-payment-request
+  ce-express-payment --> ce-stripe-payment-request
   style ce-stripe-payment-request fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

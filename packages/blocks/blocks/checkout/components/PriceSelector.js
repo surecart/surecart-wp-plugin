@@ -17,7 +17,7 @@ export default ( { onSelect, createNew, ad_hoc } ) => {
 			const queryArgs = [
 				'root',
 				'product',
-				{ query, expand: [ 'prices' ] },
+				{ query, expand: [ 'prices' ], archived: false },
 			];
 			return {
 				products: select( coreStore ).getEntityRecords( ...queryArgs ),

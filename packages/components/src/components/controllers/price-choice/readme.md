@@ -40,6 +40,7 @@
 ### Depends on
 
 - [ce-price-input](../../ui/price-input)
+- [ce-alert](../../ui/alert)
 - [ce-format-number](../../util/format-number)
 - [ce-choice](../../ui/choice)
 - [ce-skeleton](../../ui/skeleton)
@@ -49,6 +50,7 @@
 ```mermaid
 graph TD;
   ce-price-choice --> ce-price-input
+  ce-price-choice --> ce-alert
   ce-price-choice --> ce-format-number
   ce-price-choice --> ce-choice
   ce-price-choice --> ce-skeleton

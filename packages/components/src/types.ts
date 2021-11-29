@@ -155,6 +155,8 @@ export interface CheckoutSession extends Object {
   payment_intent?: PaymentIntent;
   discount_amount?: number;
   discount?: DiscountResponse;
+  billing_addresss?: Address;
+  shipping_addresss?: Address;
 }
 
 export interface Pagination {

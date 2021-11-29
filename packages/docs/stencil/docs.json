@@ -1,5 +1,5 @@
 {
-  "timestamp": "2021-11-26T18:07:18",
+  "timestamp": "2021-11-29T22:09:54",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.9.0",
@@ -172,7 +172,8 @@
       ],
       "dependents": [
         "ce-checkout",
-        "ce-coupon-form"
+        "ce-coupon-form",
+        "ce-price-choice"
       ],
       "dependencies": [],
       "dependencyGraph": {
@@ -180,6 +181,9 @@
           "ce-alert"
         ],
         "ce-coupon-form": [
+          "ce-alert"
+        ],
+        "ce-price-choice": [
           "ce-alert"
         ]
       }
@@ -1085,6 +1089,11 @@
           "passive": false
         },
         {
+          "event": "ceSetState",
+          "capture": false,
+          "passive": false
+        },
+        {
           "event": "ceAddEntities",
           "capture": false,
           "passive": false
@@ -1827,11 +1836,11 @@
         }
       ],
       "dependents": [
-        "ce-payment-request"
+        "ce-express-payment"
       ],
       "dependencies": [],
       "dependencyGraph": {
-        "ce-payment-request": [
+        "ce-express-payment": [
           "ce-divider"
         ]
       }
@@ -2297,6 +2306,71 @@
         ],
         "ce-form-control": [
           "ce-tooltip"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/controllers/express-payment/ce-express-payment.tsx",
+      "encapsulation": "none",
+      "tag": "ce-express-payment",
+      "readme": "# ce-payment-request\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "keys",
+          "type": "Keys",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "{\n    stripe: '',\n  }",
+          "values": [
+            {
+              "type": "Keys"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "processor",
+          "type": "\"paypal\" | \"stripe\"",
+          "mutable": false,
+          "attr": "processor",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "value": "paypal",
+              "type": "string"
+            },
+            {
+              "value": "stripe",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "ce-stripe-payment-request",
+        "ce-divider"
+      ],
+      "dependencyGraph": {
+        "ce-express-payment": [
+          "ce-stripe-payment-request",
+          "ce-divider"
         ]
       }
     },
@@ -3916,6 +3990,7 @@
         "ce-coupon-form",
         "ce-line-item-total",
         "ce-line-items",
+        "ce-order-summary",
         "ce-product-line-item"
       ],
       "dependencies": [],
@@ -3927,6 +4002,9 @@
           "ce-line-item"
         ],
         "ce-line-items": [
+          "ce-line-item"
+        ],
+        "ce-order-summary": [
           "ce-line-item"
         ],
         "ce-product-line-item": [
@@ -4519,6 +4597,25 @@
       }
     },
     {
+      "filePath": "./src/components/controllers/order-confirmation/ce-order-confirmation.tsx",
+      "encapsulation": "shadow",
+      "tag": "ce-order-confirmation",
+      "readme": "# ce-order-confirmation\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [],
+      "dependencyGraph": {}
+    },
+    {
       "filePath": "./src/components/controllers/order-summary/ce-order-summary.tsx",
       "encapsulation": "shadow",
       "tag": "ce-order-summary",
@@ -4535,6 +4632,54 @@
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "checkoutSession",
+          "type": "CheckoutSession",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "CheckoutSession"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "collapsed",
+          "type": "boolean",
+          "mutable": true,
+          "attr": "collapsed",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "collapsible",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "collapsible",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "false",
           "values": [
             {
               "type": "boolean"
@@ -4584,11 +4729,20 @@
       "parts": [],
       "dependents": [],
       "dependencies": [
+        "ce-line-item",
+        "ce-skeleton",
+        "ce-total",
         "ce-block-ui"
       ],
       "dependencyGraph": {
         "ce-order-summary": [
+          "ce-line-item",
+          "ce-skeleton",
+          "ce-total",
           "ce-block-ui"
+        ],
+        "ce-total": [
+          "ce-format-number"
         ],
         "ce-block-ui": [
           "ce-spinner"
@@ -4764,55 +4918,6 @@
         ],
         "ce-form-control": [
           "ce-tooltip"
-        ]
-      }
-    },
-    {
-      "filePath": "./src/components/controllers/payment-request/ce-payment-request.tsx",
-      "encapsulation": "none",
-      "tag": "ce-payment-request",
-      "readme": "# ce-payment-request\n\n\n",
-      "docs": "",
-      "docsTags": [],
-      "usage": {},
-      "props": [
-        {
-          "name": "processor",
-          "type": "\"paypal\" | \"stripe\"",
-          "mutable": false,
-          "attr": "processor",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "value": "paypal",
-              "type": "string"
-            },
-            {
-              "value": "stripe",
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        }
-      ],
-      "methods": [],
-      "events": [],
-      "listeners": [],
-      "styles": [],
-      "slots": [],
-      "parts": [],
-      "dependents": [],
-      "dependencies": [
-        "ce-stripe-payment-request",
-        "ce-divider"
-      ],
-      "dependencyGraph": {
-        "ce-payment-request": [
-          "ce-stripe-payment-request",
-          "ce-divider"
         ]
       }
     },
@@ -5122,6 +5227,7 @@
       "dependents": [],
       "dependencies": [
         "ce-price-input",
+        "ce-alert",
         "ce-format-number",
         "ce-choice",
         "ce-skeleton",
@@ -5130,6 +5236,7 @@
       "dependencyGraph": {
         "ce-price-choice": [
           "ce-price-input",
+          "ce-alert",
           "ce-format-number",
           "ce-choice",
           "ce-skeleton",
@@ -7147,6 +7254,7 @@
         "ce-coupon-form",
         "ce-line-item-total",
         "ce-line-items",
+        "ce-order-summary",
         "ce-price-choice",
         "ce-price-selector"
       ],
@@ -7159,6 +7267,9 @@
           "ce-skeleton"
         ],
         "ce-line-items": [
+          "ce-skeleton"
+        ],
+        "ce-order-summary": [
           "ce-skeleton"
         ],
         "ce-price-choice": [
@@ -7661,6 +7772,15 @@
           "composed": true,
           "docs": "",
           "docsTags": []
+        },
+        {
+          "event": "ceSetState",
+          "detail": "string",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
         }
       ],
       "listeners": [],
@@ -7677,11 +7797,11 @@
         }
       ],
       "dependents": [
-        "ce-payment-request"
+        "ce-express-payment"
       ],
       "dependencies": [],
       "dependencyGraph": {
-        "ce-payment-request": [
+        "ce-express-payment": [
           "ce-stripe-payment-request"
         ]
       }
@@ -8295,7 +8415,8 @@
       "slots": [],
       "parts": [],
       "dependents": [
-        "ce-line-item-total"
+        "ce-line-item-total",
+        "ce-order-summary"
       ],
       "dependencies": [
         "ce-format-number"
@@ -8305,6 +8426,9 @@
           "ce-format-number"
         ],
         "ce-line-item-total": [
+          "ce-total"
+        ],
+        "ce-order-summary": [
           "ce-total"
         ]
       }

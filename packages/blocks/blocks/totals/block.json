@@ -1,12 +1,19 @@
 {
-  "name": "checkout-engine/totals",
-  "title": "Totals",
-  "description": "Display the session totals.",
-  "category": "layout",
-  "keywords": ["totals", "summary"],
-  "supports": {
-    "reusable": false,
-    "html": false
-  },
-	"attributes": {}
+	"name": "checkout-engine/totals",
+	"title": "Totals",
+	"description": "Display the session totals.",
+	"category": "layout",
+	"keywords": [ "totals", "summary" ],
+	"supports": {
+		"reusable": false,
+		"html": false
+	},
+	"attributes": {
+		"collapsible": {
+			"type": "boolean"
+		},
+		"collapsed": {
+			"type": "boolean"
+		}
+	}
 }

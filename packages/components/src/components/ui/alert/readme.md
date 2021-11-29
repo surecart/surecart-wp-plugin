@@ -63,12 +63,14 @@ Type: `Promise<void>`
 
  - [ce-checkout](../../controllers/checkout)
  - [ce-coupon-form](../../controllers/coupon-form)
+ - [ce-price-choice](../../controllers/price-choice)
 
 ### Graph
 ```mermaid
 graph TD;
   ce-checkout --> ce-alert
   ce-coupon-form --> ce-alert
+  ce-price-choice --> ce-alert
   style ce-alert fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

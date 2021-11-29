@@ -232,7 +232,7 @@ export class CeSessionProvider {
 
   /** Add prices that are passed into the component. */
   addInitialPrices() {
-    if (!this?.prices.length) return [];
+    if (!this?.prices?.length) return [];
 
     // check for id
     if (this.prices.some(p => !p?.id)) {

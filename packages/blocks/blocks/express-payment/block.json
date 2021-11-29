@@ -1,7 +1,7 @@
 {
-	"name": "checkout-engine/payment-request",
-	"title": "Payment Request",
-	"description": "Display google/apply pay",
+	"name": "checkout-engine/express-payment",
+	"title": "Express Payment",
+	"description": "Display express payment options (Google Pay, Apple Pay, etc.)",
 	"category": "layout",
 	"keywords": [ "apple", "google", "android" ],
 	"supports": {

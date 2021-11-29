@@ -1,5 +1,5 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { CePaymentRequest } from '../ce-payment-request';
+import { CePaymentRequest } from '../ce-express-payment';
 
 describe('ce-payment-request', () => {
   it('renders', async () => {

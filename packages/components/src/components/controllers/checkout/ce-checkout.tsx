@@ -77,6 +77,7 @@ export class CECheckout {
 
   @Listen('cePaid')
   async handlePaid() {
+    console.log('paid');
     window.localStorage.removeItem(this.el.id);
     window.location.href = addQueryArgs(this.successUrl, { checkout_session: this.checkoutSession.id });
   }
@@ -87,6 +88,11 @@ export class CECheckout {
       code: '',
       message: 'Something went wrong with your payment.',
     };
+  }
+
+  @Listen('ceSetState')
+  handleSetStateEvent(e) {
+    this.setState(e.detail);
   }
 
   setState(name) {

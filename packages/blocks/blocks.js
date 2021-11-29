@@ -21,7 +21,8 @@ import * as title from './blocks/section-title';
 import * as totals from './blocks/totals';
 import * as name from './blocks/name';
 import * as payment from './blocks/payment';
-import * as paymentRequest from './blocks/payment-request';
+import * as expressPayment from './blocks/express-payment';
+import * as confirmation from './blocks/confirmation';
 import * as coupon from './blocks/coupon';
 import * as lineItems from './blocks/line-items';
 import * as button from './blocks/button';
@@ -49,7 +50,7 @@ export const ALLOWED_BLOCKS = [
 	'checkout-engine/switch',
 	'checkout-engine/name',
 	'checkout-engine/payment',
-	'checkout-engine/payment-request',
+	'checkout-engine/express-payment',
 	'checkout-engine/pricing-section',
 	'checkout-engine/totals',
 	'checkout-engine/form',
@@ -73,10 +74,10 @@ const registerBlock = ( block ) => {
 	registerBlockType(
 		{
 			...metadata,
-			parent:
-				typeof metadata?.parent !== 'undefined'
-					? metadata.parent
-					: BLOCK_PARENTS,
+			// parent:
+			// 	typeof metadata?.parent !== 'undefined'
+			// 		? metadata.parent
+			// 		: BLOCK_PARENTS,
 			text_domain: 'checkout_engine', // set our textdomain for everything.
 		},
 		{
@@ -96,8 +97,9 @@ export const registerCheckoutEngineBlocks = () => {
 		totals,
 		title,
 		submit,
+		confirmation,
 		payment,
-		paymentRequest,
+		expressPayment,
 		priceSelector,
 		priceChoice,
 		coupon,

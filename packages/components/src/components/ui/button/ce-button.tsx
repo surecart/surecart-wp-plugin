@@ -1,5 +1,6 @@
 import { Component, Prop, Event, EventEmitter, State, Element, h } from '@stencil/core';
 import Fragment from 'stencil-fragment';
+import { openWormhole } from 'stencil-wormhole';
 
 @Component({
   tag: 'ce-button',
@@ -222,3 +223,5 @@ export class CEButton {
     return isLink ? link : button;
   }
 }
+
+openWormhole(CEButton, ['loading'], false);

@@ -363,6 +363,10 @@ export namespace Components {
          */
         "value": string;
     }
+    interface CeExpressPayment {
+        "keys": Keys;
+        "processor": 'stripe' | 'paypal';
+    }
     interface CeForm {
         /**
           * Serializes all form controls elements and returns a `FormData` object.
@@ -672,8 +676,13 @@ export namespace Components {
     }
     interface CeMenuLabel {
     }
+    interface CeOrderConfirmation {
+    }
     interface CeOrderSummary {
         "busy": boolean;
+        "checkoutSession": CheckoutSession;
+        "collapsed": boolean;
+        "collapsible": boolean;
         "empty": boolean;
         "loading": boolean;
     }
@@ -710,9 +719,6 @@ export namespace Components {
           * Your stripe connected account id.
          */
         "stripeAccountId": string;
-    }
-    interface CePaymentRequest {
-        "processor": 'stripe' | 'paypal';
     }
     interface CePriceChoice {
         /**
@@ -1321,6 +1327,12 @@ declare global {
         prototype: HTMLCeEmailElement;
         new (): HTMLCeEmailElement;
     };
+    interface HTMLCeExpressPaymentElement extends Components.CeExpressPayment, HTMLStencilElement {
+    }
+    var HTMLCeExpressPaymentElement: {
+        prototype: HTMLCeExpressPaymentElement;
+        new (): HTMLCeExpressPaymentElement;
+    };
     interface HTMLCeFormElement extends Components.CeForm, HTMLStencilElement {
     }
     var HTMLCeFormElement: {
@@ -1411,6 +1423,12 @@ declare global {
         prototype: HTMLCeMenuLabelElement;
         new (): HTMLCeMenuLabelElement;
     };
+    interface HTMLCeOrderConfirmationElement extends Components.CeOrderConfirmation, HTMLStencilElement {
+    }
+    var HTMLCeOrderConfirmationElement: {
+        prototype: HTMLCeOrderConfirmationElement;
+        new (): HTMLCeOrderConfirmationElement;
+    };
     interface HTMLCeOrderSummaryElement extends Components.CeOrderSummary, HTMLStencilElement {
     }
     var HTMLCeOrderSummaryElement: {
@@ -1422,12 +1440,6 @@ declare global {
     var HTMLCePaymentElement: {
         prototype: HTMLCePaymentElement;
         new (): HTMLCePaymentElement;
-    };
-    interface HTMLCePaymentRequestElement extends Components.CePaymentRequest, HTMLStencilElement {
-    }
-    var HTMLCePaymentRequestElement: {
-        prototype: HTMLCePaymentRequestElement;
-        new (): HTMLCePaymentRequestElement;
     };
     interface HTMLCePriceChoiceElement extends Components.CePriceChoice, HTMLStencilElement {
     }
@@ -1575,6 +1587,7 @@ declare global {
         "ce-divider": HTMLCeDividerElement;
         "ce-dropdown": HTMLCeDropdownElement;
         "ce-email": HTMLCeEmailElement;
+        "ce-express-payment": HTMLCeExpressPaymentElement;
         "ce-form": HTMLCeFormElement;
         "ce-form-control": HTMLCeFormControlElement;
         "ce-form-row": HTMLCeFormRowElement;
@@ -1590,9 +1603,9 @@ declare global {
         "ce-menu-divider": HTMLCeMenuDividerElement;
         "ce-menu-item": HTMLCeMenuItemElement;
         "ce-menu-label": HTMLCeMenuLabelElement;
+        "ce-order-confirmation": HTMLCeOrderConfirmationElement;
         "ce-order-summary": HTMLCeOrderSummaryElement;
         "ce-payment": HTMLCePaymentElement;
-        "ce-payment-request": HTMLCePaymentRequestElement;
         "ce-price-choice": HTMLCePriceChoiceElement;
         "ce-price-choices": HTMLCePriceChoicesElement;
         "ce-price-input": HTMLCePriceInputElement;
@@ -2009,6 +2022,10 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
+    interface CeExpressPayment {
+        "keys"?: Keys;
+        "processor"?: 'stripe' | 'paypal';
+    }
     interface CeForm {
         /**
           * Prevent the form from validating inputs before submitting.
@@ -2332,8 +2349,13 @@ declare namespace LocalJSX {
     }
     interface CeMenuLabel {
     }
+    interface CeOrderConfirmation {
+    }
     interface CeOrderSummary {
         "busy"?: boolean;
+        "checkoutSession"?: CheckoutSession;
+        "collapsed"?: boolean;
+        "collapsible"?: boolean;
         "empty"?: boolean;
         "loading"?: boolean;
     }
@@ -2370,9 +2392,6 @@ declare namespace LocalJSX {
           * Your stripe connected account id.
          */
         "stripeAccountId"?: string;
-    }
-    interface CePaymentRequest {
-        "processor"?: 'stripe' | 'paypal';
     }
     interface CePriceChoice {
         /**
@@ -2874,6 +2893,7 @@ declare namespace LocalJSX {
         "onCeFormSubmit"?: (event: CustomEvent<any>) => void;
         "onCePaid"?: (event: CustomEvent<void>) => void;
         "onCePayError"?: (event: CustomEvent<any>) => void;
+        "onCeSetState"?: (event: CustomEvent<string>) => void;
         "paymentMethod"?: string;
         "prices"?: Prices;
         /**
@@ -2985,6 +3005,7 @@ declare namespace LocalJSX {
         "ce-divider": CeDivider;
         "ce-dropdown": CeDropdown;
         "ce-email": CeEmail;
+        "ce-express-payment": CeExpressPayment;
         "ce-form": CeForm;
         "ce-form-control": CeFormControl;
         "ce-form-row": CeFormRow;
@@ -3000,9 +3021,9 @@ declare namespace LocalJSX {
         "ce-menu-divider": CeMenuDivider;
         "ce-menu-item": CeMenuItem;
         "ce-menu-label": CeMenuLabel;
+        "ce-order-confirmation": CeOrderConfirmation;
         "ce-order-summary": CeOrderSummary;
         "ce-payment": CePayment;
-        "ce-payment-request": CePaymentRequest;
         "ce-price-choice": CePriceChoice;
         "ce-price-choices": CePriceChoices;
         "ce-price-input": CePriceInput;
@@ -3044,6 +3065,7 @@ declare module "@stencil/core" {
             "ce-divider": LocalJSX.CeDivider & JSXBase.HTMLAttributes<HTMLCeDividerElement>;
             "ce-dropdown": LocalJSX.CeDropdown & JSXBase.HTMLAttributes<HTMLCeDropdownElement>;
             "ce-email": LocalJSX.CeEmail & JSXBase.HTMLAttributes<HTMLCeEmailElement>;
+            "ce-express-payment": LocalJSX.CeExpressPayment & JSXBase.HTMLAttributes<HTMLCeExpressPaymentElement>;
             "ce-form": LocalJSX.CeForm & JSXBase.HTMLAttributes<HTMLCeFormElement>;
             "ce-form-control": LocalJSX.CeFormControl & JSXBase.HTMLAttributes<HTMLCeFormControlElement>;
             "ce-form-row": LocalJSX.CeFormRow & JSXBase.HTMLAttributes<HTMLCeFormRowElement>;
@@ -3059,9 +3081,9 @@ declare module "@stencil/core" {
             "ce-menu-divider": LocalJSX.CeMenuDivider & JSXBase.HTMLAttributes<HTMLCeMenuDividerElement>;
             "ce-menu-item": LocalJSX.CeMenuItem & JSXBase.HTMLAttributes<HTMLCeMenuItemElement>;
             "ce-menu-label": LocalJSX.CeMenuLabel & JSXBase.HTMLAttributes<HTMLCeMenuLabelElement>;
+            "ce-order-confirmation": LocalJSX.CeOrderConfirmation & JSXBase.HTMLAttributes<HTMLCeOrderConfirmationElement>;
             "ce-order-summary": LocalJSX.CeOrderSummary & JSXBase.HTMLAttributes<HTMLCeOrderSummaryElement>;
             "ce-payment": LocalJSX.CePayment & JSXBase.HTMLAttributes<HTMLCePaymentElement>;
-            "ce-payment-request": LocalJSX.CePaymentRequest & JSXBase.HTMLAttributes<HTMLCePaymentRequestElement>;
             "ce-price-choice": LocalJSX.CePriceChoice & JSXBase.HTMLAttributes<HTMLCePriceChoiceElement>;
             "ce-price-choices": LocalJSX.CePriceChoices & JSXBase.HTMLAttributes<HTMLCePriceChoicesElement>;
             "ce-price-input": LocalJSX.CePriceInput & JSXBase.HTMLAttributes<HTMLCePriceInputElement>;

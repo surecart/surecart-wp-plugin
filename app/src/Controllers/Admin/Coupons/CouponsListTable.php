@@ -289,8 +289,15 @@ class CouponsListTable extends ListTable {
 		<a class="row-title" aria-label="Edit Coupon" href="<?php echo esc_url( \CheckoutEngine::getUrl()->edit( 'coupon', $coupon->id ) ); ?>">
 			<?php echo esc_html_e( $coupon->name ); ?>
 		</a>
-				<?php
-				return ob_get_clean();
+
+		<?php
+		echo $this->row_actions(
+			[
+				'edit' => '<a href="' . esc_url( \CheckoutEngine::getUrl()->edit( 'coupon', $coupon->id ) ) . '" aria-label="' . esc_attr( 'Edit Coupon', 'checkout_engine' ) . '">' . __( 'Edit', 'checkout_engine' ) . '</a>',
+			],
+		);
+
+		return ob_get_clean();
 	}
 
 	/**
@@ -305,6 +312,26 @@ class CouponsListTable extends ListTable {
 			return __( 'No code specified', 'checkout_engine' );
 		}
 		return '<code>' . sanitize_text_field( $coupon->promotions->data[0]->code ) . '</code>';
+	}
+
+		/**
+		 * Toggle archive action link and text.
+		 *
+		 * @param \CheckoutEngine\Models\Product $product Product model.
+		 * @return string
+		 */
+	public function action_toggle_archive( $coupon ) {
+		$text            = $coupon->archived ? __( 'Un-Archive', 'checkout_engine' ) : __( 'Archive', 'checkout_engine' );
+		$confirm_message = $coupon->archived ? __( 'Are you sure you want to restore this coupon? This will be be available to purchase.', 'checkout_engine' ) : __( 'Are you sure you want to archive this coupon? This will be unavailable for purchase.', 'checkout_engine' );
+		$link            = \CheckoutEngine::getUrl()->toggleArchive( 'coupon', $coupon->id );
+
+		return sprintf(
+			'<a class="submitdelete" onclick="return confirm(\'%1s\')" href="%2s" aria-label="%3s">%4s</a>',
+			esc_attr( $confirm_message ),
+			esc_url( $link ),
+			esc_attr__( 'Toggle Coupon Archive', 'checkout_engine' ),
+			esc_html( $text )
+		);
 	}
 
 	/**

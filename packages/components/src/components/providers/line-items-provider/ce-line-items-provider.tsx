@@ -53,7 +53,7 @@ export class CeLineItemsProvider {
       const items = this.processSyncItems();
       this.ceUpdateLineItems.emit(items);
       this.syncItems = [];
-    }, 50);
+    }, 100);
   }
 
   /** Add item to sync */

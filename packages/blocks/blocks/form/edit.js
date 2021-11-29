@@ -16,12 +16,10 @@ import {
 	PanelBody,
 	Button,
 	SelectControl,
-	Dropdown,
 } from '@wordpress/components';
 
 import { createBlocksFromInnerBlocksTemplate } from '@wordpress/blocks';
 import * as templates from '../../templates';
-import SelectProduct from '../../components/SelectProduct';
 import Cart from './components/Cart';
 import Settings from './components/Settings';
 
@@ -41,10 +39,6 @@ export default function edit( { clientId, attributes, setAttributes } ) {
 			),
 			false
 		);
-	};
-
-	const onAddProduct = ( prices ) => {
-		setAttributes( { prices } );
 	};
 
 	return (

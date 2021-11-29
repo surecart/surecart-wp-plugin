@@ -18,12 +18,12 @@
 
 ### Used by
 
- - [ce-payment-request](../../controllers/payment-request)
+ - [ce-express-payment](../../controllers/express-payment)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-payment-request --> ce-divider
+  ce-express-payment --> ce-divider
   style ce-divider fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

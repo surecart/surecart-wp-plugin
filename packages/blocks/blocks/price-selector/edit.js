@@ -56,12 +56,6 @@ export default ( { attributes, setAttributes, clientId, isSelected } ) => {
 		};
 	} );
 
-	const priceAppender = () => (
-		<a href="#" className="" onClick={ insertPrice }>
-			{ __( 'Add Product', 'checkout_engine' ) }
-		</a>
-	);
-
 	const innerBlocksProps = useInnerBlocksProps(
 		{},
 		{
@@ -73,21 +67,6 @@ export default ( { attributes, setAttributes, clientId, isSelected } ) => {
 					: false,
 		}
 	);
-
-	// update children when type or children changes.
-	useEffect( () => {
-		if ( ! children.length ) {
-			insertPrice();
-		}
-		children.forEach( function ( child ) {
-			dispatch( blockEditorStore ).updateBlockAttributes(
-				child.clientId,
-				{
-					type,
-				}
-			);
-		} );
-	}, [ type, children ] );
 
 	// update children when type or children changes.
 	useEffect( () => {

@@ -1,20 +1,21 @@
 import { Component, h, Prop } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
+import { Keys } from '../../../types';
 
 @Component({
-  tag: 'ce-payment-request',
-  styleUrl: 'ce-payment-request.css',
+  tag: 'ce-express-payment',
+  styleUrl: 'ce-express-payment.css',
   shadow: false,
 })
-export class CePaymentRequest {
+export class CeExpressPayment {
+  sPayment;
   @Prop() processor: 'stripe' | 'paypal';
+  @Prop() keys: Keys = {
+    stripe: '',
+  };
 
   render() {
-    if (!this.processor) {
-      return;
-    }
-
-    if ('stripe' === this.processor) {
+    if (this.keys.stripe) {
       return (
         <ce-stripe-payment-request>
           <ce-divider style={{ '--spacing': 'var(--ce-spacing-small)' }}>
@@ -26,4 +27,4 @@ export class CePaymentRequest {
   }
 }
 
-openWormhole(CePaymentRequest, ['processor'], false);
+openWormhole(CeExpressPayment, ['keys'], false);

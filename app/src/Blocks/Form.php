@@ -13,7 +13,7 @@ class Form extends Block {
 	 *
 	 * @var array
 	 */
-	protected $parent = [ 'checkout-engine/checkout-form' ];
+	protected $parent = [ 'checkout-engine/checkout-form', '' ];
 	/**
 	 * Block attributes
 	 *

@@ -4,8 +4,11 @@
 import { __ } from '@wordpress/i18n';
 import {
 	InnerBlocks,
+	InspectorControls,
 	__experimentalUseInnerBlocksProps as useInnerBlocksProps,
 } from '@wordpress/block-editor';
+import { Fragment } from '@wordpress/element';
+import { PanelBody, PanelRow, ToggleControl } from '@wordpress/components';
 
 const ALLOWED_BLOCKS = [
 	'checkout-engine/coupon',
@@ -15,7 +18,9 @@ const ALLOWED_BLOCKS = [
 	'checkout-engine/subtotal',
 ];
 
-export default ( { isSelected } ) => {
+export default ( { isSelected, attributes, setAttributes } ) => {
+	const { collapsible, collapsed } = attributes;
+
 	const innerBlocksProps = useInnerBlocksProps(
 		{},
 		{
@@ -55,5 +60,45 @@ export default ( { isSelected } ) => {
 		}
 	);
 
-	return <ce-order-summary { ...innerBlocksProps }></ce-order-summary>;
+	return (
+		<Fragment>
+			<InspectorControls>
+				<PanelBody title={ __( 'Attributes', 'checkout-engine' ) }>
+					<PanelRow>
+						<ToggleControl
+							label={ __( 'Collapsible', 'checkout-engine' ) }
+							checked={ collapsible }
+							onChange={ ( collapsible ) => {
+								setAttributes( { collapsible } );
+								if ( ! collapsible ) {
+									setAttributes( { collapsed: false } );
+								}
+							} }
+						/>
+					</PanelRow>
+					<PanelRow>
+						<ToggleControl
+							label={ __(
+								'Collapsed By Default',
+								'checkout-engine'
+							) }
+							checked={ collapsed }
+							onChange={ ( collapsed ) => {
+								setAttributes( { collapsed } );
+								if ( collapsed ) {
+									setAttributes( { collapsible: true } );
+								}
+							} }
+						/>
+					</PanelRow>
+				</PanelBody>
+			</InspectorControls>
+
+			<ce-order-summary
+				collapsible={ collapsible }
+				collapsed={ collapsed }
+				{ ...innerBlocksProps }
+			></ce-order-summary>
+		</Fragment>
+	);
 };
