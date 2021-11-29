@@ -47,14 +47,19 @@ export class CeStripePaymentRequest {
 
   @Prop() error: ResponseError | null;
 
+  @Prop() paymentMethod: string;
+
   /** Has this loaded */
   @State() loaded: boolean = false;
 
   @Event() ceFormSubmit: EventEmitter<any>;
 
-  @Event() ceUpdateBillingAddress: EventEmitter<any>;
+  @Event() cePaid: EventEmitter<void>;
+  @Event() cePayError: EventEmitter<any>;
 
   private pendingEvent: any;
+
+  private confirming: boolean;
 
   async componentWillLoad() {
     if (!this.keys.stripe) {
@@ -64,7 +69,16 @@ export class CeStripePaymentRequest {
     this.elements = this.stripe.elements();
     this.paymentRequest = this.stripe.paymentRequest({
       country: this.country,
+      requestShipping: true,
       requestPayerEmail: true,
+      shippingOptions: [
+        {
+          id: 'free',
+          label: 'Free Shipping',
+          detail: 'No shipping required',
+          amount: 0,
+        },
+      ],
       ...(this.getRequestObject() as PaymentRequestOptions),
     });
   }
@@ -127,27 +141,29 @@ export class CeStripePaymentRequest {
     this.paymentRequest.on('paymentmethod', ev => {
       this.pendingEvent = ev;
       const { billing_details } = ev?.paymentMethod;
-      // const { shippingAddress } = ev;
+      const { shippingAddress } = ev;
 
       // update billing and shipping from paymentRequest
       this.ceFormSubmit.emit({
-        email: ev?.payerEmail,
-        // shipping_address: {
-        //   ...(shippingAddress?.name ? { name: shippingAddress?.name } : {}),
-        //   ...(shippingAddress?.addressLine?.[0] ? { line_1: shippingAddress?.addressLine?.[0] } : {}),
-        //   ...(shippingAddress?.addressLine?.[1] ? { line_2: shippingAddress?.addressLine?.[1] } : {}),
-        //   ...(shippingAddress?.city ? { city: shippingAddress?.city } : {}),
-        //   ...(shippingAddress?.country ? { country: shippingAddress?.country } : {}),
-        //   ...(shippingAddress?.postalCode ? { postal_code: shippingAddress?.postalCode } : {}),
-        //   ...(shippingAddress?.region ? { region: shippingAddress?.region } : {}),
-        // },
-        billing_address: {
-          ...(billing_details?.name ? { name: billing_details?.name } : {}),
-          ...(billing_details?.address?.line_1 ? { line_1: billing_details?.address?.line_1 } : {}),
-          ...(billing_details?.address?.line_2 ? { line_2: billing_details?.address?.line_2 } : {}),
-          ...(billing_details?.address?.city ? { city: billing_details?.address?.city } : {}),
-          ...(billing_details?.address?.country ? { country: billing_details?.address?.country } : {}),
-          ...(billing_details?.address?.postal_code ? { postal_code: billing_details?.address?.postal_code } : {}),
+        data: {
+          email: ev?.payerEmail,
+          shipping_address: {
+            ...(shippingAddress?.name ? { name: shippingAddress?.name } : {}),
+            ...(shippingAddress?.addressLine?.[0] ? { line_1: shippingAddress?.addressLine?.[0] } : {}),
+            ...(shippingAddress?.addressLine?.[1] ? { line_2: shippingAddress?.addressLine?.[1] } : {}),
+            ...(shippingAddress?.city ? { city: shippingAddress?.city } : {}),
+            ...(shippingAddress?.country ? { country: shippingAddress?.country } : {}),
+            ...(shippingAddress?.postalCode ? { postal_code: shippingAddress?.postalCode } : {}),
+            ...(shippingAddress?.region ? { region: shippingAddress?.region } : {}),
+          },
+          billing_address: {
+            ...(billing_details?.name ? { name: billing_details?.name } : {}),
+            ...(billing_details?.address?.line_1 ? { line_1: billing_details?.address?.line_1 } : {}),
+            ...(billing_details?.address?.line_2 ? { line_2: billing_details?.address?.line_2 } : {}),
+            ...(billing_details?.address?.city ? { city: billing_details?.address?.city } : {}),
+            ...(billing_details?.address?.country ? { country: billing_details?.address?.country } : {}),
+            ...(billing_details?.address?.postal_code ? { postal_code: billing_details?.address?.postal_code } : {}),
+          },
         },
       });
     });
@@ -181,39 +197,66 @@ export class CeStripePaymentRequest {
     if (!this.pendingEvent) return;
     // must be finalized
     if (val?.status !== 'finalized') return;
+    // must be this payment method
+    if (this.paymentMethod !== 'stripe-payment-request') return;
     // must have a secret
     if (!val?.payment_intent?.external_client_secret) return;
     // must have an external intent id
     if (!val?.payment_intent?.external_intent_id) return;
     // need an external_type
     if (!val?.payment_intent?.external_type) return;
-    // // prevent possible double-charges
-    // if (this.confirming) return;
+    // prevent possible double-charges
+    if (this.confirming) return;
+    this.confirming = true;
 
-    this.pendingEvent.complete('success');
-    this.pendingEvent = null;
+    try {
+      let response;
+      if (val?.payment_intent?.external_type == 'setup') {
+        response = await this.confirmCardSetup(val.payment_intent.external_client_secret);
+      } else {
+        response = await this.confirmCardPayment(val.payment_intent.external_client_secret);
+      }
+      if (response?.error) {
+        throw response.error;
+      }
 
-    // this.confirming = true;
-    // try {
-    //   let response;
-    //   if (val?.payment_intent?.external_type == 'setup') {
-    //     response = await this.confirmCardSetup(val.payment_intent.external_client_secret);
-    //   } else {
-    //     response = await this.confirmCardPayment(val.payment_intent.external_client_secret);
-    //   }
-    //   if (response?.error) {
-    //     throw response.error;
-    //   }
-    //   // paid
-    //   this.cePaid.emit();
-    // } catch (e) {
-    //   this.cePayError.emit(e);
-    //   if (e.message) {
-    //     this.error = e.message;
-    //   }
-    // } finally {
-    //   this.confirming = false;
-    // }
+      // Report to the browser that the confirmation was successful, prompting
+      // it to close the browser payment method collection interface.
+      this.pendingEvent.complete('success');
+      this.pendingEvent = null;
+
+      // Check if the PaymentIntent requires any actions and if so let Stripe.js
+      // handle the flow. If using an API version older than "2019-02-11"
+      // instead check for: `paymentIntent.status === "requires_source_action"`.
+      if (response.paymentIntent.status === 'requires_action') {
+        // Let Stripe.js handle the rest of the payment flow.
+        const result = await this.stripe.confirmCardPayment(val?.payment_intent?.external_client_secret);
+        // The payment failed -- ask your customer for a new payment method.
+        if (result.error) {
+          throw result.error;
+        }
+      }
+
+      // paid
+      this.cePaid.emit();
+    } catch (e) {
+      this.cePayError.emit(e);
+      if (e.message) {
+        this.error = e.message;
+      }
+    } finally {
+      this.confirming = false;
+    }
+  }
+
+  /** Confirm card payment. */
+  confirmCardPayment(secret) {
+    return this.stripe.confirmCardPayment(secret, { payment_method: this.pendingEvent.paymentMethod.id }, { handleActions: false });
+  }
+
+  /** Confirm card setup. */
+  confirmCardSetup(secret) {
+    return this.stripe.confirmCardSetup(secret, { payment_method: this.pendingEvent.paymentMethod.id }, { handleActions: false });
   }
 
   render() {
@@ -228,4 +271,4 @@ export class CeStripePaymentRequest {
   }
 }
 
-openWormhole(CeStripePaymentRequest, ['keys', 'checkoutSession', 'currencyCode', 'country', 'prices'], false);
+openWormhole(CeStripePaymentRequest, ['keys', 'checkoutSession', 'currencyCode', 'country', 'prices', 'paymentMethod'], false);

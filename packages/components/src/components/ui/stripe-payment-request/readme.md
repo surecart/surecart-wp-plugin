@@ -16,6 +16,7 @@
 | `error`           | --                  |                        | `ResponseError`                                                                                                                                                                                                                                                                                                                                                                                                                                                   | `undefined`             |
 | `keys`            | --                  | Stripe publishable key | `Keys`                                                                                                                                                                                                                                                                                                                                                                                                                                                            | `{     stripe: '',   }` |
 | `label`           | `label`             | Label                  | `string`                                                                                                                                                                                                                                                                                                                                                                                                                                                          | `'total'`               |
+| `paymentMethod`   | `payment-method`    |                        | `string`                                                                                                                                                                                                                                                                                                                                                                                                                                                          | `undefined`             |
 | `prices`          | --                  |                        | `{ [id: string]: { id: string; name: string; description?: string; amount: number; currency: string; recurring: boolean; recurring_interval?: "day" \| "week" \| "month" \| "year"; recurring_interval_count?: number; ad_hoc: boolean; ad_hoc_max_amount: number; ad_hoc_min_amount: number; archived: boolean; product_id?: string; archived_at?: string; created_at: number; updated_at: number; product?: string; metadata: { [key: string]: string; }; }; }` | `undefined`             |
 | `stripeAccountId` | `stripe-account-id` | Stripe account id      | `string`                                                                                                                                                                                                                                                                                                                                                                                                                                                          | `undefined`             |
 | `theme`           | `theme`             | Payment request theme  | `string`                                                                                                                                                                                                                                                                                                                                                                                                                                                          | `'dark'`                |
@@ -23,10 +24,11 @@
 
 ## Events
 
-| Event                    | Description | Type               |
-| ------------------------ | ----------- | ------------------ |
-| `ceFormSubmit`           |             | `CustomEvent<any>` |
-| `ceUpdateBillingAddress` |             | `CustomEvent<any>` |
+| Event          | Description | Type                |
+| -------------- | ----------- | ------------------- |
+| `ceFormSubmit` |             | `CustomEvent<any>`  |
+| `cePaid`       |             | `CustomEvent<void>` |
+| `cePayError`   |             | `CustomEvent<any>`  |
 
 
 ## Shadow Parts

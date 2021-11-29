@@ -22,7 +22,8 @@ export const Wrapper = css`
 				padding: 2em;
 
 				ce-price-choice[data-block] {
-					margin: 0 0 var( --ce-form-row-spacing, 0.75em ) 0;
+					margin-top: 15px !important;
+					margin-bottom: 15px !important;
 				}
 			}
 		}

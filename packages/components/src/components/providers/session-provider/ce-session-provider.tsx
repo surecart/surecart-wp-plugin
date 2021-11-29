@@ -104,8 +104,8 @@ export class CeSessionProvider {
     let data = this.parseFormData(json);
 
     // add additional data passed with event
-    if (Object.keys(e.detail || {})?.length) {
-      data = { ...data, ...e.detail };
+    if (Object.keys(e?.detail?.data || {})?.length) {
+      data = { ...data, ...e?.detail?.data };
     }
 
     // first lets make sure the session is updated before we process it.

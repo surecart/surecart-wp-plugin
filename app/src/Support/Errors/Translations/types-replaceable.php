@@ -16,4 +16,6 @@ return [
 	'recurring'    => __( '%s is not available with subscriptions.', 'checkout_engine' ),
 	// translators: attribute.
 	'max_interval' => __( '%s is too high.', 'checkout_engine' ),
+	// translators: attribute.
+	'archived'     => __( '%s is no longer purchasable.', 'checkout_engine' ),
 ];

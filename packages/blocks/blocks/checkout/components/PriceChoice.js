@@ -99,6 +99,7 @@ export default ( { choice, onUpdate, onSelect, onRemove, onNew } ) => {
 			>
 				{ ! choice?.id ? (
 					<PriceSelector
+						ad_hoc={ false }
 						createNew={ true }
 						onNewProduct={ onNew }
 						onSelect={ onSelect }

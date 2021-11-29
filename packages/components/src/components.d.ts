@@ -1153,6 +1153,7 @@ export namespace Components {
           * Label
          */
         "label": string;
+        "paymentMethod": string;
         "prices": Prices;
         /**
           * Stripe account id
@@ -2871,7 +2872,9 @@ declare namespace LocalJSX {
          */
         "label"?: string;
         "onCeFormSubmit"?: (event: CustomEvent<any>) => void;
-        "onCeUpdateBillingAddress"?: (event: CustomEvent<any>) => void;
+        "onCePaid"?: (event: CustomEvent<void>) => void;
+        "onCePayError"?: (event: CustomEvent<any>) => void;
+        "paymentMethod"?: string;
         "prices"?: Prices;
         /**
           * Stripe account id

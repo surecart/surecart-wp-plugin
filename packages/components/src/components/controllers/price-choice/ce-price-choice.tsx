@@ -1,8 +1,9 @@
-import { Component, h, Prop, Event, EventEmitter, Watch, Fragment, State } from '@stencil/core';
+import { Component, h, Prop, Event, EventEmitter, Watch, Fragment, State, Host } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
 import { isPriceInCheckoutSession } from '../../../functions/line-items';
 import { translatedInterval } from '../../../functions/price';
 import { getPricesAndProducts } from '../../../services/fetch';
+import { __ } from '@wordpress/i18n';
 import { CheckoutSession, LineItemData, Price, Prices, Products, ResponseError } from '../../../types';
 
 @Component({
@@ -206,6 +207,17 @@ export class CePriceChoice {
     );
   }
 
+  renderEmpty() {
+    if (window?.wp?.blocks) {
+      return (
+        <ce-alert type="danger" open style={{ margin: '0px' }}>
+          {__('This product has been archived.', 'checkout_engine')}
+        </ce-alert>
+      );
+    }
+    return <Host style={{ display: 'none' }}></Host>;
+  }
+
   renderPrice() {
     if (this.price?.ad_hoc) {
       return <span slot="per">Name your price</span>;
@@ -232,7 +244,14 @@ export class CePriceChoice {
     }
 
     // we need an active price.
-    if (!this?.price?.id || this.price?.archived) return null;
+    if (!this?.price?.id || this.price?.archived) return this.renderEmpty();
+
+    // product needs to be active
+    if (typeof this.price.product === 'string') {
+      if (this.products?.[this.price?.product]?.archived) {
+        return this.renderEmpty();
+      }
+    }
 
     return (
       <Fragment>

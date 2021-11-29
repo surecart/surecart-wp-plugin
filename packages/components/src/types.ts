@@ -2,6 +2,7 @@ declare global {
   interface Window {
     wp: {
       apiFetch: any;
+      blocks: any;
     };
     checkout_engine: {
       root_url: string;

@@ -216,6 +216,12 @@ export default function edit( { clientId, attributes, setAttributes } ) {
 						style={ {
 							'--global--spacing-vertical': '0',
 						} }
+						css={ css`
+							> .wp-block {
+								margin-top: 30px !important;
+								margin-bottom: 30px !important;
+							}
+						` }
 						allowedBlocks={ ALLOWED_BLOCKS }
 						templateLock={ false }
 						renderAppender={

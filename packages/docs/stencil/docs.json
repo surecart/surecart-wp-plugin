@@ -1,5 +1,5 @@
 {
-  "timestamp": "2021-11-25T03:12:44",
+  "timestamp": "2021-11-26T18:07:18",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.9.0",
@@ -7558,6 +7558,22 @@
           "required": false
         },
         {
+          "name": "paymentMethod",
+          "type": "string",
+          "mutable": false,
+          "attr": "payment-method",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "prices",
           "type": "{ [id: string]: { id: string; name: string; description?: string; amount: number; currency: string; recurring: boolean; recurring_interval?: \"day\" | \"week\" | \"month\" | \"year\"; recurring_interval_count?: number; ad_hoc: boolean; ad_hoc_max_amount: number; ad_hoc_min_amount: number; archived: boolean; product_id?: string; archived_at?: string; created_at: number; updated_at: number; product?: string; metadata: { [key: string]: string; }; }; }",
           "mutable": false,
@@ -7629,7 +7645,16 @@
           "docsTags": []
         },
         {
-          "event": "ceUpdateBillingAddress",
+          "event": "cePaid",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        },
+        {
+          "event": "cePayError",
           "detail": "any",
           "bubbles": true,
           "cancelable": true,

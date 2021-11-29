@@ -72,7 +72,7 @@ export class CECheckout {
 
   @Listen('ceFormSubmit')
   handlePaymentModeChange(e) {
-    this.paymentMethod = e.detail;
+    this.paymentMethod = e?.detail?.payentMethod;
   }
 
   @Listen('cePaid')

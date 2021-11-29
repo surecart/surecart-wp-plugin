@@ -6,10 +6,7 @@
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import { useState, useEffect } from '@wordpress/element';
-import { Icon, external, menu, moreHorizontal, close } from '@wordpress/icons';
-import { Container, Draggable } from 'react-smooth-dnd';
-import { useSelect, select } from '@wordpress/data';
-import ToggleHeader from '../../../../../resources/scripts/admin/components/ToggleHeader';
+import { Icon, external, moreHorizontal, close } from '@wordpress/icons';
 
 import apiFetch from '@wordpress/api-fetch';
 import dotProp from 'dot-prop-immutable';
@@ -22,14 +19,9 @@ import {
 	CeMenuItem,
 } from '@checkout-engine/react';
 
-import {
-	CheckboxControl,
-	__experimentalNumberControl as NumberControl,
-} from '@wordpress/components';
+import { __experimentalNumberControl as NumberControl } from '@wordpress/components';
 
 import { css, jsx } from '@emotion/core';
-import { applyDrag } from '../../../utils/drag-drop';
-import { BLOCKS_STORE_KEY } from '../store';
 
 export default ( { attributes, setAttributes, choice } ) => {
 	// styles
@@ -40,7 +32,6 @@ export default ( { attributes, setAttributes, choice } ) => {
 	const muted = '--ce-color-gray-500';
 
 	const { prices } = attributes;
-	const [ isOpen, setIsOpen ] = useState( true );
 	const [ isLoading, setIsLoading ] = useState( false );
 	const [ pricesData, setPricesData ] = useState( [] );
 
