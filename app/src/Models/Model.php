@@ -418,7 +418,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 	 * @return this
 	 */
 	public function addToMetaData( $key, $data ) {
-		$this->setMetaDataAttributes( array_merge( $this->attributes['metadata'], [ $key => $data ] ) );
+		$this->setMetaDataAttributes( array_merge( $this->attributes['metadata'] ?? [], [ $key => $data ] ) );
 		return $this;
 	}
 

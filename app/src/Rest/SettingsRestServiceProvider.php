@@ -22,6 +22,7 @@ class SettingsRestServiceProvider extends RestServiceProvider implements RestSer
 	 * @return void
 	 */
 	public function registerRoutes() {
+		return;
 		register_rest_route(
 			"$this->name/v$this->version",
 			"$this->endpoint",
