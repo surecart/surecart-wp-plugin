@@ -34,6 +34,36 @@ class PageService {
 	}
 
 	/**
+	 * Adds status indicator for this website.
+	 *
+	 * @param array $states States array.
+	 *
+	 * @return array States array with ours added
+	 */
+	public function displayDefaultPageStatuses( $states ) {
+		global $post;
+
+		// bail if not our post type.
+		if ( get_post_type( $post ) !== 'page' ) {
+			return $states;
+		}
+
+		if ( $post->ID === $this->getId( 'checkout' ) ) {
+			$states[] = __( 'Checkout Page', 'checkout_engine' );
+		}
+
+		if ( $post->ID === $this->getId( 'dashboard' ) ) {
+			$states[] = __( 'Customer Dashboard', 'checkout_engine' );
+		}
+
+		if ( $post->ID === $this->getId( 'order-confirmation' ) ) {
+			$states[] = __( 'Order Confirmation', 'checkout_engine' );
+		}
+
+		return $states;
+	}
+
+	/**
 	 * Find the post for a given option and post type
 	 *
 	 * @param string $option Option name.
@@ -56,6 +86,18 @@ class PageService {
 	public function url( $option, $post_type = 'page' ) {
 		$post = $this->get( $option, $post_type );
 		return get_permalink( $post );
+	}
+
+	/**
+	 * Find the post id for the given option and post type
+	 *
+	 * @param string $option Option name.
+	 * @param string $post_type Post type slug.
+	 *
+	 * @return integer
+	 */
+	public function getId( $option, $post_type = 'page' ) {
+		return (int) get_option( $this->getOptionName( $option, $post_type ) );
 	}
 
 	/**

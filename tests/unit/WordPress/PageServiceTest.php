@@ -53,4 +53,23 @@ class PageServiceTest extends CheckoutEngineUnitTestCase {
 		$another = $this->service->findOrCreate( 'test_slug', 'test_option', 'test_title', 'test_content', null, null, 'ce_form');
 		$this->assertSame( $created->ID, $another->ID );
 	}
+
+	public function test_displayDefaultPageStatuses()
+	{
+		global $post;
+		// checkout page.
+		$created = $this->service->findOrCreate( 'test_slug', 'checkout', 'test_title', 'test_content');
+		$post = $created;
+		$this->assertSame($this->service->displayDefaultPageStatuses([]), ['Checkout Page']);
+
+		// dashboard.
+		$created = $this->service->findOrCreate( 'test_slug', 'dashboard', 'test_title', 'test_content');
+		$post = $created;
+		$this->assertSame($this->service->displayDefaultPageStatuses([]), ['Customer Dashboard']);
+
+		// dashboard.
+		$created = $this->service->findOrCreate( 'test_slug', 'order-confirmation', 'test_title', 'test_content');
+		$post = $created;
+		$this->assertSame($this->service->displayDefaultPageStatuses([]), ['Order Confirmation']);
+	}
 }

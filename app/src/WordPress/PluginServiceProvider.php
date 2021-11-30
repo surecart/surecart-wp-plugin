@@ -31,6 +31,8 @@ class PluginServiceProvider implements ServiceProviderInterface {
 				return call_user_func_array( [ $container['checkout_engine.install'], 'install' ], func_get_args() );
 			}
 		);
+
+		add_action( 'display_post_states', [ $container['checkout_engine.pages'], 'displayDefaultPageStatuses' ] );
 	}
 
 	/**

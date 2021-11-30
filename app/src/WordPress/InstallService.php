@@ -127,12 +127,12 @@ class InstallService {
 				],
 				'order-confirmation' => [
 					'name'    => _x( 'order-confirmation', 'Page slug', 'checkout_engine' ),
-					'title'   => _x( 'Order Confirmation', 'Page title', 'checkout_engine' ),
+					'title'   => _x( 'Thank you!', 'Page title', 'checkout_engine' ),
 					'content' => '<!-- wp:checkout-engine/order-confirmation --> <!-- /wp:checkout-engine/order-confirmation -->',
 				],
 				'dashboard'          => [
 					'name'    => _x( 'customer-dashboard', 'Page slug', 'checkout_engine' ),
-					'title'   => _x( 'Customer Dashboard', 'Page title', 'checkout_engine' ),
+					'title'   => _x( 'Dashboard', 'Page title', 'checkout_engine' ),
 					'content' => '<!-- wp:checkout-engine/dashboard --> <!-- /wp:checkout-engine/dashboard -->',
 				],
 			)
