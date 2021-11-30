@@ -3,29 +3,31 @@ import { css, jsx } from '@emotion/core';
 
 import { __ } from '@wordpress/i18n';
 
-import { CeInput, CeFormControl } from '@checkout-engine/react';
-import { useState, Fragment } from '@wordpress/element';
-import {
-	FormFileUpload,
-	DropZone,
-	Button,
-	Spinner,
-} from '@wordpress/components';
+import { CeFormControl } from '@checkout-engine/react';
+import { useState, useEffect } from '@wordpress/element';
+import { FormFileUpload, DropZone, Spinner } from '@wordpress/components';
 import apiFetch from '@wordpress/api-fetch';
 import Box from '../../ui/Box';
 
 import useProductData from '../hooks/useProductData';
 import useValidationErrors from '../../hooks/useValidationErrors';
 import { DirectUpload } from '@rails/activestorage';
+import { dispatch } from '@wordpress/data';
 
 export default () => {
 	const { product, updateProduct, loading } = useProductData();
-	const { errors, getValidation } = useValidationErrors( 'products' );
-	const [ uploadId, setUploadId ] = useState( null );
 	const [ uploading, setUpLoading ] = useState( false );
+	const [ src, setSrc ] = useState( '' );
+
+	useEffect( () => {
+		if ( product?.image_url ) {
+			setSrc( product.image_url );
+		}
+	}, [ product?.image_url ] );
 
 	const uploadImage = async ( e ) => {
 		const file = e.currentTarget.files[ 0 ];
+		setSrc( URL.createObjectURL( file ) );
 		if ( ! file ) return;
 		try {
 			setUpLoading( true );
@@ -42,16 +44,15 @@ export default () => {
 				`${ ceData.app_url }uploads/${ id }/presign`
 			);
 
-			directUpload.create( ( error, blob ) => {
+			directUpload.create( async ( error, blob ) => {
 				if ( error ) {
-					// The file failed to upload.
-					console.log( error );
+					setUpLoading( false );
 				} else {
-					// The file has been uploaded, now you can set the upload_id on the corresponding object.
-					console.log( blob );
+					updateProduct( { image_upload_id: id } );
+					setUpLoading( false );
 				}
 			} );
-		} finally {
+		} catch ( e ) {
 			setUpLoading( false );
 		}
 	};
@@ -71,19 +72,65 @@ export default () => {
 			);
 		}
 
+		if ( src ) {
+			return (
+				<div
+					css={ css`
+						display: grid;
+						gap: 1em;
+					` }
+				>
+					<img
+						src={ src }
+						alt="product image"
+						css={ css`
+							max-width: 100%;
+							width: 380px;
+							aspect-ratio: 1/1;
+							object-fit: cover;
+							height: auto;
+							display: block;
+							border-radius: var( --ce-border-radius-medium );
+							background: #f3f3f3;
+						` }
+						onLoad={ () => URL.revokeObjectURL( src ) }
+					/>
+					<FormFileUpload
+						isSecondary
+						accept="image/*"
+						onChange={ uploadImage }
+					>
+						{ __( 'Replace Image', 'checkout_engine' ) }
+					</FormFileUpload>
+				</div>
+			);
+		}
+
 		return (
-			<Fragment>
+			<div
+				css={ css`
+					position: relative;
+					border: 2px dashed var( --ce-color-gray-200 );
+					border-radius: var( --ce-border-radius-small );
+					padding: 2em;
+					display: grid;
+					gap: 1em;
+					text-align: center;
+				` }
+			>
 				{ __(
 					'Drag and drop an image here or click to select a file.',
 					'checkout_engine'
 				) }
-				<FormFileUpload accept="image/*" onChange={ uploadImage }>
-					<Button isPrimary>
-						{ __( 'Upload File', 'checkout_engine' ) }
-					</Button>
+				<FormFileUpload
+					isPrimary
+					accept="image/*"
+					onChange={ uploadImage }
+				>
+					{ __( 'Upload File', 'checkout_engine' ) }
 				</FormFileUpload>
 				<DropZone onFilesDrop={ uploadImage } />
-			</Fragment>
+			</div>
 		);
 	};
 
@@ -96,19 +143,7 @@ export default () => {
 				label={ __( 'Product Image', 'checkout_engine' ) }
 				showLabel={ false }
 			>
-				<div
-					css={ css`
-						position: relative;
-						border: 2px dashed var( --ce-color-gray-200 );
-						border-radius: var( --ce-border-radius-small );
-						padding: 2em;
-						display: grid;
-						gap: 1em;
-						text-align: center;
-					` }
-				>
-					{ renderContent() }
-				</div>
+				{ renderContent() }
 			</CeFormControl>
 		</Box>
 	);

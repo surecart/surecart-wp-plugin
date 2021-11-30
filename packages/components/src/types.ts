@@ -77,6 +77,7 @@ export interface Product extends Object {
   description: string;
   archived: boolean;
   metadata: any;
+  image_url: string;
   prices: Array<Price>;
   created_at: number;
   updated_at: number;

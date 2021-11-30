@@ -73,7 +73,7 @@ export class CeLineItems {
           return (
             <ce-product-line-item
               key={item.id}
-              imageUrl={item?.price?.metadata?.wp_attachment_src}
+              imageUrl={(item?.price?.product as Product)?.image_url}
               name={this.getName(item)}
               editable={this.editable}
               removable={this.removable}
