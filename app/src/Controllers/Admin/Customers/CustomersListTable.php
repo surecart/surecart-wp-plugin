@@ -102,9 +102,9 @@ class CustomersListTable extends ListTable {
 	public function get_columns() {
 		return [
 			// 'cb'          => '<input type="checkbox" />',
-			'name'   => __( 'Name', 'checkout_engine' ),
-			'email'  => __( 'Email', 'checkout_engine' ),
-			'orders' => __( 'Orders', 'checkout_engine' ),
+			'name'  => __( 'Name', 'checkout_engine' ),
+			'email' => __( 'Email', 'checkout_engine' ),
+			// 'orders' => __( 'Orders', 'checkout_engine' ),
 			// 'description' => __( 'Description', 'checkout_engine' ),
 			// 'price'       => __( 'Price', 'checkout_engine' ),
 			// 'date'        => __( 'Date', 'checkout_engine' ),
@@ -152,7 +152,7 @@ class CustomersListTable extends ListTable {
 				'limit' => $this->get_items_per_page( 'customers' ),
 				'page'  => $this->get_pagenum(),
 			]
-		)->paginate();
+		)->with( [ 'checkout_sessions' ] )->paginate();
 	}
 
 	/**
@@ -165,24 +165,13 @@ class CustomersListTable extends ListTable {
 	}
 
 	/**
-	 * Handle the price column.
+	 * Handle the orders column.
 	 *
-	 * @param \CheckoutEngine\Models\Price $product Product model.
+	 * @param \CheckoutEngine\Models\Customer $customer Customer model.
 	 *
 	 * @return string
 	 */
-	public function column_price( $product ) {
-		if ( empty( $product->prices ) ) {
-			return '<ce-tag type="warning">' . __( 'No price', 'checkout_engine' ) . '</ce-tag>';
-		}
-
-		if ( ! empty( $product->prices[0]->amount ) ) {
-			$min_price = min( array_column( $product->prices, 'amount' ) );
-			$amount    = Currency::format( $min_price ) . ' <small style="opacity: 0.75;">' . strtoupper( esc_html( $product->prices[0]->currency ) ) . '</small>';
-			// translators: Price starting at.
-			return count( $product->prices ) > 1 ? sprintf( __( 'Starting at %s', 'checkout_engine' ), $amount ) : $amount;
-		}
-
+	public function column_orders( $customer ) {
 		return __( 'No price', 'checkout_engine' );
 	}
 
@@ -232,7 +221,6 @@ class CustomersListTable extends ListTable {
 		echo $this->row_actions(
 			[
 				'edit' => '<a href="' . esc_url( \CheckoutEngine::getUrl()->edit( 'customers', $customer->id ) ) . '" aria-label="' . esc_attr( 'Edit Customer', 'checkout_engine' ) . '">' . __( 'Edit', 'checkout_engine' ) . '</a>',
-				// 'trash' => $this->action_toggle_archive( $product ),
 			],
 		);
 		?>
