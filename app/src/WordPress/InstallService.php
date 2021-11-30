@@ -25,9 +25,9 @@ class InstallService {
 					'name'      => _x( 'checkout', 'Form slug', 'checkout_engine' ),
 					'title'     => _x( 'Checkout', 'Form title', 'checkout_engine' ),
 					'content'   => '<!-- wp:checkout-engine/form -->
-					<!-- wp:checkout-engine/payment-request -->
-					<ce-payment-request class="wp-block-checkout-engine-payment-request">or</ce-payment-request>
-					<!-- /wp:checkout-engine/payment-request -->
+					<!-- wp:checkout-engine/express-payment -->
+					<ce-express-payment class="wp-block-checkout-engine-express-payment">or</ce-express-payment>
+					<!-- /wp:checkout-engine/express-payment -->
 
 					<!-- wp:checkout-engine/section-title {"text":"Contact Information"} -->
 					<div class="wp-block-checkout-engine-section-title ce-section-title"><ce-text tag="h2" style="--font-size:var(--ce-form-title-font-size);--font-weight:var(--ce-form-title-font-weight);--color:var(--ce-form-title-font-color)">Contact Information</ce-text></div>

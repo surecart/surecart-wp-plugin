@@ -16,9 +16,10 @@ export default () => {
 	const renderBadge = ( status ) => {
 		switch ( status ) {
 			case 'paid':
+			case 'completed':
 				return (
 					<ce-tag type="success">
-						{ __( 'Paid', 'checkout_engine' ) }
+						{ __( 'Completed', 'checkout_engine' ) }
 					</ce-tag>
 				);
 			case 'finalized':

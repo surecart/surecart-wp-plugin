@@ -19,26 +19,8 @@ export default () => {
 		return <ce-skeleton></ce-skeleton>;
 	};
 
-	const renderRefund = (
-		<Fragment>
-			<div>
-				<CeButton>Refund</CeButton>
-			</div>
-			<div>
-				{ [ 'finalized', 'paid' ].includes( order?.status ) &&
-					__(
-						'This order is no longer editable',
-						'checkout_engine'
-					) }
-			</div>
-		</Fragment>
-	);
-
 	return (
-		<Box
-			title={ __( 'Order Details', 'checkout_engine' ) }
-			footer={ renderRefund }
-		>
+		<Box title={ __( 'Order Details', 'checkout_engine' ) }>
 			{ loading ? (
 				renderLoading()
 			) : (

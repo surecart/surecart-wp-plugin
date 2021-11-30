@@ -18,6 +18,7 @@ import useSnackbar from '../hooks/useSnackbar';
 import useOrderData from './hooks/useOrderData';
 import LineItems from './modules/LineItems';
 import Charges from './modules/Charges';
+import Subscriptions from './modules/Subscriptions';
 
 export default () => {
 	const { snackbarNotices, removeSnackbarNotice } = useSnackbar();
@@ -85,6 +86,7 @@ export default () => {
 				<Details />
 				<LineItems />
 				<Charges />
+				<Subscriptions />
 			</Fragment>
 		</Template>
 	);

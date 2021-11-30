@@ -67,4 +67,36 @@ export default {
 			yield controls.dispatch( store, 'setError', error );
 		}
 	},
+	*selectSubscriptions() {
+		// maybe get from url.
+		const id = yield controls.resolveSelect( store, 'selectPageId' );
+		if ( ! id ) return {};
+
+		const request = yield controls.resolveSelect(
+			store,
+			'prepareFetchRequest',
+			'subscriptions',
+			{
+				checkout_session_ids: [ id ],
+				expand: [
+					'subscription_items',
+					'subscription_items.price',
+					'subscription_items.price.product',
+				],
+			}
+		);
+
+		// fetch and normalize
+		try {
+			const subscriptions = yield apiFetch( request );
+			if ( ! subscriptions.length ) return;
+			console.log( { subscriptions } );
+			return yield controls.dispatch( store, 'addModels', {
+				subscriptions,
+			} );
+		} catch ( error ) {
+			// set critical error. We don't want to display the UI if we can't load the charges
+			yield controls.dispatch( store, 'setError', error );
+		}
+	},
 };
