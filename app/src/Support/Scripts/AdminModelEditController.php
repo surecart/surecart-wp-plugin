@@ -31,6 +31,13 @@ abstract class AdminModelEditController {
 	protected $dependencies = [ 'ce-core-data', 'ce-ui-data' ];
 
 	/**
+	 * Data to pass to the page.
+	 *
+	 * @var array
+	 */
+	protected $data = [];
+
+	/**
 	 * Optional conditionally load.
 	 */
 	protected function condition() {
@@ -89,18 +96,16 @@ abstract class AdminModelEditController {
 			$asset_file['version']
 		);
 
-		$data = [];
-
 		if ( in_array( 'currency', $this->with_data ) ) {
-			$data['currency_code'] = Account::find()->currency;
+			$this->data['currency_code'] = Account::find()->currency;
 		}
 		if ( in_array( 'supported_currencies', $this->with_data ) ) {
-			$data['supported_currencies'] = Currency::getSupportedCurrencies();
+			$this->data['supported_currencies'] = Currency::getSupportedCurrencies();
 		}
 		if ( in_array( 'links', $this->with_data ) ) {
-			$data['links'] = [];
+			$this->data['links'] = [];
 			foreach ( array_keys( \CheckoutEngine::getAdminPageNames() ) as $name ) {
-				$data['links'][ $name ] = esc_url_raw( add_query_arg( [ 'action' => 'edit' ], \CheckoutEngine::getUrl()->index( $name ) ) );
+				$this->data['links'][ $name ] = esc_url_raw( add_query_arg( [ 'action' => 'edit' ], \CheckoutEngine::getUrl()->index( $name ) ) );
 			}
 		}
 
@@ -108,7 +113,7 @@ abstract class AdminModelEditController {
 		wp_localize_script(
 			$this->handle,
 			'ceData',
-			$data
+			$this->data
 		);
 
 		// custom localizations.

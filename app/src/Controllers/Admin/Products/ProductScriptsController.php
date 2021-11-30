@@ -28,4 +28,11 @@ class ProductScriptsController extends AdminModelEditController {
 	 * @var string
 	 */
 	protected $path = 'admin/products';
+
+	/**
+	 * Add the app url to the data.
+	 */
+	public function __construct() {
+		$this->data['app_url'] = \CheckoutEngine::requests()->getBaseUrl();
+	}
 }

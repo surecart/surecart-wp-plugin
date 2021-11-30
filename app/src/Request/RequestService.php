@@ -50,8 +50,7 @@ class RequestService {
 		$this->base_path = $base_path;
 
 		// set the url.
-		$url            = $this->getBaseUrl( $mode );
-		$this->base_url = untrailingslashit( $url ) . trailingslashit( $this->base_path );
+		$this->base_url = $this->getBaseUrl( $mode );
 	}
 
 	/**
@@ -61,13 +60,19 @@ class RequestService {
 	 *
 	 * @return string
 	 */
-	public function getBaseUrl( $mode = 'live' ) {
+	public function getUrlRoot( $mode = 'live' ) {
 		switch ( $mode ) {
 			case 'staging':
 				return 'https://presto-pay-staging.herokuapp.com';
 			default:
 				return 'https://presto-pay-staging.herokuapp.com';
 		}
+	}
+
+	public function getBaseUrl( $mode = 'live' ) {
+		// set the url.
+		$url = $this->getUrlRoot( $mode );
+		return untrailingslashit( $url ) . trailingslashit( $this->base_path );
 	}
 
 	/**

@@ -9,6 +9,7 @@ import Box from '../ui/Box';
 import ArchiveToggle from './components/ArchiveToggle';
 import Definition from '../ui/Definition';
 import { CeButton } from '@checkout-engine/react';
+import Image from './modules/Image';
 
 export default ( { loading, product } ) => {
 	return (
@@ -71,6 +72,7 @@ export default ( { loading, product } ) => {
 					) }
 				</Fragment>
 			</Box>
+			<Image />
 			<Box
 				loading={ loading }
 				title={
