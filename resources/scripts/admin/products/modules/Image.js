@@ -5,14 +5,17 @@ import { __ } from '@wordpress/i18n';
 
 import { CeFormControl } from '@checkout-engine/react';
 import { useState, useEffect } from '@wordpress/element';
-import { FormFileUpload, DropZone, Spinner } from '@wordpress/components';
+import {
+	FormFileUpload,
+	DropZone,
+	Spinner,
+	Button,
+} from '@wordpress/components';
 import apiFetch from '@wordpress/api-fetch';
 import Box from '../../ui/Box';
 
 import useProductData from '../hooks/useProductData';
-import useValidationErrors from '../../hooks/useValidationErrors';
 import { DirectUpload } from '@rails/activestorage';
-import { dispatch } from '@wordpress/data';
 
 export default () => {
 	const { product, updateProduct, loading } = useProductData();
@@ -24,6 +27,15 @@ export default () => {
 			setSrc( product.image_url );
 		}
 	}, [ product?.image_url ] );
+
+	const onRemove = () => {
+		updateProduct( {
+			image_url: '',
+			purge_image: true,
+			image_upload_id: null,
+		} );
+		setSrc( '' );
+	};
 
 	const uploadImage = async ( e ) => {
 		const file = e.currentTarget.files[ 0 ];
@@ -95,13 +107,24 @@ export default () => {
 						` }
 						onLoad={ () => URL.revokeObjectURL( src ) }
 					/>
-					<FormFileUpload
-						isSecondary
-						accept="image/*"
-						onChange={ uploadImage }
+					<div
+						css={ css`
+							display: flex;
+							align-items: center;
+							gap: 0.5em;
+						` }
 					>
-						{ __( 'Replace Image', 'checkout_engine' ) }
-					</FormFileUpload>
+						<FormFileUpload
+							isSecondary
+							accept="image/*"
+							onChange={ uploadImage }
+						>
+							{ __( 'Replace', 'checkout_engine' ) }
+						</FormFileUpload>
+						<Button isTertiary onClick={ onRemove }>
+							{ __( 'Remove', 'checkout_engine' ) }
+						</Button>
+					</div>
 				</div>
 			);
 		}
