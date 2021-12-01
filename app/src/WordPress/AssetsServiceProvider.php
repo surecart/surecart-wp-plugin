@@ -42,6 +42,8 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 		// enqueue assets on front end and editor.
 		add_action( 'enqueue_block_editor_assets', [ $this, 'editorAssets' ] );
 		add_action( 'wp_enqueue_scripts', [ $this, 'frontAssets' ] );
+
+		add_action( 'admin_enqueue_scripts', [ $this, 'enqueueComponents' ] );
 	}
 
 	public function registerDependencies() {
@@ -154,6 +156,7 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 	 */
 	public function enqueueComponents() {
 		wp_enqueue_script( 'checkout-engine-components' );
+		wp_enqueue_style( 'checkout-engine-themes-default' );
 
 		wp_add_inline_script(
 			'wp-api-fetch',
