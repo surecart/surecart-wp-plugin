@@ -42,7 +42,6 @@ export const CePayment = /*@__PURE__*/createReactComponent<JSX.CePayment, HTMLCe
 export const CePriceChoice = /*@__PURE__*/createReactComponent<JSX.CePriceChoice, HTMLCePriceChoiceElement>('ce-price-choice');
 export const CePriceChoices = /*@__PURE__*/createReactComponent<JSX.CePriceChoices, HTMLCePriceChoicesElement>('ce-price-choices');
 export const CePriceInput = /*@__PURE__*/createReactComponent<JSX.CePriceInput, HTMLCePriceInputElement>('ce-price-input');
-export const CePriceSelector = /*@__PURE__*/createReactComponent<JSX.CePriceSelector, HTMLCePriceSelectorElement>('ce-price-selector');
 export const CeProductLineItem = /*@__PURE__*/createReactComponent<JSX.CeProductLineItem, HTMLCeProductLineItemElement>('ce-product-line-item');
 export const CeProvider = /*@__PURE__*/createReactComponent<JSX.CeProvider, HTMLCeProviderElement>('ce-provider');
 export const CePurchase = /*@__PURE__*/createReactComponent<JSX.CePurchase, HTMLCePurchaseElement>('ce-purchase');
