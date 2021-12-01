@@ -71,21 +71,21 @@ class CheckoutSessionRestServiceProvider extends RestServiceProvider implements 
 			// In JSON Schema you can specify object properties in the properties attribute.
 			'properties' => [
 				'id'         => [
-					'description' => esc_html__( 'Unique identifier for the object.', 'my-textdomain' ),
+					'description' => esc_html__( 'Unique identifier for the object.', 'checkout_engine' ),
 					'type'        => 'string',
 					'context'     => [ 'view', 'edit', 'embed' ],
 					'readonly'    => true,
 				],
 				'currency'   => [
-					'description' => esc_html__( 'The currency for the session.', 'my-textdomain' ),
+					'description' => esc_html__( 'The currency for the session.', 'checkout_engine' ),
 					'type'        => 'string',
 				],
 				'line_items' => [
-					'description' => esc_html__( 'The line items for the session.', 'my-textdomain' ),
+					'description' => esc_html__( 'The line items for the session.', 'checkout_engine' ),
 					'type'        => 'object',
 				],
 				'discount'   => [
-					'description' => esc_html__( 'The discount for the session.', 'my-textdomain' ),
+					'description' => esc_html__( 'The discount for the session.', 'checkout_engine' ),
 					'type'        => 'object',
 				],
 			],
@@ -130,6 +130,9 @@ class CheckoutSessionRestServiceProvider extends RestServiceProvider implements 
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function create_item_permissions_check( $request ) {
+		if ( ! $request['form_id'] ) {
+			return false;
+		}
 		return true;
 	}
 
