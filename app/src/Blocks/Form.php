@@ -23,6 +23,9 @@ class Form extends Block {
 		'prices' => [
 			'type' => 'array',
 		],
+		'mode'   => [
+			'type' => 'string',
+		],
 	];
 
 	/**
@@ -72,6 +75,8 @@ class Form extends Block {
 				'classes'     => $this->getClasses( $attributes ),
 				'description' => $attributes['description'] ?? '',
 				'content'     => $content,
+				'mode'        => $attributes['mode'] ?? get_option( 'checkout_engine_payment_mode', 'live' ),
+				'form_id'     => $ce_form_id,
 				'id'          => 'ce-checkout-' . $ce_form_id,
 				'prices'      => $attributes['prices'] ?? [],
 				'choice_type' => $attributes['choice_type'] ?? 'all',

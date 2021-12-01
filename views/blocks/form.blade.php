@@ -1,8 +1,10 @@
 <ce-checkout
 	class="checkout"
 	id="{{ $id }}"
+	form-id="{{ $form_id }}"
 	style="font-size: {{$font_size}}px"
     class="{{ $classes }}"
+	mode="{{ $mode }}"
 	alignment="{{$align}}"
 	choice-type="{{$choice_type}}"
 	success-url="<?php echo esc_url($success_url);?>">

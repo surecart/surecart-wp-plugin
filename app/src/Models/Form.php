@@ -25,10 +25,26 @@ class Form {
 	 * @param int|WP_Post $id Post object or id.
 	 * @return array
 	 */
-	protected function getProductIds( $id ) {
+	protected function getPriceIds( $id ) {
 		$this->post = get_post( $id );
 		$blocks     = parse_blocks( $this->post->post_content );
-		return $this->getNested( $blocks, 'product_id' );
+		return $this->getNested( $blocks, 'price_id' );
+	}
+
+	/**
+	 * Get the form's mode
+	 *
+	 * @param int|WP_Post $id Post object or id.
+	 * @return string
+	 */
+	protected function getMode( $id ) {
+		$this->post = get_post( $id );
+		$blocks     = parse_blocks( $this->post->post_content );
+		$form_block = $blocks[0] ?? false;
+		if ( ! $form_block || 'checkout-engine/form' !== $form_block['blockName'] ) {
+			return '';
+		}
+		return $form_block['attrs']['mode'] ?? 'live';
 	}
 
 	/**
@@ -57,18 +73,24 @@ class Form {
 	 * @param int|WP_Post Block post id.
 	 */
 	protected function getProducts( $id ) {
-		$ids = $this->getProductIds( $id );
+		$ids = $this->getPriceIds( $id );
 		// no products.
 		if ( empty( $ids ) ) {
 			return [];
 		}
 
-		// TODO: filter out choices here.
-		return Product::where(
+		// get prices with their product
+		$prices = Price::where(
 			[
 				'ids' => $ids,
 			]
-		)->get();
+		)->with( [ 'product' ] )->get();
+
+		$products = [];
+		foreach ( $prices as $price ) {
+			$products[] = $price->product;
+		}
+		return $products;
 	}
 
 	protected function getPosts( $id ) {

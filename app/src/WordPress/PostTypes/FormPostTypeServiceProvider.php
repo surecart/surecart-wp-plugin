@@ -47,7 +47,8 @@ class FormPostTypeServiceProvider implements ServiceProviderInterface {
 			array(
 				'title'     => $defaults['title'],
 				'public'    => __( 'Published In', 'checkout_engine' ),
-				'products'  => __( 'Included Products', 'checkout_engine' ),
+				'mode'      => __( 'Mode', 'checkout_engine' ),
+				// 'products'  => __( 'Included Products', 'checkout_engine' ),
 				'shortcode' => __( 'Shortcode', 'presto-player' ),
 			)
 		);
@@ -68,6 +69,25 @@ class FormPostTypeServiceProvider implements ServiceProviderInterface {
 		if ( 'products' === $column_name ) {
 			return $this->columnProducts( $post_ID );
 		}
+		if ( 'mode' === $column_name ) {
+			return $this->columnMode( $post_ID );
+		}
+	}
+
+	/**
+	 * Get the form's mode.
+	 *
+	 * @param int $post_ID
+	 * @return void
+	 */
+	public function columnMode( $post_ID ) {
+		$mode = Form::getMode( $post_ID );
+		if ( 'test' === $mode ) {
+			echo '<ce-tag type="warning">' . esc_html__( 'Test', 'checkout_engine' ) . '</ce-tag>';
+			return;
+		}
+
+		echo '<ce-tag type="success">' . esc_html__( 'Live', 'checkout_engine' ) . '</ce-tag>';
 	}
 
 	/**
