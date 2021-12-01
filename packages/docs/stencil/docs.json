@@ -1,5 +1,5 @@
 {
-  "timestamp": "2021-11-29T22:09:54",
+  "timestamp": "2021-12-01T16:15:32",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.9.0",
@@ -242,7 +242,6 @@
         "ce-coupon-form",
         "ce-order-summary",
         "ce-price-choices",
-        "ce-price-selector",
         "ce-purchase"
       ],
       "dependencies": [
@@ -262,9 +261,6 @@
           "ce-block-ui"
         ],
         "ce-price-choices": [
-          "ce-block-ui"
-        ],
-        "ce-price-selector": [
           "ce-block-ui"
         ],
         "ce-purchase": [
@@ -1399,15 +1395,11 @@
         }
       ],
       "dependents": [
-        "ce-price-choice",
-        "ce-price-selector"
+        "ce-price-choice"
       ],
       "dependencies": [],
       "dependencyGraph": {
         "ce-price-choice": [
-          "ce-choice"
-        ],
-        "ce-price-selector": [
           "ce-choice"
         ]
       }
@@ -1583,8 +1575,7 @@
         }
       ],
       "dependents": [
-        "ce-price-choices",
-        "ce-price-selector"
+        "ce-price-choices"
       ],
       "dependencies": [
         "ce-form-control"
@@ -1597,9 +1588,6 @@
           "ce-tooltip"
         ],
         "ce-price-choices": [
-          "ce-choices"
-        ],
-        "ce-price-selector": [
           "ce-choices"
         ]
       }
@@ -3121,7 +3109,6 @@
       "dependents": [
         "ce-coupon-form",
         "ce-price-choice",
-        "ce-price-selector",
         "ce-product-line-item",
         "ce-total"
       ],
@@ -3131,9 +3118,6 @@
           "ce-format-number"
         ],
         "ce-price-choice": [
-          "ce-format-number"
-        ],
-        "ce-price-selector": [
           "ce-format-number"
         ],
         "ce-product-line-item": [
@@ -5331,8 +5315,33 @@
         }
       ],
       "methods": [],
-      "events": [],
-      "listeners": [],
+      "events": [
+        {
+          "event": "ceRemoveLineItem",
+          "detail": "LineItemData",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Toggle line item event",
+          "docsTags": []
+        },
+        {
+          "event": "ceUpdateLineItem",
+          "detail": "LineItemData",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Toggle line item event",
+          "docsTags": []
+        }
+      ],
+      "listeners": [
+        {
+          "event": "ceChange",
+          "capture": false,
+          "passive": false
+        }
+      ],
       "styles": [],
       "slots": [],
       "parts": [],
@@ -5837,244 +5846,6 @@
         ],
         "ce-price-choice": [
           "ce-price-input"
-        ]
-      }
-    },
-    {
-      "filePath": "./src/components/controllers/price-selector/ce-price-selector.tsx",
-      "encapsulation": "shadow",
-      "tag": "ce-price-selector",
-      "readme": "# ce-price-selector\n\n\n",
-      "docs": "",
-      "docsTags": [],
-      "usage": {},
-      "props": [
-        {
-          "name": "busy",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "busy",
-          "reflectToAttr": false,
-          "docs": "Busy",
-          "docsTags": [],
-          "default": "false",
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "checkoutSession",
-          "type": "CheckoutSession",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "The current checkout session.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "CheckoutSession"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "choices",
-          "type": "PriceChoice[]",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "Choices to choose from",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "PriceChoice[]"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "columns",
-          "type": "number",
-          "mutable": false,
-          "attr": "columns",
-          "reflectToAttr": false,
-          "docs": "Number of columns",
-          "docsTags": [],
-          "default": "1",
-          "values": [
-            {
-              "type": "number"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "defaultChoice",
-          "type": "{ id: string; quantity: number; }",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "The default choice.",
-          "docsTags": [],
-          "default": "{ id: '', quantity: 1 }",
-          "values": [
-            {
-              "type": "{ id: string; quantity: number; }"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "label",
-          "type": "string",
-          "mutable": false,
-          "attr": "label",
-          "reflectToAttr": false,
-          "docs": "Selector label",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "prices",
-          "type": "{ [id: string]: { id: string; name: string; description?: string; amount: number; currency: string; recurring: boolean; recurring_interval?: \"day\" | \"week\" | \"month\" | \"year\"; recurring_interval_count?: number; ad_hoc: boolean; ad_hoc_max_amount: number; ad_hoc_min_amount: number; archived: boolean; product_id?: string; archived_at?: string; created_at: number; updated_at: number; product?: string; metadata: { [key: string]: string; }; }; }",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "Price entities",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "{ [id: string]: { id: string; name: string; description?: string; amount: number; currency: string; recurring: boolean; recurring_interval?: \"day\""
-            },
-            {
-              "value": "week",
-              "type": "string"
-            },
-            {
-              "value": "month",
-              "type": "string"
-            },
-            {
-              "type": "\"year\"; recurring_interval_count?: number; ad_hoc: boolean; ad_hoc_max_amount: number; ad_hoc_min_amount: number; archived: boolean; product_id?: string; archived_at?: string; created_at: number; updated_at: number; product?: string; metadata: { [key: string]: string; }; }; }"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "products",
-          "type": "{ [id: string]: Product; }",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "Product entity",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "{ [id: string]: Product; }"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "type",
-          "type": "\"checkbox\" | \"radio\"",
-          "mutable": false,
-          "attr": "type",
-          "reflectToAttr": true,
-          "docs": "Choice Type",
-          "docsTags": [],
-          "values": [
-            {
-              "value": "checkbox",
-              "type": "string"
-            },
-            {
-              "value": "radio",
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        }
-      ],
-      "methods": [],
-      "events": [
-        {
-          "event": "ceAddEntities",
-          "detail": "any",
-          "bubbles": true,
-          "cancelable": true,
-          "composed": true,
-          "docs": "Add entities",
-          "docsTags": []
-        },
-        {
-          "event": "ceRemoveLineItem",
-          "detail": "LineItemData",
-          "bubbles": true,
-          "cancelable": true,
-          "composed": true,
-          "docs": "Toggle line item event",
-          "docsTags": []
-        },
-        {
-          "event": "ceToggleLineItem",
-          "detail": "LineItemData",
-          "bubbles": true,
-          "cancelable": true,
-          "composed": true,
-          "docs": "Toggle line item event",
-          "docsTags": []
-        },
-        {
-          "event": "ceUpdateLineItem",
-          "detail": "LineItemData",
-          "bubbles": true,
-          "cancelable": true,
-          "composed": true,
-          "docs": "Toggle line item event",
-          "docsTags": []
-        }
-      ],
-      "listeners": [],
-      "styles": [],
-      "slots": [],
-      "parts": [],
-      "dependents": [],
-      "dependencies": [
-        "ce-choices",
-        "ce-skeleton",
-        "ce-choice",
-        "ce-format-number",
-        "ce-block-ui"
-      ],
-      "dependencyGraph": {
-        "ce-price-selector": [
-          "ce-choices",
-          "ce-skeleton",
-          "ce-choice",
-          "ce-format-number",
-          "ce-block-ui"
-        ],
-        "ce-choices": [
-          "ce-form-control"
-        ],
-        "ce-form-control": [
-          "ce-tooltip"
-        ],
-        "ce-block-ui": [
-          "ce-spinner"
         ]
       }
     },
@@ -7255,8 +7026,7 @@
         "ce-line-item-total",
         "ce-line-items",
         "ce-order-summary",
-        "ce-price-choice",
-        "ce-price-selector"
+        "ce-price-choice"
       ],
       "dependencies": [],
       "dependencyGraph": {
@@ -7273,9 +7043,6 @@
           "ce-skeleton"
         ],
         "ce-price-choice": [
-          "ce-skeleton"
-        ],
-        "ce-price-selector": [
           "ce-skeleton"
         ]
       }

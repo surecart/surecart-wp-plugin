@@ -38,7 +38,6 @@
  - [ce-line-items](../../controllers/line-items)
  - [ce-order-summary](../../controllers/order-summary)
  - [ce-price-choice](../../controllers/price-choice)
- - [ce-price-selector](../../controllers/price-selector)
 
 ### Graph
 ```mermaid
@@ -48,7 +47,6 @@ graph TD;
   ce-line-items --> ce-skeleton
   ce-order-summary --> ce-skeleton
   ce-price-choice --> ce-skeleton
-  ce-price-selector --> ce-skeleton
   style ce-skeleton fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

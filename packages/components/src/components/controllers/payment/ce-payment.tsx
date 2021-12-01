@@ -1,6 +1,7 @@
 import { Component, h, Prop, Host } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
 import { CheckoutSession, Keys } from '../../../types';
+import { __ } from '@wordpress/i18n';
 
 @Component({
   tag: 'ce-payment',
@@ -53,6 +54,13 @@ export class CePayment {
           <ce-secure-notice>
             <slot>{this.secureNotice}</slot>
           </ce-secure-notice>
+          {this.mode === 'test' && (
+            <div>
+              <ce-badge-notice type="warning" label={__('Test Mode', 'checkout_engine')}>
+                {__('In test mode, you can use the card number 4242424242424242 with any CVC and a valid expiration date.', 'checkout_engine')}
+              </ce-badge-notice>
+            </div>
+          )}
         </Host>
       );
     }

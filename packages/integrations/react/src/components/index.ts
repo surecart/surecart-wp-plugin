@@ -8,6 +8,7 @@ import type { JSX } from '@checkout-engine/components';
 
 
 export const CeAlert = /*@__PURE__*/createReactComponent<JSX.CeAlert, HTMLCeAlertElement>('ce-alert');
+export const CeBadgeNotice = /*@__PURE__*/createReactComponent<JSX.CeBadgeNotice, HTMLCeBadgeNoticeElement>('ce-badge-notice');
 export const CeBlockUi = /*@__PURE__*/createReactComponent<JSX.CeBlockUi, HTMLCeBlockUiElement>('ce-block-ui');
 export const CeButton = /*@__PURE__*/createReactComponent<JSX.CeButton, HTMLCeButtonElement>('ce-button');
 export const CeCard = /*@__PURE__*/createReactComponent<JSX.CeCard, HTMLCeCardElement>('ce-card');

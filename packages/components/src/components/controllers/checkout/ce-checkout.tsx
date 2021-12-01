@@ -20,6 +20,12 @@ export class CECheckout {
   /** An array of prices to pre-fill in the form. */
   @Prop() prices: Array<PriceChoice> = [];
 
+  /** Are we in test or live mode. */
+  @Prop() mode: 'test' | 'live' = 'live';
+
+  /** The checkout form id */
+  @Prop() formId: number;
+
   /** Currency to use for this checkout. */
   @Prop() currencyCode: string = 'usd';
 
@@ -164,6 +170,7 @@ export class CECheckout {
       products: this.productsEntities,
       prices: this.pricesEntities,
       country: 'US',
+      mode: this.mode,
       currencyCode: this.currencyCode,
       paymentMethod: this.paymentMethod,
       i18n: this.i18n,
@@ -217,6 +224,7 @@ export class CECheckout {
             prices={this.prices}
             persist={this.persistSession}
             setState={this._stateService.send}
+            form-id={this.formId}
             group-id={this.el.id}
             currency-code={this.currencyCode}
             onCeUpdateSession={e => (this.checkoutSession = e.detail)}

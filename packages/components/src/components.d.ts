@@ -33,6 +33,11 @@ export namespace Components {
          */
         "type": 'primary' | 'success' | 'info' | 'warning' | 'danger';
     }
+    interface CeBadgeNotice {
+        "label": string;
+        "size": 'small' | 'medium' | 'large';
+        "type": 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text';
+    }
     interface CeBlockUi {
         "transparent": boolean;
         "zIndex": number;
@@ -169,6 +174,10 @@ export namespace Components {
          */
         "customer": Customer;
         /**
+          * The checkout form id
+         */
+        "formId": number;
+        /**
           * Translation object.
          */
         "i18n": Object;
@@ -176,6 +185,10 @@ export namespace Components {
           * Publishable keys for providers
          */
         "keys": Keys;
+        /**
+          * Are we in test or live mode.
+         */
+        "mode": 'test' | 'live';
         /**
           * Where to go on success
          */
@@ -1033,6 +1046,10 @@ export namespace Components {
          */
         "currencyCode": string;
         /**
+          * The checkout form id
+         */
+        "formId": number;
+        /**
           * Group id
          */
         "groupId": string;
@@ -1216,6 +1233,12 @@ declare global {
     var HTMLCeAlertElement: {
         prototype: HTMLCeAlertElement;
         new (): HTMLCeAlertElement;
+    };
+    interface HTMLCeBadgeNoticeElement extends Components.CeBadgeNotice, HTMLStencilElement {
+    }
+    var HTMLCeBadgeNoticeElement: {
+        prototype: HTMLCeBadgeNoticeElement;
+        new (): HTMLCeBadgeNoticeElement;
     };
     interface HTMLCeBlockUiElement extends Components.CeBlockUi, HTMLStencilElement {
     }
@@ -1531,6 +1554,7 @@ declare global {
     };
     interface HTMLElementTagNameMap {
         "ce-alert": HTMLCeAlertElement;
+        "ce-badge-notice": HTMLCeBadgeNoticeElement;
         "ce-block-ui": HTMLCeBlockUiElement;
         "ce-button": HTMLCeButtonElement;
         "ce-card": HTMLCeCardElement;
@@ -1611,6 +1635,11 @@ declare namespace LocalJSX {
           * The type of alert.
          */
         "type"?: 'primary' | 'success' | 'info' | 'warning' | 'danger';
+    }
+    interface CeBadgeNotice {
+        "label"?: string;
+        "size"?: 'small' | 'medium' | 'large';
+        "type"?: 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text';
     }
     interface CeBlockUi {
         "transparent"?: boolean;
@@ -1752,6 +1781,10 @@ declare namespace LocalJSX {
          */
         "customer"?: Customer;
         /**
+          * The checkout form id
+         */
+        "formId"?: number;
+        /**
           * Translation object.
          */
         "i18n"?: Object;
@@ -1759,6 +1792,10 @@ declare namespace LocalJSX {
           * Publishable keys for providers
          */
         "keys"?: Keys;
+        /**
+          * Are we in test or live mode.
+         */
+        "mode"?: 'test' | 'live';
         /**
           * Where to go on success
          */
@@ -2697,6 +2734,10 @@ declare namespace LocalJSX {
          */
         "currencyCode"?: string;
         /**
+          * The checkout form id
+         */
+        "formId"?: number;
+        /**
           * Group id
          */
         "groupId"?: string;
@@ -2902,6 +2943,7 @@ declare namespace LocalJSX {
     }
     interface IntrinsicElements {
         "ce-alert": CeAlert;
+        "ce-badge-notice": CeBadgeNotice;
         "ce-block-ui": CeBlockUi;
         "ce-button": CeButton;
         "ce-card": CeCard;
@@ -2961,6 +3003,7 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "ce-alert": LocalJSX.CeAlert & JSXBase.HTMLAttributes<HTMLCeAlertElement>;
+            "ce-badge-notice": LocalJSX.CeBadgeNotice & JSXBase.HTMLAttributes<HTMLCeBadgeNoticeElement>;
             "ce-block-ui": LocalJSX.CeBlockUi & JSXBase.HTMLAttributes<HTMLCeBlockUiElement>;
             "ce-button": LocalJSX.CeButton & JSXBase.HTMLAttributes<HTMLCeButtonElement>;
             "ce-card": LocalJSX.CeCard & JSXBase.HTMLAttributes<HTMLCeCardElement>;

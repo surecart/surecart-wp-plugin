@@ -18,6 +18,9 @@ export class CeSessionProvider {
   /** Group id */
   @Prop() groupId: string;
 
+  /** The checkout form id */
+  @Prop() formId: number;
+
   /** An array of prices to pre-fill in the form. */
   @Prop() prices: Array<PriceChoice> = [];
 
@@ -117,6 +120,9 @@ export class CeSessionProvider {
       this.session = await finalizeSession({
         id: this.checkoutSession.id,
         data,
+        query: {
+          form_id: this.formId,
+        },
         processor: 'stripe',
       });
       if (this.session.status === 'finalized') {
@@ -289,6 +295,9 @@ export class CeSessionProvider {
         ...this.defaultFormData(),
         ...data,
       },
+      query: {
+        form_id: this.formId,
+      },
     })) as CheckoutSession;
   }
 
@@ -296,7 +305,7 @@ export class CeSessionProvider {
   async loadUpdate(data = {}) {
     try {
       this.setState('FETCH');
-      await this.update(data);
+      await this.update({ ...this.defaultFormData(), ...data });
       this.setState('RESOLVE');
     } catch (e) {
       this.handleErrorResponse(e);

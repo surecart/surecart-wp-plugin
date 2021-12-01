@@ -32,7 +32,6 @@
 ### Used by
 
  - [ce-price-choices](../../controllers/price-choices)
- - [ce-price-selector](../../controllers/price-selector)
 
 ### Depends on
 
@@ -44,7 +43,6 @@ graph TD;
   ce-choices --> ce-form-control
   ce-form-control --> ce-tooltip
   ce-price-choices --> ce-choices
-  ce-price-selector --> ce-choices
   style ce-choices fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

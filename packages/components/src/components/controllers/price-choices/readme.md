@@ -15,6 +15,14 @@
 | `required` | `required` | Required by default | `boolean` | `true`      |
 
 
+## Events
+
+| Event              | Description            | Type                        |
+| ------------------ | ---------------------- | --------------------------- |
+| `ceRemoveLineItem` | Toggle line item event | `CustomEvent<LineItemData>` |
+| `ceUpdateLineItem` | Toggle line item event | `CustomEvent<LineItemData>` |
+
+
 ## Dependencies
 
 ### Depends on
