@@ -21,7 +21,7 @@ abstract class RestController {
 	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function create( \WP_REST_Request $request ) {
-		return $this->class::where( $request->get_query_params() )->create( $request->get_params() );
+		return $this->class::where( $request->get_query_params() )->create( $request->get_body_params() );
 	}
 
 	/**
