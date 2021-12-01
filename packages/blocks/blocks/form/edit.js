@@ -22,9 +22,17 @@ import { createBlocksFromInnerBlocksTemplate } from '@wordpress/blocks';
 import * as templates from '../../templates';
 import Cart from './components/Cart';
 import Settings from './components/Settings';
+import Mode from './components/Mode';
 
 export default function edit( { clientId, attributes, setAttributes } ) {
-	const { align, className, prices, font_size, choice_type } = attributes;
+	const {
+		align,
+		className,
+		prices,
+		font_size,
+		choice_type,
+		mode,
+	} = attributes;
 	const [ tab, setTab ] = useState( '' );
 	const blockCount = useSelect( ( select ) =>
 		select( blockEditorStore ).getBlockCount( clientId )
@@ -62,7 +70,7 @@ export default function edit( { clientId, attributes, setAttributes } ) {
 								] }
 							/>
 							<Button isPrimary onClick={ changeTemplate }>
-								Change
+								{ __( 'Change', 'checkout_engine' ) }
 							</Button>
 						</div>
 					</PanelRow>
@@ -122,6 +130,10 @@ export default function edit( { clientId, attributes, setAttributes } ) {
 								align-items: center;
 							` }
 						>
+							<Mode
+								attributes={ attributes }
+								setAttributes={ setAttributes }
+							/>
 							<div
 								css={ css`
 									display: flex;
@@ -202,6 +214,7 @@ export default function edit( { clientId, attributes, setAttributes } ) {
 				</div>
 				<CeCheckout
 					keys={ ceData?.keys }
+					mode={ mode }
 					css={ css`
 						margin-top: 2em;
 						font-size: ${ font_size }px;
