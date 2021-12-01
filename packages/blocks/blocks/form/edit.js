@@ -69,7 +69,13 @@ export default function edit( { clientId, attributes, setAttributes } ) {
 				</PanelBody>
 			</InspectorControls>
 
-			<div>
+			<div
+				css={ css`
+					max-width: var( --ast-content-width-size, 910px );
+					margin-left: auto !important;
+					margin-right: auto !important;
+				` }
+			>
 				<div
 					css={ css`
 						padding: 10px 16px;
@@ -206,24 +212,24 @@ export default function edit( { clientId, attributes, setAttributes } ) {
 					choiceType={ choice_type }
 					prices={ prices }
 				>
-					<InnerBlocks
-						style={ {
-							'--global--spacing-vertical': '0',
-						} }
+					<div
 						css={ css`
-							> .wp-block {
+							.wp-block {
 								margin-top: 30px !important;
 								margin-bottom: 30px !important;
 							}
 						` }
-						allowedBlocks={ ALLOWED_BLOCKS }
-						templateLock={ false }
-						renderAppender={
-							blockCount
-								? undefined
-								: InnerBlocks.ButtonBlockAppender
-						}
-					/>
+					>
+						<InnerBlocks
+							allowedBlocks={ ALLOWED_BLOCKS }
+							templateLock={ false }
+							renderAppender={
+								blockCount
+									? undefined
+									: InnerBlocks.ButtonBlockAppender
+							}
+						/>
+					</div>
 				</CeCheckout>
 			</div>
 		</Fragment>
