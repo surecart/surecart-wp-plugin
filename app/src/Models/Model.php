@@ -11,6 +11,13 @@ use CheckoutEngine\Concerns\Arrayable;
  */
 abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 	/**
+	 * What mode to create the model in
+	 *
+	 * @var string
+	 */
+	protected $mode = 'live';
+
+	/**
 	 * Keeps track of booted models
 	 *
 	 * @var array
@@ -498,12 +505,42 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 	}
 
 	/**
+	 * Set the request mode (test or live).
+	 *
+	 * @param 'test'|'live' $mode Request mode.
+	 */
+	public function setMode( $mode ) {
+		$this->mode = $mode;
+	}
+
+	/**
+	 * Make the API request.
+	 *
+	 * @param array $args Array of arguments.
+	 *
+	 * @return Model
+	 */
+	private function makeRequest( $args = [] ) {
+		// TODO: maybe set test mode.
+
+		// Create the endpoint.
+		$endpoint = ! empty( $args['id'] ) ? $this->endpoint . '/' . $args['id'] : $this->endpoint;
+		unset( $args['id'] );
+
+		// add query vars.
+		$args['query'] = $this->query;
+
+		// make request.
+		return \CheckoutEngine::request( $endpoint, $args );
+	}
+
+	/**
 	 * Paginate results
 	 *
 	 * @return mixed
 	 */
 	protected function paginate() {
-		$items = \CheckoutEngine::request( $this->endpoint, [ 'query' => $this->query ] );
+		$items = $this->makeRequest( [ 'query' => $this->query ] );
 
 		if ( $this->isError( $items ) ) {
 			return $items;
@@ -518,7 +555,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 	 * @return array|\WP_Error;
 	 */
 	protected function get() {
-		$items = \CheckoutEngine::request( $this->endpoint, [ 'query' => $this->query ] );
+		$items = $this->makeRequest();
 
 		if ( $this->isError( $items ) ) {
 			return $items;
@@ -540,7 +577,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 	 * @return $this
 	 */
 	protected function find( $id = '' ) {
-		$attributes = \CheckoutEngine::request( $this->endpoint . '/' . $id, [ 'query' => $this->query ] );
+		$attributes = $this->makeRequest( [ 'id' => $id ] );
 
 		if ( $this->isError( $attributes ) ) {
 			return $attributes;
@@ -573,7 +610,11 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 			return $this;
 		}
 
-		$attributes = \CheckoutEngine::request( $this->endpoint . '/' . $this->attributes['id'], [ 'query' => $this->query ] );
+		$attributes = $this->makeRequest(
+			[
+				'id' => $this->attributes['id'],
+			]
+		);
 
 		if ( $this->isError( $attributes ) ) {
 			return $attributes;
@@ -633,14 +674,12 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 			$this->addToMetaData( 'wp_created_by', $user_id );
 		}
 
-		$created = \CheckoutEngine::request(
-			$this->endpoint,
+		$created = $this->makeRequest(
 			[
 				'method' => 'POST',
 				'body'   => [
 					$this->object_name => $this->toArray(),
 				],
-				'query'  => $this->query,
 			]
 		);
 
@@ -679,14 +718,13 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 		$attributes = $this->attributes;
 		unset( $attributes['id'] );
 
-		$updated = \CheckoutEngine::request(
-			$this->endpoint . '/' . $this->id,
+		$updated = $this->makeRequest(
 			[
+				'id'     => $this->id,
 				'method' => 'PATCH',
 				'body'   => [
 					$this->object_name => $attributes,
 				],
-				'query'  => $this->query,
 			]
 		);
 
@@ -715,11 +753,10 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 			return false;
 		}
 
-		$deleted = \CheckoutEngine::request(
-			$this->endpoint . '/' . $id,
+		$deleted = $this->makeRequest(
 			[
+				'id'     => $id,
 				'method' => 'DELETE',
-				'query'  => $this->query,
 			]
 		);
 
