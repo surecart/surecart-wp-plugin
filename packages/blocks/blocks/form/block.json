@@ -20,6 +20,10 @@
 		"choice_type": {
 			"enum": [ "all", "multiple", "single" ]
 		},
+		"mode": {
+			"enum": [ "test", "live" ],
+			"default": "live"
+		},
 		"prices": {
 			"type": "array"
 		}
