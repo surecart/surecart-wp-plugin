@@ -91,8 +91,6 @@ export class CEChoice {
       this.getSiblingChoices().map(choice => (choice.checked = false));
     }
     this.input.checked = this.checked;
-    // we only want to emit this once when a radio button is selected
-    this.ceChange.emit(this.input.checked);
   }
 
   handleClick() {
@@ -101,6 +99,8 @@ export class CEChoice {
     } else {
       this.checked = true;
     }
+    // we only want to emit this when an action is actually taken
+    this.ceChange.emit(this.input.checked);
   }
 
   handleBlur() {

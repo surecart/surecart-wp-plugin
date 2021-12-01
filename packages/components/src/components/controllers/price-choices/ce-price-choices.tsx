@@ -29,11 +29,13 @@ export class CePriceChoices {
 
   @Listen('ceChange')
   handleChange() {
-    this.el.querySelectorAll('ce-price-choice').forEach(choice => {
+    this.el.querySelectorAll('ce-price-choice').forEach(priceChoice => {
+      // get the underlying control
+      const choice = priceChoice.querySelector('ce-choice');
       if (!choice.checked) {
-        this.ceRemoveLineItem.emit({ price_id: choice.priceId, quantity: choice.quantity });
+        this.ceRemoveLineItem.emit({ price_id: priceChoice.priceId, quantity: priceChoice.quantity });
       } else {
-        this.ceUpdateLineItem.emit({ price_id: choice.priceId, quantity: choice.quantity });
+        this.ceUpdateLineItem.emit({ price_id: priceChoice.priceId, quantity: priceChoice.quantity });
       }
     });
   }

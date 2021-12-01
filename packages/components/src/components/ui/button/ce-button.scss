@@ -38,7 +38,7 @@
     outline: none;
   }
 
-  &.button--disabled:not(.button--busy) {
+  &.button--disabled {
 
     cursor: not-allowed;
 
@@ -232,18 +232,6 @@
       background-color: var(--ce-color-danger-500);
       border-color: var(--ce-color-danger-500);
       color: var(--ce-color-danger-text);
-    }
-
-    &.button--busy {
-      // Disable reason: This function call looks nicer when each argument is on its own line.
-      /* stylelint-disable */
-      background-image: linear-gradient(
-        -45deg,
-          var(--ce-color-danger-400) 33%,
-          var(--ce-color-danger-500) 33%,
-          var(--ce-color-danger-500) 70%,
-          var(--ce-color-danger-400) 70%
-      );
     }
   }
 }
@@ -531,9 +519,14 @@
 .button--busy {
   position: relative;
   cursor: wait;
-  animation: busy-animation 2500ms infinite linear;
-	opacity: 1;
-	background-size: 100px 100%;
+
+  .button__prefix,
+  .button__label,
+  .button__suffix,
+  .button__caret {
+    visibility: hidden;
+  }
+
    // When disabled, prevent mouse events from bubbling up
    * {
     pointer-events: none;

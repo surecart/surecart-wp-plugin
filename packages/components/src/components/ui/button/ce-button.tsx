@@ -105,7 +105,7 @@ export class CEButton {
   }
 
   handleClick(event: MouseEvent) {
-    if (this.disabled || this.loading) {
+    if (this.disabled || this.loading || this.busy) {
       event.preventDefault();
       event.stopPropagation();
     }
@@ -134,7 +134,7 @@ export class CEButton {
         ) : (
           ''
         )}
-        {this.loading ? <ce-spinner></ce-spinner> : ''}
+        {this.loading || this.busy ? <ce-spinner></ce-spinner> : ''}
       </Fragment>
     );
 
@@ -224,4 +224,4 @@ export class CEButton {
   }
 }
 
-openWormhole(CEButton, ['loading'], false);
+openWormhole(CEButton, ['loading', 'busy'], false);

@@ -138,27 +138,6 @@ export class CePriceChoice {
   /** Handle choice change. */
   handleChange(checked) {
     this.checked = checked;
-
-    // const inSession = this.isInCheckoutSession();
-
-    // // if in session and not checked
-    // if (inSession && !checked) {
-    //   this.ceRemoveLineItem.emit({ price_id: this.priceId, quantity: this.quantity });
-    //   return;
-    // }
-
-    // if (this.price?.ad_hoc) {
-    //   setTimeout(() => {
-    //     this.adHocInput.triggerFocus();
-    //   }, 50);
-    //   return;
-    // }
-
-    // // if checked and not yet in session
-    // if (!inSession && checked) {
-    //   this.ceUpdateLineItem.emit({ price_id: this.priceId, quantity: this.quantity });
-    //   return;
-    // }
   }
 
   /** Is this price in the checkout session. */
