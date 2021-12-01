@@ -514,6 +514,13 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 	}
 
 	/**
+	 * Get the current mode.
+	 */
+	public function getMode() {
+		return $this->mode;
+	}
+
+	/**
 	 * Make the API request.
 	 *
 	 * @param array $args Array of arguments.
@@ -521,8 +528,6 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 	 * @return Model
 	 */
 	private function makeRequest( $args = [] ) {
-		// TODO: maybe set test mode.
-
 		// Create the endpoint.
 		$endpoint = ! empty( $args['id'] ) ? $this->endpoint . '/' . $args['id'] : $this->endpoint;
 		unset( $args['id'] );
@@ -530,8 +535,8 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 		// add query vars.
 		$args['query'] = $this->query;
 
-		// make request.
-		return \CheckoutEngine::request( $endpoint, $args );
+		// make request in the correct mode.
+		return \CheckoutEngine::request( $endpoint, $args, $this->mode );
 	}
 
 	/**

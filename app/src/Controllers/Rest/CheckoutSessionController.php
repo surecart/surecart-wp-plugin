@@ -4,6 +4,7 @@ namespace CheckoutEngine\Controllers\Rest;
 
 use CheckoutEngine\Support\Errors;
 use CheckoutEngine\Models\CheckoutSession;
+use CheckoutEngine\Models\Form;
 
 /**
  * Handle price requests through the REST API
@@ -15,6 +16,31 @@ class CheckoutSessionController extends RestController {
 	 * @var string
 	 */
 	protected $class = CheckoutSession::class;
+
+	/**
+	 * Set the mode of the request before we run it.
+	 * We get this from the saved form
+	 *
+	 * @param \CheckoutEngine\Models\Model $class Model class instance.
+	 * @param \WP_REST_Request             $request Request object.
+	 *
+	 * @return \CheckoutEngine\Models\Model
+	 */
+	protected function middleware( \CheckoutEngine\Models\Model $class, \WP_REST_Request $request ) {
+		$mode = isset( $request['form_id'] ) ? $this->getFormMode( $request['form_id'] ) : 'live';
+		$class->setMode( apply_filters( 'checkout_engine/request/mode', $mode ?? 'live', $request ) );
+		return $class;
+	}
+
+	/**
+	 * Get the form mode
+	 *
+	 * @param integer $id ID of the form.
+	 * @return string Mode of the form.
+	 */
+	public function getFormMode( $id ) {
+		return Form::getMode( (int) $id );
+	}
 
 	/**
 	 * Get a session

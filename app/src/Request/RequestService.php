@@ -40,17 +40,26 @@ class RequestService {
 	/**
 	 * Constructor.
 	 *
-	 * @param string $token to make the request.
-	 * @param string $mode Request mode.
-	 * @param string $base_path The rest api base path
+	 * @param string $base_path The rest api base path.
 	 */
-	public function __construct( $token, $mode = 'live', $base_path = '/api/v1' ) {
-		$this->mode      = $mode;
-		$this->token     = $token;
+	public function __construct( $base_path = '/api/v1' ) {
+		// set the base path and url.
 		$this->base_path = $base_path;
+		$this->base_url  = $this->getBaseUrl();
+	}
 
-		// set the url.
-		$this->base_url = $this->getBaseUrl( $mode );
+	/**
+	 * The token to use for the request.
+	 *
+	 * @param string $mode The mode.
+	 *
+	 * @return string
+	 */
+	public function getToken( $mode = 'live' ) {
+		if ( 'test' === $mode ) {
+			return 'test_RiHtAnf4utLC5QJKBRDWJob5';
+		}
+		return 'test_RiHtAnf4utLC5QJKBRDWJob5';
 	}
 
 	/**
@@ -69,9 +78,11 @@ class RequestService {
 		}
 	}
 
-	public function getBaseUrl( $mode = 'live' ) {
-		// set the url.
-		$url = $this->getUrlRoot( $mode );
+	/**
+	 * Get the base url.
+	 */
+	public function getBaseUrl() {
+		$url = $this->getUrlRoot( 'live' );
 		return untrailingslashit( $url ) . trailingslashit( $this->base_path );
 	}
 
@@ -83,7 +94,7 @@ class RequestService {
 	 *
 	 * @return mixed
 	 */
-	public function makeRequest( $endpoint, $args = [] ) {
+	public function makeRequest( $endpoint, $args = [], $mode = 'live' ) {
 		// we cache this so we can request it several times.
 		$cache_key     = $endpoint . wp_json_encode( $args );
 		$response_body = wp_cache_get( $cache_key );
@@ -96,7 +107,8 @@ class RequestService {
 
 			// add auth.
 			if ( empty( $args['headers']['Authorization'] ) ) {
-				$args['headers']['Authorization'] = "Bearer $this->token";
+				$token                            = $this->getToken( $mode );
+				$args['headers']['Authorization'] = "Bearer $token";
 			}
 
 			// parse args.
@@ -130,7 +142,7 @@ class RequestService {
 			}
 
 			// make request.
-			$response = wp_remote_request( esc_url_raw( $url ), $args );
+			$response = $this->remoteRequest( $url, $args );
 
 			// bail early if it's a wp_error.
 			if ( is_wp_error( $response ) ) {
@@ -152,6 +164,19 @@ class RequestService {
 
 		// return response.
 		return apply_filters( 'checkout_engine/request/response', $response_body, $args, $endpoint );
+	}
+
+
+	/**
+	 * Make the remote request.
+	 *
+	 * @param string $url The url to request.
+	 * @param array  $args The args to pass to the request.
+	 *
+	 * @return mixed
+	 */
+	public function remoteRequest( $url, $args = [] ) {
+		return wp_remote_request( esc_url_raw( $url ), $args );
 	}
 
 	/**

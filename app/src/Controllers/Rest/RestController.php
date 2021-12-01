@@ -14,25 +14,39 @@ abstract class RestController {
 	protected $class = '';
 
 	/**
-	 * Create price
+	 * Run some middleware to run before request.
+	 *
+	 * @param \CheckoutEngine\Models\Model $class Model class instance.
+	 * @param \WP_REST_Request             $request Request object.
+	 *
+	 * @return \CheckoutEngine\Models\Model
+	 */
+	protected function middleware( \CheckoutEngine\Models\Model $class, \WP_REST_Request $request ) {
+		return apply_filters( 'checkout_engine/request/model', $class, $request );
+	}
+
+	/**
+	 * Create model.
 	 *
 	 * @param \WP_REST_Request $request Rest Request.
 	 *
 	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function create( \WP_REST_Request $request ) {
-		return $this->class::where( $request->get_query_params() )->create( $request->get_body_params() );
+		$model = $this->middleware( new $this->class(), $request );
+		return $model->where( $request->get_query_params() )->create( $request->get_body_params() );
 	}
 
 	/**
-	 * index
+	 * Index model.
 	 *
 	 * @param \WP_REST_Request $request Rest Request.
 	 *
 	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function index( \WP_REST_Request $request ) {
-		return $this->class::where( $request->get_params() )->get();
+		$model = $this->middleware( new $this->class(), $request );
+		return $model->where( $request->get_params() )->get();
 	}
 
 	/**
@@ -43,7 +57,8 @@ abstract class RestController {
 	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function find( \WP_REST_Request $request ) {
-		return $this->class::where( $request->get_query_params() )->find( $request['id'] );
+		$model = $this->middleware( new $this->class(), $request );
+		return $model->where( $request->get_query_params() )->find( $request['id'] );
 	}
 
 	/**
@@ -54,7 +69,8 @@ abstract class RestController {
 	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function edit( \WP_REST_Request $request ) {
-		return $this->class::where( $request->get_query_params() )->update( $request->get_params() );
+		$model = $this->middleware( new $this->class(), $request );
+		return $model->where( $request->get_query_params() )->update( $request->get_params() );
 	}
 
 	/**
@@ -65,6 +81,7 @@ abstract class RestController {
 	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function delete( \WP_REST_Request $request ) {
-		return $this->class::delete( $request['id'] );
+		$model = $this->middleware( new $this->class(), $request );
+		return $model->delete( $request['id'] );
 	}
 }

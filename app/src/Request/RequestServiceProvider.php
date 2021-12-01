@@ -18,9 +18,8 @@ class RequestServiceProvider implements ServiceProviderInterface {
 
 		$container['requests'] = function () {
 			// TODO: get these from database.
-			$mode  = 'staging';
-			$token = 'test_RiHtAnf4utLC5QJKBRDWJob5';
-			return new RequestService( $token, $mode );
+			$mode = 'staging';
+			return new RequestService();
 		};
 
 		$app->alias( 'requests', 'requests' );

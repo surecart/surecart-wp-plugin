@@ -6,7 +6,7 @@ use CheckoutEngine\Tests\CheckoutEngineUnitTestCase;
 use WP_REST_Request;
 
 class UploadsRestServiceProviderTest extends CheckoutEngineUnitTestCase {
-/**
+	/**
 	 * Set up a new app instance to use for tests.
 	 */
 	public function setUp()

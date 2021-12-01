@@ -12,6 +12,7 @@ abstract class CheckoutEngineUnitTestCase extends WP_UnitTestCase {
 	public function tearDown()
 	{
 	  parent::tearDown();
+	  \CheckoutEngine::setApplication( null );
 	  Mockery::close();
 	}
 
