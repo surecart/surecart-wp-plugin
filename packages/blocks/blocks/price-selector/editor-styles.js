@@ -11,8 +11,8 @@ export const Wrapper = css`
 		ce-price-choices {
 			transition: border 0.2s ease, padding 0.2s ease;
 
-			ce-price-choice[data-block] {
-				margin: 0;
+			ce-price-choice.wp-block {
+				margin: 0 !important;
 			}
 
 			&.has-child-selected,
