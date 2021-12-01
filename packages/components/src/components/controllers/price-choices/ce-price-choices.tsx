@@ -1,5 +1,6 @@
-import { Component, h, Prop, Fragment, Element } from '@stencil/core';
+import { Component, h, Prop, Fragment, Element, Listen, Event, EventEmitter } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
+import { LineItemData } from '../../../types';
 @Component({
   tag: 'ce-price-choices',
   styleUrl: 'ce-price-choices.css',
@@ -19,6 +20,23 @@ export class CePriceChoices {
 
   /** Required by default */
   @Prop() required: boolean = true;
+
+  /** Toggle line item event */
+  @Event() ceRemoveLineItem: EventEmitter<LineItemData>;
+
+  /** Toggle line item event */
+  @Event() ceUpdateLineItem: EventEmitter<LineItemData>;
+
+  @Listen('ceChange')
+  handleChange() {
+    this.el.querySelectorAll('ce-price-choice').forEach(choice => {
+      if (!choice.checked) {
+        this.ceRemoveLineItem.emit({ price_id: choice.priceId, quantity: choice.quantity });
+      } else {
+        this.ceUpdateLineItem.emit({ price_id: choice.priceId, quantity: choice.quantity });
+      }
+    });
+  }
 
   render() {
     return (

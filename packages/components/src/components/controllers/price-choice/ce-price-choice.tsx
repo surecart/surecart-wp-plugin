@@ -103,24 +103,10 @@ export class CePriceChoice {
 
   @Watch('checked')
   handleCheckedChange() {
-    const inSession = this.isInCheckoutSession();
-
-    // if in session and not checked
-    if (inSession && !this.checked) {
-      this.ceRemoveLineItem.emit({ price_id: this.priceId, quantity: this.quantity });
-      return;
-    }
-
-    if (this.price?.ad_hoc) {
+    if (this.price?.ad_hoc && this.checked) {
       setTimeout(() => {
         this.adHocInput.triggerFocus();
       }, 50);
-      return;
-    }
-
-    // if checked and not yet in session
-    if (!inSession && this.checked) {
-      this.ceUpdateLineItem.emit({ price_id: this.priceId, quantity: this.quantity });
       return;
     }
   }
