@@ -1,10 +1,10 @@
 {
 	"name": "checkout-engine/name",
 	"title": "Name",
-  "description": "Display a name collection field.",
+	"description": "Display a name collection field.",
 	"category": "layout",
-  "keywords": ["name", "customer"],
-  "supports": {
+	"keywords": [ "name", "customer" ],
+	"supports": {
 		"reusable": false,
 		"html": false
 	},
@@ -16,6 +16,9 @@
 		"help": {
 			"type": "string",
 			"default": "Optional"
+		},
+		"placeholder": {
+			"type": "string"
 		}
 	}
 }
