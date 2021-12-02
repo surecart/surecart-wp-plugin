@@ -1,11 +1,11 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { CEMenuDivider } from '../ce-menu-divider';
+import { CeText } from '../ce-text';
 
-describe('ce-menu-divider', () => {
+describe('ce-text', () => {
   it('renders', async () => {
     const page = await newSpecPage({
-      components: [CEMenuDivider],
-      html: `<ce-menu-divider></ce-menu-divider>`,
+      components: [CeText],
+      html: `<ce-text></ce-text>`,
     });
     expect(page.root).toMatchSnapshot();
   });

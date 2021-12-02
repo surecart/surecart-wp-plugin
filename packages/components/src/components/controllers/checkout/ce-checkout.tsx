@@ -223,7 +223,7 @@ export class CECheckout {
             checkoutSession={this.checkoutSession}
             prices={this.prices}
             persist={this.persistSession}
-            setState={this._stateService.send}
+            mode={this.mode}
             form-id={this.formId}
             group-id={this.el.id}
             currency-code={this.currencyCode}

@@ -4,7 +4,9 @@ exports[`ce-order-summary renders 1`] = `
 <ce-order-summary>
   <mock:shadow-root>
     <div class="summary">
-      <slot></slot>
+      <div class="summary__content">
+        <slot></slot>
+      </div>
     </div>
   </mock:shadow-root>
 </ce-order-summary>

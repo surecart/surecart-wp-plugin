@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ce-order-confirmation renders 1`] = `
+<ce-order-confirmation>
+  <mock:shadow-root>
+    <slot></slot>
+    <h1>
+      Work in Progress
+    </h1>
+  </mock:shadow-root>
+</ce-order-confirmation>
+`;

@@ -1,4 +1,4 @@
-import { calculateInitialLineItems, convertLineItemsToPriceIds, getSessionId } from '../index';
+import { calculateInitialLineItems, getSessionId } from '../index';
 
 const prices = [
   {
@@ -50,10 +50,6 @@ describe('Line items functions', () => {
     ]);
     expect(calculateInitialLineItems(prices, 'multiple')).toEqual([{ price_id: 'price1', quantity: 1 }]);
     expect(calculateInitialLineItems(prices, 'single')).toEqual([{ price_id: 'price1', quantity: 1 }]);
-  });
-
-  it('convertLineItemsToPriceIds', () => {
-    expect(convertLineItemsToPriceIds(lineItems)).toEqual(['price1', 'price2']);
   });
 
   describe('getSessionId', () => {

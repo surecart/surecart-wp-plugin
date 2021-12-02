@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ce-text renders 1`] = `
+<ce-text>
+  <mock:shadow-root>
+    <p class="title">
+      <slot></slot>
+    </p>
+  </mock:shadow-root>
+</ce-text>
+`;

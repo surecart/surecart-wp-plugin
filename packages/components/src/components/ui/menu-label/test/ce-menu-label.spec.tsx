@@ -7,12 +7,6 @@ describe('ce-menu-label', () => {
       components: [CeMenuLabel],
       html: `<ce-menu-label></ce-menu-label>`,
     });
-    expect(page.root).toEqualHtml(`
-      <ce-menu-label>
-        <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
-      </ce-menu-label>
-    `);
+    expect(page.root).toMatchSnapshot();
   });
 });

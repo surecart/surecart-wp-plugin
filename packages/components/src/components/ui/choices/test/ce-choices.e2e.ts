@@ -13,8 +13,8 @@ describe('ce-choices', () => {
     const page = await newE2EPage();
     await page.setContent(`
     <ce-choices>
-      <ce-choice name="test" value="test" checked></ce-choice>
-      <ce-choice name="test" value="test-2"></ce-choice>
+      <ce-choice type="radio" name="test" value="test" checked></ce-choice>
+      <ce-choice type="radio" name="test" value="test-2"></ce-choice>
     </ce-choices>
     `);
 

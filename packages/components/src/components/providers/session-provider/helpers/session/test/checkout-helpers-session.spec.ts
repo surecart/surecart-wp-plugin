@@ -2,10 +2,6 @@ import { getSessionId } from '../index';
 
 describe('Checkout session helpers', () => {
   describe('getSessionId', () => {
-    it('Should be able to refresh', async () => {
-      expect(getSessionId('asdf', { id: 'existing' }, true)).toBe(false);
-    });
-
     it('Should return the checkout session id if it already exists', async () => {
       expect(getSessionId('asdf', { id: 'existing' })).toBe('existing');
     });

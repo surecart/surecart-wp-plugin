@@ -2,6 +2,7 @@
 
 exports[`ce-price-choices renders 1`] = `
 <ce-price-choices>
-  <mock:shadow-root></mock:shadow-root>
+  <!---->
+  <ce-choices class="loaded price-selector" required="" style="--columns: 1;"></ce-choices>
 </ce-price-choices>
 `;

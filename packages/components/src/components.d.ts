@@ -1054,6 +1054,10 @@ export namespace Components {
          */
         "groupId": string;
         /**
+          * Are we in test or live mode.
+         */
+        "mode": 'test' | 'live';
+        /**
           * Should we persist the session.
          */
         "persist": boolean;
@@ -2742,13 +2746,17 @@ declare namespace LocalJSX {
          */
         "groupId"?: string;
         /**
+          * Are we in test or live mode.
+         */
+        "mode"?: 'test' | 'live';
+        /**
           * Update line items event
          */
         "onCeError"?: (event: CustomEvent<{ message: string; code?: string; data?: any; additional_errors?: any } | {}>) => void;
         /**
-          * Update line items event
+          * Set the state
          */
-        "onCeOnPaid"?: (event: CustomEvent<string>) => void;
+        "onCeSetState"?: (event: CustomEvent<string>) => void;
         /**
           * Update line items event
          */

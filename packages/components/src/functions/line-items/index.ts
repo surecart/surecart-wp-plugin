@@ -14,11 +14,6 @@ export const convertPriceChoiceToLineItemData = (choice: PriceChoice): LineItemD
   };
 };
 
-// convert line items to price ids
-export const convertLineItemsToPriceIds = (lineItems: RecursivePartial<lineItems>): Array<string> => {
-  return (lineItems?.data || []).map(item => item.price.id);
-};
-
 export const convertLineItemsToLineItemData = (
   lineItems: RecursivePartial<lineItems>,
 ): Array<{

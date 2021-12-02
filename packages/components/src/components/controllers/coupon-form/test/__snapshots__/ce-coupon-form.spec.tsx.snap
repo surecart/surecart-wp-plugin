@@ -4,9 +4,11 @@ exports[`ce-coupon-form renders 1`] = `
 <ce-coupon-form>
   <mock:shadow-root>
     <div class="coupon-form">
-      <div class="trigger"></div>
+      <div class="trigger">
+        <slot name="label"></slot>
+      </div>
       <div class="form">
-        <ce-input autofocus=""></ce-input>
+        <ce-input></ce-input>
         <ce-button full="" type="primary">
           <slot></slot>
         </ce-button>

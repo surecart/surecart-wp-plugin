@@ -7,12 +7,6 @@ describe('ce-order-confirmation', () => {
       components: [CeOrderConfirmation],
       html: `<ce-order-confirmation></ce-order-confirmation>`,
     });
-    expect(page.root).toEqualHtml(`
-      <ce-order-confirmation>
-        <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
-      </ce-order-confirmation>
-    `);
+    expect(page.root).toMatchSnapshot();
   });
 });

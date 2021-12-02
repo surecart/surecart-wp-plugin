@@ -18,6 +18,9 @@ export class CeSessionProvider {
   /** Group id */
   @Prop() groupId: string;
 
+  /** Are we in test or live mode. */
+  @Prop() mode: 'test' | 'live' = 'live';
+
   /** The checkout form id */
   @Prop() formId: number;
 
@@ -37,10 +40,10 @@ export class CeSessionProvider {
   @Event() ceUpdateSession: EventEmitter<CheckoutSession>;
 
   /** Update line items event */
-  @Event() ceOnPaid: EventEmitter<string>;
-
-  /** Update line items event */
   @Event() ceError: EventEmitter<{ message: string; code?: string; data?: any; additional_errors?: any } | {}>;
+
+  /** Set the state */
+  @Event() ceSetState: EventEmitter<string>;
 
   /** Holds the checkout session to update. */
   @State() session: CheckoutSession;
@@ -116,19 +119,19 @@ export class CeSessionProvider {
 
     // first validate server-side and get key
     try {
-      this.setState('FETCH');
+      this.ceSetState.emit('FETCH');
       this.session = await finalizeSession({
         id: this.checkoutSession.id,
         data,
         query: {
-          form_id: this.formId,
+          ...this.defaultFormQuery(),
         },
         processor: 'stripe',
       });
       if (this.session.status === 'finalized') {
-        this.setState('FETCH');
+        this.ceSetState.emit('FETCH');
       } else {
-        this.setState('RESOLVE');
+        this.ceSetState.emit('RESOLVE');
       }
     } catch (e) {
       if (e?.code === 'checkout_session.invalid_status_transition') {
@@ -147,12 +150,12 @@ export class CeSessionProvider {
 
   @Listen('cePaid')
   async handlePaid() {
-    this.setState('PAID');
+    this.ceSetState.emit('PAID');
   }
 
   @Listen('cePayError')
   async handlePayError() {
-    this.setState('REJECT');
+    this.ceSetState.emit('REJECT');
   }
 
   /** Handles coupon updates. */
@@ -171,14 +174,14 @@ export class CeSessionProvider {
   handleErrorResponse(e) {
     // expired
     if (e?.code === 'rest_cookie_invalid_nonce') {
-      this.setState('EXPIRE');
+      this.ceSetState.emit('EXPIRE');
       return;
     }
 
     // paid
     if (e?.code === 'readonly') {
       window.localStorage.removeItem(this.groupId);
-      this.setState('PAID');
+      this.ceSetState.emit('PAID');
       return;
     }
 
@@ -192,7 +195,7 @@ export class CeSessionProvider {
       this.ceError.emit({ message: 'Something went wrong. Please reload the page and try again.' });
     }
 
-    this.setState('REJECT');
+    this.ceSetState.emit('REJECT');
   }
 
   /** Default data always sent with the session. */
@@ -200,7 +203,14 @@ export class CeSessionProvider {
     return {
       return_url: window.location.href,
       currency: this.currencyCode,
+      live_mode: this.mode !== 'test',
       group_key: this.groupId,
+    };
+  }
+
+  defaultFormQuery() {
+    return {
+      form_id: this.formId,
     };
   }
 
@@ -296,7 +306,7 @@ export class CeSessionProvider {
         ...data,
       },
       query: {
-        form_id: this.formId,
+        ...this.defaultFormQuery(),
       },
     })) as CheckoutSession;
   }
@@ -304,9 +314,9 @@ export class CeSessionProvider {
   /** Updates a session with loading status changes. */
   async loadUpdate(data = {}) {
     try {
-      this.setState('FETCH');
+      this.ceSetState.emit('FETCH');
       await this.update({ ...this.defaultFormData(), ...data });
-      this.setState('RESOLVE');
+      this.ceSetState.emit('RESOLVE');
     } catch (e) {
       this.handleErrorResponse(e);
     }

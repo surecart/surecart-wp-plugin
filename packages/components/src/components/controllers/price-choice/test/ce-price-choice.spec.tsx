@@ -7,12 +7,6 @@ describe('ce-price-choice', () => {
       components: [CePriceChoice],
       html: `<ce-price-choice></ce-price-choice>`,
     });
-    expect(page.root).toEqualHtml(`
-      <ce-price-choice>
-        <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
-      </ce-price-choice>
-    `);
+    expect(page.root).toMatchSnapshot();
   });
 });

@@ -5,11 +5,11 @@ exports[`ce-product-line-item renders 1`] = `
   <mock:shadow-root>
     <ce-line-item>
       <span slot="title"></span>
-      <span slot="description">
+      <span class="product__description" slot="description">
         <ce-quantity-select></ce-quantity-select>
       </span>
       <span slot="price">
-        CA$10.00
+        <ce-format-number currency="CAD" type="currency" value="1000"></ce-format-number>
       </span>
     </ce-line-item>
   </mock:shadow-root>

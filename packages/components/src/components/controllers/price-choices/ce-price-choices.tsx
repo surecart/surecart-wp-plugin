@@ -52,4 +52,4 @@ export class CePriceChoices {
   }
 }
 
-openWormhole(CePriceChoices, ['busy']);
+openWormhole(CePriceChoices, ['busy'], false);
