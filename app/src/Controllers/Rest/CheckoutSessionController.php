@@ -18,18 +18,25 @@ class CheckoutSessionController extends RestController {
 	protected $class = CheckoutSession::class;
 
 	/**
-	 * Set the mode of the request before we run it.
-	 * We get this from the saved form
+	 * We run middleware to make sure the form is in "Test" mode
+	 * if a test payment is requested. This prevents the spamming of any
+	 * forms on your site that are not in test mode.
 	 *
 	 * @param \CheckoutEngine\Models\Model $class Model class instance.
 	 * @param \WP_REST_Request             $request Request object.
 	 *
-	 * @return \CheckoutEngine\Models\Model
+	 * @return \CheckoutEngine\Models\Model|\WP_Error
 	 */
 	protected function middleware( \CheckoutEngine\Models\Model $class, \WP_REST_Request $request ) {
-		$mode = isset( $request['form_id'] ) ? $this->getFormMode( $request['form_id'] ) : 'live';
-		$class->setMode( apply_filters( 'checkout_engine/request/mode', $mode ?? 'live', $request ) );
-		return $class;
+		$mode = 'live';
+		if ( false === $request['live_mode'] ) {
+			$mode = isset( $request['form_id'] ) ? $this->getFormMode( $request['form_id'] ) : 'live';
+			if ( 'test' !== $mode ) {
+				return new \WP_Error( 'invalid_mode', 'The form is set to live mode, but the request is for test mode.', [ 'status' => 400 ] );
+			}
+			$mode = 'test';
+		}
+		return $class->setMode( apply_filters( 'checkout_engine/request/mode', $mode, $request ) );
 	}
 
 	/**
@@ -38,7 +45,7 @@ class CheckoutSessionController extends RestController {
 	 * @param integer $id ID of the form.
 	 * @return string Mode of the form.
 	 */
-	public function getFormMode( $id ) {
+	protected function getFormMode( $id ) {
 		return Form::getMode( (int) $id );
 	}
 

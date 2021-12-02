@@ -34,7 +34,11 @@ abstract class RestController {
 	 */
 	public function create( \WP_REST_Request $request ) {
 		$model = $this->middleware( new $this->class(), $request );
-		return $model->where( $request->get_query_params() )->create( $request->get_body_params() );
+		if ( is_wp_error( $model ) ) {
+			return $model;
+		}
+
+		return $model->where( $request->get_query_params() )->create( array_diff_assoc( $request->get_params(), $request->get_query_params() ) );
 	}
 
 	/**
@@ -46,6 +50,10 @@ abstract class RestController {
 	 */
 	public function index( \WP_REST_Request $request ) {
 		$model = $this->middleware( new $this->class(), $request );
+		if ( is_wp_error( $model ) ) {
+			return $model;
+		}
+
 		return $model->where( $request->get_params() )->get();
 	}
 
@@ -58,6 +66,10 @@ abstract class RestController {
 	 */
 	public function find( \WP_REST_Request $request ) {
 		$model = $this->middleware( new $this->class(), $request );
+		if ( is_wp_error( $model ) ) {
+			return $model;
+		}
+
 		return $model->where( $request->get_query_params() )->find( $request['id'] );
 	}
 
@@ -70,7 +82,11 @@ abstract class RestController {
 	 */
 	public function edit( \WP_REST_Request $request ) {
 		$model = $this->middleware( new $this->class(), $request );
-		return $model->where( $request->get_query_params() )->update( $request->get_params() );
+		if ( is_wp_error( $model ) ) {
+			return $model;
+		}
+
+		return $model->where( $request->get_query_params() )->update( array_diff_assoc( $request->get_params(), $request->get_query_params() ) );
 	}
 
 	/**
@@ -82,6 +98,10 @@ abstract class RestController {
 	 */
 	public function delete( \WP_REST_Request $request ) {
 		$model = $this->middleware( new $this->class(), $request );
+		if ( is_wp_error( $model ) ) {
+			return $model;
+		}
+
 		return $model->delete( $request['id'] );
 	}
 }

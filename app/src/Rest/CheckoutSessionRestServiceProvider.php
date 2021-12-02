@@ -104,7 +104,7 @@ class CheckoutSessionRestServiceProvider extends RestServiceProvider implements 
 	}
 
 	/**
-	 * Anyone can get a specific session
+	 * Anyone can get a specific session if they have the unique session id.
 	 *
 	 * @param \WP_REST_Request $request Full details about the request.
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
@@ -114,12 +114,18 @@ class CheckoutSessionRestServiceProvider extends RestServiceProvider implements 
 	}
 
 	/**
-	 * Need priveleges to read checkout sessions.
+	 * Listing
 	 *
 	 * @param \WP_REST_Request $request Full details about the request.
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_items_permissions_check( $request ) {
+		// a customer can list their own sessions.
+		if ( isset( $request['customer_ids'] ) && 1 === count( $request['customer_ids'] ) ) {
+			return get_user_meta( get_current_user_id(), 'ce_customer_id', true ) === $request['customer_ids'][0];
+		}
+
+		// need read priveleges.
 		return current_user_can( 'read_pk_checkout_sessions' );
 	}
 
@@ -130,14 +136,11 @@ class CheckoutSessionRestServiceProvider extends RestServiceProvider implements 
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function create_item_permissions_check( $request ) {
-		if ( ! $request['form_id'] ) {
-			return false;
-		}
 		return true;
 	}
 
 	/**
-	 * Anyone can update.
+	 * Update permissions.
 	 *
 	 * @param \WP_REST_Request $request Full details about the request.
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.

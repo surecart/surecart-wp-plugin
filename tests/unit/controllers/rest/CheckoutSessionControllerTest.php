@@ -32,40 +32,13 @@ class CheckoutSessionControllerTest extends CheckoutEngineUnitTestCase
 		$request = new WP_REST_Request('POST', '/checkout-engine/v1/checkout-session', [
 			'form_id' => 1,
 		]);
-		$controller = \Mockery::mock(CheckoutSessionController::class);
-		$controller->shouldAllowMockingProtectedMethods()->shouldReceive('middleware')->andReturn('live');
-		$controller->shouldReceive('create')->andReturn([]);
+
+		$model = \Mockery::mock(CheckoutSession::class)->makePartial();
+		$model->shouldAllowMockingProtectedMethods()->shouldReceive('where')->once()->andReturn($model);
+		$model->shouldAllowMockingProtectedMethods()->shouldReceive('create')->once()->andReturn($model);
+
+		$controller = \Mockery::mock(CheckoutSessionController::class)->makePartial();
+		$controller->shouldAllowMockingProtectedMethods()->shouldReceive('middleware')->once()->andReturn($model);
 		$controller->create($request);
 	}
-
-	// public function test_appliesFormMiddleware()
-	// {
-	// 	// mock form class
-	// 	$this->createMock(Form::class);
-
-
-	// 	$foo = $this->getMockBuilder(CheckoutSessionController::class)
-	// 		->setMethods(['middleware'])
-	// 		->getMock();
-
-	// 	$foo->expects($this->once())
-    //         ->method('middleware');
-
-	// 	$foo->expects($this->once())
-    //         ->method('remoteRequest')
-	// 		->with(
-	// 			$this->equalTo('https://presto-pay-staging.herokuapp.com/api/v1/test-endpoint'),
-	// 			$this->identicalTo([
-	// 				'timeout' => 20,
-	// 				'sslverify' => true,
-	// 				'headers' => [
-	// 					'Content-Type' => 'application/json',
-	// 					'Authorization' => 'Bearer test_token',
-	// 				]
-	// 			])
-	// 		)
-	// 		->willReturn(['body' => '{test: "passed"}', 'response' => ['code' => 200]]);
-
-	// 	$foo->makeRequest('test-endpoint', [], 'test');
-	// }
 }

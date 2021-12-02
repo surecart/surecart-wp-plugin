@@ -5,7 +5,6 @@ use CheckoutEngine\Permissions\RolesServiceProvider;
 use CheckoutEngine\Tests\CheckoutEngineUnitTestCase;
 use CheckoutEngine\WordPress\PluginServiceProvider;
 use CheckoutEngine\WordPress\PostTypes\FormPostTypeServiceProvider;
-use \Mockery;
 
 class InstallTest extends CheckoutEngineUnitTestCase {
 	/**

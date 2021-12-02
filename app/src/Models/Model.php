@@ -511,6 +511,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 	 */
 	public function setMode( $mode ) {
 		$this->mode = $mode;
+		return $this;
 	}
 
 	/**

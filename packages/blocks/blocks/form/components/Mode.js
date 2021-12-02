@@ -21,7 +21,7 @@ export default ( { attributes, setAttributes } ) => {
 	};
 
 	return (
-		<CeDropdown>
+		<CeDropdown position="bottom-right">
 			<span slot="trigger">{ renderBadge() }</span>
 			<CeMenu>
 				<CeMenuItem
