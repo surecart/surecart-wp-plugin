@@ -42,7 +42,9 @@ class RequestService {
 	 *
 	 * @param string $base_path The rest api base path.
 	 */
-	public function __construct( $base_path = '/api/v1' ) {
+	public function __construct( $token = '', $base_path = '/api/v1' ) {
+		// set the token.
+		$this->token = $token;
 		// set the base path and url.
 		$this->base_path = $base_path;
 		$this->base_url  = $this->getBaseUrl();
@@ -55,10 +57,7 @@ class RequestService {
 	 *
 	 * @return string
 	 */
-	public function getToken( $mode = 'live' ) {
-		if ( 'test' === $mode ) {
-			return 'test_RiHtAnf4utLC5QJKBRDWJob5';
-		}
+	public function getToken() {
 		return 'test_RiHtAnf4utLC5QJKBRDWJob5';
 	}
 
@@ -94,7 +93,7 @@ class RequestService {
 	 *
 	 * @return mixed
 	 */
-	public function makeRequest( $endpoint, $args = [], $mode = 'live' ) {
+	public function makeRequest( $endpoint, $args = [] ) {
 		// we cache this so we can request it several times.
 		$cache_key     = $endpoint . wp_json_encode( $args );
 		$response_body = wp_cache_get( $cache_key );
@@ -107,8 +106,7 @@ class RequestService {
 
 			// add auth.
 			if ( empty( $args['headers']['Authorization'] ) ) {
-				$token                            = $this->getToken( $mode );
-				$args['headers']['Authorization'] = "Bearer $token";
+				$args['headers']['Authorization'] = "Bearer $this->token";
 			}
 
 			// parse args.

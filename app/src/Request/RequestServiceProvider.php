@@ -17,9 +17,9 @@ class RequestServiceProvider implements ServiceProviderInterface {
 		$app = $container[ WPEMERGE_APPLICATION_KEY ];
 
 		$container['requests'] = function () {
-			// TODO: get these from database.
-			$mode = 'staging';
-			return new RequestService();
+			// TODO: get this from database.
+			$token = 'test_RiHtAnf4utLC5QJKBRDWJob5';
+			return new RequestService( $token );
 		};
 
 		$app->alias( 'requests', 'requests' );
