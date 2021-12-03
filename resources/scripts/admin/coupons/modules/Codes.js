@@ -154,6 +154,7 @@ export default () => {
 				! loading && (
 					<Fragment>
 						<CeButton
+							class={ 'ce-promotion-code-add' }
 							onClick={ ( e ) => {
 								e.preventDefault();
 								addEmptyPromotion();

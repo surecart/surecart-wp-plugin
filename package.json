@@ -46,9 +46,9 @@
 		"watch:blocks": "wp-scripts start ./resources/scripts/blocks/blocks.js --output-path=dist/blocks",
 		"test:php": "wp-env run phpunit 'phpunit -c /var/www/html/wp-content/plugins/checkout-engine/phpunit.xml --testdox'",
 		"test:php:failing": "wp-env run phpunit 'phpunit -c /var/www/html/wp-content/plugins/checkout-engine/phpunit.xml --group=failing' --verbose",
-		"test:e2e": "wp-env start --xdebug && cypress run --config video=false --browser chrome",
-		"test:e2e:record": "wp-env start --xdebug && cypress run --browser chrome",
-		"test:e2e:debug": "yarn start & npx cypress open",
+		"test:cypress": "wp-env start --xdebug && cypress run --config video=false --browser chrome",
+		"test:cypress:record": "wp-env start --xdebug && cypress run --browser chrome --record --key 29b7dee9-7f63-4a24-abd2-bd74c58ec60a",
+		"test:cypress:debug": "yarn start & npx cypress open",
 		"test:js": "wp-scripts test-unit-js --config jest.config.unit.js",
 		"test:js:coverage": "wp-scripts test-unit-js --config jest.config.unit.js --coverage"
 	},

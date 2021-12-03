@@ -9,6 +9,7 @@
 	"testFiles": "tests-e2e/**/*.cypress.js",
 	"ignoreTestFiles": "**/ignoredTestFiles/*.js",
 	"viewportWidth": 2560,
+	"projectId": "ae7zwm",
 	"mockRequests": true,
 	"experimentalStudio": true,
 	"viewportHeight": 1440,
