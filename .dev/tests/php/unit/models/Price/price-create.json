@@ -1,0 +1,12 @@
+{
+	"price": {
+		"name": "Simple Price",
+		"amount": 2900,
+		"currency": "usd",
+		"recurring": false,
+		"recurring_interval": null,
+		"recurring_interval_count": null,
+		"active": true,
+		"product_id": "5ff6e35b-8297-43f0-b548-2efdf16d0206"
+	}
+}

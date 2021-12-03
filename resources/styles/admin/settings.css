@@ -1,0 +1,42 @@
+.checkout-engine-settings__page{
+  margin:25px 25px 25px auto;
+}
+
+.checkout-engine-settings__loading{
+  min-height:200px;
+  width:100%;
+  display:-webkit-box;
+  display:-ms-flexbox;
+  display:flex;
+  -webkit-box-align:center;
+      -ms-flex-align:center;
+          align-items:center;
+  -webkit-box-pack:center;
+      -ms-flex-pack:center;
+          justify-content:center;
+}
+
+.checkout-engine-settings__setting, .checkout-engine-settings__body .components-card{
+  max-width:800px;
+}
+
+.checkout-engine-settings__navigation{
+  margin-left:-20px;
+  margin-right:-20px;
+  padding-right:20px;
+  position:sticky;
+  top:32px;
+  z-index:99;
+}
+
+@media screen and (max-width: 782px){
+  .checkout-engine-settings__navigation{
+    top:46px;
+  }
+}
+
+.checkout-engine-settings .components-snackbar.is-snackbar-error{
+  background:#cc1818;
+}
+
+/*# sourceMappingURL=settings.css.map*/

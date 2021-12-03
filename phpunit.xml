@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit
-	bootstrap="./tests/bootstrap.php"
+	bootstrap="./.dev/tests/php/bootstrap.php"
 	colors="true"
 	stopOnError="false"
 	beStrictAboutOutputDuringTests="true"
@@ -12,10 +12,10 @@
 	>
 	<testsuites>
 		<testsuite name="Unit">
-			<directory suffix=".php">./tests/unit/</directory>
+			<directory suffix=".php">./.dev/tests/php/unit/</directory>
 		</testsuite>
 		<testsuite name="Feature">
-			<directory suffix=".php">./tests/feature/</directory>
+			<directory suffix=".php">./.dev/tests/php/feature/</directory>
 		</testsuite>
 	</testsuites>
 	<filter>

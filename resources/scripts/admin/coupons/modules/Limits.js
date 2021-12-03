@@ -12,7 +12,7 @@ import {
 import useCouponData from '../hooks/useCouponData';
 
 import Box from '../../ui/Box';
-import { CeCheckbox } from '@checkout-engine/react';
+import { CeCheckbox, CeInput } from '@checkout-engine/react';
 
 export default () => {
 	const { coupon, loading, updateCoupon } = useCouponData();
@@ -40,6 +40,7 @@ export default () => {
 			</CeCheckbox>
 			{ !! coupon?.redeem_by && (
 				<div
+					className="redeem-by-date"
 					css={ css`
 						max-width: 288px;
 						margin-top: 30px;
@@ -82,16 +83,17 @@ export default () => {
 
 			{ !! coupon?.max_redemptions && (
 				<BaseControl>
-					<TextControl
+					<CeInput
 						label={ __( 'Number of Times', 'checkout_engine' ) }
 						help={ __(
 							"This limit applies across customers so it won't prevent a single customer from redeeming multiple times.",
 							'checkout_engine'
 						) }
+						class="max-redemptions-input"
 						value={ coupon?.max_redemptions || 1 }
-						onChange={ ( max_redemptions ) => {
+						onCeChange={ ( e ) => {
 							updateCoupon( {
-								max_redemptions,
+								max_redemptions: e.target.value,
 							} );
 						} }
 						type="number"

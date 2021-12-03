@@ -1,0 +1,27 @@
+{
+	"id": "9f86c425-bed7-45a8-841f-ba5ef5efdfef",
+	"object": "product",
+	"name": "Other sneakers.",
+	"description": "A pair of fancy sneakers.",
+	"active": true,
+	"created_at": 1624910585,
+	"updated_at": 1624910585,
+	"prices": {
+		"data": [
+			{
+				"id": "00e5bbf1-6a4a-4e94-9e2b-c64b3f0b3645",
+				"object": "price",
+				"name": "Premium",
+				"active": true,
+				"amount": 9900,
+				"currency": "usd",
+				"recurring": true,
+				"recurring_interval": "month",
+				"recurring_interval_count": 1,
+				"product_id": "00e5bbf1-6a4a-4e94-9e2b-c64b3f0b3645",
+				"createdAt": 1616008115,
+				"updatedAt": 1616008115
+			}
+		]
+	}
+}

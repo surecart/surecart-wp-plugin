@@ -1,0 +1,15 @@
+{
+	"id": "a8fb4156-b4f8-4d9d-a1d2-1edba8e5a9cf",
+	"object": "promotion",
+	"code": "0EF363E6",
+	"redeem_by": null,
+	"max_redemptions": null,
+	"times_redeemed": 0,
+	"metadata": [],
+	"expired": false,
+	"archived": false,
+	"archived_at": null,
+	"coupon": "c1fc3e0f-a522-4d41-aef1-123f69be970d",
+	"created_at": 1638562292,
+	"updated_at": 1638562292
+}

@@ -1,0 +1,17 @@
+{
+  "id": "c1fc3e0f-a522-4d41-aef1-123f69be970d",
+  "object": "coupon",
+  "name": "name",
+  "amount_off": null,
+  "percent_off": 10,
+  "currency": "usd",
+  "duration": "once",
+  "duration_in_months": null,
+  "redeem_by": null,
+  "max_redemptions": null,
+  "times_redeemed": 0,
+  "metadata": [],
+  "expired": false,
+  "created_at": 1638562063,
+  "updated_at": 1638562063
+}
