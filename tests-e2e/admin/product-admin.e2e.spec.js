@@ -113,98 +113,98 @@ describe( 'Product Admin', () => {
 		await setUpResponseMocking( [] );
 	} );
 
-	it( 'Displays a generic error', async () => {
-		setUpResponseMocking( [
-			{
-				match: ( request ) => {
-					return (
-						request.url().includes( 'products/test' ) &&
-						request.method() === 'GET'
-					);
-				},
-				onRequestMatch: ( request ) => {
-					return request.respond( {
-						contentType: 'application/json',
-						status: 500,
-						body: JSON.stringify( {} ),
-					} );
-				},
-			},
-		] );
+	// it( 'Displays a generic error', async () => {
+	// 	setUpResponseMocking( [
+	// 		{
+	// 			match: ( request ) => {
+	// 				return (
+	// 					request.url().includes( 'products/test' ) &&
+	// 					request.method() === 'GET'
+	// 				);
+	// 			},
+	// 			onRequestMatch: ( request ) => {
+	// 				return request.respond( {
+	// 					contentType: 'application/json',
+	// 					status: 500,
+	// 					body: JSON.stringify( {} ),
+	// 				} );
+	// 			},
+	// 		},
+	// 	] );
 
-		await visitAdminPage(
-			'admin.php',
-			'page=ce-products&action=edit&id=test'
-		);
-		form = await page.waitForSelector( 'ce-form' );
-		saveButton = await page.waitForSelector( '.ce-save-model' );
+	// 	await visitAdminPage(
+	// 		'admin.php',
+	// 		'page=ce-products&action=edit&id=test'
+	// 	);
+	// 	form = await page.waitForSelector( 'ce-form' );
+	// 	saveButton = await page.waitForSelector( '.ce-save-model' );
 
-		// snackbar errors
-		const notice = await page.waitForSelector(
-			'.components-snackbar.is-snackbar-error'
-		);
-		expect( await notice.evaluate( ( node ) => node.innerText ) ).toContain(
-			'Something went wrong.'
-		);
-	} );
+	// 	// snackbar errors
+	// 	const notice = await page.waitForSelector(
+	// 		'.components-snackbar.is-snackbar-error'
+	// 	);
+	// 	expect( await notice.evaluate( ( node ) => node.innerText ) ).toContain(
+	// 		'Something went wrong.'
+	// 	);
+	// } );
 
-	it( 'Can create a new product', async () => {
-		setUpResponseMocking( [
-			{
-				match: ( request ) => {
-					return (
-						request.url().includes( 'products' ) &&
-						request.method() === 'POST'
-					);
-				},
-				onRequestMatch: ( request ) => {
-					return request.respond( {
-						contentType: 'application/json',
-						status: 200,
-						body: JSON.stringify( PRODUCT_SUCCESS ),
-					} );
-				},
-			},
-			{
-				match: ( request ) => {
-					return (
-						request.url().includes( 'prices' ) &&
-						request.method() === 'POST'
-					);
-				},
-				onRequestMatch: ( request ) => {
-					return request.respond( {
-						contentType: 'application/json',
-						status: 200,
-						body: JSON.stringify( PRICE_SUCCESS ),
-					} );
-				},
-			},
-		] );
+	// it( 'Can create a new product', async () => {
+	// 	setUpResponseMocking( [
+	// 		{
+	// 			match: ( request ) => {
+	// 				return (
+	// 					request.url().includes( 'products' ) &&
+	// 					request.method() === 'POST'
+	// 				);
+	// 			},
+	// 			onRequestMatch: ( request ) => {
+	// 				return request.respond( {
+	// 					contentType: 'application/json',
+	// 					status: 200,
+	// 					body: JSON.stringify( PRODUCT_SUCCESS ),
+	// 				} );
+	// 			},
+	// 		},
+	// 		{
+	// 			match: ( request ) => {
+	// 				return (
+	// 					request.url().includes( 'prices' ) &&
+	// 					request.method() === 'POST'
+	// 				);
+	// 			},
+	// 			onRequestMatch: ( request ) => {
+	// 				return request.respond( {
+	// 					contentType: 'application/json',
+	// 					status: 200,
+	// 					body: JSON.stringify( PRICE_SUCCESS ),
+	// 				} );
+	// 			},
+	// 		},
+	// 	] );
 
-		await visitAdminPage( 'admin.php', 'page=ce-products&action=edit' );
+	// 	await visitAdminPage( 'admin.php', 'page=ce-products&action=edit' );
 
-		await page.$eval( '.ce-product-name', ( el ) => ( el.value = 'name' ) );
-		await page.$eval(
-			'.ce-product-description',
-			( el ) => ( el.value = 'description' )
-		);
-		await page.$eval( '.ce-price-amount', ( el ) => ( el.value = '20' ) );
+	// 	await page.$eval( '.ce-product-name', ( el ) => ( el.value = 'name' ) );
+	// 	await page.$eval(
+	// 		'.ce-product-description',
+	// 		( el ) => ( el.value = 'description' )
+	// 	);
+	// 	await page.$eval( '.ce-price-amount', ( el ) => ( el.value = '20' ) );
 
-		saveButton = await page.waitForSelector( '.ce-save-model' );
-		await saveButton.click();
+	// 	saveButton = await page.waitForSelector( '.ce-save-model' );
+	// 	await saveButton.click();
 
-		// snackbar
-		const notice = await page.waitForSelector( '.components-snackbar' );
-		expect( await notice.evaluate( ( node ) => node.innerText ) ).toContain(
-			'Saved.'
-		);
+	// 	// snackbar
+	// 	const notice = await page.waitForSelector( '.components-snackbar' );
+	// 	expect( await notice.evaluate( ( node ) => node.innerText ) ).toContain(
+	// 		'Saved.'
+	// 	);
 
-		// page url should update
-		expect( page.url() ).toContain(
-			'id=cee6a221-feea-4bc4-a450-ba120df2f203'
-		);
-	} );
+	// 	// page url should update
+	// 	expect( page.url() ).toContain(
+	// 		'id=cee6a221-feea-4bc4-a450-ba120df2f203'
+	// 	);
+	// } );
 
 	it( 'Displays snackbar and validation errors', async () => {
 		setUpResponseMocking( [

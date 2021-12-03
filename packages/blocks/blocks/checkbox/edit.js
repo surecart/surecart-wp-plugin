@@ -24,6 +24,15 @@ export default ( { className, attributes, setAttributes, isSelected } ) => {
 			<InspectorControls>
 				<PanelBody title={ __( 'Attributes', 'checkout-engine' ) }>
 					<PanelRow>
+						<ToggleControl
+							label={ __( 'Required', 'checkout-engine' ) }
+							checked={ required }
+							onChange={ ( required ) =>
+								setAttributes( { required } )
+							}
+						/>
+					</PanelRow>
+					<PanelRow>
 						<TextControl
 							label={ __( 'Name', 'checkout-engine' ) }
 							value={ name }
@@ -53,15 +62,6 @@ export default ( { className, attributes, setAttributes, isSelected } ) => {
 							checked={ checked }
 							onChange={ ( checked ) =>
 								setAttributes( { checked } )
-							}
-						/>
-					</PanelRow>
-					<PanelRow>
-						<ToggleControl
-							label={ __( 'Required', 'checkout-engine' ) }
-							checked={ required }
-							onChange={ ( required ) =>
-								setAttributes( { required } )
 							}
 						/>
 					</PanelRow>

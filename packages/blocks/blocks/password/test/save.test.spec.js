@@ -6,7 +6,8 @@ import { registerBlockType, createBlock, serialize } from '@wordpress/blocks';
 /**
  * Internal dependencies.
  */
-import { name, settings } from '../index';
+import * as blockData from '../index';
+const { metadata, settings } = blockData;
 
 // Make variables accessible for all tests.
 let block;
@@ -14,13 +15,12 @@ let serializedBlock;
 
 describe( 'checkout-engine/buttons', () => {
 	beforeAll( () => {
-		// Register the block.
-		registerBlockType( name, { category: 'common', ...settings } );
+		registerBlockType( metadata, settings );
 	} );
 
 	beforeEach( () => {
 		// Create the block with the minimum attributes.
-		block = createBlock( name );
+		block = createBlock( metadata.name );
 
 		// Reset the reused variables.
 		serializedBlock = '';
@@ -28,15 +28,22 @@ describe( 'checkout-engine/buttons', () => {
 	it( 'Should render with defaults', () => {
 		serializedBlock = serialize( block );
 		expect( serializedBlock ).toBeDefined();
-		expect( serializedBlock ).toContain( `wp:checkout-engine/input` );
+		expect( serializedBlock ).toContain( `wp:checkout-engine/password` );
 	} );
 
 	it( 'should render with custom class name', () => {
 		block.attributes.className = 'my-custom-class';
 		serializedBlock = serialize( block );
-
 		expect( serializedBlock ).toBeDefined();
 		expect( serializedBlock ).toContain( 'my-custom-class' );
+		expect( serializedBlock ).toMatchSnapshot();
+	} );
+
+	it( 'can be required', () => {
+		block.attributes.required = true;
+		serializedBlock = serialize( block );
+		expect( serializedBlock ).toBeDefined();
+		expect( serializedBlock ).toContain( `{\"required\":true}` );
 		expect( serializedBlock ).toMatchSnapshot();
 	} );
 } );

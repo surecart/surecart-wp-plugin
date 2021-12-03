@@ -9,6 +9,7 @@ import {
 	PanelRow,
 	TextControl,
 	Disabled,
+	ToggleControl,
 } from '@wordpress/components';
 
 /**
@@ -17,12 +18,21 @@ import {
 import { CeInput } from '@checkout-engine/react';
 
 export default ( { attributes, setAttributes } ) => {
-	const { label, placeholder, help, name } = attributes;
+	const { label, placeholder, help, required } = attributes;
 
 	return (
 		<Fragment>
 			<InspectorControls>
 				<PanelBody title={ __( 'Attributes', 'checkout-engine' ) }>
+					<PanelRow>
+						<ToggleControl
+							label={ __( 'Required', 'checkout-engine' ) }
+							checked={ required }
+							onChange={ ( required ) =>
+								setAttributes( { required } )
+							}
+						/>
+					</PanelRow>
 					<PanelRow>
 						<TextControl
 							label={ __( 'Label', 'checkout-engine' ) }
@@ -51,6 +61,7 @@ export default ( { attributes, setAttributes } ) => {
 
 			<Disabled>
 				<CeInput
+					required={ required }
 					label={ label }
 					placeholder={ placeholder }
 					name="name"

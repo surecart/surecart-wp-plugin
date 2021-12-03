@@ -4,7 +4,12 @@
 import { __ } from '@wordpress/i18n';
 import { InspectorControls } from '@wordpress/block-editor';
 import { Fragment } from '@wordpress/element';
-import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
+import {
+	PanelBody,
+	PanelRow,
+	TextControl,
+	ToggleControl,
+} from '@wordpress/components';
 
 /**
  * Component Dependencies
@@ -12,12 +17,21 @@ import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
 import { CeInput } from '@checkout-engine/react';
 
 export default ( { className, attributes, setAttributes, isSelected } ) => {
-	const { label, placeholder, help, name } = attributes;
+	const { label, placeholder, help, required } = attributes;
 
 	return (
 		<Fragment>
 			<InspectorControls>
 				<PanelBody title={ __( 'Attributes', 'checkout-engine' ) }>
+					<PanelRow>
+						<ToggleControl
+							label={ __( 'Required', 'checkout-engine' ) }
+							checked={ required }
+							onChange={ ( required ) =>
+								setAttributes( { required } )
+							}
+						/>
+					</PanelRow>
 					<PanelRow>
 						<TextControl
 							label={ __( 'Label', 'checkout-engine' ) }

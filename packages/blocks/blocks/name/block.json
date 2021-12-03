@@ -9,13 +9,16 @@
 		"html": false
 	},
 	"attributes": {
+		"required": {
+			"typoe": "boolean"
+		},
 		"label": {
 			"type": "string",
 			"default": "Name"
 		},
 		"help": {
 			"type": "string",
-			"default": "Optional"
+			"default": ""
 		},
 		"placeholder": {
 			"type": "string"

@@ -1,14 +1,17 @@
 {
-  "name": "checkout-engine/input",
+	"name": "checkout-engine/input",
 	"title": "Input",
-  "description": "Displays a form text input.",
+	"description": "Displays a form text input.",
 	"category": "layout",
-  "keywords": ["email", "mail"],
-  "supports": {
+	"keywords": [ "email", "mail" ],
+	"supports": {
 		"reusable": false,
 		"html": false
 	},
 	"attributes": {
+		"required": {
+			"typoe": "boolean"
+		},
 		"value": {
 			"type": "string",
 			"default": ""
@@ -40,8 +43,8 @@
 		"maxlength": {
 			"type": "number"
 		},
-    "name": {
-      "type": "string"
-    }
+		"name": {
+			"type": "string"
+		}
 	}
 }

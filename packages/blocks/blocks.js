@@ -11,7 +11,6 @@ registerBlockCollection( 'checkout-engine', {
 
 // blocks
 import * as checkout from './blocks/checkout';
-import * as section from './blocks/section';
 import * as email from './blocks/email';
 import * as total from './blocks/total';
 import * as subtotal from './blocks/subtotal';
@@ -93,7 +92,6 @@ const registerBlock = ( block ) => {
 export const registerCheckoutEngineBlocks = () => {
 	[
 		checkout,
-		section,
 		totals,
 		title,
 		submit,

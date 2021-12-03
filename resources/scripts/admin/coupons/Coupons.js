@@ -3,17 +3,14 @@ import { css, jsx } from '@emotion/core';
 
 import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';
-import { useSelect, dispatch } from '@wordpress/data';
-import { Button, Modal } from '@wordpress/components';
+import { dispatch } from '@wordpress/data';
 import { CeAlert } from '@checkout-engine/react';
 
 import { store as uiStore } from '../store/ui';
-import { store as dataStore } from '../store/data';
 
 import Template from '../templates/SingleModel';
 import FlashError from '../components/FlashError';
 import SaveButton from './components/SaveButton';
-import DisableModal from './components/DisableModal';
 
 // modules
 import Name from './modules/Name';
@@ -31,10 +28,10 @@ import useCouponData from './hooks/useCouponData';
 // hocs
 import withConfirm from '../hocs/withConfirm';
 
-export default withConfirm( ( { setConfirm, noticeUI } ) => {
+export default withConfirm( ( { noticeUI } ) => {
 	const { snackbarNotices, removeSnackbarNotice } = useSnackbar();
 
-	const { coupon, error, loading, status, save } = useCouponData();
+	const { coupon, error, loading, save } = useCouponData();
 
 	const onSubmit = async ( e ) => {
 		e.preventDefault();

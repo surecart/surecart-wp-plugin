@@ -12,7 +12,7 @@ import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
 import { CeInput } from '@checkout-engine/react';
 
 export default ( { className, attributes, setAttributes, isSelected } ) => {
-	const { label, placeholder, help, name } = attributes;
+	const { label, placeholder, help, name, required } = attributes;
 
 	return (
 		<Fragment>

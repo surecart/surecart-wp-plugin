@@ -9,6 +9,9 @@
 		"html": false
 	},
 	"attributes": {
+		"required": {
+			"typoe": "boolean"
+		},
 		"value": {
 			"type": "string",
 			"default": ""

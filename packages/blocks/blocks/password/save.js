@@ -9,23 +9,24 @@ export default ( { className, attributes } ) => {
 		showLabel,
 		size,
 		value,
+		required,
 	} = attributes;
 
 	return (
 		<ce-input
-			class={ className || false }
-			label={ label || false }
-			help={ help || false }
-			autofocus={ autofocus || false }
-			maxlength={ maxlength || false }
-			minlength={ minlength || false }
-			placeholder={ placeholder || false }
-			showLabel={ showLabel || false }
-			size={ size || false }
-			type={ 'password' }
-			name={ 'password' }
+			class={ className }
+			label={ label }
+			help={ help }
+			autofocus={ autofocus }
+			maxlength={ maxlength }
+			minlength={ minlength }
+			placeholder={ placeholder }
+			showLabel={ showLabel }
+			size={ size }
+			type="password"
+			name="password"
 			value={ value }
-			required="1"
+			required={ required }
 		></ce-input>
 	);
 };
