@@ -123,6 +123,38 @@ class CheckoutSessionRestServiceProviderTest extends CheckoutEngineUnitTestCase 
 		$this->assertSame($response->get_status(), 400);
 	}
 
+	public function test_form_test_mode_bypasses_with_capability()
+	{
+		// mock the requests in the container
+		$requests =  \Mockery::mock(RequestService::class);
+		\CheckoutEngine::alias('request', function () use ($requests) {
+			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
+		});
+
+		$requests->shouldReceive('makeRequest')
+		->once()
+		->withSomeOfArgs('checkout_sessions','live')
+		->andReturn([]);
+
+		// users with edit session permissions can do this, though.
+		$request = new WP_REST_Request('POST', '/checkout-engine/v1/checkout_sessions');
+		$request->set_param('live_mode', false);
+		$request->set_query_params(['form_id'=> $live_form->ID]);
+		$response = rest_do_request( $request );
+		$this->assertSame($response->get_status(), 400);
+
+		$user = self::factory()->user->create_and_get();
+		$user->add_cap('edit_pk_checkout_sessions');
+		wp_set_current_user($user->ID);
+
+		// users with edit session permissions can do this, though.
+		$request = new WP_REST_Request('POST', '/checkout-engine/v1/checkout_sessions');
+		$request->set_param('live_mode', false);
+		$request->set_query_params(['form_id'=> $live_form->ID]);
+		$response = rest_do_request( $request );
+		$this->assertSame($response->get_status(), 200);
+	}
+
 	public function test_live_payments_are_always_allowed()
 	{
 		// mock the requests in the container

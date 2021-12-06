@@ -83,7 +83,7 @@ class CheckoutSessionController extends RestController {
 	 */
 	protected function setMode( \CheckoutEngine\Models\Model $class, \WP_REST_Request $request ) {
 		$mode = 'live';
-		if ( false === $request['live_mode'] ) {
+		if ( false === $request['live_mode'] && ! current_user_can( 'edit_pk_checkout_sessions' ) ) {
 			$mode = isset( $request['form_id'] ) ? $this->getFormMode( $request['form_id'] ) : 'live';
 			if ( 'test' !== $mode ) {
 				return new \WP_Error( 'invalid_mode', 'The form is set to live mode, but the request is for test mode.', [ 'status' => 400 ] );
