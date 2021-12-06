@@ -40,7 +40,7 @@ class CheckoutSessionRestServiceProvider extends RestServiceProvider implements 
 	public function registerRoutes() {
 		register_rest_route(
 			"$this->name/v$this->version",
-			$this->endpoint . '/(?P<id>[^/]+)/finalize/(?P<processor_type>[^/]+)',
+			$this->endpoint . '/(?P<id>\S+)/finalize/(?P<processor_type>\S+)',
 			[
 				[
 					'methods'             => \WP_REST_Server::EDITABLE,
@@ -107,9 +107,11 @@ class CheckoutSessionRestServiceProvider extends RestServiceProvider implements 
 			return new \WP_Error( 'form_id_required', esc_html__( 'Form ID is required.', 'checkout_engine' ), [ 'status' => 400 ] );
 		}
 
+		// get form.
 		$form = get_post( $request['form_id'] );
+
 		if ( ! $form || 'ce_form' !== Form::getPostType() ) {
-			// TODO: check form registration on server here.
+			// TODO: check form manual registration on server here. (ce_register_form)
 
 			// form not found.
 			return new \WP_Error( 'form_id_invalid', esc_html__( 'Form ID is invalid.', 'checkout_engine' ), [ 'status' => 400 ] );

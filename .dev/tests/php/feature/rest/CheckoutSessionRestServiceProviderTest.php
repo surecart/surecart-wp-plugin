@@ -27,6 +27,30 @@ class CheckoutSessionRestServiceProviderTest extends CheckoutEngineUnitTestCase 
 		], false);
 	}
 
+	public function test_can_finalize()
+	{
+		$test_form = self::factory()->post->create_and_get( array(
+			'post_type' => 'ce_form',
+			'post_content' => '<!-- wp:checkout-engine/form {"mode":"test"} --><!-- /wp:checkout-engine/form -->'
+		) );
+
+		// mock the requests in the container
+		$requests =  \Mockery::mock(RequestService::class);
+		\CheckoutEngine::alias('request', function () use ($requests) {
+			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
+		});
+
+		$requests->shouldReceive('makeRequest')
+			->once()
+			->withSomeOfArgs('checkout_sessions/testid/finalize/stripe')
+			->andReturn([]);
+
+		$request = new WP_REST_Request('PATCH', '/checkout-engine/v1/checkout_sessions/testid/finalize/stripe');
+		$request->set_query_params(['form_id'=> $test_form->ID]);
+		$response = rest_do_request( $request );
+		$this->assertSame($response->get_status(), 200);
+	}
+
 	public function test_form_id_required()
 	{
 		// mock the requests in the container

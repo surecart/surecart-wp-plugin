@@ -111,10 +111,10 @@ class CheckoutSessionController extends RestController {
 	 * @return \WP_REST_Response
 	 */
 	public function finalize( \WP_REST_Request $request ) {
-		$args = $request->get_body_params();
+		$args = $request->get_params();
 
 		// allow 3rd party validations on fields.
-		$errors = apply_filters( 'checkout_engine/checkout/validate', $args );
+		$errors = $this->validate( $args, $request );
 
 		if ( ! empty( $errors ) ) {
 			$error = [
@@ -132,5 +132,16 @@ class CheckoutSessionController extends RestController {
 
 		$session = new CheckoutSession( $args, $request['processor_type'] );
 		return $session->finalize();
+	}
+
+	/**
+	 * Validate the form.
+	 *
+	 * @param array  $args Arguments.
+	 * @param object $request Request.
+	 * @return array Errors.
+	 */
+	public function validate( $args, $request ) {
+		return apply_filters( 'checkout_engine/checkout/validate', [], $args, $request );
 	}
 }
