@@ -134,7 +134,7 @@ export class CEButton {
         ) : (
           ''
         )}
-        {this.loading || this.busy ? <ce-spinner></ce-spinner> : ''}
+        {this.loading ? <ce-spinner></ce-spinner> : ''}
       </Fragment>
     );
 

@@ -39,6 +39,7 @@ export namespace Components {
         "type": 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text';
     }
     interface CeBlockUi {
+        "spinner": boolean;
         "transparent": boolean;
         "zIndex": number;
     }
@@ -1651,6 +1652,7 @@ declare namespace LocalJSX {
         "type"?: 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text';
     }
     interface CeBlockUi {
+        "spinner"?: boolean;
         "transparent"?: boolean;
         "zIndex"?: number;
     }
