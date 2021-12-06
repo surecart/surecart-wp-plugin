@@ -125,13 +125,10 @@ class CheckoutSessionController extends RestController {
 			return \CheckoutEngine::errors()->translate( $error, 422 );
 		}
 
-		// don't send with request.
-		if ( ! empty( $args['processor_type'] ) ) {
-			unset( $args['processor_type'] );
-		}
-
-		$session = new CheckoutSession( $args, $request['processor_type'] );
-		return $session->finalize();
+		$session = new $this->class( [ 'id' => $request['id'] ] );
+		return $session->setProcessor( $request['processor_type'] )
+			->where( $request->get_query_params() )
+			->finalize( array_diff_assoc( $request->get_params(), $request->get_query_params() ) );
 	}
 
 	/**

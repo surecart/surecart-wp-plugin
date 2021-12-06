@@ -78,7 +78,8 @@ class CheckoutSessionTest extends CheckoutEngineUnitTestCase
 				$this->equalTo('checkout_sessions/test_session/finalize/custom'),
 				$this->equalTo([
 					'method' => 'PATCH',
-					'body' => $request
+					'body' => $request,
+					'query' => []
 				])
 			)
 			->willReturn($response);

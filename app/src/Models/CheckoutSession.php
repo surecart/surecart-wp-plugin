@@ -41,6 +41,17 @@ class CheckoutSession extends Model {
 	}
 
 	/**
+	 * Set the processor type
+	 *
+	 * @param string $type The processor type.
+	 * @return $this
+	 */
+	protected function setProcessor( $type ) {
+		$this->processor_type = $type;
+		return $this;
+	}
+
+	/**
 	 * Always set discount as object.
 	 *
 	 * @param array|object $value Value to set.
@@ -72,6 +83,7 @@ class CheckoutSession extends Model {
 			$this->endpoint . '/' . $this->attributes['id'] . '/finalize/' . $this->processor_type,
 			[
 				'method' => 'PATCH',
+				'query'  => $this->query,
 				'body'   => [
 					$this->object_name => $this->toArray(),
 				],

@@ -42,10 +42,10 @@ class CheckoutSessionRestServiceProviderTest extends CheckoutEngineUnitTestCase 
 
 		$requests->shouldReceive('makeRequest')
 			->once()
-			->withSomeOfArgs('checkout_sessions/testid/finalize/stripe')
+			->withSomeOfArgs('checkout_sessions/testid/finalize/stripe?expand[]=payment_intent')
 			->andReturn([]);
 
-		$request = new WP_REST_Request('PATCH', '/checkout-engine/v1/checkout_sessions/testid/finalize/stripe');
+		$request = new WP_REST_Request('PATCH', '/checkout-engine/v1/checkout_sessions/testid/finalize/stripe?expand[]=payment_intent');
 		$request->set_query_params(['form_id'=> $test_form->ID]);
 		$response = rest_do_request( $request );
 		$this->assertSame($response->get_status(), 200);
