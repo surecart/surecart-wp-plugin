@@ -46,6 +46,16 @@ class FormPostTypeService {
 	}
 
 	/**
+	 * Get the form post type.
+	 *
+	 * @return string post type.
+	 */
+	public function getPostType() {
+		return $this->post_type;
+	}
+
+
+	/**
 	 * Adds status indicator for this website.
 	 *
 	 * @param array $states States array.

@@ -50,6 +50,9 @@ export class CeStripePaymentRequest {
 
   @Prop() paymentMethod: string;
 
+  /** This is required to validate the form on the server */
+  @Prop() formId: number | string;
+
   /** Has this loaded */
   @State() loaded: boolean = false;
 
@@ -204,6 +207,9 @@ export class CeStripePaymentRequest {
       const session = (await finalizeSession({
         id: this.checkoutSession.id,
         processor: 'stripe',
+        query: {
+          form_id: this.formId,
+        },
       })) as CheckoutSession;
 
       // confirm payment

@@ -170,6 +170,7 @@ export class CECheckout {
       products: this.productsEntities,
       prices: this.pricesEntities,
       country: 'US',
+      formId: this.formId,
       mode: this.mode,
       currencyCode: this.currencyCode,
       paymentMethod: this.paymentMethod,

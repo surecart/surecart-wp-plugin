@@ -41,6 +41,6 @@ export default `
 <!-- /wp:checkout-engine/total --></ce-order-summary>
 <!-- /wp:checkout-engine/totals -->
 
-<!-- wp:checkout-engine/submit -->
+<!-- wp:checkout-engine/submit {"full":true}-->
 <ce-button submit="1" type="primary" full="1" size="large" class="wp-block-checkout-engine-submit">Purchase</ce-button>
 <!-- /wp:checkout-engine/submit -->`;

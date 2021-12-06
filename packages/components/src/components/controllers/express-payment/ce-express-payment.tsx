@@ -10,6 +10,7 @@ import { Keys } from '../../../types';
 export class CeExpressPayment {
   sPayment;
   @Prop() processor: 'stripe' | 'paypal';
+  @Prop() formId: number | string;
   @Prop() keys: Keys = {
     stripe: '',
   };
@@ -17,7 +18,7 @@ export class CeExpressPayment {
   render() {
     if (this.keys.stripe) {
       return (
-        <ce-stripe-payment-request>
+        <ce-stripe-payment-request formId={this.formId}>
           <ce-divider style={{ '--spacing': 'var(--ce-spacing-small)' }}>
             <slot />
           </ce-divider>
@@ -27,4 +28,4 @@ export class CeExpressPayment {
   }
 }
 
-openWormhole(CeExpressPayment, ['keys'], false);
+openWormhole(CeExpressPayment, ['keys', 'formId'], false);

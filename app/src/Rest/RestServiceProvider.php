@@ -121,7 +121,7 @@ abstract class RestServiceProvider extends \WP_REST_Controller implements RestSe
 		if ( $this->hasAnyMethods( [ 'find', 'edit', 'delete' ] ) ) {
 			register_rest_route(
 				"$this->name/v$this->version",
-				$this->endpoint . '/(?P<id>[\S]+)',
+				$this->endpoint . '/(?P<id>[^/]+)',
 				array_filter(
 					[
 						( $this->hasMethod( 'find' ) ? [

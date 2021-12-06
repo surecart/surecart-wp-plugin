@@ -5,6 +5,7 @@ namespace CheckoutEngine\Controllers\Rest;
 use CheckoutEngine\Support\Errors;
 use CheckoutEngine\Models\CheckoutSession;
 use CheckoutEngine\Models\Form;
+use CheckoutEngine\Models\User;
 
 /**
  * Handle price requests through the REST API
@@ -18,6 +19,59 @@ class CheckoutSessionController extends RestController {
 	protected $class = CheckoutSession::class;
 
 	/**
+	 * Middleware before we make the request.
+	 *
+	 * @param \CheckoutEngine\Models\Model $class Model class instance.
+	 * @param \WP_REST_Request             $request Request object.
+	 *
+	 * @return \CheckoutEngine\Models\Model|\WP_Error
+	 */
+	protected function middleware( \CheckoutEngine\Models\Model $class, \WP_REST_Request $request ) {
+		$class = $this->setMode( $class, $request );
+		if ( is_wp_error( $class ) ) {
+			return $class;
+		}
+		$class = $this->maybeSetUser( $class, $request );
+		return $class;
+	}
+
+	/**
+	 * Let's set the customer's email and name if they are already logged in.
+	 *
+	 * @param \CheckoutEngine\Models\Model $class Model class instance.
+	 * @param \WP_REST_Request             $request Request object.
+	 *
+	 * @return \CheckoutEngine\Models\Model|\WP_Error
+	 */
+	protected function maybeSetUser( \CheckoutEngine\Models\Model $class, \WP_REST_Request $request ) {
+		// we only care about new sessions for now.
+		if ( $request->get_method() !== 'POST' ) {
+			return $class;
+		}
+
+		// get current user.
+		$user = User::current();
+
+		// must be logged in.
+		if ( ! $user ) {
+			return $class;
+		}
+
+		// if the name or email is already set, don't overwrite it.
+		if ( ! empty( $request['name'] ) && ! empty( $request['email'] ) ) {
+			return $class;
+		}
+
+		// fetch the user's customer object.
+		$customer = $user->customer();
+
+		$class['email'] = $customer->email ?? $user->user_email;
+		$class['name']  = $customer->name ?? $user->display_name;
+
+		return $class;
+	}
+
+	/**
 	 * We run middleware to make sure the form is in "Test" mode
 	 * if a test payment is requested. This prevents the spamming of any
 	 * forms on your site that are not in test mode.
@@ -27,7 +81,7 @@ class CheckoutSessionController extends RestController {
 	 *
 	 * @return \CheckoutEngine\Models\Model|\WP_Error
 	 */
-	protected function middleware( \CheckoutEngine\Models\Model $class, \WP_REST_Request $request ) {
+	protected function setMode( \CheckoutEngine\Models\Model $class, \WP_REST_Request $request ) {
 		$mode = 'live';
 		if ( false === $request['live_mode'] ) {
 			$mode = isset( $request['form_id'] ) ? $this->getFormMode( $request['form_id'] ) : 'live';

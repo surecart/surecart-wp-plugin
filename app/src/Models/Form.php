@@ -20,6 +20,16 @@ class Form {
 	}
 
 	/**
+	 * The form's post type
+	 *
+	 * @return string The post type.
+	 */
+	public function getPostType() {
+		// TODO: get this from registration.
+		return 'ce_form';
+	}
+
+	/**
 	 * Get the stored product choices
 	 *
 	 * @param int|WP_Post $id Post object or id.
@@ -29,6 +39,21 @@ class Form {
 		$this->post = get_post( $id );
 		$blocks     = parse_blocks( $this->post->post_content );
 		return $this->getNested( $blocks, 'price_id' );
+	}
+
+	/**
+	 * Get a form's attribute
+	 *
+	 * @param string $attribute Attribute name.
+	 * @return mixed
+	 */
+	public function getAttribute( $attribute ) {
+		$blocks     = parse_blocks( $this->post->post_content );
+		$form_block = $blocks[0] ?? false;
+		if ( ! $form_block || 'checkout-engine/form' !== $form_block['blockName'] ) {
+			return '';
+		}
+		return $form_block['attrs'][ $attribute ] ?? null;
 	}
 
 	/**

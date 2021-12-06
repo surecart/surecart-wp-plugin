@@ -76,6 +76,6 @@ export default `<!-- wp:checkout-engine/section-title {"text":"Choose a Plan","d
 <div style="height:20px" aria-hidden="true" class="wp-block-spacer"></div>
 <!-- /wp:spacer -->
 
-<!-- wp:checkout-engine/submit -->
+<!-- wp:checkout-engine/submit {"full":true} -->
 <ce-button submit="1" type="primary" full="1" size="large" class="wp-block-checkout-engine-submit">Purchase</ce-button>
 <!-- /wp:checkout-engine/submit -->`;

@@ -377,6 +377,7 @@ export namespace Components {
         "value": string;
     }
     interface CeExpressPayment {
+        "formId": number | string;
         "keys": Keys;
         "processor": 'stripe' | 'paypal';
     }
@@ -1134,6 +1135,10 @@ export namespace Components {
          */
         "currencyCode": string;
         "error": ResponseError | null;
+        /**
+          * This is required to validate the form on the server
+         */
+        "formId": number | string;
         /**
           * Stripe publishable key
          */
@@ -2019,6 +2024,7 @@ declare namespace LocalJSX {
         "value"?: string;
     }
     interface CeExpressPayment {
+        "formId"?: number | string;
         "keys"?: Keys;
         "processor"?: 'stripe' | 'paypal';
     }
@@ -2840,6 +2846,10 @@ declare namespace LocalJSX {
          */
         "currencyCode"?: string;
         "error"?: ResponseError | null;
+        /**
+          * This is required to validate the form on the server
+         */
+        "formId"?: number | string;
         /**
           * Stripe publishable key
          */

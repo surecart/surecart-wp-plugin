@@ -3,6 +3,7 @@ namespace CheckoutEngine\Tests\Feature\Rest;
 
 use CheckoutEngine\Request\RequestServiceProvider;
 use CheckoutEngine\Rest\CheckoutSessionRestServiceProvider;
+use CheckoutEngine\Support\Errors\ErrorsServiceProvider;
 use CheckoutEngine\Tests\CheckoutEngineUnitTestCase;
 use WP_REST_Request;
 
@@ -21,11 +22,33 @@ class CheckoutSessionRestServiceProviderTest extends CheckoutEngineUnitTestCase 
 			'providers' => [
 				CheckoutSessionRestServiceProvider::class,
 				RequestServiceProvider::class,
+				ErrorsServiceProvider::class
 			]
 		], false);
+	}
 
-		// setup mock requests
-		// $this->setupMockRequests();
+	public function test_form_id_required()
+	{
+		// mock the requests in the container
+		$requests =  \Mockery::mock(RequestService::class);
+		\CheckoutEngine::alias('request', function () use ($requests) {
+			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
+		});
+
+		$requests->shouldReceive('makeRequest')->never();
+
+		// must pass form id.
+		$request = new WP_REST_Request('PATCH', '/checkout-engine/v1/checkout_sessions/123testid/finalize/stripe');
+		$response = rest_do_request( $request );
+		$this->assertSame($response->get_status(), 400);
+		$this->assertSame($response->get_data()['code'], 'form_id_required');
+
+		// must be a valid form id.
+		$request = new WP_REST_Request('PATCH', '/checkout-engine/v1/checkout_sessions/123testid/finalize/stripe');
+		$request->set_param('form_id', 1234567789);
+		$response = rest_do_request( $request );
+		$this->assertSame($response->get_status(), 400);
+		$this->assertSame($response->get_data()['code'], 'form_id_invalid');
 	}
 
 	public function test_form_test_mode()

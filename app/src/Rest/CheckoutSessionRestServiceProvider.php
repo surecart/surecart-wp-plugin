@@ -4,6 +4,8 @@ namespace CheckoutEngine\Rest;
 
 use CheckoutEngine\Rest\RestServiceInterface;
 use CheckoutEngine\Controllers\Rest\CheckoutSessionController;
+use CheckoutEngine\Models\Form;
+use CheckoutEngine\Models\User;
 
 /**
  * Service provider for Price Rest Requests
@@ -38,7 +40,7 @@ class CheckoutSessionRestServiceProvider extends RestServiceProvider implements 
 	public function registerRoutes() {
 		register_rest_route(
 			"$this->name/v$this->version",
-			$this->endpoint . '/(?P<id>[\S]+)/finalize/(?P<processor_type>[\S]+)',
+			$this->endpoint . '/(?P<id>[^/]+)/finalize/(?P<processor_type>[^/]+)',
 			[
 				[
 					'methods'             => \WP_REST_Server::EDITABLE,
@@ -99,7 +101,20 @@ class CheckoutSessionRestServiceProvider extends RestServiceProvider implements 
 	 *
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
-	public function finalize_permissions_check() {
+	public function finalize_permissions_check( \WP_REST_Request $request ) {
+		// form id is required.
+		if ( empty( $request['form_id'] ) ) {
+			return new \WP_Error( 'form_id_required', esc_html__( 'Form ID is required.', 'checkout_engine' ), [ 'status' => 400 ] );
+		}
+
+		$form = get_post( $request['form_id'] );
+		if ( ! $form || 'ce_form' !== Form::getPostType() ) {
+			// TODO: check form registration on server here.
+
+			// form not found.
+			return new \WP_Error( 'form_id_invalid', esc_html__( 'Form ID is invalid.', 'checkout_engine' ), [ 'status' => 400 ] );
+		}
+
 		return true;
 	}
 
@@ -122,7 +137,7 @@ class CheckoutSessionRestServiceProvider extends RestServiceProvider implements 
 	public function get_items_permissions_check( $request ) {
 		// a customer can list their own sessions.
 		if ( isset( $request['customer_ids'] ) && 1 === count( $request['customer_ids'] ) ) {
-			return get_user_meta( get_current_user_id(), 'ce_customer_id', true ) === $request['customer_ids'][0];
+			return User::find()->customerId() === $request['customer_ids'][0];
 		}
 
 		// need read priveleges.
