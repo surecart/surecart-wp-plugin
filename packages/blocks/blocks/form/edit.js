@@ -38,7 +38,13 @@ export default function edit( { clientId, attributes, setAttributes } ) {
 		select( blockEditorStore ).getBlockCount( clientId )
 	);
 	const [ template, setTemplate ] = useState( 'sections' );
-	const { replaceInnerBlocks } = useDispatch( blockEditorStore );
+	const { replaceInnerBlocks, setTemplateValidity } = useDispatch(
+		blockEditorStore
+	);
+
+	// temporary fix for default template.
+	setTemplateValidity( true );
+
 	const changeTemplate = async () => {
 		replaceInnerBlocks(
 			clientId,
