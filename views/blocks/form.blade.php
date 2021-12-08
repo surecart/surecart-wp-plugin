@@ -14,7 +14,7 @@
 </ce-checkout>
 
 <script>
-	var checkout = document.querySelector(".checkout");
+	var checkout = document.querySelector("#<?php echo esc_attr($id); ?>");
 	checkout.prices = <?php echo wp_json_encode($prices); ?>;
 	checkout.i18n = <?php echo wp_json_encode($i18n); ?>;
 	checkout.keys = {
