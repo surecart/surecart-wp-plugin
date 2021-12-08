@@ -208,8 +208,8 @@ class CouponsListTable extends ListTable {
 	/**
 	 * Render the "Redeem By"
 	 *
-	 * @param string $timestamp Redeem timestamp
-	 * @return void
+	 * @param string $timestamp Redeem timestamp.
+	 * @return string
 	 */
 	public function get_expiration_string( $timestamp = '' ) {
 		if ( ! $timestamp ) {

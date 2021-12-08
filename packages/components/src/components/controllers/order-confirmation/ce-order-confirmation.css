@@ -1,3 +1,19 @@
 :host {
   display: block;
+  max-width: 800px;
+  margin: auto;
+}
+
+.order-confirmation__content {
+  display: grid;
+  gap: 1em;
+}
+
+.order-confirmation__content.hidden {
+  display: none;
+}
+
+::part(line-items) {
+  display: grid;
+  gap: 0.5em;
 }

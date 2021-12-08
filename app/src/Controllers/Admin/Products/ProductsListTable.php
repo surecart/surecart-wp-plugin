@@ -158,7 +158,7 @@ class ProductsListTable extends ListTable {
 	/**
 	 * Nothing found.
 	 *
-	 * @return string
+	 * @return void
 	 */
 	public function no_items() {
 		if ( $this->error ) {

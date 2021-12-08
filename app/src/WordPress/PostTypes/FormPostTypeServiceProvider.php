@@ -59,25 +59,32 @@ class FormPostTypeServiceProvider implements ServiceProviderInterface {
 		return $columns;
 	}
 
+	/**
+	 * Post type content column.
+	 *
+	 * @param string  $column_name Column name.
+	 * @param integer $post_ID Post ID.
+	 * @return void
+	 */
 	public function postTypeContent( $column_name, $post_ID ) {
 		if ( 'shortcode' === $column_name ) {
-			return $this->columnShortcode( $post_ID );
+			$this->columnShortcode( $post_ID );
 		}
 		if ( 'public' === $column_name ) {
-			return $this->columnPosts( $post_ID );
+			$this->columnPosts( $post_ID );
 		}
 		if ( 'products' === $column_name ) {
-			return $this->columnProducts( $post_ID );
+			$this->columnProducts( $post_ID );
 		}
 		if ( 'mode' === $column_name ) {
-			return $this->columnMode( $post_ID );
+			$this->columnMode( $post_ID );
 		}
 	}
 
 	/**
 	 * Get the form's mode.
 	 *
-	 * @param int $post_ID
+	 * @param int $post_ID Post id.
 	 * @return void
 	 */
 	public function columnMode( $post_ID ) {

@@ -110,6 +110,7 @@ export namespace Components {
         "value": string;
     }
     interface CeCard {
+        "borderless": boolean;
     }
     interface CeCheckbox {
         /**
@@ -505,6 +506,8 @@ export namespace Components {
          */
         "value": number;
     }
+    interface CeHeading {
+    }
     interface CeInput {
         /**
           * The input's autocomplete attribute.
@@ -692,6 +695,14 @@ export namespace Components {
     interface CeMenuLabel {
     }
     interface CeOrderConfirmation {
+        "checkoutSession": CheckoutSession;
+    }
+    interface CeOrderConfirmationLineItems {
+        "checkoutSession": CheckoutSession;
+        "loading": boolean;
+    }
+    interface CeOrderConfirmationTotals {
+        "checkoutSession": CheckoutSession;
     }
     interface CeOrderSummary {
         "busy": boolean;
@@ -1364,6 +1375,12 @@ declare global {
         prototype: HTMLCeFormatNumberElement;
         new (): HTMLCeFormatNumberElement;
     };
+    interface HTMLCeHeadingElement extends Components.CeHeading, HTMLStencilElement {
+    }
+    var HTMLCeHeadingElement: {
+        prototype: HTMLCeHeadingElement;
+        new (): HTMLCeHeadingElement;
+    };
     interface HTMLCeInputElement extends Components.CeInput, HTMLStencilElement {
     }
     var HTMLCeInputElement: {
@@ -1423,6 +1440,18 @@ declare global {
     var HTMLCeOrderConfirmationElement: {
         prototype: HTMLCeOrderConfirmationElement;
         new (): HTMLCeOrderConfirmationElement;
+    };
+    interface HTMLCeOrderConfirmationLineItemsElement extends Components.CeOrderConfirmationLineItems, HTMLStencilElement {
+    }
+    var HTMLCeOrderConfirmationLineItemsElement: {
+        prototype: HTMLCeOrderConfirmationLineItemsElement;
+        new (): HTMLCeOrderConfirmationLineItemsElement;
+    };
+    interface HTMLCeOrderConfirmationTotalsElement extends Components.CeOrderConfirmationTotals, HTMLStencilElement {
+    }
+    var HTMLCeOrderConfirmationTotalsElement: {
+        prototype: HTMLCeOrderConfirmationTotalsElement;
+        new (): HTMLCeOrderConfirmationTotalsElement;
     };
     interface HTMLCeOrderSummaryElement extends Components.CeOrderSummary, HTMLStencilElement {
     }
@@ -1584,6 +1613,7 @@ declare global {
         "ce-form-section": HTMLCeFormSectionElement;
         "ce-format-interval": HTMLCeFormatIntervalElement;
         "ce-format-number": HTMLCeFormatNumberElement;
+        "ce-heading": HTMLCeHeadingElement;
         "ce-input": HTMLCeInputElement;
         "ce-line-item": HTMLCeLineItemElement;
         "ce-line-item-total": HTMLCeLineItemTotalElement;
@@ -1594,6 +1624,8 @@ declare global {
         "ce-menu-item": HTMLCeMenuItemElement;
         "ce-menu-label": HTMLCeMenuLabelElement;
         "ce-order-confirmation": HTMLCeOrderConfirmationElement;
+        "ce-order-confirmation-line-items": HTMLCeOrderConfirmationLineItemsElement;
+        "ce-order-confirmation-totals": HTMLCeOrderConfirmationTotalsElement;
         "ce-order-summary": HTMLCeOrderSummaryElement;
         "ce-payment": HTMLCePaymentElement;
         "ce-price-choice": HTMLCePriceChoiceElement;
@@ -1731,6 +1763,7 @@ declare namespace LocalJSX {
         "value"?: string;
     }
     interface CeCard {
+        "borderless"?: boolean;
     }
     interface CeCheckbox {
         /**
@@ -2155,6 +2188,8 @@ declare namespace LocalJSX {
          */
         "value"?: number;
     }
+    interface CeHeading {
+    }
     interface CeInput {
         /**
           * The input's autocomplete attribute.
@@ -2354,6 +2389,14 @@ declare namespace LocalJSX {
     interface CeMenuLabel {
     }
     interface CeOrderConfirmation {
+        "checkoutSession"?: CheckoutSession;
+    }
+    interface CeOrderConfirmationLineItems {
+        "checkoutSession"?: CheckoutSession;
+        "loading"?: boolean;
+    }
+    interface CeOrderConfirmationTotals {
+        "checkoutSession"?: CheckoutSession;
     }
     interface CeOrderSummary {
         "busy"?: boolean;
@@ -2983,6 +3026,7 @@ declare namespace LocalJSX {
         "ce-form-section": CeFormSection;
         "ce-format-interval": CeFormatInterval;
         "ce-format-number": CeFormatNumber;
+        "ce-heading": CeHeading;
         "ce-input": CeInput;
         "ce-line-item": CeLineItem;
         "ce-line-item-total": CeLineItemTotal;
@@ -2993,6 +3037,8 @@ declare namespace LocalJSX {
         "ce-menu-item": CeMenuItem;
         "ce-menu-label": CeMenuLabel;
         "ce-order-confirmation": CeOrderConfirmation;
+        "ce-order-confirmation-line-items": CeOrderConfirmationLineItems;
+        "ce-order-confirmation-totals": CeOrderConfirmationTotals;
         "ce-order-summary": CeOrderSummary;
         "ce-payment": CePayment;
         "ce-price-choice": CePriceChoice;
@@ -3043,6 +3089,7 @@ declare module "@stencil/core" {
             "ce-form-section": LocalJSX.CeFormSection & JSXBase.HTMLAttributes<HTMLCeFormSectionElement>;
             "ce-format-interval": LocalJSX.CeFormatInterval & JSXBase.HTMLAttributes<HTMLCeFormatIntervalElement>;
             "ce-format-number": LocalJSX.CeFormatNumber & JSXBase.HTMLAttributes<HTMLCeFormatNumberElement>;
+            "ce-heading": LocalJSX.CeHeading & JSXBase.HTMLAttributes<HTMLCeHeadingElement>;
             "ce-input": LocalJSX.CeInput & JSXBase.HTMLAttributes<HTMLCeInputElement>;
             "ce-line-item": LocalJSX.CeLineItem & JSXBase.HTMLAttributes<HTMLCeLineItemElement>;
             "ce-line-item-total": LocalJSX.CeLineItemTotal & JSXBase.HTMLAttributes<HTMLCeLineItemTotalElement>;
@@ -3053,6 +3100,8 @@ declare module "@stencil/core" {
             "ce-menu-item": LocalJSX.CeMenuItem & JSXBase.HTMLAttributes<HTMLCeMenuItemElement>;
             "ce-menu-label": LocalJSX.CeMenuLabel & JSXBase.HTMLAttributes<HTMLCeMenuLabelElement>;
             "ce-order-confirmation": LocalJSX.CeOrderConfirmation & JSXBase.HTMLAttributes<HTMLCeOrderConfirmationElement>;
+            "ce-order-confirmation-line-items": LocalJSX.CeOrderConfirmationLineItems & JSXBase.HTMLAttributes<HTMLCeOrderConfirmationLineItemsElement>;
+            "ce-order-confirmation-totals": LocalJSX.CeOrderConfirmationTotals & JSXBase.HTMLAttributes<HTMLCeOrderConfirmationTotalsElement>;
             "ce-order-summary": LocalJSX.CeOrderSummary & JSXBase.HTMLAttributes<HTMLCeOrderSummaryElement>;
             "ce-payment": LocalJSX.CePayment & JSXBase.HTMLAttributes<HTMLCePaymentElement>;
             "ce-price-choice": LocalJSX.CePriceChoice & JSXBase.HTMLAttributes<HTMLCePriceChoiceElement>;

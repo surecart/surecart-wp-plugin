@@ -1,0 +1,12 @@
+{
+	"name": "checkout-engine/customer-dashboard-button",
+	"title": "Customer Dashboard Button",
+	"description": "Display a button to link the user to their customer dashboard.",
+	"category": "layout",
+	"keywords": [ "name", "customer", "dashboard" ],
+	"parent": null,
+	"supports": {
+		"reusable": false,
+		"html": false
+	}
+}

@@ -1,0 +1,12 @@
+#$ vendor/bin/phpstan analyze
+
+includes:
+    - vendor/szepeviktor/phpstan-wordpress/extension.neon
+parameters:
+    level: 0
+    paths:
+        - app/src
+    ignoreErrors:
+        - '#Static call to instance method#'
+
+# See full example in phpstan-full.neon

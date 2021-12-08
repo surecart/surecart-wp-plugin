@@ -12,10 +12,20 @@
 	},
 	"attributes": {
 		"title": {
-			"type": "string"
+			"type": "string",
+			"default": "Order Confirmation"
 		},
-		"dashboard_button": {
-			"type": "boolean"
+		"description": {
+			"type": "string",
+			"default": "Thank you for your order!"
+		},
+		"button_enabled": {
+			"type": "boolean",
+			"default": true
+		},
+		"button_text": {
+			"type": "string",
+			"default": "Manage Orders"
 		}
 	}
 }

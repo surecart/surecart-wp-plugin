@@ -393,7 +393,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 	 * @param string $key Attribute key.
 	 * @param mixed  $type 'get' or 'set'.
 	 *
-	 * @return string
+	 * @return string|false
 	 */
 	public function getMutator( $key, $type ) {
 		$key = ucwords( str_replace( [ '-', '_' ], ' ', $key ) );
@@ -403,6 +403,8 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
 		if ( method_exists( $this, $method ) ) {
 			return $method;
 		}
+
+		return false;
 	}
 
 	/**

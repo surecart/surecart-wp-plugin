@@ -1,0 +1,21 @@
+{
+	"apiVersion": 2,
+	"name": "checkout-engine/heading",
+	"title": "Title/Heading Section",
+	"description": "Displays a title/heading section",
+	"category": "layout",
+	"keywords": [ "heading", "title" ],
+	"supports": {
+		"reusable": false,
+		"html": false,
+		"order-summary": true
+	},
+	"attributes": {
+		"title": {
+			"type": "string"
+		},
+		"description": {
+			"type": "string"
+		}
+	}
+}

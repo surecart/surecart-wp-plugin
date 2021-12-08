@@ -74,7 +74,7 @@ export class CeCouponForm {
           </ce-tag>
 
           {humanDiscount && (
-            <span class="coupon-human-discount" slot="description">
+            <span class="coupon-human-discount" slot="price-description">
               ({humanDiscount})
             </span>
           )}
@@ -82,8 +82,6 @@ export class CeCouponForm {
           <span slot="price">
             -<ce-format-number type="currency" currency={this.checkoutSession?.currency} value={this.checkoutSession?.discount_amount}></ce-format-number>
           </span>
-
-          <span slot="price-description">&nbsp;</span>
         </ce-line-item>
       );
     }

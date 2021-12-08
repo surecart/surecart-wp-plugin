@@ -1,4 +1,4 @@
-import { Component, Host, State, h } from '@stencil/core';
+import { Component, State, h, Prop } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs, getQueryArg } from '@wordpress/url';
 import { Universe } from 'stencil-wormhole';
@@ -11,8 +11,7 @@ import { CheckoutSession } from '../../../types';
   shadow: true,
 })
 export class CeOrderConfirmation {
-  /** Stores the current CheckoutSession */
-  @State() checkoutSession: CheckoutSession;
+  @Prop({ mutable: true }) checkoutSession: CheckoutSession;
 
   /** Loading */
   @State() loading: boolean = false;
@@ -34,8 +33,8 @@ export class CeOrderConfirmation {
 
   /** Update a session */
   async getSession() {
-    console.log(window.location.href);
     if (!this.getSessionId()) return;
+    if (this.checkoutSession?.id) return;
     try {
       this.loading = true;
       this.checkoutSession = (await await apiFetch({
@@ -65,12 +64,24 @@ export class CeOrderConfirmation {
 
   render() {
     return (
-      <Host>
-        <slot></slot>
-        <h1>Work in Progress</h1>
-        {this.checkoutSession?.billing_addresss?.name}
-        {JSON.stringify(this.checkoutSession)}
-      </Host>
+      <Universe.Provider state={this.state()}>
+        <div class={{ 'order-confirmation': true }}>
+          <div
+            class={{
+              'order-confirmation__content': true,
+              'hidden': !this.checkoutSession?.id && !this.loading,
+            }}
+          >
+            <slot />
+          </div>
+          {!this.checkoutSession?.id && !this.loading && (
+            <ce-heading>
+              {__('Order not found.', 'checkout_engine')}
+              <span slot="description">{__('This order could not be found. Please try again.', 'checkout_engine')}</span>
+            </ce-heading>
+          )}
+        </div>
+      </Universe.Provider>
     );
   }
 }

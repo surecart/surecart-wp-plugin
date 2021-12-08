@@ -1,46 +1,404 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
-import { InnerBlocks, useBlockProps } from '@wordpress/block-editor';
+import {
+	InnerBlocks,
+	useBlockProps,
+	RichText,
+	InspectorControls,
+} from '@wordpress/block-editor';
+import { PanelRow, PanelBody, ToggleControl } from '@wordpress/components';
 import { ALLOWED_BLOCKS } from '../../blocks';
 import { CeOrderConfirmation } from '@checkout-engine/react';
 
 export default ( { attributes, setAttributes } ) => {
+	const { title, description, button_text, button_enabled } = attributes;
 	const blockProps = useBlockProps( {
 		style: {
-			fontSize: '16px',
+			maxWidth: 'var( --ast-content-width-size, 910px )',
+			marginLeft: 'auto !important',
+			marginRight: 'auto !important',
 		},
 	} );
+
+	const checkoutSession = {
+		billing_address: null,
+		created_at: 1638829448,
+		currency: 'usd',
+		discount_amount: 3980,
+		email: 'wordpress@example.com',
+		id: 'e620901c-0320-43ee-8bb1-d07cd48696a7',
+		discount: {
+			promotion: {
+				archived: false,
+				archived_at: null,
+				code: 'EXAMPLE COUPON',
+				coupon: '9ac4b403-e069-4f9d-ad88-4d4681f96b94',
+				created_at: 1627664792,
+				expired: false,
+				id: '82455136-a0f9-4763-9b82-e167daddb303',
+				max_redemptions: null,
+				metadata: [],
+				object: 'promotion',
+				redeem_by: null,
+				times_redeemed: 4,
+				updated_at: 1638898265,
+			},
+			created_at: 1638829481,
+			id: 'f60a63b4-41f2-4b48-a956-eecd3ef2180a',
+			object: 'discount',
+			archived: false,
+			archived_at: null,
+			code: 'TEST',
+			coupon: {
+				amount_off: null,
+				created_at: 1627664456,
+				currency: 'usd',
+				duration: 'once',
+				duration_in_months: null,
+				expired: false,
+				id: '9ac4b403-e069-4f9d-ad88-4d4681f96b94',
+				max_redemptions: null,
+				metadata: [],
+				name: 'Example Coupon',
+				object: 'coupon',
+				percent_off: 20,
+				redeem_by: null,
+				times_redeemed: 4,
+				updated_at: 1638898265,
+			},
+			created_at: 1627664792,
+			expired: false,
+			id: '82455136-a0f9-4763-9b82-e167daddb303',
+			max_redemptions: null,
+			metadata: [],
+			object: 'promotion',
+			redeem_by: null,
+			times_redeemed: 4,
+			updated_at: 1638898265,
+			updated_at: 1638898265,
+		},
+		line_items: {
+			data: [
+				{
+					ad_hoc_amount: null,
+					checkout_session: 'e620901c-0320-43ee-8bb1-d07cd48696a7',
+					created_at: 1638898265,
+					discount_amount: 3980,
+					id: '5e9ca3ec-e682-40dd-b09a-67049fda5c15',
+					object: 'line_item',
+					price: {
+						ad_hoc_amount: null,
+						checkout_session:
+							'e620901c-0320-43ee-8bb1-d07cd48696a7',
+						created_at: 1638898265,
+						discount_amount: 3980,
+						id: '5e9ca3ec-e682-40dd-b09a-67049fda5c15',
+						object: 'line_item',
+						ad_hoc: false,
+						ad_hoc_max_amount: null,
+						ad_hoc_min_amount: 0,
+						amount: 19900,
+						archived: false,
+						archived_at: null,
+						created_at: 1631052052,
+						currency: 'usd',
+						current_version: true,
+						description: null,
+						id: 'bf089f46-5ac1-4027-a745-395a13203967',
+						metadata: [],
+						product: {
+							archived: false,
+							archived_at: null,
+							created_at: 1630097276,
+							description: 'Change the product description.',
+							id: 'f96c9d81-4671-4e84-b6ca-138a36b80006',
+							image_url: null,
+							metadata: [],
+							metrics: {
+								max_price_amount: 19900,
+								min_price_amount: 6900,
+								prices_count: 3,
+								currency: 'usd',
+							},
+							currency: 'usd',
+							max_price_amount: 19900,
+							min_price_amount: 6900,
+							prices_count: 3,
+							name: 'Example Line Item',
+							object: 'product',
+							tax_category: null,
+							updated_at: 1633464458,
+						},
+						name: 'Ultimate',
+						object: 'price',
+						archived: false,
+						archived_at: null,
+						created_at: 1630097276,
+						description: 'Change the product description.',
+						id: 'f96c9d81-4671-4e84-b6ca-138a36b80006',
+						image_url: null,
+						metadata: [],
+						metrics: {
+							max_price_amount: 19900,
+							min_price_amount: 6900,
+							prices_count: 3,
+							currency: 'usd',
+						},
+						currency: 'usd',
+						max_price_amount: 19900,
+						min_price_amount: 6900,
+						prices_count: 3,
+						name: 'Product',
+						object: 'product',
+						tax_category: null,
+						updated_at: 1633464458,
+						recurring: false,
+						recurring_interval: null,
+						recurring_interval_count: null,
+						tax_behavior: 'exclusive',
+						trial_duration_days: null,
+						updated_at: 1633464458,
+						quantity: 1,
+						subtotal_amount: 19900,
+						tax_amount: 0,
+						total_amount: 15920,
+						updated_at: 1638898265,
+					},
+					quantity: 1,
+					subtotal_amount: 19900,
+					tax_amount: 0,
+					total_amount: 15920,
+					updated_at: 1638898265,
+				},
+				{
+					ad_hoc_amount: null,
+					checkout_session: 'e620901c-0320-43ee-8bb1-d07cd48696a7',
+					created_at: 1638898265,
+					discount_amount: 3980,
+					id: '5e9ca3ec-e682-40dd-b09a-67049fda5c15',
+					object: 'line_item',
+					price: {
+						ad_hoc_amount: null,
+						checkout_session:
+							'e620901c-0320-43ee-8bb1-d07cd48696a7',
+						created_at: 1638898265,
+						discount_amount: 3980,
+						id: '5e9ca3ec-e682-40dd-b09a-67049fda5c15',
+						object: 'line_item',
+						ad_hoc: false,
+						ad_hoc_max_amount: null,
+						ad_hoc_min_amount: 0,
+						amount: 19900,
+						archived: false,
+						archived_at: null,
+						created_at: 1631052052,
+						currency: 'usd',
+						current_version: true,
+						description: null,
+						id: 'bf089f46-5ac1-4027-a745-395a13203967',
+						metadata: [],
+						product: {
+							archived: false,
+							archived_at: null,
+							created_at: 1630097276,
+							description: 'Change the product description.',
+							id: 'f96c9d81-4671-4e84-b6ca-138a36b80006',
+							image_url: null,
+							metadata: [],
+							metrics: {
+								max_price_amount: 19900,
+								min_price_amount: 6900,
+								prices_count: 3,
+								currency: 'usd',
+							},
+							currency: 'usd',
+							max_price_amount: 19900,
+							min_price_amount: 6900,
+							prices_count: 3,
+							name: 'Another Example Line Item',
+							object: 'product',
+							tax_category: null,
+							updated_at: 1633464458,
+						},
+						name: 'Ultimate',
+						object: 'price',
+						archived: false,
+						archived_at: null,
+						created_at: 1630097276,
+						description: 'Change the product description.',
+						id: 'f96c9d81-4671-4e84-b6ca-138a36b80006',
+						image_url: null,
+						metadata: [],
+						metrics: {
+							max_price_amount: 19900,
+							min_price_amount: 6900,
+							prices_count: 3,
+							currency: 'usd',
+						},
+						currency: 'usd',
+						max_price_amount: 19900,
+						min_price_amount: 6900,
+						prices_count: 3,
+						name: 'Product',
+						object: 'product',
+						tax_category: null,
+						updated_at: 1633464458,
+						recurring: false,
+						recurring_interval: null,
+						recurring_interval_count: null,
+						tax_behavior: 'exclusive',
+						trial_duration_days: null,
+						updated_at: 1633464458,
+						quantity: 1,
+						subtotal_amount: 19900,
+						tax_amount: 0,
+						total_amount: 15920,
+						updated_at: 1638898265,
+					},
+					quantity: 1,
+					subtotal_amount: 19900,
+					tax_amount: 0,
+					total_amount: 15920,
+					updated_at: 1638898265,
+				},
+			],
+		},
+		live_mode: false,
+		name: 'Test User',
+		number: 'C5A35729',
+		object: 'checkout_session',
+		payment_intent: null,
+		shipping_address: null,
+		status: 'paid',
+		subtotal_amount: 19900,
+		tax_amount: 0,
+		tax_calculation_status: 'disabled',
+		tax_identifier: null,
+		tax_label: null,
+		total_amount: 15920,
+		updated_at: 1638898265,
+	};
+
 	return (
-		<CeOrderConfirmation { ...blockProps }>
-			<ce-text
-				tag="h2"
-				style={ {
-					'--font-size': 'var(--ce-font-size-xx-large)',
-					'--font-weight': 'var(--ce-font-weight-bold)',
-					'--color': 'var(--ce-form-title-font-color)',
-				} }
+		<div { ...blockProps }>
+			<InspectorControls>
+				<PanelBody title={ __( 'Attributes', 'checkout-engine' ) }>
+					<PanelRow>
+						<ToggleControl
+							checked={ button_enabled }
+							label={ __(
+								'Enable dashboard button',
+								'checkout_engine'
+							) }
+							onChange={ ( button_enabled ) =>
+								setAttributes( { button_enabled } )
+							}
+						/>
+					</PanelRow>
+				</PanelBody>
+			</InspectorControls>
+			<CeOrderConfirmation
+				{ ...blockProps }
+				checkoutSession={ checkoutSession }
 			>
-				Order Details
-			</ce-text>
-			<ce-text
-				style={ {
-					'--font-size': 'var(--ce-font-size-medium)',
-					'--font-weight': 'var(--ce-font-weight-normal)',
-					'--color': 'var(--ce-color-gray-600)',
-				} }
-			>
-				Thank you for your order!
-			</ce-text>
-			<InnerBlocks
-				css={ css`
-					> .wp-block {
-						margin-top: 30px !important;
-						margin-bottom: 30px !important;
-					}
-				` }
-				templateLock={ false }
-			/>
-		</CeOrderConfirmation>
+				<ce-heading
+					style={ {
+						marginBottom: 'var(--ce-spacing-large)',
+						paddingBottom: 'var(--ce-spacing-large)',
+					} }
+				>
+					<RichText
+						aria-label={ __( 'Title', 'checkout_engine' ) }
+						placeholder={ __(
+							'Add your title...',
+							'checkout_engine'
+						) }
+						value={ title }
+						onChange={ ( title ) => setAttributes( { title } ) }
+						withoutInteractiveFormatting
+						allowedFormats={ [ 'core/bold', 'core/italic' ] }
+					/>
+					<span slot="description">
+						<RichText
+							aria-label={ __(
+								'Description',
+								'checkout_engine'
+							) }
+							placeholder={ __(
+								'Add your description...',
+								'checkout_engine'
+							) }
+							value={ description }
+							onChange={ ( description ) =>
+								setAttributes( { description } )
+							}
+							withoutInteractiveFormatting
+							allowedFormats={ [ 'core/bold', 'core/italic' ] }
+						/>
+					</span>
+
+					{ button_enabled && (
+						<ce-button type="primary" slot="end">
+							<svg
+								slot="prefix"
+								width="16"
+								height="16"
+								viewBox="0 0 16 16"
+								fill="none"
+								xmlns="http://www.w3.org/2000/svg"
+							>
+								<path
+									d="M4 1.33334L2 4.00001V13.3333C2 13.687 2.14048 14.0261 2.39052 14.2762C2.64057 14.5262 2.97971 14.6667 3.33333 14.6667H12.6667C13.0203 14.6667 13.3594 14.5262 13.6095 14.2762C13.8595 14.0261 14 13.687 14 13.3333V4.00001L12 1.33334H4Z"
+									stroke="white"
+									stroke-width="1.5"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+								/>
+								<path
+									d="M2 4H14"
+									stroke="white"
+									stroke-width="1.5"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+								/>
+								<path
+									d="M10.6667 6.66666C10.6667 7.3739 10.3857 8.05218 9.88561 8.55227C9.38552 9.05237 8.70724 9.33332 7.99999 9.33332C7.29275 9.33332 6.61447 9.05237 6.11438 8.55227C5.61428 8.05218 5.33333 7.3739 5.33333 6.66666"
+									stroke="white"
+									stroke-width="1.5"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+								/>
+							</svg>
+
+							<RichText
+								aria-label={ __( 'Button text' ) }
+								placeholder={ __( 'Add text…' ) }
+								value={ button_text }
+								onChange={ ( button_text ) =>
+									setAttributes( { button_text } )
+								}
+								withoutInteractiveFormatting
+								allowedFormats={ [
+									'core/bold',
+									'core/italic',
+								] }
+							/>
+						</ce-button>
+					) }
+				</ce-heading>
+
+				<div
+					css={ css`
+						.wp-block {
+							margin-top: 30px !important;
+							margin-bottom: 30px !important;
+						}
+					` }
+				>
+					<InnerBlocks templateLock={ false } />
+				</div>
+			</CeOrderConfirmation>
+		</div>
 	);
 };

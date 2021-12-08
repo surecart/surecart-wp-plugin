@@ -7,6 +7,12 @@ namespace CheckoutEngine\Blocks;
  */
 abstract class Block {
 	/**
+	 * Block name
+	 *
+	 * @var string
+	 */
+	protected $name = '';
+	/**
 	 * Parent blocks.
 	 *
 	 * @var array|null

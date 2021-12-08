@@ -139,7 +139,7 @@ class CheckoutSessionRestServiceProvider extends RestServiceProvider implements 
 	public function get_items_permissions_check( $request ) {
 		// a customer can list their own sessions.
 		if ( isset( $request['customer_ids'] ) && 1 === count( $request['customer_ids'] ) ) {
-			return User::find()->customerId() === $request['customer_ids'][0];
+			return User::current()->customerId() === $request['customer_ids'][0];
 		}
 
 		// need read priveleges.

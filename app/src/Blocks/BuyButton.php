@@ -2,8 +2,6 @@
 
 namespace CheckoutEngine\Blocks;
 
-use CheckoutEngine\Concerns\HasBlockTheme;
-
 /**
  * Checkout block
  */
@@ -91,7 +89,7 @@ class BuyButton extends Block {
 					],
 					\CheckoutEngine::pages()->url( 'checkout' )
 				),
-				'label' => $attributes['label'] ?? __( 'Buy Now' ),
+				'label' => $attributes['label'] ?? __( 'Buy Now', 'checkout_session' ),
 			]
 		);
 	}

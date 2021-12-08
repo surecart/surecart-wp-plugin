@@ -2,7 +2,7 @@ import { CheckoutSession } from '../../types';
 import apiFetch from '../../functions/fetch';
 import { addQueryArgs } from '@wordpress/url';
 const baseUrl = 'checkout-engine/v1/checkout_sessions/';
-const expand = ['line_items', 'line_item.price', 'price.product', 'customer', 'payment_intent', 'discount', 'discount.promotion'];
+const expand = ['line_items', 'line_item.price', 'price.product', 'customer', 'payment_intent', 'discount', 'discount.promotion', 'discount.coupon'];
 
 export const parsePath = (id, endpoint = '') => {
   let path = id ? `${baseUrl}${id}` : baseUrl;

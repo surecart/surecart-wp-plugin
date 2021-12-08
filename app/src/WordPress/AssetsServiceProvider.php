@@ -138,6 +138,15 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 			true
 		);
 		wp_set_script_translations( 'checkout-engine-components', 'checkout_engine' );
+		wp_localize_script(
+			'checkout-engine-components',
+			'ceData',
+			[
+				'pages' => [
+					'dashboard' => \CheckoutEngine::pages()->url( 'dashboard' ),
+				],
+			]
+		);
 	}
 
 	/**

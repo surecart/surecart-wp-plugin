@@ -41,7 +41,7 @@ class Form extends Block {
 	 * @return void
 	 */
 	public function registerStyles() {
-		$this->registerBlockTheme( $this->name, 'elegant', __( 'Elegant', 'checkout_engine' ), 'dist/styles/themes/elegant.css' );
+		// $this->registerBlockTheme( $this->name, 'elegant', __( 'Elegant', 'checkout_engine' ), 'dist/styles/themes/elegant.css' );
 	}
 
 	/**
