@@ -10,6 +10,20 @@ use CheckoutEngine\Support\Currency;
  */
 abstract class AdminModelEditController {
 	/**
+	 * Script path.
+	 *
+	 * @var string
+	 */
+	protected $path = '';
+
+	/**
+	 * Script handle.
+	 *
+	 * @var string
+	 */
+	protected $handle = '';
+
+	/**
 	 * What types of data to add the the page.
 	 *
 	 * @var array

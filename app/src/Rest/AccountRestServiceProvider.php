@@ -130,7 +130,7 @@ class AccountRestServiceProvider extends RestServiceProvider implements RestServ
 	public function get_item_permissions_check( $request ) {
 		// check edit request.
 		if ( 'edit' === $request['context'] && ! current_user_can( 'manage_options' ) ) {
-			return new WP_Error(
+			return new \WP_Error(
 				'rest_forbidden_context',
 				__( 'Sorry, you are not allowed to edit posts in this post type.' ),
 				[ 'status' => rest_authorization_required_code() ]

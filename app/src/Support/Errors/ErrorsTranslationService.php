@@ -9,8 +9,8 @@ class ErrorsTranslationService {
 	/**
 	 * Translate based on specific error code.
 	 *
-	 * @param string $code
-	 * @return void
+	 * @param string $code The error code.
+	 * @return string|false The translated error message or false if not found.
 	 */
 	public function codeTranslation( $code = '' ) {
 		if ( ! $code ) {

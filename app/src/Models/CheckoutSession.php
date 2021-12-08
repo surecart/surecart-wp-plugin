@@ -55,10 +55,11 @@ class CheckoutSession extends Model {
 	 * Always set discount as object.
 	 *
 	 * @param array|object $value Value to set.
-	 * @return object
+	 * @return $this
 	 */
 	protected function setDiscountAttribute( $value ) {
 		$this->attributes['discount'] = (object) $value;
+		return $this;
 	}
 
 	/**

@@ -219,7 +219,13 @@ class CouponsListTable extends ListTable {
 		return sprintf( __( 'Valid until %s', 'checkout_engine' ), date_i18n( get_option( 'date_format' ), $timestamp / 1000 ) );
 	}
 
-	public function get_price_string( $coupon = '' ) {
+	/**
+	 * Get the price string for the coupon.
+	 *
+	 * @param \CheckoutEngine\Models\Coupon|null $coupon Coupon model.
+	 * @return string
+	 */
+	public function get_price_string( \CheckoutEngine\Models\Coupon $coupon = null ) {
 		if ( ! $coupon || empty( $coupon->duration ) ) {
 			return;
 		}
@@ -233,7 +239,7 @@ class CouponsListTable extends ListTable {
 			return '<ce-format-number type="currency" currency="' . $coupon->currency . '" value="' . $coupon->amount_off . '"></ce-format-number>';
 		}
 
-		return esc_html_( 'No discount.', 'checkout_engine' );
+		return esc_html__( 'No discount.', 'checkout_engine' );
 	}
 
 	/**

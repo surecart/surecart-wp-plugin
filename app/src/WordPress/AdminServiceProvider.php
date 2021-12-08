@@ -10,6 +10,13 @@ use CheckoutEngine\WordPress\Admin\AdminMenuPageService;
  */
 class AdminServiceProvider implements ServiceProviderInterface {
 	/**
+	 * Admin pages
+	 *
+	 * @var array
+	 */
+	protected $pages = [];
+
+	/**
 	 * {@inheritDoc}
 	 *
 	 *  @param  \Pimple\Container $container Service Container.
@@ -28,7 +35,7 @@ class AdminServiceProvider implements ServiceProviderInterface {
 	 * {@inheritDoc}
 	 */
 	public function bootstrap( $container ) {
-		\CheckoutEngine::admin_pages()->register();
+		$container['admin_pages']->register();
 	}
 
 	/**

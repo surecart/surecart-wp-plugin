@@ -25,7 +25,7 @@ class SettingsService {
 	 * The Singleton's constructor should always be private to prevent direct
 	 * construction calls with the `new` operator.
 	 */
-	private function __construct() { }
+	final private function __construct() { }
 
 	/**
 	 * Singletons should not be cloneable.

@@ -2,8 +2,8 @@
 
 namespace CheckoutEngine\Controllers\Admin;
 
+use CheckoutEngine\Controllers\Admin\Products\ProductsListTable;
 use CheckoutEngine\Models\Product;
-use CheckoutEngine\Controllers\Admin\Tables\ProductsListTable;
 
 /**
  * Handles product admin requests.

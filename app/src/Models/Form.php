@@ -15,7 +15,7 @@ class Form {
 	 *
 	 * @param [type] $id
 	 */
-	public function __construct( $id = 0 ) {
+	final public function __construct( $id = 0 ) {
 		$this->post = get_post( $id );
 	}
 
@@ -164,11 +164,11 @@ class Form {
 	/**
 	 * Find our checkout block.
 	 *
-	 * @param array    $post_blocks Blocks array
-	 * @param \WP_Post $post Post object.
-	 * @return void
+	 * @param array    $post_blocks Blocks array.
+	 * @param \WP_Post $post_object Post object.
+	 * @return array
 	 */
-	public function findCheckoutBlocks( $post_blocks, $post_object ) {
+	public function findCheckoutBlocks( $post_blocks, \WP_Post $post_object ) {
 		$blocks = [];
 		foreach ( $post_blocks as $block ) {
 			if ( 'checkout-engine/checkout-form' === $block['blockName'] ) {

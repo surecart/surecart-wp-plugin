@@ -53,6 +53,7 @@ class Account extends Model {
 				return $processor;
 			}
 		}
+		return false;
 	}
 
 	/**

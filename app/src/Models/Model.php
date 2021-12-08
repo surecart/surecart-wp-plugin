@@ -9,7 +9,7 @@ use CheckoutEngine\Concerns\Arrayable;
 /**
  * Model class
  */
-abstract class Model implements ArrayAccess, JsonSerializable, Arrayable {
+abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelInterface {
 	/**
 	 * What mode to create the model in
 	 *

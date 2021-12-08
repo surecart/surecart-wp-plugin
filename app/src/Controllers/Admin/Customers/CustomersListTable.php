@@ -158,7 +158,7 @@ class CustomersListTable extends ListTable {
 	/**
 	 * Nothing found.
 	 *
-	 * @return string
+	 * @return void
 	 */
 	public function no_items() {
 		echo esc_html_e( 'No products found.', 'checkout_engine' );

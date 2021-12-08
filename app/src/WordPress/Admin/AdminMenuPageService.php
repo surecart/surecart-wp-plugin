@@ -10,6 +10,12 @@ use CheckoutEngine\Controllers\Admin\Abandoned\AbandonedCheckoutScriptsControlle
 
 class AdminMenuPageService {
 	protected $slug = 'ce-getting-started';
+	/**
+	 * Pages
+	 *
+	 * @var array
+	 */
+	protected $pages = [];
 
 	/**
 	 * Add menu items.

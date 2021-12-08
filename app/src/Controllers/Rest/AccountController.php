@@ -13,7 +13,7 @@ class AccountController extends RestController {
 	 *
 	 * @return Model
 	 */
-	public function find() {
+	public function find( \WP_REST_Request $request ) {
 		return Account::find();
 	}
 

@@ -238,10 +238,10 @@ class SubscriptionsListTable extends ListTable {
 	}
 
 	/**
-	 * Render the "Redeem By"
+	 * Render the "Redeem By".
 	 *
-	 * @param string $timestamp Redeem timestamp
-	 * @return void
+	 * @param string $timestamp Redeem timestamp.
+	 * @return string
 	 */
 	public function get_expiration_string( $timestamp = '' ) {
 		if ( ! $timestamp ) {
@@ -265,7 +265,7 @@ class SubscriptionsListTable extends ListTable {
 			return Currency::formatCurrencyNumber( $coupon->amount_off ) . ' <small style="opacity: 0.75;">' . strtoupper( esc_html( $coupon->currency ) ) . '</small>';
 		}
 
-		return esc_html_( 'No discount.', 'checkout_engine' );
+		return esc_html__( 'No discount.', 'checkout_engine' );
 	}
 
 	/**

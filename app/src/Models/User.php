@@ -32,6 +32,12 @@ class User implements ArrayAccess, JsonSerializable {
 	}
 
 	/**
+	 * Disallow overriding the constructor in child classes and make the code safe that way.
+	 */
+	final public function __construct() {
+	}
+
+	/**
 	 * Get the customer from the user.
 	 *
 	 * @return \CheckoutEngine\Models\Customer|null
