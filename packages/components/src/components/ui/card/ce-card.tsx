@@ -1,4 +1,4 @@
-import { Component, h, Prop, Element, State, Listen } from '@stencil/core';
+import { Component, h, Prop, Element, State } from '@stencil/core';
 
 @Component({
   tag: 'ce-card',
@@ -13,20 +13,25 @@ export class CeCard {
   @State() hasTitleSlot: boolean;
 
   componentWillLoad() {
-    this.hasTitleSlot = !!this.el.querySelector('[slot="title"]');
+    this.handleSlotChange();
   }
-
-  @Listen('slotChange')
   handleSlotChange() {
     this.hasTitleSlot = !!this.el.querySelector('[slot="title"]');
   }
 
   render() {
     return (
-      <div part="base" class={{ 'card': true, 'card--borderless': this.borderless, 'card--has-title-slot': this.hasTitleSlot }}>
+      <div
+        part="base"
+        class={{
+          'card': true,
+          'card--borderless': this.borderless,
+          'card--has-title-slot': this.hasTitleSlot,
+        }}
+      >
         <div class="card--title">
-          <slot name="title" />
-          <ce-divider part="border" style={{ '--spacing': 'var(--ce-spacing-small)' }}></ce-divider>
+          <slot name="title" onSlotchange={() => this.handleSlotChange()} />
+          <ce-divider class="title--divider" part="border" style={{ '--spacing': 'var(--ce-spacing-small)' }}></ce-divider>
         </div>
         <slot />
       </div>

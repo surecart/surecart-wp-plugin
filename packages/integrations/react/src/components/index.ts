@@ -54,6 +54,7 @@ export const CeRadio = /*@__PURE__*/createReactComponent<JSX.CeRadio, HTMLCeRadi
 export const CeRadioGroup = /*@__PURE__*/createReactComponent<JSX.CeRadioGroup, HTMLCeRadioGroupElement>('ce-radio-group');
 export const CeSecureNotice = /*@__PURE__*/createReactComponent<JSX.CeSecureNotice, HTMLCeSecureNoticeElement>('ce-secure-notice');
 export const CeSelect = /*@__PURE__*/createReactComponent<JSX.CeSelect, HTMLCeSelectElement>('ce-select');
+export const CeSessionDetail = /*@__PURE__*/createReactComponent<JSX.CeSessionDetail, HTMLCeSessionDetailElement>('ce-session-detail');
 export const CeSessionProvider = /*@__PURE__*/createReactComponent<JSX.CeSessionProvider, HTMLCeSessionProviderElement>('ce-session-provider');
 export const CeSkeleton = /*@__PURE__*/createReactComponent<JSX.CeSkeleton, HTMLCeSkeletonElement>('ce-skeleton');
 export const CeSpinner = /*@__PURE__*/createReactComponent<JSX.CeSpinner, HTMLCeSpinnerElement>('ce-spinner');

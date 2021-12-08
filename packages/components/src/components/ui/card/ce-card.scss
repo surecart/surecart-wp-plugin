@@ -9,8 +9,12 @@
 .card:not(.card--borderless) {
   padding: var(--ce-spacing-xx-large);
   background: var(--ce-color-white);
-  box-shadow: var(--ce-shadow-medium);
+  border: 1px solid var(--ce-color-gray-300);
   border-radius: var(--ce-input-border-radius-medium);
+}
+
+.title--divider {
+  display: none;
 }
 
 .card--has-title-slot {
@@ -18,11 +22,16 @@
     font-weight: var(--ce-font-weight-bold);
     line-height: var(--ce-line-height-normal);
   }
+  .title--divider {
+    display: block;
+  }
 }
-
+::slotted(*) {
+  margin-bottom: var(--ce-form-row-spacing);
+}
 ::slotted(*:first-child) {
   margin-top:0;
 }
 ::slotted(*:last-child) {
-  margin-bottom:0;
+  margin-bottom:0 !important;
 }

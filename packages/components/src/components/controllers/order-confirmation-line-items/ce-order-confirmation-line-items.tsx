@@ -26,31 +26,26 @@ export class CeOrderConfirmationLineItems {
       );
     }
 
-    console.log(this.checkoutSession);
-
     return (
       <div class={{ 'confirmation-summary': true }}>
-        <ce-card borderless>
-          <span slot="title">{__('Your Order', 'checkout_engine')}</span>
-          <div class="line-items" part="line-items">
-            {this.checkoutSession?.line_items?.data.map(item => {
-              return (
-                <ce-product-line-item
-                  key={item.id}
-                  imageUrl={(item?.price?.product as Product)?.image_url}
-                  name={`${(item?.price?.product as Product)?.name} \u2013 ${item?.price?.name}`}
-                  editable={false}
-                  removable={false}
-                  quantity={item.quantity}
-                  amount={item.ad_hoc_amount !== null ? item.ad_hoc_amount : item.price.amount}
-                  currency={this.checkoutSession?.currency}
-                  trialDurationDays={item?.price?.trial_duration_days}
-                  interval={translatedInterval(item.price.recurring_interval_count, item.price.recurring_interval)}
-                ></ce-product-line-item>
-              );
-            })}
-          </div>
-        </ce-card>
+        <div class="line-items" part="line-items">
+          {this.checkoutSession?.line_items?.data.map(item => {
+            return (
+              <ce-product-line-item
+                key={item.id}
+                imageUrl={(item?.price?.product as Product)?.image_url}
+                name={`${(item?.price?.product as Product)?.name} \u2013 ${item?.price?.name}`}
+                editable={false}
+                removable={false}
+                quantity={item.quantity}
+                amount={item.ad_hoc_amount !== null ? item.ad_hoc_amount : item.price.amount}
+                currency={this.checkoutSession?.currency}
+                trialDurationDays={item?.price?.trial_duration_days}
+                interval={translatedInterval(item.price.recurring_interval_count, item.price.recurring_interval)}
+              ></ce-product-line-item>
+            );
+          })}
+        </div>
       </div>
     );
   }

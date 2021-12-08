@@ -6,7 +6,7 @@
 
 .order-confirmation__content {
   display: grid;
-  gap: 1em;
+  gap: var(--ce-form-row-spacing-large);
 }
 
 .order-confirmation__content.hidden {

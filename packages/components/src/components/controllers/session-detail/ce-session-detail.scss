@@ -1,0 +1,15 @@
+:host {
+  display: block;
+}
+
+.session-detail__value {
+  display: block;
+  font-weight: var(--ce-font-weight-semibold);
+  line-height: var(--ce-line-height-dense);
+}
+
+.session-detail__label {
+  display: block;
+  color: var(--ce-color-gray-500);
+  line-height: var(--ce-line-height-dense);
+}

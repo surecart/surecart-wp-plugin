@@ -1,0 +1,22 @@
+{
+	"$schema": "https://json.schemastore.org/block.json",
+	"apiVersion": 2,
+	"name": "checkout-engine/card",
+	"title": "Card",
+	"description": "Display an card block.",
+	"category": "layout",
+	"keywords": [ "card", "details", "confirm" ],
+	"supports": {
+		"reusable": false,
+		"html": false
+	},
+	"attributes": {
+		"title": {
+			"type": "string",
+			"default": ""
+		},
+		"borderless": {
+			"type": "boolean"
+		}
+	}
+}

@@ -46,18 +46,15 @@ export class CeOrderConfirmationTotals {
 
   render() {
     return (
-      <div class={{ 'confirmation-summary': true }}>
-        <ce-card borderless>
-          <span slot="title">{__('Totals', 'checkout_engine')}</span>
-          <ce-line-item-total total="subtotal">
-            <span slot="description">Subtotal</span>
-          </ce-line-item-total>
-          {this.renderDiscountLine()}
-          <ce-divider style={{ '--spacing': 'var(--ce-spacing-small)' }}></ce-divider>
-          <ce-line-item-total size="large" show-currency>
-            <span slot="title">Total</span>
-          </ce-line-item-total>
-        </ce-card>
+      <div class={{ 'line-item-totals': true }}>
+        <ce-line-item-total total="subtotal">
+          <span slot="description">Subtotal</span>
+        </ce-line-item-total>
+        {this.renderDiscountLine()}
+        <ce-divider style={{ '--spacing': 'var(--ce-spacing-small)' }}></ce-divider>
+        <ce-line-item-total size="large" show-currency>
+          <span slot="title">Total</span>
+        </ce-line-item-total>
       </div>
     );
   }

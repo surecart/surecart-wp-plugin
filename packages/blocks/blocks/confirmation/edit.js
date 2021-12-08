@@ -28,6 +28,18 @@ export default ( { attributes, setAttributes } ) => {
 		discount_amount: 3980,
 		email: 'wordpress@example.com',
 		id: 'e620901c-0320-43ee-8bb1-d07cd48696a7',
+		customer: {
+			billing_address: null,
+			created_at: 1638571960,
+			email: 'amy@example.com',
+			id: 'f1b1bd94-6a2f-44d4-910d-c654da099fcb',
+			name: 'Amy Smith',
+			object: 'customer',
+			phone: null,
+			shipping_address: null,
+			unsubscribed: false,
+			updated_at: 1638898265,
+		},
 		discount: {
 			promotion: {
 				archived: false,
@@ -302,92 +314,6 @@ export default ( { attributes, setAttributes } ) => {
 				{ ...blockProps }
 				checkoutSession={ checkoutSession }
 			>
-				<ce-heading
-					style={ {
-						marginBottom: 'var(--ce-spacing-large)',
-						paddingBottom: 'var(--ce-spacing-large)',
-					} }
-				>
-					<RichText
-						aria-label={ __( 'Title', 'checkout_engine' ) }
-						placeholder={ __(
-							'Add your title...',
-							'checkout_engine'
-						) }
-						value={ title }
-						onChange={ ( title ) => setAttributes( { title } ) }
-						withoutInteractiveFormatting
-						allowedFormats={ [ 'core/bold', 'core/italic' ] }
-					/>
-					<span slot="description">
-						<RichText
-							aria-label={ __(
-								'Description',
-								'checkout_engine'
-							) }
-							placeholder={ __(
-								'Add your description...',
-								'checkout_engine'
-							) }
-							value={ description }
-							onChange={ ( description ) =>
-								setAttributes( { description } )
-							}
-							withoutInteractiveFormatting
-							allowedFormats={ [ 'core/bold', 'core/italic' ] }
-						/>
-					</span>
-
-					{ button_enabled && (
-						<ce-button type="primary" slot="end">
-							<svg
-								slot="prefix"
-								width="16"
-								height="16"
-								viewBox="0 0 16 16"
-								fill="none"
-								xmlns="http://www.w3.org/2000/svg"
-							>
-								<path
-									d="M4 1.33334L2 4.00001V13.3333C2 13.687 2.14048 14.0261 2.39052 14.2762C2.64057 14.5262 2.97971 14.6667 3.33333 14.6667H12.6667C13.0203 14.6667 13.3594 14.5262 13.6095 14.2762C13.8595 14.0261 14 13.687 14 13.3333V4.00001L12 1.33334H4Z"
-									stroke="white"
-									stroke-width="1.5"
-									stroke-linecap="round"
-									stroke-linejoin="round"
-								/>
-								<path
-									d="M2 4H14"
-									stroke="white"
-									stroke-width="1.5"
-									stroke-linecap="round"
-									stroke-linejoin="round"
-								/>
-								<path
-									d="M10.6667 6.66666C10.6667 7.3739 10.3857 8.05218 9.88561 8.55227C9.38552 9.05237 8.70724 9.33332 7.99999 9.33332C7.29275 9.33332 6.61447 9.05237 6.11438 8.55227C5.61428 8.05218 5.33333 7.3739 5.33333 6.66666"
-									stroke="white"
-									stroke-width="1.5"
-									stroke-linecap="round"
-									stroke-linejoin="round"
-								/>
-							</svg>
-
-							<RichText
-								aria-label={ __( 'Button text' ) }
-								placeholder={ __( 'Add text…' ) }
-								value={ button_text }
-								onChange={ ( button_text ) =>
-									setAttributes( { button_text } )
-								}
-								withoutInteractiveFormatting
-								allowedFormats={ [
-									'core/bold',
-									'core/italic',
-								] }
-							/>
-						</ce-button>
-					) }
-				</ce-heading>
-
 				<div
 					css={ css`
 						.wp-block {

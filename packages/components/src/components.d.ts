@@ -1049,6 +1049,12 @@ export namespace Components {
          */
         "value": string;
     }
+    interface CeSessionDetail {
+        "checkoutSession": CheckoutSession;
+        "label": string;
+        "loading": boolean;
+        "value": string;
+    }
     interface CeSessionProvider {
         /**
           * CheckoutSession Object
@@ -1531,6 +1537,12 @@ declare global {
         prototype: HTMLCeSelectElement;
         new (): HTMLCeSelectElement;
     };
+    interface HTMLCeSessionDetailElement extends Components.CeSessionDetail, HTMLStencilElement {
+    }
+    var HTMLCeSessionDetailElement: {
+        prototype: HTMLCeSessionDetailElement;
+        new (): HTMLCeSessionDetailElement;
+    };
     interface HTMLCeSessionProviderElement extends Components.CeSessionProvider, HTMLStencilElement {
     }
     var HTMLCeSessionProviderElement: {
@@ -1639,6 +1651,7 @@ declare global {
         "ce-radio-group": HTMLCeRadioGroupElement;
         "ce-secure-notice": HTMLCeSecureNoticeElement;
         "ce-select": HTMLCeSelectElement;
+        "ce-session-detail": HTMLCeSessionDetailElement;
         "ce-session-provider": HTMLCeSessionProviderElement;
         "ce-skeleton": HTMLCeSkeletonElement;
         "ce-spinner": HTMLCeSpinnerElement;
@@ -2779,6 +2792,12 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
+    interface CeSessionDetail {
+        "checkoutSession"?: CheckoutSession;
+        "label"?: string;
+        "loading"?: boolean;
+        "value"?: string;
+    }
     interface CeSessionProvider {
         /**
           * CheckoutSession Object
@@ -3052,6 +3071,7 @@ declare namespace LocalJSX {
         "ce-radio-group": CeRadioGroup;
         "ce-secure-notice": CeSecureNotice;
         "ce-select": CeSelect;
+        "ce-session-detail": CeSessionDetail;
         "ce-session-provider": CeSessionProvider;
         "ce-skeleton": CeSkeleton;
         "ce-spinner": CeSpinner;
@@ -3115,6 +3135,7 @@ declare module "@stencil/core" {
             "ce-radio-group": LocalJSX.CeRadioGroup & JSXBase.HTMLAttributes<HTMLCeRadioGroupElement>;
             "ce-secure-notice": LocalJSX.CeSecureNotice & JSXBase.HTMLAttributes<HTMLCeSecureNoticeElement>;
             "ce-select": LocalJSX.CeSelect & JSXBase.HTMLAttributes<HTMLCeSelectElement>;
+            "ce-session-detail": LocalJSX.CeSessionDetail & JSXBase.HTMLAttributes<HTMLCeSessionDetailElement>;
             "ce-session-provider": LocalJSX.CeSessionProvider & JSXBase.HTMLAttributes<HTMLCeSessionProviderElement>;
             "ce-skeleton": LocalJSX.CeSkeleton & JSXBase.HTMLAttributes<HTMLCeSkeletonElement>;
             "ce-spinner": LocalJSX.CeSpinner & JSXBase.HTMLAttributes<HTMLCeSpinnerElement>;

@@ -1,7 +1,11 @@
 :host {
   display: block;
 }
-ce-card::part(line-items) {
+.line-items {
+  display: grid;
+  gap: var(--ce-spacing-small);
+}
+::part(line-items) {
   display: grid;
   gap: var(--ce-spacing-small);
 }
