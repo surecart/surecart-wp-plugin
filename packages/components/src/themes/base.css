@@ -198,7 +198,7 @@ ce-button-group > ce-tooltip > ce-button.ce-focus {
   --ce-button-font-size-medium: var(--ce-font-size-medium);
   --ce-button-font-size-large: var(--ce-font-size-large);
   --ce-form-row-spacing: var(--ce-spacing-small);
-  --ce-form-row-spacing-large: var(--ce-spacing-x-large);
+  --ce-form-row-spacing-large: var(--ce-spacing-xx-large);
   --ce-form-title-font-weight: var(--ce-font-weight-semibold);
   --ce-form-title-font-size: var(--ce-font-size-x-large);
   --ce-form-title-description-color: var(--ce-color-gray-500);

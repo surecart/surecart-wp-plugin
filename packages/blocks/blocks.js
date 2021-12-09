@@ -19,9 +19,10 @@ import * as priceChoice from './blocks/price-choice';
 import * as title from './blocks/section-title';
 import * as totals from './blocks/totals';
 import * as name from './blocks/name';
-import * as sessionCustomerInfo from './blocks/session-customer-info';
 import * as payment from './blocks/payment';
 import * as heading from './blocks/heading';
+import * as sessionDetail from './blocks/session-detail';
+import * as sessionSubscription from './blocks/session-subscription';
 import * as expressPayment from './blocks/express-payment';
 import * as confirmation from './blocks/confirmation';
 import * as confirmationLineItems from './blocks/order-confirmation-line-items';
@@ -106,6 +107,8 @@ export const registerCheckoutEngineBlocks = () => {
 		confirmationLineItems,
 		confirmationTotals,
 		heading,
+		sessionDetail,
+		sessionSubscription,
 		payment,
 		expressPayment,
 		priceSelector,
@@ -115,7 +118,6 @@ export const registerCheckoutEngineBlocks = () => {
 		button,
 		buyButton,
 		customerDashboardButton,
-		sessionCustomerInfo,
 		form,
 		input,
 		password,

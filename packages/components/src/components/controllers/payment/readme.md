@@ -25,15 +25,18 @@
 
 - [ce-stripe-element](../../ui/stripe-element)
 - [ce-secure-notice](../../ui/secure-notice)
+- [ce-badge-notice](../../ui/badge-notice)
 
 ### Graph
 ```mermaid
 graph TD;
   ce-payment --> ce-stripe-element
   ce-payment --> ce-secure-notice
+  ce-payment --> ce-badge-notice
   ce-stripe-element --> ce-input
   ce-input --> ce-form-control
   ce-form-control --> ce-tooltip
+  ce-badge-notice --> ce-tag
   style ce-payment fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

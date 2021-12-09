@@ -28,6 +28,7 @@ export class CeOrderConfirmation {
 
   /** Get session id from url. */
   getSessionId() {
+    if (this.checkoutSession?.id) return this.checkoutSession.id;
     return getQueryArg(window.location.href, 'checkout_session');
   }
 
@@ -58,6 +59,7 @@ export class CeOrderConfirmation {
     return {
       processor: 'stripe',
       loading: this.loading,
+      checkoutSessionId: this.getSessionId(),
       checkoutSession: this.checkoutSession,
     };
   }

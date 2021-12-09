@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { CheckoutSession, ChoiceItem, Coupon, Customer, Keys, LineItemData, Price, PriceChoice, Prices, Products, ResponseError } from "./types";
+import { CheckoutSession, ChoiceItem, Coupon, Customer, Keys, LineItemData, Price, PriceChoice, Prices, Products, ResponseError, SubscriptionStatus } from "./types";
 export namespace Components {
     interface CeAlert {
         /**
@@ -111,6 +111,7 @@ export namespace Components {
     }
     interface CeCard {
         "borderless": boolean;
+        "loading": boolean;
     }
     interface CeCheckbox {
         /**
@@ -763,6 +764,7 @@ export namespace Components {
           * Errors from response
          */
         "error": ResponseError;
+        "isAdHoc": () => Promise<boolean>;
         /**
           * Label for the choice.
          */
@@ -1051,8 +1053,10 @@ export namespace Components {
     }
     interface CeSessionDetail {
         "checkoutSession": CheckoutSession;
+        "fallback": string;
         "label": string;
         "loading": boolean;
+        "metaKey": string;
         "value": string;
     }
     interface CeSessionProvider {
@@ -1088,6 +1092,9 @@ export namespace Components {
           * Set the checkout state
          */
         "setState": (state: string) => void;
+    }
+    interface CeSessionSubscription {
+        "checkoutSessionId": string;
     }
     interface CeSkeleton {
         /**
@@ -1175,6 +1182,24 @@ export namespace Components {
           * Payment request theme
          */
         "theme": string;
+    }
+    interface CeSubscriptionStatusBadge {
+        /**
+          * Makes the tag clearable.
+         */
+        "clearable": boolean;
+        /**
+          * Draws a pill-style tag with rounded edges.
+         */
+        "pill": boolean;
+        /**
+          * The tag's size.
+         */
+        "size": 'small' | 'medium' | 'large';
+        /**
+          * The tag's statux type.
+         */
+        "status": SubscriptionStatus;
     }
     interface CeSwitch {
         /**
@@ -1549,6 +1574,12 @@ declare global {
         prototype: HTMLCeSessionProviderElement;
         new (): HTMLCeSessionProviderElement;
     };
+    interface HTMLCeSessionSubscriptionElement extends Components.CeSessionSubscription, HTMLStencilElement {
+    }
+    var HTMLCeSessionSubscriptionElement: {
+        prototype: HTMLCeSessionSubscriptionElement;
+        new (): HTMLCeSessionSubscriptionElement;
+    };
     interface HTMLCeSkeletonElement extends Components.CeSkeleton, HTMLStencilElement {
     }
     var HTMLCeSkeletonElement: {
@@ -1572,6 +1603,12 @@ declare global {
     var HTMLCeStripePaymentRequestElement: {
         prototype: HTMLCeStripePaymentRequestElement;
         new (): HTMLCeStripePaymentRequestElement;
+    };
+    interface HTMLCeSubscriptionStatusBadgeElement extends Components.CeSubscriptionStatusBadge, HTMLStencilElement {
+    }
+    var HTMLCeSubscriptionStatusBadgeElement: {
+        prototype: HTMLCeSubscriptionStatusBadgeElement;
+        new (): HTMLCeSubscriptionStatusBadgeElement;
     };
     interface HTMLCeSwitchElement extends Components.CeSwitch, HTMLStencilElement {
     }
@@ -1653,10 +1690,12 @@ declare global {
         "ce-select": HTMLCeSelectElement;
         "ce-session-detail": HTMLCeSessionDetailElement;
         "ce-session-provider": HTMLCeSessionProviderElement;
+        "ce-session-subscription": HTMLCeSessionSubscriptionElement;
         "ce-skeleton": HTMLCeSkeletonElement;
         "ce-spinner": HTMLCeSpinnerElement;
         "ce-stripe-element": HTMLCeStripeElementElement;
         "ce-stripe-payment-request": HTMLCeStripePaymentRequestElement;
+        "ce-subscription-status-badge": HTMLCeSubscriptionStatusBadgeElement;
         "ce-switch": HTMLCeSwitchElement;
         "ce-tag": HTMLCeTagElement;
         "ce-text": HTMLCeTextElement;
@@ -1777,6 +1816,7 @@ declare namespace LocalJSX {
     }
     interface CeCard {
         "borderless"?: boolean;
+        "loading"?: boolean;
     }
     interface CeCheckbox {
         /**
@@ -2794,8 +2834,10 @@ declare namespace LocalJSX {
     }
     interface CeSessionDetail {
         "checkoutSession"?: CheckoutSession;
+        "fallback"?: string;
         "label"?: string;
         "loading"?: boolean;
+        "metaKey"?: string;
         "value"?: string;
     }
     interface CeSessionProvider {
@@ -2843,6 +2885,9 @@ declare namespace LocalJSX {
           * Set the checkout state
          */
         "setState"?: (state: string) => void;
+    }
+    interface CeSessionSubscription {
+        "checkoutSessionId"?: string;
     }
     interface CeSkeleton {
         /**
@@ -2936,6 +2981,24 @@ declare namespace LocalJSX {
           * Payment request theme
          */
         "theme"?: string;
+    }
+    interface CeSubscriptionStatusBadge {
+        /**
+          * Makes the tag clearable.
+         */
+        "clearable"?: boolean;
+        /**
+          * Draws a pill-style tag with rounded edges.
+         */
+        "pill"?: boolean;
+        /**
+          * The tag's size.
+         */
+        "size"?: 'small' | 'medium' | 'large';
+        /**
+          * The tag's statux type.
+         */
+        "status"?: SubscriptionStatus;
     }
     interface CeSwitch {
         /**
@@ -3073,10 +3136,12 @@ declare namespace LocalJSX {
         "ce-select": CeSelect;
         "ce-session-detail": CeSessionDetail;
         "ce-session-provider": CeSessionProvider;
+        "ce-session-subscription": CeSessionSubscription;
         "ce-skeleton": CeSkeleton;
         "ce-spinner": CeSpinner;
         "ce-stripe-element": CeStripeElement;
         "ce-stripe-payment-request": CeStripePaymentRequest;
+        "ce-subscription-status-badge": CeSubscriptionStatusBadge;
         "ce-switch": CeSwitch;
         "ce-tag": CeTag;
         "ce-text": CeText;
@@ -3137,10 +3202,12 @@ declare module "@stencil/core" {
             "ce-select": LocalJSX.CeSelect & JSXBase.HTMLAttributes<HTMLCeSelectElement>;
             "ce-session-detail": LocalJSX.CeSessionDetail & JSXBase.HTMLAttributes<HTMLCeSessionDetailElement>;
             "ce-session-provider": LocalJSX.CeSessionProvider & JSXBase.HTMLAttributes<HTMLCeSessionProviderElement>;
+            "ce-session-subscription": LocalJSX.CeSessionSubscription & JSXBase.HTMLAttributes<HTMLCeSessionSubscriptionElement>;
             "ce-skeleton": LocalJSX.CeSkeleton & JSXBase.HTMLAttributes<HTMLCeSkeletonElement>;
             "ce-spinner": LocalJSX.CeSpinner & JSXBase.HTMLAttributes<HTMLCeSpinnerElement>;
             "ce-stripe-element": LocalJSX.CeStripeElement & JSXBase.HTMLAttributes<HTMLCeStripeElementElement>;
             "ce-stripe-payment-request": LocalJSX.CeStripePaymentRequest & JSXBase.HTMLAttributes<HTMLCeStripePaymentRequestElement>;
+            "ce-subscription-status-badge": LocalJSX.CeSubscriptionStatusBadge & JSXBase.HTMLAttributes<HTMLCeSubscriptionStatusBadgeElement>;
             "ce-switch": LocalJSX.CeSwitch & JSXBase.HTMLAttributes<HTMLCeSwitchElement>;
             "ce-tag": LocalJSX.CeTag & JSXBase.HTMLAttributes<HTMLCeTagElement>;
             "ce-text": LocalJSX.CeText & JSXBase.HTMLAttributes<HTMLCeTextElement>;

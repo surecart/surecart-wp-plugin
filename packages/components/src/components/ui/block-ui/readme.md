@@ -9,6 +9,7 @@
 
 | Property      | Attribute     | Description | Type      | Default     |
 | ------------- | ------------- | ----------- | --------- | ----------- |
+| `spinner`     | `spinner`     |             | `boolean` | `undefined` |
 | `transparent` | `transparent` |             | `boolean` | `undefined` |
 | `zIndex`      | `z-index`     |             | `number`  | `1`         |
 

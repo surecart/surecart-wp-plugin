@@ -4,7 +4,7 @@ import { __ } from '@wordpress/i18n';
 import {
 	useBlockProps,
 	InspectorControls,
-	__experimentalUseInnerBlocksProps as useInnerBlocksProps,
+	InnerBlocks,
 	RichText,
 } from '@wordpress/block-editor';
 import {
@@ -18,7 +18,6 @@ import { CeCard } from '@checkout-engine/react';
 export default ( { attributes, setAttributes, isSelected } ) => {
 	const { borderless, title } = attributes;
 	const blockProps = useBlockProps();
-	const innerBlocksProps = useInnerBlocksProps();
 
 	return (
 		<div { ...blockProps }>
@@ -62,7 +61,7 @@ export default ( { attributes, setAttributes, isSelected } ) => {
 						allowedFormats={ [ 'core/bold', 'core/italic' ] }
 					/>
 				) }
-				<div { ...innerBlocksProps } />
+				<InnerBlocks />
 			</CeCard>
 		</div>
 	);

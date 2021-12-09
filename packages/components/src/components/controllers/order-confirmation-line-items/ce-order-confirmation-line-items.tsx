@@ -41,7 +41,7 @@ export class CeOrderConfirmationLineItems {
                 amount={item.ad_hoc_amount !== null ? item.ad_hoc_amount : item.price.amount}
                 currency={this.checkoutSession?.currency}
                 trialDurationDays={item?.price?.trial_duration_days}
-                interval={translatedInterval(item.price.recurring_interval_count, item.price.recurring_interval)}
+                interval={translatedInterval(item.price.recurring_interval_count, item.price.recurring_interval, '', '')}
               ></ce-product-line-item>
             );
           })}

@@ -1,4 +1,5 @@
 import { Component, h, Prop, Element, State } from '@stencil/core';
+import { openWormhole } from 'stencil-wormhole';
 
 @Component({
   tag: 'ce-card',
@@ -9,7 +10,7 @@ export class CeCard {
   @Element() el!: HTMLCeCardElement;
 
   @Prop() borderless: boolean;
-
+  @Prop() loading: boolean;
   @State() hasTitleSlot: boolean;
 
   componentWillLoad() {
@@ -30,7 +31,7 @@ export class CeCard {
         }}
       >
         <div class="card--title">
-          <slot name="title" onSlotchange={() => this.handleSlotChange()} />
+          {this.loading ? <ce-skeleton style={{ width: '120px' }}></ce-skeleton> : <slot name="title" onSlotchange={() => this.handleSlotChange()} />}
           <ce-divider class="title--divider" part="border" style={{ '--spacing': 'var(--ce-spacing-small)' }}></ce-divider>
         </div>
         <slot />
@@ -38,3 +39,5 @@ export class CeCard {
     );
   }
 }
+
+openWormhole(CeCard, ['loading'], false);

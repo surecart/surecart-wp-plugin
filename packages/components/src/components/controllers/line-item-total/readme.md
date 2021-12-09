@@ -18,6 +18,10 @@
 
 ## Dependencies
 
+### Used by
+
+ - [ce-order-confirmation-totals](../order-confirmation-totals)
+
 ### Depends on
 
 - [ce-line-item](../../ui/line-item)
@@ -31,6 +35,7 @@ graph TD;
   ce-line-item-total --> ce-skeleton
   ce-line-item-total --> ce-total
   ce-total --> ce-format-number
+  ce-order-confirmation-totals --> ce-line-item-total
   style ce-line-item-total fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

@@ -50,6 +50,7 @@ export class CESwitch {
 
   handleClick() {
     this.checked = !this.checked;
+    this.ceChange.emit();
   }
 
   handleBlur() {
@@ -66,11 +67,13 @@ export class CESwitch {
     if (event.key === 'ArrowLeft') {
       event.preventDefault();
       this.checked = false;
+      this.ceChange.emit();
     }
 
     if (event.key === 'ArrowRight') {
       event.preventDefault();
       this.checked = true;
+      this.ceChange.emit();
     }
   }
 
@@ -82,7 +85,10 @@ export class CESwitch {
 
   @Watch('checked')
   handleCheckedChange() {
-    this.ceChange.emit();
+    if (this.input) {
+      this.input.checked = this.checked;
+      this.invalid = !this.input.checkValidity();
+    }
   }
 
   render() {

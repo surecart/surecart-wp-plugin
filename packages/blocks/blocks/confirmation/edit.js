@@ -1,18 +1,10 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
-import {
-	InnerBlocks,
-	useBlockProps,
-	RichText,
-	InspectorControls,
-} from '@wordpress/block-editor';
-import { PanelRow, PanelBody, ToggleControl } from '@wordpress/components';
-import { ALLOWED_BLOCKS } from '../../blocks';
+import { InnerBlocks, useBlockProps } from '@wordpress/block-editor';
 import { CeOrderConfirmation } from '@checkout-engine/react';
 
-export default ( { attributes, setAttributes } ) => {
-	const { title, description, button_text, button_enabled } = attributes;
+export default () => {
 	const blockProps = useBlockProps( {
 		style: {
 			maxWidth: 'var( --ast-content-width-size, 910px )',
@@ -35,7 +27,7 @@ export default ( { attributes, setAttributes } ) => {
 			id: 'f1b1bd94-6a2f-44d4-910d-c654da099fcb',
 			name: 'Amy Smith',
 			object: 'customer',
-			phone: null,
+			phone: '897-5309',
 			shipping_address: null,
 			unsubscribed: false,
 			updated_at: 1638898265,
@@ -294,22 +286,6 @@ export default ( { attributes, setAttributes } ) => {
 
 	return (
 		<div { ...blockProps }>
-			<InspectorControls>
-				<PanelBody title={ __( 'Attributes', 'checkout-engine' ) }>
-					<PanelRow>
-						<ToggleControl
-							checked={ button_enabled }
-							label={ __(
-								'Enable dashboard button',
-								'checkout_engine'
-							) }
-							onChange={ ( button_enabled ) =>
-								setAttributes( { button_enabled } )
-							}
-						/>
-					</PanelRow>
-				</PanelBody>
-			</InspectorControls>
 			<CeOrderConfirmation
 				{ ...blockProps }
 				checkoutSession={ checkoutSession }

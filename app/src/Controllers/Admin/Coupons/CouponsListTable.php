@@ -225,7 +225,7 @@ class CouponsListTable extends ListTable {
 	 * @param \CheckoutEngine\Models\Coupon|null $coupon Coupon model.
 	 * @return string
 	 */
-	public function get_price_string( \CheckoutEngine\Models\Coupon $coupon = null ) {
+	public function get_price_string( $coupon = null ) {
 		if ( ! $coupon || empty( $coupon->duration ) ) {
 			return;
 		}

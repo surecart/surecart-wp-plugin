@@ -1,0 +1,24 @@
+{
+	"name": "checkout-engine/session-detail",
+	"title": "Session Info",
+	"description": "Display infor for a specific session.",
+	"category": "layout",
+	"keywords": [ "meta", "customer" ],
+	"supports": {
+		"reusable": false,
+		"html": false,
+		"lock": {
+			"remove": true
+		}
+	},
+	"attributes": {
+		"value": {
+			"type": "string",
+			"default": "customer.name"
+		},
+		"label": {
+			"type": "string",
+			"default": "Customer Name"
+		}
+	}
+}

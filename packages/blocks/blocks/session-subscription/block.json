@@ -1,0 +1,14 @@
+{
+	"$schema": "https://json.schemastore.org/block.json",
+	"apiVersion": 2,
+	"name": "checkout-engine/session-subscription",
+	"title": "Subscription Display",
+	"description": "Display a subscription tied to an order.",
+	"category": "layout",
+	"keywords": [ "subscription", "thank you", "confirm" ],
+	"supports": {
+		"reusable": false,
+		"html": false
+	},
+	"attributes": {}
+}

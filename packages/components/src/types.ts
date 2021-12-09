@@ -160,6 +160,62 @@ export interface CheckoutSession extends Object {
   shipping_addresss?: Address;
 }
 
+export interface Subscription extends Object {
+  id: string;
+  object: 'subscription';
+  currency?: string;
+  status: SubscriptionStatus;
+  subtotal_amount: number;
+  discount_amount: number;
+  tax_amount: number;
+  total_amount: number;
+  live_mode: boolean;
+  external_subscription_id: string;
+  trial_end_at: number;
+  processor_type: 'stripe' | 'paypal';
+  checkout_session: CheckoutSession;
+  customer: Customer;
+  discount: DiscountResponse;
+  payment_method: PaymentMethod | string;
+  subscription_items: {
+    object: 'list';
+    pagination: Pagination;
+    data: Array<SubscriptionItem>;
+  };
+  created_at: number;
+  updated_at: number;
+}
+
+export type SubscriptionItem = {
+  id: string;
+  object: 'subscription_item';
+  quantity: number;
+  subtotal_amount: number;
+  discount_amount: number;
+  tax_amount: number;
+  total_amount: number;
+  price: Price | string;
+  subscription: Subscription | string;
+  created_at: number;
+  updated_at: number;
+};
+
+export type SubscriptionStatus = 'incomplete' | 'trialing' | 'active' | 'past_due' | 'canceled' | 'unpaid';
+
+export interface PaymentMethod extends Object {
+  id: string;
+  object: 'payment_method';
+  live_mode: boolean;
+  external_payment_method_id: string;
+  processor_type: 'stripe' | 'paypal';
+  type: string;
+  payment_intent: PaymentIntent | string;
+  card: any;
+  customer: Customer | string;
+  created_at: number;
+  updated_at: number;
+}
+
 export interface Pagination {
   count: number;
   limit: number;
