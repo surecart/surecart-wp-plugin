@@ -764,7 +764,6 @@ export namespace Components {
           * Errors from response
          */
         "error": ResponseError;
-        "isAdHoc": () => Promise<boolean>;
         /**
           * Label for the choice.
          */

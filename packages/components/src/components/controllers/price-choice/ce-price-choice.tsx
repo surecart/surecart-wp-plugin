@@ -1,4 +1,4 @@
-import { Component, h, Prop, Event, EventEmitter, Watch, Fragment, State, Host, Method } from '@stencil/core';
+import { Component, h, Prop, Event, EventEmitter, Watch, Fragment, State, Host } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
 import { isPriceInCheckoutSession } from '../../../functions/line-items';
 import { translatedInterval } from '../../../functions/price';
