@@ -35,19 +35,6 @@
 | `ceUpdateLineItem` | Toggle line item event | `CustomEvent<LineItemData>` |
 
 
-## Methods
-
-### `isAdHoc() => Promise<boolean>`
-
-
-
-#### Returns
-
-Type: `Promise<boolean>`
-
-
-
-
 ## Dependencies
 
 ### Depends on

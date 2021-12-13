@@ -32,21 +32,57 @@ class User implements ArrayAccess, JsonSerializable {
 	}
 
 	/**
+	 * Set the customer id in the user meta.
+	 *
+	 * @param string $id Customer id.
+	 * @return int|bool
+	 */
+	protected function setCustomerId( $id ) {
+		return update_user_meta( $this->user->ID, $this->customer_id_key, $id );
+	}
+
+	/**
 	 * Disallow overriding the constructor in child classes and make the code safe that way.
 	 */
 	final public function __construct() {
 	}
 
 	/**
+	 * Get a user's subscriptions
+	 *
+	 * @return mixed
+	 */
+	protected function subscriptions() {
+		return Subscription::where( [ 'customer_ids' => [ $this->customerId() ] ] );
+	}
+
+	/**
+	 * Get a users orders
+	 *
+	 * @param array $query Query args.
+	 * @return CheckoutEngine\Models\CheckoutSession[];
+	 */
+	protected function orders() {
+		return CheckoutSession::where( [ 'customer_ids' => [ $this->customerId() ] ] );
+	}
+
+	/**
 	 * Get the customer from the user.
 	 *
-	 * @return \CheckoutEngine\Models\Customer|null
+	 * @return \CheckoutEngine\Models\Customer|false
 	 */
 	protected function customer() {
 		$id = $this->customerId();
 		if ( $id ) {
 			return Customer::find( $this->customerId() );
 		} else {
+			if ( $this->user->ID ) {
+				$customer = Customer::byEmail( $this->user->user_email );
+				if ( $customer ) {
+					$this->setCustomerId( $customer->id );
+					return $customer;
+				}
+			}
 			return false;
 		}
 	}

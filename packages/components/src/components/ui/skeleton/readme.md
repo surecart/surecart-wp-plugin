@@ -33,6 +33,7 @@
 
 ### Used by
 
+ - [ce-card](../card)
  - [ce-coupon-form](../../controllers/coupon-form)
  - [ce-line-item-total](../../controllers/line-item-total)
  - [ce-line-items](../../controllers/line-items)
@@ -40,10 +41,12 @@
  - [ce-order-summary](../../controllers/order-summary)
  - [ce-price-choice](../../controllers/price-choice)
  - [ce-session-detail](../../controllers/session-detail)
+ - [ce-session-subscription](../../controllers/session-subscription)
 
 ### Graph
 ```mermaid
 graph TD;
+  ce-card --> ce-skeleton
   ce-coupon-form --> ce-skeleton
   ce-line-item-total --> ce-skeleton
   ce-line-items --> ce-skeleton
@@ -51,6 +54,7 @@ graph TD;
   ce-order-summary --> ce-skeleton
   ce-price-choice --> ce-skeleton
   ce-session-detail --> ce-skeleton
+  ce-session-subscription --> ce-skeleton
   style ce-skeleton fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

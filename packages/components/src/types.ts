@@ -146,6 +146,7 @@ export type CheckoutState = 'idle' | 'loading' | 'draft' | 'updating' | 'finaliz
 export interface CheckoutSession extends Object {
   id?: string;
   status?: 'finalized' | 'draft' | 'paid';
+  number?: string;
   name?: string;
   email?: string;
   currency?: string;

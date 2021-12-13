@@ -42,7 +42,7 @@ export class CeLineItemTotal {
           <slot name="description" />
         </span>
         <span slot="price">
-          <ce-total total={this.total}></ce-total>
+          <ce-total checkoutSession={this.checkoutSession} total={this.total}></ce-total>
         </span>
         {this.showCurrency && <span slot="currency">{this.checkoutSession?.currency}</span>}
       </ce-line-item>

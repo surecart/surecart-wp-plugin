@@ -168,6 +168,7 @@ return [
 		\CheckoutEngine\Blocks\CheckoutForm::class,
 		\CheckoutEngine\Blocks\Form::class,
 		\CheckoutEngine\Blocks\BuyButton::class,
+		\CheckoutEngine\Blocks\CustomerDashboard::class,
 		\CheckoutEngine\Blocks\CustomerDashboardButton::class,
 	],
 ];

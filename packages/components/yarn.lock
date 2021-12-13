@@ -1375,6 +1375,11 @@
   resolved "https://registry.yarnpkg.com/@stencil/sass/-/sass-1.4.1.tgz#ef5a1dd1b56c024ed08e80475e8a6f8d1c25bb10"
   integrity sha512-aFKoqtxZ/8BRbvNFiWRycGiqvMI22Ifn5qsKfq0U23j43XD81jT6d7K0WQd55ejNpoSpdxJcbOuFgQy3mXizfA==
 
+"@stencil/store@^1.1.0":
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/@stencil/store/-/store-1.5.0.tgz#5c4e14ed078771bb8ed635867cfa8c3452f15ac4"
+  integrity sha512-fe5fCF6dgVlDM1iLRkkJUyUh0Tfx305asVGgMAJjIs7Q+x/b1pGgTLROm9Ibr53PZuFwr5Kg+4h9p4FLbYqHgA==
+
 "@stripe/stripe-js@^1.21.1":
   version "1.21.1"
   resolved "https://registry.yarnpkg.com/@stripe/stripe-js/-/stripe-js-1.21.1.tgz#e56cd01f889dc06af4a68ebf61d2492a87e80da1"
@@ -4737,6 +4742,13 @@ stencil-fragment@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/stencil-fragment/-/stencil-fragment-1.0.1.tgz#101fecda1bcd476bdf92ee2819fe961ecc04c970"
   integrity sha512-ih2X+LDaIB3ybQxXvtGeOS3BfwPB4ZJFuiQnv8Gf1JJGNZHB5XH54EyOa19g5brLQYdjPrzzLsgfuzUz8YWEkw==
+
+stencil-router-v2@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/stencil-router-v2/-/stencil-router-v2-0.6.0.tgz#3694f380bbe639a94a54b094799a334d503b03b5"
+  integrity sha512-E6ncNTIbFOleADelSQ7V/aSkZvdyTW8OKpPqxLi3AdUf8EwN0vZAMsIKHyPPS2hHLCh2/qNyVb/pbnzOszYBCw==
+  dependencies:
+    "@stencil/store" "^1.1.0"
 
 stencil-wormhole@^3.4.1:
   version "3.4.1"

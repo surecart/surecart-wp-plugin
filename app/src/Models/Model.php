@@ -490,7 +490,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	 * @return Model
 	 */
 	protected function where( $query = [] ) {
-		$this->query = $query;
+		$this->query = array_merge( $query, $this->query );
 		return $this;
 	}
 
@@ -548,7 +548,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	 * @return mixed
 	 */
 	protected function paginate() {
-		$items = $this->makeRequest( [ 'query' => $this->query ] );
+		$items = $this->makeRequest();
 
 		if ( $this->isError( $items ) ) {
 			return $items;
@@ -575,6 +575,21 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 		}
 
 		return $models;
+	}
+
+	/**
+	 * Get the first item in the query
+	 */
+	public function first() {
+		$this->query['limit'] = 1;
+
+		$items = $this->makeRequest();
+
+		if ( $this->isError( $items ) ) {
+			return $items;
+		}
+
+		return ! empty( $items->data[0] ) ? new static( $items->data[0] ) : null;
 	}
 
 	/**

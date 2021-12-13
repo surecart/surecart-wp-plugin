@@ -1,4 +1,4 @@
-import { Component, h } from '@stencil/core';
+import { Component, h, Element } from '@stencil/core';
 
 @Component({
   tag: 'ce-heading',
@@ -6,6 +6,16 @@ import { Component, h } from '@stencil/core';
   shadow: true,
 })
 export class CeHeading {
+  @Element() el: HTMLElement;
+  componentDidLoad() {
+    // Set initial tab state when the tabs first become visible
+    const intersectionObserver = new IntersectionObserver((entries, observer) => {
+      if (entries[0].intersectionRatio > 0) {
+        observer.unobserve(entries[0].target);
+      }
+    });
+    intersectionObserver.observe(this.el);
+  }
   render() {
     return (
       <div class={{ heading: true }} part="base">

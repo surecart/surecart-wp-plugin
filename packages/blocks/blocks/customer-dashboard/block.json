@@ -1,0 +1,12 @@
+{
+	"name": "checkout-engine/customer-dashboard",
+	"title": "Customer Dashboard",
+	"description": "Displays the users customer dashboard.",
+	"category": "layout",
+	"keywords": [ "name", "customer", "dashboard" ],
+	"parent": null,
+	"supports": {
+		"reusable": false,
+		"html": false
+	}
+}

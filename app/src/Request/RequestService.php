@@ -247,7 +247,10 @@ class RequestService {
 	 *
 	 * @param array $args Array of arguments.
 	 */
-	protected function parseArgs( $args ) {
+	protected function parseArgs( $args = [] ) {
+		if ( ! is_array( $args ) ) {
+			return;
+		}
 		foreach ( $args as $key => $arg ) {
 			// unset null.
 			if ( null === $arg ) {

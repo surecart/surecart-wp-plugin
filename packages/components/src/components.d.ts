@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { CheckoutSession, ChoiceItem, Coupon, Customer, Keys, LineItemData, Price, PriceChoice, Prices, Products, ResponseError, SubscriptionStatus } from "./types";
+import { CheckoutSession, ChoiceItem, Coupon, Customer, Keys, LineItemData, Price, PriceChoice, Prices, Products, ResponseError, Subscription, SubscriptionStatus } from "./types";
 export namespace Components {
     interface CeAlert {
         /**
@@ -303,6 +303,18 @@ export namespace Components {
         "forceOpen": boolean;
         "label": string;
         "loading": boolean;
+    }
+    interface CeCustomerDashboard {
+        /**
+          * Pass the current customer id.
+         */
+        "customerId": string;
+    }
+    interface CeCustomerOrder {
+        "order": CheckoutSession;
+    }
+    interface CeCustomerSubscription {
+        "subscription": Subscription;
     }
     interface CeDivider {
     }
@@ -1230,6 +1242,52 @@ export namespace Components {
          */
         "value": string;
     }
+    interface CeTab {
+        /**
+          * Draws the tab in an active state.
+         */
+        "active": boolean;
+        "count": string;
+        /**
+          * Draws the tab in a disabled state.
+         */
+        "disabled": boolean;
+        "href": string;
+        /**
+          * The name of the tab panel the tab will control. The panel must be located in the same tab group.
+         */
+        "panel": string;
+        /**
+          * Removes focus from the tab.
+         */
+        "triggerBlur": () => Promise<void>;
+        /**
+          * Sets focus to the tab.
+         */
+        "triggerFocus": (options?: FocusOptions) => Promise<void>;
+    }
+    interface CeTabGroup {
+    }
+    interface CeTabPanel {
+        /**
+          * When true, the tab panel will be shown.
+         */
+        "active": boolean;
+        /**
+          * The tab panel's name.
+         */
+        "name": string;
+    }
+    interface CeTable {
+    }
+    interface CeTableBody {
+    }
+    interface CeTableCell {
+    }
+    interface CeTableHead {
+    }
+    interface CeTableRow {
+    }
     interface CeTag {
         /**
           * Makes the tag clearable.
@@ -1344,6 +1402,24 @@ declare global {
     var HTMLCeCouponFormElement: {
         prototype: HTMLCeCouponFormElement;
         new (): HTMLCeCouponFormElement;
+    };
+    interface HTMLCeCustomerDashboardElement extends Components.CeCustomerDashboard, HTMLStencilElement {
+    }
+    var HTMLCeCustomerDashboardElement: {
+        prototype: HTMLCeCustomerDashboardElement;
+        new (): HTMLCeCustomerDashboardElement;
+    };
+    interface HTMLCeCustomerOrderElement extends Components.CeCustomerOrder, HTMLStencilElement {
+    }
+    var HTMLCeCustomerOrderElement: {
+        prototype: HTMLCeCustomerOrderElement;
+        new (): HTMLCeCustomerOrderElement;
+    };
+    interface HTMLCeCustomerSubscriptionElement extends Components.CeCustomerSubscription, HTMLStencilElement {
+    }
+    var HTMLCeCustomerSubscriptionElement: {
+        prototype: HTMLCeCustomerSubscriptionElement;
+        new (): HTMLCeCustomerSubscriptionElement;
     };
     interface HTMLCeDividerElement extends Components.CeDivider, HTMLStencilElement {
     }
@@ -1615,6 +1691,54 @@ declare global {
         prototype: HTMLCeSwitchElement;
         new (): HTMLCeSwitchElement;
     };
+    interface HTMLCeTabElement extends Components.CeTab, HTMLStencilElement {
+    }
+    var HTMLCeTabElement: {
+        prototype: HTMLCeTabElement;
+        new (): HTMLCeTabElement;
+    };
+    interface HTMLCeTabGroupElement extends Components.CeTabGroup, HTMLStencilElement {
+    }
+    var HTMLCeTabGroupElement: {
+        prototype: HTMLCeTabGroupElement;
+        new (): HTMLCeTabGroupElement;
+    };
+    interface HTMLCeTabPanelElement extends Components.CeTabPanel, HTMLStencilElement {
+    }
+    var HTMLCeTabPanelElement: {
+        prototype: HTMLCeTabPanelElement;
+        new (): HTMLCeTabPanelElement;
+    };
+    interface HTMLCeTableElement extends Components.CeTable, HTMLStencilElement {
+    }
+    var HTMLCeTableElement: {
+        prototype: HTMLCeTableElement;
+        new (): HTMLCeTableElement;
+    };
+    interface HTMLCeTableBodyElement extends Components.CeTableBody, HTMLStencilElement {
+    }
+    var HTMLCeTableBodyElement: {
+        prototype: HTMLCeTableBodyElement;
+        new (): HTMLCeTableBodyElement;
+    };
+    interface HTMLCeTableCellElement extends Components.CeTableCell, HTMLStencilElement {
+    }
+    var HTMLCeTableCellElement: {
+        prototype: HTMLCeTableCellElement;
+        new (): HTMLCeTableCellElement;
+    };
+    interface HTMLCeTableHeadElement extends Components.CeTableHead, HTMLStencilElement {
+    }
+    var HTMLCeTableHeadElement: {
+        prototype: HTMLCeTableHeadElement;
+        new (): HTMLCeTableHeadElement;
+    };
+    interface HTMLCeTableRowElement extends Components.CeTableRow, HTMLStencilElement {
+    }
+    var HTMLCeTableRowElement: {
+        prototype: HTMLCeTableRowElement;
+        new (): HTMLCeTableRowElement;
+    };
     interface HTMLCeTagElement extends Components.CeTag, HTMLStencilElement {
     }
     var HTMLCeTagElement: {
@@ -1651,6 +1775,9 @@ declare global {
         "ce-choices": HTMLCeChoicesElement;
         "ce-consumer": HTMLCeConsumerElement;
         "ce-coupon-form": HTMLCeCouponFormElement;
+        "ce-customer-dashboard": HTMLCeCustomerDashboardElement;
+        "ce-customer-order": HTMLCeCustomerOrderElement;
+        "ce-customer-subscription": HTMLCeCustomerSubscriptionElement;
         "ce-divider": HTMLCeDividerElement;
         "ce-dropdown": HTMLCeDropdownElement;
         "ce-email": HTMLCeEmailElement;
@@ -1696,6 +1823,14 @@ declare global {
         "ce-stripe-payment-request": HTMLCeStripePaymentRequestElement;
         "ce-subscription-status-badge": HTMLCeSubscriptionStatusBadgeElement;
         "ce-switch": HTMLCeSwitchElement;
+        "ce-tab": HTMLCeTabElement;
+        "ce-tab-group": HTMLCeTabGroupElement;
+        "ce-tab-panel": HTMLCeTabPanelElement;
+        "ce-table": HTMLCeTableElement;
+        "ce-table-body": HTMLCeTableBodyElement;
+        "ce-table-cell": HTMLCeTableCellElement;
+        "ce-table-head": HTMLCeTableHeadElement;
+        "ce-table-row": HTMLCeTableRowElement;
         "ce-tag": HTMLCeTagElement;
         "ce-text": HTMLCeTextElement;
         "ce-tooltip": HTMLCeTooltipElement;
@@ -2005,6 +2140,18 @@ declare namespace LocalJSX {
         "label"?: string;
         "loading"?: boolean;
         "onCeApplyCoupon"?: (event: CustomEvent<string>) => void;
+    }
+    interface CeCustomerDashboard {
+        /**
+          * Pass the current customer id.
+         */
+        "customerId"?: string;
+    }
+    interface CeCustomerOrder {
+        "order"?: CheckoutSession;
+    }
+    interface CeCustomerSubscription {
+        "subscription"?: Subscription;
     }
     interface CeDivider {
     }
@@ -3037,6 +3184,50 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
+    interface CeTab {
+        /**
+          * Draws the tab in an active state.
+         */
+        "active"?: boolean;
+        "count"?: string;
+        /**
+          * Draws the tab in a disabled state.
+         */
+        "disabled"?: boolean;
+        "href"?: string;
+        /**
+          * Close event
+         */
+        "onCeClose"?: (event: CustomEvent<void>) => void;
+        /**
+          * The name of the tab panel the tab will control. The panel must be located in the same tab group.
+         */
+        "panel"?: string;
+    }
+    interface CeTabGroup {
+        "onCeTabHide"?: (event: CustomEvent<string>) => void;
+        "onCeTabShow"?: (event: CustomEvent<string>) => void;
+    }
+    interface CeTabPanel {
+        /**
+          * When true, the tab panel will be shown.
+         */
+        "active"?: boolean;
+        /**
+          * The tab panel's name.
+         */
+        "name"?: string;
+    }
+    interface CeTable {
+    }
+    interface CeTableBody {
+    }
+    interface CeTableCell {
+    }
+    interface CeTableHead {
+    }
+    interface CeTableRow {
+    }
     interface CeTag {
         /**
           * Makes the tag clearable.
@@ -3097,6 +3288,9 @@ declare namespace LocalJSX {
         "ce-choices": CeChoices;
         "ce-consumer": CeConsumer;
         "ce-coupon-form": CeCouponForm;
+        "ce-customer-dashboard": CeCustomerDashboard;
+        "ce-customer-order": CeCustomerOrder;
+        "ce-customer-subscription": CeCustomerSubscription;
         "ce-divider": CeDivider;
         "ce-dropdown": CeDropdown;
         "ce-email": CeEmail;
@@ -3142,6 +3336,14 @@ declare namespace LocalJSX {
         "ce-stripe-payment-request": CeStripePaymentRequest;
         "ce-subscription-status-badge": CeSubscriptionStatusBadge;
         "ce-switch": CeSwitch;
+        "ce-tab": CeTab;
+        "ce-tab-group": CeTabGroup;
+        "ce-tab-panel": CeTabPanel;
+        "ce-table": CeTable;
+        "ce-table-body": CeTableBody;
+        "ce-table-cell": CeTableCell;
+        "ce-table-head": CeTableHead;
+        "ce-table-row": CeTableRow;
         "ce-tag": CeTag;
         "ce-text": CeText;
         "ce-tooltip": CeTooltip;
@@ -3163,6 +3365,9 @@ declare module "@stencil/core" {
             "ce-choices": LocalJSX.CeChoices & JSXBase.HTMLAttributes<HTMLCeChoicesElement>;
             "ce-consumer": LocalJSX.CeConsumer & JSXBase.HTMLAttributes<HTMLCeConsumerElement>;
             "ce-coupon-form": LocalJSX.CeCouponForm & JSXBase.HTMLAttributes<HTMLCeCouponFormElement>;
+            "ce-customer-dashboard": LocalJSX.CeCustomerDashboard & JSXBase.HTMLAttributes<HTMLCeCustomerDashboardElement>;
+            "ce-customer-order": LocalJSX.CeCustomerOrder & JSXBase.HTMLAttributes<HTMLCeCustomerOrderElement>;
+            "ce-customer-subscription": LocalJSX.CeCustomerSubscription & JSXBase.HTMLAttributes<HTMLCeCustomerSubscriptionElement>;
             "ce-divider": LocalJSX.CeDivider & JSXBase.HTMLAttributes<HTMLCeDividerElement>;
             "ce-dropdown": LocalJSX.CeDropdown & JSXBase.HTMLAttributes<HTMLCeDropdownElement>;
             "ce-email": LocalJSX.CeEmail & JSXBase.HTMLAttributes<HTMLCeEmailElement>;
@@ -3208,6 +3413,14 @@ declare module "@stencil/core" {
             "ce-stripe-payment-request": LocalJSX.CeStripePaymentRequest & JSXBase.HTMLAttributes<HTMLCeStripePaymentRequestElement>;
             "ce-subscription-status-badge": LocalJSX.CeSubscriptionStatusBadge & JSXBase.HTMLAttributes<HTMLCeSubscriptionStatusBadgeElement>;
             "ce-switch": LocalJSX.CeSwitch & JSXBase.HTMLAttributes<HTMLCeSwitchElement>;
+            "ce-tab": LocalJSX.CeTab & JSXBase.HTMLAttributes<HTMLCeTabElement>;
+            "ce-tab-group": LocalJSX.CeTabGroup & JSXBase.HTMLAttributes<HTMLCeTabGroupElement>;
+            "ce-tab-panel": LocalJSX.CeTabPanel & JSXBase.HTMLAttributes<HTMLCeTabPanelElement>;
+            "ce-table": LocalJSX.CeTable & JSXBase.HTMLAttributes<HTMLCeTableElement>;
+            "ce-table-body": LocalJSX.CeTableBody & JSXBase.HTMLAttributes<HTMLCeTableBodyElement>;
+            "ce-table-cell": LocalJSX.CeTableCell & JSXBase.HTMLAttributes<HTMLCeTableCellElement>;
+            "ce-table-head": LocalJSX.CeTableHead & JSXBase.HTMLAttributes<HTMLCeTableHeadElement>;
+            "ce-table-row": LocalJSX.CeTableRow & JSXBase.HTMLAttributes<HTMLCeTableRowElement>;
             "ce-tag": LocalJSX.CeTag & JSXBase.HTMLAttributes<HTMLCeTagElement>;
             "ce-text": LocalJSX.CeText & JSXBase.HTMLAttributes<HTMLCeTextElement>;
             "ce-tooltip": LocalJSX.CeTooltip & JSXBase.HTMLAttributes<HTMLCeTooltipElement>;

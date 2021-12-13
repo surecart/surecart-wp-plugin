@@ -27,6 +27,7 @@ import * as expressPayment from './blocks/express-payment';
 import * as confirmation from './blocks/confirmation';
 import * as confirmationLineItems from './blocks/order-confirmation-line-items';
 import * as confirmationTotals from './blocks/order-confirmation-totals';
+import * as customerDashboard from './blocks/customer-dashboard';
 import * as customerDashboardButton from './blocks/customer-dashboard-buttom';
 import * as coupon from './blocks/coupon';
 import * as lineItems from './blocks/line-items';
@@ -117,6 +118,7 @@ export const registerCheckoutEngineBlocks = () => {
 		lineItems,
 		button,
 		buyButton,
+		customerDashboard,
 		customerDashboardButton,
 		form,
 		input,

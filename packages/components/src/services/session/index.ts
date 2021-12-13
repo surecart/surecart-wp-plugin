@@ -1,7 +1,7 @@
 import { CheckoutSession } from '../../types';
 import apiFetch from '../../functions/fetch';
 import { addQueryArgs } from '@wordpress/url';
-const baseUrl = 'checkout-engine/v1/checkout_sessions/';
+export const baseUrl = 'checkout-engine/v1/checkout_sessions/';
 const expand = ['line_items', 'line_item.price', 'price.product', 'customer', 'payment_intent', 'discount', 'discount.promotion', 'discount.coupon'];
 
 export const parsePath = (id, endpoint = '') => {
@@ -35,4 +35,10 @@ export const getSession = async id => {
   return (await apiFetch({
     path: parsePath(id),
   })) as CheckoutSession;
+};
+
+export const requestSession = async ({ id, query = {} }) => {
+  return apiFetch({
+    path: addQueryArgs(`${baseUrl}${id}`, query),
+  });
 };
