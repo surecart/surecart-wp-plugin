@@ -148,7 +148,7 @@ ce-button-group > ce-tooltip > ce-button.ce-focus {
   --ce-border-radius-pill: 9999px;
   --ce-shadow-x-small: 0 1px 0 #0d131e0d;
   --ce-shadow-small: 0 1px 2px #0d131e1a;
-  --ce-shadow-medium: 0 0 #0000,0 0 #0000,0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --ce-shadow-medium: 0 0 #000,0 0 #000,0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
   --ce-shadow-large: 0 2px 8px #0d131e1a;
   --ce-shadow-x-large: 0 4px 16px #0d131e1a;
   --ce-spacing-xxx-small: 0.125em;
@@ -208,7 +208,7 @@ ce-button-group > ce-tooltip > ce-button.ce-focus {
   --ce-choice-border: solid var(--ce-input-border-width) var(--ce-input-border-color);
   --ce-choice-box-shadow: var(--ce-input-box-shadow);
   --ce-input-box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
-  --ce-input-height-small: 1.875em;
+  --ce-input-height-small: 2.35em;
   --ce-input-height-medium: 2.5em;
   --ce-input-height-large: 2.7em;
   --ce-input-background-color: var(--ce-color-white);

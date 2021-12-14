@@ -3,15 +3,21 @@
   font-size: var(--ce-font-size-medium);
   padding: var(--ce-spacing-small);
 }
+
 :host([slot="head"]) {
   background: var(--ce-color-gray-50);
   font-size: var(--ce-font-size-x-small);
-  padding: var(--ce-spacing-x-small) var(--ce-spacing-small);
+  padding: var(--ce-spacing-small);
   text-transform: uppercase;
   font-weight: var(--ce-font-weight-semibold);
   letter-spacing: var(--ce-letter-spacing-loose);
   color: var(--ce-color-gray-500);
 }
+
+:host(:last-child) {
+  text-align: right;
+}
+
 ce-table-cell {
   display: table-cell;
   overflow: hidden;

@@ -1,7 +1,7 @@
 :host {
   display: table-row;
 }
-:host(:nth-child(even)) {
+:host(:nth-of-type(even)) {
   background: var(--ce-color-gray-50);
 }
 

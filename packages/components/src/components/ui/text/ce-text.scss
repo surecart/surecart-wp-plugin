@@ -6,10 +6,16 @@
   --color: var(--color, inherit);
 }
 
-.title {
+.text {
   margin: 0;
   font-size: var(--font-size);
   font-weight: var(--font-weight);
   line-height: var(--line-height);
   color: var(--color);
+
+  &.is-truncated {
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
 }

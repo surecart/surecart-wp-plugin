@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { CheckoutSession, ChoiceItem, Coupon, Customer, Keys, LineItemData, Price, PriceChoice, Prices, Products, ResponseError, Subscription, SubscriptionStatus } from "./types";
+import { CheckoutSession, ChoiceItem, Coupon, Customer, Keys, LineItemData, Price, PriceChoice, Prices, Products, ResponseError, SessionStatus, Subscription, SubscriptionStatus } from "./types";
 export namespace Components {
     interface CeAlert {
         /**
@@ -1104,6 +1104,24 @@ export namespace Components {
          */
         "setState": (state: string) => void;
     }
+    interface CeSessionStatusBadge {
+        /**
+          * Makes the tag clearable.
+         */
+        "clearable": boolean;
+        /**
+          * Draws a pill-style tag with rounded edges.
+         */
+        "pill": boolean;
+        /**
+          * The tag's size.
+         */
+        "size": 'small' | 'medium' | 'large';
+        /**
+          * The tag's statux type.
+         */
+        "status": SessionStatus;
+    }
     interface CeSessionSubscription {
         "checkoutSessionId": string;
     }
@@ -1308,6 +1326,7 @@ export namespace Components {
     }
     interface CeText {
         "tag": 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p';
+        "truncate": boolean;
     }
     interface CeTooltip {
         /**
@@ -1649,6 +1668,12 @@ declare global {
         prototype: HTMLCeSessionProviderElement;
         new (): HTMLCeSessionProviderElement;
     };
+    interface HTMLCeSessionStatusBadgeElement extends Components.CeSessionStatusBadge, HTMLStencilElement {
+    }
+    var HTMLCeSessionStatusBadgeElement: {
+        prototype: HTMLCeSessionStatusBadgeElement;
+        new (): HTMLCeSessionStatusBadgeElement;
+    };
     interface HTMLCeSessionSubscriptionElement extends Components.CeSessionSubscription, HTMLStencilElement {
     }
     var HTMLCeSessionSubscriptionElement: {
@@ -1816,6 +1841,7 @@ declare global {
         "ce-select": HTMLCeSelectElement;
         "ce-session-detail": HTMLCeSessionDetailElement;
         "ce-session-provider": HTMLCeSessionProviderElement;
+        "ce-session-status-badge": HTMLCeSessionStatusBadgeElement;
         "ce-session-subscription": HTMLCeSessionSubscriptionElement;
         "ce-skeleton": HTMLCeSkeletonElement;
         "ce-spinner": HTMLCeSpinnerElement;
@@ -3032,6 +3058,24 @@ declare namespace LocalJSX {
          */
         "setState"?: (state: string) => void;
     }
+    interface CeSessionStatusBadge {
+        /**
+          * Makes the tag clearable.
+         */
+        "clearable"?: boolean;
+        /**
+          * Draws a pill-style tag with rounded edges.
+         */
+        "pill"?: boolean;
+        /**
+          * The tag's size.
+         */
+        "size"?: 'small' | 'medium' | 'large';
+        /**
+          * The tag's statux type.
+         */
+        "status"?: SessionStatus;
+    }
     interface CeSessionSubscription {
         "checkoutSessionId"?: string;
     }
@@ -3249,6 +3293,7 @@ declare namespace LocalJSX {
     }
     interface CeText {
         "tag"?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p';
+        "truncate"?: boolean;
     }
     interface CeTooltip {
         /**
@@ -3329,6 +3374,7 @@ declare namespace LocalJSX {
         "ce-select": CeSelect;
         "ce-session-detail": CeSessionDetail;
         "ce-session-provider": CeSessionProvider;
+        "ce-session-status-badge": CeSessionStatusBadge;
         "ce-session-subscription": CeSessionSubscription;
         "ce-skeleton": CeSkeleton;
         "ce-spinner": CeSpinner;
@@ -3406,6 +3452,7 @@ declare module "@stencil/core" {
             "ce-select": LocalJSX.CeSelect & JSXBase.HTMLAttributes<HTMLCeSelectElement>;
             "ce-session-detail": LocalJSX.CeSessionDetail & JSXBase.HTMLAttributes<HTMLCeSessionDetailElement>;
             "ce-session-provider": LocalJSX.CeSessionProvider & JSXBase.HTMLAttributes<HTMLCeSessionProviderElement>;
+            "ce-session-status-badge": LocalJSX.CeSessionStatusBadge & JSXBase.HTMLAttributes<HTMLCeSessionStatusBadgeElement>;
             "ce-session-subscription": LocalJSX.CeSessionSubscription & JSXBase.HTMLAttributes<HTMLCeSessionSubscriptionElement>;
             "ce-skeleton": LocalJSX.CeSkeleton & JSXBase.HTMLAttributes<HTMLCeSkeletonElement>;
             "ce-spinner": LocalJSX.CeSpinner & JSXBase.HTMLAttributes<HTMLCeSpinnerElement>;

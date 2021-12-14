@@ -7,12 +7,18 @@ import { Component, h, Prop } from '@stencil/core';
 })
 export class CeText {
   @Prop() tag: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' = 'p';
+  @Prop() truncate: boolean = false;
 
   render() {
     const CustomTag = this.tag;
 
     return (
-      <CustomTag class="title">
+      <CustomTag
+        class={{
+          'text': true,
+          'is-truncated': this.truncate,
+        }}
+      >
         <slot />
       </CustomTag>
     );

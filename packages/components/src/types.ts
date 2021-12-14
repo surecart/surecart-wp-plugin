@@ -203,6 +203,8 @@ export type SubscriptionItem = {
 
 export type SubscriptionStatus = 'incomplete' | 'trialing' | 'active' | 'past_due' | 'canceled' | 'unpaid';
 
+export type SessionStatus = 'draft' | 'finalized' | 'completed' | 'paid';
+
 export interface PaymentMethod extends Object {
   id: string;
   object: 'payment_method';

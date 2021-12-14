@@ -19,45 +19,7 @@
 
 
   <div style="max-width: 960px; margin: 100px auto;">
-    <ce-table>
-      <ce-table-cell slot="head">Name</ce-table-cell>
-      <ce-table-cell slot="head">Title</ce-table-cell>
-      <ce-table-cell slot="head">Email</ce-table-cell>
-      <ce-table-cell slot="head">Role</ce-table-cell>
-      <ce-table-cell slot="head"></ce-table-cell>
 
-    <ce-table-row>
-      <ce-table-cell>
-        <ce-text style="--font-weight: var(--ce-font-weight-semibold);">Jane Cooper</ce-text>
-      </ce-table-cell>
-      <ce-table-cell>
-        <ce-text style="--color: var(--ce-color-gray-500);"> Regional Paradigm Technician</ce-text>
-      </ce-table-cell>
-      <ce-table-cell>
-        <ce-text style="--color: var(--ce-color-gray-500);">jane.cooper@example.com</ce-text>
-      </ce-table-cell>
-      <ce-table-cell>
-        <ce-text style="--color: var(--ce-color-gray-500);">admin</ce-text>
-      </ce-table-cell>
-      <ce-table-cell><ce-button href="#">Edit</ce-button></ce-table-cell>
-    </ce-table-row>
-
-    <ce-table-row>
-      <ce-table-cell>
-        <ce-text style="--font-weight: var(--ce-font-weight-semibold);">Jane Cooper</ce-text>
-      </ce-table-cell>
-      <ce-table-cell>
-        <ce-text style="--color: var(--ce-color-gray-500);"> Regional Paradigm Technician</ce-text>
-      </ce-table-cell>
-      <ce-table-cell>
-        <ce-text style="--color: var(--ce-color-gray-500);">jane.cooper@example.com</ce-text>
-      </ce-table-cell>
-      <ce-table-cell>
-        <ce-text style="--color: var(--ce-color-gray-500);">admin</ce-text>
-      </ce-table-cell>
-      <ce-table-cell><ce-button href="#">Edit</ce-button></ce-table-cell>
-    </ce-table-row>
-</ce-table>
 
     <ce-tab-group>
       <ce-tab slot="nav" panel="general" count="5">
@@ -80,7 +42,45 @@
         </svg>Disabled</ce-tab>
 
       <ce-tab-panel name="general">
-        This is the general tab panel.
+        <ce-table>
+          <ce-table-cell slot="head">Name</ce-table-cell>
+          <ce-table-cell slot="head">Title</ce-table-cell>
+          <ce-table-cell slot="head">Email</ce-table-cell>
+          <ce-table-cell slot="head" style="width:100px">Role</ce-table-cell>
+          <ce-table-cell slot="head" style="width:100px"></ce-table-cell>
+
+        <ce-table-row>
+          <ce-table-cell>
+            <ce-text truncate style="--font-weight: var(--ce-font-weight-semibold);">Jane Cooper</ce-text>
+          </ce-table-cell>
+          <ce-table-cell>
+            <ce-text truncate style="--color: var(--ce-color-gray-500);"> Regional Paradigm Technician</ce-text>
+          </ce-table-cell>
+          <ce-table-cell>
+            <ce-text truncate style="--color: var(--ce-color-gray-500);">jane.cooper@example.com</ce-text>
+          </ce-table-cell>
+          <ce-table-cell>
+            <ce-text truncate style="--color: var(--ce-color-gray-500);">admin</ce-text>
+          </ce-table-cell>
+          <ce-table-cell><ce-button href="#" size="small">Edit</ce-button></ce-table-cell>
+        </ce-table-row>
+
+        <ce-table-row>
+          <ce-table-cell>
+            <ce-text truncate style="--font-weight: var(--ce-font-weight-semibold);">Jane Cooper</ce-text>
+          </ce-table-cell>
+          <ce-table-cell>
+            <ce-text truncate style="--color: var(--ce-color-gray-500);"> Regional Paradigm Technician</ce-text>
+          </ce-table-cell>
+          <ce-table-cell>
+            <ce-text truncate style="--color: var(--ce-color-gray-500);">jane.cooper@example.com</ce-text>
+          </ce-table-cell>
+          <ce-table-cell>
+            <ce-text truncate style="--color: var(--ce-color-gray-500);">admin</ce-text>
+          </ce-table-cell>
+          <ce-table-cell><ce-button href="#" size="small">Edit</ce-button></ce-table-cell>
+        </ce-table-row>
+    </ce-table>
       </ce-tab-panel>
       <ce-tab-panel name="custom">
         <ce-heading>Custom</ce-heading>
