@@ -29,7 +29,7 @@
                         <ce-subscription-status-badge status="{{ $subscription->status }}"></ce-subscription-status-badge>
                     </ce-table-cell>
                     <ce-table-cell>
-                        <ce-button href="<?php echo esc_url(add_query_arg(['id' => $order->id])); ?>" size="small">{{ esc_html__('View', 'checkout_engine') }}
+                        <ce-button href="<?php echo esc_url(add_query_arg(['id' => $subscription->id])); ?>" size="small">{{ esc_html__('View', 'checkout_engine') }}
                         </ce-button>
                     </ce-table-cell>
                 </ce-table-row>

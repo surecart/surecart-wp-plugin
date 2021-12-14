@@ -31,7 +31,7 @@ export class CeCard {
         }}
       >
         <div class="card--title">
-          {this.loading ? <ce-skeleton style={{ width: '120px' }}></ce-skeleton> : <slot name="title" onSlotchange={() => this.handleSlotChange()} />}
+          {this.loading ? <ce-skeleton style={{ width: '120px' }}></ce-skeleton> : <slot name="title" onSlotchange={() => this.handleSlotChange()}></slot>}
           <ce-divider class="title--divider" part="border" style={{ '--spacing': 'var(--ce-spacing-small)' }}></ce-divider>
         </div>
         <slot />

@@ -7,19 +7,15 @@
 
 ## Properties
 
-| Property    | Attribute   | Description                                | Type                                                                             | Default     |
-| ----------- | ----------- | ------------------------------------------ | -------------------------------------------------------------------------------- | ----------- |
-| `clearable` | `clearable` | Makes the tag clearable.                   | `boolean`                                                                        | `false`     |
-| `pill`      | `pill`      | Draws a pill-style tag with rounded edges. | `boolean`                                                                        | `false`     |
-| `size`      | `size`      | The tag's size.                            | `"large" \| "medium" \| "small"`                                                 | `'medium'`  |
-| `status`    | `status`    | The tag's statux type.                     | `"active" \| "canceled" \| "incomplete" \| "past_due" \| "trialing" \| "unpaid"` | `undefined` |
+| Property    | Attribute   | Description                                | Type                                              | Default     |
+| ----------- | ----------- | ------------------------------------------ | ------------------------------------------------- | ----------- |
+| `clearable` | `clearable` | Makes the tag clearable.                   | `boolean`                                         | `false`     |
+| `pill`      | `pill`      | Draws a pill-style tag with rounded edges. | `boolean`                                         | `false`     |
+| `size`      | `size`      | The tag's size.                            | `"large" \| "medium" \| "small"`                  | `'medium'`  |
+| `status`    | `status`    | The tag's statux type.                     | `"completed" \| "draft" \| "finalized" \| "paid"` | `undefined` |
 
 
 ## Dependencies
-
-### Used by
-
- - [ce-session-subscription](../../controllers/session-subscription)
 
 ### Depends on
 
@@ -28,9 +24,8 @@
 ### Graph
 ```mermaid
 graph TD;
-  ce-subscription-status-badge --> ce-tag
-  ce-session-subscription --> ce-subscription-status-badge
-  style ce-subscription-status-badge fill:#f9f,stroke:#333,stroke-width:4px
+  ce-session-status-badge --> ce-tag
+  style ce-session-status-badge fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

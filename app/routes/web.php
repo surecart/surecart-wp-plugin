@@ -15,16 +15,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-// Default thank you page.
-\CheckoutEngine::route()->get()->url( '/thank-you' )->handle( 'PurchaseController@show' );
-
-// \CheckoutEngine::route()->get()->where( 'post_id', \CheckoutEngine::pages()->getId( 'dashboard' ) )->handle( 'DashboardController@show' );
-
+// Customer dashboard.
 \CheckoutEngine::route()
 ->where( 'post_id', \CheckoutEngine::pages()->getId( 'dashboard' ) )
 ->middleware( CustomerDashboardMiddleware::class )
-->group(
-	function() {
-		\CheckoutEngine::route()->get()->where( 'ce_url_var', false, 'tab' )->name( 'orders' )->handle( 'DashboardController@show' );
-	}
-);
+->get()->name( 'orders' )->handle( 'DashboardController@show' );

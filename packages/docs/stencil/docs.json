@@ -1,5 +1,5 @@
 {
-  "timestamp": "2021-12-10T20:55:54",
+  "timestamp": "2021-12-14T04:13:09",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.9.0",
@@ -2016,6 +2016,138 @@
       }
     },
     {
+      "filePath": "./src/components/controllers/customer-dashboard/ce-customer-dashboard.tsx",
+      "encapsulation": "shadow",
+      "tag": "ce-customer-dashboard",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "customerId",
+          "type": "string",
+          "mutable": false,
+          "attr": "customer-id",
+          "reflectToAttr": false,
+          "docs": "Pass the current customer id.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "ce-tab-group",
+        "ce-tab",
+        "ce-heading",
+        "ce-divider"
+      ],
+      "dependencyGraph": {
+        "ce-customer-dashboard": [
+          "ce-tab-group",
+          "ce-tab",
+          "ce-heading",
+          "ce-divider"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/controllers/customer-order/ce-customer-order.tsx",
+      "encapsulation": "shadow",
+      "tag": "ce-customer-order",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "order",
+          "type": "CheckoutSession",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "CheckoutSession"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "ce-format-number"
+      ],
+      "dependencyGraph": {
+        "ce-customer-order": [
+          "ce-format-number"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/controllers/customer-subscription/ce-customer-subscription.tsx",
+      "encapsulation": "shadow",
+      "tag": "ce-customer-subscription",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "subscription",
+          "type": "Subscription",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Subscription"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "ce-format-number",
+        "ce-subscription-status-badge"
+      ],
+      "dependencyGraph": {
+        "ce-customer-subscription": [
+          "ce-format-number",
+          "ce-subscription-status-badge"
+        ],
+        "ce-subscription-status-badge": [
+          "ce-tag"
+        ]
+      }
+    },
+    {
       "filePath": "./src/components/ui/divider/ce-divider.tsx",
       "encapsulation": "shadow",
       "tag": "ce-divider",
@@ -2045,6 +2177,7 @@
       ],
       "dependents": [
         "ce-card",
+        "ce-customer-dashboard",
         "ce-express-payment",
         "ce-order-confirmation-totals",
         "ce-session-subscription"
@@ -2052,6 +2185,9 @@
       "dependencies": [],
       "dependencyGraph": {
         "ce-card": [
+          "ce-divider"
+        ],
+        "ce-customer-dashboard": [
           "ce-divider"
         ],
         "ce-express-payment": [
@@ -3359,6 +3495,8 @@
       "parts": [],
       "dependents": [
         "ce-coupon-form",
+        "ce-customer-order",
+        "ce-customer-subscription",
         "ce-order-confirmation-totals",
         "ce-price-choice",
         "ce-product-line-item",
@@ -3369,6 +3507,12 @@
       "dependencies": [],
       "dependencyGraph": {
         "ce-coupon-form": [
+          "ce-format-number"
+        ],
+        "ce-customer-order": [
+          "ce-format-number"
+        ],
+        "ce-customer-subscription": [
           "ce-format-number"
         ],
         "ce-order-confirmation-totals": [
@@ -3412,10 +3556,14 @@
         }
       ],
       "dependents": [
+        "ce-customer-dashboard",
         "ce-order-confirmation"
       ],
       "dependencies": [],
       "dependencyGraph": {
+        "ce-customer-dashboard": [
+          "ce-heading"
+        ],
         "ce-order-confirmation": [
           "ce-heading"
         ]
@@ -7607,9 +7755,125 @@
       }
     },
     {
+      "filePath": "./src/components/ui/session-status-badge/ce-session-status-badge.tsx",
+      "encapsulation": "shadow",
+      "tag": "ce-session-status-badge",
+      "readme": "# ce-subscription-status-badge\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "clearable",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "clearable",
+          "reflectToAttr": false,
+          "docs": "Makes the tag clearable.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "pill",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "pill",
+          "reflectToAttr": true,
+          "docs": "Draws a pill-style tag with rounded edges.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "size",
+          "type": "\"large\" | \"medium\" | \"small\"",
+          "mutable": false,
+          "attr": "size",
+          "reflectToAttr": true,
+          "docs": "The tag's size.",
+          "docsTags": [],
+          "default": "'medium'",
+          "values": [
+            {
+              "value": "large",
+              "type": "string"
+            },
+            {
+              "value": "medium",
+              "type": "string"
+            },
+            {
+              "value": "small",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "status",
+          "type": "\"completed\" | \"draft\" | \"finalized\" | \"paid\"",
+          "mutable": false,
+          "attr": "status",
+          "reflectToAttr": false,
+          "docs": "The tag's statux type.",
+          "docsTags": [],
+          "values": [
+            {
+              "value": "completed",
+              "type": "string"
+            },
+            {
+              "value": "draft",
+              "type": "string"
+            },
+            {
+              "value": "finalized",
+              "type": "string"
+            },
+            {
+              "value": "paid",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "ce-tag"
+      ],
+      "dependencyGraph": {
+        "ce-session-status-badge": [
+          "ce-tag"
+        ]
+      }
+    },
+    {
       "filePath": "./src/components/controllers/session-subscription/ce-session-subscription.tsx",
       "encapsulation": "shadow",
       "tag": "ce-session-subscription",
+      "readme": "# ce-session-subscription\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -8338,9 +8602,10 @@
       }
     },
     {
-      "filePath": "./src/components/ui/ce-subscription-status-badge/ce-subscription-status-badge.tsx",
+      "filePath": "./src/components/ui/subscription-status-badge/ce-subscription-status-badge.tsx",
       "encapsulation": "shadow",
       "tag": "ce-subscription-status-badge",
+      "readme": "# ce-subscription-status-badge\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -8450,6 +8715,7 @@
       "slots": [],
       "parts": [],
       "dependents": [
+        "ce-customer-subscription",
         "ce-session-subscription"
       ],
       "dependencies": [
@@ -8458,6 +8724,9 @@
       "dependencyGraph": {
         "ce-subscription-status-badge": [
           "ce-tag"
+        ],
+        "ce-customer-subscription": [
+          "ce-subscription-status-badge"
         ],
         "ce-session-subscription": [
           "ce-subscription-status-badge"
@@ -8665,6 +8934,7 @@
       "filePath": "./src/components/ui/tab/ce-tab.tsx",
       "encapsulation": "shadow",
       "tag": "ce-tab",
+      "readme": "# ce-tab\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -8681,6 +8951,22 @@
           "values": [
             {
               "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "count",
+          "type": "string",
+          "mutable": false,
+          "attr": "count",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
             }
           ],
           "optional": false,
@@ -8704,6 +8990,22 @@
           "required": false
         },
         {
+          "name": "href",
+          "type": "string",
+          "mutable": false,
+          "attr": "href",
+          "reflectToAttr": true,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "panel",
           "type": "string",
           "mutable": false,
@@ -8721,7 +9023,30 @@
           "required": false
         }
       ],
-      "methods": [],
+      "methods": [
+        {
+          "name": "triggerBlur",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "signature": "triggerBlur() => Promise<void>",
+          "parameters": [],
+          "docs": "Removes focus from the tab.",
+          "docsTags": []
+        },
+        {
+          "name": "triggerFocus",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "signature": "triggerFocus(options?: FocusOptions) => Promise<void>",
+          "parameters": [],
+          "docs": "Sets focus to the tab.",
+          "docsTags": []
+        }
+      ],
       "events": [
         {
           "event": "ceClose",
@@ -8738,36 +9063,102 @@
       "slots": [],
       "parts": [
         {
-          "name": "base",
+          "name": "content",
+          "docs": ""
+        },
+        {
+          "name": "counter",
+          "docs": ""
+        },
+        {
+          "name": "prefix",
+          "docs": ""
+        },
+        {
+          "name": "suffix",
           "docs": ""
         }
       ],
-      "dependents": [],
+      "dependents": [
+        "ce-customer-dashboard"
+      ],
       "dependencies": [],
-      "dependencyGraph": {}
+      "dependencyGraph": {
+        "ce-customer-dashboard": [
+          "ce-tab"
+        ]
+      }
     },
     {
       "filePath": "./src/components/ui/tab-group/ce-tab-group.tsx",
       "encapsulation": "shadow",
       "tag": "ce-tab-group",
+      "readme": "# ce-tab-group\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
       "props": [],
       "methods": [],
-      "events": [],
+      "events": [
+        {
+          "event": "ceTabHide",
+          "detail": "string",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        },
+        {
+          "event": "ceTabShow",
+          "detail": "string",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        }
+      ],
       "listeners": [],
       "styles": [],
       "slots": [],
-      "parts": [],
-      "dependents": [],
+      "parts": [
+        {
+          "name": "active-tab-indicator",
+          "docs": ""
+        },
+        {
+          "name": "base",
+          "docs": ""
+        },
+        {
+          "name": "body",
+          "docs": ""
+        },
+        {
+          "name": "nav",
+          "docs": ""
+        },
+        {
+          "name": "tabs",
+          "docs": ""
+        }
+      ],
+      "dependents": [
+        "ce-customer-dashboard"
+      ],
       "dependencies": [],
-      "dependencyGraph": {}
+      "dependencyGraph": {
+        "ce-customer-dashboard": [
+          "ce-tab-group"
+        ]
+      }
     },
     {
       "filePath": "./src/components/ui/tab-panel/ce-tab-panel.tsx",
       "encapsulation": "shadow",
       "tag": "ce-tab-panel",
+      "readme": "# ce-tab-panel\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -8818,6 +9209,96 @@
           "docs": ""
         }
       ],
+      "dependents": [],
+      "dependencies": [],
+      "dependencyGraph": {}
+    },
+    {
+      "filePath": "./src/components/ui/table/ce-table.tsx",
+      "encapsulation": "shadow",
+      "tag": "ce-table",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [],
+      "dependencyGraph": {}
+    },
+    {
+      "filePath": "./src/components/ui/table-body/ce-table-body.tsx",
+      "encapsulation": "shadow",
+      "tag": "ce-table-body",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [],
+      "dependencyGraph": {}
+    },
+    {
+      "filePath": "./src/components/ui/table-cell/ce-table-cell.tsx",
+      "encapsulation": "shadow",
+      "tag": "ce-table-cell",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [],
+      "dependencyGraph": {}
+    },
+    {
+      "filePath": "./src/components/ui/table-head/ce-table-head.tsx",
+      "encapsulation": "shadow",
+      "tag": "ce-table-head",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [],
+      "dependencyGraph": {}
+    },
+    {
+      "filePath": "./src/components/ui/table-row/ce-table-row.tsx",
+      "encapsulation": "shadow",
+      "tag": "ce-table-row",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
       "dependents": [],
       "dependencies": [],
       "dependencyGraph": {}
@@ -8958,6 +9439,7 @@
         "ce-badge-notice",
         "ce-coupon-form",
         "ce-order-confirmation-totals",
+        "ce-session-status-badge",
         "ce-session-subscription",
         "ce-subscription-status-badge"
       ],
@@ -8970,6 +9452,9 @@
           "ce-tag"
         ],
         "ce-order-confirmation-totals": [
+          "ce-tag"
+        ],
+        "ce-session-status-badge": [
           "ce-tag"
         ],
         "ce-session-subscription": [
@@ -9026,6 +9511,23 @@
             {
               "value": "p",
               "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "truncate",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "truncate",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
             }
           ],
           "optional": false,

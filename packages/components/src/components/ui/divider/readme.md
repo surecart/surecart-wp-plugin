@@ -19,6 +19,7 @@
 ### Used by
 
  - [ce-card](../card)
+ - [ce-customer-dashboard](../../controllers/customer-dashboard)
  - [ce-express-payment](../../controllers/express-payment)
  - [ce-order-confirmation-totals](../../controllers/order-confirmation-totals)
  - [ce-session-subscription](../../controllers/session-subscription)
@@ -27,6 +28,7 @@
 ```mermaid
 graph TD;
   ce-card --> ce-divider
+  ce-customer-dashboard --> ce-divider
   ce-express-payment --> ce-divider
   ce-order-confirmation-totals --> ce-divider
   ce-session-subscription --> ce-divider

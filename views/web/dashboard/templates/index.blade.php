@@ -1,6 +1,10 @@
 <div class="ce-customer-dashboard">
     <style>
-        ce-tab-group {
+        ce-tab-group,
+        ce-table,
+        ce-tab,
+        ce-text,
+        ce-heading {
             visibility: hidden
         }
 

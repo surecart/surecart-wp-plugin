@@ -58,6 +58,10 @@ class CustomerDashboard extends Block {
 		$tab = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : 'orders';
 		$id  = isset( $_GET['id'] ) ? sanitize_text_field( wp_unslash( $_GET['id'] ) ) : null;
 
+		if ( ! is_user_logged_in() ) {
+			return \CheckoutEngine::blocks()->render( 'web.login' );
+		}
+
 		// render the route controller.
 		return $this->renderRoute( $id, $tab );
 	}

@@ -26,7 +26,7 @@
 - [ce-line-item](../../ui/line-item)
 - [ce-skeleton](../../ui/skeleton)
 - [ce-product-line-item](../../ui/product-line-item)
-- [ce-subscription-status-badge](../../ui/ce-subscription-status-badge)
+- [ce-subscription-status-badge](../../ui/subscription-status-badge)
 - [ce-format-number](../../util/format-number)
 - [ce-divider](../../ui/divider)
 - [ce-card](../../ui/card)
