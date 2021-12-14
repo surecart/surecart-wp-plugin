@@ -35,7 +35,7 @@
                         @endif
                     </ce-table-cell>
                     <ce-table-cell>
-                        <ce-button href="<?php echo esc_url(add_query_arg(['id' => $order->id])); ?>" size="small">{{ esc_html__('Details', 'checkout_engine') }}
+                        <ce-button href="<?php echo esc_url(add_query_arg(['id' => $charge->id])); ?>" size="small">{{ esc_html__('Details', 'checkout_engine') }}
                         </ce-button>
                     </ce-table-cell>
                 </ce-table-row>

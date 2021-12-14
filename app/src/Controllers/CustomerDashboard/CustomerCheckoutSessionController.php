@@ -25,6 +25,7 @@ class CustomerCheckoutSessionController {
 				'tab'    => 'orders',
 				'orders' => CheckoutSession::where(
 					[
+						'status'       => [ 'paid', 'completed' ],
 						'customer_ids' => [ $user->customerId() ],
 					]
 				)->with( [ 'line_items' ] )->get(),

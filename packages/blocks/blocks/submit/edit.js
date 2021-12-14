@@ -18,7 +18,15 @@ import {
 import { CeButton } from '@checkout-engine/react';
 
 export default ( { className, attributes, setAttributes } ) => {
-	const { type, text, submit, full, size, show_total } = attributes;
+	const {
+		type,
+		text,
+		submit,
+		full,
+		size,
+		show_total,
+		show_icon,
+	} = attributes;
 
 	return (
 		<div className={ className }>
@@ -47,6 +55,18 @@ export default ( { className, attributes, setAttributes } ) => {
 							checked={ show_total }
 							onChange={ ( show_total ) =>
 								setAttributes( { show_total } )
+							}
+						/>
+					</PanelRow>
+					<PanelRow>
+						<ToggleControl
+							label={ __(
+								'Show a secure lock icon.',
+								'checkout-engine'
+							) }
+							checked={ show_icon }
+							onChange={ ( show_icon ) =>
+								setAttributes( { show_icon } )
 							}
 						/>
 					</PanelRow>
@@ -87,6 +107,24 @@ export default ( { className, attributes, setAttributes } ) => {
 				{ ...( full ? { full: true } : {} ) }
 				size={ size }
 			>
+				{ show_icon && (
+					<svg
+						slot="prefix"
+						xmlns="http://www.w3.org/2000/svg"
+						width="16"
+						height="16"
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke="currentColor"
+					>
+						<path
+							strokeLinecap="round"
+							strokeLinejoin="round"
+							strokeWidth={ 2 }
+							d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+						/>
+					</svg>
+				) }
 				<RichText
 					aria-label={ __( 'Button text' ) }
 					placeholder={ __( 'Add text…' ) }

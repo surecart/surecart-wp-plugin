@@ -24,6 +24,10 @@
 			"type": "boolean",
 			"default": false
 		},
+		"show_icon": {
+			"type": "boolean",
+			"default": true
+		},
 		"full": {
 			"type": "boolean",
 			"default": false
