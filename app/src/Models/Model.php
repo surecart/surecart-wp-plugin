@@ -94,6 +94,21 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	protected $guarded = [];
 
 	/**
+	 * Default collection limit
+	 *
+	 * @var integer
+	 */
+	protected $limit = 20;
+
+
+	/**
+	 * Default collection offset.
+	 *
+	 * @var integer
+	 */
+	protected $offset = 0;
+
+	/**
 	 * Model constructor
 	 *
 	 * @param array $attributes Optional attributes.
@@ -545,16 +560,40 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	/**
 	 * Paginate results
 	 *
+	 * @param array $args Pagination args.
 	 * @return mixed
 	 */
-	protected function paginate() {
+	protected function paginate( $args = [] ) {
+		$this->setPagination( $args );
+
 		$items = $this->makeRequest();
 
 		if ( $this->isError( $items ) ) {
 			return $items;
 		}
 
-		return $items;
+		return new Collection( $items );
+	}
+
+	/**
+	 * Set the pagination args.
+	 *
+	 * @param array $args Pagination args.
+	 * @return $this
+	 */
+	protected function setPagination( $args ) {
+		$args = wp_parse_args(
+			$args,
+			[
+				'page'     => 1,
+				'per_page' => 20,
+			]
+		);
+
+		$this->query['limit'] = $args['per_page'];
+		$this->query['page']  = $args['page'];
+
+		return $this;
 	}
 
 	/**
