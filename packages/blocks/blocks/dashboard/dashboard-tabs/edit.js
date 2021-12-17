@@ -22,6 +22,9 @@ const ALLOWED_BLOCKS = [ 'checkout-engine/dashboard-tab' ];
 export default ( {} ) => {
 	const blockProps = useBlockProps( {
 		slot: 'nav',
+		style: {
+			boxSizing: 'border-box',
+		},
 	} );
 
 	const innerBlocksProps = useInnerBlocksProps( blockProps, {
