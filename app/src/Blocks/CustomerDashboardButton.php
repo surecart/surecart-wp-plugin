@@ -73,7 +73,7 @@ class CustomerDashboardButton extends Block {
 			"blocks/$this->name",
 			[
 				'type'      => $attributes['type'] ?? 'primary',
-				'show_icon' => (bool) $attributes['show_icon'],
+				'show_icon' => $attributes['show_icon'] ?? false,
 				'size'      => $attributes['size'] ?? 'medium',
 				'href'      => \CheckoutEngine::pages()->url( 'dashboard' ),
 				'label'     => $attributes['label'] ?? __( 'Your Dashboard', 'checkout_session' ),

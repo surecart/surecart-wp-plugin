@@ -54,9 +54,9 @@ abstract class Block {
 	}
 
 	/**
-	 * Render the block
+	 * Render the block.
 	 *
-	 * @return void
+	 * @return function
 	 */
 	public function render( $attributes, $content ) {
 		return \CheckoutEngine::blocks()->render(

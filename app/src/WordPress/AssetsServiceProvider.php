@@ -147,6 +147,53 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 				],
 			]
 		);
+		add_action(
+			'wp_footer',
+			function() { ?>
+		<ce-register-icon-library></ce-register-icon-library>
+		<script>
+			(async () => {
+				await customElements.whenDefined('ce-register-icon-library');
+				var library = document.querySelector('ce-register-icon-library');
+				await library.registerIconLibrary(
+					'default', {
+						resolver: function(name) {
+							return '<?php echo plugin_dir_url( CHECKOUT_ENGINE_PLUGIN_FILE ); ?>resources/icons/feather/' + name + '.svg'
+						},
+						mutator: function(svg) {
+							return svg.setAttribute('fill', 'none')
+						}
+					}
+				);
+			})();
+		</script>
+				<?php
+			}
+		);
+		add_action(
+			'admin_footer',
+			function() {
+				?>
+		<ce-register-icon-library></ce-register-icon-library>
+		<script>
+			(async () => {
+				await customElements.whenDefined('ce-register-icon-library');
+				var library = document.querySelector('ce-register-icon-library');
+				await library.registerIconLibrary(
+					'default', {
+						resolver: function(name) {
+							return '<?php echo plugin_dir_url( CHECKOUT_ENGINE_PLUGIN_FILE ); ?>resources/icons/feather/' + name + '.svg'
+						},
+						mutator: function(svg) {
+							return svg.setAttribute('fill', 'none')
+						}
+					}
+				);
+			})();
+		</script>
+				<?php
+			}
+		);
 	}
 
 	/**
@@ -174,7 +221,7 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 				[
 					'window.ce = window.ce || {};',
 					sprintf(
-						'wp.apiFetch.use( wp.apiFetch.createRootURLMiddleware( "%s" ) );',
+						'wp.apiFetch.use( wp.apiFetch.createRootURLMiddleware( " % s" ) );',
 						esc_url_raw( get_rest_url() ) . 'checkout_engine/v1/'
 					),
 				]
@@ -188,13 +235,13 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 				"\n",
 				[
 					sprintf(
-						'wp.apiFetch.nonceMiddleware = wp.apiFetch.createNonceMiddleware( "%s" );',
+						'wp.apiFetch.nonceMiddleware = wp.apiFetch.createNonceMiddleware( " % s" );',
 						( wp_installing() && ! is_multisite() ) ? '' : wp_create_nonce( 'wp_rest' )
 					),
 					'wp.apiFetch.use( wp.apiFetch.nonceMiddleware );',
 					'wp.apiFetch.use( wp.apiFetch.mediaUploadMiddleware );',
 					sprintf(
-						'wp.apiFetch.nonceEndpoint = "%s";',
+						'wp.apiFetch.nonceEndpoint = " % s";',
 						admin_url( 'admin-ajax.php?action=ce-rest-nonce' )
 					),
 				]

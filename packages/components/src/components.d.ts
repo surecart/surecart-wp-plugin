@@ -6,6 +6,7 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { CheckoutSession, ChoiceItem, Coupon, Customer, Keys, LineItemData, Price, PriceChoice, Prices, Products, ResponseError, SessionStatus, Subscription, SubscriptionStatus } from "./types";
+import { IconLibraryMutator, IconLibraryResolver } from "./components/ui/icon/library";
 export namespace Components {
     interface CeAlert {
         /**
@@ -521,6 +522,24 @@ export namespace Components {
     }
     interface CeHeading {
     }
+    interface CeIcon {
+        /**
+          * An alternative description to use for accessibility. If omitted, the name or src will be used to generate it.
+         */
+        "label": string;
+        /**
+          * The name of a registered custom icon library.
+         */
+        "library": string;
+        /**
+          * The name of the icon to draw.
+         */
+        "name": string;
+        /**
+          * An external URL of an SVG file.
+         */
+        "src": string;
+    }
     interface CeInput {
         /**
           * The input's autocomplete attribute.
@@ -1023,6 +1042,10 @@ export namespace Components {
          */
         "label": string;
     }
+    interface CeRegisterIconLibrary {
+        "registerIconLibrary": (name: string, options: { resolver: IconLibraryResolver; mutator?: IconLibraryMutator; }) => Promise<void>;
+        "unregisterIconLibrary": (name: string) => Promise<void>;
+    }
     interface CeSecureNotice {
     }
     interface CeSelect {
@@ -1043,6 +1066,7 @@ export namespace Components {
           * Placeholder for no value
          */
         "placeholder": string;
+        "position": 'bottom-left' | 'bottom-right';
         "reportValidity": () => Promise<boolean>;
         "required": boolean;
         /**
@@ -1506,6 +1530,12 @@ declare global {
         prototype: HTMLCeHeadingElement;
         new (): HTMLCeHeadingElement;
     };
+    interface HTMLCeIconElement extends Components.CeIcon, HTMLStencilElement {
+    }
+    var HTMLCeIconElement: {
+        prototype: HTMLCeIconElement;
+        new (): HTMLCeIconElement;
+    };
     interface HTMLCeInputElement extends Components.CeInput, HTMLStencilElement {
     }
     var HTMLCeInputElement: {
@@ -1643,6 +1673,12 @@ declare global {
     var HTMLCeRadioGroupElement: {
         prototype: HTMLCeRadioGroupElement;
         new (): HTMLCeRadioGroupElement;
+    };
+    interface HTMLCeRegisterIconLibraryElement extends Components.CeRegisterIconLibrary, HTMLStencilElement {
+    }
+    var HTMLCeRegisterIconLibraryElement: {
+        prototype: HTMLCeRegisterIconLibraryElement;
+        new (): HTMLCeRegisterIconLibraryElement;
     };
     interface HTMLCeSecureNoticeElement extends Components.CeSecureNotice, HTMLStencilElement {
     }
@@ -1814,6 +1850,7 @@ declare global {
         "ce-format-interval": HTMLCeFormatIntervalElement;
         "ce-format-number": HTMLCeFormatNumberElement;
         "ce-heading": HTMLCeHeadingElement;
+        "ce-icon": HTMLCeIconElement;
         "ce-input": HTMLCeInputElement;
         "ce-line-item": HTMLCeLineItemElement;
         "ce-line-item-total": HTMLCeLineItemTotalElement;
@@ -1837,6 +1874,7 @@ declare global {
         "ce-quantity-select": HTMLCeQuantitySelectElement;
         "ce-radio": HTMLCeRadioElement;
         "ce-radio-group": HTMLCeRadioGroupElement;
+        "ce-register-icon-library": HTMLCeRegisterIconLibraryElement;
         "ce-secure-notice": HTMLCeSecureNoticeElement;
         "ce-select": HTMLCeSelectElement;
         "ce-session-detail": HTMLCeSessionDetailElement;
@@ -2415,6 +2453,32 @@ declare namespace LocalJSX {
     }
     interface CeHeading {
     }
+    interface CeIcon {
+        /**
+          * An alternative description to use for accessibility. If omitted, the name or src will be used to generate it.
+         */
+        "label"?: string;
+        /**
+          * The name of a registered custom icon library.
+         */
+        "library"?: string;
+        /**
+          * The name of the icon to draw.
+         */
+        "name"?: string;
+        /**
+          * Emitted when the icon failed to load.
+         */
+        "onCeError"?: (event: CustomEvent<{ status: number }>) => void;
+        /**
+          * Emitted when the icon has loaded.
+         */
+        "onCeLoad"?: (event: CustomEvent<void>) => void;
+        /**
+          * An external URL of an SVG file.
+         */
+        "src"?: string;
+    }
     interface CeInput {
         /**
           * The input's autocomplete attribute.
@@ -2954,6 +3018,8 @@ declare namespace LocalJSX {
          */
         "label"?: string;
     }
+    interface CeRegisterIconLibrary {
+    }
     interface CeSecureNotice {
     }
     interface CeSelect {
@@ -2990,6 +3056,7 @@ declare namespace LocalJSX {
           * Placeholder for no value
          */
         "placeholder"?: string;
+        "position"?: 'bottom-left' | 'bottom-right';
         "required"?: boolean;
         /**
           * Is search enabled?
@@ -3347,6 +3414,7 @@ declare namespace LocalJSX {
         "ce-format-interval": CeFormatInterval;
         "ce-format-number": CeFormatNumber;
         "ce-heading": CeHeading;
+        "ce-icon": CeIcon;
         "ce-input": CeInput;
         "ce-line-item": CeLineItem;
         "ce-line-item-total": CeLineItemTotal;
@@ -3370,6 +3438,7 @@ declare namespace LocalJSX {
         "ce-quantity-select": CeQuantitySelect;
         "ce-radio": CeRadio;
         "ce-radio-group": CeRadioGroup;
+        "ce-register-icon-library": CeRegisterIconLibrary;
         "ce-secure-notice": CeSecureNotice;
         "ce-select": CeSelect;
         "ce-session-detail": CeSessionDetail;
@@ -3425,6 +3494,7 @@ declare module "@stencil/core" {
             "ce-format-interval": LocalJSX.CeFormatInterval & JSXBase.HTMLAttributes<HTMLCeFormatIntervalElement>;
             "ce-format-number": LocalJSX.CeFormatNumber & JSXBase.HTMLAttributes<HTMLCeFormatNumberElement>;
             "ce-heading": LocalJSX.CeHeading & JSXBase.HTMLAttributes<HTMLCeHeadingElement>;
+            "ce-icon": LocalJSX.CeIcon & JSXBase.HTMLAttributes<HTMLCeIconElement>;
             "ce-input": LocalJSX.CeInput & JSXBase.HTMLAttributes<HTMLCeInputElement>;
             "ce-line-item": LocalJSX.CeLineItem & JSXBase.HTMLAttributes<HTMLCeLineItemElement>;
             "ce-line-item-total": LocalJSX.CeLineItemTotal & JSXBase.HTMLAttributes<HTMLCeLineItemTotalElement>;
@@ -3448,6 +3518,7 @@ declare module "@stencil/core" {
             "ce-quantity-select": LocalJSX.CeQuantitySelect & JSXBase.HTMLAttributes<HTMLCeQuantitySelectElement>;
             "ce-radio": LocalJSX.CeRadio & JSXBase.HTMLAttributes<HTMLCeRadioElement>;
             "ce-radio-group": LocalJSX.CeRadioGroup & JSXBase.HTMLAttributes<HTMLCeRadioGroupElement>;
+            "ce-register-icon-library": LocalJSX.CeRegisterIconLibrary & JSXBase.HTMLAttributes<HTMLCeRegisterIconLibraryElement>;
             "ce-secure-notice": LocalJSX.CeSecureNotice & JSXBase.HTMLAttributes<HTMLCeSecureNoticeElement>;
             "ce-select": LocalJSX.CeSelect & JSXBase.HTMLAttributes<HTMLCeSelectElement>;
             "ce-session-detail": LocalJSX.CeSessionDetail & JSXBase.HTMLAttributes<HTMLCeSessionDetailElement>;

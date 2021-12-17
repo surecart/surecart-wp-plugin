@@ -32,6 +32,8 @@ export class CeSelectDropdown {
   /** Is search enabled? */
   @Prop() search: boolean;
 
+  @Prop() position: 'bottom-left' | 'bottom-right' = 'bottom-right';
+
   /**
    * This will be true when the control is in an invalid state. Validity is determined by props such as `type`,
    * `required`, `minlength`, `maxlength`, and `pattern` using the browser's constraint validation API.
@@ -178,7 +180,7 @@ export class CeSelectDropdown {
           'select--has-choices': !!this?.choices?.length,
         }}
       >
-        <ce-dropdown open={this.open} position="bottom-right" style={{ '--panel-width': '100%' }} onCeShow={() => this.handleShow()} onCeHide={() => this.handleHide()}>
+        <ce-dropdown open={this.open} position={this.position} style={{ '--panel-width': '100%' }} onCeShow={() => this.handleShow()} onCeHide={() => this.handleHide()}>
           <div class="trigger" slot="trigger">
             <div class="select__value">{this.displayValue() || this.placeholder || 'Select...'}</div>
             <div part="caret" class="select__caret">

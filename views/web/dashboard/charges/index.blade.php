@@ -4,7 +4,6 @@
     ])
     <div>
         <ce-table>
-
             <ce-table-cell slot="head">
                 {{ esc_html__('Date', 'checkout_engine') }}
             </ce-table-cell>

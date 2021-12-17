@@ -9,6 +9,7 @@ declare global {
       nonce: string;
       nonce_endpoint: string;
     };
+    ceRegisterIconLibrary: any;
   }
 }
 

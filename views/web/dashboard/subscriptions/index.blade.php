@@ -10,7 +10,7 @@
             <ce-table-cell slot="head" style="width:100px">{{ esc_html__('Status', 'checkout_engine') }}</ce-table-cell>
             <ce-table-cell slot="head" style="width:100px"></ce-table-cell>
 
-            @foreach ($subscriptions as $key => $subscription)
+            @forelse ($subscriptions as $key => $subscription)
                 <ce-table-row>
                     <ce-table-cell>
                         {{ wp_date(get_option('date_format'), $subscription->created_at) }}
@@ -33,6 +33,10 @@
                         </ce-button>
                     </ce-table-cell>
                 </ce-table-row>
-            @endforeach
+            @empty
+                <ce-table-row>
+                    <ce-text style="padding: 1em;">{{ esc_html__('No subscriptions.', 'checkout_engine') }}</ce-text>
+                </ce-table-row>
+            @endforelse
     </div>
 @endcomponent

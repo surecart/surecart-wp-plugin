@@ -1,0 +1,13 @@
+{
+	"apiVersion": 2,
+	"name": "checkout-engine/dashboard-pages",
+	"title": "Customer Dashboard Pages",
+	"description": "Displays the users customer dashboard pages.",
+	"category": "layout",
+	"keywords": [ "name", "customer", "dashboard" ],
+	"parent": null,
+	"supports": {
+		"reusable": false,
+		"html": false
+	}
+}

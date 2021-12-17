@@ -2,9 +2,9 @@
 
 namespace CheckoutEngine\Blocks;
 
-use CheckoutEngine\Controllers\CustomerDashboard\CustomerCheckoutSessionController;
-use CheckoutEngine\Controllers\CustomerDashboard\CustomerSubscriptionController;
-use CheckoutEngine\Controllers\CustomerDashboard\CustomerChargesController;
+use CheckoutEngine\Controllers\Web\Dashboard\CustomerCheckoutSessionController;
+use CheckoutEngine\Controllers\Web\Dashboard\CustomerSubscriptionController;
+use CheckoutEngine\Controllers\Web\Dashboard\CustomerChargesController;
 use CheckoutEngine\Models\User;
 
 /**
@@ -54,16 +54,11 @@ class CustomerDashboard extends Block {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
-		// get the current page tab and possible id
-		$tab = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : 'orders';
-		$id  = isset( $_GET['id'] ) ? sanitize_text_field( wp_unslash( $_GET['id'] ) ) : null;
-
 		if ( ! is_user_logged_in() ) {
 			return \CheckoutEngine::blocks()->render( 'web.login' );
 		}
 
-		// render the route controller.
-		return $this->renderRoute( $id, $tab );
+		return $content;
 	}
 
 	/**
@@ -85,8 +80,9 @@ class CustomerDashboard extends Block {
 			$callable = $this->getCallback( $callback['show'][0], $callback['show'][1] );
 			return $callable( $id );
 		} else {
+			$page     = isset( $_GET['current-page'] ) ? sanitize_text_field( wp_unslash( $_GET['current-page'] ) ) : null;
 			$callable = $this->getCallback( $callback['index'][0], $callback['index'][1] );
-			return $callable( User::current() );
+			return $callable( User::current(), $page );
 		}
 
 		return false;

@@ -13,20 +13,15 @@ return [
 	 */
 	'providers'           => [
 		\WPEmergeAppCore\AppCore\AppCoreServiceProvider::class,
+		\CheckoutEngine\WordPress\PluginServiceProvider::class,
 		\WPEmergeAppCore\Assets\AssetsServiceProvider::class,
-		// \WPEmergeAppCore\Avatar\AvatarServiceProvider::class,
 		\WPEmergeAppCore\Config\ConfigServiceProvider::class,
-		\WPEmergeAppCore\Image\ImageServiceProvider::class,
-		// \WPEmergeAppCore\Sidebar\SidebarServiceProvider::class,
 		\CheckoutEngine\Routing\RouteConditionsServiceProvider::class,
 		\CheckoutEngine\WordPress\AdminServiceProvider::class,
 		\CheckoutEngine\WordPress\PostTypes\FormPostTypeServiceProvider::class,
 		\CheckoutEngine\WordPress\AssetsServiceProvider::class,
-		\CheckoutEngine\WordPress\ContentTypesServiceProvider::class,
 		\CheckoutEngine\WordPress\ShortcodesServiceProvider::class,
-		\CheckoutEngine\WordPress\PluginServiceProvider::class,
 		\CheckoutEngine\Routing\AdminRouteServiceProvider::class,
-		// \CheckoutEngine\WordPress\WidgetsServiceProvider::class,
 		\CheckoutEngine\Permissions\RolesServiceProvider::class,
 		\CheckoutEngine\Settings\SettingsServiceProvider::class,
 		\CheckoutEngine\Request\RequestServiceProvider::class,
@@ -46,6 +41,19 @@ return [
 		\CheckoutEngine\Rest\ChargesRestServiceProvider::class,
 		\CheckoutEngine\Rest\SubscriptionRestServiceProvider::class,
 		\CheckoutEngine\Rest\CheckoutSessionRestServiceProvider::class,
+	],
+
+	/**
+	* Blocks
+	*/
+	'blocks'              => [
+		\CheckoutEngine\Blocks\CheckoutForm::class,
+		\CheckoutEngine\Blocks\Form::class,
+		\CheckoutEngine\Blocks\BuyButton::class,
+		// \CheckoutEngine\Blocks\CustomerDashboard::class,
+		\CheckoutEngine\Blocks\CustomerDashboardPage::class,
+		\CheckoutEngine\Blocks\CustomerDashboardTab::class,
+		\CheckoutEngine\Blocks\CustomerDashboardButton::class,
 	],
 
 	/**
@@ -159,16 +167,5 @@ return [
 	'app_core'            => [
 		'path' => dirname( __DIR__ ),
 		'url'  => plugin_dir_url( CHECKOUT_ENGINE_PLUGIN_FILE ),
-	],
-
-	/**
-	 * Blocks
-	 */
-	'blocks'              => [
-		\CheckoutEngine\Blocks\CheckoutForm::class,
-		\CheckoutEngine\Blocks\Form::class,
-		\CheckoutEngine\Blocks\BuyButton::class,
-		\CheckoutEngine\Blocks\CustomerDashboard::class,
-		\CheckoutEngine\Blocks\CustomerDashboardButton::class,
 	],
 ];

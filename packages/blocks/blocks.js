@@ -27,8 +27,7 @@ import * as expressPayment from './blocks/express-payment';
 import * as confirmation from './blocks/confirmation';
 import * as confirmationLineItems from './blocks/order-confirmation-line-items';
 import * as confirmationTotals from './blocks/order-confirmation-totals';
-import * as customerDashboard from './blocks/customer-dashboard';
-import * as customerDashboardButton from './blocks/customer-dashboard-buttom';
+import * as customerDashboardButton from './blocks/customer-dashboard-button';
 import * as coupon from './blocks/coupon';
 import * as lineItems from './blocks/line-items';
 import * as button from './blocks/button';
@@ -41,6 +40,13 @@ import * as password from './blocks/password';
 import * as divider from './blocks/divider';
 import * as checkbox from './blocks/checkbox';
 import * as switchBlock from './blocks/switch';
+
+// dashboard
+import * as customerDashboard from './blocks/dashboard/customer-dashboard';
+import * as dashboardTabs from './blocks/dashboard/dashboard-tabs';
+import * as dashboardTab from './blocks/dashboard/dashboard-tab';
+import * as dashboardPages from './blocks/dashboard/dashboard-pages';
+import * as dashboardPage from './blocks/dashboard/dashboard-page';
 
 export const BLOCK_PARENTS = [ 'core/columns', 'checkout-engine/form' ];
 
@@ -81,10 +87,6 @@ const registerBlock = ( block ) => {
 	registerBlockType(
 		{
 			...metadata,
-			// parent:
-			// 	typeof metadata?.parent !== 'undefined'
-			// 		? metadata.parent
-			// 		: BLOCK_PARENTS,
 			text_domain: 'checkout_engine', // set our textdomain for everything.
 		},
 		{
@@ -130,6 +132,10 @@ export const registerCheckoutEngineBlocks = () => {
 		subtotal,
 		name,
 		email,
+		dashboardTabs,
+		dashboardTab,
+		dashboardPages,
+		dashboardPage,
 	].forEach( registerBlock );
 };
 

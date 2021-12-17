@@ -6,6 +6,11 @@
  */
 
 return [
+	'ce-heading'      => [
+		'style' => true,
+		'class' => true,
+	],
+	'ce-tab-group'    => [],
 	'ce-form-section' => [
 		'label' => true,
 		'slot'  => true,

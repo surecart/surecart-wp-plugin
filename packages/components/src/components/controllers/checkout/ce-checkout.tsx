@@ -4,6 +4,7 @@ import { Universe } from 'stencil-wormhole';
 import { addQueryArgs } from '@wordpress/url';
 import { interpret } from '@xstate/fsm';
 import { checkoutMachine } from './helpers/checkout-machine';
+import { __ } from '@wordpress/i18n';
 
 @Component({
   tag: 'ce-checkout',
@@ -149,11 +150,18 @@ export class CECheckout {
   /** First will display validation error, then main error if no validation errors. */
   errorMessage() {
     if (this.error?.additional_errors?.[0]?.message) {
-      return this.error?.additional_errors?.[0]?.message;
+      return this.getErrorMessage(this.error?.additional_errors?.[0]);
     } else if (this?.error?.message) {
-      return this?.error?.message;
+      return this.getErrorMessage(this?.error);
     }
     return '';
+  }
+
+  getErrorMessage(error) {
+    if (error.code === 'checkout_session.line_items.price.blank') {
+      return __('This product is no longer purchasable.', 'checkout_engine');
+    }
+    return error?.message;
   }
 
   state() {

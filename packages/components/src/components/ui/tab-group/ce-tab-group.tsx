@@ -15,11 +15,26 @@ export class CeTabGroup {
   @Event() ceTabHide: EventEmitter<string>;
   @Event() ceTabShow: EventEmitter<string>;
 
+  private mutationObserver: MutationObserver;
+
   componentDidLoad() {
-    this.tabs = this.getAllTabs();
-    this.panels = this.getAllPanels();
+    this.syncTabsAndPanels();
     this.setAriaLabels();
     this.setActiveTab(this.getActiveTab() || this.tabs[0], { emitEvents: false });
+
+    this.mutationObserver = new MutationObserver(() => {
+      this.syncTabsAndPanels();
+    });
+    this.mutationObserver.observe(this.el, { attributes: true, childList: true, subtree: true });
+  }
+
+  disconnectedCallback() {
+    this.mutationObserver.disconnect();
+  }
+
+  syncTabsAndPanels() {
+    this.tabs = this.getAllTabs();
+    this.panels = this.getAllPanels();
   }
 
   setAriaLabels() {
@@ -53,18 +68,15 @@ export class CeTabGroup {
     const tab = target.closest('ce-tab') as HTMLCeTabElement;
     const tabGroup = tab?.closest('ce-tab-group');
 
-    console.log(event.key);
-
     // Ensure the target tab is in this tab group
     if (tabGroup !== this.el) {
-      return;
+      return true;
     }
 
     // Activate a tab
     if (['Enter', ' '].includes(event.key)) {
       if (tab) {
         this.setActiveTab(tab, { scrollBehavior: 'smooth' });
-        event.preventDefault();
       }
     }
 
@@ -124,16 +136,27 @@ export class CeTabGroup {
     return tabs.find(el => el.active);
   }
 
+  getAllChildren() {
+    const slots = this.el.shadowRoot.querySelectorAll('slot') as NodeListOf<HTMLSlotElement>;
+    const tags = ['ce-tab', 'ce-tab-panel'];
+    const allSlots = Array.from(slots)
+      .map(slot => slot.assignedElements({ flatten: true }))
+      .flat();
+    return allSlots
+      .reduce((all: HTMLElement[], el: HTMLElement) => all.concat(el, [...el.querySelectorAll('*')] as HTMLElement[]), [])
+      .filter((el: HTMLElement) => tags.includes(el.tagName.toLowerCase())) as HTMLElement[];
+  }
+
   /** Get all child tabs */
   getAllTabs(includeDisabled = false) {
-    return Array.from(this.el.children).filter((el: any) => {
+    return this.getAllChildren().filter((el: any) => {
       return includeDisabled ? el.tagName.toLowerCase() === 'ce-tab' : el.tagName.toLowerCase() === 'ce-tab' && !el.disabled;
     }) as HTMLCeTabElement[];
   }
 
   /** Get all child panels */
   getAllPanels() {
-    return Array.from(this.el.children).filter((el: any) => el.tagName.toLowerCase() === 'ce-tab-panel') as [HTMLCeTabPanelElement];
+    return this.getAllChildren().filter((el: any) => el.tagName.toLowerCase() === 'ce-tab-panel') as [HTMLCeTabPanelElement];
   }
 
   render() {
@@ -150,12 +173,12 @@ export class CeTabGroup {
           <div class="tab-group__nav">
             <div part="tabs" class="tab-group__tabs" role="tablist">
               <div part="active-tab-indicator" class="tab-group__indicator"></div>
-              <slot name="nav"></slot>
+              <slot onSlotchange={() => this.syncTabsAndPanels()} name="nav"></slot>
             </div>
           </div>
         </div>
         <div part="body" class="tab-group__body">
-          <slot />
+          <slot onSlotchange={() => this.syncTabsAndPanels()} />
         </div>
       </div>
     );

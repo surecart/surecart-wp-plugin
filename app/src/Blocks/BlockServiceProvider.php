@@ -52,27 +52,9 @@ class BlockServiceProvider implements ServiceProviderInterface {
 	public function bootstrap( $container ) {
 		// allow our web components in wp_kses contexts.
 		add_filter( 'wp_kses_allowed_html', [ $this, 'ksesComponents' ] );
-		add_filter(
-			'wp_kses_allowed_html',
-			function( $tags ) {
-				return [];
-			}
-		);
 
 		// register our blocks.
 		$this->registerBlocks( $container );
-	}
-
-	public function registerCheckoutStyles() {
-		wp_register_style( 'awp-block-styles', get_template_directory_uri() . '/assets/css/custom-block-style.css', false );
-		register_block_style(
-			'checkout_engine/checkout-form',
-			[
-				'name'         => 'colored-bottom-border',
-				'label'        => __( 'Colored bottom border', 'txtdomain' ),
-				'style_handle' => 'awp-block-styles',
-			]
-		);
 	}
 
 	/**
