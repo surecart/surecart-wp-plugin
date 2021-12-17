@@ -73,7 +73,7 @@ export default ( { attributes, setAttributes } ) => {
 									} }
 									icon={
 										<ce-icon
-											name={ icon }
+											name={ icon || 'home' }
 											style={ {
 												'font-size': '20px',
 											} }
