@@ -22,7 +22,6 @@ export default ( { attributes, setAttributes } ) => {
 
 	const innerBlocksProps = useInnerBlocksProps( blockProps, {
 		templateLock: false,
-		renderAppender: InnerBlocks.ButtonBlockAppender,
 	} );
 
 	return (
