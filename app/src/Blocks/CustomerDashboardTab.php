@@ -63,7 +63,7 @@ class CustomerDashboardTab extends Block {
 			[
 				'active' => $tab === $attributes['panel'] ? 'true' : 'false',
 				'title'  => $attributes['title'] ?? '',
-				'icon'   => $attributes['icon'] ?? '',
+				'icon'   => $attributes['icon'] ?? 'home',
 				'href'   => esc_url( add_query_arg( [ 'tab' => $attributes['panel'] ] ) ),
 			]
 		);
