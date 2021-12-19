@@ -1,7 +1,4 @@
-@component('web.dashboard.templates.index', [
-    'tab' => $tab,
-    'heading' => __('Orders', 'checkout_engine'),
-    ])
+@component('web.dashboard.templates.index')
     <x-slot name="heading">
         {{ __('Orders', 'checkout_engine') }}
     </x-slot>

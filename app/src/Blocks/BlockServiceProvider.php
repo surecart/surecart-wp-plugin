@@ -52,6 +52,13 @@ class BlockServiceProvider implements ServiceProviderInterface {
 	public function bootstrap( $container ) {
 		// allow our web components in wp_kses contexts.
 		add_filter( 'wp_kses_allowed_html', [ $this, 'ksesComponents' ] );
+		add_filter(
+			'safe_style_css',
+			function( $styles ) {
+				$styles[] = '--spacing';
+				return $styles;
+			}
+		);
 
 		// register our blocks.
 		$this->registerBlocks( $container );
@@ -65,16 +72,11 @@ class BlockServiceProvider implements ServiceProviderInterface {
 	 * @return array
 	 */
 	public function ksesComponents( $tags ) {
-		$components = include 'kses.php';
+		$components = json_decode( file_get_contents( plugin_dir_path( CHECKOUT_ENGINE_PLUGIN_FILE ) . 'app/src/Support/kses.json' ), true );
 
 		// add slot to defaults.
 		$tags['span']['slot'] = true;
 		$tags['div']['slot']  = true;
-
-		$tags['ce-button'] = [
-			'full'   => true,
-			'submit' => true,
-		];
 
 		return array_merge( $components, $tags );
 	}

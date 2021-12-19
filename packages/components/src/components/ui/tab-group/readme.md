@@ -15,13 +15,12 @@
 
 ## Shadow Parts
 
-| Part                     | Description |
-| ------------------------ | ----------- |
-| `"active-tab-indicator"` |             |
-| `"base"`                 |             |
-| `"body"`                 |             |
-| `"nav"`                  |             |
-| `"tabs"`                 |             |
+| Part     | Description |
+| -------- | ----------- |
+| `"base"` |             |
+| `"body"` |             |
+| `"nav"`  |             |
+| `"tabs"` |             |
 
 
 ## Dependencies

@@ -50,10 +50,10 @@ return [
 		\CheckoutEngine\Blocks\CheckoutForm::class,
 		\CheckoutEngine\Blocks\Form::class,
 		\CheckoutEngine\Blocks\BuyButton::class,
-		// \CheckoutEngine\Blocks\CustomerDashboard::class,
 		\CheckoutEngine\Blocks\CustomerDashboardPage::class,
 		\CheckoutEngine\Blocks\CustomerDashboardTab::class,
 		\CheckoutEngine\Blocks\CustomerDashboardButton::class,
+		\CheckoutEngine\Blocks\Dashboard\CustomerOrders::class,
 	],
 
 	/**

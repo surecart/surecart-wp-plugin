@@ -1,0 +1,12 @@
+{
+	"name": "checkout-engine/customer-orders",
+	"title": "Customer Orders",
+	"description": "Displays the customers orders.",
+	"category": "layout",
+	"keywords": [ "name", "customer", "dashboard" ],
+	"parent": null,
+	"supports": {
+		"reusable": false,
+		"html": false
+	}
+}

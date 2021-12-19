@@ -47,6 +47,7 @@ import * as dashboardTabs from './blocks/dashboard/dashboard-tabs';
 import * as dashboardTab from './blocks/dashboard/dashboard-tab';
 import * as dashboardPages from './blocks/dashboard/dashboard-pages';
 import * as dashboardPage from './blocks/dashboard/dashboard-page';
+import * as customerOrders from './blocks/dashboard/customer-orders';
 
 export const BLOCK_PARENTS = [ 'core/columns', 'checkout-engine/form' ];
 
@@ -136,6 +137,7 @@ export const registerCheckoutEngineBlocks = () => {
 		dashboardTab,
 		dashboardPages,
 		dashboardPage,
+		customerOrders,
 	].forEach( registerBlock );
 };
 

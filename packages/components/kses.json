@@ -1,0 +1,704 @@
+{
+  "ce-alert": {
+    "closable": true,
+    "duration": true,
+    "open": true,
+    "type": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-badge-notice": {
+    "label": true,
+    "size": true,
+    "type": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-block-ui": {
+    "spinner": true,
+    "transparent": true,
+    "z-index": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-button": {
+    "busy": true,
+    "caret": true,
+    "circle": true,
+    "disabled": true,
+    "download": true,
+    "full": true,
+    "href": true,
+    "loading": true,
+    "name": true,
+    "outline": true,
+    "pill": true,
+    "size": true,
+    "submit": true,
+    "target": true,
+    "type": true,
+    "value": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-card": {
+    "borderless": true,
+    "loading": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-checkbox": {
+    "checked": true,
+    "disabled": true,
+    "indeterminate": true,
+    "invalid": true,
+    "name": true,
+    "required": true,
+    "value": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-checkout": {
+    "alignment": true,
+    "coupon": true,
+    "currency-code": true,
+    "customer": true,
+    "form-id": true,
+    "i18n": true,
+    "keys": true,
+    "mode": true,
+    "persist-session": true,
+    "prices": true,
+    "success-url": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-choice": {
+    "checked": true,
+    "disabled": true,
+    "invalid": true,
+    "name": true,
+    "required": true,
+    "show-control": true,
+    "show-label": true,
+    "show-price": true,
+    "type": true,
+    "value": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-choices": {
+    "columns": true,
+    "error-message": true,
+    "help": true,
+    "hide-label": true,
+    "label": true,
+    "required": true,
+    "show-label": true,
+    "size": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-consumer": {
+    "renderer": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-coupon-form": {
+    "calculating": true,
+    "checkout-session": true,
+    "error": true,
+    "force-open": true,
+    "label": true,
+    "loading": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-customer-dashboard": {
+    "customer-id": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-customer-order": {
+    "order": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-customer-subscription": {
+    "subscription": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-divider": {
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-dropdown": {
+    "click-el": true,
+    "close-on-select": true,
+    "open": true,
+    "position": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-email": {
+    "autofocus": true,
+    "checkout-session": true,
+    "disabled": true,
+    "has-focus": true,
+    "help": true,
+    "invalid": true,
+    "label": true,
+    "pill": true,
+    "placeholder": true,
+    "readonly": true,
+    "required": true,
+    "show-label": true,
+    "size": true,
+    "value": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-express-payment": {
+    "form-id": true,
+    "keys": true,
+    "processor": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-form": {
+    "novalidate": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-form-control": {
+    "error-message": true,
+    "errors": true,
+    "help": true,
+    "help-id": true,
+    "input-id": true,
+    "label": true,
+    "label-id": true,
+    "name": true,
+    "required": true,
+    "show-label": true,
+    "size": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-form-row": {
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-form-section": {
+    "label": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-format-interval": {
+    "every": true,
+    "fallback": true,
+    "interval": true,
+    "value": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-format-number": {
+    "currency": true,
+    "currency-display": true,
+    "locale": true,
+    "maximum-fraction-digits": true,
+    "maximum-significant-digits": true,
+    "minimum-fraction-digits": true,
+    "minimum-integer-digits": true,
+    "minimum-significant-digits": true,
+    "no-convert": true,
+    "no-grouping": true,
+    "type": true,
+    "value": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-heading": {
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-icon": {
+    "label": true,
+    "library": true,
+    "name": true,
+    "src": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-input": {
+    "autocomplete": true,
+    "autocorrect": true,
+    "autofocus": true,
+    "clearable": true,
+    "disabled": true,
+    "has-focus": true,
+    "help": true,
+    "hidden": true,
+    "inputmode": true,
+    "invalid": true,
+    "label": true,
+    "max": true,
+    "maxlength": true,
+    "min": true,
+    "minlength": true,
+    "name": true,
+    "pattern": true,
+    "pill": true,
+    "placeholder": true,
+    "readonly": true,
+    "required": true,
+    "show-label": true,
+    "size": true,
+    "spellcheck": true,
+    "step": true,
+    "toggle-password": true,
+    "type": true,
+    "value": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-line-item": {
+    "currency": true,
+    "price": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-line-item-total": {
+    "checkout-session": true,
+    "loading": true,
+    "show-currency": true,
+    "size": true,
+    "total": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-line-items": {
+    "checkout-session": true,
+    "editable": true,
+    "loading": true,
+    "locked-choices": true,
+    "prices": true,
+    "removable": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-line-items-provider": {
+    "checkout-session": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-menu": {
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-menu-divider": {
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-menu-item": {
+    "checked": true,
+    "disabled": true,
+    "value": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-menu-label": {
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-order-confirmation": {
+    "checkout-session": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-order-confirmation-line-items": {
+    "checkout-session": true,
+    "loading": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-order-confirmation-totals": {
+    "checkout-session": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-order-summary": {
+    "busy": true,
+    "checkout-session": true,
+    "collapsed": true,
+    "collapsible": true,
+    "empty": true,
+    "loading": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-payment": {
+    "checkout-session": true,
+    "keys": true,
+    "label": true,
+    "mode": true,
+    "payment-method": true,
+    "processor": true,
+    "secure-notice": true,
+    "stripe-account-id": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-price-choice": {
+    "checked": true,
+    "checkout-session": true,
+    "description": true,
+    "error": true,
+    "label": true,
+    "loading": true,
+    "price": true,
+    "price-id": true,
+    "prices": true,
+    "products": true,
+    "quantity": true,
+    "show-control": true,
+    "show-label": true,
+    "show-price": true,
+    "type": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-price-choices": {
+    "busy": true,
+    "columns": true,
+    "label": true,
+    "required": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-price-input": {
+    "autofocus": true,
+    "clearable": true,
+    "currency-code": true,
+    "disabled": true,
+    "has-focus": true,
+    "help": true,
+    "invalid": true,
+    "label": true,
+    "max": true,
+    "maxlength": true,
+    "min": true,
+    "minlength": true,
+    "name": true,
+    "pill": true,
+    "placeholder": true,
+    "readonly": true,
+    "required": true,
+    "show-label": true,
+    "size": true,
+    "value": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-product-line-item": {
+    "amount": true,
+    "currency": true,
+    "editable": true,
+    "image-url": true,
+    "interval": true,
+    "name": true,
+    "quantity": true,
+    "removable": true,
+    "trial-duration-days": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-provider": {
+    "-s-t-e-n-c-i-l_-c-o-n-t-e-x-t": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-purchase": {
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-quantity-select": {
+    "click-el": true,
+    "max": true,
+    "min": true,
+    "quantity": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-radio": {
+    "checked": true,
+    "disabled": true,
+    "invalid": true,
+    "name": true,
+    "required": true,
+    "value": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-radio-group": {
+    "label": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-register-icon-library": {
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-secure-notice": {
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-select": {
+    "choices": true,
+    "invalid": true,
+    "loading": true,
+    "open": true,
+    "placeholder": true,
+    "position": true,
+    "required": true,
+    "search": true,
+    "search-placeholder": true,
+    "value": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-session-detail": {
+    "checkout-session": true,
+    "fallback": true,
+    "label": true,
+    "loading": true,
+    "meta-key": true,
+    "value": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-session-provider": {
+    "checkout-session": true,
+    "currency-code": true,
+    "form-id": true,
+    "group-id": true,
+    "mode": true,
+    "persist": true,
+    "prices": true,
+    "set-state": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-session-status-badge": {
+    "clearable": true,
+    "pill": true,
+    "size": true,
+    "status": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-session-subscription": {
+    "checkout-session-id": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-skeleton": {
+    "effect": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-spinner": {
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-stripe-element": {
+    "checkout-session": true,
+    "disabled": true,
+    "has-focus": true,
+    "label": true,
+    "publishable-key": true,
+    "secure-text": true,
+    "show-label": true,
+    "size": true,
+    "stripe-account-id": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-stripe-payment-request": {
+    "amount": true,
+    "checkout-session": true,
+    "country": true,
+    "currency-code": true,
+    "error": true,
+    "form-id": true,
+    "keys": true,
+    "label": true,
+    "payment-method": true,
+    "prices": true,
+    "stripe-account-id": true,
+    "theme": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-subscription-status-badge": {
+    "clearable": true,
+    "pill": true,
+    "size": true,
+    "status": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-switch": {
+    "checked": true,
+    "disabled": true,
+    "invalid": true,
+    "name": true,
+    "required": true,
+    "value": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-tab": {
+    "active": true,
+    "count": true,
+    "disabled": true,
+    "href": true,
+    "panel": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-tab-group": {
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-tab-panel": {
+    "active": true,
+    "name": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-table": {
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-table-body": {
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-table-cell": {
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-table-head": {
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-table-row": {
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-tag": {
+    "clearable": true,
+    "pill": true,
+    "size": true,
+    "type": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-text": {
+    "tag": true,
+    "truncate": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-tooltip": {
+    "freeze": true,
+    "open": true,
+    "padding": true,
+    "text": true,
+    "type": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-total": {
+    "checkout-session": true,
+    "total": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  }
+}

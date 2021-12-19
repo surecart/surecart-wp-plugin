@@ -1,5 +1,5 @@
 {
-  "timestamp": "2021-12-14T16:06:49",
+  "timestamp": "2021-12-19T17:51:07",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.9.0",
@@ -3573,6 +3573,115 @@
       }
     },
     {
+      "filePath": "./src/components/ui/icon/ce-icon.tsx",
+      "encapsulation": "shadow",
+      "tag": "ce-icon",
+      "readme": "# ce-register-icon-library\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "label",
+          "type": "string",
+          "mutable": false,
+          "attr": "label",
+          "reflectToAttr": false,
+          "docs": "An alternative description to use for accessibility. If omitted, the name or src will be used to generate it.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "library",
+          "type": "string",
+          "mutable": false,
+          "attr": "library",
+          "reflectToAttr": false,
+          "docs": "The name of a registered custom icon library.",
+          "docsTags": [],
+          "default": "'default'",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "mutable": false,
+          "attr": "name",
+          "reflectToAttr": false,
+          "docs": "The name of the icon to draw.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "src",
+          "type": "string",
+          "mutable": false,
+          "attr": "src",
+          "reflectToAttr": false,
+          "docs": "An external URL of an SVG file.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [
+        {
+          "event": "ceError",
+          "detail": "{ status: number; }",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Emitted when the icon failed to load.",
+          "docsTags": []
+        },
+        {
+          "event": "ceLoad",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Emitted when the icon has loaded.",
+          "docsTags": []
+        }
+      ],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [
+        {
+          "name": "base",
+          "docs": ""
+        }
+      ],
+      "dependents": [],
+      "dependencies": [],
+      "dependencyGraph": {}
+    },
+    {
       "filePath": "./src/components/ui/input/ce-input.tsx",
       "encapsulation": "shadow",
       "tag": "ce-input",
@@ -7107,6 +7216,48 @@
       "dependencyGraph": {}
     },
     {
+      "filePath": "./src/components/ui/icon/ce-register.tsx",
+      "encapsulation": "none",
+      "tag": "ce-register-icon-library",
+      "readme": "# ce-register-icon-library\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [],
+      "methods": [
+        {
+          "name": "registerIconLibrary",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "signature": "registerIconLibrary(name: string, options: { resolver: IconLibraryResolver; mutator?: IconLibraryMutator; }) => Promise<void>",
+          "parameters": [],
+          "docs": "",
+          "docsTags": []
+        },
+        {
+          "name": "unregisterIconLibrary",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "signature": "unregisterIconLibrary(name: string) => Promise<void>",
+          "parameters": [],
+          "docs": "",
+          "docsTags": []
+        }
+      ],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [],
+      "dependencyGraph": {}
+    },
+    {
       "filePath": "./src/components/ui/secure-notice/ce-secure-notice.tsx",
       "encapsulation": "shadow",
       "tag": "ce-secure-notice",
@@ -7229,6 +7380,28 @@
           "default": "''",
           "values": [
             {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "position",
+          "type": "\"bottom-left\" | \"bottom-right\"",
+          "mutable": false,
+          "attr": "position",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "'bottom-right'",
+          "values": [
+            {
+              "value": "bottom-left",
+              "type": "string"
+            },
+            {
+              "value": "bottom-right",
               "type": "string"
             }
           ],
@@ -9126,10 +9299,6 @@
       "styles": [],
       "slots": [],
       "parts": [
-        {
-          "name": "active-tab-indicator",
-          "docs": ""
-        },
         {
           "name": "base",
           "docs": ""

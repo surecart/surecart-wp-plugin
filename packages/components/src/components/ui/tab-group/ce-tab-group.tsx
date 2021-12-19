@@ -172,7 +172,6 @@ export class CeTabGroup {
         <div class="tab-group__nav-container" part="nav">
           <div class="tab-group__nav">
             <div part="tabs" class="tab-group__tabs" role="tablist">
-              <div part="active-tab-indicator" class="tab-group__indicator"></div>
               <slot onSlotchange={() => this.syncTabsAndPanels()} name="nav"></slot>
             </div>
           </div>

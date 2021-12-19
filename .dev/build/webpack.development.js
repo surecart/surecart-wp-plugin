@@ -88,6 +88,10 @@ const plugins = [
 				to: './blocks/',
 				toType: 'dir',
 			},
+			{
+				from: './packages/components/kses.json',
+				to: '../app/src/Support/kses.json',
+			},
 		],
 	} ),
 	new DependencyExtractionWebpackPlugin(),
