@@ -2,8 +2,6 @@
 
 namespace CheckoutEngine\Blocks;
 
-use CheckoutEngine\Concerns\HasBlockTheme;
-
 /**
  * Checkout block
  */
@@ -36,15 +34,6 @@ class Form extends Block {
 	protected $name = 'form';
 
 	/**
-	 * Register checkout form styles
-	 *
-	 * @return void
-	 */
-	public function registerStyles() {
-		// $this->registerBlockTheme( $this->name, 'elegant', __( 'Elegant', 'checkout_engine' ), 'dist/styles/themes/elegant.css' );
-	}
-
-	/**
 	 * Get the classes for the block
 	 *
 	 * @param  array $attributes Block attributes.
@@ -73,13 +62,11 @@ class Form extends Block {
 				'label'       => $attributes['label'] ?? '',
 				'font_size'   => $attributes['font_size'] ?? 16,
 				'classes'     => $this->getClasses( $attributes ),
-				'description' => $attributes['description'] ?? '',
 				'content'     => $content,
 				'mode'        => $attributes['mode'] ?? get_option( 'checkout_engine_payment_mode', 'live' ),
 				'form_id'     => $ce_form_id,
 				'id'          => 'ce-checkout-' . $ce_form_id,
 				'prices'      => $attributes['prices'] ?? [],
-				'choice_type' => $attributes['choice_type'] ?? 'all',
 				'success_url' => $attributes['redirect'] ?? \CheckoutEngine::pages()->url( 'order-confirmation' ),
 				'i18n'        => $this->getTranslations(),
 			]

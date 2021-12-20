@@ -1,6 +1,6 @@
 <?php
 
-namespace CheckoutEngine\WordPress;
+namespace CheckoutEngine\WordPress\Assets;
 
 use WPEmerge\ServiceProviders\ServiceProviderInterface;
 
@@ -21,7 +21,13 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 	 * @param  \Pimple\Container $container Service Container.
 	 */
 	public function register( $container ) {
-		// Nothing to register.
+		$container['checkout_engine.assets'] = function () {
+			return new AssetsService();
+		};
+
+		$app = $container[ WPEMERGE_APPLICATION_KEY ];
+
+		$app->alias( 'assets', 'checkout_engine.assets' );
 	}
 
 	/**

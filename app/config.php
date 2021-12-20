@@ -19,7 +19,7 @@ return [
 		\CheckoutEngine\Routing\RouteConditionsServiceProvider::class,
 		\CheckoutEngine\WordPress\AdminServiceProvider::class,
 		\CheckoutEngine\WordPress\PostTypes\FormPostTypeServiceProvider::class,
-		\CheckoutEngine\WordPress\AssetsServiceProvider::class,
+		\CheckoutEngine\WordPress\Assets\AssetsServiceProvider::class,
 		\CheckoutEngine\WordPress\ShortcodesServiceProvider::class,
 		\CheckoutEngine\Routing\AdminRouteServiceProvider::class,
 		\CheckoutEngine\Permissions\RolesServiceProvider::class,

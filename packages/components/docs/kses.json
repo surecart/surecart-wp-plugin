@@ -71,7 +71,6 @@
     "customer": true,
     "form-id": true,
     "i18n": true,
-    "keys": true,
     "mode": true,
     "persist-session": true,
     "prices": true,
@@ -177,8 +176,8 @@
     "slot": true
   },
   "ce-express-payment": {
+    "checkout-session": true,
     "form-id": true,
-    "keys": true,
     "processor": true,
     "style": true,
     "class": true,
@@ -379,13 +378,11 @@
   },
   "ce-payment": {
     "checkout-session": true,
-    "keys": true,
     "label": true,
     "mode": true,
     "payment-method": true,
     "processor": true,
     "secure-notice": true,
-    "stripe-account-id": true,
     "style": true,
     "class": true,
     "slot": true
@@ -591,7 +588,6 @@
     "currency-code": true,
     "error": true,
     "form-id": true,
-    "keys": true,
     "label": true,
     "payment-method": true,
     "prices": true,

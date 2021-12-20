@@ -3,7 +3,7 @@ import { loadStripe } from '@stripe/stripe-js/pure';
 import { PaymentRequestOptions, Stripe } from '@stripe/stripe-js';
 import { openWormhole } from 'stencil-wormhole';
 import { createOrUpdateSession, finalizeSession } from '../../../services/session';
-import { CheckoutSession, Keys, LineItem, Prices, Product, ResponseError } from '../../../types';
+import { CheckoutSession, LineItem, Prices, Product, ResponseError } from '../../../types';
 import { __ } from '@wordpress/i18n';
 
 @Component({
@@ -17,11 +17,6 @@ export class CeStripePaymentRequest {
   private stripe: Stripe;
   private paymentRequest: any;
   private elements: any;
-
-  /** Stripe publishable key */
-  @Prop() keys: Keys = {
-    stripe: '',
-  };
 
   /** Stripe account id */
   @Prop() stripeAccountId: string;
@@ -67,10 +62,10 @@ export class CeStripePaymentRequest {
   private confirming: boolean;
 
   async componentWillLoad() {
-    if (!this.keys.stripe) {
+    if (this?.checkoutSession?.processor_data?.stripe?.publishable_key || !this?.checkoutSession?.processor_data?.stripe?.account_id) {
       return true;
     }
-    this.stripe = await loadStripe(this.keys.stripe, { stripeAccount: this.keys.stripeAccountId });
+    this.stripe = await loadStripe(this?.checkoutSession?.processor_data?.stripe?.publishable_key, { stripeAccount: this?.checkoutSession?.processor_data?.stripe?.account_id });
     this.elements = this.stripe.elements();
     this.paymentRequest = this.stripe.paymentRequest({
       country: this.country,
@@ -235,20 +230,20 @@ export class CeStripePaymentRequest {
     // must be finalized
     if (val?.status !== 'finalized') return;
     // must have a secret
-    if (!val?.payment_intent?.external_client_secret) return;
+    if (!val?.payment_intent?.processor_data?.stripe?.client_secret) return;
+    // need an external_type
+    if (!val?.payment_intent?.processor_data?.stripe?.type) return;
     // must have an external intent id
     if (!val?.payment_intent?.external_intent_id) return;
-    // need an external_type
-    if (!val?.payment_intent?.external_type) return;
     // prevent possible double-charges
     if (this.confirming) return;
     this.confirming = true;
 
     let response;
-    if (val?.payment_intent?.external_type == 'setup') {
-      response = await this.confirmCardSetup(val.payment_intent.external_client_secret, ev);
+    if (val?.payment_intent?.processor_data?.stripe?.type == 'setup') {
+      response = await this.confirmCardSetup(val?.payment_intent?.processor_data?.stripe.client_secret, ev);
     } else {
-      response = await this.confirmCardPayment(val.payment_intent.external_client_secret, ev);
+      response = await this.confirmCardPayment(val?.payment_intent?.processor_data?.stripe.client_secret, ev);
     }
     if (response?.error) {
       throw response.error;
@@ -258,7 +253,7 @@ export class CeStripePaymentRequest {
     // instead check for: `paymentIntent.status === "requires_source_action"`.
     if (response?.paymentIntent?.status === 'requires_action' || response?.paymentIntent?.status === 'requires_source_action') {
       // Let Stripe.js handle the rest of the payment flow.
-      const result = await this.stripe.confirmCardPayment(val?.payment_intent?.external_client_secret);
+      const result = await this.stripe.confirmCardPayment(val?.payment_intent?.processor_data?.stripe.client_secret);
       // The payment failed -- ask your customer for a new payment method.
       if (result.error) {
         throw result.error;

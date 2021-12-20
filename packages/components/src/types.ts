@@ -136,12 +136,6 @@ export interface PriceChoice {
   selected?: boolean;
 }
 
-export interface Keys extends Object {
-  stripe?: string;
-  stripeAccountId?: string;
-  paypal?: string;
-}
-
 export type CheckoutState = 'idle' | 'loading' | 'draft' | 'updating' | 'finalized' | 'paid' | 'failure';
 
 export interface CheckoutSession extends Object {
@@ -160,6 +154,16 @@ export interface CheckoutSession extends Object {
   discount?: DiscountResponse;
   billing_addresss?: Address;
   shipping_addresss?: Address;
+  processor_data?: ProcessorData;
+}
+
+export interface ProcessorData {
+  stripe: {
+    account_id: string;
+    publishable_key: string;
+    client_secret?: string;
+    type: 'payment' | 'setup';
+  };
 }
 
 export interface Subscription extends Object {
@@ -275,21 +279,26 @@ export interface ResponseError {
 
 export interface PaymentIntent extends Object {
   id: string;
-  object: string;
-  processor_type: string;
+  object: 'payment_intent';
+  processor_type: 'stripe' | 'paypal';
+  status: 'pending' | 'succeeded' | 'canceled';
   external_intent_id: string;
-  external_client_secret: string;
-  external_type: 'setup' | 'payment';
+  live_mode: boolean;
+  processor_data: ProcessorData;
+  customer: Customer | string;
   created_at: number;
   updated_at: number;
 }
 
 export interface SetupIntent extends Object {
   id: string;
-  object: string;
-  processor_type: string;
+  object: 'setup_intent';
+  processor_type: 'stripe' | 'paypal';
+  status: 'pending' | 'succeeded' | 'canceled';
   external_intent_id: string;
-  external_client_secret: string;
+  live_mode: boolean;
+  processor_data: ProcessorData;
+  customer: Customer | string;
   created_at: number;
   updated_at: number;
 }

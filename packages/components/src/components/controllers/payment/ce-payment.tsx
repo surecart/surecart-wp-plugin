@@ -1,6 +1,6 @@
 import { Component, h, Prop, Host } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
-import { CheckoutSession, Keys } from '../../../types';
+import { CheckoutSession } from '../../../types';
 import { __ } from '@wordpress/i18n';
 
 @Component({
@@ -14,16 +14,6 @@ export class CePayment {
 
   /** Checkout Session from ce-checkout. */
   @Prop() checkoutSession: CheckoutSession;
-
-  /** Your stripe publishable key. */
-  @Prop() keys: Keys = {
-    stripe: '',
-    stripeAccountId: '',
-    paypal: '',
-  };
-
-  /** Your stripe connected account id. */
-  @Prop() stripeAccountId: string;
 
   /** Is this created in "test" mode */
   @Prop() mode: 'test' | 'live' = 'live';
@@ -42,18 +32,24 @@ export class CePayment {
       return <div>Please contact us for payment</div>;
     }
     if ('stripe' === this.processor) {
+      if (!this?.checkoutSession?.processor_data?.stripe?.publishable_key || !this?.checkoutSession?.processor_data?.stripe?.account_id) {
+        return (
+          <div>
+            <ce-skeleton style={{ width: '100%', marginBottom: '1em' }}></ce-skeleton>
+            <ce-skeleton style={{ width: '35%' }}></ce-skeleton>
+          </div>
+        );
+      }
       return (
         <Host>
           <ce-stripe-element
             label={this.label}
             checkoutSession={this.checkoutSession}
-            stripeAccountId={this.keys.stripeAccountId}
-            publishableKey={this.keys.stripe}
+            stripeAccountId={this?.checkoutSession?.processor_data?.stripe?.account_id}
+            publishableKey={this?.checkoutSession?.processor_data?.stripe?.publishable_key}
             disabled={!!this.paymentMethod}
           ></ce-stripe-element>
-          <ce-secure-notice>
-            <slot>{this.secureNotice}</slot>
-          </ce-secure-notice>
+          <ce-secure-notice>{this.secureNotice}</ce-secure-notice>
           {this.mode === 'test' && (
             <div>
               <ce-badge-notice type="warning" label={__('Test Mode', 'checkout_engine')}>
@@ -67,4 +63,4 @@ export class CePayment {
   }
 }
 
-openWormhole(CePayment, ['processor', 'checkoutSession', 'mode', 'keys', 'paymentMethod'], false);
+openWormhole(CePayment, ['processor', 'checkoutSession', 'mode', 'paymentMethod'], false);

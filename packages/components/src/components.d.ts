@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { CheckoutSession, ChoiceItem, Coupon, Customer, Keys, LineItemData, Price, PriceChoice, Prices, Products, ResponseError, SessionStatus, Subscription, SubscriptionStatus } from "./types";
+import { CheckoutSession, ChoiceItem, Coupon, Customer, LineItemData, Price, PriceChoice, Prices, Products, ResponseError, SessionStatus, Subscription, SubscriptionStatus } from "./types";
 import { IconLibraryMutator, IconLibraryResolver } from "./components/ui/icon/library";
 export namespace Components {
     interface CeAlert {
@@ -185,10 +185,6 @@ export namespace Components {
           * Translation object.
          */
         "i18n": Object;
-        /**
-          * Publishable keys for providers
-         */
-        "keys": Keys;
         /**
           * Are we in test or live mode.
          */
@@ -393,8 +389,8 @@ export namespace Components {
         "value": string;
     }
     interface CeExpressPayment {
+        "checkoutSession": CheckoutSession;
         "formId": number | string;
-        "keys": Keys;
         "processor": 'stripe' | 'paypal';
     }
     interface CeForm {
@@ -750,10 +746,6 @@ export namespace Components {
          */
         "checkoutSession": CheckoutSession;
         /**
-          * Your stripe publishable key.
-         */
-        "keys": Keys;
-        /**
           * The input's label.
          */
         "label": string;
@@ -773,10 +765,6 @@ export namespace Components {
           * Secure notice
          */
         "secureNotice": string;
-        /**
-          * Your stripe connected account id.
-         */
-        "stripeAccountId": string;
     }
     interface CePriceChoice {
         /**
@@ -1217,10 +1205,6 @@ export namespace Components {
           * This is required to validate the form on the server
          */
         "formId": number | string;
-        /**
-          * Stripe publishable key
-         */
-        "keys": Keys;
         /**
           * Label
          */
@@ -2084,10 +2068,6 @@ declare namespace LocalJSX {
          */
         "i18n"?: Object;
         /**
-          * Publishable keys for providers
-         */
-        "keys"?: Keys;
-        /**
           * Are we in test or live mode.
          */
         "mode"?: 'test' | 'live';
@@ -2322,8 +2302,8 @@ declare namespace LocalJSX {
         "value"?: string;
     }
     interface CeExpressPayment {
+        "checkoutSession"?: CheckoutSession;
         "formId"?: number | string;
-        "keys"?: Keys;
         "processor"?: 'stripe' | 'paypal';
     }
     interface CeForm {
@@ -2701,10 +2681,6 @@ declare namespace LocalJSX {
          */
         "checkoutSession"?: CheckoutSession;
         /**
-          * Your stripe publishable key.
-         */
-        "keys"?: Keys;
-        /**
           * The input's label.
          */
         "label"?: string;
@@ -2724,10 +2700,6 @@ declare namespace LocalJSX {
           * Secure notice
          */
         "secureNotice"?: string;
-        /**
-          * Your stripe connected account id.
-         */
-        "stripeAccountId"?: string;
     }
     interface CePriceChoice {
         /**
@@ -3216,10 +3188,6 @@ declare namespace LocalJSX {
           * This is required to validate the form on the server
          */
         "formId"?: number | string;
-        /**
-          * Stripe publishable key
-         */
-        "keys"?: Keys;
         /**
           * Label
          */

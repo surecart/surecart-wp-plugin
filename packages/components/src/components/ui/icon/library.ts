@@ -20,7 +20,6 @@ export function unwatchIcon(icon: CeIcon) {
 }
 
 export function getIconLibrary(name?: string) {
-  console.log('get', { registry });
   return registry.filter(lib => lib.name === name)[0];
 }
 

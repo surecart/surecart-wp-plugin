@@ -34,31 +34,63 @@ class CustomerOrders extends Block {
 	 */
 	public function render( $attributes, $content ) {
 		// get the current page tab and possible id.
-		$id = intval( $_GET['id'] ?? 0 );
+		$id = sanitize_text_field( $_GET['id'] ?? null );
 
 		$user = User::current();
 		if ( ! $user ) {
 			return;
 		}
 
-		if ( $id ) {
-			return 'single';
+		$customer = $user->customer();
+		if ( is_wp_error( $customer ) ) {
+			return $customer->get_error_message();
 		}
 
-		return $this->index( $attributes, $user );
+		return $id ? $this->show( $id, $customer ) : $this->index( $attributes, $customer );
 	}
 
-	public function index( $attributes, $user ) {
-		$page = isset( $_GET['current-page'] ) ? sanitize_text_field( wp_unslash( $_GET['current-page'] ) ) : null;
+	/**
+	 * Show and individual checkout session.
+	 *
+	 * @param string                          $id Session ID.
+	 * @param \CheckoutEngine\Models\Customer $customer Customer.
+	 *
+	 * @return function
+	 */
+	public function show( $id, $customer ) {
+		// check permissions.
+		if ( ! current_user_can( 'read_pk_checkout_session', $id ) ) {
+			wp_die( 'You do not have permission to access this order.', 'checkout_engine' );
+		}
+
+		$order = CheckoutSession::with( [ 'line_items', 'line_item.price', 'price.product' ] )->find( $id );
+
+		return \CheckoutEngine::blocks()->render(
+			'web.dashboard.orders.show',
+			[
+				'order' => $order,
+			]
+		);
+	}
+
+	/**
+	 * Show and individual checkout session.
+	 *
+	 * @param array                           $attributes Block attributes.
+	 * @param \CheckoutEngine\Models\Customer $customer Customer.
+	 *
+	 * @return function
+	 */
+	public function index( $attributes, $customer ) {
+		$page = isset( $_GET['current-page'] ) ? sanitize_text_field( wp_unslash( $_GET['current-page'] ) ) : 1;
 
 		return \CheckoutEngine::blocks()->render(
 			'web.dashboard.orders.index',
 			[
-				'tab'    => 'orders',
 				'orders' => CheckoutSession::where(
 					[
 						'status'       => [ 'paid', 'completed' ],
-						'customer_ids' => [ $user->customerId() ],
+						'customer_ids' => [ $customer->id ],
 					]
 				)->with(
 					[

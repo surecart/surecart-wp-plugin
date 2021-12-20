@@ -1,5 +1,5 @@
 import { Component, h, Prop, Element, State, Listen, Watch } from '@stencil/core';
-import { Coupon, CheckoutSession, Customer, Keys, PriceChoice, Prices, Products, ResponseError } from '../../../types';
+import { Coupon, CheckoutSession, Customer, PriceChoice, Prices, Products, ResponseError } from '../../../types';
 import { Universe } from 'stencil-wormhole';
 import { addQueryArgs } from '@wordpress/url';
 import { interpret } from '@xstate/fsm';
@@ -41,12 +41,6 @@ export class CECheckout {
 
   /** Stores the current customer */
   @Prop({ mutable: true }) customer: Customer;
-
-  /** Publishable keys for providers */
-  @Prop() keys: Keys = {
-    stripe: '',
-    paypal: '',
-  };
 
   /** Alignment */
   @Prop() alignment: 'center' | 'wide' | 'full';
@@ -167,11 +161,11 @@ export class CECheckout {
   state() {
     return {
       processor: 'stripe',
+      processor_data: this.checkoutSession?.processor_data,
       state: this.checkoutState.value,
       loading: this.checkoutState.value === 'loading',
       busy: this.checkoutState.value === 'updating',
       empty: !['loading', 'updating'].includes(this.checkoutState.value) && !this.checkoutSession?.line_items?.pagination?.count,
-      keys: this.keys,
       error: this.error,
       checkoutSession: this.checkoutSession,
       lockedChoices: this.prices,

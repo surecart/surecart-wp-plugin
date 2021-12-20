@@ -89,7 +89,7 @@ const plugins = [
 				toType: 'dir',
 			},
 			{
-				from: './packages/components/kses.json',
+				from: './packages/components/docs/kses.json',
 				to: '../app/src/Support/kses.json',
 			},
 		],

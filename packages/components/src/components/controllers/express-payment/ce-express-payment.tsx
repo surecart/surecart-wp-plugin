@@ -1,6 +1,6 @@
 import { Component, h, Prop } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
-import { Keys } from '../../../types';
+import { CheckoutSession } from '../../../types';
 
 @Component({
   tag: 'ce-express-payment',
@@ -8,24 +8,23 @@ import { Keys } from '../../../types';
   shadow: false,
 })
 export class CeExpressPayment {
-  sPayment;
   @Prop() processor: 'stripe' | 'paypal';
   @Prop() formId: number | string;
-  @Prop() keys: Keys = {
-    stripe: '',
-  };
+  @Prop() checkoutSession: CheckoutSession;
 
   render() {
-    if (this.keys.stripe) {
-      return (
-        <ce-stripe-payment-request formId={this.formId}>
-          <ce-divider style={{ '--spacing': 'var(--ce-spacing-small)' }}>
-            <slot />
-          </ce-divider>
-        </ce-stripe-payment-request>
-      );
+    if (this?.checkoutSession?.processor_data?.stripe?.publishable_key || !this?.checkoutSession?.processor_data?.stripe?.account_id) {
+      return null;
     }
+
+    return (
+      <ce-stripe-payment-request formId={this.formId}>
+        <ce-divider style={{ '--spacing': 'var(--ce-spacing-small)' }}>
+          <slot />
+        </ce-divider>
+      </ce-stripe-payment-request>
+    );
   }
 }
 
-openWormhole(CeExpressPayment, ['keys', 'formId'], false);
+openWormhole(CeExpressPayment, ['checkoutSession', 'formId'], false);

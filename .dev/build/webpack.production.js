@@ -55,6 +55,10 @@ const plugins = [
 				to: './blocks/',
 				toType: 'dir',
 			},
+			{
+				from: './packages/components/docs/kses.json',
+				to: '../app/src/Support/kses.json',
+			},
 		],
 	} ),
 	new WatchIgnorePlugin( [

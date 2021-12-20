@@ -66,7 +66,6 @@ export class CeIcon {
   async setIcon() {
     const library = getIconLibrary(this.library);
     const url = this.getUrl();
-    console.log({ url });
     if (url) {
       try {
         const file = await requestIcon(url)!;

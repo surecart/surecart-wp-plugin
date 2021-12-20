@@ -61,7 +61,7 @@ export const config: Config = {
         });
         // return docs;
         // Custom logic goes here
-        await fs.writeFile('./kses.json', JSON.stringify(out, null, 2));
+        await fs.writeFile('./docs/kses.json', JSON.stringify(out, null, 2));
       },
     },
   ],

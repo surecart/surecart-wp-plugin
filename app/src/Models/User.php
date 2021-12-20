@@ -16,6 +16,13 @@ class User implements ArrayAccess, JsonSerializable {
 	protected $user;
 
 	/**
+	 * Holds the cutomser
+	 *
+	 * @var \CheckoutEngine\Models\Customer;
+	 */
+	protected $customer;
+
+	/**
 	 * Stores the customer id key.
 	 *
 	 * @var string
@@ -74,17 +81,28 @@ class User implements ArrayAccess, JsonSerializable {
 	protected function customer() {
 		$id = $this->customerId();
 		if ( $id ) {
-			return Customer::find( $this->customerId() );
-		} else {
-			if ( $this->user->ID ) {
-				$customer = Customer::byEmail( $this->user->user_email );
-				if ( $customer ) {
-					$this->setCustomerId( $customer->id );
-					return $customer;
-				}
-			}
-			return false;
+			$this->customer = Customer::find( $this->customerId() );
 		}
+		if ( is_wp_error( $this->customer ) && $this->customer->get_error_code() === 'customer.not_found' ) {
+			if ( $this->user->user_email ) {
+				$this->createCustomerByEmail();
+			}
+		}
+
+		return $this->customer;
+	}
+
+	/**
+	 * Create the customer by email.
+	 *
+	 * @return void
+	 */
+	public function createCustomerByEmail() {
+		$customer = Customer::byEmail( $this->user->user_email );
+		if ( $customer ) {
+			$this->customer = $this->setCustomerId( $customer->id );
+		}
+		return $this;
 	}
 
 	/**

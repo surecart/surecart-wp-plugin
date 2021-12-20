@@ -63,22 +63,22 @@ export class CEStripeElement {
     if (val?.status !== 'finalized') return;
     // must be a stripe session
     if (val?.payment_intent?.processor_type !== 'stripe') return;
-    // must have a secret
-    if (!val?.payment_intent?.external_client_secret) return;
     // must have an external intent id
     if (!val?.payment_intent?.external_intent_id) return;
+    // must have a secret
+    if (!val?.payment_intent?.processor_data?.stripe?.client_secret) return;
     // need an external_type
-    if (!val?.payment_intent?.external_type) return;
+    if (!val?.payment_intent?.processor_data?.stripe?.type) return;
     // prevent possible double-charges
     if (this.confirming) return;
 
     this.confirming = true;
     try {
       let response;
-      if (val?.payment_intent?.external_type == 'setup') {
-        response = await this.confirmCardSetup(val.payment_intent.external_client_secret);
+      if (val?.payment_intent?.processor_data?.stripe?.type == 'setup') {
+        response = await this.confirmCardSetup(val?.payment_intent?.processor_data?.stripe.client_secret);
       } else {
-        response = await this.confirmCardPayment(val.payment_intent.external_client_secret);
+        response = await this.confirmCardPayment(val?.payment_intent?.processor_data?.stripe?.client_secret);
       }
       if (response?.error) {
         throw response.error;

@@ -46,11 +46,44 @@ abstract class Block {
 		register_block_type(
 			"checkout-engine/$this->name",
 			[
-				'render_callback' => [ $this, 'render' ],
+				'render_callback' => [ $this, 'preRender' ],
 				'attributes'      => $this->attributes,
 				'parent'          => $this->parent,
 			]
 		);
+	}
+
+	/**
+	 * Optionally run a function to modify attibuutes before rendering.
+	 *
+	 * @param array  $attributes Block attributes.
+	 * @param string $content   Post content.
+	 *
+	 * @return function
+	 */
+	public function preRender( $attributes, $content ) {
+		// run middlware.
+		$render = $this->middleware( $attributes, $content );
+		if ( is_wp_error( $render ) ) {
+			return $render->get_error_message();
+		}
+		if ( ! $render ) {
+			return false;
+		}
+
+		// render
+		return $this->render( $attributes, $content );
+	}
+
+	/**
+	 * Run any block middleware before rendering.
+	 *
+	 * @param array  $attributes Block attributes.
+	 * @param string $content   Post content.
+	 * @return boolean|\WP_Error;
+	 */
+	protected function middleware( $attributes, $content ) {
+		return true;
 	}
 
 	/**

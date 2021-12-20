@@ -2,6 +2,9 @@
   display: block;
 }
 
+:slotted(* ~ *) {
+  margin-top: 20px;
+}
 ce-product-line-item ~ ce-product-line-item,
 ce-line-item ~ ce-line-item {
   margin-top: 20px;
