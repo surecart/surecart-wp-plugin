@@ -10,18 +10,28 @@
             <ce-table-cell slot="head">
                 {{ esc_html__('Amount', 'checkout_engine') }}
             </ce-table-cell>
-            <ce-table-cell slot="head" style="width:100px">
+            <ce-table-cell
+                slot="head"
+                style="width:100px"
+            >
                 {{ esc_html__('Status', 'checkout_engine') }}
             </ce-table-cell>
-            <ce-table-cell slot="head" style="width:100px"></ce-table-cell>
+            <ce-table-cell
+                slot="head"
+                style="width:100px"
+            ></ce-table-cell>
 
-            @forelse ($charges as $key => $charge)
+            @forelse ($charges->data as $key => $charge)
                 <ce-table-row>
                     <ce-table-cell>
                         {{ wp_date(get_option('date_format'), $charge->created_at) }}
                     </ce-table-cell>
                     <ce-table-cell>
-                        <ce-format-number type="currency" currency={{ $charge->currency }} value={{ $charge->amount }}>
+                        <ce-format-number
+                            type="currency"
+                            currency={{ $charge->currency }}
+                            value={{ $charge->amount }}
+                        >
                         </ce-format-number>
                     </ce-table-cell>
                     <ce-table-cell>
@@ -34,7 +44,10 @@
                         @endif
                     </ce-table-cell>
                     <ce-table-cell>
-                        <ce-button href="<?php echo esc_url(add_query_arg(['id' => $charge->id])); ?>" size="small">{{ esc_html__('Details', 'checkout_engine') }}
+                        <ce-button
+                            href="<?php echo esc_url(add_query_arg(['id' => $charge->id])); ?>"
+                            size="small"
+                        >{{ esc_html__('Details', 'checkout_engine') }}
                         </ce-button>
                     </ce-table-cell>
                 </ce-table-row>

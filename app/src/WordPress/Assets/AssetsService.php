@@ -15,19 +15,38 @@ class AssetsService {
 	 * @return void
 	 */
 	public function addComponentData( $tag, $selector, $data = [] ) {
-		$data_string = '';
-		foreach ( $data as $key => $value ) {
-			$encoded      = wp_json_encode( $value );
-			$data_string .= 'component.' . $key . " =$encoded;\n";
-		}
-		wp_add_inline_script(
-			'checkout-engine-components',
-			"(async () => {
-				await customElements.whenDefined('" . $tag . "');
-				var component = document.querySelector('" . $tag . $selector . "');
-				if (!component) return;
-				" . $data_string . '
-			})();'
+		add_action(
+			'wp_footer',
+			function () use ( $tag, $selector, $data ) {
+				return $this->outputComponentScript( $tag, $selector, $data );
+			}
 		);
+	}
+
+	/**
+	 * Output the component initialization script.
+	 *
+	 * @param string $tag Tag of the web component.
+	 * @param string $selector Specific selector (class or id).
+	 * @param array  $data Data to add.
+	 * @return void
+	 */
+	public function outputComponentScript( $tag, $selector, $data = [] ) {
+		?>
+		<script>
+			(async () => {
+				await customElements.whenDefined('<?php echo esc_js( $tag ); ?>');
+				var component = document.querySelector('<?php echo esc_js( $tag . $selector ); ?>');
+				if (!component) return;
+				<?php
+				foreach ( $data as $key => $value ) {
+					echo "\n";
+					echo esc_js( "component.$key = " );
+					echo wp_json_encode( $value );
+				}
+				?>
+			})();
+		</script>
+		<?php
 	}
 }

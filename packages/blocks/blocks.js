@@ -47,7 +47,19 @@ import * as dashboardTabs from './blocks/dashboard/dashboard-tabs';
 import * as dashboardTab from './blocks/dashboard/dashboard-tab';
 import * as dashboardPages from './blocks/dashboard/dashboard-pages';
 import * as dashboardPage from './blocks/dashboard/dashboard-page';
+import * as customerOverview from './blocks/dashboard/customer-overview';
 import * as customerOrders from './blocks/dashboard/customer-orders';
+import * as customerCharges from './blocks/dashboard/customer-charges';
+const dashboardComponents = [
+	customerDashboard,
+	dashboardTabs,
+	dashboardTab,
+	dashboardPages,
+	dashboardPage,
+	customerOverview,
+	customerOrders,
+	customerCharges,
+];
 
 export const BLOCK_PARENTS = [ 'core/columns', 'checkout-engine/form' ];
 
@@ -133,11 +145,7 @@ export const registerCheckoutEngineBlocks = () => {
 		subtotal,
 		name,
 		email,
-		dashboardTabs,
-		dashboardTab,
-		dashboardPages,
-		dashboardPage,
-		customerOrders,
+		...dashboardComponents,
 	].forEach( registerBlock );
 };
 

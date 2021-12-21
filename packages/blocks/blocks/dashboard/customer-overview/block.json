@@ -1,7 +1,7 @@
 {
-	"name": "checkout-engine/customer-orders",
-	"title": "Customer Orders",
-	"description": "Displays the customers orders.",
+	"name": "checkout-engine/customer-overview",
+	"title": "Customer Overview",
+	"description": "Displays the customers overview page.",
 	"category": "layout",
 	"keywords": [ "name", "customer", "dashboard" ],
 	"parent": [ "checkout-engine/dashboard-page" ],

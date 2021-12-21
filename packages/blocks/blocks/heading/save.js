@@ -7,12 +7,7 @@ export default ( { attributes } ) => {
 	const { title, description } = attributes;
 
 	return (
-		<ce-heading
-			style={ {
-				marginBottom: 'var(--ce-spacing-large)',
-				paddingBottom: 'var(--ce-spacing-large)',
-			} }
-		>
+		<ce-heading>
 			{ title }
 			<span slot="description">{ description }</span>
 			<span slot="end">

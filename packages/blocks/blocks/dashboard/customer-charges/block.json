@@ -1,7 +1,7 @@
 {
-	"name": "checkout-engine/customer-orders",
-	"title": "Customer Orders",
-	"description": "Displays the customers orders.",
+	"name": "checkout-engine/customer-charges",
+	"title": "Customer Charges",
+	"description": "Displays the customers charges.",
 	"category": "layout",
 	"keywords": [ "name", "customer", "dashboard" ],
 	"parent": [ "checkout-engine/dashboard-page" ],

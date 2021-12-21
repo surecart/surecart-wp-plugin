@@ -4,6 +4,7 @@ namespace CheckoutEngine\Rest;
 
 use CheckoutEngine\Rest\RestServiceInterface;
 use CheckoutEngine\Controllers\Rest\SubscriptionsController;
+use CheckoutEngine\Models\User;
 
 /**
  * Service provider for Price Rest Requests
@@ -109,6 +110,11 @@ class SubscriptionRestServiceProvider extends RestServiceProvider implements Res
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_items_permissions_check( $request ) {
+		// a customer can list their own sessions.
+		if ( isset( $request['customer_ids'] ) && 1 === count( $request['customer_ids'] ) ) {
+			return User::current()->customerId() === $request['customer_ids'][0];
+		}
+
 		return current_user_can( 'read_pk_subscriptions' );
 	}
 

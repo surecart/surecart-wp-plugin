@@ -26,7 +26,9 @@ export default ( { attributes, setAttributes } ) => {
 
 	return (
 		<Fragment>
-			<CeTabPanel { ...innerBlocksProps }></CeTabPanel>
+			<CeTabPanel name={ name }>
+				<ce-spacing { ...innerBlocksProps }></ce-spacing>
+			</CeTabPanel>
 		</Fragment>
 	);
 };

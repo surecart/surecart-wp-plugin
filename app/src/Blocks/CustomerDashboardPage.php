@@ -72,6 +72,6 @@ class CustomerDashboardPage extends Block {
 			return;
 		}
 
-		return wp_kses_post( $content );
+		return '<ce-spacing style="--spacing: var(--ce-spacing-large)">' . wp_kses_post( $content ) . '</ce-spacing>';
 	}
 }

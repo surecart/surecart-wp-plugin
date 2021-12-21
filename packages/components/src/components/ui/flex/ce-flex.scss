@@ -1,0 +1,33 @@
+:host {
+  display: block;
+  --spacing: var(--ce-spacing-small);
+}
+
+.flex {
+  display: flex;
+  gap: var(--spacing);
+  justify-content: space-between;
+}
+
+$justify: flex-start, flex-end, center, space-between, space-around, space-evenly;
+@each $value in $justify {
+  .justify-#{$value} {
+    justify-content: $value;
+  }
+}
+
+$align: flex-start, flex-end, center, baseline, stretch;
+@each $value in $align {
+  .align-#{$value} {
+    align-items: $value;
+  }
+}
+
+$direction: row, row-reverse, column, column-reverse;
+@each $value in $direction {
+  .direction-#{$value} {
+    flex-direction: $value;
+  }
+}
+
+

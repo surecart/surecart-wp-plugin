@@ -2,9 +2,14 @@
   display: block;
 }
 
-.order-row {
-  cursor: pointer;
-  display: flex;
-  justify-content: space-between;
-  gap: 2em;
+.subscription {
+  &__details {
+    line-height: var(--ce-line-height-normal);
+  }
+
+  &__name {
+    font-weight: var(--ce-font-weight-bold);
+    font-size: var(--ce-font-size-large);
+    line-height: var(--ce-line-height-normal)
+  }
 }

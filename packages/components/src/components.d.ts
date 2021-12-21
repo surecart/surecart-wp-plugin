@@ -313,6 +313,12 @@ export namespace Components {
     interface CeCustomerSubscription {
         "subscription": Subscription;
     }
+    interface CeCustomerSubscriptions {
+        /**
+          * Customer id to fetch subscriptions
+         */
+        "customerId": string;
+    }
     interface CeDivider {
     }
     interface CeDropdown {
@@ -392,6 +398,11 @@ export namespace Components {
         "checkoutSession": CheckoutSession;
         "formId": number | string;
         "processor": 'stripe' | 'paypal';
+    }
+    interface CeFlex {
+        "alignItems": string;
+        "flexDirection": string;
+        "justifyContent": string;
     }
     interface CeForm {
         /**
@@ -1143,6 +1154,8 @@ export namespace Components {
          */
         "effect": 'pulse' | 'sheen' | 'none';
     }
+    interface CeSpacing {
+    }
     interface CeSpinner {
     }
     interface CeStripeElement {
@@ -1448,6 +1461,12 @@ declare global {
         prototype: HTMLCeCustomerSubscriptionElement;
         new (): HTMLCeCustomerSubscriptionElement;
     };
+    interface HTMLCeCustomerSubscriptionsElement extends Components.CeCustomerSubscriptions, HTMLStencilElement {
+    }
+    var HTMLCeCustomerSubscriptionsElement: {
+        prototype: HTMLCeCustomerSubscriptionsElement;
+        new (): HTMLCeCustomerSubscriptionsElement;
+    };
     interface HTMLCeDividerElement extends Components.CeDivider, HTMLStencilElement {
     }
     var HTMLCeDividerElement: {
@@ -1471,6 +1490,12 @@ declare global {
     var HTMLCeExpressPaymentElement: {
         prototype: HTMLCeExpressPaymentElement;
         new (): HTMLCeExpressPaymentElement;
+    };
+    interface HTMLCeFlexElement extends Components.CeFlex, HTMLStencilElement {
+    }
+    var HTMLCeFlexElement: {
+        prototype: HTMLCeFlexElement;
+        new (): HTMLCeFlexElement;
     };
     interface HTMLCeFormElement extends Components.CeForm, HTMLStencilElement {
     }
@@ -1706,6 +1731,12 @@ declare global {
         prototype: HTMLCeSkeletonElement;
         new (): HTMLCeSkeletonElement;
     };
+    interface HTMLCeSpacingElement extends Components.CeSpacing, HTMLStencilElement {
+    }
+    var HTMLCeSpacingElement: {
+        prototype: HTMLCeSpacingElement;
+        new (): HTMLCeSpacingElement;
+    };
     interface HTMLCeSpinnerElement extends Components.CeSpinner, HTMLStencilElement {
     }
     var HTMLCeSpinnerElement: {
@@ -1823,10 +1854,12 @@ declare global {
         "ce-customer-dashboard": HTMLCeCustomerDashboardElement;
         "ce-customer-order": HTMLCeCustomerOrderElement;
         "ce-customer-subscription": HTMLCeCustomerSubscriptionElement;
+        "ce-customer-subscriptions": HTMLCeCustomerSubscriptionsElement;
         "ce-divider": HTMLCeDividerElement;
         "ce-dropdown": HTMLCeDropdownElement;
         "ce-email": HTMLCeEmailElement;
         "ce-express-payment": HTMLCeExpressPaymentElement;
+        "ce-flex": HTMLCeFlexElement;
         "ce-form": HTMLCeFormElement;
         "ce-form-control": HTMLCeFormControlElement;
         "ce-form-row": HTMLCeFormRowElement;
@@ -1866,6 +1899,7 @@ declare global {
         "ce-session-status-badge": HTMLCeSessionStatusBadgeElement;
         "ce-session-subscription": HTMLCeSessionSubscriptionElement;
         "ce-skeleton": HTMLCeSkeletonElement;
+        "ce-spacing": HTMLCeSpacingElement;
         "ce-spinner": HTMLCeSpinnerElement;
         "ce-stripe-element": HTMLCeStripeElementElement;
         "ce-stripe-payment-request": HTMLCeStripePaymentRequestElement;
@@ -2197,6 +2231,12 @@ declare namespace LocalJSX {
     interface CeCustomerSubscription {
         "subscription"?: Subscription;
     }
+    interface CeCustomerSubscriptions {
+        /**
+          * Customer id to fetch subscriptions
+         */
+        "customerId"?: string;
+    }
     interface CeDivider {
     }
     interface CeDropdown {
@@ -2305,6 +2345,11 @@ declare namespace LocalJSX {
         "checkoutSession"?: CheckoutSession;
         "formId"?: number | string;
         "processor"?: 'stripe' | 'paypal';
+    }
+    interface CeFlex {
+        "alignItems"?: string;
+        "flexDirection"?: string;
+        "justifyContent"?: string;
     }
     interface CeForm {
         /**
@@ -3124,6 +3169,8 @@ declare namespace LocalJSX {
          */
         "effect"?: 'pulse' | 'sheen' | 'none';
     }
+    interface CeSpacing {
+    }
     interface CeSpinner {
     }
     interface CeStripeElement {
@@ -3371,10 +3418,12 @@ declare namespace LocalJSX {
         "ce-customer-dashboard": CeCustomerDashboard;
         "ce-customer-order": CeCustomerOrder;
         "ce-customer-subscription": CeCustomerSubscription;
+        "ce-customer-subscriptions": CeCustomerSubscriptions;
         "ce-divider": CeDivider;
         "ce-dropdown": CeDropdown;
         "ce-email": CeEmail;
         "ce-express-payment": CeExpressPayment;
+        "ce-flex": CeFlex;
         "ce-form": CeForm;
         "ce-form-control": CeFormControl;
         "ce-form-row": CeFormRow;
@@ -3414,6 +3463,7 @@ declare namespace LocalJSX {
         "ce-session-status-badge": CeSessionStatusBadge;
         "ce-session-subscription": CeSessionSubscription;
         "ce-skeleton": CeSkeleton;
+        "ce-spacing": CeSpacing;
         "ce-spinner": CeSpinner;
         "ce-stripe-element": CeStripeElement;
         "ce-stripe-payment-request": CeStripePaymentRequest;
@@ -3451,10 +3501,12 @@ declare module "@stencil/core" {
             "ce-customer-dashboard": LocalJSX.CeCustomerDashboard & JSXBase.HTMLAttributes<HTMLCeCustomerDashboardElement>;
             "ce-customer-order": LocalJSX.CeCustomerOrder & JSXBase.HTMLAttributes<HTMLCeCustomerOrderElement>;
             "ce-customer-subscription": LocalJSX.CeCustomerSubscription & JSXBase.HTMLAttributes<HTMLCeCustomerSubscriptionElement>;
+            "ce-customer-subscriptions": LocalJSX.CeCustomerSubscriptions & JSXBase.HTMLAttributes<HTMLCeCustomerSubscriptionsElement>;
             "ce-divider": LocalJSX.CeDivider & JSXBase.HTMLAttributes<HTMLCeDividerElement>;
             "ce-dropdown": LocalJSX.CeDropdown & JSXBase.HTMLAttributes<HTMLCeDropdownElement>;
             "ce-email": LocalJSX.CeEmail & JSXBase.HTMLAttributes<HTMLCeEmailElement>;
             "ce-express-payment": LocalJSX.CeExpressPayment & JSXBase.HTMLAttributes<HTMLCeExpressPaymentElement>;
+            "ce-flex": LocalJSX.CeFlex & JSXBase.HTMLAttributes<HTMLCeFlexElement>;
             "ce-form": LocalJSX.CeForm & JSXBase.HTMLAttributes<HTMLCeFormElement>;
             "ce-form-control": LocalJSX.CeFormControl & JSXBase.HTMLAttributes<HTMLCeFormControlElement>;
             "ce-form-row": LocalJSX.CeFormRow & JSXBase.HTMLAttributes<HTMLCeFormRowElement>;
@@ -3494,6 +3546,7 @@ declare module "@stencil/core" {
             "ce-session-status-badge": LocalJSX.CeSessionStatusBadge & JSXBase.HTMLAttributes<HTMLCeSessionStatusBadgeElement>;
             "ce-session-subscription": LocalJSX.CeSessionSubscription & JSXBase.HTMLAttributes<HTMLCeSessionSubscriptionElement>;
             "ce-skeleton": LocalJSX.CeSkeleton & JSXBase.HTMLAttributes<HTMLCeSkeletonElement>;
+            "ce-spacing": LocalJSX.CeSpacing & JSXBase.HTMLAttributes<HTMLCeSpacingElement>;
             "ce-spinner": LocalJSX.CeSpinner & JSXBase.HTMLAttributes<HTMLCeSpinnerElement>;
             "ce-stripe-element": LocalJSX.CeStripeElement & JSXBase.HTMLAttributes<HTMLCeStripeElementElement>;
             "ce-stripe-payment-request": LocalJSX.CeStripePaymentRequest & JSXBase.HTMLAttributes<HTMLCeStripePaymentRequestElement>;

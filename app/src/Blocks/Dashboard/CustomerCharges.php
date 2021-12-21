@@ -3,18 +3,20 @@
 namespace CheckoutEngine\Blocks\Dashboard;
 
 use CheckoutEngine\Blocks\Dashboard\Support\DashboardPage;
+use CheckoutEngine\Models\Charge;
 use CheckoutEngine\Models\CheckoutSession;
+use CheckoutEngine\Models\User;
 
 /**
  * Checkout block
  */
-class CustomerOrders extends DashboardPage {
+class CustomerCharges extends DashboardPage {
 	/**
 	 * Block name
 	 *
 	 * @var string
 	 */
-	protected $name = 'customer-orders';
+	protected $name = 'customer-charges';
 
 	/**
 	 * Block attributes
@@ -34,7 +36,7 @@ class CustomerOrders extends DashboardPage {
 	 * @param array  $attributes Block attributes.
 	 * @param string $content Post content.
 	 *
-	 * @return function
+	 * @return void
 	 */
 	public function render( $attributes, $content ) {
 		// get the current page tab and possible id.
@@ -80,16 +82,22 @@ class CustomerOrders extends DashboardPage {
 		$page = isset( $_GET['current-page'] ) ? sanitize_text_field( wp_unslash( $_GET['current-page'] ) ) : 1;
 
 		return \CheckoutEngine::blocks()->render(
-			'web.dashboard.orders.index',
+			'web.dashboard.charges.index',
 			[
-				'orders' => CheckoutSession::where(
+				'tab'     => 'charges',
+				'charges' => Charge::where(
 					[
-						'status'       => [ 'paid', 'completed' ],
 						'customer_ids' => [ $this->customer->id ],
 					]
 				)->with(
 					[
-						'line_items',
+						'checkout_session',
+						'checkout_session.line_items',
+						'line_item.price',
+						'subscription',
+						'subscription.subscription_items',
+						'subscription_item.price',
+						'price.product',
 					]
 				)->paginate(
 					[

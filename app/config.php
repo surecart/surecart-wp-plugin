@@ -53,7 +53,9 @@ return [
 		\CheckoutEngine\Blocks\CustomerDashboardPage::class,
 		\CheckoutEngine\Blocks\CustomerDashboardTab::class,
 		\CheckoutEngine\Blocks\CustomerDashboardButton::class,
+		\CheckoutEngine\Blocks\Dashboard\CustomerOverview::class,
 		\CheckoutEngine\Blocks\Dashboard\CustomerOrders::class,
+		\CheckoutEngine\Blocks\Dashboard\CustomerCharges::class,
 	],
 
 	/**

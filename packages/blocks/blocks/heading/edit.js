@@ -11,7 +11,7 @@ import {
 import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
 import { useBlockProps } from '@wordpress/block-editor';
 
-export default ( { attributes, setAttributes } ) => {
+export default ( { attributes, setAttributes, isSelected } ) => {
 	const { title, description } = attributes;
 
 	const blockProps = useBlockProps();
@@ -39,13 +39,7 @@ export default ( { attributes, setAttributes } ) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<ce-heading
-				{ ...blockProps }
-				style={ {
-					marginBottom: 'var(--ce-spacing-large)',
-					paddingBottom: 'var(--ce-spacing-large)',
-				} }
-			>
+			<ce-heading { ...blockProps }>
 				<RichText
 					aria-label={ __( 'Title', 'checkout_engine' ) }
 					placeholder={ __( 'Add your title...', 'checkout_engine' ) }
@@ -54,6 +48,7 @@ export default ( { attributes, setAttributes } ) => {
 					withoutInteractiveFormatting
 					allowedFormats={ [ 'core/bold', 'core/italic' ] }
 				/>
+
 				<span slot="description">
 					<RichText
 						aria-label={ __( 'Description', 'checkout_engine' ) }

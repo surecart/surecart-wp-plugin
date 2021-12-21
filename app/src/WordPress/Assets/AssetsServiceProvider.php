@@ -141,7 +141,7 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 			trailingslashit( \CheckoutEngine::core()->assets()->getUrl() ) . 'dist/components/checkout-engine/checkout-engine.esm.js',
 			[ 'wp-api-fetch' ],
 			filemtime( trailingslashit( $this->container[ WPEMERGE_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/checkout-engine/checkout-engine.esm.js' ),
-			true
+			false
 		);
 		wp_set_script_translations( 'checkout-engine-components', 'checkout_engine' );
 		wp_localize_script(
@@ -164,7 +164,7 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 				await library.registerIconLibrary(
 					'default', {
 						resolver: function(name) {
-							return '<?php echo plugin_dir_url( CHECKOUT_ENGINE_PLUGIN_FILE ); ?>resources/icons/feather/' + name + '.svg'
+							return '<?php echo esc_url_raw( plugin_dir_url( CHECKOUT_ENGINE_PLUGIN_FILE ) . "resources/icons/feather/'+name+'.svg" ); ?>';
 						},
 						mutator: function(svg) {
 							return svg.setAttribute('fill', 'none')

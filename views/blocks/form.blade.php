@@ -16,9 +16,6 @@
 
 
 @php
-if (!$id) {
-    return;
-}
 // This dynamically adds prop data to a component since we cannot pass objects data as a prop.
 \CheckoutEngine::assets()->addComponentData('ce-checkout', '#' . $id, [
     'prices' => $prices,

@@ -1,6 +1,10 @@
 :host {
   --padding: 0;
+  --spacing: var(--ce-spacing-large);
   display: block;
+}
+::slotted(* ~ *) {
+  margin-top: var(--spacing);
 }
 
 .tab-panel {

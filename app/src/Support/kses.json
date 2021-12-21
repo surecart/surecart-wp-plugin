@@ -142,6 +142,12 @@
     "class": true,
     "slot": true
   },
+  "ce-customer-subscriptions": {
+    "customer-id": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
   "ce-divider": {
     "style": true,
     "class": true,
@@ -179,6 +185,14 @@
     "checkout-session": true,
     "form-id": true,
     "processor": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-flex": {
+    "align-items": true,
+    "flex-direction": true,
+    "justify-content": true,
     "style": true,
     "class": true,
     "slot": true
@@ -558,6 +572,11 @@
   },
   "ce-skeleton": {
     "effect": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-spacing": {
     "style": true,
     "class": true,
     "slot": true

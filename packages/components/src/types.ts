@@ -182,6 +182,10 @@ export interface Subscription extends Object {
   checkout_session: CheckoutSession;
   customer: Customer;
   discount: DiscountResponse;
+  cancel_at_period_end: number | false;
+  current_period_end: number | false;
+  current_period_start: number | false;
+  ended_at: number;
   payment_method: PaymentMethod | string;
   subscription_items: {
     object: 'list';

@@ -55,8 +55,16 @@ class BlockServiceProvider implements ServiceProviderInterface {
 		add_filter(
 			'safe_style_css',
 			function( $styles ) {
-				$styles[] = '--spacing';
-				return $styles;
+				return array_merge(
+					[
+						'--spacing',
+						'--font-weight',
+						'--line-height',
+						'--font-size',
+						'--color',
+					],
+					$styles
+				);
 			}
 		);
 

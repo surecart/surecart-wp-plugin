@@ -10,6 +10,13 @@ use CheckoutEngine\Models\User;
  */
 abstract class DashboardPage extends Block {
 	/**
+	 * Holds the customer object.
+	 *
+	 * @var \CheckoutEngine\Models\Customer|null|\WP_Error;
+	 */
+	protected $customer = null;
+
+	/**
 	 * Run middleware before rendering the block.
 	 *
 	 * @param array  $attributes Block attributes.
@@ -29,9 +36,9 @@ abstract class DashboardPage extends Block {
 		}
 
 		// user must be a customer.
-		$customer = $user->customer();
-		if ( is_wp_error( $customer ) ) {
-			return $customer->get_error_message();
+		$this->customer = $user->customer();
+		if ( is_wp_error( $this->customer ) ) {
+			return $this->customer->get_error_message();
 		}
 
 		return true;
