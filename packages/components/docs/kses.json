@@ -230,6 +230,24 @@
     "class": true,
     "slot": true
   },
+  "ce-format-date": {
+    "date": true,
+    "day": true,
+    "era": true,
+    "hour": true,
+    "hour-format": true,
+    "locale": true,
+    "minute": true,
+    "month": true,
+    "second": true,
+    "time-zone": true,
+    "time-zone-name": true,
+    "weekday": true,
+    "year": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
   "ce-format-interval": {
     "every": true,
     "fallback": true,
