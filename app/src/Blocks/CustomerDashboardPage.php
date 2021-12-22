@@ -65,7 +65,7 @@ class CustomerDashboardPage extends Block {
 	 */
 	public function render( $attributes, $content ) {
 		// get the current page tab and possible id.
-		$tab = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : 'orders';
+		$tab = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : false;
 
 		// make sure we are on the correct tab.
 		if ( empty( $attributes['name'] ) || $tab !== $attributes['name'] ) {

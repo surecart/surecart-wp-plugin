@@ -34,4 +34,26 @@ class BlockService {
 	public function render( $views, $context = [] ) {
 		return apply_filters( 'checkout_engine_block_output', $this->app->views()->make( $views )->with( $context )->toString() );
 	}
+
+	/**
+	 * Find all blocks and nested blocks by name.
+	 *
+	 * @param  string $type Block item to filter by.
+	 * @param  string $name Block name.
+	 * @param   array  $blocks Array of blocks.
+	 * @return array
+	 */
+	public function filterBy( $type, $name, $blocks ) {
+		$found_blocks = [];
+		$blocks       = (array) $blocks;
+		foreach ( $blocks as $block ) {
+			if ( $name === $block[ $type ] ) {
+				$found_blocks[] = $block;
+			}
+			if ( ! empty( $block['innerBlocks'] ) ) {
+				$found_blocks = array_merge( $found_blocks, $this->filterBy( $type, $name, $block['innerBlocks'] ) );
+			}
+		}
+		return $found_blocks;
+	}
 }
