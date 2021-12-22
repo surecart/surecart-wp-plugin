@@ -471,6 +471,60 @@ export namespace Components {
     interface CeFormSection {
         "label": string;
     }
+    interface CeFormatDate {
+        /**
+          * The date/time to format. If not set, the current date and time will be used.
+         */
+        "date": Date | string | number;
+        /**
+          * The format for displaying the day.
+         */
+        "day": 'numeric' | '2-digit';
+        /**
+          * The format for displaying the era.
+         */
+        "era": 'narrow' | 'short' | 'long';
+        /**
+          * The format for displaying the hour.
+         */
+        "hour": 'numeric' | '2-digit';
+        /**
+          * When set, 24 hour time will always be used.
+         */
+        "hourFormat": 'auto' | '12' | '24';
+        /**
+          * The locale to use when formatting the date/time.
+         */
+        "locale": string;
+        /**
+          * The format for displaying the minute.
+         */
+        "minute": 'numeric' | '2-digit';
+        /**
+          * The format for displaying the month.
+         */
+        "month": 'numeric' | '2-digit' | 'narrow' | 'short' | 'long';
+        /**
+          * The format for displaying the second.
+         */
+        "second": 'numeric' | '2-digit';
+        /**
+          * The time zone to express the time in.
+         */
+        "timeZone": string;
+        /**
+          * The format for displaying the time.
+         */
+        "timeZoneName": 'short' | 'long';
+        /**
+          * The format for displaying the weekday.
+         */
+        "weekday": 'narrow' | 'short' | 'long';
+        /**
+          * The format for displaying the year.
+         */
+        "year": 'numeric' | '2-digit';
+    }
     interface CeFormatInterval {
         "every": string;
         "fallback": string;
@@ -1521,6 +1575,12 @@ declare global {
         prototype: HTMLCeFormSectionElement;
         new (): HTMLCeFormSectionElement;
     };
+    interface HTMLCeFormatDateElement extends Components.CeFormatDate, HTMLStencilElement {
+    }
+    var HTMLCeFormatDateElement: {
+        prototype: HTMLCeFormatDateElement;
+        new (): HTMLCeFormatDateElement;
+    };
     interface HTMLCeFormatIntervalElement extends Components.CeFormatInterval, HTMLStencilElement {
     }
     var HTMLCeFormatIntervalElement: {
@@ -1864,6 +1924,7 @@ declare global {
         "ce-form-control": HTMLCeFormControlElement;
         "ce-form-row": HTMLCeFormRowElement;
         "ce-form-section": HTMLCeFormSectionElement;
+        "ce-format-date": HTMLCeFormatDateElement;
         "ce-format-interval": HTMLCeFormatIntervalElement;
         "ce-format-number": HTMLCeFormatNumberElement;
         "ce-heading": HTMLCeHeadingElement;
@@ -2419,6 +2480,60 @@ declare namespace LocalJSX {
     }
     interface CeFormSection {
         "label"?: string;
+    }
+    interface CeFormatDate {
+        /**
+          * The date/time to format. If not set, the current date and time will be used.
+         */
+        "date"?: Date | string | number;
+        /**
+          * The format for displaying the day.
+         */
+        "day"?: 'numeric' | '2-digit';
+        /**
+          * The format for displaying the era.
+         */
+        "era"?: 'narrow' | 'short' | 'long';
+        /**
+          * The format for displaying the hour.
+         */
+        "hour"?: 'numeric' | '2-digit';
+        /**
+          * When set, 24 hour time will always be used.
+         */
+        "hourFormat"?: 'auto' | '12' | '24';
+        /**
+          * The locale to use when formatting the date/time.
+         */
+        "locale"?: string;
+        /**
+          * The format for displaying the minute.
+         */
+        "minute"?: 'numeric' | '2-digit';
+        /**
+          * The format for displaying the month.
+         */
+        "month"?: 'numeric' | '2-digit' | 'narrow' | 'short' | 'long';
+        /**
+          * The format for displaying the second.
+         */
+        "second"?: 'numeric' | '2-digit';
+        /**
+          * The time zone to express the time in.
+         */
+        "timeZone"?: string;
+        /**
+          * The format for displaying the time.
+         */
+        "timeZoneName"?: 'short' | 'long';
+        /**
+          * The format for displaying the weekday.
+         */
+        "weekday"?: 'narrow' | 'short' | 'long';
+        /**
+          * The format for displaying the year.
+         */
+        "year"?: 'numeric' | '2-digit';
     }
     interface CeFormatInterval {
         "every"?: string;
@@ -3428,6 +3543,7 @@ declare namespace LocalJSX {
         "ce-form-control": CeFormControl;
         "ce-form-row": CeFormRow;
         "ce-form-section": CeFormSection;
+        "ce-format-date": CeFormatDate;
         "ce-format-interval": CeFormatInterval;
         "ce-format-number": CeFormatNumber;
         "ce-heading": CeHeading;
@@ -3511,6 +3627,7 @@ declare module "@stencil/core" {
             "ce-form-control": LocalJSX.CeFormControl & JSXBase.HTMLAttributes<HTMLCeFormControlElement>;
             "ce-form-row": LocalJSX.CeFormRow & JSXBase.HTMLAttributes<HTMLCeFormRowElement>;
             "ce-form-section": LocalJSX.CeFormSection & JSXBase.HTMLAttributes<HTMLCeFormSectionElement>;
+            "ce-format-date": LocalJSX.CeFormatDate & JSXBase.HTMLAttributes<HTMLCeFormatDateElement>;
             "ce-format-interval": LocalJSX.CeFormatInterval & JSXBase.HTMLAttributes<HTMLCeFormatIntervalElement>;
             "ce-format-number": LocalJSX.CeFormatNumber & JSXBase.HTMLAttributes<HTMLCeFormatNumberElement>;
             "ce-heading": LocalJSX.CeHeading & JSXBase.HTMLAttributes<HTMLCeHeadingElement>;

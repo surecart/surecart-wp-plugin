@@ -33,7 +33,12 @@ export class CeCustomerSubscription {
       return sprintf(__('Your plan begins %s', 'checkout_engine'), new Date(this.subscription.current_period_start * 1000));
     }
     if (this.subscription.status === 'active' && this.subscription.current_period_end) {
-      return sprintf(__('Your plan renews on %s', 'checkout_engine'), new Date(this.subscription.current_period_end * 1000));
+      return (
+        <span>
+          {sprintf(__('Your plan renews on', 'checkout_engine'))}{' '}
+          <ce-format-date date={this.subscription.current_period_end * 1000} month="long" day="numeric" year="numeric"></ce-format-date>
+        </span>
+      );
     }
   }
 
