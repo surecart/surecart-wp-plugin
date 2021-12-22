@@ -29,9 +29,9 @@ class AssetsService {
 	 * @param string $tag Tag of the web component.
 	 * @param string $selector Specific selector (class or id).
 	 * @param array  $data Data to add.
-	 * @return void
 	 */
 	public function outputComponentScript( $tag, $selector, $data = [] ) {
+
 		?>
 		<script>
 			(async () => {
