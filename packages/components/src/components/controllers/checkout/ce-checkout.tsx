@@ -78,7 +78,6 @@ export class CECheckout {
 
   @Listen('cePaid')
   async handlePaid() {
-    console.log('paid');
     window.localStorage.removeItem(this.el.id);
     window.location.href = addQueryArgs(this.successUrl, { checkout_session: this.checkoutSession.id });
   }
@@ -184,8 +183,8 @@ export class CECheckout {
     if (this.checkoutState.value === 'paid') {
       return (
         <ce-alert type="success" open>
-          <span slot="title">You have already paid for this order.</span>
-          Please visit your account dashboard to view your order.
+          <span slot="title">{__('You have already paid for this order.', 'checkout_engine')}</span>
+          {__('Please visit your account dashboard to view your order.', 'checkout_engine')}
         </ce-alert>
       );
     }
@@ -193,7 +192,7 @@ export class CECheckout {
     if (this.checkoutState.value === 'expired') {
       return (
         <ce-block-ui>
-          <div>Please refresh the page.</div>
+          <div>{__('Please refresh the page.', 'checkout_engine')}</div>
         </ce-block-ui>
       );
     }

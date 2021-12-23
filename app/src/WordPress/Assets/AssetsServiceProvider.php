@@ -55,6 +55,7 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 	public function registerDependencies() {
 		// core-data
 		$asset_file = include trailingslashit( $this->container[ WPEMERGE_CONFIG_KEY ]['app_core']['path'] ) . 'dist/admin/store/data/register.asset.php';
+
 		wp_register_script(
 			'ce-core-data',
 			trailingslashit( \CheckoutEngine::core()->assets()->getUrl() ) . 'dist/admin/store/data/register.js',

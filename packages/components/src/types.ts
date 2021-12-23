@@ -308,6 +308,7 @@ export interface SetupIntent extends Object {
 }
 
 export interface Customer extends Object {
+  id: string;
   email: string;
   name?: string;
   phone?: string;

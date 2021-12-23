@@ -55,12 +55,18 @@ class Form extends Block {
 	public function render( $attributes, $content ) {
 		global $ce_form_id;
 
+		$user = wp_get_current_user();
+
 		return \CheckoutEngine::blocks()->render(
 			"blocks/$this->name",
 			[
 				'align'       => $attributes['align'] ?? '',
 				'label'       => $attributes['label'] ?? '',
 				'font_size'   => $attributes['font_size'] ?? 16,
+				'customer'    => [
+					'email' => $user->user_email,
+					'name'  => $user->display_name,
+				],
 				'classes'     => $this->getClasses( $attributes ),
 				'content'     => $content,
 				'mode'        => $attributes['mode'] ?? get_option( 'checkout_engine_payment_mode', 'live' ),

@@ -3,7 +3,6 @@
 namespace CheckoutEngine\Blocks\Dashboard;
 
 use CheckoutEngine\Blocks\Dashboard\Support\DashboardPage;
-use CheckoutEngine\Models\CheckoutSession;
 
 /**
  * Checkout block

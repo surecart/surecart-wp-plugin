@@ -1,5 +1,5 @@
 import { Component, h, Prop } from '@stencil/core';
-import { CheckoutSession } from '../../../types';
+import { CheckoutSession } from '../../../../types';
 import { _n, __, sprintf } from '@wordpress/i18n';
 
 @Component({

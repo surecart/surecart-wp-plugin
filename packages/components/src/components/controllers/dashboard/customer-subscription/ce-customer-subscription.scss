@@ -3,6 +3,8 @@
 }
 
 .subscription {
+  position: relative;
+
   &__details {
     line-height: var(--ce-line-height-normal);
   }
@@ -12,4 +14,10 @@
     font-size: var(--ce-font-size-large);
     line-height: var(--ce-line-height-normal)
   }
+
+  &__fine-print {
+    font-size: var(--ce-font-size-x-small);
+    color: var(--ce-color-gray-500);
+  }
 }
+

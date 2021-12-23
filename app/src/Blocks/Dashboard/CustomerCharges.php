@@ -54,15 +54,15 @@ class CustomerCharges extends DashboardPage {
 	public function show( $id ) {
 		// check permissions.
 		if ( ! current_user_can( 'read_pk_checkout_session', $id ) ) {
-			wp_die( 'You do not have permission to access this order.', 'checkout_engine' );
+			wp_die( 'You do not have permission to access this payment.', 'checkout_engine' );
 		}
 
-		$order = CheckoutSession::with( [ 'line_items', 'line_item.price', 'price.product' ] )->find( $id );
+		$charge = Charge::with( [ 'line_items', 'line_item.price', 'price.product' ] )->find( $id );
 
 		return \CheckoutEngine::blocks()->render(
-			'web.dashboard.orders.show',
+			'web.dashboard.charges.show',
 			[
-				'order' => $order,
+				'charge' => $charge,
 			]
 		);
 	}

@@ -20,5 +20,6 @@
 \CheckoutEngine::assets()->addComponentData('ce-checkout', '#' . $id, [
     'prices' => $prices,
     'i18n' => $i18n,
+    'customer' => $customer,
 ]);
 @endphp

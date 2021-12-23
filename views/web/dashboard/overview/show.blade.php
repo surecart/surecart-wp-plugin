@@ -1,5 +1,8 @@
 <ce-spacing style="--spacing: var(--ce-spacing-xx-large)">
-    <ce-customer-subscriptions customer-id="{{ $customer_id }}"></ce-customer-subscriptions>
+    {{-- <ce-customer-subscriptions
+        customer-id="{{ $customer_id }}"
+        cancel-behavior="immediate"
+    ></ce-customer-subscriptions> --}}
     {{-- <ce-card>
         <ce-flex>
             <div>

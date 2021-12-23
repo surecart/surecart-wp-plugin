@@ -8,7 +8,7 @@ import SelectPrice from '../../../components/SelectPrice';
 import { useSelect, dispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 
-export default ( { onSelect, createNew, ad_hoc } ) => {
+export default ( { onSelect, createNew, ad_hoc, value, open = true } ) => {
 	const [ query, setQuery ] = useState( null );
 	const [ newModal, setNewModal ] = useState( false );
 
@@ -58,8 +58,9 @@ export default ( { onSelect, createNew, ad_hoc } ) => {
 				css={ css`
 					flex: 0 1 50%;
 				` }
+				value={ value }
 				onNew={ createNew && onNew }
-				open={ true }
+				open={ open }
 				ad_hoc={ ad_hoc }
 				products={ products }
 				onQuery={ setQuery }

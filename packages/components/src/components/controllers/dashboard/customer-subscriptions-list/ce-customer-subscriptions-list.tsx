@@ -1,48 +1,26 @@
-import { Component, h, Prop, State } from '@stencil/core';
-import apiFetch from '../../../functions/fetch';
+import { Component, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
 import { sprintf, __ } from '@wordpress/i18n';
-import { addQueryArgs } from '@wordpress/url';
-import { Pagination, Price, Subscription, SubscriptionItem } from '../../../types';
+import { Pagination, Price, Subscription, SubscriptionItem } from '../../../../types';
+import { openWormhole } from 'stencil-wormhole';
 
 @Component({
-  tag: 'ce-customer-subscriptions',
-  styleUrl: 'ce-customer-subscriptions.scss',
+  tag: 'ce-customer-subscriptions-list',
+  styleUrl: 'ce-customer-subscriptions-list.scss',
   shadow: true,
 })
-export class CeCustomerSubscriptions {
+export class CeCustomerSubscriptionsList {
   /** Customer id to fetch subscriptions */
   @Prop() customerId: string;
+  @Prop() cancelBehavior: 'period_end' | 'immediate' = 'period_end';
+  @Prop() loading: boolean;
+  @Prop() subscriptions: Array<Subscription>;
+  @Prop() error: string;
+  @Prop() isIndex: boolean;
 
-  @State() subscriptions: Array<Subscription>;
-  @State() loading: boolean;
-  @State() error: string;
+  @Event() ceFetchSubscriptions: EventEmitter<object>;
 
-  componentWillLoad() {
-    this.getSubscriptions();
-  }
-
-  /** Update a session */
-  async getSubscriptions() {
-    if (!this.customerId) return;
-    try {
-      this.loading = true;
-      this.subscriptions = (await await apiFetch({
-        path: addQueryArgs(`checkout-engine/v1/subscriptions/`, {
-          expand: ['subscription_items', 'subscription_item.price', 'price.product'],
-          customer_ids: [this.customerId],
-        }),
-      })) as Subscription[];
-    } catch (e) {
-      if (e?.message) {
-        this.error = e.message;
-      } else {
-        this.error = __('Something went wrong', 'checkout_engine');
-      }
-      console.log(this.error);
-    } finally {
-      this.loading = false;
-    }
-  }
+  @State() state: 'cancel' | 'update' | false;
+  @State() fetched: boolean;
 
   renderName(subscription_items: { object: 'list'; pagination: Pagination; data: Array<SubscriptionItem> }) {
     if (subscription_items.pagination.count > 1) {
@@ -57,7 +35,20 @@ export class CeCustomerSubscriptions {
     }
   }
 
+  @Watch('isIndex')
+  handleisIndexChange(val) {
+    if (!this.fetched && val) {
+      this.ceFetchSubscriptions.emit();
+      this.fetched = true;
+    }
+  }
+
   render() {
+    // must be index state.
+    if (!this.isIndex) {
+      return;
+    }
+
     if (this.loading) {
       return (
         <ce-card>
@@ -86,16 +77,19 @@ export class CeCustomerSubscriptions {
     }
 
     if (!this?.subscriptions?.length) {
-      return __('You have no subscriptions.', 'checkout_engine');
+      return <slot name="empty">{__('You have no subscriptions.', 'checkout_engine')}</slot>;
     }
 
-    return this.subscriptions.map(subscription => (
-      <ce-customer-subscription subscription={subscription}>
-        <ce-button type="primary" slot="actions">
-          {__('Update Plan', 'checkout_engine')}
-        </ce-button>
-        <ce-button slot="actions">{__('Cancel Plan', 'checkout_engine')}</ce-button>
-      </ce-customer-subscription>
-    ));
+    return (
+      <ce-spacing style={{ '--spacing': 'var(--ce-spacing-large)' }}>
+        <slot name="before-list" />
+        {this.subscriptions.map(subscription => {
+          return <ce-customer-subscription subscription={subscription}></ce-customer-subscription>;
+        })}
+        <slot name="after-list" />
+      </ce-spacing>
+    );
   }
 }
+
+openWormhole(CeCustomerSubscriptionsList, ['loading', 'subscriptions', 'error', 'isIndex'], false);

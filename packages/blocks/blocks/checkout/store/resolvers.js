@@ -1,10 +1,6 @@
 import { fetch as apiFetch } from '../../../../../resources/scripts/admin/store/data/controls';
 import { mergeEntities } from './actions';
-import {
-	normalizeProducts,
-	normalizePrices,
-	normalizeProduct,
-} from '../../../utils/schema';
+import { normalizeProducts, normalizePrices } from '../../../utils/schema';
 
 export default {
 	*searchProducts( query ) {
@@ -35,19 +31,6 @@ export default {
 			console.error( error );
 		}
 	},
-
-	// maybe not needed.
-	// *selectProductById( id ) {
-	// 	try {
-	// 		const product = yield apiFetch( {
-	// 			path: `products/${ id }`,
-	// 		} );
-	// 		const { entities } = normalizeProduct( product );
-	// 		return yield mergeEntities( entities );
-	// 	} catch ( error ) {
-	// 		console.error( error );
-	// 	}
-	// },
 
 	*selectPricesByIds( ids ) {
 		try {

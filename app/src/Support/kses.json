@@ -138,12 +138,46 @@
   },
   "ce-customer-subscription": {
     "subscription": true,
+    "upgrade-groups": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-customer-subscription-edit": {
+    "is-index": true,
+    "loading": true,
+    "subscription_id": true,
+    "subscriptions": true,
+    "upgrade-groups": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-customer-subscription-plan": {
+    "current": true,
+    "price": true,
+    "price-id": true,
+    "prices": true,
+    "products": true,
     "style": true,
     "class": true,
     "slot": true
   },
   "ce-customer-subscriptions": {
+    "cancel-behavior": true,
     "customer-id": true,
+    "upgrade-groups": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-customer-subscriptions-list": {
+    "cancel-behavior": true,
+    "customer-id": true,
+    "error": true,
+    "is-index": true,
+    "loading": true,
+    "subscriptions": true,
     "style": true,
     "class": true,
     "slot": true
@@ -275,6 +309,7 @@
     "slot": true
   },
   "ce-heading": {
+    "size": true,
     "style": true,
     "class": true,
     "slot": true

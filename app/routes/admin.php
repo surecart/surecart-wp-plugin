@@ -132,6 +132,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /*
 |--------------------------------------------------------------------------
+| Upgrade Paths
+|--------------------------------------------------------------------------
+*/
+\CheckoutEngine::route()
+->where( 'admin', 'ce-upgrade-paths' )
+->middleware( 'user.can:edit_pk_subscriptions' ) // TODO: change to manage coupons.
+->setNamespace( '\\CheckoutEngine\\Controllers\\Admin\\UpgradePaths\\' )
+->group(
+	function() {
+		\CheckoutEngine::route()->get()->name( 'upgrade-paths.edit' )->handle( 'UpgradePathsController@edit' );
+	}
+);
+
+/*
+|--------------------------------------------------------------------------
 | Settings
 |--------------------------------------------------------------------------
 */

@@ -48,6 +48,7 @@ import * as dashboardTab from './blocks/dashboard/dashboard-tab';
 import * as dashboardPages from './blocks/dashboard/dashboard-pages';
 import * as dashboardPage from './blocks/dashboard/dashboard-page';
 import * as customerOverview from './blocks/dashboard/customer-overview';
+import * as customerSubscriptions from './blocks/dashboard/customer-subscriptions';
 import * as customerOrders from './blocks/dashboard/customer-orders';
 import * as customerCharges from './blocks/dashboard/customer-charges';
 const dashboardComponents = [
@@ -56,6 +57,7 @@ const dashboardComponents = [
 	dashboardTab,
 	dashboardPages,
 	dashboardPage,
+	customerSubscriptions,
 	customerOverview,
 	customerOrders,
 	customerCharges,

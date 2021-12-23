@@ -10,6 +10,7 @@ export default ( {
 	required,
 	products,
 	onSelect,
+	value,
 	className,
 	onQuery,
 	onFetch,
@@ -69,6 +70,7 @@ export default ( {
 		<CeSelect
 			required={ required }
 			ref={ selectRef }
+			value={ value }
 			className={ className }
 			open={ open }
 			loading={ loading }

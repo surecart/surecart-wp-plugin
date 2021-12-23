@@ -57,13 +57,12 @@ class CheckoutSessionController extends RestController {
 			return $class;
 		}
 
-		// if the name or email is already set, don't overwrite it.
-		if ( ! empty( $request['name'] ) && ! empty( $request['email'] ) ) {
-			return $class;
-		}
-
 		// fetch the user's customer object.
 		$customer = $user->customer();
+
+		if ( ! empty( $customer->id ) ) {
+			$class['customer'] = $customer->id;
+		}
 
 		$class['email'] = $customer->email ?? $user->user_email;
 		$class['name']  = $customer->name ?? $user->display_name;

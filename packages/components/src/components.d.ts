@@ -312,12 +312,43 @@ export namespace Components {
     }
     interface CeCustomerSubscription {
         "subscription": Subscription;
+        "upgradeGroups": Array<Array<string>>;
+    }
+    interface CeCustomerSubscriptionEdit {
+        "isIndex": boolean;
+        "loading": boolean;
+        "subscription_id": string;
+        "subscriptions": Subscription[];
+        "upgradeGroups": Array<Array<string>>;
+    }
+    interface CeCustomerSubscriptionPlan {
+        "current": boolean;
+        "price": Price;
+        "priceId": string;
+        /**
+          * Price entities
+         */
+        "prices": Prices;
+        /**
+          * Product entity
+         */
+        "products": Products;
     }
     interface CeCustomerSubscriptions {
+        "cancelBehavior": 'period_end' | 'immediate';
+        "customerId": string;
+        "upgradeGroups": Array<Array<string>>;
+    }
+    interface CeCustomerSubscriptionsList {
+        "cancelBehavior": 'period_end' | 'immediate';
         /**
           * Customer id to fetch subscriptions
          */
         "customerId": string;
+        "error": string;
+        "isIndex": boolean;
+        "loading": boolean;
+        "subscriptions": Array<Subscription>;
     }
     interface CeDivider {
     }
@@ -582,6 +613,7 @@ export namespace Components {
         "value": number;
     }
     interface CeHeading {
+        "size": 'small' | 'medium' | 'large';
     }
     interface CeIcon {
         /**
@@ -1515,11 +1547,29 @@ declare global {
         prototype: HTMLCeCustomerSubscriptionElement;
         new (): HTMLCeCustomerSubscriptionElement;
     };
+    interface HTMLCeCustomerSubscriptionEditElement extends Components.CeCustomerSubscriptionEdit, HTMLStencilElement {
+    }
+    var HTMLCeCustomerSubscriptionEditElement: {
+        prototype: HTMLCeCustomerSubscriptionEditElement;
+        new (): HTMLCeCustomerSubscriptionEditElement;
+    };
+    interface HTMLCeCustomerSubscriptionPlanElement extends Components.CeCustomerSubscriptionPlan, HTMLStencilElement {
+    }
+    var HTMLCeCustomerSubscriptionPlanElement: {
+        prototype: HTMLCeCustomerSubscriptionPlanElement;
+        new (): HTMLCeCustomerSubscriptionPlanElement;
+    };
     interface HTMLCeCustomerSubscriptionsElement extends Components.CeCustomerSubscriptions, HTMLStencilElement {
     }
     var HTMLCeCustomerSubscriptionsElement: {
         prototype: HTMLCeCustomerSubscriptionsElement;
         new (): HTMLCeCustomerSubscriptionsElement;
+    };
+    interface HTMLCeCustomerSubscriptionsListElement extends Components.CeCustomerSubscriptionsList, HTMLStencilElement {
+    }
+    var HTMLCeCustomerSubscriptionsListElement: {
+        prototype: HTMLCeCustomerSubscriptionsListElement;
+        new (): HTMLCeCustomerSubscriptionsListElement;
     };
     interface HTMLCeDividerElement extends Components.CeDivider, HTMLStencilElement {
     }
@@ -1914,7 +1964,10 @@ declare global {
         "ce-customer-dashboard": HTMLCeCustomerDashboardElement;
         "ce-customer-order": HTMLCeCustomerOrderElement;
         "ce-customer-subscription": HTMLCeCustomerSubscriptionElement;
+        "ce-customer-subscription-edit": HTMLCeCustomerSubscriptionEditElement;
+        "ce-customer-subscription-plan": HTMLCeCustomerSubscriptionPlanElement;
         "ce-customer-subscriptions": HTMLCeCustomerSubscriptionsElement;
+        "ce-customer-subscriptions-list": HTMLCeCustomerSubscriptionsListElement;
         "ce-divider": HTMLCeDividerElement;
         "ce-dropdown": HTMLCeDropdownElement;
         "ce-email": HTMLCeEmailElement;
@@ -2290,13 +2343,51 @@ declare namespace LocalJSX {
         "order"?: CheckoutSession;
     }
     interface CeCustomerSubscription {
+        "onCeUpdateSubscription"?: (event: CustomEvent<Subscription>) => void;
         "subscription"?: Subscription;
+        "upgradeGroups"?: Array<Array<string>>;
+    }
+    interface CeCustomerSubscriptionEdit {
+        "isIndex"?: boolean;
+        "loading"?: boolean;
+        "onCeFetchSubscription"?: (event: CustomEvent<{ id: string; props?: object }>) => void;
+        "subscription_id"?: string;
+        "subscriptions"?: Subscription[];
+        "upgradeGroups"?: Array<Array<string>>;
+    }
+    interface CeCustomerSubscriptionPlan {
+        "current"?: boolean;
+        /**
+          * Add entities
+         */
+        "onCeAddEntities"?: (event: CustomEvent<any>) => void;
+        "price"?: Price;
+        "priceId"?: string;
+        /**
+          * Price entities
+         */
+        "prices"?: Prices;
+        /**
+          * Product entity
+         */
+        "products"?: Products;
     }
     interface CeCustomerSubscriptions {
+        "cancelBehavior"?: 'period_end' | 'immediate';
+        "customerId"?: string;
+        "upgradeGroups"?: Array<Array<string>>;
+    }
+    interface CeCustomerSubscriptionsList {
+        "cancelBehavior"?: 'period_end' | 'immediate';
         /**
           * Customer id to fetch subscriptions
          */
         "customerId"?: string;
+        "error"?: string;
+        "isIndex"?: boolean;
+        "loading"?: boolean;
+        "onCeFetchSubscriptions"?: (event: CustomEvent<object>) => void;
+        "subscriptions"?: Array<Subscription>;
     }
     interface CeDivider {
     }
@@ -2592,6 +2683,7 @@ declare namespace LocalJSX {
         "value"?: number;
     }
     interface CeHeading {
+        "size"?: 'small' | 'medium' | 'large';
     }
     interface CeIcon {
         /**
@@ -3533,7 +3625,10 @@ declare namespace LocalJSX {
         "ce-customer-dashboard": CeCustomerDashboard;
         "ce-customer-order": CeCustomerOrder;
         "ce-customer-subscription": CeCustomerSubscription;
+        "ce-customer-subscription-edit": CeCustomerSubscriptionEdit;
+        "ce-customer-subscription-plan": CeCustomerSubscriptionPlan;
         "ce-customer-subscriptions": CeCustomerSubscriptions;
+        "ce-customer-subscriptions-list": CeCustomerSubscriptionsList;
         "ce-divider": CeDivider;
         "ce-dropdown": CeDropdown;
         "ce-email": CeEmail;
@@ -3617,7 +3712,10 @@ declare module "@stencil/core" {
             "ce-customer-dashboard": LocalJSX.CeCustomerDashboard & JSXBase.HTMLAttributes<HTMLCeCustomerDashboardElement>;
             "ce-customer-order": LocalJSX.CeCustomerOrder & JSXBase.HTMLAttributes<HTMLCeCustomerOrderElement>;
             "ce-customer-subscription": LocalJSX.CeCustomerSubscription & JSXBase.HTMLAttributes<HTMLCeCustomerSubscriptionElement>;
+            "ce-customer-subscription-edit": LocalJSX.CeCustomerSubscriptionEdit & JSXBase.HTMLAttributes<HTMLCeCustomerSubscriptionEditElement>;
+            "ce-customer-subscription-plan": LocalJSX.CeCustomerSubscriptionPlan & JSXBase.HTMLAttributes<HTMLCeCustomerSubscriptionPlanElement>;
             "ce-customer-subscriptions": LocalJSX.CeCustomerSubscriptions & JSXBase.HTMLAttributes<HTMLCeCustomerSubscriptionsElement>;
+            "ce-customer-subscriptions-list": LocalJSX.CeCustomerSubscriptionsList & JSXBase.HTMLAttributes<HTMLCeCustomerSubscriptionsListElement>;
             "ce-divider": LocalJSX.CeDivider & JSXBase.HTMLAttributes<HTMLCeDividerElement>;
             "ce-dropdown": LocalJSX.CeDropdown & JSXBase.HTMLAttributes<HTMLCeDropdownElement>;
             "ce-email": LocalJSX.CeEmail & JSXBase.HTMLAttributes<HTMLCeEmailElement>;

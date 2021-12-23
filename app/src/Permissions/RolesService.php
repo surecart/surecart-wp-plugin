@@ -7,10 +7,6 @@ use CheckoutEngine\Models\Product;
  * Adds roles and capabilities.
  */
 class RolesService {
-	public function mapMetaCaps() {
-		 add_filter( 'map_meta_cap', [ $this, 'metaCaps' ], 10, 4 );
-	}
-
 	/**
 	 * Create roles and caps.
 	 *

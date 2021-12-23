@@ -7,6 +7,7 @@ use CheckoutEngine\Controllers\Admin\Subscriptions\SubscriptionScriptsController
 use CheckoutEngine\Controllers\Admin\Coupons\CouponScriptsController;
 use CheckoutEngine\Controllers\Admin\Products\ProductScriptsController;
 use CheckoutEngine\Controllers\Admin\Abandoned\AbandonedCheckoutScriptsController;
+use CheckoutEngine\Controllers\Admin\UpgradePaths\UpgradePathsScriptsController;
 
 class AdminMenuPageService {
 	protected $slug = 'ce-getting-started';
@@ -39,6 +40,7 @@ class AdminMenuPageService {
 			'coupons'       => \add_submenu_page( $this->slug, __( 'Coupons', 'checkout_engine' ), __( 'Coupons', 'checkout_engine' ), 'edit_pk_coupons', 'ce-coupons', '__return_false' ),
 			'customers'     => \add_submenu_page( $this->slug, __( 'Customers', 'checkout_engine' ), __( 'Customers', 'checkout_engine' ), 'edit_pk_customers', 'ce-customers', '__return_false' ),
 			'subscriptions' => \add_submenu_page( $this->slug, __( 'Subscriptions', 'checkout_engine' ), __( 'Subscriptions', 'checkout_engine' ), 'edit_pk_subscriptions', 'ce-subscriptions', '__return_false' ),
+			'upgrade-paths' => \add_submenu_page( $this->slug, __( 'Upgrade Paths', 'checkout_engine' ), __( 'Upgrade Paths', 'checkout_engine' ), 'edit_pk_products', 'ce-upgrade-paths', '__return_false' ),
 			'forms'         => \add_submenu_page( $this->slug, __( 'Forms', 'checkout_engine' ), __( 'Forms', 'checkout_engine' ), 'edit_posts', 'edit.php?post_type=ce_form', '' ),
 			'abandoned'     => \add_submenu_page( $this->slug, __( 'Abandoned Orders', 'checkout_engine' ), __( 'Abandoned Orders', 'checkout_engine' ), 'edit_pk_orders', 'ce-abandoned-checkouts', '__return_false' ),
 			'settings'      => \add_submenu_page( $this->slug, __( 'Settings', 'checkout_engine' ), __( 'Settings', 'checkout_engine' ), 'manage_account_settings', 'ce-settings', '__return_false' ),
@@ -71,6 +73,7 @@ class AdminMenuPageService {
 		add_action( "admin_print_scripts-{$this->pages['abandoned']}", \CheckoutEngine::closure()->method( AbandonedCheckoutScriptsController::class, 'enqueue' ) );
 		add_action( "admin_print_scripts-{$this->pages['products']}", \CheckoutEngine::closure()->method( ProductScriptsController::class, 'enqueue' ) );
 		add_action( "admin_print_scripts-{$this->pages['subscriptions']}", \CheckoutEngine::closure()->method( SubscriptionScriptsController::class, 'enqueue' ) );
+		add_action( "admin_print_scripts-{$this->pages['upgrade-paths']}", \CheckoutEngine::closure()->method( UpgradePathsScriptsController::class, 'enqueue' ) );
 		add_action( "admin_print_scripts-{$this->pages['settings']}", [ $this, 'settingsPageScripts' ] );
 	}
 

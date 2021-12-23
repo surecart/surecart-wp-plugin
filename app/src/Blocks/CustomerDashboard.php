@@ -39,7 +39,7 @@ class CustomerDashboard extends Block {
 		}
 
 		// maybe redirect to the first tab if one is not specified.
-		$this->maybeRedirectToInitialTab();
+		// $this->maybeRedirectToInitialTab();
 
 		return $content;
 	}

@@ -74,7 +74,11 @@ class Subscription extends Model {
 	 *
 	 * @return $this|\WP_Error
 	 */
-	protected function cancel() {
+	protected function cancel( $id = null ) {
+		if ( $id ) {
+			$this->setAttribute( 'id', $id );
+		}
+
 		if ( $this->fireModelEvent( 'canceling' ) === false ) {
 			return false;
 		}
@@ -87,6 +91,7 @@ class Subscription extends Model {
 			$this->endpoint . '/' . $this->attributes['id'] . '/cancel/',
 			[
 				'method' => 'PATCH',
+				'query'  => $this->query,
 			]
 		);
 

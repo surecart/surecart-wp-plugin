@@ -23,20 +23,16 @@ class SubscriptionsController extends RestController {
 	 * @return \WP_REST_Response
 	 */
 	public function cancel( \WP_REST_Request $request ) {
-		$args = $request->get_body_params();
-
-		// allow 3rd party validations on fields.
-		$errors = apply_filters( 'checkout_engine/subscription/cancel/validate', $args );
-
-		if ( ! empty( $errors ) ) {
-			$error = [
-				'code'              => 'invalid',
-				'message'           => __( 'Whoops! Something is not quite right.', 'checkout_engine' ),
-				'validation_errors' => $errors,
-			];
-			return \CheckoutEngine::errors()->translate( $error, 422 );
+		$model = $this->middleware( new $this->class(), $request );
+		if ( is_wp_error( $model ) ) {
+			return $model;
 		}
 
-		return Subscription::cancel();
+		// do we immediately cancel or at period end?
+		if ( apply_filters( 'checkout_engine/subscription/cancel/immediate', false, $request ) ) {
+			return $model->where( $request->get_query_params() )->cancel( $request['id'] );
+		}
+
+		return $model->where( $request->get_query_params() )->update( [ 'cancel_at_period_end' => true ] );
 	}
 }
