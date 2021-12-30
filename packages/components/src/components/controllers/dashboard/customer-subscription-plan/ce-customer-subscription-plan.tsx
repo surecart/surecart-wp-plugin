@@ -1,9 +1,10 @@
-import { Component, Prop, h, State, Event, EventEmitter, Watch } from '@stencil/core';
+import { Component, Prop, h, State, Event, EventEmitter, Watch, Element } from '@stencil/core';
 import { getPricesAndProducts } from '../../../../services/fetch';
 import { Price, Product, Prices, Products } from '../../../../types';
 import { openWormhole } from 'stencil-wormhole';
 import { translatedInterval } from '../../../../functions/price';
 import { __ } from '@wordpress/i18n';
+import { onFirstVisible } from '../../../../functions/lazy';
 
 @Component({
   tag: 'ce-customer-subscription-plan',
@@ -11,7 +12,7 @@ import { __ } from '@wordpress/i18n';
   shadow: true,
 })
 export class CeCustomerSubscriptionPlan {
-  @Prop() current: boolean;
+  @Element() el: HTMLCeCustomerSubscriptionPlanElement;
   @Prop() priceId: string;
   @Prop({ mutable: true }) price: Price;
   /** Price entities */
@@ -31,9 +32,11 @@ export class CeCustomerSubscriptionPlan {
   }
 
   componentWillLoad() {
-    if (!this.price) {
-      this.fetchPriceWithProduct();
-    }
+    onFirstVisible(this.el, () => {
+      if (!this.price) {
+        this.fetchPriceWithProduct();
+      }
+    });
   }
 
   /** Fetch prices and products */
@@ -56,10 +59,18 @@ export class CeCustomerSubscriptionPlan {
   render() {
     if (this.loading) {
       return (
-        <div>
-          <ce-skeleton style={{ width: '60px', display: 'inline-block' }}></ce-skeleton>
-          <ce-skeleton style={{ width: '80px', display: 'inline-block' }} slot="price"></ce-skeleton>
-          <ce-skeleton style={{ width: '120px', display: 'inline-block' }} slot="description"></ce-skeleton>
+        <div class="subscription-plan">
+          <div>
+            <div class="subscription-plan__name" part="name">
+              <ce-skeleton style={{ width: '120px', display: 'inline-block' }}></ce-skeleton>
+            </div>
+            <div>
+              <ce-skeleton style={{ width: '80px', display: 'inline-block' }}></ce-skeleton>
+            </div>
+          </div>
+          <div>
+            <ce-skeleton style={{ width: '120px', display: 'inline-block' }}></ce-skeleton>
+          </div>
         </div>
       );
     }
@@ -80,14 +91,7 @@ export class CeCustomerSubscriptionPlan {
           </div>
         </div>
         <div>
-          {this.current ? (
-            <ce-button type="text">
-              <ce-icon name="check" slot="prefix"></ce-icon>
-              {__('Current Plan', 'checkout_engine')}
-            </ce-button>
-          ) : (
-            <ce-button size="large">{__('Continue', 'checkout_engine')}</ce-button>
-          )}
+          <slot name="actions" />
         </div>
       </div>
     );

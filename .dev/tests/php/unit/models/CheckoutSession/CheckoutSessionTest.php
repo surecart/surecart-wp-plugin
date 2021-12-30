@@ -28,13 +28,6 @@ class CheckoutSessionTest extends CheckoutEngineUnitTestCase
 	}
 
 	/**
-	 * Tear down our test app instance.
-	 */
-	public function tearDown() {
-		\CheckoutEngine::setApplication( null );
-	}
-
-	/**
 	 * @group session
 	 * @group models
 	 */

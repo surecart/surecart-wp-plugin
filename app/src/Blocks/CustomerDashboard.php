@@ -50,6 +50,10 @@ class CustomerDashboard extends Block {
 	 * @return void
 	 */
 	public function maybeRedirectToInitialTab() {
+		if ( is_admin() ) {
+			return;
+		}
+
 		$tab = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : false;
 
 		if ( ! $tab ) {

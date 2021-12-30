@@ -172,7 +172,7 @@ export class CeCustomerSubscription {
             </div>
             <div class="subscription__price" part="price">
               <ce-format-number type="currency" currency={this.subscription?.currency} value={this.subscription?.total_amount}></ce-format-number>
-              {translatedInterval(price.recurring_interval_count, price.recurring_interval, '/', '')}
+              {translatedInterval(price?.recurring_interval_count || 0, price?.recurring_interval, '/', '')}
             </div>
             <ce-text>{this.renderCancelText()}</ce-text>
             <ce-button size="large" type="primary" onClick={() => this.cancelPlan()} loading={this.updating}>

@@ -154,7 +154,6 @@
     "slot": true
   },
   "ce-customer-subscription-plan": {
-    "current": true,
     "price": true,
     "price-id": true,
     "prices": true,
@@ -166,6 +165,7 @@
   "ce-customer-subscriptions": {
     "cancel-behavior": true,
     "customer-id": true,
+    "subscription": true,
     "upgrade-groups": true,
     "style": true,
     "class": true,
@@ -560,6 +560,21 @@
     "slot": true
   },
   "ce-register-icon-library": {
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-route": {
+    "default": true,
+    "location": true,
+    "matched": true,
+    "query-var": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-router": {
+    "auto-scroll": true,
     "style": true,
     "class": true,
     "slot": true

@@ -2,9 +2,13 @@
   display: block;
 }
 
+
 .subscription-edit {
+  position: relative;
+  &__content {
   display: grid;
   gap: 2em;
+  }
 
   &__plans {
     display: grid;

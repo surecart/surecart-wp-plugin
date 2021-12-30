@@ -27,7 +27,6 @@ class ProductTest extends CheckoutEngineUnitTestCase
 	}
 
 	/**
-	 * @group failing
 	 *
 	 * @return void
 	 */

@@ -23,6 +23,10 @@ class RolesServiceProvider implements ServiceProviderInterface {
 			return new RolesService();
 		};
 
+		$container['checkout_engine.permissions.permissions'] = function () {
+			return new PermissionsService();
+		};
+
 		$app = $container[ WPEMERGE_APPLICATION_KEY ];
 
 		// register_setting alias.
@@ -33,7 +37,7 @@ class RolesServiceProvider implements ServiceProviderInterface {
 			}
 		);
 
-		add_filter( 'map_meta_cap', [ $this, 'metaCaps' ], 10, 4 );
+		$container['checkout_engine.permissions.permissions']->register();
 	}
 
 	/**
@@ -59,31 +63,31 @@ class RolesServiceProvider implements ServiceProviderInterface {
 	 */
 	public function metaCaps( $caps, $cap, $user_id, $args ) {
 		switch ( $cap ) {
-			case 'edit_pk_subscription':
-				// need a customer id.
-				$customer_id = User::find( $user_id )->customerId();
+			// case 'edit_pk_subscription':
+			// need a customer id.
+			// $customer_id = User::find( $user_id )->customerId();
 
-				if ( ! $customer_id ) {
-					$caps[] = 'do_not_allow';
-					break;
-				}
+			// if ( ! $customer_id ) {
+			// $caps[] = 'do_not_allow';
+			// break;
+			// }
 
-				// need a subscription.
-				$subscription = Subscription::find( $args[0] );
-				if ( ! $subscription ) {
-					$caps[] = 'do_not_allow';
-					break;
-				}
+			// need a subscription.
+			// $subscription = Subscription::find( $args[0] );
+			// if ( ! $subscription ) {
+			// $caps[] = 'do_not_allow';
+			// break;
+			// }
 
-				// needs to match.
-				if ( $subscription->customer !== $customer_id ) {
-					$caps[] = 'do_not_allow';
-					break;
-				}
+			// needs to match.
+			// if ( $subscription->customer !== $customer_id ) {
+			// $caps[] = 'do_not_allow';
+			// break;
+			// }
 
-				$caps[] = 'edit_pk_subscriptions';
-				break;
-			// TODO: Add more meta caps.
+			// $caps[] = 'edit_pk_subscriptions';
+			// break;
+			// // TODO: Add more meta caps.
 			case 'read_pk_subscription':
 				$subscription = Subscription::find( $args[0] );
 				if ( ! $subscription ) {

@@ -3,7 +3,6 @@
 namespace CheckoutEngine\Tests\Controllers\Rest;
 
 use CheckoutEngine\Controllers\Rest\CheckoutSessionController;
-use CheckoutEngine\Models\Form;
 use CheckoutEngine\Models\CheckoutSession;
 use CheckoutEngine\Tests\CheckoutEngineUnitTestCase;
 use WP_REST_Request;

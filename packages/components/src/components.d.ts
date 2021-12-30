@@ -322,7 +322,6 @@ export namespace Components {
         "upgradeGroups": Array<Array<string>>;
     }
     interface CeCustomerSubscriptionPlan {
-        "current": boolean;
         "price": Price;
         "priceId": string;
         /**
@@ -337,6 +336,7 @@ export namespace Components {
     interface CeCustomerSubscriptions {
         "cancelBehavior": 'period_end' | 'immediate';
         "customerId": string;
+        "subscription": { id?: string };
         "upgradeGroups": Array<Array<string>>;
     }
     interface CeCustomerSubscriptionsList {
@@ -1131,6 +1131,15 @@ export namespace Components {
         "registerIconLibrary": (name: string, options: { resolver: IconLibraryResolver; mutator?: IconLibraryMutator; }) => Promise<void>;
         "unregisterIconLibrary": (name: string) => Promise<void>;
     }
+    interface CeRoute {
+        "default": boolean;
+        "location"?: string;
+        "matched": boolean;
+        "queryVar": string;
+    }
+    interface CeRouter {
+        "autoScroll": boolean;
+    }
     interface CeSecureNotice {
     }
     interface CeSelect {
@@ -1799,6 +1808,18 @@ declare global {
         prototype: HTMLCeRegisterIconLibraryElement;
         new (): HTMLCeRegisterIconLibraryElement;
     };
+    interface HTMLCeRouteElement extends Components.CeRoute, HTMLStencilElement {
+    }
+    var HTMLCeRouteElement: {
+        prototype: HTMLCeRouteElement;
+        new (): HTMLCeRouteElement;
+    };
+    interface HTMLCeRouterElement extends Components.CeRouter, HTMLStencilElement {
+    }
+    var HTMLCeRouterElement: {
+        prototype: HTMLCeRouterElement;
+        new (): HTMLCeRouterElement;
+    };
     interface HTMLCeSecureNoticeElement extends Components.CeSecureNotice, HTMLStencilElement {
     }
     var HTMLCeSecureNoticeElement: {
@@ -2006,6 +2027,8 @@ declare global {
         "ce-radio": HTMLCeRadioElement;
         "ce-radio-group": HTMLCeRadioGroupElement;
         "ce-register-icon-library": HTMLCeRegisterIconLibraryElement;
+        "ce-route": HTMLCeRouteElement;
+        "ce-router": HTMLCeRouterElement;
         "ce-secure-notice": HTMLCeSecureNoticeElement;
         "ce-select": HTMLCeSelectElement;
         "ce-session-detail": HTMLCeSessionDetailElement;
@@ -2356,7 +2379,6 @@ declare namespace LocalJSX {
         "upgradeGroups"?: Array<Array<string>>;
     }
     interface CeCustomerSubscriptionPlan {
-        "current"?: boolean;
         /**
           * Add entities
          */
@@ -2375,6 +2397,8 @@ declare namespace LocalJSX {
     interface CeCustomerSubscriptions {
         "cancelBehavior"?: 'period_end' | 'immediate';
         "customerId"?: string;
+        "onCeNavigate"?: (event: CustomEvent<object>) => void;
+        "subscription"?: { id?: string };
         "upgradeGroups"?: Array<Array<string>>;
     }
     interface CeCustomerSubscriptionsList {
@@ -3244,6 +3268,16 @@ declare namespace LocalJSX {
     }
     interface CeRegisterIconLibrary {
     }
+    interface CeRoute {
+        "default"?: boolean;
+        "location"?: string;
+        "matched"?: boolean;
+        "onCeNavigationComplete"?: (event: CustomEvent<void>) => void;
+        "queryVar"?: string;
+    }
+    interface CeRouter {
+        "autoScroll"?: boolean;
+    }
     interface CeSecureNotice {
     }
     interface CeSelect {
@@ -3667,6 +3701,8 @@ declare namespace LocalJSX {
         "ce-radio": CeRadio;
         "ce-radio-group": CeRadioGroup;
         "ce-register-icon-library": CeRegisterIconLibrary;
+        "ce-route": CeRoute;
+        "ce-router": CeRouter;
         "ce-secure-notice": CeSecureNotice;
         "ce-select": CeSelect;
         "ce-session-detail": CeSessionDetail;
@@ -3754,6 +3790,8 @@ declare module "@stencil/core" {
             "ce-radio": LocalJSX.CeRadio & JSXBase.HTMLAttributes<HTMLCeRadioElement>;
             "ce-radio-group": LocalJSX.CeRadioGroup & JSXBase.HTMLAttributes<HTMLCeRadioGroupElement>;
             "ce-register-icon-library": LocalJSX.CeRegisterIconLibrary & JSXBase.HTMLAttributes<HTMLCeRegisterIconLibraryElement>;
+            "ce-route": LocalJSX.CeRoute & JSXBase.HTMLAttributes<HTMLCeRouteElement>;
+            "ce-router": LocalJSX.CeRouter & JSXBase.HTMLAttributes<HTMLCeRouterElement>;
             "ce-secure-notice": LocalJSX.CeSecureNotice & JSXBase.HTMLAttributes<HTMLCeSecureNoticeElement>;
             "ce-select": LocalJSX.CeSelect & JSXBase.HTMLAttributes<HTMLCeSelectElement>;
             "ce-session-detail": LocalJSX.CeSessionDetail & JSXBase.HTMLAttributes<HTMLCeSessionDetailElement>;

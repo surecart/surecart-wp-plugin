@@ -22,34 +22,6 @@ export default ( { attributes, setAttributes } ) => {
 				</PanelBody>
 			</InspectorControls>
 			<ce-spacing style={ { '--spacing': 'var(--ce-spacing-xx-large)' } }>
-				<ce-card>
-					<ce-flex>
-						<div>
-							<ce-text
-								style={ {
-									'--font-weight':
-										'var(--ce-font-weight-bold)',
-									'--font-size': 'var(--ce-font-size-large);',
-								} }
-							>
-								Typographic Starter
-							</ce-text>
-							<ce-text>$10.00 per month</ce-text>
-							<ce-text
-								style={ {
-									'--color': 'var(--ce-color-gray-500)',
-								} }
-							>
-								Your plan renews on January 21, 2022.
-							</ce-text>
-						</div>
-						<ce-flex flex-direction="column">
-							<ce-button type="primary">Update Plan</ce-button>
-							<ce-button>Cancel Plan</ce-button>
-						</ce-flex>
-					</ce-flex>
-				</ce-card>
-
 				<ce-card borderless>
 					<ce-heading slot="title">Payment Methods</ce-heading>
 					<ce-flex justify-content="flex-start">

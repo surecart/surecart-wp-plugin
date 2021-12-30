@@ -1,7 +1,8 @@
-import { Component, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Prop, State } from '@stencil/core';
 import { sprintf, __ } from '@wordpress/i18n';
 import { Pagination, Price, Subscription, SubscriptionItem } from '../../../../types';
 import { openWormhole } from 'stencil-wormhole';
+import { onFirstVisible } from '../../../../functions/lazy';
 
 @Component({
   tag: 'ce-customer-subscriptions-list',
@@ -9,6 +10,7 @@ import { openWormhole } from 'stencil-wormhole';
   shadow: true,
 })
 export class CeCustomerSubscriptionsList {
+  @Element() el: HTMLCeCustomerSubscriptionsListElement;
   /** Customer id to fetch subscriptions */
   @Prop() customerId: string;
   @Prop() cancelBehavior: 'period_end' | 'immediate' = 'period_end';
@@ -35,20 +37,13 @@ export class CeCustomerSubscriptionsList {
     }
   }
 
-  @Watch('isIndex')
-  handleisIndexChange(val) {
-    if (!this.fetched && val) {
+  componentWillLoad() {
+    onFirstVisible(this.el, () => {
       this.ceFetchSubscriptions.emit();
-      this.fetched = true;
-    }
+    });
   }
 
   render() {
-    // must be index state.
-    if (!this.isIndex) {
-      return;
-    }
-
     if (this.loading) {
       return (
         <ce-card>

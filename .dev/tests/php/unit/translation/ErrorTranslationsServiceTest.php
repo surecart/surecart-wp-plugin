@@ -22,12 +22,6 @@ class ErrorsTranslationServiceTest extends CheckoutEngineUnitTestCase
 		], false);
 	}
 
-	public function tearDown()
-	{
-		parent::tearDown();
-		Mockery::close();
-	}
-
 	public function test_has_fallback()
 	{
 		$translation_service = \CheckoutEngine::errors()->translate();

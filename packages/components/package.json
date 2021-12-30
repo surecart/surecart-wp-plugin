@@ -36,6 +36,7 @@
   },
   "dependencies": {
     "@stencil/core": "2.9.0",
+    "@stencil/router": "^1.0.1",
     "@stencil/sass": "^1.4.0",
     "@stripe/stripe-js": "^1.21.1",
     "@wordpress/api-fetch": "^5.1.1",

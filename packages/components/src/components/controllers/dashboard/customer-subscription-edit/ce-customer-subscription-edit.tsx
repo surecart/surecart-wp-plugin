@@ -1,8 +1,9 @@
 import { Component, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
 import { Price, Subscription } from '../../../../types';
 import { _n, __, sprintf } from '@wordpress/i18n';
-// import { translatedInterval } from '../../../functions/price';
+import apiFetch from '../../../../functions/fetch';
 import { openWormhole } from 'stencil-wormhole';
+import { addQueryArgs } from '@wordpress/url';
 import { translatedInterval } from '../../../../functions/price';
 
 @Component({
@@ -18,6 +19,8 @@ export class CeCustomerSubscriptionEdit {
   @Prop() isIndex: boolean;
 
   @State() subscription: Subscription;
+  @State() error: string;
+  @State() updating: boolean;
 
   @Event() ceFetchSubscription: EventEmitter<{ id: string; props?: object }>;
 
@@ -81,12 +84,37 @@ export class CeCustomerSubscriptionEdit {
     return (this.upgradeGroups || []).filter(group => group.includes(this.price()?.id)).flat();
   }
 
-  render() {
-    // must be index state.
-    if (this.isIndex) {
-      return null;
+  async updatePlan(price: string, quantity: number) {
+    try {
+      this.error = '';
+      this.updating = true;
+      this.subscription = (await apiFetch({
+        method: 'PATCH',
+        path: addQueryArgs(`checkout-engine/v1/subscriptions/${this.subscription.id}`, {
+          expand: ['subscription_items', 'subscription_item.price', 'price.product'],
+        }),
+        data: {
+          subscription_items: [
+            {
+              price,
+              quantity,
+            },
+          ],
+        },
+      })) as Subscription;
+    } catch (e) {
+      if (e?.message) {
+        this.error = e.message;
+      } else {
+        this.error = __('Something went wrong', 'checkout_engine');
+      }
+      console.error(this.error);
+    } finally {
+      this.updating = false;
     }
+  }
 
+  render() {
     if (this.loading) {
       return (
         <ce-card>
@@ -112,8 +140,8 @@ export class CeCustomerSubscriptionEdit {
     const price = this.subscription?.subscription_items?.data?.[0].price as Price;
 
     return (
-      <ce-card>
-        <div class="subscription-edit">
+      <ce-card class="subscription-edit">
+        <div class="subscription-edit__content">
           <div class="module">
             <ce-heading size="small">{__('Current Plan', 'checkout_engine')}</ce-heading>
             <ce-divider style={{ '--spacing': 'var(--ce-spacing-small)' }}></ce-divider>
@@ -136,14 +164,40 @@ export class CeCustomerSubscriptionEdit {
                 {this.upgradePriceIds().map(id => {
                   return (
                     <ce-card>
-                      <ce-customer-subscription-plan current={id === this.price()?.id} priceId={id}></ce-customer-subscription-plan>
+                      <ce-customer-subscription-plan priceId={id}>
+                        <span slot="actions">
+                          {id === this.price()?.id ? (
+                            <ce-button size="medium" type="text">
+                              <ce-icon name="check" slot="prefix"></ce-icon>
+                              {__('Current Plan', 'checkout_engine')}
+                            </ce-button>
+                          ) : (
+                            <ce-button size="medium" type="default" onClick={() => this.updatePlan(id, 1)}>
+                              {__('Change to This Plan', 'checkout_engine')}
+                            </ce-button>
+                          )}
+                        </span>
+                      </ce-customer-subscription-plan>
                     </ce-card>
                   );
                 })}
               </div>
             </div>
           )}
+
+          <div>
+            <ce-button
+              size="medium"
+              type="default"
+              onClick={() => {
+                window.history.back();
+              }}
+            >
+              {__('Go Back', 'checkout_engine')}
+            </ce-button>
+          </div>
         </div>
+        {this.updating && <ce-block-ui spinner></ce-block-ui>}
       </ce-card>
     );
   }

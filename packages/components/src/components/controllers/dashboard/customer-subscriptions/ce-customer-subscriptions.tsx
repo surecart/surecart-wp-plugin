@@ -1,7 +1,7 @@
-import { Component, h, Listen, Prop, State, Watch } from '@stencil/core';
+import { Component, Event, EventEmitter, h, Listen, Prop, State, Watch } from '@stencil/core';
 import { addQueryArgs, getQueryArg } from '@wordpress/url';
 import apiFetch from '../../../../functions/fetch';
-import { Universe } from 'stencil-wormhole';
+import { openWormhole, Universe } from 'stencil-wormhole';
 import { Prices, Products, Subscription } from '../../../../types';
 import { __ } from '@wordpress/i18n';
 
@@ -11,6 +11,7 @@ import { __ } from '@wordpress/i18n';
   shadow: true,
 })
 export class CeCustomerSubscriptions {
+  @Prop() subscription: { id?: string } = { id: null };
   @Prop() customerId: string;
   @Prop() cancelBehavior: 'period_end' | 'immediate' = 'period_end';
   @Prop() upgradeGroups: Array<Array<string>>;
@@ -21,6 +22,9 @@ export class CeCustomerSubscriptions {
   @State() id: string;
   @State() error: string;
   @State() currentState: 'index' | 'single' = 'index';
+
+  @Event({ composed: true, cancelable: true, bubbles: true })
+  ceNavigate: EventEmitter<object>;
 
   @Listen('ceAddEntities')
   handleAddEntities(e) {
@@ -47,8 +51,7 @@ export class CeCustomerSubscriptions {
     const subscription = e.detail;
     if (subscription) {
       this.id = subscription.id;
-      console.log(this.id);
-      window.history.pushState(null, '', addQueryArgs(window.location.href, { subscription: { id: subscription.id } }));
+      this.ceNavigate.emit({ subscription: { id: subscription.id, edit: true } });
     } else {
       this.id = null;
     }
@@ -143,7 +146,7 @@ export class CeCustomerSubscriptions {
 
   state() {
     return {
-      subscription_id: this.id,
+      subscription_id: this.subscription?.id,
       upgradeGroups: this.upgradeGroups,
       customerId: this.customerId,
       prices: this.pricesEntities,
@@ -164,3 +167,5 @@ export class CeCustomerSubscriptions {
     );
   }
 }
+
+openWormhole(CeCustomerSubscriptions, ['subscription']);
