@@ -2,6 +2,7 @@
 
 namespace CheckoutEngine\Permissions;
 
+use CheckoutEngine\Permissions\Models\ChargePermissionsController;
 use CheckoutEngine\Permissions\Models\SubscriptionPermissionsController;
 
 /**
@@ -15,6 +16,7 @@ class PermissionsService {
 	 */
 	protected $controllers = [
 		SubscriptionPermissionsController::class,
+		ChargePermissionsController::class,
 	];
 
 	/**

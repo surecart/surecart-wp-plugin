@@ -3,6 +3,7 @@
 namespace CheckoutEngine\Rest;
 
 use CheckoutEngine\Controllers\Rest\ChargesController;
+use CheckoutEngine\Models\User;
 use CheckoutEngine\Rest\RestServiceInterface;
 
 /**
@@ -78,7 +79,12 @@ class ChargesRestServiceProvider extends RestServiceProvider implements RestServ
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_items_permissions_check( $request ) {
-		return true; // current_user_can( 'read_pk_charges' );
+		// a customer can list their own charges.
+		if ( isset( $request['customer_ids'] ) && 1 === count( $request['customer_ids'] ) ) {
+			return User::current()->customerId() === $request['customer_ids'][0];
+		}
+
+		return current_user_can( 'read_pk_charges' );
 	}
 
 	/**
