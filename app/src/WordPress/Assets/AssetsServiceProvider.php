@@ -262,29 +262,18 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function editorAssets() {
-		$asset_file = include trailingslashit( $this->container[ WPEMERGE_CONFIG_KEY ]['app_core']['path'] ) . 'dist/blocks/blocks.asset.php';
+		$asset_file = include trailingslashit( $this->container[ WPEMERGE_CONFIG_KEY ]['app_core']['path'] ) . 'dist/blocks.asset.php';
 
 		\CheckoutEngine::core()->assets()->enqueueScript(
 			'checkout-engine-blocks',
-			trailingslashit( \CheckoutEngine::core()->assets()->getUrl() ) . 'dist/blocks/blocks.js',
+			trailingslashit( \CheckoutEngine::core()->assets()->getUrl() ) . 'dist/blocks.js',
 			array_merge( [ 'checkout-engine-components' ], $asset_file['dependencies'] ),
 			true
 		);
 
-		wp_localize_script(
-			'checkout-engine-blocks',
-			'ceData',
-			[
-				'keys' => [
-					'stripe'          => 'pk_test_51FrVhTKIxBDlEhovnzFUjE1K3e8s9QInYW4a2S1BrYYgePmNIFZUCSvUY90MmD10PNh0ZxYFoxkW6P1xsfPofCYG00JTdSKWFO',
-					'stripeAccountId' => 'acct_1J8pDC2ejo5ZGM5Q',
-				],
-			]
-		);
-
 		\CheckoutEngine::core()->assets()->enqueueStyle(
 			'checkout-engine-blocks-style',
-			trailingslashit( \CheckoutEngine::core()->assets()->getUrl() ) . 'dist/blocks/style-blocks.css',
+			trailingslashit( \CheckoutEngine::core()->assets()->getUrl() ) . 'dist/style-blocks.css',
 			[],
 		);
 

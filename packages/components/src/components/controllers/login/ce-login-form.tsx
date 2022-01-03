@@ -12,6 +12,7 @@ export class CeLogin {
 
   @State() step: string = '';
   @State() email: string = '';
+  @State() password: string = '';
   @State() loading: boolean;
   @State() error: string;
 
@@ -44,6 +45,33 @@ export class CeLogin {
     }
   }
 
+  async login() {
+    try {
+      this.loading = true;
+      const { redirect_url } = await await apiFetch({
+        method: 'POST',
+        path: 'checkout-engine/v1/login',
+        data: {
+          login: this.email,
+          password: this.password,
+        },
+      });
+
+      if (redirect_url) {
+        window.location.replace(redirect_url);
+      } else {
+        window.location.reload();
+      }
+    } catch (e) {
+      if (e?.message) {
+        this.error = e.message;
+      } else {
+        this.error = __('Something went wrong', 'checkout_engine');
+      }
+      console.error(this.error);
+    }
+  }
+
   renderInner() {
     if (this.step === 'complete') {
       return (
@@ -58,15 +86,20 @@ export class CeLogin {
     if (this.step === 'password' && this.email) {
       return (
         <div>
-          <ce-form>
-            <ce-button type="primary" submit full onClick={() => this.submitMagicLink()}>
+          <ce-form onCeFormSubmit={() => this.submitMagicLink()}>
+            <ce-button type="primary" submit full>
               <ce-icon name="mail" slot="prefix" />
               {__('Send a magic link', 'checkout_engine')}
             </ce-button>
           </ce-form>
           <ce-divider>{__('or', 'checkout_engine')}</ce-divider>
-          <ce-form>
-            <ce-input label={__('Enter your password', 'checkout_engine')} type="password"></ce-input>
+          <ce-form onCeFormSubmit={() => this.login()}>
+            <ce-input
+              label={__('Enter your password', 'checkout_engine')}
+              type="password"
+              autofocus
+              onCeChange={e => (this.password = (e.target as HTMLCeInputElement).value)}
+            ></ce-input>
             <ce-button type="primary" outline submit full onClick={() => this.submitMagicLink()}>
               <ce-icon name="lock" slot="prefix" />
               {__('Login', 'checkout_engine')}
@@ -106,16 +139,14 @@ export class CeLogin {
 
   render() {
     return (
-      <ce-form>
-        <div class="login-form">
-          <div class="login-form__title" part="title">
-            <slot name="title"></slot>
-          </div>
-          <ce-card>{this.renderInner()}</ce-card>
-          {this.loading && <ce-block-ui spinner></ce-block-ui>}
+      <div class="login-form">
+        <div class="login-form__title" part="title">
+          <slot name="title"></slot>
         </div>
+        <ce-card>{this.renderInner()}</ce-card>
+        {this.loading && <ce-block-ui spinner></ce-block-ui>}
         {this.renderError()}
-      </ce-form>
+      </div>
     );
   }
 }

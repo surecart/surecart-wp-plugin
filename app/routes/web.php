@@ -9,6 +9,8 @@
  * @package CheckoutEngine
  */
 
+use CheckoutEngine\Middleware\LoginMiddleware;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -16,4 +18,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 // Customer dashboard.
 \CheckoutEngine::route()
 ->where( 'post_id', \CheckoutEngine::pages()->getId( 'dashboard' ) )
-->get()->name( 'dashboard' )->handle( 'DashboardController@show' );
+->group(
+	function() {
+		\CheckoutEngine::route()->get()->name( 'dashboard.show' )->handle( 'DashboardController@show' );
+		\CheckoutEngine::route()->post()->middleware( LoginMiddleware::class )->name( 'dashboard.login' )->handle( 'DashboardController@login' );
+	}
+);
+

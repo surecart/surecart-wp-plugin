@@ -49,6 +49,9 @@ abstract class DashboardPage extends Block {
 			if ( is_wp_error( $this->customer ) ) {
 				return $this->customer->get_error_message();
 			}
+			if ( ! $this->customer ) {
+				return false;
+			}
 			$this->customer_id = $this->customer->id;
 		}
 

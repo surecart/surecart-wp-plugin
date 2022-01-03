@@ -32,6 +32,7 @@ return [
 
 		// REST providers.
 		\CheckoutEngine\Rest\AccountRestServiceProvider::class,
+		\CheckoutEngine\Rest\LoginRestServiceProvider::class,
 		\CheckoutEngine\Rest\CustomerLinksRestServiceProvider::class,
 		\CheckoutEngine\Rest\SettingsRestServiceProvider::class,
 		\CheckoutEngine\Rest\ProductsRestServiceProvider::class,
@@ -51,6 +52,7 @@ return [
 		\CheckoutEngine\Blocks\CheckoutForm::class,
 		\CheckoutEngine\Blocks\Form::class,
 		\CheckoutEngine\Blocks\BuyButton::class,
+		\CheckoutEngine\Blocks\LogoutButton::class,
 		\CheckoutEngine\Blocks\CustomerDashboardPage::class,
 		\CheckoutEngine\Blocks\CustomerDashboardTab::class,
 		\CheckoutEngine\Blocks\CustomerDashboardButton::class,

@@ -1,0 +1,163 @@
+/**
+ * WordPress dependencies
+ */
+import { sprintf, __ } from '@wordpress/i18n';
+import {
+	useBlockProps,
+	store as blockEditorStore,
+	__experimentalUseInnerBlocksProps as useInnerBlocksProps,
+} from '@wordpress/block-editor';
+import { useSelect, useDispatch } from '@wordpress/data';
+import { useEffect, useRef } from '@wordpress/element';
+import {
+	createBlock,
+	createBlocksFromInnerBlocksTemplate,
+} from '@wordpress/blocks';
+
+export default ( { clientId } ) => {
+	const {
+		updateBlockAttributes,
+		insertBlocks,
+		replaceInnerBlocks,
+	} = useDispatch( blockEditorStore );
+	const blockProps = useBlockProps();
+	const innerBlocksProps = useInnerBlocksProps( blockProps, {
+		orientation: 'horizontal',
+		templateLock: 'all',
+		renderAppender: false,
+	} );
+
+	const {
+		tabBlocks,
+		panelBlocks,
+		panelsWrapper,
+		tabsWrapper,
+		blocks,
+	} = useSelect( ( select ) => {
+		const innerBlocks = select( 'core/block-editor' ).getBlocks( clientId );
+		const tabsWrapper = innerBlocks.find(
+			( block ) => block.name === 'checkout-engine/dashboard-tabs'
+		);
+		const panelsWrapper = innerBlocks.find(
+			( block ) => block.name === 'checkout-engine/dashboard-pages'
+		);
+		const blocks = select( 'core/block-editor' )
+			.getBlocks( tabsWrapper.clientId )
+			.filter(
+				( block ) => block.name === 'checkout-engine/dashboard-tab'
+			);
+		console.log( blocks );
+		return {
+			tabsWrapper,
+			panelsWrapper,
+			tabBlocks: select( 'core/block-editor' ).getBlocks(
+				tabsWrapper.clientId
+			),
+			blocks,
+			panelBlocks: select( 'core/block-editor' ).getBlocks(
+				panelsWrapper.clientId
+			),
+		};
+	} );
+
+	console.log( { blocks } );
+
+	const previousTabBlocks = useRef( tabBlocks );
+	const previousPanelBlocks = useRef( panelBlocks );
+
+	useEffect( () => {
+		// sync panel
+		tabBlocks.forEach( ( tabBlock ) => {
+			const panelBlock = panelBlocks.find(
+				( panelBlock ) =>
+					panelBlock.attributes.id === tabBlock.attributes.id
+			);
+			if ( panelBlock ) {
+				updateBlockAttributes( panelBlock.clientId, {
+					name: tabBlock.attributes.panel,
+				} );
+			}
+		} );
+
+		// Tab is added
+		if ( previousTabBlocks.current.length < tabBlocks.length ) {
+			const addedTab = tabBlocks.find(
+				( tab ) =>
+					! previousTabBlocks.current.find(
+						( previousTab ) => previousTab.clientId === tab.clientId
+					)
+			);
+
+			const title = sprintf(
+				__( 'New Tab %d', 'checkout_engine' ),
+				tabBlocks.length
+			);
+
+			const name = title
+				.toLowerCase()
+				.replace( / /g, '-' )
+				.replace( /[^\w-]+/g, '' );
+
+			updateBlockAttributes( addedTab.clientId, {
+				id: addedTab.clientId,
+				title: title,
+				active: true,
+				panel: name,
+			} );
+
+			const panel = createBlock(
+				'checkout-engine/dashboard-page',
+				{
+					id: addedTab.clientId,
+					name,
+					title,
+				},
+				createBlocksFromInnerBlocksTemplate( [
+					[ 'checkout-engine/heading', { title } ],
+				] )
+			);
+
+			insertBlocks( panel, 0, panelsWrapper.clientId );
+		}
+
+		// Tab is removed.
+		if ( previousTabBlocks.current.length > tabBlocks.length ) {
+			const removedTab = previousTabBlocks.current.find(
+				( tab ) =>
+					! tabBlocks.find(
+						( previousTab ) => previousTab.clientId === tab.clientId
+					)
+			);
+
+			const innerBlocks = panelBlocks.filter(
+				( panelBlock ) =>
+					panelBlock.attributes.id !== removedTab.attributes.id
+			);
+
+			replaceInnerBlocks( panelsWrapper.clientId, innerBlocks );
+		}
+
+		// Panel is removed.
+		if ( previousPanelBlocks.current.length > panelBlocks.length ) {
+			const removedPanel = previousPanelBlocks.current.find(
+				( panel ) =>
+					! panelBlocks.find(
+						( previousPanel ) =>
+							previousPanel.clientId === panel.clientId
+					)
+			);
+
+			const innerBlocks = tabBlocks.filter(
+				( tabBlock ) =>
+					tabBlock.attributes.id !== removedPanel.attributes.id
+			);
+
+			replaceInnerBlocks( tabsWrapper.clientId, innerBlocks );
+		}
+
+		previousTabBlocks.current = tabBlocks;
+		previousPanelBlocks.current = panelBlocks;
+	}, [ tabBlocks, panelBlocks ] );
+
+	return <ce-tab-group { ...innerBlocksProps }></ce-tab-group>;
+};
