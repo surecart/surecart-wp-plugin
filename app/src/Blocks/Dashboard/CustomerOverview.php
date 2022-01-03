@@ -27,7 +27,7 @@ class CustomerOverview extends DashboardPage {
 		return \CheckoutEngine::blocks()->render(
 			'web.dashboard.overview.show',
 			[
-				'customer_id' => $this->customer->id,
+				'customer_id' => $this->customer_id,
 			]
 		);
 	}

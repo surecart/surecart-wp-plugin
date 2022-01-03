@@ -79,25 +79,25 @@ class CustomerOrders extends DashboardPage {
 
 		$page = isset( $_GET['current-page'] ) ? sanitize_text_field( wp_unslash( $_GET['current-page'] ) ) : 1;
 
-		return \CheckoutEngine::blocks()->render(
-			'web.dashboard.orders.index',
-			[
-				'orders' => CheckoutSession::where(
-					[
-						'status'       => [ 'paid', 'completed' ],
-						'customer_ids' => [ $this->customer->id ],
-					]
-				)->with(
-					[
-						'line_items',
-					]
-				)->paginate(
-					[
-						'page'     => $page,
-						'per_page' => intval( $attributes['per_page'] ?? 10 ),
-					]
-				),
-			]
-		);
+		// return \CheckoutEngine::blocks()->render(
+		// 'web.dashboard.orders.index',
+		// [
+		// 'orders' => CheckoutSession::where(
+		// [
+		// 'status'       => [ 'paid', 'completed' ],
+		// 'customer_ids' => [ $this->customer->id ],
+		// ]
+		// )->with(
+		// [
+		// 'line_items',
+		// ]
+		// )->paginate(
+		// [
+		// 'page'     => $page,
+		// 'per_page' => intval( $attributes['per_page'] ?? 10 ),
+		// ]
+		// ),
+		// ]
+		// );
 	}
 }

@@ -75,37 +75,37 @@ class CustomerCharges extends DashboardPage {
 	 * @return function
 	 */
 	public function index( $attributes ) {
-		if ( empty( $this->customer->id ) ) {
+		if ( empty( $this->customer_id ) ) {
 			return; // sanity check.
 		}
 
 		$page = isset( $_GET['current-page'] ) ? sanitize_text_field( wp_unslash( $_GET['current-page'] ) ) : 1;
 
-		return \CheckoutEngine::blocks()->render(
-			'web.dashboard.charges.index',
-			[
-				'tab'     => 'charges',
-				'charges' => Charge::where(
-					[
-						'customer_ids' => [ $this->customer->id ],
-					]
-				)->with(
-					[
-						'checkout_session',
-						'checkout_session.line_items',
-						'line_item.price',
-						'subscription',
-						'subscription.subscription_items',
-						'subscription_item.price',
-						'price.product',
-					]
-				)->paginate(
-					[
-						'page'     => $page,
-						'per_page' => intval( $attributes['per_page'] ?? 10 ),
-					]
-				),
-			]
-		);
+		// return \CheckoutEngine::blocks()->render(
+		// 'web.dashboard.charges.index',
+		// [
+		// 'tab'     => 'charges',
+		// 'charges' => Charge::where(
+		// [
+		// 'customer_ids' => [ $this->customer->id ],
+		// ]
+		// )->with(
+		// [
+		// 'checkout_session',
+		// 'checkout_session.line_items',
+		// 'line_item.price',
+		// 'subscription',
+		// 'subscription.subscription_items',
+		// 'subscription_item.price',
+		// 'price.product',
+		// ]
+		// )->paginate(
+		// [
+		// 'page'     => $page,
+		// 'per_page' => intval( $attributes['per_page'] ?? 10 ),
+		// ]
+		// ),
+		// ]
+		// );
 	}
 }

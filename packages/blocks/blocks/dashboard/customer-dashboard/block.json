@@ -8,5 +8,11 @@
 	"supports": {
 		"reusable": false,
 		"html": false
+	},
+	"attributes": {
+		"currentStep": {
+			"type": "number",
+			"default": 0
+		}
 	}
 }

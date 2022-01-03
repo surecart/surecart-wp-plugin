@@ -17,6 +17,13 @@ abstract class DashboardPage extends Block {
 	protected $customer = null;
 
 	/**
+	 * Holds the customer id.
+	 *
+	 * @var string
+	 */
+	protected $customer_id = null;
+
+	/**
 	 * Run middleware before rendering the block.
 	 *
 	 * @param array  $attributes Block attributes.
@@ -35,10 +42,14 @@ abstract class DashboardPage extends Block {
 			return false;
 		}
 
+		$this->customer_id = $user->customerId();
 		// user must be a customer.
-		$this->customer = $user->customer();
-		if ( is_wp_error( $this->customer ) ) {
-			return $this->customer->get_error_message();
+		if ( ! $this->customer_id ) {
+			$this->customer = $user->customer();
+			if ( is_wp_error( $this->customer ) ) {
+				return $this->customer->get_error_message();
+			}
+			$this->customer_id = $this->customer->id;
 		}
 
 		return true;

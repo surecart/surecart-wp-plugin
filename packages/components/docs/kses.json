@@ -390,6 +390,11 @@
     "class": true,
     "slot": true
   },
+  "ce-login-form": {
+    "style": true,
+    "class": true,
+    "slot": true
+  },
   "ce-menu": {
     "style": true,
     "class": true,

@@ -791,6 +791,8 @@ export namespace Components {
          */
         "checkoutSession": CheckoutSession;
     }
+    interface CeLoginForm {
+    }
     interface CeMenu {
     }
     interface CeMenuDivider {
@@ -1694,6 +1696,12 @@ declare global {
         prototype: HTMLCeLineItemsProviderElement;
         new (): HTMLCeLineItemsProviderElement;
     };
+    interface HTMLCeLoginFormElement extends Components.CeLoginForm, HTMLStencilElement {
+    }
+    var HTMLCeLoginFormElement: {
+        prototype: HTMLCeLoginFormElement;
+        new (): HTMLCeLoginFormElement;
+    };
     interface HTMLCeMenuElement extends Components.CeMenu, HTMLStencilElement {
     }
     var HTMLCeMenuElement: {
@@ -2008,6 +2016,7 @@ declare global {
         "ce-line-item-total": HTMLCeLineItemTotalElement;
         "ce-line-items": HTMLCeLineItemsElement;
         "ce-line-items-provider": HTMLCeLineItemsProviderElement;
+        "ce-login-form": HTMLCeLoginFormElement;
         "ce-menu": HTMLCeMenuElement;
         "ce-menu-divider": HTMLCeMenuDividerElement;
         "ce-menu-item": HTMLCeMenuItemElement;
@@ -2912,6 +2921,8 @@ declare namespace LocalJSX {
          */
         "onCeUpdateLineItems"?: (event: CustomEvent<Array<LineItemData>>) => void;
     }
+    interface CeLoginForm {
+    }
     interface CeMenu {
         "onCeSelect"?: (event: CustomEvent<{ item: HTMLCeMenuItemElement }>) => void;
     }
@@ -3682,6 +3693,7 @@ declare namespace LocalJSX {
         "ce-line-item-total": CeLineItemTotal;
         "ce-line-items": CeLineItems;
         "ce-line-items-provider": CeLineItemsProvider;
+        "ce-login-form": CeLoginForm;
         "ce-menu": CeMenu;
         "ce-menu-divider": CeMenuDivider;
         "ce-menu-item": CeMenuItem;
@@ -3771,6 +3783,7 @@ declare module "@stencil/core" {
             "ce-line-item-total": LocalJSX.CeLineItemTotal & JSXBase.HTMLAttributes<HTMLCeLineItemTotalElement>;
             "ce-line-items": LocalJSX.CeLineItems & JSXBase.HTMLAttributes<HTMLCeLineItemsElement>;
             "ce-line-items-provider": LocalJSX.CeLineItemsProvider & JSXBase.HTMLAttributes<HTMLCeLineItemsProviderElement>;
+            "ce-login-form": LocalJSX.CeLoginForm & JSXBase.HTMLAttributes<HTMLCeLoginFormElement>;
             "ce-menu": LocalJSX.CeMenu & JSXBase.HTMLAttributes<HTMLCeMenuElement>;
             "ce-menu-divider": LocalJSX.CeMenuDivider & JSXBase.HTMLAttributes<HTMLCeMenuDividerElement>;
             "ce-menu-item": LocalJSX.CeMenuItem & JSXBase.HTMLAttributes<HTMLCeMenuItemElement>;

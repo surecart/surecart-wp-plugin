@@ -32,6 +32,7 @@ return [
 
 		// REST providers.
 		\CheckoutEngine\Rest\AccountRestServiceProvider::class,
+		\CheckoutEngine\Rest\CustomerLinksRestServiceProvider::class,
 		\CheckoutEngine\Rest\SettingsRestServiceProvider::class,
 		\CheckoutEngine\Rest\ProductsRestServiceProvider::class,
 		\CheckoutEngine\Rest\PriceRestServiceProvider::class,

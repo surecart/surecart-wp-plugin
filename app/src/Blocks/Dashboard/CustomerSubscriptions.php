@@ -41,7 +41,7 @@ class CustomerSubscriptions extends DashboardPage {
 		return \CheckoutEngine::blocks()->render(
 			'web.dashboard.subscriptions.index',
 			[
-				'customer_id'     => $this->customer->id,
+				'customer_id'     => $this->customer_id,
 				'cancel_behavior' => 'cancel',
 				'page'            => (int) $page,
 			]
@@ -63,7 +63,7 @@ class CustomerSubscriptions extends DashboardPage {
 		return \CheckoutEngine::blocks()->render(
 			'web.dashboard.subscriptions.show',
 			[
-				'customer_id' => $this->customer->id,
+				'customer_id' => $this->customer_id,
 			]
 		);
 	}
@@ -76,14 +76,14 @@ class CustomerSubscriptions extends DashboardPage {
 	 * @return function
 	 */
 	public function index( $attributes ) {
-		if ( empty( $this->customer->id ) ) {
+		if ( empty( $this->customer_id ) ) {
 			return; // sanity check.
 		}
 
 		return \CheckoutEngine::blocks()->render(
 			'web.dashboard.subscriptions.index',
 			[
-				'customer_id'     => $this->customer->id,
+				'customer_id'     => $this->customer_id,
 				'cancel_behavior' => 'cancel',
 				'page'            => (int) $page,
 			]

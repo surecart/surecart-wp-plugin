@@ -5,6 +5,10 @@
   display: none !important;
 }
 
+::slotted(*:not(:last-child)) {
+  margin-top: 0.5rem;
+}
+
 ::slotted(ul) {
   line-height: 1.4em;
   list-style-type: disc;

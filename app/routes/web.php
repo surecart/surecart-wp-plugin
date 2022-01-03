@@ -9,8 +9,6 @@
  * @package CheckoutEngine
  */
 
-use CheckoutEngine\Middleware\CustomerDashboardMiddleware;
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -18,5 +16,4 @@ if ( ! defined( 'ABSPATH' ) ) {
 // Customer dashboard.
 \CheckoutEngine::route()
 ->where( 'post_id', \CheckoutEngine::pages()->getId( 'dashboard' ) )
-->middleware( CustomerDashboardMiddleware::class )
-->get()->name( 'orders' )->handle( 'DashboardController@show' );
+->get()->name( 'dashboard' )->handle( 'DashboardController@show' );

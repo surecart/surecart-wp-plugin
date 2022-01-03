@@ -7,21 +7,20 @@ import { __ } from '@wordpress/i18n';
 import {
 	useBlockProps,
 	InnerBlocks,
-	InspectorControls,
 	__experimentalUseInnerBlocksProps as useInnerBlocksProps,
 } from '@wordpress/block-editor';
 import { Fragment } from '@wordpress/element';
-import { TextControl, PanelBody, PanelRow } from '@wordpress/components';
 import { CeTabPanel } from '@checkout-engine/react';
 
-export default ( { attributes, setAttributes } ) => {
-	const { name, id } = attributes;
+export default ( { attributes } ) => {
+	const { name } = attributes;
 	const blockProps = useBlockProps( {
 		name,
 	} );
 
 	const innerBlocksProps = useInnerBlocksProps( blockProps, {
 		templateLock: false,
+		renderAppender: InnerBlocks.ButtonBlockAppender,
 	} );
 
 	return (

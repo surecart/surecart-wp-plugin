@@ -9,42 +9,50 @@ import {
 } from '@wordpress/block-editor';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { useEffect, useRef } from '@wordpress/element';
-import { createBlock } from '@wordpress/blocks';
+import {
+	createBlock,
+	createBlocksFromInnerBlocksTemplate,
+} from '@wordpress/blocks';
 
 export default ( { clientId } ) => {
-	const { updateBlockAttributes, insertBlocks } = useDispatch(
-		blockEditorStore
-	);
-
+	const {
+		updateBlockAttributes,
+		insertBlocks,
+		replaceInnerBlocks,
+	} = useDispatch( blockEditorStore );
 	const blockProps = useBlockProps();
-
 	const innerBlocksProps = useInnerBlocksProps( blockProps, {
 		orientation: 'horizontal',
 		templateLock: 'all',
 		renderAppender: false,
 	} );
 
-	const { tabBlocks, panelBlocks, panelsWrapper } = useSelect( ( select ) => {
-		const innerBlocks = select( 'core/block-editor' ).getBlocks( clientId );
-		const tabsWrapper = innerBlocks.find(
-			( block ) => block.name === 'checkout-engine/dashboard-tabs'
-		);
-		const panelsWrapper = innerBlocks.find(
-			( block ) => block.name === 'checkout-engine/dashboard-pages'
-		);
-		return {
-			tabsWrapper,
-			panelsWrapper,
-			tabBlocks: select( 'core/block-editor' ).getBlocks(
-				tabsWrapper.clientId
-			),
-			panelBlocks: select( 'core/block-editor' ).getBlocks(
-				panelsWrapper.clientId
-			),
-		};
-	} );
+	const { tabBlocks, panelBlocks, panelsWrapper, tabsWrapper } = useSelect(
+		( select ) => {
+			const innerBlocks = select( 'core/block-editor' ).getBlocks(
+				clientId
+			);
+			const tabsWrapper = innerBlocks.find(
+				( block ) => block.name === 'checkout-engine/dashboard-tabs'
+			);
+			const panelsWrapper = innerBlocks.find(
+				( block ) => block.name === 'checkout-engine/dashboard-pages'
+			);
+			return {
+				tabsWrapper,
+				panelsWrapper,
+				tabBlocks: select( 'core/block-editor' ).getBlocks(
+					tabsWrapper.clientId
+				),
+				panelBlocks: select( 'core/block-editor' ).getBlocks(
+					panelsWrapper.clientId
+				),
+			};
+		}
+	);
 
 	const previousTabBlocks = useRef( tabBlocks );
+	const previousPanelBlocks = useRef( panelBlocks );
 
 	useEffect( () => {
 		// sync panel
@@ -60,7 +68,7 @@ export default ( { clientId } ) => {
 			}
 		} );
 
-		// added. Add a panel
+		// Tab is added
 		if ( previousTabBlocks.current.length < tabBlocks.length ) {
 			const addedTab = tabBlocks.find(
 				( tab ) =>
@@ -86,19 +94,59 @@ export default ( { clientId } ) => {
 				panel: name,
 			} );
 
-			const panel = createBlock( 'checkout-engine/dashboard-page', {
-				id: addedTab.clientId,
-				name,
-				title,
-			} );
-
-			console.log( { panel } );
+			const panel = createBlock(
+				'checkout-engine/dashboard-page',
+				{
+					id: addedTab.clientId,
+					name,
+					title,
+				},
+				createBlocksFromInnerBlocksTemplate( [
+					[ 'checkout-engine/heading', { title } ],
+				] )
+			);
 
 			insertBlocks( panel, 0, panelsWrapper.clientId );
 		}
 
+		// Tab is removed.
+		if ( previousTabBlocks.current.length > tabBlocks.length ) {
+			const removedTab = previousTabBlocks.current.find(
+				( tab ) =>
+					! tabBlocks.find(
+						( previousTab ) => previousTab.clientId === tab.clientId
+					)
+			);
+
+			const innerBlocks = panelBlocks.filter(
+				( panelBlock ) =>
+					panelBlock.attributes.id !== removedTab.attributes.id
+			);
+
+			replaceInnerBlocks( panelsWrapper.clientId, innerBlocks );
+		}
+
+		// Panel is removed.
+		if ( previousPanelBlocks.current.length > panelBlocks.length ) {
+			const removedPanel = previousPanelBlocks.current.find(
+				( panel ) =>
+					! panelBlocks.find(
+						( previousPanel ) =>
+							previousPanel.clientId === panel.clientId
+					)
+			);
+
+			const innerBlocks = tabBlocks.filter(
+				( tabBlock ) =>
+					tabBlock.attributes.id !== removedPanel.attributes.id
+			);
+
+			replaceInnerBlocks( tabsWrapper.clientId, innerBlocks );
+		}
+
 		previousTabBlocks.current = tabBlocks;
-	}, [ tabBlocks ] );
+		previousPanelBlocks.current = panelBlocks;
+	}, [ tabBlocks, panelBlocks ] );
 
 	return <ce-tab-group { ...innerBlocksProps }></ce-tab-group>;
 };

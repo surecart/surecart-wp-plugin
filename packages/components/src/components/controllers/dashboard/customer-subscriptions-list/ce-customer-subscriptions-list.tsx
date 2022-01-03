@@ -1,5 +1,7 @@
 import { Component, Element, Event, EventEmitter, h, Prop, State } from '@stencil/core';
 import { sprintf, __ } from '@wordpress/i18n';
+import { addQueryArgs } from '@wordpress/url';
+import apiFetch from '../../../../functions/fetch';
 import { Pagination, Price, Subscription, SubscriptionItem } from '../../../../types';
 import { openWormhole } from 'stencil-wormhole';
 import { onFirstVisible } from '../../../../functions/lazy';
@@ -15,7 +17,7 @@ export class CeCustomerSubscriptionsList {
   @Prop() customerId: string;
   @Prop() cancelBehavior: 'period_end' | 'immediate' = 'period_end';
   @Prop() loading: boolean;
-  @Prop() subscriptions: Array<Subscription>;
+  @Prop({ mutable: true }) subscriptions: Array<Subscription>;
   @Prop() error: string;
   @Prop() isIndex: boolean;
 
@@ -39,8 +41,33 @@ export class CeCustomerSubscriptionsList {
 
   componentWillLoad() {
     onFirstVisible(this.el, () => {
-      this.ceFetchSubscriptions.emit();
+      this.getSubscriptions();
     });
+  }
+
+  /** Get all subscriptions */
+  async getSubscriptions(props = {}) {
+    if (!this.customerId) return;
+    try {
+      this.loading = true;
+      this.subscriptions = (await await apiFetch({
+        path: addQueryArgs(`checkout-engine/v1/subscriptions/`, {
+          expand: ['subscription_items', 'subscription_item.price', 'price.product'],
+          status: ['active', 'trialing'],
+          customer_ids: [this.customerId],
+          ...props,
+        }),
+      })) as Subscription[];
+    } catch (e) {
+      if (e?.message) {
+        this.error = e.message;
+      } else {
+        this.error = __('Something went wrong', 'checkout_engine');
+      }
+      console.error(this.error);
+    } finally {
+      this.loading = false;
+    }
   }
 
   render() {

@@ -36,26 +36,6 @@ class CustomerDashboardPage extends Block {
 	];
 
 	/**
-	 * List of controller callbacks for various requests.
-	 *
-	 * @var array
-	 */
-	protected $callbacks = [
-		'orders'        => [
-			'index' => [ CustomerCheckoutSessionController::class, 'index' ],
-			'show'  => [ CustomerCheckoutSessionController::class, 'show' ],
-		],
-		'subscriptions' => [
-			'index' => [ CustomerSubscriptionController::class, 'index' ],
-			'show'  => [ CustomerSubscriptionController::class, 'show' ],
-		],
-		'charges'       => [
-			'index' => [ CustomerChargesController::class, 'index' ],
-			'show'  => [ CustomerChargesController::class, 'show' ],
-		],
-	];
-
-	/**
 	 * Render the block
 	 *
 	 * @param array  $attributes Block attributes.
@@ -69,7 +49,7 @@ class CustomerDashboardPage extends Block {
 
 		// make sure we are on the correct tab.
 		if ( empty( $attributes['name'] ) || $tab !== $attributes['name'] ) {
-			return;
+			return '';
 		}
 
 		return '<ce-spacing style="--spacing: var(--ce-spacing-large)">' . wp_kses_post( $content ) . '</ce-spacing>';
