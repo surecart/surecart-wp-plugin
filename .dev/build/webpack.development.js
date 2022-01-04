@@ -36,22 +36,6 @@ const devHotUrl = url.parse(
 const hotUrl = `${ devHotUrl.protocol }//${ devHotUrl.host }:${ devPort }/`;
 
 /**
- * Setup babel loader.
- */
-const babelLoader = {
-	loader: 'babel-loader',
-	options: {
-		cacheDirectory: true,
-		comments: false,
-		presets: [
-			'env',
-			// airbnb not included as stage-2 already covers it
-			'stage-2',
-		],
-	},
-};
-
-/**
  * Setup webpack plugins.
  */
 const plugins = [
@@ -81,11 +65,6 @@ const plugins = [
 			{
 				from: './packages/components/dist',
 				to: './components/',
-				toType: 'dir',
-			},
-			{
-				from: './packages/blocks/dist',
-				to: './blocks/',
 				toType: 'dir',
 			},
 			{

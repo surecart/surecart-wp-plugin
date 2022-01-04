@@ -1,0 +1,18 @@
+{
+	"name": "checkout-engine/customer-charges",
+	"title": "Customer Charges",
+	"description": "Displays the customers charges.",
+	"category": "layout",
+	"keywords": [ "name", "customer", "dashboard" ],
+	"parent": [ "checkout-engine/dashboard-page" ],
+	"supports": {
+		"reusable": false,
+		"html": false
+	},
+  "attributes" :{
+    "per_page": {
+      "type": "number",
+      "default": "10"
+    }
+  }
+}

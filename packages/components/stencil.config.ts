@@ -59,8 +59,6 @@ export const config: Config = {
             slot: true,
           };
         });
-        // return docs;
-        // Custom logic goes here
         await fs.writeFile('./docs/kses.json', JSON.stringify(out, null, 2));
       },
     },

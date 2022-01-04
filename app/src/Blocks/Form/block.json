@@ -1,0 +1,25 @@
+{
+	"name": "checkout-engine/form",
+	"title": "Form",
+	"description": "Displays a form.",
+	"category": "layout",
+	"keywords": [ "email", "mail" ],
+	"supports": {
+		"reusable": false,
+		"html": false,
+		"lock": {
+			"remove": true,
+			"move": true
+		}
+	},
+	"attributes": {
+		"mode": {
+      "type": "string",
+			"enum": [ "test", "live" ],
+			"default": "live"
+		},
+		"prices": {
+			"type": "array"
+		}
+	}
+}

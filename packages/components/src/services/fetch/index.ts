@@ -3,7 +3,7 @@ import apiFetch from '../../functions/fetch';
 import { addQueryArgs } from '@wordpress/url';
 const path = 'checkout-engine/v1/products/';
 
-import { normalizePrices } from '../../../../blocks/utils/schema';
+import { normalizePrices } from '../../../../../resources/scripts/schema';
 
 export const getPricesAndProducts = async ({ ids, active = true }: { ids: Array<string>; active: boolean }) => {
   const prices = (await apiFetch({

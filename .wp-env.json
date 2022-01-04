@@ -5,6 +5,7 @@
 		"tests": {
 			"config": {
 				"FS_METHOD": "direct",
+				"WP_DEBUG": true,
 				"CE_TESTING": true
 			}
 		}

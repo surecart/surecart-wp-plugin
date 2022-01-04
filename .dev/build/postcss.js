@@ -9,7 +9,6 @@ const env = utils.detectEnv();
  * Setup PostCSS plugins.
  */
 const plugins = [
-	require( 'tailwindcss' )( '.dev/build/tailwindcss.js' ),
 	require( 'postcss-discard-comments' ),
 	require( 'autoprefixer' ),
 	// Uncomment to enable combined media queries.

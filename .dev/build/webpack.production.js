@@ -51,11 +51,6 @@ const plugins = [
 				toType: 'dir',
 			},
 			{
-				from: './packages/blocks/dist',
-				to: './blocks/',
-				toType: 'dir',
-			},
-			{
 				from: './packages/components/docs/kses.json',
 				to: '../app/src/Support/kses.json',
 			},

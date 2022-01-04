@@ -6,8 +6,6 @@
  * @package CheckoutEngine
  */
 
-use CheckoutEngine\Support\ConvertTSToKSES;
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }

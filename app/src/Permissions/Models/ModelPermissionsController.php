@@ -35,8 +35,8 @@ abstract class ModelPermissionsController {
 	 * @return string[] Primitive capabilities required of the user.
 	 */
 	public function handle( $allcaps, $caps, $args, $user ) {
-		$name = $caps[0];
-		if ( method_exists( $this, $name ) ) {
+		$name = $caps[0] ?? false;
+		if ( $name && method_exists( $this, $name ) ) {
 			// we need a customer id first.
 			$customer_id = $this->getCustomerId( $user->ID );
 			if ( ! $customer_id ) {

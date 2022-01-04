@@ -271,12 +271,6 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 			true
 		);
 
-		\CheckoutEngine::core()->assets()->enqueueStyle(
-			'checkout-engine-blocks-style',
-			trailingslashit( \CheckoutEngine::core()->assets()->getUrl() ) . 'dist/style-blocks.css',
-			[],
-		);
-
 		$this->enqueueDefaultTheme();
 	}
 

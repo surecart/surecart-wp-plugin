@@ -5,8 +5,8 @@
 >
     @if ($show_icon)
         <ce-icon
-            slot="log-out"
-            name="{{ $show_icon }}"
+            slot="prefix"
+            name="log-out"
         ></ce-icon>
     @endif
 

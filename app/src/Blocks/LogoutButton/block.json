@@ -1,0 +1,40 @@
+{
+	"name": "checkout-engine/logout-button",
+	"apiVersion": 2,
+	"title": "Logout Button",
+	"description": "Display a logout button.",
+	"category": "layout",
+	"keywords": [ "name", "customer", "dashboard" ],
+	"parent": null,
+	"textdomain": "checkout_engine",
+	"supports": {
+		"reusable": false,
+		"html": false
+	},
+	"attributes": {
+		"label": {
+			"type": "string",
+			"default": "Logout"
+		},
+		"type": {
+			"type": "string",
+			"default": "primary"
+		},
+		"size": {
+			"type": "string",
+			"default": "medium"
+		},
+		"full": {
+			"type": "boolean",
+			"default": true
+		},
+		"show_icon": {
+			"type": "boolean",
+			"default": true
+		},
+		"redirectToCurrent": {
+			"type": "boolean",
+			"default": true
+		}
+	}
+}

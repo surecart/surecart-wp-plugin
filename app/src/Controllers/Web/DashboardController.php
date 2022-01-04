@@ -16,13 +16,4 @@ class DashboardController {
 		// use original page view.
 		return \CheckoutEngine::view( $view );
 	}
-
-	/**
-	 * Login the user.
-	 */
-	public function login( $request ) {
-		wp_verify_nonce( $request->query( 'nonce' ), "archive_$model_name" )
-
-		return \CheckoutEngine::redirect()->to( $login_url );
-	}
 }

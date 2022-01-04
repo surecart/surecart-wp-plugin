@@ -49,18 +49,18 @@ return [
 	* Blocks
 	*/
 	'blocks'              => [
-		\CheckoutEngine\Blocks\CheckoutForm::class,
-		\CheckoutEngine\Blocks\Form::class,
-		\CheckoutEngine\Blocks\BuyButton::class,
-		\CheckoutEngine\Blocks\LogoutButton::class,
-		\CheckoutEngine\Blocks\CustomerDashboardPage::class,
-		\CheckoutEngine\Blocks\CustomerDashboardTab::class,
-		\CheckoutEngine\Blocks\CustomerDashboardButton::class,
-		\CheckoutEngine\Blocks\CustomerDashboard::class,
-		\CheckoutEngine\Blocks\Dashboard\CustomerOverview::class,
-		\CheckoutEngine\Blocks\Dashboard\CustomerSubscriptions::class,
-		\CheckoutEngine\Blocks\Dashboard\CustomerOrders::class,
-		\CheckoutEngine\Blocks\Dashboard\CustomerCharges::class,
+		\CheckoutEngine\Blocks\BuyButton\Block::class,
+		\CheckoutEngine\Blocks\CheckoutForm\Block::class,
+		\CheckoutEngine\Blocks\Form\Block::class,
+		\CheckoutEngine\Blocks\LogoutButton\Block::class,
+		// dashboard.
+		\CheckoutEngine\Blocks\Dashboard\CustomerCharges\Block::class,
+		\CheckoutEngine\Blocks\Dashboard\CustomerDashboard\Block::class,
+		\CheckoutEngine\Blocks\Dashboard\CustomerOrders\Block::class,
+		\CheckoutEngine\Blocks\Dashboard\CustomerSubscriptions\Block::class,
+		\CheckoutEngine\Blocks\Dashboard\DashboardPage\Block::class,
+		\CheckoutEngine\Blocks\Dashboard\DashboardTab\Block::class,
+
 	],
 
 	/**

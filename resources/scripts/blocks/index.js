@@ -1,8 +1,8 @@
 /**
  * WordPress dependencies
  */
+import { registerBlockCollection, registerBlockType } from '@wordpress/blocks';
 import { __ } from '@wordpress/i18n';
-import { registerBlockType, registerBlockCollection } from '@wordpress/blocks';
 
 // Register block collection
 registerBlockCollection( 'checkout-engine', {
@@ -10,48 +10,46 @@ registerBlockCollection( 'checkout-engine', {
 } );
 
 // blocks
-import * as checkout from './blocks/checkout';
-import * as email from './blocks/email';
-import * as total from './blocks/total';
-import * as subtotal from './blocks/subtotal';
-import * as priceSelector from './blocks/price-selector';
-import * as priceChoice from './blocks/price-choice';
-import * as title from './blocks/section-title';
-import * as totals from './blocks/totals';
-import * as name from './blocks/name';
-import * as payment from './blocks/payment';
-import * as heading from './blocks/heading';
-import * as sessionDetail from './blocks/session-detail';
-import * as sessionSubscription from './blocks/session-subscription';
-import * as expressPayment from './blocks/express-payment';
-import * as confirmation from './blocks/confirmation';
-import * as confirmationLineItems from './blocks/order-confirmation-line-items';
-import * as confirmationTotals from './blocks/order-confirmation-totals';
-import * as customerDashboardButton from './blocks/customer-dashboard-button';
-import * as logoutButton from './blocks/logout-button';
-import * as coupon from './blocks/coupon';
-import * as lineItems from './blocks/line-items';
-import * as button from './blocks/button';
-import * as form from './blocks/form';
-import * as buyButton from './blocks/buy-button';
-import * as submit from './blocks/submit';
-import * as card from './blocks/card';
-import * as input from './blocks/input';
-import * as password from './blocks/password';
-import * as divider from './blocks/divider';
-import * as checkbox from './blocks/checkbox';
-import * as switchBlock from './blocks/switch';
+import * as button from '@blocks/Button';
+import * as buyButton from '@blocks/BuyButton';
+import * as card from '@blocks/Card';
+import * as confirmation from '@blocks/Confirmation';
+import * as coupon from '@blocks/Coupon';
+import * as customerDashboardButton from '@blocks/CustomerDashboardButton';
+import * as divider from '@blocks/divider';
+import * as logoutButton from '@blocks/LogoutButton';
+import * as checkout from '@blocks/checkoutForm';
+import * as email from '@blocks/email';
+import * as total from '@blocks/total';
+import * as subtotal from '@blocks/subtotal';
+import * as priceSelector from '@blocks/PriceSelector';
+import * as priceChoice from '@blocks/PriceChoice';
+import * as totals from '@blocks/totals';
+import * as name from '@blocks/name';
+import * as payment from '@blocks/payment';
+import * as heading from '@blocks/heading';
+import * as sessionDetail from '@blocks/SessionDetail';
+import * as expressPayment from '@blocks/ExpressPayment';
+import * as confirmationLineItems from '@blocks/OrderConfirmationLineItems';
+import * as confirmationTotals from '@blocks/OrderConfirmationTotals';
+import * as lineItems from '@blocks/LineItems';
+import * as form from '@blocks/form';
+import * as submit from '@blocks/submit';
+import * as input from '@blocks/input';
+import * as password from '@blocks/password';
+import * as checkbox from '@blocks/checkbox';
+import * as switchBlock from '@blocks/switch';
 
 // dashboard
-import * as customerDashboard from './blocks/dashboard/customer-dashboard';
-import * as dashboardTabs from './blocks/dashboard/dashboard-tabs';
-import * as dashboardTab from './blocks/dashboard/dashboard-tab';
-import * as dashboardPages from './blocks/dashboard/dashboard-pages';
-import * as dashboardPage from './blocks/dashboard/dashboard-page';
-import * as customerOverview from './blocks/dashboard/customer-overview';
-import * as customerSubscriptions from './blocks/dashboard/customer-subscriptions';
-import * as customerOrders from './blocks/dashboard/customer-orders';
-import * as customerCharges from './blocks/dashboard/customer-charges';
+import * as customerCharges from '@blocks/dashboard/CustomerCharges';
+import * as customerSubscriptions from '@blocks/dashboard/CustomerSubscriptions';
+import * as dashboardTab from '@blocks/dashboard/DashboardTab';
+import * as dashboardTabs from '@blocks/dashboard/DashboardTabs';
+import * as customerDashboard from '@blocks/dashboard/CustomerDashboard';
+import * as dashboardPages from '@blocks/dashboard/DashboardPages';
+import * as dashboardPage from '@blocks/dashboard/DashboardPage';
+import * as customerOrders from '@blocks/dashboard/CustomerOrders';
+
 const dashboardComponents = [
 	customerDashboard,
 	dashboardTabs,
@@ -59,7 +57,6 @@ const dashboardComponents = [
 	dashboardPages,
 	dashboardPage,
 	customerSubscriptions,
-	customerOverview,
 	customerOrders,
 	customerCharges,
 ];
@@ -119,7 +116,6 @@ export const registerCheckoutEngineBlocks = () => {
 	[
 		checkout,
 		totals,
-		title,
 		submit,
 		card,
 		confirmation,
@@ -127,7 +123,6 @@ export const registerCheckoutEngineBlocks = () => {
 		confirmationTotals,
 		heading,
 		sessionDetail,
-		sessionSubscription,
 		payment,
 		expressPayment,
 		priceSelector,

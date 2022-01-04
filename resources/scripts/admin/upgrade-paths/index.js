@@ -13,9 +13,9 @@ import { render } from '@wordpress/element';
 /**
  * App
  */
-import UpgradePaths from './UpgradePaths';
+// import UpgradePaths from './UpgradePaths';
 
 /**
  * Render
  */
-render( <UpgradePaths />, document.getElementById( 'app' ) );
+// render( <UpgradePaths />, document.getElementById( 'app' ) );

@@ -7,7 +7,7 @@
 	"prettier": "@wordpress/prettier-config",
 	"scripts": {
 		"lerna": "lerna",
-		"postinstall": "lerna exec yarn link --scope=@checkout-engine/{components,react,blocks} && lerna exec yarn link @checkout-engine/components --scope @checkout-engine/react && lerna exec yarn link @checkout-engine/react --scope @checkout-engine/blocks && yarn link @checkout-engine/react",
+		"postinstall": "lerna exec yarn link --scope=@checkout-engine/{components,react} && lerna exec yarn link @checkout-engine/components --scope @checkout-engine/react && lerna exec && yarn link @checkout-engine/react",
 		"bootstrap": "lerna exec yarn install && lerna link",
 		"wp-env": "wp-env",
 		"start": "wp-env start --xdebug && lerna run watch --stream --parallel",
@@ -33,7 +33,6 @@
 		"release:build": "lerna run build",
 		"release": "run-s release:build release:zip",
 		"release:zip": "node .dev/build/release/release.js blaze-checkout",
-		"build:blocks": "wp-scripts build ./resources/scripts/blocks/blocks.js --output-path=dist/blocks",
 		"check-engines": "wp-scripts check-engines",
 		"check-licenses": "wp-scripts check-licenses",
 		"format": "wp-scripts format",
@@ -43,7 +42,6 @@
 		"lint:md:js": "wp-scripts lint-md-js",
 		"lint:pkg-json": "wp-scripts lint-pkg-json",
 		"packages-update": "wp-scripts packages-update",
-		"watch:blocks": "wp-scripts start ./resources/scripts/blocks/blocks.js --output-path=dist/blocks",
 		"test:php": "wp-env run phpunit 'phpunit -c /var/www/html/wp-content/plugins/checkout-engine/phpunit.xml --testdox'",
 		"test:php:failing": "wp-env run phpunit 'phpunit -c /var/www/html/wp-content/plugins/checkout-engine/phpunit.xml --group=failing' --verbose",
 		"test:cypress": "wp-env start --xdebug && cypress run --config video=false --browser chrome",
@@ -56,13 +54,15 @@
 		"last 3 versions"
 	],
 	"dependencies": {
-		"@checkout-engine/blocks": "file:packages/blocks",
 		"@checkout-engine/components": "file:packages/components",
 		"@checkout-engine/docs": "file:packages/docs",
 		"@checkout-engine/react": "file:packages/integrations/react",
+		"@emotion/react": "^11.7.1",
 		"@rails/activestorage": "^6.1.4-1",
 		"@wordpress/babel-preset-default": "^6.2.0",
+		"@wordpress/icons": "^6.1.1",
 		"autoprefixer": "^10",
+		"babel-loader": "^8.2.3",
 		"chokidar": "^3.4.0",
 		"classnames": "^2.3.1",
 		"clean-webpack-plugin": "^0.1.19",
@@ -139,6 +139,7 @@
 	"resolutions": {
 		"react": "17.0.1",
 		"react-dom": "17.0.1",
+		"eslint-plugin-jsdoc": "^37.4.2",
 		"react-test-renderer": "17.0.1"
 	},
 	"wp-env": {
