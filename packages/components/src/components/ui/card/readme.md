@@ -7,10 +7,10 @@
 
 ## Properties
 
-| Property     | Attribute    | Description | Type      | Default     |
-| ------------ | ------------ | ----------- | --------- | ----------- |
-| `borderless` | `borderless` |             | `boolean` | `undefined` |
-| `loading`    | `loading`    |             | `boolean` | `undefined` |
+| Property     | Attribute    | Description              | Type      | Default     |
+| ------------ | ------------ | ------------------------ | --------- | ----------- |
+| `borderless` | `borderless` | Is this card borderless. | `boolean` | `undefined` |
+| `loading`    | `loading`    | Is this card loading.    | `boolean` | `undefined` |
 
 
 ## Shadow Parts

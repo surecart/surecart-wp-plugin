@@ -1766,7 +1766,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@checkout-engine/components-react@workspace:packages/components-react":
+"@checkout-engine/components-react@workspace:^, @checkout-engine/components-react@workspace:packages/components-react":
   version: 0.0.0-use.local
   resolution: "@checkout-engine/components-react@workspace:packages/components-react"
   dependencies:
@@ -1834,6 +1834,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@checkout-engine/docs@workspace:packages/docs"
   dependencies:
+    "@checkout-engine/components": "workspace:^"
+    "@checkout-engine/components-react": "workspace:^"
     "@docusaurus/core": 2.0.0-beta.3
     "@docusaurus/preset-classic": 2.0.0-beta.3
     "@mdx-js/react": ^1.6.22

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-01-05T16:49:42",
+  "timestamp": "2022-01-05T19:56:33",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.9.0",
@@ -831,7 +831,7 @@
           "mutable": false,
           "attr": "borderless",
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "Is this card borderless.",
           "docsTags": [],
           "values": [
             {
@@ -847,7 +847,7 @@
           "mutable": false,
           "attr": "loading",
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "Is this card loading.",
           "docsTags": [],
           "values": [
             {
