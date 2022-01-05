@@ -40,6 +40,8 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 
 	/**
 	 * Default attributes.
+	 *
+	 * @var array
 	 */
 	protected $defaults = [];
 
@@ -437,8 +439,8 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	/**
 	 * Set a single meta data attribute
 	 *
-	 * @param string $key
-	 * @param string $data
+	 * @param string $key Meta data key.
+	 * @param string $data Meta data value.
 	 * @return this
 	 */
 	public function addToMetaData( $key, $data ) {
@@ -718,6 +720,8 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 
 	/**
 	 * Create a new model
+	 *
+	 * @param array $attributes Attributes to create.
 	 *
 	 * @return $this|false
 	 */

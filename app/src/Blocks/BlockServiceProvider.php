@@ -92,9 +92,9 @@ class BlockServiceProvider implements ServiceProviderInterface {
 	/**
 	 * Register blocks from config
 	 *
+	 * @param  \Pimple\Container $container Service Container.
+	 *
 	 * @return  void
-	 * @since   1.0.0
-	 * @license GPL
 	 */
 	public function registerBlocks( $container ) {
 		$service = \CheckoutEngine::resolve( WPEMERGE_CONFIG_KEY );
