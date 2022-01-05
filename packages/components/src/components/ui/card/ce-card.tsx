@@ -9,8 +9,11 @@ import { openWormhole } from 'stencil-wormhole';
 export class CeCard {
   @Element() el!: HTMLCeCardElement;
 
+  /** Is this card borderless. */
   @Prop() borderless: boolean;
+  /** Is this card loading. */
   @Prop() loading: boolean;
+
   @State() hasTitleSlot: boolean;
 
   componentWillLoad() {

@@ -72,6 +72,19 @@ Type: `Promise<boolean>`
 | `"base"` |             |
 
 
+## Dependencies
+
+### Used by
+
+ - [ce-login-form](../../controllers/login)
+
+### Graph
+```mermaid
+graph TD;
+  ce-login-form --> ce-form
+  style ce-form fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

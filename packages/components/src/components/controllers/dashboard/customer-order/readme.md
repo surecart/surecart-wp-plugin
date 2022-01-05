@@ -16,7 +16,7 @@
 
 ### Depends on
 
-- [ce-format-number](../../util/format-number)
+- [ce-format-number](../../../util/format-number)
 
 ### Graph
 ```mermaid

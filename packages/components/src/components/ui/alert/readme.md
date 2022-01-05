@@ -63,6 +63,9 @@ Type: `Promise<void>`
 
  - [ce-checkout](../../controllers/checkout)
  - [ce-coupon-form](../../controllers/coupon-form)
+ - [ce-customer-subscription](../../controllers/dashboard/customer-subscription)
+ - [ce-customer-subscriptions-list](../../controllers/dashboard/customer-subscriptions-list)
+ - [ce-login-form](../../controllers/login)
  - [ce-price-choice](../../controllers/price-choice)
 
 ### Graph
@@ -70,6 +73,9 @@ Type: `Promise<void>`
 graph TD;
   ce-checkout --> ce-alert
   ce-coupon-form --> ce-alert
+  ce-customer-subscription --> ce-alert
+  ce-customer-subscriptions-list --> ce-alert
+  ce-login-form --> ce-alert
   ce-price-choice --> ce-alert
   style ce-alert fill:#f9f,stroke:#333,stroke-width:4px
 ```

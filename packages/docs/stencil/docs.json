@@ -1,5 +1,5 @@
 {
-  "timestamp": "2021-12-19T17:51:07",
+  "timestamp": "2022-01-05T16:49:42",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.9.0",
@@ -173,6 +173,9 @@
       "dependents": [
         "ce-checkout",
         "ce-coupon-form",
+        "ce-customer-subscription",
+        "ce-customer-subscriptions-list",
+        "ce-login-form",
         "ce-price-choice"
       ],
       "dependencies": [],
@@ -181,6 +184,15 @@
           "ce-alert"
         ],
         "ce-coupon-form": [
+          "ce-alert"
+        ],
+        "ce-customer-subscription": [
+          "ce-alert"
+        ],
+        "ce-customer-subscriptions-list": [
+          "ce-alert"
+        ],
+        "ce-login-form": [
           "ce-alert"
         ],
         "ce-price-choice": [
@@ -367,6 +379,9 @@
       "dependents": [
         "ce-checkout",
         "ce-coupon-form",
+        "ce-customer-subscription",
+        "ce-customer-subscription-edit",
+        "ce-login-form",
         "ce-order-summary",
         "ce-price-choices",
         "ce-purchase"
@@ -382,6 +397,15 @@
           "ce-block-ui"
         ],
         "ce-coupon-form": [
+          "ce-block-ui"
+        ],
+        "ce-customer-subscription": [
+          "ce-block-ui"
+        ],
+        "ce-customer-subscription-edit": [
+          "ce-block-ui"
+        ],
+        "ce-login-form": [
           "ce-block-ui"
         ],
         "ce-order-summary": [
@@ -766,7 +790,10 @@
         }
       ],
       "dependents": [
-        "ce-coupon-form"
+        "ce-coupon-form",
+        "ce-customer-subscription",
+        "ce-customer-subscription-edit",
+        "ce-login-form"
       ],
       "dependencies": [
         "ce-spinner"
@@ -776,6 +803,15 @@
           "ce-spinner"
         ],
         "ce-coupon-form": [
+          "ce-button"
+        ],
+        "ce-customer-subscription": [
+          "ce-button"
+        ],
+        "ce-customer-subscription-edit": [
+          "ce-button"
+        ],
+        "ce-login-form": [
           "ce-button"
         ]
       }
@@ -838,6 +874,10 @@
         }
       ],
       "dependents": [
+        "ce-customer-subscription",
+        "ce-customer-subscription-edit",
+        "ce-customer-subscriptions-list",
+        "ce-login-form",
         "ce-session-subscription"
       ],
       "dependencies": [
@@ -848,6 +888,18 @@
         "ce-card": [
           "ce-skeleton",
           "ce-divider"
+        ],
+        "ce-customer-subscription": [
+          "ce-card"
+        ],
+        "ce-customer-subscription-edit": [
+          "ce-card"
+        ],
+        "ce-customer-subscriptions-list": [
+          "ce-card"
+        ],
+        "ce-login-form": [
+          "ce-card"
         ],
         "ce-session-subscription": [
           "ce-card"
@@ -1192,22 +1244,6 @@
           "values": [
             {
               "type": "Object"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "keys",
-          "type": "Keys",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "Publishable keys for providers",
-          "docsTags": [],
-          "default": "{\n    stripe: '',\n    paypal: '',\n  }",
-          "values": [
-            {
-              "type": "Keys"
             }
           ],
           "optional": false,
@@ -2016,7 +2052,7 @@
       }
     },
     {
-      "filePath": "./src/components/controllers/customer-dashboard/ce-customer-dashboard.tsx",
+      "filePath": "./src/components/controllers/dashboard/customer-dashboard/ce-customer-dashboard.tsx",
       "encapsulation": "shadow",
       "tag": "ce-customer-dashboard",
       "readme": "# ce-customer-dashboard\n\n\n",
@@ -2064,7 +2100,7 @@
       }
     },
     {
-      "filePath": "./src/components/controllers/customer-order/ce-customer-order.tsx",
+      "filePath": "./src/components/controllers/dashboard/customer-order/ce-customer-order.tsx",
       "encapsulation": "shadow",
       "tag": "ce-customer-order",
       "readme": "# ce-customer-order\n\n\n",
@@ -2105,7 +2141,7 @@
       }
     },
     {
-      "filePath": "./src/components/controllers/customer-subscription/ce-customer-subscription.tsx",
+      "filePath": "./src/components/controllers/dashboard/customer-subscription/ce-customer-subscription.tsx",
       "encapsulation": "shadow",
       "tag": "ce-customer-subscription",
       "readme": "# ce-customer-subscription\n\n\n",
@@ -2116,7 +2152,7 @@
         {
           "name": "subscription",
           "type": "Subscription",
-          "mutable": false,
+          "mutable": true,
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
@@ -2127,26 +2163,684 @@
           ],
           "optional": false,
           "required": false
+        },
+        {
+          "name": "upgradeGroups",
+          "type": "string[][]",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string[][]"
+            }
+          ],
+          "optional": false,
+          "required": false
         }
       ],
       "methods": [],
-      "events": [],
+      "events": [
+        {
+          "event": "ceUpdateSubscription",
+          "detail": "Subscription",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        }
+      ],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [
+        {
+          "name": "actions",
+          "docs": ""
+        },
+        {
+          "name": "card",
+          "docs": ""
+        },
+        {
+          "name": "details",
+          "docs": ""
+        },
+        {
+          "name": "name",
+          "docs": ""
+        },
+        {
+          "name": "price",
+          "docs": ""
+        },
+        {
+          "name": "renewal",
+          "docs": ""
+        }
+      ],
+      "dependents": [
+        "ce-customer-subscriptions-list"
+      ],
+      "dependencies": [
+        "ce-format-date",
+        "ce-subscription-status-badge",
+        "ce-card",
+        "ce-flex",
+        "ce-format-number",
+        "ce-text",
+        "ce-button",
+        "ce-alert",
+        "ce-block-ui"
+      ],
+      "dependencyGraph": {
+        "ce-customer-subscription": [
+          "ce-format-date",
+          "ce-subscription-status-badge",
+          "ce-card",
+          "ce-flex",
+          "ce-format-number",
+          "ce-text",
+          "ce-button",
+          "ce-alert",
+          "ce-block-ui"
+        ],
+        "ce-subscription-status-badge": [
+          "ce-tag"
+        ],
+        "ce-card": [
+          "ce-skeleton",
+          "ce-divider"
+        ],
+        "ce-button": [
+          "ce-spinner"
+        ],
+        "ce-block-ui": [
+          "ce-spinner"
+        ],
+        "ce-customer-subscriptions-list": [
+          "ce-customer-subscription"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/controllers/dashboard/customer-subscription-edit/ce-customer-subscription-edit.tsx",
+      "encapsulation": "shadow",
+      "tag": "ce-customer-subscription-edit",
+      "readme": "# ce-customer-subscription\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "isIndex",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "is-index",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "loading",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "loading",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "subscription_id",
+          "type": "string",
+          "mutable": false,
+          "attr": "subscription_id",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "subscriptions",
+          "type": "Subscription[]",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Subscription[]"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "upgradeGroups",
+          "type": "string[][]",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string[][]"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [
+        {
+          "event": "ceFetchSubscription",
+          "detail": "{ id: string; props?: object; }",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        }
+      ],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [
+        {
+          "name": "name",
+          "docs": ""
+        },
+        {
+          "name": "plans",
+          "docs": ""
+        },
+        {
+          "name": "price",
+          "docs": ""
+        }
+      ],
+      "dependents": [],
+      "dependencies": [
+        "ce-format-date",
+        "ce-subscription-status-badge",
+        "ce-card",
+        "ce-flex",
+        "ce-skeleton",
+        "ce-heading",
+        "ce-divider",
+        "ce-format-number",
+        "ce-customer-subscription-plan",
+        "ce-button",
+        "ce-icon",
+        "ce-block-ui"
+      ],
+      "dependencyGraph": {
+        "ce-customer-subscription-edit": [
+          "ce-format-date",
+          "ce-subscription-status-badge",
+          "ce-card",
+          "ce-flex",
+          "ce-skeleton",
+          "ce-heading",
+          "ce-divider",
+          "ce-format-number",
+          "ce-customer-subscription-plan",
+          "ce-button",
+          "ce-icon",
+          "ce-block-ui"
+        ],
+        "ce-subscription-status-badge": [
+          "ce-tag"
+        ],
+        "ce-card": [
+          "ce-skeleton",
+          "ce-divider"
+        ],
+        "ce-customer-subscription-plan": [
+          "ce-skeleton",
+          "ce-format-number"
+        ],
+        "ce-button": [
+          "ce-spinner"
+        ],
+        "ce-block-ui": [
+          "ce-spinner"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/controllers/dashboard/customer-subscription-plan/ce-customer-subscription-plan.tsx",
+      "encapsulation": "shadow",
+      "tag": "ce-customer-subscription-plan",
+      "readme": "# ce-customer-subscription\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "price",
+          "type": "Price",
+          "mutable": true,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Price"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "priceId",
+          "type": "string",
+          "mutable": false,
+          "attr": "price-id",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "prices",
+          "type": "{ [id: string]: { id: string; name: string; description?: string; amount: number; currency: string; recurring: boolean; recurring_interval?: \"day\" | \"week\" | \"month\" | \"year\"; recurring_interval_count?: number; ad_hoc: boolean; ad_hoc_max_amount: number; ad_hoc_min_amount: number; archived: boolean; product_id?: string; archived_at?: string; created_at: number; updated_at: number; product?: string; metadata: { [key: string]: string; }; }; }",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "Price entities",
+          "docsTags": [],
+          "default": "{}",
+          "values": [
+            {
+              "type": "{ [id: string]: { id: string; name: string; description?: string; amount: number; currency: string; recurring: boolean; recurring_interval?: \"day\""
+            },
+            {
+              "value": "week",
+              "type": "string"
+            },
+            {
+              "value": "month",
+              "type": "string"
+            },
+            {
+              "type": "\"year\"; recurring_interval_count?: number; ad_hoc: boolean; ad_hoc_max_amount: number; ad_hoc_min_amount: number; archived: boolean; product_id?: string; archived_at?: string; created_at: number; updated_at: number; product?: string; metadata: { [key: string]: string; }; }; }"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "products",
+          "type": "{ [id: string]: Product; }",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "Product entity",
+          "docsTags": [],
+          "default": "{}",
+          "values": [
+            {
+              "type": "{ [id: string]: Product; }"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [
+        {
+          "event": "ceAddEntities",
+          "detail": "any",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Add entities",
+          "docsTags": []
+        }
+      ],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [
+        {
+          "name": "name",
+          "docs": ""
+        }
+      ],
+      "dependents": [
+        "ce-customer-subscription-edit"
+      ],
+      "dependencies": [
+        "ce-skeleton",
+        "ce-format-number"
+      ],
+      "dependencyGraph": {
+        "ce-customer-subscription-plan": [
+          "ce-skeleton",
+          "ce-format-number"
+        ],
+        "ce-customer-subscription-edit": [
+          "ce-customer-subscription-plan"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/controllers/dashboard/customer-subscriptions/ce-customer-subscriptions.tsx",
+      "encapsulation": "shadow",
+      "tag": "ce-customer-subscriptions",
+      "readme": "# ce-customer-subscriptions\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "cancelBehavior",
+          "type": "\"immediate\" | \"period_end\"",
+          "mutable": false,
+          "attr": "cancel-behavior",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "'period_end'",
+          "values": [
+            {
+              "value": "immediate",
+              "type": "string"
+            },
+            {
+              "value": "period_end",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "customerId",
+          "type": "string",
+          "mutable": false,
+          "attr": "customer-id",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "subscription",
+          "type": "{ id?: string; }",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "{ id: null }",
+          "values": [
+            {
+              "type": "{ id?: string; }"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "upgradeGroups",
+          "type": "string[][]",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string[][]"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [
+        {
+          "event": "ceNavigate",
+          "detail": "object",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        }
+      ],
+      "listeners": [
+        {
+          "event": "ceAddEntities",
+          "capture": false,
+          "passive": false
+        },
+        {
+          "event": "ceUpdateSubscription",
+          "capture": false,
+          "passive": false
+        },
+        {
+          "event": "ceFetchSubscriptions",
+          "capture": false,
+          "passive": false
+        },
+        {
+          "event": "ceFetchSubscription",
+          "capture": false,
+          "passive": false
+        }
+      ],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [],
+      "dependencyGraph": {}
+    },
+    {
+      "filePath": "./src/components/controllers/dashboard/customer-subscriptions-list/ce-customer-subscriptions-list.tsx",
+      "encapsulation": "shadow",
+      "tag": "ce-customer-subscriptions-list",
+      "readme": "# ce-customer-subscriptions-list\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "cancelBehavior",
+          "type": "\"immediate\" | \"period_end\"",
+          "mutable": false,
+          "attr": "cancel-behavior",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "'period_end'",
+          "values": [
+            {
+              "value": "immediate",
+              "type": "string"
+            },
+            {
+              "value": "period_end",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "customerId",
+          "type": "string",
+          "mutable": false,
+          "attr": "customer-id",
+          "reflectToAttr": false,
+          "docs": "Customer id to fetch subscriptions",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "error",
+          "type": "string",
+          "mutable": false,
+          "attr": "error",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "isIndex",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "is-index",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "loading",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "loading",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "subscriptions",
+          "type": "Subscription[]",
+          "mutable": true,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Subscription[]"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [
+        {
+          "event": "ceFetchSubscriptions",
+          "detail": "object",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        }
+      ],
       "listeners": [],
       "styles": [],
       "slots": [],
       "parts": [],
       "dependents": [],
       "dependencies": [
-        "ce-format-number",
-        "ce-subscription-status-badge"
+        "ce-card",
+        "ce-flex",
+        "ce-skeleton",
+        "ce-alert",
+        "ce-spacing",
+        "ce-customer-subscription"
       ],
       "dependencyGraph": {
+        "ce-customer-subscriptions-list": [
+          "ce-card",
+          "ce-flex",
+          "ce-skeleton",
+          "ce-alert",
+          "ce-spacing",
+          "ce-customer-subscription"
+        ],
+        "ce-card": [
+          "ce-skeleton",
+          "ce-divider"
+        ],
         "ce-customer-subscription": [
+          "ce-format-date",
+          "ce-subscription-status-badge",
+          "ce-card",
+          "ce-flex",
           "ce-format-number",
-          "ce-subscription-status-badge"
+          "ce-text",
+          "ce-button",
+          "ce-alert",
+          "ce-block-ui"
         ],
         "ce-subscription-status-badge": [
           "ce-tag"
+        ],
+        "ce-button": [
+          "ce-spinner"
+        ],
+        "ce-block-ui": [
+          "ce-spinner"
         ]
       }
     },
@@ -2181,7 +2875,9 @@
       "dependents": [
         "ce-card",
         "ce-customer-dashboard",
+        "ce-customer-subscription-edit",
         "ce-express-payment",
+        "ce-login-form",
         "ce-order-confirmation-totals",
         "ce-session-subscription"
       ],
@@ -2193,7 +2889,13 @@
         "ce-customer-dashboard": [
           "ce-divider"
         ],
+        "ce-customer-subscription-edit": [
+          "ce-divider"
+        ],
         "ce-express-payment": [
+          "ce-divider"
+        ],
+        "ce-login-form": [
           "ce-divider"
         ],
         "ce-order-confirmation-totals": [
@@ -2678,6 +3380,21 @@
       "usage": {},
       "props": [
         {
+          "name": "checkoutSession",
+          "type": "CheckoutSession",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "CheckoutSession"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "formId",
           "type": "number | string",
           "mutable": false,
@@ -2691,22 +3408,6 @@
             },
             {
               "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "keys",
-          "type": "Keys",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "default": "{\n    stripe: '',\n  }",
-          "values": [
-            {
-              "type": "Keys"
             }
           ],
           "optional": false,
@@ -2749,6 +3450,88 @@
         "ce-express-payment": [
           "ce-stripe-payment-request",
           "ce-divider"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/ui/flex/ce-flex.tsx",
+      "encapsulation": "shadow",
+      "tag": "ce-flex",
+      "readme": "# ce-flex\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "alignItems",
+          "type": "string",
+          "mutable": false,
+          "attr": "align-items",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "flexDirection",
+          "type": "string",
+          "mutable": false,
+          "attr": "flex-direction",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "justifyContent",
+          "type": "string",
+          "mutable": false,
+          "attr": "justify-content",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "ce-customer-subscription",
+        "ce-customer-subscription-edit",
+        "ce-customer-subscriptions-list"
+      ],
+      "dependencies": [],
+      "dependencyGraph": {
+        "ce-customer-subscription": [
+          "ce-flex"
+        ],
+        "ce-customer-subscription-edit": [
+          "ce-flex"
+        ],
+        "ce-customer-subscriptions-list": [
+          "ce-flex"
         ]
       }
     },
@@ -2869,9 +3652,15 @@
           "docs": ""
         }
       ],
-      "dependents": [],
+      "dependents": [
+        "ce-login-form"
+      ],
       "dependencies": [],
-      "dependencyGraph": {}
+      "dependencyGraph": {
+        "ce-login-form": [
+          "ce-form"
+        ]
+      }
     },
     {
       "filePath": "./src/components/ui/form-control/ce-form-control.tsx",
@@ -3172,6 +3961,326 @@
       "dependents": [],
       "dependencies": [],
       "dependencyGraph": {}
+    },
+    {
+      "filePath": "./src/components/util/format-date/ce-format-date.tsx",
+      "encapsulation": "none",
+      "tag": "ce-format-date",
+      "readme": "# ce-format-date\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "date",
+          "type": "Date | number | string",
+          "mutable": false,
+          "attr": "date",
+          "reflectToAttr": false,
+          "docs": "The date/time to format. If not set, the current date and time will be used.",
+          "docsTags": [],
+          "default": "new Date()",
+          "values": [
+            {
+              "type": "Date"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "day",
+          "type": "\"2-digit\" | \"numeric\"",
+          "mutable": false,
+          "attr": "day",
+          "reflectToAttr": false,
+          "docs": "The format for displaying the day.",
+          "docsTags": [],
+          "values": [
+            {
+              "value": "2-digit",
+              "type": "string"
+            },
+            {
+              "value": "numeric",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "era",
+          "type": "\"long\" | \"narrow\" | \"short\"",
+          "mutable": false,
+          "attr": "era",
+          "reflectToAttr": false,
+          "docs": "The format for displaying the era.",
+          "docsTags": [],
+          "values": [
+            {
+              "value": "long",
+              "type": "string"
+            },
+            {
+              "value": "narrow",
+              "type": "string"
+            },
+            {
+              "value": "short",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "hour",
+          "type": "\"2-digit\" | \"numeric\"",
+          "mutable": false,
+          "attr": "hour",
+          "reflectToAttr": false,
+          "docs": "The format for displaying the hour.",
+          "docsTags": [],
+          "values": [
+            {
+              "value": "2-digit",
+              "type": "string"
+            },
+            {
+              "value": "numeric",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "hourFormat",
+          "type": "\"12\" | \"24\" | \"auto\"",
+          "mutable": false,
+          "attr": "hour-format",
+          "reflectToAttr": false,
+          "docs": "When set, 24 hour time will always be used.",
+          "docsTags": [],
+          "default": "'auto'",
+          "values": [
+            {
+              "value": "12",
+              "type": "string"
+            },
+            {
+              "value": "24",
+              "type": "string"
+            },
+            {
+              "value": "auto",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "locale",
+          "type": "string",
+          "mutable": false,
+          "attr": "locale",
+          "reflectToAttr": false,
+          "docs": "The locale to use when formatting the date/time.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "minute",
+          "type": "\"2-digit\" | \"numeric\"",
+          "mutable": false,
+          "attr": "minute",
+          "reflectToAttr": false,
+          "docs": "The format for displaying the minute.",
+          "docsTags": [],
+          "values": [
+            {
+              "value": "2-digit",
+              "type": "string"
+            },
+            {
+              "value": "numeric",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "month",
+          "type": "\"2-digit\" | \"long\" | \"narrow\" | \"numeric\" | \"short\"",
+          "mutable": false,
+          "attr": "month",
+          "reflectToAttr": false,
+          "docs": "The format for displaying the month.",
+          "docsTags": [],
+          "values": [
+            {
+              "value": "2-digit",
+              "type": "string"
+            },
+            {
+              "value": "long",
+              "type": "string"
+            },
+            {
+              "value": "narrow",
+              "type": "string"
+            },
+            {
+              "value": "numeric",
+              "type": "string"
+            },
+            {
+              "value": "short",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "second",
+          "type": "\"2-digit\" | \"numeric\"",
+          "mutable": false,
+          "attr": "second",
+          "reflectToAttr": false,
+          "docs": "The format for displaying the second.",
+          "docsTags": [],
+          "values": [
+            {
+              "value": "2-digit",
+              "type": "string"
+            },
+            {
+              "value": "numeric",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "timeZone",
+          "type": "string",
+          "mutable": false,
+          "attr": "time-zone",
+          "reflectToAttr": false,
+          "docs": "The time zone to express the time in.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "timeZoneName",
+          "type": "\"long\" | \"short\"",
+          "mutable": false,
+          "attr": "time-zone-name",
+          "reflectToAttr": false,
+          "docs": "The format for displaying the time.",
+          "docsTags": [],
+          "values": [
+            {
+              "value": "long",
+              "type": "string"
+            },
+            {
+              "value": "short",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "weekday",
+          "type": "\"long\" | \"narrow\" | \"short\"",
+          "mutable": false,
+          "attr": "weekday",
+          "reflectToAttr": false,
+          "docs": "The format for displaying the weekday.",
+          "docsTags": [],
+          "values": [
+            {
+              "value": "long",
+              "type": "string"
+            },
+            {
+              "value": "narrow",
+              "type": "string"
+            },
+            {
+              "value": "short",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "year",
+          "type": "\"2-digit\" | \"numeric\"",
+          "mutable": false,
+          "attr": "year",
+          "reflectToAttr": false,
+          "docs": "The format for displaying the year.",
+          "docsTags": [],
+          "values": [
+            {
+              "value": "2-digit",
+              "type": "string"
+            },
+            {
+              "value": "numeric",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "ce-customer-subscription",
+        "ce-customer-subscription-edit"
+      ],
+      "dependencies": [],
+      "dependencyGraph": {
+        "ce-customer-subscription": [
+          "ce-format-date"
+        ],
+        "ce-customer-subscription-edit": [
+          "ce-format-date"
+        ]
+      }
     },
     {
       "filePath": "./src/components/util/format-interval/ce-format-interval.tsx",
@@ -3500,6 +4609,8 @@
         "ce-coupon-form",
         "ce-customer-order",
         "ce-customer-subscription",
+        "ce-customer-subscription-edit",
+        "ce-customer-subscription-plan",
         "ce-order-confirmation-totals",
         "ce-price-choice",
         "ce-product-line-item",
@@ -3516,6 +4627,12 @@
           "ce-format-number"
         ],
         "ce-customer-subscription": [
+          "ce-format-number"
+        ],
+        "ce-customer-subscription-edit": [
+          "ce-format-number"
+        ],
+        "ce-customer-subscription-plan": [
           "ce-format-number"
         ],
         "ce-order-confirmation-totals": [
@@ -3546,7 +4663,34 @@
       "docs": "",
       "docsTags": [],
       "usage": {},
-      "props": [],
+      "props": [
+        {
+          "name": "size",
+          "type": "\"large\" | \"medium\" | \"small\"",
+          "mutable": false,
+          "attr": "size",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "'medium'",
+          "values": [
+            {
+              "value": "large",
+              "type": "string"
+            },
+            {
+              "value": "medium",
+              "type": "string"
+            },
+            {
+              "value": "small",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
       "methods": [],
       "events": [],
       "listeners": [],
@@ -3560,11 +4704,15 @@
       ],
       "dependents": [
         "ce-customer-dashboard",
+        "ce-customer-subscription-edit",
         "ce-order-confirmation"
       ],
       "dependencies": [],
       "dependencyGraph": {
         "ce-customer-dashboard": [
+          "ce-heading"
+        ],
+        "ce-customer-subscription-edit": [
           "ce-heading"
         ],
         "ce-order-confirmation": [
@@ -3677,9 +4825,19 @@
           "docs": ""
         }
       ],
-      "dependents": [],
+      "dependents": [
+        "ce-customer-subscription-edit",
+        "ce-login-form"
+      ],
       "dependencies": [],
-      "dependencyGraph": {}
+      "dependencyGraph": {
+        "ce-customer-subscription-edit": [
+          "ce-icon"
+        ],
+        "ce-login-form": [
+          "ce-icon"
+        ]
+      }
     },
     {
       "filePath": "./src/components/ui/input/ce-input.tsx",
@@ -4377,6 +5535,7 @@
       "dependents": [
         "ce-coupon-form",
         "ce-email",
+        "ce-login-form",
         "ce-price-input",
         "ce-select",
         "ce-stripe-element"
@@ -4395,6 +5554,9 @@
           "ce-input"
         ],
         "ce-email": [
+          "ce-input"
+        ],
+        "ce-login-form": [
           "ce-input"
         ],
         "ce-price-input": [
@@ -4924,6 +6086,66 @@
       "dependencyGraph": {
         "ce-session-provider": [
           "ce-line-items-provider"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/controllers/login/ce-login-form.tsx",
+      "encapsulation": "shadow",
+      "tag": "ce-login-form",
+      "readme": "# ce-login-form\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [
+        {
+          "name": "title",
+          "docs": ""
+        }
+      ],
+      "dependents": [],
+      "dependencies": [
+        "ce-alert",
+        "ce-icon",
+        "ce-form",
+        "ce-button",
+        "ce-divider",
+        "ce-input",
+        "ce-card",
+        "ce-block-ui"
+      ],
+      "dependencyGraph": {
+        "ce-login-form": [
+          "ce-alert",
+          "ce-icon",
+          "ce-form",
+          "ce-button",
+          "ce-divider",
+          "ce-input",
+          "ce-card",
+          "ce-block-ui"
+        ],
+        "ce-button": [
+          "ce-spinner"
+        ],
+        "ce-input": [
+          "ce-form-control"
+        ],
+        "ce-form-control": [
+          "ce-tooltip"
+        ],
+        "ce-card": [
+          "ce-skeleton",
+          "ce-divider"
+        ],
+        "ce-block-ui": [
+          "ce-spinner"
         ]
       }
     },
@@ -5483,22 +6705,6 @@
           "required": false
         },
         {
-          "name": "keys",
-          "type": "Keys",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "Your stripe publishable key.",
-          "docsTags": [],
-          "default": "{\n    stripe: '',\n    stripeAccountId: '',\n    paypal: '',\n  }",
-          "values": [
-            {
-              "type": "Keys"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
           "name": "label",
           "type": "string",
           "mutable": false,
@@ -5585,22 +6791,6 @@
           ],
           "optional": false,
           "required": false
-        },
-        {
-          "name": "stripeAccountId",
-          "type": "string",
-          "mutable": false,
-          "attr": "stripe-account-id",
-          "reflectToAttr": false,
-          "docs": "Your stripe connected account id.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
         }
       ],
       "methods": [],
@@ -5611,12 +6801,14 @@
       "parts": [],
       "dependents": [],
       "dependencies": [
+        "ce-skeleton",
         "ce-stripe-element",
         "ce-secure-notice",
         "ce-badge-notice"
       ],
       "dependencyGraph": {
         "ce-payment": [
+          "ce-skeleton",
           "ce-stripe-element",
           "ce-secure-notice",
           "ce-badge-notice"
@@ -7258,6 +8450,144 @@
       "dependencyGraph": {}
     },
     {
+      "filePath": "./src/components/router/ce-route/ce-route.tsx",
+      "encapsulation": "shadow",
+      "tag": "ce-route",
+      "readme": "# ce-route\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "default",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "default",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "location",
+          "type": "string",
+          "mutable": false,
+          "attr": "location",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": true,
+          "required": false
+        },
+        {
+          "name": "matched",
+          "type": "boolean",
+          "mutable": true,
+          "attr": "matched",
+          "reflectToAttr": true,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "queryVar",
+          "type": "string",
+          "mutable": false,
+          "attr": "query-var",
+          "reflectToAttr": true,
+          "docs": "",
+          "docsTags": [],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [
+        {
+          "event": "ceNavigationComplete",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        }
+      ],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [],
+      "dependencyGraph": {}
+    },
+    {
+      "filePath": "./src/components/router/ce-router/ce-router.tsx",
+      "encapsulation": "shadow",
+      "tag": "ce-router",
+      "readme": "# ce-router\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "autoScroll",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "auto-scroll",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [
+        {
+          "event": "ceNavigate",
+          "target": "window",
+          "capture": false,
+          "passive": false
+        }
+      ],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [],
+      "dependencyGraph": {}
+    },
+    {
       "filePath": "./src/components/ui/secure-notice/ce-secure-notice.tsx",
       "encapsulation": "shadow",
       "tag": "ce-secure-notice",
@@ -8193,10 +9523,14 @@
       "dependents": [
         "ce-card",
         "ce-coupon-form",
+        "ce-customer-subscription-edit",
+        "ce-customer-subscription-plan",
+        "ce-customer-subscriptions-list",
         "ce-line-item-total",
         "ce-line-items",
         "ce-order-confirmation-line-items",
         "ce-order-summary",
+        "ce-payment",
         "ce-price-choice",
         "ce-session-detail",
         "ce-session-subscription"
@@ -8207,6 +9541,15 @@
           "ce-skeleton"
         ],
         "ce-coupon-form": [
+          "ce-skeleton"
+        ],
+        "ce-customer-subscription-edit": [
+          "ce-skeleton"
+        ],
+        "ce-customer-subscription-plan": [
+          "ce-skeleton"
+        ],
+        "ce-customer-subscriptions-list": [
           "ce-skeleton"
         ],
         "ce-line-item-total": [
@@ -8221,6 +9564,9 @@
         "ce-order-summary": [
           "ce-skeleton"
         ],
+        "ce-payment": [
+          "ce-skeleton"
+        ],
         "ce-price-choice": [
           "ce-skeleton"
         ],
@@ -8229,6 +9575,31 @@
         ],
         "ce-session-subscription": [
           "ce-skeleton"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/ui/spacing/ce-spacing.tsx",
+      "encapsulation": "shadow",
+      "tag": "ce-spacing",
+      "readme": "# ce-spacing\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "ce-customer-subscriptions-list"
+      ],
+      "dependencies": [],
+      "dependencyGraph": {
+        "ce-customer-subscriptions-list": [
+          "ce-spacing"
         ]
       }
     },
@@ -8607,22 +9978,6 @@
           "required": false
         },
         {
-          "name": "keys",
-          "type": "Keys",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "Stripe publishable key",
-          "docsTags": [],
-          "default": "{\n    stripe: '',\n  }",
-          "values": [
-            {
-              "type": "Keys"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
           "name": "label",
           "type": "string",
           "mutable": false,
@@ -8892,6 +10247,7 @@
       "parts": [],
       "dependents": [
         "ce-customer-subscription",
+        "ce-customer-subscription-edit",
         "ce-session-subscription"
       ],
       "dependencies": [
@@ -8902,6 +10258,9 @@
           "ce-tag"
         ],
         "ce-customer-subscription": [
+          "ce-subscription-status-badge"
+        ],
+        "ce-customer-subscription-edit": [
           "ce-subscription-status-badge"
         ],
         "ce-session-subscription": [
@@ -9717,9 +11076,15 @@
       "styles": [],
       "slots": [],
       "parts": [],
-      "dependents": [],
+      "dependents": [
+        "ce-customer-subscription"
+      ],
       "dependencies": [],
-      "dependencyGraph": {}
+      "dependencyGraph": {
+        "ce-customer-subscription": [
+          "ce-text"
+        ]
+      }
     },
     {
       "filePath": "./src/components/ui/tooltip/ce-tooltip.tsx",

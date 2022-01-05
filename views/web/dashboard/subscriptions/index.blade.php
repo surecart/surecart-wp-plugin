@@ -1,25 +1,4 @@
-<ce-customer-subscriptions-list>
-</ce-customer-subscriptions-list>
-
-{{-- <ce-router autoScroll>
-    <ce-customer-subscriptions>
-        <ce-route default>
-            @php do_action('checkout_engine/templates/after_subscription_edit') @endphp
-
-            <ce-customer-subscriptions-list></ce-customer-subscriptions-list>
-
-            @php do_action('checkout_engine/templates/after_subscription_edit') @endphp
-        </ce-route>
-
-        <ce-route query-var='subscription.edit'>
-            @php do_action('checkout_engine/templates/before_subscription_edit') @endphp
-
-            <ce-customer-subscription-edit></ce-customer-subscription-edit>
-
-            @php do_action('checkout_engine/templates/after_subscription_edit') @endphp
-        </ce-route>
-    </ce-customer-subscriptions>
-</ce-router> --}}
+<ce-customer-subscriptions-list></ce-customer-subscriptions-list>
 
 
 @php

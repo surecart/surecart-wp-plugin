@@ -1,0 +1,48 @@
+# Card
+
+```html
+<ce-card></ce-card>
+```
+
+Buttons let users take actions and make choices with a single click or tap.
+
+import DemoTabs from '../../components/Demo-Tabs.js';
+import ComponentDoc from '../../components/Component-Doc.js';
+
+<DemoTabs>
+	<DemoTabs.Code>
+		{ `
+<ce-card>
+	<span slot="title">Card Title</span>
+	Card Content
+</ce-card>
+` }
+	</DemoTabs.Code>
+	<ce-card>
+		<span slot="title">Card Title</span>
+		Card Content
+	</ce-card>
+</DemoTabs>
+
+## Borderless
+
+Use the Borderless attribute for a borderless card.
+
+<DemoTabs>
+	<DemoTabs.Code>
+		{ `
+<ce-card borderless>
+	<span slot="title">Card Title</span>
+	Card Content
+</ce-card>
+` }
+	</DemoTabs.Code>
+	<ce-card borderless>
+		<span slot="title">Card Title</span>
+		Card Content
+	</ce-card>
+</DemoTabs>
+
+## Component Codex
+
+<ComponentDoc tag="ce-card" />

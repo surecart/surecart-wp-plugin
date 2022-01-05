@@ -60,7 +60,7 @@ Type: `Promise<void>`
 
 ### Used by
 
- - [ce-customer-dashboard](../../controllers/customer-dashboard)
+ - [ce-customer-dashboard](../../controllers/dashboard/customer-dashboard)
 
 ### Graph
 ```mermaid

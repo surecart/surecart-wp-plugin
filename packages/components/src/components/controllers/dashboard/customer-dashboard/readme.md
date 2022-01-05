@@ -16,10 +16,10 @@
 
 ### Depends on
 
-- [ce-tab-group](../../ui/tab-group)
-- [ce-tab](../../ui/tab)
-- [ce-heading](../../ui/heading)
-- [ce-divider](../../ui/divider)
+- [ce-tab-group](../../../ui/tab-group)
+- [ce-tab](../../../ui/tab)
+- [ce-heading](../../../ui/heading)
+- [ce-divider](../../../ui/divider)
 
 ### Graph
 ```mermaid

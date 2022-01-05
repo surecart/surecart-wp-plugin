@@ -46,7 +46,7 @@ return [
 	],
 
 	/**
-	* Blocks
+	* SSR Blocks
 	*/
 	'blocks'              => [
 		\CheckoutEngine\Blocks\BuyButton\Block::class,
@@ -60,7 +60,6 @@ return [
 		\CheckoutEngine\Blocks\Dashboard\CustomerSubscriptions\Block::class,
 		\CheckoutEngine\Blocks\Dashboard\DashboardPage\Block::class,
 		\CheckoutEngine\Blocks\Dashboard\DashboardTab\Block::class,
-
 	],
 
 	/**
@@ -119,6 +118,7 @@ return [
 	 */
 	'middleware'          => [
 		'archive_model' => \CheckoutEngine\Middleware\ArchiveModelMiddleware::class,
+		'webhook'       => \CheckoutEngine\Middleware\ArchiveModelMiddleware::class,
 	],
 
 	/**

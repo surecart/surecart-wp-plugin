@@ -111,7 +111,13 @@ export namespace Components {
         "value": string;
     }
     interface CeCard {
+        /**
+          * Is this card borderless.
+         */
         "borderless": boolean;
+        /**
+          * Is this card loading.
+         */
         "loading": boolean;
     }
     interface CeCheckbox {
@@ -2177,7 +2183,13 @@ declare namespace LocalJSX {
         "value"?: string;
     }
     interface CeCard {
+        /**
+          * Is this card borderless.
+         */
         "borderless"?: boolean;
+        /**
+          * Is this card loading.
+         */
         "loading"?: boolean;
     }
     interface CeCheckbox {

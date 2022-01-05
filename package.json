@@ -12,7 +12,7 @@
 		"wp-env": "wp-env",
 		"start": "wp-env start --xdebug && lerna run watch --stream --parallel",
 		"docs": "lerna run docs --stream --parallel --ignore @checkout-engine/plugin",
-		"docs:build": "yarn --cwd packages/components build && yarn --cwd packages/docs upgrade @checkout-engine/components && yarn --cwd packages/docs build",
+		"docs:build": "yarn --cwd packages/components build && yarn --cwd packages/docs upgrade @checkout-engine/components && yarn --cwd packages/docs docs.build",
 		"watch": "cross-env NODE_ENV=development webpack --colors --config .dev/build/webpack.development.js",
 		"hot": "cross-env NODE_ENV=development WPEMERGE_ENV=hot webpack-dev-server --colors --config .dev/build/webpack.development.js",
 		"build:core": "cross-env WPEMERGE_COMBINED_BUILD=1 run-s -l build:debug build:production",
