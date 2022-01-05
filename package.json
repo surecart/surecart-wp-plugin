@@ -11,7 +11,7 @@
 	"scripts": {
 		"wp-env": "wp-env",
 		"dev": "wp-env start --xdebug && yarn workspaces foreach -pvi run watch",
-		"docs:build": "yarn --cwd packages/components build && yarn --cwd packages/docs upgrade @checkout-engine/components && yarn --cwd packages/docs docs.build",
+		"docs:build": "yarn workspace @checkout-engine/docs run build",
 		"watch": "cross-env NODE_ENV=development webpack --colors --config .dev/build/webpack.development.js",
 		"hot": "cross-env NODE_ENV=development WPEMERGE_ENV=hot webpack-dev-server --colors --config .dev/build/webpack.development.js",
 		"build:core": "cross-env WPEMERGE_COMBINED_BUILD=1 run-s -l build:debug build:production",
