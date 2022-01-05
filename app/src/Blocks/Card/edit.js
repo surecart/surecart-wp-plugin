@@ -13,7 +13,7 @@ import {
 	TextControl,
 	ToggleControl,
 } from '@wordpress/components';
-import { CeCard } from '@checkout-engine/react';
+import { CeCard } from '@checkout-engine/components-react';
 
 export default ( { attributes, setAttributes, isSelected } ) => {
 	const { borderless, title } = attributes;

@@ -25,7 +25,7 @@ import styles from './editor-styles';
 /**
  * Component Dependencies
  */
-import { CePriceChoices } from '@checkout-engine/react';
+import { CePriceChoices } from '@checkout-engine/components-react';
 
 export default ( { attributes, setAttributes, clientId, isSelected } ) => {
 	const { label, type, columns } = attributes;

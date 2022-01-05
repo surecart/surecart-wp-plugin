@@ -1,9 +1,9 @@
-import { Price, Product } from '../../types';
+import { normalizePrices } from '../../../../admin/schema';
 import apiFetch from '../../functions/fetch';
+import { Price, Product } from '../../types';
 import { addQueryArgs } from '@wordpress/url';
-const path = 'checkout-engine/v1/products/';
 
-import { normalizePrices } from '../../../../../resources/scripts/schema';
+const path = 'checkout-engine/v1/products/';
 
 export const getPricesAndProducts = async ({ ids, active = true }: { ids: Array<string>; active: boolean }) => {
   const prices = (await apiFetch({

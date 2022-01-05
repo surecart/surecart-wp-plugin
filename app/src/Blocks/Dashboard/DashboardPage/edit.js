@@ -10,7 +10,7 @@ import {
 	__experimentalUseInnerBlocksProps as useInnerBlocksProps,
 } from '@wordpress/block-editor';
 import { Fragment } from '@wordpress/element';
-import { CeTabPanel } from '@checkout-engine/react';
+import { CeTabPanel } from '@checkout-engine/components-react';
 
 export default ( { attributes } ) => {
 	const { name } = attributes;

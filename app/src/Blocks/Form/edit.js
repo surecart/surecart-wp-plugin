@@ -7,7 +7,7 @@ import {
 	InspectorControls,
 	store as blockEditorStore,
 } from '@wordpress/block-editor';
-import { CeCheckout } from '@checkout-engine/react';
+import { CeCheckout } from '@checkout-engine/components-react';
 import { Fragment, useState } from '@wordpress/element';
 import { parse } from '@wordpress/blocks';
 import {

@@ -15,7 +15,7 @@ import {
 /**
  * Component Dependencies
  */
-import { CeSwitch } from '@checkout-engine/react';
+import { CeSwitch } from '@checkout-engine/components-react';
 
 export default ( { className, attributes, setAttributes, isSelected } ) => {
 	const { label, value, checked, name, required, description } = attributes;

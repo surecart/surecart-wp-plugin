@@ -12,7 +12,7 @@ import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
 /**
  * Component Dependencies
  */
-import { CePriceChoice } from '@checkout-engine/react';
+import { CePriceChoice } from '@checkout-engine/components-react';
 import PriceInfo from './components/PriceInfo';
 
 import PriceSelector from '@scripts/blocks/components/PriceSelector';

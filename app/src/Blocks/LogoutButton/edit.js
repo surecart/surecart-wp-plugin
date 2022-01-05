@@ -14,7 +14,7 @@ import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
 /**
  * Component Dependencies
  */
-import { CeButton } from '@checkout-engine/react';
+import { CeButton } from '@checkout-engine/components-react';
 
 export default ( { className, attributes, setAttributes } ) => {
 	const {

@@ -9,7 +9,7 @@ import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
 /**
  * Component Dependencies
  */
-import { CeInput } from '@checkout-engine/react';
+import { CeInput } from '@checkout-engine/components-react';
 
 export default ( { className, attributes, setAttributes, isSelected } ) => {
 	const { label, placeholder, help, name, required } = attributes;

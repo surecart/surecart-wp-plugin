@@ -14,7 +14,7 @@ import {
 /**
  * Component Dependencies
  */
-import { CeInput } from '@checkout-engine/react';
+import { CeInput } from '@checkout-engine/components-react';
 
 export default ( { className, attributes, setAttributes, isSelected } ) => {
 	const { label, placeholder, help, required } = attributes;

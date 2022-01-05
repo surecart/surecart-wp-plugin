@@ -9,7 +9,7 @@ import { css, jsx } from '@emotion/core';
 
 import throttle from 'lodash/throttle';
 
-import { CeSelect } from '@checkout-engine/react';
+import { CeSelect } from '@checkout-engine/components-react';
 import { convertPricesToChoices } from '../../../utils/prices';
 import { useSelect, dispatch, select } from '@wordpress/data';
 import { BLOCKS_STORE_KEY } from '../store';

@@ -1,0 +1,27 @@
+{
+	"name": "@checkout-engine/admin",
+	"version": "1.0.0",
+	"description": "Admin functionality for CheckoutEngine",
+	"license": "GPL-2.0-or-later",
+	"keywords": [
+		"checkout",
+		"ecommerce",
+		"admin"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/Presto-Pay/presto-pay-wp.git",
+		"directory": "packages/admin"
+	},
+	"bugs": {
+		"url": "https://github.com/Presto-Pay/presto-pay-wp/issues"
+	},
+	"engines": {
+		"node": ">=12"
+	},
+	"main": "build/index.js",
+	"module": "build-module/index.js",
+	"publishConfig": {
+		"access": "public"
+	}
+}

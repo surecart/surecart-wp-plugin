@@ -7,7 +7,7 @@ import {
 	TextControl,
 	SelectControl,
 } from '@wordpress/components';
-import { CeSessionDetail } from '@checkout-engine/react';
+import { CeSessionDetail } from '@checkout-engine/components-react';
 
 export default ( { attributes, setAttributes } ) => {
 	const { value, label } = attributes;

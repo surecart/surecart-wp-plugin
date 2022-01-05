@@ -1,7 +1,7 @@
 import { __, _n, sprintf } from '@wordpress/i18n';
 import { InspectorControls } from '@wordpress/block-editor';
 import { PanelBody, PanelRow, RangeControl } from '@wordpress/components';
-import { CeCustomerSubscription } from '@checkout-engine/react';
+import { CeCustomerSubscription } from '@checkout-engine/components-react';
 
 export default ( { attributes, setAttributes } ) => {
 	const { per_page } = attributes;

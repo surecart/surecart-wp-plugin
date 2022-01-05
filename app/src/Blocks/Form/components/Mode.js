@@ -1,4 +1,4 @@
-import { CeDropdown, CeMenu, CeMenuItem } from '@checkout-engine/react';
+import { CeDropdown, CeMenu, CeMenuItem } from '@checkout-engine/components-react';
 import { __ } from '@wordpress/i18n';
 
 export default ( { attributes, setAttributes } ) => {

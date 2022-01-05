@@ -17,7 +17,7 @@ import {
 	CeDropdown,
 	CeMenu,
 	CeMenuItem,
-} from '@checkout-engine/react';
+} from '@checkout-engine/components-react';
 
 import { __experimentalNumberControl as NumberControl } from '@wordpress/components';
 

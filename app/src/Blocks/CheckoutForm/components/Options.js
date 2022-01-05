@@ -6,7 +6,7 @@ import {
 	CeSelect,
 	CeRadioGroup,
 	CeRadio,
-} from '@checkout-engine/react';
+} from '@checkout-engine/components-react';
 import SelectProduct from './SelectProductModal';
 import Choice from './Choice';
 

@@ -14,7 +14,7 @@ import {
 /**
  * Component Dependencies
  */
-import { CeCheckbox } from '@checkout-engine/react';
+import { CeCheckbox } from '@checkout-engine/components-react';
 
 export default ( { className, attributes, setAttributes, isSelected } ) => {
 	const { label, value, checked, name, required } = attributes;

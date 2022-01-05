@@ -1,17 +1,16 @@
 {
-	"name": "@checkout-engine/plugin",
+	"name": "@checkout-engine/main",
 	"private": true,
+	"workspaces": [
+		"packages/*"
+	],
 	"engines": {
 		"node": ">=12"
 	},
 	"prettier": "@wordpress/prettier-config",
 	"scripts": {
-		"lerna": "lerna",
-		"postinstall": "lerna exec yarn link --scope=@checkout-engine/{components,react} && lerna exec yarn link @checkout-engine/components --scope @checkout-engine/react && yarn link @checkout-engine/react",
-		"bootstrap": "lerna exec yarn install && lerna link",
 		"wp-env": "wp-env",
-		"start": "wp-env start --xdebug && lerna run watch --stream --parallel",
-		"docs": "lerna run docs --stream --parallel --ignore @checkout-engine/plugin",
+		"dev": "wp-env start --xdebug && yarn workspaces foreach -pvi run watch",
 		"docs:build": "yarn --cwd packages/components build && yarn --cwd packages/docs upgrade @checkout-engine/components && yarn --cwd packages/docs docs.build",
 		"watch": "cross-env NODE_ENV=development webpack --colors --config .dev/build/webpack.development.js",
 		"hot": "cross-env NODE_ENV=development WPEMERGE_ENV=hot webpack-dev-server --colors --config .dev/build/webpack.development.js",
@@ -30,7 +29,7 @@
 		"i18n:textdomain": "wpi18n addtextdomain --exclude=dist,node_modules,resources,tests,vendor --textdomain=checkout_engine",
 		"i18n:pot": "wpi18n makepot --exclude=dist,node_modules,resources,tests,vendor --type=wp-plugin --domain-path=languages/ --pot-file=checkout_engine.pot --textdomain=checkout_engine",
 		"rebrand": "node .dev/build/rebrand/rebrand.js",
-		"release:build": "lerna run build",
+		"release:build": "yarn workspaces foreach run build",
 		"release": "run-s release:build release:zip",
 		"release:zip": "node .dev/build/release/release.js blaze-checkout",
 		"check-engines": "wp-scripts check-engines",
@@ -54,9 +53,6 @@
 		"last 3 versions"
 	],
 	"dependencies": {
-		"@checkout-engine/components": "file:packages/components",
-		"@checkout-engine/docs": "file:packages/docs",
-		"@checkout-engine/react": "file:packages/integrations/react",
 		"@emotion/react": "^11.7.1",
 		"@rails/activestorage": "^6.1.4-1",
 		"@wordpress/babel-preset-default": "^6.2.0",
@@ -76,7 +72,6 @@
 		"imagemin-mozjpeg": "^8.0.0",
 		"imagemin-webpack-plugin": "^2.1.1",
 		"import-glob": "^1.5.0",
-		"lerna": "^4.0.0",
 		"loader-utils": "^1.1.0",
 		"lodash": "^4.17.15",
 		"mini-css-extract-plugin": "^0.9.0",
@@ -149,5 +144,6 @@
 			"E2E Tests Example"
 		],
 		"welcome-build-command": "npm run dev"
-	}
+	},
+	"packageManager": "yarn@3.1.1"
 }

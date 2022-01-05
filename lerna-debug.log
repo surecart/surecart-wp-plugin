@@ -1,0 +1,20 @@
+0 silly argv {
+0 silly argv   _: [ 'run' ],
+0 silly argv   stream: true,
+0 silly argv   parallel: true,
+0 silly argv   lernaVersion: '4.0.0',
+0 silly argv   '$0': 'node_modules/lerna/cli.js',
+0 silly argv   script: 'start'
+0 silly argv }
+1 notice cli v4.0.0
+2 verbose rootPath /Users/andre/code/checkout-engine
+3 info versioning independent
+4 error Error: Unsupported URL Type "workspace:": workspace:^
+4 error     at unsupportedURLType (/Users/andre/code/checkout-engine/node_modules/npm-package-arg/npa.js:246:15)
+4 error     at fromURL (/Users/andre/code/checkout-engine/node_modules/npm-package-arg/npa.js:306:13)
+4 error     at Function.resolve (/Users/andre/code/checkout-engine/node_modules/npm-package-arg/npa.js:76:12)
+4 error     at /Users/andre/code/checkout-engine/node_modules/@lerna/package-graph/index.js:66:30
+4 error     at Array.forEach (<anonymous>)
+4 error     at /Users/andre/code/checkout-engine/node_modules/@lerna/package-graph/index.js:60:38
+4 error     at Map.forEach (<anonymous>)
+4 error     at new PackageGraph (/Users/andre/code/checkout-engine/node_modules/@lerna/package-graph/index.js:49:10)

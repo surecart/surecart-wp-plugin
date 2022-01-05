@@ -19,7 +19,7 @@ import { useBlockProps } from '@wordpress/block-editor';
 /**
  * Component Dependencies
  */
-import { CeCouponForm } from '@checkout-engine/react';
+import { CeCouponForm } from '@checkout-engine/components-react';
 
 export default ( { attributes, setAttributes, isSelected } ) => {
 	const { text, button_text, disabled } = attributes;

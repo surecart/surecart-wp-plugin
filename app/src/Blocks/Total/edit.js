@@ -1,5 +1,3 @@
-import { CeLineItemTotal } from '@checkout-engine/components';
-
 export default ( { attributes } ) => {
 	const { text, subscription_text } = attributes;
 

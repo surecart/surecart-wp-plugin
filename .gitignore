@@ -33,6 +33,11 @@ Thumbs.db
 .idea
 
 artifacts
-
-
 dist
+
+# Yarn
+.yarn/**/*
+!.yarn/releases/*
+!.yarn/plugins/*
+!.yarn/sdks/*
+!.yarn/versions/*

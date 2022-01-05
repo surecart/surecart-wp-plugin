@@ -17,7 +17,7 @@ import {
 /**
  * Component Dependencies
  */
-import { CeButton } from '@checkout-engine/react';
+import { CeButton } from '@checkout-engine/components-react';
 import Placeholder from './Placeholder';
 
 export default ( { className, attributes, setAttributes } ) => {

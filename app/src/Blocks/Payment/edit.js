@@ -9,7 +9,7 @@ import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
 /**
  * Component Dependencies
  */
-import { CePayment } from '@checkout-engine/react';
+import { CePayment } from '@checkout-engine/components-react';
 
 export default ( { className, attributes, setAttributes } ) => {
 	const { label, secure_notice } = attributes;

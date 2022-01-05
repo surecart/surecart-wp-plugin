@@ -165,7 +165,7 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 				await library.registerIconLibrary(
 					'default', {
 						resolver: function(name) {
-							return '<?php echo esc_url_raw( plugin_dir_url( CHECKOUT_ENGINE_PLUGIN_FILE ) . "resources/icons/feather/'+name+'.svg" ); ?>';
+							return '<?php echo esc_url_raw( plugin_dir_url( CHECKOUT_ENGINE_PLUGIN_FILE ) . "packages/icons/feather/'+name+'.svg" ); ?>';
 						},
 						mutator: function(svg) {
 							return svg.setAttribute('fill', 'none')
@@ -189,7 +189,7 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 				await library.registerIconLibrary(
 					'default', {
 						resolver: function(name) {
-							return '<?php echo plugin_dir_url( CHECKOUT_ENGINE_PLUGIN_FILE ); ?>resources/icons/feather/' + name + '.svg'
+							return '<?php echo plugin_dir_url( CHECKOUT_ENGINE_PLUGIN_FILE ); ?>packages/icons/feather/' + name + '.svg'
 						},
 						mutator: function(svg) {
 							return svg.setAttribute('fill', 'none')

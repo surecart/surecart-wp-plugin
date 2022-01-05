@@ -9,7 +9,7 @@ import { useBlockProps } from '@wordpress/block-editor';
 /**
  * Component Dependencies
  */
-import { CeDivider } from '@checkout-engine/react';
+import { CeDivider } from '@checkout-engine/components-react';
 
 export default ( { attributes, setAttributes } ) => {
 	const { text } = attributes;

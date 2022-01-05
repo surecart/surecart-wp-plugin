@@ -20,7 +20,7 @@ module.exports.rootPath = ( basePath = '', destPath = '' ) =>
 module.exports.srcPath = ( basePath = '', destPath = '' ) =>
 	path.resolve(
 		path.dirname( __dirname ),
-		'../../resources',
+		'../../packages',
 		basePath,
 		destPath
 	);
@@ -28,8 +28,7 @@ module.exports.srcPath = ( basePath = '', destPath = '' ) =>
 module.exports.distPath = ( basePath = '', destPath = '' ) =>
 	path.resolve( path.dirname( __dirname ), '../../dist', basePath, destPath );
 
-module.exports.srcScriptsPath = ( destPath ) =>
-	exports.srcPath( 'scripts', destPath );
+module.exports.srcScriptsPath = ( destPath ) => exports.srcPath( '', destPath );
 
 module.exports.srcStylesPath = ( destPath ) =>
 	exports.srcPath( 'styles', destPath );
