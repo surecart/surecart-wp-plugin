@@ -1,0 +1,5597 @@
+{
+	"openapi": "3.0.1",
+	"info": { "title": "Endpoints", "version": "v1" },
+	"paths": {
+		"/api/v1/abandoned_checkouts": {
+			"get": {
+				"summary": "List Abandoned Checkouts",
+				"tags": ["Abandoned Checkout"],
+				"operationId": "list_abandoned_checkouts",
+				"description": "Returns a list of your abandoned checkouts.",
+				"parameters": [
+					{ "$ref": "#/components/parameters/limit" },
+					{ "$ref": "#/components/parameters/page" },
+					{ "$ref": "#/components/parameters/ids" },
+					{ "$ref": "#/components/parameters/customer_ids" },
+					{ "$ref": "#/components/parameters/status" }
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"object": "list",
+									"pagination": {
+										"count": 1,
+										"limit": 20,
+										"page": 1,
+										"url": "/api/v1/abandoned_checkouts"
+									},
+									"data": [
+										{
+											"id": "2b3409f1-58e5-4511-8dcc-218d28154a21",
+											"object": "abandoned_checkout",
+											"status": "not_notified",
+											"notification_status": "not_sent",
+											"latest_checkout_session": "cc83cac1-3412-4f3d-b15d-4348056d5e0a",
+											"customer": "e132ac6a-3ced-4a46-a525-33b57a83229b",
+											"created_at": 1640210939,
+											"updated_at": 1640211839
+										}
+									]
+								},
+								"schema": {
+									"$ref": "#/components/schemas/list_response"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/abandoned_checkouts/{id}": {
+			"parameters": [
+				{
+					"name": "id",
+					"in": "path",
+					"required": true,
+					"schema": { "type": "string" }
+				}
+			],
+			"get": {
+				"summary": "Retrieve Abandoned Checkout",
+				"tags": ["Abandoned Checkout"],
+				"operationId": "retrieve_abandoned_checkout",
+				"description": "Retrieves details of a specific abandoned checkout.",
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"id": "a24c6aea-4e80-4614-9987-1d0ce7a201ba",
+									"object": "abandoned_checkout",
+									"status": "not_notified",
+									"notification_status": "not_sent",
+									"latest_checkout_session": "0f85bc4e-6b5f-4ef2-a28b-56168c3048c7",
+									"customer": "f8440752-cabd-468b-afb7-fa3dec6540ef",
+									"created_at": 1640210939,
+									"updated_at": 1640211839
+								},
+								"schema": {
+									"$ref": "#/components/schemas/abandoned_checkout_response"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/account": {
+			"get": {
+				"summary": "Retrieve Account",
+				"tags": ["Account"],
+				"operationId": "retrieve_account",
+				"description": "Retrieves details of the current account.",
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"id": "201d79ec-180f-487e-8a56-42fec2372a7b",
+									"object": "account",
+									"name": "Test Account",
+									"currency": "usd",
+									"url": null,
+									"owner": "42aac923-6db4-465f-bbab-36393c2d9adf",
+									"address": "e026f6f0-7899-4eda-beb8-d7c2c4299210",
+									"brand": "d8b930b3-b77e-4b19-b668-a43b1db2b650",
+									"customer_notification_protocol": "471fb5b6-555f-43c3-b1e5-9b8940f136f3",
+									"tax_protocol": "f35bcd1d-c5e4-443e-9545-6e56e79dfed5",
+									"created_at": 1640211839,
+									"updated_at": 1640211839
+								},
+								"schema": {
+									"$ref": "#/components/schemas/account_response"
+								}
+							}
+						}
+					}
+				}
+			},
+			"patch": {
+				"summary": "Update Account",
+				"tags": ["Account"],
+				"operationId": "update_account",
+				"description": "Updates the current account.",
+				"parameters": [],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"id": "7fbb76c0-ddb0-4fc3-aac3-e9364e395ebd",
+									"object": "account",
+									"name": "New Account Name",
+									"currency": "aud",
+									"url": null,
+									"owner": "d8e16a32-d14c-41a6-9661-25b854942628",
+									"address": "145098bf-2541-4092-8428-3592108d07d4",
+									"brand": "02768329-e69b-4994-8354-8948cd756d77",
+									"customer_notification_protocol": "87eb7858-b770-4587-9e91-7a1be297e722",
+									"tax_protocol": "1699f996-433e-435f-8834-ad4fb8d9ad14",
+									"created_at": 1640211839,
+									"updated_at": 1640211839
+								},
+								"schema": {
+									"$ref": "#/components/schemas/account_response"
+								}
+							}
+						}
+					}
+				},
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"account": {
+										"allOf": [
+											{
+												"$ref": "#/components/schemas/account_body"
+											}
+										]
+									}
+								}
+							},
+							"example": {
+								"account": {
+									"name": "New Account Name",
+									"currency": "aud"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/brand": {
+			"get": {
+				"summary": "Retrieve Brand",
+				"tags": ["Brand"],
+				"operationId": "retrieve_brand",
+				"description": "Retrieves details of the current account's brand.",
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"id": "25c65614-e71d-4ca4-8b6e-f20a0a6c0624",
+									"object": "brand",
+									"color": "f9fafb",
+									"accent_color": "f9fafb",
+									"email": null,
+									"phone": null,
+									"website": null,
+									"inherit_account_address": true,
+									"logo_url": null,
+									"address": null,
+									"created_at": 1640211839,
+									"updated_at": 1640211839
+								},
+								"schema": {
+									"$ref": "#/components/schemas/brand_response"
+								}
+							}
+						}
+					}
+				}
+			},
+			"patch": {
+				"summary": "Update Brand",
+				"tags": ["Brand"],
+				"operationId": "update_brand",
+				"description": "Updates the current account's brand.",
+				"parameters": [],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"id": "96bb2729-200f-493f-b45d-b2aff4d9b05f",
+									"object": "brand",
+									"color": "1D2B39",
+									"accent_color": "fbce0a",
+									"email": null,
+									"phone": null,
+									"website": null,
+									"inherit_account_address": true,
+									"logo_url": null,
+									"address": null,
+									"created_at": 1640211839,
+									"updated_at": 1640211839
+								},
+								"schema": {
+									"$ref": "#/components/schemas/brand_response"
+								}
+							}
+						}
+					}
+				},
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"brand": {
+										"allOf": [
+											{
+												"$ref": "#/components/schemas/brand_body"
+											}
+										]
+									}
+								}
+							},
+							"example": {
+								"brand": {
+									"color": "1D2B39",
+									"accent_color": "fbce0a"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/charges": {
+			"get": {
+				"summary": "List Charges",
+				"tags": ["Charge"],
+				"operationId": "list_charges",
+				"description": "Returns a list of your charges.",
+				"parameters": [
+					{ "$ref": "#/components/parameters/limit" },
+					{ "$ref": "#/components/parameters/page" },
+					{ "$ref": "#/components/parameters/ids" },
+					{ "$ref": "#/components/parameters/customer_ids" },
+					{ "$ref": "#/components/parameters/checkout_session_ids" },
+					{ "$ref": "#/components/parameters/subscription_ids" },
+					{ "$ref": "#/components/parameters/live_mode" }
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"object": "list",
+									"pagination": {
+										"count": 1,
+										"limit": 20,
+										"page": 1,
+										"url": "/api/v1/charges"
+									},
+									"data": [
+										{
+											"id": "b54760c8-cf07-41dd-bade-4417a69f5418",
+											"object": "charge",
+											"amount": 2900,
+											"currency": "usd",
+											"external_charge_id": "ch_1JHbBH2fs4LLhxzS5hiaHRLN",
+											"refunded_amount": 0,
+											"live_mode": true,
+											"fully_refunded": false,
+											"processor_type": "stripe",
+											"checkout_session": "01757f51-83c0-4920-b136-2e89572d931d",
+											"subscription": null,
+											"customer": "fb41aa69-89ae-496a-9601-3c3e943d490e",
+											"created_at": 1640211840,
+											"updated_at": 1640211840
+										}
+									]
+								},
+								"schema": {
+									"$ref": "#/components/schemas/list_response"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/charges/{id}": {
+			"parameters": [
+				{
+					"name": "id",
+					"in": "path",
+					"required": true,
+					"schema": { "type": "string" }
+				}
+			],
+			"get": {
+				"summary": "Retrieve Charge",
+				"tags": ["Charge"],
+				"operationId": "retrieve_charge",
+				"description": "Retrieves details of a specific charge.",
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"id": "dc606701-749a-4c05-8164-d5ac6d46a8b2",
+									"object": "charge",
+									"amount": 2900,
+									"currency": "usd",
+									"external_charge_id": "ch_1JHbBH2fs4LLhxzS5hiaHRLN",
+									"refunded_amount": 0,
+									"live_mode": true,
+									"fully_refunded": false,
+									"processor_type": "stripe",
+									"checkout_session": "638c66ee-823c-4a9b-b6b9-b0fdbfbc5d89",
+									"subscription": null,
+									"customer": "cb9d8f4c-a872-427a-9511-0a071c80c435",
+									"created_at": 1640211840,
+									"updated_at": 1640211840
+								},
+								"schema": {
+									"$ref": "#/components/schemas/charge_response"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/checkout_sessions": {
+			"get": {
+				"summary": "List Checkout Sessions",
+				"tags": ["Checkout Session"],
+				"operationId": "list_checkout_sessions",
+				"description": "Returns a list of your checkout sessions.",
+				"parameters": [
+					{ "$ref": "#/components/parameters/limit" },
+					{ "$ref": "#/components/parameters/page" },
+					{ "$ref": "#/components/parameters/ids" },
+					{ "$ref": "#/components/parameters/status" },
+					{ "$ref": "#/components/parameters/customer_ids" },
+					{ "$ref": "#/components/parameters/group_keys" },
+					{ "$ref": "#/components/parameters/query" },
+					{ "$ref": "#/components/parameters/live_mode" }
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"object": "list",
+									"pagination": {
+										"count": 1,
+										"limit": 20,
+										"page": 1,
+										"url": "/api/v1/checkout_sessions"
+									},
+									"data": [
+										{
+											"id": "80217b70-6f6d-4627-ba35-6cd646d44f10",
+											"object": "checkout_session",
+											"email": null,
+											"name": null,
+											"currency": "usd",
+											"subtotal_amount": 0,
+											"discount_amount": 0,
+											"tax_amount": 0,
+											"total_amount": 0,
+											"status": "draft",
+											"return_url": null,
+											"live_mode": true,
+											"group_key": null,
+											"number": "25C258AB",
+											"tax_label": null,
+											"tax_calculation_status": "disabled",
+											"metadata": {},
+											"processor_data": {
+												"stripe": null
+											},
+											"customer": null,
+											"discount": null,
+											"payment_intent": null,
+											"billing_address": null,
+											"shipping_address": null,
+											"subscription": null,
+											"tax_identifier": null,
+											"created_at": 1640211840,
+											"updated_at": 1640211840
+										}
+									]
+								},
+								"schema": {
+									"$ref": "#/components/schemas/list_response"
+								}
+							}
+						}
+					}
+				}
+			},
+			"post": {
+				"summary": "Create Checkout Session",
+				"tags": ["Checkout Session"],
+				"operationId": "create_checkout_session",
+				"description": "Creates a new checkout session.",
+				"parameters": [],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"id": "7112b78f-406f-44cb-a0c1-dc2d7b19a597",
+									"object": "checkout_session",
+									"email": "customer@example.com",
+									"name": null,
+									"currency": "usd",
+									"subtotal_amount": 0,
+									"discount_amount": 0,
+									"tax_amount": 0,
+									"total_amount": 0,
+									"status": "draft",
+									"return_url": null,
+									"live_mode": true,
+									"group_key": null,
+									"number": "8AB39E2B",
+									"tax_label": null,
+									"tax_calculation_status": "disabled",
+									"metadata": {},
+									"processor_data": { "stripe": null },
+									"customer": "c6819654-9982-4dc8-8bfe-6b0adbbc1f75",
+									"discount": null,
+									"payment_intent": null,
+									"billing_address": null,
+									"shipping_address": null,
+									"subscription": null,
+									"tax_identifier": null,
+									"created_at": 1640211840,
+									"updated_at": 1640211840
+								},
+								"schema": {
+									"$ref": "#/components/schemas/checkout_session_response"
+								}
+							}
+						}
+					}
+				},
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"checkout_session": {
+										"allOf": [
+											{
+												"$ref": "#/components/schemas/checkout_session_body"
+											}
+										]
+									}
+								}
+							},
+							"example": {
+								"checkout_session": {
+									"email": "customer@example.com"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/checkout_sessions/{id}": {
+			"parameters": [
+				{
+					"name": "id",
+					"in": "path",
+					"required": true,
+					"schema": { "type": "string" }
+				}
+			],
+			"get": {
+				"summary": "Retrieve Checkout Session",
+				"parameters": [
+					{ "$ref": "#/components/parameters/refresh_status" }
+				],
+				"tags": ["Checkout Session"],
+				"operationId": "retrieve_checkout_session",
+				"description": "Retrieves details of a specific checkout session.",
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"id": "7754f926-8ead-4527-87bd-90745f39a9fb",
+									"object": "checkout_session",
+									"email": null,
+									"name": null,
+									"currency": "usd",
+									"subtotal_amount": 0,
+									"discount_amount": 0,
+									"tax_amount": 0,
+									"total_amount": 0,
+									"status": "draft",
+									"return_url": null,
+									"live_mode": true,
+									"group_key": null,
+									"number": "70CA5751",
+									"tax_label": null,
+									"tax_calculation_status": "disabled",
+									"metadata": {},
+									"processor_data": { "stripe": null },
+									"customer": null,
+									"discount": null,
+									"payment_intent": null,
+									"billing_address": null,
+									"shipping_address": null,
+									"subscription": null,
+									"tax_identifier": null,
+									"created_at": 1640211840,
+									"updated_at": 1640211840
+								},
+								"schema": {
+									"$ref": "#/components/schemas/checkout_session_response"
+								}
+							}
+						}
+					}
+				}
+			},
+			"patch": {
+				"summary": "Update Checkout Session",
+				"tags": ["Checkout Session"],
+				"operationId": "update_checkout_session",
+				"description": "Updates a specific checkout session.",
+				"parameters": [],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"id": "ae5bd893-44a4-4f96-8320-afb1e844368f",
+									"object": "checkout_session",
+									"email": "updated-customer@example.com",
+									"name": null,
+									"currency": "usd",
+									"subtotal_amount": 2900,
+									"discount_amount": 0,
+									"tax_amount": 0,
+									"total_amount": 2900,
+									"status": "draft",
+									"return_url": null,
+									"live_mode": true,
+									"group_key": null,
+									"number": "3A6EF717",
+									"tax_label": null,
+									"tax_calculation_status": "disabled",
+									"metadata": {},
+									"processor_data": { "stripe": null },
+									"customer": "440f5315-ce2f-46b5-ba3d-557a198a3478",
+									"discount": null,
+									"payment_intent": null,
+									"billing_address": null,
+									"shipping_address": null,
+									"subscription": null,
+									"tax_identifier": null,
+									"created_at": 1640211840,
+									"updated_at": 1640211840
+								},
+								"schema": {
+									"$ref": "#/components/schemas/checkout_session_response"
+								}
+							}
+						}
+					}
+				},
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"checkout_session": {
+										"allOf": [
+											{
+												"$ref": "#/components/schemas/checkout_session_body"
+											}
+										]
+									}
+								}
+							},
+							"example": {
+								"checkout_session": {
+									"email": "updated-customer@example.com",
+									"line_items": [
+										{
+											"price_id": "3b0656e9-c10d-4381-83ef-f0bc23089680",
+											"quantity": 1
+										}
+									]
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/checkout_sessions/{id}/finalize/{processor_type}": {
+			"parameters": [
+				{
+					"name": "id",
+					"in": "path",
+					"required": true,
+					"schema": { "type": "string" }
+				},
+				{
+					"name": "processor_type",
+					"in": "path",
+					"required": true,
+					"schema": { "type": "string" }
+				}
+			],
+			"patch": {
+				"summary": "Finalize Checkout Session",
+				"tags": ["Checkout Session"],
+				"operationId": "finalize_checkout_session",
+				"description": "Finalizes a specific checkout session before it can be paid. If succesfull, this will return an associated `PaymentIntent` with the necessary information to capture the payment via the specific processor. For example, if processing through Stripe, the `external_client_secret` will be set to the `Stripe::PaymentIntent` client secret.\n\nYou can also pass a request body to update the specific checkout session before the server attempts to prepare it. This is helpful when you need to update and prepare the checkout session at the same time.",
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"id": "b340165f-1f45-4b33-b699-503a7d77c4e6",
+									"object": "checkout_session",
+									"email": "customer@example.com",
+									"name": null,
+									"currency": "usd",
+									"subtotal_amount": 2900,
+									"discount_amount": 0,
+									"tax_amount": 0,
+									"total_amount": 2900,
+									"status": "finalized",
+									"return_url": null,
+									"live_mode": true,
+									"group_key": null,
+									"number": "6560D587",
+									"tax_label": null,
+									"tax_calculation_status": "disabled",
+									"metadata": {},
+									"processor_data": {
+										"stripe": {
+											"account_id": "external_account_7",
+											"publishable_key": "pk_test_123"
+										}
+									},
+									"customer": "f4c81c5f-9319-45ef-842a-83cf6449a2a3",
+									"discount": null,
+									"payment_intent": "3cf3403b-5232-4b5a-bb5d-bede42c689d5",
+									"billing_address": null,
+									"shipping_address": null,
+									"subscription": null,
+									"tax_identifier": null,
+									"created_at": 1640211840,
+									"updated_at": 1640211841
+								},
+								"schema": {
+									"$ref": "#/components/schemas/checkout_session_response"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/coupons": {
+			"get": {
+				"summary": "List Coupons",
+				"tags": ["Coupon"],
+				"operationId": "list_coupons",
+				"description": "Returns a list of your coupons.",
+				"parameters": [
+					{ "$ref": "#/components/parameters/limit" },
+					{ "$ref": "#/components/parameters/page" },
+					{ "$ref": "#/components/parameters/ids" },
+					{ "$ref": "#/components/parameters/query" }
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"object": "list",
+									"pagination": {
+										"count": 1,
+										"limit": 20,
+										"page": 1,
+										"url": "/api/v1/coupons"
+									},
+									"data": [
+										{
+											"id": "4358ad20-d123-4825-b2b0-5c5fdeafe7f0",
+											"object": "coupon",
+											"name": "Test Coupon",
+											"amount_off": 500,
+											"percent_off": null,
+											"currency": "usd",
+											"duration": "once",
+											"duration_in_months": null,
+											"redeem_by": null,
+											"max_redemptions": null,
+											"times_redeemed": 0,
+											"metadata": {},
+											"expired": false,
+											"created_at": 1640211841,
+											"updated_at": 1640211841
+										}
+									]
+								},
+								"schema": {
+									"$ref": "#/components/schemas/list_response"
+								}
+							}
+						}
+					}
+				}
+			},
+			"post": {
+				"summary": "Create Coupon",
+				"tags": ["Coupon"],
+				"operationId": "create_coupon",
+				"description": "Creates a new coupon.",
+				"parameters": [],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"id": "b5a59789-a6eb-4cad-9e36-02f1e4fa1041",
+									"object": "coupon",
+									"name": "Test Coupon",
+									"amount_off": 500,
+									"percent_off": null,
+									"currency": "usd",
+									"duration": "once",
+									"duration_in_months": null,
+									"redeem_by": null,
+									"max_redemptions": null,
+									"times_redeemed": 0,
+									"metadata": {},
+									"expired": false,
+									"created_at": 1640211841,
+									"updated_at": 1640211841
+								},
+								"schema": {
+									"$ref": "#/components/schemas/coupon_response"
+								}
+							}
+						}
+					}
+				},
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"coupon": {
+										"allOf": [
+											{
+												"$ref": "#/components/schemas/coupon_body"
+											}
+										]
+									}
+								}
+							},
+							"example": {
+								"coupon": {
+									"name": "Test Coupon",
+									"amount_off": 500
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/coupons/{id}": {
+			"parameters": [
+				{
+					"name": "id",
+					"in": "path",
+					"required": true,
+					"schema": { "type": "string" }
+				}
+			],
+			"get": {
+				"summary": "Retrieve Coupon",
+				"tags": ["Coupon"],
+				"operationId": "retrieve_coupon",
+				"description": "Retrieves details of a specific coupon.",
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"id": "4b76536d-ecb4-45e3-bf4a-d00804faf8f6",
+									"object": "coupon",
+									"name": "Test Coupon",
+									"amount_off": 500,
+									"percent_off": null,
+									"currency": "usd",
+									"duration": "once",
+									"duration_in_months": null,
+									"redeem_by": null,
+									"max_redemptions": null,
+									"times_redeemed": 0,
+									"metadata": {},
+									"expired": false,
+									"created_at": 1640211841,
+									"updated_at": 1640211841
+								},
+								"schema": {
+									"$ref": "#/components/schemas/coupon_response"
+								}
+							}
+						}
+					}
+				}
+			},
+			"patch": {
+				"summary": "Update Coupon",
+				"tags": ["Coupon"],
+				"operationId": "update_coupon",
+				"description": "Updates a specific coupon.",
+				"parameters": [],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"id": "ce7ed6e5-cfeb-47a1-aaea-0ec9f44d2698",
+									"object": "coupon",
+									"name": "Updated Coupon",
+									"amount_off": 500,
+									"percent_off": null,
+									"currency": "usd",
+									"duration": "once",
+									"duration_in_months": null,
+									"redeem_by": null,
+									"max_redemptions": null,
+									"times_redeemed": 0,
+									"metadata": {},
+									"expired": false,
+									"created_at": 1640211841,
+									"updated_at": 1640211841
+								},
+								"schema": {
+									"$ref": "#/components/schemas/coupon_response"
+								}
+							}
+						}
+					}
+				},
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"coupon": {
+										"allOf": [
+											{
+												"$ref": "#/components/schemas/coupon_body"
+											}
+										]
+									}
+								}
+							},
+							"example": {
+								"coupon": { "name": "Updated Coupon" }
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"summary": "Delete Coupon",
+				"tags": ["Coupon"],
+				"operationId": "delete_coupon",
+				"description": "Deletes a specific coupon.",
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"id": "964920aa-c628-4157-9777-9a3e9fa6c8ef",
+									"object": "coupon",
+									"deleted": true
+								},
+								"schema": {
+									"$ref": "#/components/schemas/model_destroy_response"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/customer_links": {
+			"post": {
+				"summary": "Create Customer Link",
+				"tags": ["Customer Link"],
+				"operationId": "create_customer_link",
+				"description": "Creates a new customer link.",
+				"parameters": [],
+				"responses": { "200": { "description": "Success" } },
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"customer_link": {
+										"allOf": [
+											{
+												"$ref": "#/components/schemas/customer_link_body"
+											}
+										]
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/customer_links/{id}": {
+			"parameters": [
+				{
+					"name": "id",
+					"in": "path",
+					"required": true,
+					"schema": { "type": "string" }
+				}
+			],
+			"get": {
+				"summary": "Retrieve Customer Link",
+				"tags": ["Customer Link"],
+				"operationId": "retrieve_customer_link",
+				"description": "Retrieves details of a specific customer link.",
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"id": "3dd13840-d7a9-435a-8b1c-b8431a0386d4",
+									"object": "customer_link",
+									"email": "customer-2@example.com",
+									"return_url": "https://example.com",
+									"first_used_at": 1640211841,
+									"expired": false,
+									"customer": "41fad768-bc38-4fa0-95dc-79bc46bc945e",
+									"created_at": 1640211841,
+									"updated_at": 1640211841
+								},
+								"schema": {
+									"$ref": "#/components/schemas/customer_link_response"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/customer_notification_protocol": {
+			"get": {
+				"summary": "Retrieve Customer Notification Protocol",
+				"tags": ["Customer Notification Protocol"],
+				"operationId": "retrieve_customer_notification_protocol",
+				"description": "Retrieves details of the current account's customer notification protocol.",
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"id": "c338295c-d778-4205-b0f8-f1e3def7c852",
+									"object": "customer_notification_protocol",
+									"from_name": null,
+									"reply_to_email": null,
+									"abandoned_checkouts_enabled": true,
+									"locale": "en",
+									"created_at": 1640211841,
+									"updated_at": 1640211841
+								},
+								"schema": {
+									"$ref": "#/components/schemas/customer_notification_protocol_response"
+								}
+							}
+						}
+					}
+				}
+			},
+			"patch": {
+				"summary": "Update Customer Notification Protocol",
+				"tags": ["Customer Notification Protocol"],
+				"operationId": "update_customer_notification_protocol",
+				"description": "Updates the current account's customer notification protocol.",
+				"parameters": [],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"id": "5485faec-43b3-4653-a24c-e644a361d48f",
+									"object": "customer_notification_protocol",
+									"from_name": "Support Team",
+									"reply_to_email": "support@example.com",
+									"abandoned_checkouts_enabled": true,
+									"locale": "en",
+									"created_at": 1640211841,
+									"updated_at": 1640211841
+								},
+								"schema": {
+									"$ref": "#/components/schemas/customer_notification_protocol_response"
+								}
+							}
+						}
+					}
+				},
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"customer_notification_protocol": {
+										"allOf": [
+											{
+												"$ref": "#/components/schemas/customer_notification_protocol_body"
+											}
+										]
+									}
+								}
+							},
+							"example": {
+								"customer_notification_protocol": {
+									"from_name": "Support Team",
+									"reply_to_email": "support@example.com"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/customers": {
+			"get": {
+				"summary": "List Customers",
+				"tags": ["Customer"],
+				"operationId": "list_customers",
+				"description": "Returns a list of your customers.",
+				"parameters": [
+					{ "$ref": "#/components/parameters/limit" },
+					{ "$ref": "#/components/parameters/page" },
+					{ "$ref": "#/components/parameters/ids" },
+					{ "$ref": "#/components/parameters/query" }
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"object": "list",
+									"pagination": {
+										"count": 1,
+										"limit": 20,
+										"page": 1,
+										"url": "/api/v1/customers"
+									},
+									"data": [
+										{
+											"id": "d25d6fdc-94f7-4cc8-a9e3-971f79252720",
+											"object": "customer",
+											"email": "customer-3@example.com",
+											"name": null,
+											"phone": null,
+											"unsubscribed": false,
+											"billing_address": null,
+											"shipping_address": null,
+											"created_at": 1640211841,
+											"updated_at": 1640211841
+										}
+									]
+								},
+								"schema": {
+									"$ref": "#/components/schemas/list_response"
+								}
+							}
+						}
+					}
+				}
+			},
+			"post": {
+				"summary": "Create Customer",
+				"tags": ["Customer"],
+				"operationId": "create_customer",
+				"description": "Creates a new customer.",
+				"parameters": [],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"id": "2923f19b-1840-4f70-8bed-2c73cf797515",
+									"object": "customer",
+									"email": "testcustomer@example.com",
+									"name": "Test Customer",
+									"phone": null,
+									"unsubscribed": false,
+									"billing_address": null,
+									"shipping_address": null,
+									"created_at": 1640211841,
+									"updated_at": 1640211841
+								},
+								"schema": {
+									"$ref": "#/components/schemas/customer_response"
+								}
+							}
+						}
+					}
+				},
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"customer": {
+										"allOf": [
+											{
+												"$ref": "#/components/schemas/customer_body"
+											}
+										]
+									}
+								}
+							},
+							"example": {
+								"customer": {
+									"name": "Test Customer",
+									"email": "testcustomer@example.com"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/customers/{id}": {
+			"parameters": [
+				{
+					"name": "id",
+					"in": "path",
+					"required": true,
+					"schema": { "type": "string" }
+				}
+			],
+			"get": {
+				"summary": "Retrieve Customer",
+				"tags": ["Customer"],
+				"operationId": "retrieve_customer",
+				"description": "Retrieves details of a specific customer.",
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"id": "e3ff809c-20ba-450e-bc47-6d71c09f1f45",
+									"object": "customer",
+									"email": "customer-4@example.com",
+									"name": null,
+									"phone": null,
+									"unsubscribed": false,
+									"billing_address": null,
+									"shipping_address": null,
+									"created_at": 1640211841,
+									"updated_at": 1640211841
+								},
+								"schema": {
+									"$ref": "#/components/schemas/customer_response"
+								}
+							}
+						}
+					}
+				}
+			},
+			"patch": {
+				"summary": "Update Customer",
+				"tags": ["Customer"],
+				"operationId": "update_customer",
+				"description": "Updates a specific customer.",
+				"parameters": [],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"id": "8742256d-bacb-4bed-a65b-f2fc8eb8141d",
+									"object": "customer",
+									"email": "customer-5@example.com",
+									"name": "Updated Customer",
+									"phone": null,
+									"unsubscribed": false,
+									"billing_address": null,
+									"shipping_address": null,
+									"created_at": 1640211841,
+									"updated_at": 1640211841
+								},
+								"schema": {
+									"$ref": "#/components/schemas/customer_response"
+								}
+							}
+						}
+					}
+				},
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"customer": {
+										"allOf": [
+											{
+												"$ref": "#/components/schemas/customer_body"
+											}
+										]
+									}
+								}
+							},
+							"example": {
+								"customer": { "name": "Updated Customer" }
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"summary": "Delete Customer",
+				"tags": ["Customer"],
+				"operationId": "delete_customer",
+				"description": "Deletes a specific customer.",
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"id": "955cd51d-90f1-4143-86cf-1bcdc8c27403",
+									"object": "customer",
+									"deleted": true
+								},
+								"schema": {
+									"$ref": "#/components/schemas/model_destroy_response"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/events": {
+			"get": {
+				"summary": "List Events",
+				"tags": ["Event"],
+				"operationId": "list_events",
+				"description": "Returns a list of your events.",
+				"parameters": [
+					{ "$ref": "#/components/parameters/limit" },
+					{ "$ref": "#/components/parameters/page" }
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"object": "list",
+									"pagination": {
+										"count": 1,
+										"limit": 20,
+										"page": 1,
+										"url": "/api/v1/events"
+									},
+									"data": [
+										{
+											"id": "c7f3bc15-d4a6-48a5-8473-979a23700670",
+											"object": "event",
+											"type": "subscription.updated",
+											"data": {
+												"object": {
+													"id": "1f95e067-659b-488d-b01b-15cd643b30d6",
+													"object": "subscription",
+													"currency": "usd",
+													"status": "active",
+													"subtotal_amount": 0,
+													"discount_amount": 0,
+													"tax_amount": 0,
+													"total_amount": 0,
+													"external_subscription_id": "external_subscription_1",
+													"live_mode": true,
+													"cancel_at_period_end": false,
+													"current_period_end": null,
+													"current_period_start": null,
+													"ended_at": null,
+													"trial_end_at": null,
+													"processor_type": "stripe",
+													"checkout_session": "7c55941a-f140-438d-8e6d-92ab52d52d15",
+													"customer": null,
+													"discount": null,
+													"payment_method": null,
+													"created_at": 1640211841,
+													"updated_at": 1640211841
+												}
+											},
+											"account": "9899a52e-ae96-4ba3-a306-99574e10037f",
+											"created_at": 1640211841
+										}
+									]
+								},
+								"schema": {
+									"$ref": "#/components/schemas/list_response"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/events/{id}": {
+			"parameters": [
+				{
+					"name": "id",
+					"in": "path",
+					"required": true,
+					"schema": { "type": "string" }
+				}
+			],
+			"get": {
+				"summary": "Retrieve Event",
+				"tags": ["Event"],
+				"operationId": "retrieve_event",
+				"description": "Retrieves details of a specific event.",
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"id": "c4bd8eb1-28d5-4e01-a076-0ddb4d4edc5b",
+									"object": "event",
+									"type": "subscription.updated",
+									"data": {
+										"object": {
+											"id": "af2dcb31-9bee-479c-8f4c-cab4b6b18eff",
+											"object": "subscription",
+											"currency": "usd",
+											"status": "active",
+											"subtotal_amount": 0,
+											"discount_amount": 0,
+											"tax_amount": 0,
+											"total_amount": 0,
+											"external_subscription_id": "external_subscription_2",
+											"live_mode": true,
+											"cancel_at_period_end": false,
+											"current_period_end": null,
+											"current_period_start": null,
+											"ended_at": null,
+											"trial_end_at": null,
+											"processor_type": "stripe",
+											"checkout_session": "02b9253f-df4f-49bf-a943-fb02711b1a8e",
+											"customer": null,
+											"discount": null,
+											"payment_method": null,
+											"created_at": 1640211842,
+											"updated_at": 1640211842
+										}
+									},
+									"account": "2b867e42-09f4-48c4-93a6-fb746ece9c0f",
+									"created_at": 1640211842
+								},
+								"schema": {
+									"$ref": "#/components/schemas/event_response"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/line_items": {
+			"get": {
+				"summary": "List Line Items",
+				"tags": ["Line Item"],
+				"operationId": "list_line_items",
+				"description": "Returns a list of your line items.",
+				"parameters": [
+					{ "$ref": "#/components/parameters/limit" },
+					{ "$ref": "#/components/parameters/page" },
+					{ "$ref": "#/components/parameters/checkout_session_ids" }
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"object": "list",
+									"pagination": {
+										"count": 1,
+										"limit": 20,
+										"page": 1,
+										"url": "/api/v1/line_items"
+									},
+									"data": [
+										{
+											"id": "b0adf4c9-1af1-4b29-a2fe-2ed4e82f9680",
+											"object": "line_item",
+											"quantity": 1,
+											"ad_hoc_amount": null,
+											"subtotal_amount": 2900,
+											"checkout_session": "24233723-c9fa-48d0-b5a7-e3c4c14b8b73",
+											"price": "ec306c30-46e9-46b6-ba65-cfac5abccbd1",
+											"created_at": 1640211842,
+											"updated_at": 1640211842
+										}
+									]
+								},
+								"schema": {
+									"$ref": "#/components/schemas/list_response"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/payment_intents": {
+			"get": {
+				"summary": "List Payment Intents",
+				"tags": ["Payment Intent"],
+				"operationId": "list_payment_intents",
+				"description": "Returns a list of your payment intents.",
+				"parameters": [
+					{ "$ref": "#/components/parameters/limit" },
+					{ "$ref": "#/components/parameters/page" },
+					{ "$ref": "#/components/parameters/ids" },
+					{ "$ref": "#/components/parameters/customer_ids" },
+					{ "$ref": "#/components/parameters/live_mode" }
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"object": "list",
+									"pagination": {
+										"count": 1,
+										"limit": 20,
+										"page": 1,
+										"url": "/api/v1/payment_intents"
+									},
+									"data": [
+										{
+											"id": "e76d1a02-da7c-48bb-8763-03c38cfbce6c",
+											"object": "payment_intent",
+											"processor_type": "stripe",
+											"status": "pending",
+											"external_intent_id": "pi_3JhDzG2fs4LLhxzS06L7dgBR",
+											"live_mode": true,
+											"processor_data": {
+												"stripe": {
+													"account_id": "external_account_10",
+													"client_secret": "pi_3K6NFo2fs4LLhxzS1leftxKh_secret_qoy2TA8XJEYKTp4bbF8hT3clV",
+													"publishable_key": "pk_test_123",
+													"type": "payment"
+												}
+											},
+											"customer": "765c00d2-0978-4a0f-b670-ca6b8e45604c",
+											"created_at": 1640211842,
+											"updated_at": 1640211842
+										}
+									]
+								},
+								"schema": {
+									"$ref": "#/components/schemas/list_response"
+								}
+							}
+						}
+					}
+				}
+			},
+			"post": {
+				"summary": "Create Payment Intent",
+				"tags": ["Payment Intent"],
+				"operationId": "create_payment_intent",
+				"description": "Creates a new payment intent.",
+				"parameters": [],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"id": "484f2357-290d-4118-abb7-1046d764756e",
+									"object": "payment_intent",
+									"processor_type": "stripe",
+									"status": "pending",
+									"external_intent_id": "seti_Hu49f8vzt1VbUEZ",
+									"live_mode": true,
+									"processor_data": {
+										"stripe": {
+											"account_id": "external_account_11",
+											"client_secret": "seti_1IyG7QGVpHUbKwE4Z1oYrDbC_secret_JbT3fXLyThiVhWszZSoS4fjVTVr0SWR",
+											"publishable_key": "pk_test_123",
+											"type": "setup"
+										}
+									},
+									"customer": "0a10c89e-c74f-478a-9c61-2ebd4a207fd5",
+									"created_at": 1640211842,
+									"updated_at": 1640211842
+								},
+								"schema": {
+									"$ref": "#/components/schemas/payment_intent_response"
+								}
+							}
+						}
+					}
+				},
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"payment_intent": {
+										"allOf": [
+											{
+												"$ref": "#/components/schemas/payment_intent_body"
+											}
+										]
+									}
+								}
+							},
+							"example": {
+								"payment_intent": {
+									"customer": "0a10c89e-c74f-478a-9c61-2ebd4a207fd5",
+									"processor_type": "stripe"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/payment_intents/{id}": {
+			"parameters": [
+				{
+					"name": "id",
+					"in": "path",
+					"required": true,
+					"schema": { "type": "string" }
+				}
+			],
+			"get": {
+				"summary": "Retrieve Payment Intent",
+				"tags": ["Payment Intent"],
+				"operationId": "retrieve_payment_intent",
+				"description": "Retrieves details of a specific payment intent.",
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"id": "009baf98-21d3-4e26-aacd-35164243fbce",
+									"object": "payment_intent",
+									"processor_type": "stripe",
+									"status": "pending",
+									"external_intent_id": "pi_3JhDzG2fs4LLhxzS06L7dgBR",
+									"live_mode": true,
+									"processor_data": {
+										"stripe": {
+											"account_id": "external_account_12",
+											"client_secret": "pi_3K6NFo2fs4LLhxzS1leftxKh_secret_qoy2TA8XJEYKTp4bbF8hT3clV",
+											"publishable_key": "pk_test_123",
+											"type": "payment"
+										}
+									},
+									"customer": "70da7283-d99c-4500-84c4-f23daaf8e386",
+									"created_at": 1640211842,
+									"updated_at": 1640211842
+								},
+								"schema": {
+									"$ref": "#/components/schemas/payment_intent_response"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/payment_methods": {
+			"get": {
+				"summary": "List Payment Methods",
+				"tags": ["Payment Method"],
+				"operationId": "list_payment_methods",
+				"description": "Returns a list of your payment methods.",
+				"parameters": [
+					{ "$ref": "#/components/parameters/limit" },
+					{ "$ref": "#/components/parameters/page" },
+					{ "$ref": "#/components/parameters/ids" },
+					{ "$ref": "#/components/parameters/customer_ids" },
+					{ "$ref": "#/components/parameters/live_mode" }
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"object": "list",
+									"pagination": {
+										"count": 1,
+										"limit": 20,
+										"page": 1,
+										"url": "/api/v1/payment_methods"
+									},
+									"data": [
+										{
+											"id": "e8ee157f-7035-4383-bad9-78af0fe6175d",
+											"object": "payment_method",
+											"external_payment_method_id": "pm_1Ju1BB2fs4LLhxzSoekOTDo3",
+											"live_mode": true,
+											"processor_type": "stripe",
+											"type": "card",
+											"payment_intent": "48b0103d-7a8e-4f7f-9089-5bdc4dbe49f2",
+											"card": "7fc11a02-bd28-4a35-9091-044cf4ac643b",
+											"customer": "979f79b6-8a10-4e5f-a21c-5ec136a0f263",
+											"created_at": 1640211842,
+											"updated_at": 1640211842
+										}
+									]
+								},
+								"schema": {
+									"$ref": "#/components/schemas/list_response"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/payment_methods/{id}": {
+			"parameters": [
+				{
+					"name": "id",
+					"in": "path",
+					"required": true,
+					"schema": { "type": "string" }
+				}
+			],
+			"get": {
+				"summary": "Retrieve Payment Method",
+				"tags": ["Payment Method"],
+				"operationId": "retrieve_payment_method",
+				"description": "Retrieves details of a specific payment method.",
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"id": "1f8805c8-576d-4c0d-adf9-3c622fba3934",
+									"object": "payment_method",
+									"external_payment_method_id": "pm_1Ju1BB2fs4LLhxzSoekOTDo3",
+									"live_mode": true,
+									"processor_type": "stripe",
+									"type": "card",
+									"payment_intent": "ba2c72f1-cfa8-427c-afe8-8a099a969a53",
+									"card": "119985f7-4b4d-44ec-99fe-1c04cda2d701",
+									"customer": "2565631c-22fb-4bca-9392-dd382eea6b0a",
+									"created_at": 1640211842,
+									"updated_at": 1640211842
+								},
+								"schema": {
+									"$ref": "#/components/schemas/payment_method_response"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/prices": {
+			"get": {
+				"summary": "List Prices",
+				"tags": ["Price"],
+				"operationId": "list_prices",
+				"description": "Returns a list of your prices.",
+				"parameters": [
+					{ "$ref": "#/components/parameters/limit" },
+					{ "$ref": "#/components/parameters/page" },
+					{ "$ref": "#/components/parameters/ids" },
+					{ "$ref": "#/components/parameters/archived" },
+					{ "$ref": "#/components/parameters/query" },
+					{ "$ref": "#/components/parameters/product_ids" },
+					{ "$ref": "#/components/parameters/ad_hoc" }
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"object": "list",
+									"pagination": {
+										"count": 1,
+										"limit": 20,
+										"page": 1,
+										"url": "/api/v1/prices"
+									},
+									"data": [
+										{
+											"id": "34090846-cfa2-4072-938e-bbd8934996a7",
+											"object": "price",
+											"name": "Test Price",
+											"description": null,
+											"metadata": {},
+											"amount": 2900,
+											"currency": "usd",
+											"recurring": false,
+											"recurring_interval": null,
+											"recurring_interval_count": null,
+											"trial_duration_days": null,
+											"ad_hoc": false,
+											"ad_hoc_max_amount": null,
+											"ad_hoc_min_amount": 0,
+											"tax_behavior": "exclusive",
+											"current_version": true,
+											"archived": false,
+											"archived_at": null,
+											"product": "87b42d1a-2c2a-47c0-a5bb-7f67ea955225",
+											"created_at": 1640211842,
+											"updated_at": 1640211842
+										}
+									]
+								},
+								"schema": {
+									"$ref": "#/components/schemas/list_response"
+								}
+							}
+						}
+					}
+				}
+			},
+			"post": {
+				"summary": "Create Price",
+				"tags": ["Price"],
+				"operationId": "create_price",
+				"description": "Creates a new price.",
+				"parameters": [],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"id": "a989fa00-54a1-4217-a4e1-ab29d8345c26",
+									"object": "price",
+									"name": "Test Price",
+									"description": null,
+									"metadata": {},
+									"amount": 2900,
+									"currency": "usd",
+									"recurring": false,
+									"recurring_interval": null,
+									"recurring_interval_count": null,
+									"trial_duration_days": null,
+									"ad_hoc": false,
+									"ad_hoc_max_amount": null,
+									"ad_hoc_min_amount": 0,
+									"tax_behavior": "exclusive",
+									"current_version": true,
+									"archived": false,
+									"archived_at": null,
+									"product": "e888f44e-8aca-4869-be13-b57bfdd44554",
+									"created_at": 1640211842,
+									"updated_at": 1640211842
+								},
+								"schema": {
+									"$ref": "#/components/schemas/price_response"
+								}
+							}
+						}
+					}
+				},
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"price": {
+										"allOf": [
+											{
+												"$ref": "#/components/schemas/price_body"
+											}
+										]
+									}
+								}
+							},
+							"example": {
+								"price": {
+									"name": "Test Price",
+									"amount": 2900,
+									"product_id": "e888f44e-8aca-4869-be13-b57bfdd44554"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/prices/{id}": {
+			"parameters": [
+				{
+					"name": "id",
+					"in": "path",
+					"required": true,
+					"schema": { "type": "string" }
+				}
+			],
+			"get": {
+				"summary": "Retrieve Price",
+				"tags": ["Price"],
+				"operationId": "retrieve_price",
+				"description": "Retrieves details of a specific price.",
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"id": "80c62e72-a0ad-4643-95f8-864b7df73719",
+									"object": "price",
+									"name": "Test Price",
+									"description": null,
+									"metadata": {},
+									"amount": 2900,
+									"currency": "usd",
+									"recurring": false,
+									"recurring_interval": null,
+									"recurring_interval_count": null,
+									"trial_duration_days": null,
+									"ad_hoc": false,
+									"ad_hoc_max_amount": null,
+									"ad_hoc_min_amount": 0,
+									"tax_behavior": "exclusive",
+									"current_version": true,
+									"archived": false,
+									"archived_at": null,
+									"product": "906a98b7-2020-4276-bddc-6183a79e81b4",
+									"created_at": 1640211842,
+									"updated_at": 1640211842
+								},
+								"schema": {
+									"$ref": "#/components/schemas/price_response"
+								}
+							}
+						}
+					}
+				}
+			},
+			"patch": {
+				"summary": "Update Price",
+				"tags": ["Price"],
+				"operationId": "update_price",
+				"description": "Updates a specific price.",
+				"parameters": [],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"id": "098dad0a-7f19-4da8-a737-24498179d880",
+									"object": "price",
+									"name": "Updated Price",
+									"description": null,
+									"metadata": {},
+									"amount": 2900,
+									"currency": "usd",
+									"recurring": false,
+									"recurring_interval": null,
+									"recurring_interval_count": null,
+									"trial_duration_days": null,
+									"ad_hoc": false,
+									"ad_hoc_max_amount": null,
+									"ad_hoc_min_amount": 0,
+									"tax_behavior": "exclusive",
+									"current_version": true,
+									"archived": false,
+									"archived_at": null,
+									"product": "0a9daa02-46b3-4117-a25e-8aa9c5864742",
+									"created_at": 1640211842,
+									"updated_at": 1640211842
+								},
+								"schema": {
+									"$ref": "#/components/schemas/price_response"
+								}
+							}
+						}
+					}
+				},
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"price": {
+										"allOf": [
+											{
+												"$ref": "#/components/schemas/price_body"
+											}
+										]
+									}
+								}
+							},
+							"example": { "price": { "name": "Updated Price" } }
+						}
+					}
+				}
+			},
+			"delete": {
+				"summary": "Delete Price",
+				"tags": ["Price"],
+				"operationId": "delete_price",
+				"description": "Deletes a specific price.",
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"id": "7c860268-b999-43ab-baa6-dec3c1163940",
+									"object": "price",
+									"deleted": true
+								},
+								"schema": {
+									"$ref": "#/components/schemas/model_destroy_response"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/processors": {
+			"get": {
+				"summary": "List Processors",
+				"tags": ["Processor"],
+				"operationId": "list_processors",
+				"description": "Returns a list of your processors.",
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"object": "list",
+									"pagination": {
+										"count": 1,
+										"limit": 20,
+										"page": 1,
+										"url": "/api/v1/processors"
+									},
+									"data": [
+										{
+											"id": "8e5be2d2-30f4-43b3-b81c-c9f8d1dde8bf",
+											"object": "processor",
+											"processor_type": "stripe",
+											"external_account_id": "external_account_15",
+											"enabled": false,
+											"created_at": 1640211842,
+											"updated_at": 1640211842
+										}
+									]
+								},
+								"schema": {
+									"$ref": "#/components/schemas/list_response"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/products": {
+			"get": {
+				"summary": "List Products",
+				"tags": ["Product"],
+				"operationId": "list_products",
+				"description": "Returns a list of your products.",
+				"parameters": [
+					{ "$ref": "#/components/parameters/limit" },
+					{ "$ref": "#/components/parameters/page" },
+					{ "$ref": "#/components/parameters/ids" },
+					{ "$ref": "#/components/parameters/archived" },
+					{ "$ref": "#/components/parameters/query" },
+					{ "$ref": "#/components/parameters/product_ids" }
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"object": "list",
+									"pagination": {
+										"count": 1,
+										"limit": 20,
+										"page": 1,
+										"url": "/api/v1/products"
+									},
+									"data": [
+										{
+											"id": "719b3972-53d3-4b94-934f-df981598f9ef",
+											"object": "product",
+											"name": "Test Product",
+											"description": null,
+											"tax_enabled": true,
+											"tax_category": null,
+											"metadata": {},
+											"archived": false,
+											"archived_at": null,
+											"image_url": null,
+											"metrics": {
+												"max_price_amount": 2900,
+												"min_price_amount": 2900,
+												"prices_count": 1,
+												"currency": "usd"
+											},
+											"created_at": 1640211843,
+											"updated_at": 1640211843
+										}
+									]
+								},
+								"schema": {
+									"$ref": "#/components/schemas/list_response"
+								}
+							}
+						}
+					}
+				}
+			},
+			"post": {
+				"summary": "Create Product",
+				"tags": ["Product"],
+				"operationId": "create_product",
+				"description": "Creates a new product.",
+				"parameters": [],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"id": "ca44ccd8-9a1f-4a52-87db-263ab2ffcfe3",
+									"object": "product",
+									"name": "Test Product",
+									"description": null,
+									"tax_enabled": true,
+									"tax_category": null,
+									"metadata": {},
+									"archived": false,
+									"archived_at": null,
+									"image_url": null,
+									"metrics": {
+										"max_price_amount": null,
+										"min_price_amount": null,
+										"prices_count": 0,
+										"currency": "usd"
+									},
+									"created_at": 1640211843,
+									"updated_at": 1640211843
+								},
+								"schema": {
+									"$ref": "#/components/schemas/product_response"
+								}
+							}
+						}
+					}
+				},
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"product": {
+										"allOf": [
+											{
+												"$ref": "#/components/schemas/product_body"
+											}
+										]
+									}
+								}
+							},
+							"example": { "product": { "name": "Test Product" } }
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/products/{id}": {
+			"parameters": [
+				{
+					"name": "id",
+					"in": "path",
+					"required": true,
+					"schema": { "type": "string" }
+				}
+			],
+			"get": {
+				"summary": "Retrieve Product",
+				"tags": ["Product"],
+				"operationId": "retrieve_product",
+				"description": "Retrieves details of a specific product.",
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"id": "5a6e71ab-fbb9-4910-b406-31ca52170eec",
+									"object": "product",
+									"name": "Test Product",
+									"description": null,
+									"tax_enabled": true,
+									"tax_category": null,
+									"metadata": {},
+									"archived": false,
+									"archived_at": null,
+									"image_url": null,
+									"metrics": {
+										"max_price_amount": 2900,
+										"min_price_amount": 2900,
+										"prices_count": 1,
+										"currency": "usd"
+									},
+									"created_at": 1640211843,
+									"updated_at": 1640211843
+								},
+								"schema": {
+									"$ref": "#/components/schemas/product_response"
+								}
+							}
+						}
+					}
+				}
+			},
+			"patch": {
+				"summary": "Update Product",
+				"tags": ["Product"],
+				"operationId": "update_product",
+				"description": "Updates a specific product.",
+				"parameters": [],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"id": "431e8b03-3df5-43cc-bf3f-7784ed072b66",
+									"object": "product",
+									"name": "Updated Product",
+									"description": null,
+									"tax_enabled": true,
+									"tax_category": null,
+									"metadata": {},
+									"archived": false,
+									"archived_at": null,
+									"image_url": null,
+									"metrics": {
+										"max_price_amount": 2900,
+										"min_price_amount": 2900,
+										"prices_count": 1,
+										"currency": "usd"
+									},
+									"created_at": 1640211843,
+									"updated_at": 1640211843
+								},
+								"schema": {
+									"$ref": "#/components/schemas/product_response"
+								}
+							}
+						}
+					}
+				},
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"product": {
+										"allOf": [
+											{
+												"$ref": "#/components/schemas/product_body"
+											}
+										]
+									}
+								}
+							},
+							"example": {
+								"product": { "name": "Updated Product" }
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"summary": "Delete Product",
+				"tags": ["Product"],
+				"operationId": "delete_product",
+				"description": "Deletes a specific product.",
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"id": "84eae1fd-2ad5-4909-a846-7a9899ce9502",
+									"object": "product",
+									"deleted": true
+								},
+								"schema": {
+									"$ref": "#/components/schemas/model_destroy_response"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/promotions": {
+			"get": {
+				"summary": "List Promotions",
+				"tags": ["Promotion"],
+				"operationId": "list_promotions",
+				"description": "Returns a list of your promotions.",
+				"parameters": [
+					{ "$ref": "#/components/parameters/limit" },
+					{ "$ref": "#/components/parameters/page" },
+					{ "$ref": "#/components/parameters/ids" },
+					{ "$ref": "#/components/parameters/coupon_ids" },
+					{ "$ref": "#/components/parameters/archived" },
+					{ "$ref": "#/components/parameters/query" }
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"object": "list",
+									"pagination": {
+										"count": 1,
+										"limit": 20,
+										"page": 1,
+										"url": "/api/v1/promotions"
+									},
+									"data": [
+										{
+											"id": "1b1313a3-5432-492c-b779-b5506a94cc40",
+											"object": "promotion",
+											"code": "TESTCODE",
+											"redeem_by": null,
+											"max_redemptions": null,
+											"times_redeemed": 0,
+											"metadata": {},
+											"expired": false,
+											"archived": false,
+											"archived_at": null,
+											"coupon": "eb79f059-a06a-4d2e-a641-f23a9300601d",
+											"created_at": 1640211843,
+											"updated_at": 1640211843
+										}
+									]
+								},
+								"schema": {
+									"$ref": "#/components/schemas/list_response"
+								}
+							}
+						}
+					}
+				}
+			},
+			"post": {
+				"summary": "Create Promotion",
+				"tags": ["Promotion"],
+				"operationId": "create_promotion",
+				"description": "Creates a new promotion.",
+				"parameters": [],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"id": "29bc1a53-1db6-46fd-a4ea-f58808124f72",
+									"object": "promotion",
+									"code": "TESTCODE",
+									"redeem_by": null,
+									"max_redemptions": null,
+									"times_redeemed": 0,
+									"metadata": {},
+									"expired": false,
+									"archived": false,
+									"archived_at": null,
+									"coupon": "4d1b73bd-e0c5-4b0f-903f-7be274595c44",
+									"created_at": 1640211843,
+									"updated_at": 1640211843
+								},
+								"schema": {
+									"$ref": "#/components/schemas/promotion_response"
+								}
+							}
+						}
+					}
+				},
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"promotion": {
+										"allOf": [
+											{
+												"$ref": "#/components/schemas/promotion_body"
+											}
+										]
+									}
+								}
+							},
+							"example": {
+								"promotion": {
+									"code": "TESTCODE",
+									"coupon_id": "4d1b73bd-e0c5-4b0f-903f-7be274595c44"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/promotions/{id}": {
+			"parameters": [
+				{
+					"name": "id",
+					"in": "path",
+					"required": true,
+					"schema": { "type": "string" }
+				}
+			],
+			"get": {
+				"summary": "Retrieve Promotion",
+				"tags": ["Promotion"],
+				"operationId": "retrieve_promotion",
+				"description": "Retrieves details of a specific promotion.",
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"id": "e7c6c50e-7c3e-42fc-b6b2-8835d6598baa",
+									"object": "promotion",
+									"code": "TESTCODE",
+									"redeem_by": null,
+									"max_redemptions": null,
+									"times_redeemed": 0,
+									"metadata": {},
+									"expired": false,
+									"archived": false,
+									"archived_at": null,
+									"coupon": "c22c6b34-9122-4114-bc64-8f4d1a2acc28",
+									"created_at": 1640211843,
+									"updated_at": 1640211843
+								},
+								"schema": {
+									"$ref": "#/components/schemas/promotion_response"
+								}
+							}
+						}
+					}
+				}
+			},
+			"patch": {
+				"summary": "Update Promotion",
+				"tags": ["Promotion"],
+				"operationId": "update_promotion",
+				"description": "Updates a specific promotion.",
+				"parameters": [],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"id": "91f50b10-1a93-4f17-8d38-09cefbc57773",
+									"object": "promotion",
+									"code": "UPDATEDCODE",
+									"redeem_by": null,
+									"max_redemptions": null,
+									"times_redeemed": 0,
+									"metadata": {},
+									"expired": false,
+									"archived": false,
+									"archived_at": null,
+									"coupon": "2a0991fd-2248-4e93-a351-40369756d7c8",
+									"created_at": 1640211843,
+									"updated_at": 1640211843
+								},
+								"schema": {
+									"$ref": "#/components/schemas/promotion_response"
+								}
+							}
+						}
+					}
+				},
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"promotion": {
+										"allOf": [
+											{
+												"$ref": "#/components/schemas/promotion_body"
+											}
+										]
+									}
+								}
+							},
+							"example": {
+								"promotion": { "code": "UPDATEDCODE" }
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"summary": "Delete Promotion",
+				"tags": ["Promotion"],
+				"operationId": "delete_promotion",
+				"description": "Deletes a specific promotion.",
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"id": "b56040f0-0705-45ea-8c22-d5407c3e82f1",
+									"object": "promotion",
+									"deleted": true
+								},
+								"schema": {
+									"$ref": "#/components/schemas/model_destroy_response"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/refunds": {
+			"get": {
+				"summary": "List Refunds",
+				"tags": ["Refund"],
+				"operationId": "list_refunds",
+				"description": "Returns a list of your refunds.",
+				"parameters": [
+					{ "$ref": "#/components/parameters/limit" },
+					{ "$ref": "#/components/parameters/page" },
+					{ "$ref": "#/components/parameters/ids" },
+					{ "$ref": "#/components/parameters/live_mode" }
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"object": "list",
+									"pagination": {
+										"count": 1,
+										"limit": 20,
+										"page": 1,
+										"url": "/api/v1/refunds"
+									},
+									"data": [
+										{
+											"id": "09a0d373-fc4e-4f17-a334-014e3438489f",
+											"object": "refund",
+											"amount": 1450,
+											"currency": "usd",
+											"external_refund_id": "re_1JQGuM2fs4LLhxzSPxv6VJJ3",
+											"reason": "requested_by_customer",
+											"status": "pending",
+											"live_mode": true,
+											"charge": "7158f9fa-8632-423c-8fd6-00ddeb90ae07",
+											"customer": "614917b2-829c-4c46-b703-49904f86a42f",
+											"created_at": 1640211843,
+											"updated_at": 1640211843
+										}
+									]
+								},
+								"schema": {
+									"$ref": "#/components/schemas/list_response"
+								}
+							}
+						}
+					}
+				}
+			},
+			"post": {
+				"summary": "Create Refund",
+				"tags": ["Refund"],
+				"operationId": "create_refund",
+				"description": "Creates a new refund.",
+				"parameters": [],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"id": "7c701e61-be9f-4ce1-a453-761fdd7ff144",
+									"object": "refund",
+									"amount": 500,
+									"currency": "usd",
+									"external_refund_id": "re_Hu49hcTlI11hnDe",
+									"reason": "requested_by_customer",
+									"status": "succeeded",
+									"live_mode": true,
+									"charge": "aa43dfd4-3e1a-4c0a-8522-d96d07951633",
+									"customer": "bde2f108-1cc4-4526-a643-24152c033eb3",
+									"created_at": 1640211844,
+									"updated_at": 1640211844
+								},
+								"schema": {
+									"$ref": "#/components/schemas/refund_response"
+								}
+							}
+						}
+					}
+				},
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"refund": {
+										"allOf": [
+											{
+												"$ref": "#/components/schemas/refund_body"
+											}
+										]
+									}
+								}
+							},
+							"example": {
+								"refund": {
+									"amount": 500,
+									"reason": "requested_by_customer",
+									"charge_id": "aa43dfd4-3e1a-4c0a-8522-d96d07951633"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/refunds/{id}": {
+			"parameters": [
+				{
+					"name": "id",
+					"in": "path",
+					"required": true,
+					"schema": { "type": "string" }
+				}
+			],
+			"get": {
+				"summary": "Retrieve Refund",
+				"tags": ["Refund"],
+				"operationId": "retrieve_refund",
+				"description": "Retrieves details of a specific refund.",
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"id": "58eb0078-ae96-450b-9079-0060302b7596",
+									"object": "refund",
+									"amount": 1450,
+									"currency": "usd",
+									"external_refund_id": "re_1JQGuM2fs4LLhxzSPxv6VJJ3",
+									"reason": "requested_by_customer",
+									"status": "pending",
+									"live_mode": true,
+									"charge": "4b97cadf-80f6-4ade-abc2-91a3e4ac91cf",
+									"customer": "3ce52a37-c916-455a-a585-325768ad4053",
+									"created_at": 1640211844,
+									"updated_at": 1640211844
+								},
+								"schema": {
+									"$ref": "#/components/schemas/refund_response"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/subscription_items": {
+			"get": {
+				"summary": "List Subscription Items",
+				"tags": ["Subscription Item"],
+				"operationId": "list_subscription_items",
+				"description": "Returns a list of your subscription items.",
+				"parameters": [
+					{ "$ref": "#/components/parameters/limit" },
+					{ "$ref": "#/components/parameters/page" },
+					{ "$ref": "#/components/parameters/subscription_ids" }
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"object": "list",
+									"pagination": {
+										"count": 1,
+										"limit": 20,
+										"page": 1,
+										"url": "/api/v1/subscription_items"
+									},
+									"data": [
+										{
+											"id": "fb8a9d6a-0a96-412e-b7a4-91bf09f855e9",
+											"object": "subscription_item",
+											"quantity": 1,
+											"subtotal_amount": 0,
+											"price": "70e93b37-b870-4d43-b6f7-6516e5288e46",
+											"subscription": "48a2b0f0-e53c-404a-894b-2cefc02a3beb",
+											"created_at": 1640211844,
+											"updated_at": 1640211844
+										}
+									]
+								},
+								"schema": {
+									"$ref": "#/components/schemas/list_response"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/subscriptions": {
+			"get": {
+				"summary": "List Subscriptions",
+				"tags": ["Subscription"],
+				"operationId": "list_subscriptions",
+				"description": "Returns a list of your subscriptions.",
+				"parameters": [
+					{ "$ref": "#/components/parameters/limit" },
+					{ "$ref": "#/components/parameters/page" },
+					{ "$ref": "#/components/parameters/ids" },
+					{ "$ref": "#/components/parameters/status" },
+					{ "$ref": "#/components/parameters/customer_ids" },
+					{ "$ref": "#/components/parameters/checkout_session_ids" },
+					{ "$ref": "#/components/parameters/live_mode" }
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"object": "list",
+									"pagination": {
+										"count": 1,
+										"limit": 20,
+										"page": 1,
+										"url": "/api/v1/subscriptions"
+									},
+									"data": [
+										{
+											"id": "56156251-95f4-4bf0-b879-cbfef125ee1c",
+											"object": "subscription",
+											"currency": "usd",
+											"status": "active",
+											"subtotal_amount": 0,
+											"discount_amount": 0,
+											"tax_amount": 0,
+											"total_amount": 0,
+											"external_subscription_id": "external_subscription_4",
+											"live_mode": true,
+											"cancel_at_period_end": false,
+											"current_period_end": null,
+											"current_period_start": null,
+											"ended_at": null,
+											"trial_end_at": null,
+											"processor_type": "stripe",
+											"checkout_session": "4e657acf-d23c-42bf-9ce9-3f4be79e8430",
+											"customer": "ebe1ff8a-9148-42f2-8d4f-3b6821440316",
+											"discount": null,
+											"payment_method": null,
+											"created_at": 1640211844,
+											"updated_at": 1640211844
+										}
+									]
+								},
+								"schema": {
+									"$ref": "#/components/schemas/list_response"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/subscriptions/{id}": {
+			"parameters": [
+				{
+					"name": "id",
+					"in": "path",
+					"required": true,
+					"schema": { "type": "string" }
+				}
+			],
+			"get": {
+				"summary": "Retrieve Subscription",
+				"tags": ["Subscription"],
+				"operationId": "retrieve_subscription",
+				"description": "Retrieves details of a specific subscription.",
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"id": "7627834a-5258-4c76-8711-ea4fe43ef87f",
+									"object": "subscription",
+									"currency": "usd",
+									"status": "active",
+									"subtotal_amount": 0,
+									"discount_amount": 0,
+									"tax_amount": 0,
+									"total_amount": 0,
+									"external_subscription_id": "external_subscription_5",
+									"live_mode": true,
+									"cancel_at_period_end": false,
+									"current_period_end": null,
+									"current_period_start": null,
+									"ended_at": null,
+									"trial_end_at": null,
+									"processor_type": "stripe",
+									"checkout_session": "e685b512-51b0-45bd-b57c-8af1466f19cf",
+									"customer": "4fe4a85c-59f5-4b3b-bfd5-7aaf498e002e",
+									"discount": null,
+									"payment_method": null,
+									"created_at": 1640211845,
+									"updated_at": 1640211845
+								},
+								"schema": {
+									"$ref": "#/components/schemas/subscription_response"
+								}
+							}
+						}
+					}
+				}
+			},
+			"patch": {
+				"summary": "Update Subscription",
+				"tags": ["Subscription"],
+				"operationId": "update_subscription",
+				"description": "Updates a specific subscription.",
+				"parameters": [],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"id": "c8341ecf-3078-4eba-aaa0-a405b4e9cd64",
+									"object": "subscription",
+									"currency": "usd",
+									"status": "active",
+									"subtotal_amount": 5800,
+									"discount_amount": 0,
+									"tax_amount": 0,
+									"total_amount": 5800,
+									"external_subscription_id": "external_subscription_6",
+									"live_mode": true,
+									"cancel_at_period_end": false,
+									"current_period_end": null,
+									"current_period_start": null,
+									"ended_at": null,
+									"trial_end_at": null,
+									"processor_type": "stripe",
+									"checkout_session": "4c373129-d0ae-48c9-9786-a9ccc201060f",
+									"customer": "0246b2c3-9c82-49e7-88ce-d2d44e94b413",
+									"discount": null,
+									"payment_method": null,
+									"created_at": 1640211845,
+									"updated_at": 1640211845
+								},
+								"schema": {
+									"$ref": "#/components/schemas/subscription_response"
+								}
+							}
+						}
+					}
+				},
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"subscription": {
+										"allOf": [
+											{
+												"$ref": "#/components/schemas/subscription_body"
+											}
+										]
+									}
+								}
+							},
+							"example": {
+								"subscription": {
+									"subscription_items": [
+										{
+											"price_id": "93e4480f-6edf-4085-9c0f-b8f97df1e933",
+											"quantity": 2
+										}
+									]
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/subscriptions/{id}/cancel": {
+			"parameters": [
+				{
+					"name": "id",
+					"in": "path",
+					"required": true,
+					"schema": { "type": "string" }
+				}
+			],
+			"patch": {
+				"summary": "Cancel Subscription",
+				"tags": ["Subscription"],
+				"operationId": "cancel_subscription",
+				"description": "Cancels a specific subscription.",
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"id": "1513b130-4e90-4f72-9827-6b6dcd1c0250",
+									"object": "subscription",
+									"currency": "usd",
+									"status": "canceled",
+									"subtotal_amount": 0,
+									"discount_amount": 0,
+									"tax_amount": 0,
+									"total_amount": 0,
+									"external_subscription_id": "external_subscription_7",
+									"live_mode": true,
+									"cancel_at_period_end": false,
+									"current_period_end": null,
+									"current_period_start": null,
+									"ended_at": null,
+									"trial_end_at": null,
+									"processor_type": "stripe",
+									"checkout_session": "3a96dc6d-9bc7-4324-8ae6-19d4242cbd41",
+									"customer": "fe84e3dd-5c9b-4a94-81cd-53be8bbd46d0",
+									"discount": null,
+									"payment_method": null,
+									"created_at": 1640211845,
+									"updated_at": 1640211845
+								},
+								"schema": {
+									"$ref": "#/components/schemas/subscription_response"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/tax_protocol": {
+			"get": {
+				"summary": "Retrieve Tax Protocol",
+				"tags": ["Tax Protocol"],
+				"operationId": "retrieve_tax_protocol",
+				"description": "Retrieves details of the current account's tax protocol.",
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"id": "64a976c4-b086-451d-9f2a-0246650ebe09",
+									"object": "tax_protocol",
+									"tax_enabled": false,
+									"ca_tax_enabled": false,
+									"eu_tax_enabled": false,
+									"ca_tax_identifier": null,
+									"eu_tax_identifier": null,
+									"created_at": 1640211845,
+									"updated_at": 1640211845
+								},
+								"schema": {
+									"$ref": "#/components/schemas/tax_protocol_response"
+								}
+							}
+						}
+					}
+				}
+			},
+			"patch": {
+				"summary": "Update Tax Protocol",
+				"tags": ["Tax Protocol"],
+				"operationId": "update_tax_protocol",
+				"description": "Updates the current account's tax protocol.",
+				"parameters": [],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"id": "66a29f2c-d252-4e2b-a4ef-101f653f6f7f",
+									"object": "tax_protocol",
+									"tax_enabled": true,
+									"ca_tax_enabled": false,
+									"eu_tax_enabled": false,
+									"ca_tax_identifier": null,
+									"eu_tax_identifier": null,
+									"created_at": 1640211845,
+									"updated_at": 1640211845
+								},
+								"schema": {
+									"$ref": "#/components/schemas/tax_protocol_response"
+								}
+							}
+						}
+					}
+				},
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"tax_protocol": {
+										"allOf": [
+											{
+												"$ref": "#/components/schemas/tax_protocol_body"
+											}
+										]
+									}
+								}
+							},
+							"example": {
+								"tax_protocol": { "tax_enabled": true }
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/tax_registrations": {
+			"get": {
+				"summary": "List Tax Registrations",
+				"tags": ["Tax Registration"],
+				"operationId": "list_tax_registrations",
+				"description": "Returns a list of your tax registrations.",
+				"parameters": [
+					{ "$ref": "#/components/parameters/limit" },
+					{ "$ref": "#/components/parameters/page" }
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"object": "list",
+									"pagination": {
+										"count": 1,
+										"limit": 20,
+										"page": 1,
+										"url": "/api/v1/tax_registrations"
+									},
+									"data": [
+										{
+											"id": "911ae09f-a3d2-440a-948e-8cdecbef5e1b",
+											"object": "tax_registration",
+											"tax_zone": "b398598f-5fa5-4908-b73c-af2f7eb8fc6e",
+											"tax_identifier": null,
+											"created_at": 1640211845,
+											"updated_at": 1640211845
+										}
+									]
+								},
+								"schema": {
+									"$ref": "#/components/schemas/list_response"
+								}
+							}
+						}
+					}
+				}
+			},
+			"post": {
+				"summary": "Create Tax Registration",
+				"tags": ["Tax Registration"],
+				"operationId": "create_tax_registration",
+				"description": "Creates a new tax registration.",
+				"parameters": [],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"id": "5d794145-93aa-4368-b765-26e5925bba3e",
+									"object": "tax_registration",
+									"tax_zone": "4c24f22f-458c-4cf9-bbad-79733c1425d1",
+									"tax_identifier": null,
+									"created_at": 1640211845,
+									"updated_at": 1640211845
+								},
+								"schema": {
+									"$ref": "#/components/schemas/tax_registration_response"
+								}
+							}
+						}
+					}
+				},
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"tax_registration": {
+										"allOf": [
+											{
+												"$ref": "#/components/schemas/tax_registration_body"
+											}
+										]
+									}
+								}
+							},
+							"example": {
+								"tax_registration": {
+									"tax_zone": "4c24f22f-458c-4cf9-bbad-79733c1425d1"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/tax_registrations/{id}": {
+			"parameters": [
+				{
+					"name": "id",
+					"in": "path",
+					"required": true,
+					"schema": { "type": "string" }
+				}
+			],
+			"get": {
+				"summary": "Retrieve Tax Registration",
+				"tags": ["Tax Registration"],
+				"operationId": "retrieve_tax_registration",
+				"description": "Retrieves details of a specific tax registration.",
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"id": "2f2ec76d-c01f-4b96-8b10-226ad41e40fd",
+									"object": "tax_registration",
+									"tax_zone": "05f369c4-3371-4fff-94d4-555cf08321a3",
+									"tax_identifier": null,
+									"created_at": 1640211845,
+									"updated_at": 1640211845
+								},
+								"schema": {
+									"$ref": "#/components/schemas/tax_registration_response"
+								}
+							}
+						}
+					}
+				}
+			},
+			"patch": {
+				"summary": "Update Tax Registration",
+				"tags": ["Tax Registration"],
+				"operationId": "update_tax_registration",
+				"description": "Updates a specific tax registration.",
+				"parameters": [],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"id": "82ab61ca-cb28-464c-b5b2-9390bcce10ef",
+									"object": "tax_registration",
+									"tax_zone": "2f65a0fe-3cfe-4f1b-b49c-818e388a0153",
+									"tax_identifier": "944ecf77-1271-42a0-a51b-26ac8ef06d58",
+									"created_at": 1640211846,
+									"updated_at": 1640211846
+								},
+								"schema": {
+									"$ref": "#/components/schemas/tax_registration_response"
+								}
+							}
+						}
+					}
+				},
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"tax_registration": {
+										"allOf": [
+											{
+												"$ref": "#/components/schemas/tax_registration_body"
+											}
+										]
+									}
+								}
+							},
+							"example": {
+								"tax_registration": {
+									"tax_identifier": {
+										"number_type": "eu_vat",
+										"number": "1234567890"
+									}
+								}
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"summary": "Delete Tax Registration",
+				"tags": ["Tax Registration"],
+				"operationId": "delete_tax_registration",
+				"description": "Deletes a specific tax registration.",
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"id": "e24ffe4c-a43e-4321-9508-75c300cca5e3",
+									"object": "tax_registration",
+									"deleted": true
+								},
+								"schema": {
+									"$ref": "#/components/schemas/model_destroy_response"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/tax_zones": {
+			"get": {
+				"summary": "List Tax Zones",
+				"tags": ["Tax Zone"],
+				"operationId": "list_tax_zones",
+				"description": "Returns a list of all available tax zones.",
+				"parameters": [
+					{ "$ref": "#/components/parameters/limit" },
+					{ "$ref": "#/components/parameters/page" }
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"object": "list",
+									"pagination": {
+										"count": 1,
+										"limit": 20,
+										"page": 1,
+										"url": "/api/v1/tax_zones"
+									},
+									"data": [
+										{
+											"id": "00d5cb23-c79d-46cb-abf5-4a95ffbb267b",
+											"object": "tax_zone",
+											"country": "US",
+											"country_name": "United States",
+											"state": "WI",
+											"state_name": "Wisconsin",
+											"average_rate": "0.0546",
+											"average_rate_label": "Tax",
+											"minimum_rate": "0.05",
+											"minimum_rate_label": "State Tax",
+											"created_at": 1640211846,
+											"updated_at": 1640211846
+										}
+									]
+								},
+								"schema": {
+									"$ref": "#/components/schemas/list_response"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/uploads": {
+			"post": {
+				"summary": "Create Upload",
+				"tags": ["Upload"],
+				"operationId": "create_upload",
+				"description": "Creates a new upload.",
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"id": "b871ab4b-4866-461e-b222-17ff71b68e46",
+									"object": "upload",
+									"status": "pending",
+									"url": null,
+									"direct_upload": {
+										"url": null,
+										"headers": null
+									},
+									"created_at": 1640211846,
+									"updated_at": 1640211846
+								},
+								"schema": {
+									"$ref": "#/components/schemas/upload_response"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/webhook_endpoints": {
+			"get": {
+				"summary": "List Webhook Endpoints",
+				"tags": ["Webhook Endpoint"],
+				"operationId": "list_webhook_endpoints",
+				"description": "Returns a list of your webhook endpoints.",
+				"parameters": [
+					{ "$ref": "#/components/parameters/limit" },
+					{ "$ref": "#/components/parameters/page" }
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"object": "list",
+									"pagination": {
+										"count": 1,
+										"limit": 20,
+										"page": 1,
+										"url": "/api/v1/webhook_endpoints"
+									},
+									"data": [
+										{
+											"id": "c84d53a6-5f27-4924-b99c-ee1dd90e6401",
+											"object": "webhook_endpoint",
+											"enabled": true,
+											"url": "https://example.com",
+											"description": null,
+											"secret": "dwi6RjV45DkoromPtpYfCUS9",
+											"created_at": 1640211846,
+											"updated_at": 1640211846
+										}
+									]
+								},
+								"schema": {
+									"$ref": "#/components/schemas/list_response"
+								}
+							}
+						}
+					}
+				}
+			},
+			"post": {
+				"summary": "Create Webhook Endpoint",
+				"tags": ["Webhook Endpoint"],
+				"operationId": "create_webhook_endpoint",
+				"description": "Creates a new webhook endpoint.",
+				"parameters": [],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"id": "0cd89802-7bf1-4470-a8e9-7b3b76f7a9ac",
+									"object": "webhook_endpoint",
+									"enabled": true,
+									"url": "http://example.com",
+									"description": null,
+									"secret": "o74Rx5jPoCNZatdi65hCLXst",
+									"created_at": 1640211846,
+									"updated_at": 1640211846
+								},
+								"schema": {
+									"$ref": "#/components/schemas/webhook_endpoint_response"
+								}
+							}
+						}
+					}
+				},
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"webhook_endpoint": {
+										"allOf": [
+											{
+												"$ref": "#/components/schemas/webhook_endpoint_body"
+											}
+										]
+									}
+								}
+							},
+							"example": {
+								"webhook_endpoint": {
+									"url": "http://example.com"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/webhook_endpoints/{id}": {
+			"parameters": [
+				{
+					"name": "id",
+					"in": "path",
+					"required": true,
+					"schema": { "type": "string" }
+				}
+			],
+			"get": {
+				"summary": "Retrieve Webhook Endpoint",
+				"tags": ["Webhook Endpoint"],
+				"operationId": "retrieve_webhook_endpoint",
+				"description": "Retrieves details of a specific webhook endpoint.",
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"id": "fdcde924-d7c7-424e-a7b9-0f9894462193",
+									"object": "webhook_endpoint",
+									"enabled": true,
+									"url": "https://example.com",
+									"description": null,
+									"secret": "ok4tg1gnS8faH8rVq1k9SMyj",
+									"created_at": 1640211846,
+									"updated_at": 1640211846
+								},
+								"schema": {
+									"$ref": "#/components/schemas/webhook_endpoint_response"
+								}
+							}
+						}
+					}
+				}
+			},
+			"patch": {
+				"summary": "Update Webhook Endpoint",
+				"tags": ["Webhook Endpoint"],
+				"operationId": "update_webhook_endpoint",
+				"description": "Updates a specific webhook endpoint.",
+				"parameters": [],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"id": "6fb6e454-380f-453c-bc24-668899abc6b2",
+									"object": "webhook_endpoint",
+									"enabled": false,
+									"url": "https://example.com",
+									"description": null,
+									"secret": "cwsUK6AmVZWdUmGuyQnRsPBi",
+									"created_at": 1640211846,
+									"updated_at": 1640211846
+								},
+								"schema": {
+									"$ref": "#/components/schemas/webhook_endpoint_response"
+								}
+							}
+						}
+					}
+				},
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"webhook_endpoint": {
+										"allOf": [
+											{
+												"$ref": "#/components/schemas/webhook_endpoint_body"
+											}
+										]
+									}
+								}
+							},
+							"example": {
+								"webhook_endpoint": { "enabled": false }
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"summary": "Delete Webhook Endpoint",
+				"tags": ["Webhook Endpoint"],
+				"operationId": "delete_webhook_endpoint",
+				"description": "Deletes a specific webhook endpoint.",
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"id": "056e2794-c07f-4da6-8aab-f75fe8b17f3c",
+									"object": "webhook_endpoint",
+									"deleted": true
+								},
+								"schema": {
+									"$ref": "#/components/schemas/model_destroy_response"
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+	"servers": [
+		{
+			"url": "https://{defaultHost}",
+			"variables": {
+				"defaultHost": { "default": "presto-pay.herokuapp.com" }
+			}
+		}
+	],
+	"security": [{ "bearer_auth": [] }],
+	"x-topics": [
+		{
+			"title": "Authentication",
+			"content": "The Presto Pay API uses API keys to authenticate requests. You can view and manage your API keys in your dashboard.\n\nYour API keys carry many privileges, so be sure to keep them secure! Do not share your secret API keys in publicly accessible areas such as GitHub, client-side code, and so forth.\n\nAuthentication to the API is performed via bearer auth, use `-H \"Authorization: Bearer YOUR-API-KEY\"` to authenticate.\n\nAll API requests must be made over HTTPS. Calls made over plain HTTP will fail. API requests without authentication will also fail."
+		},
+		{
+			"title": "Errors",
+			"content": "Presto Pay uses conventional HTTP response codes to indicate the success or failure of an API request. In general: codes in the `2xx` range indicate success. Codes in the `4xx` range indicate an error that failed given the information provided (e.g., a required parameter was omitted, a charge failed, etc.). Codes in the `5xx` range indicate an error with Presto Pay's servers (these are rare).\n\n# HTTP Status Code Summary\n\nThese are all of the status codes that the Presto Pay API will return.\n- `200` OK - Everything worked as expected.\n- `400` Bad Request - The request was unacceptable, often due to missing a required parameter.\n- `401` Unauthorized - No valid API key provided.\n- `404` Not Found - The requested resource doesn't exist.\n- `422` Unprocessable Entity - The request failed validation or was not allowed for another reason.\n- `500` Server Error - Something went wrong on Presto Pay's end.\n\n# Error Responses\n\nAll error responses will be formatted like the example below, and they will have at least the following keys:\n- `http_status` The HTTP status code – matching the HTTP response status.\n- `type` The type of error – more specific than the `http_status`.\n- `code` The unique code for the error – this should be used for translations.\n- `message` The human readable error message.\n\n```json\n{\n  \"http_status\": \"unprocessable_entity\",\n  \"type\": \"not_found\",\n  \"code\": \"product.not_found\",\n  \"message\": \"Unable to find product with id='e0e92d34-aed9-4bb8-9107-89309370c4b'\",\n  \"validation_errors\": {}\n}\n```\n\n# Validation Errors\n\nIf an error is due to object validation a `validation_errors` key will also be set within the error response. The validation errors response will be formatted like the example below, and each validation error will have the following keys:\n- `attribute` The attribute the validation error is associated with.\n- `type` The type of validation error.\n- `code` The unique code for the validation error – this should be used for translations.\n- `options` Any options that apply to this error – these can be used for translation interpolation. (For example, a numerical validation error might have options for `min` and `max`.)\n- `message` The human readable validation error message.\n\n```json\n{\n  \"type\": \"unprocessable_entity\",\n  \"code\": \"product.invalid\",\n  \"message\": \"Failed to save product\",\n  \"validation_errors\": [\n    {\n      \"attribute\": \"name\",\n      \"type\": \"blank\",\n      \"code\": \"product.name.blank\",\n      \"options\": {},\n      \"message\": \"can't be blank\"\n    }\n  ]\n}\n```"
+		},
+		{
+			"title": "Expanding Responses",
+			"content": "Many objects allow you to request additional information as an expanded response by using the `expand` request parameter. This parameter is available on all API requests, and applies to the response of that request only. Responses can be expanded in two ways.\n\nIn many cases, an object contains the ID of a related object in its response properties. For example, a price has an associated product ID. Those objects can be expanded inline with the expand request parameter. ID fields that can be expanded into objects are noted in this documentation with the expandable label.\n\nIn some cases, such as a list of all prices for a product, there are available fields that are not included in responses by default. You can request these fields as an expanded response by using the expand request parameter. Fields that can be included in an expanded response are noted in this documentation with the expandable label.\n\nYou can expand recursively by specifying nested fields after a dot (.). For example, requesting `customer` and `customer.billing_address` on a checkout session will expand the customer and the customer's billing_address.\n\nYou can use the expand param on any endpoint which returns expandable fields, including list, create, and update endpoints.\n\nExpanding list requests are plural, but expanding objects within a list are singular. For example, if you wanted to retrieve a checkout session's line items and each line item's price, you would pass `list_items` and `list_item.price` as expand parameters.\n\nYou can expand multiple objects at once by identifying multiple items in the expand array. Expansions have a maximum depth of two levels, and you can expand up to 10 objects."
+		},
+		{
+			"title": "Metadata",
+			"content": "Some updateable Presto Pay objects (like CheckoutSession) have a metadata parameter. You can use this parameter to attach key-value data to these objects.\n\nYou can specify up to 50 keys, with key names up to 40 characters long and values up to 500 characters long.\n\nMetadata is useful for storing additional, structured information on an object. Metadata is not used by Presto Pay and won't be seen by your users unless you choose to show it to them.\n\nDo not store any sensitive information (bank account numbers, card details, etc.) as metadata."
+		},
+		{
+			"title": "Live \u0026 Test Mode",
+			"content": "When creating `CheckoutSession` and `PaymentIntent` objects you can specify `live_mode`. If you set `live_mode=false` then all interactions with processors will be done in their respective live or sandbox modes. This allows you to create test charges, subscriptions, and run full checkout flows without charging real payment methods."
+		},
+		{
+			"title": "Pagination",
+			"content": "Presto Pay utilizes offset-based pagination, and all top-level API resources have support for bulk fetches via \"list\" API methods. For instance, you can list products, prices, and customers. These list API methods share a common structure, taking at least these two parameters: `limit`, and `page`. The default pagination limit is `20` and the max is `100`."
+		},
+		{
+			"title": "Webhooks",
+			"content": "Presto Pay uses webhooks to notify your application when an event happens in your account. Webhooks are particularly useful for asynchronous events like when a subscription is updated or a charge is refunded.\n\nYou can create and manage your webhook endpoints through the API endpoints or within your dashboard. From your dashboard you can also see a log of recent events that have been sent.\n\n# Events\n\nWebhooks are triggered based on events. Events are our way of letting you know when something interesting happens in your account. When an interesting event occurs, we create a new `Event` object. For example, when a subscription is updated, we create a `subscription.updated` event.\n\nEvents occur when the state of an API resource changes. The state of that resource at the time of the change is embedded in the event's data field. For example, a `subscription.updated` event will contain a snapshot of the subscription at that point in time.\n\nThe request payload of each webhook will contain the `Event` object, which is structured like the example below.\n\n```json\n{\n  \"id\": \"e1257591-bd43-4f27-9bc6-bac06c6191fb\",\n  \"data\": {\n    \"object\": {\n      \"id\": \"2cca2a21-905c-4bc0-974d-bf67c37778e3\",\n      \"object\": \"subscription\",\n      \"status\": \"canceled\",\n      \"live_mode\": false,\n      \"created_at\": 1632953785,\n      \"updated_at\": 1632965090,\n      \"processor_type\": \"stripe\",\n      \"external_subscription_id\": \"sub_1JfB4e2fs4LLhxzShaylJeH9\"\n    }\n  },\n  \"type\": \"subscription.updated\",\n  \"object\": \"event\",\n  \"account_id\": \"26673c58-a5a7-47bf-bebb-0b00d2e9ebec\",\n  \"created_at\": 1632965090\n}\n```\n\n# Webhook Event Types\n\nWe don't send webhooks for every type of event. This is a list of all the types of events we currently send them for. We may add more at any time, so in developing and maintaining your code, you should not assume that only these types exist.\n\n- `refund.created` A refund was created.\n- `refund.updated` A refund was updated. This could be due to a change in status (i.e. it succeeded or failed).\n- `subscription.created` A subscription was created.\n- `subscription.updated` A subscription was updated. This could be due to a change in status (i.e. it was canceled), subscription items were changed, etc."
+		}
+	],
+	"tags": [
+		{
+			"name": "Abandoned Checkout",
+			"description": "An abandoned checkout session represents a customer's recent unpaid checkout sessions."
+		},
+		{
+			"name": "Account",
+			"description": "This is an object representing a Presto Pay account. You can retrieve it to see properties on the account like it's current - name or default currency."
+		},
+		{
+			"name": "Brand",
+			"description": "A brand represents the design and branding settings for an account."
+		},
+		{
+			"name": "Checkout Session",
+			"description": "A Checkout Session represents your customer's session as they pay for one-time purchases or subscriptions. You'll want to create a new session each time your customer attempts to pay."
+		},
+		{
+			"name": "Charge",
+			"description": "A Charge represents a credit or debit card transaction that was captured through one of your processors. Only successfully captured charges are recorded in Presto Pay."
+		},
+		{
+			"name": "Coupon",
+			"description": "A coupon contains information about a percent-off or amount-off discount you can apply to a `CheckoutSession`. \n\nThe coupon object can be used to discount either one-time payments or subscriptions. There are some additional parameters that apply to subscriptions, but are not applicable to one-time payments, such as duration. Regardless of what duration is set to, it only applies once for one-time payments."
+		},
+		{
+			"name": "Customer",
+			"description": "Customer objects allow you to perform recurring charges, and to track multiple charges, that are associated with the same customer. The API allows you to list and retrieve individual customers. Creating and updating customers is performed through Checkout Sessions."
+		},
+		{
+			"name": "Customer Link",
+			"description": "Customer links are temporary \"magic links\" that allow access to customers through email lookup. They provide a secure way of granting access to a customer without having the customer ID.\n\nEach customer link is valid for the greater of 1 hour after it's `created_at` time or 1 hour after it's `first_used_at` time. This means that if a customer link is not used within the first hour it expires. If a customer link is used within the first hour then it is valid for another hour starting from the time it was first used. So, a customer link that is used 30min after it's created will be valid for a total of 1hr 30min."
+		},
+		{
+			"name": "Customer Notification Protocol",
+			"description": "A customer notification protocol represents the customer notification settings for an account."
+		},
+		{
+			"name": "Event",
+			"description": "Events are our way of letting you know when something interesting happens in your account. When an interesting event occurs, we create a new `Event` object. For example, when a subscription updates, we create a `subscription.updated` event."
+		},
+		{
+			"name": "Line Item",
+			"description": "Line items represent the individual price and quantity combinations that make up a checkout session."
+		},
+		{
+			"name": "Payment Intent",
+			"description": "A payment intent represents the process of collecting a payment method from your customer."
+		},
+		{
+			"name": "Payment Method",
+			"description": "Payment method objects represent your customer's payment instruments."
+		},
+		{
+			"name": "Price",
+			"description": "Prices define the unit cost, currency, and (optional) billing cycle for both recurring and one-time purchases of products. Products help you track inventory or provisioning, and prices help you track payment terms. Different physical goods or levels of service should be represented by products, and pricing options should be represented by prices. \n\nThis approach lets you change prices without having to change your provisioning scheme. For example, you might have a single \\\"gold\\\" product that has prices for $10/month, $100/year, and €9 once."
+		},
+		{
+			"name": "Processor",
+			"description": "A processor represents a connection to a third-party payment processor like Stripe."
+		},
+		{
+			"name": "Product",
+			"description": "Products describe the specific goods or services you offer to your customers. For example, you might offer a Standard and Premium version of your goods or service; each version would be a separate Product. They can be used in conjunction with Prices to configure pricing and Subscriptions."
+		},
+		{
+			"name": "Promotion",
+			"description": "A Promotion represents a customer-redeemable code for a coupon. It can be used to create multiple codes for a single coupon."
+		},
+		{
+			"name": "Refund",
+			"description": "Refund objects allow you to refund a charge that has previously been created but not yet refunded. Funds will be refunded to the credit or debit card that was originally charged."
+		},
+		{
+			"name": "Subscription",
+			"description": "A Subscription represents a recurring schedule to charge a customer on one of your processors."
+		},
+		{
+			"name": "Subscription Item",
+			"description": "Subscription items represent the individual price and quantity combinations that make up a subscription."
+		},
+		{
+			"name": "Tax Registration",
+			"description": "A tax registration represents a tax zone that is enabled for an account. Taxes will not be calculated for checkout sessions within a tax zone unless a matching tax registration exists."
+		},
+		{
+			"name": "Tax Protocol",
+			"description": "A tax protocol represents the tax settings for an account."
+		},
+		{
+			"name": "Tax Zone",
+			"description": "A tax zone represents a geographic area (country and state combinations) that taxes can be calculated for."
+		},
+		{
+			"name": "Upload",
+			"description": "Uploads represent files that are hosted on our servers. Files are uploaded directly to the underlying hosting service. To learn more about how uploads work, please contact support."
+		},
+		{
+			"name": "Webhook Endpoint",
+			"description": "You can configure webhook endpoints via the API to be notified about events that happen in your Presto Pay account.\n\nMost users configure webhooks from the dashboard, which provides a user interface for registering and testing your webhook endpoints."
+		}
+	],
+	"components": {
+		"securitySchemes": {
+			"bearer_auth": { "type": "http", "scheme": "bearer" }
+		},
+		"parameters": {
+			"ad_hoc": {
+				"name": "ad_hoc",
+				"in": "query",
+				"description": "Only return prices that allow ad hoc amounts or not.",
+				"required": false,
+				"schema": { "type": "boolean" }
+			},
+			"archived": {
+				"name": "archived",
+				"in": "query",
+				"description": "Only return objects that are archived or not archived.",
+				"required": false,
+				"schema": { "type": "boolean" }
+			},
+			"checkout_session_ids": {
+				"name": "checkout_session_ids[]",
+				"in": "query",
+				"description": "Only return objects that belong to the given checkout sessions. To pass multiple IDs your query parameters should be formatted like `?checkout_session_ids[]=foo\u0026checkout_session_ids[]=bar` which will be translated to `['foo', 'bar']` by the server.",
+				"required": false,
+				"schema": { "type": "array", "items": { "type": "string" } }
+			},
+			"coupon_ids": {
+				"name": "coupon_ids[]",
+				"in": "query",
+				"description": "Only return objects with the given coupon IDs. To pass multiple coupon IDs your query parameters should be formatted like `?coupon_ids[]=foo\u0026coupon_ids[]=bar` which will be translated to `['foo', 'bar']` by the server.",
+				"required": false,
+				"schema": { "type": "array", "items": { "type": "string" } }
+			},
+			"customer_ids": {
+				"name": "customer_ids[]",
+				"in": "query",
+				"description": "Only return objects that belong to the given customers. To pass multiple IDs your query parameters should be formatted like `?customer_ids[]=foo\u0026customer_ids[]=bar` which will be translated to `['foo', 'bar']` by the server.",
+				"required": false,
+				"schema": { "type": "array", "items": { "type": "string" } }
+			},
+			"group_keys": {
+				"name": "group_keys[]",
+				"in": "query",
+				"description": "Only return objects with the given group keys. To pass multiple group keys your query parameters should be formatted like `?group_keys[]=foo\u0026group_keys[]=bar` which will be translated to `['foo', 'bar']` by the server.",
+				"required": false,
+				"schema": { "type": "array", "items": { "type": "string" } }
+			},
+			"ids": {
+				"name": "ids[]",
+				"in": "query",
+				"description": "Only return objects with the given IDs. To pass multiple IDs your query parameters should be formatted like `?ids[]=foo\u0026ids[]=bar` which will be translated to `['foo', 'bar']` by the server.",
+				"required": false,
+				"schema": { "type": "array", "items": { "type": "string" } }
+			},
+			"limit": {
+				"name": "limit",
+				"in": "query",
+				"description": "A limit on the number of items to be returned, between 1 and 100.",
+				"required": false,
+				"schema": {
+					"type": "integer",
+					"minimum": 0,
+					"default": 20,
+					"maximum": 100
+				}
+			},
+			"live_mode": {
+				"name": "live_mode",
+				"in": "query",
+				"description": "Only return objects that are live mode or not test mode.",
+				"required": false,
+				"schema": { "type": "boolean" }
+			},
+			"page": {
+				"name": "page",
+				"in": "query",
+				"description": "The page of items you want returned.",
+				"required": false,
+				"schema": { "type": "integer", "default": 1 }
+			},
+			"product_ids": {
+				"name": "product_ids[]",
+				"in": "query",
+				"description": "Only return objects that belong to the given products. To pass multiple IDs your query parameters should be formatted like `?product_ids[]=foo\u0026product_ids[]=bar` which will be translated to `['foo', 'bar']` by the server.",
+				"required": false,
+				"schema": { "type": "array", "items": { "type": "string" } }
+			},
+			"query": {
+				"name": "query",
+				"in": "query",
+				"description": "The query to be used for full text search of this collection.",
+				"required": false,
+				"schema": { "type": "string" }
+			},
+			"refresh_status": {
+				"name": "refresh_status",
+				"in": "query",
+				"description": "If true, the server will check the associated payment processor to see if a status change has occured. This is only applicable when the checkout session is in the `finalized` state. (This should be used when retrieving a checkout session immediately after it has been paid through the processor. In this scenario, it's possible that you'll request the checkout session before the server has received the webhook from the processor. Setting this pararmeter to `true` prevents this scenario.)",
+				"required": false,
+				"schema": { "type": "boolean" }
+			},
+			"status": {
+				"name": "status[]",
+				"in": "query",
+				"description": "Only return objects with the given status. To pass multiple statuses your query parameters should be formatted like `?status[]=foo\u0026status[]=bar` which will be translated to `['foo', 'bar']` by the server.",
+				"required": false,
+				"schema": { "type": "array", "items": { "type": "string" } }
+			},
+			"subscription_ids": {
+				"name": "subscription_ids[]",
+				"in": "query",
+				"description": "Only return objects that belong to the given subscriptions. To pass multiple IDs your query parameters should be formatted like `?subscription_ids[]=foo\u0026subscription_ids[]=bar` which will be translated to `['foo', 'bar']` by the server.",
+				"required": false,
+				"schema": { "type": "array", "items": { "type": "string" } }
+			}
+		},
+		"schemas": {
+			"abandoned_checkout_response": {
+				"allOf": [
+					{ "$ref": "#/components/schemas/model_identifiers" },
+					{
+						"properties": {
+							"status": {
+								"type": "string",
+								"description": "The current status of this abandoned checkout, which can be one of `not_notified`, `notified`, or `recovered`."
+							},
+							"notification_status": {
+								"type": "string",
+								"description": "The current notification status for this abandoned checkout, which can be one of `not_sent`, `scheduled`, or `sent`."
+							},
+							"latest_checkout_session": {
+								"type": "expandable",
+								"description": "This customer's most recent checkout session with `total_amount \u003e 0`."
+							},
+							"customer": {
+								"type": "expandable",
+								"description": "The associated customer."
+							}
+						}
+					},
+					{ "$ref": "#/components/schemas/model_timestamps" }
+				]
+			},
+			"account_base": {
+				"properties": {
+					"name": {
+						"type": "string",
+						"description": "The full name, business name, or other short descriptor for this account."
+					},
+					"currency": {
+						"type": "string",
+						"description": "The default currency for this account. This will be used as the default value for `Price`, `CheckoutSession`, and other objects that have the `currency` attribute."
+					},
+					"url": {
+						"type": "string",
+						"nullable": true,
+						"description": "The URL of this account's store. This will be used as the fallback `return_url` when one is not set on other objects (i.e. checkout sessions, customer links, etc.)."
+					}
+				},
+				"required": ["name"]
+			},
+			"account_body": {
+				"allOf": [
+					{ "$ref": "#/components/schemas/account_base" },
+					{
+						"properties": null,
+						"address": {
+							"description": "The associated address.",
+							"allOf": [
+								{ "$ref": "#/components/schemas/address_body" }
+							]
+						}
+					}
+				]
+			},
+			"account_response": {
+				"allOf": [
+					{ "$ref": "#/components/schemas/model_identifiers" },
+					{ "$ref": "#/components/schemas/account_base" },
+					{
+						"properties": {
+							"owner": {
+								"type": "expandable",
+								"description": "The associated user that owns this account."
+							},
+							"address": {
+								"type": "expandable",
+								"description": "The associated legal business address."
+							},
+							"brand": {
+								"type": "expandable",
+								"description": "The associated brand."
+							},
+							"customer_notification_protocol": {
+								"type": "expandable",
+								"description": "The associated customer notification protocol."
+							},
+							"tax_protocol": {
+								"type": "expandable",
+								"description": "The associated tax protocol."
+							},
+							"processors": {
+								"type": "expandable",
+								"description": "A list of associated processors."
+							}
+						}
+					},
+					{ "$ref": "#/components/schemas/model_timestamps" }
+				]
+			},
+			"address_body": {
+				"properties": {
+					"name": {
+						"type": "string",
+						"description": "The full name or business name for this address. (If empty, this will fallback to the customer's name.)"
+					},
+					"line_1": {
+						"type": "string",
+						"description": "Address line 1 (e.g., street, PO Box, or company name)."
+					},
+					"line_2": {
+						"type": "string",
+						"nullable": true,
+						"description": "Address line 2 (e.g., apartment, suite, unit, or building)."
+					},
+					"city": {
+						"type": "string",
+						"description": "City, district, suburb, town, or village."
+					},
+					"state": {
+						"type": "string",
+						"description": "State, county, province, or region."
+					},
+					"postal_code": {
+						"type": "string",
+						"description": "ZIP or postal code."
+					},
+					"country": {
+						"type": "string",
+						"description": "Two-letter country code (ISO 3166-1 alpha-2)."
+					}
+				}
+			},
+			"address_response": {
+				"allOf": [
+					{ "$ref": "#/components/schemas/model_identifiers" },
+					{ "$ref": "#/components/schemas/address_body" },
+					{ "$ref": "#/components/schemas/model_timestamps" }
+				]
+			},
+			"brand_base": {
+				"properties": {
+					"color": {
+						"type": "string",
+						"nullable": true,
+						"description": "The primary brand color."
+					},
+					"accent_color": {
+						"type": "string",
+						"nullable": true,
+						"description": "The secondary brand color."
+					},
+					"email": {
+						"type": "string",
+						"nullable": true,
+						"description": "The email address that will be shown to customers for support, on invoices, etc."
+					},
+					"phone": {
+						"type": "string",
+						"nullable": true,
+						"description": "The phone number that will be shown to customers for support, on invoices, etc."
+					},
+					"website": {
+						"type": "string",
+						"nullable": true,
+						"description": "The website that will be shown to customers for support, on invoices, etc."
+					},
+					"inherit_account_address": {
+						"type": "boolean",
+						"description": "If set to `true` the account's legal business address will be used instead of the brand's address."
+					}
+				}
+			},
+			"brand_body": {
+				"allOf": [
+					{ "$ref": "#/components/schemas/brand_base" },
+					{
+						"properties": {
+							"logo_upload_id": {
+								"type": "string",
+								"description": "The upload UUID that you want to attach to this brand. This will replace the existing logo, if one exists. If `purge_logo` is also set to `true` the new logo will not be attached."
+							},
+							"purge_logo": {
+								"type": "boolean",
+								"description": "If set to `true` the brand logo will be removed."
+							},
+							"address": {
+								"description": "The associated address.",
+								"allOf": [
+									{
+										"$ref": "#/components/schemas/address_body"
+									}
+								]
+							}
+						}
+					}
+				]
+			},
+			"brand_response": {
+				"allOf": [
+					{ "$ref": "#/components/schemas/model_identifiers" },
+					{ "$ref": "#/components/schemas/brand_base" },
+					{
+						"properties": {
+							"logo_url": {
+								"type": "string",
+								"nullable": true,
+								"description": "The URL of the brand logo."
+							},
+							"address": {
+								"type": "expandable",
+								"description": "The associated address."
+							}
+						}
+					},
+					{ "$ref": "#/components/schemas/model_timestamps" }
+				]
+			},
+			"card_response": {
+				"allOf": [
+					{ "$ref": "#/components/schemas/model_identifiers" },
+					{
+						"properties": {
+							"brand": {
+								"type": "string",
+								"description": "The brand of the card, which can be `amex`, `diners`, `discover`, `jcb`, `mastercard`, `unionpay`, `visa`, or `unknown`."
+							},
+							"exp_month": {
+								"type": "integer",
+								"description": "Two-digit number representing the card’s expiration month."
+							},
+							"exp_year": {
+								"type": "integer",
+								"description": "Four-digit number representing the card’s expiration year."
+							},
+							"last4": {
+								"type": "string",
+								"description": "The last four digits of the card."
+							},
+							"wallet_type": {
+								"type": "string",
+								"nullable": true,
+								"description": "If this card is part of a card wallet, this will be set to the type of wallet. The current types are `amex_express_checkout`, `apple_pay`, `google_pay`, `masterpass`, `samsung_pay`, or `visa_checkout`."
+							}
+						}
+					},
+					{ "$ref": "#/components/schemas/model_timestamps" }
+				]
+			},
+			"charge_response": {
+				"allOf": [
+					{ "$ref": "#/components/schemas/model_identifiers" },
+					{
+						"properties": {
+							"amount": {
+								"type": "integer",
+								"description": "The amount in cents that was charged, represented as a whole integer. For example `9900` is equivalent to `$99`."
+							},
+							"currency": {
+								"type": "string",
+								"description": "Three-letter ISO currency code, in lowercase."
+							},
+							"live_mode": {
+								"type": "boolean",
+								"description": "Set to `true` if this charge is in live mode, and set to `false` if it is in test mode."
+							},
+							"external_charge_id": {
+								"type": "string",
+								"description": "The external processor ID representing this charge."
+							},
+							"refunded_amount": {
+								"type": "integer",
+								"description": "Amount in cents refunded (can be less than the amount attribute on the charge if a partial refund was issued)."
+							},
+							"fully_refunded": {
+								"type": "boolean",
+								"description": "Whether or not this charge has been refunded completely."
+							},
+							"processor_type": {
+								"type": "string",
+								"description": "The specific type of processor. The only allowed processor right now is `stripe`."
+							},
+							"checkout_session": {
+								"type": "expandable",
+								"description": "The associated checkout session."
+							},
+							"subscription": {
+								"type": "expandable",
+								"description": "The associated subscription."
+							},
+							"customer": {
+								"type": "expandable",
+								"description": "The associated customer."
+							}
+						}
+					},
+					{ "$ref": "#/components/schemas/model_timestamps" }
+				]
+			},
+			"checkout_session_base": {
+				"allOf": [
+					{
+						"properties": {
+							"name": {
+								"type": "string",
+								"nullable": true,
+								"description": "The name of the customer."
+							},
+							"email": {
+								"type": "string",
+								"nullable": true,
+								"description": "The email of the customer."
+							},
+							"currency": {
+								"type": "string",
+								"description": "Three-letter ISO currency code, in lowercase. If not set, this value will fallback to the default `Account` currency."
+							},
+							"live_mode": {
+								"type": "boolean",
+								"description": "Set to `true` if this checkout session is in live mode, and set to `false` if it is in test mode."
+							},
+							"return_url": {
+								"type": "string",
+								"nullable": true,
+								"description": "The URL that the customer should be directed to from abandoned cart emails. The return URL will have a `?checkout_session_id=` parameter added to it."
+							},
+							"group_key": {
+								"type": "string",
+								"nullable": true,
+								"description": "A key used to retrieve groups of checkout sessions dynamically from a static string."
+							}
+						}
+					},
+					{ "$ref": "#/components/schemas/model_metadata" }
+				]
+			},
+			"checkout_session_body": {
+				"allOf": [
+					{ "$ref": "#/components/schemas/checkout_session_base" },
+					{
+						"properties": {
+							"discount": {
+								"description": "The parameters of the discount to be applied to this checkout session.",
+								"allOf": [
+									{
+										"$ref": "#/components/schemas/discount_body"
+									}
+								]
+							},
+							"tax_identifier": {
+								"description": "The tax identifier to set for this checkout session.",
+								"allOf": [
+									{
+										"$ref": "#/components/schemas/tax_identifier_body"
+									}
+								]
+							},
+							"billing_address": {
+								"description": "The billing address for this checkout session.",
+								"allOf": [
+									{
+										"$ref": "#/components/schemas/address_body"
+									}
+								]
+							},
+							"shipping_address": {
+								"description": "The shipping address for this checkout session.",
+								"allOf": [
+									{
+										"$ref": "#/components/schemas/address_body"
+									}
+								]
+							},
+							"refresh_price_versions": {
+								"type": "boolean",
+								"description": "When set to true the prices that are associated with each line item will be refreshed to reference the most recent version. (This should be used if you are receiving an error when trying to finalize a checkout session that is referencing old price versions.)"
+							},
+							"line_items": {
+								"type": "array",
+								"description": "A list of this checkout session's line items.",
+								"items": {
+									"$ref": "#/components/schemas/line_item_body"
+								}
+							}
+						}
+					}
+				]
+			},
+			"checkout_session_response": {
+				"allOf": [
+					{ "$ref": "#/components/schemas/model_identifiers" },
+					{
+						"properties": {
+							"subtotal_amount": {
+								"type": "integer",
+								"description": "Total of all line items before discounts or taxes are applied."
+							},
+							"discount_amount": {
+								"type": "integer",
+								"description": "Total discount amount of all line items."
+							},
+							"tax_amount": {
+								"type": "integer",
+								"description": "Total tax amount of all line items."
+							},
+							"total_amount": {
+								"type": "integer",
+								"description": "Total of all line items after discounts and taxes are applied."
+							},
+							"status": {
+								"type": "string",
+								"description": "The current status of this checkout session, which can be one of `draft`, `finalized`, `completed`, or `paid`."
+							},
+							"number": {
+								"type": "string",
+								"description": "A unique, identifying string that is used to reference this checkout session."
+							},
+							"tax_label": {
+								"type": "string",
+								"nullable": true,
+								"description": "The type of tax that is applied to this order. For example, in the EU this value will be `VAT` and in the US this value will be `Tax`."
+							},
+							"tax_calculation_status": {
+								"type": "string",
+								"description": "The status of tax calculations for this checkout session. One of `disabled`, `shipping_address_required`, `shipping_address_country_required`, `shipping_address_state_required`, `shipping_address_postal_code_required`, `tax_registration_not_found`, `estimated`, or `calculated`."
+							},
+							"processor_data": {
+								"type": "object",
+								"description": "All of the additional data necessary to capture payment with each processor.",
+								"stripe": {
+									"type": "object",
+									"nullable": true,
+									"description": "All of the additional data necessary to capture payment with Stripe.",
+									"properties": {
+										"account_id": {
+											"type": "string",
+											"description": "The Stripe account ID."
+										},
+										"publishable_key": {
+											"type": "string",
+											"description": "The publishable key to be used when instantiating StripeJS. For example, you will instantiate like this `Stripe(publishable_key);`."
+										}
+									}
+								}
+							},
+							"customer": {
+								"type": "expandable",
+								"description": "The associated customer. (This will only be set once the checkout session has been finalized.)"
+							},
+							"discount": {
+								"type": "expandable",
+								"description": "The associated discount."
+							},
+							"payment_intent": {
+								"type": "expandable",
+								"description": "The associated payment intent. (This will only be set once the checkout session has been finalized.)"
+							},
+							"billing_address": {
+								"type": "expandable",
+								"description": "The associated billing address."
+							},
+							"shipping_address": {
+								"type": "expandable",
+								"description": "The associated shipping address."
+							},
+							"subscription": {
+								"type": "expandable",
+								"description": "The associated subscription."
+							},
+							"tax_identifier": {
+								"type": "expandable",
+								"description": "The associated tax identifier."
+							},
+							"line_items": {
+								"type": "expandable",
+								"description": "A list of associated line items."
+							}
+						}
+					},
+					{ "$ref": "#/components/schemas/model_timestamps" }
+				]
+			},
+			"coupon_body": {
+				"allOf": [
+					{
+						"properties": {
+							"name": {
+								"type": "string",
+								"description": "Name of the coupon displayed to customers."
+							},
+							"amount_off": {
+								"type": "integer",
+								"nullable": true,
+								"description": "Amount (in the `currency` specified) that will be taken off the subtotal of any checkout session."
+							},
+							"percent_off": {
+								"type": "number",
+								"nullable": true,
+								"description": "Percent that will be taken off the subtotal of any checkout session. For example, a coupon with percent_off of 50 will make a $100 invoice $50 instead."
+							},
+							"currency": {
+								"type": "string",
+								"description": "If `amount_off` has been set, the three-letter ISO code for the currency of the amount to take off."
+							},
+							"duration": {
+								"type": "string",
+								"description": "One of `forever`, `once`, and `repeating`. Describes how long a discount with this coupon will be applied. (The `repeating` and `forever` values only apply to subscriptions.)",
+								"default": "once"
+							},
+							"duration_in_months": {
+								"type": "integer",
+								"nullable": true,
+								"description": "If `duration` is `repeating`, the number of months the coupon applies. Null if coupon `duration` is `forever` or `once`."
+							},
+							"redeem_by": {
+								"type": "integer",
+								"nullable": true,
+								"description": "Date after which the coupon can no longer be redeemed."
+							},
+							"max_redemptions": {
+								"type": "integer",
+								"nullable": true,
+								"description": "Maximum number of times this coupon can be redeemed, in total, across all customers, before it is no longer valid."
+							}
+						},
+						"required": ["name", "amount_off", "percent_off"]
+					},
+					{ "$ref": "#/components/schemas/model_metadata" }
+				]
+			},
+			"coupon_response": {
+				"allOf": [
+					{ "$ref": "#/components/schemas/model_identifiers" },
+					{ "$ref": "#/components/schemas/coupon_body" },
+					{
+						"properties": {
+							"times_redeemed": {
+								"type": "integer",
+								"description": "Number of times this coupon has been applied to a checkout session and/or subscription."
+							},
+							"expired": {
+								"type": "boolean",
+								"description": "Taking into account the above properties, whether this coupon can still be applied to a checkout session."
+							},
+							"promotions": {
+								"type": "expandable",
+								"description": "A list of associated promotions."
+							}
+						}
+					},
+					{ "$ref": "#/components/schemas/model_timestamps" }
+				]
+			},
+			"customer_base": {
+				"properties": {
+					"email": {
+						"type": "string",
+						"description": "The customer’s email address."
+					},
+					"name": {
+						"type": "string",
+						"nullable": true,
+						"description": "The customer’s full name or business name."
+					},
+					"phone": {
+						"type": "string",
+						"nullable": true,
+						"description": "The customer’s phone number."
+					},
+					"billing_matches_shipping": {
+						"type": "boolean",
+						"description": "If set to `true` the shipping address will be used for the billing address."
+					}
+				},
+				"required": ["email"]
+			},
+			"customer_body": {
+				"allOf": [
+					{ "$ref": "#/components/schemas/customer_base" },
+					{
+						"properties": {
+							"billing_address": {
+								"description": "The billing address for the customer.",
+								"allOf": [
+									{
+										"$ref": "#/components/schemas/address_body"
+									}
+								]
+							},
+							"shipping_address": {
+								"description": "The shipping address for the customer.",
+								"allOf": [
+									{
+										"$ref": "#/components/schemas/address_body"
+									}
+								]
+							}
+						}
+					}
+				]
+			},
+			"customer_response": {
+				"allOf": [
+					{ "$ref": "#/components/schemas/model_identifiers" },
+					{ "$ref": "#/components/schemas/customer_base" },
+					{
+						"properties": {
+							"unsubscribed": {
+								"type": "boolean",
+								"description": "Set to `true` if this customer has unsubscribed from emails."
+							},
+							"billing_address": {
+								"type": "expandable",
+								"description": "The billing address for the customer."
+							},
+							"shipping_address": {
+								"type": "expandable",
+								"description": "The shipping address for the customer."
+							}
+						}
+					},
+					{ "$ref": "#/components/schemas/model_timestamps" }
+				]
+			},
+			"customer_link_body": {
+				"properties": {
+					"email": {
+						"type": "string",
+						"description": "The email used to lookup the customer."
+					},
+					"return_url": {
+						"type": "string",
+						"description": "The URL that the customer should be directed to when the click the link from their email. The return URL will have a `?customer_link_id=` parameter added to it."
+					}
+				},
+				"required": ["email", "return_url"]
+			},
+			"customer_link_response": {
+				"allOf": [
+					{ "$ref": "#/components/schemas/model_identifiers" },
+					{ "$ref": "#/components/schemas/customer_link_body" },
+					{
+						"properties": {
+							"first_used_at": {
+								"type": "integer",
+								"nullable": true,
+								"description": "Date when the customer link was first used."
+							},
+							"expired": {
+								"type": "boolean",
+								"description": "Whether or not this customer link is valid."
+							},
+							"customer": {
+								"type": "expandable",
+								"description": "The associated customer."
+							}
+						}
+					},
+					{ "$ref": "#/components/schemas/model_timestamps" }
+				]
+			},
+			"customer_notification_protocol_body": {
+				"properties": {
+					"from_name": {
+						"type": "string",
+						"nullable": true,
+						"description": "The from name to use when sending emails to customers."
+					},
+					"reply_to_email": {
+						"type": "string",
+						"nullable": true,
+						"description": "The reply-to email address to use when sending emails to customers."
+					},
+					"abandoned_checkouts_enabled": {
+						"type": "boolean",
+						"description": "If set to `true` abandoned checkout reminder emails will be sent to customers."
+					},
+					"locale": {
+						"type": "string",
+						"description": "The language that will be used for all customer notifications. Current available locales are `de`, `en`, `es`, and `fr`."
+					}
+				}
+			},
+			"customer_notification_protocol_response": {
+				"allOf": [
+					{ "$ref": "#/components/schemas/model_identifiers" },
+					{
+						"$ref": "#/components/schemas/customer_notification_protocol_body"
+					},
+					{ "$ref": "#/components/schemas/model_timestamps" }
+				]
+			},
+			"discount_body": {
+				"properties": {
+					"promotion_code": {
+						"type": "string",
+						"description": "The customer-facing code that will be used to lookup the promotion."
+					},
+					"coupon": {
+						"type": "string",
+						"description": "The UUID of the coupon."
+					}
+				}
+			},
+			"discount_response": {
+				"allOf": [
+					{ "$ref": "#/components/schemas/model_identifiers" },
+					{
+						"properties": {
+							"coupon": {
+								"type": "expandable",
+								"description": "The associated coupon."
+							},
+							"promotion": {
+								"type": "expandable",
+								"description": "The associated promotion."
+							}
+						}
+					},
+					{ "$ref": "#/components/schemas/model_timestamps" }
+				]
+			},
+			"event_response": {
+				"allOf": [
+					{ "$ref": "#/components/schemas/model_identifiers" },
+					{
+						"properties": {
+							"type": {
+								"type": "string",
+								"description": "Description of the event (e.g., subscription.updated or charge.updated)."
+							},
+							"data": {
+								"type": "object",
+								"description": "Object containing data associated with the event."
+							},
+							"account": {
+								"type": "expandable",
+								"description": "The associated account."
+							},
+							"created_at": {
+								"type": "integer",
+								"description": "Time at which the object was created. Measured in seconds since the Unix epoch."
+							}
+						}
+					}
+				]
+			},
+			"line_item_base": {
+				"properties": {
+					"quantity": {
+						"type": "integer",
+						"description": "The quantity of products being purchased."
+					},
+					"ad_hoc_amount": {
+						"type": "integer",
+						"nullable": true,
+						"description": "The amount to use for this line item when the associated price is `ad_hoc=true`."
+					}
+				},
+				"required": ["quantity"]
+			},
+			"line_item_body": {
+				"allOf": [
+					{ "$ref": "#/components/schemas/line_item_base" },
+					{
+						"properties": {
+							"price": {
+								"type": "string",
+								"description": "The UUID of the price."
+							}
+						},
+						"required": ["price"]
+					}
+				]
+			},
+			"line_item_response": {
+				"allOf": [
+					{ "$ref": "#/components/schemas/model_identifiers" },
+					{ "$ref": "#/components/schemas/line_item_base" },
+					{
+						"properties": {
+							"subtotal_amount": {
+								"type": "integer",
+								"description": "Total before any discounts or taxes are applied."
+							},
+							"checkout_session": {
+								"type": "expandable",
+								"description": "The associated checkout session."
+							},
+							"price": {
+								"type": "expandable",
+								"description": "The associated price."
+							}
+						}
+					},
+					{ "$ref": "#/components/schemas/model_timestamps" }
+				]
+			},
+			"payment_intent_base": {
+				"properties": {
+					"processor_type": {
+						"type": "string",
+						"description": "The processor being used for this checkout session. The only allowed processor right now is `stripe`."
+					},
+					"live_mode": {
+						"type": "boolean",
+						"description": "Set to `true` if this checkout session is in live mode, and set to `false` if it is in test mode."
+					}
+				},
+				"required": ["processor_type"]
+			},
+			"payment_intent_body": {
+				"allOf": [
+					{ "$ref": "#/components/schemas/payment_intent_base" },
+					{
+						"properties": {
+							"customer": {
+								"type": "string",
+								"description": "The UUID of the customer."
+							}
+						},
+						"required": ["customer"]
+					}
+				]
+			},
+			"payment_intent_response": {
+				"allOf": [
+					{ "$ref": "#/components/schemas/model_identifiers" },
+					{ "$ref": "#/components/schemas/payment_intent_base" },
+					{
+						"properties": {
+							"status": {
+								"type": "string",
+								"description": "The status of this payment intent, one of `pending`, `canceled`, or `succeeded`."
+							},
+							"external_intent_id": {
+								"type": "string",
+								"description": "The external ID necessary to capture payment through this processor. For example, if processing through Stripe, the `external_intent_id` will be set to the `Stripe::PaymentIntent` ID."
+							},
+							"processor_data": {
+								"type": "object",
+								"description": "All of the additional data necessary to capture payment with each processor.",
+								"stripe": {
+									"type": "object",
+									"nullable": true,
+									"description": "All of the additional data necessary to capture payment with Stripe.",
+									"properties": {
+										"account_id": {
+											"type": "string",
+											"description": "The Stripe account ID."
+										},
+										"client_secret": {
+											"type": "string",
+											"description": "The client secret for this Stripe intent."
+										},
+										"publishable_key": {
+											"type": "string",
+											"description": "The publishable key to be used when instantiating StripeJS. For example, you will instantiate like this `Stripe(publishable_key);`."
+										},
+										"type": {
+											"type": "string",
+											"description": "The type of Stripe intent – can be one of `payment` or `setup`. This will determine whether you use the StripeJS `confirmCardPayment` or `confirmCardSetup` function."
+										}
+									}
+								}
+							},
+							"customer": {
+								"type": "expandable",
+								"description": "The associated customer."
+							}
+						}
+					},
+					{ "$ref": "#/components/schemas/model_timestamps" }
+				]
+			},
+			"payment_method_response": {
+				"allOf": [
+					{ "$ref": "#/components/schemas/model_identifiers" },
+					{
+						"properties": {
+							"external_payment_method_id": {
+								"type": "string",
+								"description": "The external processor ID representing this payment method."
+							},
+							"live_mode": {
+								"type": "boolean",
+								"description": "Set to `true` if this charge is in live mode, and set to `false` if it is in test mode."
+							},
+							"processor_type": {
+								"type": "string",
+								"description": "The specific type of processor. The only allowed processor right now is `stripe`."
+							},
+							"type": {
+								"type": "string",
+								"description": "The type of payment method. The only available type right now is `card`."
+							},
+							"payment_intent": {
+								"type": "expandable",
+								"description": "The associated payment intent."
+							},
+							"card": {
+								"type": "expandable",
+								"description": "The associated card."
+							},
+							"customer": {
+								"type": "expandable",
+								"description": "The associated customer."
+							}
+						}
+					},
+					{ "$ref": "#/components/schemas/model_timestamps" }
+				]
+			},
+			"price_base": {
+				"allOf": [
+					{
+						"properties": {
+							"name": {
+								"type": "string",
+								"description": "The price's name, meant to be displayable to the customer."
+							},
+							"description": {
+								"type": "string",
+								"nullable": true,
+								"description": "The price's description, meant to be displayable to the customer."
+							},
+							"amount": {
+								"type": "integer",
+								"nullable": true,
+								"description": "The amount in cents to be charged, represented as a whole integer. For example `9900` is equivalent to `$99`. If `ad_hoc=true` the `amount` is optional."
+							},
+							"currency": {
+								"type": "string",
+								"description": "Three-letter ISO currency code, in lowercase. If not set, this value will fallback to the default `Account` currency."
+							},
+							"recurring": {
+								"type": "boolean",
+								"default": false,
+								"description": "Whether the price is for a one-time purchase or a recurring (subscription) purchase."
+							},
+							"recurring_interval": {
+								"type": "string",
+								"nullable": true,
+								"description": "The frequency at which a subscription is billed. One of `day`, `week`, `month` or `year`."
+							},
+							"recurring_interval_count": {
+								"type": "integer",
+								"nullable": true,
+								"description": "The number of intervals (specified in the `recurring_interval` attribute) between subscription billings. For example, `recurring_interval=month` and `recurring_interval_count=3` bills every 3 months. The total duration of a billing cycle is not allowed to exceed 1 year."
+							},
+							"trial_duration_days": {
+								"type": "integer",
+								"nullable": true,
+								"description": "The default number of trial days when subscribing a customer to this price."
+							},
+							"ad_hoc": {
+								"type": "boolean",
+								"default": false,
+								"description": "Whether or not this price accepts ad hoc amounts – also known as custom or user-defined amounts."
+							},
+							"ad_hoc_max_amount": {
+								"type": "integer",
+								"nullable": true,
+								"description": "The maximum ad hoc amount in cents to be allowed, represented as a whole integer. For example `9900` is equivalent to `$99`."
+							},
+							"ad_hoc_min_amount": {
+								"type": "integer",
+								"nullable": true,
+								"description": "The minimum ad hoc amount in cents to be allowed, represented as a whole integer. For example `9900` is equivalent to `$99`. If left blank, this will be interpreted as `0`."
+							},
+							"archived": {
+								"type": "boolean",
+								"description": "Whether or not this price is archived."
+							},
+							"tax_behavior": {
+								"type": "string",
+								"description": "Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive` or `exclusive`."
+							}
+						},
+						"required": ["name"]
+					},
+					{ "$ref": "#/components/schemas/model_metadata" }
+				]
+			},
+			"price_body": {
+				"allOf": [
+					{ "$ref": "#/components/schemas/price_base" },
+					{
+						"properties": {
+							"product": {
+								"type": "string",
+								"description": "The UUID of the product."
+							}
+						},
+						"required": ["product"]
+					}
+				]
+			},
+			"price_response": {
+				"allOf": [
+					{ "$ref": "#/components/schemas/model_identifiers" },
+					{ "$ref": "#/components/schemas/price_base" },
+					{
+						"properties": {
+							"current_version": {
+								"type": "boolean",
+								"description": "Whether or not this object represents the current version of this Price. (This will only be `false` if this `Price` is associated with a `LineItem` or `SubscriptionItem` prior to it being changed. In this case we will lookup the version of the `Price` at the time it was associated.)"
+							},
+							"archived_at": {
+								"type": "integer",
+								"nullable": true,
+								"description": "Time at which the object was archived. Measured in seconds since the Unix epoch."
+							},
+							"product": {
+								"type": "expandable",
+								"description": "The associated product."
+							}
+						}
+					},
+					{ "$ref": "#/components/schemas/model_timestamps" }
+				]
+			},
+			"processor_response": {
+				"allOf": [
+					{ "$ref": "#/components/schemas/model_identifiers" },
+					{
+						"properties": {
+							"processor_type": {
+								"type": "string",
+								"description": "The specific type of processor. The only allowed processor right now is `stripe`."
+							},
+							"external_account_id": {
+								"type": "string",
+								"description": "This account's external account ID with this processor. For example, this will be the Stripe account ID if the `processor_type` is `stripe`."
+							},
+							"enabled": {
+								"type": "boolean",
+								"description": "Whether or not this account has completed onboarding and is able to processs payments with this processor."
+							}
+						}
+					},
+					{ "$ref": "#/components/schemas/model_timestamps" }
+				]
+			},
+			"product_base": {
+				"properties": {
+					"name": {
+						"type": "string",
+						"description": "The product’s name, meant to be displayable to the customer."
+					},
+					"description": {
+						"type": "string",
+						"nullable": true,
+						"description": "The product’s description, meant to be displayable to the customer."
+					},
+					"tax_enabled": {
+						"type": "boolean",
+						"description": "If set to `true` this product is considered taxable."
+					},
+					"tax_category": {
+						"type": "string",
+						"nullable": true,
+						"description": "The tax category/code that matches this product – one of `digital`, `tangible`, `service`, or `saas`."
+					},
+					"archived": {
+						"type": "boolean",
+						"description": "Whether or not this product is archived."
+					}
+				},
+				"required": ["name"]
+			},
+			"product_body": {
+				"allOf": [
+					{ "$ref": "#/components/schemas/product_base" },
+					{
+						"properties": {
+							"image_upload_id": {
+								"type": "string",
+								"description": "The upload UUID that you want to attach to this product. This will replace the existing image, if one exists. If `purge_image` is also set to `true` the new image will not be attached."
+							},
+							"purge_image": {
+								"type": "boolean",
+								"description": "If set to `true` the product image will be removed."
+							}
+						}
+					},
+					{ "$ref": "#/components/schemas/model_metadata" }
+				]
+			},
+			"product_response": {
+				"allOf": [
+					{ "$ref": "#/components/schemas/model_identifiers" },
+					{ "$ref": "#/components/schemas/product_base" },
+					{
+						"properties": {
+							"archived_at": {
+								"type": "integer",
+								"nullable": true,
+								"description": "Time at which the object was archived. Measured in seconds since the Unix epoch."
+							},
+							"image_url": {
+								"type": "string",
+								"nullable": true,
+								"description": "The URL of the product image."
+							},
+							"metrics": {
+								"type": "object",
+								"properties": {
+									"max_price_amount": {
+										"type": "integer",
+										"nullable": true,
+										"description": "The maximum `amount` from this products not archived prices."
+									},
+									"min_price_amount": {
+										"type": "integer",
+										"nullable": true,
+										"description": "The minimum `amount` from this products not archived prices."
+									},
+									"prices_count": {
+										"type": "integer",
+										"nullable": true,
+										"description": "The total number of not archived prices that belong to this product."
+									},
+									"currency": {
+										"type": "string",
+										"description": "The currency that was used to calculate these metrics. This will always be set to the account's currency."
+									}
+								}
+							},
+							"prices": {
+								"type": "expandable",
+								"description": "A list of associated prices."
+							}
+						}
+					},
+					{ "$ref": "#/components/schemas/model_timestamps" }
+				]
+			},
+			"promotion_base": {
+				"allOf": [
+					{
+						"properties": {
+							"code": {
+								"type": "string",
+								"description": "The customer-facing code. Regardless of case, this code must be unique across all promotion codes on your account. If left blank, we will generate one automatically."
+							},
+							"redeem_by": {
+								"type": "integer",
+								"nullable": true,
+								"description": "Date after which the coupon can no longer be redeemed."
+							},
+							"max_redemptions": {
+								"type": "integer",
+								"nullable": true,
+								"description": "Maximum number of times this coupon can be redeemed, in total, across all customers, before it is no longer valid."
+							},
+							"archived": {
+								"type": "boolean",
+								"description": "Whether or not this promotion is archived."
+							},
+							"expired": { "type": "boolean" }
+						}
+					},
+					{ "$ref": "#/components/schemas/model_metadata" }
+				]
+			},
+			"promotion_body": {
+				"allOf": [
+					{ "$ref": "#/components/schemas/promotion_base" },
+					{
+						"properties": {
+							"coupon": {
+								"type": "string",
+								"description": "The UUID of the coupon."
+							}
+						},
+						"required": ["coupon"]
+					}
+				]
+			},
+			"promotion_response": {
+				"allOf": [
+					{ "$ref": "#/components/schemas/model_identifiers" },
+					{ "$ref": "#/components/schemas/promotion_base" },
+					{
+						"properties": {
+							"expired": {
+								"type": "boolean",
+								"description": "Taking into account the above properties, whether this promotion can still be used."
+							},
+							"archived_at": {
+								"type": "integer",
+								"nullable": true,
+								"description": "Time at which the object was archived. Measured in seconds since the Unix epoch."
+							},
+							"coupon": {
+								"type": "expandable",
+								"description": "The associated coupon."
+							}
+						}
+					},
+					{ "$ref": "#/components/schemas/model_timestamps" }
+				]
+			},
+			"refund_base": {
+				"allOf": [
+					{
+						"properties": {
+							"amount": {
+								"type": "integer",
+								"description": "The amount in cents that was refunded, represented as a whole integer. For example `9900` is equivalent to `$99`."
+							},
+							"reason": {
+								"type": "string",
+								"description": "The reason for this refund, which can be one of `duplicate`, `fraudulent`, `requested_by_customer`, or `expired_uncaptured_charge`."
+							}
+						},
+						"required": ["amount", "reason"]
+					}
+				]
+			},
+			"refund_body": {
+				"allOf": [
+					{ "$ref": "#/components/schemas/refund_base" },
+					{
+						"properties": {
+							"charge": {
+								"type": "string",
+								"description": "The UUID of the charge."
+							}
+						},
+						"required": ["charge"]
+					}
+				]
+			},
+			"refund_response": {
+				"allOf": [
+					{ "$ref": "#/components/schemas/model_identifiers" },
+					{ "$ref": "#/components/schemas/refund_base" },
+					{
+						"properties": {
+							"currency": {
+								"type": "string",
+								"description": "Three-letter ISO currency code, in lowercase."
+							},
+							"status": {
+								"type": "string",
+								"description": "The current status of this refund, which can be one of `pending`, `succeeded`, `failed`, or `canceled`."
+							},
+							"live_mode": {
+								"type": "boolean",
+								"description": "Set to `true` if this refund is in live mode, and set to `false` if it is in test mode."
+							},
+							"external_refund_id": {
+								"type": "string",
+								"description": "The external processor ID representing this refund."
+							},
+							"charge": {
+								"type": "expandable",
+								"description": "The associated charge."
+							},
+							"customer": {
+								"type": "expandable",
+								"description": "The associated customer."
+							}
+						}
+					},
+					{ "$ref": "#/components/schemas/model_timestamps" }
+				]
+			},
+			"list_response": {
+				"type": "object",
+				"properties": {
+					"object": {
+						"type": "string",
+						"description": "A string describing the object type returned."
+					},
+					"pagination": {
+						"type": "object",
+						"properties": {
+							"count": {
+								"type": "integer",
+								"description": "The total number of items."
+							},
+							"limit": {
+								"type": "integer",
+								"description": "The number of items per page. The default is `20` and the maximum is `100`."
+							},
+							"page": {
+								"type": "integer",
+								"description": "The current page."
+							}
+						}
+					},
+					"data": {
+						"type": "array",
+						"description": "An array of objects."
+					}
+				}
+			},
+			"model_destroy_response": {
+				"allOf": [
+					{ "$ref": "#/components/schemas/model_identifiers" },
+					{
+						"properties": {
+							"deleted": {
+								"type": "boolean",
+								"description": "Whether or not this object was succesfully deleted."
+							}
+						}
+					}
+				]
+			},
+			"model_identifiers": {
+				"properties": {
+					"id": {
+						"type": "string",
+						"description": "The UUID of the specific object."
+					},
+					"object": {
+						"type": "string",
+						"description": "A string describing the object type returned."
+					}
+				}
+			},
+			"model_metadata": {
+				"properties": {
+					"metadata": {
+						"type": "object",
+						"description": "Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format."
+					}
+				}
+			},
+			"model_timestamps": {
+				"properties": {
+					"created_at": {
+						"type": "integer",
+						"description": "Time at which the object was created. Measured in seconds since the Unix epoch."
+					},
+					"updated_at": {
+						"type": "integer",
+						"description": "Time at which the object was last updated. Measured in seconds since the Unix epoch."
+					}
+				}
+			},
+			"subscription_base": {
+				"properties": {
+					"cancel_at_period_end": {
+						"type": "boolean",
+						"description": "If the subscription is set to cancel at the end of the current period. You can use this attribute to determine whether a subscription that has a `status` of `active` is scheduled to be canceled at the end of the current period."
+					},
+					"trial_end_at": {
+						"type": "integer",
+						"nullable": true,
+						"description": "If the subscription has a trial, the end of that trial."
+					}
+				}
+			},
+			"subscription_body": {
+				"allOf": [
+					{ "$ref": "#/components/schemas/subscription_base" },
+					{
+						"properties": {
+							"discount": {
+								"description": "The parameters of the discount to be applied to this checkout session.",
+								"allOf": [
+									{
+										"$ref": "#/components/schemas/discount_body"
+									}
+								]
+							},
+							"payment_method": {
+								"type": "string",
+								"description": "The UUID of the payment method."
+							},
+							"subscription_items": {
+								"type": "array",
+								"description": "An expanded list of this subscription's items.",
+								"$ref": "#/components/schemas/subscription_item_body"
+							}
+						}
+					}
+				]
+			},
+			"subscription_response": {
+				"allOf": [
+					{ "$ref": "#/components/schemas/model_identifiers" },
+					{ "$ref": "#/components/schemas/subscription_base" },
+					{
+						"properties": {
+							"currency": {
+								"type": "string",
+								"description": "Three-letter ISO currency code, in lowercase. If not set, this value will fallback to the default `Account` currency."
+							},
+							"status": {
+								"type": "string",
+								"description": "The current status of this subscription, which can be one of `incomplete`, `trialing`, `active`, `past_due`, `canceled`, or `unpaid`."
+							},
+							"live_mode": {
+								"type": "boolean",
+								"description": "Set to `true` if this subscription is in live mode, and set to `false` if it is in test mode."
+							},
+							"external_subscription_id": {
+								"type": "string",
+								"description": "The external processor ID representing this subscription."
+							},
+							"current_period_end": {
+								"type": "integer",
+								"nullable": true,
+								"description": "End of the current period that the subscription has been invoiced for. At the end of this period, a new invoice will be created."
+							},
+							"current_period_start": {
+								"type": "integer",
+								"nullable": true,
+								"description": "Start of the current period that the subscription has been invoiced for."
+							},
+							"ended_at": {
+								"type": "integer",
+								"nullable": true,
+								"description": "If the subscription has ended, the date the subscription ended."
+							},
+							"processor_type": {
+								"type": "string",
+								"description": "The specific type of processor. The only allowed processor right now is `stripe`."
+							},
+							"checkout_session": {
+								"type": "expandable",
+								"description": "The associated checkout session."
+							},
+							"customer": {
+								"type": "expandable",
+								"description": "The associated customer."
+							},
+							"discount": {
+								"type": "expandable",
+								"description": "The associated discount."
+							},
+							"payment_method": {
+								"type": "expandable",
+								"description": "The associated payment method."
+							},
+							"subscription_items": {
+								"type": "expandable",
+								"description": "A list of associated subscription items."
+							}
+						}
+					},
+					{ "$ref": "#/components/schemas/model_timestamps" }
+				]
+			},
+			"subscription_item_base": {
+				"allOf": [
+					{
+						"properties": {
+							"quantity": {
+								"type": "integer",
+								"description": "The quantity of products being purchased."
+							}
+						},
+						"required": ["quantity"]
+					}
+				]
+			},
+			"subscription_item_body": {
+				"allOf": [
+					{ "$ref": "#/components/schemas/subscription_item_base" },
+					{
+						"properties": {
+							"price": {
+								"type": "string",
+								"description": "The UUID of the price."
+							}
+						},
+						"required": ["price"]
+					}
+				]
+			},
+			"subscription_item_response": {
+				"allOf": [
+					{ "$ref": "#/components/schemas/model_identifiers" },
+					{ "$ref": "#/components/schemas/subscription_item_base" },
+					{
+						"properties": {
+							"subtotal_amount": {
+								"type": "integer",
+								"description": "Total before any discounts or taxes are applied."
+							},
+							"subscription": {
+								"type": "expandable",
+								"description": "The associated subscription."
+							},
+							"price": {
+								"type": "expandable",
+								"description": "The associated price."
+							}
+						}
+					},
+					{ "$ref": "#/components/schemas/model_timestamps" }
+				]
+			},
+			"tax_identifier_body": {
+				"properties": {
+					"number_type": {
+						"type": "string",
+						"description": "The type of tax ID number, one of `eu_vat` or `us_ein`."
+					},
+					"number": {
+						"type": "string",
+						"description": "The tax ID number."
+					}
+				},
+				"required": ["number_type", "number"]
+			},
+			"tax_identifier_response": {
+				"allOf": [
+					{ "$ref": "#/components/schemas/model_identifiers" },
+					{ "$ref": "#/components/schemas/tax_identifier_body" },
+					{ "$ref": "#/components/schemas/model_timestamps" }
+				]
+			},
+			"tax_protocol_base": {
+				"properties": {
+					"tax_enabled": {
+						"type": "boolean",
+						"description": "If set to `true` taxes will be automatically calculated."
+					},
+					"ca_tax_enabled": {
+						"type": "boolean",
+						"description": "If set to `true` GST taxes will be calculated for all Canadian provinces."
+					},
+					"eu_tax_enabled": {
+						"type": "boolean",
+						"description": "If set to `true` VAT taxes will be calculated for all EU countries."
+					},
+					"eu_micro_exemption_enabled": {
+						"type": "boolean",
+						"description": "If set to `true` VAT taxes will be calculated using the account's home country VAT rate."
+					}
+				}
+			},
+			"tax_protocol_body": {
+				"allOf": [
+					{ "$ref": "#/components/schemas/tax_protocol_base" },
+					{
+						"properties": {
+							"ca_tax_identifier": {
+								"description": "The tax identifier to be used for all Canadian provinces.",
+								"allOf": [
+									{
+										"$ref": "#/components/schemas/tax_identifier_body"
+									}
+								]
+							},
+							"eu_tax_identifier": {
+								"description": "The tax identifier to be used for all EU countries.",
+								"allOf": [
+									{
+										"$ref": "#/components/schemas/tax_identifier_body"
+									}
+								]
+							}
+						}
+					}
+				]
+			},
+			"tax_protocol_response": {
+				"allOf": [
+					{ "$ref": "#/components/schemas/model_identifiers" },
+					{ "$ref": "#/components/schemas/tax_protocol_base" },
+					{
+						"properties": {
+							"ca_tax_identifier": {
+								"type": "expandable",
+								"description": "The associated Canadian tax identifier."
+							},
+							"eu_tax_identifier": {
+								"type": "expandable",
+								"description": "The associated EU tax identifier."
+							}
+						}
+					},
+					{ "$ref": "#/components/schemas/model_timestamps" }
+				]
+			},
+			"tax_registration_body": {
+				"properties": {
+					"tax_zone": {
+						"type": "string",
+						"description": "The UUID of the tax zone."
+					},
+					"tax_identifier": {
+						"description": "The tax identifier to set for this tax registration.",
+						"allOf": [
+							{
+								"$ref": "#/components/schemas/tax_identifier_body"
+							}
+						]
+					}
+				}
+			},
+			"tax_registration_response": {
+				"allOf": [
+					{ "$ref": "#/components/schemas/model_identifiers" },
+					{ "$ref": "#/components/schemas/tax_registration_body" },
+					{
+						"properties": {
+							"tax_zone": {
+								"type": "expandable",
+								"description": "The associated tax_zone."
+							},
+							"tax_identifier": {
+								"type": "expandable",
+								"description": "The associated tax identifier."
+							}
+						}
+					},
+					{ "$ref": "#/components/schemas/model_timestamps" }
+				]
+			},
+			"tax_zone_response": {
+				"allOf": [
+					{ "$ref": "#/components/schemas/model_identifiers" },
+					{
+						"properties": {
+							"country": {
+								"type": "string",
+								"description": "The country code."
+							},
+							"country_name": {
+								"type": "string",
+								"description": "The full country name."
+							},
+							"state": {
+								"type": "string",
+								"description": "The state/province code."
+							},
+							"state_name": {
+								"type": "string",
+								"description": "The full state/province name."
+							},
+							"average_rate": {
+								"type": "number",
+								"description": "The average tax rate for state/province and local tax across all postal codes in the tax zone."
+							},
+							"average_rate_label": {
+								"type": "string",
+								"description": "The label used to describe the average tax rate."
+							},
+							"minimum_rate": {
+								"type": "number",
+								"description": "The state/province tax rate for the tax zone."
+							},
+							"minimum_rate_label": {
+								"type": "string",
+								"description": "The label used to describe the minimum tax rate."
+							}
+						}
+					},
+					{ "$ref": "#/components/schemas/model_timestamps" }
+				]
+			},
+			"upload_body": {
+				"allOf": [
+					{
+						"properties": {
+							"filename": {
+								"type": "string",
+								"description": null
+							},
+							"byte_size": {
+								"type": "integer",
+								"description": null
+							},
+							"checksum": {
+								"type": "string",
+								"description": null
+							},
+							"content_type": {
+								"type": "string",
+								"description": null
+							}
+						},
+						"required": [
+							"filename",
+							"byte_size",
+							"checksum",
+							"content_type"
+						]
+					},
+					{ "$ref": "#/components/schemas/model_metadata" }
+				]
+			},
+			"upload_response": {
+				"allOf": [
+					{ "$ref": "#/components/schemas/model_identifiers" },
+					{
+						"properties": {
+							"status": {
+								"type": "string",
+								"description": "The current status of this upload which is either `pending` or `presigned`."
+							},
+							"url": {
+								"type": "string",
+								"nullable": true,
+								"description": "The public URL for accessing this file."
+							},
+							"direct_upload": {
+								"type": "object",
+								"properties": {
+									"url": {
+										"type": "string",
+										"nullable": true,
+										"description": "The URL to use when uploading the file to the hosting service."
+									},
+									"headers": {
+										"type": "object",
+										"nullable": true,
+										"description": "The headers to include when uploading the file to the hosting service."
+									}
+								}
+							}
+						}
+					},
+					{ "$ref": "#/components/schemas/model_timestamps" }
+				]
+			},
+			"user_response": {
+				"allOf": [
+					{ "$ref": "#/components/schemas/model_identifiers" },
+					{
+						"properties": {
+							"first_name": {
+								"type": "string",
+								"description": "The first name of the user."
+							},
+							"last_name": {
+								"type": "string",
+								"description": "The last name of the user."
+							},
+							"email": {
+								"type": "string",
+								"description": "The email address of the user."
+							}
+						},
+						"required": ["first_name", "last_name", "email"]
+					},
+					{ "$ref": "#/components/schemas/model_timestamps" }
+				]
+			},
+			"webhook_endpoint_body": {
+				"properties": {
+					"description": {
+						"type": "string",
+						"nullable": true,
+						"description": "An optional description of what this webhook endpoint is used for."
+					},
+					"enabled": {
+						"type": "boolean",
+						"description": "Whether or not this webhook endpoint is active."
+					},
+					"url": {
+						"type": "string",
+						"description": "The URL of this webhook endpoint."
+					}
+				},
+				"required": ["url"]
+			},
+			"webhook_endpoint_response": {
+				"allOf": [
+					{ "$ref": "#/components/schemas/model_identifiers" },
+					{ "$ref": "#/components/schemas/webhook_endpoint_body" },
+					{
+						"properties": {
+							"secret": {
+								"type": "string",
+								"description": "The webhook endpoint’s secret, used to generate webhook signatures."
+							}
+						}
+					},
+					{ "$ref": "#/components/schemas/model_timestamps" }
+				]
+			}
+		}
+	}
+}
