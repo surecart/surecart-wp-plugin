@@ -674,11 +674,24 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 			return $this;
 		}
 
-		$attributes = $this->makeRequest(
+		return $this->makeRequest(
 			[
 				'id' => $this->attributes['id'],
 			]
 		);
+	}
+
+	/**
+	 * Get fresh instance from DB.
+	 *
+	 * @return this
+	 */
+	protected function refresh() {
+		if ( ! $this->attributes['id'] ) {
+			return $this;
+		}
+
+		$attributes = $this->fresh();
 
 		if ( $this->isError( $attributes ) ) {
 			return $attributes;

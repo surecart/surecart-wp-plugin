@@ -1,0 +1,83 @@
+---
+id: expanding
+---
+
+# Expanding Model Relations
+
+Many models allow you to request additional information relational models by using the `with` method. This parameter is available on all models, and applies to the response of that model only. Model relations can be expanded in two ways.
+
+## Expanding a single relation
+In many cases, an object contains the ID of a related object in its response properties. For example, a price has an associated product ID. Those models can be queried together in one call. ID fields that can be expanded into models are noted in this documentation with the expandable label. Here's an example:
+
+```php
+$prices = \CheckoutEngine\Models\Price::with([
+	'product'
+])->paginate(['page'=> 1]);
+```
+
+```php
+$promo = \CheckoutEngine\Models\Promotion::with([
+	'coupon'
+])->find('8ba8d60f-5277-4e6b-807c-dee8166446d5');
+```
+
+## Expanding list relations
+In some cases, such as a list of all prices for a product, there are available fields that are not included in responses by default. You can request these fields as an expanded response by using the `with` method. Fields that can be included in an expanded response are noted in this documentation with the expandable label.
+
+```php
+$products = \CheckoutEngine\Models\Product::with([
+	'prices'
+])->paginate(['page'=> 1]);
+```
+
+## Recursively expanding relations
+You can expand recursively by specifying nested fields after a dot (.). For example, requesting customer and customer.billing_address on an order will expand the customer and the customer's billing_address.
+
+```php
+$orders = \CheckoutEngine\Models\Order::with([
+	'customer.billing_address'
+])->paginate(['page'=> 1]);
+```
+
+You can use the `with` method on any endpoint which returns expandable fields, including list, create, and update endpoints.
+
+Expanding list requests are plural, but expanding objects within a list are singular. For example, if you wanted to retrieve a order's line items and each line item's price, you would pass `list_items` and `list_item.price` as expand parameters.
+
+Example:
+```php
+$orders = \CheckoutEngine\Models\Order::with( [
+	'line_items',
+	'line_item.price',
+	'price.product'
+] )->paginate( [ 'page' => 1 ] );
+```
+
+Complex Example:
+```php
+$charges = \CheckoutEngine\Models\Charge::where([
+	'customer_ids' => [ $customer_id ],
+])->with( [
+	'checkout_session',
+	'checkout_session.line_items',
+	'line_item.price',
+	'price.product',
+	'subscription',
+	'subscription.subscription_items',
+	'subscription_item.price'
+] )->get();
+```
+
+You can expand multiple objects at once by identifying multiple items in the `with` array. Expansions have a maximum depth of two levels, and you can expand up to 10 objects.
+
+This is not only limited to `get` or `paginate`. You can use this on `create` or `update` requests as well. This will allow you to create or update a model and fetch it's relations all in one request.
+
+```php
+\CheckoutEngine\Models\Price::create([
+	'name' => 'New Price',
+	'amount' => 5000, // $50.00
+	'currency' => 'usd',
+	'product' => '8ba8d60f-5277-4e6b-807c-dee8166446d5',
+])->with([
+	'product'
+])->save();
+```

@@ -1,5 +1,5 @@
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
-const path = require('path');
+const path = require( 'path' );
 // const remarkImport = require("remark-import-partial");
 module.exports = {
 	title: 'Presto Pay',
@@ -11,10 +11,11 @@ module.exports = {
 	favicon: 'img/favicon.ico',
 	organizationName: 'Checkout-Engine', // Usually your GitHub org/user name.
 	projectName: 'checkout-engine-docs', // Usually your repo name.
-	clientModules: [require.resolve('./src/js/components.js')],
+	clientModules: [ require.resolve( './src/js/components.js' ) ],
+	scripts: [ 'https://unpkg.com/swagger-client' ],
 	themeConfig: {
 		prism: {
-			additionalLanguages: ['php'],
+			additionalLanguages: [ 'php' ],
 			lineHeight: 1.5,
 		},
 		navbar: {
@@ -26,15 +27,21 @@ module.exports = {
 			items: [
 				{
 					type: 'doc',
-					docId: 'guide',
-					position: 'left',
-					label: 'Guide',
-				},
-				{
-					type: 'doc',
 					docId: 'components',
 					position: 'left',
 					label: 'Components',
+				},
+				{
+					type: 'doc',
+					docId: 'models/retrieving',
+					position: 'left',
+					label: 'Models',
+				},
+				{
+					type: 'doc',
+					docId: 'api',
+					position: 'left',
+					label: 'API',
 				},
 				// { to: "/blog", label: "Blog", position: "left" },
 				{
@@ -46,17 +53,17 @@ module.exports = {
 		},
 		footer: {
 			style: 'dark',
-			copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+			copyright: `Copyright © ${ new Date().getFullYear() } My Project, Inc. Built with Docusaurus.`,
 		},
 	},
-	plugins: ['docusaurus-plugin-sass'],
+	plugins: [ 'docusaurus-plugin-sass', './plugins/buffer-loader' ],
 	presets: [
 		[
 			'@docusaurus/preset-classic',
 			{
 				docs: {
-					sidebarPath: require.resolve('./sidebars.js'),
-          remarkPlugins: [require('remark-import-partial')],
+					sidebarPath: require.resolve( './sidebars.js' ),
+					remarkPlugins: [ require( 'remark-import-partial' ) ],
 					// remarkPlugins: [remarkImport],
 					// Please change this to your repo.
 					editUrl:
@@ -69,7 +76,7 @@ module.exports = {
 						'https://github.com/facebook/docusaurus/edit/master/website/blog/',
 				},
 				theme: {
-					customCss: require.resolve('./src/css/custom.scss'),
+					customCss: require.resolve( './src/css/custom.scss' ),
 				},
 			},
 		],

@@ -1,0 +1,30 @@
+# Update
+
+Update an existing price
+
+## Attributes
+import ModelBody from '../../../components/ModelBody.js';
+
+<ModelBody path={'/api/v1/prices/{id}'} method={'patch'} model={'price'} />
+
+
+## Examples
+
+All at once:
+```php
+$price = \CheckoutEngine\Models\Price::find('8ba8d60f-5277-4e6b-807c-dee8166446d5');
+$price->update([
+	'recurring' => true, // recurring price
+	'recurring_interval' => 'month', // monthly
+	'recurring_interval_count' => 3 // every 3 months
+]);
+```
+
+Wait until attributes are updated:
+```php
+$price = \CheckoutEngine\Models\Price::find('8ba8d60f-5277-4e6b-807c-dee8166446d5');
+$price->recurring = true; // recurring price
+$price->recurring_interval = 'month'; // monthly
+$price->recurring_interval_count = 3; // every 3 months
+$price->save();
+```

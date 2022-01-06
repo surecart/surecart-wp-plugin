@@ -1,0 +1,63 @@
+---
+sidebar_position: 2
+---
+
+# Inserting Or Updating Models
+
+## Save
+The most common way to create or update a model is to use the save method. This will create a new model if there is no id. Otherwise it will update an existing model if an id is provided.
+
+```php
+use CheckoutEngine\Models\Product;
+
+$product = new Product([
+	'name' => 'iPhone',
+	'description' => 'iPhone is a smartphone'
+]);
+$product->save();
+```
+
+## Building queries
+
+In order to query by specific parameters, you can use the `where` method. This will send query parameters over the API and return the matching records.
+
+```php
+use CheckoutEngine\Models\Product;
+$archived_products = Product::where([
+	'archived' => false
+])->get();
+```
+
+## Pagination
+You can paginate and get subsquent pages of results by using the `paginate` method. This method takes 2 parameters, `page` and `per_page`. The default pagination `per_page` limit is `100`.
+
+```php
+use CheckoutEngine\Models\Product;
+
+$archived_products = Product::where([
+	'archived' => false
+])->paginate([
+	'per_page' => 20,
+	'page' => 2
+]);
+```
+
+Result:
+```php
+[
+	'object' => 'product',
+	'pagination' => [
+		'count' => 100,
+		'limit' => 20,
+		'page' => 2
+	],
+	'data' => [
+		// 20 products
+		[
+			'id' => '8ba8d60f-5277-4e6b-807c-dee8166446d5',
+			...
+		]
+		...
+	]
+]
+```

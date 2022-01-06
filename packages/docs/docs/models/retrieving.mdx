@@ -1,0 +1,97 @@
+---
+sidebar_position: 1
+---
+
+# Retrieving Models
+
+The PHP models provide a fluent syntax to query the database over the api. In this doc, we will show a variety of ways to retrieve models.
+
+## Retrieving a model by id
+The model's all method will retrieve the record with a specific id.
+
+```php
+use CheckoutEngine\Models\Product;
+$product = Product::find('8ba8d60f-5277-4e6b-807c-dee8166446d5');
+```
+
+## Retrieving several models.
+The model's all method will retrieve the first 10 of the records from the model's associated database table:
+
+```php
+use CheckoutEngine\Models\Product;
+
+$products = Product::get();
+foreach ($products as $product) {
+    echo $product->name;
+}
+```
+
+## Building queries
+
+In order to query by specific parameters, you can use the `where` method. This will send query parameters over the API and return the matching records.
+
+```php
+use CheckoutEngine\Models\Product;
+$archived_products = Product::where([
+	'archived' => false
+])->get();
+```
+
+## Pagination
+You can paginate and get subsquent pages of results by using the `paginate` method. This method takes 2 parameters, `page` and `per_page`. The default pagination `per_page` limit is `100`.
+
+```php
+use CheckoutEngine\Models\Product;
+
+$archived_products = Product::where([
+	'archived' => false
+])->paginate([
+	'per_page' => 20,
+	'page' => 2
+]);
+```
+
+Result:
+```php
+[
+	'object' => 'product',
+	'pagination' => [
+		'count' => 100,
+		'limit' => 20,
+		'page' => 2
+	],
+	'data' => [
+		// 20 products
+		[
+			'id' => '8ba8d60f-5277-4e6b-807c-dee8166446d5',
+			...
+		]
+		...
+	]
+]
+```
+
+## Refreshing Models
+
+If you already have an instance of a model that was retrieved, you can "refresh" the model using the fresh method. The fresh method will re-retrieve the model from the database. The existing model instance will not be affected:
+
+```php
+$product = Product::where([
+	'ids' => [
+		'8ba8d60f-5277-4e6b-807c-dee8166446d5',
+		'07fd28e0-e735-4acf-86d8-4d7855055e0b'
+	]
+])->first();
+
+$freshProduct = $product->fresh();
+```
+
+The refresh method will re-hydrate the existing model using fresh data from the database:
+```php
+$product = Product::create([
+	'name' => 'New Product',
+]);
+$product->name = 'Updated Product';
+$product->refresh();
+$flight->name; // "New Product"
+```

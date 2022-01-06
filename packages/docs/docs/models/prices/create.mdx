@@ -1,45 +1,21 @@
-# Create A New Price
+# Create
 
-You can list prices using the `create` method of the `\CheckoutEngine\Models\Price` model,
-and pass it the attributes you want to create.
-
-## Creating A Monthly Subscription Plan
-
-```php
-\CheckoutEngine\Models\Price::create([
-	'product_id' => '7034aecd-b3c9-4883-a626-f8fbe7323181',
-	'name' => 'My Test Price'
-	'amount' => 2900,
-	'currency' => 'usd',
-	// recurring details
-	'recurring' => true,
-	'recurring_interval' => 'month',
-	'recurring_interval_count' => 1
-]);
-```
+Creates a new price.
 
 ## Attributes
+import ModelBody from '../../../components/ModelBody.js';
 
-import Attribute from '../../../components/Attribute';
+<ModelBody path={'/api/v1/prices'} method={'post'} model={'price'} />
 
-### product_id <Attribute>STRING</Attribute>
+## Examples
 
-The UUID of the parent product.
-
-### name <Attribute>STRING</Attribute>
-
-A brief description of the price.
-
-### amount <Attribute>INTEGER</Attribute>
-
-The amount in cents to be charged, represented as a whole integer. For example 9900 is equivalent to $99.
-
-### active <Attribute>BOOLEAN</Attribute>
-
-Only return objects that are active or inactive (e.g., pass false to list all inactive objects).
-
-### ids[] <Attribute>ARRAY[]</Attribute>
-
-Only return objects with the given IDs.
-
-The `where` method supports parameters allowed by the API, which can be seen here:
+```php
+$saved = new CheckoutEngine\Models\Price([
+	'name' => 'Price 1',
+	'amount' => 1000,
+	'currency' => 'usd',
+	'recurring' => true, // recurring price
+	'recurring_interval' => 'month', // monthly
+	'recurring_interval_count' => 3 // every 3 months
+])->save();
+```
