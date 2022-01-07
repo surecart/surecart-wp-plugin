@@ -2,11 +2,7 @@
 namespace CheckoutEngine\Tests\Feature\Rest;
 
 use CheckoutEngine\Controllers\Web\WebhookController;
-use CheckoutEngine\Request\RequestServiceProvider;
-use CheckoutEngine\Rest\WebhooksRestServiceProvider;
-use CheckoutEngine\Support\Errors\ErrorsServiceProvider;
 use CheckoutEngine\Tests\CheckoutEngineUnitTestCase;
-use WP_REST_Request;
 
 class WebhookRestHandleTest extends CheckoutEngineUnitTestCase {
 	use \Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
@@ -19,13 +15,7 @@ class WebhookRestHandleTest extends CheckoutEngineUnitTestCase {
 		parent::setUp();
 
 		// Set up an app instance with whatever stubs and mocks we need before every test.
-		\CheckoutEngine::make()->bootstrap([
-			'providers' => [
-				WebhooksRestServiceProvider::class,
-				RequestServiceProvider::class,
-				ErrorsServiceProvider::class
-			]
-		], false);
+		\CheckoutEngine::make()->bootstrap([], false);
 	}
 
 	/**
