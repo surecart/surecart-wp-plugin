@@ -1,5 +1,5 @@
+import { RecursivePartial, ChoiceType, lineItems, Product, Order, Price, PriceChoice, LineItemData } from '../../types';
 import { getQueryArg } from '@wordpress/url';
-import { RecursivePartial, ChoiceType, lineItems, Product, CheckoutSession, Price, PriceChoice, LineItemData } from '../../types';
 
 // Get only enabled price choices.
 export const getEnabledPriceChoices = (choices: Array<PriceChoice>): Array<PriceChoice> => {
@@ -61,7 +61,7 @@ export const getInitialChoiceLineItems = (choices: Array<PriceChoice>, choiceTyp
 
 /**
  * Get price ids from line items
- * @param checkoutSession
+ * @param order
  * @returns
  */
 export const getLineItemPriceIds = (line_items: RecursivePartial<lineItems>) => {
@@ -79,8 +79,8 @@ export const getLineItemByPriceId = (line_items: RecursivePartial<lineItems>, pr
 /**
  * Is this product in the checkout session?
  */
-export const isProductInCheckoutSession = (product: RecursivePartial<Product>, checkoutSession: CheckoutSession) => {
-  const prices = getLineItemPrices(checkoutSession?.line_items);
+export const isProductInOrder = (product: RecursivePartial<Product>, order: Order) => {
+  const prices = getLineItemPrices(order?.line_items);
   if (!prices?.length) return false;
   return !!prices.find(price => (price?.product as Product)?.id === product.id);
 };
@@ -88,8 +88,8 @@ export const isProductInCheckoutSession = (product: RecursivePartial<Product>, c
 /**
  * Is the price in a checkout session
  */
-export const isPriceInCheckoutSession = (price: RecursivePartial<Price>, checkoutSession: CheckoutSession) => {
-  const priceIds = getLineItemPriceIds(checkoutSession?.line_items);
+export const isPriceInOrder = (price: RecursivePartial<Price>, order: Order) => {
+  const priceIds = getLineItemPriceIds(order?.line_items);
   return !!priceIds.find(id => price.id === id);
 };
 
@@ -97,24 +97,24 @@ export const isPriceInCheckoutSession = (price: RecursivePartial<Price>, checkou
  * Attempt to get the session id
  *
  * @param formId The form id.
- * @param checkoutSession The checkoutSession
+ * @param order The order
  * @param refresh Should we refresh?
  *
  * @returns string
  */
-export const getSessionId = (formId, checkoutSession, refresh = false) => {
+export const getSessionId = (formId, order, refresh = false) => {
   // if we want to get a fresh session, skip
   if (refresh === true) {
     return false;
   }
 
   // if we already have an ID set, return that:
-  if (checkoutSession?.id) {
-    return checkoutSession.id;
+  if (order?.id) {
+    return order.id;
   }
 
   // check the url query first
-  const urlId = getQueryArg(window.location.href, 'checkout_session');
+  const urlId = getQueryArg(window.location.href, 'order');
   if (urlId) {
     return urlId;
   }

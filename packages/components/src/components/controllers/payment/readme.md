@@ -9,7 +9,7 @@
 
 | Property          | Attribute        | Description                                                          | Type                       | Default     |
 | ----------------- | ---------------- | -------------------------------------------------------------------- | -------------------------- | ----------- |
-| `checkoutSession` | --               | Checkout Session from ce-checkout.                                   | `CheckoutSession`          | `undefined` |
+| `order` | --               | Checkout Session from ce-checkout.                                   | `Order`          | `undefined` |
 | `label`           | `label`          | The input's label.                                                   | `string`                   | `undefined` |
 | `mode`            | `mode`           | Is this created in "test" mode                                       | `"live" \| "test"`         | `'live'`    |
 | `paymentMethod`   | `payment-method` | Payment mode inside individual payment method (i.e. Payment Buttons) | `"stripe-payment-request"` | `undefined` |

@@ -1,7 +1,7 @@
+import { Order } from '../../../types';
 import { Component, h, Prop } from '@stencil/core';
-import { openWormhole } from 'stencil-wormhole';
 import { __ } from '@wordpress/i18n';
-import { CheckoutSession } from '../../../types';
+import { openWormhole } from 'stencil-wormhole';
 
 @Component({
   tag: 'ce-order-summary',
@@ -10,7 +10,7 @@ import { CheckoutSession } from '../../../types';
 })
 export class CEOrderSummary {
   @Prop() busy: boolean;
-  @Prop() checkoutSession: CheckoutSession;
+  @Prop() order: Order;
   @Prop() loading: boolean;
   @Prop() empty: boolean;
   @Prop() collapsible: boolean = false;
@@ -47,7 +47,7 @@ export class CEOrderSummary {
         <span slot="price">
           <ce-total total={'total'}></ce-total>
         </span>
-        <span slot="currency">{this.checkoutSession?.currency}</span>
+        <span slot="currency">{this.order?.currency}</span>
       </ce-line-item>
     );
   }
@@ -71,4 +71,4 @@ export class CEOrderSummary {
   }
 }
 
-openWormhole(CEOrderSummary, ['checkoutSession', 'busy', 'loading', 'empty'], false);
+openWormhole(CEOrderSummary, ['order', 'busy', 'loading', 'empty'], false);

@@ -1,10 +1,10 @@
-import { Component, Prop, h, State, Event, EventEmitter, Watch, Element } from '@stencil/core';
+import { onFirstVisible } from '../../../../functions/lazy';
+import { translatedInterval } from '../../../../functions/price';
 import { getPricesAndProducts } from '../../../../services/fetch';
 import { Price, Product, Prices, Products } from '../../../../types';
-import { openWormhole } from 'stencil-wormhole';
-import { translatedInterval } from '../../../../functions/price';
+import { Component, Prop, h, State, Event, EventEmitter, Watch, Element } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
-import { onFirstVisible } from '../../../../functions/lazy';
+import { openWormhole } from 'stencil-wormhole';
 
 @Component({
   tag: 'ce-customer-subscription-plan',
@@ -98,4 +98,4 @@ export class CeCustomerSubscriptionPlan {
   }
 }
 
-openWormhole(CeCustomerSubscriptionPlan, ['prices', 'products', 'checkoutSession', 'error'], false);
+openWormhole(CeCustomerSubscriptionPlan, ['prices', 'products', 'order', 'error'], false);

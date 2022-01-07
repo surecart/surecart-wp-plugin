@@ -1,6 +1,6 @@
+import { Order } from '../../../types';
 import { Component, Prop, h, Event, EventEmitter, Watch } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
-import { CheckoutSession } from '../../../types';
 
 @Component({
   tag: 'ce-email',
@@ -10,7 +10,7 @@ export class CeEmail {
   private input: HTMLCeInputElement;
 
   /** (passed from the ce-checkout component automatically) */
-  @Prop() checkoutSession: CheckoutSession;
+  @Prop() order: Order;
 
   /** The input's size. */
   @Prop({ reflect: true }) size: 'small' | 'medium' | 'large' = 'medium';
@@ -78,7 +78,7 @@ export class CeEmail {
   }
 
   /** Sync customer email with session if it's updated by other means */
-  @Watch('checkoutSession')
+  @Watch('order')
   handleSessionChange(val) {
     if (val.email) {
       if (val.email !== this.value) {
@@ -113,4 +113,4 @@ export class CeEmail {
   }
 }
 
-openWormhole(CeEmail, ['checkoutSession'], false);
+openWormhole(CeEmail, ['order'], false);

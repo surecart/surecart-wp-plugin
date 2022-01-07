@@ -70,7 +70,7 @@ return [
 // attributes:
 // mode:
 // not_enabled: "not enabled in this environment"
-// checkout_session:
+// order:
 // paid_locked: "can't delete when status is 'paid'"
 // attributes:
 // line_items:

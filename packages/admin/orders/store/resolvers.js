@@ -1,10 +1,10 @@
-import { __ } from '@wordpress/i18n';
-import { controls } from '@wordpress/data';
-import { fetch as apiFetch } from '../../store/data/controls';
 import { store } from '../../store/data';
+import { fetch as apiFetch } from '../../store/data/controls';
+import { controls } from '@wordpress/data';
+import { __ } from '@wordpress/i18n';
 
 export default {
-	*selectCheckoutSession() {
+	*selectOrder() {
 		// maybe get from url.
 		const id = yield controls.resolveSelect( store, 'selectPageId' );
 		if ( ! id ) return {};
@@ -12,7 +12,7 @@ export default {
 		const request = yield controls.resolveSelect(
 			store,
 			'prepareFetchRequest',
-			'checkout_sessions',
+			'orders',
 			{
 				id,
 				expand: [
@@ -28,10 +28,10 @@ export default {
 		try {
 			// we need prices.
 			const response = yield apiFetch( request );
-			const { customer, line_items, ...checkout_session } = response;
-			if ( ! checkout_session?.id ) return;
+			const { customer, line_items, ...order } = response;
+			if ( ! order?.id ) return;
 			return yield controls.dispatch( store, 'addModels', {
-				checkout_sessions: [ checkout_session ],
+				orders: [ order ],
 				customers: [ customer ],
 				line_items: line_items?.data || [],
 			} );
@@ -50,7 +50,7 @@ export default {
 			'prepareFetchRequest',
 			'charges',
 			{
-				checkout_session_ids: [ id ],
+				order_ids: [ id ],
 			}
 		);
 
@@ -77,7 +77,7 @@ export default {
 			'prepareFetchRequest',
 			'subscriptions',
 			{
-				checkout_session_ids: [ id ],
+				order_ids: [ id ],
 				expand: [
 					'subscription_items',
 					'subscription_items.price',

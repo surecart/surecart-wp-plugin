@@ -2,12 +2,12 @@
 
 namespace CheckoutEngine\Controllers\Web\Dashboard;
 
-use CheckoutEngine\Models\CheckoutSession;
+use CheckoutEngine\Models\Order;
 
 /**
  * Customer order controller
  */
-class CustomerCheckoutSessionController {
+class CustomerOrderController {
 	/**
 	 * List
 	 *
@@ -23,7 +23,7 @@ class CustomerCheckoutSessionController {
 			'web.dashboard.orders.index',
 			[
 				'tab'    => 'orders',
-				'orders' => CheckoutSession::where(
+				'orders' => Order::where(
 					[
 						// 'status'       => [ 'paid', 'completed' ],
 						'customer_ids' => [ $user->customerId() ],
@@ -50,7 +50,7 @@ class CustomerCheckoutSessionController {
 			'web.dashboard.orders.show',
 			[
 				'tab'   => 'orders',
-				'order' => CheckoutSession::with( [ 'line_items', 'line_item.price', 'price.product' ] )->find( $id ),
+				'order' => Order::with( [ 'line_items', 'line_item.price', 'price.product' ] )->find( $id ),
 			]
 		);
 	}

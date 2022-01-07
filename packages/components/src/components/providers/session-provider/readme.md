@@ -9,7 +9,7 @@
 
 | Property          | Attribute       | Description                                 | Type                      | Default     |
 | ----------------- | --------------- | ------------------------------------------- | ------------------------- | ----------- |
-| `checkoutSession` | --              | CheckoutSession Object                      | `CheckoutSession`         | `undefined` |
+| `order` | --              | Order Object                      | `Order`         | `undefined` |
 | `currencyCode`    | `currency-code` | Currency Code                               | `string`                  | `'usd'`     |
 | `formId`          | `form-id`       | The checkout form id                        | `number`                  | `undefined` |
 | `groupId`         | `group-id`      | Group id                                    | `string`                  | `undefined` |
@@ -25,7 +25,7 @@
 | ----------------- | ----------------------- | --------------------------------------------------------------------------------------------- |
 | `ceError`         | Update line items event | `CustomEvent<{ message: string; code?: string; data?: any; additional_errors?: any; } \| {}>` |
 | `ceSetState`      | Set the state           | `CustomEvent<string>`                                                                         |
-| `ceUpdateSession` | Update line items event | `CustomEvent<CheckoutSession>`                                                                |
+| `ceUpdateSession` | Update line items event | `CustomEvent<Order>`                                                                |
 
 
 ## Dependencies

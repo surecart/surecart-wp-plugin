@@ -67,10 +67,10 @@ class User implements ArrayAccess, JsonSerializable {
 	 * Get a users orders
 	 *
 	 * @param array $query Query args.
-	 * @return CheckoutEngine\Models\CheckoutSession[];
+	 * @return CheckoutEngine\Models\Order[];
 	 */
 	protected function orders() {
-		return CheckoutSession::where( [ 'customer_ids' => [ $this->customerId() ] ] );
+		return Order::where( [ 'customer_ids' => [ $this->customerId() ] ] );
 	}
 
 	/**

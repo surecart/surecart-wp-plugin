@@ -1,7 +1,7 @@
+import { Order } from '../../../types';
 import { Component, h, Prop } from '@stencil/core';
-import { openWormhole } from 'stencil-wormhole';
-import { CheckoutSession } from '../../../types';
 import dotProp from 'dot-prop-immutable';
+import { openWormhole } from 'stencil-wormhole';
 
 @Component({
   tag: 'ce-session-detail',
@@ -9,7 +9,7 @@ import dotProp from 'dot-prop-immutable';
   shadow: true,
 })
 export class CeSessionDetail {
-  @Prop() checkoutSession: CheckoutSession;
+  @Prop() order: Order;
   @Prop() value: string;
   @Prop() fallback: string;
   @Prop() metaKey: string;
@@ -30,15 +30,15 @@ export class CeSessionDetail {
 
     // get metadata value
     if (this.value === 'metadata') {
-      return dotProp.get(this?.checkoutSession?.metadata, this.value || '');
+      return dotProp.get(this?.order?.metadata, this.value || '');
     }
 
     // get value
-    value = dotProp.get(this?.checkoutSession, this.value || '');
+    value = dotProp.get(this?.order, this.value || '');
 
     // if number, format it
     if (typeof value === 'number') {
-      value = <ce-format-number type="currency" currency={this?.checkoutSession?.currency} value={value}></ce-format-number>;
+      value = <ce-format-number type="currency" currency={this?.order?.currency} value={value}></ce-format-number>;
     }
 
     return value;
@@ -88,4 +88,4 @@ export class CeSessionDetail {
   }
 }
 
-openWormhole(CeSessionDetail, ['checkoutSession', 'loading'], false);
+openWormhole(CeSessionDetail, ['order', 'loading'], false);

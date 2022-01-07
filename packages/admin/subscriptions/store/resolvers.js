@@ -1,7 +1,7 @@
-import { __ } from '@wordpress/i18n';
-import { controls } from '@wordpress/data';
-import { fetch as apiFetch } from '../../store/data/controls';
 import { store } from '../../store/data';
+import { fetch as apiFetch } from '../../store/data/controls';
+import { controls } from '@wordpress/data';
+import { __ } from '@wordpress/i18n';
 
 export default {
 	*selectSubscription() {
@@ -16,8 +16,8 @@ export default {
 			{
 				id,
 				expand: [
-					'checkout_session',
-					'checkout_session.line_items',
+					'order',
+					'order.line_items',
 					'line_item.price',
 					'subscription_items',
 					'subscription_item.price',
@@ -33,7 +33,7 @@ export default {
 			const response = yield apiFetch( request );
 			const {
 				customer,
-				checkout_session,
+				order,
 				subscription_items,
 				...subscription
 			} = response;
@@ -43,7 +43,7 @@ export default {
 			return yield controls.dispatch( store, 'addModels', {
 				subscriptions: [ subscription ],
 				customers: [ customer ],
-				checkout_sessions: checkout_session?.data || [],
+				orders: order?.data || [],
 				subscription_items: [
 					...( subscription_items?.data
 						? subscription_items.data

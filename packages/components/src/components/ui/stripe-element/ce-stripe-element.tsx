@@ -1,6 +1,6 @@
+import { Order } from '../../../types';
 import { Component, Prop, Element, State, Watch, h, EventEmitter, Event } from '@stencil/core';
 import { loadStripe } from '@stripe/stripe-js/pure';
-import { CheckoutSession } from '../../../types';
 
 @Component({
   tag: 'ce-stripe-element',
@@ -18,7 +18,7 @@ export class CEStripeElement {
   @Prop() disabled: boolean;
 
   /** The checkout session object for finalizing intents */
-  @Prop() checkoutSession: CheckoutSession;
+  @Prop() order: Order;
 
   /** Your stripe connected account id. */
   @Prop() stripeAccountId: string;
@@ -55,8 +55,8 @@ export class CEStripeElement {
     this.elements = this.stripe.elements();
   }
 
-  @Watch('checkoutSession')
-  async confirmPayment(val: CheckoutSession) {
+  @Watch('order')
+  async confirmPayment(val: Order) {
     // needs to be enabled
     if (this.disabled) return;
     // must be finalized
@@ -101,8 +101,8 @@ export class CEStripeElement {
       payment_method: {
         card: this.element,
         billing_details: {
-          ...(this.checkoutSession.name ? { name: this.checkoutSession?.name } : {}),
-          ...(this.checkoutSession.email ? { email: this.checkoutSession?.email } : {}),
+          ...(this.order.name ? { name: this.order?.name } : {}),
+          ...(this.order.email ? { email: this.order?.email } : {}),
         },
       },
     });
@@ -114,8 +114,8 @@ export class CEStripeElement {
       payment_method: {
         card: this.element,
         billing_details: {
-          ...(this.checkoutSession.name ? { name: this.checkoutSession?.name } : {}),
-          ...(this.checkoutSession.email ? { email: this.checkoutSession?.email } : {}),
+          ...(this.order.name ? { name: this.order?.name } : {}),
+          ...(this.order.email ? { email: this.order?.email } : {}),
         },
       },
     });

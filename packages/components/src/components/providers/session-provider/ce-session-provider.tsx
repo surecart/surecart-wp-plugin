@@ -1,7 +1,7 @@
-import { Component, h, Prop, Event, EventEmitter, Element, State, Watch, Listen } from '@stencil/core';
-import { CheckoutSession, LineItemData, PriceChoice } from '../../../types';
-import { getSessionId, getURLLineItems, populateInputs } from './helpers/session';
 import { createOrUpdateSession, finalizeSession } from '../../../services/session';
+import { Order, LineItemData, PriceChoice } from '../../../types';
+import { getSessionId, getURLLineItems, populateInputs } from './helpers/session';
+import { Component, h, Prop, Event, EventEmitter, Element, State, Watch, Listen } from '@stencil/core';
 import { removeQueryArgs } from '@wordpress/url';
 
 @Component({
@@ -12,8 +12,8 @@ export class CeSessionProvider {
   /** Element */
   @Element() el: HTMLElement;
 
-  /** CheckoutSession Object */
-  @Prop() checkoutSession: CheckoutSession;
+  /** Order Object */
+  @Prop() order: Order;
 
   /** Group id */
   @Prop() groupId: string;
@@ -37,7 +37,7 @@ export class CeSessionProvider {
   @Prop() setState: (state: string) => void;
 
   /** Update line items event */
-  @Event() ceUpdateSession: EventEmitter<CheckoutSession>;
+  @Event() ceUpdateSession: EventEmitter<Order>;
 
   /** Update line items event */
   @Event() ceError: EventEmitter<{ message: string; code?: string; data?: any; additional_errors?: any } | {}>;
@@ -46,7 +46,7 @@ export class CeSessionProvider {
   @Event() ceSetState: EventEmitter<string>;
 
   /** Holds the checkout session to update. */
-  @State() session: CheckoutSession;
+  @State() session: Order;
 
   /** Sync this session back to parent. */
   @Watch('session')
@@ -55,8 +55,8 @@ export class CeSessionProvider {
   }
 
   /** Store checkout session in localstorage */
-  @Watch('checkoutSession')
-  handleCheckoutSessionChange(val) {
+  @Watch('order')
+  handleOrderChange(val) {
     if (val?.id) {
       localStorage.setItem(this.groupId, val.id);
     }
@@ -121,7 +121,7 @@ export class CeSessionProvider {
     try {
       this.ceSetState.emit('FETCH');
       this.session = await finalizeSession({
-        id: this.checkoutSession.id,
+        id: this.order.id,
         data,
         query: {
           ...this.defaultFormQuery(),
@@ -134,9 +134,9 @@ export class CeSessionProvider {
         this.ceSetState.emit('RESOLVE');
       }
     } catch (e) {
-      if (e?.code === 'checkout_session.invalid_status_transition') {
+      if (e?.code === 'order.invalid_status_transition') {
         await this.loadUpdate({
-          id: this.checkoutSession.id,
+          id: this.order.id,
           data: {
             status: 'draft',
           },
@@ -224,7 +224,7 @@ export class CeSessionProvider {
       return this.loadUpdate({ line_items });
     }
 
-    const id = getSessionId(this.groupId, this.checkoutSession);
+    const id = getSessionId(this.groupId, this.order);
 
     // fetch or initialize a session.
     if (id && this.persist) {
@@ -281,11 +281,11 @@ export class CeSessionProvider {
   }
 
   getSessionId() {
-    if (this.checkoutSession?.id) {
-      return this.checkoutSession.id;
+    if (this.order?.id) {
+      return this.order.id;
     }
 
-    const id = getSessionId(this.groupId, this.checkoutSession);
+    const id = getSessionId(this.groupId, this.order);
     if (this.persist) {
       return id;
     }
@@ -308,7 +308,7 @@ export class CeSessionProvider {
       query: {
         ...this.defaultFormQuery(),
       },
-    })) as CheckoutSession;
+    })) as Order;
   }
 
   /** Updates a session with loading status changes. */
@@ -324,7 +324,7 @@ export class CeSessionProvider {
 
   render() {
     return (
-      <ce-line-items-provider checkoutSession={this.checkoutSession} onCeUpdateLineItems={e => this.loadUpdate({ line_items: e.detail as Array<LineItemData> })}>
+      <ce-line-items-provider order={this.order} onCeUpdateLineItems={e => this.loadUpdate({ line_items: e.detail as Array<LineItemData> })}>
         <slot />
       </ce-line-items-provider>
     );

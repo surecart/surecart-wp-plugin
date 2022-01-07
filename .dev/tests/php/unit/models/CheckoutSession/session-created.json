@@ -1,6 +1,6 @@
 {
 	"id": "48ce1ca4-4a98-4dd3-8eb1-45995042bec2",
-	"object": "checkout_session",
+	"object": "order",
 	"customer_email": "joe@gmail.com",
 	"customer_first_name": "Joe",
 	"customer_last_name": "Smith",

@@ -4,19 +4,19 @@ import { getQueryArg } from '@wordpress/url';
  * Attempt to get the session id
  *
  * @param formId The form id.
- * @param checkoutSession The checkoutSession
+ * @param order The order
  * @param refresh Should we refresh?
  *
  * @returns string
  */
-export const getSessionId = (formId, checkoutSession) => {
+export const getSessionId = (formId, order) => {
   // if we already have an ID set, return that:
-  if (checkoutSession?.id) {
-    return checkoutSession.id;
+  if (order?.id) {
+    return order.id;
   }
 
   // check the url query first
-  const urlId = getQueryArg(window.location.href, 'checkout_session');
+  const urlId = getQueryArg(window.location.href, 'order');
   if (urlId) {
     return urlId;
   }

@@ -21,23 +21,12 @@
       "styles": [],
       "slots": [],
       "parts": [],
-      "dependents": [
-        "ce-coupon-form",
-        "ce-order-summary"
-      ],
-      "dependencies": [
-        "ce-spinner"
-      ],
+      "dependents": ["ce-coupon-form", "ce-order-summary"],
+      "dependencies": ["ce-spinner"],
       "dependencyGraph": {
-        "ce-block-ui": [
-          "ce-spinner"
-        ],
-        "ce-coupon-form": [
-          "ce-block-ui"
-        ],
-        "ce-order-summary": [
-          "ce-block-ui"
-        ]
+        "ce-block-ui": ["ce-spinner"],
+        "ce-coupon-form": ["ce-block-ui"],
+        "ce-order-summary": ["ce-block-ui"]
       }
     },
     {
@@ -376,23 +365,12 @@
           "docs": ""
         }
       ],
-      "dependents": [
-        "ce-coupon-form",
-        "ce-submit"
-      ],
-      "dependencies": [
-        "ce-spinner"
-      ],
+      "dependents": ["ce-coupon-form", "ce-submit"],
+      "dependencies": ["ce-spinner"],
       "dependencyGraph": {
-        "ce-button": [
-          "ce-spinner"
-        ],
-        "ce-coupon-form": [
-          "ce-button"
-        ],
-        "ce-submit": [
-          "ce-button"
-        ]
+        "ce-button": ["ce-spinner"],
+        "ce-coupon-form": ["ce-button"],
+        "ce-submit": ["ce-button"]
       }
     },
     {
@@ -994,14 +972,10 @@
           "docs": ""
         }
       ],
-      "dependents": [
-        "ce-price-choices"
-      ],
+      "dependents": ["ce-price-choices"],
       "dependencies": [],
       "dependencyGraph": {
-        "ce-price-choices": [
-          "ce-choice"
-        ]
+        "ce-price-choices": ["ce-choice"]
       }
     },
     {
@@ -1084,14 +1058,10 @@
           "docs": ""
         }
       ],
-      "dependents": [
-        "ce-price-choices"
-      ],
+      "dependents": ["ce-price-choices"],
       "dependencies": [],
       "dependencyGraph": {
-        "ce-price-choices": [
-          "ce-choices"
-        ]
+        "ce-price-choices": ["ce-choices"]
       }
     },
     {
@@ -1215,28 +1185,12 @@
       "slots": [],
       "parts": [],
       "dependents": [],
-      "dependencies": [
-        "ce-skeleton",
-        "ce-input",
-        "ce-button",
-        "ce-block-ui"
-      ],
+      "dependencies": ["ce-skeleton", "ce-input", "ce-button", "ce-block-ui"],
       "dependencyGraph": {
-        "ce-coupon-form": [
-          "ce-skeleton",
-          "ce-input",
-          "ce-button",
-          "ce-block-ui"
-        ],
-        "ce-input": [
-          "ce-form-control"
-        ],
-        "ce-button": [
-          "ce-spinner"
-        ],
-        "ce-block-ui": [
-          "ce-spinner"
-        ]
+        "ce-coupon-form": ["ce-skeleton", "ce-input", "ce-button", "ce-block-ui"],
+        "ce-input": ["ce-form-control"],
+        "ce-button": ["ce-spinner"],
+        "ce-block-ui": ["ce-spinner"]
       }
     },
     {
@@ -1267,14 +1221,10 @@
           "docs": ""
         }
       ],
-      "dependents": [
-        "ce-payment-request"
-      ],
+      "dependents": ["ce-payment-request"],
       "dependencies": [],
       "dependencyGraph": {
-        "ce-payment-request": [
-          "ce-divider"
-        ]
+        "ce-payment-request": ["ce-divider"]
       }
     },
     {
@@ -1399,14 +1349,10 @@
           "docs": ""
         }
       ],
-      "dependents": [
-        "ce-quantity-select"
-      ],
+      "dependents": ["ce-quantity-select"],
       "dependencies": [],
       "dependencyGraph": {
-        "ce-quantity-select": [
-          "ce-dropdown"
-        ]
+        "ce-quantity-select": ["ce-dropdown"]
       }
     },
     {
@@ -1435,15 +1381,15 @@
           "required": false
         },
         {
-          "name": "checkoutSession",
-          "type": "CheckoutSession",
+          "name": "order",
+          "type": "Order",
           "mutable": false,
           "reflectToAttr": false,
           "docs": "(passed from the ce-checkout component automatically)",
           "docsTags": [],
           "values": [
             {
-              "type": "CheckoutSession"
+              "type": "Order"
             }
           ],
           "optional": false,
@@ -1722,16 +1668,10 @@
       "slots": [],
       "parts": [],
       "dependents": [],
-      "dependencies": [
-        "ce-input"
-      ],
+      "dependencies": ["ce-input"],
       "dependencyGraph": {
-        "ce-email": [
-          "ce-input"
-        ],
-        "ce-input": [
-          "ce-form-control"
-        ]
+        "ce-email": ["ce-input"],
+        "ce-input": ["ce-form-control"]
       }
     },
     {
@@ -1972,18 +1912,11 @@
           "docs": ""
         }
       ],
-      "dependents": [
-        "ce-input",
-        "ce-select"
-      ],
+      "dependents": ["ce-input", "ce-select"],
       "dependencies": [],
       "dependencyGraph": {
-        "ce-input": [
-          "ce-form-control"
-        ],
-        "ce-select": [
-          "ce-form-control"
-        ]
+        "ce-input": ["ce-form-control"],
+        "ce-select": ["ce-form-control"]
       }
     },
     {
@@ -2722,27 +2655,13 @@
           "docs": "Used to prepend an icon or element to the input."
         }
       ],
-      "dependents": [
-        "ce-coupon-form",
-        "ce-email",
-        "ce-stripe-element"
-      ],
-      "dependencies": [
-        "ce-form-control"
-      ],
+      "dependents": ["ce-coupon-form", "ce-email", "ce-stripe-element"],
+      "dependencies": ["ce-form-control"],
       "dependencyGraph": {
-        "ce-input": [
-          "ce-form-control"
-        ],
-        "ce-coupon-form": [
-          "ce-input"
-        ],
-        "ce-email": [
-          "ce-input"
-        ],
-        "ce-stripe-element": [
-          "ce-input"
-        ]
+        "ce-input": ["ce-form-control"],
+        "ce-coupon-form": ["ce-input"],
+        "ce-email": ["ce-input"],
+        "ce-stripe-element": ["ce-input"]
       }
     },
     {
@@ -2860,22 +2779,12 @@
           "docs": ""
         }
       ],
-      "dependents": [
-        "ce-line-items",
-        "ce-product-line-item",
-        "ce-line-item-total"
-      ],
+      "dependents": ["ce-line-items", "ce-product-line-item", "ce-line-item-total"],
       "dependencies": [],
       "dependencyGraph": {
-        "ce-line-items": [
-          "ce-line-item"
-        ],
-        "ce-product-line-item": [
-          "ce-line-item"
-        ],
-        "ce-line-item-total": [
-          "ce-line-item"
-        ]
+        "ce-line-items": ["ce-line-item"],
+        "ce-product-line-item": ["ce-line-item"],
+        "ce-line-item-total": ["ce-line-item"]
       }
     },
     {
@@ -2905,15 +2814,15 @@
           "required": false
         },
         {
-          "name": "checkoutSession",
-          "type": "CheckoutSession",
+          "name": "order",
+          "type": "Order",
           "mutable": false,
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
           "values": [
             {
-              "type": "CheckoutSession"
+              "type": "Order"
             }
           ],
           "optional": false,
@@ -2969,26 +2878,11 @@
       "slots": [],
       "parts": [],
       "dependents": [],
-      "dependencies": [
-        "ce-line-item",
-        "ce-skeleton",
-        "ce-product-line-item"
-      ],
+      "dependencies": ["ce-line-item", "ce-skeleton", "ce-product-line-item"],
       "dependencyGraph": {
-        "ce-line-items": [
-          "ce-line-item",
-          "ce-skeleton",
-          "ce-product-line-item"
-        ],
-        "ce-product-line-item": [
-          "ce-line-item",
-          "ce-quantity-select"
-        ],
-        "ce-quantity-select": [
-          "ce-dropdown",
-          "ce-menu",
-          "ce-menu-item"
-        ]
+        "ce-line-items": ["ce-line-item", "ce-skeleton", "ce-product-line-item"],
+        "ce-product-line-item": ["ce-line-item", "ce-quantity-select"],
+        "ce-quantity-select": ["ce-dropdown", "ce-menu", "ce-menu-item"]
       }
     },
     {
@@ -3021,14 +2915,10 @@
           "docs": ""
         }
       ],
-      "dependents": [
-        "ce-quantity-select"
-      ],
+      "dependents": ["ce-quantity-select"],
       "dependencies": [],
       "dependencyGraph": {
-        "ce-quantity-select": [
-          "ce-menu"
-        ]
+        "ce-quantity-select": ["ce-menu"]
       }
     },
     {
@@ -3166,14 +3056,10 @@
           "docs": ""
         }
       ],
-      "dependents": [
-        "ce-quantity-select"
-      ],
+      "dependents": ["ce-quantity-select"],
       "dependencies": [],
       "dependencyGraph": {
-        "ce-quantity-select": [
-          "ce-menu-item"
-        ]
+        "ce-quantity-select": ["ce-menu-item"]
       }
     },
     {
@@ -3210,16 +3096,10 @@
       "slots": [],
       "parts": [],
       "dependents": [],
-      "dependencies": [
-        "ce-block-ui"
-      ],
+      "dependencies": ["ce-block-ui"],
       "dependencyGraph": {
-        "ce-order-summary": [
-          "ce-block-ui"
-        ],
-        "ce-block-ui": [
-          "ce-spinner"
-        ]
+        "ce-order-summary": ["ce-block-ui"],
+        "ce-block-ui": ["ce-spinner"]
       }
     },
     {
@@ -3232,15 +3112,15 @@
       "usage": {},
       "props": [
         {
-          "name": "checkoutSession",
-          "type": "CheckoutSession",
+          "name": "order",
+          "type": "Order",
           "mutable": false,
           "reflectToAttr": false,
           "docs": "Checkout Session from ce-checkout.",
           "docsTags": [],
           "values": [
             {
-              "type": "CheckoutSession"
+              "type": "Order"
             }
           ],
           "optional": false,
@@ -3303,19 +3183,11 @@
       "slots": [],
       "parts": [],
       "dependents": [],
-      "dependencies": [
-        "ce-stripe-element"
-      ],
+      "dependencies": ["ce-stripe-element"],
       "dependencyGraph": {
-        "ce-payment": [
-          "ce-stripe-element"
-        ],
-        "ce-stripe-element": [
-          "ce-input"
-        ],
-        "ce-input": [
-          "ce-form-control"
-        ]
+        "ce-payment": ["ce-stripe-element"],
+        "ce-stripe-element": ["ce-input"],
+        "ce-input": ["ce-form-control"]
       }
     },
     {
@@ -3388,15 +3260,9 @@
       "slots": [],
       "parts": [],
       "dependents": [],
-      "dependencies": [
-        "ce-stripe-payment-request",
-        "ce-divider"
-      ],
+      "dependencies": ["ce-stripe-payment-request", "ce-divider"],
       "dependencyGraph": {
-        "ce-payment-request": [
-          "ce-stripe-payment-request",
-          "ce-divider"
-        ]
+        "ce-payment-request": ["ce-stripe-payment-request", "ce-divider"]
       }
     },
     {
@@ -3543,17 +3409,9 @@
       "slots": [],
       "parts": [],
       "dependents": [],
-      "dependencies": [
-        "ce-choices",
-        "ce-choice",
-        "ce-skeleton"
-      ],
+      "dependencies": ["ce-choices", "ce-choice", "ce-skeleton"],
       "dependencyGraph": {
-        "ce-price-choices": [
-          "ce-choices",
-          "ce-choice",
-          "ce-skeleton"
-        ]
+        "ce-price-choices": ["ce-choices", "ce-choice", "ce-skeleton"]
       }
     },
     {
@@ -3678,26 +3536,12 @@
       "styles": [],
       "slots": [],
       "parts": [],
-      "dependents": [
-        "ce-line-items"
-      ],
-      "dependencies": [
-        "ce-line-item",
-        "ce-quantity-select"
-      ],
+      "dependents": ["ce-line-items"],
+      "dependencies": ["ce-line-item", "ce-quantity-select"],
       "dependencyGraph": {
-        "ce-product-line-item": [
-          "ce-line-item",
-          "ce-quantity-select"
-        ],
-        "ce-quantity-select": [
-          "ce-dropdown",
-          "ce-menu",
-          "ce-menu-item"
-        ],
-        "ce-line-items": [
-          "ce-product-line-item"
-        ]
+        "ce-product-line-item": ["ce-line-item", "ce-quantity-select"],
+        "ce-quantity-select": ["ce-dropdown", "ce-menu", "ce-menu-item"],
+        "ce-line-items": ["ce-product-line-item"]
       }
     },
     {
@@ -3843,23 +3687,11 @@
       "styles": [],
       "slots": [],
       "parts": [],
-      "dependents": [
-        "ce-product-line-item"
-      ],
-      "dependencies": [
-        "ce-dropdown",
-        "ce-menu",
-        "ce-menu-item"
-      ],
+      "dependents": ["ce-product-line-item"],
+      "dependencies": ["ce-dropdown", "ce-menu", "ce-menu-item"],
       "dependencyGraph": {
-        "ce-quantity-select": [
-          "ce-dropdown",
-          "ce-menu",
-          "ce-menu-item"
-        ],
-        "ce-product-line-item": [
-          "ce-quantity-select"
-        ]
+        "ce-quantity-select": ["ce-dropdown", "ce-menu", "ce-menu-item"],
+        "ce-product-line-item": ["ce-quantity-select"]
       }
     },
     {
@@ -5213,13 +5045,9 @@
       "slots": [],
       "parts": [],
       "dependents": [],
-      "dependencies": [
-        "ce-form-control"
-      ],
+      "dependencies": ["ce-form-control"],
       "dependencyGraph": {
-        "ce-select": [
-          "ce-form-control"
-        ]
+        "ce-select": ["ce-form-control"]
       }
     },
     {
@@ -5289,26 +5117,13 @@
           "docs": ""
         }
       ],
-      "dependents": [
-        "ce-coupon-form",
-        "ce-line-items",
-        "ce-price-choices",
-        "ce-line-item-total"
-      ],
+      "dependents": ["ce-coupon-form", "ce-line-items", "ce-price-choices", "ce-line-item-total"],
       "dependencies": [],
       "dependencyGraph": {
-        "ce-coupon-form": [
-          "ce-skeleton"
-        ],
-        "ce-line-items": [
-          "ce-skeleton"
-        ],
-        "ce-price-choices": [
-          "ce-skeleton"
-        ],
-        "ce-line-item-total": [
-          "ce-skeleton"
-        ]
+        "ce-coupon-form": ["ce-skeleton"],
+        "ce-line-items": ["ce-skeleton"],
+        "ce-price-choices": ["ce-skeleton"],
+        "ce-line-item-total": ["ce-skeleton"]
       }
     },
     {
@@ -5347,18 +5162,11 @@
           "docs": ""
         }
       ],
-      "dependents": [
-        "ce-block-ui",
-        "ce-button"
-      ],
+      "dependents": ["ce-block-ui", "ce-button"],
       "dependencies": [],
       "dependencyGraph": {
-        "ce-block-ui": [
-          "ce-spinner"
-        ],
-        "ce-button": [
-          "ce-spinner"
-        ]
+        "ce-block-ui": ["ce-spinner"],
+        "ce-button": ["ce-spinner"]
       }
     },
     {
@@ -5371,15 +5179,15 @@
       "usage": {},
       "props": [
         {
-          "name": "checkoutSession",
-          "type": "CheckoutSession",
+          "name": "order",
+          "type": "Order",
           "mutable": false,
           "reflectToAttr": false,
           "docs": "The checkout session object for finalizing intents",
           "docsTags": [],
           "values": [
             {
-              "type": "CheckoutSession"
+              "type": "Order"
             }
           ],
           "optional": false,
@@ -5516,22 +5324,12 @@
       "styles": [],
       "slots": [],
       "parts": [],
-      "dependents": [
-        "ce-payment"
-      ],
-      "dependencies": [
-        "ce-input"
-      ],
+      "dependents": ["ce-payment"],
+      "dependencies": ["ce-input"],
       "dependencyGraph": {
-        "ce-stripe-element": [
-          "ce-input"
-        ],
-        "ce-input": [
-          "ce-form-control"
-        ],
-        "ce-payment": [
-          "ce-stripe-element"
-        ]
+        "ce-stripe-element": ["ce-input"],
+        "ce-input": ["ce-form-control"],
+        "ce-payment": ["ce-stripe-element"]
       }
     },
     {
@@ -5660,14 +5458,10 @@
           "docs": ""
         }
       ],
-      "dependents": [
-        "ce-payment-request"
-      ],
+      "dependents": ["ce-payment-request"],
       "dependencies": [],
       "dependencyGraph": {
-        "ce-payment-request": [
-          "ce-stripe-payment-request"
-        ]
+        "ce-payment-request": ["ce-stripe-payment-request"]
       }
     },
     {
@@ -5779,16 +5573,10 @@
       "slots": [],
       "parts": [],
       "dependents": [],
-      "dependencies": [
-        "ce-button"
-      ],
+      "dependencies": ["ce-button"],
       "dependencyGraph": {
-        "ce-submit": [
-          "ce-button"
-        ],
-        "ce-button": [
-          "ce-spinner"
-        ]
+        "ce-submit": ["ce-button"],
+        "ce-button": ["ce-spinner"]
       }
     },
     {
@@ -6186,15 +5974,15 @@
       "usage": {},
       "props": [
         {
-          "name": "checkoutSession",
-          "type": "CheckoutSession",
+          "name": "order",
+          "type": "Order",
           "mutable": false,
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
           "values": [
             {
-              "type": "CheckoutSession"
+              "type": "Order"
             }
           ],
           "optional": false,
@@ -6278,15 +6066,9 @@
       "slots": [],
       "parts": [],
       "dependents": [],
-      "dependencies": [
-        "ce-line-item",
-        "ce-skeleton"
-      ],
+      "dependencies": ["ce-line-item", "ce-skeleton"],
       "dependencyGraph": {
-        "ce-line-item-total": [
-          "ce-line-item",
-          "ce-skeleton"
-        ]
+        "ce-line-item-total": ["ce-line-item", "ce-skeleton"]
       }
     }
   ]

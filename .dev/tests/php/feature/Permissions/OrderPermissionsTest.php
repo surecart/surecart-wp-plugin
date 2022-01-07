@@ -5,7 +5,7 @@ use CheckoutEngine\Request\RequestService;
 use CheckoutEngine\Tests\CheckoutEngineUnitTestCase;
 
 
-class CheckoutSessionPermissionsTest extends CheckoutEngineUnitTestCase {
+class OrderPermissionsTest extends CheckoutEngineUnitTestCase {
 	use \Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 	/**
 	 * Set up a new app instance to use for tests.
@@ -34,10 +34,10 @@ class CheckoutSessionPermissionsTest extends CheckoutEngineUnitTestCase {
 		});
 
 		$requests->shouldReceive('makeRequest')
-			->withSomeOfArgs('checkout_sessions/testid')
+			->withSomeOfArgs('orders/testid')
 			->andReturn((object) [
 				'id' => 'testid',
-				'object' => 'checkout_session',
+				'object' => 'order',
 				'customer' => 'testcustomerid',
 				'status' => 'draft'
 			]);
@@ -45,9 +45,9 @@ class CheckoutSessionPermissionsTest extends CheckoutEngineUnitTestCase {
 		$user = self::factory()->user->create_and_get();
 		add_user_meta( $user->ID, 'ce_customer_id', 'testcustomerid' );
 
-		$this->assertFalse(user_can($user, 'read_ce_checkout_sessions'));
-		$this->assertTrue(user_can($user, 'edit_ce_checkout_session', 'testid'));
-		$this->assertTrue(user_can($user, 'read_ce_checkout_session', 'testid'));
+		$this->assertFalse(user_can($user, 'read_ce_orders'));
+		$this->assertTrue(user_can($user, 'edit_ce_order', 'testid'));
+		$this->assertTrue(user_can($user, 'read_ce_order', 'testid'));
 	}
 
 	public function test_edit_and_view_paid_completed_permissions() {
@@ -60,10 +60,10 @@ class CheckoutSessionPermissionsTest extends CheckoutEngineUnitTestCase {
 		});
 
 		$requests->shouldReceive('makeRequest')
-			->withSomeOfArgs('checkout_sessions/testid')
+			->withSomeOfArgs('orders/testid')
 			->andReturn((object) [
 				'id' => 'testid',
-				'object' => 'checkout_session',
+				'object' => 'order',
 				'customer' => 'testcustomerid',
 				'status' => 'completed'
 			]);
@@ -71,22 +71,22 @@ class CheckoutSessionPermissionsTest extends CheckoutEngineUnitTestCase {
 		$user = self::factory()->user->create_and_get();
 		add_user_meta( $user->ID, 'ce_customer_id', 'testcustomerid' );
 
-		$this->assertFalse(user_can($user, 'read_ce_checkout_sessions'));
-		$this->assertFalse(user_can($user, 'edit_ce_checkout_session', 'testid'));
-		$this->assertTrue(user_can($user, 'read_ce_checkout_session', 'testid'));
+		$this->assertFalse(user_can($user, 'read_ce_orders'));
+		$this->assertFalse(user_can($user, 'edit_ce_order', 'testid'));
+		$this->assertTrue(user_can($user, 'read_ce_order', 'testid'));
 
 		$requests->shouldReceive('makeRequest')
-		->withSomeOfArgs('checkout_sessions/testid')
+		->withSomeOfArgs('orders/testid')
 		->andReturn((object) [
 			'id' => 'testid',
-			'object' => 'checkout_session',
+			'object' => 'order',
 			'customer' => 'testcustomerid',
 			'status' => 'paid'
 		]);
 
-		$this->assertFalse(user_can($user, 'read_ce_checkout_sessions'));
-		$this->assertFalse(user_can($user, 'edit_ce_checkout_session', 'testid'));
-		$this->assertTrue(user_can($user, 'read_ce_checkout_session', 'testid'));
+		$this->assertFalse(user_can($user, 'read_ce_orders'));
+		$this->assertFalse(user_can($user, 'edit_ce_order', 'testid'));
+		$this->assertTrue(user_can($user, 'read_ce_order', 'testid'));
 	}
 
 }

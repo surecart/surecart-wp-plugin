@@ -152,7 +152,7 @@ class CustomersListTable extends ListTable {
 				'limit' => $this->get_items_per_page( 'customers' ),
 				'page'  => $this->get_pagenum(),
 			]
-		)->with( [ 'checkout_sessions' ] )->paginate();
+		)->with( [ 'orders' ] )->paginate();
 	}
 
 	/**

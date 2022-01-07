@@ -1,7 +1,8 @@
-import { Component, State, h, Watch, Prop, Event, EventEmitter } from '@stencil/core';
-import { CheckoutSession } from '../../../types';
 import { getHumanDiscount } from '../../../functions/price';
+import { Order } from '../../../types';
+import { Component, State, h, Watch, Prop, Event, EventEmitter } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
+
 @Component({
   tag: 'ce-coupon-form',
   styleUrl: 'ce-coupon-form.scss',
@@ -14,7 +15,7 @@ export class CeCouponForm {
   @Prop() loading: boolean;
   @Prop() calculating: boolean;
   @Prop() error: any;
-  @Prop() checkoutSession: CheckoutSession;
+  @Prop() order: Order;
   @Prop() forceOpen: boolean;
 
   @State() open: boolean;
@@ -51,11 +52,11 @@ export class CeCouponForm {
       return <ce-skeleton style={{ width: '120px', display: 'inline-block' }}></ce-skeleton>;
     }
 
-    if (this.checkoutSession?.discount?.promotion?.code) {
+    if (this.order?.discount?.promotion?.code) {
       let humanDiscount = '';
 
-      if (this.checkoutSession.discount?.coupon) {
-        humanDiscount = getHumanDiscount(this.checkoutSession.discount?.coupon);
+      if (this.order.discount?.coupon) {
+        humanDiscount = getHumanDiscount(this.order.discount?.coupon);
       }
 
       return (
@@ -70,7 +71,7 @@ export class CeCouponForm {
               this.open = false;
             }}
           >
-            {this.checkoutSession.discount?.promotion?.code}
+            {this.order.discount?.promotion?.code}
           </ce-tag>
 
           {humanDiscount && (
@@ -80,7 +81,7 @@ export class CeCouponForm {
           )}
 
           <span slot="price">
-            -<ce-format-number type="currency" currency={this.checkoutSession?.currency} value={this.checkoutSession?.discount_amount}></ce-format-number>
+            -<ce-format-number type="currency" currency={this.order?.currency} value={this.order?.discount_amount}></ce-format-number>
           </span>
         </ce-line-item>
       );
@@ -123,4 +124,4 @@ export class CeCouponForm {
   }
 }
 
-openWormhole(CeCouponForm, ['loading', 'checkoutSession', 'error'], false);
+openWormhole(CeCouponForm, ['loading', 'order', 'error'], false);

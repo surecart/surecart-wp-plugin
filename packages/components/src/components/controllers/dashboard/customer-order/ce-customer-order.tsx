@@ -1,5 +1,5 @@
+import { Order } from '../../../../types';
 import { Component, h, Prop } from '@stencil/core';
-import { CheckoutSession } from '../../../../types';
 import { _n, __, sprintf } from '@wordpress/i18n';
 
 @Component({
@@ -8,13 +8,13 @@ import { _n, __, sprintf } from '@wordpress/i18n';
   shadow: true,
 })
 export class CeCustomerOrders {
-  @Prop() order: CheckoutSession;
+  @Prop() order: Order;
 
   render() {
     return (
       <div class="order-row">
         <div>{this.order?.number}</div>
-        <div>{sprintf(_n('%d item', '%d items', this.order?.line_items?.pagination?.count || 0, 'checkout_session'), this.order?.line_items?.pagination?.count || 0)} </div>
+        <div>{sprintf(_n('%d item', '%d items', this.order?.line_items?.pagination?.count || 0, 'order'), this.order?.line_items?.pagination?.count || 0)} </div>
         <div>
           <ce-format-number type="currency" currency={this.order?.currency} value={this.order?.total_amount}></ce-format-number>
         </div>

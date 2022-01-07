@@ -1,12 +1,12 @@
 <?php
 namespace CheckoutEngine\Permissions\Models;
 
-use CheckoutEngine\Models\CheckoutSession;
+use CheckoutEngine\Models\Order;
 
 /**
  * Handle various charge permissions.
  */
-class CheckoutSessionPermissionsController extends ModelPermissionsController {
+class OrderPermissionsController extends ModelPermissionsController {
 	/**
 	 * Can user edit charge.
 	 *
@@ -20,8 +20,8 @@ class CheckoutSessionPermissionsController extends ModelPermissionsController {
 	 * }
 	 * @return boolean Does user have permission.
 	 */
-	public function edit_ce_checkout_session( $customer_id, $args ) {
-		$session = CheckoutSession::find( $args[2] );
+	public function edit_ce_order( $customer_id, $args ) {
+		$session = Order::find( $args[2] );
 		return in_array( $session->status, [ 'draft', 'finalized' ] );
 	}
 
@@ -38,8 +38,8 @@ class CheckoutSessionPermissionsController extends ModelPermissionsController {
 	 * }
 	 * @return boolean Does user have permission.
 	 */
-	public function read_ce_checkout_session( $customer_id, $args ) {
-		$session = CheckoutSession::find( $args[2] );
+	public function read_ce_order( $customer_id, $args ) {
+		$session = Order::find( $args[2] );
 		if ( in_array( $session->status, [ 'draft', 'finalized' ] ) ) {
 			return true;
 		}

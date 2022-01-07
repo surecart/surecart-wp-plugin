@@ -63,7 +63,7 @@ describe('Line items functions', () => {
 
     it('Should get the checkout session from the url, first', async () => {
       delete window.location;
-      window.location = new URL('https://www.example.com?checkout_session=urltest');
+      window.location = new URL('https://www.example.com?order=urltest');
       expect(getSessionId('asdf', {})).toBe('urltest');
     });
 

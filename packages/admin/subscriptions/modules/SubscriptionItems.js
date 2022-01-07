@@ -73,7 +73,7 @@ export default () => {
 
 					<hr />
 
-					<Definition title={ __( 'Subtotal', 'checkout_session' ) }>
+					<Definition title={ __( 'Subtotal', 'order' ) }>
 						<ce-format-number
 							style={ {
 								'font-weight': 'var(--ce-font-weight-semibold)',
@@ -84,7 +84,7 @@ export default () => {
 							value={ subscription?.subtotal_amount }
 						></ce-format-number>
 					</Definition>
-					<Definition title={ __( 'Discounts', 'checkout_session' ) }>
+					<Definition title={ __( 'Discounts', 'order' ) }>
 						<ce-format-number
 							style={ {
 								'font-weight': 'var(--ce-font-weight-semibold)',
@@ -98,7 +98,7 @@ export default () => {
 
 					<hr />
 
-					<Definition title={ __( 'Total', 'checkout_session' ) }>
+					<Definition title={ __( 'Total', 'order' ) }>
 						<div
 							css={ css`
 								display: flex;

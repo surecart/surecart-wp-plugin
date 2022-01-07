@@ -1,6 +1,6 @@
+import { Order } from '../../../types';
 import { Component, h, Prop } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
-import { CheckoutSession } from '../../../types';
 
 @Component({
   tag: 'ce-total',
@@ -9,7 +9,7 @@ import { CheckoutSession } from '../../../types';
 })
 export class CeTotal {
   @Prop() total: 'total' | 'subtotal' = 'total';
-  @Prop() checkoutSession: CheckoutSession;
+  @Prop() order: Order;
 
   session_key = {
     total: 'total_amount',
@@ -17,10 +17,10 @@ export class CeTotal {
   };
 
   render() {
-    if (!this.checkoutSession?.currency) return;
-    if (!this.checkoutSession?.line_items?.data?.length) return;
-    return <ce-format-number type="currency" currency={this.checkoutSession.currency} value={this.checkoutSession?.[this.session_key[this.total]]}></ce-format-number>;
+    if (!this.order?.currency) return;
+    if (!this.order?.line_items?.data?.length) return;
+    return <ce-format-number type="currency" currency={this.order.currency} value={this.order?.[this.session_key[this.total]]}></ce-format-number>;
   }
 }
 
-openWormhole(CeTotal, ['checkoutSession'], false);
+openWormhole(CeTotal, ['order'], false);

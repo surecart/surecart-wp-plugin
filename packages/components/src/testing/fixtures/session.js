@@ -1,6 +1,6 @@
 export default {
   id: '2de84382-3453-4cfa-b836-0735cac4435a',
-  object: 'checkout_session',
+  object: 'order',
   email: null,
   name: null,
   currency: 'usd',

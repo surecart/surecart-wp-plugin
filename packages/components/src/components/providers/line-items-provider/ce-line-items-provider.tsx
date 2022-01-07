@@ -1,14 +1,14 @@
-import { Component, h, State, Prop, Watch, Event, EventEmitter, Listen } from '@stencil/core';
-import { CheckoutSession, LineItemData } from '../../../types';
 import { convertLineItemsToLineItemData } from '../../../functions/line-items';
+import { Order, LineItemData } from '../../../types';
+import { Component, h, State, Prop, Watch, Event, EventEmitter, Listen } from '@stencil/core';
 
 @Component({
   tag: 'ce-line-items-provider',
   shadow: true,
 })
 export class CeLineItemsProvider {
-  /** CheckoutSession Object */
-  @Prop() checkoutSession: CheckoutSession;
+  /** Order Object */
+  @Prop() order: Order;
 
   /** Holds items to sync */
   @State() syncItems: Array<{ type: 'toggle' | 'add' | 'remove' | 'update'; payload: LineItemData }> = [];
@@ -64,7 +64,7 @@ export class CeLineItemsProvider {
   /** Batch process items to sync before sending */
   processSyncItems() {
     // get existing line item data.
-    let existingData = convertLineItemsToLineItemData(this?.checkoutSession?.line_items || []);
+    let existingData = convertLineItemsToLineItemData(this?.order?.line_items || []);
 
     const map = {
       toggle: this.toggleItem,

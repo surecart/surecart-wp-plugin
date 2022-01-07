@@ -5,7 +5,7 @@ namespace CheckoutEngine\Controllers\Admin\Tables;
 use NumberFormatter;
 use CheckoutEngine\Models\Product;
 use CheckoutEngine\Support\Currency;
-use CheckoutEngine\Models\CheckoutSession;
+use CheckoutEngine\Models\Order;
 
 // WP_List_Table is not loaded automatically so we need to load it in our application.
 if ( ! class_exists( 'WP_List_Table' ) ) {
@@ -168,7 +168,7 @@ class OrdersListTable extends \WP_List_Table {
 		// $where = [ 'active' => true ];
 		// }
 
-		return CheckoutSession::where( $where )->get();
+		return Order::where( $where )->get();
 	}
 
 	/**

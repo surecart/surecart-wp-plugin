@@ -1,10 +1,10 @@
-import { Component, Prop, State, h, Element, Watch, Event, EventEmitter } from '@stencil/core';
-import { loadStripe } from '@stripe/stripe-js/pure';
-import { PaymentRequestOptions, Stripe } from '@stripe/stripe-js';
-import { openWormhole } from 'stencil-wormhole';
 import { createOrUpdateSession, finalizeSession } from '../../../services/session';
-import { CheckoutSession, LineItem, Prices, Product, ResponseError } from '../../../types';
+import { Order, LineItem, Prices, Product, ResponseError } from '../../../types';
+import { Component, Prop, State, h, Element, Watch, Event, EventEmitter } from '@stencil/core';
+import { PaymentRequestOptions, Stripe } from '@stripe/stripe-js';
+import { loadStripe } from '@stripe/stripe-js/pure';
 import { __ } from '@wordpress/i18n';
+import { openWormhole } from 'stencil-wormhole';
 
 @Component({
   tag: 'ce-stripe-payment-request',
@@ -28,7 +28,7 @@ export class CeStripePaymentRequest {
   @Prop() currencyCode: string = 'usd';
 
   /** Checkout Session */
-  @Prop() checkoutSession: CheckoutSession;
+  @Prop() order: Order;
 
   @Prop() prices: Prices;
 
@@ -62,10 +62,10 @@ export class CeStripePaymentRequest {
   private confirming: boolean;
 
   async componentWillLoad() {
-    if (this?.checkoutSession?.processor_data?.stripe?.publishable_key || !this?.checkoutSession?.processor_data?.stripe?.account_id) {
+    if (this?.order?.processor_data?.stripe?.publishable_key || !this?.order?.processor_data?.stripe?.account_id) {
       return true;
     }
-    this.stripe = await loadStripe(this?.checkoutSession?.processor_data?.stripe?.publishable_key, { stripeAccount: this?.checkoutSession?.processor_data?.stripe?.account_id });
+    this.stripe = await loadStripe(this?.order?.processor_data?.stripe?.publishable_key, { stripeAccount: this?.order?.processor_data?.stripe?.account_id });
     this.elements = this.stripe.elements();
     this.paymentRequest = this.stripe.paymentRequest({
       country: this.country,
@@ -83,8 +83,8 @@ export class CeStripePaymentRequest {
     });
   }
 
-  @Watch('checkoutSession')
-  handleCheckoutSessionChange() {
+  @Watch('order')
+  handleOrderChange() {
     if (!this.paymentRequest) return;
     if (this.pendingEvent) return;
     this.paymentRequest.update(this.getRequestObject());
@@ -115,7 +115,7 @@ export class CeStripePaymentRequest {
   }
 
   getRequestObject() {
-    const displayItems = (this.checkoutSession?.line_items?.data || []).map(item => {
+    const displayItems = (this.order?.line_items?.data || []).map(item => {
       return {
         label: this.getName(item),
         amount: item.ad_hoc_amount !== null ? item.ad_hoc_amount : item.price.amount,
@@ -125,7 +125,7 @@ export class CeStripePaymentRequest {
     return {
       currency: this.currencyCode,
       total: {
-        amount: this.checkoutSession?.total_amount || 0,
+        amount: this.order?.total_amount || 0,
         label: __('Total', 'checkout_engine'),
         pending: true,
       },
@@ -174,7 +174,7 @@ export class CeStripePaymentRequest {
     try {
       // update session with shipping/billing
       (await createOrUpdateSession({
-        id: this.checkoutSession?.id,
+        id: this.order?.id,
         data: {
           email: billing_details?.email,
           name: billing_details?.name,
@@ -196,16 +196,16 @@ export class CeStripePaymentRequest {
             ...(billing_details?.address?.postal_code ? { postal_code: billing_details?.address?.postal_code } : {}),
           },
         },
-      })) as CheckoutSession;
+      })) as Order;
 
       // finalize
       const session = (await finalizeSession({
-        id: this.checkoutSession.id,
+        id: this.order.id,
         processor: 'stripe',
         query: {
           form_id: this.formId,
         },
-      })) as CheckoutSession;
+      })) as Order;
 
       // confirm payment
       await this.confirmPayment(session, ev);
@@ -226,7 +226,7 @@ export class CeStripePaymentRequest {
     }
   }
 
-  async confirmPayment(val: CheckoutSession, ev) {
+  async confirmPayment(val: Order, ev) {
     // must be finalized
     if (val?.status !== 'finalized') return;
     // must have a secret
@@ -286,4 +286,4 @@ export class CeStripePaymentRequest {
   }
 }
 
-openWormhole(CeStripePaymentRequest, ['keys', 'checkoutSession', 'currencyCode', 'country', 'prices', 'paymentMethod'], false);
+openWormhole(CeStripePaymentRequest, ['keys', 'order', 'currencyCode', 'country', 'prices', 'paymentMethod'], false);

@@ -1,7 +1,7 @@
-import { newE2EPage } from '@stencil/core/testing';
 import { setResponses } from '../../../../testing';
 import prices from '../../../../testing/fixtures/prices';
 import session from '../../../../testing/fixtures/session';
+import { newE2EPage } from '@stencil/core/testing';
 
 describe('ce-checkout', () => {
   //   // const setRequests = async page => {
@@ -13,7 +13,7 @@ describe('ce-checkout', () => {
   //   //         },
   //   //       },
   //   //       {
-  //   //         path: '/checkout_sessions',
+  //   //         path: '/orders',
   //   //         data: {
   //   //           body: JSON.stringify(session),
   //   //         },
@@ -77,7 +77,7 @@ describe('ce-checkout', () => {
   //   //     detail: 'TESTCOUPON',
   //   //   });
 
-  //   //   // const firstResponse = await page.waitForResponse(response => response.url().includes('checkout_session'));
+  //   //   // const firstResponse = await page.waitForResponse(response => response.url().includes('order'));
 
   //   //   // console.log(firstResponse);
 

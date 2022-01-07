@@ -9,7 +9,7 @@
 
 | Property          | Attribute       | Description | Type                    | Default     |
 | ----------------- | --------------- | ----------- | ----------------------- | ----------- |
-| `checkoutSession` | --              |             | `CheckoutSession`       | `undefined` |
+| `order` | --              |             | `Order`       | `undefined` |
 | `loading`         | `loading`       |             | `boolean`               | `undefined` |
 | `showCurrency`    | `show-currency` |             | `boolean`               | `undefined` |
 | `size`            | `size`          |             | `"large" \| "medium"`   | `undefined` |

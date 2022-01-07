@@ -1,6 +1,6 @@
+import { Order } from '../../../types';
 import { Component, h, Prop } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
-import { CheckoutSession } from '../../../types';
 
 @Component({
   tag: 'ce-line-item-total',
@@ -10,7 +10,7 @@ import { CheckoutSession } from '../../../types';
 export class CeLineItemTotal {
   @Prop() total: 'total' | 'subtotal' = 'total';
   @Prop() loading: boolean;
-  @Prop() checkoutSession: CheckoutSession;
+  @Prop() order: Order;
   @Prop() showCurrency: boolean;
   @Prop() size: 'large' | 'medium';
 
@@ -31,7 +31,7 @@ export class CeLineItemTotal {
       );
     }
 
-    if (!this.checkoutSession?.currency) return;
+    if (!this.order?.currency) return;
 
     return (
       <ce-line-item style={this.size === 'large' ? { '--price-size': 'var(--ce-font-size-x-large)' } : {}}>
@@ -42,12 +42,12 @@ export class CeLineItemTotal {
           <slot name="description" />
         </span>
         <span slot="price">
-          <ce-total checkoutSession={this.checkoutSession} total={this.total}></ce-total>
+          <ce-total order={this.order} total={this.total}></ce-total>
         </span>
-        {this.showCurrency && <span slot="currency">{this.checkoutSession?.currency}</span>}
+        {this.showCurrency && <span slot="currency">{this.order?.currency}</span>}
       </ce-line-item>
     );
   }
 }
 
-openWormhole(CeLineItemTotal, ['checkoutSession', 'loading', 'calculating'], false);
+openWormhole(CeLineItemTotal, ['order', 'loading', 'calculating'], false);

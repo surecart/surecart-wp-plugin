@@ -1,10 +1,10 @@
-import { Component, Prop, h, Watch, State } from '@stencil/core';
-import { openWormhole } from 'stencil-wormhole';
-import { Subscription } from '../../../types';
-import { addQueryArgs } from '@wordpress/url';
 import apiFetch from '../../../functions/fetch';
-import { __ } from '@wordpress/i18n';
 import { translatedInterval } from '../../../functions/price';
+import { Subscription } from '../../../types';
+import { Component, Prop, h, Watch, State } from '@stencil/core';
+import { __ } from '@wordpress/i18n';
+import { addQueryArgs } from '@wordpress/url';
+import { openWormhole } from 'stencil-wormhole';
 
 @Component({
   tag: 'ce-session-subscription',
@@ -12,13 +12,13 @@ import { translatedInterval } from '../../../functions/price';
   shadow: true,
 })
 export class CeSessionSubscription {
-  @Prop() checkoutSessionId: string;
+  @Prop() orderId: string;
   @State() loading: boolean;
   @State() subscription: Subscription;
   @State() error: string;
 
-  @Watch('checkoutSessionId')
-  handleCheckoutSessionChange(val) {
+  @Watch('orderId')
+  handleOrderChange(val) {
     if (val) {
       this.getSubscription(val);
       // fetch subscription
@@ -33,7 +33,7 @@ export class CeSessionSubscription {
       const subscriptions = (await await apiFetch({
         path: addQueryArgs(`checkout-engine/v1/subscriptions/`, {
           expand: ['payment_method', 'subscription_items', 'subscription_item.price', 'price.product'],
-          checkout_session_ids: [id],
+          order_ids: [id],
           refresh_status: true,
         }),
       })) as Array<Subscription>;
@@ -153,4 +153,4 @@ export class CeSessionSubscription {
   }
 }
 
-openWormhole(CeSessionSubscription, ['checkoutSessionId'], false);
+openWormhole(CeSessionSubscription, ['orderId'], false);

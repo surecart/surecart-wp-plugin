@@ -11,7 +11,7 @@
         @php
             // This dynamically adds prop data to a component since we cannot pass objects data as a prop.
             \CheckoutEngine::assets()->addComponentData('ce-order-confirmation-line-items', '', [
-                'checkoutSession' => $order,
+                'order' => $order,
             ]);
         @endphp
     </x-slot>
@@ -26,7 +26,7 @@
         @php
             // This dynamically adds prop data to a component since we cannot pass objects data as a prop.
             \CheckoutEngine::assets()->addComponentData('ce-order-confirmation-totals', '', [
-                'checkoutSession' => $order,
+                'order' => $order,
             ]);
         @endphp
     </ce-card> --}}

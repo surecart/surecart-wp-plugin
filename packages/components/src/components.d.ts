@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { CheckoutSession, ChoiceItem, Coupon, Customer, LineItemData, Price, PriceChoice, Prices, Products, ResponseError, SessionStatus, Subscription, SubscriptionStatus } from "./types";
+import { ChoiceItem, Coupon, Customer, LineItemData, Order, Price, PriceChoice, Prices, Products, ResponseError, SessionStatus, Subscription, SubscriptionStatus } from "./types";
 import { IconLibraryMutator, IconLibraryResolver } from "./components/ui/icon/library";
 export namespace Components {
     interface CeAlert {
@@ -301,11 +301,11 @@ export namespace Components {
     }
     interface CeCouponForm {
         "calculating": boolean;
-        "checkoutSession": CheckoutSession;
         "error": any;
         "forceOpen": boolean;
         "label": string;
         "loading": boolean;
+        "order": Order;
     }
     interface CeCustomerDashboard {
         /**
@@ -314,7 +314,7 @@ export namespace Components {
         "customerId": string;
     }
     interface CeCustomerOrder {
-        "order": CheckoutSession;
+        "order": Order;
     }
     interface CeCustomerSubscription {
         "subscription": Subscription;
@@ -379,10 +379,6 @@ export namespace Components {
          */
         "autofocus": boolean;
         /**
-          * (passed from the ce-checkout component automatically)
-         */
-        "checkoutSession": CheckoutSession;
-        /**
           * Disables the input.
          */
         "disabled": boolean;
@@ -402,6 +398,10 @@ export namespace Components {
           * The input's label.
          */
         "label": string;
+        /**
+          * (passed from the ce-checkout component automatically)
+         */
+        "order": Order;
         /**
           * Draws a pill-style input with rounded edges.
          */
@@ -432,8 +432,8 @@ export namespace Components {
         "value": string;
     }
     interface CeExpressPayment {
-        "checkoutSession": CheckoutSession;
         "formId": number | string;
+        "order": Order;
         "processor": 'stripe' | 'paypal';
     }
     interface CeFlex {
@@ -777,25 +777,25 @@ export namespace Components {
         "price": string;
     }
     interface CeLineItemTotal {
-        "checkoutSession": CheckoutSession;
         "loading": boolean;
+        "order": Order;
         "showCurrency": boolean;
         "size": 'large' | 'medium';
         "total": 'total' | 'subtotal';
     }
     interface CeLineItems {
-        "checkoutSession": CheckoutSession;
         "editable": boolean;
         "loading": boolean;
         "lockedChoices": Array<PriceChoice>;
+        "order": Order;
         "prices": Prices;
         "removable": boolean;
     }
     interface CeLineItemsProvider {
         /**
-          * CheckoutSession Object
+          * Order Object
          */
-        "checkoutSession": CheckoutSession;
+        "order": Order;
     }
     interface CeLoginForm {
     }
@@ -828,28 +828,24 @@ export namespace Components {
     interface CeMenuLabel {
     }
     interface CeOrderConfirmation {
-        "checkoutSession": CheckoutSession;
+        "order": Order;
     }
     interface CeOrderConfirmationLineItems {
-        "checkoutSession": CheckoutSession;
         "loading": boolean;
+        "order": Order;
     }
     interface CeOrderConfirmationTotals {
-        "checkoutSession": CheckoutSession;
+        "order": Order;
     }
     interface CeOrderSummary {
         "busy": boolean;
-        "checkoutSession": CheckoutSession;
         "collapsed": boolean;
         "collapsible": boolean;
         "empty": boolean;
         "loading": boolean;
+        "order": Order;
     }
     interface CePayment {
-        /**
-          * Checkout Session from ce-checkout.
-         */
-        "checkoutSession": CheckoutSession;
         /**
           * The input's label.
          */
@@ -858,6 +854,10 @@ export namespace Components {
           * Is this created in "test" mode
          */
         "mode": 'test' | 'live';
+        /**
+          * Checkout Session from ce-checkout.
+         */
+        "order": Order;
         /**
           * Payment mode inside individual payment method (i.e. Payment Buttons)
          */
@@ -877,10 +877,6 @@ export namespace Components {
          */
         "checked": boolean;
         /**
-          * Session
-         */
-        "checkoutSession": CheckoutSession;
-        /**
           * Label for the choice.
          */
         "description": string;
@@ -896,6 +892,10 @@ export namespace Components {
           * Is this loading
          */
         "loading": boolean;
+        /**
+          * Session
+         */
+        "order": Order;
         /**
           * Stores the price
          */
@@ -1189,18 +1189,14 @@ export namespace Components {
         "value": string;
     }
     interface CeSessionDetail {
-        "checkoutSession": CheckoutSession;
         "fallback": string;
         "label": string;
         "loading": boolean;
         "metaKey": string;
+        "order": Order;
         "value": string;
     }
     interface CeSessionProvider {
-        /**
-          * CheckoutSession Object
-         */
-        "checkoutSession": CheckoutSession;
         /**
           * Currency Code
          */
@@ -1217,6 +1213,10 @@ export namespace Components {
           * Are we in test or live mode.
          */
         "mode": 'test' | 'live';
+        /**
+          * Order Object
+         */
+        "order": Order;
         /**
           * Should we persist the session.
          */
@@ -1249,7 +1249,7 @@ export namespace Components {
         "status": SessionStatus;
     }
     interface CeSessionSubscription {
-        "checkoutSessionId": string;
+        "orderId": string;
     }
     interface CeSkeleton {
         /**
@@ -1263,10 +1263,6 @@ export namespace Components {
     }
     interface CeStripeElement {
         /**
-          * The checkout session object for finalizing intents
-         */
-        "checkoutSession": CheckoutSession;
-        /**
           * Whether this field is disabled
          */
         "disabled": boolean;
@@ -1278,6 +1274,10 @@ export namespace Components {
           * The input's label. Alternatively, you can use the label slot.
          */
         "label": string;
+        /**
+          * The checkout session object for finalizing intents
+         */
+        "order": Order;
         /**
           * Stripe publishable key
          */
@@ -1305,10 +1305,6 @@ export namespace Components {
          */
         "amount": number;
         /**
-          * Checkout Session
-         */
-        "checkoutSession": CheckoutSession;
-        /**
           * Country
          */
         "country": string;
@@ -1325,6 +1321,10 @@ export namespace Components {
           * Label
          */
         "label": string;
+        /**
+          * Checkout Session
+         */
+        "order": Order;
         "paymentMethod": string;
         "prices": Prices;
         /**
@@ -1475,7 +1475,7 @@ export namespace Components {
         "type": 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text';
     }
     interface CeTotal {
-        "checkoutSession": CheckoutSession;
+        "order": Order;
         "total": 'total' | 'subtotal';
     }
 }
@@ -2370,12 +2370,12 @@ declare namespace LocalJSX {
     }
     interface CeCouponForm {
         "calculating"?: boolean;
-        "checkoutSession"?: CheckoutSession;
         "error"?: any;
         "forceOpen"?: boolean;
         "label"?: string;
         "loading"?: boolean;
         "onCeApplyCoupon"?: (event: CustomEvent<string>) => void;
+        "order"?: Order;
     }
     interface CeCustomerDashboard {
         /**
@@ -2384,7 +2384,7 @@ declare namespace LocalJSX {
         "customerId"?: string;
     }
     interface CeCustomerOrder {
-        "order"?: CheckoutSession;
+        "order"?: Order;
     }
     interface CeCustomerSubscription {
         "onCeUpdateSubscription"?: (event: CustomEvent<Subscription>) => void;
@@ -2465,10 +2465,6 @@ declare namespace LocalJSX {
          */
         "autofocus"?: boolean;
         /**
-          * (passed from the ce-checkout component automatically)
-         */
-        "checkoutSession"?: CheckoutSession;
-        /**
           * Disables the input.
          */
         "disabled"?: boolean;
@@ -2510,6 +2506,10 @@ declare namespace LocalJSX {
         "onCeInput"?: (event: CustomEvent<void>) => void;
         "onCeUpdateCustomer"?: (event: CustomEvent<{ email: string }>) => void;
         /**
+          * (passed from the ce-checkout component automatically)
+         */
+        "order"?: Order;
+        /**
           * Draws a pill-style input with rounded edges.
          */
         "pill"?: boolean;
@@ -2539,8 +2539,8 @@ declare namespace LocalJSX {
         "value"?: string;
     }
     interface CeExpressPayment {
-        "checkoutSession"?: CheckoutSession;
         "formId"?: number | string;
+        "order"?: Order;
         "processor"?: 'stripe' | 'paypal';
     }
     interface CeFlex {
@@ -2901,14 +2901,13 @@ declare namespace LocalJSX {
         "price"?: string;
     }
     interface CeLineItemTotal {
-        "checkoutSession"?: CheckoutSession;
         "loading"?: boolean;
+        "order"?: Order;
         "showCurrency"?: boolean;
         "size"?: 'large' | 'medium';
         "total"?: 'total' | 'subtotal';
     }
     interface CeLineItems {
-        "checkoutSession"?: CheckoutSession;
         "editable"?: boolean;
         "loading"?: boolean;
         "lockedChoices"?: Array<PriceChoice>;
@@ -2920,18 +2919,19 @@ declare namespace LocalJSX {
           * Update the line item.
          */
         "onCeUpdateLineItem"?: (event: CustomEvent<LineItemData>) => void;
+        "order"?: Order;
         "prices"?: Prices;
         "removable"?: boolean;
     }
     interface CeLineItemsProvider {
         /**
-          * CheckoutSession Object
-         */
-        "checkoutSession"?: CheckoutSession;
-        /**
           * Update line items event
          */
         "onCeUpdateLineItems"?: (event: CustomEvent<Array<LineItemData>>) => void;
+        /**
+          * Order Object
+         */
+        "order"?: Order;
     }
     interface CeLoginForm {
     }
@@ -2957,28 +2957,24 @@ declare namespace LocalJSX {
     interface CeMenuLabel {
     }
     interface CeOrderConfirmation {
-        "checkoutSession"?: CheckoutSession;
+        "order"?: Order;
     }
     interface CeOrderConfirmationLineItems {
-        "checkoutSession"?: CheckoutSession;
         "loading"?: boolean;
+        "order"?: Order;
     }
     interface CeOrderConfirmationTotals {
-        "checkoutSession"?: CheckoutSession;
+        "order"?: Order;
     }
     interface CeOrderSummary {
         "busy"?: boolean;
-        "checkoutSession"?: CheckoutSession;
         "collapsed"?: boolean;
         "collapsible"?: boolean;
         "empty"?: boolean;
         "loading"?: boolean;
+        "order"?: Order;
     }
     interface CePayment {
-        /**
-          * Checkout Session from ce-checkout.
-         */
-        "checkoutSession"?: CheckoutSession;
         /**
           * The input's label.
          */
@@ -2987,6 +2983,10 @@ declare namespace LocalJSX {
           * Is this created in "test" mode
          */
         "mode"?: 'test' | 'live';
+        /**
+          * Checkout Session from ce-checkout.
+         */
+        "order"?: Order;
         /**
           * Payment mode inside individual payment method (i.e. Payment Buttons)
          */
@@ -3005,10 +3005,6 @@ declare namespace LocalJSX {
           * Is this checked by default
          */
         "checked"?: boolean;
-        /**
-          * Session
-         */
-        "checkoutSession"?: CheckoutSession;
         /**
           * Label for the choice.
          */
@@ -3037,6 +3033,10 @@ declare namespace LocalJSX {
           * Toggle line item event
          */
         "onCeUpdateLineItem"?: (event: CustomEvent<LineItemData>) => void;
+        /**
+          * Session
+         */
+        "order"?: Order;
         /**
           * Stores the price
          */
@@ -3353,18 +3353,14 @@ declare namespace LocalJSX {
         "value"?: string;
     }
     interface CeSessionDetail {
-        "checkoutSession"?: CheckoutSession;
         "fallback"?: string;
         "label"?: string;
         "loading"?: boolean;
         "metaKey"?: string;
+        "order"?: Order;
         "value"?: string;
     }
     interface CeSessionProvider {
-        /**
-          * CheckoutSession Object
-         */
-        "checkoutSession"?: CheckoutSession;
         /**
           * Currency Code
          */
@@ -3392,7 +3388,11 @@ declare namespace LocalJSX {
         /**
           * Update line items event
          */
-        "onCeUpdateSession"?: (event: CustomEvent<CheckoutSession>) => void;
+        "onCeUpdateSession"?: (event: CustomEvent<Order>) => void;
+        /**
+          * Order Object
+         */
+        "order"?: Order;
         /**
           * Should we persist the session.
          */
@@ -3425,7 +3425,7 @@ declare namespace LocalJSX {
         "status"?: SessionStatus;
     }
     interface CeSessionSubscription {
-        "checkoutSessionId"?: string;
+        "orderId"?: string;
     }
     interface CeSkeleton {
         /**
@@ -3438,10 +3438,6 @@ declare namespace LocalJSX {
     interface CeSpinner {
     }
     interface CeStripeElement {
-        /**
-          * The checkout session object for finalizing intents
-         */
-        "checkoutSession"?: CheckoutSession;
         /**
           * Whether this field is disabled
          */
@@ -3456,6 +3452,10 @@ declare namespace LocalJSX {
         "label"?: string;
         "onCePaid"?: (event: CustomEvent<void>) => void;
         "onCePayError"?: (event: CustomEvent<any>) => void;
+        /**
+          * The checkout session object for finalizing intents
+         */
+        "order"?: Order;
         /**
           * Stripe publishable key
          */
@@ -3483,10 +3483,6 @@ declare namespace LocalJSX {
          */
         "amount"?: number;
         /**
-          * Checkout Session
-         */
-        "checkoutSession"?: CheckoutSession;
-        /**
           * Country
          */
         "country"?: string;
@@ -3507,6 +3503,10 @@ declare namespace LocalJSX {
         "onCePaid"?: (event: CustomEvent<void>) => void;
         "onCePayError"?: (event: CustomEvent<any>) => void;
         "onCeSetState"?: (event: CustomEvent<string>) => void;
+        /**
+          * Checkout Session
+         */
+        "order"?: Order;
         "paymentMethod"?: string;
         "prices"?: Prices;
         /**
@@ -3664,7 +3664,7 @@ declare namespace LocalJSX {
         "type"?: 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text';
     }
     interface CeTotal {
-        "checkoutSession"?: CheckoutSession;
+        "order"?: Order;
         "total"?: 'total' | 'subtotal';
     }
     interface IntrinsicElements {

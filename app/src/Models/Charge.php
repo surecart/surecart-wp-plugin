@@ -3,7 +3,7 @@
 namespace CheckoutEngine\Models;
 
 use CheckoutEngine\Models\Subscription;
-use CheckoutEngine\Models\CheckoutSession;
+use CheckoutEngine\Models\Order;
 use CheckoutEngine\Models\Customer;
 
 /**
@@ -30,12 +30,12 @@ class Charge extends Model {
 	 * @param  string $value Product properties.
 	 * @return void
 	 */
-	public function setCheckoutSessionAttribute( $value ) {
+	public function setOrderAttribute( $value ) {
 		if ( is_string( $value ) ) {
-			$this->attributes['checkout_session'] = $value;
+			$this->attributes['order'] = $value;
 			return;
 		}
-		$this->attributes['checkout_session'] = new CheckoutSession( $value );
+		$this->attributes['order'] = new Order( $value );
 	}
 
 	/**

@@ -138,7 +138,7 @@ export interface PriceChoice {
 
 export type CheckoutState = 'idle' | 'loading' | 'draft' | 'updating' | 'finalized' | 'paid' | 'failure';
 
-export interface CheckoutSession extends Object {
+export interface Order extends Object {
   id?: string;
   status?: 'finalized' | 'draft' | 'paid';
   number?: string;
@@ -179,7 +179,7 @@ export interface Subscription extends Object {
   external_subscription_id: string;
   trial_end_at: number;
   processor_type: 'stripe' | 'paypal';
-  checkout_session: CheckoutSession;
+  order: Order;
   customer: Customer;
   discount: DiscountResponse;
   cancel_at_period_end: number | false;

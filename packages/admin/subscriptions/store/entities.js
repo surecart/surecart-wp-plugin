@@ -1,11 +1,11 @@
-import { dispatch } from '@wordpress/data';
 import { store as dataStore } from '../../store/data';
+import { dispatch } from '@wordpress/data';
 
 // add entities.
 dispatch( dataStore ).registerEntities( [
 	{
-		name: 'checkout_sessions',
-		baseURL: 'checkout_sessions',
+		name: 'orders',
+		baseURL: 'orders',
 		baseURLParams: { context: 'edit' },
 	},
 	{

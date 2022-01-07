@@ -27,7 +27,7 @@ class CustomerChargesController {
 					[
 						'customer_ids' => [ $user->customerId() ],
 					]
-				)->with( [ 'checkout_session', 'checkout_session.line_items', 'line_item.price', 'subscription', 'subscription.subscription_items', 'subscription_item.price', 'price.product' ] )->get(),
+				)->with( [ 'order', 'order.line_items', 'line_item.price', 'subscription', 'subscription.subscription_items', 'subscription_item.price', 'price.product' ] )->get(),
 			]
 		);
 	}

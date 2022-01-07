@@ -1,12 +1,12 @@
-import { createRegistrySelector } from '@wordpress/data';
 import { store as coreStore } from '../../store/data';
 import { store as uiStore } from '../../store/ui';
+import { createRegistrySelector } from '@wordpress/data';
 
 /**
  * Select the session
  */
-export const selectCheckoutSession = createRegistrySelector( ( select ) => () =>
-	select( coreStore ).selectModel( 'checkout_sessions', 0 )
+export const selectOrder = createRegistrySelector( ( select ) => () =>
+	select( coreStore ).selectModel( 'orders', 0 )
 );
 
 /**

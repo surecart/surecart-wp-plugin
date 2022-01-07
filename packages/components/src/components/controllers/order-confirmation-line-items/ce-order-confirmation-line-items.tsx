@@ -1,8 +1,8 @@
-import { Component, h, Prop } from '@stencil/core';
-import { openWormhole } from 'stencil-wormhole';
-import { CheckoutSession, Product } from '../../../types';
-import { __ } from '@wordpress/i18n';
 import { translatedInterval } from '../../../functions/price';
+import { Order, Product } from '../../../types';
+import { Component, h, Prop } from '@stencil/core';
+import { __ } from '@wordpress/i18n';
+import { openWormhole } from 'stencil-wormhole';
 
 @Component({
   tag: 'ce-order-confirmation-line-items',
@@ -10,7 +10,7 @@ import { translatedInterval } from '../../../functions/price';
   shadow: true,
 })
 export class CeOrderConfirmationLineItems {
-  @Prop() checkoutSession: CheckoutSession;
+  @Prop() order: Order;
   @Prop() loading: boolean;
 
   render() {
@@ -29,7 +29,7 @@ export class CeOrderConfirmationLineItems {
     return (
       <div class={{ 'confirmation-summary': true }}>
         <div class="line-items" part="line-items">
-          {this.checkoutSession?.line_items?.data.map(item => {
+          {this.order?.line_items?.data.map(item => {
             return (
               <ce-product-line-item
                 key={item.id}
@@ -39,7 +39,7 @@ export class CeOrderConfirmationLineItems {
                 removable={false}
                 quantity={item.quantity}
                 amount={item.ad_hoc_amount !== null ? item.ad_hoc_amount : item.price.amount}
-                currency={this.checkoutSession?.currency}
+                currency={this.order?.currency}
                 trialDurationDays={item?.price?.trial_duration_days}
                 interval={translatedInterval(item.price.recurring_interval_count, item.price.recurring_interval, '', '')}
               ></ce-product-line-item>
@@ -51,4 +51,4 @@ export class CeOrderConfirmationLineItems {
   }
 }
 
-openWormhole(CeOrderConfirmationLineItems, ['checkoutSession', 'busy', 'loading', 'empty'], false);
+openWormhole(CeOrderConfirmationLineItems, ['order', 'busy', 'loading', 'empty'], false);

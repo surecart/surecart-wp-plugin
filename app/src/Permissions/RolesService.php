@@ -139,7 +139,7 @@ class RolesService {
 			'ce_coupon',
 			'ce_promotion',
 			'ce_product',
-			'ce_checkout_session',
+			'ce_order',
 			'ce_price',
 			'ce_order',
 			'ce_charge',

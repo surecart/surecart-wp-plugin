@@ -4,7 +4,7 @@ namespace CheckoutEngine\Controllers\Admin\Orders;
 
 use CheckoutEngine\Support\Currency;
 use CheckoutEngine\Support\TimeDate;
-use CheckoutEngine\Models\CheckoutSession;
+use CheckoutEngine\Models\Order;
 use CheckoutEngine\Controllers\Admin\Tables\ListTable;
 
 /**
@@ -149,7 +149,7 @@ class OrdersListTable extends ListTable {
 	 * @return Array
 	 */
 	protected function table_data() {
-		return CheckoutSession::where(
+		return Order::where(
 			[
 				'status' => $this->getStatus(),
 				'limit'  => $this->get_items_per_page( 'orders' ),
@@ -180,7 +180,7 @@ class OrdersListTable extends ListTable {
 	/**
 	 * Handle the total column
 	 *
-	 * @param \CheckoutEngine\Models\CheckoutSession $session Checkout Session Model.
+	 * @param \CheckoutEngine\Models\Order $session Checkout Session Model.
 	 *
 	 * @return string
 	 */
@@ -191,7 +191,7 @@ class OrdersListTable extends ListTable {
 	/**
 	 * Handle the total column
 	 *
-	 * @param \CheckoutEngine\Models\CheckoutSession $session Checkout Session Model.
+	 * @param \CheckoutEngine\Models\Order $session Checkout Session Model.
 	 *
 	 * @return string
 	 */

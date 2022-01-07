@@ -115,11 +115,11 @@
   },
   "ce-coupon-form": {
     "calculating": true,
-    "checkout-session": true,
     "error": true,
     "force-open": true,
     "label": true,
     "loading": true,
+    "order": true,
     "style": true,
     "class": true,
     "slot": true
@@ -198,12 +198,12 @@
   },
   "ce-email": {
     "autofocus": true,
-    "checkout-session": true,
     "disabled": true,
     "has-focus": true,
     "help": true,
     "invalid": true,
     "label": true,
+    "order": true,
     "pill": true,
     "placeholder": true,
     "readonly": true,
@@ -216,8 +216,8 @@
     "slot": true
   },
   "ce-express-payment": {
-    "checkout-session": true,
     "form-id": true,
+    "order": true,
     "processor": true,
     "style": true,
     "class": true,
@@ -364,8 +364,8 @@
     "slot": true
   },
   "ce-line-item-total": {
-    "checkout-session": true,
     "loading": true,
+    "order": true,
     "show-currency": true,
     "size": true,
     "total": true,
@@ -374,10 +374,10 @@
     "slot": true
   },
   "ce-line-items": {
-    "checkout-session": true,
     "editable": true,
     "loading": true,
     "locked-choices": true,
+    "order": true,
     "prices": true,
     "removable": true,
     "style": true,
@@ -385,7 +385,7 @@
     "slot": true
   },
   "ce-line-items-provider": {
-    "checkout-session": true,
+    "order": true,
     "style": true,
     "class": true,
     "slot": true
@@ -419,39 +419,39 @@
     "slot": true
   },
   "ce-order-confirmation": {
-    "checkout-session": true,
+    "order": true,
     "style": true,
     "class": true,
     "slot": true
   },
   "ce-order-confirmation-line-items": {
-    "checkout-session": true,
     "loading": true,
+    "order": true,
     "style": true,
     "class": true,
     "slot": true
   },
   "ce-order-confirmation-totals": {
-    "checkout-session": true,
+    "order": true,
     "style": true,
     "class": true,
     "slot": true
   },
   "ce-order-summary": {
     "busy": true,
-    "checkout-session": true,
     "collapsed": true,
     "collapsible": true,
     "empty": true,
     "loading": true,
+    "order": true,
     "style": true,
     "class": true,
     "slot": true
   },
   "ce-payment": {
-    "checkout-session": true,
     "label": true,
     "mode": true,
+    "order": true,
     "payment-method": true,
     "processor": true,
     "secure-notice": true,
@@ -461,11 +461,11 @@
   },
   "ce-price-choice": {
     "checked": true,
-    "checkout-session": true,
     "description": true,
     "error": true,
     "label": true,
     "loading": true,
+    "order": true,
     "price": true,
     "price-id": true,
     "prices": true,
@@ -605,22 +605,22 @@
     "slot": true
   },
   "ce-session-detail": {
-    "checkout-session": true,
     "fallback": true,
     "label": true,
     "loading": true,
     "meta-key": true,
+    "order": true,
     "value": true,
     "style": true,
     "class": true,
     "slot": true
   },
   "ce-session-provider": {
-    "checkout-session": true,
     "currency-code": true,
     "form-id": true,
     "group-id": true,
     "mode": true,
+    "order": true,
     "persist": true,
     "prices": true,
     "set-state": true,
@@ -638,7 +638,7 @@
     "slot": true
   },
   "ce-session-subscription": {
-    "checkout-session-id": true,
+    "order-id": true,
     "style": true,
     "class": true,
     "slot": true
@@ -660,10 +660,10 @@
     "slot": true
   },
   "ce-stripe-element": {
-    "checkout-session": true,
     "disabled": true,
     "has-focus": true,
     "label": true,
+    "order": true,
     "publishable-key": true,
     "secure-text": true,
     "show-label": true,
@@ -675,12 +675,12 @@
   },
   "ce-stripe-payment-request": {
     "amount": true,
-    "checkout-session": true,
     "country": true,
     "currency-code": true,
     "error": true,
     "form-id": true,
     "label": true,
+    "order": true,
     "payment-method": true,
     "prices": true,
     "stripe-account-id": true,
@@ -783,7 +783,7 @@
     "slot": true
   },
   "ce-total": {
-    "checkout-session": true,
+    "order": true,
     "total": true,
     "style": true,
     "class": true,

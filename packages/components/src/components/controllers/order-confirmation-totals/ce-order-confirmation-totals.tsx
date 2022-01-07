@@ -1,8 +1,8 @@
-import { Component, h, Prop } from '@stencil/core';
-import { openWormhole } from 'stencil-wormhole';
-import { CheckoutSession } from '../../../types';
-import { __ } from '@wordpress/i18n';
 import { getHumanDiscount } from '../../../functions/price';
+import { Order } from '../../../types';
+import { Component, h, Prop } from '@stencil/core';
+import { __ } from '@wordpress/i18n';
+import { openWormhole } from 'stencil-wormhole';
 
 @Component({
   tag: 'ce-order-confirmation-totals',
@@ -10,17 +10,17 @@ import { getHumanDiscount } from '../../../functions/price';
   shadow: true,
 })
 export class CeOrderConfirmationTotals {
-  @Prop() checkoutSession: CheckoutSession;
+  @Prop() order: Order;
 
   renderDiscountLine() {
-    if (!this.checkoutSession?.discount?.promotion?.code) {
+    if (!this.order?.discount?.promotion?.code) {
       return null;
     }
 
     let humanDiscount = '';
 
-    if (this.checkoutSession?.discount?.coupon) {
-      humanDiscount = getHumanDiscount(this.checkoutSession?.discount?.coupon);
+    if (this.order?.discount?.coupon) {
+      humanDiscount = getHumanDiscount(this.order?.discount?.coupon);
     }
 
     return (
@@ -28,9 +28,9 @@ export class CeOrderConfirmationTotals {
         <span slot="description">
           Discount
           <br />
-          {this.checkoutSession?.discount?.promotion?.code && (
+          {this.order?.discount?.promotion?.code && (
             <ce-tag type="success" size="small">
-              {this.checkoutSession?.discount?.promotion?.code}
+              {this.order?.discount?.promotion?.code}
             </ce-tag>
           )}
         </span>
@@ -39,7 +39,7 @@ export class CeOrderConfirmationTotals {
             ({humanDiscount})
           </span>
         )}
-        <ce-format-number slot="price" type="currency" currency={this.checkoutSession?.currency} value={-this.checkoutSession?.discount_amount}></ce-format-number>
+        <ce-format-number slot="price" type="currency" currency={this.order?.currency} value={-this.order?.discount_amount}></ce-format-number>
       </ce-line-item>
     );
   }
@@ -47,12 +47,12 @@ export class CeOrderConfirmationTotals {
   render() {
     return (
       <div class={{ 'line-item-totals': true }}>
-        <ce-line-item-total checkoutSession={this.checkoutSession} total="subtotal">
+        <ce-line-item-total order={this.order} total="subtotal">
           <span slot="description">Subtotal</span>
         </ce-line-item-total>
         {this.renderDiscountLine()}
         <ce-divider style={{ '--spacing': 'var(--ce-spacing-small)' }}></ce-divider>
-        <ce-line-item-total checkoutSession={this.checkoutSession} size="large" show-currency>
+        <ce-line-item-total order={this.order} size="large" show-currency>
           <span slot="title">Total</span>
         </ce-line-item-total>
       </div>
@@ -60,4 +60,4 @@ export class CeOrderConfirmationTotals {
   }
 }
 
-openWormhole(CeOrderConfirmationTotals, ['checkoutSession', 'busy', 'loading', 'empty'], false);
+openWormhole(CeOrderConfirmationTotals, ['order', 'busy', 'loading', 'empty'], false);

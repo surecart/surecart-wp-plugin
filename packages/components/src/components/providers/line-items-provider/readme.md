@@ -9,7 +9,7 @@
 
 | Property          | Attribute | Description            | Type              | Default     |
 | ----------------- | --------- | ---------------------- | ----------------- | ----------- |
-| `checkoutSession` | --        | CheckoutSession Object | `CheckoutSession` | `undefined` |
+| `order` | --        | Order Object | `Order` | `undefined` |
 
 
 ## Events

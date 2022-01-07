@@ -191,7 +191,7 @@ class SubscriptionsListTable extends ListTable {
 	/**
 	 * Handle the total column
 	 *
-	 * @param \CheckoutEngine\Models\CheckoutSession $subscription Checkout Session Model.
+	 * @param \CheckoutEngine\Models\Order $subscription Checkout Session Model.
 	 *
 	 * @return string
 	 */
@@ -202,7 +202,7 @@ class SubscriptionsListTable extends ListTable {
 	/**
 	 * Handle the total column
 	 *
-	 * @param \CheckoutEngine\Models\CheckoutSession $session Checkout Session Model.
+	 * @param \CheckoutEngine\Models\Order $session Checkout Session Model.
 	 *
 	 * @return string
 	 */

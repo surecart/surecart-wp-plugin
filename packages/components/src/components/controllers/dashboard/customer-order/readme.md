@@ -9,7 +9,7 @@
 
 | Property | Attribute | Description | Type              | Default     |
 | -------- | --------- | ----------- | ----------------- | ----------- |
-| `order`  | --        |             | `CheckoutSession` | `undefined` |
+| `order`  | --        |             | `Order` | `undefined` |
 
 
 ## Dependencies

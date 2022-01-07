@@ -46,7 +46,7 @@ export default ( { attributes, setAttributes } ) => {
 					ended_at: null,
 					trial_end_at: Math.floor( Date.now() / 1000 ),
 					processor_type: 'stripe',
-					checkout_session: 'fb9dae7b-046c-4389-82ea-1524e79941f5',
+					order: 'fb9dae7b-046c-4389-82ea-1524e79941f5',
 					customer: '6111d191-0a87-473d-8a0b-e4ee7f9498b2',
 					discount: null,
 					payment_method: 'c7902c01-d6c3-4185-bbbe-0c74e16e1756',

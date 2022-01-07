@@ -10,7 +10,7 @@
 | Property          | Attribute     | Description | Type              | Default     |
 | ----------------- | ------------- | ----------- | ----------------- | ----------- |
 | `busy`            | `busy`        |             | `boolean`         | `undefined` |
-| `checkoutSession` | --            |             | `CheckoutSession` | `undefined` |
+| `order` | --            |             | `Order` | `undefined` |
 | `collapsed`       | `collapsed`   |             | `boolean`         | `undefined` |
 | `collapsible`     | `collapsible` |             | `boolean`         | `false`     |
 | `empty`           | `empty`       |             | `boolean`         | `undefined` |

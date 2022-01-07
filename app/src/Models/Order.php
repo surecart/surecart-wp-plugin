@@ -5,22 +5,22 @@ namespace CheckoutEngine\Models;
 use CheckoutEngine\Models\LineItem;
 
 /**
- * CheckoutSession model
+ * Order model
  */
-class CheckoutSession extends Model {
+class Order extends Model {
 	/**
 	 * Rest API endpoint
 	 *
 	 * @var string
 	 */
-	protected $endpoint = 'checkout_sessions';
+	protected $endpoint = 'orders';
 
 	/**
 	 * Object name
 	 *
 	 * @var string
 	 */
-	protected $object_name = 'checkout_session';
+	protected $object_name = 'order';
 
 	/**
 	 * Processor type

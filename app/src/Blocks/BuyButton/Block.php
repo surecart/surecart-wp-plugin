@@ -23,7 +23,7 @@ class Block extends BaseBlock {
 				'type'  => $attributes['type'] ?? 'primary',
 				'size'  => $attributes['size'] ?? 'medium',
 				'href'  => $this->href( $attributes['line_items'] ?? [] ),
-				'label' => $attributes['label'] ?? __( 'Buy Now', 'checkout_session' ),
+				'label' => $attributes['label'] ?? __( 'Buy Now', 'order' ),
 			]
 		);
 	}

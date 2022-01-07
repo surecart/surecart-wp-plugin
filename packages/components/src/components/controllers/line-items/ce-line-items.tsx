@@ -1,8 +1,7 @@
-import { Component, h, Prop, Event, EventEmitter } from '@stencil/core';
-
-import { CheckoutSession, LineItem, LineItemData, PriceChoice, Prices, Product } from '../../../types';
-import { openWormhole } from 'stencil-wormhole';
 import { translatedInterval } from '../../../functions/price';
+import { Order, LineItem, LineItemData, PriceChoice, Prices, Product } from '../../../types';
+import { Component, h, Prop, Event, EventEmitter } from '@stencil/core';
+import { openWormhole } from 'stencil-wormhole';
 
 @Component({
   tag: 'ce-line-items',
@@ -10,7 +9,7 @@ import { translatedInterval } from '../../../functions/price';
   shadow: true,
 })
 export class CeLineItems {
-  @Prop() checkoutSession: CheckoutSession;
+  @Prop() order: Order;
   @Prop() loading: boolean;
   @Prop() prices: Prices;
   @Prop() editable: boolean = true;
@@ -69,7 +68,7 @@ export class CeLineItems {
 
     return (
       <div class="line-items">
-        {this.checkoutSession?.line_items?.data.map(item => {
+        {this.order?.line_items?.data.map(item => {
           return (
             <ce-product-line-item
               key={item.id}
@@ -79,7 +78,7 @@ export class CeLineItems {
               removable={this.removable}
               quantity={item.quantity}
               amount={item.ad_hoc_amount !== null ? item.ad_hoc_amount : item.price.amount}
-              currency={this.checkoutSession?.currency}
+              currency={this.order?.currency}
               trialDurationDays={item?.price?.trial_duration_days}
               interval={translatedInterval(item.price.recurring_interval_count, item.price.recurring_interval)}
               onCeUpdateQuantity={e => this.updateQuantity(item, e.detail)}
@@ -92,4 +91,4 @@ export class CeLineItems {
   }
 }
 
-openWormhole(CeLineItems, ['checkoutSession', 'loading', 'prices', 'lockedChoices'], false);
+openWormhole(CeLineItems, ['order', 'loading', 'prices', 'lockedChoices'], false);

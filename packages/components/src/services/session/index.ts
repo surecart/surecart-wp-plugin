@@ -1,7 +1,8 @@
-import { CheckoutSession } from '../../types';
 import apiFetch from '../../functions/fetch';
+import { Order } from '../../types';
 import { addQueryArgs } from '@wordpress/url';
-export const baseUrl = 'checkout-engine/v1/checkout_sessions/';
+
+export const baseUrl = 'checkout-engine/v1/orders/';
 const expand = ['line_items', 'line_item.price', 'price.product', 'customer', 'payment_intent', 'discount', 'discount.promotion', 'discount.coupon'];
 
 export const parsePath = (id, endpoint = '') => {
@@ -28,13 +29,13 @@ export const finalizeSession = async ({ id, data = {}, query = {}, processor }) 
     method: 'POST',
     path: addQueryArgs(parsePath(id, `/finalize/${processor}`), query),
     data,
-  })) as CheckoutSession;
+  })) as Order;
 };
 
 export const getSession = async id => {
   return (await apiFetch({
     path: parsePath(id),
-  })) as CheckoutSession;
+  })) as Order;
 };
 
 export const requestSession = async ({ id, query = {} }) => {

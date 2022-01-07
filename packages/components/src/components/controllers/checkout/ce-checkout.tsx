@@ -1,10 +1,10 @@
+import { Coupon, Order, Customer, PriceChoice, Prices, Products, ResponseError } from '../../../types';
+import { checkoutMachine } from './helpers/checkout-machine';
 import { Component, h, Prop, Element, State, Listen, Watch } from '@stencil/core';
-import { Coupon, CheckoutSession, Customer, PriceChoice, Prices, Products, ResponseError } from '../../../types';
-import { Universe } from 'stencil-wormhole';
+import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import { interpret } from '@xstate/fsm';
-import { checkoutMachine } from './helpers/checkout-machine';
-import { __ } from '@wordpress/i18n';
+import { Universe } from 'stencil-wormhole';
 
 @Component({
   tag: 'ce-checkout',
@@ -57,8 +57,8 @@ export class CECheckout {
   /** Loading states for different parts of the form. */
   @State() checkoutState = checkoutMachine.initialState;
 
-  /** Stores the current CheckoutSession */
-  @State() checkoutSession: CheckoutSession;
+  /** Stores the current Order */
+  @State() order: Order;
 
   /** Error to display. */
   @State() error: ResponseError | null;
@@ -66,8 +66,8 @@ export class CECheckout {
   /** Payment mode inside individual payment method (i.e. Payment Buttons) */
   @State() paymentMethod: 'stripe-payment-request' | null;
 
-  @Watch('checkoutSession')
-  handleCheckoutSessionChange() {
+  @Watch('order')
+  handleOrderChange() {
     this.error = null;
   }
 
@@ -79,7 +79,7 @@ export class CECheckout {
   @Listen('cePaid')
   async handlePaid() {
     window.localStorage.removeItem(this.el.id);
-    window.location.href = addQueryArgs(this.successUrl, { checkout_session: this.checkoutSession.id });
+    window.location.href = addQueryArgs(this.successUrl, { order: this.order.id });
   }
 
   @Listen('cePayError')
@@ -102,7 +102,7 @@ export class CECheckout {
 
   handleComplete(val) {
     if (val && this.successUrl) {
-      window.location.href = addQueryArgs(this.successUrl, { checkout_session: this.checkoutSession.id });
+      window.location.href = addQueryArgs(this.successUrl, { order: this.order.id });
     }
   }
 
@@ -151,7 +151,7 @@ export class CECheckout {
   }
 
   getErrorMessage(error) {
-    if (error.code === 'checkout_session.line_items.price.blank') {
+    if (error.code === 'order.line_items.price.blank') {
       return __('This product is no longer purchasable.', 'checkout_engine');
     }
     return error?.message;
@@ -160,13 +160,13 @@ export class CECheckout {
   state() {
     return {
       processor: 'stripe',
-      processor_data: this.checkoutSession?.processor_data,
+      processor_data: this.order?.processor_data,
       state: this.checkoutState.value,
       loading: this.checkoutState.value === 'loading',
       busy: this.checkoutState.value === 'updating',
-      empty: !['loading', 'updating'].includes(this.checkoutState.value) && !this.checkoutSession?.line_items?.pagination?.count,
+      empty: !['loading', 'updating'].includes(this.checkoutState.value) && !this.order?.line_items?.pagination?.count,
       error: this.error,
-      checkoutSession: this.checkoutSession,
+      order: this.order,
       lockedChoices: this.prices,
       products: this.productsEntities,
       prices: this.pricesEntities,
@@ -222,14 +222,14 @@ export class CECheckout {
         </ce-alert>
         <Universe.Provider state={this.state()}>
           <ce-session-provider
-            checkoutSession={this.checkoutSession}
+            order={this.order}
             prices={this.prices}
             persist={this.persistSession}
             mode={this.mode}
             form-id={this.formId}
             group-id={this.el.id}
             currency-code={this.currencyCode}
-            onCeUpdateSession={e => (this.checkoutSession = e.detail)}
+            onCeUpdateSession={e => (this.order = e.detail)}
             onCeError={e => {
               this.error = e.detail as ResponseError;
             }}

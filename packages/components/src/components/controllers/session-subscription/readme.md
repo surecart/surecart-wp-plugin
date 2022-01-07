@@ -9,7 +9,7 @@
 
 | Property            | Attribute             | Description | Type     | Default     |
 | ------------------- | --------------------- | ----------- | -------- | ----------- |
-| `checkoutSessionId` | `checkout-session-id` |             | `string` | `undefined` |
+| `orderId` | `checkout-session-id` |             | `string` | `undefined` |
 
 
 ## Shadow Parts

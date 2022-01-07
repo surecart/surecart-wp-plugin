@@ -1,6 +1,6 @@
-import { Component, State, h } from '@stencil/core';
 import { getSession } from '../../../services/session';
-import { CheckoutSession } from '../../../types';
+import { Order } from '../../../types';
+import { Component, State, h } from '@stencil/core';
 import { getQueryArg } from '@wordpress/url';
 import { Universe } from 'stencil-wormhole';
 
@@ -10,7 +10,7 @@ import { Universe } from 'stencil-wormhole';
   shadow: true,
 })
 export class CePurchase {
-  @State() checkoutSession: CheckoutSession;
+  @State() order: Order;
   @State() loading: boolean;
   @State() error: string;
 
@@ -24,18 +24,18 @@ export class CePurchase {
   state() {
     return {
       error: this.error,
-      checkoutSession: this.checkoutSession,
+      order: this.order,
       loading: this.loading,
     };
   }
 
   async getSession() {
-    const id = getQueryArg(window.location.href, 'checkout_session');
+    const id = getQueryArg(window.location.href, 'order');
     if (!id) return;
     try {
       this.loading = true;
       this.error = '';
-      this.checkoutSession = await getSession(id);
+      this.order = await getSession(id);
     } catch (e) {
       this.error = e?.message || 'Something went wrong';
     } finally {
@@ -51,7 +51,7 @@ export class CePurchase {
       return <div>{this.error}</div>;
     }
 
-    if (this.checkoutSession) {
+    if (this.order) {
       return (
         <Universe.Provider state={this.state()}>
           <slot />

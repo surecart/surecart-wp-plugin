@@ -32,7 +32,7 @@ class Block extends DashboardPage {
 	 */
 	public function show( $id ) {
 		// check permissions.
-		if ( ! current_user_can( 'read_ce_checkout_session', $id ) ) {
+		if ( ! current_user_can( 'read_ce_order', $id ) ) {
 			wp_die( 'You do not have permission to access this payment.', 'checkout_engine' );
 		}
 
@@ -70,8 +70,8 @@ class Block extends DashboardPage {
 		// ]
 		// )->with(
 		// [
-		// 'checkout_session',
-		// 'checkout_session.line_items',
+		// 'order',
+		// 'order.line_items',
 		// 'line_item.price',
 		// 'subscription',
 		// 'subscription.subscription_items',

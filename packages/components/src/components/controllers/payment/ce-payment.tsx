@@ -1,7 +1,7 @@
+import { Order } from '../../../types';
 import { Component, h, Prop, Host } from '@stencil/core';
-import { openWormhole } from 'stencil-wormhole';
-import { CheckoutSession } from '../../../types';
 import { __ } from '@wordpress/i18n';
+import { openWormhole } from 'stencil-wormhole';
 
 @Component({
   tag: 'ce-payment',
@@ -13,7 +13,7 @@ export class CePayment {
   @Prop() processor: string = 'stripe';
 
   /** Checkout Session from ce-checkout. */
-  @Prop() checkoutSession: CheckoutSession;
+  @Prop() order: Order;
 
   /** Is this created in "test" mode */
   @Prop() mode: 'test' | 'live' = 'live';
@@ -32,7 +32,7 @@ export class CePayment {
       return <div>Please contact us for payment</div>;
     }
     if ('stripe' === this.processor) {
-      if (!this?.checkoutSession?.processor_data?.stripe?.publishable_key || !this?.checkoutSession?.processor_data?.stripe?.account_id) {
+      if (!this?.order?.processor_data?.stripe?.publishable_key || !this?.order?.processor_data?.stripe?.account_id) {
         return (
           <div>
             <ce-skeleton style={{ width: '100%', marginBottom: '1em' }}></ce-skeleton>
@@ -44,9 +44,9 @@ export class CePayment {
         <Host>
           <ce-stripe-element
             label={this.label}
-            checkoutSession={this.checkoutSession}
-            stripeAccountId={this?.checkoutSession?.processor_data?.stripe?.account_id}
-            publishableKey={this?.checkoutSession?.processor_data?.stripe?.publishable_key}
+            order={this.order}
+            stripeAccountId={this?.order?.processor_data?.stripe?.account_id}
+            publishableKey={this?.order?.processor_data?.stripe?.publishable_key}
             disabled={!!this.paymentMethod}
           ></ce-stripe-element>
           <ce-secure-notice>{this.secureNotice}</ce-secure-notice>
@@ -63,4 +63,4 @@ export class CePayment {
   }
 }
 
-openWormhole(CePayment, ['processor', 'checkoutSession', 'mode', 'paymentMethod'], false);
+openWormhole(CePayment, ['processor', 'order', 'mode', 'paymentMethod'], false);

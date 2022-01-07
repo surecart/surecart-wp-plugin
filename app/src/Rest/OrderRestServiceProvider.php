@@ -3,27 +3,27 @@
 namespace CheckoutEngine\Rest;
 
 use CheckoutEngine\Rest\RestServiceInterface;
-use CheckoutEngine\Controllers\Rest\CheckoutSessionController;
+use CheckoutEngine\Controllers\Rest\OrderController;
 use CheckoutEngine\Models\Form;
 use CheckoutEngine\Models\User;
 
 /**
  * Service provider for Price Rest Requests
  */
-class CheckoutSessionRestServiceProvider extends RestServiceProvider implements RestServiceInterface {
+class OrderRestServiceProvider extends RestServiceProvider implements RestServiceInterface {
 	/**
 	 * Endpoint.
 	 *
 	 * @var string
 	 */
-	protected $endpoint = 'checkout_sessions';
+	protected $endpoint = 'orders';
 
 	/**
 	 * Rest Controller
 	 *
 	 * @var string
 	 */
-	protected $controller = CheckoutSessionController::class;
+	protected $controller = OrderController::class;
 
 	/**
 	 * Methods allowed for the model.
@@ -44,7 +44,7 @@ class CheckoutSessionRestServiceProvider extends RestServiceProvider implements 
 			[
 				[
 					'methods'             => \WP_REST_Server::EDITABLE,
-					'callback'            => $this->callback( CheckoutSessionController::class, 'finalize' ),
+					'callback'            => $this->callback( OrderController::class, 'finalize' ),
 					'permission_callback' => [ $this, 'finalize_permissions_check' ],
 				],
 				// Register our schema callback.
@@ -143,7 +143,7 @@ class CheckoutSessionRestServiceProvider extends RestServiceProvider implements 
 		}
 
 		// need read priveleges.
-		return current_user_can( 'read_ce_checkout_sessions' );
+		return current_user_can( 'read_ce_orders' );
 	}
 
 	/**

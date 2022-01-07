@@ -57,8 +57,8 @@ Complex Example:
 $charges = \CheckoutEngine\Models\Charge::where([
 	'customer_ids' => [ $customer_id ],
 ])->with( [
-	'checkout_session',
-	'checkout_session.line_items',
+	'order',
+	'order.line_items',
 	'line_item.price',
 	'price.product',
 	'subscription',

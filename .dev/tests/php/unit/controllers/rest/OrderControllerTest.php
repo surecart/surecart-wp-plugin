@@ -2,12 +2,12 @@
 
 namespace CheckoutEngine\Tests\Controllers\Rest;
 
-use CheckoutEngine\Controllers\Rest\CheckoutSessionController;
-use CheckoutEngine\Models\CheckoutSession;
+use CheckoutEngine\Controllers\Rest\OrderController;
+use CheckoutEngine\Models\Order;
 use CheckoutEngine\Tests\CheckoutEngineUnitTestCase;
 use WP_REST_Request;
 
-class CheckoutSessionControllerTest extends CheckoutEngineUnitTestCase
+class OrderControllerTest extends CheckoutEngineUnitTestCase
 {
 	use \Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 
@@ -32,11 +32,11 @@ class CheckoutSessionControllerTest extends CheckoutEngineUnitTestCase
 			'form_id' => 1,
 		]);
 
-		$model = \Mockery::mock(CheckoutSession::class)->makePartial();
+		$model = \Mockery::mock(Order::class)->makePartial();
 		$model->shouldAllowMockingProtectedMethods()->shouldReceive('where')->once()->andReturn($model);
 		$model->shouldAllowMockingProtectedMethods()->shouldReceive('create')->once()->andReturn($model);
 
-		$controller = \Mockery::mock(CheckoutSessionController::class)->makePartial();
+		$controller = \Mockery::mock(OrderController::class)->makePartial();
 		$controller->shouldAllowMockingProtectedMethods()->shouldReceive('middleware')->once()->andReturn($model);
 		$controller->create($request);
 	}

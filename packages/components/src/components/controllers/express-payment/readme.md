@@ -9,7 +9,7 @@
 
 | Property          | Attribute   | Description | Type                   | Default     |
 | ----------------- | ----------- | ----------- | ---------------------- | ----------- |
-| `checkoutSession` | --          |             | `CheckoutSession`      | `undefined` |
+| `order` | --          |             | `Order`      | `undefined` |
 | `formId`          | `form-id`   |             | `number \| string`     | `undefined` |
 | `processor`       | `processor` |             | `"paypal" \| "stripe"` | `undefined` |
 

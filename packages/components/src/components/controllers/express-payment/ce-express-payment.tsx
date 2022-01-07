@@ -1,6 +1,6 @@
+import { Order } from '../../../types';
 import { Component, h, Prop } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
-import { CheckoutSession } from '../../../types';
 
 @Component({
   tag: 'ce-express-payment',
@@ -10,10 +10,10 @@ import { CheckoutSession } from '../../../types';
 export class CeExpressPayment {
   @Prop() processor: 'stripe' | 'paypal';
   @Prop() formId: number | string;
-  @Prop() checkoutSession: CheckoutSession;
+  @Prop() order: Order;
 
   render() {
-    if (this?.checkoutSession?.processor_data?.stripe?.publishable_key || !this?.checkoutSession?.processor_data?.stripe?.account_id) {
+    if (this?.order?.processor_data?.stripe?.publishable_key || !this?.order?.processor_data?.stripe?.account_id) {
       return null;
     }
 
@@ -27,4 +27,4 @@ export class CeExpressPayment {
   }
 }
 
-openWormhole(CeExpressPayment, ['checkoutSession', 'formId'], false);
+openWormhole(CeExpressPayment, ['order', 'formId'], false);

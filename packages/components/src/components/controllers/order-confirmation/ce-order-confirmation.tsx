@@ -1,9 +1,9 @@
+import apiFetch from '../../../functions/fetch';
+import { Order } from '../../../types';
 import { Component, State, h, Prop } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs, getQueryArg } from '@wordpress/url';
 import { Universe } from 'stencil-wormhole';
-import apiFetch from '../../../functions/fetch';
-import { CheckoutSession } from '../../../types';
 
 @Component({
   tag: 'ce-order-confirmation',
@@ -11,7 +11,7 @@ import { CheckoutSession } from '../../../types';
   shadow: true,
 })
 export class CeOrderConfirmation {
-  @Prop({ mutable: true }) checkoutSession: CheckoutSession;
+  @Prop({ mutable: true }) order: Order;
 
   /** Loading */
   @State() loading: boolean = false;
@@ -28,22 +28,22 @@ export class CeOrderConfirmation {
 
   /** Get session id from url. */
   getSessionId() {
-    if (this.checkoutSession?.id) return this.checkoutSession.id;
-    return getQueryArg(window.location.href, 'checkout_session');
+    if (this.order?.id) return this.order.id;
+    return getQueryArg(window.location.href, 'order');
   }
 
   /** Update a session */
   async getSession() {
     if (!this.getSessionId()) return;
-    if (this.checkoutSession?.id) return;
+    if (this.order?.id) return;
     try {
       this.loading = true;
-      this.checkoutSession = (await await apiFetch({
-        path: addQueryArgs(`checkout-engine/v1/checkout_sessions/${this.getSessionId()}`, {
+      this.order = (await await apiFetch({
+        path: addQueryArgs(`checkout-engine/v1/orders/${this.getSessionId()}`, {
           expand: ['line_items', 'line_item.price', 'price.product', 'customer', 'payment_intent', 'discount', 'discount.promotion', 'billing_address', 'shipping_address'],
           refresh_status: true,
         }),
-      })) as CheckoutSession;
+      })) as Order;
     } catch (e) {
       if (e?.message) {
         this.error = e.message;
@@ -59,8 +59,8 @@ export class CeOrderConfirmation {
     return {
       processor: 'stripe',
       loading: this.loading,
-      checkoutSessionId: this.getSessionId(),
-      checkoutSession: this.checkoutSession,
+      orderId: this.getSessionId(),
+      order: this.order,
     };
   }
 
@@ -71,12 +71,12 @@ export class CeOrderConfirmation {
           <div
             class={{
               'order-confirmation__content': true,
-              'hidden': !this.checkoutSession?.id && !this.loading,
+              'hidden': !this.order?.id && !this.loading,
             }}
           >
             <slot />
           </div>
-          {!this.checkoutSession?.id && !this.loading && (
+          {!this.order?.id && !this.loading && (
             <ce-heading>
               {__('Order not found.', 'checkout_engine')}
               <span slot="description">{__('This order could not be found. Please try again.', 'checkout_engine')}</span>

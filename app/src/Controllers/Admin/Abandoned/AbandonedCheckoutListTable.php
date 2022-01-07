@@ -119,7 +119,7 @@ class AbandonedCheckoutListTable extends ListTable {
 				'page'   => $this->get_pagenum(),
 			]
 		)
-		->with( [ 'latest_checkout_session', 'customer' ] )
+		->with( [ 'latest_order', 'customer' ] )
 		->paginate();
 	}
 
@@ -144,7 +144,7 @@ class AbandonedCheckoutListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_total( $abandoned ) {
-		return '<ce-format-number type="currency" currency="' . strtoupper( esc_html( $abandoned->latest_checkout_session->currency ?? 'usd' ) ) . '" value="' . (float) $abandoned->latest_checkout_session->total_amount . '"></ce-format-number>';
+		return '<ce-format-number type="currency" currency="' . strtoupper( esc_html( $abandoned->latest_order->currency ?? 'usd' ) ) . '" value="' . (float) $abandoned->latest_order->total_amount . '"></ce-format-number>';
 	}
 
 	/**
@@ -157,9 +157,9 @@ class AbandonedCheckoutListTable extends ListTable {
 	public function column_date( $abandoned ) {
 		return sprintf(
 			'<time datetime="%1$s" title="%2$s">%3$s</time>',
-			esc_attr( $abandoned->latest_checkout_session->updated_at ),
-			esc_html( TimeDate::formatDateAndTime( $abandoned->latest_checkout_session->updated_at ) ),
-			esc_html( TimeDate::humanTimeDiff( $abandoned->latest_checkout_session->updated_at ) )
+			esc_attr( $abandoned->latest_order->updated_at ),
+			esc_html( TimeDate::formatDateAndTime( $abandoned->latest_order->updated_at ) ),
+			esc_html( TimeDate::humanTimeDiff( $abandoned->latest_order->updated_at ) )
 		);
 	}
 

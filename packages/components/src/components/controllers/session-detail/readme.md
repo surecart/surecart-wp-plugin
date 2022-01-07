@@ -9,7 +9,7 @@
 
 | Property          | Attribute  | Description | Type              | Default     |
 | ----------------- | ---------- | ----------- | ----------------- | ----------- |
-| `checkoutSession` | --         |             | `CheckoutSession` | `undefined` |
+| `order` | --         |             | `Order` | `undefined` |
 | `fallback`        | `fallback` |             | `string`          | `undefined` |
 | `label`           | `label`    |             | `string`          | `undefined` |
 | `loading`         | `loading`  |             | `boolean`         | `undefined` |

@@ -47,7 +47,7 @@ describe('ce-coupon-form', () => {
 
   it('Handles Applied Coupons', async () => {
     const ceApplyCoupon = await page.spyOnEvent('ceApplyCoupon');
-    element.setProperty('checkoutSession', {
+    element.setProperty('order', {
       currency: 'usd',
       discount_amount: 725,
       discount: {

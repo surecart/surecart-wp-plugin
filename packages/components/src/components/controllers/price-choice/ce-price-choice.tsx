@@ -1,10 +1,10 @@
-import { Component, h, Prop, Event, EventEmitter, Watch, Fragment, State, Host } from '@stencil/core';
-import { openWormhole } from 'stencil-wormhole';
-import { isPriceInCheckoutSession } from '../../../functions/line-items';
+import { isPriceInOrder } from '../../../functions/line-items';
 import { translatedInterval } from '../../../functions/price';
 import { getPricesAndProducts } from '../../../services/fetch';
+import { Order, LineItemData, Price, Prices, Products, ResponseError } from '../../../types';
+import { Component, h, Prop, Event, EventEmitter, Watch, Fragment, State, Host } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
-import { CheckoutSession, LineItemData, Price, Prices, Products, ResponseError } from '../../../types';
+import { openWormhole } from 'stencil-wormhole';
 
 @Component({
   tag: 'ce-price-choice',
@@ -45,7 +45,7 @@ export class CePriceChoice {
   @Prop() products: Products = {};
 
   /** Session */
-  @Prop() checkoutSession: CheckoutSession;
+  @Prop() order: Order;
 
   /** Default quantity */
   @Prop() quantity: number = 1;
@@ -94,9 +94,9 @@ export class CePriceChoice {
     this.adHocErrorMessage = error?.message ? error?.message : '';
   }
 
-  @Watch('checkoutSession')
-  handleCheckoutSessionChange() {
-    if (this.isInCheckoutSession()) {
+  @Watch('order')
+  handleOrderChange() {
+    if (this.isInOrder()) {
       this.checked = true;
     }
   }
@@ -141,13 +141,13 @@ export class CePriceChoice {
   }
 
   /** Is this price in the checkout session. */
-  isInCheckoutSession() {
-    return isPriceInCheckoutSession(this.price, this.checkoutSession);
+  isInOrder() {
+    return isPriceInOrder(this.price, this.order);
   }
 
   /** Is this checked */
   isChecked() {
-    return this.isInCheckoutSession();
+    return this.isInOrder();
   }
 
   onChangeAdHoc(e) {
@@ -155,7 +155,7 @@ export class CePriceChoice {
   }
 
   getLineItem() {
-    return (this.checkoutSession?.line_items?.data || []).find(lineItem => lineItem.price.id === this.priceId);
+    return (this.order?.line_items?.data || []).find(lineItem => lineItem.price.id === this.priceId);
   }
 
   renderAdHoc() {
@@ -249,4 +249,4 @@ export class CePriceChoice {
   }
 }
 
-openWormhole(CePriceChoice, ['prices', 'products', 'checkoutSession', 'error'], false);
+openWormhole(CePriceChoice, ['prices', 'products', 'order', 'error'], false);

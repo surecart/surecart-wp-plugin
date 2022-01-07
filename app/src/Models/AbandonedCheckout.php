@@ -3,12 +3,12 @@
 namespace CheckoutEngine\Models;
 
 use CheckoutEngine\Models\LineItem;
-use CheckoutEngine\Models\CheckoutSession;
+use CheckoutEngine\Models\Order;
 
 /**
- * CheckoutSession model
+ * Order model
  */
-class AbandonedCheckout extends CheckoutSession {
+class AbandonedCheckout extends Order {
 	/**
 	 * Rest API endpoint
 	 *
@@ -29,12 +29,12 @@ class AbandonedCheckout extends CheckoutSession {
 	 * @param  array $value Checkout session properties.
 	 * @return void
 	 */
-	protected function setLatestCheckoutSessionAttribute( $value ) {
+	protected function setLatestOrderAttribute( $value ) {
 		if ( is_string( $value ) ) {
-			$this->attributes['latest_checkout_session'] = $value;
+			$this->attributes['latest_order'] = $value;
 			return;
 		}
-		$this->attributes['latest_checkout_session'] = new CheckoutSession( $value );
+		$this->attributes['latest_order'] = new Order( $value );
 	}
 
 	/**

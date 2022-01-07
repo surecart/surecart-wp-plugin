@@ -4,7 +4,7 @@ namespace CheckoutEngine\Rest;
 
 use CheckoutEngine\Models\Model;
 use CheckoutEngine\Rest\RestServiceInterface;
-use CheckoutEngine\Controllers\Rest\CheckoutSessionController;
+use CheckoutEngine\Controllers\Rest\OrderController;
 
 /**
  * Abstract Rest Service Provider interface

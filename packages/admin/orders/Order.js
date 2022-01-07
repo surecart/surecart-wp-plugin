@@ -36,7 +36,7 @@ export default () => {
 	return (
 		<Template
 			status={ status }
-			pageModelName={ 'checkout_sessions' }
+			pageModelName={ 'orders' }
 			onSubmit={ onSubmit }
 			onInvalid={ onInvalid }
 			backUrl={ 'admin.php?page=ce-orders' }
@@ -82,7 +82,7 @@ export default () => {
 			sidebar={ <Sidebar /> }
 		>
 			<Fragment>
-				<FlashError path="checkout_sessions" scrollIntoView />
+				<FlashError path="orders" scrollIntoView />
 				<Details />
 				<LineItems />
 				<Charges />

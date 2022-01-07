@@ -42,7 +42,7 @@ return [
 		\CheckoutEngine\Rest\UploadsRestServiceProvider::class,
 		\CheckoutEngine\Rest\ChargesRestServiceProvider::class,
 		\CheckoutEngine\Rest\SubscriptionRestServiceProvider::class,
-		\CheckoutEngine\Rest\CheckoutSessionRestServiceProvider::class,
+		\CheckoutEngine\Rest\OrderRestServiceProvider::class,
 	],
 
 	/**

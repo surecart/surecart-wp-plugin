@@ -1,5 +1,5 @@
 {
-	"checkout_session": {
+	"order": {
 		"id": "test_session",
 		"customer_first_name": "Joey",
 		"customer_last_name": "Smithy",

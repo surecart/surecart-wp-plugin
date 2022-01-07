@@ -1,5 +1,5 @@
-import { MockResponse, mockFetch, newSpecPage, MockHeaders } from '@stencil/core/testing';
 import { CeSessionProvider } from '../ce-session-provider';
+import { MockResponse, mockFetch, newSpecPage, MockHeaders } from '@stencil/core/testing';
 
 describe('ce-cart-provider', () => {
   it('renders', async () => {
@@ -30,7 +30,7 @@ describe('ce-cart-provider', () => {
 
     it('getSessionId', async () => {
       const provider = new CeSessionProvider();
-      provider.checkoutSession = { id: 'test' };
+      provider.order = { id: 'test' };
       expect(provider.getSessionId()).toEqual('test');
     });
   });

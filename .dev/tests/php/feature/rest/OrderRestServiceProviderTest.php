@@ -2,12 +2,12 @@
 namespace CheckoutEngine\Tests\Feature\Rest;
 
 use CheckoutEngine\Request\RequestServiceProvider;
-use CheckoutEngine\Rest\CheckoutSessionRestServiceProvider;
+use CheckoutEngine\Rest\OrderRestServiceProvider;
 use CheckoutEngine\Support\Errors\ErrorsServiceProvider;
 use CheckoutEngine\Tests\CheckoutEngineUnitTestCase;
 use WP_REST_Request;
 
-class CheckoutSessionRestServiceProviderTest extends CheckoutEngineUnitTestCase {
+class OrderRestServiceProviderTest extends CheckoutEngineUnitTestCase {
 	use \Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 
 	/**
@@ -20,7 +20,7 @@ class CheckoutSessionRestServiceProviderTest extends CheckoutEngineUnitTestCase 
 		// Set up an app instance with whatever stubs and mocks we need before every test.
 		\CheckoutEngine::make()->bootstrap([
 			'providers' => [
-				CheckoutSessionRestServiceProvider::class,
+				OrderRestServiceProvider::class,
 				RequestServiceProvider::class,
 				ErrorsServiceProvider::class
 			]
@@ -42,10 +42,10 @@ class CheckoutSessionRestServiceProviderTest extends CheckoutEngineUnitTestCase 
 
 		$requests->shouldReceive('makeRequest')
 			->once()
-			->withSomeOfArgs('checkout_sessions/testid/finalize/stripe?expand[]=payment_intent')
+			->withSomeOfArgs('orders/testid/finalize/stripe?expand[]=payment_intent')
 			->andReturn([]);
 
-		$request = new WP_REST_Request('PATCH', '/checkout-engine/v1/checkout_sessions/testid/finalize/stripe?expand[]=payment_intent');
+		$request = new WP_REST_Request('PATCH', '/checkout-engine/v1/orders/testid/finalize/stripe?expand[]=payment_intent');
 		$request->set_query_params(['form_id'=> $test_form->ID]);
 		$response = rest_do_request( $request );
 		$this->assertSame($response->get_status(), 200);
@@ -62,13 +62,13 @@ class CheckoutSessionRestServiceProviderTest extends CheckoutEngineUnitTestCase 
 		$requests->shouldReceive('makeRequest')->never();
 
 		// must pass form id.
-		$request = new WP_REST_Request('PATCH', '/checkout-engine/v1/checkout_sessions/123testid/finalize/stripe');
+		$request = new WP_REST_Request('PATCH', '/checkout-engine/v1/orders/123testid/finalize/stripe');
 		$response = rest_do_request( $request );
 		$this->assertSame($response->get_status(), 400);
 		$this->assertSame($response->get_data()['code'], 'form_id_required');
 
 		// must be a valid form id.
-		$request = new WP_REST_Request('PATCH', '/checkout-engine/v1/checkout_sessions/123testid/finalize/stripe');
+		$request = new WP_REST_Request('PATCH', '/checkout-engine/v1/orders/123testid/finalize/stripe');
 		$request->set_param('form_id', 1234567789);
 		$response = rest_do_request( $request );
 		$this->assertSame($response->get_status(), 400);
@@ -95,10 +95,10 @@ class CheckoutSessionRestServiceProviderTest extends CheckoutEngineUnitTestCase 
 
 		$requests->shouldReceive('makeRequest')
 			->once()
-			->withSomeOfArgs('checkout_sessions','test')
+			->withSomeOfArgs('orders','test')
 			->andReturn([]);
 
-		$request = new WP_REST_Request('POST', '/checkout-engine/v1/checkout_sessions');
+		$request = new WP_REST_Request('POST', '/checkout-engine/v1/orders');
 		$request->set_param('live_mode', false);
 		$request->set_query_params(['form_id'=> $test_form->ID]);
 		$response = rest_do_request( $request );
@@ -106,17 +106,17 @@ class CheckoutSessionRestServiceProviderTest extends CheckoutEngineUnitTestCase 
 
 		$requests->shouldReceive('makeRequest')
 			->once()
-			->withSomeOfArgs('checkout_sessions','live')
+			->withSomeOfArgs('orders','live')
 			->andReturn([]);
 
-		$request = new WP_REST_Request('POST', '/checkout-engine/v1/checkout_sessions');
+		$request = new WP_REST_Request('POST', '/checkout-engine/v1/orders');
 		$request->set_param('live_mode', true);
 		$request->set_query_params(['form_id'=> $live_form->ID]);
 		$response = rest_do_request( $request );
 		$this->assertSame($response->get_status(), 200);
 
 		// don't let someone make a test payment on a form that is live.
-		$request = new WP_REST_Request('POST', '/checkout-engine/v1/checkout_sessions');
+		$request = new WP_REST_Request('POST', '/checkout-engine/v1/orders');
 		$request->set_param('live_mode', false);
 		$request->set_query_params(['form_id'=> $live_form->ID]);
 		$response = rest_do_request( $request );
@@ -138,22 +138,22 @@ class CheckoutSessionRestServiceProviderTest extends CheckoutEngineUnitTestCase 
 
 		$requests->shouldReceive('makeRequest')
 		->once()
-		->withSomeOfArgs('checkout_sessions','live')
+		->withSomeOfArgs('orders','live')
 		->andReturn([]);
 
 		// users with edit session permissions can do this, though.
-		$request = new WP_REST_Request('POST', '/checkout-engine/v1/checkout_sessions');
+		$request = new WP_REST_Request('POST', '/checkout-engine/v1/orders');
 		$request->set_param('live_mode', false);
 		$request->set_query_params(['form_id'=> $live_form->ID]);
 		$response = rest_do_request( $request );
 		$this->assertSame($response->get_status(), 400);
 
 		$user = self::factory()->user->create_and_get();
-		$user->add_cap('edit_ce_checkout_sessions');
+		$user->add_cap('edit_ce_orders');
 		wp_set_current_user($user->ID);
 
 		// users with edit session permissions can do this, though.
-		$request = new WP_REST_Request('POST', '/checkout-engine/v1/checkout_sessions');
+		$request = new WP_REST_Request('POST', '/checkout-engine/v1/orders');
 		$request->set_param('live_mode', false);
 		$request->set_query_params(['form_id'=> $live_form->ID]);
 		$response = rest_do_request( $request );
@@ -175,18 +175,18 @@ class CheckoutSessionRestServiceProviderTest extends CheckoutEngineUnitTestCase 
 
 		$requests->shouldReceive('makeRequest')
 		->twice()
-		->withSomeOfArgs('checkout_sessions','live')
+		->withSomeOfArgs('orders','live')
 		->andReturn([]);
 
 		// always allow forced live payments, even on a test form.
-		$request = new WP_REST_Request('POST', '/checkout-engine/v1/checkout_sessions');
+		$request = new WP_REST_Request('POST', '/checkout-engine/v1/orders');
 		$request->set_param('live_mode', true);
 		$request->set_query_params(['form_id'=> $form->ID]);
 		$response = rest_do_request( $request );
 		$this->assertSame($response->get_status(), 200);
 
 		// default to live if no mode is sent with the request, even if the form is in test mode.
-		$request = new WP_REST_Request('POST', '/checkout-engine/v1/checkout_sessions');
+		$request = new WP_REST_Request('POST', '/checkout-engine/v1/orders');
 		$request->set_query_params(['form_id'=> $form->ID]);
 		$response = rest_do_request( $request );
 		$this->assertSame($response->get_status(), 200);

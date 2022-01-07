@@ -10,7 +10,7 @@
 | Property          | Attribute     | Description | Type              | Default     |
 | ----------------- | ------------- | ----------- | ----------------- | ----------- |
 | `calculating`     | `calculating` |             | `boolean`         | `undefined` |
-| `checkoutSession` | --            |             | `CheckoutSession` | `undefined` |
+| `order` | --            |             | `Order` | `undefined` |
 | `error`           | `error`       |             | `any`             | `undefined` |
 | `forceOpen`       | `force-open`  |             | `boolean`         | `undefined` |
 | `label`           | `label`       |             | `string`          | `undefined` |

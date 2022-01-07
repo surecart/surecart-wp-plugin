@@ -1,11 +1,11 @@
 <?php
 
-namespace CheckoutEngine\Tests\Models\CheckoutSession;
+namespace CheckoutEngine\Tests\Models\Order;
 
-use CheckoutEngine\Models\CheckoutSession;
+use CheckoutEngine\Models\Order;
 use CheckoutEngine\Tests\CheckoutEngineUnitTestCase;
 
-class CheckoutSessionTest extends CheckoutEngineUnitTestCase
+class OrderTest extends CheckoutEngineUnitTestCase
 {
 	protected $requests;
 
@@ -40,7 +40,7 @@ class CheckoutSessionTest extends CheckoutEngineUnitTestCase
 		$this->mock_requests->expects($this->once())
 			->method('makeRequest')
 			->with(
-				$this->equalTo('checkout_sessions'),
+				$this->equalTo('orders'),
 				$this->equalTo([
 					'method' => 'POST',
 					'body' => $request,
@@ -49,7 +49,7 @@ class CheckoutSessionTest extends CheckoutEngineUnitTestCase
 			)
 			->willReturn($response);
 
-		$instance = new CheckoutSession($request['checkout_session']);
+		$instance = new Order($request['order']);
 		$created = $instance->create();
 
 		// we don't care about the order.
@@ -68,7 +68,7 @@ class CheckoutSessionTest extends CheckoutEngineUnitTestCase
 		$this->mock_requests->expects($this->once())
 			->method('makeRequest')
 			->with(
-				$this->equalTo('checkout_sessions/test_session/finalize/custom'),
+				$this->equalTo('orders/test_session/finalize/custom'),
 				$this->equalTo([
 					'method' => 'PATCH',
 					'body' => $request,
@@ -77,7 +77,7 @@ class CheckoutSessionTest extends CheckoutEngineUnitTestCase
 			)
 			->willReturn($response);
 
-		$instance = new CheckoutSession($request['checkout_session'], 'custom');
+		$instance = new Order($request['order'], 'custom');
 		$prepared = $instance->finalize();
 
 		$this->assertEquals($prepared->toArray(), $response);

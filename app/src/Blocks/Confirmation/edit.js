@@ -13,7 +13,7 @@ export default () => {
 		},
 	} );
 
-	const checkoutSession = {
+	const order = {
 		billing_address: null,
 		created_at: 1638829448,
 		currency: 'usd',
@@ -86,14 +86,14 @@ export default () => {
 			data: [
 				{
 					ad_hoc_amount: null,
-					checkout_session: 'e620901c-0320-43ee-8bb1-d07cd48696a7',
+					order: 'e620901c-0320-43ee-8bb1-d07cd48696a7',
 					created_at: 1638898265,
 					discount_amount: 3980,
 					id: '5e9ca3ec-e682-40dd-b09a-67049fda5c15',
 					object: 'line_item',
 					price: {
 						ad_hoc_amount: null,
-						checkout_session:
+						order:
 							'e620901c-0320-43ee-8bb1-d07cd48696a7',
 						created_at: 1638898265,
 						discount_amount: 3980,
@@ -177,14 +177,14 @@ export default () => {
 				},
 				{
 					ad_hoc_amount: null,
-					checkout_session: 'e620901c-0320-43ee-8bb1-d07cd48696a7',
+					order: 'e620901c-0320-43ee-8bb1-d07cd48696a7',
 					created_at: 1638898265,
 					discount_amount: 3980,
 					id: '5e9ca3ec-e682-40dd-b09a-67049fda5c15',
 					object: 'line_item',
 					price: {
 						ad_hoc_amount: null,
-						checkout_session:
+						order:
 							'e620901c-0320-43ee-8bb1-d07cd48696a7',
 						created_at: 1638898265,
 						discount_amount: 3980,
@@ -271,7 +271,7 @@ export default () => {
 		live_mode: false,
 		name: 'Test User',
 		number: 'C5A35729',
-		object: 'checkout_session',
+		object: 'order',
 		payment_intent: null,
 		shipping_address: null,
 		status: 'paid',
@@ -288,7 +288,7 @@ export default () => {
 		<div { ...blockProps }>
 			<CeOrderConfirmation
 				{ ...blockProps }
-				checkoutSession={ checkoutSession }
+				order={ order }
 			>
 				<div
 					css={ css`
