@@ -4,12 +4,11 @@ namespace CheckoutEngine\Middleware;
 
 use Closure;
 use WPEmerge\Requests\RequestInterface;
-use WPEmerge\Responses\RedirectResponse;
 
 /**
  * Middleware for handling model archiving.
  */
-class WebhookMiddleware {
+class WebhooksMiddleware {
 	/**
 	 * Handle the middleware.
 	 *
@@ -18,7 +17,11 @@ class WebhookMiddleware {
 	 * @param string           $model_name Model name.
 	 * @return function
 	 */
-	public function handle( RequestInterface $request, Closure $next, $model_name ) {
+	public function handle( RequestInterface $request, Closure $next ) {
+		// TODO: verify signature.
+		if ( false ) {
+			return \CheckoutEngine::json( [ 'failed' => true ] )->withStatus( 400 );
+		}
 		// check nonce.
 		return $next( $request );
 	}

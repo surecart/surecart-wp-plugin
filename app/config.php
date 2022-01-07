@@ -43,6 +43,7 @@ return [
 		\CheckoutEngine\Rest\ChargesRestServiceProvider::class,
 		\CheckoutEngine\Rest\SubscriptionRestServiceProvider::class,
 		\CheckoutEngine\Rest\OrderRestServiceProvider::class,
+		\CheckoutEngine\Rest\WebhooksRestServiceProvider::class,
 	],
 
 	/**
@@ -118,7 +119,7 @@ return [
 	 */
 	'middleware'          => [
 		'archive_model' => \CheckoutEngine\Middleware\ArchiveModelMiddleware::class,
-		'webhook'       => \CheckoutEngine\Middleware\ArchiveModelMiddleware::class,
+		'webhooks'      => \CheckoutEngine\Middleware\WebhooksMiddleware::class,
 	],
 
 	/**

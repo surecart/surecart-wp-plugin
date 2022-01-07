@@ -24,26 +24,6 @@ class WebhooksRestServiceProvider extends RestServiceProvider implements RestSer
 	protected $controller = WebhooksController::class;
 
 	/**
-	 * Register REST Routes
-	 *
-	 * @return void
-	 */
-	public function registerRoutes() {
-		register_rest_route(
-			"$this->name/v$this->version",
-			$this->endpoint . '/recieve',
-			[
-				[
-					'methods'             => \WP_REST_Server::EDITABLE,
-					'callback'            => $this->callback( $this->controller, 'recieve' ),
-					'permission_callback' => [ $this, 'recieve_item_permissions_check' ],
-				],
-				'schema' => [ $this, 'get_item_schema' ],
-			]
-		);
-	}
-
-	/**
 	 * Get our sample schema for a post.
 	 *
 	 * @return array The sample schema for a post
@@ -72,17 +52,6 @@ class WebhooksRestServiceProvider extends RestServiceProvider implements RestSer
 		];
 
 		return $this->schema;
-	}
-
-	/**
-	 * Anyone can get a specific subscription
-	 *
-	 * @param \WP_REST_Request $request Full details about the request.
-	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
-	 */
-	public function recieve_item_permissions_check( $request ) {
-		// TODO: verify webhook signature.
-		return true;
 	}
 
 	/**
