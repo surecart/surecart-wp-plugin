@@ -69,7 +69,7 @@ class ChargesRestServiceProvider extends RestServiceProvider implements RestServ
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_item_permissions_check( $request ) {
-		return current_user_can( 'read_pk_charge', $request['id'] );
+		return current_user_can( 'read_ce_charge', $request['id'] );
 	}
 
 	/**
@@ -84,7 +84,7 @@ class ChargesRestServiceProvider extends RestServiceProvider implements RestServ
 			return User::current()->customerId() === $request['customer_ids'][0];
 		}
 
-		return current_user_can( 'read_pk_charges' );
+		return current_user_can( 'read_ce_charges' );
 	}
 
 	/**
@@ -94,7 +94,7 @@ class ChargesRestServiceProvider extends RestServiceProvider implements RestServ
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function update_item_permissions_check( $request ) {
-		return current_user_can( 'edit_pk_charges' );
+		return current_user_can( 'edit_ce_charges' );
 	}
 
 	/**
@@ -104,6 +104,6 @@ class ChargesRestServiceProvider extends RestServiceProvider implements RestServ
 	 * @return false
 	 */
 	public function delete_item_permissions_check( $request ) {
-		return current_user_can( 'edit_pk_charges' );
+		return current_user_can( 'edit_ce_charges' );
 	}
 }

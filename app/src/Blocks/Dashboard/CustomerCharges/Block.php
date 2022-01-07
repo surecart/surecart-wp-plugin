@@ -32,7 +32,7 @@ class Block extends DashboardPage {
 	 */
 	public function show( $id ) {
 		// check permissions.
-		if ( ! current_user_can( 'read_pk_checkout_session', $id ) ) {
+		if ( ! current_user_can( 'read_ce_checkout_session', $id ) ) {
 			wp_die( 'You do not have permission to access this payment.', 'checkout_engine' );
 		}
 

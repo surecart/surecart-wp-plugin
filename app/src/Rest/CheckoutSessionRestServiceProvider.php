@@ -143,7 +143,7 @@ class CheckoutSessionRestServiceProvider extends RestServiceProvider implements 
 		}
 
 		// need read priveleges.
-		return current_user_can( 'read_pk_checkout_sessions' );
+		return current_user_can( 'read_ce_checkout_sessions' );
 	}
 
 	/**

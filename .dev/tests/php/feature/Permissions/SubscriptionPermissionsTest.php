@@ -45,9 +45,9 @@ class SubscriptionPermissionsTest extends CheckoutEngineUnitTestCase {
 		$user = self::factory()->user->create_and_get();
 		add_user_meta( $user->ID, 'ce_customer_id', 'testcustomerid' );
 
-		$this->assertFalse(user_can($user, 'read_pk_subscriptions'));
-		$this->assertTrue(user_can($user, 'edit_pk_subscription', 'testid'));
-		$this->assertTrue(user_can($user, 'read_pk_subscription', 'testid'));
+		$this->assertFalse(user_can($user, 'read_ce_subscriptions'));
+		$this->assertTrue(user_can($user, 'edit_ce_subscription', 'testid'));
+		$this->assertTrue(user_can($user, 'read_ce_subscription', 'testid'));
 	}
 
 }

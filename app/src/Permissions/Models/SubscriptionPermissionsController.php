@@ -20,7 +20,7 @@ class SubscriptionPermissionsController extends ModelPermissionsController {
 	 * }
 	 * @return boolean Does user have permission.
 	 */
-	public function edit_pk_subscription( $customer_id, $args ) {
+	public function edit_ce_subscription( $customer_id, $args ) {
 		// need a subscription.
 		$subscription = Subscription::find( $args[2] );
 		// allow if subscription customer matches customer id.
@@ -40,7 +40,7 @@ class SubscriptionPermissionsController extends ModelPermissionsController {
 	 * }
 	 * @return boolean Does user have permission.
 	 */
-	public function read_pk_subscription( $customer_id, $args ) {
+	public function read_ce_subscription( $customer_id, $args ) {
 		$subscription = Subscription::find( $args[2] );
 		// allow if subscription customer matches customer id.
 		return ( $subscription->customer ?? null ) === $customer_id;

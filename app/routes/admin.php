@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 \CheckoutEngine::route()
 ->get()
 ->where( 'admin', 'ce-getting-started' )
-->middleware( 'user.can:edit_pk_products' )
+->middleware( 'user.can:edit_ce_products' )
 ->handle( 'Onboarding@show' );
 
 /*
@@ -39,7 +39,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 */
 \CheckoutEngine::route()
 ->where( 'admin', 'ce-orders' )
-->middleware( 'user.can:edit_pk_orders' ) // TODO: change to manage coupons.
+->middleware( 'user.can:edit_ce_orders' ) // TODO: change to manage coupons.
 ->setNamespace( '\\CheckoutEngine\\Controllers\\Admin\\Orders\\' )
 ->group(
 	function() {
@@ -56,7 +56,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 */
 \CheckoutEngine::route()
 ->where( 'admin', 'ce-products' )
-->middleware( 'user.can:edit_pk_products' ) // TODO: change to manage products.
+->middleware( 'user.can:edit_ce_products' ) // TODO: change to manage products.
 ->setNamespace( '\\CheckoutEngine\\Controllers\\Admin\\Products\\' )
 ->group(
 	function() {
@@ -73,7 +73,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 */
 \CheckoutEngine::route()
 ->where( 'admin', 'ce-coupons' )
-->middleware( 'user.can:edit_pk_coupons' ) // TODO: change to manage coupons.
+->middleware( 'user.can:edit_ce_coupons' ) // TODO: change to manage coupons.
 ->setNamespace( '\\CheckoutEngine\\Controllers\\Admin\\Coupons\\' )
 ->group(
 	function() {
@@ -89,7 +89,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 */
 \CheckoutEngine::route()
 ->where( 'admin', 'ce-customers' )
-->middleware( 'user.can:edit_pk_customers' ) // TODO: change to manage products.
+->middleware( 'user.can:edit_ce_customers' ) // TODO: change to manage products.
 ->setNamespace( '\\CheckoutEngine\\Controllers\\Admin\\Customers\\' )
 ->group(
 	function() {
@@ -105,7 +105,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 */
 \CheckoutEngine::route()
 ->where( 'admin', 'ce-abandoned-checkouts' )
-->middleware( 'user.can:edit_pk_orders' ) // TODO: change to manage coupons.
+->middleware( 'user.can:edit_ce_orders' ) // TODO: change to manage coupons.
 ->setNamespace( '\\CheckoutEngine\\Controllers\\Admin\\Abandoned\\' )
 ->group(
 	function() {
@@ -121,7 +121,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 */
 \CheckoutEngine::route()
 ->where( 'admin', 'ce-subscriptions' )
-->middleware( 'user.can:edit_pk_subscriptions' ) // TODO: change to manage coupons.
+->middleware( 'user.can:edit_ce_subscriptions' ) // TODO: change to manage coupons.
 ->setNamespace( '\\CheckoutEngine\\Controllers\\Admin\\Subscriptions\\' )
 ->group(
 	function() {
@@ -137,7 +137,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 */
 \CheckoutEngine::route()
 ->where( 'admin', 'ce-upgrade-paths' )
-->middleware( 'user.can:edit_pk_subscriptions' ) // TODO: change to manage coupons.
+->middleware( 'user.can:edit_ce_subscriptions' ) // TODO: change to manage coupons.
 ->setNamespace( '\\CheckoutEngine\\Controllers\\Admin\\UpgradePaths\\' )
 ->group(
 	function() {
@@ -153,5 +153,5 @@ if ( ! defined( 'ABSPATH' ) ) {
 \CheckoutEngine::route()
 ->get()
 ->where( 'admin', 'ce-settings' )
-->middleware( 'user.can:manage_pk_account_settings' )
+->middleware( 'user.can:manage_ce_account_settings' )
 ->handle( 'Settings@show' );

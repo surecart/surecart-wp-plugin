@@ -49,7 +49,7 @@ class UploadsRestServiceProviderTest extends CheckoutEngineUnitTestCase {
 	{
 		$user = $this->factory->user->create_and_get();
 		$user->add_cap('upload_files');
-		$user->add_cap('edit_pk_products');
+		$user->add_cap('edit_ce_products');
 		wp_set_current_user( $user->ID );
 
 		$this->mock_requests->expects($this->once())

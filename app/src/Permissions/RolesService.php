@@ -24,7 +24,7 @@ class RolesService {
 	 */
 	public function addRoles() {
 		add_role(
-			'pk_shop_manager',
+			'ce_shop_manager',
 			__( 'PayKit Shop Manager', 'checkout_engine' ),
 			[
 				'read'                   => true,
@@ -59,7 +59,7 @@ class RolesService {
 		);
 
 		add_role(
-			'pk_shop_accountant',
+			'ce_shop_accountant',
 			__( 'PayKit Accountant', 'checkout_engine' ),
 			[
 				'read'         => true,
@@ -69,7 +69,7 @@ class RolesService {
 		);
 
 		add_role(
-			'pk_shop_worker',
+			'ce_shop_worker',
 			__( 'PayKit Shop Worker', 'checkout_engine' ),
 			[
 				'read'         => true,
@@ -92,36 +92,37 @@ class RolesService {
 
 		if ( class_exists( 'WP_Roles' ) ) {
 			if ( ! isset( $wp_roles ) ) {
+				// phpcs:ignore
 				$wp_roles = new \WP_Roles();
 			}
 		}
 
 		if ( is_object( $wp_roles ) ) {
-			$wp_roles->add_cap( 'pk_shop_manager', 'view_pk_shop_reports' );
-			$wp_roles->add_cap( 'pk_shop_manager', 'view_pk_shop_sensitive_data' );
-			$wp_roles->add_cap( 'pk_shop_manager', 'export_pk_shop_reports' );
-			$wp_roles->add_cap( 'pk_shop_manager', 'manage_pk_shop_settings' );
+			$wp_roles->add_cap( 'ce_shop_manager', 'view_ce_shop_reports' );
+			$wp_roles->add_cap( 'ce_shop_manager', 'view_ce_shop_sensitive_data' );
+			$wp_roles->add_cap( 'ce_shop_manager', 'export_ce_shop_reports' );
+			$wp_roles->add_cap( 'ce_shop_manager', 'manage_ce_shop_settings' );
 
-			$wp_roles->add_cap( 'administrator', 'view_pk_shop_reports' );
-			$wp_roles->add_cap( 'administrator', 'view_pk_shop_sensitive_data' );
-			$wp_roles->add_cap( 'administrator', 'export_pk_shop_reports' );
-			$wp_roles->add_cap( 'administrator', 'manage_pk_shop_settings' );
-			$wp_roles->add_cap( 'administrator', 'manage_pk_account_settings' );
+			$wp_roles->add_cap( 'administrator', 'view_ce_shop_reports' );
+			$wp_roles->add_cap( 'administrator', 'view_ce_shop_sensitive_data' );
+			$wp_roles->add_cap( 'administrator', 'export_ce_shop_reports' );
+			$wp_roles->add_cap( 'administrator', 'manage_ce_shop_settings' );
+			$wp_roles->add_cap( 'administrator', 'manage_ce_account_settings' );
 
 			// Add the main model capabilities
 			$capabilities = $this->getModelCaps();
 			foreach ( $capabilities as $cap_group ) {
 				foreach ( $cap_group as $cap ) {
 					$wp_roles->add_cap( 'administrator', $cap );
-					$wp_roles->add_cap( 'pk_shop_manager', $cap );
-					$wp_roles->add_cap( 'pk_shop_worker', $cap );
+					$wp_roles->add_cap( 'ce_shop_manager', $cap );
+					$wp_roles->add_cap( 'ce_shop_worker', $cap );
 				}
 			}
 
-			$wp_roles->add_cap( 'pk_shop_accountant', 'edit_pk_products' );
-			$wp_roles->add_cap( 'pk_shop_accountant', 'view_pk_shop_reports' );
-			$wp_roles->add_cap( 'pk_shop_accountant', 'export_pk_shop_reports' );
-			$wp_roles->add_cap( 'pk_shop_accountant', 'edit_pk_shop_charges' );
+			$wp_roles->add_cap( 'ce_shop_accountant', 'edit_ce_products' );
+			$wp_roles->add_cap( 'ce_shop_accountant', 'view_ce_shop_reports' );
+			$wp_roles->add_cap( 'ce_shop_accountant', 'export_ce_shop_reports' );
+			$wp_roles->add_cap( 'ce_shop_accountant', 'edit_ce_shop_charges' );
 		}
 	}
 
@@ -135,14 +136,14 @@ class RolesService {
 		$capabilities = [];
 
 		$capability_types = [
-			'pk_coupon',
-			'pk_promotion',
-			'pk_product',
-			'pk_checkout_session',
-			'pk_price',
-			'pk_order',
-			'pk_charge',
-			'pk_subscription',
+			'ce_coupon',
+			'ce_promotion',
+			'ce_product',
+			'ce_checkout_session',
+			'ce_price',
+			'ce_order',
+			'ce_charge',
+			'ce_subscription',
 		];
 
 		foreach ( $capability_types as $capability_type ) {
@@ -163,12 +164,12 @@ class RolesService {
 			);
 		}
 
-		$capabilities['pk_customer'] = [
-			'edit_pk_customer', // edit.
-			'read_pk_customer', // read.
-			'delete_pk_customer', // delete.
-			'edit_pk_customers', // edit all.
-			'delete_pk_customers', // delete.
+		$capabilities['ce_customer'] = [
+			'edit_ce_customer', // edit.
+			'read_ce_customer', // read.
+			'delete_ce_customer', // delete.
+			'edit_ce_customers', // edit all.
+			'delete_ce_customers', // delete.
 		];
 
 		return $capabilities;

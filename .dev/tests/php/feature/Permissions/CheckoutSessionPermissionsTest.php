@@ -45,9 +45,9 @@ class CheckoutSessionPermissionsTest extends CheckoutEngineUnitTestCase {
 		$user = self::factory()->user->create_and_get();
 		add_user_meta( $user->ID, 'ce_customer_id', 'testcustomerid' );
 
-		$this->assertFalse(user_can($user, 'read_pk_checkout_sessions'));
-		$this->assertTrue(user_can($user, 'edit_pk_checkout_session', 'testid'));
-		$this->assertTrue(user_can($user, 'read_pk_checkout_session', 'testid'));
+		$this->assertFalse(user_can($user, 'read_ce_checkout_sessions'));
+		$this->assertTrue(user_can($user, 'edit_ce_checkout_session', 'testid'));
+		$this->assertTrue(user_can($user, 'read_ce_checkout_session', 'testid'));
 	}
 
 	public function test_edit_and_view_paid_completed_permissions() {
@@ -71,9 +71,9 @@ class CheckoutSessionPermissionsTest extends CheckoutEngineUnitTestCase {
 		$user = self::factory()->user->create_and_get();
 		add_user_meta( $user->ID, 'ce_customer_id', 'testcustomerid' );
 
-		$this->assertFalse(user_can($user, 'read_pk_checkout_sessions'));
-		$this->assertFalse(user_can($user, 'edit_pk_checkout_session', 'testid'));
-		$this->assertTrue(user_can($user, 'read_pk_checkout_session', 'testid'));
+		$this->assertFalse(user_can($user, 'read_ce_checkout_sessions'));
+		$this->assertFalse(user_can($user, 'edit_ce_checkout_session', 'testid'));
+		$this->assertTrue(user_can($user, 'read_ce_checkout_session', 'testid'));
 
 		$requests->shouldReceive('makeRequest')
 		->withSomeOfArgs('checkout_sessions/testid')
@@ -84,9 +84,9 @@ class CheckoutSessionPermissionsTest extends CheckoutEngineUnitTestCase {
 			'status' => 'paid'
 		]);
 
-		$this->assertFalse(user_can($user, 'read_pk_checkout_sessions'));
-		$this->assertFalse(user_can($user, 'edit_pk_checkout_session', 'testid'));
-		$this->assertTrue(user_can($user, 'read_pk_checkout_session', 'testid'));
+		$this->assertFalse(user_can($user, 'read_ce_checkout_sessions'));
+		$this->assertFalse(user_can($user, 'edit_ce_checkout_session', 'testid'));
+		$this->assertTrue(user_can($user, 'read_ce_checkout_session', 'testid'));
 	}
 
 }

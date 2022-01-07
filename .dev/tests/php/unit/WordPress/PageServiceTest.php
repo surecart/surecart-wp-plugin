@@ -37,7 +37,7 @@ class PageServiceTest extends CheckoutEngineUnitTestCase {
 		) );
 
 		$found = $this->service->find( $post->ID, 'ce_form' );
-		$this->assertNotSame( $post->ID, $found->ID );
+		$this->assertNull( $found );
 	}
 
 	public function test_findOrCreate() {

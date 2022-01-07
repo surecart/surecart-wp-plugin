@@ -20,7 +20,7 @@ class ChargePermissionsController extends ModelPermissionsController {
 	 * }
 	 * @return boolean Does user have permission.
 	 */
-	public function edit_pk_charge( $customer_id, $args ) {
+	public function edit_ce_charge( $customer_id, $args ) {
 		// need a subscription.
 		$charge = Charge::find( $args[2] );
 		// allow if charge customer matches customer id.
@@ -40,7 +40,7 @@ class ChargePermissionsController extends ModelPermissionsController {
 	 * }
 	 * @return boolean Does user have permission.
 	 */
-	public function read_pk_charge( $customer_id, $args ) {
+	public function read_ce_charge( $customer_id, $args ) {
 		$charge = Charge::find( $args[2] );
 		// allow if charge customer matches customer id.
 		return ( $charge->customer ?? null ) === $customer_id;

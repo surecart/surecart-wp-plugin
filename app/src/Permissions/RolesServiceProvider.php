@@ -63,7 +63,7 @@ class RolesServiceProvider implements ServiceProviderInterface {
 	 */
 	public function metaCaps( $caps, $cap, $user_id, $args ) {
 		switch ( $cap ) {
-			// case 'edit_pk_subscription':
+			// case 'edit_ce_subscription':
 			// need a customer id.
 			// $customer_id = User::find( $user_id )->customerId();
 
@@ -85,10 +85,10 @@ class RolesServiceProvider implements ServiceProviderInterface {
 			// break;
 			// }
 
-			// $caps[] = 'edit_pk_subscriptions';
+			// $caps[] = 'edit_ce_subscriptions';
 			// break;
 			// // TODO: Add more meta caps.
-			case 'read_pk_subscription':
+			case 'read_ce_subscription':
 				$subscription = Subscription::find( $args[0] );
 				if ( ! $subscription ) {
 					$caps[] = 'do_not_allow';
@@ -99,7 +99,7 @@ class RolesServiceProvider implements ServiceProviderInterface {
 				break;
 
 				// TODO: Add more meta caps.
-			case 'read_pk_charge':
+			case 'read_ce_charge':
 				$charge = Charge::find( $args[0] );
 				if ( ! $charge ) {
 					$caps[] = 'do_not_allow';

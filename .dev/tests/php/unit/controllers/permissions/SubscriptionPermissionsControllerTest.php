@@ -35,11 +35,11 @@ class SubscriptionPermissionsControllerTest extends CheckoutEngineUnitTestCase {
 			->with($user->ID)
 			->andReturn('customerid');
 
-		$subscription->shouldReceive('edit_pk_subscription')
+		$subscription->shouldReceive('edit_ce_subscription')
 			->once()
-			->with('customerid', ['edit_pk_subscription', $user->ID, 'testid'])
+			->with('customerid', ['edit_ce_subscription', $user->ID, 'testid'])
 			->andReturn(true);
 
-		$subscription->handle( [], ['edit_pk_subscription'], ['edit_pk_subscription', $user->ID, 'testid'], $user);
+		$subscription->handle( [], ['edit_ce_subscription'], ['edit_ce_subscription', $user->ID, 'testid'], $user);
 	}
 }

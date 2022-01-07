@@ -24,7 +24,7 @@ class Form {
 	 *
 	 * @return string The post type.
 	 */
-	public function getPostType() {
+	protected function getPostType() {
 		// TODO: get this from registration.
 		return 'ce_form';
 	}

@@ -2,34 +2,26 @@
 
 namespace CheckoutEngine\Rest;
 
+use CheckoutEngine\Controllers\Rest\WebhooksController;
 use CheckoutEngine\Rest\RestServiceInterface;
-use CheckoutEngine\Controllers\Rest\SubscriptionsController;
-use CheckoutEngine\Models\User;
 
 /**
- * Service provider for Price Rest Requests
+ * Service provider for Webhooks Rest Requests
  */
-class SubscriptionRestServiceProvider extends RestServiceProvider implements RestServiceInterface {
+class WebhooksRestServiceProvider extends RestServiceProvider implements RestServiceInterface {
 	/**
 	 * Endpoint.
 	 *
 	 * @var string
 	 */
-	protected $endpoint = 'subscriptions';
+	protected $endpoint = 'webhooks';
 
 	/**
 	 * Rest Controller
 	 *
 	 * @var string
 	 */
-	protected $controller = SubscriptionsController::class;
-
-	/**
-	 * Methods allowed for the model.
-	 *
-	 * @var array
-	 */
-	protected $methods = [ 'index', 'find', 'edit' ];
+	protected $controller = WebhooksController::class;
 
 	/**
 	 * Register REST Routes
@@ -39,14 +31,13 @@ class SubscriptionRestServiceProvider extends RestServiceProvider implements Res
 	public function registerRoutes() {
 		register_rest_route(
 			"$this->name/v$this->version",
-			$this->endpoint . '/cancel/(?P<id>\S+)',
+			$this->endpoint . '/recieve',
 			[
 				[
 					'methods'             => \WP_REST_Server::EDITABLE,
-					'callback'            => $this->callback( $this->controller, 'cancel' ),
-					'permission_callback' => [ $this, 'cancel_permissions_check' ],
+					'callback'            => $this->callback( $this->controller, 'recieve' ),
+					'permission_callback' => [ $this, 'recieve_item_permissions_check' ],
 				],
-				// Register our schema callback.
 				'schema' => [ $this, 'get_item_schema' ],
 			]
 		);
@@ -84,13 +75,14 @@ class SubscriptionRestServiceProvider extends RestServiceProvider implements Res
 	}
 
 	/**
-	 * Check cancel permissions.
+	 * Anyone can get a specific subscription
 	 *
 	 * @param \WP_REST_Request $request Full details about the request.
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
-	public function cancel_permissions_check( $request ) {
-		return current_user_can( 'edit_ce_subscription', $request['id'] );
+	public function recieve_item_permissions_check( $request ) {
+		// TODO: verify webhook signature.
+		return true;
 	}
 
 	/**
@@ -100,7 +92,7 @@ class SubscriptionRestServiceProvider extends RestServiceProvider implements Res
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_item_permissions_check( $request ) {
-		return current_user_can( 'read_ce_subscription', $request['id'] );
+		return current_user_can( 'read_ce_webhooks' );
 	}
 
 	/**
@@ -110,12 +102,7 @@ class SubscriptionRestServiceProvider extends RestServiceProvider implements Res
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_items_permissions_check( $request ) {
-		// a customer can list their own sessions.
-		if ( isset( $request['customer_ids'] ) && 1 === count( $request['customer_ids'] ) ) {
-			return User::current()->customerId() === $request['customer_ids'][0];
-		}
-
-		return current_user_can( 'read_ce_subscriptions' );
+		return current_user_can( 'read_ce_webhooks' );
 	}
 
 	/**
@@ -125,10 +112,7 @@ class SubscriptionRestServiceProvider extends RestServiceProvider implements Res
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function update_item_permissions_check( $request ) {
-		if ( $request['subscription_items'] ) {
-			// TODO: Check if user can switch to these subscription items.
-		}
-		return current_user_can( 'edit_ce_subscriptions' );
+		return current_user_can( 'edit_ce_webhooks' );
 	}
 
 	/**
@@ -138,6 +122,6 @@ class SubscriptionRestServiceProvider extends RestServiceProvider implements Res
 	 * @return false
 	 */
 	public function delete_item_permissions_check( $request ) {
-		return current_user_can( 'edit_ce_subscriptions' );
+		return current_user_can( 'edit_ce_webhooks' );
 	}
 }

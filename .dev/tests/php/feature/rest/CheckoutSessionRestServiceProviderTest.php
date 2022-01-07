@@ -125,6 +125,11 @@ class CheckoutSessionRestServiceProviderTest extends CheckoutEngineUnitTestCase 
 
 	public function test_form_test_mode_bypasses_with_capability()
 	{
+		$live_form = self::factory()->post->create_and_get( array(
+			'post_type' => 'ce_form',
+			'post_content' => '<!-- wp:checkout-engine/form {"mode":"live"} --><!-- /wp:checkout-engine/form -->'
+		) );
+
 		// mock the requests in the container
 		$requests =  \Mockery::mock(RequestService::class);
 		\CheckoutEngine::alias('request', function () use ($requests) {
@@ -144,7 +149,7 @@ class CheckoutSessionRestServiceProviderTest extends CheckoutEngineUnitTestCase 
 		$this->assertSame($response->get_status(), 400);
 
 		$user = self::factory()->user->create_and_get();
-		$user->add_cap('edit_pk_checkout_sessions');
+		$user->add_cap('edit_ce_checkout_sessions');
 		wp_set_current_user($user->ID);
 
 		// users with edit session permissions can do this, though.

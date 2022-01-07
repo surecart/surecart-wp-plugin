@@ -20,7 +20,7 @@ class CheckoutSessionPermissionsController extends ModelPermissionsController {
 	 * }
 	 * @return boolean Does user have permission.
 	 */
-	public function edit_pk_checkout_session( $customer_id, $args ) {
+	public function edit_ce_checkout_session( $customer_id, $args ) {
 		$session = CheckoutSession::find( $args[2] );
 		return in_array( $session->status, [ 'draft', 'finalized' ] );
 	}
@@ -38,7 +38,7 @@ class CheckoutSessionPermissionsController extends ModelPermissionsController {
 	 * }
 	 * @return boolean Does user have permission.
 	 */
-	public function read_pk_checkout_session( $customer_id, $args ) {
+	public function read_ce_checkout_session( $customer_id, $args ) {
 		$session = CheckoutSession::find( $args[2] );
 		if ( in_array( $session->status, [ 'draft', 'finalized' ] ) ) {
 			return true;
