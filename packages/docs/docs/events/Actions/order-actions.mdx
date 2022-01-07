@@ -1,0 +1,49 @@
+# Order Actions Reference
+
+### checkout_engine/order_created
+
+Occurs when a new order is created. This is typically `draft` status that occurs in an active cart.
+
+```php
+do_action(
+	'checkout_engine/order_created',
+	\CheckoutEngine\Models\Order $order,
+	array $webhook_data
+)
+```
+
+### checkout_engine/order_finalized
+
+Occurs when a new order payment is being processed, for example, waiting for credit card approval. The order is no longer editable in this status.
+
+```php
+do_action(
+	'checkout_engine/order_finalized',
+	\CheckoutEngine\Models\Order $order,
+	array $webhook_data
+)
+```
+
+### checkout_engine/order_paid
+
+Occurs when a new order has been successfully paid.
+
+```php
+do_action(
+	'checkout_engine/order_paid',
+	\CheckoutEngine\Models\Order $order,
+	array $webhook_data
+)
+```
+
+### checkout_engine/order_updated
+
+Occurs when an order is updated. This could include changing line items, addresses, discounts and more.
+
+```php
+do_action(
+	'checkout_engine/order_updated',
+	\CheckoutEngine\Models\Order $order,
+	array $webhook_data
+)
+```

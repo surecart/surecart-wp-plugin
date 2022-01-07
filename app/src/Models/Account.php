@@ -40,29 +40,4 @@ class Account extends Model {
 
 		return $processors;
 	}
-
-	/**
-	 * Get the stripe account object.
-	 *
-	 * @return object
-	 */
-	public static function getStripeAccount() {
-		$processors = self::processors();
-		foreach ( $processors as $processor ) {
-			if ( 'stripe' === $processor->processor_type ) {
-				return $processor;
-			}
-		}
-		return false;
-	}
-
-	/**
-	 * Get the stripe account ID.
-	 *
-	 * @return string
-	 */
-	public static function getStripeAccountId() {
-		$account = self::getStripeAccount();
-		return $account->external_account_id ?? false;
-	}
 }

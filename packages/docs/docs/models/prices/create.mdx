@@ -1,11 +1,7 @@
 # Create
+import MethodText from '../../../components/MethodText.js';
 
-Creates a new price.
-
-## Attributes
-import ModelBody from '../../../components/ModelBody.js';
-
-<ModelBody path={'/api/v1/prices'} method={'post'} model={'price'} />
+<p><MethodText path={'prices'} method={'post'}  /></p>
 
 ## Examples
 
@@ -19,3 +15,15 @@ $saved = new CheckoutEngine\Models\Price([
 	'recurring_interval_count' => 3 // every 3 months
 ])->save();
 ```
+
+
+## Order Attributes
+import ModelBody from '../../../components/ModelBody.js';
+
+<ModelBody path={'prices'} method={'post'} model={'price'} />
+
+## Response Attributes
+
+import ModelResponse from '../../../components/ModelResponse.js';
+
+<ModelResponse path={'prices'} method={'post'} model={'price'} />

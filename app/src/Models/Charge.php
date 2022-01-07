@@ -4,12 +4,16 @@ namespace CheckoutEngine\Models;
 
 use CheckoutEngine\Models\Subscription;
 use CheckoutEngine\Models\Order;
-use CheckoutEngine\Models\Customer;
+use CheckoutEngine\Models\Traits\HasCustomer;
+use CheckoutEngine\Models\Traits\HasOrder;
+use CheckoutEngine\Models\Traits\HasSubscription;
 
 /**
  * Subscription model
  */
 class Charge extends Model {
+	use HasCustomer, HasOrder, HasSubscription;
+
 	/**
 	 * Rest API endpoint
 	 *
@@ -23,46 +27,4 @@ class Charge extends Model {
 	 * @var string
 	 */
 	protected $object_name = 'charge';
-
-	/**
-	 * Set the product attribute
-	 *
-	 * @param  string $value Product properties.
-	 * @return void
-	 */
-	public function setOrderAttribute( $value ) {
-		if ( is_string( $value ) ) {
-			$this->attributes['order'] = $value;
-			return;
-		}
-		$this->attributes['order'] = new Order( $value );
-	}
-
-	/**
-	 * Set the product attribute
-	 *
-	 * @param  string $value Product properties.
-	 * @return void
-	 */
-	public function setSubscriptionAttribute( $value ) {
-		if ( is_string( $value ) ) {
-			$this->attributes['subscription'] = $value;
-			return;
-		}
-		$this->attributes['subscription'] = new Subscription( $value );
-	}
-
-	/**
-	 * Set the product attribute
-	 *
-	 * @param  string $value Product properties.
-	 * @return void
-	 */
-	public function setCustomerAttribute( $value ) {
-		if ( is_string( $value ) ) {
-			$this->attributes['customer'] = $value;
-			return;
-		}
-		$this->attributes['customer'] = new Customer( $value );
-	}
 }

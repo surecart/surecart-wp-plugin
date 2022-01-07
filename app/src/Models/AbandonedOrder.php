@@ -2,13 +2,15 @@
 
 namespace CheckoutEngine\Models;
 
-use CheckoutEngine\Models\LineItem;
+use CheckoutEngine\Models\Traits\HasCustomer;
 use CheckoutEngine\Models\Order;
 
 /**
  * Order model
  */
 class AbandonedOrder extends Order {
+	use HasCustomer;
+
 	/**
 	 * Rest API endpoint
 	 *
@@ -35,19 +37,5 @@ class AbandonedOrder extends Order {
 			return;
 		}
 		$this->attributes['latest_order'] = new Order( $value );
-	}
-
-	/**
-	 * Set the latest checkout session attribute
-	 *
-	 * @param  array $value Customer properties.
-	 * @return void
-	 */
-	protected function setCustomerAttribute( $value ) {
-		if ( is_string( $value ) ) {
-			$this->attributes['customer'] = $value;
-			return;
-		}
-		$this->attributes['customer'] = new Customer( $value );
 	}
 }

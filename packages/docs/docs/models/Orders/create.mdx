@@ -1,11 +1,7 @@
 # Create
+import MethodText from '../../../components/MethodText.js';
 
-Creates a new order.
-
-## Attributes
-import ModelBody from '../../../components/ModelBody.js';
-
-<ModelBody path={'/api/v1/orders'} method={'post'} model={'order'} />
+<p><MethodText path={'orders'} method={'post'}  /></p>
 
 ## Examples
 
@@ -18,3 +14,14 @@ $saved = new CheckoutEngine\Models\Order([
 	]
 ])->save();
 ```
+
+## Order Attributes
+import ModelBody from '../../../components/ModelBody.js';
+
+<ModelBody path={'orders'} method={'post'} model={'order'} />
+
+## Response Attributes
+
+import ModelResponse from '../../../components/ModelResponse.js';
+
+<ModelResponse path={'orders'} method={'post'} model={'order'} />

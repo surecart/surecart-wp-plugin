@@ -1,7 +1,9 @@
 # Delete
-Delete a price
+import MethodText from '../../../components/MethodText.js';
 
-### Examples
+<p><MethodText path={'prices/{id}'} method={'delete'}  /></p>
+
+## Examples
 
 Delete a model by id:
 ```php
@@ -13,4 +15,10 @@ Delete a model directly.
 $price = \CheckoutEngine\Models\Price::find('8ba8d60f-5277-4e6b-807c-dee8166446d5');
 $price->delete();
 ```
+
+## Response Attributes
+
+import ModelResponse from '../../../components/ModelResponse.js';
+
+<ModelResponse path={'prices/{id}'} method={'delete'} model={'price'} />
 

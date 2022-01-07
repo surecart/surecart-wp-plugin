@@ -1,11 +1,8 @@
 # Update
 
-Update an existing price
+import MethodText from '../../../components/MethodText.js';
 
-## Attributes
-import ModelBody from '../../../components/ModelBody.js';
-
-<ModelBody path={'/api/v1/prices/{id}'} method={'patch'} model={'price'} />
+<p><MethodText path={'prices/{id}'} method={'patch'}  /></p>
 
 
 ## Examples
@@ -28,3 +25,14 @@ $price->recurring_interval = 'month'; // monthly
 $price->recurring_interval_count = 3; // every 3 months
 $price->save();
 ```
+
+## Update Attributes
+import ModelBody from '../../../components/ModelBody.js';
+
+<ModelBody path={'prices/{id}'} method={'patch'} model={'price'} />
+
+## Response Attributes
+import ModelResponse from '../../../components/ModelResponse.js';
+
+<ModelResponse path={'prices/{id}'} method={'patch'} model={'price'} />
+

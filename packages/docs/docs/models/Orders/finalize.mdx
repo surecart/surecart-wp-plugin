@@ -1,0 +1,18 @@
+# Finalize
+import MethodText from '../../../components/MethodText.js';
+
+<p><MethodText path={'orders/{id}/finalize'} method={'patch'}  /></p>
+
+### Examples
+
+```php
+$price = \CheckoutEngine\Models\Price::find('8ba8d60f-5277-4e6b-807c-dee8166446d5');
+$price->finalize();
+```
+
+## Response Attributes
+
+import ModelResponse from '../../../components/ModelResponse.js';
+
+<ModelResponse path={'orders/{id}/finalize'} method={'patch'} model={'order'} />
+

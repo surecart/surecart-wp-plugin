@@ -13,7 +13,7 @@ export default ( { path, method } ) => {
 		} );
 	}, [] );
 
-	const item = data?.paths?.[ path ]?.[ method ];
+	const item = data?.paths?.[ '/api/v1/' + path ]?.[ method ];
 
 	if ( ! item?.parameters?.length ) return '';
 	return item.parameters.map( ( parameter ) => {

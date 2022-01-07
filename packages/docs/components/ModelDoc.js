@@ -6,7 +6,7 @@ import React from 'react';
 import ModelParameter from './ModelParameter';
 
 export default ( { path, method } ) => {
-	const item = docsJSON.paths?.[ path ]?.[ method ];
+	const item = docsJSON.paths?.[ '/api/v1/' + path ]?.[ method ];
 
   const renderParameters = () => {
     if (!item?.parameters) return;

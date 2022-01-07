@@ -1,13 +1,12 @@
-# List
-Returns a list of your prices.
+# List or Query
 
-## Where Parameters
-import ModelParameters from '../../../components/ModelParameters.js';
+import MethodText from '../../../components/MethodText.js';
 
-<ModelParameters path={'/api/v1/prices'} method={'get'} />
+<p><MethodText path={'prices'} method={'get'}  /></p>
 
 ## Examples
 
+Get 20 prices based on a query.
 ```php
 \CheckoutEngine\Price::where([
 	'product_ids' => [
@@ -20,3 +19,25 @@ import ModelParameters from '../../../components/ModelParameters.js';
 	'per_page' => 20
 ]);
 ```
+
+Get the first price based on a query.
+```php
+\CheckoutEngine\Price::where([
+	'product_ids' => [
+		'8ba8d60f-5277-4e6b-807c-dee8166446d5',
+		'07fd28e0-e735-4acf-86d8-4d7855055e0b'
+	],
+	'archived' => false
+])->first();
+```
+
+## Where Parameters
+import ModelParameters from '../../../components/ModelParameters.js';
+
+<ModelParameters path={'prices'} method={'get'} />
+
+## Response Attributes
+
+import ModelResponse from '../../../components/ModelResponse.js';
+
+<ModelResponse path={'prices'} method={'get'} model={'price'} />

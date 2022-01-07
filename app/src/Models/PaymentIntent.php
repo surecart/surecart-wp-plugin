@@ -1,13 +1,12 @@
 <?php
-
 namespace CheckoutEngine\Models;
 
 use CheckoutEngine\Models\Traits\HasCustomer;
 
 /**
- * Price model
+ * Payment intent model.
  */
-class CustomerLink extends Model {
+class PaymentIntent extends Model {
 	use HasCustomer;
 
 	/**
@@ -15,12 +14,12 @@ class CustomerLink extends Model {
 	 *
 	 * @var string
 	 */
-	protected $endpoint = 'customer_links';
+	protected $endpoint = 'payment_intents';
 
 	/**
 	 * Object name
 	 *
 	 * @var string
 	 */
-	protected $object_name = 'customer_link';
+	protected $object_name = 'payment_intent';
 }

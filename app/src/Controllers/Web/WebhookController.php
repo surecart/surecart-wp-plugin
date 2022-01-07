@@ -86,7 +86,7 @@ class WebhookController {
 	 */
 	public function createEventName( $type = '' ) {
 		$type = str_replace( '.', '_', $type );
-		return "checkout_engine/events/$type";
+		return "checkout_engine/$type";
 	}
 
 	/**

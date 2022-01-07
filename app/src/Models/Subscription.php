@@ -5,11 +5,15 @@ namespace CheckoutEngine\Models;
 use CheckoutEngine\Models\SubscriptionItem;
 use CheckoutEngine\Models\Order;
 use CheckoutEngine\Models\Customer;
+use CheckoutEngine\Models\Traits\HasCustomer;
+use CheckoutEngine\Models\Traits\HasOrder;
 
 /**
  * Subscription model
  */
 class Subscription extends Model {
+	use HasCustomer, HasOrder;
+
 	/**
 	 * Rest API endpoint
 	 *
@@ -23,34 +27,6 @@ class Subscription extends Model {
 	 * @var string
 	 */
 	protected $object_name = 'subscription';
-
-	/**
-	 * Set the product attribute
-	 *
-	 * @param  string $value Product properties.
-	 * @return void
-	 */
-	public function setOrderAttribute( $value ) {
-		if ( is_string( $value ) ) {
-			$this->attributes['order'] = $value;
-			return;
-		}
-		$this->attributes['order'] = new Order( $value );
-	}
-
-	/**
-	 * Set the product attribute
-	 *
-	 * @param  string $value Product properties.
-	 * @return void
-	 */
-	public function setCustomerAttribute( $value ) {
-		if ( is_string( $value ) ) {
-			$this->attributes['customer'] = $value;
-			return;
-		}
-		$this->attributes['customer'] = new Customer( $value );
-	}
 
 	/**
 	 * Set the product attribute

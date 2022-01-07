@@ -15,7 +15,9 @@ class WebhookRestHandleTest extends CheckoutEngineUnitTestCase {
 		parent::setUp();
 
 		// Set up an app instance with whatever stubs and mocks we need before every test.
-		\CheckoutEngine::make()->bootstrap([], false);
+		\CheckoutEngine::make()->bootstrap([
+
+		], false);
 	}
 
 	/**
@@ -23,7 +25,7 @@ class WebhookRestHandleTest extends CheckoutEngineUnitTestCase {
 	 */
 	public function test_can_receive()
 	{
-		$this->assertEquals(did_action('checkout_engine/events/order_created'), 0);
+		$this->assertEquals(did_action('checkout_engine/order_created'), 0);
 		$controller = \Mockery::mock(WebhookController::class)->makePartial();
 
 		$controller->shouldReceive('getInput')
@@ -38,6 +40,6 @@ class WebhookRestHandleTest extends CheckoutEngineUnitTestCase {
 
 		$result = $controller->receive();
 		$this->assertSame($result->getStatusCode(), 200);
-		$this->assertEquals(did_action('checkout_engine/events/order_created'), 1);
+		$this->assertEquals(did_action('checkout_engine/order_created'), 1);
 	}
 }

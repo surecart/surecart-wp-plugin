@@ -1,0 +1,49 @@
+# Subscription Actions Reference
+
+### checkout_engine/subscription_created
+
+Occurs when a new subscriptions is created. This is typically when you'll want to provide someone with access to something.
+
+```php
+do_action(
+	'checkout_engine/subscription_created',
+	\CheckoutEngine\Models\Subscription $subscription,
+	array $webhook_data
+)
+```
+
+Typically, you will want to check to make sure it's one of either `active` or `trialing`.
+
+```php
+use CheckoutEngine\Models\Subscription;
+
+add_action('checkout_engine/subscription_created', function(Subscription $subscription) {
+	if ( in_array($subscription->status, ['trailing', 'active']) ) {
+		// maybe give a user access to something.
+		$wp_user = $subscription->getWPUser();
+	}
+});
+```
+
+### checkout_engine/subscription_canceled
+
+Occurs when a subscription is canceled. This is typically when you want to revoke access to something.
+
+```php
+do_action(
+	'checkout_engine/subscription_canceled',
+	\CheckoutEngine\Models\Subscription $subscription,
+	array $webhook_data
+)
+```
+
+```php
+use CheckoutEngine\Models\Subscription;
+
+add_action('checkout_engine/subscription_canceled', function(Subscription $subscription) {
+	if ( !in_array($subscription->status, ['trailing', 'active']) ) {
+		// maybe revoke user access to something.
+		$wp_user = $subscription->getWPUser();
+	}
+});
+```

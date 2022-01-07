@@ -1,0 +1,48 @@
+# Refund Actions Reference
+
+### checkout_engine/refund_created
+
+Occurs when a new refund is created. This does not guarantee that the refund will be successful.
+
+```php
+do_action(
+	'checkout_engine/refund_created',
+	\CheckoutEngine\Models\Refund $refund,
+	array $webhook_data
+)
+```
+
+### checkout_engine/refund_updated
+
+Occurs when a refund is updated.
+
+```php
+do_action(
+	'checkout_engine/refund_updated',
+	\CheckoutEngine\Models\Refund $refund,
+	array $webhook_data
+)
+```
+
+Typically, you will check the status, and fetch the associated `charge` object and check it's `fully_refunded` attribute:
+
+```php
+use CheckoutEngine\Models\Refund;
+
+add_action('checkout_engine/refund_created', function(Refund $refund) {
+	// we only want to run our code if the refund has succeeded.
+	if ('succeeded' !== $refund->status) {
+		return;
+	}
+	// get the refund with the associated charge.
+	$refund = Refund::with(['charge'])->find($refund->id);
+	// find out if the charge has been fully refunded.
+	$fully_refunded = $refund->charge->fully_refunded ?? false;
+	// we only want to do something if the charge has been fully refunded.
+	if( !$fully_refunded ) {
+		return;
+	}
+	// maybe revoke access for the user.
+	$wp_user = $refund->getWPUser();
+});
+```

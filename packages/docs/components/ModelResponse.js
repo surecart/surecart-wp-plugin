@@ -13,9 +13,7 @@ export default ( { path, method, model } ) => {
 		} );
 	}, [] );
 
-  const modelSchema = data?.paths?.[ '/api/v1/' + path ]?.[ method ]?.requestBody?.content?.['application/json']?.schema?.properties?.[ model ];
-	const properties = modelSchema?.properties;
-  const required = modelSchema?.required;
+  const properties = data?.paths?.[ '/api/v1/' + path ]?.[ method ]?.responses?.[200]?.content?.['application/json']?.schema?.properties;
 
 	if ( ! Object.keys(properties || {})?.length ) return '';
 	return (Object.keys(properties)).map( ( key ) => {
@@ -23,6 +21,6 @@ export default ( { path, method, model } ) => {
       ...properties[ key ],
       name: key,
     };
-		return <ModelParameter parameter={property} required={required && required.includes( key )} />;
+		return <ModelParameter parameter={property} />;
 	} );
 };
