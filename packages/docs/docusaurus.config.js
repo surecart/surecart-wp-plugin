@@ -43,6 +43,12 @@ module.exports = {
 					position: 'left',
 					label: 'API',
 				},
+				{
+					type: 'doc',
+					docId: 'events/actions',
+					position: 'left',
+					label: 'Events',
+				},
 				// { to: "/blog", label: "Blog", position: "left" },
 				{
 					href: 'https://github.com/facebook/docusaurus',

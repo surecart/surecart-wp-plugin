@@ -51,7 +51,7 @@ return [
 // invalid_processor: "not valid or enabled"
 // hex_color_format: "is not a valid hex color"
 // models:
-// abandoned_checkout:
+// abandoned_order:
 // attributes:
 // customer:
 // multiple_active: is only allowed one active abandoned checkout at a time

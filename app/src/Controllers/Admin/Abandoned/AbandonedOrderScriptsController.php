@@ -7,7 +7,7 @@ use CheckoutEngine\Support\Scripts\AdminModelEditController;
 /**
  * Coupon page
  */
-class AbandonedCheckoutScriptsController extends AdminModelEditController {
+class AbandonedOrderScriptsController extends AdminModelEditController {
 	/**
 	 * What types of data to add the the page.
 	 *
@@ -20,7 +20,7 @@ class AbandonedCheckoutScriptsController extends AdminModelEditController {
 	 *
 	 * @var string
 	 */
-	protected $handle = 'checkoutengine/scripts/admin/abandoned_checkout';
+	protected $handle = 'checkoutengine/scripts/admin/abandoned_order';
 
 	/**
 	 * Script path.

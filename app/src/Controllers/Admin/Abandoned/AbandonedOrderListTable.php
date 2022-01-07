@@ -4,12 +4,12 @@ namespace CheckoutEngine\Controllers\Admin\Abandoned;
 
 use CheckoutEngine\Support\TimeDate;
 use CheckoutEngine\Controllers\Admin\Tables\ListTable;
-use CheckoutEngine\Models\AbandonedCheckout;
+use CheckoutEngine\Models\AbandonedOrder;
 
 /**
  * Create a new table class that will extend the WP_List_Table
  */
-class AbandonedCheckoutListTable extends ListTable {
+class AbandonedOrderListTable extends ListTable {
 	/**
 	 * Prepare the items for the table to process
 	 *
@@ -31,7 +31,7 @@ class AbandonedCheckoutListTable extends ListTable {
 		$this->set_pagination_args(
 			[
 				'total_items' => $query->pagination->count,
-				'per_page'    => $this->get_items_per_page( 'abandoned_checkouts' ),
+				'per_page'    => $this->get_items_per_page( 'abandoned_orders' ),
 			]
 		);
 
@@ -50,7 +50,7 @@ class AbandonedCheckoutListTable extends ListTable {
 			'notified'  => __( 'Notified', 'checkout_engine' ),
 		];
 
-		$link = \CheckoutEngine::getUrl()->index( 'abandoned_checkouts' );
+		$link = \CheckoutEngine::getUrl()->index( 'abandoned_orders' );
 
 		foreach ( $stati as $status => $label ) {
 			$current_link_attributes = '';
@@ -77,14 +77,14 @@ class AbandonedCheckoutListTable extends ListTable {
 		 * @param string[] $status_links An associative array of fully-formed comment status links. Includes 'All', 'Mine',
 		 *                              'Pending', 'Approved', 'Spam', and 'Trash'.
 		 */
-		return apply_filters( 'abandoned_checkout_status_links', $status_links );
+		return apply_filters( 'abandoned_order_status_links', $status_links );
 	}
 
 	public function search() {
 		?>
 	<form class="search-form"
 		method="get">
-		<?php $this->search_box( __( 'Search Abanonded Checkouts', 'checkout_engine' ), 'abandoned_checkout' ); ?>
+		<?php $this->search_box( __( 'Search Abanonded Orders', 'checkout_engine' ), 'abandoned_order' ); ?>
 		<input type="hidden"
 			name="id"
 			value="1" />
@@ -112,7 +112,7 @@ class AbandonedCheckoutListTable extends ListTable {
 	 * @return Array
 	 */
 	protected function table_data() {
-		return AbandonedCheckout::where(
+		return AbandonedOrder::where(
 			[
 				'status' => $this->getStatus(),
 				'limit'  => $this->get_items_per_page( 'abanodoned_checkout' ),
@@ -139,7 +139,7 @@ class AbandonedCheckoutListTable extends ListTable {
 	/**
 	 * Handle the total column
 	 *
-	 * @param \CheckoutEngine\Models\AbandonedCheckout $checkout Checkout Session Model.
+	 * @param \CheckoutEngine\Models\AbandonedOrder $checkout Checkout Session Model.
 	 *
 	 * @return string
 	 */
@@ -150,7 +150,7 @@ class AbandonedCheckoutListTable extends ListTable {
 	/**
 	 * Handle the total column
 	 *
-	 * @param \CheckoutEngine\Models\AbandonedCheckout $abandoned Abandoned checkout model.
+	 * @param \CheckoutEngine\Models\AbandonedOrder $abandoned Abandoned checkout model.
 	 *
 	 * @return string
 	 */
@@ -166,7 +166,7 @@ class AbandonedCheckoutListTable extends ListTable {
 	/**
 	 * Handle the status
 	 *
-	 * @param \CheckoutEngine\Models\AbandonedCheckout $abandoned Abandoned checkout session.
+	 * @param \CheckoutEngine\Models\AbandonedOrder $abandoned Abandoned checkout session.
 	 *
 	 * @return string
 	 */
@@ -185,7 +185,7 @@ class AbandonedCheckoutListTable extends ListTable {
 	/**
 	 * Email of customer
 	 *
-	 * @param \CheckoutEngine\Models\AbandonedCheckout $abandoned Abandoned checkout model.
+	 * @param \CheckoutEngine\Models\AbandonedOrder $abandoned Abandoned checkout model.
 	 *
 	 * @return string
 	 */

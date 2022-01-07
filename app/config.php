@@ -123,6 +123,31 @@ return [
 	],
 
 	/**
+	 * Map model names to their corresponding classes.
+	 * This lets you reference a model based on a simple string.
+	 */
+	'models'              => [
+		'abandoned_order'   => \CheckoutEngine\Models\AbandonedOrder::class,
+		'account'           => \CheckoutEngine\Models\Account::class,
+		'charge'            => \CheckoutEngine\Models\Charge::class,
+		'coupon'            => \CheckoutEngine\Models\Coupon::class,
+		'customer'          => \CheckoutEngine\Models\Customer::class,
+		'customer_link'     => \CheckoutEngine\Models\CustomerLink::class,
+		'form'              => \CheckoutEngine\Models\Form::class,
+		'line_item'         => \CheckoutEngine\Models\LineItem::class,
+		'order'             => \CheckoutEngine\Models\Order::class,
+		'price'             => \CheckoutEngine\Models\Price::class,
+		'processor'         => \CheckoutEngine\Models\Processor::class,
+		'product'           => \CheckoutEngine\Models\Product::class,
+		'promotion'         => \CheckoutEngine\Models\Promotion::class,
+		'subscription'      => \CheckoutEngine\Models\Subscription::class,
+		'subscription_item' => \CheckoutEngine\Models\SubscriptionItem::class,
+		'upload'            => \CheckoutEngine\Models\Upload::class,
+		'user'              => \CheckoutEngine\Models\User::class,
+		'webhook'           => \CheckoutEngine\Models\Webhook::class,
+	],
+
+	/**
 	 * Register middleware groups.
 	 * Use fully qualified middleware class names or registered aliases.
 	 * There are a couple built-in groups that you may override:

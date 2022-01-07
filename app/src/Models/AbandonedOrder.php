@@ -8,20 +8,20 @@ use CheckoutEngine\Models\Order;
 /**
  * Order model
  */
-class AbandonedCheckout extends Order {
+class AbandonedOrder extends Order {
 	/**
 	 * Rest API endpoint
 	 *
 	 * @var string
 	 */
-	protected $endpoint = 'abandoned_checkouts';
+	protected $endpoint = 'abandoned_orders';
 
 	/**
 	 * Object name
 	 *
 	 * @var string
 	 */
-	protected $object_name = 'abandoned_checkout';
+	protected $object_name = 'abandoned_order';
 
 	/**
 	 * Set the latest checkout session attribute

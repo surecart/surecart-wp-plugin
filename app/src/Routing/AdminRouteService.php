@@ -15,18 +15,18 @@ class AdminRouteService {
 	 * @var array
 	 */
 	protected $page_names = [
-		'product'             => 'ce-products',
-		'products'            => 'ce-products',
-		'order'               => 'ce-orders',
-		'orders'              => 'ce-orders',
-		'customers'           => 'ce-customers',
-		'customer'            => 'ce-customers',
-		'subscriptions'       => 'ce-subscriptions',
-		'subscription'        => 'ce-subscriptions',
-		'abandoned_checkouts' => 'ce-abandoned-checkouts',
-		'upgrade-paths'       => 'ce-upgrade-paths',
-		'coupon'              => 'ce-coupons',
-		'coupons'             => 'ce-coupons',
+		'product'          => 'ce-products',
+		'products'         => 'ce-products',
+		'order'            => 'ce-orders',
+		'orders'           => 'ce-orders',
+		'customers'        => 'ce-customers',
+		'customer'         => 'ce-customers',
+		'subscriptions'    => 'ce-subscriptions',
+		'subscription'     => 'ce-subscriptions',
+		'abandoned_orders' => 'ce-abandoned-orders',
+		'upgrade-paths'    => 'ce-upgrade-paths',
+		'coupon'           => 'ce-coupons',
+		'coupons'          => 'ce-coupons',
 	];
 
 	/**
