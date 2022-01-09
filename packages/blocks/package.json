@@ -1,5 +1,5 @@
 {
-	"name": "@checkout-engnie/blocks",
+	"name": "@checkout-engine/blocks",
 	"version": "1.0.0",
 	"description": "Block library for CheckoutEngine",
 	"license": "GPL-2.0-or-later",

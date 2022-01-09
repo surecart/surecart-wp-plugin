@@ -7,7 +7,7 @@ use CheckoutEngine\Models\Order;
 /**
  * If the model has an attached customer.
  */
-class HasOrder {
+trait HasOrder {
 	/**
 	 * Set the product attribute
 	 *

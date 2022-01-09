@@ -7,7 +7,7 @@ use CheckoutEngine\Models\PaymentMethod;
 /**
  * If the model has an attached customer.
  */
-class HasPaymentMethod {
+trait HasPaymentMethod {
 	/**
 	 * Set the product attribute
 	 *

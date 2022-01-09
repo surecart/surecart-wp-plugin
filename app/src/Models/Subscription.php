@@ -3,8 +3,6 @@
 namespace CheckoutEngine\Models;
 
 use CheckoutEngine\Models\SubscriptionItem;
-use CheckoutEngine\Models\Order;
-use CheckoutEngine\Models\Customer;
 use CheckoutEngine\Models\Traits\HasCustomer;
 use CheckoutEngine\Models\Traits\HasOrder;
 

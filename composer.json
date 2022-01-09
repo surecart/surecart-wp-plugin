@@ -11,10 +11,17 @@
 	"require": {
 		"php": ">=5.5",
 		"composer/installers": "^1.4",
+		"checkout-engine/blocks": "*",
 		"htmlburger/wpemerge": "~0.16.0",
 		"htmlburger/wpemerge-app-core": "~0.16.1",
 		"htmlburger/wpemerge-blade": "^0.16.1"
 	},
+	"repositories": [
+		{
+			"type": "path",
+			"url": "./packages/blocks"
+		}
+	],
 	"require-dev": {
 		"filp/whoops": "^2.2",
 		"htmlburger/wpemerge-cli": "~0.16.0",

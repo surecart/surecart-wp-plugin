@@ -14,7 +14,7 @@ use CheckoutEngine\Models\Product;
 $product = Product::find('8ba8d60f-5277-4e6b-807c-dee8166446d5');
 ```
 
-## Retrieving several models.
+## Retrieving several models
 The model's all method will retrieve the first 10 of the records from the model's associated database table:
 
 ```php
@@ -76,14 +76,13 @@ Result:
 If you already have an instance of a model that was retrieved, you can "refresh" the model using the fresh method. The fresh method will re-retrieve the model from the database. The existing model instance will not be affected:
 
 ```php
-$product = Product::where([
-	'ids' => [
-		'8ba8d60f-5277-4e6b-807c-dee8166446d5',
-		'07fd28e0-e735-4acf-86d8-4d7855055e0b'
-	]
-])->first();
-
+$product = Product::create([
+	'name' => 'New Product',
+]);
+$product->name = 'Updated Product';
 $freshProduct = $product->fresh();
+$product->name; // "Updated Product"
+$freshProduct->name; // "New Product"
 ```
 
 The refresh method will re-hydrate the existing model using fresh data from the database:
@@ -93,5 +92,5 @@ $product = Product::create([
 ]);
 $product->name = 'Updated Product';
 $product->refresh();
-$flight->name; // "New Product"
+$product->name; // "New Product"
 ```

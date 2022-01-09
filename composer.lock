@@ -4,8 +4,26 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "276bf0b1362f7b2dcba5cb762a9693e1",
+    "content-hash": "7ff0fb70922eb9d9eb1564c21a959218",
     "packages": [
+        {
+            "name": "checkout-engine/blocks",
+            "version": "1.0.0",
+            "dist": {
+                "type": "path",
+                "url": "./packages/blocks",
+                "reference": "fda342501ec1754963292abfed79aa7839678132"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "CheckoutEngine\\Blocks\\": "blocks"
+                }
+            },
+            "transport-options": {
+                "relative": true
+            }
+        },
         {
             "name": "composer/installers",
             "version": "v1.11.0",

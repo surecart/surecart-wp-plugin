@@ -134,6 +134,7 @@ export default function edit( { clientId, attributes, setAttributes } ) {
 							display: flex;
 							justify-content: space-between;
 							align-items: center;
+              font-size: 15px;
 						` }
 					>
 						<div
@@ -143,7 +144,6 @@ export default function edit( { clientId, attributes, setAttributes } ) {
 								user-select: none;
 								display: inline-block;
 								color: var( --ce-input-label-color );
-								font-size: 15px;
 								font-weight: var(
 									--ce-input-label-font-weight
 								);

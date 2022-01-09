@@ -3,7 +3,6 @@
 namespace CheckoutEngine\Blocks\BuyButton;
 
 use CheckoutEngine\Blocks\BaseBlock;
-
 /**
  * Logout Button Block.
  */

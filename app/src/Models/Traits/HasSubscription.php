@@ -7,7 +7,7 @@ use CheckoutEngine\Models\Subscription;
 /**
  * If the model has an attached customer.
  */
-class HasSubscription {
+trait HasSubscription {
 	/**
 	 * Set the product attribute
 	 *

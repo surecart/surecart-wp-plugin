@@ -9,7 +9,7 @@ module.exports = {
 	alias: {
 		'@config': utils.rootPath( 'config.json' ),
 		'@scripts': utils.srcScriptsPath(),
-		'@blocks': utils.rootPath( 'app/src/Blocks' ),
+		'@blocks': utils.rootPath( 'packages/blocks/Blocks' ),
 		'@styles': utils.srcStylesPath(),
 		'@images': utils.srcImagesPath(),
 		'@fonts': utils.srcFontsPath(),

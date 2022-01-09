@@ -8,7 +8,7 @@ use CheckoutEngine\Models\User;
 /**
  * If the model has an attached customer.
  */
-class HasCustomer {
+trait HasCustomer {
 	/**
 	 * Set the product attribute
 	 *

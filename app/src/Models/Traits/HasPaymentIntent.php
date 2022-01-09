@@ -7,7 +7,7 @@ use CheckoutEngine\Models\PaymentIntent;
 /**
  * If the model has an attached customer.
  */
-class HasPaymentIntent {
+trait HasPaymentIntent {
 	/**
 	 * Set the product attribute
 	 *
