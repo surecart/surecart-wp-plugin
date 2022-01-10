@@ -52,10 +52,15 @@ $membership_price_id = '8ba8d60f-5277-4e6b-807c-dee8166446d5';
 // Use the order_paid event to update the users meta
 add_action( 'checkout_engine/refund_succeeded', function( $order_id ) {
 	// fetch order with line items.
-	$refund = Refund::with( ['charge'] )->find( $order_id );
+	$refund = Refund::with( ['charge', 'charge.order', 'order.line_items'] )->find( $order_id );
 
 	// check if the charge has been fully refunded.
 	if( !$refund->charge->fully_refunded) {
+		return;
+	}
+
+	// we only want to proceed if the order contains the membership_price_id.
+	if( ! $refund->charge->order->hasPriceId( $membership_price_id ) ) {
 		return;
 	}
 
