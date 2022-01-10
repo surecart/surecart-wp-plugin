@@ -15,20 +15,25 @@ module.exports = {
 		'guide',
 		{
 			type: 'category',
-			label: 'Checkout Forms',
-			items: [
-				// 'checkout-form/form-templates',
-				// 'checkout-form/form-fields',
-				'checkout-form/creating-static-forms',
-			],
-		},
-		{
-			type: 'category',
 			label: 'Models',
 			items: [
 				'guide/retrieving',
 				'guide/expanding',
 				'guide/inserting-updating',
+			],
+		},
+		{
+			type: 'category',
+			label: 'Syncing Access',
+			items: [ 'guide/one-time-access' ],
+		},
+		{
+			type: 'category',
+			label: 'Checkout Forms',
+			items: [
+				// 'checkout-form/form-templates',
+				// 'checkout-form/form-fields',
+				'checkout-form/creating-static-forms',
 			],
 		},
 	],

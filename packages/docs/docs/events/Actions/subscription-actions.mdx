@@ -2,48 +2,78 @@
 
 ### checkout_engine/subscription_created
 
-Occurs when a new subscriptions is created. This is typically when you'll want to provide someone with access to something.
+Occurs when a new subscription is created. This is typically in `incomplete` status but it could be in `trialing`, `active`, `past_due`, or `canceled`.
 
 ```php
 do_action(
 	'checkout_engine/subscription_created',
-	\CheckoutEngine\Models\Subscription $subscription,
-	array $webhook_data
+	(string) $subscription_id,
+	(array) $webhook_data
 )
 ```
 
-Typically, you will want to check to make sure it's one of either `active` or `trialing`.
-
-```php
-use CheckoutEngine\Models\Subscription;
-
-add_action('checkout_engine/subscription_created', function(Subscription $subscription) {
-	if ( in_array($subscription->status, ['trailing', 'active']) ) {
-		// maybe give a user access to something.
-		$wp_user = $subscription->getWPUser();
-	}
-});
-```
 
 ### checkout_engine/subscription_canceled
 
-Occurs when a subscription is canceled. This is typically when you want to revoke access to something.
+Occurs whenever a subscription is canceled. Typically this is when you'll revoke access to something. Note that this only occurs after
+a customers subscription period ends. If their subscription is pending cancellation, it will not trigger this event.
 
 ```php
 do_action(
 	'checkout_engine/subscription_canceled',
-	\CheckoutEngine\Models\Subscription $subscription,
-	array $webhook_data
+	(string) $subscription_id,
+	(array) $webhook_data
 )
 ```
 
-```php
-use CheckoutEngine\Models\Subscription;
+### checkout_engine/subscription_made_active
 
-add_action('checkout_engine/subscription_canceled', function(Subscription $subscription) {
-	if ( !in_array($subscription->status, ['trailing', 'active']) ) {
-		// maybe revoke user access to something.
-		$wp_user = $subscription->getWPUser();
-	}
-});
+Occurs whenever a subscription is made active. Typically this is when you'll give access to something. Note that this can occur if a user
+is already in the trialing state, too.
+
+```php
+do_action(
+	'checkout_engine/subscription_made_active',
+	(string) $subscription_id,
+	(array) $webhook_data
+)
+```
+
+
+### checkout_engine/subscription_made_past_due
+
+Occurs when a subscription is past due, meanbing the most recent invoice failed or hasn’t been attempted.
+
+```php
+do_action(
+	'checkout_engine/subscription_made_past_due',
+	(string) $subscription_id,
+	(array) $webhook_data
+)
+```
+
+
+### checkout_engine/subscription_made_trialing
+
+Occurs when a new subscriptions transitions into a trial state. If the subscription has a trial, it will start with this status until the end of the trial period.
+
+```php
+do_action(
+	'checkout_engine/subscription_made_trialing',
+	(string) $subscription_id,
+	(array) $webhook_data
+)
+```
+
+
+### checkout_engine/subscription_updated
+
+Occurs when a subscription is updated. This can happen if any part of the subscription updates (items, periods, status, etc.).
+
+```php
+do_action(
+	'checkout_engine/subscription_updated',
+	(string) $subscription_id,
+	(array) $webhook_data
+)
 ```

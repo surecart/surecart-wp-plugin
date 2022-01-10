@@ -61,20 +61,23 @@ class WebhookController {
 		if ( empty( $request->type ) ) {
 			return new \WP_Error( 'missing_type', 'Missing type.' );
 		}
-
-		$event      = $this->createEventName( $request->type );
-		$model_name = $this->getModel( $request->data );
-
-		if ( empty( $model_name ) ) {
-			return new \WP_Error( 'invalid_object', 'This object type is not found.' );
+		if ( empty( $request->data ) ) {
+			return new \WP_Error( 'missing_data', 'Missing data.' );
 		}
 
-		$model = new $model_name( $request->data );
-		do_action( $event, $model, $request );
+		// create the event name.
+		$event = $this->createEventName( $request->type );
+		$id    = $this->getObjectId( $request->data );
+		$name  = $this->getObjectName( $request->data );
 
+		// perform the action.
+		do_action( $event, $id, $request );
+
+		// return data.
 		return [
-			'event' => $event,
-			'model' => $model->toArray(),
+			'event'   => $event,
+			'id'      => $id,
+			'request' => $request,
 		];
 	}
 
@@ -90,24 +93,26 @@ class WebhookController {
 	}
 
 	/**
-	 * Get the registered models from the config file.
+	 * Get the first object property in data.
 	 *
-	 * @return array
+	 * @param object $data Request data.
+	 * @return string
 	 */
-	public function getRegisteredModels() {
-		$service = \CheckoutEngine::resolve( WPEMERGE_CONFIG_KEY );
-		return $service['models'];
+	public function getObjectId( $data ) {
+		$id = current( $data );
+		if ( is_string( $id ) ) {
+			return $id;
+		}
+		return $id->id ?? '';
 	}
 
 	/**
-	 * Get the model based on the object type.
+	 * Find the object name.
 	 *
-	 * @param object $data The event type.
-	 * @return string model name
+	 * @param object $data Request data.
+	 * @return string
 	 */
-	public function getModel( $data ) {
-		$name   = $data->object ?? '';
-		$models = $this->getRegisteredModels();
-		return $models[ $name ] ?? '';
+	public function getObjectName( $data ) {
+		return key( $data );
 	}
 }

@@ -2,12 +2,16 @@
 
 namespace CheckoutEngine\Models;
 
+use CheckoutEngine\Models\Traits\HasCustomer;
+use CheckoutEngine\Models\Traits\HasSubscriptions;
 use CheckoutEngine\Models\LineItem;
 
 /**
  * Order model
  */
 class Order extends Model {
+	use HasCustomer, HasSubscriptions;
+
 	/**
 	 * Rest API endpoint
 	 *
@@ -119,5 +123,33 @@ class Order extends Model {
 			$value->data = $models;
 		}
 		$this->attributes['line_items'] = $value;
+	}
+
+	/**
+	 * Get order prices
+	 *
+	 * @return array|null
+	 */
+	public function getPricesAttribute() {
+		$prices = [];
+		if ( ! empty( $this->attributes['line_items']->data ) ) {
+			foreach ( $this->attributes['line_items']->data as $line_item ) {
+				$prices[] = new Price( $line_item->price );
+			}
+		}
+		return empty( $prices ) ? null : $prices;
+	}
+
+	/**
+	 * Get list of loaded price ids.
+	 *
+	 * @return array|null;
+	 */
+	public function getPriceIdsAttribute() {
+		$prices = $this->getPricesAttribute();
+		if ( empty( $prices ) ) {
+			return null;
+		}
+		return array_column( $prices, 'id' );
 	}
 }

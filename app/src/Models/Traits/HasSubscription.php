@@ -21,4 +21,13 @@ trait HasSubscription {
 		}
 		$this->attributes['subscription'] = new Subscription( $value );
 	}
+
+	/**
+	 * Does this have subscriptions?
+	 *
+	 * @return boolean
+	 */
+	public function hasSubscriptions() {
+		return count( $this->subscriptions ?? [] ) > 0;
+	}
 }

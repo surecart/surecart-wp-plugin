@@ -16,7 +16,6 @@ class WebhookRestHandleTest extends CheckoutEngineUnitTestCase {
 
 		// Set up an app instance with whatever stubs and mocks we need before every test.
 		\CheckoutEngine::make()->bootstrap([
-
 		], false);
 	}
 
@@ -33,7 +32,9 @@ class WebhookRestHandleTest extends CheckoutEngineUnitTestCase {
 			->andReturn((object) [
 				"id" => "3631d049-2ea4-4dca-acae-fd8110fab21f",
 				"object" => "event",
-				"data" => [],
+				"data" => (object) [
+					'id' => 'asdf',
+				],
 				"type" => "order.created",
 				"account" => "9954af8d-5737-4a24-8d4f-b96a34a38019"
 			]);

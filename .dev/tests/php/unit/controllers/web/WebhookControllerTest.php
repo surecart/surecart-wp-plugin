@@ -22,4 +22,14 @@ class WebhookControllerTest extends CheckoutEngineUnitTestCase
 		$this->assertSame('checkout_engine/subscription_created', $controller->createEventName('subscription.created'));
 		$this->assertSame('checkout_engine/subscription_updated', $controller->createEventName('subscription.updated'));
 	}
+
+	public function testObjectIdAndName()
+	{
+	 	$controller = new WebhookController();
+		$data =  (object) [
+			'subscription' => '3631d049-2ea4-4dca-acae-fd8110fab21f'
+		];
+	 	$this->assertSame('3631d049-2ea4-4dca-acae-fd8110fab21f', $controller->getObjectId($data));
+		$this->assertSame('subscription', $controller->getObjectName($data));
+	}
 }

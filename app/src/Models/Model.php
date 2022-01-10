@@ -119,6 +119,11 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 		// filter meta data setting.
 		add_filter( "checkout_engine/$this->object_name/set_meta_data", [ $this, 'filterMetaData' ], 9 );
 
+		// if we have string here, assume it's the id.
+		if ( is_string( $attributes ) ) {
+			$attributes = [ 'id' => $attributes ];
+		}
+
 		$this->bootModel();
 		$this->syncOriginal();
 		$this->fill( $attributes );

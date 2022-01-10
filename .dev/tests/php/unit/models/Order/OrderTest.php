@@ -82,4 +82,27 @@ class OrderTest extends CheckoutEngineUnitTestCase
 
 		$this->assertEquals($prepared->toArray(), $response);
 	}
+
+	/**
+	 * @group failing
+	 */
+	public function test_can_get_prices()
+	{
+		$order = new Order((object) [
+			'id' => 'test',
+			'line_items' => (object) [
+				'data' => [
+					[
+						'id' => 'test_line_item',
+						'quantity' => 1,
+						'price' => 'asdf'
+					]
+				]
+			]
+		]);
+
+		$this->assertNotEmpty($order->prices);
+		$this->assertSame(array_column( $order->prices, 'id' ), ['asdf']);
+		$this->assertSame($order->price_ids, ['asdf']);
+	}
 }

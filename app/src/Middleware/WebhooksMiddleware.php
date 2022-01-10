@@ -22,7 +22,6 @@ class WebhooksMiddleware {
 		if ( false ) {
 			return \CheckoutEngine::json( [ 'failed' => true ] )->withStatus( 400 );
 		}
-		// check nonce.
 		return $next( $request );
 	}
 }

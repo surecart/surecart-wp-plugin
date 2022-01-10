@@ -1,0 +1,46 @@
+# Relationships
+
+The order model has some convenient ways to find **loaded** relationship data.
+These methods and properties do not perform queries, they simply make accessing nested data easier.
+
+## `$order->prices`
+
+You can each of the `order->line_item->price` using the `prices` property.
+
+So instead of this:
+```php
+$prices = array_map(function($item) {
+	return $item->price;
+}, $order->line_items);
+```
+
+You can simply do this:
+```php
+$prices = $order->prices;
+```
+
+## `$order->price_ids`
+
+You can each of the `order->line_item->price->id` using the `prices` property.
+
+```php
+$prices = array_map(function($item) {
+	return $item->price;
+}, $order->line_items);
+$price_ids = array_map(function($price) {
+	return $price->id;
+}, $prices);
+```
+
+You can simply do this:
+```php
+$prices = $order->price_ids;
+```
+
+## `$order->hasSubscriptions()`
+
+Does the order contain a subscription?
+
+```php
+$has_subscription = (bool) $order->hasSubscriptions();
+```

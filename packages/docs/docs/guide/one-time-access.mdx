@@ -1,0 +1,54 @@
+# One Time Purchases
+
+Many cases, you'll want to provide someone with access to something when they purchase a product. This can be done through a few steps.
+
+## Store a price_id in your plugin to reference your purchasable item.
+
+This way, when you listen to events, you can sort out if you want to provide or revoke access to something based on the price_id.
+
+## Provide access using the `order_paid` event.
+
+Since this is a one-time purchase, we'll want to use the [Order Actions](../events/Actions/order-actions.mdx) to listen for order events and update access accordingly.
+The `order_paid` event is very handy for this, as it's triggered when an order is successfully paid. Here we will listen for the event and update the users meta
+to provide them with access to something specific. We will use the [Order Model](../models/order.mdx) to get the price_id and the customer_id.
+
+```php
+use \CheckoutEngine\Models\Order;
+
+$membership_price_id = '8ba8d60f-5277-4e6b-807c-dee8166446d5';
+
+// Use the order_paid event to update the users meta
+add_action( 'checkout_engine/order_paid', function( $order_id ) {
+	// fetch order with line items.
+	$order = Order::with( ['line_items', 'line_item.price'] )->find( $order_id );
+
+	// access order line item price ids through the order relationship.
+	if ( empty( $order->price_ids ) ) {
+		return; // this order does not have any purchased prices.
+	}
+
+	// this isn't our price id, so we don't care about this order.
+	if ( !in_array( $membership_price_id, $order->price_ids ) ) {
+		return;
+	}
+
+	// this is a subscription, so let's use the subscription statuses here instead.
+	if($order->hasSubscriptions()) {
+		return;
+	}
+
+	// get the order's WordPress user
+	$wp_user = $order->getWPUser();
+
+	// this order has no associated user.
+	// you could also instead create a user here with the customer's email address.
+	if ( !$wp_user ) {
+		return;
+	}
+
+	// update user meta to provide access to something.
+	update_user_meta( $wp_user->ID, 'gold_membership', true );
+});
+```
+
+## Revoke access using the `refund_succeeded` event.
