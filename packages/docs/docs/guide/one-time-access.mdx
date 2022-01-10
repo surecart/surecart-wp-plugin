@@ -55,7 +55,7 @@ add_action( 'checkout_engine/refund_succeeded', function( $order_id ) {
 	$refund = Refund::with( ['charge', 'charge.order', 'order.line_items'] )->find( $order_id );
 
 	// check if the charge has been fully refunded.
-	if( !$refund->charge->fully_refunded) {
+	if( !$refund->charge->fully_refunded ) {
 		return;
 	}
 
@@ -65,7 +65,7 @@ add_action( 'checkout_engine/refund_succeeded', function( $order_id ) {
 	}
 
 	// get the order's WordPress user
-	$wp_user = $order->getUser();
+	$wp_user = $refund->getUser();
 
 	// this order has no associated user.
 	if ( $wp_user ) {

@@ -6,6 +6,9 @@ use CheckoutEngine\Models\Traits\HasSubscription;
 use CheckoutEngine\Models\Traits\HasPaymentIntent;
 use CheckoutEngine\Models\Traits\HasPaymentMethod;
 
+/**
+ * Invoice model
+ */
 class Invoice extends Model {
 	use HasCustomer, HasSubscription, HasPaymentIntent, HasPaymentMethod;
 

@@ -2,8 +2,6 @@
 
 namespace CheckoutEngine\Models;
 
-use CheckoutEngine\Models\Subscription;
-use CheckoutEngine\Models\Order;
 use CheckoutEngine\Models\Traits\HasCustomer;
 use CheckoutEngine\Models\Traits\HasOrder;
 use CheckoutEngine\Models\Traits\HasSubscription;
