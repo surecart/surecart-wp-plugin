@@ -7,8 +7,8 @@ Occurs when a new refund is created. This does not guarantee that the refund wil
 ```php
 do_action(
 	'checkout_engine/refund_created',
-	\CheckoutEngine\Models\Refund $refund,
-	array $webhook_data
+	(string) $refund_id,
+	(array) $webhook_data
 )
 ```
 
@@ -19,30 +19,43 @@ Occurs when a refund is updated.
 ```php
 do_action(
 	'checkout_engine/refund_updated',
-	\CheckoutEngine\Models\Refund $refund,
-	array $webhook_data
+	(string) $refund_id,
+	(array) $webhook_data
 )
 ```
 
-Typically, you will check the status, and fetch the associated `charge` object and check it's `fully_refunded` attribute:
+### checkout_engine/refund_succeeded
+
+Occurs when a refund has succesfully been processed. This is typically when you'll want to revoke access to something.
 
 ```php
-use CheckoutEngine\Models\Refund;
+do_action(
+	'checkout_engine/refund_succeeded',
+	(string) $refund_id,
+	(array) $webhook_data
+)
+```
 
-add_action('checkout_engine/refund_created', function(Refund $refund) {
-	// we only want to run our code if the refund has succeeded.
-	if ('succeeded' !== $refund->status) {
-		return;
-	}
-	// get the refund with the associated charge.
-	$refund = Refund::with(['charge'])->find($refund->id);
-	// find out if the charge has been fully refunded.
-	$fully_refunded = $refund->charge->fully_refunded ?? false;
-	// we only want to do something if the charge has been fully refunded.
-	if( !$fully_refunded ) {
-		return;
-	}
-	// maybe revoke access for the user.
-	$wp_user = $refund->getWPUser();
-});
+### checkout_engine/refund_failed
+
+Occurs when a refund has failed.
+
+```php
+do_action(
+	'checkout_engine/refund_failed',
+	(string) $refund_id,
+	(array) $webhook_data
+)
+```
+
+### checkout_engine/refund_canceled
+
+Occurs when a refund has been canceled
+
+```php
+do_action(
+	'checkout_engine/refund_canceled',
+	(string) $refund_id,
+	(array) $webhook_data
+)
 ```

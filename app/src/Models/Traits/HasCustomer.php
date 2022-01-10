@@ -28,7 +28,7 @@ trait HasCustomer {
 	 *
 	 * @return \WP_User|false
 	 */
-	public function getWPUser() {
+	public function getUser() {
 		if ( empty( $this->attributes->customer ) ) {
 			return false;
 		}

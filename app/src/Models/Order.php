@@ -152,4 +152,15 @@ class Order extends Model {
 		}
 		return array_column( $prices, 'id' );
 	}
+
+	/**
+	 * Does the order have a specific price id
+	 *
+	 * @param string $id string to search for.
+	 * @return boolean true if found, false if not.
+	 */
+	public function hasPriceId( $id = '' ) {
+		$price_ids = $this->getPriceIdsAttribute();
+		return empty( $price_ids ) ? false : in_array( $id, $price_ids, true );
+	}
 }

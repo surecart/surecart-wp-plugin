@@ -1,0 +1,81 @@
+# Subscriptions
+
+Many cases, you'll want to provide someone with access to something when they start a subscription and when a subscription cancels. This can be done through a few steps.
+
+## Store a `price_id` in your own plugin to reference your purchasable item.
+
+This way, when you listen to events, you can sort out if you want to provide or revoke access to something based on the price_id.
+
+## Provide access using the `subscription_made_active` and `subscription_made_trialing` event.
+
+Since this is a subscription purchase, we'll want to use the [Subscription Actions](../events/Actions/subscription-actions.mdx) to listen for subscription events and update access accordingly.
+Here we will listen for the event and update the users meta to provide them with access to something specific. We will use the [Subscription Model](../models/subscription.mdx) to get the price_id and the customer_id.
+
+```php
+use \CheckoutEngine\Models\Subscription;
+
+// Use the subscription_paid event to update the users meta
+add_action( 'checkout_engine/subscription_made_active', 'my_provide_access_function' );
+add_action( 'checkout_engine/subscription_made_trailing', 'my_provide_access_function' );
+
+/**
+ * Provide access to the membership
+ *
+ * @param string $subscription Subscription id.
+ */
+function my_provide_access_function ( $subscription_id ) {
+	// maybe you'll fetch this from your plugin.
+	$membership_price_id = '8ba8d60f-5277-4e6b-807c-dee8166446d5';
+
+	// fetch subscription with line items so we can get the purchased price_id.
+	$subscription = Subscription::find( $subscription_id );
+
+	// we only want to proceed if the subscription is for the membership_price_id.
+	if ( $membership_price_id !== $subscription->price ) {
+		return;
+	}
+
+	// get the subscription's WordPress user
+	$wp_user = $subscription->getUser();
+
+	// this subscription has no associated user.
+	if ( $wp_user ) {
+		// update user meta to provide access to something.
+		update_user_meta( $wp_user->ID, 'subscription_membership', true );
+	}
+}
+```
+
+## Revoke access using the `subscription_canceled` event.
+
+We'll want to revoke access for the user when a subscription is canceled. We will use the
+[Subscription Canceled Action](../events/Actions/subscription-actions.mdx#checkout_enginesubscription_canceled) to listen for the event and update the users meta to revoke access to something specific.
+
+```php
+use \CheckoutEngine\Models\Subscription;
+
+$membership_price_id = '8ba8d60f-5277-4e6b-807c-dee8166446d5';
+
+// Use the subscription_canceled event to update the users meta
+add_action( 'checkout_engine/subscription_canceled', function( $subscription_id ) {
+		// maybe you'll fetch this from your plugin.
+	$membership_price_id = '8ba8d60f-5277-4e6b-807c-dee8166446d5';
+
+	// fetch subscription with line items.
+	$subscription = Subscription::find( $subscription_id );
+
+	// we only want to proceed if the subscription is for the membership_price_id.
+	if ( $membership_price_id !== $subscription->price ) {
+		return;
+	}
+
+	// get the subscription's WordPress user
+	$wp_user = $subscription->getUser();
+
+	// this subscription has no associated user.
+	if ( $wp_user ) {
+		// update user meta to revoke access to something.
+		delete_user_meta( $wp_user->ID, 'subscription_membership' );
+	}
+});
+```

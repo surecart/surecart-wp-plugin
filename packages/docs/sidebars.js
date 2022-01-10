@@ -25,7 +25,7 @@ module.exports = {
 		{
 			type: 'category',
 			label: 'Syncing Access',
-			items: [ 'guide/one-time-access' ],
+			items: [ 'guide/one-time-access', 'guide/subscription-access' ],
 		},
 		{
 			type: 'category',
