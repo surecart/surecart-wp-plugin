@@ -2,18 +2,21 @@
 
 namespace CheckoutEngine\Models;
 
-class Processor extends Model {
+/**
+ * Price model
+ */
+class Event extends Model {
 	/**
 	 * Rest API endpoint
 	 *
 	 * @var string
 	 */
-	protected $endpoint = 'processors';
+	protected $endpoint = 'events';
 
 	/**
 	 * Object name
 	 *
 	 * @var string
 	 */
-	protected $object_name = 'processor';
+	protected $object_name = 'event';
 }

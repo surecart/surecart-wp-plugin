@@ -1,0 +1,27 @@
+# Create
+import MethodText from '../../../components/MethodText.js';
+
+<p><MethodText path={'invoices'} method={'post'}  /></p>
+
+## Examples
+
+```php
+$saved = new CheckoutEngine\Models\Invoice([
+	"email": "updated-customer@example.com",
+	'line_items' => [
+		"price_id": "b971b8d9-c75c-457f-b2e2-4a7af1fb66d3",
+        "quantity": 1
+	]
+])->save();
+```
+
+## Invoice Attributes
+import ModelBody from '../../../components/ModelBody.js';
+
+<ModelBody path={'invoices'} method={'post'} model={'invoice'} />
+
+## Response Attributes
+
+import ModelResponse from '../../../components/ModelResponse.js';
+
+<ModelResponse path={'invoices'} method={'post'} model={'invoice'} />

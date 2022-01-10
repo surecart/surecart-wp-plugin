@@ -14,7 +14,7 @@ export default ( { path, method, model } ) => {
 	}, [] );
 
   const modelSchema = data?.paths?.[ '/api/v1/' + path ]?.[ method ]?.requestBody?.content?.['application/json']?.schema?.properties?.[ model ];
-	const properties = modelSchema?.properties;
+  const properties = modelSchema?.properties;
   const required = modelSchema?.required;
 
 	if ( ! Object.keys(properties || {})?.length ) return '';

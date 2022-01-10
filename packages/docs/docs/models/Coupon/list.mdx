@@ -1,0 +1,28 @@
+# List or Query
+
+import MethodText from '../../../components/MethodText.js';
+
+<p><MethodText path={'coupons'} method={'get'}  /></p>
+
+## Examples
+
+Get 20 coupons based on a query.
+```php
+\CheckoutEngine\Models\Coupon::where([
+	'query' => 'black friday'
+])->paginate([
+	'page' => 1,
+	'per_page' => 20
+]);
+```
+
+## Where Parameters
+import ModelParameters from '../../../components/ModelParameters.js';
+
+<ModelParameters path={'coupons'} method={'get'} />
+
+## Response Attributes
+
+import ModelResponse from '../../../components/ModelResponse.js';
+
+<ModelResponse path={'coupons'} method={'get'} model={'coupon'} />

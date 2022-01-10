@@ -29,10 +29,6 @@ class Promotion extends Model {
 	 * @return void
 	 */
 	public function setCouponAttribute( $value ) {
-		if ( is_string( $value ) ) {
-			$this->attributes['coupon'] = $value;
-			return;
-		}
 		$this->attributes['coupon'] = new Coupon( $value );
 	}
 }

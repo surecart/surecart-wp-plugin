@@ -1,21 +1,21 @@
 # Find with ID
-Returns a single subscription by id.
+Returns a single customer by id.
 
 ## Examples
 
 ```php
-\CheckoutEngine\Subscription::with([
-	'customer'
+\CheckoutEngine\Models\Customer::with([
+	'billing_address'
 ])->find('8ba8d60f-5277-4e6b-807c-dee8166446d5');
 ```
 
 ## Parameters
 import ModelParameters from '../../../components/ModelParameters.js';
 
-<ModelParameters path={'subscriptions/{id}'} method={'get'} />
+<ModelParameters path={'customers/{id}'} method={'get'} />
 
 ## Response Attributes
 
 import ModelResponse from '../../../components/ModelResponse.js';
 
-<ModelResponse path={'subscriptions/{id}'} method={'get'} model={'subscription'} />
+<ModelResponse path={'customers/{id}'} method={'get'} model={'customer'} />

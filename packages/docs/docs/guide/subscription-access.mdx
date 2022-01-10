@@ -16,7 +16,7 @@ use \CheckoutEngine\Models\Subscription;
 
 // Use the subscription_paid event to update the users meta
 add_action( 'checkout_engine/subscription_made_active', 'my_provide_access_function' );
-add_action( 'checkout_engine/subscription_made_trailing', 'my_provide_access_function' );
+add_action( 'checkout_engine/subscription_made_trialing', 'my_provide_access_function' );
 
 /**
  * Provide access to the membership
@@ -31,7 +31,7 @@ function my_provide_access_function ( $subscription_id ) {
 	$subscription = Subscription::find( $subscription_id );
 
 	// we only want to proceed if the subscription is for the membership_price_id.
-	if ( $membership_price_id !== $subscription->price ) {
+	if ( $membership_price_id !== $subscription->price->id ) {
 		return;
 	}
 
@@ -65,7 +65,7 @@ add_action( 'checkout_engine/subscription_canceled', function( $subscription_id 
 	$subscription = Subscription::find( $subscription_id );
 
 	// we only want to proceed if the subscription is for the membership_price_id.
-	if ( $membership_price_id !== $subscription->price ) {
+	if ( $membership_price_id !== $subscription->price->id ) {
 		return;
 	}
 

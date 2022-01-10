@@ -2,8 +2,6 @@
 
 namespace CheckoutEngine\Models;
 
-use CheckoutEngine\Models\Product;
-
 /**
  * Price model
  */
@@ -16,16 +14,12 @@ class LineItem extends Model {
 	protected $object_name = 'line_item';
 
 	/**
-	 * Set the product attribute
+	 * Set the price attribute
 	 *
 	 * @param  string $value Product properties.
 	 * @return void
 	 */
 	public function setPriceAttribute( $value ) {
-		if ( is_string( $value ) ) {
-			$this->attributes['price'] = $value;
-			return;
-		}
 		$this->attributes['price'] = new Price( $value );
 	}
 }

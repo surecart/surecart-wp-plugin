@@ -8,6 +8,11 @@ use CheckoutEngine\Models\Product;
  * Checkout form class
  */
 class Form {
+	/**
+	 * Holds the form post.
+	 *
+	 * @var \WP_Post;
+	 */
 	protected $post;
 
 	/**

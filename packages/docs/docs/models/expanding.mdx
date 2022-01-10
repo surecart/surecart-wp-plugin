@@ -19,6 +19,8 @@ $prices = \CheckoutEngine\Models\Price::with([
 $promo = \CheckoutEngine\Models\Promotion::with([
 	'coupon'
 ])->find('8ba8d60f-5277-4e6b-807c-dee8166446d5');
+
+$coupon = $promotion->coupon;
 ```
 
 ## Expanding list relations
@@ -37,6 +39,11 @@ You can expand recursively by specifying nested fields after a dot (.). For exam
 $orders = \CheckoutEngine\Models\Order::with([
 	'customer.billing_address'
 ])->paginate(['page'=> 1]);
+
+foreach($orders as $order) {
+	$billing_address = $order->customer->billing_address;
+}
+
 ```
 
 You can use the `with` method on any endpoint which returns expandable fields, including list, create, and update endpoints.
@@ -50,6 +57,12 @@ $orders = \CheckoutEngine\Models\Order::with( [
 	'line_item.price',
 	'price.product'
 ] )->paginate( [ 'page' => 1 ] );
+
+foreach($orders as $order) {
+	foreach($order->line_items as $line_item) {
+		$product = $line_item->price->product;
+	}
+}
 ```
 
 Complex Example:
@@ -62,9 +75,15 @@ $charges = \CheckoutEngine\Models\Charge::where([
 	'line_item.price',
 	'price.product',
 	'subscription',
-	'subscription.subscription_items',
-	'subscription_item.price'
+	'subscription.price'
 ] )->get();
+
+foreach($charges as $charge) {
+	// get charged line items.
+	foreach($charge->line_items as $line_item) {
+		$product = $line_item->price->product;
+	}
+}
 ```
 
 You can expand multiple objects at once by identifying multiple items in the `with` array. Expansions have a maximum depth of two levels, and you can expand up to 10 objects.

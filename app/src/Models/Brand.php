@@ -3,20 +3,20 @@
 namespace CheckoutEngine\Models;
 
 /**
- * Price model
+ * Holds the data of the current account.
  */
-class Coupon extends Model {
+class Brand extends Model {
 	/**
 	 * Rest API endpoint
 	 *
 	 * @var string
 	 */
-	protected $endpoint = 'coupons';
+	protected $endpoint = 'brand';
 
 	/**
 	 * Object name
 	 *
 	 * @var string
 	 */
-	protected $object_name = 'coupon';
+	protected $object_name = 'brand';
 }

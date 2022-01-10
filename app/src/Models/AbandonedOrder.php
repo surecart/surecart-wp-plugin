@@ -32,10 +32,6 @@ class AbandonedOrder extends Order {
 	 * @return void
 	 */
 	protected function setLatestOrderAttribute( $value ) {
-		if ( is_string( $value ) ) {
-			$this->attributes['latest_order'] = $value;
-			return;
-		}
 		$this->attributes['latest_order'] = new Order( $value );
 	}
 }

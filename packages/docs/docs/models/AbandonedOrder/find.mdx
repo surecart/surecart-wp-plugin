@@ -1,21 +1,21 @@
 # Find with ID
-Returns a single price by id.
+Returns a single abandoned order by id.
 
 ## Examples
 
 ```php
-\CheckoutEngine\Price::with([
-	'product'
+\CheckoutEngine\Models\AbandonedOrder::with([
+	'customer'
 ])->find('8ba8d60f-5277-4e6b-807c-dee8166446d5');
 ```
 
 ## Parameters
 import ModelParameters from '../../../components/ModelParameters.js';
 
-<ModelParameters path={'prices/{id}'} method={'get'} />
+<ModelParameters path={'abandoned_orders/{id}'} method={'get'} />
 
 ## Response Attributes
 
 import ModelResponse from '../../../components/ModelResponse.js';
 
-<ModelResponse path={'prices/{id}'} method={'get'} model={'price'} />
+<ModelResponse path={'abandoned_orders/{id}'} method={'get'} model={'abandoned_order'} />

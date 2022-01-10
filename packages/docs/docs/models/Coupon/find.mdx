@@ -1,0 +1,21 @@
+# Find with ID
+Returns a single coupon by id.
+
+## Examples
+
+```php
+\CheckoutEngine\Models\Coupon::with([
+	'promotions'
+])->find('8ba8d60f-5277-4e6b-807c-dee8166446d5');
+```
+
+## Parameters
+import ModelParameters from '../../../components/ModelParameters.js';
+
+<ModelParameters path={'coupons/{id}'} method={'get'} />
+
+## Response Attributes
+
+import ModelResponse from '../../../components/ModelResponse.js';
+
+<ModelResponse path={'coupons/{id}'} method={'get'} model={'coupon'} />

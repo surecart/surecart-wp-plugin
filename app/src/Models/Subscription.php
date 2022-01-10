@@ -2,7 +2,6 @@
 
 namespace CheckoutEngine\Models;
 
-use CheckoutEngine\Models\SubscriptionItem;
 use CheckoutEngine\Models\Traits\HasCustomer;
 use CheckoutEngine\Models\Traits\HasOrder;
 
@@ -27,20 +26,13 @@ class Subscription extends Model {
 	protected $object_name = 'subscription';
 
 	/**
-	 * Set the product attribute
+	 * Set the price attribute
 	 *
-	 * @param  object $value Product properties.
+	 * @param  string $value Product properties.
 	 * @return void
 	 */
-	public function setSubscriptionItemsAttribute( $value ) {
-		$models = [];
-		if ( ! empty( $value->data ) && is_array( $value->data ) ) {
-			foreach ( $value->data as $attributes ) {
-				$models[] = new SubscriptionItem( $attributes );
-			}
-			$value->data = $models;
-		}
-		$this->attributes['subscription_items'] = $value;
+	public function setPriceAttribute( $value ) {
+		$this->attributes['price'] = new Price( $value );
 	}
 
 	/**

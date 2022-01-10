@@ -1,0 +1,19 @@
+# Find with ID
+Returns a single customer_link by id.
+
+## Examples
+
+```php
+\CheckoutEngine\Models\CustomerLink::find('8ba8d60f-5277-4e6b-807c-dee8166446d5');
+```
+
+## Parameters
+import ModelParameters from '../../../components/ModelParameters.js';
+
+<ModelParameters path={'customer_links/{id}'} method={'get'} />
+
+## Response Attributes
+
+import ModelResponse from '../../../components/ModelResponse.js';
+
+<ModelResponse path={'customer_links/{id}'} method={'get'} model={'customer_link'} />
