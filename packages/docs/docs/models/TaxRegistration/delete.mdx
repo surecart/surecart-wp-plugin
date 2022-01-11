@@ -1,0 +1,24 @@
+# Delete
+import MethodText from '../../../components/MethodText.js';
+
+<p><MethodText path={'tax_registrations/{id}'} method={'delete'}  /></p>
+
+## Examples
+
+Delete a model by id:
+```php
+\CheckoutEngine\Models\TaxRegistration::delete('8ba8d60f-5277-4e6b-807c-dee8166446d5');
+```
+
+Delete a model directly.
+```php
+$tax_registration = \CheckoutEngine\Models\TaxRegistration::find('8ba8d60f-5277-4e6b-807c-dee8166446d5');
+$tax_registration->delete();
+```
+
+## Response Attributes
+
+import ModelResponse from '../../../components/ModelResponse.js';
+
+<ModelResponse path={'tax_registrations/{id}'} method={'delete'} model={'tax_registration'} />
+

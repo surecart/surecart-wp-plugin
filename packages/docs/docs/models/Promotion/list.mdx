@@ -1,0 +1,40 @@
+# List or Query
+
+import MethodText from '../../../components/MethodText.js';
+
+<p><MethodText path={'promotions'} method={'get'}  /></p>
+
+## Examples
+
+Get 20 unarchived promotions and their prices.
+```php
+\CheckoutEngine\Models\Promotion::where([
+	'archived' => false
+])->with([
+	'coupon'
+])->paginate([
+	'page' => 1,
+	'per_page' => 20
+]);
+```
+
+Get a list of promotion based on ids.
+```php
+\CheckoutEngine\Models\Price::where([
+	'ids' => [
+		'8ba8d60f-5277-4e6b-807c-dee8166446d5',
+		'07fd28e0-e735-4acf-86d8-4d7855055e0b'
+	]
+])->paginate();
+```
+
+## Where Parameters
+import ModelParameters from '../../../components/ModelParameters.js';
+
+<ModelParameters path={'promotions'} method={'get'} />
+
+## Response Attributes
+
+import ModelResponse from '../../../components/ModelResponse.js';
+
+<ModelResponse path={'promotions'} method={'get'} model={'promotion'} />

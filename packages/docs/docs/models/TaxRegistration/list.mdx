@@ -1,0 +1,28 @@
+# List or Query
+
+import MethodText from '../../../components/MethodText.js';
+
+<p><MethodText path={'tax_registrations'} method={'get'}  /></p>
+
+## Examples
+
+Get 20 tax registrations.
+```php
+\CheckoutEngine\Models\TaxRegistration::with([
+	'tax_zone'
+])->paginate([
+	'page' => 1,
+	'per_page' => 20
+]);
+```
+
+## Where Parameters
+import ModelParameters from '../../../components/ModelParameters.js';
+
+<ModelParameters path={'tax_registrations'} method={'get'} />
+
+## Response Attributes
+
+import ModelResponse from '../../../components/ModelResponse.js';
+
+<ModelResponse path={'tax_registrations'} method={'get'} model={'tax_registration'} />

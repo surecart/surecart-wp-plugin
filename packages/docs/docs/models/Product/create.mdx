@@ -1,0 +1,25 @@
+# Create
+import MethodText from '../../../components/MethodText.js';
+
+<p><MethodText path={'products'} method={'post'}  /></p>
+
+## Examples
+
+```php
+$saved = new CheckoutEngine\Models\Product([
+	'name' => 'Product 1',
+	'description' => 'Product 1 description',
+])->save();
+```
+
+
+## Model Attributes
+import ModelBody from '../../../components/ModelBody.js';
+
+<ModelBody path={'products'} method={'post'} model={'product'} />
+
+## Response Attributes
+
+import ModelResponse from '../../../components/ModelResponse.js';
+
+<ModelResponse path={'products'} method={'post'} model={'product'} />

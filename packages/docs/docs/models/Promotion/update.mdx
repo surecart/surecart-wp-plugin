@@ -1,0 +1,34 @@
+# Update
+
+import MethodText from '../../../components/MethodText.js';
+
+<p><MethodText path={'promotions/{id}'} method={'patch'}  /></p>
+
+
+## Examples
+
+All at once:
+```php
+$promotion = \CheckoutEngine\Models\Product::find('8ba8d60f-5277-4e6b-807c-dee8166446d5');
+$promotion->update([
+	'code' => 'NEWCODE',
+]);
+```
+
+Wait until attributes are updated:
+```php
+$promotion = \CheckoutEngine\Models\Product::find('8ba8d60f-5277-4e6b-807c-dee8166446d5');
+$promotion->code = 'NEWCODE';
+$promotion->save();
+```
+
+## Update Attributes
+import ModelBody from '../../../components/ModelBody.js';
+
+<ModelBody path={'promotions/{id}'} method={'patch'} model={'promotion'} />
+
+## Response Attributes
+import ModelResponse from '../../../components/ModelResponse.js';
+
+<ModelResponse path={'promotions/{id}'} method={'patch'} model={'promotion'} />
+

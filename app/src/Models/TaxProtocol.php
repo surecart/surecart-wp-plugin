@@ -1,0 +1,22 @@
+<?php
+
+namespace CheckoutEngine\Models;
+
+/**
+ * Price model
+ */
+class TaxProtocol extends Model {
+	/**
+	 * Rest API endpoint
+	 *
+	 * @var string
+	 */
+	protected $endpoint = 'tax_protocols';
+
+	/**
+	 * Object name
+	 *
+	 * @var string
+	 */
+	protected $object_name = 'tax_protocol';
+}

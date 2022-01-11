@@ -1,0 +1,18 @@
+# List
+
+import MethodText from '../../../components/MethodText.js';
+
+<p><MethodText path={'processors'} method={'get'}  /></p>
+
+## Examples
+
+Get all processors
+```php
+\CheckoutEngine\Models\Processor::get();
+```
+
+## Response Attributes
+
+import ModelResponse from '../../../components/ModelResponse.js';
+
+<ModelResponse path={'processors'} method={'get'} model={'processor'} />

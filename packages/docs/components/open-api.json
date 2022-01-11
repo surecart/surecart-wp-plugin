@@ -405,14 +405,6 @@
 								"type": "expandable",
 								"description": "The associated customer."
 							},
-							"invoice": {
-								"type": "expandable",
-								"description": "The associated invoice."
-							},
-							"order": {
-								"type": "expandable",
-								"description": "The associated order."
-							},
 							"payment_method": {
 								"type": "expandable",
 								"description": "The associated payment method."
@@ -676,10 +668,6 @@
 								"type": "integer",
 								"description": "Time at which the object was created. Measured in seconds since the Unix epoch."
 							},
-							"data": {
-								"type": "object",
-								"description": "Object containing data associated with the event."
-							},
 							"type": {
 								"type": "string",
 								"description": "Description of the event (e.g., subscription.updated or charge.updated)."
@@ -719,10 +707,8 @@
 								]
 							},
 							"customer": {
-								"description": "The customer for this invoice.",
-								"allOf": [
-									{ "$ref": "#/components/schemas/customer" }
-								]
+								"type": "string",
+								"description": "The UUID of the customer."
 							},
 							"discount": {
 								"description": "The parameters of the discount to be applied to this invoice.",
@@ -770,7 +756,7 @@
 							},
 							"customer": {
 								"type": "expandable",
-								"description": "The associated customer. (This will only be set once the invoice has been finalized.)"
+								"description": "The associated customer."
 							},
 							"discount": {
 								"type": "expandable",
@@ -1184,6 +1170,10 @@
 								"type": "string",
 								"description": "The external ID necessary to capture payment through this processor. For example, if processing through Stripe, the `external_intent_id` will be set to the `Stripe::PaymentIntent` ID."
 							},
+							"payment_method": {
+								"type": "expandable",
+								"description": "The associated payment method."
+							},
 							"processor_data": {
 								"type": "object",
 								"description": "All of the additional data necessary to capture payment with each processor.",
@@ -1199,6 +1189,10 @@
 										"client_secret": {
 											"type": "string",
 											"description": "The client secret for this Stripe intent."
+										},
+										"payment_method_id": {
+											"type": "string",
+											"description": "The Stripe payment method ID associated with this intent."
 										},
 										"publishable_key": {
 											"type": "string",
@@ -1240,10 +1234,6 @@
 							"live_mode": {
 								"type": "boolean",
 								"description": "Set to `true` if this charge is in live mode, and set to `false` if it is in test mode."
-							},
-							"payment_intent": {
-								"type": "expandable",
-								"description": "The associated payment intent."
 							},
 							"processor_type": {
 								"type": "string",
@@ -1718,6 +1708,10 @@
 					{ "$ref": "#/components/schemas/subscription_base" },
 					{
 						"properties": {
+							"customer": {
+								"type": "string",
+								"description": "The UUID of the customer."
+							},
 							"discount": {
 								"description": "The parameters of the discount to be applied to this subscription.",
 								"allOf": [
@@ -2071,95 +2065,99 @@
 	},
 	"tags": [
 		{
-			"name": "Abandonded Order",
+			"name": "Abandonded Orders",
 			"description": "An abandonded order represents a customer's most recent incomplete order."
 		},
 		{
-			"name": "Account",
+			"name": "Accounts",
 			"description": "This is an object representing a Presto Pay account. You can retrieve it to see properties on the account like it's current - name or default currency."
 		},
 		{
-			"name": "Brand",
+			"name": "Brands",
 			"description": "A brand represents the design and branding settings for an account."
 		},
 		{
-			"name": "Charge",
+			"name": "Charges",
 			"description": "A Charge represents a credit or debit card transaction that was captured through one of your processors. Only successfully captured charges are recorded in Presto Pay."
 		},
 		{
-			"name": "Coupon",
+			"name": "Coupons",
 			"description": "A coupon contains information about a percent-off or amount-off discount. \n\nThe coupon object can be used to discount either one-time payments or subscriptions. There are some additional parameters that apply to subscriptions, but are not applicable to one-time payments, such as duration. Regardless of what duration is set to, it only applies once for one-time payments."
 		},
 		{
-			"name": "Customer",
+			"name": "Customers",
 			"description": "Customer objects allow you to perform recurring charges, and to track multiple charges, that are associated with the same customer. The API allows you to list and retrieve individual customers. Creating and updating customers is performed through Orders."
 		},
 		{
-			"name": "Customer Link",
+			"name": "Customer Links",
 			"description": "Customer links are temporary \"magic links\" that allow access to customers through email lookup. They provide a secure way of granting access to a customer without having the customer ID.\n\nEach customer link is valid for the greater of 1 hour after it's `created_at` time or 1 hour after it's `first_used_at` time. This means that if a customer link is not used within the first hour it expires. If a customer link is used within the first hour then it is valid for another hour starting from the time it was first used. So, a customer link that is used 30min after it's created will be valid for a total of 1hr 30min."
 		},
 		{
-			"name": "Customer Notification Protocol",
+			"name": "Customer Notification Protocols",
 			"description": "A customer notification protocol represents the customer notification settings for an account."
 		},
 		{
-			"name": "Event",
+			"name": "Events",
 			"description": "Events are our way of letting you know when something interesting happens in your account. When an interesting event occurs, we create a new `Event` object. For example, when a subscription updates, we create a `subscription.updated` event."
 		},
 		{
-			"name": "Order",
+			"name": "Invoices",
+			"description": "Invoices are statements of amounts owed by a customer, and are either generated one-off, or generated periodically from a subscription."
+		},
+		{
+			"name": "Orders",
 			"description": "An order represents a collection of one-time and/or subscription products that a customer intends to purchase."
 		},
 		{
-			"name": "Payment Intent",
+			"name": "Payment Intents",
 			"description": "A payment intent represents the process of collecting a payment method from your customer."
 		},
 		{
-			"name": "Payment Method",
+			"name": "Payment Methods",
 			"description": "Payment method objects represent your customer's payment instruments."
 		},
 		{
-			"name": "Price",
+			"name": "Prices",
 			"description": "Prices define the unit cost, currency, and (optional) billing cycle for both recurring and one-time purchases of products. Products help you track inventory or provisioning, and prices help you track payment terms. Different physical goods or levels of service should be represented by products, and pricing options should be represented by prices. \n\nThis approach lets you change prices without having to change your provisioning scheme. For example, you might have a single \\\"gold\\\" product that has prices for $10/month, $100/year, and €9 once."
 		},
 		{
-			"name": "Processor",
+			"name": "Processors",
 			"description": "A processor represents a connection to a third-party payment processor like Stripe."
 		},
 		{
-			"name": "Product",
+			"name": "Products",
 			"description": "Products describe the specific goods or services you offer to your customers. For example, you might offer a Standard and Premium version of your goods or service; each version would be a separate Product. They can be used in conjunction with Prices to configure pricing and Subscriptions."
 		},
 		{
-			"name": "Promotion",
+			"name": "Promotions",
 			"description": "A Promotion represents a customer-redeemable code for a coupon. It can be used to create multiple codes for a single coupon."
 		},
 		{
-			"name": "Refund",
+			"name": "Refunds",
 			"description": "Refund objects allow you to refund a charge that has previously been created but not yet refunded. Funds will be refunded to the credit or debit card that was originally charged."
 		},
 		{
-			"name": "Subscription",
+			"name": "Subscriptions",
 			"description": "A Subscription represents a recurring schedule to charge a customer on one of your processors."
 		},
 		{
-			"name": "Tax Registration",
+			"name": "Tax Registrations",
 			"description": "A tax registration represents a tax zone that is enabled for an account. Taxes will not be calculated for orders within a tax zone unless a matching tax registration exists."
 		},
 		{
-			"name": "Tax Protocol",
+			"name": "Tax Protocols",
 			"description": "A tax protocol represents the tax settings for an account."
 		},
 		{
-			"name": "Tax Zone",
+			"name": "Tax Zones",
 			"description": "A tax zone represents a geographic area (country and state combinations) that taxes can be calculated for."
 		},
 		{
-			"name": "Upload",
+			"name": "Uploads",
 			"description": "Uploads represent files that are hosted on our servers. Files are uploaded directly to the underlying hosting service. To learn more about how uploads work, please contact support."
 		},
 		{
-			"name": "Webhook Endpoint",
+			"name": "Webhook Endpoints",
 			"description": "You can configure webhook endpoints via the API to be notified about events that happen in your Presto Pay account.\n\nMost users configure webhooks from the dashboard, which provides a user interface for registering and testing your webhook endpoints."
 		}
 	],
@@ -2167,7 +2165,7 @@
 		"/api/v1/abandoned_orders": {
 			"get": {
 				"summary": "List",
-				"tags": [ "Abandonded Order" ],
+				"tags": [ "Abandonded Orders" ],
 				"operationId": "list",
 				"description": "Returns a list of your abandonded orders.",
 				"parameters": [
@@ -2192,14 +2190,14 @@
 									},
 									"data": [
 										{
-											"id": "0dbfdfeb-b6d9-49c6-bff7-078068cefb88",
+											"id": "cbd6ceb4-2810-454b-82a5-a60261354bd3",
 											"object": "abandoned_order",
 											"notification_status": "not_sent",
 											"status": "not_notified",
-											"customer": "3e3f1c0c-8907-4d96-bb71-19ef9c6ca272",
-											"latest_order": "73095c3f-3edf-4bbd-b261-e3f55eebf704",
-											"created_at": 1641495131,
-											"updated_at": 1641496031
+											"customer": "f6c8a035-91c6-4436-a992-d6465b1fe62c",
+											"latest_order": "ac0a6cb1-d479-4e35-b4a1-fbc703bf4179",
+											"created_at": 1641838348,
+											"updated_at": 1641839248
 										}
 									]
 								},
@@ -2223,7 +2221,7 @@
 			],
 			"get": {
 				"summary": "Retrieve",
-				"tags": [ "Abandonded Order" ],
+				"tags": [ "Abandonded Orders" ],
 				"operationId": "retrieve",
 				"description": "Retrieves details of a specific abandonded order.",
 				"responses": {
@@ -2232,14 +2230,14 @@
 						"content": {
 							"application/json": {
 								"example": {
-									"id": "fe27b170-e192-4a6a-ae35-7f61dff3d69e",
+									"id": "8876db31-e9d5-43f1-a31e-ee26e0f86e86",
 									"object": "abandoned_order",
 									"notification_status": "not_sent",
 									"status": "not_notified",
-									"customer": "aab3410e-e00d-4ead-b6d4-deec9daa8194",
-									"latest_order": "2e0951f8-10c4-4fa0-8a72-e43f895d3f86",
-									"created_at": 1641495131,
-									"updated_at": 1641496031
+									"customer": "a8fad79a-9fbd-4f69-83db-8dc948e54b74",
+									"latest_order": "9a237f4d-8525-446c-816c-98343d6a1d45",
+									"created_at": 1641838349,
+									"updated_at": 1641839249
 								},
 								"schema": {
 									"$ref": "#/components/schemas/abandoned_order_response"
@@ -2253,7 +2251,7 @@
 		"/api/v1/account": {
 			"get": {
 				"summary": "Retrieve",
-				"tags": [ "Account" ],
+				"tags": [ "Accounts" ],
 				"operationId": "retrieve",
 				"description": "Retrieves details of the current account.",
 				"responses": {
@@ -2262,18 +2260,18 @@
 						"content": {
 							"application/json": {
 								"example": {
-									"id": "2a54ae1a-2325-4609-a273-13ceda05f5e6",
+									"id": "ed4b4419-fa3c-4028-b521-223096e45e62",
 									"object": "account",
 									"currency": "usd",
 									"name": "Test Account",
 									"url": null,
-									"address": "a775f35b-bdf2-40b5-9bbb-9a3df11e2271",
-									"brand": "a1b8d1d6-e90d-42f2-a0c0-0a970b5f3ce8",
-									"customer_notification_protocol": "f11a8eaa-34a5-4412-a3f8-fb2f39a5b053",
-									"owner": "fc40d8b7-cd3a-498b-b7cf-1e6d6da84a2b",
-									"tax_protocol": "17a86162-1c2f-4865-bb73-6e7cf33bc0b6",
-									"created_at": 1641496031,
-									"updated_at": 1641496031
+									"address": "4270c794-62be-49d1-878d-ff635d2446bb",
+									"brand": "23e5d7b6-760c-4cfd-862d-4806933d5c8c",
+									"customer_notification_protocol": "86d2f35f-210b-4f84-9b89-f4d6ec8f21d3",
+									"owner": "e1c5c11b-6d87-414b-afe8-948034e58ba4",
+									"tax_protocol": "be31fb6e-d63d-4da5-ba87-a56ab10a6708",
+									"created_at": 1641839249,
+									"updated_at": 1641839249
 								},
 								"schema": {
 									"$ref": "#/components/schemas/account_response"
@@ -2285,7 +2283,7 @@
 			},
 			"patch": {
 				"summary": "Update",
-				"tags": [ "Account" ],
+				"tags": [ "Accounts" ],
 				"operationId": "update",
 				"description": "Updates the current account.",
 				"parameters": [],
@@ -2295,18 +2293,18 @@
 						"content": {
 							"application/json": {
 								"example": {
-									"id": "3ef1d9fd-e6ad-4f81-a922-c4f63223bbc4",
+									"id": "5ad3474e-991e-4b61-a240-67028b671e73",
 									"object": "account",
 									"currency": "aud",
 									"name": "New Account Name",
 									"url": null,
-									"address": "da70b857-6670-4863-a63b-2f049bbdfadd",
-									"brand": "ebad538c-73f4-4e64-8032-09218636d8af",
-									"customer_notification_protocol": "a94cee07-236b-429a-8390-3ca19eec7831",
-									"owner": "aa91cc25-703d-48c9-ae31-51efc3ee823f",
-									"tax_protocol": "ecde102d-04be-4b9f-8893-ba983f69f574",
-									"created_at": 1641496031,
-									"updated_at": 1641496031
+									"address": "9d50bf2d-09b1-4667-8309-025a0b6668f3",
+									"brand": "12e67fa9-f1c3-4d99-a54a-a3e00c64855b",
+									"customer_notification_protocol": "0aefbaab-a6aa-4a90-a5bf-e71b7ec6dec5",
+									"owner": "dbacf65a-453a-4eef-9e2a-b83c15adbc28",
+									"tax_protocol": "37b7f4e9-e329-4de2-9f87-02e7490668a9",
+									"created_at": 1641839249,
+									"updated_at": 1641839249
 								},
 								"schema": {
 									"$ref": "#/components/schemas/account_response"
@@ -2344,7 +2342,7 @@
 		"/api/v1/brand": {
 			"get": {
 				"summary": "Retrieve",
-				"tags": [ "Brand" ],
+				"tags": [ "Brands" ],
 				"operationId": "retrieve",
 				"description": "Retrieves details of the current account's brand.",
 				"responses": {
@@ -2353,7 +2351,7 @@
 						"content": {
 							"application/json": {
 								"example": {
-									"id": "489ebd91-9dd5-4483-b4da-15fabc7bbd48",
+									"id": "1f3016ea-9e77-4a75-99c3-e310800a1f4e",
 									"object": "brand",
 									"accent_color": "f9fafb",
 									"color": "f9fafb",
@@ -2363,8 +2361,8 @@
 									"phone": null,
 									"website": null,
 									"address": null,
-									"created_at": 1641496031,
-									"updated_at": 1641496031
+									"created_at": 1641839249,
+									"updated_at": 1641839249
 								},
 								"schema": {
 									"$ref": "#/components/schemas/brand_response"
@@ -2376,7 +2374,7 @@
 			},
 			"patch": {
 				"summary": "Update",
-				"tags": [ "Brand" ],
+				"tags": [ "Brands" ],
 				"operationId": "update",
 				"description": "Updates the current account's brand.",
 				"parameters": [],
@@ -2386,7 +2384,7 @@
 						"content": {
 							"application/json": {
 								"example": {
-									"id": "5e8b17c4-25ca-45fe-9eec-56071edfe980",
+									"id": "fcd3e376-d330-403e-ae5b-59a8139bbbcf",
 									"object": "brand",
 									"accent_color": "fbce0a",
 									"color": "1D2B39",
@@ -2396,8 +2394,8 @@
 									"phone": null,
 									"website": null,
 									"address": null,
-									"created_at": 1641496032,
-									"updated_at": 1641496032
+									"created_at": 1641839249,
+									"updated_at": 1641839249
 								},
 								"schema": {
 									"$ref": "#/components/schemas/brand_response"
@@ -2435,7 +2433,7 @@
 		"/api/v1/charges": {
 			"get": {
 				"summary": "List",
-				"tags": [ "Charge" ],
+				"tags": [ "Charges" ],
 				"operationId": "list",
 				"description": "Returns a list of your charges.",
 				"parameters": [
@@ -2462,7 +2460,7 @@
 									},
 									"data": [
 										{
-											"id": "d68de530-c879-4b52-b7b9-c5d2b56f4b3b",
+											"id": "b8f85f59-163e-4068-9c62-e894de344a01",
 											"object": "charge",
 											"amount": 2900,
 											"currency": "usd",
@@ -2471,12 +2469,10 @@
 											"live_mode": true,
 											"refunded_amount": 0,
 											"status": "pending",
-											"customer": "77a58265-66ba-4790-b12d-fdd52707c027",
-											"invoice": null,
-											"order": null,
-											"payment_method": "4d226ef9-c72d-41e5-8fdc-c297ca9efcb1",
-											"created_at": 1641496032,
-											"updated_at": 1641496032
+											"customer": "15820bd5-1ad1-4378-94a0-9e88defe6a58",
+											"payment_method": null,
+											"created_at": 1641839249,
+											"updated_at": 1641839249
 										}
 									]
 								},
@@ -2500,7 +2496,7 @@
 			],
 			"get": {
 				"summary": "Retrieve",
-				"tags": [ "Charge" ],
+				"tags": [ "Charges" ],
 				"operationId": "retrieve",
 				"description": "Retrieves details of a specific charge.",
 				"responses": {
@@ -2509,7 +2505,7 @@
 						"content": {
 							"application/json": {
 								"example": {
-									"id": "0b7cf153-5728-4ca5-b91d-567da328b83d",
+									"id": "70f182c0-d27b-4224-830b-fdf338e491f2",
 									"object": "charge",
 									"amount": 2900,
 									"currency": "usd",
@@ -2518,12 +2514,10 @@
 									"live_mode": true,
 									"refunded_amount": 0,
 									"status": "pending",
-									"customer": "53c50c71-37d3-4c8a-8af2-a85d225f93af",
-									"invoice": null,
-									"order": null,
-									"payment_method": "f68fa2d2-c0b0-4409-ba5d-0866dcf969d1",
-									"created_at": 1641496032,
-									"updated_at": 1641496032
+									"customer": "6a0f84dd-1c25-437d-866c-b8106c6af9d7",
+									"payment_method": null,
+									"created_at": 1641839249,
+									"updated_at": 1641839249
 								},
 								"schema": {
 									"$ref": "#/components/schemas/charge_response"
@@ -2537,7 +2531,7 @@
 		"/api/v1/coupons": {
 			"get": {
 				"summary": "List",
-				"tags": [ "Coupon" ],
+				"tags": [ "Coupons" ],
 				"operationId": "list",
 				"description": "Returns a list of your coupons.",
 				"parameters": [
@@ -2561,7 +2555,7 @@
 									},
 									"data": [
 										{
-											"id": "ea500bca-bb04-49eb-b536-243695459cb9",
+											"id": "a0f3dff8-e3f4-4a5a-b7c7-5559b3b00797",
 											"object": "coupon",
 											"amount_off": 500,
 											"currency": "usd",
@@ -2574,8 +2568,8 @@
 											"percent_off": null,
 											"redeem_by": null,
 											"times_redeemed": 0,
-											"created_at": 1641496032,
-											"updated_at": 1641496032
+											"created_at": 1641839249,
+											"updated_at": 1641839249
 										}
 									]
 								},
@@ -2589,7 +2583,7 @@
 			},
 			"post": {
 				"summary": "Create",
-				"tags": [ "Coupon" ],
+				"tags": [ "Coupons" ],
 				"operationId": "create",
 				"description": "Creates a new coupon.",
 				"parameters": [],
@@ -2599,7 +2593,7 @@
 						"content": {
 							"application/json": {
 								"example": {
-									"id": "8f872a59-72fb-43c4-97c0-e7e0af321597",
+									"id": "a953a77e-b1a1-43fa-b5e6-37161a3f113a",
 									"object": "coupon",
 									"amount_off": 500,
 									"currency": "usd",
@@ -2612,8 +2606,8 @@
 									"percent_off": null,
 									"redeem_by": null,
 									"times_redeemed": 0,
-									"created_at": 1641496032,
-									"updated_at": 1641496032
+									"created_at": 1641839249,
+									"updated_at": 1641839249
 								},
 								"schema": {
 									"$ref": "#/components/schemas/coupon_response"
@@ -2659,7 +2653,7 @@
 			],
 			"get": {
 				"summary": "Retrieve",
-				"tags": [ "Coupon" ],
+				"tags": [ "Coupons" ],
 				"operationId": "retrieve",
 				"description": "Retrieves details of a specific coupon.",
 				"responses": {
@@ -2668,7 +2662,7 @@
 						"content": {
 							"application/json": {
 								"example": {
-									"id": "e33c50e7-d815-46b1-971e-b4683cf68f37",
+									"id": "25bb5916-ed5e-4d7e-9721-5e90d6d602f5",
 									"object": "coupon",
 									"amount_off": 500,
 									"currency": "usd",
@@ -2681,8 +2675,8 @@
 									"percent_off": null,
 									"redeem_by": null,
 									"times_redeemed": 0,
-									"created_at": 1641496032,
-									"updated_at": 1641496032
+									"created_at": 1641839249,
+									"updated_at": 1641839249
 								},
 								"schema": {
 									"$ref": "#/components/schemas/coupon_response"
@@ -2694,7 +2688,7 @@
 			},
 			"patch": {
 				"summary": "Update",
-				"tags": [ "Coupon" ],
+				"tags": [ "Coupons" ],
 				"operationId": "update",
 				"description": "Updates a specific coupon.",
 				"parameters": [],
@@ -2704,7 +2698,7 @@
 						"content": {
 							"application/json": {
 								"example": {
-									"id": "596a552b-bef3-489b-b4f7-c0d8bff4bf1e",
+									"id": "ff2a133b-2036-4214-b12f-c5531ab7ffa9",
 									"object": "coupon",
 									"amount_off": 500,
 									"currency": "usd",
@@ -2717,8 +2711,8 @@
 									"percent_off": null,
 									"redeem_by": null,
 									"times_redeemed": 0,
-									"created_at": 1641496032,
-									"updated_at": 1641496032
+									"created_at": 1641839249,
+									"updated_at": 1641839249
 								},
 								"schema": {
 									"$ref": "#/components/schemas/coupon_response"
@@ -2751,7 +2745,7 @@
 			},
 			"delete": {
 				"summary": "Delete",
-				"tags": [ "Coupon" ],
+				"tags": [ "Coupons" ],
 				"operationId": "delete",
 				"description": "Deletes a specific coupon.",
 				"responses": {
@@ -2760,7 +2754,7 @@
 						"content": {
 							"application/json": {
 								"example": {
-									"id": "fd7dbcbd-eb85-47f3-a6ed-657e7a0d7f23",
+									"id": "5ef504e4-058c-44ef-8190-ff2434889547",
 									"object": "coupon",
 									"deleted": true
 								},
@@ -2776,7 +2770,7 @@
 		"/api/v1/customer_links": {
 			"post": {
 				"summary": "Create",
-				"tags": [ "Customer Link" ],
+				"tags": [ "Customer Links" ],
 				"operationId": "create",
 				"description": "Creates a new customer link.",
 				"parameters": [],
@@ -2812,7 +2806,7 @@
 			],
 			"get": {
 				"summary": "Retrieve",
-				"tags": [ "Customer Link" ],
+				"tags": [ "Customer Links" ],
 				"operationId": "retrieve",
 				"description": "Retrieves details of a specific customer link.",
 				"responses": {
@@ -2821,15 +2815,15 @@
 						"content": {
 							"application/json": {
 								"example": {
-									"id": "fc250a5d-e037-4f6c-808f-e4918cb243b2",
+									"id": "6a05b647-2971-4769-b2cb-bcdc819323b9",
 									"object": "customer_link",
 									"email": "customer-6@example.com",
 									"expired": false,
-									"first_used_at": 1641496032,
+									"first_used_at": 1641839250,
 									"return_url": "https://example.com",
-									"customer": "92689fb0-3eed-4053-9072-e8fb2a510451",
-									"created_at": 1641496032,
-									"updated_at": 1641496032
+									"customer": "f5d50fca-ed75-44d8-b197-3a0b17cc1d6b",
+									"created_at": 1641839250,
+									"updated_at": 1641839250
 								},
 								"schema": {
 									"$ref": "#/components/schemas/customer_link_response"
@@ -2843,7 +2837,7 @@
 		"/api/v1/customer_notification_protocol": {
 			"get": {
 				"summary": "Retrieve",
-				"tags": [ "Customer Notification Protocol" ],
+				"tags": [ "Customer Notification Protocols" ],
 				"operationId": "retrieve",
 				"description": "Retrieves details of the current account's customer notification protocol.",
 				"responses": {
@@ -2852,14 +2846,14 @@
 						"content": {
 							"application/json": {
 								"example": {
-									"id": "9e147d4e-9d27-4988-8455-fadc75ea6b2b",
+									"id": "d5a88b07-9089-43e6-a119-cfb4e9d24aa6",
 									"object": "customer_notification_protocol",
 									"abandoned_orders_enabled": true,
 									"from_name": null,
 									"locale": "en",
 									"reply_to_email": null,
-									"created_at": 1641496032,
-									"updated_at": 1641496032
+									"created_at": 1641839250,
+									"updated_at": 1641839250
 								},
 								"schema": {
 									"$ref": "#/components/schemas/customer_notification_protocol_response"
@@ -2871,7 +2865,7 @@
 			},
 			"patch": {
 				"summary": "Update",
-				"tags": [ "Customer Notification Protocol" ],
+				"tags": [ "Customer Notification Protocols" ],
 				"operationId": "update",
 				"description": "Updates the current account's customer notification protocol.",
 				"parameters": [],
@@ -2881,14 +2875,14 @@
 						"content": {
 							"application/json": {
 								"example": {
-									"id": "eec5e460-61e8-4463-8c12-147a09575acf",
+									"id": "bc76ef4a-a241-4545-8bb2-fd53b65f4f88",
 									"object": "customer_notification_protocol",
 									"abandoned_orders_enabled": true,
 									"from_name": "Support Team",
 									"locale": "en",
 									"reply_to_email": "support@example.com",
-									"created_at": 1641496032,
-									"updated_at": 1641496033
+									"created_at": 1641839250,
+									"updated_at": 1641839250
 								},
 								"schema": {
 									"$ref": "#/components/schemas/customer_notification_protocol_response"
@@ -2926,7 +2920,7 @@
 		"/api/v1/customers": {
 			"get": {
 				"summary": "List",
-				"tags": [ "Customer" ],
+				"tags": [ "Customers" ],
 				"operationId": "list",
 				"description": "Returns a list of your customers.",
 				"parameters": [
@@ -2950,7 +2944,7 @@
 									},
 									"data": [
 										{
-											"id": "7a1956fc-172b-49d9-b7f3-e959694185a4",
+											"id": "a6d91aea-47fd-441f-bbd0-1eadff4cd0e6",
 											"object": "customer",
 											"billing_matches_shipping": true,
 											"email": "customer-7@example.com",
@@ -2959,8 +2953,8 @@
 											"unsubscribed": false,
 											"billing_address": null,
 											"shipping_address": null,
-											"created_at": 1641496033,
-											"updated_at": 1641496033
+											"created_at": 1641839250,
+											"updated_at": 1641839250
 										}
 									]
 								},
@@ -2974,7 +2968,7 @@
 			},
 			"post": {
 				"summary": "Create",
-				"tags": [ "Customer" ],
+				"tags": [ "Customers" ],
 				"operationId": "create",
 				"description": "Creates a new customer.",
 				"parameters": [],
@@ -2984,7 +2978,7 @@
 						"content": {
 							"application/json": {
 								"example": {
-									"id": "44b542a8-60c6-4c2c-95c6-6bfb3aa13e3f",
+									"id": "0c7ddde3-b173-42f1-95c7-ae37480c0efd",
 									"object": "customer",
 									"billing_matches_shipping": true,
 									"email": "testcustomer@example.com",
@@ -2993,8 +2987,8 @@
 									"unsubscribed": false,
 									"billing_address": null,
 									"shipping_address": null,
-									"created_at": 1641496033,
-									"updated_at": 1641496033
+									"created_at": 1641839250,
+									"updated_at": 1641839250
 								},
 								"schema": {
 									"$ref": "#/components/schemas/customer_response"
@@ -3040,7 +3034,7 @@
 			],
 			"get": {
 				"summary": "Retrieve",
-				"tags": [ "Customer" ],
+				"tags": [ "Customers" ],
 				"operationId": "retrieve",
 				"description": "Retrieves details of a specific customer.",
 				"responses": {
@@ -3049,7 +3043,7 @@
 						"content": {
 							"application/json": {
 								"example": {
-									"id": "fb400dd1-b6ca-4542-8a60-db346e1742f7",
+									"id": "b8fcb735-137b-4c7b-b740-801a12c6b098",
 									"object": "customer",
 									"billing_matches_shipping": true,
 									"email": "customer-8@example.com",
@@ -3058,8 +3052,8 @@
 									"unsubscribed": false,
 									"billing_address": null,
 									"shipping_address": null,
-									"created_at": 1641496033,
-									"updated_at": 1641496033
+									"created_at": 1641839250,
+									"updated_at": 1641839250
 								},
 								"schema": {
 									"$ref": "#/components/schemas/customer_response"
@@ -3071,7 +3065,7 @@
 			},
 			"patch": {
 				"summary": "Update",
-				"tags": [ "Customer" ],
+				"tags": [ "Customers" ],
 				"operationId": "update",
 				"description": "Updates a specific customer.",
 				"parameters": [],
@@ -3081,7 +3075,7 @@
 						"content": {
 							"application/json": {
 								"example": {
-									"id": "2fcd2316-ac4f-4bc5-b666-6e65e2519bce",
+									"id": "ba91d0a1-3d90-4dc0-818d-af50a9fef8b9",
 									"object": "customer",
 									"billing_matches_shipping": true,
 									"email": "customer-9@example.com",
@@ -3090,8 +3084,8 @@
 									"unsubscribed": false,
 									"billing_address": null,
 									"shipping_address": null,
-									"created_at": 1641496033,
-									"updated_at": 1641496033
+									"created_at": 1641839250,
+									"updated_at": 1641839250
 								},
 								"schema": {
 									"$ref": "#/components/schemas/customer_response"
@@ -3124,7 +3118,7 @@
 			},
 			"delete": {
 				"summary": "Delete",
-				"tags": [ "Customer" ],
+				"tags": [ "Customers" ],
 				"operationId": "delete",
 				"description": "Deletes a specific customer.",
 				"responses": {
@@ -3133,7 +3127,7 @@
 						"content": {
 							"application/json": {
 								"example": {
-									"id": "e77fc04e-c775-414a-8bc0-e185cf4ac673",
+									"id": "04202cc8-856b-453b-a3ee-8b1ffe518f94",
 									"object": "customer",
 									"deleted": true
 								},
@@ -3149,7 +3143,7 @@
 		"/api/v1/events": {
 			"get": {
 				"summary": "List",
-				"tags": [ "Event" ],
+				"tags": [ "Events" ],
 				"operationId": "list",
 				"description": "Returns a list of your events.",
 				"parameters": [
@@ -3171,36 +3165,14 @@
 									},
 									"data": [
 										{
-											"id": "7003d702-e8a2-4d7b-82ab-0e72ecc3ea70",
+											"id": "1ac445b2-1a6c-4d28-afee-a6a6bb96fcd7",
 											"object": "event",
 											"data": {
-												"object": {
-													"id": "50f7b162-01db-4efa-9c9d-9ac3126b636a",
-													"object": "subscription",
-													"cancel_at_period_end": false,
-													"currency": "usd",
-													"current_period_end_at": null,
-													"current_period_start_at": null,
-													"ended_at": null,
-													"live_mode": true,
-													"metadata": {},
-													"status": "active",
-													"trial_end_at": null,
-													"trial_start_at": null,
-													"quantity": 1,
-													"order": null,
-													"customer": "92971c67-1a74-46c9-9ccb-a4f5e1ebdba2",
-													"discount": null,
-													"latest_invoice": null,
-													"payment_method": null,
-													"price": "a468c2ef-025e-4405-aad0-6e915f4472d5",
-													"created_at": 1641496033,
-													"updated_at": 1641496033
-												}
+												"subscription": "b11aa295-42e8-454d-a0c4-f5871d0d2261"
 											},
 											"type": "subscription.updated",
-											"account": "abf91c31-54e2-4f5e-8abd-62f26c3a08b5",
-											"created_at": 1641496033
+											"account": "c57105c9-dcfb-45b6-908c-33ec7e7ecf19",
+											"created_at": 1641839250
 										}
 									]
 								},
@@ -3224,7 +3196,7 @@
 			],
 			"get": {
 				"summary": "Retrieve",
-				"tags": [ "Event" ],
+				"tags": [ "Events" ],
 				"operationId": "retrieve",
 				"description": "Retrieves details of a specific event.",
 				"responses": {
@@ -3233,36 +3205,14 @@
 						"content": {
 							"application/json": {
 								"example": {
-									"id": "d7a37b79-c5e1-4c3d-98dd-294a3a21c603",
+									"id": "fe25a2cd-bd51-48bd-b30d-48444e509dc2",
 									"object": "event",
 									"data": {
-										"object": {
-											"id": "9e220807-e409-4041-bcbf-78a4f99a0e78",
-											"object": "subscription",
-											"cancel_at_period_end": false,
-											"currency": "usd",
-											"current_period_end_at": null,
-											"current_period_start_at": null,
-											"ended_at": null,
-											"live_mode": true,
-											"metadata": {},
-											"status": "active",
-											"trial_end_at": null,
-											"trial_start_at": null,
-											"quantity": 1,
-											"order": null,
-											"customer": "19778d0e-f153-481c-b9e5-c75477937817",
-											"discount": null,
-											"latest_invoice": null,
-											"payment_method": null,
-											"price": "f6756f67-71c5-4afa-b04c-3f5cc7e5d6b8",
-											"created_at": 1641496033,
-											"updated_at": 1641496033
-										}
+										"subscription": "b0c3d241-cfee-408b-b94d-be2c7a6930bf"
 									},
 									"type": "subscription.updated",
-									"account": "8bed5421-d664-474c-80ff-82df97b7ee4e",
-									"created_at": 1641496033
+									"account": "697bb76d-1a3d-41d1-9bfb-200f8c95789b",
+									"created_at": 1641839250
 								},
 								"schema": {
 									"$ref": "#/components/schemas/event_response"
@@ -3276,7 +3226,7 @@
 		"/api/v1/invoices": {
 			"get": {
 				"summary": "List",
-				"tags": [ "Invoice" ],
+				"tags": [ "Invoices" ],
 				"operationId": "list",
 				"description": "Returns a list of your invoices.",
 				"parameters": [
@@ -3285,7 +3235,6 @@
 					{ "$ref": "#/components/parameters/ids" },
 					{ "$ref": "#/components/parameters/status" },
 					{ "$ref": "#/components/parameters/customer_ids" },
-					{ "$ref": "#/components/parameters/query" },
 					{ "$ref": "#/components/parameters/live_mode" }
 				],
 				"responses": {
@@ -3303,40 +3252,113 @@
 									},
 									"data": [
 										{
-											"id": "5f43e6a6-e347-4543-8dda-c18a2128d46b",
+											"id": "739336e6-0e56-49a0-bd41-3430c25f85e5",
 											"object": "invoice",
 											"currency": "usd",
 											"discount_amount": 0,
 											"live_mode": true,
 											"metadata": {},
-											"number": "8E9BAE2B",
-											"period_end_at": 1642100833,
-											"period_start_at": 1641496033,
+											"number": "97785DE2",
+											"period_end_at": 1642444050,
+											"period_start_at": 1641839250,
 											"processor_data": {
 												"stripe": null
 											},
 											"status": "draft",
-											"subtotal_amount": 0,
+											"subtotal_amount": 2900,
 											"tax_amount": 0,
 											"tax_calculation_status": "disabled",
 											"tax_label": null,
-											"total_amount": 0,
+											"total_amount": 2900,
 											"billing_address": null,
 											"charge": null,
-											"customer": "c4554d1a-b99a-4fb4-9f92-86344aa0e7f1",
+											"customer": "af83932a-08a3-4028-842e-d874ffda695e",
 											"discount": null,
 											"payment_intent": null,
 											"payment_method": null,
 											"shipping_address": null,
 											"subscription": null,
 											"tax_identifier": null,
-											"created_at": 1641496033,
-											"updated_at": 1641496033
+											"created_at": 1641839250,
+											"updated_at": 1641839250
 										}
 									]
 								},
 								"schema": {
 									"$ref": "#/components/schemas/list_response"
+								}
+							}
+						}
+					}
+				}
+			},
+			"post": {
+				"summary": "Create",
+				"tags": [ "Invoices" ],
+				"operationId": "create",
+				"description": "Creates a new invoice.",
+				"parameters": [],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"id": "bf57baa0-f1ad-49de-a641-a88ea9d2473a",
+									"object": "invoice",
+									"currency": "usd",
+									"discount_amount": 0,
+									"live_mode": true,
+									"metadata": {},
+									"number": "76F8FC21",
+									"period_end_at": 1644517651,
+									"period_start_at": 1641839251,
+									"processor_data": { "stripe": null },
+									"status": "draft",
+									"subtotal_amount": 0,
+									"tax_amount": 0,
+									"tax_calculation_status": "disabled",
+									"tax_label": null,
+									"total_amount": 0,
+									"billing_address": null,
+									"charge": null,
+									"customer": "9731f963-9cd4-4cd6-a292-13c3559d91e8",
+									"discount": null,
+									"payment_intent": null,
+									"payment_method": null,
+									"shipping_address": null,
+									"subscription": null,
+									"tax_identifier": null,
+									"created_at": 1641839251,
+									"updated_at": 1641839251
+								},
+								"schema": {
+									"$ref": "#/components/schemas/invoice_response"
+								}
+							}
+						}
+					}
+				},
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"invoice": {
+										"allOf": [
+											{
+												"$ref": "#/components/schemas/invoice_body"
+											}
+										]
+									}
+								}
+							},
+							"example": {
+								"invoice": {
+									"customer_id": "9731f963-9cd4-4cd6-a292-13c3559d91e8",
+									"period_start_at": 1641839251,
+									"period_end_at": 1644517651
 								}
 							}
 						}
@@ -3355,7 +3377,7 @@
 			],
 			"get": {
 				"summary": "Retrieve",
-				"tags": [ "Invoice" ],
+				"tags": [ "Invoices" ],
 				"operationId": "retrieve",
 				"description": "Retrieves details of a specific invoice.",
 				"responses": {
@@ -3364,33 +3386,176 @@
 						"content": {
 							"application/json": {
 								"example": {
-									"id": "068b5a3c-c43e-40e1-95a8-f6ae134e0ea0",
+									"id": "67f1e192-81ae-492d-84be-c53fa51c222a",
 									"object": "invoice",
 									"currency": "usd",
 									"discount_amount": 0,
 									"live_mode": true,
 									"metadata": {},
-									"number": "4907D552",
-									"period_end_at": 1642100833,
-									"period_start_at": 1641496033,
+									"number": "3AB89EA8",
+									"period_end_at": 1642444051,
+									"period_start_at": 1641839251,
 									"processor_data": { "stripe": null },
 									"status": "draft",
-									"subtotal_amount": 0,
+									"subtotal_amount": 2900,
 									"tax_amount": 0,
 									"tax_calculation_status": "disabled",
 									"tax_label": null,
-									"total_amount": 0,
+									"total_amount": 2900,
 									"billing_address": null,
 									"charge": null,
-									"customer": "e2d7d22b-1989-4262-9f0f-7ec9c0ebb093",
+									"customer": "19024196-5694-47e0-a1a5-bc8ed3bc334b",
 									"discount": null,
 									"payment_intent": null,
 									"payment_method": null,
 									"shipping_address": null,
 									"subscription": null,
 									"tax_identifier": null,
-									"created_at": 1641496033,
-									"updated_at": 1641496033
+									"created_at": 1641839251,
+									"updated_at": 1641839251
+								},
+								"schema": {
+									"$ref": "#/components/schemas/invoice_response"
+								}
+							}
+						}
+					}
+				}
+			},
+			"patch": {
+				"summary": "Update",
+				"tags": [ "Invoices" ],
+				"operationId": "update",
+				"description": "Updates a specific invoice.",
+				"parameters": [],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"id": "7d8a2103-cd09-437e-a64b-668c0d689d4e",
+									"object": "invoice",
+									"currency": "usd",
+									"discount_amount": 0,
+									"live_mode": true,
+									"metadata": {},
+									"number": "CDA039C9",
+									"period_end_at": 1642444051,
+									"period_start_at": 1641839251,
+									"processor_data": { "stripe": null },
+									"status": "draft",
+									"subtotal_amount": 2900,
+									"tax_amount": 0,
+									"tax_calculation_status": "disabled",
+									"tax_label": null,
+									"total_amount": 2900,
+									"billing_address": null,
+									"charge": null,
+									"customer": "461f9f39-7706-4a42-a8c7-e4c876734c2d",
+									"discount": null,
+									"payment_intent": null,
+									"payment_method": null,
+									"shipping_address": null,
+									"subscription": null,
+									"tax_identifier": null,
+									"created_at": 1641839251,
+									"updated_at": 1641839251
+								},
+								"schema": {
+									"$ref": "#/components/schemas/invoice_response"
+								}
+							}
+						}
+					}
+				},
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"invoice": {
+										"allOf": [
+											{
+												"$ref": "#/components/schemas/invoice_body"
+											}
+										]
+									}
+								}
+							},
+							"example": {
+								"invoice": {
+									"invoice_items": [
+										{
+											"price_id": "6086ca03-c231-4934-a1b1-902a8f96716a",
+											"quantity": 1
+										}
+									]
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/invoices/{id}/finalize": {
+			"parameters": [
+				{
+					"name": "id",
+					"in": "path",
+					"required": true,
+					"schema": { "type": "string" }
+				},
+				{
+					"name": "processor_type",
+					"in": "query",
+					"schema": { "type": "string" }
+				}
+			],
+			"patch": {
+				"summary": "Finalize",
+				"tags": [ "Invoices" ],
+				"operationId": "finalize",
+				"description": "Finalizes a specific invoice before it can be paid. If succesfull, this will return an associated `PaymentIntent` with the necessary information to capture the payment via the specific processor.",
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"example": {
+									"id": "5387dc0e-e3e6-4e17-a374-ac270552a09a",
+									"object": "invoice",
+									"currency": "usd",
+									"discount_amount": 0,
+									"live_mode": true,
+									"metadata": {},
+									"number": "D46FB355",
+									"period_end_at": 1642444051,
+									"period_start_at": 1641839251,
+									"processor_data": {
+										"stripe": {
+											"account_id": "external_account_11",
+											"publishable_key": "pk_test_123"
+										}
+									},
+									"status": "finalized",
+									"subtotal_amount": 2900,
+									"tax_amount": 0,
+									"tax_calculation_status": "disabled",
+									"tax_label": null,
+									"total_amount": 2900,
+									"billing_address": null,
+									"charge": null,
+									"customer": "f6eb28f5-6467-4b4b-b045-21427444bb83",
+									"discount": null,
+									"payment_intent": "b88074cc-d6fc-41cb-9434-621ce86a38a4",
+									"payment_method": null,
+									"shipping_address": null,
+									"subscription": null,
+									"tax_identifier": null,
+									"created_at": 1641839251,
+									"updated_at": 1641839251
 								},
 								"schema": {
 									"$ref": "#/components/schemas/invoice_response"
@@ -3404,7 +3569,7 @@
 		"/api/v1/orders": {
 			"get": {
 				"summary": "List",
-				"tags": [ "Order" ],
+				"tags": [ "Orders" ],
 				"operationId": "list",
 				"description": "Returns a list of your orders.",
 				"parameters": [
@@ -3432,36 +3597,36 @@
 									},
 									"data": [
 										{
-											"id": "c7812ff9-5993-42d7-a16f-4c0c5096b7fe",
+											"id": "9613f66c-229f-4f07-927f-dc9c9081f77d",
 											"object": "order",
 											"currency": "usd",
 											"discount_amount": 0,
-											"email": null,
+											"email": "customer@example.com",
 											"group_key": null,
 											"live_mode": true,
 											"metadata": {},
 											"name": null,
-											"number": "BDAE791A",
+											"number": "3AE7BB3C",
 											"processor_data": {
 												"stripe": null
 											},
 											"return_url": null,
 											"status": "draft",
-											"subtotal_amount": 0,
+											"subtotal_amount": 2900,
 											"tax_amount": 0,
 											"tax_calculation_status": "disabled",
 											"tax_label": null,
-											"total_amount": 0,
+											"total_amount": 2900,
 											"billing_address": null,
 											"charge": null,
-											"customer": null,
+											"customer": "0062f608-d065-4294-bf3a-0f606e18f0cc",
 											"discount": null,
 											"payment_intent": null,
 											"payment_method": null,
 											"shipping_address": null,
 											"tax_identifier": null,
-											"created_at": 1641496033,
-											"updated_at": 1641496033
+											"created_at": 1641839251,
+											"updated_at": 1641839251
 										}
 									]
 								},
@@ -3475,7 +3640,7 @@
 			},
 			"post": {
 				"summary": "Create",
-				"tags": [ "Order" ],
+				"tags": [ "Orders" ],
 				"operationId": "create",
 				"description": "Creates a new order.",
 				"parameters": [],
@@ -3485,7 +3650,7 @@
 						"content": {
 							"application/json": {
 								"example": {
-									"id": "d44631b6-db74-429d-b8b2-0966c0c0822e",
+									"id": "7d89ad46-433c-4242-b0c3-c1d4ca6cda10",
 									"object": "order",
 									"currency": "usd",
 									"discount_amount": 0,
@@ -3494,7 +3659,7 @@
 									"live_mode": true,
 									"metadata": {},
 									"name": null,
-									"number": "BA0E3927",
+									"number": "E4417447",
 									"processor_data": { "stripe": null },
 									"return_url": null,
 									"status": "draft",
@@ -3505,14 +3670,14 @@
 									"total_amount": 0,
 									"billing_address": null,
 									"charge": null,
-									"customer": "4c026d8c-8173-4b9a-a084-5f1801f5d079",
+									"customer": "66cc272b-32a1-4167-b290-ba6a3a8b1e90",
 									"discount": null,
 									"payment_intent": null,
 									"payment_method": null,
 									"shipping_address": null,
 									"tax_identifier": null,
-									"created_at": 1641496033,
-									"updated_at": 1641496033
+									"created_at": 1641839251,
+									"updated_at": 1641839251
 								},
 								"schema": {
 									"$ref": "#/components/schemas/order_response"
@@ -3558,7 +3723,7 @@
 				"parameters": [
 					{ "$ref": "#/components/parameters/refresh_status" }
 				],
-				"tags": [ "Order" ],
+				"tags": [ "Orders" ],
 				"operationId": "retrieve",
 				"description": "Retrieves details of a specific order.",
 				"responses": {
@@ -3567,34 +3732,34 @@
 						"content": {
 							"application/json": {
 								"example": {
-									"id": "6ee80837-59de-457f-945f-da1e5e059798",
+									"id": "3bfbc48e-9dee-4bec-86c1-3161cb6aefd9",
 									"object": "order",
 									"currency": "usd",
 									"discount_amount": 0,
-									"email": null,
+									"email": "customer@example.com",
 									"group_key": null,
 									"live_mode": true,
 									"metadata": {},
 									"name": null,
-									"number": "B55A3E58",
+									"number": "BC2A183C",
 									"processor_data": { "stripe": null },
 									"return_url": null,
 									"status": "draft",
-									"subtotal_amount": 0,
+									"subtotal_amount": 2900,
 									"tax_amount": 0,
 									"tax_calculation_status": "disabled",
 									"tax_label": null,
-									"total_amount": 0,
+									"total_amount": 2900,
 									"billing_address": null,
 									"charge": null,
-									"customer": null,
+									"customer": "f392998b-e9ca-40e5-ba62-7d5efd3dbcf1",
 									"discount": null,
 									"payment_intent": null,
 									"payment_method": null,
 									"shipping_address": null,
 									"tax_identifier": null,
-									"created_at": 1641496033,
-									"updated_at": 1641496033
+									"created_at": 1641839252,
+									"updated_at": 1641839252
 								},
 								"schema": {
 									"$ref": "#/components/schemas/order_response"
@@ -3606,7 +3771,7 @@
 			},
 			"patch": {
 				"summary": "Update",
-				"tags": [ "Order" ],
+				"tags": [ "Orders" ],
 				"operationId": "update",
 				"description": "Updates a specific order.",
 				"parameters": [],
@@ -3616,7 +3781,7 @@
 						"content": {
 							"application/json": {
 								"example": {
-									"id": "a1bb909c-aa00-4bda-b2f2-ed43a6552ce0",
+									"id": "72977132-9fbc-4ed2-b71a-5ae3772e5630",
 									"object": "order",
 									"currency": "usd",
 									"discount_amount": 0,
@@ -3625,7 +3790,7 @@
 									"live_mode": true,
 									"metadata": {},
 									"name": null,
-									"number": "B4DDCFE4",
+									"number": "7B77F8FF",
 									"processor_data": { "stripe": null },
 									"return_url": null,
 									"status": "draft",
@@ -3636,14 +3801,14 @@
 									"total_amount": 2900,
 									"billing_address": null,
 									"charge": null,
-									"customer": "f7f73bb4-6779-4e24-a731-102296d2b0d6",
+									"customer": "06455594-39da-4e17-82c1-69e9cd8fe2a9",
 									"discount": null,
 									"payment_intent": null,
 									"payment_method": null,
 									"shipping_address": null,
 									"tax_identifier": null,
-									"created_at": 1641496033,
-									"updated_at": 1641496034
+									"created_at": 1641839252,
+									"updated_at": 1641839252
 								},
 								"schema": {
 									"$ref": "#/components/schemas/order_response"
@@ -3672,7 +3837,7 @@
 									"email": "updated-customer@example.com",
 									"line_items": [
 										{
-											"price_id": "b971b8d9-c75c-457f-b2e2-4a7af1fb66d3",
+											"price_id": "7e9c9400-c68c-43b4-ba00-bac9e5a04401",
 											"quantity": 1
 										}
 									]
@@ -3699,16 +3864,16 @@
 			],
 			"patch": {
 				"summary": "Finalize",
-				"tags": [ "Order" ],
+				"tags": [ "Orders" ],
 				"operationId": "finalize",
-				"description": "Finalizes a specific order before it can be paid. If succesfull, this will return an associated `PaymentIntent` with the necessary information to capture the payment via the specific processor. For example, if processing through Stripe, the `external_client_secret` will be set to the `Stripe::PaymentIntent` client secret.\n\nYou can also pass a request body to update the specific order before the server attempts to prepare it. This is helpful when you need to update and prepare the order at the same time.",
+				"description": "Finalizes a specific order before it can be paid. If succesfull, this will return an associated `PaymentIntent` with the necessary information to capture the payment via the specific processor.",
 				"responses": {
 					"200": {
 						"description": "Success",
 						"content": {
 							"application/json": {
 								"example": {
-									"id": "0f104af2-5039-403a-aa19-142cdc5c96d5",
+									"id": "03086330-b8f9-4924-bf57-53cfe8a03066",
 									"object": "order",
 									"currency": "usd",
 									"discount_amount": 0,
@@ -3717,10 +3882,10 @@
 									"live_mode": true,
 									"metadata": {},
 									"name": null,
-									"number": "DDEABEF2",
+									"number": "75409302",
 									"processor_data": {
 										"stripe": {
-											"account_id": "external_account_9",
+											"account_id": "external_account_12",
 											"publishable_key": "pk_test_123"
 										}
 									},
@@ -3733,14 +3898,14 @@
 									"total_amount": 2900,
 									"billing_address": null,
 									"charge": null,
-									"customer": "b5d74a53-9206-4d86-87b1-a6a936ae52f6",
+									"customer": "c797e144-64de-45c0-ad15-ef3fb79fc988",
 									"discount": null,
-									"payment_intent": "ec766ddc-d2e9-433f-8066-0df328336e8d",
+									"payment_intent": "1b8858c4-d0b5-4d7f-a197-d824754c1e8d",
 									"payment_method": null,
 									"shipping_address": null,
 									"tax_identifier": null,
-									"created_at": 1641496034,
-									"updated_at": 1641496034
+									"created_at": 1641839252,
+									"updated_at": 1641839252
 								},
 								"schema": {
 									"$ref": "#/components/schemas/order_response"
@@ -3754,7 +3919,7 @@
 		"/api/v1/payment_intents": {
 			"get": {
 				"summary": "List",
-				"tags": [ "Payment Intent" ],
+				"tags": [ "Payment Intents" ],
 				"operationId": "list",
 				"description": "Returns a list of your payment intents.",
 				"parameters": [
@@ -3779,23 +3944,25 @@
 									},
 									"data": [
 										{
-											"id": "918c4127-a503-4b50-93ec-bc259edd34d5",
+											"id": "fae375dc-7a05-4f10-a1b4-340626265a2e",
 											"object": "payment_intent",
 											"external_intent_id": "pi_3JhDzG2fs4LLhxzS06L7dgBR",
 											"live_mode": true,
 											"status": "pending",
 											"processor_data": {
 												"stripe": {
-													"account_id": "external_account_10",
+													"account_id": "external_account_13",
 													"client_secret": "pi_3K6NFo2fs4LLhxzS1leftxKh_secret_qoy2TA8XJEYKTp4bbF8hT3clV",
+													"payment_method_id": null,
 													"publishable_key": "pk_test_123",
 													"type": "payment"
 												}
 											},
 											"processor_type": "stripe",
-											"customer": "b3ebe44d-5ac9-4300-8ec2-daf7b85d2dc8",
-											"created_at": 1641496034,
-											"updated_at": 1641496034
+											"customer": "40de93d5-eaba-4cd0-9224-e5513cf153fa",
+											"payment_method": null,
+											"created_at": 1641839252,
+											"updated_at": 1641839252
 										}
 									]
 								},
@@ -3809,7 +3976,7 @@
 			},
 			"post": {
 				"summary": "Create",
-				"tags": [ "Payment Intent" ],
+				"tags": [ "Payment Intents" ],
 				"operationId": "create",
 				"description": "Creates a new payment intent.",
 				"parameters": [],
@@ -3819,23 +3986,25 @@
 						"content": {
 							"application/json": {
 								"example": {
-									"id": "71a70326-fe20-49ee-8963-5cfeccb4406a",
+									"id": "8bb26785-7625-4281-98ea-4ce5dee93a3d",
 									"object": "payment_intent",
-									"external_intent_id": "seti_HzBhfvesI27ZVJw",
+									"external_intent_id": "seti_I0ZAZDumty1Q0GT",
 									"live_mode": true,
 									"status": "pending",
 									"processor_data": {
 										"stripe": {
-											"account_id": "external_account_11",
+											"account_id": "external_account_14",
 											"client_secret": "seti_1IyG7QGVpHUbKwE4Z1oYrDbC_secret_JbT3fXLyThiVhWszZSoS4fjVTVr0SWR",
+											"payment_method_id": null,
 											"publishable_key": "pk_test_123",
 											"type": "setup"
 										}
 									},
 									"processor_type": "stripe",
-									"customer": "57be2e20-5dda-4a2e-90fa-81d73b1dd228",
-									"created_at": 1641496034,
-									"updated_at": 1641496034
+									"customer": "b77e6757-2138-472c-a7a0-606de6de8186",
+									"payment_method": null,
+									"created_at": 1641839252,
+									"updated_at": 1641839252
 								},
 								"schema": {
 									"$ref": "#/components/schemas/payment_intent_response"
@@ -3861,7 +4030,7 @@
 							},
 							"example": {
 								"payment_intent": {
-									"customer": "57be2e20-5dda-4a2e-90fa-81d73b1dd228",
+									"customer": "b77e6757-2138-472c-a7a0-606de6de8186",
 									"processor_type": "stripe"
 								}
 							}
@@ -3881,7 +4050,7 @@
 			],
 			"get": {
 				"summary": "Retrieve",
-				"tags": [ "Payment Intent" ],
+				"tags": [ "Payment Intents" ],
 				"operationId": "retrieve",
 				"description": "Retrieves details of a specific payment intent.",
 				"responses": {
@@ -3890,23 +4059,25 @@
 						"content": {
 							"application/json": {
 								"example": {
-									"id": "4e8bb535-0fc4-4c1c-a41c-f0ea8df7c502",
+									"id": "a8861cc2-3e1a-4f9c-bd42-e4391c5215aa",
 									"object": "payment_intent",
 									"external_intent_id": "pi_3JhDzG2fs4LLhxzS06L7dgBR",
 									"live_mode": true,
 									"status": "pending",
 									"processor_data": {
 										"stripe": {
-											"account_id": "external_account_12",
+											"account_id": "external_account_15",
 											"client_secret": "pi_3K6NFo2fs4LLhxzS1leftxKh_secret_qoy2TA8XJEYKTp4bbF8hT3clV",
+											"payment_method_id": null,
 											"publishable_key": "pk_test_123",
 											"type": "payment"
 										}
 									},
 									"processor_type": "stripe",
-									"customer": "be2afde5-c769-4d13-bdda-3dd56f4c3f16",
-									"created_at": 1641496034,
-									"updated_at": 1641496034
+									"customer": "7233b50f-86c7-4777-aeff-d5a809472ed3",
+									"payment_method": null,
+									"created_at": 1641839252,
+									"updated_at": 1641839252
 								},
 								"schema": {
 									"$ref": "#/components/schemas/payment_intent_response"
@@ -3920,7 +4091,7 @@
 		"/api/v1/payment_methods": {
 			"get": {
 				"summary": "List",
-				"tags": [ "Payment Method" ],
+				"tags": [ "Payment Methods" ],
 				"operationId": "list",
 				"description": "Returns a list of your payment methods.",
 				"parameters": [
@@ -3945,17 +4116,16 @@
 									},
 									"data": [
 										{
-											"id": "01c76c89-03b9-41eb-90df-502704a8685e",
+											"id": "16d17719-56b9-4c98-8996-0b8d8998d76a",
 											"object": "payment_method",
 											"external_payment_method_id": "pm_1Ju1BB2fs4LLhxzSoekOTDo3",
 											"live_mode": true,
 											"processor_type": "stripe",
 											"type": "card",
-											"card": "e2bd54d5-ae19-4153-ad3b-9d9e377f1e5f",
-											"customer": "3c55d9bf-118c-48d6-8fe9-efd4dd7d4d68",
-											"payment_intent": "5f53463e-4d1e-4627-b311-8750d4b34be5",
-											"created_at": 1641496034,
-											"updated_at": 1641496034
+											"card": "e8dab8f4-d155-495e-9ea9-e7d6559ed6e2",
+											"customer": "5ceaf991-3e0d-409c-af4d-a16f1fff6a40",
+											"created_at": 1641839252,
+											"updated_at": 1641839252
 										}
 									]
 								},
@@ -3979,7 +4149,7 @@
 			],
 			"get": {
 				"summary": "Retrieve",
-				"tags": [ "Payment Method" ],
+				"tags": [ "Payment Methods" ],
 				"operationId": "retrieve",
 				"description": "Retrieves details of a specific payment method.",
 				"responses": {
@@ -3988,17 +4158,16 @@
 						"content": {
 							"application/json": {
 								"example": {
-									"id": "a0c52556-795f-40dd-a141-f5e9e06389f8",
+									"id": "7a5a630d-f0a2-4070-afed-f5bb57123956",
 									"object": "payment_method",
 									"external_payment_method_id": "pm_1Ju1BB2fs4LLhxzSoekOTDo3",
 									"live_mode": true,
 									"processor_type": "stripe",
 									"type": "card",
-									"card": "a649bccb-112b-4f25-bcd3-2ba3a76e75d1",
-									"customer": "e4a80c66-2c76-4c78-8ccb-8da8baa7f605",
-									"payment_intent": "8db2a25b-69d7-4599-ad9a-2ec903eeb55b",
-									"created_at": 1641496034,
-									"updated_at": 1641496034
+									"card": "c82a3184-d22a-49cc-8f35-12adf9582549",
+									"customer": "dbe41910-c158-4fd8-93de-7c128abb813d",
+									"created_at": 1641839252,
+									"updated_at": 1641839252
 								},
 								"schema": {
 									"$ref": "#/components/schemas/payment_method_response"
@@ -4012,7 +4181,7 @@
 		"/api/v1/prices": {
 			"get": {
 				"summary": "List",
-				"tags": [ "Price" ],
+				"tags": [ "Prices" ],
 				"operationId": "list",
 				"description": "Returns a list of your prices.",
 				"parameters": [
@@ -4039,7 +4208,7 @@
 									},
 									"data": [
 										{
-											"id": "62c5d708-de26-4f28-bae1-7034e5e6aa9b",
+											"id": "0a911920-86fc-4115-b6e1-91bc352d0b70",
 											"object": "price",
 											"ad_hoc": false,
 											"ad_hoc_max_amount": null,
@@ -4057,9 +4226,9 @@
 											"recurring_interval_count": null,
 											"tax_behavior": "exclusive",
 											"trial_duration_days": null,
-											"product": "bd8491f4-b34c-4fd5-92d7-9fa5e7298e27",
-											"created_at": 1641496034,
-											"updated_at": 1641496034
+											"product": "b2aa4b14-919f-4dd4-ba66-2d6913a676e0",
+											"created_at": 1641839252,
+											"updated_at": 1641839252
 										}
 									]
 								},
@@ -4073,7 +4242,7 @@
 			},
 			"post": {
 				"summary": "Create",
-				"tags": [ "Price" ],
+				"tags": [ "Prices" ],
 				"operationId": "create",
 				"description": "Creates a new price.",
 				"parameters": [],
@@ -4083,7 +4252,7 @@
 						"content": {
 							"application/json": {
 								"example": {
-									"id": "33cb308f-e707-4b3f-b766-3598602e2b93",
+									"id": "9bb7b07c-ef8d-40f5-b45b-50691e30e9cc",
 									"object": "price",
 									"ad_hoc": false,
 									"ad_hoc_max_amount": null,
@@ -4101,9 +4270,9 @@
 									"recurring_interval_count": null,
 									"tax_behavior": "exclusive",
 									"trial_duration_days": null,
-									"product": "18947bc3-75a8-438e-bb12-add56c468a20",
-									"created_at": 1641496034,
-									"updated_at": 1641496034
+									"product": "b23c3f2a-ef30-4058-a23e-653af3ce9b26",
+									"created_at": 1641839253,
+									"updated_at": 1641839253
 								},
 								"schema": {
 									"$ref": "#/components/schemas/price_response"
@@ -4131,7 +4300,7 @@
 								"price": {
 									"name": "Test Price",
 									"amount": 2900,
-									"product_id": "18947bc3-75a8-438e-bb12-add56c468a20"
+									"product_id": "b23c3f2a-ef30-4058-a23e-653af3ce9b26"
 								}
 							}
 						}
@@ -4150,7 +4319,7 @@
 			],
 			"get": {
 				"summary": "Retrieve",
-				"tags": [ "Price" ],
+				"tags": [ "Prices" ],
 				"operationId": "retrieve",
 				"description": "Retrieves details of a specific price.",
 				"responses": {
@@ -4159,7 +4328,7 @@
 						"content": {
 							"application/json": {
 								"example": {
-									"id": "931cefcb-3925-4ec7-96c0-2544153efe2c",
+									"id": "96cf13b0-53bf-45b6-a83e-d61e36d422ea",
 									"object": "price",
 									"ad_hoc": false,
 									"ad_hoc_max_amount": null,
@@ -4177,9 +4346,9 @@
 									"recurring_interval_count": null,
 									"tax_behavior": "exclusive",
 									"trial_duration_days": null,
-									"product": "1394096a-510b-4751-a03c-ce68a5919fec",
-									"created_at": 1641496034,
-									"updated_at": 1641496034
+									"product": "27c184f4-3663-426e-9191-539cfee9b88d",
+									"created_at": 1641839253,
+									"updated_at": 1641839253
 								},
 								"schema": {
 									"$ref": "#/components/schemas/price_response"
@@ -4191,7 +4360,7 @@
 			},
 			"patch": {
 				"summary": "Update",
-				"tags": [ "Price" ],
+				"tags": [ "Prices" ],
 				"operationId": "update",
 				"description": "Updates a specific price.",
 				"parameters": [],
@@ -4201,7 +4370,7 @@
 						"content": {
 							"application/json": {
 								"example": {
-									"id": "61e52245-9a4f-426f-a3e5-a6aed87f3025",
+									"id": "9d045eb1-aaac-42b8-9ee1-a7830f2ba601",
 									"object": "price",
 									"ad_hoc": false,
 									"ad_hoc_max_amount": null,
@@ -4219,9 +4388,9 @@
 									"recurring_interval_count": null,
 									"tax_behavior": "exclusive",
 									"trial_duration_days": null,
-									"product": "07cdabad-1c53-4db8-97a7-85a7381366b8",
-									"created_at": 1641496034,
-									"updated_at": 1641496034
+									"product": "9dab4247-fdc6-43a4-a00f-1ce427d6d3a0",
+									"created_at": 1641839253,
+									"updated_at": 1641839253
 								},
 								"schema": {
 									"$ref": "#/components/schemas/price_response"
@@ -4252,7 +4421,7 @@
 			},
 			"delete": {
 				"summary": "Delete",
-				"tags": [ "Price" ],
+				"tags": [ "Prices" ],
 				"operationId": "delete",
 				"description": "Deletes a specific price.",
 				"responses": {
@@ -4261,7 +4430,7 @@
 						"content": {
 							"application/json": {
 								"example": {
-									"id": "e61fa93d-53d7-4fb1-ae1a-31af6a884f7f",
+									"id": "a4553167-a822-46ad-a65b-a9e11259e7e6",
 									"object": "price",
 									"deleted": true
 								},
@@ -4277,7 +4446,7 @@
 		"/api/v1/processors": {
 			"get": {
 				"summary": "List",
-				"tags": [ "Processor" ],
+				"tags": [ "Processors" ],
 				"operationId": "list",
 				"description": "Returns a list of your processors.",
 				"responses": {
@@ -4295,13 +4464,13 @@
 									},
 									"data": [
 										{
-											"id": "4ad6d3fb-db08-4b3a-be0a-27be3d07aa2a",
+											"id": "dc83ab33-33ac-4f66-b375-403c5e123b71",
 											"object": "processor",
 											"enabled": false,
-											"external_account_id": "external_account_15",
+											"external_account_id": "external_account_18",
 											"processor_type": "stripe",
-											"created_at": 1641496035,
-											"updated_at": 1641496035
+											"created_at": 1641839253,
+											"updated_at": 1641839253
 										}
 									]
 								},
@@ -4317,7 +4486,7 @@
 		"/api/v1/products": {
 			"get": {
 				"summary": "List",
-				"tags": [ "Product" ],
+				"tags": [ "Products" ],
 				"operationId": "list",
 				"description": "Returns a list of your products.",
 				"parameters": [
@@ -4343,7 +4512,7 @@
 									},
 									"data": [
 										{
-											"id": "07fd28e0-e735-4acf-86d8-4d7855055e0b",
+											"id": "0b004421-b204-4b60-bdae-68e4a5d88ec2",
 											"object": "product",
 											"archived": false,
 											"archived_at": null,
@@ -4359,8 +4528,8 @@
 											"name": "Test Product",
 											"tax_enabled": true,
 											"tax_category": null,
-											"created_at": 1641496035,
-											"updated_at": 1641496035
+											"created_at": 1641839253,
+											"updated_at": 1641839253
 										}
 									]
 								},
@@ -4374,7 +4543,7 @@
 			},
 			"post": {
 				"summary": "Create",
-				"tags": [ "Product" ],
+				"tags": [ "Products" ],
 				"operationId": "create",
 				"description": "Creates a new product.",
 				"parameters": [],
@@ -4384,7 +4553,7 @@
 						"content": {
 							"application/json": {
 								"example": {
-									"id": "279bc3f7-62b4-4769-8254-18dc52124953",
+									"id": "c5834422-1df8-4534-b62f-854acbf96723",
 									"object": "product",
 									"archived": false,
 									"archived_at": null,
@@ -4400,8 +4569,8 @@
 									"name": "Test Product",
 									"tax_enabled": true,
 									"tax_category": null,
-									"created_at": 1641496035,
-									"updated_at": 1641496035
+									"created_at": 1641839253,
+									"updated_at": 1641839253
 								},
 								"schema": {
 									"$ref": "#/components/schemas/product_response"
@@ -4442,7 +4611,7 @@
 			],
 			"get": {
 				"summary": "Retrieve",
-				"tags": [ "Product" ],
+				"tags": [ "Products" ],
 				"operationId": "retrieve",
 				"description": "Retrieves details of a specific product.",
 				"responses": {
@@ -4451,7 +4620,7 @@
 						"content": {
 							"application/json": {
 								"example": {
-									"id": "ba6eb06e-6b75-4d1d-8642-567a14cd0f53",
+									"id": "2d382635-2fa3-4b65-ab5c-de1ba2b64824",
 									"object": "product",
 									"archived": false,
 									"archived_at": null,
@@ -4467,8 +4636,8 @@
 									"name": "Test Product",
 									"tax_enabled": true,
 									"tax_category": null,
-									"created_at": 1641496035,
-									"updated_at": 1641496035
+									"created_at": 1641839253,
+									"updated_at": 1641839253
 								},
 								"schema": {
 									"$ref": "#/components/schemas/product_response"
@@ -4480,7 +4649,7 @@
 			},
 			"patch": {
 				"summary": "Update",
-				"tags": [ "Product" ],
+				"tags": [ "Products" ],
 				"operationId": "update",
 				"description": "Updates a specific product.",
 				"parameters": [],
@@ -4490,7 +4659,7 @@
 						"content": {
 							"application/json": {
 								"example": {
-									"id": "01bed168-3086-4e8a-bf19-31cad64e5088",
+									"id": "295b01f1-cb3f-4381-8146-cbd03cbf8815",
 									"object": "product",
 									"archived": false,
 									"archived_at": null,
@@ -4506,8 +4675,8 @@
 									"name": "Updated Product",
 									"tax_enabled": true,
 									"tax_category": null,
-									"created_at": 1641496035,
-									"updated_at": 1641496035
+									"created_at": 1641839253,
+									"updated_at": 1641839253
 								},
 								"schema": {
 									"$ref": "#/components/schemas/product_response"
@@ -4540,7 +4709,7 @@
 			},
 			"delete": {
 				"summary": "Delete",
-				"tags": [ "Product" ],
+				"tags": [ "Products" ],
 				"operationId": "delete",
 				"description": "Deletes a specific product.",
 				"responses": {
@@ -4549,7 +4718,7 @@
 						"content": {
 							"application/json": {
 								"example": {
-									"id": "84772ccd-e4e3-4463-b70d-a23f5ad295c7",
+									"id": "d4727ea4-f2f0-4190-bd74-9b5f6fbb5411",
 									"object": "product",
 									"deleted": true
 								},
@@ -4565,7 +4734,7 @@
 		"/api/v1/promotions": {
 			"get": {
 				"summary": "List",
-				"tags": [ "Promotion" ],
+				"tags": [ "Promotions" ],
 				"operationId": "list",
 				"description": "Returns a list of your promotions.",
 				"parameters": [
@@ -4591,7 +4760,7 @@
 									},
 									"data": [
 										{
-											"id": "6b1fb5a5-72ad-4634-87f8-290e4b83729b",
+											"id": "a5d53972-9d53-41d7-a9de-035de91d2b57",
 											"object": "promotion",
 											"archived": false,
 											"archived_at": null,
@@ -4601,9 +4770,9 @@
 											"metadata": {},
 											"redeem_by": null,
 											"times_redeemed": 0,
-											"coupon": "8c72cffd-7f17-4703-a99b-8933d85c429d",
-											"created_at": 1641496035,
-											"updated_at": 1641496035
+											"coupon": "fad99164-c433-4c49-af0d-6ac086c5d7ba",
+											"created_at": 1641839253,
+											"updated_at": 1641839253
 										}
 									]
 								},
@@ -4617,7 +4786,7 @@
 			},
 			"post": {
 				"summary": "Create",
-				"tags": [ "Promotion" ],
+				"tags": [ "Promotions" ],
 				"operationId": "create",
 				"description": "Creates a new promotion.",
 				"parameters": [],
@@ -4627,7 +4796,7 @@
 						"content": {
 							"application/json": {
 								"example": {
-									"id": "7afe73f5-2f6a-4a42-bddc-2407cd03964f",
+									"id": "92647052-3eb2-4edb-a0a9-0b9db1671e75",
 									"object": "promotion",
 									"archived": false,
 									"archived_at": null,
@@ -4637,9 +4806,9 @@
 									"metadata": {},
 									"redeem_by": null,
 									"times_redeemed": 0,
-									"coupon": "27ec18a1-8b0f-463b-a285-af417ee48ded",
-									"created_at": 1641496035,
-									"updated_at": 1641496035
+									"coupon": "aeb5a2a5-80b3-4b42-be2d-6ec20e9184b3",
+									"created_at": 1641839253,
+									"updated_at": 1641839253
 								},
 								"schema": {
 									"$ref": "#/components/schemas/promotion_response"
@@ -4666,7 +4835,7 @@
 							"example": {
 								"promotion": {
 									"code": "TESTCODE",
-									"coupon_id": "27ec18a1-8b0f-463b-a285-af417ee48ded"
+									"coupon_id": "aeb5a2a5-80b3-4b42-be2d-6ec20e9184b3"
 								}
 							}
 						}
@@ -4685,7 +4854,7 @@
 			],
 			"get": {
 				"summary": "Retrieve",
-				"tags": [ "Promotion" ],
+				"tags": [ "Promotions" ],
 				"operationId": "retrieve",
 				"description": "Retrieves details of a specific promotion.",
 				"responses": {
@@ -4694,7 +4863,7 @@
 						"content": {
 							"application/json": {
 								"example": {
-									"id": "8ba8d60f-5277-4e6b-807c-dee8166446d5",
+									"id": "d37b38fe-b97f-4da4-827b-bbec61356db7",
 									"object": "promotion",
 									"archived": false,
 									"archived_at": null,
@@ -4704,9 +4873,9 @@
 									"metadata": {},
 									"redeem_by": null,
 									"times_redeemed": 0,
-									"coupon": "113e412e-d486-432e-8223-ee3f9cc43f7c",
-									"created_at": 1641496035,
-									"updated_at": 1641496035
+									"coupon": "ca7d9e24-0e22-4419-a3c4-010cf2654da0",
+									"created_at": 1641839253,
+									"updated_at": 1641839253
 								},
 								"schema": {
 									"$ref": "#/components/schemas/promotion_response"
@@ -4718,7 +4887,7 @@
 			},
 			"patch": {
 				"summary": "Update",
-				"tags": [ "Promotion" ],
+				"tags": [ "Promotions" ],
 				"operationId": "update",
 				"description": "Updates a specific promotion.",
 				"parameters": [],
@@ -4728,7 +4897,7 @@
 						"content": {
 							"application/json": {
 								"example": {
-									"id": "608dc140-e097-4ac8-b0bc-4a75a99e439c",
+									"id": "3d1bfcd9-cf75-432d-ab51-670b0582a91b",
 									"object": "promotion",
 									"archived": false,
 									"archived_at": null,
@@ -4738,9 +4907,9 @@
 									"metadata": {},
 									"redeem_by": null,
 									"times_redeemed": 0,
-									"coupon": "3bf3341f-61ef-473c-a6c2-876f583566c8",
-									"created_at": 1641496035,
-									"updated_at": 1641496035
+									"coupon": "6bfe9154-6ad1-45b7-be03-dd92ad69c05a",
+									"created_at": 1641839253,
+									"updated_at": 1641839253
 								},
 								"schema": {
 									"$ref": "#/components/schemas/promotion_response"
@@ -4773,7 +4942,7 @@
 			},
 			"delete": {
 				"summary": "Delete",
-				"tags": [ "Promotion" ],
+				"tags": [ "Promotions" ],
 				"operationId": "delete",
 				"description": "Deletes a specific promotion.",
 				"responses": {
@@ -4782,7 +4951,7 @@
 						"content": {
 							"application/json": {
 								"example": {
-									"id": "e2a0e712-cf6f-46ca-9a5e-d5acd454cbbe",
+									"id": "adbf1353-1123-4305-864e-35d349026959",
 									"object": "promotion",
 									"deleted": true
 								},
@@ -4798,7 +4967,7 @@
 		"/api/v1/refunds": {
 			"get": {
 				"summary": "List",
-				"tags": [ "Refund" ],
+				"tags": [ "Refunds" ],
 				"operationId": "list",
 				"description": "Returns a list of your refunds.",
 				"parameters": [
@@ -4822,7 +4991,7 @@
 									},
 									"data": [
 										{
-											"id": "2ae944df-f9bc-4ca7-a28a-e6428f31f323",
+											"id": "db288bb9-756d-463e-8b59-8d1b65e3a98c",
 											"object": "refund",
 											"amount": 1450,
 											"currency": "usd",
@@ -4830,10 +4999,10 @@
 											"live_mode": true,
 											"reason": "requested_by_customer",
 											"status": "pending",
-											"charge": "d16ece9b-6d07-4680-836b-544267e4a880",
-											"customer": "14793d52-2674-4ebf-aab9-5a3299dd8113",
-											"created_at": 1641496036,
-											"updated_at": 1641496036
+											"charge": "856de4d2-d62d-45a4-8ba2-e4c3cfabf564",
+											"customer": "419ebb45-2651-4035-be54-e0893384d30a",
+											"created_at": 1641839254,
+											"updated_at": 1641839254
 										}
 									]
 								},
@@ -4847,7 +5016,7 @@
 			},
 			"post": {
 				"summary": "Create",
-				"tags": [ "Refund" ],
+				"tags": [ "Refunds" ],
 				"operationId": "create",
 				"description": "Creates a new refund.",
 				"parameters": [],
@@ -4857,18 +5026,18 @@
 						"content": {
 							"application/json": {
 								"example": {
-									"id": "9647dfa6-ae14-456c-95a2-e10f8e32668d",
+									"id": "1c6e8b51-6cef-47d8-a11b-4a809e68719b",
 									"object": "refund",
 									"amount": 500,
 									"currency": "usd",
-									"external_refund_id": "re_HzBhhQiDoVw4v6Z",
+									"external_refund_id": "re_I0ZAbiz2dQhrhWq",
 									"live_mode": true,
 									"reason": "requested_by_customer",
 									"status": "succeeded",
-									"charge": "16ae91ff-4654-41d9-8b55-574f8d1392f9",
-									"customer": "3011c472-7b1a-4c8d-89c4-9ad9bd204d01",
-									"created_at": 1641496036,
-									"updated_at": 1641496036
+									"charge": "462460ad-046c-4b22-9394-29505b515f14",
+									"customer": "f6f32556-568a-489f-913b-69096f6bcba4",
+									"created_at": 1641839254,
+									"updated_at": 1641839254
 								},
 								"schema": {
 									"$ref": "#/components/schemas/refund_response"
@@ -4896,7 +5065,7 @@
 								"refund": {
 									"amount": 500,
 									"reason": "requested_by_customer",
-									"charge_id": "16ae91ff-4654-41d9-8b55-574f8d1392f9"
+									"charge_id": "462460ad-046c-4b22-9394-29505b515f14"
 								}
 							}
 						}
@@ -4915,7 +5084,7 @@
 			],
 			"get": {
 				"summary": "Retrieve",
-				"tags": [ "Refund" ],
+				"tags": [ "Refunds" ],
 				"operationId": "retrieve",
 				"description": "Retrieves details of a specific refund.",
 				"responses": {
@@ -4924,7 +5093,7 @@
 						"content": {
 							"application/json": {
 								"example": {
-									"id": "1d9c65ff-4598-4733-89ea-707ee2d5e567",
+									"id": "ea7fd002-04ed-48f6-9b82-8aba0c395443",
 									"object": "refund",
 									"amount": 1450,
 									"currency": "usd",
@@ -4932,10 +5101,10 @@
 									"live_mode": true,
 									"reason": "requested_by_customer",
 									"status": "pending",
-									"charge": "d6cda3e6-1598-4f7c-8205-737ccd838514",
-									"customer": "a3dc121f-db50-407a-84b0-c3ce414efb5d",
-									"created_at": 1641496036,
-									"updated_at": 1641496036
+									"charge": "e2c38c4b-0f37-491c-a879-cfc343d5bb8a",
+									"customer": "eff5242e-9cc8-4450-97dd-82c368bc4c11",
+									"created_at": 1641839254,
+									"updated_at": 1641839254
 								},
 								"schema": {
 									"$ref": "#/components/schemas/refund_response"
@@ -4949,7 +5118,7 @@
 		"/api/v1/subscriptions": {
 			"get": {
 				"summary": "List",
-				"tags": [ "Subscription" ],
+				"tags": [ "Subscriptions" ],
 				"operationId": "list",
 				"description": "Returns a list of your subscriptions.",
 				"parameters": [
@@ -4976,7 +5145,7 @@
 									},
 									"data": [
 										{
-											"id": "c77c380e-5ac5-423b-9c16-97d703bfb9aa",
+											"id": "e0ab7486-f60b-452f-becc-996357784ced",
 											"object": "subscription",
 											"cancel_at_period_end": false,
 											"currency": "usd",
@@ -4990,13 +5159,13 @@
 											"trial_start_at": null,
 											"quantity": 1,
 											"order": null,
-											"customer": "e5023756-2976-4cca-82fe-d027baf9174d",
+											"customer": "fc3c870e-07c8-4b8b-9fa3-dc158996c10b",
 											"discount": null,
 											"latest_invoice": null,
-											"payment_method": null,
-											"price": "a7a0574e-01e9-4fb4-8e82-64e88e4b6b18",
-											"created_at": 1641496036,
-											"updated_at": 1641496036
+											"payment_method": "038a5693-4e88-4388-abfc-c2d387599823",
+											"price": "daf7f716-c5e1-4fd7-a8ee-25810bdf38cb",
+											"created_at": 1641839254,
+											"updated_at": 1641839254
 										}
 									]
 								},
@@ -5020,7 +5189,7 @@
 			],
 			"get": {
 				"summary": "Retrieve",
-				"tags": [ "Subscription" ],
+				"tags": [ "Subscriptions" ],
 				"operationId": "retrieve",
 				"description": "Retrieves details of a specific subscription.",
 				"responses": {
@@ -5029,7 +5198,7 @@
 						"content": {
 							"application/json": {
 								"example": {
-									"id": "9a90a7e7-f493-448a-97e7-6c7b041a47e4",
+									"id": "f1a65d00-d80c-4d5f-8be5-2813307a6b63",
 									"object": "subscription",
 									"cancel_at_period_end": false,
 									"currency": "usd",
@@ -5043,13 +5212,13 @@
 									"trial_start_at": null,
 									"quantity": 1,
 									"order": null,
-									"customer": "5349d137-ad52-4549-a1ca-40779def9d3f",
+									"customer": "53d6030f-6d08-4b0d-92bd-dab2188b2ba1",
 									"discount": null,
 									"latest_invoice": null,
-									"payment_method": null,
-									"price": "5f57f0a9-af7b-4329-999e-34758cce5e8c",
-									"created_at": 1641496036,
-									"updated_at": 1641496036
+									"payment_method": "9a2fc82c-17bd-4bdf-9a8b-6261cc4d1eb9",
+									"price": "24ef567e-e930-44e3-9266-f03b66572f6d",
+									"created_at": 1641839254,
+									"updated_at": 1641839254
 								},
 								"schema": {
 									"$ref": "#/components/schemas/subscription_response"
@@ -5061,7 +5230,7 @@
 			},
 			"patch": {
 				"summary": "Update",
-				"tags": [ "Subscription" ],
+				"tags": [ "Subscriptions" ],
 				"operationId": "update",
 				"description": "Updates a specific subscription.",
 				"parameters": [],
@@ -5071,12 +5240,12 @@
 						"content": {
 							"application/json": {
 								"example": {
-									"id": "bacce427-0391-4b6f-b213-21697a49559d",
+									"id": "7380b268-f564-446e-9c36-cca982c9078f",
 									"object": "subscription",
 									"cancel_at_period_end": false,
 									"currency": "usd",
-									"current_period_end_at": 1644174436,
-									"current_period_start_at": 1641496036,
+									"current_period_end_at": 1644517654,
+									"current_period_start_at": 1641839254,
 									"ended_at": null,
 									"live_mode": true,
 									"metadata": {},
@@ -5085,13 +5254,13 @@
 									"trial_start_at": null,
 									"quantity": 2,
 									"order": null,
-									"customer": "ba938db1-018a-4b71-b464-f4b37a03c799",
+									"customer": "ddd2e131-621e-43be-97af-cfcb864d40d4",
 									"discount": null,
-									"latest_invoice": "442677f8-f97d-4cad-b36c-7e62ddd09097",
-									"payment_method": null,
-									"price": "c06397c8-e86f-416c-869c-89eec5e69201",
-									"created_at": 1641496036,
-									"updated_at": 1641496036
+									"latest_invoice": "26df8fb1-2904-445a-90a2-a5fe556b7ce5",
+									"payment_method": "7f48d1c7-a202-4e61-bbd6-b5deba54f8b7",
+									"price": "e2a4812e-907b-47ab-b49b-3883f2464cf5",
+									"created_at": 1641839254,
+									"updated_at": 1641839254
 								},
 								"schema": {
 									"$ref": "#/components/schemas/subscription_response"
@@ -5132,7 +5301,7 @@
 			],
 			"patch": {
 				"summary": "Cancel",
-				"tags": [ "Subscription" ],
+				"tags": [ "Subscriptions" ],
 				"operationId": "cancel",
 				"description": "Cancels a specific subscription.",
 				"responses": {
@@ -5141,7 +5310,7 @@
 						"content": {
 							"application/json": {
 								"example": {
-									"id": "8aa716c1-a3cb-40e5-b81e-275876eba1e5",
+									"id": "18584c48-1f17-4e62-bf40-3c8a5d7d9ca3",
 									"object": "subscription",
 									"cancel_at_period_end": false,
 									"currency": "usd",
@@ -5155,13 +5324,13 @@
 									"trial_start_at": null,
 									"quantity": 1,
 									"order": null,
-									"customer": "d5aede54-3210-4d9b-89df-f0f313af3834",
+									"customer": "5415ba72-5dc9-4253-9372-7367c26ba793",
 									"discount": null,
 									"latest_invoice": null,
-									"payment_method": null,
-									"price": "6a98205f-96c5-4c6c-88e8-73818c934253",
-									"created_at": 1641496036,
-									"updated_at": 1641496036
+									"payment_method": "d8b04b77-f2c3-44d9-a5d9-5f2985b9abb3",
+									"price": "9e2bfc24-0927-4df4-93bb-8d2a53ce9ca5",
+									"created_at": 1641839255,
+									"updated_at": 1641839255
 								},
 								"schema": {
 									"$ref": "#/components/schemas/subscription_response"
@@ -5175,7 +5344,7 @@
 		"/api/v1/tax_protocol": {
 			"get": {
 				"summary": "Retrieve",
-				"tags": [ "Tax Protocol" ],
+				"tags": [ "Tax Protocols" ],
 				"operationId": "retrieve",
 				"description": "Retrieves details of the current account's tax protocol.",
 				"responses": {
@@ -5184,7 +5353,7 @@
 						"content": {
 							"application/json": {
 								"example": {
-									"id": "89b53779-2774-42f9-8630-a6b2de1e3bfe",
+									"id": "3be4842f-19d7-447f-957b-06783ecf93c1",
 									"object": "tax_protocol",
 									"ca_tax_enabled": false,
 									"eu_micro_exemption_enabled": false,
@@ -5192,8 +5361,8 @@
 									"tax_enabled": false,
 									"ca_tax_identifier": null,
 									"eu_tax_identifier": null,
-									"created_at": 1641496036,
-									"updated_at": 1641496036
+									"created_at": 1641839255,
+									"updated_at": 1641839255
 								},
 								"schema": {
 									"$ref": "#/components/schemas/tax_protocol_response"
@@ -5205,7 +5374,7 @@
 			},
 			"patch": {
 				"summary": "Update",
-				"tags": [ "Tax Protocol" ],
+				"tags": [ "Tax Protocols" ],
 				"operationId": "update",
 				"description": "Updates the current account's tax protocol.",
 				"parameters": [],
@@ -5215,7 +5384,7 @@
 						"content": {
 							"application/json": {
 								"example": {
-									"id": "54c46b81-97fd-4644-8051-a16b1fcbd7d8",
+									"id": "b499ea57-ec06-4592-acc2-4e79abd82f64",
 									"object": "tax_protocol",
 									"ca_tax_enabled": false,
 									"eu_micro_exemption_enabled": false,
@@ -5223,8 +5392,8 @@
 									"tax_enabled": true,
 									"ca_tax_identifier": null,
 									"eu_tax_identifier": null,
-									"created_at": 1641496036,
-									"updated_at": 1641496036
+									"created_at": 1641839255,
+									"updated_at": 1641839255
 								},
 								"schema": {
 									"$ref": "#/components/schemas/tax_protocol_response"
@@ -5259,7 +5428,7 @@
 		"/api/v1/tax_registrations": {
 			"get": {
 				"summary": "List",
-				"tags": [ "Tax Registration" ],
+				"tags": [ "Tax Registrations" ],
 				"operationId": "list",
 				"description": "Returns a list of your tax registrations.",
 				"parameters": [
@@ -5281,12 +5450,12 @@
 									},
 									"data": [
 										{
-											"id": "38e3ff60-fb6a-441a-b3d1-e9fbd5e02cfd",
+											"id": "b2b95186-d401-497b-a4ea-92abdae2aa2d",
 											"object": "tax_registration",
 											"tax_identifier": null,
-											"tax_zone": "3bae5083-340a-449e-9b3f-1972fe39bab4",
-											"created_at": 1641496036,
-											"updated_at": 1641496036
+											"tax_zone": "e0665f05-e305-4628-af69-3f4b3c3f91a6",
+											"created_at": 1641839255,
+											"updated_at": 1641839255
 										}
 									]
 								},
@@ -5300,7 +5469,7 @@
 			},
 			"post": {
 				"summary": "Create",
-				"tags": [ "Tax Registration" ],
+				"tags": [ "Tax Registrations" ],
 				"operationId": "create",
 				"description": "Creates a new tax registration.",
 				"parameters": [],
@@ -5310,12 +5479,12 @@
 						"content": {
 							"application/json": {
 								"example": {
-									"id": "8098869e-746e-4980-9a56-4259ad95fd88",
+									"id": "f9bb20ef-ef9c-4b7b-96cc-b3bab147307d",
 									"object": "tax_registration",
 									"tax_identifier": null,
-									"tax_zone": "7fc38a30-5f14-47f0-b248-acea43d903e7",
-									"created_at": 1641496037,
-									"updated_at": 1641496037
+									"tax_zone": "f952f545-9782-4223-b5ae-200a3552ff38",
+									"created_at": 1641839255,
+									"updated_at": 1641839255
 								},
 								"schema": {
 									"$ref": "#/components/schemas/tax_registration_response"
@@ -5341,7 +5510,7 @@
 							},
 							"example": {
 								"tax_registration": {
-									"tax_zone": "7fc38a30-5f14-47f0-b248-acea43d903e7"
+									"tax_zone": "f952f545-9782-4223-b5ae-200a3552ff38"
 								}
 							}
 						}
@@ -5360,7 +5529,7 @@
 			],
 			"get": {
 				"summary": "Retrieve",
-				"tags": [ "Tax Registration" ],
+				"tags": [ "Tax Registrations" ],
 				"operationId": "retrieve",
 				"description": "Retrieves details of a specific tax registration.",
 				"responses": {
@@ -5369,12 +5538,12 @@
 						"content": {
 							"application/json": {
 								"example": {
-									"id": "120a6960-bfac-4845-8730-2633a97d3243",
+									"id": "32d0dea3-7d53-4aad-bceb-c512842708e7",
 									"object": "tax_registration",
 									"tax_identifier": null,
-									"tax_zone": "3bae5083-340a-449e-9b3f-1972fe39bab4",
-									"created_at": 1641496037,
-									"updated_at": 1641496037
+									"tax_zone": "96a48d90-6316-4236-a683-b7fb29c67f17",
+									"created_at": 1641839255,
+									"updated_at": 1641839255
 								},
 								"schema": {
 									"$ref": "#/components/schemas/tax_registration_response"
@@ -5386,7 +5555,7 @@
 			},
 			"patch": {
 				"summary": "Update",
-				"tags": [ "Tax Registration" ],
+				"tags": [ "Tax Registrations" ],
 				"operationId": "update",
 				"description": "Updates a specific tax registration.",
 				"parameters": [],
@@ -5396,12 +5565,12 @@
 						"content": {
 							"application/json": {
 								"example": {
-									"id": "288dfca0-f042-45b1-b9f9-17bf4ab508aa",
+									"id": "ba0afb05-71ef-40ab-b8af-ee8fa91f25fe",
 									"object": "tax_registration",
-									"tax_identifier": "f46c7e69-ca13-4502-9fe0-65108e16fa78",
-									"tax_zone": "3bae5083-340a-449e-9b3f-1972fe39bab4",
-									"created_at": 1641496037,
-									"updated_at": 1641496037
+									"tax_identifier": "63c3ce58-da48-44a1-b12f-26c3e15d0270",
+									"tax_zone": "8110c12d-a0cf-4bb4-9088-803d51455052",
+									"created_at": 1641839255,
+									"updated_at": 1641839255
 								},
 								"schema": {
 									"$ref": "#/components/schemas/tax_registration_response"
@@ -5439,7 +5608,7 @@
 			},
 			"delete": {
 				"summary": "Delete",
-				"tags": [ "Tax Registration" ],
+				"tags": [ "Tax Registrations" ],
 				"operationId": "delete",
 				"description": "Deletes a specific tax registration.",
 				"responses": {
@@ -5448,7 +5617,7 @@
 						"content": {
 							"application/json": {
 								"example": {
-									"id": "f56c0998-b701-4252-9c88-cde2c9c898ea",
+									"id": "980e6010-84b2-495a-947b-c2c75b1a6602",
 									"object": "tax_registration",
 									"deleted": true
 								},
@@ -5464,7 +5633,7 @@
 		"/api/v1/tax_zones": {
 			"get": {
 				"summary": "List",
-				"tags": [ "Tax Zone" ],
+				"tags": [ "Tax Zones" ],
 				"operationId": "list",
 				"description": "Returns a list of all available tax zones.",
 				"parameters": [
@@ -5479,293 +5648,12 @@
 								"example": {
 									"object": "list",
 									"pagination": {
-										"count": 100,
+										"count": 0,
 										"limit": 20,
 										"page": 1,
 										"url": "/api/v1/tax_zones"
 									},
-									"data": [
-										{
-											"id": "7fc38a30-5f14-47f0-b248-acea43d903e7",
-											"object": "tax_zone",
-											"average_rate": "0.05",
-											"average_rate_label": "Tax",
-											"country": "US",
-											"country_name": "United States",
-											"minimum_rate": "0.05",
-											"minimum_rate_label": "State Tax",
-											"state": "GU",
-											"state_name": "Guam",
-											"created_at": 1641486040,
-											"updated_at": 1641486040
-										},
-										{
-											"id": "2cd33545-e787-4bc0-971a-fcf7a5e0c382",
-											"object": "tax_zone",
-											"average_rate": "0.0",
-											"average_rate_label": "Tax",
-											"country": "US",
-											"country_name": "United States",
-											"minimum_rate": "0.0",
-											"minimum_rate_label": "State Tax",
-											"state": "AS",
-											"state_name": "American Samoa",
-											"created_at": 1641486040,
-											"updated_at": 1641486040
-										},
-										{
-											"id": "3c452737-296b-46ed-a6ec-4c62b3b36b15",
-											"object": "tax_zone",
-											"average_rate": "0.0",
-											"average_rate_label": "Tax",
-											"country": "US",
-											"country_name": "United States",
-											"minimum_rate": "0.0",
-											"minimum_rate_label": "State Tax",
-											"state": "AA",
-											"state_name": "Armed Forces Americas",
-											"created_at": 1641486040,
-											"updated_at": 1641486040
-										},
-										{
-											"id": "41e10bee-eb51-437c-a406-f54480148bc7",
-											"object": "tax_zone",
-											"average_rate": "0.0",
-											"average_rate_label": "Tax",
-											"country": "US",
-											"country_name": "United States",
-											"minimum_rate": "0.0",
-											"minimum_rate_label": "State Tax",
-											"state": "AP",
-											"state_name": "Armed Forces Pacific",
-											"created_at": 1641486040,
-											"updated_at": 1641486040
-										},
-										{
-											"id": "961493fc-e745-47c0-83d4-adb21d8c3fd7",
-											"object": "tax_zone",
-											"average_rate": "0.0",
-											"average_rate_label": "Tax",
-											"country": "US",
-											"country_name": "United States",
-											"minimum_rate": "0.0",
-											"minimum_rate_label": "State Tax",
-											"state": "AE",
-											"state_name": "Armed Forces Europe",
-											"created_at": 1641486040,
-											"updated_at": 1641486040
-										},
-										{
-											"id": "881bbd6f-aabb-4dc9-9d34-4c7e1b00aeee",
-											"object": "tax_zone",
-											"average_rate": "0.0",
-											"average_rate_label": "Tax",
-											"country": "US",
-											"country_name": "United States",
-											"minimum_rate": "0.0",
-											"minimum_rate_label": "State Tax",
-											"state": "VI",
-											"state_name": "Virgin Islands",
-											"created_at": 1641486040,
-											"updated_at": 1641486040
-										},
-										{
-											"id": "c331ad15-5bd1-4ca7-84d8-8bfb5549bc67",
-											"object": "tax_zone",
-											"average_rate": "0.061",
-											"average_rate_label": "Tax",
-											"country": "US",
-											"country_name": "United States",
-											"minimum_rate": "0.06",
-											"minimum_rate_label": "State Tax",
-											"state": "PA",
-											"state_name": "Pennsylvania",
-											"created_at": 1641486040,
-											"updated_at": 1641486040
-										},
-										{
-											"id": "11ee7f3a-b920-48b4-afe4-846094e73a10",
-											"object": "tax_zone",
-											"average_rate": "0.0546",
-											"average_rate_label": "Tax",
-											"country": "US",
-											"country_name": "United States",
-											"minimum_rate": "0.05",
-											"minimum_rate_label": "State Tax",
-											"state": "WI",
-											"state_name": "Wisconsin",
-											"created_at": 1641486040,
-											"updated_at": 1641486040
-										},
-										{
-											"id": "c1bfe000-1feb-468a-b5a7-3ca8c45e36e8",
-											"object": "tax_zone",
-											"average_rate": "0.07439999999999999",
-											"average_rate_label": "Tax",
-											"country": "US",
-											"country_name": "United States",
-											"minimum_rate": "0.0625",
-											"minimum_rate_label": "State Tax",
-											"state": "TX",
-											"state_name": "Texas",
-											"created_at": 1641486040,
-											"updated_at": 1641486040
-										},
-										{
-											"id": "0adbe6da-1cb6-4d76-8b7c-b41306130ad7",
-											"object": "tax_zone",
-											"average_rate": "0.0604",
-											"average_rate_label": "Tax",
-											"country": "US",
-											"country_name": "United States",
-											"minimum_rate": "0.06",
-											"minimum_rate_label": "State Tax",
-											"state": "VT",
-											"state_name": "Vermont",
-											"created_at": 1641486040,
-											"updated_at": 1641486040
-										},
-										{
-											"id": "10d1fac9-7162-4cff-956c-507fb064403d",
-											"object": "tax_zone",
-											"average_rate": "0.0682",
-											"average_rate_label": "Tax",
-											"country": "US",
-											"country_name": "United States",
-											"minimum_rate": "0.06",
-											"minimum_rate_label": "State Tax",
-											"state": "FL",
-											"state_name": "Florida",
-											"created_at": 1641486040,
-											"updated_at": 1641486040
-										},
-										{
-											"id": "8471ae75-206b-4220-9e23-75dc7d9998a9",
-											"object": "tax_zone",
-											"average_rate": "0.061",
-											"average_rate_label": "Tax",
-											"country": "US",
-											"country_name": "United States",
-											"minimum_rate": "0.06",
-											"minimum_rate_label": "State Tax",
-											"state": "WV",
-											"state_name": "West Virginia",
-											"created_at": 1641486040,
-											"updated_at": 1641486040
-										},
-										{
-											"id": "7bb513cb-bed2-4299-a109-627183540a4b",
-											"object": "tax_zone",
-											"average_rate": "0.08260000000000001",
-											"average_rate_label": "Tax",
-											"country": "US",
-											"country_name": "United States",
-											"minimum_rate": "0.0625",
-											"minimum_rate_label": "State Tax",
-											"state": "CA",
-											"state_name": "California",
-											"created_at": 1641486040,
-											"updated_at": 1641486040
-										},
-										{
-											"id": "45537506-10ce-4ba2-80f0-b6bb883431f8",
-											"object": "tax_zone",
-											"average_rate": "0.08359999999999999",
-											"average_rate_label": "Tax",
-											"country": "US",
-											"country_name": "United States",
-											"minimum_rate": "0.04",
-											"minimum_rate_label": "State Tax",
-											"state": "AL",
-											"state_name": "Alabama",
-											"created_at": 1641486040,
-											"updated_at": 1641486040
-										},
-										{
-											"id": "5197eeba-71c8-4609-b4fa-c4eef491e5ba",
-											"object": "tax_zone",
-											"average_rate": "0.0702",
-											"average_rate_label": "Tax",
-											"country": "US",
-											"country_name": "United States",
-											"minimum_rate": "0.07000000000000001",
-											"minimum_rate_label": "State Tax",
-											"state": "MS",
-											"state_name": "Mississippi",
-											"created_at": 1641486040,
-											"updated_at": 1641486040
-										},
-										{
-											"id": "8e6f7280-4081-4465-844d-271181a4794e",
-											"object": "tax_zone",
-											"average_rate": "0.075",
-											"average_rate_label": "Tax",
-											"country": "US",
-											"country_name": "United States",
-											"minimum_rate": "0.0625",
-											"minimum_rate_label": "State Tax",
-											"state": "IL",
-											"state_name": "Illinois",
-											"created_at": 1641486040,
-											"updated_at": 1641486040
-										},
-										{
-											"id": "c14b789e-f7a0-425c-8d39-667e3f5ccff8",
-											"object": "tax_zone",
-											"average_rate": "0.0958",
-											"average_rate_label": "Tax",
-											"country": "US",
-											"country_name": "United States",
-											"minimum_rate": "0.05",
-											"minimum_rate_label": "State Tax",
-											"state": "LA",
-											"state_name": "Louisiana",
-											"created_at": 1641486040,
-											"updated_at": 1641486040
-										},
-										{
-											"id": "900d2084-4446-495b-9947-7c77dee32b3f",
-											"object": "tax_zone",
-											"average_rate": "0.0703",
-											"average_rate_label": "Tax",
-											"country": "US",
-											"country_name": "United States",
-											"minimum_rate": "0.0513",
-											"minimum_rate_label": "State Tax",
-											"state": "NM",
-											"state_name": "New Mexico",
-											"created_at": 1641486040,
-											"updated_at": 1641486040
-										},
-										{
-											"id": "27675d59-a219-4f7b-bc80-f47a0f624ac2",
-											"object": "tax_zone",
-											"average_rate": "0.0546",
-											"average_rate_label": "Tax",
-											"country": "US",
-											"country_name": "United States",
-											"minimum_rate": "0.043",
-											"minimum_rate_label": "State Tax",
-											"state": "VA",
-											"state_name": "Virginia",
-											"created_at": 1641486040,
-											"updated_at": 1641486040
-										},
-										{
-											"id": "e4b7b6c7-5eb7-4d72-9af7-f886e22da98c",
-											"object": "tax_zone",
-											"average_rate": "0.095",
-											"average_rate_label": "Tax",
-											"country": "US",
-											"country_name": "United States",
-											"minimum_rate": "0.07000000000000001",
-											"minimum_rate_label": "State Tax",
-											"state": "TN",
-											"state_name": "Tennessee",
-											"created_at": 1641486040,
-											"updated_at": 1641486040
-										}
-									]
+									"data": []
 								},
 								"schema": {
 									"$ref": "#/components/schemas/list_response"
@@ -5779,7 +5667,7 @@
 		"/api/v1/uploads": {
 			"post": {
 				"summary": "Create",
-				"tags": [ "Upload" ],
+				"tags": [ "Uploads" ],
 				"operationId": "create",
 				"description": "Creates a new upload.",
 				"responses": {
@@ -5788,7 +5676,7 @@
 						"content": {
 							"application/json": {
 								"example": {
-									"id": "e44fa860-9a00-4341-ac01-10c996935d66",
+									"id": "76cec497-5ba3-482c-8c0b-a9c452c131e2",
 									"object": "upload",
 									"direct_upload": {
 										"headers": null,
@@ -5796,8 +5684,8 @@
 									},
 									"status": "pending",
 									"url": null,
-									"created_at": 1641496037,
-									"updated_at": 1641496037
+									"created_at": 1641839255,
+									"updated_at": 1641839255
 								},
 								"schema": {
 									"$ref": "#/components/schemas/upload_response"
@@ -5811,7 +5699,7 @@
 		"/api/v1/webhook_endpoints": {
 			"get": {
 				"summary": "List",
-				"tags": [ "Webhook Endpoint" ],
+				"tags": [ "Webhook Endpoints" ],
 				"operationId": "list",
 				"description": "Returns a list of your webhook endpoints.",
 				"parameters": [
@@ -5833,14 +5721,14 @@
 									},
 									"data": [
 										{
-											"id": "ba2c42ec-1355-4a0d-adca-12a700516ce8",
+											"id": "b9f3011f-8bba-4519-965d-b1c303cbedce",
 											"object": "webhook_endpoint",
 											"description": null,
 											"enabled": true,
-											"secret": "rEFQNZsZCQ2gB42iGhj8xdHf",
+											"secret": "4LYi4TsfBVDKAEEn6moH4Ljc",
 											"url": "https://example.com",
-											"created_at": 1641496037,
-											"updated_at": 1641496037
+											"created_at": 1641839255,
+											"updated_at": 1641839255
 										}
 									]
 								},
@@ -5854,7 +5742,7 @@
 			},
 			"post": {
 				"summary": "Create",
-				"tags": [ "Webhook Endpoint" ],
+				"tags": [ "Webhook Endpoints" ],
 				"operationId": "create",
 				"description": "Creates a new webhook endpoint.",
 				"parameters": [],
@@ -5864,14 +5752,14 @@
 						"content": {
 							"application/json": {
 								"example": {
-									"id": "7cd5fc14-f63a-445c-b057-af36aef47e84",
+									"id": "9e07b49d-afbc-419e-8892-81509ae935e7",
 									"object": "webhook_endpoint",
 									"description": null,
 									"enabled": true,
-									"secret": "3dYZ27LoyZpZ9DEvsjVq5xPz",
+									"secret": "DDRrqiskiCr3rFntgVmMRBQR",
 									"url": "http://example.com",
-									"created_at": 1641496037,
-									"updated_at": 1641496037
+									"created_at": 1641839255,
+									"updated_at": 1641839255
 								},
 								"schema": {
 									"$ref": "#/components/schemas/webhook_endpoint_response"
@@ -5916,7 +5804,7 @@
 			],
 			"get": {
 				"summary": "Retrieve",
-				"tags": [ "Webhook Endpoint" ],
+				"tags": [ "Webhook Endpoints" ],
 				"operationId": "retrieve",
 				"description": "Retrieves details of a specific webhook endpoint.",
 				"responses": {
@@ -5925,14 +5813,14 @@
 						"content": {
 							"application/json": {
 								"example": {
-									"id": "78cb3c22-7000-4123-b5bc-4f40be6705ff",
+									"id": "8d28b043-66e7-47b8-a5fd-f9ccc3b910b0",
 									"object": "webhook_endpoint",
 									"description": null,
 									"enabled": true,
-									"secret": "xhpGYh7sTy27X7bvjqo7WPZ9",
+									"secret": "HtfEKJ5uJWKevup9Z8gY63pF",
 									"url": "https://example.com",
-									"created_at": 1641496037,
-									"updated_at": 1641496037
+									"created_at": 1641839255,
+									"updated_at": 1641839255
 								},
 								"schema": {
 									"$ref": "#/components/schemas/webhook_endpoint_response"
@@ -5944,7 +5832,7 @@
 			},
 			"patch": {
 				"summary": "Update",
-				"tags": [ "Webhook Endpoint" ],
+				"tags": [ "Webhook Endpoints" ],
 				"operationId": "update",
 				"description": "Updates a specific webhook endpoint.",
 				"parameters": [],
@@ -5954,14 +5842,14 @@
 						"content": {
 							"application/json": {
 								"example": {
-									"id": "88630484-8ce2-4dd1-a47f-1e622e1dc048",
+									"id": "dddfe216-5cc5-4fc2-9a1b-6ce7aa929956",
 									"object": "webhook_endpoint",
 									"description": null,
 									"enabled": false,
-									"secret": "NLibuWPDPFk6emGntfEM4FZT",
+									"secret": "axYcGttApMayCiMWKKhGwk2d",
 									"url": "https://example.com",
-									"created_at": 1641496037,
-									"updated_at": 1641496037
+									"created_at": 1641839255,
+									"updated_at": 1641839255
 								},
 								"schema": {
 									"$ref": "#/components/schemas/webhook_endpoint_response"
@@ -5994,7 +5882,7 @@
 			},
 			"delete": {
 				"summary": "Delete",
-				"tags": [ "Webhook Endpoint" ],
+				"tags": [ "Webhook Endpoints" ],
 				"operationId": "delete",
 				"description": "Deletes a specific webhook endpoint.",
 				"responses": {
@@ -6003,7 +5891,7 @@
 						"content": {
 							"application/json": {
 								"example": {
-									"id": "d1f3c2e4-e5ce-4a57-83bc-fa06d4d444a2",
+									"id": "4c99f369-1e7f-43e0-9fd9-7a09598144fd",
 									"object": "webhook_endpoint",
 									"deleted": true
 								},
@@ -6012,251 +5900,6 @@
 								}
 							}
 						}
-					}
-				}
-			}
-		}
-	},
-	"webhooks": {
-		"order.created": {
-			"post": {
-				"summary": "Created",
-				"tags": [ "Order" ],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"example": {
-								"id": "d2c4778f-e4dc-482d-b5a8-b0aac44a0610",
-								"object": "event",
-								"data": {},
-								"type": "order.created",
-								"account": "9c4776cb-ee5c-492e-b8b0-51c9ab386f20"
-							},
-							"schema": {
-								"$ref": "#/components/schemas/event_response"
-							}
-						}
-					}
-				},
-				"responses": {
-					"200": {
-						"description": "Return a 200 status to indicate that the data was received successfully."
-					}
-				}
-			}
-		},
-		"order.finalized": {
-			"post": {
-				"summary": "Finalized",
-				"tags": [ "Order" ],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"example": {
-								"id": "109a19e6-a944-496f-a2ba-8dda4e816bda",
-								"object": "event",
-								"data": {},
-								"type": "order.finalized",
-								"account": "d957c3fd-e0c2-4506-aae5-0281ddea8374"
-							},
-							"schema": {
-								"$ref": "#/components/schemas/event_response"
-							}
-						}
-					}
-				},
-				"responses": {
-					"200": {
-						"description": "Return a 200 status to indicate that the data was received successfully."
-					}
-				}
-			}
-		},
-		"order.paid": {
-			"post": {
-				"summary": "Paid",
-				"tags": [ "Order" ],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"example": {
-								"id": "3e095009-40dc-4063-a4f6-8e5605b1338e",
-								"object": "event",
-								"data": {},
-								"type": "order.paid",
-								"account": "a932f22c-041c-419c-be25-b8d09b7f8291"
-							},
-							"schema": {
-								"$ref": "#/components/schemas/event_response"
-							}
-						}
-					}
-				},
-				"responses": {
-					"200": {
-						"description": "Return a 200 status to indicate that the data was received successfully."
-					}
-				}
-			}
-		},
-		"order.updated": {
-			"post": {
-				"summary": "Updated",
-				"tags": [ "Order" ],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"example": {
-								"id": "96f976ef-75f5-4f84-a5a9-765f98a9be4f",
-								"object": "event",
-								"data": {},
-								"type": "order.updated",
-								"account": "bd4b3037-aa5a-4f43-b25e-378fbf56d6a7"
-							},
-							"schema": {
-								"$ref": "#/components/schemas/event_response"
-							}
-						}
-					}
-				},
-				"responses": {
-					"200": {
-						"description": "Return a 200 status to indicate that the data was received successfully."
-					}
-				}
-			}
-		},
-		"refund.created": {
-			"post": {
-				"summary": "Created",
-				"tags": [ "Refund" ],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"example": {
-								"id": "3bdbcc92-9403-4635-8450-da0281b96705",
-								"object": "event",
-								"data": {},
-								"type": "refund.created",
-								"account": "93965e00-a510-4242-8e64-745ac591eef5"
-							},
-							"schema": {
-								"$ref": "#/components/schemas/event_response"
-							}
-						}
-					}
-				},
-				"responses": {
-					"200": {
-						"description": "Return a 200 status to indicate that the data was received successfully."
-					}
-				}
-			}
-		},
-		"refund.updated": {
-			"post": {
-				"summary": "Updated",
-				"tags": [ "Refund" ],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"example": {
-								"id": "6c260aab-5c3a-4e7c-81a4-68555b006a0d",
-								"object": "event",
-								"data": {},
-								"type": "refund.updated",
-								"account": "29121d7e-d006-47a9-b11d-186002c4851f"
-							},
-							"schema": {
-								"$ref": "#/components/schemas/event_response"
-							}
-						}
-					}
-				},
-				"responses": {
-					"200": {
-						"description": "Return a 200 status to indicate that the data was received successfully."
-					}
-				}
-			}
-		},
-		"subscription.canceled": {
-			"post": {
-				"summary": "Canceled",
-				"tags": [ "Subscription" ],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"example": {
-								"id": "a6a05412-d3e2-48fc-af24-68a5cd14235b",
-								"object": "event",
-								"data": {},
-								"type": "subscription.canceled",
-								"account": "afc2a244-cf47-44da-983e-2cc31527267c"
-							},
-							"schema": {
-								"$ref": "#/components/schemas/event_response"
-							}
-						}
-					}
-				},
-				"responses": {
-					"200": {
-						"description": "Return a 200 status to indicate that the data was received successfully."
-					}
-				}
-			}
-		},
-		"subscription.created": {
-			"post": {
-				"summary": "Created",
-				"tags": [ "Subscription" ],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"example": {
-								"id": "fe59053e-e446-439f-8f0d-c6c4c5eb7841",
-								"object": "event",
-								"data": {},
-								"type": "subscription.created",
-								"account": "5ef02445-92d9-45cb-a4d4-683028218acc"
-							},
-							"schema": {
-								"$ref": "#/components/schemas/event_response"
-							}
-						}
-					}
-				},
-				"responses": {
-					"200": {
-						"description": "Return a 200 status to indicate that the data was received successfully."
-					}
-				}
-			}
-		},
-		"subscription.updated": {
-			"post": {
-				"summary": "Updated",
-				"tags": [ "Subscription" ],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"example": {
-								"id": "7824af76-82f6-4a9f-a3fb-79e4db175af8",
-								"object": "event",
-								"data": {},
-								"type": "subscription.updated",
-								"account": "0232636e-d6bf-4956-b908-70fdc06cf4fb"
-							},
-							"schema": {
-								"$ref": "#/components/schemas/event_response"
-							}
-						}
-					}
-				},
-				"responses": {
-					"200": {
-						"description": "Return a 200 status to indicate that the data was received successfully."
 					}
 				}
 			}
@@ -6289,7 +5932,7 @@
 		},
 		{
 			"title": "Webhooks",
-			"content": "Presto Pay uses webhooks to notify your application when an event happens in your account. Webhooks are particularly useful for asynchronous events like when a subscription is updated or a charge is refunded.\n\nYou can create and manage your webhook endpoints through the API endpoints or within your dashboard. From your dashboard you can also see a log of recent events that have been sent.\n\n# Events\n\nWebhooks are triggered based on events. Events are our way of letting you know when something interesting happens in your account. When an interesting event occurs, we create a new `Event` object. For example, when a subscription is updated, we create a `subscription.updated` event.\n\nEvents occur when the state of an API resource changes. The state of that resource at the time of the change is embedded in the event's data field. For example, a `subscription.updated` event will contain a snapshot of the subscription at that point in time.\n\nThe request payload of each webhook will contain the `Event` object, which is structured like the example below.\n\n```json\n{\n  \"id\": \"e1257591-bd43-4f27-9bc6-bac06c6191fb\",\n  \"data\": {\n    \"object\": {\n      \"id\": \"2cca2a21-905c-4bc0-974d-bf67c37778e3\",\n      \"object\": \"subscription\",\n      \"status\": \"canceled\",\n      \"live_mode\": false,\n      \"created_at\": 1632953785,\n      \"updated_at\": 1632965090,\n      \"processor_type\": \"stripe\",\n      \"external_subscription_id\": \"sub_1JfB4e2fs4LLhxzShaylJeH9\"\n    }\n  },\n  \"type\": \"subscription.updated\",\n  \"object\": \"event\",\n  \"account_id\": \"26673c58-a5a7-47bf-bebb-0b00d2e9ebec\",\n  \"created_at\": 1632965090\n}\n```"
+			"content": "Presto Pay uses webhooks to notify your application when an event happens in your account. Webhooks are particularly useful for asynchronous events like when a subscription is updated or a charge is refunded.\n\nYou can create and manage your webhook endpoints through the API endpoints or within your dashboard. From your dashboard you can also see a log of recent events that have been sent.\n\n# Events\n\nWebhooks are triggered based on events. Events are our way of letting you know when something interesting happens in your account. When an interesting event occurs, we create a new `Event` object. For example, when a subscription is updated, we create a `subscription.updated` event.\n\nThe request payload of each webhook will contain the `Event` object, which is structured like the example below.\n\n```json\n{\n  \"id\": \"e1257591-bd43-4f27-9bc6-bac06c6191fb\",\n  \"object\": \"event\",\n  \"data\": {\n    \"subscription\": \"2cca2a21-905c-4bc0-974d-bf67c37778e3\"\n  },\n  \"type\": \"subscription.updated\",\n  \"created_at\": 1632965090,\n  \"account\": \"26673c58-a5a7-47bf-bebb-0b00d2e9ebec\"\n}\n```\n\n# Types of Events\n\nThe following is a list of all the events that trigger webhooks:\n- `invoice.created` – Occurs whenever an invoice is created.\n- `invoice.finalized` – Occurs whenever an invoice is finalized.\n- `invoice.made_draft` – Occurs whenever an invoice is reverted to the `draft` state.\n- `invoice.paid` – Occurs whenever an invoice is paid.\n- `invoice.updated` – Occurs whenever an invoice is updated.\n- `order.created` – Occurs whenever an order is created.\n- `order.finalized` – Occurs whenever an order is finalized.\n- `order.made_draft` – Occurs whenever an order is reverted to the `draft` state.\n- `order.paid` – Occurs whenever an order is paid.\n- `order.updated` – Occurs whenever an order is updated.\n- `refund.created` – Occurs whenever a refund is created.\n- `refund.updated` – Occurs whenever a refund is updated.\n- `subscription.canceled` – Occurs whenever a subscription is canceled.\n- `subscription.created` – Occurs whenever a subscription is created.\n- `subscription.made_active` – Occurs whenever a subscription's status changes to `active`.\n- `subscription.made_past_due` – Occurs whenever a subscription's status changes to `past_due`.\n- `subscription.made_trialing` – Occurs whenever a subscription's status changes to `trialing`.\n- `subscription.updated` – Occurs whenever a subscription is updated."
 		}
 	]
 }
