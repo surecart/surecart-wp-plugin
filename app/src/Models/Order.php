@@ -115,14 +115,7 @@ class Order extends Model {
 	 * @return void
 	 */
 	public function setLineItemsAttribute( $value ) {
-		$models = [];
-		if ( ! empty( $value->data ) && is_array( $value->data ) ) {
-			foreach ( $value->data as $attributes ) {
-				$models[] = new LineItem( $attributes );
-			}
-			$value->data = $models;
-		}
-		$this->attributes['line_items'] = $value;
+		$this->setCollection( 'line_items', $value, LineItem::class );
 	}
 
 	/**

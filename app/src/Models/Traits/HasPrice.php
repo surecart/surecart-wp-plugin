@@ -2,19 +2,19 @@
 
 namespace CheckoutEngine\Models\Traits;
 
-use CheckoutEngine\Models\PaymentIntent;
+use CheckoutEngine\Models\Price;
 
 /**
  * If the model has an attached customer.
  */
-trait HasPaymentIntent {
+trait HasPrice {
 	/**
 	 * Set the product attribute
 	 *
 	 * @param  string $value Product properties.
 	 * @return void
 	 */
-	public function setPaymentIntentAttribute( $value ) {
-		$this->setRelation( 'payment_intent', $value, PaymentIntent::class );
+	public function setPriceAttribute( $value ) {
+		$this->setRelation( 'price', $value, Price::class );
 	}
 }

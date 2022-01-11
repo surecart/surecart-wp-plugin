@@ -16,11 +16,7 @@ trait HasCustomer {
 	 * @return void
 	 */
 	public function setCustomerAttribute( $value ) {
-		if ( is_string( $value ) ) {
-			$this->attributes['customer'] = $value;
-			return;
-		}
-		$this->attributes['customer'] = new Customer( $value );
+		$this->setRelation( 'customer', $value, Customer::class );
 	}
 
 	/**

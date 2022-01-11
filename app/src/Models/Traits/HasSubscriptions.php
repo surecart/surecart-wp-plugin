@@ -15,14 +15,7 @@ trait HasSubscriptions {
 	 * @return void
 	 */
 	public function setSubscriptionAttribute( $value ) {
-		$models = [];
-		if ( ! empty( $value->data ) && is_array( $value->data ) ) {
-			foreach ( $value->data as $attributes ) {
-				$models[] = new Subscription( $attributes );
-			}
-			$value->data = $models;
-		}
-		$this->attributes['subscriptions'] = $value;
+		$this->setCollection( 'subscriptions', $value, Subscription::class );
 	}
 
 	/**

@@ -4,12 +4,13 @@ namespace CheckoutEngine\Models;
 
 use CheckoutEngine\Models\Traits\HasCustomer;
 use CheckoutEngine\Models\Traits\HasOrder;
+use CheckoutEngine\Models\Traits\HasPrice;
 
 /**
  * Subscription model
  */
 class Subscription extends Model {
-	use HasCustomer, HasOrder;
+	use HasCustomer, HasOrder, HasPrice;
 
 	/**
 	 * Rest API endpoint
@@ -24,16 +25,6 @@ class Subscription extends Model {
 	 * @var string
 	 */
 	protected $object_name = 'subscription';
-
-	/**
-	 * Set the price attribute
-	 *
-	 * @param  string $value Product properties.
-	 * @return void
-	 */
-	public function setPriceAttribute( $value ) {
-		$this->attributes['price'] = new Price( $value );
-	}
 
 	/**
 	 * Cancel a subscription

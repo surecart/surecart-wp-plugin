@@ -27,13 +27,6 @@ class Product extends Model {
 	 * @return void
 	 */
 	public function setPricesAttribute( $value ) {
-		$models = [];
-		if ( ! empty( $value->data ) && is_array( $value->data ) ) {
-			foreach ( $value->data as $attributes ) {
-				$models[] = new Price( $attributes );
-			}
-			$value->data = $models;
-		}
-		$this->attributes['prices'] = $value;
+		$this->setCollection( 'prices', $value, Price::class );
 	}
 }

@@ -49,6 +49,6 @@ class Price extends Model {
 	 * @return void
 	 */
 	public function setProductAttribute( $value ) {
-		$this->attributes['product'] = new Product( $value );
+		$this->setRelation( 'product', $value, Product::class );
 	}
 }

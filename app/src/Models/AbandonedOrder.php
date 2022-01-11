@@ -32,6 +32,6 @@ class AbandonedOrder extends Order {
 	 * @return void
 	 */
 	protected function setLatestOrderAttribute( $value ) {
-		$this->attributes['latest_order'] = new Order( $value );
+		$this->setRelation( 'latest_order', $value, Order::class );
 	}
 }

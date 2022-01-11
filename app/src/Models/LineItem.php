@@ -20,6 +20,6 @@ class LineItem extends Model {
 	 * @return void
 	 */
 	public function setPriceAttribute( $value ) {
-		$this->attributes['price'] = new Price( $value );
+		$this->setRelation( 'price', $value, Price::class );
 	}
 }

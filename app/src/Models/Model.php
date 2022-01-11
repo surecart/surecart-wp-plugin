@@ -854,6 +854,37 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	}
 
 	/**
+	 * Set a model relation.
+	 *
+	 * @prop string $attribute Attribute name.
+	 * @prop string $value     Value to set.
+	 * @prop string $model   Model name.
+	 * @return void
+	 */
+	public function setRelation( $attribute, $value, $model ) {
+		$this->attributes[ $attribute ] = is_string( $value ) ? $value : new $model( $value );
+	}
+
+	/**
+	 * Set a model collection.
+	 *
+	 * @prop string $attribute Attribute name.
+	 * @prop string $value     Value to set.
+	 * @prop string $model   Model name.
+	 * @return void
+	 */
+	public function setCollection( $attribute, $collection, $model ) {
+		$models = [];
+		if ( ! empty( $collection->data ) && is_array( $collection->data ) ) {
+			foreach ( $collection->data as $attributes ) {
+				$models[] = new $model( $attributes );
+			}
+			$collection->data = $models;
+		}
+		$this->attributes[ $attribute ] = $collection;
+	}
+
+	/**
 	 * Get the model attributes
 	 *
 	 * @return array

@@ -15,10 +15,6 @@ trait HasOrder {
 	 * @return void
 	 */
 	public function setOrderAttribute( $value ) {
-		if ( is_string( $value ) ) {
-			$this->attributes['order'] = $value;
-			return;
-		}
-		$this->attributes['order'] = new Order( $value );
+		$this->setRelation( 'order', $value, Order::class );
 	}
 }

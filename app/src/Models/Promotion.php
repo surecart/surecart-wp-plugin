@@ -29,6 +29,6 @@ class Promotion extends Model {
 	 * @return void
 	 */
 	public function setCouponAttribute( $value ) {
-		$this->attributes['coupon'] = new Coupon( $value );
+		$this->setRelation( 'coupon', $value, Coupon::class );
 	}
 }

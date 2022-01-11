@@ -15,10 +15,6 @@ trait HasCharge {
 	 * @return void
 	 */
 	public function setChargeAttribute( $value ) {
-		if ( is_string( $value ) ) {
-			$this->attributes['charge'] = $value;
-			return;
-		}
-		$this->attributes['charge'] = new Charge( $value );
+		$this->setRelation( 'charge', $value, Charge::class );
 	}
 }

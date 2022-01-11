@@ -1,6 +1,6 @@
 import { fetch as apiFetch } from '../../../../../resources/scripts/admin/store/data/controls';
 import { mergeEntities } from './actions';
-import { normalizeProducts, normalizePrices } from '../../../utils/schema';
+import { normalizeProducts, normalizePrices } from '@admin/utils/schema';
 
 export default {
 	*searchProducts( query ) {
