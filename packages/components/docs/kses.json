@@ -216,6 +216,7 @@
     "slot": true
   },
   "ce-express-payment": {
+    "divider-text": true,
     "form-id": true,
     "order": true,
     "processor": true,
@@ -683,6 +684,7 @@
     "order": true,
     "payment-method": true,
     "prices": true,
+    "publishable-key": true,
     "stripe-account-id": true,
     "theme": true,
     "style": true,

@@ -37,18 +37,7 @@ export default ( { className, attributes, setAttributes } ) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<CePayment className={ className } label={ label }>
-				<RichText
-					aria-label={ __( 'Secure Notice' ) }
-					placeholder={ __( 'Add some secure notice text...' ) }
-					value={ secure_notice }
-					onChange={ ( secure_notice ) =>
-						setAttributes( { secure_notice } )
-					}
-					withoutInteractiveFormatting
-					allowedFormats={ [ 'core/bold', 'core/italic' ] }
-				/>
-			</CePayment>
+			<CePayment className={ className } label={ label } secureNotice={ secure_notice }></CePayment>
 		</Fragment>
 	);
 };

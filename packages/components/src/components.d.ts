@@ -432,6 +432,7 @@ export namespace Components {
         "value": string;
     }
     interface CeExpressPayment {
+        "dividerText": string;
         "formId": number | string;
         "order": Order;
         "processor": 'stripe' | 'paypal';
@@ -1328,7 +1329,11 @@ export namespace Components {
         "paymentMethod": string;
         "prices": Prices;
         /**
-          * Stripe account id
+          * Stripe publishable key
+         */
+        "publishableKey": string;
+        /**
+          * Your stripe connected account id.
          */
         "stripeAccountId": string;
         /**
@@ -2539,6 +2544,7 @@ declare namespace LocalJSX {
         "value"?: string;
     }
     interface CeExpressPayment {
+        "dividerText"?: string;
         "formId"?: number | string;
         "order"?: Order;
         "processor"?: 'stripe' | 'paypal';
@@ -3502,6 +3508,7 @@ declare namespace LocalJSX {
         "onCeFormSubmit"?: (event: CustomEvent<any>) => void;
         "onCePaid"?: (event: CustomEvent<void>) => void;
         "onCePayError"?: (event: CustomEvent<any>) => void;
+        "onCePaymentRequestLoaded"?: (event: CustomEvent<void>) => void;
         "onCeSetState"?: (event: CustomEvent<string>) => void;
         /**
           * Checkout Session
@@ -3510,7 +3517,11 @@ declare namespace LocalJSX {
         "paymentMethod"?: string;
         "prices"?: Prices;
         /**
-          * Stripe account id
+          * Stripe publishable key
+         */
+        "publishableKey"?: string;
+        /**
+          * Your stripe connected account id.
          */
         "stripeAccountId"?: string;
         /**

@@ -19,7 +19,6 @@ import {
 import { createBlocksFromInnerBlocksTemplate } from '@wordpress/blocks';
 import * as templates from '@scripts/blocks/templates';
 import Cart from './components/Cart';
-import Settings from './components/Settings';
 import Mode from './components/Mode';
 const ALLOWED_BLOCKS = [
   'core/spacer',
@@ -235,13 +234,6 @@ export default function edit( { clientId, attributes, setAttributes } ) {
 
 					{ tab === 'cart' && (
 						<Cart
-							attributes={ attributes }
-							setAttributes={ setAttributes }
-						/>
-					) }
-
-					{ tab === 'settings' && (
-						<Settings
 							attributes={ attributes }
 							setAttributes={ setAttributes }
 						/>

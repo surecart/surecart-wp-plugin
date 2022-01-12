@@ -18,8 +18,11 @@ export class CeStripePaymentRequest {
   private paymentRequest: any;
   private elements: any;
 
-  /** Stripe account id */
+  /** Your stripe connected account id. */
   @Prop() stripeAccountId: string;
+
+  /** Stripe publishable key */
+  @Prop() publishableKey: string;
 
   /** Country */
   @Prop() country: string = 'US';
@@ -52,10 +55,10 @@ export class CeStripePaymentRequest {
   @State() loaded: boolean = false;
 
   @Event() ceFormSubmit: EventEmitter<any>;
-
   @Event() cePaid: EventEmitter<void>;
   @Event() cePayError: EventEmitter<any>;
   @Event() ceSetState: EventEmitter<string>;
+  @Event() cePaymentRequestLoaded: EventEmitter<void>;
 
   private pendingEvent: any;
 
@@ -88,6 +91,11 @@ export class CeStripePaymentRequest {
     if (!this.paymentRequest) return;
     if (this.pendingEvent) return;
     this.paymentRequest.update(this.getRequestObject());
+  }
+
+  @Watch('loaded')
+  handleLoaded() {
+    this.cePaymentRequestLoaded.emit();
   }
 
   @Watch('error')
@@ -279,11 +287,11 @@ export class CeStripePaymentRequest {
       <div class={{ 'request': true, 'request--loaded': this.loaded }}>
         <div class="ce-payment-request-button" part="button" ref={el => (this.request = el as HTMLDivElement)}></div>
         <div class="or" part="or">
-          <slot></slot>
+          <slot />
         </div>
       </div>
     );
   }
 }
 
-openWormhole(CeStripePaymentRequest, ['keys', 'order', 'currencyCode', 'country', 'prices', 'paymentMethod'], false);
+openWormhole(CeStripePaymentRequest, ['keys', 'currencyCode', 'country', 'prices', 'paymentMethod'], false);

@@ -90,7 +90,7 @@ export const isProductInOrder = (product: RecursivePartial<Product>, order: Orde
  */
 export const isPriceInOrder = (price: RecursivePartial<Price>, order: Order) => {
   const priceIds = getLineItemPriceIds(order?.line_items);
-  return !!priceIds.find(id => price.id === id);
+  return !!priceIds.find(id => price?.id === id);
 };
 
 /**

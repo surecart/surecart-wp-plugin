@@ -12,7 +12,7 @@ export default ( { attributes } ) => {
 	const { divider_text } = attributes;
 	return (
 		<Disabled>
-			<CeExpressPayment>{ divider_text }</CeExpressPayment>
+			<CeExpressPayment dividerText={divider_text}></CeExpressPayment>
 		</Disabled>
 	);
 };
