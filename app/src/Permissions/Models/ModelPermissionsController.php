@@ -37,14 +37,19 @@ abstract class ModelPermissionsController {
 	public function handle( $allcaps, $caps, $args, $user ) {
 		$name = $caps[0] ?? false;
 		if ( $name && method_exists( $this, $name ) ) {
+			$user = User::find( $user->ID );
+			if ( ! $user ) {
+				return false;
+			}
+
 			// we need a customer id first.
-			$customer_id = $this->getCustomerId( $user->ID );
+			$customer_id = $user->customerId();
 			if ( ! $customer_id ) {
 				return false;
 			}
 
 			// check permission.
-			$permission = $this->$name( $customer_id, $args );
+			$permission = $this->$name( $user, $args );
 			if ( $permission ) {
 				$allcaps[ $caps[0] ] = true;
 				return $allcaps;
@@ -52,5 +57,21 @@ abstract class ModelPermissionsController {
 		}
 
 		return $allcaps;
+	}
+
+	/**
+	 * Does the model belong to the user?
+	 *
+	 * @param string                      $model Model name.
+	 * @param string                      $id Model ID.
+	 * @param \CheckoutEngine\Models\User $user User model.
+	 * @return boolean
+	 */
+	public function belongsToUser( $model, $id, $user ) {
+		$subscription = $model::find( $id );
+		if ( is_wp_error( $subscription ) ) {
+			return false;
+		}
+		return $subscription->belongsToUser( $user );
 	}
 }

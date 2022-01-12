@@ -33,4 +33,26 @@ class Customer extends Model {
 			]
 		)->first();
 	}
+
+	/**
+	 * Get the customer's user.
+	 *
+	 * @return string|null
+	 */
+	public function getUser() {
+		return User::findByCustomerId( $this->id );
+	}
+
+	/**
+	 * Maybe also return the user when the id is set.
+	 *
+	 * @param string $value The user id.
+	 * @return void
+	 */
+	public function setIdAttribute( $value ) {
+		$this->attributes['id'] = $value;
+		if ( in_array( 'user', $this->query['expand'] ) ) {
+			$this->attributes['user'] = $this->getUser();
+		}
+	}
 }

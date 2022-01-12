@@ -80,16 +80,10 @@ class User implements ArrayAccess, JsonSerializable {
 	 */
 	protected function customer() {
 		$id = $this->customerId();
-		if ( $id ) {
-			$this->customer = Customer::find( $this->customerId() );
+		if ( ! $id ) {
+			return false;
 		}
-		if ( is_wp_error( $this->customer ) && $this->customer->get_error_code() === 'customer.not_found' ) {
-			if ( $this->user->user_email ) {
-				$this->createCustomerByEmail();
-			}
-		}
-
-		return $this->customer;
+		return Customer::find( $this->customerId() );
 	}
 
 	/**

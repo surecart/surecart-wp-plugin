@@ -11,7 +11,6 @@ import Box from '../ui/Box';
 import Definition from '../ui/Definition';
 import useCouponData from './hooks/useCouponData';
 import usePromotionData from './hooks/usePromotionData';
-import ArchiveToggle from './components/ArchiveToggle';
 
 export default () => {
 	const { coupon, loading: loadingCoupons, updateCoupon } = useCouponData();

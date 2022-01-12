@@ -10,9 +10,9 @@ class OrderPermissionsController extends ModelPermissionsController {
 	/**
 	 * Can user edit charge.
 	 *
-	 * @param string $customer_id Customer ID.
-	 * @param array  $args {
-	 *   Arguments that accompany the requested capability check.
+	 * @param \CheckoutEngine\Models\User $user User model.
+	 * @param array                       $args {
+	 *                        Arguments that accompany the requested capability check.
 	 *
 	 *     @type string    $0 Requested capability.
 	 *     @type int       $1 Concerned user ID.
@@ -20,7 +20,7 @@ class OrderPermissionsController extends ModelPermissionsController {
 	 * }
 	 * @return boolean Does user have permission.
 	 */
-	public function edit_ce_order( $customer_id, $args ) {
+	public function edit_ce_order( $user, $args ) {
 		$session = Order::find( $args[2] );
 		return in_array( $session->status, [ 'draft', 'finalized' ] );
 	}
@@ -28,9 +28,9 @@ class OrderPermissionsController extends ModelPermissionsController {
 	/**
 	 * Can user edit subscription.
 	 *
-	 * @param string $customer_id Customer ID.
-	 * @param array  $args {
-	 *   Arguments that accompany the requested capability check.
+	 * @param \CheckoutEngine\Models\User $user User model.
+	 * @param array                       $args {
+	 *                        Arguments that accompany the requested capability check.
 	 *
 	 *     @type string    $0 Requested capability.
 	 *     @type int       $1 Concerned user ID.
@@ -38,12 +38,11 @@ class OrderPermissionsController extends ModelPermissionsController {
 	 * }
 	 * @return boolean Does user have permission.
 	 */
-	public function read_ce_order( $customer_id, $args ) {
-		$session = Order::find( $args[2] );
-		if ( in_array( $session->status, [ 'draft', 'finalized' ] ) ) {
+	public function read_ce_order( $user, $args ) {
+		$order = Order::find( $args[2] );
+		if ( in_array( $order->status, [ 'draft', 'finalized' ] ) ) {
 			return true;
 		}
-		// allow if charge customer matches customer id.
-		return ( $session->customer ?? null ) === $customer_id;
+		return $this->belongsToUser( Order::class, $args[2], $user );
 	}
 }

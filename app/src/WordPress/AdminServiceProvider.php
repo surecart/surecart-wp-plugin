@@ -4,6 +4,7 @@ namespace CheckoutEngine\WordPress;
 
 use WPEmerge\ServiceProviders\ServiceProviderInterface;
 use CheckoutEngine\WordPress\Admin\AdminMenuPageService;
+use CheckoutEngine\WordPress\Admin\UserProfileService;
 
 /**
  * Register admin-related entities, like admin menu pages.
@@ -28,6 +29,10 @@ class AdminServiceProvider implements ServiceProviderInterface {
 			return new AdminMenuPageService();
 		};
 
+		$container['user_profile'] = function() {
+			return new UserProfileService();
+		};
+
 		$app->alias( 'admin_pages', 'admin_pages' );
 	}
 
@@ -36,6 +41,7 @@ class AdminServiceProvider implements ServiceProviderInterface {
 	 */
 	public function bootstrap( $container ) {
 		$container['admin_pages']->register();
+		$container['user_profile']->register();
 	}
 
 	/**

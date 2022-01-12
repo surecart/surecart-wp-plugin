@@ -17,6 +17,10 @@ trait HasCustomer {
 	 */
 	public function setCustomerAttribute( $value ) {
 		$this->setRelation( 'customer', $value, Customer::class );
+		$user = $this->customer->getUser();
+		if ( $user ) {
+			$this->attributes['user'] = $user;
+		}
 	}
 
 	/**
@@ -35,5 +39,41 @@ trait HasCustomer {
 			return User::findByCustomerId( $this->attributes->customer->id );
 		}
 		return false;
+	}
+
+	/**
+	 * Get the customer from the user.
+	 *
+	 * @param \WP_User|int $user_to_check User id or user object to check for ownership.
+	 * @return boolean
+	 */
+	public function belongsToUser( $user_to_check ) {
+		// normalize user id/object.
+		if ( is_int( $user_to_check() ) ) {
+			$user_to_check = get_user_by( 'ID', $user_to_check );
+		}
+
+		// make sure we can get a user id.
+		if ( empty( $user_to_check->ID ) ) {
+			return false;
+		}
+
+		// get user for this object.
+		$user = $this->getUser();
+		if ( empty( $user->ID ) ) {
+			return false;
+		}
+
+		// they must match.
+		return $user->ID === $user_to_check->ID;
+	}
+
+	/**
+	 * Does this belong to the current user?
+	 *
+	 * @return boolean
+	 */
+	public function belongsToCurrentUser() {
+		return $this->belongsToUser( wp_get_current_user() );
 	}
 }

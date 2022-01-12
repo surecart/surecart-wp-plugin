@@ -17,3 +17,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	->middleware( 'webhooks' )
 	->name( 'webhooks' )
 	->handle( 'WebhookController@receive' );
+
+\CheckoutEngine::route()
+	->get()
+	->where( 'post_id', \CheckoutEngine::pages()->getId( 'dashboard' ) )
+	->name( 'dashboard' )
+	->handle( 'DashboardController@show' );

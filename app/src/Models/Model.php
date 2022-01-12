@@ -130,6 +130,15 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	}
 
 	/**
+	 * Get the query.
+	 *
+	 * @return array
+	 */
+	public function getQuery() {
+		return $this->query;
+	}
+
+	/**
 	 * Filter meta data setting
 	 *
 	 * @param object $meta_data Meta data.
@@ -646,12 +655,17 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	 * @return $this
 	 */
 	protected function find( $id = '' ) {
+		if ( $this->fireModelEvent( 'finding' ) === false ) {
+			return false;
+		}
+
 		$attributes = $this->makeRequest( [ 'id' => $id ] );
 
 		if ( $this->isError( $attributes ) ) {
 			return $attributes;
 		}
 
+		$this->fireModelEvent( 'found' );
 		$this->syncOriginal();
 		$this->fill( $attributes );
 

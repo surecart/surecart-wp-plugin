@@ -1,14 +1,12 @@
 <?php
 namespace CheckoutEngine\Permissions\Models;
 
-use CheckoutEngine\Models\Subscription;
-
 /**
- * Handle various permissions.
+ * Handle permissions.
  */
-class SubscriptionPermissionsController extends ModelPermissionsController {
+class CustomerPermissionsController extends ModelPermissionsController {
 	/**
-	 * Can user read.
+	 * Can user edit
 	 *
 	 * @param \CheckoutEngine\Models\User $user User model.
 	 * @param array                       $args {
@@ -19,12 +17,12 @@ class SubscriptionPermissionsController extends ModelPermissionsController {
 	 * }
 	 * @return boolean Does user have permission.
 	 */
-	public function read_ce_subscription( $user, $args ) {
-		return $this->belongsToUser( Subscription::class, $args[2], $user );
+	public function edit_ce_customer( $user, $args ) {
+		return $this->customerIdMatches( $user, $args[2] );
 	}
 
 	/**
-	 * Can user edit.
+	 * Can user read
 	 *
 	 * @param \CheckoutEngine\Models\User $user User model.
 	 * @param array                       $args {
@@ -35,7 +33,18 @@ class SubscriptionPermissionsController extends ModelPermissionsController {
 	 * }
 	 * @return boolean Does user have permission.
 	 */
-	public function edit_ce_subscription( $user, $args ) {
-		return $this->belongsToUser( Subscription::class, $args[2], $user );
+	public function read_ce_customer( $user, $args ) {
+		return $this->customerIdMatches( $user, $args[2] );
+	}
+
+	/**
+	 * Does the customer id match the user id.
+	 *
+	 * @param \CheckoutEngine\Models\User $user User model.
+	 * @param string                      $id Customer ID.
+	 * @return boolean
+	 */
+	public function customerIdMatches( $user, $id ) {
+		return ( $user->customerId() ?? null ) === $id;
 	}
 }

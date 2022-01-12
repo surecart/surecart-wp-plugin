@@ -8,31 +8,11 @@ use CheckoutEngine\Models\Charge;
  */
 class ChargePermissionsController extends ModelPermissionsController {
 	/**
-	 * Can user edit charge.
+	 * Can user read
 	 *
-	 * @param string $customer_id Customer ID.
-	 * @param array  $args {
-	 *   Arguments that accompany the requested capability check.
-	 *
-	 *     @type string    $0 Requested capability.
-	 *     @type int       $1 Concerned user ID.
-	 *     @type mixed  ...$2 Optional second and further parameters, typically object ID.
-	 * }
-	 * @return boolean Does user have permission.
-	 */
-	public function edit_ce_charge( $customer_id, $args ) {
-		// need a subscription.
-		$charge = Charge::find( $args[2] );
-		// allow if charge customer matches customer id.
-		return ( $charge->customer ?? null ) === $customer_id;
-	}
-
-	/**
-	 * Can user edit subscription.
-	 *
-	 * @param string $customer_id Customer ID.
-	 * @param array  $args {
-	 *   Arguments that accompany the requested capability check.
+	 * @param \CheckoutEngine\Models\User $user User model.
+	 * @param array                       $args {
+	 *                        Arguments that accompany the requested capability check.
 	 *
 	 *     @type string    $0 Requested capability.
 	 *     @type int       $1 Concerned user ID.
@@ -40,9 +20,7 @@ class ChargePermissionsController extends ModelPermissionsController {
 	 * }
 	 * @return boolean Does user have permission.
 	 */
-	public function read_ce_charge( $customer_id, $args ) {
-		$charge = Charge::find( $args[2] );
-		// allow if charge customer matches customer id.
-		return ( $charge->customer ?? null ) === $customer_id;
+	public function read_ce_charge( $user, $args ) {
+		return $this->belongsToUser( Charge::class, $args[2], $user );
 	}
 }
