@@ -30,11 +30,23 @@ class User implements ArrayAccess, JsonSerializable {
 	protected $customer_id_key = 'ce_customer_id';
 
 	/**
+	 * Get the customer meta key.
+	 *
+	 * @return string
+	 */
+	protected function getCustomerMetaKey() {
+		return $this->customer_id_key;
+	}
+
+	/**
 	 * Get the user's customer id.
 	 *
 	 * @return int|null
 	 */
 	protected function customerId() {
+		if ( empty( $this->user->ID ) ) {
+			return '';
+		}
 		return get_user_meta( $this->user->ID, $this->customer_id_key, true );
 	}
 
@@ -127,15 +139,18 @@ class User implements ArrayAccess, JsonSerializable {
 	 * @return $this
 	 */
 	protected function findByCustomerId( $id ) {
-		$users = get_users(
+
+		$users = new \WP_User_Query(
 			array(
 				'meta_key'   => $this->customer_id_key,
 				'meta_value' => $id,
 			)
 		);
-		if ( ! empty( $users ) ) {
-			$this->user = $users[0];
+		if ( empty( $users->results ) ) {
+			return false;
 		}
+
+		$this->user = $users->results[0];
 		return $this;
 	}
 

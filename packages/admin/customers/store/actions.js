@@ -16,23 +16,6 @@ export function* updateCustomer( payload, index ) {
 		index
 	);
 }
-/**
- * Add a coupon
- */
-export function* addPromotion( payload, index ) {
-	const coupon = yield controls.select( store, 'selectCoupon' );
-	return yield controls.dispatch(
-		coreStore,
-		'addModel',
-		'coupons',
-		{
-			...payload,
-			coupon: payload?.coupon || coupon?.id,
-			currency: ceData?.currency_code || 'usd',
-		},
-		index
-	);
-}
 
 /**
  * Save the page.

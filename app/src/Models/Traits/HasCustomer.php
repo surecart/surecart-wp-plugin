@@ -17,10 +17,6 @@ trait HasCustomer {
 	 */
 	public function setCustomerAttribute( $value ) {
 		$this->setRelation( 'customer', $value, Customer::class );
-		$user = $this->customer->getUser();
-		if ( $user ) {
-			$this->attributes['user'] = $user;
-		}
 	}
 
 	/**
@@ -29,14 +25,14 @@ trait HasCustomer {
 	 * @return \WP_User|false
 	 */
 	public function getUser() {
-		if ( empty( $this->attributes->customer ) ) {
+		if ( empty( $this->attributes['customer'] ) ) {
 			return false;
 		}
-		if ( is_string( $this->attributes->customer ) ) {
-			return User::findByCustomerId( $this->attributes->customer );
+		if ( is_string( $this->attributes['customer'] ) ) {
+			return User::findByCustomerId( $this->attributes['customer'] );
 		}
-		if ( ! empty( $this->attributes->customer->id ) ) {
-			return User::findByCustomerId( $this->attributes->customer->id );
+		if ( ! empty( $this->attributes['customer']->id ) ) {
+			return User::findByCustomerId( $this->attributes['customer']->id );
 		}
 		return false;
 	}

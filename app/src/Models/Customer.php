@@ -51,7 +51,7 @@ class Customer extends Model {
 	 */
 	public function setIdAttribute( $value ) {
 		$this->attributes['id'] = $value;
-		if ( in_array( 'user', $this->query['expand'] ) ) {
+		if ( ! empty( $this->query['expand'] ) && in_array( 'user', $this->query['expand'] ) ) {
 			$this->attributes['user'] = $this->getUser();
 		}
 	}

@@ -20,6 +20,10 @@ class PluginServiceProvider implements ServiceProviderInterface {
 			return new PageService();
 		};
 
+		$container['checkout_engine.users'] = function () {
+			return new UsersService();
+		};
+
 		$app = $container[ WPEMERGE_APPLICATION_KEY ];
 
 		$app->alias( 'pages', 'checkout_engine.pages' );
@@ -41,6 +45,7 @@ class PluginServiceProvider implements ServiceProviderInterface {
 	public function bootstrap( $container ) {
 		register_activation_hook( CHECKOUT_ENGINE_PLUGIN_FILE, [ $this, 'activate' ] );
 		register_deactivation_hook( CHECKOUT_ENGINE_PLUGIN_FILE, [ $this, 'deactivate' ] );
+		$container['checkout_engine.users']->register_rest_queries();
 		add_action( 'plugins_loaded', [ $this, 'loadTextdomain' ] );
 	}
 

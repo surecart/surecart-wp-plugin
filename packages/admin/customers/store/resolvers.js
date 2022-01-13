@@ -13,7 +13,7 @@ export default {
 			store,
 			'prepareFetchRequest',
 			'customers',
-			{ id, expand: [ 'billing_address', 'shipping_address', 'user' ] }
+			{ id, expand: [ 'billing_address', 'shipping_address' ] }
 		);
 
 		// fetch and normalize
@@ -22,7 +22,7 @@ export default {
 			const customer = yield apiFetch( request );
 			if ( ! customer?.id ) return;
 			return yield controls.dispatch( store, 'addModels', {
-				customerss: [ customers ],
+				customers: [ customer ],
 			} );
 		} catch ( error ) {
 			// set critical error. We don't want to display the UI if we can't load the model.

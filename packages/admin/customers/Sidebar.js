@@ -1,12 +1,24 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-
-import { __,  _n } from '@wordpress/i18n';
-import { Fragment } from '@wordpress/element';
+import { Fragment, useState, useEffect } from '@wordpress/element';
+import { __, _n } from '@wordpress/i18n';
+import { getQueryArg } from '@wordpress/url';
 
 import Box from '../ui/Box';
+import useCustomerData from './hooks/useCustomerData';
+import User from './modules/User';
 
 export default () => {
+  const { customer, error, loading, save } = useCustomerData();
+  const [customerId, setCustomerId] = useState(getQueryArg( window.location, 'id' ));
+
+  // useEffect( () => {
+  //   if ( customer?.id && customer?.id !== customerId ) {
+  //     console.loog(customer?.id, customerId);
+  //     setCustomerId( customer.id );
+  //   }
+  // }, [ customer ]);
+
 	return (
 		<Fragment>
 			<Box
@@ -18,7 +30,7 @@ export default () => {
 							justify-content: space-between;
 						` }
 					>
-						{ __( 'Summary', 'checkout_engine' ) }{ ' ' }
+						{ __( 'User', 'checkout_engine' ) }{ ' ' }
 					</div>
 				}
 				css={ css`
@@ -26,6 +38,7 @@ export default () => {
 				` }
 			>
 				<Fragment>
+          <User customer_id={customerId} />
 				</Fragment>
 			</Box>
 		</Fragment>

@@ -1,20 +1,18 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-
-import { __ } from '@wordpress/i18n';
-import { Fragment } from '@wordpress/element';
 import { dispatch } from '@wordpress/data';
+import { Fragment } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
 
-import Template from '../templates/SingleModel';
 import FlashError from '../components/FlashError';
 import SaveButton from '../components/SaveButton';
-
-// parts
-import Sidebar from './Sidebar';
-
 // hooks
 import useSnackbar from '../hooks/useSnackbar';
+import Template from '../templates/SingleModel';
 import useCustomerData from './hooks/useCustomerData';
+import Details from './modules/Details';
+// parts
+import Sidebar from './Sidebar';
 
 export default () => {
   const { snackbarNotices, removeSnackbarNotice } = useSnackbar();
@@ -42,14 +40,8 @@ export default () => {
 		}
 
 		return customer?.id
-			? sprintf(
-					__( 'Edit %s', 'checkout_engine' ),
-					customer?.name || __( 'Customer', 'checkout_engine' )
-			  )
-			: sprintf(
-					__( 'Add %s', 'checkout_engine' ),
-					customer?.name || __( 'Customer', 'checkout_engine' )
-			  );
+			?	__( 'Edit Customer', 'checkout_engine' )
+			: __( 'Add Customer', 'checkout_engine' )
 	};
 
   return (
@@ -97,6 +89,7 @@ export default () => {
 		>
 			<Fragment>
 			 <FlashError path="customers" scrollIntoView />
+       <Details />
 				{/*<Name />
 				<Codes />
 				<Types />

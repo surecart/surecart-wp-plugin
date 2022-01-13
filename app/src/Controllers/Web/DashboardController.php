@@ -2,10 +2,7 @@
 
 namespace CheckoutEngine\Controllers\Web;
 
-use CheckoutEngine\Models\Customer;
 use CheckoutEngine\Models\CustomerLink;
-use CheckoutEngine\Models\Subscription;
-use CheckoutEngine\Models\User;
 
 /**
  * Thank you routes
@@ -73,7 +70,10 @@ class DashboardController {
 			return wp_die( esc_html__( 'This user could not be found.', 'checkout_engine' ) );
 		}
 
-		$id = is_a( $wp_user, '\WP_User' ) ? $wp_user->ID : $wp_user;
+		$id = ! empty( $wp_user->ID ) ? $wp_user->ID : $wp_user;
+		if ( ! is_int( $id ) ) {
+			return;
+		}
 
 		wp_clear_auth_cookie();
 		wp_set_current_user( $id );

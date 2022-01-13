@@ -23,8 +23,8 @@ class UserProfileService {
 	 *
 	 * @return function
 	 */
-	public function showCustomerInfo() {
-		$customer = User::current()->customer();
+	public function showCustomerInfo( $user ) {
+		$customer = User::find( $user->ID )->customer();
 		$customer = is_wp_error( $customer ) ? false : $customer;
 		return $this->render(
 			'admin.user-profile',
