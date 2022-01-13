@@ -14,8 +14,8 @@ const config = require('../../../config.json');
 const steps = require('./steps');
 
 if (chalk.level === 0) {
-  // Make sure we get color even if run-s switches the output stream.
-  chalk.level = 1;
+	// Make sure we get color even if run-s switches the output stream.
+	chalk.level = 1;
 }
 
 const { log, error: logError } = console;
@@ -24,20 +24,22 @@ const source = utils.rootPath();
 const destination = path.join(path.dirname(source), name);
 const emitter = new EventEmitter();
 
-emitter.on('file.copy', file => process.stdout.write(`Copying ${path.relative(source, file)} ...`));
+emitter.on('file.copy', (file) =>
+	process.stdout.write(`Copying ${path.relative(source, file)} ...`)
+);
 emitter.on('file.copied', () => log(' done'));
 
-(new Promise(resolve => resolve()))
-  .then(() => {
-    steps.validate(destination);
+new Promise((resolve) => resolve())
+	.then(() => {
+		steps.validate(destination);
 
-    steps.createDirectory(destination);
+		steps.createDirectory(destination);
 
-    steps.copyFiles(config.release.include, source, destination, emitter);
+		steps.copyFiles(config.release.include, source, destination, emitter);
 
-    log('Installing production composer dependencies ...');
-    steps.installComposerDependencies(source, destination);
+		log('Installing production composer dependencies ...');
+		steps.installComposerDependencies(source, destination);
 
-    return steps.zip(destination, `${destination}.zip`);
-  })
-  .catch(e => logError(chalk.red(e.message)));
+		return steps.zip(destination, `${destination}.zip`);
+	})
+	.catch((e) => logError(chalk.red(e.message)));

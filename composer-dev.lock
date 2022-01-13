@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c17b09364c66990926db71479172622d",
+    "content-hash": "27552e5b1d801640874ebf38b5cd2918",
     "packages": [
         {
             "name": "checkout-engine/blocks",
@@ -12,7 +12,7 @@
             "dist": {
                 "type": "path",
                 "url": "./packages/blocks",
-                "reference": "83d435477e149f5bf377bdfa3fe9fed6ae15004b"
+                "reference": "fda342501ec1754963292abfed79aa7839678132"
             },
             "type": "library",
             "autoload": {
@@ -21,7 +21,6 @@
                 }
             },
             "transport-options": {
-                "symlink": false,
                 "relative": true
             }
         },

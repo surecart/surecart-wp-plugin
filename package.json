@@ -10,7 +10,7 @@
 	"prettier": "@wordpress/prettier-config",
 	"scripts": {
 		"wp-env": "wp-env",
-		"dev": "wp-env start --xdebug && yarn workspaces foreach -pvi run watch",
+		"dev": "COMPOSER=composer-dev.json composer update && wp-env start --xdebug && yarn workspaces foreach -pvi run watch",
 		"docs:build": "yarn workspace @checkout-engine/docs run build",
 		"watch": "cross-env NODE_ENV=development webpack --colors --config .dev/build/webpack.development.js",
 		"hot": "cross-env NODE_ENV=development WPEMERGE_ENV=hot webpack-dev-server --colors --config .dev/build/webpack.development.js",
@@ -31,7 +31,7 @@
 		"rebrand": "node .dev/build/rebrand/rebrand.js",
 		"release:build": "yarn workspaces foreach run build",
 		"release": "run-s release:build release:zip",
-		"release:zip": "node .dev/build/release/release.js blaze-checkout",
+		"release:zip": "node .dev/build/release/release.js checkout-engine-plugin",
 		"check-engines": "wp-scripts check-engines",
 		"check-licenses": "wp-scripts check-licenses",
 		"format": "wp-scripts format",

@@ -7,14 +7,14 @@
 
 ## Properties
 
-| Property          | Attribute     | Description | Type              | Default     |
-| ----------------- | ------------- | ----------- | ----------------- | ----------- |
-| `busy`            | `busy`        |             | `boolean`         | `undefined` |
-| `order` | --            |             | `Order` | `undefined` |
-| `collapsed`       | `collapsed`   |             | `boolean`         | `undefined` |
-| `collapsible`     | `collapsible` |             | `boolean`         | `false`     |
-| `empty`           | `empty`       |             | `boolean`         | `undefined` |
-| `loading`         | `loading`     |             | `boolean`         | `undefined` |
+| Property      | Attribute     | Description | Type      | Default     |
+| ------------- | ------------- | ----------- | --------- | ----------- |
+| `busy`        | `busy`        |             | `boolean` | `undefined` |
+| `collapsed`   | `collapsed`   |             | `boolean` | `undefined` |
+| `collapsible` | `collapsible` |             | `boolean` | `false`     |
+| `empty`       | `empty`       |             | `boolean` | `undefined` |
+| `loading`     | `loading`     |             | `boolean` | `undefined` |
+| `order`       | --            |             | `Order`   | `undefined` |
 
 
 ## Dependencies

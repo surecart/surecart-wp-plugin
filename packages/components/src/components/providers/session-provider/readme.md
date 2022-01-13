@@ -7,16 +7,16 @@
 
 ## Properties
 
-| Property          | Attribute       | Description                                 | Type                      | Default     |
-| ----------------- | --------------- | ------------------------------------------- | ------------------------- | ----------- |
-| `order` | --              | Order Object                      | `Order`         | `undefined` |
-| `currencyCode`    | `currency-code` | Currency Code                               | `string`                  | `'usd'`     |
-| `formId`          | `form-id`       | The checkout form id                        | `number`                  | `undefined` |
-| `groupId`         | `group-id`      | Group id                                    | `string`                  | `undefined` |
-| `mode`            | `mode`          | Are we in test or live mode.                | `"live" \| "test"`        | `'live'`    |
-| `persist`         | `persist`       | Should we persist the session.              | `boolean`                 | `undefined` |
-| `prices`          | --              | An array of prices to pre-fill in the form. | `PriceChoice[]`           | `[]`        |
-| `setState`        | --              | Set the checkout state                      | `(state: string) => void` | `undefined` |
+| Property       | Attribute       | Description                                 | Type                      | Default     |
+| -------------- | --------------- | ------------------------------------------- | ------------------------- | ----------- |
+| `currencyCode` | `currency-code` | Currency Code                               | `string`                  | `'usd'`     |
+| `formId`       | `form-id`       | The checkout form id                        | `number`                  | `undefined` |
+| `groupId`      | `group-id`      | Group id                                    | `string`                  | `undefined` |
+| `mode`         | `mode`          | Are we in test or live mode.                | `"live" \| "test"`        | `'live'`    |
+| `order`        | --              | Order Object                                | `Order`                   | `undefined` |
+| `persist`      | `persist`       | Should we persist the session.              | `boolean`                 | `undefined` |
+| `prices`       | --              | An array of prices to pre-fill in the form. | `PriceChoice[]`           | `[]`        |
+| `setState`     | --              | Set the checkout state                      | `(state: string) => void` | `undefined` |
 
 
 ## Events
@@ -25,7 +25,7 @@
 | ----------------- | ----------------------- | --------------------------------------------------------------------------------------------- |
 | `ceError`         | Update line items event | `CustomEvent<{ message: string; code?: string; data?: any; additional_errors?: any; } \| {}>` |
 | `ceSetState`      | Set the state           | `CustomEvent<string>`                                                                         |
-| `ceUpdateSession` | Update line items event | `CustomEvent<Order>`                                                                |
+| `ceUpdateSession` | Update line items event | `CustomEvent<Order>`                                                                          |
 
 
 ## Dependencies

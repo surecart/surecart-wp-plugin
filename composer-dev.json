@@ -1,12 +1,7 @@
 {
 	"version": "0.16.2",
 	"type": "wordpress-plugin",
-	"keywords": [
-		"wordpress",
-		"plugin",
-		"starter plugin",
-		"wpemerge"
-	],
+	"keywords": ["wordpress", "plugin", "starter plugin", "wpemerge"],
 	"license": "GPL-2.0-only",
 	"require": {
 		"php": ">=5.5",
@@ -20,9 +15,7 @@
 		{
 			"type": "path",
 			"url": "./packages/blocks",
-			"options": {
-				"symlink": false
-			}
+			"symlink": true
 		}
 	],
 	"require-dev": {
@@ -50,9 +43,7 @@
 	},
 	"scripts": {
 		"analyse": "php -d memory_limit=4G vendor/bin/phpstan analyse",
-		"install-test-env": [
-			"wpemerge config:create"
-		],
+		"install-test-env": ["wpemerge config:create"],
 		"install-dev-env": [
 			"@php wpemerge config:create",
 			"@php wpemerge install:dependencies",

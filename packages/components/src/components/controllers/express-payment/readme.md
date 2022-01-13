@@ -7,11 +7,12 @@
 
 ## Properties
 
-| Property          | Attribute   | Description | Type                   | Default     |
-| ----------------- | ----------- | ----------- | ---------------------- | ----------- |
-| `order` | --          |             | `Order`      | `undefined` |
-| `formId`          | `form-id`   |             | `number \| string`     | `undefined` |
-| `processor`       | `processor` |             | `"paypal" \| "stripe"` | `undefined` |
+| Property      | Attribute      | Description | Type                   | Default     |
+| ------------- | -------------- | ----------- | ---------------------- | ----------- |
+| `dividerText` | `divider-text` |             | `string`               | `undefined` |
+| `formId`      | `form-id`      |             | `number \| string`     | `undefined` |
+| `order`       | --             |             | `Order`                | `undefined` |
+| `processor`   | `processor`    |             | `"paypal" \| "stripe"` | `undefined` |
 
 
 ## Dependencies

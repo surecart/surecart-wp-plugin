@@ -3,7 +3,7 @@
  * Plugin Name: Checkout Engine
  * Plugin URI: https://wpemerge.com/
  * Description:
- * Version: 0.15.0
+ * Version: 0.0.1
  * Requires at least: 5.5
  * Requires PHP: 5.5.9
  * Author: Andre Gagnon

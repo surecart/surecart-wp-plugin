@@ -7,14 +7,14 @@
 
 ## Properties
 
-| Property          | Attribute  | Description | Type              | Default     |
-| ----------------- | ---------- | ----------- | ----------------- | ----------- |
-| `order` | --         |             | `Order` | `undefined` |
-| `fallback`        | `fallback` |             | `string`          | `undefined` |
-| `label`           | `label`    |             | `string`          | `undefined` |
-| `loading`         | `loading`  |             | `boolean`         | `undefined` |
-| `metaKey`         | `meta-key` |             | `string`          | `undefined` |
-| `value`           | `value`    |             | `string`          | `undefined` |
+| Property   | Attribute  | Description | Type      | Default     |
+| ---------- | ---------- | ----------- | --------- | ----------- |
+| `fallback` | `fallback` |             | `string`  | `undefined` |
+| `label`    | `label`    |             | `string`  | `undefined` |
+| `loading`  | `loading`  |             | `boolean` | `undefined` |
+| `metaKey`  | `meta-key` |             | `string`  | `undefined` |
+| `order`    | --         |             | `Order`   | `undefined` |
+| `value`    | `value`    |             | `string`  | `undefined` |
 
 
 ## Shadow Parts

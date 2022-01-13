@@ -27,7 +27,7 @@ return [
 		\CheckoutEngine\Request\RequestServiceProvider::class,
 		\WPEmergeBlade\View\ServiceProvider::class,
 		\CheckoutEngine\View\ViewServiceProvider::class,
-		\CheckoutEngine\Blocks\BlockServiceProvider::class,
+		\CheckoutEngine\BlockLibrary\BlockServiceProvider::class,
 		\CheckoutEngine\Support\Errors\ErrorsServiceProvider::class,
 
 		// REST providers.
@@ -55,7 +55,7 @@ return [
 		\CheckoutEngine\Blocks\CheckoutForm\Block::class,
 		\CheckoutEngine\Blocks\Form\Block::class,
 		\CheckoutEngine\Blocks\LogoutButton\Block::class,
-		// dashboard.
+		// // dashboard.
 		\CheckoutEngine\Blocks\Dashboard\CustomerCharges\Block::class,
 		\CheckoutEngine\Blocks\Dashboard\CustomerDashboard\Block::class,
 		\CheckoutEngine\Blocks\Dashboard\CustomerOrders\Block::class,

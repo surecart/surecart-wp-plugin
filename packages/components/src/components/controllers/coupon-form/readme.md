@@ -7,14 +7,14 @@
 
 ## Properties
 
-| Property          | Attribute     | Description | Type              | Default     |
-| ----------------- | ------------- | ----------- | ----------------- | ----------- |
-| `calculating`     | `calculating` |             | `boolean`         | `undefined` |
-| `order` | --            |             | `Order` | `undefined` |
-| `error`           | `error`       |             | `any`             | `undefined` |
-| `forceOpen`       | `force-open`  |             | `boolean`         | `undefined` |
-| `label`           | `label`       |             | `string`          | `undefined` |
-| `loading`         | `loading`     |             | `boolean`         | `undefined` |
+| Property      | Attribute     | Description | Type      | Default     |
+| ------------- | ------------- | ----------- | --------- | ----------- |
+| `calculating` | `calculating` |             | `boolean` | `undefined` |
+| `error`       | `error`       |             | `any`     | `undefined` |
+| `forceOpen`   | `force-open`  |             | `boolean` | `undefined` |
+| `label`       | `label`       |             | `string`  | `undefined` |
+| `loading`     | `loading`     |             | `boolean` | `undefined` |
+| `order`       | --            |             | `Order`   | `undefined` |
 
 
 ## Events

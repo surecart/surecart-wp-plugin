@@ -7,10 +7,10 @@
 
 ## Properties
 
-| Property          | Attribute | Description | Type              | Default     |
-| ----------------- | --------- | ----------- | ----------------- | ----------- |
-| `order` | --        |             | `Order` | `undefined` |
-| `loading`         | `loading` |             | `boolean`         | `undefined` |
+| Property  | Attribute | Description | Type      | Default     |
+| --------- | --------- | ----------- | --------- | ----------- |
+| `loading` | `loading` |             | `boolean` | `undefined` |
+| `order`   | --        |             | `Order`   | `undefined` |
 
 
 ## Shadow Parts

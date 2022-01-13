@@ -7,9 +7,9 @@
 
 ## Properties
 
-| Property            | Attribute             | Description | Type     | Default     |
-| ------------------- | --------------------- | ----------- | -------- | ----------- |
-| `orderId` | `checkout-session-id` |             | `string` | `undefined` |
+| Property  | Attribute  | Description | Type     | Default     |
+| --------- | ---------- | ----------- | -------- | ----------- |
+| `orderId` | `order-id` |             | `string` | `undefined` |
 
 
 ## Shadow Parts

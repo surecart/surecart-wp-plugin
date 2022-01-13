@@ -7,9 +7,9 @@
 
 ## Properties
 
-| Property          | Attribute | Description            | Type              | Default     |
-| ----------------- | --------- | ---------------------- | ----------------- | ----------- |
-| `order` | --        | Order Object | `Order` | `undefined` |
+| Property | Attribute | Description  | Type    | Default     |
+| -------- | --------- | ------------ | ------- | ----------- |
+| `order`  | --        | Order Object | `Order` | `undefined` |
 
 
 ## Events

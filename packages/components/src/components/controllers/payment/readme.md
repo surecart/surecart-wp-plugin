@@ -7,14 +7,14 @@
 
 ## Properties
 
-| Property          | Attribute        | Description                                                          | Type                       | Default     |
-| ----------------- | ---------------- | -------------------------------------------------------------------- | -------------------------- | ----------- |
-| `order` | --               | Checkout Session from ce-checkout.                                   | `Order`          | `undefined` |
-| `label`           | `label`          | The input's label.                                                   | `string`                   | `undefined` |
-| `mode`            | `mode`           | Is this created in "test" mode                                       | `"live" \| "test"`         | `'live'`    |
-| `paymentMethod`   | `payment-method` | Payment mode inside individual payment method (i.e. Payment Buttons) | `"stripe-payment-request"` | `undefined` |
-| `processor`       | `processor`      | The current payment method for the payment                           | `string`                   | `'stripe'`  |
-| `secureNotice`    | `secure-notice`  | Secure notice                                                        | `string`                   | `undefined` |
+| Property        | Attribute        | Description                                                          | Type                       | Default     |
+| --------------- | ---------------- | -------------------------------------------------------------------- | -------------------------- | ----------- |
+| `label`         | `label`          | The input's label.                                                   | `string`                   | `undefined` |
+| `mode`          | `mode`           | Is this created in "test" mode                                       | `"live" \| "test"`         | `'live'`    |
+| `order`         | --               | Checkout Session from ce-checkout.                                   | `Order`                    | `undefined` |
+| `paymentMethod` | `payment-method` | Payment mode inside individual payment method (i.e. Payment Buttons) | `"stripe-payment-request"` | `undefined` |
+| `processor`     | `processor`      | The current payment method for the payment                           | `string`                   | `'stripe'`  |
+| `secureNotice`  | `secure-notice`  | Secure notice                                                        | `string`                   | `undefined` |
 
 
 ## Dependencies
