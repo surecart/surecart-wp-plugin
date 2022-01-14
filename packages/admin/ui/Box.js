@@ -3,53 +3,54 @@ import { css, jsx } from '@emotion/core';
 
 import { Card, CardBody, CardFooter, CardHeader } from '@wordpress/components';
 
-export default ( {
+export default ({
 	title,
 	children,
 	size = 'large',
 	isBorderLess = true,
+	hasDivider = true,
 	loading,
 	footer,
 	className,
-} ) => {
+}) => {
 	return (
 		<Card
-			css={ css`
+			css={css`
 				/* box-shadow: rgb( 0 0 0 / 10% ) 0px 2px 4px 0px; */
 				.components-card__footer {
-					background: var( --ce-color-gray-100, #f9fafb );
+					background: var(--ce-color-gray-100, #f9fafb);
 				}
-			` }
-			size={ size }
-			isBorderless={ isBorderLess }
-			className={ className }
+			`}
+			size={size}
+			isBorderless={isBorderLess}
+			className={className}
 		>
-			<CardHeader isBorderless={ false }>
+			<CardHeader isBorderless={!hasDivider}>
 				<ce-text
 					tag="h2"
-					style={ {
+					style={{
 						'--font-size': '15px',
 						'--font-weight': 'var(--ce-font-weight-bold)',
-					} }
+					}}
 				>
-					{ title && (
+					{title && (
 						<span>
-							{ loading ? (
+							{loading ? (
 								<ce-skeleton
-									style={ {
+									style={{
 										width: '120px',
 										display: 'inline-block',
-									} }
+									}}
 								></ce-skeleton>
 							) : (
 								title
-							) }
+							)}
 						</span>
-					) }
+					)}
 				</ce-text>
 			</CardHeader>
 			<CardBody
-				css={ css`
+				css={css`
 					display: grid;
 					gap: 10px;
 					> * {
@@ -59,29 +60,29 @@ export default ( {
 						font-weight: 500;
 						margin-bottom: 12px;
 					}
-				` }
+				`}
 			>
-				{ loading ? (
+				{loading ? (
 					<div>
 						<ce-skeleton
-							style={ {
+							style={{
 								width: '100%',
 								marginBottom: '15px',
 								display: 'inline-block',
-							} }
+							}}
 						></ce-skeleton>
 						<ce-skeleton
-							style={ {
+							style={{
 								width: '40%',
 								display: 'inline-block',
-							} }
+							}}
 						></ce-skeleton>
 					</div>
 				) : (
 					children
-				) }
+				)}
 			</CardBody>
-			{ !! footer && <CardFooter>{ footer }</CardFooter> }
+			{!!footer && <CardFooter>{footer}</CardFooter>}
 		</Card>
 	);
 };

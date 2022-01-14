@@ -87,8 +87,8 @@ export default ({ customer_id }) => {
 							{user?.avatar_urls?.[96] && (
 								<img
 									css={css`
-										width: 24px;
-										height: 24px;
+										width: 48px;
+										height: 48px;
 										border-radius: 9999px;
 									`}
 									src={user?.avatar_urls?.[96]}
@@ -121,6 +121,8 @@ export default ({ customer_id }) => {
 					<CeButton
 						href=""
 						size="small"
+						type="danger"
+						outline
 						onClick={() => disconnect(user?.id)}
 					>
 						{__('Disconnect', 'checkout_engine')}

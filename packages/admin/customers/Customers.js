@@ -11,90 +11,88 @@ import useSnackbar from '../hooks/useSnackbar';
 import Template from '../templates/SingleModel';
 import useCustomerData from './hooks/useCustomerData';
 import Details from './modules/Details';
+import Orders from './modules/Orders';
 // parts
 import Sidebar from './Sidebar';
 
 export default () => {
-  const { snackbarNotices, removeSnackbarNotice } = useSnackbar();
-  const { customer, error, loading, save } = useCustomerData();
+	const { snackbarNotices, removeSnackbarNotice } = useSnackbar();
+	const { customer, error, loading, save } = useCustomerData();
 
-  const onSubmit = async ( e ) => {
+	const onSubmit = async (e) => {
 		e.preventDefault();
 		save();
 	};
 
 	const onInvalid = () => {
-		dispatch( uiStore ).setInvalid( true );
+		dispatch(uiStore).setInvalid(true);
 	};
 
-  const title = () => {
-		if ( loading ) {
+	const title = () => {
+		if (loading) {
 			return (
 				<ce-skeleton
-					style={ {
+					style={{
 						width: '120px',
 						display: 'inline-block',
-					} }
+					}}
 				></ce-skeleton>
 			);
 		}
 
 		return customer?.id
-			?	__( 'Edit Customer', 'checkout_engine' )
-			: __( 'Add Customer', 'checkout_engine' )
+			? __('Edit Customer', 'checkout_engine')
+			: __('Add Customer', 'checkout_engine');
 	};
 
-  return (
+	return (
 		<Template
-			pageModelName={ 'customers' }
-			onSubmit={ onSubmit }
-			onInvalid={ onInvalid }
-			backUrl={ 'admin.php?page=ce-customers' }
-			backText={ __( 'Back to All Customers', 'checkout_engine' ) }
-			title={ title() }
+			pageModelName={'customers'}
+			onSubmit={onSubmit}
+			onInvalid={onInvalid}
+			backUrl={'admin.php?page=ce-customers'}
+			backText={__('Back to All Customers', 'checkout_engine')}
+			title={title()}
 			button={
 				loading ? (
 					<ce-skeleton
-						style={ {
+						style={{
 							width: '120px',
 							height: '35px',
 							display: 'inline-block',
-						} }
+						}}
 					></ce-skeleton>
 				) : (
 					<div
-						css={ css`
+						css={css`
 							display: flex;
 							align-items: center;
 							gap: 0.5em;
-						` }
+						`}
 					>
-						{ /* <ProductActionsDropdown
+						{/* <ProductActionsDropdown
 							setConfirm={ setConfirm }
 							product={ product }
 							isSaving={ isSaving }
 							toggleArchive={ toggleArchive }
-						/> */ }
+						/> */}
 						<SaveButton>
-							{ customer?.id
-								? __( 'Update Customer', 'checkout_engine' )
-								: __( 'Create Customer', 'checkout_engine' ) }
+							{customer?.id
+								? __('Update Customer', 'checkout_engine')
+								: __('Create Customer', 'checkout_engine')}
 						</SaveButton>
 					</div>
 				)
 			}
-			notices={ snackbarNotices }
-			removeNotice={ removeSnackbarNotice }
-			sidebar={ <Sidebar /> }
+			notices={snackbarNotices}
+			removeNotice={removeSnackbarNotice}
+			sidebar={<Sidebar />}
 		>
 			<Fragment>
-			 <FlashError path="customers" scrollIntoView />
-       <Details />
-				{/*<Name />
-				<Codes />
-				<Types />
-				<Limits /> */}
+				<FlashError path="customers" scrollIntoView />
+				<Details />
+				<Orders />
 			</Fragment>
 		</Template>
 	);
-}
+};

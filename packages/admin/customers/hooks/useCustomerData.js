@@ -6,9 +6,12 @@ import { useDispatch, useSelect } from '@wordpress/data';
 export default () => {
 	return {
 		...useSelect((select) => {
+			const customer = select(store).selectCustomer();
+			const customerId = select(coreStore).selectPageId();
 			return {
 				isCreated: select(store).isCreated(),
-				customer: select(store).selectCustomer(),
+				customerId: customer?.id || customerId,
+				customer,
 				loading: select(store).isResolving('selectCustomer'),
 				error: select(coreStore).selectError(),
 				isSaving: select(coreStore).isSaving(),

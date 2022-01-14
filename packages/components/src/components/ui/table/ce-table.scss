@@ -8,8 +8,8 @@
   font-family: var(--ce-font-sans);
   border: 1px solid var(--ce-color-gray-200);
   overflow:hidden;
-  border-radius: var(--ce-border-radius-medium);
-  box-shadow: var(--ce-shadow-medium);
+  border-radius: var(--border-radius, var(--ce-border-radius-medium));
+  box-shadow: var(--shadow, var(---ce-shadow-medium));
 }
 
 :host([shadowed]) {
