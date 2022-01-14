@@ -54,7 +54,19 @@ abstract class RestController {
 			return $model;
 		}
 
-		return $model->where( $request->get_params() )->get();
+		$items = $model->where( $request->get_params() )->paginate(
+			[
+				'per_page' => $request->get_param( 'per_page' ),
+				'page'     => $request->get_param( 'page' ),
+			]
+		);
+
+		$response = rest_ensure_response( $items->data );
+		$response->header( 'X-WP-Total', (int) $items->pagination->count );
+		$max_pages = ceil( $items->pagination->count / $items->pagination->limit );
+		$response->header( 'X-WP-TotalPages', (int) $max_pages );
+
+		return $response;
 	}
 
 	/**
