@@ -5,7 +5,12 @@
       "editor.defaultFormatter": "wongjn.php-sniffer"
     },
     "[json]": {
-      "editor.defaultFormatter": "esbenp.prettier-vscode"
+      "editor.defaultFormatter": "esbenp.prettier-vscode",
+      "editor.formatOnSave": true
+    },
+    "[js]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode",
+      "editor.formatOnSave": true
     },
     "[blade]": {
       "editor.defaultFormatter": "shufo.vscode-blade-formatter"

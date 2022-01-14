@@ -5,37 +5,39 @@ import { createRegistrySelector } from '@wordpress/data';
 /**
  * Get the customer
  */
-export const selectCustomer = createRegistrySelector( ( select ) => () =>
-	select( coreStore ).selectModel( 'customers', 0 )
+export const selectCustomer = createRegistrySelector(
+	(select) => () => select(coreStore).selectModel('customers', 0)
 );
+
+export function selectPendingConnectedUser(state) {
+	return state.connect;
+}
 
 /**
  * Has this been created?
  */
-export const isCreated = createRegistrySelector( ( select ) => () =>
-	select( coreStore ).isCreated()
+export const isCreated = createRegistrySelector(
+	(select) => () => select(coreStore).isCreated()
 );
 
 /**
  * Get the model status
  */
-export const selectCustomerStatus = createRegistrySelector(
-	( select ) => () => {
-		const model = select( store ).selectCustomer();
-		if ( ! model?.id ) {
-			return 'draft';
-		}
-		return 'active';
+export const selectCustomerStatus = createRegistrySelector((select) => () => {
+	const model = select(store).selectCustomer();
+	if (!model?.id) {
+		return 'draft';
 	}
-);
+	return 'active';
+});
 
-export const selectError = ( state ) => {
+export const selectError = (state) => {
 	return state.error;
 };
 
 /**
  * Is the model saving?
  */
-export const isSaving = createRegistrySelector( ( select ) => () => {
-	return select( 'checkout-engine/ui' ).isSaving();
-} );
+export const isSaving = createRegistrySelector((select) => () => {
+	return select('checkout-engine/ui').isSaving();
+});

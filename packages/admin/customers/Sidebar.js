@@ -9,38 +9,41 @@ import useCustomerData from './hooks/useCustomerData';
 import User from './modules/User';
 
 export default () => {
-  const { customer, error, loading, save } = useCustomerData();
-  const [customerId, setCustomerId] = useState(getQueryArg( window.location, 'id' ));
+	const { customer, error, loading, save } = useCustomerData();
+	const [customerId, setCustomerId] = useState(
+		getQueryArg(window.location, 'id')
+	);
 
-  // useEffect( () => {
-  //   if ( customer?.id && customer?.id !== customerId ) {
-  //     console.loog(customer?.id, customerId);
-  //     setCustomerId( customer.id );
-  //   }
-  // }, [ customer ]);
+	useEffect(() => {
+		if (customer?.id && customer?.id !== customerId) {
+			setCustomerId(customer.id);
+		}
+	}, [customer]);
 
 	return (
 		<Fragment>
-			<Box
-				title={
-					<div
-						css={ css`
-							display: flex;
-							align-items: center;
-							justify-content: space-between;
-						` }
-					>
-						{ __( 'User', 'checkout_engine' ) }{ ' ' }
-					</div>
-				}
-				css={ css`
-					font-size: 14px;
-				` }
-			>
-				<Fragment>
-          <User customer_id={customerId} />
-				</Fragment>
-			</Box>
+			{customerId && (
+				<Box
+					title={
+						<div
+							css={css`
+								display: flex;
+								align-items: center;
+								justify-content: space-between;
+							`}
+						>
+							{__('WordPress User', 'checkout_engine')}
+						</div>
+					}
+					css={css`
+						font-size: 14px;
+					`}
+				>
+					<Fragment>
+						<User customer_id={customerId} />
+					</Fragment>
+				</Box>
+			)}
 		</Fragment>
 	);
 };

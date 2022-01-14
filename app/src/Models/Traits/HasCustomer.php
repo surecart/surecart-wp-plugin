@@ -45,7 +45,7 @@ trait HasCustomer {
 	 */
 	public function belongsToUser( $user_to_check ) {
 		// normalize user id/object.
-		if ( is_int( $user_to_check() ) ) {
+		if ( is_int( $user_to_check ) ) {
 			$user_to_check = get_user_by( 'ID', $user_to_check );
 		}
 

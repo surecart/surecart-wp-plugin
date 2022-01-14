@@ -11,13 +11,6 @@ use CheckoutEngine\Concerns\Arrayable;
  */
 abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelInterface {
 	/**
-	 * What mode to create the model in
-	 *
-	 * @var string
-	 */
-	protected $mode = 'live';
-
-	/**
 	 * Keeps track of booted models
 	 *
 	 * @var array

@@ -86,6 +86,45 @@ class User implements ArrayAccess, JsonSerializable {
 	}
 
 	/**
+	 * Create a new user and return this model context
+	 * If the user already exists, just set the customer and role in that case.
+	 */
+	protected function create( $args ) {
+		$args = wp_parse_args(
+			$args,
+			[
+				'user_name'     => '',
+				'user_email'    => '',
+				'user_password' => '',
+			]
+		);
+
+		$user_id       = username_exists( $args['user_name'] );
+		$user_password = trim( $args['user_password'] );
+		$user_created  = false;
+
+		if ( ! $user_id && empty( $user_password ) ) {
+			$user_password = wp_generate_password( 12, false );
+			$user_id       = wp_create_user( $args['user_name'], $user_password, $args['user_email'] );
+			update_user_meta( $user_id, 'default_password_nag', true );
+			$user_created = true;
+		} elseif ( ! $user_id ) {
+			// Password has been provided.
+			$user_id      = wp_create_user( $args['user_name'], $user_password, $args['user_email'] );
+			$user_created = true;
+		}
+
+		$user = new \WP_User( $user_id );
+		$user->add_role( 'ce-customer' );
+
+		if ( $user_created ) {
+			wp_update_user( $user );
+		}
+
+		return $this->find( $user->ID );
+	}
+
+	/**
 	 * Get the customer from the user.
 	 *
 	 * @return \CheckoutEngine\Models\Customer|false

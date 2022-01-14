@@ -30,10 +30,9 @@ class SubscriptionPermissionsControllerTest extends CheckoutEngineUnitTestCase {
 		$subscription =  \Mockery::mock(SubscriptionPermissionsController::class)->shouldAllowMockingProtectedMethods()->makePartial();
 		$user = self::factory()->user->create_and_get();
 
-		$subscription->shouldReceive('getCustomerId')
+		$subscription->shouldReceive('belongsToUser')
 			->once()
-			->with($user->ID)
-			->andReturn('customerid');
+			->andReturn(true);
 
 		$subscription->shouldReceive('edit_ce_subscription')
 			->once()

@@ -21,6 +21,28 @@ class Customer extends Model {
 	protected $object_name = 'customer';
 
 	/**
+	 * Create a new model
+	 *
+	 * @param array   $attributes Attributes to create.
+	 * @param boolean $create_user Whether to create a corresponding WordPress user.
+	 *
+	 * @return $this|false
+	 */
+	protected function create( $attributes = [], $create_user = true ) {
+		parent::create( $attributes );
+		if ( $create_user ) {
+			User::create(
+				[
+					'user_name'  => $this->attributes['name'] ?? '',
+					'user_email' => $this->attributes['email'],
+				]
+			)->setCustomerId( $this->attributes['id'] );
+		}
+
+		return $this;
+	}
+
+	/**
 	 * Get a customer by their email address
 	 *
 	 * @param string $email Email address.

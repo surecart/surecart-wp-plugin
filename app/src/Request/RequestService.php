@@ -8,14 +8,6 @@ use CheckoutEngine\Support\Errors;
  * Provide api request functionality.
  */
 class RequestService {
-
-	/**
-	 * Request mode
-	 *
-	 * @var string
-	 */
-	protected $mode = 'live';
-
 	/**
 	 * Undocumented variable
 	 *

@@ -25,6 +25,10 @@
 		"@checkout-engine/components": "workspace:^",
 		"@checkout-engine/docs": "workspace:^"
 	},
+	"devDependencies": {
+		"@wordpress/prettier-config": "^1.1.1",
+		"prettier": "^2.5.1"
+	},
 	"publishConfig": {
 		"access": "public"
 	}
