@@ -7,7 +7,7 @@ use CheckoutEngine\Models\Charge;
 /**
  * Customer order controller
  */
-class CustomerChargesController {
+class CustomerPaymentMethodsController {
 	/**
 	 * Get a users list
 	 *
