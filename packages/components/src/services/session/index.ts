@@ -27,7 +27,10 @@ export const createOrUpdateSession = async ({ id, data, query = {} }) => {
 export const finalizeSession = async ({ id, data = {}, query = {}, processor }) => {
   return (await apiFetch({
     method: 'POST',
-    path: addQueryArgs(parsePath(id, `/finalize/${processor}`), query),
+    path: addQueryArgs(parsePath(id, `/finalize/`), {
+      processor_type: processor,
+      ...query,
+    }),
     data,
   })) as Order;
 };

@@ -120,6 +120,9 @@ export namespace Components {
          */
         "loading": boolean;
     }
+    interface CeCcLogo {
+        "brand": string;
+    }
     interface CeCheckbox {
         /**
           * Draws the checkbox in a checked state.
@@ -1515,6 +1518,12 @@ declare global {
         prototype: HTMLCeCardElement;
         new (): HTMLCeCardElement;
     };
+    interface HTMLCeCcLogoElement extends Components.CeCcLogo, HTMLStencilElement {
+    }
+    var HTMLCeCcLogoElement: {
+        prototype: HTMLCeCcLogoElement;
+        new (): HTMLCeCcLogoElement;
+    };
     interface HTMLCeCheckboxElement extends Components.CeCheckbox, HTMLStencilElement {
     }
     var HTMLCeCheckboxElement: {
@@ -1995,6 +2004,7 @@ declare global {
         "ce-block-ui": HTMLCeBlockUiElement;
         "ce-button": HTMLCeButtonElement;
         "ce-card": HTMLCeCardElement;
+        "ce-cc-logo": HTMLCeCcLogoElement;
         "ce-checkbox": HTMLCeCheckboxElement;
         "ce-checkout": HTMLCeCheckoutElement;
         "ce-choice": HTMLCeChoiceElement;
@@ -2196,6 +2206,9 @@ declare namespace LocalJSX {
           * Is this card loading.
          */
         "loading"?: boolean;
+    }
+    interface CeCcLogo {
+        "brand"?: string;
     }
     interface CeCheckbox {
         /**
@@ -3684,6 +3697,7 @@ declare namespace LocalJSX {
         "ce-block-ui": CeBlockUi;
         "ce-button": CeButton;
         "ce-card": CeCard;
+        "ce-cc-logo": CeCcLogo;
         "ce-checkbox": CeCheckbox;
         "ce-checkout": CeCheckout;
         "ce-choice": CeChoice;
@@ -3774,6 +3788,7 @@ declare module "@stencil/core" {
             "ce-block-ui": LocalJSX.CeBlockUi & JSXBase.HTMLAttributes<HTMLCeBlockUiElement>;
             "ce-button": LocalJSX.CeButton & JSXBase.HTMLAttributes<HTMLCeButtonElement>;
             "ce-card": LocalJSX.CeCard & JSXBase.HTMLAttributes<HTMLCeCardElement>;
+            "ce-cc-logo": LocalJSX.CeCcLogo & JSXBase.HTMLAttributes<HTMLCeCcLogoElement>;
             "ce-checkbox": LocalJSX.CeCheckbox & JSXBase.HTMLAttributes<HTMLCeCheckboxElement>;
             "ce-checkout": LocalJSX.CeCheckout & JSXBase.HTMLAttributes<HTMLCeCheckoutElement>;
             "ce-choice": LocalJSX.CeChoice & JSXBase.HTMLAttributes<HTMLCeChoiceElement>;

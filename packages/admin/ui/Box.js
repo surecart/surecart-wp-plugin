@@ -18,7 +18,7 @@ export default ({
 			css={css`
 				/* box-shadow: rgb( 0 0 0 / 10% ) 0px 2px 4px 0px; */
 				.components-card__footer {
-					background: var(--ce-color-gray-100, #f9fafb);
+					background: var(--ce-color-gray-50, #f9fafb);
 				}
 			`}
 			size={size}

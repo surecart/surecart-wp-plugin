@@ -12,6 +12,7 @@ export const CeBadgeNotice = /*@__PURE__*/createReactComponent<JSX.CeBadgeNotice
 export const CeBlockUi = /*@__PURE__*/createReactComponent<JSX.CeBlockUi, HTMLCeBlockUiElement>('ce-block-ui');
 export const CeButton = /*@__PURE__*/createReactComponent<JSX.CeButton, HTMLCeButtonElement>('ce-button');
 export const CeCard = /*@__PURE__*/createReactComponent<JSX.CeCard, HTMLCeCardElement>('ce-card');
+export const CeCcLogo = /*@__PURE__*/createReactComponent<JSX.CeCcLogo, HTMLCeCcLogoElement>('ce-cc-logo');
 export const CeCheckbox = /*@__PURE__*/createReactComponent<JSX.CeCheckbox, HTMLCeCheckboxElement>('ce-checkbox');
 export const CeCheckout = /*@__PURE__*/createReactComponent<JSX.CeCheckout, HTMLCeCheckoutElement>('ce-checkout');
 export const CeChoice = /*@__PURE__*/createReactComponent<JSX.CeChoice, HTMLCeChoiceElement>('ce-choice');

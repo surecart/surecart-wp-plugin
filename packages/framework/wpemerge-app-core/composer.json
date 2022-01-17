@@ -1,0 +1,33 @@
+{
+	"name": "htmlburger/wpemerge-app-core",
+	"description": "Core tools for the WP Emerge starter theme and plugin.",
+	"type": "library",
+	"keywords": [],
+	"license": "GPL-2.0-only",
+	"homepage": "https://wpemerge.com/",
+	"authors": [
+		{
+			"name": "Atanas Angelov",
+			"email": "hi@atanas.dev",
+			"homepage": "https://atanas.dev/",
+			"role": "Developer"
+		},
+		{
+			"name": "htmlBurger",
+			"email": "info@htmlburger.com",
+			"homepage": "http://htmlburger.com/",
+			"role": "Developer"
+		}
+	],
+	"require": {
+		"htmlburger/wpemerge": "dev-master"
+	},
+	"autoload": {
+		"psr-4": {
+			"WPEmergeAppCore\\": "src/"
+		},
+		"files": [
+			"config.php"
+		]
+	}
+}

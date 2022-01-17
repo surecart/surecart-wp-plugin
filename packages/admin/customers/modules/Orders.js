@@ -1,29 +1,34 @@
-/** @jsx jsx */
 import { __, _n } from '@wordpress/i18n';
-
-import Box from '../../ui/Box';
-import { store } from '../store';
-import { css, jsx } from '@emotion/core';
 import useCustomerData from '../hooks/useCustomerData';
-import { Fragment } from '@wordpress/element';
-import { useSelect } from '@wordpress/data';
-import { CeButton } from '@checkout-engine/components-react';
 import DataTable from '../../components/DataTable';
+import { useEffect, useState } from '@wordpress/element';
+import useDataApi from '../../hooks/useDataApi';
+import { addQueryArgs } from '@wordpress/url';
 
 export default () => {
 	const { customerId } = useCustomerData();
+	const [{ data: orders, isLoading, error, pagination }, fetchData] =
+		useDataApi();
 
-	const { orders, loading } = useSelect(
-		(select) => {
-			return {
-				orders: select(store).selectOrders(),
-				loading: select(store).isResolving('selectOrders'),
-			};
-		},
-		[customerId]
+	useEffect(() => {
+		if (customerId) {
+			fetchData({
+				path: 'checkout-engine/v1/orders',
+				query: {
+					customer_ids: [customerId],
+					context: 'edit',
+					status: ['paid'],
+					expand: ['payment_method', 'line_items'],
+				},
+			});
+		}
+	}, [customerId]);
+
+	const footer = (
+		<div>
+			{sprintf(__('%s Total', 'checkout_engine'), pagination?.total || 0)}
+		</div>
 	);
-
-	const footer = <div>total</div>;
 
 	return (
 		<DataTable
@@ -91,14 +96,21 @@ export default () => {
 							></ce-session-status-badge>
 						),
 						actions: (
-							<ce-button size="small">
+							<ce-button
+								href={addQueryArgs('admin.php', {
+									page: 'ce-orders',
+									action: 'edit',
+									id: id,
+								})}
+								size="small"
+							>
 								{__('View', 'checkout_engine')}
 							</ce-button>
 						),
 					};
 				}
 			)}
-			loading={loading}
+			loading={isLoading}
 			footer={footer}
 		/>
 	);

@@ -85,7 +85,7 @@ class Order extends Model {
 		}
 
 		$finalized = \CheckoutEngine::request(
-			$this->endpoint . '/' . $this->attributes['id'] . '/finalize/' . $this->processor_type,
+			$this->endpoint . '/' . $this->attributes['id'] . '/finalize/',
 			[
 				'method' => 'PATCH',
 				'query'  => $this->query,

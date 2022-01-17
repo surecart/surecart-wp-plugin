@@ -128,6 +128,7 @@ export class CeSessionProvider {
         },
         processor: 'stripe',
       });
+      console.log(this.session);
       if (this.session.status === 'finalized') {
         this.ceSetState.emit('FETCH');
       } else {

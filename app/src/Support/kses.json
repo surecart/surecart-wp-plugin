@@ -52,6 +52,12 @@
     "class": true,
     "slot": true
   },
+  "ce-cc-logo": {
+    "brand": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
   "ce-checkbox": {
     "checked": true,
     "disabled": true,

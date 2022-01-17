@@ -6,6 +6,7 @@ import { getQueryArg } from '@wordpress/url';
 
 import Box from '../ui/Box';
 import useCustomerData from './hooks/useCustomerData';
+import Notifications from './modules/Notifications';
 import User from './modules/User';
 
 export default () => {
@@ -23,26 +24,26 @@ export default () => {
 	return (
 		<Fragment>
 			{customerId && (
-				<Box
-					title={
-						<div
-							css={css`
-								display: flex;
-								align-items: center;
-								justify-content: space-between;
-							`}
-						>
-							{__('WordPress User', 'checkout_engine')}
-						</div>
-					}
-					css={css`
-						font-size: 14px;
-					`}
-				>
-					<Fragment>
-						<User customer_id={customerId} />
-					</Fragment>
-				</Box>
+				<Fragment>
+					<Box
+						title={__('WordPress User', 'checkout_engine')}
+						css={css`
+							font-size: 14px;
+						`}
+					>
+						<Fragment>
+							<User customer_id={customerId} />
+						</Fragment>
+					</Box>
+					<Box
+						title={__('Notifications', 'checkout_engine')}
+						css={css`
+							font-size: 14px;
+						`}
+					>
+						<Notifications />
+					</Box>
+				</Fragment>
 			)}
 		</Fragment>
 	);

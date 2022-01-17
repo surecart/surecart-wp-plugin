@@ -40,7 +40,7 @@ class OrderRestServiceProvider extends RestServiceProvider implements RestServic
 	public function registerRoutes() {
 		register_rest_route(
 			"$this->name/v$this->version",
-			$this->endpoint . '/(?P<id>\S+)/finalize/(?P<processor_type>\S+)',
+			$this->endpoint . '/(?P<id>\S+)/finalize/',
 			[
 				[
 					'methods'             => \WP_REST_Server::EDITABLE,

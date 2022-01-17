@@ -1,7 +1,9 @@
 :host {
+  --width: 1em;
+  --height: 1em;
   display: inline-block;
-  width: 1em;
-  height: 1em;
+  width: var(--width);
+  height: var(--height);
   contain: strict;
   box-sizing: content-box !important;
 }

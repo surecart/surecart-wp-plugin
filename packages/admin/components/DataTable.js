@@ -9,24 +9,21 @@ export default ({
 	footer = '',
 	items = [],
 	columns = {},
-	renderCell = () => {},
+	empty = '',
 	loading,
 }) => {
 	const renderLoading = () => {
 		return (
 			<ce-table>
-				<ce-table-cell slot="head">
-					<ce-skeleton style={{ width: '50px' }}></ce-skeleton>
-				</ce-table-cell>
-				<ce-table-cell slot="head">
-					<ce-skeleton style={{ width: '100px' }}></ce-skeleton>
-				</ce-table-cell>
-				<ce-table-cell slot="head">
-					<ce-skeleton style={{ width: '70px' }}></ce-skeleton>
-				</ce-table-cell>
-				<ce-table-cell slot="head">
-					<ce-skeleton style={{ width: '50px' }}></ce-skeleton>
-				</ce-table-cell>
+				{Object.keys(columns).map((key) => (
+					<ce-table-cell
+						slot="head"
+						style={{ width: columns[key]?.width }}
+						key={key}
+					>
+						{columns[key]?.label}
+					</ce-table-cell>
+				))}
 
 				<ce-table-row>
 					<ce-table-cell>
@@ -45,6 +42,10 @@ export default ({
 			</ce-table>
 		);
 	};
+
+	if ((items || []).length === 0) {
+		return <Box title={title}>{empty}</Box>;
+	}
 
 	return (
 		<div

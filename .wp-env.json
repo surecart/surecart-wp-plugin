@@ -1,6 +1,7 @@
 {
 	"core": null,
-	"plugins": [ "../checkout-engine" ],
+	"plugins": ["../checkout-engine"],
+	"phpVersion": "8.0",
 	"env": {
 		"tests": {
 			"config": {

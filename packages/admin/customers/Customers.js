@@ -10,8 +10,10 @@ import SaveButton from '../components/SaveButton';
 import useSnackbar from '../hooks/useSnackbar';
 import Template from '../templates/SingleModel';
 import useCustomerData from './hooks/useCustomerData';
+import Charges from './modules/Charges';
 import Details from './modules/Details';
 import Orders from './modules/Orders';
+import Subscriptions from './modules/Subscriptions';
 // parts
 import Sidebar from './Sidebar';
 
@@ -92,6 +94,8 @@ export default () => {
 				<FlashError path="customers" scrollIntoView />
 				<Details />
 				<Orders />
+				<Charges />
+				<Subscriptions />
 			</Fragment>
 		</Template>
 	);
