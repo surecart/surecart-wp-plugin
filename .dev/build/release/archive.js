@@ -13,41 +13,44 @@ const archiver = require('archiver');
  * @param {string} destination
  * @returns {Promise}
  */
-const zip = (source, destination) => new Promise((resolve, reject) => {
-  if (!shell.test('-e', source)) {
-    reject(new Error(`Directory does not exist: ${source}`));
-    return;
-  }
+const zip = (source, destination) =>
+	new Promise((resolve, reject) => {
+		if (!shell.test('-e', source)) {
+			reject(new Error(`Directory does not exist: ${source}`));
+			return;
+		}
 
-  if (!shell.test('-d', source)) {
-    reject(new Error(`Source is not a directory: ${source}`));
-    return;
-  }
+		if (!shell.test('-d', source)) {
+			reject(new Error(`Source is not a directory: ${source}`));
+			return;
+		}
 
-  if (shell.test('-e', destination)) {
-    reject(new Error(`Zip already exists: ${destination}`));
-    return;
-  }
+		// if (shell.test('-e', destination)) {
+		//   reject(new Error(`Zip already exists: ${destination}`));
+		//   return;
+		// }
 
-  const output = fs.createWriteStream(destination);
+		const output = fs.createWriteStream(destination);
 
-  output.on('close', resolve);
+		output.on('close', resolve);
 
-  const archive = archiver('zip', {
-    zlib: {
-      level: 9,
-    },
-  });
+		const archive = archiver('zip', {
+			zlib: {
+				level: 9,
+			},
+		});
 
-  archive.on('error', error => reject(new Error(`Failed to create archive: ${error.message}`)));
+		archive.on('error', (error) =>
+			reject(new Error(`Failed to create archive: ${error.message}`))
+		);
 
-  archive.pipe(output);
+		archive.pipe(output);
 
-  archive.directory(source, path.basename(source));
+		archive.directory(source, path.basename(source));
 
-  archive.finalize();
-});
+		archive.finalize();
+	});
 
 module.exports = {
-  zip,
+	zip,
 };

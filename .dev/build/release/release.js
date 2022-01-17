@@ -31,14 +31,14 @@ emitter.on('file.copied', () => log(' done'));
 
 new Promise((resolve) => resolve())
 	.then(() => {
-		steps.validate(destination);
+		// steps.validate(destination);
 
 		steps.createDirectory(destination);
 
 		steps.copyFiles(config.release.include, source, destination, emitter);
 
-		log('Installing production composer dependencies ...');
-		steps.installComposerDependencies(source, destination);
+		// log('Installing production composer dependencies ...');
+		// steps.installComposerDependencies(source, destination);
 
 		return steps.zip(destination, `${destination}.zip`);
 	})

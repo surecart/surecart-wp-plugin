@@ -47,6 +47,7 @@ const validate = (destination) => {
  * @param {string} destination
  */
 const createDirectory = (destination) => {
+	shell.rm('-r', destination);
 	shell.mkdir('-p', destination);
 };
 
@@ -67,10 +68,10 @@ const copyFile = (fileSource, source, destination, emitter) => {
 		throw new Error(`File or directory does not exist: ${fileSource}`);
 	}
 
-	if (fileRelative === 'vendor') {
-		// Skip Composer's vendor directory as we will be handling that separately.
-		return;
-	}
+	// if (fileRelative === 'vendor') {
+	// 	// Skip Composer's vendor directory as we will be handling that separately.
+	// 	return;
+	// }
 
 	emit(emitter, 'file.copy', fileSource);
 
