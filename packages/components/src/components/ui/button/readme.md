@@ -49,6 +49,7 @@
 ### Used by
 
  - [ce-coupon-form](../../controllers/coupon-form)
+ - [ce-customer-orders-list](../../controllers/dashboard/customer-orders-list)
  - [ce-customer-subscription](../../controllers/dashboard/customer-subscription)
  - [ce-customer-subscription-edit](../../controllers/dashboard/customer-subscription-edit)
  - [ce-login-form](../../controllers/login)
@@ -62,6 +63,7 @@
 graph TD;
   ce-button --> ce-spinner
   ce-coupon-form --> ce-button
+  ce-customer-orders-list --> ce-button
   ce-customer-subscription --> ce-button
   ce-customer-subscription-edit --> ce-button
   ce-login-form --> ce-button

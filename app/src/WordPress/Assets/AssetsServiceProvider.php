@@ -54,21 +54,21 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 
 	public function registerDependencies() {
 		// core-data
-		$asset_file = include trailingslashit( $this->container[ WPEMERGE_CONFIG_KEY ]['app_core']['path'] ) . 'dist/admin/store/data/register.asset.php';
+		$asset_file = include trailingslashit( $this->container[ WPEMERGE_CONFIG_KEY ]['app_core']['path'] ) . 'dist/store/data.asset.php';
 
 		wp_register_script(
 			'ce-core-data',
-			trailingslashit( \CheckoutEngine::core()->assets()->getUrl() ) . 'dist/admin/store/data/register.js',
+			trailingslashit( \CheckoutEngine::core()->assets()->getUrl() ) . 'dist/store/data.js',
 			array_merge( [ 'checkout-engine-components' ], $asset_file['dependencies'] ),
 			filemtime( trailingslashit( $this->container[ WPEMERGE_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/checkout-engine/checkout-engine.esm.js' ),
 			true
 		);
 
 		// ui
-		$asset_file = include trailingslashit( $this->container[ WPEMERGE_CONFIG_KEY ]['app_core']['path'] ) . 'dist/admin/store/ui/register.asset.php';
+		$asset_file = include trailingslashit( $this->container[ WPEMERGE_CONFIG_KEY ]['app_core']['path'] ) . 'dist/store/ui.asset.php';
 		wp_register_script(
 			'ce-ui-data',
-			trailingslashit( \CheckoutEngine::core()->assets()->getUrl() ) . 'dist/admin/store/ui/register.js',
+			trailingslashit( \CheckoutEngine::core()->assets()->getUrl() ) . 'dist/store/ui.js',
 			array_merge( [ 'checkout-engine-components' ], $asset_file['dependencies'] ),
 			filemtime( trailingslashit( $this->container[ WPEMERGE_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/checkout-engine/checkout-engine.esm.js' ),
 			true
@@ -262,11 +262,11 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function editorAssets() {
-		$asset_file = include trailingslashit( $this->container[ WPEMERGE_CONFIG_KEY ]['app_core']['path'] ) . 'dist/blocks.asset.php';
+		$asset_file = include trailingslashit( $this->container[ WPEMERGE_CONFIG_KEY ]['app_core']['path'] ) . 'dist/blocks/library.asset.php';
 
 		\CheckoutEngine::core()->assets()->enqueueScript(
 			'checkout-engine-blocks',
-			trailingslashit( \CheckoutEngine::core()->assets()->getUrl() ) . 'dist/blocks.js',
+			trailingslashit( \CheckoutEngine::core()->assets()->getUrl() ) . 'dist/blocks/library.js',
 			array_merge( [ 'checkout-engine-components' ], $asset_file['dependencies'] ),
 			true
 		);

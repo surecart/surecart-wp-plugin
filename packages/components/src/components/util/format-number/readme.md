@@ -28,7 +28,7 @@
 ### Used by
 
  - [ce-coupon-form](../../controllers/coupon-form)
- - [ce-customer-order](../../controllers/dashboard/customer-order)
+ - [ce-customer-orders-list](../../controllers/dashboard/customer-orders-list)
  - [ce-customer-subscription](../../controllers/dashboard/customer-subscription)
  - [ce-customer-subscription-edit](../../controllers/dashboard/customer-subscription-edit)
  - [ce-customer-subscription-plan](../../controllers/dashboard/customer-subscription-plan)
@@ -43,7 +43,7 @@
 ```mermaid
 graph TD;
   ce-coupon-form --> ce-format-number
-  ce-customer-order --> ce-format-number
+  ce-customer-orders-list --> ce-format-number
   ce-customer-subscription --> ce-format-number
   ce-customer-subscription-edit --> ce-format-number
   ce-customer-subscription-plan --> ce-format-number

@@ -300,16 +300,21 @@ export class CeSessionProvider {
 
   /** Update a session */
   async update(data = {}) {
-    this.session = (await createOrUpdateSession({
-      id: this.getSessionId(),
-      data: {
-        ...this.defaultFormData(),
-        ...data,
-      },
-      query: {
-        ...this.defaultFormQuery(),
-      },
-    })) as Order;
+    try {
+      this.session = (await createOrUpdateSession({
+        id: this.getSessionId(),
+        data: {
+          ...this.defaultFormData(),
+          ...data,
+        },
+        query: {
+          ...this.defaultFormQuery(),
+        },
+      })) as Order;
+    } catch (e) {
+      console.error(e);
+      throw e;
+    }
   }
 
   /** Updates a session with loading status changes. */

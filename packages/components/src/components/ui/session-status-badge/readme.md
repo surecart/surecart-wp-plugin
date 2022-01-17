@@ -17,6 +17,10 @@
 
 ## Dependencies
 
+### Used by
+
+ - [ce-customer-orders-list](../../controllers/dashboard/customer-orders-list)
+
 ### Depends on
 
 - [ce-tag](../tag)
@@ -25,6 +29,7 @@
 ```mermaid
 graph TD;
   ce-session-status-badge --> ce-tag
+  ce-customer-orders-list --> ce-session-status-badge
   style ce-session-status-badge fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

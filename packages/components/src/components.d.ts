@@ -317,7 +317,14 @@ export namespace Components {
         "customerId": string;
     }
     interface CeCustomerOrder {
-        "order": Order;
+        "orderId": string;
+    }
+    interface CeCustomerOrdersList {
+        /**
+          * Customer id to fetch subscriptions
+         */
+        "customerId": string;
+        "page": number;
     }
     interface CeCustomerSubscription {
         "subscription": Subscription;
@@ -1572,6 +1579,12 @@ declare global {
         prototype: HTMLCeCustomerOrderElement;
         new (): HTMLCeCustomerOrderElement;
     };
+    interface HTMLCeCustomerOrdersListElement extends Components.CeCustomerOrdersList, HTMLStencilElement {
+    }
+    var HTMLCeCustomerOrdersListElement: {
+        prototype: HTMLCeCustomerOrdersListElement;
+        new (): HTMLCeCustomerOrdersListElement;
+    };
     interface HTMLCeCustomerSubscriptionElement extends Components.CeCustomerSubscription, HTMLStencilElement {
     }
     var HTMLCeCustomerSubscriptionElement: {
@@ -2013,6 +2026,7 @@ declare global {
         "ce-coupon-form": HTMLCeCouponFormElement;
         "ce-customer-dashboard": HTMLCeCustomerDashboardElement;
         "ce-customer-order": HTMLCeCustomerOrderElement;
+        "ce-customer-orders-list": HTMLCeCustomerOrdersListElement;
         "ce-customer-subscription": HTMLCeCustomerSubscriptionElement;
         "ce-customer-subscription-edit": HTMLCeCustomerSubscriptionEditElement;
         "ce-customer-subscription-plan": HTMLCeCustomerSubscriptionPlanElement;
@@ -2402,7 +2416,14 @@ declare namespace LocalJSX {
         "customerId"?: string;
     }
     interface CeCustomerOrder {
-        "order"?: Order;
+        "orderId"?: string;
+    }
+    interface CeCustomerOrdersList {
+        /**
+          * Customer id to fetch subscriptions
+         */
+        "customerId"?: string;
+        "page"?: number;
     }
     interface CeCustomerSubscription {
         "onCeUpdateSubscription"?: (event: CustomEvent<Subscription>) => void;
@@ -3706,6 +3727,7 @@ declare namespace LocalJSX {
         "ce-coupon-form": CeCouponForm;
         "ce-customer-dashboard": CeCustomerDashboard;
         "ce-customer-order": CeCustomerOrder;
+        "ce-customer-orders-list": CeCustomerOrdersList;
         "ce-customer-subscription": CeCustomerSubscription;
         "ce-customer-subscription-edit": CeCustomerSubscriptionEdit;
         "ce-customer-subscription-plan": CeCustomerSubscriptionPlan;
@@ -3797,6 +3819,7 @@ declare module "@stencil/core" {
             "ce-coupon-form": LocalJSX.CeCouponForm & JSXBase.HTMLAttributes<HTMLCeCouponFormElement>;
             "ce-customer-dashboard": LocalJSX.CeCustomerDashboard & JSXBase.HTMLAttributes<HTMLCeCustomerDashboardElement>;
             "ce-customer-order": LocalJSX.CeCustomerOrder & JSXBase.HTMLAttributes<HTMLCeCustomerOrderElement>;
+            "ce-customer-orders-list": LocalJSX.CeCustomerOrdersList & JSXBase.HTMLAttributes<HTMLCeCustomerOrdersListElement>;
             "ce-customer-subscription": LocalJSX.CeCustomerSubscription & JSXBase.HTMLAttributes<HTMLCeCustomerSubscriptionElement>;
             "ce-customer-subscription-edit": LocalJSX.CeCustomerSubscriptionEdit & JSXBase.HTMLAttributes<HTMLCeCustomerSubscriptionEditElement>;
             "ce-customer-subscription-plan": LocalJSX.CeCustomerSubscriptionPlan & JSXBase.HTMLAttributes<HTMLCeCustomerSubscriptionPlanElement>;

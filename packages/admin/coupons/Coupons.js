@@ -28,116 +28,116 @@ import useCouponData from './hooks/useCouponData';
 // hocs
 import withConfirm from '../hocs/withConfirm';
 
-export default withConfirm( ( { noticeUI } ) => {
+export default withConfirm(({ noticeUI }) => {
 	const { snackbarNotices, removeSnackbarNotice } = useSnackbar();
 
 	const { coupon, error, loading, save } = useCouponData();
 
-	const onSubmit = async ( e ) => {
+	const onSubmit = async (e) => {
 		e.preventDefault();
 		save();
 	};
 
 	const onInvalid = () => {
-		dispatch( uiStore ).setInvalid( true );
+		dispatch(uiStore).setInvalid(true);
 	};
 
-	if ( error?.message ) {
+	if (error?.message) {
 		return (
 			<CeAlert
-				css={ css`
+				css={css`
 					margin-top: 20px;
 					margin-right: 20px;
-				` }
+				`}
 				type="danger"
-				open={ error?.message }
-				onCeShow={ ( e ) => {
-					if ( scrollIntoView ) {
-						e.target.scrollIntoView( {
+				open={error?.message}
+				onCeShow={(e) => {
+					if (scrollIntoView) {
+						e.target.scrollIntoView({
 							behavior: 'smooth',
 							block: 'start',
 							inline: 'nearest',
-						} );
+						});
 					}
-				} }
+				}}
 			>
 				<span slot="title">
-					{ __(
+					{__(
 						'There was a critical error loading this page. Please reload the page and try again.',
 						'checkout_engine'
-					) }
+					)}
 				</span>
-				{ error?.message }
+				{error?.message}
 			</CeAlert>
 		);
 	}
 
 	const title = () => {
-		if ( loading ) {
+		if (loading) {
 			return (
 				<ce-skeleton
-					style={ {
+					style={{
 						width: '120px',
 						display: 'inline-block',
-					} }
+					}}
 				></ce-skeleton>
 			);
 		}
 
 		return coupon?.id
 			? sprintf(
-					__( 'Edit %s', 'checkout_engine' ),
-					coupon?.name || __( 'Coupon', 'checkout_engine' )
+					__('Edit %s', 'checkout_engine'),
+					coupon?.name || __('Coupon', 'checkout_engine')
 			  )
 			: sprintf(
-					__( 'Add %s', 'checkout_engine' ),
-					coupon?.name || __( 'Coupon', 'checkout_engine' )
+					__('Add %s', 'checkout_engine'),
+					coupon?.name || __('Coupon', 'checkout_engine')
 			  );
 	};
 
 	return (
 		<Template
-			pageModelName={ 'coupons' }
-			onSubmit={ onSubmit }
-			onInvalid={ onInvalid }
-			backUrl={ 'admin.php?page=ce-coupons' }
-			backText={ __( 'Back to All Coupons', 'checkout_engine' ) }
-			title={ title() }
+			pageModelName={'coupons'}
+			onSubmit={onSubmit}
+			onInvalid={onInvalid}
+			backUrl={'admin.php?page=ce-coupons'}
+			backText={__('Back to All Coupons', 'checkout_engine')}
+			title={title()}
 			button={
 				loading ? (
 					<ce-skeleton
-						style={ {
+						style={{
 							width: '120px',
 							height: '35px',
 							display: 'inline-block',
-						} }
+						}}
 					></ce-skeleton>
 				) : (
 					<div
-						css={ css`
+						css={css`
 							display: flex;
 							align-items: center;
 							gap: 0.5em;
-						` }
+						`}
 					>
-						{ /* <ProductActionsDropdown
+						{/* <ProductActionsDropdown
 							setConfirm={ setConfirm }
 							product={ product }
 							isSaving={ isSaving }
 							toggleArchive={ toggleArchive }
-						/> */ }
+						/> */}
 						<SaveButton>
-							{ coupon?.id
-								? __( 'Update Coupon', 'checkout_engine' )
-								: __( 'Create Coupon', 'checkout_engine' ) }
+							{coupon?.id
+								? __('Update Coupon', 'checkout_engine')
+								: __('Create Coupon', 'checkout_engine')}
 						</SaveButton>
 					</div>
 				)
 			}
-			notices={ snackbarNotices }
-			removeNotice={ removeSnackbarNotice }
-			noticeUI={ noticeUI }
-			sidebar={ <Sidebar /> }
+			notices={snackbarNotices}
+			removeNotice={removeSnackbarNotice}
+			noticeUI={noticeUI}
+			sidebar={<Sidebar />}
 		>
 			<Fragment>
 				<FlashError path="coupons" scrollIntoView />
@@ -239,4 +239,4 @@ export default withConfirm( ( { noticeUI } ) => {
 	// 		</Fragment>
 	// 	</Template>
 	// );
-} );
+});

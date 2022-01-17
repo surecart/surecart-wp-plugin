@@ -32,6 +32,7 @@
 
 ### Used by
 
+ - [ce-customer-order](../../controllers/dashboard/customer-order)
  - [ce-line-items](../../controllers/line-items)
  - [ce-order-confirmation-line-items](../../controllers/order-confirmation-line-items)
  - [ce-session-subscription](../../controllers/session-subscription)
@@ -51,6 +52,7 @@ graph TD;
   ce-quantity-select --> ce-dropdown
   ce-quantity-select --> ce-menu
   ce-quantity-select --> ce-menu-item
+  ce-customer-order --> ce-product-line-item
   ce-line-items --> ce-product-line-item
   ce-order-confirmation-line-items --> ce-product-line-item
   ce-session-subscription --> ce-product-line-item

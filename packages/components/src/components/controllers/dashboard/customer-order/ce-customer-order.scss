@@ -2,6 +2,11 @@
   display: block;
 }
 
+.loading {
+  display: grid;
+  gap: 1em;
+}
+
 .order-row {
   cursor: pointer;
   display: flex;

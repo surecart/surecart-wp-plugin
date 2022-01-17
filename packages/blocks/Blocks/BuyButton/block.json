@@ -3,7 +3,7 @@
 	"title": "Buy Button",
 	"description": "Display a button to immediately redirect to the checkout page with the product in the cart.",
 	"category": "layout",
-	"keywords": [ "name", "customer" ],
+	"keywords": ["name", "customer"],
 	"parent": null,
 	"supports": {
 		"reusable": false,
@@ -17,6 +17,10 @@
 		"help": {
 			"type": "string",
 			"default": "Optional"
+		},
+		"line_items": {
+			"type": "array",
+			"default": []
 		}
 	}
 }
