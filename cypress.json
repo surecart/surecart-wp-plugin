@@ -6,7 +6,7 @@
 	"supportFile": ".dev/tests/cypress/support/commands.js",
 	"screenshotsFolder": ".dev/tests/cypress/screenshots",
 	"integrationFolder": "./",
-	"testFiles": "tests-e2e/**/*.cypress.js",
+	"testFiles": ".dev/tests/tests-e2e/**/*.cypress.js",
 	"ignoreTestFiles": "**/ignoredTestFiles/*.js",
 	"viewportWidth": 2560,
 	"projectId": "ae7zwm",

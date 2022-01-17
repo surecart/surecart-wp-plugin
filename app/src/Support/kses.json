@@ -137,7 +137,14 @@
     "slot": true
   },
   "ce-customer-order": {
-    "order": true,
+    "order-id": true,
+    "style": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-customer-orders-list": {
+    "customer-id": true,
+    "page": true,
     "style": true,
     "class": true,
     "slot": true

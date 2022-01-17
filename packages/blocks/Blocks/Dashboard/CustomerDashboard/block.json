@@ -3,17 +3,21 @@
 	"title": "Customer Dashboard",
 	"description": "Displays the users customer dashboard.",
 	"category": "layout",
-	"keywords": [ "name", "customer", "dashboard" ],
+	"keywords": ["name", "customer", "dashboard"],
 	"parent": null,
 	"supports": {
 		"reusable": false,
 		"html": false,
-		"align": [ "wide", "full" ]
+		"align": ["wide", "full"]
 	},
 	"attributes": {
 		"currentStep": {
 			"type": "number",
 			"default": 0
+		},
+		"align": {
+			"type": "string",
+			"default": "wide"
 		}
 	}
 }

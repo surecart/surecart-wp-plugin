@@ -3,7 +3,6 @@ import { sprintf, __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import apiFetch from '../../../../functions/fetch';
 import { Pagination, Price, Subscription, SubscriptionItem } from '../../../../types';
-import { openWormhole } from 'stencil-wormhole';
 import { onFirstVisible } from '../../../../functions/lazy';
 
 @Component({
@@ -113,5 +112,3 @@ export class CeCustomerSubscriptionsList {
     );
   }
 }
-
-openWormhole(CeCustomerSubscriptionsList, ['loading', 'subscriptions', 'error', 'isIndex'], false);

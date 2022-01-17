@@ -8,7 +8,6 @@ use CheckoutEngine\Blocks\Dashboard\DashboardPage;
  * Checkout block
  */
 class Block extends DashboardPage {
-
 	/**
 	 * Render the block
 	 *
@@ -19,8 +18,9 @@ class Block extends DashboardPage {
 	 */
 	public function render( $attributes, $content ) {
 		// get the current page tab and possible id.
-		$id = sanitize_text_field( $_GET['id'] ?? null );
-		return $id ? $this->show( $id ) : $this->index( $attributes );
+		$id   = sanitize_text_field( $_GET['order']['id'] ?? null );
+		$page = sanitize_text_field( $_GET['order']['page'] ?? 1 );
+		return $id ? $this->show( $id ) : $this->index( $page );
 	}
 
 	/**
@@ -31,54 +31,31 @@ class Block extends DashboardPage {
 	 * @return function
 	 */
 	public function show( $id ) {
-		// check permissions.
-		if ( ! current_user_can( 'read_ce_order', $id ) ) {
-			wp_die( 'You do not have permission to access this order.', 'checkout_engine' );
-		}
-
-		// $order = Order::with( [ 'line_items', 'line_item.price', 'price.product' ] )->find( $id );
-
-		// return \CheckoutEngine::blocks()->render(
-		// 'web.dashboard.orders.show',
-		// [
-		// 'order' => $order,
-		// ]
-		// );
+		return \CheckoutEngine::blocks()->render(
+			'web.dashboard.orders.show',
+			[
+				'id' => $id,
+			]
+		);
 	}
 
 	/**
 	 * Show and individual checkout session.
 	 *
-	 * @param array $attributes Block attributes.
+	 * @param array $page Current page.
 	 *
 	 * @return function
 	 */
-	public function index( $attributes ) {
-		if ( empty( $this->customer->id ) ) {
-			return; // sanity check.
+	public function index( $page ) {
+		if ( empty( $this->customer_id ) ) {
+			return;
 		}
-
-		$page = isset( $_GET['current-page'] ) ? sanitize_text_field( wp_unslash( $_GET['current-page'] ) ) : 1;
-
-		// return \CheckoutEngine::blocks()->render(
-		// 'web.dashboard.orders.index',
-		// [
-		// 'orders' => Order::where(
-		// [
-		// 'status'       => [ 'paid', 'completed' ],
-		// 'customer_ids' => [ $this->customer->id ],
-		// ]
-		// )->with(
-		// [
-		// 'line_items',
-		// ]
-		// )->paginate(
-		// [
-		// 'page'     => $page,
-		// 'per_page' => intval( $attributes['per_page'] ?? 10 ),
-		// ]
-		// ),
-		// ]
-		// );
+		return \CheckoutEngine::blocks()->render(
+			'web.dashboard.orders.index',
+			[
+				'customer_id' => $this->customer_id,
+				'page'        => $page,
+			]
+		);
 	}
 }

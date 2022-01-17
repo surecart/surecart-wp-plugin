@@ -35,6 +35,8 @@
 
  - [ce-card](../card)
  - [ce-coupon-form](../../controllers/coupon-form)
+ - [ce-customer-order](../../controllers/dashboard/customer-order)
+ - [ce-customer-orders-list](../../controllers/dashboard/customer-orders-list)
  - [ce-customer-subscription-edit](../../controllers/dashboard/customer-subscription-edit)
  - [ce-customer-subscription-plan](../../controllers/dashboard/customer-subscription-plan)
  - [ce-customer-subscriptions-list](../../controllers/dashboard/customer-subscriptions-list)
@@ -52,6 +54,8 @@
 graph TD;
   ce-card --> ce-skeleton
   ce-coupon-form --> ce-skeleton
+  ce-customer-order --> ce-skeleton
+  ce-customer-orders-list --> ce-skeleton
   ce-customer-subscription-edit --> ce-skeleton
   ce-customer-subscription-plan --> ce-skeleton
   ce-customer-subscriptions-list --> ce-skeleton

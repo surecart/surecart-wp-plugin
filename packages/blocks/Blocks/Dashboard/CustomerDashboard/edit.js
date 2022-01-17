@@ -22,11 +22,16 @@ export default ({ clientId }) => {
 		orientation: 'horizontal',
 		templateLock: 'all',
 		renderAppender: false,
+		template: [
+			['checkout-engine/dashboard-tabs', {}],
+			['checkout-engine/dashboard-pages', {}],
+		],
 	});
 
 	const { tabBlocks, panelBlocks, panelsWrapper, tabsWrapper } = useSelect(
 		(select) => {
 			const innerBlocks = select('core/block-editor').getBlocks(clientId);
+			console.log({ innerBlocks });
 			const tabsWrapper = (innerBlocks || []).find(
 				(block) => block.name === 'checkout-engine/dashboard-tabs'
 			);
@@ -37,10 +42,10 @@ export default ({ clientId }) => {
 				tabsWrapper,
 				panelsWrapper,
 				tabBlocks: select('core/block-editor').getBlocks(
-					tabsWrapper.clientId
+					tabsWrapper?.clientId
 				),
 				panelBlocks: select('core/block-editor').getBlocks(
-					panelsWrapper.clientId
+					panelsWrapper?.clientId
 				),
 			};
 		},

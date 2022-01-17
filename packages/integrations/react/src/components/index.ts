@@ -21,6 +21,7 @@ export const CeConsumer = /*@__PURE__*/createReactComponent<JSX.CeConsumer, HTML
 export const CeCouponForm = /*@__PURE__*/createReactComponent<JSX.CeCouponForm, HTMLCeCouponFormElement>('ce-coupon-form');
 export const CeCustomerDashboard = /*@__PURE__*/createReactComponent<JSX.CeCustomerDashboard, HTMLCeCustomerDashboardElement>('ce-customer-dashboard');
 export const CeCustomerOrder = /*@__PURE__*/createReactComponent<JSX.CeCustomerOrder, HTMLCeCustomerOrderElement>('ce-customer-order');
+export const CeCustomerOrdersList = /*@__PURE__*/createReactComponent<JSX.CeCustomerOrdersList, HTMLCeCustomerOrdersListElement>('ce-customer-orders-list');
 export const CeCustomerSubscription = /*@__PURE__*/createReactComponent<JSX.CeCustomerSubscription, HTMLCeCustomerSubscriptionElement>('ce-customer-subscription');
 export const CeCustomerSubscriptionEdit = /*@__PURE__*/createReactComponent<JSX.CeCustomerSubscriptionEdit, HTMLCeCustomerSubscriptionEditElement>('ce-customer-subscription-edit');
 export const CeCustomerSubscriptionPlan = /*@__PURE__*/createReactComponent<JSX.CeCustomerSubscriptionPlan, HTMLCeCustomerSubscriptionPlanElement>('ce-customer-subscription-plan');

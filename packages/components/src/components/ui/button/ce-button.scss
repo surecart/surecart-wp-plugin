@@ -520,6 +520,13 @@
   position: relative;
   cursor: wait;
 
+  .button__prefix,
+  .button__label,
+  .button__suffix,
+  .button__caret {
+    visibility: hidden;
+  }
+
    // When disabled, prevent mouse events from bubbling up
    * {
     pointer-events: none;

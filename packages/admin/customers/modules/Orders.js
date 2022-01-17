@@ -52,7 +52,14 @@ export default () => {
 				},
 			}}
 			items={(orders || []).map(
-				({ number, id, line_items, total_amount, status }) => {
+				({
+					number,
+					id,
+					line_items,
+					total_amount,
+					status,
+					currency,
+				}) => {
 					return {
 						number: (
 							<ce-text
@@ -86,7 +93,7 @@ export default () => {
 						total: (
 							<ce-format-number
 								type="currency"
-								currency={'USD'}
+								currency={currency}
 								value={total_amount}
 							></ce-format-number>
 						),

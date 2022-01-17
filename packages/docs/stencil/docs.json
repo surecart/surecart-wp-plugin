@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-01-17T18:58:06",
+  "timestamp": "2022-01-17T22:09:42",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.9.0",
@@ -173,6 +173,7 @@
       "dependents": [
         "ce-checkout",
         "ce-coupon-form",
+        "ce-customer-orders-list",
         "ce-customer-subscription",
         "ce-customer-subscriptions-list",
         "ce-login-form",
@@ -184,6 +185,9 @@
           "ce-alert"
         ],
         "ce-coupon-form": [
+          "ce-alert"
+        ],
+        "ce-customer-orders-list": [
           "ce-alert"
         ],
         "ce-customer-subscription": [
@@ -791,6 +795,7 @@
       ],
       "dependents": [
         "ce-coupon-form",
+        "ce-customer-orders-list",
         "ce-customer-subscription",
         "ce-customer-subscription-edit",
         "ce-login-form"
@@ -803,6 +808,9 @@
           "ce-spinner"
         ],
         "ce-coupon-form": [
+          "ce-button"
+        ],
+        "ce-customer-orders-list": [
           "ce-button"
         ],
         "ce-customer-subscription": [
@@ -2156,15 +2164,91 @@
       "usage": {},
       "props": [
         {
-          "name": "order",
-          "type": "Order",
+          "name": "orderId",
+          "type": "string",
           "mutable": false,
+          "attr": "order-id",
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
           "values": [
             {
-              "type": "Order"
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [
+        {
+          "name": "line-items",
+          "docs": ""
+        }
+      ],
+      "dependents": [],
+      "dependencies": [
+        "ce-skeleton",
+        "ce-product-line-item"
+      ],
+      "dependencyGraph": {
+        "ce-customer-order": [
+          "ce-skeleton",
+          "ce-product-line-item"
+        ],
+        "ce-product-line-item": [
+          "ce-format-number",
+          "ce-line-item",
+          "ce-quantity-select"
+        ],
+        "ce-quantity-select": [
+          "ce-dropdown",
+          "ce-menu",
+          "ce-menu-item"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/controllers/dashboard/customer-orders-list/ce-customer-orders-list.tsx",
+      "encapsulation": "shadow",
+      "tag": "ce-customer-orders-list",
+      "readme": "# ce-customer-subscriptions-list\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "customerId",
+          "type": "string",
+          "mutable": false,
+          "attr": "customer-id",
+          "reflectToAttr": false,
+          "docs": "Customer id to fetch subscriptions",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "page",
+          "type": "number",
+          "mutable": false,
+          "attr": "page",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "number"
             }
           ],
           "optional": false,
@@ -2179,11 +2263,33 @@
       "parts": [],
       "dependents": [],
       "dependencies": [
-        "ce-format-number"
+        "ce-table",
+        "ce-table-cell",
+        "ce-table-row",
+        "ce-skeleton",
+        "ce-alert",
+        "ce-text",
+        "ce-format-number",
+        "ce-session-status-badge",
+        "ce-button"
       ],
       "dependencyGraph": {
-        "ce-customer-order": [
-          "ce-format-number"
+        "ce-customer-orders-list": [
+          "ce-table",
+          "ce-table-cell",
+          "ce-table-row",
+          "ce-skeleton",
+          "ce-alert",
+          "ce-text",
+          "ce-format-number",
+          "ce-session-status-badge",
+          "ce-button"
+        ],
+        "ce-session-status-badge": [
+          "ce-tag"
+        ],
+        "ce-button": [
+          "ce-spinner"
         ]
       }
     },
@@ -4676,7 +4782,7 @@
       "parts": [],
       "dependents": [
         "ce-coupon-form",
-        "ce-customer-order",
+        "ce-customer-orders-list",
         "ce-customer-subscription",
         "ce-customer-subscription-edit",
         "ce-customer-subscription-plan",
@@ -4692,7 +4798,7 @@
         "ce-coupon-form": [
           "ce-format-number"
         ],
-        "ce-customer-order": [
+        "ce-customer-orders-list": [
           "ce-format-number"
         ],
         "ce-customer-subscription": [
@@ -8025,6 +8131,7 @@
       "slots": [],
       "parts": [],
       "dependents": [
+        "ce-customer-order",
         "ce-line-items",
         "ce-order-confirmation-line-items",
         "ce-session-subscription"
@@ -8044,6 +8151,9 @@
           "ce-dropdown",
           "ce-menu",
           "ce-menu-item"
+        ],
+        "ce-customer-order": [
+          "ce-product-line-item"
         ],
         "ce-line-items": [
           "ce-product-line-item"
@@ -9438,13 +9548,18 @@
       "styles": [],
       "slots": [],
       "parts": [],
-      "dependents": [],
+      "dependents": [
+        "ce-customer-orders-list"
+      ],
       "dependencies": [
         "ce-tag"
       ],
       "dependencyGraph": {
         "ce-session-status-badge": [
           "ce-tag"
+        ],
+        "ce-customer-orders-list": [
+          "ce-session-status-badge"
         ]
       }
     },
@@ -9596,6 +9711,8 @@
       "dependents": [
         "ce-card",
         "ce-coupon-form",
+        "ce-customer-order",
+        "ce-customer-orders-list",
         "ce-customer-subscription-edit",
         "ce-customer-subscription-plan",
         "ce-customer-subscriptions-list",
@@ -9614,6 +9731,12 @@
           "ce-skeleton"
         ],
         "ce-coupon-form": [
+          "ce-skeleton"
+        ],
+        "ce-customer-order": [
+          "ce-skeleton"
+        ],
+        "ce-customer-orders-list": [
           "ce-skeleton"
         ],
         "ce-customer-subscription-edit": [
@@ -10857,9 +10980,15 @@
       "styles": [],
       "slots": [],
       "parts": [],
-      "dependents": [],
+      "dependents": [
+        "ce-customer-orders-list"
+      ],
       "dependencies": [],
-      "dependencyGraph": {}
+      "dependencyGraph": {
+        "ce-customer-orders-list": [
+          "ce-table"
+        ]
+      }
     },
     {
       "filePath": "./src/components/ui/table-body/ce-table-body.tsx",
@@ -10895,9 +11024,15 @@
       "styles": [],
       "slots": [],
       "parts": [],
-      "dependents": [],
+      "dependents": [
+        "ce-customer-orders-list"
+      ],
       "dependencies": [],
-      "dependencyGraph": {}
+      "dependencyGraph": {
+        "ce-customer-orders-list": [
+          "ce-table-cell"
+        ]
+      }
     },
     {
       "filePath": "./src/components/ui/table-head/ce-table-head.tsx",
@@ -10933,9 +11068,15 @@
       "styles": [],
       "slots": [],
       "parts": [],
-      "dependents": [],
+      "dependents": [
+        "ce-customer-orders-list"
+      ],
       "dependencies": [],
-      "dependencyGraph": {}
+      "dependencyGraph": {
+        "ce-customer-orders-list": [
+          "ce-table-row"
+        ]
+      }
     },
     {
       "filePath": "./src/components/ui/tag/ce-tag.tsx",
@@ -11175,10 +11316,14 @@
       "slots": [],
       "parts": [],
       "dependents": [
+        "ce-customer-orders-list",
         "ce-customer-subscription"
       ],
       "dependencies": [],
       "dependencyGraph": {
+        "ce-customer-orders-list": [
+          "ce-text"
+        ],
         "ce-customer-subscription": [
           "ce-text"
         ]

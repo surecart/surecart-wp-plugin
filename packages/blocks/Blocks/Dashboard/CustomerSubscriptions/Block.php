@@ -17,8 +17,6 @@ class Block extends DashboardPage {
 	 * @return function
 	 */
 	public function render( $attributes, $content ) {
-
-		// get the current page tab and possible id.
 		$id = sanitize_text_field( $_GET['subscription']['id'] ?? null );
 		return $id ? $this->show( $id ) : $this->index( $attributes );
 	}
@@ -34,7 +32,7 @@ class Block extends DashboardPage {
 		return \CheckoutEngine::blocks()->render(
 			'web.dashboard.subscriptions.show',
 			[
-				'customer_id' => $this->customer_id,
+				'id' => $id,
 			]
 		);
 	}
