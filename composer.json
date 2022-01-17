@@ -12,14 +12,35 @@
 		"php": ">=5.5",
 		"composer/installers": "^1.4",
 		"checkout-engine/blocks": "*",
-		"htmlburger/wpemerge": "~0.16.0",
-		"htmlburger/wpemerge-app-core": "~0.16.1",
-		"htmlburger/wpemerge-blade": "^0.16.1"
+		"htmlburger/wpemerge": "dev-master",
+		"htmlburger/wpemerge-app-core": "dev-master",
+		"htmlburger/wpemerge-blade": "dev-master"
 	},
 	"repositories": [
 		{
 			"type": "path",
 			"url": "./packages/blocks",
+			"options": {
+				"symlink": false
+			}
+		},
+		{
+			"type": "path",
+			"url": "./packages/framework/wpemerge",
+			"options": {
+				"symlink": false
+			}
+		},
+		{
+			"type": "path",
+			"url": "./packages/framework/wpemerge-app-core",
+			"options": {
+				"symlink": false
+			}
+		},
+		{
+			"type": "path",
+			"url": "./packages/framework/wpemerge-blade",
 			"options": {
 				"symlink": false
 			}

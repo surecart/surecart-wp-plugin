@@ -14,23 +14,19 @@
 	"repositories": [
 		{
 			"type": "path",
-			"url": "./packages/blocks",
-			"symlink": true
+			"url": "./packages/blocks"
 		},
 		{
 			"type": "path",
-			"url": "./packages/framework/wpemerge",
-			"symlink": true
+			"url": "./packages/framework/wpemerge"
 		},
 		{
 			"type": "path",
-			"url": "./packages/framework/wpemerge-app-core",
-			"symlink": true
+			"url": "./packages/framework/wpemerge-app-core"
 		},
 		{
 			"type": "path",
-			"url": "./packages/framework/wpemerge-blade",
-			"symlink": true
+			"url": "./packages/framework/wpemerge-blade"
 		}
 	],
 	"require-dev": {
