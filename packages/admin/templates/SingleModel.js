@@ -11,7 +11,7 @@ import UnsavedChangesWarning from '../components/unsaved-changes-warning';
 import ErrorBoundary from '../components/error-boundary';
 import { CeForm, CeButton } from '@checkout-engine/components-react';
 
-export default ( {
+export default ({
 	children,
 	pageModelName,
 	title,
@@ -28,26 +28,26 @@ export default ( {
 	loading,
 	sidebar,
 	onError,
-} ) => {
+}) => {
 	return (
 		<Fragment>
 			<Global
-				styles={ css`
+				styles={css`
 					:root {
 						--ce-color-primary: 200 !important;
 						--ce-color-primary-luminance: 36% !important;
 						--ce-color-primary-saturation: 100% !important;
 					}
-				` }
+				`}
 			/>
-			<ErrorBoundary onError={ onError }>
-				<BrowserUrl path={ pageModelName } />
+			<ErrorBoundary onError={onError}>
+				<BrowserUrl path={pageModelName} />
 				<UnsavedChangesWarning />
 				<CeForm
 					className="ce-model-form"
-					onCeFormSubmit={ onSubmit }
-					onCeFormInvalid={ onInvalid }
-					css={ css`
+					onCeFormSubmit={onSubmit}
+					onCeFormInvalid={onInvalid}
+					css={css`
 						font-size: 14px;
 						margin-right: 20px;
 
@@ -85,7 +85,7 @@ export default ( {
 							-ce-color-primary-700
 						); */
 
-						ce-form-row:not( :last-child ) {
+						ce-form-row:not(:last-child) {
 							margin-bottom: 20px;
 						}
 
@@ -120,7 +120,7 @@ export default ( {
 								border-radius: 4px;
 								border: 1px solid #9898a0;
 								padding: 10px 12px;
-								box-shadow: rgb( 0 0 0 / 5% ) 0px 1px 2px 0px;
+								box-shadow: rgb(0 0 0 / 5%) 0px 1px 2px 0px;
 							}
 						}
 
@@ -133,10 +133,10 @@ export default ( {
 								box-shadow: 0 0 0 1px #cc1818;
 							}
 						}
-					` }
+					`}
 				>
 					<div
-						css={ css`
+						css={css`
 							position: sticky;
 							background: #fff;
 							margin-left: -20px;
@@ -144,45 +144,45 @@ export default ( {
 							top: 32px;
 							z-index: 4;
 
-							@media screen and ( max-width: 782px ) {
+							@media screen and (max-width: 782px) {
 								top: 46px;
 							}
-						` }
+						`}
 					>
 						<div
-							css={ css`
+							css={css`
 								padding: 20px;
 								display: flex;
 								align-items: center;
 								justify-content: space-between;
-							` }
+							`}
 						>
 							<div
-								css={ css`
+								css={css`
 									display: flex;
 									align-items: center;
 									column-gap: 1em;
-								` }
+								`}
 							>
-								{ !! backUrl && (
+								{!!backUrl && (
 									<Tooltip
 										text={
 											backText ||
-											__( 'Go back.', 'checkout_engine' )
+											__('Go back.', 'checkout_engine')
 										}
 									>
 										<CeButton
 											circle
 											size="small"
-											href={ backUrl }
+											href={backUrl}
 										>
 											&larr;
 										</CeButton>
 									</Tooltip>
-								) }
+								)}
 
 								<h1
-									css={ css`
+									css={css`
 										margin: 0;
 										font-size: var(
 											--ce-form-section-font-size
@@ -190,76 +190,76 @@ export default ( {
 										font-weight: var(
 											--ce-form-section-font-weight
 										);
-									` }
+									`}
 								>
-									{ title }
+									{title}
 								</h1>
-								{ ! loading && status && (
-									<StatusBadge status={ status } />
-								) }
+								{!loading && status && (
+									<StatusBadge status={status} />
+								)}
 							</div>
 
-							{ button }
+							{button}
 						</div>
 						<div
-							css={ css`
+							css={css`
 								.components-notice {
 									margin: 0;
 								}
-							` }
+							`}
 						>
-							{ noticeUI }
+							{noticeUI}
 						</div>
 					</div>
 
 					<div
-						css={ css`
+						css={css`
 							padding: 0 5px;
 							display: grid;
 							margin: auto;
 							max-width: 1280px;
-							@media screen and ( min-width: 960px ) {
+							@media screen and (min-width: 960px) {
 								grid-template-columns: 1fr 380px;
 								grid-gap: 2em;
 								grid-template-areas: 'nav    sidebar';
 							}
-						` }
+						`}
 					>
 						<div
-							css={ css`
+							css={css`
 								margin-bottom: 3em;
 								> * ~ * {
-									margin-top: 1em;
+									margin-top: 2em;
 								}
-							` }
+							`}
 						>
-							{ children }
-							{ footer && (
+							{children}
+							{footer && (
 								<div>
 									<hr
-										css={ css`
+										css={css`
 											margin: 1.5em 0;
-										` }
+										`}
 									/>
-									{ footer }
+									{footer}
 								</div>
-							) }
+							)}
 						</div>
 						<div>
 							<div
-								css={ css`
+								css={css`
 									margin-bottom: 3em;
 									> * ~ * {
 										margin-top: 1em;
 									}
-								` }
+								`}
 							>
-								{ sidebar }
+								{sidebar}
 							</div>
 						</div>
 					</div>
 					<SnackbarList
-						css={ css`
+						css={css`
 							position: fixed !important;
 							left: auto !important;
 							right: 40px;
@@ -269,9 +269,9 @@ export default ( {
 							:first-letter {
 								text-transform: uppercase;
 							}
-						` }
-						notices={ notices }
-						onRemove={ removeNotice }
+						`}
+						notices={notices}
+						onRemove={removeNotice}
 					/>
 				</CeForm>
 			</ErrorBoundary>

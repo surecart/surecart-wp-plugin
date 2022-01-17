@@ -9,13 +9,6 @@ export const selectCustomer = createRegistrySelector(
 	(select) => () => select(coreStore).selectModel('customers', 0)
 );
 
-/**
- * Select the orders
- */
-export const selectOrders = createRegistrySelector(
-	(select) => () => select(coreStore).selectCollection('orders')
-);
-
 export function selectPendingConnectedUser(state) {
 	return state.connect;
 }

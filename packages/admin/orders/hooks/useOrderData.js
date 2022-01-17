@@ -5,16 +5,19 @@ import { useSelect, useDispatch } from '@wordpress/data';
 
 export default () => {
 	return {
-		...useSelect( ( select ) => {
+		...useSelect((select) => {
+			const pageId = select(coreStore).selectPageId();
+			const order = select(store).selectOrder();
 			return {
-				isCreated: select( store ).isCreated(),
-				order: select( store ).selectOrder(),
-				loading: select( store ).isResolving( 'selectOrder' ),
-				error: select( coreStore ).selectError(),
-				isSaving: select( coreStore ).isSaving(),
-				isInvalid: select( uiStore ).isInvalid(),
+				isCreated: select(store).isCreated(),
+				order,
+				orderId: order?.id || pageId,
+				loading: select(store).isResolving('selectOrder'),
+				error: select(coreStore).selectError(),
+				isSaving: select(coreStore).isSaving(),
+				isInvalid: select(uiStore).isInvalid(),
 			};
-		} ),
-		...useDispatch( store ),
+		}),
+		...useDispatch(store),
 	};
 };

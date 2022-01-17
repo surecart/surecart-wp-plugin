@@ -6,8 +6,8 @@ import { __ } from '@wordpress/i18n';
 export default {
 	*selectOrder() {
 		// maybe get from url.
-		const id = yield controls.resolveSelect( store, 'selectPageId' );
-		if ( ! id ) return {};
+		const id = yield controls.resolveSelect(store, 'selectPageId');
+		if (!id) return {};
 
 		const request = yield controls.resolveSelect(
 			store,
@@ -27,57 +27,58 @@ export default {
 		// fetch and normalize
 		try {
 			// we need prices.
-			const response = yield apiFetch( request );
+			const response = yield apiFetch(request);
 			const { customer, line_items, ...order } = response;
-			if ( ! order?.id ) return;
-			return yield controls.dispatch( store, 'addModels', {
-				orders: [ order ],
-				customers: [ customer ],
+			if (!order?.id) return;
+			return yield controls.dispatch(store, 'addModels', {
+				orders: [order],
+				customers: [customer],
 				line_items: line_items?.data || [],
-			} );
-		} catch ( error ) {
+			});
+		} catch (error) {
 			// set critical error. We don't want to display the UI if we can't load the product.
-			yield controls.dispatch( store, 'setError', error );
+			yield controls.dispatch(store, 'setError', error);
 		}
 	},
 	*selectCharges() {
 		// maybe get from url.
-		const id = yield controls.resolveSelect( store, 'selectPageId' );
-		if ( ! id ) return {};
+		const id = yield controls.resolveSelect(store, 'selectPageId');
+		if (!id) return {};
 
 		const request = yield controls.resolveSelect(
 			store,
 			'prepareFetchRequest',
 			'charges',
 			{
-				order_ids: [ id ],
+				order_ids: [id],
+				expand: ['payment_method', 'payment_method.card'],
 			}
 		);
 
 		// fetch and normalize
 		try {
 			// we need prices.
-			const charges = yield apiFetch( request );
-			if ( ! charges.length ) return;
-			return yield controls.dispatch( store, 'addModels', {
+			const charges = yield apiFetch(request);
+			if (!charges.length) return;
+			return yield controls.dispatch(store, 'addModels', {
 				charges,
-			} );
-		} catch ( error ) {
+			});
+		} catch (error) {
 			// set critical error. We don't want to display the UI if we can't load the charges
-			yield controls.dispatch( store, 'setError', error );
+			yield controls.dispatch(store, 'setError', error);
 		}
 	},
 	*selectSubscriptions() {
 		// maybe get from url.
-		const id = yield controls.resolveSelect( store, 'selectPageId' );
-		if ( ! id ) return {};
+		const id = yield controls.resolveSelect(store, 'selectPageId');
+		if (!id) return {};
 
 		const request = yield controls.resolveSelect(
 			store,
 			'prepareFetchRequest',
 			'subscriptions',
 			{
-				order_ids: [ id ],
+				order_ids: [id],
 				expand: [
 					'subscription_items',
 					'subscription_items.price',
@@ -88,15 +89,15 @@ export default {
 
 		// fetch and normalize
 		try {
-			const subscriptions = yield apiFetch( request );
-			if ( ! subscriptions.length ) return;
-			console.log( { subscriptions } );
-			return yield controls.dispatch( store, 'addModels', {
+			const subscriptions = yield apiFetch(request);
+			if (!subscriptions.length) return;
+			console.log({ subscriptions });
+			return yield controls.dispatch(store, 'addModels', {
 				subscriptions,
-			} );
-		} catch ( error ) {
+			});
+		} catch (error) {
 			// set critical error. We don't want to display the UI if we can't load the charges
-			yield controls.dispatch( store, 'setError', error );
+			yield controls.dispatch(store, 'setError', error);
 		}
 	},
 };

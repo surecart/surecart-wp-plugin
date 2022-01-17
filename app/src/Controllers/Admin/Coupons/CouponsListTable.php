@@ -71,42 +71,42 @@ class CouponsListTable extends ListTable {
 	 * @global string $comment_status
 	 * @global string $comment_type
 	 */
-	protected function get_views() {
-		$stati = [
-			'active'   => __( 'Active', 'checkout_engine' ),
-			'archived' => __( 'Archived', 'checkout_engine' ),
-			'all'      => __( 'All', 'checkout_engine' ),
-		];
+	// protected function get_views() {
+	// $stati = [
+	// 'active'   => __( 'Active', 'checkout_engine' ),
+	// 'archived' => __( 'Archived', 'checkout_engine' ),
+	// 'all'      => __( 'All', 'checkout_engine' ),
+	// ];
 
-		$link = \CheckoutEngine::getUrl()->index( 'coupon' );
+	// $link = \CheckoutEngine::getUrl()->index( 'coupon' );
 
-		foreach ( $stati as $status => $label ) {
-			$current_link_attributes = '';
+	// foreach ( $stati as $status => $label ) {
+	// $current_link_attributes = '';
 
-			if ( ! empty( $_GET['product_status'] ) ) {
-				if ( $status === $_GET['product_status'] ) {
-					$current_link_attributes = ' class="current" aria-current="page"';
-				}
-			} elseif ( 'active' === $status ) {
-				$current_link_attributes = ' class="current" aria-current="page"';
-			}
+	// if ( ! empty( $_GET['status'] ) ) {
+	// if ( $status === $_GET['status'] ) {
+	// $current_link_attributes = ' class="current" aria-current="page"';
+	// }
+	// } elseif ( 'active' === $status ) {
+	// $current_link_attributes = ' class="current" aria-current="page"';
+	// }
 
-			$link = add_query_arg( 'product_status', $status, $link );
+	// $link = add_query_arg( 'status', $status, $link );
 
-			$status_links[ $status ] = "<a href='$link'$current_link_attributes>" . $label . '</a>';
-		}
+	// $status_links[ $status ] = "<a href='$link'$current_link_attributes>" . $label . '</a>';
+	// }
 
-		/**
-		 * Filters the comment status links.
-		 *
-		 * @since 2.5.0
-		 * @since 5.1.0 The 'Mine' link was added.
-		 *
-		 * @param string[] $status_links An associative array of fully-formed comment status links. Includes 'All', 'Mine',
-		 *                              'Pending', 'Approved', 'Spam', and 'Trash'.
-		 */
-		return apply_filters( 'comment_status_links', $status_links );
-	}
+	// **
+	// * Filters the comment status links.
+	// *
+	// * @since 2.5.0
+	// * @since 5.1.0 The 'Mine' link was added.
+	// *
+	// * @param string[] $status_links An associative array of fully-formed comment status links. Includes 'All', 'Mine',
+	// *                              'Pending', 'Approved', 'Spam', and 'Trash'.
+	// */
+	// return apply_filters( 'comment_status_links', $status_links );
+	// }
 
 	/**
 	 * Override the parent columns method. Defines the columns to use in your listing table

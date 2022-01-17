@@ -21,6 +21,7 @@
 	},
 	"main": "build/index.js",
 	"module": "build-module/index.js",
+	"prettier": "@wordpress/prettier-config",
 	"dependencies": {
 		"@checkout-engine/components": "workspace:^",
 		"@checkout-engine/docs": "workspace:^"

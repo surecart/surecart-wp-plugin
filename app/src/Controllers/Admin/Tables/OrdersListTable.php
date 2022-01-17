@@ -78,15 +78,15 @@ class OrdersListTable extends \WP_List_Table {
 		foreach ( $stati as $status => $label ) {
 			$current_link_attributes = '';
 
-			if ( ! empty( $_GET['product_status'] ) ) {
-				if ( $status === $_GET['product_status'] ) {
+			if ( ! empty( $_GET['status'] ) ) {
+				if ( $status === $_GET['status'] ) {
 					$current_link_attributes = ' class="current" aria-current="page"';
 				}
 			} elseif ( 'active' === $status ) {
 				$current_link_attributes = ' class="current" aria-current="page"';
 			}
 
-			$link = add_query_arg( 'product_status', $status, $link );
+			$link = add_query_arg( 'status', $status, $link );
 
 			$status_links[ $status ] = "<a href='$link'$current_link_attributes>" . $label . '</a>';
 		}
@@ -155,8 +155,8 @@ class OrdersListTable extends \WP_List_Table {
 	 */
 	private function table_data() {
 		$where = [];
-		// if ( ! empty( $_GET['product_status'] ) ) {
-		// switch ( $_GET['product_status'] ) {
+		// if ( ! empty( $_GET['status'] ) ) {
+		// switch ( $_GET['status'] ) {
 		// case 'active':
 		// $where = [ 'active' => true ];
 		// break;

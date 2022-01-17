@@ -25,16 +25,17 @@ class InstallService {
 					'name'      => _x( 'checkout', 'Form slug', 'checkout_engine' ),
 					'title'     => _x( 'Checkout', 'Form title', 'checkout_engine' ),
 					'content'   => '<!-- wp:checkout-engine/form -->
+
 					<!-- wp:checkout-engine/express-payment -->
-					<ce-express-payment class="wp-block-checkout-engine-express-payment">or</ce-express-payment>
+					<ce-express-payment divider-text="or" class="wp-block-checkout-engine-express-payment"></ce-express-payment>
 					<!-- /wp:checkout-engine/express-payment -->
 
-					<!-- wp:checkout-engine/section-title {"text":"Contact Information"} -->
-					<div class="wp-block-checkout-engine-section-title ce-section-title"><ce-text tag="h2" style="--font-size:var(--ce-form-title-font-size);--font-weight:var(--ce-form-title-font-weight);--color:var(--ce-form-title-font-color)">Contact Information</ce-text></div>
-					<!-- /wp:checkout-engine/section-title -->
+					<!-- wp:checkout-engine/heading {"title":"Contact Information"} -->
+					<ce-heading>Contact Information<span slot="description"></span><span slot="end"></span></ce-heading>
+					<!-- /wp:checkout-engine/heading -->
 
 					<!-- wp:checkout-engine/name -->
-					<ce-input label="Name" help="Optional" autocomplete="false" inputmode="false" spellcheck="false" name="name" type="text" class="wp-block-checkout-engine-name"></ce-input>
+					<ce-input label="Name" autocomplete="false" inputmode="false" spellcheck="false" name="name" type="text" class="wp-block-checkout-engine-name"></ce-input>
 					<!-- /wp:checkout-engine/name -->
 
 					<!-- wp:checkout-engine/email -->
@@ -45,9 +46,9 @@ class InstallService {
 					<div style="height:20px" aria-hidden="true" class="wp-block-spacer"></div>
 					<!-- /wp:spacer -->
 
-					<!-- wp:checkout-engine/section-title {"text":"Credit Card","description":""} -->
-					<div class="wp-block-checkout-engine-section-title ce-section-title"><ce-text tag="h2" style="--font-size:var(--ce-form-title-font-size);--font-weight:var(--ce-form-title-font-weight);--color:var(--ce-form-title-font-color)">Credit Card</ce-text></div>
-					<!-- /wp:checkout-engine/section-title -->
+					<!-- wp:checkout-engine/heading {"title":"Credit Card"} -->
+					<ce-heading>Credit Card<span slot="description"></span><span slot="end"></span></ce-heading>
+					<!-- /wp:checkout-engine/heading -->
 
 					<!-- wp:checkout-engine/payment {"secure_notice":"This is a secure, encrypted payment"} -->
 					<ce-payment secure-notice="This is a secure, encrypted payment" class="wp-block-checkout-engine-payment"></ce-payment>
@@ -57,17 +58,17 @@ class InstallService {
 					<div style="height:20px" aria-hidden="true" class="wp-block-spacer"></div>
 					<!-- /wp:spacer -->
 
-					<!-- wp:checkout-engine/section-title {"text":"Totals"} -->
-					<div class="wp-block-checkout-engine-section-title ce-section-title"><ce-text tag="h2" style="--font-size:var(--ce-form-title-font-size);--font-weight:var(--ce-form-title-font-weight);--color:var(--ce-form-title-font-color)">Totals</ce-text></div>
-					<!-- /wp:checkout-engine/section-title -->
+					<!-- wp:checkout-engine/heading {"title":"Totals"} -->
+					<ce-heading>Totals<span slot="description"></span><span slot="end"></span></ce-heading>
+					<!-- /wp:checkout-engine/heading -->
 
-					<!-- wp:checkout-engine/totals -->
+					<!-- wp:checkout-engine/totals {"collapsible":false,"collapsed":false} -->
 					<ce-order-summary class="wp-block-checkout-engine-totals"><!-- wp:checkout-engine/divider -->
 					<ce-divider></ce-divider>
 					<!-- /wp:checkout-engine/divider -->
 
 					<!-- wp:checkout-engine/line-items -->
-					<ce-line-items class="wp-block-checkout-engine-line-items"></ce-line-items>
+					<ce-line-items removable="1" editable="1" class="wp-block-checkout-engine-line-items"></ce-line-items>
 					<!-- /wp:checkout-engine/line-items -->
 
 					<!-- wp:checkout-engine/divider -->
@@ -87,7 +88,7 @@ class InstallService {
 					<!-- /wp:checkout-engine/divider -->
 
 					<!-- wp:checkout-engine/total -->
-					<ce-line-item-total class="ce-line-item-total" total="total" size="large" class="wp-block-checkout-engine-total"><span slot="description">Total</span><span slot="subscription-title">Total Due Today</span></ce-line-item-total>
+					<ce-line-item-total class="ce-line-item-total" total="total" size="large" show-currency="1" class="wp-block-checkout-engine-total"><span slot="description">Total</span><span slot="subscription-title">Total Due Today</span></ce-line-item-total>
 					<!-- /wp:checkout-engine/total --></ce-order-summary>
 					<!-- /wp:checkout-engine/totals -->
 
@@ -95,9 +96,10 @@ class InstallService {
 					<div style="height:20px" aria-hidden="true" class="wp-block-spacer"></div>
 					<!-- /wp:spacer -->
 
-					<!-- wp:checkout-engine/submit -->
-					<ce-button submit="1" type="primary" full="1" size="large" class="wp-block-checkout-engine-submit">Purchase</ce-button>
+					<!-- wp:checkout-engine/submit {"show_total":true,"full":true} -->
+					<ce-button submit="1" type="primary" full="1" size="large" class="wp-block-checkout-engine-submit"><svg slot="prefix" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewbox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>Purchase<span> <ce-total></ce-total></span></ce-button>
 					<!-- /wp:checkout-engine/submit -->
+
 					<!-- /wp:checkout-engine/form -->
 					',
 					'post_type' => 'ce_form',

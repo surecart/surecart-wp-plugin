@@ -10,4 +10,4 @@ import Customers from './Customers';
 /**
  * Render
  */
-render( <Customers />, document.getElementById( 'app' ) );
+render(<Customers />, document.getElementById('app'));
