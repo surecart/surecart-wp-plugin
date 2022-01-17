@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-01-17T22:09:42",
+  "timestamp": "2022-01-17T22:32:46",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.9.0",
@@ -10336,10 +10336,6 @@
       "parts": [
         {
           "name": "button",
-          "docs": ""
-        },
-        {
-          "name": "or",
           "docs": ""
         }
       ],

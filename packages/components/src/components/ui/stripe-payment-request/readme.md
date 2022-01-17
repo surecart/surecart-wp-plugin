@@ -39,7 +39,6 @@
 | Part       | Description |
 | ---------- | ----------- |
 | `"button"` |             |
-| `"or"`     |             |
 
 
 ## Dependencies

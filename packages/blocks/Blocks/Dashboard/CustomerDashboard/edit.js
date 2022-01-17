@@ -17,7 +17,11 @@ import { __, sprintf } from '@wordpress/i18n';
 export default ({ clientId }) => {
 	const { updateBlockAttributes, insertBlocks, replaceInnerBlocks } =
 		useDispatch(blockEditorStore);
-	const blockProps = useBlockProps();
+	const blockProps = useBlockProps({
+		style: {
+			fontSize: '16px',
+		},
+	});
 	const innerBlocksProps = useInnerBlocksProps(blockProps, {
 		orientation: 'horizontal',
 		templateLock: 'all',

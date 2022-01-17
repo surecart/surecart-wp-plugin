@@ -22,7 +22,7 @@ class Block extends BaseBlock {
 		}
 
 		// maybe redirect to the first tab if one is not specified.
-		// $this->maybeRedirectToInitialTab();
+		$this->maybeRedirectToInitialTab();
 
 		return $content;
 	}
@@ -33,7 +33,7 @@ class Block extends BaseBlock {
 	 * @return void
 	 */
 	public function maybeRedirectToInitialTab() {
-		if ( is_admin() ) {
+		if ( is_admin() || wp_doing_ajax() ) {
 			return;
 		}
 

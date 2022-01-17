@@ -65,10 +65,10 @@ export class CeStripePaymentRequest {
   private confirming: boolean;
 
   async componentWillLoad() {
-    if (this?.order?.processor_data?.stripe?.publishable_key || !this?.order?.processor_data?.stripe?.account_id) {
+    if (!this?.publishableKey || !this?.stripeAccountId) {
       return true;
     }
-    this.stripe = await loadStripe(this?.order?.processor_data?.stripe?.publishable_key, { stripeAccount: this?.order?.processor_data?.stripe?.account_id });
+    this.stripe = await loadStripe(this.publishableKey, { stripeAccount: this.stripeAccountId });
     this.elements = this.stripe.elements();
     this.paymentRequest = this.stripe.paymentRequest({
       country: this.country,
@@ -143,6 +143,7 @@ export class CeStripePaymentRequest {
 
   componentDidLoad() {
     if (!this.elements) {
+      console.log('no elements');
       return;
     }
 
@@ -286,12 +287,9 @@ export class CeStripePaymentRequest {
     return (
       <div class={{ 'request': true, 'request--loaded': this.loaded }}>
         <div class="ce-payment-request-button" part="button" ref={el => (this.request = el as HTMLDivElement)}></div>
-        <div class="or" part="or">
-          <slot />
-        </div>
       </div>
     );
   }
 }
 
-openWormhole(CeStripePaymentRequest, ['keys', 'currencyCode', 'country', 'prices', 'paymentMethod'], false);
+openWormhole(CeStripePaymentRequest, ['currencyCode', 'country', 'prices', 'paymentMethod'], false);

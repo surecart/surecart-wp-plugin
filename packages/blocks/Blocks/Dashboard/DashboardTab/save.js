@@ -1,15 +1,13 @@
-import { InnerBlocks } from '@wordpress/block-editor';
-
-export default ( { attributes } ) => {
+export default ({ attributes }) => {
 	const { icon, title } = attributes;
 	return (
-		<ce-tab>
+		<ce-tab slot="nav">
 			<ce-icon
-				style={ { 'font-size': '18px' } }
+				style={{ 'font-size': '18px' }}
 				slot="prefix"
-				name={ icon || 'home' }
+				name={icon || 'home'}
 			></ce-icon>
-			{ title }
+			{title}
 		</ce-tab>
 	);
 };

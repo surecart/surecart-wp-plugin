@@ -43,6 +43,7 @@ abstract class DashboardPage extends BaseBlock {
 		}
 
 		$this->customer_id = $user->customerId();
+
 		// user must be a customer.
 		if ( ! $this->customer_id ) {
 			$this->customer = $user->customer();

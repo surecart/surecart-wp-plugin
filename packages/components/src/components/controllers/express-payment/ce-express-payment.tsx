@@ -21,7 +21,7 @@ export class CeExpressPayment {
   }
 
   renderStripePaymentRequest() {
-    if (this?.order?.processor_data?.stripe?.publishable_key || !this?.order?.processor_data?.stripe?.account_id) {
+    if (!this?.order?.processor_data?.stripe?.publishable_key || !this?.order?.processor_data?.stripe?.account_id) {
       return '';
     }
 
@@ -39,7 +39,7 @@ export class CeExpressPayment {
     return (
       <div>
         {this.renderStripePaymentRequest()}
-        {this.hasPaymentOptions && <ce-divider>{this.dividerText}</ce-divider>}
+        {this.hasPaymentOptions && <ce-divider style={{ '--spacing': 'var(--ce-form-row-spacing' }}>{this.dividerText}</ce-divider>}
       </div>
     );
   }
