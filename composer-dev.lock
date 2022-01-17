@@ -12,12 +12,12 @@
             "dist": {
                 "type": "path",
                 "url": "./packages/blocks",
-                "reference": "fda342501ec1754963292abfed79aa7839678132"
+                "reference": "9d4644ced75835f8831d63f8fae233e21b222438"
             },
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "CheckoutEngine\\Blocks\\": "blocks"
+                    "CheckoutEngine\\Blocks\\": "Blocks"
                 }
             },
             "transport-options": {

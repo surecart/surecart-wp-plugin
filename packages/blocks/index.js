@@ -1,6 +1,9 @@
 /**
  * WordPress dependencies
  */
+import { registerBlockCollection, registerBlockType } from '@wordpress/blocks';
+import { __ } from '@wordpress/i18n';
+
 // blocks
 import * as button from '@blocks/Button';
 import * as buyButton from '@blocks/BuyButton';
@@ -41,8 +44,6 @@ import * as subtotal from '@blocks/subtotal';
 import * as switchBlock from '@blocks/switch';
 import * as total from '@blocks/total';
 import * as totals from '@blocks/totals';
-import { registerBlockCollection, registerBlockType } from '@wordpress/blocks';
-import { __ } from '@wordpress/i18n';
 
 // Register block collection
 registerBlockCollection('checkout-engine', {

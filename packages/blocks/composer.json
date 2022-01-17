@@ -3,7 +3,7 @@
 	"version": "1.0.0",
 	"autoload": {
 		"psr-4": {
-			"CheckoutEngine\\Blocks\\": "blocks"
+			"CheckoutEngine\\Blocks\\": "Blocks"
 		}
 	}
 }

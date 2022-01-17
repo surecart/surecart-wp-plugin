@@ -14,85 +14,81 @@ import { useEffect, useRef } from '@wordpress/element';
  */
 import { __, sprintf } from '@wordpress/i18n';
 
-export default ( { clientId } ) => {
-	const {
-		updateBlockAttributes,
-		insertBlocks,
-		replaceInnerBlocks,
-	} = useDispatch( blockEditorStore );
+export default ({ clientId }) => {
+	const { updateBlockAttributes, insertBlocks, replaceInnerBlocks } =
+		useDispatch(blockEditorStore);
 	const blockProps = useBlockProps();
-	const innerBlocksProps = useInnerBlocksProps( blockProps, {
+	const innerBlocksProps = useInnerBlocksProps(blockProps, {
 		orientation: 'horizontal',
 		templateLock: 'all',
 		renderAppender: false,
-	} );
+	});
 
 	const { tabBlocks, panelBlocks, panelsWrapper, tabsWrapper } = useSelect(
-		( select ) => {
-			const innerBlocks = select( 'core/block-editor' ).getBlocks(
-				clientId
+		(select) => {
+			const innerBlocks = select('core/block-editor').getBlocks(clientId);
+			const tabsWrapper = (innerBlocks || []).find(
+				(block) => block.name === 'checkout-engine/dashboard-tabs'
 			);
-			const tabsWrapper = innerBlocks.find(
-				( block ) => block.name === 'checkout-engine/dashboard-tabs'
-			);
-			const panelsWrapper = innerBlocks.find(
-				( block ) => block.name === 'checkout-engine/dashboard-pages'
+			const panelsWrapper = (innerBlocks || []).find(
+				(block) => block.name === 'checkout-engine/dashboard-pages'
 			);
 			return {
 				tabsWrapper,
 				panelsWrapper,
-				tabBlocks: select( 'core/block-editor' ).getBlocks(
+				tabBlocks: select('core/block-editor').getBlocks(
 					tabsWrapper.clientId
 				),
-				panelBlocks: select( 'core/block-editor' ).getBlocks(
+				panelBlocks: select('core/block-editor').getBlocks(
 					panelsWrapper.clientId
 				),
 			};
-		}
+		},
+		[clientId]
 	);
 
-	const previousTabBlocks = useRef( tabBlocks );
-	const previousPanelBlocks = useRef( panelBlocks );
+	const previousTabBlocks = useRef(tabBlocks);
+	const previousPanelBlocks = useRef(panelBlocks);
 
-	useEffect( () => {
+	useEffect(() => {
 		// sync panel
-		tabBlocks.forEach( ( tabBlock ) => {
+		(tabBlocks || []).forEach((tabBlock) => {
 			const panelBlock = panelBlocks.find(
-				( panelBlock ) =>
+				(panelBlock) =>
 					panelBlock.attributes.id === tabBlock.attributes.id
 			);
-			if ( panelBlock ) {
-				updateBlockAttributes( panelBlock.clientId, {
+			if (panelBlock) {
+				updateBlockAttributes(panelBlock.clientId, {
 					name: tabBlock.attributes.panel,
-				} );
+				});
 			}
-		} );
+		});
 
 		// Tab is added
-		if ( previousTabBlocks.current.length < tabBlocks.length ) {
+		if (previousTabBlocks.current.length < tabBlocks.length) {
 			const addedTab = tabBlocks.find(
-				( tab ) =>
-					! previousTabBlocks.current.find(
-						( previousTab ) => previousTab.clientId === tab.clientId
+				(tab) =>
+					!previousTabBlocks.current.find(
+						(previousTab) => previousTab.clientId === tab.clientId
 					)
 			);
 
 			const title = sprintf(
-				__( 'New Tab %d', 'checkout_engine' ),
+				__('New Tab %d', 'checkout_engine'),
 				tabBlocks.length
 			);
 
 			const name = title
 				.toLowerCase()
-				.replace( / /g, '-' )
-				.replace( /[^\w-]+/g, '' );
+				.replace(/ /g, '-')
+				.replace(/[^\w-]+/g, '');
 
-			updateBlockAttributes( addedTab.clientId, {
+			updateBlockAttributes(addedTab.clientId, {
 				id: addedTab.clientId,
 				title: title,
 				active: true,
 				panel: name,
-			} );
+			});
 
 			const panel = createBlock(
 				'checkout-engine/dashboard-page',
@@ -101,52 +97,52 @@ export default ( { clientId } ) => {
 					name,
 					title,
 				},
-				createBlocksFromInnerBlocksTemplate( [
-					[ 'checkout-engine/heading', { title } ],
-				] )
+				createBlocksFromInnerBlocksTemplate([
+					['checkout-engine/heading', { title }],
+				])
 			);
 
-			insertBlocks( panel, 0, panelsWrapper.clientId );
+			insertBlocks(panel, 0, panelsWrapper.clientId);
 		}
 
 		// Tab is removed.
-		if ( previousTabBlocks.current.length > tabBlocks.length ) {
+		if (previousTabBlocks.current.length > tabBlocks.length) {
 			const removedTab = previousTabBlocks.current.find(
-				( tab ) =>
-					! tabBlocks.find(
-						( previousTab ) => previousTab.clientId === tab.clientId
+				(tab) =>
+					!tabBlocks.find(
+						(previousTab) => previousTab.clientId === tab.clientId
 					)
 			);
 
 			const innerBlocks = panelBlocks.filter(
-				( panelBlock ) =>
+				(panelBlock) =>
 					panelBlock.attributes.id !== removedTab.attributes.id
 			);
 
-			replaceInnerBlocks( panelsWrapper.clientId, innerBlocks );
+			replaceInnerBlocks(panelsWrapper.clientId, innerBlocks);
 		}
 
 		// Panel is removed.
-		if ( previousPanelBlocks.current.length > panelBlocks.length ) {
+		if (previousPanelBlocks.current.length > panelBlocks.length) {
 			const removedPanel = previousPanelBlocks.current.find(
-				( panel ) =>
-					! panelBlocks.find(
-						( previousPanel ) =>
+				(panel) =>
+					!panelBlocks.find(
+						(previousPanel) =>
 							previousPanel.clientId === panel.clientId
 					)
 			);
 
 			const innerBlocks = tabBlocks.filter(
-				( tabBlock ) =>
+				(tabBlock) =>
 					tabBlock.attributes.id !== removedPanel.attributes.id
 			);
 
-			replaceInnerBlocks( tabsWrapper.clientId, innerBlocks );
+			replaceInnerBlocks(tabsWrapper.clientId, innerBlocks);
 		}
 
 		previousTabBlocks.current = tabBlocks;
 		previousPanelBlocks.current = panelBlocks;
-	}, [ tabBlocks, panelBlocks ] );
+	}, [tabBlocks, panelBlocks]);
 
-	return <ce-tab-group { ...innerBlocksProps }></ce-tab-group>;
+	return <ce-tab-group {...innerBlocksProps}></ce-tab-group>;
 };
