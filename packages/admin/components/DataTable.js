@@ -80,6 +80,8 @@ export default ({
 						style={{
 							'--shadow': 'none',
 							'--border-radius': '0',
+							'border-left': '0',
+							'border-right': '0',
 						}}
 					>
 						{Object.keys(columns).map((key) => (

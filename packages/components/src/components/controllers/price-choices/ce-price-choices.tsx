@@ -35,7 +35,9 @@ export class CePriceChoices {
       if (!choice.checked) {
         this.ceRemoveLineItem.emit({ price_id: priceChoice.priceId, quantity: priceChoice.quantity });
       } else {
-        this.ceUpdateLineItem.emit({ price_id: priceChoice.priceId, quantity: priceChoice.quantity });
+        if (!priceChoice?.isAdHoc) {
+          this.ceUpdateLineItem.emit({ price_id: priceChoice.priceId, quantity: priceChoice.quantity });
+        }
       }
     });
   }

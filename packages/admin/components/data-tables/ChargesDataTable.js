@@ -32,7 +32,7 @@ export default ({ data, isLoading, error, pagination }) => {
 
 	return (
 		<DataTable
-			title={__('Charges', 'checkout_engine')}
+			title={__('Payments', 'checkout_engine')}
 			columns={{
 				amount: {
 					label: __('Amount', 'checkout_engine'),

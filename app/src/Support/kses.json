@@ -477,6 +477,7 @@
     "checked": true,
     "description": true,
     "error": true,
+    "is-ad-hoc": true,
     "label": true,
     "loading": true,
     "order": true,

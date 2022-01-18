@@ -13,6 +13,7 @@ import { openWormhole } from 'stencil-wormhole';
 })
 export class CePriceChoice {
   private adHocInput: HTMLCePriceInputElement;
+  private choice: HTMLCeChoiceElement;
 
   /** Id of the price. */
   @Prop({ reflect: true }) priceId: string;
@@ -59,6 +60,9 @@ export class CePriceChoice {
   /** Errors from response */
   @Prop() error: ResponseError;
 
+  /** Is this an ad-hoc price choice */
+  @Prop({ mutable: true, reflect: true }) isAdHoc: Boolean;
+
   /** Toggle line item event */
   @Event() ceUpdateLineItem: EventEmitter<LineItemData>;
 
@@ -88,22 +92,20 @@ export class CePriceChoice {
     this.price = this?.prices?.[this.priceId];
   }
 
+  @Watch('price')
+  handlePriceChange() {
+    this.isAdHoc = this?.price?.ad_hoc;
+  }
+
   @Watch('error')
   handleErrorsChange() {
     const error = (this?.error?.additional_errors || []).find(error => error?.data?.attribute === 'line_items.ad_hoc_amount');
     this.adHocErrorMessage = error?.message ? error?.message : '';
   }
 
-  @Watch('order')
-  handleOrderChange() {
-    if (this.isInOrder()) {
-      this.checked = true;
-    }
-  }
-
   @Watch('checked')
   handleCheckedChange() {
-    if (this.price?.ad_hoc && this.checked) {
+    if (this.price?.ad_hoc && this.choice.checked) {
       setTimeout(() => {
         this.adHocInput.triggerFocus();
       }, 50);
@@ -135,11 +137,6 @@ export class CePriceChoice {
     }
   }
 
-  /** Handle choice change. */
-  handleChange(checked) {
-    this.checked = checked;
-  }
-
   /** Is this price in the checkout session. */
   isInOrder() {
     return isPriceInOrder(this.price, this.order);
@@ -156,6 +153,17 @@ export class CePriceChoice {
 
   getLineItem() {
     return (this.order?.line_items?.data || []).find(lineItem => lineItem.price.id === this.priceId);
+  }
+
+  /** Show we show the ad hoc price box */
+  showAdHoc() {
+    if (!this.price?.ad_hoc) {
+      return false;
+    }
+    if (this.isInOrder()) {
+      return true;
+    }
+    return this?.choice?.checked;
   }
 
   renderAdHoc() {
@@ -221,22 +229,19 @@ export class CePriceChoice {
     return (
       <Fragment>
         <ce-choice
+          ref={el => (this.choice = el as HTMLCeChoiceElement)}
           value={this.priceId}
           type={this.type}
           showLabel={this.showLabel}
           showPrice={this.showPrice}
           showControl={this.showControl}
           checked={this.isChecked()}
-          onCeChange={e => {
-            this.handleChange(e.detail as boolean);
-          }}
         >
           {this.label || this.price.name}
           {this.description && <span slot="description">{this.description}</span>}
           {this.renderPrice()}
         </ce-choice>
-        {this.price.ad_hoc &&
-          this.checked &&
+        {this.showAdHoc() &&
           (this.adHocErrorMessage ? (
             <ce-tooltip text={this.adHocErrorMessage} type="danger" padding={10} freeze open onClick={() => (this.adHocErrorMessage = '')}>
               {this.renderAdHoc()}

@@ -9,71 +9,71 @@ import { formatTime } from '../../util/time';
 export default () => {
 	const { order, loading } = useOrderData();
 
-	if ( ! order?.id ) {
+	if (!order?.id) {
 		return null;
 	}
 
-	const renderBadge = ( status ) => {
-		switch ( status ) {
+	const renderBadge = (status) => {
+		switch (status) {
 			case 'paid':
 			case 'completed':
 				return (
 					<ce-tag type="success">
-						{ __( 'Completed', 'checkout_engine' ) }
+						{__('Paid', 'checkout_engine')}
 					</ce-tag>
 				);
 			case 'finalized':
 				return (
 					<ce-tag type="warning">
-						{ __( 'Pending Payment', 'checkout_engine' ) }
+						{__('Pending Payment', 'checkout_engine')}
 					</ce-tag>
 				);
 			default:
-				return <ce-tag>{ status }</ce-tag>;
+				return <ce-tag>{status}</ce-tag>;
 		}
 	};
 	return (
 		<div
-			css={ css`
+			css={css`
 				display: flex;
 				justify-content: space-between;
 				align-items: center;
 				gap: 2em;
 				margin-bottom: 2em;
-			` }
+			`}
 		>
 			<div>
 				<div
-					css={ css`
+					css={css`
 						display: flex;
 						align-items: center;
 						gap: 0.5em;
-					` }
+					`}
 				>
 					<h1>
 						<ce-format-number
 							type="currency"
-							currency={ order?.currency }
-							value={ order?.total_amount }
+							currency={order?.currency}
+							value={order?.total_amount}
 						></ce-format-number>
 					</h1>
-					{ renderBadge( order.status ) }
+					{renderBadge(order.status)}
 				</div>
-				{ sprintf(
-					__( 'Created on %s', 'checkout_engine' ),
-					formatTime( order.updated_at )
-				) }
+				{sprintf(
+					__('Created on %s', 'checkout_engine'),
+					formatTime(order.updated_at)
+				)}
 			</div>
 			<div>
-				{ order?.live_mode ? (
+				{order?.live_mode ? (
 					<ce-tag type="success">
-						{ __( 'Live Mode', 'checkout_engine' ) }
+						{__('Live Mode', 'checkout_engine')}
 					</ce-tag>
 				) : (
 					<ce-tag type="warning">
-						{ __( 'Test Mode', 'checkout_engine' ) }{ ' ' }
+						{__('Test Mode', 'checkout_engine')}{' '}
 					</ce-tag>
-				) }
+				)}
 			</div>
 		</div>
 	);

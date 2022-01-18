@@ -896,6 +896,10 @@ export namespace Components {
          */
         "error": ResponseError;
         /**
+          * Is this an ad-hoc price choice
+         */
+        "isAdHoc": Boolean;
+        /**
           * Label for the choice.
          */
         "label": string;
@@ -3053,6 +3057,10 @@ declare namespace LocalJSX {
           * Errors from response
          */
         "error"?: ResponseError;
+        /**
+          * Is this an ad-hoc price choice
+         */
+        "isAdHoc"?: Boolean;
         /**
           * Label for the choice.
          */
