@@ -37,7 +37,7 @@
  - [ce-badge-notice](../badge-notice)
  - [ce-coupon-form](../../controllers/coupon-form)
  - [ce-order-confirmation-totals](../../controllers/order-confirmation-totals)
- - [ce-session-status-badge](../session-status-badge)
+ - [ce-order-status-badge](../session-status-badge)
  - [ce-session-subscription](../../controllers/session-subscription)
  - [ce-subscription-status-badge](../subscription-status-badge)
 
@@ -47,7 +47,7 @@ graph TD;
   ce-badge-notice --> ce-tag
   ce-coupon-form --> ce-tag
   ce-order-confirmation-totals --> ce-tag
-  ce-session-status-badge --> ce-tag
+  ce-order-status-badge --> ce-tag
   ce-session-subscription --> ce-tag
   ce-subscription-status-badge --> ce-tag
   style ce-tag fill:#f9f,stroke:#333,stroke-width:4px

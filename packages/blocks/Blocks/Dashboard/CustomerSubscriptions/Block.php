@@ -56,7 +56,12 @@ class Block extends DashboardPage {
 			[
 				'customer_id'     => $this->customer_id,
 				'cancel_behavior' => 'cancel',
-				'page'            => (int) $page,
+				'query'           => [
+					'customer_ids' => [ $this->customer_id ],
+					'status'       => [ 'active', 'trialing' ],
+					'page'         => 1,
+					'per_page'     => 10,
+				],
 			]
 		);
 	}

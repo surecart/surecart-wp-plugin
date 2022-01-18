@@ -1,15 +1,15 @@
 import { Component, h, Prop } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
-import { SessionStatus } from '../../../types';
+import { OrderStatus } from '../../../types';
 
 @Component({
-  tag: 'ce-session-status-badge',
-  styleUrl: 'ce-session-status-badge.css',
+  tag: 'ce-order-status-badge',
+  styleUrl: 'ce-order-status-badge.css',
   shadow: true,
 })
-export class CeSessionStatusBadge {
+export class CeOrderStatusBadge {
   /** The tag's statux type. */
-  @Prop() status: SessionStatus;
+  @Prop() status: OrderStatus;
 
   /** The tag's size. */
   @Prop({ reflect: true }) size: 'small' | 'medium' | 'large' = 'medium';
@@ -26,8 +26,6 @@ export class CeSessionStatusBadge {
         return 'text';
       case 'finalized':
         return 'warning';
-      case 'completed':
-        return 'success';
       case 'paid':
         return 'success';
     }
@@ -39,10 +37,10 @@ export class CeSessionStatusBadge {
         return __('Draft', 'checkout_engine');
       case 'finalized':
         return __('Pending Payment', 'checkout_engine');
-      case 'completed':
-        return __('Completed', 'checkout_engine');
       case 'paid':
         return __('Paid', 'checkout_engine');
+      default:
+        return this.status;
     }
   }
 

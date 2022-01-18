@@ -28,9 +28,9 @@
 ### Graph
 ```mermaid
 graph TD;
-  ce-session-status-badge --> ce-tag
-  ce-customer-orders-list --> ce-session-status-badge
-  style ce-session-status-badge fill:#f9f,stroke:#333,stroke-width:4px
+  ce-order-status-badge --> ce-tag
+  ce-customer-orders-list --> ce-order-status-badge
+  style ce-order-status-badge fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

@@ -24,7 +24,7 @@
 - [ce-alert](../../../ui/alert)
 - [ce-text](../../../ui/text)
 - [ce-format-number](../../../util/format-number)
-- [ce-session-status-badge](../../../ui/session-status-badge)
+- [ce-order-status-badge](../../../ui/session-status-badge)
 - [ce-button](../../../ui/button)
 
 ### Graph
@@ -37,9 +37,9 @@ graph TD;
   ce-customer-orders-list --> ce-alert
   ce-customer-orders-list --> ce-text
   ce-customer-orders-list --> ce-format-number
-  ce-customer-orders-list --> ce-session-status-badge
+  ce-customer-orders-list --> ce-order-status-badge
   ce-customer-orders-list --> ce-button
-  ce-session-status-badge --> ce-tag
+  ce-order-status-badge --> ce-tag
   ce-button --> ce-spinner
   style ce-customer-orders-list fill:#f9f,stroke:#333,stroke-width:4px
 ```

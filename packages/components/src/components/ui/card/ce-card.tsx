@@ -8,12 +8,13 @@ import { openWormhole } from 'stencil-wormhole';
 })
 export class CeCard {
   @Element() el!: HTMLCeCardElement;
-
+  /** Eliminate the divider */
+  @Prop() noDivider: boolean;
   /** Is this card borderless. */
   @Prop() borderless: boolean;
   /** Is this card loading. */
   @Prop() loading: boolean;
-
+  /** Does this have a title slot? */
   @State() hasTitleSlot: boolean;
 
   componentWillLoad() {
@@ -35,7 +36,7 @@ export class CeCard {
       >
         <div class="card--title">
           {this.loading ? <ce-skeleton style={{ width: '120px' }}></ce-skeleton> : <slot name="title" onSlotchange={() => this.handleSlotChange()}></slot>}
-          <ce-divider class="title--divider" part="border" style={{ '--spacing': 'var(--ce-spacing-small)' }}></ce-divider>
+          {!this.noDivider && <ce-divider class="title--divider" part="border" style={{ '--spacing': 'var(--ce-spacing-small)' }}></ce-divider>}
         </div>
         <slot />
       </div>

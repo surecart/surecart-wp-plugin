@@ -2,7 +2,6 @@
 
 namespace CheckoutEngine\Controllers\Admin\Tables;
 
-use NumberFormatter;
 use CheckoutEngine\Models\Product;
 use CheckoutEngine\Support\Currency;
 use CheckoutEngine\Models\Order;
@@ -51,12 +50,12 @@ class OrdersListTable extends \WP_List_Table {
 	public function search() { ?>
 	<form class="search-form"
 		method="get">
-		<?php $this->search_box( __( 'Search Products' ), 'user' ); ?>
+			<?php $this->search_box( __( 'Search Products' ), 'user' ); ?>
 		<input type="hidden"
 			name="id"
 			value="1" />
 	</form>
-		<?php
+			<?php
 	}
 
 	/**
@@ -111,7 +110,8 @@ class OrdersListTable extends \WP_List_Table {
 	public function get_columns() {
 		return [
 			'cb'          => '<input type="checkbox" />',
-			'name'        => __( 'Name', 'checkout_engine' ),
+			'number'      => __( 'Number', 'checkout_engine' ),
+			'customer'    => __( 'Customer', 'checkout_engine' ),
 			'description' => __( 'Description', 'checkout_engine' ),
 			'price'       => __( 'Price', 'checkout_engine' ),
 			'status'      => __( 'Status', 'checkout_engine' ),
@@ -127,7 +127,18 @@ class OrdersListTable extends \WP_List_Table {
 		?>
 		<label class="screen-reader-text" for="cb-select-<?php echo esc_attr( $product['id'] ); ?>"><?php _e( 'Select comment' ); ?></label>
 		<input id="cb-select-<?php echo esc_attr( $product['id'] ); ?>" type="checkbox" name="delete_comments[]" value="<?php echo esc_attr( $product['id'] ); ?>" />
-			<?php
+		<?php
+	}
+
+	/**
+	 * Display the number column
+	 *
+	 * @param \CheckoutEngine\Models\Order $order Order model.
+	 *
+	 * @return string
+	 */
+	public function column_price( $order ) {
+		return $order->number ?? $order->id;
 	}
 
 	/**
@@ -217,7 +228,7 @@ class OrdersListTable extends \WP_List_Table {
 	 */
 	public function column_default( $product, $column_name ) {
 		switch ( $column_name ) {
-			case 'name':
+			case 'customer':
 			case 'description':
 				return $product->$column_name ?? '';
 		}

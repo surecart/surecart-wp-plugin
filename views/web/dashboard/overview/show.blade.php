@@ -83,7 +83,7 @@
                     </ce-format-number>
                 </ce-table-cell>
                 <ce-table-cell>
-                    <ce-session-status-badge status="paid"></ce-session-status-badge>
+                    <ce-order-status-badge status="paid"></ce-order-status-badge>
                 </ce-table-cell>
                 <ce-table-cell>
                     <ce-button

@@ -138,23 +138,90 @@ export interface PriceChoice {
 
 export type CheckoutState = 'idle' | 'loading' | 'draft' | 'updating' | 'finalized' | 'paid' | 'failure';
 
+export interface Invoice extends Object {
+  id: string;
+  object: 'invoice';
+  currency: string;
+  discount_amount: number;
+  live_mode: boolean;
+  metadata: object;
+  number: string;
+  period_end_at: number;
+  period_start_at: number;
+  processor_data: {
+    stripe: object;
+  };
+  status: 'draft' | 'finalized' | 'paid';
+  subtotal_amount: number;
+  tax_amount: number;
+  tax_calculation_status:
+    | 'disabled'
+    | 'shipping_address_required'
+    | 'shipping_address_country_required'
+    | 'shipping_address_state_required'
+    | 'shipping_address_postal_code_required'
+    | 'tax_registration_not_found'
+    | 'estimated'
+    | 'calculated';
+  tax_label: string;
+  total_amount: number;
+  billing_address: string | BillingAddress;
+  charge: string | Charge;
+  customer: string | Customer;
+  discount: string | object;
+  payment_intent: string | PaymentIntent;
+  payment_method: string | PaymentMethod;
+  shipping_address: string | ShippingAddress;
+  subscription: string | Subscription;
+  tax_identifier: string | object;
+  created_at: number;
+  updated_at: number;
+}
+
+export interface BillingAddress extends Object {}
+export interface ShippingAddress extends Object {}
+export interface Charge extends Object {
+  amount: number;
+  created_at: number;
+  currency: string;
+  customer: string | Customer;
+  external_charge_id: string;
+  fully_refunded: boolean;
+  id: string;
+  invoice: string | Invoice;
+  live_mode: boolean;
+  object: 'charge';
+  order: string | Order;
+  payment_method: string | PaymentMethod;
+  refunded_amount: number;
+  status: 'pending' | 'succeeded' | 'failed';
+  updated_at: number;
+}
 export interface Order extends Object {
   id?: string;
   status?: 'finalized' | 'draft' | 'paid';
   number?: string;
+  charge?: string | Charge;
   name?: string;
   email?: string;
+  live_mode?: boolean;
   currency?: string;
   total_amount?: number;
   subtotal_amount?: number;
   line_items: lineItems;
   metadata?: Object;
   payment_intent?: PaymentIntent;
+  subscriptions: {
+    object: 'list';
+    pagination: Pagination;
+    data: Array<Subscription>;
+  };
   discount_amount?: number;
   discount?: DiscountResponse;
   billing_addresss?: Address;
   shipping_addresss?: Address;
   processor_data?: ProcessorData;
+  created_at?: number;
 }
 
 export interface ProcessorData {
@@ -171,48 +238,27 @@ export interface Subscription extends Object {
   object: 'subscription';
   currency?: string;
   status: SubscriptionStatus;
-  subtotal_amount: number;
-  discount_amount: number;
-  tax_amount: number;
-  total_amount: number;
   live_mode: boolean;
   external_subscription_id: string;
   trial_end_at: number;
   processor_type: 'stripe' | 'paypal';
   order: Order;
+  latest_invoice: string | Invoice;
   customer: Customer;
   discount: DiscountResponse;
   cancel_at_period_end: number | false;
-  current_period_end: number | false;
-  current_period_start: number | false;
+  current_period_end_at: number | false;
+  current_period_start_at: number | false;
   ended_at: number;
   payment_method: PaymentMethod | string;
-  subscription_items: {
-    object: 'list';
-    pagination: Pagination;
-    data: Array<SubscriptionItem>;
-  };
+  price: Price;
   created_at: number;
   updated_at: number;
 }
 
-export type SubscriptionItem = {
-  id: string;
-  object: 'subscription_item';
-  quantity: number;
-  subtotal_amount: number;
-  discount_amount: number;
-  tax_amount: number;
-  total_amount: number;
-  price: Price | string;
-  subscription: Subscription | string;
-  created_at: number;
-  updated_at: number;
-};
-
 export type SubscriptionStatus = 'incomplete' | 'trialing' | 'active' | 'past_due' | 'canceled' | 'unpaid';
 
-export type SessionStatus = 'draft' | 'finalized' | 'completed' | 'paid';
+export type OrderStatus = 'draft' | 'finalized' | 'paid';
 
 export interface PaymentMethod extends Object {
   id: string;

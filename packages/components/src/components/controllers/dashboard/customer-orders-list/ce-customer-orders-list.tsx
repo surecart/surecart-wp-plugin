@@ -35,7 +35,7 @@ export class CeCustomerOrdersList {
         path: addQueryArgs(`checkout-engine/v1/orders/`, {
           customer_ids: [this.customerId],
           status: ['paid'],
-          expand: ['line_items'],
+          expand: ['line_items', 'charge'],
           ...props,
         }),
       })) as Order[];
@@ -58,6 +58,7 @@ export class CeCustomerOrdersList {
           <ce-table-cell slot="head">{__('Order Number', 'checkout_engine')}</ce-table-cell>
           <ce-table-cell slot="head">{__('Items', 'checkout_engine')}</ce-table-cell>
           <ce-table-cell slot="head">{__('Total', 'checkout_engine')}</ce-table-cell>
+          <ce-table-cell slot="head">{__('Date', 'checkout_engine')}</ce-table-cell>
           <ce-table-cell slot="head" style={{ width: '100px' }}>
             {__('Status', 'checkout_engine')}
           </ce-table-cell>
@@ -91,12 +92,13 @@ export class CeCustomerOrdersList {
         <ce-table-cell slot="head">{__('Order Number', 'checkout_engine')}</ce-table-cell>
         <ce-table-cell slot="head">{__('Items', 'checkout_engine')}</ce-table-cell>
         <ce-table-cell slot="head">{__('Total', 'checkout_engine')}</ce-table-cell>
+        <ce-table-cell slot="head">{__('Date', 'checkout_engine')}</ce-table-cell>
         <ce-table-cell slot="head" style={{ width: '100px' }}>
           {__('Status', 'checkout_engine')}
         </ce-table-cell>
         <ce-table-cell slot="head" style={{ width: '100px' }}></ce-table-cell>
 
-        {this.orders.map(({ number, id, line_items, total_amount, currency, status }) => {
+        {this.orders.map(({ number, id, line_items, total_amount, currency, status, charge, created_at }) => {
           return (
             <ce-table-row>
               <ce-table-cell>
@@ -122,8 +124,9 @@ export class CeCustomerOrdersList {
               <ce-table-cell>
                 <ce-format-number type="currency" currency={currency} value={total_amount}></ce-format-number>
               </ce-table-cell>
+              <ce-table-cell>{typeof charge !== 'string' && <ce-format-date date={(charge?.created_at || created_at) * 1000}></ce-format-date>}</ce-table-cell>
               <ce-table-cell>
-                <ce-session-status-badge status={status}></ce-session-status-badge>
+                <ce-order-status-badge status={status}></ce-order-status-badge>
               </ce-table-cell>
               <ce-table-cell>
                 <ce-button

@@ -7,7 +7,7 @@
         ></ce-format-number>
     </x-slot>
     {{-- <x-slot name="end">
-        <ce-session-status-badge status="{{ $order->status }}"></ce-session-status-badge>
+        <ce-order-status-badge status="{{ $order->status }}"></ce-order-status-badge>
         @php
             // This dynamically adds prop data to a component since we cannot pass objects data as a prop.
             \CheckoutEngine::assets()->addComponentData('ce-order-confirmation-line-items', '', [

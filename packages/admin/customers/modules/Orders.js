@@ -98,9 +98,9 @@ export default () => {
 							></ce-format-number>
 						),
 						status: (
-							<ce-session-status-badge
+							<ce-order-status-badge
 								status={status}
-							></ce-session-status-badge>
+							></ce-order-status-badge>
 						),
 						actions: (
 							<ce-button

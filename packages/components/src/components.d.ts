@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { ChoiceItem, Coupon, Customer, LineItemData, Order, Price, PriceChoice, Prices, Products, ResponseError, SessionStatus, Subscription, SubscriptionStatus } from "./types";
+import { ChoiceItem, Coupon, Customer, LineItemData, Order, OrderStatus, Price, PriceChoice, Prices, Products, ResponseError, Subscription, SubscriptionStatus } from "./types";
 import { IconLibraryMutator, IconLibraryResolver } from "./components/ui/icon/library";
 export namespace Components {
     interface CeAlert {
@@ -119,9 +119,19 @@ export namespace Components {
           * Is this card loading.
          */
         "loading": boolean;
+        /**
+          * Eliminate the divider
+         */
+        "noDivider": boolean;
     }
     interface CeCcLogo {
         "brand": string;
+    }
+    interface CeChargesList {
+        /**
+          * Query to fetch charges
+         */
+        "query": object;
     }
     interface CeCheckbox {
         /**
@@ -848,6 +858,24 @@ export namespace Components {
     interface CeOrderConfirmationTotals {
         "order": Order;
     }
+    interface CeOrderStatusBadge {
+        /**
+          * Makes the tag clearable.
+         */
+        "clearable": boolean;
+        /**
+          * Draws a pill-style tag with rounded edges.
+         */
+        "pill": boolean;
+        /**
+          * The tag's size.
+         */
+        "size": 'small' | 'medium' | 'large';
+        /**
+          * The tag's statux type.
+         */
+        "status": OrderStatus;
+    }
     interface CeOrderSummary {
         "busy": boolean;
         "collapsed": boolean;
@@ -1245,27 +1273,6 @@ export namespace Components {
          */
         "setState": (state: string) => void;
     }
-    interface CeSessionStatusBadge {
-        /**
-          * Makes the tag clearable.
-         */
-        "clearable": boolean;
-        /**
-          * Draws a pill-style tag with rounded edges.
-         */
-        "pill": boolean;
-        /**
-          * The tag's size.
-         */
-        "size": 'small' | 'medium' | 'large';
-        /**
-          * The tag's statux type.
-         */
-        "status": SessionStatus;
-    }
-    interface CeSessionSubscription {
-        "orderId": string;
-    }
     interface CeSkeleton {
         /**
           * Animation effect
@@ -1372,6 +1379,13 @@ export namespace Components {
           * The tag's statux type.
          */
         "status": SubscriptionStatus;
+    }
+    interface CeSubscriptionsList {
+        "cancelBehavior": 'period_end' | 'immediate';
+        /**
+          * Customer id to fetch subscriptions
+         */
+        "query": object;
     }
     interface CeSwitch {
         /**
@@ -1534,6 +1548,12 @@ declare global {
     var HTMLCeCcLogoElement: {
         prototype: HTMLCeCcLogoElement;
         new (): HTMLCeCcLogoElement;
+    };
+    interface HTMLCeChargesListElement extends Components.CeChargesList, HTMLStencilElement {
+    }
+    var HTMLCeChargesListElement: {
+        prototype: HTMLCeChargesListElement;
+        new (): HTMLCeChargesListElement;
     };
     interface HTMLCeCheckboxElement extends Components.CeCheckbox, HTMLStencilElement {
     }
@@ -1781,6 +1801,12 @@ declare global {
         prototype: HTMLCeOrderConfirmationTotalsElement;
         new (): HTMLCeOrderConfirmationTotalsElement;
     };
+    interface HTMLCeOrderStatusBadgeElement extends Components.CeOrderStatusBadge, HTMLStencilElement {
+    }
+    var HTMLCeOrderStatusBadgeElement: {
+        prototype: HTMLCeOrderStatusBadgeElement;
+        new (): HTMLCeOrderStatusBadgeElement;
+    };
     interface HTMLCeOrderSummaryElement extends Components.CeOrderSummary, HTMLStencilElement {
     }
     var HTMLCeOrderSummaryElement: {
@@ -1889,18 +1915,6 @@ declare global {
         prototype: HTMLCeSessionProviderElement;
         new (): HTMLCeSessionProviderElement;
     };
-    interface HTMLCeSessionStatusBadgeElement extends Components.CeSessionStatusBadge, HTMLStencilElement {
-    }
-    var HTMLCeSessionStatusBadgeElement: {
-        prototype: HTMLCeSessionStatusBadgeElement;
-        new (): HTMLCeSessionStatusBadgeElement;
-    };
-    interface HTMLCeSessionSubscriptionElement extends Components.CeSessionSubscription, HTMLStencilElement {
-    }
-    var HTMLCeSessionSubscriptionElement: {
-        prototype: HTMLCeSessionSubscriptionElement;
-        new (): HTMLCeSessionSubscriptionElement;
-    };
     interface HTMLCeSkeletonElement extends Components.CeSkeleton, HTMLStencilElement {
     }
     var HTMLCeSkeletonElement: {
@@ -1936,6 +1950,12 @@ declare global {
     var HTMLCeSubscriptionStatusBadgeElement: {
         prototype: HTMLCeSubscriptionStatusBadgeElement;
         new (): HTMLCeSubscriptionStatusBadgeElement;
+    };
+    interface HTMLCeSubscriptionsListElement extends Components.CeSubscriptionsList, HTMLStencilElement {
+    }
+    var HTMLCeSubscriptionsListElement: {
+        prototype: HTMLCeSubscriptionsListElement;
+        new (): HTMLCeSubscriptionsListElement;
     };
     interface HTMLCeSwitchElement extends Components.CeSwitch, HTMLStencilElement {
     }
@@ -2022,6 +2042,7 @@ declare global {
         "ce-button": HTMLCeButtonElement;
         "ce-card": HTMLCeCardElement;
         "ce-cc-logo": HTMLCeCcLogoElement;
+        "ce-charges-list": HTMLCeChargesListElement;
         "ce-checkbox": HTMLCeCheckboxElement;
         "ce-checkout": HTMLCeCheckoutElement;
         "ce-choice": HTMLCeChoiceElement;
@@ -2063,6 +2084,7 @@ declare global {
         "ce-order-confirmation": HTMLCeOrderConfirmationElement;
         "ce-order-confirmation-line-items": HTMLCeOrderConfirmationLineItemsElement;
         "ce-order-confirmation-totals": HTMLCeOrderConfirmationTotalsElement;
+        "ce-order-status-badge": HTMLCeOrderStatusBadgeElement;
         "ce-order-summary": HTMLCeOrderSummaryElement;
         "ce-payment": HTMLCePaymentElement;
         "ce-price-choice": HTMLCePriceChoiceElement;
@@ -2081,14 +2103,13 @@ declare global {
         "ce-select": HTMLCeSelectElement;
         "ce-session-detail": HTMLCeSessionDetailElement;
         "ce-session-provider": HTMLCeSessionProviderElement;
-        "ce-session-status-badge": HTMLCeSessionStatusBadgeElement;
-        "ce-session-subscription": HTMLCeSessionSubscriptionElement;
         "ce-skeleton": HTMLCeSkeletonElement;
         "ce-spacing": HTMLCeSpacingElement;
         "ce-spinner": HTMLCeSpinnerElement;
         "ce-stripe-element": HTMLCeStripeElementElement;
         "ce-stripe-payment-request": HTMLCeStripePaymentRequestElement;
         "ce-subscription-status-badge": HTMLCeSubscriptionStatusBadgeElement;
+        "ce-subscriptions-list": HTMLCeSubscriptionsListElement;
         "ce-switch": HTMLCeSwitchElement;
         "ce-tab": HTMLCeTabElement;
         "ce-tab-group": HTMLCeTabGroupElement;
@@ -2224,9 +2245,19 @@ declare namespace LocalJSX {
           * Is this card loading.
          */
         "loading"?: boolean;
+        /**
+          * Eliminate the divider
+         */
+        "noDivider"?: boolean;
     }
     interface CeCcLogo {
         "brand"?: string;
+    }
+    interface CeChargesList {
+        /**
+          * Query to fetch charges
+         */
+        "query"?: object;
     }
     interface CeCheckbox {
         /**
@@ -3010,6 +3041,24 @@ declare namespace LocalJSX {
     interface CeOrderConfirmationTotals {
         "order"?: Order;
     }
+    interface CeOrderStatusBadge {
+        /**
+          * Makes the tag clearable.
+         */
+        "clearable"?: boolean;
+        /**
+          * Draws a pill-style tag with rounded edges.
+         */
+        "pill"?: boolean;
+        /**
+          * The tag's size.
+         */
+        "size"?: 'small' | 'medium' | 'large';
+        /**
+          * The tag's statux type.
+         */
+        "status"?: OrderStatus;
+    }
     interface CeOrderSummary {
         "busy"?: boolean;
         "collapsed"?: boolean;
@@ -3454,27 +3503,6 @@ declare namespace LocalJSX {
          */
         "setState"?: (state: string) => void;
     }
-    interface CeSessionStatusBadge {
-        /**
-          * Makes the tag clearable.
-         */
-        "clearable"?: boolean;
-        /**
-          * Draws a pill-style tag with rounded edges.
-         */
-        "pill"?: boolean;
-        /**
-          * The tag's size.
-         */
-        "size"?: 'small' | 'medium' | 'large';
-        /**
-          * The tag's statux type.
-         */
-        "status"?: SessionStatus;
-    }
-    interface CeSessionSubscription {
-        "orderId"?: string;
-    }
     interface CeSkeleton {
         /**
           * Animation effect
@@ -3588,6 +3616,13 @@ declare namespace LocalJSX {
           * The tag's statux type.
          */
         "status"?: SubscriptionStatus;
+    }
+    interface CeSubscriptionsList {
+        "cancelBehavior"?: 'period_end' | 'immediate';
+        /**
+          * Customer id to fetch subscriptions
+         */
+        "query"?: object;
     }
     interface CeSwitch {
         /**
@@ -3727,6 +3762,7 @@ declare namespace LocalJSX {
         "ce-button": CeButton;
         "ce-card": CeCard;
         "ce-cc-logo": CeCcLogo;
+        "ce-charges-list": CeChargesList;
         "ce-checkbox": CeCheckbox;
         "ce-checkout": CeCheckout;
         "ce-choice": CeChoice;
@@ -3768,6 +3804,7 @@ declare namespace LocalJSX {
         "ce-order-confirmation": CeOrderConfirmation;
         "ce-order-confirmation-line-items": CeOrderConfirmationLineItems;
         "ce-order-confirmation-totals": CeOrderConfirmationTotals;
+        "ce-order-status-badge": CeOrderStatusBadge;
         "ce-order-summary": CeOrderSummary;
         "ce-payment": CePayment;
         "ce-price-choice": CePriceChoice;
@@ -3786,14 +3823,13 @@ declare namespace LocalJSX {
         "ce-select": CeSelect;
         "ce-session-detail": CeSessionDetail;
         "ce-session-provider": CeSessionProvider;
-        "ce-session-status-badge": CeSessionStatusBadge;
-        "ce-session-subscription": CeSessionSubscription;
         "ce-skeleton": CeSkeleton;
         "ce-spacing": CeSpacing;
         "ce-spinner": CeSpinner;
         "ce-stripe-element": CeStripeElement;
         "ce-stripe-payment-request": CeStripePaymentRequest;
         "ce-subscription-status-badge": CeSubscriptionStatusBadge;
+        "ce-subscriptions-list": CeSubscriptionsList;
         "ce-switch": CeSwitch;
         "ce-tab": CeTab;
         "ce-tab-group": CeTabGroup;
@@ -3819,6 +3855,7 @@ declare module "@stencil/core" {
             "ce-button": LocalJSX.CeButton & JSXBase.HTMLAttributes<HTMLCeButtonElement>;
             "ce-card": LocalJSX.CeCard & JSXBase.HTMLAttributes<HTMLCeCardElement>;
             "ce-cc-logo": LocalJSX.CeCcLogo & JSXBase.HTMLAttributes<HTMLCeCcLogoElement>;
+            "ce-charges-list": LocalJSX.CeChargesList & JSXBase.HTMLAttributes<HTMLCeChargesListElement>;
             "ce-checkbox": LocalJSX.CeCheckbox & JSXBase.HTMLAttributes<HTMLCeCheckboxElement>;
             "ce-checkout": LocalJSX.CeCheckout & JSXBase.HTMLAttributes<HTMLCeCheckoutElement>;
             "ce-choice": LocalJSX.CeChoice & JSXBase.HTMLAttributes<HTMLCeChoiceElement>;
@@ -3860,6 +3897,7 @@ declare module "@stencil/core" {
             "ce-order-confirmation": LocalJSX.CeOrderConfirmation & JSXBase.HTMLAttributes<HTMLCeOrderConfirmationElement>;
             "ce-order-confirmation-line-items": LocalJSX.CeOrderConfirmationLineItems & JSXBase.HTMLAttributes<HTMLCeOrderConfirmationLineItemsElement>;
             "ce-order-confirmation-totals": LocalJSX.CeOrderConfirmationTotals & JSXBase.HTMLAttributes<HTMLCeOrderConfirmationTotalsElement>;
+            "ce-order-status-badge": LocalJSX.CeOrderStatusBadge & JSXBase.HTMLAttributes<HTMLCeOrderStatusBadgeElement>;
             "ce-order-summary": LocalJSX.CeOrderSummary & JSXBase.HTMLAttributes<HTMLCeOrderSummaryElement>;
             "ce-payment": LocalJSX.CePayment & JSXBase.HTMLAttributes<HTMLCePaymentElement>;
             "ce-price-choice": LocalJSX.CePriceChoice & JSXBase.HTMLAttributes<HTMLCePriceChoiceElement>;
@@ -3878,14 +3916,13 @@ declare module "@stencil/core" {
             "ce-select": LocalJSX.CeSelect & JSXBase.HTMLAttributes<HTMLCeSelectElement>;
             "ce-session-detail": LocalJSX.CeSessionDetail & JSXBase.HTMLAttributes<HTMLCeSessionDetailElement>;
             "ce-session-provider": LocalJSX.CeSessionProvider & JSXBase.HTMLAttributes<HTMLCeSessionProviderElement>;
-            "ce-session-status-badge": LocalJSX.CeSessionStatusBadge & JSXBase.HTMLAttributes<HTMLCeSessionStatusBadgeElement>;
-            "ce-session-subscription": LocalJSX.CeSessionSubscription & JSXBase.HTMLAttributes<HTMLCeSessionSubscriptionElement>;
             "ce-skeleton": LocalJSX.CeSkeleton & JSXBase.HTMLAttributes<HTMLCeSkeletonElement>;
             "ce-spacing": LocalJSX.CeSpacing & JSXBase.HTMLAttributes<HTMLCeSpacingElement>;
             "ce-spinner": LocalJSX.CeSpinner & JSXBase.HTMLAttributes<HTMLCeSpinnerElement>;
             "ce-stripe-element": LocalJSX.CeStripeElement & JSXBase.HTMLAttributes<HTMLCeStripeElementElement>;
             "ce-stripe-payment-request": LocalJSX.CeStripePaymentRequest & JSXBase.HTMLAttributes<HTMLCeStripePaymentRequestElement>;
             "ce-subscription-status-badge": LocalJSX.CeSubscriptionStatusBadge & JSXBase.HTMLAttributes<HTMLCeSubscriptionStatusBadgeElement>;
+            "ce-subscriptions-list": LocalJSX.CeSubscriptionsList & JSXBase.HTMLAttributes<HTMLCeSubscriptionsListElement>;
             "ce-switch": LocalJSX.CeSwitch & JSXBase.HTMLAttributes<HTMLCeSwitchElement>;
             "ce-tab": LocalJSX.CeTab & JSXBase.HTMLAttributes<HTMLCeTabElement>;
             "ce-tab-group": LocalJSX.CeTabGroup & JSXBase.HTMLAttributes<HTMLCeTabGroupElement>;

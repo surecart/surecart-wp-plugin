@@ -55,6 +55,7 @@ export const config: Config = {
           out[component.tag] = {
             ...props,
             style: true,
+            id: true,
             class: true,
             slot: true,
           };

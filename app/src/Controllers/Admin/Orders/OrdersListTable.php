@@ -60,9 +60,9 @@ class OrdersListTable extends ListTable {
 	 */
 	protected function get_views() {
 		$stati = [
-			'complete'   => __( 'Complete', 'checkout_engine' ),
-			'incomplete' => __( 'Incomplete', 'checkout_engine' ),
-			'all'        => __( 'All', 'checkout_engine' ),
+			'paid'    => __( 'Paid', 'checkout_engine' ),
+			'pending' => __( 'Pending', 'checkout_engine' ),
+			'all'     => __( 'All', 'checkout_engine' ),
 		];
 
 		$link = \CheckoutEngine::getUrl()->index( 'orders' );
@@ -74,7 +74,7 @@ class OrdersListTable extends ListTable {
 				if ( $status === $_GET['status'] ) {
 					$current_link_attributes = ' class="current" aria-current="page"';
 				}
-			} elseif ( 'complete' === $status ) {
+			} elseif ( 'paid' === $status ) {
 				$current_link_attributes = ' class="current" aria-current="page"';
 			}
 
@@ -103,7 +103,8 @@ class OrdersListTable extends ListTable {
 	public function get_columns() {
 		return [
 			// 'cb'          => '<input type="checkbox" />',
-			'name'   => __( 'Name', 'checkout_engine' ),
+
+			'order'  => __( 'Order', 'checkout_engine' ),
 			'date'   => __( 'Date', 'checkout_engine' ),
 			'status' => __( 'Status', 'checkout_engine' ),
 			'total'  => __( 'Total', 'checkout_engine' ),
@@ -164,8 +165,8 @@ class OrdersListTable extends ListTable {
 	 * @return boolean|null
 	 */
 	public function getStatus() {
-		$status = $_GET['status'] ?? 'complete';
-		if ( 'complete' === $status ) {
+		$status = $_GET['status'] ?? 'paid';
+		if ( 'paid' === $status ) {
 			return [ 'paid', 'completed' ];
 		}
 		if ( 'incomplete' === $status ) {
@@ -180,27 +181,27 @@ class OrdersListTable extends ListTable {
 	/**
 	 * Handle the total column
 	 *
-	 * @param \CheckoutEngine\Models\Order $session Checkout Session Model.
+	 * @param \CheckoutEngine\Models\Order $order Checkout Session Model.
 	 *
 	 * @return string
 	 */
-	public function column_total( $session ) {
-		return '<ce-format-number type="currency" currency="' . strtoupper( esc_html( $session->currency ) ) . '" value="' . (float) $session->total_amount . '"></ce-format-number>';
+	public function column_total( $order ) {
+		return '<ce-format-number type="currency" currency="' . strtoupper( esc_html( $order->currency ) ) . '" value="' . (float) $order->total_amount . '"></ce-format-number>';
 	}
 
 	/**
 	 * Handle the total column
 	 *
-	 * @param \CheckoutEngine\Models\Order $session Checkout Session Model.
+	 * @param \CheckoutEngine\Models\Order $order Checkout Session Model.
 	 *
 	 * @return string
 	 */
-	public function column_date( $session ) {
+	public function column_date( $order ) {
 		return sprintf(
 			'<time datetime="%1$s" title="%2$s">%3$s</time>',
-			esc_attr( $session->updated_at ),
-			esc_html( TimeDate::formatDateAndTime( $session->updated_at ) ),
-			esc_html( TimeDate::humanTimeDiff( $session->updated_at ) )
+			esc_attr( $order->updated_at ),
+			esc_html( TimeDate::formatDateAndTime( $order->updated_at ) ),
+			esc_html( TimeDate::humanTimeDiff( $order->updated_at ) )
 		);
 	}
 
@@ -287,15 +288,7 @@ class OrdersListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_status( $order ) {
-		switch ( $order->status ) {
-			case 'paid':
-			case 'completed':
-				return '<ce-tag type="success">' . __( 'Complete', 'checkout_engine' ) . '</ce-tag>';
-			case 'finalized':
-			case 'draft':
-				return '<ce-tag type="info">' . __( 'Draft', 'checkout_engine' ) . '</ce-tag>';
-		}
-		return $order->status;
+		return '<ce-order-status-badge status="' . esc_attr( $order->status ) . '"></ce-order-status-badge>';
 	}
 
 	/**
@@ -305,14 +298,21 @@ class OrdersListTable extends ListTable {
 	 *
 	 * @return string
 	 */
-	public function column_name( $session ) {
+	public function column_order( $order ) {
 		ob_start();
 		?>
-		<a class="row-title" aria-label="<?php echo esc_attr__( 'Edit Order', 'checkout_engine' ); ?>" href="<?php echo esc_url( \CheckoutEngine::getUrl()->edit( 'order', $session->id ) ); ?>">
-			<?php echo esc_html_e( $session->name ?? $session->email ); ?>
+		<a class="row-title" aria-label="<?php echo esc_attr__( 'Edit Order', 'checkout_engine' ); ?>" href="<?php echo esc_url( \CheckoutEngine::getUrl()->edit( 'order', $order->id ) ); ?>">
+			<?php echo sanitize_text_field( $order->number ?? $order->id ); ?>
 		</a>
-
+		<br />
+		<a  aria-label="<?php echo esc_attr__( 'Edit Order', 'checkout_engine' ); ?>" href="<?php echo esc_url( \CheckoutEngine::getUrl()->edit( 'order', $order->id ) ); ?>">
+			<?php
+			// translators: Customer name.
+			echo sprintf( esc_html__( 'By %s', 'checkout_engine' ), esc_html( $order->name ?? $order->email ) );
+			?>
+		</a>
 		<?php
+
 		return ob_get_clean();
 	}
 }

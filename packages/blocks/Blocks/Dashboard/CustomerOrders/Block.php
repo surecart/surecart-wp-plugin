@@ -20,6 +20,7 @@ class Block extends DashboardPage {
 		// get the current page tab and possible id.
 		$id   = sanitize_text_field( $_GET['order']['id'] ?? null );
 		$page = sanitize_text_field( $_GET['order']['page'] ?? 1 );
+
 		return $id ? $this->show( $id ) : $this->index( $page );
 	}
 
@@ -34,7 +35,30 @@ class Block extends DashboardPage {
 		return \CheckoutEngine::blocks()->render(
 			'web.dashboard.orders.show',
 			[
-				'id' => $id,
+				'id'            => $id,
+				'customer_id'   => $this->customer_id,
+				'order'         => [
+					'query' => [
+						'expand' => ,
+					],
+				],
+				'subscriptions' => [
+					'query' => [
+						'order_ids'    => [ $id ],
+						'customer_ids' => [ $this->customer_id ],
+						'status'       => [ 'active', 'trialing' ],
+						'page'         => 1,
+						'per_page'     => 10,
+					],
+				],
+				'charges'       => [
+					'query' => [
+						'order_ids'    => [ $id ],
+						'customer_ids' => [ $this->customer_id ],
+						'page'         => 1,
+						'per_page'     => 10,
+					],
+				],
 			]
 		);
 	}
@@ -54,7 +78,6 @@ class Block extends DashboardPage {
 			'web.dashboard.orders.index',
 			[
 				'customer_id' => $this->customer_id,
-				'page'        => $page,
 			]
 		);
 	}

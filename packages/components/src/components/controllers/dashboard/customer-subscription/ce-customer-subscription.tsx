@@ -1,5 +1,5 @@
 import { Component, Event, EventEmitter, Fragment, h, Prop, State } from '@stencil/core';
-import { Price, Subscription } from '../../../../types';
+import { Invoice, Subscription } from '../../../../types';
 import apiFetch from '../../../../functions/fetch';
 import { addQueryArgs } from '@wordpress/url';
 import { _n, __, sprintf } from '@wordpress/i18n';
@@ -21,34 +21,26 @@ export class CeCustomerSubscription {
   @State() state: 'cancel' | 'update' | '';
 
   renderName() {
-    if (!this.subscription.subscription_items) return __('Subscription', 'checkout_engine');
-    if (this.subscription.subscription_items.pagination.count > 1) {
-      return sprintf(__('%d items', 'checkout_engine'), this.subscription.subscription_items.pagination.count);
+    if (typeof this?.subscription?.price?.product !== 'string') {
+      return this?.subscription?.price?.product?.name;
     }
-    const price = this.subscription.subscription_items.data[0].price as Price;
-
-    if (typeof price?.product === 'string') return sprintf(__('%d item', 'checkout_engine'), 1);
-
-    if (price?.product?.name) {
-      return price.product.name;
-    }
+    return __('Subscription', 'checkout_engine');
   }
 
   upgradePriceIds() {
     return (this.upgradeGroups || [])
       .filter(group => {
-        const price = this.subscription?.subscription_items?.data?.[0].price as Price;
-        return group.includes(price?.id);
+        return group.includes(this.subscription?.price?.id);
       })
       .flat();
   }
 
   renderRenewalText() {
-    if (this.subscription?.cancel_at_period_end && this.subscription.current_period_end) {
+    if (this.subscription?.cancel_at_period_end && this.subscription.current_period_end_at) {
       return (
         <span>
           {sprintf(__('Your plan will be canceled on', 'checkout_engine'))}{' '}
-          <ce-format-date date={this.subscription.current_period_end * 1000} month="long" day="numeric" year="numeric"></ce-format-date>
+          <ce-format-date date={this.subscription.current_period_end_at * 1000} month="long" day="numeric" year="numeric"></ce-format-date>
         </span>
       );
     }
@@ -60,14 +52,16 @@ export class CeCustomerSubscription {
         </span>
       );
     }
-    if (this.subscription.status === 'active' && this.subscription.current_period_end) {
+    if (this.subscription.status === 'active' && this.subscription.current_period_end_at) {
       return (
         <span>
           {sprintf(__('Your plan renews on', 'checkout_engine'))}{' '}
-          <ce-format-date date={this.subscription.current_period_end * 1000} month="long" day="numeric" year="numeric"></ce-format-date>
+          <ce-format-date date={this.subscription.current_period_end_at * 1000} month="long" day="numeric" year="numeric"></ce-format-date>
         </span>
       );
     }
+
+    console.log(this.subscription);
 
     return <ce-subscription-status-badge status={this.subscription.status}></ce-subscription-status-badge>;
   }
@@ -144,11 +138,11 @@ export class CeCustomerSubscription {
   }
 
   renderCancelText() {
-    if (this.subscription.current_period_end) {
+    if (this.subscription.current_period_end_at) {
       return (
         <span>
           {__('Your plan will be canceled, but is still available until the end of your billing period on ', 'checkout_engine')}
-          <ce-format-date date={this.subscription.current_period_end * 1000} month="long" day="numeric" year="numeric"></ce-format-date>.
+          <ce-format-date date={this.subscription.current_period_end_at * 1000} month="long" day="numeric" year="numeric"></ce-format-date>.
           {__('If you change your mind, you can renew your subscription.', 'checkout_engine')}
         </span>
       );
@@ -161,7 +155,7 @@ export class CeCustomerSubscription {
   }
 
   render() {
-    const price = this.subscription?.subscription_items?.data?.[0].price as Price;
+    const price = this.subscription?.price;
 
     if (this.state === 'cancel') {
       return (
@@ -171,7 +165,11 @@ export class CeCustomerSubscription {
               {this.renderName()}
             </div>
             <div class="subscription__price" part="price">
-              <ce-format-number type="currency" currency={this.subscription?.currency} value={this.subscription?.total_amount}></ce-format-number>
+              <ce-format-number
+                type="currency"
+                currency={(this.subscription?.latest_invoice as Invoice)?.currency}
+                value={(this.subscription?.latest_invoice as Invoice)?.total_amount}
+              ></ce-format-number>
               {translatedInterval(price?.recurring_interval_count || 0, price?.recurring_interval, '/', '')}
             </div>
             <ce-text>{this.renderCancelText()}</ce-text>
@@ -208,7 +206,11 @@ export class CeCustomerSubscription {
                 {this.renderName()}
               </div>
               <div class="subscription__price" part="price">
-                <ce-format-number type="currency" currency={this.subscription?.currency} value={this.subscription?.total_amount}></ce-format-number>
+                <ce-format-number
+                  type="currency"
+                  currency={(this.subscription?.latest_invoice as Invoice)?.currency}
+                  value={(this.subscription?.latest_invoice as Invoice)?.total_amount}
+                ></ce-format-number>
                 {translatedInterval(price.recurring_interval_count, price.recurring_interval, '/', '')}
               </div>
               <div class="subscription__renewal" part="renewal">

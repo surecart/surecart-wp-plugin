@@ -5,6 +5,7 @@
     "open": true,
     "type": true,
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
@@ -13,6 +14,7 @@
     "size": true,
     "type": true,
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
@@ -21,6 +23,7 @@
     "transparent": true,
     "z-index": true,
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
@@ -42,19 +45,30 @@
     "type": true,
     "value": true,
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
   "ce-card": {
     "borderless": true,
     "loading": true,
+    "no-divider": true,
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
   "ce-cc-logo": {
     "brand": true,
     "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-charges-list": {
+    "query": true,
+    "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
@@ -67,6 +81,7 @@
     "required": true,
     "value": true,
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
@@ -82,6 +97,7 @@
     "prices": true,
     "success-url": true,
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
@@ -97,6 +113,7 @@
     "type": true,
     "value": true,
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
@@ -110,12 +127,14 @@
     "show-label": true,
     "size": true,
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
   "ce-consumer": {
     "renderer": true,
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
@@ -127,18 +146,21 @@
     "loading": true,
     "order": true,
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
   "ce-customer-dashboard": {
     "customer-id": true,
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
   "ce-customer-order": {
     "order-id": true,
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
@@ -146,6 +168,7 @@
     "customer-id": true,
     "page": true,
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
@@ -153,6 +176,7 @@
     "subscription": true,
     "upgrade-groups": true,
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
@@ -163,6 +187,7 @@
     "subscriptions": true,
     "upgrade-groups": true,
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
@@ -172,6 +197,7 @@
     "prices": true,
     "products": true,
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
@@ -181,6 +207,7 @@
     "subscription": true,
     "upgrade-groups": true,
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
@@ -192,11 +219,13 @@
     "loading": true,
     "subscriptions": true,
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
   "ce-divider": {
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
@@ -206,6 +235,7 @@
     "open": true,
     "position": true,
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
@@ -225,6 +255,7 @@
     "size": true,
     "value": true,
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
@@ -234,6 +265,7 @@
     "order": true,
     "processor": true,
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
@@ -242,12 +274,14 @@
     "flex-direction": true,
     "justify-content": true,
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
   "ce-form": {
     "novalidate": true,
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
@@ -264,17 +298,20 @@
     "show-label": true,
     "size": true,
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
   "ce-form-row": {
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
   "ce-form-section": {
     "label": true,
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
@@ -293,6 +330,7 @@
     "weekday": true,
     "year": true,
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
@@ -302,6 +340,7 @@
     "interval": true,
     "value": true,
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
@@ -319,12 +358,14 @@
     "type": true,
     "value": true,
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
   "ce-heading": {
     "size": true,
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
@@ -334,6 +375,7 @@
     "name": true,
     "src": true,
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
@@ -367,6 +409,7 @@
     "type": true,
     "value": true,
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
@@ -374,6 +417,7 @@
     "currency": true,
     "price": true,
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
@@ -384,6 +428,7 @@
     "size": true,
     "total": true,
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
@@ -395,27 +440,32 @@
     "prices": true,
     "removable": true,
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
   "ce-line-items-provider": {
     "order": true,
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
   "ce-login-form": {
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
   "ce-menu": {
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
   "ce-menu-divider": {
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
@@ -424,17 +474,20 @@
     "disabled": true,
     "value": true,
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
   "ce-menu-label": {
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
   "ce-order-confirmation": {
     "order": true,
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
@@ -442,12 +495,24 @@
     "loading": true,
     "order": true,
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
   "ce-order-confirmation-totals": {
     "order": true,
     "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-order-status-badge": {
+    "clearable": true,
+    "pill": true,
+    "size": true,
+    "status": true,
+    "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
@@ -459,6 +524,7 @@
     "loading": true,
     "order": true,
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
@@ -470,6 +536,7 @@
     "processor": true,
     "secure-notice": true,
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
@@ -491,6 +558,7 @@
     "show-price": true,
     "type": true,
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
@@ -500,6 +568,7 @@
     "label": true,
     "required": true,
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
@@ -525,6 +594,7 @@
     "size": true,
     "value": true,
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
@@ -539,17 +609,20 @@
     "removable": true,
     "trial-duration-days": true,
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
   "ce-provider": {
     "-s-t-e-n-c-i-l_-c-o-n-t-e-x-t": true,
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
   "ce-purchase": {
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
@@ -559,6 +632,7 @@
     "min": true,
     "quantity": true,
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
@@ -570,17 +644,20 @@
     "required": true,
     "value": true,
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
   "ce-radio-group": {
     "label": true,
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
   "ce-register-icon-library": {
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
@@ -590,17 +667,20 @@
     "matched": true,
     "query-var": true,
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
   "ce-router": {
     "auto-scroll": true,
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
   "ce-secure-notice": {
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
@@ -616,6 +696,7 @@
     "search-placeholder": true,
     "value": true,
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
@@ -627,6 +708,7 @@
     "order": true,
     "value": true,
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
@@ -640,37 +722,26 @@
     "prices": true,
     "set-state": true,
     "style": true,
-    "class": true,
-    "slot": true
-  },
-  "ce-session-status-badge": {
-    "clearable": true,
-    "pill": true,
-    "size": true,
-    "status": true,
-    "style": true,
-    "class": true,
-    "slot": true
-  },
-  "ce-session-subscription": {
-    "order-id": true,
-    "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
   "ce-skeleton": {
     "effect": true,
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
   "ce-spacing": {
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
   "ce-spinner": {
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
@@ -685,6 +756,7 @@
     "size": true,
     "stripe-account-id": true,
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
@@ -702,6 +774,7 @@
     "stripe-account-id": true,
     "theme": true,
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
@@ -711,6 +784,15 @@
     "size": true,
     "status": true,
     "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-subscriptions-list": {
+    "cancel-behavior": true,
+    "query": true,
+    "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
@@ -722,6 +804,7 @@
     "required": true,
     "value": true,
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
@@ -732,11 +815,13 @@
     "href": true,
     "panel": true,
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
   "ce-tab-group": {
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
@@ -744,31 +829,37 @@
     "active": true,
     "name": true,
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
   "ce-table": {
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
   "ce-table-body": {
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
   "ce-table-cell": {
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
   "ce-table-head": {
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
   "ce-table-row": {
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
@@ -778,6 +869,7 @@
     "size": true,
     "type": true,
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
@@ -785,6 +877,7 @@
     "tag": true,
     "truncate": true,
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
@@ -795,6 +888,7 @@
     "text": true,
     "type": true,
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   },
@@ -802,6 +896,7 @@
     "order": true,
     "total": true,
     "style": true,
+    "id": true,
     "class": true,
     "slot": true
   }

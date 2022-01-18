@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, h, Prop, State } from '@stencil/core';
+import { Component, Element, h, Prop, State } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import apiFetch from '../../../../functions/fetch';
@@ -6,42 +6,47 @@ import { Subscription } from '../../../../types';
 import { onFirstVisible } from '../../../../functions/lazy';
 
 @Component({
-  tag: 'ce-customer-subscriptions-list',
-  styleUrl: 'ce-customer-subscriptions-list.scss',
+  tag: 'ce-subscriptions-list',
+  styleUrl: 'ce-subscriptions-list.scss',
   shadow: true,
 })
-export class CeCustomerSubscriptionsList {
-  @Element() el: HTMLCeCustomerSubscriptionsListElement;
+export class CeSubscriptionsList {
+  @Element() el: HTMLCeSubscriptionsListElement;
   /** Customer id to fetch subscriptions */
-  @Prop() customerId: string;
+  @Prop() query: object;
   @Prop() cancelBehavior: 'period_end' | 'immediate' = 'period_end';
-  @Prop() loading: boolean;
-  @Prop({ mutable: true }) subscriptions: Array<Subscription>;
-  @Prop() error: string;
-  @Prop() isIndex: boolean;
 
-  @Event() ceFetchSubscriptions: EventEmitter<object>;
+  @State() subscriptions: Array<Subscription> = [];
 
-  @State() state: 'cancel' | 'update' | false;
-  @State() fetched: boolean;
+  /** Loading state */
+  @State() loading: boolean;
+
+  /** Error message */
+  @State() error: string;
+
+  /** Does this have a title slot */
+  @State() hasTitleSlot: boolean;
 
   componentWillLoad() {
     onFirstVisible(this.el, () => {
       this.getSubscriptions();
     });
+    this.handleSlotChange();
+  }
+
+  handleSlotChange() {
+    this.hasTitleSlot = !!this.el.querySelector('[slot="title"]');
   }
 
   /** Get all subscriptions */
-  async getSubscriptions(props = {}) {
-    if (!this.customerId) return;
+  async getSubscriptions() {
+    if (!this.query) return;
     try {
       this.loading = true;
       this.subscriptions = (await await apiFetch({
         path: addQueryArgs(`checkout-engine/v1/subscriptions/`, {
-          expand: ['subscription_items', 'subscription_item.price', 'price.product'],
-          status: ['active', 'trialing'],
-          customer_ids: [this.customerId],
-          ...props,
+          expand: ['price', 'price.product', 'latest_invoice'],
+          ...this.query,
         }),
       })) as Subscription[];
     } catch (e) {
@@ -89,13 +94,16 @@ export class CeCustomerSubscriptionsList {
     }
 
     return (
-      <ce-spacing style={{ '--spacing': 'var(--ce-spacing-large)' }}>
-        <slot name="before-list" />
-        {this.subscriptions.map(subscription => {
-          return <ce-customer-subscription subscription={subscription}></ce-customer-subscription>;
-        })}
-        <slot name="after-list" />
-      </ce-spacing>
+      <ce-card borderless no-divider>
+        <span slot="title">
+          <slot name="title" />
+        </span>
+        <ce-spacing style={{ '--spacing': 'var(--ce-spacing-large)' }}>
+          {this.subscriptions.map(subscription => {
+            return <ce-customer-subscription subscription={subscription}></ce-customer-subscription>;
+          })}
+        </ce-spacing>
+      </ce-card>
     );
   }
 }

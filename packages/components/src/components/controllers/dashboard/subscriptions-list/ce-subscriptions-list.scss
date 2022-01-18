@@ -1,0 +1,12 @@
+:host {
+  display: block;
+}
+.subscriptions {
+  &__title {
+    display: none;
+  }
+
+  &--has-title-slot &__title {
+    display: block;
+  }
+}
