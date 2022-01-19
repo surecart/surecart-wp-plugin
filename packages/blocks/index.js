@@ -32,6 +32,7 @@ import * as form from '@blocks/form';
 import * as heading from '@blocks/heading';
 import * as input from '@blocks/input';
 import * as lineItems from '@blocks/LineItems';
+import * as taxLineItem from '@blocks/TaxLineItem';
 import * as logoutButton from '@blocks/LogoutButton';
 import * as name from '@blocks/name';
 import * as confirmationLineItems from '@blocks/OrderConfirmationLineItems';
@@ -137,6 +138,7 @@ export const registerCheckoutEngineBlocks = () => {
 		priceChoice,
 		coupon,
 		lineItems,
+		taxLineItem,
 		button,
 		buyButton,
 		customerDashboard,

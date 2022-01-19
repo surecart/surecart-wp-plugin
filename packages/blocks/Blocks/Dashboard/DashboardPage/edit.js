@@ -7,13 +7,19 @@ import { __ } from '@wordpress/i18n';
 import {
 	useBlockProps,
 	InnerBlocks,
-	useInnerBlocksProps,
+	useInnerBlocksProps as __stableUseInnerBlocksProps,
+	__experimentalUseInnerBlocksProps,
 } from '@wordpress/block-editor';
 import { Fragment } from '@wordpress/element';
 import { CeTabPanel } from '@checkout-engine/components-react';
 
 export default ({ attributes }) => {
 	const { name } = attributes;
+
+	const useInnerBlocksProps = __stableUseInnerBlocksProps
+		? __stableUseInnerBlocksProps
+		: __experimentalUseInnerBlocksProps;
+
 	const blockProps = useBlockProps({
 		name,
 	});

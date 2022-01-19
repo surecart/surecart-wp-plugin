@@ -3,7 +3,8 @@
 	"title": "Totals",
 	"description": "Display the session totals.",
 	"category": "layout",
-	"keywords": [ "totals", "summary" ],
+	"keywords": ["totals", "summary"],
+	"parent": ["checkout-engine/form", "checkout-engine/column"],
 	"supports": {
 		"reusable": false,
 		"html": false

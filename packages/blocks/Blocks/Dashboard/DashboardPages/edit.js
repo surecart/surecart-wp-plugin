@@ -4,7 +4,11 @@ import { css, jsx } from '@emotion/core';
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { useBlockProps, useInnerBlocksProps } from '@wordpress/block-editor';
+import {
+	useBlockProps,
+	useInnerBlocksProps as __stableUseInnerBlocksProps,
+	__experimentalUseInnerBlocksProps,
+} from '@wordpress/block-editor';
 
 /**
  * Allowed blocks constant is passed to InnerBlocks precisely as specified here.
@@ -18,6 +22,10 @@ import { useBlockProps, useInnerBlocksProps } from '@wordpress/block-editor';
 const ALLOWED_BLOCKS = ['checkout-engine/dashboard-page'];
 
 export default () => {
+	const useInnerBlocksProps = __stableUseInnerBlocksProps
+		? __stableUseInnerBlocksProps
+		: __experimentalUseInnerBlocksProps;
+
 	const blockProps = useBlockProps();
 
 	const innerBlocksProps = useInnerBlocksProps(blockProps, {

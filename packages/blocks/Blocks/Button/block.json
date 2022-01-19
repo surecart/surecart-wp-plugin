@@ -1,12 +1,12 @@
-
 {
-  "apiVersion": 2,
+	"apiVersion": 2,
 	"name": "checkout-engine/button",
 	"title": "Button",
-  "description": "Display a checkout form button.",
+	"description": "Display a checkout form button.",
 	"category": "layout",
-  "keywords": ["button", "submit", "checkout", "engine"],
-  "supports": {
+	"keywords": ["button", "submit", "checkout", "engine"],
+	"parent": ["checkout-engine/form", "checkout-engine/column"],
+	"supports": {
 		"reusable": false,
 		"html": false
 	},

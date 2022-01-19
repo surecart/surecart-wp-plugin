@@ -13,7 +13,8 @@ import {
 	InspectorControls,
 	useBlockProps,
 	useSetting,
-	useInnerBlocksProps,
+	useInnerBlocksProps as __stableUseInnerBlocksProps,
+	__experimentalUseInnerBlocksProps,
 	store as blockEditorStore,
 } from '@wordpress/block-editor';
 import {
@@ -35,6 +36,10 @@ function ColumnEdit({
 	setAttributes,
 	clientId,
 }) {
+	const useInnerBlocksProps = __stableUseInnerBlocksProps
+		? __stableUseInnerBlocksProps
+		: __experimentalUseInnerBlocksProps;
+
 	const classes = classnames('block-core-columns', {
 		[`is-vertically-aligned-${verticalAlignment}`]: verticalAlignment,
 	});

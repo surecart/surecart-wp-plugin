@@ -3,7 +3,8 @@
 	"title": "Name",
 	"description": "Display a name collection field.",
 	"category": "layout",
-	"keywords": [ "name", "customer" ],
+	"keywords": ["name", "customer"],
+	"parent": ["checkout-engine/form", "checkout-engine/column"],
 	"supports": {
 		"reusable": false,
 		"html": false

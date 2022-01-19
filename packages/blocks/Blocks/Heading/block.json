@@ -4,7 +4,8 @@
 	"title": "Title/Heading Section",
 	"description": "Displays a title/heading section",
 	"category": "layout",
-	"keywords": [ "heading", "title" ],
+	"keywords": ["heading", "title"],
+	"parent": ["checkout-engine/form", "checkout-engine/column"],
 	"supports": {
 		"reusable": false,
 		"html": false,

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-01-19T18:02:26",
+  "timestamp": "2022-01-19T21:10:07",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.9.0",
@@ -5943,7 +5943,13 @@
         }
       ],
       "listeners": [],
-      "styles": [],
+      "styles": [
+        {
+          "name": "--focus-ring",
+          "annotation": "prop",
+          "docs": "The focus ring style to use when the control receives focus, a `box-shadow` property."
+        }
+      ],
       "slots": [],
       "parts": [
         {
@@ -9879,7 +9885,23 @@
       "methods": [],
       "events": [],
       "listeners": [],
-      "styles": [],
+      "styles": [
+        {
+          "name": "--border-radius",
+          "annotation": "prop",
+          "docs": "The skeleton's border radius."
+        },
+        {
+          "name": "--color",
+          "annotation": "prop",
+          "docs": "The color of the skeleton."
+        },
+        {
+          "name": "--sheen-color",
+          "annotation": "prop",
+          "docs": "The sheen color when the skeleton is in its loading state."
+        }
+      ],
       "slots": [],
       "parts": [
         {
@@ -10006,7 +10028,23 @@
       "methods": [],
       "events": [],
       "listeners": [],
-      "styles": [],
+      "styles": [
+        {
+          "name": "--indicator-color",
+          "annotation": "prop",
+          "docs": "The color of the spinner's indicator."
+        },
+        {
+          "name": "--stroke-width",
+          "annotation": "prop",
+          "docs": "The width of the indicator."
+        },
+        {
+          "name": "--track-color",
+          "annotation": "prop",
+          "docs": "The color of the spinner's track."
+        }
+      ],
       "slots": [],
       "parts": [
         {
@@ -10913,7 +10951,23 @@
         }
       ],
       "listeners": [],
-      "styles": [],
+      "styles": [
+        {
+          "name": "--height",
+          "annotation": "prop",
+          "docs": "The height of the switch."
+        },
+        {
+          "name": "--thumb-size",
+          "annotation": "prop",
+          "docs": "The size of the thumb."
+        },
+        {
+          "name": "--width",
+          "annotation": "prop",
+          "docs": "The width of the switch."
+        }
+      ],
       "slots": [],
       "parts": [
         {

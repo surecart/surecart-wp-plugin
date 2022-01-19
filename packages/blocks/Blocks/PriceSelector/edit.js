@@ -13,7 +13,8 @@ import {
 	InspectorControls,
 	useBlockProps,
 	InnerBlocks,
-	useInnerBlocksProps,
+	useInnerBlocksProps as __stableUseInnerBlocksProps,
+	__experimentalUseInnerBlocksProps,
 	store as blockEditorStore,
 } from '@wordpress/block-editor';
 import { createBlock } from '@wordpress/blocks';
@@ -28,6 +29,10 @@ import styles from './editor-styles';
 import { CePriceChoices } from '@checkout-engine/components-react';
 
 export default ({ attributes, setAttributes, clientId, isSelected }) => {
+	const useInnerBlocksProps = __stableUseInnerBlocksProps
+		? __stableUseInnerBlocksProps
+		: __experimentalUseInnerBlocksProps;
+
 	const { label, type, columns } = attributes;
 
 	const insertPrice = () => {

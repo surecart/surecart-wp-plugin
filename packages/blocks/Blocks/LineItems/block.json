@@ -1,22 +1,23 @@
 {
-  "name": "checkout-engine/line-items",
+	"name": "checkout-engine/line-items",
 	"title": "Line Items",
-  "description": "Displays checkout line items.",
+	"description": "Displays checkout line items.",
 	"category": "layout",
-  "keywords": ["total", "line-items"],
-  "supports": {
+	"keywords": ["total", "line-items"],
+	"parent": ["checkout-engine/totals"],
+	"supports": {
 		"reusable": false,
 		"html": false,
-    "order-summary": true
+		"order-summary": true
 	},
-  "attributes": {
-    "removable" : {
-      "type": "boolean",
-      "default": true
-    },
-    "editable" : {
-      "type": "boolean",
-      "default": true
-    }
-  }
+	"attributes": {
+		"removable": {
+			"type": "boolean",
+			"default": true
+		},
+		"editable": {
+			"type": "boolean",
+			"default": true
+		}
+	}
 }

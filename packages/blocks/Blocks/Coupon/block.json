@@ -4,7 +4,12 @@
 	"title": "Coupon",
 	"description": "Display a coupon form.",
 	"category": "layout",
-	"keywords": [ "coupon", "promo" ],
+	"keywords": ["coupon", "promo"],
+	"parent": [
+		"checkout-engine/form",
+		"checkout-engine/column",
+		"checkout-engine/totals"
+	],
 	"supports": {
 		"reusable": false,
 		"html": false,

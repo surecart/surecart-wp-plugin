@@ -1,21 +1,22 @@
 {
-  "apiVersion": 2,
+	"apiVersion": 2,
 	"name": "checkout-engine/price-selector",
 	"title": "Price Selector",
-  "description": "Displays a selector for product prices.",
+	"description": "Displays a selector for product prices.",
 	"category": "layout",
-  "keywords": ["price", "product", "choice", "checkout"],
-  "supports": {
-    "reusable": false,
+	"keywords": ["price", "product", "choice", "checkout"],
+	"parent": ["checkout-engine/form", "checkout-engine/column"],
+	"supports": {
+		"reusable": false,
 		"html": false
-  },
+	},
 	"attributes": {
-    "label": {
+		"label": {
 			"type": "string"
 		},
-    "choices": {
+		"choices": {
 			"type": "array",
-      "default": []
+			"default": []
 		},
 		"type": {
 			"type": "string",

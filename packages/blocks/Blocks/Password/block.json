@@ -3,7 +3,8 @@
 	"title": "Password",
 	"description": "Displays a password field.",
 	"category": "layout",
-	"keywords": [ "password", "input" ],
+	"keywords": ["password", "input"],
+	"parent": ["checkout-engine/form", "checkout-engine/column"],
 	"supports": {
 		"reusable": false,
 		"html": false
@@ -39,7 +40,7 @@
 			"type": "string"
 		},
 		"max": {
-			"type": [ "string", "number" ]
+			"type": ["string", "number"]
 		},
 		"maxlength": {
 			"type": "number"

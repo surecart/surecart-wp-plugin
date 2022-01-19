@@ -3,7 +3,8 @@
 	"title": "Switch",
 	"description": "Display a toggle switch.",
 	"category": "layout",
-	"keywords": [ "submit", "button" ],
+	"keywords": ["submit", "button"],
+	"parent": ["checkout-engine/form", "checkout-engine/column"],
 	"supports": {
 		"reusable": false,
 		"html": false

@@ -3,30 +3,33 @@
  */
 import { __ } from '@wordpress/i18n';
 import {
-	InnerBlocks,
 	InspectorControls,
-	useInnerBlocksProps,
+	useInnerBlocksProps as __stableUseInnerBlocksProps,
+	__experimentalUseInnerBlocksProps,
 } from '@wordpress/block-editor';
 import { Fragment } from '@wordpress/element';
 import { PanelBody, PanelRow, ToggleControl } from '@wordpress/components';
+import { CeOrderSummary } from '@checkout-engine/components-react';
 
 const ALLOWED_BLOCKS = [
 	'checkout-engine/coupon',
 	'checkout-engine/divider',
 	'checkout-engine/line-items',
+	'checkout-engine/tax-line-item',
 	'checkout-engine/total',
 	'checkout-engine/subtotal',
 ];
 
 export default ({ isSelected, attributes, setAttributes }) => {
+	const useInnerBlocksProps = __stableUseInnerBlocksProps
+		? __stableUseInnerBlocksProps
+		: __experimentalUseInnerBlocksProps;
+
 	const { collapsible, collapsed } = attributes;
 
 	const innerBlocksProps = useInnerBlocksProps(
 		{},
 		{
-			// renderAppender: isSelected
-			// 	? InnerBlocks.ButtonBlockAppender
-			// 	: false,
 			template: [
 				['checkout-engine/divider', {}],
 				['checkout-engine/line-items', {}],
@@ -44,6 +47,7 @@ export default ({ isSelected, attributes, setAttributes }) => {
 						button_text: __('Apply Coupon', 'checkout_engine'),
 					},
 				],
+				['checkout-engine/tax-line-item', {}],
 				['checkout-engine/divider', {}],
 				[
 					'checkout-engine/total',
@@ -57,6 +61,7 @@ export default ({ isSelected, attributes, setAttributes }) => {
 				],
 			],
 			allowedBlocks: ALLOWED_BLOCKS,
+			templateLock: false,
 		}
 	);
 
@@ -94,11 +99,11 @@ export default ({ isSelected, attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<ce-order-summary
+			<CeOrderSummary
 				collapsible={collapsible}
 				collapsed={collapsed}
 				{...innerBlocksProps}
-			></ce-order-summary>
+			></CeOrderSummary>
 		</Fragment>
 	);
 };

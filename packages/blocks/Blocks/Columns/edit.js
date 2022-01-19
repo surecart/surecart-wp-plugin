@@ -17,7 +17,8 @@ import {
 
 import {
 	InspectorControls,
-	useInnerBlocksProps,
+	useInnerBlocksProps as __stableUseInnerBlocksProps,
+	__experimentalUseInnerBlocksProps,
 	BlockControls,
 	BlockVerticalAlignmentToolbar,
 	__experimentalBlockVariationPicker,
@@ -61,6 +62,10 @@ function ColumnsEditContainer({
 	updateColumns,
 	clientId,
 }) {
+	const useInnerBlocksProps = __stableUseInnerBlocksProps
+		? __stableUseInnerBlocksProps
+		: __experimentalUseInnerBlocksProps;
+
 	const { isStackedOnMobile, verticalAlignment } = attributes;
 
 	const { count } = useSelect(

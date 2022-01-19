@@ -435,6 +435,14 @@
     "class": true,
     "slot": true
   },
+  "ce-line-item-tax": {
+    "loading": true,
+    "order": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "ce-line-item-total": {
     "loading": true,
     "order": true,

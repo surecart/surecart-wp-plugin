@@ -4,7 +4,8 @@
 import {
 	InnerBlocks,
 	useBlockProps,
-	useInnerBlocksProps,
+	useInnerBlocksProps as __stableUseInnerBlocksProps,
+	__experimentalUseInnerBlocksProps,
 } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
 
@@ -23,6 +24,10 @@ const ALLOWED_BLOCKS = [
 ];
 
 export default ({}) => {
+	const useInnerBlocksProps = __stableUseInnerBlocksProps
+		? __stableUseInnerBlocksProps
+		: __experimentalUseInnerBlocksProps;
+
 	const blockProps = useBlockProps({
 		slot: 'nav',
 		style: {

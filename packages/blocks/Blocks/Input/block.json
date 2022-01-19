@@ -4,6 +4,7 @@
 	"description": "Displays a form text input.",
 	"category": "layout",
 	"keywords": ["email", "mail"],
+	"parent": ["checkout-engine/form", "checkout-engine/column"],
 	"supports": {
 		"reusable": false,
 		"html": false

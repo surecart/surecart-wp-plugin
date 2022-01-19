@@ -809,6 +809,10 @@ export namespace Components {
          */
         "price": string;
     }
+    interface CeLineItemTax {
+        "loading": boolean;
+        "order": Order;
+    }
     interface CeLineItemTotal {
         "loading": boolean;
         "order": Order;
@@ -1759,6 +1763,12 @@ declare global {
         prototype: HTMLCeLineItemElement;
         new (): HTMLCeLineItemElement;
     };
+    interface HTMLCeLineItemTaxElement extends Components.CeLineItemTax, HTMLStencilElement {
+    }
+    var HTMLCeLineItemTaxElement: {
+        prototype: HTMLCeLineItemTaxElement;
+        new (): HTMLCeLineItemTaxElement;
+    };
     interface HTMLCeLineItemTotalElement extends Components.CeLineItemTotal, HTMLStencilElement {
     }
     var HTMLCeLineItemTotalElement: {
@@ -2099,6 +2109,7 @@ declare global {
         "ce-icon": HTMLCeIconElement;
         "ce-input": HTMLCeInputElement;
         "ce-line-item": HTMLCeLineItemElement;
+        "ce-line-item-tax": HTMLCeLineItemTaxElement;
         "ce-line-item-total": HTMLCeLineItemTotalElement;
         "ce-line-items": HTMLCeLineItemsElement;
         "ce-line-items-provider": HTMLCeLineItemsProviderElement;
@@ -3013,6 +3024,10 @@ declare namespace LocalJSX {
          */
         "price"?: string;
     }
+    interface CeLineItemTax {
+        "loading"?: boolean;
+        "order"?: Order;
+    }
     interface CeLineItemTotal {
         "loading"?: boolean;
         "order"?: Order;
@@ -3833,6 +3848,7 @@ declare namespace LocalJSX {
         "ce-icon": CeIcon;
         "ce-input": CeInput;
         "ce-line-item": CeLineItem;
+        "ce-line-item-tax": CeLineItemTax;
         "ce-line-item-total": CeLineItemTotal;
         "ce-line-items": CeLineItems;
         "ce-line-items-provider": CeLineItemsProvider;
@@ -3928,6 +3944,7 @@ declare module "@stencil/core" {
             "ce-icon": LocalJSX.CeIcon & JSXBase.HTMLAttributes<HTMLCeIconElement>;
             "ce-input": LocalJSX.CeInput & JSXBase.HTMLAttributes<HTMLCeInputElement>;
             "ce-line-item": LocalJSX.CeLineItem & JSXBase.HTMLAttributes<HTMLCeLineItemElement>;
+            "ce-line-item-tax": LocalJSX.CeLineItemTax & JSXBase.HTMLAttributes<HTMLCeLineItemTaxElement>;
             "ce-line-item-total": LocalJSX.CeLineItemTotal & JSXBase.HTMLAttributes<HTMLCeLineItemTotalElement>;
             "ce-line-items": LocalJSX.CeLineItems & JSXBase.HTMLAttributes<HTMLCeLineItemsElement>;
             "ce-line-items-provider": LocalJSX.CeLineItemsProvider & JSXBase.HTMLAttributes<HTMLCeLineItemsProviderElement>;

@@ -16,7 +16,8 @@ import {
 	store as coreStore,
 } from '@wordpress/core-data';
 import {
-	useInnerBlocksProps,
+	useInnerBlocksProps as __stableUseInnerBlocksProps,
+	__experimentalUseInnerBlocksProps,
 	__experimentalUseNoRecursiveRenders as useNoRecursiveRenders,
 	// __experimentalBlockContentOverlay as BlockContentOverlay, // TODO when gutenberg releases it: https://github.com/WordPress/gutenberg/blob/afee31ee020b8965e811f5d68a5ca8001780af9d/packages/block-editor/src/components/block-content-overlay/index.js#L17
 	InspectorControls,
@@ -25,6 +26,10 @@ import {
 } from '@wordpress/block-editor';
 
 export default ({ attributes, setAttributes }) => {
+	const useInnerBlocksProps = __stableUseInnerBlocksProps
+		? __stableUseInnerBlocksProps
+		: __experimentalUseInnerBlocksProps;
+
 	// TODO: Let's store a unique hash in both meta and attribute to find.
 	const { id } = attributes;
 

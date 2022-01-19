@@ -6,9 +6,17 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies
  */
-import { useInnerBlocksProps, useBlockProps } from '@wordpress/block-editor';
+import {
+	useInnerBlocksProps as __stableUseInnerBlocksProps,
+	__experimentalUseInnerBlocksProps,
+	useBlockProps,
+} from '@wordpress/block-editor';
 
 export default function save({ attributes }) {
+	const useInnerBlocksProps = __stableUseInnerBlocksProps
+		? __stableUseInnerBlocksProps
+		: __experimentalUseInnerBlocksProps;
+
 	const { verticalAlignment, width } = attributes;
 
 	const wrapperClasses = classnames({

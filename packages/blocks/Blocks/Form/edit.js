@@ -6,6 +6,9 @@ import {
 	InnerBlocks,
 	InspectorControls,
 	store as blockEditorStore,
+	__experimentalGetBorderClassesAndStyles as getBorderClassesAndStyles,
+	__experimentalGetColorClassesAndStyles as getColorClassesAndStyles,
+	__experimentalGetSpacingClassesAndStyles as getSpacingClassesAndStyles,
 } from '@wordpress/block-editor';
 import { CeCheckout } from '@checkout-engine/components-react';
 import { Fragment, useState } from '@wordpress/element';
@@ -20,6 +23,7 @@ import { createBlocksFromInnerBlocksTemplate } from '@wordpress/blocks';
 import * as templates from '@scripts/blocks/templates';
 import Cart from './components/Cart';
 import Mode from './components/Mode';
+
 const ALLOWED_BLOCKS = [
 	'core/spacer',
 	'checkout-engine/columns',
@@ -45,7 +49,7 @@ const ALLOWED_BLOCKS = [
 export default function edit({ clientId, attributes, setAttributes }) {
 	const { align, className, prices, font_size, choice_type, mode } =
 		attributes;
-	console.log({ attributes });
+	const colorProps = getColorClassesAndStyles(attributes);
 	const [tab, setTab] = useState('');
 	const blockCount = useSelect((select) =>
 		select(blockEditorStore).getBlockCount(clientId)

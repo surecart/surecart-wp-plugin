@@ -20,6 +20,15 @@
 | `"indicator"` |             |
 
 
+## CSS Custom Properties
+
+| Name              | Description                                                |
+| ----------------- | ---------------------------------------------------------- |
+| `--border-radius` | The skeleton's border radius.                              |
+| `--color`         | The color of the skeleton.                                 |
+| `--sheen-color`   | The sheen color when the skeleton is in its loading state. |
+
+
 ## Dependencies
 
 ### Used by

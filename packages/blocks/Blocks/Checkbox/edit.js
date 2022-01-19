@@ -15,75 +15,72 @@ import {
  * Component Dependencies
  */
 import { CeCheckbox } from '@checkout-engine/components-react';
+import { useBlockProps } from '@wordpress/block-editor';
 
-export default ( { className, attributes, setAttributes, isSelected } ) => {
+export default ({ className, attributes, setAttributes }) => {
 	const { label, value, checked, name, required } = attributes;
+
+	const blockProps = useBlockProps();
 
 	return (
 		<Fragment>
 			<InspectorControls>
-				<PanelBody title={ __( 'Attributes', 'checkout-engine' ) }>
+				<PanelBody title={__('Attributes', 'checkout-engine')}>
 					<PanelRow>
 						<ToggleControl
-							label={ __( 'Required', 'checkout-engine' ) }
-							checked={ required }
-							onChange={ ( required ) =>
-								setAttributes( { required } )
-							}
+							label={__('Required', 'checkout-engine')}
+							checked={required}
+							onChange={(required) => setAttributes({ required })}
 						/>
 					</PanelRow>
 					<PanelRow>
 						<TextControl
-							label={ __( 'Name', 'checkout-engine' ) }
-							value={ name }
-							onChange={ ( name ) => setAttributes( { name } ) }
+							label={__('Name', 'checkout-engine')}
+							value={name}
+							onChange={(name) => setAttributes({ name })}
 						/>
 					</PanelRow>
 					<PanelRow>
 						<TextControl
-							label={ __( 'Label', 'checkout-engine' ) }
-							value={ label }
-							onChange={ ( label ) => setAttributes( { label } ) }
+							label={__('Label', 'checkout-engine')}
+							value={label}
+							onChange={(label) => setAttributes({ label })}
 						/>
 					</PanelRow>
 					<PanelRow>
 						<TextControl
-							label={ __( 'Value', 'checkout-engine' ) }
-							value={ value }
-							onChange={ ( value ) => setAttributes( { value } ) }
+							label={__('Value', 'checkout-engine')}
+							value={value}
+							onChange={(value) => setAttributes({ value })}
 						/>
 					</PanelRow>
 					<PanelRow>
 						<ToggleControl
-							label={ __(
-								'Checked by default',
-								'checkout-engine'
-							) }
-							checked={ checked }
-							onChange={ ( checked ) =>
-								setAttributes( { checked } )
-							}
+							label={__('Checked by default', 'checkout-engine')}
+							checked={checked}
+							onChange={(checked) => setAttributes({ checked })}
 						/>
 					</PanelRow>
 				</PanelBody>
 			</InspectorControls>
 
-			{ /* <Disabled> */ }
+			{/* <Disabled> */}
 			<CeCheckbox
-				className={ className }
-				name={ name }
-				required={ required }
+				className={className}
+				name={name}
+				required={required}
+				{...blockProps}
 			>
 				<RichText
-					aria-label={ __( 'Secure Notice' ) }
-					placeholder={ __( 'Add some checkbox text...' ) }
-					value={ label }
-					onChange={ ( label ) => setAttributes( { label } ) }
+					aria-label={__('Secure Notice')}
+					placeholder={__('Add some checkbox text...')}
+					value={label}
+					onChange={(label) => setAttributes({ label })}
 					withoutInteractiveFormatting
-					allowedFormats={ [ 'core/bold', 'core/italic' ] }
+					allowedFormats={['core/bold', 'core/italic']}
 				/>
 			</CeCheckbox>
-			{ /* </Disabled> */ }
+			{/* </Disabled> */}
 		</Fragment>
 	);
 };

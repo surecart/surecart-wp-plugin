@@ -1,18 +1,19 @@
 {
 	"name": "checkout-engine/subtotal",
 	"title": "Subtotal Line Item",
-  "description": "Display a subtotal line item.",
+	"description": "Display a subtotal line item.",
 	"category": "layout",
-  "keywords": ["submit", "button"],
-  "supports": {
+	"parent": ["checkout-engine/totals"],
+	"keywords": ["submit", "button"],
+	"supports": {
 		"reusable": false,
 		"html": false,
-    "order-summary": true
+		"order-summary": true
 	},
 	"attributes": {
-    "text" : {
-      "type": "string",
-      "default": "Subtotal"
-    }
+		"text": {
+			"type": "string",
+			"default": "Subtotal"
+		}
 	}
 }

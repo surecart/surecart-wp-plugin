@@ -1,6 +1,6 @@
 {
 	"name": "checkout-engine/form",
-	"title": "Form",
+	"title": "Checkout Engine Form",
 	"description": "Displays a form.",
 	"category": "layout",
 	"parent": ["checkout-engine/checkout-form"],
@@ -8,6 +8,11 @@
 	"supports": {
 		"reusable": false,
 		"html": false,
+		"color": {
+			"background": true,
+			"link": true,
+			"text": true
+		},
 		"spacing": {
 			"blockGap": "25px",
 			"margin": ["top", "bottom"],

@@ -1,7 +1,8 @@
 import {
 	store as blockEditorStore,
 	useBlockProps,
-	useInnerBlocksProps,
+	useInnerBlocksProps as __stableUseInnerBlocksProps,
+	__experimentalUseInnerBlocksProps,
 } from '@wordpress/block-editor';
 import {
 	createBlock,
@@ -15,6 +16,10 @@ import { useEffect, useRef } from '@wordpress/element';
 import { __, sprintf } from '@wordpress/i18n';
 
 export default ({ clientId }) => {
+	const useInnerBlocksProps = __stableUseInnerBlocksProps
+		? __stableUseInnerBlocksProps
+		: __experimentalUseInnerBlocksProps;
+
 	const { updateBlockAttributes, insertBlocks, replaceInnerBlocks } =
 		useDispatch(blockEditorStore);
 	const blockProps = useBlockProps({

@@ -208,6 +208,17 @@ export interface Order extends Object {
   currency?: string;
   total_amount?: number;
   subtotal_amount?: number;
+  tax_amount: number;
+  tax_calculation_status:
+    | 'disabled'
+    | 'shipping_address_required'
+    | 'shipping_address_country_required'
+    | 'shipping_address_state_required'
+    | 'shipping_address_postal_code_required'
+    | 'tax_registration_not_found'
+    | 'estimated'
+    | 'calculated';
+  tax_label: string;
   line_items: lineItems;
   metadata?: Object;
   payment_intent?: PaymentIntent;

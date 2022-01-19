@@ -46,6 +46,7 @@ export const CeHeading = /*@__PURE__*/createReactComponent<JSX.CeHeading, HTMLCe
 export const CeIcon = /*@__PURE__*/createReactComponent<JSX.CeIcon, HTMLCeIconElement>('ce-icon');
 export const CeInput = /*@__PURE__*/createReactComponent<JSX.CeInput, HTMLCeInputElement>('ce-input');
 export const CeLineItem = /*@__PURE__*/createReactComponent<JSX.CeLineItem, HTMLCeLineItemElement>('ce-line-item');
+export const CeLineItemTax = /*@__PURE__*/createReactComponent<JSX.CeLineItemTax, HTMLCeLineItemTaxElement>('ce-line-item-tax');
 export const CeLineItemTotal = /*@__PURE__*/createReactComponent<JSX.CeLineItemTotal, HTMLCeLineItemTotalElement>('ce-line-item-total');
 export const CeLineItems = /*@__PURE__*/createReactComponent<JSX.CeLineItems, HTMLCeLineItemsElement>('ce-line-items');
 export const CeLineItemsProvider = /*@__PURE__*/createReactComponent<JSX.CeLineItemsProvider, HTMLCeLineItemsProviderElement>('ce-line-items-provider');
