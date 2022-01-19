@@ -1,4 +1,4 @@
-export default ( { className, attributes } ) => {
+export default ({ className, attributes }) => {
 	const {
 		label,
 		help,
@@ -14,19 +14,19 @@ export default ( { className, attributes } ) => {
 
 	return (
 		<ce-input
-			class={ className }
-			label={ label }
-			help={ help }
-			autofocus={ autofocus }
-			maxlength={ maxlength }
-			minlength={ minlength }
-			placeholder={ placeholder }
-			showLabel={ showLabel }
-			size={ size }
+			class={className}
+			label={label}
+			help={help}
+			autofocus={autofocus}
+			maxlength={maxlength}
+			minlength={minlength}
+			placeholder={placeholder}
+			showLabel={showLabel}
+			size={size ? size : 'medium'}
 			type="password"
 			name="password"
-			value={ value }
-			required={ required }
+			value={value}
+			required={required}
 		></ce-input>
 	);
 };

@@ -1,10 +1,10 @@
 {
 	"name": "checkout-engine/email",
 	"title": "Email",
-  "description": "Displays an email form field.",
+	"description": "Displays an email form field.",
 	"category": "layout",
-  "keywords": ["email", "mail"],
-  "supports": {
+	"keywords": ["email", "mail"],
+	"supports": {
 		"reusable": false,
 		"html": false
 	},
@@ -27,7 +27,7 @@
 		},
 		"label": {
 			"type": "string",
-      "default": "Email"
+			"default": "Email"
 		},
 		"help": {
 			"type": "string"
@@ -36,13 +36,13 @@
 			"type": "string"
 		},
 		"max": {
-			"type": [ "string", "number" ]
+			"type": ["string", "number"]
 		},
 		"maxlength": {
 			"type": "number"
 		},
-    "name": {
-      "type": "string"
-    }
+		"name": {
+			"type": "string"
+		}
 	}
 }

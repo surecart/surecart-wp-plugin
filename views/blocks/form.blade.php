@@ -2,11 +2,10 @@
     class="checkout"
     id="{{ $id }}"
     form-id="{{ $form_id }}"
-    style="font-size: {{ $font_size }}px"
     class="{{ $classes }}"
+    style="{{ $style }}"
     mode="{{ $mode }}"
     alignment="{{ $align }}"
-    choice-type="{{ $choice_type }}"
     success-url="<?php echo esc_url($success_url); ?>"
 >
     <ce-form>

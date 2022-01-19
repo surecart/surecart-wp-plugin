@@ -102,7 +102,14 @@ export class CeChargesList {
     }
 
     if (!this?.charges?.length) {
-      return <slot name="empty">{__('You have no charges.', 'checkout_engine')}</slot>;
+      return (
+        <ce-card borderless no-divider>
+          <span slot="title">
+            <slot name="title" />
+          </span>
+          <slot name="empty">{__('You have no charges.', 'checkout_engine')}</slot>
+        </ce-card>
+      );
     }
 
     return (

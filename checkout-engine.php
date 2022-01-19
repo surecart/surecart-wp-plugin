@@ -4,7 +4,7 @@
  * Plugin URI: https://wpemerge.com/
  * Description:
  * Version: 0.0.1
- * Requires at least: 5.5
+ * Requires at least: 5.9
  * Requires PHP: 5.5.9
  * Author: Andre Gagnon
  * Author URI: https://atanas.dev/

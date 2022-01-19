@@ -21,6 +21,10 @@
 
 ## Dependencies
 
+### Used by
+
+ - [ce-charges-list](../../controllers/dashboard/charges-list)
+
 ### Depends on
 
 - [ce-icon](../icon)
@@ -29,6 +33,7 @@
 ```mermaid
 graph TD;
   ce-cc-logo --> ce-icon
+  ce-charges-list --> ce-cc-logo
   style ce-cc-logo fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

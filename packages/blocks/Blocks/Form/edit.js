@@ -22,7 +22,7 @@ import Cart from './components/Cart';
 import Mode from './components/Mode';
 const ALLOWED_BLOCKS = [
 	'core/spacer',
-	'core/columns',
+	'checkout-engine/columns',
 	'checkout-engine/input',
 	'checkout-engine/password',
 	'checkout-engine/price-selector',
@@ -45,6 +45,7 @@ const ALLOWED_BLOCKS = [
 export default function edit({ clientId, attributes, setAttributes }) {
 	const { align, className, prices, font_size, choice_type, mode } =
 		attributes;
+	console.log({ attributes });
 	const [tab, setTab] = useState('');
 	const blockCount = useSelect((select) =>
 		select(blockEditorStore).getBlockCount(clientId)
@@ -245,9 +246,13 @@ export default function edit({ clientId, attributes, setAttributes }) {
 				>
 					<div
 						css={css`
-							.wp-block {
-								margin-top: 30px !important;
-								margin-bottom: 30px !important;
+							* > * > .wp-block {
+								margin-top: calc(
+									${attributes?.style?.spacing?.blockGap} / 2
+								);
+								margin-bottom: calc(
+									${attributes?.style?.spacing?.blockGap} / 2
+								);
 							}
 						`}
 					>

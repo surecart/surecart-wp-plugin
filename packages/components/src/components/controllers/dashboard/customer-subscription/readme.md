@@ -37,6 +37,7 @@
 ### Used by
 
  - [ce-customer-subscriptions-list](../customer-subscriptions-list)
+ - [ce-subscriptions-list](../subscriptions-list)
 
 ### Depends on
 
@@ -66,8 +67,10 @@ graph TD;
   ce-card --> ce-skeleton
   ce-card --> ce-divider
   ce-button --> ce-spinner
+  ce-alert --> ce-icon
   ce-block-ui --> ce-spinner
   ce-customer-subscriptions-list --> ce-customer-subscription
+  ce-subscriptions-list --> ce-customer-subscription
   style ce-customer-subscription fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

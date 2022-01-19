@@ -16,7 +16,7 @@ import {
 	store as coreStore,
 } from '@wordpress/core-data';
 import {
-	__experimentalUseInnerBlocksProps as useInnerBlocksProps,
+	useInnerBlocksProps,
 	__experimentalUseNoRecursiveRenders as useNoRecursiveRenders,
 	// __experimentalBlockContentOverlay as BlockContentOverlay, // TODO when gutenberg releases it: https://github.com/WordPress/gutenberg/blob/afee31ee020b8965e811f5d68a5ca8001780af9d/packages/block-editor/src/components/block-content-overlay/index.js#L17
 	InspectorControls,
@@ -24,28 +24,21 @@ import {
 	Warning,
 } from '@wordpress/block-editor';
 
-export default ( { attributes, setAttributes } ) => {
+export default ({ attributes, setAttributes }) => {
 	// TODO: Let's store a unique hash in both meta and attribute to find.
 	const { id } = attributes;
 
-	const [ hasAlreadyRendered, RecursionProvider ] = useNoRecursiveRenders(
-		id
-	);
+	const [hasAlreadyRendered, RecursionProvider] = useNoRecursiveRenders(id);
 
 	const blockProps = useBlockProps();
 
-	const [ blocks, onInput, onChange ] = useEntityBlockEditor(
+	const [blocks, onInput, onChange] = useEntityBlockEditor(
 		'postType',
 		'ce_form',
 		{ id }
 	);
 
-	const [ title, setTitle ] = useEntityProp(
-		'postType',
-		'ce_form',
-		'title',
-		id
-	);
+	const [title, setTitle] = useEntityProp('postType', 'ce_form', 'title', id);
 
 	const innerBlocksProps = useInnerBlocksProps(
 		{},
@@ -53,52 +46,47 @@ export default ( { attributes, setAttributes } ) => {
 			value: blocks,
 			onInput,
 			onChange,
-			template: [ [ 'checkout-engine/form', {} ] ],
+			template: [['checkout-engine/form', {}]],
 			templateLock: 'all',
 		}
 	);
 
-	const { isMissing, hasResolved } = useSelect( ( select ) => {
-		const hasResolved = select(
-			coreStore
-		).hasFinishedResolution( 'getEntityRecord', [
-			'postType',
-			'ce_form',
-			id,
-		] );
-		const form = select( coreStore ).getEntityRecord(
+	const { isMissing, hasResolved } = useSelect((select) => {
+		const hasResolved = select(coreStore).hasFinishedResolution(
+			'getEntityRecord',
+			['postType', 'ce_form', id]
+		);
+		const form = select(coreStore).getEntityRecord(
 			'postType',
 			'ce_form',
 			id
 		);
-		const canEdit = select( coreStore ).canUserEditEntityRecord(
-			'ce_form'
-		);
+		const canEdit = select(coreStore).canUserEditEntityRecord('ce_form');
 		return {
 			canEdit,
-			isMissing: hasResolved && ! form,
+			isMissing: hasResolved && !form,
 			hasResolved,
 			form,
 		};
-	} );
+	});
 
-	if ( hasAlreadyRendered ) {
+	if (hasAlreadyRendered) {
 		return (
-			<div { ...blockProps }>
+			<div {...blockProps}>
 				<Warning>
-					{ __(
+					{__(
 						'Form cannot be rendered inside itself.',
 						'checkout_engine'
-					) }
+					)}
 				</Warning>
 			</div>
 		);
 	}
 
 	// form has resolved
-	if ( ! hasResolved ) {
+	if (!hasResolved) {
 		return (
-			<div { ...blockProps }>
+			<div {...blockProps}>
 				<Placeholder>
 					<Spinner />
 				</Placeholder>
@@ -107,14 +95,14 @@ export default ( { attributes, setAttributes } ) => {
 	}
 
 	// form is missing
-	if ( isMissing ) {
+	if (isMissing) {
 		return (
-			<div { ...blockProps }>
+			<div {...blockProps}>
 				<Warning>
-					{ __(
+					{__(
 						'This form has been deleted or is unavailable.',
 						'checkout_engine'
-					) }
+					)}
 				</Warning>
 			</div>
 		);
@@ -123,17 +111,17 @@ export default ( { attributes, setAttributes } ) => {
 	return (
 		<RecursionProvider>
 			<InspectorControls>
-				<PanelBody title={ __( 'Form Title', 'checkout-engine' ) }>
+				<PanelBody title={__('Form Title', 'checkout-engine')}>
 					<PanelRow>
 						<TextControl
-							label={ __( 'Form Title', 'checkout-engine' ) }
-							value={ title }
-							onChange={ ( title ) => setTitle( title ) }
+							label={__('Form Title', 'checkout-engine')}
+							value={title}
+							onChange={(title) => setTitle(title)}
 						/>
 					</PanelRow>
 				</PanelBody>
 			</InspectorControls>
-			<div { ...blockProps }>{ <div { ...innerBlocksProps } /> }</div>
+			<div {...blockProps}>{<div {...innerBlocksProps} />}</div>
 		</RecursionProvider>
 	);
 };

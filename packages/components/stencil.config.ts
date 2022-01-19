@@ -25,7 +25,7 @@ export const config: Config = {
   outputTargets: [
     reactOutputTarget({
       componentCorePackage: '@checkout-engine/components',
-      proxiesFile: '../integrations/react/src/components/index.ts',
+      proxiesFile: '../components-react/src/components/index.ts',
       includeDefineCustomElements: false,
     }),
     {

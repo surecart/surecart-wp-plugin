@@ -309,6 +309,18 @@ export namespace Components {
          */
         "size": 'small' | 'medium' | 'large';
     }
+    interface CeColumn {
+    }
+    interface CeColumns {
+        /**
+          * Is this stacked on mobile
+         */
+        "isStackedOnMobile": boolean;
+        /**
+          * The vertical alignment of the columns.
+         */
+        "verticalAlignment": string;
+    }
     interface CeConsumer {
         "renderer": any;
     }
@@ -1579,6 +1591,18 @@ declare global {
         prototype: HTMLCeChoicesElement;
         new (): HTMLCeChoicesElement;
     };
+    interface HTMLCeColumnElement extends Components.CeColumn, HTMLStencilElement {
+    }
+    var HTMLCeColumnElement: {
+        prototype: HTMLCeColumnElement;
+        new (): HTMLCeColumnElement;
+    };
+    interface HTMLCeColumnsElement extends Components.CeColumns, HTMLStencilElement {
+    }
+    var HTMLCeColumnsElement: {
+        prototype: HTMLCeColumnsElement;
+        new (): HTMLCeColumnsElement;
+    };
     interface HTMLCeConsumerElement extends Components.CeConsumer, HTMLStencilElement {
     }
     var HTMLCeConsumerElement: {
@@ -2047,6 +2071,8 @@ declare global {
         "ce-checkout": HTMLCeCheckoutElement;
         "ce-choice": HTMLCeChoiceElement;
         "ce-choices": HTMLCeChoicesElement;
+        "ce-column": HTMLCeColumnElement;
+        "ce-columns": HTMLCeColumnsElement;
         "ce-consumer": HTMLCeConsumerElement;
         "ce-coupon-form": HTMLCeCouponFormElement;
         "ce-customer-dashboard": HTMLCeCustomerDashboardElement;
@@ -2430,6 +2456,18 @@ declare namespace LocalJSX {
           * Input size
          */
         "size"?: 'small' | 'medium' | 'large';
+    }
+    interface CeColumn {
+    }
+    interface CeColumns {
+        /**
+          * Is this stacked on mobile
+         */
+        "isStackedOnMobile"?: boolean;
+        /**
+          * The vertical alignment of the columns.
+         */
+        "verticalAlignment"?: string;
     }
     interface CeConsumer {
         "onMountConsumer"?: (event: CustomEvent<any>) => void;
@@ -3767,6 +3805,8 @@ declare namespace LocalJSX {
         "ce-checkout": CeCheckout;
         "ce-choice": CeChoice;
         "ce-choices": CeChoices;
+        "ce-column": CeColumn;
+        "ce-columns": CeColumns;
         "ce-consumer": CeConsumer;
         "ce-coupon-form": CeCouponForm;
         "ce-customer-dashboard": CeCustomerDashboard;
@@ -3860,6 +3900,8 @@ declare module "@stencil/core" {
             "ce-checkout": LocalJSX.CeCheckout & JSXBase.HTMLAttributes<HTMLCeCheckoutElement>;
             "ce-choice": LocalJSX.CeChoice & JSXBase.HTMLAttributes<HTMLCeChoiceElement>;
             "ce-choices": LocalJSX.CeChoices & JSXBase.HTMLAttributes<HTMLCeChoicesElement>;
+            "ce-column": LocalJSX.CeColumn & JSXBase.HTMLAttributes<HTMLCeColumnElement>;
+            "ce-columns": LocalJSX.CeColumns & JSXBase.HTMLAttributes<HTMLCeColumnsElement>;
             "ce-consumer": LocalJSX.CeConsumer & JSXBase.HTMLAttributes<HTMLCeConsumerElement>;
             "ce-coupon-form": LocalJSX.CeCouponForm & JSXBase.HTMLAttributes<HTMLCeCouponFormElement>;
             "ce-customer-dashboard": LocalJSX.CeCustomerDashboard & JSXBase.HTMLAttributes<HTMLCeCustomerDashboardElement>;

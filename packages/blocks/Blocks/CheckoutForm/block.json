@@ -5,10 +5,11 @@
 	"title": "Checkout Form",
 	"description": "Display a checkout form",
 	"category": "layout",
-	"keywords": [ "checkout", "form" ],
+	"keywords": ["form", "checkout", "form"],
 	"supports": {
 		"reusable": false,
-		"html": false
+		"html": false,
+		"align": ["center", "wide", "full"]
 	},
 	"attributes": {
 		"id": {
@@ -25,7 +26,7 @@
 		},
 		"choice_type": {
 			"type": "string",
-			"enum": [ "all", "checkbox", "radio" ],
+			"enum": ["all", "checkbox", "radio"],
 			"default": "all"
 		},
 		"create_user_account": {

@@ -3,13 +3,10 @@
 	"title": "Submit Button",
 	"description": "Display a submit button.",
 	"category": "layout",
-	"keywords": [ "submit", "button" ],
+	"keywords": ["submit", "button"],
 	"supports": {
 		"reusable": false,
-		"html": false,
-		"lock": {
-			"remove": true
-		}
+		"html": false
 	},
 	"attributes": {
 		"text": {

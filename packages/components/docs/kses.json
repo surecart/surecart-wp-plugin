@@ -131,6 +131,20 @@
     "class": true,
     "slot": true
   },
+  "ce-column": {
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-columns": {
+    "is-stacked-on-mobile": true,
+    "vertical-alignment": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "ce-consumer": {
     "renderer": true,
     "style": true,

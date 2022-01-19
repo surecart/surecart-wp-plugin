@@ -29,7 +29,7 @@ export default {
 			yield controls.dispatch(store, 'setError', error);
 		}
 	},
-	*selectOrders() {
+	*selectNotifications() {
 		// maybe get from url.
 		const id = yield controls.resolveSelect(store, 'selectPageId');
 		if (!id) return {};
@@ -37,7 +37,7 @@ export default {
 		const request = yield controls.resolveSelect(
 			store,
 			'prepareFetchRequest',
-			'orders',
+			'customer_notification_protocols',
 			{
 				customer_ids: [id],
 				status: ['paid'],

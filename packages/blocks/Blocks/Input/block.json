@@ -3,7 +3,7 @@
 	"title": "Input",
 	"description": "Displays a form text input.",
 	"category": "layout",
-	"keywords": [ "email", "mail" ],
+	"keywords": ["email", "mail"],
 	"supports": {
 		"reusable": false,
 		"html": false
@@ -38,13 +38,14 @@
 			"type": "string"
 		},
 		"max": {
-			"type": [ "string", "number" ]
+			"type": ["string", "number"]
 		},
 		"maxlength": {
 			"type": "number"
 		},
 		"name": {
-			"type": "string"
+			"type": "string",
+			"default": "input"
 		}
 	}
 }

@@ -20,20 +20,12 @@
 | `"indicator"` |             |
 
 
-## CSS Custom Properties
-
-| Name              | Description                                                |
-| ----------------- | ---------------------------------------------------------- |
-| `--border-radius` | The skeleton's border radius.                              |
-| `--color`         | The color of the skeleton.                                 |
-| `--sheen-color`   | The sheen color when the skeleton is in its loading state. |
-
-
 ## Dependencies
 
 ### Used by
 
  - [ce-card](../card)
+ - [ce-charges-list](../../controllers/dashboard/charges-list)
  - [ce-coupon-form](../../controllers/coupon-form)
  - [ce-customer-order](../../controllers/dashboard/customer-order)
  - [ce-customer-orders-list](../../controllers/dashboard/customer-orders-list)
@@ -47,12 +39,13 @@
  - [ce-payment](../../controllers/payment)
  - [ce-price-choice](../../controllers/price-choice)
  - [ce-session-detail](../../controllers/session-detail)
- - [ce-session-subscription](../../controllers/session-subscription)
+ - [ce-subscriptions-list](../../controllers/dashboard/subscriptions-list)
 
 ### Graph
 ```mermaid
 graph TD;
   ce-card --> ce-skeleton
+  ce-charges-list --> ce-skeleton
   ce-coupon-form --> ce-skeleton
   ce-customer-order --> ce-skeleton
   ce-customer-orders-list --> ce-skeleton
@@ -66,7 +59,7 @@ graph TD;
   ce-payment --> ce-skeleton
   ce-price-choice --> ce-skeleton
   ce-session-detail --> ce-skeleton
-  ce-session-subscription --> ce-skeleton
+  ce-subscriptions-list --> ce-skeleton
   style ce-skeleton fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

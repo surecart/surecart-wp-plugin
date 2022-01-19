@@ -25,6 +25,13 @@
             <?php echo __('Payment', 'checkout_engine'); ?>
             <ce-divider></ce-divider>
         </span>
+        <span slot="empty">
+            <ce-alert
+                type="info"
+                open
+            >{{ __('You have not been charged for this order.', 'checkout_engine') }}
+            </ce-alert>
+        </span>
     </ce-charges-list>
     @php
         \CheckoutEngine::assets()->addComponentData('ce-charges-list', '#charges' . $id, [

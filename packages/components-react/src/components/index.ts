@@ -5,339 +5,94 @@ import { createReactComponent } from './react-component-lib';
 
 import type { JSX } from '@checkout-engine/components';
 
-export const CeAlert = /*@__PURE__*/ createReactComponent<
-	JSX.CeAlert,
-	HTMLCeAlertElement
->('ce-alert');
-export const CeBadgeNotice = /*@__PURE__*/ createReactComponent<
-	JSX.CeBadgeNotice,
-	HTMLCeBadgeNoticeElement
->('ce-badge-notice');
-export const CeBlockUi = /*@__PURE__*/ createReactComponent<
-	JSX.CeBlockUi,
-	HTMLCeBlockUiElement
->('ce-block-ui');
-export const CeButton = /*@__PURE__*/ createReactComponent<
-	JSX.CeButton,
-	HTMLCeButtonElement
->('ce-button');
-export const CeCard = /*@__PURE__*/ createReactComponent<
-	JSX.CeCard,
-	HTMLCeCardElement
->('ce-card');
-export const CeCheckbox = /*@__PURE__*/ createReactComponent<
-	JSX.CeCheckbox,
-	HTMLCeCheckboxElement
->('ce-checkbox');
-export const CeCheckout = /*@__PURE__*/ createReactComponent<
-	JSX.CeCheckout,
-	HTMLCeCheckoutElement
->('ce-checkout');
-export const CeChoice = /*@__PURE__*/ createReactComponent<
-	JSX.CeChoice,
-	HTMLCeChoiceElement
->('ce-choice');
-export const CeChoices = /*@__PURE__*/ createReactComponent<
-	JSX.CeChoices,
-	HTMLCeChoicesElement
->('ce-choices');
-export const CeConsumer = /*@__PURE__*/ createReactComponent<
-	JSX.CeConsumer,
-	HTMLCeConsumerElement
->('ce-consumer');
-export const CeCouponForm = /*@__PURE__*/ createReactComponent<
-	JSX.CeCouponForm,
-	HTMLCeCouponFormElement
->('ce-coupon-form');
-export const CeCustomerDashboard = /*@__PURE__*/ createReactComponent<
-	JSX.CeCustomerDashboard,
-	HTMLCeCustomerDashboardElement
->('ce-customer-dashboard');
-export const CeCustomerOrder = /*@__PURE__*/ createReactComponent<
-	JSX.CeCustomerOrder,
-	HTMLCeCustomerOrderElement
->('ce-customer-order');
-export const CeCustomerSubscription = /*@__PURE__*/ createReactComponent<
-	JSX.CeCustomerSubscription,
-	HTMLCeCustomerSubscriptionElement
->('ce-customer-subscription');
-export const CeCustomerSubscriptionEdit = /*@__PURE__*/ createReactComponent<
-	JSX.CeCustomerSubscriptionEdit,
-	HTMLCeCustomerSubscriptionEditElement
->('ce-customer-subscription-edit');
-export const CeCustomerSubscriptionPlan = /*@__PURE__*/ createReactComponent<
-	JSX.CeCustomerSubscriptionPlan,
-	HTMLCeCustomerSubscriptionPlanElement
->('ce-customer-subscription-plan');
-export const CeCustomerSubscriptions = /*@__PURE__*/ createReactComponent<
-	JSX.CeCustomerSubscriptions,
-	HTMLCeCustomerSubscriptionsElement
->('ce-customer-subscriptions');
-export const CeCustomerSubscriptionsList = /*@__PURE__*/ createReactComponent<
-	JSX.CeCustomerSubscriptionsList,
-	HTMLCeCustomerSubscriptionsListElement
->('ce-customer-subscriptions-list');
-export const CeDivider = /*@__PURE__*/ createReactComponent<
-	JSX.CeDivider,
-	HTMLCeDividerElement
->('ce-divider');
-export const CeDropdown = /*@__PURE__*/ createReactComponent<
-	JSX.CeDropdown,
-	HTMLCeDropdownElement
->('ce-dropdown');
-export const CeEmail = /*@__PURE__*/ createReactComponent<
-	JSX.CeEmail,
-	HTMLCeEmailElement
->('ce-email');
-export const CeExpressPayment = /*@__PURE__*/ createReactComponent<
-	JSX.CeExpressPayment,
-	HTMLCeExpressPaymentElement
->('ce-express-payment');
-export const CeFlex = /*@__PURE__*/ createReactComponent<
-	JSX.CeFlex,
-	HTMLCeFlexElement
->('ce-flex');
-export const CeForm = /*@__PURE__*/ createReactComponent<
-	JSX.CeForm,
-	HTMLCeFormElement
->('ce-form');
-export const CeFormControl = /*@__PURE__*/ createReactComponent<
-	JSX.CeFormControl,
-	HTMLCeFormControlElement
->('ce-form-control');
-export const CeFormRow = /*@__PURE__*/ createReactComponent<
-	JSX.CeFormRow,
-	HTMLCeFormRowElement
->('ce-form-row');
-export const CeFormSection = /*@__PURE__*/ createReactComponent<
-	JSX.CeFormSection,
-	HTMLCeFormSectionElement
->('ce-form-section');
-export const CeFormatDate = /*@__PURE__*/ createReactComponent<
-	JSX.CeFormatDate,
-	HTMLCeFormatDateElement
->('ce-format-date');
-export const CeFormatInterval = /*@__PURE__*/ createReactComponent<
-	JSX.CeFormatInterval,
-	HTMLCeFormatIntervalElement
->('ce-format-interval');
-export const CeFormatNumber = /*@__PURE__*/ createReactComponent<
-	JSX.CeFormatNumber,
-	HTMLCeFormatNumberElement
->('ce-format-number');
-export const CeHeading = /*@__PURE__*/ createReactComponent<
-	JSX.CeHeading,
-	HTMLCeHeadingElement
->('ce-heading');
-export const CeIcon = /*@__PURE__*/ createReactComponent<
-	JSX.CeIcon,
-	HTMLCeIconElement
->('ce-icon');
-export const CeInput = /*@__PURE__*/ createReactComponent<
-	JSX.CeInput,
-	HTMLCeInputElement
->('ce-input');
-export const CeLineItem = /*@__PURE__*/ createReactComponent<
-	JSX.CeLineItem,
-	HTMLCeLineItemElement
->('ce-line-item');
-export const CeLineItemTotal = /*@__PURE__*/ createReactComponent<
-	JSX.CeLineItemTotal,
-	HTMLCeLineItemTotalElement
->('ce-line-item-total');
-export const CeLineItems = /*@__PURE__*/ createReactComponent<
-	JSX.CeLineItems,
-	HTMLCeLineItemsElement
->('ce-line-items');
-export const CeLineItemsProvider = /*@__PURE__*/ createReactComponent<
-	JSX.CeLineItemsProvider,
-	HTMLCeLineItemsProviderElement
->('ce-line-items-provider');
-export const CeLoginForm = /*@__PURE__*/ createReactComponent<
-	JSX.CeLoginForm,
-	HTMLCeLoginFormElement
->('ce-login-form');
-export const CeMenu = /*@__PURE__*/ createReactComponent<
-	JSX.CeMenu,
-	HTMLCeMenuElement
->('ce-menu');
-export const CeMenuDivider = /*@__PURE__*/ createReactComponent<
-	JSX.CeMenuDivider,
-	HTMLCeMenuDividerElement
->('ce-menu-divider');
-export const CeMenuItem = /*@__PURE__*/ createReactComponent<
-	JSX.CeMenuItem,
-	HTMLCeMenuItemElement
->('ce-menu-item');
-export const CeMenuLabel = /*@__PURE__*/ createReactComponent<
-	JSX.CeMenuLabel,
-	HTMLCeMenuLabelElement
->('ce-menu-label');
-export const CeOrderConfirmation = /*@__PURE__*/ createReactComponent<
-	JSX.CeOrderConfirmation,
-	HTMLCeOrderConfirmationElement
->('ce-order-confirmation');
-export const CeOrderConfirmationLineItems = /*@__PURE__*/ createReactComponent<
-	JSX.CeOrderConfirmationLineItems,
-	HTMLCeOrderConfirmationLineItemsElement
->('ce-order-confirmation-line-items');
-export const CeOrderConfirmationTotals = /*@__PURE__*/ createReactComponent<
-	JSX.CeOrderConfirmationTotals,
-	HTMLCeOrderConfirmationTotalsElement
->('ce-order-confirmation-totals');
-export const CeOrderSummary = /*@__PURE__*/ createReactComponent<
-	JSX.CeOrderSummary,
-	HTMLCeOrderSummaryElement
->('ce-order-summary');
-export const CePayment = /*@__PURE__*/ createReactComponent<
-	JSX.CePayment,
-	HTMLCePaymentElement
->('ce-payment');
-export const CePriceChoice = /*@__PURE__*/ createReactComponent<
-	JSX.CePriceChoice,
-	HTMLCePriceChoiceElement
->('ce-price-choice');
-export const CePriceChoices = /*@__PURE__*/ createReactComponent<
-	JSX.CePriceChoices,
-	HTMLCePriceChoicesElement
->('ce-price-choices');
-export const CePriceInput = /*@__PURE__*/ createReactComponent<
-	JSX.CePriceInput,
-	HTMLCePriceInputElement
->('ce-price-input');
-export const CeProductLineItem = /*@__PURE__*/ createReactComponent<
-	JSX.CeProductLineItem,
-	HTMLCeProductLineItemElement
->('ce-product-line-item');
-export const CeProvider = /*@__PURE__*/ createReactComponent<
-	JSX.CeProvider,
-	HTMLCeProviderElement
->('ce-provider');
-export const CePurchase = /*@__PURE__*/ createReactComponent<
-	JSX.CePurchase,
-	HTMLCePurchaseElement
->('ce-purchase');
-export const CeQuantitySelect = /*@__PURE__*/ createReactComponent<
-	JSX.CeQuantitySelect,
-	HTMLCeQuantitySelectElement
->('ce-quantity-select');
-export const CeRadio = /*@__PURE__*/ createReactComponent<
-	JSX.CeRadio,
-	HTMLCeRadioElement
->('ce-radio');
-export const CeRadioGroup = /*@__PURE__*/ createReactComponent<
-	JSX.CeRadioGroup,
-	HTMLCeRadioGroupElement
->('ce-radio-group');
-export const CeRegisterIconLibrary = /*@__PURE__*/ createReactComponent<
-	JSX.CeRegisterIconLibrary,
-	HTMLCeRegisterIconLibraryElement
->('ce-register-icon-library');
-export const CeRoute = /*@__PURE__*/ createReactComponent<
-	JSX.CeRoute,
-	HTMLCeRouteElement
->('ce-route');
-export const CeRouter = /*@__PURE__*/ createReactComponent<
-	JSX.CeRouter,
-	HTMLCeRouterElement
->('ce-router');
-export const CeSecureNotice = /*@__PURE__*/ createReactComponent<
-	JSX.CeSecureNotice,
-	HTMLCeSecureNoticeElement
->('ce-secure-notice');
-export const CeSelect = /*@__PURE__*/ createReactComponent<
-	JSX.CeSelect,
-	HTMLCeSelectElement
->('ce-select');
-export const CeSessionDetail = /*@__PURE__*/ createReactComponent<
-	JSX.CeSessionDetail,
-	HTMLCeSessionDetailElement
->('ce-session-detail');
-export const CeSessionProvider = /*@__PURE__*/ createReactComponent<
-	JSX.CeSessionProvider,
-	HTMLCeSessionProviderElement
->('ce-session-provider');
-export const CeOrderStatusBadge = /*@__PURE__*/ createReactComponent<
-	JSX.CeOrderStatusBadge,
-	HTMLCeOrderStatusBadgeElement
->('ce-order-status-badge');
-export const CeSessionSubscription = /*@__PURE__*/ createReactComponent<
-	JSX.CeSessionSubscription,
-	HTMLCeSessionSubscriptionElement
->('ce-session-subscription');
-export const CeSkeleton = /*@__PURE__*/ createReactComponent<
-	JSX.CeSkeleton,
-	HTMLCeSkeletonElement
->('ce-skeleton');
-export const CeSpacing = /*@__PURE__*/ createReactComponent<
-	JSX.CeSpacing,
-	HTMLCeSpacingElement
->('ce-spacing');
-export const CeSpinner = /*@__PURE__*/ createReactComponent<
-	JSX.CeSpinner,
-	HTMLCeSpinnerElement
->('ce-spinner');
-export const CeStripeElement = /*@__PURE__*/ createReactComponent<
-	JSX.CeStripeElement,
-	HTMLCeStripeElementElement
->('ce-stripe-element');
-export const CeStripePaymentRequest = /*@__PURE__*/ createReactComponent<
-	JSX.CeStripePaymentRequest,
-	HTMLCeStripePaymentRequestElement
->('ce-stripe-payment-request');
-export const CeSubscriptionStatusBadge = /*@__PURE__*/ createReactComponent<
-	JSX.CeSubscriptionStatusBadge,
-	HTMLCeSubscriptionStatusBadgeElement
->('ce-subscription-status-badge');
-export const CeSwitch = /*@__PURE__*/ createReactComponent<
-	JSX.CeSwitch,
-	HTMLCeSwitchElement
->('ce-switch');
-export const CeTab = /*@__PURE__*/ createReactComponent<
-	JSX.CeTab,
-	HTMLCeTabElement
->('ce-tab');
-export const CeTabGroup = /*@__PURE__*/ createReactComponent<
-	JSX.CeTabGroup,
-	HTMLCeTabGroupElement
->('ce-tab-group');
-export const CeTabPanel = /*@__PURE__*/ createReactComponent<
-	JSX.CeTabPanel,
-	HTMLCeTabPanelElement
->('ce-tab-panel');
-export const CeTable = /*@__PURE__*/ createReactComponent<
-	JSX.CeTable,
-	HTMLCeTableElement
->('ce-table');
-export const CeTableBody = /*@__PURE__*/ createReactComponent<
-	JSX.CeTableBody,
-	HTMLCeTableBodyElement
->('ce-table-body');
-export const CeTableCell = /*@__PURE__*/ createReactComponent<
-	JSX.CeTableCell,
-	HTMLCeTableCellElement
->('ce-table-cell');
-export const CeTableHead = /*@__PURE__*/ createReactComponent<
-	JSX.CeTableHead,
-	HTMLCeTableHeadElement
->('ce-table-head');
-export const CeTableRow = /*@__PURE__*/ createReactComponent<
-	JSX.CeTableRow,
-	HTMLCeTableRowElement
->('ce-table-row');
-export const CeTag = /*@__PURE__*/ createReactComponent<
-	JSX.CeTag,
-	HTMLCeTagElement
->('ce-tag');
-export const CeText = /*@__PURE__*/ createReactComponent<
-	JSX.CeText,
-	HTMLCeTextElement
->('ce-text');
-export const CeTooltip = /*@__PURE__*/ createReactComponent<
-	JSX.CeTooltip,
-	HTMLCeTooltipElement
->('ce-tooltip');
-export const CeTotal = /*@__PURE__*/ createReactComponent<
-	JSX.CeTotal,
-	HTMLCeTotalElement
->('ce-total');
+
+
+export const CeAlert = /*@__PURE__*/createReactComponent<JSX.CeAlert, HTMLCeAlertElement>('ce-alert');
+export const CeBadgeNotice = /*@__PURE__*/createReactComponent<JSX.CeBadgeNotice, HTMLCeBadgeNoticeElement>('ce-badge-notice');
+export const CeBlockUi = /*@__PURE__*/createReactComponent<JSX.CeBlockUi, HTMLCeBlockUiElement>('ce-block-ui');
+export const CeButton = /*@__PURE__*/createReactComponent<JSX.CeButton, HTMLCeButtonElement>('ce-button');
+export const CeCard = /*@__PURE__*/createReactComponent<JSX.CeCard, HTMLCeCardElement>('ce-card');
+export const CeCcLogo = /*@__PURE__*/createReactComponent<JSX.CeCcLogo, HTMLCeCcLogoElement>('ce-cc-logo');
+export const CeChargesList = /*@__PURE__*/createReactComponent<JSX.CeChargesList, HTMLCeChargesListElement>('ce-charges-list');
+export const CeCheckbox = /*@__PURE__*/createReactComponent<JSX.CeCheckbox, HTMLCeCheckboxElement>('ce-checkbox');
+export const CeCheckout = /*@__PURE__*/createReactComponent<JSX.CeCheckout, HTMLCeCheckoutElement>('ce-checkout');
+export const CeChoice = /*@__PURE__*/createReactComponent<JSX.CeChoice, HTMLCeChoiceElement>('ce-choice');
+export const CeChoices = /*@__PURE__*/createReactComponent<JSX.CeChoices, HTMLCeChoicesElement>('ce-choices');
+export const CeColumn = /*@__PURE__*/createReactComponent<JSX.CeColumn, HTMLCeColumnElement>('ce-column');
+export const CeColumns = /*@__PURE__*/createReactComponent<JSX.CeColumns, HTMLCeColumnsElement>('ce-columns');
+export const CeConsumer = /*@__PURE__*/createReactComponent<JSX.CeConsumer, HTMLCeConsumerElement>('ce-consumer');
+export const CeCouponForm = /*@__PURE__*/createReactComponent<JSX.CeCouponForm, HTMLCeCouponFormElement>('ce-coupon-form');
+export const CeCustomerDashboard = /*@__PURE__*/createReactComponent<JSX.CeCustomerDashboard, HTMLCeCustomerDashboardElement>('ce-customer-dashboard');
+export const CeCustomerOrder = /*@__PURE__*/createReactComponent<JSX.CeCustomerOrder, HTMLCeCustomerOrderElement>('ce-customer-order');
+export const CeCustomerOrdersList = /*@__PURE__*/createReactComponent<JSX.CeCustomerOrdersList, HTMLCeCustomerOrdersListElement>('ce-customer-orders-list');
+export const CeCustomerSubscription = /*@__PURE__*/createReactComponent<JSX.CeCustomerSubscription, HTMLCeCustomerSubscriptionElement>('ce-customer-subscription');
+export const CeCustomerSubscriptionEdit = /*@__PURE__*/createReactComponent<JSX.CeCustomerSubscriptionEdit, HTMLCeCustomerSubscriptionEditElement>('ce-customer-subscription-edit');
+export const CeCustomerSubscriptionPlan = /*@__PURE__*/createReactComponent<JSX.CeCustomerSubscriptionPlan, HTMLCeCustomerSubscriptionPlanElement>('ce-customer-subscription-plan');
+export const CeCustomerSubscriptions = /*@__PURE__*/createReactComponent<JSX.CeCustomerSubscriptions, HTMLCeCustomerSubscriptionsElement>('ce-customer-subscriptions');
+export const CeCustomerSubscriptionsList = /*@__PURE__*/createReactComponent<JSX.CeCustomerSubscriptionsList, HTMLCeCustomerSubscriptionsListElement>('ce-customer-subscriptions-list');
+export const CeDivider = /*@__PURE__*/createReactComponent<JSX.CeDivider, HTMLCeDividerElement>('ce-divider');
+export const CeDropdown = /*@__PURE__*/createReactComponent<JSX.CeDropdown, HTMLCeDropdownElement>('ce-dropdown');
+export const CeEmail = /*@__PURE__*/createReactComponent<JSX.CeEmail, HTMLCeEmailElement>('ce-email');
+export const CeExpressPayment = /*@__PURE__*/createReactComponent<JSX.CeExpressPayment, HTMLCeExpressPaymentElement>('ce-express-payment');
+export const CeFlex = /*@__PURE__*/createReactComponent<JSX.CeFlex, HTMLCeFlexElement>('ce-flex');
+export const CeForm = /*@__PURE__*/createReactComponent<JSX.CeForm, HTMLCeFormElement>('ce-form');
+export const CeFormControl = /*@__PURE__*/createReactComponent<JSX.CeFormControl, HTMLCeFormControlElement>('ce-form-control');
+export const CeFormRow = /*@__PURE__*/createReactComponent<JSX.CeFormRow, HTMLCeFormRowElement>('ce-form-row');
+export const CeFormSection = /*@__PURE__*/createReactComponent<JSX.CeFormSection, HTMLCeFormSectionElement>('ce-form-section');
+export const CeFormatDate = /*@__PURE__*/createReactComponent<JSX.CeFormatDate, HTMLCeFormatDateElement>('ce-format-date');
+export const CeFormatInterval = /*@__PURE__*/createReactComponent<JSX.CeFormatInterval, HTMLCeFormatIntervalElement>('ce-format-interval');
+export const CeFormatNumber = /*@__PURE__*/createReactComponent<JSX.CeFormatNumber, HTMLCeFormatNumberElement>('ce-format-number');
+export const CeHeading = /*@__PURE__*/createReactComponent<JSX.CeHeading, HTMLCeHeadingElement>('ce-heading');
+export const CeIcon = /*@__PURE__*/createReactComponent<JSX.CeIcon, HTMLCeIconElement>('ce-icon');
+export const CeInput = /*@__PURE__*/createReactComponent<JSX.CeInput, HTMLCeInputElement>('ce-input');
+export const CeLineItem = /*@__PURE__*/createReactComponent<JSX.CeLineItem, HTMLCeLineItemElement>('ce-line-item');
+export const CeLineItemTotal = /*@__PURE__*/createReactComponent<JSX.CeLineItemTotal, HTMLCeLineItemTotalElement>('ce-line-item-total');
+export const CeLineItems = /*@__PURE__*/createReactComponent<JSX.CeLineItems, HTMLCeLineItemsElement>('ce-line-items');
+export const CeLineItemsProvider = /*@__PURE__*/createReactComponent<JSX.CeLineItemsProvider, HTMLCeLineItemsProviderElement>('ce-line-items-provider');
+export const CeLoginForm = /*@__PURE__*/createReactComponent<JSX.CeLoginForm, HTMLCeLoginFormElement>('ce-login-form');
+export const CeMenu = /*@__PURE__*/createReactComponent<JSX.CeMenu, HTMLCeMenuElement>('ce-menu');
+export const CeMenuDivider = /*@__PURE__*/createReactComponent<JSX.CeMenuDivider, HTMLCeMenuDividerElement>('ce-menu-divider');
+export const CeMenuItem = /*@__PURE__*/createReactComponent<JSX.CeMenuItem, HTMLCeMenuItemElement>('ce-menu-item');
+export const CeMenuLabel = /*@__PURE__*/createReactComponent<JSX.CeMenuLabel, HTMLCeMenuLabelElement>('ce-menu-label');
+export const CeOrderConfirmation = /*@__PURE__*/createReactComponent<JSX.CeOrderConfirmation, HTMLCeOrderConfirmationElement>('ce-order-confirmation');
+export const CeOrderConfirmationLineItems = /*@__PURE__*/createReactComponent<JSX.CeOrderConfirmationLineItems, HTMLCeOrderConfirmationLineItemsElement>('ce-order-confirmation-line-items');
+export const CeOrderConfirmationTotals = /*@__PURE__*/createReactComponent<JSX.CeOrderConfirmationTotals, HTMLCeOrderConfirmationTotalsElement>('ce-order-confirmation-totals');
+export const CeOrderStatusBadge = /*@__PURE__*/createReactComponent<JSX.CeOrderStatusBadge, HTMLCeOrderStatusBadgeElement>('ce-order-status-badge');
+export const CeOrderSummary = /*@__PURE__*/createReactComponent<JSX.CeOrderSummary, HTMLCeOrderSummaryElement>('ce-order-summary');
+export const CePayment = /*@__PURE__*/createReactComponent<JSX.CePayment, HTMLCePaymentElement>('ce-payment');
+export const CePriceChoice = /*@__PURE__*/createReactComponent<JSX.CePriceChoice, HTMLCePriceChoiceElement>('ce-price-choice');
+export const CePriceChoices = /*@__PURE__*/createReactComponent<JSX.CePriceChoices, HTMLCePriceChoicesElement>('ce-price-choices');
+export const CePriceInput = /*@__PURE__*/createReactComponent<JSX.CePriceInput, HTMLCePriceInputElement>('ce-price-input');
+export const CeProductLineItem = /*@__PURE__*/createReactComponent<JSX.CeProductLineItem, HTMLCeProductLineItemElement>('ce-product-line-item');
+export const CeProvider = /*@__PURE__*/createReactComponent<JSX.CeProvider, HTMLCeProviderElement>('ce-provider');
+export const CePurchase = /*@__PURE__*/createReactComponent<JSX.CePurchase, HTMLCePurchaseElement>('ce-purchase');
+export const CeQuantitySelect = /*@__PURE__*/createReactComponent<JSX.CeQuantitySelect, HTMLCeQuantitySelectElement>('ce-quantity-select');
+export const CeRadio = /*@__PURE__*/createReactComponent<JSX.CeRadio, HTMLCeRadioElement>('ce-radio');
+export const CeRadioGroup = /*@__PURE__*/createReactComponent<JSX.CeRadioGroup, HTMLCeRadioGroupElement>('ce-radio-group');
+export const CeRegisterIconLibrary = /*@__PURE__*/createReactComponent<JSX.CeRegisterIconLibrary, HTMLCeRegisterIconLibraryElement>('ce-register-icon-library');
+export const CeRoute = /*@__PURE__*/createReactComponent<JSX.CeRoute, HTMLCeRouteElement>('ce-route');
+export const CeRouter = /*@__PURE__*/createReactComponent<JSX.CeRouter, HTMLCeRouterElement>('ce-router');
+export const CeSecureNotice = /*@__PURE__*/createReactComponent<JSX.CeSecureNotice, HTMLCeSecureNoticeElement>('ce-secure-notice');
+export const CeSelect = /*@__PURE__*/createReactComponent<JSX.CeSelect, HTMLCeSelectElement>('ce-select');
+export const CeSessionDetail = /*@__PURE__*/createReactComponent<JSX.CeSessionDetail, HTMLCeSessionDetailElement>('ce-session-detail');
+export const CeSessionProvider = /*@__PURE__*/createReactComponent<JSX.CeSessionProvider, HTMLCeSessionProviderElement>('ce-session-provider');
+export const CeSkeleton = /*@__PURE__*/createReactComponent<JSX.CeSkeleton, HTMLCeSkeletonElement>('ce-skeleton');
+export const CeSpacing = /*@__PURE__*/createReactComponent<JSX.CeSpacing, HTMLCeSpacingElement>('ce-spacing');
+export const CeSpinner = /*@__PURE__*/createReactComponent<JSX.CeSpinner, HTMLCeSpinnerElement>('ce-spinner');
+export const CeStripeElement = /*@__PURE__*/createReactComponent<JSX.CeStripeElement, HTMLCeStripeElementElement>('ce-stripe-element');
+export const CeStripePaymentRequest = /*@__PURE__*/createReactComponent<JSX.CeStripePaymentRequest, HTMLCeStripePaymentRequestElement>('ce-stripe-payment-request');
+export const CeSubscriptionStatusBadge = /*@__PURE__*/createReactComponent<JSX.CeSubscriptionStatusBadge, HTMLCeSubscriptionStatusBadgeElement>('ce-subscription-status-badge');
+export const CeSubscriptionsList = /*@__PURE__*/createReactComponent<JSX.CeSubscriptionsList, HTMLCeSubscriptionsListElement>('ce-subscriptions-list');
+export const CeSwitch = /*@__PURE__*/createReactComponent<JSX.CeSwitch, HTMLCeSwitchElement>('ce-switch');
+export const CeTab = /*@__PURE__*/createReactComponent<JSX.CeTab, HTMLCeTabElement>('ce-tab');
+export const CeTabGroup = /*@__PURE__*/createReactComponent<JSX.CeTabGroup, HTMLCeTabGroupElement>('ce-tab-group');
+export const CeTabPanel = /*@__PURE__*/createReactComponent<JSX.CeTabPanel, HTMLCeTabPanelElement>('ce-tab-panel');
+export const CeTable = /*@__PURE__*/createReactComponent<JSX.CeTable, HTMLCeTableElement>('ce-table');
+export const CeTableBody = /*@__PURE__*/createReactComponent<JSX.CeTableBody, HTMLCeTableBodyElement>('ce-table-body');
+export const CeTableCell = /*@__PURE__*/createReactComponent<JSX.CeTableCell, HTMLCeTableCellElement>('ce-table-cell');
+export const CeTableHead = /*@__PURE__*/createReactComponent<JSX.CeTableHead, HTMLCeTableHeadElement>('ce-table-head');
+export const CeTableRow = /*@__PURE__*/createReactComponent<JSX.CeTableRow, HTMLCeTableRowElement>('ce-table-row');
+export const CeTag = /*@__PURE__*/createReactComponent<JSX.CeTag, HTMLCeTagElement>('ce-tag');
+export const CeText = /*@__PURE__*/createReactComponent<JSX.CeText, HTMLCeTextElement>('ce-text');
+export const CeTooltip = /*@__PURE__*/createReactComponent<JSX.CeTooltip, HTMLCeTooltipElement>('ce-tooltip');
+export const CeTotal = /*@__PURE__*/createReactComponent<JSX.CeTotal, HTMLCeTotalElement>('ce-total');

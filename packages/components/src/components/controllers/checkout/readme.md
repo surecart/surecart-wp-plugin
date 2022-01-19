@@ -35,6 +35,7 @@ graph TD;
   ce-checkout --> ce-alert
   ce-checkout --> ce-block-ui
   ce-checkout --> ce-session-provider
+  ce-alert --> ce-icon
   ce-block-ui --> ce-spinner
   ce-session-provider --> ce-line-items-provider
   style ce-checkout fill:#f9f,stroke:#333,stroke-width:4px

@@ -40,25 +40,25 @@
 ### Used by
 
  - [ce-coupon-form](../../controllers/coupon-form)
+ - [ce-customer-order](../../controllers/dashboard/customer-order)
  - [ce-line-item-total](../../controllers/line-item-total)
  - [ce-line-items](../../controllers/line-items)
  - [ce-order-confirmation-line-items](../../controllers/order-confirmation-line-items)
  - [ce-order-confirmation-totals](../../controllers/order-confirmation-totals)
  - [ce-order-summary](../../controllers/order-summary)
  - [ce-product-line-item](../product-line-item)
- - [ce-session-subscription](../../controllers/session-subscription)
 
 ### Graph
 ```mermaid
 graph TD;
   ce-coupon-form --> ce-line-item
+  ce-customer-order --> ce-line-item
   ce-line-item-total --> ce-line-item
   ce-line-items --> ce-line-item
   ce-order-confirmation-line-items --> ce-line-item
   ce-order-confirmation-totals --> ce-line-item
   ce-order-summary --> ce-line-item
   ce-product-line-item --> ce-line-item
-  ce-session-subscription --> ce-line-item
   style ce-line-item fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

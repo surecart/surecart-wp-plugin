@@ -46,6 +46,7 @@ graph TD;
   ce-customer-subscriptions-list --> ce-customer-subscription
   ce-card --> ce-skeleton
   ce-card --> ce-divider
+  ce-alert --> ce-icon
   ce-customer-subscription --> ce-format-date
   ce-customer-subscription --> ce-subscription-status-badge
   ce-customer-subscription --> ce-card

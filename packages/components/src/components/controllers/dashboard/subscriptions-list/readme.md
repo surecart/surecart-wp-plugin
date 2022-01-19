@@ -10,18 +10,7 @@
 | Property         | Attribute         | Description                        | Type                          | Default        |
 | ---------------- | ----------------- | ---------------------------------- | ----------------------------- | -------------- |
 | `cancelBehavior` | `cancel-behavior` |                                    | `"immediate" \| "period_end"` | `'period_end'` |
-| `customerId`     | `customer-id`     | Customer id to fetch subscriptions | `string`                      | `undefined`    |
-| `error`          | `error`           |                                    | `string`                      | `undefined`    |
-| `isIndex`        | `is-index`        |                                    | `boolean`                     | `undefined`    |
-| `loading`        | `loading`         |                                    | `boolean`                     | `undefined`    |
-| `subscriptions`  | --                |                                    | `Subscription[]`              | `undefined`    |
-
-
-## Events
-
-| Event                  | Description | Type                  |
-| ---------------------- | ----------- | --------------------- |
-| `ceFetchSubscriptions` |             | `CustomEvent<object>` |
+| `query`          | --                | Customer id to fetch subscriptions | `object`                      | `undefined`    |
 
 
 ## Dependencies
@@ -38,14 +27,15 @@
 ### Graph
 ```mermaid
 graph TD;
-  ce-customer-subscriptions-list --> ce-card
-  ce-customer-subscriptions-list --> ce-flex
-  ce-customer-subscriptions-list --> ce-skeleton
-  ce-customer-subscriptions-list --> ce-alert
-  ce-customer-subscriptions-list --> ce-spacing
-  ce-customer-subscriptions-list --> ce-customer-subscription
+  ce-subscriptions-list --> ce-card
+  ce-subscriptions-list --> ce-flex
+  ce-subscriptions-list --> ce-skeleton
+  ce-subscriptions-list --> ce-alert
+  ce-subscriptions-list --> ce-spacing
+  ce-subscriptions-list --> ce-customer-subscription
   ce-card --> ce-skeleton
   ce-card --> ce-divider
+  ce-alert --> ce-icon
   ce-customer-subscription --> ce-format-date
   ce-customer-subscription --> ce-subscription-status-badge
   ce-customer-subscription --> ce-card
@@ -58,7 +48,7 @@ graph TD;
   ce-subscription-status-badge --> ce-tag
   ce-button --> ce-spinner
   ce-block-ui --> ce-spinner
-  style ce-customer-subscriptions-list fill:#f9f,stroke:#333,stroke-width:4px
+  style ce-subscriptions-list fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

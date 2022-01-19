@@ -1,7 +1,11 @@
 /**
  * WordPress dependencies
  */
-import { InnerBlocks, useBlockProps, __experimentalUseInnerBlocksProps as useInnerBlocksProps } from '@wordpress/block-editor';
+import {
+	InnerBlocks,
+	useBlockProps,
+	useInnerBlocksProps,
+} from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -18,19 +22,19 @@ const ALLOWED_BLOCKS = [
 	'checkout-engine/dashboard-logout',
 ];
 
-export default ( {} ) => {
-	const blockProps = useBlockProps( {
+export default ({}) => {
+	const blockProps = useBlockProps({
 		slot: 'nav',
 		style: {
 			boxSizing: 'border-box',
 		},
-	} );
+	});
 
-	const innerBlocksProps = useInnerBlocksProps( blockProps, {
+	const innerBlocksProps = useInnerBlocksProps(blockProps, {
 		allowedBlocks: ALLOWED_BLOCKS,
 		templateLock: false,
 		renderAppender: InnerBlocks.ButtonBlockAppender,
-	} );
+	});
 
-	return <div { ...innerBlocksProps } />;
+	return <div {...innerBlocksProps} />;
 };

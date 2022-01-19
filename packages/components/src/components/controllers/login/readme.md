@@ -36,6 +36,7 @@ graph TD;
   ce-login-form --> ce-input
   ce-login-form --> ce-card
   ce-login-form --> ce-block-ui
+  ce-alert --> ce-icon
   ce-button --> ce-spinner
   ce-input --> ce-form-control
   ce-form-control --> ce-tooltip

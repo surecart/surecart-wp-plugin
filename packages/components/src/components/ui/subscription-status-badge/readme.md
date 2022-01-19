@@ -21,7 +21,6 @@
 
  - [ce-customer-subscription](../../controllers/dashboard/customer-subscription)
  - [ce-customer-subscription-edit](../../controllers/dashboard/customer-subscription-edit)
- - [ce-session-subscription](../../controllers/session-subscription)
 
 ### Depends on
 
@@ -33,7 +32,6 @@ graph TD;
   ce-subscription-status-badge --> ce-tag
   ce-customer-subscription --> ce-subscription-status-badge
   ce-customer-subscription-edit --> ce-subscription-status-badge
-  ce-session-subscription --> ce-subscription-status-badge
   style ce-subscription-status-badge fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

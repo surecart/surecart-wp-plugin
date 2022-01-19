@@ -1850,7 +1850,7 @@ __metadata:
     "@babel/preset-env": ^7.13.15
     "@rollup/plugin-babel": ^5.3.0
     "@stencil/core": 2.9.0
-    "@stencil/react-output-target": ^0.1.0
+    "@stencil/react-output-target": ^0.2.1
     "@stencil/router": ^1.0.1
     "@stencil/sass": ^1.4.0
     "@stripe/stripe-js": ^1.21.1
@@ -3263,12 +3263,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@stencil/react-output-target@npm:^0.1.0":
-  version: 0.1.0
-  resolution: "@stencil/react-output-target@npm:0.1.0"
+"@stencil/react-output-target@npm:^0.2.1":
+  version: 0.2.1
+  resolution: "@stencil/react-output-target@npm:0.2.1"
   peerDependencies:
-    "@stencil/core": ">=1.8.0"
-  checksum: f88b98bc11d97c213edf80d7388d5f807e274685e6048557f2ff304315e35d5fa6db48bfa9f76d059ede1bec2b2ce1d278a3b66d151a9212a4f14b9daf564f63
+    "@stencil/core": ^2.9.0
+  checksum: 1067397a00cb3d9f2177c8cbb925548837062960d7ea7851e6d5c8c159c338db522f436a9702c2b89438d39272ef0ea3a89e9542eba2fdea1db55d8126b979b0
   languageName: node
   linkType: hard
 

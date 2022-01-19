@@ -35,20 +35,22 @@
 ### Used by
 
  - [ce-badge-notice](../badge-notice)
+ - [ce-charges-list](../../controllers/dashboard/charges-list)
  - [ce-coupon-form](../../controllers/coupon-form)
+ - [ce-customer-order](../../controllers/dashboard/customer-order)
  - [ce-order-confirmation-totals](../../controllers/order-confirmation-totals)
- - [ce-order-status-badge](../session-status-badge)
- - [ce-session-subscription](../../controllers/session-subscription)
+ - [ce-order-status-badge](../order-status-badge)
  - [ce-subscription-status-badge](../subscription-status-badge)
 
 ### Graph
 ```mermaid
 graph TD;
   ce-badge-notice --> ce-tag
+  ce-charges-list --> ce-tag
   ce-coupon-form --> ce-tag
+  ce-customer-order --> ce-tag
   ce-order-confirmation-totals --> ce-tag
   ce-order-status-badge --> ce-tag
-  ce-session-subscription --> ce-tag
   ce-subscription-status-badge --> ce-tag
   style ce-tag fill:#f9f,stroke:#333,stroke-width:4px
 ```

@@ -10,8 +10,9 @@ import {
 } from '@wordpress/block-editor';
 import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
 import { useBlockProps } from '@wordpress/block-editor';
+import { CeHeading } from '@checkout-engine/components-react';
 
-export default ( { attributes, setAttributes, isSelected } ) => {
+export default ({ attributes, setAttributes, isSelected }) => {
 	const { title, description } = attributes;
 
 	const blockProps = useBlockProps();
@@ -19,56 +20,56 @@ export default ( { attributes, setAttributes, isSelected } ) => {
 	return (
 		<Fragment>
 			<InspectorControls>
-				<PanelBody title={ __( 'Attributes', 'checkout-engine' ) }>
+				<PanelBody title={__('Attributes', 'checkout-engine')}>
 					<PanelRow>
 						<TextControl
-							label={ __( 'Title', 'checkout-engine' ) }
-							value={ title }
-							onChange={ ( title ) => setAttributes( { title } ) }
+							label={__('Title', 'checkout-engine')}
+							value={title}
+							onChange={(title) => setAttributes({ title })}
 						/>
 					</PanelRow>
 					<PanelRow>
 						<TextControl
-							label={ __( 'Description', 'checkout-engine' ) }
-							value={ description }
-							onChange={ ( description ) =>
-								setAttributes( { description } )
+							label={__('Description', 'checkout-engine')}
+							value={description}
+							onChange={(description) =>
+								setAttributes({ description })
 							}
 						/>
 					</PanelRow>
 				</PanelBody>
 			</InspectorControls>
 
-			<ce-heading { ...blockProps }>
+			<CeHeading {...blockProps}>
 				<RichText
-					aria-label={ __( 'Title', 'checkout_engine' ) }
-					placeholder={ __( 'Add your title...', 'checkout_engine' ) }
-					value={ title }
-					onChange={ ( title ) => setAttributes( { title } ) }
+					aria-label={__('Title', 'checkout_engine')}
+					placeholder={__('Add your title...', 'checkout_engine')}
+					value={title}
+					onChange={(title) => setAttributes({ title })}
 					withoutInteractiveFormatting
-					allowedFormats={ [ 'core/bold', 'core/italic' ] }
+					allowedFormats={['core/bold', 'core/italic']}
 				/>
 
 				<span slot="description">
 					<RichText
-						aria-label={ __( 'Description', 'checkout_engine' ) }
-						placeholder={ __(
+						aria-label={__('Description', 'checkout_engine')}
+						placeholder={__(
 							'Add your description...',
 							'checkout_engine'
-						) }
-						value={ description }
-						onChange={ ( description ) =>
-							setAttributes( { description } )
+						)}
+						value={description}
+						onChange={(description) =>
+							setAttributes({ description })
 						}
 						withoutInteractiveFormatting
-						allowedFormats={ [ 'core/bold', 'core/italic' ] }
+						allowedFormats={['core/bold', 'core/italic']}
 					/>
 				</span>
 
 				<div slot="end">
 					<InnerBlocks />
 				</div>
-			</ce-heading>
+			</CeHeading>
 		</Fragment>
 	);
 };

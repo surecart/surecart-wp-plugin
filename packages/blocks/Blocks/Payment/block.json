@@ -3,21 +3,19 @@
 	"title": "Payment",
 	"description": "Display payment options",
 	"category": "layout",
-	"keywords": [ "credit", "card", "paypal", "stripe" ],
+	"keywords": ["credit", "card", "paypal", "stripe"],
 	"supports": {
 		"reusable": false,
-		"html": false,
-		"lock": {
-			"remove": true
-		}
+		"html": false
 	},
 	"attributes": {
 		"secure_notice": {
 			"type": "string",
-			"default": ""
+			"default": "This is a secure, encrypted payment."
 		},
 		"label": {
-			"type": "string"
+			"type": "string",
+			"default": "Payment"
 		}
 	}
 }

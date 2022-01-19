@@ -1,0 +1,47 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"name": "checkout-engine/columns",
+	"title": "Columns",
+	"category": "design",
+	"description": "Display content in multiple columns, with blocks added to each column.",
+	"textdomain": "checkout_engine",
+	"parent": ["checkout-engine/form"],
+	"attributes": {
+		"verticalAlignment": {
+			"type": "string"
+		},
+		"isStackedOnMobile": {
+			"type": "boolean",
+			"default": true
+		}
+	},
+	"supports": {
+		"anchor": true,
+		"align": ["wide", "full"],
+		"html": false,
+		"color": {
+			"gradients": true,
+			"link": true
+		},
+		"spacing": {
+			"blockGap": "25px",
+			"margin": ["top", "bottom"],
+			"padding": true,
+			"__experimentalDefaultControls": {
+				"padding": true
+			}
+		},
+		"__experimentalLayout": {
+			"allowSwitching": false,
+			"allowInheriting": false,
+			"allowEditing": false,
+			"default": {
+				"type": "flex",
+				"flexWrap": "nowrap"
+			}
+		}
+	},
+	"editorStyle": "file:./editor-style.css",
+	"style": "file:./style.css"
+}

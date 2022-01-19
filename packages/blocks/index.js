@@ -8,6 +8,8 @@ import { __ } from '@wordpress/i18n';
 import * as button from '@blocks/Button';
 import * as buyButton from '@blocks/BuyButton';
 import * as card from '@blocks/Card';
+import * as columns from '@blocks/columns';
+import * as column from '@blocks/column';
 import * as checkbox from '@blocks/checkbox';
 import * as checkout from '@blocks/checkoutForm';
 import * as confirmation from '@blocks/Confirmation';
@@ -61,7 +63,10 @@ const dashboardComponents = [
 	customerCharges,
 ];
 
-export const BLOCK_PARENTS = ['core/columns', 'checkout-engine/form'];
+export const BLOCK_PARENTS = [
+	'checkout-engine/columns',
+	'checkout-engine/form',
+];
 
 export const ALLOWED_BLOCKS = [
 	'core/spacer',
@@ -119,6 +124,8 @@ export const registerCheckoutEngineBlocks = () => {
 		totals,
 		submit,
 		card,
+		columns,
+		column,
 		confirmation,
 		confirmationLineItems,
 		confirmationTotals,

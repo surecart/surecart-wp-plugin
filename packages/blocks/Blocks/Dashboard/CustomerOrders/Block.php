@@ -39,7 +39,7 @@ class Block extends DashboardPage {
 				'customer_id'   => $this->customer_id,
 				'order'         => [
 					'query' => [
-						'expand' => ,
+						'expand' => [],
 					],
 				],
 				'subscriptions' => [

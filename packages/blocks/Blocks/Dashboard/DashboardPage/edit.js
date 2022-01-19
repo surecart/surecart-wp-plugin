@@ -7,26 +7,26 @@ import { __ } from '@wordpress/i18n';
 import {
 	useBlockProps,
 	InnerBlocks,
-	__experimentalUseInnerBlocksProps as useInnerBlocksProps,
+	useInnerBlocksProps,
 } from '@wordpress/block-editor';
 import { Fragment } from '@wordpress/element';
 import { CeTabPanel } from '@checkout-engine/components-react';
 
-export default ( { attributes } ) => {
+export default ({ attributes }) => {
 	const { name } = attributes;
-	const blockProps = useBlockProps( {
+	const blockProps = useBlockProps({
 		name,
-	} );
+	});
 
-	const innerBlocksProps = useInnerBlocksProps( blockProps, {
+	const innerBlocksProps = useInnerBlocksProps(blockProps, {
 		templateLock: false,
 		renderAppender: InnerBlocks.ButtonBlockAppender,
-	} );
+	});
 
 	return (
 		<Fragment>
-			<CeTabPanel name={ name }>
-				<ce-spacing { ...innerBlocksProps }></ce-spacing>
+			<CeTabPanel name={name}>
+				<ce-spacing {...innerBlocksProps}></ce-spacing>
 			</CeTabPanel>
 		</Fragment>
 	);

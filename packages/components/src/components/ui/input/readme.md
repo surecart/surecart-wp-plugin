@@ -103,13 +103,6 @@ Type: `Promise<void>`
 | `"suffix"`       | Used to prepend an icon or element to the input. |
 
 
-## CSS Custom Properties
-
-| Name           | Description                                                                           |
-| -------------- | ------------------------------------------------------------------------------------- |
-| `--focus-ring` | The focus ring style to use when the control receives focus, a `box-shadow` property. |
-
-
 ## Dependencies
 
 ### Used by

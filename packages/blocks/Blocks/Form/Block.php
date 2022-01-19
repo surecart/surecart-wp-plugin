@@ -20,6 +20,20 @@ class Block extends BaseBlock {
 	}
 
 	/**
+	 * Get the style for the block
+	 *
+	 * @param  array $attributes Block attributes.
+	 * @return string
+	 */
+	public function getStyle( $attributes ) {
+		$style = '';
+		if ( ! empty( $attributes['style']['spacing']['blockGap'] ) ) {
+			$style .= '--ce-form-row-spacing: ' . $attributes['style']['spacing']['blockGap'] . ';';
+		}
+		return $style;
+	}
+
+	/**
 	 * Render the block
 	 *
 	 * @param array  $attributes Block attributes.
@@ -43,6 +57,7 @@ class Block extends BaseBlock {
 					'name'  => $user->display_name,
 				],
 				'classes'     => $this->getClasses( $attributes ),
+				'style'       => $this->getStyle( $attributes ),
 				'content'     => $content,
 				'mode'        => $attributes['mode'] ?? get_option( 'checkout_engine_payment_mode', 'live' ),
 				'form_id'     => $ce_form_id,

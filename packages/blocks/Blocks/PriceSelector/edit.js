@@ -13,7 +13,7 @@ import {
 	InspectorControls,
 	useBlockProps,
 	InnerBlocks,
-	__experimentalUseInnerBlocksProps as useInnerBlocksProps,
+	useInnerBlocksProps,
 	store as blockEditorStore,
 } from '@wordpress/block-editor';
 import { createBlock } from '@wordpress/blocks';
@@ -27,40 +27,36 @@ import styles from './editor-styles';
  */
 import { CePriceChoices } from '@checkout-engine/components-react';
 
-export default ( { attributes, setAttributes, clientId, isSelected } ) => {
+export default ({ attributes, setAttributes, clientId, isSelected }) => {
 	const { label, type, columns } = attributes;
 
 	const insertPrice = () => {
-		const innerCount = select( 'core/editor' ).getBlocksByClientId(
-			clientId
-		)[ 0 ].innerBlocks.length;
-		let block = createBlock( 'checkout-engine/price-choice' );
-		dispatch( 'core/block-editor' ).insertBlock(
-			block,
-			innerCount,
-			clientId
-		);
+		const innerCount =
+			select('core/editor').getBlocksByClientId(clientId)[0].innerBlocks
+				.length;
+		let block = createBlock('checkout-engine/price-choice');
+		dispatch('core/block-editor').insertBlock(block, innerCount, clientId);
 	};
 
 	const blockProps = useBlockProps();
 
-	const { children, childIsSelected } = useSelect( ( select ) => {
+	const { children, childIsSelected } = useSelect((select) => {
 		return {
-			children: select( blockEditorStore ).getBlocksByClientId(
-				clientId
-			)?.[ 0 ].innerBlocks,
-			childIsSelected: select( blockEditorStore ).hasSelectedInnerBlock(
+			children:
+				select(blockEditorStore).getBlocksByClientId(clientId)?.[0]
+					.innerBlocks,
+			childIsSelected: select(blockEditorStore).hasSelectedInnerBlock(
 				clientId,
 				true
 			),
 		};
-	} );
+	});
 
 	const innerBlocksProps = useInnerBlocksProps(
 		{},
 		{
 			className: 'ce-choices',
-			allowedBlocks: [ 'checkout-engine/price-choice' ],
+			allowedBlocks: ['checkout-engine/price-choice'],
 			renderAppender:
 				isSelected || childIsSelected
 					? InnerBlocks.ButtonBlockAppender
@@ -69,62 +65,54 @@ export default ( { attributes, setAttributes, clientId, isSelected } ) => {
 	);
 
 	// update children when type or children changes.
-	useEffect( () => {
-		if ( ! children.length ) {
+	useEffect(() => {
+		if (!children.length) {
 			insertPrice();
 		}
-		children.forEach( function ( child ) {
-			dispatch( blockEditorStore ).updateBlockAttributes(
-				child.clientId,
-				{
-					type,
-				}
-			);
-		} );
-	}, [ type, children ] );
+		children.forEach(function (child) {
+			dispatch(blockEditorStore).updateBlockAttributes(child.clientId, {
+				type,
+			});
+		});
+	}, [type, children]);
 
 	return (
 		<Fragment>
-			<Global styles={ styles } />
+			<Global styles={styles} />
 			<InspectorControls>
-				<PanelBody title={ __( 'Attributes', 'checkout-engine' ) }>
+				<PanelBody title={__('Attributes', 'checkout-engine')}>
 					<PanelRow>
 						<TextControl
-							label={ __( 'Label', 'checkout-engine' ) }
-							value={ label }
-							onChange={ ( label ) => setAttributes( { label } ) }
+							label={__('Label', 'checkout-engine')}
+							value={label}
+							onChange={(label) => setAttributes({ label })}
 						/>
 					</PanelRow>
 					<PanelRow>
 						<RadioControl
-							label={ __( 'Type', 'checkout_engine' ) }
+							label={__('Type', 'checkout_engine')}
 							help="The type of product selection"
-							selected={ type }
-							options={ [
+							selected={type}
+							options={[
 								{
-									label: __( 'Choose one', 'checkout_egine' ),
+									label: __('Choose one', 'checkout_egine'),
 									value: 'radio',
 								},
 								{
-									label: __(
-										'Choose many',
-										'checkout_engine'
-									),
+									label: __('Choose many', 'checkout_engine'),
 									value: 'checkbox',
 								},
-							] }
-							onChange={ ( type ) => setAttributes( { type } ) }
+							]}
+							onChange={(type) => setAttributes({ type })}
 						/>
 					</PanelRow>
 					<PanelRow>
 						<RangeControl
-							label={ __( 'Columns', 'checkout_engine' ) }
-							value={ columns }
-							onChange={ ( columns ) =>
-								setAttributes( { columns } )
-							}
-							min={ 1 }
-							max={ 3 }
+							label={__('Columns', 'checkout_engine')}
+							value={columns}
+							onChange={(columns) => setAttributes({ columns })}
+							min={1}
+							max={3}
 						/>
 					</PanelRow>
 				</PanelBody>
@@ -132,12 +120,12 @@ export default ( { attributes, setAttributes, clientId, isSelected } ) => {
 
 			<div>
 				<CePriceChoices
-					{ ...blockProps }
-					label={ label }
-					type={ type }
-					columns={ columns }
+					{...blockProps}
+					label={label}
+					type={type}
+					columns={columns}
 				>
-					<div { ...innerBlocksProps } />
+					<div {...innerBlocksProps} />
 				</CePriceChoices>
 			</div>
 		</Fragment>
