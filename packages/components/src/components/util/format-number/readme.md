@@ -34,11 +34,12 @@
  - [ce-customer-subscription](../../controllers/dashboard/customer-subscription)
  - [ce-customer-subscription-edit](../../controllers/dashboard/customer-subscription-edit)
  - [ce-customer-subscription-plan](../../controllers/dashboard/customer-subscription-plan)
+ - [ce-line-item-tax](../../controllers/line-item-tax)
  - [ce-order-confirmation-totals](../../controllers/order-confirmation-totals)
  - [ce-price-choice](../../controllers/price-choice)
  - [ce-product-line-item](../../ui/product-line-item)
  - [ce-session-detail](../../controllers/session-detail)
- - [ce-total](../../controllers/ce-total)
+ - [ce-total](../../controllers/total)
 
 ### Graph
 ```mermaid
@@ -50,6 +51,7 @@ graph TD;
   ce-customer-subscription --> ce-format-number
   ce-customer-subscription-edit --> ce-format-number
   ce-customer-subscription-plan --> ce-format-number
+  ce-line-item-tax --> ce-format-number
   ce-order-confirmation-totals --> ce-format-number
   ce-price-choice --> ce-format-number
   ce-product-line-item --> ce-format-number

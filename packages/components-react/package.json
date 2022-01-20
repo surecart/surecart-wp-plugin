@@ -11,6 +11,7 @@
 	"scripts": {
 		"release": "yarn build",
 		"build": "yarn clean && yarn compile",
+		"docs:release": "yarn run build",
 		"clean": "rm -rf dist",
 		"compile": "yarn tsc",
 		"tsc": "tsc -p .",

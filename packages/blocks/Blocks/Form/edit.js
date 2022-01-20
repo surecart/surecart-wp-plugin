@@ -204,24 +204,10 @@ export default function edit({ clientId, attributes, setAttributes }) {
 										</span>
 									</span>
 
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										css={css`
-											width: 18px;
-											height: 18px;
-											fill: none !important;
-										`}
-										fill="none"
-										viewBox="0 0 24 24"
-										stroke="currentColor"
-									>
-										<path
-											strokeLinecap="round"
-											strokeLinejoin="round"
-											strokeWidth={2}
-											d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
-										/>
-									</svg>
+									<ce-icon
+										name="shopping-bag"
+										style={{ fontSize: '18px' }}
+									/>
 								</Button>
 							</div>
 						</div>

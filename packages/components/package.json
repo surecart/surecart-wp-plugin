@@ -24,6 +24,7 @@
     "stencil": "stencil",
     "watch": "stencil build --watch",
     "release": "yarn run build",
+    "docs:release": "yarn run build",
     "build": "stencil build --docs --docs-json ../docs/stencil/docs.json",
     "docs": "stencil build --watch",
     "docs.build": "stencil build --docs",

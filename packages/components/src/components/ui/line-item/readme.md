@@ -41,6 +41,7 @@
 
  - [ce-coupon-form](../../controllers/coupon-form)
  - [ce-customer-order](../../controllers/dashboard/customer-order)
+ - [ce-line-item-tax](../../controllers/line-item-tax)
  - [ce-line-item-total](../../controllers/line-item-total)
  - [ce-line-items](../../controllers/line-items)
  - [ce-order-confirmation-line-items](../../controllers/order-confirmation-line-items)
@@ -53,6 +54,7 @@
 graph TD;
   ce-coupon-form --> ce-line-item
   ce-customer-order --> ce-line-item
+  ce-line-item-tax --> ce-line-item
   ce-line-item-total --> ce-line-item
   ce-line-items --> ce-line-item
   ce-order-confirmation-line-items --> ce-line-item

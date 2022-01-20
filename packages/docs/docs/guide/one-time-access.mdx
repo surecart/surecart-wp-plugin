@@ -44,6 +44,25 @@ We'll want to revoke access for the user when the order is refunded. We will use
 [Refund Action](../events/Actions/refund-actions.mdx) `refund_succeeded` and query the the [Refund Model](../models/refund.mdx) and find it's
 relationships to check if the order with the price_id has been fully refunded.
 
+:::info Note
+
+If you are processing a refund programatically, you will want to make sure you pass any price ids that you are refunding. To do that
+you can use the `forPriceIds` method on the Charge `refund` method.
+
+```php
+<?php
+\CheckoutEngine\Models\Charge::refund()
+	->forPriceIds( [
+		// access will be revoked for these price ids.
+		'8ba8d60f-5277-4e6b-807c-dee8166446d5',
+		'8ba8d60f-5277-4e6b-dee8-807c166446d6',
+	] )->create( [
+		// 9900 is equivalent to $99.
+		'amount' => 9900,
+	] );
+```
+:::
+
 ```php
 use \CheckoutEngine\Models\Order;
 
@@ -52,15 +71,10 @@ $membership_price_id = '8ba8d60f-5277-4e6b-807c-dee8166446d5';
 // Use the order_paid event to update the users meta
 add_action( 'checkout_engine/refund_succeeded', function( $order_id ) {
 	// fetch order with line items.
-	$refund = Refund::with( ['charge', 'charge.order', 'order.line_items'] )->find( $order_id );
+	$refund = Refund::find( $order_id );
 
-	// check if the charge has been fully refunded.
-	if( !$refund->charge->fully_refunded ) {
-		return;
-	}
-
-	// we only want to proceed if the order contains the membership_price_id.
-	if( ! $refund->charge->order->hasPriceId( $membership_price_id ) ) {
+	// is the refund for this price id?
+	if( ! $refund->hasPriceId( $membership_price_id ) ) {
 		return;
 	}
 

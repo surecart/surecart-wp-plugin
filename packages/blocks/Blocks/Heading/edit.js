@@ -50,21 +50,23 @@ export default ({ attributes, setAttributes, isSelected }) => {
 					allowedFormats={['core/bold', 'core/italic']}
 				/>
 
-				<span slot="description">
-					<RichText
-						aria-label={__('Description', 'checkout_engine')}
-						placeholder={__(
-							'Add your description...',
-							'checkout_engine'
-						)}
-						value={description}
-						onChange={(description) =>
-							setAttributes({ description })
-						}
-						withoutInteractiveFormatting
-						allowedFormats={['core/bold', 'core/italic']}
-					/>
-				</span>
+				{(isSelected || !!description) && (
+					<span slot="description">
+						<RichText
+							aria-label={__('Description', 'checkout_engine')}
+							placeholder={__(
+								'Add your description...',
+								'checkout_engine'
+							)}
+							value={description}
+							onChange={(description) =>
+								setAttributes({ description })
+							}
+							withoutInteractiveFormatting
+							allowedFormats={['core/bold', 'core/italic']}
+						/>
+					</span>
+				)}
 
 				<div slot="end">
 					<InnerBlocks />

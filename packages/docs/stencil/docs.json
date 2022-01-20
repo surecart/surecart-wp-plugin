@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-01-19T21:10:07",
+  "timestamp": "2022-01-20T17:46:13",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.9.0",
@@ -5046,6 +5046,7 @@
         "ce-customer-subscription",
         "ce-customer-subscription-edit",
         "ce-customer-subscription-plan",
+        "ce-line-item-tax",
         "ce-order-confirmation-totals",
         "ce-price-choice",
         "ce-product-line-item",
@@ -5073,6 +5074,9 @@
           "ce-format-number"
         ],
         "ce-customer-subscription-plan": [
+          "ce-format-number"
+        ],
+        "ce-line-item-tax": [
           "ce-format-number"
         ],
         "ce-order-confirmation-totals": [
@@ -6133,6 +6137,7 @@
       "dependents": [
         "ce-coupon-form",
         "ce-customer-order",
+        "ce-line-item-tax",
         "ce-line-item-total",
         "ce-line-items",
         "ce-order-confirmation-line-items",
@@ -6146,6 +6151,9 @@
           "ce-line-item"
         ],
         "ce-customer-order": [
+          "ce-line-item"
+        ],
+        "ce-line-item-tax": [
           "ce-line-item"
         ],
         "ce-line-item-total": [
@@ -6165,6 +6173,65 @@
         ],
         "ce-product-line-item": [
           "ce-line-item"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/controllers/line-item-tax/ce-line-item-tax.tsx",
+      "encapsulation": "shadow",
+      "tag": "ce-line-item-tax",
+      "readme": "# ce-line-item-tax\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "loading",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "loading",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "order",
+          "type": "Order",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Order"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "ce-line-item",
+        "ce-format-number"
+      ],
+      "dependencyGraph": {
+        "ce-line-item-tax": [
+          "ce-line-item",
+          "ce-format-number"
         ]
       }
     },
@@ -8621,7 +8688,7 @@
       "dependencyGraph": {}
     },
     {
-      "filePath": "./src/components/controllers/ce-purchase/ce-purchase.tsx",
+      "filePath": "./src/components/controllers/purchase/ce-purchase.tsx",
       "encapsulation": "shadow",
       "tag": "ce-purchase",
       "readme": "# ce-purchase\n\n\n",
@@ -11810,7 +11877,7 @@
       }
     },
     {
-      "filePath": "./src/components/controllers/ce-total/ce-total.tsx",
+      "filePath": "./src/components/controllers/total/ce-total.tsx",
       "encapsulation": "none",
       "tag": "ce-total",
       "readme": "# ce-total\n\n\n",

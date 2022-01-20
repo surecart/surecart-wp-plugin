@@ -23,7 +23,7 @@
 
 - [ce-line-item](../../ui/line-item)
 - [ce-skeleton](../../ui/skeleton)
-- [ce-total](../ce-total)
+- [ce-total](../total)
 - [ce-block-ui](../../ui/block-ui)
 
 ### Graph

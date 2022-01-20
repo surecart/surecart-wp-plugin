@@ -25,7 +25,7 @@
  - [ce-login-form](../../controllers/login)
  - [ce-order-summary](../../controllers/order-summary)
  - [ce-price-choices](../../controllers/price-choices)
- - [ce-purchase](../../controllers/ce-purchase)
+ - [ce-purchase](../../controllers/purchase)
 
 ### Depends on
 

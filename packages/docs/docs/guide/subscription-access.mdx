@@ -9,7 +9,7 @@ This way, when you listen to events, you can sort out if you want to provide or 
 ## Provide access using the `subscription_made_active` and `subscription_made_trialing` event.
 
 Since this is a subscription purchase, we'll want to use the [Subscription Actions](../events/Actions/subscription-actions.mdx) to listen for subscription events and update access accordingly.
-Here we will listen for the event and update the users meta to provide them with access to something specific. We will use the [Subscription Model](../models/subscription.mdx) to get the price_id and the customer_id.
+Here we will listen for the event and update the users meta to provide them with access to something specific. We will use the [Subscription Model](../models/subscription/find.mdx) to get the price_id and the customer_id.
 
 ```php
 use \CheckoutEngine\Models\Subscription;
