@@ -25,4 +25,13 @@ class Charge extends Model {
 	 * @var string
 	 */
 	protected $object_name = 'charge';
+
+	/**
+	 * Refund this specific charge
+	 *
+	 * @return \CheckoutEngine\Models\Refund
+	 */
+	protected function refund() {
+		return new Refund( [ 'charge' => $this->id ] );
+	}
 }

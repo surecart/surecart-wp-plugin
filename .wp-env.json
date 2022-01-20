@@ -1,7 +1,6 @@
 {
-	"core": "WordPress/WordPress#5.9-branch",
+	"core": null,
 	"plugins": ["../checkout-engine"],
-	"phpVersion": "8.0",
 	"env": {
 		"tests": {
 			"config": {

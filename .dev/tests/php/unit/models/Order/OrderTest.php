@@ -31,36 +31,65 @@ class OrderTest extends CheckoutEngineUnitTestCase
 	 * @group session
 	 * @group models
 	 */
-	public function test_can_create_session()
+	public function test_can_create_draft_order()
 	{
-		$request = json_decode(file_get_contents(dirname(__FILE__) . '/session-create.json'), true);
-		$response = json_decode(file_get_contents(dirname(__FILE__) . '/session-created.json'));
-		$response_array = json_decode(file_get_contents(dirname(__FILE__) . '/session-created.json'), true);
-
 		$this->mock_requests->expects($this->once())
 			->method('makeRequest')
 			->with(
 				$this->equalTo('orders'),
 				$this->equalTo([
 					'method' => 'POST',
-					'body' => $request,
+					'body' => [
+						'order' => [
+							"currency" => "usd",
+							"line_items" => [
+								[
+									"price_id" => "85109619-529d-47b3-98c3-ca90d22913e4",
+									"quantity" => 2
+								]
+							]
+						]
+					],
 					'query' => []
 				])
 			)
-			->willReturn($response);
+			->willReturn((object) [
+				"currency" => "usd",
+				"line_items" => [
+					[
+						"price_id" => "85109619-529d-47b3-98c3-ca90d22913e4",
+						"quantity" => 2
+					]
+				]
+			]);
 
-		$instance = new Order($request['order']);
-		$created = $instance->create();
+		$created = (new Order([
+			"currency" => "usd",
+			"line_items" => [
+				[
+					"price_id" => "85109619-529d-47b3-98c3-ca90d22913e4",
+					"quantity" => 2
+				]
+			]
+		]))->save();
 
 		// we don't care about the order.
-		$this->assertEqualsCanonicalizing($created->toArray(), $response_array);
+		$this->assertEqualsCanonicalizing($created->getAttributes(), [
+			"currency" => "usd",
+			"line_items" => [
+				[
+					"price_id" => "85109619-529d-47b3-98c3-ca90d22913e4",
+					"quantity" => 2
+				]
+			]
+		]);
 	}
 
 	/**
 	 * @group session
 	 * @group models
 	 */
-	public function test_can_finalize_session()
+	public function test_can_finalize_order()
 	{
 		$request = json_decode(file_get_contents(dirname(__FILE__) . '/session-create.json'), true);
 		$response = json_decode(file_get_contents(dirname(__FILE__) . '/session-finalized.json'), true);
@@ -68,7 +97,7 @@ class OrderTest extends CheckoutEngineUnitTestCase
 		$this->mock_requests->expects($this->once())
 			->method('makeRequest')
 			->with(
-				$this->equalTo('orders/test_session/finalize/custom'),
+				$this->equalTo('orders/test_order/finalize/'),
 				$this->equalTo([
 					'method' => 'PATCH',
 					'body' => $request,
@@ -80,12 +109,9 @@ class OrderTest extends CheckoutEngineUnitTestCase
 		$instance = new Order($request['order'], 'custom');
 		$prepared = $instance->finalize();
 
-		$this->assertEquals($prepared->toArray(), $response);
+		$this->assertEquals($prepared->getAttributes(), $response);
 	}
 
-	/**
-	 * @group failing
-	 */
 	public function test_can_get_prices()
 	{
 		$order = new Order((object) [
@@ -102,7 +128,7 @@ class OrderTest extends CheckoutEngineUnitTestCase
 		]);
 
 		$this->assertNotEmpty($order->prices);
-		$this->assertSame(array_column( $order->prices, 'id' ), ['asdf']);
+		$this->assertSame(array_column($order->prices, 'id'), ['asdf']);
 		$this->assertSame($order->price_ids, ['asdf']);
 	}
 }

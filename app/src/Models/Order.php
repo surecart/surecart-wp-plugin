@@ -90,7 +90,7 @@ class Order extends Model {
 				'method' => 'PATCH',
 				'query'  => $this->query,
 				'body'   => [
-					$this->object_name => $this->toArray(),
+					$this->object_name => $this->getAttributes(),
 				],
 			]
 		);
@@ -116,6 +116,14 @@ class Order extends Model {
 	 */
 	public function setLineItemsAttribute( $value ) {
 		$this->setCollection( 'line_items', $value, LineItem::class );
+	}
+
+	protected function makeRequest( $args = [] ) {
+		// don't send these accesors.
+		unset( $args['prices'] );
+		unset( $args['priceIds'] );
+
+		return parent::makeRequest( $args );
 	}
 
 	/**
@@ -152,7 +160,7 @@ class Order extends Model {
 	 * @param string $id string to search for.
 	 * @return boolean true if found, false if not.
 	 */
-	public function hasPriceId( $id = '' ) {
+	protected function hasPriceId( $id = '' ) {
 		$price_ids = $this->getPriceIdsAttribute();
 		return empty( $price_ids ) ? false : in_array( $id, $price_ids, true );
 	}

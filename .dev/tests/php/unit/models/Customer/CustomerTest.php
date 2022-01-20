@@ -68,37 +68,4 @@ class CustomerTest extends CheckoutEngineUnitTestCase
 		// make sure we can get the user's customer id.
 		$this->assertSame(User::find($user->ID)->customerId(), '48ecc3b6-b20c-4ac5-b62e-976ad68cdb85');
 	}
-
-	/**
-	 * @group failing
-	 */
-	public function test_does_not_associate_existing_user_with_customer() {
-		$user = $this->factory->user->create_and_get();
-
-		$this->mock_requests->expects($this->once())
-		->method('makeRequest')
-		->with(
-			$this->equalTo('customers'),
-			$this->equalTo([
-				'method' => 'POST',
-				'body' => [
-					"customer" => [
-						"email" => $user->user_email,
-						"name" => "NewTest"
-					]
-				],
-				'query' => []
-			])
-		)
-		->willReturn((object)[
-			"id" => "existinguserid",
-			"object" => "customer",
-			"email" => $user->user_email,
-			"name"=> "NewTest",
-		]);
-
-		// make sure the user has the correct meta.
-		$customer_id = get_user_meta($user->ID, 'ce_customer_id', true);
-		$this->assertEmpty($customer_id);
-	}
 }

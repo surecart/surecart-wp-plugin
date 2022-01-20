@@ -42,11 +42,12 @@ class OrderRestServiceProviderTest extends CheckoutEngineUnitTestCase {
 
 		$requests->shouldReceive('makeRequest')
 			->once()
-			->withSomeOfArgs('orders/testid/finalize/stripe?expand[]=payment_intent')
+			->withSomeOfArgs('orders/testid/finalize/')
 			->andReturn([]);
 
-		$request = new WP_REST_Request('PATCH', '/checkout-engine/v1/orders/testid/finalize/stripe?expand[]=payment_intent');
+		$request = new WP_REST_Request('PATCH', '/checkout-engine/v1/orders/testid/finalize');
 		$request->set_query_params(['form_id'=> $test_form->ID]);
+		$request->set_param('processor_type', 'stripe');
 		$response = rest_do_request( $request );
 		$this->assertSame($response->get_status(), 200);
 	}
@@ -62,13 +63,15 @@ class OrderRestServiceProviderTest extends CheckoutEngineUnitTestCase {
 		$requests->shouldReceive('makeRequest')->never();
 
 		// must pass form id.
-		$request = new WP_REST_Request('PATCH', '/checkout-engine/v1/orders/123testid/finalize/stripe');
+		$request = new WP_REST_Request('PATCH', '/checkout-engine/v1/orders/testid/finalize');
+		$request->set_param('processor_type', 'stripe');
 		$response = rest_do_request( $request );
 		$this->assertSame($response->get_status(), 400);
 		$this->assertSame($response->get_data()['code'], 'form_id_required');
 
 		// must be a valid form id.
-		$request = new WP_REST_Request('PATCH', '/checkout-engine/v1/orders/123testid/finalize/stripe');
+		$request = new WP_REST_Request('PATCH', '/checkout-engine/v1/orders/testid/finalize');
+		$request->set_param('processor_type', 'stripe');
 		$request->set_param('form_id', 1234567789);
 		$response = rest_do_request( $request );
 		$this->assertSame($response->get_status(), 400);

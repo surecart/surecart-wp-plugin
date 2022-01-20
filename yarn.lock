@@ -1803,6 +1803,7 @@ __metadata:
     postcss: ^8.0.1
     postcss-discard-comments: ^4
     postcss-loader: ^4.2.0
+    process: ^0.11.10
     querystringify: ^2.2.0
     react: 17.0.1
     react-dom: 17.0.1
@@ -1810,6 +1811,7 @@ __metadata:
     replace-in-file: ^6.0.0
     sass-loader: ^10
     shelljs: ^0.8.3
+    stream-browserify: ^3.0.0
     stylelint: ^13.3.3
     stylelint-config-recommended-scss: ^4.2.0
     stylelint-order: ^4.0.0
@@ -13843,7 +13845,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"inherits@npm:2, inherits@npm:2.0.4, inherits@npm:^2.0.0, inherits@npm:^2.0.1, inherits@npm:^2.0.3, inherits@npm:^2.0.4, inherits@npm:~2.0.3":
+"inherits@npm:2, inherits@npm:2.0.4, inherits@npm:^2.0.0, inherits@npm:^2.0.1, inherits@npm:^2.0.3, inherits@npm:^2.0.4, inherits@npm:~2.0.3, inherits@npm:~2.0.4":
   version: 2.0.4
   resolution: "inherits@npm:2.0.4"
   checksum: 4a48a733847879d6cf6691860a6b1e3f0f4754176e4d71494c41f3475553768b10f84b5ce1d40fbd0e34e6bfbb864ee35858ad4dd2cf31e02fc4a154b724d7f1
@@ -21016,6 +21018,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"process@npm:^0.11.10":
+  version: 0.11.10
+  resolution: "process@npm:0.11.10"
+  checksum: bfcce49814f7d172a6e6a14d5fa3ac92cc3d0c3b9feb1279774708a719e19acd673995226351a082a9ae99978254e320ccda4240ddc474ba31a76c79491ca7c3
+  languageName: node
+  linkType: hard
+
 "progress@npm:2.0.1":
   version: 2.0.1
   resolution: "progress@npm:2.0.1"
@@ -21753,7 +21762,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"readable-stream@npm:^3.0.6, readable-stream@npm:^3.1.1, readable-stream@npm:^3.2.0, readable-stream@npm:^3.4.0, readable-stream@npm:^3.6.0":
+"readable-stream@npm:^3.0.6, readable-stream@npm:^3.1.1, readable-stream@npm:^3.2.0, readable-stream@npm:^3.4.0, readable-stream@npm:^3.5.0, readable-stream@npm:^3.6.0":
   version: 3.6.0
   resolution: "readable-stream@npm:3.6.0"
   dependencies:
@@ -24004,6 +24013,16 @@ __metadata:
   version: 3.4.1
   resolution: "stencil-wormhole@npm:3.4.1"
   checksum: d509b9704b2350db09785306828d19642ea7a51d480acd61678649481fab159b285bc4fc476014b0708645d0b6053856fef48e68c9c49af8e98c8061918f423d
+  languageName: node
+  linkType: hard
+
+"stream-browserify@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "stream-browserify@npm:3.0.0"
+  dependencies:
+    inherits: ~2.0.4
+    readable-stream: ^3.5.0
+  checksum: 4c47ef64d6f03815a9ca3874e2319805e8e8a85f3550776c47ce523b6f4c6cd57f40e46ec6a9ab8ad260fde61863c2718f250d3bedb3fe9052444eb9abfd9921
   languageName: node
   linkType: hard
 

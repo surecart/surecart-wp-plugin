@@ -554,7 +554,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	 *
 	 * @return Model
 	 */
-	private function makeRequest( $args = [] ) {
+	protected function makeRequest( $args = [] ) {
 		// Create the endpoint.
 		$endpoint = ! empty( $args['id'] ) ? $this->endpoint . '/' . $args['id'] : $this->endpoint;
 		unset( $args['id'] );
@@ -761,7 +761,8 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 		}
 
 		// add created by WordPress param
-		if ( $user_id = get_current_user_id() ) {
+		$user_id = get_current_user_id();
+		if ( $user_id ) {
 			$this->addToMetaData( 'wp_created_by', $user_id );
 		}
 
@@ -769,7 +770,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 			[
 				'method' => 'POST',
 				'body'   => [
-					$this->object_name => $this->toArray(),
+					$this->object_name => $this->getAttributes(),
 				],
 			]
 		);

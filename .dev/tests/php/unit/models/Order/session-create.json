@@ -1,6 +1,6 @@
 {
 	"order": {
-		"id": "test_session",
+		"id": "test_order",
 		"customer_first_name": "Joey",
 		"customer_last_name": "Smithy",
 		"customer_email": "joe@gmail.com",

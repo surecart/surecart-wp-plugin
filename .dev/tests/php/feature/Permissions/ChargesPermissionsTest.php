@@ -44,9 +44,8 @@ class ChargesPermissionsTest extends CheckoutEngineUnitTestCase {
 		$user = self::factory()->user->create_and_get();
 		add_user_meta( $user->ID, 'ce_customer_id', 'testcustomerid' );
 
-		$this->assertFalse(user_can($user, 'read_ce_charges'));
-		$this->assertTrue(user_can($user, 'edit_ce_charge', 'testid'));
-		$this->assertTrue(user_can($user, 'read_ce_charge', 'testid'));
+		$this->assertFalse(user_can($user, 'read_ce_charges')); // they can't read charges
+		$this->assertFalse(user_can($user, 'edit_ce_charge', 'testid')); // they can't edit charges
+		$this->assertTrue(user_can($user, 'read_ce_charge', 'testid')); // they can read a specific charge
 	}
-
 }
