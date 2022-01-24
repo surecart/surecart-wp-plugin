@@ -1,5 +1,5 @@
 <ce-subscriptions-list>
-    <span slot="empty"></span>
+    <span slot="empty">{{ $empty ?? '' }}</span>
 </ce-subscriptions-list>
 @php
 \CheckoutEngine::assets()->addComponentData('ce-subscriptions-list', '', [

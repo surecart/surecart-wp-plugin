@@ -7,6 +7,7 @@ import type { JSX } from '@checkout-engine/components';
 
 
 
+export const CeAddress = /*@__PURE__*/createReactComponent<JSX.CeAddress, HTMLCeAddressElement>('ce-address');
 export const CeAlert = /*@__PURE__*/createReactComponent<JSX.CeAlert, HTMLCeAlertElement>('ce-alert');
 export const CeBadgeNotice = /*@__PURE__*/createReactComponent<JSX.CeBadgeNotice, HTMLCeBadgeNoticeElement>('ce-badge-notice');
 export const CeBlockUi = /*@__PURE__*/createReactComponent<JSX.CeBlockUi, HTMLCeBlockUiElement>('ce-block-ui');
@@ -22,14 +23,9 @@ export const CeColumn = /*@__PURE__*/createReactComponent<JSX.CeColumn, HTMLCeCo
 export const CeColumns = /*@__PURE__*/createReactComponent<JSX.CeColumns, HTMLCeColumnsElement>('ce-columns');
 export const CeConsumer = /*@__PURE__*/createReactComponent<JSX.CeConsumer, HTMLCeConsumerElement>('ce-consumer');
 export const CeCouponForm = /*@__PURE__*/createReactComponent<JSX.CeCouponForm, HTMLCeCouponFormElement>('ce-coupon-form');
-export const CeCustomerDashboard = /*@__PURE__*/createReactComponent<JSX.CeCustomerDashboard, HTMLCeCustomerDashboardElement>('ce-customer-dashboard');
-export const CeCustomerOrder = /*@__PURE__*/createReactComponent<JSX.CeCustomerOrder, HTMLCeCustomerOrderElement>('ce-customer-order');
 export const CeCustomerOrdersList = /*@__PURE__*/createReactComponent<JSX.CeCustomerOrdersList, HTMLCeCustomerOrdersListElement>('ce-customer-orders-list');
-export const CeCustomerSubscription = /*@__PURE__*/createReactComponent<JSX.CeCustomerSubscription, HTMLCeCustomerSubscriptionElement>('ce-customer-subscription');
 export const CeCustomerSubscriptionEdit = /*@__PURE__*/createReactComponent<JSX.CeCustomerSubscriptionEdit, HTMLCeCustomerSubscriptionEditElement>('ce-customer-subscription-edit');
 export const CeCustomerSubscriptionPlan = /*@__PURE__*/createReactComponent<JSX.CeCustomerSubscriptionPlan, HTMLCeCustomerSubscriptionPlanElement>('ce-customer-subscription-plan');
-export const CeCustomerSubscriptions = /*@__PURE__*/createReactComponent<JSX.CeCustomerSubscriptions, HTMLCeCustomerSubscriptionsElement>('ce-customer-subscriptions');
-export const CeCustomerSubscriptionsList = /*@__PURE__*/createReactComponent<JSX.CeCustomerSubscriptionsList, HTMLCeCustomerSubscriptionsListElement>('ce-customer-subscriptions-list');
 export const CeDivider = /*@__PURE__*/createReactComponent<JSX.CeDivider, HTMLCeDividerElement>('ce-divider');
 export const CeDropdown = /*@__PURE__*/createReactComponent<JSX.CeDropdown, HTMLCeDropdownElement>('ce-dropdown');
 export const CeEmail = /*@__PURE__*/createReactComponent<JSX.CeEmail, HTMLCeEmailElement>('ce-email');
@@ -58,9 +54,12 @@ export const CeMenuLabel = /*@__PURE__*/createReactComponent<JSX.CeMenuLabel, HT
 export const CeOrderConfirmation = /*@__PURE__*/createReactComponent<JSX.CeOrderConfirmation, HTMLCeOrderConfirmationElement>('ce-order-confirmation');
 export const CeOrderConfirmationLineItems = /*@__PURE__*/createReactComponent<JSX.CeOrderConfirmationLineItems, HTMLCeOrderConfirmationLineItemsElement>('ce-order-confirmation-line-items');
 export const CeOrderConfirmationTotals = /*@__PURE__*/createReactComponent<JSX.CeOrderConfirmationTotals, HTMLCeOrderConfirmationTotalsElement>('ce-order-confirmation-totals');
+export const CeOrderDetail = /*@__PURE__*/createReactComponent<JSX.CeOrderDetail, HTMLCeOrderDetailElement>('ce-order-detail');
 export const CeOrderStatusBadge = /*@__PURE__*/createReactComponent<JSX.CeOrderStatusBadge, HTMLCeOrderStatusBadgeElement>('ce-order-status-badge');
 export const CeOrderSummary = /*@__PURE__*/createReactComponent<JSX.CeOrderSummary, HTMLCeOrderSummaryElement>('ce-order-summary');
+export const CeOrdersList = /*@__PURE__*/createReactComponent<JSX.CeOrdersList, HTMLCeOrdersListElement>('ce-orders-list');
 export const CePayment = /*@__PURE__*/createReactComponent<JSX.CePayment, HTMLCePaymentElement>('ce-payment');
+export const CePaymentMethodsList = /*@__PURE__*/createReactComponent<JSX.CePaymentMethodsList, HTMLCePaymentMethodsListElement>('ce-payment-methods-list');
 export const CePriceChoice = /*@__PURE__*/createReactComponent<JSX.CePriceChoice, HTMLCePriceChoiceElement>('ce-price-choice');
 export const CePriceChoices = /*@__PURE__*/createReactComponent<JSX.CePriceChoices, HTMLCePriceChoicesElement>('ce-price-choices');
 export const CePriceInput = /*@__PURE__*/createReactComponent<JSX.CePriceInput, HTMLCePriceInputElement>('ce-price-input');
@@ -82,6 +81,7 @@ export const CeSpacing = /*@__PURE__*/createReactComponent<JSX.CeSpacing, HTMLCe
 export const CeSpinner = /*@__PURE__*/createReactComponent<JSX.CeSpinner, HTMLCeSpinnerElement>('ce-spinner');
 export const CeStripeElement = /*@__PURE__*/createReactComponent<JSX.CeStripeElement, HTMLCeStripeElementElement>('ce-stripe-element');
 export const CeStripePaymentRequest = /*@__PURE__*/createReactComponent<JSX.CeStripePaymentRequest, HTMLCeStripePaymentRequestElement>('ce-stripe-payment-request');
+export const CeSubscription = /*@__PURE__*/createReactComponent<JSX.CeSubscription, HTMLCeSubscriptionElement>('ce-subscription');
 export const CeSubscriptionStatusBadge = /*@__PURE__*/createReactComponent<JSX.CeSubscriptionStatusBadge, HTMLCeSubscriptionStatusBadgeElement>('ce-subscription-status-badge');
 export const CeSubscriptionsList = /*@__PURE__*/createReactComponent<JSX.CeSubscriptionsList, HTMLCeSubscriptionsListElement>('ce-subscriptions-list');
 export const CeSwitch = /*@__PURE__*/createReactComponent<JSX.CeSwitch, HTMLCeSwitchElement>('ce-switch');

@@ -5,7 +5,11 @@
 	"description": "Displays a title/heading section",
 	"category": "layout",
 	"keywords": ["heading", "title"],
-	"parent": ["checkout-engine/form", "checkout-engine/column"],
+	"parent": [
+		"checkout-engine/form",
+		"checkout-engine/column",
+		"checkout-engine/dashboard-page"
+	],
 	"supports": {
 		"reusable": false,
 		"html": false,

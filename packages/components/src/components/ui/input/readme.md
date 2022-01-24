@@ -31,6 +31,11 @@
 | `showLabel`      | `show-label`      | Should we show the label                                                                                                                                                                                      | `boolean`                                                                             | `true`      |
 | `size`           | `size`            | The input's size.                                                                                                                                                                                             | `"large" \| "medium" \| "small"`                                                      | `'medium'`  |
 | `spellcheck`     | `spellcheck`      | Enables spell checking on the input.                                                                                                                                                                          | `boolean`                                                                             | `undefined` |
+| `squared`        | `squared`         |                                                                                                                                                                                                               | `boolean`                                                                             | `undefined` |
+| `squaredBottom`  | `squared-bottom`  |                                                                                                                                                                                                               | `boolean`                                                                             | `undefined` |
+| `squaredLeft`    | `squared-left`    |                                                                                                                                                                                                               | `boolean`                                                                             | `undefined` |
+| `squaredRight`   | `squared-right`   |                                                                                                                                                                                                               | `boolean`                                                                             | `undefined` |
+| `squaredTop`     | `squared-top`     |                                                                                                                                                                                                               | `boolean`                                                                             | `undefined` |
 | `step`           | `step`            | The input's step attribute.                                                                                                                                                                                   | `number`                                                                              | `undefined` |
 | `togglePassword` | `toggle-password` | Adds a password toggle button to password inputs.                                                                                                                                                             | `boolean`                                                                             | `false`     |
 | `type`           | `type`            | The input's type.                                                                                                                                                                                             | `"email" \| "number" \| "password" \| "search" \| "tel" \| "text" \| "url"`           | `'text'`    |
@@ -114,6 +119,7 @@ Type: `Promise<void>`
 
 ### Used by
 
+ - [ce-address](../ce-address)
  - [ce-coupon-form](../../controllers/coupon-form)
  - [ce-email](../../controllers/email)
  - [ce-login-form](../../controllers/login)
@@ -130,6 +136,7 @@ Type: `Promise<void>`
 graph TD;
   ce-input --> ce-form-control
   ce-form-control --> ce-tooltip
+  ce-address --> ce-input
   ce-coupon-form --> ce-input
   ce-email --> ce-input
   ce-login-form --> ce-input

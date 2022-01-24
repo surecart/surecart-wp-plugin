@@ -103,7 +103,7 @@ class OrderController extends RestController {
 	}
 
 	/**
-	 * Get a session
+	 * Finalize an order.
 	 *
 	 * @param \WP_REST_Request $request Rest Request.
 	 *
@@ -115,19 +115,17 @@ class OrderController extends RestController {
 		// allow 3rd party validations on fields.
 		$errors = $this->validate( $args, $request );
 
-		if ( ! empty( $errors ) ) {
-			$error = [
-				'code'              => 'invalid',
-				'message'           => __( 'Whoops! Something is not quite right.', 'checkout_engine' ),
-				'validation_errors' => $errors,
-			];
-			return \CheckoutEngine::errors()->translate( $error, 422 );
+		// return early if errors.
+		if ( ! empty( $errors ) || $errors->has_errors() ) {
+			return $errors;
 		}
 
-		$session = new $this->class( [ 'id' => $request['id'] ] );
-		return $session->setProcessor( $request['processor_type'] )
+		$order           = new $this->class( [ 'id' => $request['id'] ] );
+		$finalized_order = $order->setProcessor( $request['processor_type'] )
 			->where( $request->get_query_params() )
 			->finalize( array_diff_assoc( $request->get_params(), $request->get_query_params() ) );
+
+		return $finalized_order;
 	}
 
 	/**
@@ -135,9 +133,64 @@ class OrderController extends RestController {
 	 *
 	 * @param array  $args Arguments.
 	 * @param object $request Request.
-	 * @return array Errors.
+	 * @return \WP_Error Errors.
 	 */
 	public function validate( $args, $request ) {
-		return apply_filters( 'checkout_engine/checkout/validate', [], $args, $request );
+		$errors = new \WP_Error();
+
+		// validate email/password.
+		if ( $request->get_param( 'password' ) && $request->get_param( 'email' ) ) {
+			$user = $this->createOrLoginUser( $request->get_param( 'email' ), $request->get_param( 'name' ), $request->get_param( 'password' ) );
+			if ( is_wp_error( $user ) ) {
+				$errors->add( $user->get_error_code(), $user->get_error_message() );
+			}
+		}
+
+		return apply_filters( 'checkout_engine/checkout/validate', $errors, $args, $request );
+	}
+
+	/**
+	 * Create or login the user.
+	 *
+	 * @param string $user_email Username.
+	 * @param string $user_name User email.
+	 * @param string $password User password.
+	 * @return \WP_Error|true
+	 */
+	protected function createOrLoginUser( $user_email, $user_name, $password ) {
+		if ( empty( $password ) || empty( $user_email ) ) {
+			return;
+		}
+
+		// user exists, try signing in with password.
+		$user = get_user_by( 'email', $user_email );
+
+		// if there's a user, try to sign them in with the password.
+		if ( false !== $user ) {
+			$user = wp_signon(
+				[
+					'user_login'    => $user_email,
+					'user_password' => $password,
+				]
+			);
+			return is_wp_error( $user ) ? $user : true;
+		}
+
+		// otherwise, create the user with the info.
+		$user = User::create(
+			[
+				'user_name'     => empty( $user_name ) ? $user_name : $user_email,
+				'user_email'    => $user_email,
+				'user_password' => $password,
+			]
+		);
+
+		if ( is_wp_error( $user ) ) {
+			return $user;
+		}
+
+		$user->login();
+
+		return ! empty( $user->ID ) ? true : new \WP_Error( 'error', __( 'Could not create the user.', 'checkout_engine' ) );
 	}
 }

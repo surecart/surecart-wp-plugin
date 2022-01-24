@@ -201,6 +201,8 @@ export interface Order extends Object {
   id?: string;
   status?: 'finalized' | 'draft' | 'paid';
   number?: string;
+  amount_due?: number;
+  trial_amount?: number;
   charge?: string | Charge;
   name?: string;
   email?: string;
@@ -229,8 +231,8 @@ export interface Order extends Object {
   };
   discount_amount?: number;
   discount?: DiscountResponse;
-  billing_addresss?: Address;
-  shipping_addresss?: Address;
+  billing_address?: string | Address;
+  shipping_address?: string | Address;
   processor_data?: ProcessorData;
   created_at?: number;
 }
@@ -378,10 +380,9 @@ export interface Address extends Object {
   line_1?: string;
   line_2?: string;
   city?: string;
-  region?: string;
+  state?: string;
   postal_code?: string;
   country?: string;
-  destroy?: boolean;
 }
 
 export interface PriceData extends Object {

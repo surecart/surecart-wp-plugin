@@ -26,7 +26,10 @@ class DashboardController {
 		}
 
 		// login the user using the customer id from the link.
-		$this->loginUser( $link->getUser() );
+		$user = $link->getUser();
+		if ( $user ) {
+			$user->login();
+		}
 
 		$dashboard_url = \CheckoutEngine::pages()->url( 'dashboard' );
 		return \CheckoutEngine::redirect()->to( $dashboard_url );

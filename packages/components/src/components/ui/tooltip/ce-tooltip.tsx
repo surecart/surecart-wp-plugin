@@ -12,6 +12,9 @@ export class CeTooltip {
   /** Open or not */
   @Prop({ mutable: true }) open: boolean;
 
+  /** Tooltip fixed width */
+  @Prop() width: string;
+
   /** Tooltip text */
   @Prop() text: string;
 
@@ -83,6 +86,7 @@ export class CeTooltip {
           'tooltip--info': this.type === 'info',
           'tooltip--warning': this.type === 'warning',
           'tooltip--danger': this.type === 'danger',
+          'tooltip--has-width': !!this.width,
         }}
         onClick={() => this.handleClick()}
         onBlur={() => this.handleBlur()}
@@ -99,6 +103,7 @@ export class CeTooltip {
             style={{
               top: `${this.top}px`,
               left: `${this.left}px`,
+              ...(this.width ? { '--ce-tooltip-width': this.width } : {}),
             }}
           >
             {this.text}

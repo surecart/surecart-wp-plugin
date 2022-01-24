@@ -1,4 +1,15 @@
 {
+  "ce-address": {
+    "busy": true,
+    "label": true,
+    "loading": true,
+    "required": true,
+    "shipping-address": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "ce-alert": {
     "closable": true,
     "duration": true,
@@ -164,31 +175,9 @@
     "class": true,
     "slot": true
   },
-  "ce-customer-dashboard": {
-    "customer-id": true,
-    "style": true,
-    "id": true,
-    "class": true,
-    "slot": true
-  },
-  "ce-customer-order": {
-    "order-id": true,
-    "style": true,
-    "id": true,
-    "class": true,
-    "slot": true
-  },
   "ce-customer-orders-list": {
     "customer-id": true,
     "page": true,
-    "style": true,
-    "id": true,
-    "class": true,
-    "slot": true
-  },
-  "ce-customer-subscription": {
-    "subscription": true,
-    "upgrade-groups": true,
     "style": true,
     "id": true,
     "class": true,
@@ -210,28 +199,6 @@
     "price-id": true,
     "prices": true,
     "products": true,
-    "style": true,
-    "id": true,
-    "class": true,
-    "slot": true
-  },
-  "ce-customer-subscriptions": {
-    "cancel-behavior": true,
-    "customer-id": true,
-    "subscription": true,
-    "upgrade-groups": true,
-    "style": true,
-    "id": true,
-    "class": true,
-    "slot": true
-  },
-  "ce-customer-subscriptions-list": {
-    "cancel-behavior": true,
-    "customer-id": true,
-    "error": true,
-    "is-index": true,
-    "loading": true,
-    "subscriptions": true,
     "style": true,
     "id": true,
     "class": true,
@@ -418,6 +385,11 @@
     "show-label": true,
     "size": true,
     "spellcheck": true,
+    "squared": true,
+    "squared-bottom": true,
+    "squared-left": true,
+    "squared-right": true,
+    "squared-top": true,
     "step": true,
     "toggle-password": true,
     "type": true,
@@ -528,6 +500,13 @@
     "class": true,
     "slot": true
   },
+  "ce-order-detail": {
+    "order-id": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "ce-order-status-badge": {
     "clearable": true,
     "pill": true,
@@ -550,6 +529,13 @@
     "class": true,
     "slot": true
   },
+  "ce-orders-list": {
+    "query": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "ce-payment": {
     "label": true,
     "mode": true,
@@ -557,6 +543,13 @@
     "payment-method": true,
     "processor": true,
     "secure-notice": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-payment-methods-list": {
+    "query": true,
     "style": true,
     "id": true,
     "class": true,
@@ -710,12 +703,18 @@
     "choices": true,
     "invalid": true,
     "loading": true,
+    "name": true,
     "open": true,
     "placeholder": true,
     "position": true,
     "required": true,
     "search": true,
     "search-placeholder": true,
+    "squared": true,
+    "squared-bottom": true,
+    "squared-left": true,
+    "squared-right": true,
+    "squared-top": true,
     "value": true,
     "style": true,
     "id": true,
@@ -771,6 +770,7 @@
     "disabled": true,
     "has-focus": true,
     "label": true,
+    "mode": true,
     "order": true,
     "publishable-key": true,
     "secure-text": true,
@@ -795,6 +795,14 @@
     "publishable-key": true,
     "stripe-account-id": true,
     "theme": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-subscription": {
+    "subscription": true,
+    "upgrade-groups": true,
     "style": true,
     "id": true,
     "class": true,
@@ -909,6 +917,7 @@
     "padding": true,
     "text": true,
     "type": true,
+    "width": true,
     "style": true,
     "id": true,
     "class": true,

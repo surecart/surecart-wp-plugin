@@ -1,1 +1,6 @@
-<ce-customer-orders-list customer-id={{ esc_attr($customer_id) }}></ce-customer-orders-list>
+<ce-orders-list></ce-orders-list>
+@php
+\CheckoutEngine::assets()->addComponentData('ce-orders-list', '', [
+    'query' => $query ?? [],
+]);
+@endphp

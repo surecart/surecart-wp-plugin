@@ -16,10 +16,6 @@
 
 ## Dependencies
 
-### Used by
-
- - [ce-payment](../../controllers/payment)
-
 ### Depends on
 
 - [ce-tag](../tag)
@@ -28,7 +24,6 @@
 ```mermaid
 graph TD;
   ce-badge-notice --> ce-tag
-  ce-payment --> ce-badge-notice
   style ce-badge-notice fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

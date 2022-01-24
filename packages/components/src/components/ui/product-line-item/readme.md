@@ -32,9 +32,9 @@
 
 ### Used by
 
- - [ce-customer-order](../../controllers/dashboard/customer-order)
  - [ce-line-items](../../controllers/line-items)
  - [ce-order-confirmation-line-items](../../controllers/order-confirmation-line-items)
+ - [ce-order-detail](../../controllers/dashboard/order-detail)
 
 ### Depends on
 
@@ -51,9 +51,9 @@ graph TD;
   ce-quantity-select --> ce-dropdown
   ce-quantity-select --> ce-menu
   ce-quantity-select --> ce-menu-item
-  ce-customer-order --> ce-product-line-item
   ce-line-items --> ce-product-line-item
   ce-order-confirmation-line-items --> ce-product-line-item
+  ce-order-detail --> ce-product-line-item
   style ce-product-line-item fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

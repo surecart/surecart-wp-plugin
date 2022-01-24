@@ -167,6 +167,7 @@ export class CECheckout {
       empty: !['loading', 'updating'].includes(this.checkoutState.value) && !this.order?.line_items?.pagination?.count,
       error: this.error,
       order: this.order,
+      shippingAddress: this.order?.shipping_address,
       lockedChoices: this.prices,
       products: this.productsEntities,
       prices: this.pricesEntities,
@@ -229,7 +230,7 @@ export class CECheckout {
             form-id={this.formId}
             group-id={this.el.id}
             currency-code={this.currencyCode}
-            onCeUpdateSession={e => (this.order = e.detail)}
+            onCeUpdateOrderState={e => (this.order = e.detail)}
             onCeError={e => {
               this.error = e.detail as ResponseError;
             }}

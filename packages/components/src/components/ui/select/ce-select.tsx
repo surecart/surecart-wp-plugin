@@ -1,6 +1,7 @@
-import { Component, Prop, h, State, Watch, Event, EventEmitter, Method } from '@stencil/core';
+import { Component, Prop, h, State, Watch, Event, EventEmitter, Method, Element } from '@stencil/core';
 import { ChoiceItem } from '../../../types';
 import Fuse from 'fuse.js';
+import { addFormData } from '../../../functions/form-data';
 
 @Component({
   tag: 'ce-select',
@@ -8,6 +9,9 @@ import Fuse from 'fuse.js';
   shadow: true,
 })
 export class CeSelectDropdown {
+  /** Element */
+  @Element() el: HTMLCeSelectElement;
+
   private searchInput: HTMLCeInputElement;
   private input: HTMLInputElement;
 
@@ -24,13 +28,16 @@ export class CeSelectDropdown {
   @Prop({ mutable: true }) choices: Array<ChoiceItem> = [];
 
   /* Is it required */
-  @Prop() required: boolean;
+  @Prop({ reflect: true }) required: boolean;
 
   /* Is it loading */
   @Prop() loading: boolean;
 
   /** Is search enabled? */
   @Prop() search: boolean;
+
+  /** The input's name attribute. */
+  @Prop() name: string;
 
   @Prop() position: 'bottom-left' | 'bottom-right' = 'bottom-right';
 
@@ -42,6 +49,14 @@ export class CeSelectDropdown {
 
   /** Is this open */
   @Prop({ mutable: true }) open: boolean;
+
+  @Prop() squared: boolean;
+  @Prop() squaredBottom: boolean;
+  @Prop() squaredTop: boolean;
+  @Prop() squaredLeft: boolean;
+  @Prop() squaredRight: boolean;
+
+  @State() private hasFocus: boolean = false;
 
   /** Search term */
   @State() searchTerm: string = '';
@@ -57,6 +72,12 @@ export class CeSelectDropdown {
 
   /** Emitted whent the components search query changes */
   @Event() ceClose: EventEmitter<string>;
+
+  /** Emitted when the control loses focus. */
+  @Event() ceBlur: EventEmitter<void>;
+
+  /** Emitted when the control gains focus. */
+  @Event() ceFocus: EventEmitter<void>;
 
   /** Emitted when the control's value changes. */
   @Event({ composed: true })
@@ -74,6 +95,16 @@ export class CeSelectDropdown {
   handleHide() {
     this.open = false;
     this.ceClose.emit();
+  }
+
+  handleBlur() {
+    this.hasFocus = false;
+    this.ceBlur.emit();
+  }
+
+  handleFocus() {
+    this.hasFocus = true;
+    this.ceFocus.emit();
   }
 
   /** Get the display value of the item. */
@@ -99,6 +130,7 @@ export class CeSelectDropdown {
 
   @Method('reportValidity')
   async reportValidity() {
+    console.log(this.input, this.input.reportValidity());
     return this.input.reportValidity();
   }
 
@@ -152,6 +184,7 @@ export class CeSelectDropdown {
   }
 
   componentDidLoad() {
+    addFormData(this.el);
     if (this.open) {
       this.searchInput.triggerFocus();
     }
@@ -176,18 +209,30 @@ export class CeSelectDropdown {
         class={{
           'select': true,
           'select--placeholder': !this.value,
+          'select--focused': this.hasFocus,
           'select--is-open': !!this.open,
           'select--has-choices': !!this?.choices?.length,
+          'select--squared': this.squared,
+          'select--squared-bottom': this.squaredBottom,
+          'select--squared-top': this.squaredTop,
+          'select--squared-left': this.squaredLeft,
+          'select--squared-right': this.squaredRight,
         }}
       >
+        <input
+          class="select__hidden-input"
+          onBlur={() => this.handleBlur()}
+          onFocus={() => this.handleFocus()}
+          name={this.name}
+          ref={el => (this.input = el as HTMLInputElement)}
+          value={this.value}
+          required={this.required}
+        ></input>
+
         <ce-dropdown open={this.open} position={this.position} style={{ '--panel-width': '100%' }} onCeShow={() => this.handleShow()} onCeHide={() => this.handleHide()}>
           <div class="trigger" slot="trigger">
             <div class="select__value">{this.displayValue() || this.placeholder || 'Select...'}</div>
-            <div part="caret" class="select__caret">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="6 9 12 15 18 9"></polyline>
-              </svg>
-            </div>
+            <ce-icon part="caret" class="select__caret" name="chevron-down" />
           </div>
 
           {this.search && (
@@ -221,8 +266,6 @@ export class CeSelectDropdown {
             {this.searchTerm && !this.loading && !this.filteredChoices.length && <div class="select__empty">{'Nothing Found'}</div>}
             <slot name="suffix"></slot>
           </ce-menu>
-
-          <input type="hidden" ref={el => (this.input = el as HTMLInputElement)} value={this.value} required={this.required}></input>
         </ce-dropdown>
       </div>
     );

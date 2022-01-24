@@ -1,5 +1,6 @@
 import { Component, h, Element, Prop, Event, EventEmitter, Method, Listen } from '@stencil/core';
-
+import dotProp from 'dot-prop-immutable';
+import { serialize } from '../../../functions/form';
 interface FormControl {
   tag: string;
   serialize: (el: HTMLElement, formData: FormData | object) => void;
@@ -14,6 +15,7 @@ interface FormControl {
 })
 export class CEForm {
   @Element() form: HTMLElement;
+  private formElement: HTMLFormElement;
 
   /** Prevent the form from validating inputs before submitting. */
   @Prop({ reflect: true, mutable: true }) novalidate: boolean = false;
@@ -42,7 +44,8 @@ export class CEForm {
   private formControls: FormControl[];
 
   appendData(formData: FormData | object, name: string, value: any) {
-    return formData instanceof FormData ? formData.append(name, value) : (formData[name] = value);
+    console.log('setting', dotProp.set(formData, name, value));
+    return formData instanceof FormData ? formData.append(name, value) : dotProp.set(formData, name, value);
   }
 
   componentWillLoad() {
@@ -244,8 +247,7 @@ export class CEForm {
 
   @Listen('ceChange')
   async handleChange() {
-    let data = await this.getFormJson();
-    this.ceFormChange.emit(data);
+    this.ceFormChange.emit(serialize(this.formElement));
   }
 
   /**
@@ -302,7 +304,9 @@ export class CEForm {
   render() {
     return (
       <div part="base" class="form" role="form" onClick={e => this.handleClick(e)} onKeyDown={e => this.handleKeyDown(e)}>
-        <slot></slot>
+        <form ref={el => (this.formElement = el as HTMLFormElement)}>
+          <slot></slot>
+        </form>
       </div>
     );
   }

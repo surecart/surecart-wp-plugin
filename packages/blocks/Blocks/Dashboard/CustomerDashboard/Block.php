@@ -33,7 +33,7 @@ class Block extends BaseBlock {
 	 * @return void
 	 */
 	public function maybeRedirectToInitialTab() {
-		if ( is_admin() || wp_doing_ajax() ) {
+		if ( is_admin() || wp_doing_ajax() || defined( 'REST_REQUEST' ) ) {
 			return;
 		}
 

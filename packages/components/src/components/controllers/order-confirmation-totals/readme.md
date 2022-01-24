@@ -33,6 +33,7 @@ graph TD;
   ce-line-item-total --> ce-line-item
   ce-line-item-total --> ce-skeleton
   ce-line-item-total --> ce-total
+  ce-line-item-total --> ce-format-number
   ce-total --> ce-format-number
   style ce-order-confirmation-totals fill:#f9f,stroke:#333,stroke-width:4px
 ```

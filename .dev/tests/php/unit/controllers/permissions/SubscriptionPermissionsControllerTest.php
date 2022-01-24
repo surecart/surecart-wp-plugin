@@ -27,23 +27,25 @@ class SubscriptionPermissionsControllerTest extends CheckoutEngineUnitTestCase {
 		parent::setUp();
 	}
 
-	public function broken_test_handle_edit_subscription()
+	public function test_handle_edit_subscription()
 	{
-		$subscription =  \Mockery::mock(SubscriptionPermissionsController::class)->shouldAllowMockingProtectedMethods()->makePartial();
+		// mock the requests in the container
+		$requests =  \Mockery::mock(RequestService::class);
+		\CheckoutEngine::alias('request', function () use ($requests) {
+			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
+		});
+
 		$user = self::factory()->user->create_and_get();
 		add_user_meta( $user->ID, 'ce_customer_id', 'testcustomerid' );
 
-		$subscription->shouldReceive('belongsToUser')
-			->once()
-			->andReturn(true);
+		$requests->shouldReceive('makeRequest')
+		->once()
+		->withSomeOfArgs('subscriptions/testid')
+		->andReturn([
+			'customer' => 'testcustomerid'
+		]);
 
-		$subscription->shouldReceive('edit_ce_subscription')
-			->once()
-			->with('customerid', ['edit_ce_subscription', $user->ID, 'testid'])
-			->andReturn(true);
-
-		user_can($user, 'edit_ce_subscription', 'testid');
-
-		// $subscription->handle( [], ['edit_ce_subscription'], ['edit_ce_subscription', $user->ID, 'testid'], $user);
+		$controller = new SubscriptionPermissionsController();
+		$this->assertTrue($controller->edit_ce_subscription( $user, [null, null, 'testid']));
 	}
 }

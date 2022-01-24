@@ -86,6 +86,21 @@ class User implements ArrayAccess, JsonSerializable {
 	}
 
 	/**
+	 * Login the user.
+	 *
+	 * @return void
+	 */
+	protected function login() {
+		if ( empty( $this->user->ID ) ) {
+			return new \Error( 'not_found', esc_html__( 'This user could not be found.', 'checkout_engine' ) );
+		}
+
+		wp_clear_auth_cookie();
+		wp_set_current_user( $this->user->ID );
+		wp_set_auth_cookie( $this->user->ID );
+	}
+
+	/**
 	 * Create a new user and return this model context
 	 * If the user already exists, just set the customer and role in that case.
 	 */
@@ -122,6 +137,18 @@ class User implements ArrayAccess, JsonSerializable {
 		}
 
 		return $this->find( $user->ID );
+	}
+
+	/**
+	 * Retrieve user info by a given field
+	 *
+	 * @param string     $field The field to retrieve the user with. id | ID | slug | email | login.
+	 * @param int|string $value A value for $field. A user ID, slug, email address, or login name.
+	 * @return this|false This object on success, false on failure.
+	 */
+	protected function getUserBy( $field, $value ) {
+		$this->user = get_user_by( $field, $value );
+		return $this->user ? $this : false;
 	}
 
 	/**
@@ -178,7 +205,6 @@ class User implements ArrayAccess, JsonSerializable {
 	 * @return $this
 	 */
 	protected function findByCustomerId( $id ) {
-
 		$users = new \WP_User_Query(
 			array(
 				'meta_key'   => $this->customer_id_key,

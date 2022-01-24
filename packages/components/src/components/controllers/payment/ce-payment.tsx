@@ -44,19 +44,27 @@ export class CePayment {
         <Host>
           <ce-stripe-element
             label={this.label}
+            mode={this.mode}
             order={this.order}
             stripeAccountId={this?.order?.processor_data?.stripe?.account_id}
             publishableKey={this?.order?.processor_data?.stripe?.publishable_key}
             disabled={!!this.paymentMethod}
           ></ce-stripe-element>
-          <ce-secure-notice>{this.secureNotice}</ce-secure-notice>
-          {this.mode === 'test' && (
-            <div>
-              <ce-badge-notice type="warning" label={__('Test Mode', 'checkout_engine')}>
-                {__('In test mode, you can use the card number 4242424242424242 with any CVC and a valid expiration date.', 'checkout_engine')}
-              </ce-badge-notice>
-            </div>
-          )}
+          <ce-secure-notice>
+            {this.secureNotice}{' '}
+            {this.mode === 'test' && (
+              <ce-tooltip
+                slot="suffix"
+                type="warning"
+                width={'220px'}
+                text={__('In test mode, you can use the card 4242 4242 4242 4242 and any code/expiration date.', 'checkout_engine')}
+              >
+                <ce-tag type="warning" size="small">
+                  {__('Test Mode', 'checkout-engine')}
+                </ce-tag>
+              </ce-tooltip>
+            )}
+          </ce-secure-notice>
         </Host>
       );
     }

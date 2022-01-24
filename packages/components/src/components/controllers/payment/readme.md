@@ -24,7 +24,8 @@
 - [ce-skeleton](../../ui/skeleton)
 - [ce-stripe-element](../../ui/stripe-element)
 - [ce-secure-notice](../../ui/secure-notice)
-- [ce-badge-notice](../../ui/badge-notice)
+- [ce-tooltip](../../ui/tooltip)
+- [ce-tag](../../ui/tag)
 
 ### Graph
 ```mermaid
@@ -32,11 +33,11 @@ graph TD;
   ce-payment --> ce-skeleton
   ce-payment --> ce-stripe-element
   ce-payment --> ce-secure-notice
-  ce-payment --> ce-badge-notice
+  ce-payment --> ce-tooltip
+  ce-payment --> ce-tag
   ce-stripe-element --> ce-input
   ce-input --> ce-form-control
   ce-form-control --> ce-tooltip
-  ce-badge-notice --> ce-tag
   style ce-payment fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

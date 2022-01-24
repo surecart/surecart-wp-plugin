@@ -56,6 +56,7 @@ class Block extends DashboardPage {
 			[
 				'customer_id'     => $this->customer_id,
 				'cancel_behavior' => 'cancel',
+				'empty'           => __( 'You have no subscriptions.', 'checkout-engine' ),
 				'query'           => [
 					'customer_ids' => [ $this->customer_id ],
 					'status'       => [ 'active', 'trialing' ],

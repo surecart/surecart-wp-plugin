@@ -60,6 +60,7 @@ return [
 		\CheckoutEngine\Blocks\Dashboard\CustomerDashboard\Block::class,
 		\CheckoutEngine\Blocks\Dashboard\CustomerOrders\Block::class,
 		\CheckoutEngine\Blocks\Dashboard\CustomerSubscriptions\Block::class,
+		\CheckoutEngine\Blocks\Dashboard\CustomerPaymentMethods\Block::class,
 		\CheckoutEngine\Blocks\Dashboard\DashboardPage\Block::class,
 		\CheckoutEngine\Blocks\Dashboard\DashboardTab\Block::class,
 	],

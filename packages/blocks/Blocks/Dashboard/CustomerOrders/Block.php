@@ -77,7 +77,12 @@ class Block extends DashboardPage {
 		return \CheckoutEngine::blocks()->render(
 			'web.dashboard.orders.index',
 			[
-				'customer_id' => $this->customer_id,
+				'query' => [
+					'customer_ids' => [ $this->customer_id ],
+					'status'       => [ 'paid' ],
+					'page'         => 1,
+					'per_page'     => 10,
+				],
 			]
 		);
 	}

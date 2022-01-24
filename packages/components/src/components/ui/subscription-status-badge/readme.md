@@ -19,8 +19,8 @@
 
 ### Used by
 
- - [ce-customer-subscription](../../controllers/dashboard/customer-subscription)
- - [ce-customer-subscription-edit](../../controllers/dashboard/customer-subscription-edit)
+ - [ce-customer-subscription-edit](../../controllers/dashboard/subscription-detail)
+ - [ce-subscription](../../controllers/dashboard/subscription)
 
 ### Depends on
 
@@ -30,8 +30,8 @@
 ```mermaid
 graph TD;
   ce-subscription-status-badge --> ce-tag
-  ce-customer-subscription --> ce-subscription-status-badge
   ce-customer-subscription-edit --> ce-subscription-status-badge
+  ce-subscription --> ce-subscription-status-badge
   style ce-subscription-status-badge fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

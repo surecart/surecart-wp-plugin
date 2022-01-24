@@ -1869,6 +1869,7 @@ __metadata:
     case: ^1.6.3
     choices.js: ^9.0.1
     clsx: ^1.1.1
+    country-region-data: ^2.0.0
     element-internals-polyfill: ^0.1.40
     fuse.js: ^6.4.6
     import: ^0.0.6
@@ -8445,6 +8446,13 @@ __metadata:
     path-type: ^4.0.0
     yaml: ^1.10.0
   checksum: 4be63e7117955fd88333d7460e4c466a90f556df6ef34efd59034d2463484e339666c41f02b523d574a797ec61f4a91918c5b89a316db2ea2f834e0d2d09465b
+  languageName: node
+  linkType: hard
+
+"country-region-data@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "country-region-data@npm:2.0.0"
+  checksum: b714f5225c4d3df7df76aa2e85b25ec5ff29beac2b61d5791ebf3baac0d36ff601be63b7a1a0ff239b8b3d34c4173a74bcd86fffd66d9707de9ae5be1fdfbae2
   languageName: node
   linkType: hard
 

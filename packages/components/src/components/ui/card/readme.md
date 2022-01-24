@@ -27,12 +27,13 @@
 ### Used by
 
  - [ce-charges-list](../../controllers/dashboard/charges-list)
- - [ce-customer-order](../../controllers/dashboard/customer-order)
  - [ce-customer-orders-list](../../controllers/dashboard/customer-orders-list)
- - [ce-customer-subscription](../../controllers/dashboard/customer-subscription)
- - [ce-customer-subscription-edit](../../controllers/dashboard/customer-subscription-edit)
- - [ce-customer-subscriptions-list](../../controllers/dashboard/customer-subscriptions-list)
+ - [ce-customer-subscription-edit](../../controllers/dashboard/subscription-detail)
  - [ce-login-form](../../controllers/login)
+ - [ce-order-detail](../../controllers/dashboard/order-detail)
+ - [ce-orders-list](../../controllers/dashboard/orders-list)
+ - [ce-payment-methods-list](../../controllers/dashboard/payment-methods-list)
+ - [ce-subscription](../../controllers/dashboard/subscription)
  - [ce-subscriptions-list](../../controllers/dashboard/subscriptions-list)
 
 ### Depends on
@@ -46,12 +47,13 @@ graph TD;
   ce-card --> ce-skeleton
   ce-card --> ce-divider
   ce-charges-list --> ce-card
-  ce-customer-order --> ce-card
   ce-customer-orders-list --> ce-card
-  ce-customer-subscription --> ce-card
   ce-customer-subscription-edit --> ce-card
-  ce-customer-subscriptions-list --> ce-card
   ce-login-form --> ce-card
+  ce-order-detail --> ce-card
+  ce-orders-list --> ce-card
+  ce-payment-methods-list --> ce-card
+  ce-subscription --> ce-card
   ce-subscriptions-list --> ce-card
   style ce-card fill:#f9f,stroke:#333,stroke-width:4px
 ```

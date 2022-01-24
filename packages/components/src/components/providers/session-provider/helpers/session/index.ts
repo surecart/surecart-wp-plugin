@@ -41,21 +41,34 @@ export const findInput = (el, name) => {
     .find((el: HTMLInputElement) => el.name === name) as HTMLElement;
 };
 
-export const populateInputs = (el, session: Order) => {
+export const populateInputs = (el, order: Order) => {
   // handle our own built-in inputs.
   const names = ['name', 'email'];
 
   // handle our our inputs.
   names.forEach(name => {
     const input = findInput(el, name) as any;
-    if (!input || !session[name]) return;
-    input.value = session[name];
+    if (!input || !order[name]) return;
+    input.value = order[name];
   });
 
+  // const address_fields = ['line_1', 'line_2', 'city', 'state', 'postal_code', 'country'];
+  // address_fields.forEach(name => {
+  //   const shipping_input = findInput(el, `shipping_${name}`) as any;
+  //   console.log({ shipping_input });
+  //   if (shipping_input && typeof order?.shipping_address === 'object') {
+  //     shipping_input.value = order?.shipping_address?.[name];
+  //   }
+  //   const billing_input = findInput(el, `billing_${name}`) as any;
+  //   if (billing_input && typeof order?.billing_address === 'object') {
+  //     billing_input.value = order?.billing_address?.[name];
+  //   }
+  // });
+
   // update metadata.
-  Object.keys(session.metadata).forEach(key => {
+  Object.keys(order.metadata).forEach(key => {
     const input = findInput(el, key) as any;
-    if (!input || !session.metadata[key]) return;
-    input.value = session.metadata[key];
+    if (!input || !order.metadata[key]) return;
+    input.value = order.metadata[key];
   });
 };

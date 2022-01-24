@@ -68,7 +68,6 @@ class WebhookController {
 		// create the event name.
 		$event = $this->createEventName( $request->type );
 		$id    = $this->getObjectId( $request->data );
-		$name  = $this->getObjectName( $request->data );
 
 		// perform the action.
 		do_action( $event, $id, $request );

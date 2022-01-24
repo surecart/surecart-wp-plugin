@@ -100,7 +100,7 @@ export class CeSubscriptionsList {
         </span>
         <ce-spacing style={{ '--spacing': 'var(--ce-spacing-large)' }}>
           {this.subscriptions.map(subscription => {
-            return <ce-customer-subscription subscription={subscription}></ce-customer-subscription>;
+            return <ce-subscription subscription={subscription}></ce-subscription>;
           })}
         </ce-spacing>
       </ce-card>

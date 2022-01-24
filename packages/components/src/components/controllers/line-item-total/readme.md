@@ -27,6 +27,7 @@
 - [ce-line-item](../../ui/line-item)
 - [ce-skeleton](../../ui/skeleton)
 - [ce-total](../total)
+- [ce-format-number](../../util/format-number)
 
 ### Graph
 ```mermaid
@@ -34,6 +35,7 @@ graph TD;
   ce-line-item-total --> ce-line-item
   ce-line-item-total --> ce-skeleton
   ce-line-item-total --> ce-total
+  ce-line-item-total --> ce-format-number
   ce-total --> ce-format-number
   ce-order-confirmation-totals --> ce-line-item-total
   style ce-line-item-total fill:#f9f,stroke:#333,stroke-width:4px

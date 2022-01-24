@@ -48,6 +48,7 @@
     "@xstate/fsm": "^1.6.2",
     "choices.js": "^9.0.1",
     "clsx": "^1.1.1",
+    "country-region-data": "^2.0.0",
     "element-internals-polyfill": "^0.1.40",
     "fuse.js": "^6.4.6",
     "import": "^0.0.6",

@@ -4,6 +4,8 @@ import { getSessionId, getURLLineItems, populateInputs } from './helpers/session
 import { Component, h, Prop, Event, EventEmitter, Element, State, Watch, Listen } from '@stencil/core';
 import { removeQueryArgs } from '@wordpress/url';
 
+import { hasCompleteAddress } from '../../../functions/address';
+
 @Component({
   tag: 'ce-session-provider',
   shadow: true,
@@ -37,7 +39,7 @@ export class CeSessionProvider {
   @Prop() setState: (state: string) => void;
 
   /** Update line items event */
-  @Event() ceUpdateSession: EventEmitter<Order>;
+  @Event() ceUpdateOrderState: EventEmitter<Order>;
 
   /** Update line items event */
   @Event() ceError: EventEmitter<{ message: string; code?: string; data?: any; additional_errors?: any } | {}>;
@@ -51,7 +53,7 @@ export class CeSessionProvider {
   /** Sync this session back to parent. */
   @Watch('session')
   handleSessionUpdate(val) {
-    this.ceUpdateSession.emit(val);
+    this.ceUpdateOrderState.emit(val);
   }
 
   /** Store checkout session in localstorage */
@@ -88,11 +90,36 @@ export class CeSessionProvider {
   }
 
   parseFormData(data) {
-    const { email, name, password, ...rest } = data;
+    const { email, name, password, shipping_city, shipping_country, shipping_line_1, shipping_line_2, shipping_postal_code, shipping_state, ...rest } = data;
+
+    let shipping_address = null;
+
+    // make sure we have a complete address.
+    const shippingComplete = hasCompleteAddress({
+      city: shipping_city,
+      country: shipping_country,
+      line_1: shipping_line_1,
+      postal_code: shipping_postal_code,
+      state: shipping_state,
+    });
+
+    // if it's complete, set the shipping address
+    if (shippingComplete) {
+      shipping_address = {
+        ...(shipping_city ? { city: shipping_city } : {}),
+        ...(shipping_country ? { country: shipping_country } : {}),
+        ...(shipping_line_1 ? { line_1: shipping_line_1 } : {}),
+        ...(shipping_postal_code ? { postal_code: shipping_postal_code } : {}),
+        ...(shipping_state ? { state: shipping_state } : {}),
+        line_2: shipping_line_2 ?? '',
+      };
+    }
+
     return {
       email,
       name,
       password,
+      ...(shipping_address ? { shipping_address } : {}),
       metadata: rest || {},
     };
   }

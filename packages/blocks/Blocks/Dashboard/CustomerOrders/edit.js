@@ -1,9 +1,14 @@
 import { __, _n, sprintf } from '@wordpress/i18n';
 import { InspectorControls } from '@wordpress/block-editor';
-import { PanelBody, PanelRow, RangeControl } from '@wordpress/components';
+import {
+	PanelBody,
+	PanelRow,
+	RangeControl,
+	ToggleControl,
+} from '@wordpress/components';
 
 export default ({ attributes, setAttributes }) => {
-	const { per_page } = attributes;
+	const { per_page, paginate } = attributes;
 	return (
 		<div>
 			<InspectorControls>
@@ -15,6 +20,13 @@ export default ({ attributes, setAttributes }) => {
 							onChange={(per_page) => setAttributes({ per_page })}
 							min={1}
 							max={30}
+						/>
+					</PanelRow>
+					<PanelRow>
+						<ToggleControl
+							label={__('Paginate', 'checkout-engine')}
+							checked={paginate}
+							onChange={(paginate) => setAttributes({ paginate })}
 						/>
 					</PanelRow>
 				</PanelBody>
@@ -92,29 +104,34 @@ export default ({ attributes, setAttributes }) => {
 					))}
 				</ce-table>
 
-				<ce-flex
-					justify-content="space-between"
-					align-items="center"
-					style={{ '--spacing': 'var(--ce-spacing-large)' }}
-				>
-					<ce-text
-						style={{
-							'--size': 'var(--ce-font-size-small)',
-							'--color': 'var(--ce-color-gray-500)',
-						}}
+				{paginate && (
+					<ce-flex
+						justify-content="space-between"
+						align-items="center"
+						style={{ '--spacing': 'var(--ce-spacing-large)' }}
 					>
-						{__('Showing 1 to 10 of 20 results', 'checkout_engine')}
-					</ce-text>
+						<ce-text
+							style={{
+								'--size': 'var(--ce-font-size-small)',
+								'--color': 'var(--ce-color-gray-500)',
+							}}
+						>
+							{__(
+								'Showing 1 to 10 of 20 results',
+								'checkout_engine'
+							)}
+						</ce-text>
 
-					<ce-flex>
-						<ce-button>
-							{__('Prev Page', 'checkout_engine')}
-						</ce-button>
-						<ce-button>
-							{__('Next Page', 'checkout_engine')}
-						</ce-button>
+						<ce-flex>
+							<ce-button>
+								{__('Prev Page', 'checkout_engine')}
+							</ce-button>
+							<ce-button>
+								{__('Next Page', 'checkout_engine')}
+							</ce-button>
+						</ce-flex>
 					</ce-flex>
-				</ce-flex>
+				)}
 			</ce-flex>
 		</div>
 	);

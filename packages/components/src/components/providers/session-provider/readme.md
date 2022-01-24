@@ -21,11 +21,11 @@
 
 ## Events
 
-| Event             | Description             | Type                                                                                          |
-| ----------------- | ----------------------- | --------------------------------------------------------------------------------------------- |
-| `ceError`         | Update line items event | `CustomEvent<{ message: string; code?: string; data?: any; additional_errors?: any; } \| {}>` |
-| `ceSetState`      | Set the state           | `CustomEvent<string>`                                                                         |
-| `ceUpdateSession` | Update line items event | `CustomEvent<Order>`                                                                          |
+| Event                | Description             | Type                                                                                          |
+| -------------------- | ----------------------- | --------------------------------------------------------------------------------------------- |
+| `ceError`            | Update line items event | `CustomEvent<{ message: string; code?: string; data?: any; additional_errors?: any; } \| {}>` |
+| `ceSetState`         | Set the state           | `CustomEvent<string>`                                                                         |
+| `ceUpdateOrderState` | Update line items event | `CustomEvent<Order>`                                                                          |
 
 
 ## Dependencies

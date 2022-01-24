@@ -1,6 +1,14 @@
 .tooltip {
   position: relative;
+
+
+  &--has-width .tooltip-text {
+    white-space: normal;
+    min-width: var(--ce-tooltip-width);
+    max-width: var(--ce-tooltip-width);
+  }
 }
+
 .tooltip-text {
   position: fixed;
   background: var(--ce-color-gray-900);
@@ -9,7 +17,7 @@
   font-family: var(--ce-input-font-family);
   font-size: var(--ce-input-font-size-small);
   white-space: nowrap;
-  line-height: 1;
+  line-height: 1.2;
   color: var(--ce-color-white);
   z-index: 99999;
 

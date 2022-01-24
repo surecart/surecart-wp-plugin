@@ -18,6 +18,8 @@ import {
 	PanelBody,
 	Button,
 	SelectControl,
+	UnitControl as __stableUnitControl,
+	__experimentalUnitControl,
 } from '@wordpress/components';
 import { createBlocksFromInnerBlocksTemplate } from '@wordpress/blocks';
 import * as templates from '@scripts/blocks/templates';
@@ -47,7 +49,11 @@ const ALLOWED_BLOCKS = [
 ];
 
 export default function edit({ clientId, attributes, setAttributes }) {
-	const { align, className, prices, font_size, choice_type, mode } =
+	const UnitControl = __stableUnitControl
+		? __stableUnitControl
+		: __experimentalUnitControl;
+
+	const { align, className, prices, font_size, choice_type, mode, gap } =
 		attributes;
 	const colorProps = getColorClassesAndStyles(attributes);
 	const [tab, setTab] = useState('');
@@ -104,6 +110,23 @@ export default function edit({ clientId, attributes, setAttributes }) {
 								{__('Change', 'checkout_engine')}
 							</Button>
 						</div>
+					</PanelRow>
+				</PanelBody>
+				<PanelBody title={__('Dimensions', 'checkout_engine')}>
+					<PanelRow>
+						<UnitControl
+							label={__('Row Gap')}
+							onChange={(gap) => setAttributes({ gap })}
+							value={gap}
+							help={__(
+								'The this is the space between the rows of form elements.',
+								'checkout_engine'
+							)}
+							units={[
+								{ value: 'px', label: 'px', default: 0 },
+								{ value: 'em', label: 'em', default: 0 },
+							]}
+						/>
 					</PanelRow>
 				</PanelBody>
 			</InspectorControls>
@@ -237,12 +260,7 @@ export default function edit({ clientId, attributes, setAttributes }) {
 					<div
 						css={css`
 							* > * > .wp-block {
-								margin-top: calc(
-									${attributes?.style?.spacing?.blockGap} / 2
-								);
-								margin-bottom: calc(
-									${attributes?.style?.spacing?.blockGap} / 2
-								);
+								margin-bottom: ${gap} !important;
 							}
 						`}
 					>

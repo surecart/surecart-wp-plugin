@@ -29,19 +29,23 @@
 ### Used by
 
  - [ce-charges-list](../../controllers/dashboard/charges-list)
- - [ce-customer-order](../../controllers/dashboard/customer-order)
  - [ce-customer-orders-list](../../controllers/dashboard/customer-orders-list)
- - [ce-customer-subscription](../../controllers/dashboard/customer-subscription)
- - [ce-customer-subscription-edit](../../controllers/dashboard/customer-subscription-edit)
+ - [ce-customer-subscription-edit](../../controllers/dashboard/subscription-detail)
+ - [ce-order-detail](../../controllers/dashboard/order-detail)
+ - [ce-orders-list](../../controllers/dashboard/orders-list)
+ - [ce-payment-methods-list](../../controllers/dashboard/payment-methods-list)
+ - [ce-subscription](../../controllers/dashboard/subscription)
 
 ### Graph
 ```mermaid
 graph TD;
   ce-charges-list --> ce-format-date
-  ce-customer-order --> ce-format-date
   ce-customer-orders-list --> ce-format-date
-  ce-customer-subscription --> ce-format-date
   ce-customer-subscription-edit --> ce-format-date
+  ce-order-detail --> ce-format-date
+  ce-orders-list --> ce-format-date
+  ce-payment-methods-list --> ce-format-date
+  ce-subscription --> ce-format-date
   style ce-format-date fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

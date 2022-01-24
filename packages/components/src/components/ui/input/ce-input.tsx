@@ -1,4 +1,5 @@
 import { Component, Prop, State, Watch, h, Event, EventEmitter, Method, Element, Host } from '@stencil/core';
+import { addFormData } from '../../../functions/form-data';
 
 let id = 0;
 
@@ -23,6 +24,12 @@ export class CEInput {
 
   /** Element */
   @Element() el: HTMLCeInputElement;
+
+  @Prop() squared: boolean;
+  @Prop() squaredBottom: boolean;
+  @Prop() squaredTop: boolean;
+  @Prop() squaredLeft: boolean;
+  @Prop() squaredRight: boolean;
 
   /** Hidden */
   @Prop() hidden: boolean = false;
@@ -207,6 +214,7 @@ export class CEInput {
 
   componentDidLoad() {
     this.handleFocusChange();
+    addFormData(this.el);
   }
 
   render() {
@@ -236,6 +244,12 @@ export class CEInput {
               // States
               'input--focused': this.hasFocus,
               'input--invalid': this.invalid,
+
+              'input--squared': this.squared,
+              'input--squared-bottom': this.squaredBottom,
+              'input--squared-top': this.squaredTop,
+              'input--squared-left': this.squaredLeft,
+              'input--squared-right': this.squaredRight,
             }}
           >
             <span part="prefix" class="input__prefix">

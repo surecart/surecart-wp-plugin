@@ -26,6 +26,9 @@ export class CEStripeElement {
   /** Stripe publishable key */
   @Prop() publishableKey: string;
 
+  /** Mode for the payment */
+  @Prop() mode: 'live' | 'test' = 'live';
+
   /** The input's size. */
   @Prop({ reflect: true }) size: 'small' | 'medium' | 'large' = 'medium';
 

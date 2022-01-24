@@ -1,0 +1,19 @@
+{
+	"apiVersion": 2,
+	"name": "checkout-engine/address",
+	"title": "Address",
+	"description": "Display an address form.",
+	"category": "layout",
+	"keywords": ["button", "submit", "checkout", "engine"],
+	"parent": ["checkout-engine/form", "checkout-engine/column"],
+	"supports": {
+		"reusable": false,
+		"html": false
+	},
+	"attributes": {
+		"label": {
+			"type": "string",
+			"default": "Address"
+		}
+	}
+}

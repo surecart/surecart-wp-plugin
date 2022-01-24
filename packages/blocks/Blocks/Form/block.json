@@ -12,14 +12,6 @@
 			"background": true,
 			"link": true,
 			"text": true
-		},
-		"spacing": {
-			"blockGap": "25px",
-			"margin": ["top", "bottom"],
-			"padding": true,
-			"__experimentalDefaultControls": {
-				"blockGap": true
-			}
 		}
 	},
 	"attributes": {
@@ -30,6 +22,10 @@
 		},
 		"prices": {
 			"type": "array"
+		},
+		"gap": {
+			"type": "string",
+			"default": "25px"
 		}
 	}
 }

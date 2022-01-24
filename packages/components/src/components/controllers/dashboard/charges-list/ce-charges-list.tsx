@@ -40,7 +40,7 @@ export class CeChargesList {
 
   /** Get all charges */
   async getCharges() {
-    if (!this.query) return;
+    console.log(this.query);
     try {
       this.loading = true;
       this.charges = (await await apiFetch({
@@ -73,25 +73,56 @@ export class CeChargesList {
     return <ce-tag type="success">{__('Paid', 'checkout_engine')}</ce-tag>;
   }
 
-  render() {
+  renderContent() {
     if (this.loading) {
       return (
-        <ce-card>
-          <ce-flex>
-            <ce-flex flex-direction="column" style={{ flex: '1' }}>
-              <ce-skeleton style={{ width: '30%', display: 'inline-block' }}></ce-skeleton>
-              <ce-skeleton style={{ width: '20%', display: 'inline-block' }}></ce-skeleton>
-              <ce-skeleton style={{ width: '40%', display: 'inline-block' }}></ce-skeleton>
-            </ce-flex>
-            <ce-flex flex-direction="column">
-              <ce-skeleton style={{ width: '200px' }}></ce-skeleton>
-              <ce-skeleton style={{ width: '200px' }}></ce-skeleton>
-            </ce-flex>
-          </ce-flex>
-        </ce-card>
+        <ce-table-row>
+          {[...Array(5)].map(() => (
+            <ce-table-cell>
+              <ce-skeleton style={{ width: '100px', display: 'inline-block' }}></ce-skeleton>
+            </ce-table-cell>
+          ))}
+        </ce-table-row>
       );
     }
 
+    return (this.charges || []).map(charge => {
+      const { id, currency, amount, created_at, payment_method } = charge;
+      return (
+        <ce-table-row>
+          <ce-table-cell>
+            <ce-format-number type="currency" currency={currency} value={amount}></ce-format-number>
+          </ce-table-cell>
+          <ce-table-cell>
+            <ce-format-date date={created_at * 1000} month="long" day="numeric" year="numeric"></ce-format-date>
+          </ce-table-cell>
+          <ce-table-cell>
+            {typeof payment_method !== 'string' && (
+              <ce-flex justify-content="flex-start" style={{ '--spacing': '1em' }}>
+                <ce-cc-logo style={{ fontSize: '36px' }} brand={payment_method?.card?.brand}></ce-cc-logo>
+                **** {payment_method?.card?.last4}
+              </ce-flex>
+            )}
+          </ce-table-cell>
+          <ce-table-cell>{this.renderRefundStatus(charge)}</ce-table-cell>
+          <ce-table-cell>
+            <ce-button
+              href={addQueryArgs(window.location.href, {
+                charge: {
+                  id,
+                },
+              })}
+              size="small"
+            >
+              {__('View', 'checkout_engine')}
+            </ce-button>
+          </ce-table-cell>
+        </ce-table-row>
+      );
+    });
+  }
+
+  render() {
     if (this.error) {
       return (
         <ce-alert open type="danger">
@@ -101,13 +132,13 @@ export class CeChargesList {
       );
     }
 
-    if (!this?.charges?.length) {
+    if (!this.loading && !this?.charges?.length) {
       return (
         <ce-card borderless no-divider>
           <span slot="title">
             <slot name="title" />
           </span>
-          <slot name="empty">{__('You have no charges.', 'checkout_engine')}</slot>
+          <slot name="empty">{__('You have no payments.', 'checkout_engine')}</slot>
         </ce-card>
       );
     }
@@ -124,25 +155,9 @@ export class CeChargesList {
           <ce-table-cell slot="head" style={{ width: '100px' }}>
             {__('Status', 'checkout_engine')}
           </ce-table-cell>
-          {(this.charges || []).map(charge => (
-            <ce-table-row>
-              <ce-table-cell>
-                <ce-format-number type="currency" currency={charge?.currency} value={charge?.amount}></ce-format-number>
-              </ce-table-cell>
-              <ce-table-cell>
-                <ce-format-date date={charge?.created_at * 1000} month="long" day="numeric" year="numeric" hour="numeric" minute="numeric"></ce-format-date>
-              </ce-table-cell>
-              <ce-table-cell>
-                {typeof charge?.payment_method !== 'string' && (
-                  <ce-flex justify-content="flex-start" style={{ '--spacing': '1em' }}>
-                    <ce-cc-logo style={{ fontSize: '36px' }} brand={charge?.payment_method?.card?.brand}></ce-cc-logo>
-                    **** {charge?.payment_method?.card?.last4}
-                  </ce-flex>
-                )}
-              </ce-table-cell>
-              <ce-table-cell>{this.renderRefundStatus(charge)}</ce-table-cell>
-            </ce-table-row>
-          ))}
+          <ce-table-cell slot="head" style={{ width: '100px' }}></ce-table-cell>
+
+          {this.renderContent()}
         </ce-table>
       </ce-card>
     );

@@ -12,4 +12,5 @@ return [
 	'order.discount.promotion_code.invalid_code' => __( 'Invalid promotion code.', 'checkout_engine' ),
 	'order.invalid'                              => __( 'Failed to update. Please check for errors and try again.', 'checkout_engine' ),
 	'order.line_items.required'                  => __( 'Please add at least one product.', 'checkout-engine' ),
+	'order.shipping_address.missing_tax_info'    => __( 'Please fill out your shipping information.', 'checkout-engine' ),
 ];

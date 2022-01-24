@@ -10,7 +10,9 @@ export const findInput = (el, name) => {
     .find((el: HTMLInputElement) => el.name === name) as HTMLElement;
 };
 
-export const handleInputs = (el, session: Order) => {
+export const handleInputs = (el, order: Order) => {
+  console.log('handle');
+
   // handle our own built-in inputs.
   const names = ['name', 'email'];
 
@@ -18,12 +20,12 @@ export const handleInputs = (el, session: Order) => {
   names.forEach(name => {
     const input = findInput(el, name) as any;
     if (!input) return;
-    input.value = session[name];
+    input.value = order[name];
   });
 
   // update metadata.
-  Object.keys(session.metadata).forEach(key => {
+  Object.keys(order.metadata).forEach(key => {
     const input = findInput(el, key) as any;
-    input.value = session.metadata[key];
+    input.value = order.metadata[key];
   });
 };

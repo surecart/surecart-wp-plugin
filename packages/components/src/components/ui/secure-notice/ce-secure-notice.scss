@@ -10,6 +10,14 @@
   font-size: var(--ce-secure-notice-font-size);
   display: flex;
   align-items: center;
+
+  &__text {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
 }
 
 .notice__icon {

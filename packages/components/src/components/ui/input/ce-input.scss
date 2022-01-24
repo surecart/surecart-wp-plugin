@@ -23,6 +23,7 @@
   justify-content: start;
   position: relative;
   width: 100%;
+  box-sizing: border-box;
   font-family: var(--ce-input-font-family);
   font-weight: var(--ce-input-font-weight);
   letter-spacing: var(--ce-input-letter-spacing);
@@ -36,6 +37,7 @@
   &:hover:not(.input--disabled) {
     background-color: var(--ce-input-background-color-hover);
     border-color: var(--ce-input-border-color-hover);
+    z-index: 1;
 
     .input__control {
       color: var(--ce-input-color-hover);
@@ -46,6 +48,7 @@
     background-color: var(--ce-input-background-color-focus);
     border-color: var(--ce-input-border-color-focus);
     box-shadow: var(--focus-ring);
+    z-index: 2;
 
     .input__control {
       color: var(--ce-input-color-focus);
@@ -253,4 +256,26 @@
 
 .input--empty .input__clear {
   visibility: hidden;
+}
+
+.input {
+  &--squared {
+    border-radius: 0;
+  }
+  &--squared-top {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+  &--squared-bottom {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  &--squared-left {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+  &--squared-right {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
 }

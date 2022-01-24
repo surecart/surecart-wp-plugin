@@ -67,6 +67,17 @@ class Order extends Model {
 	}
 
 	/**
+	 * Always set discount as object.
+	 *
+	 * @param array|object $value Value to set.
+	 * @return $this
+	 */
+	protected function setShippingAddressAttribute( $value ) {
+		$this->attributes['shipping_address'] = (object) $value;
+		return $this;
+	}
+
+	/**
 	 * Finalize the session for checkout.
 	 *
 	 * @return $this|\WP_Error

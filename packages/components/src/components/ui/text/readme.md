@@ -18,13 +18,15 @@
 ### Used by
 
  - [ce-customer-orders-list](../../controllers/dashboard/customer-orders-list)
- - [ce-customer-subscription](../../controllers/dashboard/customer-subscription)
+ - [ce-orders-list](../../controllers/dashboard/orders-list)
+ - [ce-subscription](../../controllers/dashboard/subscription)
 
 ### Graph
 ```mermaid
 graph TD;
   ce-customer-orders-list --> ce-text
-  ce-customer-subscription --> ce-text
+  ce-orders-list --> ce-text
+  ce-subscription --> ce-text
   style ce-text fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

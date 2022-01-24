@@ -19,8 +19,9 @@
 
 ### Used by
 
- - [ce-customer-order](../../controllers/dashboard/customer-order)
  - [ce-customer-orders-list](../../controllers/dashboard/customer-orders-list)
+ - [ce-order-detail](../../controllers/dashboard/order-detail)
+ - [ce-orders-list](../../controllers/dashboard/orders-list)
 
 ### Depends on
 
@@ -30,8 +31,9 @@
 ```mermaid
 graph TD;
   ce-order-status-badge --> ce-tag
-  ce-customer-order --> ce-order-status-badge
   ce-customer-orders-list --> ce-order-status-badge
+  ce-order-detail --> ce-order-status-badge
+  ce-orders-list --> ce-order-status-badge
   style ce-order-status-badge fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

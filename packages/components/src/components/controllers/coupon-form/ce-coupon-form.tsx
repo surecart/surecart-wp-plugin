@@ -81,7 +81,7 @@ export class CeCouponForm {
           )}
 
           <span slot="price">
-            -<ce-format-number type="currency" currency={this.order?.currency} value={this.order?.discount_amount}></ce-format-number>
+            <ce-format-number type="currency" currency={this.order?.currency} value={this.order?.discount_amount}></ce-format-number>
           </span>
         </ce-line-item>
       );

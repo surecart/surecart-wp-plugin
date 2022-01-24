@@ -1,0 +1,13 @@
+:host {
+  display: block;
+}
+
+.payment-methods {
+  &__title {
+    display: none;
+  }
+
+  &--has-title-slot &__title {
+    display: block;
+  }
+}

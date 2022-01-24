@@ -29,16 +29,18 @@
 
  - [ce-charges-list](../../controllers/dashboard/charges-list)
  - [ce-coupon-form](../../controllers/coupon-form)
- - [ce-customer-order](../../controllers/dashboard/customer-order)
  - [ce-customer-orders-list](../../controllers/dashboard/customer-orders-list)
- - [ce-customer-subscription](../../controllers/dashboard/customer-subscription)
- - [ce-customer-subscription-edit](../../controllers/dashboard/customer-subscription-edit)
- - [ce-customer-subscription-plan](../../controllers/dashboard/customer-subscription-plan)
+ - [ce-customer-subscription-edit](../../controllers/dashboard/subscription-detail)
+ - [ce-customer-subscription-plan](../../controllers/dashboard/subscription-plan)
  - [ce-line-item-tax](../../controllers/line-item-tax)
+ - [ce-line-item-total](../../controllers/line-item-total)
  - [ce-order-confirmation-totals](../../controllers/order-confirmation-totals)
+ - [ce-order-detail](../../controllers/dashboard/order-detail)
+ - [ce-orders-list](../../controllers/dashboard/orders-list)
  - [ce-price-choice](../../controllers/price-choice)
  - [ce-product-line-item](../../ui/product-line-item)
  - [ce-session-detail](../../controllers/session-detail)
+ - [ce-subscription](../../controllers/dashboard/subscription)
  - [ce-total](../../controllers/total)
 
 ### Graph
@@ -46,16 +48,18 @@
 graph TD;
   ce-charges-list --> ce-format-number
   ce-coupon-form --> ce-format-number
-  ce-customer-order --> ce-format-number
   ce-customer-orders-list --> ce-format-number
-  ce-customer-subscription --> ce-format-number
   ce-customer-subscription-edit --> ce-format-number
   ce-customer-subscription-plan --> ce-format-number
   ce-line-item-tax --> ce-format-number
+  ce-line-item-total --> ce-format-number
   ce-order-confirmation-totals --> ce-format-number
+  ce-order-detail --> ce-format-number
+  ce-orders-list --> ce-format-number
   ce-price-choice --> ce-format-number
   ce-product-line-item --> ce-format-number
   ce-session-detail --> ce-format-number
+  ce-subscription --> ce-format-number
   ce-total --> ce-format-number
   style ce-format-number fill:#f9f,stroke:#333,stroke-width:4px
 ```

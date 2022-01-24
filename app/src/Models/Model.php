@@ -172,7 +172,11 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	 * @return string
 	 */
 	public static function getCalledClassName() {
-		return str_replace( '\\', '_', get_called_class() );
+		$class = get_called_class();
+		$class = explode( '\\', $class );
+		end( $class );
+		$last = key( $class );
+		return strtolower( $class[ $last ] );
 	}
 
 	/**

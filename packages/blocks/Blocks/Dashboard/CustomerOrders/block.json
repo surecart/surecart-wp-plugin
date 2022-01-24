@@ -3,10 +3,24 @@
 	"title": "Customer Orders",
 	"description": "Displays the customers orders.",
 	"category": "layout",
-	"keywords": [ "name", "customer", "dashboard" ],
-	"parent": [ "checkout-engine/dashboard-page" ],
+	"keywords": ["name", "customer", "dashboard"],
+	"parent": ["checkout-engine/dashboard-page"],
 	"supports": {
 		"reusable": false,
 		"html": false
+	},
+	"attributes": {
+		"title": {
+			"type": "string",
+			"default": "Orders"
+		},
+		"paginate": {
+			"type": "boolean",
+			"default": true
+		},
+		"per_page": {
+			"type": "number",
+			"default": 10
+		}
 	}
 }

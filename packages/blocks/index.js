@@ -8,6 +8,7 @@ import { __ } from '@wordpress/i18n';
 import * as button from '@blocks/Button';
 import * as buyButton from '@blocks/BuyButton';
 import * as card from '@blocks/Card';
+import * as address from '@blocks/address';
 import * as columns from '@blocks/columns';
 import * as column from '@blocks/column';
 import * as checkbox from '@blocks/checkbox';
@@ -19,8 +20,10 @@ import * as customerDashboardButton from '@blocks/CustomerDashboardButton';
 // dashboard
 import * as customerCharges from '@blocks/dashboard/CustomerCharges';
 import * as customerDashboard from '@blocks/dashboard/CustomerDashboard';
+import * as customerShippingAddress from '@blocks/dashboard/CustomerShippingAddress';
 import * as customerOrders from '@blocks/dashboard/CustomerOrders';
 import * as customerSubscriptions from '@blocks/dashboard/CustomerSubscriptions';
+import * as customerPaymentMethods from '@blocks/dashboard/CustomerPaymentMethods';
 import * as dashboardPage from '@blocks/dashboard/DashboardPage';
 import * as dashboardPages from '@blocks/dashboard/DashboardPages';
 import * as dashboardTab from '@blocks/dashboard/DashboardTab';
@@ -58,8 +61,10 @@ const dashboardComponents = [
 	dashboardTabs,
 	dashboardTab,
 	dashboardPages,
+	customerShippingAddress,
 	dashboardPage,
 	customerSubscriptions,
+	customerPaymentMethods,
 	customerOrders,
 	customerCharges,
 ];
@@ -121,6 +126,7 @@ const registerBlock = (block) => {
  */
 export const registerCheckoutEngineBlocks = () => {
 	[
+		address,
 		checkout,
 		totals,
 		submit,

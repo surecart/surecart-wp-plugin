@@ -65,10 +65,11 @@ Type: `Promise<void>`
  - [ce-checkout](../../controllers/checkout)
  - [ce-coupon-form](../../controllers/coupon-form)
  - [ce-customer-orders-list](../../controllers/dashboard/customer-orders-list)
- - [ce-customer-subscription](../../controllers/dashboard/customer-subscription)
- - [ce-customer-subscriptions-list](../../controllers/dashboard/customer-subscriptions-list)
  - [ce-login-form](../../controllers/login)
+ - [ce-orders-list](../../controllers/dashboard/orders-list)
+ - [ce-payment-methods-list](../../controllers/dashboard/payment-methods-list)
  - [ce-price-choice](../../controllers/price-choice)
+ - [ce-subscription](../../controllers/dashboard/subscription)
  - [ce-subscriptions-list](../../controllers/dashboard/subscriptions-list)
 
 ### Depends on
@@ -83,10 +84,11 @@ graph TD;
   ce-checkout --> ce-alert
   ce-coupon-form --> ce-alert
   ce-customer-orders-list --> ce-alert
-  ce-customer-subscription --> ce-alert
-  ce-customer-subscriptions-list --> ce-alert
   ce-login-form --> ce-alert
+  ce-orders-list --> ce-alert
+  ce-payment-methods-list --> ce-alert
   ce-price-choice --> ce-alert
+  ce-subscription --> ce-alert
   ce-subscriptions-list --> ce-alert
   style ce-alert fill:#f9f,stroke:#333,stroke-width:4px
 ```

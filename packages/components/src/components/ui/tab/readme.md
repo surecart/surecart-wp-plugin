@@ -56,19 +56,6 @@ Type: `Promise<void>`
 | `"suffix"`  |             |
 
 
-## Dependencies
-
-### Used by
-
- - [ce-customer-dashboard](../../controllers/dashboard/customer-dashboard)
-
-### Graph
-```mermaid
-graph TD;
-  ce-customer-dashboard --> ce-tab
-  style ce-tab fill:#f9f,stroke:#333,stroke-width:4px
-```
-
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

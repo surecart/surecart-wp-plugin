@@ -48,11 +48,14 @@
 
 ### Used by
 
+ - [ce-charges-list](../../controllers/dashboard/charges-list)
  - [ce-coupon-form](../../controllers/coupon-form)
  - [ce-customer-orders-list](../../controllers/dashboard/customer-orders-list)
- - [ce-customer-subscription](../../controllers/dashboard/customer-subscription)
- - [ce-customer-subscription-edit](../../controllers/dashboard/customer-subscription-edit)
+ - [ce-customer-subscription-edit](../../controllers/dashboard/subscription-detail)
  - [ce-login-form](../../controllers/login)
+ - [ce-orders-list](../../controllers/dashboard/orders-list)
+ - [ce-payment-methods-list](../../controllers/dashboard/payment-methods-list)
+ - [ce-subscription](../../controllers/dashboard/subscription)
 
 ### Depends on
 
@@ -62,11 +65,14 @@
 ```mermaid
 graph TD;
   ce-button --> ce-spinner
+  ce-charges-list --> ce-button
   ce-coupon-form --> ce-button
   ce-customer-orders-list --> ce-button
-  ce-customer-subscription --> ce-button
   ce-customer-subscription-edit --> ce-button
   ce-login-form --> ce-button
+  ce-orders-list --> ce-button
+  ce-payment-methods-list --> ce-button
+  ce-subscription --> ce-button
   style ce-button fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

@@ -22,7 +22,7 @@
 - [ce-skeleton](../../../ui/skeleton)
 - [ce-alert](../../../ui/alert)
 - [ce-spacing](../../../ui/spacing)
-- [ce-customer-subscription](../customer-subscription)
+- [ce-subscription](../subscription)
 
 ### Graph
 ```mermaid
@@ -32,19 +32,19 @@ graph TD;
   ce-subscriptions-list --> ce-skeleton
   ce-subscriptions-list --> ce-alert
   ce-subscriptions-list --> ce-spacing
-  ce-subscriptions-list --> ce-customer-subscription
+  ce-subscriptions-list --> ce-subscription
   ce-card --> ce-skeleton
   ce-card --> ce-divider
   ce-alert --> ce-icon
-  ce-customer-subscription --> ce-format-date
-  ce-customer-subscription --> ce-subscription-status-badge
-  ce-customer-subscription --> ce-card
-  ce-customer-subscription --> ce-flex
-  ce-customer-subscription --> ce-format-number
-  ce-customer-subscription --> ce-text
-  ce-customer-subscription --> ce-button
-  ce-customer-subscription --> ce-alert
-  ce-customer-subscription --> ce-block-ui
+  ce-subscription --> ce-format-date
+  ce-subscription --> ce-subscription-status-badge
+  ce-subscription --> ce-card
+  ce-subscription --> ce-flex
+  ce-subscription --> ce-format-number
+  ce-subscription --> ce-text
+  ce-subscription --> ce-button
+  ce-subscription --> ce-alert
+  ce-subscription --> ce-block-ui
   ce-subscription-status-badge --> ce-tag
   ce-button --> ce-spinner
   ce-block-ui --> ce-spinner

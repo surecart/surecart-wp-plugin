@@ -2,7 +2,7 @@
     style="--spacing: var(--ce-spacing-medium)"
     no-divider
 >
-    <ce-customer-order
+    <ce-order-detail
         order-id={{ esc_attr($id) }}
         style="margin-bottom: 2em;"
     >
@@ -10,15 +10,15 @@
             <?php echo __('Order Details', 'checkout_engine'); ?>
             <ce-divider></ce-divider>
         </span>
-    </ce-customer-order>
+    </ce-order-detail>
     @php
-        \CheckoutEngine::assets()->addComponentData('ce-order', '', [
+        \CheckoutEngine::assets()->addComponentData('ce-order-detail', '', [
             'query' => $order['query'] ?? [],
         ]);
     @endphp
 
     <ce-charges-list
-        id="{{ esc_attr('charges' . $id) }}"
+        id="customer-order-charges-list"
         style="margin-bottom: 2em;"
     >
         <span slot="title">
@@ -34,7 +34,7 @@
         </span>
     </ce-charges-list>
     @php
-        \CheckoutEngine::assets()->addComponentData('ce-charges-list', '#charges' . $id, [
+        \CheckoutEngine::assets()->addComponentData('ce-charges-list', '#customer-order-charges-list', [
             'query' => $charges['query'] ?? [],
         ]);
     @endphp
