@@ -1,6 +1,6 @@
 <?php
 
-namespace CheckoutEngine\Blocks\Dashboard\CustomerCharges;
+namespace CheckoutEngine\Blocks\Dashboard\CustomerOrders;
 
 use CheckoutEngine\Blocks\Dashboard\DashboardPage;
 
@@ -18,8 +18,8 @@ class Block extends DashboardPage {
 	 */
 	public function render( $attributes, $content ) {
 		// get the current page tab and possible id.
-		$id   = sanitize_text_field( $_GET['charge']['id'] ?? null );
-		$page = sanitize_text_field( $_GET['charge']['page'] ?? 1 );
+		$id   = sanitize_text_field( $_GET['order']['id'] ?? null );
+		$page = sanitize_text_field( $_GET['order']['page'] ?? 1 );
 
 		return $id ? $this->show( $id ) : $this->index( $page );
 	}
@@ -33,32 +33,9 @@ class Block extends DashboardPage {
 	 */
 	public function show( $id ) {
 		return \CheckoutEngine::blocks()->render(
-			'web.dashboard.charges.show',
+			'web.dashboard.shipping_address.show',
 			[
-				'id'            => $id,
 				'customer_id'   => $this->customer_id,
-				'order'         => [
-					'query' => [
-						'expand' => [],
-					],
-				],
-				'subscriptions' => [
-					'query' => [
-						'order_ids'    => [ $id ],
-						'customer_ids' => [ $this->customer_id ],
-						'status'       => [ 'active', 'trialing' ],
-						'page'         => 1,
-						'per_page'     => 10,
-					],
-				],
-				'charges'       => [
-					'query' => [
-						'order_ids'    => [ $id ],
-						'customer_ids' => [ $this->customer_id ],
-						'page'         => 1,
-						'per_page'     => 10,
-					],
-				],
 			]
 		);
 	}
@@ -75,10 +52,11 @@ class Block extends DashboardPage {
 			return;
 		}
 		return \CheckoutEngine::blocks()->render(
-			'web.dashboard.charges.index',
+			'web.dashboard.orders.index',
 			[
 				'query' => [
 					'customer_ids' => [ $this->customer_id ],
+					'status'       => [ 'paid' ],
 					'page'         => 1,
 					'per_page'     => 10,
 				],
