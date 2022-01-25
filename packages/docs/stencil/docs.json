@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-01-24T21:47:58",
+  "timestamp": "2022-01-25T14:31:19",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.9.0",
@@ -4246,6 +4246,28 @@
           "required": false
         },
         {
+          "name": "type",
+          "type": "\"date\" | \"timestamp\"",
+          "mutable": false,
+          "attr": "type",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "'date'",
+          "values": [
+            {
+              "value": "date",
+              "type": "string"
+            },
+            {
+              "value": "timestamp",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "weekday",
           "type": "\"long\" | \"narrow\" | \"short\"",
           "mutable": false,
@@ -6926,13 +6948,17 @@
         },
         {
           "name": "status",
-          "type": "\"draft\" | \"finalized\" | \"paid\"",
+          "type": "\"completed\" | \"draft\" | \"finalized\" | \"paid\"",
           "mutable": false,
           "attr": "status",
           "reflectToAttr": false,
           "docs": "The tag's statux type.",
           "docsTags": [],
           "values": [
+            {
+              "value": "completed",
+              "type": "string"
+            },
             {
               "value": "draft",
               "type": "string"

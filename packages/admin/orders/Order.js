@@ -24,62 +24,62 @@ export default () => {
 	const { snackbarNotices, removeSnackbarNotice } = useSnackbar();
 	const { order, loading } = useOrderData();
 
-	const onSubmit = async ( e ) => {
+	const onSubmit = async (e) => {
 		e.preventDefault();
-		dispatch( store ).save();
+		dispatch(store).save();
 	};
 
 	const onInvalid = () => {
-		dispatch( uiStore ).setInvalid( true );
+		dispatch(uiStore).setInvalid(true);
 	};
 
 	return (
 		<Template
-			status={ status }
-			pageModelName={ 'orders' }
-			onSubmit={ onSubmit }
-			onInvalid={ onInvalid }
-			backUrl={ 'admin.php?page=ce-orders' }
-			backText={ __( 'Back to All Orders', 'checkout_engine' ) }
+			status={status}
+			pageModelName={'orders'}
+			onSubmit={onSubmit}
+			onInvalid={onInvalid}
+			backUrl={'admin.php?page=ce-orders'}
+			backText={__('Back to All Orders', 'checkout_engine')}
 			title={
 				order?.id
-					? __( 'Edit Order', 'checkout_engine' )
-					: __( 'Create Order', 'checkout_engine' )
+					? __('Edit Order', 'checkout_engine')
+					: __('Create Order', 'checkout_engine')
 			}
 			button={
 				loading ? (
 					<ce-skeleton
-						style={ {
+						style={{
 							width: '120px',
 							height: '35px',
 							display: 'inline-block',
-						} }
+						}}
 					></ce-skeleton>
 				) : (
 					<div
-						css={ css`
+						css={css`
 							display: flex;
 							align-items: center;
 							gap: 0.5em;
-						` }
+						`}
 					>
-						{ /* <ProductActionsDropdown
+						{/* <ProductActionsDropdown
           setConfirm={ setConfirm }
           product={ product }
           isSaving={ isSaving }
           toggleArchive={ toggleArchive }
-        /> */ }
+        /> */}
 						<SaveButton>
-							{ order?.id
-								? __( 'Update Order', 'checkout_engine' )
-								: __( 'Create Product', 'checkout_engine' ) }
+							{order?.id
+								? __('Update Order', 'checkout_engine')
+								: __('Create Product', 'checkout_engine')}
 						</SaveButton>
 					</div>
 				)
 			}
-			notices={ snackbarNotices }
-			removeNotice={ removeSnackbarNotice }
-			sidebar={ <Sidebar /> }
+			notices={snackbarNotices}
+			removeNotice={removeSnackbarNotice}
+			sidebar={<Sidebar />}
 		>
 			<Fragment>
 				<FlashError path="orders" scrollIntoView />

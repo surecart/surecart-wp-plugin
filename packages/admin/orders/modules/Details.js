@@ -56,7 +56,9 @@ export default () => {
 							value={order?.total_amount}
 						></ce-format-number>
 					</h1>
-					{renderBadge(order.status)}
+					<ce-order-status-badge
+						status={order?.status}
+					></ce-order-status-badge>
 				</div>
 				{sprintf(
 					__('Created on %s', 'checkout_engine'),
@@ -64,13 +66,9 @@ export default () => {
 				)}
 			</div>
 			<div>
-				{order?.live_mode ? (
-					<ce-tag type="success">
-						{__('Live Mode', 'checkout_engine')}
-					</ce-tag>
-				) : (
+				{!order?.live_mode && (
 					<ce-tag type="warning">
-						{__('Test Mode', 'checkout_engine')}{' '}
+						{__('Test Mode', 'checkout_engine')}
 					</ce-tag>
 				)}
 			</div>

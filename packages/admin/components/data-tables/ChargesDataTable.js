@@ -51,6 +51,7 @@ export default ({ data, isLoading, error, pagination }) => {
 					width: '100px',
 				},
 			}}
+			empty={__('None found.', 'checkout-engine')}
 			items={(data || []).map((charge) => {
 				const { currency, amount, id, created_at, payment_method } =
 					charge;

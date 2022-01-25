@@ -563,6 +563,7 @@ export namespace Components {
           * The format for displaying the time.
          */
         "timeZoneName": 'short' | 'long';
+        "type": 'timestamp' | 'date';
         /**
           * The format for displaying the weekday.
          */
@@ -2778,6 +2779,7 @@ declare namespace LocalJSX {
           * The format for displaying the time.
          */
         "timeZoneName"?: 'short' | 'long';
+        "type"?: 'timestamp' | 'date';
         /**
           * The format for displaying the weekday.
          */

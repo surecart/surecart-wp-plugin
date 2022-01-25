@@ -72,12 +72,6 @@ export default () => {
 							gap: 0.5em;
 						`}
 					>
-						{/* <ProductActionsDropdown
-							setConfirm={ setConfirm }
-							product={ product }
-							isSaving={ isSaving }
-							toggleArchive={ toggleArchive }
-						/> */}
 						<SaveButton>
 							{customer?.id
 								? __('Update Customer', 'checkout_engine')
@@ -93,9 +87,9 @@ export default () => {
 			<Fragment>
 				<FlashError path="customers" scrollIntoView />
 				<Details />
-				<Orders />
-				<Charges />
-				<Subscriptions />
+				{customer?.id && <Orders />}
+				{customer?.id && <Charges />}
+				{customer?.id && <Subscriptions />}
 			</Fragment>
 		</Template>
 	);

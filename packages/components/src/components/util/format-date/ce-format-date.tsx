@@ -44,8 +44,11 @@ export class CeFormatDate {
   /** When set, 24 hour time will always be used. */
   @Prop({ attribute: 'hour-format' }) hourFormat: 'auto' | '12' | '24' = 'auto';
 
+  @Prop() type: 'timestamp' | 'date' = 'date';
+
   render() {
-    const date = new Date(this.date);
+    const dateString = this.type === 'timestamp' ? parseInt(this.date.toString()) * 1000 : this.date;
+    const date = new Date(dateString);
     const hour12 = this.hourFormat === 'auto' ? undefined : this.hourFormat === '12';
 
     // Check for an invalid date

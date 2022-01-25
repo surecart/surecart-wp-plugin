@@ -308,6 +308,7 @@
     "second": true,
     "time-zone": true,
     "time-zone-name": true,
+    "type": true,
     "weekday": true,
     "year": true,
     "style": true,

@@ -271,7 +271,7 @@ export interface Subscription extends Object {
 
 export type SubscriptionStatus = 'incomplete' | 'trialing' | 'active' | 'past_due' | 'canceled' | 'unpaid';
 
-export type OrderStatus = 'draft' | 'finalized' | 'paid';
+export type OrderStatus = 'draft' | 'finalized' | 'paid' | 'completed';
 
 export interface PaymentMethod extends Object {
   id: string;

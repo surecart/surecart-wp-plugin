@@ -26,6 +26,7 @@ export class CeOrderStatusBadge {
         return 'text';
       case 'finalized':
         return 'warning';
+      case 'completed':
       case 'paid':
         return 'success';
     }
@@ -39,6 +40,8 @@ export class CeOrderStatusBadge {
         return __('Pending Payment', 'checkout_engine');
       case 'paid':
         return __('Paid', 'checkout_engine');
+      case 'completed':
+        return __('Completed', 'checkout_engine');
       default:
         return this.status;
     }

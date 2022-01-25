@@ -51,6 +51,7 @@ export default () => {
 					width: '100px',
 				},
 			}}
+			empty={__('This customer has no orders.', 'checkout-engine')}
 			items={(orders || []).map(
 				({
 					number,
