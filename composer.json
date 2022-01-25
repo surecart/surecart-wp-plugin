@@ -37,13 +37,6 @@
 			"options": {
 				"symlink": false
 			}
-		},
-		{
-			"type": "path",
-			"url": "./packages/framework/wpemerge-blade",
-			"options": {
-				"symlink": false
-			}
 		}
 	],
 	"require-dev": {
