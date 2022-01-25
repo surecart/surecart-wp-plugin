@@ -101,13 +101,9 @@ class CustomersListTable extends ListTable {
 	 */
 	public function get_columns() {
 		return [
-			// 'cb'          => '<input type="checkbox" />',
-			'name'  => __( 'Name', 'checkout_engine' ),
-			'email' => __( 'Email', 'checkout_engine' ),
-			// 'orders' => __( 'Orders', 'checkout_engine' ),
-			// 'description' => __( 'Description', 'checkout_engine' ),
-			// 'price'       => __( 'Price', 'checkout_engine' ),
-			// 'date'        => __( 'Date', 'checkout_engine' ),
+			'name'    => __( 'Name', 'checkout_engine' ),
+			'email'   => __( 'Email', 'checkout_engine' ),
+			'created' => __( 'Created', 'checkout_engine' ),
 		];
 	}
 

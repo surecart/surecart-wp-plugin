@@ -78,4 +78,23 @@ abstract class ListTable extends \WP_List_Table {
 		);
 		return $created . '<br /><small style="opacity: 0.75">' . $updated . '</small>';
 	}
+
+	/**
+	 * Handle the created column
+	 *
+	 * @param \CheckoutEngine\Models\Model $model Model.
+	 *
+	 * @return string
+	 */
+	public function column_created( $model ) {
+		return sprintf(
+			'<ce-format-date
+				date="%1$s"
+				month="long"
+				day="numeric"
+				year="numeric"
+				type="timestamp"></ce-format-date>',
+			esc_attr( $model->created_at )
+		);
+	}
 }

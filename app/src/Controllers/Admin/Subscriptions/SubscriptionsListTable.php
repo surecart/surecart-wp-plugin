@@ -104,11 +104,10 @@ class SubscriptionsListTable extends ListTable {
 		return [
 			// 'cb'          => '<input type="checkbox" />',
 			'customer' => __( 'Customer', 'checkout_engine' ),
-			'date'     => __( 'Date', 'checkout_engine' ),
 			'status'   => __( 'Status', 'checkout_engine' ),
-			'products' => __( 'Products', 'checkout_engine' ),
 			'total'    => __( 'Total', 'checkout_engine' ),
-			'mode'     => __( 'Mode', 'checkout_engine' ),
+			'product'  => __( 'Product', 'checkout_engine' ),
+			'created'  => __( 'Created', 'checkout_engine' ),
 			// 'usage' => __( 'Usage', 'checkout_engine' ),
 
 		];
@@ -126,19 +125,11 @@ class SubscriptionsListTable extends ListTable {
 			<?php
 	}
 
-	public function column_products( $subscription ) {
-		$products = array_map(
-			function( $item ) {
-				return '<a href="' . esc_url( \CheckoutEngine::getUrl()->edit( 'product', $item->price->product->id ) ) . '">' . $item->price->product->name . '</a>';
-			},
-			$subscription->subscription_items->data
-		);
-
-		if ( ! empty( $products ) ) {
-			return implode( ', ', $products );
+	public function column_product( $subscription ) {
+		if ( empty( $subscription->price->product ) ) {
+			return __( 'No products', 'checkout_engine' );
 		}
-
-		return __( 'No products', 'checkout_engine' );
+		return '<a href="' . esc_url( \CheckoutEngine::getUrl()->edit( 'product', $subscription->price->product->id ) ) . '">' . $subscription->price->product->name . ' - ' . $subscription->price->name . '</a>';
 	}
 
 	/**
@@ -171,7 +162,7 @@ class SubscriptionsListTable extends ListTable {
 				'limit'  => $this->get_items_per_page( 'subscriptions' ),
 				'page'   => $this->get_pagenum(),
 			]
-		)->with( [ 'customer', 'subscription_items', 'subscription_item.price', 'price.product' ] )
+		)->with( [ 'customer', 'price', 'price.product', 'latest_invoice' ] )
 		->paginate();
 	}
 
@@ -196,23 +187,7 @@ class SubscriptionsListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_total( $subscription ) {
-		return '<ce-format-number type="currency" currency="' . strtoupper( esc_html( $subscription->currency ?? 'usd' ) ) . '" value="' . (float) $subscription->total_amount . '"></ce-format-number>';
-	}
-
-	/**
-	 * Handle the total column
-	 *
-	 * @param \CheckoutEngine\Models\Order $session Checkout Session Model.
-	 *
-	 * @return string
-	 */
-	public function column_date( $session ) {
-		return sprintf(
-			'<time datetime="%1$s" title="%2$s">%3$s</time>',
-			esc_attr( $session->updated_at ),
-			esc_html( TimeDate::formatDateAndTime( $session->updated_at ) ),
-			esc_html( TimeDate::humanTimeDiff( $session->updated_at ) )
-		);
+		return '<ce-format-number type="currency" currency="' . strtoupper( esc_html( $subscription->latest_invoice->currency ?? 'usd' ) ) . '" value="' . (float) ( $subscription->latest_invoice->total_amount ?? 0 ) . '"></ce-format-number>';
 	}
 
 	/**
@@ -298,17 +273,30 @@ class SubscriptionsListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_status( $subscription ) {
+
 		switch ( $subscription->status ) {
 			case 'active':
-				return '<ce-tag type="success">' . __( 'Active', 'checkout_engine' ) . '</ce-tag>';
+				$status = '<ce-tag type="success">' . __( 'Active', 'checkout_engine' ) . '</ce-tag>';
+				break;
 			case 'canceled':
-				return '<ce-tag type="warning">' . __( 'Canceled', 'checkout_engine' ) . '</ce-tag>';
+				$status = '<ce-tag type="warning">' . __( 'Canceled', 'checkout_engine' ) . '</ce-tag>';
+				break;
 			case 'trialing':
-				return '<ce-tag type="primary">' . __( 'Trialing', 'checkout_engine' ) . '</ce-tag>';
+				$status = '<ce-tag type="primary">' . __( 'Trialing', 'checkout_engine' ) . '</ce-tag>';
+				break;
 			case 'draft':
-				return '<ce-tag>' . __( 'Draft', 'checkout_engine' ) . '</ce-tag>';
+				$status = '<ce-tag>' . __( 'Draft', 'checkout_engine' ) . '</ce-tag>';
+				break;
+			default:
+				$status = '<ce-tag>' . $subscription->status . '</ce-tag>';
+				break;
 		}
-		return $subscription->status;
+
+		if ( ! $subscription->live_mode ) {
+			$status .= ' <ce-tag type="warning">' . __( 'Test', 'checkout_engine' ) . '</ce-tag>';
+		}
+
+		return $status;
 	}
 
 	/**
@@ -329,6 +317,13 @@ class SubscriptionsListTable extends ListTable {
 			<?php echo esc_html_e( $name ?? __( 'No name provided', 'checkout_engine' ) ); ?>
 		</a>
 
+		<?php
+		echo $this->row_actions(
+			[
+				'edit' => '<a href="' . esc_url( \CheckoutEngine::getUrl()->edit( 'subscription', $subscription->id ) ) . '" aria-label="' . esc_attr( 'Edit Subscription', 'checkout_engine' ) . '">' . __( 'Edit', 'checkout_engine' ) . '</a>',
+			],
+		);
+		?>
 		<?php
 		return ob_get_clean();
 	}
