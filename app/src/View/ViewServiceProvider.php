@@ -13,18 +13,6 @@ class ViewServiceProvider implements ServiceProviderInterface {
 	 * {@inheritDoc}
 	 */
 	public function register( $container ) {
-		$blade = $container[ WPEMERGEBLADE_VIEW_BLADE_VIEW_ENGINE_KEY ];
-		$blade->compiler()->directive(
-			'attr',
-			function( $expression ) {
-				list($attr, $value) = explode( ', ', $expression );
-
-				if ( ! $value ) {
-					return;
-				}
-				return "<?php echo {$attr}='{$value}'; ?>";
-			}
-		);
 	}
 
 	/**

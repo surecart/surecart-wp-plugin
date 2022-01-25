@@ -19,6 +19,6 @@ class Orders {
 	public function list( $request, $view ) {
 		$table = new OrdersListTable();
 		$table->prepare_items();
-		return \CheckoutEngine::view( 'admin.orders.index' )->with( [ 'table' => $table ] );
+		return \CheckoutEngine::view( 'admin/orders/index' )->with( [ 'table' => $table ] );
 	}
 }

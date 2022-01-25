@@ -14,7 +14,7 @@ class SubscriptionsController {
 	public function index() {
 		$table = new SubscriptionsListTable();
 		$table->prepare_items();
-		return \CheckoutEngine::view( 'admin.subscriptions.index' )->with(
+		return \CheckoutEngine::view( 'admin/subscriptions/index' )->with(
 			[
 				'table' => $table,
 			]
@@ -25,6 +25,6 @@ class SubscriptionsController {
 	 * Coupons edit.
 	 */
 	public function edit() {
-		return \CheckoutEngine::view( 'admin.subscriptions.edit' );
+		return \CheckoutEngine::view( 'admin/subscriptions/edit' );
 	}
 }

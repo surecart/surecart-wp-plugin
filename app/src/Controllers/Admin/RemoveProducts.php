@@ -38,13 +38,13 @@ class Products {
 	public function index( $request ) {
 		$table = new ProductsListTable();
 		$table->prepare_items();
-		return \CheckoutEngine::view( 'admin.products.index' )->with( [ 'table' => $table ] );
+		return \CheckoutEngine::view( 'admin/orders/index' )->with( [ 'table' => $table ] );
 	}
 
 	public function show( $request ) {
 		$product = $this->getProductQuery( $request );
 		$product = Product::find( $product );
 
-		return \CheckoutEngine::view( 'admin.products.show' )->with( [ 'product' => $product ] );
+		return \CheckoutEngine::view( 'admin/products/show' )->with( [ 'product' => $product ] );
 	}
 }

@@ -14,7 +14,7 @@ class OrdersViewController {
 	public function index() {
 		$table = new OrdersListTable();
 		$table->prepare_items();
-		return \CheckoutEngine::view( 'admin.orders.index' )->with(
+		return \CheckoutEngine::view( 'admin/orders/index' )->with(
 			[
 				'table' => $table,
 			]
@@ -25,7 +25,7 @@ class OrdersViewController {
 	 * Coupons edit.
 	 */
 	public function edit() {
-		return \CheckoutEngine::view( 'admin.orders.edit' );
+		return \CheckoutEngine::view( 'admin/orders/edit' );
 	}
 
 	public function archive( $request ) {

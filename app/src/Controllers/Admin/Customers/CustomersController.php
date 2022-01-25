@@ -17,14 +17,14 @@ class CustomersController {
 	public function index() {
 		$table = new CustomersListTable();
 		$table->prepare_items();
-		return \CheckoutEngine::view( 'admin.customers.index' )->with( [ 'table' => $table ] );
+		return \CheckoutEngine::view( 'admin/customers/index' )->with( [ 'table' => $table ] );
 	}
 
 	/**
-	 * Edit a product.
+	 * Customers edit.
 	 */
 	public function edit() {
-		return \CheckoutEngine::view( 'admin.products.edit' );
+		return \CheckoutEngine::view( 'admin/customers/edit' );
 	}
 
 	/**

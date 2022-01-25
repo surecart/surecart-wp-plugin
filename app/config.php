@@ -25,7 +25,6 @@ return [
 		\CheckoutEngine\Permissions\RolesServiceProvider::class,
 		\CheckoutEngine\Settings\SettingsServiceProvider::class,
 		\CheckoutEngine\Request\RequestServiceProvider::class,
-		\WPEmergeBlade\View\ServiceProvider::class,
 		\CheckoutEngine\View\ViewServiceProvider::class,
 		\CheckoutEngine\Webhooks\WebhooksServiceProvider::class,
 		\CheckoutEngine\BlockLibrary\BlockServiceProvider::class,
@@ -185,16 +184,6 @@ return [
 	 * Applies only to the default PhpViewEngine.
 	 */
 	'views'               => [ dirname( __DIR__ ) . DIRECTORY_SEPARATOR . 'views' ],
-
-	/**
-	 * Blade options
-	 */
-	'blade'               => [
-		'options' => [
-			// 'cache' defaults to the main ['cache']['path'] key of the configuration.
-			'cache' => 'wp-content/uploads/checkout-engine/cache/blade',
-		],
-	],
 
 	/**
 	 * App Core configuration.

@@ -2,10 +2,12 @@
 	.wp-list-table .column-image {
 		width: 40px;
 	}
+
 	.ce-product-name {
 		display: flex;
 		gap: 1em;
 	}
+
 	.ce-product-image-preview {
 		width: 40px;
 		height: 40px;
@@ -16,10 +18,18 @@
 		justify-content: center;
 		border-radius: var(--ce-border-radius-small);
 	}
+
 </style>
-@component('components.admin.templates.index', [
-    'title' => __('Products', 'checkout_engine'),
-	'table' => $table,
-	'model_type' => 'product'
-    ])
-@endcomponent
+
+
+<div class="wrap">
+	<?php \CheckoutEngine::render(
+		'layouts/partials/admin-index-header',
+		[
+			'title'    => __( 'Products', 'checkout_engine' ),
+			'new_link' => \CheckoutEngine::getUrl()->edit( 'product' ),
+		]
+	); ?>
+
+	<?php $table->display(); ?>
+</div>

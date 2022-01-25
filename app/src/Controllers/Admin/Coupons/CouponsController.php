@@ -14,7 +14,7 @@ class CouponsController {
 	public function index() {
 		$table = new CouponsListTable();
 		$table->prepare_items();
-		return \CheckoutEngine::view( 'admin.coupons.index' )->with(
+		return \CheckoutEngine::view( 'admin/coupons/index' )->with(
 			[
 				'table' => $table,
 			]
@@ -25,6 +25,6 @@ class CouponsController {
 	 * Coupons edit.
 	 */
 	public function edit() {
-		return \CheckoutEngine::view( 'admin.coupons.edit' );
+		return \CheckoutEngine::view( 'admin/coupons/edit' );
 	}
 }
