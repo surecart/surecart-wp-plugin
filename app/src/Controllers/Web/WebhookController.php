@@ -1,6 +1,9 @@
 <?php
 namespace CheckoutEngine\Controllers\Web;
 
+use CheckoutEngine\Models\Webhook;
+use CheckoutEngine\Support\Encryption;
+
 /**
  * Handles webhooks
  */
@@ -12,6 +15,19 @@ class WebhookController {
 	 */
 	public function getInput() {
 		return json_decode( file_get_contents( 'php://input' ) );
+	}
+
+	/**
+	 * Create a webhook for this install.
+	 */
+	public function create() {
+		return Webhook::create(
+			[
+				'description' => 'Main webhook for Checkout Engine',
+				'enabled'     => true,
+				'url'         => \CheckoutEngine::routeUrl( 'webhooks.receive' ),
+			]
+		);
 	}
 
 	/**

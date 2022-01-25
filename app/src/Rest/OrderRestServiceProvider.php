@@ -112,7 +112,6 @@ class OrderRestServiceProvider extends RestServiceProvider implements RestServic
 
 		if ( ! $form || 'ce_form' !== Form::getPostType() ) {
 			// TODO: check form manual registration on server here. (ce_register_form)
-
 			// form not found.
 			return new \WP_Error( 'form_id_invalid', esc_html__( 'Form ID is invalid.', 'checkout_engine' ), [ 'status' => 400 ] );
 		}

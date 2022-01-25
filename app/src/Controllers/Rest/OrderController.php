@@ -116,7 +116,7 @@ class OrderController extends RestController {
 		$errors = $this->validate( $args, $request );
 
 		// return early if errors.
-		if ( ! empty( $errors ) || $errors->has_errors() ) {
+		if ( $errors->has_errors() ) {
 			return $errors;
 		}
 

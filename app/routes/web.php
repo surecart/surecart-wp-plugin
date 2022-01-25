@@ -14,8 +14,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 \CheckoutEngine::route()
 	->post()
 	->url( '/checkout_engine/webhooks' )
-	->middleware( 'webhooks' )
 	->name( 'webhooks' )
+	->middleware( 'webhooks' )
 	->handle( 'WebhookController@receive' );
 
 \CheckoutEngine::route()

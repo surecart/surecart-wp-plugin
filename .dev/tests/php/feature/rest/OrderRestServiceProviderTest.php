@@ -47,7 +47,7 @@ class OrderRestServiceProviderTest extends CheckoutEngineUnitTestCase {
 
 		$request = new WP_REST_Request('PATCH', '/checkout-engine/v1/orders/testid/finalize');
 		$request->set_query_params(['form_id'=> $test_form->ID]);
-		$request->set_param('processor_type', 'stripe');x
+		$request->set_param('processor_type', 'stripe');
 		$response = rest_do_request( $request );
 		$this->assertSame($response->get_status(), 200);
 	}

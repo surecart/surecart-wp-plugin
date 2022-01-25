@@ -27,6 +27,7 @@ return [
 		\CheckoutEngine\Request\RequestServiceProvider::class,
 		\WPEmergeBlade\View\ServiceProvider::class,
 		\CheckoutEngine\View\ViewServiceProvider::class,
+		\CheckoutEngine\Webhooks\WebhooksServiceProvider::class,
 		\CheckoutEngine\BlockLibrary\BlockServiceProvider::class,
 		\CheckoutEngine\Support\Errors\ErrorsServiceProvider::class,
 

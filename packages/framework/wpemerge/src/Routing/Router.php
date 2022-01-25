@@ -62,7 +62,7 @@ class Router implements HasRoutesInterface {
 	 */
 	public function __construct( ConditionFactory $condition_factory, HandlerFactory $handler_factory ) {
 		$this->condition_factory = $condition_factory;
-		$this->handler_factory = $handler_factory;
+		$this->handler_factory   = $handler_factory;
 	}
 
 	/**
@@ -174,7 +174,7 @@ class Router implements HasRoutesInterface {
 	 * @return string
 	 */
 	public function mergeNameAttribute( $old, $new ) {
-		$name = implode( '.', array_filter( [$old, $new] ) );
+		$name = implode( '.', array_filter( [ $old, $new ] ) );
 
 		// Trim dots.
 		$name = preg_replace( '/^\.+|\.+$/', '', $name );
@@ -194,12 +194,12 @@ class Router implements HasRoutesInterface {
 	 */
 	public function mergeAttributes( $old, $new ) {
 		return [
-			'methods' => $this->mergeMethodsAttribute(
+			'methods'    => $this->mergeMethodsAttribute(
 				(array) Arr::get( $old, 'methods', [] ),
 				(array) Arr::get( $new, 'methods', [] )
 			),
 
-			'condition' => $this->mergeConditionAttribute(
+			'condition'  => $this->mergeConditionAttribute(
 				Arr::get( $old, 'condition', null ),
 				Arr::get( $new, 'condition', null )
 			),
@@ -209,22 +209,22 @@ class Router implements HasRoutesInterface {
 				(array) Arr::get( $new, 'middleware', [] )
 			),
 
-			'namespace' => $this->mergeNamespaceAttribute(
+			'namespace'  => $this->mergeNamespaceAttribute(
 				Arr::get( $old, 'namespace', '' ),
 				Arr::get( $new, 'namespace', '' )
 			),
 
-			'handler' => $this->mergeHandlerAttribute(
+			'handler'    => $this->mergeHandlerAttribute(
 				Arr::get( $old, 'handler', '' ),
 				Arr::get( $new, 'handler', '' )
 			),
 
-			'query' => $this->mergeQueryAttribute(
+			'query'      => $this->mergeQueryAttribute(
 				Arr::get( $old, 'query', null ),
 				Arr::get( $new, 'query', null )
 			),
 
-			'name' => $this->mergeNameAttribute(
+			'name'       => $this->mergeNameAttribute(
 				Arr::get( $old, 'name', '' ),
 				Arr::get( $new, 'name', '' )
 			),
@@ -267,7 +267,7 @@ class Router implements HasRoutesInterface {
 	 *
 	 * @codeCoverageIgnore
 	 * @param  array<string, mixed> $attributes
-	 * @param  Closure|string      $routes Closure or path to file.
+	 * @param  Closure|string       $routes Closure or path to file.
 	 * @return void
 	 */
 	public function group( $attributes, $routes ) {
@@ -287,7 +287,7 @@ class Router implements HasRoutesInterface {
 	/**
 	 * Make a route condition.
 	 *
-	 * @param  mixed              $condition
+	 * @param  mixed $condition
 	 * @return ConditionInterface
 	 */
 	protected function routeCondition( $condition ) {
@@ -330,7 +330,7 @@ class Router implements HasRoutesInterface {
 			$attributes,
 			[
 				'condition' => $this->routeCondition( $attributes['condition'] ),
-				'handler' => $this->routeHandler( $attributes['handler'], $attributes['namespace'] ),
+				'handler'   => $this->routeHandler( $attributes['handler'], $attributes['namespace'] ),
 			]
 		);
 
@@ -341,13 +341,13 @@ class Router implements HasRoutesInterface {
 			);
 		}
 
-		return (new Route())->attributes( $attributes );
+		return ( new Route() )->attributes( $attributes );
 	}
 
 	/**
 	 * Assign and return the first satisfied route (if any) as the current one for the given request.
 	 *
-	 * @param  RequestInterface    $request
+	 * @param  RequestInterface $request
 	 * @return RouteInterface|null
 	 */
 	public function execute( $request ) {

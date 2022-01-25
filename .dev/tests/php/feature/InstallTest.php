@@ -7,6 +7,8 @@ use CheckoutEngine\WordPress\PluginServiceProvider;
 use CheckoutEngine\WordPress\PostTypes\FormPostTypeServiceProvider;
 
 class InstallTest extends CheckoutEngineUnitTestCase {
+	use \Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+
 	/**
 	 * Set up a new app instance to use for tests.
 	 */
@@ -42,5 +44,15 @@ class InstallTest extends CheckoutEngineUnitTestCase {
 		$page = \CheckoutEngine::pages()->get('dashboard');
 		$this->assertSame($page->post_type, 'page');
 		$this->assertStringContainsString('wp:checkout-engine/dashboard', $page->post_content);
+	}
+
+	public function setsUpWebhooks()
+	{
+		// mock the requests in the container
+		$requests =  \Mockery::mock(RequestService::class);
+		\CheckoutEngine::alias('request', function () use ($requests) {
+			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
+		});
+
 	}
 }
