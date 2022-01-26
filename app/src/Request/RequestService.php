@@ -52,38 +52,10 @@ class RequestService {
 	}
 
 	/**
-	 * The token to use for the request.
-	 *
-	 * @param string $mode The mode.
-	 *
-	 * @return string
-	 */
-	public function getToken() {
-		return 'test_RiHtAnf4utLC5QJKBRDWJob5';
-	}
-
-	/**
-	 * Get base url depending on mode
-	 *
-	 * @param string $mode 'staging' or 'live'.
-	 *
-	 * @return string
-	 */
-	public function getUrlRoot( $mode = 'live' ) {
-		switch ( $mode ) {
-			case 'staging':
-				return 'https://presto-pay-staging.herokuapp.com';
-			default:
-				return 'https://presto-pay-staging.herokuapp.com';
-		}
-	}
-
-	/**
 	 * Get the base url.
 	 */
 	public function getBaseUrl() {
-		$url = $this->getUrlRoot( 'live' );
-		return untrailingslashit( $url ) . trailingslashit( $this->base_path );
+		return untrailingslashit( CHECKOUT_ENGINE_APP_URL ) . trailingslashit( $this->base_path );
 	}
 
 	/**

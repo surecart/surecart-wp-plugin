@@ -35,6 +35,7 @@ class AdminMenuPageService {
 		\add_menu_page( __( 'Dashboard', 'checkout_engine' ), __( 'Checkout Engine', 'checkout_engine' ), 'edit_ce_products', $this->slug, '__return_false' );
 
 		$this->pages = [
+			'onboarding'    => \add_submenu_page( null, __( 'Onboarding', 'checkout_engine' ), __( 'Onboarding', 'checkout_engine' ), 'manage_options', 'ce-onboarding', '__return_false' ),
 			'get-started'   => \add_submenu_page( $this->slug, __( 'Getting Started', 'checkout_engine' ), __( 'Getting Started', 'checkout_engine' ), 'edit_ce_products', $this->slug, '__return_false' ),
 			'orders'        => \add_submenu_page( $this->slug, __( 'Orders', 'checkout_engine' ), __( 'Orders', 'checkout_engine' ), 'edit_ce_orders', 'ce-orders', '__return_false' ),
 			'products'      => \add_submenu_page( $this->slug, __( 'Products', 'checkout_engine' ), __( 'Products', 'checkout_engine' ), 'edit_ce_products', 'ce-products', '__return_false' ),

@@ -26,6 +26,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 define( 'CHECKOUT_ENGINE_PLUGIN_FILE', __FILE__ );
 
+// define host url.
+if ( ! defined( 'CHECKOUT_ENGINE_APP_URL' ) ) {
+	define( 'CHECKOUT_ENGINE_APP_URL', 'https://presto-pay-staging.herokuapp.com' );
+}
+
 // Load composer dependencies.
 if ( file_exists( __DIR__ . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php' ) ) {
 	require_once __DIR__ . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';

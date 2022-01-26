@@ -24,6 +24,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->middleware( 'user.can:edit_ce_products' )
 ->handle( 'Onboarding@show' );
 
+\CheckoutEngine::route()
+->get()
+->where( 'admin', 'ce-onboarding' )
+->middleware( 'user.can:edit_ce_products' )
+->handle( 'Onboarding@show' );
+
 /*
 |--------------------------------------------------------------------------
 | Dashboard

@@ -32,7 +32,7 @@ class WebhooksMiddleware {
 	 */
 	public function verifySignature() {
 		// Compare the signature in the header to the expected signature.
-		return $this->getSignedPayload() === $this->computeHash();
+		return $this->getSignature() === $this->computeHash();
 	}
 
 	/**
@@ -42,7 +42,7 @@ class WebhooksMiddleware {
 	 * @return string
 	 */
 	public function computeHash() {
-		return hash_hmac( 'sha256', $this->getInput(), $this->getSigningSecret() );
+		return hash_hmac( 'sha256', $this->getSignedPayload(), $this->getSigningSecret() );
 	}
 
 	/**
@@ -60,7 +60,7 @@ class WebhooksMiddleware {
 	 * @return string
 	 */
 	public function getInput() {
-		return file_get_contents( 'php://input' );
+		return json_decode( file_get_contents( 'php://input' ) );
 	}
 
 	/**
@@ -87,6 +87,6 @@ class WebhooksMiddleware {
 	 * @return string
 	 */
 	public function getSignedPayload() {
-		return $this->getSignature() . '.' . $this->getTimestamp();
+		return $this->getTimestamp() . '.' . json_encode( $this->getInput() );
 	}
 }
