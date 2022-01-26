@@ -31,16 +31,36 @@ class WebhooksMiddleware {
 	 * @return bool
 	 */
 	public function verifySignature() {
-		// get the signature.
-		$signature = $this->getSignature();
-		// get the signing secret secret.
-		$secret = Webhook::getSigningSecret();
-		// Prepare Signed Payload String.
-		$payload = $this->getSignedPayload();
-		// Compute an HMAC with the SHA256 hash function. Use the endpoint’s signing secret as the key, and use the signed_payload string as the message.
-		$expected = hash_hmac( 'sha256', $payload, $secret );
 		// Compare the signature in the header to the expected signature.
-		return $expected === $signature;
+		return $this->getSignedPayload() === $this->computeHash();
+	}
+
+	/**
+	 * Compute an HMAC with the SHA256 hash function.
+	 * Use the endpoint’s signing secret as the key, and use the signed_payload string as the message.
+	 *
+	 * @return string
+	 */
+	public function computeHash() {
+		return hash_hmac( 'sha256', $this->getInput(), $this->getSigningSecret() );
+	}
+
+	/**
+	 * Get the signing secret.
+	 *
+	 * @return string
+	 */
+	public function getSigningSecret() {
+		return Webhook::getSigningSecret();
+	}
+
+	/**
+	 * Get expected json request body.
+	 *
+	 * @return string
+	 */
+	public function getInput() {
+		return file_get_contents( 'php://input' );
 	}
 
 	/**

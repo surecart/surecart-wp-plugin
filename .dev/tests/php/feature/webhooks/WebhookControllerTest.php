@@ -4,7 +4,7 @@ namespace CheckoutEngine\Tests\Feature\Rest;
 use CheckoutEngine\Controllers\Web\WebhookController;
 use CheckoutEngine\Tests\CheckoutEngineUnitTestCase;
 
-class WebhookRestHandleTest extends CheckoutEngineUnitTestCase {
+class WebhookControllerTest extends CheckoutEngineUnitTestCase {
 	use \Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 
 	/**
