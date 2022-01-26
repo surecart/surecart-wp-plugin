@@ -1,10 +1,10 @@
 <?php
 /**
- * @package   WPEmerge
- * @author    Atanas Angelov <hi@atanas.dev>
- * @copyright 2017-2019 Atanas Angelov
+ * @package   CheckoutEngineCore
+ * @author    Andre Gagnon <hi@atanas.dev>
+ * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://wpemerge.com/
+ * @link      https://checkout_engine.com/
  */
 
 /**
@@ -13,41 +13,41 @@
  * @noinspection ALL
  */
 
-$is_admin = function_exists( 'is_admin' ) && is_admin() && apply_filters( 'wpemerge.pretty_errors.apply_admin_styles', true );
-$is_ajax = function_exists( 'wp_doing_ajax' ) && wp_doing_ajax();
+$is_admin = function_exists( 'is_admin' ) && is_admin() && apply_filters( 'checkout_engine.pretty_errors.apply_admin_styles', true );
+$is_ajax  = function_exists( 'wp_doing_ajax' ) && wp_doing_ajax();
 
 if ( $is_admin && ! $is_ajax ) {
 	?>
 	<!--suppress CssUnusedSymbol -->
 	<style>
-		.wpemerge-whoops {
+		.checkout-engine-whoops {
 			position: relative;
 			z-index: 1;
 			margin: 20px 20px 0 0;
 		}
 
-		.wpemerge-whoops .stack-container {
+		.checkout-engine-whoops .stack-container {
 			display: flex;
 		}
 
-		.wpemerge-whoops .left-panel {
+		.checkout-engine-whoops .left-panel {
 			position: static;
 			height: auto;
 			overflow: visible;
 		}
 
-		.wpemerge-whoops .details-container {
+		.checkout-engine-whoops .details-container {
 			position: static;
 			height: auto;
 			overflow: visible;
 		}
 
 		@media (max-width: 600px) {
-			.wpemerge-whoops {
+			.checkout-engine-whoops {
 				margin: 10px 10px 0 0;
 			}
 
-			.wpemerge-whoops .stack-container {
+			.checkout-engine-whoops .stack-container {
 				display: block;
 			}
 		}
@@ -63,7 +63,7 @@ if ( $is_admin && ! $is_ajax ) {
 		});
 	</script>
 	<?php
-	require 'wpemerge-body.html.php';
+	require 'checkout-engine-body.html.php';
 	return;
 }
 ?>
@@ -74,9 +74,9 @@ if ( $is_admin && ! $is_ajax ) {
 	<meta name="robots" content="noindex,nofollow"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
 	<?php // Avoid triggering the Theme Check sniff as this is not a WordPress template. ?>
-	<?php echo '<' . 'title' . '>' . $tpl->escape( $page_title ) . '</' . 'title' . '>' ?>
+	<?php echo '<' . 'title' . '>' . $tpl->escape( $page_title ) . '</' . 'title' . '>'; ?>
 </head>
 <body>
-	<?php require 'wpemerge-body.html.php'; ?>
+	<?php require 'checkout-engine-body.html.php'; ?>
 </body>
 </html>

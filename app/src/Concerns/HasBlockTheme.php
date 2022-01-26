@@ -2,7 +2,7 @@
 
 namespace CheckoutEngine\Concerns;
 
-use WPEmerge\Helpers\MixedType;
+use CheckoutEngineCore\Helpers\MixedType;
 
 trait HasBlockTheme {
 

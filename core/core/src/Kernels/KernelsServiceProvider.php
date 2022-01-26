@@ -1,16 +1,16 @@
 <?php
 /**
- * @package   WPEmerge
- * @author    Atanas Angelov <hi@atanas.dev>
- * @copyright 2017-2019 Atanas Angelov
+ * @package   CheckoutEngineCore
+ * @author    Andre Gagnon <hi@atanas.dev>
+ * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://wpemerge.com/
+ * @link      https://checkout_engine.com/
  */
 
-namespace WPEmerge\Kernels;
+namespace CheckoutEngineCore\Kernels;
 
-use WPEmerge\ServiceProviders\ExtendsConfigTrait;
-use WPEmerge\ServiceProviders\ServiceProviderInterface;
+use CheckoutEngineCore\ServiceProviders\ExtendsConfigTrait;
+use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
 
 /**
  * Provide old input dependencies.
@@ -24,53 +24,64 @@ class KernelsServiceProvider implements ServiceProviderInterface {
 	 * {@inheritDoc}
 	 */
 	public function register( $container ) {
-		$this->extendConfig( $container, 'middleware', [
-			'flash' => \WPEmerge\Flash\FlashMiddleware::class,
-			'old_input' => \WPEmerge\Input\OldInputMiddleware::class,
-			'csrf' => \WPEmerge\Csrf\CsrfMiddleware::class,
-			'user.logged_in' => \WPEmerge\Middleware\UserLoggedInMiddleware::class,
-			'user.logged_out' => \WPEmerge\Middleware\UserLoggedOutMiddleware::class,
-			'user.can' => \WPEmerge\Middleware\UserCanMiddleware::class,
-		] );
+		$this->extendConfig(
+			$container,
+			'middleware',
+			[
+				'flash'           => \CheckoutEngineCore\Flash\FlashMiddleware::class,
+				'old_input'       => \CheckoutEngineCore\Input\OldInputMiddleware::class,
+				'csrf'            => \CheckoutEngineCore\Csrf\CsrfMiddleware::class,
+				'user.logged_in'  => \CheckoutEngineCore\Middleware\UserLoggedInMiddleware::class,
+				'user.logged_out' => \CheckoutEngineCore\Middleware\UserLoggedOutMiddleware::class,
+				'user.can'        => \CheckoutEngineCore\Middleware\UserCanMiddleware::class,
+			]
+		);
 
-		$this->extendConfig( $container, 'middleware_groups', [
-			'wpemerge' => [
-				'flash',
-				'old_input',
-			],
-			'global' => [],
-			'web' => [],
-			'ajax' => [],
-			'admin' => [],
-		] );
+		$this->extendConfig(
+			$container,
+			'middleware_groups',
+			[
+				'checkout_engine' => [
+					'flash',
+					'old_input',
+				],
+				'global'          => [],
+				'web'             => [],
+				'ajax'            => [],
+				'admin'           => [],
+			]
+		);
 
 		$this->extendConfig( $container, 'middleware_priority', [] );
 
-		$container[ WPEMERGE_WORDPRESS_HTTP_KERNEL_KEY ] = function ( $c ) {
+		$container[ CHECKOUT_ENGINE_WORDPRESS_HTTP_KERNEL_KEY ] = function ( $c ) {
 			$kernel = new HttpKernel(
 				$c,
-				$c[ WPEMERGE_APPLICATION_GENERIC_FACTORY_KEY ],
-				$c[ WPEMERGE_HELPERS_HANDLER_FACTORY_KEY ],
-				$c[ WPEMERGE_RESPONSE_SERVICE_KEY ],
-				$c[ WPEMERGE_REQUEST_KEY ],
-				$c[ WPEMERGE_ROUTING_ROUTER_KEY ],
-				$c[ WPEMERGE_VIEW_SERVICE_KEY ],
-				$c[ WPEMERGE_EXCEPTIONS_ERROR_HANDLER_KEY ]
+				$c[ CHECKOUT_ENGINE_APPLICATION_GENERIC_FACTORY_KEY ],
+				$c[ CHECKOUT_ENGINE_HELPERS_HANDLER_FACTORY_KEY ],
+				$c[ CHECKOUT_ENGINE_RESPONSE_SERVICE_KEY ],
+				$c[ CHECKOUT_ENGINE_REQUEST_KEY ],
+				$c[ CHECKOUT_ENGINE_ROUTING_ROUTER_KEY ],
+				$c[ CHECKOUT_ENGINE_VIEW_SERVICE_KEY ],
+				$c[ CHECKOUT_ENGINE_EXCEPTIONS_ERROR_HANDLER_KEY ]
 			);
 
-			$kernel->setMiddleware( $c[ WPEMERGE_CONFIG_KEY ]['middleware'] );
-			$kernel->setMiddlewareGroups( $c[ WPEMERGE_CONFIG_KEY ]['middleware_groups'] );
-			$kernel->setMiddlewarePriority( $c[ WPEMERGE_CONFIG_KEY ]['middleware_priority'] );
+			$kernel->setMiddleware( $c[ CHECKOUT_ENGINE_CONFIG_KEY ]['middleware'] );
+			$kernel->setMiddlewareGroups( $c[ CHECKOUT_ENGINE_CONFIG_KEY ]['middleware_groups'] );
+			$kernel->setMiddlewarePriority( $c[ CHECKOUT_ENGINE_CONFIG_KEY ]['middleware_priority'] );
 
 			return $kernel;
 		};
 
-		$app = $container[ WPEMERGE_APPLICATION_KEY ];
+		$app = $container[ CHECKOUT_ENGINE_APPLICATION_KEY ];
 
-		$app->alias( 'run', function () use ( $app ) {
-			$kernel = $app->resolve( WPEMERGE_WORDPRESS_HTTP_KERNEL_KEY );
-			return call_user_func_array( [$kernel, 'run'], func_get_args() );
-		} );
+		$app->alias(
+			'run',
+			function () use ( $app ) {
+				$kernel = $app->resolve( CHECKOUT_ENGINE_WORDPRESS_HTTP_KERNEL_KEY );
+				return call_user_func_array( [ $kernel, 'run' ], func_get_args() );
+			}
+		);
 	}
 
 	/**

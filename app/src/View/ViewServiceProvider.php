@@ -2,7 +2,7 @@
 
 namespace CheckoutEngine\View;
 
-use WPEmerge\ServiceProviders\ServiceProviderInterface;
+use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
 
 /**
  * Register view composers and globals.

@@ -1,15 +1,15 @@
 <?php
 /**
- * @package   WPEmergeAppCore
- * @author    Atanas Angelov <hi@atanas.dev>
- * @copyright 2017-2020 Atanas Angelov
+ * @package   CheckoutEngineAppCore
+ * @author    Andre Gagnon <hi@atanas.dev>
+ * @copyright  Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://wpemerge.com/
+ * @link      https://checkoutengine.com
  */
 
-namespace WPEmergeAppCore\Application;
+namespace CheckoutEngineAppCore\Application;
 
-use WPEmergeAppCore\AppCore\AppCore;
+use CheckoutEngineAppCore\AppCore\AppCore;
 
 /**
  * Can be applied to your App class via a "@mixin" annotation for better IDE support.

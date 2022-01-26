@@ -1,16 +1,16 @@
 <?php
 /**
- * @package   WPEmerge
- * @author    Atanas Angelov <hi@atanas.dev>
- * @copyright 2017-2019 Atanas Angelov
+ * @package   CheckoutEngineCore
+ * @author    Andre Gagnon <hi@atanas.dev>
+ * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://wpemerge.com/
+ * @link      https://checkout_engine.com/
  */
 
-namespace WPEmerge\Application;
+namespace CheckoutEngineCore\Application;
 
 use BadMethodCallException;
-use WPEmerge\Exceptions\ConfigurationException;
+use CheckoutEngineCore\Exceptions\ConfigurationException;
 
 /**
  * Provides static access to an Application instance.
@@ -66,7 +66,7 @@ trait ApplicationTrait {
 	 */
 	public static function __callStatic( $method, $parameters ) {
 		$application = static::getApplication();
-		$callable = [$application, $method];
+		$callable    = [ $application, $method ];
 
 		if ( ! $application ) {
 			throw new ConfigurationException(

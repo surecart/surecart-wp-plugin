@@ -1,15 +1,15 @@
 <?php
 /**
- * @package   WPEmerge
- * @author    Atanas Angelov <hi@atanas.dev>
- * @copyright 2017-2019 Atanas Angelov
+ * @package   CheckoutEngineCore
+ * @author    Andre Gagnon <hi@atanas.dev>
+ * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://wpemerge.com/
+ * @link      https://checkout_engine.com/
  */
 
-namespace WPEmerge\Middleware;
+namespace CheckoutEngineCore\Middleware;
 
-use WPEmerge\Helpers\Handler;
+use CheckoutEngineCore\Helpers\Handler;
 
 /**
  * Describes how a request is handled.
@@ -18,7 +18,7 @@ trait ReadsHandlerMiddlewareTrait {
 	/**
 	 * Get middleware registered with the given handler.
 	 *
-	 * @param  Handler  $handler
+	 * @param  Handler $handler
 	 * @return string[]
 	 */
 	protected function getHandlerMiddleware( Handler $handler ) {

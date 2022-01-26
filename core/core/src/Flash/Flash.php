@@ -1,18 +1,18 @@
 <?php
 /**
- * @package   WPEmerge
- * @author    Atanas Angelov <hi@atanas.dev>
- * @copyright 2017-2019 Atanas Angelov
+ * @package   CheckoutEngineCore
+ * @author    Andre Gagnon <hi@atanas.dev>
+ * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://wpemerge.com/
+ * @link      https://checkout_engine.com/
  */
 
-namespace WPEmerge\Flash;
+namespace CheckoutEngineCore\Flash;
 
 use ArrayAccess;
-use WPEmerge\Exceptions\ConfigurationException;
-use WPEmerge\Helpers\MixedType;
-use WPEmerge\Support\Arr;
+use CheckoutEngineCore\Exceptions\ConfigurationException;
+use CheckoutEngineCore\Helpers\MixedType;
+use CheckoutEngineCore\Support\Arr;
 
 /**
  * Provide a way to flash data into the session for the next request.
@@ -22,7 +22,7 @@ class Flash {
 	 * Keys for different request contexts.
 	 */
 	const CURRENT_KEY = 'current';
-	const NEXT_KEY = 'next';
+	const NEXT_KEY    = 'next';
 
 	/**
 	 * Key to store flashed data in store with.
@@ -50,9 +50,9 @@ class Flash {
 	 *
 	 * @codeCoverageIgnore
 	 * @param array|ArrayAccess $store
-	 * @param string             $store_key
+	 * @param string            $store_key
 	 */
-	public function __construct( &$store, $store_key = '__wpemergeFlash' ) {
+	public function __construct( &$store, $store_key = '__checkoutEngineFlash' ) {
 		$this->store_key = $store_key;
 		$this->setStore( $store );
 	}
@@ -60,7 +60,7 @@ class Flash {
 	/**
 	 * Get whether a store object is valid.
 	 *
-	 * @param  mixed   $store
+	 * @param  mixed $store
 	 * @return boolean
 	 */
 	protected function isValidStore( $store ) {
@@ -106,7 +106,7 @@ class Flash {
 		if ( ! isset( $this->store[ $this->store_key ] ) ) {
 			$this->store[ $this->store_key ] = [
 				static::CURRENT_KEY => [],
-				static::NEXT_KEY => [],
+				static::NEXT_KEY    => [],
 			];
 		}
 
@@ -125,9 +125,9 @@ class Flash {
 	/**
 	 * Get the entire store or the values for a key for a request.
 	 *
-	 * @param  string $request_key
+	 * @param  string      $request_key
 	 * @param  string|null $key
-	 * @param  mixed $default
+	 * @param  mixed       $default
 	 * @return mixed
 	 */
 	protected function getFromRequest( $request_key, $key = null, $default = [] ) {
@@ -145,28 +145,28 @@ class Flash {
 	 *
 	 * @param  string $request_key
 	 * @param  string $key
-	 * @param  mixed $new_items
+	 * @param  mixed  $new_items
 	 * @return void
 	 */
 	protected function addToRequest( $request_key, $key, $new_items ) {
 		$this->validateStore();
 
-		$new_items = MixedType::toArray( $new_items );
-		$items = MixedType::toArray( $this->get( $key, [] ) );
+		$new_items                             = MixedType::toArray( $new_items );
+		$items                                 = MixedType::toArray( $this->get( $key, [] ) );
 		$this->flashed[ $request_key ][ $key ] = array_merge( $items, $new_items );
 	}
 
 	/**
 	 * Remove all values or values for a key from a request.
 	 *
-	 * @param  string $request_key
+	 * @param  string      $request_key
 	 * @param  string|null $key
 	 * @return void
 	 */
 	protected function clearFromRequest( $request_key, $key = null ) {
 		$this->validateStore();
 
-		$keys = $key === null ? array_keys( $this->flashed[ $request_key ] ) : [$key];
+		$keys = $key === null ? array_keys( $this->flashed[ $request_key ] ) : [ $key ];
 		foreach ( $keys as $k ) {
 			unset( $this->flashed[ $request_key ][ $k ] );
 		}
@@ -176,7 +176,7 @@ class Flash {
 	 * Add values for a key for the next request.
 	 *
 	 * @param  string $key
-	 * @param  mixed $new_items
+	 * @param  mixed  $new_items
 	 * @return void
 	 */
 	public function add( $key, $new_items ) {
@@ -187,7 +187,7 @@ class Flash {
 	 * Add values for a key for the current request.
 	 *
 	 * @param  string $key
-	 * @param  mixed $new_items
+	 * @param  mixed  $new_items
 	 * @return void
 	 */
 	public function addNow( $key, $new_items ) {
@@ -198,7 +198,7 @@ class Flash {
 	 * Get the entire store or the values for a key for the current request.
 	 *
 	 * @param  string|null $key
-	 * @param  mixed $default
+	 * @param  mixed       $default
 	 * @return mixed
 	 */
 	public function get( $key = null, $default = [] ) {
@@ -209,7 +209,7 @@ class Flash {
 	 * Get the entire store or the values for a key for the next request.
 	 *
 	 * @param  string|null $key
-	 * @param  mixed $default
+	 * @param  mixed       $default
 	 * @return mixed
 	 */
 	public function getNext( $key = null, $default = [] ) {
@@ -245,7 +245,7 @@ class Flash {
 		$this->validateStore();
 
 		$this->flashed[ static::CURRENT_KEY ] = $this->flashed[ static::NEXT_KEY ];
-		$this->flashed[ static::NEXT_KEY ] = [];
+		$this->flashed[ static::NEXT_KEY ]    = [];
 	}
 
 	/**

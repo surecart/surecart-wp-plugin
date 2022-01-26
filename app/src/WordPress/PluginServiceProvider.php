@@ -2,7 +2,7 @@
 
 namespace CheckoutEngine\WordPress;
 
-use WPEmerge\ServiceProviders\ServiceProviderInterface;
+use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
 
 /**
  * Register plugin options.
@@ -24,7 +24,7 @@ class PluginServiceProvider implements ServiceProviderInterface {
 			return new UsersService();
 		};
 
-		$app = $container[ WPEMERGE_APPLICATION_KEY ];
+		$app = $container[ CHECKOUT_ENGINE_APPLICATION_KEY ];
 
 		$app->alias( 'pages', 'checkout_engine.pages' );
 

@@ -1,15 +1,15 @@
 <?php
 /**
- * @package   WPEmerge
- * @author    Atanas Angelov <hi@atanas.dev>
- * @copyright 2017-2019 Atanas Angelov
+ * @package   CheckoutEngineCore
+ * @author    Andre Gagnon <hi@atanas.dev>
+ * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://wpemerge.com/
+ * @link      https://checkout_engine.com/
  */
 
-namespace WPEmerge\Requests;
+namespace CheckoutEngineCore\Requests;
 
-use WPEmerge\ServiceProviders\ServiceProviderInterface;
+use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
 
 /**
  * Provide request dependencies.
@@ -21,7 +21,7 @@ class RequestsServiceProvider implements ServiceProviderInterface {
 	 * {@inheritDoc}
 	 */
 	public function register( $container ) {
-		$container[ WPEMERGE_REQUEST_KEY ] = function () {
+		$container[ CHECKOUT_ENGINE_REQUEST_KEY ] = function () {
 			return Request::fromGlobals();
 		};
 	}

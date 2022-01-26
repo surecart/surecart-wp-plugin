@@ -2,7 +2,7 @@
 
 namespace CheckoutEngine\Webhooks;
 
-use WPEmerge\ServiceProviders\ServiceProviderInterface;
+use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
 
 /**
  * WordPress Users service.

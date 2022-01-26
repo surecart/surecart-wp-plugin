@@ -3,7 +3,7 @@
 namespace CheckoutEngine\Controllers\Admin\Customers;
 
 use CheckoutEngine\Models\Product;
-use WPEmerge\Responses\RedirectResponse;
+use CheckoutEngineCore\Responses\RedirectResponse;
 use CheckoutEngine\Controllers\Admin\Customers\CustomersListTable;
 
 /**
@@ -30,7 +30,7 @@ class CustomersController {
 	/**
 	 * Change the archived attribute in the model
 	 *
-	 * @param \WPEmerge\Requests\RequestInterface $request Request.
+	 * @param \CheckoutEngineCore\Requests\RequestInterface $request Request.
 	 * @return void
 	 */
 	public function toggleArchive( $request ) {

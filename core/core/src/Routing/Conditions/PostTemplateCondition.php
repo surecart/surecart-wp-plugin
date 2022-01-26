@@ -1,15 +1,15 @@
 <?php
 /**
- * @package   WPEmerge
- * @author    Atanas Angelov <hi@atanas.dev>
- * @copyright 2017-2019 Atanas Angelov
+ * @package   CheckoutEngineCore
+ * @author    Andre Gagnon <hi@atanas.dev>
+ * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://wpemerge.com/
+ * @link      https://checkout_engine.com/
  */
 
-namespace WPEmerge\Routing\Conditions;
+namespace CheckoutEngineCore\Routing\Conditions;
 
-use WPEmerge\Requests\RequestInterface;
+use CheckoutEngineCore\Requests\RequestInterface;
 
 /**
  * Check against the current post's template.
@@ -40,7 +40,7 @@ class PostTemplateCondition implements ConditionInterface {
 	 */
 	public function __construct( $post_template, $post_types = [] ) {
 		$this->post_template = $post_template;
-		$this->post_types = is_array( $post_types ) ? $post_types : [$post_types];
+		$this->post_types    = is_array( $post_types ) ? $post_types : [ $post_types ];
 	}
 
 	/**
@@ -56,6 +56,9 @@ class PostTemplateCondition implements ConditionInterface {
 	 * {@inheritDoc}
 	 */
 	public function getArguments( RequestInterface $request ) {
-		return ['post_template' => $this->post_template, 'post_types' => $this->post_types];
+		return [
+			'post_template' => $this->post_template,
+			'post_types'    => $this->post_types,
+		];
 	}
 }

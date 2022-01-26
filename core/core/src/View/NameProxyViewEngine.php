@@ -1,15 +1,15 @@
 <?php
 /**
- * @package   WPEmerge
- * @author    Atanas Angelov <hi@atanas.dev>
- * @copyright 2017-2019 Atanas Angelov
+ * @package   CheckoutEngineCore
+ * @author    Andre Gagnon <hi@atanas.dev>
+ * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://wpemerge.com/
+ * @link      https://checkout_engine.com/
  */
 
-namespace WPEmerge\View;
+namespace CheckoutEngineCore\View;
 
-use WPEmerge\Application\Application;
+use CheckoutEngineCore\Application\Application;
 
 /**
  * Render view files with different engines depending on their filename
@@ -20,7 +20,7 @@ class NameProxyViewEngine implements ViewEngineInterface {
 	 *
 	 * @var string
 	 */
-	protected $default = WPEMERGE_VIEW_PHP_VIEW_ENGINE_KEY;
+	protected $default = CHECKOUT_ENGINE_VIEW_PHP_VIEW_ENGINE_KEY;
 
 	/**
 	 * Application.
@@ -44,7 +44,7 @@ class NameProxyViewEngine implements ViewEngineInterface {
 	 * @param string      $default
 	 */
 	public function __construct( Application $app, $bindings, $default = '' ) {
-		$this->app = $app;
+		$this->app      = $app;
 		$this->bindings = $bindings;
 
 		if ( ! empty( $default ) ) {
@@ -57,7 +57,7 @@ class NameProxyViewEngine implements ViewEngineInterface {
 	 */
 	public function exists( $view ) {
 		$engine_key = $this->getBindingForFile( $view );
-		$engine = $this->app->resolve( $engine_key );
+		$engine     = $this->app->resolve( $engine_key );
 		return $engine->exists( $view );
 	}
 
@@ -66,20 +66,21 @@ class NameProxyViewEngine implements ViewEngineInterface {
 	 */
 	public function canonical( $view ) {
 		$engine_key = $this->getBindingForFile( $view );
-		$engine = $this->app->resolve( $engine_key );
+		$engine     = $this->app->resolve( $engine_key );
 		return $engine->canonical( $view );
 	}
 
 	/**
 	 * {@inheritDoc}
+	 *
 	 * @throws ViewNotFoundException
 	 */
 	public function make( $views ) {
 		foreach ( $views as $view ) {
 			if ( $this->exists( $view ) ) {
 				$engine_key = $this->getBindingForFile( $view );
-				$engine = $this->app->resolve( $engine_key );
-				return $engine->make( [$view] );
+				$engine     = $this->app->resolve( $engine_key );
+				return $engine->make( [ $view ] );
 			}
 		}
 

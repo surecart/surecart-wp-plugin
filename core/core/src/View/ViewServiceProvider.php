@@ -1,18 +1,18 @@
 <?php
 /**
- * @package   WPEmerge
- * @author    Atanas Angelov <hi@atanas.dev>
- * @copyright 2017-2019 Atanas Angelov
+ * @package   CheckoutEngineCore
+ * @author    Andre Gagnon <hi@atanas.dev>
+ * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://wpemerge.com/
+ * @link      https://checkout_engine.com/
  */
 
-namespace WPEmerge\View;
+namespace CheckoutEngineCore\View;
 
 use Pimple\Container;
-use WPEmerge\Helpers\MixedType;
-use WPEmerge\ServiceProviders\ExtendsConfigTrait;
-use WPEmerge\ServiceProviders\ServiceProviderInterface;
+use CheckoutEngineCore\Helpers\MixedType;
+use CheckoutEngineCore\ServiceProviders\ExtendsConfigTrait;
+use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
 
 /**
  * Provide view dependencies
@@ -27,54 +27,67 @@ class ViewServiceProvider implements ServiceProviderInterface {
 	 */
 	public function register( $container ) {
 		/** @var Container $container */
-		$this->extendConfig( $container, 'views', [get_stylesheet_directory(), get_template_directory()] );
+		$this->extendConfig( $container, 'views', [ get_stylesheet_directory(), get_template_directory() ] );
 
-		$this->extendConfig( $container, 'view_composers', [
-			'namespace' => 'App\\ViewComposers\\',
-		] );
+		$this->extendConfig(
+			$container,
+			'view_composers',
+			[
+				'namespace' => 'App\\ViewComposers\\',
+			]
+		);
 
-		$container[ WPEMERGE_VIEW_SERVICE_KEY ] = function ( $c ) {
+		$container[ CHECKOUT_ENGINE_VIEW_SERVICE_KEY ] = function ( $c ) {
 			return new ViewService(
-				$c[ WPEMERGE_CONFIG_KEY ]['view_composers'],
-				$c[ WPEMERGE_VIEW_ENGINE_KEY ],
-				$c[ WPEMERGE_HELPERS_HANDLER_FACTORY_KEY ]
+				$c[ CHECKOUT_ENGINE_CONFIG_KEY ]['view_composers'],
+				$c[ CHECKOUT_ENGINE_VIEW_ENGINE_KEY ],
+				$c[ CHECKOUT_ENGINE_HELPERS_HANDLER_FACTORY_KEY ]
 			);
 		};
 
-		$container[ WPEMERGE_VIEW_COMPOSE_ACTION_KEY ] = function ( $c ) {
+		$container[ CHECKOUT_ENGINE_VIEW_COMPOSE_ACTION_KEY ] = function ( $c ) {
 			return function ( ViewInterface $view ) use ( $c ) {
-				$view_service = $c[ WPEMERGE_VIEW_SERVICE_KEY ];
+				$view_service = $c[ CHECKOUT_ENGINE_VIEW_SERVICE_KEY ];
 				$view_service->compose( $view );
 				return $view;
 			};
 		};
 
-		$container[ WPEMERGE_VIEW_PHP_VIEW_ENGINE_KEY ] = function ( $c ) {
-			$finder = new PhpViewFilesystemFinder( MixedType::toArray( $c[ WPEMERGE_CONFIG_KEY ]['views'] ) );
-			return new PhpViewEngine( $c[ WPEMERGE_VIEW_COMPOSE_ACTION_KEY ], $finder );
+		$container[ CHECKOUT_ENGINE_VIEW_PHP_VIEW_ENGINE_KEY ] = function ( $c ) {
+			$finder = new PhpViewFilesystemFinder( MixedType::toArray( $c[ CHECKOUT_ENGINE_CONFIG_KEY ]['views'] ) );
+			return new PhpViewEngine( $c[ CHECKOUT_ENGINE_VIEW_COMPOSE_ACTION_KEY ], $finder );
 		};
 
-		$container[ WPEMERGE_VIEW_ENGINE_KEY ] = function ( $c ) {
-			return $c[ WPEMERGE_VIEW_PHP_VIEW_ENGINE_KEY ];
+		$container[ CHECKOUT_ENGINE_VIEW_ENGINE_KEY ] = function ( $c ) {
+			return $c[ CHECKOUT_ENGINE_VIEW_PHP_VIEW_ENGINE_KEY ];
 		};
 
-		$app = $container[ WPEMERGE_APPLICATION_KEY ];
-		$app->alias( 'views', WPEMERGE_VIEW_SERVICE_KEY );
+		$app = $container[ CHECKOUT_ENGINE_APPLICATION_KEY ];
+		$app->alias( 'views', CHECKOUT_ENGINE_VIEW_SERVICE_KEY );
 
-		$app->alias( 'view', function () use ( $app ) {
-			return call_user_func_array( [$app->views(), 'make'], func_get_args() );
-		} );
+		$app->alias(
+			'view',
+			function () use ( $app ) {
+				return call_user_func_array( [ $app->views(), 'make' ], func_get_args() );
+			}
+		);
 
-		$app->alias( 'render', function () use ( $app ) {
-			return call_user_func_array( [$app->views(), 'render'], func_get_args() );
-		} );
+		$app->alias(
+			'render',
+			function () use ( $app ) {
+				return call_user_func_array( [ $app->views(), 'render' ], func_get_args() );
+			}
+		);
 
-		$app->alias( 'layoutContent', function () use ( $app ) {
-			/** @var PhpViewEngine $engine */
-			$engine = $app->resolve( WPEMERGE_VIEW_PHP_VIEW_ENGINE_KEY );
+		$app->alias(
+			'layoutContent',
+			function () use ( $app ) {
+				/** @var PhpViewEngine $engine */
+				$engine = $app->resolve( CHECKOUT_ENGINE_VIEW_PHP_VIEW_ENGINE_KEY );
 
-			echo $engine->getLayoutContent();
-		} );
+				echo $engine->getLayoutContent();
+			}
+		);
 	}
 
 	/**

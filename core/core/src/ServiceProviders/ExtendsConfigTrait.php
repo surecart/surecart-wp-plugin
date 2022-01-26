@@ -1,16 +1,16 @@
 <?php
 /**
- * @package   WPEmerge
- * @author    Atanas Angelov <hi@atanas.dev>
- * @copyright 2017-2019 Atanas Angelov
+ * @package   CheckoutEngineCore
+ * @author    Andre Gagnon <hi@atanas.dev>
+ * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://wpemerge.com/
+ * @link      https://checkout_engine.com/
  */
 
-namespace WPEmerge\ServiceProviders;
+namespace CheckoutEngineCore\ServiceProviders;
 
 use Pimple\Container;
-use WPEmerge\Support\Arr;
+use CheckoutEngineCore\Support\Arr;
 
 /**
  * Allows objects to extend the config.
@@ -32,7 +32,7 @@ trait ExtendsConfigTrait {
 		}
 
 		$default_is_indexed = array_keys( $default ) === range( 0, count( $default ) - 1 );
-		$config_is_indexed = array_keys( $config ) === range( 0, count( $config ) - 1 );
+		$config_is_indexed  = array_keys( $config ) === range( 0, count( $config ) - 1 );
 
 		if ( $default_is_indexed && $config_is_indexed ) {
 			return $config;
@@ -56,12 +56,12 @@ trait ExtendsConfigTrait {
 	 * @return void
 	 */
 	public function extendConfig( $container, $key, $default ) {
-		$config = isset( $container[ WPEMERGE_CONFIG_KEY ] ) ? $container[ WPEMERGE_CONFIG_KEY ] : [];
+		$config = isset( $container[ CHECKOUT_ENGINE_CONFIG_KEY ] ) ? $container[ CHECKOUT_ENGINE_CONFIG_KEY ] : [];
 		$config = Arr::get( $config, $key, $default );
 
-		$container[ WPEMERGE_CONFIG_KEY ] = array_merge(
-			$container[ WPEMERGE_CONFIG_KEY ],
-			[$key => $this->replaceConfig( $default, $config )]
+		$container[ CHECKOUT_ENGINE_CONFIG_KEY ] = array_merge(
+			$container[ CHECKOUT_ENGINE_CONFIG_KEY ],
+			[ $key => $this->replaceConfig( $default, $config ) ]
 		);
 	}
 }

@@ -1,17 +1,17 @@
 <?php
 /**
- * @package   WPEmergeAppCore
- * @author    Atanas Angelov <hi@atanas.dev>
- * @copyright 2017-2020 Atanas Angelov
+ * @package   CheckoutEngineAppCore
+ * @author    Andre Gagnon <hi@atanas.dev>
+ * @copyright  Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://wpemerge.com/
+ * @link      https://checkoutengine.com
  */
 
-namespace WPEmergeAppCore\Assets;
+namespace CheckoutEngineAppCore\Assets;
 
-use WPEmerge\Helpers\MixedType;
-use WPEmerge\Helpers\Url;
-use WPEmergeAppCore\Config\Config;
+use CheckoutEngineCore\Helpers\MixedType;
+use CheckoutEngineCore\Helpers\Url;
+use CheckoutEngineAppCore\Config\Config;
 
 class Assets {
 	/**
@@ -51,9 +51,9 @@ class Assets {
 	 * @param Manifest $manifest
 	 */
 	public function __construct( $path, $url, Config $config, Manifest $manifest ) {
-		$this->path = MixedType::removeTrailingSlash( $path );
-		$this->url = Url::removeTrailingSlash( $url );
-		$this->config = $config;
+		$this->path     = MixedType::removeTrailingSlash( $path );
+		$this->url      = Url::removeTrailingSlash( $url );
+		$this->config   = $config;
 		$this->manifest = $manifest;
 	}
 
@@ -70,37 +70,39 @@ class Assets {
 	/**
 	 * Get if a url is external or not.
 	 *
-	 * @param  string  $url
-	 * @param  string  $home_url
+	 * @param  string $url
+	 * @param  string $home_url
 	 * @return boolean
 	 */
 	protected function isExternalUrl( $url, $home_url ) {
-		$delimiter = '~';
+		$delimiter        = '~';
 		$pattern_home_url = preg_quote( $home_url, $delimiter );
-		$pattern = $delimiter . '^' . $pattern_home_url . $delimiter . 'i';
+		$pattern          = $delimiter . '^' . $pattern_home_url . $delimiter . 'i';
 		return ! preg_match( $pattern, $url );
 	}
 
 	/**
 	 * Generate a version for a given asset src.
 	 *
-	 * @param  string          $src
+	 * @param  string $src
 	 * @return integer|boolean
 	 */
 	protected function generateFileVersion( $src ) {
 		// Normalize both URLs in order to avoid problems with http, https
 		// and protocol-less cases.
-		$src = $this->removeProtocol( $src );
+		$src      = $this->removeProtocol( $src );
 		$home_url = $this->removeProtocol( WP_CONTENT_URL );
-		$version = false;
+		$version  = false;
 
 		if ( ! $this->isExternalUrl( $src, $home_url ) ) {
 			// Generate the absolute path to the file.
-			$file_path = MixedType::normalizePath( str_replace(
-				[$home_url, '/'],
-				[WP_CONTENT_DIR, DIRECTORY_SEPARATOR],
-				$src
-			) );
+			$file_path = MixedType::normalizePath(
+				str_replace(
+					[ $home_url, '/' ],
+					[ WP_CONTENT_DIR, DIRECTORY_SEPARATOR ],
+					$src
+				)
+			);
 
 			if ( file_exists( $file_path ) ) {
 				// Use the last modified time of the file as a version.
@@ -150,13 +152,13 @@ class Assets {
 	 * Get the public URL to a generated JS or CSS bundle.
 	 * Handles SCRIPT_DEBUG and hot reloading.
 	 *
-	 * @param string  $name Source basename (no extension).
-	 * @param string  $extension Source extension - '.js' or '.css'.
+	 * @param string $name Source basename (no extension).
+	 * @param string $extension Source extension - '.js' or '.css'.
 	 * @return string
 	 */
 	public function getBundleUrl( $name, $extension ) {
-		$url_path = '.css' === $extension ? "styles/{$name}" : $name;
-		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+		$url_path  = '.css' === $extension ? "styles/{$name}" : $name;
+		$suffix    = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 		$file_path = implode(
 			DIRECTORY_SEPARATOR,
 			array_filter(
@@ -173,7 +175,7 @@ class Assets {
 			return "{$this->getUrl()}/dist/{$url_path}{$suffix}{$extension}";
 		}
 
-		$hot_url = wp_parse_url( $this->config->get( 'development.hotUrl', 'http://localhost/' ) );
+		$hot_url  = wp_parse_url( $this->config->get( 'development.hotUrl', 'http://localhost/' ) );
 		$hot_port = $this->config->get( 'development.port', 3000 );
 
 		return "${hot_url['scheme']}://{$hot_url['host']}:{$hot_port}/{$url_path}{$extension}";
@@ -216,7 +218,7 @@ class Assets {
 			return;
 		}
 
-		$favicon_url = apply_filters( 'wpemerge_app_core_favicon_url', $this->getAssetUrl( 'images/favicon.ico' ) );
+		$favicon_url = apply_filters( 'checkout_engine_app_core_favicon_url', $this->getAssetUrl( 'images/favicon.ico' ) );
 
 		echo '<link rel="shortcut icon" href="' . $favicon_url . '" />' . "\n";
 	}

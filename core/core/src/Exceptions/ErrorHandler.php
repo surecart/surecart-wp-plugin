@@ -1,22 +1,22 @@
 <?php
 /**
- * @package   WPEmerge
- * @author    Atanas Angelov <hi@atanas.dev>
- * @copyright 2017-2019 Atanas Angelov
+ * @package   CheckoutEngineCore
+ * @author    Andre Gagnon <hi@atanas.dev>
+ * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://wpemerge.com/
+ * @link      https://checkout_engine.com/
  */
 
-namespace WPEmerge\Exceptions;
+namespace CheckoutEngineCore\Exceptions;
 
 use Exception as PhpException;
 use Psr\Http\Message\ResponseInterface;
 use Whoops\RunInterface;
-use WPEmerge\Csrf\InvalidCsrfTokenException;
-use WPEmerge\Requests\RequestInterface;
-use WPEmerge\Responses\ResponseService;
-use WPEmerge\Routing\NotFoundException;
-use WPEmerge\Support\Arr;
+use CheckoutEngineCore\Csrf\InvalidCsrfTokenException;
+use CheckoutEngineCore\Requests\RequestInterface;
+use CheckoutEngineCore\Responses\ResponseService;
+use CheckoutEngineCore\Routing\NotFoundException;
+use CheckoutEngineCore\Support\Arr;
 
 class ErrorHandler implements ErrorHandlerInterface {
 	/**
@@ -50,12 +50,13 @@ class ErrorHandler implements ErrorHandlerInterface {
 	 */
 	public function __construct( $response_service, $whoops, $debug = false ) {
 		$this->response_service = $response_service;
-		$this->whoops = $whoops;
-		$this->debug = $debug;
+		$this->whoops           = $whoops;
+		$this->debug            = $debug;
 	}
 
 	/**
 	 * {@inheritDoc}
+	 *
 	 * @codeCoverageIgnore
 	 */
 	public function register() {
@@ -66,6 +67,7 @@ class ErrorHandler implements ErrorHandlerInterface {
 
 	/**
 	 * {@inheritDoc}
+	 *
 	 * @codeCoverageIgnore
 	 */
 	public function unregister() {
@@ -77,7 +79,7 @@ class ErrorHandler implements ErrorHandlerInterface {
 	/**
 	 * Convert an exception to a ResponseInterface instance if possible.
 	 *
-	 * @param  PhpException            $exception
+	 * @param  PhpException $exception
 	 * @return ResponseInterface|false
 	 */
 	protected function toResponse( $exception ) {
@@ -98,21 +100,26 @@ class ErrorHandler implements ErrorHandlerInterface {
 	 * Convert an exception to a debug ResponseInterface instance if possible.
 	 *
 	 * @throws PhpException
-	 * @param  RequestInterface  $request
-	 * @param  PhpException      $exception
+	 * @param  RequestInterface $request
+	 * @param  PhpException     $exception
 	 * @return ResponseInterface
 	 */
 	protected function toDebugResponse( RequestInterface $request, PhpException $exception ) {
 		if ( $request->isAjax() ) {
-			return $this->response_service->json( [
-				'message' => $exception->getMessage(),
-				'exception' => get_class( $exception ),
-				'file' => $exception->getFile(),
-				'line' => $exception->getLine(),
-				'trace' => array_map( function ( $trace ) {
-					return Arr::except( $trace, ['args'] );
-				}, $exception->getTrace() ),
-			] )->withStatus( 500 );
+			return $this->response_service->json(
+				[
+					'message'   => $exception->getMessage(),
+					'exception' => get_class( $exception ),
+					'file'      => $exception->getFile(),
+					'line'      => $exception->getLine(),
+					'trace'     => array_map(
+						function ( $trace ) {
+							return Arr::except( $trace, [ 'args' ] );
+						},
+						$exception->getTrace()
+					),
+				]
+			)->withStatus( 500 );
 		}
 
 		if ( $this->whoops !== null ) {
@@ -126,7 +133,7 @@ class ErrorHandler implements ErrorHandlerInterface {
 	 * Convert an exception to a pretty error response.
 	 *
 	 * @codeCoverageIgnore
-	 * @param  PhpException      $exception
+	 * @param  PhpException $exception
 	 * @return ResponseInterface
 	 */
 	protected function toPrettyErrorResponse( $exception ) {
@@ -139,6 +146,7 @@ class ErrorHandler implements ErrorHandlerInterface {
 
 	/**
 	 * {@inheritDoc}
+	 *
 	 * @throws PhpException
 	 */
 	public function getResponse( RequestInterface $request, PhpException $exception ) {
@@ -148,7 +156,7 @@ class ErrorHandler implements ErrorHandlerInterface {
 			return $response;
 		}
 
-		if ( ! defined( 'WPEMERGE_TEST_DIR' ) ) {
+		if ( ! defined( 'CHECKOUT_ENGINE_TEST_DIR' ) ) {
 			// Only log errors if we are not running the WP Emerge test suite.
 			error_log( $exception );
 		}

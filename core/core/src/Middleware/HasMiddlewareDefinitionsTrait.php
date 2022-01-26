@@ -1,15 +1,15 @@
 <?php
 /**
- * @package   WPEmerge
- * @author    Atanas Angelov <hi@atanas.dev>
- * @copyright 2017-2019 Atanas Angelov
+ * @package   CheckoutEngineCore
+ * @author    Andre Gagnon <hi@atanas.dev>
+ * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://wpemerge.com/
+ * @link      https://checkout_engine.com/
  */
 
-namespace WPEmerge\Middleware;
+namespace CheckoutEngineCore\Middleware;
 
-use WPEmerge\Exceptions\ConfigurationException;
+use CheckoutEngineCore\Exceptions\ConfigurationException;
 
 /**
  * Provide middleware definitions.
@@ -30,7 +30,7 @@ trait HasMiddlewareDefinitionsTrait {
 	protected $middleware_groups = [];
 
 	/**
-	 * Middleware groups that should have the 'wpemerge' and 'global' groups prepended to them.
+	 * Middleware groups that should have the 'checkout_engine' and 'global' groups prepended to them.
 	 *
 	 * @var string[]
 	 */
@@ -65,7 +65,7 @@ trait HasMiddlewareDefinitionsTrait {
 	/**
 	 * Filter array of middleware into a unique set.
 	 *
-	 * @param  array[]  $middleware
+	 * @param  array[] $middleware
 	 * @return string[]
 	 */
 	public function uniqueMiddleware( $middleware ) {
@@ -94,7 +94,7 @@ trait HasMiddlewareDefinitionsTrait {
 	/**
 	 * Expand a middleware group into an array of fully qualified class names.
 	 *
-	 * @param  string  $group
+	 * @param  string $group
 	 * @return array[]
 	 */
 	public function expandMiddlewareGroup( $group ) {
@@ -105,7 +105,7 @@ trait HasMiddlewareDefinitionsTrait {
 		$middleware = $this->middleware_groups[ $group ];
 
 		if ( in_array( $group, $this->prepend_special_groups_to, true ) ) {
-			$middleware = array_merge( ['wpemerge', 'global'], $middleware );
+			$middleware = array_merge( [ 'checkout_engine', 'global' ], $middleware );
 		}
 
 		return $this->expandMiddleware( $middleware );
@@ -114,21 +114,21 @@ trait HasMiddlewareDefinitionsTrait {
 	/**
 	 * Expand middleware into an array of fully qualified class names and any companion arguments.
 	 *
-	 * @param  string  $middleware
+	 * @param  string $middleware
 	 * @return array[]
 	 */
 	public function expandMiddlewareMolecule( $middleware ) {
 		$pieces = explode( ':', $middleware, 2 );
 
 		if ( count( $pieces ) > 1 ) {
-			return [array_merge( [$this->expandMiddlewareAtom( $pieces[0] )], explode( ',', $pieces[1] ) )];
+			return [ array_merge( [ $this->expandMiddlewareAtom( $pieces[0] ) ], explode( ',', $pieces[1] ) ) ];
 		}
 
 		if ( isset( $this->middleware_groups[ $middleware ] ) ) {
 			return $this->expandMiddlewareGroup( $middleware );
 		}
 
-		return [[$this->expandMiddlewareAtom( $middleware )]];
+		return [ [ $this->expandMiddlewareAtom( $middleware ) ] ];
 	}
 
 	/**

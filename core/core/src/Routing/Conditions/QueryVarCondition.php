@@ -1,15 +1,15 @@
 <?php
 /**
- * @package   WPEmerge
- * @author    Atanas Angelov <hi@atanas.dev>
- * @copyright 2017-2019 Atanas Angelov
+ * @package   CheckoutEngineCore
+ * @author    Andre Gagnon <hi@atanas.dev>
+ * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://wpemerge.com/
+ * @link      https://checkout_engine.com/
  */
 
-namespace WPEmerge\Routing\Conditions;
+namespace CheckoutEngineCore\Routing\Conditions;
 
-use WPEmerge\Requests\RequestInterface;
+use CheckoutEngineCore\Requests\RequestInterface;
 
 /**
  * Check against a query var value.
@@ -40,7 +40,7 @@ class QueryVarCondition implements ConditionInterface {
 	 */
 	public function __construct( $query_var, $value = null ) {
 		$this->query_var = $query_var;
-		$this->value = $value;
+		$this->value     = $value;
 	}
 
 	/**
@@ -64,6 +64,9 @@ class QueryVarCondition implements ConditionInterface {
 	 * {@inheritDoc}
 	 */
 	public function getArguments( RequestInterface $request ) {
-		return ['query_var' => $this->query_var, 'value' => $this->value];
+		return [
+			'query_var' => $this->query_var,
+			'value'     => $this->value,
+		];
 	}
 }

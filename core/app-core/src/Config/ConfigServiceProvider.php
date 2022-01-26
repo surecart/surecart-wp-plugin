@@ -1,15 +1,15 @@
 <?php
 /**
- * @package   WPEmergeAppCore
- * @author    Atanas Angelov <hi@atanas.dev>
- * @copyright 2017-2020 Atanas Angelov
+ * @package   CheckoutEngineAppCore
+ * @author    Andre Gagnon <hi@atanas.dev>
+ * @copyright  Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://wpemerge.com/
+ * @link      https://checkoutengine.com
  */
 
-namespace WPEmergeAppCore\Config;
+namespace CheckoutEngineAppCore\Config;
 
-use WPEmerge\ServiceProviders\ServiceProviderInterface;
+use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
 
 /**
  * Provide assets dependencies.
@@ -21,8 +21,8 @@ class ConfigServiceProvider implements ServiceProviderInterface {
 	 * {@inheritDoc}
 	 */
 	public function register( $container ) {
-		$container['wpemerge_app_core.config.config'] = function( $c ) {
-			return new Config( $c[ WPEMERGE_CONFIG_KEY ]['app_core']['path'] );
+		$container['checkout_engine_app_core.config.config'] = function( $c ) {
+			return new Config( $c[ CHECKOUT_ENGINE_CONFIG_KEY ]['app_core']['path'] );
 		};
 	}
 

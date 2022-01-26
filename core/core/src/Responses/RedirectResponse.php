@@ -1,17 +1,17 @@
 <?php
 /**
- * @package   WPEmerge
- * @author    Atanas Angelov <hi@atanas.dev>
- * @copyright 2017-2019 Atanas Angelov
+ * @package   CheckoutEngineCore
+ * @author    Andre Gagnon <hi@atanas.dev>
+ * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://wpemerge.com/
+ * @link      https://checkout_engine.com/
  */
 
-namespace WPEmerge\Responses;
+namespace CheckoutEngineCore\Responses;
 
 use GuzzleHttp\Psr7\Response as Psr7Response;
 use Psr\Http\Message\ResponseInterface;
-use WPEmerge\Requests\RequestInterface;
+use CheckoutEngineCore\Requests\RequestInterface;
 
 /**
  * A collection of tools for the creation of responses
@@ -38,8 +38,8 @@ class RedirectResponse extends Psr7Response {
 	/**
 	 * Get a response redirecting to a specific url.
 	 *
-	 * @param  string            $url
-	 * @param  integer           $status
+	 * @param  string  $url
+	 * @param  integer $status
 	 * @return ResponseInterface
 	 */
 	public function to( $url, $status = 302 ) {
@@ -51,8 +51,8 @@ class RedirectResponse extends Psr7Response {
 	/**
 	 * Get a response redirecting back to the referrer or a fallback.
 	 *
-	 * @param  string            $fallback
-	 * @param  integer           $status
+	 * @param  string  $fallback
+	 * @param  integer $status
 	 * @return ResponseInterface
 	 */
 	public function back( $fallback = '', $status = 302 ) {

@@ -1,13 +1,13 @@
 <?php
 /**
- * @package   WPEmerge
- * @author    Atanas Angelov <hi@atanas.dev>
- * @copyright 2017-2019 Atanas Angelov
+ * @package   CheckoutEngineCore
+ * @author    Andre Gagnon <hi@atanas.dev>
+ * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://wpemerge.com/
+ * @link      https://checkout_engine.com/
  */
 
-namespace WPEmerge\Routing;
+namespace CheckoutEngineCore\Routing;
 
 /**
  * Provide middleware sorting.
@@ -55,7 +55,7 @@ trait SortsMiddlewareTrait {
 		}
 
 		$increasing_priority = array_reverse( $this->getMiddlewarePriority() );
-		$priority = array_search( $middleware, $increasing_priority );
+		$priority            = array_search( $middleware, $increasing_priority );
 		return $priority !== false ? (int) $priority : -1;
 	}
 
@@ -68,18 +68,21 @@ trait SortsMiddlewareTrait {
 	public function sortMiddleware( $middleware ) {
 		$sorted = $middleware;
 
-		usort( $sorted, function ( $a, $b ) use ( $middleware ) {
-			$a_priority = $this->getMiddlewarePriorityForMiddleware( $a );
-			$b_priority = $this->getMiddlewarePriorityForMiddleware( $b );
-			$priority = $b_priority - $a_priority;
+		usort(
+			$sorted,
+			function ( $a, $b ) use ( $middleware ) {
+				$a_priority = $this->getMiddlewarePriorityForMiddleware( $a );
+				$b_priority = $this->getMiddlewarePriorityForMiddleware( $b );
+				$priority   = $b_priority - $a_priority;
 
-			if ( $priority !== 0 ) {
-				return $priority;
+				if ( $priority !== 0 ) {
+					return $priority;
+				}
+
+				// Keep relative order from original array.
+				return array_search( $a, $middleware ) - array_search( $b, $middleware );
 			}
-
-			// Keep relative order from original array.
-			return array_search( $a, $middleware ) - array_search( $b, $middleware );
-		} );
+		);
 
 		return array_values( $sorted );
 	}

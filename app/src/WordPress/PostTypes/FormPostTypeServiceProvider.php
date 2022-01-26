@@ -4,7 +4,7 @@ namespace CheckoutEngine\WordPress\PostTypes;
 
 use CheckoutEngine\Models\Form;
 use CheckoutEngine\WordPress\PageService;
-use WPEmerge\ServiceProviders\ServiceProviderInterface;
+use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
 
 /**
  * Register our form post type
@@ -22,7 +22,7 @@ class FormPostTypeServiceProvider implements ServiceProviderInterface {
 			return new FormPostTypeService( new PageService() );
 		};
 
-		$container[ WPEMERGE_APPLICATION_KEY ]
+		$container[ CHECKOUT_ENGINE_APPLICATION_KEY ]
 			->alias( 'forms', 'checkout_engine.forms' );
 
 		add_action( 'display_post_states', [ $container['checkout_engine.forms'], 'displayDefaultFormStatus' ] );

@@ -1,16 +1,16 @@
 <?php
 /**
- * @package   WPEmerge
- * @author    Atanas Angelov <hi@atanas.dev>
- * @copyright 2017-2019 Atanas Angelov
+ * @package   CheckoutEngineCore
+ * @author    Andre Gagnon <hi@atanas.dev>
+ * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://wpemerge.com/
+ * @link      https://checkout_engine.com/
  */
 
-namespace WPEmerge\Helpers;
+namespace CheckoutEngineCore\Helpers;
 
-use WPEmerge\Requests\RequestInterface;
-use WPEmerge\Support\Arr;
+use CheckoutEngineCore\Requests\RequestInterface;
+use CheckoutEngineCore\Support\Arr;
 
 /**
  * A collection of tools dealing with URLs.
@@ -26,7 +26,7 @@ class Url {
 	 */
 	public static function getPath( RequestInterface $request, $home_url = '' ) {
 		$parsed_request = wp_parse_url( $request->getUrl() );
-		$parsed_home = wp_parse_url( $home_url ? $home_url : home_url( '/' ) );
+		$parsed_home    = wp_parse_url( $home_url ? $home_url : home_url( '/' ) );
 
 		$request_path = Arr::get( $parsed_request, 'path', '/' );
 		$request_path = static::removeTrailingSlash( $request_path );
@@ -39,7 +39,7 @@ class Url {
 		$home_path = Arr::get( $parsed_home, 'path', '/' );
 		$home_path = static::removeTrailingSlash( $home_path );
 		$home_path = static::addLeadingSlash( $home_path );
-		$path = $request_path;
+		$path      = $request_path;
 
 		if ( strpos( $request_path, $home_path ) === 0 ) {
 			$path = substr( $request_path, strlen( $home_path ) );

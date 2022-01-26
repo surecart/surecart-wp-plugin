@@ -1,16 +1,16 @@
 <?php
 /**
- * @package   WPEmerge
- * @author    Atanas Angelov <hi@atanas.dev>
- * @copyright 2017-2019 Atanas Angelov
+ * @package   CheckoutEngineCore
+ * @author    Andre Gagnon <hi@atanas.dev>
+ * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://wpemerge.com/
+ * @link      https://checkout_engine.com/
  */
 
-namespace WPEmerge\Routing;
+namespace CheckoutEngineCore\Routing;
 
-use WPEmerge\Exceptions\ConfigurationException;
-use WPEmerge\Support\Arr;
+use CheckoutEngineCore\Exceptions\ConfigurationException;
+use CheckoutEngineCore\Support\Arr;
 
 /**
  * Allow objects to have routes
@@ -41,7 +41,7 @@ trait HasRoutesTrait {
 	 */
 	public function addRoute( RouteInterface $route ) {
 		$routes = $this->getRoutes();
-		$name = $route->getAttribute( 'name' );
+		$name   = $route->getAttribute( 'name' );
 
 		if ( in_array( $route, $routes, true ) ) {
 			throw new ConfigurationException( 'Attempted to register a route twice.' );

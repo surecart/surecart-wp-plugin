@@ -1,33 +1,33 @@
 <?php
 /**
- * @package   WPEmerge
- * @author    Atanas Angelov <hi@atanas.dev>
- * @copyright 2017-2019 Atanas Angelov
+ * @package   CheckoutEngineCore
+ * @author    Andre Gagnon <hi@atanas.dev>
+ * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://wpemerge.com/
+ * @link      https://checkout_engine.com/
  */
 
-namespace WPEmerge\Kernels;
+namespace CheckoutEngineCore\Kernels;
 
 use Exception;
 use Pimple\Container;
 use Psr\Http\Message\ResponseInterface;
 use WP_Query;
-use WPEmerge\Application\GenericFactory;
-use WPEmerge\Exceptions\ConfigurationException;
-use WPEmerge\Exceptions\ErrorHandlerInterface;
-use WPEmerge\Helpers\Handler;
-use WPEmerge\Helpers\HandlerFactory;
-use WPEmerge\Middleware\ExecutesMiddlewareTrait;
-use WPEmerge\Middleware\HasMiddlewareDefinitionsTrait;
-use WPEmerge\Middleware\ReadsHandlerMiddlewareTrait;
-use WPEmerge\Requests\RequestInterface;
-use WPEmerge\Responses\ConvertsToResponseTrait;
-use WPEmerge\Responses\ResponseService;
-use WPEmerge\Routing\HasQueryFilterInterface;
-use WPEmerge\Routing\Router;
-use WPEmerge\Routing\SortsMiddlewareTrait;
-use WPEmerge\View\ViewService;
+use CheckoutEngineCore\Application\GenericFactory;
+use CheckoutEngineCore\Exceptions\ConfigurationException;
+use CheckoutEngineCore\Exceptions\ErrorHandlerInterface;
+use CheckoutEngineCore\Helpers\Handler;
+use CheckoutEngineCore\Helpers\HandlerFactory;
+use CheckoutEngineCore\Middleware\ExecutesMiddlewareTrait;
+use CheckoutEngineCore\Middleware\HasMiddlewareDefinitionsTrait;
+use CheckoutEngineCore\Middleware\ReadsHandlerMiddlewareTrait;
+use CheckoutEngineCore\Requests\RequestInterface;
+use CheckoutEngineCore\Responses\ConvertsToResponseTrait;
+use CheckoutEngineCore\Responses\ResponseService;
+use CheckoutEngineCore\Routing\HasQueryFilterInterface;
+use CheckoutEngineCore\Routing\Router;
+use CheckoutEngineCore\Routing\SortsMiddlewareTrait;
+use CheckoutEngineCore\View\ViewService;
 
 /**
  * Describes how a request is handled.
@@ -125,14 +125,14 @@ class HttpKernel implements HttpKernelInterface {
 		ViewService $view_service,
 		ErrorHandlerInterface $error_handler
 	) {
-		$this->container = $container;
-		$this->factory = $factory;
-		$this->handler_factory = $handler_factory;
+		$this->container        = $container;
+		$this->factory          = $factory;
+		$this->handler_factory  = $handler_factory;
 		$this->response_service = $response_service;
-		$this->request = $request;
-		$this->router = $router;
-		$this->view_service = $view_service;
-		$this->error_handler = $error_handler;
+		$this->request          = $request;
+		$this->router           = $router;
+		$this->view_service     = $view_service;
+		$this->error_handler    = $error_handler;
 	}
 
 	/**
@@ -142,7 +142,7 @@ class HttpKernel implements HttpKernelInterface {
 	 * @return ResponseInterface|null
 	 */
 	protected function getResponse() {
-		return isset( $this->container[ WPEMERGE_RESPONSE_KEY ] ) ? $this->container[ WPEMERGE_RESPONSE_KEY ] : null;
+		return isset( $this->container[ CHECKOUT_ENGINE_RESPONSE_KEY ] ) ? $this->container[ CHECKOUT_ENGINE_RESPONSE_KEY ] : null;
 	}
 
 	/**
@@ -169,12 +169,12 @@ class HttpKernel implements HttpKernelInterface {
 	/**
 	 * Execute a handler.
 	 *
-	 * @param  Handler           $handler
-	 * @param  array             $arguments
+	 * @param  Handler $handler
+	 * @param  array   $arguments
 	 * @return ResponseInterface
 	 */
 	protected function executeHandler( Handler $handler, $arguments = [] ) {
-		$response = call_user_func_array( [$handler, 'execute'], array_values( $arguments ) );
+		$response = call_user_func_array( [ $handler, 'execute' ], array_values( $arguments ) );
 		$response = $this->toResponse( $response );
 
 		if ( ! $response instanceof ResponseInterface ) {
@@ -201,9 +201,13 @@ class HttpKernel implements HttpKernelInterface {
 			$middleware = $this->uniqueMiddleware( $middleware );
 			$middleware = $this->sortMiddleware( $middleware );
 
-			$response = $this->executeMiddleware( $middleware, $request, function () use ( $handler, $arguments ) {
-				return $this->executeHandler( $handler, $arguments );
-			} );
+			$response = $this->executeMiddleware(
+				$middleware,
+				$request,
+				function () use ( $handler, $arguments ) {
+					return $this->executeHandler( $handler, $arguments );
+				}
+			);
 		} catch ( Exception $exception ) {
 			$response = $this->error_handler->getResponse( $request, $exception );
 		}
@@ -234,13 +238,13 @@ class HttpKernel implements HttpKernelInterface {
 			$route->getAttribute( 'middleware', [] ),
 			$route->getAttribute( 'handler' ),
 			array_merge(
-				[$request],
+				[ $request ],
 				$arguments,
 				$route_arguments
 			)
 		);
 
-		$this->container[ WPEMERGE_RESPONSE_KEY ] = $response;
+		$this->container[ CHECKOUT_ENGINE_RESPONSE_KEY ] = $response;
 
 		return $response;
 	}
@@ -273,20 +277,21 @@ class HttpKernel implements HttpKernelInterface {
 
 	/**
 	 * {@inheritDoc}
+	 *
 	 * @codeCoverageIgnore
 	 */
 	public function bootstrap() {
 		// Web. Use 3100 so it's high enough and has uncommonly used numbers
 		// before and after. For example, 1000 is too common and it would have 999 before it
 		// which is too common as well.).
-		add_action( 'request', [$this, 'filterRequest'], 3100 );
-		add_action( 'template_include', [$this, 'filterTemplateInclude'], 3100 );
+		add_action( 'request', [ $this, 'filterRequest' ], 3100 );
+		add_action( 'template_include', [ $this, 'filterTemplateInclude' ], 3100 );
 
 		// Ajax.
-		add_action( 'admin_init', [$this, 'registerAjaxAction'] );
+		add_action( 'admin_init', [ $this, 'registerAjaxAction' ] );
 
 		// Admin.
-		add_action( 'admin_init', [$this, 'registerAdminAction'] );
+		add_action( 'admin_init', [ $this, 'registerAdminAction' ] );
 	}
 
 	/**
@@ -307,10 +312,12 @@ class HttpKernel implements HttpKernelInterface {
 				continue;
 			}
 
-			$this->container[ WPEMERGE_APPLICATION_KEY ]
-				->renderConfigExceptions( function () use ( $route, &$query_vars ) {
-					$query_vars = $route->applyQueryFilter( $this->request, $query_vars );
-				} );
+			$this->container[ CHECKOUT_ENGINE_APPLICATION_KEY ]
+				->renderConfigExceptions(
+					function () use ( $route, &$query_vars ) {
+						$query_vars = $route->applyQueryFilter( $this->request, $query_vars );
+					}
+				);
 			break;
 		}
 
@@ -329,7 +336,7 @@ class HttpKernel implements HttpKernelInterface {
 
 		$this->template = $template;
 
-		$response = $this->handle( $this->request, [$template] );
+		$response = $this->handle( $this->request, [ $template ] );
 
 		// A route has matched so we use its response.
 		if ( $response instanceof ResponseInterface ) {
@@ -337,18 +344,18 @@ class HttpKernel implements HttpKernelInterface {
 				$wp_query->set_404();
 			}
 
-			add_action( 'wpemerge.kernels.http_kernel.respond', [$this, 'respond'] );
+			add_action( 'checkout_engine.kernels.http_kernel.respond', [ $this, 'respond' ] );
 
-			return WPEMERGE_DIR . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'view.php';
+			return CHECKOUT_ENGINE_DIR . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'view.php';
 		}
 
 		// No route has matched, but we still want to compose views.
 		$composers = $this->view_service->getComposersForView( $template );
 
 		if ( ! empty( $composers ) ) {
-			add_action( 'wpemerge.kernels.http_kernel.respond', [$this, 'compose'] );
+			add_action( 'checkout_engine.kernels.http_kernel.respond', [ $this, 'compose' ] );
 
-			return WPEMERGE_DIR . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'view.php';
+			return CHECKOUT_ENGINE_DIR . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'view.php';
 		}
 
 		return $template;
@@ -367,8 +374,8 @@ class HttpKernel implements HttpKernelInterface {
 		$action = $this->request->body( 'action', $this->request->query( 'action' ) );
 		$action = sanitize_text_field( $action );
 
-		add_action( "wp_ajax_{$action}", [$this, 'actionAjax'] );
-		add_action( "wp_ajax_nopriv_{$action}", [$this, 'actionAjax'] );
+		add_action( "wp_ajax_{$action}", [ $this, 'actionAjax' ] );
+		add_action( "wp_ajax_nopriv_{$action}", [ $this, 'actionAjax' ] );
 	}
 
 	/**
@@ -377,7 +384,7 @@ class HttpKernel implements HttpKernelInterface {
 	 * @return void
 	 */
 	public function actionAjax() {
-		$response = $this->handle( $this->request, [''] );
+		$response = $this->handle( $this->request, [ '' ] );
 
 		if ( ! $response instanceof ResponseInterface ) {
 			return;
@@ -385,7 +392,7 @@ class HttpKernel implements HttpKernelInterface {
 
 		$this->response_service->respond( $response );
 
-		wp_die( '', '', ['response' => null] );
+		wp_die( '', '', [ 'response' => null ] );
 	}
 
 	/**
@@ -443,11 +450,11 @@ class HttpKernel implements HttpKernelInterface {
 	 * @return void
 	 */
 	public function registerAdminAction() {
-		$page_hook = $this->getAdminPageHook();
+		$page_hook   = $this->getAdminPageHook();
 		$hook_suffix = $this->getAdminHook( $page_hook );
 
-		add_action( "load-{$hook_suffix}", [$this, 'actionAdminLoad'] );
-		add_action( $hook_suffix, [$this, 'actionAdmin'] );
+		add_action( "load-{$hook_suffix}", [ $this, 'actionAdminLoad' ] );
+		add_action( $hook_suffix, [ $this, 'actionAdmin' ] );
 	}
 
 	/**
@@ -456,7 +463,7 @@ class HttpKernel implements HttpKernelInterface {
 	 * @return void
 	 */
 	public function actionAdminLoad() {
-		$response = $this->handle( $this->request, [''] );
+		$response = $this->handle( $this->request, [ '' ] );
 
 		if ( ! $response instanceof ResponseInterface ) {
 			return;

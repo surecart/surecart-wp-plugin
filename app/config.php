@@ -1,6 +1,6 @@
 <?php
 /**
- * WP Emerge configuration.
+ * Configuration. Based on WPEmerge config:
  *
  * @link https://docs.wpemerge.com/#/framework/configuration
  *
@@ -12,10 +12,10 @@ return [
 	 * Array of service providers you wish to enable.
 	 */
 	'providers'           => [
-		\WPEmergeAppCore\AppCore\AppCoreServiceProvider::class,
+		\CheckoutEngineAppCore\AppCore\AppCoreServiceProvider::class,
 		\CheckoutEngine\WordPress\PluginServiceProvider::class,
-		\WPEmergeAppCore\Assets\AssetsServiceProvider::class,
-		\WPEmergeAppCore\Config\ConfigServiceProvider::class,
+		\CheckoutEngineAppCore\Assets\AssetsServiceProvider::class,
+		\CheckoutEngineAppCore\Config\ConfigServiceProvider::class,
 		\CheckoutEngine\Routing\RouteConditionsServiceProvider::class,
 		\CheckoutEngine\WordPress\AdminServiceProvider::class,
 		\CheckoutEngine\WordPress\PostTypes\FormPostTypeServiceProvider::class,
@@ -156,9 +156,9 @@ return [
 	 * - 'admin'    - Automatically applied to admin routes.
 	 * - 'ajax'     - Automatically applied to ajax routes.
 	 * - 'global'   - Automatically applied to all of the above.
-	 * - 'wpemerge' - Internal group applied the same way 'global' is.
+	 * - 'checkout_engine' - Internal group applied the same way 'global' is.
 	 *
-	 * Warning: The 'wpemerge' group contains some internal WP Emerge
+	 * Warning: The 'checkout_engine' group contains some internal Checkout Engine core
 	 * middleware which you should avoid overriding.
 	 */
 	'middleware_groups'   => [

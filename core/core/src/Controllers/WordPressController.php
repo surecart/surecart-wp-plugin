@@ -1,16 +1,16 @@
 <?php /**
- * @package   WPEmerge
- * @author    Atanas Angelov <hi@atanas.dev>
- * @copyright 2017-2019 Atanas Angelov
- * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://wpemerge.com/
- */ /** @noinspection PhpUnusedParameterInspection */
-namespace WPEmerge\Controllers;
+	   * @package   CheckoutEngineCore
+	   * @author    Andre Gagnon <hi@atanas.dev>
+	   * @copyright 2017-2019 Andre Gagnon
+	   * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
+	   * @link      https://checkout_engine.com/
+	   */ /** @noinspection PhpUnusedParameterInspection */
+namespace CheckoutEngineCore\Controllers;
 
 use Psr\Http\Message\ResponseInterface;
-use WPEmerge\Exceptions\ConfigurationException;
-use WPEmerge\Requests\RequestInterface;
-use WPEmerge\View\ViewService;
+use CheckoutEngineCore\Exceptions\ConfigurationException;
+use CheckoutEngineCore\Requests\RequestInterface;
+use CheckoutEngineCore\View\ViewService;
 
 /**
  * Handles normal WordPress requests without interfering
@@ -39,8 +39,8 @@ class WordPressController {
 	/**
 	 * Default WordPress handler.
 	 *
-	 * @param  RequestInterface  $request
-	 * @param  string            $view
+	 * @param  RequestInterface $request
+	 * @param  string           $view
 	 * @return ResponseInterface
 	 */
 	public function handle( RequestInterface $request, $view = '' ) {

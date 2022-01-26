@@ -1,13 +1,13 @@
 <?php
 /**
- * @package   WPEmerge
- * @author    Atanas Angelov <hi@atanas.dev>
- * @copyright 2017-2019 Atanas Angelov
+ * @package   CheckoutEngineCore
+ * @author    Andre Gagnon <hi@atanas.dev>
+ * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://wpemerge.com/
+ * @link      https://checkout_engine.com/
  */
 
-namespace WPEmerge\Middleware;
+namespace CheckoutEngineCore\Middleware;
 
 /**
  * Provide middleware definitions.
@@ -34,7 +34,7 @@ interface HasMiddlewareDefinitionsInterface {
 	/**
 	 * Filter array of middleware into a unique set.
 	 *
-	 * @param  array[]  $middleware
+	 * @param  array[] $middleware
 	 * @return string[]
 	 */
 	public function uniqueMiddleware( $middleware );
@@ -50,7 +50,7 @@ interface HasMiddlewareDefinitionsInterface {
 	/**
 	 * Expand a middleware group into an array of fully qualified class names.
 	 *
-	 * @param  string  $group
+	 * @param  string $group
 	 * @return array[]
 	 */
 	public function expandMiddlewareGroup( $group );
@@ -58,7 +58,7 @@ interface HasMiddlewareDefinitionsInterface {
 	/**
 	 * Expand middleware into an array of fully qualified class names and any companion arguments.
 	 *
-	 * @param  string  $middleware
+	 * @param  string $middleware
 	 * @return array[]
 	 */
 	public function expandMiddlewareMolecule( $middleware );

@@ -1,15 +1,15 @@
 <?php
 /**
- * @package   WPEmerge
- * @author    Atanas Angelov <hi@atanas.dev>
- * @copyright 2017-2019 Atanas Angelov
+ * @package   CheckoutEngineCore
+ * @author    Andre Gagnon <hi@atanas.dev>
+ * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://wpemerge.com/
+ * @link      https://checkout_engine.com/
  */
 
-namespace WPEmerge\Routing\Conditions;
+namespace CheckoutEngineCore\Routing\Conditions;
 
-use WPEmerge\Requests\RequestInterface;
+use CheckoutEngineCore\Requests\RequestInterface;
 
 /**
  * Check against the current ajax action.
@@ -47,9 +47,9 @@ class AjaxCondition implements ConditionInterface, UrlableInterface {
 	 * @param boolean $public
 	 */
 	public function __construct( $action, $private = true, $public = false ) {
-		$this->action = $action;
+		$this->action  = $action;
 		$this->private = $private;
-		$this->public = $public;
+		$this->public  = $public;
 	}
 
 	/**
@@ -99,7 +99,7 @@ class AjaxCondition implements ConditionInterface, UrlableInterface {
 	 * {@inheritDoc}
 	 */
 	public function getArguments( RequestInterface $request ) {
-		return ['action' => $this->action];
+		return [ 'action' => $this->action ];
 	}
 
 	/**

@@ -1,16 +1,16 @@
 <?php
 /**
- * @package   WPEmergeAppCore
- * @author    Atanas Angelov <hi@atanas.dev>
- * @copyright 2017-2020 Atanas Angelov
+ * @package   CheckoutEngineAppCore
+ * @author    Andre Gagnon <hi@atanas.dev>
+ * @copyright  Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://wpemerge.com/
+ * @link      https://checkoutengine.com
  */
 
-namespace WPEmergeAppCore\AppCore;
+namespace CheckoutEngineAppCore\AppCore;
 
-use WPEmerge\ServiceProviders\ExtendsConfigTrait;
-use WPEmerge\ServiceProviders\ServiceProviderInterface;
+use CheckoutEngineCore\ServiceProviders\ExtendsConfigTrait;
+use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
 
 /**
  * Provide theme dependencies.
@@ -24,17 +24,21 @@ class AppCoreServiceProvider implements ServiceProviderInterface {
 	 * {@inheritDoc}
 	 */
 	public function register( $container ) {
-		$this->extendConfig( $container, 'app_core', [
-			'path' => '',
-			'url' => '',
-		] );
+		$this->extendConfig(
+			$container,
+			'app_core',
+			[
+				'path' => '',
+				'url'  => '',
+			]
+		);
 
-		$container['wpemerge_app_core.app_core.app_core'] = function( $c ) {
-			return new AppCore( $c[ WPEMERGE_APPLICATION_KEY ] );
+		$container['checkout_engine_app_core.app_core.app_core'] = function( $c ) {
+			return new AppCore( $c[ CHECKOUT_ENGINE_APPLICATION_KEY ] );
 		};
 
-		$app = $container[ WPEMERGE_APPLICATION_KEY ];
-		$app->alias( 'core', 'wpemerge_app_core.app_core.app_core' );
+		$app = $container[ CHECKOUT_ENGINE_APPLICATION_KEY ];
+		$app->alias( 'core', 'checkout_engine_app_core.app_core.app_core' );
 	}
 
 	/**

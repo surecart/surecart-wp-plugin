@@ -1,17 +1,17 @@
 <?php
 /**
- * @package   WPEmergeAppCore
- * @author    Atanas Angelov <hi@atanas.dev>
- * @copyright 2017-2020 Atanas Angelov
+ * @package   CheckoutEngineAppCore
+ * @author    Andre Gagnon <hi@atanas.dev>
+ * @copyright  Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://wpemerge.com/
+ * @link      https://checkoutengine.com
  */
 
-namespace WPEmergeAppCore\Assets;
+namespace CheckoutEngineAppCore\Assets;
 
-use WPEmerge\Helpers\MixedType;
-use WPEmergeAppCore\Concerns\JsonFileNotFoundException;
-use WPEmergeAppCore\Concerns\ReadsJsonTrait;
+use CheckoutEngineCore\Helpers\MixedType;
+use CheckoutEngineAppCore\Concerns\JsonFileNotFoundException;
+use CheckoutEngineAppCore\Concerns\ReadsJsonTrait;
 
 class Manifest {
 	use ReadsJsonTrait {

@@ -1,18 +1,18 @@
 <?php
 /**
- * @package   WPEmerge
- * @author    Atanas Angelov <hi@atanas.dev>
- * @copyright 2017-2019 Atanas Angelov
+ * @package   CheckoutEngineCore
+ * @author    Andre Gagnon <hi@atanas.dev>
+ * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://wpemerge.com/
+ * @link      https://checkout_engine.com/
  */
 
-namespace WPEmerge\Routing;
+namespace CheckoutEngineCore\Routing;
 
 use Closure;
-use WPEmerge\Helpers\HasAttributesTrait;
-use WPEmerge\Routing\Conditions\ConditionInterface;
-use WPEmerge\View\ViewService;
+use CheckoutEngineCore\Helpers\HasAttributesTrait;
+use CheckoutEngineCore\Routing\Conditions\ConditionInterface;
+use CheckoutEngineCore\View\ViewService;
 
 /**
  * Provide a fluent interface for registering routes with the router.
@@ -42,7 +42,7 @@ class RouteBlueprint {
 	 * @param ViewService $view_service
 	 */
 	public function __construct( Router $router, ViewService $view_service ) {
-		$this->router = $router;
+		$this->router       = $router;
 		$this->view_service = $view_service;
 	}
 
@@ -75,8 +75,8 @@ class RouteBlueprint {
 	/**
 	 * Set the condition attribute.
 	 *
-	 * @param  string|array|ConditionInterface $condition
-	 * @param  mixed                           ,...$arguments
+	 * @param  string|array|ConditionInterface   $condition
+	 * @param  mixed                           , ...$arguments
 	 * @return static                          $this
 	 */
 	public function where( $condition ) {
@@ -182,9 +182,11 @@ class RouteBlueprint {
 	 * @return void
 	 */
 	public function view( $views ) {
-		$this->handle( function () use ( $views ) {
-			return $this->view_service->make( $views );
-		} );
+		$this->handle(
+			function () use ( $views ) {
+				return $this->view_service->make( $views );
+			}
+		);
 	}
 
 	/**
@@ -203,7 +205,7 @@ class RouteBlueprint {
 	 * @return static $this
 	 */
 	public function get() {
-		return $this->methods( ['GET', 'HEAD'] );
+		return $this->methods( [ 'GET', 'HEAD' ] );
 	}
 
 	/**
@@ -212,7 +214,7 @@ class RouteBlueprint {
 	 * @return static $this
 	 */
 	public function post() {
-		return $this->methods( ['POST'] );
+		return $this->methods( [ 'POST' ] );
 	}
 
 	/**
@@ -221,7 +223,7 @@ class RouteBlueprint {
 	 * @return static $this
 	 */
 	public function put() {
-		return $this->methods( ['PUT'] );
+		return $this->methods( [ 'PUT' ] );
 	}
 
 	/**
@@ -230,7 +232,7 @@ class RouteBlueprint {
 	 * @return static $this
 	 */
 	public function patch() {
-		return $this->methods( ['PATCH'] );
+		return $this->methods( [ 'PATCH' ] );
 	}
 
 	/**
@@ -239,7 +241,7 @@ class RouteBlueprint {
 	 * @return static $this
 	 */
 	public function delete() {
-		return $this->methods( ['DELETE'] );
+		return $this->methods( [ 'DELETE' ] );
 	}
 
 	/**
@@ -248,7 +250,7 @@ class RouteBlueprint {
 	 * @return static $this
 	 */
 	public function options() {
-		return $this->methods( ['OPTIONS'] );
+		return $this->methods( [ 'OPTIONS' ] );
 	}
 
 	/**
@@ -257,6 +259,6 @@ class RouteBlueprint {
 	 * @return static $this
 	 */
 	public function any() {
-		return $this->methods( ['GET', 'HEAD', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'] );
+		return $this->methods( [ 'GET', 'HEAD', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS' ] );
 	}
 }

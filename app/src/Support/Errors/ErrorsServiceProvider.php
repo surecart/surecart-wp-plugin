@@ -2,7 +2,7 @@
 
 namespace CheckoutEngine\Support\Errors;
 
-use WPEmerge\ServiceProviders\ServiceProviderInterface;
+use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
 
 class ErrorsServiceProvider implements ServiceProviderInterface {
 	/**
@@ -11,7 +11,7 @@ class ErrorsServiceProvider implements ServiceProviderInterface {
 	 *  @param  \Pimple\Container $container Service Container.
 	 */
 	public function register( $container ) {
-		$app = $container[ WPEMERGE_APPLICATION_KEY ];
+		$app = $container[ CHECKOUT_ENGINE_APPLICATION_KEY ];
 
 		$container['checkout.errors_service'] = function () {
 			return new ErrorsService();

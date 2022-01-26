@@ -4,7 +4,7 @@ namespace CheckoutEngine\Middleware;
 
 use CheckoutEngine\Models\Webhook;
 use Closure;
-use WPEmerge\Requests\RequestInterface;
+use CheckoutEngineCore\Requests\RequestInterface;
 
 /**
  * Middleware for handling model archiving.

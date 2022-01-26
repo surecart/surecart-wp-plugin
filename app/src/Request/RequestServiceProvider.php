@@ -2,7 +2,7 @@
 
 namespace CheckoutEngine\Request;
 
-use WPEmerge\ServiceProviders\ServiceProviderInterface;
+use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
 
 /**
  * Handles the request service
@@ -14,7 +14,7 @@ class RequestServiceProvider implements ServiceProviderInterface {
 	 *  @param  \Pimple\Container $container Service Container.
 	 */
 	public function register( $container ) {
-		$app = $container[ WPEMERGE_APPLICATION_KEY ];
+		$app = $container[ CHECKOUT_ENGINE_APPLICATION_KEY ];
 
 		$container['requests'] = function () {
 			// TODO: get this from database.

@@ -1,18 +1,18 @@
 <?php
 /**
- * @package   WPEmerge
- * @author    Atanas Angelov <hi@atanas.dev>
- * @copyright 2017-2019 Atanas Angelov
+ * @package   CheckoutEngineCore
+ * @author    Andre Gagnon <hi@atanas.dev>
+ * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://wpemerge.com/
+ * @link      https://checkout_engine.com/
  */
 
-namespace WPEmerge\View;
+namespace CheckoutEngineCore\View;
 
 use Closure;
-use WPEmerge\Helpers\Handler;
-use WPEmerge\Helpers\HandlerFactory;
-use WPEmerge\Helpers\MixedType;
+use CheckoutEngineCore\Helpers\Handler;
+use CheckoutEngineCore\Helpers\HandlerFactory;
+use CheckoutEngineCore\Helpers\MixedType;
 
 /**
  * Provide general view-related functionality.
@@ -62,8 +62,8 @@ class ViewService {
 	 * @param HandlerFactory       $handler_factory
 	 */
 	public function __construct( $config, ViewEngineInterface $engine, HandlerFactory $handler_factory ) {
-		$this->config = $config;
-		$this->engine = $engine;
+		$this->config          = $config;
+		$this->engine          = $engine;
 		$this->handler_factory = $handler_factory;
 	}
 
@@ -102,7 +102,7 @@ class ViewService {
 	/**
 	 * Get view composer.
 	 *
-	 * @param  string    $view
+	 * @param  string $view
 	 * @return Handler[]
 	 */
 	public function getComposersForView( $view ) {
@@ -127,14 +127,17 @@ class ViewService {
 	 * @return void
 	 */
 	public function addComposer( $views, $composer ) {
-		$views = array_map( function ( $view ) {
-			return $this->engine->canonical( $view );
-		}, MixedType::toArray( $views ) );
+		$views = array_map(
+			function ( $view ) {
+				return $this->engine->canonical( $view );
+			},
+			MixedType::toArray( $views )
+		);
 
 		$handler = $this->handler_factory->make( $composer, 'compose', $this->config['namespace'] );
 
 		$this->composers[] = [
-			'views' => $views,
+			'views'    => $views,
 			'composer' => $handler,
 		];
 	}
@@ -146,8 +149,8 @@ class ViewService {
 	 * @return void
 	 */
 	public function compose( ViewInterface $view ) {
-		$global = ['global' => $this->getGlobals()];
-		$local = $view->getContext();
+		$global = [ 'global' => $this->getGlobals() ];
+		$local  = $view->getContext();
 
 		$view->with( $global );
 
@@ -183,10 +186,10 @@ class ViewService {
 		}
 
 		$core_partial = '/^(header|sidebar|footer)(?:-(.*?))?(\.|$)/i';
-		$matches = [];
-		$is_partial = preg_match( $core_partial, $name, $matches );
+		$matches      = [];
+		$is_partial   = preg_match( $core_partial, $name, $matches );
 
-		if ( $is_partial && apply_filters( "wpemerge.partials.{$matches[1]}.hook", true ) ) {
+		if ( $is_partial && apply_filters( "checkout_engine.partials.{$matches[1]}.hook", true ) ) {
 			do_action( "get_{$matches[1]}", $matches[2] );
 		}
 	}

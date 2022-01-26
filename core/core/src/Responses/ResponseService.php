@@ -1,20 +1,20 @@
 <?php
 /**
- * @package   WPEmerge
- * @author    Atanas Angelov <hi@atanas.dev>
- * @copyright 2017-2019 Atanas Angelov
+ * @package   CheckoutEngineCore
+ * @author    Andre Gagnon <hi@atanas.dev>
+ * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://wpemerge.com/
+ * @link      https://checkout_engine.com/
  */
 
-namespace WPEmerge\Responses;
+namespace CheckoutEngineCore\Responses;
 
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Response as Psr7Response;
-use WPEmerge\Requests\RequestInterface;
+use CheckoutEngineCore\Requests\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
-use WPEmerge\View\ViewService;
+use CheckoutEngineCore\View\ViewService;
 
 /**
  * A collection of tools for the creation of responses.
@@ -42,12 +42,13 @@ class ResponseService {
 	 * @param ViewService      $view_service
 	 */
 	public function __construct( RequestInterface $request, ViewService $view_service ) {
-		$this->request = $request;
+		$this->request      = $request;
 		$this->view_service = $view_service;
 	}
 
 	/**
 	 * Send output based on a response object.
+	 *
 	 * @credit heavily modified version of slimphp/slim - Slim/App.php
 	 *
 	 * @codeCoverageIgnore
@@ -70,12 +71,14 @@ class ResponseService {
 	 */
 	public function sendHeaders( ResponseInterface $response ) {
 		// Status
-		header( sprintf(
-			'HTTP/%s %s %s',
-			$response->getProtocolVersion(),
-			$response->getStatusCode(),
-			$response->getReasonPhrase()
-		) );
+		header(
+			sprintf(
+				'HTTP/%s %s %s',
+				$response->getProtocolVersion(),
+				$response->getStatusCode(),
+				$response->getReasonPhrase()
+			)
+		);
 
 		// Headers
 		foreach ( $response->getHeaders() as $name => $values ) {
@@ -111,7 +114,7 @@ class ResponseService {
 		$content_length = $response->getHeaderLine( 'Content-Length' );
 
 		if ( ! $content_length ) {
-			$body = $this->getBody( $response );
+			$body           = $this->getBody( $response );
 			$content_length = $body->getSize();
 		}
 
@@ -119,7 +122,7 @@ class ResponseService {
 			$content_length = 0;
 		}
 
-		return (integer) $content_length;
+		return (int) $content_length;
 	}
 
 	/**
@@ -131,7 +134,7 @@ class ResponseService {
 	 * @return void
 	 */
 	public function sendBody( ResponseInterface $response, $chunk_size = 4096 ) {
-		$body = $this->getBody( $response );
+		$body           = $this->getBody( $response );
 		$content_length = $this->getBodyContentLength( $response );
 
 		if ( $content_length > 0 ) {
@@ -192,7 +195,7 @@ class ResponseService {
 	/**
 	 * Get a cloned response with the passed string as the body.
 	 *
-	 * @param  string            $output
+	 * @param  string $output
 	 * @return ResponseInterface
 	 */
 	public function output( $output ) {
@@ -204,7 +207,7 @@ class ResponseService {
 	/**
 	 * Get a cloned response, json encoding the passed data as the body.
 	 *
-	 * @param  mixed             $data
+	 * @param  mixed $data
 	 * @return ResponseInterface
 	 */
 	public function json( $data ) {
@@ -228,17 +231,20 @@ class ResponseService {
 	/**
 	 * Get an error response, with status headers and rendering a suitable view as the body.
 	 *
-	 * @param  integer           $status
+	 * @param  integer $status
 	 * @return ResponseInterface
 	 */
 	public function error( $status ) {
-		$views = [$status, 'error', 'index'];
+		$views = [ $status, 'error', 'index' ];
 
 		if ( is_admin() ) {
 			$views = array_merge(
-				array_map( function ( $view ) {
-					return $view . '-' . ( wp_doing_ajax() ? 'ajax' : 'admin' );
-				}, $views ),
+				array_map(
+					function ( $view ) {
+						return $view . '-' . ( wp_doing_ajax() ? 'ajax' : 'admin' );
+					},
+					$views
+				),
 				$views
 			);
 		}

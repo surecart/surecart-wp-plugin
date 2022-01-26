@@ -13,11 +13,11 @@ class Products {
 	/**
 	 * Get the product query
 	 *
-	 * @param \WPEmerge\Requests\Request $request Request.
+	 * @param \CheckoutEngineCore\Requests\Request $request Request.
 	 *
 	 * @return string
 	 */
-	public function getProductQuery( \WPEmerge\Requests\Request $request ) {
+	public function getProductQuery( \CheckoutEngineCore\Requests\Request $request ) {
 		$params = $request->getQueryParams();
 		return ! empty( $params['product'] ) ? $params['product'] : null;
 	}
@@ -25,7 +25,7 @@ class Products {
 	/**
 	 * List product in a WP Table.
 	 *
-	 * @param \WPEmerge\Requests\Request $request
+	 * @param \CheckoutEngineCore\Requests\Request $request
 	 *
 	 * @return void
 	 */

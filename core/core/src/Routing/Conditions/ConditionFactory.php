@@ -1,18 +1,18 @@
 <?php
 /**
- * @package   WPEmerge
- * @author    Atanas Angelov <hi@atanas.dev>
- * @copyright 2017-2019 Atanas Angelov
+ * @package   CheckoutEngineCore
+ * @author    Andre Gagnon <hi@atanas.dev>
+ * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://wpemerge.com/
+ * @link      https://checkout_engine.com/
  */
 
-namespace WPEmerge\Routing\Conditions;
+namespace CheckoutEngineCore\Routing\Conditions;
 
 use Closure;
 use ReflectionClass;
 use ReflectionException;
-use WPEmerge\Exceptions\ConfigurationException;
+use CheckoutEngineCore\Exceptions\ConfigurationException;
 
 /**
  * Check against the current url
@@ -76,7 +76,7 @@ class ConditionFactory {
 	/**
 	 * Get condition class for condition type.
 	 *
-	 * @param  string      $condition_type
+	 * @param  string $condition_type
 	 * @return string|null
 	 */
 	protected function getConditionTypeClass( $condition_type ) {
@@ -90,7 +90,7 @@ class ConditionFactory {
 	/**
 	 * Check if the passed argument is a registered condition type.
 	 *
-	 * @param  mixed   $condition_type
+	 * @param  mixed $condition_type
 	 * @return boolean
 	 */
 	protected function conditionTypeRegistered( $condition_type ) {
@@ -104,7 +104,7 @@ class ConditionFactory {
 	/**
 	 * Check if a condition is negated.
 	 *
-	 * @param  mixed   $condition
+	 * @param  mixed $condition
 	 * @return boolean
 	 */
 	protected function isNegatedCondition( $condition ) {
@@ -124,12 +124,15 @@ class ConditionFactory {
 	 */
 	protected function parseNegatedCondition( $type, $arguments ) {
 		$negated_type = substr( $type, strlen( static::NEGATE_CONDITION_PREFIX ) );
-		$arguments = array_merge( [ $negated_type ], $arguments );
+		$arguments    = array_merge( [ $negated_type ], $arguments );
 
-		$type = 'negate';
-		$condition = call_user_func( [$this, 'make'], $arguments );
+		$type      = 'negate';
+		$condition = call_user_func( [ $this, 'make' ], $arguments );
 
-		return ['type' => $type, 'arguments' => [$condition]];
+		return [
+			'type'      => $type,
+			'arguments' => [ $condition ],
+		];
 	}
 
 	/**
@@ -139,7 +142,7 @@ class ConditionFactory {
 	 * @return array
 	 */
 	protected function parseConditionOptions( $options ) {
-		$type = $options[0];
+		$type      = $options[0];
 		$arguments = array_values( array_slice( $options, 1 ) );
 
 		if ( $this->isNegatedCondition( $type ) ) {
@@ -148,19 +151,25 @@ class ConditionFactory {
 
 		if ( ! $this->conditionTypeRegistered( $type ) ) {
 			if ( is_callable( $type ) ) {
-				return ['type' => 'custom', 'arguments' => $options];
+				return [
+					'type'      => 'custom',
+					'arguments' => $options,
+				];
 			}
 
 			throw new ConfigurationException( 'Unknown condition type specified: ' . $type );
 		}
 
-		return ['type' => $type, 'arguments' => $arguments ];
+		return [
+			'type'      => $type,
+			'arguments' => $arguments,
+		];
 	}
 
 	/**
 	 * Create a new condition from a url.
 	 *
-	 * @param  string             $url
+	 * @param  string $url
 	 * @return ConditionInterface
 	 */
 	protected function makeFromUrl( $url ) {
@@ -170,7 +179,7 @@ class ConditionFactory {
 	/**
 	 * Create a new condition from an array.
 	 *
-	 * @param  array              $options
+	 * @param  array $options
 	 * @return ConditionInterface
 	 */
 	protected function makeFromArray( $options ) {
@@ -183,7 +192,7 @@ class ConditionFactory {
 		}
 
 		$condition_options = $this->parseConditionOptions( $options );
-		$condition_class = $this->getConditionTypeClass( $condition_options['type'] );
+		$condition_class   = $this->getConditionTypeClass( $condition_options['type'] );
 
 		try {
 			$reflection = new ReflectionClass( $condition_class );
@@ -198,16 +207,19 @@ class ConditionFactory {
 	/**
 	 * Create a new condition from an array of conditions.
 	 *
-	 * @param  array               $options
+	 * @param  array $options
 	 * @return ConditionInterface
 	 */
 	protected function makeFromArrayOfConditions( $options ) {
-		$conditions = array_map( function ( $condition ) {
-			if ( $condition instanceof ConditionInterface ) {
-				return $condition;
-			}
-			return $this->make( $condition );
-		}, $options );
+		$conditions = array_map(
+			function ( $condition ) {
+				if ( $condition instanceof ConditionInterface ) {
+					  return $condition;
+				}
+				return $this->make( $condition );
+			},
+			$options
+		);
 
 		return new MultipleCondition( $conditions );
 	}
@@ -215,7 +227,7 @@ class ConditionFactory {
 	/**
 	 * Create a new condition from a closure.
 	 *
-	 * @param  Closure            $closure
+	 * @param  Closure $closure
 	 * @return ConditionInterface
 	 */
 	protected function makeFromClosure( Closure $closure ) {
@@ -236,7 +248,7 @@ class ConditionFactory {
 			}
 
 			return $this->condition( $new );
-		} else if ( empty( $new ) ) {
+		} elseif ( empty( $new ) ) {
 			return $this->condition( $old );
 		}
 
@@ -255,6 +267,6 @@ class ConditionFactory {
 			return $old->concatenate( $new->getUrl(), $new->getUrlWhere() );
 		}
 
-		return $this->makeFromArrayOfConditions( [$old, $new] );
+		return $this->makeFromArrayOfConditions( [ $old, $new ] );
 	}
 }

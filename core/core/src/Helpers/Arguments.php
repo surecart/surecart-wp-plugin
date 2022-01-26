@@ -1,13 +1,13 @@
 <?php
 /**
- * @package   WPEmerge
- * @author    Atanas Angelov <hi@atanas.dev>
- * @copyright 2017-2019 Atanas Angelov
+ * @package   CheckoutEngineCore
+ * @author    Andre Gagnon <hi@atanas.dev>
+ * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://wpemerge.com/
+ * @link      https://checkout_engine.com/
  */
 
-namespace WPEmerge\Helpers;
+namespace CheckoutEngineCore\Helpers;
 
 /**
  * A collection of tools dealing with urls
@@ -15,12 +15,13 @@ namespace WPEmerge\Helpers;
 class Arguments {
 	/**
 	 * Get a closure which will flip preceding optional arguments around.
+	 *
 	 * @example list( $argument1, $argument2 ) = Arguments::flip( $argument1, $argument2 );
 	 *
 	 * @return array
 	 */
 	public static function flip() {
-		$arguments = func_get_args();
+		$arguments  = func_get_args();
 		$first_null = array_search( null, $arguments, true );
 
 		if ( $first_null === false ) {
@@ -30,10 +31,12 @@ class Arguments {
 		// Support integer keys only.
 		$first_null = (int) $first_null;
 
-		$arguments = array_values( array_merge(
-			array_slice( $arguments, $first_null ),
-			array_slice( $arguments, 0, $first_null )
-		) );
+		$arguments = array_values(
+			array_merge(
+				array_slice( $arguments, $first_null ),
+				array_slice( $arguments, 0, $first_null )
+			)
+		);
 
 		return $arguments;
 	}

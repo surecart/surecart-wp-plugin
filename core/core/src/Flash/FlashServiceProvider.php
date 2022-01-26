@@ -1,15 +1,15 @@
 <?php
 /**
- * @package   WPEmerge
- * @author    Atanas Angelov <hi@atanas.dev>
- * @copyright 2017-2019 Atanas Angelov
+ * @package   CheckoutEngineCore
+ * @author    Andre Gagnon <hi@atanas.dev>
+ * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://wpemerge.com/
+ * @link      https://checkout_engine.com/
  */
 
-namespace WPEmerge\Flash;
+namespace CheckoutEngineCore\Flash;
 
-use WPEmerge\ServiceProviders\ServiceProviderInterface;
+use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
 
 /**
  * Provide flash dependencies.
@@ -21,22 +21,22 @@ class FlashServiceProvider implements ServiceProviderInterface {
 	 * {@inheritDoc}
 	 */
 	public function register( $container ) {
-		$container[ WPEMERGE_FLASH_KEY ] = function ( $c ) {
+		$container[ CHECKOUT_ENGINE_FLASH_KEY ] = function ( $c ) {
 			$session = null;
-			if ( isset( $c[ WPEMERGE_SESSION_KEY ] ) ) {
-				$session = &$c[ WPEMERGE_SESSION_KEY ];
-			} else if ( isset( $_SESSION ) ) {
+			if ( isset( $c[ CHECKOUT_ENGINE_SESSION_KEY ] ) ) {
+				$session = &$c[ CHECKOUT_ENGINE_SESSION_KEY ];
+			} elseif ( isset( $_SESSION ) ) {
 				$session = &$_SESSION;
 			}
 			return new Flash( $session );
 		};
 
 		$container[ FlashMiddleware::class ] = function ( $c ) {
-			return new FlashMiddleware( $c[ WPEMERGE_FLASH_KEY ] );
+			return new FlashMiddleware( $c[ CHECKOUT_ENGINE_FLASH_KEY ] );
 		};
 
-		$app = $container[ WPEMERGE_APPLICATION_KEY ];
-		$app->alias( 'flash', WPEMERGE_FLASH_KEY );
+		$app = $container[ CHECKOUT_ENGINE_APPLICATION_KEY ];
+		$app->alias( 'flash', CHECKOUT_ENGINE_FLASH_KEY );
 	}
 
 	/**

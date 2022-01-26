@@ -1,6 +1,6 @@
 <?php
 
-namespace WPEmerge\Exceptions\Whoops;
+namespace CheckoutEngineCore\Exceptions\Whoops;
 
 use Pimple\Container;
 
@@ -49,8 +49,8 @@ class DebugDataProvider {
 	 * @return array<string, mixed>
 	 */
 	public function route( $inspector ) {
-		/** @var \WPEmerge\Routing\RouteInterface|null $route */
-		$route = $this->container[ WPEMERGE_ROUTING_ROUTER_KEY ]->getCurrentRoute();
+		/** @var \CheckoutEngineCore\Routing\RouteInterface|null $route */
+		$route = $this->container[ CHECKOUT_ENGINE_ROUTING_ROUTER_KEY ]->getCurrentRoute();
 
 		if ( ! $route ) {
 			return [];
@@ -61,7 +61,7 @@ class DebugDataProvider {
 		foreach ( $route->getAttributes() as $attribute => $value ) {
 			// Only convert the first level of an array to scalar for simplicity.
 			if ( is_array( $value ) ) {
-				$value = '[' . implode( ', ', array_map( [$this, 'toScalar'], $value ) ) . ']';
+				$value = '[' . implode( ', ', array_map( [ $this, 'toScalar' ], $value ) ) . ']';
 			} else {
 				$value = $this->toScalar( $value );
 			}

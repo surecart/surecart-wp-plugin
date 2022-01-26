@@ -1,20 +1,20 @@
 <?php
 /**
- * @package   WPEmerge
- * @author    Atanas Angelov <hi@atanas.dev>
- * @copyright 2017-2019 Atanas Angelov
+ * @package   CheckoutEngineCore
+ * @author    Andre Gagnon <hi@atanas.dev>
+ * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://wpemerge.com/
+ * @link      https://checkout_engine.com/
  */
 
-namespace WPEmerge\Application;
+namespace CheckoutEngineCore\Application;
 
 use Pimple\Container;
 use Psr\Http\Message\ResponseInterface;
-use WPEmerge\Requests\RequestInterface;
-use WPEmerge\Responses\RedirectResponse;
-use WPEmerge\Routing\RouteBlueprint;
-use WPEmerge\View\ViewInterface;
+use CheckoutEngineCore\Requests\RequestInterface;
+use CheckoutEngineCore\Responses\RedirectResponse;
+use CheckoutEngineCore\Routing\RouteBlueprint;
+use CheckoutEngineCore\View\ViewInterface;
 
 /**
  * Can be applied to your App class via a "@mixin" annotation for better IDE support.
@@ -66,7 +66,7 @@ final class ApplicationMixin {
 	/**
 	 * Resolve a dependency from the IoC container.
 	 *
-	 * @param  string     $key
+	 * @param  string $key
 	 * @return mixed|null
 	 */
 	public static function resolve( $key ) {}
@@ -77,7 +77,7 @@ final class ApplicationMixin {
 	 * Get the Application instance.
 	 *
 	 * @codeCoverageIgnore
-	 * @return \WPEmerge\Application\Application
+	 * @return \CheckoutEngineCore\Application\Application
 	 */
 	public static function app() {}
 
@@ -93,7 +93,7 @@ final class ApplicationMixin {
 	 * Get the CSRF service instance.
 	 *
 	 * @codeCoverageIgnore
-	 * @return \WPEmerge\Csrf\Csrf
+	 * @return \CheckoutEngineCore\Csrf\Csrf
 	 */
 	public static function csrf() {}
 
@@ -101,7 +101,7 @@ final class ApplicationMixin {
 	 * Get the Flash service instance.
 	 *
 	 * @codeCoverageIgnore
-	 * @return \WPEmerge\Flash\Flash
+	 * @return \CheckoutEngineCore\Flash\Flash
 	 */
 	public static function flash() {}
 
@@ -109,7 +109,7 @@ final class ApplicationMixin {
 	 * Get the OldInput service instance.
 	 *
 	 * @codeCoverageIgnore
-	 * @return \WPEmerge\Input\OldInput
+	 * @return \CheckoutEngineCore\Input\OldInput
 	 */
 	public static function oldInput() {}
 
@@ -117,11 +117,11 @@ final class ApplicationMixin {
 	 * Run a full middleware + handler pipeline independently of routes.
 	 *
 	 * @codeCoverageIgnore
-	 * @see    \WPEmerge\Kernels\HttpKernel::run()
-	 * @param  RequestInterface  $request
-	 * @param  string[]          $middleware
-	 * @param  string|\Closure   $handler
-	 * @param  array             $arguments
+	 * @see    \CheckoutEngineCore\Kernels\HttpKernel::run()
+	 * @param  RequestInterface $request
+	 * @param  string[]         $middleware
+	 * @param  string|\Closure  $handler
+	 * @param  array            $arguments
 	 * @return ResponseInterface
 	 */
 	public static function run( RequestInterface $request, $middleware, $handler, $arguments = [] ) {}
@@ -130,7 +130,7 @@ final class ApplicationMixin {
 	 * Get the ResponseService instance.
 	 *
 	 * @codeCoverageIgnore
-	 * @return \WPEmerge\Responses\ResponseService
+	 * @return \CheckoutEngineCore\Responses\ResponseService
 	 */
 	public static function responses() {}
 
@@ -138,7 +138,7 @@ final class ApplicationMixin {
 	 * Create a "blank" response.
 	 *
 	 * @codeCoverageIgnore
-	 * @see    \WPEmerge\Responses\ResponseService::response()
+	 * @see    \CheckoutEngineCore\Responses\ResponseService::response()
 	 * @return ResponseInterface
 	 */
 	public static function response() {}
@@ -147,8 +147,8 @@ final class ApplicationMixin {
 	 * Create a response with the specified string as its body.
 	 *
 	 * @codeCoverageIgnore
-	 * @see    \WPEmerge\Responses\ResponseService::output()
-	 * @param  string            $output
+	 * @see    \CheckoutEngineCore\Responses\ResponseService::output()
+	 * @param  string $output
 	 * @return ResponseInterface
 	 */
 	public static function output( $output ) {}
@@ -157,8 +157,8 @@ final class ApplicationMixin {
 	 * Create a response with the specified data encoded as JSON as its body.
 	 *
 	 * @codeCoverageIgnore
-	 * @see    \WPEmerge\Responses\ResponseService::json()
-	 * @param  mixed             $data
+	 * @see    \CheckoutEngineCore\Responses\ResponseService::json()
+	 * @param  mixed $data
 	 * @return ResponseInterface
 	 */
 	public static function json( $data ) {}
@@ -167,7 +167,7 @@ final class ApplicationMixin {
 	 * Create a redirect response.
 	 *
 	 * @codeCoverageIgnore
-	 * @see    \WPEmerge\Responses\ResponseService::redirect()
+	 * @see    \CheckoutEngineCore\Responses\ResponseService::redirect()
 	 * @return RedirectResponse
 	 */
 	public static function redirect() {}
@@ -176,8 +176,8 @@ final class ApplicationMixin {
 	 * Create a response with the specified error status code.
 	 *
 	 * @codeCoverageIgnore
-	 * @see    \WPEmerge\Responses\ResponseService::error()
-	 * @param  integer           $status
+	 * @see    \CheckoutEngineCore\Responses\ResponseService::error()
+	 * @param  integer $status
 	 * @return ResponseInterface
 	 */
 	public static function error( $status ) {}
@@ -186,7 +186,7 @@ final class ApplicationMixin {
 	 * Get the ViewService instance.
 	 *
 	 * @codeCoverageIgnore
-	 * @return \WPEmerge\View\ViewService
+	 * @return \CheckoutEngineCore\View\ViewService
 	 */
 	public static function views() {}
 
@@ -194,7 +194,7 @@ final class ApplicationMixin {
 	 * Create a view.
 	 *
 	 * @codeCoverageIgnore
-	 * @see    \WPEmerge\View\ViewService::make()
+	 * @see    \CheckoutEngineCore\View\ViewService::make()
 	 * @param  string|string[] $views
 	 * @return ViewInterface
 	 */
@@ -204,7 +204,7 @@ final class ApplicationMixin {
 	 * Output child layout content.
 	 *
 	 * @codeCoverageIgnore
-	 * @see    \WPEmerge\View\PhpViewEngine::getLayoutContent()
+	 * @see    \CheckoutEngineCore\View\PhpViewEngine::getLayoutContent()
 	 * @return void
 	 */
 	public static function layoutContent() {}
@@ -221,8 +221,8 @@ final class ApplicationMixin {
 	 * Output the specified view.
 	 *
 	 * @codeCoverageIgnore
-	 * @see    \WPEmerge\View\ViewService::make()
-	 * @see    \WPEmerge\View\ViewInterface::toString()
+	 * @see    \CheckoutEngineCore\View\ViewService::make()
+	 * @see    \CheckoutEngineCore\View\ViewInterface::toString()
 	 * @param  string|string[]      $views
 	 * @param  array<string, mixed> $context
 	 * @return void

@@ -1,121 +1,114 @@
 <?php
 /**
- * @package   WPEmerge
- * @author    Atanas Angelov <hi@atanas.dev>
- * @copyright 2017-2019 Atanas Angelov
+ * @package   CheckoutEngineCore
+ * @author    Andre Gagnon <hi@atanas.dev>
+ * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://wpemerge.com/
+ * @link      https://checkout_engine.com/
  */
-
-/**
- * Current version.
- */
-if ( ! defined( 'WPEMERGE_VERSION' ) ) {
-	define( 'WPEMERGE_VERSION', '0.16.0' );
-}
 
 /**
  * Absolute path to application's directory.
  */
-if ( ! defined( 'WPEMERGE_DIR' ) ) {
-	define( 'WPEMERGE_DIR', __DIR__ );
+if ( ! defined( 'CHECKOUT_ENGINE_DIR' ) ) {
+	define( 'CHECKOUT_ENGINE_DIR', __DIR__ );
 }
 
 /**
  * Service container keys.
  */
-if ( ! defined( 'WPEMERGE_CONFIG_KEY' ) ) {
-	define( 'WPEMERGE_CONFIG_KEY', 'wpemerge.config' );
+if ( ! defined( 'CHECKOUT_ENGINE_CONFIG_KEY' ) ) {
+	define( 'CHECKOUT_ENGINE_CONFIG_KEY', 'checkout_engine.config' );
 }
 
-if ( ! defined( 'WPEMERGE_APPLICATION_KEY' ) ) {
-	define( 'WPEMERGE_APPLICATION_KEY', 'wpemerge.application.application' );
+if ( ! defined( 'CHECKOUT_ENGINE_APPLICATION_KEY' ) ) {
+	define( 'CHECKOUT_ENGINE_APPLICATION_KEY', 'checkout_engine.application.application' );
 }
 
-if ( ! defined( 'WPEMERGE_APPLICATION_GENERIC_FACTORY_KEY' ) ) {
-	define( 'WPEMERGE_APPLICATION_GENERIC_FACTORY_KEY', 'wpemerge.application.generic_factory' );
+if ( ! defined( 'CHECKOUT_ENGINE_APPLICATION_GENERIC_FACTORY_KEY' ) ) {
+	define( 'CHECKOUT_ENGINE_APPLICATION_GENERIC_FACTORY_KEY', 'checkout_engine.application.generic_factory' );
 }
 
-if ( ! defined( 'WPEMERGE_APPLICATION_CLOSURE_FACTORY_KEY' ) ) {
-	define( 'WPEMERGE_APPLICATION_CLOSURE_FACTORY_KEY', 'wpemerge.application.closure_factory' );
+if ( ! defined( 'CHECKOUT_ENGINE_APPLICATION_CLOSURE_FACTORY_KEY' ) ) {
+	define( 'CHECKOUT_ENGINE_APPLICATION_CLOSURE_FACTORY_KEY', 'checkout_engine.application.closure_factory' );
 }
 
-if ( ! defined( 'WPEMERGE_HELPERS_HANDLER_FACTORY_KEY' ) ) {
-	define( 'WPEMERGE_HELPERS_HANDLER_FACTORY_KEY', 'wpemerge.handlers.helper_factory' );
+if ( ! defined( 'CHECKOUT_ENGINE_HELPERS_HANDLER_FACTORY_KEY' ) ) {
+	define( 'CHECKOUT_ENGINE_HELPERS_HANDLER_FACTORY_KEY', 'checkout_engine.handlers.helper_factory' );
 }
 
-if ( ! defined( 'WPEMERGE_WORDPRESS_HTTP_KERNEL_KEY' ) ) {
-	define( 'WPEMERGE_WORDPRESS_HTTP_KERNEL_KEY', 'wpemerge.kernels.wordpress_http_kernel' );
+if ( ! defined( 'CHECKOUT_ENGINE_WORDPRESS_HTTP_KERNEL_KEY' ) ) {
+	define( 'CHECKOUT_ENGINE_WORDPRESS_HTTP_KERNEL_KEY', 'checkout_engine.kernels.wordpress_http_kernel' );
 }
 
-if ( ! defined( 'WPEMERGE_SESSION_KEY' ) ) {
-	define( 'WPEMERGE_SESSION_KEY', 'wpemerge.session' );
+if ( ! defined( 'CHECKOUT_ENGINE_SESSION_KEY' ) ) {
+	define( 'CHECKOUT_ENGINE_SESSION_KEY', 'checkout_engine.session' );
 }
 
-if ( ! defined( 'WPEMERGE_REQUEST_KEY' ) ) {
-	define( 'WPEMERGE_REQUEST_KEY', 'wpemerge.request' );
+if ( ! defined( 'CHECKOUT_ENGINE_REQUEST_KEY' ) ) {
+	define( 'CHECKOUT_ENGINE_REQUEST_KEY', 'checkout_engine.request' );
 }
 
-if ( ! defined( 'WPEMERGE_RESPONSE_KEY' ) ) {
-	define( 'WPEMERGE_RESPONSE_KEY', 'wpemerge.response' );
+if ( ! defined( 'CHECKOUT_ENGINE_RESPONSE_KEY' ) ) {
+	define( 'CHECKOUT_ENGINE_RESPONSE_KEY', 'checkout_engine.response' );
 }
 
-if ( ! defined( 'WPEMERGE_EXCEPTIONS_ERROR_HANDLER_KEY' ) ) {
-	define( 'WPEMERGE_EXCEPTIONS_ERROR_HANDLER_KEY', 'wpemerge.exceptions.error_handler' );
+if ( ! defined( 'CHECKOUT_ENGINE_EXCEPTIONS_ERROR_HANDLER_KEY' ) ) {
+	define( 'CHECKOUT_ENGINE_EXCEPTIONS_ERROR_HANDLER_KEY', 'checkout_engine.exceptions.error_handler' );
 }
 
-if ( ! defined( 'WPEMERGE_EXCEPTIONS_CONFIGURATION_ERROR_HANDLER_KEY' ) ) {
-	define( 'WPEMERGE_EXCEPTIONS_CONFIGURATION_ERROR_HANDLER_KEY', 'wpemerge.exceptions.configuration_error_handler' );
+if ( ! defined( 'CHECKOUT_ENGINE_EXCEPTIONS_CONFIGURATION_ERROR_HANDLER_KEY' ) ) {
+	define( 'CHECKOUT_ENGINE_EXCEPTIONS_CONFIGURATION_ERROR_HANDLER_KEY', 'checkout_engine.exceptions.configuration_error_handler' );
 }
 
-if ( ! defined( 'WPEMERGE_RESPONSE_SERVICE_KEY' ) ) {
-	define( 'WPEMERGE_RESPONSE_SERVICE_KEY', 'wpemerge.responses.response_service' );
+if ( ! defined( 'CHECKOUT_ENGINE_RESPONSE_SERVICE_KEY' ) ) {
+	define( 'CHECKOUT_ENGINE_RESPONSE_SERVICE_KEY', 'checkout_engine.responses.response_service' );
 }
 
-if ( ! defined( 'WPEMERGE_ROUTING_ROUTER_KEY' ) ) {
-	define( 'WPEMERGE_ROUTING_ROUTER_KEY', 'wpemerge.routing.router' );
+if ( ! defined( 'CHECKOUT_ENGINE_ROUTING_ROUTER_KEY' ) ) {
+	define( 'CHECKOUT_ENGINE_ROUTING_ROUTER_KEY', 'checkout_engine.routing.router' );
 }
 
-if ( ! defined( 'WPEMERGE_ROUTING_ROUTE_BLUEPRINT_KEY' ) ) {
-	define( 'WPEMERGE_ROUTING_ROUTE_BLUEPRINT_KEY', 'wpemerge.routing.route_registrar' );
+if ( ! defined( 'CHECKOUT_ENGINE_ROUTING_ROUTE_BLUEPRINT_KEY' ) ) {
+	define( 'CHECKOUT_ENGINE_ROUTING_ROUTE_BLUEPRINT_KEY', 'checkout_engine.routing.route_registrar' );
 }
 
-if ( ! defined( 'WPEMERGE_ROUTING_CONDITIONS_CONDITION_FACTORY_KEY' ) ) {
-	define( 'WPEMERGE_ROUTING_CONDITIONS_CONDITION_FACTORY_KEY', 'wpemerge.routing.conditions.condition_factory' );
+if ( ! defined( 'CHECKOUT_ENGINE_ROUTING_CONDITIONS_CONDITION_FACTORY_KEY' ) ) {
+	define( 'CHECKOUT_ENGINE_ROUTING_CONDITIONS_CONDITION_FACTORY_KEY', 'checkout_engine.routing.conditions.condition_factory' );
 }
 
-if ( ! defined( 'WPEMERGE_ROUTING_CONDITION_TYPES_KEY' ) ) {
-	define( 'WPEMERGE_ROUTING_CONDITION_TYPES_KEY', 'wpemerge.routing.conditions.condition_types' );
+if ( ! defined( 'CHECKOUT_ENGINE_ROUTING_CONDITION_TYPES_KEY' ) ) {
+	define( 'CHECKOUT_ENGINE_ROUTING_CONDITION_TYPES_KEY', 'checkout_engine.routing.conditions.condition_types' );
 }
 
-if ( ! defined( 'WPEMERGE_VIEW_SERVICE_KEY' ) ) {
-	define( 'WPEMERGE_VIEW_SERVICE_KEY', 'wpemerge.view.view_service' );
+if ( ! defined( 'CHECKOUT_ENGINE_VIEW_SERVICE_KEY' ) ) {
+	define( 'CHECKOUT_ENGINE_VIEW_SERVICE_KEY', 'checkout_engine.view.view_service' );
 }
 
-if ( ! defined( 'WPEMERGE_VIEW_COMPOSE_ACTION_KEY' ) ) {
-	define( 'WPEMERGE_VIEW_COMPOSE_ACTION_KEY', 'wpemerge.view.view_compose_action' );
+if ( ! defined( 'CHECKOUT_ENGINE_VIEW_COMPOSE_ACTION_KEY' ) ) {
+	define( 'CHECKOUT_ENGINE_VIEW_COMPOSE_ACTION_KEY', 'checkout_engine.view.view_compose_action' );
 }
 
-if ( ! defined( 'WPEMERGE_VIEW_ENGINE_KEY' ) ) {
-	define( 'WPEMERGE_VIEW_ENGINE_KEY', 'wpemerge.view.view_engine' );
+if ( ! defined( 'CHECKOUT_ENGINE_VIEW_ENGINE_KEY' ) ) {
+	define( 'CHECKOUT_ENGINE_VIEW_ENGINE_KEY', 'checkout_engine.view.view_engine' );
 }
 
-if ( ! defined( 'WPEMERGE_VIEW_PHP_VIEW_ENGINE_KEY' ) ) {
-	define( 'WPEMERGE_VIEW_PHP_VIEW_ENGINE_KEY', 'wpemerge.view.php_view_engine' );
+if ( ! defined( 'CHECKOUT_ENGINE_VIEW_PHP_VIEW_ENGINE_KEY' ) ) {
+	define( 'CHECKOUT_ENGINE_VIEW_PHP_VIEW_ENGINE_KEY', 'checkout_engine.view.php_view_engine' );
 }
 
-if ( ! defined( 'WPEMERGE_SERVICE_PROVIDERS_KEY' ) ) {
-	define( 'WPEMERGE_SERVICE_PROVIDERS_KEY', 'wpemerge.service_providers' );
+if ( ! defined( 'CHECKOUT_ENGINE_SERVICE_PROVIDERS_KEY' ) ) {
+	define( 'CHECKOUT_ENGINE_SERVICE_PROVIDERS_KEY', 'checkout_engine.service_providers' );
 }
 
-if ( ! defined( 'WPEMERGE_FLASH_KEY' ) ) {
-	define( 'WPEMERGE_FLASH_KEY', 'wpemerge.flash.flash' );
+if ( ! defined( 'CHECKOUT_ENGINE_FLASH_KEY' ) ) {
+	define( 'CHECKOUT_ENGINE_FLASH_KEY', 'checkout_engine.flash.flash' );
 }
 
-if ( ! defined( 'WPEMERGE_OLD_INPUT_KEY' ) ) {
-	define( 'WPEMERGE_OLD_INPUT_KEY', 'wpemerge.old_input.old_input' );
+if ( ! defined( 'CHECKOUT_ENGINE_OLD_INPUT_KEY' ) ) {
+	define( 'CHECKOUT_ENGINE_OLD_INPUT_KEY', 'checkout_engine.old_input.old_input' );
 }
 
-if ( ! defined( 'WPEMERGE_CSRF_KEY' ) ) {
-	define( 'WPEMERGE_CSRF_KEY', 'wpemerge.csrf.csrf' );
+if ( ! defined( 'CHECKOUT_ENGINE_CSRF_KEY' ) ) {
+	define( 'CHECKOUT_ENGINE_CSRF_KEY', 'checkout_engine.csrf.csrf' );
 }

@@ -1,17 +1,17 @@
 <?php
 /**
- * @package   WPEmerge
- * @author    Atanas Angelov <hi@atanas.dev>
- * @copyright 2017-2019 Atanas Angelov
+ * @package   CheckoutEngineCore
+ * @author    Andre Gagnon <hi@atanas.dev>
+ * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://wpemerge.com/
+ * @link      https://checkout_engine.com/
  */
 
-namespace WPEmerge\Routing;
+namespace CheckoutEngineCore\Routing;
 
-use WPEmerge\Exceptions\ConfigurationException;
-use WPEmerge\Requests\RequestInterface;
-use WPEmerge\Routing\Conditions\CanFilterQueryInterface;
+use CheckoutEngineCore\Exceptions\ConfigurationException;
+use CheckoutEngineCore\Requests\RequestInterface;
+use CheckoutEngineCore\Routing\Conditions\CanFilterQueryInterface;
 
 /**
  * Represent an object which has a WordPress query filter attribute.
@@ -31,7 +31,7 @@ trait HasQueryFilterTrait {
 	 * @param  mixed  $default
 	 * @return mixed
 	 */
-	public abstract function getAttribute( $attribute, $default = '' );
+	abstract public function getAttribute( $attribute, $default = '' );
 
 	/**
 	 * Apply the query filter, if any.
@@ -41,7 +41,7 @@ trait HasQueryFilterTrait {
 	 * @return array
 	 */
 	public function applyQueryFilter( $request, $query_vars ) {
-		$query = $this->getAttribute( 'query' );
+		$query     = $this->getAttribute( 'query' );
 		$condition = $this->getAttribute( 'condition' );
 
 		if ( $query === null ) {
@@ -59,7 +59,7 @@ trait HasQueryFilterTrait {
 		return call_user_func_array(
 			$query,
 			array_merge(
-				[$query_vars],
+				[ $query_vars ],
 				array_values( $condition->getArguments( $request ) )
 			)
 		);

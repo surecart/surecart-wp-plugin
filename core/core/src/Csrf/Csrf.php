@@ -1,15 +1,15 @@
 <?php
 /**
- * @package   WPEmerge
- * @author    Atanas Angelov <hi@atanas.dev>
- * @copyright 2017-2019 Atanas Angelov
+ * @package   CheckoutEngineCore
+ * @author    Andre Gagnon <hi@atanas.dev>
+ * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://wpemerge.com/
+ * @link      https://checkout_engine.com/
  */
 
-namespace WPEmerge\Csrf;
+namespace CheckoutEngineCore\Csrf;
 
-use WPEmerge\Requests\RequestInterface;
+use CheckoutEngineCore\Requests\RequestInterface;
 
 /**
  * Provide CSRF protection utilities through WordPress nonces.
@@ -51,8 +51,8 @@ class Csrf {
 	 * @param string  $key
 	 * @param integer $maximum_lifetime
 	 */
-	public function __construct( $key = '__wpemergeCsrfToken', $maximum_lifetime = 2 ) {
-		$this->key = $key;
+	public function __construct( $key = '__checkoutEngineCsrfToken', $maximum_lifetime = 2 ) {
+		$this->key              = $key;
 		$this->maximum_lifetime = $maximum_lifetime;
 	}
 
@@ -117,7 +117,7 @@ class Csrf {
 	 * @return boolean
 	 */
 	public function isValidToken( $token, $action = -1 ) {
-		$action = $action === -1 ? session_id() : $action;
+		$action   = $action === -1 ? session_id() : $action;
 		$lifetime = (int) wp_verify_nonce( $token, $action );
 
 		return ( $lifetime > 0 && $lifetime <= $this->maximum_lifetime );

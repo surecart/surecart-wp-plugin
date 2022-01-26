@@ -1,9 +1,9 @@
 <?php
 
-use WPEmerge\Application\ApplicationTrait;
+use CheckoutEngineCore\Application\ApplicationTrait;
 
 /**
- * @mixin \WPEmergeAppCore\Application\ApplicationMixin
+ * @mixin \CheckoutEngineAppCore\Application\ApplicationMixin
  */
 class CheckoutEngine {
 	use ApplicationTrait;

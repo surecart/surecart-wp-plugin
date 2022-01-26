@@ -1,13 +1,13 @@
 <?php
 /**
- * @package   WPEmergeAppCore
- * @author    Atanas Angelov <hi@atanas.dev>
- * @copyright 2017-2020 Atanas Angelov
+ * @package   CheckoutEngineAppCore
+ * @author    Andre Gagnon <hi@atanas.dev>
+ * @copyright  Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://wpemerge.com/
+ * @link      https://checkoutengine.com
  */
 
-namespace WPEmergeAppCore\Avatar;
+namespace CheckoutEngineAppCore\Avatar;
 
 use WP_Comment;
 
@@ -32,7 +32,7 @@ class Avatar {
 	 * @return void
 	 */
 	public function bootstrap() {
-		add_filter( 'get_avatar_url', [$this, 'filterAvatar'], 10, 3 );
+		add_filter( 'get_avatar_url', [ $this, 'filterAvatar' ], 10, 3 );
 	}
 
 	/**
@@ -62,7 +62,7 @@ class Avatar {
 	 * @return void
 	 */
 	public function removeUserMetaKey( $user_meta_key ) {
-		$filter = function( $meta_key ) use ( $user_meta_key ) {
+		$filter                      = function( $meta_key ) use ( $user_meta_key ) {
 			return $meta_key !== $user_meta_key;
 		};
 		$this->avatar_user_meta_keys = array_filter( $this->avatar_user_meta_keys, $filter );
@@ -92,7 +92,7 @@ class Avatar {
 	/**
 	 * Returns a size (name or [widget, height]) for the given avatar arguments.
 	 *
-	 * @param  array                 $arguments
+	 * @param  array $arguments
 	 * @return array<integer>|string
 	 */
 	protected function getSize( $arguments ) {
@@ -110,7 +110,7 @@ class Avatar {
 	/**
 	 * Get attachment fallback chain for the user avatar.
 	 *
-	 * @param  integer        $user_id
+	 * @param  integer $user_id
 	 * @return array<integer>
 	 */
 	protected function getAttachmentFallbackChain( $user_id ) {

@@ -2,7 +2,7 @@
 
 namespace CheckoutEngine\Blocks;
 
-use WPEmerge\ServiceProviders\ServiceProviderInterface;
+use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
 
 /**
  * Checkout block

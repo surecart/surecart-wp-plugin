@@ -3,8 +3,8 @@
 namespace CheckoutEngine\Middleware;
 
 use Closure;
-use WPEmerge\Requests\RequestInterface;
-use WPEmerge\Responses\RedirectResponse;
+use CheckoutEngineCore\Requests\RequestInterface;
+use CheckoutEngineCore\Responses\RedirectResponse;
 
 class LoginMiddleware {
 	// Note the new $capability parameter:

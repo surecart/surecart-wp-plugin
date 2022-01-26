@@ -3,7 +3,7 @@
 namespace CheckoutEngine\Routing;
 
 use CheckoutEngine\Routing\AdminRouteService;
-use WPEmerge\ServiceProviders\ServiceProviderInterface;
+use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
 
 /**
  * Provide custom route conditions.
@@ -18,7 +18,7 @@ class AdminRouteServiceProvider implements ServiceProviderInterface {
 			return new AdminRouteService();
 		};
 
-		$app = $container[ WPEMERGE_APPLICATION_KEY ];
+		$app = $container[ CHECKOUT_ENGINE_APPLICATION_KEY ];
 
 		$app->alias(
 			'getUrl',

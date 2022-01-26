@@ -1,3 +1,3 @@
-# WP Emerge App Core
+# CheckoutEngine App Core
 
-Refer to http://wpemerge.com/ for more information.
+Forked from http://checkout_engine.com/.

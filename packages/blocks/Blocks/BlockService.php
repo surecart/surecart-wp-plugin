@@ -2,7 +2,7 @@
 
 namespace CheckoutEngine\Blocks;
 
-use WPEmerge\Application\Application;
+use CheckoutEngineCore\Application\Application;
 
 /**
  * Provide general block-related functionality.

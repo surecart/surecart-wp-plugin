@@ -1,19 +1,19 @@
 <?php
 /**
- * @package   WPEmerge
- * @author    Atanas Angelov <hi@atanas.dev>
- * @copyright 2017-2019 Atanas Angelov
+ * @package   CheckoutEngineCore
+ * @author    Andre Gagnon <hi@atanas.dev>
+ * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://wpemerge.com/
+ * @link      https://checkout_engine.com/
  */
 
-namespace WPEmerge\Application;
+namespace CheckoutEngineCore\Application;
 
 use Closure;
 use Pimple\Container;
-use WPEmerge\Exceptions\ConfigurationException;
-use WPEmerge\Requests\Request;
-use WPEmerge\Support\Arr;
+use CheckoutEngineCore\Exceptions\ConfigurationException;
+use CheckoutEngineCore\Requests\Request;
+use CheckoutEngineCore\Support\Arr;
 
 /**
  * The core WP Emerge component representing an application.
@@ -55,8 +55,8 @@ class Application {
 	 */
 	public function __construct( Container $container, $render_config_exceptions = true ) {
 		$this->setContainer( $container );
-		$this->container()[ WPEMERGE_APPLICATION_KEY ] = $this;
-		$this->render_config_exceptions = $render_config_exceptions;
+		$this->container()[ CHECKOUT_ENGINE_APPLICATION_KEY ] = $this;
+		$this->render_config_exceptions                       = $render_config_exceptions;
 	}
 
 	/**
@@ -86,14 +86,16 @@ class Application {
 		$this->loadConfig( $container, $config );
 		$this->loadServiceProviders( $container );
 
-		$this->renderConfigExceptions( function () use ( $run ) {
-			$this->loadRoutes();
+		$this->renderConfigExceptions(
+			function () use ( $run ) {
+				$this->loadRoutes();
 
-			if ( $run ) {
-				$kernel = $this->resolve( WPEMERGE_WORDPRESS_HTTP_KERNEL_KEY );
-				$kernel->bootstrap();
+				if ( $run ) {
+					  $kernel = $this->resolve( CHECKOUT_ENGINE_WORDPRESS_HTTP_KERNEL_KEY );
+					  $kernel->bootstrap();
+				}
 			}
-		} );
+		);
 	}
 
 	/**
@@ -105,7 +107,7 @@ class Application {
 	 * @return void
 	 */
 	protected function loadConfig( Container $container, $config ) {
-		$container[ WPEMERGE_CONFIG_KEY ] = $config;
+		$container[ CHECKOUT_ENGINE_CONFIG_KEY ] = $config;
 	}
 
 	/**
@@ -136,8 +138,8 @@ class Application {
 	 * @return void
 	 */
 	protected function loadRoutesGroup( $group ) {
-		$config = $this->resolve( WPEMERGE_CONFIG_KEY );
-		$file = Arr::get( $config, 'routes.' . $group . '.definitions', '' );
+		$config     = $this->resolve( CHECKOUT_ENGINE_CONFIG_KEY );
+		$file       = Arr::get( $config, 'routes.' . $group . '.definitions', '' );
 		$attributes = Arr::get( $config, 'routes.' . $group . '.attributes', [] );
 
 		if ( empty( $file ) ) {
@@ -147,12 +149,12 @@ class Application {
 		$middleware = Arr::get( $attributes, 'middleware', [] );
 
 		if ( ! in_array( $group, $middleware, true ) ) {
-			$middleware = array_merge( [$group], $middleware );
+			$middleware = array_merge( [ $group ], $middleware );
 		}
 
 		$attributes['middleware'] = $middleware;
 
-		$blueprint = $this->resolve( WPEMERGE_ROUTING_ROUTE_BLUEPRINT_KEY );
+		$blueprint = $this->resolve( CHECKOUT_ENGINE_ROUTING_ROUTE_BLUEPRINT_KEY );
 		$blueprint->attributes( $attributes )->group( $file );
 	}
 
@@ -172,11 +174,11 @@ class Application {
 			}
 
 			$request = Request::fromGlobals();
-			$handler = $this->resolve( WPEMERGE_EXCEPTIONS_CONFIGURATION_ERROR_HANDLER_KEY );
+			$handler = $this->resolve( CHECKOUT_ENGINE_EXCEPTIONS_CONFIGURATION_ERROR_HANDLER_KEY );
 
-			add_filter( 'wpemerge.pretty_errors.apply_admin_styles', '__return_false' );
+			add_filter( 'checkout_engine.pretty_errors.apply_admin_styles', '__return_false' );
 
-			$response_service = $this->resolve( WPEMERGE_RESPONSE_SERVICE_KEY );
+			$response_service = $this->resolve( CHECKOUT_ENGINE_RESPONSE_SERVICE_KEY );
 			$response_service->respond( $handler->getResponse( $request, $exception ) );
 
 			wp_die();

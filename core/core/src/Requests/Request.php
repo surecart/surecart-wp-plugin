@@ -1,16 +1,16 @@
 <?php
 /**
- * @package   WPEmerge
- * @author    Atanas Angelov <hi@atanas.dev>
- * @copyright 2017-2019 Atanas Angelov
+ * @package   CheckoutEngineCore
+ * @author    Andre Gagnon <hi@atanas.dev>
+ * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://wpemerge.com/
+ * @link      https://checkout_engine.com/
  */
 
-namespace WPEmerge\Requests;
+namespace CheckoutEngineCore\Requests;
 
 use GuzzleHttp\Psr7\ServerRequest;
-use WPEmerge\Support\Arr;
+use CheckoutEngineCore\Support\Arr;
 
 /**
  * A representation of a request to the server.
@@ -23,7 +23,7 @@ class Request extends ServerRequest implements RequestInterface {
 	 */
 	public static function fromGlobals() {
 		$request = parent::fromGlobals();
-		$new = new self(
+		$new     = new self(
 			$request->getMethod(),
 			$request->getUri(),
 			$request->getHeaders(),
@@ -51,8 +51,8 @@ class Request extends ServerRequest implements RequestInterface {
 	 * {@inheritDoc}
 	 */
 	protected function getMethodOverride( $default ) {
-		$valid_overrides = ['GET', 'HEAD', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'];
-		$override = $default;
+		$valid_overrides = [ 'GET', 'HEAD', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS' ];
+		$override        = $default;
 
 		$header_override = (string) $this->getHeaderLine( 'X-HTTP-METHOD-OVERRIDE' );
 		if ( ! empty( $header_override ) ) {
@@ -137,7 +137,7 @@ class Request extends ServerRequest implements RequestInterface {
 	 * {@inheritDoc}
 	 */
 	public function isReadVerb() {
-		return in_array( $this->getMethod(), ['GET', 'HEAD', 'OPTIONS'] );
+		return in_array( $this->getMethod(), [ 'GET', 'HEAD', 'OPTIONS' ] );
 	}
 
 	/**
@@ -150,7 +150,7 @@ class Request extends ServerRequest implements RequestInterface {
 	/**
 	 * Get all values or a single one from an input type.
 	 *
-	 * @param  array $source
+	 * @param  array  $source
 	 * @param  string $key
 	 * @param  mixed  $default
 	 * @return mixed
@@ -165,57 +165,64 @@ class Request extends ServerRequest implements RequestInterface {
 
 	/**
 	 * {@inheritDoc}
+	 *
 	 * @see ::get()
 	 */
 	public function attributes( $key = '', $default = null ) {
-		return call_user_func( [$this, 'get'], $this->getAttributes(), $key, $default );
+		return call_user_func( [ $this, 'get' ], $this->getAttributes(), $key, $default );
 	}
 
 	/**
 	 * {@inheritDoc}
+	 *
 	 * @see ::get()
 	 */
 	public function query( $key = '', $default = null ) {
-		return call_user_func( [$this, 'get'], $this->getQueryParams(), $key, $default );
+		return call_user_func( [ $this, 'get' ], $this->getQueryParams(), $key, $default );
 	}
 
 	/**
 	 * {@inheritDoc}
+	 *
 	 * @see ::get()
 	 */
 	public function body( $key = '', $default = null ) {
-		return call_user_func( [$this, 'get'], $this->getParsedBody(), $key, $default );
+		return call_user_func( [ $this, 'get' ], $this->getParsedBody(), $key, $default );
 	}
 
 	/**
 	 * {@inheritDoc}
+	 *
 	 * @see ::get()
 	 */
 	public function cookies( $key = '', $default = null ) {
-		return call_user_func( [$this, 'get'], $this->getCookieParams(), $key, $default );
+		return call_user_func( [ $this, 'get' ], $this->getCookieParams(), $key, $default );
 	}
 
 	/**
 	 * {@inheritDoc}
+	 *
 	 * @see ::get()
 	 */
 	public function files( $key = '', $default = null ) {
-		return call_user_func( [$this, 'get'], $this->getUploadedFiles(), $key, $default );
+		return call_user_func( [ $this, 'get' ], $this->getUploadedFiles(), $key, $default );
 	}
 
 	/**
 	 * {@inheritDoc}
+	 *
 	 * @see ::get()
 	 */
 	public function server( $key = '', $default = null ) {
-		return call_user_func( [$this, 'get'], $this->getServerParams(), $key, $default );
+		return call_user_func( [ $this, 'get' ], $this->getServerParams(), $key, $default );
 	}
 
 	/**
 	 * {@inheritDoc}
+	 *
 	 * @see ::get()
 	 */
 	public function headers( $key = '', $default = null ) {
-		return call_user_func( [$this, 'get'], $this->getHeaders(), $key, $default );
+		return call_user_func( [ $this, 'get' ], $this->getHeaders(), $key, $default );
 	}
 }

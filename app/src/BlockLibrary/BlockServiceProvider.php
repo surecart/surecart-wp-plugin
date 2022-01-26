@@ -7,7 +7,7 @@
 namespace CheckoutEngine\BlockLibrary;
 
 use CheckoutEngine\Blocks\BlockService;
-use WPEmerge\ServiceProviders\ServiceProviderInterface;
+use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
 
 /**
  * Block Service Provider Class
@@ -24,7 +24,7 @@ class BlockServiceProvider implements ServiceProviderInterface {
 	 *  @param  \Pimple\Container $container Service Container.
 	 */
 	public function register( $container ) {
-		$app = $container[ WPEMERGE_APPLICATION_KEY ];
+		$app = $container[ CHECKOUT_ENGINE_APPLICATION_KEY ];
 
 		$container['blocks'] = function () use ( $app ) {
 			return new BlockService( $app );
@@ -97,7 +97,7 @@ class BlockServiceProvider implements ServiceProviderInterface {
 	 * @return  void
 	 */
 	public function registerBlocks( $container ) {
-		$service = \CheckoutEngine::resolve( WPEMERGE_CONFIG_KEY );
+		$service = \CheckoutEngine::resolve( CHECKOUT_ENGINE_CONFIG_KEY );
 		if ( ! empty( $service['blocks'] ) ) {
 			foreach ( $service['blocks'] as $block ) {
 				( new $block() )->register( $container );

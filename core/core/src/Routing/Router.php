@@ -1,23 +1,23 @@
 <?php
 /**
- * @package   WPEmerge
- * @author    Atanas Angelov <hi@atanas.dev>
- * @copyright 2017-2019 Atanas Angelov
+ * @package   CheckoutEngineCore
+ * @author    Andre Gagnon <hi@atanas.dev>
+ * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://wpemerge.com/
+ * @link      https://checkout_engine.com/
  */
 
-namespace WPEmerge\Routing;
+namespace CheckoutEngineCore\Routing;
 
 use Closure;
-use WPEmerge\Exceptions\ConfigurationException;
-use WPEmerge\Helpers\Handler;
-use WPEmerge\Helpers\HandlerFactory;
-use WPEmerge\Requests\RequestInterface;
-use WPEmerge\Routing\Conditions\ConditionFactory;
-use WPEmerge\Routing\Conditions\ConditionInterface;
-use WPEmerge\Routing\Conditions\UrlableInterface;
-use WPEmerge\Support\Arr;
+use CheckoutEngineCore\Exceptions\ConfigurationException;
+use CheckoutEngineCore\Helpers\Handler;
+use CheckoutEngineCore\Helpers\HandlerFactory;
+use CheckoutEngineCore\Requests\RequestInterface;
+use CheckoutEngineCore\Routing\Conditions\ConditionFactory;
+use CheckoutEngineCore\Routing\Conditions\ConditionInterface;
+use CheckoutEngineCore\Routing\Conditions\UrlableInterface;
+use CheckoutEngineCore\Support\Arr;
 
 /**
  * Provide routing for site requests (i.e. all non-api requests).

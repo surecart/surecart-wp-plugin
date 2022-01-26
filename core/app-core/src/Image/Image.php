@@ -1,15 +1,15 @@
 <?php
 /**
- * @package   WPEmergeAppCore
- * @author    Atanas Angelov <hi@atanas.dev>
- * @copyright 2017-2020 Atanas Angelov
+ * @package   CheckoutEngineAppCore
+ * @author    Andre Gagnon <hi@atanas.dev>
+ * @copyright  Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://wpemerge.com/
+ * @link      https://checkoutengine.com
  */
 
-namespace WPEmergeAppCore\Image;
+namespace CheckoutEngineAppCore\Image;
 
-use WPEmerge\Helpers\MixedType;
+use CheckoutEngineCore\Helpers\MixedType;
 
 class Image {
 	/**
@@ -71,20 +71,20 @@ class Image {
 	 * @return string
 	 */
 	public function thumbnail( $attachment_id, $width, $height, $crop = true ) {
-		$width = absint( $width );
+		$width  = absint( $width );
 		$height = absint( $height );
 
 		$upload_dir = wp_upload_dir();
 		$attachment = wp_get_attachment_metadata( $attachment_id );
-		$source = MixedType::normalizePath( get_attached_file( $attachment_id ) );
+		$source     = MixedType::normalizePath( get_attached_file( $attachment_id ) );
 
 		if ( ! $attachment || ! file_exists( $source ) ) {
 			return '';
 		}
 
 		$attachment_subdirectory = preg_replace( '/\/?[^\/]+\z/', '', $attachment['file'] );
-		$filename = $this->getResizedFilename( $source, $width, $height, $crop );
-		$destination = MixedType::normalizePath( MixedType::normalizePath( $upload_dir['basedir'] ) . DIRECTORY_SEPARATOR . $attachment_subdirectory ) . DIRECTORY_SEPARATOR . $filename;
+		$filename                = $this->getResizedFilename( $source, $width, $height, $crop );
+		$destination             = MixedType::normalizePath( MixedType::normalizePath( $upload_dir['basedir'] ) . DIRECTORY_SEPARATOR . $attachment_subdirectory ) . DIRECTORY_SEPARATOR . $filename;
 
 		$stored = $this->store( $source, $destination, $width, $height, $crop );
 

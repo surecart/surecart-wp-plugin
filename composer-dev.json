@@ -1,32 +1,21 @@
 {
 	"version": "0.16.2",
 	"type": "wordpress-plugin",
-	"keywords": ["wordpress", "plugin", "starter plugin", "wpemerge"],
+	"keywords": ["wordpress", "plugin", "checkout engine"],
 	"license": "GPL-2.0-only",
 	"require": {
 		"php": ">=5.5",
 		"composer/installers": "^1.4",
-		"checkout-engine/blocks": "*",
-		"htmlburger/wpemerge": "dev-master",
-		"htmlburger/wpemerge-app-core": "dev-master"
+		"checkout-engine/blocks": "*"
 	},
 	"repositories": [
 		{
 			"type": "path",
 			"url": "./packages/blocks"
-		},
-		{
-			"type": "path",
-			"url": "./packages/framework/wpemerge"
-		},
-		{
-			"type": "path",
-			"url": "./packages/framework/wpemerge-app-core"
 		}
 	],
 	"require-dev": {
 		"filp/whoops": "^2.2",
-		"htmlburger/wpemerge-cli": "~0.16.0",
 		"wp-phpunit/wp-phpunit": "5.7.1",
 		"wp-cli/wp-cli-bundle": "*",
 		"mockery/mockery": "^1.4",
@@ -48,13 +37,6 @@
 		}
 	},
 	"scripts": {
-		"analyse": "php -d memory_limit=4G vendor/bin/phpstan analyse",
-		"install-test-env": ["wpemerge config:create"],
-		"install-dev-env": [
-			"@php wpemerge config:create",
-			"@php wpemerge install:dependencies",
-			"@php wpemerge assets:build"
-		],
-		"post-create-project-cmd": "@install-dev-env"
+		"analyse": "php -d memory_limit=4G vendor/bin/phpstan analyse"
 	}
 }

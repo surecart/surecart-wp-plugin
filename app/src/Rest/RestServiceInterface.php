@@ -2,7 +2,7 @@
 
 namespace CheckoutEngine\Rest;
 
-use WPEmerge\ServiceProviders\ServiceProviderInterface;
+use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
 
 interface RestServiceInterface extends ServiceProviderInterface {
 	/**

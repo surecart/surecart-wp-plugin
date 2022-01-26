@@ -53,8 +53,7 @@ wp-content/plugins/checkout-engine
 │   ├── layouts/
 │   └── partials/
 ├── screenshot-1.png          # Plugin screenshot.
-├── wpemerge                  # WP Emerge CLI shortcut.
-├── wpemerge.php              # Bootstrap plugin.
+├── checkout-engine.php              # Bootstrap plugin.
 └── ...
 ```
 

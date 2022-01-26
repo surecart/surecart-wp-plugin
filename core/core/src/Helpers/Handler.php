@@ -1,18 +1,18 @@
 <?php
 /**
- * @package   WPEmerge
- * @author    Atanas Angelov <hi@atanas.dev>
- * @copyright 2017-2019 Atanas Angelov
+ * @package   CheckoutEngineCore
+ * @author    Andre Gagnon <hi@atanas.dev>
+ * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://wpemerge.com/
+ * @link      https://checkout_engine.com/
  */
 
-namespace WPEmerge\Helpers;
+namespace CheckoutEngineCore\Helpers;
 
 use Closure;
-use WPEmerge\Application\GenericFactory;
-use WPEmerge\Exceptions\ClassNotFoundException;
-use WPEmerge\Exceptions\ConfigurationException;
+use CheckoutEngineCore\Application\GenericFactory;
+use CheckoutEngineCore\Exceptions\ClassNotFoundException;
+use CheckoutEngineCore\Exceptions\ConfigurationException;
 
 /**
  * Represent a generic handler - a Closure or a class method to be resolved from the service container
@@ -55,9 +55,9 @@ class Handler {
 	/**
 	 * Parse a raw handler to a Closure or a [class, method] array
 	 *
-	 * @param  string|Closure     $raw_handler
-	 * @param  string             $default_method
-	 * @param  string             $namespace
+	 * @param  string|Closure $raw_handler
+	 * @param  string         $default_method
+	 * @param  string         $namespace
 	 * @return array|Closure|null
 	 */
 	protected function parse( $raw_handler, $default_method, $namespace ) {
@@ -71,9 +71,9 @@ class Handler {
 	/**
 	 * Parse a raw string handler to a [class, method] array
 	 *
-	 * @param  string     $raw_handler
-	 * @param  string     $default_method
-	 * @param  string     $namespace
+	 * @param  string $raw_handler
+	 * @param  string $default_method
+	 * @param  string $namespace
 	 * @return array|null
 	 */
 	protected function parseFromString( $raw_handler, $default_method, $namespace ) {
@@ -85,8 +85,8 @@ class Handler {
 
 		if ( ! empty( $class ) && ! empty( $method ) ) {
 			return [
-				'class' => $class,
-				'method' => $method,
+				'class'     => $class,
+				'method'    => $method,
 				'namespace' => $namespace,
 			];
 		}
@@ -116,7 +116,7 @@ class Handler {
 		}
 
 		$namespace = $handler['namespace'];
-		$class = $handler['class'];
+		$class     = $handler['class'];
 
 		try {
 			$instance = $this->factory->make( $class );
@@ -134,17 +134,17 @@ class Handler {
 	/**
 	 * Execute the parsed handler with any provided arguments and return the result.
 	 *
-	 * @param  mixed ,...$arguments
+	 * @param  mixed , ...$arguments
 	 * @return mixed
 	 */
 	public function execute() {
 		$arguments = func_get_args();
-		$instance = $this->make();
+		$instance  = $this->make();
 
 		if ( $instance instanceof Closure ) {
 			return call_user_func_array( $instance, $arguments );
 		}
 
-		return call_user_func_array( [$instance, $this->get()['method']], $arguments );
+		return call_user_func_array( [ $instance, $this->get()['method'] ], $arguments );
 	}
 }

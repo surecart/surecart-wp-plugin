@@ -1,15 +1,15 @@
 <?php
 /**
- * @package   WPEmergeAppCore
- * @author    Atanas Angelov <hi@atanas.dev>
- * @copyright 2017-2020 Atanas Angelov
+ * @package   CheckoutEngineAppCore
+ * @author    Andre Gagnon <hi@atanas.dev>
+ * @copyright  Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://wpemerge.com/
+ * @link      https://checkoutengine.com
  */
 
-namespace WPEmergeAppCore\Assets;
+namespace CheckoutEngineAppCore\Assets;
 
-use WPEmerge\ServiceProviders\ServiceProviderInterface;
+use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
 
 /**
  * Provide assets dependencies.
@@ -21,16 +21,16 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 	 * {@inheritDoc}
 	 */
 	public function register( $container ) {
-		$container['wpemerge_app_core.assets.manifest'] = function( $c ) {
-			return new Manifest( $c[ WPEMERGE_CONFIG_KEY ]['app_core']['path'] );
+		$container['checkout_engine_app_core.assets.manifest'] = function( $c ) {
+			return new Manifest( $c[ CHECKOUT_ENGINE_CONFIG_KEY ]['app_core']['path'] );
 		};
 
-		$container['wpemerge_app_core.assets.assets'] = function( $container ) {
+		$container['checkout_engine_app_core.assets.assets'] = function( $container ) {
 			return new Assets(
-				$container[ WPEMERGE_CONFIG_KEY ]['app_core']['path'],
-				$container[ WPEMERGE_CONFIG_KEY ]['app_core']['url'],
-				$container['wpemerge_app_core.config.config'],
-				$container['wpemerge_app_core.assets.manifest']
+				$container[ CHECKOUT_ENGINE_CONFIG_KEY ]['app_core']['path'],
+				$container[ CHECKOUT_ENGINE_CONFIG_KEY ]['app_core']['url'],
+				$container['checkout_engine_app_core.config.config'],
+				$container['checkout_engine_app_core.assets.manifest']
 			);
 		};
 	}

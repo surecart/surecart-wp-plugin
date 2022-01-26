@@ -6,7 +6,7 @@ use CheckoutEngine\Models\Charge;
 use CheckoutEngine\Models\Subscription;
 use CheckoutEngine\Models\User;
 use CheckoutEngine\Permissions\RolesService;
-use WPEmerge\ServiceProviders\ServiceProviderInterface;
+use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
 
 /**
  * Handles the request service
@@ -27,7 +27,7 @@ class RolesServiceProvider implements ServiceProviderInterface {
 			return new PermissionsService();
 		};
 
-		$app = $container[ WPEMERGE_APPLICATION_KEY ];
+		$app = $container[ CHECKOUT_ENGINE_APPLICATION_KEY ];
 
 		// register_setting alias.
 		$app->alias(

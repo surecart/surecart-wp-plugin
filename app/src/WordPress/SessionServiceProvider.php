@@ -2,7 +2,7 @@
 
 namespace CheckoutEngine\WordPress;
 
-use WPEmerge\ServiceProviders\ServiceProviderInterface;
+use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
 
 /**
  * Register a session for Flash and OldInput to work with.

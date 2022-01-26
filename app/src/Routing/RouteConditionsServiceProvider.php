@@ -2,7 +2,7 @@
 
 namespace CheckoutEngine\Routing;
 
-use WPEmerge\ServiceProviders\ServiceProviderInterface;
+use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
 
 /**
  * Provide custom route conditions.

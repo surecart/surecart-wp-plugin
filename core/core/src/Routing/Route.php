@@ -1,18 +1,18 @@
 <?php
 /**
- * @package   WPEmerge
- * @author    Atanas Angelov <hi@atanas.dev>
- * @copyright 2017-2019 Atanas Angelov
+ * @package   CheckoutEngineCore
+ * @author    Andre Gagnon <hi@atanas.dev>
+ * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://wpemerge.com/
+ * @link      https://checkout_engine.com/
  */
 
-namespace WPEmerge\Routing;
+namespace CheckoutEngineCore\Routing;
 
-use WPEmerge\Exceptions\ConfigurationException;
-use WPEmerge\Helpers\HasAttributesTrait;
-use WPEmerge\Requests\RequestInterface;
-use WPEmerge\Routing\Conditions\ConditionInterface;
+use CheckoutEngineCore\Exceptions\ConfigurationException;
+use CheckoutEngineCore\Helpers\HasAttributesTrait;
+use CheckoutEngineCore\Requests\RequestInterface;
+use CheckoutEngineCore\Routing\Conditions\ConditionInterface;
 
 /**
  * Represent a route
@@ -25,7 +25,7 @@ class Route implements RouteInterface, HasQueryFilterInterface {
 	 * {@inheritDoc}
 	 */
 	public function isSatisfied( RequestInterface $request ) {
-		$methods = $this->getAttribute( 'methods', [] );
+		$methods   = $this->getAttribute( 'methods', [] );
 		$condition = $this->getAttribute( 'condition' );
 
 		if ( ! in_array( $request->getMethod(), $methods ) ) {

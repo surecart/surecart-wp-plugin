@@ -1,29 +1,29 @@
 <?php
 /**
- * @package   WPEmerge
- * @author    Atanas Angelov <hi@atanas.dev>
- * @copyright 2017-2019 Atanas Angelov
+ * @package   CheckoutEngineCore
+ * @author    Andre Gagnon <hi@atanas.dev>
+ * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://wpemerge.com/
+ * @link      https://checkout_engine.com/
  */
 
-namespace WPEmerge\Application;
+namespace CheckoutEngineCore\Application;
 
 use Pimple\Container;
-use WPEmerge\Controllers\ControllersServiceProvider;
-use WPEmerge\Csrf\CsrfServiceProvider;
-use WPEmerge\Exceptions\ConfigurationException;
-use WPEmerge\Exceptions\ExceptionsServiceProvider;
-use WPEmerge\Flash\FlashServiceProvider;
-use WPEmerge\Input\OldInputServiceProvider;
-use WPEmerge\Kernels\KernelsServiceProvider;
-use WPEmerge\Middleware\MiddlewareServiceProvider;
-use WPEmerge\Requests\RequestsServiceProvider;
-use WPEmerge\Responses\ResponsesServiceProvider;
-use WPEmerge\Routing\RoutingServiceProvider;
-use WPEmerge\ServiceProviders\ServiceProviderInterface;
-use WPEmerge\Support\Arr;
-use WPEmerge\View\ViewServiceProvider;
+use CheckoutEngineCore\Controllers\ControllersServiceProvider;
+use CheckoutEngineCore\Csrf\CsrfServiceProvider;
+use CheckoutEngineCore\Exceptions\ConfigurationException;
+use CheckoutEngineCore\Exceptions\ExceptionsServiceProvider;
+use CheckoutEngineCore\Flash\FlashServiceProvider;
+use CheckoutEngineCore\Input\OldInputServiceProvider;
+use CheckoutEngineCore\Kernels\KernelsServiceProvider;
+use CheckoutEngineCore\Middleware\MiddlewareServiceProvider;
+use CheckoutEngineCore\Requests\RequestsServiceProvider;
+use CheckoutEngineCore\Responses\ResponsesServiceProvider;
+use CheckoutEngineCore\Routing\RoutingServiceProvider;
+use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
+use CheckoutEngineCore\Support\Arr;
+use CheckoutEngineCore\View\ViewServiceProvider;
 
 /**
  * Load service providers.
@@ -57,26 +57,29 @@ trait LoadsServiceProvidersTrait {
 	 * @return void
 	 */
 	protected function loadServiceProviders( Container $container ) {
-		$container[ WPEMERGE_SERVICE_PROVIDERS_KEY ] = array_merge(
+		$container[ CHECKOUT_ENGINE_SERVICE_PROVIDERS_KEY ] = array_merge(
 			$this->service_providers,
-			Arr::get( $container[ WPEMERGE_CONFIG_KEY ], 'providers', [] )
+			Arr::get( $container[ CHECKOUT_ENGINE_CONFIG_KEY ], 'providers', [] )
 		);
 
-		$service_providers = array_map( function ( $service_provider ) use ( $container ) {
-			if ( ! is_subclass_of( $service_provider, ServiceProviderInterface::class ) ) {
-				throw new ConfigurationException(
-					'The following class does not implement ' .
-					ServiceProviderInterface::class . ': ' . $service_provider
-				);
-			}
+		$service_providers = array_map(
+			function ( $service_provider ) use ( $container ) {
+				if ( ! is_subclass_of( $service_provider, ServiceProviderInterface::class ) ) {
+					throw new ConfigurationException(
+						'The following class does not implement ' .
+						ServiceProviderInterface::class . ': ' . $service_provider
+					);
+				}
 
-			// Provide container access to the service provider instance
-			// so bootstrap hooks can be unhooked e.g.:
-			// remove_action( 'some_action', [\App::resolve( SomeServiceProvider::class ), 'methodAddedToAction'] );
-			$container[ $service_provider ] = new $service_provider();
+				// Provide container access to the service provider instance
+				// so bootstrap hooks can be unhooked e.g.:
+				// remove_action( 'some_action', [\App::resolve( SomeServiceProvider::class ), 'methodAddedToAction'] );
+				$container[ $service_provider ] = new $service_provider();
 
-			return $container[ $service_provider ];
-		}, $container[ WPEMERGE_SERVICE_PROVIDERS_KEY ] );
+				return $container[ $service_provider ];
+			},
+			$container[ CHECKOUT_ENGINE_SERVICE_PROVIDERS_KEY ]
+		);
 
 		$this->registerServiceProviders( $service_providers, $container );
 		$this->bootstrapServiceProviders( $service_providers, $container );

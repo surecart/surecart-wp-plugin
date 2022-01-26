@@ -1,15 +1,15 @@
 <?php
 /**
- * @package   WPEmergeAppCore
- * @author    Atanas Angelov <hi@atanas.dev>
- * @copyright 2017-2020 Atanas Angelov
+ * @package   CheckoutEngineAppCore
+ * @author    Andre Gagnon <hi@atanas.dev>
+ * @copyright  Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://wpemerge.com/
+ * @link      https://checkoutengine.com
  */
 
-namespace WPEmergeAppCore\Concerns;
+namespace CheckoutEngineAppCore\Concerns;
 
-use WPEmerge\Support\Arr;
+use CheckoutEngineCore\Support\Arr;
 
 trait ReadsJsonTrait {
 	/**
@@ -45,8 +45,8 @@ trait ReadsJsonTrait {
 			throw new JsonFileNotFoundException( 'The required ' . basename( $file ) . ' file is missing.' );
 		}
 
-		$contents = $wp_filesystem->get_contents( $file );
-		$json = json_decode( $contents, true );
+		$contents   = $wp_filesystem->get_contents( $file );
+		$json       = json_decode( $contents, true );
 		$json_error = json_last_error();
 
 		if ( $json_error !== JSON_ERROR_NONE ) {
@@ -62,7 +62,7 @@ trait ReadsJsonTrait {
 	 * @return array
 	 */
 	protected function getAll() {
-		if ($this->cache === null) {
+		if ( $this->cache === null ) {
 			$this->cache = $this->load( $this->getJsonPath() );
 		}
 

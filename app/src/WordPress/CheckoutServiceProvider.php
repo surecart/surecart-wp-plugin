@@ -4,7 +4,7 @@ namespace CheckoutEngine\WordPress;
 
 use CheckoutEngine\Models\Order;
 use CheckoutEngine\Models\User;
-use WPEmerge\ServiceProviders\ServiceProviderInterface;
+use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
 
 /**
  * WordPress Users service.

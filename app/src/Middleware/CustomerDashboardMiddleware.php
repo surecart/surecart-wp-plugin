@@ -3,7 +3,7 @@
 namespace CheckoutEngine\Middleware;
 
 use Closure;
-use WPEmerge\Requests\RequestInterface;
+use CheckoutEngineCore\Requests\RequestInterface;
 
 /**
  * Middleware for customer dashboard.

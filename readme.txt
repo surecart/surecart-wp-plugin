@@ -8,7 +8,7 @@ Stable tag: 1.0
 License: GPL-2.0-only
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-A modern WordPress starter plugin which uses the [WP Emerge](https://github.com/htmlburger/wpemerge) framework.
+A fast, modern eCommerce platform for WordPress.
 
 == Description ==
 

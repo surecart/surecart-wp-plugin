@@ -1,16 +1,16 @@
 <?php
 /**
- * @package   WPEmerge
- * @author    Atanas Angelov <hi@atanas.dev>
- * @copyright 2017-2019 Atanas Angelov
+ * @package   CheckoutEngineCore
+ * @author    Andre Gagnon <hi@atanas.dev>
+ * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://wpemerge.com/
+ * @link      https://checkout_engine.com/
  */
 
-namespace WPEmerge\Controllers;
+namespace CheckoutEngineCore\Controllers;
 
-use WPEmerge;
-use WPEmerge\ServiceProviders\ServiceProviderInterface;
+use CheckoutEngineCore;
+use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
 
 /**
  * Provide controller dependencies
@@ -23,7 +23,7 @@ class ControllersServiceProvider implements ServiceProviderInterface {
 	 */
 	public function register( $container ) {
 		$container[ WordPressController::class ] = function ( $c ) {
-			return new WordPressController( $c[ WPEMERGE_VIEW_SERVICE_KEY ] );
+			return new WordPressController( $c[ CHECKOUT_ENGINE_VIEW_SERVICE_KEY ] );
 		};
 	}
 

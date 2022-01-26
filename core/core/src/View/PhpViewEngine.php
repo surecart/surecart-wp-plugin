@@ -1,13 +1,13 @@
 <?php
 /**
- * @package   WPEmerge
- * @author    Atanas Angelov <hi@atanas.dev>
- * @copyright 2017-2019 Atanas Angelov
+ * @package   CheckoutEngineCore
+ * @author    Andre Gagnon <hi@atanas.dev>
+ * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://wpemerge.com/
+ * @link      https://checkout_engine.com/
  */
 
-namespace WPEmerge\View;
+namespace CheckoutEngineCore\View;
 
 /**
  * Render view files with php.
@@ -50,7 +50,7 @@ class PhpViewEngine implements ViewEngineInterface {
 	 */
 	public function __construct( callable $compose, PhpViewFilesystemFinder $finder ) {
 		$this->compose = $compose;
-		$this->finder = $finder;
+		$this->finder  = $finder;
 	}
 
 	/**
@@ -69,6 +69,7 @@ class PhpViewEngine implements ViewEngineInterface {
 
 	/**
 	 * {@inheritDoc}
+	 *
 	 * @throws ViewNotFoundException
 	 */
 	public function make( $views ) {
@@ -91,7 +92,7 @@ class PhpViewEngine implements ViewEngineInterface {
 	 * @throws ViewNotFoundException
 	 */
 	protected function makeView( $name, $filepath ) {
-		$view = (new PhpView( $this ))
+		$view = ( new PhpView( $this ) )
 			->setName( $name )
 			->setFilepath( $filepath );
 
@@ -112,10 +113,12 @@ class PhpViewEngine implements ViewEngineInterface {
 	 * @throws ViewNotFoundException
 	 */
 	protected function getViewLayout( PhpView $view ) {
-		$layout_headers = array_filter( get_file_data(
-			$view->getFilepath(),
-			[$this->layout_file_header]
-		) );
+		$layout_headers = array_filter(
+			get_file_data(
+				$view->getFilepath(),
+				[ $this->layout_file_header ]
+			)
+		);
 
 		if ( empty( $layout_headers ) ) {
 			return null;

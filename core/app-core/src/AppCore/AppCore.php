@@ -1,15 +1,15 @@
 <?php
 /**
- * @package   WPEmergeAppCore
- * @author    Atanas Angelov <hi@atanas.dev>
- * @copyright 2017-2020 Atanas Angelov
+ * @package   CheckoutEngineAppCore
+ * @author    Andre Gagnon <hi@atanas.dev>
+ * @copyright  Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://wpemerge.com/
+ * @link      https://checkoutengine.com
  */
 
-namespace WPEmergeAppCore\AppCore;
+namespace CheckoutEngineAppCore\AppCore;
 
-use WPEmerge\Application\Application;
+use CheckoutEngineCore\Application\Application;
 
 /**
  * Main communication channel with the theme.
@@ -32,47 +32,47 @@ class AppCore {
 	}
 
 	/**
-	 * Shortcut to \WPEmergeAppCore\Assets\Assets.
+	 * Shortcut to \CheckoutEngineAppCore\Assets\Assets.
 	 *
-	 * @return \WPEmergeAppCore\Assets\Assets
+	 * @return \CheckoutEngineAppCore\Assets\Assets
 	 */
 	public function assets() {
-		return $this->app->resolve( 'wpemerge_app_core.assets.assets' );
+		return $this->app->resolve( 'checkout_engine_app_core.assets.assets' );
 	}
 
 	/**
-	 * Shortcut to \WPEmergeAppCore\Avatar\Avatar.
+	 * Shortcut to \CheckoutEngineAppCore\Avatar\Avatar.
 	 *
-	 * @return \WPEmergeAppCore\Avatar\Avatar
+	 * @return \CheckoutEngineAppCore\Avatar\Avatar
 	 */
 	public function avatar() {
-		return $this->app->resolve( 'wpemerge_app_core.avatar.avatar' );
+		return $this->app->resolve( 'checkout_engine_app_core.avatar.avatar' );
 	}
 
 	/**
-	 * Shortcut to \WPEmergeAppCore\Config\Config.
+	 * Shortcut to \CheckoutEngineAppCore\Config\Config.
 	 *
-	 * @return \WPEmergeAppCore\Config\Config
+	 * @return \CheckoutEngineAppCore\Config\Config
 	 */
 	public function config() {
-		return $this->app->resolve( 'wpemerge_app_core.config.config' );
+		return $this->app->resolve( 'checkout_engine_app_core.config.config' );
 	}
 
 	/**
-	 * Shortcut to \WPEmergeAppCore\Image\Image.
+	 * Shortcut to \CheckoutEngineAppCore\Image\Image.
 	 *
-	 * @return \WPEmergeAppCore\Image\Image
+	 * @return \CheckoutEngineAppCore\Image\Image
 	 */
 	public function image() {
-		return $this->app->resolve( 'wpemerge_app_core.image.image' );
+		return $this->app->resolve( 'checkout_engine_app_core.image.image' );
 	}
 
 	/**
-	 * Shortcut to \WPEmergeAppCore\Sidebar\Sidebar.
+	 * Shortcut to \CheckoutEngineAppCore\Sidebar\Sidebar.
 	 *
-	 * @return \WPEmergeAppCore\Sidebar\Sidebar
+	 * @return \CheckoutEngineAppCore\Sidebar\Sidebar
 	 */
 	public function sidebar() {
-		return $this->app->resolve( 'wpemerge_app_core.sidebar.sidebar' );
+		return $this->app->resolve( 'checkout_engine_app_core.sidebar.sidebar' );
 	}
 }

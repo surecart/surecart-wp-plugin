@@ -1,18 +1,18 @@
 <?php
 /**
- * @package   WPEmerge
- * @author    Atanas Angelov <hi@atanas.dev>
- * @copyright 2017-2019 Atanas Angelov
+ * @package   CheckoutEngineCore
+ * @author    Andre Gagnon <hi@atanas.dev>
+ * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://wpemerge.com/
+ * @link      https://checkout_engine.com/
  */
 
-namespace WPEmerge\Routing\Conditions;
+namespace CheckoutEngineCore\Routing\Conditions;
 
-use WPEmerge\Exceptions\ConfigurationException;
-use WPEmerge\Helpers\Url as UrlUtility;
-use WPEmerge\Requests\RequestInterface;
-use WPEmerge\Support\Arr;
+use CheckoutEngineCore\Exceptions\ConfigurationException;
+use CheckoutEngineCore\Helpers\Url as UrlUtility;
+use CheckoutEngineCore\Requests\RequestInterface;
+use CheckoutEngineCore\Support\Arr;
 
 /**
  * Check against the current url
@@ -60,7 +60,7 @@ class UrlCondition implements ConditionInterface, UrlableInterface, CanFilterQue
 	 * Constructor.
 	 *
 	 * @codeCoverageIgnore
-	 * @param string $url
+	 * @param string                $url
 	 * @param array<string, string> $where
 	 */
 	public function __construct( $url, $where = [] ) {
@@ -72,7 +72,7 @@ class UrlCondition implements ConditionInterface, UrlableInterface, CanFilterQue
 	 * Make a new instance.
 	 *
 	 * @codeCoverageIgnore
-	 * @param string $url
+	 * @param string                $url
 	 * @param array<string, string> $where
 	 * @return self
 	 */
@@ -84,7 +84,7 @@ class UrlCondition implements ConditionInterface, UrlableInterface, CanFilterQue
 	 * {@inheritDoc}
 	 */
 	protected function whereIsSatisfied( RequestInterface $request ) {
-		$where = $this->getUrlWhere();
+		$where     = $this->getUrlWhere();
 		$arguments = $this->getArguments( $request );
 
 		foreach ( $where as $parameter => $pattern ) {
@@ -107,8 +107,8 @@ class UrlCondition implements ConditionInterface, UrlableInterface, CanFilterQue
 		}
 
 		$validation_pattern = $this->getValidationPattern( $this->getUrl() );
-		$url = UrlUtility::addTrailingSlash( UrlUtility::getPath( $request ) );
-		$match = (bool) preg_match( $validation_pattern, $url );
+		$url                = UrlUtility::addTrailingSlash( UrlUtility::getPath( $request ) );
+		$match              = (bool) preg_match( $validation_pattern, $url );
 
 		if ( ! $match || empty( $this->getUrlWhere() ) ) {
 			return $match;
@@ -122,15 +122,15 @@ class UrlCondition implements ConditionInterface, UrlableInterface, CanFilterQue
 	 */
 	public function getArguments( RequestInterface $request ) {
 		$validation_pattern = $this->getValidationPattern( $this->getUrl() );
-		$url = UrlUtility::addTrailingSlash( UrlUtility::getPath( $request ) );
-		$matches = [];
-		$success = preg_match( $validation_pattern, $url, $matches );
+		$url                = UrlUtility::addTrailingSlash( UrlUtility::getPath( $request ) );
+		$matches            = [];
+		$success            = preg_match( $validation_pattern, $url, $matches );
 
 		if ( ! $success ) {
 			return []; // this should not normally happen
 		}
 
-		$arguments = [];
+		$arguments       = [];
 		$parameter_names = $this->getParameterNames( $this->getUrl() );
 		foreach ( $parameter_names as $parameter_name ) {
 			$arguments[ $parameter_name ] = isset( $matches[ $parameter_name ] ) ? $matches[ $parameter_name ] : '';
@@ -188,19 +188,22 @@ class UrlCondition implements ConditionInterface, UrlableInterface, CanFilterQue
 			return $this->make( static::WILDCARD );
 		}
 
-		$leading = UrlUtility::addLeadingSlash( UrlUtility::removeTrailingSlash( $this->getUrl() ), true );
+		$leading  = UrlUtility::addLeadingSlash( UrlUtility::removeTrailingSlash( $this->getUrl() ), true );
 		$trailing = UrlUtility::addLeadingSlash( UrlUtility::addTrailingSlash( $url ) );
 
-		return $this->make( $leading . $trailing, array_merge(
-			$this->getUrlWhere(),
-			$where
-		) );
+		return $this->make(
+			$leading . $trailing,
+			array_merge(
+				$this->getUrlWhere(),
+				$where
+			)
+		);
 	}
 
 	/**
 	 * Get parameter names as defined in the url.
 	 *
-	 * @param  string   $url
+	 * @param  string $url
 	 * @return string[]
 	 */
 	protected function getParameterNames( $url ) {
@@ -212,12 +215,12 @@ class UrlCondition implements ConditionInterface, UrlableInterface, CanFilterQue
 	/**
 	 * Validation pattern replace callback.
 	 *
-	 * @param  array  $matches
-	 * @param  array  $parameters
+	 * @param  array $matches
+	 * @param  array $parameters
 	 * @return string
 	 */
 	protected function replacePatternParameterWithPlaceholder( $matches, &$parameters ) {
-		$name = $matches['name'];
+		$name     = $matches['name'];
 		$optional = ! empty( $matches['optional'] );
 
 		$replacement = '/(?P<' . $name . '>' . $this->parameter_pattern . ')';
@@ -226,12 +229,17 @@ class UrlCondition implements ConditionInterface, UrlableInterface, CanFilterQue
 			$replacement = '(?:' . $replacement . ')?';
 		}
 
-		$hash = sha1( implode( '_', [
-			count( $parameters ),
-			$replacement,
-			uniqid( 'wpemerge_', true ),
-		] ) );
-		$placeholder = '___placeholder_' . $hash . '___';
+		$hash                       = sha1(
+			implode(
+				'_',
+				[
+					count( $parameters ),
+					$replacement,
+					uniqid( 'checkout_engine_', true ),
+				]
+			)
+		);
+		$placeholder                = '___placeholder_' . $hash . '___';
 		$parameters[ $placeholder ] = $replacement;
 
 		return $placeholder;
@@ -248,9 +256,13 @@ class UrlCondition implements ConditionInterface, UrlableInterface, CanFilterQue
 		$parameters = [];
 
 		// Replace all parameters with placeholders
-		$validation_pattern = preg_replace_callback( $this->url_pattern, function ( $matches ) use ( &$parameters ) {
-			return $this->replacePatternParameterWithPlaceholder( $matches, $parameters );
-		}, $url );
+		$validation_pattern = preg_replace_callback(
+			$this->url_pattern,
+			function ( $matches ) use ( &$parameters ) {
+				return $this->replacePatternParameterWithPlaceholder( $matches, $parameters );
+			},
+			$url
+		);
 
 		// Quote the remaining string so that it does not get evaluated as a pattern.
 		$validation_pattern = preg_quote( $validation_pattern, '~' );
@@ -276,21 +288,25 @@ class UrlCondition implements ConditionInterface, UrlableInterface, CanFilterQue
 	 * {@inheritDoc}
 	 */
 	public function toUrl( $arguments = [] ) {
-		$url = preg_replace_callback( $this->url_pattern, function ( $matches ) use ( $arguments ) {
-			$name = $matches['name'];
-			$optional = ! empty( $matches['optional'] );
-			$value = '/' . urlencode( Arr::get( $arguments, $name, '' ) );
+		$url = preg_replace_callback(
+			$this->url_pattern,
+			function ( $matches ) use ( $arguments ) {
+				$name     = $matches['name'];
+				$optional = ! empty( $matches['optional'] );
+				$value    = '/' . urlencode( Arr::get( $arguments, $name, '' ) );
 
-			if ( $value === '/' ) {
-				if ( ! $optional ) {
-					throw new ConfigurationException( "Required URL parameter \"$name\" is not specified." );
+				if ( $value === '/' ) {
+					if ( ! $optional ) {
+						throw new ConfigurationException( "Required URL parameter \"$name\" is not specified." );
+					}
+
+					$value = '';
 				}
 
-				$value = '';
-			}
-
-			return $value;
-		}, $this->getUrl() );
+				return $value;
+			},
+			$this->getUrl()
+		);
 
 		return home_url( UrlUtility::addLeadingSlash( UrlUtility::removeTrailingSlash( $url ) ) );
 	}

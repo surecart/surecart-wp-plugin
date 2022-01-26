@@ -3,7 +3,7 @@
 namespace CheckoutEngine\Settings;
 
 use CheckoutEngine\Settings\SettingsService;
-use WPEmerge\ServiceProviders\ServiceProviderInterface;
+use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
 
 /**
  * Register a session for Flash and OldInput to work with.
@@ -13,7 +13,7 @@ class SettingsServiceProvider implements ServiceProviderInterface {
 	 * {@inheritDoc}
 	 */
 	public function register( $container ) {
-		$app = $container[ WPEMERGE_APPLICATION_KEY ];
+		$app = $container[ CHECKOUT_ENGINE_APPLICATION_KEY ];
 
 		// Service for registering a setting.
 		$container['checkout_engine.settings'] = function () {
@@ -37,7 +37,7 @@ class SettingsServiceProvider implements ServiceProviderInterface {
 		);
 
 		// register our settings from config.
-		$config = $container[ WPEMERGE_CONFIG_KEY ];
+		$config = $container[ CHECKOUT_ENGINE_CONFIG_KEY ];
 		if ( ! empty( $config['settings'] ) ) {
 			foreach ( $config['settings'] as $setting ) {
 				$app->register_setting( $setting );

@@ -1,13 +1,13 @@
 <?php
 /**
- * @package   WPEmerge
- * @author    Atanas Angelov <hi@atanas.dev>
- * @copyright 2017-2019 Atanas Angelov
+ * @package   CheckoutEngineCore
+ * @author    Andre Gagnon <hi@atanas.dev>
+ * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://wpemerge.com/
+ * @link      https://checkout_engine.com/
  */
 
-namespace WPEmerge\Helpers;
+namespace CheckoutEngineCore\Helpers;
 
 class MixedType {
 	/**
@@ -19,7 +19,7 @@ class MixedType {
 	 */
 	public static function toArray( $argument ) {
 		if ( ! is_array( $argument ) ) {
-			$argument = [$argument];
+			$argument = [ $argument ];
 		}
 
 		return $argument;
@@ -50,11 +50,11 @@ class MixedType {
 		}
 
 		if ( is_object( $entity ) ) {
-			return call_user_func_array( [$entity, $method], $arguments );
+			return call_user_func_array( [ $entity, $method ], $arguments );
 		}
 
 		if ( static::isClass( $entity ) ) {
-			return call_user_func_array( [call_user_func( $instantiator, $entity ), $method], $arguments );
+			return call_user_func_array( [ call_user_func( $instantiator, $entity ), $method ], $arguments );
 		}
 
 		return $entity;
@@ -63,7 +63,7 @@ class MixedType {
 	/**
 	 * Check if a value is a valid class name
 	 *
-	 * @param  mixed   $class_name
+	 * @param  mixed $class_name
 	 * @return boolean
 	 */
 	public static function isClass( $class_name ) {

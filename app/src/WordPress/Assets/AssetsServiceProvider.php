@@ -2,7 +2,7 @@
 
 namespace CheckoutEngine\WordPress\Assets;
 
-use WPEmerge\ServiceProviders\ServiceProviderInterface;
+use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
 
 /**
  * Register and enqueues assets.
@@ -25,7 +25,7 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 			return new AssetsService();
 		};
 
-		$app = $container[ WPEMERGE_APPLICATION_KEY ];
+		$app = $container[ CHECKOUT_ENGINE_APPLICATION_KEY ];
 
 		$app->alias( 'assets', 'checkout_engine.assets' );
 	}
@@ -54,23 +54,23 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 
 	public function registerDependencies() {
 		// core-data
-		$asset_file = include trailingslashit( $this->container[ WPEMERGE_CONFIG_KEY ]['app_core']['path'] ) . 'dist/store/data.asset.php';
+		$asset_file = include trailingslashit( $this->container[ CHECKOUT_ENGINE_CONFIG_KEY ]['app_core']['path'] ) . 'dist/store/data.asset.php';
 
 		wp_register_script(
 			'ce-core-data',
 			trailingslashit( \CheckoutEngine::core()->assets()->getUrl() ) . 'dist/store/data.js',
 			array_merge( [ 'checkout-engine-components' ], $asset_file['dependencies'] ),
-			filemtime( trailingslashit( $this->container[ WPEMERGE_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/checkout-engine/checkout-engine.esm.js' ),
+			filemtime( trailingslashit( $this->container[ CHECKOUT_ENGINE_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/checkout-engine/checkout-engine.esm.js' ),
 			true
 		);
 
 		// ui
-		$asset_file = include trailingslashit( $this->container[ WPEMERGE_CONFIG_KEY ]['app_core']['path'] ) . 'dist/store/ui.asset.php';
+		$asset_file = include trailingslashit( $this->container[ CHECKOUT_ENGINE_CONFIG_KEY ]['app_core']['path'] ) . 'dist/store/ui.asset.php';
 		wp_register_script(
 			'ce-ui-data',
 			trailingslashit( \CheckoutEngine::core()->assets()->getUrl() ) . 'dist/store/ui.js',
 			array_merge( [ 'checkout-engine-components' ], $asset_file['dependencies'] ),
-			filemtime( trailingslashit( $this->container[ WPEMERGE_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/checkout-engine/checkout-engine.esm.js' ),
+			filemtime( trailingslashit( $this->container[ CHECKOUT_ENGINE_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/checkout-engine/checkout-engine.esm.js' ),
 			true
 		);
 	}
@@ -112,7 +112,7 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 			'checkout-engine-themes-default',
 			trailingslashit( \CheckoutEngine::core()->assets()->getUrl() ) . 'dist/components/checkout-engine/checkout-engine.css',
 			[],
-			filemtime( trailingslashit( $this->container[ WPEMERGE_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/checkout-engine/checkout-engine.css' ),
+			filemtime( trailingslashit( $this->container[ CHECKOUT_ENGINE_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/checkout-engine/checkout-engine.css' ),
 		);
 		wp_add_inline_style(
 			'checkout-engine-themes-default',
@@ -141,7 +141,7 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 			'checkout-engine-components',
 			trailingslashit( \CheckoutEngine::core()->assets()->getUrl() ) . 'dist/components/checkout-engine/checkout-engine.esm.js',
 			[ 'wp-api-fetch' ],
-			filemtime( trailingslashit( $this->container[ WPEMERGE_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/checkout-engine/checkout-engine.esm.js' ),
+			filemtime( trailingslashit( $this->container[ CHECKOUT_ENGINE_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/checkout-engine/checkout-engine.esm.js' ),
 			false
 		);
 		wp_set_script_translations( 'checkout-engine-components', 'checkout_engine' );
@@ -262,7 +262,7 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function editorAssets() {
-		$asset_file = include trailingslashit( $this->container[ WPEMERGE_CONFIG_KEY ]['app_core']['path'] ) . 'dist/blocks/library.asset.php';
+		$asset_file = include trailingslashit( $this->container[ CHECKOUT_ENGINE_CONFIG_KEY ]['app_core']['path'] ) . 'dist/blocks/library.asset.php';
 
 		\CheckoutEngine::core()->assets()->enqueueScript(
 			'checkout-engine-blocks',

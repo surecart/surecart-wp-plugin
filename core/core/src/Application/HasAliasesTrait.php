@@ -1,17 +1,17 @@
 <?php
 /**
- * @package   WPEmerge
- * @author    Atanas Angelov <hi@atanas.dev>
- * @copyright 2017-2019 Atanas Angelov
+ * @package   CheckoutEngineCore
+ * @author    Andre Gagnon <hi@atanas.dev>
+ * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://wpemerge.com/
+ * @link      https://checkout_engine.com/
  */
 
-namespace WPEmerge\Application;
+namespace CheckoutEngineCore\Application;
 
 use Closure;
 use BadMethodCallException;
-use WPEmerge\Support\Arr;
+use CheckoutEngineCore\Support\Arr;
 
 /**
  * Add methods to classes at runtime.
@@ -30,7 +30,7 @@ trait HasAliasesTrait {
 	/**
 	 * Get whether an alias is registered.
 	 *
-	 * @param  string  $alias
+	 * @param  string $alias
 	 * @return boolean
 	 */
 	public function hasAlias( $alias ) {
@@ -40,7 +40,7 @@ trait HasAliasesTrait {
 	/**
 	 * Get a registered alias.
 	 *
-	 * @param  string     $alias
+	 * @param  string $alias
 	 * @return array|null
 	 */
 	public function getAlias( $alias ) {
@@ -63,7 +63,7 @@ trait HasAliasesTrait {
 		$name = Arr::get( $alias, 'name' );
 
 		$this->aliases[ $name ] = [
-			'name' => $name,
+			'name'   => $name,
 			'target' => Arr::get( $alias, 'target' ),
 			'method' => Arr::get( $alias, 'method', '' ),
 		];
@@ -80,11 +80,13 @@ trait HasAliasesTrait {
 	 * @return void
 	 */
 	public function alias( $alias, $target, $method = '' ) {
-		$this->setAlias( [
-			'name' => $alias,
-			'target' => $target,
-			'method' => $method,
-		] );
+		$this->setAlias(
+			[
+				'name'   => $alias,
+				'target' => $target,
+				'method' => $method,
+			]
+		);
 	}
 
 	/**
@@ -108,7 +110,7 @@ trait HasAliasesTrait {
 		$target = $this->resolve( $alias['target'] );
 
 		if ( ! empty( $alias['method'] ) ) {
-			return call_user_func_array( [$target, $alias['method']], $parameters );
+			return call_user_func_array( [ $target, $alias['method'] ], $parameters );
 		}
 
 		return $target;
@@ -117,7 +119,7 @@ trait HasAliasesTrait {
 	/**
 	 * Resolve a dependency from the IoC container.
 	 *
-	 * @param  string     $key
+	 * @param  string $key
 	 * @return mixed|null
 	 */
 	abstract public function resolve( $key );

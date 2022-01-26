@@ -2,7 +2,7 @@
 
 namespace CheckoutEngine\WordPress;
 
-use WPEmerge\ServiceProviders\ServiceProviderInterface;
+use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
 use CheckoutEngine\WordPress\Admin\AdminMenuPageService;
 use CheckoutEngine\WordPress\Admin\UserProfileService;
 
@@ -23,7 +23,7 @@ class AdminServiceProvider implements ServiceProviderInterface {
 	 *  @param  \Pimple\Container $container Service Container.
 	 */
 	public function register( $container ) {
-		$app = $container[ WPEMERGE_APPLICATION_KEY ];
+		$app = $container[ CHECKOUT_ENGINE_APPLICATION_KEY ];
 
 		$container['admin_pages'] = function () {
 			return new AdminMenuPageService();
