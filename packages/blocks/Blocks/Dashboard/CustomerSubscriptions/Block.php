@@ -30,7 +30,7 @@ class Block extends DashboardPage {
 	 */
 	public function show( $id ) {
 		return \CheckoutEngine::blocks()->render(
-			'web.dashboard.subscriptions.show',
+			'web/dashboard/subscriptions/show',
 			[
 				'id' => $id,
 			]
@@ -52,7 +52,7 @@ class Block extends DashboardPage {
 		$page = isset( $_GET['subscription']['page'] ) ? intval( wp_unslash( $_GET['subscription']['page'] ) ) : 1;
 
 		return \CheckoutEngine::blocks()->render(
-			'web.dashboard.subscriptions.index',
+			'web/dashboard/subscriptions/index',
 			[
 				'customer_id'     => $this->customer_id,
 				'cancel_behavior' => 'cancel',

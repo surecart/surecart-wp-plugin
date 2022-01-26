@@ -33,7 +33,7 @@ class Block extends DashboardPage {
 	 */
 	public function show( $id ) {
 		return \CheckoutEngine::blocks()->render(
-			'web.dashboard.payment-methods.show',
+			'web/dashboard/payment-methods/show',
 			[
 				'id'            => $id,
 				'customer_id'   => $this->customer_id,
@@ -75,7 +75,7 @@ class Block extends DashboardPage {
 			return;
 		}
 		return \CheckoutEngine::blocks()->render(
-			'web.dashboard.payment-methods.index',
+			'web/dashboard/payment-methods/index',
 			[
 				'query' => [
 					'customer_ids' => [ $this->customer_id ],

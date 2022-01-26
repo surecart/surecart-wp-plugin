@@ -13,8 +13,7 @@
 		"composer/installers": "^1.4",
 		"checkout-engine/blocks": "*",
 		"htmlburger/wpemerge": "dev-master",
-		"htmlburger/wpemerge-app-core": "dev-master",
-		"htmlburger/wpemerge-blade": "dev-master"
+		"htmlburger/wpemerge-app-core": "dev-master"
 	},
 	"repositories": [
 		{

@@ -33,7 +33,7 @@ class Block extends DashboardPage {
 	 */
 	public function show( $id ) {
 		return \CheckoutEngine::blocks()->render(
-			'web.dashboard.shipping_address.show',
+			'web/dashboard/shipping_address/show',
 			[
 				'customer_id'   => $this->customer_id,
 			]
@@ -52,7 +52,7 @@ class Block extends DashboardPage {
 			return;
 		}
 		return \CheckoutEngine::blocks()->render(
-			'web.dashboard.orders.index',
+			'web/dashboard/orders/index',
 			[
 				'query' => [
 					'customer_ids' => [ $this->customer_id ],
