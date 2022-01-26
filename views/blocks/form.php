@@ -4,8 +4,8 @@
 	form-id="<?php echo esc_attr( $form_id ); ?>"
 	class="<?php echo esc_attr( $classes ); ?>"
 	style="<?php echo esc_attr( $style ); ?>"
-	mode="<?php esc_attr( $mode ); ?>"
-	alignment="<?php esc_attr( $align ); ?>"
+	mode="<?php echo esc_attr( $mode ); ?>"
+	alignment="<?php echo esc_attr( $align ); ?>"
 	success-url="<?php echo esc_url( $success_url ); ?>"
 >
 	<ce-form>

@@ -10,6 +10,6 @@ class UpgradePathsController {
 	 * Coupons edit.
 	 */
 	public function edit() {
-		return \CheckoutEngine::view( 'admin.upgrade-paths.edit' );
+		return \CheckoutEngine::view( 'admin/upgrade-paths/edit' );
 	}
 }
