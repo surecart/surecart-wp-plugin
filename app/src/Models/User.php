@@ -129,6 +129,10 @@ class User implements ArrayAccess, JsonSerializable {
 			$user_created = true;
 		}
 
+		if ( is_wp_error( $user_id ) ) {
+			return $user_id;
+		}
+
 		$user = new \WP_User( $user_id );
 		$user->add_role( 'ce-customer' );
 
@@ -136,7 +140,7 @@ class User implements ArrayAccess, JsonSerializable {
 			wp_update_user( $user );
 		}
 
-		return $this->find( $user->ID );
+		return $this->find( $user_id );
 	}
 
 	/**

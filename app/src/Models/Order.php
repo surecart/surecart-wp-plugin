@@ -134,7 +134,7 @@ class Order extends Model {
 		if ( empty( $this->attributes['id'] ) ||
 			empty( $this->attributes['customer']['email'] ) ||
 			empty( $this->attributes['customer']['id'] ) ) {
-			return;
+			return false;
 		}
 
 		$customer = $this->attributes['customer'];
@@ -143,24 +143,28 @@ class Order extends Model {
 		$user = User::findByCustomerId( $customer['id'] );
 
 		// we already have a user for this order.
-		if ( $user ) {
+		if ( ! empty( $user->ID ) ) {
 			return $user;
 		}
 
 		// find any existing users.
 		$existing = User::getUserBy( 'email', $customer['email'] );
 		// If they match.
-		if ( $customer['id'] !== $existing->customerId() ) {
+		if ( $existing && $customer['id'] !== $existing->customerId() ) {
 			return $existing;
 		}
 
 		// if no user, create one with a generated password.
 		$created = User::create(
 			[
-				'user_name'  => empty( $customer['name'] ) ? $customer->name : $customer->email,
-				'user_email' => $customer->email,
+				'user_name'  => ! empty( $customer['name'] ) ? $customer['name'] : $customer['email'],
+				'user_email' => $customer['email'],
 			]
 		);
+
+		if ( is_wp_error( $created ) ) {
+			return $created;
+		}
 
 		if ( ! empty( $created->ID ) ) {
 			return $created;

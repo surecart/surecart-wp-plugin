@@ -3,6 +3,7 @@
 namespace CheckoutEngine\Tests\Models\Order;
 
 use CheckoutEngine\Models\Order;
+use CheckoutEngine\Models\User;
 use CheckoutEngine\Tests\CheckoutEngineUnitTestCase;
 
 class OrderTest extends CheckoutEngineUnitTestCase
@@ -89,7 +90,7 @@ class OrderTest extends CheckoutEngineUnitTestCase
 	 * @group session
 	 * @group models
 	 */
-	public function test_can_finalize_order()
+	public function test_finalize_order()
 	{
 		$request = json_decode(file_get_contents(dirname(__FILE__) . '/session-create.json'), true);
 		$response = json_decode(file_get_contents(dirname(__FILE__) . '/session-finalized.json'), true);
@@ -100,7 +101,22 @@ class OrderTest extends CheckoutEngineUnitTestCase
 				$this->equalTo('orders/test_order/finalize/'),
 				$this->equalTo([
 					'method' => 'PATCH',
-					'body' => $request,
+					'body' => [
+						"order" => [
+							"id" => "test_order",
+							"customer_first_name" => "Joey",
+							"customer_last_name" => "Smithy",
+							"customer_email" => "joe@gmail.com",
+							"currency" => "usd",
+							"metadata" => [],
+							"line_items" => [
+								[
+									"price_id" => "85109619-529d-47b3-98c3-ca90d22913e4",
+									"quantity" => 2
+								]
+							]
+						]
+					],
 					'query' => []
 				])
 			)
@@ -110,7 +126,59 @@ class OrderTest extends CheckoutEngineUnitTestCase
 		$prepared = $instance->finalize();
 
 		$this->assertEquals($prepared->getAttributes(), $response);
+		$this->assertNotFalse(get_user_by('email', $response['customer']['email']));
 	}
+
+	public function test_maybeAssociateUser() {
+		// empty order won't work.
+		$instance = new Order([]);
+		$this->assertFalse($instance->maybeAssociateUser());
+
+		// needs id
+		$instance['id'] = 'test_order';
+		$this->assertFalse($instance->maybeAssociateUser());
+
+		// needs customer
+		$instance['customer'] = [
+			'id' => 'test_customer',
+			'email' => 'test@test.com',
+		];
+		$associated = $instance->maybeAssociateUser();
+		$this->assertNotFalse($associated);
+		$this->assertInstanceOf(User::class, $associated);
+		$this->assertSame($associated->user_email, 'test@test.com');
+		$this->assertNotFalse(get_user_by('email', $associated->user_email));
+	}
+
+	// /*
+	//  * @group failing
+	//  */
+	// public function test_creates_user_on_finalize()
+	// {
+	// 	// mock the requests in the container
+	// 	$requests =  \Mockery::mock(RequestService::class);
+	// 	\CheckoutEngine::alias('request', function () use ($requests) {
+	// 		return call_user_func_array([$requests, 'makeRequest'], func_get_args());
+	// 	});
+
+
+	// 	$requests->shouldReceive('makeRequest')
+	// 		->once()
+	// 		->withSomeOfArgs('orders/test_order/finalize/')
+	// 		->andReturn((object) [
+	// 			'customer' => [
+	// 				'id' => 'test_user',
+	// 				"email" => "test@test.com"
+	// 			]
+	// 		]);
+
+	// 	$order = (new Order( ["id" => "test_order" ] ))
+	// 			->setProcessor('stripe')
+	// 			->finalize();
+
+	// 	$this->assertNotWPError($order);
+	// 	$this->assertNotFalse(get_user_by('email', 'test@test.com'));
+	// }
 
 	public function test_can_get_prices()
 	{
