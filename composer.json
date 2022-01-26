@@ -40,12 +40,12 @@
 	"autoload": {
 		"psr-4": {
 			"CheckoutEngine\\": "app/src/",
-			"WPEmerge\\": "core/wpemerge/src/",
-			"WPEmergeAppCore\\": "core/wpemerge-app-core/src/"
+			"WPEmerge\\": "core/core/src/",
+			"WPEmergeAppCore\\": "core/app-core/src/"
 		},
 		"files": [
-			"core/wpemerge/config.php",
-			"core/wpemerge-app-core/config.php"
+			"core/core/config.php",
+			"core/app-core/config.php"
 		]
 	},
 	"autoload-dev": {
