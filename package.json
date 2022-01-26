@@ -12,6 +12,7 @@
 		"dist/",
 		"languages/",
 		"packages/icons/",
+		"core/",
 		"vendor/",
 		"views/",
 		"LICENSE",
