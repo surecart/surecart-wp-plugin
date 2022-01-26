@@ -4,7 +4,12 @@
 import { __ } from '@wordpress/i18n';
 import { InspectorControls } from '@wordpress/block-editor';
 import { Fragment } from '@wordpress/element';
-import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
+import {
+	PanelBody,
+	PanelRow,
+	TextControl,
+	ToggleControl,
+} from '@wordpress/components';
 
 /**
  * Component Dependencies
@@ -18,6 +23,13 @@ export default ({ className, attributes, setAttributes, isSelected }) => {
 		<Fragment>
 			<InspectorControls>
 				<PanelBody title={__('Attributes', 'checkout-engine')}>
+					<PanelRow>
+						<ToggleControl
+							label={__('Required', 'checkout-engine')}
+							checked={required}
+							onChange={(required) => setAttributes({ required })}
+						/>
+					</PanelRow>
 					<PanelRow>
 						<TextControl
 							label={__('Name', 'checkout-engine')}
@@ -54,6 +66,7 @@ export default ({ className, attributes, setAttributes, isSelected }) => {
 			{!isSelected && !name && <div>Please add a name</div>}
 			<CeInput
 				className={className}
+				required={required}
 				name={name}
 				label={label}
 				placeholder={placeholder}

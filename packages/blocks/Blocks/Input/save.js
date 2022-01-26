@@ -28,11 +28,11 @@ export default ({ className, attributes }) => {
 		<ce-input
 			class={className}
 			label={label}
-			clearable={clearable ? '1' : ''}
-			disabled={disabled ? '1' : ''}
+			clearable={clearable ? '1' : null}
+			disabled={disabled ? '1' : null}
 			help={help}
-			autofocus={autofocus ? '1' : ''}
-			autocomplete={autocomplete ? '1' : ''}
+			autofocus={autofocus ? '1' : null}
+			autocomplete={autocomplete ? '1' : null}
 			inputmode={inputmode}
 			max={max}
 			maxlength={maxlength}
@@ -40,15 +40,15 @@ export default ({ className, attributes }) => {
 			minlength={minlength}
 			name={name}
 			placeholder={placeholder}
-			readonly={readonly ? '1' : ''}
-			showLabel={showLabel ? '1' : ''}
+			readonly={readonly ? '1' : null}
+			showLabel={showLabel ? '1' : null}
 			size={size ? size : 'medium'}
-			spellcheck={spellcheck ? '1' : ''}
+			spellcheck={spellcheck ? '1' : null}
 			step={step}
-			togglePassword={togglePassword ? '1' : ''}
+			togglePassword={togglePassword ? '1' : null}
 			type={type}
 			value={value}
-			required={required ? '1' : ''}
+			required={required ? '1' : null}
 		></ce-input>
 	);
 };
