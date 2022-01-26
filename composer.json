@@ -11,28 +11,14 @@
 	"require": {
 		"php": ">=5.5",
 		"composer/installers": "^1.4",
-		"checkout-engine/blocks": "*",
-		"htmlburger/wpemerge": "dev-master",
-		"htmlburger/wpemerge-app-core": "dev-master"
+		"pimple/pimple": "^3.2",
+		"guzzlehttp/psr7": "^1.5",
+		"checkout-engine/blocks": "*"
 	},
 	"repositories": [
 		{
 			"type": "path",
 			"url": "./packages/blocks",
-			"options": {
-				"symlink": false
-			}
-		},
-		{
-			"type": "path",
-			"url": "./packages/framework/wpemerge",
-			"options": {
-				"symlink": false
-			}
-		},
-		{
-			"type": "path",
-			"url": "./packages/framework/wpemerge-app-core",
 			"options": {
 				"symlink": false
 			}
@@ -53,8 +39,14 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"CheckoutEngine\\": "app/src/"
-		}
+			"CheckoutEngine\\": "app/src/",
+			"WPEmerge\\": "core/wpemerge/src/",
+			"WPEmergeAppCore\\": "core/wpemerge-app-core/src/"
+		},
+		"files": [
+			"core/wpemerge/config.php",
+			"core/wpemerge-app-core/config.php"
+		]
 	},
 	"autoload-dev": {
 		"psr-4": {

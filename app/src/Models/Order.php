@@ -116,7 +116,57 @@ class Order extends Model {
 
 		$this->fireModelEvent( 'finalized' );
 
+		$this->maybeAssociateUser();
+
 		return $this;
+	}
+
+	/**
+	 * Maybe create the WordPress user for the purchase.
+	 *
+	 * @param string $order_id The order id.
+	 * @throws \Exception Throws execption for missing data.
+	 *
+	 * @return \CheckoutEngine\Models\User;
+	 */
+	protected function maybeAssociateUser() {
+		// requires an order, and a customer email and id.
+		if ( empty( $this->attributes['id'] ) ||
+			empty( $this->attributes['customer']['email'] ) ||
+			empty( $this->attributes['customer']['id'] ) ) {
+			return;
+		}
+
+		$customer = $this->attributes['customer'];
+
+		// maybe create the user.
+		$user = User::findByCustomerId( $customer['id'] );
+
+		// we already have a user for this order.
+		if ( $user ) {
+			return $user;
+		}
+
+		// find any existing users.
+		$existing = User::getUserBy( 'email', $customer['email'] );
+		// If they match.
+		if ( $customer['id'] !== $existing->customerId() ) {
+			return $existing;
+		}
+
+		// if no user, create one with a generated password.
+		$created = User::create(
+			[
+				'user_name'  => empty( $customer['name'] ) ? $customer->name : $customer->email,
+				'user_email' => $customer->email,
+			]
+		);
+
+		if ( ! empty( $created->ID ) ) {
+			return $created;
+		}
+
+		return new \WP_Error( 'user_not_created', __( 'User not created.', 'checkout_engine' ) );
 	}
 
 	/**
@@ -129,6 +179,11 @@ class Order extends Model {
 		$this->setCollection( 'line_items', $value, LineItem::class );
 	}
 
+	/**
+	 * Don't send prices or price ids with request.
+	 *
+	 * @param $args array Request arguments.
+	 */
 	protected function makeRequest( $args = [] ) {
 		// don't send these accesors.
 		unset( $args['prices'] );

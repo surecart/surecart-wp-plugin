@@ -20,6 +20,7 @@ class OrderControllerTest extends CheckoutEngineUnitTestCase
 		\CheckoutEngine::make()->bootstrap([
 			'providers' => [
 				\CheckoutEngine\Request\RequestServiceProvider::class,
+				\CheckoutEngine\Support\Errors\ErrorsServiceProvider::class,
 			]
 		], false);
 

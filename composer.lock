@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "92d3d56f6cfe6756de79339ba5202948",
+    "content-hash": "c2374d0edacb860e0c0e56241996ac91",
     "packages": [
         {
             "name": "checkout-engine/blocks",
@@ -285,127 +285,6 @@
                 }
             ],
             "time": "2021-10-05T13:56:00+00:00"
-        },
-        {
-            "name": "htmlburger/wpemerge",
-            "version": "dev-master",
-            "dist": {
-                "type": "path",
-                "url": "./packages/framework/wpemerge",
-                "reference": "68cfdc00a334383cb7c61e5ef1b4cab2352f5946"
-            },
-            "require": {
-                "guzzlehttp/psr7": "^1.5",
-                "php": ">=5.5",
-                "pimple/pimple": "^3.2"
-            },
-            "require-dev": {
-                "filp/whoops": "^2.2",
-                "mockery/mockery": "^0.9",
-                "phpcompatibility/php-compatibility": "^9.0",
-                "squizlabs/php_codesniffer": "^3.3"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "WPEmerge\\": "src/",
-                    "WPEmergeTestTools\\": "tests/tools"
-                },
-                "files": [
-                    "config.php"
-                ]
-            },
-            "scripts": {
-                "lint": [
-                    "phpcs"
-                ],
-                "test": [
-                    "phpunit --coverage-clover=./tmp/clover.xml"
-                ]
-            },
-            "license": [
-                "GPL-2.0-only"
-            ],
-            "authors": [
-                {
-                    "name": "Atanas Angelov",
-                    "email": "hi@atanas.dev",
-                    "homepage": "https://atanas.dev/",
-                    "role": "Developer"
-                },
-                {
-                    "name": "htmlBurger",
-                    "email": "info@htmlburger.com",
-                    "homepage": "http://htmlburger.com/",
-                    "role": "Developer"
-                }
-            ],
-            "description": "A micro framework which modernizes WordPress as a CMS development by providing tools to implement MVC and more.",
-            "homepage": "https://wpemerge.com/",
-            "keywords": [
-                "controller",
-                "framework",
-                "middleware",
-                "request",
-                "response",
-                "template",
-                "view",
-                "wordpress",
-                "wpemerge"
-            ],
-            "support": {
-                "source": "https://github.com/htmlburger/wpemerge",
-                "issues": "https://github.com/htmlburger/wpemerge/issues",
-                "email": "wordpress@htmlburger.com"
-            },
-            "transport-options": {
-                "symlink": false,
-                "relative": true
-            }
-        },
-        {
-            "name": "htmlburger/wpemerge-app-core",
-            "version": "dev-master",
-            "dist": {
-                "type": "path",
-                "url": "./packages/framework/wpemerge-app-core",
-                "reference": "24dbe6f97910656431ca1004d37f5c076118b3cc"
-            },
-            "require": {
-                "htmlburger/wpemerge": "dev-master"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "WPEmergeAppCore\\": "src/"
-                },
-                "files": [
-                    "config.php"
-                ]
-            },
-            "license": [
-                "GPL-2.0-only"
-            ],
-            "authors": [
-                {
-                    "name": "Atanas Angelov",
-                    "email": "hi@atanas.dev",
-                    "homepage": "https://atanas.dev/",
-                    "role": "Developer"
-                },
-                {
-                    "name": "htmlBurger",
-                    "email": "info@htmlburger.com",
-                    "homepage": "http://htmlburger.com/",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Core tools for the WP Emerge starter theme and plugin.",
-            "homepage": "https://wpemerge.com/",
-            "transport-options": {
-                "symlink": false,
-                "relative": true
-            }
         },
         {
             "name": "pimple/pimple",
@@ -7680,10 +7559,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "htmlburger/wpemerge": 20,
-        "htmlburger/wpemerge-app-core": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

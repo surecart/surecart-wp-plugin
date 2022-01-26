@@ -2,7 +2,7 @@
 
 namespace CheckoutEngine\Request;
 
-use CheckoutEngine\Support\Errors;
+use CheckoutEngine\Support\Errors\ErrorsService;
 
 /**
  * Provide api request functionality.
@@ -30,11 +30,20 @@ class RequestService {
 	protected $base_path;
 
 	/**
+	 * Errors service container
+	 *
+	 * @var \CheckoutEngine\Support\Errors\ErrorsService;
+	 */
+	protected $errors_service;
+
+	/**
 	 * Constructor.
 	 *
 	 * @param string $base_path The rest api base path.
 	 */
-	public function __construct( $token = '', $base_path = '/api/v1' ) {
+	public function __construct( $token = '', $base_path = '/api/v1', $errors_service = null ) {
+		// error handing service.
+		$this->errors_service = $errors_service ? $errors_service : new ErrorsService();
 		// set the token.
 		$this->token = $token;
 		// set the base path and url.
@@ -145,7 +154,7 @@ class RequestService {
 			// check for errors.
 			if ( ! in_array( $response_code, [ 200, 201 ], true ) ) {
 				$response_body = json_decode( $response_body, true );
-				return \CheckoutEngine::errors()->translate( $response_body, $response_code );
+				return $this->errors_service->translate( $response_body, $response_code );
 			}
 
 			$response_body = json_decode( $response_body );

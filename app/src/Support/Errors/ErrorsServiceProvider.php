@@ -13,11 +13,11 @@ class ErrorsServiceProvider implements ServiceProviderInterface {
 	public function register( $container ) {
 		$app = $container[ WPEMERGE_APPLICATION_KEY ];
 
-		$container['errors_service'] = function () {
+		$container['checkout.errors_service'] = function () {
 			return new ErrorsService();
 		};
 
-		$app->alias( 'errors', 'errors_service' );
+		$app->alias( 'errors', 'checkout.errors_service' );
 	}
 
 	/**
