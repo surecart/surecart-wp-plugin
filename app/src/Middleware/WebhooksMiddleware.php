@@ -2,7 +2,6 @@
 
 namespace CheckoutEngine\Middleware;
 
-use CheckoutEngine\Models\Webhook;
 use Closure;
 use CheckoutEngineCore\Requests\RequestInterface;
 
@@ -18,7 +17,6 @@ class WebhooksMiddleware {
 	 * @return function
 	 */
 	public function handle( RequestInterface $request, Closure $next ) {
-		// verify the signature before handling.
 		if ( ! $this->verifySignature() ) {
 			return \CheckoutEngine::json( [ 'error' => 'Invalid signature' ] )->withStatus( 400 );
 		}
@@ -31,7 +29,6 @@ class WebhooksMiddleware {
 	 * @return bool
 	 */
 	public function verifySignature() {
-		// Compare the signature in the header to the expected signature.
 		return $this->getSignature() === $this->computeHash();
 	}
 
@@ -51,7 +48,7 @@ class WebhooksMiddleware {
 	 * @return string
 	 */
 	public function getSigningSecret() {
-		return Webhook::getSigningSecret();
+		return \CheckoutEngine::webhooks()->getSigningSecret();
 	}
 
 	/**

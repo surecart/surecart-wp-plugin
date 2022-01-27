@@ -27,22 +27,28 @@ class WebhookMiddlewareTest extends CheckoutEngineUnitTestCase {
 	{
 		$middleware = \Mockery::mock(WebhooksMiddleware::class)->makePartial();
 
-		$middleware->shouldReceive('getSignature')->andReturn('signature');
+		$middleware->shouldReceive('getInput')->andReturn(['test'=> 'test']);
 		$middleware->shouldReceive('getTimestamp')->andReturn(12345);
 
-		$this->assertSame($middleware->getSignedPayload(), 'signature.12345');
+		$this->assertSame($middleware->getSignedPayload(), '12345.' . json_encode(['test'=> 'test']));
 	}
 
 	/**
 	 * @group failing
 	 */
 	public function test_computeHash() {
-		$expected = hash_hmac( 'sha256', 'something.else', 'signing_secret' );
+		$payload = json_encode(['test' => '1234']);
+		$secret = 'secret';
+		$timestamp = 1641873601;
+		$signature = hash_hmac( 'sha256', "$timestamp.$payload", $secret );
 
 		$middleware = \Mockery::mock(WebhooksMiddleware::class)->makePartial();
-		$middleware->shouldReceive('getSignedPayload')->andReturn('something.else');
-		$middleware->shouldReceive('getSigningSecret')->andReturn('signing_secret');
 
-		$this->assertSame($middleware->computeHash(), $expected);
+		$middleware->shouldReceive('getSignature')->andReturn($signature);
+		$middleware->shouldReceive('getTimestamp')->andReturn($timestamp);
+		$middleware->shouldReceive('getInput')->andReturn(['test' => '1234']);
+		$middleware->shouldReceive('getSigningSecret')->andReturn($secret);
+
+		$this->assertSame($middleware->computeHash(), $signature, 'Hash should be computed correctly');
 	}
 }

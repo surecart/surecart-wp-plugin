@@ -18,7 +18,7 @@ interface ServiceProviderInterface {
 	/**
 	 * Register all dependencies in the IoC container.
 	 *
-	 * @param  Container $container
+	 * @param \Pimple\Container $container Service container.
 	 * @return void
 	 */
 	public function register( $container );
@@ -26,7 +26,7 @@ interface ServiceProviderInterface {
 	/**
 	 * Bootstrap any services if needed.
 	 *
-	 * @param  Container $container
+	 * @param \Pimple\Container $container Service container.
 	 * @return void
 	 */
 	public function bootstrap( $container );

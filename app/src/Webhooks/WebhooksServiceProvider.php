@@ -9,15 +9,30 @@ use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
  */
 class WebhooksServiceProvider implements ServiceProviderInterface {
 	/**
-	 * {@inheritDoc}
+	 * Register all dependencies in the IoC container.
+	 *
+	 * @param \Pimple\Container $container Service container.
+	 * @return void
 	 */
 	public function register( $container ) {
-		( new WebhooksService() )->maybeCreateWebooks();
+		$container['checkout_engine.webhooks'] = function () {
+			return new WebhooksService();
+		};
+
+		$app = $container[ CHECKOUT_ENGINE_APPLICATION_KEY ];
+
+		$app->alias( 'webhooks', 'checkout_engine.webhooks' );
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Bootstrap any services if needed.
+	 *
+	 * @param \Pimple\Container $container Service container.
+	 * @return void
 	 */
 	public function bootstrap( $container ) {
+		if ( ! empty( $container['checkout_engine.webhooks'] ) ) {
+			$container['checkout_engine.webhooks']->maybeCreateWebooks();
+		}
 	}
 }
