@@ -37,6 +37,12 @@ class Webhook extends Model {
 	 * @return $this|false
 	 */
 	protected function register() {
+		$existing = $this->findExisting();
+
+		if ( $existing ) {
+			return $existing;
+		}
+
 		return $this->create(
 			[
 				'description' => 'Main webhook for Checkout Engine',
@@ -44,5 +50,22 @@ class Webhook extends Model {
 				'url'         => $this->getListenerUrl(),
 			]
 		);
+	}
+
+	/**
+	 * Find existing webhook with the same listner url.
+	 *
+	 * @return \CheckoutEngine\Models\Webhook|false
+	 */
+	public function findExisting() {
+		$webhooks = $this->setPagination( [ 'per_page' => 100 ] )->get();
+		if ( is_array( $webhooks ) && ! empty( $webhooks ) ) {
+			foreach ( $webhooks as $webhook ) {
+				if ( $webhook['url'] === $this->getListenerUrl() ) {
+					return $webhook;
+				}
+			}
+		}
+		return false;
 	}
 }

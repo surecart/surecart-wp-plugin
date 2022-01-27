@@ -3,6 +3,9 @@
 use CheckoutEngine\Middleware\WebhooksMiddleware;
 use CheckoutEngine\Tests\CheckoutEngineUnitTestCase;
 
+/**
+ * @group webhooks
+ */
 class WebhookMiddlewareFeatureTest extends CheckoutEngineUnitTestCase {
 	/**
 	 * @group failing
@@ -17,7 +20,7 @@ class WebhookMiddlewareFeatureTest extends CheckoutEngineUnitTestCase {
 
 		$middleware->shouldReceive('getSignature')->andReturn($signature);
 		$middleware->shouldReceive('getTimestamp')->andReturn($timestamp);
-		$middleware->shouldReceive('getInput')->andReturn(['test' => '1234']);
+		$middleware->shouldReceive('getBody')->andReturn($payload);
 		$middleware->shouldReceive('getSigningSecret')->andReturn($secret);
 
 		$this->assertTrue($middleware->verifySignature());

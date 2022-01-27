@@ -10,6 +10,13 @@ use CheckoutEngineCore\Requests\RequestInterface;
  */
 class WebhooksMiddleware {
 	/**
+	 * Holds the current request.
+	 *
+	 * @var  RequestInterface
+	 */
+	protected $request;
+
+	/**
 	 * Handle the middleware.
 	 *
 	 * @param RequestInterface $request Request.
@@ -17,9 +24,12 @@ class WebhooksMiddleware {
 	 * @return function
 	 */
 	public function handle( RequestInterface $request, Closure $next ) {
-		if ( ! $this->verifySignature() ) {
+		$this->request = $request;
+
+		if ( ! $this->verifySignature( $request ) ) {
 			return \CheckoutEngine::json( [ 'error' => 'Invalid signature' ] )->withStatus( 400 );
 		}
+
 		return $next( $request );
 	}
 
@@ -56,8 +66,8 @@ class WebhooksMiddleware {
 	 *
 	 * @return string
 	 */
-	public function getInput() {
-		return json_decode( file_get_contents( 'php://input' ) );
+	public function getBody() {
+		return $this->request->body();
 	}
 
 	/**
@@ -66,7 +76,7 @@ class WebhooksMiddleware {
 	 * @return string
 	 */
 	public function getSignature() {
-		return $_SERVER['x-webhook-signature'] ?? '';
+		return $this->request->headers( 'X-Webhook-Signature' ) ?? '';
 	}
 
 	/**
@@ -75,7 +85,7 @@ class WebhooksMiddleware {
 	 * @return string
 	 */
 	public function getTimestamp() {
-		return $_SERVER['x-webhook-timestamp'] ?? '';
+		return $this->request->headers( 'X-Webhook-Timestamp' ) ?? '';
 	}
 
 	/**
@@ -84,6 +94,6 @@ class WebhooksMiddleware {
 	 * @return string
 	 */
 	public function getSignedPayload() {
-		return $this->getTimestamp() . '.' . json_encode( $this->getInput() );
+		return $this->getTimestamp() . '.' . $this->getBody();
 	}
 }
