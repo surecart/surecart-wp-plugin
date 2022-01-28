@@ -9,6 +9,8 @@
  * @package CheckoutEngine
  */
 
+use CheckoutEngine\Middleware\ArchiveModelMiddleware;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -161,3 +163,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->where( 'admin', 'ce-settings' )
 ->middleware( 'user.can:manage_ce_account_settings' )
 ->handle( 'Settings@show' );
+
+/*
+|--------------------------------------------------------------------------
+| Webhooks
+|--------------------------------------------------------------------------
+*/
+\CheckoutEngine::route()
+	->get()
+	->where( 'ce_url_var', 'remove_webhook', 'action' )
+	->name( 'webhook.remove' )
+	->middleware( 'nonce:remove_webhook' )
+	->middleware( 'user.can:edit_ce_webhooks' )
+	->handle( '\\CheckoutEngine\\Controllers\\Web\\WebhookController@remove' );

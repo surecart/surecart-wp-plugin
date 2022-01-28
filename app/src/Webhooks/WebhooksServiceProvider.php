@@ -16,7 +16,7 @@ class WebhooksServiceProvider implements ServiceProviderInterface {
 	 */
 	public function register( $container ) {
 		$container['checkout_engine.webhooks'] = function () use ( $container ) {
-			return new WebhooksService( new WebHooksDomainService() );
+			return new WebhooksService( new WebhooksHistoryService() );
 		};
 
 		$app = $container[ CHECKOUT_ENGINE_APPLICATION_KEY ];

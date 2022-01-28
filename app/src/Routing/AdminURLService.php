@@ -89,4 +89,20 @@ class AdminURLService {
 			)
 		);
 	}
+
+	/**
+	 * Edit model action
+	 */
+	public function editModel( $action, $id, $redirect_url = '' ) {
+		return esc_url(
+			add_query_arg(
+				[
+					'action' => $action,
+					'nonce'  => wp_create_nonce( $action ),
+					'id'     => $id,
+				],
+				$redirect_url
+			)
+		);
+	}
 }

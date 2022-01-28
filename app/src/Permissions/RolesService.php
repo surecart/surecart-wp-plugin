@@ -25,7 +25,7 @@ class RolesService {
 	public function addRoles() {
 		add_role(
 			'ce_shop_manager',
-			__( 'PayKit Shop Manager', 'checkout_engine' ),
+			__( 'CheckoutEngine Shop Manager', 'checkout_engine' ),
 			[
 				'read'                   => true,
 				'edit_posts'             => true,
@@ -60,7 +60,7 @@ class RolesService {
 
 		add_role(
 			'ce_shop_accountant',
-			__( 'PayKit Accountant', 'checkout_engine' ),
+			__( 'CheckoutEngine Accountant', 'checkout_engine' ),
 			[
 				'read'         => true,
 				'edit_posts'   => false,
@@ -70,7 +70,7 @@ class RolesService {
 
 		add_role(
 			'ce_shop_worker',
-			__( 'PayKit Shop Worker', 'checkout_engine' ),
+			__( 'CheckoutEngine Shop Worker', 'checkout_engine' ),
 			[
 				'read'         => true,
 				'edit_posts'   => false,
@@ -138,6 +138,7 @@ class RolesService {
 		$capability_types = [
 			'ce_coupon',
 			'ce_promotion',
+			'ce_webhook',
 			'ce_product',
 			'ce_order',
 			'ce_price',

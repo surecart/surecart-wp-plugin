@@ -121,6 +121,8 @@ return [
 	 */
 	'middleware'          => [
 		'archive_model' => \CheckoutEngine\Middleware\ArchiveModelMiddleware::class,
+		'edit_model'    => \CheckoutEngine\Middleware\EditModelMiddleware::class,
+		'nonce'         => \CheckoutEngine\Middleware\NonceMiddleware::class,
 		'webhooks'      => \CheckoutEngine\Middleware\WebhooksMiddleware::class,
 	],
 

@@ -19,16 +19,16 @@ class WebhooksService {
 	/**
 	 * Hold the domain service.
 	 *
-	 * @var \CheckoutEngine\Webhooks\WebhooksDomainService
+	 * @var \CheckoutEngine\Webhooks\WebhooksHistoryService
 	 */
 	protected $domain_service;
 
 	/**
 	 * Get the domain service.
 	 *
-	 * @param WebHooksDomainService $domain_service The domain service.
+	 * @param WebhooksHistoryService $domain_service The domain service.
 	 */
-	public function __construct( WebHooksDomainService $domain_service ) {
+	public function __construct( WebhooksHistoryService $domain_service ) {
 		$this->domain_service = $domain_service;
 	}
 
@@ -72,9 +72,13 @@ class WebhooksService {
 
 		// if successful, update the domain and signing secret.
 		if ( ! empty( $registered['signing_secret'] ) ) {
-			$this->deleteSigningSecret();
 			$this->setSigningSecret( $registered['signing_secret'] );
-			$this->setDomain();
+			$this->saveRegisteredWebhook(
+				[
+					'id'  => $registered['id'],
+					'url' => $registered['url'],
+				]
+			);
 			return true;
 		}
 
@@ -119,6 +123,7 @@ class WebhooksService {
 	 * @return string|bool Encrypted value, or false on failure.
 	 */
 	public function setSigningSecret( $value ) {
+		$this->deleteSigningSecret();
 		return update_option( $this->signing_key, Encryption::encrypt( $value ), false );
 	}
 
@@ -145,8 +150,8 @@ class WebhooksService {
 	 *
 	 * @return bool
 	 */
-	public function setDomain() {
-		return $this->domain_service->setDomain( get_site_url() );
+	public function saveRegisteredWebhook( $webhook ) {
+		return $this->domain_service->saveRegisteredWebhook( $webhook );
 	}
 
 	/**

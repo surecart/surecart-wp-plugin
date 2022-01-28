@@ -4,13 +4,13 @@ namespace CheckoutEngine\Tests\Unit\Services;
 
 use CheckoutEngine\Models\Webhook;
 use CheckoutEngine\Tests\CheckoutEngineUnitTestCase;
-use CheckoutEngine\Webhooks\WebHooksDomainService;
+use CheckoutEngine\Webhooks\WebHooksHistoryService;
 use CheckoutEngine\Webhooks\WebhooksService;
 
 /**
  * @group webhooks
  */
-class WebhooksDomainServiceFeatureTest extends CheckoutEngineUnitTestCase {
+class WebhooksHistoryServiceFeatureTest extends CheckoutEngineUnitTestCase {
 	use \Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 
 	/**
@@ -18,7 +18,7 @@ class WebhooksDomainServiceFeatureTest extends CheckoutEngineUnitTestCase {
 	 */
 	public function test_stores_previous_domain_when_domain_changes()
 	{
-		$service = new WebHooksDomainService();
+		$service = new WebHooksHistoryService();
 		$this->assertEmpty($service->getPreviousDomain());
 		$this->assertFalse($service->maybeShowDomainChangeNotice());
 

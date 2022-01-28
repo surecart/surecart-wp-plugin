@@ -2,11 +2,23 @@
 namespace CheckoutEngine\Controllers\Web;
 
 use CheckoutEngine\Models\Webhook;
+use CheckoutEngineCore\Responses\RedirectResponse;
 
 /**
  * Handles webhooks
  */
 class WebhookController {
+
+	/**
+	 * Remove the webhook.
+	 *
+	 * @param \CheckoutEngineCore\Requests\RequestInterface $request Request.
+	 * @return function
+	 */
+	public function remove( $request ) {
+		return \CheckoutEngine::json( [ 'failed' => true ] )->withStatus( 400 );
+	}
+
 	/**
 	 * Create a webhook for this install.
 	 */
