@@ -15,12 +15,11 @@ class WebhooksServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function register( $container ) {
-		$container['checkout_engine.webhooks'] = function () {
-			return new WebhooksService();
+		$container['checkout_engine.webhooks'] = function () use ( $container ) {
+			return new WebhooksService( new WebHooksDomainService() );
 		};
 
 		$app = $container[ CHECKOUT_ENGINE_APPLICATION_KEY ];
-
 		$app->alias( 'webhooks', 'checkout_engine.webhooks' );
 	}
 
@@ -33,6 +32,7 @@ class WebhooksServiceProvider implements ServiceProviderInterface {
 	public function bootstrap( $container ) {
 		if ( ! empty( $container['checkout_engine.webhooks'] ) ) {
 			$container['checkout_engine.webhooks']->maybeCreateWebooks();
+			$container['checkout_engine.webhooks']->listenForDomainChanges();
 		}
 	}
 }

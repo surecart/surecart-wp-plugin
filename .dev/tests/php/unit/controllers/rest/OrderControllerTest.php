@@ -70,9 +70,6 @@ class OrderControllerTest extends CheckoutEngineUnitTestCase
 		$this->assertTrue($errors->has_errors());
 	}
 
-	/**
-	 * @group failing
-	 */
 	public function createOrLoginUser() {
 		$controller = new OrderController();
 		$this->assertFalse($controller->createOrLoginUser('email@email.com', '', null));

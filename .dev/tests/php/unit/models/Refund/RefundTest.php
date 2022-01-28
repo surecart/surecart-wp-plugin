@@ -28,9 +28,6 @@ class RefundTest extends CheckoutEngineUnitTestCase
 		$this->setupMockRequests();
 	}
 
-	/**
-	 * @group failing
-	 */
 	public function test_can_refund()
 	{
 		$this->mock_requests->expects($this->once())

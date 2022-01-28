@@ -9,13 +9,37 @@ use CheckoutEngine\Support\Encryption;
  * WordPress Users service.
  */
 class WebhooksService {
-
 	/**
 	 * Option value for signing key.
 	 *
 	 * @var string
 	 */
 	protected $signing_key = 'ce_webhook_signing_secret';
+
+	/**
+	 * Hold the domain service.
+	 *
+	 * @var \CheckoutEngine\Webhooks\WebhooksDomainService
+	 */
+	protected $domain_service;
+
+	/**
+	 * Get the domain service.
+	 *
+	 * @param WebHooksDomainService $domain_service The domain service.
+	 */
+	public function __construct( WebHooksDomainService $domain_service ) {
+		$this->domain_service = $domain_service;
+	}
+
+	/**
+	 * Listen for domain changes.
+	 *
+	 * @return function
+	 */
+	public function listenForDomainChanges() {
+		return $this->domain_service->listen();
+	}
 
 	/**
 	 * Create webhooks for this site.
@@ -34,7 +58,7 @@ class WebhooksService {
 		}
 
 		// register the webhooks.
-		$registered = Webhook::register();
+		$registered = $this->register();
 
 		// handle error and show notice to user.
 		if ( is_wp_error( $registered ) ) {
@@ -51,7 +75,19 @@ class WebhooksService {
 			$this->deleteSigningSecret();
 			$this->setSigningSecret( $registered['signing_secret'] );
 			$this->setDomain();
+			return true;
 		}
+
+		return false;
+	}
+
+	/**
+	 * Register webhooks for this site.
+	 *
+	 * @return \WP_Error|\CheckoutEngine\Models\Webhook;
+	 */
+	public function register() {
+		return Webhook::register();
 	}
 
 	/**
@@ -110,7 +146,7 @@ class WebhooksService {
 	 * @return bool
 	 */
 	public function setDomain() {
-		return update_option( 'ce_webhook_domain', get_site_url() );
+		return $this->domain_service->setDomain( get_site_url() );
 	}
 
 	/**
@@ -119,6 +155,6 @@ class WebhooksService {
 	 * @return boolean
 	 */
 	public function domainMatches() {
-		return get_site_url() === get_option( 'ce_webhook_domain', '' );
+		return $this->domain_service->domainMatches();
 	}
 }

@@ -150,36 +150,6 @@ class OrderTest extends CheckoutEngineUnitTestCase
 		$this->assertNotFalse(get_user_by('email', $associated->user_email));
 	}
 
-	// /*
-	//  * @group failing
-	//  */
-	// public function test_creates_user_on_finalize()
-	// {
-	// 	// mock the requests in the container
-	// 	$requests =  \Mockery::mock(RequestService::class);
-	// 	\CheckoutEngine::alias('request', function () use ($requests) {
-	// 		return call_user_func_array([$requests, 'makeRequest'], func_get_args());
-	// 	});
-
-
-	// 	$requests->shouldReceive('makeRequest')
-	// 		->once()
-	// 		->withSomeOfArgs('orders/test_order/finalize/')
-	// 		->andReturn((object) [
-	// 			'customer' => [
-	// 				'id' => 'test_user',
-	// 				"email" => "test@test.com"
-	// 			]
-	// 		]);
-
-	// 	$order = (new Order( ["id" => "test_order" ] ))
-	// 			->setProcessor('stripe')
-	// 			->finalize();
-
-	// 	$this->assertNotWPError($order);
-	// 	$this->assertNotFalse(get_user_by('email', 'test@test.com'));
-	// }
-
 	public function test_can_get_prices()
 	{
 		$order = new Order((object) [

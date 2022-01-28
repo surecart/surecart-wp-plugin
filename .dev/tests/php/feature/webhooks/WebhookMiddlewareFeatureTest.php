@@ -7,9 +7,6 @@ use CheckoutEngine\Tests\CheckoutEngineUnitTestCase;
  * @group webhooks
  */
 class WebhookMiddlewareFeatureTest extends CheckoutEngineUnitTestCase {
-	/**
-	 * @group failing
-	 */
 	public function test_verifies_signature() {
 		$payload = json_encode(['test' => '1234']);
 		$secret = 'secret';
@@ -25,4 +22,5 @@ class WebhookMiddlewareFeatureTest extends CheckoutEngineUnitTestCase {
 
 		$this->assertTrue($middleware->verifySignature());
 	}
+
 }

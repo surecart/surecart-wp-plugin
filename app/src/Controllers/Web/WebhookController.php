@@ -39,7 +39,7 @@ class WebhookController {
 	public function handleResponse( $data ) {
 		// handle the response.
 		if ( is_wp_error( $data ) ) {
-			return \CheckoutEngine::json( [ $data->get_error_code() => $data->get_error_message() ] )->withStatus( 400 );
+			return \CheckoutEngine::json( [ $data->get_error_code() => $data->get_error_message() ] )->withStatus( 500 );
 		}
 
 		if ( empty( $data ) ) {

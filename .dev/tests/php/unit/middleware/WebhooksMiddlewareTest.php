@@ -17,9 +17,6 @@ class WebhookMiddlewareTest extends CheckoutEngineUnitTestCase {
 		$this->assertSame($middleware->getSignedPayload(), '12345.' . json_encode(['test'=> 'test']));
 	}
 
-	/**
-	 * @group failing
-	 */
 	public function test_computeHash() {
 		$payload = json_encode(['test' => '1234']);
 		$secret = 'secret';

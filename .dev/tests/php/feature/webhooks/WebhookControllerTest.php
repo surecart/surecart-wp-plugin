@@ -1,13 +1,16 @@
 <?php
-namespace CheckoutEngine\Tests\Feature\Rest;
+
+namespace CheckoutEngine\Tests\Feature;
 
 use CheckoutEngine\Controllers\Web\WebhookController;
 use CheckoutEngine\Tests\CheckoutEngineUnitTestCase;
+use CheckoutEngineCore\Requests\Request;
 
 /**
  * @group webhooks
  */
-class WebhookControllerTest extends CheckoutEngineUnitTestCase {
+class WebhookControllerTest extends CheckoutEngineUnitTestCase
+{
 	use \Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 
 	/**
@@ -18,8 +21,7 @@ class WebhookControllerTest extends CheckoutEngineUnitTestCase {
 		parent::setUp();
 
 		// Set up an app instance with whatever stubs and mocks we need before every test.
-		\CheckoutEngine::make()->bootstrap([
-		], false);
+		\CheckoutEngine::make()->bootstrap([], false);
 	}
 
 	/**
@@ -29,20 +31,22 @@ class WebhookControllerTest extends CheckoutEngineUnitTestCase {
 	{
 		$this->assertEquals(did_action('checkout_engine/order_created'), 0);
 		$controller = \Mockery::mock(WebhookController::class)->makePartial();
+		$request = \Mockery::mock(Request::class)->makePartial();
 
-		$controller->shouldReceive('getInput')
+		$request->shouldReceive('getParsedBody')
 			->once()
-			->andReturn((object) [
-				"id" => "3631d049-2ea4-4dca-acae-fd8110fab21f",
+			->andReturn([
+				"id" => "e57979af-84f7-41e3-82e5-911cf24f13f5",
 				"object" => "event",
-				"data" => (object) [
-					'id' => 'asdf',
+				"data" => [
+					"order" => "1ce4624d-2287-4d5b-bec7-b23689ae4461"
 				],
 				"type" => "order.created",
-				"account" => "9954af8d-5737-4a24-8d4f-b96a34a38019"
+				"account" => "9f152260-0a22-4bf3-aaf9-5a2487c2bf59",
+				"created_at" => 1643236542
 			]);
 
-		$result = $controller->receive();
+		$result = $controller->receive($request);
 		$this->assertSame($result->getStatusCode(), 200);
 		$this->assertEquals(did_action('checkout_engine/order_created'), 1);
 	}
