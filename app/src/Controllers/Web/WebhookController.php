@@ -2,21 +2,11 @@
 namespace CheckoutEngine\Controllers\Web;
 
 use CheckoutEngine\Models\Webhook;
-use CheckoutEngine\Support\Encryption;
 
 /**
  * Handles webhooks
  */
 class WebhookController {
-	/**
-	 * Get expected json request body.
-	 *
-	 * @return object
-	 */
-	public function getInput() {
-		return json_decode( file_get_contents( 'php://input' ) );
-	}
-
 	/**
 	 * Create a webhook for this install.
 	 */
@@ -33,11 +23,9 @@ class WebhookController {
 	/**
 	 * Recieve webhook
 	 */
-	public function receive() {
-		// get the request body.
-		$data = $this->getInput();
+	public function receive( $request ) {
 		// perform the action.
-		$action = $this->doAction( $data );
+		$action = $this->doAction( $request->getParsedBody() );
 		// handle the response.
 		return $this->handleResponse( $action );
 	}
@@ -74,16 +62,16 @@ class WebhookController {
 	 * @return array|\WP_Error
 	 */
 	public function doAction( $request ) {
-		if ( empty( $request->type ) ) {
+		if ( empty( $request['type'] ) ) {
 			return new \WP_Error( 'missing_type', 'Missing type.' );
 		}
-		if ( empty( $request->data ) ) {
+		if ( empty( $request['data'] ) ) {
 			return new \WP_Error( 'missing_data', 'Missing data.' );
 		}
 
 		// create the event name.
-		$event = $this->createEventName( $request->type );
-		$id    = $this->getObjectId( $request->data );
+		$event = $this->createEventName( $request['type'] );
+		$id    = $this->getObjectId( $request['data'] );
 
 		// perform the action.
 		do_action( $event, $id, $request );

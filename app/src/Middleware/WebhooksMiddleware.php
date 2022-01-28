@@ -27,7 +27,7 @@ class WebhooksMiddleware {
 		$this->request = $request;
 
 		if ( ! $this->verifySignature( $request ) ) {
-			return \CheckoutEngine::json( [ 'error' => 'Invalid signature' ] )->withStatus( 400 );
+			return \CheckoutEngine::json( [ 'error' => 'Invalid signature' ] )->withStatus( 403 );
 		}
 
 		return $next( $request );
@@ -67,7 +67,7 @@ class WebhooksMiddleware {
 	 * @return string
 	 */
 	public function getBody() {
-		return $this->request->body();
+		return file_get_contents( 'php://input' );
 	}
 
 	/**
@@ -76,7 +76,7 @@ class WebhooksMiddleware {
 	 * @return string
 	 */
 	public function getSignature() {
-		return $this->request->headers( 'X-Webhook-Signature' ) ?? '';
+		return $this->request->headers( 'X-Webhook-Signature' )[0] ?? '';
 	}
 
 	/**
@@ -85,7 +85,7 @@ class WebhooksMiddleware {
 	 * @return string
 	 */
 	public function getTimestamp() {
-		return $this->request->headers( 'X-Webhook-Timestamp' ) ?? '';
+		return $this->request->headers( 'X-Webhook-Timestamp' )[0] ?? '';
 	}
 
 	/**
