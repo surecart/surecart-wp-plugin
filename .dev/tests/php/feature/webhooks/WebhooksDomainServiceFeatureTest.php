@@ -29,5 +29,4 @@ class WebhooksDomainServiceFeatureTest extends CheckoutEngineUnitTestCase {
 		$service->maybeShowDomainChangeNotice();
 		$this->assertSame(ob_get_clean(), '<div class="notice notice-error"><p>It looks like this site has moved or has been duplicated. CheckoutEngine has created new webhooks for the domain to prevent purchase sync issues. Should we remove the previous webook?</p><a href="#" class="button button-primary">This is a duplicate site like a staging site.</a><a href="#" class="button button-secondary">My website domain has permanently changed. Remove webhook for http://foo.com</a></div>');
 	}
-
 }

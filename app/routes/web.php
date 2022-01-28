@@ -11,6 +11,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/*
+|--------------------------------------------------------------------------
+| Receive Webhooks
+|--------------------------------------------------------------------------
+*/
 \CheckoutEngine::route()
 	->post()
 	->url( '/checkout_engine/webhooks' )
@@ -18,6 +23,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 	->middleware( 'webhooks' )
 	->handle( 'WebhookController@receive' );
 
+/*
+|--------------------------------------------------------------------------
+| Dashboard
+|--------------------------------------------------------------------------
+*/
+// Here we maybe intercept dashboard request if there is a user link and log them in.
 \CheckoutEngine::route()
 	->get()
 	->where( 'post_id', \CheckoutEngine::pages()->getId( 'dashboard' ) )

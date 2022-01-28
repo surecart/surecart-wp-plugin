@@ -13,4 +13,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/*
+|--------------------------------------------------------------------------
+| Nonce Refresh
+|--------------------------------------------------------------------------
+*/
 \CheckoutEngine::route()->get()->where( 'ajax', 'ce-rest-nonce', true, true )->handle( 'NonceController@get' );

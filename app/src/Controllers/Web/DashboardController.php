@@ -45,7 +45,7 @@ class DashboardController {
 		if ( $error->get_error_code() === 'customer_link.expired' ) {
 			return wp_die( esc_html__( 'This link has expired.', 'checkout_engine' ) );
 		}
-		return wp_die( $error->get_error_message() );
+		return wp_die( wp_kses_post( $error->get_error_message() ) );
 	}
 
 	/**
