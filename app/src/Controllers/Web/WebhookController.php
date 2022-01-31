@@ -8,7 +8,6 @@ use CheckoutEngineCore\Responses\RedirectResponse;
  * Handles webhooks
  */
 class WebhookController {
-
 	/**
 	 * Remove the webhook.
 	 *
