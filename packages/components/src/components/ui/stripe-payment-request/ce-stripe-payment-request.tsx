@@ -133,7 +133,7 @@ export class CeStripePaymentRequest {
     return {
       currency: this.currencyCode,
       total: {
-        amount: this.order?.total_amount || 0,
+        amount: this.order?.amount_due || 0,
         label: __('Total', 'checkout_engine'),
         pending: true,
       },
