@@ -78,7 +78,7 @@ class PageService {
 	 * @param string $option Option name.
 	 * @param string $post_type Post type slug.
 	 *
-	 * @return string
+	 * @return \WP_Post|null
 	 */
 	public function get( $option, $post_type = 'page' ) {
 		return $this->findByName( $option, $post_type );
@@ -115,7 +115,7 @@ class PageService {
 	 * @param string $option Option name.
 	 * @param string $post_type Post type slug.
 	 *
-	 * @return string
+	 * @return \WP_Post|null
 	 */
 	public function findByName( $option, $post_type = 'page' ) {
 		// get the option fro the database.

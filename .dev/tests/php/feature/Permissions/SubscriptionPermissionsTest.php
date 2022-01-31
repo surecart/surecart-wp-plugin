@@ -1,7 +1,6 @@
 <?php
 namespace CheckoutEngine\Tests;
 
-use CheckoutEngine\Permissions\Models\SubscriptionPermissionsController;
 use CheckoutEngine\Request\RequestService;
 use CheckoutEngine\Tests\CheckoutEngineUnitTestCase;
 
@@ -18,6 +17,10 @@ class SubscriptionPermissionsTest extends CheckoutEngineUnitTestCase {
 			'providers' => [
 				\CheckoutEngine\Request\RequestServiceProvider::class,
 				\CheckoutEngine\Permissions\RolesServiceProvider::class,
+				\CheckoutEngine\WordPress\Pages\PageServiceProvider::class,
+				\CheckoutEngine\WordPress\PostTypes\FormPostTypeServiceProvider::class,
+				\CheckoutEngine\Activation\ActivationServiceProvider::class,
+				\CheckoutEngine\WordPress\PluginServiceProvider::class,
 			]
 		], false);
 
@@ -26,7 +29,7 @@ class SubscriptionPermissionsTest extends CheckoutEngineUnitTestCase {
 
 	public function test_subscription_edit_permissions()
 	{
-		\CheckoutEngine::createRoles();
+		\CheckoutEngine::plugin()->activation()->bootstrap();
 
 		// mock the requests in the container
 		$requests =  \Mockery::mock(RequestService::class);

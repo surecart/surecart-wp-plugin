@@ -7,7 +7,7 @@
  * @link      https://checkoutengine.com
  */
 
-namespace CheckoutEngineAppCore\AppCore;
+namespace CheckoutEngine\WordPress;
 
 use CheckoutEngineCore\Application\Application;
 
@@ -41,11 +41,28 @@ class PluginService {
 	}
 
 	/**
-	 * Shortcut to \CheckoutEngineAppCore\Sidebar\Sidebar.
+	 * Shortcut to \CheckoutEngine\WordPress\Pages\PageService.
 	 *
-	 * @return \CheckoutEngineAppCore\Sidebar\Sidebar
+	 * @return \CheckoutEngine\WordPress\Pages\PageService
 	 */
 	public function pages() {
-		return $this->app->resolve( 'checkout_engine_app_core.sidebar.sidebar' );
+		return $this->app->resolve( 'checkout_engine.pages' );
+	}
+	/**
+	 * Shortcut to \CheckoutEngine\WordPress\Pages\PageService.
+	 *
+	 * @return \CheckoutEngine\WordPress\Pages\PageService
+	 */
+	public function activation() {
+		return $this->app->resolve( 'checkout_engine.activation' );
+	}
+
+	/**
+	 * Shortcut to \CheckoutEngine\WordPress\Pages\PageService.
+	 *
+	 * @return \CheckoutEngine\Permissions\RolesService;
+	 */
+	public function roles() {
+		return $this->app->resolve( 'checkout_engine.permissions.roles' );
 	}
 }

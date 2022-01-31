@@ -17,6 +17,10 @@ class OrderPermissionsTest extends CheckoutEngineUnitTestCase {
 			'providers' => [
 				\CheckoutEngine\Request\RequestServiceProvider::class,
 				\CheckoutEngine\Permissions\RolesServiceProvider::class,
+				\CheckoutEngine\WordPress\Pages\PageServiceProvider::class,
+				\CheckoutEngine\WordPress\PostTypes\FormPostTypeServiceProvider::class,
+				\CheckoutEngine\Activation\ActivationServiceProvider::class,
+				\CheckoutEngine\WordPress\PluginServiceProvider::class,
 			]
 		], false);
 
@@ -25,7 +29,7 @@ class OrderPermissionsTest extends CheckoutEngineUnitTestCase {
 
 	public function test_edit_and_view_draft_permissions()
 	{
-		\CheckoutEngine::createRoles();
+		\CheckoutEngine::plugin()->activation()->bootstrap();
 
 		// mock the requests in the container
 		$requests =  \Mockery::mock(RequestService::class);
@@ -51,7 +55,7 @@ class OrderPermissionsTest extends CheckoutEngineUnitTestCase {
 	}
 
 	public function test_edit_and_view_paid_completed_permissions() {
-		\CheckoutEngine::createRoles();
+		\CheckoutEngine::plugin()->activation()->bootstrap();
 
 		// mock the requests in the container
 		$requests =  \Mockery::mock(RequestService::class);

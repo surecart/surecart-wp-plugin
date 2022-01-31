@@ -17,6 +17,10 @@ class ChargesPermissionsTest extends CheckoutEngineUnitTestCase {
 			'providers' => [
 				\CheckoutEngine\Request\RequestServiceProvider::class,
 				\CheckoutEngine\Permissions\RolesServiceProvider::class,
+				\CheckoutEngine\WordPress\Pages\PageServiceProvider::class,
+				\CheckoutEngine\WordPress\PostTypes\FormPostTypeServiceProvider::class,
+				\CheckoutEngine\Activation\ActivationServiceProvider::class,
+				\CheckoutEngine\WordPress\PluginServiceProvider::class,
 			]
 		], false);
 
@@ -25,7 +29,7 @@ class ChargesPermissionsTest extends CheckoutEngineUnitTestCase {
 
 	public function test_subscription_edit_permissions()
 	{
-		\CheckoutEngine::createRoles();
+		\CheckoutEngine::plugin()->activation()->bootstrap();
 
 		// mock the requests in the container
 		$requests =  \Mockery::mock(RequestService::class);

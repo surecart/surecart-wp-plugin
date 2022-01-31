@@ -16,7 +16,7 @@ class ActivationServiceProvider implements ServiceProviderInterface {
 	 */
 	public function register( $container ) {
 		$container['checkout_engine.activation'] = function ( $container ) {
-			return new ActivationService( $container['checkout_engine.permissions.roles'], $container['checkout_engine.permissions.roles'] );
+			return new ActivationService( $container['checkout_engine.permissions.roles'], $container['checkout_engine.pages.seeder'] );
 		};
 	}
 
@@ -27,6 +27,6 @@ class ActivationServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function bootstrap( $container ) {
-		$container['checkout_engine.pages']->bootstrap();
+		$container['checkout_engine.activation']->bootstrap();
 	}
 }

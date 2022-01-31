@@ -2,7 +2,7 @@
 
 namespace CheckoutEngine\WordPress;
 
-use CheckoutEngineAppCore\AppCore\PluginService;
+use CheckoutEngine\WordPress\PluginService;
 use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
 
 /**

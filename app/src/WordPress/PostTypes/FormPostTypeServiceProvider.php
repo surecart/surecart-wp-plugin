@@ -17,6 +17,9 @@ class FormPostTypeServiceProvider implements ServiceProviderInterface {
 		$container['checkout_engine.forms'] = function ( $container ) {
 			return new FormPostTypeService( $container['checkout_engine.pages'] );
 		};
+
+		$app = $container[ CHECKOUT_ENGINE_APPLICATION_KEY ];
+		$app->alias( 'forms', 'checkout_engine.forms' );
 	}
 
 	/**

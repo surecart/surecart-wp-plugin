@@ -2,16 +2,33 @@
 
 namespace CheckoutEngine\Tests\Unit\Services;
 
-use CheckoutEngine\Models\Webhook;
 use CheckoutEngine\Tests\CheckoutEngineUnitTestCase;
 use CheckoutEngine\Webhooks\WebHooksHistoryService;
-use CheckoutEngine\Webhooks\WebhooksService;
 
 /**
  * @group webhooks
  */
 class WebhooksHistoryServiceFeatureTest extends CheckoutEngineUnitTestCase {
 	use \Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+
+	/**
+	 * Set up a new app instance to use for tests.
+	 */
+	public function setUp()
+	{
+		// Set up an app instance with whatever stubs and mocks we need before every test.
+		\CheckoutEngine::make()->bootstrap([
+			'providers' => [
+				\CheckoutEngine\WordPress\Pages\PageServiceProvider::class,
+				\CheckoutEngine\Routing\AdminRouteServiceProvider::class,
+				\CheckoutEngine\WordPress\PluginServiceProvider::class,
+				\CheckoutEngine\Request\RequestServiceProvider::class,
+				\CheckoutEngine\Permissions\RolesServiceProvider::class,
+			]
+		], false);
+
+		parent::setUp();
+	}
 
 	/**
 	 * @group failing
@@ -22,11 +39,13 @@ class WebhooksHistoryServiceFeatureTest extends CheckoutEngineUnitTestCase {
 		$this->assertEmpty($service->getPreviousDomain());
 		$this->assertFalse($service->maybeShowDomainChangeNotice());
 
-		$service->setPreviousDomain('foo.com');
+		$service->setPreviousWebhook(['id' => 'asdf', 'url' => 'foo.com']);
 		$this->assertSame('foo.com', $service->getPreviousDomain());
 
 		ob_start();
 		$service->maybeShowDomainChangeNotice();
-		$this->assertSame(ob_get_clean(), '<div class="notice notice-error"><p>It looks like this site has moved or has been duplicated. CheckoutEngine has created new webhooks for the domain to prevent purchase sync issues. Should we remove the previous webook?</p><a href="#" class="button button-primary">This is a duplicate site like a staging site.</a><a href="#" class="button button-secondary">My website domain has permanently changed. Remove webhook for http://foo.com</a></div>');
+		$result = ob_get_clean();
+		$this->assertStringContainsString('action=remove_webhook', $result);
+		$this->assertStringContainsString('action=ignore_webhook', $result);
 	}
 }

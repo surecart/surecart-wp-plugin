@@ -2,8 +2,7 @@
 namespace CheckoutEngine\Tests\WordPress\Admin;
 
 use CheckoutEngine\Tests\CheckoutEngineUnitTestCase;
-use CheckoutEngine\WordPress\PageService;
-use \Mockery;
+use CheckoutEngine\WordPress\Pages\PageService;
 
 class PageServiceTest extends CheckoutEngineUnitTestCase {
 	public $service;
