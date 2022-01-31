@@ -26,7 +26,7 @@ class PermissionsService {
 	 *
 	 * @return void
 	 */
-	public function register() {
+	public function bootstrap() {
 		foreach ( $this->controllers as $controller ) {
 			$instance = new $controller();
 			add_filter( 'user_has_cap', [ $instance, 'handle' ], 10, 4 );

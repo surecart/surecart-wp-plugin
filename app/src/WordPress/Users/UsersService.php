@@ -1,6 +1,6 @@
 <?php
 
-namespace CheckoutEngine\WordPress;
+namespace CheckoutEngine\WordPress\Users;
 
 use CheckoutEngine\Models\Order;
 use CheckoutEngine\Models\User;
@@ -14,7 +14,7 @@ class UsersService {
 	 *
 	 * @return void
 	 */
-	public function register_rest_queries() {
+	public function bootstrap() {
 		add_filter( 'rest_user_query', [ $this, 'userMetaQuery' ], 10, 2 );
 		add_filter( 'rest_user_query', [ $this, 'isCustomerQuery' ], 10, 2 );
 		add_filter( 'rest_user_collection_params', [ $this, 'collectionParams' ] );

@@ -13,11 +13,13 @@ return [
 	 */
 	'providers'           => [
 		\CheckoutEngineAppCore\AppCore\AppCoreServiceProvider::class,
+		\CheckoutEngine\WordPress\Pages\PageServiceProvider::class,
+		\CheckoutEngine\WordPress\Users\UsersServiceProvider::class,
+		\CheckoutEngine\WordPress\Admin\Profile\UserProfileServiceProvider::class,
 		\CheckoutEngine\WordPress\PluginServiceProvider::class,
 		\CheckoutEngineAppCore\Assets\AssetsServiceProvider::class,
 		\CheckoutEngineAppCore\Config\ConfigServiceProvider::class,
 		\CheckoutEngine\Routing\RouteConditionsServiceProvider::class,
-		\CheckoutEngine\WordPress\AdminServiceProvider::class,
 		\CheckoutEngine\WordPress\PostTypes\FormPostTypeServiceProvider::class,
 		\CheckoutEngine\WordPress\Assets\AssetsServiceProvider::class,
 		\CheckoutEngine\WordPress\ShortcodesServiceProvider::class,
@@ -29,6 +31,8 @@ return [
 		\CheckoutEngine\Webhooks\WebhooksServiceProvider::class,
 		\CheckoutEngine\BlockLibrary\BlockServiceProvider::class,
 		\CheckoutEngine\Support\Errors\ErrorsServiceProvider::class,
+		\CheckoutEngine\Activation\ActivationServiceProvider::class,
+		\CheckoutEngine\WordPress\Admin\Menus\AdminMenuPageServiceProvider::class,
 
 		// REST providers.
 		\CheckoutEngine\Rest\AccountRestServiceProvider::class,

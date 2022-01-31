@@ -1,6 +1,6 @@
 <?php
 
-namespace CheckoutEngine\WordPress;
+namespace CheckoutEngine\Install;
 
 /**
  * Service for installation related functions.

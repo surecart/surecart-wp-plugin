@@ -1,11 +1,20 @@
 <?php
 
-namespace CheckoutEngine\WordPress;
+namespace CheckoutEngine\WordPress\Pages;
 
 /**
  * Handles page creation
  */
 class PageService {
+	/**
+	 * Bootstrap.
+	 *
+	 * @return void
+	 */
+	public function bootstrap() {
+		add_action( 'display_post_states', [ $this, 'displayDefaultPageStatuses' ] );
+	}
+
 	/**
 	 * The option name
 	 *

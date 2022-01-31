@@ -1,8 +1,6 @@
 <?php
 namespace CheckoutEngine\Permissions;
 
-use CheckoutEngine\Models\Product;
-
 /**
  * Adds roles and capabilities.
  */
@@ -12,7 +10,7 @@ class RolesService {
 	 *
 	 * @return void
 	 */
-	public function createRoles() {
+	public function create() {
 		$this->addRoles();
 		$this->addCaps();
 	}

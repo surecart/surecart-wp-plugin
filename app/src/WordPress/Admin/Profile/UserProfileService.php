@@ -1,6 +1,6 @@
 <?php
 
-namespace CheckoutEngine\WordPress\Admin;
+namespace CheckoutEngine\WordPress\Admin\Profile;
 
 use CheckoutEngine\Models\User;
 
@@ -9,11 +9,11 @@ use CheckoutEngine\Models\User;
  */
 class UserProfileService {
 	/**
-	 * Register related hooks.
+	 * Bootstrap related hooks.
 	 *
 	 * @return void
 	 */
-	public function register() {
+	public function bootstrap() {
 		add_action( 'edit_user_profile', [ $this, 'showCustomerInfo' ] );
 		add_action( 'show_user_profile', [ $this, 'showCustomerInfo' ] );
 	}

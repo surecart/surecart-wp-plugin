@@ -2,6 +2,7 @@
 
 namespace CheckoutEngine\WordPress;
 
+use CheckoutEngineAppCore\AppCore\PluginService;
 use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
 
 /**
@@ -12,60 +13,21 @@ class PluginServiceProvider implements ServiceProviderInterface {
 	 * {@inheritDoc}
 	 */
 	public function register( $container ) {
-		$container['checkout_engine.install'] = function () {
-			return new InstallService();
-		};
+		$app = $container[ CHECKOUT_ENGINE_APPLICATION_KEY ];
 
-		$container['checkout_engine.pages'] = function () {
-			return new PageService();
-		};
-
-		$container['checkout_engine.users'] = function () {
-			return new UsersService();
+		$container['checkout_engine.plugin'] = function( $c ) {
+			return new PluginService( $c[ CHECKOUT_ENGINE_APPLICATION_KEY ] );
 		};
 
 		$app = $container[ CHECKOUT_ENGINE_APPLICATION_KEY ];
-
-		$app->alias( 'pages', 'checkout_engine.pages' );
-
-		// install alias.
-		$app->alias(
-			'install',
-			function () use ( $container ) {
-				return call_user_func_array( [ $container['checkout_engine.install'], 'install' ], func_get_args() );
-			}
-		);
-
-		add_action( 'display_post_states', [ $container['checkout_engine.pages'], 'displayDefaultPageStatuses' ] );
+		$app->alias( 'plugin', 'checkout_engine.plugin' );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function bootstrap( $container ) {
-		register_activation_hook( CHECKOUT_ENGINE_PLUGIN_FILE, [ $this, 'activate' ] );
-		register_deactivation_hook( CHECKOUT_ENGINE_PLUGIN_FILE, [ $this, 'deactivate' ] );
-		$container['checkout_engine.users']->register_rest_queries();
-		add_action( 'plugins_loaded', [ $this, 'loadTextdomain' ] );
-	}
-
-	/**
-	 * Plugin activation.
-	 *
-	 * @return void
-	 */
-	public function activate() {
-		\CheckoutEngine::createRoles();
-		\CheckoutEngine::install();
-	}
-
-	/**
-	 * Plugin deactivation.
-	 *
-	 * @return void
-	 */
-	public function deactivate() {
-		// Nothing to do right now.
+		/** Nothing to bootstrap */
 	}
 
 	/**

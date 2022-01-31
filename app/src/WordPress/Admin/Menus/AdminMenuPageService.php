@@ -1,6 +1,6 @@
 <?php
 
-namespace CheckoutEngine\WordPress\Admin;
+namespace CheckoutEngine\WordPress\Admin\Menus;
 
 use CheckoutEngine\Controllers\Admin\Orders\OrderScriptsController;
 use CheckoutEngine\Controllers\Admin\Subscriptions\SubscriptionScriptsController;
@@ -10,6 +10,9 @@ use CheckoutEngine\Controllers\Admin\Abandoned\AbandonedOrderScriptsController;
 use CheckoutEngine\Controllers\Admin\Customers\CustomersScriptsController;
 use CheckoutEngine\Controllers\Admin\UpgradePaths\UpgradePathsScriptsController;
 
+/**
+ * Handles creation and enqueueing of admin menu pages and assets.
+ */
 class AdminMenuPageService {
 	protected $slug = 'ce-getting-started';
 	/**
@@ -22,7 +25,7 @@ class AdminMenuPageService {
 	/**
 	 * Add menu items.
 	 */
-	public function register() {
+	public function bootstrap() {
 		add_action( 'admin_menu', [ $this, 'registerAdminPages' ] );
 	}
 
