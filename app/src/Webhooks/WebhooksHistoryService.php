@@ -69,12 +69,28 @@ class WebHooksHistoryService {
 	}
 
 	/**
+	 * Delete any previous webhooks.
+	 *
+	 * @return boolean
+	 */
+	public function deletePreviousWebhook() {
+		return delete_option( $this->previous_webhook );
+	}
+
+	/**
+	 * Get the previous webhook.
+	 */
+	public function getPreviousWebhook() {
+		return get_option( $this->previous_webhook, [] );
+	}
+
+	/**
 	 * Does this webhook have multiple domains registered?
 	 *
 	 * @return boolean
 	 */
 	public function getPreviousDomain() {
-		$webhook = get_option( $this->registered_webhook, [] );
+		$webhook = $this->getPreviousWebhook();
 		return $webhook['url'] ?? '';
 	}
 
@@ -85,6 +101,10 @@ class WebHooksHistoryService {
 	 */
 	public function saveRegisteredWebhook( $webhook ) {
 		return update_option( $this->registered_webhook, $webhook );
+	}
+
+	public function getRegisteredWebhook() {
+		return get_option( $this->registered_webhook, [] );
 	}
 
 	/**
@@ -106,13 +126,11 @@ class WebHooksHistoryService {
 	 * @return void
 	 */
 	public function maybeShowDomainChangeNotice() {
-		$webhook_id  = '123';
-		$webhook_url = 'http://foo.com'
-		// if we don't have multiple domains, we don't need to show a notice.
-		// $previous_webhook = $this->getPreviousDomain();
-		// if ( ! $previous_webhook ) {
-		// return false;
-		// }
+		$webhook = $this->getPreviousWebhook();
+
+		if ( empty( $webhook['url'] ) || empty( $webhook['id'] ) ) {
+			return false;
+		}
 
 		?>
 		<div class="notice notice-error">
@@ -120,31 +138,21 @@ class WebHooksHistoryService {
 				<?php _e( 'It looks like this site has moved or has been duplicated. CheckoutEngine has created new webhooks for the domain to prevent purchase sync issues. Should we remove the previous webook?', 'checkout_engine' ); ?>
 			</p>
 			<p>
-				<a href="<?php echo esc_url( \CheckoutEngine::getUrl()->editModel( 'remove_domain', $webhook_id ) ); ?>" class="button button-primary">Do nothing. This is a duplicate site like a staging site.</a>
-				<a href="<?php echo esc_url( \CheckoutEngine::getUrl()->editModel( 'remove_webhook', $webhook_id ) ); ?>"
+				<a href="<?php echo esc_url( \CheckoutEngine::getUrl()->editModel( 'ignore_webhook', $webhook['id'] ) ); ?>"
+					class="button button-primary"
+					aria-label="<?php esc_attr_e( 'Ignore notice.', 'checkout_engine' ); ?>">
+				<?php esc_html_e( 'Ignore this notice. This is a duplicate or staging site.', 'checkout_engine' ); ?>
+				</a>
+				<a href="<?php echo esc_url( \CheckoutEngine::getUrl()->editModel( 'remove_webhook', $webhook['id'] ) ); ?>"
 					onclick="return confirm('<?php esc_attr_e( 'Are you sure you want to remove this webhook?', 'checkout_engine' ); ?>')"
-					class="button button-secondary">
-					<?php printf( esc_html__( 'My website domain has permanently changed. Remove webhook for %s', 'checkout_engine' ), esc_url( $webhook_url ) ); ?>
+					class="button button-secondary"
+					aria-label="<?php esc_attr_e( 'Remove webhook', 'checkout_engine' ); ?>">
+					<?php printf( esc_html__( 'My website domain has permanently changed. Remove webhook for %s', 'checkout_engine' ), esc_url( str_replace( 'checkout_engine/webhooks', '', untrailingslashit( $webhook['url'] ) ) ) ); ?>
 				</a>
 			<p>
 		</div>
 
 		<?php
-
-		// $class   = 'notice notice-error';
-		// $message = __( 'It looks like this site has moved or has been duplicated. CheckoutEngine has created new webhooks for the domain to prevent purchase sync issues. Should we remove the previous webook?', 'checkout_engine' );
-
-		// printf(
-		// '<div class="%1$s"><p>%2$s</p><p><a href="%3$s" class="button button-primary">%4$s</a> <a href="%5$s" class="button button-secondary">%6$s</a></div></p>',
-		// esc_attr( $class ),
-		// wp_kses_post( $message ),
-		// '#',
-		// esc_html__( 'This is a duplicate site like a staging site.', 'checkout_engine' ),
-		// $this->actionRemoveWebhook( 'test' ),
-		// translators:: %s is the domain.
-		// sprintf( esc_html__( 'My website domain has permanently changed. Remove webhook for %s', 'checkout_engine' ), esc_url_raw( $previous_webhook ) )
-		// );
-
 		return true;
 	}
 

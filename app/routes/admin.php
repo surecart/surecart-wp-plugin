@@ -176,3 +176,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	->middleware( 'nonce:remove_webhook' )
 	->middleware( 'user.can:edit_ce_webhooks' )
 	->handle( '\\CheckoutEngine\\Controllers\\Web\\WebhookController@remove' );
+
+\CheckoutEngine::route()
+	->get()
+	->where( 'ce_url_var', 'ignore_webhook', 'action' )
+	->name( 'webhook.ignore' )
+	->middleware( 'nonce:ignore_webhook' )
+	->middleware( 'user.can:edit_ce_webhooks' )
+	->handle( '\\CheckoutEngine\\Controllers\\Web\\WebhookController@ignore' );

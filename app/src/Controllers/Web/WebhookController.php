@@ -2,6 +2,8 @@
 namespace CheckoutEngine\Controllers\Web;
 
 use CheckoutEngine\Models\Webhook;
+use CheckoutEngine\Tests\Unit\Services\WebhooksHistoryServiceFeatureTest;
+use CheckoutEngine\Webhooks\WebHooksHistoryService;
 use CheckoutEngineCore\Responses\RedirectResponse;
 
 /**
@@ -15,7 +17,23 @@ class WebhookController {
 	 * @return function
 	 */
 	public function remove( $request ) {
-		return \CheckoutEngine::json( [ 'failed' => true ] )->withStatus( 400 );
+		$deleted = Webhook::delete( $request->query( 'id' ) );
+		if ( is_wp_error( $deleted ) ) {
+			wp_die( $deleted->get_error_message() );
+		}
+		return ( new RedirectResponse( $request ) )->back();
+	}
+
+	/**
+	 * Remove the webhook.
+	 *
+	 * @param \CheckoutEngineCore\Requests\RequestInterface $request Request.
+	 * @return function
+	 */
+	public function ignore( $request ) {
+		$service = new WebHooksHistoryService();
+		$service->deletePreviousWebhook();
+		return ( new RedirectResponse( $request ) )->back();
 	}
 
 	/**

@@ -10,7 +10,10 @@ use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
  */
 class PluginServiceProvider implements ServiceProviderInterface {
 	/**
-	 * {@inheritDoc}
+	 * Register all dependencies in the IoC container.
+	 *
+	 * @param \Pimple\Container $container Service container.
+	 * @return void
 	 */
 	public function register( $container ) {
 		$app = $container[ CHECKOUT_ENGINE_APPLICATION_KEY ];
