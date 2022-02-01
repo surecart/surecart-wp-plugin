@@ -2,6 +2,9 @@
 
 namespace CheckoutEngine\Models;
 
+/**
+ * Processor model.
+ */
 class Processor extends Model {
 	/**
 	 * Rest API endpoint
