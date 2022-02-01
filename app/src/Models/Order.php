@@ -186,14 +186,15 @@ class Order extends Model {
 	/**
 	 * Don't send prices or price ids with request.
 	 *
-	 * @param $args array Request arguments.
+	 * @param array  $args Request arguments.
+	 * @param string $endpoint Optional endpoint.
 	 */
 	protected function makeRequest( $args = [], $endpoint = '' ) {
 		// don't send these accesors.
 		unset( $args['prices'] );
 		unset( $args['priceIds'] );
 
-		return parent::makeRequest( $args );
+		return parent::makeRequest( $args, $endpoint );
 	}
 
 	/**

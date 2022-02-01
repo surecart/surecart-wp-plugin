@@ -110,9 +110,10 @@ class WebhookController {
 		$object_name = $this->getObjectName( $request['data'] );
 		$event       = $this->createEventName( $request['type'] );
 		$id          = $this->getObjectId( $request['data'] );
+		$model       = new $this->models[ $object_name ]( $request['data'] );
 
 		// perform the action.
-		do_action( new $this->models[ $object_name ]( $request['data'] ), $event, $id, $request );
+		do_action( $event, $model, $request );
 
 		// return data.
 		return [
@@ -150,10 +151,10 @@ class WebhookController {
 	/**
 	 * Find the object name.
 	 *
-	 * @param object $data Request data.
+	 * @param object|array $data Request data.
 	 * @return string
 	 */
 	public function getObjectName( $data ) {
-		return key( $data );
+		return array_key_first( (array) $data );
 	}
 }

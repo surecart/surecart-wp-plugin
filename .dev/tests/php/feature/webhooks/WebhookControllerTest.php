@@ -26,10 +26,11 @@ class WebhookControllerTest extends CheckoutEngineUnitTestCase
 
 	/**
 	 * Checks that our recieve function calls the correct event.
+	 * @group failing
 	 */
 	public function test_can_receive()
 	{
-		$this->assertEquals(did_action('checkout_engine/order_created'), 0);
+		$this->assertEquals(did_action('checkout_engine/purchase_created'), 0);
 		$controller = \Mockery::mock(WebhookController::class)->makePartial();
 		$request = \Mockery::mock(Request::class)->makePartial();
 
@@ -39,15 +40,15 @@ class WebhookControllerTest extends CheckoutEngineUnitTestCase
 				"id" => "e57979af-84f7-41e3-82e5-911cf24f13f5",
 				"object" => "event",
 				"data" => [
-					"order" => "1ce4624d-2287-4d5b-bec7-b23689ae4461"
+					"purchase" => "1ce4624d-2287-4d5b-bec7-b23689ae4461"
 				],
-				"type" => "order.created",
+				"type" => "purchase.created",
 				"account" => "9f152260-0a22-4bf3-aaf9-5a2487c2bf59",
 				"created_at" => 1643236542
 			]);
 
 		$result = $controller->receive($request);
 		$this->assertSame($result->getStatusCode(), 200);
-		$this->assertEquals(did_action('checkout_engine/order_created'), 1);
+		$this->assertEquals(did_action('checkout_engine/purchase_created'), 1);
 	}
 }

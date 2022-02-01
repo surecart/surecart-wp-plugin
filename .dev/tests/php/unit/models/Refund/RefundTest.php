@@ -2,11 +2,8 @@
 
 namespace CheckoutEngine\Tests\Models\Refund;
 
-use CheckoutEngine\Models\Refund;
 use CheckoutEngine\Models\Charge;
-use CheckoutEngine\Models\Price;
 use CheckoutEngine\Tests\CheckoutEngineUnitTestCase;
-
 class RefundTest extends CheckoutEngineUnitTestCase
 {
 	/**
@@ -40,12 +37,6 @@ class RefundTest extends CheckoutEngineUnitTestCase
 					"refund" => [
 						"amount" => 9900,
 						'charge' => 'test_charge_id',
-						"metadata"=> [
-							'price_ids' => [
-								'test_price_id',
-								'test_price_id_2'
-							]
-						],
 					]
 				],
 				'query' => []
@@ -55,25 +46,11 @@ class RefundTest extends CheckoutEngineUnitTestCase
 			"id" => "48ecc3b6-b20c-4ac5-b62e-976ad68cdb85",
 			"object" => "refund",
 			"amount" => 9900,
-			"metadata"=> [
-				'price_ids' => [
-					'test_price_id',
-					'test_price_id_2'
-				]
-			],
 		]);
 
 		$charge = new Charge(['id' => 'test_charge_id']);
-		$refund = $charge->refund()
-			->forPriceIds( [
-				'test_price_id',
-				'test_price_id_2'
-			] )->create( [
+		$charge->refund()->create( [
 				'amount' => 9900,
 			] );
-
-		$this->assertTrue($refund->hasPriceId('test_price_id'));
-		$this->assertTrue($refund->hasPriceId('test_price_id_2'));
-		$this->assertTrue($refund->hasPriceIds(['test_price_id', 'test_price_id_2']));
 	}
 }
