@@ -1,0 +1,83 @@
+# Providing or Revoking Access
+
+CheckoutEngine provides a convenient way to provide access to purchased content after purchase. This is done through the
+`Purchase` model and actions. The purchase model is a summary of all products that a customer current should have "access" to.
+This way you do not need to check subscriptions, refunds, orders or any other information to determine if a customer has access to a
+product.
+
+## Store a `price_id` or a `product_id` in your own plugin to reference your purchasable item.
+
+This way, when you listen to events, you can sort out if you want to provide or revoke access to something based on the price_id.
+
+## Providing Access
+
+In this example, we are going to be providing access to a product when the purchase is *both* `created` AND `invoked`. This
+handles the case where a customer purchases a product, and also when a purchase is revoked, but later invoked.
+
+In some cases you may want to do separate things for `created` vs `invoked`. For example, you may want to send an email to the
+customer when they purchase something, but not when their access is revoked, then invoked again.
+
+In this case we will run the same function for both events:
+
+```php
+use \CheckoutEngine\Models\Purchase;
+
+$membership_product_id = '8ba8d60f-5277-4e6b-807c-dee8166446d5';
+
+// this action runs when a user checks out.
+add_action( 'checkout_engine/purchase_created', 'provide_access_to_membership', 10, 1 );
+// this action runs when a revoked purchase is invoked ("un-revoked").
+add_action( 'checkout_engine/purchase_invoked', 'provide_access_to_membership', 10, 1 );
+
+function provide_access_to_membership( $purchase_id ) {
+	// fetch the purchase.
+	$purchase = Purchase::find( $purchase_id );
+
+	// we only want to proceed if the purchase is for this product id.
+	if( $membership_product_id !== $purchase->product ) {
+		return;
+	}
+
+	// get the purchase's WordPress user
+	$wp_user = $purchase->getUser();
+
+	// this order has no associated user.
+	if ( $wp_user ) {
+		// update user meta to provide access to something.
+		update_user_meta( $wp_user->ID, 'gold_membership', true );
+	}
+}
+```
+
+## Revoke access using the purchase actions.
+
+We'll want to revoke access for the user when the purchase is revoked. This is done by listening to both the `purchase_revoked` event.
+
+```php
+use \CheckoutEngine\Models\Purchase;
+
+$membership_product_id = '8ba8d60f-5277-4e6b-807c-dee8166446d5';
+
+// this action runs when a user's purchase is revoked. This can occur on refunds or subscription cancelations.
+add_action( 'checkout_engine/purchase_revoked', 'remove_access_to_membership', 10, 1 );
+
+// Use the order_paid event to update the users meta
+function remove_access_to_membership( $purchase_id ) {
+	// fetch order with line items so we can get the purchased price_id.
+	$purchase = Purchase::find( $purchase_id );
+
+	// we only want to proceed if the purchase is for this product id.
+	if( $membership_product_id !== $purchase->product ) {
+		return;
+	}
+
+	// get the purchase's WordPress user
+	$wp_user = $purchase->getUser();
+
+	// this order has no associated user.
+	if ( $wp_user ) {
+		// update user meta to provide access to something.
+		delete_user_meta( $wp_user->ID, 'gold_membership');
+	}
+}
+```

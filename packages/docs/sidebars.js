@@ -23,9 +23,8 @@ module.exports = {
 			],
 		},
 		{
-			type: 'category',
-			label: 'Syncing Access',
-			items: [ 'guide/one-time-access', 'guide/subscription-access' ],
+			type: 'doc',
+			id: 'guide/purchase-actions',
 		},
 		{
 			type: 'category',
