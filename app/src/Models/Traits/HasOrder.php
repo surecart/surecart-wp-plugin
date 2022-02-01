@@ -17,4 +17,13 @@ trait HasOrder {
 	public function setOrderAttribute( $value ) {
 		$this->setRelation( 'order', $value, Order::class );
 	}
+
+	/**
+	 * Get the relation id attribute
+	 *
+	 * @return string
+	 */
+	public function getOrderIdAttribute() {
+		return $this->getRelationId( 'order' );
+	}
 }

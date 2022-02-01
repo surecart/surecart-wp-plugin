@@ -34,4 +34,13 @@ class AbandonedOrder extends Order {
 	protected function setLatestOrderAttribute( $value ) {
 		$this->setRelation( 'latest_order', $value, Order::class );
 	}
+
+	/**
+	 * Get the relation id attribute
+	 *
+	 * @return string
+	 */
+	public function getLatestOrderIdAttribute() {
+		return $this->getRelationId( 'latest_order' );
+	}
 }

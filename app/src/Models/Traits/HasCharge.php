@@ -17,4 +17,13 @@ trait HasCharge {
 	public function setChargeAttribute( $value ) {
 		$this->setRelation( 'charge', $value, Charge::class );
 	}
+
+	/**
+	 * Get the relation id attribute
+	 *
+	 * @return string
+	 */
+	public function getChargeIdAttribute() {
+		return $this->getRelationId( 'charge' );
+	}
 }

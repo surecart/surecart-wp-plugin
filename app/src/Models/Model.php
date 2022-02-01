@@ -558,9 +558,12 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	 *
 	 * @return Model
 	 */
-	protected function makeRequest( $args = [] ) {
+	protected function makeRequest( $args = [], $endpoint = '' ) {
 		// Create the endpoint.
-		$endpoint = ! empty( $args['id'] ) ? $this->endpoint . '/' . $args['id'] : $this->endpoint;
+		if ( ! $endpoint ) {
+			$endpoint = ! empty( $args['id'] ) ? $this->endpoint . '/' . $args['id'] : $this->endpoint;
+		}
+
 		unset( $args['id'] );
 
 		// add query vars.
@@ -875,6 +878,18 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	 */
 	public function setRelation( $attribute, $value, $model ) {
 		$this->attributes[ $attribute ] = is_string( $value ) ? $value : new $model( $value );
+	}
+
+	/**
+	 * Get a relation id.
+	 *
+	 * @prop string $attribute Attribute name.
+	 * @prop string $value     Value to set.
+	 * @prop string $model   Model name.
+	 * @return string|null;
+	 */
+	public function getRelationId( $attribute ) {
+		return ! empty( $this->attributes[ $attribute ]['id'] ) ? $this->attributes[ $attribute ]['id'] : $this->attributes[ $attribute ];
 	}
 
 	/**

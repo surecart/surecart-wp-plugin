@@ -2,10 +2,13 @@
 
 namespace CheckoutEngine\Models;
 
+use CheckoutEngine\Models\Traits\HasPrice;
+
 /**
  * Price model
  */
 class Product extends Model {
+	use HasPrice;
 	/**
 	 * Rest API endpoint
 	 *
@@ -19,14 +22,4 @@ class Product extends Model {
 	 * @var string
 	 */
 	protected $object_name = 'product';
-
-	/**
-	 * Set the prices attribute.
-	 *
-	 * @param  object $value Array of price objects.
-	 * @return void
-	 */
-	public function setPricesAttribute( $value ) {
-		$this->setCollection( 'prices', $value, Price::class );
-	}
 }

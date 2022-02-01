@@ -2,7 +2,6 @@
 namespace CheckoutEngine\Controllers\Web;
 
 use CheckoutEngine\Models\Webhook;
-use CheckoutEngine\Tests\Unit\Services\WebhooksHistoryServiceFeatureTest;
 use CheckoutEngine\Webhooks\WebHooksHistoryService;
 use CheckoutEngineCore\Responses\RedirectResponse;
 
@@ -10,6 +9,15 @@ use CheckoutEngineCore\Responses\RedirectResponse;
  * Handles webhooks
  */
 class WebhookController {
+	/**
+	 * Map object names to their models.
+	 *
+	 * @var array
+	 */
+	protected $models = [
+		'purchase' => \CheckoutEngine\Models\Purchase::class,
+	];
+
 	/**
 	 * Remove the webhook.
 	 *
@@ -99,11 +107,12 @@ class WebhookController {
 		}
 
 		// create the event name.
-		$event = $this->createEventName( $request['type'] );
-		$id    = $this->getObjectId( $request['data'] );
+		$object_name = $this->getObjectName( $request['data'] );
+		$event       = $this->createEventName( $request['type'] );
+		$id          = $this->getObjectId( $request['data'] );
 
 		// perform the action.
-		do_action( $event, $id, $request );
+		do_action( new $this->models[ $object_name ]( $request['data'] ), $event, $id, $request );
 
 		// return data.
 		return [

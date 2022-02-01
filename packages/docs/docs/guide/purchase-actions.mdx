@@ -25,8 +25,6 @@ In this case we will run the same function for both events:
 ```php
 <?php
 
-use \CheckoutEngine\Models\Purchase;
-
 // mapping a product id to our membership id.
 $memberships = [
 	'8ba8d60f-5277-4e6b-807c-dee8166446d5' => 'gold_membership'
@@ -37,12 +35,9 @@ add_action( 'checkout_engine/purchase_created', 'provide_access_to_membership', 
 // this action runs when a revoked purchase is invoked ("un-revoked").
 add_action( 'checkout_engine/purchase_invoked', 'provide_access_to_membership', 10, 1 );
 
-function provide_access_to_membership( $purchase_id ) {
-	// fetch the purchase.
-	$purchase = Purchase::find( $purchase_id );
-
+function provide_access_to_membership( \CheckoutEngine\Models\Purchase $purchase ) {
 	// we only want to proceed if the purchase is for one of our products
-	if ( empty( $memberships[ $purchase->product ] ) ) {
+	if ( empty( $memberships[ $purchase->product_id ] ) ) {
 		return;
 	}
 
@@ -52,7 +47,7 @@ function provide_access_to_membership( $purchase_id ) {
 	// this order has no associated user.
 	if ( $wp_user ) {
 		// update user meta to provide access to something.
-		update_user_meta( $wp_user->ID, $memberships[ $purchase->product ], true );
+		update_user_meta( $wp_user->ID, $memberships[ $purchase->product_id ], true );
 	}
 }
 ```
@@ -65,8 +60,6 @@ chooses to revoke access, or a subscription is canceled or expired. In this case
 ```php
 <?php
 
-use \CheckoutEngine\Models\Purchase;
-
 // mapping a product id to our membership id.
 $memberships = [
 	'8ba8d60f-5277-4e6b-807c-dee8166446d5' => 'gold_membership'
@@ -76,12 +69,9 @@ $memberships = [
 add_action( 'checkout_engine/purchase_revoked', 'remove_access_to_membership', 10, 1 );
 
 // Use the order_paid event to update the users meta
-function remove_access_to_membership( $purchase_id ) {
-	// fetch order with line items so we can get the purchased price_id.
-	$purchase = Purchase::find( $purchase_id );
-
+function remove_access_to_membership( \CheckoutEngine\Models\Purchase $purchase ) {
 	// we only want to proceed if the purchase is for one of our products
-	if ( empty( $memberships[ $purchase->product ] ) ) {
+	if ( empty( $memberships[ $purchase->product_id ] ) ) {
 		return;
 	}
 
@@ -91,7 +81,7 @@ function remove_access_to_membership( $purchase_id ) {
 	// this order has no associated user.
 	if ( $wp_user ) {
 		// delete user meta access.
-		delete_user_meta( $wp_user->ID, $memberships[ $purchase->product ] );
+		delete_user_meta( $wp_user->ID, $memberships[ $purchase->product_id ] );
 	}
 }
 ```
@@ -105,8 +95,6 @@ changes. These actions can be done by the merchant, for example, by updating a c
 ```php
 <?php
 
-use \CheckoutEngine\Models\Purchase;
-
 // mapping product ids to our membership ids.
 $memberships = [
 	'8ba8d60f-5277-4e6b-807c-dee8166446d5' => 'Gold Membership',
@@ -117,21 +105,14 @@ $memberships = [
 add_action( 'checkout_engine/purchase_updated', 'update_access_to_membership', 10, 1 );
 
 // Use the order_paid event to update the users meta
-function update_access_to_membership( $purchase_id ) {
-	// fetch order with line items so we can get the purchased price_id.
-	$purchase = Purchase::find( $purchase_id );
-
+function update_access_to_membership( \CheckoutEngine\Models\Purchase $purchase ) {
 	// we only want to proceed if the purchase is for one of our products
-	if ( empty( $memberships[ $purchase->product ] ) ) {
+	if ( !in_array( $purchase->product_id, array_keys( $memberships ) ) ) {
 		return;
 	}
 
-	// get the purchase's previous quantity and product.
-	[ 'product' => $product ] = (array) $purchase->toArray();
-	[ 'product' => $previous_product ] = (array) $purchase->previous_attributes;
-
 	// we are only concerned if the product changes.
-	if ( $product === $previous_product) {
+	if ( $purchase->product_id === $purchase->previous_product_id ) {
 		return;
 	}
 
@@ -141,9 +122,9 @@ function update_access_to_membership( $purchase_id ) {
 	// update user meta for access.
 	if ( $wp_user ) {
 		// remove access to old.
-		delete_user_meta( $wp_user->ID, $memberships[ $previous_product ] );
+		delete_user_meta( $wp_user->ID, $memberships[ $purchase->previous_product_id ] );
 		// update access to new.
-		update_user_meta( $wp_user->ID, $memberships[ $product ], true );
+		update_user_meta( $wp_user->ID, $memberships[ $purchase->product_id ], true );
 	}
 }
 ```

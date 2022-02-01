@@ -188,7 +188,7 @@ class Order extends Model {
 	 *
 	 * @param $args array Request arguments.
 	 */
-	protected function makeRequest( $args = [] ) {
+	protected function makeRequest( $args = [], $endpoint = '' ) {
 		// don't send these accesors.
 		unset( $args['prices'] );
 		unset( $args['priceIds'] );

@@ -20,6 +20,15 @@ trait HasCustomer {
 	}
 
 	/**
+	 * Get the relation id attribute
+	 *
+	 * @return string
+	 */
+	public function getCustomerIdAttribute() {
+		return $this->getRelationId( 'customer' );
+	}
+
+	/**
 	 * Find out which WordPress user this model belongs to.
 	 *
 	 * @return \WP_User|false

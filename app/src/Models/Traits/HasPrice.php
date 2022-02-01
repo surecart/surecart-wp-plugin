@@ -17,4 +17,13 @@ trait HasPrice {
 	public function setPriceAttribute( $value ) {
 		$this->setRelation( 'price', $value, Price::class );
 	}
+
+	/**
+	 * Get the price id attribute
+	 *
+	 * @return string
+	 */
+	public function getPriceIdAttribute() {
+		return $this->getRelationId( 'price' );
+	}
 }

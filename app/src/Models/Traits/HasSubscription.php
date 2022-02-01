@@ -17,4 +17,13 @@ trait HasSubscription {
 	public function setSubscriptionAttribute( $value ) {
 		$this->setRelation( 'subscription', $value, Subscription::class );
 	}
+
+	/**
+	 * Get the relation id attribute
+	 *
+	 * @return string
+	 */
+	public function getSubscriptionIdAttribute() {
+		return $this->getRelationId( 'subscription' );
+	}
 }

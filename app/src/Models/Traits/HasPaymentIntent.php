@@ -17,4 +17,13 @@ trait HasPaymentIntent {
 	public function setPaymentIntentAttribute( $value ) {
 		$this->setRelation( 'payment_intent', $value, PaymentIntent::class );
 	}
+
+	/**
+	 * Get the relation id attribute
+	 *
+	 * @return string
+	 */
+	public function getPaymentIntentIdAttribute() {
+		return $this->getRelationId( 'payment_intent' );
+	}
 }

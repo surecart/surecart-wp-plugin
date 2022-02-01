@@ -17,4 +17,13 @@ trait HasProduct {
 	public function setProductAttribute( $value ) {
 		$this->setRelation( 'product', $value, Product::class );
 	}
+
+	/**
+	 * Get the product id attribute
+	 *
+	 * @return string
+	 */
+	public function getProductIdAttribute() {
+		return $this->getRelationId( 'product' );
+	}
 }

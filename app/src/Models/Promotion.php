@@ -3,11 +3,14 @@
 namespace CheckoutEngine\Models;
 
 use CheckoutEngine\Models\Coupon;
+use CheckoutEngine\Models\Traits\HasCoupon;
 
 /**
  * Price model
  */
 class Promotion extends Model {
+	use HasCoupon;
+
 	/**
 	 * Rest API endpoint
 	 *
@@ -21,14 +24,4 @@ class Promotion extends Model {
 	 * @var string
 	 */
 	protected $object_name = 'promotion';
-
-	/**
-	 * Set the coupon attribute
-	 *
-	 * @param  string $value Coupon properties.
-	 * @return void
-	 */
-	public function setCouponAttribute( $value ) {
-		$this->setRelation( 'coupon', $value, Coupon::class );
-	}
 }

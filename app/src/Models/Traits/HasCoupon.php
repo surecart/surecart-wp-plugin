@@ -2,20 +2,20 @@
 
 namespace CheckoutEngine\Models\Traits;
 
-use CheckoutEngine\Models\Refund;
+use CheckoutEngine\Models\Coupon;
 
 /**
  * If the model has an attached customer.
  */
-trait HasRefund {
+trait HasCoupon {
 	/**
 	 * Set the product attribute
 	 *
 	 * @param  string $value Product properties.
 	 * @return void
 	 */
-	public function setRefundAttribute( $value ) {
-		$this->setRelation( 'refund', $value, Refund::class );
+	public function setCouponAttribute( $value ) {
+		$this->setRelation( 'coupon', $value, Coupon::class );
 	}
 
 	/**
@@ -23,7 +23,7 @@ trait HasRefund {
 	 *
 	 * @return string
 	 */
-	public function getRefundIdAttribute() {
-		return $this->getRelationId( 'refund' );
+	public function getCouponIdAttribute() {
+		return $this->getRelationId( 'coupon' );
 	}
 }

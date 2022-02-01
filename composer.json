@@ -25,6 +25,7 @@
 		}
 	],
 	"require-dev": {
+		"php": "^7.4",
 		"filp/whoops": "^2.2",
 		"htmlburger/wpemerge-cli": "~0.16.0",
 		"wp-phpunit/wp-phpunit": "5.8.3",
@@ -36,7 +37,8 @@
 		"phpstan/phpstan": "^1.2",
 		"szepeviktor/phpstan-wordpress": "^1.0",
 		"yoast/phpunit-polyfills": "^1.0",
-		"phpcompatibility/php-compatibility": "^9.0"
+		"phpcompatibility/php-compatibility": "^9.0",
+		"spatie/phpunit-watcher": "^1.23"
 	},
 	"autoload": {
 		"psr-4": {

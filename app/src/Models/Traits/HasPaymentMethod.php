@@ -2,7 +2,7 @@
 
 namespace CheckoutEngine\Models\Traits;
 
-use CheckoutEngine\Models\PaymentIntent;
+use CheckoutEngine\Models\PaymentMethod;
 
 /**
  * If the model has an attached customer.
@@ -15,6 +15,15 @@ trait HasPaymentMethod {
 	 * @return void
 	 */
 	public function setPaymentMethodAttribute( $value ) {
-		$this->setRelation( 'payment_intent', $value, PaymentIntent::class );
+		$this->setRelation( 'payment_method', $value, PaymentMethod::class );
+	}
+
+	/**
+	 * Get the relation id attribute
+	 *
+	 * @return string
+	 */
+	public function getPaymentMethodIdAttribute() {
+		return $this->getRelationId( 'payment_method' );
 	}
 }

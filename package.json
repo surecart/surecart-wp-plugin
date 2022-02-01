@@ -48,6 +48,7 @@
 		"packages-update": "wp-scripts packages-update",
 		"plugin-zip": "node .dev/release.js",
 		"test:php": "wp-env run phpunit 'phpunit -c /var/www/html/wp-content/plugins/checkout-engine/phpunit.xml --testdox'",
+		"test:php:watch": "wp-env run phpunit '/var/www/html/wp-content/plugins/checkout-engine/vendor/bin/phpunit-watcher watch --directories=/var/www/html/wp-content/plugins/checkout-engine/app'",
 		"test:php:failing": "wp-env run phpunit 'phpunit -c /var/www/html/wp-content/plugins/checkout-engine/phpunit.xml --group=failing' --verbose",
 		"test:cypress": "wp-env start --xdebug && cypress run --config video=false --browser chrome",
 		"test:cypress:record": "wp-env start --xdebug && cypress run --browser chrome --record --key 29b7dee9-7f63-4a24-abd2-bd74c58ec60a",
