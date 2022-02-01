@@ -18,7 +18,6 @@ class SettingsController {
 	public function index( \WP_REST_Request $request ) {
 		$settings = [];
 		$settings = (array) apply_filters( 'checkout_engine/rest/settings/index', $settings, $request->get_params(), $request );
-
 		return rest_ensure_response( $settings );
 	}
 
@@ -32,8 +31,6 @@ class SettingsController {
 	public function update( \WP_REST_Request $request ) {
 		$settings = [];
 		$settings = apply_filters( 'checkout_engine/rest/settings/update', $settings, $request->get_params(), $request );
-
 		return rest_ensure_response( $settings );
 	}
-
 }
