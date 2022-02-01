@@ -1,0 +1,30 @@
+# List or Query
+
+import MethodText from '../../../components/MethodText.js';
+
+<p><MethodText path={'purchases'} method={'get'}  /></p>
+
+## Examples
+
+Get 20 purchases based on a query.
+```php
+\CheckoutEngine\Models\Purchase::where([
+	'customer_ids' => [
+		'8ba8d60f-5277-4e6b-807c-dee8166446d5',
+	],
+])->paginate([
+	'page' => 1,
+	'per_page' => 20
+]);
+```
+
+## Where Parameters
+import ModelParameters from '../../../components/ModelParameters.js';
+
+<ModelParameters path={'purchases'} method={'get'} />
+
+## Response Attributes
+
+import ModelResponse from '../../../components/ModelResponse.js';
+
+<ModelResponse path={'purchases'} method={'get'} model={'purchase'} />

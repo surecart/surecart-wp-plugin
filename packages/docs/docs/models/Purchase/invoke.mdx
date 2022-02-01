@@ -1,0 +1,18 @@
+# Invoke
+import MethodText from '../../../components/MethodText.js';
+
+<p><MethodText path={'purchases/{id}/invoke'} method={'patch'}  /></p>
+
+## Examples
+
+Invoke a model by id:
+```php
+\CheckoutEngine\Models\Purchase::find('8ba8d60f-5277-4e6b-807c-dee8166446d5')->invoke();
+```
+
+## Response Attributes
+
+import ModelResponse from '../../../components/ModelResponse.js';
+
+<ModelResponse path={'purchases/{id}/invoke'} method={'patch'} model={'purchase'} />
+

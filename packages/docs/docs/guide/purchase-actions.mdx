@@ -1,25 +1,30 @@
 # Providing or Revoking Access
 
-CheckoutEngine provides a convenient way to provide access to purchased content after purchase. This is done through the
+CheckoutEngine provides a convenient way to provide access after purchase. This is done through the
 `Purchase` model and actions. The purchase model is a summary of all products that a customer current should have "access" to.
 This way you do not need to check subscriptions, refunds, orders or any other information to determine if a customer has access to a
 product.
 
-## Store a `price_id` or a `product_id` in your own plugin to reference your purchasable item.
+## Store a `product_id` in your own plugin to reference your purchasable item.
 
-This way, when you listen to events, you can sort out if you want to provide or revoke access to something based on the price_id.
+This way, when you listen to events, you can sort out if you want to provide or revoke access to something based on the `product_id`.
 
 ## Providing Access
 
 In this example, we are going to be providing access to a product when the purchase is *both* `created` AND `invoked`. This
 handles the case where a customer purchases a product, and also when a purchase is revoked, but later invoked.
 
-In some cases you may want to do separate things for `created` vs `invoked`. For example, you may want to send an email to the
-customer when they purchase something, but not when their access is revoked, then invoked again.
+:::info Note
+We provide two actions here on purpose. In some cases you may want to perform separate actions for `created` vs `invoked`.
+An `invoked` event can only occur after a purchase was `revoked`. For example, you may want to send an email to the
+customer when they purchase something, but not when their access is `revoked`, then `invoked` again.
+:::
 
 In this case we will run the same function for both events:
 
 ```php
+<?php
+
 use \CheckoutEngine\Models\Purchase;
 
 $membership_product_id = '8ba8d60f-5277-4e6b-807c-dee8166446d5';
@@ -49,11 +54,14 @@ function provide_access_to_membership( $purchase_id ) {
 }
 ```
 
-## Revoke access using the purchase actions.
+## Revoking Access
 
-We'll want to revoke access for the user when the purchase is revoked. This is done by listening to both the `purchase_revoked` event.
+We'll want to revoke access for the user when the purchase is revoked. This can happen if an order is refunded and the merchant
+chooses to revoke access, or a subscription is canceled or expired. In this case we want to listen to the `purchase_revoked` event.
 
 ```php
+<?php
+
 use \CheckoutEngine\Models\Purchase;
 
 $membership_product_id = '8ba8d60f-5277-4e6b-807c-dee8166446d5';
@@ -78,6 +86,57 @@ function remove_access_to_membership( $purchase_id ) {
 	if ( $wp_user ) {
 		// update user meta to provide access to something.
 		delete_user_meta( $wp_user->ID, 'gold_membership');
+	}
+}
+```
+
+## Updating Access
+
+We'll want to update access for the user when the purchase is update. This can only happen if a purchase's `product` or `quantity`
+changes. These actions can be done by the merchant, for example, by updating a customers subscription.
+
+
+```php
+<?php
+
+use \CheckoutEngine\Models\Purchase;
+
+$memberships = [
+	'8ba8d60f-5277-4e6b-807c-dee8166446d5' => 'Gold Membership',
+	'8ba8d60f-5277-4e6b-807c-dee8166446d6' => 'Silver Membership',
+];
+
+// this action runs when a user's purchase is revoked. This can occur on refunds or subscription cancelations.
+add_action( 'checkout_engine/purchase_updated', 'update_access_to_membership', 10, 1 );
+
+// Use the order_paid event to update the users meta
+function update_access_to_membership( $purchase_id ) {
+	// fetch order with line items so we can get the purchased price_id.
+	$purchase = Purchase::find( $purchase_id );
+
+	// we only want to proceed if the purchase is for one of our products
+	if( ! in_array( $purchase->product, array_keys( $memberships ) ) ) {
+		return;
+	}
+
+	// get the purchase's previous quantity and product.
+	['product' => $product] = (array) $purchase->toArray();
+	['product' => $previous_product] = (array) $purchase->previous_attributes;
+
+	// we are only concerned if the product changes.
+	if( $product === $previous_product) {
+		return;
+	}
+
+	// get the purchase's WordPress user
+	$wp_user = $purchase->getUser();
+
+	// update user meta for access.
+	if ( $wp_user ) {
+		// remove access to old.
+		delete_user_meta( $wp_user->ID, $memberships[$previous_product]);
+		// update access to new.
+		update_user_meta( $wp_user->ID, $memberships[$product], true );
 	}
 }
 ```

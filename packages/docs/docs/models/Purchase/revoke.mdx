@@ -1,0 +1,18 @@
+# Revoke
+import MethodText from '../../../components/MethodText.js';
+
+<p><MethodText path={'purchases/{id}/revoke'} method={'patch'}  /></p>
+
+## Examples
+
+Revoke a model by id:
+```php
+\CheckoutEngine\Models\Purchase::find('8ba8d60f-5277-4e6b-807c-dee8166446d5')->revoke();
+```
+
+## Response Attributes
+
+import ModelResponse from '../../../components/ModelResponse.js';
+
+<ModelResponse path={'purchases/{id}/revoke'} method={'patch'} model={'purchase'} />
+
