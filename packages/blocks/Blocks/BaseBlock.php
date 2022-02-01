@@ -30,7 +30,7 @@ abstract class BaseBlock implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function register( $container ) {
-		$registered = register_block_type_from_metadata(
+		register_block_type_from_metadata(
 			$this->getDir(),
 			apply_filters(
 				'checkout_engine/block/registration/args',
@@ -73,12 +73,13 @@ abstract class BaseBlock implements ServiceProviderInterface {
 	public function preRender( $attributes, $content ) {
 		// run middlware.
 		$render = $this->middleware( $attributes, $content );
-		if ( ! $render ) {
-			return false;
-		}
 
 		if ( is_wp_error( $render ) ) {
 			return $render->get_error_message();
+		}
+
+		if ( true !== $render ) {
+			return $render;
 		}
 
 		$attributes = $this->getAttributes( $attributes );

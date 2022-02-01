@@ -55,7 +55,6 @@ export default function edit({ clientId, attributes, setAttributes }) {
 
 	const { align, className, prices, font_size, choice_type, mode, gap } =
 		attributes;
-	const colorProps = getColorClassesAndStyles(attributes);
 	const [tab, setTab] = useState('');
 	const blockCount = useSelect((select) =>
 		select(blockEditorStore).getBlockCount(clientId)
@@ -259,7 +258,7 @@ export default function edit({ clientId, attributes, setAttributes }) {
 				>
 					<div
 						css={css`
-							* > * > .wp-block {
+							* > * > .wp-block:not(ce-columns):not(ce-column) {
 								margin-bottom: ${gap} !important;
 							}
 						`}

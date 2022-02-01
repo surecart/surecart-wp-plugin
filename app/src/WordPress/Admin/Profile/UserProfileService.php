@@ -27,7 +27,7 @@ class UserProfileService {
 		$customer = User::find( $user->ID )->customer();
 		$customer = is_wp_error( $customer ) ? false : $customer;
 		return $this->render(
-			'admin.user-profile',
+			'admin/user-profile',
 			[
 				'customer'  => $customer,
 				'edit_link' => ! empty( $customer->id ) ? \CheckoutEngine::getUrl()->edit( 'customer', $customer->id ) : '',

@@ -1,6 +1,5 @@
 import { InnerBlocks } from '@wordpress/block-editor';
 
-export default ( { attributes } ) => {
-	const { name } = attributes;
+export default () => {
 	return <InnerBlocks.Content />;
 };

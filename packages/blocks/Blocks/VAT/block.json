@@ -1,0 +1,20 @@
+{
+	"name": "checkout-engine/vat",
+	"title": "VAT",
+	"description": "Display a VAT field for VAT collection.",
+	"category": "layout",
+	"keywords": ["totals", "summary"],
+	"parent": ["checkout-engine/form", "checkout-engine/column"],
+	"supports": {
+		"reusable": false,
+		"html": false
+	},
+	"attributes": {
+		"collapsible": {
+			"type": "boolean"
+		},
+		"collapsed": {
+			"type": "boolean"
+		}
+	}
+}

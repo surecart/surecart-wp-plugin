@@ -3,7 +3,13 @@ import { css, jsx } from '@emotion/core';
 
 import { __ } from '@wordpress/i18n';
 
-import { CeInput, CeSwitch, CeSelect } from '@checkout-engine/components-react';
+import {
+	CeInput,
+	CeSwitch,
+	CeSelect,
+	CeChoices,
+	CeChoice,
+} from '@checkout-engine/components-react';
 import Box from '../../ui/Box';
 
 import useProductData from '../hooks/useProductData';
@@ -18,7 +24,7 @@ export default () => {
 			<div
 				css={css`
 					display: grid;
-					gap: var(--ce-form-row-spacing);
+					gap: var(--ce-spacing-large);
 				`}
 			>
 				<CeInput
@@ -33,7 +39,7 @@ export default () => {
 					name="name"
 					required
 				/>
-				<CeInput
+				{/* <CeInput
 					label={__('Description', 'checkout_engine')}
 					className="ce-product-description"
 					help={__(
@@ -46,7 +52,48 @@ export default () => {
 					onCeChange={(e) =>
 						updateProduct({ description: e.target.value })
 					}
-				/>
+				/> */}
+				<CeChoices
+					label={__('Product Type', 'checkout_engine')}
+					style={{ '--columns': 2 }}
+				>
+					<div>
+						<CeChoice
+							checked={!product?.recurring}
+							value="single"
+							onCeChange={(e) => {
+								if (!e.target.checked) return;
+								updateProduct({ recurring: false });
+							}}
+						>
+							{__('Single Payment', 'checkout_engine')}
+							<span slot="description">
+								{__(
+									'Charge a one-time fee.',
+									'checkout_engine'
+								)}
+							</span>
+						</CeChoice>
+						<CeChoice
+							checked={product?.recurring}
+							value="subscription"
+							onCeChange={(e) => {
+								if (!e.target.checked) return;
+								updateProduct({
+									recurring: true,
+								});
+							}}
+						>
+							{__('Subscription', 'checkout_engine')}
+							<span slot="description">
+								{__(
+									'Charge an ongoing fee.',
+									'checkout_engine'
+								)}
+							</span>
+						</CeChoice>
+					</div>
+				</CeChoices>
 				<CeSwitch
 					css={css`
 						margin: var(--ce-spacing-small) 0;
@@ -73,7 +120,10 @@ export default () => {
 							choices={[
 								{
 									value: 'tangible',
-									label: __('Tangible', 'checkout_engine'),
+									label: __(
+										'General/Tangible Goods',
+										'checkout_engine'
+									),
 								},
 								{
 									value: 'digital',

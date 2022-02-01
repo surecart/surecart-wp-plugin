@@ -15,6 +15,9 @@ export class CePayment {
   /** Checkout Session from ce-checkout. */
   @Prop() order: Order;
 
+  /** Is this loading. */
+  @Prop() loading: boolean;
+
   /** Is this created in "test" mode */
   @Prop() mode: 'test' | 'live' = 'live';
 
@@ -28,6 +31,9 @@ export class CePayment {
   @Prop() paymentMethod: 'stripe-payment-request' | null;
 
   render() {
+    if (this.loading) {
+      return <ce-skeleton></ce-skeleton>;
+    }
     if (!this.processor) {
       return <div>Please contact us for payment</div>;
     }
@@ -71,4 +77,4 @@ export class CePayment {
   }
 }
 
-openWormhole(CePayment, ['processor', 'order', 'mode', 'paymentMethod'], false);
+openWormhole(CePayment, ['processor', 'order', 'mode', 'paymentMethod', 'loading'], false);

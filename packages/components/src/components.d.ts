@@ -898,6 +898,10 @@ export namespace Components {
          */
         "label": string;
         /**
+          * Is this loading.
+         */
+        "loading": boolean;
+        /**
           * Is this created in "test" mode
          */
         "mode": 'test' | 'live';
@@ -1544,7 +1548,7 @@ export namespace Components {
     }
     interface CeTotal {
         "order": Order;
-        "total": 'total' | 'subtotal';
+        "total": 'total' | 'subtotal' | 'amount_due';
     }
 }
 declare global {
@@ -3134,6 +3138,10 @@ declare namespace LocalJSX {
          */
         "label"?: string;
         /**
+          * Is this loading.
+         */
+        "loading"?: boolean;
+        /**
           * Is this created in "test" mode
          */
         "mode"?: 'test' | 'live';
@@ -3850,7 +3858,7 @@ declare namespace LocalJSX {
     }
     interface CeTotal {
         "order"?: Order;
-        "total"?: 'total' | 'subtotal';
+        "total"?: 'total' | 'subtotal' | 'amount_due';
     }
     interface IntrinsicElements {
         "ce-address": CeAddress;

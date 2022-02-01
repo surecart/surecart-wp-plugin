@@ -3,6 +3,7 @@
 namespace CheckoutEngine\Blocks\Dashboard\CustomerDashboard;
 
 use CheckoutEngine\Blocks\BaseBlock;
+use CheckoutEngine\Models\User;
 
 /**
  * Checkout block
@@ -18,7 +19,19 @@ class Block extends BaseBlock {
 	 */
 	public function render( $attributes, $content ) {
 		if ( ! is_user_logged_in() ) {
-			return \CheckoutEngine::blocks()->render( 'web.login' );
+			return \CheckoutEngine::blocks()->render( 'web/login' );
+		}
+
+		// cannot get user.
+		$user = User::current();
+		if ( ! $user ) {
+			return \CheckoutEngine::blocks()->render( 'web/login' );
+		}
+
+		$is_customer = $user->customerId();
+
+		if ( ! $is_customer ) {
+			return \CheckoutEngine::blocks()->render( 'web/no-customer' );
 		}
 
 		// maybe redirect to the first tab if one is not specified.
@@ -39,14 +52,14 @@ class Block extends BaseBlock {
 
 		$tab = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : false;
 
-		if ( ! $tab ) {
+		if ( empty( $tab ) ) {
 			global $post;
 			$postcontent = $post->post_content;
 			$blocks      = parse_blocks( $postcontent );
 			$named       = \CheckoutEngine::blocks()->filterBy( 'blockName', 'checkout-engine/dashboard-tab', $blocks );
 
 			if ( ! empty( $named[0]['attrs']['panel'] ) ) {
-				wp_redirect( esc_url( add_query_arg( [ 'tab' => $named[0]['attrs']['panel'] ] ) ) );
+				wp_redirect( esc_url_raw( add_query_arg( [ 'tab' => $named[0]['attrs']['panel'] ] ) ) );
 				exit;
 			}
 		}

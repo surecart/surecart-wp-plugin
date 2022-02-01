@@ -539,6 +539,7 @@
   },
   "ce-payment": {
     "label": true,
+    "loading": true,
     "mode": true,
     "order": true,
     "payment-method": true,

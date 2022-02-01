@@ -51,9 +51,8 @@ abstract class DashboardPage extends BaseBlock {
 				return $this->customer->get_error_message();
 			}
 			if ( ! $this->customer ) {
-				return false;
+				return '<ce-alert type="error" open>' . esc_html__( 'You must be a customer to access this page.', 'checkout-engine' ) . '</ce-alert>';
 			}
-			$this->customer_id = $this->customer->id;
 		}
 
 		return true;

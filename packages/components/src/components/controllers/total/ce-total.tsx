@@ -8,18 +8,19 @@ import { openWormhole } from 'stencil-wormhole';
   shadow: false,
 })
 export class CeTotal {
-  @Prop() total: 'total' | 'subtotal' = 'total';
+  @Prop() total: 'total' | 'subtotal' | 'amount_due' = 'amount_due';
   @Prop() order: Order;
 
-  session_key = {
+  order_key = {
     total: 'total_amount',
     subtotal: 'subtotal_amount',
+    amount_due: 'amount_due',
   };
 
   render() {
     if (!this.order?.currency) return;
     if (!this.order?.line_items?.data?.length) return;
-    return <ce-format-number type="currency" currency={this.order.currency} value={this.order?.[this.session_key[this.total]]}></ce-format-number>;
+    return <ce-format-number type="currency" currency={this.order.currency} value={this.order?.[this.order_key[this.total]]}></ce-format-number>;
   }
 }
 

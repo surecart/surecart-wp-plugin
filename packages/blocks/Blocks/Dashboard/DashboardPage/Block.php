@@ -25,6 +25,6 @@ class Block extends DashboardPage {
 			return '';
 		}
 
-		return '<ce-spacing style="--spacing: var(--ce-spacing-large)">' . wp_kses_post( $content ) . '</ce-spacing>';
+		return '<ce-spacing style="--spacing: var(--ce-spacing-large); font-size: 16px;">' . wp_kses_post( $content ) . '</ce-spacing>';
 	}
 }

@@ -7,13 +7,15 @@ import { __ } from '@wordpress/i18n';
 import {
 	useBlockProps,
 	InnerBlocks,
+	InspectorControls,
 	useInnerBlocksProps as __stableUseInnerBlocksProps,
 	__experimentalUseInnerBlocksProps,
 } from '@wordpress/block-editor';
 import { Fragment } from '@wordpress/element';
 import { CeTabPanel } from '@checkout-engine/components-react';
+import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
 
-export default ({ attributes }) => {
+export default ({ attributes, setAttributes }) => {
 	const { name } = attributes;
 
 	const useInnerBlocksProps = __stableUseInnerBlocksProps
@@ -31,6 +33,17 @@ export default ({ attributes }) => {
 
 	return (
 		<Fragment>
+			<InspectorControls>
+				<PanelBody title={__('Attributes', 'checkout-engine')}>
+					<PanelRow>
+						<TextControl
+							label={__('Url Slug', 'checkout-engine')}
+							value={name}
+							onChange={(name) => setAttributes({ name })}
+						/>
+					</PanelRow>
+				</PanelBody>
+			</InspectorControls>
 			<CeTabPanel name={name}>
 				<ce-spacing {...innerBlocksProps}></ce-spacing>
 			</CeTabPanel>

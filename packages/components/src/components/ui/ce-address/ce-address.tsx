@@ -136,10 +136,12 @@ export class CeAddress {
       return (
         <div class="ce-address">
           <ce-form-control label={this.label} class="ce-address__control ce-address--loading" part="control">
-            <ce-skeleton style={{ width: '50%' }}></ce-skeleton>
-            <ce-skeleton style={{ width: '80%' }}></ce-skeleton>
-            <ce-skeleton style={{ width: '40%' }}></ce-skeleton>
-            <ce-skeleton style={{ width: '20%' }}></ce-skeleton>
+            <ce-spacing style={{ '--spacing': 'var(--ce-spacing-large)' }}>
+              <ce-skeleton style={{ width: '50%' }}></ce-skeleton>
+              <ce-skeleton style={{ width: '80%' }}></ce-skeleton>
+              <ce-skeleton style={{ width: '40%' }}></ce-skeleton>
+              <ce-skeleton style={{ width: '20%' }}></ce-skeleton>
+            </ce-spacing>
           </ce-form-control>
         </div>
       );

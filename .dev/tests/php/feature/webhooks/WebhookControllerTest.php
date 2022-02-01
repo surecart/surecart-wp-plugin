@@ -40,7 +40,10 @@ class WebhookControllerTest extends CheckoutEngineUnitTestCase
 				"id" => "e57979af-84f7-41e3-82e5-911cf24f13f5",
 				"object" => "event",
 				"data" => [
-					"purchase" => "1ce4624d-2287-4d5b-bec7-b23689ae4461"
+					"object" => [
+						'id' => "1ce4624d-2287-4d5b-bec7-b23689ae4461",
+						"object" => "purchase",
+					],
 				],
 				"type" => "purchase.created",
 				"account" => "9f152260-0a22-4bf3-aaf9-5a2487c2bf59",
