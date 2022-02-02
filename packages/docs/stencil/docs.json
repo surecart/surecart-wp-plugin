@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-01-28T17:43:05",
+  "timestamp": "2022-02-02T15:05:57",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.9.0",
@@ -111,6 +111,7 @@
       "dependencies": [
         "ce-input",
         "ce-form-control",
+        "ce-spacing",
         "ce-skeleton",
         "ce-select",
         "ce-block-ui"
@@ -119,6 +120,7 @@
         "ce-address": [
           "ce-input",
           "ce-form-control",
+          "ce-spacing",
           "ce-skeleton",
           "ce-select",
           "ce-block-ui"
@@ -7239,6 +7241,22 @@
           "required": false
         },
         {
+          "name": "loading",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "loading",
+          "reflectToAttr": false,
+          "docs": "Is this loading.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "mode",
           "type": "\"live\" | \"test\"",
           "mutable": false,
@@ -10164,11 +10182,15 @@
       "slots": [],
       "parts": [],
       "dependents": [
+        "ce-address",
         "ce-order-detail",
         "ce-subscriptions-list"
       ],
       "dependencies": [],
       "dependencyGraph": {
+        "ce-address": [
+          "ce-spacing"
+        ],
         "ce-order-detail": [
           "ce-spacing"
         ],
@@ -12186,14 +12208,18 @@
         },
         {
           "name": "total",
-          "type": "\"subtotal\" | \"total\"",
+          "type": "\"amount_due\" | \"subtotal\" | \"total\"",
           "mutable": false,
           "attr": "total",
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
-          "default": "'total'",
+          "default": "'amount_due'",
           "values": [
+            {
+              "value": "amount_due",
+              "type": "string"
+            },
             {
               "value": "subtotal",
               "type": "string"

@@ -29,6 +29,7 @@
 
 - [ce-input](../input)
 - [ce-form-control](../form-control)
+- [ce-spacing](../spacing)
 - [ce-skeleton](../skeleton)
 - [ce-select](../select)
 - [ce-block-ui](../block-ui)
@@ -38,6 +39,7 @@
 graph TD;
   ce-address --> ce-input
   ce-address --> ce-form-control
+  ce-address --> ce-spacing
   ce-address --> ce-skeleton
   ce-address --> ce-select
   ce-address --> ce-block-ui

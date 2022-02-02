@@ -7,10 +7,10 @@
 
 ## Properties
 
-| Property | Attribute | Description | Type                    | Default     |
-| -------- | --------- | ----------- | ----------------------- | ----------- |
-| `order`  | --        |             | `Order`                 | `undefined` |
-| `total`  | `total`   |             | `"subtotal" \| "total"` | `'total'`   |
+| Property | Attribute | Description | Type                                    | Default        |
+| -------- | --------- | ----------- | --------------------------------------- | -------------- |
+| `order`  | --        |             | `Order`                                 | `undefined`    |
+| `total`  | `total`   |             | `"amount_due" \| "subtotal" \| "total"` | `'amount_due'` |
 
 
 ## Dependencies

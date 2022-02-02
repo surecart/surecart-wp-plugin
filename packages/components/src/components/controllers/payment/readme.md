@@ -10,6 +10,7 @@
 | Property        | Attribute        | Description                                                          | Type                       | Default     |
 | --------------- | ---------------- | -------------------------------------------------------------------- | -------------------------- | ----------- |
 | `label`         | `label`          | The input's label.                                                   | `string`                   | `undefined` |
+| `loading`       | `loading`        | Is this loading.                                                     | `boolean`                  | `undefined` |
 | `mode`          | `mode`           | Is this created in "test" mode                                       | `"live" \| "test"`         | `'live'`    |
 | `order`         | --               | Checkout Session from ce-checkout.                                   | `Order`                    | `undefined` |
 | `paymentMethod` | `payment-method` | Payment mode inside individual payment method (i.e. Payment Buttons) | `"stripe-payment-request"` | `undefined` |

@@ -1213,6 +1213,10 @@ export namespace Components {
     }
     interface CeSelect {
         /**
+          * The input's autocomplete attribute.
+         */
+        "autocomplete": string;
+        /**
           * The input's value attribute.
          */
         "choices": Array<ChoiceItem>;
@@ -3476,6 +3480,10 @@ declare namespace LocalJSX {
     interface CeSecureNotice {
     }
     interface CeSelect {
+        /**
+          * The input's autocomplete attribute.
+         */
+        "autocomplete"?: string;
         /**
           * The input's value attribute.
          */
