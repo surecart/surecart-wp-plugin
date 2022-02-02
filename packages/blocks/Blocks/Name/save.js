@@ -1,4 +1,4 @@
-export default ( { className, attributes } ) => {
+export default ({ className, attributes }) => {
 	const {
 		label,
 		clearable,
@@ -23,28 +23,28 @@ export default ( { className, attributes } ) => {
 
 	return (
 		<ce-input
-			class={ className || false }
-			label={ label || false }
-			clearable={ clearable || false }
-			disabled={ disabled || false }
-			help={ help || false }
-			autofocus={ autofocus || false }
-			autocomplete={ autocomplete || false }
-			inputmode={ inputmode || false }
-			max={ max || false }
-			maxlength={ maxlength || false }
-			min={ min || false }
-			minlength={ minlength || false }
-			placeholder={ placeholder || false }
-			readonly={ readonly || false }
-			showLabel={ showLabel || false }
-			size={ size || false }
-			spellcheck={ spellcheck || false }
-			step={ step || false }
-			togglePassword={ togglePassword }
-			value={ value || false }
-			name={ 'name' }
-			type={ 'text' }
+			class={className || false}
+			label={label || false}
+			clearable={clearable || false}
+			disabled={disabled || false}
+			help={help || false}
+			autofocus={autofocus || false}
+			autocomplete={'name'}
+			inputmode={inputmode || false}
+			max={max || false}
+			maxlength={maxlength || false}
+			min={min || false}
+			minlength={minlength || false}
+			placeholder={placeholder || false}
+			readonly={readonly || false}
+			showLabel={showLabel || false}
+			size={size || false}
+			spellcheck={spellcheck || false}
+			step={step || false}
+			togglePassword={togglePassword}
+			value={value || false}
+			name={'name'}
+			type={'text'}
 		></ce-input>
 	);
 };
