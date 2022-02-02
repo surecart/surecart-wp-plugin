@@ -1,6 +1,6 @@
 import { createOrUpdateSession, finalizeSession } from '../../../services/session';
 import { Order, LineItemData, PriceChoice } from '../../../types';
-import { getSessionId, getURLLineItems, populateInputs } from './helpers/session';
+import { getSessionId, getURLLineItems, populateInputs, removeSessionIdFromStorage } from './helpers/session';
 import { Component, h, Prop, Event, EventEmitter, Element, State, Watch, Listen } from '@stencil/core';
 import { removeQueryArgs } from '@wordpress/url';
 
@@ -162,7 +162,7 @@ export class CeSessionProvider {
         this.ceSetState.emit('RESOLVE');
       }
     } catch (e) {
-      if (e?.code === 'order.invalid_status_transition') {
+      if (['order.invalid_status_transition'].includes(e?.code)) {
         await this.loadUpdate({
           id: this.order.id,
           data: {
@@ -321,7 +321,6 @@ export class CeSessionProvider {
 
   /** Fetch a session. */
   async fetch() {
-    // let line_items = this.addInitialPrices() || [];
     this.loadUpdate({ status: 'draft' });
   }
 
@@ -339,6 +338,11 @@ export class CeSessionProvider {
         },
       })) as Order;
     } catch (e) {
+      // reinitalize if order not found.
+      if (['order.not_found'].includes(e?.code)) {
+        removeSessionIdFromStorage(this.groupId);
+        return this.initialize();
+      }
       console.error(e);
       throw e;
     }
