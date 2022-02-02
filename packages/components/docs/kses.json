@@ -702,6 +702,7 @@
     "slot": true
   },
   "ce-select": {
+    "autocomplete": true,
     "choices": true,
     "invalid": true,
     "loading": true,
