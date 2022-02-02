@@ -31,6 +31,11 @@ export const getSessionId = (formId, order) => {
   return window.localStorage.getItem(formId);
 };
 
+export const removeSessionIdFromStorage = formId => {
+  // check id in localstorage
+  return window.localStorage.removeItem(formId);
+};
+
 // find the input based on the unique name.
 export const findInput = (el, name) => {
   const slot = el.querySelector('ce-form')?.shadowRoot?.querySelector('slot') as HTMLSlotElement;
