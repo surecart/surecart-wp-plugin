@@ -69,6 +69,7 @@ export class CeAddress {
         <ce-input
           placeholder={__('Postal Code/Zip', 'checkout_engine')}
           name="shipping_city"
+          autocomplete={'postal-code'}
           value={this?.state?.city}
           required={this.required}
           squared={!!this?.regions?.length}
@@ -103,6 +104,7 @@ export class CeAddress {
         <ce-input
           placeholder={__('Postal Code/Zip', 'checkout_engine')}
           name="shipping_postal_code"
+          autocomplete={'postal-code'}
           required={this.required}
           value={this?.state?.postal_code}
           squared={!!this?.regions?.length}
@@ -153,6 +155,7 @@ export class CeAddress {
           <ce-select
             placeholder={__('Country', 'checkout_engine')}
             choices={this.countryChoices}
+            autocomplete={'country-name'}
             onCeChange={e => (this.state = { ...this.state, country: (e.target as any).value })}
             value={this?.state?.country}
             name="shipping_country"
@@ -160,13 +163,21 @@ export class CeAddress {
             squared-bottom
             required={this.required}
           />
-          <ce-input value={this?.state?.line_1} placeholder={__('Address', 'checkout_engine')} name="shipping_line_1" squared required={this.required} />
+          <ce-input
+            value={this?.state?.line_1}
+            autocomplete="street-address"
+            placeholder={__('Address', 'checkout_engine')}
+            name="shipping_line_1"
+            squared
+            required={this.required}
+          />
           {/* <ce-input value={this?.state?.line_2} placeholder={__('Address Line 2', 'checkout_engine')} name="shipping_line_2" squared /> */}
           {this.renderCityPostal()}
           {!!this?.regions?.length && (
             <ce-select
               placeholder={__('State/Province/Region', 'checkout_engine')}
               name="shipping_state"
+              autocomplete={'address-level1'}
               value={this?.state?.state}
               choices={this.regions}
               required={this.required}
