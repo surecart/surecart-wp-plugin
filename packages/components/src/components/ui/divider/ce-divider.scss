@@ -1,5 +1,6 @@
 :host {
   display: block;
+  min-height: 1px; // Safari bug workaround
 }
 
 .divider {
