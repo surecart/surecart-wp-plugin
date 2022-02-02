@@ -58,10 +58,10 @@ export class CePriceInput {
   @Prop() maxlength: number;
 
   /** The input's maximum value. */
-  @Prop() max: number | string;
+  @Prop() max: number;
 
   /** The input's minimum value. */
-  @Prop() min: number | string;
+  @Prop() min: number;
 
   /** Makes the input a required field. */
   @Prop({ reflect: true }) required = false;
@@ -80,6 +80,9 @@ export class CePriceInput {
 
   /** 3 letter currency code for input */
   @Prop() currencyCode: string;
+
+  /** Show the currency code with the input */
+  @Prop() showCode: boolean;
 
   /** Emitted when the control's value changes. */
   @Event({ composed: true })
@@ -136,7 +139,7 @@ export class CePriceInput {
           maxlength={this.maxlength}
           min={this.min || 0.0}
           step={0.001}
-          max={this.max}
+          max={!!this.max ? this.max / 100 : null}
           // TODO: Test These below
           autofocus={this.autofocus}
           inputmode={'decimal'}
@@ -146,6 +149,11 @@ export class CePriceInput {
           <span style={{ opacity: '0.5' }} slot="prefix">
             {getCurrencySymbol(this.currencyCode)}
           </span>
+          {this.showCode && this?.currencyCode && (
+            <span style={{ opacity: '0.5' }} slot="suffix">
+              {this.currencyCode.toUpperCase()}
+            </span>
+          )}
         </ce-input>
       </div>
     );

@@ -1,10 +1,11 @@
 /** @jsx jsx */
 import { __, _n } from '@wordpress/i18n';
-import DataTable from '../DataTable';
+import DataTable from '../../DataTable';
 import { css, jsx } from '@emotion/core';
 import { addQueryArgs } from '@wordpress/url';
-import { formatTime } from '../../util/time';
+import Refund from './Refund';
 import { Fragment } from '@wordpress/element';
+import { useState } from '@wordpress/element';
 
 export default ({
 	data,
@@ -15,6 +16,8 @@ export default ({
 	empty,
 	purchases,
 }) => {
+	const [confirmRefund, setConfirmRefund] = useState(false);
+
 	const footer = (
 		<div>
 			{sprintf(__('%s Total', 'checkout_engine'), pagination?.total || 0)}
@@ -40,7 +43,10 @@ export default ({
 	};
 
 	const onRefund = (charge) => {
-		console.log({ charge, purchases });
+		setConfirmRefund({
+			charge,
+			purchases,
+		});
 	};
 
 	return (
@@ -68,12 +74,13 @@ export default ({
 							</ce-text>
 						),
 						date: (
-							<div>
-								{formatTime(created_at, {
-									dateStyle: 'medium',
-									timeStyle: 'short',
-								})}
-							</div>
+							<ce-format-date
+								type="timestamp"
+								date={created_at}
+								month="long"
+								day="numeric"
+								year="numeric"
+							></ce-format-date>
 						),
 						method: payment_method?.card?.brand && (
 							<div
@@ -116,6 +123,13 @@ export default ({
 				loading={isLoading}
 				footer={footer}
 			/>
+			{confirmRefund && (
+				<Refund
+					purchases={confirmRefund?.purchases}
+					charge={confirmRefund?.charge}
+					onRequestClose={() => setConfirmRefund(false)}
+				/>
+			)}
 		</Fragment>
 	);
 };

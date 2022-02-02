@@ -10,6 +10,7 @@ import SaveButton from '../components/SaveButton';
 import useSnackbar from '../hooks/useSnackbar';
 import Template from '../templates/SingleModel';
 import useCustomerData from './hooks/useCustomerData';
+import Purchases from './modules/Purchases';
 import Charges from './modules/Charges';
 import Details from './modules/Details';
 import Orders from './modules/Orders';

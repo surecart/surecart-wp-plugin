@@ -10,6 +10,7 @@
 namespace CheckoutEngineCore\Flash;
 
 use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
+use CheckoutEngineCore\Session\Session;
 
 /**
  * Provide flash dependencies.
@@ -21,12 +22,15 @@ class FlashServiceProvider implements ServiceProviderInterface {
 	 * {@inheritDoc}
 	 */
 	public function register( $container ) {
-		$container[ CHECKOUT_ENGINE_FLASH_KEY ] = function ( $c ) {
+		global $ce_session;
+		$ce_session = [];
+
+		$container[ CHECKOUT_ENGINE_FLASH_KEY ] = function ( $c ) use ( $ce_session ) {
 			$session = null;
 			if ( isset( $c[ CHECKOUT_ENGINE_SESSION_KEY ] ) ) {
 				$session = &$c[ CHECKOUT_ENGINE_SESSION_KEY ];
-			} elseif ( isset( $_SESSION ) ) {
-				$session = &$_SESSION;
+			} else {
+				$session = &$ce_session;
 			}
 			return new Flash( $session );
 		};

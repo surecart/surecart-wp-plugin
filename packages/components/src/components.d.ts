@@ -1048,7 +1048,7 @@ export namespace Components {
         /**
           * The input's maximum value.
          */
-        "max": number | string;
+        "max": number;
         /**
           * The maximum length of input that will be considered valid.
          */
@@ -1056,7 +1056,7 @@ export namespace Components {
         /**
           * The input's minimum value.
          */
-        "min": number | string;
+        "min": number;
         /**
           * The minimum length of input that will be considered valid.
          */
@@ -1086,6 +1086,10 @@ export namespace Components {
           * Sets a custom validation message. If `message` is not empty, the field will be considered invalid.
          */
         "setCustomValidity": (message: string) => Promise<void>;
+        /**
+          * Show the currency code with the input
+         */
+        "showCode": boolean;
         /**
           * Should we show the label
          */
@@ -3312,7 +3316,7 @@ declare namespace LocalJSX {
         /**
           * The input's maximum value.
          */
-        "max"?: number | string;
+        "max"?: number;
         /**
           * The maximum length of input that will be considered valid.
          */
@@ -3320,7 +3324,7 @@ declare namespace LocalJSX {
         /**
           * The input's minimum value.
          */
-        "min"?: number | string;
+        "min"?: number;
         /**
           * The minimum length of input that will be considered valid.
          */
@@ -3349,6 +3353,10 @@ declare namespace LocalJSX {
           * Makes the input a required field.
          */
         "required"?: boolean;
+        /**
+          * Show the currency code with the input
+         */
+        "showCode"?: boolean;
         /**
           * Should we show the label
          */

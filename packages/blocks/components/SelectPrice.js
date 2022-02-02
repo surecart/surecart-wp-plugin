@@ -63,8 +63,13 @@ export default ({
 					.map((price) => {
 						return {
 							value: price.id,
-							label: price.name,
-							suffix: displayPriceAmount(price),
+							label: formatNumber(price.amount, price.currency),
+							suffix: translateInterval(
+								price?.recurring_interval_count,
+								price?.recurring_interval,
+								' /',
+								'once'
+							),
 						};
 					}),
 			};

@@ -3,11 +3,9 @@ import { css, jsx } from '@emotion/core';
 
 import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';
-import { CardDivider } from '@wordpress/components';
 import Box from '../../ui/Box';
 import { translateInterval } from '../../util/translations';
 import useLineItemData from '../hooks/useLineItemData';
-import { CeButton } from '@checkout-engine/components-react';
 import useOrderData from '../hooks/useOrderData';
 import Definition from '../../ui/Definition';
 
@@ -20,96 +18,96 @@ export default () => {
 	};
 
 	return (
-		<Box title={ __( 'Order Details', 'checkout_engine' ) }>
-			{ loading ? (
+		<Box title={__('Order Details', 'checkout_engine')}>
+			{loading ? (
 				renderLoading()
 			) : (
 				<Fragment>
-					{ ( line_items || [] ).map( ( item, index ) => {
+					{(line_items || []).map((item, index) => {
 						return (
 							<ce-product-line-item
-								key={ item.id }
+								key={item.id}
 								imageUrl={
 									item?.price?.metadata?.wp_attachment_src
 								}
-								name={ `${ item?.price?.product?.name } \u2013 ${ item?.price?.name }` }
-								editable={ false }
-								removable={ false }
-								quantity={ item.quantity }
+								name={item?.price?.product?.name}
+								editable={false}
+								removable={false}
+								quantity={item.quantity}
 								amount={
 									item.ad_hoc_amount !== null
 										? item.ad_hoc_amount
 										: item.price.amount
 								}
-								currency={ item?.price?.currency }
+								currency={item?.price?.currency}
 								trialDurationDays={
 									item?.price?.trial_duration_days
 								}
-								interval={ translateInterval(
+								interval={translateInterval(
 									item?.price?.recurring_interval_count,
 									item?.price?.recurring_interval
-								) }
+								)}
 							></ce-product-line-item>
 						);
-					} ) }
+					})}
 
 					<hr />
 
-					<Definition title={ __( 'Subtotal', 'order' ) }>
+					<Definition title={__('Subtotal', 'order')}>
 						<ce-format-number
-							style={ {
+							style={{
 								'font-weight': 'var(--ce-font-weight-semibold)',
 								color: 'var(--ce-color-gray-800)',
-							} }
+							}}
 							type="currency"
-							currency={ order?.currency }
-							value={ order?.subtotal_amount }
+							currency={order?.currency}
+							value={order?.subtotal_amount}
 						></ce-format-number>
 					</Definition>
-					<Definition title={ __( 'Discounts', 'order' ) }>
+					<Definition title={__('Discounts', 'order')}>
 						<ce-format-number
-							style={ {
+							style={{
 								'font-weight': 'var(--ce-font-weight-semibold)',
 								color: 'var(--ce-color-gray-800)',
-							} }
+							}}
 							type="currency"
-							currency={ order?.currency }
-							value={ order?.discount_amount }
+							currency={order?.currency}
+							value={order?.discount_amount}
 						></ce-format-number>
 					</Definition>
 
 					<hr />
 
-					<Definition title={ __( 'Total', 'order' ) }>
+					<Definition title={__('Total', 'order')}>
 						<div
-							css={ css`
+							css={css`
 								display: flex;
 								align-items: center;
 								gap: 1em;
-							` }
+							`}
 						>
 							<div
-								css={ css`
+								css={css`
 									text-transform: uppercase;
-								` }
+								`}
 							>
-								{ order?.currency }
+								{order?.currency}
 							</div>
 							<ce-format-number
-								style={ {
+								style={{
 									fontSize: 'var(--ce-font-size-x-large)',
 									fontWeight:
 										'var(--ce-font-weight-semibold)',
 									color: 'var(--ce-color-gray-800)',
-								} }
+								}}
 								type="currency"
-								currency={ order?.currency }
-								value={ order?.total_amount }
+								currency={order?.currency}
+								value={order?.total_amount}
 							></ce-format-number>
 						</div>
 					</Definition>
 				</Fragment>
-			) }
+			)}
 		</Box>
 	);
 };

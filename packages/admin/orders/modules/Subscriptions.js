@@ -1,5 +1,4 @@
 import { __, _n } from '@wordpress/i18n';
-import useCustomerData from '../hooks/useCustomerData';
 import { useEffect } from '@wordpress/element';
 import useDataApi from '../../hooks/useDataApi';
 import SubscriptionsDataTable from '../../components/data-tables/SubscriptionsDataTable';
@@ -7,7 +6,7 @@ import useOrderData from '../hooks/useOrderData';
 
 export default () => {
 	const { orderId } = useOrderData();
-	const [{ data, isLoading, error, pagination }, fetchData] = useDataApi();
+	const { data, isLoading, error, pagination, fetchData } = useDataApi();
 
 	useEffect(() => {
 		if (orderId) {

@@ -8,4 +8,8 @@
 	</a>
 <?php endif; ?>
 
+<?php if ( isset( $after_title ) ) : ?>
+	<?php echo wp_kses_post( $after_title ); ?>
+<?php endif; ?>
+
 <hr class="wp-header-end" />

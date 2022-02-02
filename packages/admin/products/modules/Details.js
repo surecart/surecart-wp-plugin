@@ -16,7 +16,7 @@ import useProductData from '../hooks/useProductData';
 import useValidationErrors from '../../hooks/useValidationErrors';
 
 export default () => {
-	const { product, updateProduct, loading } = useProductData();
+	const { product, updateProduct, loading, isCreated } = useProductData();
 	const { errors, getValidation } = useValidationErrors('products');
 
 	return (
@@ -53,47 +53,50 @@ export default () => {
 						updateProduct({ description: e.target.value })
 					}
 				/> */}
-				<CeChoices
-					label={__('Product Type', 'checkout_engine')}
-					style={{ '--columns': 2 }}
-				>
-					<div>
-						<CeChoice
-							checked={!product?.recurring}
-							value="single"
-							onCeChange={(e) => {
-								if (!e.target.checked) return;
-								updateProduct({ recurring: false });
-							}}
-						>
-							{__('Single Payment', 'checkout_engine')}
-							<span slot="description">
-								{__(
-									'Charge a one-time fee.',
-									'checkout_engine'
-								)}
-							</span>
-						</CeChoice>
-						<CeChoice
-							checked={product?.recurring}
-							value="subscription"
-							onCeChange={(e) => {
-								if (!e.target.checked) return;
-								updateProduct({
-									recurring: true,
-								});
-							}}
-						>
-							{__('Subscription', 'checkout_engine')}
-							<span slot="description">
-								{__(
-									'Charge an ongoing fee.',
-									'checkout_engine'
-								)}
-							</span>
-						</CeChoice>
-					</div>
-				</CeChoices>
+				{!isCreated && (
+					<CeChoices
+						required
+						label={__('Product Type', 'checkout_engine')}
+						style={{ '--columns': 2 }}
+					>
+						<div>
+							<CeChoice
+								checked={!product?.recurring}
+								value="single"
+								onCeChange={(e) => {
+									if (!e.target.checked) return;
+									updateProduct({ recurring: false });
+								}}
+							>
+								{__('Single Payment', 'checkout_engine')}
+								<span slot="description">
+									{__(
+										'Charge a one-time fee.',
+										'checkout_engine'
+									)}
+								</span>
+							</CeChoice>
+							<CeChoice
+								checked={product?.recurring}
+								value="subscription"
+								onCeChange={(e) => {
+									if (!e.target.checked) return;
+									updateProduct({
+										recurring: true,
+									});
+								}}
+							>
+								{__('Subscription', 'checkout_engine')}
+								<span slot="description">
+									{__(
+										'Charge an ongoing fee.',
+										'checkout_engine'
+									)}
+								</span>
+							</CeChoice>
+						</div>
+					</CeChoices>
+				)}
 				<CeSwitch
 					css={css`
 						margin: var(--ce-spacing-small) 0;

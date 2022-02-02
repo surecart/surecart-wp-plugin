@@ -3,7 +3,7 @@ import DataTable from '../DataTable';
 import { addQueryArgs } from '@wordpress/url';
 import { CeFormatDate } from '@checkout-engine/components-react';
 
-export default ({ data, isLoading, error, pagination }) => {
+export default ({ data, isLoading, error, pagination, empty }) => {
 	const footer = (
 		<div>
 			{sprintf(__('%s Total', 'checkout_engine'), pagination?.total || 0)}
@@ -28,7 +28,7 @@ export default ({ data, isLoading, error, pagination }) => {
 					width: '100px',
 				},
 			}}
-			empty={__('No subscriptions found.', 'checkout_engine')}
+			empty={empty || __('None found.', 'checkout-engine')}
 			items={(data || []).map(({ id, status, price, created_at }) => {
 				return {
 					status: (

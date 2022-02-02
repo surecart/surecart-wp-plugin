@@ -1,4 +1,4 @@
-import { useState, useReducer, useEffect } from '@wordpress/element';
+import { useReducer } from '@wordpress/element';
 import dataFetchReducer from './reducer';
 import apiFetch from '@wordpress/api-fetch';
 import { __ } from '@wordpress/i18n';
@@ -13,6 +13,15 @@ export default (initialData) => {
 		total_pages: 10,
 		data: initialData,
 	});
+
+	const setData = (data) => {
+		dispatch({ type: 'SET_DATA', payload: data });
+	};
+
+	// update data item by id.
+	const updateDataItem = (id, data) => {
+		dispatch({ type: 'UPDATE_DATA_BY_ID', payload: { id, data } });
+	};
 
 	const fetchData = async (args) => {
 		dispatch({ type: 'FETCH_INIT' });
@@ -47,5 +56,5 @@ export default (initialData) => {
 		}
 	};
 
-	return [state, fetchData];
+	return { ...state, fetchData, setData, updateDataItem };
 };

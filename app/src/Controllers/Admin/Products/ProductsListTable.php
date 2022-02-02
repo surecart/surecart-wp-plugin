@@ -106,6 +106,7 @@ class ProductsListTable extends ListTable {
 			'name'        => __( 'Name', 'checkout_engine' ),
 			'description' => __( 'Description', 'checkout_engine' ),
 			'price'       => __( 'Price', 'checkout_engine' ),
+			'type'        => __( 'Type', 'checkout_engine' ),
 			'date'        => __( 'Date', 'checkout_engine' ),
 		];
 	}
@@ -169,9 +170,44 @@ class ProductsListTable extends ListTable {
 	}
 
 	/**
-	 * Handle the price column.
+	 * Handle the type column output.
 	 *
 	 * @param \CheckoutEngine\Models\Price $product Product model.
+	 *
+	 * @return string
+	 */
+	public function column_type( $product ) {
+		if ( $product->recurring ) {
+			return '<ce-tag type="success">
+			<div
+				style="
+					display: flex;
+					align-items: center;
+					gap: 0.5em;"
+			>
+				<ce-icon name="repeat"></ce-icon>
+				' . esc_html__( 'Subscription', 'checkout_engine' ) . '
+			</div>
+		</ce-tag>';
+		}
+
+		return '<ce-tag type="info">
+		<div
+			style="
+				display: flex;
+				align-items: center;
+				gap: 0.5em;"
+		>
+			<ce-icon name="bookmark"></ce-icon>
+			' . esc_html__( 'One-Time', 'checkout_engine' ) . '
+		</div>
+	</ce-tag>';
+	}
+
+	/**
+	 * Handle the price column.
+	 *
+	 * @param \CheckoutEngine\Models\Product $product Product model.
 	 *
 	 * @return string
 	 */

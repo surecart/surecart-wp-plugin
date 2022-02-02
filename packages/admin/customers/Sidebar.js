@@ -7,6 +7,7 @@ import { getQueryArg } from '@wordpress/url';
 import Box from '../ui/Box';
 import useCustomerData from './hooks/useCustomerData';
 import Notifications from './modules/Notifications';
+import Purchases from './modules/Purchases';
 import User from './modules/User';
 
 export default () => {
@@ -25,6 +26,7 @@ export default () => {
 		<Fragment>
 			{customerId && (
 				<Fragment>
+					<Purchases />
 					<Box
 						title={__('WordPress User', 'checkout_engine')}
 						css={css`

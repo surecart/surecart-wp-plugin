@@ -33,7 +33,7 @@ import useProductData from './hooks/useProductData';
 import withConfirm from '../hocs/withConfirm';
 import useValidationErrors from '../hooks/useValidationErrors';
 
-export default withConfirm( ( { setConfirm, noticeUI } ) => {
+export default withConfirm(({ setConfirm, noticeUI }) => {
 	const { snackbarNotices, removeSnackbarNotice } = useSnackbar();
 
 	const {
@@ -44,130 +44,135 @@ export default withConfirm( ( { setConfirm, noticeUI } ) => {
 		loading,
 		isCreated,
 		status,
+		updateProduct,
 		isSaving,
+		addEmptyPrice,
 	} = useProductData();
 
-	useEffect( () => {
-		if ( ! isCreated ) {
-			dispatch( store ).addEmptyPrice();
+	useEffect(() => {
+		if (!isCreated) {
+			addEmptyPrice();
+			updateProduct({
+				tax_enabled: true,
+			});
 		}
-	}, [] );
+	}, []);
 
-	const onSubmit = async ( e ) => {
+	const onSubmit = async (e) => {
 		e.preventDefault();
-		if ( ! prices.some( ( price ) => ! price.archived ) ) {
+		if (!prices.some((price) => !price.archived)) {
 			return handlePricesError();
 		}
-		dispatch( store ).save();
+		dispatch(store).save();
 	};
 
 	const handlePricesError = () => {
-		dispatch( uiStore ).addSnackbarNotice( {
+		dispatch(uiStore).addSnackbarNotice({
 			className: 'is-snackbar-error',
-			content: __( 'You must have a price.', 'checkout_engine' ),
-		} );
-		dispatch( dataStore ).addPrice( 'prices', {
+			content: __('You must have a price.', 'checkout_engine'),
+		});
+		dispatch(dataStore).addPrice('prices', {
 			recurring: false,
-		} );
+		});
 	};
 
 	const onInvalid = () => {
-		dispatch( uiStore ).setInvalid( true );
+		dispatch(uiStore).setInvalid(true);
 	};
 
 	const toggleArchive = async () => {
-		setConfirm( {} );
-		toggleProductArchive( 0 );
+		setConfirm({});
+		toggleProductArchive(0);
 	};
 
-	if ( error?.message ) {
+	if (error?.message) {
 		return (
 			<CeAlert
-				css={ css`
+				css={css`
 					margin-top: 20px;
 					margin-right: 20px;
-				` }
+				`}
 				type="danger"
-				open={ error?.message }
-				onCeShow={ ( e ) => {
-					if ( scrollIntoView ) {
-						e.target.scrollIntoView( {
+				open={error?.message}
+				onCeShow={(e) => {
+					if (scrollIntoView) {
+						e.target.scrollIntoView({
 							behavior: 'smooth',
 							block: 'start',
 							inline: 'nearest',
-						} );
+						});
 					}
-				} }
+				}}
 			>
 				<span slot="title">
-					{ __(
+					{__(
 						'There was a critical error loading this page. Please reload the page and try again.',
 						'checkout_engine'
-					) }
+					)}
 				</span>
-				{ error?.message }
+				{error?.message}
 			</CeAlert>
 		);
 	}
 
 	return (
 		<Template
-			status={ status }
-			pageModelName={ 'products' }
-			onSubmit={ onSubmit }
-			onInvalid={ onInvalid }
-			backUrl={ 'admin.php?page=ce-products' }
-			backText={ __( 'Back to All Product', 'checkout_engine' ) }
+			status={status}
+			pageModelName={'products'}
+			onSubmit={onSubmit}
+			onInvalid={onInvalid}
+			backUrl={'admin.php?page=ce-products'}
+			backText={__('Back to All Product', 'checkout_engine')}
 			title={
 				product?.id
 					? sprintf(
-							__( 'Edit %s', 'checkout_engine' ),
-							product?.name || __( 'Product', 'checkout_engine' )
+							__('Edit %s', 'checkout_engine'),
+							product?.name || __('Product', 'checkout_engine')
 					  )
 					: sprintf(
-							__( 'Add %s', 'checkout_engine' ),
-							product?.name || __( 'Product', 'checkout_engine' )
+							__('Add %s', 'checkout_engine'),
+							product?.name || __('Product', 'checkout_engine')
 					  )
 			}
 			button={
 				loading ? (
 					<ce-skeleton
-						style={ {
+						style={{
 							width: '120px',
 							height: '35px',
 							display: 'inline-block',
-						} }
+						}}
 					></ce-skeleton>
 				) : (
 					<div
-						css={ css`
+						css={css`
 							display: flex;
 							align-items: center;
 							gap: 0.5em;
-						` }
+						`}
 					>
 						<ProductActionsDropdown
-							setConfirm={ setConfirm }
-							product={ product }
-							isSaving={ isSaving }
-							toggleArchive={ toggleArchive }
+							setConfirm={setConfirm}
+							product={product}
+							isSaving={isSaving}
+							toggleArchive={toggleArchive}
 						/>
 						<SaveButton>
-							{ product?.id
-								? __( 'Update Product', 'checkout_engine' )
-								: __( 'Create Product', 'checkout_engine' ) }
+							{product?.id
+								? __('Update Product', 'checkout_engine')
+								: __('Create Product', 'checkout_engine')}
 						</SaveButton>
 					</div>
 				)
 			}
-			notices={ snackbarNotices }
-			removeNotice={ removeSnackbarNotice }
-			noticeUI={ noticeUI }
+			notices={snackbarNotices}
+			removeNotice={removeSnackbarNotice}
+			noticeUI={noticeUI}
 			sidebar={
 				<Sidebar
-					loading={ loading }
-					product={ product }
-					isSaving={ isSaving }
+					loading={loading}
+					product={product}
+					isSaving={isSaving}
 				/>
 			}
 		>
@@ -178,4 +183,4 @@ export default withConfirm( ( { setConfirm, noticeUI } ) => {
 			</Fragment>
 		</Template>
 	);
-} );
+});

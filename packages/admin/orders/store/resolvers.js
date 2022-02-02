@@ -19,6 +19,8 @@ export default {
 					'line_items',
 					'line_item.price',
 					'price.product',
+					'purchases',
+					'purchase.product',
 					'customer',
 				],
 			}
@@ -28,12 +30,13 @@ export default {
 		try {
 			// we need prices.
 			const response = yield apiFetch(request);
-			const { customer, line_items, ...order } = response;
+			const { customer, line_items, purchases, ...order } = response;
 			if (!order?.id) return;
 			return yield controls.dispatch(store, 'addModels', {
 				orders: [order],
 				customers: [customer],
 				line_items: line_items?.data || [],
+				purchases: purchases?.data || [],
 			});
 		} catch (error) {
 			// set critical error. We don't want to display the UI if we can't load the product.

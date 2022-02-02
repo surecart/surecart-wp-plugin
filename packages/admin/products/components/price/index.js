@@ -32,6 +32,7 @@ import withConfirm from '../../../hocs/withConfirm';
 export default withConfirm(({ price, index, open }) => {
 	const {
 		product,
+		prices,
 		duplicatePrice: duplicatePriceAction,
 		updatePrice: updatePriceAction,
 		isInvalid,
@@ -88,41 +89,33 @@ export default withConfirm(({ price, index, open }) => {
 		duplicatePriceAction(price);
 	};
 
+	const hasHeader = () => {
+		return product?.recurring || prices?.length > 1;
+	};
+
 	return (
 		<div>
-			<Header
-				isOpen={isOpen}
-				setIsOpen={setIsOpen}
-				price={price}
-				onDuplicate={duplicatePrice}
-				onArchive={toggleArchive}
-				onDelete={deletePrice}
-			/>
-
+			{(product?.recurring || prices?.length > 1) && (
+				<Header
+					isOpen={isOpen}
+					setIsOpen={setIsOpen}
+					price={price}
+					onDuplicate={duplicatePrice}
+					onArchive={toggleArchive}
+					onDelete={deletePrice}
+				/>
+			)}
 			<div
 				css={css`
 					display: grid;
 					gap: var(--ce-form-row-spacing);
-					margin-top: ${isOpen ? '2em' : '0'};
+					margin-top: ${isOpen && hasHeader() ? '2em' : '0'};
 					height: ${isOpen ? 'auto' : 0};
 					overflow: ${isOpen ? 'visible' : 'hidden'};
 					visibility: ${isOpen ? 'visibile' : 'hidden'};
 				`}
 			>
 				<FlashError path="prices" index={index} scrollIntoView />
-
-				<CeInput
-					ref={input}
-					label={__('Price Name', 'checkout_engine')}
-					className="ce-price-name"
-					help={__(
-						'A short name for your price interval (i.e Monthly).',
-						'checkout_engine'
-					)}
-					value={price?.name}
-					onCeChange={(e) => updatePrice({ name: e.target.value })}
-					required
-				/>
 
 				{!price?.ad_hoc && (
 					<ce-flex>

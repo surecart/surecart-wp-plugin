@@ -6,7 +6,7 @@ import SubscriptionsDataTable from '../../components/data-tables/SubscriptionsDa
 
 export default () => {
 	const { customerId } = useCustomerData();
-	const [{ data, isLoading, error, pagination }, fetchData] = useDataApi();
+	const { data, isLoading, error, pagination, fetchData } = useDataApi();
 
 	useEffect(() => {
 		if (customerId) {
@@ -23,6 +23,10 @@ export default () => {
 
 	return (
 		<SubscriptionsDataTable
+			empty={__(
+				'This customer does not have any subscriptions.',
+				'checkout_engine'
+			)}
 			data={data}
 			isLoading={isLoading}
 			error={error}

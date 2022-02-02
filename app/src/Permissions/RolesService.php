@@ -136,6 +136,7 @@ class RolesService {
 		$capability_types = [
 			'ce_coupon',
 			'ce_promotion',
+			'ce_purchase',
 			'ce_webhook',
 			'ce_product',
 			'ce_order',

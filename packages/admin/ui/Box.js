@@ -6,6 +6,7 @@ import { Card, CardBody, CardFooter, CardHeader } from '@wordpress/components';
 export default ({
 	title,
 	children,
+	header_action,
 	size = 'large',
 	isBorderLess = true,
 	hasDivider = true,
@@ -48,6 +49,7 @@ export default ({
 						</span>
 					)}
 				</ce-text>
+				{header_action}
 			</CardHeader>
 			<CardBody
 				css={css`

@@ -607,6 +607,7 @@
     "placeholder": true,
     "readonly": true,
     "required": true,
+    "show-code": true,
     "show-label": true,
     "size": true,
     "value": true,

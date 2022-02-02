@@ -12,6 +12,7 @@ export default () => {
 				isCreated: select(store).isCreated(),
 				order,
 				orderId: order?.id || pageId,
+				purchases: select(store).selectPurchases(),
 				loading: select(store).isResolving('selectOrder'),
 				error: select(coreStore).selectError(),
 				isSaving: select(coreStore).isSaving(),

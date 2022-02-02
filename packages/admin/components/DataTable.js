@@ -12,6 +12,7 @@ export default ({
 	empty = '',
 	loading,
 }) => {
+	console.log({ loading });
 	const renderLoading = () => {
 		return (
 			<ce-table>
@@ -26,24 +27,17 @@ export default ({
 				))}
 
 				<ce-table-row>
-					<ce-table-cell>
-						<ce-skeleton></ce-skeleton>
-					</ce-table-cell>
-					<ce-table-cell>
-						<ce-skeleton></ce-skeleton>
-					</ce-table-cell>
-					<ce-table-cell>
-						<ce-skeleton></ce-skeleton>
-					</ce-table-cell>
-					<ce-table-cell>
-						<ce-skeleton></ce-skeleton>
-					</ce-table-cell>
+					{Object.keys(columns).map((key) => (
+						<ce-table-cell key={key}>
+							<ce-skeleton></ce-skeleton>
+						</ce-table-cell>
+					))}
 				</ce-table-row>
 			</ce-table>
 		);
 	};
 
-	if ((items || []).length === 0) {
+	if ((items || []).length === 0 && !loading) {
 		return <Box title={title}>{empty}</Box>;
 	}
 

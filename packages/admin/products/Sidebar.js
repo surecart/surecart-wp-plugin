@@ -11,86 +11,115 @@ import Definition from '../ui/Definition';
 import { CeButton } from '@checkout-engine/components-react';
 import Image from './modules/Image';
 
-export default ( { loading, product } ) => {
+export default ({ loading, product }) => {
+	const badge = () => {
+		if (loading) {
+			return null;
+		}
+		return product?.recurring ? (
+			<ce-tag type="success">
+				<div
+					css={css`
+						display: flex;
+						align-items: center;
+						gap: 0.5em;
+					`}
+				>
+					<ce-icon name="repeat" />
+					{__('Subscription Product', 'checkout_engine')}
+				</div>
+			</ce-tag>
+		) : (
+			<ce-tag type="success">
+				<div
+					css={css`
+						display: flex;
+						align-items: center;
+						gap: 0.5em;
+					`}
+				>
+					<ce-icon name="bookmark" />
+					{__('One-Time Product', 'checkout_engine')}
+				</div>
+			</ce-tag>
+		);
+	};
+
 	return (
 		<Fragment>
 			<Box
-				loading={ loading }
+				loading={loading}
+				header_action={badge()}
 				title={
 					<div
-						css={ css`
+						css={css`
 							display: flex;
 							align-items: center;
 							justify-content: space-between;
-						` }
+						`}
 					>
-						{ __( 'Summary', 'checkout_engine' ) }
+						{__('Summary', 'checkout_engine')}
 					</div>
 				}
 			>
 				<Fragment>
 					<Definition
-						title={ __(
-							'Available for purchase',
-							'checkout_engine'
-						) }
+						title={__('Available for purchase', 'checkout_engine')}
 					>
 						<ArchiveToggle />
 					</Definition>
-					{ !! product?.archived_at && (
+					{!!product?.archived_at && (
 						<Definition
-							css={ css`
+							css={css`
 								margin-bottom: 1em;
-							` }
-							title={ __( 'Archived On', 'checkout_engine' ) }
+							`}
+							title={__('Archived On', 'checkout_engine')}
 						>
-							{ format(
+							{format(
 								'F j, Y',
-								new Date( product?.archived_at * 1000 )
-							) }
+								new Date(product?.archived_at * 1000)
+							)}
 						</Definition>
-					) }
-					{ !! product?.updated_at && (
+					)}
+					{!!product?.updated_at && (
 						<Definition
-							title={ __( 'Last Updated', 'checkout_engine' ) }
+							title={__('Last Updated', 'checkout_engine')}
 						>
-							{ format(
+							{format(
 								'F j, Y',
-								new Date( product.updated_at * 1000 )
-							) }
+								new Date(product.updated_at * 1000)
+							)}
 						</Definition>
-					) }
-					{ !! product?.created_at && (
-						<Definition
-							title={ __( 'Created On', 'checkout_engine' ) }
-						>
-							{ format(
+					)}
+					{!!product?.created_at && (
+						<Definition title={__('Created On', 'checkout_engine')}>
+							{format(
 								'F j, Y',
-								new Date( product.created_at * 1000 )
-							) }
+								new Date(product.created_at * 1000)
+							)}
 						</Definition>
-					) }
+					)}
 				</Fragment>
 			</Box>
 			<Image />
 			<Box
-				loading={ loading }
+				loading={loading}
 				title={
 					<div
-						css={ css`
+						css={css`
 							display: flex;
 							align-items: center;
 							justify-content: space-between;
-						` }
+						`}
 					>
-						{ __( 'Automations', 'checkout_engine' ) }
+						{__('Automations', 'checkout_engine')}
 					</div>
 				}
-				css={ css`
+				css={css`
 					font-size: 14px;
-				` }
+				`}
 				footer={
-					! loading && (
+					!loading && (
 						<CeButton>
 							<svg
 								slot="prefix"
@@ -108,15 +137,12 @@ export default ( { loading, product } ) => {
 								<line x1="5" y1="12" x2="19" y2="12"></line>
 							</svg>
 
-							{ __( 'Add Automation', 'checkout_engine' ) }
+							{__('Add Automation', 'checkout_engine')}
 						</CeButton>
 					)
 				}
 			>
-				{ __(
-					'To get started, add an automation.',
-					'checkout_engine'
-				) }
+				{__('To get started, add an automation.', 'checkout_engine')}
 			</Box>
 		</Fragment>
 	);

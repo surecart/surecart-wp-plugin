@@ -21,7 +21,7 @@ export default ({ required, value, className, onSelect }) => {
 			const queryArgs = [
 				'root',
 				'user',
-				{ search: query, is_customer: false, context: 'edit' },
+				{ search: query, context: 'edit' },
 			];
 			const users = select(coreStore).getEntityRecords(...queryArgs);
 			return {
