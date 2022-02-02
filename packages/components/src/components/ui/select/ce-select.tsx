@@ -15,6 +15,9 @@ export class CeSelectDropdown {
   private searchInput: HTMLCeInputElement;
   private input: HTMLInputElement;
 
+  /** The input's autocomplete attribute. */
+  @Prop() autocomplete: string;
+
   /** Placeholder for no value */
   @Prop() placeholder: string = '';
 
@@ -223,6 +226,7 @@ export class CeSelectDropdown {
           class="select__hidden-input"
           onBlur={() => this.handleBlur()}
           onFocus={() => this.handleFocus()}
+          autocomplete={this.autocomplete}
           name={this.name}
           ref={el => (this.input = el as HTMLInputElement)}
           value={this.value}
