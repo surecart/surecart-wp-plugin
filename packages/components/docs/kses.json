@@ -177,6 +177,7 @@
   },
   "ce-customer-name": {
     "autofocus": true,
+    "customer": true,
     "disabled": true,
     "has-focus": true,
     "help": true,
@@ -242,6 +243,7 @@
   },
   "ce-email": {
     "autofocus": true,
+    "customer": true,
     "disabled": true,
     "has-focus": true,
     "help": true,

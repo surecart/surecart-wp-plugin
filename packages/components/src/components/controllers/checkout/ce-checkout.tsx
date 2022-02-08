@@ -167,6 +167,7 @@ export class CECheckout {
       empty: !['loading', 'updating'].includes(this.checkoutState.value) && !this.order?.line_items?.pagination?.count,
       error: this.error,
       order: this.order,
+      customer: this.customer,
       customerShippingAddress: typeof this.order?.customer !== 'string' ? this?.order?.customer?.shipping_address : {},
       shippingAddress: this.order?.shipping_address,
       lockedChoices: this.prices,

@@ -345,6 +345,10 @@ export namespace Components {
          */
         "autofocus": boolean;
         /**
+          * Force a customer.
+         */
+        "customer": Customer;
+        /**
           * Disables the input.
          */
         "disabled": boolean;
@@ -445,6 +449,10 @@ export namespace Components {
           * The input's autofocus attribute.
          */
         "autofocus": boolean;
+        /**
+          * Force a customer.
+         */
+        "customer": Customer;
         /**
           * Disables the input.
          */
@@ -2600,6 +2608,10 @@ declare namespace LocalJSX {
          */
         "autofocus"?: boolean;
         /**
+          * Force a customer.
+         */
+        "customer"?: Customer;
+        /**
           * Disables the input.
          */
         "disabled"?: boolean;
@@ -2734,6 +2746,10 @@ declare namespace LocalJSX {
           * The input's autofocus attribute.
          */
         "autofocus"?: boolean;
+        /**
+          * Force a customer.
+         */
+        "customer"?: Customer;
         /**
           * Disables the input.
          */

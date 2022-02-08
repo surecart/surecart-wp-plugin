@@ -1,4 +1,4 @@
-import { Order } from '../../../types';
+import { Customer, Order } from '../../../types';
 import { Component, Prop, h, Event, EventEmitter, Watch } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
 
@@ -11,6 +11,9 @@ export class CeCustomerName {
 
   /** (passed from the ce-checkout component automatically) */
   @Prop() order: Order;
+
+  /** Force a customer. */
+  @Prop() customer: Customer;
 
   /** The input's size. */
   @Prop({ reflect: true }) size: 'small' | 'medium' | 'large' = 'medium';
@@ -93,7 +96,8 @@ export class CeCustomerName {
         type="text"
         name="name"
         ref={el => (this.input = el as HTMLCeInputElement)}
-        value={this.value}
+        value={this.customer?.name || this.value}
+        disabled={!!this.customer?.name}
         label={this.label}
         help={this.help}
         autocomplete="name"
@@ -112,4 +116,4 @@ export class CeCustomerName {
   }
 }
 
-openWormhole(CeCustomerName, ['order'], false);
+openWormhole(CeCustomerName, ['order', 'customer'], false);
