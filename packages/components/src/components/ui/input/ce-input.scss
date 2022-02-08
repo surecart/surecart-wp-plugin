@@ -4,6 +4,7 @@
 :host {
   --focus-ring: 0 0 0 var(--ce-focus-ring-width) var(--ce-focus-ring-color-primary);
   display: block;
+  position: relative;
 }
 
 .input__control[type='number'] {

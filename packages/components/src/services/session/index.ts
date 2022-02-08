@@ -3,7 +3,18 @@ import { Order } from '../../types';
 import { addQueryArgs } from '@wordpress/url';
 
 export const baseUrl = 'checkout-engine/v1/orders/';
-const expand = ['line_items', 'line_item.price', 'price.product', 'customer', 'payment_intent', 'discount', 'discount.promotion', 'discount.coupon', 'shipping_address'];
+const expand = [
+  'line_items',
+  'line_item.price',
+  'price.product',
+  'customer',
+  'customer.shipping_address',
+  'payment_intent',
+  'discount',
+  'discount.promotion',
+  'discount.coupon',
+  'shipping_address',
+];
 
 export const parsePath = (id, endpoint = '') => {
   let path = id ? `${baseUrl}${id}` : baseUrl;

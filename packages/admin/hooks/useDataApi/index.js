@@ -19,8 +19,8 @@ export default (initialData) => {
 	};
 
 	// update data item by id.
-	const updateDataItem = (id, data) => {
-		dispatch({ type: 'UPDATE_DATA_BY_ID', payload: { id, data } });
+	const updateDataItem = (data) => {
+		dispatch({ type: 'UPDATE_DATA_ITEM', payload: data });
 	};
 
 	const fetchData = async (args) => {

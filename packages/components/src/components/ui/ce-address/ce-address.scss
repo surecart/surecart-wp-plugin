@@ -4,6 +4,7 @@ ce-address {
 
 .ce-address {
   display: block;
+  position: relative;
 
   &--loading {
     min-height: 230px;

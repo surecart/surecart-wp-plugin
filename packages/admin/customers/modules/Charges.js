@@ -16,7 +16,13 @@ export default () => {
 					customer_ids: [customerId],
 					context: 'edit',
 					status: ['paid'],
-					expand: ['payment_method', 'payment_method.card'],
+					expand: [
+						'payment_method',
+						'payment_method.card',
+						'order',
+						'order.purchases',
+						'purchase.product',
+					],
 				},
 			});
 		}
@@ -38,7 +44,7 @@ export default () => {
 					label: __('Status', 'checkout_engine'),
 					width: '100px',
 				},
-				edit: {
+				refund: {
 					width: '100px',
 				},
 			}}

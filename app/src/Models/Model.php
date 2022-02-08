@@ -530,7 +530,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	 * @return Model
 	 */
 	protected function with( $query = [] ) {
-		$this->query['expand'] = (array) $query;
+		$this->query['expand'] = (array) array_merge( $query, $this->query['expand'] ?? [] );
 		return $this;
 	}
 
@@ -877,7 +877,9 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	 * @return void
 	 */
 	public function setRelation( $attribute, $value, $model ) {
-		$this->attributes[ $attribute ] = is_string( $value ) ? $value : new $model( $value );
+		if ( $value ) {
+			$this->attributes[ $attribute ] = is_string( $value ) ? $value : new $model( $value );
+		}
 	}
 
 	/**
@@ -889,7 +891,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	 * @return string|null;
 	 */
 	public function getRelationId( $attribute ) {
-		$value = $this->attributes[ $attribute ] ?? false;
+		$value = $this->attributes[ $attribute ] ?? null;
 		return ! empty( $value['id'] ) ? $value['id'] : $value;
 	}
 

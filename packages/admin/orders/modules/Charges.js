@@ -1,29 +1,34 @@
 import { __, _n } from '@wordpress/i18n';
-import { useEffect } from '@wordpress/element';
-import useDataApi from '../../hooks/useDataApi';
 import ChargesDataTable from '../../components/data-tables/charges-data-table';
-import useOrderData from '../hooks/useOrderData';
+import useEntities from '../../mixins/useEntities';
+import { useEffect } from '@wordpress/element';
+import useCurrentPage from '../../mixins/useCurrentPage';
 
 export default () => {
-	const { orderId, purchases } = useOrderData();
-	const { data, isLoading, error, pagination, fetchData } = useDataApi();
+	const { id } = useCurrentPage();
+	const { data, isLoading, pagination, error, fetchEntities } =
+		useEntities('charge');
 
 	useEffect(() => {
-		if (orderId) {
-			fetchData({
-				path: 'checkout-engine/v1/charges',
-				query: {
-					order_ids: [orderId],
-					context: 'edit',
-					status: ['paid'],
-					expand: ['payment_method', 'payment_method.card'],
-				},
-			});
-		}
-	}, [orderId]);
+		fetchEntities({
+			query: {
+				order_ids: [id],
+				context: 'edit',
+				expand: [
+					'payment_method',
+					'payment_method.card',
+					'invoice',
+					'invoice.subscription',
+					'subscription.price',
+					'price.product',
+				],
+			},
+		});
+	}, [id]);
 
 	return (
 		<ChargesDataTable
+			title={__('Payment', 'checkout_engine')}
 			columns={{
 				amount: {
 					label: __('Amount', 'checkout_engine'),
@@ -42,7 +47,8 @@ export default () => {
 					width: '100px',
 				},
 			}}
-			purchases={purchases}
+			showTotal
+			// onUpdatePurchase={editEntityRecord}
 			data={data}
 			isLoading={isLoading}
 			error={error}

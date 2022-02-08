@@ -47,6 +47,7 @@ return [
 		\CheckoutEngine\Rest\PromotionRestServiceProvider::class,
 		\CheckoutEngine\Rest\UploadsRestServiceProvider::class,
 		\CheckoutEngine\Rest\ChargesRestServiceProvider::class,
+		\CheckoutEngine\Rest\RefundsRestServiceProvider::class,
 		\CheckoutEngine\Rest\SubscriptionRestServiceProvider::class,
 		\CheckoutEngine\Rest\OrderRestServiceProvider::class,
 		\CheckoutEngine\Rest\WebhooksRestServiceProvider::class,

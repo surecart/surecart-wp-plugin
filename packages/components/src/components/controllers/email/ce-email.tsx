@@ -91,16 +91,16 @@ export class CeEmail {
     return (
       <ce-input
         type="email"
-        name="customer_email"
+        name="email"
         ref={el => (this.input = el as HTMLCeInputElement)}
         value={this.value}
         label={this.label}
         help={this.help}
         autocomplete={'email'}
         placeholder={this.placeholder}
-        disabled={this.disabled}
+        disabled={typeof this.order?.customer !== 'string' && !!this.order?.customer?.email}
         readonly={this.readonly}
-        required={this.required}
+        required={true}
         invalid={this.invalid}
         autofocus={this.autofocus}
         hasFocus={this.hasFocus}

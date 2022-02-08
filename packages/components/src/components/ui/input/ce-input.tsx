@@ -244,6 +244,7 @@ export class CEInput {
               // States
               'input--focused': this.hasFocus,
               'input--invalid': this.invalid,
+              'input--disabled': this.disabled,
 
               'input--squared': this.squared,
               'input--squared-bottom': this.squaredBottom,

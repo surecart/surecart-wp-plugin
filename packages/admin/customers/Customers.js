@@ -20,7 +20,7 @@ import Sidebar from './Sidebar';
 
 export default () => {
 	const { snackbarNotices, removeSnackbarNotice } = useSnackbar();
-	const { customer, error, loading, save } = useCustomerData();
+	const { customerId, error, loading, save } = useCustomerData();
 
 	const onSubmit = async (e) => {
 		e.preventDefault();
@@ -43,7 +43,7 @@ export default () => {
 			);
 		}
 
-		return customer?.id
+		return customerId
 			? __('Edit Customer', 'checkout_engine')
 			: __('Add Customer', 'checkout_engine');
 	};
@@ -74,7 +74,7 @@ export default () => {
 						`}
 					>
 						<SaveButton>
-							{customer?.id
+							{customerId
 								? __('Update Customer', 'checkout_engine')
 								: __('Create Customer', 'checkout_engine')}
 						</SaveButton>
@@ -88,9 +88,9 @@ export default () => {
 			<Fragment>
 				<FlashError path="customers" scrollIntoView />
 				<Details />
-				{customer?.id && <Orders />}
-				{customer?.id && <Charges />}
-				{customer?.id && <Subscriptions />}
+				{customerId && <Orders />}
+				{customerId && <Charges />}
+				{customerId && <Subscriptions />}
 			</Fragment>
 		</Template>
 	);

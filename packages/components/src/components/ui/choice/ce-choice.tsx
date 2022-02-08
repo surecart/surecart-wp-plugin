@@ -1,4 +1,5 @@
 import { Component, Prop, h, Event, EventEmitter, Method, State, Element, Watch } from '@stencil/core';
+import { addFormData } from '../../../functions/form-data';
 
 let id = 0;
 
@@ -157,6 +158,9 @@ export class CEChoice {
 
   componentDidLoad() {
     this.handleResize();
+    addFormData(this.el, {
+      value: (control: HTMLCeChoiceElement) => (control.checked ? control.value : undefined),
+    });
   }
 
   handleResize() {

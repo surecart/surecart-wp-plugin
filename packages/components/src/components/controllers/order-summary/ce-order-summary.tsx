@@ -9,7 +9,6 @@ import { openWormhole } from 'stencil-wormhole';
   shadow: true,
 })
 export class CEOrderSummary {
-  @Prop() busy: boolean;
   @Prop() order: Order;
   @Prop() loading: boolean;
   @Prop() empty: boolean;
@@ -65,10 +64,9 @@ export class CEOrderSummary {
           <slot />
         </div>
         {this.empty && !this.loading && <p class="empty">{__('Your cart is empty.', 'checkout_engine')}</p>}
-        {this.busy && <ce-block-ui></ce-block-ui>}
       </div>
     );
   }
 }
 
-openWormhole(CEOrderSummary, ['order', 'busy', 'loading', 'empty'], false);
+openWormhole(CEOrderSummary, ['order', 'loading', 'empty'], false);

@@ -8,13 +8,20 @@ import Box from '../../ui/Box';
 import Price from '../components/price/index.js';
 import useProductData from '../hooks/useProductData';
 
-import { CeButton, CeSwitch } from '@checkout-engine/components-react';
+import {
+	CeButton,
+	CeChoice,
+	CeChoices,
+	CeSwitch,
+} from '@checkout-engine/components-react';
 
 export default () => {
 	const {
 		loading,
 		prices,
 		product,
+		updateProduct,
+		isCreated,
 		addPrice,
 		archivedPrices,
 		hasArchivedPrices,
@@ -146,6 +153,50 @@ export default () => {
 					)
 				}
 			>
+				{!isCreated && (
+					<CeChoices
+						required
+						label={__('Product Type', 'checkout_engine')}
+						style={{ '--columns': 2 }}
+					>
+						<div>
+							<CeChoice
+								checked={!product?.recurring}
+								value="single"
+								onCeChange={(e) => {
+									if (!e.target.checked) return;
+									updateProduct({ recurring: false });
+								}}
+							>
+								{__('Single Payment', 'checkout_engine')}
+								<span slot="description">
+									{__(
+										'Charge a one-time fee.',
+										'checkout_engine'
+									)}
+								</span>
+							</CeChoice>
+							<CeChoice
+								checked={product?.recurring}
+								value="subscription"
+								onCeChange={(e) => {
+									if (!e.target.checked) return;
+									updateProduct({
+										recurring: true,
+									});
+								}}
+							>
+								{__('Subscription', 'checkout_engine')}
+								<span slot="description">
+									{__(
+										'Charge an ongoing fee.',
+										'checkout_engine'
+									)}
+								</span>
+							</CeChoice>
+						</div>
+					</CeChoices>
+				)}
 				{renderPrices()}
 			</Box>
 		</div>

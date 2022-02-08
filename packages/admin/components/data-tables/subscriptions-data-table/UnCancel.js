@@ -1,0 +1,69 @@
+import { __ } from '@wordpress/i18n';
+import apiFetch from '@wordpress/api-fetch';
+import { useState } from '@wordpress/element';
+import { addQueryArgs } from '@wordpress/url';
+import { Fragment } from '@wordpress/element';
+import useEntity from '../../../mixins/useEntity';
+
+export default ({ subscription, children }) => {
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState(null);
+	const { updateEntity } = useEntity('subscription', subscription?.id);
+
+	const unCancel = async (e) => {
+		setError(false);
+		setLoading(true);
+		try {
+			const result = await apiFetch({
+				path: addQueryArgs(
+					`checkout-engine/v1/subscriptions/${subscription.id}`,
+					{
+						expand: [
+							'price',
+							'price.product',
+							'latest_invoice',
+							'purchase',
+						],
+					}
+				),
+				data: { cancel_at_period_end: false },
+				method: 'PATCH',
+			});
+			if (result.id) {
+				updateEntity(result);
+			} else {
+				throw __(
+					'Could not un-cancel subscription.',
+					'checkout_engine'
+				);
+			}
+		} catch (e) {
+			console.error(e);
+			if (e?.additional_errors?.[0]?.message) {
+				setError(e?.additional_errors?.[0]?.message);
+			} else {
+				setError(
+					e?.message ||
+						__(
+							'Failed to un-cancel subscription.',
+							'checkout_engine'
+						)
+				);
+			}
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	return (
+		<Fragment>
+			{children ? (
+				<span onClick={unCancel}>{children}</span>
+			) : (
+				<ce-button size="small" onClick={unCancel} loading={loading}>
+					{__("Don't Cancel", 'checkout_engine')}
+				</ce-button>
+			)}
+		</Fragment>
+	);
+};

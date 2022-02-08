@@ -54,7 +54,7 @@ export default ({ attributes, setAttributes }) => {
 						status: 'paid',
 						subtotal_amount: 2900,
 						tax_amount: 0,
-						tax_calculation_status: 'calculated',
+						tax_status: 'calculated',
 						tax_label: null,
 						total_amount: 2900,
 						billing_address: null,

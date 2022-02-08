@@ -1,6 +1,6 @@
-import { Component, h, Prop } from '@stencil/core';
+import { Component, Fragment, h, Prop } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
-import { SubscriptionStatus } from '../../../types';
+import { Subscription, SubscriptionStatus } from '../../../types';
 
 @Component({
   tag: 'ce-subscription-status-badge',
@@ -8,8 +8,11 @@ import { SubscriptionStatus } from '../../../types';
   shadow: true,
 })
 export class CeSubscriptionStatusBadge {
-  /** The tag's statux type. */
+  /** Subscription status */
   @Prop() status: SubscriptionStatus;
+
+  /** The tag's statux type. */
+  @Prop() subscription: Subscription;
 
   /** The tag's size. */
   @Prop({ reflect: true }) size: 'small' | 'medium' | 'large' = 'medium';
@@ -21,11 +24,14 @@ export class CeSubscriptionStatusBadge {
   @Prop() clearable: boolean = false;
 
   getType() {
-    switch (this.status) {
+    if (this.subscription?.cancel_at_period_end) {
+      return 'info';
+    }
+    switch (this.status || this.subscription?.status) {
       case 'incomplete':
         return 'warning';
       case 'trialing':
-        return 'text';
+        return 'info';
       case 'active':
         return 'success';
       case 'past_due':
@@ -38,7 +44,14 @@ export class CeSubscriptionStatusBadge {
   }
 
   getText() {
-    switch (this.status) {
+    if (this.subscription?.cancel_at_period_end && this.subscription.current_period_end_at) {
+      return (
+        <Fragment>
+          {__('Cancels', 'checkout_engine')} <ce-format-date type="timestamp" date={this.subscription.current_period_end_at} month="short" day="numeric"></ce-format-date>
+        </Fragment>
+      );
+    }
+    switch (this.status || this.subscription?.status) {
       case 'incomplete':
         return __('Incomplete', 'checkout_engine');
       case 'trialing':

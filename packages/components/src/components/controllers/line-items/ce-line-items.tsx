@@ -77,7 +77,7 @@ export class CeLineItems {
               editable={this.editable}
               removable={this.removable}
               quantity={item.quantity}
-              amount={item.ad_hoc_amount !== null ? item.ad_hoc_amount : item.price.amount}
+              amount={item.ad_hoc_amount !== null ? item.ad_hoc_amount : item.price.amount * item.quantity}
               currency={this.order?.currency}
               trialDurationDays={item?.price?.trial_duration_days}
               interval={translatedInterval(item.price.recurring_interval_count, item.price.recurring_interval)}

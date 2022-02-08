@@ -154,15 +154,7 @@ export interface Invoice extends Object {
   status: 'draft' | 'finalized' | 'paid';
   subtotal_amount: number;
   tax_amount: number;
-  tax_calculation_status:
-    | 'disabled'
-    | 'shipping_address_required'
-    | 'shipping_address_country_required'
-    | 'shipping_address_state_required'
-    | 'shipping_address_postal_code_required'
-    | 'tax_registration_not_found'
-    | 'estimated'
-    | 'calculated';
+  tax_status: 'disabled' | 'address_invalid' | 'reverse_charged' | 'tax_registration_not_found' | 'estimated' | 'calculated';
   tax_label: string;
   total_amount: number;
   billing_address: string | BillingAddress;
@@ -224,6 +216,7 @@ export interface Order extends Object {
   line_items: lineItems;
   metadata?: Object;
   payment_intent?: PaymentIntent;
+  customer: string | Customer;
   subscriptions: {
     object: 'list';
     pagination: Pagination;
@@ -371,8 +364,8 @@ export interface Customer extends Object {
   email: string;
   name?: string;
   phone?: string;
-  billing_address?: Address;
-  shipping_address?: Address;
+  billing_address?: string | Address;
+  shipping_address?: string | Address;
 }
 
 export interface Address extends Object {

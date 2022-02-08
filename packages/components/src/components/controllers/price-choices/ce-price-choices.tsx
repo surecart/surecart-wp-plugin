@@ -1,5 +1,4 @@
 import { Component, h, Prop, Fragment, Element, Listen, Event, EventEmitter } from '@stencil/core';
-import { openWormhole } from 'stencil-wormhole';
 import { LineItemData } from '../../../types';
 @Component({
   tag: 'ce-price-choices',
@@ -14,9 +13,6 @@ export class CePriceChoices {
 
   /** Number of columns */
   @Prop() columns: number = 1;
-
-  /** Busy */
-  @Prop() busy: boolean = false;
 
   /** Required by default */
   @Prop() required: boolean = true;
@@ -48,10 +44,7 @@ export class CePriceChoices {
         <ce-choices label={this.label} required={this.required} class="loaded price-selector" style={{ '--columns': this.columns.toString() }}>
           <slot />
         </ce-choices>
-        {this.busy && <ce-block-ui z-index={4}></ce-block-ui>}
       </Fragment>
     );
   }
 }
-
-openWormhole(CePriceChoices, ['busy'], false);

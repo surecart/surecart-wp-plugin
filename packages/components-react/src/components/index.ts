@@ -23,6 +23,7 @@ export const CeColumn = /*@__PURE__*/createReactComponent<JSX.CeColumn, HTMLCeCo
 export const CeColumns = /*@__PURE__*/createReactComponent<JSX.CeColumns, HTMLCeColumnsElement>('ce-columns');
 export const CeConsumer = /*@__PURE__*/createReactComponent<JSX.CeConsumer, HTMLCeConsumerElement>('ce-consumer');
 export const CeCouponForm = /*@__PURE__*/createReactComponent<JSX.CeCouponForm, HTMLCeCouponFormElement>('ce-coupon-form');
+export const CeCustomerName = /*@__PURE__*/createReactComponent<JSX.CeCustomerName, HTMLCeCustomerNameElement>('ce-customer-name');
 export const CeCustomerOrdersList = /*@__PURE__*/createReactComponent<JSX.CeCustomerOrdersList, HTMLCeCustomerOrdersListElement>('ce-customer-orders-list');
 export const CeCustomerSubscriptionEdit = /*@__PURE__*/createReactComponent<JSX.CeCustomerSubscriptionEdit, HTMLCeCustomerSubscriptionEditElement>('ce-customer-subscription-edit');
 export const CeCustomerSubscriptionPlan = /*@__PURE__*/createReactComponent<JSX.CeCustomerSubscriptionPlan, HTMLCeCustomerSubscriptionPlanElement>('ce-customer-subscription-plan');

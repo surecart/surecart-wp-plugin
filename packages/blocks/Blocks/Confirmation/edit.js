@@ -5,13 +5,13 @@ import { InnerBlocks, useBlockProps } from '@wordpress/block-editor';
 import { CeOrderConfirmation } from '@checkout-engine/components-react';
 
 export default () => {
-	const blockProps = useBlockProps( {
+	const blockProps = useBlockProps({
 		style: {
 			maxWidth: 'var( --ast-content-width-size, 910px )',
 			marginLeft: 'auto !important',
 			marginRight: 'auto !important',
 		},
-	} );
+	});
 
 	const order = {
 		billing_address: null,
@@ -93,8 +93,7 @@ export default () => {
 					object: 'line_item',
 					price: {
 						ad_hoc_amount: null,
-						order:
-							'e620901c-0320-43ee-8bb1-d07cd48696a7',
+						order: 'e620901c-0320-43ee-8bb1-d07cd48696a7',
 						created_at: 1638898265,
 						discount_amount: 3980,
 						id: '5e9ca3ec-e682-40dd-b09a-67049fda5c15',
@@ -184,8 +183,7 @@ export default () => {
 					object: 'line_item',
 					price: {
 						ad_hoc_amount: null,
-						order:
-							'e620901c-0320-43ee-8bb1-d07cd48696a7',
+						order: 'e620901c-0320-43ee-8bb1-d07cd48696a7',
 						created_at: 1638898265,
 						discount_amount: 3980,
 						id: '5e9ca3ec-e682-40dd-b09a-67049fda5c15',
@@ -277,7 +275,7 @@ export default () => {
 		status: 'paid',
 		subtotal_amount: 19900,
 		tax_amount: 0,
-		tax_calculation_status: 'disabled',
+		tax_status: 'disabled',
 		tax_identifier: null,
 		tax_label: null,
 		total_amount: 15920,
@@ -285,20 +283,17 @@ export default () => {
 	};
 
 	return (
-		<div { ...blockProps }>
-			<CeOrderConfirmation
-				{ ...blockProps }
-				order={ order }
-			>
+		<div {...blockProps}>
+			<CeOrderConfirmation {...blockProps} order={order}>
 				<div
-					css={ css`
+					css={css`
 						.wp-block {
 							margin-top: 30px !important;
 							margin-bottom: 30px !important;
 						}
-					` }
+					`}
 				>
-					<InnerBlocks templateLock={ false } />
+					<InnerBlocks templateLock={false} />
 				</div>
 			</CeOrderConfirmation>
 		</div>

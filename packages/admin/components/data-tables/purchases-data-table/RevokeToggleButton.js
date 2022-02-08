@@ -3,9 +3,11 @@ import { addQueryArgs } from '@wordpress/url';
 import { useState } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
 import { CeButton } from '@checkout-engine/components-react';
+import useEntity from '../../../mixins/useEntity';
 
-export default ({ purchase, onUpdatePurchase }) => {
+export default ({ purchase }) => {
 	const [loading, setLoading] = useState(false);
+	const { updateEntity } = useEntity('purchase', purchase?.id);
 
 	const toggleRevoke = async (id, revoke) => {
 		const r = confirm(
@@ -38,13 +40,18 @@ export default ({ purchase, onUpdatePurchase }) => {
 				),
 				method: 'PATCH',
 			});
-			onUpdatePurchase(id, result);
+			updateEntity(result);
 		} catch (e) {
 			throw e;
 		} finally {
 			setLoading(false);
 		}
 	};
+
+	// TODO: Maybe offer subscription cancelation UI here.
+	if (purchase?.subscription) {
+		return null;
+	}
 
 	return purchase?.revoked ? (
 		<CeButton
@@ -53,7 +60,7 @@ export default ({ purchase, onUpdatePurchase }) => {
 			size="small"
 			loading={loading}
 		>
-			{__('Reinstate', 'checkout_engine')}
+			{__('Unrevoke', 'checkout_engine')}
 		</CeButton>
 	) : (
 		<CeButton

@@ -11,9 +11,9 @@ import { Address } from '../../../types';
   shadow: false,
 })
 export class CeAddress {
-  @Prop() shippingAddress: Address;
+  @Prop() customerShippingAddress: Address = {};
+  @Prop() shippingAddress: Address = {};
   @Prop() loading: boolean;
-  @Prop() busy: boolean;
   @Prop() label: string;
   @Prop() required: boolean = true;
 
@@ -52,6 +52,19 @@ export class CeAddress {
         this.state = { ...this.state, [key]: val?.[key] };
       }
     });
+  }
+
+  @Watch('customerShippingAddress')
+  handleCustomerShippingChange(val, old) {
+    if (!Object.keys(this.shippingAddress || {}).length) {
+      // update local state if changes.
+      Object.keys(this.state).forEach(key => {
+        if (val?.[key] !== old?.[key]) {
+          if (!val?.[key]) return; // don't allow resetting to empty.
+          this.state = { ...this.state, [key]: val?.[key] };
+        }
+      });
+    }
   }
 
   setRegions() {
@@ -186,10 +199,9 @@ export class CeAddress {
             />
           )}
         </ce-form-control>
-        {this.busy && <ce-block-ui></ce-block-ui>}
       </div>
     );
   }
 }
 
-openWormhole(CeAddress, ['shippingAddress', 'loading', 'busy'], false);
+openWormhole(CeAddress, ['shippingAddress', 'loading', 'customerShippingAddress'], false);

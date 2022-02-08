@@ -67,7 +67,7 @@ export default ({
 							suffix: translateInterval(
 								price?.recurring_interval_count,
 								price?.recurring_interval,
-								' /',
+								'every',
 								'once'
 							),
 						};

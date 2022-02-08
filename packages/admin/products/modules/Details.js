@@ -53,7 +53,7 @@ export default () => {
 						updateProduct({ description: e.target.value })
 					}
 				/> */}
-				{!isCreated && (
+				{/* {!isCreated && (
 					<CeChoices
 						required
 						label={__('Product Type', 'checkout_engine')}
@@ -96,7 +96,7 @@ export default () => {
 							</CeChoice>
 						</div>
 					</CeChoices>
-				)}
+				)}*/}
 				<CeSwitch
 					css={css`
 						margin: var(--ce-spacing-small) 0;

@@ -9,16 +9,39 @@ import useLineItemData from '../hooks/useLineItemData';
 import useOrderData from '../hooks/useOrderData';
 import Definition from '../../ui/Definition';
 
-export default () => {
-	const { line_items } = useLineItemData();
-	const { order, loading } = useOrderData();
+export default ({ order, loading }) => {
+	const line_items = order?.line_items?.data;
 
 	const renderLoading = () => {
 		return <ce-skeleton></ce-skeleton>;
 	};
 
 	return (
-		<Box title={__('Order Details', 'checkout_engine')}>
+		<Box
+			title={__('Order Details', 'checkout_engine')}
+			footer={
+				!loading && (
+					<ce-line-item
+						style={{
+							width: '100%',
+							'--price-size': 'var(--ce-font-size-x-large)',
+						}}
+					>
+						<span slot="title">
+							{__('Total', 'checkout_engine')}
+						</span>
+						<span slot="price">
+							<ce-format-number
+								type="currency"
+								currency={order?.currency}
+								value={order?.total_amount}
+							></ce-format-number>
+						</span>
+						<span slot="currency">{order?.currency}</span>
+					</ce-line-item>
+				)
+			}
+		>
 			{loading ? (
 				renderLoading()
 			) : (
@@ -78,34 +101,24 @@ export default () => {
 
 					<hr />
 
-					<Definition title={__('Total', 'order')}>
-						<div
-							css={css`
-								display: flex;
-								align-items: center;
-								gap: 1em;
-							`}
-						>
-							<div
-								css={css`
-									text-transform: uppercase;
-								`}
-							>
-								{order?.currency}
-							</div>
+					<ce-line-item
+						style={{
+							width: '100%',
+							'--price-size': 'var(--ce-font-size-x-large)',
+						}}
+					>
+						<span slot="title">
+							{__('Amount Paid', 'checkout_engine')}
+						</span>
+						<span slot="price">
 							<ce-format-number
-								style={{
-									fontSize: 'var(--ce-font-size-x-large)',
-									fontWeight:
-										'var(--ce-font-weight-semibold)',
-									color: 'var(--ce-color-gray-800)',
-								}}
 								type="currency"
 								currency={order?.currency}
-								value={order?.total_amount}
+								value={order?.amount_due}
 							></ce-format-number>
-						</div>
-					</Definition>
+						</span>
+						<span slot="currency">{order?.currency}</span>
+					</ce-line-item>
 				</Fragment>
 			)}
 		</Box>

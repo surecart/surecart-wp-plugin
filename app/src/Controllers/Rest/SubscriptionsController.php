@@ -27,12 +27,6 @@ class SubscriptionsController extends RestController {
 		if ( is_wp_error( $model ) ) {
 			return $model;
 		}
-
-		// do we immediately cancel or at period end?
-		if ( apply_filters( 'checkout_engine/subscription/cancel/immediate', false, $request ) ) {
-			return $model->where( $request->get_query_params() )->cancel( $request['id'] );
-		}
-
-		return $model->where( $request->get_query_params() )->update( [ 'cancel_at_period_end' => true ] );
+		return $model->where( $request->get_query_params() )->cancel( $request['id'] );
 	}
 }

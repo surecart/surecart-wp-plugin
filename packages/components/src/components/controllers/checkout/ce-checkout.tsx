@@ -167,6 +167,7 @@ export class CECheckout {
       empty: !['loading', 'updating'].includes(this.checkoutState.value) && !this.order?.line_items?.pagination?.count,
       error: this.error,
       order: this.order,
+      customerShippingAddress: typeof this.order?.customer !== 'string' ? this?.order?.customer?.shipping_address : {},
       shippingAddress: this.order?.shipping_address,
       lockedChoices: this.prices,
       products: this.productsEntities,
@@ -237,6 +238,7 @@ export class CECheckout {
           >
             <slot />
           </ce-session-provider>
+          {this.state().busy && <ce-block-ui z-index={9}></ce-block-ui>}
         </Universe.Provider>
       </div>
     );

@@ -9,7 +9,7 @@ import { Address, ChoiceItem, Coupon, Customer, LineItemData, Order, OrderStatus
 import { IconLibraryMutator, IconLibraryResolver } from "./components/ui/icon/library";
 export namespace Components {
     interface CeAddress {
-        "busy": boolean;
+        "customerShippingAddress": Address;
         "label": string;
         "loading": boolean;
         "required": boolean;
@@ -339,6 +339,64 @@ export namespace Components {
         "loading": boolean;
         "order": Order;
     }
+    interface CeCustomerName {
+        /**
+          * The input's autofocus attribute.
+         */
+        "autofocus": boolean;
+        /**
+          * Disables the input.
+         */
+        "disabled": boolean;
+        /**
+          * Inputs focus
+         */
+        "hasFocus": boolean;
+        /**
+          * The input's help text.
+         */
+        "help": string;
+        /**
+          * This will be true when the control is in an invalid state. Validity is determined by props such as `type`, `required`, `minlength`, `maxlength`, and `pattern` using the browser's constraint validation API.
+         */
+        "invalid": boolean;
+        /**
+          * The input's label.
+         */
+        "label": string;
+        /**
+          * (passed from the ce-checkout component automatically)
+         */
+        "order": Order;
+        /**
+          * Draws a pill-style input with rounded edges.
+         */
+        "pill": boolean;
+        /**
+          * The input's placeholder text.
+         */
+        "placeholder": string;
+        /**
+          * Makes the input readonly.
+         */
+        "readonly": boolean;
+        /**
+          * Makes the input a required field.
+         */
+        "required": boolean;
+        /**
+          * Should we show the label
+         */
+        "showLabel": boolean;
+        /**
+          * The input's size.
+         */
+        "size": 'small' | 'medium' | 'large';
+        /**
+          * The input's value attribute.
+         */
+        "value": string;
+    }
     interface CeCustomerOrdersList {
         /**
           * Customer id to fetch subscriptions
@@ -456,7 +514,7 @@ export namespace Components {
           * Serializes all form controls elements and returns a `FormData` object.
          */
         "getFormData": () => Promise<FormData>;
-        "getFormJson": () => Promise<{}>;
+        "getFormJson": () => Promise<Record<string, unknown>>;
         /**
           * Prevent the form from validating inputs before submitting.
          */
@@ -464,8 +522,7 @@ export namespace Components {
         /**
           * Submits the form. If all controls are valid, the `ce-submit` event will be emitted and the promise will resolve with `true`. If any form control is invalid, the promise will resolve with `false` and no event will be emitted.
          */
-        "submit": () => Promise<boolean>;
-        "validate": () => Promise<boolean>;
+        "submit": () => Promise<void>;
     }
     interface CeFormControl {
         /**
@@ -879,7 +936,6 @@ export namespace Components {
         "status": OrderStatus;
     }
     interface CeOrderSummary {
-        "busy": boolean;
         "collapsed": boolean;
         "collapsible": boolean;
         "empty": boolean;
@@ -995,10 +1051,6 @@ export namespace Components {
         "type": 'checkbox' | 'radio';
     }
     interface CePriceChoices {
-        /**
-          * Busy
-         */
-        "busy": boolean;
         /**
           * Number of columns
          */
@@ -1419,9 +1471,13 @@ export namespace Components {
          */
         "size": 'small' | 'medium' | 'large';
         /**
-          * The tag's statux type.
+          * Subscription status
          */
         "status": SubscriptionStatus;
+        /**
+          * The tag's statux type.
+         */
+        "subscription": Subscription;
     }
     interface CeSubscriptionsList {
         "cancelBehavior": 'period_end' | 'immediate';
@@ -1655,6 +1711,12 @@ declare global {
     var HTMLCeCouponFormElement: {
         prototype: HTMLCeCouponFormElement;
         new (): HTMLCeCouponFormElement;
+    };
+    interface HTMLCeCustomerNameElement extends Components.CeCustomerName, HTMLStencilElement {
+    }
+    var HTMLCeCustomerNameElement: {
+        prototype: HTMLCeCustomerNameElement;
+        new (): HTMLCeCustomerNameElement;
     };
     interface HTMLCeCustomerOrdersListElement extends Components.CeCustomerOrdersList, HTMLStencilElement {
     }
@@ -2117,6 +2179,7 @@ declare global {
         "ce-columns": HTMLCeColumnsElement;
         "ce-consumer": HTMLCeConsumerElement;
         "ce-coupon-form": HTMLCeCouponFormElement;
+        "ce-customer-name": HTMLCeCustomerNameElement;
         "ce-customer-orders-list": HTMLCeCustomerOrdersListElement;
         "ce-customer-subscription-edit": HTMLCeCustomerSubscriptionEditElement;
         "ce-customer-subscription-plan": HTMLCeCustomerSubscriptionPlanElement;
@@ -2195,7 +2258,7 @@ declare global {
 }
 declare namespace LocalJSX {
     interface CeAddress {
-        "busy"?: boolean;
+        "customerShippingAddress"?: Address;
         "label"?: string;
         "loading"?: boolean;
         "required"?: boolean;
@@ -2531,6 +2594,85 @@ declare namespace LocalJSX {
         "onCeApplyCoupon"?: (event: CustomEvent<string>) => void;
         "order"?: Order;
     }
+    interface CeCustomerName {
+        /**
+          * The input's autofocus attribute.
+         */
+        "autofocus"?: boolean;
+        /**
+          * Disables the input.
+         */
+        "disabled"?: boolean;
+        /**
+          * Inputs focus
+         */
+        "hasFocus"?: boolean;
+        /**
+          * The input's help text.
+         */
+        "help"?: string;
+        /**
+          * This will be true when the control is in an invalid state. Validity is determined by props such as `type`, `required`, `minlength`, `maxlength`, and `pattern` using the browser's constraint validation API.
+         */
+        "invalid"?: boolean;
+        /**
+          * The input's label.
+         */
+        "label"?: string;
+        /**
+          * Emitted when the control loses focus.
+         */
+        "onCeBlur"?: (event: CustomEvent<void>) => void;
+        /**
+          * Emitted when the control's value changes.
+         */
+        "onCeChange"?: (event: CustomEvent<void>) => void;
+        /**
+          * Emitted when the clear button is activated.
+         */
+        "onCeClear"?: (event: CustomEvent<void>) => void;
+        /**
+          * Emitted when the control gains focus.
+         */
+        "onCeFocus"?: (event: CustomEvent<void>) => void;
+        /**
+          * Emitted when the control receives input.
+         */
+        "onCeInput"?: (event: CustomEvent<void>) => void;
+        "onCeUpdateCustomer"?: (event: CustomEvent<{ email: string }>) => void;
+        /**
+          * (passed from the ce-checkout component automatically)
+         */
+        "order"?: Order;
+        /**
+          * Draws a pill-style input with rounded edges.
+         */
+        "pill"?: boolean;
+        /**
+          * The input's placeholder text.
+         */
+        "placeholder"?: string;
+        /**
+          * Makes the input readonly.
+         */
+        "readonly"?: boolean;
+        /**
+          * Makes the input a required field.
+         */
+        "required"?: boolean;
+        /**
+          * Should we show the label
+         */
+        "showLabel"?: boolean;
+        /**
+          * The input's size.
+         */
+        "size"?: 'small' | 'medium' | 'large';
+        /**
+          * The input's value attribute.
+         */
+        "value"?: string;
+    }
     interface CeCustomerOrdersList {
         /**
           * Customer id to fetch subscriptions
@@ -2686,10 +2828,6 @@ declare namespace LocalJSX {
           * Emitted when the form is submitted. This event will not be emitted if any form control inside of it is in an invalid state, unless the form has the `novalidate` attribute. Note that there is never a need to prevent this event, since it doen't send a GET or POST request like native forms. To "prevent" submission, use a conditional around the XHR request you use to submit the form's data with.
          */
         "onCeFormChange"?: (event: CustomEvent<Object>) => void;
-        /**
-          * Emitted when the form is invalid.
-         */
-        "onCeFormInvalid"?: (event: CustomEvent<Object>) => void;
         /**
           * Emitted when the form is submitted. This event will not be emitted if any form control inside of it is in an invalid state, unless the form has the `novalidate` attribute. Note that there is never a need to prevent this event, since it doen't send a GET or POST request like native forms. To "prevent" submission, use a conditional around the XHR request you use to submit the form's data with.
          */
@@ -3127,7 +3265,6 @@ declare namespace LocalJSX {
         "status"?: OrderStatus;
     }
     interface CeOrderSummary {
-        "busy"?: boolean;
         "collapsed"?: boolean;
         "collapsible"?: boolean;
         "empty"?: boolean;
@@ -3255,10 +3392,6 @@ declare namespace LocalJSX {
         "type"?: 'checkbox' | 'radio';
     }
     interface CePriceChoices {
-        /**
-          * Busy
-         */
-        "busy"?: boolean;
         /**
           * Number of columns
          */
@@ -3730,9 +3863,13 @@ declare namespace LocalJSX {
          */
         "size"?: 'small' | 'medium' | 'large';
         /**
-          * The tag's statux type.
+          * Subscription status
          */
         "status"?: SubscriptionStatus;
+        /**
+          * The tag's statux type.
+         */
+        "subscription"?: Subscription;
     }
     interface CeSubscriptionsList {
         "cancelBehavior"?: 'period_end' | 'immediate';
@@ -3893,6 +4030,7 @@ declare namespace LocalJSX {
         "ce-columns": CeColumns;
         "ce-consumer": CeConsumer;
         "ce-coupon-form": CeCouponForm;
+        "ce-customer-name": CeCustomerName;
         "ce-customer-orders-list": CeCustomerOrdersList;
         "ce-customer-subscription-edit": CeCustomerSubscriptionEdit;
         "ce-customer-subscription-plan": CeCustomerSubscriptionPlan;
@@ -3989,6 +4127,7 @@ declare module "@stencil/core" {
             "ce-columns": LocalJSX.CeColumns & JSXBase.HTMLAttributes<HTMLCeColumnsElement>;
             "ce-consumer": LocalJSX.CeConsumer & JSXBase.HTMLAttributes<HTMLCeConsumerElement>;
             "ce-coupon-form": LocalJSX.CeCouponForm & JSXBase.HTMLAttributes<HTMLCeCouponFormElement>;
+            "ce-customer-name": LocalJSX.CeCustomerName & JSXBase.HTMLAttributes<HTMLCeCustomerNameElement>;
             "ce-customer-orders-list": LocalJSX.CeCustomerOrdersList & JSXBase.HTMLAttributes<HTMLCeCustomerOrdersListElement>;
             "ce-customer-subscription-edit": LocalJSX.CeCustomerSubscriptionEdit & JSXBase.HTMLAttributes<HTMLCeCustomerSubscriptionEditElement>;
             "ce-customer-subscription-plan": LocalJSX.CeCustomerSubscriptionPlan & JSXBase.HTMLAttributes<HTMLCeCustomerSubscriptionPlanElement>;

@@ -34,7 +34,7 @@
 		"plugin:release": "composer install --no-dev && run-s build release:build plugin-zip",
 		"release:zip": "node .dev/build/release/release.js checkout-engine-plugin",
 		"watch": "yarn start",
-		"start": "wp-scripts start --hot",
+		"start": "wp-scripts start",
 		"start:workspace": "yarn workspaces foreach -pvi run watch",
 		"build": "wp-scripts build",
 		"check-engines": "wp-scripts check-engines",

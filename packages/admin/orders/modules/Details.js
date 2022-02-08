@@ -3,34 +3,40 @@
 import { __, sprintf } from '@wordpress/i18n';
 
 import { css, jsx } from '@emotion/core';
-import useOrderData from '../hooks/useOrderData';
 import { formatTime } from '../../util/time';
 
-export default () => {
-	const { order, loading } = useOrderData();
+export default ({ order, loading }) => {
+	if (loading) {
+		return (
+			<div
+				css={css`
+					display: flex;
+					justify-content: space-between;
+					align-items: center;
+					gap: 2em;
+					margin-bottom: 2em;
+				`}
+			>
+				<div>
+					<div
+						css={css`
+							display: flex;
+							align-items: center;
+							gap: 0.5em;
+						`}
+					>
+						<ce-skeleton style={{ flex: 1 }}></ce-skeleton>
+					</div>
+					<ce-skeleton></ce-skeleton>
+				</div>
+			</div>
+		);
+	}
 
 	if (!order?.id) {
 		return null;
 	}
 
-	const renderBadge = (status) => {
-		switch (status) {
-			case 'paid':
-				return (
-					<ce-tag type="success">
-						{__('Paid', 'checkout_engine')}
-					</ce-tag>
-				);
-			case 'finalized':
-				return (
-					<ce-tag type="warning">
-						{__('Pending Payment', 'checkout_engine')}
-					</ce-tag>
-				);
-			default:
-				return <ce-tag>{status}</ce-tag>;
-		}
-	};
 	return (
 		<div
 			css={css`
@@ -53,7 +59,7 @@ export default () => {
 						<ce-format-number
 							type="currency"
 							currency={order?.currency}
-							value={order?.total_amount}
+							value={order?.amount_due}
 						></ce-format-number>
 					</h1>
 					<ce-order-status-badge

@@ -4,15 +4,16 @@ import { addQueryArgs } from '@wordpress/url';
 import { controls } from '@wordpress/data';
 import { store as uiStore } from '../ui';
 import { store as coreStore } from '../data';
+import { normalizeEntities, normalizeEntity } from '../../schema';
 
-export function setError( payload ) {
+export function setError(payload) {
 	return {
 		type: 'SET_ERROR',
 		payload,
 	};
 }
 
-export function registerEntities( payload ) {
+export function registerEntities(payload) {
 	return {
 		type: 'REGISTER_ENTITIES',
 		payload,
@@ -22,7 +23,7 @@ export function registerEntities( payload ) {
 /**
  * Bulk set all models
  */
-export function setModels( payload ) {
+export function setModels(payload) {
 	return {
 		type: 'SET_MODELS',
 		payload,
@@ -32,14 +33,14 @@ export function setModels( payload ) {
 /**
  * Bulk add models
  */
-export function addModels( payload ) {
+export function addModels(payload) {
 	return {
 		type: 'ADD_MODELS',
 		payload,
 	};
 }
 
-export function* updateModelsProperty( key, prop, payload ) {
+export function* updateModelsProperty(key, prop, payload) {
 	return {
 		type: 'UPDATE_MODELS_PROPERTY',
 		payload,
@@ -48,7 +49,7 @@ export function* updateModelsProperty( key, prop, payload ) {
 	};
 }
 
-export function updateModels( key, payload ) {
+export function updateModels(key, payload) {
 	return {
 		type: 'UPDATE_MODELS',
 		payload,
@@ -59,10 +60,10 @@ export function updateModels( key, payload ) {
 /**
  * Set model by path
  */
-export function setModel( key, payload, index = 0 ) {
+export function setModel(key, payload, index = 0) {
 	return {
 		type: 'SET_MODEL',
-		key: `${ key }.${ index }`,
+		key: `${key}.${index}`,
 		payload,
 	};
 }
@@ -70,7 +71,7 @@ export function setModel( key, payload, index = 0 ) {
 /**
  * Add model by path.
  */
-export function addModel( key, payload ) {
+export function addModel(key, payload) {
 	return {
 		type: 'ADD_MODEL',
 		key,
@@ -81,25 +82,52 @@ export function addModel( key, payload ) {
 /**
  * Duplicate price. (Alias for Add Price)
  */
-export function duplicateModel( key, { id, ...payload } ) {
-	return addModel( key, payload );
+export function duplicateModel(key, { id, ...payload }) {
+	return addModel(key, payload);
 }
 
 /**
  * Update model by path.
  */
-export function* updateModel( key, payload, index = 0 ) {
+export function* updateModel(key, payload, index = 0) {
 	// first update dirty so we know to save.
-	yield controls.dispatch( coreStore, 'updateDirty', key, payload, index );
+	yield controls.dispatch(coreStore, 'updateDirty', key, payload, index);
 
 	return {
 		type: 'UPDATE_MODEL',
-		key: `${ key }.${ index }`,
+		key: `${key}.${index}`,
 		payload,
 	};
 }
 
-export function setModelById( key, payload, index = 0 ) {
+/**
+ * Receive entity records and normalize data.
+ */
+export function* receiveModels(payload) {
+	// Normalize data
+	const payloadArray = Array.isArray(payload) ? payload : [payload];
+	const normalized = normalizeEntities(payloadArray);
+	let transformed = {};
+	Object.keys(normalized?.entities || {}).forEach((name) => {
+		transformed[name] = Object.values(normalized.entities[name] || {}).map(
+			(item) => item
+		);
+	});
+
+	for (var key of Object.keys(transformed)) {
+		yield updateCollection(key, transformed[key]);
+	}
+}
+
+export function updateCollection(key, payload) {
+	return {
+		type: 'UPDATE_COLLECTION',
+		key,
+		payload,
+	};
+}
+
+export function setModelById(key, payload, index = 0) {
 	return {
 		type: 'SET_MODEL_BY_ID',
 		key,
@@ -111,7 +139,7 @@ export function setModelById( key, payload, index = 0 ) {
 /**
  * Update dirty list.
  */
-export function* updateDirty( key, payload, index = 0 ) {
+export function* updateDirty(key, payload, index = 0) {
 	const model = yield controls.resolveSelect(
 		coreStore,
 		'selectModel',
@@ -120,7 +148,7 @@ export function* updateDirty( key, payload, index = 0 ) {
 	);
 
 	// set dirty.
-	if ( model?.id ) {
+	if (model?.id) {
 		yield {
 			type: 'UPDATE_DIRTY',
 			id: model?.id,
@@ -132,7 +160,7 @@ export function* updateDirty( key, payload, index = 0 ) {
 /**
  * Delete model by path.
  */
-export function* deleteModel( key, index = 0 ) {
+export function* deleteModel(key, index = 0) {
 	const data = yield controls.resolveSelect(
 		coreStore,
 		'selectModel',
@@ -140,31 +168,31 @@ export function* deleteModel( key, index = 0 ) {
 		index
 	);
 
-	if ( data?.id ) {
+	if (data?.id) {
 		let response;
 		try {
-			yield controls.dispatch( uiStore, 'setSaving', true );
-			response = yield apiFetch( {
+			yield controls.dispatch(uiStore, 'setSaving', true);
+			response = yield apiFetch({
 				path: data.id
-					? `${ data.object }s/${ data.id }`
-					: `${ data.object }s`,
+					? `${data.object}s/${data.id}`
+					: `${data.object}s`,
 				method: 'DELETE',
-			} );
-		} catch ( error ) {
+			});
+		} catch (error) {
 			throw error;
 		} finally {
-			yield controls.dispatch( uiStore, 'setSaving', false );
+			yield controls.dispatch(uiStore, 'setSaving', false);
 		}
 
 		// success.
-		if ( response ) {
+		if (response) {
 			// add notice.
-			yield controls.dispatch( uiStore, 'addSnackbarNotice', {
-				content: __( 'Deleted.', 'checkout_engine' ),
-			} );
+			yield controls.dispatch(uiStore, 'addSnackbarNotice', {
+				content: __('Deleted.', 'checkout_engine'),
+			});
 			return {
 				type: 'DELETE_MODEL',
-				key: `${ key }.${ index }`,
+				key: `${key}.${index}`,
 			};
 		}
 
@@ -176,14 +204,14 @@ export function* deleteModel( key, index = 0 ) {
 
 	return {
 		type: 'DELETE_MODEL',
-		key: `${ key }.${ index }`,
+		key: `${key}.${index}`,
 	};
 }
 
 /**
  * Clear dirty state.
  */
-export function* removeDirty( key, index = 0 ) {
+export function* removeDirty(key, index = 0) {
 	const model = yield controls.resolveSelect(
 		coreStore,
 		'selectModel',
@@ -194,7 +222,7 @@ export function* removeDirty( key, index = 0 ) {
 	// console.log( key, index, model );
 
 	// set dirty.
-	if ( model?.id ) {
+	if (model?.id) {
 		yield {
 			type: 'REMOVE_DIRTY',
 			id: model?.id,
@@ -211,7 +239,7 @@ export function clearDirty() {
 	};
 }
 
-export function* toggleArchiveModel( key, index = 0, save = true ) {
+export function* toggleArchiveModel(key, index = 0, save = true) {
 	const model = yield controls.resolveSelect(
 		coreStore,
 		'selectModel',
@@ -224,58 +252,58 @@ export function* toggleArchiveModel( key, index = 0, save = true ) {
 		coreStore,
 		'updateModel',
 		key,
-		{ archived: ! model.archived },
+		{ archived: !model.archived },
 		index
 	);
 
-	if ( model.id && save ) {
-		return yield controls.dispatch( coreStore, 'saveModel', key, index );
+	if (model.id && save) {
+		return yield controls.dispatch(coreStore, 'saveModel', key, index);
 	}
 }
 
-export function* saveCollections( names = [] ) {
+export function* saveCollections(names = []) {
 	// get all models
 	const allModels = yield controls.resolveSelect(
 		coreStore,
 		'selectAllModels'
 	);
 	// get dirty models
-	const dirty = yield controls.resolveSelect( coreStore, 'selectDirty' );
-	const entities = yield controls.resolveSelect( coreStore, 'getEntities' );
+	const dirty = yield controls.resolveSelect(coreStore, 'selectDirty');
+	const entities = yield controls.resolveSelect(coreStore, 'getEntities');
 
 	// batch request others if dirty
 	let batch = [];
-	names.forEach( ( name ) => {
-		const entity = entities.find( ( entity ) => entity.name === name );
-		if ( allModels?.[ name ] ) {
-			const models = allModels?.[ name ];
-			if ( Array.isArray( models ) ) {
-				models.forEach( ( model, index ) => {
-					if ( isDirty( model, dirty ) ) {
-						batch.push( {
+	names.forEach((name) => {
+		const entity = entities.find((entity) => entity.name === name);
+		if (allModels?.[name]) {
+			const models = allModels?.[name];
+			if (Array.isArray(models)) {
+				models.forEach((model, index) => {
+					if (isDirty(model, dirty)) {
+						batch.push({
 							key: name,
-							request: prepareSaveRequest( model, entity ),
+							request: prepareSaveRequest(model, entity),
 							index,
-						} );
+						});
 					}
-				} );
+				});
 			} else {
-				if ( isDirty( model, dirty ) ) {
-					batch.push( {
+				if (isDirty(model, dirty)) {
+					batch.push({
 						key: name,
-						request: prepareSaveRequest( models, entity ),
-					} );
+						request: prepareSaveRequest(models, entity),
+					});
 				}
 			}
 		}
-	} );
+	});
 
-	return yield batchSave( batch );
+	return yield batchSave(batch);
 }
 
-export function* saveModel( key, index ) {
+export function* saveModel(key, index) {
 	// get dirty models
-	const dirty = yield controls.resolveSelect( coreStore, 'selectDirty' );
+	const dirty = yield controls.resolveSelect(coreStore, 'selectDirty');
 
 	// get fresh model.
 	const model = yield controls.resolveSelect(
@@ -286,17 +314,17 @@ export function* saveModel( key, index ) {
 	);
 
 	// save main model if new or dirty.
-	if ( ! model?.id || dirty?.[ model?.id ] ) {
-		let response = yield apiFetch( {
-			path: model?.id ? `${ key }/${ model.id }` : `${ key }`,
+	if (!model?.id || dirty?.[model?.id]) {
+		let response = yield apiFetch({
+			path: model?.id ? `${key}/${model.id}` : `${key}`,
 			method: model?.id ? 'PATCH' : 'POST',
 			data: model,
-		} );
+		});
 
 		// didn't update.
-		if ( ! response || ! response?.id ) {
+		if (!response || !response?.id) {
 			throw {
-				message: __( 'Failed to save.', 'checkout_engine' ),
+				message: __('Failed to save.', 'checkout_engine'),
 			};
 		}
 
@@ -311,30 +339,28 @@ export function* saveModel( key, index ) {
 	}
 }
 
-export function* receiveModel( key, data, index ) {
-	yield controls.dispatch( coreStore, 'updateModel', key, data, index );
-	return yield controls.dispatch( coreStore, 'removeDirty', key, index );
+export function* receiveModel(key, data, index) {
+	yield controls.dispatch(coreStore, 'updateModel', key, data, index);
+	return yield controls.dispatch(coreStore, 'removeDirty', key, index);
 }
 
 /**
  * Is the model dirty?
  */
-export function isDirty( model, dirty ) {
-	if ( ! model?.id ) {
+export function isDirty(model, dirty) {
+	if (!model?.id) {
 		return true;
 	}
-	return Object.keys( dirty?.[ model?.id ] || {} ).length;
+	return Object.keys(dirty?.[model?.id] || {}).length;
 }
 
 /**
  * Prepare the save request
  */
-export function prepareSaveRequest( data, entity ) {
-	const path = data.id
-		? `${ entity?.baseURL }/${ data.id }`
-		: entity?.baseURL;
+export function prepareSaveRequest(data, entity) {
+	const path = data.id ? `${entity?.baseURL}/${data.id}` : entity?.baseURL;
 	return {
-		path: addQueryArgs( path, entity.baseURLParams ),
+		path: addQueryArgs(path, entity.baseURLParams),
 		method: data.id ? 'PATCH' : 'POST',
 		data,
 	};

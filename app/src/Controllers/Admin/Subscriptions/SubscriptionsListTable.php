@@ -127,9 +127,9 @@ class SubscriptionsListTable extends ListTable {
 
 	public function column_product( $subscription ) {
 		if ( empty( $subscription->price->product ) ) {
-			return __( 'No products', 'checkout_engine' );
+			return __( 'No product', 'checkout_engine' );
 		}
-		return '<a href="' . esc_url( \CheckoutEngine::getUrl()->edit( 'product', $subscription->price->product->id ) ) . '">' . $subscription->price->product->name . ' - ' . $subscription->price->name . '</a>';
+		return '<a href="' . esc_url( \CheckoutEngine::getUrl()->edit( 'product', $subscription->price->product->id ) ) . '">' . $subscription->price->product->name . '</a>';
 	}
 
 	/**

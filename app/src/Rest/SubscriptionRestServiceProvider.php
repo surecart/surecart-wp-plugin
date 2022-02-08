@@ -39,7 +39,7 @@ class SubscriptionRestServiceProvider extends RestServiceProvider implements Res
 	public function registerRoutes() {
 		register_rest_route(
 			"$this->name/v$this->version",
-			$this->endpoint . '/cancel/(?P<id>\S+)',
+			$this->endpoint . '/(?P<id>\S+)/cancel/',
 			[
 				[
 					'methods'             => \WP_REST_Server::EDITABLE,

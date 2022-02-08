@@ -3,19 +3,18 @@ import { __ } from '@wordpress/i18n';
 import { combineReducers } from '@wordpress/data';
 
 import dotProp from 'dot-prop-immutable';
+import merge from 'lodash/merge';
 
-function unique( array = [], propertyName ) {
+function unique(array = [], propertyName) {
 	return array.filter(
-		( e, i ) =>
-			array.findIndex(
-				( a ) => a[ propertyName ] === e[ propertyName ]
-			) === i
+		(e, i) =>
+			array.findIndex((a) => a[propertyName] === e[propertyName]) === i
 	);
 }
 
 // Store based on nested key. (i.e. product.price)
-export const entities = ( state = {}, { type, key, payload, id, prop } ) => {
-	switch ( type ) {
+export const entities = (state = {}, { type, key, payload, id, prop }) => {
+	switch (type) {
 		case 'SET_MODELS':
 			return payload;
 		case 'ADD_MODELS':
@@ -23,55 +22,60 @@ export const entities = ( state = {}, { type, key, payload, id, prop } ) => {
 				...state,
 				...payload,
 			};
+		case 'UPDATE_COLLECTION':
+			return {
+				...state,
+				[key]: unique([...payload, ...(state[key] || [])], 'id'),
+			};
 		case 'UPDATE_MODELS':
-			const merged = dotProp.merge( state, key, payload );
-			const uniqueEntities = unique( merged?.[ key ] || [], 'id' );
-			return dotProp.set( state, key, uniqueEntities );
+			const merged = dotProp.merge(state, key, payload);
+			const uniqueEntities = unique(merged?.[key] || [], 'id');
+			return dotProp.set(state, key, uniqueEntities);
 		case 'UPDATE_MODELS_PROPERTY':
 			return {
 				...state,
-				[ key ]: ( state?.[ key ] || [] ).map( ( entity ) => {
+				[key]: (state?.[key] || []).map((entity) => {
 					return {
 						...entity,
-						[ prop ]: payload,
+						[prop]: payload,
 					};
-				} ),
+				}),
 			};
 		case 'SET_MODEL':
-			return dotProp.set( state, key, payload );
+			return dotProp.set(state, key, payload);
 		case 'SET_MODEL_BY_ID':
-			const items = dotProp.get( state, key, payload );
-			const item = items.find( ( item ) => ( item.id = id ) );
-			const index = items.findIndex( item );
-			return dotProp.set( state, `${ key }.${ index }`, payload );
+			const items = dotProp.get(state, key, payload);
+			const item = items.find((item) => (item.id = id));
+			const index = items.findIndex(item);
+			return dotProp.set(state, `${key}.${index}`, payload);
 		case 'ADD_MODEL':
 			return {
 				...state,
-				[ key ]: [ ...( state[ key ] || [] ), payload ],
+				[key]: [...(state[key] || []), payload],
 			};
 		case 'UPDATE_MODEL':
-			return dotProp.merge( state, key, payload );
+			return dotProp.merge(state, key, payload);
 		case 'DELETE_MODEL':
-			return dotProp.delete( state, key );
+			return dotProp.delete(state, key);
 		default:
 			return state;
 	}
 };
 
-export const config = ( state = [], { type, payload } ) => {
-	switch ( type ) {
+export const config = (state = [], { type, payload }) => {
+	switch (type) {
 		case 'REGISTER_ENTITIES':
-			return [ ...state, ...payload ];
+			return [...state, ...payload];
 	}
 	return state;
 };
 
-export const dirty = ( state = {}, { type, id, payload } ) => {
-	switch ( type ) {
+export const dirty = (state = {}, { type, id, payload }) => {
+	switch (type) {
 		case 'UPDATE_DIRTY':
-			return dotProp.merge( state, id, payload );
+			return dotProp.merge(state, id, payload);
 		case 'REMOVE_DIRTY':
-			return dotProp.delete( state, id );
+			return dotProp.delete(state, id);
 		case 'CLEAR_DIRTY':
 			return {};
 		default:
@@ -79,8 +83,8 @@ export const dirty = ( state = {}, { type, id, payload } ) => {
 	}
 };
 
-export const error = ( state = {}, { payload, type } ) => {
-	switch ( type ) {
+export const error = (state = {}, { payload, type }) => {
+	switch (type) {
 		case 'SET_ERROR':
 			return payload;
 	}
@@ -97,8 +101,8 @@ export const error = ( state = {}, { payload, type } ) => {
  *
  * @return {Object} Updated state.
  */
-export function saving( state = {}, action ) {
-	switch ( action.type ) {
+export function saving(state = {}, action) {
+	switch (action.type) {
 		case 'REQUEST_POST_UPDATE_START':
 		case 'REQUEST_POST_UPDATE_FINISH':
 			return {
@@ -111,10 +115,10 @@ export function saving( state = {}, action ) {
 }
 
 // export reducers.
-export default combineReducers( {
+export default combineReducers({
 	config,
 	error,
 	entities,
 	dirty,
 	saving,
-} );
+});

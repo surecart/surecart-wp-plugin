@@ -1,6 +1,6 @@
 {
   "ce-address": {
-    "busy": true,
+    "customer-shipping-address": true,
     "label": true,
     "loading": true,
     "required": true,
@@ -170,6 +170,26 @@
     "label": true,
     "loading": true,
     "order": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-customer-name": {
+    "autofocus": true,
+    "disabled": true,
+    "has-focus": true,
+    "help": true,
+    "invalid": true,
+    "label": true,
+    "order": true,
+    "pill": true,
+    "placeholder": true,
+    "readonly": true,
+    "required": true,
+    "show-label": true,
+    "size": true,
+    "value": true,
     "style": true,
     "id": true,
     "class": true,
@@ -519,7 +539,6 @@
     "slot": true
   },
   "ce-order-summary": {
-    "busy": true,
     "collapsed": true,
     "collapsible": true,
     "empty": true,
@@ -580,7 +599,6 @@
     "slot": true
   },
   "ce-price-choices": {
-    "busy": true,
     "columns": true,
     "label": true,
     "required": true,
@@ -817,6 +835,7 @@
     "pill": true,
     "size": true,
     "status": true,
+    "subscription": true,
     "style": true,
     "id": true,
     "class": true,

@@ -7,7 +7,7 @@ export function serialize(form: HTMLFormElement) {
   const object: Record<string, unknown> = {};
 
   formData.forEach((value, key) => {
-    object[key] = value;
+    // object[key] = value;
     // if (Reflect.has(object, key)) {
     //   const entry = object[key];
     //   if (Array.isArray(entry)) {
@@ -16,11 +16,9 @@ export function serialize(form: HTMLFormElement) {
     //     object[key] = [object[key], value];
     //   }
     // } else {
-    //   object[key] = value;
+    object[key] = value;
     // }
   });
-
-  console.log({ object });
 
   return object;
 }

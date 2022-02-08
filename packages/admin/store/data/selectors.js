@@ -3,80 +3,104 @@ import { createRegistrySelector } from '@wordpress/data';
 import { getQueryArg, addQueryArgs } from '@wordpress/url';
 import { store as uiStore } from '../ui';
 
-export const getEntity = ( state, name ) => {
-	return state.config.find( ( item ) => item.name === name );
+export const getEntity = (state, name) => {
+	return state.config.find((item) => item.name === name);
 };
 
-export const getEntities = ( state ) => {
+export const selectEntity = (state, name) => {
+	return state.config.find((item) => item.name === name);
+};
+
+export const getEntities = (state) => {
 	return state.config;
 };
+export const selectEntities = (state, name) => {
+	return state.config.find((item) => item.name === name);
+};
 
-export const getEntityEditLink = ( state, name, id ) => {
-	const entity = getEntity( state, name );
-	return entity ? addQueryArgs( entity.editLink, { id } ) : null;
+export const getEntityEditLink = (state, name, id) => {
+	const entity = getEntity(state, name);
+	return entity ? addQueryArgs(entity.editLink, { id }) : null;
 };
 
 export const selectPageId = () => {
-	return getQueryArg( window.location, 'id' );
+	return getQueryArg(window.location, 'id');
 };
 
 export const isCreated = () => {
-	return !! selectPageId();
+	return !!selectPageId();
 };
 
-export const selectError = ( state ) => {
+export const selectError = (state) => {
 	return state.error;
 };
 
-export const selectAllModels = ( state ) => {
+export const selectAllModels = (state) => {
 	return state.entities;
 };
 
-export const selectCollection = ( state, path ) => {
-	return state.entities?.[ path ];
+export const selectCollection = (state, path) => {
+	return state.entities?.[path];
 };
 
-export const selectModel = ( state, path, index = 0 ) => {
-	return get( state.entities, `${ path }.${ index }` );
+export const selectModel = (state, path, index = 0) => {
+	return get(state.entities, `${path}.${index}`);
 };
 
-export const selectModelById = ( state, path, id ) => {
-	const models = get( state.entities, path );
-	if ( ! models || ! Array.isArray( models ) ) {
+export const selectModelById = (state, path, id) => {
+	const models = get(state.entities, path);
+	if (!models || !Array.isArray(models)) {
 		return false;
 	}
-	return ( models || [] ).find( ( model ) => model.id === id );
+	return (models || []).find((model) => model.id === id);
 };
 
-export const selectDirty = ( state ) => {
+export const selectRelation = (state, path, id, relation) => {
+	let model = selectModelById(state, path, id);
+	if (!model) {
+		return false;
+	}
+
+	relation.split('.').forEach((name) => {
+		model = selectSingleRelation(state, model, name);
+	});
+
+	return model;
+};
+
+export const selectSingleRelation = (state, model, relation) => {
+	return state?.entities?.[relation].find((item) => {
+		return item.id === model?.[relation];
+	});
+};
+
+export const selectDirty = (state) => {
 	return state.dirty;
 };
 
-export const hasDirtyModels = ( state ) => {
-	return !! Object.keys( state.dirty || {} ).length;
+export const hasDirtyModels = (state) => {
+	return !!Object.keys(state.dirty || {}).length;
 };
 
-export const isDirty = ( state, path ) => {
-	let model = selectModel( state, path );
-	if ( ! model?.id ) {
+export const isDirty = (state, path) => {
+	let model = selectModel(state, path);
+	if (!model?.id) {
 		return true;
 	}
-	return Object.keys( state?.dirty?.[ model.id ] || {} )?.length;
+	return Object.keys(state?.dirty?.[model.id] || {})?.length;
 };
 
-export const isSaving = createRegistrySelector( ( select ) => () => {
-	return select( uiStore ).isSaving();
-} );
+export const isSaving = createRegistrySelector((select) => () => {
+	return select(uiStore).isSaving();
+});
 
 /**
  * Prepare the save request
  */
-export function prepareUpdateRequest( state, name, data ) {
-	const path = data.id
-		? `${ entity?.baseURL }/${ data.id }`
-		: entity?.baseURL;
+export function prepareUpdateRequest(state, name, data) {
+	const path = data.id ? `${entity?.baseURL}/${data.id}` : entity?.baseURL;
 	return {
-		path: addQueryArgs( path, entity.baseURLParams ),
+		path: addQueryArgs(path, entity.baseURLParams),
 		method: data.id ? 'PATCH' : 'POST',
 		data,
 	};
@@ -85,15 +109,18 @@ export function prepareUpdateRequest( state, name, data ) {
 /**
  * Prepare the save request
  */
-export function prepareFetchRequest( state, name, data ) {
+export function prepareFetchRequest(state, name, data) {
 	// get id and params from data
 	const { id, ...params } = data;
 	// get the registered entity
-	const entity = getEntity( state, name );
+	const entity = getEntity(state, name);
 	// make the path.
-	const path = id ? `${ entity?.baseURL }/${ id }` : entity?.baseURL;
+	const path = id ? `${entity?.baseURL}/${id}` : entity?.baseURL;
 	// return the request.
 	return {
-		path: addQueryArgs( path, { ...entity.baseURLParams, ...params } ),
+		path: addQueryArgs(path, {
+			...(entity?.baseURLParams ? entity.baseURLParams : {}),
+			...params,
+		}),
 	};
 }

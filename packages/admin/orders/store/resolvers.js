@@ -94,7 +94,6 @@ export default {
 		try {
 			const subscriptions = yield apiFetch(request);
 			if (!subscriptions.length) return;
-			console.log({ subscriptions });
 			return yield controls.dispatch(store, 'addModels', {
 				subscriptions,
 			});

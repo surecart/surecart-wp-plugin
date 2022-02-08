@@ -72,21 +72,36 @@ class OrderRestServiceProvider extends RestServiceProvider implements RestServic
 			'type'       => 'object',
 			// In JSON Schema you can specify object properties in the properties attribute.
 			'properties' => [
-				'id'         => [
+				'id'          => [
 					'description' => esc_html__( 'Unique identifier for the object.', 'checkout_engine' ),
 					'type'        => 'string',
 					'context'     => [ 'view', 'edit', 'embed' ],
 					'readonly'    => true,
 				],
-				'currency'   => [
+				'currency'    => [
 					'description' => esc_html__( 'The currency for the session.', 'checkout_engine' ),
 					'type'        => 'string',
 				],
-				'line_items' => [
+				'metadata'    => [
+					'description' => esc_html__( 'Metadata for the order.', 'checkout_engine' ),
+					'type'        => 'object',
+					'context'     => [ 'edit' ],
+				],
+				'customer_id' => [
+					'description' => esc_html__( 'The customer id for the order.', 'checkout_engine' ),
+					'type'        => 'string',
+					'context'     => [ 'edit' ],
+				],
+				'customer'    => [
+					'description' => esc_html__( 'The customer for the session.', 'checkout_engine' ),
+					'type'        => 'object',
+					'context'     => [ 'edit' ],
+				],
+				'line_items'  => [
 					'description' => esc_html__( 'The line items for the session.', 'checkout_engine' ),
 					'type'        => 'object',
 				],
-				'discount'   => [
+				'discount'    => [
 					'description' => esc_html__( 'The discount for the session.', 'checkout_engine' ),
 					'type'        => 'object',
 				],
@@ -118,6 +133,36 @@ class OrderRestServiceProvider extends RestServiceProvider implements RestServic
 
 		return true;
 	}
+
+	/**
+	 * Filters a response based on the context defined in the schema.
+	 *
+	 * @since 4.7.0
+	 *
+	 * @param array  $data    Response data to filter.
+	 * @param string $context Context defined in the schema.
+	 * @return array Filtered response.
+	 */
+	public function filter_response_by_context( $data, $context ) {
+		$schema = $this->get_item_schema();
+
+		// if the user can edit customers, show the edit context.
+		if ( current_user_can( 'edit_ce_customers' ) ) {
+			return rest_filter_response_by_context( $data, $schema, 'edit' );
+		}
+
+		// if the user is logged in, and we have customer data.
+		// if it matches the current customer, then we can show the edit context.
+		if ( is_user_logged_in() && ! empty( $data['customer'] ) ) {
+			$customer_id = ! empty( $data['customer']['id'] ) ? $data['customer']['id'] : $data['customer'];
+			if ( User::current()->customerId() === $customer_id ) {
+				return rest_filter_response_by_context( $data, $schema, 'edit' );
+			}
+		}
+
+		return rest_filter_response_by_context( $data, $schema, 'view' );
+	}
+
 
 	/**
 	 * Anyone can get a specific session if they have the unique session id.

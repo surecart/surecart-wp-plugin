@@ -34,7 +34,7 @@ export class CeOrderConfirmationLineItems {
               <ce-product-line-item
                 key={item.id}
                 imageUrl={(item?.price?.product as Product)?.image_url}
-                name={`${(item?.price?.product as Product)?.name} \u2013 ${item?.price?.name}`}
+                name={`${(item?.price?.product as Product)?.name}`}
                 editable={false}
                 removable={false}
                 quantity={item.quantity}

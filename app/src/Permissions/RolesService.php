@@ -142,6 +142,7 @@ class RolesService {
 			'ce_order',
 			'ce_price',
 			'ce_order',
+			'ce_refund',
 			'ce_charge',
 			'ce_subscription',
 		];

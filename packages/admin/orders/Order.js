@@ -19,6 +19,8 @@ import useOrderData from './hooks/useOrderData';
 import LineItems from './modules/LineItems';
 import Charges from './modules/Charges';
 import Subscriptions from './modules/Subscriptions';
+import useCurrentPage from '../mixins/useCurrentPage';
+import { useEffect, useRef } from 'react';
 
 export default () => {
 	const { snackbarNotices, removeSnackbarNotice } = useSnackbar();
@@ -33,6 +35,24 @@ export default () => {
 		dispatch(uiStore).setInvalid(true);
 	};
 
+	const { id, model, isLoading, error, fetchModel } = useCurrentPage('order');
+
+	useEffect(() => {
+		if (id) {
+			fetchModel({
+				context: 'edit',
+				expand: [
+					'line_items',
+					'line_item.price',
+					'price.product',
+					'purchases',
+					'purchase.product',
+					'customer',
+				],
+			});
+		}
+	}, [id]);
+
 	return (
 		<Template
 			status={status}
@@ -42,40 +62,9 @@ export default () => {
 			backUrl={'admin.php?page=ce-orders'}
 			backText={__('Back to All Orders', 'checkout_engine')}
 			title={
-				order?.id
+				id
 					? __('Edit Order', 'checkout_engine')
 					: __('Create Order', 'checkout_engine')
-			}
-			button={
-				loading ? (
-					<ce-skeleton
-						style={{
-							width: '120px',
-							height: '35px',
-							display: 'inline-block',
-						}}
-					></ce-skeleton>
-				) : (
-					<div
-						css={css`
-							display: flex;
-							align-items: center;
-							gap: 0.5em;
-						`}
-					>
-						{/* <ProductActionsDropdown
-          setConfirm={ setConfirm }
-          product={ product }
-          isSaving={ isSaving }
-          toggleArchive={ toggleArchive }
-        /> */}
-						<SaveButton>
-							{order?.id
-								? __('Update Order', 'checkout_engine')
-								: __('Create Product', 'checkout_engine')}
-						</SaveButton>
-					</div>
-				)
 			}
 			notices={snackbarNotices}
 			removeNotice={removeSnackbarNotice}
@@ -83,8 +72,8 @@ export default () => {
 		>
 			<Fragment>
 				<FlashError path="orders" scrollIntoView />
-				<Details />
-				<LineItems />
+				<Details order={model} loading={isLoading} />
+				<LineItems order={model} loading={isLoading} />
 				<Charges />
 				<Subscriptions />
 			</Fragment>

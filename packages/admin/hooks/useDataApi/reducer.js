@@ -14,16 +14,17 @@ export default (state, action) => {
 				data: action.payload,
 				pagination: action.pagination,
 			};
-		case 'UPDATE_DATA_BY_ID':
+		case 'UPDATE_DATA_ITEM':
 			return {
 				...state,
 				data: (state.data || []).map((item) => {
-					if (item.id !== action.payload.id) {
+					const { id, ...data } = action.payload;
+					if (item.id !== id) {
 						return item;
 					}
 					return {
 						...item,
-						...action.payload.data,
+						...data,
 					};
 				}),
 			};

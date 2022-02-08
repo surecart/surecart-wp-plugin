@@ -1,4 +1,5 @@
 import { Component, Prop, Event, EventEmitter, h, Method, Watch, Element } from '@stencil/core';
+import { addFormData } from '../../../functions/form-data';
 import { getCurrencySymbol } from '../../../functions/price';
 
 /**
@@ -118,6 +119,11 @@ export class CePriceInput {
 
   handleChange() {
     this.value = (parseFloat(this.ceInput.value) * 100).toString();
+  }
+
+  componentDidLoad() {
+    this.handleFocusChange();
+    addFormData(this.el);
   }
 
   render() {

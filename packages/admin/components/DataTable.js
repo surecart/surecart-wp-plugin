@@ -9,10 +9,10 @@ export default ({
 	footer = '',
 	items = [],
 	columns = {},
+	children,
 	empty = '',
 	loading,
 }) => {
-	console.log({ loading });
 	const renderLoading = () => {
 		return (
 			<ce-table>
@@ -74,8 +74,8 @@ export default ({
 						style={{
 							'--shadow': 'none',
 							'--border-radius': '0',
-							'border-left': '0',
-							'border-right': '0',
+							borderLeft: '0',
+							borderRight: '0',
 						}}
 					>
 						{Object.keys(columns).map((key) => (
@@ -99,6 +99,7 @@ export default ({
 						))}
 					</ce-table>
 				)}
+				{children}
 			</Box>
 		</div>
 	);

@@ -1,28 +1,41 @@
 import { __, _n } from '@wordpress/i18n';
 import useCustomerData from '../hooks/useCustomerData';
-import { useEffect } from '@wordpress/element';
-import useDataApi from '../../hooks/useDataApi';
-import SubscriptionsDataTable from '../../components/data-tables/SubscriptionsDataTable';
+import SubscriptionsDataTable from '../../components/data-tables/subscriptions-data-table';
+import useEntities from '../../mixins/useEntities';
 
 export default () => {
 	const { customerId } = useCustomerData();
-	const { data, isLoading, error, pagination, fetchData } = useDataApi();
 
-	useEffect(() => {
-		if (customerId) {
-			fetchData({
-				path: 'checkout-engine/v1/subscriptions',
-				query: {
-					customer_ids: [customerId],
-					context: 'edit',
-					expand: ['price', 'price.product'],
-				},
-			});
+	const { data, isLoading, pagination, error } = useEntities(
+		'root',
+		'subscription',
+		{
+			customer_ids: [customerId],
+			context: 'edit',
+			expand: ['price', 'price.product'],
 		}
-	}, [customerId]);
+	);
 
 	return (
 		<SubscriptionsDataTable
+			columns={{
+				status: {
+					label: __('Status', 'checkout_engine'),
+					width: '100px',
+				},
+				product: {
+					label: __('Product', 'checkout_engine'),
+				},
+				renews: {
+					label: __('Renews', 'checkout_engine'),
+				},
+				created: {
+					label: __('Created', 'checkout_engine'),
+				},
+				actions: {
+					width: '100px',
+				},
+			}}
 			empty={__(
 				'This customer does not have any subscriptions.',
 				'checkout_engine'

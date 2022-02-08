@@ -109,6 +109,30 @@ export class CEButton {
       event.preventDefault();
       event.stopPropagation();
     }
+
+    if (this.submit) {
+      this.submitForm();
+    }
+  }
+
+  submitForm() {
+    const form = this.button.closest('form');
+    // Calling form.submit() seems to bypass the submit event and constraint validation. Instead, we can inject a
+    // native submit button into the form, click it, then remove it to simulate a standard form submission.
+    const button = document.createElement('button');
+    if (form) {
+      button.type = 'submit';
+      button.style.position = 'absolute';
+      button.style.width = '0';
+      button.style.height = '0';
+      button.style.clip = 'rect(0 0 0 0)';
+      button.style.clipPath = 'inset(50%)';
+      button.style.overflow = 'hidden';
+      button.style.whiteSpace = 'nowrap';
+      form.append(button);
+      button.click();
+      button.remove();
+    }
   }
 
   render() {

@@ -66,7 +66,7 @@ export class CeCustomerSubscriptionEdit {
       );
     }
 
-    return <ce-subscription-status-badge status={this.subscription.status}></ce-subscription-status-badge>;
+    return <ce-subscription-status-badge subscription={this.subscription}></ce-subscription-status-badge>;
   }
 
   upgradePriceIds() {
