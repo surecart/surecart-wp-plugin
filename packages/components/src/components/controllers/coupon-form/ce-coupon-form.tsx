@@ -107,7 +107,7 @@ export class CeCouponForm {
         </div>
 
         <div class="form">
-          <ce-input onCeBlur={() => this.handleBlur()} ref={el => (this.input = el as HTMLCeInputElement)}></ce-input>
+          <ce-input onCeBlur={() => this.handleBlur()} ref={el => (this.input = el as HTMLCeInputElement)} clearable></ce-input>
           {!!this.errorMessage && (
             <ce-alert type="danger" open>
               <span slot="title">{this.errorMessage}</span>
