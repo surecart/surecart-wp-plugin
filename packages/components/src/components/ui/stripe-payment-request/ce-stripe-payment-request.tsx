@@ -1,10 +1,11 @@
-import { createOrUpdateSession, finalizeSession } from '../../../services/session';
-import { Order, LineItem, Prices, Product, ResponseError } from '../../../types';
-import { Component, Prop, State, h, Element, Watch, Event, EventEmitter } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
 import { PaymentRequestOptions, Stripe } from '@stripe/stripe-js';
 import { loadStripe } from '@stripe/stripe-js/pure';
 import { __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
+
+import { createOrUpdateSession, finalizeSession } from '../../../services/session';
+import { LineItem, Order, Prices, Product, ResponseError } from '../../../types';
 
 @Component({
   tag: 'ce-stripe-payment-request',

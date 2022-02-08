@@ -30,9 +30,7 @@ class WebhooksHistoryServiceFeatureTest extends CheckoutEngineUnitTestCase {
 		parent::setUp();
 	}
 
-	/**
-	 * @group failing
-	 */
+
 	public function test_stores_previous_domain_when_domain_changes()
 	{
 		$service = new WebHooksHistoryService();

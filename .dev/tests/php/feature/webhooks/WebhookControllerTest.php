@@ -26,7 +26,6 @@ class WebhookControllerTest extends CheckoutEngineUnitTestCase
 
 	/**
 	 * Checks that our recieve function calls the correct event.
-	 * @group failing
 	 */
 	public function test_can_receive()
 	{

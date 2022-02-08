@@ -3,8 +3,10 @@
 namespace CheckoutEngine\Middleware;
 
 use CheckoutEngine\Models\CustomerLink;
+use CheckoutEngine\Models\User;
 use Closure;
 use CheckoutEngineCore\Requests\RequestInterface;
+use CheckoutEngineCore\Middleware\ReadsHandlerMiddlewareTrait;
 
 /**
  * Middleware for customer dashboard.
@@ -17,7 +19,7 @@ class CustomerDashboardMiddleware {
 	 * @param Closure          $next Next.
 	 * @return method
 	 */
-	public function handle( RequestInterface $request, Closure $next ) {
+	public function handle( $request, Closure $next ) {
 		$link_id = $request->query( 'customer_link_id' );
 
 		// use original page view if no customer link id is found.
@@ -34,15 +36,34 @@ class CustomerDashboardMiddleware {
 			return $this->error( new \WP_Error( 'link_expired', 'This link has expired.' ) );
 		}
 
-		// login the user using the customer id from the link.
-		$user = $link->getUser();
-		if ( ! $user ) {
-			return $this->error( new \WP_Error( 'not_a_customer', 'It looks like you are not yet a customer.' ) );
+		$user = User::getUserBy('email', $link->email);
+		if ($user) {
+			$user->login();
+			return $next( $request );
 		}
 
-		$user->login();
+		// login the user using the customer id from the link.
+		$user = $link->getUser();
+		if ( $user ) {
+			$user->login();
+			return $next( $request );
+		}
 
-		return $next( $request );
+		// there's no user with this email or customer id. Let's create one.
+		if( $link->customer ) {
+			$user = User::create([
+				'user_name' => $link->email,
+				'user_email' => $link->email,
+			]);
+
+			if ( $user ) {
+				$user->setCustomerId( $link->customer );
+				$user->login();
+				return $next( $request );
+			}
+		}
+
+		return $this->error( new \WP_Error( 'user_not_found', 'This user was not found.' ) );
 	}
 
 	/**

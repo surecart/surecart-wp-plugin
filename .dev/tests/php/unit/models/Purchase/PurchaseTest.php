@@ -67,9 +67,6 @@ class PurchaseTest extends CheckoutEngineUnitTestCase
 		$this->assertFalse($purchase->revoked);
 	}
 
-	/**
-	 * @group failing
-	 */
 	public function test_previousProductIdAttribute()
 	{
 		$attributes = [
