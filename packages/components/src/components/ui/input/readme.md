@@ -121,6 +121,7 @@ Type: `Promise<void>`
 
  - [ce-address](../ce-address)
  - [ce-coupon-form](../../controllers/coupon-form)
+ - [ce-customer-name](../../controllers/customer-name)
  - [ce-email](../../controllers/email)
  - [ce-login-form](../../controllers/login)
  - [ce-price-input](../price-input)
@@ -138,6 +139,7 @@ graph TD;
   ce-form-control --> ce-tooltip
   ce-address --> ce-input
   ce-coupon-form --> ce-input
+  ce-customer-name --> ce-input
   ce-email --> ce-input
   ce-login-form --> ce-input
   ce-price-input --> ce-input

@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngine\Blocks\Dashboard\CustomerOrders;
+namespace CheckoutEngineBlocks\Dashboard\CustomerOrders;
 
-use CheckoutEngine\Blocks\Dashboard\DashboardPage;
+use CheckoutEngineBlocks\Dashboard\DashboardPage;
 
 /**
  * Checkout block

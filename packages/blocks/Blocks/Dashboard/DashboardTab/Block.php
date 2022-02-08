@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngine\Blocks\Dashboard\DashboardTab;
+namespace CheckoutEngineBlocks\Dashboard\DashboardTab;
 
-use CheckoutEngine\Blocks\BaseBlock;
+use CheckoutEngineBlocks\BaseBlock;
 
 /**
  * Checkout block

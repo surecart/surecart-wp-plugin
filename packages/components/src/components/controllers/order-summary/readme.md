@@ -9,7 +9,6 @@
 
 | Property      | Attribute     | Description | Type      | Default     |
 | ------------- | ------------- | ----------- | --------- | ----------- |
-| `busy`        | `busy`        |             | `boolean` | `undefined` |
 | `collapsed`   | `collapsed`   |             | `boolean` | `undefined` |
 | `collapsible` | `collapsible` |             | `boolean` | `false`     |
 | `empty`       | `empty`       |             | `boolean` | `undefined` |
@@ -24,7 +23,6 @@
 - [ce-line-item](../../ui/line-item)
 - [ce-skeleton](../../ui/skeleton)
 - [ce-total](../total)
-- [ce-block-ui](../../ui/block-ui)
 
 ### Graph
 ```mermaid
@@ -32,9 +30,7 @@ graph TD;
   ce-order-summary --> ce-line-item
   ce-order-summary --> ce-skeleton
   ce-order-summary --> ce-total
-  ce-order-summary --> ce-block-ui
   ce-total --> ce-format-number
-  ce-block-ui --> ce-spinner
   style ce-order-summary fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

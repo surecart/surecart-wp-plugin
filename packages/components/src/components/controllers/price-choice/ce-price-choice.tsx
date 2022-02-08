@@ -1,7 +1,7 @@
 import { isPriceInOrder } from '../../../functions/line-items';
 import { translatedInterval } from '../../../functions/price';
 import { getPricesAndProducts } from '../../../services/fetch';
-import { Order, LineItemData, Price, Prices, Products, ResponseError } from '../../../types';
+import { Order, LineItemData, Price, Prices, Products, ResponseError, Product } from '../../../types';
 import { Component, h, Prop, Event, EventEmitter, Watch, Fragment, State, Host } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
@@ -78,6 +78,8 @@ export class CePriceChoice {
   /** Stores the error message */
   @State() adHocErrorMessage: string;
 
+  @State() product: Product;
+
   /** Refetch if price changes */
   @Watch('priceId')
   handlePriceIdChage() {
@@ -87,9 +89,11 @@ export class CePriceChoice {
 
   /** Keep price up to date. */
   @Watch('prices')
+  @Watch('products')
   handlePricesChange() {
-    if (!Object.keys(this.prices || {}).length) return;
+    if (!Object.keys(this.prices || {}).length || !Object.keys(this.products || {}).length) return;
     this.price = this?.prices?.[this.priceId];
+    this.product = this?.products?.[this?.price?.product as string];
   }
 
   @Watch('price')
@@ -220,10 +224,8 @@ export class CePriceChoice {
     if (!this?.price?.id || this.price?.archived) return this.renderEmpty();
 
     // product needs to be active
-    if (typeof this.price.product === 'string') {
-      if (this.products?.[this.price?.product]?.archived) {
-        return this.renderEmpty();
-      }
+    if (this.product?.archived) {
+      return this.renderEmpty();
     }
 
     return (
@@ -237,7 +239,7 @@ export class CePriceChoice {
           showControl={this.showControl}
           checked={this.isChecked()}
         >
-          {this.label || this.price.name}
+          {this.label || this?.product?.name}
           {this.description && <span slot="description">{this.description}</span>}
           {this.renderPrice()}
         </ce-choice>

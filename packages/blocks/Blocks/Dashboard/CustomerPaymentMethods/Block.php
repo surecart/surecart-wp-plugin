@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngine\Blocks\Dashboard\CustomerPaymentMethods;
+namespace CheckoutEngineBlocks\Dashboard\CustomerPaymentMethods;
 
-use CheckoutEngine\Blocks\Dashboard\DashboardPage;
+use CheckoutEngineBlocks\Dashboard\DashboardPage;
 
 /**
  * Checkout block

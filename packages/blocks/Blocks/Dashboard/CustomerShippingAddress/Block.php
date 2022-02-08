@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngine\Blocks\Dashboard\CustomerOrders;
+namespace CheckoutEngineBlocks\Dashboard\CustomerOrders;
 
-use CheckoutEngine\Blocks\Dashboard\DashboardPage;
+use CheckoutEngineBlocks\Dashboard\DashboardPage;
 
 /**
  * Checkout block
@@ -35,7 +35,7 @@ class Block extends DashboardPage {
 		return \CheckoutEngine::blocks()->render(
 			'web/dashboard/shipping_address/show',
 			[
-				'customer_id'   => $this->customer_id,
+				'customer_id' => $this->customer_id,
 			]
 		);
 	}

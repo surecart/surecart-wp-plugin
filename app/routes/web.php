@@ -7,6 +7,8 @@
  * @package CheckoutEngine
  */
 
+use CheckoutEngine\Middleware\CustomerDashboardMiddleware;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -31,6 +33,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 // Here we maybe intercept dashboard request if there is a user link and log them in.
 \CheckoutEngine::route()
 	->get()
+	->middleware( CustomerDashboardMiddleware::class )
 	->where( 'post_id', \CheckoutEngine::pages()->getId( 'dashboard' ) )
 	->name( 'dashboard' )
 	->handle( 'DashboardController@show' );

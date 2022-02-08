@@ -12,18 +12,8 @@
 		"php": ">=5.5",
 		"composer/installers": "^1.4",
 		"pimple/pimple": "^3.2",
-		"guzzlehttp/psr7": "^1.5",
-		"checkout-engine/blocks": "*"
+		"guzzlehttp/psr7": "^1.5"
 	},
-	"repositories": [
-		{
-			"type": "path",
-			"url": "./packages/blocks",
-			"options": {
-				"symlink": false
-			}
-		}
-	],
 	"require-dev": {
 		"php": "^7.4",
 		"filp/whoops": "^2.2",
@@ -44,7 +34,8 @@
 		"psr-4": {
 			"CheckoutEngine\\": "app/src/",
 			"CheckoutEngineCore\\": "core/core/src/",
-			"CheckoutEngineAppCore\\": "core/app-core/src/"
+			"CheckoutEngineAppCore\\": "core/app-core/src/",
+			"CheckoutEngineBlocks\\": "packages/blocks/Blocks/"
 		},
 		"files": [
 			"core/core/config.php",

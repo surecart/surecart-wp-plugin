@@ -64,6 +64,7 @@ graph TD;
   ce-customer-subscription-edit --> ce-button
   ce-customer-subscription-edit --> ce-icon
   ce-customer-subscription-edit --> ce-block-ui
+  ce-subscription-status-badge --> ce-format-date
   ce-subscription-status-badge --> ce-tag
   ce-card --> ce-skeleton
   ce-card --> ce-divider

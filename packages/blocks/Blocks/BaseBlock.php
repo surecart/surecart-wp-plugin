@@ -1,6 +1,6 @@
 <?php
 
-namespace CheckoutEngine\Blocks;
+namespace CheckoutEngineBlocks;
 
 use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
 

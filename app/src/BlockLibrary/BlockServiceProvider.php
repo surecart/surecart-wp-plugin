@@ -6,7 +6,7 @@
 
 namespace CheckoutEngine\BlockLibrary;
 
-use CheckoutEngine\Blocks\BlockService;
+use CheckoutEngineBlocks\BlockService;
 use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
 
 /**

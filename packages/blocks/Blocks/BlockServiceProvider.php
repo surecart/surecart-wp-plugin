@@ -4,9 +4,9 @@
  * Block Service Provider
  */
 
-namespace CheckoutEngine\Blocks;
+namespace CheckoutEngineBlocks;
 
-use CheckoutEngine\Blocks\BlockService;
+use CheckoutEngineBlocks\BlockService;
 use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
 
 /**

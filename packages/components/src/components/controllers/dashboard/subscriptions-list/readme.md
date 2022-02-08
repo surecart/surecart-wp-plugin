@@ -45,6 +45,7 @@ graph TD;
   ce-subscription --> ce-button
   ce-subscription --> ce-alert
   ce-subscription --> ce-block-ui
+  ce-subscription-status-badge --> ce-format-date
   ce-subscription-status-badge --> ce-tag
   ce-button --> ce-spinner
   ce-block-ui --> ce-spinner

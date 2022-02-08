@@ -36,6 +36,7 @@
  - [ce-orders-list](../../controllers/dashboard/orders-list)
  - [ce-payment-methods-list](../../controllers/dashboard/payment-methods-list)
  - [ce-subscription](../../controllers/dashboard/subscription)
+ - [ce-subscription-status-badge](../../ui/subscription-status-badge)
 
 ### Graph
 ```mermaid
@@ -47,6 +48,7 @@ graph TD;
   ce-orders-list --> ce-format-date
   ce-payment-methods-list --> ce-format-date
   ce-subscription --> ce-format-date
+  ce-subscription-status-badge --> ce-format-date
   style ce-format-date fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

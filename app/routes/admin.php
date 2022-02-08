@@ -9,8 +9,6 @@
  * @package CheckoutEngine
  */
 
-use CheckoutEngine\Middleware\ArchiveModelMiddleware;
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }

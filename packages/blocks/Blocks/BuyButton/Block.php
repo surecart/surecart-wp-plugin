@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngine\Blocks\BuyButton;
+namespace CheckoutEngineBlocks\BuyButton;
 
-use CheckoutEngine\Blocks\BaseBlock;
+use CheckoutEngineBlocks\BaseBlock;
 /**
  * Logout Button Block.
  */

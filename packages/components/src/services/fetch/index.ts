@@ -1,4 +1,4 @@
-import { normalizePrices } from '../../../../admin/schema';
+import { normalizeEntities } from '../../../../admin/schema';
 import apiFetch from '../../functions/fetch';
 import { Price, Product } from '../../types';
 import { addQueryArgs } from '@wordpress/url';
@@ -14,10 +14,10 @@ export const getPricesAndProducts = async ({ ids, active = true }: { ids: Array<
     }),
   })) as Array<Price>;
 
-  const { entities } = normalizePrices(prices);
+  const { entities } = normalizeEntities(prices);
   return {
-    prices: entities.prices,
-    products: entities.products,
+    prices: entities.price,
+    products: entities.product,
   };
 };
 

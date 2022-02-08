@@ -73,7 +73,7 @@ export class CeLineItems {
             <ce-product-line-item
               key={item.id}
               imageUrl={(item?.price?.product as Product)?.image_url}
-              name={this.getName(item)}
+              name={(item?.price?.product as Product)?.name}
               editable={this.editable}
               removable={this.removable}
               quantity={item.quantity}

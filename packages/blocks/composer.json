@@ -1,9 +1,0 @@
-{
-	"name": "checkout-engine/blocks",
-	"version": "1.0.0",
-	"autoload": {
-		"psr-4": {
-			"CheckoutEngine\\Blocks\\": "Blocks"
-		}
-	}
-}

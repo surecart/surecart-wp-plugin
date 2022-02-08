@@ -9,43 +9,10 @@ use CheckoutEngine\Models\CustomerLink;
  */
 class DashboardController {
 	/**
-	 * Show the dashboard
+	 * Show the dashboard.
 	 */
-	public function show( $request, $view ) {
-		$link_id = $request->query( 'customer_link_id' );
-
-		// use original page view if no customer link id is found.
-		if ( ! $link_id ) {
-			return \CheckoutEngine::view( $view );
-		}
-
-		// get the customer link by id.
-		$link = CustomerLink::find( $link_id );
-		if ( is_wp_error( $link ) ) {
-			return $this->error( $link );
-		}
-
-		// login the user using the customer id from the link.
-		$user = $link->getUser();
-		if ( $user ) {
-			$user->login();
-		}
-
-		$dashboard_url = \CheckoutEngine::pages()->url( 'dashboard' );
-		return \CheckoutEngine::redirect()->to( $dashboard_url );
-	}
-
-	/**
-	 * Handle errors.
-	 *
-	 * @param \WP_Error $error Error.
-	 * @return wp_die
-	 */
-	public function error( $error ) {
-		if ( $error->get_error_code() === 'customer_link.expired' ) {
-			return wp_die( esc_html__( 'This link has expired.', 'checkout_engine' ) );
-		}
-		return wp_die( wp_kses_post( $error->get_error_message() ) );
+	public function show() {
+		return \CheckoutEngine::redirect()->to( \CheckoutEngine::pages()->url( 'dashboard' ) );
 	}
 
 	/**

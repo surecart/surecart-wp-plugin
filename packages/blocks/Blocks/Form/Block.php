@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngine\Blocks\Form;
+namespace CheckoutEngineBlocks\Form;
 
-use CheckoutEngine\Blocks\BaseBlock;
+use CheckoutEngineBlocks\BaseBlock;
 
 /**
  * Checkout block

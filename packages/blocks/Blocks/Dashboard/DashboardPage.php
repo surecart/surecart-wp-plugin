@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngine\Blocks\Dashboard;
+namespace CheckoutEngineBlocks\Dashboard;
 
-use CheckoutEngine\Blocks\BaseBlock;
+use CheckoutEngineBlocks\BaseBlock;
 use CheckoutEngine\Models\User;
 
 /**
