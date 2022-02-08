@@ -58,5 +58,11 @@
 			"@php wpemerge assets:build"
 		],
 		"post-create-project-cmd": "@install-dev-env"
+	},
+	"config": {
+		"allow-plugins": {
+			"dealerdirect/phpcodesniffer-composer-installer": true,
+			"composer/installers": true
+		}
 	}
 }
