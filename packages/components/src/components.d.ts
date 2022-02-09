@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Address, ChoiceItem, Coupon, Customer, LineItemData, Order, OrderStatus, Price, PriceChoice, Prices, Products, ResponseError, Subscription, SubscriptionStatus } from "./types";
+import { Address, ChoiceItem, Coupon, Customer, Invoice, LineItemData, Order, OrderStatus, Price, PriceChoice, Prices, Products, ResponseError, Subscription, SubscriptionStatus } from "./types";
 import { IconLibraryMutator, IconLibraryResolver } from "./components/ui/icon/library";
 export namespace Components {
     interface CeAddress {
@@ -847,6 +847,24 @@ export namespace Components {
          */
         "value": string;
     }
+    interface CeInvoiceStatusBadge {
+        /**
+          * Makes the tag clearable.
+         */
+        "clearable": boolean;
+        /**
+          * The tag's statux type.
+         */
+        "invoice": Invoice;
+        /**
+          * Draws a pill-style tag with rounded edges.
+         */
+        "pill": boolean;
+        /**
+          * The tag's size.
+         */
+        "size": 'small' | 'medium' | 'large';
+    }
     interface CeLineItem {
         /**
           * Currency symbol
@@ -897,6 +915,10 @@ export namespace Components {
           * Draws the menu item in a disabled state.
          */
         "disabled": boolean;
+        /**
+          * Optional link to follow.
+         */
+        "href": string;
         /**
           * Removes focus from the button.
          */
@@ -1834,6 +1856,12 @@ declare global {
         prototype: HTMLCeInputElement;
         new (): HTMLCeInputElement;
     };
+    interface HTMLCeInvoiceStatusBadgeElement extends Components.CeInvoiceStatusBadge, HTMLStencilElement {
+    }
+    var HTMLCeInvoiceStatusBadgeElement: {
+        prototype: HTMLCeInvoiceStatusBadgeElement;
+        new (): HTMLCeInvoiceStatusBadgeElement;
+    };
     interface HTMLCeLineItemElement extends Components.CeLineItem, HTMLStencilElement {
     }
     var HTMLCeLineItemElement: {
@@ -2206,6 +2234,7 @@ declare global {
         "ce-heading": HTMLCeHeadingElement;
         "ce-icon": HTMLCeIconElement;
         "ce-input": HTMLCeInputElement;
+        "ce-invoice-status-badge": HTMLCeInvoiceStatusBadgeElement;
         "ce-line-item": HTMLCeLineItemElement;
         "ce-line-item-tax": HTMLCeLineItemTaxElement;
         "ce-line-item-total": HTMLCeLineItemTotalElement;
@@ -3179,6 +3208,24 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
+    interface CeInvoiceStatusBadge {
+        /**
+          * Makes the tag clearable.
+         */
+        "clearable"?: boolean;
+        /**
+          * The tag's statux type.
+         */
+        "invoice"?: Invoice;
+        /**
+          * Draws a pill-style tag with rounded edges.
+         */
+        "pill"?: boolean;
+        /**
+          * The tag's size.
+         */
+        "size"?: 'small' | 'medium' | 'large';
+    }
     interface CeLineItem {
         /**
           * Currency symbol
@@ -3242,6 +3289,10 @@ declare namespace LocalJSX {
           * Draws the menu item in a disabled state.
          */
         "disabled"?: boolean;
+        /**
+          * Optional link to follow.
+         */
+        "href"?: string;
         /**
           * A unique value to store in the menu item. This can be used as a way to identify menu items when selected.
          */
@@ -4065,6 +4116,7 @@ declare namespace LocalJSX {
         "ce-heading": CeHeading;
         "ce-icon": CeIcon;
         "ce-input": CeInput;
+        "ce-invoice-status-badge": CeInvoiceStatusBadge;
         "ce-line-item": CeLineItem;
         "ce-line-item-tax": CeLineItemTax;
         "ce-line-item-total": CeLineItemTotal;
@@ -4162,6 +4214,7 @@ declare module "@stencil/core" {
             "ce-heading": LocalJSX.CeHeading & JSXBase.HTMLAttributes<HTMLCeHeadingElement>;
             "ce-icon": LocalJSX.CeIcon & JSXBase.HTMLAttributes<HTMLCeIconElement>;
             "ce-input": LocalJSX.CeInput & JSXBase.HTMLAttributes<HTMLCeInputElement>;
+            "ce-invoice-status-badge": LocalJSX.CeInvoiceStatusBadge & JSXBase.HTMLAttributes<HTMLCeInvoiceStatusBadgeElement>;
             "ce-line-item": LocalJSX.CeLineItem & JSXBase.HTMLAttributes<HTMLCeLineItemElement>;
             "ce-line-item-tax": LocalJSX.CeLineItemTax & JSXBase.HTMLAttributes<HTMLCeLineItemTaxElement>;
             "ce-line-item-total": LocalJSX.CeLineItemTotal & JSXBase.HTMLAttributes<HTMLCeLineItemTotalElement>;

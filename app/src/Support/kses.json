@@ -422,6 +422,16 @@
     "class": true,
     "slot": true
   },
+  "ce-invoice-status-badge": {
+    "clearable": true,
+    "invoice": true,
+    "pill": true,
+    "size": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "ce-line-item": {
     "currency": true,
     "price": true,
@@ -489,6 +499,7 @@
   "ce-menu-item": {
     "checked": true,
     "disabled": true,
+    "href": true,
     "value": true,
     "style": true,
     "id": true,

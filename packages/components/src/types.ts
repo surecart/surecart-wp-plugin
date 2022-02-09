@@ -151,7 +151,7 @@ export interface Invoice extends Object {
   processor_data: {
     stripe: object;
   };
-  status: 'draft' | 'finalized' | 'paid';
+  status: 'draft' | 'finalized' | 'paid' | 'payment_intent_canceled' | 'payment_failed';
   subtotal_amount: number;
   tax_amount: number;
   tax_status: 'disabled' | 'address_invalid' | 'reverse_charged' | 'tax_registration_not_found' | 'estimated' | 'calculated';

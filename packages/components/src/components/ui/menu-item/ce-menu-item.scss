@@ -18,6 +18,7 @@
   user-select: none;
   white-space: nowrap;
   cursor: pointer;
+  text-decoration: none;
 
   &.menu-item--focused:not(.menu-item--disabled) {
     outline: none;

@@ -1,5 +1,5 @@
 ce-payment {
-  display: flex;
+  display: flex !important;
   flex-direction: column;
   gap: var(--ce-input-label-margin);
   position: relative;

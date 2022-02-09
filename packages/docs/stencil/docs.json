@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-02-08T18:40:16",
+  "timestamp": "2022-02-09T22:44:30",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.9.0",
@@ -2477,6 +2477,21 @@
           "required": false
         },
         {
+          "name": "customer",
+          "type": "Customer",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "Force a customer.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Customer"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "disabled",
           "type": "boolean",
           "mutable": false,
@@ -3373,6 +3388,21 @@
           "values": [
             {
               "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "customer",
+          "type": "Customer",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "Force a customer.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Customer"
             }
           ],
           "optional": false,
@@ -6054,6 +6084,107 @@
       }
     },
     {
+      "filePath": "./src/components/ui/invoice-status-badge/ce-invoice-status-badge.tsx",
+      "encapsulation": "shadow",
+      "tag": "ce-invoice-status-badge",
+      "readme": "# ce-subscription-status-badge\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "clearable",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "clearable",
+          "reflectToAttr": false,
+          "docs": "Makes the tag clearable.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "invoice",
+          "type": "Invoice",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "The tag's statux type.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Invoice"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "pill",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "pill",
+          "reflectToAttr": true,
+          "docs": "Draws a pill-style tag with rounded edges.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "size",
+          "type": "\"large\" | \"medium\" | \"small\"",
+          "mutable": false,
+          "attr": "size",
+          "reflectToAttr": true,
+          "docs": "The tag's size.",
+          "docsTags": [],
+          "default": "'medium'",
+          "values": [
+            {
+              "value": "large",
+              "type": "string"
+            },
+            {
+              "value": "medium",
+              "type": "string"
+            },
+            {
+              "value": "small",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "ce-tag"
+      ],
+      "dependencyGraph": {
+        "ce-invoice-status-badge": [
+          "ce-tag"
+        ]
+      }
+    },
+    {
       "filePath": "./src/components/ui/line-item/ce-line-item.tsx",
       "encapsulation": "shadow",
       "tag": "ce-line-item",
@@ -6806,6 +6937,22 @@
           "values": [
             {
               "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "href",
+          "type": "string",
+          "mutable": false,
+          "attr": "href",
+          "reflectToAttr": false,
+          "docs": "Optional link to follow.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
             }
           ],
           "optional": false,
@@ -12183,6 +12330,7 @@
         "ce-badge-notice",
         "ce-charges-list",
         "ce-coupon-form",
+        "ce-invoice-status-badge",
         "ce-order-confirmation-totals",
         "ce-order-detail",
         "ce-order-status-badge",
@@ -12198,6 +12346,9 @@
           "ce-tag"
         ],
         "ce-coupon-form": [
+          "ce-tag"
+        ],
+        "ce-invoice-status-badge": [
           "ce-tag"
         ],
         "ce-order-confirmation-totals": [

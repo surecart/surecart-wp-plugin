@@ -2,7 +2,7 @@
 
 namespace CheckoutEngine\Rest;
 
-use CheckoutEngine\Controllers\Rest\ChargesController;
+use CheckoutEngine\Controllers\Rest\PaymentMethodsController;
 use CheckoutEngine\Models\User;
 use CheckoutEngine\Rest\RestServiceInterface;
 
@@ -22,7 +22,7 @@ class PaymentMethodsRestServiceProvider extends RestServiceProvider implements R
 	 *
 	 * @var string
 	 */
-	protected $controller = ChargesController::class;
+	protected $controller = PaymentMethodsController::class;
 
 	/**
 	 * Methods allowed for the model.

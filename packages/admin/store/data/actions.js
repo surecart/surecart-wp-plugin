@@ -114,6 +114,12 @@ export function* receiveModels(payload) {
 		);
 	});
 
+	for (const key of Object.keys(transformed)) {
+		for (const [index] of transformed[key].entries()) {
+			yield controls.dispatch(coreStore, 'removeDirty', key, index);
+		}
+	}
+
 	for (var key of Object.keys(transformed)) {
 		yield updateCollection(key, transformed[key]);
 	}
@@ -134,6 +140,24 @@ export function setModelById(key, payload, index = 0) {
 		payload,
 		id,
 	};
+}
+
+export function* updateModelById(key, id, payload) {
+	const collection = yield controls.resolveSelect(
+		coreStore,
+		'selectCollection',
+		key
+	);
+
+	const index = collection.findIndex((item) => item.id == id);
+
+	return yield controls.dispatch(
+		coreStore,
+		'updateModel',
+		key,
+		payload,
+		index
+	);
 }
 
 /**
@@ -219,8 +243,6 @@ export function* removeDirty(key, index = 0) {
 		index
 	);
 
-	// console.log( key, index, model );
-
 	// set dirty.
 	if (model?.id) {
 		yield {
@@ -301,6 +323,18 @@ export function* saveCollections(names = []) {
 	return yield batchSave(batch);
 }
 
+export function* saveModelById(key, id) {
+	const collection = yield controls.resolveSelect(
+		coreStore,
+		'selectCollection',
+		key
+	);
+
+	const index = collection.findIndex((item) => item.id == id);
+
+	return yield controls.dispatch(coreStore, 'saveModel', key, index);
+}
+
 export function* saveModel(key, index) {
 	// get dirty models
 	const dirty = yield controls.resolveSelect(coreStore, 'selectDirty');
@@ -316,7 +350,7 @@ export function* saveModel(key, index) {
 	// save main model if new or dirty.
 	if (!model?.id || dirty?.[model?.id]) {
 		let response = yield apiFetch({
-			path: model?.id ? `${key}/${model.id}` : `${key}`,
+			path: model?.id ? `${key}s/${model.id}` : `${key}`,
 			method: model?.id ? 'PATCH' : 'POST',
 			data: model,
 		});
@@ -336,6 +370,10 @@ export function* saveModel(key, index) {
 			response,
 			index
 		);
+
+		yield controls.dispatch(uiStore, 'addSnackbarNotice', {
+			content: __('Saved.', 'checkout_engine'),
+		});
 	}
 }
 

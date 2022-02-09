@@ -37,6 +37,7 @@
  - [ce-badge-notice](../badge-notice)
  - [ce-charges-list](../../controllers/dashboard/charges-list)
  - [ce-coupon-form](../../controllers/coupon-form)
+ - [ce-invoice-status-badge](../invoice-status-badge)
  - [ce-order-confirmation-totals](../../controllers/order-confirmation-totals)
  - [ce-order-detail](../../controllers/dashboard/order-detail)
  - [ce-order-status-badge](../order-status-badge)
@@ -49,6 +50,7 @@ graph TD;
   ce-badge-notice --> ce-tag
   ce-charges-list --> ce-tag
   ce-coupon-form --> ce-tag
+  ce-invoice-status-badge --> ce-tag
   ce-order-confirmation-totals --> ce-tag
   ce-order-detail --> ce-tag
   ce-order-status-badge --> ce-tag

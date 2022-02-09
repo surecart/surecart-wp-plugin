@@ -10,7 +10,10 @@ export default (name, id = null) => {
 	const [isLoading, setIsLoading] = useState();
 
 	// select data from core store.
-	const model = useSelect((select) => select(store).selectModel(name, id));
+	const model = useSelect(
+		(select) => select(store).selectModelById(name, id),
+		[id]
+	);
 
 	const getEditLink = (id) => {
 		if (!id) return false;
@@ -47,17 +50,33 @@ export default (name, id = null) => {
 		}
 	};
 
-	const updateEntity = (payload) => {
+	const receiveEntity = (payload) => {
 		dispatch(store).receiveModels({ id, ...payload });
 	};
 
+	const updateEntity = (payload) => {
+		dispatch(store).updateModelById(name, id, payload);
+	};
+
+	const snakeToCamel = (str) =>
+		str
+			.toLowerCase()
+			.replace(/([-_][a-z])/g, (group) =>
+				group.toUpperCase().replace('-', '').replace('_', '')
+			);
+	const camelName = snakeToCamel(name);
+	const ucName =
+		camelName.charAt(0).toUpperCase() + camelName.toLowerCase().slice(1);
+
 	return {
 		model,
+		[name]: model,
 		isLoading,
 		error,
-		updateEntity,
+		[`update${ucName}`]: updateEntity,
+		[`receive${ucName}`]: receiveEntity,
+		[`fetch${ucName}`]: fetchEntity,
 		getEditLink,
 		getRelation,
-		fetchEntity,
 	};
 };

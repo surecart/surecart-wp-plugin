@@ -31,13 +31,6 @@ abstract class AdminModelEditController {
 	protected $with_data = [ 'links' ];
 
 	/**
-	 * Are we editing a single page?
-	 *
-	 * @var array
-	 */
-	protected $url_query = [ 'action' => 'edit' ];
-
-	/**
 	 * Additional dependencies
 	 *
 	 * @var array

@@ -8,7 +8,7 @@ import useEntity from '../../../mixins/useEntity';
 export default ({ subscription, children }) => {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
-	const { updateEntity } = useEntity('subscription', subscription?.id);
+	const { receiveEntity } = useEntity('subscription', subscription?.id);
 
 	const confirmStart = () => {
 		const r = confirm(
@@ -41,7 +41,7 @@ export default ({ subscription, children }) => {
 				method: 'PATCH',
 			});
 			if (result.id) {
-				updateEntity(result);
+				receiveEntity(result);
 			} else {
 				throw __('Could not start subscription.', 'checkout_engine');
 			}

@@ -313,14 +313,14 @@ class SubscriptionsListTable extends ListTable {
 			$name = $subscription->customer->email;
 		}
 		?>
-		<a class="row-title" aria-label="<?php echo esc_attr__( 'Edit Subscription', 'checkout_engine' ); ?>" href="<?php echo esc_url( \CheckoutEngine::getUrl()->edit( 'subscription', $subscription->id ) ); ?>">
+		<a class="row-title" aria-label="<?php echo esc_attr__( 'Edit Subscription', 'checkout_engine' ); ?>" href="<?php echo esc_url( \CheckoutEngine::getUrl()->show( 'subscription', $subscription->id ) ); ?>">
 			<?php echo esc_html_e( $name ?? __( 'No name provided', 'checkout_engine' ) ); ?>
 		</a>
 
 		<?php
 		echo $this->row_actions(
 			[
-				'edit' => '<a href="' . esc_url( \CheckoutEngine::getUrl()->edit( 'subscription', $subscription->id ) ) . '" aria-label="' . esc_attr( 'Edit Subscription', 'checkout_engine' ) . '">' . __( 'Edit', 'checkout_engine' ) . '</a>',
+				'edit' => '<a href="' . esc_url( \CheckoutEngine::getUrl()->show( 'subscription', $subscription->id ) ) . '" aria-label="' . esc_attr( 'Edit Subscription', 'checkout_engine' ) . '">' . __( 'Edit', 'checkout_engine' ) . '</a>',
 			],
 		);
 		?>

@@ -42,6 +42,7 @@ export const CeFormatNumber = /*@__PURE__*/createReactComponent<JSX.CeFormatNumb
 export const CeHeading = /*@__PURE__*/createReactComponent<JSX.CeHeading, HTMLCeHeadingElement>('ce-heading');
 export const CeIcon = /*@__PURE__*/createReactComponent<JSX.CeIcon, HTMLCeIconElement>('ce-icon');
 export const CeInput = /*@__PURE__*/createReactComponent<JSX.CeInput, HTMLCeInputElement>('ce-input');
+export const CeInvoiceStatusBadge = /*@__PURE__*/createReactComponent<JSX.CeInvoiceStatusBadge, HTMLCeInvoiceStatusBadgeElement>('ce-invoice-status-badge');
 export const CeLineItem = /*@__PURE__*/createReactComponent<JSX.CeLineItem, HTMLCeLineItemElement>('ce-line-item');
 export const CeLineItemTax = /*@__PURE__*/createReactComponent<JSX.CeLineItemTax, HTMLCeLineItemTaxElement>('ce-line-item-tax');
 export const CeLineItemTotal = /*@__PURE__*/createReactComponent<JSX.CeLineItemTotal, HTMLCeLineItemTotalElement>('ce-line-item-total');

@@ -41,6 +41,7 @@ return [
 		\CheckoutEngine\Rest\CustomerRestServiceProvider::class,
 		\CheckoutEngine\Rest\CustomerLinksRestServiceProvider::class,
 		\CheckoutEngine\Rest\SettingsRestServiceProvider::class,
+		\CheckoutEngine\Rest\PaymentMethodsRestServiceProvider::class,
 		\CheckoutEngine\Rest\ProductsRestServiceProvider::class,
 		\CheckoutEngine\Rest\PriceRestServiceProvider::class,
 		\CheckoutEngine\Rest\CouponRestServiceProvider::class,

@@ -2,7 +2,7 @@
 
 namespace CheckoutEngine\Controllers\Rest;
 
-use CheckoutEngine\Models\Charge;
+use CheckoutEngine\Models\PaymentMethod;
 
 /**
  * Handle Price requests through the REST API
@@ -13,5 +13,5 @@ class PaymentMethodsController extends RestController {
 	 *
 	 * @var string
 	 */
-	protected $class = Charge::class;
+	protected $class = PaymentMethod::class;
 }

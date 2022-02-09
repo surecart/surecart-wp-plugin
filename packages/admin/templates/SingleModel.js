@@ -10,6 +10,7 @@ import BrowserUrl from '../components/browser-url';
 import UnsavedChangesWarning from '../components/unsaved-changes-warning';
 import ErrorBoundary from '../components/error-boundary';
 import { CeForm, CeButton } from '@checkout-engine/components-react';
+import useSnackbar from '../hooks/useSnackbar';
 
 export default ({
 	children,
@@ -19,6 +20,7 @@ export default ({
 	footer,
 	noticeUI,
 	backUrl,
+	backButtonType,
 	backText,
 	status,
 	notices,
@@ -29,6 +31,8 @@ export default ({
 	sidebar,
 	onError,
 }) => {
+	const { snackbarNotices, removeSnackbarNotice } = useSnackbar();
+
 	return (
 		<Fragment>
 			<Global
@@ -171,13 +175,30 @@ export default ({
 											__('Go back.', 'checkout_engine')
 										}
 									>
-										<CeButton
-											circle
-											size="small"
-											href={backUrl}
-										>
-											&larr;
-										</CeButton>
+										{backButtonType === 'icon' ? (
+											<a
+												href={backUrl}
+												css={css`
+													color: black;
+													display: flex;
+													align-items: center;
+													cursor: pointer;
+													padding: 0.5em 1em;
+													border-right: 1px solid
+														#dcdcdc;
+												`}
+											>
+												<ce-icon name="x"></ce-icon>
+											</a>
+										) : (
+											<CeButton
+												circle
+												size="small"
+												href={backUrl}
+											>
+												&larr;
+											</CeButton>
+										)}
 									</Tooltip>
 								)}
 
@@ -270,8 +291,8 @@ export default ({
 								text-transform: uppercase;
 							}
 						`}
-						notices={notices}
-						onRemove={removeNotice}
+						notices={snackbarNotices}
+						onRemove={removeSnackbarNotice}
 					/>
 				</CeForm>
 			</ErrorBoundary>

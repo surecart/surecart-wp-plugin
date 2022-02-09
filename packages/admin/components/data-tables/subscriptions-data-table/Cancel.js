@@ -13,7 +13,7 @@ export default ({ subscription, children }) => {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
 	const [modal, setModal] = useState(false);
-	const { updateEntity } = useEntity('subscription', subscription?.id);
+	const { receiveEntity } = useEntity('subscription', subscription?.id);
 
 	const onSubmit = async (e) => {
 		const { cancel_behavior } = await e.target.getFormJson();
@@ -37,7 +37,7 @@ export default ({ subscription, children }) => {
 				method: 'PATCH',
 			});
 			if (result.id) {
-				updateEntity(result);
+				receiveEntity(result);
 				setModal(false);
 			} else {
 				throw __('Could not cancel subscription.', 'checkout_engine');

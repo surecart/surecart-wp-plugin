@@ -12,7 +12,7 @@
 		"dist/",
 		"languages/",
 		"packages/icons/",
-    "packages/blocks/",
+		"packages/blocks/",
 		"core/",
 		"vendor/",
 		"views/",
@@ -61,7 +61,6 @@
 		"last 3 versions"
 	],
 	"dependencies": {
-		"@emotion/react": "^11.7.1",
 		"@rails/activestorage": "^6.1.4-1",
 		"@wordpress/babel-preset-default": "^6.2.0",
 		"@wordpress/icons": "^6.1.1",
@@ -97,11 +96,13 @@
 		"tmp": "^0.2.1"
 	},
 	"devDependencies": {
-		"@emotion/babel-plugin": "^11.3.0",
+		"@emotion/babel-plugin": "^11.7.2",
+		"@emotion/babel-preset-css-prop": "^11.2.0",
 		"@emotion/core": "^10.1.1",
 		"@emotion/css": "^10.0.22",
 		"@emotion/hash": "^0.8.0",
 		"@emotion/native": "^10.0.22",
+		"@emotion/react": "^11.7.1",
 		"@emotion/styled": "^10.0.23",
 		"@wordpress/data": "^6.1.0",
 		"@wordpress/dependency-extraction-webpack-plugin": "^3.2.1",

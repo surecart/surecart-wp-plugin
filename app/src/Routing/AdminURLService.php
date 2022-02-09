@@ -60,6 +60,26 @@ class AdminURLService {
 	}
 
 	/**
+	 * Show page url
+	 *
+	 * @param string $name Model lowercase name.
+	 * @param string $id Model id.
+	 *
+	 * @return string URL for the page.
+	 */
+	public function show( $name, $id = null ) {
+		return esc_url(
+			add_query_arg(
+				[
+					'action' => 'show',
+					'id'     => $id,
+				],
+				menu_page_url( $this->page_names[ $name ] ?? '', false )
+			)
+		);
+	}
+
+	/**
 	 * Admin index page url
 	 *
 	 * @param string $name Model lowercase name.

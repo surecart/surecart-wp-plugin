@@ -10,6 +10,9 @@ export class CEMenuItem {
 
   @State() private hasFocus = false;
 
+  /** Optional link to follow. */
+  @Prop() href: string;
+
   /** Draws the item in a checked state. */
   @Prop({ reflect: true }) checked: boolean = false;
 
@@ -40,8 +43,9 @@ export class CEMenuItem {
   }
 
   render() {
+    const Tag = this.href ? 'a' : 'div';
     return (
-      <div
+      <Tag
         ref={el => (this.menuItem = el as HTMLElement)}
         part="base"
         class={{
@@ -50,6 +54,7 @@ export class CEMenuItem {
           'menu-item--disabled': this.disabled,
           'menu-item--focused': this.hasFocus,
         }}
+        href={this.href}
         role="menuitem"
         aria-disabled={this.disabled ? 'true' : 'false'}
         aria-checked={this.checked ? 'true' : 'false'}
@@ -73,7 +78,7 @@ export class CEMenuItem {
         <span part="suffix" class="menu-item__suffix">
           <slot name="suffix"></slot>
         </span>
-      </div>
+      </Tag>
     );
   }
 }

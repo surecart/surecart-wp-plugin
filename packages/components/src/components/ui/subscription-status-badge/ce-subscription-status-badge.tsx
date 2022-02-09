@@ -24,6 +24,7 @@ export class CeSubscriptionStatusBadge {
   @Prop() clearable: boolean = false;
 
   getType() {
+    console.log(this.subscription);
     if (this.subscription?.cancel_at_period_end) {
       return 'info';
     }

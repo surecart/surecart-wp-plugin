@@ -35,11 +35,11 @@ export default () => {
 		dispatch(uiStore).setInvalid(true);
 	};
 
-	const { id, model, isLoading, error, fetchModel } = useCurrentPage('order');
+	const { id, model, isLoading, error, fetchOrder } = useCurrentPage('order');
 
 	useEffect(() => {
 		if (id) {
-			fetchModel({
+			fetchOrder({
 				context: 'edit',
 				expand: [
 					'line_items',

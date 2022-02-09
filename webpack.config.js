@@ -9,6 +9,14 @@ module.exports = {
 			'@scripts': path.resolve(__dirname, 'packages'),
 			'@blocks': path.resolve(__dirname, 'packages/blocks/Blocks'),
 			'@admin': path.resolve(__dirname, 'packages/admin'),
+			'@checkout-engine/data': path.resolve(
+				__dirname,
+				'packages/admin/store/data'
+			),
+			'@checkout-engine/ui-data': path.resolve(
+				__dirname,
+				'packages/admin/store/data'
+			),
 		},
 	},
 	entry: {
@@ -32,9 +40,13 @@ module.exports = {
 			__dirname,
 			'packages/admin/settings/index.js'
 		),
-		['admin/subscriptions']: path.resolve(
+		['admin/subscriptions/show']: path.resolve(
 			__dirname,
-			'packages/admin/subscriptions/index.js'
+			'packages/admin/subscriptions/show/index.js'
+		),
+		['admin/subscriptions/edit']: path.resolve(
+			__dirname,
+			'packages/admin/subscriptions/edit/index.js'
 		),
 		['blocks/library']: path.resolve(__dirname, 'packages/blocks/index.js'),
 		['store/data']: path.resolve(

@@ -7,7 +7,7 @@ import useEntity from '../../../mixins/useEntity';
 
 export default ({ purchase }) => {
 	const [loading, setLoading] = useState(false);
-	const { updateEntity } = useEntity('purchase', purchase?.id);
+	const { receiveEntity } = useEntity('purchase', purchase?.id);
 
 	const toggleRevoke = async (id, revoke) => {
 		const r = confirm(
@@ -40,7 +40,7 @@ export default ({ purchase }) => {
 				),
 				method: 'PATCH',
 			});
-			updateEntity(result);
+			receiveEntity(result);
 		} catch (e) {
 			throw e;
 		} finally {

@@ -69,7 +69,11 @@ export const selectRelation = (state, path, id, relation) => {
 };
 
 export const selectSingleRelation = (state, model, relation) => {
-	return state?.entities?.[relation].find((item) => {
+	let collection = relation;
+	if ('latest_invoice' === relation) {
+		collection = 'invoice';
+	}
+	return (state?.entities?.[collection] || []).find((item) => {
 		return item.id === model?.[relation];
 	});
 };

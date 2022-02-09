@@ -77,7 +77,7 @@ class AdminMenuPageService {
 		add_action( "admin_print_scripts-{$this->pages['orders']}", \CheckoutEngine::closure()->method( OrderScriptsController::class, 'enqueue' ) );
 		add_action( "admin_print_scripts-{$this->pages['abandoned']}", \CheckoutEngine::closure()->method( AbandonedOrderScriptsController::class, 'enqueue' ) );
 		add_action( "admin_print_scripts-{$this->pages['products']}", \CheckoutEngine::closure()->method( ProductScriptsController::class, 'enqueue' ) );
-		add_action( "admin_print_scripts-{$this->pages['subscriptions']}", \CheckoutEngine::closure()->method( SubscriptionScriptsController::class, 'enqueue' ) );
+		// add_action( "admin_print_scripts-{$this->pages['subscriptions']}", \CheckoutEngine::closure()->method( SubscriptionScriptsController::class, 'enqueue' ) );
 		add_action( "admin_print_scripts-{$this->pages['customers']}", \CheckoutEngine::closure()->method( CustomersScriptsController::class, 'enqueue' ) );
 		add_action( "admin_print_scripts-{$this->pages['upgrade-paths']}", \CheckoutEngine::closure()->method( UpgradePathsScriptsController::class, 'enqueue' ) );
 		add_action( "admin_print_scripts-{$this->pages['settings']}", [ $this, 'settingsPageScripts' ] );

@@ -44,10 +44,9 @@ export const entities = (state = {}, { type, key, payload, id, prop }) => {
 		case 'SET_MODEL':
 			return dotProp.set(state, key, payload);
 		case 'SET_MODEL_BY_ID':
-			const items = dotProp.get(state, key, payload);
-			const item = items.find((item) => (item.id = id));
-			const index = items.findIndex(item);
-			return dotProp.set(state, `${key}.${index}`, payload);
+		case 'UPDATE_MODEL_BY_ID':
+			let index = state[key].findIndex((item) => item.id == id);
+			return dotProp.merge(state, `${key}.${index}`, payload);
 		case 'ADD_MODEL':
 			return {
 				...state,

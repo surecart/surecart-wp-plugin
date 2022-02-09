@@ -132,6 +132,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->group(
 	function() {
 		\CheckoutEngine::route()->get()->where( 'ce_url_var', false, 'action' )->name( 'subscriptions.index' )->handle( 'SubscriptionsController@index' );
+		\CheckoutEngine::route()->get()->where( 'ce_url_var', 'show', 'action' )->name( 'subscriptions.show' )->handle( 'SubscriptionsController@show' );
 		\CheckoutEngine::route()->get()->where( 'ce_url_var', 'edit', 'action' )->name( 'subscriptions.edit' )->handle( 'SubscriptionsController@edit' );
 	}
 );

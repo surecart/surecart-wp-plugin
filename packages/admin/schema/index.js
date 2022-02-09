@@ -1,55 +1,69 @@
 import { normalize, schema } from 'normalizr';
+import entities from './entities';
 
-export { normalize, schema };
+const {
+	price,
+	product,
+	purchase,
+	payment_method,
+	card,
+	invoice,
+	refund,
+	charge,
+	order,
+	customer,
+	subscription,
+} = entities;
 
-const entities = {
-	price: new schema.Entity('price'),
-	product: new schema.Entity('product'),
-	purchase: new schema.Entity('purchase'),
-	invoice: new schema.Entity('invoice'),
-	refund: new schema.Entity('refund'),
-	charge: new schema.Entity('charge'),
-	order: new schema.Entity('order'),
-	customer: new schema.Entity('customer'),
-	subscription: new schema.Entity('subscription'),
-};
-
-entities.product.define({
+product.define({
 	prices: {
-		data: [entities.price],
+		data: [price],
 	},
 });
-entities.price.define({
-	product: entities.product,
+
+price.define({
+	product,
 });
-entities.invoice.define({
+
+invoice.define({
 	purchases: {
-		data: [entities.purchase],
+		data: [purchase],
 	},
-	subscription: entities.subscription,
+	subscription,
 });
-entities.order.define({
+
+order.define({
 	purchases: {
-		data: [entities.purchase],
+		data: [purchase],
 	},
 });
-entities.charge.define({
-	order: entities.order,
-	invoice: entities.invoice,
+
+charge.define({
+	order,
+	invoice,
 });
-entities.subscription.define({
-	latest_invoice: entities.invoice,
-	purchase: entities.purchase,
-	price: entities.price,
+
+subscription.define({
+	latest_invoice: invoice,
+	purchase,
+	price,
+	payment_method,
+	customer,
 });
-entities.refund.define({
-	charge: entities.charge,
-	customer: entities.customer,
+
+refund.define({
+	charge,
+	customer,
 });
-entities.purchase.define({
-	order: entities.order,
-	product: entities.product,
-	subscription: entities.subscription,
+
+purchase.define({
+	order,
+	product,
+	subscription,
+});
+
+payment_method.define({
+	card,
 });
 
 export const normalizeEntities = (data) => {
@@ -78,3 +92,5 @@ export const normalizeProducts = (products) => {
 export const normalizeProduct = (data) => {
 	return normalize(data, entities.product);
 };
+
+export { normalize, schema };
