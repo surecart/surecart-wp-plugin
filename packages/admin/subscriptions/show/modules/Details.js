@@ -14,6 +14,19 @@ export default ({ subscription, customer, product, loading }) => {
 	}
 
 	const renderStartDate = () => {
+		if (subscription?.current_period_end_at == null) {
+			return (
+				<div>
+					<div>
+						<strong>
+							{sprintf(__('Lifetime', 'checkout_engine'))}
+						</strong>
+					</div>
+					{__('Lifetime Subscription', 'checkout_engine')}
+				</div>
+			);
+		}
+
 		if (
 			subscription?.cancel_at_period_end &&
 			subscription.current_period_end_at
