@@ -62,33 +62,6 @@ export default ({
 						--ce-highlight-color: 200 !important;
 						--ce-color-luminance: 36% !important;
 
-						/* --ce-color-primary-300: hsl(
-							from var( --wp-admin-theme-color ) h s
-								calc( l - 5% )
-						);
-						--ce-color-primary-400: hsl(
-							from var( --wp-admin-theme-color ) h s
-								calc( l - 5% )
-						);
-						--ce-color-primary-500: var( --wp-admin-theme-color );
-						--ce-color-primary-600: hsl(
-							from var( --wp-admin-theme-color ) h s
-								calc( l - 5% )
-						);
-						--ce-color-primary-700: hsl(
-							from var( --wp-admin-theme-color ) h s
-								calc( l - 5% )
-						); */
-
-						// change theme color
-						/* --wp-admin-theme-color: var( --ce-color-primary-500 );
-						--wp-admin-theme-color-darker-10: var(
-							-ce-color-primary-600
-						);
-						--wp-admin-theme-color-darker-20: var(
-							-ce-color-primary-700
-						); */
-
 						ce-form-row:not(:last-child) {
 							margin-bottom: 20px;
 						}

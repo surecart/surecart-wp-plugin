@@ -140,6 +140,7 @@ class RolesService {
 			'ce_webhook',
 			'ce_product',
 			'ce_order',
+			'ce_invoice',
 			'ce_price',
 			'ce_order',
 			'ce_refund',

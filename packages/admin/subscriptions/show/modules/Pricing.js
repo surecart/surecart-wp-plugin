@@ -8,9 +8,10 @@ import Box from '../../../ui/Box';
 import { css, jsx } from '@emotion/core';
 import { CeInput } from '@checkout-engine/components-react';
 
-export default ({ product, price, subscription, isLoading }) => {
+export default ({ product, price, subscription, loading }) => {
 	return (
 		<DataTable
+			loading={loading}
 			title={__('Product', 'checkout_engine')}
 			columns={{
 				product: {

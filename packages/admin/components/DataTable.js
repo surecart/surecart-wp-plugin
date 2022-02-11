@@ -15,7 +15,14 @@ export default ({
 }) => {
 	const renderLoading = () => {
 		return (
-			<ce-table>
+			<ce-table
+				style={{
+					'--shadow': 'none',
+					'--border-radius': '0',
+					borderLeft: '0',
+					borderRight: '0',
+				}}
+			>
 				{Object.keys(columns).map((key) => (
 					<ce-table-cell
 						slot="head"

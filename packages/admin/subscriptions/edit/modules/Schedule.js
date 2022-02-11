@@ -1,34 +1,33 @@
-/** @jsx jsx */
 import { __ } from '@wordpress/i18n';
 import Box from '../../../ui/Box';
-import { BaseControl, DateTimePicker } from '@wordpress/components';
-import { css, jsx } from '@emotion/core';
+import DatePicker from '../../../components/DatePicker';
+import { CeFormControl } from '@checkout-engine/components-react';
 
-export default ({ subscription, updateSubscription, isLoading }) => {
+export default ({ subscription, updateSubscription, loading }) => {
 	return (
-		<Box title={__('Schedule', 'checkout_engine')} loading={isLoading}>
-			<div
-				className="redeem-by-date"
-				css={css`
-					max-width: 288px;
-					margin-top: 30px;
-				`}
-			>
-				<BaseControl.VisualLabel>
-					{__('Trial Ends At', 'checkout_engine')}
-				</BaseControl.VisualLabel>
-				<DateTimePicker
-					currentDate={
-						new Date(
-							subscription?.trial_end_at * 1000 || Date.now()
-						)
+		<Box title={__('Trial', 'checkout_engine')} loading={loading}>
+			<div className="trial-ends">
+				<CeFormControl
+					label={
+						subscription?.trial_end_at
+							? __('Free Trial Ends', 'checkout_engine')
+							: __('Free Trial', 'checkout_engine')
 					}
-					onChange={(trial_end_at) => {
-						updateSubscription({
-							trial_end_at: Date.parse(trial_end_at) / 1000,
-						});
-					}}
-				/>
+				>
+					<DatePicker
+						placeholder={__('Add Free Trial', 'checkout_engine')}
+						currentDate={
+							subscription?.trial_end_at
+								? new Date(subscription?.trial_end_at * 1000)
+								: null
+						}
+						onChoose={(trial_end_at) => {
+							updateSubscription({
+								trial_end_at: Date.parse(trial_end_at) / 1000,
+							});
+						}}
+					/>
+				</CeFormControl>
 			</div>
 		</Box>
 	);

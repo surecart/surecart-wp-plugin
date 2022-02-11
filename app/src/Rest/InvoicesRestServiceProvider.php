@@ -2,34 +2,35 @@
 
 namespace CheckoutEngine\Rest;
 
-use CheckoutEngine\Rest\RestServiceInterface;
-use CheckoutEngine\Controllers\Rest\SubscriptionsController;
+use CheckoutEngine\Controllers\Rest\InvoicesController;
 use CheckoutEngine\Models\User;
+use CheckoutEngine\Rest\RestServiceInterface;
 
 /**
- * Service provider for Price Rest Requests
+ * Service provider for Invoice Rest Requests
  */
-class SubscriptionRestServiceProvider extends RestServiceProvider implements RestServiceInterface {
+class InvoicesRestServiceProvider extends RestServiceProvider implements RestServiceInterface {
 	/**
 	 * Endpoint.
 	 *
 	 * @var string
 	 */
-	protected $endpoint = 'subscriptions';
+	protected $endpoint = 'invoices';
 
 	/**
 	 * Rest Controller
 	 *
 	 * @var string
 	 */
-	protected $controller = SubscriptionsController::class;
+	protected $controller = InvoicesController::class;
 
 	/**
 	 * Methods allowed for the model.
 	 *
 	 * @var array
 	 */
-	protected $methods = [ 'index', 'find', 'edit' ];
+	protected $methods = [ 'index', 'create', 'find', 'edit' ];
+
 
 	/**
 	 * Register REST Routes
@@ -39,12 +40,12 @@ class SubscriptionRestServiceProvider extends RestServiceProvider implements Res
 	public function registerRoutes() {
 		register_rest_route(
 			"$this->name/v$this->version",
-			$this->endpoint . '/(?P<id>\S+)/cancel/',
+			$this->endpoint . '/(?P<id>\S+)/finalize/',
 			[
 				[
 					'methods'             => \WP_REST_Server::EDITABLE,
-					'callback'            => $this->callback( $this->controller, 'cancel' ),
-					'permission_callback' => [ $this, 'cancel_permissions_check' ],
+					'callback'            => $this->callback( $this->controller, 'finalize' ),
+					'permission_callback' => [ $this, 'finalize_permissions_check' ],
 				],
 				// Register our schema callback.
 				'schema' => [ $this, 'get_item_schema' ],
@@ -77,24 +78,10 @@ class SubscriptionRestServiceProvider extends RestServiceProvider implements Res
 					'context'     => [ 'view', 'edit', 'embed' ],
 					'readonly'    => true,
 				],
-				'trial_end_at' => [
-					'type' => 'integer',
-					'admin_only' => true
-				]
 			],
 		];
 
 		return $this->schema;
-	}
-
-	/**
-	 * Check cancel permissions.
-	 *
-	 * @param \WP_REST_Request $request Full details about the request.
-	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
-	 */
-	public function cancel_permissions_check( $request ) {
-		return current_user_can( 'edit_ce_subscription', $request['id'] );
 	}
 
 	/**
@@ -104,7 +91,7 @@ class SubscriptionRestServiceProvider extends RestServiceProvider implements Res
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_item_permissions_check( $request ) {
-		return current_user_can( 'read_ce_subscription', $request['id'] );
+		return current_user_can( 'read_ce_invoice', $request['id'] );
 	}
 
 	/**
@@ -114,7 +101,7 @@ class SubscriptionRestServiceProvider extends RestServiceProvider implements Res
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_items_permissions_check( $request ) {
-		if ( current_user_can( 'read_ce_subscriptions' ) ) {
+		if ( current_user_can( 'read_ce_invoices' ) ) {
 			return true;
 		}
 
@@ -134,13 +121,7 @@ class SubscriptionRestServiceProvider extends RestServiceProvider implements Res
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function update_item_permissions_check( $request ) {
-		if( ! current_user_can( 'edit_ce_subscriptions' ) ) {
-			if ( !empty($request['skip_product_group_validation']) || !empty($request['update_behavior']) || !empty($request['skip_proration']) ) {
-				return false;
-			}
-		}
-
-		return current_user_can( 'edit_ce_subscriptions' );
+		return current_user_can( 'edit_ce_invoices' );
 	}
 
 	/**
@@ -150,6 +131,6 @@ class SubscriptionRestServiceProvider extends RestServiceProvider implements Res
 	 * @return false
 	 */
 	public function delete_item_permissions_check( $request ) {
-		return current_user_can( 'edit_ce_subscriptions' );
+		return current_user_can( 'edit_ce_invoices' );
 	}
 }

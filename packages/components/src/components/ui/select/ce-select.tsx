@@ -133,7 +133,6 @@ export class CeSelectDropdown {
 
   @Method('reportValidity')
   async reportValidity() {
-    console.log(this.input, this.input.reportValidity());
     return this.input.reportValidity();
   }
 
@@ -226,7 +225,6 @@ export class CeSelectDropdown {
           class="select__hidden-input"
           onBlur={() => this.handleBlur()}
           onFocus={() => this.handleFocus()}
-          autocomplete={this.autocomplete}
           name={this.name}
           ref={el => (this.input = el as HTMLInputElement)}
           value={this.value}

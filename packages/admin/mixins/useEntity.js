@@ -1,13 +1,17 @@
 import { __, _n } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
-import { useSelect, dispatch, select, useDispatch } from '@wordpress/data';
+import { useSelect, select, useDispatch } from '@wordpress/data';
 import { useState } from '@wordpress/element';
 import { store } from '../store/data';
+import { store as uiStore } from '../store/ui';
+import { camelName } from '../util';
 
 export default (name, id = null) => {
-	// local states.
-	const [error, setError] = useState();
 	const [isLoading, setIsLoading] = useState();
+	const { receiveModels, updateModelById, saveModelById } =
+		useDispatch(store);
+	const { addModelErrors, clearModelErrors, setSaving } =
+		useDispatch(uiStore);
 
 	// select data from core store.
 	const model = useSelect(
@@ -15,15 +19,23 @@ export default (name, id = null) => {
 		[id]
 	);
 
-	const getEditLink = (id) => {
-		if (!id) return false;
-		return select(store).getEntityEditLink(name, id);
-	};
+	// select errors related to this type of model.
+	const errors = useSelect((select) =>
+		select(uiStore).selectModelErrors(name)
+	);
 
-	const getRelation = (relation) => {
-		return select(store).selectRelation(name, id, relation);
-	};
+	const isSaving = useSelect((select) => select(uiStore).isSaving());
 
+	const getRelation = useSelect(
+		(select) => {
+			return (relation) => {
+				return select(store).selectRelation(name, id, relation);
+			};
+		},
+		[model]
+	);
+
+	// fetch the model from the API.
 	const fetchEntity = async ({ query, ...rest }) => {
 		setIsLoading(true);
 
@@ -38,45 +50,60 @@ export default (name, id = null) => {
 
 			const payload = await result.json();
 			if (payload) {
-				dispatch(store).receiveModels(payload);
+				receiveModels(payload);
 			}
 		} catch (e) {
 			console.error(e);
-			setError(
-				error?.message || __('Something went wrong.', 'checkout_engine')
-			);
+			addModelErrors(name, [e]);
 		} finally {
 			setIsLoading(false);
 		}
 	};
 
+	// receive the model.
 	const receiveEntity = (payload) => {
-		dispatch(store).receiveModels({ id, ...payload });
+		receiveModels({ id, ...payload });
 	};
 
+	// update the model.
 	const updateEntity = (payload) => {
-		dispatch(store).updateModelById(name, id, payload);
+		updateModelById(name, id, payload);
 	};
 
-	const snakeToCamel = (str) =>
-		str
-			.toLowerCase()
-			.replace(/([-_][a-z])/g, (group) =>
-				group.toUpperCase().replace('-', '').replace('_', '')
-			);
-	const camelName = snakeToCamel(name);
-	const ucName =
-		camelName.charAt(0).toUpperCase() + camelName.toLowerCase().slice(1);
+	const addErrors = (error) => {
+		addModelErrors(name, error);
+	};
+
+	// save the model.
+	const saveEntity = async (requestArgs) => {
+		try {
+			await saveModelById(name, id, requestArgs);
+		} catch (e) {
+			setSaving(false);
+			addModelErrors(name, e);
+			throw e;
+		}
+	};
+
+	// clear any errors.
+	const clearErrors = () => {
+		clearModelErrors(name);
+	};
+
+	const ucName = camelName(name);
 
 	return {
-		model,
-		[name]: model,
 		isLoading,
-		error,
+		[name]: model,
 		[`update${ucName}`]: updateEntity,
 		[`receive${ucName}`]: receiveEntity,
 		[`fetch${ucName}`]: fetchEntity,
-		getEditLink,
+		[`save${ucName}`]: saveEntity,
+		[`${name}Errors`]: errors,
+		[`clear${ucName}Errors`]: clearErrors,
+		[`add${ucName}Errors`]: addErrors,
+		isSaving,
+		setSaving,
 		getRelation,
 	};
 };

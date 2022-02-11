@@ -14,4 +14,5 @@ return [
 	'order.line_items.required'                    => __( 'Please add at least one product.', 'checkout-engine' ),
 	'order.shipping_address.missing_tax_info'      => __( 'Please fill out your address.', 'checkout-engine' ),
 	'refund.amount.greater_than_refundable_amount' => __( 'The refund amount is greater than the refundable amount.', 'checkout-engine' ),
+	'subscription.product.one_time'                => __('You cannot add a one-time product to a subscription.', 'checkout-engine'),
 ];

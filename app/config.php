@@ -51,6 +51,7 @@ return [
 		\CheckoutEngine\Rest\RefundsRestServiceProvider::class,
 		\CheckoutEngine\Rest\SubscriptionRestServiceProvider::class,
 		\CheckoutEngine\Rest\OrderRestServiceProvider::class,
+		\CheckoutEngine\Rest\InvoicesRestServiceProvider::class,
 		\CheckoutEngine\Rest\WebhooksRestServiceProvider::class,
 	],
 

@@ -1,13 +1,15 @@
 import { __, _n } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
-import { useSelect, dispatch, select, useDispatch } from '@wordpress/data';
+import { useSelect, dispatch, select } from '@wordpress/data';
 import { useState } from '@wordpress/element';
 import { store } from '../store/data';
+import { useEffect } from 'react';
 
-export default (name) => {
+export default (name, args, deps = []) => {
 	// local states.
 	const [error, setError] = useState();
 	const [isLoading, setIsLoading] = useState();
+	const [isFetching, setIsFetching] = useState();
 	const [pagination, setPagination] = useState({
 		total: 0,
 		total_pages: 0,
@@ -16,15 +18,16 @@ export default (name) => {
 	// select data from core store.
 	const data = useSelect((select) => select(store).selectCollection(name));
 
-	const getEditLink = (id) => {
-		if (!id) return false;
-		return select(store).getEntityEditLink(name, id);
-	};
-
-	const { setModel } = useDispatch(store);
+	deps.length &&
+		useEffect(() => {
+			console.log(deps);
+			fetchEntities(args);
+		}, deps);
 
 	const fetchEntities = async ({ query, ...rest }) => {
-		setIsLoading(true);
+		data?.length && query?.page > 1
+			? setIsFetching(true)
+			: setIsLoading(true);
 
 		const args = select(store).prepareFetchRequest(name, query);
 
@@ -51,16 +54,28 @@ export default (name) => {
 			);
 		} finally {
 			setIsLoading(false);
+			setIsFetching(false);
 		}
 	};
 
+	const snakeToCamel = (str) =>
+		str
+			.toLowerCase()
+			.replace(/([-_][a-z])/g, (group) =>
+				group.toUpperCase().replace('-', '').replace('_', '')
+			);
+	const camelName = snakeToCamel(name);
+	const ucName =
+		camelName.charAt(0).toUpperCase() + camelName.toLowerCase().slice(1);
+
 	return {
 		data,
+		[`${name}s`]: data,
 		isLoading,
+		isFetching,
 		pagination,
 		error,
-		getEditLink,
 		fetchEntities,
-		setModel,
+		[`fetch${ucName}s`]: fetchEntities,
 	};
 };

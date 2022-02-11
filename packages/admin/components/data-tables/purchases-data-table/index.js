@@ -1,8 +1,7 @@
 import { __, _n } from '@wordpress/i18n';
-import { translateInterval } from '../../../util/translations';
 import DataTable from '../../DataTable';
+import PaginationFooter from '../PaginationFooter';
 import purchaseItem from './purchase-item';
-import RevokeToggleButton from './RevokeToggleButton';
 
 export default ({
 	data,
@@ -11,14 +10,9 @@ export default ({
 	pagination,
 	columns,
 	empty,
-	onUpdatePurchase,
+	page,
+	setPage,
 }) => {
-	const footer = (
-		<div>
-			{sprintf(__('%s Total', 'checkout_engine'), pagination?.total || 0)}
-		</div>
-	);
-
 	return (
 		<DataTable
 			title={__('Purchases', 'checkout_engine')}
@@ -29,7 +23,17 @@ export default ({
 				.sort((a, b) => b.created_at - a.created_at)
 				.map((purchase) => purchaseItem(purchase))}
 			loading={isLoading}
-			footer={footer}
+			footer={
+				pagination ? (
+					<PaginationFooter
+						showing={data?.length}
+						total={pagination?.total}
+						total_pages={pagination?.total_pages}
+						page={page}
+						setPage={setPage}
+					/>
+				) : null
+			}
 		/>
 	);
 };

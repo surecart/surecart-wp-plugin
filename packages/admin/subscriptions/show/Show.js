@@ -1,4 +1,5 @@
 import {
+	CeBlockUi,
 	CeButton,
 	CeDropdown,
 	CeMenu,
@@ -6,7 +7,7 @@ import {
 } from '@checkout-engine/components-react';
 import { __ } from '@wordpress/i18n';
 import { Fragment, useEffect } from 'react';
-import FlashError from '../../components/FlashError';
+import ErrorFlash from '../../components/ErrorFlash';
 import { addQueryArgs } from '@wordpress/url';
 
 // template
@@ -15,33 +16,93 @@ import useCurrentPage from '../../mixins/useCurrentPage';
 import Details from './modules/Details';
 import Invoices from './modules/Invoices';
 import Pricing from './modules/Pricing';
+import Cancel from './modules/Cancel';
+import Sidebar from './Sidebar';
 
 export default () => {
-	const { id, subscription, isLoading, fetchSubscription, getRelation } =
-		useCurrentPage('subscription');
+	const {
+		id,
+		subscription,
+		isLoading,
+		fetchSubscription,
+		getRelation,
+		saveSubscription,
+		isSaving,
+		subscriptionErrors,
+		clearSubscriptionErrors,
+	} = useCurrentPage('subscription', {
+		query: {
+			context: 'edit',
+			expand: [
+				'customer',
+				'price',
+				'price.product',
+				'purchase',
+				'payment_method',
+				'payment_method.card',
+			],
+		},
+	});
+
 	const customer = getRelation('customer');
 	const price = getRelation('price');
 	const product = getRelation('price.product');
-	const invoice = getRelation('latest_invoice');
 
 	useEffect(() => {
 		if (id) {
-			fetchSubscription({
-				query: {
-					context: 'edit',
-					expand: [
-						'customer',
-						'latest_invoice',
-						'price',
-						'price.product',
-						'purchase',
-						'payment_method',
-						'payment_method.card',
-					],
-				},
-			});
+			doFetch();
 		}
 	}, [id]);
+
+	const doFetch = () => {
+		fetchSubscription({
+			query: {
+				context: 'edit',
+				expand: [
+					'customer',
+					'price',
+					'price.product',
+					'purchase',
+					'payment_method',
+					'payment_method.card',
+				],
+			},
+		});
+	};
+
+	const renderCancelButton = () => {
+		if (subscription?.status === 'canceled') return null;
+		if (subscription?.cancel_at_period_end) {
+			return (
+				<CeMenuItem
+					onClick={async () => {
+						saveSubscription({
+							data: {
+								cancel_at_period_end: false,
+							},
+							query: {
+								context: 'edit',
+							},
+						});
+					}}
+				>
+					{__("Don't Cancel", 'checkout_engine')}
+				</CeMenuItem>
+			);
+		}
+
+		return (
+			<Cancel
+				id={id}
+				onCancel={() => setSaving(true)}
+				onCanceled={doFetch}
+			>
+				<CeMenuItem>
+					{__('Cancel Subscription', 'checkout_engine')}
+				</CeMenuItem>
+			</Cancel>
+		);
+	};
 
 	return (
 		<Template
@@ -49,6 +110,7 @@ export default () => {
 			backUrl={'admin.php?page=ce-subscriptions'}
 			backText={__('Back to all subscriptions.', 'checkout_engine')}
 			title={__('Subscription', 'checkout_engine')}
+			sidebar={<Sidebar loading={isLoading} />}
 			button={
 				isLoading ? (
 					<ce-skeleton
@@ -73,28 +135,40 @@ export default () => {
 							>
 								{__('Update Subscription', 'checkout_engine')}
 							</CeMenuItem>
-							<CeMenuItem>
-								{__('Cancel Subscription', 'checkout_engine')}
-							</CeMenuItem>
+							{renderCancelButton()}
 						</CeMenu>
 					</CeDropdown>
 				)
 			}
 		>
 			<Fragment>
-				<FlashError path="subscriptions" scrollIntoView />
+				<ErrorFlash
+					errors={subscriptionErrors}
+					onHide={clearSubscriptionErrors}
+				/>
+
 				<Details
 					subscription={subscription}
 					customer={customer}
 					product={product}
 					loading={isLoading}
 				/>
+
 				<Pricing
 					price={price}
 					product={product}
+					loading={isLoading}
 					subscription={subscription}
 				/>
-				<Invoices invoice={invoice} />
+
+				<Invoices subscriptionId={id} subscription={subscription} />
+
+				{isSaving && (
+					<ce-block-ui
+						spinner
+						style={{ zIndex: 9, margin: 0 }}
+					></ce-block-ui>
+				)}
 			</Fragment>
 		</Template>
 	);

@@ -35,6 +35,26 @@ export default ({ subscription, customer, product, loading }) => {
 				</div>
 			);
 		}
+
+		if (subscription?.ended_at) {
+			return (
+				<div>
+					<div>
+						<strong>
+							{sprintf(__('Ended', 'checkout_engine'))}
+						</strong>
+					</div>
+					<CeFormatDate
+						date={subscription.ended_at}
+						type="timestamp"
+						month="long"
+						day="numeric"
+						year="numeric"
+					></CeFormatDate>
+				</div>
+			);
+		}
+
 		if (subscription.status === 'trialing' && subscription.trial_end_at) {
 			return (
 				<div>
@@ -44,7 +64,7 @@ export default ({ subscription, customer, product, loading }) => {
 						</strong>
 					</div>
 					<CeFormatDate
-						date={subscription.trial_end_at}
+						date={subscription?.current_period_end_at}
 						type="timestamp"
 						month="long"
 						day="numeric"
@@ -75,6 +95,10 @@ export default ({ subscription, customer, product, loading }) => {
 			);
 		}
 	};
+
+	if (loading) {
+		return 'looding';
+	}
 
 	return (
 		<div>

@@ -1,44 +1,68 @@
 /** @jsx jsx */
 import { __ } from '@wordpress/i18n';
-import { Fragment } from '@wordpress/element';
-import { useDispatch } from '@wordpress/data';
-import FlashError from '../../components/FlashError';
+import { Fragment, useEffect, useState } from '@wordpress/element';
 import { addQueryArgs } from '@wordpress/url';
+import { css, jsx } from '@emotion/react';
 
 // template
 import Template from '../../templates/SingleModel';
 
-import useSnackbar from '../../hooks/useSnackbar';
 import useCurrentPage from '../../mixins/useCurrentPage';
-import { useEffect } from 'react';
+
+// modules
 import Customer from './modules/Customer';
 import Price from './modules/Price';
 import PaymentMethod from './modules/PaymentMethod';
 import Schedule from './modules/Schedule';
 import Sidebar from './Sidebar';
-import SaveButton from '../../products/components/SaveButton';
-import { CeButton, CeSwitch } from '@checkout-engine/components-react';
-import { css, jsx } from '@emotion/react';
-import { store } from '../../store/data';
+
+// components
+import ErrorFlash from '../../components/ErrorFlash';
+import {
+	CeButton,
+	CeFormatDate,
+	CeSwitch,
+} from '@checkout-engine/components-react';
 
 export default () => {
-	const { snackbarNotices, removeSnackbarNotice } = useSnackbar();
+	const [skip_proration, setSkipProration] = useState(true);
+	let update_behavior = 'immediate';
 
 	const {
 		id,
 		subscription,
-		updateSubscription,
-		isLoading,
-		error,
-		fetchSubscription,
 		saveSubscription,
+		isSaving,
+		updateSubscription,
+		setSaving,
+		subscriptionErrors,
+		clearSubscriptionErrors,
+		isLoading,
+		fetchSubscription,
+		getRelation,
 	} = useCurrentPage('subscription');
 
-	const { receiveModel } = useDispatch(store);
+	const customer = getRelation('customer');
+	const price = getRelation('price');
+	const product = getRelation('price.product');
 
-	const onSubmit = async (e) => {
+	const onSubmit = (e) => {
 		e.preventDefault();
-		saveSubscription();
+		setTimeout(async () => {
+			try {
+				await saveSubscription({
+					update_behavior,
+					skip_product_group_validation: true,
+					skip_proration,
+				});
+				setSaving(true);
+				window.location.href = addQueryArgs('admin.php', {
+					page: 'ce-subscriptions',
+					action: 'show',
+					id: id,
+				});
+			} catch (error) {}
+		}, 50);
 	};
 
 	const onInvalid = () => {};
@@ -46,16 +70,17 @@ export default () => {
 	useEffect(() => {
 		if (id) {
 			fetchSubscription({
-				context: 'edit',
-				expand: [
-					'customer',
-					'latest_invoice',
-					'price',
-					'price.product',
-					'purchase',
-					'payment_method',
-					'payment_method.card',
-				],
+				query: {
+					context: 'edit',
+					expand: [
+						'customer',
+						'price',
+						'price.product',
+						'purchase',
+						'payment_method',
+						'payment_method.card',
+					],
+				},
 			});
 		}
 	}, [id]);
@@ -77,9 +102,9 @@ export default () => {
 					? __('Update Subscription', 'checkout_engine')
 					: __('Create Subscription', 'checkout_engine')
 			}
-			notices={snackbarNotices}
-			sidebar={<Sidebar />}
-			removeNotice={removeSnackbarNotice}
+			sidebar={
+				<Sidebar subscription={subscription} loading={isLoading} />
+			}
 			button={
 				isLoading ? (
 					<ce-skeleton
@@ -97,21 +122,66 @@ export default () => {
 							align-items: center;
 						`}
 					>
-						<SaveButton>
-							{id
-								? __('Update Subscription', 'checkout_engine')
-								: __('Create Subscriptoin', 'checkout_engine')}
-						</SaveButton>
+						<CeSwitch
+							checked={skip_proration}
+							onCeChange={(e) =>
+								setSkipProration(e.target.checked)
+							}
+						>
+							{__('Skip Proration', 'checkout_engine')}
+						</CeSwitch>
+						<CeButton
+							className={'ce-schedule-model'}
+							disabled={isSaving}
+							loading={isSaving}
+							submit
+							onClick={(e) => {
+								e.preventDefault();
+								// setUpdateBehavior('pending');
+								update_behavior = 'pending';
+								console.log({ update_behavior });
+							}}
+						>
+							{__('Schedule for', 'checkout_engine')}
+							{'\u00A0'}
+							<CeFormatDate
+								date={subscription?.current_period_end_at}
+								month="short"
+								day="numeric"
+								year="numeric"
+								type="timestamp"
+							></CeFormatDate>
+						</CeButton>
+						<CeButton
+							type="primary"
+							className={'ce-save-model'}
+							disabled={isSaving}
+							loading={isSaving}
+							submit
+							onClick={(e) => {
+								e.preventDefault();
+								update_behavior = 'immediate';
+								// setUpdateBehavior('im mediate');
+								console.log({ update_behavior });
+							}}
+						>
+							{__('Update Subscription', 'checkout_engine')}
+						</CeButton>
 					</div>
 				)
 			}
 		>
 			<Fragment>
-				<FlashError path="subscriptions" scrollIntoView />
-				<Customer subscription={subscription} />
+				<ErrorFlash
+					errors={subscriptionErrors}
+					onHide={clearSubscriptionErrors}
+				/>
 				<Price
 					subscription={subscription}
 					updateSubscription={updateSubscription}
+					customer={customer}
+					price={price}
+					product={product}
 					loading={isLoading}
 				/>
 				<Schedule
@@ -124,6 +194,12 @@ export default () => {
 					updateSubscription={updateSubscription}
 					loading={isLoading}
 				/>
+				{isSaving && (
+					<ce-block-ui
+						spinner
+						style={{ zIndex: 9, margin: 0 }}
+					></ce-block-ui>
+				)}
 			</Fragment>
 		</Template>
 	);

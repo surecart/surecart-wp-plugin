@@ -4,19 +4,12 @@ import { select } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import { useEffect } from 'react';
 import useEntities from '../../../mixins/useEntities';
-import useEntity from '../../../mixins/useEntity';
 import { store } from '../../../store/data';
 import Box from '../../../ui/Box';
 import { css, jsx } from '@emotion/core';
 
 export default ({ subscription, updateSubscription, loading }) => {
-	const { getRelation } = useEntity(
-		'payment_method',
-		subscription?.payment_method
-	);
 	const { fetchEntities, data } = useEntities('payment_method');
-
-	console.log({ data });
 
 	useEffect(() => {
 		if (subscription?.customer) {

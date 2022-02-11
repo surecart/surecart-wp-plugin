@@ -1,29 +1,32 @@
-export function snackbarNotices( state ) {
+export function snackbarNotices(state) {
 	return state.snackbar || [];
 }
-export function isSaving( state ) {
+export function isSaving(state) {
 	return state.saving.isSaving;
 }
-export function flash( state ) {
+export function flash(state) {
 	return state.errors.flash;
 }
-export function isInvalid( state ) {
+export function isInvalid(state) {
 	return state.errors.isInvalid;
 }
-export function selectErrors( state, key, index = null ) {
-	if ( ! key ) {
+export function selectModelErrors(state, name) {
+	return state.modelErrors[name] || [];
+}
+export function selectErrors(state, key, index = null) {
+	if (!key) {
 		return state.errors.errors;
 	}
 
 	const filtered = state.errors.errors.filter(
-		( error ) => error?.key && error.key === key
+		(error) => error?.key && error.key === key
 	);
 
-	if ( index === null ) {
+	if (index === null) {
 		return filtered;
 	}
 
-	return filtered.filter( ( error ) => error?.index === index );
+	return filtered.filter((error) => error?.index === index);
 }
 
 export function selectValidationErrors(
@@ -32,19 +35,19 @@ export function selectValidationErrors(
 	index = null,
 	attribute = ''
 ) {
-	const errors = selectErrors( state, key, index );
+	const errors = selectErrors(state, key, index);
 
 	let validationErrors = [];
 
-	if ( ! errors.length ) {
+	if (!errors.length) {
 		return validationErrors;
 	}
 
-	errors.forEach( ( { error } ) => {
-		if ( ! error?.additional_errors?.length ) {
+	errors.forEach(({ error }) => {
+		if (!error?.additional_errors?.length) {
 			return;
 		}
-		if ( ! attribute ) {
+		if (!attribute) {
 			validationErrors = [
 				...validationErrors,
 				...error?.additional_errors,
@@ -54,10 +57,10 @@ export function selectValidationErrors(
 		validationErrors = [
 			...validationErrors,
 			...error?.additional_errors?.filter(
-				( error ) => error?.data?.attribute === attribute
+				(error) => error?.data?.attribute === attribute
 			),
 		];
-	} );
+	});
 
 	return validationErrors;
 }

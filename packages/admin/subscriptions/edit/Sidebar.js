@@ -1,10 +1,12 @@
-import { CeSwitch } from '@checkout-engine/components-react';
 import { Fragment } from '@wordpress/element';
+import Customer from './modules/Customer';
+import Summary from './modules/Summary';
 
-export default () => {
+export default ({ subscription, loading }) => {
 	return (
 		<Fragment>
-			<CeSwitch>Prorate Changes</CeSwitch>
+			<Summary subscription={subscription} loading={loading} />
+			<Customer subscription={subscription} loading={loading} />
 		</Fragment>
 	);
 };

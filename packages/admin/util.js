@@ -54,3 +54,15 @@ export const filterObject = (obj, predicate) =>
 	Object.keys(obj)
 		.filter((key) => predicate(obj[key]))
 		.reduce((res, key) => ((res[key] = obj[key]), res), {});
+
+export const snakeToCamel = (str) =>
+	str
+		.toLowerCase()
+		.replace(/([-_][a-z])/g, (group) =>
+			group.toUpperCase().replace('-', '').replace('_', '')
+		);
+
+export const camelName = (name) => {
+	const camelName = snakeToCamel(name);
+	return camelName.charAt(0).toUpperCase() + camelName.toLowerCase().slice(1);
+};
