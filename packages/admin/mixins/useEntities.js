@@ -17,6 +17,7 @@ export default (name, args, deps = []) => {
 
 	// select data from core store.
 	const data = useSelect((select) => select(store).selectCollection(name));
+	const drafts = useSelect((select) => select(store).selectDrafts(name));
 
 	deps.length &&
 		useEffect(() => {
@@ -58,6 +59,10 @@ export default (name, args, deps = []) => {
 		}
 	};
 
+	const addEntity = (payload) => {
+		dispatch(store).addDraft(name, payload);
+	};
+
 	const snakeToCamel = (str) =>
 		str
 			.toLowerCase()
@@ -69,13 +74,13 @@ export default (name, args, deps = []) => {
 		camelName.charAt(0).toUpperCase() + camelName.toLowerCase().slice(1);
 
 	return {
-		data,
-		[`${name}s`]: data,
 		isLoading,
 		isFetching,
 		pagination,
 		error,
-		fetchEntities,
+		[`${name}s`]: data,
+		[`draft${ucName}s`]: drafts,
 		[`fetch${ucName}s`]: fetchEntities,
+		[`add${ucName}`]: addEntity,
 	};
 };

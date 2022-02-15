@@ -9,11 +9,11 @@ import Box from '../../../ui/Box';
 import { css, jsx } from '@emotion/core';
 
 export default ({ subscription, updateSubscription, loading }) => {
-	const { fetchEntities, data } = useEntities('payment_method');
+	const { fetchPaymentmethods, data } = useEntities('payment_method');
 
 	useEffect(() => {
 		if (subscription?.customer) {
-			fetchEntities({
+			fetchPaymentmethods({
 				query: {
 					customer_ids: [subscription?.customer],
 					context: 'edit',

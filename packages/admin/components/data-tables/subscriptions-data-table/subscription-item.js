@@ -174,7 +174,7 @@ export default (subscription) => {
 			<ce-button
 				href={addQueryArgs('admin.php', {
 					page: 'ce-subscriptions',
-					action: 'edit',
+					action: 'show',
 					id: subscription?.id,
 				})}
 				size="small"

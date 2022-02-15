@@ -5,19 +5,19 @@ import { CeButton } from '@checkout-engine/components-react';
 import { __ } from '@wordpress/i18n';
 
 import Box from '../../ui/Box';
-import useCustomerData from '../hooks/useCustomerData';
 import { useEffect } from 'react';
 import useCurrentPage from '../../mixins/useCurrentPage';
 import useEntities from '../../mixins/useEntities';
+import { addQueryArgs } from '@wordpress/url';
 
 export default () => {
 	const { id } = useCurrentPage();
-	const { data, getEditLink, isLoading, pagination, error, fetchEntities } =
+	const { customers, isLoading, pagination, error, fetchCustomers } =
 		useEntities('customer');
 
 	useEffect(() => {
 		id &&
-			fetchEntities({
+			fetchCustomers({
 				query: {
 					order_ids: [id],
 					context: 'edit',
@@ -25,24 +25,26 @@ export default () => {
 			});
 	}, [id]);
 
-	const customer = data?.[0];
+	const customer = customers?.[0];
 
 	const renderLoading = () => {
 		return <ce-skeleton></ce-skeleton>;
 	};
-
-	const editLink = getEditLink(customer?.id);
 
 	return (
 		<Box
 			title={__('Customer', 'checkout_engine')}
 			footer={
 				<div>
-					{editLink && (
-						<CeButton href={editLink}>
-							{__('Edit Customer', 'checkout_engine')}
-						</CeButton>
-					)}
+					<CeButton
+						href={addQueryArgs('admin.php', {
+							page: 'ce-subscriptions',
+							action: 'show',
+							id: id,
+						})}
+					>
+						{__('Edit Customer', 'checkout_engine')}
+					</CeButton>
 				</div>
 			}
 		>

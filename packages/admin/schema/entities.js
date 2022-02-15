@@ -10,6 +10,8 @@ export default {
 	latest_invoice: new schema.Entity('latest_invoice'),
 	refund: new schema.Entity('refund'),
 	charge: new schema.Entity('charge'),
+	coupon: new schema.Entity('coupon'),
+	promotion: new schema.Entity('promotion'),
 	order: new schema.Entity('order'),
 	customer: new schema.Entity('customer'),
 	subscription: new schema.Entity('subscription'),

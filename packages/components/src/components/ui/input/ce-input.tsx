@@ -1,5 +1,5 @@
 import { Component, Prop, State, Watch, h, Event, EventEmitter, Method, Element, Host } from '@stencil/core';
-import { addFormData } from '../../../functions/form-data';
+import { FormSubmitController } from '../../../functions/form-data';
 
 let id = 0;
 
@@ -24,6 +24,8 @@ export class CEInput {
 
   /** Element */
   @Element() el: HTMLCeInputElement;
+
+  private formController: any;
 
   @Prop() squared: boolean;
   @Prop() squaredBottom: boolean;
@@ -213,8 +215,13 @@ export class CEInput {
   }
 
   componentDidLoad() {
+    this.formController = new FormSubmitController(this.el);
+    this.formController.addFormData(this.el);
     this.handleFocusChange();
-    addFormData(this.el);
+  }
+
+  disconnectedCallback() {
+    this.formController.removeFormData(this.el);
   }
 
   render() {

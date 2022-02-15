@@ -6,12 +6,12 @@ import useEntities from '../../mixins/useEntities';
 
 export default () => {
 	const { id } = useCurrentPage();
-	const { data, isLoading, pagination, error, fetchEntities } =
+	const { subscriptions, isLoading, pagination, error, fetchSubscriptions } =
 		useEntities('subscription');
 
 	useEffect(() => {
 		id &&
-			fetchEntities({
+			fetchSubscriptions({
 				query: {
 					order_ids: [id],
 					context: 'edit',
@@ -36,11 +36,11 @@ export default () => {
 				created: {
 					label: __('Created', 'checkout_engine'),
 				},
-				actions: {
+				view: {
 					width: '100px',
 				},
 			}}
-			data={data}
+			data={subscriptions}
 			isLoading={isLoading}
 			error={error}
 			pagination={pagination}

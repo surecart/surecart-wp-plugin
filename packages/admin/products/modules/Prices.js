@@ -6,7 +6,6 @@ import { useState, Fragment } from '@wordpress/element';
 
 import Box from '../../ui/Box';
 import Price from '../components/price/index.js';
-import useProductData from '../hooks/useProductData';
 
 import {
 	CeButton,
@@ -14,32 +13,46 @@ import {
 	CeChoices,
 	CeSwitch,
 } from '@checkout-engine/components-react';
+import useEntities from '../../mixins/useEntities';
+import useCurrentPage from '../../mixins/useCurrentPage';
+import { useEffect } from 'react';
+import ErrorFlash from '../../components/ErrorFlash';
+import useEntity from '../../mixins/useEntity';
 
-export default () => {
-	const {
-		loading,
-		prices,
-		product,
-		updateProduct,
-		isCreated,
-		addPrice,
-		archivedPrices,
-		hasArchivedPrices,
-		hasActivePrices,
-	} = useProductData();
+export default ({ product, updateProduct, loading }) => {
+	const { id } = useCurrentPage();
+	const { prices, draftPrices, addPrice } = useEntities('price');
+	const archivedPrices = (prices || []).filter((price) => !!price.archived);
+	const activePrices = (prices || []).filter((price) => !price.archived);
 
 	const [open, setOpen] = useState();
 	const [showArchived, setShowArchived] = useState(false);
+	const { priceErrors, clearPriceErrors } = useEntity('price');
+
+	useEffect(() => {
+		if (!id) {
+			addPrice({
+				recurring: false,
+				recurring_interval: 'month',
+				currency: ceData?.currency_code || 'usd',
+				recurring_interval_count: 1,
+				archived: false,
+			});
+		}
+	}, [id]);
 
 	const renderPrices = () => {
-		if (!prices?.length) {
-			return null;
-		}
-
 		return (
-			<Fragment>
-				{renderPriceList()}
-				{!!hasArchivedPrices && (
+			<div
+				css={css`
+					display: grid;
+					gap: 3em;
+				`}
+			>
+				{renderPriceList(activePrices)}
+				{renderPriceList(draftPrices)}
+
+				{!!archivedPrices?.length && (
 					<div
 						css={css`
 							> *:not(:last-child) {
@@ -50,23 +63,20 @@ export default () => {
 						{!!showArchived && renderPriceList({ archived: true })}
 					</div>
 				)}
-			</Fragment>
+			</div>
 		);
 	};
 
-	const renderPriceList = ({ archived } = { archived: undefined }) => {
-		return prices.map((price, index) => {
-			if (archived && !price.archived) return null;
-			if (!archived && price.archived) return null;
-
+	const renderPriceList = (list) => {
+		return (list || []).map((price, index) => {
 			return (
 				<Price
 					price={price}
 					prices={prices}
+					product={product}
 					index={index}
 					key={index}
 					focused={index === open}
-					open={open}
 				/>
 			);
 		});
@@ -76,18 +86,28 @@ export default () => {
 		<div>
 			<Box
 				title={__('Pricing', 'checkout_engine')}
-				description={!hasActivePrices ? __('Please add a price.') : ''}
+				description={
+					!activePrices?.length ? __('Please add a price.') : ''
+				}
 				loading={loading}
 				footer={
 					!loading &&
-					(product?.recurring || hasArchivedPrices) && (
+					(product?.recurring ||
+						archivedPrices?.length ||
+						activePrices < 1) && (
 						<Fragment>
-							{product?.recurring && (
+							{(product?.recurring || activePrices < 1) && (
 								<CeButton
 									onClick={(e) => {
 										e.preventDefault();
 										addPrice({
+											product: id,
 											recurring: false,
+											recurring_interval: 'month',
+											currency:
+												ceData?.currency_code || 'usd',
+											recurring_interval_count: 1,
+											archived: false,
 										});
 										setOpen(prices?.length);
 									}}
@@ -120,7 +140,7 @@ export default () => {
 									{__('Add Another Price', 'checkout_engine')}
 								</CeButton>
 							)}
-							{!!hasArchivedPrices && (
+							{!!archivedPrices?.length && (
 								<div
 									css={css`
 										display: flex;
@@ -153,7 +173,8 @@ export default () => {
 					)
 				}
 			>
-				{!isCreated && (
+				<ErrorFlash errors={priceErrors} onHide={clearPriceErrors} />
+				{!id && (
 					<CeChoices
 						required
 						label={__('Product Type', 'checkout_engine')}

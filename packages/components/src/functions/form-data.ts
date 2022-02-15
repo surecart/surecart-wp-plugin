@@ -25,67 +25,67 @@ export interface FormSubmitControllerOptions {
   reportValidity: (input: unknown) => boolean;
 }
 
-export const addFormData = (input: any, options?: Partial<FormSubmitControllerOptions>) => {
-  const formOptions = {
-    form: (input: HTMLInputElement) => input?.closest('ce-form')?.shadowRoot?.querySelector('form') || input.closest('form'),
-    name: (input: HTMLInputElement) => input.name,
-    value: (input: HTMLInputElement) => input.value,
-    disabled: (input: HTMLInputElement) => input.disabled,
-    reportValidity: (input: HTMLInputElement) => {
-      return typeof input.reportValidity === 'function' ? input.reportValidity() : true;
-    },
-    ...options,
-  };
+export class FormSubmitController {
+  form: HTMLFormElement | null = null;
+  input: any;
+  options: FormSubmitControllerOptions;
+  constructor(input: any, options?: Partial<FormSubmitControllerOptions>) {
+    this.input = input;
+    this.options = {
+      form: (input: HTMLInputElement) => input?.closest('ce-form')?.shadowRoot?.querySelector('form') || input.closest('form'),
+      name: (input: HTMLInputElement) => input.name,
+      value: (input: HTMLInputElement) => input.value,
+      disabled: (input: HTMLInputElement) => input.disabled,
+      reportValidity: (input: HTMLInputElement) => {
+        return typeof input.reportValidity === 'function' ? input.reportValidity() : true;
+      },
+      ...options,
+    };
 
-  const form = formOptions.form(input);
-
-  if (form) {
-    form.addEventListener('formdata', (event: FormDataEvent) => handleFormData(input, event, formOptions));
-    form.addEventListener('submit', event => handleFormSubmit(input, form, event, formOptions));
+    this.form = this.options.form(this.input);
+    this.handleFormData = this.handleFormData.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
-};
 
-export const removeFormData = (input: any, options?: Partial<FormSubmitControllerOptions>) => {
-  const formOptions = {
-    form: (input: HTMLInputElement) => input?.closest('ce-form')?.shadowRoot?.querySelector('form') || input.closest('form'),
-    name: (input: HTMLInputElement) => input.name,
-    value: (input: HTMLInputElement) => input.value,
-    disabled: (input: HTMLInputElement) => input.disabled,
-    reportValidity: (input: HTMLInputElement) => {
-      return typeof input.reportValidity === 'function' ? input.reportValidity() : true;
-    },
-    ...options,
-  };
+  addFormData() {
+    if (!this.form) return;
+    this.form.addEventListener('formdata', this.handleFormData);
+    this.form.addEventListener('submit', this.handleSubmit, true);
+  }
 
-  const form = formOptions.form(input);
+  removeFormData() {
+    if (!this.form) return;
+    this.form.removeEventListener('formdata', this.handleFormData);
+    this.form.removeEventListener('submit', this.handleSubmit, true);
+  }
 
-  form.removeEventListener('formdata', (event: FormDataEvent) => handleFormData(input, event, formOptions));
-  form.removeEventListener('submit', event => handleFormSubmit(input, form, event, formOptions));
-};
+  handleFormData(event: FormDataEvent) {
+    const disabled = this.options.disabled(this.input);
+    const name = this.options.name(this.input);
+    const value = this.options.value(this.input);
 
-export const handleFormData = (input: any, event: FormDataEvent, options: FormSubmitControllerOptions) => {
-  const disabled = options.disabled(input);
-  const name = options.name(input);
-  const value = options.value(input);
-
-  if (!disabled && typeof name === 'string' && typeof value !== 'undefined') {
-    if (Array.isArray(value)) {
-      (value as unknown[]).forEach(val => {
-        event.formData.append(name, (val as string | number | boolean).toString());
-      });
-    } else {
-      console.log({ value });
-      event.formData.append(name, (value as string | number | boolean).toString());
+    if (!disabled && typeof name === 'string' && typeof value !== 'undefined') {
+      if (Array.isArray(value)) {
+        (value as unknown[]).forEach(val => {
+          event.formData.append(name, (val as string | number | boolean).toString());
+        });
+      } else {
+        event.formData.append(name, (value as string | number | boolean).toString());
+      }
     }
   }
-};
 
-export const handleFormSubmit = (input: any, form: HTMLFormElement, event, options: FormSubmitControllerOptions) => {
-  const disabled = options.disabled(input);
-  const reportValidity = options.reportValidity;
-  // prevent submission if there are any invalid inputs.
-  if (form && !form.noValidate && !disabled && !reportValidity(input)) {
+  async handleSubmit(event: Event) {
+    const disabled = this.options.disabled(this.input);
+    const reportValidity = this.options.reportValidity;
+    const isValid = await reportValidity(this.input);
+
+    if (!this.form) return;
+    if (this.form.noValidate) return;
+    if (disabled) return;
+    if (isValid) return;
+
     event.preventDefault();
     event.stopImmediatePropagation();
   }
-};
+}

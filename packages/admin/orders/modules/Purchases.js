@@ -6,12 +6,12 @@ import useCurrentPage from '../../mixins/useCurrentPage';
 
 export default () => {
 	const { id } = useCurrentPage();
-	const { data, isLoading, pagination, error, fetchEntities } =
+	const { purchases, isLoading, pagination, error, fetchPurchases } =
 		useEntities('purchase');
 
 	useEffect(() => {
 		id &&
-			fetchEntities({
+			fetchPurchases({
 				query: {
 					order_ids: [id],
 					context: 'edit',
@@ -30,8 +30,7 @@ export default () => {
 					width: '100px',
 				},
 			}}
-			// onUpdatePurchase={editEntityRecord}
-			data={data}
+			data={purchases}
 			isLoading={isLoading}
 			error={error}
 			pagination={pagination}

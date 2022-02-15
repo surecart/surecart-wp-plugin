@@ -6,12 +6,11 @@ import { format } from '@wordpress/date';
 import { Fragment } from '@wordpress/element';
 
 import Box from '../ui/Box';
-import ArchiveToggle from './components/ArchiveToggle';
 import Definition from '../ui/Definition';
-import { CeButton } from '@checkout-engine/components-react';
+import { CeButton, CeSwitch } from '@checkout-engine/components-react';
 import Image from './modules/Image';
 
-export default ({ loading, product }) => {
+export default ({ loading, product, updateProduct, saveProduct }) => {
 	const badge = () => {
 		if (loading) {
 			return null;
@@ -66,7 +65,35 @@ export default ({ loading, product }) => {
 					<Definition
 						title={__('Available for purchase', 'checkout_engine')}
 					>
-						<ArchiveToggle />
+						<CeSwitch
+							checked={!product?.archived}
+							onClick={(e) => {
+								e.preventDefault();
+								const r = confirm(
+									product?.archived
+										? sprintf(
+												__(
+													'Un-Archive %s? This will make the product purchaseable again.',
+													'checkout_engine'
+												),
+												product?.name || 'Product'
+										  )
+										: sprintf(
+												__(
+													'Archive %s? This product will not be purchaseable and all unsaved changes will be lost.',
+													'checkout_engine'
+												),
+												product?.name || 'Product'
+										  )
+								);
+								if (!r) return;
+								saveProduct({
+									data: {
+										archived: !product?.archived,
+									},
+								});
+							}}
+						/>
 					</Definition>
 					{!!product?.archived_at && (
 						<Definition
@@ -101,7 +128,9 @@ export default ({ loading, product }) => {
 					)}
 				</Fragment>
 			</Box>
-			<Image />
+
+			<Image product={product} updateProduct={updateProduct} />
+
 			<Box
 				loading={loading}
 				title={

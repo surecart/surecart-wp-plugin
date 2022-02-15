@@ -17,6 +17,12 @@ export const batchSave = (batches) => {
 	};
 };
 
+export const batchSaveDrafts = (batches) => {
+	return {
+		type: 'BATCH_SAVE_DRAFTS',
+		batches,
+	};
+};
 /**
  * Wrapper for API to add our endpoint
  */
@@ -58,6 +64,24 @@ export default {
 						]);
 					}
 
+					throw error;
+				}
+			})
+		);
+	},
+	async BATCH_SAVE_DRAFTS({ batches }) {
+		return await Promise.all(
+			batches.map(async ({ key, request, index = null }) => {
+				try {
+					const updated = await fetchFromAPI(request);
+					if (updated && updated?.id) {
+						await dispatch(dataStore).updateDraft(
+							key,
+							updated,
+							index
+						);
+					}
+				} catch (error) {
 					throw error;
 				}
 			})

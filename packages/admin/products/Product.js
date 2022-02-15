@@ -3,20 +3,13 @@ import { css, jsx } from '@emotion/core';
 
 import { __ } from '@wordpress/i18n';
 import { Fragment, useEffect } from '@wordpress/element';
-import { dispatch } from '@wordpress/data';
+import { useDispatch } from '@wordpress/data';
 
 import { store as uiStore } from '../store/ui';
 import { store as dataStore } from '../store/data';
-import { store } from './store';
 
 // template
 import Template from '../templates/SingleModel';
-
-// components
-import SaveButton from './components/SaveButton';
-import ProductActionsDropdown from './components/ProductActionsDropdown';
-import FlashError from '../components/FlashError';
-import { CeAlert } from '@checkout-engine/components-react';
 
 // modules
 import Details from './modules/Details';
@@ -25,33 +18,41 @@ import Prices from './modules/Prices';
 // parts
 import Sidebar from './Sidebar';
 
-// hooks
-import useSnackbar from '../hooks/useSnackbar';
-import useProductData from './hooks/useProductData';
-
 // hocs
-import withConfirm from '../hocs/withConfirm';
-import useValidationErrors from '../hooks/useValidationErrors';
+import useCurrentPage from '../mixins/useCurrentPage';
+import ErrorFlash from '../components/ErrorFlash';
+import useEntities from '../mixins/useEntities';
+import { useState } from 'react';
+import { CeButton } from '@checkout-engine/components-react';
 
-export default withConfirm(({ setConfirm, noticeUI }) => {
-	const { snackbarNotices, removeSnackbarNotice } = useSnackbar();
-
+export default () => {
+	const { saveModel, updateModel, saveDraft, updateDraft, clearDrafts } =
+		useDispatch(dataStore);
+	const { addSnackbarNotice, addModelErrors } = useDispatch(uiStore);
 	const {
+		id,
 		product,
-		error,
-		toggleProductArchive,
-		prices,
-		loading,
-		isCreated,
-		status,
-		updateProduct,
+		saveProduct,
 		isSaving,
-		addEmptyPrice,
-	} = useProductData();
+		fetchProduct,
+		updateProduct,
+		productErrors,
+		clearProductErrors,
+		isLoading,
+	} = useCurrentPage('product');
+	const { prices, draftPrices } = useEntities('price');
+	const [saving, setSaving] = useState(false);
 
+	// fetch product on load.
 	useEffect(() => {
-		if (!isCreated) {
-			addEmptyPrice();
+		if (id) {
+			fetchProduct({
+				query: {
+					context: 'edit',
+					expand: ['prices'],
+				},
+			});
+		} else {
 			updateProduct({
 				tax_enabled: true,
 			});
@@ -60,82 +61,87 @@ export default withConfirm(({ setConfirm, noticeUI }) => {
 
 	const onSubmit = async (e) => {
 		e.preventDefault();
-		if (!prices.some((price) => !price.archived)) {
-			return handlePricesError();
+		try {
+			setSaving(true);
+			id ? await editProduct() : await createProduct();
+			addSnackbarNotice({
+				content: __('Saved.'),
+			});
+		} catch (e) {
+			console.error(e);
+		} finally {
+			setSaving(false);
 		}
-		dispatch(store).save();
 	};
 
-	const handlePricesError = () => {
-		dispatch(uiStore).addSnackbarNotice({
-			className: 'is-snackbar-error',
-			content: __('You must have a price.', 'checkout_engine'),
+	const createProduct = async () => {
+		await saveProduct({
+			query: {
+				context: 'edit',
+				expand: ['prices'],
+			},
+			data: {
+				prices: draftPrices,
+			},
 		});
-		dispatch(dataStore).addPrice('prices', {
-			recurring: false,
-		});
+		await clearDrafts('product');
+		return await clearDrafts('price');
 	};
 
-	const onInvalid = () => {
-		dispatch(uiStore).setInvalid(true);
-	};
-
-	const toggleArchive = async () => {
-		setConfirm({});
-		toggleProductArchive(0);
-	};
-
-	if (error?.message) {
-		return (
-			<CeAlert
-				css={css`
-					margin-top: 20px;
-					margin-right: 20px;
-				`}
-				type="danger"
-				open={error?.message}
-				onCeShow={(e) => {
-					if (scrollIntoView) {
-						e.target.scrollIntoView({
-							behavior: 'smooth',
-							block: 'start',
-							inline: 'nearest',
-						});
-					}
-				}}
-			>
-				<span slot="title">
-					{__(
-						'There was a critical error loading this page. Please reload the page and try again.',
-						'checkout_engine'
-					)}
-				</span>
-				{error?.message}
-			</CeAlert>
+	const editProduct = async () => {
+		await saveProduct();
+		await Promise.all(
+			(prices || []).map((price) => savePrice(price, product))
 		);
-	}
+		await Promise.all(
+			(draftPrices || []).map((price, index) =>
+				saveDraftPrice(price, index, product)
+			)
+		);
+		return await clearDrafts('price');
+	};
+
+	// save price
+	const savePrice = async (price) => {
+		try {
+			return await saveModel('price', price?.id);
+		} catch (e) {
+			addModelErrors('price', e);
+		}
+	};
+
+	/** Save any draft prices. */
+	const saveDraftPrice = async (_, index) => {
+		try {
+			return await saveDraft('price', index);
+		} catch (e) {
+			addModelErrors('price', e);
+		}
+	};
 
 	return (
 		<Template
-			status={status}
-			pageModelName={'products'}
+			status={product?.status}
+			pageModelName={'product'}
 			onSubmit={onSubmit}
-			onInvalid={onInvalid}
 			backUrl={'admin.php?page=ce-products'}
 			backText={__('Back to All Product', 'checkout_engine')}
 			title={
-				product?.id
-					? sprintf(
-							__('Edit %s', 'checkout_engine'),
-							product?.name || __('Product', 'checkout_engine')
-					  )
-					: sprintf(
-							__('Add %s', 'checkout_engine'),
-							product?.name || __('Product', 'checkout_engine')
-					  )
+				isLoading ? (
+					<ce-skeleton
+						style={{
+							width: '120px',
+							display: 'inline-block',
+						}}
+					></ce-skeleton>
+				) : product?.id ? (
+					__('Edit Product', 'checkout_engine')
+				) : (
+					__('Create Product', 'checkout_engine')
+				)
 			}
 			button={
-				loading ? (
+				isLoading ? (
 					<ce-skeleton
 						style={{
 							width: '120px',
@@ -151,36 +157,50 @@ export default withConfirm(({ setConfirm, noticeUI }) => {
 							gap: 0.5em;
 						`}
 					>
-						<ProductActionsDropdown
+						{/* <ProductActionsDropdown
 							setConfirm={setConfirm}
 							product={product}
 							isSaving={isSaving}
 							toggleArchive={toggleArchive}
-						/>
-						<SaveButton>
+						/> */}
+						<CeButton
+							type="primary"
+							loading={saving || isSaving}
+							submit
+						>
 							{product?.id
 								? __('Update Product', 'checkout_engine')
 								: __('Create Product', 'checkout_engine')}
-						</SaveButton>
+						</CeButton>
 					</div>
 				)
 			}
-			notices={snackbarNotices}
-			removeNotice={removeSnackbarNotice}
-			noticeUI={noticeUI}
 			sidebar={
 				<Sidebar
-					loading={loading}
+					loading={isLoading}
 					product={product}
-					isSaving={isSaving}
+					updateProduct={updateProduct}
+					saveProduct={saveProduct}
 				/>
 			}
 		>
 			<Fragment>
-				<FlashError path="products" scrollIntoView />
-				<Details />
-				<Prices />
+				<ErrorFlash
+					errors={productErrors}
+					onHide={clearProductErrors}
+				/>
+
+				<Details
+					product={product}
+					updateProduct={updateProduct}
+					loading={isLoading}
+				/>
+				<Prices
+					product={product}
+					updateProduct={updateProduct}
+					loading={isLoading}
+				/>
 			</Fragment>
 		</Template>
 	);
-});
+};

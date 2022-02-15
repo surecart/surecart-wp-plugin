@@ -50,7 +50,6 @@ export default ({
 				<CeForm
 					className="ce-model-form"
 					onCeFormSubmit={onSubmit}
-					onCeFormInvalid={onInvalid}
 					css={css`
 						font-size: 14px;
 						margin-right: 20px;

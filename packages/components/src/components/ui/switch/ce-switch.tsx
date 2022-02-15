@@ -1,4 +1,5 @@
-import { Component, Prop, Event, EventEmitter, h, State, Method, Watch } from '@stencil/core';
+import { Component, Prop, Event, EventEmitter, h, State, Method, Watch, Element } from '@stencil/core';
+import { FormSubmitController } from '../../../functions/form-data';
 
 let id = 0;
 
@@ -8,6 +9,8 @@ let id = 0;
   shadow: true,
 })
 export class CESwitch {
+  @Element() el: HTMLCeSwitchElement;
+  private formController: any;
   private input: HTMLInputElement;
   private switchId: string = `switch-${++id}`;
   private labelId = `switch-label-${id}`;
@@ -89,6 +92,17 @@ export class CESwitch {
       this.input.checked = this.checked;
       this.invalid = !this.input.checkValidity();
     }
+  }
+
+  componentDidLoad() {
+    this.formController = new FormSubmitController(this.el, {
+      value: (control: HTMLCeChoiceElement) => (control.checked ? control.value : undefined),
+    });
+    this.formController.addFormData(this.el);
+  }
+
+  disconnectedCallback() {
+    this.formController.removeFormData(this.el);
   }
 
   render() {

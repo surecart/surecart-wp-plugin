@@ -39,24 +39,16 @@ export const selectAllModels = (state) => {
 	return state.entities;
 };
 
-export const selectCollection = (state, path) => {
-	return state.entities?.[path];
+export const selectCollection = (state, name) => {
+	return Object.values(state.entities?.[name] || {});
 };
 
-export const selectModel = (state, path, index = 0) => {
-	return get(state.entities, `${path}.${index}`);
+export const selectModel = (state, name, id) => {
+	return state.entities?.[name]?.[id];
 };
 
-export const selectModelById = (state, path, id) => {
-	const models = get(state.entities, path);
-	if (!models || !Array.isArray(models)) {
-		return false;
-	}
-	return (models || []).find((model) => model.id === id);
-};
-
-export const selectRelation = (state, path, id, relation) => {
-	let model = selectModelById(state, path, id);
+export const selectRelation = (state, name, id, relation) => {
+	let model = selectModel(state, name, id);
 	if (!model) {
 		return false;
 	}
@@ -73,13 +65,29 @@ export const selectSingleRelation = (state, model, relation) => {
 	if ('latest_invoice' === relation) {
 		collection = 'invoice';
 	}
-	return (state?.entities?.[collection] || []).find((item) => {
+	return Object.values(state?.entities?.[collection] || {}).find((item) => {
 		return item.id === model?.[relation];
 	});
 };
 
 export const selectDirty = (state) => {
 	return state.dirty;
+};
+
+export const selectAllDrafts = (state) => {
+	return Object.values(state.drafts || {}).filter((category) =>
+		category.some((item) => !item?.id)
+	);
+};
+
+export const selectDrafts = (state, name) => {
+	return Object.values(state.drafts?.[name] || {}).filter(
+		(item) => !item?.id
+	);
+};
+
+export const selectDraft = (state, name, index) => {
+	return state.drafts?.[name]?.[index] || [];
 };
 
 export const hasDirtyModels = (state) => {

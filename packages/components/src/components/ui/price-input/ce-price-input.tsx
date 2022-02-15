@@ -1,6 +1,6 @@
 import { Component, Prop, Event, EventEmitter, h, Method, Watch, Element } from '@stencil/core';
-import { addFormData } from '../../../functions/form-data';
 import { getCurrencySymbol } from '../../../functions/price';
+import { FormSubmitController } from '../../../functions/form-data';
 
 /**
  * @part base - The elements base wrapper.
@@ -18,6 +18,8 @@ import { getCurrencySymbol } from '../../../functions/price';
 export class CePriceInput {
   @Element() el: HTMLCePriceInputElement;
   private ceInput: HTMLCeInputElement;
+
+  private formController: any;
 
   /** The input's size. */
   @Prop({ reflect: true }) size: 'small' | 'medium' | 'large' = 'medium';
@@ -123,7 +125,15 @@ export class CePriceInput {
 
   componentDidLoad() {
     this.handleFocusChange();
-    addFormData(this.el);
+    this.formController = new FormSubmitController(this.el);
+    this.formController.addFormData(this.el);
+    document.addEventListener('wheel', () => {
+      this.ceInput.triggerBlur();
+    });
+  }
+
+  disconnectedCallback() {
+    this.formController.removeFormData(this.el);
   }
 
   render() {

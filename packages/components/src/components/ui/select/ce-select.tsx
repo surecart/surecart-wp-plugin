@@ -1,7 +1,7 @@
 import { Component, Prop, h, State, Watch, Event, EventEmitter, Method, Element } from '@stencil/core';
 import { ChoiceItem } from '../../../types';
 import Fuse from 'fuse.js';
-import { addFormData } from '../../../functions/form-data';
+import { FormSubmitController } from '../../../functions/form-data';
 
 @Component({
   tag: 'ce-select',
@@ -11,6 +11,8 @@ import { addFormData } from '../../../functions/form-data';
 export class CeSelectDropdown {
   /** Element */
   @Element() el: HTMLCeSelectElement;
+
+  private formController: any;
 
   private searchInput: HTMLCeInputElement;
   private input: HTMLInputElement;
@@ -186,10 +188,15 @@ export class CeSelectDropdown {
   }
 
   componentDidLoad() {
-    addFormData(this.el);
+    this.formController = new FormSubmitController(this.el);
+    this.formController.addFormData(this.el);
     if (this.open) {
       this.searchInput.triggerFocus();
     }
+  }
+
+  disconnectedCallback() {
+    this.formController.removeFormData(this.el);
   }
 
   renderItem(choice: ChoiceItem) {

@@ -1,7 +1,12 @@
 import { render } from '@wordpress/element';
 
 /**
- * register store and entities.
+ * register store entities.
+ */
+import '@admin/schema/register';
+
+/**
+ * Register store.
  */
 import './store/register';
 
@@ -13,4 +18,4 @@ import Product from './Product';
 /**
  * Render
  */
-render( <Product />, document.getElementById( 'app' ) );
+render(<Product />, document.getElementById('app'));

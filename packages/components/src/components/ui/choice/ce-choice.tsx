@@ -1,5 +1,5 @@
 import { Component, Prop, h, Event, EventEmitter, Method, State, Element, Watch } from '@stencil/core';
-import { addFormData } from '../../../functions/form-data';
+import { FormSubmitController } from '../../../functions/form-data';
 
 let id = 0;
 
@@ -10,6 +10,8 @@ let id = 0;
 })
 export class CEChoice {
   @Element() el: HTMLCeChoiceElement;
+
+  private formController: any;
 
   private input: HTMLInputElement;
   private inputId: string = `choice-${++id}`;
@@ -158,9 +160,14 @@ export class CEChoice {
 
   componentDidLoad() {
     this.handleResize();
-    addFormData(this.el, {
+    this.formController = new FormSubmitController(this.el, {
       value: (control: HTMLCeChoiceElement) => (control.checked ? control.value : undefined),
     });
+    this.formController.addFormData(this.el);
+  }
+
+  disconnectedCallback() {
+    this.formController.removeFormData(this.el);
   }
 
   handleResize() {

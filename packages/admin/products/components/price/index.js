@@ -2,11 +2,7 @@
 import { css, jsx } from '@emotion/core';
 
 import { __ } from '@wordpress/i18n';
-import { useState, useEffect, useRef, Fragment } from '@wordpress/element';
-import { dispatch } from '@wordpress/data';
-
-import FlashError from '../../../components/FlashError';
-import { store as coreStore } from '../../../store/data';
+import { useState, useEffect } from '@wordpress/element';
 
 import {
 	CeInput,
@@ -17,80 +13,39 @@ import {
 	CeDropdown,
 	CeMenu,
 	CeMenuItem,
+	CeTooltip,
 } from '@checkout-engine/components-react';
-
 import Header from './Header';
-import { translate } from '../../../util';
 
-// hooks
-import useProductData from '../../hooks/useProductData';
-import useValidationErrors from '../../../hooks/useValidationErrors';
+import { translate } from '../../../util';
 
 // hocs
 import withConfirm from '../../../hocs/withConfirm';
+import useEntity from '../../../mixins/useEntity';
+import ConditionalWrapper from '../../../components/ConditionalWrapper';
 
-export default withConfirm(({ price, index, open }) => {
-	const {
-		product,
-		prices,
-		duplicatePrice: duplicatePriceAction,
-		updatePrice: updatePriceAction,
-		isInvalid,
-		togglePriceArchive,
-	} = useProductData();
+export default withConfirm(({ price: priceEntity, prices, product, index }) => {
+	const { price, updatePrice, deletePrice, priceErrors, clearPriceErrors } =
+		useEntity('price', priceEntity?.id, index);
 
-	const { errors, getValidation } = useValidationErrors('prices', index);
-
-	const [isOpen, setIsOpen] = useState(index === 0);
-	const input = useRef();
+	const [isOpen, setIsOpen] = useState(true);
 
 	// if invalid, toggle open.
 	useEffect(() => {
-		if (isInvalid) {
+		if (priceErrors?.length) {
 			setIsOpen(true);
 		}
-	}, [isInvalid]);
-
-	// focus on first input when opened.
-	useEffect(() => {
-		if (open === index && input?.current) {
-			setIsOpen(true);
-			setTimeout(() => {
-				input.current.triggerFocus();
-			}, 50);
-			return;
-		}
-	}, [open]);
-
-	// if invalid, toggle open.
-	useEffect(() => {
-		if (errors?.length) {
-			setIsOpen(true);
-		}
-	}, [errors]);
-
-	// update price
-	const updatePrice = (value) => {
-		updatePriceAction(index, value);
-	};
-
-	// delete
-	const deletePrice = () => {
-		dispatch(coreStore).deleteModel('prices', index);
-	};
-
-	// archive
-	const toggleArchive = () => {
-		togglePriceArchive(index);
-	};
-
-	// duplicate
-	const duplicatePrice = () => {
-		duplicatePriceAction(price);
-	};
+	}, [priceErrors]);
 
 	const hasHeader = () => {
 		return product?.recurring || prices?.length > 1;
+	};
+
+	const showLifetime = () => {
+		// need to be a recurring product
+		if (!product?.recurring) return false;
+		if (!price?.id) return true;
+		return price?.recurring_interval === 'never';
 	};
 
 	return (
@@ -100,23 +55,24 @@ export default withConfirm(({ price, index, open }) => {
 					isOpen={isOpen}
 					setIsOpen={setIsOpen}
 					price={price}
-					onDuplicate={duplicatePrice}
-					onArchive={toggleArchive}
-					onDelete={deletePrice}
+					onArchive={() =>
+						updatePrice({
+							archived: !price.archived,
+						})
+					}
+					onDelete={() => deletePrice()}
 				/>
 			)}
 			<div
 				css={css`
 					display: grid;
 					gap: var(--ce-form-row-spacing);
-					margin-top: ${isOpen && hasHeader() ? '2em' : '0'};
+					margin-top: ${isOpen && hasHeader() ? '1em' : '0'};
 					height: ${isOpen ? 'auto' : 0};
 					overflow: ${isOpen ? 'visible' : 'hidden'};
 					visibility: ${isOpen ? 'visibile' : 'hidden'};
 				`}
 			>
-				<FlashError path="prices" index={index} scrollIntoView />
-
 				{!price?.ad_hoc && (
 					<ce-flex>
 						<CePriceInput
@@ -135,110 +91,131 @@ export default withConfirm(({ price, index, open }) => {
 						/>
 						{product?.recurring &&
 							price?.recurring_interval !== 'never' && (
-								<CeFormControl
-									css={css`
-										flex: 1;
-									`}
-									label={__(
-										'Repeat Payment Every',
-										'checkout_engine'
-									)}
-								>
-									<div
-										css={css`
-											display: flex;
-											align-items: center;
-											gap: 0.5em;
-										`}
-									>
-										<CeInput
-											value={
-												price?.recurring_interval_count
-											}
-											errorMessage={getValidation(
-												'recurring_interval_count'
-											)}
-											onCeChange={(e) =>
-												updatePrice({
-													recurring_interval_count:
-														e.target.value,
-												})
-											}
-											type="number"
-											max={
-												price?.recurring_interval ===
-												'year'
-													? 1
+								<ConditionalWrapper
+									condition={price?.id}
+									wrapper={(children) => (
+										<CeTooltip
+											text={
+												price?.id
+													? __(
+															'To change the interval, create a new price.',
+															'checkout_engine'
+													  )
 													: null
 											}
-											required
-										/>
-										<CeDropdown
-											slot="suffix"
-											position="bottom-right"
 										>
-											<CeButton slot="trigger" caret>
-												{translate(
-													price?.recurring_interval
-												)}
-											</CeButton>
-											<CeMenu>
-												<CeMenuItem
-													onClick={() =>
-														updatePrice({
-															recurring_interval:
-																'day',
-														})
-													}
+											{children}
+										</CeTooltip>
+									)}
+								>
+									<CeFormControl
+										css={css`
+											flex: 1;
+										`}
+										disabled={price?.id}
+										label={__(
+											'Repeat Payment Every',
+											'checkout_engine'
+										)}
+									>
+										<div
+											css={css`
+												display: flex;
+												align-items: center;
+												gap: 0.5em;
+											`}
+										>
+											<CeInput
+												disabled={price?.id}
+												value={
+													price?.recurring_interval_count
+												}
+												onCeChange={(e) =>
+													updatePrice({
+														recurring_interval_count:
+															e.target.value,
+													})
+												}
+												type="number"
+												max={
+													price?.recurring_interval ===
+													'year'
+														? 1
+														: null
+												}
+												required
+											/>
+											<CeDropdown
+												slot="suffix"
+												position="bottom-right"
+											>
+												<CeButton
+													slot="trigger"
+													disabled={price?.id}
+													caret
 												>
-													{__(
-														'Day',
-														'checkout_engine'
+													{translate(
+														price?.recurring_interval
 													)}
-												</CeMenuItem>
-												<CeMenuItem
-													onClick={() =>
-														updatePrice({
-															recurring_interval:
-																'month',
-														})
-													}
-												>
-													{__(
-														'Month',
-														'checkout_engine'
-													)}
-												</CeMenuItem>
-												<CeMenuItem
-													onClick={() =>
-														updatePrice({
-															recurring_interval:
-																'year',
-														})
-													}
-												>
-													{__(
-														'Year',
-														'checkout_engine'
-													)}
-												</CeMenuItem>
-												<CeMenuItem
-													onClick={() =>
-														updatePrice({
-															recurring_interval:
-																'never',
-														})
-													}
-												>
-													{__(
-														'Lifetime',
-														'checkout_engine'
-													)}
-												</CeMenuItem>
-											</CeMenu>
-										</CeDropdown>
-									</div>
-								</CeFormControl>
+												</CeButton>
+												<CeMenu>
+													{/* <CeMenuItem
+														onClick={() =>
+															updatePrice({
+																recurring_interval:
+																	'day',
+															})
+														}
+													>
+														{__(
+															'Day',
+															'checkout_engine'
+														)}
+													</CeMenuItem> */}
+													<CeMenuItem
+														onClick={() =>
+															updatePrice({
+																recurring_interval:
+																	'month',
+															})
+														}
+													>
+														{__(
+															'Month',
+															'checkout_engine'
+														)}
+													</CeMenuItem>
+													<CeMenuItem
+														onClick={() =>
+															updatePrice({
+																recurring_interval:
+																	'year',
+															})
+														}
+													>
+														{__(
+															'Year',
+															'checkout_engine'
+														)}
+													</CeMenuItem>
+													<CeMenuItem
+														onClick={() =>
+															updatePrice({
+																recurring_interval:
+																	'never',
+															})
+														}
+													>
+														{__(
+															'Lifetime',
+															'checkout_engine'
+														)}
+													</CeMenuItem>
+												</CeMenu>
+											</CeDropdown>
+										</div>
+									</CeFormControl>
+								</ConditionalWrapper>
 							)}
 					</ce-flex>
 				)}
@@ -291,20 +268,39 @@ export default withConfirm(({ price, index, open }) => {
 					</div>
 				)}
 
-				{product?.recurring && (
+				{showLifetime() && (
 					<div>
-						<CeSwitch
-							checked={price?.recurring_interval === 'never'}
-							onCeChange={(e) =>
-								updatePrice({
-									recurring_interval: e.target.checked
-										? 'never'
-										: 'month',
-								})
-							}
+						<ConditionalWrapper
+							condition={price?.id}
+							wrapper={(children) => (
+								<CeTooltip
+									text={
+										price?.id
+											? __(
+													'To change the interval, create a new price.',
+													'checkout_engine'
+											  )
+											: null
+									}
+								>
+									{children}
+								</CeTooltip>
+							)}
 						>
-							{__('Lifetime subscription', 'checkout_engine')}
-						</CeSwitch>
+							<CeSwitch
+								disabled={price?.id}
+								checked={price?.recurring_interval === 'never'}
+								onCeChange={(e) =>
+									updatePrice({
+										recurring_interval: e.target.checked
+											? 'never'
+											: 'month',
+									})
+								}
+							>
+								{__('Lifetime subscription', 'checkout_engine')}
+							</CeSwitch>
+						</ConditionalWrapper>
 					</div>
 				)}
 

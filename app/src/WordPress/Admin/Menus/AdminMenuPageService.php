@@ -45,7 +45,7 @@ class AdminMenuPageService {
 			'coupons'       => \add_submenu_page( $this->slug, __( 'Coupons', 'checkout_engine' ), __( 'Coupons', 'checkout_engine' ), 'edit_ce_coupons', 'ce-coupons', '__return_false' ),
 			'customers'     => \add_submenu_page( $this->slug, __( 'Customers', 'checkout_engine' ), __( 'Customers', 'checkout_engine' ), 'edit_ce_customers', 'ce-customers', '__return_false' ),
 			'subscriptions' => \add_submenu_page( $this->slug, __( 'Subscriptions', 'checkout_engine' ), __( 'Subscriptions', 'checkout_engine' ), 'edit_ce_subscriptions', 'ce-subscriptions', '__return_false' ),
-			'upgrade-paths' => \add_submenu_page( $this->slug, __( 'Upgrade Paths', 'checkout_engine' ), __( 'Upgrade Paths', 'checkout_engine' ), 'edit_ce_products', 'ce-upgrade-paths', '__return_false' ),
+			'upgrade-paths' => \add_submenu_page( $this->slug, __( 'Upgrade Groups', 'checkout_engine' ), __( 'Upgrade Groups', 'checkout_engine' ), 'edit_ce_products', 'ce-upgrade-paths', '__return_false' ),
 			'abandoned'     => \add_submenu_page( $this->slug, __( 'Abandoned Orders', 'checkout_engine' ), __( 'Abandoned Orders', 'checkout_engine' ), 'edit_ce_orders', 'ce-abandoned-orders', '__return_false' ),
 			'forms'         => \add_submenu_page( $this->slug, __( 'Forms', 'checkout_engine' ), __( 'Forms', 'checkout_engine' ), 'edit_posts', 'edit.php?post_type=ce_form', '' ),
 			'settings'      => \add_submenu_page( $this->slug, __( 'Settings', 'checkout_engine' ), __( 'Settings', 'checkout_engine' ), 'manage_options', 'ce-settings', '__return_false' ),

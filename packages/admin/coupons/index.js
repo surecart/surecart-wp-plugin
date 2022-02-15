@@ -1,7 +1,10 @@
 // const { render } = wp.element;
 import { render } from '@wordpress/element';
 
-import './store/register';
+/**
+ * register store entities.
+ */
+import '@admin/schema/register';
 
 /**
  * App
@@ -11,4 +14,4 @@ import Coupons from './Coupons';
 /**
  * Render
  */
-render( <Coupons />, document.getElementById( 'app' ) );
+render(<Coupons />, document.getElementById('app'));

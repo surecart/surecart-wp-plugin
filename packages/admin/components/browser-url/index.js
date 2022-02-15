@@ -11,18 +11,16 @@ import { store } from '../../store/data';
  *
  * @return {string} Post edit URL.
  */
-export function getEditURL( id ) {
-	return addQueryArgs( window.location.href, { id } );
+export function getEditURL(id) {
+	return addQueryArgs(window.location.href, { id });
 }
 
-export default ( { path } ) => {
-	const [ historyId, setHistoryId ] = useState( null );
+export default ({ path }) => {
+	const [historyId, setHistoryId] = useState(null);
 	let id;
-	const model = useSelect( ( select ) =>
-		select( store ).selectModel( path, 0 )
-	);
-	if ( model?.id ) {
-		id = model?.id;
+	const model = useSelect((select) => select(store).selectCollection(path));
+	if (model?.[0]?.id) {
+		id = model?.[0]?.id;
 	}
 
 	/**
@@ -34,13 +32,13 @@ export default ( { path } ) => {
 	 *
 	 * @param {number} id id for the model for which to generate edit URL.
 	 */
-	const setBrowserURL = ( id ) => {
-		window.history.replaceState( { id }, 'Post ' + id, getEditURL( id ) );
-		setHistoryId( id );
+	const setBrowserURL = (id) => {
+		window.history.replaceState({ id }, 'Post ' + id, getEditURL(id));
+		setHistoryId(id);
 	};
 
-	if ( id && id !== historyId ) {
-		setBrowserURL( id );
+	if (id && id !== historyId) {
+		setBrowserURL(id);
 	}
 
 	return null;

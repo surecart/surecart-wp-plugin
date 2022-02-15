@@ -10,6 +10,8 @@ const {
 	invoice,
 	refund,
 	charge,
+	coupon,
+	promotion,
 	order,
 	customer,
 	subscription,
@@ -64,6 +66,12 @@ purchase.define({
 
 payment_method.define({
 	card,
+});
+
+coupon.define({
+	promotions: {
+		data: [promotion],
+	},
 });
 
 export const normalizeEntities = (data) => {

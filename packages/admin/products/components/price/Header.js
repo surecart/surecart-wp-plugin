@@ -17,6 +17,7 @@ import {
 
 import ToggleHeader from '../../../components/ToggleHeader';
 import { translate } from '../../../util';
+import { translateInterval } from '../../../util/translations';
 
 export default ({
 	isOpen,
@@ -24,28 +25,23 @@ export default ({
 	className,
 	price,
 	onArchive,
-	onDuplicate,
 	onDelete,
 }) => {
 	/** Header name */
 	const headerName = () => {
-		if (!price?.name) {
-			return __('Pricing Details', 'checkout_engine');
-		}
-
-		if (isOpen) {
-			return price?.name;
-		}
-
 		return (
 			<Fragment>
-				{price?.name} -{' '}
 				<ce-format-number
 					type="currency"
 					currency={price?.currency || ceData.currency_code}
 					value={price?.amount}
 				/>
-				{translate(price?.recurring_interval) || ''}
+				{translateInterval(
+					price?.recurring_interval_count,
+					price?.recurring_interval,
+					' /',
+					''
+				)}
 			</Fragment>
 		);
 	};
@@ -63,17 +59,6 @@ export default ({
 					<Icon icon={moreHorizontalMobile} />
 				</CeButton>
 				<CeMenu>
-					<CeMenuItem onClick={onDuplicate}>
-						<Icon
-							slot="prefix"
-							style={{
-								opacity: 0.5,
-							}}
-							icon={addSubmenu}
-							size={20}
-						/>
-						{__('Duplicate', 'checkout_engine')}
-					</CeMenuItem>
 					{price?.id && (
 						<CeMenuItem onClick={onArchive}>
 							<Icon
@@ -111,7 +96,7 @@ export default ({
 			isOpen={isOpen}
 			setIsOpen={setIsOpen}
 			buttons={buttons}
-			type={price.archived ? 'warning' : ''}
+			type={price?.archived ? 'warning' : ''}
 		>
 			{headerName()}
 		</ToggleHeader>

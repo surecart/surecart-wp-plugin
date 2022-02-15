@@ -7,6 +7,7 @@ import { dispatch } from '@wordpress/data';
 import { CeAlert } from '@checkout-engine/components-react';
 
 import { store as uiStore } from '../store/ui';
+import { store as dataStore } from '../store/data';
 
 import Template from '../templates/SingleModel';
 import FlashError from '../components/FlashError';
@@ -27,53 +28,45 @@ import useCouponData from './hooks/useCouponData';
 
 // hocs
 import withConfirm from '../hocs/withConfirm';
+import { useEffect } from 'react';
+import ErrorFlash from '../components/ErrorFlash';
+import useCurrentPage from '../mixins/useCurrentPage';
+import useEntities from '../mixins/useEntities';
+import { useDispatch } from '@wordpress/data';
+import DraftsProvider from '../components/drafts-provider';
 
 export default withConfirm(({ noticeUI }) => {
-	const { snackbarNotices, removeSnackbarNotice } = useSnackbar();
+	const { saveModel, updateModel, saveDraft, updateDraft, clearDrafts } =
+		useDispatch(dataStore);
+	const { addSnackbarNotice, addModelErrors } = useDispatch(uiStore);
+	const {
+		id,
+		coupon,
+		updateCoupon,
+		saveCoupon,
+		setSaving,
+		isSaving,
+		fetchCoupon,
+		couponErrors,
+		clearCouponErrors,
+		isLoading,
+	} = useCurrentPage('coupon');
+	const { promotions, draftPromotions } = useEntities('promotion');
 
-	const { coupon, error, loading, save } = useCouponData();
-
-	const onSubmit = async (e) => {
-		e.preventDefault();
-		save();
-	};
-
-	const onInvalid = () => {
-		dispatch(uiStore).setInvalid(true);
-	};
-
-	if (error?.message) {
-		return (
-			<CeAlert
-				css={css`
-					margin-top: 20px;
-					margin-right: 20px;
-				`}
-				type="danger"
-				open={error?.message}
-				onCeShow={(e) => {
-					if (scrollIntoView) {
-						e.target.scrollIntoView({
-							behavior: 'smooth',
-							block: 'start',
-							inline: 'nearest',
-						});
-					}
-				}}
-			>
-				<span slot="title">
-					{__(
-						'There was a critical error loading this page. Please reload the page and try again.',
-						'checkout_engine'
-					)}
-				</span>
-				{error?.message}
-			</CeAlert>
-		);
-	}
+	// fetch product on load.
+	useEffect(() => {
+		if (id) {
+			fetchCoupon({
+				query: {
+					context: 'edit',
+					expand: ['promotions'],
+				},
+			});
+		}
+	}, []);
 
 	const title = () => {
-		if (loading) {
+		if (isLoading) {
 			return (
 				<ce-skeleton
 					style={{
@@ -83,28 +76,71 @@ export default withConfirm(({ noticeUI }) => {
 				></ce-skeleton>
 			);
 		}
-
 		return coupon?.id
-			? sprintf(
-					__('Edit %s', 'checkout_engine'),
-					coupon?.name || __('Coupon', 'checkout_engine')
-			  )
-			: sprintf(
-					__('Add %s', 'checkout_engine'),
-					coupon?.name || __('Coupon', 'checkout_engine')
-			  );
+			? __('Edit Coupon', 'checkout_engine')
+			: __('New Coupon', 'checkout_engine');
+	};
+
+	const onSubmit = async (e) => {
+		e.preventDefault();
+		try {
+			const coupon = await saveCoupon(); // first save the product, in case we don't have an id.
+			await Promise.all(
+				(promotions || []).map((promotion) =>
+					savePromotion(promotion, coupon)
+				)
+			);
+			await Promise.all(
+				(draftPromotions || []).map((promotion, index) =>
+					saveDraftPromotion(promotion, index, coupon)
+				)
+			);
+			await clearDrafts('promotion');
+			addSnackbarNotice({
+				content: __('Saved.'),
+			});
+		} catch (e) {
+			console.error(e);
+		} finally {
+			setSaving(false);
+		}
+	};
+
+	// save price
+	const savePromotion = async (promotion, coupon) => {
+		if (!promotion?.coupon) {
+			await updateModel('promotion', promotion.id, {
+				coupon: id || coupon?.id, // make sure coupon is set
+			});
+		}
+		try {
+			return await saveModel('promotion', promotion?.id);
+		} catch (e) {
+			addModelErrors('promotion', e);
+		}
+	};
+
+	/** Save any draft prices. */
+	const saveDraftPromotion = async (_, index, coupon) => {
+		await updateDraft('promotion', index, {
+			coupon: id || coupon?.id, // make sure coupon is set
+		});
+		try {
+			return await saveDraft('promotion', index);
+		} catch (e) {
+			addModelErrors('promotion', e);
+		}
 	};
 
 	return (
 		<Template
-			pageModelName={'coupons'}
 			onSubmit={onSubmit}
-			onInvalid={onInvalid}
+			pageModelName={'coupon'}
 			backUrl={'admin.php?page=ce-coupons'}
 			backText={__('Back to All Coupons', 'checkout_engine')}
 			title={title()}
 			button={
-				loading ? (
+				isLoading ? (
 					<ce-skeleton
 						style={{
 							width: '120px',
@@ -134,17 +170,30 @@ export default withConfirm(({ noticeUI }) => {
 					</div>
 				)
 			}
-			notices={snackbarNotices}
-			removeNotice={removeSnackbarNotice}
-			noticeUI={noticeUI}
 			sidebar={<Sidebar />}
 		>
 			<Fragment>
-				<FlashError path="coupons" scrollIntoView />
-				<Name />
-				<Codes />
-				<Types />
-				<Limits />
+				<ErrorFlash errors={couponErrors} onHide={clearCouponErrors} />
+
+				<Name
+					loading={isLoading}
+					coupon={coupon}
+					updateCoupon={updateCoupon}
+				/>
+
+				<Codes id={coupon?.id || id} loading={isLoading} />
+
+				<Types
+					loading={isLoading}
+					coupon={coupon}
+					updateCoupon={updateCoupon}
+				/>
+
+				<Limits
+					loading={isLoading}
+					coupon={coupon}
+					updateCoupon={updateCoupon}
+				/>
 			</Fragment>
 		</Template>
 	);

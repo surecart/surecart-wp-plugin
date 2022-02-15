@@ -5,35 +5,31 @@ import { useState } from '@wordpress/element';
 import { store } from '../store/data';
 import { store as uiStore } from '../store/ui';
 import { camelName } from '../util';
+import { useEffect } from 'react';
 
-export default (name, id = null, index = null) => {
-	const {
-		receiveModels,
-		updateModel,
-		deleteModel,
-		saveModel,
-		addDraft,
-		updateDraft,
-		removeDraft,
-		saveDraft,
-	} = useDispatch(store);
+export default (name, modelId = null, index = null) => {
+	const [draft, setDraft] = useState({});
+	const [id, setId] = useState(modelId);
+	const [isDirty, setIsDirty] = useState(false);
 
+	const { receiveModels, deleteModel, saveData, addDraft, removeDraft } =
+		useDispatch(store);
 	const { addModelErrors, clearModelErrors, setSaving } =
 		useDispatch(uiStore);
 
 	// select data from core store.
 	const model = useSelect(
-		(select) => {
-			if (id) {
-				return select(store).selectModel(name, id);
-			} else if (index !== null) {
-				return select(store).selectDraft(name, index);
-			}
-			return false;
-		},
+		(select) => (id ? select(store).selectModel(name, id) : false),
 		[id]
 	);
 
+	// when model is updated, sync back to local state.
+	useEffect(() => {
+		setDraft(model);
+		setIsDirty(false);
+	}, [model]);
+
+	// get a relation from the store.
 	const getRelation = useSelect(
 		(select) => {
 			return (relation) => {
@@ -49,8 +45,11 @@ export default (name, id = null, index = null) => {
 
 	// crud.
 	const receiveEntity = (payload) => receiveModels({ id, ...payload });
-	const updateEntity = (payload) =>
-		id ? updateModel(name, id, payload) : updateDraft(name, index, payload);
+	const updateEntity = (payload) => {
+		setDraft({ ...draft, ...payload });
+		console.log({ draft });
+		setIsDirty(true);
+	};
 	const deleteEntity = () =>
 		id ? deleteModel(name, id) : removeDraft(name, index);
 
@@ -65,27 +64,35 @@ export default (name, id = null, index = null) => {
 	const saveEntity = async (
 		requestArgs = {
 			query: {},
+			data: {},
 		}
 	) => {
+		if (!isDirty) return;
+		const { data, ...args } = requestArgs;
 		try {
-			if (id) {
-				return await saveModel(name, id, requestArgs || {});
+			setSaving(true);
+			const response = await saveData(
+				name,
+				{ ...draft, ...(data || {}) },
+				args
+			);
+			if (response?.id) {
+				setId(response.id);
 			}
-			if (index !== null) {
-				return await saveDraft(name, index, requestArgs || {});
-			}
+			return response;
 		} catch (e) {
-			setSaving(false);
 			addModelErrors(name, e);
 			throw e;
+		} finally {
+			setSaving(false);
 		}
 	};
 
 	// fetch the model from the API.
 	const fetchEntity = async ({ query, ...rest }) => {
 		if (!id) return;
-		setIsLoading(true);
 
+		setIsLoading(true);
 		const args = select(store).prepareFetchRequest(name, { id, ...query });
 
 		try {
@@ -111,7 +118,7 @@ export default (name, id = null, index = null) => {
 
 	return {
 		isLoading,
-		[name]: model,
+		[name]: draft,
 		[`update${ucName}`]: updateEntity,
 		[`delete${ucName}`]: deleteEntity,
 		[`receive${ucName}`]: receiveEntity,
