@@ -736,7 +736,9 @@
   "ce-select": {
     "autocomplete": true,
     "choices": true,
+    "help": true,
     "invalid": true,
+    "label": true,
     "loading": true,
     "name": true,
     "open": true,
@@ -745,6 +747,7 @@
     "required": true,
     "search": true,
     "search-placeholder": true,
+    "size": true,
     "squared": true,
     "squared-bottom": true,
     "squared-left": true,

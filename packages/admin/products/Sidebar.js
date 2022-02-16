@@ -3,12 +3,14 @@ import { css, jsx } from '@emotion/core';
 
 import { __ } from '@wordpress/i18n';
 import { format } from '@wordpress/date';
+import { FormTokenField } from '@wordpress/components';
 import { Fragment } from '@wordpress/element';
 
 import Box from '../ui/Box';
 import Definition from '../ui/Definition';
 import { CeButton, CeSwitch } from '@checkout-engine/components-react';
 import Image from './modules/Image';
+import Upgrades from './modules/Upgrades';
 
 export default ({ loading, product, updateProduct, saveProduct }) => {
 	const badge = () => {
@@ -131,19 +133,15 @@ export default ({ loading, product, updateProduct, saveProduct }) => {
 
 			<Image product={product} updateProduct={updateProduct} />
 
+			<Upgrades
+				product={product}
+				updateProduct={updateProduct}
+				loading={loading}
+			/>
+
 			<Box
 				loading={loading}
-				title={
-					<div
-						css={css`
-							display: flex;
-							align-items: center;
-							justify-content: space-between;
-						`}
-					>
-						{__('Automations', 'checkout_engine')}
-					</div>
-				}
+				title={__('Automations', 'checkout_engine')}
 				css={css`
 					font-size: 14px;
 				`}

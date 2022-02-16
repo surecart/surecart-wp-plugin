@@ -10,6 +10,7 @@ export default ({ onSelect, ad_hoc, value, open = false, requestQuery }) => {
 	const [query, setQuery] = useState(null);
 
 	const { products, fetchProducts, isLoading } = useEntities('product');
+	const { prices } = useEntities('price');
 
 	useEffect(() => {
 		fetchProducts({
@@ -32,6 +33,7 @@ export default ({ onSelect, ad_hoc, value, open = false, requestQuery }) => {
 				ad_hoc={ad_hoc}
 				open={open}
 				products={products}
+				prices={prices}
 				onQuery={setQuery}
 				onFetch={() => setQuery('')}
 				loading={isLoading}

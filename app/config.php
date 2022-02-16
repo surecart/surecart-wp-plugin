@@ -43,6 +43,7 @@ return [
 		\CheckoutEngine\Rest\SettingsRestServiceProvider::class,
 		\CheckoutEngine\Rest\PaymentMethodsRestServiceProvider::class,
 		\CheckoutEngine\Rest\ProductsRestServiceProvider::class,
+		\CheckoutEngine\Rest\ProductGroupsRestServiceProvider::class,
 		\CheckoutEngine\Rest\PriceRestServiceProvider::class,
 		\CheckoutEngine\Rest\CouponRestServiceProvider::class,
 		\CheckoutEngine\Rest\PromotionRestServiceProvider::class,

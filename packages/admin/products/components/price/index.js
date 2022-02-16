@@ -14,6 +14,7 @@ import {
 	CeMenu,
 	CeMenuItem,
 	CeTooltip,
+	CeSelect,
 } from '@checkout-engine/components-react';
 import Header from './Header';
 
@@ -145,74 +146,40 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 												}
 												required
 											/>
-											<CeDropdown
-												slot="suffix"
-												position="bottom-right"
-											>
-												<CeButton
-													slot="trigger"
-													disabled={price?.id}
-													caret
-												>
-													{translate(
-														price?.recurring_interval
-													)}
-												</CeButton>
-												<CeMenu>
-													{/* <CeMenuItem
-														onClick={() =>
-															updatePrice({
-																recurring_interval:
-																	'day',
-															})
-														}
-													>
-														{__(
-															'Day',
-															'checkout_engine'
-														)}
-													</CeMenuItem> */}
-													<CeMenuItem
-														onClick={() =>
-															updatePrice({
-																recurring_interval:
-																	'month',
-															})
-														}
-													>
-														{__(
+											<CeSelect
+												value={
+													price?.recurring_interval
+												}
+												onCeChange={(e) =>
+													updatePrice({
+														recurring_interval:
+															e.target.value,
+													})
+												}
+												choices={[
+													{
+														value: 'month',
+														label: __(
 															'Month',
 															'checkout_engine'
-														)}
-													</CeMenuItem>
-													<CeMenuItem
-														onClick={() =>
-															updatePrice({
-																recurring_interval:
-																	'year',
-															})
-														}
-													>
-														{__(
+														),
+													},
+													{
+														value: 'year',
+														label: __(
 															'Year',
 															'checkout_engine'
-														)}
-													</CeMenuItem>
-													<CeMenuItem
-														onClick={() =>
-															updatePrice({
-																recurring_interval:
-																	'never',
-															})
-														}
-													>
-														{__(
+														),
+													},
+													{
+														value: 'never',
+														label: __(
 															'Lifetime',
 															'checkout_engine'
-														)}
-													</CeMenuItem>
-												</CeMenu>
-											</CeDropdown>
+														),
+													},
+												]}
+											/>
 										</div>
 									</CeFormControl>
 								</ConditionalWrapper>

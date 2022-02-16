@@ -1307,9 +1307,17 @@ export namespace Components {
          */
         "choices": Array<ChoiceItem>;
         /**
+          * Some help text for the input.
+         */
+        "help": string;
+        /**
           * This will be true when the control is in an invalid state. Validity is determined by props such as `type`, `required`, `minlength`, `maxlength`, and `pattern` using the browser's constraint validation API.
          */
         "invalid": boolean;
+        /**
+          * The input's label.
+         */
+        "label": string;
         "loading": boolean;
         /**
           * The input's name attribute.
@@ -1338,6 +1346,10 @@ export namespace Components {
           * Sets a custom validation message. If `message` is not empty, the field will be considered invalid.
          */
         "setCustomValidity": (message: string) => Promise<void>;
+        /**
+          * The input's size.
+         */
+        "size": 'small' | 'medium' | 'large';
         "squared": boolean;
         "squaredBottom": boolean;
         "squaredLeft": boolean;
@@ -3697,9 +3709,17 @@ declare namespace LocalJSX {
          */
         "choices"?: Array<ChoiceItem>;
         /**
+          * Some help text for the input.
+         */
+        "help"?: string;
+        /**
           * This will be true when the control is in an invalid state. Validity is determined by props such as `type`, `required`, `minlength`, `maxlength`, and `pattern` using the browser's constraint validation API.
          */
         "invalid"?: boolean;
+        /**
+          * The input's label.
+         */
+        "label"?: string;
         "loading"?: boolean;
         /**
           * The input's name attribute.
@@ -3747,6 +3767,10 @@ declare namespace LocalJSX {
           * Placeholder for search
          */
         "searchPlaceholder"?: string;
+        /**
+          * The input's size.
+         */
+        "size"?: 'small' | 'medium' | 'large';
         "squared"?: boolean;
         "squaredBottom"?: boolean;
         "squaredLeft"?: boolean;

@@ -102,7 +102,7 @@ export class CESwitch {
   }
 
   disconnectedCallback() {
-    this.formController.removeFormData(this.el);
+    this.formController?.removeFormData(this.el);
   }
 
   render() {

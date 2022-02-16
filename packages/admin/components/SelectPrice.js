@@ -8,13 +8,12 @@ import {
 import throttle from 'lodash/throttle';
 import { translateInterval } from '../../admin/util/translations';
 import { formatNumber } from '../../admin/util';
-import { select, useSelect } from '@wordpress/data';
-import { store } from '../store/data';
 
 export default ({
 	open,
 	required,
 	products,
+	prices,
 	onSelect,
 	value,
 	className,
@@ -31,10 +30,6 @@ export default ({
 		},
 		750,
 		{ leading: false }
-	);
-
-	const prices = useSelect((select) =>
-		select(store).selectCollection('price')
 	);
 
 	const choices = (products || []).map((product) => {

@@ -133,7 +133,7 @@ export class CePriceInput {
   }
 
   disconnectedCallback() {
-    this.formController.removeFormData(this.el);
+    this.formController?.removeFormData(this.el);
   }
 
   render() {
