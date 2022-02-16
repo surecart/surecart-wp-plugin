@@ -69,8 +69,7 @@ export class CEChoice {
   }
 
   /** Checks for validity and shows the browser's validation message if the control is invalid. */
-  @Method()
-  async reportValidity() {
+  reportValidity() {
     this.invalid = !this.input.checkValidity();
 
     if (this.type === 'radio') {
@@ -160,14 +159,13 @@ export class CEChoice {
 
   componentDidLoad() {
     this.handleResize();
-    this.formController = new FormSubmitController(this.el, {
+    this.formController = new FormSubmitController(this, this.el, {
       value: (control: HTMLCeChoiceElement) => (control.checked ? control.value : undefined),
-    });
-    this.formController.addFormData(this.el);
+    }).addFormData();
   }
 
   disconnectedCallback() {
-    this.formController?.removeFormData(this.el);
+    this.formController?.removeFormData();
   }
 
   handleResize() {

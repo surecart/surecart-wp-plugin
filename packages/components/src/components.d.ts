@@ -246,10 +246,6 @@ export namespace Components {
          */
         "name": string;
         /**
-          * Checks for validity and shows the browser's validation message if the control is invalid.
-         */
-        "reportValidity": () => Promise<boolean>;
-        /**
           * Is this required
          */
         "required": boolean;
@@ -796,7 +792,6 @@ export namespace Components {
           * Makes the input readonly.
          */
         "readonly": boolean;
-        "reportValidity": () => Promise<boolean>;
         /**
           * Makes the input a required field.
          */
@@ -1159,7 +1154,6 @@ export namespace Components {
           * Makes the input readonly.
          */
         "readonly": boolean;
-        "reportValidity": () => Promise<boolean>;
         /**
           * Makes the input a required field.
          */
@@ -1332,7 +1326,6 @@ export namespace Components {
          */
         "placeholder": string;
         "position": 'bottom-left' | 'bottom-right';
-        "reportValidity": () => Promise<boolean>;
         "required": boolean;
         /**
           * Is search enabled?
@@ -1545,10 +1538,6 @@ export namespace Components {
           * The switch's name attribute.
          */
         "name": string;
-        /**
-          * Checks for validity and shows the browser's validation message if the control is invalid.
-         */
-        "reportValidity": () => Promise<boolean>;
         /**
           * Makes the switch a required field.
          */

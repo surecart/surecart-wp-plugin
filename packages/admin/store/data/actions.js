@@ -106,7 +106,7 @@ export function* updateModel(name, id, payload) {
 export function* receiveModels(payload) {
 	// Normalize data
 	const payloadArray = Array.isArray(payload) ? payload : [payload];
-	const { entities } = normalizeEntities(payloadArray);
+	const { entities } = normalizeEntities(payloadArray) || {};
 	for (const key of Object.keys(entities || {})) {
 		const models = entities[key];
 		for (const id of Object.keys(models || {})) {

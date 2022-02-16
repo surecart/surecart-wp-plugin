@@ -9,16 +9,10 @@ import {
 	CePriceInput,
 	CeSwitch,
 	CeFormControl,
-	CeButton,
-	CeDropdown,
-	CeMenu,
-	CeMenuItem,
 	CeTooltip,
 	CeSelect,
 } from '@checkout-engine/components-react';
 import Header from './Header';
-
-import { translate } from '../../../util';
 
 // hocs
 import withConfirm from '../../../hocs/withConfirm';
@@ -38,9 +32,7 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 		}
 	}, [priceErrors]);
 
-	const hasHeader = () => {
-		return product?.recurring || prices?.length > 1;
-	};
+	const hasHeader = prices?.length > 1;
 
 	const showLifetime = () => {
 		// need to be a recurring product
@@ -51,7 +43,7 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 
 	return (
 		<div>
-			{(product?.recurring || prices?.length > 1) && (
+			{hasHeader && (
 				<Header
 					isOpen={isOpen}
 					setIsOpen={setIsOpen}
@@ -68,7 +60,7 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 				css={css`
 					display: grid;
 					gap: var(--ce-form-row-spacing);
-					margin-top: ${isOpen && hasHeader() ? '1em' : '0'};
+					margin-top: ${isOpen && hasHeader ? '1em' : '0'};
 					height: ${isOpen ? 'auto' : 0};
 					overflow: ${isOpen ? 'visible' : 'hidden'};
 					visibility: ${isOpen ? 'visibile' : 'hidden'};

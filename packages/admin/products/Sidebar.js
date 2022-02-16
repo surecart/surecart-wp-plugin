@@ -169,7 +169,7 @@ export default ({ loading, product, updateProduct, saveProduct }) => {
 					)
 				}
 			>
-				{__('To get started, add an automation.', 'checkout_engine')}
+				{__('Coming soon...', 'checkout_engine')}
 			</Box>
 		</Fragment>
 	);

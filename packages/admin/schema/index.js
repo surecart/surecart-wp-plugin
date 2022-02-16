@@ -78,12 +78,14 @@ export const normalizeEntities = (data) => {
 	if (entities?.[data?.[0]?.object]) {
 		return normalize(data, [entities[data?.[0]?.object]]);
 	}
+	return {};
 };
 
 export const normalizeEntity = (data) => {
 	if (entities?.[data?.object]) {
 		return normalize(data, entities[data.object]);
 	}
+	return {};
 };
 
 // normalize price data

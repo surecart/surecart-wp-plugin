@@ -63,7 +63,7 @@ export default () => {
 		e.preventDefault();
 		try {
 			setSaving(true);
-			id ? await editProduct() : await createProduct();
+			id ? await updatePage() : await createPage();
 			addSnackbarNotice({
 				content: __('Saved.'),
 			});
@@ -74,7 +74,10 @@ export default () => {
 		}
 	};
 
-	const createProduct = async () => {
+	/**
+	 * Create the page and clear all drafts.
+	 */
+	const createPage = async () => {
 		await saveProduct({
 			query: {
 				context: 'edit',
@@ -88,17 +91,26 @@ export default () => {
 		return await clearDrafts('price');
 	};
 
-	const editProduct = async () => {
-		await saveProduct();
-		await Promise.all(
-			(prices || []).map((price) => savePrice(price, product))
-		);
+	/**
+	 * Update product, prices and drafts all at once.
+	 */
+	const updatePage = async () => {
+		return Promise.all([saveProduct(), savePrices(), saveDraftPrices()]);
+	};
+
+	const saveDraftPrices = async () => {
 		await Promise.all(
 			(draftPrices || []).map((price, index) =>
 				saveDraftPrice(price, index, product)
 			)
 		);
 		return await clearDrafts('price');
+	};
+
+	const savePrices = async () => {
+		return await Promise.all(
+			(prices || []).map((price) => savePrice(price, product))
+		);
 	};
 
 	// save price

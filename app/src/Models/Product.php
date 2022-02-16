@@ -2,8 +2,6 @@
 
 namespace CheckoutEngine\Models;
 
-use CheckoutEngine\Models\Traits\HasPrice;
-
 /**
  * Price model
  */

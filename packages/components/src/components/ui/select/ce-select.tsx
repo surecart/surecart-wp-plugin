@@ -148,8 +148,7 @@ export class CeSelectDropdown {
     this.invalid = !this.input.checkValidity();
   }
 
-  @Method('reportValidity')
-  async reportValidity() {
+  reportValidity() {
     return this.input.reportValidity();
   }
 
@@ -203,15 +202,14 @@ export class CeSelectDropdown {
   }
 
   componentDidLoad() {
-    this.formController = new FormSubmitController(this.el);
-    this.formController.addFormData(this.el);
+    this.formController = new FormSubmitController(this, this.el).addFormData();
     if (this.open) {
       this.searchInput.triggerFocus();
     }
   }
 
   disconnectedCallback() {
-    this.formController?.removeFormData(this.el);
+    this.formController?.removeFormData();
   }
 
   renderItem(choice: ChoiceItem) {

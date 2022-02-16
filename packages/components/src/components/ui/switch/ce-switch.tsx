@@ -1,4 +1,4 @@
-import { Component, Prop, Event, EventEmitter, h, State, Method, Watch, Element } from '@stencil/core';
+import { Component, Prop, Event, EventEmitter, h, State, Watch, Element } from '@stencil/core';
 import { FormSubmitController } from '../../../functions/form-data';
 
 let id = 0;
@@ -45,9 +45,7 @@ export class CESwitch {
   @Event() ceFocus: EventEmitter<void>;
 
   /** Checks for validity and shows the browser's validation message if the control is invalid. */
-  @Method()
-  async reportValidity() {
-    this.invalid = !this.input.checkValidity();
+  reportValidity() {
     return this.input.reportValidity();
   }
 
@@ -95,14 +93,13 @@ export class CESwitch {
   }
 
   componentDidLoad() {
-    this.formController = new FormSubmitController(this.el, {
+    this.formController = new FormSubmitController(this, this.el, {
       value: (control: HTMLCeChoiceElement) => (control.checked ? control.value : undefined),
-    });
-    this.formController.addFormData(this.el);
+    }).addFormData();
   }
 
   disconnectedCallback() {
-    this.formController?.removeFormData(this.el);
+    this.formController?.removeFormData();
   }
 
   render() {

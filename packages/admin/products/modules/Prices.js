@@ -72,7 +72,7 @@ export default ({ product, updateProduct, loading }) => {
 			return (
 				<Price
 					price={price}
-					prices={prices}
+					prices={[...prices, ...draftPrices]}
 					product={product}
 					index={index}
 					key={index}
@@ -81,6 +81,9 @@ export default ({ product, updateProduct, loading }) => {
 			);
 		});
 	};
+
+	const shouldShowButton =
+		[...activePrices, ...draftPrices]?.length < 1 || product?.recurring;
 
 	return (
 		<div>
@@ -92,11 +95,9 @@ export default ({ product, updateProduct, loading }) => {
 				loading={loading}
 				footer={
 					!loading &&
-					(product?.recurring ||
-						archivedPrices?.length ||
-						activePrices < 1) && (
+					(shouldShowButton || archivedPrices?.length) && (
 						<Fragment>
-							{(product?.recurring || activePrices < 1) && (
+							{shouldShowButton && (
 								<CeButton
 									onClick={(e) => {
 										e.preventDefault();
@@ -176,6 +177,9 @@ export default ({ product, updateProduct, loading }) => {
 				<ErrorFlash errors={priceErrors} onHide={clearPriceErrors} />
 				{!id && (
 					<CeChoices
+						css={css`
+							margin-bottom: 1em;
+						`}
 						required
 						label={__('Product Type', 'checkout_engine')}
 						style={{ '--columns': 2 }}

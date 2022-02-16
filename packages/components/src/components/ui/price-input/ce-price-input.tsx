@@ -91,9 +91,8 @@ export class CePriceInput {
   @Event({ composed: true })
   ceChange: EventEmitter<void>;
 
-  @Method('reportValidity')
-  async reportValidity() {
-    return this.ceInput.reportValidity();
+  reportValidity() {
+    return this.ceInput.shadowRoot.querySelector('input').reportValidity();
   }
 
   /** Sets focus on the input. */
@@ -125,15 +124,14 @@ export class CePriceInput {
 
   componentDidLoad() {
     this.handleFocusChange();
-    this.formController = new FormSubmitController(this.el);
-    this.formController.addFormData(this.el);
+    this.formController = new FormSubmitController(this, this.el).addFormData();
     document.addEventListener('wheel', () => {
       this.ceInput.triggerBlur();
     });
   }
 
   disconnectedCallback() {
-    this.formController?.removeFormData(this.el);
+    this.formController?.removeFormData();
   }
 
   render() {

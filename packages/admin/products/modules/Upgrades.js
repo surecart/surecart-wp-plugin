@@ -30,13 +30,11 @@ export default ({ loading, product, updateProduct }) => {
 		updateProduct({
 			product_group,
 		});
-		console.log(product_group);
 	};
 
 	return (
 		<Box title={__('Upgrade Group', 'checkout_engine')} loading={loading}>
 			<SelectProductGroup
-				required
 				css={css`
 					flex: 0 1 50%;
 				`}

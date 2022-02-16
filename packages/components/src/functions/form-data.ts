@@ -22,22 +22,22 @@ export interface FormSubmitControllerOptions {
    * A function that maps to the form control's reportValidity() function. When the control is invalid, this will
    * prevent submission and trigger the browser's constraint violation warning.
    */
-  reportValidity: (input: unknown) => boolean;
+  reportValidity: () => boolean;
 }
 
 export class FormSubmitController {
   form: HTMLFormElement | null = null;
   input: any;
   options: FormSubmitControllerOptions;
-  constructor(input: any, options?: Partial<FormSubmitControllerOptions>) {
+  constructor(component: any, input: any, options?: Partial<FormSubmitControllerOptions>) {
     this.input = input;
     this.options = {
       form: (input: HTMLInputElement) => input?.closest('ce-form')?.shadowRoot?.querySelector('form') || input.closest('form'),
       name: (input: HTMLInputElement) => input.name,
       value: (input: HTMLInputElement) => input.value,
       disabled: (input: HTMLInputElement) => input.disabled,
-      reportValidity: (input: HTMLInputElement) => {
-        return typeof input.reportValidity === 'function' ? input.reportValidity() : true;
+      reportValidity: () => {
+        return typeof component.reportValidity === 'function' ? component.reportValidity() : true;
       },
       ...options,
     };
@@ -77,8 +77,7 @@ export class FormSubmitController {
 
   async handleSubmit(event: Event) {
     const disabled = this.options.disabled(this.input);
-    const reportValidity = this.options.reportValidity;
-    const isValid = await reportValidity(this.input);
+    const isValid = this.options.reportValidity();
 
     if (!this.form) return;
     if (this.form.noValidate) return;

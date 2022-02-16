@@ -46,7 +46,7 @@ export class CEInput {
   @Prop() name: string;
 
   /** The input's value attribute. */
-  @Prop({ mutable: true }) value = '';
+  @Prop({ mutable: true, reflect: true }) value = '';
 
   /** Draws a pill-style input with rounded edges. */
   @Prop({ reflect: true }) pill = false;
@@ -139,8 +139,7 @@ export class CEInput {
   /** Emitted when the control loses focus. */
   @Event() ceBlur: EventEmitter<void>;
 
-  @Method('reportValidity')
-  async reportValidity() {
+  reportValidity() {
     return this.input.reportValidity();
   }
 
@@ -215,13 +214,12 @@ export class CEInput {
   }
 
   componentDidLoad() {
-    this.formController = new FormSubmitController(this.el);
-    this.formController.addFormData(this.el);
+    this.formController = new FormSubmitController(this, this.el).addFormData();
     this.handleFocusChange();
   }
 
   disconnectedCallback() {
-    this.formController?.removeFormData(this.el);
+    this.formController?.removeFormData();
   }
 
   render() {
