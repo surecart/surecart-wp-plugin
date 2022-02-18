@@ -1,9 +1,9 @@
 {
-  "timestamp": "2022-02-09T22:44:30",
+  "timestamp": "2022-02-17T23:20:17",
   "compiler": {
     "name": "@stencil/core",
-    "version": "2.9.0",
-    "typescriptVersion": "4.2.3"
+    "version": "2.14.0",
+    "typescriptVersion": "4.5.4"
   },
   "components": [
     {
@@ -108,7 +108,9 @@
           "docs": ""
         }
       ],
-      "dependents": [],
+      "dependents": [
+        "ce-form-components-validator"
+      ],
       "dependencies": [
         "ce-input",
         "ce-form-control",
@@ -133,11 +135,15 @@
         "ce-select": [
           "ce-menu-label",
           "ce-menu-item",
+          "ce-form-control",
           "ce-dropdown",
           "ce-icon",
           "ce-input",
           "ce-spinner",
           "ce-menu"
+        ],
+        "ce-form-components-validator": [
+          "ce-address"
         ]
       }
     },
@@ -1542,6 +1548,22 @@
           "required": false
         },
         {
+          "name": "disableComponentsValidation",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "disable-components-validation",
+          "reflectToAttr": false,
+          "docs": "Should we disable components validation",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "formId",
           "type": "number",
           "mutable": false,
@@ -1681,12 +1703,14 @@
       "dependencies": [
         "ce-alert",
         "ce-block-ui",
+        "ce-form-components-validator",
         "ce-session-provider"
       ],
       "dependencyGraph": {
         "ce-checkout": [
           "ce-alert",
           "ce-block-ui",
+          "ce-form-components-validator",
           "ce-session-provider"
         ],
         "ce-alert": [
@@ -1694,6 +1718,32 @@
         ],
         "ce-block-ui": [
           "ce-spinner"
+        ],
+        "ce-form-components-validator": [
+          "ce-address"
+        ],
+        "ce-address": [
+          "ce-input",
+          "ce-form-control",
+          "ce-spacing",
+          "ce-skeleton",
+          "ce-select"
+        ],
+        "ce-input": [
+          "ce-form-control"
+        ],
+        "ce-form-control": [
+          "ce-tooltip"
+        ],
+        "ce-select": [
+          "ce-menu-label",
+          "ce-menu-item",
+          "ce-form-control",
+          "ce-dropdown",
+          "ce-icon",
+          "ce-input",
+          "ce-spinner",
+          "ce-menu"
         ],
         "ce-session-provider": [
           "ce-line-items-provider"
@@ -1884,17 +1934,6 @@
         }
       ],
       "methods": [
-        {
-          "name": "reportValidity",
-          "returns": {
-            "type": "Promise<boolean>",
-            "docs": ""
-          },
-          "signature": "reportValidity() => Promise<boolean>",
-          "parameters": [],
-          "docs": "Checks for validity and shows the browser's validation message if the control is invalid.",
-          "docsTags": []
-        },
         {
           "name": "setCustomValidity",
           "returns": {
@@ -3964,7 +4003,7 @@
           },
           "signature": "submit() => Promise<void>",
           "parameters": [],
-          "docs": "Submits the form. If all controls are valid, the `ce-submit` event will be emitted and the promise will resolve\nwith `true`. If any form control is invalid, the promise will resolve with `false` and no event will be emitted.",
+          "docs": "",
           "docsTags": []
         }
       ],
@@ -4010,6 +4049,91 @@
       "dependencyGraph": {
         "ce-login-form": [
           "ce-form"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/providers/form-components-validator/ce-form-components-validator.tsx",
+      "encapsulation": "shadow",
+      "tag": "ce-form-components-validator",
+      "readme": "# ce-form-components-validator\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "disabled",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "order",
+          "type": "Order",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "The order",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Order"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "ce-checkout"
+      ],
+      "dependencies": [
+        "ce-address"
+      ],
+      "dependencyGraph": {
+        "ce-form-components-validator": [
+          "ce-address"
+        ],
+        "ce-address": [
+          "ce-input",
+          "ce-form-control",
+          "ce-spacing",
+          "ce-skeleton",
+          "ce-select"
+        ],
+        "ce-input": [
+          "ce-form-control"
+        ],
+        "ce-form-control": [
+          "ce-tooltip"
+        ],
+        "ce-select": [
+          "ce-menu-label",
+          "ce-menu-item",
+          "ce-form-control",
+          "ce-dropdown",
+          "ce-icon",
+          "ce-input",
+          "ce-spinner",
+          "ce-menu"
+        ],
+        "ce-checkout": [
+          "ce-form-components-validator"
         ]
       }
     },
@@ -4233,7 +4357,8 @@
       "dependents": [
         "ce-address",
         "ce-choices",
-        "ce-input"
+        "ce-input",
+        "ce-select"
       ],
       "dependencies": [
         "ce-tooltip"
@@ -4249,6 +4374,9 @@
           "ce-form-control"
         ],
         "ce-input": [
+          "ce-form-control"
+        ],
+        "ce-select": [
           "ce-form-control"
         ]
       }
@@ -5272,28 +5400,28 @@
       "docs": "",
       "docsTags": [
         {
-          "text": "base - The elements base wrapper.",
-          "name": "part"
+          "name": "part",
+          "text": "base - The elements base wrapper."
         },
         {
-          "text": "input - The html input element.",
-          "name": "part"
+          "name": "part",
+          "text": "input - The html input element."
         },
         {
-          "text": "base - The elements base wrapper.",
-          "name": "part"
+          "name": "part",
+          "text": "base - The elements base wrapper."
         },
         {
-          "text": "prefix - Used to prepend an icon or element to the input.",
-          "name": "part"
+          "name": "part",
+          "text": "prefix - Used to prepend an icon or element to the input."
         },
         {
-          "text": "suffix - Used to prepend an icon or element to the input.",
-          "name": "part"
+          "name": "part",
+          "text": "suffix - Used to prepend an icon or element to the input."
         },
         {
-          "text": "help-text - Help text that describes how to use the input.",
-          "name": "part"
+          "name": "part",
+          "text": "help-text - Help text that describes how to use the input."
         }
       ],
       "usage": {},
@@ -5896,7 +6024,7 @@
           "type": "string",
           "mutable": true,
           "attr": "value",
-          "reflectToAttr": false,
+          "reflectToAttr": true,
           "docs": "The input's value attribute.",
           "docsTags": [],
           "default": "''",
@@ -5910,17 +6038,6 @@
         }
       ],
       "methods": [
-        {
-          "name": "reportValidity",
-          "returns": {
-            "type": "Promise<boolean>",
-            "docs": ""
-          },
-          "signature": "reportValidity() => Promise<boolean>",
-          "parameters": [],
-          "docs": "",
-          "docsTags": []
-        },
         {
           "name": "setCustomValidity",
           "returns": {
@@ -6192,28 +6309,28 @@
       "docs": "",
       "docsTags": [
         {
-          "text": "image - Line item image",
-          "name": "slot"
+          "name": "slot",
+          "text": "image - Line item image"
         },
         {
-          "text": "title - Line item title.",
-          "name": "slot"
+          "name": "slot",
+          "text": "title - Line item title."
         },
         {
-          "text": "description - Line item description (below the title)",
-          "name": "slot"
+          "name": "slot",
+          "text": "description - Line item description (below the title)"
         },
         {
-          "text": "currency - Used for the 3 character currency code.",
-          "name": "slot"
+          "name": "slot",
+          "text": "currency - Used for the 3 character currency code."
         },
         {
-          "text": "price - Price amount, including currency sign.",
-          "name": "slot"
+          "name": "slot",
+          "text": "price - Price amount, including currency sign."
         },
         {
-          "text": "price-description - Description for the price (i.e. monthly)",
-          "name": "slot"
+          "name": "slot",
+          "text": "price-description - Description for the price (i.e. monthly)"
         }
       ],
       "usage": {},
@@ -8341,28 +8458,28 @@
       "docs": "",
       "docsTags": [
         {
-          "text": "base - The elements base wrapper.",
-          "name": "part"
+          "name": "part",
+          "text": "base - The elements base wrapper."
         },
         {
-          "text": "input - The html input element.",
-          "name": "part"
+          "name": "part",
+          "text": "input - The html input element."
         },
         {
-          "text": "base - The elements base wrapper.",
-          "name": "part"
+          "name": "part",
+          "text": "base - The elements base wrapper."
         },
         {
-          "text": "prefix - Used to prepend an icon or element to the input.",
-          "name": "part"
+          "name": "part",
+          "text": "prefix - Used to prepend an icon or element to the input."
         },
         {
-          "text": "suffix - Used to prepend an icon or element to the input.",
-          "name": "part"
+          "name": "part",
+          "text": "suffix - Used to prepend an icon or element to the input."
         },
         {
-          "text": "help-text - Help text that describes how to use the input.",
-          "name": "part"
+          "name": "part",
+          "text": "help-text - Help text that describes how to use the input."
         }
       ],
       "usage": {},
@@ -8724,17 +8841,6 @@
         }
       ],
       "methods": [
-        {
-          "name": "reportValidity",
-          "returns": {
-            "type": "Promise<boolean>",
-            "docs": ""
-          },
-          "signature": "reportValidity() => Promise<boolean>",
-          "parameters": [],
-          "docs": "",
-          "docsTags": []
-        },
         {
           "name": "setCustomValidity",
           "returns": {
@@ -9722,6 +9828,22 @@
           "required": false
         },
         {
+          "name": "help",
+          "type": "string",
+          "mutable": false,
+          "attr": "help",
+          "reflectToAttr": false,
+          "docs": "Some help text for the input.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "invalid",
           "type": "boolean",
           "mutable": true,
@@ -9733,6 +9855,22 @@
           "values": [
             {
               "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "label",
+          "type": "string",
+          "mutable": false,
+          "attr": "label",
+          "reflectToAttr": false,
+          "docs": "The input's label.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
             }
           ],
           "optional": false,
@@ -9875,6 +10013,32 @@
           "required": false
         },
         {
+          "name": "size",
+          "type": "\"large\" | \"medium\" | \"small\"",
+          "mutable": false,
+          "attr": "size",
+          "reflectToAttr": true,
+          "docs": "The input's size.",
+          "docsTags": [],
+          "default": "'medium'",
+          "values": [
+            {
+              "value": "large",
+              "type": "string"
+            },
+            {
+              "value": "medium",
+              "type": "string"
+            },
+            {
+              "value": "small",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "squared",
           "type": "boolean",
           "mutable": false,
@@ -9974,17 +10138,6 @@
       ],
       "methods": [
         {
-          "name": "reportValidity",
-          "returns": {
-            "type": "Promise<boolean>",
-            "docs": ""
-          },
-          "signature": "reportValidity() => Promise<boolean>",
-          "parameters": [],
-          "docs": "",
-          "docsTags": []
-        },
-        {
           "name": "setCustomValidity",
           "returns": {
             "type": "Promise<void>",
@@ -10071,6 +10224,7 @@
       "dependencies": [
         "ce-menu-label",
         "ce-menu-item",
+        "ce-form-control",
         "ce-dropdown",
         "ce-icon",
         "ce-input",
@@ -10081,17 +10235,18 @@
         "ce-select": [
           "ce-menu-label",
           "ce-menu-item",
+          "ce-form-control",
           "ce-dropdown",
           "ce-icon",
           "ce-input",
           "ce-spinner",
           "ce-menu"
         ],
-        "ce-input": [
-          "ce-form-control"
-        ],
         "ce-form-control": [
           "ce-tooltip"
+        ],
+        "ce-input": [
+          "ce-form-control"
         ],
         "ce-address": [
           "ce-select"
@@ -11691,19 +11846,7 @@
           "required": false
         }
       ],
-      "methods": [
-        {
-          "name": "reportValidity",
-          "returns": {
-            "type": "Promise<boolean>",
-            "docs": ""
-          },
-          "signature": "reportValidity() => Promise<boolean>",
-          "parameters": [],
-          "docs": "Checks for validity and shows the browser's validation message if the control is invalid.",
-          "docsTags": []
-        }
-      ],
+      "methods": [],
       "events": [
         {
           "event": "ceBlur",
