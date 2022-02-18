@@ -1,4 +1,4 @@
-<h2><?php esc_html_e( 'Checkout Engine', 'checkout_engine' ); ?></h2>
+<h2><?php esc_html_e( 'SureCart', 'checkout_engine' ); ?></h2>
 
 <table class="form-table">
 	<tr>
