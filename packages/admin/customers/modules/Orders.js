@@ -1,32 +1,39 @@
 import { __, _n } from '@wordpress/i18n';
-import useCustomerData from '../hooks/useCustomerData';
 import { useEffect } from '@wordpress/element';
-import useDataApi from '../../hooks/useDataApi';
 import OrdersDataTable from '../../components/data-tables/OrdersDataTable';
+import useEntities from '../../mixins/useEntities';
+import { useState } from 'react';
 
-export default () => {
-	const { customerId } = useCustomerData();
-	const { data, isLoading, error, pagination, fetchData } = useDataApi();
+export default ({ id }) => {
+	const [page, setPage] = useState(1);
+	const { orders, fetchOrders, pagination, isLoading, isFetching } =
+		useEntities('order');
 
 	useEffect(() => {
-		if (customerId) {
-			fetchData({
-				path: 'checkout-engine/v1/orders',
+		if (id) {
+			fetchOrders({
 				query: {
-					customer_ids: [customerId],
 					context: 'edit',
-					status: ['paid'],
-					expand: ['payment_method', 'line_items'],
+					subscription_ids: [id],
+					status: [
+						'paid',
+						'canceled',
+						'payment_failed',
+						'payment_intent_canceled',
+					],
+					expand: ['line_items'],
+					page,
+					per_page: 5,
 				},
 			});
 		}
-	}, [customerId]);
+	}, [id, page]);
 
 	return (
 		<OrdersDataTable
 			columns={{
 				number: {
-					label: __('Order Number', 'checkout_engine'),
+					label: __('Number', 'checkout_engine'),
 				},
 				items: {
 					label: __('Items', 'checkout_engine'),
@@ -38,13 +45,18 @@ export default () => {
 					label: __('Status', 'checkout_engine'),
 					width: '100px',
 				},
+				date: {
+					label: __('Date', 'checkout_engine'),
+				},
 				actions: {
 					width: '100px',
 				},
 			}}
-			data={data}
+			data={orders}
 			isLoading={isLoading}
-			error={error}
+			isFetching={isFetching}
+			page={page}
+			setPage={setPage}
 			pagination={pagination}
 		/>
 	);

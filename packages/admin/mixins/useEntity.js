@@ -68,12 +68,11 @@ export default (name, id = null, index = null) => {
 		}
 	) => {
 		try {
-			if (id) {
-				return await saveModel(name, id, requestArgs || {});
-			}
-			if (index !== null) {
+			if (!id && index !== null) {
 				return await saveDraft(name, index, requestArgs || {});
 			}
+
+			return await saveModel(name, id, requestArgs || {});
 		} catch (e) {
 			setSaving(false);
 			addModelErrors(name, e);
@@ -83,7 +82,7 @@ export default (name, id = null, index = null) => {
 
 	// fetch the model from the API.
 	const fetchEntity = async ({ query, ...rest }) => {
-		if (!id) return;
+		if (id === null) return;
 		setIsLoading(true);
 
 		const args = select(store).prepareFetchRequest(name, { id, ...query });
@@ -99,6 +98,7 @@ export default (name, id = null, index = null) => {
 			if (payload) {
 				receiveModels(payload);
 			}
+			return payload;
 		} catch (e) {
 			console.error(e);
 			addModelErrors(name, [e]);

@@ -1,20 +1,31 @@
 import { __, _n } from '@wordpress/i18n';
-import useCustomerData from '../hooks/useCustomerData';
 import SubscriptionsDataTable from '../../components/data-tables/subscriptions-data-table';
 import useEntities from '../../mixins/useEntities';
+import { useEffect, useState } from '@wordpress/element';
 
-export default () => {
-	const { customerId } = useCustomerData();
+export default ({ id }) => {
+	const [page, setPage] = useState(1);
+	const {
+		subscriptions,
+		isLoading,
+		pagination,
+		fetchSubscriptions,
+		isFetching,
+	} = useEntities('subscription');
 
-	const { data, isLoading, pagination, error } = useEntities(
-		'root',
-		'subscription',
-		{
-			customer_ids: [customerId],
-			context: 'edit',
-			expand: ['price', 'price.product'],
+	useEffect(() => {
+		if (id) {
+			fetchSubscriptions({
+				query: {
+					customer_ids: [id],
+					context: 'edit',
+					expand: ['price', 'price.product'],
+					page: page,
+					per_page: 5,
+				},
+			});
 		}
-	);
+	}, [id, page]);
 
 	return (
 		<SubscriptionsDataTable
@@ -40,9 +51,11 @@ export default () => {
 				'This customer does not have any subscriptions.',
 				'checkout_engine'
 			)}
-			data={data}
+			data={subscriptions}
 			isLoading={isLoading}
-			error={error}
+			isFetching={isFetching}
+			page={page}
+			setPage={setPage}
 			pagination={pagination}
 		/>
 	);

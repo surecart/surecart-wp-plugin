@@ -7,46 +7,44 @@ import {
 	CeMenuItem,
 } from '@checkout-engine/components-react';
 
-export default ( { setConfirm, product, isSaving, toggleArchive } ) => {
+export default ({ product, onDelete, onToggleArchive }) => {
 	const confirmArchive = () => {
-		setConfirm( {
-			title: product?.archived_at
+		const r = confirm(
+			product?.archived_at
 				? sprintf(
-						__( 'Un-Archive %s?', 'checkout_engine' ),
+						__(
+							'Un-Archive %s? This will make the product purchaseable again.',
+							'checkout_engine'
+						),
 						product?.name || 'Product'
 				  )
 				: sprintf(
-						__( 'Archive %s?', 'checkout_engine' ),
-						product?.name || 'Product'
-				  ),
-			message: product?.archived_at
-				? __(
-						'This will make the product purchaseable again.',
-						'checkout_engine'
-				  )
-				: __(
-						'This product will not be purchaseable and all unsaved changes will be lost.',
-						'checkout_engine'
-				  ),
-			confirmButtonText: product?.archived_at
-				? sprintf(
-						__( 'Un-Archive %s?', 'checkout_engine' ),
+						__(
+							'This product will not be purchaseable and all unsaved changes will be lost.',
+							'checkout_engine'
+						),
 						product?.name || 'Product'
 				  )
-				: sprintf(
-						__( 'Archive %s?', 'checkout_engine' ),
-						product?.name || 'Product'
-				  ),
-			open: true,
-			isSaving,
-			className: 'ce-disable-confirm',
-			isDestructive: true,
-			onRequestClose: () => setConfirm( {} ),
-			onRequestConfirm: toggleArchive,
-		} );
+		);
+		if (!r) return;
+		onToggleArchive && onToggleArchive();
 	};
 
-	if ( ! product?.id ) {
+	const confirmDelete = () => {
+		const r = confirm(
+			sprintf(
+				__(
+					'Permanently delete %s? You cannot undo this action.',
+					'checkout_engine'
+				),
+				product?.name || 'Product'
+			)
+		);
+		if (!r) return;
+		onDelete && onDelete();
+	};
+
+	if (!product?.id) {
 		return '';
 	}
 
@@ -70,13 +68,13 @@ export default ( { setConfirm, product, isSaving, toggleArchive } ) => {
 				</svg>
 			</CeButton>
 			<CeMenu>
-				{ product?.id && (
-					<CeMenuItem onClick={ confirmArchive }>
+				{product?.id && (
+					<CeMenuItem onClick={confirmArchive}>
 						<span
 							slot="prefix"
-							style={ {
+							style={{
 								opacity: 0.5,
-							} }
+							}}
 						>
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -94,23 +92,18 @@ export default ( { setConfirm, product, isSaving, toggleArchive } ) => {
 								<line x1="10" y1="12" x2="14" y2="12"></line>
 							</svg>
 						</span>
-						{ product?.archived_at
-							? __( 'Un-Archive', 'checkout_engine' )
-							: __( 'Archive', 'checkout_engine' ) }
+						{product?.archived_at
+							? __('Un-Archive', 'checkout_engine')
+							: __('Archive', 'checkout_engine')}
 					</CeMenuItem>
-				) }
-				{ product?.id && (
-					<CeMenuItem
-						onClick={ ( e ) => {
-							e.preventDefault();
-							deleteProduct();
-						} }
-					>
+				)}
+				{product?.id && (
+					<CeMenuItem onClick={confirmDelete}>
 						<span
 							slot="prefix"
-							style={ {
+							style={{
 								opacity: 0.5,
-							} }
+							}}
 						>
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -129,9 +122,9 @@ export default ( { setConfirm, product, isSaving, toggleArchive } ) => {
 								<line x1="14" y1="11" x2="14" y2="17"></line>
 							</svg>
 						</span>
-						{ __( 'Delete', 'checkout_engine' ) }
+						{__('Delete', 'checkout_engine')}
 					</CeMenuItem>
-				) }
+				)}
 			</CeMenu>
 		</CeDropdown>
 	);

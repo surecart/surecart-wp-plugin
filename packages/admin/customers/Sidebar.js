@@ -10,21 +10,10 @@ import Notifications from './modules/Notifications';
 import Purchases from './modules/Purchases';
 import User from './modules/User';
 
-export default () => {
-	const { customer, error, loading, save } = useCustomerData();
-	const [customerId, setCustomerId] = useState(
-		getQueryArg(window.location, 'id')
-	);
-
-	useEffect(() => {
-		if (customer?.id && customer?.id !== customerId) {
-			setCustomerId(customer.id);
-		}
-	}, [customer]);
-
+export default ({ id }) => {
 	return (
 		<Fragment>
-			{customerId && (
+			{id && (
 				<Fragment>
 					<Purchases />
 					<Box
@@ -34,7 +23,7 @@ export default () => {
 						`}
 					>
 						<Fragment>
-							<User customer_id={customerId} />
+							<User customer_id={id} />
 						</Fragment>
 					</Box>
 					<Box

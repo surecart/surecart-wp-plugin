@@ -16,7 +16,11 @@ export default (name, args, deps = []) => {
 	});
 
 	// select data from core store.
-	const data = useSelect((select) => select(store).selectCollection(name));
+	const data = useSelect((select) =>
+		(select(store).selectCollection(name) || []).sort((a, b) => {
+			return a?.created_at - b?.created_at;
+		})
+	);
 	const drafts = useSelect((select) => select(store).selectDrafts(name));
 
 	deps.length &&
@@ -63,6 +67,8 @@ export default (name, args, deps = []) => {
 		dispatch(store).addDraft(name, payload);
 	};
 
+	const receiveModels = (payload) => dispatch(store).receiveModels(payload);
+
 	const snakeToCamel = (str) =>
 		str
 			.toLowerCase()
@@ -82,5 +88,6 @@ export default (name, args, deps = []) => {
 		[`draft${ucName}s`]: drafts,
 		[`fetch${ucName}s`]: fetchEntities,
 		[`add${ucName}`]: addEntity,
+		[`receive${ucName}s`]: receiveModels,
 	};
 };

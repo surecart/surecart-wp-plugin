@@ -1,15 +1,20 @@
-const { render } = wp.element;
-const { registerStore } = wp.data;
+import { render } from '@wordpress/element';
+import { registerStore } from '@wordpress/data';
 
 import store from './store';
-registerStore( 'checkout-engine/settings', store );
+registerStore('checkout-engine/settings', store);
+
+/**
+ * register store entities.
+ */
+import '@admin/schema/register';
 
 /**
  * App
  */
-import App from './App';
+import Settings from './Settings';
 
 /**
  * Render
  */
-render( <App />, document.getElementById( 'app' ) );
+render(<Settings />, document.getElementById('app'));

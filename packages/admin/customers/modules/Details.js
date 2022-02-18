@@ -4,11 +4,9 @@ import { __ } from '@wordpress/i18n';
 import Box from '../../ui/Box';
 import { CeInput } from '@checkout-engine/components-react';
 import { css, jsx } from '@emotion/core';
-import useCustomerData from '../hooks/useCustomerData';
 
-export default () => {
-	const { customer, loading, updateCustomer } = useCustomerData();
-
+export default ({ customer, loading, updateCustomer }) => {
+	console.log({ customer });
 	const renderLoading = () => {
 		return (
 			<div

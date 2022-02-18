@@ -5,7 +5,11 @@ import { __ } from '@wordpress/i18n';
 import { BaseControl, DateTimePicker } from '@wordpress/components';
 
 import Box from '../../ui/Box';
-import { CeCheckbox, CeInput } from '@checkout-engine/components-react';
+import {
+	CeCheckbox,
+	CeInput,
+	CeSwitch,
+} from '@checkout-engine/components-react';
 
 export default ({ coupon, loading, updateCoupon }) => {
 	return (
@@ -13,85 +17,99 @@ export default ({ coupon, loading, updateCoupon }) => {
 			title={__('Redemption Limits', 'checkout_engine')}
 			loading={loading}
 		>
-			<CeCheckbox
-				className="ce-redeem-by"
-				label={__(
-					'Limit the end date when customers can redeem this coupon.'
-				)}
-				checked={coupon?.redeem_by}
-				onCeChange={(e) => {
-					console.log(e);
-					updateCoupon({
-						redeem_by: e.target.checked ? Date.now() : null,
-					});
-				}}
+			<div
+				css={css`
+					display: grid;
+					gap: 2em;
+				`}
 			>
-				{__(
-					'Limit the end date when customers can redeem this coupon.'
-				)}
-			</CeCheckbox>
-			{!!coupon?.redeem_by && (
-				<div
-					className="redeem-by-date"
-					css={css`
-						max-width: 288px;
-						margin-top: 30px;
-					`}
-				>
-					<BaseControl.VisualLabel>
-						{__(
-							'Users must redeem this coupon by:',
-							'checkout_engine'
-						)}
-					</BaseControl.VisualLabel>
-					<DateTimePicker
-						currentDate={new Date(coupon?.redeem_by)}
-						onChange={(redeem_by) => {
-							updateCoupon({
-								redeem_by: new Date(redeem_by).getTime(),
-							});
-						}}
-					/>
-				</div>
-			)}
-
-			<CeCheckbox
-				className="ce-max-redemptions"
-				label={__(
-					'Limit the end date when customers can redeem this coupon.'
-				)}
-				checked={coupon?.max_redemptions}
-				onCeChange={(e) => {
-					updateCoupon({
-						max_redemptions: e.target.checked ? 1 : null,
-					});
-				}}
-			>
-				{__(
-					'Limit the total number of times this coupon can be redeemed',
-					'checkout_engine'
-				)}
-			</CeCheckbox>
-
-			{!!coupon?.max_redemptions && (
-				<BaseControl>
-					<CeInput
-						label={__('Number of Times', 'checkout_engine')}
-						help={__(
-							"This limit applies across customers so it won't prevent a single customer from redeeming multiple times.",
-							'checkout_engine'
-						)}
-						class="max-redemptions-input"
-						value={coupon?.max_redemptions || 1}
+				<div>
+					<CeSwitch
+						checked={!!coupon?.redeem_by}
 						onCeChange={(e) => {
 							updateCoupon({
-								max_redemptions: e.target.value,
+								redeem_by: e.target.checked ? Date.now() : null,
 							});
 						}}
-						type="number"
-					/>
-				</BaseControl>
-			)}
+					>
+						{__('End Date')}
+						<span slot="description">
+							{__(
+								'Limit the end date when customers can redeem this coupon.'
+							)}
+						</span>
+					</CeSwitch>
+					{!!coupon?.redeem_by && (
+						<div
+							className="redeem-by-date"
+							css={css`
+								max-width: 288px;
+								margin-top: 30px;
+							`}
+						>
+							<BaseControl.VisualLabel>
+								{__(
+									'Users must redeem this coupon by:',
+									'checkout_engine'
+								)}
+							</BaseControl.VisualLabel>
+							<DateTimePicker
+								currentDate={new Date(coupon?.redeem_by)}
+								onChange={(redeem_by) => {
+									updateCoupon({
+										redeem_by: new Date(
+											redeem_by
+										).getTime(),
+									});
+								}}
+							/>
+						</div>
+					)}
+				</div>
+
+				<div
+					css={css`
+						display: grid;
+						gap: 1em;
+					`}
+				>
+					<CeSwitch
+						checked={!!coupon?.max_redemptions}
+						onCeChange={(e) => {
+							updateCoupon({
+								max_redemptions: e.target.checked ? 1 : null,
+							});
+						}}
+					>
+						{__('Max Redemptions')}
+						<span slot="description">
+							{__(
+								'Limit the total number of times this coupon can be redeemed.'
+							)}
+						</span>
+					</CeSwitch>
+
+					{!!coupon?.max_redemptions && (
+						<BaseControl>
+							<CeInput
+								label={__('Number of Times', 'checkout_engine')}
+								help={__(
+									"This limit applies across customers so it won't prevent a single customer from redeeming multiple times.",
+									'checkout_engine'
+								)}
+								class="max-redemptions-input"
+								value={coupon?.max_redemptions || 1}
+								onCeChange={(e) => {
+									updateCoupon({
+										max_redemptions: e.target.value,
+									});
+								}}
+								type="number"
+							/>
+						</BaseControl>
+					)}
+				</div>
+			</div>
 		</Box>
 	);
 };

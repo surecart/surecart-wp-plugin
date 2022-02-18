@@ -1,11 +1,11 @@
-export function setSettings( settings ) {
+export function setSettings(settings) {
 	return {
 		type: 'SET_SETTINGS',
 		settings,
 	};
 }
 
-export function updateSetting( data, optionName ) {
+export function updateSetting(optionName, data) {
 	return {
 		type: 'UPDATE_SETTING',
 		data,
@@ -13,28 +13,28 @@ export function updateSetting( data, optionName ) {
 	};
 }
 
-export function setSaving( value ) {
+export function setSaving(value) {
 	return {
 		type: 'SET_SAVING',
 		value,
 	};
 }
 
-export function addNotice( notice ) {
+export function addNotice(notice) {
 	return {
 		type: 'SET_NOTICE',
 		notice,
 	};
 }
 
-export function removeNotice( id ) {
+export function removeNotice(id) {
 	return {
 		type: 'REMOVE_NOTICE',
 		id,
 	};
 }
 
-export function fetchFromAPI( path ) {
+export function fetchFromAPI(path) {
 	return {
 		type: 'FETCH_FROM_API',
 		path,

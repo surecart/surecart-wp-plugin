@@ -1,26 +1,34 @@
 import { __, _n } from '@wordpress/i18n';
-import useCustomerData from '../hooks/useCustomerData';
-import { useEffect } from '@wordpress/element';
-import useDataApi from '../../hooks/useDataApi';
 import PurchasesDataTable from '../../components/data-tables/purchases-data-table';
+import useEntities from '../../mixins/useEntities';
+import { useEffect } from '@wordpress/element';
+import useCurrentPage from '../../mixins/useCurrentPage';
+import { useState } from 'react';
 
 export default () => {
-	const { customerId } = useCustomerData();
-	const { data, isLoading, error, pagination, fetchData, updateDataItem } =
-		useDataApi();
+	const [page, setPage] = useState(1);
+	const { id } = useCurrentPage();
+	const {
+		purchases,
+		isLoading,
+		pagination,
+		error,
+		fetchPurchases,
+		isFetching,
+	} = useEntities('purchase');
 
 	useEffect(() => {
-		if (customerId) {
-			fetchData({
-				path: 'checkout-engine/v1/purchases',
+		id &&
+			fetchPurchases({
 				query: {
-					customer_ids: [customerId],
+					customer_id: [id],
 					context: 'edit',
 					expand: ['product', 'product.price'],
+					per_page: 5,
+					page,
 				},
 			});
-		}
-	}, [customerId]);
+	}, [id, page]);
 
 	return (
 		<PurchasesDataTable
@@ -32,8 +40,10 @@ export default () => {
 					width: '100px',
 				},
 			}}
-			onUpdatePurchase={updateDataItem}
-			data={data}
+			page={page}
+			setPage={setPage}
+			data={purchases}
+			isFetching={isFetching}
 			isLoading={isLoading}
 			error={error}
 			pagination={pagination}

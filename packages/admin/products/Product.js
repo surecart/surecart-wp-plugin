@@ -24,15 +24,16 @@ import ErrorFlash from '../components/ErrorFlash';
 import useEntities from '../mixins/useEntities';
 import { useState } from 'react';
 import { CeButton } from '@checkout-engine/components-react';
+import ProductActionsDropdown from './components/ProductActionsDropdown';
 
 export default () => {
-	const { saveModel, updateModel, saveDraft, updateDraft, clearDrafts } =
-		useDispatch(dataStore);
+	const { saveModel, saveDraft, clearDrafts } = useDispatch(dataStore);
 	const { addSnackbarNotice, addModelErrors } = useDispatch(uiStore);
 	const {
 		id,
 		product,
 		saveProduct,
+		deleteProduct,
 		isSaving,
 		fetchProduct,
 		updateProduct,
@@ -49,7 +50,7 @@ export default () => {
 			fetchProduct({
 				query: {
 					context: 'edit',
-					expand: ['prices'],
+					expand: ['prices', 'product_group'],
 				},
 			});
 		} else {
@@ -78,17 +79,23 @@ export default () => {
 	 * Create the page and clear all drafts.
 	 */
 	const createPage = async () => {
-		await saveProduct({
-			query: {
-				context: 'edit',
-				expand: ['prices'],
-			},
-			data: {
-				prices: draftPrices,
-			},
-		});
-		await clearDrafts('product');
-		return await clearDrafts('price');
+		try {
+			const saved = await saveProduct({
+				query: {
+					context: 'edit',
+					expand: ['prices'],
+				},
+				data: {
+					prices: draftPrices,
+				},
+			});
+			if (saved?.id) {
+				await clearDrafts('product');
+				return await clearDrafts('price');
+			}
+		} catch (e) {
+			throw e;
+		}
 	};
 
 	/**
@@ -99,17 +106,22 @@ export default () => {
 	};
 
 	const saveDraftPrices = async () => {
-		await Promise.all(
-			(draftPrices || []).map((price, index) =>
-				saveDraftPrice(price, index, product)
-			)
-		);
-		return await clearDrafts('price');
+		try {
+			await Promise.all(
+				(draftPrices || []).map((price, index) =>
+					saveDraftPrice(price, index)
+				)
+			);
+			return await clearDrafts('price');
+		} catch (e) {
+			addModelErrors('price', e);
+			throw e;
+		}
 	};
 
 	const savePrices = async () => {
 		return await Promise.all(
-			(prices || []).map((price) => savePrice(price, product))
+			(prices || []).map((price) => savePrice(price))
 		);
 	};
 
@@ -119,6 +131,7 @@ export default () => {
 			return await saveModel('price', price?.id);
 		} catch (e) {
 			addModelErrors('price', e);
+			throw e;
 		}
 	};
 
@@ -128,6 +141,29 @@ export default () => {
 			return await saveDraft('price', index);
 		} catch (e) {
 			addModelErrors('price', e);
+			throw e;
+		}
+	};
+
+	const onDeleteProduct = async () => {
+		try {
+			return await deleteProduct();
+		} catch (e) {
+			addModelErrors('product', e);
+			throw e;
+		}
+	};
+
+	const onToggleArchiveProduct = async () => {
+		try {
+			return await saveProduct({
+				data: {
+					archived: !product?.archived,
+				},
+			});
+		} catch (e) {
+			addModelErrors('product', e);
+			throw e;
 		}
 	};
 
@@ -139,18 +175,31 @@ export default () => {
 			backUrl={'admin.php?page=ce-products'}
 			backText={__('Back to All Product', 'checkout_engine')}
 			title={
-				isLoading ? (
-					<ce-skeleton
-						style={{
-							width: '120px',
-							display: 'inline-block',
-						}}
-					></ce-skeleton>
-				) : product?.id ? (
-					__('Edit Product', 'checkout_engine')
-				) : (
-					__('Create Product', 'checkout_engine')
-				)
+				<div
+					css={css`
+						display: flex;
+						align-items: center;
+						gap: 1em;
+					`}
+				>
+					{isLoading ? (
+						<ce-skeleton
+							style={{
+								width: '120px',
+								display: 'inline-block',
+							}}
+						></ce-skeleton>
+					) : product?.id ? (
+						__('Edit Product', 'checkout_engine')
+					) : (
+						__('Create Product', 'checkout_engine')
+					)}
+					{product?.archived && (
+						<ce-tag type="warning">
+							{__('Archived', 'checkout_engine')}
+						</ce-tag>
+					)}
+				</div>
 			}
 			button={
 				isLoading ? (
@@ -169,12 +218,12 @@ export default () => {
 							gap: 0.5em;
 						`}
 					>
-						{/* <ProductActionsDropdown
-							setConfirm={setConfirm}
+						<ProductActionsDropdown
 							product={product}
+							onDelete={onDeleteProduct}
+							onToggleArchive={onToggleArchiveProduct}
 							isSaving={isSaving}
-							toggleArchive={toggleArchive}
-						/> */}
+						/>
 						<CeButton
 							type="primary"
 							loading={saving || isSaving}

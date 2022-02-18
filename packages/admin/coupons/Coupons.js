@@ -3,14 +3,11 @@ import { css, jsx } from '@emotion/core';
 
 import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';
-import { dispatch } from '@wordpress/data';
-import { CeAlert } from '@checkout-engine/components-react';
 
 import { store as uiStore } from '../store/ui';
 import { store as dataStore } from '../store/data';
 
 import Template from '../templates/SingleModel';
-import FlashError from '../components/FlashError';
 import SaveButton from './components/SaveButton';
 
 // modules
@@ -22,10 +19,6 @@ import Limits from './modules/Limits';
 // parts
 import Sidebar from './Sidebar';
 
-// hooks
-import useSnackbar from '../hooks/useSnackbar';
-import useCouponData from './hooks/useCouponData';
-
 // hocs
 import withConfirm from '../hocs/withConfirm';
 import { useEffect } from 'react';
@@ -33,17 +26,17 @@ import ErrorFlash from '../components/ErrorFlash';
 import useCurrentPage from '../mixins/useCurrentPage';
 import useEntities from '../mixins/useEntities';
 import { useDispatch } from '@wordpress/data';
-import DraftsProvider from '../components/drafts-provider';
+import { CeButton } from '@checkout-engine/components-react';
 
-export default withConfirm(({ noticeUI }) => {
-	const { saveModel, updateModel, saveDraft, updateDraft, clearDrafts } =
-		useDispatch(dataStore);
+export default () => {
+	const { saveModel, saveDraft, clearDrafts } = useDispatch(dataStore);
 	const { addSnackbarNotice, addModelErrors } = useDispatch(uiStore);
 	const {
 		id,
 		coupon,
 		updateCoupon,
 		saveCoupon,
+		saving,
 		setSaving,
 		isSaving,
 		fetchCoupon,
@@ -84,18 +77,8 @@ export default withConfirm(({ noticeUI }) => {
 	const onSubmit = async (e) => {
 		e.preventDefault();
 		try {
-			const coupon = await saveCoupon(); // first save the product, in case we don't have an id.
-			await Promise.all(
-				(promotions || []).map((promotion) =>
-					savePromotion(promotion, coupon)
-				)
-			);
-			await Promise.all(
-				(draftPromotions || []).map((promotion, index) =>
-					saveDraftPromotion(promotion, index, coupon)
-				)
-			);
-			await clearDrafts('promotion');
+			setSaving(true);
+			id ? await updatePage() : await createPage();
 			addSnackbarNotice({
 				content: __('Saved.'),
 			});
@@ -106,29 +89,76 @@ export default withConfirm(({ noticeUI }) => {
 		}
 	};
 
+	/**
+	 * Create the page and clear all drafts.
+	 */
+	const createPage = async () => {
+		try {
+			const saved = await saveCoupon({
+				query: {
+					context: 'edit',
+					expand: ['promotions'],
+				},
+				data: {
+					promotions: draftPromotions,
+				},
+			});
+			if (saved?.id) {
+				await clearDrafts('coupon');
+				return await clearDrafts('promotion');
+			}
+		} catch (e) {
+			throw e;
+		}
+	};
+
+	/**
+	 * Update product, prices and drafts all at once.
+	 */
+	const updatePage = async () => {
+		return Promise.all([
+			saveCoupon(),
+			savePromotions(),
+			saveDraftPromotions(),
+		]);
+	};
+
+	const saveDraftPromotions = async () => {
+		try {
+			await Promise.all(
+				(draftPromotions || []).map((promotion, index) =>
+					saveDraftPromotion(promotion, index)
+				)
+			);
+			return await clearDrafts('promotion');
+		} catch (e) {
+			throw e;
+		}
+	};
+
+	const savePromotions = async () => {
+		return await Promise.all(
+			(promotions || []).map((promotion) => savePromotion(promotion))
+		);
+	};
+
 	// save price
 	const savePromotion = async (promotion, coupon) => {
-		if (!promotion?.coupon) {
-			await updateModel('promotion', promotion.id, {
-				coupon: id || coupon?.id, // make sure coupon is set
-			});
-		}
 		try {
 			return await saveModel('promotion', promotion?.id);
 		} catch (e) {
 			addModelErrors('promotion', e);
+			throw e;
 		}
 	};
 
 	/** Save any draft prices. */
-	const saveDraftPromotion = async (_, index, coupon) => {
-		await updateDraft('promotion', index, {
-			coupon: id || coupon?.id, // make sure coupon is set
-		});
+	const saveDraftPromotion = async (_, index) => {
 		try {
 			return await saveDraft('promotion', index);
 		} catch (e) {
 			addModelErrors('promotion', e);
+			throw e;
 		}
 	};
 
@@ -156,21 +186,25 @@ export default withConfirm(({ noticeUI }) => {
 							gap: 0.5em;
 						`}
 					>
-						{/* <ProductActionsDropdown
-							setConfirm={ setConfirm }
-							product={ product }
-							isSaving={ isSaving }
-							toggleArchive={ toggleArchive }
-						/> */}
-						<SaveButton>
+						<CeButton
+							type="primary"
+							loading={saving || isSaving}
+							submit
+						>
 							{coupon?.id
 								? __('Update Coupon', 'checkout_engine')
 								: __('Create Coupon', 'checkout_engine')}
-						</SaveButton>
+						</CeButton>
 					</div>
 				)
 			}
-			sidebar={<Sidebar />}
+			sidebar={
+				<Sidebar
+					coupon={coupon}
+					loading={isLoading}
+					saveCoupon={saveCoupon}
+				/>
+			}
 		>
 			<Fragment>
 				<ErrorFlash errors={couponErrors} onHide={clearCouponErrors} />
@@ -197,95 +231,4 @@ export default withConfirm(({ noticeUI }) => {
 			</Fragment>
 		</Template>
 	);
-
-	// return (
-	// 	<Template
-	// 		onSubmit={ onSubmit }
-	// 		backUrl={ 'admin.php?page=ce-coupons' }
-	// 		backText={ __( 'Back to All Coupons', 'checkout_engine' ) }
-	// 		title={
-	// 			loading ? (
-	// 				<ce-skeleton
-	// 					style={ { width: '120px', display: 'inline-block' } }
-	// 				></ce-skeleton>
-	// 			) : (
-	// 				<div>
-	// 					{ coupon?.id
-	// 						? sprintf(
-	// 								__( 'Edit %s', 'checkout_engine' ),
-	// 								coupon?.name ||
-	// 									__( 'Coupon', 'checkout_engine' )
-	// 						  )
-	// 						: sprintf(
-	// 								__( 'Add %s', 'checkout_engine' ),
-	// 								coupon?.name ||
-	// 									__( 'Coupon', 'checkout_engine' )
-	// 						  ) }
-	// 				</div>
-	// 			)
-	// 		}
-	// 		button={
-	// 			loading ? (
-	// 				<ce-skeleton
-	// 					style={ {
-	// 						width: '120px',
-	// 						height: '35px',
-	// 						display: 'inline-block',
-	// 					} }
-	// 				></ce-skeleton>
-	// 			) : (
-	// 				<SaveButton>
-	// 					{ coupon?.id
-	// 						? __( 'Update Coupon', 'checkout_engine' )
-	// 						: __( 'Create Coupon', 'checkout_engine' ) }
-	// 				</SaveButton>
-	// 			)
-	// 		}
-	// 		notices={ snackbarNotices }
-	// 		removeNotice={ removeSnackbarNotice }
-	// 		noticeUI={ noticeUI }
-	// 		sidebar={
-	// 			<Sidebar
-	// 				promotion={ promotion }
-	// 				coupon={ coupon }
-	// 				loading={ loading }
-	// 			/>
-	// 		}
-	// 		footer={
-	// 			! loading &&
-	// 			!! promotion?.id && (
-	// 				<div
-	// 					css={ css`
-	// 						display: flex;
-	// 						justify-content: space-between;
-	// 						align-items: center;
-	// 					` }
-	// 				>
-	// 					<Button
-	// 						className="ce-archive"
-	// 						isSecondary
-	// 						onClick={ () => setConfirmDisable( true ) }
-	// 					>
-	// 						{ __( 'Archive', 'checkout_engine' ) }
-	// 					</Button>
-	// 					<Button
-	// 						className="ce-disable"
-	// 						isDestructive
-	// 						onClick={ deleteCoupon }
-	// 					>
-	// 						{ __( 'Delete', 'checkout_engine' ) }
-	// 					</Button>
-	// 				</div>
-	// 			)
-	// 		}
-	// 	>
-	// 		<Fragment>
-	// 			<Name
-	// 				loading={ loading }
-	// 				coupon={ coupon }
-	// 				updateCoupon={ updateCoupon }
-	// 			/>
-	// 		</Fragment>
-	// 	</Template>
-	// );
-});
+};

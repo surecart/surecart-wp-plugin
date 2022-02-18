@@ -1,31 +1,14 @@
 import { __, _n } from '@wordpress/i18n';
-import { useEffect } from '@wordpress/element';
 import ChargesDataTable from '../../components/data-tables/charges-data-table';
-import { useState } from 'react';
 import useEntities from '../../mixins/useEntities';
+import { useEffect } from '@wordpress/element';
+import useCurrentPage from '../../mixins/useCurrentPage';
 
-export default ({ id }) => {
-	const [page, setPage] = useState(1);
-	const { charges, fetchCharges, pagination, isLoading, isFetching } =
-		useEntities('charge');
-
-	useEffect(() => {
-		if (id) {
-			fetchCharges({
-				query: {
-					context: 'edit',
-					status: ['paid', 'failed'],
-					customer_ids: [id],
-					expand: ['payment_method', 'payment_method.card'],
-					page,
-					per_page: 5,
-				},
-			});
-		}
-	}, [id, page]);
-
+export default ({ refunds }) => {
+	return JSON.stringify(refunds);
 	return (
 		<ChargesDataTable
+			title={__('Payment', 'checkout_engine')}
 			columns={{
 				amount: {
 					label: __('Amount', 'checkout_engine'),
@@ -44,11 +27,10 @@ export default ({ id }) => {
 					width: '100px',
 				},
 			}}
+			showTotal
 			data={charges}
 			isLoading={isLoading}
-			isFetching={isFetching}
-			page={page}
-			setPage={setPage}
+			error={error}
 			pagination={pagination}
 		/>
 	);

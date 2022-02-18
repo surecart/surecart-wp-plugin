@@ -8,6 +8,7 @@ export default ({
 	isLoading,
 	error,
 	pagination,
+	isFetching,
 	columns,
 	empty,
 	page,
@@ -19,7 +20,6 @@ export default ({
 			columns={columns}
 			empty={empty || __('None found.', 'checkout-engine')}
 			items={(data || [])
-				.slice()
 				.sort((a, b) => b.created_at - a.created_at)
 				.map((purchase) => purchaseItem(purchase))}
 			loading={isLoading}
@@ -30,6 +30,7 @@ export default ({
 						total={pagination?.total}
 						total_pages={pagination?.total_pages}
 						page={page}
+						isFetching={isFetching}
 						setPage={setPage}
 					/>
 				) : null

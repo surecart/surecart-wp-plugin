@@ -2,21 +2,31 @@
 import { css, jsx } from '@emotion/core';
 
 import { __ } from '@wordpress/i18n';
-import { FormTokenField } from '@wordpress/components';
+import { Modal, Button } from '@wordpress/components';
 
 import Box from '../../ui/Box';
 import { useEffect, useState } from 'react';
 import SelectProductGroup from '../../components/SelectProductGroup';
 import useEntities from '../../mixins/useEntities';
+import apiFetch from '@wordpress/api-fetch';
+
+import { CeForm, CeInput } from '@checkout-engine/components-react';
 
 export default ({ loading, product, updateProduct }) => {
+	const [saving, setSaving] = useState(false);
+	const [modal, setModal] = useState(false);
+
 	const onNew = () => {
-		console.log('new');
+		setModal(true);
 	};
 
 	const [query, setQuery] = useState(null);
-	const { product_groups, fetchProductgroups, isLoading } =
-		useEntities('product_group');
+	const {
+		product_groups,
+		receiveProductgroups,
+		fetchProductgroups,
+		isLoading,
+	} = useEntities('product_group');
 
 	useEffect(() => {
 		fetchProductgroups({
@@ -32,6 +42,33 @@ export default ({ loading, product, updateProduct }) => {
 		});
 	};
 
+	const onCreate = async (e) => {
+		setSaving(true);
+		const { name } = await e.target.getFormJson();
+
+		try {
+			const group = await apiFetch({
+				path: 'checkout-engine/v1/product_groups/',
+				method: 'POST',
+				data: {
+					name,
+				},
+			});
+
+			if (group?.id) {
+				receiveProductgroups(group);
+				updateProduct({
+					product_group: group?.id,
+				});
+			}
+		} finally {
+			setSaving(false);
+			setModal(false);
+		}
+	};
+
+	if (!product?.recurring) return null;
+
 	return (
 		<Box title={__('Upgrade Group', 'checkout_engine')} loading={loading}>
 			<SelectProductGroup
@@ -42,7 +79,7 @@ export default ({ loading, product, updateProduct }) => {
 					'Add this product to a group with others you want the purchaser to switch between.',
 					'checkout_engine'
 				)}
-				value={product?.product_group}
+				value={product?.product_group?.id || product?.product_group}
 				groups={product_groups}
 				onQuery={setQuery}
 				onFetch={() => setQuery('')}
@@ -50,6 +87,49 @@ export default ({ loading, product, updateProduct }) => {
 				onSelect={onSelect}
 				onNew={onNew}
 			/>
+			{modal && (
+				<Modal
+					title={__('Create Product Group', 'checkout_engine')}
+					css={css`
+						max-width: 500px !important;
+					`}
+					onRequestClose={() => setModal(false)}
+					shouldCloseOnClickOutside={false}
+				>
+					<CeForm
+						onCeFormSubmit={onCreate}
+						css={css`
+							--ce-form-row-spacing: var(--ce-spacing-large);
+						`}
+					>
+						<CeInput
+							required
+							name="name"
+							label={__('Group Name', 'checkout_engine')}
+							help={__(
+								'This is not shown to the customer, but is used help you identify the group.',
+								'checkout_engine'
+							)}
+							autofocus
+						/>
+
+						<div
+							css={css`
+								display: flex;
+								align-items: center;
+								gap: 0.5em;
+							`}
+						>
+							<Button isPrimary isBusy={saving} type="submit">
+								{__('Create', 'checkout_engine')}
+							</Button>
+							<Button onClick={() => setModal(false)}>
+								{__('Cancel', 'checkout_engine')}
+							</Button>
+						</div>
+					</CeForm>
+				</Modal>
+			)}
 		</Box>
 	);
 };

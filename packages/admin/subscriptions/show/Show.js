@@ -18,6 +18,7 @@ import Invoices from './modules/Invoices';
 import Pricing from './modules/Pricing';
 import Cancel from './modules/Cancel';
 import Sidebar from './Sidebar';
+import PendingUpdate from './modules/PendingUpdate';
 
 export default () => {
 	const {
@@ -160,6 +161,10 @@ export default () => {
 					loading={isLoading}
 					subscription={subscription}
 				/>
+
+				{!!Object.keys(subscription?.pending_update || {}).length && (
+					<PendingUpdate subscription={subscription} />
+				)}
 
 				<Invoices subscriptionId={id} subscription={subscription} />
 

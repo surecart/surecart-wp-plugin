@@ -1,12 +1,9 @@
 /** @jsx jsx */
 import { __ } from '@wordpress/i18n';
 import DataTable from '../../../components/DataTable';
-// import { store } from '../../store/data';
 import { addQueryArgs } from '@wordpress/url';
 import { translateInterval } from '@scripts/admin/util/translations';
-import Box from '../../../ui/Box';
 import { css, jsx } from '@emotion/core';
-import { CeInput } from '@checkout-engine/components-react';
 
 export default ({ product, price, subscription, loading }) => {
 	return (
@@ -34,7 +31,7 @@ export default ({ product, price, subscription, loading }) => {
 					),
 				},
 				actions: {
-					width: '50px',
+					width: '75px',
 				},
 			}}
 			items={[
@@ -87,7 +84,7 @@ export default ({ product, price, subscription, loading }) => {
 								id: subscription?.id,
 							})}
 						>
-							{__('Edit', 'checkout_engine')}
+							{__('Change', 'checkout_engine')}
 						</ce-button>
 					),
 				},

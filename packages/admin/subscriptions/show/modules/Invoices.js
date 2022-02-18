@@ -108,6 +108,7 @@ export default ({ subscriptionId }) => {
 							actions: (
 								<ce-button
 									size="small"
+									disabled
 									href={addQueryArgs('admin.php', {
 										page: 'ce-invoices',
 										action: 'edit',

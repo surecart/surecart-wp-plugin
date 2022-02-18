@@ -29,6 +29,11 @@ dispatch(dataStore).registerEntities([
 		baseURLParams: { context: 'edit' },
 	},
 	{
+		name: 'price',
+		baseURL: 'checkout-engine/v1/prices',
+		baseURLParams: { context: 'edit' },
+	},
+	{
 		name: 'purchase',
 		baseURL: 'checkout-engine/v1/purchases',
 		baseURLParams: { context: 'edit' },
@@ -61,6 +66,26 @@ dispatch(dataStore).registerEntities([
 	{
 		name: 'product_group',
 		baseURL: 'checkout-engine/v1/product_groups',
+		baseURLParams: { context: 'edit' },
+	},
+	{
+		name: 'refund',
+		baseURL: 'checkout-engine/v1/refunds',
+		baseURLParams: { context: 'edit' },
+	},
+	{
+		name: 'setting',
+		baseURL: 'checkout-engine/v1/settings',
+		baseURLParams: { context: 'edit' },
+	},
+	{
+		name: 'account',
+		baseURL: 'checkout-engine/v1/account',
+		baseURLParams: { context: 'edit' },
+	},
+	{
+		name: 'customer_notification_protocol',
+		baseURL: 'checkout-engine/v1/customer_notification_protocol',
 		baseURLParams: { context: 'edit' },
 	},
 ]);

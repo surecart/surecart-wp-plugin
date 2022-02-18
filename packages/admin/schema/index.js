@@ -14,6 +14,7 @@ const {
 	promotion,
 	order,
 	customer,
+	product_group,
 	subscription,
 } = entities;
 
@@ -73,6 +74,8 @@ coupon.define({
 		data: [promotion],
 	},
 });
+
+product_group.define({});
 
 export const normalizeEntities = (data) => {
 	if (entities?.[data?.[0]?.object]) {

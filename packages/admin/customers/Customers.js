@@ -17,22 +17,36 @@ import Orders from './modules/Orders';
 import Subscriptions from './modules/Subscriptions';
 // parts
 import Sidebar from './Sidebar';
+import useCurrentPage from '../mixins/useCurrentPage';
+import { useEffect } from 'react';
 
 export default () => {
-	const { snackbarNotices, removeSnackbarNotice } = useSnackbar();
-	const { customerId, error, loading, save } = useCustomerData();
+	const {
+		id,
+		customer,
+		fetchCustomer,
+		updateCustomer,
+		saveCustomer,
+		isLoading,
+	} = useCurrentPage('customer');
+
+	useEffect(() => {
+		if (id) {
+			fetchCustomer({
+				query: {
+					context: 'edit',
+				},
+			});
+		}
+	}, []);
 
 	const onSubmit = async (e) => {
 		e.preventDefault();
-		save();
-	};
-
-	const onInvalid = () => {
-		dispatch(uiStore).setInvalid(true);
+		saveCustomer();
 	};
 
 	const title = () => {
-		if (loading) {
+		if (isLoading) {
 			return (
 				<ce-skeleton
 					style={{
@@ -43,7 +57,7 @@ export default () => {
 			);
 		}
 
-		return customerId
+		return id
 			? __('Edit Customer', 'checkout_engine')
 			: __('Add Customer', 'checkout_engine');
 	};
@@ -52,12 +66,11 @@ export default () => {
 		<Template
 			pageModelName={'customers'}
 			onSubmit={onSubmit}
-			onInvalid={onInvalid}
 			backUrl={'admin.php?page=ce-customers'}
 			backText={__('Back to All Customers', 'checkout_engine')}
 			title={title()}
 			button={
-				loading ? (
+				isLoading ? (
 					<ce-skeleton
 						style={{
 							width: '120px',
@@ -74,23 +87,25 @@ export default () => {
 						`}
 					>
 						<SaveButton>
-							{customerId
+							{id
 								? __('Update Customer', 'checkout_engine')
 								: __('Create Customer', 'checkout_engine')}
 						</SaveButton>
 					</div>
 				)
 			}
-			notices={snackbarNotices}
-			removeNotice={removeSnackbarNotice}
-			sidebar={<Sidebar />}
+			sidebar={<Sidebar id={id} />}
 		>
 			<Fragment>
 				<FlashError path="customers" scrollIntoView />
-				<Details />
-				{customerId && <Orders />}
-				{customerId && <Charges />}
-				{customerId && <Subscriptions />}
+				<Details
+					customer={customer}
+					updateCustomer={updateCustomer}
+					loading={isLoading}
+				/>
+				{id && <Orders id={id} />}
+				{id && <Charges id={id} />}
+				{id && <Subscriptions id={id} />}
 			</Fragment>
 		</Template>
 	);

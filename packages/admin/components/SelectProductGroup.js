@@ -20,7 +20,6 @@ export default ({
 	onQuery,
 	onFetch,
 	onNew,
-	ad_hoc = true,
 	loading,
 }) => {
 	const selectRef = useRef();
@@ -35,7 +34,7 @@ export default ({
 	const choices = (groups || []).map((group) => {
 		return {
 			label: group?.name,
-			id: group.id,
+			value: group.id,
 		};
 	});
 

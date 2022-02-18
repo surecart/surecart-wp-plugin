@@ -6,7 +6,6 @@ import { Fragment } from '@wordpress/element';
 import { dispatch } from '@wordpress/data';
 import { store } from './store';
 import Sidebar from './Sidebar';
-import SaveButton from '../components/SaveButton';
 import FlashError from '../components/FlashError';
 
 // template
@@ -15,7 +14,6 @@ import Template from '../templates/SingleModel';
 import Details from './modules/Details';
 
 import useSnackbar from '../hooks/useSnackbar';
-import useOrderData from './hooks/useOrderData';
 import LineItems from './modules/LineItems';
 import Charges from './modules/Charges';
 import Subscriptions from './modules/Subscriptions';
@@ -24,7 +22,6 @@ import { useEffect, useRef } from 'react';
 
 export default () => {
 	const { snackbarNotices, removeSnackbarNotice } = useSnackbar();
-	const { order, loading } = useOrderData();
 
 	const onSubmit = async (e) => {
 		e.preventDefault();
@@ -35,20 +32,24 @@ export default () => {
 		dispatch(uiStore).setInvalid(true);
 	};
 
-	const { id, model, isLoading, error, fetchOrder } = useCurrentPage('order');
+	const { id, order, isLoading, error, fetchOrder } = useCurrentPage('order');
 
 	useEffect(() => {
 		if (id) {
 			fetchOrder({
-				context: 'edit',
-				expand: [
-					'line_items',
-					'line_item.price',
-					'price.product',
-					'purchases',
-					'purchase.product',
-					'customer',
-				],
+				query: {
+					context: 'edit',
+					expand: [
+						'line_items',
+						'line_item.price',
+						'price.product',
+						'purchases',
+						'charge',
+						'charge.refund',
+						'purchase.product',
+						'customer',
+					],
+				},
 			});
 		}
 	}, [id]);
@@ -72,8 +73,8 @@ export default () => {
 		>
 			<Fragment>
 				<FlashError path="orders" scrollIntoView />
-				<Details order={model} loading={isLoading} />
-				<LineItems order={model} loading={isLoading} />
+				<Details order={order} loading={isLoading} />
+				<LineItems order={order} loading={isLoading} />
 				<Charges />
 				<Subscriptions />
 			</Fragment>

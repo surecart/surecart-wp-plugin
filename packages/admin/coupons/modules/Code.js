@@ -37,6 +37,13 @@ export default ({ promotion: promotionEntity, index }) => {
 	const onDelete = async () => {
 		try {
 			setLoading(true);
+			const r = confirm(
+				__(
+					'Are you sure you want to delete this promotion code?',
+					'checkout-engine'
+				)
+			);
+			if (!r) return;
 			await deletePromotion();
 		} finally {
 			setLoading(false);

@@ -28,7 +28,7 @@ export default () => {
 
 	return (
 		<ChargesDataTable
-			title={__('Payment', 'checkout_engine')}
+			title={__('Charge', 'checkout_engine')}
 			columns={{
 				amount: {
 					label: __('Amount', 'checkout_engine'),

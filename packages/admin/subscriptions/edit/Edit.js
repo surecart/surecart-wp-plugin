@@ -23,6 +23,7 @@ import {
 	CeFormatDate,
 	CeSwitch,
 } from '@checkout-engine/components-react';
+import PendingUpdate from '../show/modules/PendingUpdate';
 
 export default () => {
 	const [skip_proration, setSkipProration] = useState(true);
@@ -49,11 +50,23 @@ export default () => {
 	const onSubmit = (e) => {
 		e.preventDefault();
 		setTimeout(async () => {
+			if (subscription?.pending_update && update_behavior === 'pending') {
+				const r = confirm(
+					__(
+						'There is already a pending update to this subscription. Do you want to replace it with this one?',
+						'checkout_engine'
+					)
+				);
+				if (!r) return;
+			}
+
 			try {
 				await saveSubscription({
-					update_behavior,
-					skip_product_group_validation: true,
-					skip_proration,
+					query: {
+						update_behavior,
+						skip_product_group_validation: true,
+						skip_proration,
+					},
 				});
 				setSaving(true);
 				window.location.href = addQueryArgs('admin.php', {
@@ -184,6 +197,7 @@ export default () => {
 					product={product}
 					loading={isLoading}
 				/>
+				<PendingUpdate subscription={subscription} />
 				<Schedule
 					subscription={subscription}
 					updateSubscription={updateSubscription}

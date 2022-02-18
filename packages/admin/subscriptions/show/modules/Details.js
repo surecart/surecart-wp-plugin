@@ -148,11 +148,7 @@ export default ({ subscription, customer, product, loading }) => {
 				</div>
 				<div>
 					<CeSubscriptionStatusBadge subscription={subscription} />
-					{subscription?.live_mode ? (
-						<ce-tag type="success">
-							{__('Live Mode', 'checkout_engine')}
-						</ce-tag>
-					) : (
+					{!subscription?.live_mode && (
 						<ce-tag type="warning">
 							{__('Test Mode', 'checkout_engine')}{' '}
 						</ce-tag>

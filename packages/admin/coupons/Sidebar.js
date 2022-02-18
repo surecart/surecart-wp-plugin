@@ -5,14 +5,10 @@ import { __, sprintf, _n } from '@wordpress/i18n';
 import { format } from '@wordpress/date';
 import { Fragment } from '@wordpress/element';
 
-import { CeButton } from '@checkout-engine/components-react';
-
 import Box from '../ui/Box';
 import Definition from '../ui/Definition';
-import useCouponData from './hooks/useCouponData';
-import usePromotionData from './hooks/usePromotionData';
 
-export default ({ coupon, loading, updateCoupon }) => {
+export default ({ coupon, loading }) => {
 	const formattedDiscount = () => {
 		if (coupon?.percent_off) {
 			return sprintf(
@@ -64,36 +60,6 @@ export default ({ coupon, loading, updateCoupon }) => {
 				`}
 			>
 				<Fragment>
-					{/* <Definition
-						title={_n(
-							'Code',
-							'Codes',
-							activePromotions?.length,
-							'checkout_engine'
-						)}
-					>
-						<div
-							css={css`
-								text-align: right;
-								display: grid;
-								gap: 0.5em;
-							`}
-						>
-							{(activePromotions || []).map((promotion) => {
-								if (!promotion?.code) return null;
-								return (
-									<div>
-										<code>{promotion?.code}</code>
-									</div>
-								);
-							})}
-						</div>
-					</Definition> */}
-
-					{/* <Definition title={ __( 'Active', 'checkout_engine' ) }>
-						<ArchiveToggle />
-					</Definition> */}
-
 					{formattedDiscount() && (
 						<Definition title={__('Discount', 'checkout_engine')}>
 							{formattedDiscount()}
@@ -154,48 +120,6 @@ export default ({ coupon, loading, updateCoupon }) => {
 						</Definition>
 					)}
 				</Fragment>
-			</Box>
-			<Box
-				loading={loading}
-				title={
-					<div
-						css={css`
-							display: flex;
-							align-items: center;
-							justify-content: space-between;
-						`}
-					>
-						{__('Automations', 'checkout_engine')}
-					</div>
-				}
-				css={css`
-					font-size: 14px;
-				`}
-				footer={
-					!loading && (
-						<CeButton>
-							<svg
-								slot="prefix"
-								xmlns="http://www.w3.org/2000/svg"
-								width="16"
-								height="16"
-								viewBox="0 0 24 24"
-								fill="none"
-								stroke="currentColor"
-								strokeWidth="2"
-								strokeLinecap="round"
-								strokeLinejoin="round"
-							>
-								<line x1="12" y1="5" x2="12" y2="19"></line>
-								<line x1="5" y1="12" x2="19" y2="12"></line>
-							</svg>
-
-							{__('Add Automation', 'checkout_engine')}
-						</CeButton>
-					)
-				}
-			>
-				{__('To get started, add an automation.', 'checkout_engine')}
 			</Box>
 		</Fragment>
 	);

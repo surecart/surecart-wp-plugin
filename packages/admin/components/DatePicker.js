@@ -7,7 +7,14 @@ import { css, jsx } from '@emotion/core';
 import { useEffect } from 'react';
 
 export default (props) => {
-	const { currentDate, onChange, onChoose, placeholder, ...rest } = props;
+	const {
+		currentDate,
+		onChange,
+		onChoose,
+		placeholder,
+		popoverTitle,
+		...rest
+	} = props;
 	const [isVisible, setIsVisible] = useState(false);
 	const [date, setDate] = useState(currentDate);
 
@@ -49,7 +56,17 @@ export default (props) => {
 
 			{isVisible && (
 				<Popover position="bottom">
+					{!!popoverTitle && (
+						<div
+							css={css`
+								padding: 1em 1em 0 1em;
+							`}
+						>
+							{popoverTitle}
+						</div>
+					)}
 					<DateTimePicker
+						headerTitle={'test'}
 						currentDate={date}
 						onChange={onChangeDate}
 						{...rest}

@@ -258,7 +258,7 @@ export function* saveModel(
 	const dirty = yield controls.resolveSelect(coreStore, 'selectDirty');
 
 	// create path.
-	const modelPath = id ? `${key}s/${id}` : `${key}`;
+	const modelPath = id ? `${key}s/${id}` : `${key}s`;
 	const baseUrl = path ? path : modelPath;
 
 	// find data to save.

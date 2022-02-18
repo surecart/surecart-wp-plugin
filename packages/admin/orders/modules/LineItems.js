@@ -5,12 +5,12 @@ import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';
 import Box from '../../ui/Box';
 import { translateInterval } from '../../util/translations';
-import useLineItemData from '../hooks/useLineItemData';
-import useOrderData from '../hooks/useOrderData';
 import Definition from '../../ui/Definition';
 
 export default ({ order, loading }) => {
 	const line_items = order?.line_items?.data;
+
+	console.log({ order });
 
 	const renderLoading = () => {
 		return <ce-skeleton></ce-skeleton>;

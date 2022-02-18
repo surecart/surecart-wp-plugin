@@ -9,7 +9,8 @@ import Box from '../../../ui/Box';
 import { css, jsx } from '@emotion/core';
 
 export default ({ subscription, updateSubscription, loading }) => {
-	const { fetchPaymentmethods, data } = useEntities('payment_method');
+	const { fetchPaymentmethods, payment_methods } =
+		useEntities('payment_method');
 
 	useEffect(() => {
 		if (subscription?.customer) {
@@ -27,7 +28,7 @@ export default ({ subscription, updateSubscription, loading }) => {
 		<Box title={__('Payment Method', 'checkout_engine')} loading={loading}>
 			<CeChoices label={__('Choose a payment method')}>
 				<div>
-					{(data || []).map((method) => {
+					{(payment_methods || []).map((method) => {
 						const card = select(store).selectRelation(
 							'payment_method',
 							method?.id,

@@ -1,6 +1,7 @@
 import { schema } from 'normalizr';
 
 export default {
+	account: new schema.Entity('account'),
 	price: new schema.Entity('price'),
 	product: new schema.Entity('product'),
 	purchase: new schema.Entity('purchase'),
@@ -15,4 +16,5 @@ export default {
 	order: new schema.Entity('order'),
 	customer: new schema.Entity('customer'),
 	subscription: new schema.Entity('subscription'),
+	product_group: new schema.Entity('product_group'),
 };
