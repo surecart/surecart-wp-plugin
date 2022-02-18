@@ -33,6 +33,7 @@ export const CeEmail = /*@__PURE__*/createReactComponent<JSX.CeEmail, HTMLCeEmai
 export const CeExpressPayment = /*@__PURE__*/createReactComponent<JSX.CeExpressPayment, HTMLCeExpressPaymentElement>('ce-express-payment');
 export const CeFlex = /*@__PURE__*/createReactComponent<JSX.CeFlex, HTMLCeFlexElement>('ce-flex');
 export const CeForm = /*@__PURE__*/createReactComponent<JSX.CeForm, HTMLCeFormElement>('ce-form');
+export const CeFormComponentsValidator = /*@__PURE__*/createReactComponent<JSX.CeFormComponentsValidator, HTMLCeFormComponentsValidatorElement>('ce-form-components-validator');
 export const CeFormControl = /*@__PURE__*/createReactComponent<JSX.CeFormControl, HTMLCeFormControlElement>('ce-form-control');
 export const CeFormRow = /*@__PURE__*/createReactComponent<JSX.CeFormRow, HTMLCeFormRowElement>('ce-form-row');
 export const CeFormSection = /*@__PURE__*/createReactComponent<JSX.CeFormSection, HTMLCeFormSectionElement>('ce-form-section');
