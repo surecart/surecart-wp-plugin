@@ -1,5 +1,5 @@
 {
-	"name": "@checkout-engine/checkout-engine",
+	"name": "@surecart/surecart",
 	"private": true,
 	"workspaces": [
 		"packages/*"
@@ -148,7 +148,7 @@
 	},
 	"wp-env": {
 		"plugin-dir": "checkout-engine",
-		"plugin-name": "Checkout Engine",
+		"plugin-name": "SureCart",
 		"welcome-logo": [
 			"E2E Tests Example"
 		],
