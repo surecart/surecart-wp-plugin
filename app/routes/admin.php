@@ -143,12 +143,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 |--------------------------------------------------------------------------
 */
 \CheckoutEngine::route()
-->where( 'admin', 'ce-upgrade-paths' )
+->where( 'admin', 'ce-product-groups' )
 ->middleware( 'user.can:edit_ce_subscriptions' ) // TODO: change to manage coupons.
-->setNamespace( '\\CheckoutEngine\\Controllers\\Admin\\UpgradePaths\\' )
+->setNamespace( '\\CheckoutEngine\\Controllers\\Admin\\ProductGroups\\' )
 ->group(
 	function() {
-		\CheckoutEngine::route()->get()->name( 'upgrade-paths.edit' )->handle( 'UpgradePathsController@edit' );
+		\CheckoutEngine::route()->get()->where( 'ce_url_var', false, 'action' )->name( 'product_groups.index' )->handle( 'ProductGroupsController@index' );
 	}
 );
 
