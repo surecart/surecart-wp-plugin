@@ -1,7 +1,7 @@
 <?php
 /**
- * Plugin Name: Checkout Engine
- * Plugin URI: https://checkoutengine.com/
+ * Plugin Name: SureCart
+ * Plugin URI: https://surecart.com/
  * Description:
  * Version: 0.0.1
  * Requires at least: 5.9-RC3
@@ -28,7 +28,7 @@ define( 'CHECKOUT_ENGINE_PLUGIN_FILE', __FILE__ );
 
 // define host url.
 if ( ! defined( 'CHECKOUT_ENGINE_APP_URL' ) ) {
-	define( 'CHECKOUT_ENGINE_APP_URL', 'https://presto-pay-staging.herokuapp.com' );
+	define( 'CHECKOUT_ENGINE_APP_URL', 'https://staging.surecart.com' );
 }
 
 // Load composer dependencies.
