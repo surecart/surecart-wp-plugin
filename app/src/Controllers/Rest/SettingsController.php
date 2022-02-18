@@ -2,7 +2,7 @@
 
 namespace CheckoutEngine\Controllers\Rest;
 
-use CheckoutEngine\Models\Price;
+use CheckoutEngine\Models\Account;
 
 /**
  * Handle price requests through the REST API
@@ -16,9 +16,9 @@ class SettingsController {
 	 * @return \WP_REST_Response
 	 */
 	public function index( \WP_REST_Request $request ) {
+		$account  = Account::where( $request->get_query_params() )->find();
 		$settings = [];
-		$settings = (array) apply_filters( 'checkout_engine/rest/settings/index', $settings, $request->get_params(), $request );
-		return rest_ensure_response( $settings );
+		return rest_ensure_response( array_merge( $account->toArray(), $settings ) );
 	}
 
 	/**

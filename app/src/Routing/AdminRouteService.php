@@ -24,9 +24,11 @@ class AdminRouteService {
 		'subscriptions'    => 'ce-subscriptions',
 		'subscription'     => 'ce-subscriptions',
 		'abandoned_orders' => 'ce-abandoned-orders',
-		'upgrade-paths'    => 'ce-upgrade-paths',
+		'upgrade-paths'    => 'ce-product-groups',
 		'coupon'           => 'ce-coupons',
 		'coupons'          => 'ce-coupons',
+		'product_group'    => 'ce-product-groups',
+		'product_groups'   => 'ce-product-groups',
 	];
 
 	/**

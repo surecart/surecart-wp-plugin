@@ -50,8 +50,7 @@ class BlockServiceProvider implements ServiceProviderInterface {
 	 * phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter
 	 */
 	public function bootstrap( $container ) {
-		// allow our web components in wp_kses contexts.
-		add_filter( 'wp_kses_allowed_html', [ $this, 'ksesComponents' ] );
+		// allow design tokens in css.
 		add_filter(
 			'safe_style_css',
 			function( $styles ) {
@@ -67,9 +66,10 @@ class BlockServiceProvider implements ServiceProviderInterface {
 				);
 			}
 		);
-
+		// allow our web components in wp_kses contexts.
+		add_filter( 'wp_kses_allowed_html', [ $this, 'ksesComponents' ] );
 		// register our blocks.
-		$this->registerBlocks( $container );
+		add_action( 'init', [ $this, 'registerBlocks' ] );
 	}
 
 	/**
@@ -96,11 +96,11 @@ class BlockServiceProvider implements ServiceProviderInterface {
 	 *
 	 * @return  void
 	 */
-	public function registerBlocks( $container ) {
+	public function registerBlocks() {
 		$service = \CheckoutEngine::resolve( CHECKOUT_ENGINE_CONFIG_KEY );
 		if ( ! empty( $service['blocks'] ) ) {
 			foreach ( $service['blocks'] as $block ) {
-				( new $block() )->register( $container );
+				( new $block() )->register();
 			}
 		}
 	}

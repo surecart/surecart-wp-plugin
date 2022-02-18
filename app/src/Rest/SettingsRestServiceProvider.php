@@ -17,6 +17,13 @@ class SettingsRestServiceProvider extends RestServiceProvider implements RestSer
 	protected $endpoint = 'settings';
 
 	/**
+	 * Rest Controller
+	 *
+	 * @var string
+	 */
+	protected $controller = SettingsController::class;
+
+	/**
 	 * Register REST Routes
 	 *
 	 * @return void
@@ -86,7 +93,36 @@ class SettingsRestServiceProvider extends RestServiceProvider implements RestSer
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_item_permissions_check( $request ) {
-		return true;
+		return current_user_can( 'manage_options' );
+	}
+
+	/**
+	 * User must be able to manage options
+	 *
+	 * @param \WP_REST_Request $request Full details about the request.
+	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
+	 */
+	public function get_items_permissions_check( $request ) {
+		return current_user_can( 'manage_options' );
+	}
+
+	/**
+	 * User must be able to manage options
+	 *
+	 * @param \WP_REST_Request $request Full details about the request.
+	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
+	 */
+	public function update_item_permissions_check( $request ) {
+		return current_user_can( 'manage_options' );
+	}
+
+	/**
+	 * User must be able to manage options
+	 *
+	 * @param \WP_REST_Request $request Full details about the request.
+	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
+	 */
+	public function delete_item_permissions_check( $request ) {
 		return current_user_can( 'manage_options' );
 	}
 }

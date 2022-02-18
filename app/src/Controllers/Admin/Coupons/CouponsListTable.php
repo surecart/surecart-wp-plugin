@@ -116,11 +116,11 @@ class CouponsListTable extends ListTable {
 	public function get_columns() {
 		return [
 			// 'cb'          => '<input type="checkbox" />',
-			'name'  => __( 'Name', 'checkout_engine' ),
-			'code'  => __( 'Code', 'checkout_engine' ),
-			'price' => __( 'Price', 'checkout_engine' ),
-			'usage' => __( 'Usage', 'checkout_engine' ),
-			'date'  => __( 'Date', 'checkout_engine' ),
+			'name'           => __( 'Name', 'checkout_engine' ),
+			'promotion_code' => __( 'Code', 'checkout_engine' ),
+			'price'          => __( 'Price', 'checkout_engine' ),
+			'usage'          => __( 'Usage', 'checkout_engine' ),
+			'date'           => __( 'Date', 'checkout_engine' ),
 		];
 	}
 
@@ -163,11 +163,14 @@ class CouponsListTable extends ListTable {
 		return Coupon::where(
 			[
 				'archived' => $this->getArchiveStatus(),
-				'limit'    => $this->get_items_per_page( 'coupons' ),
-				'page'     => $this->get_pagenum(),
 			]
 		)->with( [ 'promotions' ] )
-		->paginate();
+		->paginate(
+			[
+				'per_page' => $this->get_items_per_page( 'coupons' ),
+				'page'     => $this->get_pagenum(),
+			]
+		);
 	}
 
 	/**
@@ -313,11 +316,15 @@ class CouponsListTable extends ListTable {
 	 *
 	 * @return string
 	 */
-	public function column_code( $coupon ) {
+	public function column_promotion_code( $coupon ) {
 		if ( empty( $coupon->promotions->data[0]->code ) ) {
 			return __( 'No code specified', 'checkout_engine' );
 		}
-		return '<code>' . sanitize_text_field( $coupon->promotions->data[0]->code ) . '</code>';
+		$and = '';
+		if ( $coupon->promotions->pagination->count > 1 ) {
+			$and = sprintf( __( '+ %d more', 'checkout_engine' ), number_format_i18n( $coupon->promotions->pagination->count ) );
+		}
+		return '<code>' . sanitize_text_field( $coupon->promotions->data[0]->code ) . '</code> ' . $and;
 	}
 
 		/**

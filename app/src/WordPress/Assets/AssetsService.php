@@ -31,7 +31,6 @@ class AssetsService {
 	 * @param array  $data Data to add.
 	 */
 	public function outputComponentScript( $tag, $selector, $data = [] ) {
-
 		?>
 		<script>
 			(async () => {

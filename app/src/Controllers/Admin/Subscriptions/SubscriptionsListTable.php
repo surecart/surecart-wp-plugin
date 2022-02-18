@@ -159,11 +159,14 @@ class SubscriptionsListTable extends ListTable {
 		return Subscription::where(
 			[
 				'status' => $this->getStatus(),
-				'limit'  => $this->get_items_per_page( 'subscriptions' ),
-				'page'   => $this->get_pagenum(),
 			]
 		)->with( [ 'customer', 'price', 'price.product', 'latest_invoice' ] )
-		->paginate();
+		->paginate(
+			[
+				'per_page' => $this->get_items_per_page( 'subscriptions' ),
+				'page'     => $this->get_pagenum(),
+			]
+		);
 	}
 
 	/**
@@ -294,6 +297,10 @@ class SubscriptionsListTable extends ListTable {
 
 		if ( ! $subscription->live_mode ) {
 			$status .= ' <ce-tag type="warning">' . __( 'Test', 'checkout_engine' ) . '</ce-tag>';
+		}
+
+		if ( ! empty( (array) $subscription->pending_update ) ) {
+			$status .= ' <ce-tag type="info">' . __( 'Update Pending', 'checkout_engine' ) . '</ce-tag>';
 		}
 
 		return $status;

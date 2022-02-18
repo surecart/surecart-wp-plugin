@@ -115,12 +115,15 @@ class AbandonedOrderListTable extends ListTable {
 		return AbandonedOrder::where(
 			[
 				'status' => $this->getStatus(),
-				'limit'  => $this->get_items_per_page( 'abanodoned_checkout' ),
-				'page'   => $this->get_pagenum(),
 			]
 		)
 		->with( [ 'latest_order', 'customer' ] )
-		->paginate();
+		->paginate(
+			[
+				'per_page' => $this->get_items_per_page( 'coupons' ),
+				'page'     => $this->get_pagenum(),
+			]
+		);
 	}
 
 	/**

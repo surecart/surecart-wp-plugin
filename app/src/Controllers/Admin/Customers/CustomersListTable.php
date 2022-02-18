@@ -143,12 +143,13 @@ class CustomersListTable extends ListTable {
 	 * @return Array
 	 */
 	private function table_data() {
-		return Customer::where(
+		return Customer::with( [ 'orders' ] )
+		->paginate(
 			[
-				'limit' => $this->get_items_per_page( 'customers' ),
-				'page'  => $this->get_pagenum(),
+				'per_page' => $this->get_items_per_page( 'customers' ),
+				'page'     => $this->get_pagenum(),
 			]
-		)->with( [ 'orders' ] )->paginate();
+		);
 	}
 
 	/**

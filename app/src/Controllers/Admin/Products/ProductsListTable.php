@@ -150,10 +150,13 @@ class ProductsListTable extends ListTable {
 		return Product::where(
 			[
 				'archived' => $this->getArchiveStatus(),
-				'limit'    => $this->get_items_per_page( 'products' ),
+			]
+		)->paginate(
+			[
+				'per_page' => $this->get_items_per_page( 'products' ),
 				'page'     => $this->get_pagenum(),
 			]
-		)->paginate();
+		);
 	}
 
 	/**

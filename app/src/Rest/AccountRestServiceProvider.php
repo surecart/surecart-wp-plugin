@@ -17,32 +17,11 @@ class AccountRestServiceProvider extends RestServiceProvider implements RestServ
 	protected $endpoint = 'account';
 
 	/**
-	 * Register REST Routes
+	 * Rest Controller
 	 *
-	 * @return void
+	 * @var string
 	 */
-	public function registerRoutes() {
-		register_rest_route(
-			"$this->name/v$this->version",
-			"$this->endpoint",
-			[
-				[
-					'methods'             => \WP_REST_Server::EDITABLE,
-					'callback'            => $this->callback( AccountController::class, 'edit' ),
-					'permission_callback' => [ $this, 'update_item_permissions_check' ],
-				],
-				[
-					'methods'             => \WP_REST_Server::READABLE,
-					'callback'            => $this->callback( AccountController::class, 'find' ),
-					'permission_callback' => [ $this, 'get_item_permissions_check' ],
-					'args'                => [
-						'context' => [ 'default' => 'view' ],
-					],
-				],
-				'schema' => [ $this, 'get_item_schema' ],
-			]
-		);
-	}
+	protected $controller = AccountController::class;
 
 	/**
 	 * Get our sample schema for a post.
@@ -114,29 +93,22 @@ class AccountRestServiceProvider extends RestServiceProvider implements RestServ
 	}
 
 	/**
-	 * Anyone can get create checkout sessions
+	 * Get items
 	 *
+	 * @param \WP_REST_Request $request Full details about the request.
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
-	public function update_item_permissions_check( $request ) {
-		return current_user_can( 'edit_post' ); // TODO: Change to "edit coupons".
+	public function get_items_permissions_check( $request ) {
+		return current_user_can( 'manage_options' );
 	}
 
 	/**
-	 * Anyone can get create checkout sessions
+	 * Update item
 	 *
+	 * @param \WP_REST_Request $request Full details about the request.
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
-	public function get_item_permissions_check( $request ) {
-		// check edit request.
-		if ( 'edit' === $request['context'] && ! current_user_can( 'manage_options' ) ) {
-			return new \WP_Error(
-				'rest_forbidden_context',
-				__( 'Sorry, you are not allowed to edit posts in this post type.' ),
-				[ 'status' => rest_authorization_required_code() ]
-			);
-		}
-
-		return true;
+	public function update_item_permissions_check( $request ) {
+		return current_user_can( 'manage_options' );
 	}
 }

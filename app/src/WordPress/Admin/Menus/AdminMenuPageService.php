@@ -3,12 +3,10 @@
 namespace CheckoutEngine\WordPress\Admin\Menus;
 
 use CheckoutEngine\Controllers\Admin\Orders\OrderScriptsController;
-use CheckoutEngine\Controllers\Admin\Subscriptions\SubscriptionScriptsController;
 use CheckoutEngine\Controllers\Admin\Coupons\CouponScriptsController;
 use CheckoutEngine\Controllers\Admin\Products\ProductScriptsController;
 use CheckoutEngine\Controllers\Admin\Abandoned\AbandonedOrderScriptsController;
 use CheckoutEngine\Controllers\Admin\Customers\CustomersScriptsController;
-use CheckoutEngine\Controllers\Admin\UpgradePaths\UpgradePathsScriptsController;
 
 /**
  * Handles creation and enqueueing of admin menu pages and assets.
@@ -35,7 +33,7 @@ class AdminMenuPageService {
 	 * @return void
 	 */
 	public function registerAdminPages() {
-		\add_menu_page( __( 'Dashboard', 'checkout_engine' ), __( 'Checkout Engine', 'checkout_engine' ), 'edit_ce_products', $this->slug, '__return_false' );
+		\add_menu_page( __( 'Dashboard', 'checkout_engine' ), __( 'SureCart', 'checkout_engine' ), 'edit_ce_products', $this->slug, '__return_false', 'dashicons-cart' );
 
 		$this->pages = [
 			'onboarding'    => \add_submenu_page( null, __( 'Onboarding', 'checkout_engine' ), __( 'Onboarding', 'checkout_engine' ), 'manage_options', 'ce-onboarding', '__return_false' ),
@@ -45,7 +43,7 @@ class AdminMenuPageService {
 			'coupons'       => \add_submenu_page( $this->slug, __( 'Coupons', 'checkout_engine' ), __( 'Coupons', 'checkout_engine' ), 'edit_ce_coupons', 'ce-coupons', '__return_false' ),
 			'customers'     => \add_submenu_page( $this->slug, __( 'Customers', 'checkout_engine' ), __( 'Customers', 'checkout_engine' ), 'edit_ce_customers', 'ce-customers', '__return_false' ),
 			'subscriptions' => \add_submenu_page( $this->slug, __( 'Subscriptions', 'checkout_engine' ), __( 'Subscriptions', 'checkout_engine' ), 'edit_ce_subscriptions', 'ce-subscriptions', '__return_false' ),
-			'upgrade-paths' => \add_submenu_page( $this->slug, __( 'Upgrade Groups', 'checkout_engine' ), __( 'Upgrade Groups', 'checkout_engine' ), 'edit_ce_products', 'ce-upgrade-paths', '__return_false' ),
+			'upgrade-paths' => \add_submenu_page( $this->slug, __( 'Upgrade Groups', 'checkout_engine' ), __( 'Upgrade Groups', 'checkout_engine' ), 'edit_ce_products', 'ce-product-groups', '__return_false' ),
 			'abandoned'     => \add_submenu_page( $this->slug, __( 'Abandoned Orders', 'checkout_engine' ), __( 'Abandoned Orders', 'checkout_engine' ), 'edit_ce_orders', 'ce-abandoned-orders', '__return_false' ),
 			'forms'         => \add_submenu_page( $this->slug, __( 'Forms', 'checkout_engine' ), __( 'Forms', 'checkout_engine' ), 'edit_posts', 'edit.php?post_type=ce_form', '' ),
 			'settings'      => \add_submenu_page( $this->slug, __( 'Settings', 'checkout_engine' ), __( 'Settings', 'checkout_engine' ), 'manage_options', 'ce-settings', '__return_false' ),
@@ -79,7 +77,7 @@ class AdminMenuPageService {
 		add_action( "admin_print_scripts-{$this->pages['products']}", \CheckoutEngine::closure()->method( ProductScriptsController::class, 'enqueue' ) );
 		// add_action( "admin_print_scripts-{$this->pages['subscriptions']}", \CheckoutEngine::closure()->method( SubscriptionScriptsController::class, 'enqueue' ) );
 		add_action( "admin_print_scripts-{$this->pages['customers']}", \CheckoutEngine::closure()->method( CustomersScriptsController::class, 'enqueue' ) );
-		add_action( "admin_print_scripts-{$this->pages['upgrade-paths']}", \CheckoutEngine::closure()->method( UpgradePathsScriptsController::class, 'enqueue' ) );
+		// add_action( "admin_print_scripts-{$this->pages['upgrade-paths']}", \CheckoutEngine::closure()->method( UpgradePathsScriptsController::class, 'enqueue' ) );
 		add_action( "admin_print_scripts-{$this->pages['settings']}", [ $this, 'settingsPageScripts' ] );
 	}
 
@@ -111,6 +109,8 @@ class AdminMenuPageService {
 				'wp-blocks',
 				'wp-data',
 				'wp-core-data',
+				'ce-core-data',
+				'ce-ui-data',
 			],
 			true
 		);

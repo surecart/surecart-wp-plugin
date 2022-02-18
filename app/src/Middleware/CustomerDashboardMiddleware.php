@@ -6,7 +6,6 @@ use CheckoutEngine\Models\CustomerLink;
 use CheckoutEngine\Models\User;
 use Closure;
 use CheckoutEngineCore\Requests\RequestInterface;
-use CheckoutEngineCore\Middleware\ReadsHandlerMiddlewareTrait;
 
 /**
  * Middleware for customer dashboard.
@@ -36,8 +35,8 @@ class CustomerDashboardMiddleware {
 			return $this->error( new \WP_Error( 'link_expired', 'This link has expired.' ) );
 		}
 
-		$user = User::getUserBy('email', $link->email);
-		if ($user) {
+		$user = User::getUserBy( 'email', $link->email );
+		if ( $user ) {
 			$user->login();
 			return $next( $request );
 		}
@@ -50,11 +49,13 @@ class CustomerDashboardMiddleware {
 		}
 
 		// there's no user with this email or customer id. Let's create one.
-		if( $link->customer ) {
-			$user = User::create([
-				'user_name' => $link->email,
-				'user_email' => $link->email,
-			]);
+		if ( $link->customer ) {
+			$user = User::create(
+				[
+					'user_name'  => $link->email,
+					'user_email' => $link->email,
+				]
+			);
 
 			if ( $user ) {
 				$user->setCustomerId( $link->customer );

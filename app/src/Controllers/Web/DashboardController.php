@@ -11,8 +11,8 @@ class DashboardController {
 	/**
 	 * Show the dashboard.
 	 */
-	public function show() {
-		return \CheckoutEngine::redirect()->to( \CheckoutEngine::pages()->url( 'dashboard' ) );
+	public function show( $request, $view ) {
+		return \CheckoutEngine::view( $view );
 	}
 
 	/**

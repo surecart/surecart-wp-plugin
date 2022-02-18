@@ -58,42 +58,42 @@ class OrdersListTable extends ListTable {
 	 * @global string $comment_status
 	 * @global string $comment_type
 	 */
-	protected function get_views() {
-		$stati = [
-			'paid'    => __( 'Paid', 'checkout_engine' ),
-			'pending' => __( 'Pending', 'checkout_engine' ),
-			'all'     => __( 'All', 'checkout_engine' ),
-		];
+	// protected function get_views() {
+	// $stati = [
+	// 'paid'    => __( 'Paid', 'checkout_engine' ),
+	// 'pending' => __( 'Pending', 'checkout_engine' ),
+	// 'all'     => __( 'All', 'checkout_engine' ),
+	// ];
 
-		$link = \CheckoutEngine::getUrl()->index( 'orders' );
+	// $link = \CheckoutEngine::getUrl()->index( 'orders' );
 
-		foreach ( $stati as $status => $label ) {
-			$current_link_attributes = '';
+	// foreach ( $stati as $status => $label ) {
+	// $current_link_attributes = '';
 
-			if ( ! empty( $_GET['status'] ) ) {
-				if ( $status === $_GET['status'] ) {
-					$current_link_attributes = ' class="current" aria-current="page"';
-				}
-			} elseif ( 'paid' === $status ) {
-				$current_link_attributes = ' class="current" aria-current="page"';
-			}
+	// if ( ! empty( $_GET['status'] ) ) {
+	// if ( $status === $_GET['status'] ) {
+	// $current_link_attributes = ' class="current" aria-current="page"';
+	// }
+	// } elseif ( 'paid' === $status ) {
+	// $current_link_attributes = ' class="current" aria-current="page"';
+	// }
 
-			$link = add_query_arg( 'status', $status, $link );
+	// $link = add_query_arg( 'status', $status, $link );
 
-			$status_links[ $status ] = "<a href='$link'$current_link_attributes>" . $label . '</a>';
-		}
+	// $status_links[ $status ] = "<a href='$link'$current_link_attributes>" . $label . '</a>';
+	// }
 
-		/**
-		 * Filters the comment status links.
-		 *
-		 * @since 2.5.0
-		 * @since 5.1.0 The 'Mine' link was added.
-		 *
-		 * @param string[] $status_links An associative array of fully-formed comment status links. Includes 'All', 'Mine',
-		 *                              'Pending', 'Approved', 'Spam', and 'Trash'.
-		 */
-		return apply_filters( 'comment_status_links', $status_links );
-	}
+	// **
+	// * Filters the comment status links.
+	// *
+	// * @since 2.5.0
+	// * @since 5.1.0 The 'Mine' link was added.
+	// *
+	// * @param string[] $status_links An associative array of fully-formed comment status links. Includes 'All', 'Mine',
+	// *                              'Pending', 'Approved', 'Spam', and 'Trash'.
+	// */
+	// return apply_filters( 'comment_status_links', $status_links );
+	// }
 
 	/**
 	 * Override the parent columns method. Defines the columns to use in your listing table
@@ -153,10 +153,14 @@ class OrdersListTable extends ListTable {
 		return Order::where(
 			[
 				'status' => $this->getStatus(),
-				'limit'  => $this->get_items_per_page( 'orders' ),
-				'page'   => $this->get_pagenum(),
 			]
-		)->paginate();
+		)->with( [ 'charge' ] )
+		->paginate(
+			[
+				'per_page' => $this->get_items_per_page( 'orders' ),
+				'page'     => $this->get_pagenum(),
+			]
+		);
 	}
 
 	/**
@@ -288,6 +292,9 @@ class OrdersListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_status( $order ) {
+		if ( ! empty( $order->charge->fully_refunded ) ) {
+			return '<ce-tag type="danger">' . __( 'Refunded', 'checkout_engine' ) . '</ce-tag>';
+		}
 		return '<ce-order-status-badge status="' . esc_attr( $order->status ) . '"></ce-order-status-badge>';
 	}
 

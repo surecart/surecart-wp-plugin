@@ -17,6 +17,10 @@ class AccountController extends RestController {
 		return Account::find();
 	}
 
+	public function index( \WP_REST_Request $request ) {
+		return Account::find();
+	}
+
 	/**
 	 * Edit account
 	 *

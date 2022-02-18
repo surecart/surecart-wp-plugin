@@ -48,7 +48,6 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 		// enqueue assets on front end and editor.
 		add_action( 'enqueue_block_editor_assets', [ $this, 'editorAssets' ] );
 		add_action( 'wp_enqueue_scripts', [ $this, 'frontAssets' ] );
-
 		add_action( 'admin_enqueue_scripts', [ $this, 'enqueueComponents' ] );
 	}
 
