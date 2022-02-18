@@ -2,10 +2,17 @@
 	"core": null,
 	"plugins": ["../checkout-engine"],
 	"env": {
+		"development": {
+			"config": {
+				"CHECKOUT_ENGINE_APP_URL": "https://staging.surecart.com",
+				"WP_DEBUG": true
+			}
+		},
 		"tests": {
 			"config": {
 				"FS_METHOD": "direct",
 				"WP_DEBUG": true,
+				"CHECKOUT_ENGINE_APP_URL": "https://staging.surecart.com",
 				"CE_TESTING": true
 			}
 		}
