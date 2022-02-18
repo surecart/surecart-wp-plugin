@@ -11,8 +11,6 @@ export const findInput = (el, name) => {
 };
 
 export const handleInputs = (el, order: Order) => {
-  console.log('handle');
-
   // handle our own built-in inputs.
   const names = ['name', 'email'];
 
@@ -24,7 +22,7 @@ export const handleInputs = (el, order: Order) => {
   });
 
   // update metadata.
-  Object.keys(order.metadata).forEach(key => {
+  Object.keys(order?.metadata || {}).forEach(key => {
     const input = findInput(el, key) as any;
     input.value = order.metadata[key];
   });

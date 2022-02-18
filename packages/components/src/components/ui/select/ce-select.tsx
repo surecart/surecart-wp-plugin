@@ -2,6 +2,7 @@ import { Component, Prop, h, State, Watch, Event, EventEmitter, Method, Element 
 import { ChoiceItem } from '../../../types';
 import Fuse from 'fuse.js';
 import { FormSubmitController } from '../../../functions/form-data';
+import { __ } from '@wordpress/i18n';
 
 let id = 0;
 
@@ -295,7 +296,7 @@ export class CeSelectDropdown {
                   </div>
                 );
               })}
-              {this.searchTerm && !this.loading && !this.filteredChoices.length && <div class="select__empty">{'Nothing Found'}</div>}
+              {!this.loading && !this.filteredChoices.length && <div class="select__empty">{__('Nothing Found', 'checkout_engine')}</div>}
               <slot name="suffix"></slot>
             </ce-menu>
           </ce-dropdown>

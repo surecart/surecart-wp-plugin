@@ -71,7 +71,7 @@ export const populateInputs = (el, order: Order) => {
   // });
 
   // update metadata.
-  Object.keys(order.metadata).forEach(key => {
+  Object.keys(order?.metadata || {}).forEach(key => {
     const input = findInput(el, key) as any;
     if (!input || !order.metadata[key]) return;
     input.value = order.metadata[key];

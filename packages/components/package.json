@@ -37,7 +37,7 @@
     "generate": "stencil generate"
   },
   "dependencies": {
-    "@stencil/core": "2.9.0",
+    "@stencil/core": "2.14.0",
     "@stencil/router": "^1.0.1",
     "@stencil/sass": "^1.4.0",
     "@stripe/stripe-js": "^1.21.1",
@@ -63,7 +63,7 @@
     "@babel/plugin-proposal-decorators": "^7.13.15",
     "@babel/preset-env": "^7.13.15",
     "@rollup/plugin-babel": "^5.3.0",
-    "@stencil/react-output-target": "^0.2.1",
+    "@stencil/react-output-target": "^0.3.1",
     "@types/jest": "^26.0.15",
     "@types/node": "^15.0.3",
     "@types/puppeteer": "^5.4.0",

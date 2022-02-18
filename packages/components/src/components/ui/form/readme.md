@@ -44,8 +44,7 @@ Type: `Promise<Record<string, unknown>>`
 
 ### `submit() => Promise<void>`
 
-Submits the form. If all controls are valid, the `ce-submit` event will be emitted and the promise will resolve
-with `true`. If any form control is invalid, the promise will resolve with `false` and no event will be emitted.
+
 
 #### Returns
 

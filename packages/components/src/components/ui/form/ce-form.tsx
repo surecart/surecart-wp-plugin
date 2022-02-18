@@ -44,10 +44,6 @@ export class CEForm {
     this.ceFormChange.emit(serialize(this.formElement));
   }
 
-  /**
-   * Submits the form. If all controls are valid, the `ce-submit` event will be emitted and the promise will resolve
-   * with `true`. If any form control is invalid, the promise will resolve with `false` and no event will be emitted.
-   */
   @Method('submit')
   async submit() {
     return this.formElement.submit();
@@ -64,7 +60,7 @@ export class CEForm {
           }}
           novalidate={this.novalidate}
         >
-          <slot></slot>
+          <slot />
         </form>
       </div>
     );

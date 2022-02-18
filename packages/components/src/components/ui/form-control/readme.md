@@ -36,6 +36,7 @@
  - [ce-address](../ce-address)
  - [ce-choices](../choices)
  - [ce-input](../input)
+ - [ce-select](../select)
 
 ### Depends on
 
@@ -48,6 +49,7 @@ graph TD;
   ce-address --> ce-form-control
   ce-choices --> ce-form-control
   ce-input --> ce-form-control
+  ce-select --> ce-form-control
   style ce-form-control fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

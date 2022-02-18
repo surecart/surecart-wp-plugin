@@ -25,6 +25,10 @@
 
 ## Dependencies
 
+### Used by
+
+ - [ce-form-components-validator](../../providers/form-components-validator)
+
 ### Depends on
 
 - [ce-input](../input)
@@ -45,11 +49,13 @@ graph TD;
   ce-form-control --> ce-tooltip
   ce-select --> ce-menu-label
   ce-select --> ce-menu-item
+  ce-select --> ce-form-control
   ce-select --> ce-dropdown
   ce-select --> ce-icon
   ce-select --> ce-input
   ce-select --> ce-spinner
   ce-select --> ce-menu
+  ce-form-components-validator --> ce-address
   style ce-address fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

@@ -204,6 +204,10 @@ export namespace Components {
          */
         "customer": Customer;
         /**
+          * Should we disable components validation
+         */
+        "disableComponentsValidation": boolean;
+        /**
           * The checkout form id
          */
         "formId": number;
@@ -523,10 +527,14 @@ export namespace Components {
           * Prevent the form from validating inputs before submitting.
          */
         "novalidate": boolean;
-        /**
-          * Submits the form. If all controls are valid, the `ce-submit` event will be emitted and the promise will resolve with `true`. If any form control is invalid, the promise will resolve with `false` and no event will be emitted.
-         */
         "submit": () => Promise<void>;
+    }
+    interface CeFormComponentsValidator {
+        "disabled": boolean;
+        /**
+          * The order
+         */
+        "order": Order;
     }
     interface CeFormControl {
         /**
@@ -1803,6 +1811,12 @@ declare global {
         prototype: HTMLCeFormElement;
         new (): HTMLCeFormElement;
     };
+    interface HTMLCeFormComponentsValidatorElement extends Components.CeFormComponentsValidator, HTMLStencilElement {
+    }
+    var HTMLCeFormComponentsValidatorElement: {
+        prototype: HTMLCeFormComponentsValidatorElement;
+        new (): HTMLCeFormComponentsValidatorElement;
+    };
     interface HTMLCeFormControlElement extends Components.CeFormControl, HTMLStencilElement {
     }
     var HTMLCeFormControlElement: {
@@ -2226,6 +2240,7 @@ declare global {
         "ce-express-payment": HTMLCeExpressPaymentElement;
         "ce-flex": HTMLCeFlexElement;
         "ce-form": HTMLCeFormElement;
+        "ce-form-components-validator": HTMLCeFormComponentsValidatorElement;
         "ce-form-control": HTMLCeFormControlElement;
         "ce-form-row": HTMLCeFormRowElement;
         "ce-form-section": HTMLCeFormSectionElement;
@@ -2494,6 +2509,10 @@ declare namespace LocalJSX {
           * Stores the current customer
          */
         "customer"?: Customer;
+        /**
+          * Should we disable components validation
+         */
+        "disableComponentsValidation"?: boolean;
         /**
           * The checkout form id
          */
@@ -2878,6 +2897,13 @@ declare namespace LocalJSX {
           * Emitted when the form is submitted. This event will not be emitted if any form control inside of it is in an invalid state, unless the form has the `novalidate` attribute. Note that there is never a need to prevent this event, since it doen't send a GET or POST request like native forms. To "prevent" submission, use a conditional around the XHR request you use to submit the form's data with.
          */
         "onCeFormSubmit"?: (event: CustomEvent<void>) => void;
+    }
+    interface CeFormComponentsValidator {
+        "disabled"?: boolean;
+        /**
+          * The order
+         */
+        "order"?: Order;
     }
     interface CeFormControl {
         /**
@@ -4120,6 +4146,7 @@ declare namespace LocalJSX {
         "ce-express-payment": CeExpressPayment;
         "ce-flex": CeFlex;
         "ce-form": CeForm;
+        "ce-form-components-validator": CeFormComponentsValidator;
         "ce-form-control": CeFormControl;
         "ce-form-row": CeFormRow;
         "ce-form-section": CeFormSection;
@@ -4218,6 +4245,7 @@ declare module "@stencil/core" {
             "ce-express-payment": LocalJSX.CeExpressPayment & JSXBase.HTMLAttributes<HTMLCeExpressPaymentElement>;
             "ce-flex": LocalJSX.CeFlex & JSXBase.HTMLAttributes<HTMLCeFlexElement>;
             "ce-form": LocalJSX.CeForm & JSXBase.HTMLAttributes<HTMLCeFormElement>;
+            "ce-form-components-validator": LocalJSX.CeFormComponentsValidator & JSXBase.HTMLAttributes<HTMLCeFormComponentsValidatorElement>;
             "ce-form-control": LocalJSX.CeFormControl & JSXBase.HTMLAttributes<HTMLCeFormControlElement>;
             "ce-form-row": LocalJSX.CeFormRow & JSXBase.HTMLAttributes<HTMLCeFormRowElement>;
             "ce-form-section": LocalJSX.CeFormSection & JSXBase.HTMLAttributes<HTMLCeFormSectionElement>;

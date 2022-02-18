@@ -48,6 +48,9 @@ export class CECheckout {
   /** Translation object. */
   @Prop() i18n: Object;
 
+  /** Should we disable components validation */
+  @Prop() disableComponentsValidation: boolean;
+
   /** Stores fetched prices for use throughout component.  */
   @State() pricesEntities: Prices = {};
 
@@ -62,6 +65,8 @@ export class CECheckout {
 
   /** Error to display. */
   @State() error: ResponseError | null;
+
+  @State() missingAddress: boolean;
 
   /** Payment mode inside individual payment method (i.e. Payment Buttons) */
   @State() paymentMethod: 'stripe-payment-request' | null;
@@ -224,21 +229,23 @@ export class CECheckout {
           <span slot="title">{this.errorMessage()}</span>
         </ce-alert>
         <Universe.Provider state={this.state()}>
-          <ce-session-provider
-            order={this.order}
-            prices={this.prices}
-            persist={this.persistSession}
-            mode={this.mode}
-            form-id={this.formId}
-            group-id={this.el.id}
-            currency-code={this.currencyCode}
-            onCeUpdateOrderState={e => (this.order = e.detail)}
-            onCeError={e => {
-              this.error = e.detail as ResponseError;
-            }}
-          >
-            <slot />
-          </ce-session-provider>
+          <ce-form-components-validator order={this.order} disabled={this.disableComponentsValidation}>
+            <ce-session-provider
+              order={this.order}
+              prices={this.prices}
+              persist={this.persistSession}
+              mode={this.mode}
+              form-id={this.formId}
+              group-id={this.el.id}
+              currency-code={this.currencyCode}
+              onCeUpdateOrderState={e => (this.order = e.detail)}
+              onCeError={e => {
+                this.error = e.detail as ResponseError;
+              }}
+            >
+              <slot />
+            </ce-session-provider>
+          </ce-form-components-validator>
           {this.state().busy && <ce-block-ui z-index={9}></ce-block-ui>}
         </Universe.Provider>
       </div>

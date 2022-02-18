@@ -32,16 +32,6 @@
 
 ## Methods
 
-### `reportValidity() => Promise<boolean>`
-
-Checks for validity and shows the browser's validation message if the control is invalid.
-
-#### Returns
-
-Type: `Promise<boolean>`
-
-
-
 ### `setCustomValidity(message: string) => Promise<void>`
 
 Sets a custom validation message. If `message` is not empty, the field will be considered invalid.

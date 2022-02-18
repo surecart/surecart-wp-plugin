@@ -13,7 +13,7 @@ export class CeLineItemTax {
   @Prop() loading: boolean;
 
   renderLabel() {
-    if (this?.order?.tax_calculation_status === 'calculated') {
+    if (this?.order?.tax_status === 'calculated') {
       return this?.order?.tax_label;
     }
     // translators: %s: tax label

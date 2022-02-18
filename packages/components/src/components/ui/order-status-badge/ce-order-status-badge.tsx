@@ -23,7 +23,7 @@ export class CeOrderStatusBadge {
   getType() {
     switch (this.status) {
       case 'draft':
-        return 'text';
+        return 'info';
       case 'finalized':
         return 'warning';
       case 'completed':

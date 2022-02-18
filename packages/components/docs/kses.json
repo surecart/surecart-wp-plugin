@@ -101,6 +101,7 @@
     "coupon": true,
     "currency-code": true,
     "customer": true,
+    "disable-components-validation": true,
     "form-id": true,
     "i18n": true,
     "mode": true,
@@ -283,6 +284,14 @@
   },
   "ce-form": {
     "novalidate": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-form-components-validator": {
+    "disabled": true,
+    "order": true,
     "style": true,
     "id": true,
     "class": true,
