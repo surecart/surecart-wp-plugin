@@ -69,7 +69,7 @@ ce-button-group > ce-tooltip > ce-button.ce-focus {
   --ce-color-gray-50: #f9fafb;
   --ce-color-gray-100: #f3f4f6;
   --ce-color-gray-200: #e5e7eb;
-  --ce-color-gray-300: #d1d5db;
+  --ce-color-gray-300: #dce0e6;
   --ce-color-gray-400: #9ca3af;
   --ce-color-gray-500: #6b7280;
   --ce-color-gray-600: #4b5563;
@@ -197,6 +197,7 @@ ce-button-group > ce-tooltip > ce-button.ce-focus {
   --ce-button-font-size-small: var(--ce-font-size-x-small);
   --ce-button-font-size-medium: var(--ce-font-size-medium);
   --ce-button-font-size-large: var(--ce-font-size-large);
+  --ce-column-spacing: var(--ce-spacing-xxxx-large);
   --ce-form-row-spacing: var(--ce-spacing-small);
   --ce-form-row-spacing-large: var(--ce-spacing-xx-large);
   --ce-form-title-font-weight: var(--ce-font-weight-semibold);
