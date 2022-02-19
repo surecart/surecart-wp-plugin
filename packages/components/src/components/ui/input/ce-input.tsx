@@ -43,7 +43,7 @@ export class CEInput {
   @Prop({ reflect: true }) size: 'small' | 'medium' | 'large' = 'medium';
 
   /** The input's name attribute. */
-  @Prop() name: string;
+  @Prop({ reflect: true }) name: string;
 
   /** The input's value attribute. */
   @Prop({ mutable: true, reflect: true }) value = '';
