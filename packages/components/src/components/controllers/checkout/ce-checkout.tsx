@@ -239,9 +239,7 @@ export class CECheckout {
               group-id={this.el.id}
               currency-code={this.currencyCode}
               onCeUpdateOrderState={e => (this.order = e.detail)}
-              onCeError={e => {
-                this.error = e.detail as ResponseError;
-              }}
+              onCeError={e => (this.error = e.detail as ResponseError)}
             >
               <slot />
             </ce-session-provider>
