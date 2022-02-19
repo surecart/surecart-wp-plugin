@@ -264,6 +264,7 @@
     "slot": true
   },
   "ce-express-payment": {
+    "debug": true,
     "divider-text": true,
     "form-id": true,
     "order": true,
@@ -833,6 +834,7 @@
     "amount": true,
     "country": true,
     "currency-code": true,
+    "debug": true,
     "error": true,
     "form-id": true,
     "label": true,

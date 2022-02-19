@@ -522,6 +522,7 @@ export namespace Components {
         "value": string;
     }
     interface CeExpressPayment {
+        "debug": boolean;
         "dividerText": string;
         "formId": number | string;
         "order": Order;
@@ -1483,6 +1484,10 @@ export namespace Components {
           * Currency
          */
         "currencyCode": string;
+        /**
+          * Is this in debug mode.
+         */
+        "debug": boolean;
         "error": ResponseError | null;
         /**
           * This is required to validate the form on the server
@@ -2904,6 +2909,7 @@ declare namespace LocalJSX {
         "value"?: string;
     }
     interface CeExpressPayment {
+        "debug"?: boolean;
         "dividerText"?: string;
         "formId"?: number | string;
         "order"?: Order;
@@ -3947,6 +3953,10 @@ declare namespace LocalJSX {
           * Currency
          */
         "currencyCode"?: string;
+        /**
+          * Is this in debug mode.
+         */
+        "debug"?: boolean;
         "error"?: ResponseError | null;
         /**
           * This is required to validate the form on the server
@@ -3959,7 +3969,7 @@ declare namespace LocalJSX {
         "onCeFormSubmit"?: (event: CustomEvent<any>) => void;
         "onCePaid"?: (event: CustomEvent<void>) => void;
         "onCePayError"?: (event: CustomEvent<any>) => void;
-        "onCePaymentRequestLoaded"?: (event: CustomEvent<void>) => void;
+        "onCePaymentRequestLoaded"?: (event: CustomEvent<boolean>) => void;
         "onCeSetState"?: (event: CustomEvent<string>) => void;
         /**
           * Checkout Session

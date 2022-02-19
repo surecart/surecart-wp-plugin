@@ -1,3 +1,7 @@
+<!-- wp:checkout-engine/express-payment -->
+<ce-express-payment divider-text="or" class="wp-block-checkout-engine-express-payment"></ce-express-payment>
+<!-- /wp:checkout-engine/express-payment -->
+
 <!-- wp:checkout-engine/columns -->
 <ce-columns class="wp-block-checkout-engine-columns"><!-- wp:checkout-engine/column -->
 <ce-column class="wp-block-checkout-engine-column"><!-- wp:checkout-engine/name -->
@@ -12,12 +16,12 @@
 <!-- /wp:checkout-engine/column --></ce-columns>
 <!-- /wp:checkout-engine/columns -->
 
-<!-- wp:checkout-engine/payment {"secure_notice":"This is a secure, encrypted payment","className":"wp-block-checkout-engine-payment"} -->
-<ce-payment label="Payment" secure-notice="This is a secure, encrypted payment"></ce-payment>
+<!-- wp:checkout-engine/payment {"secure_notice":"This is a secure, encrypted payment"} -->
+<ce-payment label="Payment" secure-notice="This is a secure, encrypted payment" class="wp-block-checkout-engine-payment"></ce-payment>
 <!-- /wp:checkout-engine/payment -->
 
-<!-- wp:checkout-engine/totals {"collapsible":true,"collapsed":false,"className":"wp-block-checkout-engine-totals"} -->
-<ce-order-summary collapsible="1"><!-- wp:checkout-engine/divider -->
+<!-- wp:checkout-engine/totals {"collapsible":true,"collapsed":false} -->
+<ce-order-summary collapsible="1" class="wp-block-checkout-engine-totals"><!-- wp:checkout-engine/divider -->
 <ce-divider></ce-divider>
 <!-- /wp:checkout-engine/divider -->
 
@@ -50,6 +54,6 @@
 <!-- /wp:checkout-engine/total --></ce-order-summary>
 <!-- /wp:checkout-engine/totals -->
 
-<!-- wp:checkout-engine/submit {"show_total":true,"full":true,"className":"wp-block-checkout-engine-submit"} -->
-<ce-button submit="1" type="primary" full="1" size="large"><svg slot="prefix" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewbox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>Purchase<span> <ce-total></ce-total></span></ce-button>
+<!-- wp:checkout-engine/submit {"show_total":true,"full":true} -->
+<ce-button submit="1" type="primary" full="1" size="large" class="wp-block-checkout-engine-submit"><svg slot="prefix" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewbox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>Purchase<span> <ce-total></ce-total></span></ce-button>
 <!-- /wp:checkout-engine/submit -->

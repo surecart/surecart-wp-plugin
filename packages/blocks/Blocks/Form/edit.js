@@ -107,12 +107,34 @@ export default function edit({ clientId, attributes, setAttributes }) {
 								options={[
 									{
 										value: null,
-										label: 'Select a Template',
+										label: __(
+											'Select a Template',
+											'checkout_engine'
+										),
 										disabled: true,
 									},
-									{ value: 'default', label: 'Default' },
-									{ value: 'sections', label: 'Sections' },
-									{ value: 'simple', label: 'Simple' },
+									{
+										value: 'default',
+										label: __('Default', 'checkout_engine'),
+									},
+									{
+										value: 'sections',
+										label: __(
+											'Sections',
+											'checkout_engine'
+										),
+									},
+									{
+										value: 'two-column',
+										label: __(
+											'Two Column',
+											'checkout_engine'
+										),
+									},
+									{
+										value: 'simple',
+										label: __('Simple', 'checkout_engine'),
+									},
 								]}
 							/>
 							<Button isPrimary onClick={changeTemplate}>
@@ -142,7 +164,7 @@ export default function edit({ clientId, attributes, setAttributes }) {
 
 			<div
 				css={css`
-					max-width: var(--ast-content-width-size, 910px);
+					max-width: var(--ast-content-width-size);
 					margin-left: auto !important;
 					margin-right: auto !important;
 				`}
@@ -260,6 +282,7 @@ export default function edit({ clientId, attributes, setAttributes }) {
 						margin-top: 2em;
 						font-size: ${font_size}px;
 					`}
+					disableComponentsValidation={true}
 					persistSession={false}
 					alignment={align}
 					className={className}
@@ -268,7 +291,9 @@ export default function edit({ clientId, attributes, setAttributes }) {
 				>
 					<div
 						css={css`
-							* > * > .wp-block:not(ce-columns):not(ce-column) {
+							*
+								> *
+								> .wp-block:not(ce-columns):not(ce-column):not(:last-child) {
 								margin-bottom: ${gap} !important;
 							}
 						`}

@@ -47,9 +47,13 @@ class Block extends BaseBlock {
 		$seen_forms[ $attributes['id'] ] = true;
 
 		global $ce_form_id;
-		$ce_form_id = $attributes['id'];
-		$result     = do_blocks( $form->post_content );
+		$ce_form_id         = $attributes['id'];
+		$wrapper_attributes = get_block_wrapper_attributes( [ 'class' => $attributes['textalign'] ?? '' ] );
+		$result             = do_blocks( $form->post_content );
 		unset( $seen_forms[ $attributes['id'] ] );
-		return "<div class='alignwide'>" . $result . '</div>';
+		return sprintf(
+			'<div %1$s>' . $result . '</div>',
+			$wrapper_attributes,
+		);
 	}
 }

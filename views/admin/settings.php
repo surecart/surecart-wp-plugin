@@ -1,3 +1,5 @@
+<!-- refresh this page every 15 minutes to prevent session from expiring -->
+<meta http-equiv="refresh" content="900" >
 
 <style>
 	#wpbody-content, #wpcontent {

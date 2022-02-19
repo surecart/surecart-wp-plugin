@@ -1,0 +1,75 @@
+<!-- wp:checkout-engine/columns {"backgroundColor":"background"} -->
+<ce-columns class="wp-block-checkout-engine-columns has-background-background-color has-background"><!-- wp:checkout-engine/column {"verticalAlignment":"top","sticky":true,"stickyOffset":"50px"} -->
+	<ce-column class="wp-block-checkout-engine-column is-vertically-aligned-top is-sticky" style="top:50px" stickyoffset="50px"><!-- wp:checkout-engine/heading {"title":"Order Summary"} -->
+	<ce-heading>Order Summary<span slot="description"></span><span slot="end"></span></ce-heading>
+	<!-- /wp:checkout-engine/heading -->
+
+	<!-- wp:checkout-engine/totals -->
+	<ce-order-summary class="wp-block-checkout-engine-totals"><!-- wp:checkout-engine/divider -->
+	<ce-divider></ce-divider>
+	<!-- /wp:checkout-engine/divider -->
+
+	<!-- wp:checkout-engine/line-items -->
+	<ce-line-items removable="1" editable="1" class="wp-block-checkout-engine-line-items"></ce-line-items>
+	<!-- /wp:checkout-engine/line-items -->
+
+	<!-- wp:checkout-engine/divider -->
+	<ce-divider></ce-divider>
+	<!-- /wp:checkout-engine/divider -->
+
+	<!-- wp:checkout-engine/subtotal -->
+	<ce-line-item-total class="ce-subtotal" total="subtotal" class="wp-block-checkout-engine-subtotal"><span slot="description">Subtotal</span></ce-line-item-total>
+	<!-- /wp:checkout-engine/subtotal -->
+
+	<!-- wp:checkout-engine/coupon {"text":"Add Coupon Code","button_text":"Apply Coupon"} -->
+	<ce-coupon-form label="Add Coupon Code">Apply Coupon</ce-coupon-form>
+	<!-- /wp:checkout-engine/coupon -->
+
+	<!-- wp:checkout-engine/tax-line-item -->
+	<ce-line-item-tax class="wp-block-checkout-engine-tax-line-item"></ce-line-item-tax>
+	<!-- /wp:checkout-engine/tax-line-item -->
+
+	<!-- wp:checkout-engine/divider -->
+	<ce-divider></ce-divider>
+	<!-- /wp:checkout-engine/divider -->
+
+	<!-- wp:checkout-engine/total -->
+	<ce-line-item-total class="ce-line-item-total" total="total" size="large" show-currency="1" class="wp-block-checkout-engine-total"><span slot="description">Total</span><span slot="subscription-title">Total Due Today</span></ce-line-item-total>
+	<!-- /wp:checkout-engine/total --></ce-order-summary>
+	<!-- /wp:checkout-engine/totals --></ce-column>
+	<!-- /wp:checkout-engine/column -->
+
+	<!-- wp:checkout-engine/column {"style":{"spacing":{"padding":{"top":"0px","right":"0px","bottom":"0px","left":"0px"}}}} -->
+	<ce-column class="wp-block-checkout-engine-column" style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px"><!-- wp:checkout-engine/express-payment -->
+	<ce-express-payment divider-text="or" class="wp-block-checkout-engine-express-payment"></ce-express-payment>
+	<!-- /wp:checkout-engine/express-payment -->
+
+	<!-- wp:checkout-engine/heading {"title":"Contact Information"} -->
+	<ce-heading>Contact Information<span slot="description"></span><span slot="end"></span></ce-heading>
+	<!-- /wp:checkout-engine/heading -->
+
+	<!-- wp:checkout-engine/email {"label":"Email Address"} -->
+	<ce-email label="Email Address" autocomplete="email" inputmode="email" required class="wp-block-checkout-engine-email"></ce-email>
+	<!-- /wp:checkout-engine/email -->
+
+	<!-- wp:checkout-engine/password -->
+	<ce-input label="Password" placeholder="" size="medium" type="password" name="password" value="" class="wp-block-checkout-engine-password"></ce-input>
+	<!-- /wp:checkout-engine/password -->
+
+	<!-- wp:checkout-engine/address -->
+	<ce-address label="Address"></ce-address>
+	<!-- /wp:checkout-engine/address -->
+
+	<!-- wp:checkout-engine/payment {"secure_notice":"This is a secure, encrypted payment"} -->
+	<ce-payment label="Payment" secure-notice="This is a secure, encrypted payment" class="wp-block-checkout-engine-payment"></ce-payment>
+	<!-- /wp:checkout-engine/payment -->
+
+	<!-- wp:checkout-engine/switch {"required":true,"label":"I agree to the purchase terms.","description":"You can find these on our terms page."} -->
+	<ce-switch name="switch" required class="wp-block-checkout-engine-switch">I agree to the purchase terms.<span slot="description">You can find these on our terms page.</span></ce-switch>
+	<!-- /wp:checkout-engine/switch -->
+
+	<!-- wp:checkout-engine/submit {"show_total":true,"full":true} -->
+	<ce-button submit="1" type="primary" full="1" size="large" class="wp-block-checkout-engine-submit"><svg slot="prefix" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewbox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>Purchase<span> <ce-total></ce-total></span></ce-button>
+	<!-- /wp:checkout-engine/submit --></ce-column>
+	<!-- /wp:checkout-engine/column --></ce-columns>
+	<!-- /wp:checkout-engine/columns -->

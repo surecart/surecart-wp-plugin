@@ -26,10 +26,8 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function getStyle( $attributes ) {
-		$style = '';
-		if ( ! empty( $attributes['gap'] ) ) {
-			$style .= '--ce-form-row-spacing: ' . $attributes['gap'] . ';';
-		}
+		$style  = '';
+		$style .= '--ce-form-row-spacing: ' . ( $attributes['gap'] ?? '25' ) . ';';
 		return $style;
 	}
 

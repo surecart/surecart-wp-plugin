@@ -1,6 +1,10 @@
 ce-form form > * {
   margin-bottom: var(--ce-form-row-spacing, 0.75em);
   display: block;
+
+  &.wp-block-spacer {
+    margin-bottom: 0;
+  }
 }
 
 ce-form .wp-block-columns .wp-block-column {

@@ -165,6 +165,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /*
 |--------------------------------------------------------------------------
+| Connection
+|--------------------------------------------------------------------------
+*/
+\CheckoutEngine::route()
+->get()
+->where( 'admin', 'ce-connection' )
+->middleware( 'user.can:manage_options' )
+->group(
+	function() {
+		\CheckoutEngine::route()->get()->name( 'connection.show' )->handle( 'Connection@show' );
+		\CheckoutEngine::route()->post()->middleware( 'nonce:update_connection' )->name( 'connection.save' )->handle( 'Connection@save' );
+	}
+);
+
+/*
+|--------------------------------------------------------------------------
 | Webhooks
 |--------------------------------------------------------------------------
 */

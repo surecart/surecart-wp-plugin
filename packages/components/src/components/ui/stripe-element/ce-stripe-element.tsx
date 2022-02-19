@@ -1,5 +1,5 @@
 import { Order } from '../../../types';
-import { Component, Prop, Element, State, Watch, h, EventEmitter, Event } from '@stencil/core';
+import { Component, Prop, Element, State, Watch, h, EventEmitter, Event, Fragment } from '@stencil/core';
 import { loadStripe } from '@stripe/stripe-js/pure';
 
 @Component({
@@ -84,6 +84,7 @@ export class CEStripeElement {
         response = await this.confirmCardPayment(val?.payment_intent?.processor_data?.stripe?.client_secret);
       }
       if (response?.error) {
+        this.error = response.error.message;
         throw response.error;
       }
       // paid
@@ -158,9 +159,22 @@ export class CEStripeElement {
 
   render() {
     return (
-      <ce-input error-message={this.error} class="ce-stripe" size={this.size} label={this.label} hasFocus={this.hasFocus}>
-        <div ref={el => (this.container = el as HTMLDivElement)}></div>
-      </ce-input>
+      <Fragment>
+        <ce-input class="ce-stripe" size={this.size} label={this.label} hasFocus={this.hasFocus}>
+          <div ref={el => (this.container = el as HTMLDivElement)}></div>
+        </ce-input>
+        {this.error && (
+          <ce-text
+            style={{
+              'color': 'var(--ce-color-danger-500)',
+              '--font-size': 'var(--ce-font-size-small)',
+              'marginTop': '0.5em',
+            }}
+          >
+            {this.error}
+          </ce-text>
+        )}
+      </Fragment>
     );
   }
 }

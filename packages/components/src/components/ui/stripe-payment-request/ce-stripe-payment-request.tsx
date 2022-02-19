@@ -49,17 +49,21 @@ export class CeStripePaymentRequest {
 
   @Prop() paymentMethod: string;
 
+  /** Is this in debug mode. */
+  @Prop() debug: boolean = false;
+
   /** This is required to validate the form on the server */
   @Prop() formId: number | string;
 
   /** Has this loaded */
   @State() loaded: boolean = false;
+  @State() debugError: string;
 
   @Event() ceFormSubmit: EventEmitter<any>;
   @Event() cePaid: EventEmitter<void>;
   @Event() cePayError: EventEmitter<any>;
   @Event() ceSetState: EventEmitter<string>;
-  @Event() cePaymentRequestLoaded: EventEmitter<void>;
+  @Event() cePaymentRequestLoaded: EventEmitter<boolean>;
 
   private pendingEvent: any;
 
@@ -96,7 +100,7 @@ export class CeStripePaymentRequest {
 
   @Watch('loaded')
   handleLoaded() {
-    this.cePaymentRequestLoaded.emit();
+    this.cePaymentRequestLoaded.emit(true);
   }
 
   @Watch('error')
@@ -144,7 +148,6 @@ export class CeStripePaymentRequest {
 
   componentDidLoad() {
     if (!this.elements) {
-      console.log('no elements');
       return;
     }
 
@@ -165,6 +168,17 @@ export class CeStripePaymentRequest {
       .canMakePayment()
       .then(result => {
         if (!result) {
+          if (location.protocol !== 'https:') {
+            if (this.debug) {
+              this.debugError = __('You must serve this page over HTTPS to display express payment buttons.', 'checkout_engine');
+            }
+            console.log('SSL needed to display payment buttons.');
+          } else {
+            if (this.debug) {
+              this.debugError = __('No payment methods available.', 'checkout_engine');
+            }
+            console.log('No payment methods available.');
+          }
           return;
         }
         paymentRequestElement.mount(this.request);
@@ -285,8 +299,18 @@ export class CeStripePaymentRequest {
   }
 
   render() {
+    console.log(this.debug);
     return (
       <div class={{ 'request': true, 'request--loaded': this.loaded }}>
+        {this.debug && this.debugError && (
+          <div>
+            <slot name="debug-fallback" />
+            <ce-alert type="info" open>
+              <span slot="title">{__('Express Payment', 'checkout_engine')}</span>
+              {this.debugError}
+            </ce-alert>
+          </div>
+        )}
         <div class="ce-payment-request-button" part="button" ref={el => (this.request = el as HTMLDivElement)}></div>
       </div>
     );

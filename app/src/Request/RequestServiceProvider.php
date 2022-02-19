@@ -2,6 +2,7 @@
 
 namespace CheckoutEngine\Request;
 
+use CheckoutEngine\Models\ApiToken;
 use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
 
 /**
@@ -17,9 +18,7 @@ class RequestServiceProvider implements ServiceProviderInterface {
 		$app = $container[ CHECKOUT_ENGINE_APPLICATION_KEY ];
 
 		$container['requests'] = function () {
-			// TODO: get this from database.
-			$token = 'gBucSD8TkHpDC3WmRedtao8o';
-			return new RequestService( $token );
+			return new RequestService( ApiToken::get() );
 		};
 
 		$app->alias( 'requests', 'requests' );

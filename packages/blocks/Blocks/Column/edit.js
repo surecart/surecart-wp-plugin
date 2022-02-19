@@ -45,6 +45,7 @@ function ColumnEdit({
 
 	const classes = classnames('block-core-columns', {
 		[`is-vertically-aligned-${verticalAlignment}`]: verticalAlignment,
+		[`is-sticky`]: sticky,
 	});
 
 	const units = useCustomUnits({
@@ -87,7 +88,12 @@ function ColumnEdit({
 	const widthWithUnit = Number.isFinite(width) ? width + '%' : width;
 	const blockProps = useBlockProps({
 		className: classes,
-		style: widthWithUnit ? { flexBasis: widthWithUnit } : undefined,
+		sticky,
+		stickyOffset,
+		style: {
+			...(widthWithUnit ? { flexBasis: widthWithUnit } : undefined),
+			top: stickyOffset,
+		},
 	});
 
 	const columnsCount = columnsIds.length;

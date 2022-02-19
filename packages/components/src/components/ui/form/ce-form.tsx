@@ -3,7 +3,7 @@ import { serialize } from '../../../functions/form';
 @Component({
   tag: 'ce-form',
   styleUrl: 'ce-form.scss',
-  scoped: true,
+  shadow: false,
 })
 export class CEForm {
   @Element() form: HTMLElement;

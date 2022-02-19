@@ -1,5 +1,5 @@
 import { Order } from '../../../types';
-import { Component, h, Listen, Prop, State } from '@stencil/core';
+import { Component, Fragment, h, Listen, Prop, State } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
 
 @Component({
@@ -12,6 +12,7 @@ export class CeExpressPayment {
   @Prop() formId: number | string;
   @Prop() order: Order;
   @Prop() dividerText: string;
+  @Prop() debug: boolean;
 
   @State() hasPaymentOptions: boolean;
 
@@ -28,6 +29,7 @@ export class CeExpressPayment {
     return (
       <ce-stripe-payment-request
         formId={this.formId}
+        debug={this.debug}
         order={this.order}
         stripeAccountId={this?.order?.processor_data?.stripe?.account_id}
         publishableKey={this?.order?.processor_data?.stripe?.publishable_key}
@@ -37,10 +39,10 @@ export class CeExpressPayment {
 
   render() {
     return (
-      <div>
+      <Fragment>
         {this.renderStripePaymentRequest()}
-        {this.hasPaymentOptions && <ce-divider style={{ '--spacing': 'var(--ce-form-row-spacing' }}>{this.dividerText}</ce-divider>}
-      </div>
+        {(this.hasPaymentOptions || this.debug) && <ce-divider style={{ '--spacing': 'var(--ce-form-row-spacing' }}>{this.dividerText}</ce-divider>}
+      </Fragment>
     );
   }
 }

@@ -15,7 +15,7 @@ export class CePriceChoices {
   @Prop() columns: number = 1;
 
   /** Required by default */
-  @Prop() required: boolean = true;
+  @Prop() required: boolean = false;
 
   /** Toggle line item event */
   @Event() ceRemoveLineItem: EventEmitter<LineItemData>;

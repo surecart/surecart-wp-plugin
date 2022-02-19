@@ -8,11 +8,14 @@ import { Disabled } from '@wordpress/components';
  */
 import { __ } from '@wordpress/i18n';
 
-export default ( { attributes } ) => {
+export default ({ attributes }) => {
 	const { divider_text } = attributes;
 	return (
 		<Disabled>
-			<CeExpressPayment dividerText={divider_text}></CeExpressPayment>
+			<CeExpressPayment
+				dividerText={divider_text}
+				debug
+			></CeExpressPayment>
 		</Disabled>
 	);
 };

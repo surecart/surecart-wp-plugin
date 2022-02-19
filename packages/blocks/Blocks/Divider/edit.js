@@ -11,26 +11,30 @@ import { useBlockProps } from '@wordpress/block-editor';
  */
 import { CeDivider } from '@checkout-engine/components-react';
 
-export default ( { attributes, setAttributes } ) => {
+export default ({ attributes, setAttributes }) => {
 	const { text } = attributes;
 
-	const blockProps = useBlockProps();
+	const blockProps = useBlockProps({
+		style: {
+			padding: '10px 0',
+		},
+	});
 
 	return (
 		<Fragment>
 			<InspectorControls>
-				<PanelBody title={ __( 'Attributes', 'checkout-engine' ) }>
+				<PanelBody title={__('Attributes', 'checkout-engine')}>
 					<PanelRow>
 						<TextControl
-							label={ __( 'Text', 'checkout-engine' ) }
-							value={ text }
-							onChange={ ( text ) => setAttributes( { text } ) }
+							label={__('Text', 'checkout-engine')}
+							value={text}
+							onChange={(text) => setAttributes({ text })}
 						/>
 					</PanelRow>
 				</PanelBody>
 			</InspectorControls>
 
-			<CeDivider { ...blockProps }>{ text }</CeDivider>
+			<CeDivider {...blockProps}>{text}</CeDivider>
 		</Fragment>
 	);
 };

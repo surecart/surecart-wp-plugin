@@ -19,13 +19,16 @@ class NonceMiddleware {
 	 * @return function
 	 */
 	public function handle( RequestInterface $request, Closure $next, $nonce_name ) {
-		if ( ! $request->query( 'nonce' ) ) {
+		// get nonce from body or query.
+		$nonce = $request->query( 'nonce' ) ?? $request->body( 'nonce' );
+
+		if ( empty( $nonce ) ) {
 			wp_die( esc_html__( 'Something is wrong with the provided link.', 'checkout_engine' ) );
 			exit;
 		}
 
 		// check nonce.
-		if ( ! wp_verify_nonce( $request->query( 'nonce' ), $nonce_name ) ) {
+		if ( ! wp_verify_nonce( $nonce, $nonce_name ) ) {
 			wp_die( esc_html__( 'Your session expired - please try again.', 'checkout_engine' ) );
 			exit;
 		}

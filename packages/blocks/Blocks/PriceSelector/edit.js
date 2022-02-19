@@ -123,13 +123,8 @@ export default ({ attributes, setAttributes, clientId, isSelected }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<div>
-				<CePriceChoices
-					{...blockProps}
-					label={label}
-					type={type}
-					columns={columns}
-				>
+			<div {...blockProps}>
+				<CePriceChoices label={label} type={type} columns={columns}>
 					<div {...innerBlocksProps} />
 				</CePriceChoices>
 			</div>
