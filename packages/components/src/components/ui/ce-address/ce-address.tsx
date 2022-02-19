@@ -1,22 +1,31 @@
 import { Component, h, Prop, State, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
-
 import { hasState, hasCity, hasPostal, countryChoices } from '../../../functions/address';
 import { Address } from '../../../types';
 
 @Component({
   tag: 'ce-address',
   styleUrl: 'ce-address.scss',
-  shadow: false,
+  scoped: true,
 })
 export class CeAddress {
+  /** Customer shipping address. */
   @Prop() customerShippingAddress: Address = {};
+
+  /** The order's shipping address. */
   @Prop() shippingAddress: Address = {};
-  @Prop() loading: boolean;
+
+  /** Is this loading?  */
+  @Prop() loading: boolean = true;
+
+  /** The label for the field. */
   @Prop() label: string;
+
+  /** Is this required? */
   @Prop() required: boolean = true;
 
+  /** Internal state. */
   @State() state: Partial<Address> = {
     country: '',
     city: '',
@@ -25,11 +34,20 @@ export class CeAddress {
     postal_code: '',
     state: '',
   };
+
+  /** Should we show the city field? */
   @State() showCity: boolean = true;
+
+  /** Should we show the postal field? */
   @State() showPostal: boolean = true;
+
+  /** Holds the regions for a given country. */
   @State() regions: Array<{ value: string; label: string }>;
+
+  /** Holds our country choices. */
   @State() countryChoices: Array<{ value: string; label: string }> = countryChoices;
 
+  /** When the state changes, we want to update city and postal fields. */
   @Watch('state')
   handleCountryChange(val, old) {
     this.setRegions();
@@ -43,6 +61,7 @@ export class CeAddress {
     }
   }
 
+  /** When the shipping address changes, we want to update the internal state to match. */
   @Watch('shippingAddress')
   handleShippingChange(val, old) {
     // update local state if changes.
@@ -54,6 +73,7 @@ export class CeAddress {
     });
   }
 
+  /** When the customer shipping address changes, we want to update the internal state to match. */
   @Watch('customerShippingAddress')
   handleCustomerShippingChange(val, old) {
     if (!Object.keys(this.shippingAddress || {}).length) {
@@ -67,6 +87,7 @@ export class CeAddress {
     }
   }
 
+  /** Set the regions based on the country. */
   setRegions() {
     if (hasState(this.state.country)) {
       import('./countries.json').then(module => {
@@ -76,6 +97,8 @@ export class CeAddress {
       this.regions = [];
     }
   }
+
+  /** Render the city and postal code fields. */
   renderCityPostal() {
     if (!this.showCity) {
       return (
@@ -129,6 +152,7 @@ export class CeAddress {
   }
 
   componentWillLoad() {
+    // if we have a shipping address, update the state.
     if (this.shippingAddress) {
       this.state = {
         ...(this.shippingAddress.state ? { state: this.shippingAddress.state } : {}),
@@ -138,30 +162,20 @@ export class CeAddress {
       };
     }
     if (!this.state.country) {
-      const country = navigator.language.slice(-2);
-      if (country) {
-        this.state.country = country;
-        this.setRegions();
-      }
+      this.setRegionByBrowserLanguage();
+    }
+  }
+
+  /** Set the region by browser language if not set. */
+  setRegionByBrowserLanguage() {
+    const country = navigator.language.slice(-2);
+    if (country) {
+      this.state.country = country;
+      this.setRegions();
     }
   }
 
   render() {
-    if (this.loading) {
-      return (
-        <div class="ce-address">
-          <ce-form-control label={this.label} class="ce-address__control ce-address--loading" part="control">
-            <ce-spacing style={{ '--spacing': 'var(--ce-spacing-large)' }}>
-              <ce-skeleton style={{ width: '50%' }}></ce-skeleton>
-              <ce-skeleton style={{ width: '80%' }}></ce-skeleton>
-              <ce-skeleton style={{ width: '40%' }}></ce-skeleton>
-              <ce-skeleton style={{ width: '20%' }}></ce-skeleton>
-            </ce-spacing>
-          </ce-form-control>
-        </div>
-      );
-    }
-
     return (
       <div class="ce-address">
         <ce-form-control label={this.label} class="ce-address__control" part="control" required={this.required}>
