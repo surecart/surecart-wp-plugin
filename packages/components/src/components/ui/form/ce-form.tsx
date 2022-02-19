@@ -3,7 +3,7 @@ import { serialize } from '../../../functions/form';
 @Component({
   tag: 'ce-form',
   styleUrl: 'ce-form.scss',
-  shadow: false,
+  scoped: true,
 })
 export class CEForm {
   @Element() form: HTMLElement;
@@ -55,6 +55,7 @@ export class CEForm {
         <form
           ref={el => (this.formElement = el as HTMLFormElement)}
           onSubmit={e => {
+            console.log('submit');
             e.preventDefault();
             this.ceFormSubmit.emit();
           }}
