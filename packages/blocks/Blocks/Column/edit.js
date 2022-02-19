@@ -20,6 +20,7 @@ import {
 import {
 	__experimentalUseCustomUnits as useCustomUnits,
 	PanelBody,
+	ToggleControl,
 	__experimentalUnitControl as UnitControl,
 } from '@wordpress/components';
 import { useSelect, useDispatch } from '@wordpress/data';
@@ -30,6 +31,8 @@ function ColumnEdit({
 	attributes: {
 		verticalAlignment,
 		width,
+		sticky,
+		stickyOffset,
 		templateLock = false,
 		allowedBlocks,
 	},
@@ -131,6 +134,27 @@ function ColumnEdit({
 						}}
 						units={units}
 					/>
+				</PanelBody>
+				<PanelBody title={__('Sticky')}>
+					<ToggleControl
+						label={__('Sticky', 'checkout-engine')}
+						checked={sticky}
+						onChange={(sticky) => setAttributes({ sticky })}
+					/>
+					{sticky && (
+						<UnitControl
+							label={__('Top Offset')}
+							labelPosition="edge"
+							__unstableInputWidth="80px"
+							value={stickyOffset || ''}
+							onChange={(nextWidth) => {
+								nextWidth =
+									0 > parseFloat(nextWidth) ? '0' : nextWidth;
+								setAttributes({ stickyOffset: nextWidth });
+							}}
+							units={units}
+						/>
+					)}
 				</PanelBody>
 			</InspectorControls>
 			<CeColumn {...innerBlocksProps} />

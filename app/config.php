@@ -61,6 +61,8 @@ return [
 	*/
 	'blocks'              => [
 		\CheckoutEngineBlocks\BuyButton\Block::class,
+		// \CheckoutEngineBlocks\Email\Block::class,
+		// \CheckoutEngineBlocks\Divider\Block::class,
 		\CheckoutEngineBlocks\CheckoutForm\Block::class,
 		\CheckoutEngineBlocks\Form\Block::class,
 		\CheckoutEngineBlocks\LogoutButton\Block::class,
@@ -168,7 +170,7 @@ return [
 	 * - 'global'   - Automatically applied to all of the above.
 	 * - 'checkout_engine' - Internal group applied the same way 'global' is.
 	 *
-	 * Warning: The 'checkout_engine' group contains some internal Checkout Engine core
+	 * Warning: The 'checkout_engine' group contains some internal SureCart core
 	 * middleware which you should avoid overriding.
 	 */
 	'middleware_groups'   => [

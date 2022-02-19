@@ -148,7 +148,8 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 			'checkout-engine-components',
 			'ceData',
 			[
-				'pages' => [
+				'plugin_url' => \CheckoutEngine::core()->assets()->getUrl(),
+				'pages'      => [
 					'dashboard' => \CheckoutEngine::pages()->url( 'dashboard' ),
 				],
 			]

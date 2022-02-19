@@ -1,0 +1,126 @@
+/** @jsx jsx */
+import { CeCard } from '@checkout-engine/components-react';
+import { css, jsx } from '@emotion/core';
+
+import { Card, CardBody, CardFooter, CardHeader } from '@wordpress/components';
+
+export default ({
+	title,
+	children,
+	header_action,
+	size = 'large',
+	isBorderLess = true,
+	hasDivider = true,
+	loading,
+	footer,
+	className,
+}) => {
+	return (
+		<div>
+			<ce-text
+				tag="h2"
+				style={{
+					'--font-size': '15px',
+					'--font-weight': 'var(--ce-font-weight-bold)',
+					'--line-height': '1.2',
+				}}
+			>
+				{title && (
+					<span>
+						{loading ? (
+							<ce-skeleton
+								style={{
+									width: '120px',
+									display: 'inline-block',
+								}}
+							></ce-skeleton>
+						) : (
+							title
+						)}
+					</span>
+				)}
+			</ce-text>
+			<ce-text
+				tag="h2"
+				style={{
+					'--line-height': '1',
+				}}
+			>
+				Manage how your store handles subscription upgrades, downgrades,
+				and cancellations.
+			</ce-text>
+			{header_action}
+			<CeCard
+				// css={css`
+				// 	/* box-shadow: rgb( 0 0 0 / 10% ) 0px 2px 4px 0px; */
+				// 	.components-card__footer {
+				// 		background: var(--ce-color-gray-50, #f9fafb);
+				// 	}
+				// `}
+				// size={size}
+				// isBorderless={isBorderLess}
+				className={className}
+			>
+				{/* <CardHeader isBorderless={!hasDivider}>
+					<ce-text
+						tag="h2"
+						style={{
+							'--font-size': '15px',
+							'--font-weight': 'var(--ce-font-weight-bold)',
+						}}
+					>
+						{title && (
+							<span>
+								{loading ? (
+									<ce-skeleton
+										style={{
+											width: '120px',
+											display: 'inline-block',
+										}}
+									></ce-skeleton>
+								) : (
+									title
+								)}
+							</span>
+						)}
+					</ce-text>
+					{header_action}
+				</CardHeader> */}
+				<CardBody
+					css={css`
+						display: grid;
+						gap: 10px;
+						> * {
+							width: 100%;
+						}
+						.components-base-control__label {
+							font-weight: 500;
+							margin-bottom: 12px;
+						}
+					`}
+				>
+					{loading ? (
+						<div>
+							<ce-skeleton
+								style={{
+									width: '100%',
+									marginBottom: '15px',
+									display: 'inline-block',
+								}}
+							></ce-skeleton>
+							<ce-skeleton
+								style={{
+									width: '40%',
+									display: 'inline-block',
+								}}
+							></ce-skeleton>
+						</div>
+					) : (
+						children
+					)}
+				</CardBody>
+				{!!footer && <CardFooter>{footer}</CardFooter>}
+			</CeCard>
+		</div>
+	);
+};

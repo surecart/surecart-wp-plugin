@@ -47,13 +47,16 @@ class PageSeeder {
 	 * @return void
 	 */
 	public function createCheckoutForm() {
+		$content = file_get_contents( plugin_dir_path( CHECKOUT_ENGINE_PLUGIN_FILE ) . 'templates/forms/default.html' );
+		$content = '<!-- wp:checkout-engine/form -->' . $content . '<!-- /wp:checkout-engine/form -->';
+
 		$forms = apply_filters(
 			'checkout_engine/create_forms',
 			[
 				'checkout' => [
 					'name'      => _x( 'checkout', 'Form slug', 'checkout_engine' ),
 					'title'     => _x( 'Checkout', 'Form title', 'checkout_engine' ),
-					'content'   => file_get_contents( plugin_dir_path( CHECKOUT_ENGINE_PLUGIN_FILE ) . 'templates/forms/default.html' ),
+					'content'   => $content,
 					'post_type' => 'ce_form',
 				],
 			]

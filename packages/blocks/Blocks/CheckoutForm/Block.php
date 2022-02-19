@@ -32,12 +32,12 @@ class Block extends BaseBlock {
 			// WP_DEBUG_DISPLAY must only be honored when WP_DEBUG. This precedent
 			// is set in `wp_debug_mode()`.
 			$is_debug = defined( 'WP_DEBUG' ) && WP_DEBUG &&
-				defined( 'WP_DEBUG_DISPLAY' ) && WP_DEBUG_DISPLAY;
+			defined( 'WP_DEBUG_DISPLAY' ) && WP_DEBUG_DISPLAY;
 
 			return $is_debug ?
-				// translators: Visible only in the front end, this warning takes the place of a faulty block.
-				__( '[block rendering halted]' ) :
-				'';
+			// translators: Visible only in the front end, this warning takes the place of a faulty block.
+			__( '[block rendering halted]' ) :
+			'';
 		}
 
 		if ( 'publish' !== $form->post_status || ! empty( $form->post_password ) ) {
@@ -50,6 +50,6 @@ class Block extends BaseBlock {
 		$ce_form_id = $attributes['id'];
 		$result     = do_blocks( $form->post_content );
 		unset( $seen_forms[ $attributes['id'] ] );
-		return $result;
+		return "<div class='alignwide'>" . $result . '</div>';
 	}
 }

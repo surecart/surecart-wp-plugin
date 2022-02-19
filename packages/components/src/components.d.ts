@@ -9,10 +9,25 @@ import { Address, ChoiceItem, Coupon, Customer, Invoice, LineItemData, Order, Or
 import { IconLibraryMutator, IconLibraryResolver } from "./components/ui/icon/library";
 export namespace Components {
     interface CeAddress {
+        /**
+          * Customer shipping address.
+         */
         "customerShippingAddress": Address;
+        /**
+          * The label for the field.
+         */
         "label": string;
+        /**
+          * Is this loading?
+         */
         "loading": boolean;
+        /**
+          * Is this required?
+         */
         "required": boolean;
+        /**
+          * The order's shipping address.
+         */
         "shippingAddress": Address;
     }
     interface CeAlert {
@@ -2311,10 +2326,25 @@ declare global {
 }
 declare namespace LocalJSX {
     interface CeAddress {
+        /**
+          * Customer shipping address.
+         */
         "customerShippingAddress"?: Address;
+        /**
+          * The label for the field.
+         */
         "label"?: string;
+        /**
+          * Is this loading?
+         */
         "loading"?: boolean;
+        /**
+          * Is this required?
+         */
         "required"?: boolean;
+        /**
+          * The order's shipping address.
+         */
         "shippingAddress"?: Address;
     }
     interface CeAlert {

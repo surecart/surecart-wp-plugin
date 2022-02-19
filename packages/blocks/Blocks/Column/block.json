@@ -14,6 +14,12 @@
 		"width": {
 			"type": "string"
 		},
+		"sticky": {
+			"type": "boolean"
+		},
+		"stickyOffset": {
+			"type": "string"
+		},
 		"allowedBlocks": {
 			"type": "array"
 		},

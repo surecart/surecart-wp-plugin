@@ -2,19 +2,10 @@
 
 namespace CheckoutEngineBlocks;
 
-use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
-
 /**
  * Checkout block
  */
-abstract class BaseBlock implements ServiceProviderInterface {
-	/**
-	 * App Service container
-	 *
-	 * @var \Pimple\Container
-	 */
-	protected $container;
-
+abstract class BaseBlock {
 	/**
 	 * Optional directory to .json block data files.
 	 *
@@ -29,7 +20,7 @@ abstract class BaseBlock implements ServiceProviderInterface {
 	 *
 	 * @return void
 	 */
-	public function register( $container ) {
+	public function register() {
 		register_block_type_from_metadata(
 			$this->getDir(),
 			apply_filters(
@@ -54,13 +45,6 @@ abstract class BaseBlock implements ServiceProviderInterface {
 		return dirname( $fn );
 	}
 
-	/**
-	 * Nothing to bootstrap.
-	 *
-	 * @param \Pimple\Container $container Service container.
-	 */
-	public function bootstrap( $container ) {
-	}
 
 	/**
 	 * Optionally run a function to modify attibuutes before rendering.
@@ -118,6 +102,6 @@ abstract class BaseBlock implements ServiceProviderInterface {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
-		return 'asdf';
+		return '';
 	}
 }

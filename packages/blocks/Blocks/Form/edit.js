@@ -6,9 +6,6 @@ import {
 	InnerBlocks,
 	InspectorControls,
 	store as blockEditorStore,
-	__experimentalGetBorderClassesAndStyles as getBorderClassesAndStyles,
-	__experimentalGetColorClassesAndStyles as getColorClassesAndStyles,
-	__experimentalGetSpacingClassesAndStyles as getSpacingClassesAndStyles,
 } from '@wordpress/block-editor';
 import { CeCheckout } from '@checkout-engine/components-react';
 import { Fragment, useState } from '@wordpress/element';
@@ -22,7 +19,7 @@ import {
 	__experimentalUnitControl,
 } from '@wordpress/components';
 import { createBlocksFromInnerBlocksTemplate } from '@wordpress/blocks';
-import * as templates from '@scripts/blocks/templates';
+import apiFetch from '@wordpress/api-fetch';
 import Cart from './components/Cart';
 import Mode from './components/Mode';
 
@@ -67,9 +64,21 @@ export default function edit({ clientId, attributes, setAttributes }) {
 	setTemplateValidity(true);
 
 	const changeTemplate = async () => {
+		const r = confirm(
+			__(
+				'Are you sure you want to change the template? This will completely replace your current form.',
+				'checkout-engine'
+			)
+		);
+		if (!r) return;
+		const result = await apiFetch({
+			url: ceData.plugin_url + '/templates/forms/' + template + '.html',
+			parse: false,
+			cache: 'no-cache',
+		});
 		replaceInnerBlocks(
 			clientId,
-			createBlocksFromInnerBlocksTemplate(parse(templates[template])),
+			createBlocksFromInnerBlocksTemplate(parse(await result.text())),
 			false
 		);
 	};
@@ -101,6 +110,7 @@ export default function edit({ clientId, attributes, setAttributes }) {
 										label: 'Select a Template',
 										disabled: true,
 									},
+									{ value: 'default', label: 'Default' },
 									{ value: 'sections', label: 'Sections' },
 									{ value: 'simple', label: 'Simple' },
 								]}

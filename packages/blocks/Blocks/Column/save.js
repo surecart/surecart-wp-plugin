@@ -17,10 +17,11 @@ export default function save({ attributes }) {
 		? __stableUseInnerBlocksProps
 		: __experimentalUseInnerBlocksProps;
 
-	const { verticalAlignment, width } = attributes;
+	const { verticalAlignment, width, sticky, stickyOffset } = attributes;
 
 	const wrapperClasses = classnames({
 		[`is-vertically-aligned-${verticalAlignment}`]: verticalAlignment,
+		[`is-sticky`]: sticky,
 	});
 
 	let style;
@@ -41,7 +42,12 @@ export default function save({ attributes }) {
 
 	const blockProps = useBlockProps.save({
 		className: wrapperClasses,
-		style,
+		style: {
+			...style,
+			top: stickyOffset,
+		},
+		sticky,
+		stickyOffset,
 	});
 	const innerBlocksProps = useInnerBlocksProps.save(blockProps);
 
