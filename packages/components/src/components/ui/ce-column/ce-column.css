@@ -1,3 +1,8 @@
 :host {
   display: block;
 }
+
+::slotted(*) {
+  margin-bottom: var(--ce-form-row-spacing, 0.75em);
+  display: block;
+}

@@ -2,7 +2,7 @@
 .ce-columns {
 	display: flex;
 	box-sizing: border-box;
-  gap: var(--ce-column-spacing, var(--ce-form-row-spacing));
+  gap: var(--ce-column-spacing, var(--ce-spacing-xxxx-large));
   margin-left: auto;
   margin-right: auto;
   width: 100%;
@@ -105,4 +105,12 @@ ce-column {
 	&.is-vertically-aligned-bottom {
 		width: 100%;
 	}
+
+  @media (min-width: 782px) {
+    &.is-sticky {
+      position: sticky;
+      align-self: flex-start;
+      top: 0;
+    }
+  }
 }
