@@ -243,7 +243,7 @@ export class CeSessionProvider {
   }
 
   /** Find or create session on load. */
-  componentWillLoad() {
+  componentDidLoad() {
     const line_items = getURLLineItems();
 
     if (line_items && line_items?.length) {

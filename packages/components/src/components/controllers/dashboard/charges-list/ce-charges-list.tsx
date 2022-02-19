@@ -27,7 +27,7 @@ export class CeChargesList {
   @State() hasTitleSlot: boolean;
 
   /** Only fetch if visible */
-  componentWillLoad() {
+  componentDidLoad() {
     onFirstVisible(this.el, () => {
       this.getCharges();
     });
