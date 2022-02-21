@@ -5,9 +5,21 @@ namespace CheckoutEngine\Controllers\Admin;
 use CheckoutEngine\Models\Account;
 use CheckoutEngine\Models\AccountPortalSession;
 
+/**
+ * Controls the settings page.
+ */
 class Settings {
-	public function show( \CheckoutEngineCore\Requests\RequestInterface $request, $view ) {
-		$session = AccountPortalSession::create();
+	/**
+	 * Show the settings page.
+	 *
+	 * @return function
+	 */
+	public function show() {
+		$session = AccountPortalSession::create(
+			[
+				'frame_url' => ( is_ssl() ? 'https://' : 'http://' ) . $_SERVER['HTTP_HOST'],
+			]
+		);
 		return \CheckoutEngine::view( 'admin/settings' )->with(
 			[
 				'session_url' => $session->url,

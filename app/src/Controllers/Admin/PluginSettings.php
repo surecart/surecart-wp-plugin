@@ -38,13 +38,8 @@ class PluginSettings {
 			return \CheckoutEngine::redirect()->to( esc_url_raw( add_query_arg( 'status', 'missing', $url ) ) );
 		}
 
-		var_dump(
-			$request->body()
-		);
-		wp_die();
-
 		// update uninstall option.
-		update_option( 'ce_uninstall', $request->body( 'uninstall' ) );
+		update_option( 'ce_uninstall', $request->body( 'uninstall' ) === 'on' );
 
 		// save token.
 		ApiToken::save( $api_token );
