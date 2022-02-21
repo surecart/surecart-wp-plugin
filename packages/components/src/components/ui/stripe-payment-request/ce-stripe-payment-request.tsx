@@ -299,7 +299,6 @@ export class CeStripePaymentRequest {
   }
 
   render() {
-    console.log(this.debug);
     return (
       <div class={{ 'request': true, 'request--loaded': this.loaded }}>
         {this.debug && this.debugError && (

@@ -19,20 +19,16 @@ describe('ce-form', () => {
     </ce-form>
     `);
     const ceSubmit = await page.spyOnEvent('ceFormSubmit');
-    const form = await page.find('ce-form');
-    await form.callMethod('submit');
-    await page.waitForChanges();
-    expect(ceSubmit).toHaveReceivedEventTimes(1);
 
     const button = await page.find('button');
     button.click();
     await page.waitForChanges();
-    expect(ceSubmit).toHaveReceivedEventTimes(2);
+    expect(ceSubmit).toHaveReceivedEventTimes(1);
 
     const ce_button = await page.find('ce-button');
     ce_button.click();
     await page.waitForChanges();
-    expect(ceSubmit).toHaveReceivedEventTimes(3);
+    expect(ceSubmit).toHaveReceivedEventTimes(2);
   });
 
   // we are testing this because JEST doesn't work well with FormData
@@ -56,6 +52,8 @@ describe('ce-form', () => {
         <ce-choice value="CE Choice Check 1" name="ce_check_choice_1" checked type="checkbox"></ce-choice>
       </ce-choices>
 
+      <ce-select value="CE Select" name="ce_select"></ce-select>
+
       <!-- Default form fields -->
       <input name="input" value="Input"></input>
       <select name="select">
@@ -76,6 +74,7 @@ describe('ce-form', () => {
       ce_input: 'CE Input',
       ce_switch: 'switch',
       ce_radio: 'CE Radio',
+      ce_select: 'CE Select',
       ce_checkbox: 'CE Checkbox',
       ce_choice: 'CE Choice',
       ce_check_choice: 'CE Choice Check',

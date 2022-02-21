@@ -7,12 +7,6 @@ describe('ce-cc-logo', () => {
       components: [CeCcLogo],
       html: `<ce-cc-logo></ce-cc-logo>`,
     });
-    expect(page.root).toEqualHtml(`
-      <ce-cc-logo>
-        <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
-      </ce-cc-logo>
-    `);
+    expect(page.root).toMatchSnapshot();
   });
 });

@@ -20,7 +20,7 @@ export const config: Config = {
       '^.+\\.(ts|tsx|js|jsx|css)$': '@stencil/core/testing/jest-preprocessor',
     },
     transformIgnorePatterns: ['node_modules/(?!stencil-fragment)'],
-    // setupFilesAfterEnv: ['./src/test/setup-tests.js'],
+    setupFilesAfterEnv: ['./setup-tests.js'],
   },
   outputTargets: [
     reactOutputTarget({

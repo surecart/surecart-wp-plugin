@@ -48,16 +48,16 @@ describe('ce-radio', () => {
     expect(input).toHaveAttribute('disabled');
   });
 
-  it('Can be required', async () => {
-    const page = await newE2EPage();
-    await page.setContent(`
-    <ce-form>
-      <ce-radio required name="test"></ce-radio>
-    </ce-form>`);
-    const element = await page.find(`ce-radio`);
-    const form = await page.find(`ce-form`);
-    form.callMethod('submit');
-    await page.waitForChanges();
-    expect(element).toHaveAttribute('invalid');
-  });
+  // it('Can be required', async () => {
+  //   const page = await newE2EPage();
+  //   await page.setContent(`
+  //   <ce-form>
+  //     <ce-radio required name="test"></ce-radio>
+  //   </ce-form>`);
+  //   const element = await page.find(`ce-radio`);
+  //   const form = await page.find(`ce-form`);
+  //   form.callMethod('submit');
+  //   await page.waitForChanges();
+  //   expect(element).toHaveAttribute('invalid');
+  // });
 });

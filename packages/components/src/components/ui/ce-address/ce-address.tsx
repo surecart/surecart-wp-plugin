@@ -168,7 +168,7 @@ export class CeAddress {
 
   /** Set the region by browser language if not set. */
   setRegionByBrowserLanguage() {
-    const country = navigator.language.slice(-2);
+    const country = navigator?.language?.slice(-2);
     if (country) {
       this.state.country = country;
       this.setRegions();

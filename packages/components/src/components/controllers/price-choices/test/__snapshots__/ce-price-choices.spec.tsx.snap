@@ -3,6 +3,6 @@
 exports[`ce-price-choices renders 1`] = `
 <ce-price-choices>
   <!---->
-  <ce-choices class="loaded price-selector" required="" style="--columns: 1;"></ce-choices>
+  <ce-choices class="loaded price-selector" style="--columns: 1;"></ce-choices>
 </ce-price-choices>
 `;

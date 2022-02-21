@@ -7,12 +7,6 @@ describe('ce-address', () => {
       components: [CeAddress],
       html: `<ce-address></ce-address>`,
     });
-    expect(page.root).toEqualHtml(`
-      <ce-address>
-        <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
-      </ce-address>
-    `);
+    expect(page.root).toMatchSnapshot();
   });
 });

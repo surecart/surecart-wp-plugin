@@ -7,12 +7,6 @@ describe('ce-table', () => {
       components: [CeTable],
       html: `<ce-table></ce-table>`,
     });
-    expect(page.root).toEqualHtml(`
-      <ce-table>
-        <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
-      </ce-table>
-    `);
+    expect(page.root).toMatchSnapshot();
   });
 });

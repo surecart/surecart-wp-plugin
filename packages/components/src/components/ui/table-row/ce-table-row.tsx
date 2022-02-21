@@ -5,7 +5,7 @@ import { Component, Host, h } from '@stencil/core';
   styleUrl: 'ce-table-row.scss',
   shadow: true,
 })
-export class CeTable {
+export class CeTableRow {
   render() {
     return (
       <Host>

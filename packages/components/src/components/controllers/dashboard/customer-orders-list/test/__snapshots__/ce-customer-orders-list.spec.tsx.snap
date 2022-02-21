@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ce-customer-orders-list renders 1`] = `
+<ce-customer-orders-list>
+  <mock:shadow-root>
+    <ce-card borderless="" no-divider="">
+      <span slot="title">
+        <slot name="title"></slot>
+      </span>
+      <slot name="empty">
+        You have no orders.
+      </slot>
+    </ce-card>
+  </mock:shadow-root>
+</ce-customer-orders-list>
+`;

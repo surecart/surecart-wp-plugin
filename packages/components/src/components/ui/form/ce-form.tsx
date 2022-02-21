@@ -55,7 +55,6 @@ export class CEForm {
         <form
           ref={el => (this.formElement = el as HTMLFormElement)}
           onSubmit={e => {
-            console.log('submit');
             e.preventDefault();
             this.ceFormSubmit.emit();
           }}

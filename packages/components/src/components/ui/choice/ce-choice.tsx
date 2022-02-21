@@ -1,4 +1,5 @@
 import { Component, Prop, h, Event, EventEmitter, Method, State, Element, Watch } from '@stencil/core';
+import { __ } from '@wordpress/i18n';
 import { FormSubmitController } from '../../../functions/form-data';
 
 let id = 0;
@@ -75,7 +76,7 @@ export class CEChoice {
     if (this.type === 'radio') {
       const choices = this.getAllChoices();
       if (!choices.some(c => c.checked)) {
-        this.input.setCustomValidity('Please choose one.');
+        this.input.setCustomValidity(__('Please choose one.', 'checkout_engine'));
         this.invalid = !this.input.checkValidity();
       } else {
         this.input.setCustomValidity('');

@@ -46,6 +46,7 @@ export class CESwitch {
 
   /** Checks for validity and shows the browser's validation message if the control is invalid. */
   reportValidity() {
+    this.invalid = !this.input.checkValidity();
     return this.input.reportValidity();
   }
 

@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ce-table renders 1`] = `
+<ce-table>
+  <mock:shadow-root>
+    <slot name="head"></slot>
+    <slot></slot>
+    <slot name="footer"></slot>
+  </mock:shadow-root>
+</ce-table>
+`;

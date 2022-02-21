@@ -115,7 +115,7 @@ export class CePriceInput {
 
   @Watch('hasFocus')
   handleFocusChange() {
-    this.hasFocus ? this.ceInput.focus() : this.ceInput.blur();
+    this.hasFocus ? this.ceInput?.focus?.() : this.ceInput?.blur?.();
   }
 
   handleChange() {

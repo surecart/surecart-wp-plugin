@@ -21,25 +21,25 @@ describe('ce-choice', () => {
     expect(element).toHaveClass('hydrated');
   });
 
-  it('Can report validity', async () => {
-    let page = await newE2EPage();
-    await page.setContent(`<${selector} required name="test" type="checkbox"></${selector}>`);
-    element = await page.find(`${selector}`);
+  // it('Can report validity', async () => {
+  //   let page = await newE2EPage();
+  //   await page.setContent(`<${selector} required name="test" type="checkbox"></${selector}>`);
+  //   element = await page.find(`${selector}`);
 
-    let result = await element.callMethod('reportValidity');
-    expect(result).toBeFalsy();
+  //   let result = await element.callMethod('reportValidity');
+  //   expect(result).toBeFalsy();
 
-    result = await element.callMethod('setCustomValidity', 'message');
-    expect(result).toBeFalsy();
-    expect(label).not.toHaveClasses(['choice--checked', 'choice--focused']);
+  //   result = await element.callMethod('setCustomValidity', 'message');
+  //   expect(result).toBeFalsy();
+  //   expect(label).not.toHaveClasses(['choice--checked', 'choice--focused']);
 
-    page = await newE2EPage();
-    await page.setContent(`<${selector} required name="test" type="checkbox" checked></${selector}>`);
-    element = await page.find(`${selector}`);
+  //   page = await newE2EPage();
+  //   await page.setContent(`<${selector} required name="test" type="checkbox" checked></${selector}>`);
+  //   element = await page.find(`${selector}`);
 
-    result = await element.callMethod('reportValidity');
-    expect(result).toBeTruthy();
-  });
+  //   result = await element.callMethod('reportValidity');
+  //   expect(result).toBeTruthy();
+  // });
 
   it('Should be clickable', async () => {
     const ceBlur = await page.spyOnEvent('ceBlur');
@@ -75,16 +75,16 @@ describe('ce-choice', () => {
     expect(input).toEqualAttribute('type', 'checkbox');
   });
 
-  it('Can be required', async () => {
-    page = await newE2EPage();
-    await page.setContent(`
-    <ce-form>
-      <ce-choice required name="test"></ce-choice>
-    </ce-form>`);
-    element = await page.find(`ce-choice`);
-    const form = await page.find(`ce-form`);
-    form.callMethod('submit');
-    await page.waitForChanges();
-    expect(element).toHaveAttribute('invalid');
-  });
+  // it('Can be required', async () => {
+  //   page = await newE2EPage();
+  //   await page.setContent(`
+  //   <ce-form>
+  //     <ce-choice required name="test"></ce-choice>
+  //   </ce-form>`);
+  //   element = await page.find(`ce-choice`);
+  //   const form = await page.find(`ce-form`);
+  //   form.callMethod('submit');
+  //   await page.waitForChanges();
+  //   expect(element).toHaveAttribute('invalid');
+  // });
 });

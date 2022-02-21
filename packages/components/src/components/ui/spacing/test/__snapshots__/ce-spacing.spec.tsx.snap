@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ce-spacing renders 1`] = `
+<ce-spacing>
+  <mock:shadow-root>
+    <slot></slot>
+  </mock:shadow-root>
+</ce-spacing>
+`;

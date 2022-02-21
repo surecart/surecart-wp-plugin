@@ -1,5 +1,4 @@
-import { Component, Prop, Event, EventEmitter, State, Element, h } from '@stencil/core';
-import Fragment from 'stencil-fragment';
+import { Component, Prop, Event, EventEmitter, State, Element, Fragment, h } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
 
 @Component({

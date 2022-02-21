@@ -7,12 +7,6 @@ describe('ce-columns', () => {
       components: [CeColumns],
       html: `<ce-columns></ce-columns>`,
     });
-    expect(page.root).toEqualHtml(`
-      <ce-columns>
-        <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
-      </ce-columns>
-    `);
+    expect(page.root).toMatchSnapshot();
   });
 });

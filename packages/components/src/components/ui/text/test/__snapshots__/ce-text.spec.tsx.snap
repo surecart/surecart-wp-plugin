@@ -3,7 +3,7 @@
 exports[`ce-text renders 1`] = `
 <ce-text>
   <mock:shadow-root>
-    <p class="title">
+    <p class="text">
       <slot></slot>
     </p>
   </mock:shadow-root>

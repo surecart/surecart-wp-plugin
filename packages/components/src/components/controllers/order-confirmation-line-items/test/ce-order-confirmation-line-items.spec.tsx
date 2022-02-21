@@ -1,11 +1,11 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { CeOrderConfirmationSummary } from '../ce-order-confirmation-line-items';
+import { CeOrderConfirmationLineItems } from '../ce-order-confirmation-line-items';
 
-describe('ce-order-confirmation-summary', () => {
+describe('ce-order-confirmation-line-items', () => {
   it('renders', async () => {
     const page = await newSpecPage({
-      components: [CeOrderConfirmationSummary],
-      html: `<ce-order-confirmation-summary></ce-order-confirmation-summary>`,
+      components: [CeOrderConfirmationLineItems],
+      html: `<ce-order-confirmation-line-items></ce-order-confirmation-line-items>`,
     });
     expect(page.root).toMatchSnapshot();
   });

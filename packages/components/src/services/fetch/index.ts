@@ -14,10 +14,14 @@ export const getPricesAndProducts = async ({ ids, active = true }: { ids: Array<
     }),
   })) as Array<Price>;
 
+  return normalizePrices(prices);
+};
+
+export const normalizePrices = (prices: Array<Price>) => {
   const { entities } = normalizeEntities(prices);
   return {
-    prices: entities.price,
-    products: entities.product,
+    prices: entities?.price,
+    products: entities?.product,
   };
 };
 

@@ -1304,15 +1304,6 @@ export namespace Components {
         "registerIconLibrary": (name: string, options: { resolver: IconLibraryResolver; mutator?: IconLibraryMutator; }) => Promise<void>;
         "unregisterIconLibrary": (name: string) => Promise<void>;
     }
-    interface CeRoute {
-        "default": boolean;
-        "location"?: string;
-        "matched": boolean;
-        "queryVar": string;
-    }
-    interface CeRouter {
-        "autoScroll": boolean;
-    }
     interface CeSecureNotice {
     }
     interface CeSelect {
@@ -1612,8 +1603,6 @@ export namespace Components {
         "name": string;
     }
     interface CeTable {
-    }
-    interface CeTableBody {
     }
     interface CeTableCell {
     }
@@ -2071,18 +2060,6 @@ declare global {
         prototype: HTMLCeRegisterIconLibraryElement;
         new (): HTMLCeRegisterIconLibraryElement;
     };
-    interface HTMLCeRouteElement extends Components.CeRoute, HTMLStencilElement {
-    }
-    var HTMLCeRouteElement: {
-        prototype: HTMLCeRouteElement;
-        new (): HTMLCeRouteElement;
-    };
-    interface HTMLCeRouterElement extends Components.CeRouter, HTMLStencilElement {
-    }
-    var HTMLCeRouterElement: {
-        prototype: HTMLCeRouterElement;
-        new (): HTMLCeRouterElement;
-    };
     interface HTMLCeSecureNoticeElement extends Components.CeSecureNotice, HTMLStencilElement {
     }
     var HTMLCeSecureNoticeElement: {
@@ -2184,12 +2161,6 @@ declare global {
     var HTMLCeTableElement: {
         prototype: HTMLCeTableElement;
         new (): HTMLCeTableElement;
-    };
-    interface HTMLCeTableBodyElement extends Components.CeTableBody, HTMLStencilElement {
-    }
-    var HTMLCeTableBodyElement: {
-        prototype: HTMLCeTableBodyElement;
-        new (): HTMLCeTableBodyElement;
     };
     interface HTMLCeTableCellElement extends Components.CeTableCell, HTMLStencilElement {
     }
@@ -2300,8 +2271,6 @@ declare global {
         "ce-radio": HTMLCeRadioElement;
         "ce-radio-group": HTMLCeRadioGroupElement;
         "ce-register-icon-library": HTMLCeRegisterIconLibraryElement;
-        "ce-route": HTMLCeRouteElement;
-        "ce-router": HTMLCeRouterElement;
         "ce-secure-notice": HTMLCeSecureNoticeElement;
         "ce-select": HTMLCeSelectElement;
         "ce-session-detail": HTMLCeSessionDetailElement;
@@ -2319,7 +2288,6 @@ declare global {
         "ce-tab-group": HTMLCeTabGroupElement;
         "ce-tab-panel": HTMLCeTabPanelElement;
         "ce-table": HTMLCeTableElement;
-        "ce-table-body": HTMLCeTableBodyElement;
         "ce-table-cell": HTMLCeTableCellElement;
         "ce-table-head": HTMLCeTableHeadElement;
         "ce-table-row": HTMLCeTableRowElement;
@@ -3738,16 +3706,6 @@ declare namespace LocalJSX {
     }
     interface CeRegisterIconLibrary {
     }
-    interface CeRoute {
-        "default"?: boolean;
-        "location"?: string;
-        "matched"?: boolean;
-        "onCeNavigationComplete"?: (event: CustomEvent<void>) => void;
-        "queryVar"?: string;
-    }
-    interface CeRouter {
-        "autoScroll"?: boolean;
-    }
     interface CeSecureNotice {
     }
     interface CeSelect {
@@ -4098,8 +4056,6 @@ declare namespace LocalJSX {
     }
     interface CeTable {
     }
-    interface CeTableBody {
-    }
     interface CeTableCell {
     }
     interface CeTableHead {
@@ -4226,8 +4182,6 @@ declare namespace LocalJSX {
         "ce-radio": CeRadio;
         "ce-radio-group": CeRadioGroup;
         "ce-register-icon-library": CeRegisterIconLibrary;
-        "ce-route": CeRoute;
-        "ce-router": CeRouter;
         "ce-secure-notice": CeSecureNotice;
         "ce-select": CeSelect;
         "ce-session-detail": CeSessionDetail;
@@ -4245,7 +4199,6 @@ declare namespace LocalJSX {
         "ce-tab-group": CeTabGroup;
         "ce-tab-panel": CeTabPanel;
         "ce-table": CeTable;
-        "ce-table-body": CeTableBody;
         "ce-table-cell": CeTableCell;
         "ce-table-head": CeTableHead;
         "ce-table-row": CeTableRow;
@@ -4325,8 +4278,6 @@ declare module "@stencil/core" {
             "ce-radio": LocalJSX.CeRadio & JSXBase.HTMLAttributes<HTMLCeRadioElement>;
             "ce-radio-group": LocalJSX.CeRadioGroup & JSXBase.HTMLAttributes<HTMLCeRadioGroupElement>;
             "ce-register-icon-library": LocalJSX.CeRegisterIconLibrary & JSXBase.HTMLAttributes<HTMLCeRegisterIconLibraryElement>;
-            "ce-route": LocalJSX.CeRoute & JSXBase.HTMLAttributes<HTMLCeRouteElement>;
-            "ce-router": LocalJSX.CeRouter & JSXBase.HTMLAttributes<HTMLCeRouterElement>;
             "ce-secure-notice": LocalJSX.CeSecureNotice & JSXBase.HTMLAttributes<HTMLCeSecureNoticeElement>;
             "ce-select": LocalJSX.CeSelect & JSXBase.HTMLAttributes<HTMLCeSelectElement>;
             "ce-session-detail": LocalJSX.CeSessionDetail & JSXBase.HTMLAttributes<HTMLCeSessionDetailElement>;
@@ -4344,7 +4295,6 @@ declare module "@stencil/core" {
             "ce-tab-group": LocalJSX.CeTabGroup & JSXBase.HTMLAttributes<HTMLCeTabGroupElement>;
             "ce-tab-panel": LocalJSX.CeTabPanel & JSXBase.HTMLAttributes<HTMLCeTabPanelElement>;
             "ce-table": LocalJSX.CeTable & JSXBase.HTMLAttributes<HTMLCeTableElement>;
-            "ce-table-body": LocalJSX.CeTableBody & JSXBase.HTMLAttributes<HTMLCeTableBodyElement>;
             "ce-table-cell": LocalJSX.CeTableCell & JSXBase.HTMLAttributes<HTMLCeTableCellElement>;
             "ce-table-head": LocalJSX.CeTableHead & JSXBase.HTMLAttributes<HTMLCeTableHeadElement>;
             "ce-table-row": LocalJSX.CeTableRow & JSXBase.HTMLAttributes<HTMLCeTableRowElement>;

@@ -9,16 +9,16 @@ describe('ce-checkbox', () => {
     expect(element).toHaveClass('hydrated');
   });
 
-  it('Can be required', async () => {
-    const page = await newE2EPage();
-    await page.setContent(`
-    <ce-form>
-      <ce-checkbox required name="test"></ce-checkbox>
-    </ce-form>`);
-    const element = await page.find(`ce-checkbox`);
-    const form = await page.find(`ce-form`);
-    form.callMethod('submit');
-    await page.waitForChanges();
-    expect(element).toHaveAttribute('invalid');
-  });
+  // it('Can be required', async () => {
+  // const page = await newE2EPage();
+  // await page.setContent(`
+  // <ce-form>
+  //   <ce-checkbox required name="test"></ce-checkbox>
+  // </ce-form>`);
+  // const element = await page.find(`ce-checkbox`);
+  // const form = await page.find(`ce-form`);
+  // form.callMethod('submit');
+  // await page.waitForChanges();
+  // expect(element).toHaveAttribute('invalid');
+  // });
 });

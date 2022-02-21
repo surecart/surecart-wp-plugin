@@ -46,7 +46,7 @@ class AdminMenuPageService {
 			'upgrade-paths' => \add_submenu_page( $this->slug, __( 'Upgrade Groups', 'checkout_engine' ), __( 'Upgrade Groups', 'checkout_engine' ), 'edit_ce_products', 'ce-product-groups', '__return_false' ),
 			'abandoned'     => \add_submenu_page( $this->slug, __( 'Abandoned Orders', 'checkout_engine' ), __( 'Abandoned Orders', 'checkout_engine' ), 'edit_ce_orders', 'ce-abandoned-orders', '__return_false' ),
 			'forms'         => \add_submenu_page( $this->slug, __( 'Forms', 'checkout_engine' ), __( 'Forms', 'checkout_engine' ), 'edit_posts', 'edit.php?post_type=ce_form', '' ),
-			'connection'    => \add_submenu_page( $this->slug, __( 'Connection', 'checkout_engine' ), __( 'Connection', 'checkout_engine' ), 'manage_options', 'ce-connection', '__return_false' ),
+			'plugin'        => \add_submenu_page( $this->slug, __( 'Plugin', 'checkout_engine' ), __( 'Plugin', 'checkout_engine' ), 'manage_options', 'ce-plugin', '__return_false' ),
 			'settings'      => \add_submenu_page( $this->slug, __( 'Settings', 'checkout_engine' ), __( 'Settings', 'checkout_engine' ), 'manage_options', 'ce-settings', '__return_false' ),
 		];
 

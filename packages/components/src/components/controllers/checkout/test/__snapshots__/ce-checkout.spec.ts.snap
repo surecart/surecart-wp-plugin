@@ -7,7 +7,9 @@ exports[`ce-checkout renders 1`] = `
     <ce-alert type="danger">
       <span slot="title"></span>
     </ce-alert>
-    <ce-session-provider currency-code="usd" group-id="" mode="live" persist=""></ce-session-provider>
+    <ce-form-components-validator>
+      <ce-session-provider currency-code="usd" group-id="" mode="live" persist=""></ce-session-provider>
+    </ce-form-components-validator>
   </div>
 </ce-checkout>
 `;

@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ce-format-date renders 1`] = `
+<ce-format-date>
+  2/21/2022
+</ce-format-date>
+`;

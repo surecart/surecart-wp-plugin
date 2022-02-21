@@ -140,11 +140,11 @@ export class CeTabGroup {
     const slots = this.el.shadowRoot.querySelectorAll('slot') as NodeListOf<HTMLSlotElement>;
     const tags = ['ce-tab', 'ce-tab-panel'];
     const allSlots = Array.from(slots)
-      .map(slot => slot.assignedElements({ flatten: true }))
+      .map(slot => slot?.assignedElements?.({ flatten: true }))
       .flat();
     return allSlots
-      .reduce((all: HTMLElement[], el: HTMLElement) => all.concat(el, [...el.querySelectorAll('*')] as HTMLElement[]), [])
-      .filter((el: HTMLElement) => tags.includes(el.tagName.toLowerCase())) as HTMLElement[];
+      .reduce((all: HTMLElement[], el: HTMLElement) => all.concat(el, [...(el?.querySelectorAll?.('*') || [])] as HTMLElement[]), [])
+      .filter((el: HTMLElement) => tags.includes(el?.tagName?.toLowerCase?.())) as HTMLElement[];
   }
 
   /** Get all child tabs */

@@ -170,12 +170,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 */
 \CheckoutEngine::route()
 ->get()
-->where( 'admin', 'ce-connection' )
+->where( 'admin', 'ce-plugin' )
 ->middleware( 'user.can:manage_options' )
 ->group(
 	function() {
-		\CheckoutEngine::route()->get()->name( 'connection.show' )->handle( 'Connection@show' );
-		\CheckoutEngine::route()->post()->middleware( 'nonce:update_connection' )->name( 'connection.save' )->handle( 'Connection@save' );
+		\CheckoutEngine::route()->get()->name( 'plugin.show' )->handle( 'PluginSettings@show' );
+		\CheckoutEngine::route()->post()->middleware( 'nonce:update_plugin_settings' )->name( 'plugin.save' )->handle( 'PluginSettings@save' );
 	}
 );
 

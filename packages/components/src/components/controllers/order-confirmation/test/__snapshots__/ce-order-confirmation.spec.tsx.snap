@@ -3,10 +3,17 @@
 exports[`ce-order-confirmation renders 1`] = `
 <ce-order-confirmation>
   <mock:shadow-root>
-    <slot></slot>
-    <h1>
-      Work in Progress
-    </h1>
+    <div class="order-confirmation">
+      <div class="hidden order-confirmation__content">
+        <slot></slot>
+      </div>
+      <ce-heading>
+        Order not found.
+        <span slot="description">
+          This order could not be found. Please try again.
+        </span>
+      </ce-heading>
+    </div>
   </mock:shadow-root>
 </ce-order-confirmation>
 `;

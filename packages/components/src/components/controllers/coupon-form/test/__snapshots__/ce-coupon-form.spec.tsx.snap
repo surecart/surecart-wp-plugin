@@ -8,7 +8,7 @@ exports[`ce-coupon-form renders 1`] = `
         <slot name="label"></slot>
       </div>
       <div class="form">
-        <ce-input></ce-input>
+        <ce-input clearable=""></ce-input>
         <ce-button full="" type="primary">
           <slot></slot>
         </ce-button>

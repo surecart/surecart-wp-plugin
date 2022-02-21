@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ce-card renders 1`] = `
+<ce-card>
+  <mock:shadow-root>
+    <div class="card" part="base">
+      <div class="card--title">
+        <slot name="title"></slot>
+        <ce-divider class="title--divider" part="border" style="--spacing: var(--ce-spacing-small);"></ce-divider>
+      </div>
+      <slot></slot>
+    </div>
+  </mock:shadow-root>
+</ce-card>
+`;

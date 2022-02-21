@@ -2,6 +2,6 @@
 
 exports[`ce-email renders 1`] = `
 <ce-email size="medium">
-  <ce-input autocomplete="email" help="" name="customer_email" type="email" value=""></ce-input>
+  <ce-input autocomplete="email" help="" name="email" required="" type="email" value=""></ce-input>
 </ce-email>
 `;

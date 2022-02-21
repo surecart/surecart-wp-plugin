@@ -7,12 +7,6 @@ describe('ce-icon', () => {
       components: [CeIcon],
       html: `<ce-icon></ce-icon>`,
     });
-    expect(page.root).toEqualHtml(`
-      <ce-icon>
-        <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
-      </ce-icon>
-    `);
+    expect(page.root).toMatchSnapshot();
   });
 });

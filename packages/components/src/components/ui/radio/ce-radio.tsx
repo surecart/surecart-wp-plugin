@@ -1,4 +1,5 @@
 import { Component, Prop, h, Event, EventEmitter, Method, State, Element, Watch } from '@stencil/core';
+import { FormSubmitController } from '../../../functions/form-data';
 
 let id = 0;
 
@@ -8,9 +9,9 @@ let id = 0;
   shadow: true,
 })
 export class CERadio {
-  @Element() el: HTMLCeRadioElement;
-
+  @Element() el: HTMLCeCheckboxElement;
   private input: HTMLInputElement;
+  private formController: any;
   private inputId: string = `radio-${++id}`;
   private labelId: string = `radio-label-${id}`;
 
@@ -119,6 +120,16 @@ export class CERadio {
   handleMouseDown(event: MouseEvent) {
     event.preventDefault();
     this.input.focus();
+  }
+
+  componentDidLoad() {
+    this.formController = new FormSubmitController(this, this.el, {
+      value: (control: HTMLCeChoiceElement) => (control.checked ? control.value : undefined),
+    }).addFormData();
+  }
+
+  disconnectedCallback() {
+    this.formController?.removeFormData();
   }
 
   render() {

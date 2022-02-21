@@ -720,23 +720,6 @@
     "class": true,
     "slot": true
   },
-  "ce-route": {
-    "default": true,
-    "location": true,
-    "matched": true,
-    "query-var": true,
-    "style": true,
-    "id": true,
-    "class": true,
-    "slot": true
-  },
-  "ce-router": {
-    "auto-scroll": true,
-    "style": true,
-    "id": true,
-    "class": true,
-    "slot": true
-  },
   "ce-secure-notice": {
     "style": true,
     "id": true,

@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ce-flex renders 1`] = `
+<ce-flex>
+  <mock:shadow-root>
+    <div class="flex">
+      <slot></slot>
+    </div>
+  </mock:shadow-root>
+</ce-flex>
+`;

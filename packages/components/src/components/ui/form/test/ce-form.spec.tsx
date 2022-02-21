@@ -7,14 +7,6 @@ describe('ce-form', () => {
       components: [CEForm],
       html: `<ce-form></ce-form>`,
     });
-    expect(page.root).toEqualHtml(`
-      <ce-form>
-        <mock:shadow-root>
-          <div class="form" part="base" role="form">
-            <slot></slot>
-          </div>
-        </mock:shadow-root>
-      </ce-form>
-    `);
+    expect(page.root).toMatchSnapshot();
   });
 });

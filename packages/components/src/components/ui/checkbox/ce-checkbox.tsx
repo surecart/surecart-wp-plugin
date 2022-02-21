@@ -1,4 +1,5 @@
-import { Component, Prop, State, h, Event, EventEmitter, Method, Watch } from '@stencil/core';
+import { Component, Prop, State, h, Event, EventEmitter, Method, Watch, Element } from '@stencil/core';
+import { FormSubmitController } from '../../../functions/form-data';
 
 let id = 0;
 
@@ -8,8 +9,9 @@ let id = 0;
   shadow: true,
 })
 export class CECheckbox {
+  @Element() el: HTMLCeCheckboxElement;
   private input: HTMLInputElement;
-
+  private formController: any;
   private inputId = `checkbox-${++id}`;
   private labelId = `checkbox-label-${id}`;
 
@@ -107,6 +109,16 @@ export class CECheckbox {
     this.input.checked = this.checked;
     this.input.indeterminate = this.indeterminate;
     this.ceChange.emit();
+  }
+
+  componentDidLoad() {
+    this.formController = new FormSubmitController(this, this.el, {
+      value: (control: HTMLCeChoiceElement) => (control.checked ? control.value : undefined),
+    }).addFormData();
+  }
+
+  disconnectedCallback() {
+    this.formController?.removeFormData();
   }
 
   render() {

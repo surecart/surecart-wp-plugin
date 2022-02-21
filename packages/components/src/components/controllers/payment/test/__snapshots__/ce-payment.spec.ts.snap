@@ -2,8 +2,9 @@
 
 exports[`ce-payment renders 1`] = `
 <ce-payment>
-  <!---->
-  <ce-stripe-element publishablekey="" stripeaccountid=""></ce-stripe-element>
-  <ce-secure-notice></ce-secure-notice>
+  <div>
+    <ce-skeleton style="width: 100%; margin-bottom: 1em;"></ce-skeleton>
+    <ce-skeleton style="width: 35%;"></ce-skeleton>
+  </div>
 </ce-payment>
 `;
