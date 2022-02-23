@@ -98,59 +98,6 @@ export class CeAddress {
     }
   }
 
-  /** Render the city and postal code fields. */
-  renderCityPostal() {
-    if (!this.showCity) {
-      return (
-        <ce-input
-          placeholder={__('Postal Code/Zip', 'checkout_engine')}
-          name="shipping_city"
-          autocomplete={'postal-code'}
-          value={this?.state?.city}
-          required={this.required}
-          squared={!!this?.regions?.length}
-          squared-top
-        />
-      );
-    }
-    if (!this.showPostal) {
-      return (
-        <ce-input
-          placeholder={__('City', 'checkout_engine')}
-          name="shipping_postal_code"
-          value={this?.state?.postal_code}
-          required={this.required}
-          squared={!!this?.regions?.length}
-          squared-top
-        />
-      );
-    }
-
-    return (
-      <div class="ce-address__columns">
-        <ce-input
-          placeholder={__('City', 'checkout_engine')}
-          name="shipping_city"
-          value={this?.state?.city}
-          required={this.required}
-          squared={!!this?.regions?.length}
-          squared-top
-          squared-right
-        />
-        <ce-input
-          placeholder={__('Postal Code/Zip', 'checkout_engine')}
-          name="shipping_postal_code"
-          autocomplete={'postal-code'}
-          required={this.required}
-          value={this?.state?.postal_code}
-          squared={!!this?.regions?.length}
-          squared-top
-          squared-left
-        />
-      </div>
-    );
-  }
-
   componentWillLoad() {
     // if we have a shipping address, update the state.
     if (this.shippingAddress) {
@@ -190,6 +137,7 @@ export class CeAddress {
             squared-bottom
             required={this.required}
           />
+
           <ce-input
             value={this?.state?.line_1}
             autocomplete="street-address"
@@ -198,20 +146,43 @@ export class CeAddress {
             squared
             required={this.required}
           />
-          {/* <ce-input value={this?.state?.line_2} placeholder={__('Address Line 2', 'checkout_engine')} name="shipping_line_2" squared /> */}
-          {this.renderCityPostal()}
-          {!!this?.regions?.length && (
-            <ce-select
-              placeholder={__('State/Province/Region', 'checkout_engine')}
-              name="shipping_state"
-              autocomplete={'address-level1'}
-              value={this?.state?.state}
-              choices={this.regions}
-              required={this.required}
-              search
+
+          <div class="ce-address__columns">
+            <ce-input
+              placeholder={__('City', 'checkout_engine')}
+              name="shipping_city"
+              value={this?.state?.city}
+              required={this.required && this.showCity}
+              hidden={!this.showCity}
+              squared={!!this?.regions?.length}
+              style={{ marginRight: this.showPostal ? '-1px' : '0' }}
               squared-top
+              squared-right={this.showPostal}
             />
-          )}
+            <ce-input
+              placeholder={__('Postal Code/Zip', 'checkout_engine')}
+              name="shipping_postal_code"
+              autocomplete={'postal-code'}
+              required={this.required && this.showPostal}
+              hidden={!this.showPostal}
+              value={this?.state?.postal_code}
+              squared={!!this?.regions?.length}
+              squared-top
+              squared-left={this.showCity}
+            />
+          </div>
+
+          <ce-select
+            placeholder={__('State/Province/Region', 'checkout_engine')}
+            name="shipping_state"
+            autocomplete={'address-level1'}
+            value={this?.state?.state}
+            choices={this.regions}
+            required={this.required && !!this?.regions?.length}
+            hidden={!this?.regions?.length}
+            search
+            squared-top
+          />
         </ce-form-control>
       </div>
     );
