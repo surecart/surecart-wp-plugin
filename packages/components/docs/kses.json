@@ -574,6 +574,7 @@
     "slot": true
   },
   "ce-orders-list": {
+    "list-title": true,
     "query": true,
     "style": true,
     "id": true,
@@ -798,6 +799,20 @@
     "class": true,
     "slot": true
   },
+  "ce-stacked-list": {
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-stacked-list-row": {
+    "href": true,
+    "mobile-size": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "ce-stripe-element": {
     "disabled": true,
     "has-focus": true,
@@ -916,6 +931,7 @@
     "slot": true
   },
   "ce-table-row": {
+    "href": true,
     "style": true,
     "id": true,
     "class": true,

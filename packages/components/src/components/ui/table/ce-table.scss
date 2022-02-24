@@ -6,10 +6,10 @@
   border-collapse: collapse;
   table-layout:fixed;
   font-family: var(--ce-font-sans);
-  border: 0 1px 1px 1px solid var(--ce-color-gray-200);
-  // overflow:hidden;
-  border-radius: var(--border-radius, var(--ce-border-radius-small));
-  box-shadow: var(--shadow, var(--ce-shadow-medium));
+  // border: 0 1px 1px 1px solid var(--ce-color-gray-200);
+  // // overflow:hidden;
+  // border-radius: var(--border-radius, var(--ce-border-radius-small));
+  // box-shadow: var(--shadow, var(--ce-shadow-medium));
 }
 
 :host([shadowed]) {

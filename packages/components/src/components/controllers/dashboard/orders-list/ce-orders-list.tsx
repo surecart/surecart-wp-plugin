@@ -14,6 +14,7 @@ export class CeOrdersList {
   @Element() el: HTMLCeOrdersListElement;
   /** Query to fetch orders */
   @Prop() query: object;
+  @Prop() listTitle: string;
 
   @State() orders: Array<Order> = [];
 
@@ -64,63 +65,47 @@ export class CeOrdersList {
   renderContent() {
     if (this.loading) {
       return (
-        <ce-table-row>
-          {[...Array(6)].map(() => (
-            <ce-table-cell>
+        <ce-stacked-list>
+          <ce-stacked-list-row style={{ '--columns': '4' }} mobile-size={500}>
+            {[...Array(4)].map(() => (
               <ce-skeleton style={{ width: '100px', display: 'inline-block' }}></ce-skeleton>
-            </ce-table-cell>
-          ))}
-        </ce-table-row>
+            ))}
+          </ce-stacked-list-row>
+        </ce-stacked-list>
       );
     }
 
-    return this.orders.map(({ number, id, line_items, total_amount, currency, status, charge, created_at }) => {
-      return (
-        <ce-table-row>
-          <ce-table-cell>
-            <ce-text
-              truncate
-              style={{
-                '--font-weight': 'var(--ce-font-weight-semibold)',
-              }}
-            >
-              {number || id}
-            </ce-text>
-          </ce-table-cell>
-          <ce-table-cell>
-            <ce-text
-              truncate
-              style={{
-                '--color': 'var(--ce-color-gray-500)',
-              }}
-            >
-              {sprintf(_n('%s item', '%s items', line_items?.pagination?.count || 0, 'checkout_engine'), line_items?.pagination?.count || 0)}
-            </ce-text>
-          </ce-table-cell>
-          <ce-table-cell>
-            <ce-format-number type="currency" currency={currency} value={total_amount}></ce-format-number>
-          </ce-table-cell>
-          <ce-table-cell>
-            {typeof charge !== 'string' && <ce-format-date date={(charge?.created_at || created_at) * 1000} month="long" day="numeric" year="numeric"></ce-format-date>}
-          </ce-table-cell>
-          <ce-table-cell>
-            <ce-order-status-badge status={status}></ce-order-status-badge>
-          </ce-table-cell>
-          <ce-table-cell>
-            <ce-button
-              href={addQueryArgs(window.location.href, {
-                order: {
-                  id,
-                },
-              })}
-              size="small"
-            >
-              {__('View', 'checkout_engine')}
-            </ce-button>
-          </ce-table-cell>
-        </ce-table-row>
-      );
-    });
+    return (
+      <ce-stacked-list>
+        {this.orders.map(({ line_items, total_amount, currency, status, charge, created_at }) => {
+          return (
+            <ce-stacked-list-row href="#" style={{ '--columns': '4' }} mobile-size={500}>
+              <div>
+                {typeof charge !== 'string' && (
+                  <ce-format-date class="order__date" date={(charge?.created_at || created_at) * 1000} month="short" day="numeric" year="numeric"></ce-format-date>
+                )}
+              </div>
+              <div>
+                <ce-text
+                  truncate
+                  style={{
+                    '--color': 'var(--ce-color-gray-500)',
+                  }}
+                >
+                  {sprintf(_n('%s item', '%s items', line_items?.pagination?.count || 0, 'checkout_engine'), line_items?.pagination?.count || 0)}
+                </ce-text>
+              </div>
+              <div>
+                <ce-order-status-badge status={status}></ce-order-status-badge>
+              </div>
+              <div>
+                <ce-format-number type="currency" currency={currency} value={total_amount}></ce-format-number>
+              </div>
+            </ce-stacked-list-row>
+          );
+        })}
+      </ce-stacked-list>
+    );
   }
 
   render() {
@@ -133,35 +118,20 @@ export class CeOrdersList {
       );
     }
 
-    if (!this.loading && !this?.orders?.length) {
-      return (
-        <ce-card borderless no-divider>
-          <span slot="title">
-            <slot name="title" />
-          </span>
-          <slot name="empty">{__('You have no orders.', 'checkout_engine')}</slot>
-        </ce-card>
-      );
-    }
-
     return (
-      <ce-card borderless no-divider>
-        <span slot="title">
-          <slot name="title" />
-        </span>
-        <ce-table>
-          <ce-table-cell slot="head">{__('Order', 'checkout_engine')}</ce-table-cell>
-          <ce-table-cell slot="head">{__('Items', 'checkout_engine')}</ce-table-cell>
-          <ce-table-cell slot="head">{__('Total', 'checkout_engine')}</ce-table-cell>
-          <ce-table-cell slot="head">{__('Date', 'checkout_engine')}</ce-table-cell>
-          <ce-table-cell slot="head" style={{ width: '100px' }}>
-            {__('Status', 'checkout_engine')}
-          </ce-table-cell>
-          <ce-table-cell slot="head" style={{ width: '100px' }}></ce-table-cell>
-
-          {this.renderContent()}
-        </ce-table>
-      </ce-card>
+      <div
+        class={{
+          'orders-list': true,
+          'orders-list--has-title': !!this.listTitle,
+        }}
+      >
+        <div class="orders-list__heading">
+          <div class="orders-list__title">
+            <slot name="title">{this.listTitle}</slot>
+          </div>
+        </div>
+        <ce-card no-padding>{this.renderContent()}</ce-card>
+      </div>
     );
   }
 }

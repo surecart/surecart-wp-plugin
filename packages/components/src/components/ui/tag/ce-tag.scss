@@ -10,6 +10,7 @@
   white-space: nowrap;
   user-select: none;
   cursor: pointer;
+  font-weight: var(--ce-font-weight-bold);
 }
 
 .tag__clear::part(base) {
@@ -30,7 +31,7 @@
 .tag--success {
   background-color: var(--ce-color-success-100);
   border-color: var(--ce-color-success-200);
-  color: var(--ce-color-success-700);
+  color: var(--ce-color-success-800);
 }
 
 .tag--info {

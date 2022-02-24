@@ -17,20 +17,24 @@
 
 <body>
 
- <ce-form>
-   <ce-address required></ce-address>
-   <ce-button type="primary" submit>Submit</ce-button>
-   </ce-form>
-
-   <ce-button class="unload">Unload</ce-button>
-
-   <script>
-    const address = document.querySelector('ce-address');
-    const unload = document.querySelector('.unload');
-    unload.addEventListener('click', function() {
-      address.loading = !address.loading;
-    })
-   </script>
+  <div style="max-width: 800px; margin: auto; font-size:15px;">
+  <ce-card no-padding>
+<ce-stacked-list>
+  <ce-stacked-list-row href="#" style="--columns: 4">
+    <div>Testasdfasdf</div>
+    <div>Test</div>
+    <div>Testasdfasdasdfasdfasdfasdfasdfasdfasfdafd</div>
+    <div>Test</div>
+  </ce-stacked-list-row>
+  <ce-stacked-list-row href="#" style="--columns: 4">
+    <div>Test</div>
+    <div>Testa</div>
+    <div>Testasdfasdf</div>
+    <div>Test</div>
+  </ce-stacked-list-row>
+</ce-stacked-list>
+</div>
+</ce-card>
 
 </body>
 </html>

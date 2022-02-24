@@ -1,12 +1,10 @@
 :host {
   display: table-row;
-  border-bottom: 1px solid var(--ce-color-gray-200);
 }
-// :host(:nth-of-type(even)) {
-//   background: var(--ce-color-gray-50);
-// }
-
-ce-table-row {
-  display: table-row;
+:host([href]:hover) {
+  background: var(--ce-color-gray-50);
+}
+:host(:not(:last-child)) {
+  border-bottom: 1px solid var(--ce-color-gray-200);
 }
 

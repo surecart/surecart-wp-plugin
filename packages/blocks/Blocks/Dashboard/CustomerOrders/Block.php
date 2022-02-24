@@ -9,6 +9,7 @@ use CheckoutEngineBlocks\Dashboard\DashboardPage;
  * Checkout block
  */
 class Block extends DashboardPage {
+	protected $attributes = [];
 	/**
 	 * Render the block
 	 *
@@ -18,6 +19,8 @@ class Block extends DashboardPage {
 	 * @return function
 	 */
 	public function render( $attributes, $content ) {
+		$this->attributes = $attributes;
+
 		// get the current page tab and possible id.
 		$id   = sanitize_text_field( $_GET['order']['id'] ?? null );
 		$page = sanitize_text_field( $_GET['order']['page'] ?? 1 );
@@ -75,16 +78,19 @@ class Block extends DashboardPage {
 		if ( ! User::current()->isCustomer() ) {
 			return;
 		}
-		return \CheckoutEngine::blocks()->render(
-			'web/dashboard/orders/index',
+		\CheckoutEngine::assets()->addComponentData(
+			'ce-orders-list',
+			'#customer-orders-index',
 			[
-				'query' => [
-					'customer_ids' => User::current()->customerIds(),
+				'listTitle' => $this->attributes['title'] ?? __( 'Order History', 'checkout-engine' ),
+				'query'     => [
+					'customer_ids' => array_values( User::current()->customerIds() ),
 					'status'       => [ 'paid' ],
 					'page'         => 1,
-					'per_page'     => 10,
+					'per_page'     => 5,
 				],
 			]
 		);
+		return '<ce-orders-list id="customer-orders-index"></ce-orders-list>';
 	}
 }

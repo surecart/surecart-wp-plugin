@@ -996,6 +996,7 @@ export namespace Components {
         "order": Order;
     }
     interface CeOrdersList {
+        "listTitle": string;
         /**
           * Query to fetch orders
          */
@@ -1424,6 +1425,12 @@ export namespace Components {
     }
     interface CeSpinner {
     }
+    interface CeStackedList {
+    }
+    interface CeStackedListRow {
+        "href": string;
+        "mobileSize": number;
+    }
     interface CeStripeElement {
         /**
           * Whether this field is disabled
@@ -1613,6 +1620,7 @@ export namespace Components {
     interface CeTableHead {
     }
     interface CeTableRow {
+        "href": string;
     }
     interface CeTag {
         /**
@@ -2115,6 +2123,18 @@ declare global {
         prototype: HTMLCeSpinnerElement;
         new (): HTMLCeSpinnerElement;
     };
+    interface HTMLCeStackedListElement extends Components.CeStackedList, HTMLStencilElement {
+    }
+    var HTMLCeStackedListElement: {
+        prototype: HTMLCeStackedListElement;
+        new (): HTMLCeStackedListElement;
+    };
+    interface HTMLCeStackedListRowElement extends Components.CeStackedListRow, HTMLStencilElement {
+    }
+    var HTMLCeStackedListRowElement: {
+        prototype: HTMLCeStackedListRowElement;
+        new (): HTMLCeStackedListRowElement;
+    };
     interface HTMLCeStripeElementElement extends Components.CeStripeElement, HTMLStencilElement {
     }
     var HTMLCeStripeElementElement: {
@@ -2297,6 +2317,8 @@ declare global {
         "ce-skeleton": HTMLCeSkeletonElement;
         "ce-spacing": HTMLCeSpacingElement;
         "ce-spinner": HTMLCeSpinnerElement;
+        "ce-stacked-list": HTMLCeStackedListElement;
+        "ce-stacked-list-row": HTMLCeStackedListRowElement;
         "ce-stripe-element": HTMLCeStripeElementElement;
         "ce-stripe-payment-request": HTMLCeStripePaymentRequestElement;
         "ce-subscription": HTMLCeSubscriptionElement;
@@ -3394,6 +3416,7 @@ declare namespace LocalJSX {
         "order"?: Order;
     }
     interface CeOrdersList {
+        "listTitle"?: string;
         /**
           * Query to fetch orders
          */
@@ -3882,6 +3905,12 @@ declare namespace LocalJSX {
     }
     interface CeSpinner {
     }
+    interface CeStackedList {
+    }
+    interface CeStackedListRow {
+        "href"?: string;
+        "mobileSize"?: number;
+    }
     interface CeStripeElement {
         /**
           * Whether this field is disabled
@@ -4089,6 +4118,7 @@ declare namespace LocalJSX {
     interface CeTableHead {
     }
     interface CeTableRow {
+        "href"?: string;
     }
     interface CeTag {
         /**
@@ -4226,6 +4256,8 @@ declare namespace LocalJSX {
         "ce-skeleton": CeSkeleton;
         "ce-spacing": CeSpacing;
         "ce-spinner": CeSpinner;
+        "ce-stacked-list": CeStackedList;
+        "ce-stacked-list-row": CeStackedListRow;
         "ce-stripe-element": CeStripeElement;
         "ce-stripe-payment-request": CeStripePaymentRequest;
         "ce-subscription": CeSubscription;
@@ -4323,6 +4355,8 @@ declare module "@stencil/core" {
             "ce-skeleton": LocalJSX.CeSkeleton & JSXBase.HTMLAttributes<HTMLCeSkeletonElement>;
             "ce-spacing": LocalJSX.CeSpacing & JSXBase.HTMLAttributes<HTMLCeSpacingElement>;
             "ce-spinner": LocalJSX.CeSpinner & JSXBase.HTMLAttributes<HTMLCeSpinnerElement>;
+            "ce-stacked-list": LocalJSX.CeStackedList & JSXBase.HTMLAttributes<HTMLCeStackedListElement>;
+            "ce-stacked-list-row": LocalJSX.CeStackedListRow & JSXBase.HTMLAttributes<HTMLCeStackedListRowElement>;
             "ce-stripe-element": LocalJSX.CeStripeElement & JSXBase.HTMLAttributes<HTMLCeStripeElementElement>;
             "ce-stripe-payment-request": LocalJSX.CeStripePaymentRequest & JSXBase.HTMLAttributes<HTMLCeStripePaymentRequestElement>;
             "ce-subscription": LocalJSX.CeSubscription & JSXBase.HTMLAttributes<HTMLCeSubscriptionElement>;
