@@ -110,7 +110,7 @@ class Encryption {
 	 *
 	 * @return string Default (not user-based) encryption key.
 	 */
-	private function getDefaultKey() {
+	protected function getDefaultKey() {
 		if ( defined( 'CHECKOUT_ENGINE_ENCRYPTION_KEY' ) && '' !== CHECKOUT_ENGINE_ENCRYPTION_KEY ) {
 			return CHECKOUT_ENGINE_ENCRYPTION_KEY;
 		}
