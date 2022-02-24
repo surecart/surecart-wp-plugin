@@ -1,7 +1,7 @@
 {
-	"name": "checkout-engine/vat",
+	"name": "checkout-engine/tax-id-input",
 	"title": "VAT",
-	"description": "Display a VAT field for VAT collection.",
+	"description": "Display a VAT/GST field for VAT collection.",
 	"category": "layout",
 	"keywords": ["totals", "summary"],
 	"parent": ["checkout-engine/form", "checkout-engine/column"],
@@ -9,12 +9,5 @@
 		"reusable": false,
 		"html": false
 	},
-	"attributes": {
-		"collapsible": {
-			"type": "boolean"
-		},
-		"collapsed": {
-			"type": "boolean"
-		}
-	}
+	"attributes": {}
 }

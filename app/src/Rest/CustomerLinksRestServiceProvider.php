@@ -28,7 +28,7 @@ class CustomerLinksRestServiceProvider extends RestServiceProvider implements Re
 	 *
 	 * @var array
 	 */
-	protected $methods = [ 'create', 'find' ];
+	protected $methods = [ 'create' ];
 
 	/**
 	 * Get our sample schema for a post.
@@ -81,45 +81,5 @@ class CustomerLinksRestServiceProvider extends RestServiceProvider implements Re
 	 */
 	public function create_item_permissions_check( $request ) {
 		return true;
-	}
-
-	/**
-	 * Anyone can get a specific subscription
-	 *
-	 * @param \WP_REST_Request $request Full details about the request.
-	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
-	 */
-	public function get_item_permissions_check( $request ) {
-		return true;
-	}
-
-	/**
-	 * Nobody can list these
-	 *
-	 * @param \WP_REST_Request $request Full details about the request.
-	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
-	 */
-	public function get_items_permissions_check( $request ) {
-		return false;
-	}
-
-	/**
-	 * Nobody can update.
-	 *
-	 * @param \WP_REST_Request $request Full details about the request.
-	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
-	 */
-	public function update_item_permissions_check( $request ) {
-		return false;
-	}
-
-	/**
-	 * Nobody can delete.
-	 *
-	 * @param \WP_REST_Request $request Full details about the request.
-	 * @return false
-	 */
-	public function delete_item_permissions_check( $request ) {
-		return false;
 	}
 }

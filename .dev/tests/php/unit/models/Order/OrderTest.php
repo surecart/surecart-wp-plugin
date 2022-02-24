@@ -125,8 +125,12 @@ class OrderTest extends CheckoutEngineUnitTestCase
 		$instance = new Order($request['order'], 'custom');
 		$prepared = $instance->finalize();
 
+		// make sure attriutes page
 		$this->assertEquals($prepared->getAttributes(), $response);
-		$this->assertNotFalse(get_user_by('email', $response['customer']['email']));
+		// user cureated with customer record
+		// $user = User::getUserBy('email', $response['customer']['email']);
+		// $this->assertNotFalse($user->ID);
+		// $this->assertSame($user->customerId(), $response['customer']['id']);
 	}
 
 	public function test_maybeAssociateUser() {
@@ -148,25 +152,5 @@ class OrderTest extends CheckoutEngineUnitTestCase
 		$this->assertInstanceOf(User::class, $associated);
 		$this->assertSame($associated->user_email, 'test@test.com');
 		$this->assertNotFalse(get_user_by('email', $associated->user_email));
-	}
-
-	public function test_can_get_prices()
-	{
-		$order = new Order((object) [
-			'id' => 'test',
-			'line_items' => (object) [
-				'data' => [
-					[
-						'id' => 'test_line_item',
-						'quantity' => 1,
-						'price' => 'asdf'
-					]
-				]
-			]
-		]);
-
-		$this->assertNotEmpty($order->prices);
-		$this->assertSame(array_column($order->prices, 'id'), ['asdf']);
-		$this->assertSame($order->price_ids, ['asdf']);
 	}
 }

@@ -5,11 +5,14 @@ namespace CheckoutEngine\Rest;
 use CheckoutEngine\Rest\RestServiceInterface;
 use CheckoutEngine\Controllers\Rest\SubscriptionsController;
 use CheckoutEngine\Models\User;
+use CheckoutEngine\Rest\Traits\CanListByCustomerIds;
 
 /**
  * Service provider for Price Rest Requests
  */
 class SubscriptionRestServiceProvider extends RestServiceProvider implements RestServiceInterface {
+	use CanListByCustomerIds;
+
 	/**
 	 * Endpoint.
 	 *
@@ -71,21 +74,38 @@ class SubscriptionRestServiceProvider extends RestServiceProvider implements Res
 			'type'       => 'object',
 			// In JSON Schema you can specify object properties in the properties attribute.
 			'properties' => [
-				'id' => [
+				'id'           => [
 					'description' => esc_html__( 'Unique identifier for the object.', 'my-textdomain' ),
 					'type'        => 'string',
 					'context'     => [ 'view', 'edit', 'embed' ],
 					'readonly'    => true,
 				],
 				'trial_end_at' => [
-					'type' => 'integer',
-					'admin_only' => true
-				]
+					'type'       => 'integer',
+					'admin_only' => true,
+				],
 			],
 		];
 
 		return $this->schema;
 	}
+
+	/**
+	 * Mark specific properties that need additional permissions checks
+	 * before modifying. We don't want customers being able to modify these.
+	 *
+	 * @var array
+	 */
+	protected $property_permissions = [
+		'skip_product_group_validation' => 'update_ce_subscriptions',
+		'update_behavior'               => 'update_ce_subscriptions',
+		'skip_proration'                => 'update_ce_subscriptions',
+		'currency'                      => 'update_ce_subscriptions',
+		'trial_end_at'                  => 'update_ce_subscriptions',
+		'metadata'                      => 'update_ce_subscriptions',
+		'customer'                      => 'update_ce_subscriptions',
+		'discount'                      => 'update_ce_subscriptions',
+	];
 
 	/**
 	 * Check cancel permissions.
@@ -104,6 +124,9 @@ class SubscriptionRestServiceProvider extends RestServiceProvider implements Res
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_item_permissions_check( $request ) {
+		if ( current_user_can( 'read_ce_subscriptions' ) ) {
+			return true;
+		}
 		return current_user_can( 'read_ce_subscription', $request['id'] );
 	}
 
@@ -114,17 +137,14 @@ class SubscriptionRestServiceProvider extends RestServiceProvider implements Res
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_items_permissions_check( $request ) {
-		if ( current_user_can( 'read_ce_subscriptions' ) ) {
-			return true;
-		}
-
-		// a customer can list their own sessions.
-		if ( isset( $request['customer_ids'] ) && 1 === count( $request['customer_ids'] ) ) {
-			return User::current()->customerId() === $request['customer_ids'][0];
+		// if the current user can't read.
+		if ( ! current_user_can( 'read_ce_subscriptions' ) ) {
+			// they can list if they are listing their own customer id.
+			return $this->isListingOwnCustomerId( $request );
 		}
 
 		// need read priveleges.
-		return false;
+		return current_user_can( 'read_ce_subscriptions' );
 	}
 
 	/**
@@ -134,10 +154,11 @@ class SubscriptionRestServiceProvider extends RestServiceProvider implements Res
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function update_item_permissions_check( $request ) {
-		if( ! current_user_can( 'edit_ce_subscriptions' ) ) {
-			if ( !empty($request['skip_product_group_validation']) || !empty($request['update_behavior']) || !empty($request['skip_proration']) ) {
-				return false;
-			}
+		// let customers modify pending cancel, quantity and price.
+		// if request is sent with only these keys, then we can modify the subscription.
+		// if they have permission to access it.
+		if ( $this->requestOnlyHasKeys( $request, [ 'cancel_at_period_end', 'quantity', 'price' ] ) ) {
+			return current_user_can( 'edit_ce_subscription', $request['id'] );
 		}
 
 		return current_user_can( 'edit_ce_subscriptions' );
@@ -150,6 +171,6 @@ class SubscriptionRestServiceProvider extends RestServiceProvider implements Res
 	 * @return false
 	 */
 	public function delete_item_permissions_check( $request ) {
-		return current_user_can( 'edit_ce_subscriptions' );
+		return current_user_can( 'delete_ce_subscriptions' );
 	}
 }

@@ -24,7 +24,10 @@ class ProductsController {
 	 * Edit a product.
 	 */
 	public function edit() {
-		return \CheckoutEngine::view( 'admin/products/edit' );
+		// enqueue needed script.
+		add_action( 'admin_enqueue_scripts', \CheckoutEngine::closure()->method( ProductScriptsController::class, 'enqueue' ) );
+		// return view.
+		return '<div id="app"></div>';
 	}
 
 	/**

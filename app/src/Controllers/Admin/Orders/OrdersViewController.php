@@ -25,7 +25,10 @@ class OrdersViewController {
 	 * Coupons edit.
 	 */
 	public function edit() {
-		return \CheckoutEngine::view( 'admin/orders/edit' );
+		// enqueue needed script.
+		add_action( 'admin_enqueue_scripts', \CheckoutEngine::closure()->method( OrderScriptsController::class, 'enqueue' ) );
+		// return view.
+		return '<div id="app"></div>';
 	}
 
 	public function archive( $request ) {

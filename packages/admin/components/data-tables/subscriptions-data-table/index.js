@@ -13,6 +13,7 @@ export default ({
 	isFetching,
 	page,
 	setPage,
+	...props
 }) => {
 	return (
 		<DataTable
@@ -36,6 +37,7 @@ export default ({
 					/>
 				) : null
 			}
+			{...props}
 		/>
 	);
 };

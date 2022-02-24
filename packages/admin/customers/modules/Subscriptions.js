@@ -29,6 +29,7 @@ export default ({ id }) => {
 
 	return (
 		<SubscriptionsDataTable
+			hideHeader={true}
 			columns={{
 				status: {
 					label: __('Status', 'checkout_engine'),
@@ -43,7 +44,7 @@ export default ({ id }) => {
 				created: {
 					label: __('Created', 'checkout_engine'),
 				},
-				actions: {
+				view: {
 					width: '100px',
 				},
 			}}

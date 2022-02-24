@@ -22,6 +22,7 @@ product.define({
 	prices: {
 		data: [price],
 	},
+	product_group,
 });
 
 price.define({
@@ -39,6 +40,7 @@ order.define({
 	purchases: {
 		data: [purchase],
 	},
+	customer,
 });
 
 charge.define({

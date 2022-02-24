@@ -145,15 +145,12 @@ export function* updateDraft(name, index = 0, payload) {
 export function* deleteModel(name, id) {
 	let response;
 	try {
-		yield controls.dispatch(uiStore, 'setSaving', true);
 		response = yield apiFetch({
 			path: `${name}s/${id}`,
 			method: 'DELETE',
 		});
 	} catch (error) {
 		throw error;
-	} finally {
-		yield controls.dispatch(uiStore, 'setSaving', false);
 	}
 
 	// success.
@@ -212,9 +209,6 @@ export function clearDirty() {
 }
 
 export function* saveData(name, data, { query, ...requestArgs } = {}) {
-	// set saving
-	yield controls.dispatch(uiStore, 'setSaving', true);
-
 	// clear errors
 	yield controls.dispatch(uiStore, 'clearModelErrors', name);
 
@@ -237,9 +231,6 @@ export function* saveData(name, data, { query, ...requestArgs } = {}) {
 	// update model.
 	yield controls.dispatch(coreStore, 'receiveModels', response);
 
-	// set saving
-	yield controls.dispatch(uiStore, 'setSaving', false);
-
 	return response;
 }
 
@@ -248,9 +239,6 @@ export function* saveModel(
 	id,
 	{ query, data, path, ...requestArgs } = {}
 ) {
-	// set saving
-	yield controls.dispatch(uiStore, 'setSaving', true);
-
 	// clear errors
 	yield controls.dispatch(uiStore, 'clearModelErrors', key);
 
@@ -265,7 +253,7 @@ export function* saveModel(
 	const dataToSave = Object.keys(data || {}).length ? data : dirty?.[id];
 
 	if (!Object.keys(dataToSave || {}).length && !path) {
-		return yield controls.dispatch(uiStore, 'setSaving', false);
+		return;
 	}
 
 	let response = yield apiFetch({
@@ -284,9 +272,6 @@ export function* saveModel(
 
 	// update model.
 	yield controls.dispatch(coreStore, 'receiveModels', response);
-
-	// set saving
-	yield controls.dispatch(uiStore, 'setSaving', false);
 }
 
 /**
@@ -315,7 +300,7 @@ export function* saveDrafts(name, { query, data, path, ...requestArgs } = {}) {
 
 	// bail, no draft to save here.
 	if (!drafts?.length) {
-		return yield controls.dispatch(uiStore, 'setSaving', false);
+		return false;
 	}
 
 	// batch request others if dirty
@@ -337,9 +322,6 @@ export function* saveDraft(
 	index,
 	{ query, data, path, ...requestArgs } = {}
 ) {
-	// set saving
-	yield controls.dispatch(uiStore, 'setSaving', true);
-
 	// clear errors
 	yield controls.dispatch(uiStore, 'clearModelErrors', key);
 
@@ -353,7 +335,7 @@ export function* saveDraft(
 
 	// bail, no draft to save here.
 	if (!Object.keys(draft || {}).length) {
-		return yield controls.dispatch(uiStore, 'setSaving', false);
+		return false;
 	}
 
 	// make the request.
@@ -376,12 +358,6 @@ export function* saveDraft(
 
 	// update model.
 	yield controls.dispatch(coreStore, 'receiveModels', response);
-
-	// remove draft.
-	// yield controls.dispatch(coreStore, 'removeDraft', key, index);
-
-	// set saving
-	yield controls.dispatch(uiStore, 'setSaving', false);
 
 	return response;
 }

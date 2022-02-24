@@ -9,7 +9,7 @@ let id = 0;
   shadow: true,
 })
 export class CERadio {
-  @Element() el: HTMLCeCheckboxElement;
+  @Element() el: HTMLCeRadioElement;
   private input: HTMLInputElement;
   private formController: any;
   private inputId: string = `radio-${++id}`;

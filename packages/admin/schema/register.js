@@ -29,6 +29,11 @@ dispatch(dataStore).registerEntities([
 		baseURLParams: { context: 'edit' },
 	},
 	{
+		name: 'product-group',
+		baseURL: 'checkout-engine/v1/product-groups',
+		baseURLParams: { context: 'edit' },
+	},
+	{
 		name: 'price',
 		baseURL: 'checkout-engine/v1/prices',
 		baseURLParams: { context: 'edit' },

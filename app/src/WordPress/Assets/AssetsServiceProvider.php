@@ -2,6 +2,7 @@
 
 namespace CheckoutEngine\WordPress\Assets;
 
+use CheckoutEngine\Models\Brand;
 use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
 
 /**
@@ -113,20 +114,26 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 			[],
 			filemtime( trailingslashit( $this->container[ CHECKOUT_ENGINE_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/checkout-engine/checkout-engine.css' ),
 		);
+		$brand  = Brand::find();
+		$style  = 'ce-form, ce-checkout {
+			visibility: hidden;
+			opacity: 0;
+			transition: opacity 0.1s ease;
+		}
+		ce-checkout.hydrated,
+		ce-form.hydrated {
+			visibility: visible;
+			opacity: 1;
+		}';
+		$style .= ':root {';
+		$style .= '--ce-color-primary-500: #' . ( $brand->color ?? '000' ) . ';';
+		$style .= '--ce-focus-ring-color-primary: #' . ( $brand->color ?? '000' ) . ';';
+		$style .= '--ce-input-border-color-focus: #' . ( $brand->color ?? '000' ) . ';';
+		$style .= '}';
+
 		wp_add_inline_style(
 			'checkout-engine-themes-default',
-			'
-			ce-form, ce-checkout {
-				visibility: hidden;
-				opacity: 0;
-				transition: opacity 0.1s ease;
-			}
-			ce-checkout.hydrated,
-			ce-form.hydrated {
-				visibility: visible;
-				opacity: 1;
-			}
-		'
+			$style
 		);
 	}
 

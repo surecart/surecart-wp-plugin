@@ -32,7 +32,9 @@ export default () => {
 		dispatch(uiStore).setInvalid(true);
 	};
 
-	const { id, order, isLoading, error, fetchOrder } = useCurrentPage('order');
+	const { id, order, isLoading, error, fetchOrder, getRelation } =
+		useCurrentPage('order');
+	const customer = getRelation('customer');
 
 	useEffect(() => {
 		if (id) {
@@ -69,7 +71,7 @@ export default () => {
 			}
 			notices={snackbarNotices}
 			removeNotice={removeSnackbarNotice}
-			sidebar={<Sidebar />}
+			sidebar={<Sidebar customer={customer} loading={isLoading} />}
 		>
 			<Fragment>
 				<FlashError path="orders" scrollIntoView />

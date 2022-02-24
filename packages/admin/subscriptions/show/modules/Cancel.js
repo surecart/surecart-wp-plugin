@@ -2,9 +2,10 @@ import { useState } from 'react';
 import Cancel from '../../../components/subscriptions/Cancel';
 import useCurrentPage from '../../../mixins/useCurrentPage';
 
-export default ({ children, onCanceled }) => {
+export default ({ children }) => {
 	const [open, setOpen] = useState();
-	const { id, saveSubscription } = useCurrentPage('subscription');
+	const { id, subscription, saveSubscription } =
+		useCurrentPage('subscription');
 
 	const onCancel = async ({ cancel_behavior }) => {
 		// close modal
@@ -24,7 +25,7 @@ export default ({ children, onCanceled }) => {
 	};
 
 	return (
-		<Cancel onCancel={onCancel} open={open}>
+		<Cancel onCancel={onCancel} open={open} subscription={subscription}>
 			{children}
 		</Cancel>
 	);

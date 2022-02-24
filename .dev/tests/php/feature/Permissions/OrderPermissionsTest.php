@@ -42,12 +42,11 @@ class OrderPermissionsTest extends CheckoutEngineUnitTestCase {
 			->andReturn((object) [
 				'id' => 'testid',
 				'object' => 'order',
-				'customer' => 'testcustomerid',
+				'customer' => 'anybody',
 				'status' => 'draft'
 			]);
 
 		$user = self::factory()->user->create_and_get();
-		add_user_meta( $user->ID, 'ce_customer_id', 'testcustomerid' );
 
 		$this->assertFalse(user_can($user, 'read_ce_orders'));
 		$this->assertTrue(user_can($user, 'edit_ce_order', 'testid'));

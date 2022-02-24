@@ -27,7 +27,7 @@ class User implements ArrayAccess, JsonSerializable {
 	 *
 	 * @var string
 	 */
-	protected $customer_id_key = 'ce_customer_id';
+	protected $customer_id_key = 'ce_customer_ids';
 
 	/**
 	 * Get the customer meta key.
@@ -43,11 +43,24 @@ class User implements ArrayAccess, JsonSerializable {
 	 *
 	 * @return int|null
 	 */
-	protected function customerId() {
+	protected function customerId( $mode = 'live' ) {
 		if ( empty( $this->user->ID ) ) {
 			return '';
 		}
-		return get_user_meta( $this->user->ID, $this->customer_id_key, true );
+		$meta = (array) get_user_meta( $this->user->ID, $this->customer_id_key, true );
+		return $meta[ $mode ] ?? $meta[0];
+	}
+
+	/**
+	 * List the users customer ids.
+	 *
+	 * @return void
+	 */
+	protected function customerIds() {
+		if ( empty( $this->user->ID ) ) {
+			return '';
+		}
+		return (array) get_user_meta( $this->user->ID, $this->customer_id_key, true );
 	}
 
 	/**
@@ -56,8 +69,10 @@ class User implements ArrayAccess, JsonSerializable {
 	 * @param string $id Customer id.
 	 * @return int|bool
 	 */
-	protected function setCustomerId( $id ) {
-		return update_user_meta( $this->user->ID, $this->customer_id_key, $id );
+	protected function setCustomerId( $id, $mode = 'live' ) {
+		$meta          = (array) get_user_meta( $this->user->ID, $this->customer_id_key, true );
+		$meta[ $mode ] = $id;
+		return update_user_meta( $this->user->ID, $this->customer_id_key, $meta );
 	}
 
 	/**
@@ -210,10 +225,15 @@ class User implements ArrayAccess, JsonSerializable {
 	 */
 	protected function findByCustomerId( $id ) {
 		$users = new \WP_User_Query(
-			array(
-				'meta_key'   => $this->customer_id_key,
-				'meta_value' => $id,
-			)
+			[
+				'meta_query' => [
+					[
+						'key'     => $this->customer_id_key,
+						'value'   => $id,
+						'compare' => 'LIKE',
+					],
+				],
+			]
 		);
 		if ( empty( $users->results ) ) {
 			return false;

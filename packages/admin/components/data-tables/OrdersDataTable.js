@@ -6,6 +6,7 @@ import PaginationFooter from './PaginationFooter';
 export default ({
 	data,
 	isLoading,
+	title,
 	error,
 	isFetching,
 	page,
@@ -13,10 +14,11 @@ export default ({
 	pagination,
 	columns,
 	empty,
+	...props
 }) => {
 	return (
 		<DataTable
-			title={__('Orders', 'checkout_engine')}
+			title={title || __('Orders', 'checkout_engine')}
 			columns={columns}
 			empty={empty || __('None found.', 'checkout-engine')}
 			items={(data || [])
@@ -110,6 +112,7 @@ export default ({
 					/>
 				) : null
 			}
+			{...props}
 		/>
 	);
 };

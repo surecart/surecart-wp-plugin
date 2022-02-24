@@ -38,9 +38,16 @@ export default ({
 			<Global
 				styles={css`
 					:root {
-						--ce-color-primary: 200 !important;
-						--ce-color-primary-luminance: 36% !important;
-						--ce-color-primary-saturation: 100% !important;
+						--ce-color-primary-500: var(--wp-admin-theme-color);
+						--ce-focus-ring-color-primary: var(
+							--wp-admin-theme-color
+						);
+						--ce-input-border-color-focus: var(
+							--wp-admin-theme-color
+						);
+					}
+					#wpwrap {
+						background-color: var(--ce-color-gray-100);
 					}
 				`}
 			/>
@@ -177,12 +184,7 @@ export default ({
 								<h1
 									css={css`
 										margin: 0;
-										font-size: var(
-											--ce-form-section-font-size
-										);
-										font-weight: var(
-											--ce-form-section-font-weight
-										);
+										font-size: var(--ce-font-size-large);
 									`}
 								>
 									{title}
@@ -210,19 +212,20 @@ export default ({
 							padding: 0 5px;
 							display: grid;
 							margin: auto;
-							max-width: 1160px;
-							@media screen and (min-width: 960px) {
+							max-width: ${sidebar ? '1160px' : '752px'};
+							${sidebar &&
+							`@media screen and (min-width: 960px) {
 								grid-template-columns: 1fr 380px;
-								grid-gap: 2em;
+								grid-gap: var(--ce-spacing-xxx-large);
 								grid-template-areas: 'nav    sidebar';
-							}
+							}`}
 						`}
 					>
 						<div
 							css={css`
 								margin-bottom: 3em;
 								> * ~ * {
-									margin-top: 2em;
+									margin-top: var(--ce-spacing-xxx-large);
 								}
 							`}
 						>

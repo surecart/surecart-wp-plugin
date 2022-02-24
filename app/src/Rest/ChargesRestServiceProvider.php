@@ -3,13 +3,15 @@
 namespace CheckoutEngine\Rest;
 
 use CheckoutEngine\Controllers\Rest\ChargesController;
-use CheckoutEngine\Models\User;
 use CheckoutEngine\Rest\RestServiceInterface;
+use CheckoutEngine\Rest\Traits\CanListByCustomerIds;
 
 /**
  * Service provider for Price Rest Requests
  */
 class ChargesRestServiceProvider extends RestServiceProvider implements RestServiceInterface {
+	use CanListByCustomerIds;
+
 	/**
 	 * Endpoint.
 	 *
@@ -84,7 +86,7 @@ class ChargesRestServiceProvider extends RestServiceProvider implements RestServ
 	}
 
 	/**
-	 * Anyone can get a specific subscription
+	 * Check if the current user can read a charge.
 	 *
 	 * @param \WP_REST_Request $request Full details about the request.
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
@@ -100,36 +102,13 @@ class ChargesRestServiceProvider extends RestServiceProvider implements RestServ
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_items_permissions_check( $request ) {
-		if ( current_user_can( 'read_ce_charges' ) ) {
-			return true;
-		}
-
-		// a customer can list their own sessions.
-		if ( isset( $request['customer_ids'] ) && 1 === count( $request['customer_ids'] ) ) {
-			return User::current()->customerId() === $request['customer_ids'][0];
+		// if the current user can't read charges.
+		if ( ! current_user_can( 'read_ce_charges' ) ) {
+			// they can list if they are listing their own customer id.
+			return $this->isListingOwnCustomerId( $request );
 		}
 
 		// need read priveleges.
-		return false;
-	}
-
-	/**
-	 * Anyone can update.
-	 *
-	 * @param \WP_REST_Request $request Full details about the request.
-	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
-	 */
-	public function update_item_permissions_check( $request ) {
-		return current_user_can( 'edit_ce_charges' );
-	}
-
-	/**
-	 * Nobody can delete.
-	 *
-	 * @param \WP_REST_Request $request Full details about the request.
-	 * @return false
-	 */
-	public function delete_item_permissions_check( $request ) {
-		return current_user_can( 'edit_ce_charges' );
+		return current_user_can( 'read_ce_charges' );
 	}
 }

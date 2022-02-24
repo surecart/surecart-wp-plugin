@@ -25,11 +25,12 @@ class SubscriptionsController {
 
 	/**
 	 * Edit
+	 *
 	 * @return string
 	 */
 	public function edit() {
 		// enqueue needed script.
-		add_action('admin_enqueue_scripts', \CheckoutEngine::closure()->method( EditScriptsController::class, 'enqueue' ));
+		add_action( 'admin_enqueue_scripts', \CheckoutEngine::closure()->method( EditScriptsController::class, 'enqueue' ) );
 		// return view.
 		return '<div id="app"></div>';
 	}
@@ -41,7 +42,7 @@ class SubscriptionsController {
 	 */
 	public function show() {
 		// enqueue needed script.
-		add_action('admin_enqueue_scripts', \CheckoutEngine::closure()->method( ShowScriptsController::class, 'enqueue' ));
+		add_action( 'admin_enqueue_scripts', \CheckoutEngine::closure()->method( ShowScriptsController::class, 'enqueue' ) );
 		// return view.
 		return '<div id="app"></div>';
 	}

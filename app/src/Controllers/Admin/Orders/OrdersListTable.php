@@ -108,7 +108,7 @@ class OrdersListTable extends ListTable {
 			'date'   => __( 'Date', 'checkout_engine' ),
 			'status' => __( 'Status', 'checkout_engine' ),
 			'total'  => __( 'Total', 'checkout_engine' ),
-			'mode'   => __( 'Mode', 'checkout_engine' ),
+			'mode'   => '',
 			// 'usage' => __( 'Usage', 'checkout_engine' ),
 
 		];
@@ -225,10 +225,6 @@ class OrdersListTable extends ListTable {
 		<div style="opacity: 0.75"><?php echo \esc_html( $this->get_expiration_string( $promotion->redeem_by ) ); ?></div>
 		<?php
 		return ob_get_clean();
-	}
-
-	public function column_mode( $order ) {
-		return $order->live_mode ? '<ce-tag type="success">' . __( 'Live', 'checkout_engine' ) . '</ce-tag>' : '<ce-tag type="warning">' . __( 'Test', 'checkout_engine' ) . '</ce-tag>';
 	}
 
 	/**

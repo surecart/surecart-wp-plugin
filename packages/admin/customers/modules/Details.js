@@ -6,7 +6,6 @@ import { CeInput } from '@checkout-engine/components-react';
 import { css, jsx } from '@emotion/core';
 
 export default ({ customer, loading, updateCustomer }) => {
-	console.log({ customer });
 	const renderLoading = () => {
 		return (
 			<div
@@ -43,7 +42,40 @@ export default ({ customer, loading, updateCustomer }) => {
 						gap: var(--ce-form-row-spacing);
 					`}
 				>
-					<CeInput
+					<ce-columns>
+						<ce-column>
+							<CeInput
+								label={__('Name', 'checkout_engine')}
+								className="ce-customer-name"
+								help={__(
+									'Your customers name.',
+									'checkout_engine'
+								)}
+								attribute="name"
+								value={customer?.name}
+								onCeChange={(e) =>
+									updateCustomer({ name: e.target.value })
+								}
+							/>
+						</ce-column>
+						<ce-column>
+							<CeInput
+								label={__('Email', 'checkout_engine')}
+								className="ce-customer-email"
+								help={__(
+									"Your customer's email address.",
+									'checkout_engine'
+								)}
+								value={customer?.email}
+								name="email"
+								required
+								onCeChange={(e) =>
+									updateCustomer({ email: e.target.value })
+								}
+							/>
+						</ce-column>
+					</ce-columns>
+					{/* <CeInput
 						label={__('Name', 'checkout_engine')}
 						className="ce-customer-name"
 						help={__('Your customers name.', 'checkout_engine')}
@@ -66,7 +98,7 @@ export default ({ customer, loading, updateCustomer }) => {
 						onCeChange={(e) =>
 							updateCustomer({ email: e.target.value })
 						}
-					/>
+					/> */}
 				</div>
 			)}
 		</Box>

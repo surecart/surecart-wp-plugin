@@ -12,6 +12,8 @@ export class CeCard {
   @Prop() noDivider: boolean;
   /** Is this card borderless. */
   @Prop() borderless: boolean;
+  /** Remove padding */
+  @Prop() noPadding: boolean;
   /** Is this card loading. */
   @Prop() loading: boolean;
   /** Does this have a title slot? */
@@ -31,13 +33,14 @@ export class CeCard {
         class={{
           'card': true,
           'card--borderless': this.borderless,
-          'card--has-title-slot': this.hasTitleSlot,
+          'card--no-padding': this.noPadding,
+          // 'card--has-title-slot': this.hasTitleSlot,
         }}
       >
-        <div class="card--title">
+        {/* <div class="card--title">
           {this.loading ? <ce-skeleton style={{ width: '120px' }}></ce-skeleton> : <slot name="title" onSlotchange={() => this.handleSlotChange()}></slot>}
           {!this.noDivider && <ce-divider class="title--divider" part="border" style={{ '--spacing': 'var(--ce-spacing-small)' }}></ce-divider>}
-        </div>
+        </div> */}
         <slot />
       </div>
     );

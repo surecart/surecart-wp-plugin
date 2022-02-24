@@ -5,11 +5,14 @@ namespace CheckoutEngine\Rest;
 use CheckoutEngine\Controllers\Rest\InvoicesController;
 use CheckoutEngine\Models\User;
 use CheckoutEngine\Rest\RestServiceInterface;
+use CheckoutEngine\Rest\Traits\CanListByCustomerIds;
 
 /**
  * Service provider for Invoice Rest Requests
  */
 class InvoicesRestServiceProvider extends RestServiceProvider implements RestServiceInterface {
+	use CanListByCustomerIds;
+
 	/**
 	 * Endpoint.
 	 *
@@ -85,7 +88,7 @@ class InvoicesRestServiceProvider extends RestServiceProvider implements RestSer
 	}
 
 	/**
-	 * Anyone can get a specific subscription
+	 * Get permissions.
 	 *
 	 * @param \WP_REST_Request $request Full details about the request.
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
@@ -95,42 +98,39 @@ class InvoicesRestServiceProvider extends RestServiceProvider implements RestSer
 	}
 
 	/**
-	 * Need priveleges to read checkout sessions.
+	 * List permissions.
 	 *
 	 * @param \WP_REST_Request $request Full details about the request.
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_items_permissions_check( $request ) {
-		if ( current_user_can( 'read_ce_invoices' ) ) {
-			return true;
-		}
-
-		// a customer can list their own sessions.
-		if ( isset( $request['customer_ids'] ) && 1 === count( $request['customer_ids'] ) ) {
-			return User::current()->customerId() === $request['customer_ids'][0];
+		// if the current user can't read.
+		if ( ! current_user_can( 'read_ce_invoices' ) ) {
+			// they can list if they are listing their own customer id.
+			return $this->isListingOwnCustomerId( $request );
 		}
 
 		// need read priveleges.
-		return false;
+		return current_user_can( 'read_ce_invoices' );
 	}
 
 	/**
-	 * Anyone can update.
+	 * Create permissions.
+	 *
+	 * @param \WP_REST_Request $request Full details about the request.
+	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
+	 */
+	public function create_item_permissions_check( $request ) {
+		return current_user_can( 'publish_ce_invoices' );
+	}
+
+	/**
+	 * Update permissions.
 	 *
 	 * @param \WP_REST_Request $request Full details about the request.
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function update_item_permissions_check( $request ) {
-		return current_user_can( 'edit_ce_invoices' );
-	}
-
-	/**
-	 * Nobody can delete.
-	 *
-	 * @param \WP_REST_Request $request Full details about the request.
-	 * @return false
-	 */
-	public function delete_item_permissions_check( $request ) {
 		return current_user_can( 'edit_ce_invoices' );
 	}
 }

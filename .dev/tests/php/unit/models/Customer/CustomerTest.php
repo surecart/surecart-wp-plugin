@@ -62,8 +62,8 @@ class CustomerTest extends CheckoutEngineUnitTestCase
 		$this->assertNotFalse($user);
 
 		// make sure the user has the correct meta.
-		$customer_id = get_user_meta($user->ID, 'ce_customer_id', true);
-		$this->assertSame($customer_id, '48ecc3b6-b20c-4ac5-b62e-976ad68cdb85');
+		$customer_id = get_user_meta($user->ID, 'ce_customer_ids', true);
+		$this->assertSame($customer_id['live'], '48ecc3b6-b20c-4ac5-b62e-976ad68cdb85');
 
 		// make sure we can get the user's customer id.
 		$this->assertSame(User::find($user->ID)->customerId(), '48ecc3b6-b20c-4ac5-b62e-976ad68cdb85');

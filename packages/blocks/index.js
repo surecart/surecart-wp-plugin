@@ -15,6 +15,7 @@ import * as checkbox from '@blocks/checkbox';
 import * as checkout from '@blocks/checkoutForm';
 import * as confirmation from '@blocks/Confirmation';
 import * as coupon from '@blocks/Coupon';
+import * as taxIdInput from '@blocks/TaxIdInput';
 import * as customerDashboardButton from '@blocks/CustomerDashboardButton';
 
 // dashboard
@@ -160,6 +161,7 @@ export const registerCheckoutEngineBlocks = () => {
 		subtotal,
 		name,
 		email,
+		taxIdInput,
 		...dashboardComponents,
 	].forEach(registerBlock);
 };

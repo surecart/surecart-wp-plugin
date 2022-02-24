@@ -11,6 +11,14 @@ use CheckoutEngine\Controllers\Rest\OrderController;
  */
 abstract class RestServiceProvider extends \WP_REST_Controller implements RestServiceInterface {
 	/**
+	 * Mark specific properties that need additional permissions checks
+	 * before modifying. We don't want customers being able to modify these.
+	 *
+	 * @var array
+	 */
+	protected $property_permissions = [];
+
+	/**
 	 * Plugin namespace.
 	 *
 	 * @var string
@@ -179,5 +187,77 @@ abstract class RestServiceProvider extends \WP_REST_Controller implements RestSe
 
 			return rest_ensure_response( $this->filter_response_by_context( is_a( $model, Model::class ) ? $model->toArray() : $model, $context ) );
 		};
+	}
+
+	/**
+	 * Check permissions for specific properties of the request.
+	 *
+	 * @param \WP_REST_Request $request Full details about the request.
+	 * @param array            $keys Keys to check.
+	 *
+	 * @return boolean
+	 */
+	protected function requestOnlyHasKeys( $request, $keys ) {
+		return ! empty( array_diff( array_keys( $request->get_params() ), $keys ) );
+	}
+
+	/**
+	 * Set these all as false by default
+	 * in case parent class doesn't implement them.
+	 *
+	 * @param \WP_REST_Request $request Full details about the request.
+	 *
+	 * @return false
+	 */
+	public function get_item_permissions_check( $request ) {
+		return false;
+	}
+
+	/**
+	 * Set these all as false by default
+	 * in case parent class doesn't implement them.
+	 *
+	 * @param \WP_REST_Request $request Full details about the request.
+	 *
+	 * @return false
+	 */
+	public function get_items_permissions_check( $request ) {
+		return false;
+	}
+
+	/**
+	 * Set these all as false by default
+	 * in case parent class doesn't implement them.
+	 *
+	 * @param \WP_REST_Request $request Full details about the request.
+	 *
+	 * @return false
+	 */
+	public function create_item_permissions_check( $request ) {
+		return false;
+	}
+
+	/**
+	 * Set these all as false by default
+	 * in case parent class doesn't implement them.
+	 *
+	 * @param \WP_REST_Request $request Full details about the request.
+	 *
+	 * @return false
+	 */
+	public function update_item_permissions_check( $request ) {
+		return false;
+	}
+
+	/**
+	 * Set these all as false by default
+	 * in case parent class doesn't implement them.
+	 *
+	 * @param \WP_REST_Request $request Full details about the request.
+	 *
+	 * @return false
+	 */
+	public function delete_item_permissions_check( $request ) {
+		return false;
 	}
 }

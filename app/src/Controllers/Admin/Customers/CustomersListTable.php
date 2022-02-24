@@ -11,8 +11,6 @@ use CheckoutEngine\Controllers\Admin\Tables\ListTable;
  * Create a new table class that will extend the WP_List_Table
  */
 class CustomersListTable extends ListTable {
-	public $checkbox = true;
-
 	/**
 	 * Prepare the items for the table to process
 	 *
@@ -104,6 +102,7 @@ class CustomersListTable extends ListTable {
 			'name'    => __( 'Name', 'checkout_engine' ),
 			'email'   => __( 'Email', 'checkout_engine' ),
 			'created' => __( 'Created', 'checkout_engine' ),
+			'mode'    => '',
 		];
 	}
 

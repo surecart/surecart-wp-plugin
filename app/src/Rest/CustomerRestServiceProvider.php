@@ -3,6 +3,7 @@
 namespace CheckoutEngine\Rest;
 
 use CheckoutEngine\Controllers\Rest\CustomerController;
+use CheckoutEngine\Models\User;
 use CheckoutEngine\Rest\RestServiceInterface;
 
 /**
@@ -55,43 +56,78 @@ class CustomerRestServiceProvider extends RestServiceProvider implements RestSer
 	}
 
 	/**
-	 * Anyone can create one.
+	 * Does the current user match the customer?
 	 *
-	 * @param \WP_REST_Request $request Full details about the request.
-	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
+	 * @param string $id Customer id.
+	 *
+	 * @return bool
 	 */
-	public function create_item_permissions_check( $request ) {
-		return current_user_can( 'edit_ce_customers' );
+	public function currentUserMatchesCustomerId( $id ) {
+		$user = User::findByCustomerId( $id );
+		if ( ! $user || is_wp_error( $user ) ) {
+			return false;
+		}
+
+		// user can get their own customer record.
+		if ( User::current()->ID === $user->ID ) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
-	 * Get Item Permissions Check
+	 * A WordPress user can read their own customer record.
 	 *
 	 * @param \WP_REST_Request $request Full details about the request.
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_item_permissions_check( $request ) {
-		return current_user_can( 'edit_ce_customer', $request['id'] );
+		if ( $this->currentUserMatchesCustomerId( $request['id'] ) ) {
+			return true;
+		}
+
+		// need to be able to read customers.
+		return current_user_can( 'read_ce_customers' );
 	}
 
 	/**
-	 * Nobody can list these
+	 * Read permissions.
 	 *
 	 * @param \WP_REST_Request $request Full details about the request.
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_items_permissions_check( $request ) {
-		return current_user_can( 'edit_ce_customers' );
+		return current_user_can( 'read_ce_customers' );
+	}
+
+
+	/**
+	 * Create permissions.
+	 *
+	 * @param \WP_REST_Request $request Full details about the request.
+	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
+	 */
+	public function create_item_permissions_check( $request ) {
+		return current_user_can( 'publish_ce_customers' );
 	}
 
 	/**
-	 * Nobody can update.
+	 * Update permissions.
 	 *
 	 * @param \WP_REST_Request $request Full details about the request.
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function update_item_permissions_check( $request ) {
-		return current_user_can( 'edit_ce_customer', $request['id'] );
+		// if the current user matches the customer id.
+		if ( ! current_user_can( 'edit_ce_customers' ) ) {
+			if ( $this->currentUserMatchesCustomerId( $request['id'] ) ) {
+				// whitelist specific params they are allowed to update.
+				return $this->requestOnlyHasKeys( $request, [ 'billing_address', 'shipping_address', 'default_payment_method', 'tax_identifier', 'unsubscribed', 'phone', 'name', 'email' ] );
+			}
+		}
+
+		return current_user_can( 'edit_ce_customers' );
 	}
 
 	/**
@@ -101,6 +137,6 @@ class CustomerRestServiceProvider extends RestServiceProvider implements RestSer
 	 * @return false
 	 */
 	public function delete_item_permissions_check( $request ) {
-		return current_user_can( 'edit_ce_customer', $request['id'] );
+		return current_user_can( 'delete_ce_customers' );
 	}
 }

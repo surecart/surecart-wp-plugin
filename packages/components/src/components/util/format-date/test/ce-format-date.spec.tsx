@@ -5,7 +5,7 @@ describe('ce-format-date', () => {
   it('renders', async () => {
     const page = await newSpecPage({
       components: [CeFormatDate],
-      html: `<ce-format-date></ce-format-date>`,
+      template: () => <ce-format-date></ce-format-date>,
     });
     expect(page.root).toMatchSnapshot();
   });

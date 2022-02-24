@@ -91,16 +91,19 @@ export default ({ subscription, children }) => {
 
 						<ce-choices label={__('Cancel', 'checkout_engine')}>
 							<div>
-								<ce-choice
-									name="cancel_behavior"
-									value="pending"
-									checked
-								>
-									{__(
-										'	At end of current period',
-										'checkout_engine'
-									)}
-								</ce-choice>
+								{subscription?.current_period_end_at !==
+									null && (
+									<ce-choice
+										name="cancel_behavior"
+										value="pending"
+										checked
+									>
+										{__(
+											'	At end of current period',
+											'checkout_engine'
+										)}
+									</ce-choice>
+								)}
 								<ce-choice
 									name="cancel_behavior"
 									value="immediate"

@@ -81,7 +81,7 @@ trait CanFinalize {
 		// find any existing users.
 		$existing = User::getUserBy( 'email', $customer['email'] );
 		// If they match.
-		if ( $existing && $customer['id'] !== $existing->customerId() ) {
+		if ( $existing && $customer['id'] === $existing->customerId( $this->live_mode ? 'live' : 'test' ) ) {
 			return $existing;
 		}
 
@@ -96,6 +96,9 @@ trait CanFinalize {
 		if ( is_wp_error( $created ) ) {
 			return $created;
 		}
+
+		// set the customer id.
+		$created->setCustomerId( $customer['id'], $this->live_mode ? 'live' : 'test' );
 
 		if ( ! empty( $created->ID ) ) {
 			return $created;

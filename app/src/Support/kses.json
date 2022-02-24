@@ -64,6 +64,7 @@
     "borderless": true,
     "loading": true,
     "no-divider": true,
+    "no-padding": true,
     "style": true,
     "id": true,
     "class": true,
@@ -902,12 +903,6 @@
     "class": true,
     "slot": true
   },
-  "ce-table-body": {
-    "style": true,
-    "id": true,
-    "class": true,
-    "slot": true
-  },
   "ce-table-cell": {
     "style": true,
     "id": true,
@@ -931,6 +926,16 @@
     "pill": true,
     "size": true,
     "type": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-tax-id-input": {
+    "draft": true,
+    "order": true,
+    "show": true,
+    "tax_status": true,
     "style": true,
     "id": true,
     "class": true,

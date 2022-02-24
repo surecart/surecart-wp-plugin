@@ -50,7 +50,7 @@
 			</div>
 		<?php endif; ?>
 
-		<form action="" method="post" onSubmit="return false;">
+		<form action="" method="post">
 			<div class="ce-section-heading">
 				<h3>
 					<ce-icon name="sliders"></ce-icon>
@@ -80,7 +80,7 @@
 					<ce-text style="--font-size: var(--ce-font-size-large); --font-weight: var(--ce-font-weight-bold); --line-height:1;"><?php esc_html_e( 'Uninstall', 'checkout_engine' ); ?></ce-text>
 					<ce-text style="margin-bottom: 1em; --line-height:1; --color: var(--ce-color-gray-500)"><?php esc_html_e( 'Change your plugin uninstall settings.', 'checkout_engine' ); ?></ce-text>
 					<ce-card>
-						<ce-switch name="uninstall" onCeChange="if(!confirm('Are you sure you want to sign out?'))return false;" <?php checked( $uninstall, 0, 1 ); ?>>
+						<ce-switch name="uninstall" <?php checked( $uninstall, 1 ); ?> value="on">
 							<?php _e( 'Uninstall On Delete', 'checkout_engine' ); ?>
 							<span slot="description"><?php _e( 'Completely remove all plugin data when deleted. This cannot be undone.', 'checkout_engine' ); ?></span>
 						</ce-switch>

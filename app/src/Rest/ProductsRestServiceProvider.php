@@ -77,7 +77,7 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 	 */
 	public function get_items_permissions_check( $request ) {
 		// anyone can get them if they have the ids.
-		if ( ! empty( $request['ids'] ) ) {
+		if ( ! empty( $request['ids'] ) && false === $request['archived'] ) {
 			return true;
 		}
 
@@ -91,7 +91,7 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function create_item_permissions_check( $request ) {
-		return current_user_can( 'publish_posts' ); // TODO: add cap.
+		return current_user_can( 'publish_ce_products' );
 	}
 
 	/**
@@ -101,7 +101,7 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function update_item_permissions_check( $request ) {
-		return current_user_can( 'edit_posts' ); // TODO: add cap.
+		return current_user_can( 'edit_ce_products' );
 	}
 
 	/**
@@ -111,6 +111,6 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function delete_item_permissions_check( $request ) {
-		return current_user_can( 'delete_posts' ); // TODO: add cap.
+		return current_user_can( 'delete_ce_products' );
 	}
 }

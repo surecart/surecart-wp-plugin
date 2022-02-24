@@ -8,6 +8,7 @@ export default ({
 	title = '',
 	footer = '',
 	items = [],
+	hideHeader = false,
 	columns = {},
 	children,
 	empty = '',
@@ -23,15 +24,16 @@ export default ({
 					borderRight: '0',
 				}}
 			>
-				{Object.keys(columns).map((key) => (
-					<ce-table-cell
-						slot="head"
-						style={{ width: columns[key]?.width }}
-						key={key}
-					>
-						{columns[key]?.label}
-					</ce-table-cell>
-				))}
+				{!hideHeader &&
+					Object.keys(columns).map((key) => (
+						<ce-table-cell
+							slot="head"
+							style={{ width: columns[key]?.width }}
+							key={key}
+						>
+							{columns[key]?.label}
+						</ce-table-cell>
+					))}
 
 				<ce-table-row>
 					{Object.keys(columns).map((key) => (
@@ -65,7 +67,7 @@ export default ({
 		>
 			<Box
 				title={title}
-				hasDivider={false}
+				noPadding={true}
 				footer={
 					!!(loading && footer) ? (
 						<ce-skeleton style={{ width: '70px' }}></ce-skeleton>
@@ -85,15 +87,16 @@ export default ({
 							borderRight: '0',
 						}}
 					>
-						{Object.keys(columns).map((key) => (
-							<ce-table-cell
-								slot="head"
-								style={{ width: columns[key]?.width }}
-								key={key}
-							>
-								{columns[key]?.label}
-							</ce-table-cell>
-						))}
+						{!hideHeader &&
+							Object.keys(columns).map((key) => (
+								<ce-table-cell
+									slot="head"
+									style={{ width: columns[key]?.width }}
+									key={key}
+								>
+									{columns[key]?.label}
+								</ce-table-cell>
+							))}
 
 						{(items || []).map((item) => (
 							<ce-table-row key={item.id}>

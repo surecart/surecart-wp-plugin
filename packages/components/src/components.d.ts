@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Address, ChoiceItem, Coupon, Customer, Invoice, LineItemData, Order, OrderStatus, Price, PriceChoice, Prices, Products, ResponseError, Subscription, SubscriptionStatus } from "./types";
+import { Address, ChoiceItem, Coupon, Customer, Invoice, LineItemData, Order, OrderStatus, Price, PriceChoice, Prices, Products, ResponseError, Subscription, SubscriptionStatus, TaxStatus } from "./types";
 import { IconLibraryMutator, IconLibraryResolver } from "./components/ui/icon/library";
 export namespace Components {
     interface CeAddress {
@@ -145,6 +145,10 @@ export namespace Components {
           * Eliminate the divider
          */
         "noDivider": boolean;
+        /**
+          * Remove padding
+         */
+        "noPadding": boolean;
     }
     interface CeCcLogo {
         "brand": string;
@@ -1628,6 +1632,15 @@ export namespace Components {
          */
         "type": 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text';
     }
+    interface CeTaxIdInput {
+        "draft": { shipping_country: string };
+        "order": Order;
+        /**
+          * Force show the field.
+         */
+        "show": boolean;
+        "tax_status": TaxStatus;
+    }
     interface CeText {
         "tag": 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p';
         "truncate": boolean;
@@ -2186,6 +2199,12 @@ declare global {
         prototype: HTMLCeTagElement;
         new (): HTMLCeTagElement;
     };
+    interface HTMLCeTaxIdInputElement extends Components.CeTaxIdInput, HTMLStencilElement {
+    }
+    var HTMLCeTaxIdInputElement: {
+        prototype: HTMLCeTaxIdInputElement;
+        new (): HTMLCeTaxIdInputElement;
+    };
     interface HTMLCeTextElement extends Components.CeText, HTMLStencilElement {
     }
     var HTMLCeTextElement: {
@@ -2292,6 +2311,7 @@ declare global {
         "ce-table-head": HTMLCeTableHeadElement;
         "ce-table-row": HTMLCeTableRowElement;
         "ce-tag": HTMLCeTagElement;
+        "ce-tax-id-input": HTMLCeTaxIdInputElement;
         "ce-text": HTMLCeTextElement;
         "ce-tooltip": HTMLCeTooltipElement;
         "ce-total": HTMLCeTotalElement;
@@ -2443,6 +2463,10 @@ declare namespace LocalJSX {
           * Eliminate the divider
          */
         "noDivider"?: boolean;
+        /**
+          * Remove padding
+         */
+        "noPadding"?: boolean;
     }
     interface CeCcLogo {
         "brand"?: string;
@@ -3826,6 +3850,10 @@ declare namespace LocalJSX {
         /**
           * Update line items event
          */
+        "onCeUpdateDraftState"?: (event: CustomEvent<Order>) => void;
+        /**
+          * Update line items event
+         */
         "onCeUpdateOrderState"?: (event: CustomEvent<Order>) => void;
         /**
           * Order Object
@@ -4081,6 +4109,15 @@ declare namespace LocalJSX {
          */
         "type"?: 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text';
     }
+    interface CeTaxIdInput {
+        "draft"?: { shipping_country: string };
+        "order"?: Order;
+        /**
+          * Force show the field.
+         */
+        "show"?: boolean;
+        "tax_status"?: TaxStatus;
+    }
     interface CeText {
         "tag"?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p';
         "truncate"?: boolean;
@@ -4203,6 +4240,7 @@ declare namespace LocalJSX {
         "ce-table-head": CeTableHead;
         "ce-table-row": CeTableRow;
         "ce-tag": CeTag;
+        "ce-tax-id-input": CeTaxIdInput;
         "ce-text": CeText;
         "ce-tooltip": CeTooltip;
         "ce-total": CeTotal;
@@ -4299,6 +4337,7 @@ declare module "@stencil/core" {
             "ce-table-head": LocalJSX.CeTableHead & JSXBase.HTMLAttributes<HTMLCeTableHeadElement>;
             "ce-table-row": LocalJSX.CeTableRow & JSXBase.HTMLAttributes<HTMLCeTableRowElement>;
             "ce-tag": LocalJSX.CeTag & JSXBase.HTMLAttributes<HTMLCeTagElement>;
+            "ce-tax-id-input": LocalJSX.CeTaxIdInput & JSXBase.HTMLAttributes<HTMLCeTaxIdInputElement>;
             "ce-text": LocalJSX.CeText & JSXBase.HTMLAttributes<HTMLCeTextElement>;
             "ce-tooltip": LocalJSX.CeTooltip & JSXBase.HTMLAttributes<HTMLCeTooltipElement>;
             "ce-total": LocalJSX.CeTotal & JSXBase.HTMLAttributes<HTMLCeTotalElement>;

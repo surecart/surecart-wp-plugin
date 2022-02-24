@@ -1,5 +1,5 @@
 <!-- refresh this page every 15 minutes to prevent session from expiring -->
-<meta http-equiv="refresh" content="900" >
+<meta http-equiv="refresh" content="1800" >
 
 <style>
 	#wpbody-content, #wpcontent {
@@ -25,6 +25,7 @@
 		width: 100% !important;
 		left: 0;
 		background: white;
+		z-index:9;
 	}
 </style>
 

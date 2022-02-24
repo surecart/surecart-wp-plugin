@@ -26,6 +26,7 @@ export default ({ id }) => {
 
 	return (
 		<ChargesDataTable
+			hideHeader={true}
 			columns={{
 				amount: {
 					label: __('Amount', 'checkout_engine'),

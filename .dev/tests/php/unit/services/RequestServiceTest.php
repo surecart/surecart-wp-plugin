@@ -30,6 +30,6 @@ class RequestServiceTest extends CheckoutEngineUnitTestCase
 	public function test_gets_base_url()
 	{
 		$service = new RequestService();
-		$this->assertSame('https://surecart-staging.herokuapp.com/api/v1/', $service->getBaseUrl());
+		$this->assertSame('https://staging.surecart.com/api/v1/', $service->getBaseUrl());
 	}
 }

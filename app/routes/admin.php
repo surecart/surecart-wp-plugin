@@ -122,7 +122,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /*
 |--------------------------------------------------------------------------
-| Orders
+| Subscriptions
 |--------------------------------------------------------------------------
 */
 \CheckoutEngine::route()
@@ -144,11 +144,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 */
 \CheckoutEngine::route()
 ->where( 'admin', 'ce-product-groups' )
-->middleware( 'user.can:edit_ce_subscriptions' ) // TODO: change to manage coupons.
+->middleware( 'user.can:edit_ce_products' ) // TODO: change to manage coupons.
 ->setNamespace( '\\CheckoutEngine\\Controllers\\Admin\\ProductGroups\\' )
 ->group(
 	function() {
 		\CheckoutEngine::route()->get()->where( 'ce_url_var', false, 'action' )->name( 'product_groups.index' )->handle( 'ProductGroupsController@index' );
+		\CheckoutEngine::route()->get()->where( 'ce_url_var', 'show', 'action' )->name( 'product_groups.show' )->handle( 'ProductGroupsController@show' );
+		\CheckoutEngine::route()->get()->where( 'ce_url_var', 'edit', 'action' )->name( 'product_groups.edit' )->handle( 'ProductGroupsController@show' );
+
 	}
 );
 

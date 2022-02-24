@@ -2,10 +2,10 @@ import { Fragment } from '@wordpress/element';
 import Customer from './modules/Customer';
 import Purchases from './modules/Purchases';
 
-export default () => {
+export default ({ customer, loading }) => {
 	return (
 		<Fragment>
-			<Customer />
+			<Customer customer={customer} isLoading={loading} />
 			<Purchases />
 		</Fragment>
 	);

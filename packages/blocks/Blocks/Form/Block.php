@@ -2,6 +2,8 @@
 
 namespace CheckoutEngineBlocks\Form;
 
+use CheckoutEngine\Models\Account;
+use CheckoutEngine\Models\Brand;
 use CheckoutEngineBlocks\BaseBlock;
 
 /**

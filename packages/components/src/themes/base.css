@@ -188,12 +188,12 @@ ce-button-group > ce-tooltip > ce-button.ce-focus {
   --ce-line-height-dense: 1.4;
   --ce-line-height-normal: 1.8;
   --ce-line-height-loose: 2.2;
-  --ce-focus-ring-color-primary: #3b82f654;
+  --ce-focus-ring-color-primary: var(--ce-color-primary-500);
   --ce-focus-ring-color-success: #22c55e54;
   --ce-focus-ring-color-info: #6b728054;
   --ce-focus-ring-color-warning: #f59e0b54;
   --ce-focus-ring-color-danger: #ef444454;
-  --ce-focus-ring-width: 3px;
+  --ce-focus-ring-width: 2px;
   --ce-button-font-size-small: var(--ce-font-size-x-small);
   --ce-button-font-size-medium: var(--ce-font-size-medium);
   --ce-button-font-size-large: var(--ce-font-size-large);
@@ -223,7 +223,7 @@ ce-button-group > ce-tooltip > ce-button.ce-focus {
   --ce-input-border-color-disabled: var(--ce-color-gray-300);
   --ce-input-border-color-invalid: var(--ce-color-danger-500);
   --ce-input-border-width: 1px;
-  --ce-input-border-radius-small: var(--ce-border-radius-medium);
+  --ce-input-border-radius-small: var(--ce-border-radius-small);
   --ce-input-border-radius-medium: var(--ce-border-radius-medium);
   --ce-input-border-radius-large: var(--ce-border-radius-medium);
   --ce-input-font-family: var(--ce-font-sans);

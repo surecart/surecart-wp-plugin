@@ -2,8 +2,6 @@
 
 namespace CheckoutEngine\Controllers\Admin\ProductGroups;
 
-use CheckoutEngine\Support\Currency;
-use CheckoutEngine\Support\TimeDate;
 use CheckoutEngine\Controllers\Admin\Tables\ListTable;
 use CheckoutEngine\Models\ProductGroup;
 
@@ -163,7 +161,7 @@ class ProductGroupsListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_status( $group ) {
-		return $group->archived ? 'archived' : 'live';
+		return $group->archived ? '<ce-tag type="warning">' . __( 'Archived', 'checkout_engine' ) . '</ce-tag>' : '<ce-tag type="success">' . __( 'Live', 'checkout_engine' ) . '</ce-tag>';
 	}
 
 	public function column_name( $group ) {
@@ -175,7 +173,7 @@ class ProductGroupsListTable extends ListTable {
 		<?php
 		echo $this->row_actions(
 			[
-				'edit' => '<a href="' . esc_url( \CheckoutEngine::getUrl()->edit( 'product_group', $group->id ) ) . '" aria-label="' . esc_attr( 'Edit Product Group', 'checkout_engine' ) . '">' . __( 'Edit', 'checkout_engine' ) . '</a>',
+				'view' => '<a href="' . esc_url( \CheckoutEngine::getUrl()->show( 'product_group', $group->id ) ) . '" aria-label="' . esc_attr( 'View Product Group', 'checkout_engine' ) . '">' . __( 'View', 'checkout_engine' ) . '</a>',
 			],
 		);
 		return ob_get_clean();

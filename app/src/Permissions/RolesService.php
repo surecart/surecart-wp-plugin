@@ -139,12 +139,14 @@ class RolesService {
 			'ce_purchase',
 			'ce_webhook',
 			'ce_product',
+			'ce_customer',
 			'ce_order',
 			'ce_invoice',
 			'ce_price',
 			'ce_order',
 			'ce_refund',
 			'ce_charge',
+			'ce_payment_method',
 			'ce_subscription',
 		];
 
@@ -165,14 +167,6 @@ class RolesService {
 				"view_{$capability_type}_stats",
 			);
 		}
-
-		$capabilities['ce_customer'] = [
-			'edit_ce_customer', // edit.
-			'read_ce_customer', // read.
-			'delete_ce_customer', // delete.
-			'edit_ce_customers', // edit all.
-			'delete_ce_customers', // delete.
-		];
 
 		return $capabilities;
 	}

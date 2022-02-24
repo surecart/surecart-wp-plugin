@@ -13,6 +13,7 @@ export default ({
 	empty,
 	page,
 	setPage,
+	...props
 }) => {
 	return (
 		<DataTable
@@ -35,6 +36,7 @@ export default ({
 					/>
 				) : null
 			}
+			{...props}
 		/>
 	);
 };

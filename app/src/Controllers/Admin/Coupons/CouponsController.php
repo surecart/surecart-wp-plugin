@@ -25,6 +25,9 @@ class CouponsController {
 	 * Coupons edit.
 	 */
 	public function edit() {
-		return \CheckoutEngine::view( 'admin/coupons/edit' );
+		// enqueue needed script.
+		add_action( 'admin_enqueue_scripts', \CheckoutEngine::closure()->method( CouponScriptsController::class, 'enqueue' ) );
+		// return view.
+		return '<div id="app"></div>';
 	}
 }

@@ -2,7 +2,6 @@
 
 namespace CheckoutEngine\Controllers\Rest;
 
-use CheckoutEngine\Support\Errors;
 use CheckoutEngine\Models\Order;
 use CheckoutEngine\Models\Form;
 use CheckoutEngine\Models\User;

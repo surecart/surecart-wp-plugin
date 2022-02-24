@@ -4,6 +4,7 @@ export default {
 	account: new schema.Entity('account'),
 	price: new schema.Entity('price'),
 	product: new schema.Entity('product'),
+	product_group: new schema.Entity('product_group'),
 	purchase: new schema.Entity('purchase'),
 	payment_method: new schema.Entity('payment_method'),
 	card: new schema.Entity('card'),

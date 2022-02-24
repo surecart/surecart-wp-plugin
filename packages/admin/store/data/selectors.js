@@ -126,7 +126,6 @@ export function prepareFetchRequest(state, name, data) {
 	const { id, ...params } = data;
 	// get the registered entity
 	const entity = getEntity(state, name);
-	console.log({ entity, name, state });
 	// make the path.
 	const path = id ? `${entity?.baseURL}/${id}` : entity?.baseURL;
 	// return the request.

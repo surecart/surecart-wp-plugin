@@ -18,7 +18,7 @@ export class CESwitch {
   @State() private hasFocus: boolean = false;
 
   /** The switch's name attribute. */
-  @Prop() name: string;
+  @Prop({ reflect: true }) name: string;
 
   /** The switch's value attribute. */
   @Prop() value: string;
@@ -125,7 +125,7 @@ export class CESwitch {
             type="checkbox"
             role="switch"
             name={this.name}
-            value={this.value}
+            value={this.value || 'on'}
             checked={this.checked}
             disabled={this.disabled}
             required={this.required}

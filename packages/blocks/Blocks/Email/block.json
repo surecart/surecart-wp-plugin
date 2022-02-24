@@ -45,7 +45,5 @@
 		"name": {
 			"type": "string"
 		}
-	},
-	"editorScript": "file:../../dist/email/editor.js",
-	"script": "file:../../dist/email/script.js"
+	}
 }

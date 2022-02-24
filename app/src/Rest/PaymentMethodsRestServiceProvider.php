@@ -5,11 +5,14 @@ namespace CheckoutEngine\Rest;
 use CheckoutEngine\Controllers\Rest\PaymentMethodsController;
 use CheckoutEngine\Models\User;
 use CheckoutEngine\Rest\RestServiceInterface;
+use CheckoutEngine\Rest\Traits\CanListByCustomerIds;
 
 /**
  * Service provider for Price Rest Requests
  */
 class PaymentMethodsRestServiceProvider extends RestServiceProvider implements RestServiceInterface {
+	use CanListByCustomerIds;
+
 	/**
 	 * Endpoint.
 	 *
@@ -63,52 +66,49 @@ class PaymentMethodsRestServiceProvider extends RestServiceProvider implements R
 	}
 
 	/**
-	 * Anyone can get a specific subscription
+	 * Read permissions.
 	 *
 	 * @param \WP_REST_Request $request Full details about the request.
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_item_permissions_check( $request ) {
-		return current_user_can( 'read_ce_charge', $request['id'] );
+		return current_user_can( 'read_ce_payment_method', $request['id'] );
 	}
 
 	/**
-	 * Need priveleges to read checkout sessions.
+	 * List permissions.
 	 *
 	 * @param \WP_REST_Request $request Full details about the request.
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_items_permissions_check( $request ) {
-		if ( current_user_can( 'read_ce_charges' ) ) {
-			return true;
-		}
-
-		// a customer can list their own sessions.
-		if ( isset( $request['customer_ids'] ) && 1 === count( $request['customer_ids'] ) ) {
-			return User::current()->customerId() === $request['customer_ids'][0];
+		// a customer can list their own payment methods.
+		if ( ! current_user_can( 'read_ce_payment_methods' ) ) {
+			// they can list if they are listing their own customer id.
+			return $this->isListingOwnCustomerId( $request );
 		}
 
 		// need read priveleges.
-		return false;
+		return current_user_can( 'read_ce_payment_methods' );
 	}
 
 	/**
-	 * Anyone can update.
+	 * Update permissions.
 	 *
 	 * @param \WP_REST_Request $request Full details about the request.
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function update_item_permissions_check( $request ) {
-		return current_user_can( 'edit_ce_charges' );
+		return current_user_can( 'edit_ce_payment_methods' );
 	}
 
 	/**
-	 * Nobody can delete.
+	 * Delete permissions.
 	 *
 	 * @param \WP_REST_Request $request Full details about the request.
 	 * @return false
 	 */
 	public function delete_item_permissions_check( $request ) {
-		return current_user_can( 'edit_ce_charges' );
+		return current_user_can( 'delete_ce_payment_methods' );
 	}
 }

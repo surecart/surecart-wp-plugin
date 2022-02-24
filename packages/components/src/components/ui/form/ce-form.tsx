@@ -54,8 +54,10 @@ export class CEForm {
       <div part="base" class="form" role="form">
         <form
           ref={el => (this.formElement = el as HTMLFormElement)}
-          onSubmit={e => {
+          onSubmit={async e => {
             e.preventDefault();
+            console.log(e);
+            console.log(await this.getFormJson());
             this.ceFormSubmit.emit();
           }}
           novalidate={this.novalidate}

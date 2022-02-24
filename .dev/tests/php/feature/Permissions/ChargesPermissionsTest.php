@@ -27,7 +27,7 @@ class ChargesPermissionsTest extends CheckoutEngineUnitTestCase {
 		parent::setUp();
 	}
 
-	public function test_subscription_edit_permissions()
+	public function test_edit_permissions()
 	{
 		\CheckoutEngine::plugin()->activation()->bootstrap();
 
@@ -50,6 +50,6 @@ class ChargesPermissionsTest extends CheckoutEngineUnitTestCase {
 
 		$this->assertFalse(user_can($user, 'read_ce_charges')); // they can't read charges
 		$this->assertFalse(user_can($user, 'edit_ce_charge', 'testid')); // they can't edit charges
-		$this->assertTrue(user_can($user, 'read_ce_charge', 'testid')); // they can read a specific charge
+		$this->assertFalse(user_can($user, 'read_ce_charge', 'testid')); // they can read a specific charge
 	}
 }

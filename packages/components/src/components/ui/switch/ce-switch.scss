@@ -72,8 +72,8 @@
 
   .switch__thumb {
     background-color: var(--ce-color-white);
-    border-color: var(--ce-color-primary-500);
-    box-shadow: 0 0 0 var(--ce-focus-ring-width) var(--ce-focus-ring-color-primary);
+    border-color: var(--ce-color-gray-300);
+    box-shadow: 0 0 0 1px var(--ce-color-gray-300);
   }
 }
 
@@ -91,8 +91,7 @@
 
 // Checked + hover
 .switch.switch--checked:not(.switch--disabled) .switch__control:hover {
-  background-color: var(--ce-color-primary-400);
-  border-color: var(--ce-color-primary-400);
+  opacity: 0.8;
 
   .switch__thumb {
     background-color: var(--ce-color-white);
@@ -102,13 +101,10 @@
 
 // Checked + focus
 .switch.switch--checked:not(.switch--disabled).switch--focused .switch__control {
-  background-color: var(--ce-color-primary-400);
-  border-color: var(--ce-color-primary-400);
-
   .switch__thumb {
     background-color: var(--ce-color-white);
     border-color: var(--ce-color-primary-500);
-    box-shadow: 0 0 0 var(--ce-focus-ring-width) var(--ce-focus-ring-color-primary);
+    box-shadow: 0 0 0 1px var(--ce-focus-ring-color-primary);
   }
 }
 

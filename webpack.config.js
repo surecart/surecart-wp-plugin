@@ -40,6 +40,10 @@ module.exports = {
 			__dirname,
 			'packages/admin/settings/index.js'
 		),
+		['admin/product-groups']: path.resolve(
+			__dirname,
+			'packages/admin/product-groups/index.js'
+		),
 		['admin/subscriptions/show']: path.resolve(
 			__dirname,
 			'packages/admin/subscriptions/show/index.js'

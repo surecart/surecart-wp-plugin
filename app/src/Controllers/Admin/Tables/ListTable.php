@@ -97,4 +97,8 @@ abstract class ListTable extends \WP_List_Table {
 			esc_attr( $model->created_at )
 		);
 	}
+
+	public function column_mode( $order ) {
+		return ! $order->live_mode ? '<ce-tag type="warning">' . __( 'Test', 'checkout_engine' ) . '</ce-tag>' : '';
+	}
 }

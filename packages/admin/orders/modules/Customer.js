@@ -5,28 +5,9 @@ import { CeButton } from '@checkout-engine/components-react';
 import { __ } from '@wordpress/i18n';
 
 import Box from '../../ui/Box';
-import { useEffect } from 'react';
-import useCurrentPage from '../../mixins/useCurrentPage';
-import useEntities from '../../mixins/useEntities';
 import { addQueryArgs } from '@wordpress/url';
 
-export default () => {
-	const { id } = useCurrentPage();
-	const { customers, isLoading, pagination, error, fetchCustomers } =
-		useEntities('customer');
-
-	useEffect(() => {
-		id &&
-			fetchCustomers({
-				query: {
-					order_ids: [id],
-					context: 'edit',
-				},
-			});
-	}, [id]);
-
-	const customer = customers?.[0];
-
+export default ({ customer, loading }) => {
 	const renderLoading = () => {
 		return <ce-skeleton></ce-skeleton>;
 	};
@@ -38,9 +19,9 @@ export default () => {
 				<div>
 					<CeButton
 						href={addQueryArgs('admin.php', {
-							page: 'ce-subscriptions',
-							action: 'show',
-							id: id,
+							page: 'ce-customers',
+							action: 'edit',
+							id: customer?.id,
 						})}
 					>
 						{__('Edit Customer', 'checkout_engine')}
@@ -48,7 +29,7 @@ export default () => {
 				</div>
 			}
 		>
-			{isLoading ? (
+			{loading ? (
 				renderLoading()
 			) : (
 				<div

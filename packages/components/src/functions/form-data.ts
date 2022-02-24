@@ -29,8 +29,10 @@ export class FormSubmitController {
   form: HTMLFormElement | null = null;
   input: any;
   options: FormSubmitControllerOptions;
+  component: any;
   constructor(component: any, input: any, options?: Partial<FormSubmitControllerOptions>) {
     this.input = input;
+    this.component = component;
     this.options = {
       form: (input: HTMLInputElement) => input?.closest('ce-form')?.shadowRoot?.querySelector('form') || input.closest('form'),
       name: (input: HTMLInputElement) => input.name,
@@ -45,6 +47,11 @@ export class FormSubmitController {
     this.form = this.options.form(this.input);
     this.handleFormData = this.handleFormData.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  setComponent(component: any) {
+    this.component = component;
+    console.log('set', component);
   }
 
   addFormData() {
@@ -67,10 +74,14 @@ export class FormSubmitController {
     if (!disabled && typeof name === 'string' && typeof value !== 'undefined') {
       if (Array.isArray(value)) {
         (value as unknown[]).forEach(val => {
-          event.formData.append(name, (val as string | number | boolean).toString());
+          if (val) {
+            event.formData.append(name, (val as string | number | boolean).toString());
+          }
         });
       } else {
-        event.formData.append(name, (value as string | number | boolean).toString());
+        if (value) {
+          event.formData.append(name, (value as string | number | boolean).toString());
+        }
       }
     }
   }

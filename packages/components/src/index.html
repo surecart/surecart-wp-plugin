@@ -17,9 +17,20 @@
 
 <body>
 
-  <ce-columns>
-    <ce-column>asdfasdf</ce-column>
-    <ce-column>asdfasdf</ce-column>
-  </ce-columns>
+ <ce-form>
+   <ce-address required></ce-address>
+   <ce-button type="primary" submit>Submit</ce-button>
+   </ce-form>
+
+   <ce-button class="unload">Unload</ce-button>
+
+   <script>
+    const address = document.querySelector('ce-address');
+    const unload = document.querySelector('.unload');
+    unload.addEventListener('click', function() {
+      address.loading = !address.loading;
+    })
+   </script>
+
 </body>
 </html>

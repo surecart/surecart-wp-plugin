@@ -6,11 +6,14 @@ use CheckoutEngine\Rest\RestServiceInterface;
 use CheckoutEngine\Controllers\Rest\OrderController;
 use CheckoutEngine\Models\Form;
 use CheckoutEngine\Models\User;
+use CheckoutEngine\Rest\Traits\CanListByCustomerIds;
 
 /**
  * Service provider for Price Rest Requests
  */
 class OrderRestServiceProvider extends RestServiceProvider implements RestServiceInterface {
+	use CanListByCustomerIds;
+
 	/**
 	 * Endpoint.
 	 *
@@ -165,7 +168,7 @@ class OrderRestServiceProvider extends RestServiceProvider implements RestServic
 
 
 	/**
-	 * Anyone can get a specific session if they have the unique session id.
+	 * Anyone can get a specific order if they have the unique order id.
 	 *
 	 * @param \WP_REST_Request $request Full details about the request.
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
@@ -181,17 +184,14 @@ class OrderRestServiceProvider extends RestServiceProvider implements RestServic
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_items_permissions_check( $request ) {
-		if ( current_user_can( 'read_ce_orders' ) ) {
-			return true;
-		}
-
-		// a customer can list their own sessions.
-		if ( isset( $request['customer_ids'] ) && 1 === count( $request['customer_ids'] ) ) {
-			return User::current()->customerId() === $request['customer_ids'][0];
+		// if the current user can't read.
+		if ( ! current_user_can( 'read_ce_orders' ) ) {
+			// they can list if they are listing their own customer id.
+			return $this->isListingOwnCustomerId( $request );
 		}
 
 		// need read priveleges.
-		return false;
+		return current_user_can( 'read_ce_orders' );
 	}
 
 	/**

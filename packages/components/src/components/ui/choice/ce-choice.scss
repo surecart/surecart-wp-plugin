@@ -104,9 +104,9 @@
 
 // Focus
 .choice.choice--focused:not(.choice--checked):not(.choice--disabled) .choice__control {
-  border-color: var(--ce-input-border-color-focus);
+  border-color: var(--ce-color-white);
   background-color: var(--ce-input-background-color-focus);
-  box-shadow: 0 0 0 var(--ce-focus-ring-width) var(--ce-focus-ring-color-primary);
+  box-shadow: 0 0 0 var(--ce-focus-ring-width) var(--ce-color-primary-500);
 }
 
 // Checked
@@ -118,14 +118,14 @@
 
 // Checked + hover
 .choice.choice--checked:not(.choice--disabled) .choice__control:hover {
-  border-color: var(--ce-color-primary-400);
-  background-color: var(--ce-color-primary-400);
+  border-color: var(--ce-color-white);
+  background-color: var(--ce-color-primary-500);
 }
 
 // Checked + focus
 .choice.choice--checked:not(.choice--disabled).choice--focused .choice__control {
-  border-color: var(--ce-color-primary-400);
-  background-color: var(--ce-color-primary-400);
+  border-color: var(--ce-color-white);
+  background-color: var(--ce-color-primary-500);
   box-shadow: 0 0 0 var(--ce-focus-ring-width) var(--ce-focus-ring-color-primary);
 }
 

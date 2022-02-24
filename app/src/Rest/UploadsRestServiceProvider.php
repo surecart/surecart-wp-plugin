@@ -67,26 +67,6 @@ class UploadsRestServiceProvider extends RestServiceProvider implements RestServ
 	}
 
 	/**
-	 * Anyone can get a specific price.
-	 *
-	 * @param \WP_REST_Request $request Full details about the request.
-	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
-	 */
-	public function get_item_permissions_check( $request ) {
-		return false;
-	}
-
-	/**
-	 * Who can list
-	 *
-	 * @param \WP_REST_Request $request Full details about the request.
-	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
-	 */
-	public function get_items_permissions_check( $request ) {
-		return false;
-	}
-
-	/**
 	 * Create model.
 	 *
 	 * @param \WP_REST_Request $request Full details about the request.
@@ -94,25 +74,5 @@ class UploadsRestServiceProvider extends RestServiceProvider implements RestServ
 	 */
 	public function create_item_permissions_check( $request ) {
 		return current_user_can( 'upload_files' ) && current_user_can( 'edit_ce_products' );
-	}
-
-	/**
-	 * Update model.
-	 *
-	 * @param \WP_REST_Request $request Full details about the request.
-	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
-	 */
-	public function update_item_permissions_check( $request ) {
-		return false;
-	}
-
-	/**
-	 * Delete model.
-	 *
-	 * @param \WP_REST_Request $request Full details about the request.
-	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
-	 */
-	public function delete_item_permissions_check( $request ) {
-		return false;
 	}
 }

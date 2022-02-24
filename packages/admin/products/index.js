@@ -6,11 +6,6 @@ import { render } from '@wordpress/element';
 import '@admin/schema/register';
 
 /**
- * Register store.
- */
-import './store/register';
-
-/**
  * App
  */
 import Product from './Product';

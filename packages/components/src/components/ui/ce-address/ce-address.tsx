@@ -23,7 +23,7 @@ export class CeAddress {
   @Prop() label: string;
 
   /** Is this required? */
-  @Prop() required: boolean = true;
+  @Prop({ reflect: true }) required: boolean = true;
 
   /** Internal state. */
   @State() state: Partial<Address> = {

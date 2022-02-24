@@ -1,18 +1,21 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { Fragment, useState, useEffect } from '@wordpress/element';
+import { Fragment } from '@wordpress/element';
 import { __, _n } from '@wordpress/i18n';
-import { getQueryArg } from '@wordpress/url';
 
 import Box from '../ui/Box';
-import useCustomerData from './hooks/useCustomerData';
 import Notifications from './modules/Notifications';
 import Purchases from './modules/Purchases';
 import User from './modules/User';
 
-export default ({ id }) => {
+export default ({ id, customer, updateCustomer, loading }) => {
 	return (
-		<Fragment>
+		<div
+			css={css`
+				display: grid;
+				gap: var(--ce-spacing-xxx-large);
+			`}
+		>
 			{id && (
 				<Fragment>
 					<Purchases />
@@ -21,6 +24,7 @@ export default ({ id }) => {
 						css={css`
 							font-size: 14px;
 						`}
+						loading={loading}
 					>
 						<Fragment>
 							<User customer_id={id} />
@@ -31,11 +35,16 @@ export default ({ id }) => {
 						css={css`
 							font-size: 14px;
 						`}
+						loading={loading}
 					>
-						<Notifications />
+						<Notifications
+							customer={customer}
+							updateCustomer={updateCustomer}
+							loading={loading}
+						/>
 					</Box>
 				</Fragment>
 			)}
-		</Fragment>
+		</div>
 	);
 };

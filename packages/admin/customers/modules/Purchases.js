@@ -21,7 +21,7 @@ export default () => {
 		id &&
 			fetchPurchases({
 				query: {
-					customer_id: [id],
+					customer_ids: [id],
 					context: 'edit',
 					expand: ['product', 'product.price'],
 					per_page: 5,
@@ -32,6 +32,7 @@ export default () => {
 
 	return (
 		<PurchasesDataTable
+			hideHeader={true}
 			columns={{
 				item: {
 					label: __('Item', 'checkout_engine'),

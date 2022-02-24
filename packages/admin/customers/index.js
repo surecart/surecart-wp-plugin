@@ -5,8 +5,6 @@ import { render } from '@wordpress/element';
  */
 import '@admin/schema/register';
 
-import './store/register';
-
 /**
  * App
  */

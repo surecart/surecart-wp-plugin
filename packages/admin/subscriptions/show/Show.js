@@ -19,6 +19,7 @@ import Pricing from './modules/Pricing';
 import Cancel from './modules/Cancel';
 import Sidebar from './Sidebar';
 import PendingUpdate from './modules/PendingUpdate';
+import UpdatePending from './modules/UpdatePending';
 
 export default () => {
 	const {
@@ -93,11 +94,7 @@ export default () => {
 		}
 
 		return (
-			<Cancel
-				id={id}
-				onCancel={() => setSaving(true)}
-				onCanceled={doFetch}
-			>
+			<Cancel onCancel={() => setSaving(true)}>
 				<CeMenuItem>
 					{__('Cancel Subscription', 'checkout_engine')}
 				</CeMenuItem>
@@ -127,15 +124,36 @@ export default () => {
 							{__('Actions', 'checkout_engine')}
 						</CeButton>
 						<CeMenu>
-							<CeMenuItem
-								href={addQueryArgs('admin.php', {
-									page: 'ce-subscriptions',
-									action: 'edit',
-									id: id,
-								})}
-							>
-								{__('Update Subscription', 'checkout_engine')}
-							</CeMenuItem>
+							{!!Object.keys(subscription?.pending_update || {})
+								.length ? (
+								<UpdatePending
+									id={id}
+									onCancel={() => setSaving(true)}
+								>
+									<CeMenuItem>
+										{__(
+											'Manage Pending Update',
+											'checkout_engine'
+										)}
+									</CeMenuItem>
+								</UpdatePending>
+							) : (
+								subscription?.current_period_end_at !==
+									null && (
+									<CeMenuItem
+										href={addQueryArgs('admin.php', {
+											page: 'ce-subscriptions',
+											action: 'edit',
+											id: id,
+										})}
+									>
+										{__(
+											'Update Subscription',
+											'checkout_engine'
+										)}
+									</CeMenuItem>
+								)
+							)}
 							{renderCancelButton()}
 						</CeMenu>
 					</CeDropdown>

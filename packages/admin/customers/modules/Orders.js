@@ -14,7 +14,7 @@ export default ({ id }) => {
 			fetchOrders({
 				query: {
 					context: 'edit',
-					subscription_ids: [id],
+					customer_ids: [id],
 					status: [
 						'paid',
 						'canceled',
@@ -31,6 +31,8 @@ export default ({ id }) => {
 
 	return (
 		<OrdersDataTable
+			hideHeader={true}
+			title={__('Customer Orders', 'checkout_engine')}
 			columns={{
 				number: {
 					label: __('Number', 'checkout_engine'),

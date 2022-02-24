@@ -50,16 +50,6 @@ export default () => {
 	const onSubmit = (e) => {
 		e.preventDefault();
 		setTimeout(async () => {
-			if (subscription?.pending_update && update_behavior === 'pending') {
-				const r = confirm(
-					__(
-						'There is already a pending update to this subscription. Do you want to replace it with this one?',
-						'checkout_engine'
-					)
-				);
-				if (!r) return;
-			}
-
 			try {
 				await saveSubscription({
 					query: {
@@ -174,11 +164,9 @@ export default () => {
 							onClick={(e) => {
 								e.preventDefault();
 								update_behavior = 'immediate';
-								// setUpdateBehavior('im mediate');
-								console.log({ update_behavior });
 							}}
 						>
-							{__('Update Subscription', 'checkout_engine')}
+							{__('Update Now', 'checkout_engine')}
 						</CeButton>
 					</div>
 				)
@@ -189,6 +177,7 @@ export default () => {
 					errors={subscriptionErrors}
 					onHide={clearSubscriptionErrors}
 				/>
+
 				<Price
 					subscription={subscription}
 					updateSubscription={updateSubscription}
@@ -197,17 +186,19 @@ export default () => {
 					product={product}
 					loading={isLoading}
 				/>
-				<PendingUpdate subscription={subscription} />
+
 				<Schedule
 					subscription={subscription}
 					updateSubscription={updateSubscription}
 					loading={isLoading}
 				/>
+
 				<PaymentMethod
 					subscription={subscription}
 					updateSubscription={updateSubscription}
 					loading={isLoading}
 				/>
+
 				{isSaving && (
 					<ce-block-ui
 						spinner

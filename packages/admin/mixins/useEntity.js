@@ -71,10 +71,8 @@ export default (name, id = null, index = null) => {
 			if (!id && index !== null) {
 				return await saveDraft(name, index, requestArgs || {});
 			}
-
 			return await saveModel(name, id, requestArgs || {});
 		} catch (e) {
-			setSaving(false);
 			addModelErrors(name, e);
 			throw e;
 		}
@@ -100,8 +98,9 @@ export default (name, id = null, index = null) => {
 			}
 			return payload;
 		} catch (e) {
-			console.error(e);
-			addModelErrors(name, [e]);
+			const error = await e.json();
+			console.error(error);
+			addModelErrors(name, [error]);
 		} finally {
 			setIsLoading(false);
 		}

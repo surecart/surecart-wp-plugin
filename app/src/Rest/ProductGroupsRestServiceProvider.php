@@ -60,7 +60,7 @@ class ProductGroupsRestServiceProvider extends RestServiceProvider implements Re
 	}
 
 	/**
-	 * Anyone can get a specific product.
+	 * You can get a specific product group if you have the id.
 	 *
 	 * @param \WP_REST_Request $request Full details about the request.
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
@@ -70,13 +70,17 @@ class ProductGroupsRestServiceProvider extends RestServiceProvider implements Re
 	}
 
 	/**
-	 * Who can list products groups?
+	 * You can list product groups if you have the ids.
 	 *
 	 * @param \WP_REST_Request $request Full details about the request.
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_items_permissions_check( $request ) {
-		return true;
+		if ( ! empty( $request['ids'] ) && false === $request['archived'] ) {
+			return true;
+		}
+
+		return current_user_can( 'read_ce_product_groups' );
 	}
 
 	/**

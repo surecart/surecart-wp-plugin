@@ -73,7 +73,7 @@ export default ({ subscription, customer, product, loading }) => {
 				<div>
 					<div>
 						<strong>
-							{sprintf(__('Begins on', 'checkout_engine'))}
+							{sprintf(__('Trial ends on', 'checkout_engine'))}
 						</strong>
 					</div>
 					<CeFormatDate

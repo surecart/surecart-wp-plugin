@@ -1,13 +1,14 @@
 import { __, _n } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
-import { useSelect, dispatch, select } from '@wordpress/data';
+import { useSelect, dispatch, select, useDispatch } from '@wordpress/data';
 import { useState } from '@wordpress/element';
 import { store } from '../store/data';
+import { store as uiStore } from '../store/ui';
 import { useEffect } from 'react';
 
 export default (name, args, deps = []) => {
 	// local states.
-	const [error, setError] = useState();
+	const { addModelErrors } = useDispatch(uiStore);
 	const [isLoading, setIsLoading] = useState();
 	const [isFetching, setIsFetching] = useState();
 	const [pagination, setPagination] = useState({
@@ -53,10 +54,9 @@ export default (name, args, deps = []) => {
 				total_pages: result.headers.get('X-WP-TotalPages'),
 			});
 		} catch (e) {
-			console.error(e);
-			setError(
-				error?.message || __('Something went wrong.', 'checkout_engine')
-			);
+			const error = await e.json();
+			console.error(error);
+			addModelErrors(name, [error]);
 		} finally {
 			setIsLoading(false);
 			setIsFetching(false);
@@ -68,6 +68,13 @@ export default (name, args, deps = []) => {
 	};
 
 	const receiveModels = (payload) => dispatch(store).receiveModels(payload);
+
+	// errors.
+	const errors = useSelect((select) =>
+		select(uiStore).selectModelErrors(name)
+	);
+	const addErrors = (error) => addModelErrors(name, error);
+	const clearErrors = () => clearModelErrors(name);
 
 	const snakeToCamel = (str) =>
 		str
@@ -83,7 +90,9 @@ export default (name, args, deps = []) => {
 		isLoading,
 		isFetching,
 		pagination,
-		error,
+		errors,
+		addErrors,
+		clearErrors,
 		[`${name}s`]: data,
 		[`draft${ucName}s`]: drafts,
 		[`fetch${ucName}s`]: fetchEntities,

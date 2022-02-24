@@ -104,6 +104,13 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	protected $offset = 0;
 
 	/**
+	 * The default transient cache time
+	 *
+	 * @var integer
+	 */
+	protected $transient_cache_time = 5 * MINUTE_IN_SECONDS;
+
+	/**
 	 * Model constructor
 	 *
 	 * @param array $attributes Optional attributes.
@@ -554,11 +561,24 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	/**
 	 * Make the API request.
 	 *
-	 * @param array $args Array of arguments.
+	 * @param array  $args Array of arguments.
+	 * @param string $endpoint Optional endpoint override.
 	 *
 	 * @return Model
 	 */
 	protected function makeRequest( $args = [], $endpoint = '' ) {
+		return \CheckoutEngine::request( ...$this->prepareRequest( $args, $endpoint ) );
+	}
+
+	/**
+	 * Prepare API Request Arguments.
+	 *
+	 * @param array  $args Array of arguments.
+	 * @param string $endpoint Optional endpoint override.
+	 *
+	 * @return array $args for API request.
+	 */
+	protected function prepareRequest( $args, $endpoint = '' ) {
 		// Create the endpoint.
 		if ( ! $endpoint ) {
 			$endpoint = ! empty( $args['id'] ) ? $this->endpoint . '/' . $args['id'] : $this->endpoint;
@@ -569,8 +589,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 		// add query vars.
 		$args['query'] = $this->query;
 
-		// make request in the correct mode.
-		return \CheckoutEngine::request( $endpoint, $args, $this->mode );
+		return [ $endpoint, $args ];
 	}
 
 	/**
@@ -670,6 +689,23 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 		$this->fill( $attributes );
 
 		return $this;
+	}
+
+	/**
+	 * Return a cached version of the model.
+	 *
+	 * @param string $id Id of the model.
+	 *
+	 * @return $this
+	 */
+	protected function findCached( $id = '' ) {
+		$cache_key = 'ce_cached_request' . wp_json_encode( $this->prepareRequest( [ 'id' => $id ] ) );
+		$value     = get_transient( $cache_key );
+		if ( false === $value ) {
+			$value = $this->find( $id );
+			set_transient( $cache_key, $value, apply_filters( 'ce_cached_request_transient_time', $this->transient_cache_time, $this ) );
+		}
+		return $value;
 	}
 
 	/**

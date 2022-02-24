@@ -1,16 +1,12 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { dispatch } from '@wordpress/data';
 import { Fragment } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 import FlashError from '../components/FlashError';
-import SaveButton from '../components/SaveButton';
+import { store as uiStore } from '../store/ui';
 // hooks
-import useSnackbar from '../hooks/useSnackbar';
 import Template from '../templates/SingleModel';
-import useCustomerData from './hooks/useCustomerData';
-import Purchases from './modules/Purchases';
 import Charges from './modules/Charges';
 import Details from './modules/Details';
 import Orders from './modules/Orders';
@@ -19,6 +15,8 @@ import Subscriptions from './modules/Subscriptions';
 import Sidebar from './Sidebar';
 import useCurrentPage from '../mixins/useCurrentPage';
 import { useEffect } from 'react';
+import { CeButton } from '@checkout-engine/components-react';
+import { useDispatch } from '@wordpress/data';
 
 export default () => {
 	const {
@@ -27,9 +25,12 @@ export default () => {
 		fetchCustomer,
 		updateCustomer,
 		saveCustomer,
+		setSaving,
+		isSaving,
 		isLoading,
 	} = useCurrentPage('customer');
 
+	const { addSnackbarNotice, addModelErrors } = useDispatch(uiStore);
 	useEffect(() => {
 		if (id) {
 			fetchCustomer({
@@ -42,7 +43,18 @@ export default () => {
 
 	const onSubmit = async (e) => {
 		e.preventDefault();
-		saveCustomer();
+		try {
+			setSaving(true);
+			await saveCustomer();
+			addSnackbarNotice({
+				content: __('Saved.'),
+			});
+		} catch (e) {
+			console.error(e);
+			addModelErrors('customer', e);
+		} finally {
+			setSaving(false);
+		}
 	};
 
 	const title = () => {
@@ -86,15 +98,22 @@ export default () => {
 							gap: 0.5em;
 						`}
 					>
-						<SaveButton>
+						<CeButton type="primary" loading={isSaving} submit>
 							{id
 								? __('Update Customer', 'checkout_engine')
 								: __('Create Customer', 'checkout_engine')}
-						</SaveButton>
+						</CeButton>
 					</div>
 				)
 			}
-			sidebar={<Sidebar id={id} />}
+			sidebar={
+				<Sidebar
+					id={id}
+					customer={customer}
+					updateCustomer={updateCustomer}
+					loading={isLoading}
+				/>
+			}
 		>
 			<Fragment>
 				<FlashError path="customers" scrollIntoView />

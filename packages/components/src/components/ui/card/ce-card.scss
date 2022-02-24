@@ -12,6 +12,9 @@
   border: 1px solid var(--ce-color-gray-300);
   border-radius: var(--ce-input-border-radius-medium);
   box-shadow: var(--ce-shadow-small);
+  &.card--no-padding {
+    padding: 0;
+  }
 }
 
 .title--divider {

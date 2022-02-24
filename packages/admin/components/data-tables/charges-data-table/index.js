@@ -20,6 +20,7 @@ export default ({
 	pagination,
 	columns,
 	empty,
+	...props
 }) => {
 	const [confirmRefund, setConfirmRefund] = useState(false);
 
@@ -166,6 +167,7 @@ export default ({
 						/>
 					) : null
 				}
+				{...props}
 			></DataTable>
 			{confirmRefund && (
 				<Refund

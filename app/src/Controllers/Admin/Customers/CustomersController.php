@@ -24,7 +24,10 @@ class CustomersController {
 	 * Customers edit.
 	 */
 	public function edit() {
-		return \CheckoutEngine::view( 'admin/customers/edit' );
+		// enqueue needed script.
+		add_action( 'admin_enqueue_scripts', \CheckoutEngine::closure()->method( CustomersScriptsController::class, 'enqueue' ) );
+		// return view.
+		return '<div id="app"></div>';
 	}
 
 	/**

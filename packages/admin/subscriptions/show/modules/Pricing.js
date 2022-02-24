@@ -75,18 +75,20 @@ export default ({ product, price, subscription, loading }) => {
 							)}
 						</div>
 					),
-					actions: (
-						<ce-button
-							size="small"
-							href={addQueryArgs('admin.php', {
-								page: 'ce-subscriptions',
-								action: 'edit',
-								id: subscription?.id,
-							})}
-						>
-							{__('Change', 'checkout_engine')}
-						</ce-button>
-					),
+					actions: !Object.keys(subscription?.pending_update || {})
+						.length &&
+						subscription?.current_period_end_at !== null && (
+							<ce-button
+								size="small"
+								href={addQueryArgs('admin.php', {
+									page: 'ce-subscriptions',
+									action: 'edit',
+									id: subscription?.id,
+								})}
+							>
+								{__('Change', 'checkout_engine')}
+							</ce-button>
+						),
 				},
 			]}
 		/>

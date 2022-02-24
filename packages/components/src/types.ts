@@ -138,6 +138,7 @@ export interface PriceChoice {
 
 export type CheckoutState = 'idle' | 'loading' | 'draft' | 'updating' | 'finalized' | 'paid' | 'failure';
 
+export type TaxStatus = 'disabled' | 'address_invalid' | 'reverse_charged' | 'tax_registration_not_found' | 'tax_zone_not_found' | 'estimated' | 'calculated';
 export interface Invoice extends Object {
   id: string;
   object: 'invoice';
@@ -154,7 +155,7 @@ export interface Invoice extends Object {
   status: 'draft' | 'finalized' | 'paid' | 'payment_intent_canceled' | 'payment_failed';
   subtotal_amount: number;
   tax_amount: number;
-  tax_status: 'disabled' | 'address_invalid' | 'reverse_charged' | 'tax_registration_not_found' | 'estimated' | 'calculated';
+  tax_status: TaxStatus;
   tax_label: string;
   total_amount: number;
   billing_address: string | BillingAddress;
@@ -219,6 +220,10 @@ export interface Order extends Object {
   billing_address?: string | Address;
   shipping_address?: string | Address;
   processor_data?: ProcessorData;
+  tax_identifier?: {
+    number: string;
+    number_type: string;
+  };
   created_at?: number;
 }
 

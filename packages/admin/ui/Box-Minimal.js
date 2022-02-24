@@ -10,6 +10,7 @@ export default ({
 	header_action,
 	size = 'large',
 	isBorderLess = true,
+	noPadding = false,
 	hasDivider = true,
 	loading,
 	footer,
@@ -17,12 +18,13 @@ export default ({
 }) => {
 	return (
 		<div>
+			{' '}
 			<ce-text
 				tag="h2"
 				style={{
-					'--font-size': '15px',
+					'--font-size': '16px',
 					'--font-weight': 'var(--ce-font-weight-bold)',
-					'--line-height': '1.2',
+					marginBottom: 'var(--ce-spacing-medium)',
 				}}
 			>
 				{title && (
@@ -40,56 +42,31 @@ export default ({
 					</span>
 				)}
 			</ce-text>
-			<ce-text
-				tag="h2"
-				style={{
-					'--line-height': '1',
-				}}
-			>
-				Manage how your store handles subscription upgrades, downgrades,
-				and cancellations.
-			</ce-text>
 			{header_action}
 			<CeCard
-				// css={css`
-				// 	/* box-shadow: rgb( 0 0 0 / 10% ) 0px 2px 4px 0px; */
-				// 	.components-card__footer {
-				// 		background: var(--ce-color-gray-50, #f9fafb);
-				// 	}
-				// `}
-				// size={size}
-				// isBorderless={isBorderLess}
+				noPadding={noPadding}
+				css={css`
+					.components-card__footer {
+						background: var(--ce-color-gray-50, #f9fafb);
+						margin-top: -1px;
+						position: relative;
+						border-bottom-left-radius: var(
+							--ce-input-border-radius-medium
+						);
+						border-bottom-right-radius: var(
+							--ce-input-border-radius-medium
+						);
+					}
+				`}
+				size={size}
+				isBorderless={isBorderLess}
 				className={className}
 			>
-				{/* <CardHeader isBorderless={!hasDivider}>
-					<ce-text
-						tag="h2"
-						style={{
-							'--font-size': '15px',
-							'--font-weight': 'var(--ce-font-weight-bold)',
-						}}
-					>
-						{title && (
-							<span>
-								{loading ? (
-									<ce-skeleton
-										style={{
-											width: '120px',
-											display: 'inline-block',
-										}}
-									></ce-skeleton>
-								) : (
-									title
-								)}
-							</span>
-						)}
-					</ce-text>
-					{header_action}
-				</CardHeader> */}
-				<CardBody
+				<div
 					css={css`
 						display: grid;
 						gap: 10px;
+						margin-bottom: 0;
 						> * {
 							width: 100%;
 						}
@@ -118,7 +95,7 @@ export default ({
 					) : (
 						children
 					)}
-				</CardBody>
+				</div>
 				{!!footer && <CardFooter>{footer}</CardFooter>}
 			</CeCard>
 		</div>

@@ -3,7 +3,6 @@
 namespace CheckoutEngine\Controllers\Admin\Subscriptions;
 
 use CheckoutEngine\Support\Currency;
-use CheckoutEngine\Support\TimeDate;
 use CheckoutEngine\Controllers\Admin\Tables\ListTable;
 use CheckoutEngine\Models\Subscription;
 
@@ -11,8 +10,6 @@ use CheckoutEngine\Models\Subscription;
  * Create a new table class that will extend the WP_List_Table
  */
 class SubscriptionsListTable extends ListTable {
-	// public $checkbox = true;
-
 	/**
 	 * Prepare the items for the table to process
 	 *
@@ -60,9 +57,9 @@ class SubscriptionsListTable extends ListTable {
 	 */
 	protected function get_views() {
 		$stati = [
+			'all'      => __( 'All', 'checkout_engine' ),
 			'active'   => __( 'Active', 'checkout_engine' ),
 			'canceled' => __( 'Canceled', 'checkout_engine' ),
-			'all'      => __( 'All', 'checkout_engine' ),
 		];
 
 		$link = \CheckoutEngine::getUrl()->index( 'subscriptions' );
@@ -74,7 +71,7 @@ class SubscriptionsListTable extends ListTable {
 				if ( $status === $_GET['status'] ) {
 					$current_link_attributes = ' class="current" aria-current="page"';
 				}
-			} elseif ( 'active' === $status ) {
+			} elseif ( 'all' === $status ) {
 				$current_link_attributes = ' class="current" aria-current="page"';
 			}
 
@@ -102,14 +99,12 @@ class SubscriptionsListTable extends ListTable {
 	 */
 	public function get_columns() {
 		return [
-			// 'cb'          => '<input type="checkbox" />',
 			'customer' => __( 'Customer', 'checkout_engine' ),
 			'status'   => __( 'Status', 'checkout_engine' ),
-			'total'    => __( 'Total', 'checkout_engine' ),
+			'plan'     => __( 'Plan', 'checkout_engine' ),
 			'product'  => __( 'Product', 'checkout_engine' ),
 			'created'  => __( 'Created', 'checkout_engine' ),
-			// 'usage' => __( 'Usage', 'checkout_engine' ),
-
+			'mode'     => '',
 		];
 	}
 
@@ -189,8 +184,36 @@ class SubscriptionsListTable extends ListTable {
 	 *
 	 * @return string
 	 */
-	public function column_total( $subscription ) {
-		return '<ce-format-number type="currency" currency="' . strtoupper( esc_html( $subscription->latest_invoice->currency ?? 'usd' ) ) . '" value="' . (float) ( $subscription->latest_invoice->total_amount ?? 0 ) . '"></ce-format-number>';
+	public function column_plan( $subscription ) {
+		$interval = $subscription->price->recurring_interval ?? '';
+		$count    = $subscription->price->recurring_interval_count ?? 1;
+		ob_start();
+		echo '<ce-format-number type="currency" currency="' . esc_html( strtoupper( $subscription->latest_invoice->currency ?? 'usd' ) ) . '" value="' . (float) ( $subscription->latest_invoice->total_amount ?? 0 ) . '"></ce-format-number>';
+		echo esc_html( $this->getInterval( $interval, $count ) );
+		return ob_get_clean();
+	}
+
+	public function getInterval( $interval, $count ) {
+		switch ( $interval ) {
+			case 'week':
+				return ' / ' . sprintf(
+					// phpcs:ignore
+					_n( 'week', '%d weeks', $count, 'checkout_engine' ),
+					$count
+				);
+			case 'month':
+				return ' / ' . sprintf(
+					// phpcs:ignore
+					_n( 'month', '%d months', $count, 'checkout_engine' ),
+					$count
+				);
+			case 'year':
+				return ' / ' . sprintf(
+					// phpcs:ignore
+					_n( 'year', '%d years', $count, 'checkout_engine' ),
+					$count
+				);
+		}
 	}
 
 	/**
@@ -209,10 +232,6 @@ class SubscriptionsListTable extends ListTable {
 		<div style="opacity: 0.75"><?php echo \esc_html( $this->get_expiration_string( $promotion->redeem_by ) ); ?></div>
 		<?php
 		return ob_get_clean();
-	}
-
-	public function column_mode( $order ) {
-		return $order->live_mode ? '<ce-tag type="success">' . __( 'Live', 'checkout_engine' ) . '</ce-tag>' : '<ce-tag type="warning">' . __( 'Test', 'checkout_engine' ) . '</ce-tag>';
 	}
 
 	/**
@@ -282,7 +301,7 @@ class SubscriptionsListTable extends ListTable {
 				$status = '<ce-tag type="success">' . __( 'Active', 'checkout_engine' ) . '</ce-tag>';
 				break;
 			case 'canceled':
-				$status = '<ce-tag type="warning">' . __( 'Canceled', 'checkout_engine' ) . '</ce-tag>';
+				$status = '<ce-tag type="danger">' . __( 'Canceled', 'checkout_engine' ) . '</ce-tag>';
 				break;
 			case 'trialing':
 				$status = '<ce-tag type="primary">' . __( 'Trialing', 'checkout_engine' ) . '</ce-tag>';
@@ -293,10 +312,6 @@ class SubscriptionsListTable extends ListTable {
 			default:
 				$status = '<ce-tag>' . $subscription->status . '</ce-tag>';
 				break;
-		}
-
-		if ( ! $subscription->live_mode ) {
-			$status .= ' <ce-tag type="warning">' . __( 'Test', 'checkout_engine' ) . '</ce-tag>';
 		}
 
 		if ( ! empty( (array) $subscription->pending_update ) ) {

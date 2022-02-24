@@ -42,6 +42,9 @@ export class CeSessionProvider {
   @Event() ceUpdateOrderState: EventEmitter<Order>;
 
   /** Update line items event */
+  @Event() ceUpdateDraftState: EventEmitter<Order>;
+
+  /** Update line items event */
   @Event() ceError: EventEmitter<{ message: string; code?: string; data?: any; additional_errors?: any } | {}>;
 
   /** Set the state */
@@ -73,9 +76,16 @@ export class CeSessionProvider {
   @Listen('ceFormChange')
   handleFormChange(e) {
     const data = e.detail;
+    this.ceUpdateDraftState.emit(data);
     if (Object.values(data || {}).every(item => !item)) return;
     // we update silently here since we parse form data on submit.
     this.update(this.parseFormData(data));
+  }
+
+  @Listen('ceUpdateSession')
+  handleUpdateSession(e) {
+    const data = e.detail;
+    this.loadUpdate(data);
   }
 
   @Watch('prices')
@@ -90,7 +100,20 @@ export class CeSessionProvider {
   }
 
   parseFormData(data) {
-    const { email, name, password, shipping_city, shipping_country, shipping_line_1, shipping_line_2, shipping_postal_code, shipping_state, ...rest } = data;
+    const {
+      email,
+      name,
+      password,
+      shipping_city,
+      shipping_country,
+      shipping_line_1,
+      shipping_line_2,
+      shipping_postal_code,
+      shipping_state,
+      'tax_identifier.number_type': tax_number_type,
+      'tax_identifier.number': tax_number,
+      ...rest
+    } = data;
 
     let shipping_address = null;
 
@@ -120,6 +143,14 @@ export class CeSessionProvider {
       name,
       password,
       ...(shipping_address ? { shipping_address } : {}),
+      ...(tax_number && tax_number_type
+        ? {
+            tax_identifier: {
+              number: tax_number,
+              number_type: tax_number_type,
+            },
+          }
+        : {}),
       metadata: rest || {},
     };
   }
@@ -155,7 +186,6 @@ export class CeSessionProvider {
         },
         processor: 'stripe',
       });
-      console.log(this.session);
       if (this.session.status === 'finalized') {
         this.ceSetState.emit('FETCH');
       } else {

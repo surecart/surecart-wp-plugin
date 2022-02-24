@@ -6,7 +6,7 @@ import { css, jsx } from '@emotion/core';
 import { useState, Fragment } from '@wordpress/element';
 import { useEffect } from 'react';
 
-export default ({ onCancel, loading, error, children, open }) => {
+export default ({ onCancel, subscription, loading, error, children, open }) => {
 	const [modal, setModal] = useState(false);
 
 	const onSubmit = async (e) => {
@@ -54,20 +54,23 @@ export default ({ onCancel, loading, error, children, open }) => {
 							<div>
 								<ce-choice
 									name="cancel_behavior"
-									value="pending"
-									checked
-								>
-									{__(
-										'	At end of current period',
-										'checkout_engine'
-									)}
-								</ce-choice>
-								<ce-choice
-									name="cancel_behavior"
 									value="immediate"
+									checked
 								>
 									{__('Immediately', 'checkout_engine')}
 								</ce-choice>
+								{subscription?.current_period_end_at !==
+									null && (
+									<ce-choice
+										name="cancel_behavior"
+										value="pending"
+									>
+										{__(
+											'	At end of current period',
+											'checkout_engine'
+										)}
+									</ce-choice>
+								)}
 							</div>
 						</ce-choices>
 
