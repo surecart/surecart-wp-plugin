@@ -28,13 +28,16 @@ class UsersService {
 	 * @return array
 	 */
 	public function collectionParams( $query_params ) {
-		$query_params['is_customer']    = [
+		$query_params['is_customer']     = [
 			'description' => __( 'Limit result set to users with a customer.', 'checkout-engine' ),
 			'type'        => 'boolean',
 		];
-		$query_params['ce_customer_id'] = [
-			'description' => __( 'Limit result set to users with a customer.', 'checkout-engine' ),
-			'type'        => 'string',
+		$query_params['ce_customer_ids'] = [
+			'description' => __( 'Limit result set to users with specific customer ids.', 'checkout-engine' ),
+			'type'        => 'array',
+			'items'       => [
+				'type' => 'string',
+			],
 		];
 		return $query_params;
 	}
@@ -47,12 +50,26 @@ class UsersService {
 	public function registerMeta() {
 		register_meta(
 			'user',
-			'ce_customer_id',
+			'ce_customer_ids',
 			[
-				'show_in_rest'      => true,
-				'type'              => 'string',
+				'type'              => 'object',
+				'show_in_rest'      => [
+					'schema' => [
+						'type'       => 'object',
+						'properties' => [
+							'live' => [
+								'type' => 'string',
+							],
+							'test' => [
+								'type' => 'string',
+							],
+						],
+					],
+				],
 				'single'            => true,
-				'sanitize_callback' => 'sanitize_text_field',
+				'sanitize_callback' => function( $value ) {
+					return (object) array_map( 'sanitize_text_field', (array) $value );
+				},
 				'auth_callback'     => function () {
 					return current_user_can( 'edit_ce_customers' );
 				},
@@ -68,11 +85,11 @@ class UsersService {
 	 * @return array
 	 */
 	public function userMetaQuery( $args, $request ) {
-		$key         = User::getCustomerMetaKey();
-		$customer_id = $request->get_param( $key );
+		$key          = User::getCustomerMetaKey();
+		$customer_ids = $request->get_param( 'ce_customer_ids' );
 
 		// we're only concerned about our param.
-		if ( ! $customer_id ) {
+		if ( empty( $customer_ids ) ) {
 			return $args;
 		}
 
@@ -82,8 +99,17 @@ class UsersService {
 		}
 
 		// set the meta query.
-		$args['meta_key']   = $key;
-		$args['meta_value'] = $customer_id;
+		$args['meta_query'] = [
+			'relation' => 'OR',
+		];
+
+		foreach ( $customer_ids as $customer_id ) {
+			$args['meta_query'][] = [
+				'key'     => $key,
+				'value'   => $customer_id,
+				'compare' => 'LIKE',
+			];
+		}
 
 		return $args;
 	}

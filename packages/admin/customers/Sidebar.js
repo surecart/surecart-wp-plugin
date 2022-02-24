@@ -27,7 +27,7 @@ export default ({ id, customer, updateCustomer, loading }) => {
 						loading={loading}
 					>
 						<Fragment>
-							<User customer_id={id} />
+							<User customer={customer} customer_id={id} />
 						</Fragment>
 					</Box>
 					<Box

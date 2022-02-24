@@ -28,9 +28,7 @@ class Block extends BaseBlock {
 			return \CheckoutEngine::blocks()->render( 'web/login' );
 		}
 
-		$is_customer = $user->customerId();
-
-		if ( ! $is_customer ) {
+		if ( ! $user->isCustomer() ) {
 			return \CheckoutEngine::blocks()->render( 'web/no-customer' );
 		}
 

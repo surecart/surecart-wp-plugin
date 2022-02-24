@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { useDispatch, useSelect } from '@wordpress/data';
+import { select, useDispatch, useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { useState } from '@wordpress/element';
 import { addQueryArgs } from '@wordpress/url';
@@ -10,23 +10,28 @@ import { CeFormControl } from '@checkout-engine/components-react';
 import UserSelect from '../../components/UserSelect';
 import { css, jsx } from '@emotion/core';
 
-export default ({ customer_id }) => {
+export default ({ customer_id, customer }) => {
 	const [id, setId] = useState();
 	const { saveEntityRecord } = useDispatch(coreStore);
+	const mode = customer?.live_mode ? 'live' : 'test';
 
 	// get user when customer id changes
-	const { user, loading } = useSelect(
+	const { users, loading } = useSelect(
 		(select) => {
-			const queryArgs = ['root', 'user', { ce_customer_id: customer_id }];
+			const queryArgs = [
+				'root',
+				'user',
+				{ ce_customer_ids: [customer_id] },
+			];
 			const users = select(coreStore).getEntityRecords(...queryArgs);
 			const loading = select(coreStore).isResolving(
 				'getEntityRecords',
 				queryArgs
 			);
 			return {
-				user: (users || []).find(
-					(user) => user?.meta?.ce_customer_id === customer_id
-				),
+				users: (users || []).filter((user) => {
+					return user?.meta?.ce_customer_ids?.[mode] === customer_id;
+				}),
 				loading,
 			};
 		},
@@ -49,10 +54,18 @@ export default ({ customer_id }) => {
 		);
 		if (r) {
 			setId(id);
+			const user = select(coreStore).getEntityRecord(
+				'root',
+				'user',
+				parseInt(id)
+			);
 			saveEntityRecord('root', 'user', {
 				id,
 				meta: {
-					ce_customer_id: '',
+					ce_customer_ids: {
+						...(user?.meta?.ce_customer_ids || {}),
+						...{ [mode]: '' },
+					},
 				},
 			});
 		}
@@ -60,10 +73,18 @@ export default ({ customer_id }) => {
 
 	const connect = (id) => {
 		setId(id);
+		const user = select(coreStore).getEntityRecord(
+			'root',
+			'user',
+			parseInt(id)
+		);
 		saveEntityRecord('root', 'user', {
 			id,
 			meta: {
-				ce_customer_id: customer_id,
+				ce_customer_ids: {
+					...(user?.meta?.ce_customer_ids || {}),
+					...{ [mode]: customer_id },
+				},
 			},
 		});
 	};
@@ -78,8 +99,8 @@ export default ({ customer_id }) => {
 		);
 	}
 
-	if (user) {
-		return (
+	if (users?.length) {
+		return users.map((user) => (
 			<div>
 				<Definition
 					title={
@@ -129,7 +150,7 @@ export default ({ customer_id }) => {
 					</CeButton>
 				</Definition>
 			</div>
-		);
+		));
 	}
 
 	return (

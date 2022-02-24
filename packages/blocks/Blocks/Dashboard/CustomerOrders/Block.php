@@ -2,6 +2,7 @@
 
 namespace CheckoutEngineBlocks\Dashboard\CustomerOrders;
 
+use CheckoutEngine\Models\User;
 use CheckoutEngineBlocks\Dashboard\DashboardPage;
 
 /**
@@ -36,16 +37,16 @@ class Block extends DashboardPage {
 			'web/dashboard/orders/show',
 			[
 				'id'            => $id,
-				'customer_id'   => $this->customer_id,
 				'order'         => [
 					'query' => [
-						'expand' => [],
+						'expand'       => [],
+						'customer_ids' => [ User::current()->customerIds() ],
 					],
 				],
 				'subscriptions' => [
 					'query' => [
 						'order_ids'    => [ $id ],
-						'customer_ids' => [ $this->customer_id ],
+						'customer_ids' => [ User::current()->customerIds() ],
 						'status'       => [ 'active', 'trialing' ],
 						'page'         => 1,
 						'per_page'     => 10,
@@ -54,7 +55,7 @@ class Block extends DashboardPage {
 				'charges'       => [
 					'query' => [
 						'order_ids'    => [ $id ],
-						'customer_ids' => [ $this->customer_id ],
+						'customer_ids' => [ User::current()->customerIds() ],
 						'page'         => 1,
 						'per_page'     => 10,
 					],
@@ -71,14 +72,14 @@ class Block extends DashboardPage {
 	 * @return function
 	 */
 	public function index( $page ) {
-		if ( empty( $this->customer_id ) ) {
+		if ( ! User::current()->isCustomer() ) {
 			return;
 		}
 		return \CheckoutEngine::blocks()->render(
 			'web/dashboard/orders/index',
 			[
 				'query' => [
-					'customer_ids' => [ $this->customer_id ],
+					'customer_ids' => User::current()->customerIds(),
 					'status'       => [ 'paid' ],
 					'page'         => 1,
 					'per_page'     => 10,

@@ -64,6 +64,15 @@ class User implements ArrayAccess, JsonSerializable {
 	}
 
 	/**
+	 * Is this user a customer?
+	 *
+	 * @return boolean
+	 */
+	protected function isCustomer() {
+		return ! empty( $this->customerIds() );
+	}
+
+	/**
 	 * Set the customer id in the user meta.
 	 *
 	 * @param string $id Customer id.
