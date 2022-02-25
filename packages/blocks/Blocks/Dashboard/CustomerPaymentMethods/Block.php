@@ -1,8 +1,9 @@
 <?php
 
-namespace CheckoutEngineBlocks\Dashboard\CustomerPaymentMethods;
+namespace CheckoutEngineBlocks\Blocks\Dashboard\CustomerPaymentMethods;
 
-use CheckoutEngineBlocks\Dashboard\DashboardPage;
+use CheckoutEngine\Models\User;
+use CheckoutEngineBlocks\Blocks\Dashboard\DashboardPage;
 
 /**
  * Checkout block
@@ -21,7 +22,7 @@ class Block extends DashboardPage {
 		$id   = sanitize_text_field( $_GET['payment_methods']['id'] ?? null );
 		$page = sanitize_text_field( $_GET['payment_methods']['page'] ?? 1 );
 
-		return $id ? $this->show( $id ) : $this->index( $page );
+		return $id ? $this->show( $attributes, $content ) : $this->index( $attributes, $content );
 	}
 
 	/**
@@ -31,7 +32,7 @@ class Block extends DashboardPage {
 	 *
 	 * @return function
 	 */
-	public function show( $id ) {
+	public function show( $attributes, $content ) {
 		return \CheckoutEngine::blocks()->render(
 			'web/dashboard/payment-methods/show',
 			[
@@ -63,6 +64,7 @@ class Block extends DashboardPage {
 		);
 	}
 
+
 	/**
 	 * Show and individual checkout session.
 	 *
@@ -70,19 +72,22 @@ class Block extends DashboardPage {
 	 *
 	 * @return function
 	 */
-	public function index( $page ) {
-		if ( empty( $this->customer_id ) ) {
+	public function index( $attributes, $content ) {
+		if ( ! User::current()->isCustomer() ) {
 			return;
 		}
-		return \CheckoutEngine::blocks()->render(
-			'web/dashboard/payment-methods/index',
+		\CheckoutEngine::assets()->addComponentData(
+			'ce-orders-list',
+			'#ce-payment-methods-list',
 			[
-				'query' => [
-					'customer_ids' => [ $this->customer_id ],
-					'page'         => $page,
-					'per_page'     => 10,
+				'listTitle' => $attributes['title'] ?? __( 'Payment Methods', 'checkout-engine' ),
+				'query'     => [
+					'customer_ids' => array_values( User::current()->customerIds() ),
+					'page'         => 1,
+					'per_page'     => 5,
 				],
 			]
 		);
+		return '<ce-payment-methods-list id="ce-payment-methods-list"></ce-payment-methods-list>';
 	}
 }

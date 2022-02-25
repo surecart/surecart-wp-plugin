@@ -1,17 +1,16 @@
 <?php
 
-namespace CheckoutEngineBlocks\Dashboard\CustomerOrders;
+namespace CheckoutEngineBlocks\Blocks\Dashboard\CustomerOrders;
 
 use CheckoutEngine\Models\User;
-use CheckoutEngineBlocks\Dashboard\DashboardPage;
+use CheckoutEngineBlocks\Blocks\Dashboard\DashboardPage;
 
 /**
  * Checkout block
  */
 class Block extends DashboardPage {
-	protected $attributes = [];
 	/**
-	 * Render the block
+	 * Render the preview (overview)
 	 *
 	 * @param array  $attributes Block attributes.
 	 * @param string $content Post content.
@@ -19,27 +18,42 @@ class Block extends DashboardPage {
 	 * @return function
 	 */
 	public function render( $attributes, $content ) {
-		$this->attributes = $attributes;
-
-		// get the current page tab and possible id.
-		$id   = sanitize_text_field( $_GET['order']['id'] ?? null );
-		$page = sanitize_text_field( $_GET['order']['page'] ?? 1 );
-
-		return $id ? $this->show( $id ) : $this->index( $page );
+		if ( ! User::current()->isCustomer() ) {
+			return;
+		}
+		\CheckoutEngine::assets()->addComponentData(
+			'ce-orders-list',
+			'#customer-orders-index',
+			[
+				'listTitle' => $this->attributes['title'] ?? __( 'Order History', 'checkout-engine' ),
+				'query'     => [
+					'customer_ids' => array_values( User::current()->customerIds() ),
+					'status'       => [ 'paid' ],
+					'page'         => 1,
+					'per_page'     => 5,
+				],
+			]
+		);
+		return '<ce-orders-list id="customer-orders-index"></ce-orders-list>';
 	}
 
 	/**
 	 * Show and individual checkout session.
 	 *
-	 * @param string $id Session ID.
-	 *
 	 * @return function
 	 */
-	public function show( $id ) {
+	public function show() {
+		$id = isset( $_GET['id'] ) ? sanitize_text_field( wp_unslash( $_GET['id'] ) ) : false;
 		return \CheckoutEngine::blocks()->render(
 			'web/dashboard/orders/show',
 			[
 				'id'            => $id,
+				'back_url'      => add_query_arg(
+					[
+						'tab' => $this->getTab(),
+					],
+					\CheckoutEngine::pages()->url( 'dashboard' )
+				),
 				'order'         => [
 					'query' => [
 						'expand'       => [],
@@ -87,7 +101,7 @@ class Block extends DashboardPage {
 					'customer_ids' => array_values( User::current()->customerIds() ),
 					'status'       => [ 'paid' ],
 					'page'         => 1,
-					'per_page'     => 5,
+					'per_page'     => 10,
 				],
 			]
 		);

@@ -58,7 +58,7 @@
 
 .tag--small {
   font-size: var(--ce-button-font-size-small);
-  height: calc(var(--ce-input-height-small) * 0.8);
+  height: calc(var(--ce-input-height-small) * 0.75);
   line-height: calc(var(--ce-input-height-small) - var(--ce-input-border-width) * 2);
   border-radius: var(--ce-input-border-radius-small);
   padding: 0 var(--ce-spacing-x-small);
@@ -71,7 +71,7 @@
 
 .tag--medium {
   font-size: var(--ce-font-size-small);
-  height: calc(var(--ce-input-height-medium) * 0.8);
+  height: calc(var(--ce-input-height-medium) * 0.75);
   line-height: calc(var(--ce-input-height-medium) - var(--ce-input-border-width) * 2);
   border-radius: var(--ce-input-border-radius-medium);
   padding: 0 var(--ce-spacing-small);
@@ -84,7 +84,7 @@
 
 .tag--large {
   font-size: var(--ce-button-font-size-large);
-  height: calc(var(--ce-input-height-large) * 0.8);
+  height: calc(var(--ce-input-height-large) * 0.75);
   line-height: calc(var(--ce-input-height-large) - var(--ce-input-border-width) * 2);
   border-radius: var(--ce-input-border-radius-large);
   padding: 0 var(--ce-spacing-medium);

@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngineBlocks\Dashboard;
+namespace CheckoutEngineBlocks\Blocks\Dashboard;
 
-use CheckoutEngineBlocks\BaseBlock;
+use CheckoutEngineBlocks\Blocks\BaseBlock;
 use CheckoutEngine\Models\User;
 
 /**
@@ -22,6 +22,13 @@ abstract class DashboardPage extends BaseBlock {
 	 * @var string
 	 */
 	protected $customer_id = null;
+
+	/**
+	 * Get the current tab.
+	 */
+	protected function getTab() {
+		return isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : false;
+	}
 
 	/**
 	 * Run middleware before rendering the block.

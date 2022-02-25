@@ -35,7 +35,7 @@
 			"CheckoutEngine\\": "app/src/",
 			"CheckoutEngineCore\\": "core/core/src/",
 			"CheckoutEngineAppCore\\": "core/app-core/src/",
-			"CheckoutEngineBlocks\\": "packages/blocks/Blocks/"
+			"CheckoutEngineBlocks\\": "packages/blocks/"
 		},
 		"files": [
 			"core/core/config.php",

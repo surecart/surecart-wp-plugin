@@ -12,7 +12,7 @@
 	"attributes": {
 		"title": {
 			"type": "string",
-			"default": "Orders"
+			"default": "Order History"
 		},
 		"paginate": {
 			"type": "boolean",

@@ -8,5 +8,11 @@
 	"supports": {
 		"reusable": false,
 		"html": false
+	},
+	"attributes": {
+		"title": {
+			"type": "string",
+			"default": "Payment Methods"
+		}
 	}
 }

@@ -3,21 +3,39 @@
 }
 
 .subscription {
-  position: relative;
+  display: grid;
+  gap: 0.5em;
 
-  &__details {
-    line-height: var(--ce-line-height-normal);
-  }
+  a {
+    text-decoration: none;
+    font-weight: var(--ce-font-weight-semibold);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25em;
+    color: var(--ce-color-primary-500);
 
-  &__name {
-    font-weight: var(--ce-font-weight-bold);
-    font-size: var(--ce-font-size-large);
-    line-height: var(--ce-line-height-normal)
-  }
-
-  &__fine-print {
-    font-size: var(--ce-font-size-x-small);
-    color: var(--ce-color-gray-500);
+    &.cancel {
+      color: var(--ce-color-danger-500);
+    }
   }
 }
+
+// .subscription {
+//   position: relative;
+
+//   &__details {
+//     line-height: var(--ce-line-height-normal);
+//   }
+
+//   &__name {
+//     font-weight: var(--ce-font-weight-bold);
+//     font-size: var(--ce-font-size-large);
+//     line-height: var(--ce-line-height-normal)
+//   }
+
+//   &__fine-print {
+//     font-size: var(--ce-font-size-x-small);
+//     color: var(--ce-color-gray-500);
+//   }
+// }
 

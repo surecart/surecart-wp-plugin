@@ -4,9 +4,9 @@
  * Block Service Provider
  */
 
-namespace CheckoutEngineBlocks;
+namespace CheckoutEngineBlocks\Blocks;
 
-use CheckoutEngineBlocks\BlockService;
+use 'CheckoutEngineBlocks\Blocks\BlockService;
 use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
 
 /**
@@ -58,9 +58,9 @@ class BlockServiceProvider implements ServiceProviderInterface {
 				return array_merge(
 					[
 						'--spacing',
-						'--font-weight',
-						'--line-height',
-						'--font-size',
+						'--font - weight',
+						'--line - height',
+						'--font - size',
 						'--color',
 					],
 					$styles
@@ -80,7 +80,7 @@ class BlockServiceProvider implements ServiceProviderInterface {
 	 * @return array
 	 */
 	public function ksesComponents( $tags ) {
-		$components = json_decode( file_get_contents( plugin_dir_path( CHECKOUT_ENGINE_PLUGIN_FILE ) . 'app/src/Support/kses.json' ), true );
+		$components = json_decode( file_get_contents( plugin_dir_path( CHECKOUT_ENGINE_PLUGIN_FILE ) . 'app / src / Support / kses . json' ), true );
 
 		// add slot to defaults.
 		$tags['span']['slot'] = true;

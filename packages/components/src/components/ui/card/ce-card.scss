@@ -1,9 +1,11 @@
 :host {
   display: block;
+  --overflow: visible;
 }
 
 .card {
   font-family: var(--ce-font-sans);
+  overflow: var(--overflow);
 }
 
 .card:not(.card--borderless) {

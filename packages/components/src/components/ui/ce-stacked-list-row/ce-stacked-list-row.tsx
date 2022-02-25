@@ -13,6 +13,8 @@ export class CeStackedListRow {
   @Prop() mobileSize: number = 600;
 
   @State() width: number;
+  @State() private hasPrefix = false;
+  @State() private hasSuffix = false;
 
   componentDidLoad() {
     // Only run if ResizeObserver is supported.
@@ -27,6 +29,11 @@ export class CeStackedListRow {
     }
   }
 
+  handleSlotChange() {
+    this.hasPrefix = !!this.el.querySelector('[slot="prefix"]');
+    this.hasSuffix = !!this.el.querySelector('[slot="suffix"]');
+  }
+
   render() {
     const Tag = this.href ? 'a' : 'div';
 
@@ -35,10 +42,18 @@ export class CeStackedListRow {
         href={this.href}
         class={{
           'list-row': true,
+          'list-row--has-prefix': this.hasPrefix,
+          'list-row--has-suffix': this.hasSuffix,
           'breakpoint-lg': this.width >= this.mobileSize,
         }}
       >
+        <span class="list-row__prefix">
+          <slot name="prefix"></slot>
+        </span>
         <slot></slot>
+        <span class="list-row__suffix">
+          <slot name="suffix"></slot>
+        </span>
       </Tag>
     );
   }

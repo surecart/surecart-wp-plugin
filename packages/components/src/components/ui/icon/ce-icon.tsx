@@ -13,7 +13,7 @@ export class CeIcon {
   @State() private svg = '';
 
   /** The name of the icon to draw. */
-  @Prop() name: string;
+  @Prop({ reflect: true }) name: string;
 
   /** An external URL of an SVG file. */
   @Prop() src: string;

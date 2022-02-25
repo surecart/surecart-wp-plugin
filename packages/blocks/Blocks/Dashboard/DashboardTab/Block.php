@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngineBlocks\Dashboard\DashboardTab;
+namespace CheckoutEngineBlocks\Blocks\Dashboard\DashboardTab;
 
-use CheckoutEngineBlocks\BaseBlock;
+use CheckoutEngineBlocks\Blocks\BaseBlock;
 
 /**
  * Checkout block
@@ -31,7 +31,7 @@ class Block extends BaseBlock {
 				'active' => $tab === $attributes['panel'] ? 'true' : 'false',
 				'title'  => $attributes['title'] ?? '',
 				'icon'   => $attributes['icon'] ?? 'home',
-				'href'   => esc_url( remove_query_arg( 'id', add_query_arg( [ 'tab' => $attributes['panel'] ] ) ) ),
+				'href'   => esc_url( add_query_arg( [ 'tab' => $attributes['panel'] ], \CheckoutEngine::pages()->url( 'dashboard' ) ) ),
 			]
 		);
 	}

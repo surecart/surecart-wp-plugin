@@ -1,21 +1,12 @@
 :host {
   display: block;
   --column-width-min: 125px;
+  position: relative;
 }
-
-// ::slotted(*) {
-//   text-overflow: ellipsis;
-//   white-space: nowrap;
-//   overflow: hidden;
-// }
 
 :host(:not(:last-child)) {
   border-bottom: 1px solid var(--ce-color-gray-200);
 }
-:host([href]:hover) {
-  background: var(--ce-color-gray-50);
-}
-
 
 .list-row {
   color: var(--ce-color-gray-800);
@@ -24,21 +15,37 @@
   justify-content:space-between;
   grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
   gap: var(--ce-spacing-large);
-  padding: var(--ce-spacing-small) var(--ce-spacing-large);
+  padding: var(--ce-spacing-medium) var(--ce-spacing-large);
+  transition: background-color var(--ce-transition-fast) ease;
 
   &[href]:hover {
     background: var(--ce-color-gray-50);
   }
+
+  &__prefix,
+  &__suffix {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  &__prefix {
+    left: var(--ce-spacing-large);
+  }
+
+  &__suffix {
+    right: var(--ce-spacing-large);
+  }
+
+  &--has-prefix {
+    padding-left: var(--ce-spacing-xx-large);
+  }
+  &--has-suffix {
+    padding-right: var(--ce-spacing-xx-large);
+  }
 }
 
 
-  .list-row.breakpoint-lg {
-    grid-template-columns: repeat(calc(var(--columns) - 1), 1fr) auto;
-  }
-
-  ::slotted(*) {
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-  }
-
+.list-row.breakpoint-lg {
+  grid-template-columns: repeat(calc(var(--columns) - 1), 1fr) auto;
+}

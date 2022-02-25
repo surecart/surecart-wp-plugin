@@ -60,19 +60,17 @@ return [
 	* SSR Blocks
 	*/
 	'blocks'              => [
-		\CheckoutEngineBlocks\BuyButton\Block::class,
-		// \CheckoutEngineBlocks\Email\Block::class,
-		// \CheckoutEngineBlocks\Divider\Block::class,
-		\CheckoutEngineBlocks\CheckoutForm\Block::class,
-		\CheckoutEngineBlocks\Form\Block::class,
-		\CheckoutEngineBlocks\LogoutButton\Block::class,
-		\CheckoutEngineBlocks\Dashboard\CustomerCharges\Block::class,
-		\CheckoutEngineBlocks\Dashboard\CustomerDashboard\Block::class,
-		\CheckoutEngineBlocks\Dashboard\CustomerOrders\Block::class,
-		\CheckoutEngineBlocks\Dashboard\CustomerSubscriptions\Block::class,
-		\CheckoutEngineBlocks\Dashboard\CustomerPaymentMethods\Block::class,
-		\CheckoutEngineBlocks\Dashboard\DashboardPage\Block::class,
-		\CheckoutEngineBlocks\Dashboard\DashboardTab\Block::class,
+		\CheckoutEngineBlocks\Blocks\BuyButton\Block::class,
+		\CheckoutEngineBlocks\Blocks\CheckoutForm\Block::class,
+		\CheckoutEngineBlocks\Blocks\Form\Block::class,
+		\CheckoutEngineBlocks\Blocks\LogoutButton\Block::class,
+		\CheckoutEngineBlocks\Blocks\Dashboard\CustomerCharges\Block::class,
+		\CheckoutEngineBlocks\Blocks\Dashboard\CustomerDashboard\Block::class,
+		\CheckoutEngineBlocks\Blocks\Dashboard\CustomerOrders\Block::class,
+		\CheckoutEngineBlocks\Blocks\Dashboard\CustomerSubscriptions\Block::class,
+		\CheckoutEngineBlocks\Blocks\Dashboard\CustomerPaymentMethods\Block::class,
+		\CheckoutEngineBlocks\Blocks\Dashboard\DashboardPage\Block::class,
+		\CheckoutEngineBlocks\Blocks\Dashboard\DashboardTab\Block::class,
 	],
 
 	/**

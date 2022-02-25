@@ -1,5 +1,5 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { CeCustomerSubscriptionEdit } from '../ce-customer-subscription-edit';
+import { CeCustomerSubscriptionEdit } from '../ce-subscription-edit';
 
 describe('ce-customer-subscription', () => {
   it('renders', async () => {

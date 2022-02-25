@@ -363,6 +363,13 @@ export interface Customer extends Object {
   phone?: string;
   billing_address?: string | Address;
   shipping_address?: string | Address;
+  billing_matches_shipping: true;
+  live_mode: true;
+  unsubscribed: false;
+  default_payment_method: null;
+  tax_identifier: null;
+  created_at: number;
+  updated_at: number;
 }
 
 export interface Address extends Object {

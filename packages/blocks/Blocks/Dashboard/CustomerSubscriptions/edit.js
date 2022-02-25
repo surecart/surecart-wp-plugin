@@ -1,11 +1,23 @@
-import { __, _n, sprintf } from '@wordpress/i18n';
+import { __, _n } from '@wordpress/i18n';
 import { InspectorControls } from '@wordpress/block-editor';
-import { PanelBody, PanelRow, RangeControl } from '@wordpress/components';
+import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
 import { CeSubscription } from '@checkout-engine/components-react';
 
 export default ({ attributes, setAttributes }) => {
+	const { title } = attributes;
 	return (
 		<div>
+			<InspectorControls>
+				<PanelBody>
+					<PanelRow>
+						<TextControl
+							label={__('Title', 'checkout_engine')}
+							value={title}
+							onChange={(title) => setAttributes({ title })}
+						/>
+					</PanelRow>
+				</PanelBody>
+			</InspectorControls>
 			<CeSubscription
 				upgradeGroups={[
 					[

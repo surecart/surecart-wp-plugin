@@ -38,6 +38,22 @@
     "class": true,
     "slot": true
   },
+  "ce-breadcrumb": {
+    "href": true,
+    "rel": true,
+    "target": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-breadcrumbs": {
+    "label": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "ce-button": {
     "busy": true,
     "caret": true,
@@ -201,17 +217,6 @@
   "ce-customer-orders-list": {
     "customer-id": true,
     "page": true,
-    "style": true,
-    "id": true,
-    "class": true,
-    "slot": true
-  },
-  "ce-customer-subscription-edit": {
-    "is-index": true,
-    "loading": true,
-    "subscription_id": true,
-    "subscriptions": true,
-    "upgrade-groups": true,
     "style": true,
     "id": true,
     "class": true,
@@ -595,6 +600,7 @@
     "slot": true
   },
   "ce-payment-methods-list": {
+    "list-title": true,
     "query": true,
     "style": true,
     "id": true,
@@ -849,7 +855,20 @@
     "slot": true
   },
   "ce-subscription": {
+    "list-title": true,
+    "query": true,
     "subscription": true,
+    "subscription-id": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-subscription-edit": {
+    "is-index": true,
+    "loading": true,
+    "subscription_id": true,
+    "subscriptions": true,
     "upgrade-groups": true,
     "style": true,
     "id": true,
@@ -869,6 +888,7 @@
   },
   "ce-subscriptions-list": {
     "cancel-behavior": true,
+    "list-title": true,
     "query": true,
     "style": true,
     "id": true,

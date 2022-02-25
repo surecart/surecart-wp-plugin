@@ -1,9 +1,10 @@
 import { Component, Element, h, Prop, State } from '@stencil/core';
-import { __ } from '@wordpress/i18n';
+import { sprintf, __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import apiFetch from '../../../../functions/fetch';
-import { Subscription } from '../../../../types';
+import { Invoice, Subscription } from '../../../../types';
 import { onFirstVisible } from '../../../../functions/lazy';
+import { translatedInterval } from '../../../../functions/price';
 
 @Component({
   tag: 'ce-subscriptions-list',
@@ -14,6 +15,7 @@ export class CeSubscriptionsList {
   @Element() el: HTMLCeSubscriptionsListElement;
   /** Customer id to fetch subscriptions */
   @Prop() query: object;
+  @Prop() listTitle: string;
   @Prop() cancelBehavior: 'period_end' | 'immediate' = 'period_end';
 
   @State() subscriptions: Array<Subscription> = [];
@@ -61,25 +63,97 @@ export class CeSubscriptionsList {
     }
   }
 
-  render() {
-    if (this.loading) {
+  renderName(subscription: Subscription) {
+    if (typeof subscription?.price?.product !== 'string') {
+      return subscription?.price?.product?.name;
+    }
+    return __('Subscription', 'checkout_engine');
+  }
+
+  renderRenewalText(subscription) {
+    const tag = <ce-subscription-status-badge subscription={subscription}></ce-subscription-status-badge>;
+
+    if (subscription?.cancel_at_period_end && subscription.current_period_end_at) {
       return (
-        <ce-card>
-          <ce-flex>
-            <ce-flex flex-direction="column" style={{ flex: '1' }}>
-              <ce-skeleton style={{ width: '30%', display: 'inline-block' }}></ce-skeleton>
-              <ce-skeleton style={{ width: '20%', display: 'inline-block' }}></ce-skeleton>
-              <ce-skeleton style={{ width: '40%', display: 'inline-block' }}></ce-skeleton>
-            </ce-flex>
-            <ce-flex flex-direction="column">
-              <ce-skeleton style={{ width: '200px' }}></ce-skeleton>
-              <ce-skeleton style={{ width: '200px' }}></ce-skeleton>
-            </ce-flex>
-          </ce-flex>
-        </ce-card>
+        <span>
+          {tag} {sprintf(__('Your plan will be canceled on', 'checkout_engine'))}{' '}
+          <ce-format-date date={subscription.current_period_end_at * 1000} month="long" day="numeric" year="numeric"></ce-format-date>
+        </span>
+      );
+    }
+    if (subscription.status === 'trialing' && subscription.trial_end_at) {
+      return (
+        <span>
+          {tag} {sprintf(__('Your plan begins on', 'checkout_engine'))}{' '}
+          <ce-format-date date={subscription.trial_end_at * 1000} month="long" day="numeric" year="numeric"></ce-format-date>
+        </span>
+      );
+    }
+    if (subscription.status === 'active' && subscription.current_period_end_at) {
+      return (
+        <span>
+          {tag} {sprintf(__('Your plan renews on', 'checkout_engine'))}{' '}
+          <ce-format-date date={subscription.current_period_end_at * 1000} month="long" day="numeric" year="numeric"></ce-format-date>
+        </span>
       );
     }
 
+    return tag;
+  }
+
+  renderEmpty() {
+    return <slot name="empty">{__('You have no subscriptions.', 'checkout_engine')}</slot>;
+  }
+
+  renderLoading() {
+    return (
+      <ce-stacked-list-row style={{ '--columns': '2' }} mobile-size={0}>
+        <div style={{ padding: '0.5em' }}>
+          <ce-skeleton style={{ width: '30%', marginBottom: '0.75em' }}></ce-skeleton>
+          <ce-skeleton style={{ width: '20%', marginBottom: '0.75em' }}></ce-skeleton>
+          <ce-skeleton style={{ width: '40%' }}></ce-skeleton>
+        </div>
+      </ce-stacked-list-row>
+    );
+  }
+
+  renderContent() {
+    if (this.loading) {
+      return this.renderLoading();
+    }
+
+    if (this.subscriptions?.length === 0) {
+      return this.renderEmpty();
+    }
+
+    return this.subscriptions.map(subscription => {
+      return (
+        <ce-stacked-list-row
+          href={addQueryArgs(window.location.href, {
+            action: 'edit',
+            model: 'subscription',
+            id: subscription.id,
+          })}
+          style={{ '--columns': '2' }}
+          mobile-size={0}
+        >
+          <div>
+            <ce-text style={{ '--font-weight': 'var(--ce-font-weight-bold)' }}>{this.renderName(subscription)}</ce-text>
+            <ce-format-number
+              type="currency"
+              currency={(subscription?.latest_invoice as Invoice)?.currency}
+              value={(subscription?.latest_invoice as Invoice)?.total_amount}
+            ></ce-format-number>
+            {translatedInterval(subscription?.price?.recurring_interval_count || 0, subscription?.price?.recurring_interval, '/', '')}
+            <div>{this.renderRenewalText(subscription)}</div>
+          </div>
+          <ce-icon name="chevron-right" slot="suffix"></ce-icon>
+        </ce-stacked-list-row>
+      );
+    });
+  }
+
+  render() {
     if (this.error) {
       return (
         <ce-alert open type="danger">
@@ -89,21 +163,30 @@ export class CeSubscriptionsList {
       );
     }
 
-    if (!this?.subscriptions?.length) {
-      return <slot name="empty">{__('You have no subscriptions.', 'checkout_engine')}</slot>;
-    }
-
     return (
-      <ce-card borderless no-divider>
-        <span slot="title">
-          <slot name="title" />
-        </span>
-        <ce-spacing style={{ '--spacing': 'var(--ce-spacing-large)' }}>
-          {this.subscriptions.map(subscription => {
-            return <ce-subscription subscription={subscription}></ce-subscription>;
-          })}
-        </ce-spacing>
-      </ce-card>
+      <div
+        class={{
+          'subscriptions-list': true,
+        }}
+      >
+        {this.listTitle && (
+          <ce-heading>
+            {this.listTitle || __('Subscriptions', 'checkout_engine')}
+            <a
+              href={addQueryArgs(window.location.href, {
+                action: 'index',
+                model: 'subscription',
+              })}
+              slot="end"
+            >
+              {__('View all', 'checkout_engine')} <ce-icon name="chevron-right"></ce-icon>
+            </a>
+          </ce-heading>
+        )}
+        <ce-card no-padding style={{ '--overflow': 'hidden' }}>
+          <ce-stacked-list>{this.renderContent()}</ce-stacked-list>
+        </ce-card>
+      </div>
     );
   }
 }

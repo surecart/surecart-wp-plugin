@@ -1,6 +1,6 @@
 <?php
 
-namespace CheckoutEngineBlocks;
+namespace CheckoutEngineBlocks\Blocks;
 
 use CheckoutEngineCore\Application\Application;
 

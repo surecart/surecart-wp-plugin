@@ -66,6 +66,26 @@ export namespace Components {
         "transparent": boolean;
         "zIndex": number;
     }
+    interface CeBreadcrumb {
+        /**
+          * Optional URL to direct the user to when the breadcrumb item is activated. When set, a link will be rendered internally. When unset, a button will be rendered instead.
+         */
+        "href"?: string;
+        /**
+          * The `rel` attribute to use on the link. Only used when `href` is set.
+         */
+        "rel": string;
+        /**
+          * Tells the browser where to open the link. Only used when `href` is set.
+         */
+        "target"?: '_blank' | '_parent' | '_self' | '_top';
+    }
+    interface CeBreadcrumbs {
+        /**
+          * The label to use for the breadcrumb control. This will not be shown, but it will be announced by screen readers and other assistive devices.
+         */
+        "label": string;
+    }
     interface CeButton {
         /**
           * Draws the button in a busy state.
@@ -426,13 +446,6 @@ export namespace Components {
          */
         "customerId": string;
         "page": number;
-    }
-    interface CeCustomerSubscriptionEdit {
-        "isIndex": boolean;
-        "loading": boolean;
-        "subscription_id": string;
-        "subscriptions": Subscription[];
-        "upgradeGroups": Array<Array<string>>;
     }
     interface CeCustomerSubscriptionPlan {
         "price": Price;
@@ -1033,6 +1046,7 @@ export namespace Components {
         "secureNotice": string;
     }
     interface CePaymentMethodsList {
+        "listTitle": string;
         /**
           * Query to fetch paymentMethods
          */
@@ -1519,7 +1533,19 @@ export namespace Components {
         "theme": string;
     }
     interface CeSubscription {
+        "listTitle": string;
+        "query": object;
         "subscription": Subscription;
+        /**
+          * Customer id to fetch subscriptions
+         */
+        "subscriptionId": string;
+    }
+    interface CeSubscriptionEdit {
+        "isIndex": boolean;
+        "loading": boolean;
+        "subscription_id": string;
+        "subscriptions": Subscription[];
         "upgradeGroups": Array<Array<string>>;
     }
     interface CeSubscriptionStatusBadge {
@@ -1546,6 +1572,7 @@ export namespace Components {
     }
     interface CeSubscriptionsList {
         "cancelBehavior": 'period_end' | 'immediate';
+        "listTitle": string;
         /**
           * Customer id to fetch subscriptions
          */
@@ -1709,6 +1736,18 @@ declare global {
         prototype: HTMLCeBlockUiElement;
         new (): HTMLCeBlockUiElement;
     };
+    interface HTMLCeBreadcrumbElement extends Components.CeBreadcrumb, HTMLStencilElement {
+    }
+    var HTMLCeBreadcrumbElement: {
+        prototype: HTMLCeBreadcrumbElement;
+        new (): HTMLCeBreadcrumbElement;
+    };
+    interface HTMLCeBreadcrumbsElement extends Components.CeBreadcrumbs, HTMLStencilElement {
+    }
+    var HTMLCeBreadcrumbsElement: {
+        prototype: HTMLCeBreadcrumbsElement;
+        new (): HTMLCeBreadcrumbsElement;
+    };
     interface HTMLCeButtonElement extends Components.CeButton, HTMLStencilElement {
     }
     var HTMLCeButtonElement: {
@@ -1792,12 +1831,6 @@ declare global {
     var HTMLCeCustomerOrdersListElement: {
         prototype: HTMLCeCustomerOrdersListElement;
         new (): HTMLCeCustomerOrdersListElement;
-    };
-    interface HTMLCeCustomerSubscriptionEditElement extends Components.CeCustomerSubscriptionEdit, HTMLStencilElement {
-    }
-    var HTMLCeCustomerSubscriptionEditElement: {
-        prototype: HTMLCeCustomerSubscriptionEditElement;
-        new (): HTMLCeCustomerSubscriptionEditElement;
     };
     interface HTMLCeCustomerSubscriptionPlanElement extends Components.CeCustomerSubscriptionPlan, HTMLStencilElement {
     }
@@ -2153,6 +2186,12 @@ declare global {
         prototype: HTMLCeSubscriptionElement;
         new (): HTMLCeSubscriptionElement;
     };
+    interface HTMLCeSubscriptionEditElement extends Components.CeSubscriptionEdit, HTMLStencilElement {
+    }
+    var HTMLCeSubscriptionEditElement: {
+        prototype: HTMLCeSubscriptionEditElement;
+        new (): HTMLCeSubscriptionEditElement;
+    };
     interface HTMLCeSubscriptionStatusBadgeElement extends Components.CeSubscriptionStatusBadge, HTMLStencilElement {
     }
     var HTMLCeSubscriptionStatusBadgeElement: {
@@ -2248,6 +2287,8 @@ declare global {
         "ce-alert": HTMLCeAlertElement;
         "ce-badge-notice": HTMLCeBadgeNoticeElement;
         "ce-block-ui": HTMLCeBlockUiElement;
+        "ce-breadcrumb": HTMLCeBreadcrumbElement;
+        "ce-breadcrumbs": HTMLCeBreadcrumbsElement;
         "ce-button": HTMLCeButtonElement;
         "ce-card": HTMLCeCardElement;
         "ce-cc-logo": HTMLCeCcLogoElement;
@@ -2262,7 +2303,6 @@ declare global {
         "ce-coupon-form": HTMLCeCouponFormElement;
         "ce-customer-name": HTMLCeCustomerNameElement;
         "ce-customer-orders-list": HTMLCeCustomerOrdersListElement;
-        "ce-customer-subscription-edit": HTMLCeCustomerSubscriptionEditElement;
         "ce-customer-subscription-plan": HTMLCeCustomerSubscriptionPlanElement;
         "ce-divider": HTMLCeDividerElement;
         "ce-dropdown": HTMLCeDropdownElement;
@@ -2322,6 +2362,7 @@ declare global {
         "ce-stripe-element": HTMLCeStripeElementElement;
         "ce-stripe-payment-request": HTMLCeStripePaymentRequestElement;
         "ce-subscription": HTMLCeSubscriptionElement;
+        "ce-subscription-edit": HTMLCeSubscriptionEditElement;
         "ce-subscription-status-badge": HTMLCeSubscriptionStatusBadgeElement;
         "ce-subscriptions-list": HTMLCeSubscriptionsListElement;
         "ce-switch": HTMLCeSwitchElement;
@@ -2397,6 +2438,26 @@ declare namespace LocalJSX {
         "spinner"?: boolean;
         "transparent"?: boolean;
         "zIndex"?: number;
+    }
+    interface CeBreadcrumb {
+        /**
+          * Optional URL to direct the user to when the breadcrumb item is activated. When set, a link will be rendered internally. When unset, a button will be rendered instead.
+         */
+        "href"?: string;
+        /**
+          * The `rel` attribute to use on the link. Only used when `href` is set.
+         */
+        "rel"?: string;
+        /**
+          * Tells the browser where to open the link. Only used when `href` is set.
+         */
+        "target"?: '_blank' | '_parent' | '_self' | '_top';
+    }
+    interface CeBreadcrumbs {
+        /**
+          * The label to use for the breadcrumb control. This will not be shown, but it will be announced by screen readers and other assistive devices.
+         */
+        "label"?: string;
     }
     interface CeButton {
         /**
@@ -2789,14 +2850,6 @@ declare namespace LocalJSX {
          */
         "customerId"?: string;
         "page"?: number;
-    }
-    interface CeCustomerSubscriptionEdit {
-        "isIndex"?: boolean;
-        "loading"?: boolean;
-        "onCeFetchSubscription"?: (event: CustomEvent<{ id: string; props?: object }>) => void;
-        "subscription_id"?: string;
-        "subscriptions"?: Subscription[];
-        "upgradeGroups"?: Array<Array<string>>;
     }
     interface CeCustomerSubscriptionPlan {
         /**
@@ -3453,6 +3506,7 @@ declare namespace LocalJSX {
         "secureNotice"?: string;
     }
     interface CePaymentMethodsList {
+        "listTitle"?: string;
         /**
           * Query to fetch paymentMethods
          */
@@ -4006,8 +4060,20 @@ declare namespace LocalJSX {
         "theme"?: string;
     }
     interface CeSubscription {
-        "onCeUpdateSubscription"?: (event: CustomEvent<Subscription>) => void;
+        "listTitle"?: string;
+        "query"?: object;
         "subscription"?: Subscription;
+        /**
+          * Customer id to fetch subscriptions
+         */
+        "subscriptionId"?: string;
+    }
+    interface CeSubscriptionEdit {
+        "isIndex"?: boolean;
+        "loading"?: boolean;
+        "onCeFetchSubscription"?: (event: CustomEvent<{ id: string; props?: object }>) => void;
+        "subscription_id"?: string;
+        "subscriptions"?: Subscription[];
         "upgradeGroups"?: Array<Array<string>>;
     }
     interface CeSubscriptionStatusBadge {
@@ -4034,6 +4100,7 @@ declare namespace LocalJSX {
     }
     interface CeSubscriptionsList {
         "cancelBehavior"?: 'period_end' | 'immediate';
+        "listTitle"?: string;
         /**
           * Customer id to fetch subscriptions
          */
@@ -4187,6 +4254,8 @@ declare namespace LocalJSX {
         "ce-alert": CeAlert;
         "ce-badge-notice": CeBadgeNotice;
         "ce-block-ui": CeBlockUi;
+        "ce-breadcrumb": CeBreadcrumb;
+        "ce-breadcrumbs": CeBreadcrumbs;
         "ce-button": CeButton;
         "ce-card": CeCard;
         "ce-cc-logo": CeCcLogo;
@@ -4201,7 +4270,6 @@ declare namespace LocalJSX {
         "ce-coupon-form": CeCouponForm;
         "ce-customer-name": CeCustomerName;
         "ce-customer-orders-list": CeCustomerOrdersList;
-        "ce-customer-subscription-edit": CeCustomerSubscriptionEdit;
         "ce-customer-subscription-plan": CeCustomerSubscriptionPlan;
         "ce-divider": CeDivider;
         "ce-dropdown": CeDropdown;
@@ -4261,6 +4329,7 @@ declare namespace LocalJSX {
         "ce-stripe-element": CeStripeElement;
         "ce-stripe-payment-request": CeStripePaymentRequest;
         "ce-subscription": CeSubscription;
+        "ce-subscription-edit": CeSubscriptionEdit;
         "ce-subscription-status-badge": CeSubscriptionStatusBadge;
         "ce-subscriptions-list": CeSubscriptionsList;
         "ce-switch": CeSwitch;
@@ -4286,6 +4355,8 @@ declare module "@stencil/core" {
             "ce-alert": LocalJSX.CeAlert & JSXBase.HTMLAttributes<HTMLCeAlertElement>;
             "ce-badge-notice": LocalJSX.CeBadgeNotice & JSXBase.HTMLAttributes<HTMLCeBadgeNoticeElement>;
             "ce-block-ui": LocalJSX.CeBlockUi & JSXBase.HTMLAttributes<HTMLCeBlockUiElement>;
+            "ce-breadcrumb": LocalJSX.CeBreadcrumb & JSXBase.HTMLAttributes<HTMLCeBreadcrumbElement>;
+            "ce-breadcrumbs": LocalJSX.CeBreadcrumbs & JSXBase.HTMLAttributes<HTMLCeBreadcrumbsElement>;
             "ce-button": LocalJSX.CeButton & JSXBase.HTMLAttributes<HTMLCeButtonElement>;
             "ce-card": LocalJSX.CeCard & JSXBase.HTMLAttributes<HTMLCeCardElement>;
             "ce-cc-logo": LocalJSX.CeCcLogo & JSXBase.HTMLAttributes<HTMLCeCcLogoElement>;
@@ -4300,7 +4371,6 @@ declare module "@stencil/core" {
             "ce-coupon-form": LocalJSX.CeCouponForm & JSXBase.HTMLAttributes<HTMLCeCouponFormElement>;
             "ce-customer-name": LocalJSX.CeCustomerName & JSXBase.HTMLAttributes<HTMLCeCustomerNameElement>;
             "ce-customer-orders-list": LocalJSX.CeCustomerOrdersList & JSXBase.HTMLAttributes<HTMLCeCustomerOrdersListElement>;
-            "ce-customer-subscription-edit": LocalJSX.CeCustomerSubscriptionEdit & JSXBase.HTMLAttributes<HTMLCeCustomerSubscriptionEditElement>;
             "ce-customer-subscription-plan": LocalJSX.CeCustomerSubscriptionPlan & JSXBase.HTMLAttributes<HTMLCeCustomerSubscriptionPlanElement>;
             "ce-divider": LocalJSX.CeDivider & JSXBase.HTMLAttributes<HTMLCeDividerElement>;
             "ce-dropdown": LocalJSX.CeDropdown & JSXBase.HTMLAttributes<HTMLCeDropdownElement>;
@@ -4360,6 +4430,7 @@ declare module "@stencil/core" {
             "ce-stripe-element": LocalJSX.CeStripeElement & JSXBase.HTMLAttributes<HTMLCeStripeElementElement>;
             "ce-stripe-payment-request": LocalJSX.CeStripePaymentRequest & JSXBase.HTMLAttributes<HTMLCeStripePaymentRequestElement>;
             "ce-subscription": LocalJSX.CeSubscription & JSXBase.HTMLAttributes<HTMLCeSubscriptionElement>;
+            "ce-subscription-edit": LocalJSX.CeSubscriptionEdit & JSXBase.HTMLAttributes<HTMLCeSubscriptionEditElement>;
             "ce-subscription-status-badge": LocalJSX.CeSubscriptionStatusBadge & JSXBase.HTMLAttributes<HTMLCeSubscriptionStatusBadgeElement>;
             "ce-subscriptions-list": LocalJSX.CeSubscriptionsList & JSXBase.HTMLAttributes<HTMLCeSubscriptionsListElement>;
             "ce-switch": LocalJSX.CeSwitch & JSXBase.HTMLAttributes<HTMLCeSwitchElement>;

@@ -4,15 +4,23 @@ import {
 	PanelBody,
 	PanelRow,
 	RangeControl,
+	TextControl,
 	ToggleControl,
 } from '@wordpress/components';
 
 export default ({ attributes, setAttributes }) => {
-	const { per_page, paginate } = attributes;
+	const { per_page, paginate, title } = attributes;
 	return (
 		<div>
 			<InspectorControls>
 				<PanelBody title={__('Attributes', 'checkout_engine')}>
+					<PanelRow>
+						<TextControl
+							label={__('Title', 'checkout_engine')}
+							value={title}
+							onChange={(title) => setAttributes({ title })}
+						/>
+					</PanelRow>
 					<PanelRow>
 						<RangeControl
 							label={__('Per Page', 'checkout_engine')}

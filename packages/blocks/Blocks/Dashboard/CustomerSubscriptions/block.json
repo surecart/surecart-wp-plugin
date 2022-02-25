@@ -3,16 +3,20 @@
 	"title": "Customer Subscriptions",
 	"description": "Displays a customer's subscriptions.",
 	"category": "layout",
-	"keywords": [ "name", "customer", "dashboard" ],
-	"parent": [ "checkout-engine/dashboard-page" ],
+	"keywords": ["name", "customer", "dashboard"],
+	"parent": ["checkout-engine/dashboard-page"],
 	"supports": {
 		"reusable": false,
 		"html": false
 	},
-  "attributes" :{
-    "per_page": {
-      "type": "number",
-      "default": "10"
-    }
-  }
+	"attributes": {
+		"title": {
+			"type": "string",
+			"default": "Subscriptions"
+		},
+		"per_page": {
+			"type": "number",
+			"default": "10"
+		}
+	}
 }

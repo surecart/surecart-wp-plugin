@@ -1,10 +1,10 @@
 <?php
 
-namespace CheckoutEngineBlocks\Form;
+namespace CheckoutEngineBlocks\Blocks\Form;
 
 use CheckoutEngine\Models\Account;
 use CheckoutEngine\Models\Brand;
-use CheckoutEngineBlocks\BaseBlock;
+use CheckoutEngineBlocks\Blocks\BaseBlock;
 
 /**
  * Checkout block

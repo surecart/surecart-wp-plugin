@@ -1,3 +1,8 @@
+<ce-breadcrumbs>
+	<ce-breadcrumb href="<?php echo esc_url( $back_url ); ?>">Dashboard</ce-breadcrumb>
+	<ce-breadcrumb>Order</ce-breadcrumb>
+</ce-breadcrumbs>
+
 <ce-card
 	style="--spacing: var(--ce-spacing-medium)"
 	no-divider

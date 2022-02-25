@@ -2,12 +2,16 @@
   display: block;
 }
 
-.payment-methods {
-  &__title {
-    display: none;
-  }
+.payment-methods-list {
+  display: grid;
+  gap: 0.5em;
 
-  &--has-title-slot &__title {
-    display: block;
+  ce-heading a {
+    text-decoration: none;
+    font-weight: var(--ce-font-weight-semibold);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25em;
+    color: var(--ce-color-primary-500);
   }
 }

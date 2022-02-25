@@ -7,11 +7,11 @@ import { addQueryArgs } from '@wordpress/url';
 import { translatedInterval } from '../../../../functions/price';
 
 @Component({
-  tag: 'ce-customer-subscription-edit',
-  styleUrl: 'ce-customer-subscription-edit.scss',
+  tag: 'ce-subscription-edit',
+  styleUrl: 'ce-subscription-edit.scss',
   shadow: true,
 })
-export class CeCustomerSubscriptionEdit {
+export class CeSubscriptionEdit {
   @Prop() subscription_id: string;
   @Prop() subscriptions: Subscription[];
   @Prop() upgradeGroups: Array<Array<string>>;
@@ -192,4 +192,4 @@ export class CeCustomerSubscriptionEdit {
   }
 }
 
-openWormhole(CeCustomerSubscriptionEdit, ['loading', 'subscriptions', 'error', 'isIndex', 'subscription_id', 'upgradeGroups'], false);
+openWormhole(CeSubscriptionEdit, ['loading', 'subscriptions', 'error', 'isIndex', 'subscription_id', 'upgradeGroups'], false);
