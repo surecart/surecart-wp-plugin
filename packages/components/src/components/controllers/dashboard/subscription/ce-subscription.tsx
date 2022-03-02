@@ -64,6 +64,12 @@ export class CeSubscription {
     }
   }
 
+  async confirmCancel(e) {
+    e.preventDefault();
+    const r = confirm(__('Are you sure you want to cancel your subscription?', 'checkout_engine'));
+    if (!r) return;
+  }
+
   renderName(subscription: Subscription) {
     if (typeof subscription?.price?.product !== 'string') {
       return subscription?.price?.product?.name;
@@ -162,22 +168,8 @@ export class CeSubscription {
         <ce-heading>
           {this.listTitle || __('Update Subscription', 'checkout_engine')}
           <ce-flex slot="end">
-            <a
-              href={addQueryArgs(window.location.href, {
-                action: 'index',
-                model: 'subscription',
-              })}
-              class="cancel"
-            >
+            <a onClick={e => this.confirmCancel(e)} class="cancel">
               <ce-icon name="x"></ce-icon> {__('Cancel', 'checkout_engine')}
-            </a>
-            <a
-              href={addQueryArgs(window.location.href, {
-                action: 'index',
-                model: 'subscription',
-              })}
-            >
-              <ce-icon name="credit-card"></ce-icon> {__('Update Payment Method', 'checkout_engine')}
             </a>
           </ce-flex>
         </ce-heading>

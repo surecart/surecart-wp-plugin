@@ -67,6 +67,7 @@ return [
 		\CheckoutEngineBlocks\Blocks\Dashboard\CustomerCharges\Block::class,
 		\CheckoutEngineBlocks\Blocks\Dashboard\CustomerDashboard\Block::class,
 		\CheckoutEngineBlocks\Blocks\Dashboard\CustomerOrders\Block::class,
+		\CheckoutEngineBlocks\Blocks\Dashboard\CustomerBillingDetails\Block::class,
 		\CheckoutEngineBlocks\Blocks\Dashboard\CustomerSubscriptions\Block::class,
 		\CheckoutEngineBlocks\Blocks\Dashboard\CustomerPaymentMethods\Block::class,
 		\CheckoutEngineBlocks\Blocks\Dashboard\DashboardPage\Block::class,

@@ -4,6 +4,7 @@ namespace CheckoutEngine\Permissions;
 
 use CheckoutEngine\Permissions\Models\ChargePermissionsController;
 use CheckoutEngine\Permissions\Models\OrderPermissionsController;
+use CheckoutEngine\Permissions\Models\PaymentMethodPermissionsController;
 use CheckoutEngine\Permissions\Models\SubscriptionPermissionsController;
 
 /**
@@ -19,6 +20,7 @@ class PermissionsService {
 		SubscriptionPermissionsController::class,
 		OrderPermissionsController::class,
 		ChargePermissionsController::class,
+		PaymentMethodPermissionsController::class,
 	];
 
 	/**

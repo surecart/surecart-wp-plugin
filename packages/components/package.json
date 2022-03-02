@@ -47,6 +47,7 @@
     "country-region-data": "^2.0.0",
     "fuse.js": "^6.4.6",
     "import": "^0.0.6",
+    "localized-address-format": "^1.1.0",
     "sass": "^1.29.0",
     "stencil-wormhole": "^3.4.1"
   },

@@ -1761,6 +1761,7 @@ __metadata:
     import: ^0.0.6
     jest: ^27.4.5
     jest-cli: ^27.4.5
+    localized-address-format: ^1.1.0
     prettier: ^2.5.1
     puppeteer: ^10.0.0
     sass: ^1.29.0
@@ -15469,6 +15470,13 @@ __metadata:
     emojis-list: ^3.0.0
     json5: ^2.1.2
   checksum: 9078d1ed47cadc57f4c6ddbdb2add324ee7da544cea41de3b7f1128e8108fcd41cd3443a85b7ee8d7d8ac439148aa221922774efe4cf87506d4fb054d5889303
+  languageName: node
+  linkType: hard
+
+"localized-address-format@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "localized-address-format@npm:1.1.0"
+  checksum: 415f05617884616487638262db6d78ecf4e29f5b36a66a512d9248946edde42b1ded40944eaf42076e6d0356224382b46c779ce69dd4688014be5e058d22bd96
   languageName: node
   linkType: hard
 

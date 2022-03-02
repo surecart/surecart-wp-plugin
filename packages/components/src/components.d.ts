@@ -146,7 +146,7 @@ export namespace Components {
         /**
           * The button's type.
          */
-        "type": 'default' | 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text';
+        "type": 'default' | 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text' | 'link';
         /**
           * An optional value for the button. Ignored when `href` is set.
          */
@@ -174,10 +174,14 @@ export namespace Components {
         "brand": string;
     }
     interface CeChargesList {
+        "listTitle": string;
         /**
           * Query to fetch charges
          */
-        "query": object;
+        "query": {
+    page: number;
+    per_page: number;
+  };
     }
     interface CeCheckbox {
         /**
@@ -377,6 +381,14 @@ export namespace Components {
         "label": string;
         "loading": boolean;
         "order": Order;
+    }
+    interface CeCustomerDetails {
+        "customerId": string;
+        "heading": string;
+    }
+    interface CeCustomerEdit {
+        "customer": Customer;
+        "header": string;
     }
     interface CeCustomerName {
         /**
@@ -1045,6 +1057,11 @@ export namespace Components {
          */
         "secureNotice": string;
     }
+    interface CePaymentMethodCreate {
+        "clientSecret": string;
+        "error": string;
+        "successUrl": string;
+    }
     interface CePaymentMethodsList {
         "listTitle": string;
         /**
@@ -1447,6 +1464,14 @@ export namespace Components {
     }
     interface CeStripeElement {
         /**
+          * Confirm card payment
+         */
+        "confirmCardPayment": (secret: any) => Promise<any>;
+        /**
+          * Confirm card setup.
+         */
+        "confirmCardSetup": (secret: any) => Promise<any>;
+        /**
           * Whether this field is disabled
          */
         "disabled": boolean;
@@ -1820,6 +1845,18 @@ declare global {
         prototype: HTMLCeCouponFormElement;
         new (): HTMLCeCouponFormElement;
     };
+    interface HTMLCeCustomerDetailsElement extends Components.CeCustomerDetails, HTMLStencilElement {
+    }
+    var HTMLCeCustomerDetailsElement: {
+        prototype: HTMLCeCustomerDetailsElement;
+        new (): HTMLCeCustomerDetailsElement;
+    };
+    interface HTMLCeCustomerEditElement extends Components.CeCustomerEdit, HTMLStencilElement {
+    }
+    var HTMLCeCustomerEditElement: {
+        prototype: HTMLCeCustomerEditElement;
+        new (): HTMLCeCustomerEditElement;
+    };
     interface HTMLCeCustomerNameElement extends Components.CeCustomerName, HTMLStencilElement {
     }
     var HTMLCeCustomerNameElement: {
@@ -2047,6 +2084,12 @@ declare global {
     var HTMLCePaymentElement: {
         prototype: HTMLCePaymentElement;
         new (): HTMLCePaymentElement;
+    };
+    interface HTMLCePaymentMethodCreateElement extends Components.CePaymentMethodCreate, HTMLStencilElement {
+    }
+    var HTMLCePaymentMethodCreateElement: {
+        prototype: HTMLCePaymentMethodCreateElement;
+        new (): HTMLCePaymentMethodCreateElement;
     };
     interface HTMLCePaymentMethodsListElement extends Components.CePaymentMethodsList, HTMLStencilElement {
     }
@@ -2301,6 +2344,8 @@ declare global {
         "ce-columns": HTMLCeColumnsElement;
         "ce-consumer": HTMLCeConsumerElement;
         "ce-coupon-form": HTMLCeCouponFormElement;
+        "ce-customer-details": HTMLCeCustomerDetailsElement;
+        "ce-customer-edit": HTMLCeCustomerEditElement;
         "ce-customer-name": HTMLCeCustomerNameElement;
         "ce-customer-orders-list": HTMLCeCustomerOrdersListElement;
         "ce-customer-subscription-plan": HTMLCeCustomerSubscriptionPlanElement;
@@ -2339,6 +2384,7 @@ declare global {
         "ce-order-summary": HTMLCeOrderSummaryElement;
         "ce-orders-list": HTMLCeOrdersListElement;
         "ce-payment": HTMLCePaymentElement;
+        "ce-payment-method-create": HTMLCePaymentMethodCreateElement;
         "ce-payment-methods-list": HTMLCePaymentMethodsListElement;
         "ce-price-choice": HTMLCePriceChoiceElement;
         "ce-price-choices": HTMLCePriceChoicesElement;
@@ -2527,7 +2573,7 @@ declare namespace LocalJSX {
         /**
           * The button's type.
          */
-        "type"?: 'default' | 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text';
+        "type"?: 'default' | 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text' | 'link';
         /**
           * An optional value for the button. Ignored when `href` is set.
          */
@@ -2555,10 +2601,14 @@ declare namespace LocalJSX {
         "brand"?: string;
     }
     interface CeChargesList {
+        "listTitle"?: string;
         /**
           * Query to fetch charges
          */
-        "query"?: object;
+        "query"?: {
+    page: number;
+    per_page: number;
+  };
     }
     interface CeCheckbox {
         /**
@@ -2760,6 +2810,14 @@ declare namespace LocalJSX {
         "loading"?: boolean;
         "onCeApplyCoupon"?: (event: CustomEvent<string>) => void;
         "order"?: Order;
+    }
+    interface CeCustomerDetails {
+        "customerId"?: string;
+        "heading"?: string;
+    }
+    interface CeCustomerEdit {
+        "customer"?: Customer;
+        "header"?: string;
     }
     interface CeCustomerName {
         /**
@@ -3504,6 +3562,11 @@ declare namespace LocalJSX {
           * Secure notice
          */
         "secureNotice"?: string;
+    }
+    interface CePaymentMethodCreate {
+        "clientSecret"?: string;
+        "error"?: string;
+        "successUrl"?: string;
     }
     interface CePaymentMethodsList {
         "listTitle"?: string;
@@ -4268,6 +4331,8 @@ declare namespace LocalJSX {
         "ce-columns": CeColumns;
         "ce-consumer": CeConsumer;
         "ce-coupon-form": CeCouponForm;
+        "ce-customer-details": CeCustomerDetails;
+        "ce-customer-edit": CeCustomerEdit;
         "ce-customer-name": CeCustomerName;
         "ce-customer-orders-list": CeCustomerOrdersList;
         "ce-customer-subscription-plan": CeCustomerSubscriptionPlan;
@@ -4306,6 +4371,7 @@ declare namespace LocalJSX {
         "ce-order-summary": CeOrderSummary;
         "ce-orders-list": CeOrdersList;
         "ce-payment": CePayment;
+        "ce-payment-method-create": CePaymentMethodCreate;
         "ce-payment-methods-list": CePaymentMethodsList;
         "ce-price-choice": CePriceChoice;
         "ce-price-choices": CePriceChoices;
@@ -4369,6 +4435,8 @@ declare module "@stencil/core" {
             "ce-columns": LocalJSX.CeColumns & JSXBase.HTMLAttributes<HTMLCeColumnsElement>;
             "ce-consumer": LocalJSX.CeConsumer & JSXBase.HTMLAttributes<HTMLCeConsumerElement>;
             "ce-coupon-form": LocalJSX.CeCouponForm & JSXBase.HTMLAttributes<HTMLCeCouponFormElement>;
+            "ce-customer-details": LocalJSX.CeCustomerDetails & JSXBase.HTMLAttributes<HTMLCeCustomerDetailsElement>;
+            "ce-customer-edit": LocalJSX.CeCustomerEdit & JSXBase.HTMLAttributes<HTMLCeCustomerEditElement>;
             "ce-customer-name": LocalJSX.CeCustomerName & JSXBase.HTMLAttributes<HTMLCeCustomerNameElement>;
             "ce-customer-orders-list": LocalJSX.CeCustomerOrdersList & JSXBase.HTMLAttributes<HTMLCeCustomerOrdersListElement>;
             "ce-customer-subscription-plan": LocalJSX.CeCustomerSubscriptionPlan & JSXBase.HTMLAttributes<HTMLCeCustomerSubscriptionPlanElement>;
@@ -4407,6 +4475,7 @@ declare module "@stencil/core" {
             "ce-order-summary": LocalJSX.CeOrderSummary & JSXBase.HTMLAttributes<HTMLCeOrderSummaryElement>;
             "ce-orders-list": LocalJSX.CeOrdersList & JSXBase.HTMLAttributes<HTMLCeOrdersListElement>;
             "ce-payment": LocalJSX.CePayment & JSXBase.HTMLAttributes<HTMLCePaymentElement>;
+            "ce-payment-method-create": LocalJSX.CePaymentMethodCreate & JSXBase.HTMLAttributes<HTMLCePaymentMethodCreateElement>;
             "ce-payment-methods-list": LocalJSX.CePaymentMethodsList & JSXBase.HTMLAttributes<HTMLCePaymentMethodsListElement>;
             "ce-price-choice": LocalJSX.CePriceChoice & JSXBase.HTMLAttributes<HTMLCePriceChoiceElement>;
             "ce-price-choices": LocalJSX.CePriceChoices & JSXBase.HTMLAttributes<HTMLCePriceChoicesElement>;

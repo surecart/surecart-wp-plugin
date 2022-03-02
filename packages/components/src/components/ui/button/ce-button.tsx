@@ -15,7 +15,7 @@ export class CEButton {
   @State() private hasSuffix = false;
 
   /** The button's type. */
-  @Prop({ reflect: true }) type: 'default' | 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text' = 'default';
+  @Prop({ reflect: true }) type: 'default' | 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text' | 'link' = 'default';
 
   /** The button's size. */
   @Prop({ reflect: true }) size: 'small' | 'medium' | 'large' = 'medium';
@@ -135,7 +135,7 @@ export class CEButton {
   }
 
   render() {
-    const isLink = this.href ? true : false;
+    const Tag = this.href ? 'a' : 'button';
 
     const interior = (
       <Fragment>
@@ -161,66 +161,19 @@ export class CEButton {
       </Fragment>
     );
 
-    const button = (
-      <button
+    return (
+      <Tag
         part="base"
         class={{
           'button': true,
-          'button--default': this.type === 'default',
-          'button--primary': this.type === 'primary',
-          'button--success': this.type === 'success',
-          'button--info': this.type === 'info',
-          'button--warning': this.type === 'warning',
-          'button--danger': this.type === 'danger',
-          'button--text': this.type === 'text',
-          'button--small': this.size === 'small',
-          'button--medium': this.size === 'medium',
-          'button--large': this.size === 'large',
+          [`button--${this.type}`]: !!this.type,
+          [`button--${this.size}`]: true,
           'button--caret': this.caret,
           'button--circle': this.circle,
           'button--disabled': this.disabled,
           'button--focused': this.hasFocus,
           'button--loading': this.loading,
           'button--busy': this.busy,
-          'button--pill': this.pill,
-          'button--standard': !this.outline,
-          'button--outline': this.outline,
-          'button--has-label': this.hasLabel,
-          'button--has-prefix': this.hasPrefix,
-          'button--has-suffix': this.hasSuffix,
-        }}
-        disabled={this.disabled || this.busy}
-        type={this.submit ? 'submit' : 'button'}
-        name={this.name}
-        value={this.value}
-        onBlur={() => this.handleBlur()}
-        onFocus={() => this.handleFocus()}
-        onClick={e => this.handleClick(e)}
-      >
-        {interior}
-      </button>
-    );
-
-    const link = (
-      <a
-        part="base"
-        class={{
-          'button': true,
-          'button--default': this.type === 'default',
-          'button--primary': this.type === 'primary',
-          'button--success': this.type === 'success',
-          'button--info': this.type === 'info',
-          'button--warning': this.type === 'warning',
-          'button--danger': this.type === 'danger',
-          'button--text': this.type === 'text',
-          'button--small': this.size === 'small',
-          'button--medium': this.size === 'medium',
-          'button--large': this.size === 'large',
-          'button--caret': this.caret,
-          'button--circle': this.circle,
-          'button--disabled': this.disabled,
-          'button--focused': this.hasFocus,
-          'button--loading': this.loading,
           'button--pill': this.pill,
           'button--standard': !this.outline,
           'button--outline': this.outline,
@@ -235,15 +188,17 @@ export class CEButton {
         role="button"
         aria-disabled={this.disabled ? 'true' : 'false'}
         tabindex={this.disabled ? '-1' : '0'}
+        disabled={this.disabled || this.busy}
+        type={this.submit ? 'submit' : 'button'}
+        name={this.name}
+        value={this.value}
         onBlur={() => this.handleBlur()}
         onFocus={() => this.handleFocus()}
         onClick={e => this.handleClick(e)}
       >
         {interior}
-      </a>
+      </Tag>
     );
-
-    return isLink ? link : button;
   }
 }
 

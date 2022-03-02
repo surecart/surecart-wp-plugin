@@ -8,7 +8,7 @@ import { Component, h, Prop } from '@stencil/core';
 export class CeCcLogo {
   @Prop() brand: string;
   renderLogo() {
-    if (['visa', 'mastercard', 'amex', 'discover'].includes(this.brand)) {
+    if (['visa', 'mastercard', 'amex', 'discover', 'diners', 'jcb', 'unionpay'].includes(this.brand)) {
       return <ce-icon name={this.brand} style={{ '--height': '0.63em' }}></ce-icon>;
     }
     return <ce-icon name="credit-card" style={{ '--height': '0.63em' }}></ce-icon>;

@@ -172,15 +172,17 @@ export class CeSubscriptionsList {
         {this.listTitle && (
           <ce-heading>
             {this.listTitle || __('Subscriptions', 'checkout_engine')}
-            <a
+            <ce-button
+              type="link"
               href={addQueryArgs(window.location.href, {
                 action: 'index',
                 model: 'subscription',
               })}
               slot="end"
             >
-              {__('View all', 'checkout_engine')} <ce-icon name="chevron-right"></ce-icon>
-            </a>
+              {__('View all', 'checkout_engine')}
+              <ce-icon name="chevron-right" slot="suffix"></ce-icon>
+            </ce-button>
           </ce-heading>
         )}
         <ce-card no-padding style={{ '--overflow': 'hidden' }}>

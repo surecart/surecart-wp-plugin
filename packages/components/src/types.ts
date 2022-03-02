@@ -224,6 +224,7 @@ export interface Order extends Object {
     number: string;
     number_type: string;
   };
+  url: string;
   created_at?: number;
 }
 

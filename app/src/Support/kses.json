@@ -94,6 +94,7 @@
     "slot": true
   },
   "ce-charges-list": {
+    "list-title": true,
     "query": true,
     "style": true,
     "id": true,
@@ -188,6 +189,22 @@
     "label": true,
     "loading": true,
     "order": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-customer-details": {
+    "customer-id": true,
+    "heading": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-customer-edit": {
+    "customer": true,
+    "header": true,
     "style": true,
     "id": true,
     "class": true,
@@ -594,6 +611,15 @@
     "payment-method": true,
     "processor": true,
     "secure-notice": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-payment-method-create": {
+    "client-secret": true,
+    "error": true,
+    "success-url": true,
     "style": true,
     "id": true,
     "class": true,

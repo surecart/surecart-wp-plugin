@@ -77,17 +77,9 @@ export class CeOrdersList {
 
     return (
       <ce-stacked-list>
-        {this.orders.map(({ id, line_items, total_amount, currency, status, charge, created_at }) => {
+        {this.orders.map(({ line_items, total_amount, currency, status, charge, created_at, url }) => {
           return (
-            <ce-stacked-list-row
-              href={addQueryArgs(window.location.href, {
-                action: 'show',
-                model: 'order',
-                id,
-              })}
-              style={{ '--columns': '4' }}
-              mobile-size={500}
-            >
+            <ce-stacked-list-row href={url} style={{ '--columns': '4' }} mobile-size={500}>
               <div>
                 {typeof charge !== 'string' && (
                   <ce-format-date class="order__date" date={(charge?.created_at || created_at) * 1000} month="short" day="numeric" year="numeric"></ce-format-date>
@@ -133,14 +125,14 @@ export class CeOrdersList {
           'orders-list--has-title': !!this.listTitle,
         }}
       >
-        <div class="orders-list__heading">
-          <div class="orders-list__title">
-            <slot name="title">{this.listTitle}</slot>
-          </div>
-          <a href="#">
-            {__('View all', 'checkout_engine')} <ce-icon name="chevron-right"></ce-icon>
-          </a>
-        </div>
+        <ce-heading>
+          {this.listTitle || __('Order History', 'checkout_engine')}
+          <ce-button type="link" slot="end">
+            {__('View all', 'checkout_engine')}
+            <ce-icon name="chevron-right" slot="suffix"></ce-icon>
+          </ce-button>
+        </ce-heading>
+
         <ce-card no-padding>{this.renderContent()}</ce-card>
       </div>
     );

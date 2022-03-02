@@ -192,7 +192,7 @@ ce-button-group > ce-tooltip > ce-button.ce-focus {
   --ce-focus-ring-color-info: #6b728054;
   --ce-focus-ring-color-warning: #f59e0b54;
   --ce-focus-ring-color-danger: #ef444454;
-  --ce-focus-ring-width: 2px;
+  --ce-focus-ring-width: 1px;
   --ce-button-font-size-small: var(--ce-font-size-x-small);
   --ce-button-font-size-medium: var(--ce-font-size-medium);
   --ce-button-font-size-large: var(--ce-font-size-large);
@@ -231,7 +231,7 @@ ce-button-group > ce-tooltip > ce-button.ce-focus {
   --ce-input-font-size-medium: var(--ce-font-size-medium);
   --ce-input-font-size-large: var(--ce-font-size-large);
   --ce-input-label-font-weight: var(--ce-font-weight-semibold);
-  --ce-input-label-margin: var(--ce-spacing-x-small);
+  --ce-input-label-margin: var(--ce-spacing-xx-small);
   --ce-input-letter-spacing: var(--ce-letter-spacing-normal);
   --ce-input-color: var(--ce-color-gray-700);
   --ce-input-color-hover: var(--ce-color-gray-700);
@@ -302,7 +302,7 @@ html[data-theme='dark'] {
   --ce-input-background-color-disabled: var(--ce-color-gray-800);
   --ce-input-border-color: var(--ce-color-gray-700);
   --ce-input-border-color-hover: var(--ce-color-gray-600);
-  --ce-input-border-color-focus: var(--ce-color-primary-500);
+  --ce-input-border-color-focus: var(--ce-color-gray-500);
   --ce-input-border-color-disabled: var(--ce-color-gray-200);
   --ce-input-border-color-invalid: var(--ce-color-danger-500);
   --ce-input-font-family: var(--ce-font-sans);

@@ -9,7 +9,7 @@
 }
 
 .card:not(.card--borderless) {
-  padding: var(--ce-spacing-xx-large);
+  padding: var(--ce-spacing-large);
   background: var(--ce-color-white);
   border: 1px solid var(--ce-color-gray-300);
   border-radius: var(--ce-input-border-radius-medium);

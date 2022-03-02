@@ -16,8 +16,9 @@ class Block extends DashboardPage {
 	protected $blocks = [
 		'order'          => \CheckoutEngineBlocks\Blocks\Dashboard\CustomerOrders\Block::class,
 		'subscription'   => \CheckoutEngineBlocks\Controllers\SubscriptionController::class,
-		'payment_method' => \CheckoutEngineBlocks\Blocks\Dashboard\CustomerPaymentMethods\Block::class,
+		'payment_method' => \CheckoutEngineBlocks\Controllers\PaymentMethodController::class,
 		'charge'         => \CheckoutEngineBlocks\Controllers\ChargeController::class,
+		'customer'       => \CheckoutEngineBlocks\Controllers\CustomerController::class,
 	];
 
 
@@ -50,6 +51,6 @@ class Block extends DashboardPage {
 			}
 		}
 
-		return '<ce-spacing style="--spacing: var(--ce-spacing-xxx-large); font-size: 16px;">' . wp_kses_post( $content ) . '</ce-spacing>';
+		return '<ce-spacing style="--spacing: var(--ce-spacing-xxx-large); font-size: 15px;">' . wp_kses_post( $content ) . '</ce-spacing>';
 	}
 }

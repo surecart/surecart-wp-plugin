@@ -4,15 +4,21 @@ namespace CheckoutEngineBlocks\Controllers;
 use CheckoutEngine\Models\Component;
 use CheckoutEngine\Models\Subscription;
 
-class SubscriptionController {
+/**
+ * The subscription controller.
+ */
+class SubscriptionController extends BaseController {
 	/**
 	 * Show and individual checkout session.
 	 *
 	 * @return function
 	 */
 	public function edit() {
-		$id  = isset( $_GET['id'] ) ? sanitize_text_field( wp_unslash( $_GET['id'] ) ) : false;
-		$tab = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : false;
+		$id = $this->getId();
+
+		if ( ! $id ) {
+			return $this->notFound();
+		}
 
 		// fetch subscription.
 		$subscription = Subscription::with(
@@ -28,7 +34,7 @@ class SubscriptionController {
 
 		<ce-spacing style="--spacing: var(--ce-spacing-large)">
 			<ce-breadcrumbs>
-				<ce-breadcrumb href="<?php echo esc_url( add_query_arg( [ 'tab' => $tab ], \CheckoutEngine::pages()->url( 'dashboard' ) ) ); ?>">
+				<ce-breadcrumb href="<?php echo esc_url( add_query_arg( [ 'tab' => $this->getTab() ], \CheckoutEngine::pages()->url( 'dashboard' ) ) ); ?>">
 					<?php esc_html_e( 'Dashboard', 'checkout_engine' ); ?>
 				</ce-breadcrumb>
 				<ce-breadcrumb>

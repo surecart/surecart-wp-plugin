@@ -1,5 +1,5 @@
 import { Order } from '../../../types';
-import { Component, Prop, Element, State, Watch, h, EventEmitter, Event, Fragment } from '@stencil/core';
+import { Component, Prop, Element, State, Watch, h, EventEmitter, Event, Fragment, Method } from '@stencil/core';
 import { loadStripe } from '@stripe/stripe-js/pure';
 
 @Component({
@@ -100,26 +100,28 @@ export class CEStripeElement {
   }
 
   /** Confirm card payment */
+  @Method('confirmPayment')
   async confirmCardPayment(secret) {
     return this.stripe.confirmCardPayment(secret, {
       payment_method: {
         card: this.element,
         billing_details: {
-          ...(this.order.name ? { name: this.order?.name } : {}),
-          ...(this.order.email ? { email: this.order?.email } : {}),
+          ...(this?.order?.name ? { name: this.order.name } : {}),
+          ...(this?.order?.email ? { email: this.order.email } : {}),
         },
       },
     });
   }
 
   /** Confirm card setup. */
-  confirmCardSetup(secret) {
+  @Method('confirmSetup')
+  async confirmCardSetup(secret) {
     return this.stripe.confirmCardSetup(secret, {
       payment_method: {
         card: this.element,
         billing_details: {
-          ...(this.order.name ? { name: this.order?.name } : {}),
-          ...(this.order.email ? { email: this.order?.email } : {}),
+          ...(this?.order?.name ? { name: this.order.name } : {}),
+          ...(this?.order?.email ? { email: this.order.email } : {}),
         },
       },
     });

@@ -25,10 +25,13 @@ import * as customerShippingAddress from '@blocks/dashboard/CustomerShippingAddr
 import * as customerOrders from '@blocks/dashboard/CustomerOrders';
 import * as customerSubscriptions from '@blocks/dashboard/CustomerSubscriptions';
 import * as customerPaymentMethods from '@blocks/dashboard/CustomerPaymentMethods';
+import * as customerBillingDetails from '@blocks/dashboard/CustomerBillingDetails';
 import * as dashboardPage from '@blocks/dashboard/DashboardPage';
 import * as dashboardPages from '@blocks/dashboard/DashboardPages';
 import * as dashboardTab from '@blocks/dashboard/DashboardTab';
 import * as dashboardTabs from '@blocks/dashboard/DashboardTabs';
+
+// blocks
 import * as divider from '@blocks/divider';
 import * as email from '@blocks/email';
 import * as expressPayment from '@blocks/ExpressPayment';
@@ -65,6 +68,7 @@ const dashboardComponents = [
 	customerShippingAddress,
 	dashboardPage,
 	customerSubscriptions,
+	customerBillingDetails,
 	customerPaymentMethods,
 	customerOrders,
 	customerCharges,

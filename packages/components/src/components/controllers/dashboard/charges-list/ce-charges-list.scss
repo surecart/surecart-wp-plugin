@@ -1,13 +1,9 @@
 :host {
   display: block;
+  position: relative;
 }
 
-.charges {
-  &__title {
-    display: none;
-  }
-
-  &--has-title-slot &__title {
-    display: block;
-  }
+.charges-list {
+  display: grid;
+  gap: 1em;
 }
