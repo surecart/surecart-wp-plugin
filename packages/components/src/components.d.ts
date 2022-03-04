@@ -5,14 +5,14 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Address, ChoiceItem, Coupon, Customer, Invoice, LineItemData, Order, OrderStatus, Price, PriceChoice, Prices, Products, ResponseError, Subscription, SubscriptionStatus, TaxStatus } from "./types";
+import { Address, ChoiceItem, Coupon, Customer, DiscountResponse, LineItemData, Order, OrderStatus, PaymentMethod, Price, PriceChoice, Prices, ProductGroup, Products, ResponseError, Subscription, SubscriptionStatus, TaxStatus } from "./types";
 import { IconLibraryMutator, IconLibraryResolver } from "./components/ui/icon/library";
 export namespace Components {
     interface CeAddress {
         /**
-          * Customer shipping address.
+          * The address.
          */
-        "customerShippingAddress": Address;
+        "address": Partial<Address>;
         /**
           * The label for the field.
          */
@@ -21,14 +21,11 @@ export namespace Components {
           * Is this loading?
          */
         "loading": boolean;
+        "names": Partial<Address>;
         /**
           * Is this required?
          */
         "required": boolean;
-        /**
-          * The order's shipping address.
-         */
-        "shippingAddress": Address;
     }
     interface CeAlert {
         /**
@@ -59,7 +56,7 @@ export namespace Components {
     interface CeBadgeNotice {
         "label": string;
         "size": 'small' | 'medium' | 'large';
-        "type": 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text';
+        "type": 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'default';
     }
     interface CeBlockUi {
         "spinner": boolean;
@@ -375,12 +372,38 @@ export namespace Components {
         "renderer": any;
     }
     interface CeCouponForm {
-        "calculating": boolean;
-        "error": any;
+        /**
+          * Is the form calculating
+         */
+        "busy": boolean;
+        /**
+          * Currency
+         */
+        "currency": string;
+        /**
+          * The discount
+         */
+        "discount": DiscountResponse;
+        /**
+          * The discount amount
+         */
+        "discountAmount": number;
+        /**
+          * The error message
+         */
+        "error": string;
+        /**
+          * Force the form to show
+         */
         "forceOpen": boolean;
+        /**
+          * The label for the coupon form
+         */
         "label": string;
+        /**
+          * Is the form loading
+         */
         "loading": boolean;
-        "order": Order;
     }
     interface CeCustomerDetails {
         "customerId": string;
@@ -389,6 +412,7 @@ export namespace Components {
     interface CeCustomerEdit {
         "customer": Customer;
         "header": string;
+        "successUrl": string;
     }
     interface CeCustomerName {
         /**
@@ -458,18 +482,6 @@ export namespace Components {
          */
         "customerId": string;
         "page": number;
-    }
-    interface CeCustomerSubscriptionPlan {
-        "price": Price;
-        "priceId": string;
-        /**
-          * Price entities
-         */
-        "prices": Prices;
-        /**
-          * Product entity
-         */
-        "products": Products;
     }
     interface CeDivider {
     }
@@ -895,23 +907,12 @@ export namespace Components {
          */
         "value": string;
     }
-    interface CeInvoiceStatusBadge {
+    interface CeInvoicesList {
+        "header": string;
         /**
-          * Makes the tag clearable.
+          * Query to fetch invoices
          */
-        "clearable": boolean;
-        /**
-          * The tag's statux type.
-         */
-        "invoice": Invoice;
-        /**
-          * Draws a pill-style tag with rounded edges.
-         */
-        "pill": boolean;
-        /**
-          * The tag's size.
-         */
-        "size": 'small' | 'medium' | 'large';
+        "query": object;
     }
     interface CeLineItem {
         /**
@@ -992,8 +993,38 @@ export namespace Components {
     interface CeOrderConfirmationTotals {
         "order": Order;
     }
+    interface CeOrderCouponForm {
+        "busy": boolean;
+        "error": any;
+        "forceOpen": boolean;
+        "label": string;
+        "loading": boolean;
+        "order": Order;
+    }
     interface CeOrderDetail {
         "orderId": string;
+    }
+    interface CeOrderShippingAddress {
+        /**
+          * Holds the customer's shipping address
+         */
+        "customerShippingAddress": Address;
+        /**
+          * Label for the field.
+         */
+        "label": string;
+        /**
+          * Is this loading.
+         */
+        "loading": boolean;
+        /**
+          * Is this required (defaults to true)
+         */
+        "required": boolean;
+        /**
+          * Holds the customer's billing address
+         */
+        "shippingAddress": Address;
     }
     interface CeOrderStatusBadge {
         /**
@@ -1595,6 +1626,24 @@ export namespace Components {
          */
         "subscription": Subscription;
     }
+    interface CeSubscriptionSwitch {
+        "heading": string;
+        "productGroupId": ProductGroup;
+        /**
+          * Customer id to fetch subscriptions
+         */
+        "query": object;
+        "subscription": Subscription;
+    }
+    interface CeSubscriptionSwitchSummary {
+        "heading": string;
+        "productGroupId": ProductGroup;
+        /**
+          * Customer id to fetch subscriptions
+         */
+        "query": object;
+        "subscription": Subscription;
+    }
     interface CeSubscriptionsList {
         "cancelBehavior": 'period_end' | 'immediate';
         "listTitle": string;
@@ -1690,7 +1739,7 @@ export namespace Components {
         /**
           * The tag's type.
          */
-        "type": 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text';
+        "type": 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'default';
     }
     interface CeTaxIdInput {
         "draft": { shipping_country: string };
@@ -1734,6 +1783,18 @@ export namespace Components {
     interface CeTotal {
         "order": Order;
         "total": 'total' | 'subtotal' | 'amount_due';
+    }
+    interface CeUpcomingInvoice {
+        "discount": {
+    promotion_code?: string;
+    coupon?: string;
+  };
+        "heading": string;
+        "payment_method": PaymentMethod;
+        "priceId": string;
+        "quantity": number;
+        "subscriptionId": string;
+        "successUrl": string;
     }
 }
 declare global {
@@ -1869,12 +1930,6 @@ declare global {
         prototype: HTMLCeCustomerOrdersListElement;
         new (): HTMLCeCustomerOrdersListElement;
     };
-    interface HTMLCeCustomerSubscriptionPlanElement extends Components.CeCustomerSubscriptionPlan, HTMLStencilElement {
-    }
-    var HTMLCeCustomerSubscriptionPlanElement: {
-        prototype: HTMLCeCustomerSubscriptionPlanElement;
-        new (): HTMLCeCustomerSubscriptionPlanElement;
-    };
     interface HTMLCeDividerElement extends Components.CeDivider, HTMLStencilElement {
     }
     var HTMLCeDividerElement: {
@@ -1971,11 +2026,11 @@ declare global {
         prototype: HTMLCeInputElement;
         new (): HTMLCeInputElement;
     };
-    interface HTMLCeInvoiceStatusBadgeElement extends Components.CeInvoiceStatusBadge, HTMLStencilElement {
+    interface HTMLCeInvoicesListElement extends Components.CeInvoicesList, HTMLStencilElement {
     }
-    var HTMLCeInvoiceStatusBadgeElement: {
-        prototype: HTMLCeInvoiceStatusBadgeElement;
-        new (): HTMLCeInvoiceStatusBadgeElement;
+    var HTMLCeInvoicesListElement: {
+        prototype: HTMLCeInvoicesListElement;
+        new (): HTMLCeInvoicesListElement;
     };
     interface HTMLCeLineItemElement extends Components.CeLineItem, HTMLStencilElement {
     }
@@ -2055,11 +2110,23 @@ declare global {
         prototype: HTMLCeOrderConfirmationTotalsElement;
         new (): HTMLCeOrderConfirmationTotalsElement;
     };
+    interface HTMLCeOrderCouponFormElement extends Components.CeOrderCouponForm, HTMLStencilElement {
+    }
+    var HTMLCeOrderCouponFormElement: {
+        prototype: HTMLCeOrderCouponFormElement;
+        new (): HTMLCeOrderCouponFormElement;
+    };
     interface HTMLCeOrderDetailElement extends Components.CeOrderDetail, HTMLStencilElement {
     }
     var HTMLCeOrderDetailElement: {
         prototype: HTMLCeOrderDetailElement;
         new (): HTMLCeOrderDetailElement;
+    };
+    interface HTMLCeOrderShippingAddressElement extends Components.CeOrderShippingAddress, HTMLStencilElement {
+    }
+    var HTMLCeOrderShippingAddressElement: {
+        prototype: HTMLCeOrderShippingAddressElement;
+        new (): HTMLCeOrderShippingAddressElement;
     };
     interface HTMLCeOrderStatusBadgeElement extends Components.CeOrderStatusBadge, HTMLStencilElement {
     }
@@ -2241,6 +2308,18 @@ declare global {
         prototype: HTMLCeSubscriptionStatusBadgeElement;
         new (): HTMLCeSubscriptionStatusBadgeElement;
     };
+    interface HTMLCeSubscriptionSwitchElement extends Components.CeSubscriptionSwitch, HTMLStencilElement {
+    }
+    var HTMLCeSubscriptionSwitchElement: {
+        prototype: HTMLCeSubscriptionSwitchElement;
+        new (): HTMLCeSubscriptionSwitchElement;
+    };
+    interface HTMLCeSubscriptionSwitchSummaryElement extends Components.CeSubscriptionSwitchSummary, HTMLStencilElement {
+    }
+    var HTMLCeSubscriptionSwitchSummaryElement: {
+        prototype: HTMLCeSubscriptionSwitchSummaryElement;
+        new (): HTMLCeSubscriptionSwitchSummaryElement;
+    };
     interface HTMLCeSubscriptionsListElement extends Components.CeSubscriptionsList, HTMLStencilElement {
     }
     var HTMLCeSubscriptionsListElement: {
@@ -2325,6 +2404,12 @@ declare global {
         prototype: HTMLCeTotalElement;
         new (): HTMLCeTotalElement;
     };
+    interface HTMLCeUpcomingInvoiceElement extends Components.CeUpcomingInvoice, HTMLStencilElement {
+    }
+    var HTMLCeUpcomingInvoiceElement: {
+        prototype: HTMLCeUpcomingInvoiceElement;
+        new (): HTMLCeUpcomingInvoiceElement;
+    };
     interface HTMLElementTagNameMap {
         "ce-address": HTMLCeAddressElement;
         "ce-alert": HTMLCeAlertElement;
@@ -2348,7 +2433,6 @@ declare global {
         "ce-customer-edit": HTMLCeCustomerEditElement;
         "ce-customer-name": HTMLCeCustomerNameElement;
         "ce-customer-orders-list": HTMLCeCustomerOrdersListElement;
-        "ce-customer-subscription-plan": HTMLCeCustomerSubscriptionPlanElement;
         "ce-divider": HTMLCeDividerElement;
         "ce-dropdown": HTMLCeDropdownElement;
         "ce-email": HTMLCeEmailElement;
@@ -2365,7 +2449,7 @@ declare global {
         "ce-heading": HTMLCeHeadingElement;
         "ce-icon": HTMLCeIconElement;
         "ce-input": HTMLCeInputElement;
-        "ce-invoice-status-badge": HTMLCeInvoiceStatusBadgeElement;
+        "ce-invoices-list": HTMLCeInvoicesListElement;
         "ce-line-item": HTMLCeLineItemElement;
         "ce-line-item-tax": HTMLCeLineItemTaxElement;
         "ce-line-item-total": HTMLCeLineItemTotalElement;
@@ -2379,7 +2463,9 @@ declare global {
         "ce-order-confirmation": HTMLCeOrderConfirmationElement;
         "ce-order-confirmation-line-items": HTMLCeOrderConfirmationLineItemsElement;
         "ce-order-confirmation-totals": HTMLCeOrderConfirmationTotalsElement;
+        "ce-order-coupon-form": HTMLCeOrderCouponFormElement;
         "ce-order-detail": HTMLCeOrderDetailElement;
+        "ce-order-shipping-address": HTMLCeOrderShippingAddressElement;
         "ce-order-status-badge": HTMLCeOrderStatusBadgeElement;
         "ce-order-summary": HTMLCeOrderSummaryElement;
         "ce-orders-list": HTMLCeOrdersListElement;
@@ -2410,6 +2496,8 @@ declare global {
         "ce-subscription": HTMLCeSubscriptionElement;
         "ce-subscription-edit": HTMLCeSubscriptionEditElement;
         "ce-subscription-status-badge": HTMLCeSubscriptionStatusBadgeElement;
+        "ce-subscription-switch": HTMLCeSubscriptionSwitchElement;
+        "ce-subscription-switch-summary": HTMLCeSubscriptionSwitchSummaryElement;
         "ce-subscriptions-list": HTMLCeSubscriptionsListElement;
         "ce-switch": HTMLCeSwitchElement;
         "ce-tab": HTMLCeTabElement;
@@ -2424,14 +2512,15 @@ declare global {
         "ce-text": HTMLCeTextElement;
         "ce-tooltip": HTMLCeTooltipElement;
         "ce-total": HTMLCeTotalElement;
+        "ce-upcoming-invoice": HTMLCeUpcomingInvoiceElement;
     }
 }
 declare namespace LocalJSX {
     interface CeAddress {
         /**
-          * Customer shipping address.
+          * The address.
          */
-        "customerShippingAddress"?: Address;
+        "address"?: Partial<Address>;
         /**
           * The label for the field.
          */
@@ -2440,14 +2529,11 @@ declare namespace LocalJSX {
           * Is this loading?
          */
         "loading"?: boolean;
+        "names"?: Partial<Address>;
         /**
           * Is this required?
          */
         "required"?: boolean;
-        /**
-          * The order's shipping address.
-         */
-        "shippingAddress"?: Address;
     }
     interface CeAlert {
         /**
@@ -2478,7 +2564,7 @@ declare namespace LocalJSX {
     interface CeBadgeNotice {
         "label"?: string;
         "size"?: 'small' | 'medium' | 'large';
-        "type"?: 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text';
+        "type"?: 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'default';
     }
     interface CeBlockUi {
         "spinner"?: boolean;
@@ -2803,13 +2889,42 @@ declare namespace LocalJSX {
         "renderer"?: any;
     }
     interface CeCouponForm {
-        "calculating"?: boolean;
-        "error"?: any;
+        /**
+          * Is the form calculating
+         */
+        "busy"?: boolean;
+        /**
+          * Currency
+         */
+        "currency"?: string;
+        /**
+          * The discount
+         */
+        "discount"?: DiscountResponse;
+        /**
+          * The discount amount
+         */
+        "discountAmount"?: number;
+        /**
+          * The error message
+         */
+        "error"?: string;
+        /**
+          * Force the form to show
+         */
         "forceOpen"?: boolean;
+        /**
+          * The label for the coupon form
+         */
         "label"?: string;
+        /**
+          * Is the form loading
+         */
         "loading"?: boolean;
+        /**
+          * When the coupon is applied
+         */
         "onCeApplyCoupon"?: (event: CustomEvent<string>) => void;
-        "order"?: Order;
     }
     interface CeCustomerDetails {
         "customerId"?: string;
@@ -2818,6 +2933,7 @@ declare namespace LocalJSX {
     interface CeCustomerEdit {
         "customer"?: Customer;
         "header"?: string;
+        "successUrl"?: string;
     }
     interface CeCustomerName {
         /**
@@ -2908,22 +3024,6 @@ declare namespace LocalJSX {
          */
         "customerId"?: string;
         "page"?: number;
-    }
-    interface CeCustomerSubscriptionPlan {
-        /**
-          * Add entities
-         */
-        "onCeAddEntities"?: (event: CustomEvent<any>) => void;
-        "price"?: Price;
-        "priceId"?: string;
-        /**
-          * Price entities
-         */
-        "prices"?: Prices;
-        /**
-          * Product entity
-         */
-        "products"?: Products;
     }
     interface CeDivider {
     }
@@ -3396,23 +3496,12 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
-    interface CeInvoiceStatusBadge {
+    interface CeInvoicesList {
+        "header"?: string;
         /**
-          * Makes the tag clearable.
+          * Query to fetch invoices
          */
-        "clearable"?: boolean;
-        /**
-          * The tag's statux type.
-         */
-        "invoice"?: Invoice;
-        /**
-          * Draws a pill-style tag with rounded edges.
-         */
-        "pill"?: boolean;
-        /**
-          * The tag's size.
-         */
-        "size"?: 'small' | 'medium' | 'large';
+        "query"?: object;
     }
     interface CeLineItem {
         /**
@@ -3498,8 +3587,39 @@ declare namespace LocalJSX {
     interface CeOrderConfirmationTotals {
         "order"?: Order;
     }
+    interface CeOrderCouponForm {
+        "busy"?: boolean;
+        "error"?: any;
+        "forceOpen"?: boolean;
+        "label"?: string;
+        "loading"?: boolean;
+        "onCeApplyCoupon"?: (event: CustomEvent<string>) => void;
+        "order"?: Order;
+    }
     interface CeOrderDetail {
         "orderId"?: string;
+    }
+    interface CeOrderShippingAddress {
+        /**
+          * Holds the customer's shipping address
+         */
+        "customerShippingAddress"?: Address;
+        /**
+          * Label for the field.
+         */
+        "label"?: string;
+        /**
+          * Is this loading.
+         */
+        "loading"?: boolean;
+        /**
+          * Is this required (defaults to true)
+         */
+        "required"?: boolean;
+        /**
+          * Holds the customer's billing address
+         */
+        "shippingAddress"?: Address;
     }
     interface CeOrderStatusBadge {
         /**
@@ -4161,6 +4281,24 @@ declare namespace LocalJSX {
          */
         "subscription"?: Subscription;
     }
+    interface CeSubscriptionSwitch {
+        "heading"?: string;
+        "productGroupId"?: ProductGroup;
+        /**
+          * Customer id to fetch subscriptions
+         */
+        "query"?: object;
+        "subscription"?: Subscription;
+    }
+    interface CeSubscriptionSwitchSummary {
+        "heading"?: string;
+        "productGroupId"?: ProductGroup;
+        /**
+          * Customer id to fetch subscriptions
+         */
+        "query"?: object;
+        "subscription"?: Subscription;
+    }
     interface CeSubscriptionsList {
         "cancelBehavior"?: 'period_end' | 'immediate';
         "listTitle"?: string;
@@ -4267,7 +4405,7 @@ declare namespace LocalJSX {
         /**
           * The tag's type.
          */
-        "type"?: 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text';
+        "type"?: 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'default';
     }
     interface CeTaxIdInput {
         "draft"?: { shipping_country: string };
@@ -4312,6 +4450,18 @@ declare namespace LocalJSX {
         "order"?: Order;
         "total"?: 'total' | 'subtotal' | 'amount_due';
     }
+    interface CeUpcomingInvoice {
+        "discount"?: {
+    promotion_code?: string;
+    coupon?: string;
+  };
+        "heading"?: string;
+        "payment_method"?: PaymentMethod;
+        "priceId"?: string;
+        "quantity"?: number;
+        "subscriptionId"?: string;
+        "successUrl"?: string;
+    }
     interface IntrinsicElements {
         "ce-address": CeAddress;
         "ce-alert": CeAlert;
@@ -4335,7 +4485,6 @@ declare namespace LocalJSX {
         "ce-customer-edit": CeCustomerEdit;
         "ce-customer-name": CeCustomerName;
         "ce-customer-orders-list": CeCustomerOrdersList;
-        "ce-customer-subscription-plan": CeCustomerSubscriptionPlan;
         "ce-divider": CeDivider;
         "ce-dropdown": CeDropdown;
         "ce-email": CeEmail;
@@ -4352,7 +4501,7 @@ declare namespace LocalJSX {
         "ce-heading": CeHeading;
         "ce-icon": CeIcon;
         "ce-input": CeInput;
-        "ce-invoice-status-badge": CeInvoiceStatusBadge;
+        "ce-invoices-list": CeInvoicesList;
         "ce-line-item": CeLineItem;
         "ce-line-item-tax": CeLineItemTax;
         "ce-line-item-total": CeLineItemTotal;
@@ -4366,7 +4515,9 @@ declare namespace LocalJSX {
         "ce-order-confirmation": CeOrderConfirmation;
         "ce-order-confirmation-line-items": CeOrderConfirmationLineItems;
         "ce-order-confirmation-totals": CeOrderConfirmationTotals;
+        "ce-order-coupon-form": CeOrderCouponForm;
         "ce-order-detail": CeOrderDetail;
+        "ce-order-shipping-address": CeOrderShippingAddress;
         "ce-order-status-badge": CeOrderStatusBadge;
         "ce-order-summary": CeOrderSummary;
         "ce-orders-list": CeOrdersList;
@@ -4397,6 +4548,8 @@ declare namespace LocalJSX {
         "ce-subscription": CeSubscription;
         "ce-subscription-edit": CeSubscriptionEdit;
         "ce-subscription-status-badge": CeSubscriptionStatusBadge;
+        "ce-subscription-switch": CeSubscriptionSwitch;
+        "ce-subscription-switch-summary": CeSubscriptionSwitchSummary;
         "ce-subscriptions-list": CeSubscriptionsList;
         "ce-switch": CeSwitch;
         "ce-tab": CeTab;
@@ -4411,6 +4564,7 @@ declare namespace LocalJSX {
         "ce-text": CeText;
         "ce-tooltip": CeTooltip;
         "ce-total": CeTotal;
+        "ce-upcoming-invoice": CeUpcomingInvoice;
     }
 }
 export { LocalJSX as JSX };
@@ -4439,7 +4593,6 @@ declare module "@stencil/core" {
             "ce-customer-edit": LocalJSX.CeCustomerEdit & JSXBase.HTMLAttributes<HTMLCeCustomerEditElement>;
             "ce-customer-name": LocalJSX.CeCustomerName & JSXBase.HTMLAttributes<HTMLCeCustomerNameElement>;
             "ce-customer-orders-list": LocalJSX.CeCustomerOrdersList & JSXBase.HTMLAttributes<HTMLCeCustomerOrdersListElement>;
-            "ce-customer-subscription-plan": LocalJSX.CeCustomerSubscriptionPlan & JSXBase.HTMLAttributes<HTMLCeCustomerSubscriptionPlanElement>;
             "ce-divider": LocalJSX.CeDivider & JSXBase.HTMLAttributes<HTMLCeDividerElement>;
             "ce-dropdown": LocalJSX.CeDropdown & JSXBase.HTMLAttributes<HTMLCeDropdownElement>;
             "ce-email": LocalJSX.CeEmail & JSXBase.HTMLAttributes<HTMLCeEmailElement>;
@@ -4456,7 +4609,7 @@ declare module "@stencil/core" {
             "ce-heading": LocalJSX.CeHeading & JSXBase.HTMLAttributes<HTMLCeHeadingElement>;
             "ce-icon": LocalJSX.CeIcon & JSXBase.HTMLAttributes<HTMLCeIconElement>;
             "ce-input": LocalJSX.CeInput & JSXBase.HTMLAttributes<HTMLCeInputElement>;
-            "ce-invoice-status-badge": LocalJSX.CeInvoiceStatusBadge & JSXBase.HTMLAttributes<HTMLCeInvoiceStatusBadgeElement>;
+            "ce-invoices-list": LocalJSX.CeInvoicesList & JSXBase.HTMLAttributes<HTMLCeInvoicesListElement>;
             "ce-line-item": LocalJSX.CeLineItem & JSXBase.HTMLAttributes<HTMLCeLineItemElement>;
             "ce-line-item-tax": LocalJSX.CeLineItemTax & JSXBase.HTMLAttributes<HTMLCeLineItemTaxElement>;
             "ce-line-item-total": LocalJSX.CeLineItemTotal & JSXBase.HTMLAttributes<HTMLCeLineItemTotalElement>;
@@ -4470,7 +4623,9 @@ declare module "@stencil/core" {
             "ce-order-confirmation": LocalJSX.CeOrderConfirmation & JSXBase.HTMLAttributes<HTMLCeOrderConfirmationElement>;
             "ce-order-confirmation-line-items": LocalJSX.CeOrderConfirmationLineItems & JSXBase.HTMLAttributes<HTMLCeOrderConfirmationLineItemsElement>;
             "ce-order-confirmation-totals": LocalJSX.CeOrderConfirmationTotals & JSXBase.HTMLAttributes<HTMLCeOrderConfirmationTotalsElement>;
+            "ce-order-coupon-form": LocalJSX.CeOrderCouponForm & JSXBase.HTMLAttributes<HTMLCeOrderCouponFormElement>;
             "ce-order-detail": LocalJSX.CeOrderDetail & JSXBase.HTMLAttributes<HTMLCeOrderDetailElement>;
+            "ce-order-shipping-address": LocalJSX.CeOrderShippingAddress & JSXBase.HTMLAttributes<HTMLCeOrderShippingAddressElement>;
             "ce-order-status-badge": LocalJSX.CeOrderStatusBadge & JSXBase.HTMLAttributes<HTMLCeOrderStatusBadgeElement>;
             "ce-order-summary": LocalJSX.CeOrderSummary & JSXBase.HTMLAttributes<HTMLCeOrderSummaryElement>;
             "ce-orders-list": LocalJSX.CeOrdersList & JSXBase.HTMLAttributes<HTMLCeOrdersListElement>;
@@ -4501,6 +4656,8 @@ declare module "@stencil/core" {
             "ce-subscription": LocalJSX.CeSubscription & JSXBase.HTMLAttributes<HTMLCeSubscriptionElement>;
             "ce-subscription-edit": LocalJSX.CeSubscriptionEdit & JSXBase.HTMLAttributes<HTMLCeSubscriptionEditElement>;
             "ce-subscription-status-badge": LocalJSX.CeSubscriptionStatusBadge & JSXBase.HTMLAttributes<HTMLCeSubscriptionStatusBadgeElement>;
+            "ce-subscription-switch": LocalJSX.CeSubscriptionSwitch & JSXBase.HTMLAttributes<HTMLCeSubscriptionSwitchElement>;
+            "ce-subscription-switch-summary": LocalJSX.CeSubscriptionSwitchSummary & JSXBase.HTMLAttributes<HTMLCeSubscriptionSwitchSummaryElement>;
             "ce-subscriptions-list": LocalJSX.CeSubscriptionsList & JSXBase.HTMLAttributes<HTMLCeSubscriptionsListElement>;
             "ce-switch": LocalJSX.CeSwitch & JSXBase.HTMLAttributes<HTMLCeSwitchElement>;
             "ce-tab": LocalJSX.CeTab & JSXBase.HTMLAttributes<HTMLCeTabElement>;
@@ -4515,6 +4672,7 @@ declare module "@stencil/core" {
             "ce-text": LocalJSX.CeText & JSXBase.HTMLAttributes<HTMLCeTextElement>;
             "ce-tooltip": LocalJSX.CeTooltip & JSXBase.HTMLAttributes<HTMLCeTooltipElement>;
             "ce-total": LocalJSX.CeTotal & JSXBase.HTMLAttributes<HTMLCeTotalElement>;
+            "ce-upcoming-invoice": LocalJSX.CeUpcomingInvoice & JSXBase.HTMLAttributes<HTMLCeUpcomingInvoiceElement>;
         }
     }
 }

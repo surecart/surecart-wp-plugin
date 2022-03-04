@@ -83,26 +83,6 @@ export class CeProductLineItem {
         </span>
         {this.renderPriceAndInterval()}
       </ce-line-item>
-
-      // <ce-line-item>
-      //   {!!this.imageUrl && <img src={this.imageUrl} slot="image" />}
-      //   <span slot="title">{this.name}</span>
-      //   <span class="product__description" slot="description">
-      //     {this.edit ? (
-      //       <ce-quantity-select clickEl={this.el} quantity={this.quantity} onCeChange={e => this.ceUpdateQuantity.emit(e.detail)}></ce-quantity-select>
-      //     ) : (
-      //       <span>Qty: {this.quantity}</span>
-      //     )}
-      //     | <ce-format-number type="currency" currency={this.currency} value={this.amount}></ce-format-number>
-      //   </span>
-      //   <span slot="price">
-      //     {this.isRemovable && this.edit && (
-      //       <span onClick={() => this.ceRemove.emit()}>
-      //         <TrashIcon class="price__remove" size={18} />
-      //       </span>
-      //     )}
-      //   </span>
-      // </ce-line-item>
     );
   }
 }

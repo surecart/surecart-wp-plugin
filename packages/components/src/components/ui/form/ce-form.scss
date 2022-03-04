@@ -1,6 +1,5 @@
 ce-form form > *:not(:last-child) {
   margin-bottom: var(--ce-form-row-spacing, 0.75em);
-  display: block;
 
   &.wp-block-spacer {
     margin-bottom: 0;

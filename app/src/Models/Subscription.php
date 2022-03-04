@@ -64,5 +64,47 @@ class Subscription extends Model {
 
 		return $this;
 	}
+
+	/**
+	 * Preview the upcoming invoice.
+	 *
+	 * @return $this|\WP_Error
+	 */
+	protected function upcomingInvoice( $id = null ) {
+		if ( $id ) {
+			$this->setAttribute( 'id', $id );
+		}
+
+		if ( $this->fireModelEvent( 'previewingUpcomingInvoice' ) === false ) {
+			return false;
+		}
+
+		if ( empty( $this->attributes['id'] ) ) {
+			return new \WP_Error( 'not_saved', 'Please create the subscription' );
+		}
+
+		$invoice = \CheckoutEngine::request(
+			$this->endpoint . '/' . $this->attributes['id'] . '/upcoming_invoice/',
+			[
+				'method' => 'GET',
+				'query'  => array_merge(
+					$this->query,
+					$this->attributes
+				),
+			]
+		);
+
+		if ( is_wp_error( $invoice ) ) {
+			return $invoice;
+		}
+
+		$this->resetAttributes();
+
+		$this->fill( $invoice );
+
+		$this->fireModelEvent( 'previewedUpcomingInvoice' );
+
+		return $this;
+	}
 }
 

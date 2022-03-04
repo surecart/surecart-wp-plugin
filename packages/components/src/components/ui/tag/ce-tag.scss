@@ -40,6 +40,12 @@
   color: var(--ce-color-info-700);
 }
 
+.tag--default {
+  background-color: var(--ce-color-gray-100);
+  border-color: var(--ce-color-gray-200);
+  color: var(--ce-color-gray-700);
+}
+
 .tag--warning {
   background-color: var(--ce-color-warning-100);
   border-color: var(--ce-color-warning-200);

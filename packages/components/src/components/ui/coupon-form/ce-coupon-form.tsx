@@ -1,7 +1,6 @@
-import { getHumanDiscount } from '../../../functions/price';
-import { Order } from '../../../types';
 import { Component, State, h, Watch, Prop, Event, EventEmitter } from '@stencil/core';
-import { openWormhole } from 'stencil-wormhole';
+import { getHumanDiscount } from '../../../functions/price';
+import { DiscountResponse } from '../../../types';
 
 @Component({
   tag: 'ce-coupon-form',
@@ -11,25 +10,40 @@ import { openWormhole } from 'stencil-wormhole';
 export class CeCouponForm {
   private input: HTMLCeInputElement;
 
+  /** The label for the coupon form */
   @Prop() label: string;
+
+  /** Is the form loading */
   @Prop() loading: boolean;
-  @Prop() calculating: boolean;
-  @Prop() error: any;
-  @Prop() order: Order;
+
+  /** Is the form calculating */
+  @Prop() busy: boolean;
+
+  /** The error message */
+  @Prop({ mutable: true }) error: string;
+
+  /** Force the form to show */
   @Prop() forceOpen: boolean;
 
-  @State() open: boolean;
-  @State() value: string;
-  @State() errorMessage: string;
+  /** The discount */
+  @Prop() discount: DiscountResponse;
 
+  /** Currency */
+  @Prop() currency: string;
+
+  /** The discount amount */
+  @Prop() discountAmount: number;
+
+  /** Is it open */
+  @State() open: boolean;
+
+  /** The value of the input */
+  @State() value: string;
+
+  /** When the coupon is applied */
   @Event() ceApplyCoupon: EventEmitter<string>;
 
-  @Watch('error')
-  handleErrorsChange() {
-    const error = (this?.error?.additional_errors || []).find(error => error?.data?.attribute === 'discount.promotion_code');
-    this.errorMessage = error?.message ? error?.message : '';
-  }
-
+  /** Auto focus the input when opened. */
   @Watch('open')
   handleOpenChange(val) {
     if (val) {
@@ -37,12 +51,15 @@ export class CeCouponForm {
     }
   }
 
+  /** Close it when blurred and no value. */
   handleBlur() {
     if (!this.input.value) {
       this.open = false;
+      this.error = '';
     }
   }
 
+  /** Apply the coupon. */
   applyCoupon() {
     this.ceApplyCoupon.emit(this.input.value);
   }
@@ -52,11 +69,11 @@ export class CeCouponForm {
       return <ce-skeleton style={{ width: '120px', display: 'inline-block' }}></ce-skeleton>;
     }
 
-    if (this.order?.discount?.promotion?.code) {
+    if (this?.discount?.promotion?.code) {
       let humanDiscount = '';
 
-      if (this.order.discount?.coupon) {
-        humanDiscount = getHumanDiscount(this.order.discount?.coupon);
+      if (this?.discount?.coupon) {
+        humanDiscount = getHumanDiscount(this?.discount?.coupon);
       }
 
       return (
@@ -71,7 +88,7 @@ export class CeCouponForm {
               this.open = false;
             }}
           >
-            {this.order.discount?.promotion?.code}
+            {this?.discount?.promotion?.code}
           </ce-tag>
 
           {humanDiscount && (
@@ -81,7 +98,7 @@ export class CeCouponForm {
           )}
 
           <span slot="price">
-            <ce-format-number type="currency" currency={this.order?.currency} value={this.order?.discount_amount}></ce-format-number>
+            <ce-format-number type="currency" currency={this?.currency} value={this?.discountAmount}></ce-format-number>
           </span>
         </ce-line-item>
       );
@@ -108,9 +125,9 @@ export class CeCouponForm {
 
         <div class="form">
           <ce-input onCeBlur={() => this.handleBlur()} ref={el => (this.input = el as HTMLCeInputElement)} clearable></ce-input>
-          {!!this.errorMessage && (
+          {!!this.error && (
             <ce-alert type="danger" open>
-              <span slot="title">{this.errorMessage}</span>
+              <span slot="title">{this.error}</span>
             </ce-alert>
           )}
           <ce-button type="primary" full onClick={() => this.applyCoupon()}>
@@ -123,5 +140,3 @@ export class CeCouponForm {
     );
   }
 }
-
-openWormhole(CeCouponForm, ['loading', 'order', 'error'], false);

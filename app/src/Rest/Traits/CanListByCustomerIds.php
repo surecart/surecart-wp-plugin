@@ -17,7 +17,7 @@ trait CanListByCustomerIds {
 		}
 
 		// get the users test and live customer ids.
-		$users_customer_ids = User::current()->customerIds();
+		$users_customer_ids = (array) User::current()->customerIds();
 
 		// check to make sure they are not trying to list an ID that's not one of their own.
 		foreach ( $request['customer_ids'] as $id ) {

@@ -26,7 +26,7 @@ class SubscriptionController extends BaseController {
 				'price',
 				'price.product',
 				'latest_invoice',
-				'product.product_group',
+				'product',
 			]
 		)->find( $id );
 
@@ -56,21 +56,83 @@ class SubscriptionController extends BaseController {
 		?>
 
 		<?php
+		if ( ! empty( $subscription->price->product->product_group ) ) {
 			echo wp_kses_post(
 				Component::tag( 'ce-subscription-switch' )
 				->id( 'customer-subscription-switch' )
 				->with(
 					[
-						'listTitle'     => __( 'Update Subscription', 'checkout-engine' ),
-						'product-group' => $subscription->price->product->product_group ?? null,
-						'subscription'  => $subscription,
+						'heading'        => __( 'Update Subscription', 'checkout-engine' ),
+						'productGroupId' => $subscription->price->product->product_group,
+						'subscription'   => $subscription,
 					]
 				)->render()
 			);
+		}
 		?>
 		</ce-spacing>
 
 		<?php
 		return ob_get_clean();
+	}
+
+	/**
+	 * Confirm changing subscription
+	 *
+	 * @return function
+	 */
+	public function confirm() {
+		$back = add_query_arg( [ 'tab' => $this->getTab() ], \CheckoutEngine::pages()->url( 'dashboard' ) );
+		ob_start();
+		?>
+	<ce-spacing style="--spacing: var(--ce-spacing-xx-large)">
+			<ce-breadcrumbs>
+				<ce-breadcrumb href="<?php echo esc_url( add_query_arg( [ 'tab' => $this->getTab() ], \CheckoutEngine::pages()->url( 'dashboard' ) ) ); ?>">
+					<?php esc_html_e( 'Dashboard', 'checkout_engine' ); ?>
+				</ce-breadcrumb>
+				<ce-breadcrumb href="
+				<?php
+				echo esc_url(
+					add_query_arg(
+						[
+							'tab'    => $this->getTab(),
+							'action' => 'edit',
+							'model'  => 'subscription',
+							'id'     => $this->getId(),
+						],
+						\CheckoutEngine::pages()->url( 'dashboard' )
+					)
+				);
+				?>
+				">
+					<?php esc_html_e( 'Subscription', 'checkout_engine' ); ?>
+				</ce-breadcrumb>
+				<ce-breadcrumb>
+					<?php esc_html_e( 'Confirm', 'checkout_engine' ); ?>
+				</ce-breadcrumb>
+			</ce-breadcrumbs>
+
+			<?php
+			echo wp_kses_post(
+				Component::tag( 'ce-upcoming-invoice' )
+				->id( 'customer-upcoming-invoice' )
+				->with(
+					[
+						'heading'        => __( 'New Plan', 'checkout-engine' ),
+						'subscriptionId' => $this->getId(),
+						'priceId'        => $this->getParam( 'price_id' ),
+						'successUrl'     => esc_url( $back ),
+						'quantity'       => 1,
+					]
+				)->render()
+			);
+			?>
+
+
+	</ce-spacing>
+
+		<?php
+		return ob_get_clean();
+
 	}
 }

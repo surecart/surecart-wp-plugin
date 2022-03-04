@@ -27,3 +27,5 @@ export function findElements(selector, base) {
   }
   return __findFrom(base);
 }
+
+export const capitalize = s => s && s[0].toUpperCase() + s.slice(1);

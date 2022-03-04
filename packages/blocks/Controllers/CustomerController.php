@@ -32,12 +32,12 @@ class CustomerController extends BaseController {
 	 */
 	public function edit() {
 		$customer = Customer::with( [ 'billing_address', 'shipping_address' ] )->find( User::current()->customerId() );
-
+		$back     = add_query_arg( [ 'tab' => $this->getTab() ], \CheckoutEngine::pages()->url( 'dashboard' ) );
 		ob_start(); ?>
 
 		<ce-spacing style="--spacing: var(--ce-spacing-large)">
 			<ce-breadcrumbs>
-				<ce-breadcrumb href="<?php echo esc_url( add_query_arg( [ 'tab' => $this->getTab() ], \CheckoutEngine::pages()->url( 'dashboard' ) ) ); ?>">
+				<ce-breadcrumb href="<?php echo esc_url( $back ); ?>">
 					<?php esc_html_e( 'Dashboard', 'checkout_engine' ); ?>
 				</ce-breadcrumb>
 				<ce-breadcrumb>
@@ -51,8 +51,9 @@ class CustomerController extends BaseController {
 				->id( 'customer-customer-edit' )
 				->with(
 					[
-						'header'   => __( 'Update Billing Details', 'checkout-engine' ),
-						'customer' => $customer,
+						'header'     => __( 'Update Billing Details', 'checkout-engine' ),
+						'customer'   => $customer,
+						'successUrl' => esc_url( $back ),
 					]
 				)->render()
 			);

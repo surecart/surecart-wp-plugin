@@ -42,7 +42,6 @@ export class CeSubscription {
 
   /** Get all subscriptions */
   async getSubscription() {
-    console.log(this.subscription);
     if (this.subscription) return;
     try {
       this.loading = true;

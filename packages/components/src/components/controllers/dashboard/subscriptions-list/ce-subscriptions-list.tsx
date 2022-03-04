@@ -73,6 +73,10 @@ export class CeSubscriptionsList {
   renderRenewalText(subscription) {
     const tag = <ce-subscription-status-badge subscription={subscription}></ce-subscription-status-badge>;
 
+    if (Object.keys(subscription?.pending_update ?? {}).length > 0) {
+      return 'Updating';
+    }
+
     if (subscription?.cancel_at_period_end && subscription.current_period_end_at) {
       return (
         <span>
@@ -85,7 +89,7 @@ export class CeSubscriptionsList {
       return (
         <span>
           {tag} {sprintf(__('Your plan begins on', 'checkout_engine'))}{' '}
-          <ce-format-date date={subscription.trial_end_at * 1000} month="long" day="numeric" year="numeric"></ce-format-date>
+          <ce-format-date date={subscription.trial_end_at} type="timestamp" month="long" day="numeric" year="numeric"></ce-format-date>
         </span>
       );
     }
@@ -138,7 +142,10 @@ export class CeSubscriptionsList {
           mobile-size={0}
         >
           <div>
-            <ce-text style={{ '--font-weight': 'var(--ce-font-weight-bold)' }}>{this.renderName(subscription)}</ce-text>
+            <ce-text style={{ '--font-weight': 'var(--ce-font-weight-bold)' }}>
+              {this.renderName(subscription)}{' '}
+              {Object.keys(subscription?.pending_update || {}).length > 0 && <ce-tag size="small">{__('Update Scheduled', 'checkout_engine')}</ce-tag>}
+            </ce-text>
             <ce-format-number
               type="currency"
               currency={(subscription?.latest_invoice as Invoice)?.currency}

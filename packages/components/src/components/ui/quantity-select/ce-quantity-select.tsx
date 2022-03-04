@@ -1,4 +1,5 @@
 import { Component, h, Prop, Element, Event, EventEmitter, Watch } from '@stencil/core';
+import { __ } from '@wordpress/i18n';
 
 @Component({
   tag: 'ce-quantity-select',
@@ -37,7 +38,7 @@ export class CeQuantitySelect {
         style={{ '--panel-height': '150px' }}
       >
         <div class="quantity--trigger" slot="trigger">
-          Qty <strong>{this.quantity}</strong>
+          <slot name="prefix">{__('Qty', 'checkout_engine')}</slot> <strong>{this.quantity}</strong>
           <svg viewBox="0 0 24 24" style={{ width: '10px', height: '10px' }} fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="6 9 12 15 18 9"></polyline>
           </svg>

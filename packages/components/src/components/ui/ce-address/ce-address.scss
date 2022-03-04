@@ -6,6 +6,10 @@ ce-address {
   display: block;
   position: relative;
 
+  [hidden] {
+    display: none;
+  }
+
   &--loading {
     min-height: 230px;
   }

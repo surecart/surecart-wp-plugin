@@ -23,6 +23,7 @@ import * as customerCharges from '@blocks/dashboard/CustomerCharges';
 import * as customerDashboard from '@blocks/dashboard/CustomerDashboard';
 import * as customerShippingAddress from '@blocks/dashboard/CustomerShippingAddress';
 import * as customerOrders from '@blocks/dashboard/CustomerOrders';
+import * as customerInvoices from '@blocks/dashboard/CustomerInvoices';
 import * as customerSubscriptions from '@blocks/dashboard/CustomerSubscriptions';
 import * as customerPaymentMethods from '@blocks/dashboard/CustomerPaymentMethods';
 import * as customerBillingDetails from '@blocks/dashboard/CustomerBillingDetails';
@@ -71,6 +72,7 @@ const dashboardComponents = [
 	customerBillingDetails,
 	customerPaymentMethods,
 	customerOrders,
+	customerInvoices,
 	customerCharges,
 ];
 

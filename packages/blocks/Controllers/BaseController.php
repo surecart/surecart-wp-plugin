@@ -6,12 +6,23 @@ namespace CheckoutEngineBlocks\Controllers;
  */
 abstract class BaseController {
 	/**
+	 * Get a query param.
+	 *
+	 * @param string $name The query param name.
+	 * @param mixed  $fallback The fallback value.
+	 *
+	 * @return string|false
+	 */
+	protected function getParam( $name, $fallback = false ) {
+		return isset( $_GET[ $name ] ) ? sanitize_text_field( wp_unslash( $_GET[ $name ] ) ) : $fallback;
+	}
+	/**
 	 * Get the current tab.
 	 *
 	 * @return string|false
 	 */
 	protected function getTab() {
-		return isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : false;
+		return $this->getParam( 'tab' );
 	}
 
 	/**
@@ -20,7 +31,7 @@ abstract class BaseController {
 	 * @return integer
 	 */
 	protected function getPage() {
-		return isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : 1;
+		return $this->getParam( 'page' );
 	}
 
 	/**
@@ -29,7 +40,7 @@ abstract class BaseController {
 	 * @return integer|false
 	 */
 	protected function getId() {
-		return isset( $_GET['id'] ) ? sanitize_text_field( wp_unslash( $_GET['id'] ) ) : false;
+		return $this->getParam( 'id' );
 	}
 
 	/**

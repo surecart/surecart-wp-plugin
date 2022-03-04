@@ -43,8 +43,8 @@ export class CeCustomerDetails {
             <div>{this.customer?.email}</div>
           </ce-stacked-list-row>
         )}
-        {!!Object.keys(this?.customer?.shipping_address || {}).length && this.renderAddress(this.customer.shipping_address)}
-        {!!Object.keys(this?.customer?.billing_address || {}).length && this.renderAddress(this.customer.billing_address)}
+        {!!Object.keys(this?.customer?.shipping_address || {}).length && this.renderAddress(__('Shipping Address', 'checkout_engine'), this.customer.shipping_address)}
+        {!!Object.keys(this?.customer?.billing_address || {}).length && this.renderAddress(__('Billing Address', 'checkout_engine'), this.customer.billing_address)}
         {!!this?.customer?.phone && (
           <ce-stacked-list-row style={{ '--columns': '3' }}>
             <div>{__('Phone', 'checkout_engine')}</div>
@@ -55,12 +55,12 @@ export class CeCustomerDetails {
     );
   }
 
-  renderAddress(address: Address) {
+  renderAddress(label: string = 'Address', address: Address) {
     const { line_1, line_2, city, state, postal_code, country } = address;
     const countryName = countryChoices.find(({ value }) => value === country)?.label;
     return (
       <ce-stacked-list-row style={{ '--columns': '3' }}>
-        <div>{__('Shipping Address', 'checkout_engine')}</div>
+        <div>{label}</div>
         <div>
           {formatAddress({
             postalCountry: country,
@@ -91,7 +91,7 @@ export class CeCustomerDetails {
       this.loading = true;
       this.customer = (await await apiFetch({
         path: addQueryArgs(`checkout-engine/v1/customers/${this.customerId}`, {
-          expand: ['shipping_address', 'billinb_address'],
+          expand: ['shipping_address', 'billing_address'],
         }),
       })) as Customer;
     } catch (e) {

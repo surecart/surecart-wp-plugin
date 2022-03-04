@@ -2,7 +2,7 @@ import { Component, Element, h, Prop, State, Watch } from '@stencil/core';
 import { sprintf, __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import apiFetch from '../../../../functions/fetch';
-import { Charge } from '../../../../types';
+import { Charge, Invoice, Order } from '../../../../types';
 import { onFirstVisible } from '../../../../functions/lazy';
 
 @Component({
@@ -96,7 +96,7 @@ export class CeChargesList {
       return sprintf(__('Order #%s', 'checkout_engine'), charge.order.number);
     }
     if (typeof charge?.invoice === 'object' && charge.invoice?.number) {
-      return sprintf(__('Order #%s', 'checkout_engine'), charge.invoice.number);
+      return sprintf(__('Invoice #%s', 'checkout_engine'), charge.invoice.number);
     }
   }
 
@@ -140,7 +140,7 @@ export class CeChargesList {
     return this.charges.map(charge => {
       const { currency, amount, created_at } = charge;
       return (
-        <ce-stacked-list-row style={{ '--columns': '4' }} mobile-size={600}>
+        <ce-stacked-list-row style={{ '--columns': '4' }} mobile-size={600} href={(charge?.order as Order)?.url || (charge?.invoice as Invoice)?.url}>
           <strong>
             <ce-format-date date={created_at} type="timestamp" month="short" day="numeric" year="numeric"></ce-format-date>
           </strong>

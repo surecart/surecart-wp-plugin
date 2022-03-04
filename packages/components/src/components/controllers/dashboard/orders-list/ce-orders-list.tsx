@@ -62,6 +62,20 @@ export class CeOrdersList {
     }
   }
 
+  renderStatusBadge(order: Order) {
+    const { status, charge } = order;
+    if (charge && typeof charge === 'object') {
+      if (charge?.fully_refunded) {
+        return <ce-tag type="danger">{__('Refunded', 'checkout_engine')}</ce-tag>;
+      }
+      if (charge?.refunded_amount) {
+        return <ce-tag type="info">{__('Partially Refunded', 'checkout_engine')}</ce-tag>;
+      }
+    }
+
+    return <ce-order-status-badge status={status}></ce-order-status-badge>;
+  }
+
   renderContent() {
     if (this.loading) {
       return (
@@ -77,7 +91,8 @@ export class CeOrdersList {
 
     return (
       <ce-stacked-list>
-        {this.orders.map(({ line_items, total_amount, currency, status, charge, created_at, url }) => {
+        {this.orders.map(order => {
+          const { line_items, total_amount, currency, charge, created_at, url } = order;
           return (
             <ce-stacked-list-row href={url} style={{ '--columns': '4' }} mobile-size={500}>
               <div>
@@ -95,9 +110,7 @@ export class CeOrdersList {
                   {sprintf(_n('%s item', '%s items', line_items?.pagination?.count || 0, 'checkout_engine'), line_items?.pagination?.count || 0)}
                 </ce-text>
               </div>
-              <div>
-                <ce-order-status-badge status={status}></ce-order-status-badge>
-              </div>
+              <div>{this.renderStatusBadge(order)}</div>
               <div>
                 <ce-format-number type="currency" currency={currency} value={total_amount}></ce-format-number>
               </div>

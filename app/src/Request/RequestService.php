@@ -222,7 +222,7 @@ class RequestService {
 	 */
 	protected function parseArgs( $args = [] ) {
 		if ( ! is_array( $args ) ) {
-			return;
+			return $args;
 		}
 		foreach ( $args as $key => $arg ) {
 			// unset null.

@@ -48,7 +48,13 @@ class User implements ArrayAccess, JsonSerializable {
 			return '';
 		}
 		$meta = (array) get_user_meta( $this->user->ID, $this->customer_id_key, true );
-		return $meta[ $mode ] ?? $meta[0];
+		if ( isset( $meta[ $mode ] ) ) {
+			return $meta[ $mode ];
+		}
+		if ( isset( $meta[0] ) ) {
+			return $meta[0];
+		}
+		return null;
 	}
 
 	/**

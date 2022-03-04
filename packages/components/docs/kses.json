@@ -1,10 +1,10 @@
 {
   "ce-address": {
-    "customer-shipping-address": true,
+    "address": true,
     "label": true,
     "loading": true,
+    "names": true,
     "required": true,
-    "shipping-address": true,
     "style": true,
     "id": true,
     "class": true,
@@ -183,12 +183,14 @@
     "slot": true
   },
   "ce-coupon-form": {
-    "calculating": true,
+    "busy": true,
+    "currency": true,
+    "discount": true,
+    "discount-amount": true,
     "error": true,
     "force-open": true,
     "label": true,
     "loading": true,
-    "order": true,
     "style": true,
     "id": true,
     "class": true,
@@ -205,6 +207,7 @@
   "ce-customer-edit": {
     "customer": true,
     "header": true,
+    "success-url": true,
     "style": true,
     "id": true,
     "class": true,
@@ -234,16 +237,6 @@
   "ce-customer-orders-list": {
     "customer-id": true,
     "page": true,
-    "style": true,
-    "id": true,
-    "class": true,
-    "slot": true
-  },
-  "ce-customer-subscription-plan": {
-    "price": true,
-    "price-id": true,
-    "prices": true,
-    "products": true,
     "style": true,
     "id": true,
     "class": true,
@@ -455,11 +448,9 @@
     "class": true,
     "slot": true
   },
-  "ce-invoice-status-badge": {
-    "clearable": true,
-    "invoice": true,
-    "pill": true,
-    "size": true,
+  "ce-invoices-list": {
+    "header": true,
+    "query": true,
     "style": true,
     "id": true,
     "class": true,
@@ -567,8 +558,31 @@
     "class": true,
     "slot": true
   },
+  "ce-order-coupon-form": {
+    "busy": true,
+    "error": true,
+    "force-open": true,
+    "label": true,
+    "loading": true,
+    "order": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "ce-order-detail": {
     "order-id": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-order-shipping-address": {
+    "customer-shipping-address": true,
+    "label": true,
+    "loading": true,
+    "required": true,
+    "shipping-address": true,
     "style": true,
     "id": true,
     "class": true,
@@ -912,6 +926,26 @@
     "class": true,
     "slot": true
   },
+  "ce-subscription-switch": {
+    "heading": true,
+    "product-group-id": true,
+    "query": true,
+    "subscription": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-subscription-switch-summary": {
+    "heading": true,
+    "product-group-id": true,
+    "query": true,
+    "subscription": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "ce-subscriptions-list": {
     "cancel-behavior": true,
     "list-title": true,
@@ -1026,6 +1060,19 @@
   "ce-total": {
     "order": true,
     "total": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-upcoming-invoice": {
+    "discount": true,
+    "heading": true,
+    "payment_method": true,
+    "price-id": true,
+    "quantity": true,
+    "subscription-id": true,
+    "success-url": true,
     "style": true,
     "id": true,
     "class": true,

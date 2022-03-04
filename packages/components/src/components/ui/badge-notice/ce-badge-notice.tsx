@@ -6,7 +6,7 @@ import { Component, h, Prop } from '@stencil/core';
   shadow: true,
 })
 export class CeBadgeNotice {
-  @Prop() type: 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text' = 'primary';
+  @Prop() type: 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'default' = 'primary';
   @Prop() label: string;
   @Prop() size: 'small' | 'medium' | 'large' = 'small';
 
@@ -22,7 +22,7 @@ export class CeBadgeNotice {
           'notice--success': this.type === 'success',
           'notice--warning': this.type === 'warning',
           'notice--danger': this.type === 'danger',
-          'notice--text': this.type === 'text',
+          'notice--default': this.type === 'default',
         }}
       >
         <ce-tag size={this.size} type={this.type}>

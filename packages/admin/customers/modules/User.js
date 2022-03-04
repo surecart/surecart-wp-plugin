@@ -157,7 +157,7 @@ export default ({ customer_id, customer }) => {
 		<div>
 			<CeFormControl label={__('Connect a user', 'checkout_engine')}>
 				<UserSelect
-					value={user?.id}
+					value={users?.[0]?.id}
 					onSelect={(id) => {
 						if (!id) return;
 						connect(id);

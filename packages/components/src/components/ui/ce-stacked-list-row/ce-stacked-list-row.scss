@@ -47,5 +47,11 @@
 
 
 .list-row.breakpoint-lg {
-  grid-template-columns: repeat(calc(var(--columns) - 1), 1fr) auto;
+  grid-template-columns: repeat(calc(var(--columns) - 1), 1fr) 0.5fr;
+
+  ::slotted(:last-child:not(:first-child)) {
+    display: flex;
+    justify-content: flex-end;
+  }
 }
+

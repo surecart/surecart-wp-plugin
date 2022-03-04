@@ -38,7 +38,6 @@
   transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease, box-shadow 150ms ease;;
 
   &--checked {
-    background: transparent;
     border-color: var(--ce-color-primary-500);
     box-shadow: 0 0 0 1px var(--ce-color-primary-500);
     z-index:1;

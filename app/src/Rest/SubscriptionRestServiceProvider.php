@@ -53,6 +53,20 @@ class SubscriptionRestServiceProvider extends RestServiceProvider implements Res
 				'schema' => [ $this, 'get_item_schema' ],
 			]
 		);
+
+		register_rest_route(
+			"$this->name/v$this->version",
+			$this->endpoint . '/(?P<id>\S+)/upcoming_invoice/',
+			[
+				[
+					'methods'             => \WP_REST_Server::READABLE,
+					'callback'            => $this->callback( $this->controller, 'upcomingInvoice' ),
+					'permission_callback' => [ $this, 'get_item_permissions_check' ],
+				],
+				// Register our schema callback.
+				'schema' => [ $this, 'get_item_schema' ],
+			]
+		);
 	}
 
 	/**
@@ -147,6 +161,10 @@ class SubscriptionRestServiceProvider extends RestServiceProvider implements Res
 		return current_user_can( 'read_ce_subscriptions' );
 	}
 
+	public function preview_item_permissions_check( $request ) {
+		return current_user_can( 'edit_ce_subscription', $request['id'] );
+	}
+
 	/**
 	 * Anyone can update.
 	 *
@@ -154,6 +172,10 @@ class SubscriptionRestServiceProvider extends RestServiceProvider implements Res
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function update_item_permissions_check( $request ) {
+		if ( current_user_can( 'edit_ce_subscriptions' ) ) {
+			return true;
+		}
+
 		// let customers modify pending cancel, quantity and price.
 		// if request is sent with only these keys, then we can modify the subscription.
 		// if they have permission to access it.
@@ -161,7 +183,7 @@ class SubscriptionRestServiceProvider extends RestServiceProvider implements Res
 			return current_user_can( 'edit_ce_subscription', $request['id'] );
 		}
 
-		return current_user_can( 'edit_ce_subscriptions' );
+		return false;
 	}
 
 	/**

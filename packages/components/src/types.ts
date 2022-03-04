@@ -34,7 +34,7 @@ export interface Price {
   amount: number;
   currency: string;
   recurring: boolean;
-  recurring_interval?: 'day' | 'week' | 'month' | 'year';
+  recurring_interval?: 'week' | 'month' | 'year' | 'never';
   recurring_interval_count?: number;
   trial_duration_days?: number;
   ad_hoc: boolean;
@@ -50,26 +50,7 @@ export interface Price {
 }
 
 export type Prices = {
-  [id: string]: {
-    id: string;
-    name: string;
-    description?: string;
-    amount: number;
-    currency: string;
-    recurring: boolean;
-    recurring_interval?: 'day' | 'week' | 'month' | 'year';
-    recurring_interval_count?: number;
-    ad_hoc: boolean;
-    ad_hoc_max_amount: number;
-    ad_hoc_min_amount: number;
-    archived: boolean;
-    product_id?: string;
-    archived_at?: string;
-    created_at: number;
-    updated_at: number;
-    product?: string;
-    metadata: { [key: string]: string };
-  };
+  [id: string]: Price;
 };
 
 export interface Product extends Object {
@@ -79,7 +60,11 @@ export interface Product extends Object {
   archived: boolean;
   metadata: any;
   image_url: string;
-  prices: Array<Price>;
+  prices: {
+    object: 'list';
+    pagination: Pagination;
+    data: Array<Price>;
+  };
   created_at: number;
   updated_at: number;
 }
@@ -128,6 +113,8 @@ export interface LineItem extends Object {
   price?: Price;
   price_id: string;
 }
+
+export interface InvoiceItem extends LineItem {}
 export interface PriceChoice {
   id: string;
   product_id: string;
@@ -143,16 +130,23 @@ export interface Invoice extends Object {
   id: string;
   object: 'invoice';
   currency: string;
+  amount_due: number;
+  invoice_items: {
+    object: 'list';
+    pagination: Pagination;
+    data: Array<InvoiceItem>;
+  };
   discount_amount: number;
   live_mode: boolean;
   metadata: object;
   number: string;
   period_end_at: number;
   period_start_at: number;
+  proration_amount: number;
   processor_data: {
     stripe: object;
   };
-  status: 'draft' | 'finalized' | 'paid' | 'payment_intent_canceled' | 'payment_failed';
+  status: OrderStatus;
   subtotal_amount: number;
   tax_amount: number;
   tax_status: TaxStatus;
@@ -167,12 +161,23 @@ export interface Invoice extends Object {
   shipping_address: string | ShippingAddress;
   subscription: string | Subscription;
   tax_identifier: string | object;
+  url: string;
   created_at: number;
   updated_at: number;
 }
 
 export interface BillingAddress extends Object {}
 export interface ShippingAddress extends Object {}
+export interface ProductGroup {
+  id: string;
+  object: 'product_group';
+  archived: boolean;
+  archived_at: number;
+  metadata: object;
+  name: string;
+  created_at: number;
+  updated_at: number;
+}
 export interface Charge extends Object {
   amount: number;
   created_at: number;
@@ -250,6 +255,10 @@ export interface Subscription extends Object {
   latest_invoice: string | Invoice;
   customer: Customer;
   discount: DiscountResponse;
+  pending_update: {
+    price?: string;
+    quantity?: number;
+  };
   cancel_at_period_end: number | false;
   current_period_end_at: number | false;
   current_period_start_at: number | false;
@@ -364,11 +373,14 @@ export interface Customer extends Object {
   phone?: string;
   billing_address?: string | Address;
   shipping_address?: string | Address;
-  billing_matches_shipping: true;
-  live_mode: true;
-  unsubscribed: false;
-  default_payment_method: null;
-  tax_identifier: null;
+  billing_matches_shipping: boolean;
+  live_mode: boolean;
+  unsubscribed: boolean;
+  default_payment_method: string | PaymentMethod;
+  tax_identifier: {
+    number: string;
+    number_type: string;
+  };
   created_at: number;
   updated_at: number;
 }
