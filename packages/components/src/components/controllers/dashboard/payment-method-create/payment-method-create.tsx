@@ -41,9 +41,12 @@ export class CePaymentMethodCreate {
     return (
       <ce-card>
         <ce-form onCeFormSubmit={() => this.handleSubmit()}>
-          <ce-alert type="danger" open={!!this.error}>
-            {this.error}
-          </ce-alert>
+          {this.error && (
+            <ce-alert open={!!this.error} type="danger">
+              <span slot="title">{__('Error', 'checkout_engine')}</span>
+              {this.error}
+            </ce-alert>
+          )}
 
           <slot />
 

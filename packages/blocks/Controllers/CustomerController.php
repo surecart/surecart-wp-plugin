@@ -3,7 +3,6 @@ namespace CheckoutEngineBlocks\Controllers;
 
 use CheckoutEngine\Models\Component;
 use CheckoutEngine\Models\Customer;
-use CheckoutEngine\Models\PaymentIntent;
 use CheckoutEngine\Models\User;
 
 /**
@@ -22,7 +21,19 @@ class CustomerController extends BaseController {
 		if ( ! User::current()->isCustomer() ) {
 			return;
 		}
-		return '<ce-customer-details customer-id="' . User::current()->customerId() . '"></ce-customer-details>';
+
+		$output = '';
+
+		// show test.
+		if ( ! empty( User::current()->customerId( 'test' ) ) ) {
+			$output .= '<ce-customer-details customer-id="' . User::current()->customerId( 'test' ) . '"></ce-customer-details>';
+		}
+		// show live.
+		if ( ! empty( User::current()->customerId( 'live' ) ) ) {
+			$output .= '<ce-customer-details customer-id="' . User::current()->customerId( 'live' ) . '"></ce-customer-details>';
+		}
+
+		return $output;
 	}
 
 	/**
@@ -46,17 +57,35 @@ class CustomerController extends BaseController {
 			</ce-breadcrumbs>
 
 			<?php
-			echo wp_kses_post(
-				Component::tag( 'ce-customer-edit' )
-				->id( 'customer-customer-edit' )
-				->with(
-					[
-						'header'     => __( 'Update Billing Details', 'checkout-engine' ),
-						'customer'   => $customer,
-						'successUrl' => esc_url( $back ),
-					]
-				)->render()
-			);
+			if ( ! empty( User::current()->customerId( 'test' ) ) ) {
+				$customer = Customer::with( [ 'billing_address', 'shipping_address' ] )->find( User::current()->customerId( 'test' ) );
+				echo wp_kses_post(
+					Component::tag( 'ce-customer-edit' )
+					->id( 'customer-customer-edit' )
+					->with(
+						[
+							'header'     => __( 'Update Billing Details', 'checkout-engine' ),
+							'customer'   => $customer,
+							'successUrl' => esc_url( $back ),
+						]
+					)->render()
+				);
+			}
+
+			if ( ! empty( User::current()->customerId( 'live' ) ) ) {
+				$customer = Customer::with( [ 'billing_address', 'shipping_address' ] )->find( User::current()->customerId( 'live' ) );
+				echo wp_kses_post(
+					Component::tag( 'ce-customer-edit' )
+					->id( 'customer-customer-edit' )
+					->with(
+						[
+							'header'     => __( 'Update Billing Details', 'checkout-engine' ),
+							'customer'   => $customer,
+							'successUrl' => esc_url( $back ),
+						]
+					)->render()
+				);
+			}
 			?>
 		</ce-spacing>
 

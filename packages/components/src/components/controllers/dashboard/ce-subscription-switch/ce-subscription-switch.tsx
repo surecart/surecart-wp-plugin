@@ -26,10 +26,11 @@ export class CeSubscriptionSwitch {
   @State() prices: Array<Price>;
 
   /** Filter state */
-  @State() filter: 'month' | 'year' | 'never';
+  @State() filter: 'month' | 'week' | 'year' | 'never' = 'month';
 
   @State() hasFilters: {
     month: boolean;
+    week: boolean;
     year: boolean;
     never: boolean;
   };
@@ -47,6 +48,7 @@ export class CeSubscriptionSwitch {
     onFirstVisible(this.el, () => {
       this.getItems();
     });
+    this.handleSubscriptionChange();
   }
 
   @Watch('products')
@@ -56,7 +58,6 @@ export class CeSubscriptionSwitch {
 
   @Watch('prices')
   handlePricesChange() {
-    console.log(this.prices);
     this.hasFilters = {
       ...this.hasFilters,
       month: this.prices.some(price => price.recurring_interval === 'month'),
@@ -65,12 +66,9 @@ export class CeSubscriptionSwitch {
     };
   }
 
-  @Watch('hasFilters')
-  handleFiltersChange(val, old) {
-    if (old) return;
-    if (val.month) return (this.filter = 'month');
-    if (val.year) return (this.filter = 'year');
-    if (val.never) return (this.filter = 'never');
+  @Watch('subscription')
+  handleSubscriptionChange() {
+    this.filter = (this.subscription?.price as Price)?.recurring_interval || 'month';
   }
 
   /** Get all subscriptions */
@@ -115,6 +113,11 @@ export class CeSubscriptionSwitch {
         {this.hasFilters.month && (
           <ce-button onClick={() => (this.filter = 'month')} size="small" type={this.filter === 'month' ? 'default' : 'text'}>
             {__('Monthly', 'checkout_engine')}
+          </ce-button>
+        )}
+        {this.hasFilters.week && (
+          <ce-button onClick={() => (this.filter = 'week')} size="small" type={this.filter === 'week' ? 'default' : 'text'}>
+            {__('Weekly', 'checkout_engine')}
           </ce-button>
         )}
         {this.hasFilters.year && (
@@ -179,30 +182,19 @@ export class CeSubscriptionSwitch {
   }
 
   render() {
-    if (this.error) {
-      return (
-        <ce-alert open type="danger">
-          <span slot="title">{__('Error', 'checkout_engine')}</span>
-          {this.error}
-        </ce-alert>
-      );
-    }
-
     return (
-      <ce-form class="subscriptions-switch" onCeFormSubmit={e => this.handleSubmit(e)}>
-        <ce-heading>
-          {this.heading || __('Update Subscription', 'checkout_engine')}
-          {this.renderSwitcher()}
-        </ce-heading>
+      <ce-dashboard-module heading={this.heading || __('Update Plan', 'checkout_engine')} class="subscription-switch" error={this.error}>
+        <span slot="end">{this.renderSwitcher()}</span>
+        <ce-form class="subscriptions-switch" onCeFormSubmit={e => this.handleSubmit(e)}>
+          {this.renderContent()}
 
-        {this.renderContent()}
+          <ce-button type="primary" full submit loading={this.loading || this.busy}>
+            {__('Next', 'checkout_engine')} <ce-icon name="arrow-right" slot="suffix"></ce-icon>
+          </ce-button>
 
-        <ce-button type="primary" full submit loading={this.loading || this.busy}>
-          {__('Next', 'checkout_engine')} <ce-icon name="arrow-right" slot="suffix"></ce-icon>
-        </ce-button>
-
-        {this.busy && <ce-block-ui style={{ zIndex: '9' }}></ce-block-ui>}
-      </ce-form>
+          {this.busy && <ce-block-ui style={{ zIndex: '9' }}></ce-block-ui>}
+        </ce-form>
+      </ce-dashboard-module>
     );
   }
 }

@@ -1,4 +1,4 @@
-import { Component, Element, h, Prop, State, Watch } from '@stencil/core';
+import { Component, Element, h, Prop, State } from '@stencil/core';
 import { sprintf, __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import apiFetch from '../../../../functions/fetch';
@@ -16,10 +16,14 @@ export class CeChargesList {
   @Prop({ mutable: true }) query: {
     page: number;
     per_page: number;
+  } = {
+    page: 1,
+    per_page: 10,
   };
 
-  @Prop() listTitle: string;
-
+  @Prop() heading: string;
+  @Prop() showPagination: boolean = true;
+  @Prop() allLink: string;
   @State() charges: Array<Charge> = [];
 
   /** Loading state */
@@ -29,9 +33,6 @@ export class CeChargesList {
   /** Error message */
   @State() error: string;
 
-  /** Does this have a title slot */
-  @State() hasTitleSlot: boolean;
-
   @State() pagination: {
     total: number;
     total_pages: number;
@@ -40,25 +41,11 @@ export class CeChargesList {
     total_pages: 0,
   };
 
-  @State() hasNextPage: boolean;
-  @State() hasPreviousPage: boolean;
-
   /** Only fetch if visible */
   componentWillLoad() {
     onFirstVisible(this.el, () => {
       this.getItems();
     });
-    this.handleSlotChange();
-  }
-
-  handleSlotChange() {
-    this.hasTitleSlot = !!this.el.querySelector('[slot="title"]');
-  }
-
-  @Watch('pagination')
-  handlePaginationChange() {
-    this.hasNextPage = this.pagination.total_pages > 1 && this.query?.page < this.pagination.total_pages;
-    this.hasPreviousPage = this.pagination.total_pages > 1 && this.query?.page > 1;
   }
 
   /** Get items */
@@ -168,46 +155,33 @@ export class CeChargesList {
   }
 
   render() {
-    if (this.error) {
-      return (
-        <ce-alert open type="danger">
-          <span slot="title">{__('Error', 'checkout_engine')}</span>
-          {this.error}
-        </ce-alert>
-      );
-    }
-
     return (
-      <div
-        class={{
-          'charges-list': true,
-        }}
-      >
-        <ce-heading>{this.listTitle || __('Payment History', 'checkout_engine')}</ce-heading>
+      <ce-dashboard-module heading={this.heading || __('Payment History', 'checkout_engine')} class="charges-list" error={this.error}>
+        {!!this.allLink && (
+          <ce-button type="link" href={this.allLink} slot="end">
+            {__('View all', 'checkout_engine')}
+            <ce-icon name="chevron-right" slot="suffix"></ce-icon>
+          </ce-button>
+        )}
+
         <ce-card no-padding style={{ '--overflow': 'hidden' }}>
           <ce-stacked-list>{this.renderContent()}</ce-stacked-list>
         </ce-card>
-        {(this.hasPreviousPage || this.hasNextPage) &&
-          (() => {
-            const from = this.query.per_page * (this.query.page - 1) + 1;
-            const to = Math.min(from + this.charges.length - 1, this.pagination.total);
-            const total = this.pagination.total;
-            return (
-              <ce-flex>
-                <div>{sprintf(__('Displaying %1d to %2d of %3d items', 'checkout_engine'), from, to, total)}</div>
-                <ce-flex>
-                  <ce-button onClick={() => this.prevPage()} disabled={!this.hasPreviousPage} size="small">
-                    {__('Previous', 'checkout_engine')}
-                  </ce-button>
-                  <ce-button onClick={() => this.nextPage()} disabled={!this.hasNextPage} size="small">
-                    {__('Next', 'checkout_engine')}
-                  </ce-button>
-                </ce-flex>
-              </ce-flex>
-            );
-          })()}
+
+        {this.showPagination && (
+          <ce-pagination
+            page={this.query.page}
+            perPage={this.query.per_page}
+            total={this.pagination.total}
+            totalPages={this.pagination.total_pages}
+            totalShowing={this?.charges?.length}
+            onCeNextPage={() => this.nextPage()}
+            onCePrevPage={() => this.prevPage()}
+          ></ce-pagination>
+        )}
+
         {this.loading && this.loaded && <ce-block-ui spinner></ce-block-ui>}
-      </div>
+      </ce-dashboard-module>
     );
   }
 }

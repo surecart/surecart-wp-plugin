@@ -14,7 +14,7 @@ export class CePaymentMethodsList {
   @Element() el: HTMLCePaymentMethodsListElement;
   /** Query to fetch paymentMethods */
   @Prop() query: object;
-  @Prop() listTitle: string;
+  @Prop() heading: string;
 
   @State() paymentMethods: Array<PaymentMethod> = [];
 
@@ -153,7 +153,9 @@ export class CePaymentMethodsList {
             <ce-dropdown position="bottom-right">
               <ce-icon name="more-horizontal" slot="trigger"></ce-icon>
               <ce-menu>
-                <ce-menu-item onClick={() => this.setDefault(paymentMethod)}>{__('Make Default', 'checkout_engine')}</ce-menu-item>
+                {typeof customer !== 'string' && customer?.default_payment_method !== id && (
+                  <ce-menu-item onClick={() => this.setDefault(paymentMethod)}>{__('Make Default', 'checkout_engine')}</ce-menu-item>
+                )}
                 <ce-menu-item onClick={() => this.deleteMethod(paymentMethod)}>{__('Delete', 'checkout_engine')}</ce-menu-item>
               </ce-menu>
             </ce-dropdown>
@@ -164,52 +166,37 @@ export class CePaymentMethodsList {
   }
 
   render() {
-    if (this.error) {
-      return (
-        <ce-alert open type="danger">
-          <span slot="title">{__('Error', 'checkout_engine')}</span>
-          {this.error}
-        </ce-alert>
-      );
-    }
-
     return (
-      <div
-        class={{
-          'payment-methods-list': true,
-        }}
-      >
-        <ce-heading>
-          {this.listTitle || __('Payment Methods', 'checkout_engine')}
-          <ce-flex slot="end">
-            <ce-button
-              type="link"
-              href={addQueryArgs(window.location.href, {
-                action: 'index',
-                model: 'charge',
-              })}
-            >
-              <ce-icon name="clock" slot="prefix"></ce-icon>
-              {__('Payment History', 'checkout_engine')}
-            </ce-button>
-            <ce-button
-              type="link"
-              href={addQueryArgs(window.location.href, {
-                action: 'create',
-                model: 'payment_method',
-              })}
-            >
-              <ce-icon name="plus" slot="prefix"></ce-icon>
-              {__('Add', 'checkout_engine')}
-            </ce-button>
-          </ce-flex>
-        </ce-heading>
+      <ce-dashboard-module heading={this.heading || __('Payment Methods', 'checkout_engine')} class="payment-methods-list" error={this.error}>
+        <ce-flex slot="end">
+          <ce-button
+            type="link"
+            href={addQueryArgs(window.location.href, {
+              action: 'index',
+              model: 'charge',
+            })}
+          >
+            <ce-icon name="clock" slot="prefix"></ce-icon>
+            {__('Payment History', 'checkout_engine')}
+          </ce-button>
+          <ce-button
+            type="link"
+            href={addQueryArgs(window.location.href, {
+              action: 'create',
+              model: 'payment_method',
+            })}
+          >
+            <ce-icon name="plus" slot="prefix"></ce-icon>
+            {__('Add', 'checkout_engine')}
+          </ce-button>
+        </ce-flex>
 
         <ce-card no-padding>
           <ce-stacked-list>{this.renderContent()}</ce-stacked-list>
         </ce-card>
+
         {this.busy && <ce-block-ui spinner></ce-block-ui>}
-      </div>
+      </ce-dashboard-module>
     );
   }
 }

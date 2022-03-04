@@ -9,7 +9,7 @@ import apiFetch from '../../../../functions/fetch';
   shadow: true,
 })
 export class CeCustomerEdit {
-  @Prop() header: string;
+  @Prop() heading: string;
   @Prop({ mutable: true }) customer: Customer;
   @Prop() successUrl: string;
 
@@ -72,16 +72,15 @@ export class CeCustomerEdit {
 
   render() {
     return (
-      <div
-        class={{
-          'customer-edit': true,
-        }}
-      >
-        <ce-alert type="danger" open={!!this.error}>
-          {this.error}
-        </ce-alert>
-
-        <ce-heading>{this.header || __('Update Billing Details', 'checkout_engine')}</ce-heading>
+      <ce-dashboard-module class="customer-edit" error={this.error}>
+        <span slot="heading">
+          {this.heading || __('Update Billing Details', 'checkout_engine')}{' '}
+          {!this?.customer?.live_mode && (
+            <ce-tag type="warning" size="small">
+              {__('Test', 'checkout_engine')}
+            </ce-tag>
+          )}
+        </span>
 
         <ce-card>
           <ce-form onCeFormSubmit={e => this.handleSubmit(e)}>
@@ -153,7 +152,7 @@ export class CeCustomerEdit {
           </ce-form>
         </ce-card>
         {this.loading && <ce-block-ui spinner></ce-block-ui>}
-      </div>
+      </ce-dashboard-module>
     );
   }
 }

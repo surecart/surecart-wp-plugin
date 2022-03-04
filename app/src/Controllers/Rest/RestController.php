@@ -61,6 +61,11 @@ abstract class RestController {
 			]
 		);
 
+		// check for error.
+		if ( is_wp_error( $items ) ) {
+			return $items;
+		}
+
 		$response = rest_ensure_response( $items->data );
 		$response->header( 'X-WP-Total', (int) $items->pagination->count );
 		$max_pages = ceil( $items->pagination->count / $items->pagination->limit );

@@ -44,13 +44,13 @@ class PriceRestServiceProvider extends RestServiceProvider implements RestServic
 			// In JSON Schema you can specify object properties in the properties attribute.
 			'properties' => [
 				'id'      => [
-					'description' => esc_html__( 'Unique identifier for the object.', 'my-textdomain' ),
+					'description' => esc_html__( 'Unique identifier for the object.', 'checkout_engine' ),
 					'type'        => 'string',
 					'context'     => array( 'view', 'edit', 'embed' ),
 					'readonly'    => true,
 				],
 				'content' => array(
-					'description' => esc_html__( 'The content for the object.', 'my-textdomain' ),
+					'description' => esc_html__( 'The content for the object.', 'checkout_engine' ),
 					'type'        => 'string',
 				),
 			],

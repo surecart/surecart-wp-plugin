@@ -43,7 +43,6 @@ export class CeUpcomingInvoice {
   }
 
   isFutureInvoice() {
-    console.log(this.invoice);
     return this.invoice.period_start_at >= new Date().getTime() / 1000;
   }
 
@@ -262,14 +261,21 @@ export class CeUpcomingInvoice {
 
         <ce-line-item>
           <span slot="description">{__('Payment', 'checkout_engine')}</span>
-          <ce-flex slot="price-description" justify-content="flex-start" align-items="center" style={{ '--spacing': '0.5em' }}>
-            {capitalize(card?.brand)}
-            <span style={{ fontSize: '7px', whiteSpace: 'nowrap' }}>
-              {'\u2B24'} {'\u2B24'} {'\u2B24'} {'\u2B24'}
-            </span>
-            <span>{card?.last4}</span>
-            <ce-icon name="edit-3"></ce-icon>
-          </ce-flex>
+          <a
+            href={addQueryArgs(window.location.href, {
+              action: 'payment',
+            })}
+            slot="price-description"
+          >
+            <ce-flex justify-content="flex-start" align-items="center" style={{ '--spacing': '0.5em' }}>
+              {capitalize(card?.brand)}
+              <span style={{ fontSize: '7px', whiteSpace: 'nowrap' }}>
+                {'\u2B24'} {'\u2B24'} {'\u2B24'} {'\u2B24'}
+              </span>
+              <span>{card?.last4}</span>
+              <ce-icon name="edit-3"></ce-icon>
+            </ce-flex>
+          </a>
         </ce-line-item>
 
         <ce-line-item style={{ '--price-size': 'var(--ce-font-size-x-large)' }}>
@@ -295,20 +301,19 @@ export class CeUpcomingInvoice {
           </ce-alert>
         )}
 
-        <div>
-          <ce-heading>{this.heading || __('New Plan', 'checkout_engine')}</ce-heading>
+        <ce-dashboard-module heading={__('New Plan', 'checkout_engine')} class="plan-preview" error={this.error}>
           <ce-card>{this.renderContent()}</ce-card>
-        </div>
+        </ce-dashboard-module>
 
-        <ce-form onCeFormSubmit={() => this.onSubmit()}>
-          <ce-heading>{__('Summary', 'checkout_engine')}</ce-heading>
+        <ce-dashboard-module heading={__('Summary', 'checkout_engine')} class="plan-summary">
+          <ce-form onCeFormSubmit={() => this.onSubmit()}>
+            <ce-card>{this.renderSummary()}</ce-card>
 
-          <ce-card>{this.renderSummary()}</ce-card>
-
-          <ce-button type="primary" full submit loading={this.loading || this.busy} disabled={this.loading || this.busy}>
-            {__('Confirm', 'checkout_engine')}
-          </ce-button>
-        </ce-form>
+            <ce-button type="primary" full submit loading={this.loading || this.busy} disabled={this.loading || this.busy}>
+              {__('Confirm', 'checkout_engine')}
+            </ce-button>
+          </ce-form>
+        </ce-dashboard-module>
 
         <ce-text style={{ '--text-align': 'center', '--font-size': 'var(--ce-font-size-small)', '--line-height': 'var(--ce-line-height-normal)' }}>
           <slot name="terms">{__('By updating or cancelling your plan, you agree to the Terms of Service and Privacy Policy.', 'checkout_engine')}</slot>

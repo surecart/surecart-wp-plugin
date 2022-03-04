@@ -94,8 +94,10 @@
     "slot": true
   },
   "ce-charges-list": {
-    "list-title": true,
+    "all-link": true,
+    "heading": true,
     "query": true,
+    "show-pagination": true,
     "style": true,
     "id": true,
     "class": true,
@@ -206,7 +208,7 @@
   },
   "ce-customer-edit": {
     "customer": true,
-    "header": true,
+    "heading": true,
     "success-url": true,
     "style": true,
     "id": true,
@@ -234,9 +236,9 @@
     "class": true,
     "slot": true
   },
-  "ce-customer-orders-list": {
-    "customer-id": true,
-    "page": true,
+  "ce-dashboard-module": {
+    "error": true,
+    "heading": true,
     "style": true,
     "id": true,
     "class": true,
@@ -449,7 +451,8 @@
     "slot": true
   },
   "ce-invoices-list": {
-    "header": true,
+    "all-link": true,
+    "heading": true,
     "query": true,
     "style": true,
     "id": true,
@@ -570,13 +573,6 @@
     "class": true,
     "slot": true
   },
-  "ce-order-detail": {
-    "order-id": true,
-    "style": true,
-    "id": true,
-    "class": true,
-    "slot": true
-  },
   "ce-order-shipping-address": {
     "customer-shipping-address": true,
     "label": true,
@@ -610,8 +606,20 @@
     "slot": true
   },
   "ce-orders-list": {
-    "list-title": true,
+    "all-link": true,
+    "heading": true,
     "query": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-pagination": {
+    "page": true,
+    "per-page": true,
+    "total": true,
+    "total-pages": true,
+    "total-showing": true,
     "style": true,
     "id": true,
     "class": true,
@@ -640,7 +648,7 @@
     "slot": true
   },
   "ce-payment-methods-list": {
-    "list-title": true,
+    "heading": true,
     "query": true,
     "style": true,
     "id": true,
@@ -895,7 +903,7 @@
     "slot": true
   },
   "ce-subscription": {
-    "list-title": true,
+    "heading": true,
     "query": true,
     "subscription": true,
     "subscription-id": true,
@@ -904,12 +912,44 @@
     "class": true,
     "slot": true
   },
-  "ce-subscription-edit": {
-    "is-index": true,
-    "loading": true,
-    "subscription_id": true,
-    "subscriptions": true,
-    "upgrade-groups": true,
+  "ce-subscription-cancel": {
+    "back-url": true,
+    "heading": true,
+    "subscription": true,
+    "subscription-id": true,
+    "success-url": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-subscription-details": {
+    "hide-renewal-text": true,
+    "pending-price": true,
+    "subscription": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-subscription-payment": {
+    "back-url": true,
+    "customer-ids": true,
+    "payment-methods": true,
+    "subscription": true,
+    "subscription-id": true,
+    "success-url": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-subscription-renew": {
+    "back-url": true,
+    "heading": true,
+    "subscription": true,
+    "subscription-id": true,
+    "success-url": true,
     "style": true,
     "id": true,
     "class": true,
@@ -936,19 +976,10 @@
     "class": true,
     "slot": true
   },
-  "ce-subscription-switch-summary": {
-    "heading": true,
-    "product-group-id": true,
-    "query": true,
-    "subscription": true,
-    "style": true,
-    "id": true,
-    "class": true,
-    "slot": true
-  },
   "ce-subscriptions-list": {
+    "all-link": true,
     "cancel-behavior": true,
-    "list-title": true,
+    "heading": true,
     "query": true,
     "style": true,
     "id": true,

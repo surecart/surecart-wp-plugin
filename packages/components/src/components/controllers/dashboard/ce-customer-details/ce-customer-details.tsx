@@ -35,12 +35,14 @@ export class CeCustomerDetails {
           <ce-stacked-list-row style={{ '--columns': '3' }}>
             <div>{__('Name', 'checkout_engine')}</div>
             <div>{this.customer?.name}</div>
+            <div></div>
           </ce-stacked-list-row>
         )}
         {!!this?.customer?.email && (
           <ce-stacked-list-row style={{ '--columns': '3' }}>
             <div>{__('Email', 'checkout_engine')}</div>
             <div>{this.customer?.email}</div>
+            <div></div>
           </ce-stacked-list-row>
         )}
         {!!Object.keys(this?.customer?.shipping_address || {}).length && this.renderAddress(__('Shipping Address', 'checkout_engine'), this.customer.shipping_address)}
@@ -49,6 +51,7 @@ export class CeCustomerDetails {
           <ce-stacked-list-row style={{ '--columns': '3' }}>
             <div>{__('Phone', 'checkout_engine')}</div>
             <div>{this.customer?.phone}</div>
+            <div></div>
           </ce-stacked-list-row>
         )}
       </Fragment>
@@ -120,29 +123,32 @@ export class CeCustomerDetails {
 
   render() {
     return (
-      <div
-        class={{
-          'customer-details': true,
-        }}
-      >
-        <ce-heading>
-          {this.heading || __('Billing Details', 'checkout_engine')}
-          <ce-button
-            type="link"
-            href={addQueryArgs(window.location.href, {
-              action: 'edit',
-              model: 'customer',
-            })}
-            slot="end"
-          >
-            <ce-icon name="edit-3" slot="prefix"></ce-icon>
-            {__('Update', 'checkout_engine')}
-          </ce-button>
-        </ce-heading>
+      <ce-dashboard-module class="customer-details" error={this.error}>
+        <span slot="heading">
+          {this.heading || __('Billing Details', 'checkout_engine')}{' '}
+          {!this?.customer?.live_mode && (
+            <ce-tag type="warning" size="small">
+              {__('Test', 'checkout_engine')}
+            </ce-tag>
+          )}
+        </span>
+
+        <ce-button
+          type="link"
+          href={addQueryArgs(window.location.href, {
+            action: 'edit',
+            model: 'customer',
+          })}
+          slot="end"
+        >
+          <ce-icon name="edit-3" slot="prefix"></ce-icon>
+          {__('Update', 'checkout_engine')}
+        </ce-button>
+
         <ce-card no-padding>
           <ce-stacked-list>{this.renderContent()}</ce-stacked-list>
         </ce-card>
-      </div>
+      </ce-dashboard-module>
     );
   }
 }

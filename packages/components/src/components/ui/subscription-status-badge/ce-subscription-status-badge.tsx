@@ -61,7 +61,7 @@ export class CeSubscriptionStatusBadge {
       case 'past_due':
         return __('Past Due', 'checkout_engine');
       case 'canceled':
-        return __('Cancelled', 'checkout_engine');
+        return __('Canceled', 'checkout_engine');
       case 'unpaid':
         return __('Unpaid', 'checkout_engine');
     }

@@ -35,6 +35,8 @@
 
 ::slotted([slot="price-description"]) {
   margin-top: var(--ce-line-item-text-margin, 5px);
+  color: var(--ce-color-gray-500);
+  text-decoration: none;
 }
 
 .item__end {

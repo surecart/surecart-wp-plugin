@@ -1,10 +1,9 @@
 import { Component, Element, h, Prop, State } from '@stencil/core';
-import { sprintf, __ } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import apiFetch from '../../../../functions/fetch';
-import { Invoice, Subscription } from '../../../../types';
+import { Subscription } from '../../../../types';
 import { onFirstVisible } from '../../../../functions/lazy';
-import { translatedInterval } from '../../../../functions/price';
 
 @Component({
   tag: 'ce-subscriptions-list',
@@ -14,95 +13,89 @@ import { translatedInterval } from '../../../../functions/price';
 export class CeSubscriptionsList {
   @Element() el: HTMLCeSubscriptionsListElement;
   /** Customer id to fetch subscriptions */
-  @Prop() query: object;
-  @Prop() listTitle: string;
+  @Prop({ mutable: true }) query: {
+    page: number;
+    per_page: number;
+  } = {
+    page: 1,
+    per_page: 10,
+  };
+  @Prop() allLink: string;
+  @Prop() heading: string;
   @Prop() cancelBehavior: 'period_end' | 'immediate' = 'period_end';
 
   @State() subscriptions: Array<Subscription> = [];
 
   /** Loading state */
   @State() loading: boolean;
+  @State() busy: boolean;
 
   /** Error message */
   @State() error: string;
 
-  /** Does this have a title slot */
-  @State() hasTitleSlot: boolean;
+  @State() pagination: {
+    total: number;
+    total_pages: number;
+  } = {
+    total: 0,
+    total_pages: 0,
+  };
 
   componentWillLoad() {
     onFirstVisible(this.el, () => {
-      this.getSubscriptions();
+      this.initialFetch();
     });
-    this.handleSlotChange();
   }
 
-  handleSlotChange() {
-    this.hasTitleSlot = !!this.el.querySelector('[slot="title"]');
-  }
-
-  /** Get all subscriptions */
-  async getSubscriptions() {
-    if (!this.query) return;
+  async initialFetch() {
     try {
       this.loading = true;
-      this.subscriptions = (await await apiFetch({
-        path: addQueryArgs(`checkout-engine/v1/subscriptions/`, {
-          expand: ['price', 'price.product', 'latest_invoice'],
-          ...this.query,
-        }),
-      })) as Subscription[];
+      await this.getSubscriptions();
     } catch (e) {
-      if (e?.message) {
-        this.error = e.message;
-      } else {
-        this.error = __('Something went wrong', 'checkout_engine');
-      }
       console.error(this.error);
+      this.error = e?.message || __('Something went wrong', 'checkout_engine');
     } finally {
       this.loading = false;
     }
   }
 
-  renderName(subscription: Subscription) {
-    if (typeof subscription?.price?.product !== 'string') {
-      return subscription?.price?.product?.name;
+  async fetchSubscriptions() {
+    try {
+      this.busy = true;
+      await this.getSubscriptions();
+    } catch (e) {
+      console.error(this.error);
+      this.error = e?.message || __('Something went wrong', 'checkout_engine');
+    } finally {
+      this.busy = false;
     }
-    return __('Subscription', 'checkout_engine');
   }
 
-  renderRenewalText(subscription) {
-    const tag = <ce-subscription-status-badge subscription={subscription}></ce-subscription-status-badge>;
+  /** Get all subscriptions */
+  async getSubscriptions() {
+    const response = await await apiFetch({
+      path: addQueryArgs(`checkout-engine/v1/subscriptions/`, {
+        expand: ['price', 'price.product', 'latest_invoice'],
+        ...this.query,
+      }),
+      parse: false,
+    });
+    this.pagination = {
+      total: response.headers.get('X-WP-Total'),
+      total_pages: response.headers.get('X-WP-TotalPages'),
+    };
+    this.subscriptions = (await response.json()) as Subscription[];
+    return this.subscriptions;
+  }
 
-    if (Object.keys(subscription?.pending_update ?? {}).length > 0) {
-      return 'Updating';
-    }
+  nextPage() {
+    this.query.page = this.query.page + 1;
+    this.fetchSubscriptions();
+  }
 
-    if (subscription?.cancel_at_period_end && subscription.current_period_end_at) {
-      return (
-        <span>
-          {tag} {sprintf(__('Your plan will be canceled on', 'checkout_engine'))}{' '}
-          <ce-format-date date={subscription.current_period_end_at * 1000} month="long" day="numeric" year="numeric"></ce-format-date>
-        </span>
-      );
-    }
-    if (subscription.status === 'trialing' && subscription.trial_end_at) {
-      return (
-        <span>
-          {tag} {sprintf(__('Your plan begins on', 'checkout_engine'))}{' '}
-          <ce-format-date date={subscription.trial_end_at} type="timestamp" month="long" day="numeric" year="numeric"></ce-format-date>
-        </span>
-      );
-    }
-    if (subscription.status === 'active' && subscription.current_period_end_at) {
-      return (
-        <span>
-          {tag} {sprintf(__('Your plan renews on', 'checkout_engine'))}{' '}
-          <ce-format-date date={subscription.current_period_end_at * 1000} month="long" day="numeric" year="numeric"></ce-format-date>
-        </span>
-      );
-    }
-
-    return tag;
+  prevPage() {
+    this.query.page = this.query.page - 1;
+    this.fetchSubscriptions();
   }
 
   renderEmpty() {
@@ -133,27 +126,18 @@ export class CeSubscriptionsList {
     return this.subscriptions.map(subscription => {
       return (
         <ce-stacked-list-row
-          href={addQueryArgs(window.location.href, {
-            action: 'edit',
-            model: 'subscription',
-            id: subscription.id,
-          })}
-          style={{ '--columns': '2' }}
+          href={
+            subscription?.status !== 'canceled'
+              ? addQueryArgs(window.location.href, {
+                  action: 'edit',
+                  model: 'subscription',
+                  id: subscription.id,
+                })
+              : null
+          }
           mobile-size={0}
         >
-          <div>
-            <ce-text style={{ '--font-weight': 'var(--ce-font-weight-bold)' }}>
-              {this.renderName(subscription)}{' '}
-              {Object.keys(subscription?.pending_update || {}).length > 0 && <ce-tag size="small">{__('Update Scheduled', 'checkout_engine')}</ce-tag>}
-            </ce-text>
-            <ce-format-number
-              type="currency"
-              currency={(subscription?.latest_invoice as Invoice)?.currency}
-              value={(subscription?.latest_invoice as Invoice)?.total_amount}
-            ></ce-format-number>
-            {translatedInterval(subscription?.price?.recurring_interval_count || 0, subscription?.price?.recurring_interval, '/', '')}
-            <div>{this.renderRenewalText(subscription)}</div>
-          </div>
+          <ce-subscription-details subscription={subscription}></ce-subscription-details>
           <ce-icon name="chevron-right" slot="suffix"></ce-icon>
         </ce-stacked-list-row>
       );
@@ -161,41 +145,33 @@ export class CeSubscriptionsList {
   }
 
   render() {
-    if (this.error) {
-      return (
-        <ce-alert open type="danger">
-          <span slot="title">{__('Error', 'checkout_engine')}</span>
-          {this.error}
-        </ce-alert>
-      );
-    }
-
     return (
-      <div
-        class={{
-          'subscriptions-list': true,
-        }}
-      >
-        {this.listTitle && (
-          <ce-heading>
-            {this.listTitle || __('Subscriptions', 'checkout_engine')}
-            <ce-button
-              type="link"
-              href={addQueryArgs(window.location.href, {
-                action: 'index',
-                model: 'subscription',
-              })}
-              slot="end"
-            >
-              {__('View all', 'checkout_engine')}
-              <ce-icon name="chevron-right" slot="suffix"></ce-icon>
-            </ce-button>
-          </ce-heading>
+      <ce-dashboard-module heading={this.heading || __('Subscriptions', 'checkout_engine')} class="subscriptions-list" error={this.error}>
+        {!!this.allLink && (
+          <ce-button type="link" href={this.allLink} slot="end">
+            {__('View all', 'checkout_engine')}
+            <ce-icon name="chevron-right" slot="suffix"></ce-icon>
+          </ce-button>
         )}
+
         <ce-card no-padding style={{ '--overflow': 'hidden' }}>
           <ce-stacked-list>{this.renderContent()}</ce-stacked-list>
         </ce-card>
-      </div>
+
+        {!this.allLink && (
+          <ce-pagination
+            page={this.query.page}
+            perPage={this.query.per_page}
+            total={this.pagination.total}
+            totalPages={this.pagination.total_pages}
+            totalShowing={this?.subscriptions?.length}
+            onCeNextPage={() => this.nextPage()}
+            onCePrevPage={() => this.prevPage()}
+          ></ce-pagination>
+        )}
+
+        {this.busy && <ce-block-ui></ce-block-ui>}
+      </ce-dashboard-module>
     );
   }
 }

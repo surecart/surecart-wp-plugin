@@ -13,53 +13,89 @@ import { onFirstVisible } from '../../../../functions/lazy';
 export class CeOrdersList {
   @Element() el: HTMLCeOrdersListElement;
   /** Query to fetch orders */
-  @Prop() query: object;
-  @Prop() listTitle: string;
+  @Prop({ mutable: true }) query: {
+    page: number;
+    per_page: number;
+  } = {
+    page: 1,
+    per_page: 10,
+  };
+  @Prop() allLink: string;
+  @Prop() heading: string;
 
   @State() orders: Array<Order> = [];
 
   /** Loading state */
   @State() loading: boolean;
+  @State() busy: boolean;
 
   /** Error message */
   @State() error: string;
 
-  /** Does this have a title slot */
-  @State() hasTitleSlot: boolean;
+  @State() pagination: {
+    total: number;
+    total_pages: number;
+  } = {
+    total: 0,
+    total_pages: 0,
+  };
 
   /** Only fetch if visible */
   componentWillLoad() {
     onFirstVisible(this.el, () => {
-      this.getOrders();
+      this.initialFetch();
     });
-    this.handleSlotChange();
   }
 
-  handleSlotChange() {
-    this.hasTitleSlot = !!this.el.querySelector('[slot="title"]');
+  async initialFetch() {
+    try {
+      this.loading = true;
+      await this.getOrders();
+    } catch (e) {
+      console.error(this.error);
+      this.error = e?.message || __('Something went wrong', 'checkout_engine');
+    } finally {
+      this.loading = false;
+    }
+  }
+
+  async fetchOrders() {
+    try {
+      this.busy = true;
+      await this.getOrders();
+    } catch (e) {
+      console.error(this.error);
+      this.error = e?.message || __('Something went wrong', 'checkout_engine');
+    } finally {
+      this.busy = false;
+    }
   }
 
   /** Get all orders */
   async getOrders() {
-    if (!this.query) return;
-    try {
-      this.loading = true;
-      this.orders = (await await apiFetch({
-        path: addQueryArgs(`checkout-engine/v1/orders/`, {
-          expand: ['line_items', 'charge'],
-          ...this.query,
-        }),
-      })) as Order[];
-    } catch (e) {
-      if (e?.message) {
-        this.error = e.message;
-      } else {
-        this.error = __('Something went wrong', 'checkout_engine');
-      }
-      console.error(this.error);
-    } finally {
-      this.loading = false;
-    }
+    const response = await await apiFetch({
+      path: addQueryArgs(`checkout-engine/v1/orders/`, {
+        expand: ['line_items', 'charge'],
+        ...this.query,
+      }),
+      parse: false,
+    });
+    this.pagination = {
+      total: response.headers.get('X-WP-Total'),
+      total_pages: response.headers.get('X-WP-TotalPages'),
+    };
+    this.orders = (await response.json()) as Order[];
+    return this.orders;
+  }
+
+  nextPage() {
+    this.query.page = this.query.page + 1;
+    this.fetchOrders();
+  }
+
+  prevPage() {
+    this.query.page = this.query.page - 1;
+    this.fetchOrders();
   }
 
   renderStatusBadge(order: Order) {
@@ -122,32 +158,31 @@ export class CeOrdersList {
   }
 
   render() {
-    if (this.error) {
-      return (
-        <ce-alert open type="danger">
-          <span slot="title">{__('Error', 'checkout_engine')}</span>
-          {this.error}
-        </ce-alert>
-      );
-    }
-
     return (
-      <div
-        class={{
-          'orders-list': true,
-          'orders-list--has-title': !!this.listTitle,
-        }}
-      >
-        <ce-heading>
-          {this.listTitle || __('Order History', 'checkout_engine')}
-          <ce-button type="link" slot="end">
+      <ce-dashboard-module heading={this.heading || __('Order History', 'checkout_engine')} class="orders-list" error={this.error}>
+        {!!this.allLink && (
+          <ce-button type="link" href={this.allLink} slot="end">
             {__('View all', 'checkout_engine')}
             <ce-icon name="chevron-right" slot="suffix"></ce-icon>
           </ce-button>
-        </ce-heading>
+        )}
 
         <ce-card no-padding>{this.renderContent()}</ce-card>
-      </div>
+
+        {!this.allLink && (
+          <ce-pagination
+            page={this.query.page}
+            perPage={this.query.per_page}
+            total={this.pagination.total}
+            totalPages={this.pagination.total_pages}
+            totalShowing={this?.orders?.length}
+            onCeNextPage={() => this.nextPage()}
+            onCePrevPage={() => this.prevPage()}
+          ></ce-pagination>
+        )}
+
+        {this.busy && <ce-block-ui></ce-block-ui>}
+      </ce-dashboard-module>
     );
   }
 }

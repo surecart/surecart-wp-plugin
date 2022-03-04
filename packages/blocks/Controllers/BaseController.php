@@ -1,6 +1,8 @@
 <?php
 namespace CheckoutEngineBlocks\Controllers;
 
+use CheckoutEngine\Models\User;
+
 /**
  * Base controller for dashboard pages.
  */
@@ -31,7 +33,7 @@ abstract class BaseController {
 	 * @return integer
 	 */
 	protected function getPage() {
-		return $this->getParam( 'page' );
+		return $this->getParam( 'page', 1 );
 	}
 
 	/**
@@ -41,6 +43,15 @@ abstract class BaseController {
 	 */
 	protected function getId() {
 		return $this->getParam( 'id' );
+	}
+
+	/**
+	 * Get the users customer ids.
+	 *
+	 * @return array
+	 */
+	protected function customerIds() {
+		return array_values( (array) User::current()->customerIds() );
 	}
 
 	/**

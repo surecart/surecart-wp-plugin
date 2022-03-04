@@ -5,6 +5,7 @@ namespace CheckoutEngineBlocks\Blocks\Dashboard\CustomerSubscriptions;
 use CheckoutEngine\Models\Subscription;
 use CheckoutEngine\Models\User;
 use CheckoutEngineBlocks\Blocks\Dashboard\DashboardPage;
+use CheckoutEngineBlocks\Controllers\SubscriptionController;
 
 /**
  * Checkout block
@@ -22,21 +23,7 @@ class Block extends DashboardPage {
 		if ( ! User::current()->isCustomer() ) {
 			return;
 		}
-
-		\CheckoutEngine::assets()->addComponentData(
-			'ce-subscriptions-list',
-			'#customer-subscriptions-index',
-			[
-				'listTitle' => $attributes['title'] ?? __( 'Subscriptions', 'checkout-engine' ),
-				'query'     => [
-					'customer_ids' => array_values( User::current()->customerIds() ),
-					'status'       => [ 'active', 'trialing' ],
-					'page'         => 1,
-					'per_page'     => 10,
-				],
-			]
-		);
-		return '<ce-subscriptions-list id="customer-subscriptions-index"></ce-subscriptions-list>';
+		return ( new SubscriptionController() )->preview();
 	}
 
 	/**
@@ -69,7 +56,7 @@ class Block extends DashboardPage {
 			'ce-subscription',
 			'#customer-subscription',
 			[
-				'listTitle'    => $attributes['title'] ?? __( 'Update Subscription', 'checkout-engine' ),
+				'heading'      => $attributes['title'] ?? __( 'Update Subscription', 'checkout-engine' ),
 				'subscription' => $subscription,
 			]
 		);
@@ -77,7 +64,7 @@ class Block extends DashboardPage {
 			'ce-subscription-switch',
 			'#customer-subscription-switch',
 			[
-				'listTitle'     => $attributes['title'] ?? __( 'Update Subscription', 'checkout-engine' ),
+				'heading'       => $attributes['title'] ?? __( 'Update Subscription', 'checkout-engine' ),
 				'product-group' => $subscription->price->product->product_group ?? null,
 				'subscription'  => $subscription,
 			]
@@ -116,8 +103,8 @@ class Block extends DashboardPage {
 			'ce-subscriptions-list',
 			'#customer-subscriptions-index',
 			[
-				'listTitle' => $attributes['title'] ?? __( 'Subscriptions', 'checkout-engine' ),
-				'query'     => [
+				'heading' => $attributes['title'] ?? __( 'Subscriptions', 'checkout-engine' ),
+				'query'   => [
 					'customer_ids' => array_values( User::current()->customerIds() ),
 					'status'       => [ 'active', 'trialing' ],
 					'page'         => 1,

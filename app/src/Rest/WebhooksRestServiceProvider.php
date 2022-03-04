@@ -43,7 +43,7 @@ class WebhooksRestServiceProvider extends RestServiceProvider implements RestSer
 			// In JSON Schema you can specify object properties in the properties attribute.
 			'properties' => [
 				'id' => [
-					'description' => esc_html__( 'Unique identifier for the object.', 'my-textdomain' ),
+					'description' => esc_html__( 'Unique identifier for the object.', 'checkout_engine' ),
 					'type'        => 'string',
 					'context'     => [ 'view', 'edit', 'embed' ],
 					'readonly'    => true,

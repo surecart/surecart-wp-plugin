@@ -14,7 +14,7 @@
   display: grid;
   justify-content:space-between;
   grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
-  gap: var(--ce-spacing-large);
+  gap: var(--ce-spacing-xx-small);
   padding: var(--ce-spacing-medium) var(--ce-spacing-large);
   transition: background-color var(--ce-transition-fast) ease;
 
@@ -48,6 +48,7 @@
 
 .list-row.breakpoint-lg {
   grid-template-columns: repeat(calc(var(--columns) - 1), 1fr) 0.5fr;
+  gap: var(--ce-spacing-large);
 
   ::slotted(:last-child:not(:first-child)) {
     display: flex;

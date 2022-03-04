@@ -269,6 +269,17 @@ export interface Subscription extends Object {
   updated_at: number;
 }
 
+export interface SubscriptionProtocol {
+  id: string;
+  object: 'subscription_protocol';
+  cancel_behavior: 'pending' | 'immediate';
+  downgrade_behavior: 'pending' | 'immediate';
+  payment_retry_window_weeks: number;
+  upgrade_behavior: 'pending' | 'immediate';
+  created_at: number;
+  updated_at: number;
+}
+
 export type SubscriptionStatus = 'incomplete' | 'trialing' | 'active' | 'past_due' | 'canceled' | 'unpaid';
 
 export type OrderStatus = 'draft' | 'finalized' | 'paid' | 'completed';

@@ -20,6 +20,4 @@ class Block extends DashboardPage {
 	public function render( $attributes, $content ) {
 		return ( new InvoiceController() )->preview( $attributes, $content );
 	}
-
-
 }

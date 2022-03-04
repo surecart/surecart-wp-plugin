@@ -279,6 +279,7 @@ ce-button-group > ce-tooltip > ce-button.ce-focus {
   --ce-z-index-toast: 950;
   --ce-z-index-tooltip: 1000;
   --ce-checkout-columns: 1;
+  --ce-dashboard-module-spacing: var(--ce-spacing-x-small);
 }
 
 [hidden] {

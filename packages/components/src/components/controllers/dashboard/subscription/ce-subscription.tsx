@@ -2,9 +2,8 @@ import { Component, Element, h, Prop, State } from '@stencil/core';
 import { sprintf, __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import apiFetch from '../../../../functions/fetch';
-import { Invoice, Subscription } from '../../../../types';
+import { Subscription } from '../../../../types';
 import { onFirstVisible } from '../../../../functions/lazy';
-import { translatedInterval } from '../../../../functions/price';
 
 @Component({
   tag: 'ce-subscription',
@@ -15,13 +14,16 @@ export class CeSubscription {
   @Element() el: HTMLCeSubscriptionsListElement;
   /** Customer id to fetch subscriptions */
   @Prop() subscriptionId: string;
+  @Prop() heading: string;
   @Prop() query: object;
-  @Prop() listTitle: string;
 
   @Prop({ mutable: true }) subscription: Subscription;
 
   /** Loading state */
   @State() loading: boolean;
+
+  /**  */
+  @State() renewing: boolean;
 
   /** Error message */
   @State() error: string;
@@ -61,12 +63,6 @@ export class CeSubscription {
     } finally {
       this.loading = false;
     }
-  }
-
-  async confirmCancel(e) {
-    e.preventDefault();
-    const r = confirm(__('Are you sure you want to cancel your subscription?', 'checkout_engine'));
-    if (!r) return;
   }
 
   renderName(subscription: Subscription) {
@@ -133,50 +129,47 @@ export class CeSubscription {
     }
 
     return (
-      <ce-stacked-list-row style={{ '--columns': '1' }} mobile-size={0}>
-        <div>
-          <ce-text style={{ '--font-weight': 'var(--ce-font-weight-bold)' }}>{this.renderName(this.subscription)}</ce-text>
-          <ce-format-number
-            type="currency"
-            currency={(this.subscription?.latest_invoice as Invoice)?.currency}
-            value={(this.subscription?.latest_invoice as Invoice)?.total_amount}
-          ></ce-format-number>
-          {translatedInterval(this.subscription?.price?.recurring_interval_count || 0, this.subscription?.price?.recurring_interval, '/', '')}
-          <div>{this.renderRenewalText(this.subscription)}</div>
-        </div>
+      <ce-stacked-list-row mobile-size={0}>
+        <ce-subscription-details subscription={this.subscription}></ce-subscription-details>
       </ce-stacked-list-row>
     );
   }
 
   render() {
-    if (this.error) {
-      return (
-        <ce-alert open type="danger">
-          <span slot="title">{__('Error', 'checkout_engine')}</span>
-          {this.error}
-        </ce-alert>
-      );
-    }
-
     return (
-      <div
-        class={{
-          subscription: true,
-        }}
-      >
-        <ce-heading>
-          {this.listTitle || __('Update Subscription', 'checkout_engine')}
+      <ce-dashboard-module heading={this.heading || __('Current Plan', 'checkout_engine')} class="subscription" error={this.error}>
+        {!!this.subscription && (
           <ce-flex slot="end">
-            <a onClick={e => this.confirmCancel(e)} class="cancel">
-              <ce-icon name="x"></ce-icon> {__('Cancel', 'checkout_engine')}
-            </a>
+            {this?.subscription?.cancel_at_period_end ? (
+              <ce-button
+                type="link"
+                href={addQueryArgs(window.location.href, {
+                  action: 'renew',
+                })}
+              >
+                <ce-icon name="repeat" slot="prefix"></ce-icon>
+                {__('Renew Plan', 'checkout_engine')}
+              </ce-button>
+            ) : (
+              this.subscription?.status !== 'canceled' && (
+                <ce-button
+                  type="link"
+                  href={addQueryArgs(window.location.href, {
+                    action: 'cancel',
+                  })}
+                >
+                  <ce-icon name="x" slot="prefix"></ce-icon>
+                  {__('Cancel', 'checkout_engine')}
+                </ce-button>
+              )
+            )}
           </ce-flex>
-        </ce-heading>
+        )}
 
         <ce-card no-padding style={{ '--overflow': 'hidden' }}>
           <ce-stacked-list>{this.renderContent()}</ce-stacked-list>
         </ce-card>
-      </div>
+      </ce-dashboard-module>
     );
   }
 }

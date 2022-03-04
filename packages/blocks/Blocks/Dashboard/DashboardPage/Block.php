@@ -14,11 +14,12 @@ class Block extends DashboardPage {
 	 * @var array
 	 */
 	protected $blocks = [
-		'order'          => \CheckoutEngineBlocks\Blocks\Dashboard\CustomerOrders\Block::class,
 		'subscription'   => \CheckoutEngineBlocks\Controllers\SubscriptionController::class,
 		'payment_method' => \CheckoutEngineBlocks\Controllers\PaymentMethodController::class,
 		'charge'         => \CheckoutEngineBlocks\Controllers\ChargeController::class,
+		'order'          => \CheckoutEngineBlocks\Controllers\OrderController::class,
 		'customer'       => \CheckoutEngineBlocks\Controllers\CustomerController::class,
+		'invoice'        => \CheckoutEngineBlocks\Controllers\InvoiceController::class,
 	];
 
 

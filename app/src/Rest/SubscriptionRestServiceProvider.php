@@ -56,6 +56,20 @@ class SubscriptionRestServiceProvider extends RestServiceProvider implements Res
 
 		register_rest_route(
 			"$this->name/v$this->version",
+			$this->endpoint . '/(?P<id>\S+)/renew/',
+			[
+				[
+					'methods'             => \WP_REST_Server::EDITABLE,
+					'callback'            => $this->callback( $this->controller, 'renew' ),
+					'permission_callback' => [ $this, 'renew_permissions_check' ],
+				],
+				// Register our schema callback.
+				'schema' => [ $this, 'get_item_schema' ],
+			]
+		);
+
+		register_rest_route(
+			"$this->name/v$this->version",
 			$this->endpoint . '/(?P<id>\S+)/upcoming_invoice/',
 			[
 				[
@@ -89,7 +103,7 @@ class SubscriptionRestServiceProvider extends RestServiceProvider implements Res
 			// In JSON Schema you can specify object properties in the properties attribute.
 			'properties' => [
 				'id'           => [
-					'description' => esc_html__( 'Unique identifier for the object.', 'my-textdomain' ),
+					'description' => esc_html__( 'Unique identifier for the object.', 'checkout_engine' ),
 					'type'        => 'string',
 					'context'     => [ 'view', 'edit', 'embed' ],
 					'readonly'    => true,
@@ -128,6 +142,24 @@ class SubscriptionRestServiceProvider extends RestServiceProvider implements Res
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function cancel_permissions_check( $request ) {
+		if ( current_user_can( 'edit_ce_subscriptions' ) ) {
+			return true;
+		}
+
+		return current_user_can( 'edit_ce_subscription', $request['id'] );
+	}
+
+	/**
+	 * Check cancel permissions.
+	 *
+	 * @param \WP_REST_Request $request Full details about the request.
+	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
+	 */
+	public function renew_permissions_check( $request ) {
+		if ( current_user_can( 'edit_ce_subscriptions' ) ) {
+			return true;
+		}
+
 		return current_user_can( 'edit_ce_subscription', $request['id'] );
 	}
 

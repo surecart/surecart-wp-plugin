@@ -29,6 +29,7 @@ class Subscription extends Model {
 	/**
 	 * Cancel a subscription
 	 *
+	 * @param string $id Model id.
 	 * @return $this|\WP_Error
 	 */
 	protected function cancel( $id = null ) {
@@ -61,6 +62,51 @@ class Subscription extends Model {
 		$this->fill( $canceled );
 
 		$this->fireModelEvent( 'canceled' );
+
+		return $this;
+	}
+
+	/**
+	 * Renew a subscription.
+	 *
+	 * @param string $id Model id.
+	 * @return $this|\WP_Error
+	 */
+	protected function renew( $id = null ) {
+		if ( $id ) {
+			$this->setAttribute( 'id', $id );
+		}
+
+		if ( $this->fireModelEvent( 'renewing' ) === false ) {
+			return false;
+		}
+
+		if ( empty( $this->attributes['id'] ) ) {
+			return new \WP_Error( 'not_saved', 'Please create the subscription.' );
+		}
+
+		$renewed = \CheckoutEngine::request(
+			$this->endpoint . '/' . $this->attributes['id'],
+			[
+				'method' => 'PATCH',
+				'query'  => $this->query,
+				'body'   => [
+					$this->object_name => [
+						'cancel_at_period_end' => false,
+					],
+				],
+			]
+		);
+
+		if ( is_wp_error( $renewed ) ) {
+			return $renewed;
+		}
+
+		$this->resetAttributes();
+
+		$this->fill( $renewed );
+
+		$this->fireModelEvent( 'renewed' );
 
 		return $this;
 	}
