@@ -60,6 +60,52 @@ class PriceRestServiceProvider extends RestServiceProvider implements RestServic
 	}
 
 	/**
+	 * Get the collection params.
+	 *
+	 * @return array
+	 */
+	public function get_collection_params() {
+		return [
+			'archived'    => [
+				'description' => esc_html__( 'Whether to get archived products or not.', 'checkout_engine' ),
+				'type'        => 'boolean',
+			],
+			'ad_hoc'      => [
+				'description' => esc_html__( 'Only return prices that allow ad hoc amounts or not.', 'checkout_engine' ),
+				'type'        => 'boolean',
+			],
+			'query'       => [
+				'description' => __( 'The query to be used for full text search of this collection.' ),
+				'type'        => 'string',
+			],
+			'ids'         => [
+				'description' => __( 'Ensure result set excludes specific IDs.' ),
+				'type'        => 'array',
+				'items'       => [
+					'type' => 'string',
+				],
+				'default'     => [],
+			],
+			'product_ids' => [
+				'description' => __( 'Only return objects that belong to the given products.' ),
+				'type'        => 'array',
+				'items'       => [
+					'type' => 'string',
+				],
+				'default'     => [],
+			],
+			'page'        => [
+				'description' => esc_html__( 'The page of items you want returned.', 'checkout_engine' ),
+				'type'        => 'integer',
+			],
+			'per_page'    => [
+				'description' => esc_html__( 'A limit on the number of items to be returned, between 1 and 100.', 'checkout_engine' ),
+				'type'        => 'integer',
+			],
+		];
+	}
+
+	/**
 	 * Anyone can get a specific price.
 	 *
 	 * @param \WP_REST_Request $request Full details about the request.

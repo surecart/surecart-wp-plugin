@@ -21,7 +21,7 @@ trait CanListByCustomerIds {
 
 		// check to make sure they are not trying to list an ID that's not one of their own.
 		foreach ( $request['customer_ids'] as $id ) {
-			if ( ! in_array( $id, $users_customer_ids ) ) {
+			if ( ! $id || ! in_array( $id, $users_customer_ids ) ) {
 				return false; // this id does not belong to the user.
 			}
 		}

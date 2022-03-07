@@ -114,6 +114,7 @@ abstract class RestServiceProvider extends \WP_REST_Controller implements RestSe
 							'methods'             => \WP_REST_Server::READABLE,
 							'callback'            => $this->callback( $this->controller, 'index' ),
 							'permission_callback' => [ $this, 'get_items_permissions_check' ],
+							'args'                => $this->get_collection_params(),
 						] : [] ),
 						( $this->hasMethod( 'create' ) ? [
 							'methods'             => \WP_REST_Server::CREATABLE,
@@ -204,6 +205,15 @@ abstract class RestServiceProvider extends \WP_REST_Controller implements RestSe
 				return false;
 			}
 		}
+	}
+
+	/**
+	 * Retrieves the query params for collections.
+	 *
+	 * @return array
+	 */
+	public function get_collection_params() {
+		return [];
 	}
 
 	/**
