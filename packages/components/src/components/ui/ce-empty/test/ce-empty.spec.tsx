@@ -1,0 +1,18 @@
+import { newSpecPage } from '@stencil/core/testing';
+import { CeEmpty } from '../ce-empty';
+
+describe('ce-empty', () => {
+  it('renders', async () => {
+    const page = await newSpecPage({
+      components: [CeEmpty],
+      html: `<ce-empty></ce-empty>`,
+    });
+    expect(page.root).toEqualHtml(`
+      <ce-empty>
+        <mock:shadow-root>
+          <slot></slot>
+        </mock:shadow-root>
+      </ce-empty>
+    `);
+  });
+});

@@ -561,6 +561,9 @@ export namespace Components {
          */
         "value": string;
     }
+    interface CeEmpty {
+        "icon": string;
+    }
     interface CeExpressPayment {
         "debug": boolean;
         "dividerText": string;
@@ -1974,6 +1977,12 @@ declare global {
         prototype: HTMLCeEmailElement;
         new (): HTMLCeEmailElement;
     };
+    interface HTMLCeEmptyElement extends Components.CeEmpty, HTMLStencilElement {
+    }
+    var HTMLCeEmptyElement: {
+        prototype: HTMLCeEmptyElement;
+        new (): HTMLCeEmptyElement;
+    };
     interface HTMLCeExpressPaymentElement extends Components.CeExpressPayment, HTMLStencilElement {
     }
     var HTMLCeExpressPaymentElement: {
@@ -2474,6 +2483,7 @@ declare global {
         "ce-divider": HTMLCeDividerElement;
         "ce-dropdown": HTMLCeDropdownElement;
         "ce-email": HTMLCeEmailElement;
+        "ce-empty": HTMLCeEmptyElement;
         "ce-express-payment": HTMLCeExpressPaymentElement;
         "ce-flex": HTMLCeFlexElement;
         "ce-form": HTMLCeFormElement;
@@ -3171,6 +3181,9 @@ declare namespace LocalJSX {
           * The input's value attribute.
          */
         "value"?: string;
+    }
+    interface CeEmpty {
+        "icon"?: string;
     }
     interface CeExpressPayment {
         "debug"?: boolean;
@@ -4555,6 +4568,7 @@ declare namespace LocalJSX {
         "ce-divider": CeDivider;
         "ce-dropdown": CeDropdown;
         "ce-email": CeEmail;
+        "ce-empty": CeEmpty;
         "ce-express-payment": CeExpressPayment;
         "ce-flex": CeFlex;
         "ce-form": CeForm;
@@ -4665,6 +4679,7 @@ declare module "@stencil/core" {
             "ce-divider": LocalJSX.CeDivider & JSXBase.HTMLAttributes<HTMLCeDividerElement>;
             "ce-dropdown": LocalJSX.CeDropdown & JSXBase.HTMLAttributes<HTMLCeDropdownElement>;
             "ce-email": LocalJSX.CeEmail & JSXBase.HTMLAttributes<HTMLCeEmailElement>;
+            "ce-empty": LocalJSX.CeEmpty & JSXBase.HTMLAttributes<HTMLCeEmptyElement>;
             "ce-express-payment": LocalJSX.CeExpressPayment & JSXBase.HTMLAttributes<HTMLCeExpressPaymentElement>;
             "ce-flex": LocalJSX.CeFlex & JSXBase.HTMLAttributes<HTMLCeFlexElement>;
             "ce-form": LocalJSX.CeForm & JSXBase.HTMLAttributes<HTMLCeFormElement>;

@@ -4,7 +4,7 @@
 	"title": "Customer Dashboard Page",
 	"description": "Displays the users customer dashboard tab.",
 	"category": "layout",
-	"keywords": [ "name", "customer", "dashboard" ],
+	"keywords": ["name", "customer", "dashboard"],
 	"parent": null,
 	"supports": {
 		"reusable": false,
@@ -19,6 +19,10 @@
 		},
 		"title": {
 			"type": "string"
+		},
+		"gap": {
+			"type": "string",
+			"default": "25px"
 		}
 	}
 }

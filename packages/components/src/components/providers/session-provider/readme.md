@@ -25,6 +25,7 @@
 | -------------------- | ----------------------- | --------------------------------------------------------------------------------------------- |
 | `ceError`            | Update line items event | `CustomEvent<{ message: string; code?: string; data?: any; additional_errors?: any; } \| {}>` |
 | `ceSetState`         | Set the state           | `CustomEvent<string>`                                                                         |
+| `ceUpdateDraftState` | Update line items event | `CustomEvent<Order>`                                                                          |
 | `ceUpdateOrderState` | Update line items event | `CustomEvent<Order>`                                                                          |
 
 

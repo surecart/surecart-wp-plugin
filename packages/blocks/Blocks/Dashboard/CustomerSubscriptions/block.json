@@ -1,4 +1,5 @@
 {
+	"apiVersion": 2,
 	"name": "checkout-engine/customer-subscriptions",
 	"title": "Customer Subscriptions",
 	"description": "Displays a customer's subscriptions.",

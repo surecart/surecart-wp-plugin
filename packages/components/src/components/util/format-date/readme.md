@@ -30,25 +30,27 @@
 ### Used by
 
  - [ce-charges-list](../../controllers/dashboard/charges-list)
- - [ce-customer-orders-list](../../controllers/dashboard/customer-orders-list)
- - [ce-customer-subscription-edit](../../controllers/dashboard/subscription-detail)
- - [ce-order-detail](../../controllers/dashboard/order-detail)
+ - [ce-invoices-list](../../controllers/dashboard/invoices-list)
  - [ce-orders-list](../../controllers/dashboard/orders-list)
- - [ce-payment-methods-list](../../controllers/dashboard/payment-methods-list)
  - [ce-subscription](../../controllers/dashboard/subscription)
+ - [ce-subscription-cancel](../../controllers/dashboard/ce-subscription-cancel)
+ - [ce-subscription-details](../../controllers/dashboard/ce-subscription-details)
+ - [ce-subscription-renew](../../controllers/dashboard/ce-subscription-renew)
  - [ce-subscription-status-badge](../../ui/subscription-status-badge)
+ - [ce-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
 
 ### Graph
 ```mermaid
 graph TD;
   ce-charges-list --> ce-format-date
-  ce-customer-orders-list --> ce-format-date
-  ce-customer-subscription-edit --> ce-format-date
-  ce-order-detail --> ce-format-date
+  ce-invoices-list --> ce-format-date
   ce-orders-list --> ce-format-date
-  ce-payment-methods-list --> ce-format-date
   ce-subscription --> ce-format-date
+  ce-subscription-cancel --> ce-format-date
+  ce-subscription-details --> ce-format-date
+  ce-subscription-renew --> ce-format-date
   ce-subscription-status-badge --> ce-format-date
+  ce-upcoming-invoice --> ce-format-date
   style ce-format-date fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

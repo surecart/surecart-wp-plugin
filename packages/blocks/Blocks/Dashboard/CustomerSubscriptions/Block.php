@@ -23,7 +23,7 @@ class Block extends DashboardPage {
 		if ( ! User::current()->isCustomer() ) {
 			return;
 		}
-		return ( new SubscriptionController() )->preview();
+		return ( new SubscriptionController() )->preview( $attributes );
 	}
 
 	/**

@@ -103,31 +103,32 @@ export class CePaymentMethodsList {
     }
   }
 
-  renderEmpty() {
-    return <slot name="empty">{__('You have no saved payment methods.', 'checkout_engine')}</slot>;
-  }
-
   renderLoading() {
     return (
-      <ce-stacked-list-row style={{ '--columns': '2' }} mobile-size={0}>
-        <div style={{ padding: '0.5em' }}>
-          <ce-skeleton style={{ width: '30%', marginBottom: '0.75em' }}></ce-skeleton>
-          <ce-skeleton style={{ width: '20%', marginBottom: '0.75em' }}></ce-skeleton>
-          <ce-skeleton style={{ width: '40%' }}></ce-skeleton>
-        </div>
-      </ce-stacked-list-row>
+      <ce-card noPadding>
+        <ce-stacked-list>
+          <ce-stacked-list-row style={{ '--columns': '4' }} mobile-size={500}>
+            {[...Array(4)].map(() => (
+              <ce-skeleton style={{ width: '100px', display: 'inline-block' }}></ce-skeleton>
+            ))}
+          </ce-stacked-list-row>
+        </ce-stacked-list>
+      </ce-card>
     );
   }
 
-  renderContent() {
-    if (this.loading) {
-      return this.renderLoading();
-    }
+  renderEmpty() {
+    return (
+      <div>
+        <ce-divider style={{ '--spacing': '0' }}></ce-divider>
+        <slot name="empty">
+          <ce-empty icon="credit-card">{__("You don't have any saved payment methods.", 'checkout_engine')}</ce-empty>
+        </slot>
+      </div>
+    );
+  }
 
-    if (this.paymentMethods?.length === 0) {
-      return this.renderEmpty();
-    }
-
+  renderList() {
     return this.paymentMethods.map(paymentMethod => {
       const { id, card, customer, live_mode } = paymentMethod;
       return (
@@ -165,9 +166,29 @@ export class CePaymentMethodsList {
     });
   }
 
+  renderContent() {
+    if (this.loading) {
+      return this.renderLoading();
+    }
+
+    if (this.paymentMethods?.length === 0) {
+      return this.renderEmpty();
+    }
+
+    return (
+      <ce-card no-padding>
+        <ce-stacked-list>{this.renderList()}</ce-stacked-list>
+      </ce-card>
+    );
+  }
+
   render() {
     return (
-      <ce-dashboard-module heading={this.heading || __('Payment Methods', 'checkout_engine')} class="payment-methods-list" error={this.error}>
+      <ce-dashboard-module class="payment-methods-list" error={this.error}>
+        <span slot="heading">
+          <slot name="heading">{this.heading || __('Payment Methods', 'checkout_engine')}</slot>
+        </span>
+
         <ce-flex slot="end">
           <ce-button
             type="link"
@@ -191,9 +212,7 @@ export class CePaymentMethodsList {
           </ce-button>
         </ce-flex>
 
-        <ce-card no-padding>
-          <ce-stacked-list>{this.renderContent()}</ce-stacked-list>
-        </ce-card>
+        {this.renderContent()}
 
         {this.busy && <ce-block-ui spinner></ce-block-ui>}
       </ce-dashboard-module>

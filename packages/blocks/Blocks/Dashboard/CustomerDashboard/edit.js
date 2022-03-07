@@ -1,3 +1,4 @@
+/** @jsx jsx */
 import {
 	store as blockEditorStore,
 	useBlockProps,
@@ -10,10 +11,9 @@ import {
 } from '@wordpress/blocks';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { useEffect, useRef } from '@wordpress/element';
-/**
- * WordPress dependencies
- */
+import { css, jsx } from '@emotion/core';
 import { __, sprintf } from '@wordpress/i18n';
+import { CeTabGroup } from '@checkout-engine/components-react';
 
 export default ({ clientId }) => {
 	const useInnerBlocksProps = __stableUseInnerBlocksProps
@@ -22,11 +22,13 @@ export default ({ clientId }) => {
 
 	const { updateBlockAttributes, insertBlocks, replaceInnerBlocks } =
 		useDispatch(blockEditorStore);
+
 	const blockProps = useBlockProps({
 		style: {
 			fontSize: '16px',
 		},
 	});
+
 	const innerBlocksProps = useInnerBlocksProps(blockProps, {
 		orientation: 'horizontal',
 		templateLock: 'all',
@@ -158,5 +160,21 @@ export default ({ clientId }) => {
 		previousPanelBlocks.current = panelBlocks;
 	}, [tabBlocks, panelBlocks]);
 
-	return <ce-tab-group {...innerBlocksProps}></ce-tab-group>;
+	return (
+		<CeTabGroup
+			{...innerBlocksProps}
+			css={css`
+				.block-list-appender {
+					position: relative !important;
+					box-sizing: border-box !important;
+					opacity: 0.25;
+					transition: opacity 0.25s ease;
+
+					&:hover {
+						opacity: 1;
+					}
+				}
+			`}
+		></CeTabGroup>
+	);
 };

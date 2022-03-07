@@ -18,22 +18,26 @@
 
 ### Used by
 
- - [ce-card](../card)
- - [ce-customer-subscription-edit](../../controllers/dashboard/subscription-detail)
  - [ce-express-payment](../../controllers/express-payment)
+ - [ce-invoices-list](../../controllers/dashboard/invoices-list)
  - [ce-login-form](../../controllers/login)
  - [ce-order-confirmation-totals](../../controllers/order-confirmation-totals)
- - [ce-order-detail](../../controllers/dashboard/order-detail)
+ - [ce-orders-list](../../controllers/dashboard/orders-list)
+ - [ce-payment-methods-list](../../controllers/dashboard/payment-methods-list)
+ - [ce-subscriptions-list](../../controllers/dashboard/subscriptions-list)
+ - [ce-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-card --> ce-divider
-  ce-customer-subscription-edit --> ce-divider
   ce-express-payment --> ce-divider
+  ce-invoices-list --> ce-divider
   ce-login-form --> ce-divider
   ce-order-confirmation-totals --> ce-divider
-  ce-order-detail --> ce-divider
+  ce-orders-list --> ce-divider
+  ce-payment-methods-list --> ce-divider
+  ce-subscriptions-list --> ce-divider
+  ce-upcoming-invoice --> ce-divider
   style ce-divider fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

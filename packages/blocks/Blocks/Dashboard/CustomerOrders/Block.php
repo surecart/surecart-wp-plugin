@@ -22,6 +22,6 @@ class Block extends DashboardPage {
 		if ( ! User::current()->isCustomer() ) {
 			return;
 		}
-		return ( new OrderController() )->preview();
+		return ( new OrderController() )->preview( $attributes );
 	}
 }

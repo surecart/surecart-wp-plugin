@@ -32,6 +32,8 @@
 ### Used by
 
  - [ce-price-choices](../../controllers/price-choices)
+ - [ce-subscription-payment](../../controllers/dashboard/ce-subscription-payment)
+ - [ce-subscription-switch](../../controllers/dashboard/ce-subscription-switch)
 
 ### Depends on
 
@@ -43,6 +45,8 @@ graph TD;
   ce-choices --> ce-form-control
   ce-form-control --> ce-tooltip
   ce-price-choices --> ce-choices
+  ce-subscription-payment --> ce-choices
+  ce-subscription-switch --> ce-choices
   style ce-choices fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

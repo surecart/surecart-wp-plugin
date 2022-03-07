@@ -151,7 +151,8 @@ export class CeSubscription {
                 {__('Renew Plan', 'checkout_engine')}
               </ce-button>
             ) : (
-              this.subscription?.status !== 'canceled' && (
+              this.subscription?.status !== 'canceled' &&
+              this.subscription?.current_period_end_at && (
                 <ce-button
                   type="link"
                   href={addQueryArgs(window.location.href, {

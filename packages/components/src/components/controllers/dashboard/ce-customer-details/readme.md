@@ -1,0 +1,48 @@
+# ce-customer-details
+
+
+
+<!-- Auto Generated Below -->
+
+
+## Properties
+
+| Property     | Attribute     | Description | Type     | Default     |
+| ------------ | ------------- | ----------- | -------- | ----------- |
+| `customerId` | `customer-id` |             | `string` | `undefined` |
+| `heading`    | `heading`     |             | `string` | `undefined` |
+
+
+## Dependencies
+
+### Depends on
+
+- [ce-stacked-list-row](../../../ui/ce-stacked-list-row)
+- [ce-skeleton](../../../ui/skeleton)
+- [ce-dashboard-module](../../../ui/ce-dashboard-module)
+- [ce-tag](../../../ui/tag)
+- [ce-button](../../../ui/button)
+- [ce-icon](../../../ui/icon)
+- [ce-card](../../../ui/card)
+- [ce-stacked-list](../../../ui/ce-stacked-list)
+
+### Graph
+```mermaid
+graph TD;
+  ce-customer-details --> ce-stacked-list-row
+  ce-customer-details --> ce-skeleton
+  ce-customer-details --> ce-dashboard-module
+  ce-customer-details --> ce-tag
+  ce-customer-details --> ce-button
+  ce-customer-details --> ce-icon
+  ce-customer-details --> ce-card
+  ce-customer-details --> ce-stacked-list
+  ce-dashboard-module --> ce-alert
+  ce-alert --> ce-icon
+  ce-button --> ce-spinner
+  style ce-customer-details fill:#f9f,stroke:#333,stroke-width:4px
+```
+
+----------------------------------------------
+
+*Built with [StencilJS](https://stenciljs.com/)*

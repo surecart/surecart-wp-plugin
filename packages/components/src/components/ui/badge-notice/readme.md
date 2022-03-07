@@ -7,11 +7,11 @@
 
 ## Properties
 
-| Property | Attribute | Description | Type                                                                  | Default     |
-| -------- | --------- | ----------- | --------------------------------------------------------------------- | ----------- |
-| `label`  | `label`   |             | `string`                                                              | `undefined` |
-| `size`   | `size`    |             | `"large" \| "medium" \| "small"`                                      | `'small'`   |
-| `type`   | `type`    |             | `"danger" \| "info" \| "primary" \| "success" \| "text" \| "warning"` | `'primary'` |
+| Property | Attribute | Description | Type                                                                     | Default     |
+| -------- | --------- | ----------- | ------------------------------------------------------------------------ | ----------- |
+| `label`  | `label`   |             | `string`                                                                 | `undefined` |
+| `size`   | `size`    |             | `"large" \| "medium" \| "small"`                                         | `'small'`   |
+| `type`   | `type`    |             | `"danger" \| "default" \| "info" \| "primary" \| "success" \| "warning"` | `'primary'` |
 
 
 ## Dependencies

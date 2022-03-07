@@ -61,16 +61,16 @@ Type: `Promise<void>`
 
 ### Used by
 
- - [ce-charges-list](../../controllers/dashboard/charges-list)
  - [ce-checkout](../../controllers/checkout)
- - [ce-coupon-form](../../controllers/coupon-form)
- - [ce-customer-orders-list](../../controllers/dashboard/customer-orders-list)
+ - [ce-coupon-form](../coupon-form)
+ - [ce-dashboard-module](../ce-dashboard-module)
  - [ce-login-form](../../controllers/login)
- - [ce-orders-list](../../controllers/dashboard/orders-list)
- - [ce-payment-methods-list](../../controllers/dashboard/payment-methods-list)
+ - [ce-payment-method-create](../../controllers/dashboard/payment-method-create)
  - [ce-price-choice](../../controllers/price-choice)
- - [ce-subscription](../../controllers/dashboard/subscription)
- - [ce-subscriptions-list](../../controllers/dashboard/subscriptions-list)
+ - [ce-stripe-payment-request](../stripe-payment-request)
+ - [ce-subscription-cancel](../../controllers/dashboard/ce-subscription-cancel)
+ - [ce-subscription-renew](../../controllers/dashboard/ce-subscription-renew)
+ - [ce-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
 
 ### Depends on
 
@@ -80,16 +80,16 @@ Type: `Promise<void>`
 ```mermaid
 graph TD;
   ce-alert --> ce-icon
-  ce-charges-list --> ce-alert
   ce-checkout --> ce-alert
   ce-coupon-form --> ce-alert
-  ce-customer-orders-list --> ce-alert
+  ce-dashboard-module --> ce-alert
   ce-login-form --> ce-alert
-  ce-orders-list --> ce-alert
-  ce-payment-methods-list --> ce-alert
+  ce-payment-method-create --> ce-alert
   ce-price-choice --> ce-alert
-  ce-subscription --> ce-alert
-  ce-subscriptions-list --> ce-alert
+  ce-stripe-payment-request --> ce-alert
+  ce-subscription-cancel --> ce-alert
+  ce-subscription-renew --> ce-alert
+  ce-upcoming-invoice --> ce-alert
   style ce-alert fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

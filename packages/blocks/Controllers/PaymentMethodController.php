@@ -21,19 +21,20 @@ class PaymentMethodController extends BaseController {
 		if ( ! User::current()->isCustomer() ) {
 			return;
 		}
-		\CheckoutEngine::assets()->addComponentData(
-			'ce-payment-methods-list',
-			'#ce-payment-methods-list',
-			[
-				'heading' => $attributes['title'] ?? __( 'Payment Methods', 'checkout-engine' ),
-				'query'   => [
-					'customer_ids' => array_values( User::current()->customerIds() ),
-					'page'         => 1,
-					'per_page'     => 100,
-				],
-			]
+
+		return wp_kses_post(
+			Component::tag( 'ce-payment-methods-list' )
+			->id( 'ce-customer-payment-methods-list' )
+			->with(
+				[
+					'query' => [
+						'customer_ids' => array_values( User::current()->customerIds() ),
+						'page'         => 1,
+						'per_page'     => 100,
+					],
+				]
+			)->render( $attributes['title'] ? "<span slot='heading'>" . $attributes['title'] . '</span>' : '' )
 		);
-		return '<ce-payment-methods-list id="ce-payment-methods-list"></ce-payment-methods-list>';
 	}
 
 	/**

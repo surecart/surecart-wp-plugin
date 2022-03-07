@@ -20,8 +20,8 @@
 
 ### Used by
 
- - [ce-customer-subscription-edit](../../controllers/dashboard/subscription-detail)
  - [ce-subscription](../../controllers/dashboard/subscription)
+ - [ce-subscription-details](../../controllers/dashboard/ce-subscription-details)
 
 ### Depends on
 
@@ -33,8 +33,8 @@
 graph TD;
   ce-subscription-status-badge --> ce-format-date
   ce-subscription-status-badge --> ce-tag
-  ce-customer-subscription-edit --> ce-subscription-status-badge
   ce-subscription --> ce-subscription-status-badge
+  ce-subscription-details --> ce-subscription-status-badge
   style ce-subscription-status-badge fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

@@ -32,6 +32,7 @@ export const CeDashboardModule = /*@__PURE__*/createReactComponent<JSX.CeDashboa
 export const CeDivider = /*@__PURE__*/createReactComponent<JSX.CeDivider, HTMLCeDividerElement>('ce-divider');
 export const CeDropdown = /*@__PURE__*/createReactComponent<JSX.CeDropdown, HTMLCeDropdownElement>('ce-dropdown');
 export const CeEmail = /*@__PURE__*/createReactComponent<JSX.CeEmail, HTMLCeEmailElement>('ce-email');
+export const CeEmpty = /*@__PURE__*/createReactComponent<JSX.CeEmpty, HTMLCeEmptyElement>('ce-empty');
 export const CeExpressPayment = /*@__PURE__*/createReactComponent<JSX.CeExpressPayment, HTMLCeExpressPaymentElement>('ce-express-payment');
 export const CeFlex = /*@__PURE__*/createReactComponent<JSX.CeFlex, HTMLCeFlexElement>('ce-flex');
 export const CeForm = /*@__PURE__*/createReactComponent<JSX.CeForm, HTMLCeFormElement>('ce-form');

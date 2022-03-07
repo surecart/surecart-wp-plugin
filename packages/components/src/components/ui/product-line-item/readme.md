@@ -34,7 +34,7 @@
 
  - [ce-line-items](../../controllers/line-items)
  - [ce-order-confirmation-line-items](../../controllers/order-confirmation-line-items)
- - [ce-order-detail](../../controllers/dashboard/order-detail)
+ - [ce-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
 
 ### Depends on
 
@@ -53,7 +53,7 @@ graph TD;
   ce-quantity-select --> ce-menu-item
   ce-line-items --> ce-product-line-item
   ce-order-confirmation-line-items --> ce-product-line-item
-  ce-order-detail --> ce-product-line-item
+  ce-upcoming-invoice --> ce-product-line-item
   style ce-product-line-item fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

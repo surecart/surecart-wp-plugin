@@ -29,6 +29,29 @@
 | `cePayError` |             | `CustomEvent<any>`  |
 
 
+## Methods
+
+### `confirmCardPayment(secret: any) => Promise<any>`
+
+Confirm card payment
+
+#### Returns
+
+Type: `Promise<any>`
+
+
+
+### `confirmCardSetup(secret: any) => Promise<any>`
+
+Confirm card setup.
+
+#### Returns
+
+Type: `Promise<any>`
+
+
+
+
 ## Dependencies
 
 ### Used by
@@ -38,11 +61,13 @@
 ### Depends on
 
 - [ce-input](../input)
+- [ce-text](../text)
 
 ### Graph
 ```mermaid
 graph TD;
   ce-stripe-element --> ce-input
+  ce-stripe-element --> ce-text
   ce-input --> ce-form-control
   ce-form-control --> ce-tooltip
   ce-payment --> ce-stripe-element

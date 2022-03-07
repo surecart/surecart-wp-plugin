@@ -64,12 +64,22 @@ Type: `Promise<void>`
 
 ### Used by
 
+ - [ce-customer-edit](../../controllers/dashboard/ce-customer-edit)
  - [ce-login-form](../../controllers/login)
+ - [ce-payment-method-create](../../controllers/dashboard/payment-method-create)
+ - [ce-subscription-payment](../../controllers/dashboard/ce-subscription-payment)
+ - [ce-subscription-switch](../../controllers/dashboard/ce-subscription-switch)
+ - [ce-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
 
 ### Graph
 ```mermaid
 graph TD;
+  ce-customer-edit --> ce-form
   ce-login-form --> ce-form
+  ce-payment-method-create --> ce-form
+  ce-subscription-payment --> ce-form
+  ce-subscription-switch --> ce-form
+  ce-upcoming-invoice --> ce-form
   style ce-form fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

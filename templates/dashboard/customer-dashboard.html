@@ -1,15 +1,7 @@
 <!-- wp:checkout-engine/customer-dashboard -->
 <ce-tab-group style="font-size:16px;font-family:var(--ce-font-sans)" class="wp-block-checkout-engine-customer-dashboard alignwide"><!-- wp:checkout-engine/dashboard-tabs -->
-	<!-- wp:checkout-engine/dashboard-tab {"id":"6494481d-dd18-4323-8a68-2eec728a531c","title":"Orders","panel":"orders","icon":"shopping-bag"} -->
-	<ce-tab slot="nav"><ce-icon style="font-size:18px" slot="prefix" name="shopping-bag"></ce-icon>Orders</ce-tab>
-	<!-- /wp:checkout-engine/dashboard-tab -->
-
-	<!-- wp:checkout-engine/dashboard-tab {"id":"9cb9f79e-3318-4ac8-a430-b83e58324f21","title":"Subscriptions","panel":"subscriptions","icon":"repeat"} -->
-	<ce-tab slot="nav"><ce-icon style="font-size:18px" slot="prefix" name="repeat"></ce-icon>Subscriptions</ce-tab>
-	<!-- /wp:checkout-engine/dashboard-tab -->
-
-	<!-- wp:checkout-engine/dashboard-tab {"id":"776a60e2-7b4a-4716-bf71-b6e095403732","title":"Payments","panel":"payments","icon":"credit-card"} -->
-	<ce-tab slot="nav"><ce-icon style="font-size:18px" slot="prefix" name="credit-card"></ce-icon>Payments</ce-tab>
+	<!-- wp:checkout-engine/dashboard-tab {"id":"6494481d-dd18-4323-8a68-2eec728a531c","title":"Dashboard","panel":"dashboard","icon":"shopping-bag"} -->
+	<ce-tab slot="nav"><ce-icon style="font-size:18px" slot="prefix" name="shopping-bag"></ce-icon>Dashboard</ce-tab>
 	<!-- /wp:checkout-engine/dashboard-tab -->
 
 	<!-- wp:checkout-engine/dashboard-tab {"id":"1543ae69-a38d-4e74-b1fd-bad2b8ae9e49","title":"Account","panel":"account","icon":"user"} -->
@@ -31,35 +23,17 @@
 	<!-- /wp:checkout-engine/dashboard-page -->
 
 	<!-- wp:checkout-engine/dashboard-page {"id":"1543ae69-a38d-4e74-b1fd-bad2b8ae9e49","name":"account","title":"New Tab 5"} -->
-	<!-- wp:checkout-engine/heading {"title":"Account"} -->
-	<ce-heading>Account<span slot="description"></span><span slot="end"></span></ce-heading>
-	<!-- /wp:checkout-engine/heading -->
-
-	<!-- wp:checkout-engine/customer-shipping-address /-->
+	<!-- wp:checkout-engine/customer-billing-details /-->
 	<!-- /wp:checkout-engine/dashboard-page -->
 
-	<!-- wp:checkout-engine/dashboard-page {"id":"776a60e2-7b4a-4716-bf71-b6e095403732","name":"payments","title":"New Tab 4"} -->
-	<!-- wp:checkout-engine/heading {"title":"Payments"} -->
-	<ce-heading>Payments<span slot="description"></span><span slot="end"></span></ce-heading>
-	<!-- /wp:checkout-engine/heading -->
-
-	<!-- wp:checkout-engine/customer-charges /-->
-	<!-- /wp:checkout-engine/dashboard-page -->
-
-	<!-- wp:checkout-engine/dashboard-page {"id":"9cb9f79e-3318-4ac8-a430-b83e58324f21","name":"subscriptions","title":"New Tab 3"} -->
-	<!-- wp:checkout-engine/heading {"title":"Subscriptions"} -->
-	<ce-heading>Subscriptions<span slot="description"></span><span slot="end"></span></ce-heading>
-	<!-- /wp:checkout-engine/heading -->
-
+	<!-- wp:checkout-engine/dashboard-page {"id":"6494481d-dd18-4323-8a68-2eec728a531c","name":"dashboard","title":"New Tab 2"} -->
 	<!-- wp:checkout-engine/customer-subscriptions /-->
-	<!-- /wp:checkout-engine/dashboard-page -->
 
-	<!-- wp:checkout-engine/dashboard-page {"id":"6494481d-dd18-4323-8a68-2eec728a531c","name":"orders","title":"New Tab 2"} -->
-	<!-- wp:checkout-engine/heading {"title":"Orders"} -->
-	<ce-heading>Orders<span slot="description"></span><span slot="end"></span></ce-heading>
-	<!-- /wp:checkout-engine/heading -->
+	<!-- wp:checkout-engine/customer-payment-methods {"title":"Payment History"} /-->
 
 	<!-- wp:checkout-engine/customer-orders /-->
+
+	<!-- wp:checkout-engine/customer-invoices /-->
 	<!-- /wp:checkout-engine/dashboard-page -->
 	<!-- /wp:checkout-engine/dashboard-pages --></ce-tab-group>
 	<!-- /wp:checkout-engine/customer-dashboard -->

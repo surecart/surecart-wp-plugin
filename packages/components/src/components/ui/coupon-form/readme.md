@@ -7,35 +7,42 @@
 
 ## Properties
 
-| Property      | Attribute     | Description | Type      | Default     |
-| ------------- | ------------- | ----------- | --------- | ----------- |
-| `calculating` | `calculating` |             | `boolean` | `undefined` |
-| `error`       | `error`       |             | `any`     | `undefined` |
-| `forceOpen`   | `force-open`  |             | `boolean` | `undefined` |
-| `label`       | `label`       |             | `string`  | `undefined` |
-| `loading`     | `loading`     |             | `boolean` | `undefined` |
-| `order`       | --            |             | `Order`   | `undefined` |
+| Property         | Attribute         | Description                   | Type               | Default     |
+| ---------------- | ----------------- | ----------------------------- | ------------------ | ----------- |
+| `busy`           | `busy`            | Is the form calculating       | `boolean`          | `undefined` |
+| `currency`       | `currency`        | Currency                      | `string`           | `undefined` |
+| `discount`       | --                | The discount                  | `DiscountResponse` | `undefined` |
+| `discountAmount` | `discount-amount` | The discount amount           | `number`           | `undefined` |
+| `error`          | `error`           | The error message             | `string`           | `undefined` |
+| `forceOpen`      | `force-open`      | Force the form to show        | `boolean`          | `undefined` |
+| `label`          | `label`           | The label for the coupon form | `string`           | `undefined` |
+| `loading`        | `loading`         | Is the form loading           | `boolean`          | `undefined` |
 
 
 ## Events
 
-| Event           | Description | Type                  |
-| --------------- | ----------- | --------------------- |
-| `ceApplyCoupon` |             | `CustomEvent<string>` |
+| Event           | Description                | Type                  |
+| --------------- | -------------------------- | --------------------- |
+| `ceApplyCoupon` | When the coupon is applied | `CustomEvent<string>` |
 
 
 ## Dependencies
 
+### Used by
+
+ - [ce-order-coupon-form](../../controllers/order-coupon-form)
+ - [ce-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
+
 ### Depends on
 
-- [ce-skeleton](../../ui/skeleton)
-- [ce-line-item](../../ui/line-item)
-- [ce-tag](../../ui/tag)
+- [ce-skeleton](../skeleton)
+- [ce-line-item](../line-item)
+- [ce-tag](../tag)
 - [ce-format-number](../../util/format-number)
-- [ce-input](../../ui/input)
-- [ce-alert](../../ui/alert)
-- [ce-button](../../ui/button)
-- [ce-block-ui](../../ui/block-ui)
+- [ce-input](../input)
+- [ce-alert](../alert)
+- [ce-button](../button)
+- [ce-block-ui](../block-ui)
 
 ### Graph
 ```mermaid
@@ -53,6 +60,8 @@ graph TD;
   ce-alert --> ce-icon
   ce-button --> ce-spinner
   ce-block-ui --> ce-spinner
+  ce-order-coupon-form --> ce-coupon-form
+  ce-upcoming-invoice --> ce-coupon-form
   style ce-coupon-form fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

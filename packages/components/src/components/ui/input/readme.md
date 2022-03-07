@@ -110,13 +110,15 @@ Type: `Promise<void>`
 ### Used by
 
  - [ce-address](../ce-address)
- - [ce-coupon-form](../../controllers/coupon-form)
+ - [ce-coupon-form](../coupon-form)
+ - [ce-customer-edit](../../controllers/dashboard/ce-customer-edit)
  - [ce-customer-name](../../controllers/customer-name)
  - [ce-email](../../controllers/email)
  - [ce-login-form](../../controllers/login)
  - [ce-price-input](../price-input)
  - [ce-select](../select)
  - [ce-stripe-element](../stripe-element)
+ - [ce-tax-id-input](../../controllers/tax-id-input)
 
 ### Depends on
 
@@ -129,12 +131,14 @@ graph TD;
   ce-form-control --> ce-tooltip
   ce-address --> ce-input
   ce-coupon-form --> ce-input
+  ce-customer-edit --> ce-input
   ce-customer-name --> ce-input
   ce-email --> ce-input
   ce-login-form --> ce-input
   ce-price-input --> ce-input
   ce-select --> ce-input
   ce-stripe-element --> ce-input
+  ce-tax-id-input --> ce-input
   style ce-input fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

@@ -40,8 +40,6 @@ graph TD;
   ce-button --> ce-spinner
   ce-input --> ce-form-control
   ce-form-control --> ce-tooltip
-  ce-card --> ce-skeleton
-  ce-card --> ce-divider
   ce-block-ui --> ce-spinner
   style ce-login-form fill:#f9f,stroke:#333,stroke-width:4px
 ```

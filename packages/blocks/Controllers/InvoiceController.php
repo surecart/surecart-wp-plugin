@@ -11,7 +11,7 @@ class InvoiceController extends BaseController {
 	/**
 	 * Preview.
 	 */
-	public function preview() {
+	public function preview( $attributes = [] ) {
 		if ( ! User::current()->isCustomer() ) {
 			return;
 		}
@@ -37,7 +37,7 @@ class InvoiceController extends BaseController {
 						'per_page'     => 5,
 					],
 				]
-			)->render()
+			)->render( $attributes['title'] ? "<span slot='heading'>" . $attributes['title'] . '</span>' : '' )
 		);
 	}
 

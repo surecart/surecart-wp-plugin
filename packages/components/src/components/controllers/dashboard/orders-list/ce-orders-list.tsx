@@ -112,9 +112,9 @@ export class CeOrdersList {
     return <ce-order-status-badge status={status}></ce-order-status-badge>;
   }
 
-  renderContent() {
-    if (this.loading) {
-      return (
+  renderLoading() {
+    return (
+      <ce-card noPadding>
         <ce-stacked-list>
           <ce-stacked-list-row style={{ '--columns': '4' }} mobile-size={500}>
             {[...Array(4)].map(() => (
@@ -122,52 +122,81 @@ export class CeOrdersList {
             ))}
           </ce-stacked-list-row>
         </ce-stacked-list>
+      </ce-card>
+    );
+  }
+
+  renderEmpty() {
+    return (
+      <div>
+        <ce-divider style={{ '--spacing': '0' }}></ce-divider>
+        <slot name="empty">
+          <ce-empty icon="shopping-bag">{__("You don't have any orders.", 'checkout_engine')}</ce-empty>
+        </slot>
+      </div>
+    );
+  }
+
+  renderList() {
+    return this.orders.map(order => {
+      const { line_items, total_amount, currency, charge, created_at, url } = order;
+      return (
+        <ce-stacked-list-row href={url} style={{ '--columns': '4' }} mobile-size={500}>
+          <div>
+            {typeof charge !== 'string' && (
+              <ce-format-date class="order__date" date={(charge?.created_at || created_at) * 1000} month="short" day="numeric" year="numeric"></ce-format-date>
+            )}
+          </div>
+          <div>
+            <ce-text
+              truncate
+              style={{
+                '--color': 'var(--ce-color-gray-500)',
+              }}
+            >
+              {sprintf(_n('%s item', '%s items', line_items?.pagination?.count || 0, 'checkout_engine'), line_items?.pagination?.count || 0)}
+            </ce-text>
+          </div>
+          <div>{this.renderStatusBadge(order)}</div>
+          <div>
+            <ce-format-number type="currency" currency={currency} value={total_amount}></ce-format-number>
+          </div>
+        </ce-stacked-list-row>
       );
+    });
+  }
+
+  renderContent() {
+    if (this.loading) {
+      return this.renderLoading();
+    }
+
+    if (this.orders?.length === 0) {
+      return this.renderEmpty();
     }
 
     return (
-      <ce-stacked-list>
-        {this.orders.map(order => {
-          const { line_items, total_amount, currency, charge, created_at, url } = order;
-          return (
-            <ce-stacked-list-row href={url} style={{ '--columns': '4' }} mobile-size={500}>
-              <div>
-                {typeof charge !== 'string' && (
-                  <ce-format-date class="order__date" date={(charge?.created_at || created_at) * 1000} month="short" day="numeric" year="numeric"></ce-format-date>
-                )}
-              </div>
-              <div>
-                <ce-text
-                  truncate
-                  style={{
-                    '--color': 'var(--ce-color-gray-500)',
-                  }}
-                >
-                  {sprintf(_n('%s item', '%s items', line_items?.pagination?.count || 0, 'checkout_engine'), line_items?.pagination?.count || 0)}
-                </ce-text>
-              </div>
-              <div>{this.renderStatusBadge(order)}</div>
-              <div>
-                <ce-format-number type="currency" currency={currency} value={total_amount}></ce-format-number>
-              </div>
-            </ce-stacked-list-row>
-          );
-        })}
-      </ce-stacked-list>
+      <ce-card no-padding>
+        <ce-stacked-list>{this.renderList()}</ce-stacked-list>
+      </ce-card>
     );
   }
 
   render() {
     return (
-      <ce-dashboard-module heading={this.heading || __('Order History', 'checkout_engine')} class="orders-list" error={this.error}>
-        {!!this.allLink && (
+      <ce-dashboard-module class="orders-list" error={this.error}>
+        <span slot="heading">
+          <slot name="heading">{this.heading || __('Order History', 'checkout_engine')}</slot>
+        </span>
+
+        {!!this.allLink && !!this.orders?.length && (
           <ce-button type="link" href={this.allLink} slot="end">
             {__('View all', 'checkout_engine')}
             <ce-icon name="chevron-right" slot="suffix"></ce-icon>
           </ce-button>
         )}
 
-        <ce-card no-padding>{this.renderContent()}</ce-card>
+        {this.renderContent()}
 
         {!this.allLink && (
           <ce-pagination

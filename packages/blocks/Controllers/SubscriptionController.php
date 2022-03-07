@@ -13,31 +13,32 @@ class SubscriptionController extends BaseController {
 	/**
 	 * Render the block
 	 *
+	 * @param array $attributes Block attributes.
 	 * @return function
 	 */
-	public function preview() {
-		\CheckoutEngine::assets()->addComponentData(
-			'ce-subscriptions-list',
-			'#customer-subscriptions-preview',
-			[
-				'heading' => $attributes['title'] ?? __( 'Subscriptions', 'checkout-engine' ),
-				'allLink' => add_query_arg(
-					[
-						'tab'    => $this->getTab(),
-						'model'  => 'subscription',
-						'action' => 'index',
+	public function preview( $attributes = [] ) {
+		return wp_kses_post(
+			Component::tag( 'ce-subscriptions-list' )
+			->id( 'customer-subscriptions-preview' )
+			->with(
+				[
+					'allLink' => add_query_arg(
+						[
+							'tab'    => $this->getTab(),
+							'model'  => 'subscription',
+							'action' => 'index',
+						],
+						\CheckoutEngine::pages()->url( 'dashboard' )
+					),
+					'query'   => [
+						'customer_ids' => array_values( User::current()->customerIds() ),
+						'status'       => [ 'active', 'trialing' ],
+						'page'         => 1,
+						'per_page'     => 5,
 					],
-					\CheckoutEngine::pages()->url( 'dashboard' )
-				),
-				'query'   => [
-					'customer_ids' => array_values( User::current()->customerIds() ),
-					'status'       => [ 'active', 'trialing' ],
-					'page'         => 1,
-					'per_page'     => 5,
-				],
-			]
+				]
+			)->render( $attributes['title'] ? "<span slot='heading'>" . $attributes['title'] . '</span>' : '' )
 		);
-		return '<ce-subscriptions-list id="customer-subscriptions-preview"></ce-subscriptions-list>';
 	}
 
 	/**

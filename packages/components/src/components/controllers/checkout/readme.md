@@ -41,12 +41,9 @@ graph TD;
   ce-alert --> ce-icon
   ce-block-ui --> ce-spinner
   ce-form-components-validator --> ce-address
-  ce-address --> ce-input
   ce-address --> ce-form-control
-  ce-address --> ce-spacing
-  ce-address --> ce-skeleton
   ce-address --> ce-select
-  ce-input --> ce-form-control
+  ce-address --> ce-input
   ce-form-control --> ce-tooltip
   ce-select --> ce-menu-label
   ce-select --> ce-menu-item
@@ -56,6 +53,7 @@ graph TD;
   ce-select --> ce-input
   ce-select --> ce-spinner
   ce-select --> ce-menu
+  ce-input --> ce-form-control
   ce-session-provider --> ce-line-items-provider
   style ce-checkout fill:#f9f,stroke:#333,stroke-width:4px
 ```

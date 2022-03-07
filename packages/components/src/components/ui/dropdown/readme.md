@@ -33,14 +33,18 @@
 
 ### Used by
 
+ - [ce-payment-methods-list](../../controllers/dashboard/payment-methods-list)
  - [ce-quantity-select](../quantity-select)
  - [ce-select](../select)
+ - [ce-tax-id-input](../../controllers/tax-id-input)
 
 ### Graph
 ```mermaid
 graph TD;
+  ce-payment-methods-list --> ce-dropdown
   ce-quantity-select --> ce-dropdown
   ce-select --> ce-dropdown
+  ce-tax-id-input --> ce-dropdown
   style ce-dropdown fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

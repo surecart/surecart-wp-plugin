@@ -39,15 +39,15 @@
 
 ### Used by
 
- - [ce-coupon-form](../../controllers/coupon-form)
+ - [ce-coupon-form](../coupon-form)
  - [ce-line-item-tax](../../controllers/line-item-tax)
  - [ce-line-item-total](../../controllers/line-item-total)
  - [ce-line-items](../../controllers/line-items)
  - [ce-order-confirmation-line-items](../../controllers/order-confirmation-line-items)
  - [ce-order-confirmation-totals](../../controllers/order-confirmation-totals)
- - [ce-order-detail](../../controllers/dashboard/order-detail)
  - [ce-order-summary](../../controllers/order-summary)
  - [ce-product-line-item](../product-line-item)
+ - [ce-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
 
 ### Graph
 ```mermaid
@@ -58,9 +58,9 @@ graph TD;
   ce-line-items --> ce-line-item
   ce-order-confirmation-line-items --> ce-line-item
   ce-order-confirmation-totals --> ce-line-item
-  ce-order-detail --> ce-line-item
   ce-order-summary --> ce-line-item
   ce-product-line-item --> ce-line-item
+  ce-upcoming-invoice --> ce-line-item
   style ce-line-item fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

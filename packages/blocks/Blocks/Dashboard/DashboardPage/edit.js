@@ -16,7 +16,7 @@ import { CeTabPanel } from '@checkout-engine/components-react';
 import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
 
 export default ({ attributes, setAttributes }) => {
-	const { name } = attributes;
+	const { name, gap } = attributes;
 
 	const useInnerBlocksProps = __stableUseInnerBlocksProps
 		? __stableUseInnerBlocksProps
@@ -24,6 +24,11 @@ export default ({ attributes, setAttributes }) => {
 
 	const blockProps = useBlockProps({
 		name,
+		css: css`
+			> .wp-block:not(ce-columns):not(ce-column):not(:last-child) {
+				margin-bottom: ${gap} !important;
+			}
+		`,
 	});
 
 	const innerBlocksProps = useInnerBlocksProps(blockProps, {
@@ -44,9 +49,7 @@ export default ({ attributes, setAttributes }) => {
 					</PanelRow>
 				</PanelBody>
 			</InspectorControls>
-			<CeTabPanel name={name}>
-				<ce-spacing {...innerBlocksProps}></ce-spacing>
-			</CeTabPanel>
+			<CeTabPanel {...innerBlocksProps}></CeTabPanel>
 		</Fragment>
 	);
 };

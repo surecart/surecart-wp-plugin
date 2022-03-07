@@ -7,14 +7,14 @@
 
 ## Properties
 
-| Property      | Attribute     | Description | Type      | Default     |
-| ------------- | ------------- | ----------- | --------- | ----------- |
-| `calculating` | `calculating` |             | `boolean` | `undefined` |
-| `error`       | `error`       |             | `any`     | `undefined` |
-| `forceOpen`   | `force-open`  |             | `boolean` | `undefined` |
-| `label`       | `label`       |             | `string`  | `undefined` |
-| `loading`     | `loading`     |             | `boolean` | `undefined` |
-| `order`       | --            |             | `Order`   | `undefined` |
+| Property    | Attribute    | Description | Type      | Default     |
+| ----------- | ------------ | ----------- | --------- | ----------- |
+| `busy`      | `busy`       |             | `boolean` | `undefined` |
+| `error`     | `error`      |             | `any`     | `undefined` |
+| `forceOpen` | `force-open` |             | `boolean` | `undefined` |
+| `label`     | `label`      |             | `string`  | `undefined` |
+| `loading`   | `loading`    |             | `boolean` | `undefined` |
+| `order`     | --           |             | `Order`   | `undefined` |
 
 
 ## Events
@@ -28,18 +28,12 @@
 
 ### Depends on
 
-- [ce-skeleton](../../ui/skeleton)
-- [ce-line-item](../../ui/line-item)
-- [ce-tag](../../ui/tag)
-- [ce-format-number](../../util/format-number)
-- [ce-input](../../ui/input)
-- [ce-alert](../../ui/alert)
-- [ce-button](../../ui/button)
-- [ce-block-ui](../../ui/block-ui)
+- [ce-coupon-form](../../ui/coupon-form)
 
 ### Graph
 ```mermaid
 graph TD;
+  ce-order-coupon-form --> ce-coupon-form
   ce-coupon-form --> ce-skeleton
   ce-coupon-form --> ce-line-item
   ce-coupon-form --> ce-tag
@@ -53,7 +47,7 @@ graph TD;
   ce-alert --> ce-icon
   ce-button --> ce-spinner
   ce-block-ui --> ce-spinner
-  style ce-coupon-form fill:#f9f,stroke:#333,stroke-width:4px
+  style ce-order-coupon-form fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

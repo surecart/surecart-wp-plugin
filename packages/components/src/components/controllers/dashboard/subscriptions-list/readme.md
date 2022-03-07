@@ -7,47 +7,60 @@
 
 ## Properties
 
-| Property         | Attribute         | Description                        | Type                          | Default        |
-| ---------------- | ----------------- | ---------------------------------- | ----------------------------- | -------------- |
-| `cancelBehavior` | `cancel-behavior` |                                    | `"immediate" \| "period_end"` | `'period_end'` |
-| `query`          | --                | Customer id to fetch subscriptions | `object`                      | `undefined`    |
+| Property         | Attribute         | Description                        | Type                                  | Default                                |
+| ---------------- | ----------------- | ---------------------------------- | ------------------------------------- | -------------------------------------- |
+| `allLink`        | `all-link`        |                                    | `string`                              | `undefined`                            |
+| `cancelBehavior` | `cancel-behavior` |                                    | `"immediate" \| "period_end"`         | `'period_end'`                         |
+| `heading`        | `heading`         |                                    | `string`                              | `undefined`                            |
+| `query`          | --                | Customer id to fetch subscriptions | `{ page: number; per_page: number; }` | `{     page: 1,     per_page: 10,   }` |
 
 
 ## Dependencies
 
 ### Depends on
 
+- [ce-divider](../../../ui/divider)
+- [ce-empty](../../../ui/ce-empty)
 - [ce-card](../../../ui/card)
-- [ce-flex](../../../ui/flex)
+- [ce-stacked-list](../../../ui/ce-stacked-list)
+- [ce-stacked-list-row](../../../ui/ce-stacked-list-row)
 - [ce-skeleton](../../../ui/skeleton)
-- [ce-alert](../../../ui/alert)
-- [ce-spacing](../../../ui/spacing)
-- [ce-subscription](../subscription)
+- [ce-subscription-details](../ce-subscription-details)
+- [ce-icon](../../../ui/icon)
+- [ce-dashboard-module](../../../ui/ce-dashboard-module)
+- [ce-button](../../../ui/button)
+- [ce-pagination](../../../ui/ce-pagination)
+- [ce-block-ui](../../../ui/block-ui)
 
 ### Graph
 ```mermaid
 graph TD;
+  ce-subscriptions-list --> ce-divider
+  ce-subscriptions-list --> ce-empty
   ce-subscriptions-list --> ce-card
-  ce-subscriptions-list --> ce-flex
+  ce-subscriptions-list --> ce-stacked-list
+  ce-subscriptions-list --> ce-stacked-list-row
   ce-subscriptions-list --> ce-skeleton
-  ce-subscriptions-list --> ce-alert
-  ce-subscriptions-list --> ce-spacing
-  ce-subscriptions-list --> ce-subscription
-  ce-card --> ce-skeleton
-  ce-card --> ce-divider
-  ce-alert --> ce-icon
-  ce-subscription --> ce-format-date
-  ce-subscription --> ce-subscription-status-badge
-  ce-subscription --> ce-card
-  ce-subscription --> ce-flex
-  ce-subscription --> ce-format-number
-  ce-subscription --> ce-text
-  ce-subscription --> ce-button
-  ce-subscription --> ce-alert
-  ce-subscription --> ce-block-ui
+  ce-subscriptions-list --> ce-subscription-details
+  ce-subscriptions-list --> ce-icon
+  ce-subscriptions-list --> ce-dashboard-module
+  ce-subscriptions-list --> ce-button
+  ce-subscriptions-list --> ce-pagination
+  ce-subscriptions-list --> ce-block-ui
+  ce-empty --> ce-icon
+  ce-subscription-details --> ce-subscription-status-badge
+  ce-subscription-details --> ce-format-date
+  ce-subscription-details --> ce-skeleton
+  ce-subscription-details --> ce-text
+  ce-subscription-details --> ce-tag
+  ce-subscription-details --> ce-format-number
   ce-subscription-status-badge --> ce-format-date
   ce-subscription-status-badge --> ce-tag
+  ce-dashboard-module --> ce-alert
+  ce-alert --> ce-icon
   ce-button --> ce-spinner
+  ce-pagination --> ce-flex
+  ce-pagination --> ce-button
   ce-block-ui --> ce-spinner
   style ce-subscriptions-list fill:#f9f,stroke:#333,stroke-width:4px
 ```

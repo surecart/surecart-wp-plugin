@@ -1,4 +1,5 @@
 {
+	"apiVersion": 2,
 	"name": "checkout-engine/customer-invoices",
 	"title": "Customer Invoices",
 	"description": "Displays the customers invoices.",
@@ -12,7 +13,7 @@
 	"attributes": {
 		"title": {
 			"type": "string",
-			"default": "Order History"
+			"default": "Invoice History"
 		},
 		"paginate": {
 			"type": "boolean",

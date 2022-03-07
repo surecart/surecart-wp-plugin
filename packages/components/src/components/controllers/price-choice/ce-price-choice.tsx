@@ -130,7 +130,7 @@ export class CePriceChoice {
     try {
       this.loading = true;
       const { products, prices } = await getPricesAndProducts({
-        active: true,
+        archived: false,
         ids: [this.priceId],
       });
       // add to central store.

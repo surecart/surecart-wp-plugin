@@ -27,12 +27,9 @@
 ```mermaid
 graph TD;
   ce-form-components-validator --> ce-address
-  ce-address --> ce-input
   ce-address --> ce-form-control
-  ce-address --> ce-spacing
-  ce-address --> ce-skeleton
   ce-address --> ce-select
-  ce-input --> ce-form-control
+  ce-address --> ce-input
   ce-form-control --> ce-tooltip
   ce-select --> ce-menu-label
   ce-select --> ce-menu-item
@@ -42,6 +39,7 @@ graph TD;
   ce-select --> ce-input
   ce-select --> ce-spinner
   ce-select --> ce-menu
+  ce-input --> ce-form-control
   ce-checkout --> ce-form-components-validator
   style ce-form-components-validator fill:#f9f,stroke:#333,stroke-width:4px
 ```

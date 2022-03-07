@@ -1,4 +1,5 @@
 {
+	"apiVersion": 2,
 	"name": "checkout-engine/customer-payment-methods",
 	"title": "Customer Payment Methods",
 	"description": "Lets the customer update payment methods.",

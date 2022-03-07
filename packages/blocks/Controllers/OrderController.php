@@ -11,7 +11,7 @@ class OrderController extends BaseController {
 	/**
 	 * Preview.
 	 */
-	public function preview() {
+	public function preview( $attributes = [] ) {
 		if ( ! User::current()->isCustomer() ) {
 			return;
 		}
@@ -21,7 +21,6 @@ class OrderController extends BaseController {
 			->id( 'customer-orders-preview' )
 			->with(
 				[
-					'heading' => __( 'Order History', 'checkout-engine' ),
 					'allLink' => add_query_arg(
 						[
 							'tab'    => $this->getTab(),
@@ -37,7 +36,7 @@ class OrderController extends BaseController {
 						'per_page'     => 5,
 					],
 				]
-			)->render()
+			)->render( $attributes['title'] ? "<span slot='heading'>" . $attributes['title'] . '</span>' : '' )
 		);
 	}
 

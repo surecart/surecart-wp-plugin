@@ -281,6 +281,13 @@
     "class": true,
     "slot": true
   },
+  "ce-empty": {
+    "icon": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "ce-express-payment": {
     "debug": true,
     "divider-text": true,

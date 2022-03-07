@@ -99,30 +99,33 @@ export class CeSubscriptionsList {
   }
 
   renderEmpty() {
-    return <slot name="empty">{__('You have no subscriptions.', 'checkout_engine')}</slot>;
+    return (
+      <div>
+        <ce-divider style={{ '--spacing': '0' }}></ce-divider>
+        <slot name="empty">
+          <ce-empty icon="repeat">{__("You don't have any subscriptions.", 'checkout_engine')}</ce-empty>
+        </slot>
+      </div>
+    );
   }
 
   renderLoading() {
     return (
-      <ce-stacked-list-row style={{ '--columns': '2' }} mobile-size={0}>
-        <div style={{ padding: '0.5em' }}>
-          <ce-skeleton style={{ width: '30%', marginBottom: '0.75em' }}></ce-skeleton>
-          <ce-skeleton style={{ width: '20%', marginBottom: '0.75em' }}></ce-skeleton>
-          <ce-skeleton style={{ width: '40%' }}></ce-skeleton>
-        </div>
-      </ce-stacked-list-row>
+      <ce-card no-padding style={{ '--overflow': 'hidden' }}>
+        <ce-stacked-list>
+          <ce-stacked-list-row style={{ '--columns': '2' }} mobile-size={0}>
+            <div style={{ padding: '0.5em' }}>
+              <ce-skeleton style={{ width: '30%', marginBottom: '0.75em' }}></ce-skeleton>
+              <ce-skeleton style={{ width: '20%', marginBottom: '0.75em' }}></ce-skeleton>
+              <ce-skeleton style={{ width: '40%' }}></ce-skeleton>
+            </div>
+          </ce-stacked-list-row>
+        </ce-stacked-list>
+      </ce-card>
     );
   }
 
-  renderContent() {
-    if (this.loading) {
-      return this.renderLoading();
-    }
-
-    if (this.subscriptions?.length === 0) {
-      return this.renderEmpty();
-    }
-
+  renderList() {
     return this.subscriptions.map(subscription => {
       return (
         <ce-stacked-list-row
@@ -135,6 +138,7 @@ export class CeSubscriptionsList {
                 })
               : null
           }
+          key={subscription.id}
           mobile-size={0}
         >
           <ce-subscription-details subscription={subscription}></ce-subscription-details>
@@ -144,19 +148,37 @@ export class CeSubscriptionsList {
     });
   }
 
+  renderContent() {
+    if (this.loading) {
+      return this.renderLoading();
+    }
+
+    if (this.subscriptions?.length === 0) {
+      return this.renderEmpty();
+    }
+
+    return (
+      <ce-card no-padding style={{ '--overflow': 'hidden' }}>
+        <ce-stacked-list>{this.renderList()}</ce-stacked-list>
+      </ce-card>
+    );
+  }
+
   render() {
     return (
-      <ce-dashboard-module heading={this.heading || __('Subscriptions', 'checkout_engine')} class="subscriptions-list" error={this.error}>
-        {!!this.allLink && (
+      <ce-dashboard-module class="subscriptions-list" error={this.error}>
+        <span slot="heading">
+          <slot name="heading">{this.heading || __('Subscriptions', 'checkout_engine')}</slot>
+        </span>
+
+        {!!this.allLink && !!this.subscriptions?.length && (
           <ce-button type="link" href={this.allLink} slot="end">
             {__('View all', 'checkout_engine')}
             <ce-icon name="chevron-right" slot="suffix"></ce-icon>
           </ce-button>
         )}
 
-        <ce-card no-padding style={{ '--overflow': 'hidden' }}>
-          <ce-stacked-list>{this.renderContent()}</ce-stacked-list>
-        </ce-card>
+        {this.renderContent()}
 
         {!this.allLink && (
           <ce-pagination

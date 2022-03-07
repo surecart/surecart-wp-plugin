@@ -31,6 +31,7 @@ class Block extends BaseBlock {
 	public function render( $attributes, $content ) {
 		// Build the redirect URL.
 		$current_url = ( is_ssl() ? 'https://' : 'http://' ) . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+		$current_url = remove_query_arg( 'tab', $current_url );
 
 		return \CheckoutEngine::blocks()->render(
 			'blocks/logout-button',

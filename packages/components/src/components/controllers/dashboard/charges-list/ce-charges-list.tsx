@@ -156,7 +156,11 @@ export class CeChargesList {
 
   render() {
     return (
-      <ce-dashboard-module heading={this.heading || __('Payment History', 'checkout_engine')} class="charges-list" error={this.error}>
+      <ce-dashboard-module class="charges-list" error={this.error}>
+        <span slot="heading">
+          <slot name="heading">{this.heading || __('Payment History', 'checkout_engine')}</slot>
+        </span>
+
         {!!this.allLink && (
           <ce-button type="link" href={this.allLink} slot="end">
             {__('View all', 'checkout_engine')}

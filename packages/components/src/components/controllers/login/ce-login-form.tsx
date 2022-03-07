@@ -1,4 +1,4 @@
-import { Component, h, State } from '@stencil/core';
+import { Component, h, State, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import apiFetch from '../../../functions/fetch';
 
@@ -9,12 +9,23 @@ import apiFetch from '../../../functions/fetch';
 })
 export class CeLogin {
   private emailInput: HTMLCeInputElement;
+  private passwordInput: HTMLCeInputElement;
 
   @State() step: string = '';
   @State() email: string = '';
   @State() password: string = '';
   @State() loading: boolean;
   @State() error: string;
+
+  /** Focus the password field automatically on password step. */
+  @Watch('step')
+  handleStepChange() {
+    if (this.step === 'password') {
+      setTimeout(() => {
+        this.passwordInput.triggerFocus();
+      }, 50);
+    }
+  }
 
   handleEmailChange() {
     this.email = this.emailInput.value;
@@ -24,7 +35,7 @@ export class CeLogin {
   async submitMagicLink() {
     try {
       this.loading = true;
-      await await apiFetch({
+      await apiFetch({
         method: 'POST',
         path: 'checkout-engine/v1/customer_links',
         data: {
@@ -48,7 +59,7 @@ export class CeLogin {
   async login() {
     try {
       this.loading = true;
-      const { redirect_url } = await await apiFetch({
+      const { redirect_url } = await apiFetch({
         method: 'POST',
         path: 'checkout-engine/v1/login',
         data: {
@@ -63,14 +74,13 @@ export class CeLogin {
         window.location.reload();
       }
     } catch (e) {
+      console.error(this.error);
+      this.loading = false;
       if (e?.message) {
         this.error = e.message;
       } else {
         this.error = __('Something went wrong', 'checkout_engine');
       }
-      console.error(this.error);
-    } finally {
-      this.loading = false;
     }
   }
 
@@ -99,6 +109,7 @@ export class CeLogin {
             <ce-input
               label={__('Enter your password', 'checkout_engine')}
               type="password"
+              ref={el => (this.passwordInput = el as HTMLCeInputElement)}
               autofocus
               required
               onCeChange={e => (this.password = (e.target as HTMLCeInputElement).value)}

@@ -18,20 +18,22 @@
 
 ### Used by
 
- - [ce-charges-list](../../controllers/dashboard/charges-list)
- - [ce-customer-subscription-edit](../../controllers/dashboard/subscription-detail)
+ - [ce-pagination](../ce-pagination)
  - [ce-payment-methods-list](../../controllers/dashboard/payment-methods-list)
  - [ce-subscription](../../controllers/dashboard/subscription)
- - [ce-subscriptions-list](../../controllers/dashboard/subscriptions-list)
+ - [ce-subscription-payment](../../controllers/dashboard/ce-subscription-payment)
+ - [ce-subscription-switch](../../controllers/dashboard/ce-subscription-switch)
+ - [ce-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-charges-list --> ce-flex
-  ce-customer-subscription-edit --> ce-flex
+  ce-pagination --> ce-flex
   ce-payment-methods-list --> ce-flex
   ce-subscription --> ce-flex
-  ce-subscriptions-list --> ce-flex
+  ce-subscription-payment --> ce-flex
+  ce-subscription-switch --> ce-flex
+  ce-upcoming-invoice --> ce-flex
   style ce-flex fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

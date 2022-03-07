@@ -60,7 +60,7 @@ class User implements ArrayAccess, JsonSerializable {
 	/**
 	 * List the users customer ids.
 	 *
-	 * @return void
+	 * @return array
 	 */
 	protected function customerIds() {
 		if ( empty( $this->user->ID ) ) {
@@ -75,7 +75,7 @@ class User implements ArrayAccess, JsonSerializable {
 	 * @return boolean
 	 */
 	protected function isCustomer() {
-		return ! empty( $this->customerIds() );
+		return ! empty( array_filter( $this->customerIds() ) );
 	}
 
 	/**

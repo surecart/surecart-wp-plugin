@@ -5,11 +5,11 @@ import { addQueryArgs } from '@wordpress/url';
 
 const path = 'checkout-engine/v1/products/';
 
-export const getPricesAndProducts = async ({ ids, active = true }: { ids: Array<string>; active: boolean }) => {
+export const getPricesAndProducts = async ({ ids, archived = false }: { ids: Array<string>; archived: boolean }) => {
   const prices = (await apiFetch({
     path: addQueryArgs('checkout-engine/v1/prices/', {
       ids,
-      active,
+      archived,
       expand: ['product'],
     }),
   })) as Array<Price>;

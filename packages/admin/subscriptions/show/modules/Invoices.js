@@ -3,7 +3,7 @@ import { __ } from '@wordpress/i18n';
 import DataTable from '../../../components/DataTable';
 import { store } from '@checkout-engine/data';
 import { addQueryArgs } from '@wordpress/url';
-import { CeInvoiceStatusBadge } from '@checkout-engine/components-react';
+import { CeOrderStatusBadge } from '@checkout-engine/components-react';
 import useEntities from '../../../mixins/useEntities';
 import { Flex } from '@wordpress/components';
 import InfinitePaginationButton from '@admin/ui/InfinitePaginationButton';
@@ -90,9 +90,9 @@ export default ({ subscriptionId }) => {
 								></ce-format-number>
 							),
 							status: (
-								<CeInvoiceStatusBadge
+								<CeOrderStatusBadge
 									invoice={invoice}
-								></CeInvoiceStatusBadge>
+								></CeOrderStatusBadge>
 							),
 							created: (
 								<ce-format-date

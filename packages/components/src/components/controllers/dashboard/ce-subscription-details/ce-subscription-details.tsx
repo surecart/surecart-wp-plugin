@@ -80,7 +80,7 @@ export class CeSubscriptionDetails {
       return (
         <span>
           {tag} {sprintf(__('Your plan begins on', 'checkout_engine'))}{' '}
-          <ce-format-date date={this?.subscription?.trial_end_at * 1000} month="long" day="numeric" year="numeric"></ce-format-date>
+          <ce-format-date date={this?.subscription?.trial_end_at} type="timestamp" month="long" day="numeric" year="numeric"></ce-format-date>
         </span>
       );
     }
@@ -98,16 +98,18 @@ export class CeSubscriptionDetails {
 
   render() {
     return (
-      <div>
+      <div class="subscription-details">
         <ce-text style={{ '--font-weight': 'var(--ce-font-weight-bold)' }}>
           {this.renderName()} {this.hasPendingUpdate && <ce-tag size="small">{__('Update Scheduled', 'checkout_engine')}</ce-tag>}
         </ce-text>
-        <ce-format-number
-          type="currency"
-          currency={(this.subscription?.latest_invoice as Invoice)?.currency}
-          value={(this.subscription?.latest_invoice as Invoice)?.total_amount}
-        ></ce-format-number>
-        {translatedInterval(this.subscription?.price?.recurring_interval_count || 0, this.subscription?.price?.recurring_interval, '/', '')}
+        <div>
+          <ce-format-number
+            type="currency"
+            currency={(this.subscription?.latest_invoice as Invoice)?.currency}
+            value={(this.subscription?.latest_invoice as Invoice)?.total_amount}
+          ></ce-format-number>
+          {translatedInterval(this.subscription?.price?.recurring_interval_count || 0, this.subscription?.price?.recurring_interval, '/', '')}
+        </div>
         {!this.hideRenewalText && <div>{this.renderRenewalText()}</div>}
       </div>
     );

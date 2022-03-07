@@ -1,6 +1,4 @@
-/**
- * WordPress dependencies
- */
+/** @jsx jsx */
 import {
 	InnerBlocks,
 	useBlockProps,
@@ -8,6 +6,7 @@ import {
 	__experimentalUseInnerBlocksProps,
 } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
+import { css, jsx } from '@emotion/core';
 
 /**
  * Allowed blocks constant is passed to InnerBlocks precisely as specified here.
@@ -41,5 +40,14 @@ export default ({}) => {
 		renderAppender: InnerBlocks.ButtonBlockAppender,
 	});
 
-	return <div {...innerBlocksProps} />;
+	return (
+		<div
+			{...innerBlocksProps}
+			css={css`
+				ce-tab {
+					margin-bottom: var(--ce-spacing-xx-small) !important;
+				}
+			`}
+		></div>
+	);
 };
