@@ -1,4 +1,9 @@
 export default ({ attributes, className }) => {
 	const { label } = attributes;
-	return <ce-address className={className} label={label}></ce-address>;
+	return (
+		<ce-order-shipping-address
+			className={className}
+			label={label}
+		></ce-order-shipping-address>
+	);
 };

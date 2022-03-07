@@ -24,7 +24,7 @@ export class CeFormComponentsValidator {
     if (this.disabled) return;
     // address is required, add before the payment field
     if (this?.order?.tax_status === 'address_invalid' && !this.hasAddress) {
-      const address = document.createElement('ce-address');
+      const address = document.createElement('ce-order-shipping-address');
       address.label = __('Address', 'checkout_engine');
       this.paymentField.before(address);
       this.hasAddress = true;

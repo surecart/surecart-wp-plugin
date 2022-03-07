@@ -24,7 +24,14 @@ export class CeOrderShippingAddress {
   @Prop() shippingAddress: Address;
 
   /** Address to pass to the component */
-  @State() address: Address;
+  @State() address: Partial<Address> = {
+    country: '',
+    city: '',
+    line_1: '',
+    line_2: '',
+    postal_code: '',
+    state: '',
+  };
 
   /** When the customer shipping address changes, we want to use that instead of what's entered, if we have empty fields. */
   @Watch('customerShippingAddress')
@@ -56,15 +63,16 @@ export class CeOrderShippingAddress {
     // if we have a shipping address on load, update the passed address.
     if (this.shippingAddress) {
       this.address = {
-        ...(this.shippingAddress.state ? { state: this.shippingAddress.state } : {}),
-        ...(this.shippingAddress.city ? { city: this.shippingAddress.city } : {}),
-        ...(this.shippingAddress.postal_code ? { postal_code: this.shippingAddress.postal_code } : {}),
-        ...(this.shippingAddress.line_1 ? { line_1: this.shippingAddress.line_1 } : {}),
+        ...(this.shippingAddress?.country ? { county: this.shippingAddress?.country } : {}),
+        ...(this.shippingAddress?.state ? { state: this.shippingAddress.state } : {}),
+        ...(this.shippingAddress?.city ? { city: this.shippingAddress.city } : {}),
+        ...(this.shippingAddress?.postal_code ? { postal_code: this.shippingAddress.postal_code } : {}),
+        ...(this.shippingAddress?.line_1 ? { line_1: this.shippingAddress.line_1 } : {}),
       };
     }
 
     /** Set the country by browser language if not set. */
-    if (!this.address.country) {
+    if (!this.address?.country) {
       const country = navigator?.language?.slice(-2);
       if (country) {
         this.address.country = country;
