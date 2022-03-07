@@ -84,7 +84,7 @@ export class CeCustomerEdit {
 
         <ce-card>
           <ce-form onCeFormSubmit={e => this.handleSubmit(e)}>
-            <ce-input label={__('Email', 'checkout_engine')} name="email" value={this.customer?.email} required />
+            <ce-input label={__('Billing Email', 'checkout_engine')} name="email" value={this.customer?.email} required />
             <ce-columns style={{ '--ce-column-spacing': 'var(--ce-spacing-medium)' }}>
               <ce-column>
                 <ce-input label={__('Name', 'checkout_engine')} name="name" value={this.customer?.name} />

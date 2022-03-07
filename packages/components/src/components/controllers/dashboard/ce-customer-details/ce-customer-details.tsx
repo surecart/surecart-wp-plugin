@@ -40,7 +40,7 @@ export class CeCustomerDetails {
         )}
         {!!this?.customer?.email && (
           <ce-stacked-list-row style={{ '--columns': '3' }}>
-            <div>{__('Email', 'checkout_engine')}</div>
+            <div>{__('Billing Email', 'checkout_engine')}</div>
             <div>{this.customer?.email}</div>
             <div></div>
           </ce-stacked-list-row>
