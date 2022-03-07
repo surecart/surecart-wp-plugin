@@ -69,6 +69,8 @@ export class CeLogin {
         this.error = __('Something went wrong', 'checkout_engine');
       }
       console.error(this.error);
+    } finally {
+      this.loading = false;
     }
   }
 
@@ -98,9 +100,10 @@ export class CeLogin {
               label={__('Enter your password', 'checkout_engine')}
               type="password"
               autofocus
+              required
               onCeChange={e => (this.password = (e.target as HTMLCeInputElement).value)}
             ></ce-input>
-            <ce-button type="primary" outline submit full onClick={() => this.submitMagicLink()}>
+            <ce-button type="primary" outline submit full>
               <ce-icon name="lock" slot="prefix" />
               {__('Login', 'checkout_engine')}
             </ce-button>
@@ -113,12 +116,13 @@ export class CeLogin {
       <ce-form onCeFormSubmit={() => (this.step = 'password')}>
         <ce-input
           ref={el => (this.emailInput = el as HTMLCeInputElement)}
-          label="Username or Email Address"
+          label="Email Address"
           onCeChange={() => this.handleEmailChange()}
           required
           autofocus
+          type="email"
         ></ce-input>
-        <ce-button type="primary" submit full onClick={() => (this.step = 'password')}>
+        <ce-button type="primary" submit full>
           <ce-icon name="arrow-right" slot="suffix" />
           {__('Next', 'checkout_engine')}
         </ce-button>
@@ -131,7 +135,7 @@ export class CeLogin {
       return (
         <ce-alert open type="danger">
           <span slot="title">{__('Error', 'checkout_engine')}</span>
-          {this.error}
+          <span innerHTML={this.error}></span>
         </ce-alert>
       );
     }
