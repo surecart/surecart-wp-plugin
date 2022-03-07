@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-03-07T20:29:26",
+  "timestamp": "2022-03-07T21:23:59",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.14.0",
@@ -111,7 +111,6 @@
       ],
       "dependents": [
         "ce-customer-edit",
-        "ce-form-components-validator",
         "ce-order-shipping-address"
       ],
       "dependencies": [
@@ -142,9 +141,6 @@
           "ce-form-control"
         ],
         "ce-customer-edit": [
-          "ce-address"
-        ],
-        "ce-form-components-validator": [
           "ce-address"
         ],
         "ce-order-shipping-address": [
@@ -2040,6 +2036,9 @@
           "ce-spinner"
         ],
         "ce-form-components-validator": [
+          "ce-order-shipping-address"
+        ],
+        "ce-order-shipping-address": [
           "ce-address"
         ],
         "ce-address": [
@@ -4561,10 +4560,13 @@
         "ce-checkout"
       ],
       "dependencies": [
-        "ce-address"
+        "ce-order-shipping-address"
       ],
       "dependencyGraph": {
         "ce-form-components-validator": [
+          "ce-order-shipping-address"
+        ],
+        "ce-order-shipping-address": [
           "ce-address"
         ],
         "ce-address": [
@@ -8143,7 +8145,9 @@
       "styles": [],
       "slots": [],
       "parts": [],
-      "dependents": [],
+      "dependents": [
+        "ce-form-components-validator"
+      ],
       "dependencies": [
         "ce-address"
       ],
@@ -8171,6 +8175,9 @@
         ],
         "ce-input": [
           "ce-form-control"
+        ],
+        "ce-form-components-validator": [
+          "ce-order-shipping-address"
         ]
       }
     },
@@ -12412,6 +12419,15 @@
         {
           "event": "ceSetState",
           "detail": "string",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        },
+        {
+          "event": "ceUpdateOrderState",
+          "detail": "any",
           "bubbles": true,
           "cancelable": true,
           "composed": true,

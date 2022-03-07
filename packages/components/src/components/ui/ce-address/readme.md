@@ -28,7 +28,6 @@
 ### Used by
 
  - [ce-customer-edit](../../controllers/dashboard/ce-customer-edit)
- - [ce-form-components-validator](../../providers/form-components-validator)
  - [ce-order-shipping-address](../../controllers/order-shipping-address)
 
 ### Depends on
@@ -54,7 +53,6 @@ graph TD;
   ce-select --> ce-menu
   ce-input --> ce-form-control
   ce-customer-edit --> ce-address
-  ce-form-components-validator --> ce-address
   ce-order-shipping-address --> ce-address
   style ce-address fill:#f9f,stroke:#333,stroke-width:4px
 ```

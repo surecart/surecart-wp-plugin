@@ -64,6 +64,7 @@ export class CeStripePaymentRequest {
   @Event() cePayError: EventEmitter<any>;
   @Event() ceSetState: EventEmitter<string>;
   @Event() cePaymentRequestLoaded: EventEmitter<boolean>;
+  @Event() ceUpdateOrderState: EventEmitter<any>;
 
   private pendingEvent: any;
 
@@ -87,7 +88,7 @@ export class CeStripePaymentRequest {
           amount: 0,
         },
       ],
-      ...(this.getRequestObject() as PaymentRequestOptions),
+      ...(this.getRequestObject(this.order) as PaymentRequestOptions),
     });
   }
 
@@ -95,7 +96,7 @@ export class CeStripePaymentRequest {
   handleOrderChange() {
     if (!this.paymentRequest) return;
     if (this.pendingEvent) return;
-    this.paymentRequest.update(this.getRequestObject());
+    this.paymentRequest.update(this.getRequestObject(this.order));
   }
 
   @Watch('loaded')
@@ -107,6 +108,30 @@ export class CeStripePaymentRequest {
   handleErrorChange() {
     if (this.pendingEvent) {
       this.pendingEvent.complete('error');
+    }
+  }
+
+  async handleShippingChange(ev: any) {
+    const { shippingAddress, updateWith } = ev;
+    try {
+      const order = await createOrUpdateSession({
+        id: this.order?.id,
+        data: {
+          shipping_address: {
+            ...(shippingAddress?.name ? { name: shippingAddress?.name } : {}),
+            ...(shippingAddress?.addressLine?.[0] ? { line_1: shippingAddress?.addressLine?.[0] } : {}),
+            ...(shippingAddress?.addressLine?.[1] ? { line_2: shippingAddress?.addressLine?.[1] } : {}),
+            ...(shippingAddress?.city ? { city: shippingAddress?.city } : {}),
+            ...(shippingAddress?.country ? { country: shippingAddress?.country } : {}),
+            ...(shippingAddress?.postalCode ? { postal_code: shippingAddress?.postalCode } : {}),
+            ...(shippingAddress?.region ? { region: shippingAddress?.region } : {}),
+          },
+        },
+      });
+      updateWith(this.getRequestObject(this.order));
+      this.ceUpdateOrderState.emit(order);
+    } catch (e) {
+      ev.updateWith({ status: 'invalid_shipping_address' });
     }
   }
 
@@ -127,8 +152,8 @@ export class CeStripePaymentRequest {
     return name;
   }
 
-  getRequestObject() {
-    const displayItems = (this.order?.line_items?.data || []).map(item => {
+  getRequestObject(order: Order) {
+    const displayItems = (order?.line_items?.data || []).map(item => {
       return {
         label: this.getName(item),
         amount: item.ad_hoc_amount !== null ? item.ad_hoc_amount : item.price.amount,
@@ -138,7 +163,7 @@ export class CeStripePaymentRequest {
     return {
       currency: this.currencyCode,
       total: {
-        amount: this.order?.amount_due || 0,
+        amount: order?.amount_due || 0,
         label: __('Total', 'checkout_engine'),
         pending: true,
       },
@@ -162,6 +187,7 @@ export class CeStripePaymentRequest {
 
     // handle payment method.
     this.paymentRequest.on('paymentmethod', e => this.handlePaymentMethod(e));
+    this.paymentRequest.on('shippingaddresschange', async ev => await this.handleShippingChange(ev));
 
     // mount button.
     this.paymentRequest

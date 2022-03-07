@@ -2,28 +2,46 @@
   display: block;
 }
 
+$mobile-size: 750px;
+
 .tab-group {
   display: flex;
+  flex-wrap: wrap;
+  position: relative;
   border: solid 1px transparent;
   border-radius: 0;
   flex-direction: row;
-}
-.tab-group .tab-group__tabs {
-  display: flex;
-  position: relative;
-}
-.tab-group__nav-container {
-  order: 1;
-}
 
-.tab-group__tabs {
-  flex: 0 0 auto;
-  flex-direction: column;
-}
-.tab-group__body {
-  flex: 1 1 auto;
-  order: 2;
-  padding: 0 var(--ce-spacing-xx-large);
+  @media screen and (min-width: $mobile-size) {
+    flex-wrap: nowrap;
+  }
+
+  &__tabs {
+    display: flex;
+    flex-wrap: wrap;
+    flex: 0 0 auto;
+    flex-direction: column;
+    margin-bottom: var(--ce-spacing-xx-large);
+  }
+
+  &__nav-container {
+    order: 1;
+    flex: 1 0 100%;
+
+    @media screen and (min-width: $mobile-size) {
+      flex: 0 1 auto;
+    }
+  }
+
+  &__body {
+    flex: 1 1 auto;
+    order: 2;
+
+    @media screen and (min-width: $mobile-size) {
+      padding: 0 var(--ce-spacing-xx-large);
+    }
+  }
+
 }
 
 ::slotted(ce-tab) {

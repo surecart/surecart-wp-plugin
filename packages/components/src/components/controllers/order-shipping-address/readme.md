@@ -18,6 +18,10 @@
 
 ## Dependencies
 
+### Used by
+
+ - [ce-form-components-validator](../../providers/form-components-validator)
+
 ### Depends on
 
 - [ce-address](../../ui/ce-address)
@@ -39,6 +43,7 @@ graph TD;
   ce-select --> ce-spinner
   ce-select --> ce-menu
   ce-input --> ce-form-control
+  ce-form-components-validator --> ce-order-shipping-address
   style ce-order-shipping-address fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

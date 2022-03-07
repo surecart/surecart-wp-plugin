@@ -40,7 +40,8 @@ graph TD;
   ce-checkout --> ce-session-provider
   ce-alert --> ce-icon
   ce-block-ui --> ce-spinner
-  ce-form-components-validator --> ce-address
+  ce-form-components-validator --> ce-order-shipping-address
+  ce-order-shipping-address --> ce-address
   ce-address --> ce-form-control
   ce-address --> ce-select
   ce-address --> ce-input

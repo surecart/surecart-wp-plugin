@@ -21,12 +21,13 @@
 
 ### Depends on
 
-- [ce-address](../../ui/ce-address)
+- [ce-order-shipping-address](../../controllers/order-shipping-address)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-form-components-validator --> ce-address
+  ce-form-components-validator --> ce-order-shipping-address
+  ce-order-shipping-address --> ce-address
   ce-address --> ce-form-control
   ce-address --> ce-select
   ce-address --> ce-input

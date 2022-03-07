@@ -8,7 +8,7 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  line-height:1;
+  line-height: 1;
   padding: var(--ce-spacing-small) var(--ce-spacing-small);
   font-size: var(--ce-font-size-medium);
   font-weight: var(--ce-font-weight-semibold);
@@ -19,7 +19,8 @@
   user-select: none;
   text-decoration: none;
 
-  &.tab--active, &:hover {
+  &.tab--active,
+  &:hover {
     color: var(--ce-color-gray-900);
     background-color: var(--ce-color-gray-100);
   }
@@ -59,22 +60,22 @@
 }
 
 .tab {
-&.tab--active .tab__counter,
-&:hover .tab__counter {
-  background: var(--ce-color-white);
-}
+  &.tab--active .tab__counter,
+  &:hover .tab__counter {
+    background: var(--ce-color-white);
+  }
 }
 
 .tab--has-prefix {
+  padding-left: var(--ce-spacing-small);
+  .tab__content {
     padding-left: var(--ce-spacing-small);
-    .tab__content {
-      padding-left: var(--ce-spacing-small);
-    }
+  }
 }
 
 .tab--has-suffix {
+  padding-right: var(--ce-spacing-small);
+  .tab__label {
     padding-right: var(--ce-spacing-small);
-    .tab__label {
-      padding-right: var(--ce-spacing-small);
-    }
+  }
 }

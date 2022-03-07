@@ -4289,6 +4289,7 @@ declare namespace LocalJSX {
         "onCePayError"?: (event: CustomEvent<any>) => void;
         "onCePaymentRequestLoaded"?: (event: CustomEvent<boolean>) => void;
         "onCeSetState"?: (event: CustomEvent<string>) => void;
+        "onCeUpdateOrderState"?: (event: CustomEvent<any>) => void;
         /**
           * Checkout Session
          */

@@ -33,6 +33,7 @@
 | `cePayError`             |             | `CustomEvent<any>`     |
 | `cePaymentRequestLoaded` |             | `CustomEvent<boolean>` |
 | `ceSetState`             |             | `CustomEvent<string>`  |
+| `ceUpdateOrderState`     |             | `CustomEvent<any>`     |
 
 
 ## Shadow Parts
