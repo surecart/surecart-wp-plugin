@@ -99,10 +99,11 @@ class AbandonedOrderListTable extends ListTable {
 	 */
 	public function get_columns() {
 		return [
-			'email'  => __( 'Email', 'checkout_engine' ),
-			'date'   => __( 'Date', 'checkout_engine' ),
-			'status' => __( 'Status', 'checkout_engine' ),
-			'total'  => __( 'Total', 'checkout_engine' ),
+			'order'    => __( 'Order', 'checkout_engine' ),
+			'date'     => __( 'Date', 'checkout_engine' ),
+			'delivery' => __( 'Delivery', 'checkout_engine' ),
+			'status'   => __( 'Status', 'checkout_engine' ),
+			'total'    => __( 'Total', 'checkout_engine' ),
 		];
 	}
 
@@ -158,12 +159,7 @@ class AbandonedOrderListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_date( $abandoned ) {
-		return sprintf(
-			'<time datetime="%1$s" title="%2$s">%3$s</time>',
-			esc_attr( $abandoned->latest_order->updated_at ),
-			esc_html( TimeDate::formatDateAndTime( $abandoned->latest_order->updated_at ) ),
-			esc_html( TimeDate::humanTimeDiff( $abandoned->latest_order->updated_at ) )
-		);
+		return '<ce-format-date date="' . (int) $abandoned->latest_order->updated_at . '" type="timestamp" month="short" day="numeric" year="numeric" hour="numeric" minute="numeric"></ce-format-date>';
 	}
 
 	/**
@@ -173,16 +169,20 @@ class AbandonedOrderListTable extends ListTable {
 	 *
 	 * @return string
 	 */
+	public function column_delivery( $abandoned ) {
+		return 'notified' === $abandoned->status ? '<ce-tag type="success">' . __( 'Sent', 'checkout_engine' ) . '</ce-tag>' : '<ce-tag>' . __( 'Not Sent', 'checkout_engine' ) . '</ce-tag>';
+	}
+
+
+	/**
+	 * Handle the status
+	 *
+	 * @param \CheckoutEngine\Models\AbandonedOrder $abandoned Abandoned checkout session.
+	 *
+	 * @return string
+	 */
 	public function column_status( $abandoned ) {
-		switch ( $abandoned->status ) {
-			case 'not_notified':
-				return '<ce-tag type="danger">' . __( 'Not Notified', 'checkout_engine' ) . '</ce-tag>';
-			case 'notified':
-				return '<ce-tag type="warning">' . __( 'Notified', 'checkout_engine' ) . '</ce-tag>';
-			case 'recovered':
-				return '<ce-tag type="success">' . __( 'Recovered', 'checkout_engine' ) . '</ce-tag>';
-		}
-		return '<ce-tag>' . $abandoned->status . '</ce-tag>';
+		return 'recovered' === $abandoned->status ? '<ce-tag type="success">' . __( 'Recovered', 'checkout_engine' ) . '</ce-tag>' : '<ce-tag>' . __( 'Not Recovered', 'checkout_engine' ) . '</ce-tag>';
 	}
 
 	/**
@@ -192,7 +192,7 @@ class AbandonedOrderListTable extends ListTable {
 	 *
 	 * @return string
 	 */
-	public function column_email( $abandoned ) {
-		return $abandoned->customer->email ?? __( 'None', 'checkout_engine' );
+	public function column_order( $abandoned ) {
+		return "#{$abandoned->latest_order->number}";
 	}
 }
