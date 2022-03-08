@@ -124,4 +124,4 @@ export class CeCustomerEmail {
   }
 }
 
-openWormhole(CeEmail, ['order', 'customer'], false);
+openWormhole(CeCustomerEmail, ['order', 'customer'], false);
