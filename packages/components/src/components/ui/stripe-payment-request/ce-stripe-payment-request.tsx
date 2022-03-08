@@ -4,7 +4,7 @@ import { loadStripe } from '@stripe/stripe-js/pure';
 import { __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
 
-import { createOrUpdateSession, finalizeSession } from '../../../services/session';
+import { createOrUpdateOrder, finalizeSession } from '../../../services/session';
 import { LineItem, Order, Prices, Product, ResponseError } from '../../../types';
 
 @Component({
@@ -114,7 +114,7 @@ export class CeStripePaymentRequest {
   async handleShippingChange(ev: any) {
     const { shippingAddress, updateWith } = ev;
     try {
-      const order = await createOrUpdateSession({
+      const order = await createOrUpdateOrder({
         id: this.order?.id,
         data: {
           shipping_address: {
@@ -223,7 +223,7 @@ export class CeStripePaymentRequest {
 
     try {
       // update session with shipping/billing
-      (await createOrUpdateSession({
+      (await createOrUpdateOrder({
         id: this.order?.id,
         data: {
           email: billing_details?.email,

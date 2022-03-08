@@ -1,12 +1,11 @@
 import { Component, Prop, Event, EventEmitter, State, Element, Fragment, h } from '@stencil/core';
-import { openWormhole } from 'stencil-wormhole';
 
 @Component({
   tag: 'ce-button',
   styleUrl: 'ce-button.scss',
   shadow: true,
 })
-export class CEButton {
+export class CeButton {
   @Element() button: HTMLElement | HTMLAnchorElement;
 
   @State() private hasFocus = false;
@@ -201,5 +200,3 @@ export class CEButton {
     );
   }
 }
-
-openWormhole(CEButton, ['loading', 'busy'], false);

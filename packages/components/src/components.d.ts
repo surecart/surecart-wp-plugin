@@ -416,6 +416,68 @@ export namespace Components {
         "heading": string;
         "successUrl": string;
     }
+    interface CeCustomerEmail {
+        /**
+          * The input's autofocus attribute.
+         */
+        "autofocus": boolean;
+        /**
+          * Force a customer.
+         */
+        "customer": Customer;
+        /**
+          * Disables the input.
+         */
+        "disabled": boolean;
+        /**
+          * Inputs focus
+         */
+        "hasFocus": boolean;
+        /**
+          * The input's help text.
+         */
+        "help": string;
+        /**
+          * This will be true when the control is in an invalid state. Validity is determined by props such as `type`, `required`, `minlength`, `maxlength`, and `pattern` using the browser's constraint validation API.
+         */
+        "invalid": boolean;
+        /**
+          * The input's label.
+         */
+        "label": string;
+        /**
+          * (passed from the ce-checkout component automatically)
+         */
+        "order": Order;
+        /**
+          * Draws a pill-style input with rounded edges.
+         */
+        "pill": boolean;
+        /**
+          * The input's placeholder text.
+         */
+        "placeholder": string;
+        /**
+          * Makes the input readonly.
+         */
+        "readonly": boolean;
+        /**
+          * Makes the input a required field.
+         */
+        "required": boolean;
+        /**
+          * Should we show the label
+         */
+        "showLabel": boolean;
+        /**
+          * The input's size.
+         */
+        "size": 'small' | 'medium' | 'large';
+        /**
+          * The input's value attribute.
+         */
+        "value": string;
+    }
     interface CeCustomerName {
         /**
           * The input's autofocus attribute.
@@ -498,68 +560,6 @@ export namespace Components {
           * The placement of the dropdown panel
          */
         "position": 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
-    }
-    interface CeEmail {
-        /**
-          * The input's autofocus attribute.
-         */
-        "autofocus": boolean;
-        /**
-          * Force a customer.
-         */
-        "customer": Customer;
-        /**
-          * Disables the input.
-         */
-        "disabled": boolean;
-        /**
-          * Inputs focus
-         */
-        "hasFocus": boolean;
-        /**
-          * The input's help text.
-         */
-        "help": string;
-        /**
-          * This will be true when the control is in an invalid state. Validity is determined by props such as `type`, `required`, `minlength`, `maxlength`, and `pattern` using the browser's constraint validation API.
-         */
-        "invalid": boolean;
-        /**
-          * The input's label.
-         */
-        "label": string;
-        /**
-          * (passed from the ce-checkout component automatically)
-         */
-        "order": Order;
-        /**
-          * Draws a pill-style input with rounded edges.
-         */
-        "pill": boolean;
-        /**
-          * The input's placeholder text.
-         */
-        "placeholder": string;
-        /**
-          * Makes the input readonly.
-         */
-        "readonly": boolean;
-        /**
-          * Makes the input a required field.
-         */
-        "required": boolean;
-        /**
-          * Should we show the label
-         */
-        "showLabel": boolean;
-        /**
-          * The input's size.
-         */
-        "size": 'small' | 'medium' | 'large';
-        /**
-          * The input's value attribute.
-         */
-        "value": string;
     }
     interface CeEmpty {
         "icon": string;
@@ -1947,6 +1947,12 @@ declare global {
         prototype: HTMLCeCustomerEditElement;
         new (): HTMLCeCustomerEditElement;
     };
+    interface HTMLCeCustomerEmailElement extends Components.CeCustomerEmail, HTMLStencilElement {
+    }
+    var HTMLCeCustomerEmailElement: {
+        prototype: HTMLCeCustomerEmailElement;
+        new (): HTMLCeCustomerEmailElement;
+    };
     interface HTMLCeCustomerNameElement extends Components.CeCustomerName, HTMLStencilElement {
     }
     var HTMLCeCustomerNameElement: {
@@ -1970,12 +1976,6 @@ declare global {
     var HTMLCeDropdownElement: {
         prototype: HTMLCeDropdownElement;
         new (): HTMLCeDropdownElement;
-    };
-    interface HTMLCeEmailElement extends Components.CeEmail, HTMLStencilElement {
-    }
-    var HTMLCeEmailElement: {
-        prototype: HTMLCeEmailElement;
-        new (): HTMLCeEmailElement;
     };
     interface HTMLCeEmptyElement extends Components.CeEmpty, HTMLStencilElement {
     }
@@ -2478,11 +2478,11 @@ declare global {
         "ce-coupon-form": HTMLCeCouponFormElement;
         "ce-customer-details": HTMLCeCustomerDetailsElement;
         "ce-customer-edit": HTMLCeCustomerEditElement;
+        "ce-customer-email": HTMLCeCustomerEmailElement;
         "ce-customer-name": HTMLCeCustomerNameElement;
         "ce-dashboard-module": HTMLCeDashboardModuleElement;
         "ce-divider": HTMLCeDividerElement;
         "ce-dropdown": HTMLCeDropdownElement;
-        "ce-email": HTMLCeEmailElement;
         "ce-empty": HTMLCeEmptyElement;
         "ce-express-payment": HTMLCeExpressPaymentElement;
         "ce-flex": HTMLCeFlexElement;
@@ -2987,6 +2987,89 @@ declare namespace LocalJSX {
         "heading"?: string;
         "successUrl"?: string;
     }
+    interface CeCustomerEmail {
+        /**
+          * The input's autofocus attribute.
+         */
+        "autofocus"?: boolean;
+        /**
+          * Force a customer.
+         */
+        "customer"?: Customer;
+        /**
+          * Disables the input.
+         */
+        "disabled"?: boolean;
+        /**
+          * Inputs focus
+         */
+        "hasFocus"?: boolean;
+        /**
+          * The input's help text.
+         */
+        "help"?: string;
+        /**
+          * This will be true when the control is in an invalid state. Validity is determined by props such as `type`, `required`, `minlength`, `maxlength`, and `pattern` using the browser's constraint validation API.
+         */
+        "invalid"?: boolean;
+        /**
+          * The input's label.
+         */
+        "label"?: string;
+        /**
+          * Emitted when the control loses focus.
+         */
+        "onCeBlur"?: (event: CustomEvent<void>) => void;
+        /**
+          * Emitted when the control's value changes.
+         */
+        "onCeChange"?: (event: CustomEvent<void>) => void;
+        /**
+          * Emitted when the clear button is activated.
+         */
+        "onCeClear"?: (event: CustomEvent<void>) => void;
+        /**
+          * Emitted when the control gains focus.
+         */
+        "onCeFocus"?: (event: CustomEvent<void>) => void;
+        /**
+          * Emitted when the control receives input.
+         */
+        "onCeInput"?: (event: CustomEvent<void>) => void;
+        "onCeUpdateOrderState"?: (event: CustomEvent<{ email: string }>) => void;
+        /**
+          * (passed from the ce-checkout component automatically)
+         */
+        "order"?: Order;
+        /**
+          * Draws a pill-style input with rounded edges.
+         */
+        "pill"?: boolean;
+        /**
+          * The input's placeholder text.
+         */
+        "placeholder"?: string;
+        /**
+          * Makes the input readonly.
+         */
+        "readonly"?: boolean;
+        /**
+          * Makes the input a required field.
+         */
+        "required"?: boolean;
+        /**
+          * Should we show the label
+         */
+        "showLabel"?: boolean;
+        /**
+          * The input's size.
+         */
+        "size"?: 'small' | 'medium' | 'large';
+        /**
+          * The input's value attribute.
+         */
+        "value"?: string;
+    }
     interface CeCustomerName {
         /**
           * The input's autofocus attribute.
@@ -3037,6 +3120,7 @@ declare namespace LocalJSX {
          */
         "onCeInput"?: (event: CustomEvent<void>) => void;
         "onCeUpdateCustomer"?: (event: CustomEvent<{ email: string }>) => void;
+        "onCeUpdateOrderState"?: (event: CustomEvent<Partial<Order>>) => void;
         /**
           * (passed from the ce-checkout component automatically)
          */
@@ -3098,89 +3182,6 @@ declare namespace LocalJSX {
           * The placement of the dropdown panel
          */
         "position"?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
-    }
-    interface CeEmail {
-        /**
-          * The input's autofocus attribute.
-         */
-        "autofocus"?: boolean;
-        /**
-          * Force a customer.
-         */
-        "customer"?: Customer;
-        /**
-          * Disables the input.
-         */
-        "disabled"?: boolean;
-        /**
-          * Inputs focus
-         */
-        "hasFocus"?: boolean;
-        /**
-          * The input's help text.
-         */
-        "help"?: string;
-        /**
-          * This will be true when the control is in an invalid state. Validity is determined by props such as `type`, `required`, `minlength`, `maxlength`, and `pattern` using the browser's constraint validation API.
-         */
-        "invalid"?: boolean;
-        /**
-          * The input's label.
-         */
-        "label"?: string;
-        /**
-          * Emitted when the control loses focus.
-         */
-        "onCeBlur"?: (event: CustomEvent<void>) => void;
-        /**
-          * Emitted when the control's value changes.
-         */
-        "onCeChange"?: (event: CustomEvent<void>) => void;
-        /**
-          * Emitted when the clear button is activated.
-         */
-        "onCeClear"?: (event: CustomEvent<void>) => void;
-        /**
-          * Emitted when the control gains focus.
-         */
-        "onCeFocus"?: (event: CustomEvent<void>) => void;
-        /**
-          * Emitted when the control receives input.
-         */
-        "onCeInput"?: (event: CustomEvent<void>) => void;
-        "onCeUpdateCustomer"?: (event: CustomEvent<{ email: string }>) => void;
-        /**
-          * (passed from the ce-checkout component automatically)
-         */
-        "order"?: Order;
-        /**
-          * Draws a pill-style input with rounded edges.
-         */
-        "pill"?: boolean;
-        /**
-          * The input's placeholder text.
-         */
-        "placeholder"?: string;
-        /**
-          * Makes the input readonly.
-         */
-        "readonly"?: boolean;
-        /**
-          * Makes the input a required field.
-         */
-        "required"?: boolean;
-        /**
-          * Should we show the label
-         */
-        "showLabel"?: boolean;
-        /**
-          * The input's size.
-         */
-        "size"?: 'small' | 'medium' | 'large';
-        /**
-          * The input's value attribute.
-         */
-        "value"?: string;
     }
     interface CeEmpty {
         "icon"?: string;
@@ -4564,11 +4565,11 @@ declare namespace LocalJSX {
         "ce-coupon-form": CeCouponForm;
         "ce-customer-details": CeCustomerDetails;
         "ce-customer-edit": CeCustomerEdit;
+        "ce-customer-email": CeCustomerEmail;
         "ce-customer-name": CeCustomerName;
         "ce-dashboard-module": CeDashboardModule;
         "ce-divider": CeDivider;
         "ce-dropdown": CeDropdown;
-        "ce-email": CeEmail;
         "ce-empty": CeEmpty;
         "ce-express-payment": CeExpressPayment;
         "ce-flex": CeFlex;
@@ -4675,11 +4676,11 @@ declare module "@stencil/core" {
             "ce-coupon-form": LocalJSX.CeCouponForm & JSXBase.HTMLAttributes<HTMLCeCouponFormElement>;
             "ce-customer-details": LocalJSX.CeCustomerDetails & JSXBase.HTMLAttributes<HTMLCeCustomerDetailsElement>;
             "ce-customer-edit": LocalJSX.CeCustomerEdit & JSXBase.HTMLAttributes<HTMLCeCustomerEditElement>;
+            "ce-customer-email": LocalJSX.CeCustomerEmail & JSXBase.HTMLAttributes<HTMLCeCustomerEmailElement>;
             "ce-customer-name": LocalJSX.CeCustomerName & JSXBase.HTMLAttributes<HTMLCeCustomerNameElement>;
             "ce-dashboard-module": LocalJSX.CeDashboardModule & JSXBase.HTMLAttributes<HTMLCeDashboardModuleElement>;
             "ce-divider": LocalJSX.CeDivider & JSXBase.HTMLAttributes<HTMLCeDividerElement>;
             "ce-dropdown": LocalJSX.CeDropdown & JSXBase.HTMLAttributes<HTMLCeDropdownElement>;
-            "ce-email": LocalJSX.CeEmail & JSXBase.HTMLAttributes<HTMLCeEmailElement>;
             "ce-empty": LocalJSX.CeEmpty & JSXBase.HTMLAttributes<HTMLCeEmptyElement>;
             "ce-express-payment": LocalJSX.CeExpressPayment & JSXBase.HTMLAttributes<HTMLCeExpressPaymentElement>;
             "ce-flex": LocalJSX.CeFlex & JSXBase.HTMLAttributes<HTMLCeFlexElement>;

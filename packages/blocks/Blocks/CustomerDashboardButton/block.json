@@ -3,7 +3,7 @@
 	"title": "Customer Dashboard Button",
 	"description": "Display a button to link the user to their customer dashboard.",
 	"category": "layout",
-	"keywords": [ "name", "customer", "dashboard" ],
+	"keywords": ["name", "customer", "dashboard"],
 	"parent": null,
 	"supports": {
 		"reusable": false,
@@ -12,7 +12,7 @@
 	"attributes": {
 		"label": {
 			"type": "string",
-			"default": "Logout"
+			"default": "Manage Your Orders"
 		},
 		"type": {
 			"type": "string",

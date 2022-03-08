@@ -113,9 +113,7 @@ export default ({ clientId }) => {
 					name,
 					title,
 				},
-				createBlocksFromInnerBlocksTemplate([
-					['checkout-engine/heading', { title }],
-				])
+				[]
 			);
 
 			insertBlocks(panel, 0, panelsWrapper.clientId);

@@ -21,7 +21,10 @@ import feather from 'feather-icons';
 export default ({ attributes, setAttributes }) => {
 	const { panel, title, active, icon } = attributes;
 	const tab = useRef();
-	const blockProps = useBlockProps();
+	const blockProps = useBlockProps({
+		panel,
+		tab,
+	});
 
 	useEffect(() => {
 		setAttributes({
@@ -107,7 +110,7 @@ export default ({ attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<CeTab {...blockProps} panel={panel} ref={tab}>
+			<CeTab {...blockProps}>
 				<ce-icon
 					style={{ fontSize: '18px' }}
 					slot="prefix"

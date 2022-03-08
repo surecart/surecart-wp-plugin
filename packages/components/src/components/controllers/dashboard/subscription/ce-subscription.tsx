@@ -22,24 +22,40 @@ export class CeSubscription {
   /** Loading state */
   @State() loading: boolean;
 
-  /**  */
-  @State() renewing: boolean;
+  /**  Busy state */
+  @State() busy: boolean;
 
   /** Error message */
   @State() error: string;
-
-  /** Does this have a title slot */
-  @State() hasTitleSlot: boolean;
 
   componentWillLoad() {
     onFirstVisible(this.el, () => {
       this.getSubscription();
     });
-    this.handleSlotChange();
   }
 
-  handleSlotChange() {
-    this.hasTitleSlot = !!this.el.querySelector('[slot="title"]');
+  async cancelPendingUpdate() {
+    const r = confirm(__('Are you sure you want to cancel the pending update to your plan?', 'checkout_engine'));
+    if (!r) return;
+    try {
+      this.busy = true;
+      this.subscription = (await apiFetch({
+        path: addQueryArgs(`checkout-engine/v1/subscriptions/${this.subscription?.id}/`, { expand: ['price', 'price.product', 'latest_invoice', 'product'] }),
+        method: 'PATCH',
+        data: {
+          purge_pending_update: true,
+        },
+      })) as Subscription;
+    } catch (e) {
+      if (e?.message) {
+        this.error = e.message;
+      } else {
+        this.error = __('Something went wrong', 'checkout_engine');
+      }
+      console.error(this.error);
+    } finally {
+      this.busy = false;
+    }
   }
 
   /** Get all subscriptions */
@@ -140,6 +156,12 @@ export class CeSubscription {
       <ce-dashboard-module heading={this.heading || __('Current Plan', 'checkout_engine')} class="subscription" error={this.error}>
         {!!this.subscription && (
           <ce-flex slot="end">
+            {!!Object.keys(this.subscription?.pending_update).length && (
+              <ce-button type="link" onClick={() => this.cancelPendingUpdate()}>
+                <ce-icon name="x-octagon" slot="prefix"></ce-icon>
+                {__('Cancel Scheduled Update', 'checkout_engine')}
+              </ce-button>
+            )}
             {this?.subscription?.cancel_at_period_end ? (
               <ce-button
                 type="link"
@@ -160,7 +182,7 @@ export class CeSubscription {
                   })}
                 >
                   <ce-icon name="x" slot="prefix"></ce-icon>
-                  {__('Cancel', 'checkout_engine')}
+                  {__('Cancel Plan', 'checkout_engine')}
                 </ce-button>
               )
             )}
@@ -170,6 +192,8 @@ export class CeSubscription {
         <ce-card no-padding style={{ '--overflow': 'hidden' }}>
           <ce-stacked-list>{this.renderContent()}</ce-stacked-list>
         </ce-card>
+
+        {this.busy && <ce-block-ui spinner></ce-block-ui>}
       </ce-dashboard-module>
     );
   }

@@ -98,7 +98,6 @@ export class CeTaxIdInput {
   }
 
   render() {
-    console.log(this.type);
     if (this.type === null) {
       return null;
     }

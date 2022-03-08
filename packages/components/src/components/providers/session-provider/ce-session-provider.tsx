@@ -1,4 +1,4 @@
-import { createOrUpdateSession, finalizeSession } from '../../../services/session';
+import { createOrUpdateOrder, finalizeSession } from '../../../services/session';
 import { Order, LineItemData, PriceChoice } from '../../../types';
 import { getSessionId, getURLLineItems, populateInputs, removeSessionIdFromStorage } from './helpers/session';
 import { Component, h, Prop, Event, EventEmitter, Element, State, Watch, Listen } from '@stencil/core';
@@ -73,14 +73,14 @@ export class CeSessionProvider {
   }
 
   /** Update form state when form data changes */
-  @Listen('ceFormChange')
-  handleFormChange(e) {
-    const data = e.detail;
-    this.ceUpdateDraftState.emit(data);
-    if (Object.values(data || {}).every(item => !item)) return;
-    // we update silently here since we parse form data on submit.
-    this.update(this.parseFormData(data));
-  }
+  // @Listen('ceFormChange')
+  // handleFormChange(e) {
+  //   const data = e.detail;
+  //   this.ceUpdateDraftState.emit(data);
+  //   if (Object.values(data || {}).every(item => !item)) return;
+  //   // we update silently here since we parse form data on submit.
+  //   this.update(this.parseFormData(data));
+  // }
 
   @Listen('ceUpdateSession')
   handleUpdateSession(e) {
@@ -357,7 +357,7 @@ export class CeSessionProvider {
   /** Update a session */
   async update(data = {}) {
     try {
-      this.session = (await createOrUpdateSession({
+      this.session = (await createOrUpdateOrder({
         id: this.getSessionId(),
         data: {
           ...this.defaultFormData(),

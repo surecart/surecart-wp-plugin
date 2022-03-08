@@ -32,15 +32,19 @@ export class CeCustomerDetails {
     return (
       <Fragment>
         {!!this?.customer?.name && (
-          <ce-stacked-list-row style={{ '--columns': '3' }}>
-            <div>{__('Name', 'checkout_engine')}</div>
+          <ce-stacked-list-row style={{ '--columns': '3' }} mobileSize={480}>
+            <div>
+              <strong>{__('Name', 'checkout_engine')}</strong>
+            </div>
             <div>{this.customer?.name}</div>
             <div></div>
           </ce-stacked-list-row>
         )}
         {!!this?.customer?.email && (
-          <ce-stacked-list-row style={{ '--columns': '3' }}>
-            <div>{__('Billing Email', 'checkout_engine')}</div>
+          <ce-stacked-list-row style={{ '--columns': '3' }} mobileSize={480}>
+            <div>
+              <strong>{__('Billing Email', 'checkout_engine')}</strong>
+            </div>
             <div>{this.customer?.email}</div>
             <div></div>
           </ce-stacked-list-row>
@@ -48,8 +52,10 @@ export class CeCustomerDetails {
         {!!Object.keys(this?.customer?.shipping_address || {}).length && this.renderAddress(__('Shipping Address', 'checkout_engine'), this.customer.shipping_address)}
         {!!Object.keys(this?.customer?.billing_address || {}).length && this.renderAddress(__('Billing Address', 'checkout_engine'), this.customer.billing_address)}
         {!!this?.customer?.phone && (
-          <ce-stacked-list-row style={{ '--columns': '3' }}>
-            <div>{__('Phone', 'checkout_engine')}</div>
+          <ce-stacked-list-row style={{ '--columns': '3' }} mobileSize={480}>
+            <div>
+              <strong>{__('Phone', 'checkout_engine')}</strong>
+            </div>
             <div>{this.customer?.phone}</div>
             <div></div>
           </ce-stacked-list-row>
@@ -62,8 +68,10 @@ export class CeCustomerDetails {
     const { line_1, line_2, city, state, postal_code, country } = address;
     const countryName = countryChoices.find(({ value }) => value === country)?.label;
     return (
-      <ce-stacked-list-row style={{ '--columns': '3' }}>
-        <div>{label}</div>
+      <ce-stacked-list-row style={{ '--columns': '3' }} mobileSize={480}>
+        <div>
+          <strong>{label}</strong>
+        </div>
         <div>
           {formatAddress({
             postalCountry: country,

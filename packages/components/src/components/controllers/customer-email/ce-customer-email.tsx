@@ -1,12 +1,13 @@
 import { Customer, Order } from '../../../types';
 import { Component, Prop, h, Event, EventEmitter, Watch } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
+import { createOrUpdateOrder } from '../../../services/session';
 
 @Component({
-  tag: 'ce-email',
+  tag: 'ce-customer-email',
   shadow: false,
 })
-export class CeEmail {
+export class CeCustomerEmail {
   private input: HTMLCeInputElement;
 
   /** (passed from the ce-checkout component automatically) */
@@ -72,12 +73,19 @@ export class CeEmail {
   /** Emitted when the control loses focus. */
   @Event() ceBlur: EventEmitter<void>;
 
-  @Event() ceUpdateCustomer: EventEmitter<{ email: string }>;
+  @Event() ceUpdateOrderState: EventEmitter<{ email: string }>;
 
-  handleChange() {
+  async handleChange() {
     this.value = this.input.value;
     this.ceChange.emit();
-    this.ceUpdateCustomer.emit({ email: this.value });
+
+    // update order state.
+    try {
+      const order = await createOrUpdateOrder({ id: this.order?.id, data: { email: this.input.value } });
+      this.ceUpdateOrderState.emit(order);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   /** Sync customer email with session if it's updated by other means */

@@ -1,10 +1,10 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { CEButton } from '../ce-button';
+import { CeButton } from '../ce-button';
 
 describe('ce-button', () => {
   it('renders', async () => {
     const page = await newSpecPage({
-      components: [CEButton],
+      components: [CeButton],
       html: '<ce-button></ce-button>',
     });
     expect(page.root).toMatchSnapshot();
@@ -12,7 +12,7 @@ describe('ce-button', () => {
 
   it('renders slots', async () => {
     const page = await newSpecPage({
-      components: [CEButton],
+      components: [CeButton],
       html: `<ce-button>
         <span slot="prefix">Prefix</span>
         Text

@@ -1,4 +1,5 @@
 import { Customer, Order } from '../../../types';
+import { createOrUpdateOrder } from '../../../services/session';
 import { Component, Prop, h, Event, EventEmitter, Watch } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
 
@@ -60,6 +61,8 @@ export class CeCustomerName {
   /** Emitted when the control's value changes. */
   @Event({ composed: true }) ceChange: EventEmitter<void>;
 
+  @Event() ceUpdateOrderState: EventEmitter<Partial<Order>>;
+
   /** Emitted when the clear button is activated. */
   @Event() ceClear: EventEmitter<void>;
 
@@ -74,10 +77,16 @@ export class CeCustomerName {
 
   @Event() ceUpdateCustomer: EventEmitter<{ email: string }>;
 
-  handleChange() {
+  async handleChange() {
     this.value = this.input.value;
-    this.ceChange.emit();
-    this.ceUpdateCustomer.emit({ email: this.value });
+
+    // update order.
+    try {
+      const order = await createOrUpdateOrder({ id: this.order?.id, data: { name: this.input.value } });
+      this.ceUpdateOrderState.emit(order);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   /** Sync customer email with session if it's updated by other means */

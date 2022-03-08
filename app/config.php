@@ -62,6 +62,7 @@ return [
 	*/
 	'blocks'              => [
 		\CheckoutEngineBlocks\Blocks\BuyButton\Block::class,
+		\CheckoutEngineBlocks\Blocks\CustomerDashboardButton\Block::class,
 		\CheckoutEngineBlocks\Blocks\CheckoutForm\Block::class,
 		\CheckoutEngineBlocks\Blocks\Form\Block::class,
 		\CheckoutEngineBlocks\Blocks\LogoutButton\Block::class,
