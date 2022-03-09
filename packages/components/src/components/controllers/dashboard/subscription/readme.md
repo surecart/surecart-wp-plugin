@@ -21,15 +21,16 @@
 
 - [ce-subscription-status-badge](../../../ui/subscription-status-badge)
 - [ce-format-date](../../../util/format-date)
-- [ce-stacked-list-row](../../../ui/ce-stacked-list-row)
+- [ce-stacked-list-row](../../../ui/stacked-list-row)
 - [ce-skeleton](../../../ui/skeleton)
-- [ce-subscription-details](../ce-subscription-details)
-- [ce-dashboard-module](../../../ui/ce-dashboard-module)
+- [ce-subscription-details](../subscription-details)
+- [ce-dashboard-module](../../../ui/dashboard-module)
 - [ce-flex](../../../ui/flex)
 - [ce-button](../../../ui/button)
 - [ce-icon](../../../ui/icon)
 - [ce-card](../../../ui/card)
-- [ce-stacked-list](../../../ui/ce-stacked-list)
+- [ce-stacked-list](../../../ui/stacked-list)
+- [ce-block-ui](../../../ui/block-ui)
 
 ### Graph
 ```mermaid
@@ -45,6 +46,7 @@ graph TD;
   ce-subscription --> ce-icon
   ce-subscription --> ce-card
   ce-subscription --> ce-stacked-list
+  ce-subscription --> ce-block-ui
   ce-subscription-status-badge --> ce-format-date
   ce-subscription-status-badge --> ce-tag
   ce-subscription-details --> ce-subscription-status-badge
@@ -56,6 +58,7 @@ graph TD;
   ce-dashboard-module --> ce-alert
   ce-alert --> ce-icon
   ce-button --> ce-spinner
+  ce-block-ui --> ce-spinner
   style ce-subscription fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

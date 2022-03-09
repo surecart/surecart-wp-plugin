@@ -82,6 +82,7 @@ export class CeSessionProvider {
   //   this.update(this.parseFormData(data));
   // }
 
+  @Listen('ceUpdateOrder')
   @Listen('ceUpdateSession')
   handleUpdateSession(e) {
     const data = e.detail;

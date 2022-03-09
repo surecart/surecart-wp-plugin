@@ -1,4 +1,5 @@
 import { __ } from '@wordpress/i18n';
+import { Address } from '../types';
 
 export const STATE_INCLUDED_COUNTRIES = ['AU', 'BR', 'CA', 'CH', 'ES', 'HK', 'IE', 'IN', 'IT', 'JP', 'MY', 'MX', 'US'];
 export const POSTAL_CODE_EXCLUDED_COUNTRIES = ['HK'];
@@ -87,3 +88,22 @@ export const countryChoices: Array<{ value: string; label: string }> = [
   { value: 'GB', label: __('United Kingdom', 'checkout_engine') },
   { value: 'US', label: __('United States', 'checkout_engine') },
 ];
+
+export const isAddressComplete = (address: Partial<Address>) => {
+  return (
+    address?.country && // must have country
+    address?.line_1 && // must have line 1
+    (hasPostal(address.country) ? address?.postal_code : true) && // should have postal code if applicable
+    (hasCity(address.country) ? address?.city : true) && // should have city if applicable
+    (hasState(address.country) ? address?.state : true) // should have state if applicable
+  );
+};
+
+export const isAddressCompleteEnough = (address: Partial<Address>) => {
+  return (
+    address?.country && // must have country
+    (hasPostal(address.country) ? address?.postal_code : true) && // should have postal code if applicable
+    (hasCity(address.country) ? address?.city : true) && // should have city if applicable
+    (hasState(address.country) ? address?.state : true) // should have state if applicable
+  );
+};

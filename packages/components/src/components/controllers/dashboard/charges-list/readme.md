@@ -20,17 +20,17 @@
 ### Depends on
 
 - [ce-tag](../../../ui/tag)
-- [ce-stacked-list-row](../../../ui/ce-stacked-list-row)
+- [ce-stacked-list-row](../../../ui/stacked-list-row)
 - [ce-skeleton](../../../ui/skeleton)
 - [ce-format-date](../../../util/format-date)
 - [ce-text](../../../ui/text)
 - [ce-format-number](../../../util/format-number)
-- [ce-dashboard-module](../../../ui/ce-dashboard-module)
+- [ce-dashboard-module](../../../ui/dashboard-module)
 - [ce-button](../../../ui/button)
 - [ce-icon](../../../ui/icon)
 - [ce-card](../../../ui/card)
-- [ce-stacked-list](../../../ui/ce-stacked-list)
-- [ce-pagination](../../../ui/ce-pagination)
+- [ce-stacked-list](../../../ui/stacked-list)
+- [ce-pagination](../../../ui/pagination)
 - [ce-block-ui](../../../ui/block-ui)
 
 ### Graph

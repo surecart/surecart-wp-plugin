@@ -70,8 +70,8 @@ Type: `Promise<void>`
 ### Used by
 
  - [ce-price-choice](../../controllers/price-choice)
- - [ce-subscription-payment](../../controllers/dashboard/ce-subscription-payment)
- - [ce-subscription-switch](../../controllers/dashboard/ce-subscription-switch)
+ - [ce-subscription-payment](../../controllers/dashboard/subscription-payment)
+ - [ce-subscription-switch](../../controllers/dashboard/subscription-switch)
 
 ### Graph
 ```mermaid

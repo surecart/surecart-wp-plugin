@@ -33,9 +33,9 @@
  - [ce-invoices-list](../../controllers/dashboard/invoices-list)
  - [ce-orders-list](../../controllers/dashboard/orders-list)
  - [ce-subscription](../../controllers/dashboard/subscription)
- - [ce-subscription-cancel](../../controllers/dashboard/ce-subscription-cancel)
- - [ce-subscription-details](../../controllers/dashboard/ce-subscription-details)
- - [ce-subscription-renew](../../controllers/dashboard/ce-subscription-renew)
+ - [ce-subscription-cancel](../../controllers/dashboard/subscription-cancel)
+ - [ce-subscription-details](../../controllers/dashboard/subscription-details)
+ - [ce-subscription-renew](../../controllers/dashboard/subscription-renew)
  - [ce-subscription-status-badge](../../ui/subscription-status-badge)
  - [ce-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
 

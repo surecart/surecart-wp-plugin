@@ -586,6 +586,7 @@
     "loading": true,
     "required": true,
     "shipping-address": true,
+    "tax-status": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1066,7 +1067,6 @@
     "slot": true
   },
   "ce-tax-id-input": {
-    "draft": true,
     "order": true,
     "show": true,
     "tax_status": true,

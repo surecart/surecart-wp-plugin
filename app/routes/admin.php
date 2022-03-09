@@ -21,14 +21,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 \CheckoutEngine::route()
 ->get()
 ->where( 'admin', 'ce-getting-started' )
-->middleware( 'user.can:edit_ce_products' )
+->name( 'onboarding.show' )
+->middleware( 'user.can:manage_options' )
 ->handle( 'Onboarding@show' );
 
 \CheckoutEngine::route()
 ->get()
-->where( 'admin', 'ce-onboarding' )
-->middleware( 'user.can:edit_ce_products' )
-->handle( 'Onboarding@show' );
+->where( 'admin', 'ce-complete-signup' )
+->middleware( 'user.can:manage_options' )
+->group(
+	function() {
+		\CheckoutEngine::route()->get()->name( 'onboarding.complete' )->handle( 'Onboarding@complete' );
+		\CheckoutEngine::route()->post()->middleware( 'nonce:update_plugin_settings' )->name( 'onboarding.save' )->handle( 'Onboarding@save' );
+	}
+);
 
 /*
 |--------------------------------------------------------------------------

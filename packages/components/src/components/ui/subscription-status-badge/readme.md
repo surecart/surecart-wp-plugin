@@ -21,7 +21,7 @@
 ### Used by
 
  - [ce-subscription](../../controllers/dashboard/subscription)
- - [ce-subscription-details](../../controllers/dashboard/ce-subscription-details)
+ - [ce-subscription-details](../../controllers/dashboard/subscription-details)
 
 ### Depends on
 

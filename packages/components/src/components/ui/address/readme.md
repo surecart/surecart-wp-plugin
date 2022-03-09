@@ -27,7 +27,7 @@
 
 ### Used by
 
- - [ce-customer-edit](../../controllers/dashboard/ce-customer-edit)
+ - [ce-customer-edit](../../controllers/dashboard/customer-edit)
  - [ce-order-shipping-address](../../controllers/order-shipping-address)
 
 ### Depends on

@@ -63,13 +63,13 @@ Type: `Promise<void>`
 
  - [ce-checkout](../../controllers/checkout)
  - [ce-coupon-form](../coupon-form)
- - [ce-dashboard-module](../ce-dashboard-module)
+ - [ce-dashboard-module](../dashboard-module)
  - [ce-login-form](../../controllers/login)
  - [ce-payment-method-create](../../controllers/dashboard/payment-method-create)
  - [ce-price-choice](../../controllers/price-choice)
  - [ce-stripe-payment-request](../stripe-payment-request)
- - [ce-subscription-cancel](../../controllers/dashboard/ce-subscription-cancel)
- - [ce-subscription-renew](../../controllers/dashboard/ce-subscription-renew)
+ - [ce-subscription-cancel](../../controllers/dashboard/subscription-cancel)
+ - [ce-subscription-renew](../../controllers/dashboard/subscription-renew)
  - [ce-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
 
 ### Depends on

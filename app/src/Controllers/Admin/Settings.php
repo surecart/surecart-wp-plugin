@@ -20,6 +20,11 @@ class Settings {
 				'frame_url' => ( is_ssl() ? 'https://' : 'http://' ) . $_SERVER['HTTP_HOST'],
 			]
 		);
+
+		if ( ! $session || is_wp_error( $session ) ) {
+			wp_die( esc_html__( 'Could not load settings page.', 'checkout-engine' ) );
+		}
+
 		return \CheckoutEngine::view( 'admin/settings' )->with(
 			[
 				'session_url' => $session->url,

@@ -64,11 +64,11 @@ Type: `Promise<void>`
 
 ### Used by
 
- - [ce-customer-edit](../../controllers/dashboard/ce-customer-edit)
+ - [ce-customer-edit](../../controllers/dashboard/customer-edit)
  - [ce-login-form](../../controllers/login)
  - [ce-payment-method-create](../../controllers/dashboard/payment-method-create)
- - [ce-subscription-payment](../../controllers/dashboard/ce-subscription-payment)
- - [ce-subscription-switch](../../controllers/dashboard/ce-subscription-switch)
+ - [ce-subscription-payment](../../controllers/dashboard/subscription-payment)
+ - [ce-subscription-switch](../../controllers/dashboard/subscription-switch)
  - [ce-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
 
 ### Graph

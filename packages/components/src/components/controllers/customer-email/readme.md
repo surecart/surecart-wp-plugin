@@ -28,14 +28,14 @@
 
 ## Events
 
-| Event              | Description                                 | Type                              |
-| ------------------ | ------------------------------------------- | --------------------------------- |
-| `ceBlur`           | Emitted when the control loses focus.       | `CustomEvent<void>`               |
-| `ceChange`         | Emitted when the control's value changes.   | `CustomEvent<void>`               |
-| `ceClear`          | Emitted when the clear button is activated. | `CustomEvent<void>`               |
-| `ceFocus`          | Emitted when the control gains focus.       | `CustomEvent<void>`               |
-| `ceInput`          | Emitted when the control receives input.    | `CustomEvent<void>`               |
-| `ceUpdateCustomer` |                                             | `CustomEvent<{ email: string; }>` |
+| Event                | Description                                 | Type                              |
+| -------------------- | ------------------------------------------- | --------------------------------- |
+| `ceBlur`             | Emitted when the control loses focus.       | `CustomEvent<void>`               |
+| `ceChange`           | Emitted when the control's value changes.   | `CustomEvent<void>`               |
+| `ceClear`            | Emitted when the clear button is activated. | `CustomEvent<void>`               |
+| `ceFocus`            | Emitted when the control gains focus.       | `CustomEvent<void>`               |
+| `ceInput`            | Emitted when the control receives input.    | `CustomEvent<void>`               |
+| `ceUpdateOrderState` |                                             | `CustomEvent<{ email: string; }>` |
 
 
 ## Dependencies
@@ -47,10 +47,10 @@
 ### Graph
 ```mermaid
 graph TD;
-  ce-email --> ce-input
+  ce-customer-email --> ce-input
   ce-input --> ce-form-control
   ce-form-control --> ce-tooltip
-  style ce-email fill:#f9f,stroke:#333,stroke-width:4px
+  style ce-customer-email fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

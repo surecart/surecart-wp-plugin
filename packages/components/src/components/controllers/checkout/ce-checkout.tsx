@@ -60,9 +60,6 @@ export class CECheckout {
   /** Loading states for different parts of the form. */
   @State() checkoutState = checkoutMachine.initialState;
 
-  /** Stores the draft shipping address. */
-  @State() draft: Partial<Order> = {};
-
   /** Stores the current Order */
   @State() order: Order;
 
@@ -176,10 +173,10 @@ export class CECheckout {
       error: this.error,
       order: this.order,
       customer: this.customer,
-      draft: this.draft,
       tax_status: this?.order?.tax_status,
       customerShippingAddress: typeof this.order?.customer !== 'string' ? this?.order?.customer?.shipping_address : {},
       shippingAddress: this.order?.shipping_address,
+      taxStatus: this.order?.tax_status,
       lockedChoices: this.prices,
       products: this.productsEntities,
       prices: this.pricesEntities,
@@ -243,7 +240,6 @@ export class CECheckout {
               form-id={this.formId}
               group-id={this.el.id}
               currency-code={this.currencyCode}
-              onCeUpdateDraftState={e => (this.draft = e.detail)}
               onCeUpdateOrderState={e => (this.order = e.detail)}
               onCeError={e => (this.error = e.detail as ResponseError)}
             >

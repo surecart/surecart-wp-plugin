@@ -24,7 +24,7 @@
 
 ### Depends on
 
-- [ce-address](../../ui/ce-address)
+- [ce-address](../../ui/address)
 
 ### Graph
 ```mermaid

@@ -1028,6 +1028,10 @@ export namespace Components {
           * Holds the customer's billing address
          */
         "shippingAddress": Address;
+        /**
+          * Tax status of the order
+         */
+        "taxStatus": TaxStatus;
     }
     interface CeOrderStatusBadge {
         /**
@@ -1771,7 +1775,6 @@ export namespace Components {
         "type": 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'default';
     }
     interface CeTaxIdInput {
-        "draft": { shipping_country: string };
         "order": Order;
         /**
           * Force show the field.
@@ -2580,6 +2583,10 @@ declare namespace LocalJSX {
          */
         "loading"?: boolean;
         "names"?: Partial<Address>;
+        /**
+          * Address change event.
+         */
+        "onCeChangeAddress"?: (event: CustomEvent<Partial<Address>>) => void;
         /**
           * Is this required?
          */
@@ -3667,6 +3674,10 @@ declare namespace LocalJSX {
          */
         "loading"?: boolean;
         /**
+          * Make a request to update the order.
+         */
+        "onCeUpdateOrder"?: (event: CustomEvent<Partial<Order>>) => void;
+        /**
           * Is this required (defaults to true)
          */
         "required"?: boolean;
@@ -3674,6 +3685,10 @@ declare namespace LocalJSX {
           * Holds the customer's billing address
          */
         "shippingAddress"?: Address;
+        /**
+          * Tax status of the order
+         */
+        "taxStatus"?: TaxStatus;
     }
     interface CeOrderStatusBadge {
         /**
@@ -4490,7 +4505,6 @@ declare namespace LocalJSX {
         "type"?: 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'default';
     }
     interface CeTaxIdInput {
-        "draft"?: { shipping_country: string };
         "order"?: Order;
         /**
           * Force show the field.

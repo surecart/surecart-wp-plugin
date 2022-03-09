@@ -18,14 +18,14 @@
 
 ### Depends on
 
-- [ce-dashboard-module](../../../ui/ce-dashboard-module)
+- [ce-dashboard-module](../../../ui/dashboard-module)
 - [ce-tag](../../../ui/tag)
 - [ce-card](../../../ui/card)
 - [ce-form](../../../ui/form)
 - [ce-input](../../../ui/input)
-- [ce-columns](../../../ui/ce-columns)
-- [ce-column](../../../ui/ce-column)
-- [ce-address](../../../ui/ce-address)
+- [ce-columns](../../../ui/columns)
+- [ce-column](../../../ui/column)
+- [ce-address](../../../ui/address)
 - [ce-switch](../../../ui/switch)
 - [ce-button](../../../ui/button)
 - [ce-block-ui](../../../ui/block-ui)

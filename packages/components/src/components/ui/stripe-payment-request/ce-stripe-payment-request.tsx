@@ -124,14 +124,20 @@ export class CeStripePaymentRequest {
             ...(shippingAddress?.city ? { city: shippingAddress?.city } : {}),
             ...(shippingAddress?.country ? { country: shippingAddress?.country } : {}),
             ...(shippingAddress?.postalCode ? { postal_code: shippingAddress?.postalCode } : {}),
-            ...(shippingAddress?.region ? { region: shippingAddress?.region } : {}),
+            ...(shippingAddress?.region ? { state: shippingAddress?.region } : {}),
           },
         },
       });
-      updateWith(this.getRequestObject(this.order));
-      this.ceUpdateOrderState.emit(order);
+      updateWith({
+        status: 'success',
+        total: {
+          amount: order?.amount_due || 0,
+          label: __('Total', 'checkout_engine'),
+          pending: true,
+        },
+      });
     } catch (e) {
-      ev.updateWith({ status: 'invalid_shipping_address' });
+      e.updateWith({ status: 'invalid_shipping_address' });
     }
   }
 
@@ -235,7 +241,7 @@ export class CeStripePaymentRequest {
             ...(shippingAddress?.city ? { city: shippingAddress?.city } : {}),
             ...(shippingAddress?.country ? { country: shippingAddress?.country } : {}),
             ...(shippingAddress?.postalCode ? { postal_code: shippingAddress?.postalCode } : {}),
-            ...(shippingAddress?.region ? { region: shippingAddress?.region } : {}),
+            ...(shippingAddress?.region ? { state: shippingAddress?.region } : {}),
           },
           billing_address: {
             ...(billing_details?.name ? { name: billing_details?.name } : {}),
@@ -244,6 +250,7 @@ export class CeStripePaymentRequest {
             ...(billing_details?.address?.city ? { city: billing_details?.address?.city } : {}),
             ...(billing_details?.address?.country ? { country: billing_details?.address?.country } : {}),
             ...(billing_details?.address?.postal_code ? { postal_code: billing_details?.address?.postal_code } : {}),
+            ...(billing_details?.region ? { state: billing_details?.region } : {}),
           },
         },
       })) as Order;

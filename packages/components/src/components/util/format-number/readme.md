@@ -37,8 +37,8 @@
  - [ce-price-choice](../../controllers/price-choice)
  - [ce-product-line-item](../../ui/product-line-item)
  - [ce-session-detail](../../controllers/session-detail)
- - [ce-subscription-details](../../controllers/dashboard/ce-subscription-details)
- - [ce-subscription-switch](../../controllers/dashboard/ce-subscription-switch)
+ - [ce-subscription-details](../../controllers/dashboard/subscription-details)
+ - [ce-subscription-switch](../../controllers/dashboard/subscription-switch)
  - [ce-total](../../controllers/total)
  - [ce-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
 

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-03-07T21:23:59",
+  "timestamp": "2022-03-08T23:02:48",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.14.0",
@@ -7,7 +7,7 @@
   },
   "components": [
     {
-      "filePath": "./src/components/ui/ce-address/ce-address.tsx",
+      "filePath": "./src/components/ui/address/ce-address.tsx",
       "encapsulation": "scoped",
       "tag": "ce-address",
       "readme": "# ce-address\n\n\n",
@@ -545,6 +545,7 @@
         "ce-payment-method-create",
         "ce-payment-methods-list",
         "ce-purchase",
+        "ce-subscription",
         "ce-subscription-cancel",
         "ce-subscription-payment",
         "ce-subscription-renew",
@@ -589,6 +590,9 @@
         "ce-purchase": [
           "ce-block-ui"
         ],
+        "ce-subscription": [
+          "ce-block-ui"
+        ],
         "ce-subscription-cancel": [
           "ce-block-ui"
         ],
@@ -610,7 +614,7 @@
       }
     },
     {
-      "filePath": "./src/components/ui/ce-breadcrumb/ce-breadcrumb.tsx",
+      "filePath": "./src/components/ui/breadcrumb/ce-breadcrumb.tsx",
       "encapsulation": "shadow",
       "tag": "ce-breadcrumb",
       "readme": "# ce-breadcrumb\n\n\n",
@@ -713,7 +717,7 @@
       "dependencyGraph": {}
     },
     {
-      "filePath": "./src/components/ui/ce-breadcrumbs/ce-breadcrumbs.tsx",
+      "filePath": "./src/components/ui/breadcrumbs/ce-breadcrumbs.tsx",
       "encapsulation": "shadow",
       "tag": "ce-breadcrumbs",
       "readme": "# ce-breadcrumbs\n\n\n",
@@ -1365,7 +1369,7 @@
       }
     },
     {
-      "filePath": "./src/components/ui/ce-cc-logo/ce-cc-logo.tsx",
+      "filePath": "./src/components/ui/cc-logo/ce-cc-logo.tsx",
       "encapsulation": "shadow",
       "tag": "ce-cc-logo",
       "readme": "# ce-cc-logo\n\n\n",
@@ -2547,7 +2551,7 @@
       }
     },
     {
-      "filePath": "./src/components/ui/ce-column/ce-column.tsx",
+      "filePath": "./src/components/ui/column/ce-column.tsx",
       "encapsulation": "shadow",
       "tag": "ce-column",
       "readme": "# ce-column\n\n\n",
@@ -2572,7 +2576,7 @@
       }
     },
     {
-      "filePath": "./src/components/ui/ce-columns/ce-columns.tsx",
+      "filePath": "./src/components/ui/columns/ce-columns.tsx",
       "encapsulation": "none",
       "tag": "ce-columns",
       "readme": "# ce-columns\n\n\n",
@@ -2877,7 +2881,7 @@
       }
     },
     {
-      "filePath": "./src/components/controllers/dashboard/ce-customer-details/ce-customer-details.tsx",
+      "filePath": "./src/components/controllers/dashboard/customer-details/ce-customer-details.tsx",
       "encapsulation": "shadow",
       "tag": "ce-customer-details",
       "readme": "# ce-customer-details\n\n\n",
@@ -2958,7 +2962,7 @@
       }
     },
     {
-      "filePath": "./src/components/controllers/dashboard/ce-customer-edit/ce-customer-edit.tsx",
+      "filePath": "./src/components/controllers/dashboard/customer-edit/ce-customer-edit.tsx",
       "encapsulation": "shadow",
       "tag": "ce-customer-edit",
       "readme": "# ce-customer-edit\n\n\n",
@@ -3080,6 +3084,349 @@
         ],
         "ce-block-ui": [
           "ce-spinner"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/controllers/customer-email/ce-customer-email.tsx",
+      "encapsulation": "none",
+      "tag": "ce-customer-email",
+      "readme": "# ce-email\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "autofocus",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "autofocus",
+          "reflectToAttr": false,
+          "docs": "The input's autofocus attribute.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "customer",
+          "type": "Customer",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "Force a customer.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Customer"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "disabled",
+          "reflectToAttr": true,
+          "docs": "Disables the input.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "hasFocus",
+          "type": "boolean",
+          "mutable": true,
+          "attr": "has-focus",
+          "reflectToAttr": true,
+          "docs": "Inputs focus",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "help",
+          "type": "string",
+          "mutable": false,
+          "attr": "help",
+          "reflectToAttr": false,
+          "docs": "The input's help text.",
+          "docsTags": [],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "invalid",
+          "type": "boolean",
+          "mutable": true,
+          "attr": "invalid",
+          "reflectToAttr": true,
+          "docs": "This will be true when the control is in an invalid state. Validity is determined by props such as `type`,\n`required`, `minlength`, `maxlength`, and `pattern` using the browser's constraint validation API.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "label",
+          "type": "string",
+          "mutable": false,
+          "attr": "label",
+          "reflectToAttr": false,
+          "docs": "The input's label.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "order",
+          "type": "Order",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "(passed from the ce-checkout component automatically)",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Order"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "pill",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "pill",
+          "reflectToAttr": true,
+          "docs": "Draws a pill-style input with rounded edges.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "placeholder",
+          "type": "string",
+          "mutable": false,
+          "attr": "placeholder",
+          "reflectToAttr": false,
+          "docs": "The input's placeholder text.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "readonly",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "readonly",
+          "reflectToAttr": true,
+          "docs": "Makes the input readonly.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "required",
+          "reflectToAttr": true,
+          "docs": "Makes the input a required field.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "showLabel",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "show-label",
+          "reflectToAttr": false,
+          "docs": "Should we show the label",
+          "docsTags": [],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "size",
+          "type": "\"large\" | \"medium\" | \"small\"",
+          "mutable": false,
+          "attr": "size",
+          "reflectToAttr": true,
+          "docs": "The input's size.",
+          "docsTags": [],
+          "default": "'medium'",
+          "values": [
+            {
+              "value": "large",
+              "type": "string"
+            },
+            {
+              "value": "medium",
+              "type": "string"
+            },
+            {
+              "value": "small",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "mutable": true,
+          "attr": "value",
+          "reflectToAttr": false,
+          "docs": "The input's value attribute.",
+          "docsTags": [],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [
+        {
+          "event": "ceBlur",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Emitted when the control loses focus.",
+          "docsTags": []
+        },
+        {
+          "event": "ceChange",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Emitted when the control's value changes.",
+          "docsTags": []
+        },
+        {
+          "event": "ceClear",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Emitted when the clear button is activated.",
+          "docsTags": []
+        },
+        {
+          "event": "ceFocus",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Emitted when the control gains focus.",
+          "docsTags": []
+        },
+        {
+          "event": "ceInput",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Emitted when the control receives input.",
+          "docsTags": []
+        },
+        {
+          "event": "ceUpdateOrderState",
+          "detail": "{ email: string; }",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        }
+      ],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "ce-input"
+      ],
+      "dependencyGraph": {
+        "ce-customer-email": [
+          "ce-input"
+        ],
+        "ce-input": [
+          "ce-form-control"
+        ],
+        "ce-form-control": [
+          "ce-tooltip"
         ]
       }
     },
@@ -3404,6 +3751,15 @@
           "composed": true,
           "docs": "",
           "docsTags": []
+        },
+        {
+          "event": "ceUpdateOrderState",
+          "detail": "{ id?: string; status?: \"finalized\" | \"draft\" | \"paid\"; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; email?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; tax_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; line_items?: lineItems; metadata?: Object; payment_intent?: PaymentIntent; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_address?: string | Address; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
         }
       ],
       "listeners": [],
@@ -3427,7 +3783,7 @@
       }
     },
     {
-      "filePath": "./src/components/ui/ce-dashboard-module/ce-dashboard-module.tsx",
+      "filePath": "./src/components/ui/dashboard-module/ce-dashboard-module.tsx",
       "encapsulation": "shadow",
       "tag": "ce-dashboard-module",
       "readme": "# ce-dashboard-module\n\n\n",
@@ -3760,350 +4116,7 @@
       }
     },
     {
-      "filePath": "./src/components/controllers/email/ce-email.tsx",
-      "encapsulation": "none",
-      "tag": "ce-email",
-      "readme": "# ce-email\n\n\n",
-      "docs": "",
-      "docsTags": [],
-      "usage": {},
-      "props": [
-        {
-          "name": "autofocus",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "autofocus",
-          "reflectToAttr": false,
-          "docs": "The input's autofocus attribute.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "customer",
-          "type": "Customer",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "Force a customer.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "Customer"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "disabled",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "disabled",
-          "reflectToAttr": true,
-          "docs": "Disables the input.",
-          "docsTags": [],
-          "default": "false",
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "hasFocus",
-          "type": "boolean",
-          "mutable": true,
-          "attr": "has-focus",
-          "reflectToAttr": true,
-          "docs": "Inputs focus",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "help",
-          "type": "string",
-          "mutable": false,
-          "attr": "help",
-          "reflectToAttr": false,
-          "docs": "The input's help text.",
-          "docsTags": [],
-          "default": "''",
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "invalid",
-          "type": "boolean",
-          "mutable": true,
-          "attr": "invalid",
-          "reflectToAttr": true,
-          "docs": "This will be true when the control is in an invalid state. Validity is determined by props such as `type`,\n`required`, `minlength`, `maxlength`, and `pattern` using the browser's constraint validation API.",
-          "docsTags": [],
-          "default": "false",
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "label",
-          "type": "string",
-          "mutable": false,
-          "attr": "label",
-          "reflectToAttr": false,
-          "docs": "The input's label.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "order",
-          "type": "Order",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "(passed from the ce-checkout component automatically)",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "Order"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "pill",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "pill",
-          "reflectToAttr": true,
-          "docs": "Draws a pill-style input with rounded edges.",
-          "docsTags": [],
-          "default": "false",
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "placeholder",
-          "type": "string",
-          "mutable": false,
-          "attr": "placeholder",
-          "reflectToAttr": false,
-          "docs": "The input's placeholder text.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "readonly",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "readonly",
-          "reflectToAttr": true,
-          "docs": "Makes the input readonly.",
-          "docsTags": [],
-          "default": "false",
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "required",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "required",
-          "reflectToAttr": true,
-          "docs": "Makes the input a required field.",
-          "docsTags": [],
-          "default": "false",
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "showLabel",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "show-label",
-          "reflectToAttr": false,
-          "docs": "Should we show the label",
-          "docsTags": [],
-          "default": "true",
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "size",
-          "type": "\"large\" | \"medium\" | \"small\"",
-          "mutable": false,
-          "attr": "size",
-          "reflectToAttr": true,
-          "docs": "The input's size.",
-          "docsTags": [],
-          "default": "'medium'",
-          "values": [
-            {
-              "value": "large",
-              "type": "string"
-            },
-            {
-              "value": "medium",
-              "type": "string"
-            },
-            {
-              "value": "small",
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "value",
-          "type": "string",
-          "mutable": true,
-          "attr": "value",
-          "reflectToAttr": false,
-          "docs": "The input's value attribute.",
-          "docsTags": [],
-          "default": "''",
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        }
-      ],
-      "methods": [],
-      "events": [
-        {
-          "event": "ceBlur",
-          "detail": "void",
-          "bubbles": true,
-          "cancelable": true,
-          "composed": true,
-          "docs": "Emitted when the control loses focus.",
-          "docsTags": []
-        },
-        {
-          "event": "ceChange",
-          "detail": "void",
-          "bubbles": true,
-          "cancelable": true,
-          "composed": true,
-          "docs": "Emitted when the control's value changes.",
-          "docsTags": []
-        },
-        {
-          "event": "ceClear",
-          "detail": "void",
-          "bubbles": true,
-          "cancelable": true,
-          "composed": true,
-          "docs": "Emitted when the clear button is activated.",
-          "docsTags": []
-        },
-        {
-          "event": "ceFocus",
-          "detail": "void",
-          "bubbles": true,
-          "cancelable": true,
-          "composed": true,
-          "docs": "Emitted when the control gains focus.",
-          "docsTags": []
-        },
-        {
-          "event": "ceInput",
-          "detail": "void",
-          "bubbles": true,
-          "cancelable": true,
-          "composed": true,
-          "docs": "Emitted when the control receives input.",
-          "docsTags": []
-        },
-        {
-          "event": "ceUpdateCustomer",
-          "detail": "{ email: string; }",
-          "bubbles": true,
-          "cancelable": true,
-          "composed": true,
-          "docs": "",
-          "docsTags": []
-        }
-      ],
-      "listeners": [],
-      "styles": [],
-      "slots": [],
-      "parts": [],
-      "dependents": [],
-      "dependencies": [
-        "ce-input"
-      ],
-      "dependencyGraph": {
-        "ce-email": [
-          "ce-input"
-        ],
-        "ce-input": [
-          "ce-form-control"
-        ],
-        "ce-form-control": [
-          "ce-tooltip"
-        ]
-      }
-    },
-    {
-      "filePath": "./src/components/ui/ce-empty/ce-empty.tsx",
+      "filePath": "./src/components/ui/empty/ce-empty.tsx",
       "encapsulation": "shadow",
       "tag": "ce-empty",
       "readme": "# ce-empty\n\n\n",
@@ -6656,8 +6669,8 @@
         "ce-address",
         "ce-coupon-form",
         "ce-customer-edit",
+        "ce-customer-email",
         "ce-customer-name",
-        "ce-email",
         "ce-login-form",
         "ce-price-input",
         "ce-select",
@@ -6683,10 +6696,10 @@
         "ce-customer-edit": [
           "ce-input"
         ],
-        "ce-customer-name": [
+        "ce-customer-email": [
           "ce-input"
         ],
-        "ce-email": [
+        "ce-customer-name": [
           "ce-input"
         ],
         "ce-login-form": [
@@ -8545,7 +8558,7 @@
       }
     },
     {
-      "filePath": "./src/components/ui/ce-pagination/ce-pagination.tsx",
+      "filePath": "./src/components/ui/pagination/ce-pagination.tsx",
       "encapsulation": "shadow",
       "tag": "ce-pagination",
       "readme": "# ce-pagination\n\n\n",
@@ -11486,11 +11499,6 @@
       ],
       "listeners": [
         {
-          "event": "ceFormChange",
-          "capture": false,
-          "passive": false
-        },
-        {
           "event": "ceUpdateSession",
           "capture": false,
           "passive": false
@@ -11765,7 +11773,7 @@
       }
     },
     {
-      "filePath": "./src/components/ui/ce-stacked-list/ce-stacked-list.tsx",
+      "filePath": "./src/components/ui/stacked-list/ce-stacked-list.tsx",
       "encapsulation": "shadow",
       "tag": "ce-stacked-list",
       "readme": "# ce-stacked-list\n\n\n",
@@ -11814,7 +11822,7 @@
       }
     },
     {
-      "filePath": "./src/components/ui/ce-stacked-list-row/ce-stacked-list-row.tsx",
+      "filePath": "./src/components/ui/stacked-list-row/ce-stacked-list-row.tsx",
       "encapsulation": "shadow",
       "tag": "ce-stacked-list-row",
       "readme": "# ce-stacked-list-row\n\n\n",
@@ -12552,7 +12560,8 @@
         "ce-button",
         "ce-icon",
         "ce-card",
-        "ce-stacked-list"
+        "ce-stacked-list",
+        "ce-block-ui"
       ],
       "dependencyGraph": {
         "ce-subscription": [
@@ -12566,7 +12575,8 @@
           "ce-button",
           "ce-icon",
           "ce-card",
-          "ce-stacked-list"
+          "ce-stacked-list",
+          "ce-block-ui"
         ],
         "ce-subscription-status-badge": [
           "ce-format-date",
@@ -12588,11 +12598,14 @@
         ],
         "ce-button": [
           "ce-spinner"
+        ],
+        "ce-block-ui": [
+          "ce-spinner"
         ]
       }
     },
     {
-      "filePath": "./src/components/controllers/dashboard/ce-subscription-cancel/ce-subscription-cancel.tsx",
+      "filePath": "./src/components/controllers/dashboard/subscription-cancel/ce-subscription-cancel.tsx",
       "encapsulation": "shadow",
       "tag": "ce-subscription-cancel",
       "readme": "# ce-subscription-cancel\n\n\n",
@@ -12735,7 +12748,7 @@
       }
     },
     {
-      "filePath": "./src/components/controllers/dashboard/ce-subscription-details/ce-subscription-details.tsx",
+      "filePath": "./src/components/controllers/dashboard/subscription-details/ce-subscription-details.tsx",
       "encapsulation": "shadow",
       "tag": "ce-subscription-details",
       "readme": "# ce-subscription-details\n\n\n",
@@ -12838,7 +12851,7 @@
       }
     },
     {
-      "filePath": "./src/components/controllers/dashboard/ce-subscription-payment/ce-subscription-payment.tsx",
+      "filePath": "./src/components/controllers/dashboard/subscription-payment/ce-subscription-payment.tsx",
       "encapsulation": "shadow",
       "tag": "ce-subscription-payment",
       "readme": "# ce-subscription-payment\n\n\n",
@@ -12998,7 +13011,7 @@
       }
     },
     {
-      "filePath": "./src/components/controllers/dashboard/ce-subscription-renew/ce-subscription-renew.tsx",
+      "filePath": "./src/components/controllers/dashboard/subscription-renew/ce-subscription-renew.tsx",
       "encapsulation": "shadow",
       "tag": "ce-subscription-renew",
       "readme": "# ce-subscription-renew\n\n\n",
@@ -13290,7 +13303,7 @@
       }
     },
     {
-      "filePath": "./src/components/controllers/dashboard/ce-subscription-switch/ce-subscription-switch.tsx",
+      "filePath": "./src/components/controllers/dashboard/subscription-switch/ce-subscription-switch.tsx",
       "encapsulation": "shadow",
       "tag": "ce-subscription-switch",
       "readme": "# ce-subscription-switch\n\n\n",

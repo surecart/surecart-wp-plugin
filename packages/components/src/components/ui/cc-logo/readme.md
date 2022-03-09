@@ -24,7 +24,7 @@
 ### Used by
 
  - [ce-payment-methods-list](../../controllers/dashboard/payment-methods-list)
- - [ce-subscription-payment](../../controllers/dashboard/ce-subscription-payment)
+ - [ce-subscription-payment](../../controllers/dashboard/subscription-payment)
 
 ### Depends on
 

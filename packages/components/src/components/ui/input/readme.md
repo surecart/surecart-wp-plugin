@@ -109,11 +109,11 @@ Type: `Promise<void>`
 
 ### Used by
 
- - [ce-address](../ce-address)
+ - [ce-address](../address)
  - [ce-coupon-form](../coupon-form)
- - [ce-customer-edit](../../controllers/dashboard/ce-customer-edit)
+ - [ce-customer-edit](../../controllers/dashboard/customer-edit)
+ - [ce-customer-email](../../controllers/customer-email)
  - [ce-customer-name](../../controllers/customer-name)
- - [ce-email](../../controllers/email)
  - [ce-login-form](../../controllers/login)
  - [ce-price-input](../price-input)
  - [ce-select](../select)
@@ -132,8 +132,8 @@ graph TD;
   ce-address --> ce-input
   ce-coupon-form --> ce-input
   ce-customer-edit --> ce-input
+  ce-customer-email --> ce-input
   ce-customer-name --> ce-input
-  ce-email --> ce-input
   ce-login-form --> ce-input
   ce-price-input --> ce-input
   ce-select --> ce-input

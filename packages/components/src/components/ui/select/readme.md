@@ -68,7 +68,7 @@ Type: `Promise<void>`
 
 ### Used by
 
- - [ce-address](../ce-address)
+ - [ce-address](../address)
 
 ### Depends on
 

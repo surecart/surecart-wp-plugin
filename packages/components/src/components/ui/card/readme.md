@@ -27,17 +27,17 @@
 ### Used by
 
  - [ce-charges-list](../../controllers/dashboard/charges-list)
- - [ce-customer-details](../../controllers/dashboard/ce-customer-details)
- - [ce-customer-edit](../../controllers/dashboard/ce-customer-edit)
+ - [ce-customer-details](../../controllers/dashboard/customer-details)
+ - [ce-customer-edit](../../controllers/dashboard/customer-edit)
  - [ce-invoices-list](../../controllers/dashboard/invoices-list)
  - [ce-login-form](../../controllers/login)
  - [ce-orders-list](../../controllers/dashboard/orders-list)
  - [ce-payment-method-create](../../controllers/dashboard/payment-method-create)
  - [ce-payment-methods-list](../../controllers/dashboard/payment-methods-list)
  - [ce-subscription](../../controllers/dashboard/subscription)
- - [ce-subscription-cancel](../../controllers/dashboard/ce-subscription-cancel)
- - [ce-subscription-payment](../../controllers/dashboard/ce-subscription-payment)
- - [ce-subscription-renew](../../controllers/dashboard/ce-subscription-renew)
+ - [ce-subscription-cancel](../../controllers/dashboard/subscription-cancel)
+ - [ce-subscription-payment](../../controllers/dashboard/subscription-payment)
+ - [ce-subscription-renew](../../controllers/dashboard/subscription-renew)
  - [ce-subscriptions-list](../../controllers/dashboard/subscriptions-list)
  - [ce-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
 

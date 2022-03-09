@@ -9,7 +9,6 @@ import { Address, Order, TaxStatus } from '../../../types';
   shadow: false,
 })
 export class CeTaxIdInput {
-  @Prop() draft: { shipping_country: string } = { shipping_country: '' };
   @Prop() order: Order;
   @Prop() tax_status: TaxStatus;
 
@@ -41,10 +40,10 @@ export class CeTaxIdInput {
     },
   };
 
-  @Watch('draft')
+  @Watch('order')
   handleDraftChange() {
-    if (this?.draft?.shipping_country) {
-      this.setType(this?.draft?.shipping_country);
+    if ((this?.order?.shipping_address as Address)?.country) {
+      this.setType((this?.order?.shipping_address as Address)?.country);
     }
   }
 
@@ -93,7 +92,7 @@ export class CeTaxIdInput {
   }
 
   componentDidLoad() {
-    this.handleDraftChange();
+    // this.handleDraftChange();
     this.maybeForceShow();
   }
 

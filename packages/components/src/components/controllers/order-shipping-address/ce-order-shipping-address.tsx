@@ -1,6 +1,7 @@
-import { Component, Prop, h, Watch, State } from '@stencil/core';
+import { Component, Prop, h, Watch, State, Event, EventEmitter } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
-import { Address } from '../../../types';
+import { isAddressCompleteEnough } from '../../../functions/address';
+import { Address, Order, TaxStatus } from '../../../types';
 
 @Component({
   tag: 'ce-order-shipping-address',
@@ -22,6 +23,12 @@ export class CeOrderShippingAddress {
 
   /** Holds the customer's billing address */
   @Prop() shippingAddress: Address;
+
+  /** Tax status of the order */
+  @Prop() taxStatus: TaxStatus;
+
+  /** Make a request to update the order. */
+  @Event() ceUpdateOrder: EventEmitter<Partial<Order>>;
 
   /** Address to pass to the component */
   @State() address: Partial<Address> = {
@@ -59,6 +66,16 @@ export class CeOrderShippingAddress {
     });
   }
 
+  updateAddressState(address: Partial<Address>) {
+    if (address === this.address) return;
+    this.address = address;
+    if (isAddressCompleteEnough(this.address) && this.taxStatus !== 'disabled') {
+      this.ceUpdateOrder.emit({
+        shipping_address: this.address as Address,
+      });
+    }
+  }
+
   componentWillLoad() {
     // if we have a shipping address on load, update the passed address.
     if (this.shippingAddress) {
@@ -75,7 +92,10 @@ export class CeOrderShippingAddress {
     if (!this.address?.country) {
       const country = navigator?.language?.slice(-2);
       if (country) {
-        this.address.country = country;
+        this.address = {
+          ...this.address,
+          country,
+        };
       }
     }
   }
@@ -87,6 +107,7 @@ export class CeOrderShippingAddress {
         required={this.required}
         loading={this.loading}
         address={this.address}
+        onCeChangeAddress={e => this.updateAddressState(e.detail)}
         names={{
           country: 'shipping_country',
           line_1: 'shipping_line_1',
@@ -100,4 +121,4 @@ export class CeOrderShippingAddress {
   }
 }
 
-openWormhole(CeOrderShippingAddress, ['shippingAddress', 'loading', 'customerShippingAddress'], false);
+openWormhole(CeOrderShippingAddress, ['shippingAddress', 'loading', 'customerShippingAddress', 'taxStatus'], false);

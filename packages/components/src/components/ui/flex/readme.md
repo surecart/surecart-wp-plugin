@@ -18,11 +18,11 @@
 
 ### Used by
 
- - [ce-pagination](../ce-pagination)
+ - [ce-pagination](../pagination)
  - [ce-payment-methods-list](../../controllers/dashboard/payment-methods-list)
  - [ce-subscription](../../controllers/dashboard/subscription)
- - [ce-subscription-payment](../../controllers/dashboard/ce-subscription-payment)
- - [ce-subscription-switch](../../controllers/dashboard/ce-subscription-switch)
+ - [ce-subscription-payment](../../controllers/dashboard/subscription-payment)
+ - [ce-subscription-switch](../../controllers/dashboard/subscription-switch)
  - [ce-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
 
 ### Graph

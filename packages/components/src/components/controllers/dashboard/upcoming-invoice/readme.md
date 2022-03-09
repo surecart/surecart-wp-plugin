@@ -33,7 +33,7 @@
 - [ce-flex](../../../ui/flex)
 - [ce-icon](../../../ui/icon)
 - [ce-alert](../../../ui/alert)
-- [ce-dashboard-module](../../../ui/ce-dashboard-module)
+- [ce-dashboard-module](../../../ui/dashboard-module)
 - [ce-card](../../../ui/card)
 - [ce-form](../../../ui/form)
 - [ce-button](../../../ui/button)

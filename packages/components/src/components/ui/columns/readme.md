@@ -17,7 +17,7 @@
 
 ### Used by
 
- - [ce-customer-edit](../../controllers/dashboard/ce-customer-edit)
+ - [ce-customer-edit](../../controllers/dashboard/customer-edit)
 
 ### Graph
 ```mermaid

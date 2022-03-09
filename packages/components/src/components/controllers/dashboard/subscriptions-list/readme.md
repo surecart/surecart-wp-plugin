@@ -20,16 +20,16 @@
 ### Depends on
 
 - [ce-divider](../../../ui/divider)
-- [ce-empty](../../../ui/ce-empty)
+- [ce-empty](../../../ui/empty)
 - [ce-card](../../../ui/card)
-- [ce-stacked-list](../../../ui/ce-stacked-list)
-- [ce-stacked-list-row](../../../ui/ce-stacked-list-row)
+- [ce-stacked-list](../../../ui/stacked-list)
+- [ce-stacked-list-row](../../../ui/stacked-list-row)
 - [ce-skeleton](../../../ui/skeleton)
-- [ce-subscription-details](../ce-subscription-details)
+- [ce-subscription-details](../subscription-details)
 - [ce-icon](../../../ui/icon)
-- [ce-dashboard-module](../../../ui/ce-dashboard-module)
+- [ce-dashboard-module](../../../ui/dashboard-module)
 - [ce-button](../../../ui/button)
-- [ce-pagination](../../../ui/ce-pagination)
+- [ce-pagination](../../../ui/pagination)
 - [ce-block-ui](../../../ui/block-ui)
 
 ### Graph

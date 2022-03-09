@@ -20,11 +20,11 @@
 
 ### Depends on
 
-- [ce-subscription-details](../ce-subscription-details)
+- [ce-subscription-details](../subscription-details)
 - [ce-alert](../../../ui/alert)
 - [ce-format-date](../../../util/format-date)
 - [ce-skeleton](../../../ui/skeleton)
-- [ce-dashboard-module](../../../ui/ce-dashboard-module)
+- [ce-dashboard-module](../../../ui/dashboard-module)
 - [ce-card](../../../ui/card)
 - [ce-button](../../../ui/button)
 - [ce-block-ui](../../../ui/block-ui)

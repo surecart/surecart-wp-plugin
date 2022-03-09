@@ -37,17 +37,17 @@
  - [ce-badge-notice](../badge-notice)
  - [ce-charges-list](../../controllers/dashboard/charges-list)
  - [ce-coupon-form](../coupon-form)
- - [ce-customer-details](../../controllers/dashboard/ce-customer-details)
- - [ce-customer-edit](../../controllers/dashboard/ce-customer-edit)
+ - [ce-customer-details](../../controllers/dashboard/customer-details)
+ - [ce-customer-edit](../../controllers/dashboard/customer-edit)
  - [ce-invoices-list](../../controllers/dashboard/invoices-list)
  - [ce-order-confirmation-totals](../../controllers/order-confirmation-totals)
  - [ce-order-status-badge](../order-status-badge)
  - [ce-orders-list](../../controllers/dashboard/orders-list)
  - [ce-payment](../../controllers/payment)
  - [ce-payment-methods-list](../../controllers/dashboard/payment-methods-list)
- - [ce-subscription-details](../../controllers/dashboard/ce-subscription-details)
+ - [ce-subscription-details](../../controllers/dashboard/subscription-details)
  - [ce-subscription-status-badge](../subscription-status-badge)
- - [ce-subscription-switch](../../controllers/dashboard/ce-subscription-switch)
+ - [ce-subscription-switch](../../controllers/dashboard/subscription-switch)
 
 ### Graph
 ```mermaid

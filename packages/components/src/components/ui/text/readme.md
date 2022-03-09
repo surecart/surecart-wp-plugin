@@ -21,7 +21,7 @@
  - [ce-invoices-list](../../controllers/dashboard/invoices-list)
  - [ce-orders-list](../../controllers/dashboard/orders-list)
  - [ce-stripe-element](../stripe-element)
- - [ce-subscription-details](../../controllers/dashboard/ce-subscription-details)
+ - [ce-subscription-details](../../controllers/dashboard/subscription-details)
  - [ce-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
 
 ### Graph

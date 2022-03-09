@@ -33,7 +33,7 @@
 
 ### Used by
 
- - [ce-address](../ce-address)
+ - [ce-address](../address)
  - [ce-choices](../choices)
  - [ce-input](../input)
  - [ce-select](../select)

@@ -26,7 +26,7 @@
 - [ce-choices](../../../ui/choices)
 - [ce-format-number](../../../util/format-number)
 - [ce-tag](../../../ui/tag)
-- [ce-dashboard-module](../../../ui/ce-dashboard-module)
+- [ce-dashboard-module](../../../ui/dashboard-module)
 - [ce-form](../../../ui/form)
 - [ce-icon](../../../ui/icon)
 - [ce-block-ui](../../../ui/block-ui)

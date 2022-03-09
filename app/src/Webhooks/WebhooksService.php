@@ -2,6 +2,7 @@
 
 namespace CheckoutEngine\Webhooks;
 
+use CheckoutEngine\Models\ApiToken;
 use CheckoutEngine\Models\Webhook;
 use CheckoutEngine\Support\Encryption;
 
@@ -47,10 +48,10 @@ class WebhooksService {
 	 * @return void
 	 */
 	public function maybeCreateWebooks() {
-		// TODO: Check for API key and early return if not.
-		// if( ! \CheckoutEngine::hasApiKey()) {
-		// return false;
-		// }
+		// Check for API key and early return if not.
+		if ( empty( ApiToken::get() ) ) {
+			return false;
+		}
 
 		// skip if we've already registered for this domain and has a signing secret saved.
 		if ( $this->domainMatches() && $this->hasSigningSecret() ) {

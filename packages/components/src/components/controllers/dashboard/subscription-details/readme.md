@@ -19,8 +19,8 @@
 ### Used by
 
  - [ce-subscription](../subscription)
- - [ce-subscription-cancel](../ce-subscription-cancel)
- - [ce-subscription-renew](../ce-subscription-renew)
+ - [ce-subscription-cancel](../subscription-cancel)
+ - [ce-subscription-renew](../subscription-renew)
  - [ce-subscriptions-list](../subscriptions-list)
 
 ### Depends on

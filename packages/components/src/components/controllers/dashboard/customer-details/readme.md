@@ -17,14 +17,14 @@
 
 ### Depends on
 
-- [ce-stacked-list-row](../../../ui/ce-stacked-list-row)
+- [ce-stacked-list-row](../../../ui/stacked-list-row)
 - [ce-skeleton](../../../ui/skeleton)
-- [ce-dashboard-module](../../../ui/ce-dashboard-module)
+- [ce-dashboard-module](../../../ui/dashboard-module)
 - [ce-tag](../../../ui/tag)
 - [ce-button](../../../ui/button)
 - [ce-icon](../../../ui/icon)
 - [ce-card](../../../ui/card)
-- [ce-stacked-list](../../../ui/ce-stacked-list)
+- [ce-stacked-list](../../../ui/stacked-list)
 
 ### Graph
 ```mermaid
