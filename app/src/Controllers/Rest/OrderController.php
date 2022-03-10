@@ -5,6 +5,7 @@ namespace CheckoutEngine\Controllers\Rest;
 use CheckoutEngine\Models\Order;
 use CheckoutEngine\Models\Form;
 use CheckoutEngine\Models\User;
+use CheckoutEngine\WordPress\Users\CustomerLinkService;
 
 /**
  * Handle price requests through the REST API
@@ -88,7 +89,7 @@ class OrderController extends RestController {
 			}
 			$mode = 'test';
 		}
-		return $class->setMode( apply_filters( 'checkout_engine/request/mode', $mode, $request ) );
+		return $class;
 	}
 
 	/**
@@ -124,7 +125,36 @@ class OrderController extends RestController {
 			->where( $request->get_query_params() )
 			->finalize( array_diff_assoc( $request->get_params(), $request->get_query_params() ) );
 
+		// return early if errors.
+		if ( is_wp_error( $finalized_order ) ) {
+			return $finalized_order;
+		}
+
+		// link the customer id to the user.
+		$linked = $this->linkCustomerId( $finalized_order, $request );
+		if ( is_wp_error( $linked ) ) {
+			return $linked;
+		}
+
+		// maybe login the user if a password is sent.
+		$login = $this->maybeLoginUser( $request->get_param( 'email' ), $request->get_param( 'password' ) );
+		if ( is_wp_error( $login ) ) {
+			return $login;
+		}
+
+		// finalize the order.
 		return $finalized_order;
+	}
+
+	/**
+	 * Link the customer id to the order.
+	 *
+	 * @param \CheckoutEngine\Models\Order $order Order model.
+	 * @return \WP_User|\WP_Error
+	 */
+	public function linkCustomerId( $order, $request ) {
+		$service = new CustomerLinkService( $order, $request->get_param( 'password' ) );
+		return $service->link();
 	}
 
 	/**
@@ -137,59 +167,53 @@ class OrderController extends RestController {
 	public function validate( $args, $request ) {
 		$errors = new \WP_Error();
 
-		// validate email/password.
-		if ( $request->get_param( 'password' ) && $request->get_param( 'email' ) ) {
-			$user = $this->createOrLoginUser( $request->get_param( 'email' ), $request->get_param( 'name' ), $request->get_param( 'password' ) );
-			if ( is_wp_error( $user ) ) {
-				$errors->add( $user->get_error_code(), $user->get_error_message() );
-			}
+		// check if they are trying to sign in.
+		$valid_login = $this->maybeValidateLoginCreds( $request->get_param( 'email' ), $request->get_param( 'password' ) );
+		if ( is_wp_error( $valid_login ) ) {
+			$errors->add( $valid_login->get_error_code(), $valid_login->get_error_message() );
 		}
 
 		return apply_filters( 'checkout_engine/checkout/validate', $errors, $args, $request );
 	}
 
 	/**
+	 * Check if the user is trying to sign in.
+	 * If so, validate credentials before finalizing.
+	 *
+	 * @param string $email Email.
+	 * @param string $password Password.
+	 *
+	 * @return true|\WP_Error
+	 */
+	public function maybeValidateLoginCreds( $email = '', $password = '' ) {
+		// check if the person is signing in using a password and sign them in.
+		if ( $password && $email ) {
+			// user exists, try signing in with password.
+			$user = get_user_by( 'email', $email );
+			// if there's a user, check the username and password before we submit the order.
+			if ( false !== $user ) {
+				return wp_authenticate_username_password( null, $user->user_login, $password );
+			}
+		}
+		return true;
+	}
+
+	/**
 	 * Create or login the user.
 	 *
 	 * @param string $user_email Username.
-	 * @param string $user_name User email.
 	 * @param string $password User password.
 	 * @return \WP_Error|true
 	 */
-	protected function createOrLoginUser( $user_email, $user_name, $password ) {
-		if ( empty( $password ) || empty( $user_email ) ) {
+	protected function maybeLoginUser( $user_email, $password = '' ) {
+		if ( empty( $password ) ) {
 			return;
 		}
-
-		// user exists, try signing in with password.
-		$user = get_user_by( 'email', $user_email );
-
-		// if there's a user, try to sign them in with the password.
-		if ( false !== $user ) {
-			$user = wp_signon(
-				[
-					'user_login'    => $user_email,
-					'user_password' => $password,
-				]
-			);
-			return is_wp_error( $user ) ? $user : true;
-		}
-
-		// otherwise, create the user with the info.
-		$user = User::create(
+		return wp_signon(
 			[
-				'user_name'     => empty( $user_name ) ? $user_name : $user_email,
-				'user_email'    => $user_email,
+				'user_login'    => $user_email,
 				'user_password' => $password,
 			]
 		);
-
-		if ( is_wp_error( $user ) ) {
-			return $user;
-		}
-
-		$user->login();
-
-		return ! empty( $user->ID ) ? true : new \WP_Error( 'error', __( 'Could not create the user.', 'checkout_engine' ) );
 	}
 }

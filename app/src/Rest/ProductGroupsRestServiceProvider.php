@@ -76,7 +76,7 @@ class ProductGroupsRestServiceProvider extends RestServiceProvider implements Re
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_items_permissions_check( $request ) {
-		if ( ! empty( $request['ids'] ) && false === $request['archived'] ) {
+		if ( ! empty( $request['ids'] ) && true !== $request['archived'] ) {
 			return true;
 		}
 

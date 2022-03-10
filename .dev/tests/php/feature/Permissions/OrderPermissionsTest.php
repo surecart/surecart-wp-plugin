@@ -28,7 +28,6 @@ class OrderPermissionsTest extends CheckoutEngineUnitTestCase {
 		parent::setUp();
 	}
 
-	/** @group failing */
 	public function test_edit_and_view_draft_permissions()
 	{
 		\CheckoutEngine::plugin()->activation()->bootstrap();

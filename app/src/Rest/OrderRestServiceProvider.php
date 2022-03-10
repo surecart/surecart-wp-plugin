@@ -154,6 +154,8 @@ class OrderRestServiceProvider extends RestServiceProvider implements RestServic
 			return rest_filter_response_by_context( $data, $schema, 'edit' );
 		}
 
+		$data = is_a( $data, 'WP_REST_Response' ) ? $data->get_data() : $data;
+
 		// if the user is logged in, and we have customer data.
 		// if it matches the current customer, then we can show the edit context.
 		if ( is_user_logged_in() && ! empty( $data['customer'] ) ) {

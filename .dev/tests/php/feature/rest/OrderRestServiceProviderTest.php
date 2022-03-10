@@ -43,7 +43,9 @@ class OrderRestServiceProviderTest extends CheckoutEngineUnitTestCase {
 		$requests->shouldReceive('makeRequest')
 			->once()
 			->withSomeOfArgs('orders/testid/finalize/')
-			->andReturn([]);
+			->andReturn([
+				'email' => 'test@test.com'
+			]);
 
 		$request = new WP_REST_Request('PATCH', '/checkout-engine/v1/orders/testid/finalize');
 		$request->set_query_params(['form_id'=> $test_form->ID]);

@@ -87,7 +87,8 @@ class User implements ArrayAccess, JsonSerializable {
 	protected function setCustomerId( $id, $mode = 'live' ) {
 		$meta          = (array) get_user_meta( $this->user->ID, $this->customer_id_key, true );
 		$meta[ $mode ] = $id;
-		return update_user_meta( $this->user->ID, $this->customer_id_key, $meta );
+		update_user_meta( $this->user->ID, $this->customer_id_key, $meta );
+		return $this;
 	}
 
 	/**

@@ -89,7 +89,6 @@ class OrderTest extends CheckoutEngineUnitTestCase
 	/**
 	 * @group session
 	 * @group models
-	 * @group failing
 	 */
 	public function test_finalize_order()
 	{
@@ -128,30 +127,5 @@ class OrderTest extends CheckoutEngineUnitTestCase
 
 		// make sure attriutes page
 		$this->assertEquals($prepared->getAttributes(), $response);
-		// user cureated with customer record
-		$user = User::getUserBy('email', $response['customer']['email']);
-		$this->assertNotFalse($user->ID);
-		$this->assertSame($user->customerId(), $response['customer']['id']);
-	}
-
-	public function test_maybeAssociateUser() {
-		// empty order won't work.
-		$instance = new Order([]);
-		$this->assertFalse($instance->maybeAssociateUser());
-
-		// needs id
-		$instance['id'] = 'test_order';
-		$this->assertFalse($instance->maybeAssociateUser());
-
-		// needs customer
-		$instance['customer'] = [
-			'id' => 'test_customer',
-			'email' => 'test@test.com',
-		];
-		$associated = $instance->maybeAssociateUser();
-		$this->assertNotFalse($associated);
-		$this->assertInstanceOf(User::class, $associated);
-		$this->assertSame($associated->user_email, 'test@test.com');
-		$this->assertNotFalse(get_user_by('email', $associated->user_email));
 	}
 }

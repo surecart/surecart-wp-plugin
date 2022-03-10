@@ -122,12 +122,11 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_items_permissions_check( $request ) {
-		// anyone can get them if they have the ids.
-		if ( ! empty( $request['ids'] ) && false === $request['archived'] ) {
-			return true;
+		if ( $request['archived'] ) {
+			return current_user_can( 'edit_ce_products' );
 		}
 
-		return current_user_can( 'edit_ce_products' );
+		return true;
 	}
 
 	/**

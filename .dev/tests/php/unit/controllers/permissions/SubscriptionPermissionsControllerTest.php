@@ -28,9 +28,6 @@ class SubscriptionPermissionsControllerTest extends CheckoutEngineUnitTestCase {
 		parent::setUp();
 	}
 
-	/**
-	 * @group failing
-	 */
 	public function test_handle_edit_subscription()
 	{
 		// mock the requests in the container
