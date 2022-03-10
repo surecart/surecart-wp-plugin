@@ -66,7 +66,7 @@ class User implements ArrayAccess, JsonSerializable {
 		if ( empty( $this->user->ID ) ) {
 			return '';
 		}
-		return (array) get_user_meta( $this->user->ID, $this->customer_id_key, true );
+		return array_filter( (array) get_user_meta( $this->user->ID, $this->customer_id_key, true ) );
 	}
 
 	/**
