@@ -42,12 +42,6 @@ abstract class ModelPermissionsController {
 				return false;
 			}
 
-			// we need a customer id first.
-			$customer_id = $user->customerId();
-			if ( ! $customer_id ) {
-				return false;
-			}
-
 			// check permission.
 			$permission = $this->$name( $user, $args );
 			if ( $permission ) {
@@ -70,7 +64,7 @@ abstract class ModelPermissionsController {
 	public function belongsToUser( $model, $id, $user ) {
 		$subscription = $model::find( $id );
 		if ( is_wp_error( $subscription ) ) {
-			return false;
+			return $subscription;
 		}
 		return $subscription->belongsToUser( $user );
 	}

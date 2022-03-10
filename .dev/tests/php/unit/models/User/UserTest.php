@@ -21,9 +21,7 @@ class UserTest extends CheckoutEngineUnitTestCase {
 		$this->assertNotEmpty($model_2->user_email);
 		$this->assertEquals($user_2->user_email, $model_2->user_email);
 	}
-	/**
-	 * @group failing
-	 */
+
 	public function test_findByCustomerId() {
 		$user_id = $this->factory->user->create();
 		$user_id_2 = $this->factory->user->create();

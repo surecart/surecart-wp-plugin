@@ -18,6 +18,7 @@ class Block extends DashboardPage {
 		'payment_method' => \CheckoutEngineBlocks\Controllers\PaymentMethodController::class,
 		'charge'         => \CheckoutEngineBlocks\Controllers\ChargeController::class,
 		'order'          => \CheckoutEngineBlocks\Controllers\OrderController::class,
+		'user'           => \CheckoutEngineBlocks\Controllers\UserController::class,
 		'customer'       => \CheckoutEngineBlocks\Controllers\CustomerController::class,
 		'invoice'        => \CheckoutEngineBlocks\Controllers\InvoiceController::class,
 	];

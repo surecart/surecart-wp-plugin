@@ -1115,5 +1115,31 @@
     "id": true,
     "class": true,
     "slot": true
+  },
+  "ce-wordpress-password-edit": {
+    "heading": true,
+    "success-url": true,
+    "user": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-wordpress-user": {
+    "heading": true,
+    "user": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-wordpress-user-edit": {
+    "heading": true,
+    "success-url": true,
+    "user": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
   }
 }

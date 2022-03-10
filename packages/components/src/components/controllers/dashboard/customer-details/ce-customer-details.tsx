@@ -34,7 +34,7 @@ export class CeCustomerDetails {
         {!!this?.customer?.name && (
           <ce-stacked-list-row style={{ '--columns': '3' }} mobileSize={480}>
             <div>
-              <strong>{__('Name', 'checkout_engine')}</strong>
+              <strong>{__('Billing Name', 'checkout_engine')}</strong>
             </div>
             <div>{this.customer?.name}</div>
             <div></div>

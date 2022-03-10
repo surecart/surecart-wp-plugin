@@ -66,6 +66,7 @@ return [
 		\CheckoutEngineBlocks\Blocks\CheckoutForm\Block::class,
 		\CheckoutEngineBlocks\Blocks\Form\Block::class,
 		\CheckoutEngineBlocks\Blocks\LogoutButton\Block::class,
+		\CheckoutEngineBlocks\Blocks\Dashboard\WordPressAccount\Block::class,
 		\CheckoutEngineBlocks\Blocks\Dashboard\CustomerCharges\Block::class,
 		\CheckoutEngineBlocks\Blocks\Dashboard\CustomerDashboard\Block::class,
 		\CheckoutEngineBlocks\Blocks\Dashboard\CustomerOrders\Block::class,

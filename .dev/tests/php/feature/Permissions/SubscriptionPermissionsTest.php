@@ -1,6 +1,7 @@
 <?php
 namespace CheckoutEngine\Tests;
 
+use CheckoutEngine\Models\User;
 use CheckoutEngine\Request\RequestService;
 use CheckoutEngine\Tests\CheckoutEngineUnitTestCase;
 
@@ -45,12 +46,10 @@ class SubscriptionPermissionsTest extends CheckoutEngineUnitTestCase {
 				'customer' => 'testcustomerid'
 			]);
 
-		$user = self::factory()->user->create_and_get();
-		add_user_meta( $user->ID, 'ce_customer_id', 'testcustomerid' );
-
-		$this->assertFalse(user_can($user, 'read_ce_subscriptions'));
-		$this->assertTrue(user_can($user, 'edit_ce_subscription', 'testid'));
-		// $this->assertTrue(user_can($user, 'read_ce_subscription', 'testid'));
+		$user = User::find(self::factory()->user->create());
+		$user->setCustomerId('testcustomerid');
+		$this->assertFalse(user_can($user->ID, 'read_ce_subscriptions'));
+		$this->assertTrue(user_can($user->ID, 'edit_ce_subscription', 'testid'));
 	}
 
 }

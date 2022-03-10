@@ -91,7 +91,7 @@ export default ({ subscriptionId }) => {
 							),
 							status: (
 								<CeOrderStatusBadge
-									invoice={invoice}
+									status={invoice?.status}
 								></CeOrderStatusBadge>
 							),
 							created: (

@@ -112,3 +112,6 @@ export const CeText = /*@__PURE__*/createReactComponent<JSX.CeText, HTMLCeTextEl
 export const CeTooltip = /*@__PURE__*/createReactComponent<JSX.CeTooltip, HTMLCeTooltipElement>('ce-tooltip');
 export const CeTotal = /*@__PURE__*/createReactComponent<JSX.CeTotal, HTMLCeTotalElement>('ce-total');
 export const CeUpcomingInvoice = /*@__PURE__*/createReactComponent<JSX.CeUpcomingInvoice, HTMLCeUpcomingInvoiceElement>('ce-upcoming-invoice');
+export const CeWordpressPasswordEdit = /*@__PURE__*/createReactComponent<JSX.CeWordpressPasswordEdit, HTMLCeWordpressPasswordEditElement>('ce-wordpress-password-edit');
+export const CeWordpressUser = /*@__PURE__*/createReactComponent<JSX.CeWordpressUser, HTMLCeWordpressUserElement>('ce-wordpress-user');
+export const CeWordpressUserEdit = /*@__PURE__*/createReactComponent<JSX.CeWordpressUserEdit, HTMLCeWordpressUserEditElement>('ce-wordpress-user-edit');

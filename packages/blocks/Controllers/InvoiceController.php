@@ -21,7 +21,7 @@ class InvoiceController extends BaseController {
 			->id( 'customer-invoices-preview' )
 			->with(
 				[
-					'heading' => __( 'Invoice History', 'checkout-engine' ),
+					'heading' => $attributes['title'] ?? __( 'Invoice History', 'checkout-engine' ),
 					'allLink' => add_query_arg(
 						[
 							'tab'    => $this->getTab(),

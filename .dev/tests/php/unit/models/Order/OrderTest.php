@@ -89,6 +89,7 @@ class OrderTest extends CheckoutEngineUnitTestCase
 	/**
 	 * @group session
 	 * @group models
+	 * @group failing
 	 */
 	public function test_finalize_order()
 	{
@@ -128,9 +129,9 @@ class OrderTest extends CheckoutEngineUnitTestCase
 		// make sure attriutes page
 		$this->assertEquals($prepared->getAttributes(), $response);
 		// user cureated with customer record
-		// $user = User::getUserBy('email', $response['customer']['email']);
-		// $this->assertNotFalse($user->ID);
-		// $this->assertSame($user->customerId(), $response['customer']['id']);
+		$user = User::getUserBy('email', $response['customer']['email']);
+		$this->assertNotFalse($user->ID);
+		$this->assertSame($user->customerId(), $response['customer']['id']);
 	}
 
 	public function test_maybeAssociateUser() {

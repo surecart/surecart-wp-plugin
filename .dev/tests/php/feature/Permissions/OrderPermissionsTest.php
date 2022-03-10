@@ -1,6 +1,7 @@
 <?php
 namespace CheckoutEngine\Tests;
 
+use CheckoutEngine\Models\User;
 use CheckoutEngine\Request\RequestService;
 use CheckoutEngine\Tests\CheckoutEngineUnitTestCase;
 
@@ -27,6 +28,7 @@ class OrderPermissionsTest extends CheckoutEngineUnitTestCase {
 		parent::setUp();
 	}
 
+	/** @group failing */
 	public function test_edit_and_view_draft_permissions()
 	{
 		\CheckoutEngine::plugin()->activation()->bootstrap();
@@ -38,6 +40,8 @@ class OrderPermissionsTest extends CheckoutEngineUnitTestCase {
 		});
 
 		$requests->shouldReceive('makeRequest')
+			->atLeast()
+			->once()
 			->withSomeOfArgs('orders/testid')
 			->andReturn((object) [
 				'id' => 'testid',
@@ -48,9 +52,9 @@ class OrderPermissionsTest extends CheckoutEngineUnitTestCase {
 
 		$user = self::factory()->user->create_and_get();
 
-		$this->assertFalse(user_can($user, 'read_ce_orders'));
-		$this->assertTrue(user_can($user, 'edit_ce_order', 'testid'));
-		$this->assertTrue(user_can($user, 'read_ce_order', 'testid'));
+		$this->assertFalse(user_can($user, 'read_ce_orders', 'Users should not be able to read orders by default'));
+		$this->assertTrue(user_can($user, 'edit_ce_order', 'testid'), 'Anyone can edit a draft order.');
+		$this->assertTrue(user_can($user, 'read_ce_order', 'testid', 'Anyone can read a draft order.'));
 	}
 
 	public function test_edit_and_view_paid_completed_permissions() {
@@ -71,12 +75,12 @@ class OrderPermissionsTest extends CheckoutEngineUnitTestCase {
 				'status' => 'completed'
 			]);
 
-		$user = self::factory()->user->create_and_get();
-		add_user_meta( $user->ID, 'ce_customer_id', 'testcustomerid' );
+		$user = User::find(self::factory()->user->create());
+		$user->setCustomerId('testcustomerid');
 
-		$this->assertFalse(user_can($user, 'read_ce_orders'));
-		$this->assertFalse(user_can($user, 'edit_ce_order', 'testid'));
-		$this->assertTrue(user_can($user, 'read_ce_order', 'testid'));
+		$this->assertFalse(user_can($user->ID, 'read_ce_orders'));
+		$this->assertFalse(user_can($user->ID, 'edit_ce_order', 'testid'));
+		$this->assertTrue(user_can($user->ID, 'read_ce_order', 'testid'));
 
 		$requests->shouldReceive('makeRequest')
 		->withSomeOfArgs('orders/testid')
@@ -87,9 +91,9 @@ class OrderPermissionsTest extends CheckoutEngineUnitTestCase {
 			'status' => 'paid'
 		]);
 
-		$this->assertFalse(user_can($user, 'read_ce_orders'));
-		$this->assertFalse(user_can($user, 'edit_ce_order', 'testid'));
-		$this->assertTrue(user_can($user, 'read_ce_order', 'testid'));
+		$this->assertFalse(user_can($user->ID, 'read_ce_orders'));
+		$this->assertFalse(user_can($user->ID, 'edit_ce_order', 'testid'));
+		$this->assertTrue(user_can($user->ID, 'read_ce_order', 'testid'));
 	}
 
 }

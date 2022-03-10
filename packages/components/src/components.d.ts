@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Address, ChoiceItem, Coupon, Customer, DiscountResponse, LineItemData, Order, OrderStatus, PaymentMethod, Price, PriceChoice, Prices, ProductGroup, Products, ResponseError, Subscription, SubscriptionStatus, TaxStatus } from "./types";
+import { Address, ChoiceItem, Coupon, Customer, DiscountResponse, LineItemData, Order, OrderStatus, PaymentMethod, Price, PriceChoice, Prices, ProductGroup, Products, ResponseError, Subscription, SubscriptionStatus, TaxStatus, WordPressUser } from "./types";
 import { IconLibraryMutator, IconLibraryResolver } from "./components/ui/icon/library";
 export namespace Components {
     interface CeAddress {
@@ -1828,6 +1828,20 @@ export namespace Components {
         "subscriptionId": string;
         "successUrl": string;
     }
+    interface CeWordpressPasswordEdit {
+        "heading": string;
+        "successUrl": string;
+        "user": WordPressUser;
+    }
+    interface CeWordpressUser {
+        "heading": string;
+        "user": WordPressUser;
+    }
+    interface CeWordpressUserEdit {
+        "heading": string;
+        "successUrl": string;
+        "user": WordPressUser;
+    }
 }
 declare global {
     interface HTMLCeAddressElement extends Components.CeAddress, HTMLStencilElement {
@@ -2460,6 +2474,24 @@ declare global {
         prototype: HTMLCeUpcomingInvoiceElement;
         new (): HTMLCeUpcomingInvoiceElement;
     };
+    interface HTMLCeWordpressPasswordEditElement extends Components.CeWordpressPasswordEdit, HTMLStencilElement {
+    }
+    var HTMLCeWordpressPasswordEditElement: {
+        prototype: HTMLCeWordpressPasswordEditElement;
+        new (): HTMLCeWordpressPasswordEditElement;
+    };
+    interface HTMLCeWordpressUserElement extends Components.CeWordpressUser, HTMLStencilElement {
+    }
+    var HTMLCeWordpressUserElement: {
+        prototype: HTMLCeWordpressUserElement;
+        new (): HTMLCeWordpressUserElement;
+    };
+    interface HTMLCeWordpressUserEditElement extends Components.CeWordpressUserEdit, HTMLStencilElement {
+    }
+    var HTMLCeWordpressUserEditElement: {
+        prototype: HTMLCeWordpressUserEditElement;
+        new (): HTMLCeWordpressUserEditElement;
+    };
     interface HTMLElementTagNameMap {
         "ce-address": HTMLCeAddressElement;
         "ce-alert": HTMLCeAlertElement;
@@ -2566,6 +2598,9 @@ declare global {
         "ce-tooltip": HTMLCeTooltipElement;
         "ce-total": HTMLCeTotalElement;
         "ce-upcoming-invoice": HTMLCeUpcomingInvoiceElement;
+        "ce-wordpress-password-edit": HTMLCeWordpressPasswordEditElement;
+        "ce-wordpress-user": HTMLCeWordpressUserElement;
+        "ce-wordpress-user-edit": HTMLCeWordpressUserEditElement;
     }
 }
 declare namespace LocalJSX {
@@ -4505,6 +4540,14 @@ declare namespace LocalJSX {
         "type"?: 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'default';
     }
     interface CeTaxIdInput {
+        /**
+          * Set the checkout state.
+         */
+        "onCeSetState"?: (event: CustomEvent<string>) => void;
+        /**
+          * Make a request to update the order.
+         */
+        "onCeUpdateOrder"?: (event: CustomEvent<Partial<Order>>) => void;
         "order"?: Order;
         /**
           * Force show the field.
@@ -4557,6 +4600,20 @@ declare namespace LocalJSX {
         "quantity"?: number;
         "subscriptionId"?: string;
         "successUrl"?: string;
+    }
+    interface CeWordpressPasswordEdit {
+        "heading"?: string;
+        "successUrl"?: string;
+        "user"?: WordPressUser;
+    }
+    interface CeWordpressUser {
+        "heading"?: string;
+        "user"?: WordPressUser;
+    }
+    interface CeWordpressUserEdit {
+        "heading"?: string;
+        "successUrl"?: string;
+        "user"?: WordPressUser;
     }
     interface IntrinsicElements {
         "ce-address": CeAddress;
@@ -4664,6 +4721,9 @@ declare namespace LocalJSX {
         "ce-tooltip": CeTooltip;
         "ce-total": CeTotal;
         "ce-upcoming-invoice": CeUpcomingInvoice;
+        "ce-wordpress-password-edit": CeWordpressPasswordEdit;
+        "ce-wordpress-user": CeWordpressUser;
+        "ce-wordpress-user-edit": CeWordpressUserEdit;
     }
 }
 export { LocalJSX as JSX };
@@ -4775,6 +4835,9 @@ declare module "@stencil/core" {
             "ce-tooltip": LocalJSX.CeTooltip & JSXBase.HTMLAttributes<HTMLCeTooltipElement>;
             "ce-total": LocalJSX.CeTotal & JSXBase.HTMLAttributes<HTMLCeTotalElement>;
             "ce-upcoming-invoice": LocalJSX.CeUpcomingInvoice & JSXBase.HTMLAttributes<HTMLCeUpcomingInvoiceElement>;
+            "ce-wordpress-password-edit": LocalJSX.CeWordpressPasswordEdit & JSXBase.HTMLAttributes<HTMLCeWordpressPasswordEditElement>;
+            "ce-wordpress-user": LocalJSX.CeWordpressUser & JSXBase.HTMLAttributes<HTMLCeWordpressUserElement>;
+            "ce-wordpress-user-edit": LocalJSX.CeWordpressUserEdit & JSXBase.HTMLAttributes<HTMLCeWordpressUserEditElement>;
         }
     }
 }

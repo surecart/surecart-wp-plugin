@@ -63,8 +63,8 @@
 				<ce-flex flex-direction="column">
 					<ce-dashboard-module>
 						<ce-card>
-							<ce-input label="<?php echo esc_attr_e( 'Enter your API Token', 'checkout_engine' ); ?>" type="password" name="api_token" placeholder="<?php echo esc_attr_e( 'Api token', 'checkout_engine' ); ?>" autofocus></ce-input>
-							<ce-button type="primary" submit>
+							<ce-input size="large" label="<?php echo esc_attr_e( 'Enter your API Token', 'checkout_engine' ); ?>" type="password" name="api_token" placeholder="<?php echo esc_attr_e( 'Api token', 'checkout_engine' ); ?>" autofocus></ce-input>
+							<ce-button type="primary" size="large" full submit>
 								<?php esc_html_e( 'Complete Installation', 'checkout_engine' ); ?>
 								<ce-icon name="arrow-right" slot="suffix"></ce-icon>
 							</ce-button>

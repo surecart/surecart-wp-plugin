@@ -250,6 +250,7 @@ class User implements ArrayAccess, JsonSerializable {
 				],
 			]
 		);
+
 		if ( empty( $users->results ) ) {
 			return false;
 		}

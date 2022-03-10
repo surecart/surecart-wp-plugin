@@ -80,8 +80,13 @@ trait CanFinalize {
 
 		// find any existing users.
 		$existing = User::getUserBy( 'email', $customer['email'] );
+
 		// If they match.
-		if ( $existing && $customer['id'] === $existing->customerId( $this->live_mode ? 'live' : 'test' ) ) {
+		if ( $existing ) {
+			// maybe update the customer id.
+			if ( $customer['id'] !== $existing->customerId( $this->live_mode ? 'live' : 'test' ) ) {
+				$existing->setCustomerId( $customer['id'], $this->live_mode ? 'live' : 'test' );
+			}
 			return $existing;
 		}
 

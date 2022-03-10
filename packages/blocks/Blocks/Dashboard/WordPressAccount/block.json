@@ -1,0 +1,19 @@
+{
+	"apiVersion": 2,
+	"name": "checkout-engine/wordpress-account",
+	"title": "WordPress User Account",
+	"description": "WordPress User Account Information",
+	"category": "layout",
+	"keywords": ["account", "user", "dashboard"],
+	"parent": ["checkout-engine/dashboard-page"],
+	"supports": {
+		"reusable": false,
+		"html": false
+	},
+	"attributes": {
+		"title": {
+			"type": "string",
+			"default": "Account Details"
+		}
+	}
+}

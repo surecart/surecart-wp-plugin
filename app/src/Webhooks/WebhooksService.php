@@ -43,14 +43,23 @@ class WebhooksService {
 	}
 
 	/**
+	 * Do we have a token.
+	 *
+	 * @return boolean
+	 */
+	public function hasToken() {
+		return ! empty( ApiToken::get() );
+	}
+
+	/**
 	 * Create webhooks for this site.
 	 *
 	 * @return void
 	 */
 	public function maybeCreateWebooks() {
 		// Check for API key and early return if not.
-		if ( empty( ApiToken::get() ) ) {
-			return false;
+		if ( ! $this->hasToken() ) {
+			return;
 		}
 
 		// skip if we've already registered for this domain and has a signing secret saved.

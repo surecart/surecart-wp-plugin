@@ -45,44 +45,23 @@ export default ({ attributes, setAttributes }) => {
 				<ce-card no-padding>
 					<ce-stacked-list>
 						<ce-stacked-list-row style={{ '--columns': '3' }}>
-							<div>{__('Billing Name', 'checkout_engine')}</div>
+							<div>{__('Display Name', 'checkout_engine')}</div>
 							<div>Jane Doe</div>
 							<div></div>
 						</ce-stacked-list-row>
 						<ce-stacked-list-row style={{ '--columns': '3' }}>
-							<div>{__('Billing Email', 'checkout_engine')}</div>
+							<div>{__('Email Address', 'checkout_engine')}</div>
 							<div>customer@email.com</div>
 							<div></div>
 						</ce-stacked-list-row>
 						<ce-stacked-list-row style={{ '--columns': '3' }}>
-							<div>
-								{__('Shipping Address', 'checkout_engine')}
-							</div>
-							<div>
-								3606 Neville Street
-								<br />
-								Terre Haute, Indiana 47802
-								<br />
-								USA
-							</div>
+							<div>{__('First Name', 'checkout_engine')}</div>
+							<div>Jane Doe</div>
 							<div></div>
 						</ce-stacked-list-row>
 						<ce-stacked-list-row style={{ '--columns': '3' }}>
-							<div>
-								{__('Billing Address', 'checkout_engine')}
-							</div>
-							<div>
-								3606 Neville Street
-								<br />
-								Terre Haute, Indiana 47802
-								<br />
-								USA
-							</div>
-							<div></div>
-						</ce-stacked-list-row>
-						<ce-stacked-list-row style={{ '--columns': '3' }}>
-							<div>{__('Phone', 'checkout_engine')}</div>
-							<div>555-867-5309</div>
+							<div>{__('Last Name', 'checkout_engine')}</div>
+							<div>Jane Doe</div>
 							<div></div>
 						</ce-stacked-list-row>
 					</ce-stacked-list>

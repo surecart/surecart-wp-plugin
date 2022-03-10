@@ -11,10 +11,6 @@
 		"html": false
 	},
 	"attributes": {
-		"per_page": {
-			"type": "number",
-			"default": "10"
-		},
 		"title": {
 			"type": "string",
 			"default": "Billing Details"

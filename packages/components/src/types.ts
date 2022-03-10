@@ -377,6 +377,13 @@ export interface SetupIntent extends Object {
   updated_at: number;
 }
 
+export interface WordPressUser {
+  id: number;
+  display_name: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+}
 export interface Customer extends Object {
   id: string;
   email: string;

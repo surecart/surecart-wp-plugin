@@ -17,6 +17,7 @@ class WebhookServiceTest extends CheckoutEngineUnitTestCase {
 	{
 		$domain_service = new WebhooksHistoryService();
 		$service = \Mockery::mock(WebhooksService::class, [$domain_service])->makePartial();
+		$service->shouldReceive('hasToken')->once()->andReturn(true);
 		$service->shouldReceive('domainMatches')->once()->andReturn(true);
 		$service->shouldReceive('hasSigningSecret')->once()->andReturn(true);
 
@@ -26,6 +27,7 @@ class WebhookServiceTest extends CheckoutEngineUnitTestCase {
 	public function test_registers_webhooks_if_doesnt_have_signing_secret() {
 		$domain_service = new WebhooksHistoryService();
 		$service = \Mockery::mock(WebhooksService::class, [$domain_service])->makePartial();
+		$service->shouldReceive('hasToken')->once()->andReturn(true);
 		$service->shouldReceive('domainMatches')->once()->andReturn(true);
 		$service->shouldReceive('hasSigningSecret')->once()->andReturn(false);
 		$service->shouldReceive('register')->once()->andReturn(new Webhook(['signing_secret' => 'secret']));
@@ -37,6 +39,7 @@ class WebhookServiceTest extends CheckoutEngineUnitTestCase {
 	public function test_registers_webhooks_if_domain_does_not_match() {
 		$domain_service = new WebhooksHistoryService();
 		$service = \Mockery::mock(WebhooksService::class, [$domain_service])->makePartial();
+		$service->shouldReceive('hasToken')->once()->andReturn(true);
 		$service->shouldReceive('domainMatches')->once()->andReturn(false);
 		$service->shouldReceive('register')->once()->andReturn(new Webhook(['signing_secret' => 'secret1']));
 

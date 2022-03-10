@@ -27,6 +27,7 @@ import * as customerInvoices from '@blocks/dashboard/CustomerInvoices';
 import * as customerSubscriptions from '@blocks/dashboard/CustomerSubscriptions';
 import * as customerPaymentMethods from '@blocks/dashboard/CustomerPaymentMethods';
 import * as customerBillingDetails from '@blocks/dashboard/CustomerBillingDetails';
+import * as WordPressAccount from '@blocks/dashboard/WordPressAccount';
 import * as dashboardPage from '@blocks/dashboard/DashboardPage';
 import * as dashboardPages from '@blocks/dashboard/DashboardPages';
 import * as dashboardTab from '@blocks/dashboard/DashboardTab';
@@ -66,6 +67,7 @@ const dashboardComponents = [
 	dashboardTabs,
 	dashboardTab,
 	dashboardPages,
+	WordPressAccount,
 	customerShippingAddress,
 	dashboardPage,
 	customerSubscriptions,

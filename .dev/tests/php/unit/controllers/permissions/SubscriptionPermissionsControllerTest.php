@@ -1,6 +1,7 @@
 <?php
 namespace CheckoutEngine\Tests\Controllers\Permissions;
 
+use CheckoutEngine\Models\User;
 use CheckoutEngine\Permissions\Models\SubscriptionPermissionsController;
 use CheckoutEngine\Permissions\RolesServiceProvider;
 use CheckoutEngine\Request\RequestServiceProvider;
@@ -27,6 +28,9 @@ class SubscriptionPermissionsControllerTest extends CheckoutEngineUnitTestCase {
 		parent::setUp();
 	}
 
+	/**
+	 * @group failing
+	 */
 	public function test_handle_edit_subscription()
 	{
 		// mock the requests in the container
@@ -35,17 +39,21 @@ class SubscriptionPermissionsControllerTest extends CheckoutEngineUnitTestCase {
 			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
 		});
 
-		$user = self::factory()->user->create_and_get();
-		add_user_meta( $user->ID, 'ce_customer_id', 'testcustomerid' );
+		$user = User::find(self::factory()->user->create());
+		$user->setCustomerId('testcustomerid');
+
+		$user_fail = User::find(self::factory()->user->create());
+		$user_fail->setCustomerId('testcustomeridfail');
 
 		$requests->shouldReceive('makeRequest')
-		->once()
+		->twice()
 		->withSomeOfArgs('subscriptions/testid')
 		->andReturn([
 			'customer' => 'testcustomerid'
 		]);
 
 		$controller = new SubscriptionPermissionsController();
-		$this->assertTrue($controller->edit_ce_subscription( $user, [null, null, 'testid']));
+		$this->assertTrue($controller->edit_ce_subscription( $user->ID, [null, null, 'testid']));
+		$this->assertFalse($controller->edit_ce_subscription( $user_fail->ID, [null, null, 'testid']));
 	}
 }

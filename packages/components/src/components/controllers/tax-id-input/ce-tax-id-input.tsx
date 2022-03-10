@@ -1,4 +1,4 @@
-import { Component, h, Prop, Fragment, Watch, State } from '@stencil/core';
+import { Component, h, Prop, Fragment, Watch, State, Event, EventEmitter } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
 import { Address, Order, TaxStatus } from '../../../types';
@@ -16,6 +16,13 @@ export class CeTaxIdInput {
   @Prop() show: boolean = false;
 
   @State() type: string = null;
+  @State() number: string = null;
+
+  /** Make a request to update the order. */
+  @Event() ceUpdateOrder: EventEmitter<Partial<Order>>;
+
+  /** Set the checkout state. */
+  @Event() ceSetState: EventEmitter<string>;
 
   private zones = {
     ca_gst: {
@@ -58,6 +65,19 @@ export class CeTaxIdInput {
     }
   }
 
+  @Watch('number')
+  @Watch('type')
+  handleNumberTypeChange() {
+    if (this.number && this.type) {
+      this.ceUpdateOrder.emit({
+        tax_identifier: {
+          number: this.number,
+          number_type: this.type,
+        },
+      });
+    }
+  }
+
   @Watch('order')
   handleOrderChange(_, prev) {
     if (prev) return;
@@ -92,7 +112,6 @@ export class CeTaxIdInput {
   }
 
   componentDidLoad() {
-    // this.handleDraftChange();
     this.maybeForceShow();
   }
 
@@ -104,7 +123,7 @@ export class CeTaxIdInput {
     return (
       <Fragment>
         <input type="hidden" name="tax_identifier.number_type" value={this.type} />
-        <ce-input label={this?.zones?.[this?.type]?.label} name="tax_identifier.number">
+        <ce-input label={this?.zones?.[this?.type]?.label} name="tax_identifier.number" value={this.number} onCeChange={(e: any) => (this.number = e.target.value)}>
           <ce-dropdown slot="suffix" position="bottom-right">
             <ce-button type="text" slot="trigger" caret loading={false}>
               {this?.zones?.[this?.type]?.label_small}
