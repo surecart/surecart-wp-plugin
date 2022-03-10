@@ -21,17 +21,19 @@ export default ({ customer_id, customer }) => {
 			const queryArgs = [
 				'root',
 				'user',
-				{ ce_customer_ids: [customer_id] },
+				{
+					ce_customer_ids: [customer_id],
+					meta: { ce_customer_ids: [customer_id] },
+				},
 			];
 			const users = select(coreStore).getEntityRecords(...queryArgs);
 			const loading = select(coreStore).isResolving(
 				'getEntityRecords',
 				queryArgs
 			);
+
 			return {
-				users: (users || []).filter((user) => {
-					return user?.meta?.ce_customer_ids?.[mode] === customer_id;
-				}),
+				users,
 				loading,
 			};
 		},
