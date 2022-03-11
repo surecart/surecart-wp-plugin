@@ -2,8 +2,6 @@
 
 namespace CheckoutEngine\Models\Traits;
 
-use CheckoutEngine\Models\User;
-
 /**
  * If the model has an attached customer.
  */

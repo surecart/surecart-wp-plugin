@@ -646,6 +646,24 @@ export namespace Components {
     interface CeFormSection {
         "label": string;
     }
+    interface CeFormatBytes {
+        /**
+          * Determines how to display the result, e.g. "100 bytes", "100 b", or "100b".
+         */
+        "display": 'long' | 'short' | 'narrow';
+        /**
+          * The locale to use when formatting the number.
+         */
+        "locale": string;
+        /**
+          * The unit to display.
+         */
+        "unit": 'byte' | 'bit';
+        /**
+          * The number to format in bytes.
+         */
+        "value": number;
+    }
     interface CeFormatDate {
         /**
           * The date/time to format. If not set, the current date and time will be used.
@@ -2042,6 +2060,12 @@ declare global {
         prototype: HTMLCeFormSectionElement;
         new (): HTMLCeFormSectionElement;
     };
+    interface HTMLCeFormatBytesElement extends Components.CeFormatBytes, HTMLStencilElement {
+    }
+    var HTMLCeFormatBytesElement: {
+        prototype: HTMLCeFormatBytesElement;
+        new (): HTMLCeFormatBytesElement;
+    };
     interface HTMLCeFormatDateElement extends Components.CeFormatDate, HTMLStencilElement {
     }
     var HTMLCeFormatDateElement: {
@@ -2526,6 +2550,7 @@ declare global {
         "ce-form-control": HTMLCeFormControlElement;
         "ce-form-row": HTMLCeFormRowElement;
         "ce-form-section": HTMLCeFormSectionElement;
+        "ce-format-bytes": HTMLCeFormatBytesElement;
         "ce-format-date": HTMLCeFormatDateElement;
         "ce-format-interval": HTMLCeFormatIntervalElement;
         "ce-format-number": HTMLCeFormatNumberElement;
@@ -3311,6 +3336,24 @@ declare namespace LocalJSX {
     }
     interface CeFormSection {
         "label"?: string;
+    }
+    interface CeFormatBytes {
+        /**
+          * Determines how to display the result, e.g. "100 bytes", "100 b", or "100b".
+         */
+        "display"?: 'long' | 'short' | 'narrow';
+        /**
+          * The locale to use when formatting the number.
+         */
+        "locale"?: string;
+        /**
+          * The unit to display.
+         */
+        "unit"?: 'byte' | 'bit';
+        /**
+          * The number to format in bytes.
+         */
+        "value"?: number;
     }
     interface CeFormatDate {
         /**
@@ -4649,6 +4692,7 @@ declare namespace LocalJSX {
         "ce-form-control": CeFormControl;
         "ce-form-row": CeFormRow;
         "ce-form-section": CeFormSection;
+        "ce-format-bytes": CeFormatBytes;
         "ce-format-date": CeFormatDate;
         "ce-format-interval": CeFormatInterval;
         "ce-format-number": CeFormatNumber;
@@ -4763,6 +4807,7 @@ declare module "@stencil/core" {
             "ce-form-control": LocalJSX.CeFormControl & JSXBase.HTMLAttributes<HTMLCeFormControlElement>;
             "ce-form-row": LocalJSX.CeFormRow & JSXBase.HTMLAttributes<HTMLCeFormRowElement>;
             "ce-form-section": LocalJSX.CeFormSection & JSXBase.HTMLAttributes<HTMLCeFormSectionElement>;
+            "ce-format-bytes": LocalJSX.CeFormatBytes & JSXBase.HTMLAttributes<HTMLCeFormatBytesElement>;
             "ce-format-date": LocalJSX.CeFormatDate & JSXBase.HTMLAttributes<HTMLCeFormatDateElement>;
             "ce-format-interval": LocalJSX.CeFormatInterval & JSXBase.HTMLAttributes<HTMLCeFormatIntervalElement>;
             "ce-format-number": LocalJSX.CeFormatNumber & JSXBase.HTMLAttributes<HTMLCeFormatNumberElement>;

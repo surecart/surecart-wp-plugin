@@ -40,6 +40,7 @@ export const CeFormComponentsValidator = /*@__PURE__*/createReactComponent<JSX.C
 export const CeFormControl = /*@__PURE__*/createReactComponent<JSX.CeFormControl, HTMLCeFormControlElement>('ce-form-control');
 export const CeFormRow = /*@__PURE__*/createReactComponent<JSX.CeFormRow, HTMLCeFormRowElement>('ce-form-row');
 export const CeFormSection = /*@__PURE__*/createReactComponent<JSX.CeFormSection, HTMLCeFormSectionElement>('ce-form-section');
+export const CeFormatBytes = /*@__PURE__*/createReactComponent<JSX.CeFormatBytes, HTMLCeFormatBytesElement>('ce-format-bytes');
 export const CeFormatDate = /*@__PURE__*/createReactComponent<JSX.CeFormatDate, HTMLCeFormatDateElement>('ce-format-date');
 export const CeFormatInterval = /*@__PURE__*/createReactComponent<JSX.CeFormatInterval, HTMLCeFormatIntervalElement>('ce-format-interval');
 export const CeFormatNumber = /*@__PURE__*/createReactComponent<JSX.CeFormatNumber, HTMLCeFormatNumberElement>('ce-format-number');

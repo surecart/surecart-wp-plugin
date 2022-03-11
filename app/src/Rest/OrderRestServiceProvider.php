@@ -36,7 +36,7 @@ class OrderRestServiceProvider extends RestServiceProvider implements RestServic
 	protected $methods = [ 'index', 'create', 'find', 'edit' ];
 
 	/**
-	 * Register REST Routes
+	 * Register Additional REST Routes
 	 *
 	 * @return void
 	 */
@@ -47,7 +47,7 @@ class OrderRestServiceProvider extends RestServiceProvider implements RestServic
 			[
 				[
 					'methods'             => \WP_REST_Server::EDITABLE,
-					'callback'            => $this->callback( OrderController::class, 'finalize' ),
+					'callback'            => $this->callback( $this->controller, 'finalize' ),
 					'permission_callback' => [ $this, 'finalize_permissions_check' ],
 				],
 				// Register our schema callback.

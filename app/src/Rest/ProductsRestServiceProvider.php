@@ -25,6 +25,41 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 	protected $controller = ProductsController::class;
 
 	/**
+	 * Register Additional REST Routes
+	 *
+	 * @return void
+	 */
+	public function registerRoutes() {
+		register_rest_route(
+			"$this->name/v$this->version",
+			$this->endpoint . '/(?P<id>\S+)/purge_image/',
+			[
+				[
+					'methods'             => \WP_REST_Server::DELETABLE,
+					'callback'            => $this->callback( $this->controller, 'purgeImage' ),
+					'permission_callback' => [ $this, 'update_item_permissions_check' ],
+				],
+				// Register our schema callback.
+				'schema' => [ $this, 'get_item_schema' ],
+			]
+		);
+
+		register_rest_route(
+			"$this->name/v$this->version",
+			$this->endpoint . '/(?P<id>\S+)/purge_file/(?P<file_id>\S+)',
+			[
+				[
+					'methods'             => \WP_REST_Server::DELETABLE,
+					'callback'            => $this->callback( $this->controller, 'purgeFile' ),
+					'permission_callback' => [ $this, 'update_item_permissions_check' ],
+				],
+				// Register our schema callback.
+				'schema' => [ $this, 'get_item_schema' ],
+			]
+		);
+	}
+
+	/**
 	 * Get our sample schema for a post.
 	 *
 	 * @return array The sample schema for a post
@@ -43,16 +78,48 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 			'type'       => 'object',
 			// In JSON Schema you can specify object properties in the properties attribute.
 			'properties' => [
-				'id'      => [
+				'id'       => [
 					'description' => esc_html__( 'Unique identifier for the object.', 'checkout_engine' ),
 					'type'        => 'string',
-					'context'     => array( 'view', 'edit', 'embed' ),
+					'context'     => [ 'view', 'edit', 'embed' ],
 					'readonly'    => true,
 				],
-				'content' => array(
-					'description' => esc_html__( 'The content for the object.', 'checkout_engine' ),
-					'type'        => 'string',
-				),
+				'files'    => [
+					'description' => esc_html__( 'Files attached to the product.', 'checkout_engine' ),
+					'readonly'    => true,
+					'context'     => [ 'edit' ],
+				],
+				'metadata' => [
+					'description' => esc_html__( 'Stored product metadata', 'checkout_engine' ),
+					'type'        => 'object',
+					'properties'  => [
+						'wp_created_by' => [
+							'type'     => 'integer',
+							'context'  => [ 'edit' ],
+							'readonly' => true,
+						],
+					],
+				],
+				'metrics'  => [
+					'description' => esc_html__( 'Top level metrics for the product.', 'checkout_engine' ),
+					'readonly'    => true,
+					'type'        => 'object',
+					'properties'  => [
+						'currency'         => [
+							'type' => 'string',
+						],
+						'max_price_amount' => [
+							'type' => 'integer',
+						],
+						'min_price_amount' => [
+							'type' => 'integer',
+						],
+						'prices_count'     => [
+							'type' => 'integer',
+						],
+					],
+					'context'     => [ 'edit' ],
+				],
 			],
 		];
 
@@ -112,6 +179,14 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_item_permissions_check( $request ) {
+		if ( 'edit' === $request['context'] && ! current_user_can( 'edit_ce_products' ) ) {
+			return new \WP_Error(
+				'rest_forbidden_context',
+				__( 'Sorry, you are not allowed to edit products.', 'checkout_engine' ),
+				array( 'status' => rest_authorization_required_code() )
+			);
+		}
+
 		return true;
 	}
 
@@ -122,6 +197,14 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_items_permissions_check( $request ) {
+		if ( 'edit' === $request['context'] && ! current_user_can( 'edit_ce_products' ) ) {
+			return new \WP_Error(
+				'rest_forbidden_context',
+				__( 'Sorry, you are not allowed to edit products.', 'checkout_engine' ),
+				array( 'status' => rest_authorization_required_code() )
+			);
+		}
+
 		if ( $request['archived'] ) {
 			return current_user_can( 'edit_ce_products' );
 		}

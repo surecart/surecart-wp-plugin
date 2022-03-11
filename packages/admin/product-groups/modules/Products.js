@@ -1,10 +1,5 @@
 import Box from '../../ui/Box';
 import { __ } from '@wordpress/i18n';
-import {
-	CeButton,
-	CeDropdown,
-	CeMenu,
-} from '@checkout-engine/components-react';
 import Product from './Product';
 import { useDispatch } from '@wordpress/data';
 import SelectModel from '../../components/SelectModel';

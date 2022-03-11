@@ -80,7 +80,7 @@ class ProductGroupsRestServiceProvider extends RestServiceProvider implements Re
 			return true;
 		}
 
-		return current_user_can( 'read_ce_product_groups' );
+		return current_user_can( 'read_ce_products' );
 	}
 
 	/**

@@ -17,7 +17,7 @@ import Box from '../../ui/Box';
 import { DirectUpload } from '@rails/activestorage';
 
 export default ({ product, updateProduct, loading }) => {
-	const [uploading, setUpLoading] = useState(false);
+	const [busy, setBusy] = useState(false);
 	const [src, setSrc] = useState('');
 
 	useEffect(() => {
@@ -26,13 +26,30 @@ export default ({ product, updateProduct, loading }) => {
 		}
 	}, [product?.image_url]);
 
-	const onRemove = () => {
-		updateProduct({
-			image_url: '',
-			purge_image: true,
-			image_upload_id: null,
-		});
-		setSrc('');
+	const onRemove = async () => {
+		const r = confirm(
+			__('Are you sure you want to remove this image?', 'checkout_engine')
+		);
+		if (!r) return;
+		try {
+			setBusy(true);
+			// first get the unique upload id.
+			if (product?.id) {
+				await apiFetch({
+					method: 'DELETE',
+					path: `/checkout-engine/v1/products/${product.id}/purge_image`,
+				});
+			}
+			updateProduct({
+				image_url: '',
+				image_upload_id: null,
+			});
+			setSrc('');
+		} catch (e) {
+			console.log(e);
+		} finally {
+			setBusy(false);
+		}
 	};
 
 	const uploadImage = async (e) => {
@@ -40,7 +57,7 @@ export default ({ product, updateProduct, loading }) => {
 		setSrc(URL.createObjectURL(file));
 		if (!file) return;
 		try {
-			setUpLoading(true);
+			setBusy(true);
 
 			// first get the unique upload id.
 			const { id } = await apiFetch({
@@ -56,19 +73,19 @@ export default ({ product, updateProduct, loading }) => {
 
 			directUpload.create(async (error, blob) => {
 				if (error) {
-					setUpLoading(false);
+					setBusy(false);
 				} else {
 					updateProduct({ image_upload_id: id });
-					setUpLoading(false);
+					setBusy(false);
 				}
 			});
 		} catch (e) {
-			setUpLoading(false);
+			setBusy(false);
 		}
 	};
 
 	const renderContent = () => {
-		if (uploading) {
+		if (busy || loading) {
 			return (
 				<div
 					css={css`

@@ -11,6 +11,7 @@ import Definition from '../ui/Definition';
 import { CeButton, CeSwitch } from '@checkout-engine/components-react';
 import Image from './modules/Image';
 import Upgrades from './modules/Upgrades';
+import Files from './modules/Files';
 
 export default ({ loading, product, updateProduct, saveProduct }) => {
 	const badge = () => {
@@ -131,14 +132,24 @@ export default ({ loading, product, updateProduct, saveProduct }) => {
 				</Fragment>
 			</Box>
 
-			<Image product={product} updateProduct={updateProduct} />
+			<Image
+				product={product}
+				updateProduct={updateProduct}
+				loading={loading}
+			/>
+
+			<Files
+				product={product}
+				updateProduct={updateProduct}
+				loading={loading}
+			/>
 
 			<Upgrades
 				product={product}
 				updateProduct={updateProduct}
 				loading={loading}
 			/>
-
+			{/*
 			<Box
 				loading={loading}
 				title={__('Automations', 'checkout_engine')}
@@ -170,7 +181,7 @@ export default ({ loading, product, updateProduct, saveProduct }) => {
 				}
 			>
 				{__('Coming soon...', 'checkout_engine')}
-			</Box>
+			</Box> */}
 		</Fragment>
 	);
 };

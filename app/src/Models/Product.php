@@ -2,10 +2,15 @@
 
 namespace CheckoutEngine\Models;
 
+use CheckoutEngine\Models\Traits\CanPurgeFile;
+use CheckoutEngine\Models\Traits\CanPurgeImage;
+
 /**
  * Price model
  */
 class Product extends Model {
+	use CanPurgeImage, CanPurgeFile;
+
 	/**
 	 * Rest API endpoint
 	 *

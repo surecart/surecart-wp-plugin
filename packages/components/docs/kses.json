@@ -353,6 +353,16 @@
     "class": true,
     "slot": true
   },
+  "ce-format-bytes": {
+    "display": true,
+    "locale": true,
+    "unit": true,
+    "value": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "ce-format-date": {
     "date": true,
     "day": true,

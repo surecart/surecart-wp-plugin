@@ -146,7 +146,7 @@ export function* deleteModel(name, id) {
 	let response;
 	try {
 		response = yield apiFetch({
-			path: `${name}s/${id}`,
+			path: addQueryArgs(`${name}s/${id}`, { context: 'edit' }),
 			method: 'DELETE',
 		});
 	} catch (error) {
@@ -215,7 +215,7 @@ export function* saveData(name, data, { query, ...requestArgs } = {}) {
 	const path = data?.id ? `${name}s/${data?.id}` : `${name}s`;
 
 	let response = yield apiFetch({
-		path: addQueryArgs(path, query || {}),
+		path: addQueryArgs(path, { context: 'edit', ...(query || {}) }),
 		method: data?.id ? 'PATCH' : 'POST',
 		data,
 		...requestArgs,
@@ -257,7 +257,7 @@ export function* saveModel(
 	}
 
 	let response = yield apiFetch({
-		path: addQueryArgs(baseUrl, query || {}),
+		path: addQueryArgs(baseUrl, { context: 'edit', ...(query || {}) }),
 		method: id ? 'PATCH' : 'POST',
 		data: dataToSave,
 		...requestArgs,
@@ -281,7 +281,7 @@ export function* makeRequest({ id, key, query, data, path, ...requestArgs }) {
 	const modelPath = id ? `${key}s/${id}` : `${key}s`;
 	const baseUrl = path ? path : modelPath;
 	return yield apiFetch({
-		path: addQueryArgs(baseUrl, query || {}),
+		path: addQueryArgs(baseUrl, { context: 'edit', ...(query || {}) }),
 		method: id ? 'PATCH' : 'POST',
 		data,
 		...requestArgs,

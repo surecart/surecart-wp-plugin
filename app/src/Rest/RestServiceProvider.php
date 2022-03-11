@@ -186,6 +186,11 @@ abstract class RestServiceProvider extends \WP_REST_Controller implements RestSe
 				return $model;
 			}
 
+			// remove wp_created_by to prevent user ids from being leaked.
+			if ( 'edit' !== $context && ! empty( $model->metadata->wp_created_by ) ) {
+				unset( $model->metadata->wp_created_by );
+			}
+
 			return rest_ensure_response( $this->filter_response_by_context( is_a( $model, Model::class ) ? $model->toArray() : $model, $context ) );
 		};
 	}
