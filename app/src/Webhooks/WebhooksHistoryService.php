@@ -2,6 +2,8 @@
 
 namespace CheckoutEngine\Webhooks;
 
+use CheckoutEngine\Models\Webhook;
+
 /**
  * Handles domain name changes to webhook
  * Shows notices and allows user to remove old webhooks.
@@ -117,7 +119,7 @@ class WebHooksHistoryService {
 		if ( empty( $webhook['url'] ) ) {
 			return false;
 		}
-		return get_site_url() === $webhook['url'];
+		return Webhook::getListenerUrl() === $webhook['url'];
 	}
 
 	/**
