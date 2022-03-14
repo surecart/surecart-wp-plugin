@@ -7,12 +7,6 @@ describe('ce-subscription-details', () => {
       components: [CeSubscriptionDetails],
       html: `<ce-subscription-details></ce-subscription-details>`,
     });
-    expect(page.root).toEqualHtml(`
-      <ce-subscription-details>
-        <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
-      </ce-subscription-details>
-    `);
+    expect(page.root).toMatchSnapshot();
   });
 });

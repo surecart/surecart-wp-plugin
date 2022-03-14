@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ce-breadcrumbs renders 1`] = `
+<ce-breadcrumbs>
+  <mock:shadow-root>
+    <nav aria-label="Breadcrumb" class="breadcrumb" part="base">
+      <slot></slot>
+    </nav>
+    <div aria-hidden="true" hidden="">
+      <slot name="separator">
+        <ce-icon name="chevron-right"></ce-icon>
+      </slot>
+    </div>
+  </mock:shadow-root>
+</ce-breadcrumbs>
+`;

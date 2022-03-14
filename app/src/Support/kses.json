@@ -623,6 +623,14 @@
     "class": true,
     "slot": true
   },
+  "ce-order-tax-id-input": {
+    "order": true,
+    "show": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "ce-orders-list": {
     "all-link": true,
     "heading": true,
@@ -1077,9 +1085,10 @@
     "slot": true
   },
   "ce-tax-id-input": {
-    "order": true,
+    "country": true,
+    "number": true,
     "show": true,
-    "tax_status": true,
+    "type": true,
     "style": true,
     "id": true,
     "class": true,

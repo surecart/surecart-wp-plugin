@@ -49,23 +49,6 @@ export default ({
 			return null;
 		}
 
-		// const order = select(store).selectRelation(
-		// 	'charge',
-		// 	charge?.id,
-		// 	'order'
-		// );
-
-		// const invoice = select(store).selectRelation(
-		// 	'charge',
-		// 	charge?.id,
-		// 	'invoice.subscription'
-		// );
-
-		// console.log({ order, invoice });
-
-		// a charges invoice->subscription->subscription
-		// a charges order->purchase
-
 		return (
 			<ce-button
 				onClick={() =>

@@ -79,7 +79,7 @@ export default (name, id = null, index = null) => {
 	};
 
 	// fetch the model from the API.
-	const fetchEntity = async ({ query, ...rest }) => {
+	const fetchEntity = async ({ query, ...rest }, defaultData = {}) => {
 		if (id === null) return;
 		setIsLoading(true);
 
@@ -94,7 +94,7 @@ export default (name, id = null, index = null) => {
 
 			const payload = await result.json();
 			if (payload) {
-				receiveModels(payload);
+				receiveModels({ ...payload, ...defaultData });
 			}
 			return payload;
 		} catch (e) {

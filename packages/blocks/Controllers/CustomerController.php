@@ -42,8 +42,7 @@ class CustomerController extends BaseController {
 	 * @return function
 	 */
 	public function edit() {
-		$customer = Customer::with( [ 'billing_address', 'shipping_address' ] )->find( User::current()->customerId() );
-		$back     = add_query_arg( [ 'tab' => $this->getTab() ], \CheckoutEngine::pages()->url( 'dashboard' ) );
+		$back = add_query_arg( [ 'tab' => $this->getTab() ], \CheckoutEngine::pages()->url( 'dashboard' ) );
 		ob_start(); ?>
 
 		<ce-spacing style="--spacing: var(--ce-spacing-large)">
@@ -58,7 +57,7 @@ class CustomerController extends BaseController {
 
 			<?php
 			if ( ! empty( User::current()->customerId( 'test' ) ) ) {
-				$customer = Customer::with( [ 'billing_address', 'shipping_address' ] )->find( User::current()->customerId( 'test' ) );
+				$customer = Customer::with( [ 'shipping_address', 'billing_address', 'tax_identifier' ] )->find( User::current()->customerId( 'test' ) );
 				echo wp_kses_post(
 					Component::tag( 'ce-customer-edit' )
 					->id( 'customer-customer-edit' )
@@ -73,7 +72,7 @@ class CustomerController extends BaseController {
 			}
 
 			if ( ! empty( User::current()->customerId( 'live' ) ) ) {
-				$customer = Customer::with( [ 'billing_address', 'shipping_address' ] )->find( User::current()->customerId( 'live' ) );
+				$customer = Customer::with( [ 'shipping_address', 'billing_address', 'tax_identifier' ] )->find( User::current()->customerId( 'live' ) );
 				echo wp_kses_post(
 					Component::tag( 'ce-customer-edit' )
 					->id( 'customer-customer-edit' )

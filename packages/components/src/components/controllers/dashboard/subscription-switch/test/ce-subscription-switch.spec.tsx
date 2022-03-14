@@ -7,12 +7,6 @@ describe('ce-subscription-switch', () => {
       components: [CeSubscriptionSwitch],
       html: `<ce-subscription-switch></ce-subscription-switch>`,
     });
-    expect(page.root).toEqualHtml(`
-      <ce-subscription-switch>
-        <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
-      </ce-subscription-switch>
-    `);
+    expect(page.root).toMatchSnapshot();
   });
 });

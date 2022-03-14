@@ -65,6 +65,7 @@ export const CeOrderCouponForm = /*@__PURE__*/createReactComponent<JSX.CeOrderCo
 export const CeOrderShippingAddress = /*@__PURE__*/createReactComponent<JSX.CeOrderShippingAddress, HTMLCeOrderShippingAddressElement>('ce-order-shipping-address');
 export const CeOrderStatusBadge = /*@__PURE__*/createReactComponent<JSX.CeOrderStatusBadge, HTMLCeOrderStatusBadgeElement>('ce-order-status-badge');
 export const CeOrderSummary = /*@__PURE__*/createReactComponent<JSX.CeOrderSummary, HTMLCeOrderSummaryElement>('ce-order-summary');
+export const CeOrderTaxIdInput = /*@__PURE__*/createReactComponent<JSX.CeOrderTaxIdInput, HTMLCeOrderTaxIdInputElement>('ce-order-tax-id-input');
 export const CeOrdersList = /*@__PURE__*/createReactComponent<JSX.CeOrdersList, HTMLCeOrdersListElement>('ce-orders-list');
 export const CePagination = /*@__PURE__*/createReactComponent<JSX.CePagination, HTMLCePaginationElement>('ce-pagination');
 export const CePayment = /*@__PURE__*/createReactComponent<JSX.CePayment, HTMLCePaymentElement>('ce-payment');

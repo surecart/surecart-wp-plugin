@@ -11,10 +11,12 @@ import { useEffect, useState } from 'react';
 import apiFetch from '@wordpress/api-fetch';
 import useFileUpload from '../../mixins/useFileUpload';
 import { css, jsx } from '@emotion/core';
+import useCurrentPage from '../../mixins/useCurrentPage';
 
 export default ({ file, product, onUploaded, onRemoved }) => {
 	const [loading, setLoading] = useState(false);
 	const uploadFile = useFileUpload();
+	const { setSaving } = useCurrentPage('product');
 
 	useEffect(() => {
 		if (!file.id) {
@@ -26,12 +28,18 @@ export default ({ file, product, onUploaded, onRemoved }) => {
 		if (file.id) return;
 		try {
 			setLoading(true);
+			setSaving(true);
 			const id = await uploadFile(file);
+			file = {
+				...file,
+				id,
+			};
 			onUploaded(id);
 		} catch (e) {
 			console.error(e);
 		} finally {
 			setLoading(false);
+			setSaving(false);
 		}
 	};
 
@@ -46,11 +54,10 @@ export default ({ file, product, onUploaded, onRemoved }) => {
 		try {
 			setLoading(true);
 			// first get the unique upload id.
-			// TODO: check for if it's saved.
-			if (product?.id && file?.byte_size) {
+			if (file.id) {
 				await apiFetch({
 					method: 'DELETE',
-					path: `/checkout-engine/v1/products/${product.id}/purge_file/${file.id}`,
+					path: `/checkout-engine/v1/files/${file.id}`,
 				});
 			}
 			onRemoved(file.id);

@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ce-subscription-details renders 1`] = `
+<ce-subscription-details>
+  <mock:shadow-root>
+    <div class="subscription-details">
+      <ce-text style="--font-weight: var(--ce-font-weight-bold);"></ce-text>
+      <div>
+        <ce-format-number type="currency"></ce-format-number>
+      </div>
+      <div>
+        <ce-subscription-status-badge></ce-subscription-status-badge>
+      </div>
+    </div>
+  </mock:shadow-root>
+</ce-subscription-details>
+`;

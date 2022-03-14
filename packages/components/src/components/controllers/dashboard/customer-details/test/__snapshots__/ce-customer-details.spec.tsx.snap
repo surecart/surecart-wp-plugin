@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ce-customer-details renders 1`] = `
+<ce-customer-details>
+  <mock:shadow-root>
+    <ce-dashboard-module class="customer-details">
+      <span slot="heading">
+        Billing Details
+        <ce-tag size="small" type="warning">
+          Test
+        </ce-tag>
+      </span>
+      <ce-button href="http://testing.stenciljs.com/?action=edit&amp;model=customer" slot="end" type="link">
+        <ce-icon name="edit-3" slot="prefix"></ce-icon>
+        Update
+      </ce-button>
+      <ce-card no-padding="">
+        <ce-stacked-list>
+          <slot name="empty">
+            You are not a customer.
+          </slot>
+        </ce-stacked-list>
+      </ce-card>
+    </ce-dashboard-module>
+  </mock:shadow-root>
+</ce-customer-details>
+`;

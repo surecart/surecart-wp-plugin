@@ -7,12 +7,6 @@ describe('ce-subscription-cancel', () => {
       components: [CeSubscriptionCancel],
       html: `<ce-subscription-cancel></ce-subscription-cancel>`,
     });
-    expect(page.root).toEqualHtml(`
-      <ce-subscription-cancel>
-        <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
-      </ce-subscription-cancel>
-    `);
+    expect(page.root).toMatchSnapshot();
   });
 });

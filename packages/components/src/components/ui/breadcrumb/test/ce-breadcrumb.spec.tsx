@@ -7,12 +7,6 @@ describe('ce-breadcrumb', () => {
       components: [CeBreadcrumb],
       html: `<ce-breadcrumb></ce-breadcrumb>`,
     });
-    expect(page.root).toEqualHtml(`
-      <ce-breadcrumb>
-        <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
-      </ce-breadcrumb>
-    `);
+    expect(page.root).toMatchSnapshot();
   });
 });

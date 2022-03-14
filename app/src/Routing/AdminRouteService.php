@@ -19,6 +19,8 @@ class AdminRouteService {
 		'products'         => 'ce-products',
 		'order'            => 'ce-orders',
 		'orders'           => 'ce-orders',
+		'invoice'          => 'ce-invoices',
+		'invoices'         => 'ce-invoices',
 		'customers'        => 'ce-customers',
 		'customer'         => 'ce-customers',
 		'subscriptions'    => 'ce-subscriptions',

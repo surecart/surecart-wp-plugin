@@ -78,18 +78,21 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 			'type'       => 'object',
 			// In JSON Schema you can specify object properties in the properties attribute.
 			'properties' => [
-				'id'       => [
+				'id'              => [
 					'description' => esc_html__( 'Unique identifier for the object.', 'checkout_engine' ),
 					'type'        => 'string',
 					'context'     => [ 'view', 'edit', 'embed' ],
 					'readonly'    => true,
 				],
-				'files'    => [
+				'file_upload_ids' => [
 					'description' => esc_html__( 'Files attached to the product.', 'checkout_engine' ),
-					'readonly'    => true,
 					'context'     => [ 'edit' ],
+					'type'        => 'array',
+					'items'       => [
+						'type' => 'string',
+					],
 				],
-				'metadata' => [
+				'metadata'        => [
 					'description' => esc_html__( 'Stored product metadata', 'checkout_engine' ),
 					'type'        => 'object',
 					'properties'  => [
@@ -100,7 +103,7 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 						],
 					],
 				],
-				'metrics'  => [
+				'metrics'         => [
 					'description' => esc_html__( 'Top level metrics for the product.', 'checkout_engine' ),
 					'readonly'    => true,
 					'type'        => 'object',

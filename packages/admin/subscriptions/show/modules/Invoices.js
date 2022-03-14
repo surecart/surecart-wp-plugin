@@ -37,6 +37,10 @@ export default ({ subscriptionId }) => {
 		return customer?.name || customer?.email;
 	};
 
+	if (!isLoading && !invoices?.length) {
+		return null;
+	}
+
 	return (
 		<div>
 			<DataTable
@@ -68,10 +72,7 @@ export default ({ subscriptionId }) => {
 						label: __('Created', 'checkout_engine'),
 					},
 					number: {
-						label: __('Invoice Number', 'checkout_engine'),
-					},
-					customer: {
-						label: __('Customer', 'checkout_engine'),
+						label: __('Number', 'checkout_engine'),
 					},
 					actions: {
 						width: '100px',
@@ -98,17 +99,15 @@ export default ({ subscriptionId }) => {
 								<ce-format-date
 									type="timestamp"
 									date={invoice?.created_at}
-									month="long"
+									month="short"
 									day="numeric"
 									year="numeric"
 								></ce-format-date>
 							),
 							number: invoice.number,
-							customer: getCustomer(invoice),
 							actions: (
 								<ce-button
 									size="small"
-									disabled
 									href={addQueryArgs('admin.php', {
 										page: 'ce-invoices',
 										action: 'edit',

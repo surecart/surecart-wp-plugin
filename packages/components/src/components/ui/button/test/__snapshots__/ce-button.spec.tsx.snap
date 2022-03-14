@@ -3,7 +3,7 @@
 exports[`ce-button renders 1`] = `
 <ce-button size="medium" type="default">
   <mock:shadow-root>
-    <button class="button button--default button--has-label button--medium button--standard" part="base" type="button">
+    <button aria-disabled="false" class="button button--default button--has-label button--medium button--standard" part="base" role="button" tabindex="0" type="button">
       <span class="button__prefix" part="prefix">
         <slot name="prefix"></slot>
       </span>
@@ -21,7 +21,7 @@ exports[`ce-button renders 1`] = `
 exports[`ce-button renders slots 1`] = `
 <ce-button size="medium" type="default">
   <mock:shadow-root>
-    <button class="button button--default button--has-label button--has-prefix button--has-suffix button--medium button--standard" part="base" type="button">
+    <button aria-disabled="false" class="button button--default button--has-label button--has-prefix button--has-suffix button--medium button--standard" part="base" role="button" tabindex="0" type="button">
       <span class="button__prefix" part="prefix">
         <slot name="prefix"></slot>
       </span>

@@ -7,12 +7,6 @@ describe('ce-dashboard-module', () => {
       components: [CeDashboardModule],
       html: `<ce-dashboard-module></ce-dashboard-module>`,
     });
-    expect(page.root).toEqualHtml(`
-      <ce-dashboard-module>
-        <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
-      </ce-dashboard-module>
-    `);
+    expect(page.root).toMatchSnapshot();
   });
 });

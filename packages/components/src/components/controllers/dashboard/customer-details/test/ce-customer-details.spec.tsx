@@ -7,12 +7,6 @@ describe('ce-customer-details', () => {
       components: [CeCustomerDetails],
       html: `<ce-customer-details></ce-customer-details>`,
     });
-    expect(page.root).toEqualHtml(`
-      <ce-customer-details>
-        <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
-      </ce-customer-details>
-    `);
+    expect(page.root).toMatchSnapshot();
   });
 });

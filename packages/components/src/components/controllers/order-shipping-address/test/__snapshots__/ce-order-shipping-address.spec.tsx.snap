@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ce-order-shipping-address renders 1`] = `
+<ce-order-shipping-address>
+  <ce-address required=""></ce-address>
+</ce-order-shipping-address>
+`;

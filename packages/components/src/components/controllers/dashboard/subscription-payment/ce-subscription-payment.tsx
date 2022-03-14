@@ -20,7 +20,7 @@ export class CeSubscriptionPayment {
   @State() busy: boolean;
   @State() error: string;
 
-  componentDidLoad() {
+  componentWillLoad() {
     this.fetchItems();
   }
 

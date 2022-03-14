@@ -15,19 +15,23 @@ describe('ce-tax-id-input', () => {
 
     // UK Vat.
     const element = await page.find('ce-tax-id-input');
-    element.setProperty('draft', {
-      shipping_country: 'GB',
+    element.setProperty('order', {
+      shipping_address: {
+        country: 'GB',
+      },
     });
     await page.waitForChanges();
     let input = await page.find('ce-tax-id-input ce-input');
-    let trigger = await page.find('ce-tax-id-input ce-input [slot="trigger"]');
+    let trigger = await page.find('ce-tax-id-input ce-button');
     expect(trigger.textContent).toContain('UK VAT');
     let label = await input.getProperty('label');
     expect(label).toBe('VAT Number');
 
     // EU Vat.
-    element.setProperty('draft', {
-      shipping_country: 'DE',
+    element.setProperty('order', {
+      shipping_address: {
+        country: 'DE',
+      },
     });
     await page.waitForChanges();
     input = await page.find('ce-tax-id-input ce-input');
@@ -37,8 +41,10 @@ describe('ce-tax-id-input', () => {
     expect(label).toBe('VAT Number');
 
     // CA GST.
-    element.setProperty('draft', {
-      shipping_country: 'CA',
+    element.setProperty('order', {
+      shipping_address: {
+        country: 'CA',
+      },
     });
     await page.waitForChanges();
     input = await page.find('ce-tax-id-input ce-input');
@@ -48,8 +54,10 @@ describe('ce-tax-id-input', () => {
     expect(label).toBe('GST Number');
 
     // AU ABN.
-    element.setProperty('draft', {
-      shipping_country: 'AU',
+    element.setProperty('order', {
+      shipping_address: {
+        country: 'AU',
+      },
     });
     await page.waitForChanges();
     input = await page.find('ce-tax-id-input ce-input');

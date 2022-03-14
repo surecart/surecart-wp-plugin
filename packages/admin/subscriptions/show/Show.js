@@ -15,6 +15,7 @@ import Template from '../../templates/SingleModel';
 import useCurrentPage from '../../mixins/useCurrentPage';
 import Details from './modules/Details';
 import Invoices from './modules/Invoices';
+import Orders from './modules/Orders';
 import Pricing from './modules/Pricing';
 import Cancel from './modules/Cancel';
 import Sidebar from './Sidebar';
@@ -40,6 +41,7 @@ export default () => {
 				'price',
 				'price.product',
 				'purchase',
+				'order',
 				'payment_method',
 				'payment_method.card',
 			],
@@ -48,7 +50,10 @@ export default () => {
 
 	const customer = getRelation('customer');
 	const price = getRelation('price');
+	const order = getRelation('order');
 	const product = getRelation('price.product');
+
+	console.log({ order });
 
 	useEffect(() => {
 		if (id) {
@@ -63,6 +68,7 @@ export default () => {
 				expand: [
 					'customer',
 					'price',
+					'order',
 					'price.product',
 					'purchase',
 					'payment_method',
@@ -183,6 +189,8 @@ export default () => {
 				{!!Object.keys(subscription?.pending_update || {}).length && (
 					<PendingUpdate subscription={subscription} />
 				)}
+
+				<Orders order={order} loading={isLoading} />
 
 				<Invoices subscriptionId={id} subscription={subscription} />
 

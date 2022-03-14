@@ -330,13 +330,13 @@ class SubscriptionsListTable extends ListTable {
 	 */
 	public function column_customer( $subscription ) {
 		ob_start();
-		$name = $subscription->customer->name;
+		$name = $subscription->customer->name ?? '';
 		if ( ! $name ) {
-			$name = $subscription->customer->email;
+			$name = $subscription->customer->email ?? __( 'No name provided', 'checkout_engine' );
 		}
 		?>
 		<a class="row-title" aria-label="<?php echo esc_attr__( 'Edit Subscription', 'checkout_engine' ); ?>" href="<?php echo esc_url( \CheckoutEngine::getUrl()->show( 'subscription', $subscription->id ) ); ?>">
-			<?php echo esc_html_e( $name ?? __( 'No name provided', 'checkout_engine' ) ); ?>
+			<?php echo esc_html( $name ); ?>
 		</a>
 
 		<?php

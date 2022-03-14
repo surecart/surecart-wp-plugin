@@ -7,12 +7,6 @@ describe('ce-stacked-list', () => {
       components: [CeStackedList],
       html: `<ce-stacked-list></ce-stacked-list>`,
     });
-    expect(page.root).toEqualHtml(`
-      <ce-stacked-list>
-        <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
-      </ce-stacked-list>
-    `);
+    expect(page.root).toMatchSnapshot();
   });
 });

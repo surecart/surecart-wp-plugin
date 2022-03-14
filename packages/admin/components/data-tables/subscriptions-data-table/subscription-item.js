@@ -33,8 +33,8 @@ export default (subscription) => {
 					{__('Cancels', 'checkout_engine')}{' '}
 					<ce-format-date
 						type="timestamp"
-						date={subscription.current_period_end_at}
-						month="long"
+						date={subscription?.current_period_end_at}
+						month="short"
 						day="numeric"
 						year="numeric"
 					></ce-format-date>
@@ -42,14 +42,14 @@ export default (subscription) => {
 			);
 		}
 
-		if (subscription.status === 'trialing' && subscription.trial_end_at) {
+		if (subscription?.status === 'trialing' && subscription?.trial_end_at) {
 			return (
 				<span>
 					{__('Begins', 'checkout_engine')}{' '}
 					<ce-format-date
 						type="timestamp"
-						date={subscription.trial_end_at}
-						month="long"
+						date={subscription?.trial_end_at}
+						month="short"
 						day="numeric"
 						year="numeric"
 					></ce-format-date>
@@ -58,16 +58,16 @@ export default (subscription) => {
 		}
 
 		if (
-			subscription.status === 'active' &&
-			subscription.current_period_end_at
+			subscription?.status === 'active' &&
+			subscription?.current_period_end_at
 		) {
 			return (
 				<span>
 					{__('Renews', 'checkout_engine')}{' '}
 					<ce-format-date
 						type="timestamp"
-						date={subscription.current_period_end_at}
-						month="long"
+						date={subscription?.current_period_end_at}
+						month="short"
 						day="numeric"
 						year="numeric"
 					></ce-format-date>
@@ -82,7 +82,7 @@ export default (subscription) => {
 					<ce-format-date
 						type="timestamp"
 						date={subscription?.ended_at}
-						month="long"
+						month="short"
 						day="numeric"
 						year="numeric"
 					></ce-format-date>
@@ -158,7 +158,7 @@ export default (subscription) => {
 		created: (
 			<CeFormatDate
 				date={subscription?.created_at}
-				month="long"
+				month="short"
 				day="numeric"
 				year="numeric"
 				type="timestamp"

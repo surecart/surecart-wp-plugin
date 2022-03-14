@@ -84,7 +84,7 @@ export class CeSubscriptionDetails {
         </span>
       );
     }
-    if (this.subscription.status === 'active' && this.subscription.current_period_end_at) {
+    if (this.subscription?.status === 'active' && this.subscription?.current_period_end_at) {
       return (
         <span>
           {tag} {sprintf(__('Your plan renews on', 'checkout_engine'))}{' '}

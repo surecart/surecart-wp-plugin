@@ -7,12 +7,6 @@ describe('ce-pagination', () => {
       components: [CePagination],
       html: `<ce-pagination></ce-pagination>`,
     });
-    expect(page.root).toEqualHtml(`
-      <ce-pagination>
-        <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
-      </ce-pagination>
-    `);
+    expect(page.root).toMatchSnapshot();
   });
 });

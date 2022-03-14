@@ -63,6 +63,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /*
 |--------------------------------------------------------------------------
+| Orders
+|--------------------------------------------------------------------------
+*/
+\CheckoutEngine::route()
+->where( 'admin', 'ce-invoices' )
+->middleware( 'user.can:edit_ce_invoices' ) // TODO: change to manage coupons.
+->setNamespace( '\\CheckoutEngine\\Controllers\\Admin\\Invoices\\' )
+->group(
+	function() {
+		\CheckoutEngine::route()->get()->where( 'ce_url_var', false, 'action' )->name( 'invoices.index' )->handle( 'InvoicesViewController@index' );
+		\CheckoutEngine::route()->get()->where( 'ce_url_var', 'edit', 'action' )->name( 'invoices.edit' )->handle( 'InvoicesViewController@edit' );
+		\CheckoutEngine::route()->get()->where( 'ce_url_var', 'archive', 'action' )->name( 'invoices.archive' )->handle( 'InvoicesViewController@archive' );
+	}
+);
+
+/*
+|--------------------------------------------------------------------------
 | Products
 |--------------------------------------------------------------------------
 */

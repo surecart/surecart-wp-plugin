@@ -3,17 +3,19 @@ import { css, jsx } from '@emotion/core';
 
 import { __ } from '@wordpress/i18n';
 import { format } from '@wordpress/date';
-import { FormTokenField } from '@wordpress/components';
 import { Fragment } from '@wordpress/element';
 
 import Box from '../ui/Box';
 import Definition from '../ui/Definition';
-import { CeButton, CeSwitch } from '@checkout-engine/components-react';
+import { CeSwitch } from '@checkout-engine/components-react';
 import Image from './modules/Image';
 import Upgrades from './modules/Upgrades';
 import Files from './modules/Files';
+import useCurrentPage from '../mixins/useCurrentPage';
 
 export default ({ loading, product, updateProduct, saveProduct }) => {
+	const { isSaving, setSaving } = useCurrentPage('product');
+
 	const badge = () => {
 		if (loading) {
 			return null;
@@ -47,6 +49,22 @@ export default ({ loading, product, updateProduct, saveProduct }) => {
 		);
 	};
 
+	const onToggleArchiveProduct = async () => {
+		try {
+			setSaving(true);
+			return await saveProduct({
+				data: {
+					archived: !product?.archived,
+				},
+			});
+		} catch (e) {
+			addModelErrors('product', e);
+			throw e;
+		} finally {
+			setSaving(false);
+		}
+	};
+
 	return (
 		<Fragment>
 			<Box
@@ -70,8 +88,10 @@ export default ({ loading, product, updateProduct, saveProduct }) => {
 					>
 						<CeSwitch
 							checked={!product?.archived}
+							disabled={isSaving}
 							onClick={(e) => {
 								e.preventDefault();
+								if (isSaving) return false;
 								const r = confirm(
 									product?.archived
 										? sprintf(
@@ -90,11 +110,7 @@ export default ({ loading, product, updateProduct, saveProduct }) => {
 										  )
 								);
 								if (!r) return;
-								saveProduct({
-									data: {
-										archived: !product?.archived,
-									},
-								});
+								onToggleArchiveProduct();
 							}}
 						/>
 					</Definition>

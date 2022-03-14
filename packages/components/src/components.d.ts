@@ -1076,6 +1076,16 @@ export namespace Components {
         "loading": boolean;
         "order": Order;
     }
+    interface CeOrderTaxIdInput {
+        /**
+          * The order
+         */
+        "order": Order;
+        /**
+          * Force show the field.
+         */
+        "show": boolean;
+    }
     interface CeOrdersList {
         "allLink": string;
         "heading": string;
@@ -1793,12 +1803,22 @@ export namespace Components {
         "type": 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'default';
     }
     interface CeTaxIdInput {
-        "order": Order;
+        /**
+          * Label for the field.
+         */
+        "country": string;
+        /**
+          * Tax ID Number
+         */
+        "number": string;
         /**
           * Force show the field.
          */
         "show": boolean;
-        "tax_status": TaxStatus;
+        /**
+          * Type of tax id
+         */
+        "type": string;
     }
     interface CeText {
         "tag": 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p';
@@ -2210,6 +2230,12 @@ declare global {
         prototype: HTMLCeOrderSummaryElement;
         new (): HTMLCeOrderSummaryElement;
     };
+    interface HTMLCeOrderTaxIdInputElement extends Components.CeOrderTaxIdInput, HTMLStencilElement {
+    }
+    var HTMLCeOrderTaxIdInputElement: {
+        prototype: HTMLCeOrderTaxIdInputElement;
+        new (): HTMLCeOrderTaxIdInputElement;
+    };
     interface HTMLCeOrdersListElement extends Components.CeOrdersList, HTMLStencilElement {
     }
     var HTMLCeOrdersListElement: {
@@ -2575,6 +2601,7 @@ declare global {
         "ce-order-shipping-address": HTMLCeOrderShippingAddressElement;
         "ce-order-status-badge": HTMLCeOrderStatusBadgeElement;
         "ce-order-summary": HTMLCeOrderSummaryElement;
+        "ce-order-tax-id-input": HTMLCeOrderTaxIdInputElement;
         "ce-orders-list": HTMLCeOrdersListElement;
         "ce-pagination": HTMLCePaginationElement;
         "ce-payment": HTMLCePaymentElement;
@@ -3793,6 +3820,20 @@ declare namespace LocalJSX {
         "loading"?: boolean;
         "order"?: Order;
     }
+    interface CeOrderTaxIdInput {
+        /**
+          * Make a request to update the order.
+         */
+        "onCeUpdateOrder"?: (event: CustomEvent<Partial<Order>>) => void;
+        /**
+          * The order
+         */
+        "order"?: Order;
+        /**
+          * Force show the field.
+         */
+        "show"?: boolean;
+    }
     interface CeOrdersList {
         "allLink"?: string;
         "heading"?: string;
@@ -4584,19 +4625,29 @@ declare namespace LocalJSX {
     }
     interface CeTaxIdInput {
         /**
+          * Label for the field.
+         */
+        "country"?: string;
+        /**
+          * Tax ID Number
+         */
+        "number"?: string;
+        /**
+          * Make a request to update the order.
+         */
+        "onCeChange"?: (event: CustomEvent<{ number: string; number_type: string }>) => void;
+        /**
           * Set the checkout state.
          */
         "onCeSetState"?: (event: CustomEvent<string>) => void;
         /**
-          * Make a request to update the order.
-         */
-        "onCeUpdateOrder"?: (event: CustomEvent<Partial<Order>>) => void;
-        "order"?: Order;
-        /**
           * Force show the field.
          */
         "show"?: boolean;
-        "tax_status"?: TaxStatus;
+        /**
+          * Type of tax id
+         */
+        "type"?: string;
     }
     interface CeText {
         "tag"?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p';
@@ -4717,6 +4768,7 @@ declare namespace LocalJSX {
         "ce-order-shipping-address": CeOrderShippingAddress;
         "ce-order-status-badge": CeOrderStatusBadge;
         "ce-order-summary": CeOrderSummary;
+        "ce-order-tax-id-input": CeOrderTaxIdInput;
         "ce-orders-list": CeOrdersList;
         "ce-pagination": CePagination;
         "ce-payment": CePayment;
@@ -4832,6 +4884,7 @@ declare module "@stencil/core" {
             "ce-order-shipping-address": LocalJSX.CeOrderShippingAddress & JSXBase.HTMLAttributes<HTMLCeOrderShippingAddressElement>;
             "ce-order-status-badge": LocalJSX.CeOrderStatusBadge & JSXBase.HTMLAttributes<HTMLCeOrderStatusBadgeElement>;
             "ce-order-summary": LocalJSX.CeOrderSummary & JSXBase.HTMLAttributes<HTMLCeOrderSummaryElement>;
+            "ce-order-tax-id-input": LocalJSX.CeOrderTaxIdInput & JSXBase.HTMLAttributes<HTMLCeOrderTaxIdInputElement>;
             "ce-orders-list": LocalJSX.CeOrdersList & JSXBase.HTMLAttributes<HTMLCeOrdersListElement>;
             "ce-pagination": LocalJSX.CePagination & JSXBase.HTMLAttributes<HTMLCePaginationElement>;
             "ce-payment": LocalJSX.CePayment & JSXBase.HTMLAttributes<HTMLCePaymentElement>;

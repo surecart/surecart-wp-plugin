@@ -27,7 +27,7 @@ class Webhook extends Model {
 	 *
 	 * @return string
 	 */
-	public function getListenerUrl() {
+	protected function getListenerUrl() {
 		return get_site_url( null, '/checkout_engine/webhooks', is_ssl() ? 'https' : 'http' );
 	}
 

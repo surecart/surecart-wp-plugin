@@ -7,12 +7,6 @@ describe('ce-empty', () => {
       components: [CeEmpty],
       html: `<ce-empty></ce-empty>`,
     });
-    expect(page.root).toEqualHtml(`
-      <ce-empty>
-        <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
-      </ce-empty>
-    `);
+    expect(page.root).toMatchSnapshot();
   });
 });

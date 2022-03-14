@@ -33,6 +33,8 @@ invoice.define({
 	purchases: {
 		data: [purchase],
 	},
+	charge,
+	customer,
 	subscription,
 });
 
@@ -53,6 +55,7 @@ subscription.define({
 	purchase,
 	price,
 	payment_method,
+	order,
 	customer,
 });
 

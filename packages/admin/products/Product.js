@@ -22,7 +22,6 @@ import Sidebar from './Sidebar';
 import useCurrentPage from '../mixins/useCurrentPage';
 import ErrorFlash from '../components/ErrorFlash';
 import useEntities from '../mixins/useEntities';
-import { useState } from 'react';
 import { CeButton } from '@checkout-engine/components-react';
 import ProductActionsDropdown from './components/ProductActionsDropdown';
 
@@ -35,24 +34,28 @@ export default () => {
 		saveProduct,
 		deleteProduct,
 		isSaving,
+		setSaving,
 		fetchProduct,
 		updateProduct,
 		productErrors,
 		clearProductErrors,
 		isLoading,
 	} = useCurrentPage('product');
+
 	const { prices, draftPrices } = useEntities('price');
-	const [saving, setSaving] = useState(false);
 
 	// fetch product on load.
 	useEffect(() => {
 		if (id) {
-			fetchProduct({
-				query: {
-					context: 'edit',
-					expand: ['prices', 'product_group'],
+			fetchProduct(
+				{
+					query: {
+						context: 'edit',
+						expand: ['prices', 'product_group', 'files'],
+					},
 				},
-			});
+				{ file_upload_ids: [] }
+			);
 		} else {
 			updateProduct({
 				tax_enabled: true,
@@ -83,7 +86,7 @@ export default () => {
 			const saved = await saveProduct({
 				query: {
 					context: 'edit',
-					expand: ['prices'],
+					expand: ['prices', 'product_group', 'files'],
 				},
 				data: {
 					prices: draftPrices,
@@ -102,7 +105,16 @@ export default () => {
 	 * Update product, prices and drafts all at once.
 	 */
 	const updatePage = async () => {
-		return Promise.all([saveProduct(), savePrices(), saveDraftPrices()]);
+		return Promise.all([
+			saveProduct({
+				query: {
+					context: 'edit',
+					expand: ['prices', 'product_group', 'files'],
+				},
+			}),
+			savePrices(),
+			saveDraftPrices(),
+		]);
 	};
 
 	const saveDraftPrices = async () => {
@@ -147,15 +159,19 @@ export default () => {
 
 	const onDeleteProduct = async () => {
 		try {
+			setSaving(true);
 			return await deleteProduct();
 		} catch (e) {
 			addModelErrors('product', e);
 			throw e;
+		} finally {
+			setSaving(false);
 		}
 	};
 
 	const onToggleArchiveProduct = async () => {
 		try {
+			setSaving(true);
 			return await saveProduct({
 				data: {
 					archived: !product?.archived,
@@ -164,6 +180,8 @@ export default () => {
 		} catch (e) {
 			addModelErrors('product', e);
 			throw e;
+		} finally {
+			setSaving(false);
 		}
 	};
 
@@ -226,7 +244,8 @@ export default () => {
 						/>
 						<CeButton
 							type="primary"
-							loading={saving || isSaving}
+							loading={isSaving}
+							disabled={isSaving}
 							submit
 						>
 							{product?.id

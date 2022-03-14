@@ -93,6 +93,7 @@
 		"querystringify": "^2.2.0",
 		"sass-loader": "^10",
 		"svg-sprite-loader": "^4.2.5",
+		"swr": "^1.2.2",
 		"thread-loader": "^3.0.4",
 		"tmp": "^0.2.1"
 	},

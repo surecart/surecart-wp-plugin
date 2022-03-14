@@ -6,6 +6,7 @@ import { onFirstVisible } from '../../../../functions/lazy';
 import { Address, Customer } from '../../../../types';
 import { formatAddress } from 'localized-address-format';
 import { countryChoices } from '../../../../functions/address';
+import { zones } from '../../../../functions/tax';
 
 @Component({
   tag: 'ce-customer-details',
@@ -60,6 +61,23 @@ export class CeCustomerDetails {
             <div></div>
           </ce-stacked-list-row>
         )}
+        {/* {JSON.stringify(this.customer?.tax_identifier)} */}
+        {(() => {
+          const { number_type, number } = this.customer?.tax_identifier || {};
+          const label = zones?.[number_type]?.label || __('Tax Id', 'checkout_engine');
+          const isInvalid = this.customer?.tax_identifier?.[`valid_${number_type}`] === false;
+          return (
+            <ce-stacked-list-row style={{ '--columns': '3' }} mobileSize={480}>
+              <div>
+                <strong>{label}</strong>
+              </div>
+              <div>
+                {number} {isInvalid && <ce-tag type="warning">{__('Invalid', 'checkout_engine')}</ce-tag>}
+              </div>
+              <div></div>
+            </ce-stacked-list-row>
+          );
+        })()}
       </Fragment>
     );
   }
@@ -102,7 +120,7 @@ export class CeCustomerDetails {
       this.loading = true;
       this.customer = (await await apiFetch({
         path: addQueryArgs(`checkout-engine/v1/customers/${this.customerId}`, {
-          expand: ['shipping_address', 'billing_address'],
+          expand: ['shipping_address', 'billing_address', 'tax_identifier'],
         }),
       })) as Customer;
     } catch (e) {

@@ -2,6 +2,7 @@ import { Component, Prop, h, State } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { Customer, Address } from '../../../../types';
 import apiFetch from '../../../../functions/fetch';
+import { addQueryArgs } from '@wordpress/url';
 
 @Component({
   tag: 'ce-customer-edit',
@@ -25,6 +26,8 @@ export class CeCustomerEdit {
         phone,
         billing_matches_shipping,
         shipping_city,
+        'tax_identifier.number_type': tax_identifier_number_type,
+        'tax_identifier.number': tax_identifier_number,
         shipping_country,
         shipping_line_1,
         shipping_postal_code,
@@ -36,7 +39,7 @@ export class CeCustomerEdit {
         billing_state,
       } = await e.target.getFormJson();
       await apiFetch({
-        path: `checkout-engine/v1/customers/${this.customer?.id}`,
+        path: addQueryArgs(`checkout-engine/v1/customers/${this.customer?.id}`, { expand: ['tax_identifier'] }),
         method: 'PATCH',
         data: {
           email,
@@ -57,6 +60,14 @@ export class CeCustomerEdit {
             postal_code: billing_postal_code,
             state: billing_state,
           },
+          ...(tax_identifier_number && tax_identifier_number_type
+            ? {
+                tax_identifier: {
+                  number: tax_identifier_number,
+                  number_type: tax_identifier_number_type,
+                },
+              }
+            : {}),
         },
       });
       if (this.successUrl) {
@@ -85,6 +96,7 @@ export class CeCustomerEdit {
         <ce-card>
           <ce-form onCeFormSubmit={e => this.handleSubmit(e)}>
             <ce-input label={__('Billing Email', 'checkout_engine')} name="email" value={this.customer?.email} required />
+
             <ce-columns style={{ '--ce-column-spacing': 'var(--ce-spacing-medium)' }}>
               <ce-column>
                 <ce-input label={__('Name', 'checkout_engine')} name="name" value={this.customer?.name} />
@@ -110,6 +122,7 @@ export class CeCustomerEdit {
                 }}
               ></ce-address>
             </div>
+
             <div>
               <ce-switch
                 name="billing_matches_shipping"
@@ -143,6 +156,8 @@ export class CeCustomerEdit {
                 required={false}
               ></ce-address>
             </div>
+
+            <ce-tax-id-input show number={this.customer?.tax_identifier?.number} type={this.customer?.tax_identifier?.number_type}></ce-tax-id-input>
 
             <div>
               <ce-button type="primary" full submit>
