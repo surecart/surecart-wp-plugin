@@ -64,8 +64,11 @@
  - [ce-subscription-renew](../../controllers/dashboard/subscription-renew)
  - [ce-subscription-switch](../../controllers/dashboard/subscription-switch)
  - [ce-subscriptions-list](../../controllers/dashboard/subscriptions-list)
- - [ce-tax-id-input](../../controllers/tax-id-input)
+ - [ce-tax-id-input](../tax-id-input)
  - [ce-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
+ - [ce-wordpress-password-edit](../../controllers/dashboard/wordpress-password-edit)
+ - [ce-wordpress-user](../../controllers/dashboard/wordpress-user)
+ - [ce-wordpress-user-edit](../../controllers/dashboard/wordpress-user-edit)
 
 ### Depends on
 
@@ -93,6 +96,9 @@ graph TD;
   ce-subscriptions-list --> ce-button
   ce-tax-id-input --> ce-button
   ce-upcoming-invoice --> ce-button
+  ce-wordpress-password-edit --> ce-button
+  ce-wordpress-user --> ce-button
+  ce-wordpress-user-edit --> ce-button
   style ce-button fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

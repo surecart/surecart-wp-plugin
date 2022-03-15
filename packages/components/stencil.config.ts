@@ -36,6 +36,9 @@ export const config: Config = {
       autoDefineCustomElements: true,
     },
     {
+      type: 'dist-custom-elements-bundle', // needed right now for docs.
+    },
+    {
       type: 'www',
       serviceWorker: null, // disable service workers
     },

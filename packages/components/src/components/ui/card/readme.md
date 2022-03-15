@@ -40,6 +40,9 @@
  - [ce-subscription-renew](../../controllers/dashboard/subscription-renew)
  - [ce-subscriptions-list](../../controllers/dashboard/subscriptions-list)
  - [ce-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
+ - [ce-wordpress-password-edit](../../controllers/dashboard/wordpress-password-edit)
+ - [ce-wordpress-user](../../controllers/dashboard/wordpress-user)
+ - [ce-wordpress-user-edit](../../controllers/dashboard/wordpress-user-edit)
 
 ### Graph
 ```mermaid
@@ -58,6 +61,9 @@ graph TD;
   ce-subscription-renew --> ce-card
   ce-subscriptions-list --> ce-card
   ce-upcoming-invoice --> ce-card
+  ce-wordpress-password-edit --> ce-card
+  ce-wordpress-user --> ce-card
+  ce-wordpress-user-edit --> ce-card
   style ce-card fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

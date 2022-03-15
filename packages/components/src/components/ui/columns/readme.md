@@ -18,11 +18,13 @@
 ### Used by
 
  - [ce-customer-edit](../../controllers/dashboard/customer-edit)
+ - [ce-wordpress-user-edit](../../controllers/dashboard/wordpress-user-edit)
 
 ### Graph
 ```mermaid
 graph TD;
   ce-customer-edit --> ce-columns
+  ce-wordpress-user-edit --> ce-columns
   style ce-columns fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

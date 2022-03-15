@@ -18,9 +18,9 @@
 ### Depends on
 
 - [ce-stacked-list-row](../../../ui/stacked-list-row)
+- [ce-tag](../../../ui/tag)
 - [ce-skeleton](../../../ui/skeleton)
 - [ce-dashboard-module](../../../ui/dashboard-module)
-- [ce-tag](../../../ui/tag)
 - [ce-button](../../../ui/button)
 - [ce-icon](../../../ui/icon)
 - [ce-card](../../../ui/card)
@@ -30,9 +30,9 @@
 ```mermaid
 graph TD;
   ce-customer-details --> ce-stacked-list-row
+  ce-customer-details --> ce-tag
   ce-customer-details --> ce-skeleton
   ce-customer-details --> ce-dashboard-module
-  ce-customer-details --> ce-tag
   ce-customer-details --> ce-button
   ce-customer-details --> ce-icon
   ce-customer-details --> ce-card

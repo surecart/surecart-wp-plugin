@@ -118,7 +118,9 @@ Type: `Promise<void>`
  - [ce-price-input](../price-input)
  - [ce-select](../select)
  - [ce-stripe-element](../stripe-element)
- - [ce-tax-id-input](../../controllers/tax-id-input)
+ - [ce-tax-id-input](../tax-id-input)
+ - [ce-wordpress-password-edit](../../controllers/dashboard/wordpress-password-edit)
+ - [ce-wordpress-user-edit](../../controllers/dashboard/wordpress-user-edit)
 
 ### Depends on
 
@@ -139,6 +141,8 @@ graph TD;
   ce-select --> ce-input
   ce-stripe-element --> ce-input
   ce-tax-id-input --> ce-input
+  ce-wordpress-password-edit --> ce-input
+  ce-wordpress-user-edit --> ce-input
   style ce-input fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

@@ -24,6 +24,7 @@
  - [ce-payment-methods-list](../../controllers/dashboard/payment-methods-list)
  - [ce-subscription](../../controllers/dashboard/subscription)
  - [ce-subscriptions-list](../../controllers/dashboard/subscriptions-list)
+ - [ce-wordpress-user](../../controllers/dashboard/wordpress-user)
 
 ### Graph
 ```mermaid
@@ -35,6 +36,7 @@ graph TD;
   ce-payment-methods-list --> ce-stacked-list-row
   ce-subscription --> ce-stacked-list-row
   ce-subscriptions-list --> ce-stacked-list-row
+  ce-wordpress-user --> ce-stacked-list-row
   style ce-stacked-list-row fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

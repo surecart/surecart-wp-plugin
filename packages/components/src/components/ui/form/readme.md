@@ -70,6 +70,8 @@ Type: `Promise<void>`
  - [ce-subscription-payment](../../controllers/dashboard/subscription-payment)
  - [ce-subscription-switch](../../controllers/dashboard/subscription-switch)
  - [ce-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
+ - [ce-wordpress-password-edit](../../controllers/dashboard/wordpress-password-edit)
+ - [ce-wordpress-user-edit](../../controllers/dashboard/wordpress-user-edit)
 
 ### Graph
 ```mermaid
@@ -80,6 +82,8 @@ graph TD;
   ce-subscription-payment --> ce-form
   ce-subscription-switch --> ce-form
   ce-upcoming-invoice --> ce-form
+  ce-wordpress-password-edit --> ce-form
+  ce-wordpress-user-edit --> ce-form
   style ce-form fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

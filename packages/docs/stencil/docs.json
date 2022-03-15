@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-03-08T23:02:48",
+  "timestamp": "2022-03-15T12:59:57",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.14.0",
@@ -99,7 +99,17 @@
         }
       ],
       "methods": [],
-      "events": [],
+      "events": [
+        {
+          "event": "ceChangeAddress",
+          "detail": "{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Address change event.",
+          "docsTags": []
+        }
+      ],
       "listeners": [],
       "styles": [],
       "slots": [],
@@ -551,7 +561,9 @@
         "ce-subscription-renew",
         "ce-subscription-switch",
         "ce-subscriptions-list",
-        "ce-upcoming-invoice"
+        "ce-upcoming-invoice",
+        "ce-wordpress-password-edit",
+        "ce-wordpress-user-edit"
       ],
       "dependencies": [
         "ce-spinner"
@@ -609,6 +621,12 @@
           "ce-block-ui"
         ],
         "ce-upcoming-invoice": [
+          "ce-block-ui"
+        ],
+        "ce-wordpress-password-edit": [
+          "ce-block-ui"
+        ],
+        "ce-wordpress-user-edit": [
           "ce-block-ui"
         ]
       }
@@ -1156,7 +1174,10 @@
         "ce-subscription-switch",
         "ce-subscriptions-list",
         "ce-tax-id-input",
-        "ce-upcoming-invoice"
+        "ce-upcoming-invoice",
+        "ce-wordpress-password-edit",
+        "ce-wordpress-user",
+        "ce-wordpress-user-edit"
       ],
       "dependencies": [
         "ce-spinner"
@@ -1217,6 +1238,15 @@
           "ce-button"
         ],
         "ce-upcoming-invoice": [
+          "ce-button"
+        ],
+        "ce-wordpress-password-edit": [
+          "ce-button"
+        ],
+        "ce-wordpress-user": [
+          "ce-button"
+        ],
+        "ce-wordpress-user-edit": [
           "ce-button"
         ]
       }
@@ -1320,7 +1350,10 @@
         "ce-subscription-payment",
         "ce-subscription-renew",
         "ce-subscriptions-list",
-        "ce-upcoming-invoice"
+        "ce-upcoming-invoice",
+        "ce-wordpress-password-edit",
+        "ce-wordpress-user",
+        "ce-wordpress-user-edit"
       ],
       "dependencies": [],
       "dependencyGraph": {
@@ -1364,6 +1397,15 @@
           "ce-card"
         ],
         "ce-upcoming-invoice": [
+          "ce-card"
+        ],
+        "ce-wordpress-password-edit": [
+          "ce-card"
+        ],
+        "ce-wordpress-user": [
+          "ce-card"
+        ],
+        "ce-wordpress-user-edit": [
           "ce-card"
         ]
       }
@@ -2566,11 +2608,15 @@
       "slots": [],
       "parts": [],
       "dependents": [
-        "ce-customer-edit"
+        "ce-customer-edit",
+        "ce-wordpress-user-edit"
       ],
       "dependencies": [],
       "dependencyGraph": {
         "ce-customer-edit": [
+          "ce-column"
+        ],
+        "ce-wordpress-user-edit": [
           "ce-column"
         ]
       }
@@ -2624,11 +2670,15 @@
       "slots": [],
       "parts": [],
       "dependents": [
-        "ce-customer-edit"
+        "ce-customer-edit",
+        "ce-wordpress-user-edit"
       ],
       "dependencies": [],
       "dependencyGraph": {
         "ce-customer-edit": [
+          "ce-columns"
+        ],
+        "ce-wordpress-user-edit": [
           "ce-columns"
         ]
       }
@@ -2931,9 +2981,9 @@
       "dependents": [],
       "dependencies": [
         "ce-stacked-list-row",
+        "ce-tag",
         "ce-skeleton",
         "ce-dashboard-module",
-        "ce-tag",
         "ce-button",
         "ce-icon",
         "ce-card",
@@ -2942,9 +2992,9 @@
       "dependencyGraph": {
         "ce-customer-details": [
           "ce-stacked-list-row",
+          "ce-tag",
           "ce-skeleton",
           "ce-dashboard-module",
-          "ce-tag",
           "ce-button",
           "ce-icon",
           "ce-card",
@@ -3035,6 +3085,7 @@
         "ce-column",
         "ce-address",
         "ce-switch",
+        "ce-tax-id-input",
         "ce-button",
         "ce-block-ui"
       ],
@@ -3049,6 +3100,7 @@
           "ce-column",
           "ce-address",
           "ce-switch",
+          "ce-tax-id-input",
           "ce-button",
           "ce-block-ui"
         ],
@@ -3078,6 +3130,13 @@
           "ce-input",
           "ce-spinner",
           "ce-menu"
+        ],
+        "ce-tax-id-input": [
+          "ce-input",
+          "ce-dropdown",
+          "ce-button",
+          "ce-menu",
+          "ce-menu-item"
         ],
         "ce-button": [
           "ce-spinner"
@@ -3852,7 +3911,10 @@
         "ce-subscription-renew",
         "ce-subscription-switch",
         "ce-subscriptions-list",
-        "ce-upcoming-invoice"
+        "ce-upcoming-invoice",
+        "ce-wordpress-password-edit",
+        "ce-wordpress-user",
+        "ce-wordpress-user-edit"
       ],
       "dependencies": [
         "ce-alert"
@@ -3901,6 +3963,15 @@
           "ce-dashboard-module"
         ],
         "ce-upcoming-invoice": [
+          "ce-dashboard-module"
+        ],
+        "ce-wordpress-password-edit": [
+          "ce-dashboard-module"
+        ],
+        "ce-wordpress-user": [
+          "ce-dashboard-module"
+        ],
+        "ce-wordpress-user-edit": [
           "ce-dashboard-module"
         ]
       }
@@ -4498,7 +4569,9 @@
         "ce-payment-method-create",
         "ce-subscription-payment",
         "ce-subscription-switch",
-        "ce-upcoming-invoice"
+        "ce-upcoming-invoice",
+        "ce-wordpress-password-edit",
+        "ce-wordpress-user-edit"
       ],
       "dependencies": [],
       "dependencyGraph": {
@@ -4518,6 +4591,12 @@
           "ce-form"
         ],
         "ce-upcoming-invoice": [
+          "ce-form"
+        ],
+        "ce-wordpress-password-edit": [
+          "ce-form"
+        ],
+        "ce-wordpress-user-edit": [
           "ce-form"
         ]
       }
@@ -4912,6 +4991,106 @@
           "docs": ""
         }
       ],
+      "dependents": [],
+      "dependencies": [],
+      "dependencyGraph": {}
+    },
+    {
+      "filePath": "./src/components/util/format-bytes/ce-format-bytes.tsx",
+      "encapsulation": "shadow",
+      "tag": "ce-format-bytes",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "display",
+          "type": "\"long\" | \"narrow\" | \"short\"",
+          "mutable": false,
+          "attr": "display",
+          "reflectToAttr": false,
+          "docs": "Determines how to display the result, e.g. \"100 bytes\", \"100 b\", or \"100b\".",
+          "docsTags": [],
+          "default": "'short'",
+          "values": [
+            {
+              "value": "long",
+              "type": "string"
+            },
+            {
+              "value": "narrow",
+              "type": "string"
+            },
+            {
+              "value": "short",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "locale",
+          "type": "string",
+          "mutable": false,
+          "attr": "locale",
+          "reflectToAttr": false,
+          "docs": "The locale to use when formatting the number.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "unit",
+          "type": "\"bit\" | \"byte\"",
+          "mutable": false,
+          "attr": "unit",
+          "reflectToAttr": false,
+          "docs": "The unit to display.",
+          "docsTags": [],
+          "default": "'byte'",
+          "values": [
+            {
+              "value": "bit",
+              "type": "string"
+            },
+            {
+              "value": "byte",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "value",
+          "type": "number",
+          "mutable": false,
+          "attr": "value",
+          "reflectToAttr": false,
+          "docs": "The number to format in bytes.",
+          "docsTags": [],
+          "default": "0",
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
       "dependents": [],
       "dependencies": [],
       "dependencyGraph": {}
@@ -5848,8 +6027,8 @@
         "ce-subscription",
         "ce-subscription-switch",
         "ce-subscriptions-list",
-        "ce-tax-id-input",
-        "ce-upcoming-invoice"
+        "ce-upcoming-invoice",
+        "ce-wordpress-user"
       ],
       "dependencies": [],
       "dependencyGraph": {
@@ -5895,10 +6074,10 @@
         "ce-subscriptions-list": [
           "ce-icon"
         ],
-        "ce-tax-id-input": [
+        "ce-upcoming-invoice": [
           "ce-icon"
         ],
-        "ce-upcoming-invoice": [
+        "ce-wordpress-user": [
           "ce-icon"
         ]
       }
@@ -6675,7 +6854,9 @@
         "ce-price-input",
         "ce-select",
         "ce-stripe-element",
-        "ce-tax-id-input"
+        "ce-tax-id-input",
+        "ce-wordpress-password-edit",
+        "ce-wordpress-user-edit"
       ],
       "dependencies": [
         "ce-form-control"
@@ -6715,6 +6896,12 @@
           "ce-input"
         ],
         "ce-tax-id-input": [
+          "ce-input"
+        ],
+        "ce-wordpress-password-edit": [
+          "ce-input"
+        ],
+        "ce-wordpress-user-edit": [
           "ce-input"
         ]
       }
@@ -8150,10 +8337,61 @@
           ],
           "optional": false,
           "required": false
+        },
+        {
+          "name": "taxStatus",
+          "type": "\"address_invalid\" | \"calculated\" | \"disabled\" | \"estimated\" | \"reverse_charged\" | \"tax_registration_not_found\" | \"tax_zone_not_found\"",
+          "mutable": false,
+          "attr": "tax-status",
+          "reflectToAttr": false,
+          "docs": "Tax status of the order",
+          "docsTags": [],
+          "values": [
+            {
+              "value": "address_invalid",
+              "type": "string"
+            },
+            {
+              "value": "calculated",
+              "type": "string"
+            },
+            {
+              "value": "disabled",
+              "type": "string"
+            },
+            {
+              "value": "estimated",
+              "type": "string"
+            },
+            {
+              "value": "reverse_charged",
+              "type": "string"
+            },
+            {
+              "value": "tax_registration_not_found",
+              "type": "string"
+            },
+            {
+              "value": "tax_zone_not_found",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
         }
       ],
       "methods": [],
-      "events": [],
+      "events": [
+        {
+          "event": "ceUpdateOrder",
+          "detail": "{ id?: string; status?: \"finalized\" | \"draft\" | \"paid\"; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; email?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; tax_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; line_items?: lineItems; metadata?: Object; payment_intent?: PaymentIntent; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_address?: string | Address; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Make a request to update the order.",
+          "docsTags": []
+        }
+      ],
       "listeners": [],
       "styles": [],
       "slots": [],
@@ -8428,6 +8666,120 @@
         ],
         "ce-total": [
           "ce-format-number"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/controllers/order-tax-id-input/ce-order-tax-id-input.tsx",
+      "encapsulation": "none",
+      "tag": "ce-order-tax-id-input",
+      "readme": "# ce-tax-id-input\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "order",
+          "type": "{ id?: string; status?: \"finalized\" | \"draft\" | \"paid\"; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; email?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; tax_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; line_items?: lineItems; metadata?: Object; payment_intent?: PaymentIntent; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_address?: string | Address; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "The order",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "{ id?: string; status?: \"finalized\""
+            },
+            {
+              "value": "draft",
+              "type": "string"
+            },
+            {
+              "type": "\"paid\"; number?: string; amount_due?: number; trial_amount?: number; charge?: string"
+            },
+            {
+              "type": "Charge; name?: string; email?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; tax_amount?: number; tax_status?: \"disabled\""
+            },
+            {
+              "value": "address_invalid",
+              "type": "string"
+            },
+            {
+              "value": "estimated",
+              "type": "string"
+            },
+            {
+              "type": "\"calculated\"; tax_label?: string; line_items?: lineItems; metadata?: Object; payment_intent?: PaymentIntent; customer?: string"
+            },
+            {
+              "type": "Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string"
+            },
+            {
+              "type": "Address; shipping_address?: string"
+            },
+            {
+              "type": "Address; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "show",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "show",
+          "reflectToAttr": false,
+          "docs": "Force show the field.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [
+        {
+          "event": "ceUpdateOrder",
+          "detail": "{ id?: string; status?: \"finalized\" | \"draft\" | \"paid\"; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; email?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; tax_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; line_items?: lineItems; metadata?: Object; payment_intent?: PaymentIntent; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_address?: string | Address; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Make a request to update the order.",
+          "docsTags": []
+        }
+      ],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "ce-tax-id-input"
+      ],
+      "dependencyGraph": {
+        "ce-order-tax-id-input": [
+          "ce-tax-id-input"
+        ],
+        "ce-tax-id-input": [
+          "ce-input",
+          "ce-dropdown",
+          "ce-button",
+          "ce-menu",
+          "ce-menu-item"
+        ],
+        "ce-input": [
+          "ce-form-control"
+        ],
+        "ce-form-control": [
+          "ce-tooltip"
+        ],
+        "ce-button": [
+          "ce-spinner"
         ]
       }
     },
@@ -11499,6 +11851,11 @@
       ],
       "listeners": [
         {
+          "event": "ceUpdateOrder",
+          "capture": false,
+          "passive": false
+        },
+        {
           "event": "ceUpdateSession",
           "capture": false,
           "passive": false
@@ -11794,7 +12151,8 @@
         "ce-orders-list",
         "ce-payment-methods-list",
         "ce-subscription",
-        "ce-subscriptions-list"
+        "ce-subscriptions-list",
+        "ce-wordpress-user"
       ],
       "dependencies": [],
       "dependencyGraph": {
@@ -11817,6 +12175,9 @@
           "ce-stacked-list"
         ],
         "ce-subscriptions-list": [
+          "ce-stacked-list"
+        ],
+        "ce-wordpress-user": [
           "ce-stacked-list"
         ]
       }
@@ -11877,7 +12238,8 @@
         "ce-orders-list",
         "ce-payment-methods-list",
         "ce-subscription",
-        "ce-subscriptions-list"
+        "ce-subscriptions-list",
+        "ce-wordpress-user"
       ],
       "dependencies": [],
       "dependencyGraph": {
@@ -11900,6 +12262,9 @@
           "ce-stacked-list-row"
         ],
         "ce-subscriptions-list": [
+          "ce-stacked-list-row"
+        ],
+        "ce-wordpress-user": [
           "ce-stacked-list-row"
         ]
       }
@@ -14323,7 +14688,7 @@
       }
     },
     {
-      "filePath": "./src/components/controllers/tax-id-input/ce-tax-id-input.tsx",
+      "filePath": "./src/components/ui/tax-id-input/ce-tax-id-input.tsx",
       "encapsulation": "none",
       "tag": "ce-tax-id-input",
       "readme": "# ce-tax-id-input\n\n\n",
@@ -14332,31 +14697,33 @@
       "usage": {},
       "props": [
         {
-          "name": "draft",
-          "type": "{ shipping_country: string; }",
+          "name": "country",
+          "type": "string",
           "mutable": false,
+          "attr": "country",
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "Label for the field.",
           "docsTags": [],
-          "default": "{ shipping_country: '' }",
           "values": [
             {
-              "type": "{ shipping_country: string; }"
+              "type": "string"
             }
           ],
           "optional": false,
           "required": false
         },
         {
-          "name": "order",
-          "type": "Order",
-          "mutable": false,
+          "name": "number",
+          "type": "string",
+          "mutable": true,
+          "attr": "number",
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "Tax ID Number",
           "docsTags": [],
+          "default": "null",
           "values": [
             {
-              "type": "Order"
+              "type": "string"
             }
           ],
           "optional": false,
@@ -14380,40 +14747,16 @@
           "required": false
         },
         {
-          "name": "tax_status",
-          "type": "\"address_invalid\" | \"calculated\" | \"disabled\" | \"estimated\" | \"reverse_charged\" | \"tax_registration_not_found\" | \"tax_zone_not_found\"",
-          "mutable": false,
-          "attr": "tax_status",
+          "name": "type",
+          "type": "string",
+          "mutable": true,
+          "attr": "type",
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "Type of tax id",
           "docsTags": [],
+          "default": "null",
           "values": [
             {
-              "value": "address_invalid",
-              "type": "string"
-            },
-            {
-              "value": "calculated",
-              "type": "string"
-            },
-            {
-              "value": "disabled",
-              "type": "string"
-            },
-            {
-              "value": "estimated",
-              "type": "string"
-            },
-            {
-              "value": "reverse_charged",
-              "type": "string"
-            },
-            {
-              "value": "tax_registration_not_found",
-              "type": "string"
-            },
-            {
-              "value": "tax_zone_not_found",
               "type": "string"
             }
           ],
@@ -14422,14 +14765,35 @@
         }
       ],
       "methods": [],
-      "events": [],
+      "events": [
+        {
+          "event": "ceChange",
+          "detail": "{ number: string; number_type: string; }",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Make a request to update the order.",
+          "docsTags": []
+        },
+        {
+          "event": "ceSetState",
+          "detail": "string",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Set the checkout state.",
+          "docsTags": []
+        }
+      ],
       "listeners": [],
       "styles": [],
       "slots": [],
       "parts": [],
-      "dependents": [],
+      "dependents": [
+        "ce-customer-edit",
+        "ce-order-tax-id-input"
+      ],
       "dependencies": [
-        "ce-icon",
         "ce-input",
         "ce-dropdown",
         "ce-button",
@@ -14438,7 +14802,6 @@
       ],
       "dependencyGraph": {
         "ce-tax-id-input": [
-          "ce-icon",
           "ce-input",
           "ce-dropdown",
           "ce-button",
@@ -14453,6 +14816,12 @@
         ],
         "ce-button": [
           "ce-spinner"
+        ],
+        "ce-customer-edit": [
+          "ce-tax-id-input"
+        ],
+        "ce-order-tax-id-input": [
+          "ce-tax-id-input"
         ]
       }
     },
@@ -15013,6 +15382,288 @@
         ],
         "ce-dashboard-module": [
           "ce-alert"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/controllers/dashboard/wordpress-password-edit/ce-wordpress-password-edit.tsx",
+      "encapsulation": "shadow",
+      "tag": "ce-wordpress-password-edit",
+      "readme": "# ce-customer-details\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "heading",
+          "type": "string",
+          "mutable": false,
+          "attr": "heading",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "successUrl",
+          "type": "string",
+          "mutable": false,
+          "attr": "success-url",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "user",
+          "type": "WordPressUser",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "WordPressUser"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "ce-dashboard-module",
+        "ce-card",
+        "ce-form",
+        "ce-input",
+        "ce-button",
+        "ce-block-ui"
+      ],
+      "dependencyGraph": {
+        "ce-wordpress-password-edit": [
+          "ce-dashboard-module",
+          "ce-card",
+          "ce-form",
+          "ce-input",
+          "ce-button",
+          "ce-block-ui"
+        ],
+        "ce-dashboard-module": [
+          "ce-alert"
+        ],
+        "ce-alert": [
+          "ce-icon"
+        ],
+        "ce-input": [
+          "ce-form-control"
+        ],
+        "ce-form-control": [
+          "ce-tooltip"
+        ],
+        "ce-button": [
+          "ce-spinner"
+        ],
+        "ce-block-ui": [
+          "ce-spinner"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/controllers/dashboard/wordpress-user/ce-wordpress-user.tsx",
+      "encapsulation": "shadow",
+      "tag": "ce-wordpress-user",
+      "readme": "# ce-customer-details\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "heading",
+          "type": "string",
+          "mutable": false,
+          "attr": "heading",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "user",
+          "type": "WordPressUser",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "WordPressUser"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "ce-stacked-list-row",
+        "ce-dashboard-module",
+        "ce-button",
+        "ce-icon",
+        "ce-card",
+        "ce-stacked-list"
+      ],
+      "dependencyGraph": {
+        "ce-wordpress-user": [
+          "ce-stacked-list-row",
+          "ce-dashboard-module",
+          "ce-button",
+          "ce-icon",
+          "ce-card",
+          "ce-stacked-list"
+        ],
+        "ce-dashboard-module": [
+          "ce-alert"
+        ],
+        "ce-alert": [
+          "ce-icon"
+        ],
+        "ce-button": [
+          "ce-spinner"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/controllers/dashboard/wordpress-user-edit/ce-wordpress-user-edit.tsx",
+      "encapsulation": "shadow",
+      "tag": "ce-wordpress-user-edit",
+      "readme": "# ce-customer-details\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "heading",
+          "type": "string",
+          "mutable": false,
+          "attr": "heading",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "successUrl",
+          "type": "string",
+          "mutable": false,
+          "attr": "success-url",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "user",
+          "type": "WordPressUser",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "WordPressUser"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "ce-dashboard-module",
+        "ce-card",
+        "ce-form",
+        "ce-input",
+        "ce-columns",
+        "ce-column",
+        "ce-button",
+        "ce-block-ui"
+      ],
+      "dependencyGraph": {
+        "ce-wordpress-user-edit": [
+          "ce-dashboard-module",
+          "ce-card",
+          "ce-form",
+          "ce-input",
+          "ce-columns",
+          "ce-column",
+          "ce-button",
+          "ce-block-ui"
+        ],
+        "ce-dashboard-module": [
+          "ce-alert"
+        ],
+        "ce-alert": [
+          "ce-icon"
+        ],
+        "ce-input": [
+          "ce-form-control"
+        ],
+        "ce-form-control": [
+          "ce-tooltip"
+        ],
+        "ce-button": [
+          "ce-spinner"
+        ],
+        "ce-block-ui": [
+          "ce-spinner"
         ]
       }
     }

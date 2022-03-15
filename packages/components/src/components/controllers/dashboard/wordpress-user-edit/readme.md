@@ -7,40 +7,44 @@
 
 ## Properties
 
-| Property     | Attribute     | Description | Type     | Default     |
-| ------------ | ------------- | ----------- | -------- | ----------- |
-| `customerId` | `customer-id` |             | `string` | `undefined` |
-| `heading`    | `heading`     |             | `string` | `undefined` |
+| Property     | Attribute     | Description | Type            | Default     |
+| ------------ | ------------- | ----------- | --------------- | ----------- |
+| `heading`    | `heading`     |             | `string`        | `undefined` |
+| `successUrl` | `success-url` |             | `string`        | `undefined` |
+| `user`       | --            |             | `WordPressUser` | `undefined` |
 
 
 ## Dependencies
 
 ### Depends on
 
-- [ce-stacked-list-row](../../../ui/stacked-list-row)
-- [ce-skeleton](../../../ui/skeleton)
 - [ce-dashboard-module](../../../ui/dashboard-module)
-- [ce-tag](../../../ui/tag)
-- [ce-button](../../../ui/button)
-- [ce-icon](../../../ui/icon)
 - [ce-card](../../../ui/card)
-- [ce-stacked-list](../../../ui/stacked-list)
+- [ce-form](../../../ui/form)
+- [ce-input](../../../ui/input)
+- [ce-columns](../../../ui/columns)
+- [ce-column](../../../ui/column)
+- [ce-button](../../../ui/button)
+- [ce-block-ui](../../../ui/block-ui)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-customer-details --> ce-stacked-list-row
-  ce-customer-details --> ce-skeleton
-  ce-customer-details --> ce-dashboard-module
-  ce-customer-details --> ce-tag
-  ce-customer-details --> ce-button
-  ce-customer-details --> ce-icon
-  ce-customer-details --> ce-card
-  ce-customer-details --> ce-stacked-list
+  ce-wordpress-user-edit --> ce-dashboard-module
+  ce-wordpress-user-edit --> ce-card
+  ce-wordpress-user-edit --> ce-form
+  ce-wordpress-user-edit --> ce-input
+  ce-wordpress-user-edit --> ce-columns
+  ce-wordpress-user-edit --> ce-column
+  ce-wordpress-user-edit --> ce-button
+  ce-wordpress-user-edit --> ce-block-ui
   ce-dashboard-module --> ce-alert
   ce-alert --> ce-icon
+  ce-input --> ce-form-control
+  ce-form-control --> ce-tooltip
   ce-button --> ce-spinner
-  style ce-customer-details fill:#f9f,stroke:#333,stroke-width:4px
+  ce-block-ui --> ce-spinner
+  style ce-wordpress-user-edit fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

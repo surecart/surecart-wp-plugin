@@ -27,6 +27,7 @@
 - [ce-column](../../../ui/column)
 - [ce-address](../../../ui/address)
 - [ce-switch](../../../ui/switch)
+- [ce-tax-id-input](../../../ui/tax-id-input)
 - [ce-button](../../../ui/button)
 - [ce-block-ui](../../../ui/block-ui)
 
@@ -42,6 +43,7 @@ graph TD;
   ce-customer-edit --> ce-column
   ce-customer-edit --> ce-address
   ce-customer-edit --> ce-switch
+  ce-customer-edit --> ce-tax-id-input
   ce-customer-edit --> ce-button
   ce-customer-edit --> ce-block-ui
   ce-dashboard-module --> ce-alert
@@ -59,6 +61,11 @@ graph TD;
   ce-select --> ce-input
   ce-select --> ce-spinner
   ce-select --> ce-menu
+  ce-tax-id-input --> ce-input
+  ce-tax-id-input --> ce-dropdown
+  ce-tax-id-input --> ce-button
+  ce-tax-id-input --> ce-menu
+  ce-tax-id-input --> ce-menu-item
   ce-button --> ce-spinner
   ce-block-ui --> ce-spinner
   style ce-customer-edit fill:#f9f,stroke:#333,stroke-width:4px

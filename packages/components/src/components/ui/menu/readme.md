@@ -24,7 +24,7 @@
  - [ce-payment-methods-list](../../controllers/dashboard/payment-methods-list)
  - [ce-quantity-select](../quantity-select)
  - [ce-select](../select)
- - [ce-tax-id-input](../../controllers/tax-id-input)
+ - [ce-tax-id-input](../tax-id-input)
 
 ### Graph
 ```mermaid

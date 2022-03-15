@@ -7,10 +7,10 @@
 
 ## Properties
 
-| Property     | Attribute     | Description | Type     | Default     |
-| ------------ | ------------- | ----------- | -------- | ----------- |
-| `customerId` | `customer-id` |             | `string` | `undefined` |
-| `heading`    | `heading`     |             | `string` | `undefined` |
+| Property  | Attribute | Description | Type            | Default     |
+| --------- | --------- | ----------- | --------------- | ----------- |
+| `heading` | `heading` |             | `string`        | `undefined` |
+| `user`    | --        |             | `WordPressUser` | `undefined` |
 
 
 ## Dependencies
@@ -18,9 +18,7 @@
 ### Depends on
 
 - [ce-stacked-list-row](../../../ui/stacked-list-row)
-- [ce-skeleton](../../../ui/skeleton)
 - [ce-dashboard-module](../../../ui/dashboard-module)
-- [ce-tag](../../../ui/tag)
 - [ce-button](../../../ui/button)
 - [ce-icon](../../../ui/icon)
 - [ce-card](../../../ui/card)
@@ -29,18 +27,16 @@
 ### Graph
 ```mermaid
 graph TD;
-  ce-customer-details --> ce-stacked-list-row
-  ce-customer-details --> ce-skeleton
-  ce-customer-details --> ce-dashboard-module
-  ce-customer-details --> ce-tag
-  ce-customer-details --> ce-button
-  ce-customer-details --> ce-icon
-  ce-customer-details --> ce-card
-  ce-customer-details --> ce-stacked-list
+  ce-wordpress-user --> ce-stacked-list-row
+  ce-wordpress-user --> ce-dashboard-module
+  ce-wordpress-user --> ce-button
+  ce-wordpress-user --> ce-icon
+  ce-wordpress-user --> ce-card
+  ce-wordpress-user --> ce-stacked-list
   ce-dashboard-module --> ce-alert
   ce-alert --> ce-icon
   ce-button --> ce-spinner
-  style ce-customer-details fill:#f9f,stroke:#333,stroke-width:4px
+  style ce-wordpress-user fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

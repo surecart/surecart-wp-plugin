@@ -38,6 +38,9 @@
  - [ce-subscription-switch](../../controllers/dashboard/subscription-switch)
  - [ce-subscriptions-list](../../controllers/dashboard/subscriptions-list)
  - [ce-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
+ - [ce-wordpress-password-edit](../../controllers/dashboard/wordpress-password-edit)
+ - [ce-wordpress-user](../../controllers/dashboard/wordpress-user)
+ - [ce-wordpress-user-edit](../../controllers/dashboard/wordpress-user-edit)
 
 ### Depends on
 
@@ -61,6 +64,9 @@ graph TD;
   ce-subscription-switch --> ce-dashboard-module
   ce-subscriptions-list --> ce-dashboard-module
   ce-upcoming-invoice --> ce-dashboard-module
+  ce-wordpress-password-edit --> ce-dashboard-module
+  ce-wordpress-user --> ce-dashboard-module
+  ce-wordpress-user-edit --> ce-dashboard-module
   style ce-dashboard-module fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
