@@ -1,18 +1,18 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { CeCustomerEmail } from '../ce-customer-email';
+import { CeCustomerName } from '../ce-customer-name';
 
-describe('ce-customer-email', () => {
+describe('ce-customer-name', () => {
   it('renders', async () => {
     const page = await newSpecPage({
-      components: [CeCustomerEmail],
-      html: `<ce-customer-email></ce-customer-email>`,
+      components: [CeCustomerName],
+      html: `<ce-customer-name></ce-customer-name>`,
     });
     expect(page.root).toMatchSnapshot();
   });
   it('is disabled when logged in', async () => {
     const page = await newSpecPage({
-      components: [CeCustomerEmail],
-      html: `<ce-customer-email logged-in></ce-customer-email>`,
+      components: [CeCustomerName],
+      html: `<ce-customer-name logged-in></ce-customer-name>`,
     });
     expect(page.root).toMatchSnapshot();
   });

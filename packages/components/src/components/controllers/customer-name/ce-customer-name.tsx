@@ -10,6 +10,9 @@ import { openWormhole } from 'stencil-wormhole';
 export class CeCustomerName {
   private input: HTMLCeInputElement;
 
+  /** Is the user logged in. */
+  @Prop() loggedIn: boolean;
+
   /** (passed from the ce-checkout component automatically) */
   @Prop() order: Order;
 
@@ -106,7 +109,7 @@ export class CeCustomerName {
         name="name"
         ref={el => (this.input = el as HTMLCeInputElement)}
         value={this.customer?.name || this.value}
-        disabled={!!this.customer?.name}
+        disabled={!!this.loggedIn}
         label={this.label}
         help={this.help}
         autocomplete="name"

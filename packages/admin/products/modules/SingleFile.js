@@ -17,7 +17,7 @@ export default ({ file, onUploaded, onRemoved }) => {
 	const [loading, setLoading] = useState(false);
 	const [id, setId] = useState('');
 	const uploadFile = useFileUpload();
-	const { setSaving, product } = useCurrentPage('product');
+	const { setSaving } = useCurrentPage('product');
 
 	useEffect(() => {
 		if (!file.id) {

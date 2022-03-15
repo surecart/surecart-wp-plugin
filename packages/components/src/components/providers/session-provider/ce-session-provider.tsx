@@ -50,6 +50,9 @@ export class CeSessionProvider {
   /** Set the state */
   @Event() ceSetState: EventEmitter<string>;
 
+  /** Paid event */
+  @Event() cePaid: EventEmitter<void>;
+
   /** Holds the checkout session to update. */
   @State() session: Order;
 
@@ -189,6 +192,9 @@ export class CeSessionProvider {
       });
       if (this.session.status === 'finalized') {
         this.ceSetState.emit('FETCH');
+      } else if (this.session.status === 'paid') {
+        this.ceSetState.emit('PAID');
+        this.cePaid.emit();
       } else {
         this.ceSetState.emit('RESOLVE');
       }

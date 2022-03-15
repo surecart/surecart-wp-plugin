@@ -206,22 +206,6 @@ export default ({ attributes, setAttributes, onCreate, onCancel, isNew }) => {
 
 				<div>
 					<div css={label}>
-						{__('User Account', 'checkout_engine')}
-					</div>
-					<ToggleControl
-						label={__(
-							'Automatically create a user account when purchased.',
-							'checkout_engine'
-						)}
-						checked={create_user_account}
-						onChange={(create_user_account) =>
-							setAttributes({ create_user_account })
-						}
-					/>
-				</div>
-
-				<div>
-					<div css={label}>
 						{__('Thank You Page', 'checkout_engine')}
 					</div>
 					<ToggleControl

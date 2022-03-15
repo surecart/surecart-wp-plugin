@@ -258,6 +258,10 @@ export namespace Components {
          */
         "i18n": Object;
         /**
+          * Is this user logged in?
+         */
+        "loggedIn": boolean;
+        /**
           * Are we in test or live mode.
          */
         "mode": 'test' | 'live';
@@ -446,6 +450,10 @@ export namespace Components {
          */
         "label": string;
         /**
+          * Is the user logged in.
+         */
+        "loggedIn": boolean;
+        /**
           * (passed from the ce-checkout component automatically)
          */
         "order": Order;
@@ -508,6 +516,10 @@ export namespace Components {
          */
         "label": string;
         /**
+          * Is the user logged in.
+         */
+        "loggedIn": boolean;
+        /**
           * (passed from the ce-checkout component automatically)
          */
         "order": Order;
@@ -545,6 +557,18 @@ export namespace Components {
         "heading": string;
     }
     interface CeDivider {
+    }
+    interface CeDownloadsList {
+        "allLink": string;
+        "cancelBehavior": 'period_end' | 'immediate';
+        "heading": string;
+        /**
+          * Customer id to fetch subscriptions
+         */
+        "query": {
+    page: number;
+    per_page: number;
+  };
     }
     interface CeDropdown {
         "clickEl"?: HTMLElement;
@@ -1028,6 +1052,53 @@ export namespace Components {
         "label": string;
         "loading": boolean;
         "order": Order;
+    }
+    interface CeOrderPassword {
+        /**
+          * The input's autofocus attribute.
+         */
+        "autofocus": boolean;
+        /**
+          * Disables the input.
+         */
+        "disabled": boolean;
+        /**
+          * The input's help text.
+         */
+        "help": string;
+        /**
+          * The input's label.
+         */
+        "label": string;
+        "loggedIn": boolean;
+        /**
+          * Draws a pill-style input with rounded edges.
+         */
+        "pill": boolean;
+        /**
+          * The input's placeholder text.
+         */
+        "placeholder": string;
+        /**
+          * Makes the input readonly.
+         */
+        "readonly": boolean;
+        /**
+          * Makes the input a required field.
+         */
+        "required": boolean;
+        /**
+          * Should we show the label
+         */
+        "showLabel": boolean;
+        /**
+          * The input's size.
+         */
+        "size": 'small' | 'medium' | 'large';
+        /**
+          * The input's value attribute.
+         */
+        "value": string;
     }
     interface CeOrderShippingAddress {
         /**
@@ -2031,6 +2102,12 @@ declare global {
         prototype: HTMLCeDividerElement;
         new (): HTMLCeDividerElement;
     };
+    interface HTMLCeDownloadsListElement extends Components.CeDownloadsList, HTMLStencilElement {
+    }
+    var HTMLCeDownloadsListElement: {
+        prototype: HTMLCeDownloadsListElement;
+        new (): HTMLCeDownloadsListElement;
+    };
     interface HTMLCeDropdownElement extends Components.CeDropdown, HTMLStencilElement {
     }
     var HTMLCeDropdownElement: {
@@ -2216,6 +2293,12 @@ declare global {
     var HTMLCeOrderCouponFormElement: {
         prototype: HTMLCeOrderCouponFormElement;
         new (): HTMLCeOrderCouponFormElement;
+    };
+    interface HTMLCeOrderPasswordElement extends Components.CeOrderPassword, HTMLStencilElement {
+    }
+    var HTMLCeOrderPasswordElement: {
+        prototype: HTMLCeOrderPasswordElement;
+        new (): HTMLCeOrderPasswordElement;
     };
     interface HTMLCeOrderShippingAddressElement extends Components.CeOrderShippingAddress, HTMLStencilElement {
     }
@@ -2572,6 +2655,7 @@ declare global {
         "ce-customer-name": HTMLCeCustomerNameElement;
         "ce-dashboard-module": HTMLCeDashboardModuleElement;
         "ce-divider": HTMLCeDividerElement;
+        "ce-downloads-list": HTMLCeDownloadsListElement;
         "ce-dropdown": HTMLCeDropdownElement;
         "ce-empty": HTMLCeEmptyElement;
         "ce-express-payment": HTMLCeExpressPaymentElement;
@@ -2603,6 +2687,7 @@ declare global {
         "ce-order-confirmation-line-items": HTMLCeOrderConfirmationLineItemsElement;
         "ce-order-confirmation-totals": HTMLCeOrderConfirmationTotalsElement;
         "ce-order-coupon-form": HTMLCeOrderCouponFormElement;
+        "ce-order-password": HTMLCeOrderPasswordElement;
         "ce-order-shipping-address": HTMLCeOrderShippingAddressElement;
         "ce-order-status-badge": HTMLCeOrderStatusBadgeElement;
         "ce-order-summary": HTMLCeOrderSummaryElement;
@@ -2919,6 +3004,10 @@ declare namespace LocalJSX {
          */
         "i18n"?: Object;
         /**
+          * Is this user logged in?
+         */
+        "loggedIn"?: boolean;
+        /**
           * Are we in test or live mode.
          */
         "mode"?: 'test' | 'live';
@@ -3116,6 +3205,10 @@ declare namespace LocalJSX {
          */
         "label"?: string;
         /**
+          * Is the user logged in.
+         */
+        "loggedIn"?: boolean;
+        /**
           * Emitted when the control loses focus.
          */
         "onCeBlur"?: (event: CustomEvent<void>) => void;
@@ -3199,6 +3292,10 @@ declare namespace LocalJSX {
          */
         "label"?: string;
         /**
+          * Is the user logged in.
+         */
+        "loggedIn"?: boolean;
+        /**
           * Emitted when the control loses focus.
          */
         "onCeBlur"?: (event: CustomEvent<void>) => void;
@@ -3258,6 +3355,18 @@ declare namespace LocalJSX {
         "heading"?: string;
     }
     interface CeDivider {
+    }
+    interface CeDownloadsList {
+        "allLink"?: string;
+        "cancelBehavior"?: 'period_end' | 'immediate';
+        "heading"?: string;
+        /**
+          * Customer id to fetch subscriptions
+         */
+        "query"?: {
+    page: number;
+    per_page: number;
+  };
     }
     interface CeDropdown {
         "clickEl"?: HTMLElement;
@@ -3773,6 +3882,53 @@ declare namespace LocalJSX {
         "loading"?: boolean;
         "onCeApplyCoupon"?: (event: CustomEvent<string>) => void;
         "order"?: Order;
+    }
+    interface CeOrderPassword {
+        /**
+          * The input's autofocus attribute.
+         */
+        "autofocus"?: boolean;
+        /**
+          * Disables the input.
+         */
+        "disabled"?: boolean;
+        /**
+          * The input's help text.
+         */
+        "help"?: string;
+        /**
+          * The input's label.
+         */
+        "label"?: string;
+        "loggedIn"?: boolean;
+        /**
+          * Draws a pill-style input with rounded edges.
+         */
+        "pill"?: boolean;
+        /**
+          * The input's placeholder text.
+         */
+        "placeholder"?: string;
+        /**
+          * Makes the input readonly.
+         */
+        "readonly"?: boolean;
+        /**
+          * Makes the input a required field.
+         */
+        "required"?: boolean;
+        /**
+          * Should we show the label
+         */
+        "showLabel"?: boolean;
+        /**
+          * The input's size.
+         */
+        "size"?: 'small' | 'medium' | 'large';
+        /**
+          * The input's value attribute.
+         */
+        "value"?: string;
     }
     interface CeOrderShippingAddress {
         /**
@@ -4315,6 +4471,10 @@ declare namespace LocalJSX {
          */
         "onCeError"?: (event: CustomEvent<{ message: string; code?: string; data?: any; additional_errors?: any } | {}>) => void;
         /**
+          * Paid event
+         */
+        "onCePaid"?: (event: CustomEvent<void>) => void;
+        /**
           * Set the state
          */
         "onCeSetState"?: (event: CustomEvent<string>) => void;
@@ -4744,6 +4904,7 @@ declare namespace LocalJSX {
         "ce-customer-name": CeCustomerName;
         "ce-dashboard-module": CeDashboardModule;
         "ce-divider": CeDivider;
+        "ce-downloads-list": CeDownloadsList;
         "ce-dropdown": CeDropdown;
         "ce-empty": CeEmpty;
         "ce-express-payment": CeExpressPayment;
@@ -4775,6 +4936,7 @@ declare namespace LocalJSX {
         "ce-order-confirmation-line-items": CeOrderConfirmationLineItems;
         "ce-order-confirmation-totals": CeOrderConfirmationTotals;
         "ce-order-coupon-form": CeOrderCouponForm;
+        "ce-order-password": CeOrderPassword;
         "ce-order-shipping-address": CeOrderShippingAddress;
         "ce-order-status-badge": CeOrderStatusBadge;
         "ce-order-summary": CeOrderSummary;
@@ -4860,6 +5022,7 @@ declare module "@stencil/core" {
             "ce-customer-name": LocalJSX.CeCustomerName & JSXBase.HTMLAttributes<HTMLCeCustomerNameElement>;
             "ce-dashboard-module": LocalJSX.CeDashboardModule & JSXBase.HTMLAttributes<HTMLCeDashboardModuleElement>;
             "ce-divider": LocalJSX.CeDivider & JSXBase.HTMLAttributes<HTMLCeDividerElement>;
+            "ce-downloads-list": LocalJSX.CeDownloadsList & JSXBase.HTMLAttributes<HTMLCeDownloadsListElement>;
             "ce-dropdown": LocalJSX.CeDropdown & JSXBase.HTMLAttributes<HTMLCeDropdownElement>;
             "ce-empty": LocalJSX.CeEmpty & JSXBase.HTMLAttributes<HTMLCeEmptyElement>;
             "ce-express-payment": LocalJSX.CeExpressPayment & JSXBase.HTMLAttributes<HTMLCeExpressPaymentElement>;
@@ -4891,6 +5054,7 @@ declare module "@stencil/core" {
             "ce-order-confirmation-line-items": LocalJSX.CeOrderConfirmationLineItems & JSXBase.HTMLAttributes<HTMLCeOrderConfirmationLineItemsElement>;
             "ce-order-confirmation-totals": LocalJSX.CeOrderConfirmationTotals & JSXBase.HTMLAttributes<HTMLCeOrderConfirmationTotalsElement>;
             "ce-order-coupon-form": LocalJSX.CeOrderCouponForm & JSXBase.HTMLAttributes<HTMLCeOrderCouponFormElement>;
+            "ce-order-password": LocalJSX.CeOrderPassword & JSXBase.HTMLAttributes<HTMLCeOrderPasswordElement>;
             "ce-order-shipping-address": LocalJSX.CeOrderShippingAddress & JSXBase.HTMLAttributes<HTMLCeOrderShippingAddressElement>;
             "ce-order-status-badge": LocalJSX.CeOrderStatusBadge & JSXBase.HTMLAttributes<HTMLCeOrderStatusBadgeElement>;
             "ce-order-summary": LocalJSX.CeOrderSummary & JSXBase.HTMLAttributes<HTMLCeOrderSummaryElement>;

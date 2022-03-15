@@ -10,6 +10,9 @@ import { createOrUpdateOrder } from '../../../services/session';
 export class CeCustomerEmail {
   private input: HTMLCeInputElement;
 
+  /** Is the user logged in. */
+  @Prop() loggedIn: boolean;
+
   /** (passed from the ce-checkout component automatically) */
   @Prop() order: Order;
 
@@ -109,7 +112,7 @@ export class CeCustomerEmail {
         help={this.help}
         autocomplete={'email'}
         placeholder={this.placeholder}
-        disabled={!!this.customer?.email}
+        disabled={!!this.loggedIn}
         readonly={this.readonly}
         required={true}
         invalid={this.invalid}
@@ -124,4 +127,4 @@ export class CeCustomerEmail {
   }
 }
 
-openWormhole(CeCustomerEmail, ['order', 'customer'], false);
+openWormhole(CeCustomerEmail, ['order', 'customer', 'loggedIn'], false);

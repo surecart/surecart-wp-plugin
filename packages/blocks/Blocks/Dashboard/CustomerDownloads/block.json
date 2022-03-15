@@ -1,0 +1,19 @@
+{
+	"name": "checkout-engine/customer-downloads",
+	"title": "Customer Downloads",
+	"description": "Displays the customer's downloads.",
+	"category": "layout",
+	"keywords": ["download", "customer", "dashboard"],
+	"parent": null,
+	"supports": {
+		"reusable": false,
+		"html": false,
+		"align": ["wide", "full"]
+	},
+	"attributes": {
+		"title": {
+			"type": "string",
+			"default": "Downloads"
+		}
+	}
+}

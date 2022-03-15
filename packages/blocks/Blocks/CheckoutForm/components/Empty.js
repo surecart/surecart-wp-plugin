@@ -44,7 +44,7 @@ export default ({ attributes, setAttributes }) => {
 		});
 
 		// parse blocks.
-		const parsed = parse(parse(await result.text()));
+		const parsed = parse(await result.text());
 
 		// get the price selector block
 		const priceChoiceBlock = parsed.findIndex(

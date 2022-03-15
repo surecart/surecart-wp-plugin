@@ -20,6 +20,7 @@ class Block extends DashboardPage {
 		'order'          => \CheckoutEngineBlocks\Controllers\OrderController::class,
 		'user'           => \CheckoutEngineBlocks\Controllers\UserController::class,
 		'customer'       => \CheckoutEngineBlocks\Controllers\CustomerController::class,
+		'download'       => \CheckoutEngineBlocks\Controllers\DownloadController::class,
 		'invoice'        => \CheckoutEngineBlocks\Controllers\InvoiceController::class,
 	];
 

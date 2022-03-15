@@ -48,6 +48,9 @@ export class CECheckout {
   /** Translation object. */
   @Prop() i18n: Object;
 
+  /** Is this user logged in? */
+  @Prop() loggedIn: boolean;
+
   /** Should we disable components validation */
   @Prop() disableComponentsValidation: boolean;
 
@@ -181,6 +184,7 @@ export class CECheckout {
       products: this.productsEntities,
       prices: this.pricesEntities,
       country: 'US',
+      loggedIn: this.loggedIn,
       formId: this.formId,
       mode: this.mode,
       currencyCode: this.currencyCode,

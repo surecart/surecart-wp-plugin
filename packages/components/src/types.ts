@@ -53,6 +53,17 @@ export type Prices = {
   [id: string]: Price;
 };
 
+export interface File {
+  id: string;
+  object: 'file';
+  byte_size: number;
+  content_type: string;
+  extension: string;
+  filename: string;
+  product: string | 'Product';
+  created_at: number;
+}
+
 export interface Product extends Object {
   id: string;
   name: string;
@@ -64,6 +75,11 @@ export interface Product extends Object {
     object: 'list';
     pagination: Pagination;
     data: Array<Price>;
+  };
+  files: {
+    object: 'list';
+    pagination: Pagination;
+    data: Array<File>;
   };
   created_at: number;
   updated_at: number;
@@ -240,6 +256,42 @@ export interface ProcessorData {
     client_secret?: string;
     type: 'payment' | 'setup';
   };
+}
+
+export interface Purchase {
+  id: string;
+  object: 'purchase';
+  live_mode: boolean;
+  quantity: number;
+  revoked: boolean;
+  revoked_at: number;
+  customer: string | Customer;
+  invoice_item: string | InvoiceItem;
+  invoice: string | Invoice;
+  line_item: string | LineItem;
+  order: string | Order;
+  product: string | Product;
+  refund: string | Refund;
+  subscription: string | Subscription;
+  created_at: number;
+  updated_at: number;
+}
+
+export interface Refund {
+  id: string;
+  object: 'refund';
+  amount: number;
+  currency: string;
+  external_refund_id: string;
+  live_mode: boolean;
+  metadata: object;
+  reason: 'duplicate' | 'fraudulent' | 'requested_by_customer' | 'expired_uncaptured_charge';
+  status: 'pending' | 'succeeded' | 'failed' | 'canceled';
+  charge: string | Charge;
+  customer: string | Customer;
+  revoked_purchases: null | Array<Purchase>;
+  created_at: number;
+  updated_at: number;
 }
 
 export interface Subscription extends Object {

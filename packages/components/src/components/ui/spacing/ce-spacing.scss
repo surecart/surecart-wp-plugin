@@ -2,6 +2,6 @@
   display: block;
 }
 
-::slotted(*) {
+::slotted(*:not(:last-child)) {
   margin-bottom: var(--spacing);
 }

@@ -22,6 +22,7 @@ import * as customerDashboardButton from '@blocks/CustomerDashboardButton';
 import * as customerCharges from '@blocks/dashboard/CustomerCharges';
 import * as customerDashboard from '@blocks/dashboard/CustomerDashboard';
 import * as customerShippingAddress from '@blocks/dashboard/CustomerShippingAddress';
+import * as customerDownloads from '@blocks/dashboard/CustomerDownloads';
 import * as customerOrders from '@blocks/dashboard/CustomerOrders';
 import * as customerInvoices from '@blocks/dashboard/CustomerInvoices';
 import * as customerSubscriptions from '@blocks/dashboard/CustomerSubscriptions';
@@ -74,6 +75,7 @@ const dashboardComponents = [
 	customerBillingDetails,
 	customerPaymentMethods,
 	customerOrders,
+	customerDownloads,
 	customerInvoices,
 	customerCharges,
 ];
