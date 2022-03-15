@@ -25,6 +25,10 @@ class Settings {
 			wp_die( esc_html__( 'Could not load settings page.', 'checkout-engine' ) );
 		}
 
+		if ( is_ssl() ) {
+			$session->url = str_replace( 'http://', 'https://', $session->url );
+		}
+
 		return \CheckoutEngine::view( 'admin/settings' )->with(
 			[
 				'session_url' => $session->url,
