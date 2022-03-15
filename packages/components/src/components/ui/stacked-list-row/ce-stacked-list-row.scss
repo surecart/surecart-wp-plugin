@@ -17,6 +17,8 @@
   gap: var(--ce-spacing-xx-small);
   padding: var(--ce-spacing-medium) var(--ce-spacing-large);
   transition: background-color var(--ce-transition-fast) ease;
+  min-width: 0px;
+  min-height: 0px;
 
   &[href]:hover {
     background: var(--ce-color-gray-50);
@@ -27,6 +29,7 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
+    z-index:1;
   }
 
   &__prefix {
@@ -38,10 +41,10 @@
   }
 
   &--has-prefix {
-    padding-left: var(--ce-spacing-xx-large);
+    padding-left: var(--ce-spacing-xxxx-large);
   }
   &--has-suffix {
-    padding-right: var(--ce-spacing-xx-large);
+    padding-right: var(--ce-spacing-xxxx-large);
   }
 }
 

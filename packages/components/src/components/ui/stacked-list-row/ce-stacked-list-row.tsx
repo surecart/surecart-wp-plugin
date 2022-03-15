@@ -47,11 +47,11 @@ export class CeStackedListRow {
         }}
       >
         <span class="list-row__prefix">
-          <slot name="prefix"></slot>
+          <slot name="prefix" onSlotchange={() => this.handleSlotChange()}></slot>
         </span>
-        <slot></slot>
+        <slot onSlotchange={() => this.handleSlotChange()}></slot>
         <span class="list-row__suffix">
-          <slot name="suffix"></slot>
+          <slot name="suffix" onSlotchange={() => this.handleSlotChange()}></slot>
         </span>
       </Tag>
     );
