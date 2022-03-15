@@ -49,8 +49,7 @@ export class CeTaxIdInput {
   }
 
   @Watch('country')
-  handleCountryChange(_, prev) {
-    if (prev) return;
+  handleCountryChange() {
     this.type = getType(this.country);
   }
 

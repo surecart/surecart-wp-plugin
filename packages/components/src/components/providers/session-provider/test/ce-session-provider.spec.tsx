@@ -1,5 +1,5 @@
 import { CeSessionProvider } from '../ce-session-provider';
-import { MockResponse, mockFetch, newSpecPage, MockHeaders } from '@stencil/core/testing';
+import { newSpecPage } from '@stencil/core/testing';
 
 describe('ce-cart-provider', () => {
   it('renders', async () => {

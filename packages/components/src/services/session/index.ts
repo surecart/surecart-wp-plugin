@@ -14,7 +14,7 @@ const expand = [
   'discount.promotion',
   'discount.coupon',
   'shipping_address',
-  // 'tax_identifier',
+  'tax_identifier',
 ];
 
 export const parsePath = (id, endpoint = '') => {
