@@ -49,13 +49,14 @@ export class CeTaxIdInput {
   }
 
   @Watch('country')
-  handleOrderChange(_, prev) {
+  handleCountryChange(_, prev) {
     if (prev) return;
     this.type = getType(this.country);
   }
 
-  componentDidLoad() {
+  componentWillLoad() {
     this.maybeForceShow();
+    this.type = getType(this.country);
   }
 
   render() {

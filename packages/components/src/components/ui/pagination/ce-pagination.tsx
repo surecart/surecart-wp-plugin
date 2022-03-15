@@ -21,7 +21,7 @@ export class CePagination {
   @Event() cePrevPage: EventEmitter<void>;
   @Event() ceNextPage: EventEmitter<void>;
 
-  componentDidLoad() {
+  componentWillLoad() {
     this.handlePaginationChange();
   }
 

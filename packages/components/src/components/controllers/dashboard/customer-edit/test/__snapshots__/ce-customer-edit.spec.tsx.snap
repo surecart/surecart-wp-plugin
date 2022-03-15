@@ -32,6 +32,7 @@ exports[`ce-customer-edit renders 1`] = `
           <div style="display: block;">
             <ce-address label="Billing Address"></ce-address>
           </div>
+          <ce-tax-id-input show=""></ce-tax-id-input>
           <div>
             <ce-button full="" submit="" type="primary">
               Save

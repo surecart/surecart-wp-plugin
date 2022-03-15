@@ -1,5 +1,23 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`ce-coupon-form handles applied coupons 1`] = `
+<ce-coupon-form>
+  <mock:shadow-root>
+    <ce-line-item>
+      <ce-tag class="coupon-tag" clearable="" slot="title" type="success">
+        TESTCODE
+      </ce-tag>
+      <span class="coupon-human-discount" slot="price-description">
+        (25% off)
+      </span>
+      <span slot="price">
+        <ce-format-number currency="usd" type="currency" value="725"></ce-format-number>
+      </span>
+    </ce-line-item>
+  </mock:shadow-root>
+</ce-coupon-form>
+`;
+
 exports[`ce-coupon-form renders 1`] = `
 <ce-coupon-form>
   <mock:shadow-root>

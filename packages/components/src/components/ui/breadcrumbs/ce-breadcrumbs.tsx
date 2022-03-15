@@ -23,11 +23,6 @@ export class CeBreadcrumbs {
 
     [clone, ...clone.querySelectorAll('[id]')].forEach(el => el.removeAttribute('id'));
     clone.slot = 'separator';
-    // if (typeof (separator as any)?.name === 'string') {
-    //   (clone as any).name = (separator as any).name;
-    // }
-
-    // console.log({ clone, separator });
 
     return clone;
   }

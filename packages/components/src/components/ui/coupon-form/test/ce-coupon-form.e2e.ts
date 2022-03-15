@@ -44,33 +44,4 @@ describe('ce-coupon-form', () => {
     await page.waitForChanges();
     expect(ceApplyCoupon).toHaveReceivedEventDetail('TESTCOUPON');
   });
-
-  it('Handles Applied Coupons', async () => {
-    // const ceApplyCoupon = await page.spyOnEvent('ceApplyCoupon');
-    await page.$eval(element, (elm: any) => {
-      elm.currency = 'usd';
-      elm.discountAmount = 725;
-      elm.discount = {
-        coupon: {
-          percent_off: 25.0,
-          currency: 'usd',
-        },
-        promotion: {
-          code: 'TESTCODE',
-        },
-      };
-    });
-
-    await page.waitForChanges();
-    // const line = await page.find(`${selector} >>> ce-line-item`);
-    // expect(line).toEqualText('TESTCODE(25% off)$7.25');
-    // const tag = await page.find(`${selector} >>> ce-tag`);
-    // expect(tag).toEqualText('TESTCODE');
-
-    // tag.click();
-    // await page.waitForChanges();
-
-    // // remove event
-    // expect(ceApplyCoupon).toHaveReceivedEventDetail(null);
-  });
 });

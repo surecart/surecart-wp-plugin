@@ -22,7 +22,6 @@ export class CeStackedListRow {
       var ro = new ResizeObserver(entries => {
         entries.forEach(entry => {
           this.width = entry.contentRect.width;
-          console.log(this.width);
         });
       });
       ro.observe(this.el);

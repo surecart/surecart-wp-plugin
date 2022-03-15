@@ -10,7 +10,7 @@ import { Address, Order } from '../../../types';
 })
 export class CeOrderTaxIdInput {
   /** The order */
-  @Prop() order: Order;
+  @Prop() order: Partial<Order>;
 
   /** Force show the field. */
   @Prop() show: boolean = false;
@@ -19,11 +19,26 @@ export class CeOrderTaxIdInput {
   @Event() ceUpdateOrder: EventEmitter<Partial<Order>>;
 
   render() {
+    if (this.order?.tax_identifier?.number && this.order?.tax_identifier?.number_type) {
+      return (
+        <ce-tax-id-input
+          show={this.show}
+          number={this.order?.tax_identifier?.number}
+          type={this.order?.tax_identifier?.number_type}
+          onCeChange={e => {
+            const tax_identifier = e.detail;
+            this.ceUpdateOrder.emit({
+              tax_identifier,
+            });
+          }}
+        ></ce-tax-id-input>
+      );
+    }
     return (
       <ce-tax-id-input
         show={this.show}
-        number={this.order.tax_identifier?.number}
-        type={this.order.tax_identifier?.number_type}
+        number={this.order?.tax_identifier?.number}
+        type={this.order?.tax_identifier?.number_type}
         country={(this?.order?.shipping_address as Address)?.country}
         onCeChange={e => {
           const tax_identifier = e.detail;

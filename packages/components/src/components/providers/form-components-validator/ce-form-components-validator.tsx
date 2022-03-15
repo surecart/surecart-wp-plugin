@@ -31,7 +31,7 @@ export class CeFormComponentsValidator {
     }
   }
 
-  componentDidLoad() {
+  componentWillLoad() {
     this.hasAddress = !!this.el.querySelector('ce-address');
     this.paymentField = this.el.querySelector('ce-payment');
   }

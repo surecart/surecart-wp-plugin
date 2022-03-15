@@ -57,19 +57,6 @@ export const populateInputs = (el, order: Order) => {
     input.value = order[name];
   });
 
-  // const address_fields = ['line_1', 'line_2', 'city', 'state', 'postal_code', 'country'];
-  // address_fields.forEach(name => {
-  //   const shipping_input = findInput(el, `shipping_${name}`) as any;
-  //   console.log({ shipping_input });
-  //   if (shipping_input && typeof order?.shipping_address === 'object') {
-  //     shipping_input.value = order?.shipping_address?.[name];
-  //   }
-  //   const billing_input = findInput(el, `billing_${name}`) as any;
-  //   if (billing_input && typeof order?.billing_address === 'object') {
-  //     billing_input.value = order?.billing_address?.[name];
-  //   }
-  // });
-
   // update metadata.
   Object.keys(order?.metadata || {}).forEach(key => {
     const input = findInput(el, key) as any;

@@ -1,3 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`ce-tax-id-input renders 1`] = `<ce-tax-id-input></ce-tax-id-input>`;

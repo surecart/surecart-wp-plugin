@@ -33,7 +33,7 @@ export class CeSubscriptionDetails {
     }
   }
 
-  componentDidLoad() {
+  componentWillLoad() {
     this.handleSubscriptionChange();
   }
 

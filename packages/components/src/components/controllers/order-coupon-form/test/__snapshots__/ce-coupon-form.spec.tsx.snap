@@ -1,19 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ce-coupon-form renders 1`] = `
-<ce-coupon-form>
+exports[`ce-order-coupon-form renders 1`] = `
+<ce-order-coupon-form>
   <mock:shadow-root>
-    <div class="coupon-form">
-      <div class="trigger">
-        <slot name="label"></slot>
-      </div>
-      <div class="form">
-        <ce-input clearable=""></ce-input>
-        <ce-button full="" type="primary">
-          <slot></slot>
-        </ce-button>
-      </div>
-    </div>
+    <ce-coupon-form></ce-coupon-form>
   </mock:shadow-root>
-</ce-coupon-form>
+</ce-order-coupon-form>
 `;

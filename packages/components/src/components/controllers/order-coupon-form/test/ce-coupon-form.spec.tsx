@@ -1,11 +1,11 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { CeCouponForm } from '../ce-order-coupon-form';
+import { CeOrderCouponForm } from '../ce-order-coupon-form';
 
-describe('ce-coupon-form', () => {
+describe('ce-order-coupon-form', () => {
   it('renders', async () => {
     const page = await newSpecPage({
-      components: [CeCouponForm],
-      html: `<ce-coupon-form></ce-coupon-form>`,
+      components: [CeOrderCouponForm],
+      html: `<ce-order-coupon-form></ce-order-coupon-form>`,
     });
     expect(page.root).toMatchSnapshot();
   });

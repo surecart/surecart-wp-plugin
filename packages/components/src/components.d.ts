@@ -1080,7 +1080,7 @@ export namespace Components {
         /**
           * The order
          */
-        "order": Order;
+        "order": Partial<Order>;
         /**
           * Force show the field.
          */
@@ -3828,7 +3828,7 @@ declare namespace LocalJSX {
         /**
           * The order
          */
-        "order"?: Order;
+        "order"?: Partial<Order>;
         /**
           * Force show the field.
          */
