@@ -4,8 +4,8 @@
  * Plugin URI: https://surecart.com/
  * Description:
  * Version: 0.0.2
- * Requires at least: 5.9-RC3
- * Requires PHP: 5.5.9
+ * Requires at least: 5.9
+ * Requires PHP: 7.3
  * Author: Andre Gagnon
  * Author URI: https://andregagnon.me
  * License: GPL-2.0-only
