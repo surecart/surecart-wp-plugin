@@ -1,6 +1,7 @@
 import { Component, State, h, Watch, Prop, Event, EventEmitter } from '@stencil/core';
 import { Order } from '../../../types';
 import { openWormhole } from 'stencil-wormhole';
+import { __ } from '@wordpress/i18n';
 
 @Component({
   tag: 'ce-order-coupon-form',
@@ -37,7 +38,9 @@ export class CeOrderCouponForm {
         discount={this?.order?.discount}
         currency={this?.order?.currency}
         discount-amount={this?.order?.discount_amount}
-      ></ce-coupon-form>
+      >
+        <slot>{__('Apply Coupon', 'checkout_engine')}</slot>
+      </ce-coupon-form>
     );
   }
 }
