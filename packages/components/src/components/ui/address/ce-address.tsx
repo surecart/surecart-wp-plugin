@@ -6,7 +6,7 @@ import { Address } from '../../../types';
 @Component({
   tag: 'ce-address',
   styleUrl: 'ce-address.scss',
-  scoped: true,
+  shadow: false,
 })
 export class CeAddress {
   /** The address. */
