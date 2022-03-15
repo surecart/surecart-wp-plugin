@@ -553,6 +553,10 @@ export namespace Components {
          */
         "closeOnSelect": boolean;
         /**
+          * Is this disabled.
+         */
+        "disabled": boolean;
+        /**
           * Indicates whether or not the dropdown is open. You can use this in lieu of the show/hide methods.
          */
         "open"?: boolean;
@@ -1428,6 +1432,7 @@ export namespace Components {
           * The input's value attribute.
          */
         "choices": Array<ChoiceItem>;
+        "disabled": boolean;
         /**
           * Some help text for the input.
          */
@@ -3261,6 +3266,10 @@ declare namespace LocalJSX {
          */
         "closeOnSelect"?: boolean;
         /**
+          * Is this disabled.
+         */
+        "disabled"?: boolean;
+        /**
           * Emitted when the dropdown closes. Calling `event.preventDefault()` will prevent it from being closed.
          */
         "onCeHide"?: (event: CustomEvent<void>) => void;
@@ -4202,6 +4211,7 @@ declare namespace LocalJSX {
           * The input's value attribute.
          */
         "choices"?: Array<ChoiceItem>;
+        "disabled"?: boolean;
         /**
           * Some help text for the input.
          */

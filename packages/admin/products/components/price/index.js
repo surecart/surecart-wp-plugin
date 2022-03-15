@@ -142,6 +142,7 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 												value={
 													price?.recurring_interval
 												}
+												disabled={price?.id}
 												onCeChange={(e) =>
 													updatePrice({
 														recurring_interval:

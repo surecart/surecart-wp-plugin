@@ -70,6 +70,7 @@ export class CeSelectDropdown {
 
   /** Is this open */
   @Prop({ mutable: true }) open: boolean;
+  @Prop() disabled: boolean;
 
   @Prop() squared: boolean;
   @Prop() squaredBottom: boolean;
@@ -260,9 +261,17 @@ export class CeSelectDropdown {
             ref={el => (this.input = el as HTMLInputElement)}
             value={this.value}
             required={this.required}
+            disabled={this.disabled}
           ></input>
 
-          <ce-dropdown open={this.open} position={this.position} style={{ '--panel-width': '100%' }} onCeShow={() => this.handleShow()} onCeHide={() => this.handleHide()}>
+          <ce-dropdown
+            disabled={this.disabled}
+            open={this.open}
+            position={this.position}
+            style={{ '--panel-width': '100%' }}
+            onCeShow={() => this.handleShow()}
+            onCeHide={() => this.handleHide()}
+          >
             <div class="trigger" slot="trigger">
               <div class="select__value">{this.displayValue() || this.placeholder || 'Select...'}</div>
               <ce-icon part="caret" class="select__caret" name="chevron-down" />

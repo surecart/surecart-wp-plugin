@@ -257,6 +257,7 @@ export default () => {
 			}
 			sidebar={
 				<Sidebar
+					id={id}
 					loading={isLoading}
 					product={product}
 					updateProduct={updateProduct}

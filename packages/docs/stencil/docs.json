@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-03-15T12:59:57",
+  "timestamp": "2022-03-15T13:25:07",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.14.0",
@@ -8,7 +8,7 @@
   "components": [
     {
       "filePath": "./src/components/ui/address/ce-address.tsx",
-      "encapsulation": "scoped",
+      "encapsulation": "none",
       "tag": "ce-address",
       "readme": "# ce-address\n\n\n",
       "docs": "",
@@ -4999,6 +4999,7 @@
       "filePath": "./src/components/util/format-bytes/ce-format-bytes.tsx",
       "encapsulation": "shadow",
       "tag": "ce-format-bytes",
+      "readme": "# ce-format-bytes\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},

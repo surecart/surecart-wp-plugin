@@ -6,85 +6,105 @@ import {
 	CeFormControl,
 	CeStackedList,
 } from '@checkout-engine/components-react';
-import { FormFileUpload, DropZone, Spinner } from '@wordpress/components';
+import { FormFileUpload, DropZone } from '@wordpress/components';
 import SingleFile from './SingleFile';
 import Box from '../../ui/Box';
+import { useEffect, useState } from 'react';
+import { select } from '@wordpress/data';
+import { store } from '../../store/data';
 
-export default ({ product, updateProduct, loading }) => {
+export default ({ id, product, updateProduct, loading }) => {
+	// stores our draft uploads.
+	const [uploads, setUploads] = useState([]);
+
+	// clear draft uploads on save.
+	useEffect(() => {
+		setUploads([]);
+	}, [product?.files?.data?.length]);
+
+	// set uploads from file input.
 	const doUpload = async (e) => {
-		const files = e.currentTarget.files;
-		updateProduct({
-			files: {
-				data: [...(product.files?.data || []), ...files],
-			},
-		});
+		const files = [...(e?.currentTarget?.files || e)];
+		setUploads([...uploads, ...files]);
 	};
 
-	const renderFiles = () => {
-		if (loading) {
-			return (
-				<div
-					css={css`
-						display: flex;
-						align-items: center;
-						justify-content: center;
-					`}
-				>
-					<Spinner />
-				</div>
-			);
-		}
+	return (
+		<Box title={__('Files', 'checkout_engine')} loading={loading}>
+			{(() => {
+				if (!(product?.files?.data || [])?.length && !uploads.length)
+					return null;
 
-		if ((product?.files?.data || []).length) {
-			return (
-				<div>
+				return (
 					<CeCard noPadding>
 						<CeStackedList>
-							{product?.files?.data.map((file, index) => (
+							{(product?.files?.data || [])
+								.sort((a, b) => a.created_at - b.created_at)
+								.map((file) => (
+									<SingleFile
+										file={file}
+										key={file.id}
+										onRemoved={({ file }) => {
+											const product = id
+												? select(store).selectModel(
+														'product',
+														id
+												  )
+												: select(store).selectDraft(
+														'product',
+														0
+												  );
+											updateProduct({
+												files: {
+													...product?.files,
+													data: product?.files?.data.filter(
+														(f) => f.id !== file.id
+													),
+												},
+											});
+										}}
+									/>
+								))}
+
+							{uploads.map((file, index) => (
 								<SingleFile
 									file={file}
 									key={index}
-									product={product}
-									onUploaded={(id) => {
-										updateProduct({
-											...product,
+									onUploaded={async (upload_id) => {
+										const product = id
+											? select(store).selectModel(
+													'product',
+													id
+											  )
+											: select(store).selectDraft(
+													'product',
+													0
+											  );
+										await updateProduct({
 											file_upload_ids: [
-												...(product?.file_upload_ids ||
-													[]),
-												id,
+												...product?.file_upload_ids,
+												upload_id,
 											],
 										});
 									}}
-									onRemoved={(id) => {
+									onRemoved={({ upload_id }) => {
+										setUploads(
+											uploads.filter(
+												(_, i) => i !== index
+											)
+										);
 										updateProduct({
-											files: {
-												data: (
-													product.files.data || []
-												).filter(
-													(file) => file.id !== id
-												),
-											},
 											file_upload_ids: (
 												product?.file_upload_ids || []
-											).filter(
-												(upload_id) => upload_id !== id
-											),
+											).filter((id) => id !== upload_id),
 										});
 									}}
 								/>
 							))}
 						</CeStackedList>
 					</CeCard>
-				</div>
-			);
-		}
+				);
+			})()}
 
-		return null;
-	};
-
-	return (
-		<Box title={__('Files', 'checkout_engine')} loading={loading}>
-			{renderFiles()}
 			<CeFormControl
 				label={__('Files', 'checkout_engine')}
 				showLabel={false}
@@ -104,9 +124,11 @@ export default ({ product, updateProduct, loading }) => {
 						'Drag and drop an file here or click to select a file.',
 						'checkout_engine'
 					)}
-					<FormFileUpload isPrimary onChange={doUpload}>
+
+					<FormFileUpload isPrimary multiple onChange={doUpload}>
 						{__('Upload File', 'checkout_engine')}
 					</FormFileUpload>
+
 					<DropZone onFilesDrop={doUpload} />
 				</div>
 			</CeFormControl>

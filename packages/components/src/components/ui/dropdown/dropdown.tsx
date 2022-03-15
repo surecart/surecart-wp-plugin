@@ -12,6 +12,9 @@ export class CEDropdown {
 
   @Prop() clickEl?: HTMLElement;
 
+  /** Is this disabled. */
+  @Prop() disabled: boolean;
+
   /** Indicates whether or not the dropdown is open. You can use this in lieu of the show/hide methods. */
   @Prop({ reflect: true, mutable: true }) open?: boolean = false;
 
@@ -89,9 +92,9 @@ export class CEDropdown {
   /* Get the slotted menu */
   getMenu() {
     let slotted = this.el.shadowRoot.querySelector('slot') as HTMLSlotElement;
-    return (slotted.assignedNodes().find(node => {
+    return slotted.assignedNodes().find(node => {
       return node.nodeName === 'ce-menu';
-    }) as unknown) as CEMenu;
+    }) as unknown as CEMenu;
   }
 
   render() {
@@ -106,6 +109,7 @@ export class CEDropdown {
           part="trigger"
           class="dropdown__trigger"
           onClick={() => {
+            if (this.disabled) return;
             if (this.open) {
               this.hide();
             } else {

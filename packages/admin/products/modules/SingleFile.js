@@ -13,10 +13,11 @@ import useFileUpload from '../../mixins/useFileUpload';
 import { css, jsx } from '@emotion/core';
 import useCurrentPage from '../../mixins/useCurrentPage';
 
-export default ({ file, product, onUploaded, onRemoved }) => {
+export default ({ file, onUploaded, onRemoved }) => {
 	const [loading, setLoading] = useState(false);
+	const [id, setId] = useState('');
 	const uploadFile = useFileUpload();
-	const { setSaving } = useCurrentPage('product');
+	const { setSaving, product } = useCurrentPage('product');
 
 	useEffect(() => {
 		if (!file.id) {
@@ -30,10 +31,7 @@ export default ({ file, product, onUploaded, onRemoved }) => {
 			setLoading(true);
 			setSaving(true);
 			const id = await uploadFile(file);
-			file = {
-				...file,
-				id,
-			};
+			setId(id);
 			onUploaded(id);
 		} catch (e) {
 			console.error(e);
@@ -60,7 +58,10 @@ export default ({ file, product, onUploaded, onRemoved }) => {
 					path: `/checkout-engine/v1/files/${file.id}`,
 				});
 			}
-			onRemoved(file.id);
+			onRemoved({
+				file,
+				upload_id: id,
+			});
 		} catch (e) {
 			console.error(e);
 		} finally {
@@ -69,16 +70,15 @@ export default ({ file, product, onUploaded, onRemoved }) => {
 	};
 
 	return (
-		<ce-stacked-list-row
-			style={{ '--columns': '2', position: 'relative' }}
-			mobile-size={0}
-		>
+		<ce-stacked-list-row style={{ position: 'relative' }} mobile-size={0}>
 			{loading && <ce-block-ui spinner></ce-block-ui>}
 			<div
 				css={css`
 					display: flex;
 					align-items: center;
 					gap: 0.75em;
+					overflow: hidden;
+					min-width: 0;
 				`}
 			>
 				<div
@@ -94,7 +94,13 @@ export default ({ file, product, onUploaded, onRemoved }) => {
 					{file?.name?.split?.('.')?.pop?.()}
 					{file?.filename?.split?.('.')?.pop?.()}
 				</div>
-				<div>
+				<div
+					css={css`
+						overflow: hidden;
+						text-overflow: ellipsis;
+						white-space: nowrap;
+					`}
+				>
 					<div
 						css={css`
 							overflow: hidden;
@@ -109,18 +115,17 @@ export default ({ file, product, onUploaded, onRemoved }) => {
 					></ce-format-bytes>
 				</div>
 			</div>
-			<div>
-				<CeDropdown position="bottom-right">
-					<CeButton type="text" slot="trigger" circle>
-						<CeIcon name="more-horizontal" />
-					</CeButton>
-					<CeMenu>
-						<CeMenuItem onClick={onRemove}>
-							{__('Delete', 'checkout_engine')}
-						</CeMenuItem>
-					</CeMenu>
-				</CeDropdown>
-			</div>
+
+			<CeDropdown slot="suffix" position="bottom-right">
+				<CeButton type="text" slot="trigger" circle>
+					<CeIcon name="more-horizontal" />
+				</CeButton>
+				<CeMenu>
+					<CeMenuItem onClick={onRemove}>
+						{__('Delete', 'checkout_engine')}
+					</CeMenuItem>
+				</CeMenu>
+			</CeDropdown>
 		</ce-stacked-list-row>
 	);
 };

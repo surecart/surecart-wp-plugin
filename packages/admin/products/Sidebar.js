@@ -13,7 +13,7 @@ import Upgrades from './modules/Upgrades';
 import Files from './modules/Files';
 import useCurrentPage from '../mixins/useCurrentPage';
 
-export default ({ loading, product, updateProduct, saveProduct }) => {
+export default ({ id, loading, product, updateProduct, saveProduct }) => {
 	const { isSaving, setSaving } = useCurrentPage('product');
 
 	const badge = () => {
@@ -155,6 +155,7 @@ export default ({ loading, product, updateProduct, saveProduct }) => {
 			/>
 
 			<Files
+				id={id}
 				product={product}
 				updateProduct={updateProduct}
 				loading={loading}

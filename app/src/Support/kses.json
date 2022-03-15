@@ -274,6 +274,7 @@
   "ce-dropdown": {
     "click-el": true,
     "close-on-select": true,
+    "disabled": true,
     "open": true,
     "position": true,
     "style": true,
@@ -811,6 +812,7 @@
   "ce-select": {
     "autocomplete": true,
     "choices": true,
+    "disabled": true,
     "help": true,
     "invalid": true,
     "label": true,
