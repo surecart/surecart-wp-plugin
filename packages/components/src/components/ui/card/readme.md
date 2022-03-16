@@ -29,6 +29,7 @@
  - [ce-charges-list](../../controllers/dashboard/charges-list)
  - [ce-customer-details](../../controllers/dashboard/customer-details)
  - [ce-customer-edit](../../controllers/dashboard/customer-edit)
+ - [ce-downloads-list](../../controllers/dashboard/downloads-list)
  - [ce-invoices-list](../../controllers/dashboard/invoices-list)
  - [ce-login-form](../../controllers/login)
  - [ce-orders-list](../../controllers/dashboard/orders-list)
@@ -50,6 +51,7 @@ graph TD;
   ce-charges-list --> ce-card
   ce-customer-details --> ce-card
   ce-customer-edit --> ce-card
+  ce-downloads-list --> ce-card
   ce-invoices-list --> ce-card
   ce-login-form --> ce-card
   ce-orders-list --> ce-card

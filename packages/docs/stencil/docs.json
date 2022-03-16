@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-03-15T13:25:07",
+  "timestamp": "2022-03-15T22:14:12",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.14.0",
@@ -549,6 +549,7 @@
         "ce-checkout",
         "ce-coupon-form",
         "ce-customer-edit",
+        "ce-downloads-list",
         "ce-invoices-list",
         "ce-login-form",
         "ce-orders-list",
@@ -582,6 +583,9 @@
           "ce-block-ui"
         ],
         "ce-customer-edit": [
+          "ce-block-ui"
+        ],
+        "ce-downloads-list": [
           "ce-block-ui"
         ],
         "ce-invoices-list": [
@@ -1161,6 +1165,7 @@
         "ce-coupon-form",
         "ce-customer-details",
         "ce-customer-edit",
+        "ce-downloads-list",
         "ce-invoices-list",
         "ce-login-form",
         "ce-orders-list",
@@ -1196,6 +1201,9 @@
           "ce-button"
         ],
         "ce-customer-edit": [
+          "ce-button"
+        ],
+        "ce-downloads-list": [
           "ce-button"
         ],
         "ce-invoices-list": [
@@ -1340,6 +1348,7 @@
         "ce-charges-list",
         "ce-customer-details",
         "ce-customer-edit",
+        "ce-downloads-list",
         "ce-invoices-list",
         "ce-login-form",
         "ce-orders-list",
@@ -1364,6 +1373,9 @@
           "ce-card"
         ],
         "ce-customer-edit": [
+          "ce-card"
+        ],
+        "ce-downloads-list": [
           "ce-card"
         ],
         "ce-invoices-list": [
@@ -1951,6 +1963,22 @@
           "values": [
             {
               "type": "Object"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "loggedIn",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "logged-in",
+          "reflectToAttr": false,
+          "docs": "Is this user logged in?",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
             }
           ],
           "optional": false,
@@ -3270,6 +3298,22 @@
           "required": false
         },
         {
+          "name": "loggedIn",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "logged-in",
+          "reflectToAttr": false,
+          "docs": "Is the user logged in.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "order",
           "type": "Order",
           "mutable": false,
@@ -3613,6 +3657,22 @@
           "required": false
         },
         {
+          "name": "loggedIn",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "logged-in",
+          "reflectToAttr": false,
+          "docs": "Is the user logged in.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "order",
           "type": "Order",
           "mutable": false,
@@ -3902,6 +3962,7 @@
         "ce-charges-list",
         "ce-customer-details",
         "ce-customer-edit",
+        "ce-downloads-list",
         "ce-invoices-list",
         "ce-orders-list",
         "ce-payment-methods-list",
@@ -3933,6 +3994,9 @@
           "ce-dashboard-module"
         ],
         "ce-customer-edit": [
+          "ce-dashboard-module"
+        ],
+        "ce-downloads-list": [
           "ce-dashboard-module"
         ],
         "ce-invoices-list": [
@@ -4043,6 +4107,138 @@
       }
     },
     {
+      "filePath": "./src/components/controllers/dashboard/downloads-list/ce-downloads-list.tsx",
+      "encapsulation": "shadow",
+      "tag": "ce-downloads-list",
+      "readme": "# ce-customer-subscriptions-list\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "allLink",
+          "type": "string",
+          "mutable": false,
+          "attr": "all-link",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "cancelBehavior",
+          "type": "\"immediate\" | \"period_end\"",
+          "mutable": false,
+          "attr": "cancel-behavior",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "'period_end'",
+          "values": [
+            {
+              "value": "immediate",
+              "type": "string"
+            },
+            {
+              "value": "period_end",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "heading",
+          "type": "string",
+          "mutable": false,
+          "attr": "heading",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "query",
+          "type": "{ page: number; per_page: number; }",
+          "mutable": true,
+          "reflectToAttr": false,
+          "docs": "Customer id to fetch subscriptions",
+          "docsTags": [],
+          "default": "{\n    page: 1,\n    per_page: 10,\n  }",
+          "values": [
+            {
+              "type": "{ page: number; per_page: number; }"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "ce-card",
+        "ce-stacked-list",
+        "ce-stacked-list-row",
+        "ce-skeleton",
+        "ce-spacing",
+        "ce-format-bytes",
+        "ce-icon",
+        "ce-dashboard-module",
+        "ce-button",
+        "ce-pagination",
+        "ce-block-ui"
+      ],
+      "dependencyGraph": {
+        "ce-downloads-list": [
+          "ce-card",
+          "ce-stacked-list",
+          "ce-stacked-list-row",
+          "ce-skeleton",
+          "ce-spacing",
+          "ce-format-bytes",
+          "ce-icon",
+          "ce-dashboard-module",
+          "ce-button",
+          "ce-pagination",
+          "ce-block-ui"
+        ],
+        "ce-dashboard-module": [
+          "ce-alert"
+        ],
+        "ce-alert": [
+          "ce-icon"
+        ],
+        "ce-button": [
+          "ce-spinner"
+        ],
+        "ce-pagination": [
+          "ce-flex",
+          "ce-button"
+        ],
+        "ce-block-ui": [
+          "ce-spinner"
+        ]
+      }
+    },
+    {
       "filePath": "./src/components/ui/dropdown/dropdown.tsx",
       "encapsulation": "shadow",
       "tag": "ce-dropdown",
@@ -4075,6 +4271,22 @@
           "docs": "Determines whether the dropdown should hide when a menu item is selected",
           "docsTags": [],
           "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "disabled",
+          "reflectToAttr": false,
+          "docs": "Is this disabled.",
+          "docsTags": [],
           "values": [
             {
               "type": "boolean"
@@ -5092,9 +5304,15 @@
       "styles": [],
       "slots": [],
       "parts": [],
-      "dependents": [],
+      "dependents": [
+        "ce-downloads-list"
+      ],
       "dependencies": [],
-      "dependencyGraph": {}
+      "dependencyGraph": {
+        "ce-downloads-list": [
+          "ce-format-bytes"
+        ]
+      }
     },
     {
       "filePath": "./src/components/util/format-date/ce-format-date.tsx",
@@ -6019,6 +6237,7 @@
         "ce-cc-logo",
         "ce-charges-list",
         "ce-customer-details",
+        "ce-downloads-list",
         "ce-empty",
         "ce-invoices-list",
         "ce-login-form",
@@ -6046,6 +6265,9 @@
           "ce-icon"
         ],
         "ce-customer-details": [
+          "ce-icon"
+        ],
+        "ce-downloads-list": [
           "ce-icon"
         ],
         "ce-empty": [
@@ -6852,6 +7074,7 @@
         "ce-customer-email",
         "ce-customer-name",
         "ce-login-form",
+        "ce-order-password",
         "ce-price-input",
         "ce-select",
         "ce-stripe-element",
@@ -6885,6 +7108,9 @@
           "ce-input"
         ],
         "ce-login-form": [
+          "ce-input"
+        ],
+        "ce-order-password": [
           "ce-input"
         ],
         "ce-price-input": [
@@ -8252,6 +8478,247 @@
       }
     },
     {
+      "filePath": "./src/components/controllers/order-password/ce-order-password.tsx",
+      "encapsulation": "none",
+      "tag": "ce-order-password",
+      "readme": "# ce-email\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "autofocus",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "autofocus",
+          "reflectToAttr": false,
+          "docs": "The input's autofocus attribute.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "disabled",
+          "reflectToAttr": true,
+          "docs": "Disables the input.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "help",
+          "type": "string",
+          "mutable": false,
+          "attr": "help",
+          "reflectToAttr": false,
+          "docs": "The input's help text.",
+          "docsTags": [],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "label",
+          "type": "string",
+          "mutable": false,
+          "attr": "label",
+          "reflectToAttr": false,
+          "docs": "The input's label.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "loggedIn",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "logged-in",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "pill",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "pill",
+          "reflectToAttr": true,
+          "docs": "Draws a pill-style input with rounded edges.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "placeholder",
+          "type": "string",
+          "mutable": false,
+          "attr": "placeholder",
+          "reflectToAttr": false,
+          "docs": "The input's placeholder text.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "readonly",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "readonly",
+          "reflectToAttr": true,
+          "docs": "Makes the input readonly.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "required",
+          "reflectToAttr": true,
+          "docs": "Makes the input a required field.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "showLabel",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "show-label",
+          "reflectToAttr": false,
+          "docs": "Should we show the label",
+          "docsTags": [],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "size",
+          "type": "\"large\" | \"medium\" | \"small\"",
+          "mutable": false,
+          "attr": "size",
+          "reflectToAttr": true,
+          "docs": "The input's size.",
+          "docsTags": [],
+          "default": "'medium'",
+          "values": [
+            {
+              "value": "large",
+              "type": "string"
+            },
+            {
+              "value": "medium",
+              "type": "string"
+            },
+            {
+              "value": "small",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "mutable": true,
+          "attr": "value",
+          "reflectToAttr": false,
+          "docs": "The input's value attribute.",
+          "docsTags": [],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "ce-input"
+      ],
+      "dependencyGraph": {
+        "ce-order-password": [
+          "ce-input"
+        ],
+        "ce-input": [
+          "ce-form-control"
+        ],
+        "ce-form-control": [
+          "ce-tooltip"
+        ]
+      }
+    },
+    {
       "filePath": "./src/components/controllers/order-shipping-address/ce-order-shipping-address.tsx",
       "encapsulation": "none",
       "tag": "ce-order-shipping-address",
@@ -9032,6 +9499,7 @@
       "parts": [],
       "dependents": [
         "ce-charges-list",
+        "ce-downloads-list",
         "ce-invoices-list",
         "ce-orders-list",
         "ce-subscriptions-list"
@@ -9049,6 +9517,9 @@
           "ce-spinner"
         ],
         "ce-charges-list": [
+          "ce-pagination"
+        ],
+        "ce-downloads-list": [
           "ce-pagination"
         ],
         "ce-invoices-list": [
@@ -11107,6 +11578,22 @@
           "required": false
         },
         {
+          "name": "disabled",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "disabled",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "help",
           "type": "string",
           "mutable": false,
@@ -11823,6 +12310,15 @@
           "docsTags": []
         },
         {
+          "event": "cePaid",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Paid event",
+          "docsTags": []
+        },
+        {
           "event": "ceSetState",
           "detail": "string",
           "bubbles": true,
@@ -11971,6 +12467,7 @@
         "ce-charges-list",
         "ce-coupon-form",
         "ce-customer-details",
+        "ce-downloads-list",
         "ce-invoices-list",
         "ce-line-item-total",
         "ce-line-items",
@@ -11999,6 +12496,9 @@
           "ce-skeleton"
         ],
         "ce-customer-details": [
+          "ce-skeleton"
+        ],
+        "ce-downloads-list": [
           "ce-skeleton"
         ],
         "ce-invoices-list": [
@@ -12072,9 +12572,15 @@
       "styles": [],
       "slots": [],
       "parts": [],
-      "dependents": [],
+      "dependents": [
+        "ce-downloads-list"
+      ],
       "dependencies": [],
-      "dependencyGraph": {}
+      "dependencyGraph": {
+        "ce-downloads-list": [
+          "ce-spacing"
+        ]
+      }
     },
     {
       "filePath": "./src/components/ui/spinner/ce-spinner.tsx",
@@ -12148,6 +12654,7 @@
       "dependents": [
         "ce-charges-list",
         "ce-customer-details",
+        "ce-downloads-list",
         "ce-invoices-list",
         "ce-orders-list",
         "ce-payment-methods-list",
@@ -12161,6 +12668,9 @@
           "ce-stacked-list"
         ],
         "ce-customer-details": [
+          "ce-stacked-list"
+        ],
+        "ce-downloads-list": [
           "ce-stacked-list"
         ],
         "ce-invoices-list": [
@@ -12235,6 +12745,7 @@
       "dependents": [
         "ce-charges-list",
         "ce-customer-details",
+        "ce-downloads-list",
         "ce-invoices-list",
         "ce-orders-list",
         "ce-payment-methods-list",
@@ -12248,6 +12759,9 @@
           "ce-stacked-list-row"
         ],
         "ce-customer-details": [
+          "ce-stacked-list-row"
+        ],
+        "ce-downloads-list": [
           "ce-stacked-list-row"
         ],
         "ce-invoices-list": [

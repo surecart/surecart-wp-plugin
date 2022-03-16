@@ -16,6 +16,7 @@
 | `disableComponentsValidation` | `disable-components-validation` | Should we disable components validation     | `boolean`                      | `undefined` |
 | `formId`                      | `form-id`                       | The checkout form id                        | `number`                       | `undefined` |
 | `i18n`                        | --                              | Translation object.                         | `Object`                       | `undefined` |
+| `loggedIn`                    | `logged-in`                     | Is this user logged in?                     | `boolean`                      | `undefined` |
 | `mode`                        | `mode`                          | Are we in test or live mode.                | `"live" \| "test"`             | `'live'`    |
 | `persistSession`              | `persist-session`               | Where to go on success                      | `boolean`                      | `true`      |
 | `prices`                      | --                              | An array of prices to pre-fill in the form. | `PriceChoice[]`                | `[]`        |

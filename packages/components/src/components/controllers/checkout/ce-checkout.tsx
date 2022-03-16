@@ -87,7 +87,7 @@ export class CECheckout {
   @Listen('cePaid')
   async handlePaid() {
     window.localStorage.removeItem(this.el.id);
-    window.location.href = addQueryArgs(this.successUrl, { order: this.order.id });
+    window.location.assign(addQueryArgs(this.successUrl, { order: this.order.id }));
   }
 
   @Listen('cePayError')
@@ -106,12 +106,6 @@ export class CECheckout {
   setState(name) {
     const { send } = this._stateService;
     return send(name);
-  }
-
-  handleComplete(val) {
-    if (val && this.successUrl) {
-      window.location.href = addQueryArgs(this.successUrl, { order: this.order.id });
-    }
   }
 
   @Listen('ceAddEntities')

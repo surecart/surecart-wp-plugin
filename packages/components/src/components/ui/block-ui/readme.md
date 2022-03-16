@@ -22,6 +22,7 @@
  - [ce-checkout](../../controllers/checkout)
  - [ce-coupon-form](../coupon-form)
  - [ce-customer-edit](../../controllers/dashboard/customer-edit)
+ - [ce-downloads-list](../../controllers/dashboard/downloads-list)
  - [ce-invoices-list](../../controllers/dashboard/invoices-list)
  - [ce-login-form](../../controllers/login)
  - [ce-orders-list](../../controllers/dashboard/orders-list)
@@ -50,6 +51,7 @@ graph TD;
   ce-checkout --> ce-block-ui
   ce-coupon-form --> ce-block-ui
   ce-customer-edit --> ce-block-ui
+  ce-downloads-list --> ce-block-ui
   ce-invoices-list --> ce-block-ui
   ce-login-form --> ce-block-ui
   ce-orders-list --> ce-block-ui

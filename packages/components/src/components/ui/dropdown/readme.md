@@ -9,6 +9,7 @@
 | --------------- | ----------------- | ------------------------------------------------------------------------------------------------- | -------------------------------------------------------------- | ----------- |
 | `clickEl`       | --                |                                                                                                   | `HTMLElement`                                                  | `undefined` |
 | `closeOnSelect` | `close-on-select` | Determines whether the dropdown should hide when a menu item is selected                          | `boolean`                                                      | `true`      |
+| `disabled`      | `disabled`        | Is this disabled.                                                                                 | `boolean`                                                      | `undefined` |
 | `open`          | `open`            | Indicates whether or not the dropdown is open. You can use this in lieu of the show/hide methods. | `boolean`                                                      | `false`     |
 | `position`      | `position`        | The placement of the dropdown panel                                                               | `"bottom-left" \| "bottom-right" \| "top-left" \| "top-right"` | `undefined` |
 

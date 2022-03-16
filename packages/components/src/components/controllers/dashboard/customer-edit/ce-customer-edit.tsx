@@ -71,7 +71,7 @@ export class CeCustomerEdit {
         },
       });
       if (this.successUrl) {
-        window.location.href = this.successUrl;
+        window.location.assign(this.successUrl);
       } else {
         this.loading = false;
       }

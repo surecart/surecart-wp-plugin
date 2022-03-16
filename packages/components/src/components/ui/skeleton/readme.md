@@ -36,6 +36,7 @@
  - [ce-charges-list](../../controllers/dashboard/charges-list)
  - [ce-coupon-form](../coupon-form)
  - [ce-customer-details](../../controllers/dashboard/customer-details)
+ - [ce-downloads-list](../../controllers/dashboard/downloads-list)
  - [ce-invoices-list](../../controllers/dashboard/invoices-list)
  - [ce-line-item-total](../../controllers/line-item-total)
  - [ce-line-items](../../controllers/line-items)
@@ -61,6 +62,7 @@ graph TD;
   ce-charges-list --> ce-skeleton
   ce-coupon-form --> ce-skeleton
   ce-customer-details --> ce-skeleton
+  ce-downloads-list --> ce-skeleton
   ce-invoices-list --> ce-skeleton
   ce-line-item-total --> ce-skeleton
   ce-line-items --> ce-skeleton

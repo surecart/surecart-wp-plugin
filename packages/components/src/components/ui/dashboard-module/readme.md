@@ -28,6 +28,7 @@
  - [ce-charges-list](../../controllers/dashboard/charges-list)
  - [ce-customer-details](../../controllers/dashboard/customer-details)
  - [ce-customer-edit](../../controllers/dashboard/customer-edit)
+ - [ce-downloads-list](../../controllers/dashboard/downloads-list)
  - [ce-invoices-list](../../controllers/dashboard/invoices-list)
  - [ce-orders-list](../../controllers/dashboard/orders-list)
  - [ce-payment-methods-list](../../controllers/dashboard/payment-methods-list)
@@ -54,6 +55,7 @@ graph TD;
   ce-charges-list --> ce-dashboard-module
   ce-customer-details --> ce-dashboard-module
   ce-customer-edit --> ce-dashboard-module
+  ce-downloads-list --> ce-dashboard-module
   ce-invoices-list --> ce-dashboard-module
   ce-orders-list --> ce-dashboard-module
   ce-payment-methods-list --> ce-dashboard-module

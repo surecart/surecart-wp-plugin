@@ -98,10 +98,12 @@ export class CeSubscriptionSwitch {
   async handleSubmit(e) {
     const { plan } = await e.target.getFormJson();
     this.busy = true;
-    window.location.href = addQueryArgs(window.location.href, {
-      action: 'confirm',
-      price_id: plan,
-    });
+    window.location.assign(
+      addQueryArgs(window.location.href, {
+        action: 'confirm',
+        price_id: plan,
+      }),
+    );
   }
 
   renderSwitcher() {
