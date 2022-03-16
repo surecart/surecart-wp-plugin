@@ -3,7 +3,11 @@
 exports[`ce-order-coupon-form renders 1`] = `
 <ce-order-coupon-form>
   <mock:shadow-root>
-    <ce-coupon-form></ce-coupon-form>
+    <ce-coupon-form>
+      <slot>
+        Apply Coupon
+      </slot>
+    </ce-coupon-form>
   </mock:shadow-root>
 </ce-order-coupon-form>
 `;
