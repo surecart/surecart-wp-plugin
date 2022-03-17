@@ -57,31 +57,9 @@ export default ({ choice, onUpdate, onSelect, onRemove, onNew }) => {
 		);
 	};
 
-	const renderDropDown = () => {
-		return (
-			<CeDropdown slot="suffix" position="bottom-right">
-				<CeButton type="text" slot="trigger" circle>
-					<Icon icon={moreHorizontalMobile} />
-				</CeButton>
-				<CeMenu>
-					<CeMenuItem onClick={onRemove}>
-						<Icon
-							slot="prefix"
-							style={{
-								opacity: 0.5,
-							}}
-							icon={trash}
-							size={20}
-						/>
-						{__('Remove', 'checkout_engine')}
-					</CeMenuItem>
-				</CeMenu>
-			</CeDropdown>
-		);
-	};
 	return (
-		<tr>
-			<td
+		<ce-table-row>
+			<ce-table-cell
 				css={css`
 					width: 50%;
 					max-width: 50%;
@@ -97,24 +75,15 @@ export default ({ choice, onUpdate, onSelect, onRemove, onNew }) => {
 				) : (
 					product?.name
 				)}
-			</td>
-			<td
-				css={css`
-					max-width: 70px;
-					width: 70px;
-				`}
-			>
+			</ce-table-cell>
+			<ce-table-cell style={{ width: '70px' }}>
 				<CeInput
 					type="number"
 					value={choice?.quantity}
 					onCeChange={(e) => onUpdate({ quantity: e.target.value })}
 				/>
-			</td>
-			<td
-				css={css`
-					text-align: right;
-				`}
-			>
+			</ce-table-cell>
+			<ce-table-cell style={{ textAlign: 'right' }}>
 				{renderPrice(true)}{' '}
 				<span
 					css={css`
@@ -129,8 +98,24 @@ export default ({ choice, onUpdate, onSelect, onRemove, onNew }) => {
 							'once'
 						)}
 				</span>
-			</td>
-			<td>{renderDropDown()}</td>
-		</tr>
+			</ce-table-cell>
+			<ce-table-cell>
+				<CeDropdown position="bottom-right">
+					<CeButton type="text" slot="trigger" circle>
+						<ce-icon name="more-horizontal"></ce-icon>
+					</CeButton>
+					<CeMenu>
+						<CeMenuItem onClick={onRemove}>
+							<ce-icon
+								name="trash"
+								slot="prefix"
+								style={{ opacity: 0.5 }}
+							></ce-icon>
+							{__('Remove', 'checkout_engine')}
+						</CeMenuItem>
+					</CeMenu>
+				</CeDropdown>
+			</ce-table-cell>
+		</ce-table-row>
 	);
 };

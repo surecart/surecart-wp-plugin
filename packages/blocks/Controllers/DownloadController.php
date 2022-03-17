@@ -2,6 +2,8 @@
 namespace CheckoutEngineBlocks\Controllers;
 
 use CheckoutEngine\Models\Component;
+use CheckoutEngine\Models\PortalSession;
+use CheckoutEngine\Models\Purchase;
 use CheckoutEngine\Models\User;
 
 /**
@@ -64,5 +66,34 @@ class DownloadController extends BaseController {
 				]
 			)->render()
 		);
+	}
+
+	public function edit() {
+		if ( ! User::current()->isCustomer() ) {
+			return;
+		}
+
+		$id = $this->getId();
+
+		if ( ! $id ) {
+			return $this->notFound();
+		}
+
+		$purchase = Purchase::find( $id );
+
+		$session = PortalSession::create(
+			[
+				'public'     => true,
+				'return_url' => add_query_arg( [ 'tab' => $this->getTab() ], \CheckoutEngine::pages()->url( 'dashboard' ) ),
+				'customer'   => $purchase->customer,
+			]
+		);
+
+		if ( $session->url ) {
+			wp_redirect( esc_url_raw( "$session->url/purchases/$purchase->id" ) );
+			exit;
+		}
+
+		return $this->notFound();
 	}
 }

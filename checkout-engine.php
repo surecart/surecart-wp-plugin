@@ -45,16 +45,3 @@ require_once __DIR__ . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'help
 
 // Register hooks.
 require_once __DIR__ . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'hooks.php';
-
-
-
-add_action(
-	'checkout_engine/purchase_revoked',
-	function( $purchase_id ) {
-		$purchase   = new \CheckoutEngine\Models\Purchase( $purchase_id );
-		$product_id = (string) $purchase->product;
-		if ( 'd26734b3-0a0d-45c1-8044-16fbd11bca2f' === $product_id ) {
-			// remove credit from user.
-		}
-	}
-);

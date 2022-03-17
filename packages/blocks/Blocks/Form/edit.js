@@ -22,6 +22,7 @@ import { createBlocksFromInnerBlocksTemplate } from '@wordpress/blocks';
 import apiFetch from '@wordpress/api-fetch';
 import Cart from './components/Cart';
 import Mode from './components/Mode';
+import Setup from './components/Setup';
 
 const ALLOWED_BLOCKS = [
 	'core/spacer',
@@ -71,16 +72,7 @@ export default function edit({ clientId, attributes, setAttributes }) {
 			)
 		);
 		if (!r) return;
-		const result = await apiFetch({
-			url: ceData.plugin_url + '/templates/forms/' + template + '.html',
-			parse: false,
-			cache: 'no-cache',
-		});
-		replaceInnerBlocks(
-			clientId,
-			createBlocksFromInnerBlocksTemplate(parse(await result.text())),
-			false
-		);
+		replaceInnerBlocks(clientId, [], false);
 	};
 
 	const formId = useSelect((select) => {
@@ -94,51 +86,85 @@ export default function edit({ clientId, attributes, setAttributes }) {
 		return parentBlock?.[0]?.attributes?.id || post_id;
 	});
 
+	/**
+	 * Maybe create the template for the form.
+	 */
+	const maybeCreateTemplate = async ({
+		template = 'default',
+		choices,
+		choice_type,
+	}) => {
+		const result = await apiFetch({
+			url: ceData.plugin_url + '/templates/forms/' + template + '.html',
+			parse: false,
+			cache: 'no-cache',
+		});
+
+		// parse blocks.
+		const parsed = parse(await result.text());
+
+		// get the price selector block
+		const priceChoiceBlock = parsed.findIndex(
+			(block) => block.name === 'checkout-engine/price-selector'
+		);
+
+		// Remove price choices from template.
+		if (!choices?.length || !['checkbox', 'radio'].includes(choice_type)) {
+			return parsed.filter(function (_, index) {
+				return index !== priceChoiceBlock;
+			});
+		}
+
+		// add choices as price choice inner blocks.
+		parsed[priceChoiceBlock].innerBlocks = choices.map((choice, index) => {
+			return [
+				'checkout-engine/price-choice',
+				{
+					price_id: choice?.id,
+					quantity: choice?.quantity || 1,
+					type: choice_type,
+					checked: index === 0 && choice_type === 'radio',
+				},
+			];
+		});
+
+		return parsed;
+	};
+
+	const onCreate = async ({
+		choices,
+		choice_type,
+		template,
+		custom_success_url,
+		success_url,
+	}) => {
+		// form attributes.
+		setAttributes({
+			prices: choice_type === 'all' ? choices : [],
+			redirect: custom_success_url && success_url ? success_url : '',
+		});
+
+		const result = await maybeCreateTemplate({
+			template,
+			choices,
+			choice_type,
+		});
+
+		replaceInnerBlocks(
+			clientId,
+			createBlocksFromInnerBlocksTemplate(result),
+			false
+		);
+	};
+
 	return (
 		<Fragment>
 			<InspectorControls>
 				<PanelBody title={__('Form Template', 'checkout_engine')}>
 					<PanelRow>
 						<div>
-							<SelectControl
-								label={__('Template')}
-								value={template}
-								onChange={(name) => setTemplate(name)}
-								options={[
-									{
-										value: null,
-										label: __(
-											'Select a Template',
-											'checkout_engine'
-										),
-										disabled: true,
-									},
-									{
-										value: 'default',
-										label: __('Default', 'checkout_engine'),
-									},
-									{
-										value: 'sections',
-										label: __(
-											'Sections',
-											'checkout_engine'
-										),
-									},
-									{
-										value: 'two-column',
-										label: __(
-											'Two Column',
-											'checkout_engine'
-										),
-									},
-									{
-										value: 'simple',
-										label: __('Simple', 'checkout_engine'),
-									},
-								]}
-							/>
 							<Button isPrimary onClick={changeTemplate}>
-								{__('Change', 'checkout_engine')}
+								{__('Change Template', 'checkout_engine')}
 							</Button>
 						</div>
 					</PanelRow>
@@ -162,154 +188,160 @@ export default function edit({ clientId, attributes, setAttributes }) {
 				</PanelBody>
 			</InspectorControls>
 
-			<div
-				css={css`
-					max-width: var(--ast-content-width-size);
-					margin-left: auto !important;
-					margin-right: auto !important;
-				`}
-			>
+			{blockCount === 0 ? (
+				<Setup onCreate={onCreate} clientId={clientId} />
+			) : (
 				<div
 					css={css`
-						padding: 10px 16px;
-						border-radius: 8px;
-						display: grid;
-						gap: 0.5em;
-						border: 1px solid transparent;
-						background: var(--ce-color-gray-100, #f9fafb);
+						max-width: var(--ast-content-width-size);
+						margin-left: auto !important;
+						margin-right: auto !important;
 					`}
 				>
 					<div
 						css={css`
-							display: flex;
-							justify-content: space-between;
-							align-items: center;
-							font-size: 15px;
+							padding: 10px 16px;
+							border-radius: 8px;
+							display: grid;
+							gap: 0.5em;
+							border: 1px solid transparent;
+							background: var(--ce-color-gray-100, #f9fafb);
 						`}
 					>
 						<div
 							css={css`
-								cursor: pointer;
-								flex: 1;
-								user-select: none;
-								display: inline-block;
-								color: var(--ce-input-label-color);
-								font-weight: var(--ce-input-label-font-weight);
-								text-transform: var(
-									--ce-input-label-text-transform,
-									none
-								);
-								letter-spacing: var(
-									--ce-input-label-letter-spacing,
-									0
-								);
-							`}
-						>
-							{__('Form', 'checkout_engine')}
-						</div>
-						<div
-							css={css`
 								display: flex;
+								justify-content: space-between;
 								align-items: center;
+								font-size: 15px;
 							`}
 						>
-							<Mode
-								attributes={attributes}
-								setAttributes={setAttributes}
-							/>
+							<div
+								css={css`
+									cursor: pointer;
+									flex: 1;
+									user-select: none;
+									display: inline-block;
+									color: var(--ce-input-label-color);
+									font-weight: var(
+										--ce-input-label-font-weight
+									);
+									text-transform: var(
+										--ce-input-label-text-transform,
+										none
+									);
+									letter-spacing: var(
+										--ce-input-label-letter-spacing,
+										0
+									);
+								`}
+							>
+								{__('Form', 'checkout_engine')}
+							</div>
 							<div
 								css={css`
 									display: flex;
 									align-items: center;
 								`}
 							>
-								<Button
-									onClick={() =>
-										setTab(tab === 'cart' ? '' : 'cart')
-									}
+								<Mode
+									attributes={attributes}
+									setAttributes={setAttributes}
+								/>
+								<div
+									css={css`
+										display: flex;
+										align-items: center;
+									`}
 								>
-									<span
-										css={css`
-											display: inline-block;
-											vertical-align: top;
-											box-sizing: border-box;
-											margin: 1px 0 -1px 2px;
-											padding: 0 5px;
-											min-width: 18px;
-											height: 18px;
-											border-radius: 9px;
-											background-color: currentColor;
-											font-size: 11px;
-											line-height: 1.6;
-											text-align: center;
-											z-index: 26;
-										`}
+									<Button
+										onClick={() =>
+											setTab(tab === 'cart' ? '' : 'cart')
+										}
 									>
 										<span
 											css={css`
-												color: #fff;
+												display: inline-block;
+												vertical-align: top;
+												box-sizing: border-box;
+												margin: 1px 0 -1px 2px;
+												padding: 0 5px;
+												min-width: 18px;
+												height: 18px;
+												border-radius: 9px;
+												background-color: currentColor;
+												font-size: 11px;
+												line-height: 1.6;
+												text-align: center;
+												z-index: 26;
 											`}
 										>
-											{
-												(prices || []).filter(
-													(p) => p?.id
-												)?.length
-											}
+											<span
+												css={css`
+													color: #fff;
+												`}
+											>
+												{
+													(prices || []).filter(
+														(p) => p?.id
+													)?.length
+												}
+											</span>
 										</span>
-									</span>
 
-									<ce-icon
-										name="shopping-bag"
-										style={{ fontSize: '18px' }}
-									/>
-								</Button>
+										<ce-icon
+											name="shopping-bag"
+											style={{ fontSize: '18px' }}
+										/>
+									</Button>
+								</div>
 							</div>
 						</div>
-					</div>
 
-					{tab === 'cart' && (
-						<Cart
-							attributes={attributes}
-							setAttributes={setAttributes}
-						/>
-					)}
-				</div>
-				<CeCheckout
-					keys={ceData?.keys}
-					mode={mode}
-					formId={formId}
-					css={css`
-						margin-top: 2em;
-						font-size: ${font_size}px;
-					`}
-					disableComponentsValidation={true}
-					persistSession={false}
-					alignment={align}
-					className={className}
-					choiceType={choice_type}
-					prices={prices}
-				>
-					<div
-						css={css`
-							*
-								> *
-								> .wp-block:not(ce-columns):not(ce-column):not(:last-child) {
-								margin-bottom: ${gap} !important;
-							}
-						`}
-					>
-						<InnerBlocks
-							allowedBlocks={ALLOWED_BLOCKS}
-							templateLock={false}
-							renderAppender={
-								blockCount
-									? undefined
-									: InnerBlocks.ButtonBlockAppender
-							}
-						/>
+						{tab === 'cart' && (
+							<Cart
+								attributes={attributes}
+								setAttributes={setAttributes}
+							/>
+						)}
 					</div>
-				</CeCheckout>
-			</div>
+					<CeCheckout
+						keys={ceData?.keys}
+						mode={mode}
+						formId={formId}
+						css={css`
+							margin-top: 2em;
+							font-size: ${font_size}px;
+						`}
+						disableComponentsValidation={true}
+						persistSession={false}
+						alignment={align}
+						className={className}
+						choiceType={choice_type}
+						prices={prices}
+					>
+						<div
+							css={css`
+								*
+									> *
+									> .wp-block:not(ce-columns):not(ce-column):not(:last-child) {
+									margin-bottom: ${gap} !important;
+								}
+							`}
+						>
+							<InnerBlocks
+								allowedBlocks={ALLOWED_BLOCKS}
+								templateLock={false}
+								renderAppender={
+									blockCount
+										? undefined
+										: InnerBlocks.ButtonBlockAppender
+								}
+							/>
+						</div>
+					</CeCheckout>
+				</div>
+			)}
 		</Fragment>
 	);
 }

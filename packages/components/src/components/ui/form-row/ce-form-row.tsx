@@ -14,7 +14,7 @@ export class CEFormRow {
 
   componentDidLoad() {
     if ('ResizeObserver' in window) {
-      this.observer = new ResizeObserver(entries => {
+      this.observer = new window.ResizeObserver(entries => {
         this.width = entries?.[0].contentRect.width;
       });
       this.observer.observe(this.el);

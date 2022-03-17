@@ -44,7 +44,7 @@ export class CEOrderSummary {
           <slot name="description" />
         </span>
         <span slot="price">
-          <ce-total total={'total'}></ce-total>
+          <ce-total total={'total'} order={this.order}></ce-total>
         </span>
         <span slot="currency">{this.order?.currency}</span>
       </ce-line-item>

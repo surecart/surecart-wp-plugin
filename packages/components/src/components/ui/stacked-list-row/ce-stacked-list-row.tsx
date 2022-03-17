@@ -19,7 +19,7 @@ export class CeStackedListRow {
   componentDidLoad() {
     // Only run if ResizeObserver is supported.
     if ('ResizeObserver' in window) {
-      var ro = new ResizeObserver(entries => {
+      var ro = new window.ResizeObserver(entries => {
         entries.forEach(entry => {
           this.width = entry.contentRect.width;
         });

@@ -5,6 +5,7 @@
   justify-content: stretch;
   width: 100%;
   min-width: 0;
+  align-self: stretch;
 }
 
 [hidden] {
@@ -34,8 +35,8 @@
   position: relative;
   text-decoration: none;
   color: var(--ce-input-color);
-  // height: 100%;
-  transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease, box-shadow 150ms ease;;
+  height: 100%; // TODO: test this.
+  transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease, box-shadow 150ms ease;
 
   &--checked {
     border-color: var(--ce-color-primary-500);

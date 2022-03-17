@@ -1,9 +1,9 @@
 {
-  "timestamp": "2022-03-15T22:14:12",
+  "timestamp": "2022-03-17T14:35:23",
   "compiler": {
     "name": "@stencil/core",
-    "version": "2.14.0",
-    "typescriptVersion": "4.5.4"
+    "version": "2.4.0",
+    "typescriptVersion": "4.1.3"
   },
   "components": [
     {
@@ -17,7 +17,7 @@
       "props": [
         {
           "name": "address",
-          "type": "{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
+          "type": "{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: string | number | symbol) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: string | number | symbol) => boolean; }",
           "mutable": true,
           "reflectToAttr": false,
           "docs": "The address.",
@@ -25,7 +25,19 @@
           "default": "{\n    country: '',\n    city: '',\n    line_1: '',\n    line_2: '',\n    postal_code: '',\n    state: '',\n  }",
           "values": [
             {
-              "type": "{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }"
+              "type": "{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: string"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "symbol) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: string"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "symbol) => boolean; }"
             }
           ],
           "optional": false,
@@ -66,7 +78,7 @@
         },
         {
           "name": "names",
-          "type": "{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
+          "type": "{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: string | number | symbol) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: string | number | symbol) => boolean; }",
           "mutable": false,
           "reflectToAttr": false,
           "docs": "",
@@ -74,7 +86,19 @@
           "default": "{\n    country: 'shipping_country',\n    city: 'shipping_country',\n    line_1: 'shipping_line_1',\n    line_2: 'shipping_line_2',\n    postal_code: 'shipping_postal_code',\n    state: 'shipping_state',\n  }",
           "values": [
             {
-              "type": "{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }"
+              "type": "{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: string"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "symbol) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: string"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "symbol) => boolean; }"
             }
           ],
           "optional": false,
@@ -102,7 +126,7 @@
       "events": [
         {
           "event": "ceChangeAddress",
-          "detail": "{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
+          "detail": "{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: string | number | symbol) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: string | number | symbol) => boolean; }",
           "bubbles": true,
           "cancelable": true,
           "composed": true,
@@ -3873,7 +3897,7 @@
         },
         {
           "event": "ceUpdateOrderState",
-          "detail": "{ id?: string; status?: \"finalized\" | \"draft\" | \"paid\"; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; email?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; tax_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; line_items?: lineItems; metadata?: Object; payment_intent?: PaymentIntent; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_address?: string | Address; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
+          "detail": "{ id?: string; status?: \"finalized\" | \"draft\" | \"paid\"; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; email?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; tax_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; line_items?: lineItems; metadata?: Object; payment_intent?: PaymentIntent; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_address?: string | Address; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: string | number | symbol) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: string | number | symbol) => boolean; }",
           "bubbles": true,
           "cancelable": true,
           "composed": true,
@@ -4125,28 +4149,6 @@
           "docsTags": [],
           "values": [
             {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "cancelBehavior",
-          "type": "\"immediate\" | \"period_end\"",
-          "mutable": false,
-          "attr": "cancel-behavior",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "default": "'period_end'",
-          "values": [
-            {
-              "value": "immediate",
-              "type": "string"
-            },
-            {
-              "value": "period_end",
               "type": "string"
             }
           ],
@@ -6313,28 +6315,28 @@
       "docs": "",
       "docsTags": [
         {
-          "name": "part",
-          "text": "base - The elements base wrapper."
+          "text": "base - The elements base wrapper.",
+          "name": "part"
         },
         {
-          "name": "part",
-          "text": "input - The html input element."
+          "text": "input - The html input element.",
+          "name": "part"
         },
         {
-          "name": "part",
-          "text": "base - The elements base wrapper."
+          "text": "base - The elements base wrapper.",
+          "name": "part"
         },
         {
-          "name": "part",
-          "text": "prefix - Used to prepend an icon or element to the input."
+          "text": "prefix - Used to prepend an icon or element to the input.",
+          "name": "part"
         },
         {
-          "name": "part",
-          "text": "suffix - Used to prepend an icon or element to the input."
+          "text": "suffix - Used to prepend an icon or element to the input.",
+          "name": "part"
         },
         {
-          "name": "part",
-          "text": "help-text - Help text that describes how to use the input."
+          "text": "help-text - Help text that describes how to use the input.",
+          "name": "part"
         }
       ],
       "usage": {},
@@ -7267,28 +7269,28 @@
       "docs": "",
       "docsTags": [
         {
-          "name": "slot",
-          "text": "image - Line item image"
+          "text": "image - Line item image",
+          "name": "slot"
         },
         {
-          "name": "slot",
-          "text": "title - Line item title."
+          "text": "title - Line item title.",
+          "name": "slot"
         },
         {
-          "name": "slot",
-          "text": "description - Line item description (below the title)"
+          "text": "description - Line item description (below the title)",
+          "name": "slot"
         },
         {
-          "name": "slot",
-          "text": "currency - Used for the 3 character currency code."
+          "text": "currency - Used for the 3 character currency code.",
+          "name": "slot"
         },
         {
-          "name": "slot",
-          "text": "price - Price amount, including currency sign."
+          "text": "price - Price amount, including currency sign.",
+          "name": "slot"
         },
         {
-          "name": "slot",
-          "text": "price-description - Description for the price (i.e. monthly)"
+          "text": "price-description - Description for the price (i.e. monthly)",
+          "name": "slot"
         }
       ],
       "usage": {},
@@ -8852,7 +8854,7 @@
       "events": [
         {
           "event": "ceUpdateOrder",
-          "detail": "{ id?: string; status?: \"finalized\" | \"draft\" | \"paid\"; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; email?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; tax_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; line_items?: lineItems; metadata?: Object; payment_intent?: PaymentIntent; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_address?: string | Address; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
+          "detail": "{ id?: string; status?: \"finalized\" | \"draft\" | \"paid\"; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; email?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; tax_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; line_items?: lineItems; metadata?: Object; payment_intent?: PaymentIntent; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_address?: string | Address; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: string | number | symbol) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: string | number | symbol) => boolean; }",
           "bubbles": true,
           "cancelable": true,
           "composed": true,
@@ -9148,7 +9150,7 @@
       "props": [
         {
           "name": "order",
-          "type": "{ id?: string; status?: \"finalized\" | \"draft\" | \"paid\"; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; email?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; tax_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; line_items?: lineItems; metadata?: Object; payment_intent?: PaymentIntent; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_address?: string | Address; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
+          "type": "{ id?: string; status?: \"finalized\" | \"draft\" | \"paid\"; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; email?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; tax_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; line_items?: lineItems; metadata?: Object; payment_intent?: PaymentIntent; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_address?: string | Address; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: string | number | symbol) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: string | number | symbol) => boolean; }",
           "mutable": false,
           "reflectToAttr": false,
           "docs": "The order",
@@ -9185,7 +9187,19 @@
               "type": "Address; shipping_address?: string"
             },
             {
-              "type": "Address; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }"
+              "type": "Address; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: string"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "symbol) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: string"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "symbol) => boolean; }"
             }
           ],
           "optional": false,
@@ -9213,7 +9227,7 @@
       "events": [
         {
           "event": "ceUpdateOrder",
-          "detail": "{ id?: string; status?: \"finalized\" | \"draft\" | \"paid\"; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; email?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; tax_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; line_items?: lineItems; metadata?: Object; payment_intent?: PaymentIntent; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_address?: string | Address; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
+          "detail": "{ id?: string; status?: \"finalized\" | \"draft\" | \"paid\"; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; email?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; tax_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; line_items?: lineItems; metadata?: Object; payment_intent?: PaymentIntent; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_address?: string | Address; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: string | number | symbol) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: string | number | symbol) => boolean; }",
           "bubbles": true,
           "cancelable": true,
           "composed": true,
@@ -10346,28 +10360,28 @@
       "docs": "",
       "docsTags": [
         {
-          "name": "part",
-          "text": "base - The elements base wrapper."
+          "text": "base - The elements base wrapper.",
+          "name": "part"
         },
         {
-          "name": "part",
-          "text": "input - The html input element."
+          "text": "input - The html input element.",
+          "name": "part"
         },
         {
-          "name": "part",
-          "text": "base - The elements base wrapper."
+          "text": "base - The elements base wrapper.",
+          "name": "part"
         },
         {
-          "name": "part",
-          "text": "prefix - Used to prepend an icon or element to the input."
+          "text": "prefix - Used to prepend an icon or element to the input.",
+          "name": "part"
         },
         {
-          "name": "part",
-          "text": "suffix - Used to prepend an icon or element to the input."
+          "text": "suffix - Used to prepend an icon or element to the input.",
+          "name": "part"
         },
         {
-          "name": "part",
-          "text": "help-text - Help text that describes how to use the input."
+          "text": "help-text - Help text that describes how to use the input.",
+          "name": "part"
         }
       ],
       "usage": {},

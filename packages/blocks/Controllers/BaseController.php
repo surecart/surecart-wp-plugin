@@ -62,4 +62,13 @@ abstract class BaseController {
 	protected function notFound() {
 		return '<ce-alert type="danger" open>' . esc_html__( 'Not found.', 'checkout-engine' ) . '</ce-alert>';
 	}
+
+	/**
+	 * Render not found view.
+	 *
+	 * @return string
+	 */
+	protected function noAccess() {
+		return '<ce-alert type="danger" open>' . esc_html__( 'You do not have permission to do this.', 'checkout-engine' ) . '</ce-alert>';
+	}
 }

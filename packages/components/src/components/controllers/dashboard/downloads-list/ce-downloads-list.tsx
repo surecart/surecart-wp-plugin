@@ -22,7 +22,6 @@ export class CeDownloadsList {
   };
   @Prop() allLink: string;
   @Prop() heading: string;
-  @Prop() cancelBehavior: 'period_end' | 'immediate' = 'period_end';
 
   @State() purchases: Array<Purchase> = [];
 
@@ -142,7 +141,7 @@ export class CeDownloadsList {
             <div>
               <strong>{(purchase?.product as Product)?.name}</strong>
             </div>
-            <div>
+            <div class="download__details">
               {sprintf(
                 _n('%s file', '%s files', (purchase?.product as Product)?.files?.pagination?.count, 'checkout_engine'),
                 (purchase?.product as Product)?.files?.pagination?.count,
@@ -175,7 +174,7 @@ export class CeDownloadsList {
 
   render() {
     return (
-      <ce-dashboard-module class="subscriptions-list" error={this.error}>
+      <ce-dashboard-module class="downloads-list" error={this.error}>
         <span slot="heading">
           <slot name="heading">{this.heading || __('Items', 'checkout_engine')}</slot>
         </span>

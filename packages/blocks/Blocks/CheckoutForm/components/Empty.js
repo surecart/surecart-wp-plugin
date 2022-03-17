@@ -24,6 +24,7 @@ import { receipt as icon } from '@wordpress/icons';
  */
 import Setup from './Setup';
 import SelectForm from './SelectForm';
+import { CeInput } from '@checkout-engine/components-react';
 
 export default ({ attributes, setAttributes }) => {
 	const { title, step } = attributes;
@@ -106,9 +107,6 @@ export default ({ attributes, setAttributes }) => {
 	const saveFormBlock = async () => {
 		setAttributes({ loading: true });
 
-		let innerBlocksTemplate = await maybeCreateTemplate(attributes);
-		let formAttributes = createFormAttributes(attributes);
-
 		try {
 			const updatedRecord = await dispatch('core').saveEntityRecord(
 				'postType',
@@ -118,14 +116,8 @@ export default ({ attributes, setAttributes }) => {
 					content: serialize(
 						createBlock(
 							'checkout-engine/form', // name
-							{
-								...formAttributes,
-							},
-							innerBlocksTemplate
-								? createBlocksFromInnerBlocksTemplate(
-										innerBlocksTemplate
-								  )
-								: []
+							{},
+							[]
 						)
 					),
 					status: 'publish',
@@ -143,13 +135,48 @@ export default ({ attributes, setAttributes }) => {
 	if (step === 'new') {
 		return (
 			<div {...blockProps}>
-				<Setup
-					attributes={attributes}
-					setAttributes={setAttributes}
-					onCreate={saveFormBlock}
-					isNew={true}
-					onCancel={() => setAttributes({ step: null })}
-				/>
+				<Placeholder
+					icon={icon}
+					label={__('Create a Checkout Form', 'checkout_engine')}
+				>
+					<div
+						css={css`
+							display: grid;
+							gap: 0.5em;
+							width: 100%;
+						`}
+					>
+						<div>{__('Form Title', 'checkout_engine')}</div>
+						<CeInput
+							css={css`
+								max-width: 400px;
+							`}
+							value={title}
+							placeholder={__(
+								'Enter a title for your form',
+								'checkout_engine'
+							)}
+							onCeChange={(e) =>
+								setAttributes({ title: e.target.value })
+							}
+						/>
+						<div>
+							<Button
+								isPrimary
+								onClick={() => {
+									saveFormBlock();
+								}}
+							>
+								{__('Next', 'checkout_engine')}
+							</Button>
+							<Button
+								onClick={() => setAttributes({ step: null })}
+							>
+								{__('Cancel', 'checkout_engine')}
+							</Button>
+						</div>
+					</div>
+				</Placeholder>
 			</div>
 		);
 	}

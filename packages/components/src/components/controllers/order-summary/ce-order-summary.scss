@@ -1,5 +1,7 @@
 :host {
   display: block;
+  font-family: var(--ce-font-sans);
+  font-size: var(--ce-checkout-font-size, 16px);
 }
 
 .collapse-link {

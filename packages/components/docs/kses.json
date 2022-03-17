@@ -276,7 +276,6 @@
   },
   "ce-downloads-list": {
     "all-link": true,
-    "cancel-behavior": true,
     "heading": true,
     "query": true,
     "style": true,

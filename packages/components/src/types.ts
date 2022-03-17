@@ -10,6 +10,7 @@ declare global {
       nonce_endpoint: string;
     };
     ceRegisterIconLibrary: any;
+    ResizeObserver: any;
   }
 }
 

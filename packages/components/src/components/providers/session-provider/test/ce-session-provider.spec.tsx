@@ -1,6 +1,11 @@
 import { CeSessionProvider } from '../ce-session-provider';
 import { newSpecPage } from '@stencil/core/testing';
 
+jest.mock('../../../../services/session', () => ({
+  createOrUpdateOrder: () => Promise.resolve(),
+  finalizeSession: () => Promise.resolve(),
+}));
+
 describe('ce-cart-provider', () => {
   it('renders', async () => {
     const page = await newSpecPage({
@@ -9,6 +14,8 @@ describe('ce-cart-provider', () => {
     });
     expect(page.root).toMatchSnapshot();
   });
+
+  it('redirects when the order is paid', async () => {});
 
   describe('Methods', () => {
     it('parseFormData', async () => {

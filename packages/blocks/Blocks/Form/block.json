@@ -26,6 +26,10 @@
 		"gap": {
 			"type": "string",
 			"default": "25px"
+		},
+		"redirect": {
+			"type": "string",
+			"default": ""
 		}
 	}
 }

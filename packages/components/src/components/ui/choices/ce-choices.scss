@@ -9,7 +9,6 @@
   display: grid;
   gap: 10px;
 }
-.breakpoint-md,
 .breakpoint-lg,
 .breakpoint-xl {
   ::slotted(*) {

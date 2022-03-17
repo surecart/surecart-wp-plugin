@@ -560,7 +560,6 @@ export namespace Components {
     }
     interface CeDownloadsList {
         "allLink": string;
-        "cancelBehavior": 'period_end' | 'immediate';
         "heading": string;
         /**
           * Customer id to fetch subscriptions
@@ -3358,7 +3357,6 @@ declare namespace LocalJSX {
     }
     interface CeDownloadsList {
         "allLink"?: string;
-        "cancelBehavior"?: 'period_end' | 'immediate';
         "heading"?: string;
         /**
           * Customer id to fetch subscriptions

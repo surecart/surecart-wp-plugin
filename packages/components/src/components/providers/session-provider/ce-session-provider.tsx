@@ -4,8 +4,6 @@ import { getSessionId, getURLLineItems, populateInputs, removeSessionIdFromStora
 import { Component, h, Prop, Event, EventEmitter, Element, State, Watch, Listen } from '@stencil/core';
 import { removeQueryArgs } from '@wordpress/url';
 
-import { hasCompleteAddress } from '../../../functions/address';
-
 @Component({
   tag: 'ce-session-provider',
   shadow: true,
@@ -59,6 +57,9 @@ export class CeSessionProvider {
   /** Sync this session back to parent. */
   @Watch('session')
   handleSessionUpdate(val) {
+    if (val?.status === 'paid') {
+      this.cePaid.emit();
+    }
     this.ceUpdateOrderState.emit(val);
   }
 
@@ -119,42 +120,8 @@ export class CeSessionProvider {
       ...rest
     } = data;
 
-    let shipping_address = null;
-
-    // make sure we have a complete address.
-    const shippingComplete = hasCompleteAddress({
-      city: shipping_city,
-      country: shipping_country,
-      line_1: shipping_line_1,
-      postal_code: shipping_postal_code,
-      state: shipping_state,
-    });
-
-    // if it's complete, set the shipping address
-    if (shippingComplete) {
-      shipping_address = {
-        ...(shipping_city ? { city: shipping_city } : {}),
-        ...(shipping_country ? { country: shipping_country } : {}),
-        ...(shipping_line_1 ? { line_1: shipping_line_1 } : {}),
-        ...(shipping_postal_code ? { postal_code: shipping_postal_code } : {}),
-        ...(shipping_state ? { state: shipping_state } : {}),
-        line_2: shipping_line_2 ?? '',
-      };
-    }
-
     return {
-      email,
-      name,
       password,
-      ...(shipping_address ? { shipping_address } : {}),
-      ...(tax_number && tax_number_type
-        ? {
-            tax_identifier: {
-              number: tax_number,
-              number_type: tax_number_type,
-            },
-          }
-        : {}),
       metadata: rest || {},
     };
   }
@@ -190,13 +157,16 @@ export class CeSessionProvider {
         },
         processor: 'stripe',
       });
-      if (this.session.status === 'finalized') {
-        this.ceSetState.emit('FETCH');
-      } else if (this.session.status === 'paid') {
-        this.ceSetState.emit('PAID');
-        this.cePaid.emit();
-      } else {
-        this.ceSetState.emit('RESOLVE');
+      switch (this.session.status) {
+        case 'finalized':
+          this.ceSetState.emit('FETCH');
+          break;
+        case 'paid':
+          this.ceSetState.emit('FETCH');
+          break;
+        default:
+          this.ceSetState.emit('RESOLVE');
+          break;
       }
     } catch (e) {
       if (['order.invalid_status_transition'].includes(e?.code)) {
