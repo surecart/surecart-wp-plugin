@@ -561,6 +561,7 @@ export namespace Components {
     interface CeDownloadsList {
         "allLink": string;
         "heading": string;
+        "nonce": string;
         /**
           * Customer id to fetch subscriptions
          */
@@ -3358,6 +3359,7 @@ declare namespace LocalJSX {
     interface CeDownloadsList {
         "allLink"?: string;
         "heading"?: string;
+        "nonce"?: string;
         /**
           * Customer id to fetch subscriptions
          */

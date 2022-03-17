@@ -33,6 +33,7 @@ class DownloadController extends BaseController {
 						],
 						\CheckoutEngine::pages()->url( 'dashboard' )
 					),
+					'nonce'   => wp_create_nonce( 'customer-download' ),
 					'query'   => [
 						'customer_ids' => array_values( User::current()->customerIds() ),
 						'page'         => 1,
@@ -57,6 +58,7 @@ class DownloadController extends BaseController {
 			->with(
 				[
 					'heading' => __( 'Order History', 'checkout-engine' ),
+
 					'query'   => [
 						'customer_ids' => array_values( User::current()->customerIds() ),
 						'status'       => [ 'paid' ],
@@ -69,6 +71,10 @@ class DownloadController extends BaseController {
 	}
 
 	public function edit() {
+		if ( ! wp_verify_nonce( $_GET['nonce'], 'customer-download' ) ) {
+			die( __( 'Your session expired. Please go back and try again.', 'checkout_engine' ) );
+		}
+
 		if ( ! User::current()->isCustomer() ) {
 			return;
 		}

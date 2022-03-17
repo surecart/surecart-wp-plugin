@@ -1,9 +1,10 @@
 import { Component, Element, h, Prop, State } from '@stencil/core';
-import { sprintf, _n, __ } from '@wordpress/i18n';
+import { __, _n, sprintf } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
+
 import apiFetch from '../../../../functions/fetch';
-import { Product, Purchase } from '../../../../types';
 import { onFirstVisible } from '../../../../functions/lazy';
+import { Product, Purchase } from '../../../../types';
 
 @Component({
   tag: 'ce-downloads-list',
@@ -22,6 +23,7 @@ export class CeDownloadsList {
   };
   @Prop() allLink: string;
   @Prop() heading: string;
+  @Prop() nonce: string;
 
   @State() purchases: Array<Purchase> = [];
 
@@ -127,6 +129,7 @@ export class CeDownloadsList {
                   action: 'edit',
                   model: 'download',
                   id: purchase.id,
+                  nonce: this.nonce,
                 })
               : null
           }
