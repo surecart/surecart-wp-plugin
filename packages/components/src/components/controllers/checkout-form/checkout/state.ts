@@ -1,4 +1,4 @@
-import { Price } from '../../../types';
+import { Price } from '../../../../types';
 
 const DefaultValue: {
   prices: Array<Price>;
