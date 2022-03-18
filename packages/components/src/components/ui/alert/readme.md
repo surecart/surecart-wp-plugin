@@ -61,12 +61,12 @@ Type: `Promise<void>`
 
 ### Used by
 
- - [ce-checkout](../../controllers/checkout)
+ - [ce-checkout](../../controllers/checkout-form/checkout)
  - [ce-coupon-form](../coupon-form)
  - [ce-dashboard-module](../dashboard-module)
  - [ce-login-form](../../controllers/login)
  - [ce-payment-method-create](../../controllers/dashboard/payment-method-create)
- - [ce-price-choice](../../controllers/price-choice)
+ - [ce-price-choice](../../controllers/checkout-form/price-choice)
  - [ce-stripe-payment-request](../stripe-payment-request)
  - [ce-subscription-cancel](../../controllers/dashboard/subscription-cancel)
  - [ce-subscription-renew](../../controllers/dashboard/subscription-renew)

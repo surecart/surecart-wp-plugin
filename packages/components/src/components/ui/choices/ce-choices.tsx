@@ -20,6 +20,8 @@ export class CEChoices {
   /** Input size */
   @Prop({ reflect: true }) size: 'small' | 'medium' | 'large' = 'medium';
 
+  @Prop() autoWidth: boolean;
+
   /** Required */
   @Prop() required: boolean = false;
 
@@ -59,6 +61,7 @@ export class CEChoices {
         class={{
           'choices': true,
           'choices--hide-label': this.hideLabel,
+          'choices--auto-width': this.autoWidth,
           'breakpoint-sm': this.width < 384,
           'breakpoint-md': this.width >= 384 && this.width < 576,
           'breakpoint-lg': this.width >= 576 && this.width < 768,

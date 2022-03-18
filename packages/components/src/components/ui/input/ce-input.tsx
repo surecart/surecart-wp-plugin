@@ -139,7 +139,8 @@ export class CEInput {
   /** Emitted when the control loses focus. */
   @Event() ceBlur: EventEmitter<void>;
 
-  reportValidity() {
+  @Method()
+  async reportValidity() {
     return this.input.reportValidity();
   }
 
@@ -214,7 +215,7 @@ export class CEInput {
   }
 
   componentDidLoad() {
-    this.formController = new FormSubmitController(this, this.el).addFormData();
+    this.formController = new FormSubmitController(this.el).addFormData();
     this.handleFocusChange();
   }
 

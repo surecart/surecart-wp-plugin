@@ -39,7 +39,7 @@ export const addLineItem = (lineItems: RecursivePartial<lineItems>, data: { pric
  */
 export const calculateInitialLineItems = (choices: Array<PriceChoice>, choiceType: ChoiceType) => {
   // check the url query first.
-  const prices = (getQueryArg(window.location.href, 'prices') as unknown) as Array<PriceChoice>;
+  const prices = getQueryArg(window.location.href, 'prices') as unknown as Array<PriceChoice>;
   if (prices) {
     return prices.map(convertPriceChoiceToLineItemData);
   }

@@ -18,7 +18,7 @@
 
 ### Used by
 
- - [ce-payment](../../controllers/payment)
+ - [ce-payment](../../controllers/checkout-form/payment)
 
 ### Graph
 ```mermaid

@@ -474,16 +474,16 @@
     "packages-dev": [
         {
             "name": "clue/stdio-react",
-            "version": "v2.5.0",
+            "version": "v2.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/clue/reactphp-stdio.git",
-                "reference": "c73bcdc228eca627992c0088f7bc30b794fde8da"
+                "reference": "dfa6c378aabdff718202d4e2453f752c38ea3399"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/clue/reactphp-stdio/zipball/c73bcdc228eca627992c0088f7bc30b794fde8da",
-                "reference": "c73bcdc228eca627992c0088f7bc30b794fde8da",
+                "url": "https://api.github.com/repos/clue/reactphp-stdio/zipball/dfa6c378aabdff718202d4e2453f752c38ea3399",
+                "reference": "dfa6c378aabdff718202d4e2453f752c38ea3399",
                 "shasum": ""
             },
             "require": {
@@ -534,7 +534,7 @@
             ],
             "support": {
                 "issues": "https://github.com/clue/reactphp-stdio/issues",
-                "source": "https://github.com/clue/reactphp-stdio/tree/v2.5.0"
+                "source": "https://github.com/clue/reactphp-stdio/tree/v2.6.0"
             },
             "funding": [
                 {
@@ -546,7 +546,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-10-25T08:01:22+00:00"
+            "time": "2022-03-18T15:09:30+00:00"
         },
         {
             "name": "clue/term-react",

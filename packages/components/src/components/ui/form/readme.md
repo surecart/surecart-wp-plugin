@@ -17,7 +17,8 @@
 | Event          | Description                                                                                                                                                                                                                                                                                                                                                                                                | Type                  |
 | -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- |
 | `ceFormChange` | Emitted when the form is submitted. This event will not be emitted if any form control inside of it is in an invalid state, unless the form has the `novalidate` attribute. Note that there is never a need to prevent this event, since it doen't send a GET or POST request like native forms. To "prevent" submission, use a conditional around the XHR request you use to submit the form's data with. | `CustomEvent<Object>` |
-| `ceFormSubmit` | Emitted when the form is submitted. This event will not be emitted if any form control inside of it is in an invalid state, unless the form has the `novalidate` attribute. Note that there is never a need to prevent this event, since it doen't send a GET or POST request like native forms. To "prevent" submission, use a conditional around the XHR request you use to submit the form's data with. | `CustomEvent<void>`   |
+| `ceFormSubmit` | Backwards compat.                                                                                                                                                                                                                                                                                                                                                                                          | `CustomEvent<void>`   |
+| `ceSubmit`     | Emitted when the form is submitted. This event will not be emitted if any form control inside of it is in an invalid state, unless the form has the `novalidate` attribute. Note that there is never a need to prevent this event, since it doen't send a GET or POST request like native forms. To "prevent" submission, use a conditional around the XHR request you use to submit the form's data with. | `CustomEvent<void>`   |
 
 
 ## Methods
@@ -49,6 +50,16 @@ Type: `Promise<Record<string, unknown>>`
 #### Returns
 
 Type: `Promise<void>`
+
+
+
+### `validate() => Promise<boolean>`
+
+
+
+#### Returns
+
+Type: `Promise<boolean>`
 
 
 

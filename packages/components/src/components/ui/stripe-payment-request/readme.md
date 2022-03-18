@@ -47,7 +47,7 @@
 
 ### Used by
 
- - [ce-express-payment](../../controllers/express-payment)
+ - [ce-express-payment](../../controllers/checkout-form/express-payment)
 
 ### Depends on
 

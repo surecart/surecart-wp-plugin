@@ -28,7 +28,7 @@
 ### Used by
 
  - [ce-customer-edit](../../controllers/dashboard/customer-edit)
- - [ce-order-tax-id-input](../../controllers/order-tax-id-input)
+ - [ce-order-tax-id-input](../../controllers/checkout-form/order-tax-id-input)
 
 ### Depends on
 

@@ -1,0 +1,26 @@
+{
+	"apiVersion": 2,
+	"name": "checkout-engine/donation",
+	"title": "Donation",
+	"description": "Displays a donation amount for the user to choose from.",
+	"category": "layout",
+	"parent": ["checkout-engine/form", "checkout-engine/column"],
+	"keywords": ["donation", "ad hoc", "custom", "amount"],
+	"supports": {
+		"reusable": false,
+		"html": false
+	},
+	"attributes": {
+		"label": {
+			"type": "string",
+			"default": "Donation Amount"
+		},
+		"price_id": {
+			"type": "string"
+		},
+		"currency": {
+			"type": "string",
+			"default": "USD"
+		}
+	}
+}

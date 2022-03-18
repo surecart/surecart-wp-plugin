@@ -1,0 +1,21 @@
+{
+	"apiVersion": 2,
+	"name": "checkout-engine/donation-amount",
+	"title": "Donation Amount",
+	"description": "Displays a donation amount for the donation form.",
+	"category": "layout",
+	"parent": ["checkout-engine/donation"],
+	"keywords": ["donation", "ad hoc", "custom", "amount"],
+	"supports": {
+		"reusable": false,
+		"html": false
+	},
+	"attributes": {
+		"amount": {
+			"type": "number"
+		},
+		"label": {
+			"type": "string"
+		}
+	}
+}

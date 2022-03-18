@@ -30,7 +30,7 @@
 
 ### Used by
 
- - [ce-order-coupon-form](../../controllers/order-coupon-form)
+ - [ce-order-coupon-form](../../controllers/checkout-form/order-coupon-form)
  - [ce-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
 
 ### Depends on

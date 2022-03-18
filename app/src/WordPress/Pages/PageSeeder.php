@@ -86,7 +86,7 @@ class PageSeeder {
 				'order-confirmation' => [
 					'name'    => _x( 'order-confirmation', 'Page slug', 'checkout_engine' ),
 					'title'   => _x( 'Thank you!', 'Page title', 'checkout_engine' ),
-					'content' => '<!-- wp:checkout-engine/order-confirmation --> <!-- /wp:checkout-engine/order-confirmation -->',
+					'content' => file_get_contents( plugin_dir_path( CHECKOUT_ENGINE_PLUGIN_FILE ) . 'templates/confirmation/order-confirmation.html' ),
 				],
 				'dashboard'          => [
 					'name'    => _x( 'customer-dashboard', 'Page slug', 'checkout_engine' ),

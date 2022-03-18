@@ -35,18 +35,19 @@
 
  - [ce-charges-list](../../controllers/dashboard/charges-list)
  - [ce-coupon-form](../coupon-form)
- - [ce-customer-details](../../controllers/dashboard/customer-details)
- - [ce-downloads-list](../../controllers/dashboard/downloads-list)
+ - [ce-customer-details](../customer-details)
+ - [ce-donation-choices](../../controllers/checkout-form/ce-donation-choices)
+ - [ce-downloads-list](../downloads-list)
  - [ce-invoices-list](../../controllers/dashboard/invoices-list)
- - [ce-line-item-total](../../controllers/line-item-total)
- - [ce-line-items](../../controllers/line-items)
- - [ce-order-confirmation-line-items](../../controllers/order-confirmation-line-items)
- - [ce-order-summary](../../controllers/order-summary)
+ - [ce-line-item-total](../../controllers/checkout-form/line-item-total)
+ - [ce-line-items](../../controllers/checkout-form/line-items)
+ - [ce-order-confirmation-line-items](../../controllers/confirmation/order-confirmation-line-items)
+ - [ce-order-detail](../../controllers/confirmation/order-detail)
+ - [ce-order-summary](../../controllers/checkout-form/order-summary)
  - [ce-orders-list](../../controllers/dashboard/orders-list)
- - [ce-payment](../../controllers/payment)
+ - [ce-payment](../../controllers/checkout-form/payment)
  - [ce-payment-methods-list](../../controllers/dashboard/payment-methods-list)
- - [ce-price-choice](../../controllers/price-choice)
- - [ce-session-detail](../../controllers/session-detail)
+ - [ce-price-choice](../../controllers/checkout-form/price-choice)
  - [ce-subscription](../../controllers/dashboard/subscription)
  - [ce-subscription-cancel](../../controllers/dashboard/subscription-cancel)
  - [ce-subscription-details](../../controllers/dashboard/subscription-details)
@@ -62,17 +63,18 @@ graph TD;
   ce-charges-list --> ce-skeleton
   ce-coupon-form --> ce-skeleton
   ce-customer-details --> ce-skeleton
+  ce-donation-choices --> ce-skeleton
   ce-downloads-list --> ce-skeleton
   ce-invoices-list --> ce-skeleton
   ce-line-item-total --> ce-skeleton
   ce-line-items --> ce-skeleton
   ce-order-confirmation-line-items --> ce-skeleton
+  ce-order-detail --> ce-skeleton
   ce-order-summary --> ce-skeleton
   ce-orders-list --> ce-skeleton
   ce-payment --> ce-skeleton
   ce-payment-methods-list --> ce-skeleton
   ce-price-choice --> ce-skeleton
-  ce-session-detail --> ce-skeleton
   ce-subscription --> ce-skeleton
   ce-subscription-cancel --> ce-skeleton
   ce-subscription-details --> ce-skeleton

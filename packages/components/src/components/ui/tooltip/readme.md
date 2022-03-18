@@ -30,8 +30,8 @@
 ### Used by
 
  - [ce-form-control](../form-control)
- - [ce-payment](../../controllers/payment)
- - [ce-price-choice](../../controllers/price-choice)
+ - [ce-payment](../../controllers/checkout-form/payment)
+ - [ce-price-choice](../../controllers/checkout-form/price-choice)
 
 ### Graph
 ```mermaid

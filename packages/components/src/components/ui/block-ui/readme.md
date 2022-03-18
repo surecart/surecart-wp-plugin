@@ -19,16 +19,16 @@
 ### Used by
 
  - [ce-charges-list](../../controllers/dashboard/charges-list)
- - [ce-checkout](../../controllers/checkout)
+ - [ce-checkout](../../controllers/checkout-form/checkout)
  - [ce-coupon-form](../coupon-form)
  - [ce-customer-edit](../../controllers/dashboard/customer-edit)
- - [ce-downloads-list](../../controllers/dashboard/downloads-list)
+ - [ce-donation-choices](../../controllers/checkout-form/ce-donation-choices)
+ - [ce-downloads-list](../downloads-list)
  - [ce-invoices-list](../../controllers/dashboard/invoices-list)
  - [ce-login-form](../../controllers/login)
  - [ce-orders-list](../../controllers/dashboard/orders-list)
  - [ce-payment-method-create](../../controllers/dashboard/payment-method-create)
  - [ce-payment-methods-list](../../controllers/dashboard/payment-methods-list)
- - [ce-purchase](../../controllers/purchase)
  - [ce-subscription](../../controllers/dashboard/subscription)
  - [ce-subscription-cancel](../../controllers/dashboard/subscription-cancel)
  - [ce-subscription-payment](../../controllers/dashboard/subscription-payment)
@@ -51,13 +51,13 @@ graph TD;
   ce-checkout --> ce-block-ui
   ce-coupon-form --> ce-block-ui
   ce-customer-edit --> ce-block-ui
+  ce-donation-choices --> ce-block-ui
   ce-downloads-list --> ce-block-ui
   ce-invoices-list --> ce-block-ui
   ce-login-form --> ce-block-ui
   ce-orders-list --> ce-block-ui
   ce-payment-method-create --> ce-block-ui
   ce-payment-methods-list --> ce-block-ui
-  ce-purchase --> ce-block-ui
   ce-subscription --> ce-block-ui
   ce-subscription-cancel --> ce-block-ui
   ce-subscription-payment --> ce-block-ui

@@ -7,18 +7,19 @@
 
 ## Properties
 
-| Property      | Attribute      | Description                                                                                               | Type                    | Default     |
-| ------------- | -------------- | --------------------------------------------------------------------------------------------------------- | ----------------------- | ----------- |
-| `checked`     | `checked`      | Draws the choice in a checked state.                                                                      | `boolean`               | `false`     |
-| `disabled`    | `disabled`     | Is the choice disabled                                                                                    | `boolean`               | `false`     |
-| `invalid`     | `invalid`      | This will be true when the control is in an invalid state. Validity is determined by the `required` prop. | `boolean`               | `false`     |
-| `name`        | `name`         | The choice name attribute                                                                                 | `string`                | `undefined` |
-| `required`    | `required`     | Is this required                                                                                          | `boolean`               | `false`     |
-| `showControl` | `show-control` | Show the radio/checkbox control                                                                           | `boolean`               | `true`      |
-| `showLabel`   | `show-label`   | Show the label                                                                                            | `boolean`               | `true`      |
-| `showPrice`   | `show-price`   | Show the price                                                                                            | `boolean`               | `true`      |
-| `type`        | `type`         | The choice name attribute                                                                                 | `"checkbox" \| "radio"` | `'radio'`   |
-| `value`       | `value`        | The choice value                                                                                          | `string`                | `undefined` |
+| Property      | Attribute      | Description                                                                                               | Type                             | Default     |
+| ------------- | -------------- | --------------------------------------------------------------------------------------------------------- | -------------------------------- | ----------- |
+| `checked`     | `checked`      | Draws the choice in a checked state.                                                                      | `boolean`                        | `false`     |
+| `disabled`    | `disabled`     | Is the choice disabled                                                                                    | `boolean`                        | `false`     |
+| `invalid`     | `invalid`      | This will be true when the control is in an invalid state. Validity is determined by the `required` prop. | `boolean`                        | `false`     |
+| `name`        | `name`         | The choice name attribute                                                                                 | `string`                         | `undefined` |
+| `required`    | `required`     | Is this required                                                                                          | `boolean`                        | `false`     |
+| `showControl` | `show-control` | Show the radio/checkbox control                                                                           | `boolean`                        | `true`      |
+| `showLabel`   | `show-label`   | Show the label                                                                                            | `boolean`                        | `true`      |
+| `showPrice`   | `show-price`   | Show the price                                                                                            | `boolean`                        | `true`      |
+| `size`        | `size`         | The size.                                                                                                 | `"large" \| "medium" \| "small"` | `'medium'`  |
+| `type`        | `type`         | The choice name attribute                                                                                 | `"checkbox" \| "radio"`          | `'radio'`   |
+| `value`       | `value`        | The choice value                                                                                          | `string`                         | `undefined` |
 
 
 ## Events
@@ -31,6 +32,16 @@
 
 
 ## Methods
+
+### `reportValidity() => Promise<boolean>`
+
+Checks for validity and shows the browser's validation message if the control is invalid.
+
+#### Returns
+
+Type: `Promise<boolean>`
+
+
 
 ### `setCustomValidity(message: string) => Promise<void>`
 
@@ -69,7 +80,7 @@ Type: `Promise<void>`
 
 ### Used by
 
- - [ce-price-choice](../../controllers/price-choice)
+ - [ce-price-choice](../../controllers/checkout-form/price-choice)
  - [ce-subscription-payment](../../controllers/dashboard/subscription-payment)
  - [ce-subscription-switch](../../controllers/dashboard/subscription-switch)
 

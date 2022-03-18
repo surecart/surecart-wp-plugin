@@ -34,10 +34,17 @@ class ErrorsTranslationService {
 	 *
 	 * @return string|false
 	 */
-	public function attributeTranslation( $attribute, $type ) {
+	public function attributeTranslation( $attribute, $type, $options = [] ) {
 		// if both are empty, return.
 		if ( empty( $attribute ) && empty( $type ) ) {
 			return false;
+		}
+
+		if ( ! empty( $options ) ) {
+			$special = $this->attributeOptionsTranslation( $attribute, $type, $options );
+			if ( $special ) {
+				return $special;
+			}
 		}
 
 		$attribute_translations        = include 'Translations/attributes.php';
@@ -51,6 +58,14 @@ class ErrorsTranslationService {
 			}
 			// translators: field name.
 			return sprintf( __( '%s is invalid.', 'checkount_engine' ), $attribute_translations[ $attribute ] );
+		}
+
+		return false;
+	}
+
+	public function attributeOptionsTranslation( $attribute, $type, $options ) {
+		if ( 'line_items.ad_hoc_amount' === $attribute && 'outside_range' === $type ) {
+			return sprintf( __( 'You must enter an amount between %1$s and %2$s', 'checkout_engine' ), $options['min'] / 100, $options['max'] / 100 );
 		}
 
 		return false;
@@ -91,7 +106,7 @@ class ErrorsTranslationService {
 		}
 
 		// translate attribute.
-		$translated = $this->attributeTranslation( $response['attribute'] ?? '', $response['type'] ?? '' );
+		$translated = $this->attributeTranslation( $response['attribute'] ?? '', $response['type'] ?? '', $response['options'] ?? [] );
 		if ( $translated ) {
 			return $translated;
 		}

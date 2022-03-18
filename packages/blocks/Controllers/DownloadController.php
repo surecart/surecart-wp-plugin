@@ -21,11 +21,11 @@ class DownloadController extends BaseController {
 		}
 
 		return wp_kses_post(
-			Component::tag( 'ce-downloads-list' )
+			Component::tag( 'ce-dashboard-downloads-list' )
 			->id( 'customer-downloads-preview' )
 			->with(
 				[
-					'allLink' => add_query_arg(
+					'allLink'      => add_query_arg(
 						[
 							'tab'    => $this->getTab(),
 							'model'  => 'download',
@@ -33,8 +33,8 @@ class DownloadController extends BaseController {
 						],
 						\CheckoutEngine::pages()->url( 'dashboard' )
 					),
-					'nonce'   => wp_create_nonce( 'customer-download' ),
-					'query'   => [
+					'requestNonce' => wp_create_nonce( 'customer-download' ),
+					'query'        => [
 						'customer_ids' => array_values( User::current()->customerIds() ),
 						'page'         => 1,
 						'per_page'     => 10,
@@ -95,8 +95,10 @@ class DownloadController extends BaseController {
 			]
 		);
 
+		$url = (object) parse_url( $session->url );
+
 		if ( $session->url ) {
-			wp_redirect( esc_url_raw( "$session->url/purchases/$purchase->id" ) );
+			wp_redirect( esc_url_raw( "{$url->scheme}://{$url->host}{$url->path}/purchases/$purchase->id?portal_session_id=$session->id" ) );
 			exit;
 		}
 

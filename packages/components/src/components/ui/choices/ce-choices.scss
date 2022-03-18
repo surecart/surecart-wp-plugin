@@ -1,18 +1,42 @@
-@use '../../../styles/mixins/hide';
-
 :host {
   display: block;
 }
 
-::slotted(*) {
-  margin: 0;
-  display: grid;
-  gap: 10px;
+.choices {
+  ::slotted(div) {
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
 }
+.choices:not(.choices--auto-width) {
+  ::slotted(div) {
+    margin: 0;
+    display: grid;
+    gap: 10px;
+  }
+}
+
 .breakpoint-lg,
 .breakpoint-xl {
-  ::slotted(*) {
+  ::slotted(div) {
     grid-template-columns: repeat(var(--columns, 1), 1fr);
+  }
+}
+.choices {
+  .choices__items {
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+}
+
+.choices:not(.choices--auto-width) {
+  .choices__items {
+    display: grid;
+    gap: 10px;
   }
 }
 
@@ -21,6 +45,7 @@
   padding: 0;
   margin: 0;
   min-width: 0;
+  margin: 0;
 
   .choices__label {
     font-family: var(--ce-input-font-family);
@@ -31,10 +56,10 @@
   }
 }
 
-// .choices__items {
-//   display: grid;
-//   gap: 10px;
-// }
+.choices__items {
+  display: grid;
+  gap: 10px;
+}
 
 // .breakpoint-md,
 // .breakpoint-lg,
@@ -43,9 +68,3 @@
 //     grid-template-columns: repeat(var(--columns, 1), 1fr);
 //   }
 // }
-
-.choices--hide-label {
-  .choices__label {
-    @include hide.visually-hidden;
-  }
-}

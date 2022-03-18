@@ -7,6 +7,8 @@ import { __ } from '@wordpress/i18n';
 // blocks
 import * as button from '@blocks/Button';
 import * as buyButton from '@blocks/BuyButton';
+import * as donation from '@blocks/Donation';
+import * as donationAmount from '@blocks/DonationAmount';
 import * as card from '@blocks/Card';
 import * as address from '@blocks/address';
 import * as columns from '@blocks/columns';
@@ -46,12 +48,12 @@ import * as taxLineItem from '@blocks/TaxLineItem';
 import * as logoutButton from '@blocks/LogoutButton';
 import * as name from '@blocks/name';
 import * as confirmationLineItems from '@blocks/OrderConfirmationLineItems';
-import * as confirmationTotals from '@blocks/OrderConfirmationTotals';
+// import * as confirmationCustomer from '@blocks/OrderConfirmationCustomer';
 import * as password from '@blocks/password';
 import * as payment from '@blocks/payment';
 import * as priceChoice from '@blocks/PriceChoice';
 import * as priceSelector from '@blocks/PriceSelector';
-import * as sessionDetail from '@blocks/SessionDetail';
+// import * as sessionDetail from '@blocks/SessionDetail';
 import * as submit from '@blocks/submit';
 import * as subtotal from '@blocks/subtotal';
 import * as switchBlock from '@blocks/switch';
@@ -145,10 +147,12 @@ export const registerCheckoutEngineBlocks = () => {
 		columns,
 		column,
 		confirmation,
+		donation,
+		donationAmount,
 		confirmationLineItems,
-		confirmationTotals,
+		// confirmationCustomer,
 		heading,
-		sessionDetail,
+		// sessionDetail,
 		payment,
 		expressPayment,
 		priceSelector,

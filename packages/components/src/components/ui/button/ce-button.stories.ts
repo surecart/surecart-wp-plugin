@@ -1,6 +1,3 @@
-import { expect } from '@storybook/jest';
-import { within, userEvent } from '@storybook/testing-library';
-
 export default {
   title: 'Components/Button',
   parameters: {
@@ -48,10 +45,4 @@ Button.args = {
   outline: false,
   pill: false,
   circle: false,
-};
-
-Button.play = async ({ canvasElement }) => {
-  const canvas = within(canvasElement);
-  await userEvent.click(canvas.queryByTestId('button'));
-  expect(true).toBe(true);
 };

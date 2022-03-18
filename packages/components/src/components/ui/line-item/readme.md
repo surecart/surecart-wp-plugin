@@ -40,12 +40,12 @@
 ### Used by
 
  - [ce-coupon-form](../coupon-form)
- - [ce-line-item-tax](../../controllers/line-item-tax)
- - [ce-line-item-total](../../controllers/line-item-total)
- - [ce-line-items](../../controllers/line-items)
- - [ce-order-confirmation-line-items](../../controllers/order-confirmation-line-items)
- - [ce-order-confirmation-totals](../../controllers/order-confirmation-totals)
- - [ce-order-summary](../../controllers/order-summary)
+ - [ce-line-item-tax](../../controllers/checkout-form/line-item-tax)
+ - [ce-line-item-total](../../controllers/checkout-form/line-item-total)
+ - [ce-line-items](../../controllers/checkout-form/line-items)
+ - [ce-order-confirmation-line-items](../../controllers/confirmation/order-confirmation-line-items)
+ - [ce-order-confirmation-totals](../../controllers/confirmation/order-confirmation-totals)
+ - [ce-order-summary](../../controllers/checkout-form/order-summary)
  - [ce-product-line-item](../product-line-item)
  - [ce-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
 

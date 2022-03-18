@@ -1,14 +1,19 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
-import { __ } from '@wordpress/i18n';
 import { useBlockProps } from '@wordpress/block-editor';
+import { CeDashboardModule } from '@checkout-engine/components-react';
 
-export default () => {
-	const blockProps = useBlockProps();
+export default ({ attributes }) => {
+	const { title } = attributes;
+	const blockProps = useBlockProps({
+		heading: title,
+	});
 
 	return (
-		<div { ...blockProps }>
-			<ce-order-confirmation-line-items></ce-order-confirmation-line-items>
-		</div>
+		<CeDashboardModule {...blockProps}>
+			<ce-card>
+				<ce-order-confirmation-line-items></ce-order-confirmation-line-items>
+				<ce-divider></ce-divider>
+				<ce-order-confirmation-totals></ce-order-confirmation-totals>
+			</ce-card>
+		</CeDashboardModule>
 	);
 };

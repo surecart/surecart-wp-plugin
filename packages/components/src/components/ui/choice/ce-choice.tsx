@@ -27,6 +27,9 @@ export class CEChoice {
   /** The choice name attribute */
   @Prop() name: string;
 
+  /** The size. */
+  @Prop() size: 'small' | 'medium' | 'large' = 'medium';
+
   /** The choice value */
   @Prop({ reflect: true }) value: string;
 
@@ -54,6 +57,11 @@ export class CEChoice {
   /** Show the radio/checkbox control */
   @Prop() showControl: boolean = true;
 
+  @State() hasDefaultSlot: boolean;
+  @State() hasPrice: boolean;
+  @State() hasPer: boolean;
+  @State() hasDescription: boolean;
+
   /** Emitted when the control loses focus. */
   @Event() ceBlur: EventEmitter<void>;
 
@@ -70,7 +78,8 @@ export class CEChoice {
   }
 
   /** Checks for validity and shows the browser's validation message if the control is invalid. */
-  reportValidity() {
+  @Method()
+  async reportValidity() {
     this.invalid = !this.input.checkValidity();
 
     if (this.type === 'radio') {
@@ -124,7 +133,7 @@ export class CEChoice {
   }
 
   getAllChoices() {
-    const choiceGroup = this.el.closest('ce-choices');
+    const choiceGroup = this.el.parentElement;
     // Radios must be part of a radio group
     if (!choiceGroup) {
       return [];
@@ -160,7 +169,7 @@ export class CEChoice {
 
   componentDidLoad() {
     this.handleResize();
-    this.formController = new FormSubmitController(this, this.el, {
+    this.formController = new FormSubmitController(this.el, {
       value: (control: HTMLCeChoiceElement) => (control.checked ? control.value : undefined),
     }).addFormData();
   }
@@ -184,6 +193,13 @@ export class CEChoice {
     resizeObserver.observe(this.el);
   }
 
+  handleSlotChange() {
+    this.hasPrice = !!this.el.querySelector('[slot="price"]');
+    this.hasPer = !!this.el.querySelector('[slot="per"]');
+    this.hasDescription = !!this.el.querySelector('[slot="description"]');
+    this.hasDefaultSlot = !!this.el.querySelector('[slot="default"]');
+  }
+
   render() {
     return (
       <label
@@ -194,6 +210,7 @@ export class CEChoice {
           'choice--disabled': this.disabled,
           'choice--focused': this.hasFocus,
           'choice--layout-columns': !this.isStacked,
+          [`choice--size-${this.size}`]: true,
         }}
         htmlFor={this.inputId}
         onKeyDown={e => this.handleKeyDown(e)}
@@ -250,19 +267,19 @@ export class CEChoice {
         <span part="label" id={this.labelId} class="choice__label">
           <span class="choice__label-text" hidden={!this.showLabel}>
             <span class="choice__title" part="title">
-              <slot></slot>
+              <slot onSlotchange={() => this.handleSlotChange()}></slot>
             </span>
-            <span class="choice__description description" part="description">
-              <slot name="description"></slot>
+            <span class="choice__description description" part="description" hidden={!this.hasDescription}>
+              <slot name="description" onSlotchange={() => this.handleSlotChange()}></slot>
             </span>
           </span>
 
-          <span class="choice__price" hidden={!this.showPrice}>
+          <span class="choice__price" hidden={!this.showPrice || (!this.hasPrice && !this.hasPer)}>
             <span class="choice__title">
-              <slot name="price"></slot>
+              <slot name="price" onSlotchange={() => this.handleSlotChange()}></slot>
             </span>{' '}
             <span class="choice__description">
-              <slot name="per"></slot>
+              <slot name="per" onSlotchange={() => this.handleSlotChange()}></slot>
             </span>
           </span>
         </span>

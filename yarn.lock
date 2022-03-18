@@ -1971,7 +1971,7 @@ __metadata:
     "@babel/plugin-transform-react-jsx": ^7.17.3
     "@babel/preset-env": ^7.13.15
     "@mdx-js/react": ^1.6.22
-    "@stencil/core": 2.4.0
+    "@stencil/core": 2.14.2
     "@stencil/react-output-target": ^0.3.1
     "@stencil/sass": ^1.4.0
     "@storybook/addon-a11y": ^6.4.19
@@ -1981,7 +1981,6 @@ __metadata:
     "@storybook/addon-interactions": ^6.4.19
     "@storybook/addon-links": ^6.4.19
     "@storybook/html": ^6.4.19
-    "@storybook/jest": ^0.0.9
     "@storybook/testing-library": ^0.0.9
     "@stripe/stripe-js": ^1.21.1
     "@types/jest": ^27.0.3
@@ -3493,12 +3492,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@stencil/core@npm:2.4.0":
-  version: 2.4.0
-  resolution: "@stencil/core@npm:2.4.0"
+"@stencil/core@npm:2.14.2":
+  version: 2.14.2
+  resolution: "@stencil/core@npm:2.14.2"
   bin:
     stencil: bin/stencil
-  checksum: 20f00ef48b2a8a13de6be69863f719848d422587c2c2421260259ddfd850a54635af74a7b73720c81a2450a42a9dd5f49c98c683a1822fc3a3b7220cd5974e86
+  checksum: 9c6345da4d155096c685c2e3176cd3e6d67e46bd27cab4278c94ca69bdd66a46bb2d58c60f2c5529b69bc7ee0a70d10ebea9026b94efdbe8964352349c75843c
   languageName: node
   linkType: hard
 
@@ -4491,15 +4490,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/expect@npm:storybook-jest":
-  version: 27.5.2-0
-  resolution: "@storybook/expect@npm:27.5.2-0"
-  dependencies:
-    "@types/jest": ">=26.0.0"
-  checksum: 09738a8f8e0b9d3d5a909c80ce0c101080cf376316ceca1f3820e88877d6b5ef92abd847b4c4a4e9687c43c2168a6e3e8cdd74947b6af622688797f74cf523df
-  languageName: node
-  linkType: hard
-
 "@storybook/html@npm:^6.4.19":
   version: 6.4.19
   resolution: "@storybook/html@npm:6.4.19"
@@ -4530,7 +4520,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/instrumenter@npm:6.4.19, @storybook/instrumenter@npm:^6.4.0":
+"@storybook/instrumenter@npm:6.4.19":
   version: 6.4.19
   resolution: "@storybook/instrumenter@npm:6.4.19"
   dependencies:
@@ -4552,18 +4542,6 @@ __metadata:
     core-js: ^3.8.2
     global: ^4.4.0
   checksum: 7efa264efbbbc631c598554e2e2e8c44119aae1dd4020ac7ed327415e3d591c7428618af8345a235f60b9752a540e958d249d9634b6fe9f95d0eb8b26fbd6f53
-  languageName: node
-  linkType: hard
-
-"@storybook/jest@npm:^0.0.9":
-  version: 0.0.9
-  resolution: "@storybook/jest@npm:0.0.9"
-  dependencies:
-    "@storybook/expect": storybook-jest
-    "@storybook/instrumenter": ^6.4.0
-    "@testing-library/jest-dom": ^5.16.2
-    jest-mock: ^27.3.0
-  checksum: 6e64fefcd33eed2f11ca36fa76dfbe519ce52879483d46f74a2c8e925826464785a893023b967768c70a307a5987fcf4c853e2da50acd18c58602770a1051617
   languageName: node
   linkType: hard
 
@@ -5318,23 +5296,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/jest-dom@npm:^5.16.2":
-  version: 5.16.2
-  resolution: "@testing-library/jest-dom@npm:5.16.2"
-  dependencies:
-    "@babel/runtime": ^7.9.2
-    "@types/testing-library__jest-dom": ^5.9.1
-    aria-query: ^5.0.0
-    chalk: ^3.0.0
-    css: ^3.0.0
-    css.escape: ^1.5.1
-    dom-accessibility-api: ^0.5.6
-    lodash: ^4.17.15
-    redent: ^3.0.0
-  checksum: e4569df67c4c4998d2c60c6cf00ce2f1ac10c9397e0970320728c8be8f4e2c17a0e801705ce8a7384f7f5629b598a6f58db91d4401dde02044f5625405ca0988
-  languageName: node
-  linkType: hard
-
 "@testing-library/user-event@npm:^13.2.1":
   version: 13.5.0
   resolution: "@testing-library/user-event@npm:13.5.0"
@@ -5669,16 +5630,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jest@npm:*, @types/jest@npm:>=26.0.0":
-  version: 27.4.1
-  resolution: "@types/jest@npm:27.4.1"
-  dependencies:
-    jest-matcher-utils: ^27.0.0
-    pretty-format: ^27.0.0
-  checksum: 5184f3eef4832d01ee8f59bed15eec45ccc8e29c724a5e6ce37bf74396b37bdf04f557000f45ba4fc38ae6075cf9cfcce3d7a75abc981023c61ceb27230a93e4
-  languageName: node
-  linkType: hard
-
 "@types/jest@npm:23.3.9":
   version: 23.3.9
   resolution: "@types/jest@npm:23.3.9"
@@ -6010,15 +5961,6 @@ __metadata:
   version: 1.0.8
   resolution: "@types/tapable@npm:1.0.8"
   checksum: b4b754dd0822c407b8f29ef6b766490721c276880f9e976d92ee2b3ef915f11a05a2442ae36c8978bcd872ad6bc833b0a2c4d267f2d611590668a366bad50652
-  languageName: node
-  linkType: hard
-
-"@types/testing-library__jest-dom@npm:^5.9.1":
-  version: 5.14.3
-  resolution: "@types/testing-library__jest-dom@npm:5.14.3"
-  dependencies:
-    "@types/jest": "*"
-  checksum: 203443d0e7e5929fbc9e441146f92d85efa033b4697e427ed0164df1c40b720b6bb9bbd96a3171ea5fd8d9301b538fd0f49d4f35594d142afd0f6d2ecac25785
   languageName: node
   linkType: hard
 
@@ -10849,24 +10791,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"css.escape@npm:^1.5.1":
-  version: 1.5.1
-  resolution: "css.escape@npm:1.5.1"
-  checksum: f6d38088d870a961794a2580b2b2af1027731bb43261cfdce14f19238a88664b351cc8978abc20f06cc6bbde725699dec8deb6fe9816b139fc3f2af28719e774
-  languageName: node
-  linkType: hard
-
-"css@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "css@npm:3.0.0"
-  dependencies:
-    inherits: ^2.0.4
-    source-map: ^0.6.1
-    source-map-resolve: ^0.6.0
-  checksum: 4273ac816ddf99b99acb9c1d1a27d86d266a533cc01118369d941d8e8a78277a83cad3315e267a398c509d930fbb86504e193ea1ebc620a4a4212e06fe76e8be
-  languageName: node
-  linkType: hard
-
 "cssesc@npm:^3.0.0":
   version: 3.0.0
   resolution: "cssesc@npm:3.0.0"
@@ -11782,7 +11706,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dom-accessibility-api@npm:^0.5.6, dom-accessibility-api@npm:^0.5.9":
+"dom-accessibility-api@npm:^0.5.9":
   version: 0.5.13
   resolution: "dom-accessibility-api@npm:0.5.13"
   checksum: a5a5f14c01e466d424750aaac9225f1dc43cf16d101a1c40e01a554abce63c48084707002c39b805f2ce212273c179dd6d2258175997cd06d5f79851bf52dd40
@@ -17657,7 +17581,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest-matcher-utils@npm:^27.0.0, jest-matcher-utils@npm:^27.4.2, jest-matcher-utils@npm:^27.5.1":
+"jest-matcher-utils@npm:^27.4.2, jest-matcher-utils@npm:^27.5.1":
   version: 27.5.1
   resolution: "jest-matcher-utils@npm:27.5.1"
   dependencies:
@@ -17686,7 +17610,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest-mock@npm:^27.0.6, jest-mock@npm:^27.3.0, jest-mock@npm:^27.5.1":
+"jest-mock@npm:^27.0.6, jest-mock@npm:^27.5.1":
   version: 27.5.1
   resolution: "jest-mock@npm:27.5.1"
   dependencies:
@@ -26011,16 +25935,6 @@ __metadata:
     source-map-url: ^0.4.0
     urix: ^0.1.0
   checksum: c73fa44ac00783f025f6ad9e038ab1a2e007cd6a6b86f47fe717c3d0765b4a08d264f6966f3bd7cd9dbcd69e4832783d5472e43247775b2a550d6f2155d24bae
-  languageName: node
-  linkType: hard
-
-"source-map-resolve@npm:^0.6.0":
-  version: 0.6.0
-  resolution: "source-map-resolve@npm:0.6.0"
-  dependencies:
-    atob: ^2.1.2
-    decode-uri-component: ^0.2.0
-  checksum: fe503b9e5dac1c54be835282fcfec10879434e7b3ee08a9774f230299c724a8d403484d9531276d1670c87390e0e4d1d3f92b14cca6e4a2445ea3016b786ecd4
   languageName: node
   linkType: hard
 

@@ -3,7 +3,6 @@
   flex-direction: column;
   align-items: stretch;
   justify-content: stretch;
-  width: 100%;
   min-width: 0;
   align-self: stretch;
 }
@@ -48,6 +47,13 @@
     display: inline-block;
     font-weight: var(--ce-input-label-font-weight);
     font-size: var(--ce-input-label-font-size-medium);
+  }
+
+  &--size-small {
+    padding: 0.75em 0.9em;
+  }
+  &--size-large {
+    padding: 1.3em 1.1em;
   }
 }
 
@@ -167,7 +173,7 @@
 
 .choice__label-text {
   display: block;
-  padding-right: 20px;
+
   display: flex;
   flex-direction: column;
   gap: 0.2em;
@@ -177,4 +183,5 @@
 .choice__price {
   display: block;
   white-space: nowrap;
+  margin-left: 20px;
 }

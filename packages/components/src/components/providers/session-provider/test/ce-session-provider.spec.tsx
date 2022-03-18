@@ -28,8 +28,6 @@ describe('ce-cart-provider', () => {
           meta_item: 'test',
         }),
       ).toEqual({
-        email: 'test@test.com',
-        name: 'test',
         password: 'password',
         metadata: { meta_item: 'test' },
       });

@@ -5,7 +5,7 @@
 	"title": "Order Confirmation Line Items",
 	"description": "Display an order confirmation line items summary section.",
 	"category": "layout",
-	"keywords": [ "thank", "thank you", "confirm" ],
+	"keywords": ["thank", "thank you", "confirm"],
 	"supports": {
 		"reusable": false,
 		"html": false
@@ -13,19 +13,7 @@
 	"attributes": {
 		"title": {
 			"type": "string",
-			"default": "Order Confirmation"
-		},
-		"description": {
-			"type": "string",
-			"default": "Thank you for your order!"
-		},
-		"button_enabled": {
-			"type": "boolean",
-			"default": true
-		},
-		"button_text": {
-			"type": "string",
-			"default": "Manage Orders"
+			"default": "Summary"
 		}
 	}
 }

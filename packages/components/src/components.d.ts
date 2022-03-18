@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Address, ChoiceItem, Coupon, Customer, DiscountResponse, LineItemData, Order, OrderStatus, PaymentMethod, Price, PriceChoice, Prices, ProductGroup, Products, ResponseError, Subscription, SubscriptionStatus, TaxStatus, WordPressUser } from "./types";
+import { Address, ChoiceItem, Coupon, Customer, DiscountResponse, LineItem, LineItemData, Order, OrderStatus, PaymentMethod, Price, PriceChoice, Prices, ProductGroup, Products, Purchase, ResponseError, Subscription, SubscriptionStatus, TaxStatus, WordPressUser } from "./types";
 import { IconLibraryMutator, IconLibraryResolver } from "./components/ui/icon/library";
 export namespace Components {
     interface CeAddress {
@@ -148,6 +148,10 @@ export namespace Components {
           * An optional value for the button. Ignored when `href` is set.
          */
         "value": string;
+    }
+    interface CeButtonGroup {
+        "label": string;
+        "separate": boolean;
     }
     interface CeCard {
         /**
@@ -296,6 +300,10 @@ export namespace Components {
          */
         "name": string;
         /**
+          * Checks for validity and shows the browser's validation message if the control is invalid.
+         */
+        "reportValidity": () => Promise<boolean>;
+        /**
           * Is this required
          */
         "required": boolean;
@@ -316,6 +324,10 @@ export namespace Components {
          */
         "showPrice": boolean;
         /**
+          * The size.
+         */
+        "size": 'small' | 'medium' | 'large';
+        /**
           * Simulates a click on the choice.
          */
         "triggerClick": () => Promise<void>;
@@ -329,6 +341,7 @@ export namespace Components {
         "value": string;
     }
     interface CeChoices {
+        "autoWidth": boolean;
         /**
           * Number of columns on desktop
          */
@@ -412,8 +425,11 @@ export namespace Components {
         "loading": boolean;
     }
     interface CeCustomerDetails {
-        "customerId": string;
+        "customer": Customer;
+        "editLink": string;
+        "error": string;
         "heading": string;
+        "loading": boolean;
     }
     interface CeCustomerEdit {
         "customer": Customer;
@@ -552,16 +568,13 @@ export namespace Components {
          */
         "value": string;
     }
-    interface CeDashboardModule {
-        "error": string;
+    interface CeDashboardCustomerDetails {
+        "customerId": string;
         "heading": string;
     }
-    interface CeDivider {
-    }
-    interface CeDownloadsList {
+    interface CeDashboardDownloadsList {
         "allLink": string;
         "heading": string;
-        "nonce": string;
         /**
           * Customer id to fetch subscriptions
          */
@@ -569,6 +582,43 @@ export namespace Components {
     page: number;
     per_page: number;
   };
+        "requestNonce": string;
+    }
+    interface CeDashboardModule {
+        "error": string;
+        "heading": string;
+    }
+    interface CeDivider {
+    }
+    interface CeDonationChoices {
+        "busy": boolean;
+        /**
+          * The label for the field.
+         */
+        "label": string;
+        /**
+          * Order line items.
+         */
+        "lineItems": LineItem[];
+        /**
+          * Is this loading
+         */
+        "loading": boolean;
+        /**
+          * The price id for the fields.
+         */
+        "priceId": string;
+        "removeInvalid": boolean;
+        "reportValidity": () => Promise<boolean>;
+    }
+    interface CeDownloadsList {
+        "allLink": string;
+        "busy": boolean;
+        "error": string;
+        "heading": string;
+        "loading": boolean;
+        "purchases": Array<Purchase>;
+        "requestNonce": string;
     }
     interface CeDropdown {
         "clickEl"?: HTMLElement;
@@ -615,6 +665,7 @@ export namespace Components {
          */
         "novalidate": boolean;
         "submit": () => Promise<void>;
+        "validate": () => Promise<boolean>;
     }
     interface CeFormComponentsValidator {
         "disabled": boolean;
@@ -905,6 +956,7 @@ export namespace Components {
           * Makes the input readonly.
          */
         "readonly": boolean;
+        "reportValidity": () => Promise<boolean>;
         /**
           * Makes the input a required field.
          */
@@ -1038,6 +1090,28 @@ export namespace Components {
     interface CeOrderConfirmation {
         "order": Order;
     }
+    interface CeOrderConfirmationCustomer {
+        /**
+          * The customer
+         */
+        "customer": Customer;
+        /**
+          * Error message.
+         */
+        "error": string;
+        /**
+          * The heading
+         */
+        "heading": string;
+        /**
+          * Is this loading?
+         */
+        "loading": boolean;
+        /**
+          * The Order
+         */
+        "order": Order;
+    }
     interface CeOrderConfirmationLineItems {
         "loading": boolean;
         "order": Order;
@@ -1052,6 +1126,14 @@ export namespace Components {
         "label": string;
         "loading": boolean;
         "order": Order;
+    }
+    interface CeOrderDetail {
+        "fallback": string;
+        "label": string;
+        "loading": boolean;
+        "metaKey": string;
+        "order": Order;
+        "value": string;
     }
     interface CeOrderPassword {
         /**
@@ -1366,6 +1448,7 @@ export namespace Components {
           * Makes the input readonly.
          */
         "readonly": boolean;
+        "reportValidity": () => Promise<boolean>;
         /**
           * Makes the input a required field.
          */
@@ -1439,8 +1522,6 @@ export namespace Components {
     }
     interface CeProvider {
         "STENCIL_CONTEXT": { [key: string]: any };
-    }
-    interface CePurchase {
     }
     interface CeQuantitySelect {
         "clickEl"?: HTMLElement;
@@ -1530,6 +1611,7 @@ export namespace Components {
          */
         "placeholder": string;
         "position": 'bottom-left' | 'bottom-right';
+        "reportValidity": () => Promise<boolean>;
         "required": boolean;
         /**
           * Is search enabled?
@@ -1555,14 +1637,6 @@ export namespace Components {
         /**
           * The input's value attribute.
          */
-        "value": string;
-    }
-    interface CeSessionDetail {
-        "fallback": string;
-        "label": string;
-        "loading": boolean;
-        "metaKey": string;
-        "order": Order;
         "value": string;
     }
     interface CeSessionProvider {
@@ -1807,6 +1881,10 @@ export namespace Components {
          */
         "name": string;
         /**
+          * Checks for validity and shows the browser's validation message if the control is invalid.
+         */
+        "reportValidity": () => Promise<boolean>;
+        /**
           * Makes the switch a required field.
          */
         "required": boolean;
@@ -2000,6 +2078,12 @@ declare global {
         prototype: HTMLCeButtonElement;
         new (): HTMLCeButtonElement;
     };
+    interface HTMLCeButtonGroupElement extends Components.CeButtonGroup, HTMLStencilElement {
+    }
+    var HTMLCeButtonGroupElement: {
+        prototype: HTMLCeButtonGroupElement;
+        new (): HTMLCeButtonGroupElement;
+    };
     interface HTMLCeCardElement extends Components.CeCard, HTMLStencilElement {
     }
     var HTMLCeCardElement: {
@@ -2090,6 +2174,18 @@ declare global {
         prototype: HTMLCeCustomerNameElement;
         new (): HTMLCeCustomerNameElement;
     };
+    interface HTMLCeDashboardCustomerDetailsElement extends Components.CeDashboardCustomerDetails, HTMLStencilElement {
+    }
+    var HTMLCeDashboardCustomerDetailsElement: {
+        prototype: HTMLCeDashboardCustomerDetailsElement;
+        new (): HTMLCeDashboardCustomerDetailsElement;
+    };
+    interface HTMLCeDashboardDownloadsListElement extends Components.CeDashboardDownloadsList, HTMLStencilElement {
+    }
+    var HTMLCeDashboardDownloadsListElement: {
+        prototype: HTMLCeDashboardDownloadsListElement;
+        new (): HTMLCeDashboardDownloadsListElement;
+    };
     interface HTMLCeDashboardModuleElement extends Components.CeDashboardModule, HTMLStencilElement {
     }
     var HTMLCeDashboardModuleElement: {
@@ -2101,6 +2197,12 @@ declare global {
     var HTMLCeDividerElement: {
         prototype: HTMLCeDividerElement;
         new (): HTMLCeDividerElement;
+    };
+    interface HTMLCeDonationChoicesElement extends Components.CeDonationChoices, HTMLStencilElement {
+    }
+    var HTMLCeDonationChoicesElement: {
+        prototype: HTMLCeDonationChoicesElement;
+        new (): HTMLCeDonationChoicesElement;
     };
     interface HTMLCeDownloadsListElement extends Components.CeDownloadsList, HTMLStencilElement {
     }
@@ -2276,6 +2378,12 @@ declare global {
         prototype: HTMLCeOrderConfirmationElement;
         new (): HTMLCeOrderConfirmationElement;
     };
+    interface HTMLCeOrderConfirmationCustomerElement extends Components.CeOrderConfirmationCustomer, HTMLStencilElement {
+    }
+    var HTMLCeOrderConfirmationCustomerElement: {
+        prototype: HTMLCeOrderConfirmationCustomerElement;
+        new (): HTMLCeOrderConfirmationCustomerElement;
+    };
     interface HTMLCeOrderConfirmationLineItemsElement extends Components.CeOrderConfirmationLineItems, HTMLStencilElement {
     }
     var HTMLCeOrderConfirmationLineItemsElement: {
@@ -2293,6 +2401,12 @@ declare global {
     var HTMLCeOrderCouponFormElement: {
         prototype: HTMLCeOrderCouponFormElement;
         new (): HTMLCeOrderCouponFormElement;
+    };
+    interface HTMLCeOrderDetailElement extends Components.CeOrderDetail, HTMLStencilElement {
+    }
+    var HTMLCeOrderDetailElement: {
+        prototype: HTMLCeOrderDetailElement;
+        new (): HTMLCeOrderDetailElement;
     };
     interface HTMLCeOrderPasswordElement extends Components.CeOrderPassword, HTMLStencilElement {
     }
@@ -2384,12 +2498,6 @@ declare global {
         prototype: HTMLCeProviderElement;
         new (): HTMLCeProviderElement;
     };
-    interface HTMLCePurchaseElement extends Components.CePurchase, HTMLStencilElement {
-    }
-    var HTMLCePurchaseElement: {
-        prototype: HTMLCePurchaseElement;
-        new (): HTMLCePurchaseElement;
-    };
     interface HTMLCeQuantitySelectElement extends Components.CeQuantitySelect, HTMLStencilElement {
     }
     var HTMLCeQuantitySelectElement: {
@@ -2425,12 +2533,6 @@ declare global {
     var HTMLCeSelectElement: {
         prototype: HTMLCeSelectElement;
         new (): HTMLCeSelectElement;
-    };
-    interface HTMLCeSessionDetailElement extends Components.CeSessionDetail, HTMLStencilElement {
-    }
-    var HTMLCeSessionDetailElement: {
-        prototype: HTMLCeSessionDetailElement;
-        new (): HTMLCeSessionDetailElement;
     };
     interface HTMLCeSessionProviderElement extends Components.CeSessionProvider, HTMLStencilElement {
     }
@@ -2638,6 +2740,7 @@ declare global {
         "ce-breadcrumb": HTMLCeBreadcrumbElement;
         "ce-breadcrumbs": HTMLCeBreadcrumbsElement;
         "ce-button": HTMLCeButtonElement;
+        "ce-button-group": HTMLCeButtonGroupElement;
         "ce-card": HTMLCeCardElement;
         "ce-cc-logo": HTMLCeCcLogoElement;
         "ce-charges-list": HTMLCeChargesListElement;
@@ -2653,8 +2756,11 @@ declare global {
         "ce-customer-edit": HTMLCeCustomerEditElement;
         "ce-customer-email": HTMLCeCustomerEmailElement;
         "ce-customer-name": HTMLCeCustomerNameElement;
+        "ce-dashboard-customer-details": HTMLCeDashboardCustomerDetailsElement;
+        "ce-dashboard-downloads-list": HTMLCeDashboardDownloadsListElement;
         "ce-dashboard-module": HTMLCeDashboardModuleElement;
         "ce-divider": HTMLCeDividerElement;
+        "ce-donation-choices": HTMLCeDonationChoicesElement;
         "ce-downloads-list": HTMLCeDownloadsListElement;
         "ce-dropdown": HTMLCeDropdownElement;
         "ce-empty": HTMLCeEmptyElement;
@@ -2684,9 +2790,11 @@ declare global {
         "ce-menu-item": HTMLCeMenuItemElement;
         "ce-menu-label": HTMLCeMenuLabelElement;
         "ce-order-confirmation": HTMLCeOrderConfirmationElement;
+        "ce-order-confirmation-customer": HTMLCeOrderConfirmationCustomerElement;
         "ce-order-confirmation-line-items": HTMLCeOrderConfirmationLineItemsElement;
         "ce-order-confirmation-totals": HTMLCeOrderConfirmationTotalsElement;
         "ce-order-coupon-form": HTMLCeOrderCouponFormElement;
+        "ce-order-detail": HTMLCeOrderDetailElement;
         "ce-order-password": HTMLCeOrderPasswordElement;
         "ce-order-shipping-address": HTMLCeOrderShippingAddressElement;
         "ce-order-status-badge": HTMLCeOrderStatusBadgeElement;
@@ -2702,14 +2810,12 @@ declare global {
         "ce-price-input": HTMLCePriceInputElement;
         "ce-product-line-item": HTMLCeProductLineItemElement;
         "ce-provider": HTMLCeProviderElement;
-        "ce-purchase": HTMLCePurchaseElement;
         "ce-quantity-select": HTMLCeQuantitySelectElement;
         "ce-radio": HTMLCeRadioElement;
         "ce-radio-group": HTMLCeRadioGroupElement;
         "ce-register-icon-library": HTMLCeRegisterIconLibraryElement;
         "ce-secure-notice": HTMLCeSecureNoticeElement;
         "ce-select": HTMLCeSelectElement;
-        "ce-session-detail": HTMLCeSessionDetailElement;
         "ce-session-provider": HTMLCeSessionProviderElement;
         "ce-skeleton": HTMLCeSkeletonElement;
         "ce-spacing": HTMLCeSpacingElement;
@@ -2899,6 +3005,10 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
+    interface CeButtonGroup {
+        "label"?: string;
+        "separate"?: boolean;
+    }
     interface CeCard {
         /**
           * Is this card borderless.
@@ -3070,6 +3180,10 @@ declare namespace LocalJSX {
          */
         "showPrice"?: boolean;
         /**
+          * The size.
+         */
+        "size"?: 'small' | 'medium' | 'large';
+        /**
           * The choice name attribute
          */
         "type"?: 'radio' | 'checkbox';
@@ -3079,6 +3193,7 @@ declare namespace LocalJSX {
         "value"?: string;
     }
     interface CeChoices {
+        "autoWidth"?: boolean;
         /**
           * Number of columns on desktop
          */
@@ -3167,8 +3282,11 @@ declare namespace LocalJSX {
         "onCeApplyCoupon"?: (event: CustomEvent<string>) => void;
     }
     interface CeCustomerDetails {
-        "customerId"?: string;
+        "customer"?: Customer;
+        "editLink"?: string;
+        "error"?: string;
         "heading"?: string;
+        "loading"?: boolean;
     }
     interface CeCustomerEdit {
         "customer"?: Customer;
@@ -3350,16 +3468,13 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
-    interface CeDashboardModule {
-        "error"?: string;
+    interface CeDashboardCustomerDetails {
+        "customerId"?: string;
         "heading"?: string;
     }
-    interface CeDivider {
-    }
-    interface CeDownloadsList {
+    interface CeDashboardDownloadsList {
         "allLink"?: string;
         "heading"?: string;
-        "nonce"?: string;
         /**
           * Customer id to fetch subscriptions
          */
@@ -3367,6 +3482,54 @@ declare namespace LocalJSX {
     page: number;
     per_page: number;
   };
+        "requestNonce"?: string;
+    }
+    interface CeDashboardModule {
+        "error"?: string;
+        "heading"?: string;
+    }
+    interface CeDivider {
+    }
+    interface CeDonationChoices {
+        "busy"?: boolean;
+        /**
+          * The label for the field.
+         */
+        "label"?: string;
+        /**
+          * Order line items.
+         */
+        "lineItems"?: LineItem[];
+        /**
+          * Is this loading
+         */
+        "loading"?: boolean;
+        /**
+          * Toggle line item event
+         */
+        "onCeAddLineItem"?: (event: CustomEvent<LineItemData>) => void;
+        /**
+          * Toggle line item event
+         */
+        "onCeRemoveLineItem"?: (event: CustomEvent<LineItemData>) => void;
+        /**
+          * Toggle line item event
+         */
+        "onCeUpdateLineItem"?: (event: CustomEvent<LineItemData>) => void;
+        /**
+          * The price id for the fields.
+         */
+        "priceId"?: string;
+        "removeInvalid"?: boolean;
+    }
+    interface CeDownloadsList {
+        "allLink"?: string;
+        "busy"?: boolean;
+        "error"?: string;
+        "heading"?: string;
+        "loading"?: boolean;
+        "purchases"?: Array<Purchase>;
+        "requestNonce"?: string;
     }
     interface CeDropdown {
         "clickEl"?: HTMLElement;
@@ -3420,9 +3583,13 @@ declare namespace LocalJSX {
          */
         "onCeFormChange"?: (event: CustomEvent<Object>) => void;
         /**
-          * Emitted when the form is submitted. This event will not be emitted if any form control inside of it is in an invalid state, unless the form has the `novalidate` attribute. Note that there is never a need to prevent this event, since it doen't send a GET or POST request like native forms. To "prevent" submission, use a conditional around the XHR request you use to submit the form's data with.
+          * Backwards compat.
          */
         "onCeFormSubmit"?: (event: CustomEvent<void>) => void;
+        /**
+          * Emitted when the form is submitted. This event will not be emitted if any form control inside of it is in an invalid state, unless the form has the `novalidate` attribute. Note that there is never a need to prevent this event, since it doen't send a GET or POST request like native forms. To "prevent" submission, use a conditional around the XHR request you use to submit the form's data with.
+         */
+        "onCeSubmit"?: (event: CustomEvent<void>) => void;
     }
     interface CeFormComponentsValidator {
         "disabled"?: boolean;
@@ -3867,6 +4034,28 @@ declare namespace LocalJSX {
     interface CeOrderConfirmation {
         "order"?: Order;
     }
+    interface CeOrderConfirmationCustomer {
+        /**
+          * The customer
+         */
+        "customer"?: Customer;
+        /**
+          * Error message.
+         */
+        "error"?: string;
+        /**
+          * The heading
+         */
+        "heading"?: string;
+        /**
+          * Is this loading?
+         */
+        "loading"?: boolean;
+        /**
+          * The Order
+         */
+        "order"?: Order;
+    }
     interface CeOrderConfirmationLineItems {
         "loading"?: boolean;
         "order"?: Order;
@@ -3882,6 +4071,14 @@ declare namespace LocalJSX {
         "loading"?: boolean;
         "onCeApplyCoupon"?: (event: CustomEvent<string>) => void;
         "order"?: Order;
+    }
+    interface CeOrderDetail {
+        "fallback"?: string;
+        "label"?: string;
+        "loading"?: boolean;
+        "metaKey"?: string;
+        "order"?: Order;
+        "value"?: string;
     }
     interface CeOrderPassword {
         /**
@@ -4301,8 +4498,6 @@ declare namespace LocalJSX {
         "STENCIL_CONTEXT"?: { [key: string]: any };
         "onMountConsumer"?: (event: CustomEvent<any>) => void;
     }
-    interface CePurchase {
-    }
     interface CeQuantitySelect {
         "clickEl"?: HTMLElement;
         "max"?: number;
@@ -4439,14 +4634,6 @@ declare namespace LocalJSX {
         /**
           * The input's value attribute.
          */
-        "value"?: string;
-    }
-    interface CeSessionDetail {
-        "fallback"?: string;
-        "label"?: string;
-        "loading"?: boolean;
-        "metaKey"?: string;
-        "order"?: Order;
         "value"?: string;
     }
     interface CeSessionProvider {
@@ -4887,6 +5074,7 @@ declare namespace LocalJSX {
         "ce-breadcrumb": CeBreadcrumb;
         "ce-breadcrumbs": CeBreadcrumbs;
         "ce-button": CeButton;
+        "ce-button-group": CeButtonGroup;
         "ce-card": CeCard;
         "ce-cc-logo": CeCcLogo;
         "ce-charges-list": CeChargesList;
@@ -4902,8 +5090,11 @@ declare namespace LocalJSX {
         "ce-customer-edit": CeCustomerEdit;
         "ce-customer-email": CeCustomerEmail;
         "ce-customer-name": CeCustomerName;
+        "ce-dashboard-customer-details": CeDashboardCustomerDetails;
+        "ce-dashboard-downloads-list": CeDashboardDownloadsList;
         "ce-dashboard-module": CeDashboardModule;
         "ce-divider": CeDivider;
+        "ce-donation-choices": CeDonationChoices;
         "ce-downloads-list": CeDownloadsList;
         "ce-dropdown": CeDropdown;
         "ce-empty": CeEmpty;
@@ -4933,9 +5124,11 @@ declare namespace LocalJSX {
         "ce-menu-item": CeMenuItem;
         "ce-menu-label": CeMenuLabel;
         "ce-order-confirmation": CeOrderConfirmation;
+        "ce-order-confirmation-customer": CeOrderConfirmationCustomer;
         "ce-order-confirmation-line-items": CeOrderConfirmationLineItems;
         "ce-order-confirmation-totals": CeOrderConfirmationTotals;
         "ce-order-coupon-form": CeOrderCouponForm;
+        "ce-order-detail": CeOrderDetail;
         "ce-order-password": CeOrderPassword;
         "ce-order-shipping-address": CeOrderShippingAddress;
         "ce-order-status-badge": CeOrderStatusBadge;
@@ -4951,14 +5144,12 @@ declare namespace LocalJSX {
         "ce-price-input": CePriceInput;
         "ce-product-line-item": CeProductLineItem;
         "ce-provider": CeProvider;
-        "ce-purchase": CePurchase;
         "ce-quantity-select": CeQuantitySelect;
         "ce-radio": CeRadio;
         "ce-radio-group": CeRadioGroup;
         "ce-register-icon-library": CeRegisterIconLibrary;
         "ce-secure-notice": CeSecureNotice;
         "ce-select": CeSelect;
-        "ce-session-detail": CeSessionDetail;
         "ce-session-provider": CeSessionProvider;
         "ce-skeleton": CeSkeleton;
         "ce-spacing": CeSpacing;
@@ -5005,6 +5196,7 @@ declare module "@stencil/core" {
             "ce-breadcrumb": LocalJSX.CeBreadcrumb & JSXBase.HTMLAttributes<HTMLCeBreadcrumbElement>;
             "ce-breadcrumbs": LocalJSX.CeBreadcrumbs & JSXBase.HTMLAttributes<HTMLCeBreadcrumbsElement>;
             "ce-button": LocalJSX.CeButton & JSXBase.HTMLAttributes<HTMLCeButtonElement>;
+            "ce-button-group": LocalJSX.CeButtonGroup & JSXBase.HTMLAttributes<HTMLCeButtonGroupElement>;
             "ce-card": LocalJSX.CeCard & JSXBase.HTMLAttributes<HTMLCeCardElement>;
             "ce-cc-logo": LocalJSX.CeCcLogo & JSXBase.HTMLAttributes<HTMLCeCcLogoElement>;
             "ce-charges-list": LocalJSX.CeChargesList & JSXBase.HTMLAttributes<HTMLCeChargesListElement>;
@@ -5020,8 +5212,11 @@ declare module "@stencil/core" {
             "ce-customer-edit": LocalJSX.CeCustomerEdit & JSXBase.HTMLAttributes<HTMLCeCustomerEditElement>;
             "ce-customer-email": LocalJSX.CeCustomerEmail & JSXBase.HTMLAttributes<HTMLCeCustomerEmailElement>;
             "ce-customer-name": LocalJSX.CeCustomerName & JSXBase.HTMLAttributes<HTMLCeCustomerNameElement>;
+            "ce-dashboard-customer-details": LocalJSX.CeDashboardCustomerDetails & JSXBase.HTMLAttributes<HTMLCeDashboardCustomerDetailsElement>;
+            "ce-dashboard-downloads-list": LocalJSX.CeDashboardDownloadsList & JSXBase.HTMLAttributes<HTMLCeDashboardDownloadsListElement>;
             "ce-dashboard-module": LocalJSX.CeDashboardModule & JSXBase.HTMLAttributes<HTMLCeDashboardModuleElement>;
             "ce-divider": LocalJSX.CeDivider & JSXBase.HTMLAttributes<HTMLCeDividerElement>;
+            "ce-donation-choices": LocalJSX.CeDonationChoices & JSXBase.HTMLAttributes<HTMLCeDonationChoicesElement>;
             "ce-downloads-list": LocalJSX.CeDownloadsList & JSXBase.HTMLAttributes<HTMLCeDownloadsListElement>;
             "ce-dropdown": LocalJSX.CeDropdown & JSXBase.HTMLAttributes<HTMLCeDropdownElement>;
             "ce-empty": LocalJSX.CeEmpty & JSXBase.HTMLAttributes<HTMLCeEmptyElement>;
@@ -5051,9 +5246,11 @@ declare module "@stencil/core" {
             "ce-menu-item": LocalJSX.CeMenuItem & JSXBase.HTMLAttributes<HTMLCeMenuItemElement>;
             "ce-menu-label": LocalJSX.CeMenuLabel & JSXBase.HTMLAttributes<HTMLCeMenuLabelElement>;
             "ce-order-confirmation": LocalJSX.CeOrderConfirmation & JSXBase.HTMLAttributes<HTMLCeOrderConfirmationElement>;
+            "ce-order-confirmation-customer": LocalJSX.CeOrderConfirmationCustomer & JSXBase.HTMLAttributes<HTMLCeOrderConfirmationCustomerElement>;
             "ce-order-confirmation-line-items": LocalJSX.CeOrderConfirmationLineItems & JSXBase.HTMLAttributes<HTMLCeOrderConfirmationLineItemsElement>;
             "ce-order-confirmation-totals": LocalJSX.CeOrderConfirmationTotals & JSXBase.HTMLAttributes<HTMLCeOrderConfirmationTotalsElement>;
             "ce-order-coupon-form": LocalJSX.CeOrderCouponForm & JSXBase.HTMLAttributes<HTMLCeOrderCouponFormElement>;
+            "ce-order-detail": LocalJSX.CeOrderDetail & JSXBase.HTMLAttributes<HTMLCeOrderDetailElement>;
             "ce-order-password": LocalJSX.CeOrderPassword & JSXBase.HTMLAttributes<HTMLCeOrderPasswordElement>;
             "ce-order-shipping-address": LocalJSX.CeOrderShippingAddress & JSXBase.HTMLAttributes<HTMLCeOrderShippingAddressElement>;
             "ce-order-status-badge": LocalJSX.CeOrderStatusBadge & JSXBase.HTMLAttributes<HTMLCeOrderStatusBadgeElement>;
@@ -5069,14 +5266,12 @@ declare module "@stencil/core" {
             "ce-price-input": LocalJSX.CePriceInput & JSXBase.HTMLAttributes<HTMLCePriceInputElement>;
             "ce-product-line-item": LocalJSX.CeProductLineItem & JSXBase.HTMLAttributes<HTMLCeProductLineItemElement>;
             "ce-provider": LocalJSX.CeProvider & JSXBase.HTMLAttributes<HTMLCeProviderElement>;
-            "ce-purchase": LocalJSX.CePurchase & JSXBase.HTMLAttributes<HTMLCePurchaseElement>;
             "ce-quantity-select": LocalJSX.CeQuantitySelect & JSXBase.HTMLAttributes<HTMLCeQuantitySelectElement>;
             "ce-radio": LocalJSX.CeRadio & JSXBase.HTMLAttributes<HTMLCeRadioElement>;
             "ce-radio-group": LocalJSX.CeRadioGroup & JSXBase.HTMLAttributes<HTMLCeRadioGroupElement>;
             "ce-register-icon-library": LocalJSX.CeRegisterIconLibrary & JSXBase.HTMLAttributes<HTMLCeRegisterIconLibraryElement>;
             "ce-secure-notice": LocalJSX.CeSecureNotice & JSXBase.HTMLAttributes<HTMLCeSecureNoticeElement>;
             "ce-select": LocalJSX.CeSelect & JSXBase.HTMLAttributes<HTMLCeSelectElement>;
-            "ce-session-detail": LocalJSX.CeSessionDetail & JSXBase.HTMLAttributes<HTMLCeSessionDetailElement>;
             "ce-session-provider": LocalJSX.CeSessionProvider & JSXBase.HTMLAttributes<HTMLCeSessionProviderElement>;
             "ce-skeleton": LocalJSX.CeSkeleton & JSXBase.HTMLAttributes<HTMLCeSkeletonElement>;
             "ce-spacing": LocalJSX.CeSpacing & JSXBase.HTMLAttributes<HTMLCeSpacingElement>;

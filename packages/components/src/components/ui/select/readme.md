@@ -46,6 +46,16 @@
 
 ## Methods
 
+### `reportValidity() => Promise<boolean>`
+
+
+
+#### Returns
+
+Type: `Promise<boolean>`
+
+
+
 ### `setCustomValidity(message: string) => Promise<void>`
 
 Sets a custom validation message. If `message` is not empty, the field will be considered invalid.

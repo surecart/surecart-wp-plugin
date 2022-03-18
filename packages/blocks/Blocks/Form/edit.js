@@ -324,7 +324,7 @@ export default function edit({ clientId, attributes, setAttributes }) {
 							css={css`
 								*
 									> *
-									> .wp-block:not(ce-columns):not(ce-column):not(:last-child) {
+									> .wp-block:not(ce-columns):not(ce-choice):not(ce-column):not(:last-child) {
 									margin-bottom: ${gap} !important;
 								}
 							`}

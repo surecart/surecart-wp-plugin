@@ -18,6 +18,11 @@ export class CEForm {
    * this event, since it doen't send a GET or POST request like native forms. To "prevent" submission, use a conditional
    * around the XHR request you use to submit the form's data with.
    */
+  @Event() ceSubmit: EventEmitter<void>;
+
+  /**
+   * Backwards compat.
+   */
   @Event() ceFormSubmit: EventEmitter<void>;
 
   /**
@@ -49,13 +54,45 @@ export class CEForm {
     return this.formElement.submit();
   }
 
+  // private controls = ['button', 'fieldset', 'input', 'keygen', 'label', 'meter', 'output', 'progress', 'select', 'textarea', 'ce-button', 'ce-price-input', 'ce-input'];
+
+  /** Gets all form control elements (native and custom). */
+  getFormControls() {
+    return [...this.form.querySelectorAll('*')] as HTMLElement[];
+    // return ([...this.form.querySelectorAll('*')] as HTMLElement[]).filter((el: HTMLElement) => this.controls.includes(el.tagName.toLowerCase())) as HTMLElement[];
+  }
+
+  @Method('validate')
+  async validate() {
+    const formControls = this.getFormControls();
+    const formControlsThatReport = formControls.filter((el: any) => typeof el.reportValidity === 'function') as any;
+
+    if (!this.novalidate) {
+      for (const el of formControlsThatReport) {
+        const isValid = await el.reportValidity();
+
+        if (!isValid) {
+          return false;
+        }
+      }
+    }
+
+    return true;
+  }
+
   render() {
     return (
       <div part="base" class="form" role="form">
         <form
           ref={el => (this.formElement = el as HTMLFormElement)}
           onSubmit={async e => {
+            console.log(e);
             e.preventDefault();
+            const isValid = await this.validate();
+            if (!isValid) {
+              return false;
+            }
+            this.ceSubmit.emit();
             this.ceFormSubmit.emit();
           }}
           novalidate={this.novalidate}

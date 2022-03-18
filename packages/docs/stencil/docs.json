@@ -1,9 +1,9 @@
 {
-  "timestamp": "2022-03-17T14:35:23",
+  "timestamp": "2022-03-18T21:53:10",
   "compiler": {
     "name": "@stencil/core",
-    "version": "2.4.0",
-    "typescriptVersion": "4.1.3"
+    "version": "2.14.2",
+    "typescriptVersion": "4.5.4"
   },
   "components": [
     {
@@ -17,7 +17,7 @@
       "props": [
         {
           "name": "address",
-          "type": "{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: string | number | symbol) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: string | number | symbol) => boolean; }",
+          "type": "{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
           "mutable": true,
           "reflectToAttr": false,
           "docs": "The address.",
@@ -25,19 +25,7 @@
           "default": "{\n    country: '',\n    city: '',\n    line_1: '',\n    line_2: '',\n    postal_code: '',\n    state: '',\n  }",
           "values": [
             {
-              "type": "{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: string"
-            },
-            {
-              "type": "number"
-            },
-            {
-              "type": "symbol) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: string"
-            },
-            {
-              "type": "number"
-            },
-            {
-              "type": "symbol) => boolean; }"
+              "type": "{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }"
             }
           ],
           "optional": false,
@@ -78,7 +66,7 @@
         },
         {
           "name": "names",
-          "type": "{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: string | number | symbol) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: string | number | symbol) => boolean; }",
+          "type": "{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
           "mutable": false,
           "reflectToAttr": false,
           "docs": "",
@@ -86,19 +74,7 @@
           "default": "{\n    country: 'shipping_country',\n    city: 'shipping_country',\n    line_1: 'shipping_line_1',\n    line_2: 'shipping_line_2',\n    postal_code: 'shipping_postal_code',\n    state: 'shipping_state',\n  }",
           "values": [
             {
-              "type": "{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: string"
-            },
-            {
-              "type": "number"
-            },
-            {
-              "type": "symbol) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: string"
-            },
-            {
-              "type": "number"
-            },
-            {
-              "type": "symbol) => boolean; }"
+              "type": "{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }"
             }
           ],
           "optional": false,
@@ -126,7 +102,7 @@
       "events": [
         {
           "event": "ceChangeAddress",
-          "detail": "{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: string | number | symbol) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: string | number | symbol) => boolean; }",
+          "detail": "{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
           "bubbles": true,
           "cancelable": true,
           "composed": true,
@@ -573,13 +549,13 @@
         "ce-checkout",
         "ce-coupon-form",
         "ce-customer-edit",
+        "ce-donation-choices",
         "ce-downloads-list",
         "ce-invoices-list",
         "ce-login-form",
         "ce-orders-list",
         "ce-payment-method-create",
         "ce-payment-methods-list",
-        "ce-purchase",
         "ce-subscription",
         "ce-subscription-cancel",
         "ce-subscription-payment",
@@ -609,6 +585,9 @@
         "ce-customer-edit": [
           "ce-block-ui"
         ],
+        "ce-donation-choices": [
+          "ce-block-ui"
+        ],
         "ce-downloads-list": [
           "ce-block-ui"
         ],
@@ -625,9 +604,6 @@
           "ce-block-ui"
         ],
         "ce-payment-methods-list": [
-          "ce-block-ui"
-        ],
-        "ce-purchase": [
           "ce-block-ui"
         ],
         "ce-subscription": [
@@ -1284,6 +1260,63 @@
       }
     },
     {
+      "filePath": "./src/components/ui/ce-button-group/ce-button-group.tsx",
+      "encapsulation": "shadow",
+      "tag": "ce-button-group",
+      "readme": "# ce-button-group\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "label",
+          "type": "string",
+          "mutable": false,
+          "attr": "label",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "separate",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "separate",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [
+        {
+          "name": "base",
+          "docs": ""
+        }
+      ],
+      "dependents": [],
+      "dependencies": [],
+      "dependencyGraph": {}
+    },
+    {
       "filePath": "./src/components/ui/card/ce-card.tsx",
       "encapsulation": "shadow",
       "tag": "ce-card",
@@ -1865,7 +1898,7 @@
       "dependencyGraph": {}
     },
     {
-      "filePath": "./src/components/controllers/checkout/ce-checkout.tsx",
+      "filePath": "./src/components/controllers/checkout-form/checkout/ce-checkout.tsx",
       "encapsulation": "none",
       "tag": "ce-checkout",
       "readme": "# ce-checkout\n\n\n",
@@ -2310,6 +2343,32 @@
           "required": false
         },
         {
+          "name": "size",
+          "type": "\"large\" | \"medium\" | \"small\"",
+          "mutable": false,
+          "attr": "size",
+          "reflectToAttr": false,
+          "docs": "The size.",
+          "docsTags": [],
+          "default": "'medium'",
+          "values": [
+            {
+              "value": "large",
+              "type": "string"
+            },
+            {
+              "value": "medium",
+              "type": "string"
+            },
+            {
+              "value": "small",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "type",
           "type": "\"checkbox\" | \"radio\"",
           "mutable": false,
@@ -2349,6 +2408,17 @@
         }
       ],
       "methods": [
+        {
+          "name": "reportValidity",
+          "returns": {
+            "type": "Promise<boolean>",
+            "docs": ""
+          },
+          "signature": "reportValidity() => Promise<boolean>",
+          "parameters": [],
+          "docs": "Checks for validity and shows the browser's validation message if the control is invalid.",
+          "docsTags": []
+        },
         {
           "name": "setCustomValidity",
           "returns": {
@@ -2457,6 +2527,22 @@
       "docsTags": [],
       "usage": {},
       "props": [
+        {
+          "name": "autoWidth",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "auto-width",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
         {
           "name": "columns",
           "type": "number",
@@ -2619,6 +2705,7 @@
         }
       ],
       "dependents": [
+        "ce-donation-choices",
         "ce-price-choices",
         "ce-subscription-payment",
         "ce-subscription-switch"
@@ -2632,6 +2719,9 @@
         ],
         "ce-form-control": [
           "ce-tooltip"
+        ],
+        "ce-donation-choices": [
+          "ce-choices"
         ],
         "ce-price-choices": [
           "ce-choices"
@@ -2983,7 +3073,7 @@
       }
     },
     {
-      "filePath": "./src/components/controllers/dashboard/customer-details/ce-customer-details.tsx",
+      "filePath": "./src/components/ui/customer-details/ce-customer-details.tsx",
       "encapsulation": "shadow",
       "tag": "ce-customer-details",
       "readme": "# ce-customer-details\n\n\n",
@@ -2992,10 +3082,41 @@
       "usage": {},
       "props": [
         {
-          "name": "customerId",
+          "name": "customer",
+          "type": "Customer",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Customer"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "editLink",
           "type": "string",
           "mutable": false,
-          "attr": "customer-id",
+          "attr": "edit-link",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "error",
+          "type": "string",
+          "mutable": false,
+          "attr": "error",
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
@@ -3022,6 +3143,22 @@
           ],
           "optional": false,
           "required": false
+        },
+        {
+          "name": "loading",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "loading",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
         }
       ],
       "methods": [],
@@ -3030,7 +3167,10 @@
       "styles": [],
       "slots": [],
       "parts": [],
-      "dependents": [],
+      "dependents": [
+        "ce-dashboard-customer-details",
+        "ce-order-confirmation-customer"
+      ],
       "dependencies": [
         "ce-stacked-list-row",
         "ce-tag",
@@ -3060,6 +3200,12 @@
         ],
         "ce-button": [
           "ce-spinner"
+        ],
+        "ce-dashboard-customer-details": [
+          "ce-customer-details"
+        ],
+        "ce-order-confirmation-customer": [
+          "ce-customer-details"
         ]
       }
     },
@@ -3199,7 +3345,7 @@
       }
     },
     {
-      "filePath": "./src/components/controllers/customer-email/ce-customer-email.tsx",
+      "filePath": "./src/components/controllers/checkout-form/customer-email/ce-customer-email.tsx",
       "encapsulation": "none",
       "tag": "ce-customer-email",
       "readme": "# ce-email\n\n\n",
@@ -3558,7 +3704,7 @@
       }
     },
     {
-      "filePath": "./src/components/controllers/customer-name/ce-customer-name.tsx",
+      "filePath": "./src/components/controllers/checkout-form/customer-name/ce-customer-name.tsx",
       "encapsulation": "none",
       "tag": "ce-customer-name",
       "readme": "# ce-customer-name\n\n\n",
@@ -3897,7 +4043,7 @@
         },
         {
           "event": "ceUpdateOrderState",
-          "detail": "{ id?: string; status?: \"finalized\" | \"draft\" | \"paid\"; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; email?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; tax_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; line_items?: lineItems; metadata?: Object; payment_intent?: PaymentIntent; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_address?: string | Address; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: string | number | symbol) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: string | number | symbol) => boolean; }",
+          "detail": "{ id?: string; status?: \"finalized\" | \"draft\" | \"paid\"; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; email?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; tax_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; line_items?: lineItems; metadata?: Object; payment_intent?: PaymentIntent; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_address?: string | Address; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
           "bubbles": true,
           "cancelable": true,
           "composed": true,
@@ -3922,6 +4068,203 @@
         ],
         "ce-form-control": [
           "ce-tooltip"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/controllers/dashboard/customer-details/ce-dashboard-customer-details.tsx",
+      "encapsulation": "shadow",
+      "tag": "ce-dashboard-customer-details",
+      "readme": "# ce-customer-details\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "customerId",
+          "type": "string",
+          "mutable": false,
+          "attr": "customer-id",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "heading",
+          "type": "string",
+          "mutable": false,
+          "attr": "heading",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "ce-customer-details"
+      ],
+      "dependencyGraph": {
+        "ce-dashboard-customer-details": [
+          "ce-customer-details"
+        ],
+        "ce-customer-details": [
+          "ce-stacked-list-row",
+          "ce-tag",
+          "ce-skeleton",
+          "ce-dashboard-module",
+          "ce-button",
+          "ce-icon",
+          "ce-card",
+          "ce-stacked-list"
+        ],
+        "ce-dashboard-module": [
+          "ce-alert"
+        ],
+        "ce-alert": [
+          "ce-icon"
+        ],
+        "ce-button": [
+          "ce-spinner"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/controllers/dashboard/dashboard-downloads-list/ce-dashboard-downloads-list.tsx",
+      "encapsulation": "shadow",
+      "tag": "ce-dashboard-downloads-list",
+      "readme": "# ce-customer-subscriptions-list\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "allLink",
+          "type": "string",
+          "mutable": false,
+          "attr": "all-link",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "heading",
+          "type": "string",
+          "mutable": false,
+          "attr": "heading",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "query",
+          "type": "{ page: number; per_page: number; }",
+          "mutable": true,
+          "reflectToAttr": false,
+          "docs": "Customer id to fetch subscriptions",
+          "docsTags": [],
+          "default": "{\n    page: 1,\n    per_page: 10,\n  }",
+          "values": [
+            {
+              "type": "{ page: number; per_page: number; }"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "requestNonce",
+          "type": "string",
+          "mutable": false,
+          "attr": "request-nonce",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "ce-downloads-list",
+        "ce-pagination"
+      ],
+      "dependencyGraph": {
+        "ce-dashboard-downloads-list": [
+          "ce-downloads-list",
+          "ce-pagination"
+        ],
+        "ce-downloads-list": [
+          "ce-card",
+          "ce-stacked-list",
+          "ce-stacked-list-row",
+          "ce-skeleton",
+          "ce-spacing",
+          "ce-format-bytes",
+          "ce-icon",
+          "ce-dashboard-module",
+          "ce-button",
+          "ce-block-ui"
+        ],
+        "ce-dashboard-module": [
+          "ce-alert"
+        ],
+        "ce-alert": [
+          "ce-icon"
+        ],
+        "ce-button": [
+          "ce-spinner"
+        ],
+        "ce-block-ui": [
+          "ce-spinner"
+        ],
+        "ce-pagination": [
+          "ce-flex",
+          "ce-button"
         ]
       }
     },
@@ -4131,7 +4474,197 @@
       }
     },
     {
-      "filePath": "./src/components/controllers/dashboard/downloads-list/ce-downloads-list.tsx",
+      "filePath": "./src/components/controllers/checkout-form/ce-donation-choices/ce-donation-choices.tsx",
+      "encapsulation": "shadow",
+      "tag": "ce-donation-choices",
+      "readme": "# ce-donation-choices\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "busy",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "busy",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "label",
+          "type": "string",
+          "mutable": false,
+          "attr": "label",
+          "reflectToAttr": false,
+          "docs": "The label for the field.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "lineItems",
+          "type": "LineItem[]",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "Order line items.",
+          "docsTags": [],
+          "default": "[]",
+          "values": [
+            {
+              "type": "LineItem[]"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "loading",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "loading",
+          "reflectToAttr": false,
+          "docs": "Is this loading",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "priceId",
+          "type": "string",
+          "mutable": false,
+          "attr": "price-id",
+          "reflectToAttr": false,
+          "docs": "The price id for the fields.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "removeInvalid",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "remove-invalid",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [
+        {
+          "name": "reportValidity",
+          "returns": {
+            "type": "Promise<boolean>",
+            "docs": ""
+          },
+          "signature": "reportValidity() => Promise<boolean>",
+          "parameters": [],
+          "docs": "",
+          "docsTags": []
+        }
+      ],
+      "events": [
+        {
+          "event": "ceAddLineItem",
+          "detail": "LineItemData",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Toggle line item event",
+          "docsTags": []
+        },
+        {
+          "event": "ceRemoveLineItem",
+          "detail": "LineItemData",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Toggle line item event",
+          "docsTags": []
+        },
+        {
+          "event": "ceUpdateLineItem",
+          "detail": "LineItemData",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Toggle line item event",
+          "docsTags": []
+        }
+      ],
+      "listeners": [
+        {
+          "event": "ceChange",
+          "capture": false,
+          "passive": false
+        }
+      ],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "ce-skeleton",
+        "ce-choices",
+        "ce-price-input",
+        "ce-block-ui"
+      ],
+      "dependencyGraph": {
+        "ce-donation-choices": [
+          "ce-skeleton",
+          "ce-choices",
+          "ce-price-input",
+          "ce-block-ui"
+        ],
+        "ce-choices": [
+          "ce-form-control"
+        ],
+        "ce-form-control": [
+          "ce-tooltip"
+        ],
+        "ce-price-input": [
+          "ce-input"
+        ],
+        "ce-input": [
+          "ce-form-control"
+        ],
+        "ce-block-ui": [
+          "ce-spinner"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/ui/downloads-list/ce-downloads-list.tsx",
       "encapsulation": "shadow",
       "tag": "ce-downloads-list",
       "readme": "# ce-customer-subscriptions-list\n\n\n",
@@ -4144,6 +4677,38 @@
           "type": "string",
           "mutable": false,
           "attr": "all-link",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "busy",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "busy",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "error",
+          "type": "string",
+          "mutable": false,
+          "attr": "error",
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
@@ -4172,16 +4737,48 @@
           "required": false
         },
         {
-          "name": "query",
-          "type": "{ page: number; per_page: number; }",
-          "mutable": true,
+          "name": "loading",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "loading",
           "reflectToAttr": false,
-          "docs": "Customer id to fetch subscriptions",
+          "docs": "",
           "docsTags": [],
-          "default": "{\n    page: 1,\n    per_page: 10,\n  }",
           "values": [
             {
-              "type": "{ page: number; per_page: number; }"
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "purchases",
+          "type": "Purchase[]",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "[]",
+          "values": [
+            {
+              "type": "Purchase[]"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "requestNonce",
+          "type": "string",
+          "mutable": false,
+          "attr": "request-nonce",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
             }
           ],
           "optional": false,
@@ -4194,7 +4791,9 @@
       "styles": [],
       "slots": [],
       "parts": [],
-      "dependents": [],
+      "dependents": [
+        "ce-dashboard-downloads-list"
+      ],
       "dependencies": [
         "ce-card",
         "ce-stacked-list",
@@ -4205,7 +4804,6 @@
         "ce-icon",
         "ce-dashboard-module",
         "ce-button",
-        "ce-pagination",
         "ce-block-ui"
       ],
       "dependencyGraph": {
@@ -4219,7 +4817,6 @@
           "ce-icon",
           "ce-dashboard-module",
           "ce-button",
-          "ce-pagination",
           "ce-block-ui"
         ],
         "ce-dashboard-module": [
@@ -4231,12 +4828,11 @@
         "ce-button": [
           "ce-spinner"
         ],
-        "ce-pagination": [
-          "ce-flex",
-          "ce-button"
-        ],
         "ce-block-ui": [
           "ce-spinner"
+        ],
+        "ce-dashboard-downloads-list": [
+          "ce-downloads-list"
         ]
       }
     },
@@ -4460,7 +5056,7 @@
       }
     },
     {
-      "filePath": "./src/components/controllers/express-payment/ce-express-payment.tsx",
+      "filePath": "./src/components/controllers/checkout-form/express-payment/ce-express-payment.tsx",
       "encapsulation": "none",
       "tag": "ce-express-payment",
       "readme": "# ce-payment-request\n\n\n",
@@ -4740,6 +5336,17 @@
           "parameters": [],
           "docs": "",
           "docsTags": []
+        },
+        {
+          "name": "validate",
+          "returns": {
+            "type": "Promise<boolean>",
+            "docs": ""
+          },
+          "signature": "validate() => Promise<boolean>",
+          "parameters": [],
+          "docs": "",
+          "docsTags": []
         }
       ],
       "events": [
@@ -4754,6 +5361,15 @@
         },
         {
           "event": "ceFormSubmit",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Backwards compat.",
+          "docsTags": []
+        },
+        {
+          "event": "ceSubmit",
           "detail": "void",
           "bubbles": true,
           "cancelable": true,
@@ -6016,10 +6632,10 @@
         "ce-line-item-tax",
         "ce-line-item-total",
         "ce-order-confirmation-totals",
+        "ce-order-detail",
         "ce-orders-list",
         "ce-price-choice",
         "ce-product-line-item",
-        "ce-session-detail",
         "ce-subscription-details",
         "ce-subscription-switch",
         "ce-total",
@@ -6045,6 +6661,9 @@
         "ce-order-confirmation-totals": [
           "ce-format-number"
         ],
+        "ce-order-detail": [
+          "ce-format-number"
+        ],
         "ce-orders-list": [
           "ce-format-number"
         ],
@@ -6052,9 +6671,6 @@
           "ce-format-number"
         ],
         "ce-product-line-item": [
-          "ce-format-number"
-        ],
-        "ce-session-detail": [
           "ce-format-number"
         ],
         "ce-subscription-details": [
@@ -6315,28 +6931,28 @@
       "docs": "",
       "docsTags": [
         {
-          "text": "base - The elements base wrapper.",
-          "name": "part"
+          "name": "part",
+          "text": "base - The elements base wrapper."
         },
         {
-          "text": "input - The html input element.",
-          "name": "part"
+          "name": "part",
+          "text": "input - The html input element."
         },
         {
-          "text": "base - The elements base wrapper.",
-          "name": "part"
+          "name": "part",
+          "text": "base - The elements base wrapper."
         },
         {
-          "text": "prefix - Used to prepend an icon or element to the input.",
-          "name": "part"
+          "name": "part",
+          "text": "prefix - Used to prepend an icon or element to the input."
         },
         {
-          "text": "suffix - Used to prepend an icon or element to the input.",
-          "name": "part"
+          "name": "part",
+          "text": "suffix - Used to prepend an icon or element to the input."
         },
         {
-          "text": "help-text - Help text that describes how to use the input.",
-          "name": "part"
+          "name": "part",
+          "text": "help-text - Help text that describes how to use the input."
         }
       ],
       "usage": {},
@@ -6954,6 +7570,17 @@
       ],
       "methods": [
         {
+          "name": "reportValidity",
+          "returns": {
+            "type": "Promise<boolean>",
+            "docs": ""
+          },
+          "signature": "reportValidity() => Promise<boolean>",
+          "parameters": [],
+          "docs": "",
+          "docsTags": []
+        },
+        {
           "name": "setCustomValidity",
           "returns": {
             "type": "Promise<void>",
@@ -7269,28 +7896,28 @@
       "docs": "",
       "docsTags": [
         {
-          "text": "image - Line item image",
-          "name": "slot"
+          "name": "slot",
+          "text": "image - Line item image"
         },
         {
-          "text": "title - Line item title.",
-          "name": "slot"
+          "name": "slot",
+          "text": "title - Line item title."
         },
         {
-          "text": "description - Line item description (below the title)",
-          "name": "slot"
+          "name": "slot",
+          "text": "description - Line item description (below the title)"
         },
         {
-          "text": "currency - Used for the 3 character currency code.",
-          "name": "slot"
+          "name": "slot",
+          "text": "currency - Used for the 3 character currency code."
         },
         {
-          "text": "price - Price amount, including currency sign.",
-          "name": "slot"
+          "name": "slot",
+          "text": "price - Price amount, including currency sign."
         },
         {
-          "text": "price-description - Description for the price (i.e. monthly)",
-          "name": "slot"
+          "name": "slot",
+          "text": "price-description - Description for the price (i.e. monthly)"
         }
       ],
       "usage": {},
@@ -7419,7 +8046,7 @@
       }
     },
     {
-      "filePath": "./src/components/controllers/line-item-tax/ce-line-item-tax.tsx",
+      "filePath": "./src/components/controllers/checkout-form/line-item-tax/ce-line-item-tax.tsx",
       "encapsulation": "shadow",
       "tag": "ce-line-item-tax",
       "readme": "# ce-line-item-tax\n\n\n",
@@ -7478,7 +8105,7 @@
       }
     },
     {
-      "filePath": "./src/components/controllers/line-item-total/ce-line-item-total.tsx",
+      "filePath": "./src/components/controllers/checkout-form/line-item-total/ce-line-item-total.tsx",
       "encapsulation": "shadow",
       "tag": "ce-line-item-total",
       "readme": "# ce-line-item-total\n\n\n",
@@ -7608,7 +8235,7 @@
       }
     },
     {
-      "filePath": "./src/components/controllers/line-items/ce-line-items.tsx",
+      "filePath": "./src/components/controllers/checkout-form/line-items/ce-line-items.tsx",
       "encapsulation": "shadow",
       "tag": "ce-line-items",
       "readme": "# ce-line-items\n\n\n",
@@ -8149,7 +8776,7 @@
       }
     },
     {
-      "filePath": "./src/components/controllers/order-confirmation/ce-order-confirmation.tsx",
+      "filePath": "./src/components/controllers/confirmation/order-confirmation/ce-order-confirmation.tsx",
       "encapsulation": "shadow",
       "tag": "ce-order-confirmation",
       "readme": "# ce-order-confirmation\n\n\n",
@@ -8190,7 +8817,130 @@
       }
     },
     {
-      "filePath": "./src/components/controllers/order-confirmation-line-items/ce-order-confirmation-line-items.tsx",
+      "filePath": "./src/components/controllers/confirmation/order-confirmation-customer/ce-order-confirmation-customer.tsx",
+      "encapsulation": "shadow",
+      "tag": "ce-order-confirmation-customer",
+      "readme": "# ce-order-confirmation-customer\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "customer",
+          "type": "Customer",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "The customer",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Customer"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "error",
+          "type": "string",
+          "mutable": false,
+          "attr": "error",
+          "reflectToAttr": false,
+          "docs": "Error message.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "heading",
+          "type": "string",
+          "mutable": false,
+          "attr": "heading",
+          "reflectToAttr": false,
+          "docs": "The heading",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "loading",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "loading",
+          "reflectToAttr": false,
+          "docs": "Is this loading?",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "order",
+          "type": "Order",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "The Order",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Order"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "ce-customer-details"
+      ],
+      "dependencyGraph": {
+        "ce-order-confirmation-customer": [
+          "ce-customer-details"
+        ],
+        "ce-customer-details": [
+          "ce-stacked-list-row",
+          "ce-tag",
+          "ce-skeleton",
+          "ce-dashboard-module",
+          "ce-button",
+          "ce-icon",
+          "ce-card",
+          "ce-stacked-list"
+        ],
+        "ce-dashboard-module": [
+          "ce-alert"
+        ],
+        "ce-alert": [
+          "ce-icon"
+        ],
+        "ce-button": [
+          "ce-spinner"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/controllers/confirmation/order-confirmation-line-items/ce-order-confirmation-line-items.tsx",
       "encapsulation": "shadow",
       "tag": "ce-order-confirmation-line-items",
       "readme": "# ce-order-confirmation-line-items\n\n\n",
@@ -8266,7 +9016,7 @@
       }
     },
     {
-      "filePath": "./src/components/controllers/order-confirmation-totals/ce-order-confirmation-totals.tsx",
+      "filePath": "./src/components/controllers/confirmation/order-confirmation-totals/ce-order-confirmation-totals.tsx",
       "encapsulation": "shadow",
       "tag": "ce-order-confirmation-totals",
       "readme": "# ce-order-confirmation-totals\n\n\n",
@@ -8324,7 +9074,7 @@
       }
     },
     {
-      "filePath": "./src/components/controllers/order-coupon-form/ce-order-coupon-form.tsx",
+      "filePath": "./src/components/controllers/checkout-form/order-coupon-form/ce-order-coupon-form.tsx",
       "encapsulation": "shadow",
       "tag": "ce-order-coupon-form",
       "readme": "# ce-coupon-form\n\n\n",
@@ -8480,7 +9230,143 @@
       }
     },
     {
-      "filePath": "./src/components/controllers/order-password/ce-order-password.tsx",
+      "filePath": "./src/components/controllers/confirmation/order-detail/ce-order-detail.tsx",
+      "encapsulation": "shadow",
+      "tag": "ce-order-detail",
+      "readme": "# ce-card\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "fallback",
+          "type": "string",
+          "mutable": false,
+          "attr": "fallback",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "label",
+          "type": "string",
+          "mutable": false,
+          "attr": "label",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "loading",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "loading",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "metaKey",
+          "type": "string",
+          "mutable": false,
+          "attr": "meta-key",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "order",
+          "type": "Order",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Order"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "mutable": false,
+          "attr": "value",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [
+        {
+          "name": "base",
+          "docs": ""
+        },
+        {
+          "name": "label",
+          "docs": ""
+        },
+        {
+          "name": "value",
+          "docs": ""
+        }
+      ],
+      "dependents": [],
+      "dependencies": [
+        "ce-format-number",
+        "ce-skeleton"
+      ],
+      "dependencyGraph": {
+        "ce-order-detail": [
+          "ce-format-number",
+          "ce-skeleton"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/controllers/checkout-form/order-password/ce-order-password.tsx",
       "encapsulation": "none",
       "tag": "ce-order-password",
       "readme": "# ce-email\n\n\n",
@@ -8721,7 +9607,7 @@
       }
     },
     {
-      "filePath": "./src/components/controllers/order-shipping-address/ce-order-shipping-address.tsx",
+      "filePath": "./src/components/controllers/checkout-form/order-shipping-address/ce-order-shipping-address.tsx",
       "encapsulation": "none",
       "tag": "ce-order-shipping-address",
       "readme": "# ce-order-shipping-address\n\n\n",
@@ -8854,7 +9740,7 @@
       "events": [
         {
           "event": "ceUpdateOrder",
-          "detail": "{ id?: string; status?: \"finalized\" | \"draft\" | \"paid\"; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; email?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; tax_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; line_items?: lineItems; metadata?: Object; payment_intent?: PaymentIntent; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_address?: string | Address; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: string | number | symbol) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: string | number | symbol) => boolean; }",
+          "detail": "{ id?: string; status?: \"finalized\" | \"draft\" | \"paid\"; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; email?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; tax_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; line_items?: lineItems; metadata?: Object; payment_intent?: PaymentIntent; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_address?: string | Address; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
           "bubbles": true,
           "cancelable": true,
           "composed": true,
@@ -9027,7 +9913,7 @@
       }
     },
     {
-      "filePath": "./src/components/controllers/order-summary/ce-order-summary.tsx",
+      "filePath": "./src/components/controllers/checkout-form/order-summary/ce-order-summary.tsx",
       "encapsulation": "shadow",
       "tag": "ce-order-summary",
       "readme": "# ce-order-summary\n\n\n",
@@ -9140,7 +10026,7 @@
       }
     },
     {
-      "filePath": "./src/components/controllers/order-tax-id-input/ce-order-tax-id-input.tsx",
+      "filePath": "./src/components/controllers/checkout-form/order-tax-id-input/ce-order-tax-id-input.tsx",
       "encapsulation": "none",
       "tag": "ce-order-tax-id-input",
       "readme": "# ce-tax-id-input\n\n\n",
@@ -9150,7 +10036,7 @@
       "props": [
         {
           "name": "order",
-          "type": "{ id?: string; status?: \"finalized\" | \"draft\" | \"paid\"; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; email?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; tax_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; line_items?: lineItems; metadata?: Object; payment_intent?: PaymentIntent; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_address?: string | Address; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: string | number | symbol) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: string | number | symbol) => boolean; }",
+          "type": "{ id?: string; status?: \"finalized\" | \"draft\" | \"paid\"; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; email?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; tax_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; line_items?: lineItems; metadata?: Object; payment_intent?: PaymentIntent; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_address?: string | Address; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
           "mutable": false,
           "reflectToAttr": false,
           "docs": "The order",
@@ -9187,19 +10073,7 @@
               "type": "Address; shipping_address?: string"
             },
             {
-              "type": "Address; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: string"
-            },
-            {
-              "type": "number"
-            },
-            {
-              "type": "symbol) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: string"
-            },
-            {
-              "type": "number"
-            },
-            {
-              "type": "symbol) => boolean; }"
+              "type": "Address; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }"
             }
           ],
           "optional": false,
@@ -9227,7 +10101,7 @@
       "events": [
         {
           "event": "ceUpdateOrder",
-          "detail": "{ id?: string; status?: \"finalized\" | \"draft\" | \"paid\"; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; email?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; tax_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; line_items?: lineItems; metadata?: Object; payment_intent?: PaymentIntent; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_address?: string | Address; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: string | number | symbol) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: string | number | symbol) => boolean; }",
+          "detail": "{ id?: string; status?: \"finalized\" | \"draft\" | \"paid\"; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; email?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; tax_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; line_items?: lineItems; metadata?: Object; payment_intent?: PaymentIntent; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_address?: string | Address; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
           "bubbles": true,
           "cancelable": true,
           "composed": true,
@@ -9513,7 +10387,7 @@
       "parts": [],
       "dependents": [
         "ce-charges-list",
-        "ce-downloads-list",
+        "ce-dashboard-downloads-list",
         "ce-invoices-list",
         "ce-orders-list",
         "ce-subscriptions-list"
@@ -9533,7 +10407,7 @@
         "ce-charges-list": [
           "ce-pagination"
         ],
-        "ce-downloads-list": [
+        "ce-dashboard-downloads-list": [
           "ce-pagination"
         ],
         "ce-invoices-list": [
@@ -9548,7 +10422,7 @@
       }
     },
     {
-      "filePath": "./src/components/controllers/payment/ce-payment.tsx",
+      "filePath": "./src/components/controllers/checkout-form/payment/ce-payment.tsx",
       "encapsulation": "none",
       "tag": "ce-payment",
       "readme": "# ce-payment\n\n\n",
@@ -9907,7 +10781,7 @@
       }
     },
     {
-      "filePath": "./src/components/controllers/price-choice/ce-price-choice.tsx",
+      "filePath": "./src/components/controllers/checkout-form/price-choice/ce-price-choice.tsx",
       "encapsulation": "none",
       "tag": "ce-price-choice",
       "readme": "# ce-price-choice\n\n\n",
@@ -10246,7 +11120,7 @@
       }
     },
     {
-      "filePath": "./src/components/controllers/price-choices/ce-price-choices.tsx",
+      "filePath": "./src/components/controllers/checkout-form/price-choices/ce-price-choices.tsx",
       "encapsulation": "none",
       "tag": "ce-price-choices",
       "readme": "# ce-price-choices\n\n\n",
@@ -10360,28 +11234,28 @@
       "docs": "",
       "docsTags": [
         {
-          "text": "base - The elements base wrapper.",
-          "name": "part"
+          "name": "part",
+          "text": "base - The elements base wrapper."
         },
         {
-          "text": "input - The html input element.",
-          "name": "part"
+          "name": "part",
+          "text": "input - The html input element."
         },
         {
-          "text": "base - The elements base wrapper.",
-          "name": "part"
+          "name": "part",
+          "text": "base - The elements base wrapper."
         },
         {
-          "text": "prefix - Used to prepend an icon or element to the input.",
-          "name": "part"
+          "name": "part",
+          "text": "prefix - Used to prepend an icon or element to the input."
         },
         {
-          "text": "suffix - Used to prepend an icon or element to the input.",
-          "name": "part"
+          "name": "part",
+          "text": "suffix - Used to prepend an icon or element to the input."
         },
         {
-          "text": "help-text - Help text that describes how to use the input.",
-          "name": "part"
+          "name": "part",
+          "text": "help-text - Help text that describes how to use the input."
         }
       ],
       "usage": {},
@@ -10523,7 +11397,7 @@
           "type": "number",
           "mutable": false,
           "attr": "max",
-          "reflectToAttr": false,
+          "reflectToAttr": true,
           "docs": "The input's maximum value.",
           "docsTags": [],
           "values": [
@@ -10555,7 +11429,7 @@
           "type": "number",
           "mutable": false,
           "attr": "min",
-          "reflectToAttr": false,
+          "reflectToAttr": true,
           "docs": "The input's minimum value.",
           "docsTags": [],
           "values": [
@@ -10744,6 +11618,17 @@
       ],
       "methods": [
         {
+          "name": "reportValidity",
+          "returns": {
+            "type": "Promise<boolean>",
+            "docs": ""
+          },
+          "signature": "reportValidity() => Promise<boolean>",
+          "parameters": [],
+          "docs": "",
+          "docsTags": []
+        },
+        {
           "name": "setCustomValidity",
           "returns": {
             "type": "Promise<void>",
@@ -10814,6 +11699,7 @@
         }
       ],
       "dependents": [
+        "ce-donation-choices",
         "ce-price-choice"
       ],
       "dependencies": [
@@ -10828,6 +11714,9 @@
         ],
         "ce-form-control": [
           "ce-tooltip"
+        ],
+        "ce-donation-choices": [
+          "ce-price-input"
         ],
         "ce-price-choice": [
           "ce-price-input"
@@ -11096,34 +11985,6 @@
       "dependents": [],
       "dependencies": [],
       "dependencyGraph": {}
-    },
-    {
-      "filePath": "./src/components/controllers/purchase/ce-purchase.tsx",
-      "encapsulation": "shadow",
-      "tag": "ce-purchase",
-      "readme": "# ce-purchase\n\n\n",
-      "docs": "",
-      "docsTags": [],
-      "usage": {},
-      "props": [],
-      "methods": [],
-      "events": [],
-      "listeners": [],
-      "styles": [],
-      "slots": [],
-      "parts": [],
-      "dependents": [],
-      "dependencies": [
-        "ce-block-ui"
-      ],
-      "dependencyGraph": {
-        "ce-purchase": [
-          "ce-block-ui"
-        ],
-        "ce-block-ui": [
-          "ce-spinner"
-        ]
-      }
     },
     {
       "filePath": "./src/components/ui/quantity-select/ce-quantity-select.tsx",
@@ -11918,6 +12779,17 @@
       ],
       "methods": [
         {
+          "name": "reportValidity",
+          "returns": {
+            "type": "Promise<boolean>",
+            "docs": ""
+          },
+          "signature": "reportValidity() => Promise<boolean>",
+          "parameters": [],
+          "docs": "",
+          "docsTags": []
+        },
+        {
           "name": "setCustomValidity",
           "returns": {
             "type": "Promise<void>",
@@ -12030,142 +12902,6 @@
         ],
         "ce-address": [
           "ce-select"
-        ]
-      }
-    },
-    {
-      "filePath": "./src/components/controllers/session-detail/ce-session-detail.tsx",
-      "encapsulation": "shadow",
-      "tag": "ce-session-detail",
-      "readme": "# ce-card\n\n\n",
-      "docs": "",
-      "docsTags": [],
-      "usage": {},
-      "props": [
-        {
-          "name": "fallback",
-          "type": "string",
-          "mutable": false,
-          "attr": "fallback",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "label",
-          "type": "string",
-          "mutable": false,
-          "attr": "label",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "loading",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "loading",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "metaKey",
-          "type": "string",
-          "mutable": false,
-          "attr": "meta-key",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "order",
-          "type": "Order",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "Order"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "value",
-          "type": "string",
-          "mutable": false,
-          "attr": "value",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        }
-      ],
-      "methods": [],
-      "events": [],
-      "listeners": [],
-      "styles": [],
-      "slots": [],
-      "parts": [
-        {
-          "name": "base",
-          "docs": ""
-        },
-        {
-          "name": "label",
-          "docs": ""
-        },
-        {
-          "name": "value",
-          "docs": ""
-        }
-      ],
-      "dependents": [],
-      "dependencies": [
-        "ce-format-number",
-        "ce-skeleton"
-      ],
-      "dependencyGraph": {
-        "ce-session-detail": [
-          "ce-format-number",
-          "ce-skeleton"
         ]
       }
     },
@@ -12481,17 +13217,18 @@
         "ce-charges-list",
         "ce-coupon-form",
         "ce-customer-details",
+        "ce-donation-choices",
         "ce-downloads-list",
         "ce-invoices-list",
         "ce-line-item-total",
         "ce-line-items",
         "ce-order-confirmation-line-items",
+        "ce-order-detail",
         "ce-order-summary",
         "ce-orders-list",
         "ce-payment",
         "ce-payment-methods-list",
         "ce-price-choice",
-        "ce-session-detail",
         "ce-subscription",
         "ce-subscription-cancel",
         "ce-subscription-details",
@@ -12512,6 +13249,9 @@
         "ce-customer-details": [
           "ce-skeleton"
         ],
+        "ce-donation-choices": [
+          "ce-skeleton"
+        ],
         "ce-downloads-list": [
           "ce-skeleton"
         ],
@@ -12527,6 +13267,9 @@
         "ce-order-confirmation-line-items": [
           "ce-skeleton"
         ],
+        "ce-order-detail": [
+          "ce-skeleton"
+        ],
         "ce-order-summary": [
           "ce-skeleton"
         ],
@@ -12540,9 +13283,6 @@
           "ce-skeleton"
         ],
         "ce-price-choice": [
-          "ce-skeleton"
-        ],
-        "ce-session-detail": [
           "ce-skeleton"
         ],
         "ce-subscription": [
@@ -14580,7 +15320,19 @@
           "required": false
         }
       ],
-      "methods": [],
+      "methods": [
+        {
+          "name": "reportValidity",
+          "returns": {
+            "type": "Promise<boolean>",
+            "docs": ""
+          },
+          "signature": "reportValidity() => Promise<boolean>",
+          "parameters": [],
+          "docs": "Checks for validity and shows the browser's validation message if the control is invalid.",
+          "docsTags": []
+        }
+      ],
       "events": [
         {
           "event": "ceBlur",
@@ -15635,7 +16387,7 @@
       }
     },
     {
-      "filePath": "./src/components/controllers/total/ce-total.tsx",
+      "filePath": "./src/components/controllers/checkout-form/total/ce-total.tsx",
       "encapsulation": "none",
       "tag": "ce-total",
       "readme": "# ce-total\n\n\n",

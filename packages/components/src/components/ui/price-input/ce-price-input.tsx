@@ -61,10 +61,10 @@ export class CePriceInput {
   @Prop() maxlength: number;
 
   /** The input's maximum value. */
-  @Prop() max: number;
+  @Prop({ reflect: true }) max: number;
 
   /** The input's minimum value. */
-  @Prop() min: number;
+  @Prop({ reflect: true }) min: number;
 
   /** Makes the input a required field. */
   @Prop({ reflect: true }) required = false;
@@ -91,7 +91,8 @@ export class CePriceInput {
   @Event({ composed: true })
   ceChange: EventEmitter<void>;
 
-  reportValidity() {
+  @Method()
+  async reportValidity() {
     return this.ceInput.shadowRoot.querySelector('input').reportValidity();
   }
 
@@ -119,12 +120,12 @@ export class CePriceInput {
   }
 
   handleChange() {
-    this.value = (parseFloat(this.ceInput.value) * 100).toString();
+    this.value = this.ceInput.value ? (parseFloat(this.ceInput.value) * 100).toString() : '';
   }
 
   componentDidLoad() {
     this.handleFocusChange();
-    this.formController = new FormSubmitController(this, this.el).addFormData();
+    this.formController = new FormSubmitController(this.el).addFormData();
     document.addEventListener('wheel', () => {
       this.ceInput.triggerBlur();
     });
@@ -151,7 +152,7 @@ export class CePriceInput {
           placeholder={this.placeholder}
           minlength={this.minlength}
           maxlength={this.maxlength}
-          min={this.min || 0.0}
+          min={!!this.min ? this.min / 100 : 0.0}
           step={0.001}
           max={!!this.max ? this.max / 100 : null}
           // TODO: Test These below

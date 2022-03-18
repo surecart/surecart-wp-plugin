@@ -27,9 +27,9 @@
 ### Used by
 
  - [ce-charges-list](../../controllers/dashboard/charges-list)
- - [ce-customer-details](../../controllers/dashboard/customer-details)
+ - [ce-customer-details](../customer-details)
  - [ce-customer-edit](../../controllers/dashboard/customer-edit)
- - [ce-downloads-list](../../controllers/dashboard/downloads-list)
+ - [ce-downloads-list](../downloads-list)
  - [ce-invoices-list](../../controllers/dashboard/invoices-list)
  - [ce-login-form](../../controllers/login)
  - [ce-orders-list](../../controllers/dashboard/orders-list)

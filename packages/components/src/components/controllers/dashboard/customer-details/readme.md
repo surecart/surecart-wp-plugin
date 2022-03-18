@@ -17,18 +17,12 @@
 
 ### Depends on
 
-- [ce-stacked-list-row](../../../ui/stacked-list-row)
-- [ce-tag](../../../ui/tag)
-- [ce-skeleton](../../../ui/skeleton)
-- [ce-dashboard-module](../../../ui/dashboard-module)
-- [ce-button](../../../ui/button)
-- [ce-icon](../../../ui/icon)
-- [ce-card](../../../ui/card)
-- [ce-stacked-list](../../../ui/stacked-list)
+- [ce-customer-details](../../../ui/customer-details)
 
 ### Graph
 ```mermaid
 graph TD;
+  ce-dashboard-customer-details --> ce-customer-details
   ce-customer-details --> ce-stacked-list-row
   ce-customer-details --> ce-tag
   ce-customer-details --> ce-skeleton
@@ -40,7 +34,7 @@ graph TD;
   ce-dashboard-module --> ce-alert
   ce-alert --> ce-icon
   ce-button --> ce-spinner
-  style ce-customer-details fill:#f9f,stroke:#333,stroke-width:4px
+  style ce-dashboard-customer-details fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

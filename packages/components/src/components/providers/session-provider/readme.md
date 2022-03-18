@@ -34,7 +34,7 @@
 
 ### Used by
 
- - [ce-checkout](../../controllers/checkout)
+ - [ce-checkout](../../controllers/checkout-form/checkout)
 
 ### Depends on
 

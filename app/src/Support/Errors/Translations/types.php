@@ -38,6 +38,7 @@ return [
 	'send_after.too_late'      => __( 'must be less than 1 week', 'checkout_engine' ),
 	'send_after.too_close'     => __( 'must be at least 12 hours between emails', 'checkout_engine' ),
 	'send_after.too_many'      => __( 'max count reached', 'checkout_engine' ),
+	'outside_range'            => __( 'must be between %1$s and %2$s', 'checkout_engine' ),
 ];
 
 

@@ -5,13 +5,7 @@ import { InnerBlocks, useBlockProps } from '@wordpress/block-editor';
 import { CeOrderConfirmation } from '@checkout-engine/components-react';
 
 export default () => {
-	const blockProps = useBlockProps({
-		style: {
-			maxWidth: 'var( --ast-content-width-size, 910px )',
-			marginLeft: 'auto !important',
-			marginRight: 'auto !important',
-		},
-	});
+	const blockProps = useBlockProps();
 
 	const order = {
 		billing_address: null,
@@ -27,6 +21,7 @@ export default () => {
 			id: 'f1b1bd94-6a2f-44d4-910d-c654da099fcb',
 			name: 'Amy Smith',
 			object: 'customer',
+			live_mode: true,
 			phone: '897-5309',
 			shipping_address: null,
 			unsubscribed: false,
@@ -266,7 +261,7 @@ export default () => {
 				},
 			],
 		},
-		live_mode: false,
+		live_mode: true,
 		name: 'Test User',
 		number: 'C5A35729',
 		object: 'order',

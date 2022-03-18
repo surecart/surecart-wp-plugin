@@ -1,0 +1,131 @@
+import { Component, Element, h, Prop, State } from '@stencil/core';
+import { __, _n } from '@wordpress/i18n';
+import { addQueryArgs } from '@wordpress/url';
+
+import apiFetch from '../../../../functions/fetch';
+import { onFirstVisible } from '../../../../functions/lazy';
+import { Purchase } from '../../../../types';
+
+@Component({
+  tag: 'ce-dashboard-downloads-list',
+  styleUrl: 'ce-dashboard-downloads-list.scss',
+  shadow: true,
+})
+export class CeDownloadsList {
+  @Element() el: HTMLCeDownloadsListElement;
+  /** Customer id to fetch subscriptions */
+  @Prop({ mutable: true }) query: {
+    page: number;
+    per_page: number;
+  } = {
+    page: 1,
+    per_page: 10,
+  };
+  @Prop() allLink: string;
+  @Prop() heading: string;
+  @Prop() requestNonce: string;
+
+  @State() purchases: Array<Purchase> = [];
+
+  /** Loading state */
+  @State() loading: boolean;
+  @State() busy: boolean;
+
+  /** Error message */
+  @State() error: string;
+
+  @State() pagination: {
+    total: number;
+    total_pages: number;
+  } = {
+    total: 0,
+    total_pages: 0,
+  };
+
+  componentWillLoad() {
+    onFirstVisible(this.el, () => {
+      this.initialFetch();
+    });
+  }
+
+  async initialFetch() {
+    try {
+      this.loading = true;
+      await this.getItems();
+    } catch (e) {
+      console.error(this.error);
+      this.error = e?.message || __('Something went wrong', 'checkout_engine');
+    } finally {
+      this.loading = false;
+    }
+  }
+
+  async fetchItems() {
+    try {
+      this.busy = true;
+      await this.getItems();
+    } catch (e) {
+      console.error(this.error);
+      this.error = e?.message || __('Something went wrong', 'checkout_engine');
+    } finally {
+      this.busy = false;
+    }
+  }
+
+  /** Get all subscriptions */
+  async getItems() {
+    const response = await await apiFetch({
+      path: addQueryArgs(`checkout-engine/v1/purchases/`, {
+        expand: ['product', 'product.files'],
+        downloadable: true,
+        ...this.query,
+      }),
+      parse: false,
+    });
+    this.pagination = {
+      total: response.headers.get('X-WP-Total'),
+      total_pages: response.headers.get('X-WP-TotalPages'),
+    };
+    this.purchases = (await response.json()) as Purchase[];
+    return this.purchases;
+  }
+
+  nextPage() {
+    this.query.page = this.query.page + 1;
+    this.fetchItems();
+  }
+
+  prevPage() {
+    this.query.page = this.query.page - 1;
+    this.fetchItems();
+  }
+
+  render() {
+    return (
+      <ce-downloads-list
+        heading={this.heading}
+        allLink={this.allLink && this.pagination.total_pages > 1 ? this.allLink : ''}
+        loading={this.loading}
+        busy={this.busy}
+        requestNonce={this.requestNonce}
+        error={this.error}
+        purchases={this.purchases}
+      >
+        <span slot="heading">
+          <slot name="heading">{this.heading || __('Downloads', 'checkout_engine')}</slot>
+        </span>
+
+        <ce-pagination
+          slot="after"
+          page={this.query.page}
+          perPage={this.query.per_page}
+          total={this.pagination.total}
+          totalPages={this.pagination.total_pages}
+          totalShowing={this?.purchases?.length}
+          onCeNextPage={() => this.nextPage()}
+          onCePrevPage={() => this.prevPage()}
+        ></ce-pagination>
+      </ce-downloads-list>
+    );
+  }
+}

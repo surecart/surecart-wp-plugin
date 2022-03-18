@@ -19,7 +19,6 @@ export default ({
 	onQuery,
 	onFetch,
 	onNew,
-	ad_hoc = true,
 	loading,
 }) => {
 	const selectRef = useRef();
@@ -31,21 +30,6 @@ export default ({
 		{ leading: false }
 	);
 
-	const displayPriceAmount = (price) => {
-		if (price?.ad_hoc) {
-			return __('Custom', 'checkout_engine');
-		}
-		return `${formatNumber(
-			price.amount,
-			price.currency
-		)}${translateInterval(
-			price?.recurring_interval_count,
-			price?.recurring_interval,
-			' /',
-			''
-		)}`;
-	};
-
 	const choices = (products || [])
 		.filter((product) => !!product?.prices?.data?.length)
 		.map((product) => {
@@ -53,25 +37,18 @@ export default ({
 				label: product?.name,
 				id: product.id,
 				disabled: false,
-				choices: (product?.prices?.data || [])
-					.filter((price) => {
-						if (!ad_hoc && price.ad_hoc) {
-							return false;
-						}
-						return true;
-					})
-					.map((price) => {
-						return {
-							value: price.id,
-							label: formatNumber(price.amount, price.currency),
-							suffix: translateInterval(
-								price?.recurring_interval_count,
-								price?.recurring_interval,
-								'every',
-								'once'
-							),
-						};
-					}),
+				choices: (product?.prices?.data || []).map((price) => {
+					return {
+						value: price.id,
+						label: formatNumber(price.amount, price.currency),
+						suffix: translateInterval(
+							price?.recurring_interval_count,
+							price?.recurring_interval,
+							'every',
+							'once'
+						),
+					};
+				}),
 			};
 		});
 

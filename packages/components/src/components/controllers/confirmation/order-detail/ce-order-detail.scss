@@ -1,0 +1,15 @@
+:host {
+  display: block;
+}
+
+.order-detail__value {
+  display: block;
+  font-weight: var(--ce-font-weight-semibold);
+  line-height: var(--ce-line-height-dense);
+}
+
+.order-detail__label {
+  display: block;
+  color: var(--ce-color-gray-500);
+  line-height: var(--ce-line-height-dense);
+}

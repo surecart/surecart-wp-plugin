@@ -41,6 +41,16 @@
 
 ## Methods
 
+### `reportValidity() => Promise<boolean>`
+
+
+
+#### Returns
+
+Type: `Promise<boolean>`
+
+
+
 ### `setCustomValidity(message: string) => Promise<void>`
 
 Sets a custom validation message. If `message` is not empty, the field will be considered invalid.
@@ -87,7 +97,8 @@ Type: `Promise<void>`
 
 ### Used by
 
- - [ce-price-choice](../../controllers/price-choice)
+ - [ce-donation-choices](../../controllers/checkout-form/ce-donation-choices)
+ - [ce-price-choice](../../controllers/checkout-form/price-choice)
 
 ### Depends on
 
@@ -99,6 +110,7 @@ graph TD;
   ce-price-input --> ce-input
   ce-input --> ce-form-control
   ce-form-control --> ce-tooltip
+  ce-donation-choices --> ce-price-input
   ce-price-choice --> ce-price-input
   style ce-price-input fill:#f9f,stroke:#333,stroke-width:4px
 ```

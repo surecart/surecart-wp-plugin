@@ -76,6 +76,14 @@
     "class": true,
     "slot": true
   },
+  "ce-button-group": {
+    "label": true,
+    "separate": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "ce-card": {
     "borderless": true,
     "loading": true,
@@ -143,6 +151,7 @@
     "show-control": true,
     "show-label": true,
     "show-price": true,
+    "size": true,
     "type": true,
     "value": true,
     "style": true,
@@ -151,6 +160,7 @@
     "slot": true
   },
   "ce-choices": {
+    "auto-width": true,
     "columns": true,
     "error-message": true,
     "help": true,
@@ -200,8 +210,11 @@
     "slot": true
   },
   "ce-customer-details": {
-    "customer-id": true,
+    "customer": true,
+    "edit-link": true,
+    "error": true,
     "heading": true,
+    "loading": true,
     "style": true,
     "id": true,
     "class": true,
@@ -260,6 +273,24 @@
     "class": true,
     "slot": true
   },
+  "ce-dashboard-customer-details": {
+    "customer-id": true,
+    "heading": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-dashboard-downloads-list": {
+    "all-link": true,
+    "heading": true,
+    "query": true,
+    "request-nonce": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "ce-dashboard-module": {
     "error": true,
     "heading": true,
@@ -274,11 +305,26 @@
     "class": true,
     "slot": true
   },
+  "ce-donation-choices": {
+    "busy": true,
+    "label": true,
+    "line-items": true,
+    "loading": true,
+    "price-id": true,
+    "remove-invalid": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "ce-downloads-list": {
     "all-link": true,
+    "busy": true,
+    "error": true,
     "heading": true,
-    "nonce": true,
-    "query": true,
+    "loading": true,
+    "purchases": true,
+    "request-nonce": true,
     "style": true,
     "id": true,
     "class": true,
@@ -577,6 +623,17 @@
     "class": true,
     "slot": true
   },
+  "ce-order-confirmation-customer": {
+    "customer": true,
+    "error": true,
+    "heading": true,
+    "loading": true,
+    "order": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "ce-order-confirmation-line-items": {
     "loading": true,
     "order": true,
@@ -599,6 +656,18 @@
     "label": true,
     "loading": true,
     "order": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "ce-order-detail": {
+    "fallback": true,
+    "label": true,
+    "loading": true,
+    "meta-key": true,
+    "order": true,
+    "value": true,
     "style": true,
     "id": true,
     "class": true,
@@ -793,12 +862,6 @@
     "class": true,
     "slot": true
   },
-  "ce-purchase": {
-    "style": true,
-    "id": true,
-    "class": true,
-    "slot": true
-  },
   "ce-quantity-select": {
     "click-el": true,
     "max": true,
@@ -861,18 +924,6 @@
     "squared-left": true,
     "squared-right": true,
     "squared-top": true,
-    "value": true,
-    "style": true,
-    "id": true,
-    "class": true,
-    "slot": true
-  },
-  "ce-session-detail": {
-    "fallback": true,
-    "label": true,
-    "loading": true,
-    "meta-key": true,
-    "order": true,
     "value": true,
     "style": true,
     "id": true,

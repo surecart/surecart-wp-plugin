@@ -55,6 +55,16 @@
 
 ## Methods
 
+### `reportValidity() => Promise<boolean>`
+
+
+
+#### Returns
+
+Type: `Promise<boolean>`
+
+
+
 ### `setCustomValidity(message: string) => Promise<void>`
 
 Sets a custom validation message. If `message` is not empty, the field will be considered invalid.
@@ -112,10 +122,10 @@ Type: `Promise<void>`
  - [ce-address](../address)
  - [ce-coupon-form](../coupon-form)
  - [ce-customer-edit](../../controllers/dashboard/customer-edit)
- - [ce-customer-email](../../controllers/customer-email)
- - [ce-customer-name](../../controllers/customer-name)
+ - [ce-customer-email](../../controllers/checkout-form/customer-email)
+ - [ce-customer-name](../../controllers/checkout-form/customer-name)
  - [ce-login-form](../../controllers/login)
- - [ce-order-password](../../controllers/order-password)
+ - [ce-order-password](../../controllers/checkout-form/order-password)
  - [ce-price-input](../price-input)
  - [ce-select](../select)
  - [ce-stripe-element](../stripe-element)

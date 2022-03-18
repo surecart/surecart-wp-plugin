@@ -30,16 +30,16 @@
  - [ce-charges-list](../../controllers/dashboard/charges-list)
  - [ce-coupon-form](../../ui/coupon-form)
  - [ce-invoices-list](../../controllers/dashboard/invoices-list)
- - [ce-line-item-tax](../../controllers/line-item-tax)
- - [ce-line-item-total](../../controllers/line-item-total)
- - [ce-order-confirmation-totals](../../controllers/order-confirmation-totals)
+ - [ce-line-item-tax](../../controllers/checkout-form/line-item-tax)
+ - [ce-line-item-total](../../controllers/checkout-form/line-item-total)
+ - [ce-order-confirmation-totals](../../controllers/confirmation/order-confirmation-totals)
+ - [ce-order-detail](../../controllers/confirmation/order-detail)
  - [ce-orders-list](../../controllers/dashboard/orders-list)
- - [ce-price-choice](../../controllers/price-choice)
+ - [ce-price-choice](../../controllers/checkout-form/price-choice)
  - [ce-product-line-item](../../ui/product-line-item)
- - [ce-session-detail](../../controllers/session-detail)
  - [ce-subscription-details](../../controllers/dashboard/subscription-details)
  - [ce-subscription-switch](../../controllers/dashboard/subscription-switch)
- - [ce-total](../../controllers/total)
+ - [ce-total](../../controllers/checkout-form/total)
  - [ce-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
 
 ### Graph
@@ -51,10 +51,10 @@ graph TD;
   ce-line-item-tax --> ce-format-number
   ce-line-item-total --> ce-format-number
   ce-order-confirmation-totals --> ce-format-number
+  ce-order-detail --> ce-format-number
   ce-orders-list --> ce-format-number
   ce-price-choice --> ce-format-number
   ce-product-line-item --> ce-format-number
-  ce-session-detail --> ce-format-number
   ce-subscription-details --> ce-format-number
   ce-subscription-switch --> ce-format-number
   ce-total --> ce-format-number

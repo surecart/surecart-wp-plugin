@@ -14,29 +14,29 @@
   margin: var(--ce-spacing-medium);
 }
 
-ce-button-group > ce-button:first-child::part(base),
-ce-button-group > ce-dropdown:first-child > ce-button[slot='trigger']::part(base),
-ce-button-group > ce-tooltip:first-child > ce-button::part(base) {
+ce-button-group:not([separate]) > ce-button:first-child::part(base),
+ce-button-group:not([separate]) > ce-dropdown:first-child > ce-button[slot='trigger']::part(base),
+ce-button-group:not([separate]) > ce-tooltip:first-child > ce-button::part(base) {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
 
-ce-button-group > ce-button:last-child::part(base),
-ce-button-group > ce-dropdown:last-child > ce-button[slot='trigger']::part(base),
-ce-button-group > ce-tooltip:last-child > ce-button::part(base) {
+ce-button-group:not([separate]) > ce-button:last-child::part(base),
+ce-button-group:not([separate]) > ce-dropdown:last-child > ce-button[slot='trigger']::part(base),
+ce-button-group:not([separate]) > ce-tooltip:last-child > ce-button::part(base) {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
 
-ce-button-group > ce-button:not(:first-child):not(:last-child)::part(base),
-ce-button-group > ce-dropdown:not(:first-child):not(:last-child) > ce-button[slot='trigger']::part(base),
-ce-button-group > ce-tooltip:not(:first-child):not(:last-child) > ce-button::part(base) {
+ce-button-group:not([separate]) > ce-button:not(:first-child):not(:last-child)::part(base),
+ce-button-group:not([separate]) > ce-dropdown:not(:first-child):not(:last-child) > ce-button[slot='trigger']::part(base),
+ce-button-group:not([separate]) > ce-tooltip:not(:first-child):not(:last-child) > ce-button::part(base) {
   border-radius: 0;
 }
 
-ce-button-group > ce-button:not(:first-child),
-ce-button-group > ce-dropdown:not(:first-child) > ce-button[slot='trigger'],
-ce-button-group > ce-tooltip:not(:first-child) > ce-button {
+ce-button-group:not([separate]) > ce-button:not(:first-child),
+ce-button-group:not([separate]) > ce-dropdown:not(:first-child) > ce-button[slot='trigger'],
+ce-button-group:not([separate]) > ce-tooltip:not(:first-child) > ce-button {
   margin-left: calc(-1 * var(--ce-input-border-width));
 }
 

@@ -19,7 +19,7 @@
 
 ### Used by
 
- - [ce-downloads-list](../../controllers/dashboard/downloads-list)
+ - [ce-downloads-list](../../ui/downloads-list)
 
 ### Graph
 ```mermaid

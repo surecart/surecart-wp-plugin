@@ -150,7 +150,8 @@ export class CeSelectDropdown {
     this.invalid = !this.input.checkValidity();
   }
 
-  reportValidity() {
+  @Method()
+  async reportValidity() {
     return this.input.reportValidity();
   }
 
@@ -204,7 +205,7 @@ export class CeSelectDropdown {
   }
 
   componentDidLoad() {
-    this.formController = new FormSubmitController(this, this.el).addFormData();
+    this.formController = new FormSubmitController(this.el).addFormData();
     if (this.open) {
       this.searchInput.triggerFocus();
     }

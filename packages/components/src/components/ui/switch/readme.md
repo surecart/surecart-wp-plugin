@@ -24,6 +24,19 @@
 | `ceFocus`  | Emitted when the control gains focus.             | `CustomEvent<void>` |
 
 
+## Methods
+
+### `reportValidity() => Promise<boolean>`
+
+Checks for validity and shows the browser's validation message if the control is invalid.
+
+#### Returns
+
+Type: `Promise<boolean>`
+
+
+
+
 ## Shadow Parts
 
 | Part            | Description |

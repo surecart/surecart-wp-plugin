@@ -48,7 +48,9 @@
       pointer-events: none;
     }
 
-    .button__label {
+    .button__label,
+    .button__suffix,
+    .button__prefix {
       opacity: 0.5;
     }
   }

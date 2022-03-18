@@ -20,7 +20,7 @@ import {
 import { CeButton } from '@checkout-engine/components-react';
 
 export default ({ className, attributes, setAttributes }) => {
-	const { type, label, submit, size, show_icon } = attributes;
+	const { type, label, submit, size, show_icon, full } = attributes;
 
 	return (
 		<div className={className} css={css``}>
@@ -40,6 +40,13 @@ export default ({ className, attributes, setAttributes }) => {
 							onChange={(show_icon) =>
 								setAttributes({ show_icon })
 							}
+						/>
+					</PanelRow>
+					<PanelRow>
+						<ToggleControl
+							label={__('Full', 'checkout-engine')}
+							checked={full}
+							onChange={(full) => setAttributes({ full })}
 						/>
 					</PanelRow>
 					<PanelRow>
@@ -92,7 +99,7 @@ export default ({ className, attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<CeButton type={type} submit={submit} size={size} type={type}>
+			<CeButton type={type} submit={submit} size={size} full={full}>
 				{show_icon && (
 					<ce-icon
 						name="user"

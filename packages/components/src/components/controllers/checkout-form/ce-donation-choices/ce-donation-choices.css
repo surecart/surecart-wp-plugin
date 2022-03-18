@@ -1,0 +1,5 @@
+.ce-donation-choices {
+  display: grid;
+  gap: var(--ce-spacing-small);
+  position: relative;
+}

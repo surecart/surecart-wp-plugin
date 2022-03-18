@@ -18,10 +18,10 @@
 
 ### Used by
 
- - [ce-express-payment](../../controllers/express-payment)
+ - [ce-express-payment](../../controllers/checkout-form/express-payment)
  - [ce-invoices-list](../../controllers/dashboard/invoices-list)
  - [ce-login-form](../../controllers/login)
- - [ce-order-confirmation-totals](../../controllers/order-confirmation-totals)
+ - [ce-order-confirmation-totals](../../controllers/confirmation/order-confirmation-totals)
  - [ce-orders-list](../../controllers/dashboard/orders-list)
  - [ce-payment-methods-list](../../controllers/dashboard/payment-methods-list)
  - [ce-subscriptions-list](../../controllers/dashboard/subscriptions-list)

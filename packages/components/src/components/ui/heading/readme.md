@@ -23,7 +23,7 @@
 
 ### Used by
 
- - [ce-order-confirmation](../../controllers/order-confirmation)
+ - [ce-order-confirmation](../../controllers/confirmation/order-confirmation)
 
 ### Graph
 ```mermaid

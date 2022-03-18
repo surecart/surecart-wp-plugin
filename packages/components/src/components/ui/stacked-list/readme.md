@@ -10,8 +10,8 @@
 ### Used by
 
  - [ce-charges-list](../../controllers/dashboard/charges-list)
- - [ce-customer-details](../../controllers/dashboard/customer-details)
- - [ce-downloads-list](../../controllers/dashboard/downloads-list)
+ - [ce-customer-details](../customer-details)
+ - [ce-downloads-list](../downloads-list)
  - [ce-invoices-list](../../controllers/dashboard/invoices-list)
  - [ce-orders-list](../../controllers/dashboard/orders-list)
  - [ce-payment-methods-list](../../controllers/dashboard/payment-methods-list)

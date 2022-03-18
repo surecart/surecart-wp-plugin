@@ -18,52 +18,34 @@ export interface FormSubmitControllerOptions {
   value: (input: unknown) => unknown | unknown[];
   /** A function that returns the form control's current disabled state. If disabled, the value won't be submitted. */
   disabled: (input: unknown) => boolean;
-  /**
-   * A function that maps to the form control's reportValidity() function. When the control is invalid, this will
-   * prevent submission and trigger the browser's constraint violation warning.
-   */
-  reportValidity: () => boolean;
 }
 
 export class FormSubmitController {
   form: HTMLFormElement | null = null;
   input: any;
   options: FormSubmitControllerOptions;
-  component: any;
-  constructor(component: any, input: any, options?: Partial<FormSubmitControllerOptions>) {
+  constructor(input: any, options?: Partial<FormSubmitControllerOptions>) {
     this.input = input;
-    this.component = component;
     this.options = {
       form: (input: HTMLInputElement) => input?.closest('ce-form')?.shadowRoot?.querySelector('form') || input.closest('form'),
       name: (input: HTMLInputElement) => input.name,
       value: (input: HTMLInputElement) => input.value,
       disabled: (input: HTMLInputElement) => input.disabled,
-      reportValidity: () => {
-        return typeof component.reportValidity === 'function' ? component.reportValidity() : true;
-      },
       ...options,
     };
 
     this.form = this.options.form(this.input);
     this.handleFormData = this.handleFormData.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  setComponent(component: any) {
-    this.component = component;
-    console.log('set', component);
   }
 
   addFormData() {
     if (!this.form) return;
     this.form.addEventListener('formdata', this.handleFormData);
-    this.form.addEventListener('submit', this.handleSubmit, true);
   }
 
   removeFormData() {
     if (!this.form) return;
     this.form.removeEventListener('formdata', this.handleFormData);
-    this.form.removeEventListener('submit', this.handleSubmit, true);
   }
 
   handleFormData(event: FormDataEvent) {
@@ -84,18 +66,5 @@ export class FormSubmitController {
         }
       }
     }
-  }
-
-  async handleSubmit(event: Event) {
-    const disabled = this.options.disabled(this.input);
-    const isValid = this.options.reportValidity();
-
-    if (!this.form) return;
-    if (this.form.noValidate) return;
-    if (disabled) return;
-    if (isValid) return;
-
-    event.preventDefault();
-    event.stopImmediatePropagation();
   }
 }

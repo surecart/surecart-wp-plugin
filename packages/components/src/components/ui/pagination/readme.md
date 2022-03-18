@@ -29,7 +29,7 @@
 ### Used by
 
  - [ce-charges-list](../../controllers/dashboard/charges-list)
- - [ce-downloads-list](../../controllers/dashboard/downloads-list)
+ - [ce-dashboard-downloads-list](../../controllers/dashboard/dashboard-downloads-list)
  - [ce-invoices-list](../../controllers/dashboard/invoices-list)
  - [ce-orders-list](../../controllers/dashboard/orders-list)
  - [ce-subscriptions-list](../../controllers/dashboard/subscriptions-list)
@@ -46,7 +46,7 @@ graph TD;
   ce-pagination --> ce-button
   ce-button --> ce-spinner
   ce-charges-list --> ce-pagination
-  ce-downloads-list --> ce-pagination
+  ce-dashboard-downloads-list --> ce-pagination
   ce-invoices-list --> ce-pagination
   ce-orders-list --> ce-pagination
   ce-subscriptions-list --> ce-pagination

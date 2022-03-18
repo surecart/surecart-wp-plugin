@@ -17,11 +17,11 @@
 
 ### Used by
 
- - [ce-checkout](../../controllers/checkout)
+ - [ce-checkout](../../controllers/checkout-form/checkout)
 
 ### Depends on
 
-- [ce-order-shipping-address](../../controllers/order-shipping-address)
+- [ce-order-shipping-address](../../controllers/checkout-form/order-shipping-address)
 
 ### Graph
 ```mermaid

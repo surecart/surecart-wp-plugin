@@ -112,7 +112,7 @@ export class CECheckbox {
   }
 
   componentDidLoad() {
-    this.formController = new FormSubmitController(this, this.el, {
+    this.formController = new FormSubmitController(this.el, {
       value: (control: HTMLCeChoiceElement) => (control.checked ? control.value : undefined),
     }).addFormData();
   }

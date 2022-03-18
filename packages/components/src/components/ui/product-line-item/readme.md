@@ -32,8 +32,8 @@
 
 ### Used by
 
- - [ce-line-items](../../controllers/line-items)
- - [ce-order-confirmation-line-items](../../controllers/order-confirmation-line-items)
+ - [ce-line-items](../../controllers/checkout-form/line-items)
+ - [ce-order-confirmation-line-items](../../controllers/confirmation/order-confirmation-line-items)
  - [ce-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
 
 ### Depends on
