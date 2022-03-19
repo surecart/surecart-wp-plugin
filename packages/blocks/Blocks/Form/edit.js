@@ -107,33 +107,31 @@ export default function edit({ clientId, attributes, setAttributes }) {
 	 * Maybe populated the donation block with the correct price.
 	 */
 	const populateChoicesBlock = (blocks, choices, choice_type) => {
-		// get the price selector block
-		const priceChoiceBlock = blocks.findIndex(
-			(block) => block.name === 'checkout-engine/price-selector'
-		);
+		const remove =
+			!choices?.length || !['checkbox', 'radio'].includes(choice_type);
 
-		// Remove price choices from template.
-		if (!choices?.length || !['checkbox', 'radio'].includes(choice_type)) {
-			blocks = blocks.filter(function (_, index) {
-				return index !== priceChoiceBlock;
-			});
-		} else if (blocks?.[priceChoiceBlock]) {
-			// add choices as price choice inner blocks.
-			blocks[priceChoiceBlock].innerBlocks = choices.map(
-				(choice, index) => {
-					console.log({ choice_type });
-					return [
-						'checkout-engine/price-choice',
-						{
-							price_id: choice?.id,
-							quantity: choice?.quantity || 1,
-							type: choice_type,
-							checked: index === 0 && choice_type === 'radio',
-						},
-					];
+		// look through nested blocks and add or remove prices.
+		blocks.forEach(function iter(block, index, blocks) {
+			if (block.name === 'checkout-engine/price-selector') {
+				if (remove) {
+					blocks.splice(index, 1);
+				} else {
+					blocks[index].attributes.type = choice_type;
+					blocks[index].innerBlocks = choices.map((choice, index) => {
+						return [
+							'checkout-engine/price-choice',
+							{
+								price_id: choice?.id,
+								quantity: choice?.quantity || 1,
+								type: choice_type,
+								checked: index === 0 && choice_type === 'radio',
+							},
+						];
+					});
 				}
-			);
-		}
+			}
+			Array.isArray(block.innerBlocks) && block.innerBlocks.forEach(iter);
+		});
 
 		return blocks;
 	};
@@ -142,19 +140,19 @@ export default function edit({ clientId, attributes, setAttributes }) {
 	 * Maybe populated the donation block with the correct price.
 	 */
 	const populateDonationBlock = (blocks, choices) => {
-		const donationBlockIndex = blocks.findIndex(
-			(block) => block.name === 'checkout-engine/donation'
-		);
+		const remove = !choices?.length;
 
-		// maybe remove donation block
-		if (!choices?.length) {
-			blocks = blocks.filter(function (_, index) {
-				return index !== donationBlockIndex;
-			});
-		} else if (blocks?.[donationBlockIndex]) {
-			// add choice to donation block
-			blocks[donationBlockIndex].attributes.price_id = choices[0].id;
-		}
+		// look through nested blocks and add or remove prices.
+		blocks.forEach(function iter(block, index, blocks) {
+			if (block.name === 'checkout-engine/donation') {
+				if (remove) {
+					blocks.splice(index, 1);
+				} else {
+					blocks[index].attributes.price_id = choices[0].id;
+				}
+			}
+			Array.isArray(block.innerBlocks) && block.innerBlocks.forEach(iter);
+		});
 
 		return blocks;
 	};
