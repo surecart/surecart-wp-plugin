@@ -19,4 +19,5 @@ return [
 	'promotion.code.taken'                         => __( 'This promotion code already exists. Please archive the old code or use a different code.', 'checkout-engine' ),
 	'product.restrict_dependent_destroy.has_many'  => __( 'This product has prices that are currently being used. Please archive the product instead.', 'checkout-engine' ),
 	'order.shipping_address.invalid_tax_address'   => __( 'Please fill out your address.', 'checkout-engine' ),
+	'order.line_items.old_price_versions'          => __( 'This checkout has expired. Please refresh the page and try again.', 'checkout-engine' ),
 ];
