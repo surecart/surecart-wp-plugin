@@ -169,6 +169,11 @@ export class CeSessionProvider {
           break;
       }
     } catch (e) {
+      if (e?.additional_errors?.[0]?.code === 'order.line_items.old_price_versions') {
+        // Remove saved order.
+        window.localStorage.removeItem(this.groupId);
+      }
+      // make it a draft again and resubmit if status is incorrect.
       if (['order.invalid_status_transition'].includes(e?.code)) {
         await this.loadUpdate({
           id: this.order.id,
