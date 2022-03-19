@@ -19,6 +19,7 @@ export default ({
 	onQuery,
 	onFetch,
 	onNew,
+	ad_hoc,
 	loading,
 }) => {
 	const selectRef = useRef();
@@ -32,23 +33,62 @@ export default ({
 
 	const choices = (products || [])
 		.filter((product) => !!product?.prices?.data?.length)
+		.filter((product) => {
+			if (ad_hoc === true) {
+				if (
+					!product?.prices?.data.some(
+						(price) => price.ad_hoc === true
+					)
+				) {
+					return false;
+				}
+			}
+
+			if (ad_hoc === false) {
+				if (
+					!product?.prices?.data.some(
+						(price) => price.ad_hoc === false
+					)
+				) {
+					return false;
+				}
+			}
+
+			return true;
+		})
 		.map((product) => {
 			return {
 				label: product?.name,
 				id: product.id,
 				disabled: false,
-				choices: (product?.prices?.data || []).map((price) => {
-					return {
-						value: price.id,
-						label: formatNumber(price.amount, price.currency),
-						suffix: translateInterval(
-							price?.recurring_interval_count,
-							price?.recurring_interval,
-							'every',
-							'once'
-						),
-					};
-				}),
+				choices: (product?.prices?.data || [])
+					.filter((price) => {
+						if (ad_hoc === false) {
+							if (price.ad_hoc) {
+								return false;
+							}
+						}
+
+						if (ad_hoc === true) {
+							if (!price.ad_hoc) {
+								return false;
+							}
+						}
+
+						return true;
+					})
+					.map((price) => {
+						return {
+							value: price.id,
+							label: formatNumber(price.amount, price.currency),
+							suffix: translateInterval(
+								price?.recurring_interval_count,
+								price?.recurring_interval,
+								'every',
+								'once'
+							),
+						};
+					}),
 			};
 		});
 
