@@ -28,7 +28,7 @@ export default ({ onSelect, createNew, ad_hoc, value, open = true }) => {
 				products: select(coreStore).getEntityRecords(...queryArgs),
 				loading: select(coreStore).isResolving(
 					'getEntityRecord',
-					queryArgsy
+					queryArgs
 				),
 			};
 		},
