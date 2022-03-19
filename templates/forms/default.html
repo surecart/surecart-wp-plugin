@@ -1,5 +1,5 @@
 <!-- wp:checkout-engine/price-selector {"label":"Choose A Product"}  -->
-<ce-price-choices type="radio" columns="1"><div><!-- wp:checkout-engine/price-choice -->
+<ce-price-choices label="Choose A Product" type="radio" columns="1"><div><!-- wp:checkout-engine/price-choice -->
 <ce-price-choice type="radio" show-label="1" show-price="1" show-control="1"></ce-price-choice>
 <!-- /wp:checkout-engine/price-choice --></div></ce-price-choices>
 <!-- /wp:checkout-engine/price-selector -->
@@ -17,7 +17,7 @@
 
 <!-- wp:checkout-engine/column -->
 <ce-column class="wp-block-checkout-engine-column"><!-- wp:checkout-engine/email -->
-<ce-email label="Email" autocomplete="email" inputmode="email" required class="wp-block-checkout-engine-email"></ce-customer-email>
+<ce-customer-email label="Email" autocomplete="email" inputmode="email" required class="wp-block-checkout-engine-email"></ce-customer-email>
 <!-- /wp:checkout-engine/email --></ce-column>
 <!-- /wp:checkout-engine/column --></ce-columns>
 <!-- /wp:checkout-engine/columns -->
@@ -48,7 +48,7 @@
 <!-- /wp:checkout-engine/tax-line-item -->
 
 <!-- wp:checkout-engine/coupon {"text":"Add Coupon Code","button_text":"Apply Coupon"} -->
-<ce-coupon-form label="Add Coupon Code">Apply Coupon</ce-coupon-form>
+<ce-order-coupon-form label="Add Coupon Code">Apply Coupon</ce-order-coupon-form>
 <!-- /wp:checkout-engine/coupon -->
 
 <!-- wp:checkout-engine/divider -->

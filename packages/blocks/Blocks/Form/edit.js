@@ -14,7 +14,6 @@ import {
 	PanelRow,
 	PanelBody,
 	Button,
-	SelectControl,
 	UnitControl as __stableUnitControl,
 	__experimentalUnitControl,
 } from '@wordpress/components';
@@ -118,10 +117,11 @@ export default function edit({ clientId, attributes, setAttributes }) {
 			blocks = blocks.filter(function (_, index) {
 				return index !== priceChoiceBlock;
 			});
-		} else {
+		} else if (blocks?.[priceChoiceBlock]) {
 			// add choices as price choice inner blocks.
 			blocks[priceChoiceBlock].innerBlocks = choices.map(
 				(choice, index) => {
+					console.log({ choice_type });
 					return [
 						'checkout-engine/price-choice',
 						{
@@ -151,7 +151,7 @@ export default function edit({ clientId, attributes, setAttributes }) {
 			blocks = blocks.filter(function (_, index) {
 				return index !== donationBlockIndex;
 			});
-		} else {
+		} else if (blocks?.[donationBlockIndex]) {
 			// add choice to donation block
 			blocks[donationBlockIndex].attributes.price_id = choices[0].id;
 		}

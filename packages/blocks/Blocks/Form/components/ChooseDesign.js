@@ -61,11 +61,6 @@ export default ({ template, setTemplate }) => {
 					selected={choice === 'donation'}
 					onSelect={() => setChoice('donation')}
 				/>
-				<Thumbnail
-					label={'Invoice Pay'}
-					selected={choice === 'invoice'}
-					onSelect={() => setChoice('invoice')}
-				/>
 			</div>
 		</PlaceholderTemplate>
 	);

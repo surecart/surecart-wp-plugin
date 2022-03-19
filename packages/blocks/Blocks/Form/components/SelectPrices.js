@@ -5,6 +5,7 @@ import { css, jsx } from '@emotion/core';
 import { CeRadioGroup, CeRadio } from '@checkout-engine/components-react';
 import PriceChoices from '@scripts/blocks/components/PriceChoices';
 import PriceSelector from '../../../components/PriceSelector';
+import { Fragment } from 'react';
 
 export default ({
 	template,
@@ -58,7 +59,7 @@ export default ({
 		}
 
 		return (
-			<div>
+			<Fragment>
 				<ce-dashboard-module heading={heading}>
 					<PriceSelector
 						ad_hoc={true}
@@ -74,12 +75,12 @@ export default ({
 						required
 					/>
 				</ce-dashboard-module>
-			</div>
+			</Fragment>
 		);
 	}
 
 	return (
-		<div>
+		<Fragment>
 			<ce-dashboard-module heading={__('Products', 'checkout_engine')}>
 				<PriceChoices
 					choices={choices}
@@ -123,6 +124,6 @@ export default ({
 					</CeRadioGroup>
 				</ce-dashboard-module>
 			)}
-		</div>
+		</Fragment>
 	);
 };

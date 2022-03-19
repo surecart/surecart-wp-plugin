@@ -1,3 +1,9 @@
+<!-- wp:checkout-engine/price-selector {"label":"Choose A Plan"} -->
+<ce-price-choices label="Choose A Plan" type="radio" columns="1"><div><!-- wp:checkout-engine/price-choice {"price_id":"9182e0aa-95b4-41ff-adeb-477fae3400f7","label":"","quantity":1,"checked":true} -->
+<ce-price-choice price-id="9182e0aa-95b4-41ff-adeb-477fae3400f7" type="radio" label="" checked show-label="1" show-price="1" show-control="1" quantity="1"></ce-price-choice>
+<!-- /wp:checkout-engine/price-choice --></div></ce-price-choices>
+<!-- /wp:checkout-engine/price-selector -->
+
 <!-- wp:checkout-engine/express-payment -->
 <ce-express-payment divider-text="or" class="wp-block-checkout-engine-express-payment"></ce-express-payment>
 <!-- /wp:checkout-engine/express-payment -->
@@ -15,7 +21,7 @@
 
 <!-- wp:checkout-engine/column -->
 <ce-column class="wp-block-checkout-engine-column"><!-- wp:checkout-engine/email -->
-<ce-email label="Email" autocomplete="email" inputmode="email" required class="wp-block-checkout-engine-email"></ce-customer-email>
+<ce-customer-email label="Email" autocomplete="email" inputmode="email" required class="wp-block-checkout-engine-email"></ce-customer-email>
 <!-- /wp:checkout-engine/email --></ce-column>
 <!-- /wp:checkout-engine/column --></ce-columns>
 <!-- /wp:checkout-engine/columns -->
@@ -29,7 +35,7 @@
 <!-- /wp:checkout-engine/heading -->
 
 <!-- wp:checkout-engine/address {"label":""} -->
-<ce-address label=""></ce-address>
+<ce-order-shipping-address label=""></ce-order-shipping-address>
 <!-- /wp:checkout-engine/address -->
 
 <!-- wp:spacer {"height":1} -->
@@ -70,7 +76,7 @@
 <!-- /wp:checkout-engine/subtotal -->
 
 <!-- wp:checkout-engine/coupon {"text":"Add Coupon Code","button_text":"Apply Coupon"} -->
-<ce-coupon-form label="Add Coupon Code">Apply Coupon</ce-coupon-form>
+<ce-order-coupon-form label="Add Coupon Code">Apply Coupon</ce-order-coupon-form>
 <!-- /wp:checkout-engine/coupon -->
 
 <!-- wp:checkout-engine/tax-line-item -->

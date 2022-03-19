@@ -20,10 +20,12 @@
 			"remove": true
 		},
 		"text": {
-			"type": "string"
+			"type": "string",
+			"default": "Add Coupon Code"
 		},
 		"button_text": {
-			"type": "string"
+			"type": "string",
+			"default": "Apply Coupon"
 		},
 		"disabled": {
 			"type": "boolean"

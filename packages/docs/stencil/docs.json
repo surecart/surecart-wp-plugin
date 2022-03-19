@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-03-19T14:09:48",
+  "timestamp": "2022-03-19T19:04:11",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.14.2",
@@ -12704,6 +12704,23 @@
           "required": false
         },
         {
+          "name": "showParentLabel",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "show-parent-label",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "size",
           "type": "\"large\" | \"medium\" | \"small\"",
           "mutable": false,
@@ -13796,17 +13813,6 @@
           "signature": "confirmCardSetup(secret: any) => Promise<any>",
           "parameters": [],
           "docs": "Confirm card setup.",
-          "docsTags": []
-        },
-        {
-          "name": "reportValidity",
-          "returns": {
-            "type": "Promise<string>",
-            "docs": ""
-          },
-          "signature": "reportValidity() => Promise<string>",
-          "parameters": [],
-          "docs": "",
           "docsTags": []
         }
       ],

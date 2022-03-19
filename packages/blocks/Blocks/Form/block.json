@@ -7,12 +7,7 @@
 	"keywords": ["email", "mail"],
 	"supports": {
 		"reusable": false,
-		"html": false,
-		"color": {
-			"background": true,
-			"link": true,
-			"text": true
-		}
+		"html": false
 	},
 	"attributes": {
 		"mode": {

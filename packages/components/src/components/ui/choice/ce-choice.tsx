@@ -133,7 +133,7 @@ export class CEChoice {
   }
 
   getAllChoices() {
-    const choiceGroup = this.el.parentElement;
+    const choiceGroup = this.el.closest('ce-choices') || this.el.parentElement;
     // Radios must be part of a radio group
     if (!choiceGroup) {
       return [];

@@ -2,7 +2,6 @@
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 
-import { Fragment } from '@wordpress/element';
 import {
 	CeInput,
 	CeButton,
@@ -10,7 +9,6 @@ import {
 	CeMenu,
 	CeMenuItem,
 } from '@checkout-engine/components-react';
-import { Icon, trash, moreHorizontalMobile } from '@wordpress/icons';
 import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { translateInterval } from '@scripts/admin/util/translations';
