@@ -22,7 +22,7 @@
 	<!-- /wp:checkout-engine/subtotal -->
 
 	<!-- wp:checkout-engine/coupon {"text":"Add Coupon Code","button_text":"Apply Coupon"} -->
-	<ce-coupon-form label="Add Coupon Code">Apply Coupon</ce-coupon-form>
+	<ce-order-coupon-form label="Add Coupon Code">Apply Coupon</ce-order-coupon-form>
 	<!-- /wp:checkout-engine/coupon -->
 
 	<!-- wp:checkout-engine/tax-line-item -->
@@ -40,7 +40,15 @@
 	<!-- /wp:checkout-engine/column -->
 
 	<!-- wp:checkout-engine/column {"style":{"spacing":{"padding":{"top":"0px","right":"0px","bottom":"0px","left":"0px"}}}} -->
-	<ce-column class="wp-block-checkout-engine-column" style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px"><!-- wp:checkout-engine/express-payment -->
+	<ce-column class="wp-block-checkout-engine-column" style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px">
+
+		<!-- wp:checkout-engine/price-selector {"label":"Choose A Plan"} -->
+<ce-price-choices label="Choose A Plan" type="radio" columns="1"><div><!-- wp:checkout-engine/price-choice -->
+	<ce-price-choice type="radio" show-label="1" show-price="1" show-control="1"></ce-price-choice>
+	<!-- /wp:checkout-engine/price-choice --></div></ce-price-choices>
+	<!-- /wp:checkout-engine/price-selector -->
+
+	<!-- wp:checkout-engine/express-payment -->
 	<ce-express-payment divider-text="or" class="wp-block-checkout-engine-express-payment"></ce-express-payment>
 	<!-- /wp:checkout-engine/express-payment -->
 
@@ -49,15 +57,15 @@
 	<!-- /wp:checkout-engine/heading -->
 
 	<!-- wp:checkout-engine/email {"label":"Email Address"} -->
-	<ce-email label="Email Address" autocomplete="email" inputmode="email" required class="wp-block-checkout-engine-email"></ce-customer-email>
+	<ce-customer-email label="Email Address" autocomplete="email" inputmode="email" required class="wp-block-checkout-engine-email"></ce-customer-email>
 	<!-- /wp:checkout-engine/email -->
 
 	<!-- wp:checkout-engine/password -->
-	<ce-input label="Password" placeholder="" size="medium" type="password" name="password" value="" class="wp-block-checkout-engine-password"></ce-input>
+	<ce-order-password label="Password" placeholder="" size="medium" type="password" name="password" value="" class="wp-block-checkout-engine-password"></ce-order-password>
 	<!-- /wp:checkout-engine/password -->
 
 	<!-- wp:checkout-engine/address -->
-	<ce-address label="Address"></ce-address>
+	<ce-order-shipping-address label="Address"></ce-order-shipping-address>
 	<!-- /wp:checkout-engine/address -->
 
 	<!-- wp:checkout-engine/payment {"secure_notice":"This is a secure, encrypted payment"} -->
