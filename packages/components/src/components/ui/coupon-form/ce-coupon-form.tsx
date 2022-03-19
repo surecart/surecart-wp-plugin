@@ -1,4 +1,5 @@
 import { Component, State, h, Watch, Prop, Event, EventEmitter } from '@stencil/core';
+import { __ } from '@wordpress/i18n';
 import { getHumanDiscount } from '../../../functions/price';
 import { DiscountResponse } from '../../../types';
 
@@ -35,7 +36,7 @@ export class CeCouponForm {
   @Prop() discountAmount: number;
 
   /** Is it open */
-  @State() open: boolean;
+  @Prop({ mutable: true }) open: boolean;
 
   /** The value of the input */
   @State() value: string;
@@ -78,18 +79,20 @@ export class CeCouponForm {
 
       return (
         <ce-line-item>
-          <ce-tag
-            type="success"
-            class="coupon-tag"
-            slot="title"
-            clearable
-            onCeClear={() => {
-              this.ceApplyCoupon.emit(null);
-              this.open = false;
-            }}
-          >
-            {this?.discount?.promotion?.code}
-          </ce-tag>
+          <span slot="description">
+            <div>{__('Discount')}</div>
+            <ce-tag
+              type="success"
+              class="coupon-tag"
+              clearable
+              onCeClear={() => {
+                this.ceApplyCoupon.emit(null);
+                this.open = false;
+              }}
+            >
+              {this?.discount?.promotion?.code}
+            </ce-tag>
+          </span>
 
           {humanDiscount && (
             <span class="coupon-human-discount" slot="price-description">

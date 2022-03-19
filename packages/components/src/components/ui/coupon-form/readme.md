@@ -17,6 +17,7 @@
 | `forceOpen`      | `force-open`      | Force the form to show        | `boolean`          | `undefined` |
 | `label`          | `label`           | The label for the coupon form | `string`           | `undefined` |
 | `loading`        | `loading`         | Is the form loading           | `boolean`          | `undefined` |
+| `open`           | `open`            | Is it open                    | `boolean`          | `undefined` |
 
 
 ## Events
