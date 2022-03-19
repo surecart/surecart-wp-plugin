@@ -62,6 +62,8 @@ export default ({
 		);
 	};
 
+	console.log({ onNew });
+
 	return (
 		<ce-table-row>
 			<ce-table-cell
@@ -71,12 +73,7 @@ export default ({
 				`}
 			>
 				{!choice?.id ? (
-					<PriceSelector
-						ad_hoc={false}
-						createNew={true}
-						onNewProduct={onNew}
-						onSelect={onSelect}
-					/>
+					<PriceSelector ad_hoc={false} onSelect={onSelect} />
 				) : (
 					product?.name
 				)}

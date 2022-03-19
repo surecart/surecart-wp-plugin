@@ -7,6 +7,7 @@ import { CeInput, CeSwitch, CeSelect } from '@checkout-engine/components-react';
 import Box from '../../ui/Box';
 
 export default ({ productGroup, updateProductGroup, loading }) => {
+	console.log({ productGroup });
 	return (
 		<Box title={__('Details', 'checkout_engine')} loading={loading}>
 			<div

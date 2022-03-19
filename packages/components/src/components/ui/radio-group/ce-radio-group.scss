@@ -21,7 +21,7 @@
 
 ::slotted(ce-radio:not(:last-of-type)) {
   display: block;
-  margin-bottom: var(--ce-spacing-x-small);
+  margin-bottom: var(--ce-spacing-x-small) !important;
 }
 
 // .radio-group:not(.radio-group--has-fieldset) {

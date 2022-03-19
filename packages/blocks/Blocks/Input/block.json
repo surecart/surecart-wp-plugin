@@ -30,7 +30,8 @@
 			"default": ""
 		},
 		"label": {
-			"type": "string"
+			"type": "string",
+			"default": "Input"
 		},
 		"help": {
 			"type": "string"

@@ -14,7 +14,7 @@ export default ({
 			css={css`
 				background: #fff;
 				font-family: var(--ce-font-sans);
-				font-size: 13px;
+				font-size: 14px;
 				box-sizing: border-box;
 				position: relative;
 				min-height: 200px;

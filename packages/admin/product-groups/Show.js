@@ -15,7 +15,9 @@ export default () => {
 	const {
 		id,
 		product_group,
+		isLoading: isGroupLoading,
 		updateProductgroup,
+		fetchProductgroup,
 		saveProductgroup,
 		isSaving,
 		setSaving,
@@ -26,14 +28,17 @@ export default () => {
 		useEntities('product');
 
 	useEffect(() => {
-		fetchProducts({
-			query: {
-				product_group_ids: [id],
-				recurring: true,
-				expand: ['prices', 'product_group'],
-			},
-		});
-	}, []);
+		if (!id) return;
+		console.log({ id });
+		// fetchProducts({
+		// 	query: {
+		// 		product_group_ids: [id],
+		// 		recurring: true,
+		// 		expand: ['prices', 'product_group'],
+		// 	},
+		// });
+		// fetchProductgroup({});
+	}, [id]);
 
 	const onSubmit = async (e) => {
 		e.preventDefault();
@@ -125,7 +130,7 @@ export default () => {
 			pageModelName={'product_group'}
 			onSubmit={onSubmit}
 			button={
-				isLoading ? (
+				isLoading || isGroupLoading ? (
 					<ce-skeleton
 						style={{
 							width: '120px',
@@ -155,14 +160,14 @@ export default () => {
 			<Details
 				productGroup={product_group}
 				updateProductGroup={updateProductgroup}
-				loading={isLoading}
+				loading={isLoading || isGroupLoading}
 			/>
 			<Products
 				id={id}
 				products={products}
 				fetchProducts={fetchProducts}
 				addProduct={addProduct}
-				loading={isLoading}
+				loading={isLoading || isGroupLoading}
 			/>
 		</Template>
 	);

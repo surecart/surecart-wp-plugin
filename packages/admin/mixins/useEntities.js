@@ -26,7 +26,6 @@ export default (name, args, deps = []) => {
 
 	deps.length &&
 		useEffect(() => {
-			console.log(deps);
 			fetchEntities(args);
 		}, deps);
 

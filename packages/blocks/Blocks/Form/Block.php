@@ -61,7 +61,7 @@ class Block extends BaseBlock {
 				'form_id'     => $ce_form_id,
 				'id'          => 'ce-checkout-' . $ce_form_id,
 				'prices'      => $attributes['prices'] ?? [],
-				'success_url' => $attributes['redirect'] ?? \CheckoutEngine::pages()->url( 'order-confirmation' ),
+				'success_url' => ! empty( $attributes['redirect'] ) ? $attributes['redirect'] : \CheckoutEngine::pages()->url( 'order-confirmation' ),
 				'i18n'        => $this->getTranslations(),
 			]
 		);

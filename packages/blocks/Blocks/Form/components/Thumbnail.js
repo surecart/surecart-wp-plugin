@@ -3,6 +3,7 @@ import { css, jsx } from '@emotion/core';
 
 export default ({ label, children, selected, onSelect }) => {
 	const base = css`
+		flex: 1;
 		display: flex;
 		align-items: center;
 		overflow: hidden;
@@ -10,7 +11,7 @@ export default ({ label, children, selected, onSelect }) => {
 		border: 1px solid #f0f0f0;
 		height: inherit;
 		min-height: 300px;
-		max-height: 800px;
+		max-height: 700px;
 		cursor: pointer;
 		&:hover {
 			border-color: var(--wp-admin-theme-color);
@@ -31,12 +32,18 @@ export default ({ label, children, selected, onSelect }) => {
 	`;
 
 	return (
-		<div onClick={onSelect}>
+		<div
+			css={css`
+				display: flex;
+				flex-direction: column;
+			`}
+			onClick={onSelect}
+		>
 			<div css={[base, selected && highlighted]}>{children}</div>
 			<div
 				css={css`
 					padding-top: 8px;
-					font-size: 12px;
+					font-size: 16px;
 					text-align: center;
 				`}
 			>

@@ -76,16 +76,6 @@ export class CeSessionProvider {
     populateInputs(this.el, val);
   }
 
-  /** Update form state when form data changes */
-  // @Listen('ceFormChange')
-  // handleFormChange(e) {
-  //   const data = e.detail;
-  //   this.ceUpdateDraftState.emit(data);
-  //   if (Object.values(data || {}).every(item => !item)) return;
-  //   // we update silently here since we parse form data on submit.
-  //   this.update(this.parseFormData(data));
-  // }
-
   @Listen('ceUpdateOrder')
   @Listen('ceUpdateSession')
   handleUpdateSession(e) {
@@ -115,13 +105,42 @@ export class CeSessionProvider {
       shipping_line_2,
       shipping_postal_code,
       shipping_state,
+      billing_city,
+      billing_country,
+      billing_line_1,
+      billing_line_2,
+      billing_postal_code,
+      billing_state,
       'tax_identifier.number_type': tax_number_type,
       'tax_identifier.number': tax_number,
       ...rest
     } = data;
 
+    const shipping_address = {
+      ...(shipping_city ? { city: shipping_city } : {}),
+      ...(shipping_country ? { country: shipping_country } : {}),
+      ...(shipping_line_1 ? { line_1: shipping_line_1 } : {}),
+      ...(shipping_line_2 ? { line_2: shipping_line_2 } : {}),
+      ...(shipping_postal_code ? { postal_code: shipping_postal_code } : {}),
+      ...(shipping_state ? { state: shipping_state } : {}),
+    };
+
+    const billing_address = {
+      ...(billing_city ? { city: billing_city } : {}),
+      ...(billing_country ? { country: billing_country } : {}),
+      ...(billing_line_1 ? { line_1: billing_line_1 } : {}),
+      ...(billing_line_2 ? { line_2: billing_line_2 } : {}),
+      ...(billing_postal_code ? { postal_code: billing_postal_code } : {}),
+      ...(billing_state ? { state: billing_state } : {}),
+    };
+
     return {
-      password,
+      ...(name ? { name } : {}),
+      ...(email ? { email } : {}),
+      ...(password ? { password } : {}),
+      ...(Object.keys(shipping_address || {}).length ? { shipping_address } : {}),
+      ...(Object.keys(billing_address || {}).length ? { billing_address } : {}),
+      ...(tax_number_type && tax_number ? { tax_identifier: { number: tax_number, number_type: tax_number_type } } : {}),
       metadata: rest || {},
     };
   }
@@ -137,11 +156,6 @@ export class CeSessionProvider {
     // Get current form state.
     const json = await this.el.querySelector('ce-form').getFormJson();
     let data = this.parseFormData(json);
-
-    // add additional data passed with event
-    if (Object.keys(e?.detail?.data || {})?.length) {
-      data = { ...data, ...e?.detail?.data };
-    }
 
     // first lets make sure the session is updated before we process it.
     await this.loadUpdate(data);
@@ -169,9 +183,16 @@ export class CeSessionProvider {
           break;
       }
     } catch (e) {
+      // handle old price versions by refreshing.
       if (e?.additional_errors?.[0]?.code === 'order.line_items.old_price_versions') {
-        // Remove saved order.
-        window.localStorage.removeItem(this.groupId);
+        await this.loadUpdate({
+          id: this.order.id,
+          data: {
+            status: 'draft',
+            refresh_price_versions: true,
+          },
+        });
+        return;
       }
       // make it a draft again and resubmit if status is incorrect.
       if (['order.invalid_status_transition'].includes(e?.code)) {
@@ -337,7 +358,7 @@ export class CeSessionProvider {
   }
 
   /** Update a session */
-  async update(data = {}) {
+  async update(data = {}, query = {}) {
     try {
       this.session = (await createOrUpdateOrder({
         id: this.getSessionId(),
@@ -347,6 +368,7 @@ export class CeSessionProvider {
         },
         query: {
           ...this.defaultFormQuery(),
+          ...query,
         },
       })) as Order;
     } catch (e) {

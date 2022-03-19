@@ -71,7 +71,13 @@ export default () => {
 			}
 			notices={snackbarNotices}
 			removeNotice={removeSnackbarNotice}
-			sidebar={<Sidebar customer={customer} loading={isLoading} />}
+			sidebar={
+				<Sidebar
+					order={order}
+					customer={customer}
+					loading={isLoading}
+				/>
+			}
 		>
 			<Fragment>
 				<FlashError path="orders" scrollIntoView />

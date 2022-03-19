@@ -3,10 +3,11 @@
 namespace CheckoutEngine\Controllers\Admin;
 
 use CheckoutEngine\Models\ApiToken;
+use CheckoutEngine\Models\Account;
 
 class Onboarding {
 	public function show( \CheckoutEngineCore\Requests\RequestInterface $request, $view ) {
-		if ( ! ApiToken::get() ) {
+		if ( ! ApiToken::get() || is_wp_error( Account::find() ) ) {
 			return \CheckoutEngine::view( 'admin/onboarding/install' )->with(
 				[
 					'url' => esc_url_raw( untrailingslashit( CHECKOUT_ENGINE_APP_URL ) . '/sign_up?return_url=' . esc_url( admin_url( 'admin.php?page=ce-complete-signup' ) ) ),

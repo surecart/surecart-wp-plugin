@@ -50,7 +50,6 @@ export default ({ onCreate }) => {
 						})
 					}
 				>
-					<ce-icon name="arrow-right" slot="suffix"></ce-icon>
 					{__('Create', 'checkout_engine')}
 				</CeButton>
 			}
@@ -62,6 +61,7 @@ export default ({ onCreate }) => {
 						setTemplate('');
 					}}
 				>
+					<ce-icon name="arrow-left" slot="prefix"></ce-icon>
 					{__('Back', 'checkout_engine')}
 				</CeButton>
 			}

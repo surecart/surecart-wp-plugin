@@ -64,7 +64,7 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 			true
 		);
 
-		// ui
+		// ui.
 		$asset_file = include trailingslashit( $this->container[ CHECKOUT_ENGINE_CONFIG_KEY ]['app_core']['path'] ) . 'dist/store/ui.asset.php';
 		wp_register_script(
 			'ce-ui-data',

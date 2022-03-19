@@ -4,6 +4,7 @@ namespace CheckoutEngine\Rest;
 
 use CheckoutEngine\Rest\RestServiceInterface;
 use CheckoutEngine\Controllers\Rest\OrderController;
+use CheckoutEngine\Form\FormValidationService;
 use CheckoutEngine\Models\Form;
 use CheckoutEngine\Models\User;
 use CheckoutEngine\Rest\Traits\CanListByCustomerIds;
@@ -132,6 +133,12 @@ class OrderRestServiceProvider extends RestServiceProvider implements RestServic
 			// TODO: check form manual registration on server here. (ce_register_form)
 			// form not found.
 			return new \WP_Error( 'form_id_invalid', esc_html__( 'Form ID is invalid.', 'checkout_engine' ), [ 'status' => 400 ] );
+		}
+
+		$validator = new FormValidationService( $form->post_content, $request->get_body_params() );
+		$validated = $validator->validate();
+		if ( is_wp_error( $validated ) ) {
+			return $validated;
 		}
 
 		return true;
