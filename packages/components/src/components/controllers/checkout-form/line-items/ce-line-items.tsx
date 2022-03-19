@@ -74,7 +74,7 @@ export class CeLineItems {
               key={item.id}
               imageUrl={(item?.price?.product as Product)?.image_url}
               name={(item?.price?.product as Product)?.name}
-              editable={this.editable}
+              editable={this.editable && !item?.ad_hoc_amount}
               removable={this.removable}
               quantity={item.quantity}
               amount={item.ad_hoc_amount !== null ? item.ad_hoc_amount : item.price.amount * item.quantity}

@@ -24,6 +24,7 @@
  - [ce-customer-edit](../../controllers/dashboard/customer-edit)
  - [ce-donation-choices](../../controllers/checkout-form/ce-donation-choices)
  - [ce-downloads-list](../downloads-list)
+ - [ce-express-payment](../../controllers/checkout-form/express-payment)
  - [ce-invoices-list](../../controllers/dashboard/invoices-list)
  - [ce-login-form](../../controllers/login)
  - [ce-orders-list](../../controllers/dashboard/orders-list)
@@ -53,6 +54,7 @@ graph TD;
   ce-customer-edit --> ce-block-ui
   ce-donation-choices --> ce-block-ui
   ce-downloads-list --> ce-block-ui
+  ce-express-payment --> ce-block-ui
   ce-invoices-list --> ce-block-ui
   ce-login-form --> ce-block-ui
   ce-orders-list --> ce-block-ui

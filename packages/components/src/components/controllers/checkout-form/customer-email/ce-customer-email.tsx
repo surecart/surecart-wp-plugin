@@ -5,6 +5,7 @@ import { createOrUpdateOrder } from '../../../../services/session';
 
 @Component({
   tag: 'ce-customer-email',
+  styleUrl: 'ce-customer-email.css',
   shadow: false,
 })
 export class CeCustomerEmail {

@@ -10,6 +10,7 @@ import { openWormhole } from 'stencil-wormhole';
 export class CeExpressPayment {
   @Prop() processor: 'stripe' | 'paypal';
   @Prop() formId: number | string;
+  @Prop() busy: boolean;
   @Prop() order: Order;
   @Prop() dividerText: string;
   @Prop() debug: boolean;
@@ -41,10 +42,11 @@ export class CeExpressPayment {
     return (
       <Fragment>
         {this.renderStripePaymentRequest()}
-        {(this.hasPaymentOptions || this.debug) && <ce-divider style={{ '--spacing': 'var(--ce-form-row-spacing' }}>{this.dividerText}</ce-divider>}
+        {(this.hasPaymentOptions || this.debug) && <ce-divider style={{ '--spacing': 'calc(var(--ce-form-row-spacing)/2)' }}>{this.dividerText}</ce-divider>}
+        {this.busy && <ce-block-ui></ce-block-ui>}
       </Fragment>
     );
   }
 }
 
-openWormhole(CeExpressPayment, ['order', 'formId'], false);
+openWormhole(CeExpressPayment, ['order', 'formId', 'busy'], false);

@@ -52,6 +52,7 @@
  - [ce-coupon-form](../coupon-form)
  - [ce-customer-details](../customer-details)
  - [ce-customer-edit](../../controllers/dashboard/customer-edit)
+ - [ce-donation-choices](../../controllers/checkout-form/ce-donation-choices)
  - [ce-downloads-list](../downloads-list)
  - [ce-invoices-list](../../controllers/dashboard/invoices-list)
  - [ce-login-form](../../controllers/login)
@@ -83,6 +84,7 @@ graph TD;
   ce-coupon-form --> ce-button
   ce-customer-details --> ce-button
   ce-customer-edit --> ce-button
+  ce-donation-choices --> ce-button
   ce-downloads-list --> ce-button
   ce-invoices-list --> ce-button
   ce-login-form --> ce-button
