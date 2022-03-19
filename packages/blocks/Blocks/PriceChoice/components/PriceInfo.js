@@ -41,7 +41,7 @@ export default ({ price_id }) => {
 		<div>
 			<h3
 				css={css`
-					margin: 0;
+					margin: 0 !important;
 				`}
 			>
 				{product?.name}

@@ -17,7 +17,7 @@ import PriceInfo from './components/PriceInfo';
 
 import PriceSelector from '@scripts/blocks/components/PriceSelector';
 
-export default ( { attributes, setAttributes, isSelected } ) => {
+export default ({ attributes, setAttributes, isSelected }) => {
 	const {
 		price_id,
 		label,
@@ -30,15 +30,15 @@ export default ( { attributes, setAttributes, isSelected } ) => {
 		checked,
 	} = attributes;
 
-	const blockProps = useBlockProps( {
+	const blockProps = useBlockProps({
 		style: { width: '100%' },
-	} );
+	});
 
-	if ( ! price_id ) {
+	if (!price_id) {
 		return (
-			<div { ...blockProps }>
+			<div {...blockProps}>
 				<PriceSelector
-					onSelect={ ( price_id ) => setAttributes( { price_id } ) }
+					onSelect={(price_id) => setAttributes({ price_id })}
 				/>
 			</div>
 		);
@@ -47,85 +47,77 @@ export default ( { attributes, setAttributes, isSelected } ) => {
 	return (
 		<Fragment>
 			<InspectorControls>
-				<PanelBody title={ __( 'Price Info', 'checkout-engine' ) }>
+				<PanelBody title={__('Attributes', 'checkout-engine')}>
 					<PanelRow>
-						<PriceInfo price_id={ price_id } />
+						<TextControl
+							label={__('Label', 'checkout-engine')}
+							value={label}
+							onChange={(label) => setAttributes({ label })}
+						/>
+					</PanelRow>
+					<PanelRow>
+						<TextControl
+							label={__('Description', 'checkout-engine')}
+							value={description}
+							onChange={(description) =>
+								setAttributes({ description })
+							}
+						/>
+					</PanelRow>
+					<PanelRow>
+						<ToggleControl
+							label={__('Checked By Default', 'checkout-engine')}
+							checked={checked}
+							onChange={(checked) => setAttributes({ checked })}
+						/>
+					</PanelRow>
+					<PanelRow>
+						<ToggleControl
+							label={__('Show Label', 'checkout-engine')}
+							checked={show_label}
+							onChange={(show_label) =>
+								setAttributes({ show_label })
+							}
+						/>
+					</PanelRow>
+					<PanelRow>
+						<ToggleControl
+							label={__('Show Price Amount', 'checkout-engine')}
+							checked={show_price}
+							onChange={(show_price) =>
+								setAttributes({ show_price })
+							}
+						/>
+					</PanelRow>
+					<PanelRow>
+						<ToggleControl
+							label={__('Show control', 'checkout-engine')}
+							checked={show_control}
+							onChange={(show_control) =>
+								setAttributes({ show_control })
+							}
+						/>
 					</PanelRow>
 				</PanelBody>
-				<PanelBody title={ __( 'Attributes', 'checkout-engine' ) }>
+				<PanelBody title={__('Product Info', 'checkout-engine')}>
 					<PanelRow>
-						<TextControl
-							label={ __( 'Label', 'checkout-engine' ) }
-							value={ label }
-							onChange={ ( label ) => setAttributes( { label } ) }
-						/>
-					</PanelRow>
-					<PanelRow>
-						<TextControl
-							label={ __( 'Description', 'checkout-engine' ) }
-							value={ description }
-							onChange={ ( description ) =>
-								setAttributes( { description } )
-							}
-						/>
-					</PanelRow>
-					<PanelRow>
-						<ToggleControl
-							label={ __(
-								'Checked By Default',
-								'checkout-engine'
-							) }
-							checked={ checked }
-							onChange={ ( checked ) =>
-								setAttributes( { checked } )
-							}
-						/>
-					</PanelRow>
-					<PanelRow>
-						<ToggleControl
-							label={ __( 'Show Label', 'checkout-engine' ) }
-							checked={ show_label }
-							onChange={ ( show_label ) =>
-								setAttributes( { show_label } )
-							}
-						/>
-					</PanelRow>
-					<PanelRow>
-						<ToggleControl
-							label={ __(
-								'Show Price Amount',
-								'checkout-engine'
-							) }
-							checked={ show_price }
-							onChange={ ( show_price ) =>
-								setAttributes( { show_price } )
-							}
-						/>
-					</PanelRow>
-					<PanelRow>
-						<ToggleControl
-							label={ __( 'Show control', 'checkout-engine' ) }
-							checked={ show_control }
-							onChange={ ( show_control ) =>
-								setAttributes( { show_control } )
-							}
-						/>
+						<PriceInfo price_id={price_id} />
 					</PanelRow>
 				</PanelBody>
 			</InspectorControls>
 
 			<CePriceChoice
-				{ ...blockProps }
-				onClick={ ( e ) => e.preventDefault() }
-				priceId={ price_id }
-				type={ type }
-				label={ label }
-				showLabel={ show_label }
-				showPrice={ show_price }
-				showControl={ show_control }
-				description={ description }
-				checked={ checked }
-				quantity={ quantity }
+				{...blockProps}
+				onClick={(e) => e.preventDefault()}
+				priceId={price_id}
+				type={type}
+				label={label}
+				showLabel={show_label}
+				showPrice={show_price}
+				showControl={show_control}
+				description={description}
+				checked={checked}
+				quantity={quantity}
 			/>
 		</Fragment>
 	);
