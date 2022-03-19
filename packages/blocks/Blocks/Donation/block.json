@@ -21,6 +21,10 @@
 		"currency": {
 			"type": "string",
 			"default": "USD"
+		},
+		"custom_amount": {
+			"type": "boolean",
+			"default": true
 		}
 	}
 }

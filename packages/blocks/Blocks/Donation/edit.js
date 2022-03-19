@@ -6,6 +6,7 @@ import {
 	PanelBody,
 	PanelRow,
 	TextControl,
+	ToggleControl,
 	Modal,
 	Tooltip,
 } from '@wordpress/components';
@@ -28,13 +29,14 @@ import {
 import { store as coreStore } from '@wordpress/core-data';
 
 export default ({ attributes, setAttributes, isSelected, clientId }) => {
+	const { price_id, label, currency, custom_amount } = attributes;
+
 	const [showModal, setShowModal] = useState(false);
 	const { insertBlocks } = useDispatch(blockEditorStore);
 	const useInnerBlocksProps = __stableUseInnerBlocksProps
 		? __stableUseInnerBlocksProps
 		: __experimentalUseInnerBlocksProps;
 
-	const { price_id, label, currency } = attributes;
 	const [template, setTemplate] = useState([
 		['checkout-engine/donation-amount', { amount: 100, currency }],
 		['checkout-engine/donation-amount', { amount: 200, currency }],
@@ -138,15 +140,33 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 							onChange={(label) => setAttributes({ label })}
 						/>
 					</PanelRow>
+					<PanelRow>
+						<ToggleControl
+							label={__(
+								'Allow custom amount to be entered',
+								'checkout-engine'
+							)}
+							checked={custom_amount}
+							onChange={(custom_amount) =>
+								setAttributes({ custom_amount })
+							}
+						/>
+					</PanelRow>
 				</PanelBody>
 			</InspectorControls>
 
 			<div {...blockProps}>
 				<CeDonationChoices label={label} priceId={price_id}>
 					<div {...innerBlocksProps}></div>
-					<ce-choice show-control="false" size="small" value="ad_hoc">
-						{__('Other', 'checkout_engine')}
-					</ce-choice>
+					{custom_amount && (
+						<ce-choice
+							show-control="false"
+							size="small"
+							value="ad_hoc"
+						>
+							{__('Other', 'checkout_engine')}
+						</ce-choice>
+					)}
 				</CeDonationChoices>
 
 				{isSelected && (
