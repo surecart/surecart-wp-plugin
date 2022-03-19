@@ -9,6 +9,7 @@ const Template = ({ loading, priceId, amount, ad_hoc_max_amount, ad_hoc_min_amou
     const donation = document.querySelector('ce-donation-choices');
     donation.lineItems = [
       {
+        ad_hoc_amount: amount,
         price: {
           id: 'test',
           amount,
@@ -82,5 +83,5 @@ RemoveChoices.args = {
   priceId: 'test',
   amount: 1000,
   ad_hoc_min_amount: 100,
-  ad_hoc_max_amount: 200,
+  ad_hoc_max_amount: 2000,
 };

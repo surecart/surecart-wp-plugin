@@ -5,7 +5,7 @@ import { openWormhole } from 'stencil-wormhole';
 
 @Component({
   tag: 'ce-donation-choices',
-  styleUrl: 'ce-donation-choices.css',
+  styleUrl: 'ce-donation-choices.scss',
   shadow: true,
 })
 export class CeDonationChoices {
@@ -131,6 +131,13 @@ export class CeDonationChoices {
     });
   }
 
+  updateCustomAmount() {
+    if (this.input.value === this.lineItem?.ad_hoc_amount.toString()) return;
+    this.input.value
+      ? this.ceUpdateLineItem.emit({ price_id: this.priceId, quantity: 1, ad_hoc_amount: parseInt(this.input.value) })
+      : this.ceRemoveLineItem.emit({ price_id: this.priceId, quantity: 1 });
+  }
+
   render() {
     if (this.loading) {
       return (
@@ -149,17 +156,17 @@ export class CeDonationChoices {
         </ce-choices>
 
         {this.showCustomAmount && (
-          <ce-price-input
-            ref={el => (this.input = el as HTMLCePriceInputElement)}
-            required
-            label={'Enter an amount'}
-            onCeChange={async (e: any) => {
-              e.target.value
-                ? this.ceUpdateLineItem.emit({ price_id: this.priceId, quantity: 1, ad_hoc_amount: parseInt(e.target.value) })
-                : this.ceRemoveLineItem.emit({ price_id: this.priceId, quantity: 1 });
-            }}
-            value={this.lineItem?.ad_hoc_amount.toString()}
-          ></ce-price-input>
+          <div class="ce-donation-choices__form">
+            <ce-price-input
+              ref={el => (this.input = el as HTMLCePriceInputElement)}
+              required
+              label={'Enter an amount'}
+              value={this.lineItem?.ad_hoc_amount.toString()}
+            ></ce-price-input>
+            <ce-button type="primary" onClick={() => this.updateCustomAmount()} full busy={this.busy}>
+              {__('Update', 'checkout-engine')}
+            </ce-button>
+          </div>
         )}
 
         {this.busy && <ce-block-ui style={{ zIndex: '9' }}></ce-block-ui>}

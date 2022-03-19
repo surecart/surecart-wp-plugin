@@ -46,6 +46,7 @@ Type: `Promise<boolean>`
 - [ce-skeleton](../../../ui/skeleton)
 - [ce-choices](../../../ui/choices)
 - [ce-price-input](../../../ui/price-input)
+- [ce-button](../../../ui/button)
 - [ce-block-ui](../../../ui/block-ui)
 
 ### Graph
@@ -54,11 +55,13 @@ graph TD;
   ce-donation-choices --> ce-skeleton
   ce-donation-choices --> ce-choices
   ce-donation-choices --> ce-price-input
+  ce-donation-choices --> ce-button
   ce-donation-choices --> ce-block-ui
   ce-choices --> ce-form-control
   ce-form-control --> ce-tooltip
   ce-price-input --> ce-input
   ce-input --> ce-form-control
+  ce-button --> ce-spinner
   ce-block-ui --> ce-spinner
   style ce-donation-choices fill:#f9f,stroke:#333,stroke-width:4px
 ```
