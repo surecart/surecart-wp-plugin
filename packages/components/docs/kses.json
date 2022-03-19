@@ -204,6 +204,7 @@
     "force-open": true,
     "label": true,
     "loading": true,
+    "open": true,
     "style": true,
     "id": true,
     "class": true,
@@ -349,6 +350,7 @@
     "slot": true
   },
   "ce-express-payment": {
+    "busy": true,
     "debug": true,
     "divider-text": true,
     "form-id": true,
