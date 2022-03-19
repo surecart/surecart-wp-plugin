@@ -67,7 +67,7 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 						`}
 					>
 						<CePriceInput
-							label={__('Min Amount', 'checkout_engine')}
+							label={__('Minimum Amount', 'checkout_engine')}
 							className="ce-ad-hoc-min-amount"
 							value={price?.ad_hoc_min_amount}
 							onCeChange={(e) =>
@@ -75,10 +75,9 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 									ad_hoc_min_amount: e.target.value,
 								})
 							}
-							required
 						/>
 						<CePriceInput
-							label={__('Max Amount', 'checkout_engine')}
+							label={__('Maximum Amount', 'checkout_engine')}
 							className="ce-ad-hoc-max-amount"
 							value={price?.ad_hoc_max_amount}
 							min={price?.ad_hoc_min_amount / 100}
