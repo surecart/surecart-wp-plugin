@@ -53,8 +53,8 @@ export default ({ template, setTemplate }) => {
 				/>
 				<Thumbnail
 					label={'Two Columns'}
-					selected={choice === 'two-columns'}
-					onSelect={() => setChoice('two-columns')}
+					selected={choice === 'two-column'}
+					onSelect={() => setChoice('two-column')}
 				/>
 				<Thumbnail
 					label={'Donation'}
