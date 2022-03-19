@@ -57,12 +57,7 @@ export default function edit({ clientId, attributes, setAttributes }) {
 	const blockCount = useSelect((select) =>
 		select(blockEditorStore).getBlockCount(clientId)
 	);
-	const [template, setTemplate] = useState('sections');
-	const { replaceInnerBlocks, setTemplateValidity } =
-		useDispatch(blockEditorStore);
-
-	// temporary fix for default template.
-	setTemplateValidity(true);
+	const { replaceInnerBlocks } = useDispatch(blockEditorStore);
 
 	const changeTemplate = async () => {
 		const r = confirm(
@@ -101,34 +96,67 @@ export default function edit({ clientId, attributes, setAttributes }) {
 		});
 
 		// parse blocks.
-		const parsed = parse(await result.text());
+		let parsed = parse(await result.text());
 
+		parsed = populateChoicesBlock(parsed, choices, choice_type);
+		parsed = populateDonationBlock(parsed, choices);
+
+		return parsed;
+	};
+
+	/**
+	 * Maybe populated the donation block with the correct price.
+	 */
+	const populateChoicesBlock = (blocks, choices, choice_type) => {
 		// get the price selector block
-		const priceChoiceBlock = parsed.findIndex(
+		const priceChoiceBlock = blocks.findIndex(
 			(block) => block.name === 'checkout-engine/price-selector'
 		);
 
 		// Remove price choices from template.
 		if (!choices?.length || !['checkbox', 'radio'].includes(choice_type)) {
-			return parsed.filter(function (_, index) {
+			blocks = blocks.filter(function (_, index) {
 				return index !== priceChoiceBlock;
 			});
+		} else {
+			// add choices as price choice inner blocks.
+			blocks[priceChoiceBlock].innerBlocks = choices.map(
+				(choice, index) => {
+					return [
+						'checkout-engine/price-choice',
+						{
+							price_id: choice?.id,
+							quantity: choice?.quantity || 1,
+							type: choice_type,
+							checked: index === 0 && choice_type === 'radio',
+						},
+					];
+				}
+			);
 		}
 
-		// add choices as price choice inner blocks.
-		parsed[priceChoiceBlock].innerBlocks = choices.map((choice, index) => {
-			return [
-				'checkout-engine/price-choice',
-				{
-					price_id: choice?.id,
-					quantity: choice?.quantity || 1,
-					type: choice_type,
-					checked: index === 0 && choice_type === 'radio',
-				},
-			];
-		});
+		return blocks;
+	};
 
-		return parsed;
+	/**
+	 * Maybe populated the donation block with the correct price.
+	 */
+	const populateDonationBlock = (blocks, choices) => {
+		const donationBlockIndex = blocks.findIndex(
+			(block) => block.name === 'checkout-engine/donation'
+		);
+
+		// maybe remove donation block
+		if (!choices?.length) {
+			blocks = blocks.filter(function (_, index) {
+				return index !== donationBlockIndex;
+			});
+		} else {
+			// add choice to donation block
+			blocks[donationBlockIndex].attributes.price_id = choices[0].id;
+		}
+
+		return blocks;
 	};
 
 	const onCreate = async ({
@@ -324,7 +352,7 @@ export default function edit({ clientId, attributes, setAttributes }) {
 							css={css`
 								*
 									> *
-									> .wp-block:not(ce-columns):not(ce-choice):not(ce-column):not(:last-child) {
+									> .wp-block:not(ce-choice):not(ce-column):not(:last-child) {
 									margin-bottom: ${gap} !important;
 								}
 							`}

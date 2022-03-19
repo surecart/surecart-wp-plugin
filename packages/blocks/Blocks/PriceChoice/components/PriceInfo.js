@@ -1,61 +1,84 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
+import { __ } from '@wordpress/i18n';
 
 import { Spinner, Button } from '@wordpress/components';
-import { useEffect, useState } from '@wordpress/element';
-import apiFetch from '@wordpress/api-fetch';
-import { translate } from '@scripts/admin/util';
+import { useSelect } from '@wordpress/data';
+import { store as coreStore } from '@wordpress/core-data';
+import { addQueryArgs } from '@wordpress/url';
+import { translateInterval } from '../../../../admin/util/translations';
 
-export default ( { price_id } ) => {
-	const [ price, setPrice ] = useState( null );
-	const [ loading, setLoading ] = useState( false );
+export default ({ price_id }) => {
+	const { price, product, loading } = useSelect((select) => {
+		const queryArgs = [
+			'root',
+			'price',
+			price_id,
+			{
+				expand: ['product'],
+			},
+		];
+		const price = select(coreStore).getEntityRecord(...queryArgs);
+		return {
+			price,
+			product: price?.product,
+			loading: select(coreStore).isResolving(
+				'getEntityRecord',
+				queryArgs
+			),
+		};
+	});
 
-	useEffect( () => {
-		fetchPrice();
-	}, [ price_id ] );
-
-	const fetchPrice = async () => {
-		// fetch price from server.
-		try {
-			setLoading( true );
-			const response = await apiFetch( {
-				path: `/checkout-engine/v1/prices/${ price_id }`,
-			} );
-			setPrice( response );
-		} catch ( error ) {
-			console.error( error );
-		} finally {
-			setLoading( false );
-		}
-	};
-
-	if ( loading ) {
+	if (loading) {
 		return <Spinner />;
 	}
 
-	if ( ! price ) {
+	if (!price) {
 		return null;
 	}
 
 	return (
 		<div>
-			<h2
-				css={ css`
-					margin-top: 0;
-				` }
+			<h3
+				css={css`
+					margin: 0;
+				`}
 			>
-				{ price.product.name } - { price.name }
-			</h2>
-			<p>
-				<ce-format-number
-					type="currency"
-					currency={ price.currency }
-					value={ price.amount }
-				></ce-format-number>{ ' ' }
-				{ price?.recurring && price?.recurring_interval ? '/' : '' }{ ' ' }
-				{ translate( price?.recurring_interval ) || '' }
+				{product?.name}
+			</h3>
+			<p
+				css={css`
+					opacity: 0.75;
+				`}
+			>
+				{price?.ad_hoc ? (
+					__('Name Your Price', 'checkout_engine')
+				) : (
+					<>
+						<ce-format-number
+							type="currency"
+							currency={price?.currency}
+							value={price?.amount}
+						></ce-format-number>{' '}
+						{translateInterval(
+							price?.recurring_interval_count,
+							price?.recurring_interval,
+							'every',
+							'once'
+						)}
+					</>
+				)}
 			</p>
-			<Button isSecondary>Edit Product</Button>
+			<Button
+				href={addQueryArgs('admin.php', {
+					page: 'ce-products',
+					action: 'edit',
+					id: product?.id,
+				})}
+				isSecondary
+			>
+				{__('Edit Product', 'checkout_engine')}
+			</Button>
 		</div>
 	);
 };

@@ -193,26 +193,7 @@ class FormPostTypeService {
 					[
 						'checkout-engine/form',
 						[],
-						[
-							[
-								'checkout-engine/totals',
-								[
-									'collapsible' => true,
-									'collapsed'   => true,
-								],
-								[
-									[ 'checkout-engine/line-items' ],
-									[ 'checkout-engine/divider' ],
-									[ 'checkout-engine/subtotal' ],
-									[ 'checkout-engine/divider' ],
-									[ 'checkout-engine/total' ],
-								],
-							],
-							[ 'checkout-engine/express-payment' ],
-							[ 'checkout-engine/email' ],
-							[ 'checkout-engine/payment', [ 'secure_notice' => 'This is a secure, encrypted payment' ] ],
-							[ 'checkout-engine/submit', [ 'full' => true ] ],
-						],
+						[],
 					],
 				],
 				'template_lock'         => 'all',

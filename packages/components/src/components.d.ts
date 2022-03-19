@@ -1630,6 +1630,7 @@ export namespace Components {
           * Sets a custom validation message. If `message` is not empty, the field will be considered invalid.
          */
         "setCustomValidity": (message: string) => Promise<void>;
+        "showParentLabel": boolean;
         /**
           * The input's size.
          */
@@ -4632,6 +4633,7 @@ declare namespace LocalJSX {
           * Placeholder for search
          */
         "searchPlaceholder"?: string;
+        "showParentLabel"?: boolean;
         /**
           * The input's size.
          */

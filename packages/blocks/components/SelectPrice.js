@@ -80,7 +80,9 @@ export default ({
 					.map((price) => {
 						return {
 							value: price.id,
-							label: formatNumber(price.amount, price.currency),
+							label: price?.ad_hoc
+								? __('Name Your Price', 'checkout_engine')
+								: formatNumber(price.amount, price.currency),
 							suffix: translateInterval(
 								price?.recurring_interval_count,
 								price?.recurring_interval,
@@ -99,6 +101,7 @@ export default ({
 			value={value}
 			className={className}
 			open={open}
+			showParentLabel
 			loading={loading}
 			placeholder={__('Select a product', 'checkout_engine')}
 			searchPlaceholder={__('Search for a product...', 'checkout_engine')}

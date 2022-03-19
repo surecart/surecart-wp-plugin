@@ -71,6 +71,7 @@ export class CeSelectDropdown {
   /** Is this open */
   @Prop({ mutable: true }) open: boolean;
   @Prop() disabled: boolean;
+  @Prop() showParentLabel: boolean = true;
 
   @Prop() squared: boolean;
   @Prop() squaredBottom: boolean;
@@ -131,12 +132,20 @@ export class CeSelectDropdown {
 
   /** Get the display value of the item. */
   displayValue() {
+    if (!this.value) return false;
     let chosen = this.choices.find(choice => choice.value == this.value);
+    let append = '';
     if (!chosen) {
+      if (this.showParentLabel) {
+        append = this.choices.find(choice => choice.choices.some(subChoice => subChoice.value === this.value))?.label;
+      }
       const subchoices = (this.choices || []).map(choice => choice.choices).flat();
       chosen = subchoices.find(choice => choice?.value == this.value);
     }
-    return chosen?.label;
+    if (chosen) {
+      return `${append ? append + ' - ' : ''}${chosen?.label}`;
+    }
+    return false;
   }
 
   isChecked({ value }) {

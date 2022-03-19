@@ -27,6 +27,7 @@ import {
 	CePriceInput,
 } from '@checkout-engine/components-react';
 import { store as coreStore } from '@wordpress/core-data';
+import PriceInfo from '../PriceChoice/components/PriceInfo';
 
 export default ({ attributes, setAttributes, isSelected, clientId }) => {
 	const { price_id, label, currency, custom_amount } = attributes;
@@ -152,6 +153,9 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 							}
 						/>
 					</PanelRow>
+				</PanelBody>
+				<PanelBody title={__('Product Info', 'checkout-engine')}>
+					<PriceInfo price_id={price_id} />
 				</PanelBody>
 			</InspectorControls>
 

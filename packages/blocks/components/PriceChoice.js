@@ -16,7 +16,14 @@ import { store as coreStore } from '@wordpress/core-data';
 import { translateInterval } from '@scripts/admin/util/translations';
 import PriceSelector from './PriceSelector';
 
-export default ({ choice, onUpdate, onSelect, onRemove, onNew }) => {
+export default ({
+	choice,
+	onUpdate,
+	hideQuantity,
+	onSelect,
+	onRemove,
+	onNew,
+}) => {
 	// get price from choice.
 	const price = useSelect(
 		(select) => {
@@ -76,13 +83,17 @@ export default ({ choice, onUpdate, onSelect, onRemove, onNew }) => {
 					product?.name
 				)}
 			</ce-table-cell>
-			<ce-table-cell style={{ width: '70px' }}>
-				<CeInput
-					type="number"
-					value={choice?.quantity}
-					onCeChange={(e) => onUpdate({ quantity: e.target.value })}
-				/>
-			</ce-table-cell>
+			{!hideQuantity && (
+				<ce-table-cell style={{ width: '70px' }}>
+					<CeInput
+						type="number"
+						value={choice?.quantity}
+						onCeChange={(e) =>
+							onUpdate({ quantity: e.target.value })
+						}
+					/>
+				</ce-table-cell>
+			)}
 			<ce-table-cell style={{ textAlign: 'right' }}>
 				{renderPrice(true)}{' '}
 				<span

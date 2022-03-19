@@ -920,6 +920,7 @@
     "required": true,
     "search": true,
     "search-placeholder": true,
+    "show-parent-label": true,
     "size": true,
     "squared": true,
     "squared-bottom": true,

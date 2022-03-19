@@ -1,7 +1,7 @@
 :host {
   display: table-cell;
   font-size: var(--ce-font-size-medium);
-  padding: var(--ce-table-cell-spacing, var(--ce-spacing-small)) var(--ce-table-cell-spacing, var(--ce-spacing-large));
+  padding: var(--ce-table-cell-spacing, var(--ce-spacing-small)) var(--ce-table-cell-spacing, var(--ce-spacing-large)) !important;
   vertical-align: middle;
 }
 

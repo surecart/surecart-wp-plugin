@@ -1,105 +1,72 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
-import { Placeholder } from '@wordpress/components';
 import Thumbnail from './Thumbnail';
 import { CeButton } from '@checkout-engine/components-react';
+import { useState } from 'react';
+import PlaceholderTemplate from './PlaceholderTemplate';
 
 export default ({ template, setTemplate }) => {
+	const [choice, setChoice] = useState(template);
+
 	return (
-		<div
-			css={css`
-				box-sizing: border-box;
-				position: relative;
-				min-height: 200px;
-				width: 100%;
-				text-align: left;
-				margin: 0;
-				color: #1e1e1e;
-				-moz-font-smoothing: subpixel-antialiased;
-				-webkit-font-smoothing: subpixel-antialiased;
-				border-radius: 2px;
-				background-color: #fff;
-				border: 1px solid #ddd;
-				outline: 1px solid transparent;
-			`}
-			style={{
-				'--ce-color-primary-500': 'var(--wp-admin-theme-color)',
-				'--ce-focus-ring-color-primary': 'var(--wp-admin-theme-color)',
-				'--ce-input-border-color-focus': 'var(--wp-admin-theme-color)',
-			}}
+		<PlaceholderTemplate
+			header={__('Choose A Starting Design', 'checkout-engine')}
+			footerRight={
+				<CeButton
+					type="primary"
+					disabled={!choice}
+					onClick={() => setTemplate(choice)}
+				>
+					<ce-icon name="arrow-right" slot="suffix"></ce-icon>
+					{__('Next', 'checkout_engine')}
+				</CeButton>
+			}
+			maxHeight={'300px'}
+			minHeight={'32rem'}
 		>
 			<div
 				css={css`
-					width: 100%;
-					position: relative;
+					display: grid;
+					padding: 32px;
+					flex: 1 1 0%;
+					grid-gap: 32px;
+					grid-template-columns: repeat(3, 1fr);
+					overflow-y: scroll;
+					overflow-x: visible;
 				`}
 			>
-				<div
-					css={css`
-						position: relative;
-						min-height: 32rem;
-						display: flex;
-						max-height: 400px;
-					`}
-				>
-					<div
-						css={css`
-							display: flex;
-							flex-direction: column;
-							gap: 2px;
-							width: 280px;
-							position: absolute;
-							top: 32px;
-							bottom: 0;
-							left: 32px;
-							padding: 5px 32px 5px 5px;
-							overflow-x: visible;
-							overflow-y: scroll;
-						`}
-					>
-						<ce-tab active>Featured</ce-tab>
-						<ce-tab>Donation</ce-tab>
-					</div>
-					<div
-						css={css`
-							display: grid;
-							padding: 32px;
-							padding-left: 312px;
-							flex: 1 1 0%;
-							grid-gap: 32px;
-							grid-template-columns: repeat(2, 1fr);
-							overflow-y: scroll;
-							overflow-x: visible;
-						`}
-					>
-						<Thumbnail label={'Default'} />
-						<Thumbnail label={'Simple'} />
-						<Thumbnail label={'Sections'} />
-						<Thumbnail label={'Two Columns'} />
-					</div>
-				</div>
-				<div
-					css={css`
-						position: sticky;
-						bottom: 0;
-						left: 0;
-						right: 0;
-						border-top: 1px solid #ddd;
-						padding: 0 16px;
-						display: flex;
-						flex-direction: row;
-						justify-content: flex-end;
-						align-items: center;
-						height: 60px;
-					`}
-				>
-					<CeButton type="primary" disabled>
-						<ce-icon name="arrow-right" slot="suffix"></ce-icon>
-						{__('Next', 'checkout_engine')}
-					</CeButton>
-				</div>
+				<Thumbnail
+					label={'Default'}
+					selected={choice === 'default'}
+					onSelect={() => setChoice('default')}
+				/>
+				<Thumbnail
+					label={'Simple'}
+					selected={choice === 'simple'}
+					onSelect={() => setChoice('simple')}
+				/>
+				<Thumbnail
+					label={'Sections'}
+					selected={choice === 'sections'}
+					onSelect={() => setChoice('sections')}
+				/>
+				<Thumbnail
+					label={'Two Columns'}
+					selected={choice === 'two-columns'}
+					onSelect={() => setChoice('two-columns')}
+				/>
+				<Thumbnail
+					label={'Donation'}
+					selected={choice === 'donation'}
+					onSelect={() => setChoice('donation')}
+				/>
+				<Thumbnail
+					label={'Invoice Pay'}
+					selected={choice === 'invoice'}
+					onSelect={() => setChoice('invoice')}
+				/>
 			</div>
-		</div>
+		</PlaceholderTemplate>
 	);
 };

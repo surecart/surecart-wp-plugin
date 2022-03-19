@@ -2,24 +2,11 @@
 import { css, jsx } from '@emotion/core';
 
 import { __ } from '@wordpress/i18n';
-import { Button } from '@wordpress/components';
 
 import PriceChoice from './PriceChoice';
 import { CeButton } from '@checkout-engine/components-react';
 
 export default ({ choices, onUpdate, onRemove, onAddProduct, description }) => {
-	const headerStyle = css`
-		border-bottom: 1px solid var(--ce-color-gray-300);
-		border-top: 1px solid var(--ce-color-gray-300);
-		padding: 0.5em 0 !important;
-		font-weight: bold;
-		font-size: 11px;
-		text-transform: uppercase;
-		letter-spacing: 0.05em;
-		color: var(--ce-color-gray-600);
-		border: none !important;
-	`;
-
 	const renderTable = () => {
 		return (
 			<ce-card no-padding>
