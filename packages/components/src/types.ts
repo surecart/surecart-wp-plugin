@@ -18,6 +18,11 @@ export type RecursivePartial<T> = {
   [P in keyof T]?: RecursivePartial<T[P]>;
 };
 
+interface Model {
+  created_at: number;
+  updated_at: number;
+}
+
 export interface ChoiceItem extends Object {
   value: string;
   label: string;
@@ -90,21 +95,21 @@ export type Products = {
   [id: string]: Product;
 };
 
-export interface Coupon extends Object {
+export interface Coupon extends Model {
   id: string;
+  object: 'coupon';
   amount_off: number;
-  created: number;
+  valid?: boolean;
+  expired: boolean;
   currency: string;
   duration: string;
   duration_in_months: number;
-  livemode: boolean;
   max_redemptions: number;
   metadata: Object;
   name: string;
   percent_off: number;
   redeem_by: number;
   times_redeemed: number;
-  valid: boolean;
 }
 
 export interface LineItemData extends Object {
@@ -376,12 +381,10 @@ export interface Promotion extends Object {
   times_redeemed: number;
 }
 
-export interface DiscountResponse extends Object {
+export interface DiscountResponse {
   coupon?: Coupon;
-  created_at: string;
-  updated_at: string;
   id: string;
-  object: string;
+  object: 'discount';
   promotion: Promotion;
 }
 

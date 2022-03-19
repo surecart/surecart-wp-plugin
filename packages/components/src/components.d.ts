@@ -423,6 +423,10 @@ export namespace Components {
           * Is the form loading
          */
         "loading": boolean;
+        /**
+          * Is it open
+         */
+        "open": boolean;
     }
     interface CeCustomerDetails {
         "customer": Customer;
@@ -643,6 +647,7 @@ export namespace Components {
         "icon": string;
     }
     interface CeExpressPayment {
+        "busy": boolean;
         "debug": boolean;
         "dividerText": string;
         "formId": number | string;
@@ -3280,6 +3285,10 @@ declare namespace LocalJSX {
           * When the coupon is applied
          */
         "onCeApplyCoupon"?: (event: CustomEvent<string>) => void;
+        /**
+          * Is it open
+         */
+        "open"?: boolean;
     }
     interface CeCustomerDetails {
         "customer"?: Customer;
@@ -3562,6 +3571,7 @@ declare namespace LocalJSX {
         "icon"?: string;
     }
     interface CeExpressPayment {
+        "busy"?: boolean;
         "debug"?: boolean;
         "dividerText"?: string;
         "formId"?: number | string;

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-03-18T22:30:39",
+  "timestamp": "2022-03-19T14:09:48",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.14.2",
@@ -551,6 +551,7 @@
         "ce-customer-edit",
         "ce-donation-choices",
         "ce-downloads-list",
+        "ce-express-payment",
         "ce-invoices-list",
         "ce-login-form",
         "ce-orders-list",
@@ -589,6 +590,9 @@
           "ce-block-ui"
         ],
         "ce-downloads-list": [
+          "ce-block-ui"
+        ],
+        "ce-express-payment": [
           "ce-block-ui"
         ],
         "ce-invoices-list": [
@@ -1165,6 +1169,7 @@
         "ce-coupon-form",
         "ce-customer-details",
         "ce-customer-edit",
+        "ce-donation-choices",
         "ce-downloads-list",
         "ce-invoices-list",
         "ce-login-form",
@@ -1201,6 +1206,9 @@
           "ce-button"
         ],
         "ce-customer-edit": [
+          "ce-button"
+        ],
+        "ce-donation-choices": [
           "ce-button"
         ],
         "ce-downloads-list": [
@@ -3006,6 +3014,22 @@
           ],
           "optional": false,
           "required": false
+        },
+        {
+          "name": "open",
+          "type": "boolean",
+          "mutable": true,
+          "attr": "open",
+          "reflectToAttr": false,
+          "docs": "Is it open",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
         }
       ],
       "methods": [],
@@ -4637,6 +4661,7 @@
         "ce-skeleton",
         "ce-choices",
         "ce-price-input",
+        "ce-button",
         "ce-block-ui"
       ],
       "dependencyGraph": {
@@ -4644,6 +4669,7 @@
           "ce-skeleton",
           "ce-choices",
           "ce-price-input",
+          "ce-button",
           "ce-block-ui"
         ],
         "ce-choices": [
@@ -4657,6 +4683,9 @@
         ],
         "ce-input": [
           "ce-form-control"
+        ],
+        "ce-button": [
+          "ce-spinner"
         ],
         "ce-block-ui": [
           "ce-spinner"
@@ -5065,6 +5094,22 @@
       "usage": {},
       "props": [
         {
+          "name": "busy",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "busy",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "debug",
           "type": "boolean",
           "mutable": false,
@@ -5167,18 +5212,23 @@
       "dependents": [],
       "dependencies": [
         "ce-stripe-payment-request",
-        "ce-divider"
+        "ce-divider",
+        "ce-block-ui"
       ],
       "dependencyGraph": {
         "ce-express-payment": [
           "ce-stripe-payment-request",
-          "ce-divider"
+          "ce-divider",
+          "ce-block-ui"
         ],
         "ce-stripe-payment-request": [
           "ce-alert"
         ],
         "ce-alert": [
           "ce-icon"
+        ],
+        "ce-block-ui": [
+          "ce-spinner"
         ]
       }
     },
@@ -13746,6 +13796,17 @@
           "signature": "confirmCardSetup(secret: any) => Promise<any>",
           "parameters": [],
           "docs": "Confirm card setup.",
+          "docsTags": []
+        },
+        {
+          "name": "reportValidity",
+          "returns": {
+            "type": "Promise<string>",
+            "docs": ""
+          },
+          "signature": "reportValidity() => Promise<string>",
+          "parameters": [],
+          "docs": "",
           "docsTags": []
         }
       ],
