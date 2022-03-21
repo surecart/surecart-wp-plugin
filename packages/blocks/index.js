@@ -62,7 +62,7 @@ import * as totals from '@blocks/totals';
 
 // Register block collection
 registerBlockCollection('surecart', {
-	title: __('Checkout Engine', 'surecart'),
+	title: __('SureCart', 'surecart'),
 });
 
 const dashboardComponents = [
@@ -132,7 +132,7 @@ const registerBlock = (block) => {
 };
 
 /**
- * Function to register blocks provided by Checkout Engine.
+ * Function to register blocks provided by SureCart.
  */
 export const registerSureCartBlocks = () => {
 	[

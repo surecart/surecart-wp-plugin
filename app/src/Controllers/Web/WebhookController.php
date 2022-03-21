@@ -50,7 +50,7 @@ class WebhookController {
 	public function create() {
 		return Webhook::create(
 			[
-				'description' => 'Main webhook for Checkout Engine',
+				'description' => 'Main webhook for SureCart',
 				'enabled'     => true,
 				'url'         => \SureCart::routeUrl( 'webhooks.receive' ),
 			]

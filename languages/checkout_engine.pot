@@ -2,7 +2,7 @@
 # This file is distributed under the GPL-2.0-only.
 msgid ""
 msgstr ""
-"Project-Id-Version: Checkout Engine 0.15.0\n"
+"Project-Id-Version: SureCart 0.15.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wpemerge\n"
 "POT-Creation-Date: 2020-05-20 20:42:11+00:00\n"
 "MIME-Version: 1.0\n"
@@ -27,7 +27,7 @@ msgid "Hello World!"
 msgstr ""
 
 #. Plugin Name of the plugin/theme
-msgid "Checkout Engine"
+msgid "SureCart"
 msgstr ""
 
 #. Plugin URI of the plugin/theme

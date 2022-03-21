@@ -1,4 +1,4 @@
-Checkout Engine. Based on the [WP Emerge](https://github.com/htmlburger/wpemerge) framework.
+SureCart. Based on the [WP Emerge](https://github.com/htmlburger/wpemerge) framework.
 
 ## Summary
 
@@ -101,4 +101,4 @@ Avoid adding any PHP logic in any of these views, unless it pertains to layoutin
 
 ## Credits
 
-Checkout Engine is powered by the [WP Emerge framework](https://wpemerge.com/).
+SureCart is powered by the [WP Emerge framework](https://wpemerge.com/).

@@ -1,6 +1,6 @@
 {
 	"name": "surecart/form",
-	"title": "Checkout Engine Form",
+	"title": "SureCart Form",
 	"description": "Displays a form.",
 	"category": "layout",
 	"parent": ["surecart/checkout-form"],

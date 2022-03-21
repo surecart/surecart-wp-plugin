@@ -13,7 +13,7 @@ use SureCartCore\ServiceProviders\ServiceProviderInterface;
  * Block Service Provider Class
  * Registers block service used throughout the plugin
  *
- * @author  Checkout Engine <andre@SureCart.com>
+ * @author  SureCart <andre@surecart.com>
  * @since   1.0.0
  * @license GPL
  */

@@ -45,7 +45,7 @@ class Webhook extends Model {
 
 		return $this->create(
 			[
-				'description' => 'Main webhook for Checkout Engine',
+				'description' => 'Main webhook for SureCart',
 				'enabled'     => true,
 				'url'         => $this->getListenerUrl(),
 			]
