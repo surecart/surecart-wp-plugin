@@ -9,3 +9,13 @@ exports[`ce-tooltip renders 1`] = `
   </mock:shadow-root>
 </ce-tooltip>
 `;
+
+exports[`sc-tooltip renders 1`] = `
+<sc-tooltip type="info">
+  <mock:shadow-root>
+    <span class="tooltip tooltip--info" part="base">
+      <slot></slot>
+    </span>
+  </mock:shadow-root>
+</sc-tooltip>
+`;

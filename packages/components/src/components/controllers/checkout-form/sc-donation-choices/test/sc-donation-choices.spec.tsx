@@ -7,12 +7,6 @@ describe('sc-donation-choices', () => {
       components: [ScDonationChoices],
       html: `<sc-donation-choices></sc-donation-choices>`,
     });
-    expect(page.root).toEqualHtml(`
-      <sc-donation-choices>
-        <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
-      </sc-donation-choices>
-    `);
+    expect(page.root).toMatchSnapshot();
   });
 });

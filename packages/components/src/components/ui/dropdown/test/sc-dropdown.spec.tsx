@@ -1,5 +1,5 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { CEDropdown } from '../dropdown';
+import { ScDropdown } from '../dropdown';
 
 describe('sc-dropdown', () => {
   function withPanelClass(name) {
@@ -19,7 +19,7 @@ describe('sc-dropdown', () => {
   }
   it('renders', async () => {
     const page = await newSpecPage({
-      components: [CEDropdown],
+      components: [ScDropdown],
       html: `<sc-dropdown></sc-dropdown>`,
     });
     expect(page.root).toEqualHtml(`
@@ -39,7 +39,7 @@ describe('sc-dropdown', () => {
 
   it('can be positioned', async () => {
     const page = await newSpecPage({
-      components: [CEDropdown],
+      components: [ScDropdown],
       html: `<sc-dropdown></sc-dropdown>`,
     });
     const element = await page.doc.querySelector('sc-dropdown');

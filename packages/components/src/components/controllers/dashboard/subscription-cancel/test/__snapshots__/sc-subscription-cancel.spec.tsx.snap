@@ -17,3 +17,21 @@ exports[`ce-subscription-cancel renders 1`] = `
   </mock:shadow-root>
 </ce-subscription-cancel>
 `;
+
+exports[`sc-subscription-cancel renders 1`] = `
+<sc-subscription-cancel>
+  <mock:shadow-root>
+    <sc-dashboard-module class="subscription-cancel" error="window.fetch is not a function" heading="Cancel your plan">
+      <sc-card>
+        <sc-subscription-details hiderenewaltext=""></sc-subscription-details>
+        <sc-alert open="" type="info">
+          Your plan will be canceled immediately. You cannot change your mind.
+        </sc-alert>
+        <sc-button full="" type="primary">
+          Cancel Plan
+        </sc-button>
+      </sc-card>
+    </sc-dashboard-module>
+  </mock:shadow-root>
+</sc-subscription-cancel>
+`;

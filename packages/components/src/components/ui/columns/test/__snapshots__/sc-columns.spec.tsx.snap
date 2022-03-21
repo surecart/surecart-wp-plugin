@@ -5,3 +5,9 @@ exports[`ce-columns renders 1`] = `
   <!---->
 </ce-columns>
 `;
+
+exports[`sc-columns renders 1`] = `
+<sc-columns class="sc-columns">
+  <!---->
+</sc-columns>
+`;

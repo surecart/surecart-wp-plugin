@@ -8,3 +8,12 @@ exports[`ce-stripe-payment-request renders 1`] = `
   </div>
 </ce-stripe-payment-request>
 `;
+
+exports[`sc-stripe-payment-request renders 1`] = `
+<sc-stripe-payment-request>
+  <!---->
+  <div class="request">
+    <div class="sc-payment-request-button" part="button"></div>
+  </div>
+</sc-stripe-payment-request>
+`;

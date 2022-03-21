@@ -11,3 +11,15 @@ exports[`ce-customer-name renders 1`] = `
   <ce-input autocomplete="name" help="" name="name" required="" type="text" value=""></ce-input>
 </ce-customer-name>
 `;
+
+exports[`sc-customer-name is disabled when logged in 1`] = `
+<sc-customer-name logged-in="" size="medium">
+  <sc-input autocomplete="name" disabled="" help="" name="name" required="" type="text" value=""></sc-input>
+</sc-customer-name>
+`;
+
+exports[`sc-customer-name renders 1`] = `
+<sc-customer-name size="medium">
+  <sc-input autocomplete="name" help="" name="name" required="" type="text" value=""></sc-input>
+</sc-customer-name>
+`;

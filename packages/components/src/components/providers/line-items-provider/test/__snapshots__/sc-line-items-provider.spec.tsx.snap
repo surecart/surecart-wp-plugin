@@ -7,3 +7,11 @@ exports[`ce-line-items-provider renders 1`] = `
   </mock:shadow-root>
 </ce-line-items-provider>
 `;
+
+exports[`sc-line-items-provider renders 1`] = `
+<sc-line-items-provider>
+  <mock:shadow-root>
+    <slot></slot>
+  </mock:shadow-root>
+</sc-line-items-provider>
+`;

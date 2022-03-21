@@ -1,10 +1,10 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { CESpinner } from '../sc-spinner';
+import { ScSpinner } from '../sc-spinner';
 
 describe('sc-spinner', () => {
   it('renders', async () => {
     const page = await newSpecPage({
-      components: [CESpinner],
+      components: [ScSpinner],
       html: `<sc-spinner></sc-spinner>`,
     });
     expect(page.root).toEqualHtml(`

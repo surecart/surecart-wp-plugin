@@ -7,3 +7,11 @@ exports[`ce-spacing renders 1`] = `
   </mock:shadow-root>
 </ce-spacing>
 `;
+
+exports[`sc-spacing renders 1`] = `
+<sc-spacing>
+  <mock:shadow-root>
+    <slot></slot>
+  </mock:shadow-root>
+</sc-spacing>
+`;

@@ -9,3 +9,13 @@ exports[`ce-text renders 1`] = `
   </mock:shadow-root>
 </ce-text>
 `;
+
+exports[`sc-text renders 1`] = `
+<sc-text>
+  <mock:shadow-root>
+    <p class="text">
+      <slot></slot>
+    </p>
+  </mock:shadow-root>
+</sc-text>
+`;

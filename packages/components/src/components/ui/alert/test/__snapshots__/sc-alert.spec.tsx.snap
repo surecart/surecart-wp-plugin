@@ -21,3 +21,25 @@ exports[`ce-alert renders 1`] = `
   </mock:shadow-root>
 </ce-alert>
 `;
+
+exports[`sc-alert renders 1`] = `
+<sc-alert type="primary">
+  <mock:shadow-root>
+    <div aria-atomic="true" aria-hidden="true" aria-live="assertive" class="alert alert--primary" hidden="" part="base" role="alert">
+      <div class="alert__icon" part="icon">
+        <slot name="icon">
+          <sc-icon name="info"></sc-icon>
+        </slot>
+      </div>
+      <div class="alert__text" part="text">
+        <div class="alert__title" part="title">
+          <slot name="title"></slot>
+        </div>
+        <div class="alert__message" part="message">
+          <slot></slot>
+        </div>
+      </div>
+    </div>
+  </mock:shadow-root>
+</sc-alert>
+`;

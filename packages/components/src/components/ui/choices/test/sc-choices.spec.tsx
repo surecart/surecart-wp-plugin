@@ -1,10 +1,10 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { CEChoices } from '../sc-choices';
+import { ScChoices } from '../sc-choices';
 
 describe('sc-choices', () => {
   it('renders', async () => {
     const page = await newSpecPage({
-      components: [CEChoices],
+      components: [ScChoices],
       html: `<sc-choices></sc-choices>`,
     });
     expect(page.root).toMatchSnapshot();

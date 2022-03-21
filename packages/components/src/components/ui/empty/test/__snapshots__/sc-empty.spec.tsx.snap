@@ -9,3 +9,13 @@ exports[`ce-empty renders 1`] = `
   </mock:shadow-root>
 </ce-empty>
 `;
+
+exports[`sc-empty renders 1`] = `
+<sc-empty>
+  <mock:shadow-root>
+    <div class="empty">
+      <slot></slot>
+    </div>
+  </mock:shadow-root>
+</sc-empty>
+`;

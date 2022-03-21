@@ -8,3 +8,12 @@ exports[`ce-payment renders 1`] = `
   </div>
 </ce-payment>
 `;
+
+exports[`sc-payment renders 1`] = `
+<sc-payment>
+  <div>
+    <sc-skeleton style="width: 100%; margin-bottom: 1em;"></sc-skeleton>
+    <sc-skeleton style="width: 35%;"></sc-skeleton>
+  </div>
+</sc-payment>
+`;

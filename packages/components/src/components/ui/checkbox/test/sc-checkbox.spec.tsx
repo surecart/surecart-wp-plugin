@@ -1,10 +1,10 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { CECheckbox } from '../sc-checkbox';
+import { ScCheckbox } from '../sc-checkbox';
 
 describe('sc-checkbox', () => {
   it('renders', async () => {
     const page = await newSpecPage({
-      components: [CECheckbox],
+      components: [ScCheckbox],
       html: `<sc-checkbox></sc-checkbox>`,
     });
     expect(page.root).toEqualHtml(`

@@ -9,3 +9,13 @@ exports[`ce-order-confirmation-line-items renders 1`] = `
   </mock:shadow-root>
 </ce-order-confirmation-line-items>
 `;
+
+exports[`sc-order-confirmation-line-items renders 1`] = `
+<sc-order-confirmation-line-items>
+  <mock:shadow-root>
+    <div class="confirmation-summary">
+      <div class="line-items" part="line-items"></div>
+    </div>
+  </mock:shadow-root>
+</sc-order-confirmation-line-items>
+`;

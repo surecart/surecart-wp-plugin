@@ -7,12 +7,6 @@ describe('sc-button-group', () => {
       components: [ScButtonGroup],
       html: `<sc-button-group></sc-button-group>`,
     });
-    expect(page.root).toEqualHtml(`
-      <sc-button-group>
-        <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
-      </sc-button-group>
-    `);
+    expect(page.root).toMatchSnapshot();
   });
 });

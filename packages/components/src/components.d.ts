@@ -735,9 +735,6 @@ export namespace Components {
     }
     interface ScFormRow {
     }
-    interface ScFormSection {
-        "label": string;
-    }
     interface ScFormatBytes {
         /**
           * Determines how to display the result, e.g. "100 bytes", "100 b", or "100b".
@@ -2310,12 +2307,6 @@ declare global {
         prototype: HTMLScFormRowElement;
         new (): HTMLScFormRowElement;
     };
-    interface HTMLScFormSectionElement extends Components.ScFormSection, HTMLStencilElement {
-    }
-    var HTMLScFormSectionElement: {
-        prototype: HTMLScFormSectionElement;
-        new (): HTMLScFormSectionElement;
-    };
     interface HTMLScFormatBytesElement extends Components.ScFormatBytes, HTMLStencilElement {
     }
     var HTMLScFormatBytesElement: {
@@ -2828,7 +2819,6 @@ declare global {
         "sc-form-components-validator": HTMLScFormComponentsValidatorElement;
         "sc-form-control": HTMLScFormControlElement;
         "sc-form-row": HTMLScFormRowElement;
-        "sc-form-section": HTMLScFormSectionElement;
         "sc-format-bytes": HTMLScFormatBytesElement;
         "sc-format-date": HTMLScFormatDateElement;
         "sc-format-interval": HTMLScFormatIntervalElement;
@@ -3717,9 +3707,6 @@ declare namespace LocalJSX {
         "size"?: 'small' | 'medium' | 'large';
     }
     interface ScFormRow {
-    }
-    interface ScFormSection {
-        "label"?: string;
     }
     interface ScFormatBytes {
         /**
@@ -5215,7 +5202,6 @@ declare namespace LocalJSX {
         "sc-form-components-validator": ScFormComponentsValidator;
         "sc-form-control": ScFormControl;
         "sc-form-row": ScFormRow;
-        "sc-form-section": ScFormSection;
         "sc-format-bytes": ScFormatBytes;
         "sc-format-date": ScFormatDate;
         "sc-format-interval": ScFormatInterval;
@@ -5338,7 +5324,6 @@ declare module "@stencil/core" {
             "sc-form-components-validator": LocalJSX.ScFormComponentsValidator & JSXBase.HTMLAttributes<HTMLScFormComponentsValidatorElement>;
             "sc-form-control": LocalJSX.ScFormControl & JSXBase.HTMLAttributes<HTMLScFormControlElement>;
             "sc-form-row": LocalJSX.ScFormRow & JSXBase.HTMLAttributes<HTMLScFormRowElement>;
-            "sc-form-section": LocalJSX.ScFormSection & JSXBase.HTMLAttributes<HTMLScFormSectionElement>;
             "sc-format-bytes": LocalJSX.ScFormatBytes & JSXBase.HTMLAttributes<HTMLScFormatBytesElement>;
             "sc-format-date": LocalJSX.ScFormatDate & JSXBase.HTMLAttributes<HTMLScFormatDateElement>;
             "sc-format-interval": LocalJSX.ScFormatInterval & JSXBase.HTMLAttributes<HTMLScFormatIntervalElement>;

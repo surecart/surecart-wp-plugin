@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-donation-choices renders 1`] = `
+<sc-donation-choices>
+  <mock:shadow-root>
+    <div class="sc-donation-choices">
+      <sc-choices auto-width="">
+        <slot></slot>
+      </sc-choices>
+    </div>
+  </mock:shadow-root>
+</sc-donation-choices>
+`;

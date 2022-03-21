@@ -17,3 +17,21 @@ exports[`ce-heading renders 1`] = `
   </mock:shadow-root>
 </ce-heading>
 `;
+
+exports[`sc-heading renders 1`] = `
+<sc-heading>
+  <mock:shadow-root>
+    <div class="heading heading--medium" part="base">
+      <div class="heading__text">
+        <div class="heading__title">
+          <slot></slot>
+        </div>
+        <div class="heading__description">
+          <slot name="description"></slot>
+        </div>
+      </div>
+      <slot name="end"></slot>
+    </div>
+  </mock:shadow-root>
+</sc-heading>
+`;

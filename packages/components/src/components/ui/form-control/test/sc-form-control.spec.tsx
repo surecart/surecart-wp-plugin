@@ -1,10 +1,10 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { CEFormControl } from '../sc-form-control';
+import { ScFormControl } from '../sc-form-control';
 
 describe('sc-form-control', () => {
   it('renders', async () => {
     const page = await newSpecPage({
-      components: [CEFormControl],
+      components: [ScFormControl],
       html: `<sc-form-control></sc-form-control>`,
     });
     expect(page.root).toEqualHtml(`

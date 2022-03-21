@@ -7,3 +7,11 @@ exports[`ce-stacked-list renders 1`] = `
   </mock:shadow-root>
 </ce-stacked-list>
 `;
+
+exports[`sc-stacked-list renders 1`] = `
+<sc-stacked-list>
+  <mock:shadow-root>
+    <slot></slot>
+  </mock:shadow-root>
+</sc-stacked-list>
+`;

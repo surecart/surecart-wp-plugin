@@ -9,3 +9,13 @@ exports[`ce-flex renders 1`] = `
   </mock:shadow-root>
 </ce-flex>
 `;
+
+exports[`sc-flex renders 1`] = `
+<sc-flex>
+  <mock:shadow-root>
+    <div class="flex">
+      <slot></slot>
+    </div>
+  </mock:shadow-root>
+</sc-flex>
+`;

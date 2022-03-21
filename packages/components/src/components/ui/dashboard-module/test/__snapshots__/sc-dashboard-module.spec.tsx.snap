@@ -20,3 +20,24 @@ exports[`ce-dashboard-module renders 1`] = `
   </mock:shadow-root>
 </ce-dashboard-module>
 `;
+
+exports[`sc-dashboard-module renders 1`] = `
+<sc-dashboard-module>
+  <mock:shadow-root>
+    <div class="dashboard-module">
+      <div class="heading">
+        <div class="heading__text">
+          <div class="heading__title" part="heading-title">
+            <slot name="heading"></slot>
+          </div>
+          <div class="heading__description" part="heading-description">
+            <slot name="description"></slot>
+          </div>
+        </div>
+        <slot name="end"></slot>
+      </div>
+      <slot></slot>
+    </div>
+  </mock:shadow-root>
+</sc-dashboard-module>
+`;

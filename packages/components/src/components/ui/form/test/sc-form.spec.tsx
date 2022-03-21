@@ -1,10 +1,10 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { CEForm } from '../sc-form';
+import { ScForm } from '../sc-form';
 
 describe('sc-form', () => {
   it('renders', async () => {
     const page = await newSpecPage({
-      components: [CEForm],
+      components: [ScForm],
       html: `<sc-form></sc-form>`,
     });
     expect(page.root).toMatchSnapshot();

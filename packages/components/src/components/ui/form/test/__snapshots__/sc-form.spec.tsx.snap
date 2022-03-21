@@ -8,3 +8,12 @@ exports[`ce-form renders 1`] = `
   </div>
 </ce-form>
 `;
+
+exports[`sc-form renders 1`] = `
+<sc-form>
+  <!---->
+  <div class="form" part="base" role="form">
+    <form></form>
+  </div>
+</sc-form>
+`;

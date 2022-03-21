@@ -28,7 +28,9 @@ describe('sc-cart-provider', () => {
           meta_item: 'test',
         }),
       ).toEqual({
+        email: 'test@test.com',
         password: 'password',
+        name: 'test',
         metadata: { meta_item: 'test' },
       });
     });

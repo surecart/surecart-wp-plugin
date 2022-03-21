@@ -5,3 +5,9 @@ exports[`ce-pagination renders 1`] = `
   <mock:shadow-root></mock:shadow-root>
 </ce-pagination>
 `;
+
+exports[`sc-pagination renders 1`] = `
+<sc-pagination>
+  <mock:shadow-root></mock:shadow-root>
+</sc-pagination>
+`;

@@ -11,3 +11,15 @@ exports[`ce-tag renders 1`] = `
   </mock:shadow-root>
 </ce-tag>
 `;
+
+exports[`sc-tag renders 1`] = `
+<sc-tag size="medium" type="default">
+  <mock:shadow-root>
+    <span class="tag tag--default tag--medium" part="base">
+      <span class="tag__content" part="content">
+        <slot></slot>
+      </span>
+    </span>
+  </mock:shadow-root>
+</sc-tag>
+`;

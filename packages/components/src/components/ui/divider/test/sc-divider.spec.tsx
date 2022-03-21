@@ -1,10 +1,10 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { CEDivider } from '../sc-divider';
+import { ScDivider } from '../sc-divider';
 
 describe('sc-divider', () => {
   it('renders', async () => {
     const page = await newSpecPage({
-      components: [CEDivider],
+      components: [ScDivider],
       html: `<sc-divider></sc-divider>`,
     });
     expect(page.root).toEqualHtml(`

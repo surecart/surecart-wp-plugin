@@ -1,3 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ce-select-dropdown renders 1`] = `<ce-select-dropdown />`;
+
+exports[`sc-select-dropdown renders 1`] = `<sc-select-dropdown />`;

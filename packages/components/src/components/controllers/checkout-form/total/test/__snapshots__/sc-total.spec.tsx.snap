@@ -1,3 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ce-total renders 1`] = `<ce-total></ce-total>`;
+
+exports[`sc-total renders 1`] = `<sc-total></sc-total>`;

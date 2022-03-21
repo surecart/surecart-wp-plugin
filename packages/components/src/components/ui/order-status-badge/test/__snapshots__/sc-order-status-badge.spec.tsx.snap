@@ -7,3 +7,11 @@ exports[`ce-order-status-badge renders 1`] = `
   </mock:shadow-root>
 </ce-order-status-badge>
 `;
+
+exports[`sc-order-status-badge renders 1`] = `
+<sc-order-status-badge size="medium">
+  <mock:shadow-root>
+    <sc-tag></sc-tag>
+  </mock:shadow-root>
+</sc-order-status-badge>
+`;

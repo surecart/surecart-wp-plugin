@@ -44,3 +44,45 @@ exports[`ce-customer-edit renders 1`] = `
   </mock:shadow-root>
 </ce-customer-edit>
 `;
+
+exports[`sc-customer-edit renders 1`] = `
+<sc-customer-edit>
+  <mock:shadow-root>
+    <sc-dashboard-module class="customer-edit">
+      <span slot="heading">
+        Update Billing Details
+      </span>
+      <sc-card>
+        <sc-form>
+          <sc-input label="Billing Email" name="email" required=""></sc-input>
+          <sc-columns style="--sc-column-spacing: var(--sc-spacing-medium);">
+            <sc-column>
+              <sc-input label="Name" name="name"></sc-input>
+            </sc-column>
+            <sc-column>
+              <sc-input label="Phone" name="phone"></sc-input>
+            </sc-column>
+          </sc-columns>
+          <div>
+            <sc-address label="Shipping Address"></sc-address>
+          </div>
+          <div>
+            <sc-switch name="billing_matches_shipping" value="on">
+              Billing address same as shipping
+            </sc-switch>
+          </div>
+          <div style="display: block;">
+            <sc-address label="Billing Address"></sc-address>
+          </div>
+          <sc-tax-id-input show=""></sc-tax-id-input>
+          <div>
+            <sc-button full="" submit="" type="primary">
+              Save
+            </sc-button>
+          </div>
+        </sc-form>
+      </sc-card>
+    </sc-dashboard-module>
+  </mock:shadow-root>
+</sc-customer-edit>
+`;

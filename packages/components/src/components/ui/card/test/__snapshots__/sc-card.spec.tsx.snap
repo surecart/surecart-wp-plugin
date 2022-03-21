@@ -9,3 +9,13 @@ exports[`ce-card renders 1`] = `
   </mock:shadow-root>
 </ce-card>
 `;
+
+exports[`sc-card renders 1`] = `
+<sc-card>
+  <mock:shadow-root>
+    <div class="card" part="base">
+      <slot></slot>
+    </div>
+  </mock:shadow-root>
+</sc-card>
+`;

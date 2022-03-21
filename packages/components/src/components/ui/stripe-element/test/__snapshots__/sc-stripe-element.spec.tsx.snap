@@ -7,3 +7,11 @@ exports[`ce-stripe-element renders 1`] = `
   </ce-input>
 </ce-stripe-element>
 `;
+
+exports[`sc-stripe-element renders 1`] = `
+<sc-stripe-element size="medium">
+  <sc-input class="sc-stripe" size="medium">
+    <div></div>
+  </sc-input>
+</sc-stripe-element>
+`;

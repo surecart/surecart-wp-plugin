@@ -5,3 +5,9 @@ exports[`ce-line-item-total renders 1`] = `
   <mock:shadow-root></mock:shadow-root>
 </ce-line-item-total>
 `;
+
+exports[`sc-line-item-total renders 1`] = `
+<sc-line-item-total>
+  <mock:shadow-root></mock:shadow-root>
+</sc-line-item-total>
+`;

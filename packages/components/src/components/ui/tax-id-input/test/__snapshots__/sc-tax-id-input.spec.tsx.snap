@@ -121,3 +121,125 @@ exports[`ce-tax-id-input Renders UK VAT Tax Type 1`] = `
 `;
 
 exports[`ce-tax-id-input renders 1`] = `<ce-tax-id-input></ce-tax-id-input>`;
+
+exports[`sc-tax-id-input Renders AU Tax Type 1`] = `
+<sc-tax-id-input country="AU">
+  <input name="tax_identifier.number_type" type="hidden" value="au_abn">
+  <sc-input label="ABN Number" name="tax_identifier.number">
+    <sc-dropdown position="bottom-right" slot="suffix">
+      <sc-button caret="" slot="trigger" type="text">
+        AU ABN
+      </sc-button>
+      <sc-menu>
+        <sc-menu-item>
+          CA GST
+        </sc-menu-item>
+        <sc-menu-item checked="">
+          AU ABN
+        </sc-menu-item>
+        <sc-menu-item>
+          UK VAT
+        </sc-menu-item>
+        <sc-menu-item>
+          EU VAT
+        </sc-menu-item>
+        <sc-menu-item>
+          Other
+        </sc-menu-item>
+      </sc-menu>
+    </sc-dropdown>
+  </sc-input>
+</sc-tax-id-input>
+`;
+
+exports[`sc-tax-id-input Renders CA Tax Type 1`] = `
+<sc-tax-id-input country="CA">
+  <input name="tax_identifier.number_type" type="hidden" value="ca_gst">
+  <sc-input label="GST Number" name="tax_identifier.number">
+    <sc-dropdown position="bottom-right" slot="suffix">
+      <sc-button caret="" slot="trigger" type="text">
+        CA GST
+      </sc-button>
+      <sc-menu>
+        <sc-menu-item checked="">
+          CA GST
+        </sc-menu-item>
+        <sc-menu-item>
+          AU ABN
+        </sc-menu-item>
+        <sc-menu-item>
+          UK VAT
+        </sc-menu-item>
+        <sc-menu-item>
+          EU VAT
+        </sc-menu-item>
+        <sc-menu-item>
+          Other
+        </sc-menu-item>
+      </sc-menu>
+    </sc-dropdown>
+  </sc-input>
+</sc-tax-id-input>
+`;
+
+exports[`sc-tax-id-input Renders EU VAT Tax Type 1`] = `
+<sc-tax-id-input country="DE">
+  <input name="tax_identifier.number_type" type="hidden" value="eu_vat">
+  <sc-input label="VAT Number" name="tax_identifier.number">
+    <sc-dropdown position="bottom-right" slot="suffix">
+      <sc-button caret="" slot="trigger" type="text">
+        EU VAT
+      </sc-button>
+      <sc-menu>
+        <sc-menu-item>
+          CA GST
+        </sc-menu-item>
+        <sc-menu-item>
+          AU ABN
+        </sc-menu-item>
+        <sc-menu-item>
+          UK VAT
+        </sc-menu-item>
+        <sc-menu-item checked="">
+          EU VAT
+        </sc-menu-item>
+        <sc-menu-item>
+          Other
+        </sc-menu-item>
+      </sc-menu>
+    </sc-dropdown>
+  </sc-input>
+</sc-tax-id-input>
+`;
+
+exports[`sc-tax-id-input Renders UK VAT Tax Type 1`] = `
+<sc-tax-id-input country="GB">
+  <input name="tax_identifier.number_type" type="hidden" value="gb_vat">
+  <sc-input label="VAT Number" name="tax_identifier.number">
+    <sc-dropdown position="bottom-right" slot="suffix">
+      <sc-button caret="" slot="trigger" type="text">
+        UK VAT
+      </sc-button>
+      <sc-menu>
+        <sc-menu-item>
+          CA GST
+        </sc-menu-item>
+        <sc-menu-item>
+          AU ABN
+        </sc-menu-item>
+        <sc-menu-item checked="">
+          UK VAT
+        </sc-menu-item>
+        <sc-menu-item>
+          EU VAT
+        </sc-menu-item>
+        <sc-menu-item>
+          Other
+        </sc-menu-item>
+      </sc-menu>
+    </sc-dropdown>
+  </sc-input>
+</sc-tax-id-input>
+`;
+
+exports[`sc-tax-id-input renders 1`] = `<sc-tax-id-input></sc-tax-id-input>`;

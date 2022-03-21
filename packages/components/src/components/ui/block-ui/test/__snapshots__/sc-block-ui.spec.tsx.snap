@@ -9,3 +9,13 @@ exports[`ce-block-ui renders 1`] = `
   </mock:shadow-root>
 </ce-block-ui>
 `;
+
+exports[`sc-block-ui renders 1`] = `
+<sc-block-ui>
+  <mock:shadow-root>
+    <div class="overlay" style="z-index: 1;">
+      <slot></slot>
+    </div>
+  </mock:shadow-root>
+</sc-block-ui>
+`;

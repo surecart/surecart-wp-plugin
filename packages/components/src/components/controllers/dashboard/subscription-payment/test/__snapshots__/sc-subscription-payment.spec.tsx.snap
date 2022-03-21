@@ -18,3 +18,19 @@ exports[`ce-subscription-payment renders 1`] = `
   </mock:shadow-root>
 </ce-subscription-payment>
 `;
+
+exports[`sc-subscription-payment renders 1`] = `
+<sc-subscription-payment>
+  <mock:shadow-root>
+    <sc-dashboard-module class="subscription-payment" error="Cannot read properties of undefined (reading 'live_mode')" heading="Select a payment method">
+      <sc-form>
+        <sc-card>
+          <sc-empty icon="credit-card">
+            You have no saved payment methods.
+          </sc-empty>
+        </sc-card>
+      </sc-form>
+    </sc-dashboard-module>
+  </mock:shadow-root>
+</sc-subscription-payment>
+`;

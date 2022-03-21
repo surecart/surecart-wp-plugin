@@ -1,10 +1,10 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { CEMenu } from '../sc-menu';
+import { ScMenu } from '../sc-menu';
 
 describe('sc-menu', () => {
   it('renders', async () => {
     const page = await newSpecPage({
-      components: [CEMenu],
+      components: [ScMenu],
       html: `<sc-menu></sc-menu>`,
     });
     expect(page.root).toEqualHtml(`

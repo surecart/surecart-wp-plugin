@@ -1,10 +1,10 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { CESkeleton } from '../sc-skeleton';
+import { ScSkeleton } from '../sc-skeleton';
 
 describe('sc-skeleton', () => {
   it('renders', async () => {
     const page = await newSpecPage({
-      components: [CESkeleton],
+      components: [ScSkeleton],
       html: `<sc-skeleton></sc-skeleton>`,
     });
     expect(page.root).toEqualHtml(`

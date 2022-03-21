@@ -1,10 +1,10 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { CERadio } from '../sc-radio';
+import { ScRadio } from '../sc-radio';
 
 describe('sc-radio', () => {
   it('renders', async () => {
     const page = await newSpecPage({
-      components: [CERadio],
+      components: [ScRadio],
       html: `<sc-radio></sc-radio>`,
     });
     expect(page.root).toEqualHtml(`

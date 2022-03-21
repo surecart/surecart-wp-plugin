@@ -1,5 +1,5 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { CECheckout } from '../sc-checkout';
+import { ScCheckout } from '../sc-checkout';
 
 describe('sc-checkout', () => {
   const originalFetch = window.fetch;
@@ -35,7 +35,7 @@ describe('sc-checkout', () => {
       }),
     );
     const page = await newSpecPage({
-      components: [CECheckout],
+      components: [ScCheckout],
       html: `<sc-checkout></sc-checkout>`,
     });
     expect(page.root).toMatchSnapshot();

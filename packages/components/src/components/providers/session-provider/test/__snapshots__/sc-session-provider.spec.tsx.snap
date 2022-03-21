@@ -9,3 +9,13 @@ exports[`ce-cart-provider renders 1`] = `
   </mock:shadow-root>
 </ce-session-provider>
 `;
+
+exports[`sc-cart-provider renders 1`] = `
+<sc-session-provider>
+  <mock:shadow-root>
+    <sc-line-items-provider>
+      <slot></slot>
+    </sc-line-items-provider>
+  </mock:shadow-root>
+</sc-session-provider>
+`;

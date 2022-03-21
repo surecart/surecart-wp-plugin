@@ -9,3 +9,13 @@ exports[`ce-menu-label renders 1`] = `
   </mock:shadow-root>
 </ce-menu-label>
 `;
+
+exports[`sc-menu-label renders 1`] = `
+<sc-menu-label>
+  <mock:shadow-root>
+    <div class="menu-label" part="base">
+      <slot></slot>
+    </div>
+  </mock:shadow-root>
+</sc-menu-label>
+`;

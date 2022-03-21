@@ -1,10 +1,10 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { CEMenuItem } from '../sc-menu-item';
+import { ScMenuItem } from '../sc-menu-item';
 
 describe('sc-menu-item', () => {
   it('renders', async () => {
     const page = await newSpecPage({
-      components: [CEMenuItem],
+      components: [ScMenuItem],
       html: `<sc-menu-item></sc-menu-item>`,
     });
     expect(page.root).toEqualHtml(`
@@ -33,7 +33,7 @@ describe('sc-menu-item', () => {
 
   it('Can be checked', async () => {
     const page = await newSpecPage({
-      components: [CEMenuItem],
+      components: [ScMenuItem],
       html: `<sc-menu-item checked></sc-menu-item>`,
     });
     expect(page.root).toEqualHtml(`
