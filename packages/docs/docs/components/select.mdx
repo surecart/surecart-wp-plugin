@@ -1,7 +1,7 @@
 # Select
 
 ```html
-<ce-select></ce-select>
+<sc-select></sc-select>
 ```
 
 This component lets the user select one option from a group of many.
@@ -13,7 +13,7 @@ import { ScSelect } from '@surecart/components-react';
 <DemoTabs>
   <DemoTabs.Code>
     {`
-<ce-select id="my-select"></ce-select>
+<sc-select id="my-select"></sc-select>
 <script>
   var select = document.querySelector('#my-select');
   // add choices
@@ -39,12 +39,12 @@ import { ScSelect } from '@surecart/components-react';
 
 ## Examples
 
-### Multiple
+### Search
 
 <DemoTabs>
   <DemoTabs.Code>
     {`
-<ce-select id="my-select" placeholder="Make your choice" type="multiple" remove-item-button></ce-select>
+<sc-select id="my-select" placeholder="Make your choice" type="multiple" search remove-item-button></sc-select>
 <script>
   var select = document.querySelector('#my-select');
   // add choices
@@ -60,7 +60,7 @@ import { ScSelect } from '@surecart/components-react';
   </DemoTabs.Code>
 
   <div></div>
-	<ScSelect placeholder="Make your choice" placeholderValue="Make your choice"  type="multiple"  removeItemButton choices={[
+	<ScSelect placeholder="Make your choice" placeholderValue="Make your choice"  search  removeItemButton choices={[
     { "value": "pizza", "label": "Pizza", "selected": false, "disabled": false },
     { "value": "pasta", "label": "Pasta", "selected": false, "disabled": false },
     { "value": "breadsticks", "label": "Breadsticks", "selected": false, "disabled": false },
@@ -70,4 +70,4 @@ import { ScSelect } from '@surecart/components-react';
 
 ## Component Codex
 
-<ComponentDoc tag="ce-select" />
+<ComponentDoc tag="sc-select" />

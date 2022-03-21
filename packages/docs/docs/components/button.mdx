@@ -1,7 +1,7 @@
 # Button
 
 ```html
-<ce-button></ce-button>
+<sc-button></sc-button>
 ```
 
 Buttons let users take actions and make choices with a single click or tap.
@@ -11,9 +11,9 @@ import ComponentDoc from '../../components/Component-Doc.js';
 
 <DemoTabs>
 	<DemoTabs.Code>
-		{ '<ce-button type="primary">Click Me</ce-button>' }
+		{ '<sc-button type="primary">Click Me</sc-button>' }
 	</DemoTabs.Code>
-	<ce-button type="primary">Click Me</ce-button>
+	<sc-button type="primary">Click Me</sc-button>
 </DemoTabs>
 
 ## Type
@@ -23,19 +23,19 @@ Use the `type` property to set the button's type.
 <DemoTabs>
 	<DemoTabs.Code>
 		{ `
-<ce-button>Default</ce-button>
-<ce-button type="primary">Primary</ce-button>
-<ce-button type="success">Success</ce-button>
-<ce-button type="info">Info</ce-button>
-<ce-button type="warning">Warning</ce-button>
-<ce-button type="danger">Danger</ce-button>
+<sc-button>Default</sc-button>
+<sc-button type="primary">Primary</sc-button>
+<sc-button type="success">Success</sc-button>
+<sc-button type="info">Info</sc-button>
+<sc-button type="warning">Warning</sc-button>
+<sc-button type="danger">Danger</sc-button>
     ` }
 	</DemoTabs.Code>
-	<ce-button>Default</ce-button> <ce-button type="primary">
+	<sc-button>Default</sc-button> <sc-button type="primary">
 		Primary
-	</ce-button> <ce-button type="success">Success</ce-button> <ce-button type="info">
+	</sc-button> <sc-button type="success">Success</sc-button> <sc-button type="info">
 		Info
-	</ce-button> <ce-button type="warning">Warning</ce-button> <ce-button type="danger">Danger</ce-button>
+	</sc-button> <sc-button type="warning">Warning</sc-button> <sc-button type="danger">Danger</sc-button>
 </DemoTabs>
 
 ## Size
@@ -45,15 +45,15 @@ Use the `size` property to set the button's size.
 <DemoTabs>
   <DemoTabs.Code>
 {`
-<ce-button size="small">Small</ce-button>
-<ce-button>Default</ce-button>
-<ce-button size="large">Large</ce-button>
+<sc-button size="small">Small</sc-button>
+<sc-button>Default</sc-button>
+<sc-button size="large">Large</sc-button>
 `}
   </DemoTabs.Code>
 
-<ce-button size="small">Small</ce-button>
-<ce-button>Default</ce-button>
-<ce-button size="large">Large</ce-button>
+<sc-button size="small">Small</sc-button>
+<sc-button>Default</sc-button>
+<sc-button size="large">Large</sc-button>
 
 </DemoTabs>
 
@@ -64,15 +64,15 @@ Use the `pill` property to make the button rounded
 <DemoTabs>
   <DemoTabs.Code>
 {`
-<ce-button size="small" pill>Small</ce-button>
-<ce-button pill>Default</ce-button>
-<ce-button size="large" pill>Large</ce-button>
+<sc-button size="small" pill>Small</sc-button>
+<sc-button pill>Default</sc-button>
+<sc-button size="large" pill>Large</sc-button>
 `}
   </DemoTabs.Code>
 
-<ce-button size="small" pill>Small</ce-button>
-<ce-button pill>Default</ce-button>
-<ce-button size="large" pill>Large</ce-button>
+<sc-button size="small" pill>Small</sc-button>
+<sc-button pill>Default</sc-button>
+<sc-button size="large" pill>Large</sc-button>
 
 </DemoTabs>
 
@@ -83,15 +83,15 @@ Use the `circle` property to create a circular button
 <DemoTabs>
   <DemoTabs.Code>
     {`
-<ce-button size="small" circle>👍🏻</ce-button>
-<ce-button circle>👍🏻</ce-button>
-<ce-button size="large" circle>👍🏻</ce-button>
+<sc-button size="small" circle>👍🏻</sc-button>
+<sc-button circle>👍🏻</sc-button>
+<sc-button size="large" circle>👍🏻</sc-button>
     `}
   </DemoTabs.Code>
 
-<ce-button size="small" circle>👍🏻</ce-button>
-<ce-button circle>👍🏻</ce-button>
-<ce-button size="large" circle>👍🏻</ce-button>
+<sc-button size="small" circle>👍🏻</sc-button>
+<sc-button circle>👍🏻</sc-button>
+<sc-button size="large" circle>👍🏻</sc-button>
 
 </DemoTabs>
 
@@ -100,25 +100,25 @@ Use the `circle` property to create a circular button
 <DemoTabs>
 	<DemoTabs.Code>
 		{ `
-<ce-button loading>Click Me</ce-button>
-<ce-button loading type="primary">Click Me</ce-button>
-<ce-button loading type="success">Click Me</ce-button>
-<ce-button loading type="info">Click Me</ce-button>
-<ce-button loading type="warning">Click Me</ce-button>
-<ce-button loading type="danger">Click Me</ce-button>
+<sc-button loading>Click Me</sc-button>
+<sc-button loading type="primary">Click Me</sc-button>
+<sc-button loading type="success">Click Me</sc-button>
+<sc-button loading type="info">Click Me</sc-button>
+<sc-button loading type="warning">Click Me</sc-button>
+<sc-button loading type="danger">Click Me</sc-button>
     ` }
 	</DemoTabs.Code>
-	<ce-button loading>Default</ce-button> <ce-button loading type="primary">
+	<sc-button loading>Default</sc-button> <sc-button loading type="primary">
 		Click Me
-	</ce-button> <ce-button loading type="success">
+	</sc-button> <sc-button loading type="success">
 		Click Me
-	</ce-button> <ce-button loading type="info">
+	</sc-button> <sc-button loading type="info">
 		Click Me
-	</ce-button> <ce-button loading type="warning">
+	</sc-button> <sc-button loading type="warning">
 		Click Me
-	</ce-button> <ce-button loading type="danger">
+	</sc-button> <sc-button loading type="danger">
 		Click Me
-	</ce-button>
+	</sc-button>
 </DemoTabs>
 
 ## Disabled
@@ -126,27 +126,27 @@ Use the `circle` property to create a circular button
 <DemoTabs>
 	<DemoTabs.Code>
 		{ `
-<ce-button disabled>Disabled</ce-button>
-<ce-button disabled type="primary">Disabled</ce-button>
-<ce-button disabled type="success">Disabled</ce-button>
-<ce-button disabled type="info">Disabled</ce-button>
-<ce-button disabled type="warning">Disabled</ce-button>
-<ce-button disabled type="danger">Disabled</ce-button>
+<sc-button disabled>Disabled</sc-button>
+<sc-button disabled type="primary">Disabled</sc-button>
+<sc-button disabled type="success">Disabled</sc-button>
+<sc-button disabled type="info">Disabled</sc-button>
+<sc-button disabled type="warning">Disabled</sc-button>
+<sc-button disabled type="danger">Disabled</sc-button>
     ` }
 	</DemoTabs.Code>
-	<ce-button disabled>Disabled</ce-button> <ce-button disabled type="primary">
+	<sc-button disabled>Disabled</sc-button> <sc-button disabled type="primary">
 		Disabled
-	</ce-button> <ce-button disabled type="success">
+	</sc-button> <sc-button disabled type="success">
 		Disabled
-	</ce-button> <ce-button disabled type="info">
+	</sc-button> <sc-button disabled type="info">
 		Disabled
-	</ce-button> <ce-button disabled type="warning">
+	</sc-button> <sc-button disabled type="warning">
 		Disabled
-	</ce-button> <ce-button disabled type="danger">
+	</sc-button> <sc-button disabled type="danger">
 		Disabled
-	</ce-button>
+	</sc-button>
 </DemoTabs>
 
 ## Component Codex
 
-<ComponentDoc tag="ce-button" />
+<ComponentDoc tag="sc-button" />

@@ -28,7 +28,7 @@
 		"wp-env": "wp-env",
 		"dev": "composer install && wp-env start --xdebug && yarn start:workspace",
 		"docs:release": "yarn workspaces foreach run docs:release",
-		"docs:dev": "yarn workspace @surecart/docs run start",
+		"dev:docs": "yarn workspace @surecart/docs run start",
 		"i18n": "run-s -cl i18n:textdomain i18n:pot",
 		"i18n:textdomain": "wpi18n addtextdomain --exclude=dist,node_modules,resources,tests,vendor --textdomain=SURECART",
 		"i18n:pot": "wpi18n makepot --exclude=dist,node_modules,resources,tests,vendor --type=wp-plugin --domain-path=languages/ --pot-file=SURECART.pot --textdomain=SURECART",

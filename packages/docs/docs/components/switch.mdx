@@ -1,15 +1,15 @@
 # Switch
 
 ```html
-<ce-switch></ce-switch>
+<sc-switch></sc-switch>
 ```
 
 import DemoTabs from '../../components/Demo-Tabs.js';
 import ComponentDoc from '../../components/Component-Doc.js';
 
 <DemoTabs>
-	<DemoTabs.Code>{ '<ce-switch>Toggle Me</ce-switch>' }</DemoTabs.Code>
-	<ce-switch>Toggle Me</ce-switch>
+	<DemoTabs.Code>{ '<sc-switch>Toggle Me</sc-switch>' }</DemoTabs.Code>
+	<sc-switch>Toggle Me</sc-switch>
 </DemoTabs>
 
 ## Disabled
@@ -18,9 +18,9 @@ Use the `disabled` property to disable the switch
 
 <DemoTabs>
 	<DemoTabs.Code>
-		{ '<ce-switch disabled>Disabled</ce-switch>' }
+		{ '<sc-switch disabled>Disabled</sc-switch>' }
 	</DemoTabs.Code>
-	<ce-switch disabled>Disabled</ce-switch>
+	<sc-switch disabled>Disabled</sc-switch>
 </DemoTabs>
 
 ## Custom Size
@@ -30,18 +30,18 @@ Use the css variable design tokens to change the sizes of the switch for an inst
 <DemoTabs>
 	<DemoTabs.Code>
 		{
-			'<ce-switch style="--width: 80px; --height: 32px; --thumb-size: 26px;"></ce-switch>'
+			'<sc-switch style="--width: 80px; --height: 32px; --thumb-size: 26px;"></sc-switch>'
 		}
 	</DemoTabs.Code>
-	<ce-switch
+	<sc-switch
 		style={ {
 			'--width': '80px',
 			'--height': '32px',
 			'--thumb-size': '26px',
 		} }
-	></ce-switch>
+	></sc-switch>
 </DemoTabs>
 
 ## Component Codex
 
-<ComponentDoc tag="ce-switch" />
+<ComponentDoc tag="sc-switch" />
