@@ -13,6 +13,7 @@
 | `formId`       | `form-id`       | The checkout form id                        | `number`                  | `undefined` |
 | `groupId`      | `group-id`      | Group id                                    | `string`                  | `undefined` |
 | `mode`         | `mode`          | Are we in test or live mode.                | `"live" \| "test"`        | `'live'`    |
+| `modified`     | `modified`      | Whent the post was modified.                | `string`                  | `undefined` |
 | `order`        | --              | Order Object                                | `Order`                   | `undefined` |
 | `persist`      | `persist`       | Should we persist the session.              | `boolean`                 | `undefined` |
 | `prices`       | --              | An array of prices to pre-fill in the form. | `PriceChoice[]`           | `[]`        |

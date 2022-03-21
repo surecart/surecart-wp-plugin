@@ -27,6 +27,8 @@
 graph TD;
   ce-dashboard-downloads-list --> ce-downloads-list
   ce-dashboard-downloads-list --> ce-pagination
+  ce-downloads-list --> ce-divider
+  ce-downloads-list --> ce-empty
   ce-downloads-list --> ce-card
   ce-downloads-list --> ce-stacked-list
   ce-downloads-list --> ce-stacked-list-row
@@ -37,6 +39,7 @@ graph TD;
   ce-downloads-list --> ce-dashboard-module
   ce-downloads-list --> ce-button
   ce-downloads-list --> ce-block-ui
+  ce-empty --> ce-icon
   ce-dashboard-module --> ce-alert
   ce-alert --> ce-icon
   ce-button --> ce-spinner

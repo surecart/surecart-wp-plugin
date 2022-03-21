@@ -20,7 +20,7 @@ class Onboarding {
 				'docs_url'     => 'https://surecart.com',
 				'settings_url' => esc_url( admin_url( 'admin.php?page=ce-settings' ) ),
 				'product_url'  => esc_url( \CheckoutEngine::getUrl()->edit( 'product' ) ),
-				'form_url'     => esc_url( admin_url( 'post-new.php?post_type=ce_form' ) ),
+				'form_url'     => esc_url( admin_url( 'post-new.php?post_type=sc_form' ) ),
 			]
 		);
 	}

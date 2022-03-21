@@ -20,7 +20,14 @@ export class CeDownloadsList {
   @Prop() purchases: Array<Purchase> = [];
 
   renderEmpty() {
-    return null;
+    return (
+      <div>
+        <ce-divider style={{ '--spacing': '0' }}></ce-divider>
+        <slot name="empty">
+          <ce-empty icon="download">{__("You don't have any downloads.", 'checkout_engine')}</ce-empty>
+        </slot>
+      </div>
+    );
   }
 
   renderLoading() {

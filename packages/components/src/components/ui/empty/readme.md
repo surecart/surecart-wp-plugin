@@ -16,9 +16,11 @@
 
 ### Used by
 
+ - [ce-downloads-list](../downloads-list)
  - [ce-invoices-list](../../controllers/dashboard/invoices-list)
  - [ce-orders-list](../../controllers/dashboard/orders-list)
  - [ce-payment-methods-list](../../controllers/dashboard/payment-methods-list)
+ - [ce-subscription-payment](../../controllers/dashboard/subscription-payment)
  - [ce-subscriptions-list](../../controllers/dashboard/subscriptions-list)
 
 ### Depends on
@@ -29,9 +31,11 @@
 ```mermaid
 graph TD;
   ce-empty --> ce-icon
+  ce-downloads-list --> ce-empty
   ce-invoices-list --> ce-empty
   ce-orders-list --> ce-empty
   ce-payment-methods-list --> ce-empty
+  ce-subscription-payment --> ce-empty
   ce-subscriptions-list --> ce-empty
   style ce-empty fill:#f9f,stroke:#333,stroke-width:4px
 ```

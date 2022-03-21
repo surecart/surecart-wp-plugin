@@ -4,7 +4,7 @@
 	"description": "Displays the customer's downloads.",
 	"category": "layout",
 	"keywords": ["download", "customer", "dashboard"],
-	"parent": null,
+	"parent": ["checkout-engine/dashboard-page"],
 	"supports": {
 		"reusable": false,
 		"html": false,

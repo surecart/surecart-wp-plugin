@@ -23,13 +23,14 @@
 
 - [ce-choice](../../../ui/choice)
 - [ce-skeleton](../../../ui/skeleton)
+- [ce-button](../../../ui/button)
+- [ce-empty](../../../ui/empty)
 - [ce-choices](../../../ui/choices)
 - [ce-flex](../../../ui/flex)
 - [ce-cc-logo](../../../ui/cc-logo)
 - [ce-dashboard-module](../../../ui/dashboard-module)
 - [ce-form](../../../ui/form)
 - [ce-card](../../../ui/card)
-- [ce-button](../../../ui/button)
 - [ce-block-ui](../../../ui/block-ui)
 
 ### Graph
@@ -37,20 +38,22 @@
 graph TD;
   ce-subscription-payment --> ce-choice
   ce-subscription-payment --> ce-skeleton
+  ce-subscription-payment --> ce-button
+  ce-subscription-payment --> ce-empty
   ce-subscription-payment --> ce-choices
   ce-subscription-payment --> ce-flex
   ce-subscription-payment --> ce-cc-logo
   ce-subscription-payment --> ce-dashboard-module
   ce-subscription-payment --> ce-form
   ce-subscription-payment --> ce-card
-  ce-subscription-payment --> ce-button
   ce-subscription-payment --> ce-block-ui
+  ce-button --> ce-spinner
+  ce-empty --> ce-icon
   ce-choices --> ce-form-control
   ce-form-control --> ce-tooltip
   ce-cc-logo --> ce-icon
   ce-dashboard-module --> ce-alert
   ce-alert --> ce-icon
-  ce-button --> ce-spinner
   ce-block-ui --> ce-spinner
   style ce-subscription-payment fill:#f9f,stroke:#333,stroke-width:4px
 ```

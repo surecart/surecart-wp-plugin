@@ -24,18 +24,18 @@ class PageServiceTest extends CheckoutEngineUnitTestCase {
 
 	public function test_find() {
 		$post = self::factory()->post->create_and_get( array(
-			'post_type' => 'ce_form',
+			'post_type' => 'sc_form',
 		) );
 
-		$found = $this->service->find( $post->ID, 'ce_form' );
+		$found = $this->service->find( $post->ID, 'sc_form' );
 		$this->assertSame( $post->ID, $found->ID );
 
 		$post = self::factory()->post->create_and_get( array(
-			'post_type' => 'ce_form',
+			'post_type' => 'sc_form',
 			'post_status' => 'pending'
 		) );
 
-		$found = $this->service->find( $post->ID, 'ce_form' );
+		$found = $this->service->find( $post->ID, 'sc_form' );
 		$this->assertNull( $found );
 	}
 
@@ -45,11 +45,11 @@ class PageServiceTest extends CheckoutEngineUnitTestCase {
 		$this->assertEquals( 'page', $created->post_type );
 
 		// another post type
-		$created = $this->service->findOrCreate( 'test_slug', 'test_option', 'test_title', 'test_content', null, null, 'ce_form');
-		$this->assertEquals( 'ce_form', $created->post_type );
+		$created = $this->service->findOrCreate( 'test_slug', 'test_option', 'test_title', 'test_content', null, null, 'sc_form');
+		$this->assertEquals( 'sc_form', $created->post_type );
 
 		// does not create twice.
-		$another = $this->service->findOrCreate( 'test_slug', 'test_option', 'test_title', 'test_content', null, null, 'ce_form');
+		$another = $this->service->findOrCreate( 'test_slug', 'test_option', 'test_title', 'test_content', null, null, 'sc_form');
 		$this->assertSame( $created->ID, $another->ID );
 	}
 

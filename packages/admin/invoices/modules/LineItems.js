@@ -45,8 +45,7 @@ export default ({ invoice, charge, loading }) => {
 				renderLoading()
 			) : (
 				<Fragment>
-					{(line_items || []).map((item, index) => {
-						console.log({ item });
+					{(line_items || []).map((item) => {
 						return (
 							<ce-product-line-item
 								key={item.id}

@@ -47,8 +47,6 @@ export default () => {
 						'invoice_items',
 						'invoice_item.price',
 						'price.product',
-						// 'purchases',
-						// 'purchase.product',
 						'subscription',
 						'subscription.price',
 						'charge',

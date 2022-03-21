@@ -7,14 +7,15 @@
 
 ## Properties
 
-| Property        | Attribute        | Description                  | Type         | Default     |
-| --------------- | ---------------- | ---------------------------- | ------------ | ----------- |
-| `busy`          | `busy`           |                              | `boolean`    | `undefined` |
-| `label`         | `label`          | The label for the field.     | `string`     | `undefined` |
-| `lineItems`     | --               | Order line items.            | `LineItem[]` | `[]`        |
-| `loading`       | `loading`        | Is this loading              | `boolean`    | `undefined` |
-| `priceId`       | `price-id`       | The price id for the fields. | `string`     | `undefined` |
-| `removeInvalid` | `remove-invalid` |                              | `boolean`    | `true`      |
+| Property        | Attribute        | Description                               | Type         | Default     |
+| --------------- | ---------------- | ----------------------------------------- | ------------ | ----------- |
+| `busy`          | `busy`           |                                           | `boolean`    | `undefined` |
+| `defaultAmount` | `default-amount` | The default amount to load the page with. | `string`     | `undefined` |
+| `label`         | `label`          | The label for the field.                  | `string`     | `undefined` |
+| `lineItems`     | --               | Order line items.                         | `LineItem[]` | `[]`        |
+| `loading`       | `loading`        | Is this loading                           | `boolean`    | `undefined` |
+| `priceId`       | `price-id`       | The price id for the fields.              | `string`     | `undefined` |
+| `removeInvalid` | `remove-invalid` |                                           | `boolean`    | `true`      |
 
 
 ## Events

@@ -56,6 +56,7 @@
  - [ce-downloads-list](../downloads-list)
  - [ce-invoices-list](../../controllers/dashboard/invoices-list)
  - [ce-login-form](../../controllers/login)
+ - [ce-order-submit](../../controllers/checkout-form/order-submit)
  - [ce-orders-list](../../controllers/dashboard/orders-list)
  - [ce-pagination](../pagination)
  - [ce-payment-method-create](../../controllers/dashboard/payment-method-create)
@@ -88,6 +89,7 @@ graph TD;
   ce-downloads-list --> ce-button
   ce-invoices-list --> ce-button
   ce-login-form --> ce-button
+  ce-order-submit --> ce-button
   ce-orders-list --> ce-button
   ce-pagination --> ce-button
   ce-payment-method-create --> ce-button

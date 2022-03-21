@@ -287,6 +287,22 @@ Default.parameters = {
   ],
 };
 
+export const Paid = Template.bind({});
+Paid.parameters = {
+  mockData: [
+    {
+      url: '/checkout-engine/v1/orders/?expand%5B0%5D=line_items1&expand%5B1%5D=line_item.price&expand%5B2%5D=price.product&expand%5B3%5D=customer&expand%5B4%5D=customer.shipping_address&expand%5B5%5D=payment_intent&expand%5B6%5D=discount&expand%5B7%5D=discount.promotion&expand%5B8%5D=discount.coupon&expand%5B9%5D=shipping_address&expand%5B10%5D=tax_identifier&_locale=user',
+      method: 'POST',
+      status: 200,
+      response: {
+        id: '5b4cf222-7898-4655-84a2-73b0559deb99',
+        object: 'order',
+        status: 'paid',
+      },
+    },
+  ],
+};
+
 export const Error = Template.bind({});
 Error.parameters = {
   mockData: [

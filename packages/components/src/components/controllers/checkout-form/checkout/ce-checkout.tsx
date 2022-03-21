@@ -27,6 +27,9 @@ export class CECheckout {
   /** The checkout form id */
   @Prop() formId: number;
 
+  /** When the form was modified. */
+  @Prop() modified: string;
+
   /** Currency to use for this checkout. */
   @Prop() currencyCode: string = 'usd';
 
@@ -86,6 +89,7 @@ export class CECheckout {
 
   @Listen('cePaid')
   async handlePaid() {
+    console.log(this.order);
     window.localStorage.removeItem(this.el.id);
     window.location.assign(addQueryArgs(this.successUrl, { order: this.order.id }));
   }
@@ -164,9 +168,14 @@ export class CECheckout {
       processor: 'stripe',
       processor_data: this.order?.processor_data,
       state: this.checkoutState.value,
+
+      // checkout states
       loading: this.checkoutState.value === 'loading',
-      busy: this.checkoutState.value === 'updating',
+      busy: ['updating', 'finalizing', 'paid'].includes(this.checkoutState.value),
+      paying: ['finalizing', 'paid'].includes(this.checkoutState.value),
       empty: !['loading', 'updating'].includes(this.checkoutState.value) && !this.order?.line_items?.pagination?.count,
+      // checkout states
+
       error: this.error,
       order: this.order,
       lineItems: this.order?.line_items?.data || [],
@@ -189,7 +198,7 @@ export class CECheckout {
   }
 
   render() {
-    if (this.checkoutState.value === 'paid') {
+    if (this?.order?.status === 'paid') {
       return (
         <ce-alert type="success" open>
           <span slot="title">{__('You have already paid for this order.', 'checkout_engine')}</span>
@@ -235,6 +244,7 @@ export class CECheckout {
               order={this.order}
               prices={this.prices}
               persist={this.persistSession}
+              modified={this.modified}
               mode={this.mode}
               form-id={this.formId}
               group-id={this.el.id}

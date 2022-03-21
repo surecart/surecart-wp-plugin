@@ -15,6 +15,9 @@
 			"type": "string",
 			"default": "Donation Amount"
 		},
+		"default_amount": {
+			"type": "number"
+		},
 		"price_id": {
 			"type": "string"
 		},

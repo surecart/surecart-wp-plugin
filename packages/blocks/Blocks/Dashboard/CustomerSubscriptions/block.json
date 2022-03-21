@@ -18,6 +18,10 @@
 		"per_page": {
 			"type": "number",
 			"default": "10"
+		},
+		"terms": {
+			"type": "string",
+			"default": "By updating or cancelling your plan, you agree to the Terms of Service and Privacy Policy."
 		}
 	}
 }

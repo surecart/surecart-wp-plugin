@@ -1,6 +1,6 @@
 import { createOrUpdateOrder, finalizeSession } from '../../../services/session';
 import { Order, LineItemData, PriceChoice } from '../../../types';
-import { getSessionId, getURLLineItems, populateInputs, removeSessionIdFromStorage } from './helpers/session';
+import { getSessionId, getURLLineItems, populateInputs, removeSessionId, setSessionId } from './helpers/session';
 import { Component, h, Prop, Event, EventEmitter, Element, State, Watch, Listen } from '@stencil/core';
 import { removeQueryArgs } from '@wordpress/url';
 
@@ -23,6 +23,9 @@ export class CeSessionProvider {
 
   /** The checkout form id */
   @Prop() formId: number;
+
+  /** Whent the post was modified. */
+  @Prop() modified: string;
 
   /** An array of prices to pre-fill in the form. */
   @Prop() prices: Array<PriceChoice> = [];
@@ -67,10 +70,10 @@ export class CeSessionProvider {
   @Watch('order')
   handleOrderChange(val) {
     if (val?.id) {
-      localStorage.setItem(this.groupId, val.id);
+      setSessionId(this.groupId, val.id, this.modified);
     }
     if (val.status === 'paid') {
-      window.localStorage.removeItem(this.groupId);
+      removeSessionId(this.groupId);
     }
     /** Populate any inputs from the session */
     populateInputs(this.el, val);
@@ -150,7 +153,8 @@ export class CeSessionProvider {
    * @param e
    */
   @Listen('ceFormSubmit')
-  async handleFormSubmit(e) {
+  async handleFormSubmit() {
+    this.ceSetState.emit('FINALIZE');
     this.ceError.emit({});
 
     // Get current form state.
@@ -158,11 +162,16 @@ export class CeSessionProvider {
     let data = this.parseFormData(json);
 
     // first lets make sure the session is updated before we process it.
-    await this.loadUpdate(data);
+    try {
+      await this.update({ ...this.defaultFormData(), ...data });
+    } catch (e) {
+      console.error(e);
+      this.ceSetState.emit('REJECT');
+      this.handleErrorResponse(e);
+    }
 
     // first validate server-side and get key
     try {
-      this.ceSetState.emit('FETCH');
       this.session = await finalizeSession({
         id: this.order.id,
         data,
@@ -171,17 +180,6 @@ export class CeSessionProvider {
         },
         processor: 'stripe',
       });
-      switch (this.session.status) {
-        case 'finalized':
-          this.ceSetState.emit('FETCH');
-          break;
-        case 'paid':
-          this.ceSetState.emit('FETCH');
-          break;
-        default:
-          this.ceSetState.emit('RESOLVE');
-          break;
-      }
     } catch (e) {
       // handle old price versions by refreshing.
       if (e?.additional_errors?.[0]?.code === 'order.line_items.old_price_versions') {
@@ -202,7 +200,7 @@ export class CeSessionProvider {
             status: 'draft',
           },
         });
-        this.handleFormSubmit(e);
+        this.handleFormSubmit();
         return;
       }
       this.handleErrorResponse(e);
@@ -285,7 +283,7 @@ export class CeSessionProvider {
       return this.loadUpdate({ line_items });
     }
 
-    const id = getSessionId(this.groupId, this.order);
+    const id = getSessionId(this.groupId, this.order, this.modified);
 
     // fetch or initialize a session.
     if (id && this.persist) {
@@ -330,10 +328,20 @@ export class CeSessionProvider {
     const elements = this.el.querySelectorAll('[price-id]') as any;
 
     elements.forEach(el => {
+      // handle price choices.
       if (el.checked) {
         line_items.push({
           quantity: el.quantity || 1,
           price_id: el.priceId,
+          ...(el.defaultAmount ? { ad_hoc_amount: el.defaultAmount } : {}),
+        });
+      }
+      // handle donation default amount.
+      if (el.defaultAmount) {
+        line_items.push({
+          quantity: el.quantity || 1,
+          price_id: el.priceId,
+          ad_hoc_amount: el.defaultAmount,
         });
       }
     });
@@ -346,7 +354,7 @@ export class CeSessionProvider {
       return this.order.id;
     }
 
-    const id = getSessionId(this.groupId, this.order);
+    const id = getSessionId(this.groupId, this.order, this.modified);
     if (this.persist) {
       return id;
     }
@@ -374,7 +382,7 @@ export class CeSessionProvider {
     } catch (e) {
       // reinitalize if order not found.
       if (['order.not_found'].includes(e?.code)) {
-        removeSessionIdFromStorage(this.groupId);
+        removeSessionId(this.groupId);
         return this.initialize();
       }
       console.error(e);

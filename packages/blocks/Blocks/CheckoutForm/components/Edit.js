@@ -39,11 +39,11 @@ export default ({ attributes, setAttributes }) => {
 
 	const [blocks, onInput, onChange] = useEntityBlockEditor(
 		'postType',
-		'ce_form',
+		'sc_form',
 		{ id }
 	);
 
-	const [title, setTitle] = useEntityProp('postType', 'ce_form', 'title', id);
+	const [title, setTitle] = useEntityProp('postType', 'sc_form', 'title', id);
 
 	const innerBlocksProps = useInnerBlocksProps(
 		{},
@@ -59,14 +59,14 @@ export default ({ attributes, setAttributes }) => {
 	const { isMissing, hasResolved } = useSelect((select) => {
 		const hasResolved = select(coreStore).hasFinishedResolution(
 			'getEntityRecord',
-			['postType', 'ce_form', id]
+			['postType', 'sc_form', id]
 		);
 		const form = select(coreStore).getEntityRecord(
 			'postType',
-			'ce_form',
+			'sc_form',
 			id
 		);
-		const canEdit = select(coreStore).canUserEditEntityRecord('ce_form');
+		const canEdit = select(coreStore).canUserEditEntityRecord('sc_form');
 		return {
 			canEdit,
 			isMissing: hasResolved && !form,

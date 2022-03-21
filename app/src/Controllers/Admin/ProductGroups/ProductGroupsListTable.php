@@ -125,6 +125,25 @@ class ProductGroupsListTable extends ListTable {
 	}
 
 	/**
+	 * Get the archive query status.
+	 *
+	 * @return boolean|null
+	 */
+	public function getStatus() {
+		$status = $_GET['status'] ?? 'active';
+		if ( 'active' === $status ) {
+			return [ 'archived' => false ];
+		}
+		if ( 'archived' === $status ) {
+			return [ 'archived' => true ];
+		}
+		if ( 'all' === $status ) {
+			return [];
+		}
+		return $status;
+	}
+
+	/**
 	 * Get the table data
 	 *
 	 * @return Object
@@ -132,7 +151,7 @@ class ProductGroupsListTable extends ListTable {
 	protected function table_data() {
 		return ProductGroup::where(
 			[
-				'status' => $this->getStatus(),
+				$this->getStatus(),
 			]
 		)->paginate(
 			[

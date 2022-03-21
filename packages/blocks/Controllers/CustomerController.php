@@ -56,8 +56,8 @@ class CustomerController extends BaseController {
 			</ce-breadcrumbs>
 
 			<?php
-			if ( ! empty( User::current()->customerId( 'test' ) ) ) {
-				$customer = Customer::with( [ 'shipping_address', 'billing_address', 'tax_identifier' ] )->find( User::current()->customerId( 'test' ) );
+			if ( ! empty( User::current()->customerId( 'live' ) ) ) {
+				$customer = Customer::with( [ 'shipping_address', 'billing_address', 'tax_identifier' ] )->find( User::current()->customerId( 'live' ) );
 				echo wp_kses_post(
 					Component::tag( 'ce-customer-edit' )
 					->id( 'customer-customer-edit' )
@@ -71,8 +71,8 @@ class CustomerController extends BaseController {
 				);
 			}
 
-			if ( ! empty( User::current()->customerId( 'live' ) ) ) {
-				$customer = Customer::with( [ 'shipping_address', 'billing_address', 'tax_identifier' ] )->find( User::current()->customerId( 'live' ) );
+			if ( ! empty( User::current()->customerId( 'test' ) ) ) {
+				$customer = Customer::with( [ 'shipping_address', 'billing_address', 'tax_identifier' ] )->find( User::current()->customerId( 'test' ) );
 				echo wp_kses_post(
 					Component::tag( 'ce-customer-edit' )
 					->id( 'customer-customer-edit' )

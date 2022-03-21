@@ -270,6 +270,10 @@ export namespace Components {
          */
         "mode": 'test' | 'live';
         /**
+          * When the form was modified.
+         */
+        "modified": string;
+        /**
           * Where to go on success
          */
         "persistSession": boolean;
@@ -596,6 +600,10 @@ export namespace Components {
     }
     interface CeDonationChoices {
         "busy": boolean;
+        /**
+          * The default amount to load the page with.
+         */
+        "defaultAmount": string;
         /**
           * The label for the field.
          */
@@ -1231,6 +1239,40 @@ export namespace Components {
          */
         "status": OrderStatus;
     }
+    interface CeOrderSubmit {
+        /**
+          * Is the order busy
+         */
+        "busy": boolean;
+        /**
+          * Show a full-width button.
+         */
+        "full": boolean;
+        /**
+          * Icon to show.
+         */
+        "icon": string;
+        /**
+          * Is the order loading.
+         */
+        "loading": boolean;
+        /**
+          * Is the order paying.
+         */
+        "paying": boolean;
+        /**
+          * Show the total.
+         */
+        "showTotal": boolean;
+        /**
+          * The button's size.
+         */
+        "size": 'small' | 'medium' | 'large';
+        /**
+          * The button type.
+         */
+        "type": 'default' | 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text' | 'link';
+    }
     interface CeOrderSummary {
         "collapsed": boolean;
         "collapsible": boolean;
@@ -1662,6 +1704,10 @@ export namespace Components {
           * Are we in test or live mode.
          */
         "mode": 'test' | 'live';
+        /**
+          * Whent the post was modified.
+         */
+        "modified": string;
         /**
           * Order Object
          */
@@ -2432,6 +2478,12 @@ declare global {
         prototype: HTMLCeOrderStatusBadgeElement;
         new (): HTMLCeOrderStatusBadgeElement;
     };
+    interface HTMLCeOrderSubmitElement extends Components.CeOrderSubmit, HTMLStencilElement {
+    }
+    var HTMLCeOrderSubmitElement: {
+        prototype: HTMLCeOrderSubmitElement;
+        new (): HTMLCeOrderSubmitElement;
+    };
     interface HTMLCeOrderSummaryElement extends Components.CeOrderSummary, HTMLStencilElement {
     }
     var HTMLCeOrderSummaryElement: {
@@ -2804,6 +2856,7 @@ declare global {
         "ce-order-password": HTMLCeOrderPasswordElement;
         "ce-order-shipping-address": HTMLCeOrderShippingAddressElement;
         "ce-order-status-badge": HTMLCeOrderStatusBadgeElement;
+        "ce-order-submit": HTMLCeOrderSubmitElement;
         "ce-order-summary": HTMLCeOrderSummaryElement;
         "ce-order-tax-id-input": HTMLCeOrderTaxIdInputElement;
         "ce-orders-list": HTMLCeOrdersListElement;
@@ -3127,6 +3180,10 @@ declare namespace LocalJSX {
           * Are we in test or live mode.
          */
         "mode"?: 'test' | 'live';
+        /**
+          * When the form was modified.
+         */
+        "modified"?: string;
         /**
           * Where to go on success
          */
@@ -3502,6 +3559,10 @@ declare namespace LocalJSX {
     }
     interface CeDonationChoices {
         "busy"?: boolean;
+        /**
+          * The default amount to load the page with.
+         */
+        "defaultAmount"?: string;
         /**
           * The label for the field.
          */
@@ -4186,6 +4247,40 @@ declare namespace LocalJSX {
          */
         "status"?: OrderStatus;
     }
+    interface CeOrderSubmit {
+        /**
+          * Is the order busy
+         */
+        "busy"?: boolean;
+        /**
+          * Show a full-width button.
+         */
+        "full"?: boolean;
+        /**
+          * Icon to show.
+         */
+        "icon"?: string;
+        /**
+          * Is the order loading.
+         */
+        "loading"?: boolean;
+        /**
+          * Is the order paying.
+         */
+        "paying"?: boolean;
+        /**
+          * Show the total.
+         */
+        "showTotal"?: boolean;
+        /**
+          * The button's size.
+         */
+        "size"?: 'small' | 'medium' | 'large';
+        /**
+          * The button type.
+         */
+        "type"?: 'default' | 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text' | 'link';
+    }
     interface CeOrderSummary {
         "collapsed"?: boolean;
         "collapsible"?: boolean;
@@ -4666,6 +4761,10 @@ declare namespace LocalJSX {
          */
         "mode"?: 'test' | 'live';
         /**
+          * Whent the post was modified.
+         */
+        "modified"?: string;
+        /**
           * Update line items event
          */
         "onCeError"?: (event: CustomEvent<{ message: string; code?: string; data?: any; additional_errors?: any } | {}>) => void;
@@ -5144,6 +5243,7 @@ declare namespace LocalJSX {
         "ce-order-password": CeOrderPassword;
         "ce-order-shipping-address": CeOrderShippingAddress;
         "ce-order-status-badge": CeOrderStatusBadge;
+        "ce-order-submit": CeOrderSubmit;
         "ce-order-summary": CeOrderSummary;
         "ce-order-tax-id-input": CeOrderTaxIdInput;
         "ce-orders-list": CeOrdersList;
@@ -5266,6 +5366,7 @@ declare module "@stencil/core" {
             "ce-order-password": LocalJSX.CeOrderPassword & JSXBase.HTMLAttributes<HTMLCeOrderPasswordElement>;
             "ce-order-shipping-address": LocalJSX.CeOrderShippingAddress & JSXBase.HTMLAttributes<HTMLCeOrderShippingAddressElement>;
             "ce-order-status-badge": LocalJSX.CeOrderStatusBadge & JSXBase.HTMLAttributes<HTMLCeOrderStatusBadgeElement>;
+            "ce-order-submit": LocalJSX.CeOrderSubmit & JSXBase.HTMLAttributes<HTMLCeOrderSubmitElement>;
             "ce-order-summary": LocalJSX.CeOrderSummary & JSXBase.HTMLAttributes<HTMLCeOrderSummaryElement>;
             "ce-order-tax-id-input": LocalJSX.CeOrderTaxIdInput & JSXBase.HTMLAttributes<HTMLCeOrderTaxIdInputElement>;
             "ce-orders-list": LocalJSX.CeOrdersList & JSXBase.HTMLAttributes<HTMLCeOrdersListElement>;

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-03-19T21:15:02",
+  "timestamp": "2022-03-21T18:18:07",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.14.2",
@@ -1173,6 +1173,7 @@
         "ce-downloads-list",
         "ce-invoices-list",
         "ce-login-form",
+        "ce-order-submit",
         "ce-orders-list",
         "ce-pagination",
         "ce-payment-method-create",
@@ -1218,6 +1219,9 @@
           "ce-button"
         ],
         "ce-login-form": [
+          "ce-button"
+        ],
+        "ce-order-submit": [
           "ce-button"
         ],
         "ce-orders-list": [
@@ -2065,6 +2069,22 @@
             },
             {
               "value": "test",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "modified",
+          "type": "string",
+          "mutable": false,
+          "attr": "modified",
+          "reflectToAttr": false,
+          "docs": "When the form was modified.",
+          "docsTags": [],
+          "values": [
+            {
               "type": "string"
             }
           ],
@@ -4263,6 +4283,8 @@
           "ce-pagination"
         ],
         "ce-downloads-list": [
+          "ce-divider",
+          "ce-empty",
           "ce-card",
           "ce-stacked-list",
           "ce-stacked-list-row",
@@ -4273,6 +4295,9 @@
           "ce-dashboard-module",
           "ce-button",
           "ce-block-ui"
+        ],
+        "ce-empty": [
+          "ce-icon"
         ],
         "ce-dashboard-module": [
           "ce-alert"
@@ -4460,6 +4485,7 @@
         }
       ],
       "dependents": [
+        "ce-downloads-list",
         "ce-express-payment",
         "ce-invoices-list",
         "ce-login-form",
@@ -4471,6 +4497,9 @@
       ],
       "dependencies": [],
       "dependencyGraph": {
+        "ce-downloads-list": [
+          "ce-divider"
+        ],
         "ce-express-payment": [
           "ce-divider"
         ],
@@ -4517,6 +4546,22 @@
           "values": [
             {
               "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "defaultAmount",
+          "type": "string",
+          "mutable": false,
+          "attr": "default-amount",
+          "reflectToAttr": false,
+          "docs": "The default amount to load the page with.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
             }
           ],
           "optional": false,
@@ -4575,7 +4620,7 @@
           "type": "string",
           "mutable": false,
           "attr": "price-id",
-          "reflectToAttr": false,
+          "reflectToAttr": true,
           "docs": "The price id for the fields.",
           "docsTags": [],
           "values": [
@@ -4824,6 +4869,8 @@
         "ce-dashboard-downloads-list"
       ],
       "dependencies": [
+        "ce-divider",
+        "ce-empty",
         "ce-card",
         "ce-stacked-list",
         "ce-stacked-list-row",
@@ -4837,6 +4884,8 @@
       ],
       "dependencyGraph": {
         "ce-downloads-list": [
+          "ce-divider",
+          "ce-empty",
           "ce-card",
           "ce-stacked-list",
           "ce-stacked-list-row",
@@ -4847,6 +4896,9 @@
           "ce-dashboard-module",
           "ce-button",
           "ce-block-ui"
+        ],
+        "ce-empty": [
+          "ce-icon"
         ],
         "ce-dashboard-module": [
           "ce-alert"
@@ -5058,9 +5110,11 @@
       "slots": [],
       "parts": [],
       "dependents": [
+        "ce-downloads-list",
         "ce-invoices-list",
         "ce-orders-list",
         "ce-payment-methods-list",
+        "ce-subscription-payment",
         "ce-subscriptions-list"
       ],
       "dependencies": [
@@ -5070,6 +5124,9 @@
         "ce-empty": [
           "ce-icon"
         ],
+        "ce-downloads-list": [
+          "ce-empty"
+        ],
         "ce-invoices-list": [
           "ce-empty"
         ],
@@ -5077,6 +5134,9 @@
           "ce-empty"
         ],
         "ce-payment-methods-list": [
+          "ce-empty"
+        ],
+        "ce-subscription-payment": [
           "ce-empty"
         ],
         "ce-subscriptions-list": [
@@ -6909,6 +6969,7 @@
         "ce-empty",
         "ce-invoices-list",
         "ce-login-form",
+        "ce-order-submit",
         "ce-orders-list",
         "ce-payment-methods-list",
         "ce-select",
@@ -6945,6 +7006,9 @@
           "ce-icon"
         ],
         "ce-login-form": [
+          "ce-icon"
+        ],
+        "ce-order-submit": [
           "ce-icon"
         ],
         "ce-orders-list": [
@@ -9959,6 +10023,211 @@
         ],
         "ce-orders-list": [
           "ce-order-status-badge"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/controllers/checkout-form/order-submit/ce-order-submit.tsx",
+      "encapsulation": "none",
+      "tag": "ce-order-submit",
+      "readme": "# ce-order-submit\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "busy",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "busy",
+          "reflectToAttr": false,
+          "docs": "Is the order busy",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "full",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "full",
+          "reflectToAttr": false,
+          "docs": "Show a full-width button.",
+          "docsTags": [],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "icon",
+          "type": "string",
+          "mutable": false,
+          "attr": "icon",
+          "reflectToAttr": false,
+          "docs": "Icon to show.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "loading",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "loading",
+          "reflectToAttr": false,
+          "docs": "Is the order loading.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "paying",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "paying",
+          "reflectToAttr": false,
+          "docs": "Is the order paying.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "showTotal",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "show-total",
+          "reflectToAttr": false,
+          "docs": "Show the total.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "size",
+          "type": "\"large\" | \"medium\" | \"small\"",
+          "mutable": false,
+          "attr": "size",
+          "reflectToAttr": true,
+          "docs": "The button's size.",
+          "docsTags": [],
+          "default": "'medium'",
+          "values": [
+            {
+              "value": "large",
+              "type": "string"
+            },
+            {
+              "value": "medium",
+              "type": "string"
+            },
+            {
+              "value": "small",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "type",
+          "type": "\"danger\" | \"default\" | \"info\" | \"link\" | \"primary\" | \"success\" | \"text\" | \"warning\"",
+          "mutable": false,
+          "attr": "type",
+          "reflectToAttr": true,
+          "docs": "The button type.",
+          "docsTags": [],
+          "default": "'primary'",
+          "values": [
+            {
+              "value": "danger",
+              "type": "string"
+            },
+            {
+              "value": "default",
+              "type": "string"
+            },
+            {
+              "value": "info",
+              "type": "string"
+            },
+            {
+              "value": "link",
+              "type": "string"
+            },
+            {
+              "value": "primary",
+              "type": "string"
+            },
+            {
+              "value": "success",
+              "type": "string"
+            },
+            {
+              "value": "text",
+              "type": "string"
+            },
+            {
+              "value": "warning",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "ce-button",
+        "ce-icon",
+        "ce-total"
+      ],
+      "dependencyGraph": {
+        "ce-order-submit": [
+          "ce-button",
+          "ce-icon",
+          "ce-total"
+        ],
+        "ce-button": [
+          "ce-spinner"
+        ],
+        "ce-total": [
+          "ce-format-number"
         ]
       }
     },
@@ -13053,6 +13322,22 @@
           "required": false
         },
         {
+          "name": "modified",
+          "type": "string",
+          "mutable": false,
+          "attr": "modified",
+          "reflectToAttr": false,
+          "docs": "Whent the post was modified.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "order",
           "type": "Order",
           "mutable": false,
@@ -14666,27 +14951,35 @@
       "dependencies": [
         "ce-choice",
         "ce-skeleton",
+        "ce-button",
+        "ce-empty",
         "ce-choices",
         "ce-flex",
         "ce-cc-logo",
         "ce-dashboard-module",
         "ce-form",
         "ce-card",
-        "ce-button",
         "ce-block-ui"
       ],
       "dependencyGraph": {
         "ce-subscription-payment": [
           "ce-choice",
           "ce-skeleton",
+          "ce-button",
+          "ce-empty",
           "ce-choices",
           "ce-flex",
           "ce-cc-logo",
           "ce-dashboard-module",
           "ce-form",
           "ce-card",
-          "ce-button",
           "ce-block-ui"
+        ],
+        "ce-button": [
+          "ce-spinner"
+        ],
+        "ce-empty": [
+          "ce-icon"
         ],
         "ce-choices": [
           "ce-form-control"
@@ -14702,9 +14995,6 @@
         ],
         "ce-alert": [
           "ce-icon"
-        ],
-        "ce-button": [
-          "ce-spinner"
         ],
         "ce-block-ui": [
           "ce-spinner"
@@ -16512,6 +16802,7 @@
       "parts": [],
       "dependents": [
         "ce-line-item-total",
+        "ce-order-submit",
         "ce-order-summary"
       ],
       "dependencies": [
@@ -16522,6 +16813,9 @@
           "ce-format-number"
         ],
         "ce-line-item-total": [
+          "ce-total"
+        ],
+        "ce-order-submit": [
           "ce-total"
         ],
         "ce-order-summary": [

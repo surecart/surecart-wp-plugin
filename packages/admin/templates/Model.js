@@ -5,21 +5,25 @@ import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';
 import { SnackbarList, Tooltip } from '@wordpress/components';
 import { PostLockedModal } from '@wordpress/editor';
+import StatusBadge from '../components/StatusBadge';
 import BrowserUrl from '../components/browser-url';
 import UnsavedChangesWarning from '../components/unsaved-changes-warning';
 import ErrorBoundary from '../components/error-boundary';
-import SaveButton from '../components/SaveButton';
 import { CeForm, CeButton } from '@checkout-engine/components-react';
+import useSnackbar from '../hooks/useSnackbar';
 
 export default ({
+	id,
 	children,
 	pageModelName,
 	title,
-	buttonText,
+	button,
 	footer,
-	back,
+	noticeUI,
+	backUrl,
 	backButtonType,
-	statusBadge,
+	backText,
+	status,
 	notices,
 	removeNotice,
 	onSubmit,
@@ -28,24 +32,72 @@ export default ({
 	sidebar,
 	onError,
 }) => {
+	const { snackbarNotices, removeSnackbarNotice } = useSnackbar();
+
+	if (!id) {
+		return (
+			<ErrorBoundary onError={onError}>
+				<Global
+					styles={css`
+						:root {
+							--ce-color-primary-500: var(--wp-admin-theme-color);
+							--ce-focus-ring-color-primary: var(
+								--wp-admin-theme-color
+							);
+							--ce-input-border-color-focus: var(
+								--wp-admin-theme-color
+							);
+						}
+						#wpwrap {
+							background-color: var(--ce-color-gray-100);
+						}
+					`}
+				/>
+				<div
+					css={css`
+						height: calc(100vh - 100px);
+						display: grid;
+					`}
+				>
+					<UnsavedChangesWarning />
+					<BrowserUrl path={pageModelName} />
+					<div
+						css={css`
+							margin: auto;
+							width: 100%;
+							max-width: 752px;
+						`}
+					>
+						{children}
+					</div>
+				</div>
+			</ErrorBoundary>
+		);
+	}
+
 	return (
 		<Fragment>
 			<Global
 				styles={css`
 					:root {
-						--ce-color-primary: 200 !important;
-						--ce-color-primary-luminance: 36% !important;
-						--ce-color-primary-saturation: 100% !important;
+						--ce-color-primary-500: var(--wp-admin-theme-color);
+						--ce-focus-ring-color-primary: var(
+							--wp-admin-theme-color
+						);
+						--ce-input-border-color-focus: var(
+							--wp-admin-theme-color
+						);
+					}
+					#wpwrap {
+						background-color: var(--ce-color-gray-100);
 					}
 				`}
 			/>
 			<ErrorBoundary onError={onError}>
-				<BrowserUrl path={pageModelName} />
 				<UnsavedChangesWarning />
 				<CeForm
 					className="ce-model-form"
 					onCeFormSubmit={onSubmit}
-					onCeFormInvalid={onInvalid}
 					css={css`
 						font-size: 14px;
 						margin-right: 20px;
@@ -53,6 +105,9 @@ export default ({
 						button {
 							font-size: 13px;
 						}
+
+						--ce-highlight-color: 200 !important;
+						--ce-color-luminance: 36% !important;
 
 						ce-form-row:not(:last-child) {
 							margin-bottom: 20px;
@@ -133,22 +188,33 @@ export default ({
 									column-gap: 1em;
 								`}
 							>
-								{!!back?.url && (
+								{!!backUrl && (
 									<Tooltip
 										text={
-											back?.text ||
+											backText ||
 											__('Go back.', 'checkout_engine')
 										}
 									>
 										{backButtonType === 'icon' ? (
-											<a href={back?.url}>
-												<ce-icon name="close"></ce-icon>
+											<a
+												href={backUrl}
+												css={css`
+													color: black;
+													display: flex;
+													align-items: center;
+													cursor: pointer;
+													padding: 0.5em 1em;
+													border-right: 1px solid
+														#dcdcdc;
+												`}
+											>
+												<ce-icon name="x"></ce-icon>
 											</a>
 										) : (
 											<CeButton
 												circle
 												size="small"
-												href={back?.url}
+												href={backUrl}
 											>
 												&larr;
 											</CeButton>
@@ -156,20 +222,29 @@ export default ({
 									</Tooltip>
 								)}
 
-								<ce-text
-									tag="h1"
-									style={{
-										'--font-size':
-											'var(--ce-font-size-large)',
-									}}
+								<h1
+									css={css`
+										margin: 0;
+										font-size: var(--ce-font-size-large);
+									`}
 								>
 									{title}
-								</ce-text>
-								{!loading && statusBadge ? statusBadge : ''}
+								</h1>
+								{!loading && status && (
+									<StatusBadge status={status} />
+								)}
 							</div>
-							{buttonText && (
-								<SaveButton>{buttonText}</SaveButton>
-							)}
+
+							{button}
+						</div>
+						<div
+							css={css`
+								.components-notice {
+									margin: 0;
+								}
+							`}
+						>
+							{noticeUI}
 						</div>
 					</div>
 
@@ -178,19 +253,20 @@ export default ({
 							padding: 0 5px;
 							display: grid;
 							margin: auto;
-							max-width: 1280px;
-							@media screen and (min-width: 960px) {
+							max-width: ${sidebar ? '1160px' : '752px'};
+							${sidebar &&
+							`@media screen and (min-width: 960px) {
 								grid-template-columns: 1fr 380px;
-								grid-gap: 2em;
+								grid-gap: var(--ce-spacing-xxx-large);
 								grid-template-areas: 'nav    sidebar';
-							}
+							}`}
 						`}
 					>
 						<div
 							css={css`
 								margin-bottom: 3em;
 								> * ~ * {
-									margin-top: 1em;
+									margin-top: var(--ce-spacing-xxx-large);
 								}
 							`}
 						>
@@ -231,8 +307,8 @@ export default ({
 								text-transform: uppercase;
 							}
 						`}
-						notices={notices || []}
-						onRemove={removeNotice}
+						notices={snackbarNotices}
+						onRemove={removeSnackbarNotice}
 					/>
 				</CeForm>
 			</ErrorBoundary>

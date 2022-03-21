@@ -7,10 +7,8 @@ import Box from '../../ui/Box';
 import { translateInterval } from '../../util/translations';
 import Definition from '../../ui/Definition';
 
-export default ({ order, loading }) => {
+export default ({ order, charge, loading }) => {
 	const line_items = order?.line_items?.data;
-
-	console.log({ order });
 
 	const renderLoading = () => {
 		return <ce-skeleton></ce-skeleton>;
@@ -20,7 +18,8 @@ export default ({ order, loading }) => {
 		<Box
 			title={__('Order Details', 'checkout_engine')}
 			footer={
-				!loading && (
+				!loading &&
+				!!charge && (
 					<ce-line-item
 						style={{
 							width: '100%',
@@ -28,16 +27,16 @@ export default ({ order, loading }) => {
 						}}
 					>
 						<span slot="title">
-							{__('Total', 'checkout_engine')}
+							{__('Amount Paid', 'checkout_engine')}
 						</span>
 						<span slot="price">
 							<ce-format-number
 								type="currency"
-								currency={order?.currency}
-								value={order?.total_amount}
+								currency={charge?.currency}
+								value={charge?.amount - charge?.refunded_amount}
 							></ce-format-number>
 						</span>
-						<span slot="currency">{order?.currency}</span>
+						<span slot="currency">{charge?.currency}</span>
 					</ce-line-item>
 				)
 			}
@@ -46,7 +45,7 @@ export default ({ order, loading }) => {
 				renderLoading()
 			) : (
 				<Fragment>
-					{(line_items || []).map((item, index) => {
+					{(line_items || []).map((item) => {
 						return (
 							<ce-product-line-item
 								key={item.id}
@@ -57,11 +56,7 @@ export default ({ order, loading }) => {
 								editable={false}
 								removable={false}
 								quantity={item.quantity}
-								amount={
-									item.ad_hoc_amount !== null
-										? item.ad_hoc_amount
-										: item.price.amount
-								}
+								amount={item.price.amount}
 								currency={item?.price?.currency}
 								trialDurationDays={
 									item?.price?.trial_duration_days
@@ -76,7 +71,7 @@ export default ({ order, loading }) => {
 
 					<hr />
 
-					<Definition title={__('Subtotal', 'order')}>
+					<Definition title={__('Subtotal', 'checkout_engine')}>
 						<ce-format-number
 							style={{
 								'font-weight': 'var(--ce-font-weight-semibold)',
@@ -87,7 +82,7 @@ export default ({ order, loading }) => {
 							value={order?.subtotal_amount}
 						></ce-format-number>
 					</Definition>
-					<Definition title={__('Discounts', 'order')}>
+					<Definition title={__('Discounts', 'checkout_engine')}>
 						<ce-format-number
 							style={{
 								'font-weight': 'var(--ce-font-weight-semibold)',
@@ -108,7 +103,7 @@ export default ({ order, loading }) => {
 						}}
 					>
 						<span slot="title">
-							{__('Amount Paid', 'checkout_engine')}
+							{__('Total Due', 'checkout_engine')}
 						</span>
 						<span slot="price">
 							<ce-format-number
@@ -119,6 +114,26 @@ export default ({ order, loading }) => {
 						</span>
 						<span slot="currency">{order?.currency}</span>
 					</ce-line-item>
+
+					{!!charge?.refunded_amount && (
+						<ce-line-item
+							style={{
+								width: '100%',
+							}}
+						>
+							<span slot="description">
+								{__('Refunded', 'checkout_engine')}
+							</span>
+							<span slot="price">
+								-
+								<ce-format-number
+									type="currency"
+									currency={charge?.currency}
+									value={charge?.refunded_amount}
+								></ce-format-number>
+							</span>
+						</ce-line-item>
+					)}
 				</Fragment>
 			)}
 		</Box>

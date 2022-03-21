@@ -1,19 +1,23 @@
-import { CeButton, CeSwitch } from '@checkout-engine/components-react';
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
+import { CeButton } from '@checkout-engine/components-react';
 import { useDispatch } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import { useEffect } from 'react';
 import { store as uiStore } from '../store/ui';
 import { store as dataStore } from '../store/data';
-import useCurrentPage from '../mixins/useCurrentPage';
+import { addQueryArgs } from '@wordpress/url';
 import useEntities from '../mixins/useEntities';
 // template
 import Template from '../templates/SingleModel';
 import Details from './modules/Details';
 import Products from './modules/Products';
+import useEntity from '../mixins/useEntity';
 
-export default () => {
+export default ({ id }) => {
+	const { saveModel } = useDispatch(dataStore);
+	const { addSnackbarNotice, addModelErrors } = useDispatch(uiStore);
 	const {
-		id,
 		product_group,
 		isLoading: isGroupLoading,
 		updateProductgroup,
@@ -21,30 +25,26 @@ export default () => {
 		saveProductgroup,
 		isSaving,
 		setSaving,
-	} = useCurrentPage('product_group');
-	const { saveModel } = useDispatch(dataStore);
-	const { addSnackbarNotice, addModelErrors } = useDispatch(uiStore);
-	const { products, fetchProducts, addProduct, isLoading } =
-		useEntities('product');
+	} = useEntity('product_group', id);
+	const { products, fetchProducts, isLoading } = useEntities('product');
 
 	useEffect(() => {
 		if (!id) return;
-		console.log({ id });
-		// fetchProducts({
-		// 	query: {
-		// 		product_group_ids: [id],
-		// 		recurring: true,
-		// 		expand: ['prices', 'product_group'],
-		// 	},
-		// });
-		// fetchProductgroup({});
-	}, [id]);
+		fetchProducts({
+			query: {
+				product_group_ids: [id],
+				recurring: true,
+				expand: ['prices'],
+			},
+		});
+		fetchProductgroup({});
+	}, []);
 
 	const onSubmit = async (e) => {
 		e.preventDefault();
 		try {
 			setSaving(true);
-			await updatePage();
+			id ? await updatePage() : await createPage();
 			addSnackbarNotice({
 				content: __('Saved.'),
 			});
@@ -60,24 +60,43 @@ export default () => {
 	 * Update product, prices and drafts all at once.
 	 */
 	const updatePage = async () => {
-		return Promise.all([saveProductgroup(), saveProducts()]);
+		return Promise.all([saveProductgroup(), saveProducts(id)]);
+	};
+
+	/**
+	 * Create the page and clear all drafts.
+	 */
+	const createPage = async () => {
+		try {
+			const saved = await saveProductgroup();
+			if (saved?.id) {
+				await saveProducts(saved?.id);
+			}
+		} catch (e) {
+			throw e;
+		}
 	};
 
 	/**
 	 * Save products.
 	 */
-	const saveProducts = async () => {
+	const saveProducts = async (product_group) => {
 		return await Promise.all(
-			(products || []).map((product) => saveProduct(product))
+			(products || []).map(({ id, ...data }) => {
+				return saveProduct(id, { ...data, product_group });
+			})
 		);
 	};
 
 	/**
 	 * Save product.
 	 */
-	const saveProduct = async (product) => {
+	const saveProduct = async (id, data) => {
 		try {
-			return await saveModel('product', product?.id);
+			return await saveModel('product', id, {
+				data,
+				query: { expand: ['prices'] },
+			});
 		} catch (e) {
 			addModelErrors('product', e);
 			throw e;
@@ -103,16 +122,21 @@ export default () => {
 					? __('Un-archived.', 'checkout_engine')
 					: __('Archived.', 'checkout_engine'),
 			});
+			window.location.assign(
+				addQueryArgs('admin.php', {
+					page: 'ce-product-groups',
+				})
+			);
 		} catch (e) {
 			addModelErrors('product_group', e);
 			console.error(e);
-		} finally {
 			setSaving(false);
 		}
 	};
 
 	return (
 		<Template
+			id={id}
 			backUrl={'admin.php?page=ce-product-groups'}
 			backText={__('Back to upgrade groups list.', 'checkout_engine')}
 			title={
@@ -142,33 +166,33 @@ export default () => {
 					<ce-flex align-items="center">
 						<CeButton
 							loading={isSaving}
+							type="text"
 							onClick={confirmArchiveToggle}
 						>
 							{product_group?.archived
-								? __('Un-Archive Group', 'checkout_engine')
-								: __('Archive Group', 'checkout_engine')}
+								? __('Un-Archive', 'checkout_engine')
+								: __('Archive', 'checkout_engine')}
 						</CeButton>
 						<CeButton type="primary" loading={isSaving} submit>
-							{id
-								? __('Update Group', 'checkout_engine')
-								: __('Create Group', 'checkout_engine')}
+							{__('Update', 'checkout_engine')}
 						</CeButton>
 					</ce-flex>
 				)
 			}
 		>
 			<Details
+				id={id}
 				productGroup={product_group}
 				updateProductGroup={updateProductgroup}
 				loading={isLoading || isGroupLoading}
 			/>
-			<Products
-				id={id}
-				products={products}
-				fetchProducts={fetchProducts}
-				addProduct={addProduct}
-				loading={isLoading || isGroupLoading}
-			/>
+			{!!id && (
+				<Products
+					id={id}
+					products={products}
+					loading={isLoading || isGroupLoading}
+				/>
+			)}
 		</Template>
 	);
 };

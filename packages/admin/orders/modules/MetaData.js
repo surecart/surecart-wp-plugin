@@ -6,7 +6,6 @@ import { __ } from '@wordpress/i18n';
 import Box from '../../ui/Box';
 
 export default ({ order, loading }) => {
-	console.log({ order });
 	if (!Object.keys(order?.metadata || {}).length || loading) {
 		return null;
 	}

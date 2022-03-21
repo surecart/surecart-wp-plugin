@@ -24,7 +24,7 @@ class Block extends BaseBlock {
 		}
 
 		$form = get_post( $attributes['id'] );
-		if ( ! $form || 'ce_form' !== $form->post_type ) {
+		if ( ! $form || 'sc_form' !== $form->post_type ) {
 			return '';
 		}
 
@@ -46,8 +46,8 @@ class Block extends BaseBlock {
 
 		$seen_forms[ $attributes['id'] ] = true;
 
-		global $ce_form_id;
-		$ce_form_id         = $attributes['id'];
+		global $sc_form_id;
+		$sc_form_id         = $attributes['id'];
 		$wrapper_attributes = get_block_wrapper_attributes( [ 'class' => $attributes['textalign'] ?? '' ] );
 		$result             = do_blocks( $form->post_content );
 		unset( $seen_forms[ $attributes['id'] ] );

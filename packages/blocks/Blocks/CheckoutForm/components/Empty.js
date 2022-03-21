@@ -22,86 +22,24 @@ import { receipt as icon } from '@wordpress/icons';
 /**
  * Components
  */
-import Setup from './Setup';
 import SelectForm from './SelectForm';
-import { CeInput } from '@checkout-engine/components-react';
+import { CeButton, CeInput } from '@checkout-engine/components-react';
+import PlaceholderTemplate from '../../../components/PlaceholderTemplate';
 
 export default ({ attributes, setAttributes }) => {
 	const { title, step } = attributes;
 	const [form, setForm] = useState({});
 
-	const blockProps = useBlockProps();
-
-	/**
-	 * Maybe create the template for the form.
-	 */
-	const maybeCreateTemplate = async (attributes) => {
-		const { template = 'standard', choices, choice_type } = attributes;
-
-		const result = await apiFetch({
-			url: ceData.plugin_url + '/templates/forms/' + template + '.html',
-			parse: false,
-			cache: 'no-cache',
-		});
-
-		// parse blocks.
-		const parsed = parse(await result.text());
-
-		// get the price selector block
-		const priceChoiceBlock = parsed.findIndex(
-			(block) => block.name === 'checkout-engine/price-selector'
-		);
-
-		// maybe create price selector choices.
-		if (!choices?.length || !['checkbox', 'radio'].includes(choice_type)) {
-			// delete choices block.
-			delete parsed[priceChoiceBlock];
-
-			// maybe remove previous section title.
-			const prev = parsed?.[priceChoiceBlock - 1];
-			if (prev?.name === 'checkout-engine/section-title') {
-				delete parsed[priceChoiceBlock - 1];
+	const blockProps = useBlockProps({
+		css: css`
+			--ce-color-primary-500: var(--wp-admin-theme-color);
+			--ce-focus-ring-color-primary: var(--wp-admin-theme-color);
+			--ce-input-border-color-focus: var(--wp-admin-theme-color);
+			.components-placeholder.components-placeholder {
+				padding: 2em;
 			}
-
-			// maybe remove spacer.
-			const next = parsed?.[priceChoiceBlock + 1];
-			console.log(next);
-			if (next?.name === 'core/spacer') {
-				delete parsed[priceChoiceBlock + 1];
-			}
-			return parsed;
-		}
-
-		// add choices as inner blocks
-		parsed[priceChoiceBlock].innerBlocks = choices.map((choice, index) => {
-			return [
-				'checkout-engine/price-choice',
-				{
-					price_id: choice?.id,
-					quantity: choice?.quantity || 1,
-					type: choice_type,
-					checked: index === 0 && choice_type === 'radio',
-				},
-			];
-		});
-
-		return parsed;
-	};
-
-	/**
-	 * Create form attributes.
-	 */
-	const createFormAttributes = (attributes) => {
-		const { choices, choice_type } = attributes;
-
-		if (choice_type !== 'all') {
-			return {};
-		}
-
-		return {
-			prices: choices,
-		};
-	};
+		`,
+	});
 
 	// save the form block.
 	const saveFormBlock = async () => {
@@ -110,7 +48,7 @@ export default ({ attributes, setAttributes }) => {
 		try {
 			const updatedRecord = await dispatch('core').saveEntityRecord(
 				'postType',
-				'ce_form',
+				'sc_form',
 				{
 					title: title || __('Untitled Form', 'checkout_engine'),
 					content: serialize(
@@ -135,9 +73,8 @@ export default ({ attributes, setAttributes }) => {
 	if (step === 'new') {
 		return (
 			<div {...blockProps}>
-				<Placeholder
-					icon={icon}
-					label={__('Create a Checkout Form', 'checkout_engine')}
+				<PlaceholderTemplate
+					header={__('Create a Checkout Form', 'checkout-engine')}
 				>
 					<div
 						css={css`
@@ -161,22 +98,27 @@ export default ({ attributes, setAttributes }) => {
 							}
 						/>
 						<div>
-							<Button
-								isPrimary
+							<CeButton
+								type="primary"
 								onClick={() => {
 									saveFormBlock();
 								}}
 							>
 								{__('Next', 'checkout_engine')}
-							</Button>
-							<Button
+								<ce-icon
+									name="arrow-right"
+									slot="suffix"
+								></ce-icon>
+							</CeButton>
+							<CeButton
+								type="text"
 								onClick={() => setAttributes({ step: null })}
 							>
 								{__('Cancel', 'checkout_engine')}
-							</Button>
+							</CeButton>
 						</div>
 					</div>
-				</Placeholder>
+				</PlaceholderTemplate>
 			</div>
 		);
 	}
@@ -184,9 +126,8 @@ export default ({ attributes, setAttributes }) => {
 	if (step === 'select') {
 		return (
 			<div {...blockProps}>
-				<Placeholder
-					icon={icon}
-					label={__('Select a checkout form', 'checkout_engine')}
+				<PlaceholderTemplate
+					header={__('Select a checkout form', 'checkout-engine')}
 				>
 					<div
 						css={css`
@@ -197,22 +138,27 @@ export default ({ attributes, setAttributes }) => {
 					>
 						<SelectForm form={form} setForm={setForm} />
 						<div>
-							<Button
-								isPrimary
+							<CeButton
+								type="primary"
 								onClick={() => {
 									setAttributes({ id: form?.id });
 								}}
 							>
 								{__('Choose', 'checkout_engine')}
-							</Button>
-							<Button
+								<ce-icon
+									name="arrow-right"
+									slot="suffix"
+								></ce-icon>
+							</CeButton>
+							<CeButton
+								type="text"
 								onClick={() => setAttributes({ step: null })}
 							>
 								{__('Cancel', 'checkout_engine')}
-							</Button>
+							</CeButton>
 						</div>
 					</div>
-				</Placeholder>
+				</PlaceholderTemplate>
 			</div>
 		);
 	}
@@ -227,19 +173,24 @@ export default ({ attributes, setAttributes }) => {
 				)}
 				label={__('Add a checkout form', 'checkout_engine')}
 			>
-				<div>
-					<Button
-						isPrimary
+				<div
+					css={css`
+						display: flex;
+						gap: 0.5em;
+					`}
+				>
+					<CeButton
+						type="primary"
 						onClick={() => setAttributes({ step: 'new' })}
 					>
 						{__('New Form', 'checkout_engine')}
-					</Button>
-					<Button
-						isSecondary
+					</CeButton>
+					<CeButton
+						type="default"
 						onClick={() => setAttributes({ step: 'select' })}
 					>
 						{__('Select Form', 'checkout_engine')}
-					</Button>
+					</CeButton>
 				</div>
 			</Placeholder>
 		</div>

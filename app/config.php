@@ -13,6 +13,7 @@ return [
 	 */
 	'providers'           => [
 		\CheckoutEngineAppCore\AppCore\AppCoreServiceProvider::class,
+		\CheckoutEngine\Account\AccountServiceProvider::class,
 		\CheckoutEngine\WordPress\Pages\PageServiceProvider::class,
 		\CheckoutEngine\WordPress\Users\UsersServiceProvider::class,
 		\CheckoutEngine\WordPress\Admin\Profile\UserProfileServiceProvider::class,

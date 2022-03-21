@@ -31,7 +31,7 @@ class Form {
 	 */
 	protected function getPostType() {
 		// TODO: get this from registration.
-		return 'ce_form';
+		return 'sc_form';
 	}
 
 	/**
@@ -143,7 +143,7 @@ class Form {
 	public function searchShortcodes( $id ) {
 		return get_posts(
 			[
-				's'         => '[ce_form id=' . (int) $id,
+				's'         => '[sc_form id=' . (int) $id,
 				'sentence'  => 1,
 				'post_type' => 'any',
 				'per_page'  => -1,

@@ -18,6 +18,7 @@
 | `i18n`                        | --                              | Translation object.                         | `Object`                       | `undefined` |
 | `loggedIn`                    | `logged-in`                     | Is this user logged in?                     | `boolean`                      | `undefined` |
 | `mode`                        | `mode`                          | Are we in test or live mode.                | `"live" \| "test"`             | `'live'`    |
+| `modified`                    | `modified`                      | When the form was modified.                 | `string`                       | `undefined` |
 | `persistSession`              | `persist-session`               | Where to go on success                      | `boolean`                      | `true`      |
 | `prices`                      | --                              | An array of prices to pre-fill in the form. | `PriceChoice[]`                | `[]`        |
 | `successUrl`                  | `success-url`                   | Where to go on success                      | `string`                       | `''`        |

@@ -13,7 +13,10 @@ export class CeDonationChoices {
   private input: HTMLCePriceInputElement;
 
   /** The price id for the fields. */
-  @Prop() priceId: string;
+  @Prop({ reflect: true }) priceId: string;
+
+  /** The default amount to load the page with. */
+  @Prop() defaultAmount: string;
 
   /** Order line items. */
   @Prop() lineItems: LineItem[] = [];

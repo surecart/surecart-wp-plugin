@@ -4,17 +4,19 @@ import { addQueryArgs } from '@wordpress/url';
 
 const fetcher = (path) => apiFetch({ path });
 
-export default (id) => {
+export default ({ id, query }) => {
 	const { data, error, mutate } = useSWR(
 		addQueryArgs(`checkout-engine/v1/products/${id}`, {
 			context: 'edit',
-			expand: ['prices', 'product_group', 'files'],
+			query,
+			recurring: true,
+			expand: ['prices', 'product_group'],
 		}),
 		fetcher
 	);
 
 	return {
-		product: data,
+		products: data || [],
 		mutate,
 		isLoading: !error && !data,
 		error,

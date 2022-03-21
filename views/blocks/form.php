@@ -3,6 +3,7 @@
 	id="<?php echo esc_attr( $id ); ?>"
 	form-id="<?php echo esc_attr( $form_id ); ?>"
 	class="<?php echo esc_attr( $classes ); ?>"
+	modified="<?php echo esc_attr( $modified ); ?>"
 	logged-in="<?php echo is_user_logged_in() ? 'true' : 'false'; ?>"
 	style="<?php echo esc_attr( $style ); ?>"
 	mode="<?php echo esc_attr( $mode ); ?>"

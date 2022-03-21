@@ -3,6 +3,17 @@
 		background: var(--ce-color-gray-50);
 	}
 
+	:root {
+		--wp-admin-theme-color: #007cba;
+		--ce-color-primary-500: var(--wp-admin-theme-color);
+		--ce-focus-ring-color-primary: var(
+			--wp-admin-theme-color
+		);
+		--ce-input-border-color-focus: var(
+			--wp-admin-theme-color
+		);
+	}
+
 	.ce-container {
 		margin-left: auto;
 		margin-right: auto;

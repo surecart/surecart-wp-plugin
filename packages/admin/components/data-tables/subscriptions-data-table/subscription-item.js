@@ -13,7 +13,6 @@ import Cancel from './Cancel';
 import UnCancel from './UnCancel';
 import { select } from '@wordpress/data';
 import { store } from '../../../store/data';
-import { Fragment } from 'react';
 import StartPlan from './StartPlan';
 
 export default (subscription) => {

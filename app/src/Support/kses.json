@@ -134,6 +134,7 @@
     "i18n": true,
     "logged-in": true,
     "mode": true,
+    "modified": true,
     "persist-session": true,
     "prices": true,
     "success-url": true,
@@ -308,6 +309,7 @@
   },
   "ce-donation-choices": {
     "busy": true,
+    "default-amount": true,
     "label": true,
     "line-items": true,
     "loading": true,
@@ -715,6 +717,20 @@
     "class": true,
     "slot": true
   },
+  "ce-order-submit": {
+    "busy": true,
+    "full": true,
+    "icon": true,
+    "loading": true,
+    "paying": true,
+    "show-total": true,
+    "size": true,
+    "type": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "ce-order-summary": {
     "collapsed": true,
     "collapsible": true,
@@ -938,6 +954,7 @@
     "form-id": true,
     "group-id": true,
     "mode": true,
+    "modified": true,
     "order": true,
     "persist": true,
     "prices": true,

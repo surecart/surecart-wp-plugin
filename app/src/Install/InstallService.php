@@ -102,7 +102,7 @@ class InstallService {
 
 					<!-- /wp:checkout-engine/form -->
 					',
-					'post_type' => 'ce_form',
+					'post_type' => 'sc_form',
 				],
 			]
 		);

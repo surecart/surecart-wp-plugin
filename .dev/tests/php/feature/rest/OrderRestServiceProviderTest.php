@@ -30,7 +30,7 @@ class OrderRestServiceProviderTest extends CheckoutEngineUnitTestCase {
 	public function test_can_finalize()
 	{
 		$test_form = self::factory()->post->create_and_get( array(
-			'post_type' => 'ce_form',
+			'post_type' => 'sc_form',
 			'post_content' => '<!-- wp:checkout-engine/form {"mode":"test"} --><!-- /wp:checkout-engine/form -->'
 		) );
 
@@ -83,12 +83,12 @@ class OrderRestServiceProviderTest extends CheckoutEngineUnitTestCase {
 	public function test_form_test_mode()
 	{
 		$test_form = self::factory()->post->create_and_get( array(
-			'post_type' => 'ce_form',
+			'post_type' => 'sc_form',
 			'post_content' => '<!-- wp:checkout-engine/form {"mode":"test"} --><!-- /wp:checkout-engine/form -->'
 		) );
 
 		$live_form = self::factory()->post->create_and_get( array(
-			'post_type' => 'ce_form',
+			'post_type' => 'sc_form',
 			'post_content' => '<!-- wp:checkout-engine/form {"mode":"live"} --><!-- /wp:checkout-engine/form -->'
 		) );
 
@@ -123,7 +123,7 @@ class OrderRestServiceProviderTest extends CheckoutEngineUnitTestCase {
 	public function test_form_test_mode_bypasses_with_capability()
 	{
 		$live_form = self::factory()->post->create_and_get( array(
-			'post_type' => 'ce_form',
+			'post_type' => 'sc_form',
 			'post_content' => '<!-- wp:checkout-engine/form {"mode":"live"} --><!-- /wp:checkout-engine/form -->'
 		) );
 
@@ -163,7 +163,7 @@ class OrderRestServiceProviderTest extends CheckoutEngineUnitTestCase {
 		});
 
 		$form = self::factory()->post->create_and_get( array(
-			'post_type' => 'ce_form',
+			'post_type' => 'sc_form',
 			'post_content' => '<!-- wp:checkout-engine/form {"mode":"test"} --><!-- /wp:checkout-engine/form -->'
 		) );
 

@@ -57,7 +57,7 @@ class PageSeeder {
 					'name'      => _x( 'checkout', 'Form slug', 'checkout_engine' ),
 					'title'     => _x( 'Checkout', 'Form title', 'checkout_engine' ),
 					'content'   => $content,
-					'post_type' => 'ce_form',
+					'post_type' => 'sc_form',
 				],
 			]
 		);

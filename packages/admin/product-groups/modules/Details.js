@@ -6,10 +6,16 @@ import { __ } from '@wordpress/i18n';
 import { CeInput, CeSwitch, CeSelect } from '@checkout-engine/components-react';
 import Box from '../../ui/Box';
 
-export default ({ productGroup, updateProductGroup, loading }) => {
-	console.log({ productGroup });
+export default ({ id, productGroup, updateProductGroup, loading }) => {
 	return (
-		<Box title={__('Details', 'checkout_engine')} loading={loading}>
+		<Box
+			title={
+				id
+					? __('Details', 'checkout_engine')
+					: __('New Upgrade Group', 'checkout_engine')
+			}
+			loading={loading}
+		>
 			<div
 				css={css`
 					display: grid;

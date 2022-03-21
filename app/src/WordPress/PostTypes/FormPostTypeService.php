@@ -28,7 +28,7 @@ class FormPostTypeService {
 	 *
 	 * @var string
 	 */
-	protected $post_type = 'ce_form';
+	protected $post_type = 'sc_form';
 
 	/**
 	 * Group Prefix
@@ -98,7 +98,7 @@ class FormPostTypeService {
 	 * @return WP_Post|null
 	 */
 	public function findByOptionName( $option ) {
-		return $this->page_service->get( $option, 'ce_form' );
+		return $this->page_service->get( $option, 'sc_form' );
 	}
 
 	/**
@@ -109,6 +109,16 @@ class FormPostTypeService {
 	 */
 	public function findById( $id ) {
 		return get_post( $id );
+	}
+
+	/**
+	 * Find a form by id.
+	 *
+	 * @param integer $id Post id.
+	 * @return WP_Post|null
+	 */
+	public function get( $id ) {
+		return $this->findById( $id );
 	}
 
 	/**
@@ -271,7 +281,7 @@ class FormPostTypeService {
 	 * @return void
 	 */
 	public function columnShortcode( $post_ID ) {
-		echo '<code>[ce_form id=' . (int) $post_ID . ']</code>';
+		echo '<code>[sc_form id=' . (int) $post_ID . ']</code>';
 	}
 
 	/**

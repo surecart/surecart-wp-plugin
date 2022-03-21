@@ -32,9 +32,18 @@ class PluginService {
 	}
 
 	/**
+	 * Shortcute to \CheckoutEngine\Account\AccountService
+	 *
+	 * @return \CheckoutEngine\Account\AccountService
+	 */
+	public function account() {
+		return $this->app->reolve( 'checkout_engine.account' );
+	}
+
+	/**
 	 * Shortcut to \CheckoutEngine\Install\InstallService.
 	 *
-	 * @return \CheckoutEngineAppCore\Assets\Assets
+	 * @return \CheckoutEngine\Install\InstallService
 	 */
 	public function install() {
 		return $this->app->resolve( 'checkout_engine.install' );

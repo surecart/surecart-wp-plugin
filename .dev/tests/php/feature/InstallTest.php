@@ -37,8 +37,8 @@ class InstallTest extends CheckoutEngineUnitTestCase {
 		\CheckoutEngine::plugin()->activation()->activate();
 
 		$page_service = new PageService();
-		$form = $page_service->get('checkout', 'ce_form');
-		$this->assertSame($form->post_type, 'ce_form');
+		$form = $page_service->get('checkout', 'sc_form');
+		$this->assertSame($form->post_type, 'sc_form');
 		$this->assertStringContainsString('wp:checkout-engine/form', $form->post_content);
 
 		$default_form = \CheckoutEngine::forms()->getDefault();

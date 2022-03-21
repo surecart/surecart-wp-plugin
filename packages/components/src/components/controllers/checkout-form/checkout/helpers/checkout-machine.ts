@@ -22,7 +22,7 @@ export const checkoutMachine = createMachine({
     },
     draft: {
       on: {
-        FINALIZE: 'finalized',
+        FINALIZE: 'finalizing',
         FETCH: 'updating',
       },
     },
@@ -34,15 +34,10 @@ export const checkoutMachine = createMachine({
         FINALIZED: 'finalized',
       },
     },
-    finalized: {
-      on: {
-        PAYING: 'paying',
-        UPDATING: 'updating',
-      },
-    },
-    paying: {
+    finalizing: {
       on: {
         PAID: 'paid',
+        REJECT: 'draft',
       },
     },
     expired: {},

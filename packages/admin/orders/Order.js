@@ -18,7 +18,7 @@ import LineItems from './modules/LineItems';
 import Charges from './modules/Charges';
 import Subscriptions from './modules/Subscriptions';
 import useCurrentPage from '../mixins/useCurrentPage';
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 
 export default () => {
 	const { snackbarNotices, removeSnackbarNotice } = useSnackbar();
@@ -35,6 +35,9 @@ export default () => {
 	const { id, order, isLoading, error, fetchOrder, getRelation } =
 		useCurrentPage('order');
 	const customer = getRelation('customer');
+	const charge = getRelation('charge');
+
+	console.log({ charge });
 
 	useEffect(() => {
 		if (id) {
@@ -45,10 +48,11 @@ export default () => {
 						'line_items',
 						'line_item.price',
 						'price.product',
-						'purchases',
+						'subscription',
+						'subscription.price',
 						'charge',
-						'charge.refund',
-						'purchase.product',
+						'charge.payment_method',
+						'payment_method.card',
 						'customer',
 					],
 				},
@@ -82,7 +86,7 @@ export default () => {
 			<Fragment>
 				<FlashError path="orders" scrollIntoView />
 				<Details order={order} loading={isLoading} />
-				<LineItems order={order} loading={isLoading} />
+				<LineItems order={order} charge={charge} loading={isLoading} />
 				<Charges />
 				<Subscriptions />
 			</Fragment>

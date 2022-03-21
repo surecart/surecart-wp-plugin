@@ -28,15 +28,6 @@ export default ({ subscriptionId }) => {
 		}
 	}, [subscriptionId, page]);
 
-	const getCustomer = (invoice) => {
-		const customer = select(store).selectRelation(
-			'invoice',
-			invoice?.id,
-			'customer'
-		);
-		return customer?.name || customer?.email;
-	};
-
 	if (!isLoading && !invoices?.length) {
 		return null;
 	}

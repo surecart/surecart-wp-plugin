@@ -316,7 +316,7 @@ export class CeUpcomingInvoice {
         </ce-dashboard-module>
 
         <ce-text style={{ '--text-align': 'center', '--font-size': 'var(--ce-font-size-small)', '--line-height': 'var(--ce-line-height-normal)' }}>
-          <slot name="terms">{__('By updating or cancelling your plan, you agree to the Terms of Service and Privacy Policy.', 'checkout_engine')}</slot>
+          <slot name="terms"></slot>
         </ce-text>
 
         {this.busy && <ce-block-ui></ce-block-ui>}

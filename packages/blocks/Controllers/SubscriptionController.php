@@ -134,6 +134,29 @@ class SubscriptionController extends BaseController {
 	}
 
 	/**
+	 * Get the terms text.
+	 */
+	public function getTermsText() {
+		$account     = \CheckoutEngine::account();
+		$privacy_url = $account->portal_protocol->privacy_url ?? \get_privacy_policy_url();
+		$terms_url   = $account->portal_protocol->terms_url ?? '';
+
+		if ( ! empty( $privacy_url ) && ! empty( $terms_url ) ) {
+			return sprintf( __( 'By updating or canceling your plan, you agree to the <a href="%1$1s" target="_blank">%2$2s</a> and <a href="%3$3s" target="_blank">%4$4s</a>', 'checkout_engine' ), esc_url( $terms_url ), __( 'Terms', 'checkout_engine' ), esc_url( $privacy_url ), __( 'Privacy Policy', 'checkout-engine' ) );
+		}
+
+		if ( ! empty( $privacy_url ) ) {
+			return sprintf( __( 'By updating or canceling your plan, you agree to the <a href="%1$1s" target="_blank">%2$2s</a>', 'checkout_engine' ), esc_url( $privacy_url ), __( 'Privacy Policy', 'checkout-engine' ) );
+		}
+
+		if ( ! empty( $terms_url ) ) {
+			return sprintf( __( 'By updating or canceling your plan, you agree to the <a href="%1$1s" target="_blank">%2$2s</a>', 'checkout_engine' ), esc_url( $terms_url ), __( 'Terms', 'checkout-engine' ) );
+		}
+
+		return '';
+	}
+
+	/**
 	 * Confirm changing subscription
 	 *
 	 * @return function
@@ -170,6 +193,8 @@ class SubscriptionController extends BaseController {
 			</ce-breadcrumbs>
 
 			<?php
+			$terms = $this->getTermsText();
+
 			echo wp_kses_post(
 				Component::tag( 'ce-upcoming-invoice' )
 				->id( 'customer-upcoming-invoice' )
@@ -181,7 +206,7 @@ class SubscriptionController extends BaseController {
 						'successUrl'     => esc_url( $back ),
 						'quantity'       => 1,
 					]
-				)->render()
+				)->render( $terms ? '<span slot="terms">' . wp_kses_post( $terms ) . '</span>' : '' )
 			);
 			?>
 
@@ -321,6 +346,8 @@ class SubscriptionController extends BaseController {
 			],
 			\CheckoutEngine::pages()->url( 'dashboard' )
 		);
+
+		$subscription = Subscription::find( $this->getId() );
 		ob_start();
 		?>
 
@@ -346,10 +373,11 @@ class SubscriptionController extends BaseController {
 				->id( 'customer-subscription-payment' )
 				->with(
 					[
-						'customerIds'    => $this->customerIds(),
-						'subscriptionId' => $this->getId(),
-						'successUrl'     => esc_url_raw( $confirm_subscription_url ),
-						'quantity'       => 1,
+						'customerIds'  => $this->customerIds(),
+						'subscription' => $subscription,
+						'backUrl'      => esc_url_raw( $confirm_subscription_url ),
+						'successUrl'   => esc_url_raw( $confirm_subscription_url ),
+						'quantity'     => 1,
 					]
 				)->render()
 			);

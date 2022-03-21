@@ -42,7 +42,9 @@ order.define({
 	purchases: {
 		data: [purchase],
 	},
+	charge,
 	customer,
+	subscription,
 });
 
 charge.define({

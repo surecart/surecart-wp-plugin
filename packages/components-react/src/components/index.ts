@@ -72,6 +72,7 @@ export const CeOrderDetail = /*@__PURE__*/createReactComponent<JSX.CeOrderDetail
 export const CeOrderPassword = /*@__PURE__*/createReactComponent<JSX.CeOrderPassword, HTMLCeOrderPasswordElement>('ce-order-password');
 export const CeOrderShippingAddress = /*@__PURE__*/createReactComponent<JSX.CeOrderShippingAddress, HTMLCeOrderShippingAddressElement>('ce-order-shipping-address');
 export const CeOrderStatusBadge = /*@__PURE__*/createReactComponent<JSX.CeOrderStatusBadge, HTMLCeOrderStatusBadgeElement>('ce-order-status-badge');
+export const CeOrderSubmit = /*@__PURE__*/createReactComponent<JSX.CeOrderSubmit, HTMLCeOrderSubmitElement>('ce-order-submit');
 export const CeOrderSummary = /*@__PURE__*/createReactComponent<JSX.CeOrderSummary, HTMLCeOrderSummaryElement>('ce-order-summary');
 export const CeOrderTaxIdInput = /*@__PURE__*/createReactComponent<JSX.CeOrderTaxIdInput, HTMLCeOrderTaxIdInputElement>('ce-order-tax-id-input');
 export const CeOrdersList = /*@__PURE__*/createReactComponent<JSX.CeOrdersList, HTMLCeOrdersListElement>('ce-orders-list');

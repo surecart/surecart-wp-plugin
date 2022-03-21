@@ -9,47 +9,47 @@ use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
  */
 class ShortcodesServiceProvider implements ServiceProviderInterface {
 	/**
-	 * {@inheritDoc}
+	 * Register all dependencies in the IoC container.
+	 *
+	 * @param \Pimple\Container $container Service container.
+	 * @return void
 	 */
 	public function register( $container ) {
 		// Nothing to register.
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Bootstrap the service.
+	 *
+	 * @param \Pimple\Container $container Service container.
+	 * @return void
 	 */
 	public function bootstrap( $container ) {
-		// phpcs:ignore
-		// add_shortcode( 'example', [$this, 'shortcodeExample'] );
+		add_shortcode( 'sc_form', [ $this, 'formShortcode' ] );
 	}
 
 	/**
-	 * Example shortcode.
+	 * Form shorcode
 	 *
-	 * @param  array  $atts
-	 * @param  string $content
-	 * @return string
+	 * @param  array  $atts Shortcode attributes.
+	 * @param  string $content Shortcode content.
+	 * @return string Shortcode output.
 	 */
-	public function shortcodeExample( $atts, $content ) {
+	public function formShortcode( $atts ) {
 		$atts = shortcode_atts(
-			array(
-				'example_attribute' => 'example_value',
-			),
+			[
+				'id' => null,
+			],
 			$atts,
-			'example'
+			'sc_form'
 		);
 
-		ob_start();
-		?>
-		<div class="shortcode-example">
-			<!-- Your shortcode content goes here ... -->
-		</div>
-		<?php
-		$html = ob_get_clean();
+		if ( ! $atts['id'] ) {
+			return;
+		}
 
-		// Alternatively, you can use a WP Emerge View instead of a buffer:
-		// $html = \CheckoutEngine::view( 'some-view' )->with( $atts )->with( 'content', $content )->toString();
+		$form = \CheckoutEngine::forms()->get( $atts['id'] );
 
-		return $html;
+		return do_blocks( $form->post_content );
 	}
 }

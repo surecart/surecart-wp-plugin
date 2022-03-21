@@ -40,7 +40,8 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
-		global $ce_form_id;
+		global $sc_form_id;
+		$post = get_post( $sc_form_id );
 
 		$user = wp_get_current_user();
 
@@ -50,6 +51,7 @@ class Block extends BaseBlock {
 				'align'       => $attributes['align'] ?? '',
 				'label'       => $attributes['label'] ?? '',
 				'font_size'   => $attributes['font_size'] ?? 16,
+				'modified'    => $post->post_modified_gmt,
 				'customer'    => [
 					'email' => $user->user_email,
 					'name'  => $user->display_name,
@@ -58,8 +60,8 @@ class Block extends BaseBlock {
 				'style'       => $this->getStyle( $attributes ),
 				'content'     => $content,
 				'mode'        => $attributes['mode'] ?? get_option( 'checkout_engine_payment_mode', 'live' ),
-				'form_id'     => $ce_form_id,
-				'id'          => 'ce-checkout-' . $ce_form_id,
+				'form_id'     => $sc_form_id,
+				'id'          => 'ce-checkout-' . $sc_form_id,
 				'prices'      => $attributes['prices'] ?? [],
 				'success_url' => ! empty( $attributes['redirect'] ) ? $attributes['redirect'] : \CheckoutEngine::pages()->url( 'order-confirmation' ),
 				'i18n'        => $this->getTranslations(),

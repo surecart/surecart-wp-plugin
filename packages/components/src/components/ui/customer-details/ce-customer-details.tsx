@@ -123,7 +123,7 @@ export class CeCustomerDetails {
       <ce-dashboard-module class="customer-details" error={this.error}>
         <span slot="heading">
           {this.heading || __('Billing Details', 'checkout_engine')}{' '}
-          {!this?.customer?.live_mode && (
+          {!this?.customer?.live_mode === false && (
             <ce-tag type="warning" size="small">
               {__('Test', 'checkout_engine')}
             </ce-tag>

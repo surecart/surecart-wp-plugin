@@ -15,7 +15,7 @@ export const getURLLineItems = () => {
  *
  * @returns string
  */
-export const getSessionId = (formId, order) => {
+export const getSessionId = (formId, order, modified) => {
   // if we already have an ID set, return that:
   if (order?.id) {
     return order.id;
@@ -27,11 +27,27 @@ export const getSessionId = (formId, order) => {
     return urlId;
   }
 
-  // check id in localstorage
-  return window.localStorage.getItem(formId);
+  const savedModification = localStorage.getItem(`${formId}-modified`);
+
+  // nothing saved.
+  if (!savedModification) {
+    return window.localStorage.getItem(formId);
+  }
+
+  // this has not been modified, so return the saved session id.
+  if (modified && savedModification === modified) {
+    return window.localStorage.getItem(formId);
+  }
+
+  return '';
 };
 
-export const removeSessionIdFromStorage = formId => {
+export const setSessionId = (formId, sessionId, modified) => {
+  window.localStorage.setItem(formId, sessionId);
+  window.localStorage.setItem(`${formId}-modified`, modified);
+};
+
+export const removeSessionId = formId => {
   // check id in localstorage
   return window.localStorage.removeItem(formId);
 };

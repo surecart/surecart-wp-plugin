@@ -7,17 +7,21 @@ import { useEffect, useState } from 'react';
 import { store } from '../../store/data';
 import useEntities from '../../mixins/useEntities';
 
-export default ({ id, loading }) => {
+export default ({ id, products, loading }) => {
 	const [query, setQuery] = useState(null);
 	const { updateModel } = useDispatch(store);
-	const { products, fetchProducts, isLoading } = useEntities('product');
+	const {
+		products: productsQuery,
+		fetchProducts,
+		isLoading,
+	} = useEntities('product');
 
 	useEffect(() => {
 		fetchProducts({
 			query: {
 				query,
 				recurring: true,
-				expand: ['prices', 'product_group'],
+				expand: ['prices'],
 			},
 		});
 	}, [query]);
@@ -25,6 +29,8 @@ export default ({ id, loading }) => {
 	const onSelect = (product_id) => {
 		updateModel('product', product_id, { product_group: id });
 	};
+
+	const groupProducts = products.filter((p) => p.product_group === id);
 
 	return (
 		<Box
@@ -38,7 +44,7 @@ export default ({ id, loading }) => {
 							'checkout_engine'
 						)}
 						position={'bottom-left'}
-						choices={products.map((product) => ({
+						choices={productsQuery.map((product) => ({
 							label: product.name,
 							value: product.id,
 						}))}
@@ -49,11 +55,20 @@ export default ({ id, loading }) => {
 				</div>
 			}
 		>
-			{(products || [])
-				.filter((p) => p.product_group === id)
-				.map((product) => (
-					<Product key={product?.id} product={product} />
-				))}
+			{!!groupProducts?.length ? (
+				groupProducts
+					.filter((p) => p.product_group === id)
+					.map((product) => (
+						<Product key={product?.id} product={product} />
+					))
+			) : (
+				<ce-empty icon="shopping-bag">
+					{__(
+						'Add some products to this upgrade group.',
+						'checkout_engine'
+					)}
+				</ce-empty>
+			)}
 		</Box>
 	);
 };

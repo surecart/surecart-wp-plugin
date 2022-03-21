@@ -18,6 +18,7 @@
 
 ### Used by
 
+ - [ce-downloads-list](../downloads-list)
  - [ce-express-payment](../../controllers/checkout-form/express-payment)
  - [ce-invoices-list](../../controllers/dashboard/invoices-list)
  - [ce-login-form](../../controllers/login)
@@ -30,6 +31,7 @@
 ### Graph
 ```mermaid
 graph TD;
+  ce-downloads-list --> ce-divider
   ce-express-payment --> ce-divider
   ce-invoices-list --> ce-divider
   ce-login-form --> ce-divider

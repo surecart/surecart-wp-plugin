@@ -8,9 +8,9 @@ import '@admin/schema/register';
 /**
  * App
  */
-import Show from './Show';
+import ProductGroup from './ProductGroup';
 
 /**
  * Render
  */
-render(<Show />, document.getElementById('app'));
+render(<ProductGroup />, document.getElementById('app'));

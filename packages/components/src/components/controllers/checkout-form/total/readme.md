@@ -18,6 +18,7 @@
 ### Used by
 
  - [ce-line-item-total](../line-item-total)
+ - [ce-order-submit](../order-submit)
  - [ce-order-summary](../order-summary)
 
 ### Depends on
@@ -29,6 +30,7 @@
 graph TD;
   ce-total --> ce-format-number
   ce-line-item-total --> ce-total
+  ce-order-submit --> ce-total
   ce-order-summary --> ce-total
   style ce-total fill:#f9f,stroke:#333,stroke-width:4px
 ```

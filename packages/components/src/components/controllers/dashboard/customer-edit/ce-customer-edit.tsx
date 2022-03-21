@@ -86,7 +86,7 @@ export class CeCustomerEdit {
       <ce-dashboard-module class="customer-edit" error={this.error}>
         <span slot="heading">
           {this.heading || __('Update Billing Details', 'checkout_engine')}{' '}
-          {!this?.customer?.live_mode && (
+          {!this?.customer?.live_mode === false && (
             <ce-tag type="warning" size="small">
               {__('Test', 'checkout_engine')}
             </ce-tag>
