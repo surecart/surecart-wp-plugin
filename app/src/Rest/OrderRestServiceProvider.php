@@ -1,13 +1,13 @@
 <?php
 
-namespace CheckoutEngine\Rest;
+namespace SureCart\Rest;
 
-use CheckoutEngine\Rest\RestServiceInterface;
-use CheckoutEngine\Controllers\Rest\OrderController;
-use CheckoutEngine\Form\FormValidationService;
-use CheckoutEngine\Models\Form;
-use CheckoutEngine\Models\User;
-use CheckoutEngine\Rest\Traits\CanListByCustomerIds;
+use SureCart\Rest\RestServiceInterface;
+use SureCart\Controllers\Rest\OrderController;
+use SureCart\Form\FormValidationService;
+use SureCart\Models\Form;
+use SureCart\Models\User;
+use SureCart\Rest\Traits\CanListByCustomerIds;
 
 /**
  * Service provider for Price Rest Requests

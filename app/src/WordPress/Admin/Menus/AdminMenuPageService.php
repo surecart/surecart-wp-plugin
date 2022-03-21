@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngine\WordPress\Admin\Menus;
+namespace SureCart\WordPress\Admin\Menus;
 
-use CheckoutEngine\Models\ApiToken;
+use SureCart\Models\ApiToken;
 
 /**
  * Handles creation and enqueueing of admin menu pages and assets.

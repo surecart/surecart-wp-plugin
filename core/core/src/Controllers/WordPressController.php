@@ -1,16 +1,16 @@
 <?php /**
-	   * @package   CheckoutEngineCore
+	   * @package   SureCartCore
 	   * @author    Andre Gagnon <me@andregagnon.me>
 	   * @copyright 2017-2019 Andre Gagnon
 	   * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
 	   * @link      https://surecart.com/
 	   */ /** @noinspection PhpUnusedParameterInspection */
-namespace CheckoutEngineCore\Controllers;
+namespace SureCartCore\Controllers;
 
 use Psr\Http\Message\ResponseInterface;
-use CheckoutEngineCore\Exceptions\ConfigurationException;
-use CheckoutEngineCore\Requests\RequestInterface;
-use CheckoutEngineCore\View\ViewService;
+use SureCartCore\Exceptions\ConfigurationException;
+use SureCartCore\Requests\RequestInterface;
+use SureCartCore\View\ViewService;
 
 /**
  * Handles normal WordPress requests without interfering

@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngine\Controllers\Admin\ProductGroups;
+namespace SureCart\Controllers\Admin\ProductGroups;
 
-use CheckoutEngine\Support\Scripts\AdminModelEditController;
+use SureCart\Support\Scripts\AdminModelEditController;
 
 /**
  * Product Group Scripts
@@ -13,7 +13,7 @@ class ProductGroupsScriptsController extends AdminModelEditController {
 	 *
 	 * @var string
 	 */
-	protected $handle = 'checkoutengine/scripts/admin/product-groups';
+	protected $handle = 'SureCart/scripts/admin/product-groups';
 
 	/**
 	 * Script path.

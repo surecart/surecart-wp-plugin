@@ -1,9 +1,9 @@
 <?php
 
-namespace CheckoutEngine\Routing;
+namespace SureCart\Routing;
 
-use CheckoutEngine\Routing\AdminRouteService;
-use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
+use SureCart\Routing\AdminRouteService;
+use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 /**
  * Provide custom route conditions.

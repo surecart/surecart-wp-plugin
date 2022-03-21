@@ -65,7 +65,7 @@ Add PHP helper files here. Helper files should include **function definitions on
 
 #### `app/src/`
 
-Add PHP class files here. All clases in the `CheckoutEngine\` namespace are autoloaded in accordance with [PSR-4](http://www.php-fig.org/psr/psr-4/).
+Add PHP class files here. All clases in the `SureCart\` namespace are autoloaded in accordance with [PSR-4](http://www.php-fig.org/psr/psr-4/).
 
 #### `resources/images/`
 

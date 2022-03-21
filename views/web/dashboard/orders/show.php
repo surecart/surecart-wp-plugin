@@ -17,7 +17,7 @@
 		</span>
 	</ce-order-detail>
 	<?php
-		\CheckoutEngine::assets()->addComponentData(
+		\SureCart::assets()->addComponentData(
 			'ce-order-detail',
 			'',
 			[
@@ -44,7 +44,7 @@
 		</span>
 	</ce-charges-list>
 	<?php
-		\CheckoutEngine::assets()->addComponentData(
+		\SureCart::assets()->addComponentData(
 			'ce-charges-list',
 			'#customer-order-charges-list',
 			[
@@ -61,7 +61,7 @@
 		<span slot="empty"></span>
 	</ce-subscriptions-list>
 	<?php
-		\CheckoutEngine::assets()->addComponentData(
+		\SureCart::assets()->addComponentData(
 			'ce-subscriptions-list',
 			'#list' . $id,
 			[

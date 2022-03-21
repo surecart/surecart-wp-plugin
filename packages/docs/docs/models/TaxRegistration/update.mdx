@@ -9,7 +9,7 @@ import MethodText from '../../../components/MethodText.js';
 
 All at once:
 ```php
-$tax_registration = \CheckoutEngine\Models\Product::find('8ba8d60f-5277-4e6b-807c-dee8166446d5');
+$tax_registration = \SureCart\Models\Product::find('8ba8d60f-5277-4e6b-807c-dee8166446d5');
 $tax_registration->update([
 	'tax_identifier' => [
 		'number' => '1234556789',
@@ -20,7 +20,7 @@ $tax_registration->update([
 
 Wait until attributes are updated:
 ```php
-$tax_registration = \CheckoutEngine\Models\Product::find('8ba8d60f-5277-4e6b-807c-dee8166446d5');
+$tax_registration = \SureCart\Models\Product::find('8ba8d60f-5277-4e6b-807c-dee8166446d5');
 $tax_registration->tax_identifier->number = '1234556789';
 $tax_registration->tax_identifier->type = 'eu_vat';
 $tax_registration->save();

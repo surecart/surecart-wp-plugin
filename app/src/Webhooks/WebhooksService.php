@@ -1,10 +1,10 @@
 <?php
 
-namespace CheckoutEngine\Webhooks;
+namespace SureCart\Webhooks;
 
-use CheckoutEngine\Models\ApiToken;
-use CheckoutEngine\Models\Webhook;
-use CheckoutEngine\Support\Encryption;
+use SureCart\Models\ApiToken;
+use SureCart\Models\Webhook;
+use SureCart\Support\Encryption;
 
 /**
  * WordPress Users service.
@@ -20,7 +20,7 @@ class WebhooksService {
 	/**
 	 * Hold the domain service.
 	 *
-	 * @var \CheckoutEngine\Webhooks\WebhooksHistoryService
+	 * @var \SureCart\Webhooks\WebhooksHistoryService
 	 */
 	protected $domain_service;
 
@@ -98,7 +98,7 @@ class WebhooksService {
 	/**
 	 * Register webhooks for this site.
 	 *
-	 * @return \WP_Error|\CheckoutEngine\Models\Webhook;
+	 * @return \WP_Error|\SureCart\Models\Webhook;
 	 */
 	public function register() {
 		return Webhook::register();
@@ -113,7 +113,7 @@ class WebhooksService {
 	public function showWebhooksErrorNotice( \WP_Error $error ) {
 		$messages = implode( '<br>', $error->get_error_messages() );
 		$class    = 'notice notice-error';
-		$message  = __( 'CheckoutEngine webhooks could not be created.', 'surecart' ) . $messages;
+		$message  = __( 'SureCart webhooks could not be created.', 'surecart' ) . $messages;
 		printf( ' < div class = "%1$s" > < p > % 2$s < / p > < / div > ', esc_attr( $class ), wp_kses_post( $message ) );
 	}
 

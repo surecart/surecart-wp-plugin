@@ -1,11 +1,11 @@
 <?php
 
-namespace CheckoutEngine\Rest;
+namespace SureCart\Rest;
 
-use CheckoutEngine\Rest\RestServiceInterface;
-use CheckoutEngine\Controllers\Rest\SubscriptionsController;
-use CheckoutEngine\Models\User;
-use CheckoutEngine\Rest\Traits\CanListByCustomerIds;
+use SureCart\Rest\RestServiceInterface;
+use SureCart\Controllers\Rest\SubscriptionsController;
+use SureCart\Models\User;
+use SureCart\Rest\Traits\CanListByCustomerIds;
 
 /**
  * Service provider for Price Rest Requests

@@ -1,11 +1,11 @@
 <?php
 
-namespace CheckoutEngine\Middleware;
+namespace SureCart\Middleware;
 
-use CheckoutEngine\Models\CustomerLink;
-use CheckoutEngine\Models\User;
+use SureCart\Models\CustomerLink;
+use SureCart\Models\User;
 use Closure;
-use CheckoutEngineCore\Requests\RequestInterface;
+use SureCartCore\Requests\RequestInterface;
 
 /**
  * Middleware for customer dashboard.

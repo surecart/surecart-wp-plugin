@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngine\Models\Traits;
+namespace SureCart\Models\Traits;
 
-use CheckoutEngine\Models\Order;
+use SureCart\Models\Order;
 
 /**
  * If the model has an attached customer.

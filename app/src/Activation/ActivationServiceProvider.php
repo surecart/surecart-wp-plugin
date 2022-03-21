@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngine\Activation;
+namespace SureCart\Activation;
 
-use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
+use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 /**
  * Provide users dependencies.

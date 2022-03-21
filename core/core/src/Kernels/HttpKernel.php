@@ -1,33 +1,33 @@
 <?php
 /**
- * @package   CheckoutEngineCore
+ * @package   SureCartCore
  * @author    Andre Gagnon <me@andregagnon.me>
  * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
  * @link      https://surecart.com/
  */
 
-namespace CheckoutEngineCore\Kernels;
+namespace SureCartCore\Kernels;
 
 use Exception;
 use Pimple\Container;
 use Psr\Http\Message\ResponseInterface;
 use WP_Query;
-use CheckoutEngineCore\Application\GenericFactory;
-use CheckoutEngineCore\Exceptions\ConfigurationException;
-use CheckoutEngineCore\Exceptions\ErrorHandlerInterface;
-use CheckoutEngineCore\Helpers\Handler;
-use CheckoutEngineCore\Helpers\HandlerFactory;
-use CheckoutEngineCore\Middleware\ExecutesMiddlewareTrait;
-use CheckoutEngineCore\Middleware\HasMiddlewareDefinitionsTrait;
-use CheckoutEngineCore\Middleware\ReadsHandlerMiddlewareTrait;
-use CheckoutEngineCore\Requests\RequestInterface;
-use CheckoutEngineCore\Responses\ConvertsToResponseTrait;
-use CheckoutEngineCore\Responses\ResponseService;
-use CheckoutEngineCore\Routing\HasQueryFilterInterface;
-use CheckoutEngineCore\Routing\Router;
-use CheckoutEngineCore\Routing\SortsMiddlewareTrait;
-use CheckoutEngineCore\View\ViewService;
+use SureCartCore\Application\GenericFactory;
+use SureCartCore\Exceptions\ConfigurationException;
+use SureCartCore\Exceptions\ErrorHandlerInterface;
+use SureCartCore\Helpers\Handler;
+use SureCartCore\Helpers\HandlerFactory;
+use SureCartCore\Middleware\ExecutesMiddlewareTrait;
+use SureCartCore\Middleware\HasMiddlewareDefinitionsTrait;
+use SureCartCore\Middleware\ReadsHandlerMiddlewareTrait;
+use SureCartCore\Requests\RequestInterface;
+use SureCartCore\Responses\ConvertsToResponseTrait;
+use SureCartCore\Responses\ResponseService;
+use SureCartCore\Routing\HasQueryFilterInterface;
+use SureCartCore\Routing\Router;
+use SureCartCore\Routing\SortsMiddlewareTrait;
+use SureCartCore\View\ViewService;
 
 /**
  * Describes how a request is handled.

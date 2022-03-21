@@ -1,9 +1,9 @@
 <?php
 
-namespace CheckoutEngine\WordPress\PostTypes;
+namespace SureCart\WordPress\PostTypes;
 
-use CheckoutEngine\Models\Form;
-use CheckoutEngine\WordPress\Pages\PageService;
+use SureCart\Models\Form;
+use SureCart\WordPress\Pages\PageService;
 
 /**
  * Form post type service class.
@@ -314,7 +314,7 @@ class FormPostTypeService {
 
 		$product_names = array_map(
 			function ( $product ) {
-				return '<a href="' . esc_url( \CheckoutEngine::getUrl()->edit( 'product', $product->id ) ) . '">' . wp_kses_post( $product->name ) . '</a>';
+				return '<a href="' . esc_url( \SureCart::getUrl()->edit( 'product', $product->id ) ) . '">' . wp_kses_post( $product->name ) . '</a>';
 			},
 			$products,
 		);

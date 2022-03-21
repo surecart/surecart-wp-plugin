@@ -1,9 +1,9 @@
 <?php
-namespace CheckoutEngineBlocks\Controllers;
+namespace SureCartBlocks\Controllers;
 
-use CheckoutEngine\Models\Component;
-use CheckoutEngine\Models\PaymentIntent;
-use CheckoutEngine\Models\User;
+use SureCart\Models\Component;
+use SureCart\Models\PaymentIntent;
+use SureCart\Models\User;
 
 /**
  * Payment method block controller class.
@@ -76,7 +76,7 @@ class PaymentMethodController extends BaseController {
 	/**
 	 * Render the create view.
 	 *
-	 * @param \CheckoutEngine\Models\PaymentIntent $payment_intent the payment intent.
+	 * @param \SureCart\Models\PaymentIntent $payment_intent the payment intent.
 	 * @return string
 	 */
 	public function renderCreate( $payment_intent ) {
@@ -88,7 +88,7 @@ class PaymentMethodController extends BaseController {
 
 		<ce-spacing style="--spacing: var(--ce-spacing-large)">
 			<ce-breadcrumbs>
-				<ce-breadcrumb href="<?php echo esc_url( add_query_arg( [ 'tab' => $this->getTab() ], \CheckoutEngine::pages()->url( 'dashboard' ) ) ); ?>">
+				<ce-breadcrumb href="<?php echo esc_url( add_query_arg( [ 'tab' => $this->getTab() ], \SureCart::pages()->url( 'dashboard' ) ) ); ?>">
 					<?php esc_html_e( 'Dashboard', 'surecart' ); ?>
 				</ce-breadcrumb>
 				<ce-breadcrumb>
@@ -102,7 +102,7 @@ class PaymentMethodController extends BaseController {
 
 			<ce-payment-method-create
 				client-secret="<?php echo esc_attr( $payment_intent->processor_data->stripe->client_secret ); ?>"
-				success-url="<?php echo esc_url( add_query_arg( [ 'tab' => $this->getTab() ], \CheckoutEngine::pages()->url( 'dashboard' ) ) ); ?>"
+				success-url="<?php echo esc_url( add_query_arg( [ 'tab' => $this->getTab() ], \SureCart::pages()->url( 'dashboard' ) ) ); ?>"
 				>
 					<?php
 						echo wp_kses_post(

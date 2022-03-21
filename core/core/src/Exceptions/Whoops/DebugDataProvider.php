@@ -1,6 +1,6 @@
 <?php
 
-namespace CheckoutEngineCore\Exceptions\Whoops;
+namespace SureCartCore\Exceptions\Whoops;
 
 use Pimple\Container;
 
@@ -49,7 +49,7 @@ class DebugDataProvider {
 	 * @return array<string, mixed>
 	 */
 	public function route( $inspector ) {
-		/** @var \CheckoutEngineCore\Routing\RouteInterface|null $route */
+		/** @var \SureCartCore\Routing\RouteInterface|null $route */
 		$route = $this->container[ SURECART_ROUTING_ROUTER_KEY ]->getCurrentRoute();
 
 		if ( ! $route ) {

@@ -4,7 +4,7 @@
  *
  * @link https://docs.wpemerge.com/#/framework/configuration
  *
- * @package CheckoutEngine
+ * @package SureCart
  */
 
 return [
@@ -12,80 +12,80 @@ return [
 	 * Array of service providers you wish to enable.
 	 */
 	'providers'           => [
-		\CheckoutEngineAppCore\AppCore\AppCoreServiceProvider::class,
-		\CheckoutEngine\Account\AccountServiceProvider::class,
-		\CheckoutEngine\WordPress\Pages\PageServiceProvider::class,
-		\CheckoutEngine\WordPress\Users\UsersServiceProvider::class,
-		\CheckoutEngine\WordPress\Admin\Profile\UserProfileServiceProvider::class,
-		\CheckoutEngine\WordPress\PluginServiceProvider::class,
-		\CheckoutEngineAppCore\Assets\AssetsServiceProvider::class,
-		\CheckoutEngineAppCore\Config\ConfigServiceProvider::class,
-		\CheckoutEngine\Routing\RouteConditionsServiceProvider::class,
-		\CheckoutEngine\WordPress\PostTypes\FormPostTypeServiceProvider::class,
-		\CheckoutEngine\WordPress\Assets\AssetsServiceProvider::class,
-		\CheckoutEngine\WordPress\ShortcodesServiceProvider::class,
-		\CheckoutEngine\Routing\AdminRouteServiceProvider::class,
-		\CheckoutEngine\Permissions\RolesServiceProvider::class,
-		\CheckoutEngine\Settings\SettingsServiceProvider::class,
-		\CheckoutEngine\Request\RequestServiceProvider::class,
-		\CheckoutEngine\View\ViewServiceProvider::class,
-		\CheckoutEngine\Webhooks\WebhooksServiceProvider::class,
-		\CheckoutEngine\BlockLibrary\BlockServiceProvider::class,
-		\CheckoutEngine\Support\Errors\ErrorsServiceProvider::class,
-		\CheckoutEngine\Activation\ActivationServiceProvider::class,
-		\CheckoutEngine\WordPress\Admin\Menus\AdminMenuPageServiceProvider::class,
+		\SureCartAppCore\AppCore\AppCoreServiceProvider::class,
+		\SureCart\Account\AccountServiceProvider::class,
+		\SureCart\WordPress\Pages\PageServiceProvider::class,
+		\SureCart\WordPress\Users\UsersServiceProvider::class,
+		\SureCart\WordPress\Admin\Profile\UserProfileServiceProvider::class,
+		\SureCart\WordPress\PluginServiceProvider::class,
+		\SureCartAppCore\Assets\AssetsServiceProvider::class,
+		\SureCartAppCore\Config\ConfigServiceProvider::class,
+		\SureCart\Routing\RouteConditionsServiceProvider::class,
+		\SureCart\WordPress\PostTypes\FormPostTypeServiceProvider::class,
+		\SureCart\WordPress\Assets\AssetsServiceProvider::class,
+		\SureCart\WordPress\ShortcodesServiceProvider::class,
+		\SureCart\Routing\AdminRouteServiceProvider::class,
+		\SureCart\Permissions\RolesServiceProvider::class,
+		\SureCart\Settings\SettingsServiceProvider::class,
+		\SureCart\Request\RequestServiceProvider::class,
+		\SureCart\View\ViewServiceProvider::class,
+		\SureCart\Webhooks\WebhooksServiceProvider::class,
+		\SureCart\BlockLibrary\BlockServiceProvider::class,
+		\SureCart\Support\Errors\ErrorsServiceProvider::class,
+		\SureCart\Activation\ActivationServiceProvider::class,
+		\SureCart\WordPress\Admin\Menus\AdminMenuPageServiceProvider::class,
 
 		// REST providers.
-		\CheckoutEngine\Rest\AccountRestServiceProvider::class,
-		\CheckoutEngine\Rest\LoginRestServiceProvider::class,
-		\CheckoutEngine\Rest\FilesRestServiceProvider::class,
-		\CheckoutEngine\Rest\PurchasesRestServiceProvider::class,
-		\CheckoutEngine\Rest\CustomerRestServiceProvider::class,
-		\CheckoutEngine\Rest\CustomerLinksRestServiceProvider::class,
-		\CheckoutEngine\Rest\SettingsRestServiceProvider::class,
-		\CheckoutEngine\Rest\PaymentMethodsRestServiceProvider::class,
-		\CheckoutEngine\Rest\ProductsRestServiceProvider::class,
-		\CheckoutEngine\Rest\ProductGroupsRestServiceProvider::class,
-		\CheckoutEngine\Rest\PriceRestServiceProvider::class,
-		\CheckoutEngine\Rest\CouponRestServiceProvider::class,
-		\CheckoutEngine\Rest\PromotionRestServiceProvider::class,
-		\CheckoutEngine\Rest\UploadsRestServiceProvider::class,
-		\CheckoutEngine\Rest\ChargesRestServiceProvider::class,
-		\CheckoutEngine\Rest\RefundsRestServiceProvider::class,
-		\CheckoutEngine\Rest\SubscriptionRestServiceProvider::class,
-		\CheckoutEngine\Rest\SubscriptionProtocolRestServiceProvider::class,
-		\CheckoutEngine\Rest\OrderRestServiceProvider::class,
-		\CheckoutEngine\Rest\InvoicesRestServiceProvider::class,
-		\CheckoutEngine\Rest\WebhooksRestServiceProvider::class,
+		\SureCart\Rest\AccountRestServiceProvider::class,
+		\SureCart\Rest\LoginRestServiceProvider::class,
+		\SureCart\Rest\FilesRestServiceProvider::class,
+		\SureCart\Rest\PurchasesRestServiceProvider::class,
+		\SureCart\Rest\CustomerRestServiceProvider::class,
+		\SureCart\Rest\CustomerLinksRestServiceProvider::class,
+		\SureCart\Rest\SettingsRestServiceProvider::class,
+		\SureCart\Rest\PaymentMethodsRestServiceProvider::class,
+		\SureCart\Rest\ProductsRestServiceProvider::class,
+		\SureCart\Rest\ProductGroupsRestServiceProvider::class,
+		\SureCart\Rest\PriceRestServiceProvider::class,
+		\SureCart\Rest\CouponRestServiceProvider::class,
+		\SureCart\Rest\PromotionRestServiceProvider::class,
+		\SureCart\Rest\UploadsRestServiceProvider::class,
+		\SureCart\Rest\ChargesRestServiceProvider::class,
+		\SureCart\Rest\RefundsRestServiceProvider::class,
+		\SureCart\Rest\SubscriptionRestServiceProvider::class,
+		\SureCart\Rest\SubscriptionProtocolRestServiceProvider::class,
+		\SureCart\Rest\OrderRestServiceProvider::class,
+		\SureCart\Rest\InvoicesRestServiceProvider::class,
+		\SureCart\Rest\WebhooksRestServiceProvider::class,
 	],
 
 	/**
 	* SSR Blocks
 	*/
 	'blocks'              => [
-		\CheckoutEngineBlocks\Blocks\BuyButton\Block::class,
-		\CheckoutEngineBlocks\Blocks\CustomerDashboardButton\Block::class,
-		\CheckoutEngineBlocks\Blocks\CheckoutForm\Block::class,
-		\CheckoutEngineBlocks\Blocks\Form\Block::class,
-		\CheckoutEngineBlocks\Blocks\LogoutButton\Block::class,
-		\CheckoutEngineBlocks\Blocks\Dashboard\WordPressAccount\Block::class,
-		\CheckoutEngineBlocks\Blocks\Dashboard\CustomerCharges\Block::class,
-		\CheckoutEngineBlocks\Blocks\Dashboard\CustomerDashboard\Block::class,
-		\CheckoutEngineBlocks\Blocks\Dashboard\CustomerOrders\Block::class,
-		\CheckoutEngineBlocks\Blocks\Dashboard\CustomerDownloads\Block::class,
-		\CheckoutEngineBlocks\Blocks\Dashboard\CustomerBillingDetails\Block::class,
-		\CheckoutEngineBlocks\Blocks\Dashboard\CustomerPaymentMethods\Block::class,
-		\CheckoutEngineBlocks\Blocks\Dashboard\CustomerSubscriptions\Block::class,
-		\CheckoutEngineBlocks\Blocks\Dashboard\CustomerInvoices\Block::class,
-		\CheckoutEngineBlocks\Blocks\Dashboard\DashboardPage\Block::class,
-		\CheckoutEngineBlocks\Blocks\Dashboard\DashboardTab\Block::class,
+		\SureCartBlocks\Blocks\BuyButton\Block::class,
+		\SureCartBlocks\Blocks\CustomerDashboardButton\Block::class,
+		\SureCartBlocks\Blocks\CheckoutForm\Block::class,
+		\SureCartBlocks\Blocks\Form\Block::class,
+		\SureCartBlocks\Blocks\LogoutButton\Block::class,
+		\SureCartBlocks\Blocks\Dashboard\WordPressAccount\Block::class,
+		\SureCartBlocks\Blocks\Dashboard\CustomerCharges\Block::class,
+		\SureCartBlocks\Blocks\Dashboard\CustomerDashboard\Block::class,
+		\SureCartBlocks\Blocks\Dashboard\CustomerOrders\Block::class,
+		\SureCartBlocks\Blocks\Dashboard\CustomerDownloads\Block::class,
+		\SureCartBlocks\Blocks\Dashboard\CustomerBillingDetails\Block::class,
+		\SureCartBlocks\Blocks\Dashboard\CustomerPaymentMethods\Block::class,
+		\SureCartBlocks\Blocks\Dashboard\CustomerSubscriptions\Block::class,
+		\SureCartBlocks\Blocks\Dashboard\CustomerInvoices\Block::class,
+		\SureCartBlocks\Blocks\Dashboard\DashboardPage\Block::class,
+		\SureCartBlocks\Blocks\Dashboard\DashboardTab\Block::class,
 	],
 
 	/**
 	 * And array of plugin settings to register
 	 */
 	'settings'            => [
-		\CheckoutEngine\Settings\Setting\AccountSetting::class,
+		\SureCart\Settings\Setting\AccountSetting::class,
 	],
 
 	/**
@@ -99,19 +99,19 @@ return [
 		'web'   => [
 			'definitions' => __DIR__ . DIRECTORY_SEPARATOR . 'routes' . DIRECTORY_SEPARATOR . 'web.php',
 			'attributes'  => [
-				'namespace' => 'CheckoutEngine\\Controllers\\Web\\',
+				'namespace' => 'SureCart\\Controllers\\Web\\',
 			],
 		],
 		'admin' => [
 			'definitions' => __DIR__ . DIRECTORY_SEPARATOR . 'routes' . DIRECTORY_SEPARATOR . 'admin.php',
 			'attributes'  => [
-				'namespace' => 'CheckoutEngine\\Controllers\\Admin\\',
+				'namespace' => 'SureCart\\Controllers\\Admin\\',
 			],
 		],
 		'ajax'  => [
 			'definitions' => __DIR__ . DIRECTORY_SEPARATOR . 'routes' . DIRECTORY_SEPARATOR . 'ajax.php',
 			'attributes'  => [
-				'namespace' => 'CheckoutEngine\\Controllers\\Ajax\\',
+				'namespace' => 'SureCart\\Controllers\\Ajax\\',
 			],
 		],
 	],
@@ -120,7 +120,7 @@ return [
 	 * View Composers settings.
 	 */
 	'view_composers'      => [
-		'namespace' => 'CheckoutEngine\\ViewComposers\\',
+		'namespace' => 'SureCart\\ViewComposers\\',
 	],
 
 	/**
@@ -136,10 +136,10 @@ return [
 	 * - 'user.can'
 	 */
 	'middleware'          => [
-		'archive_model' => \CheckoutEngine\Middleware\ArchiveModelMiddleware::class,
-		'edit_model'    => \CheckoutEngine\Middleware\EditModelMiddleware::class,
-		'nonce'         => \CheckoutEngine\Middleware\NonceMiddleware::class,
-		'webhooks'      => \CheckoutEngine\Middleware\WebhooksMiddleware::class,
+		'archive_model' => \SureCart\Middleware\ArchiveModelMiddleware::class,
+		'edit_model'    => \SureCart\Middleware\EditModelMiddleware::class,
+		'nonce'         => \SureCart\Middleware\NonceMiddleware::class,
+		'webhooks'      => \SureCart\Middleware\WebhooksMiddleware::class,
 	],
 
 	/**
@@ -147,23 +147,23 @@ return [
 	 * This lets you reference a model based on a simple string.
 	 */
 	'models'              => [
-		'abandoned_order' => \CheckoutEngine\Models\AbandonedOrder::class,
-		'account'         => \CheckoutEngine\Models\Account::class,
-		'charge'          => \CheckoutEngine\Models\Charge::class,
-		'coupon'          => \CheckoutEngine\Models\Coupon::class,
-		'customer'        => \CheckoutEngine\Models\Customer::class,
-		'customer_link'   => \CheckoutEngine\Models\CustomerLink::class,
-		'form'            => \CheckoutEngine\Models\Form::class,
-		'line_item'       => \CheckoutEngine\Models\LineItem::class,
-		'order'           => \CheckoutEngine\Models\Order::class,
-		'price'           => \CheckoutEngine\Models\Price::class,
-		'processor'       => \CheckoutEngine\Models\Processor::class,
-		'product'         => \CheckoutEngine\Models\Product::class,
-		'promotion'       => \CheckoutEngine\Models\Promotion::class,
-		'subscription'    => \CheckoutEngine\Models\Subscription::class,
-		'upload'          => \CheckoutEngine\Models\Upload::class,
-		'user'            => \CheckoutEngine\Models\User::class,
-		'webhook'         => \CheckoutEngine\Models\Webhook::class,
+		'abandoned_order' => \SureCart\Models\AbandonedOrder::class,
+		'account'         => \SureCart\Models\Account::class,
+		'charge'          => \SureCart\Models\Charge::class,
+		'coupon'          => \SureCart\Models\Coupon::class,
+		'customer'        => \SureCart\Models\Customer::class,
+		'customer_link'   => \SureCart\Models\CustomerLink::class,
+		'form'            => \SureCart\Models\Form::class,
+		'line_item'       => \SureCart\Models\LineItem::class,
+		'order'           => \SureCart\Models\Order::class,
+		'price'           => \SureCart\Models\Price::class,
+		'processor'       => \SureCart\Models\Processor::class,
+		'product'         => \SureCart\Models\Product::class,
+		'promotion'       => \SureCart\Models\Promotion::class,
+		'subscription'    => \SureCart\Models\Subscription::class,
+		'upload'          => \SureCart\Models\Upload::class,
+		'user'            => \SureCart\Models\User::class,
+		'webhook'         => \SureCart\Models\Webhook::class,
 	],
 
 	/**
@@ -192,8 +192,8 @@ return [
 	 */
 	'middleware_priority' => [
 		// phpcs:ignore
-		// \CheckoutEngine\Middleware\MyMiddlewareThatShouldRunFirst::class,
-		// \CheckoutEngine\Middleware\MyMiddlewareThatShouldRunSecond::class,
+		// \SureCart\Middleware\MyMiddlewareThatShouldRunFirst::class,
+		// \SureCart\Middleware\MyMiddlewareThatShouldRunSecond::class,
 	],
 
 	/**

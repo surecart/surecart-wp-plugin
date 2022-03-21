@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngine\Webhooks;
+namespace SureCart\Webhooks;
 
-use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
+use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 /**
  * WordPress Users service.

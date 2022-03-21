@@ -4,10 +4,10 @@
  *
  * @link https://docs.wpemerge.com/#/framework/routing/methods
  *
- * @package CheckoutEngine
+ * @package SureCart
  */
 
-use CheckoutEngine\Middleware\CustomerDashboardMiddleware;
+use SureCart\Middleware\CustomerDashboardMiddleware;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 | Receive Webhooks
 |--------------------------------------------------------------------------
 */
-\CheckoutEngine::route()
+\SureCart::route()
 	->post()
 	->url( '/surecart/webhooks' )
 	->name( 'webhooks' )
@@ -31,9 +31,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 |--------------------------------------------------------------------------
 */
 // Here we maybe intercept dashboard request if there is a user link and log them in.
-\CheckoutEngine::route()
+\SureCart::route()
 	->get()
 	->middleware( CustomerDashboardMiddleware::class )
-	->where( 'post_id', \CheckoutEngine::pages()->getId( 'dashboard' ) )
+	->where( 'post_id', \SureCart::pages()->getId( 'dashboard' ) )
 	->name( 'dashboard' )
 	->handle( 'DashboardController@show' );

@@ -1,6 +1,6 @@
 <?php
 
-namespace CheckoutEngineBlocks\Blocks;
+namespace SureCartBlocks\Blocks;
 
 /**
  * Checkout block

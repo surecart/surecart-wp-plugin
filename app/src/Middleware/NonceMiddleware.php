@@ -1,10 +1,10 @@
 <?php
 
-namespace CheckoutEngine\Middleware;
+namespace SureCart\Middleware;
 
 use Closure;
-use CheckoutEngineCore\Requests\RequestInterface;
-use CheckoutEngineCore\Responses\RedirectResponse;
+use SureCartCore\Requests\RequestInterface;
+use SureCartCore\Responses\RedirectResponse;
 
 /**
  * Middleware for handling model archiving.

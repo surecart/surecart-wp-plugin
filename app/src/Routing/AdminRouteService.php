@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngine\Routing;
+namespace SureCart\Routing;
 
-use CheckoutEngine\Routing\AdminURLService;
+use SureCart\Routing\AdminURLService;
 
 /**
  * Provide custom route conditions.

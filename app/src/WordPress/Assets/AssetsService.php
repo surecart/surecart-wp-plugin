@@ -1,6 +1,6 @@
 <?php
 
-namespace CheckoutEngine\WordPress\Assets;
+namespace SureCart\WordPress\Assets;
 
 /**
  * Our assets service.

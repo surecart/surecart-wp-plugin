@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngine\WordPress\Users;
+namespace SureCart\WordPress\Users;
 
-use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
+use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 /**
  * Provide users dependencies.

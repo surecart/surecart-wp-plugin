@@ -1,6 +1,6 @@
 <?php
 
-namespace CheckoutEngine\Install;
+namespace SureCart\Install;
 
 /**
  * Service for installation related functions.
@@ -116,7 +116,7 @@ class InstallService {
 	 * @return void
 	 */
 	public function createPages() {
-		$form  = \CheckoutEngine::forms()->getDefault();
+		$form  = \SureCart::forms()->getDefault();
 		$pages = apply_filters(
 			'surecart/create_pages',
 			array(
@@ -151,12 +151,12 @@ class InstallService {
 	 */
 	public function createPosts( $posts ) {
 		foreach ( $posts as $key => $post ) {
-			\CheckoutEngine::pages()->findOrCreate(
+			\SureCart::pages()->findOrCreate(
 				esc_sql( $post['name'] ),
 				$key,
 				$post['title'],
 				$post['content'],
-				! empty( $post['parent'] ) ? \CheckoutEngine::pages()->findOrCreate( $post['parent'] ) : '',
+				! empty( $post['parent'] ) ? \SureCart::pages()->findOrCreate( $post['parent'] ) : '',
 				! empty( $post['post_status'] ) ? $post['post_status'] : 'publish',
 				! empty( $post['post_type'] ) ? $post['post_type'] : 'page'
 			);

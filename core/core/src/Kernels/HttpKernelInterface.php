@@ -1,19 +1,19 @@
 <?php
 /**
- * @package   CheckoutEngineCore
+ * @package   SureCartCore
  * @author    Andre Gagnon <me@andregagnon.me>
  * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
  * @link      https://surecart
  */
 
-namespace CheckoutEngineCore\Kernels;
+namespace SureCartCore\Kernels;
 
 use Closure;
 use Psr\Http\Message\ResponseInterface;
-use CheckoutEngineCore\Helpers\Handler;
-use CheckoutEngineCore\Middleware\HasMiddlewareDefinitionsInterface;
-use CheckoutEngineCore\Requests\RequestInterface;
+use SureCartCore\Helpers\Handler;
+use SureCartCore\Middleware\HasMiddlewareDefinitionsInterface;
+use SureCartCore\Requests\RequestInterface;
 
 /**
  * Describes how a request is handled.

@@ -134,7 +134,7 @@ const registerBlock = (block) => {
 /**
  * Function to register blocks provided by Checkout Engine.
  */
-export const registerCheckoutEngineBlocks = () => {
+export const registerSureCartBlocks = () => {
 	[
 		address,
 		checkout,
@@ -177,4 +177,4 @@ export const registerCheckoutEngineBlocks = () => {
 	].forEach(registerBlock);
 };
 
-registerCheckoutEngineBlocks();
+registerSureCartBlocks();

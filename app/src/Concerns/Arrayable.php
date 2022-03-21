@@ -1,5 +1,5 @@
 <?php
-namespace CheckoutEngine\Concerns;
+namespace SureCart\Concerns;
 
 interface Arrayable {
 

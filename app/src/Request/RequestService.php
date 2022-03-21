@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngine\Request;
+namespace SureCart\Request;
 
-use CheckoutEngine\Support\Errors\ErrorsService;
+use SureCart\Support\Errors\ErrorsService;
 
 /**
  * Provide api request functionality.
@@ -32,7 +32,7 @@ class RequestService {
 	/**
 	 * Errors service container
 	 *
-	 * @var \CheckoutEngine\Support\Errors\ErrorsService;
+	 * @var \SureCart\Support\Errors\ErrorsService;
 	 */
 	protected $errors_service;
 

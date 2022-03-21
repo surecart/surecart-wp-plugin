@@ -1,6 +1,6 @@
 <?php
 
-namespace CheckoutEngine\Permissions\WPConfig;
+namespace SureCart\Permissions\WPConfig;
 
 // The MIT License (MIT)
 

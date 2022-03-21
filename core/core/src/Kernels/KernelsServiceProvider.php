@@ -1,16 +1,16 @@
 <?php
 /**
- * @package   CheckoutEngineCore
+ * @package   SureCartCore
  * @author    Andre Gagnon <me@andregagnon.me>
  * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
  * @link      https://surecart.com/
  */
 
-namespace CheckoutEngineCore\Kernels;
+namespace SureCartCore\Kernels;
 
-use CheckoutEngineCore\ServiceProviders\ExtendsConfigTrait;
-use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
+use SureCartCore\ServiceProviders\ExtendsConfigTrait;
+use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 /**
  * Provide old input dependencies.
@@ -28,12 +28,12 @@ class KernelsServiceProvider implements ServiceProviderInterface {
 			$container,
 			'middleware',
 			[
-				'flash'           => \CheckoutEngineCore\Flash\FlashMiddleware::class,
-				'old_input'       => \CheckoutEngineCore\Input\OldInputMiddleware::class,
-				'csrf'            => \CheckoutEngineCore\Csrf\CsrfMiddleware::class,
-				'user.logged_in'  => \CheckoutEngineCore\Middleware\UserLoggedInMiddleware::class,
-				'user.logged_out' => \CheckoutEngineCore\Middleware\UserLoggedOutMiddleware::class,
-				'user.can'        => \CheckoutEngineCore\Middleware\UserCanMiddleware::class,
+				'flash'           => \SureCartCore\Flash\FlashMiddleware::class,
+				'old_input'       => \SureCartCore\Input\OldInputMiddleware::class,
+				'csrf'            => \SureCartCore\Csrf\CsrfMiddleware::class,
+				'user.logged_in'  => \SureCartCore\Middleware\UserLoggedInMiddleware::class,
+				'user.logged_out' => \SureCartCore\Middleware\UserLoggedOutMiddleware::class,
+				'user.can'        => \SureCartCore\Middleware\UserCanMiddleware::class,
 			]
 		);
 

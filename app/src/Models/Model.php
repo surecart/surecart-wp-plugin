@@ -1,10 +1,10 @@
 <?php
 
-namespace CheckoutEngine\Models;
+namespace SureCart\Models;
 
 use ArrayAccess;
 use JsonSerializable;
-use CheckoutEngine\Concerns\Arrayable;
+use SureCart\Concerns\Arrayable;
 
 /**
  * Model class
@@ -567,7 +567,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	 * @return Model
 	 */
 	protected function makeRequest( $args = [], $endpoint = '' ) {
-		return \CheckoutEngine::request( ...$this->prepareRequest( $args, $endpoint ) );
+		return \SureCart::request( ...$this->prepareRequest( $args, $endpoint ) );
 	}
 
 	/**

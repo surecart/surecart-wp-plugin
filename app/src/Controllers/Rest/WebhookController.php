@@ -1,7 +1,7 @@
 <?php
-namespace CheckoutEngine\Controllers\Rest;
+namespace SureCart\Controllers\Rest;
 
-use CheckoutEngine\Models\Webhook;
+use SureCart\Models\Webhook;
 
 /**
  * Handles webhooks

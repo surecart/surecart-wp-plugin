@@ -1,18 +1,18 @@
 <?php
 /**
- * @package   CheckoutEngineCore
+ * @package   SureCartCore
  * @author    Andre Gagnon <me@andregagnon.me>
  * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
  * @link      https://surecart.com/
  */
 
-namespace CheckoutEngineCore\Routing\Conditions;
+namespace SureCartCore\Routing\Conditions;
 
-use CheckoutEngineCore\Exceptions\ConfigurationException;
-use CheckoutEngineCore\Helpers\Url as UrlUtility;
-use CheckoutEngineCore\Requests\RequestInterface;
-use CheckoutEngineCore\Support\Arr;
+use SureCartCore\Exceptions\ConfigurationException;
+use SureCartCore\Helpers\Url as UrlUtility;
+use SureCartCore\Requests\RequestInterface;
+use SureCartCore\Support\Arr;
 
 /**
  * Check against the current url

@@ -1,11 +1,11 @@
 <?php
 
-namespace CheckoutEngine\Controllers\Admin\Orders;
+namespace SureCart\Controllers\Admin\Orders;
 
-use CheckoutEngine\Support\Currency;
-use CheckoutEngine\Support\TimeDate;
-use CheckoutEngine\Models\Order;
-use CheckoutEngine\Controllers\Admin\Tables\ListTable;
+use SureCart\Support\Currency;
+use SureCart\Support\TimeDate;
+use SureCart\Models\Order;
+use SureCart\Controllers\Admin\Tables\ListTable;
 
 /**
  * Create a new table class that will extend the WP_List_Table
@@ -65,7 +65,7 @@ class OrdersListTable extends ListTable {
 	// 'all'     => __( 'All', 'surecart' ),
 	// ];
 
-	// $link = \CheckoutEngine::getUrl()->index( 'orders' );
+	// $link = \SureCart::getUrl()->index( 'orders' );
 
 	// foreach ( $stati as $status => $label ) {
 	// $current_link_attributes = '';
@@ -185,7 +185,7 @@ class OrdersListTable extends ListTable {
 	/**
 	 * Handle the total column
 	 *
-	 * @param \CheckoutEngine\Models\Order $order Checkout Session Model.
+	 * @param \SureCart\Models\Order $order Checkout Session Model.
 	 *
 	 * @return string
 	 */
@@ -196,7 +196,7 @@ class OrdersListTable extends ListTable {
 	/**
 	 * Handle the total column
 	 *
-	 * @param \CheckoutEngine\Models\Order $order Checkout Session Model.
+	 * @param \SureCart\Models\Order $order Checkout Session Model.
 	 *
 	 * @return string
 	 */
@@ -283,7 +283,7 @@ class OrdersListTable extends ListTable {
 	/**
 	 * Handle the status
 	 *
-	 * @param \CheckoutEngine\Models\Order $order Order Model.
+	 * @param \SureCart\Models\Order $order Order Model.
 	 *
 	 * @return string
 	 */
@@ -297,18 +297,18 @@ class OrdersListTable extends ListTable {
 	/**
 	 * Name of the coupon
 	 *
-	 * @param \CheckoutEngine\Models\Promotion $promotion Promotion model.
+	 * @param \SureCart\Models\Promotion $promotion Promotion model.
 	 *
 	 * @return string
 	 */
 	public function column_order( $order ) {
 		ob_start();
 		?>
-		<a class="row-title" aria-label="<?php echo esc_attr__( 'Edit Order', 'surecart' ); ?>" href="<?php echo esc_url( \CheckoutEngine::getUrl()->edit( 'order', $order->id ) ); ?>">
+		<a class="row-title" aria-label="<?php echo esc_attr__( 'Edit Order', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'order', $order->id ) ); ?>">
 			<?php echo sanitize_text_field( $order->number ?? $order->id ); ?>
 		</a>
 		<br />
-		<a  aria-label="<?php echo esc_attr__( 'Edit Order', 'surecart' ); ?>" href="<?php echo esc_url( \CheckoutEngine::getUrl()->edit( 'order', $order->id ) ); ?>">
+		<a  aria-label="<?php echo esc_attr__( 'Edit Order', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'order', $order->id ) ); ?>">
 			<?php
 			// translators: Customer name.
 			echo sprintf( esc_html__( 'By %s', 'surecart' ), esc_html( $order->name ?? $order->email ) );

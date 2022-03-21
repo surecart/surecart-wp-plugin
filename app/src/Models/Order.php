@@ -1,16 +1,16 @@
 <?php
 
-namespace CheckoutEngine\Models;
+namespace SureCart\Models;
 
-use CheckoutEngine\Models\Traits\HasCustomer;
-use CheckoutEngine\Models\Traits\HasSubscriptions;
-use CheckoutEngine\Models\LineItem;
-use CheckoutEngine\Models\Traits\CanFinalize;
-use CheckoutEngine\Models\Traits\HasDiscount;
-use CheckoutEngine\Models\Traits\HasPaymentIntent;
-use CheckoutEngine\Models\Traits\HasPaymentMethod;
-use CheckoutEngine\Models\Traits\HasProcessorType;
-use CheckoutEngine\Models\Traits\HasShippingAddress;
+use SureCart\Models\Traits\HasCustomer;
+use SureCart\Models\Traits\HasSubscriptions;
+use SureCart\Models\LineItem;
+use SureCart\Models\Traits\CanFinalize;
+use SureCart\Models\Traits\HasDiscount;
+use SureCart\Models\Traits\HasPaymentIntent;
+use SureCart\Models\Traits\HasPaymentMethod;
+use SureCart\Models\Traits\HasProcessorType;
+use SureCart\Models\Traits\HasShippingAddress;
 
 /**
  * Order model

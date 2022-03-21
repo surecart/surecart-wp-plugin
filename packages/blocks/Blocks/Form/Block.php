@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngineBlocks\Blocks\Form;
+namespace SureCartBlocks\Blocks\Form;
 
-use CheckoutEngineBlocks\Blocks\BaseBlock;
+use SureCartBlocks\Blocks\BaseBlock;
 
 /**
  * Checkout block
@@ -45,7 +45,7 @@ class Block extends BaseBlock {
 
 		$user = wp_get_current_user();
 
-		return \CheckoutEngine::blocks()->render(
+		return \SureCart::blocks()->render(
 			'blocks/form',
 			[
 				'align'       => $attributes['align'] ?? '',
@@ -63,7 +63,7 @@ class Block extends BaseBlock {
 				'form_id'     => $sc_form_id,
 				'id'          => 'ce-checkout-' . $sc_form_id,
 				'prices'      => $attributes['prices'] ?? [],
-				'success_url' => ! empty( $attributes['redirect'] ) ? $attributes['redirect'] : \CheckoutEngine::pages()->url( 'order-confirmation' ),
+				'success_url' => ! empty( $attributes['redirect'] ) ? $attributes['redirect'] : \SureCart::pages()->url( 'order-confirmation' ),
 				'i18n'        => $this->getTranslations(),
 			]
 		);
@@ -142,25 +142,6 @@ class Block extends BaseBlock {
 			'platform_api_key_expired'                   => __( 'The API key provided by your Connect platform has expired. This occurs if your platform has either generated a new key or the connected account has been disconnected from the platform. Obtain your current API keys from the Dashboard and update your integration, or reach out to the user and reconnect the account.', 'surecart' ),
 			'postal_code_invalid'                        => __( 'The postal code provided was incorrect.', 'surecart' ),
 			'processing_error'                           => __( 'An error occurred while processing the card. Check the card details are correct or use a different card.', 'surecart' ),
-			'product_inactive'                           => __( 'The product this SKU belongs to is no longer available for purchase.', 'surecart' ),
-			'rate_limit'                                 => __( 'Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.', 'surecart' ),
-			'resource_already_exists'                    => __( 'A resource with a user-specified ID (e.g., plan or coupon) already exists. Use a different, unique value for id and try again.', 'surecart' ),
-			'resource_missing'                           => __( 'The ID provided is not valid. Either the resource does not exist, or an ID for a different resource has been provided.', 'surecart' ),
-			'routing_number_invalid'                     => __( 'The bank routing number provided is invalid.', 'surecart' ),
-			'secret_key_required'                        => __( 'The API key provided is a publishable key, but a secret key is required. Obtain your current API keys from the Dashboard and update your integration to use them.', 'surecart' ),
-			'sepa_unsupported_account'                   => __( 'Your account does not support SEPA payments.', 'surecart' ),
-			'shipping_calculation_failed'                => __( 'Shipping calculation failed as the information provided was either incorrect or could not be verified.', 'surecart' ),
-			'sku_inactive'                               => __( 'The SKU is inactive and no longer available for purchase. Use a different SKU, or make the current SKU active again.', 'surecart' ),
-			'state_unsupported'                          => __( 'Occurs when providing the legal_entity information for a U.S. custom account, if the provided state is not supported. (This is mostly associated states and territories.)', 'surecart' ),
-			'tax_id_invalid'                             => __( 'The tax ID number provided is invalid (e.g., missing digits). Tax ID information varies from country to country, but must be at least nine digits.', 'surecart' ),
-			'taxes_calculation_failed'                   => __( 'Tax calculation for the order failed.', 'surecart' ),
-			'testmode_charges_only'                      => __( 'Your account has not been activated and can only make test charges. Activate your account in the Dashboard to begin processing live charges.', 'surecart' ),
-			'tls_version_unsupported'                    => __( 'Your integration is using an older version of TLS that is unsupported. You must be using TLS 1.2 or above.', 'surecart' ),
-			'token_already_used'                         => __( 'The token provided has already been used. You must create a new token before you can retry this request.', 'surecart' ),
-			'token_in_use'                               => __( 'The token provided is currently being used in another request. This occurs if your integration is making duplicate requests simultaneously.', 'surecart' ),
-			'transfers_not_allowed'                      => __( 'The requested transfer cannot be created. Contact us if you are receiving this error.', 'surecart' ),
-			'upstream_order_creation_failed'             => __( 'The order could not be created. Check the order details and then try again.', 'surecart' ),
-			'url_invalid'                                => __( 'The URL provided is invalid.', 'surecart' ),
 		];
 	}
 }

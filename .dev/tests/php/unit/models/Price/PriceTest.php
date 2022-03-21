@@ -1,12 +1,12 @@
 <?php
 
-namespace CheckoutEngine\Tests\Models;
+namespace SureCart\Tests\Models;
 
-use CheckoutEngine\Models\Price;
-use CheckoutEngine\Models\Product;
-use CheckoutEngine\Tests\CheckoutEngineUnitTestCase;
+use SureCart\Models\Price;
+use SureCart\Models\Product;
+use SureCart\Tests\SureCartUnitTestCase;
 
-class PriceTest extends CheckoutEngineUnitTestCase
+class PriceTest extends SureCartUnitTestCase
 {
 	/**
 	 * Set up a new app instance to use for tests.
@@ -16,9 +16,9 @@ class PriceTest extends CheckoutEngineUnitTestCase
 		parent::setUp();
 
 		// Set up an app instance with whatever stubs and mocks we need before every test.
-		\CheckoutEngine::make()->bootstrap([
+		\SureCart::make()->bootstrap([
 			'providers' => [
-				\CheckoutEngine\Request\RequestServiceProvider::class,
+				\SureCart\Request\RequestServiceProvider::class,
 			]
 		], false);
 

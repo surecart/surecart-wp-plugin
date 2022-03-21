@@ -1,6 +1,6 @@
 <?php
 
-namespace CheckoutEngine\Settings;
+namespace SureCart\Settings;
 
 /**
  * Service for registering a new setting.

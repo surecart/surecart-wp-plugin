@@ -1,17 +1,17 @@
 <?php
 /**
- * @package   CheckoutEngineAppCore
+ * @package   SureCartAppCore
  * @author    Andre Gagnon <me@andregagnon.me>
  * @copyright  Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://checkoutengine.com
+ * @link      https://SureCart.com
  */
 
-namespace CheckoutEngineAppCore\Assets;
+namespace SureCartAppCore\Assets;
 
-use CheckoutEngineCore\Helpers\MixedType;
-use CheckoutEngineCore\Helpers\Url;
-use CheckoutEngineAppCore\Config\Config;
+use SureCartCore\Helpers\MixedType;
+use SureCartCore\Helpers\Url;
+use SureCartAppCore\Config\Config;
 
 class Assets {
 	/**

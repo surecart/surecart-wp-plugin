@@ -1,10 +1,10 @@
 <?php
 
-namespace CheckoutEngineBlocks\Blocks\Dashboard\CustomerOrders;
+namespace SureCartBlocks\Blocks\Dashboard\CustomerOrders;
 
-use CheckoutEngine\Models\User;
-use CheckoutEngineBlocks\Blocks\Dashboard\DashboardPage;
-use CheckoutEngineBlocks\Controllers\OrderController;
+use SureCart\Models\User;
+use SureCartBlocks\Blocks\Dashboard\DashboardPage;
+use SureCartBlocks\Controllers\OrderController;
 
 /**
  * Checkout block

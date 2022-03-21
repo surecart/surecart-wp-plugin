@@ -1,16 +1,16 @@
 <?php
 /**
- * @package   CheckoutEngineCore
+ * @package   SureCartCore
  * @author    Andre Gagnon <me@andregagnon.me>
  * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
  * @link      https://surecart.com/
  */
 
-namespace CheckoutEngineCore\Input;
+namespace SureCartCore\Input;
 
-use CheckoutEngineCore\Flash\Flash;
-use CheckoutEngineCore\Support\Arr;
+use SureCartCore\Flash\Flash;
+use SureCartCore\Support\Arr;
 
 /**
  * Provide a way to get values from the previous request.
@@ -37,7 +37,7 @@ class OldInput {
 	 * @param Flash  $flash
 	 * @param string $flash_key
 	 */
-	public function __construct( Flash $flash, $flash_key = '__checkoutEngineOldInput' ) {
+	public function __construct( Flash $flash, $flash_key = '__SureCartOldInput' ) {
 		$this->flash     = $flash;
 		$this->flash_key = $flash_key;
 	}

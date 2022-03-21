@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngineBlocks\Blocks\BuyButton;
+namespace SureCartBlocks\Blocks\BuyButton;
 
-use CheckoutEngineBlocks\Blocks\BaseBlock;
+use SureCartBlocks\Blocks\BaseBlock;
 /**
  * Logout Button Block.
  */
@@ -16,7 +16,7 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
-		return \CheckoutEngine::blocks()->render(
+		return \SureCart::blocks()->render(
 			'blocks/buy-button',
 			[
 				'type'  => $attributes['type'] ?? 'primary',
@@ -56,7 +56,7 @@ class Block extends BaseBlock {
 			[
 				'line_items' => $this->lineItems( $line_items ?? [] ),
 			],
-			\CheckoutEngine::pages()->url( 'checkout' )
+			\SureCart::pages()->url( 'checkout' )
 		);
 	}
 }

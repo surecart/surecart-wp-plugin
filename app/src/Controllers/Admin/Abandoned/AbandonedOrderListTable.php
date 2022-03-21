@@ -1,10 +1,10 @@
 <?php
 
-namespace CheckoutEngine\Controllers\Admin\Abandoned;
+namespace SureCart\Controllers\Admin\Abandoned;
 
-use CheckoutEngine\Support\TimeDate;
-use CheckoutEngine\Controllers\Admin\Tables\ListTable;
-use CheckoutEngine\Models\AbandonedOrder;
+use SureCart\Support\TimeDate;
+use SureCart\Controllers\Admin\Tables\ListTable;
+use SureCart\Models\AbandonedOrder;
 
 /**
  * Create a new table class that will extend the WP_List_Table
@@ -50,7 +50,7 @@ class AbandonedOrderListTable extends ListTable {
 			'notified'  => __( 'Notified', 'surecart' ),
 		];
 
-		$link = \CheckoutEngine::getUrl()->index( 'abandoned_orders' );
+		$link = \SureCart::getUrl()->index( 'abandoned_orders' );
 
 		foreach ( $stati as $status => $label ) {
 			$current_link_attributes = '';
@@ -143,7 +143,7 @@ class AbandonedOrderListTable extends ListTable {
 	/**
 	 * Handle the total column
 	 *
-	 * @param \CheckoutEngine\Models\AbandonedOrder $checkout Checkout Session Model.
+	 * @param \SureCart\Models\AbandonedOrder $checkout Checkout Session Model.
 	 *
 	 * @return string
 	 */
@@ -154,7 +154,7 @@ class AbandonedOrderListTable extends ListTable {
 	/**
 	 * Handle the total column
 	 *
-	 * @param \CheckoutEngine\Models\AbandonedOrder $abandoned Abandoned checkout model.
+	 * @param \SureCart\Models\AbandonedOrder $abandoned Abandoned checkout model.
 	 *
 	 * @return string
 	 */
@@ -165,7 +165,7 @@ class AbandonedOrderListTable extends ListTable {
 	/**
 	 * Handle the status
 	 *
-	 * @param \CheckoutEngine\Models\AbandonedOrder $abandoned Abandoned checkout session.
+	 * @param \SureCart\Models\AbandonedOrder $abandoned Abandoned checkout session.
 	 *
 	 * @return string
 	 */
@@ -177,7 +177,7 @@ class AbandonedOrderListTable extends ListTable {
 	/**
 	 * Handle the status
 	 *
-	 * @param \CheckoutEngine\Models\AbandonedOrder $abandoned Abandoned checkout session.
+	 * @param \SureCart\Models\AbandonedOrder $abandoned Abandoned checkout session.
 	 *
 	 * @return string
 	 */
@@ -188,7 +188,7 @@ class AbandonedOrderListTable extends ListTable {
 	/**
 	 * Email of customer
 	 *
-	 * @param \CheckoutEngine\Models\AbandonedOrder $abandoned Abandoned checkout model.
+	 * @param \SureCart\Models\AbandonedOrder $abandoned Abandoned checkout model.
 	 *
 	 * @return string
 	 */

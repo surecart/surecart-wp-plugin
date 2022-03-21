@@ -1,13 +1,13 @@
 <?php
 
-namespace CheckoutEngine\Support;
+namespace SureCart\Support;
 
 /**
  * Datetime utilities.
  */
 class TimeDate {
 	/**
-	 * Get the CheckoutEngine date format
+	 * Get the SureCart date format
 	 *
 	 * @return string
 	 */
@@ -21,7 +21,7 @@ class TimeDate {
 	}
 
 	/**
-	 * Get the CheckoutEngine time format
+	 * Get the SureCart time format
 	 *
 	 * @return string
 	 */
@@ -35,7 +35,7 @@ class TimeDate {
 	}
 
 	/**
-	 *  Date Format - Allows to change date format for everything CheckoutEngine
+	 *  Date Format - Allows to change date format for everything SureCart
 	 *
 	 * @return string
 	 */

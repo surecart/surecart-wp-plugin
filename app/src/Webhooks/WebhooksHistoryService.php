@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngine\Webhooks;
+namespace SureCart\Webhooks;
 
-use CheckoutEngine\Models\Webhook;
+use SureCart\Models\Webhook;
 
 /**
  * Handles domain name changes to webhook
@@ -12,7 +12,7 @@ class WebHooksHistoryService {
 	/**
 	 * Webhooks service.
 	 *
-	 * @var \CheckoutEngine\Webhooks\WebhooksService
+	 * @var \SureCart\Webhooks\WebhooksService
 	 */
 	protected $webhooks_service;
 
@@ -137,15 +137,15 @@ class WebHooksHistoryService {
 		?>
 		<div class="notice notice-error">
 			<p>
-				<?php _e( 'It looks like this site has moved or has been duplicated. CheckoutEngine has created new webhooks for the domain to prevent purchase sync issues. Should we remove the previous webook?', 'surecart' ); ?>
+				<?php _e( 'It looks like this site has moved or has been duplicated. SureCart has created new webhooks for the domain to prevent purchase sync issues. Should we remove the previous webook?', 'surecart' ); ?>
 			</p>
 			<p>
-				<a href="<?php echo esc_url( \CheckoutEngine::getUrl()->editModel( 'ignore_webhook', $webhook['id'] ) ); ?>"
+				<a href="<?php echo esc_url( \SureCart::getUrl()->editModel( 'ignore_webhook', $webhook['id'] ) ); ?>"
 					class="button button-primary"
 					aria-label="<?php esc_attr_e( 'Ignore notice.', 'surecart' ); ?>">
 				<?php esc_html_e( 'Ignore this notice. This is a duplicate or staging site.', 'surecart' ); ?>
 				</a>
-				<a href="<?php echo esc_url( \CheckoutEngine::getUrl()->editModel( 'remove_webhook', $webhook['id'] ) ); ?>"
+				<a href="<?php echo esc_url( \SureCart::getUrl()->editModel( 'remove_webhook', $webhook['id'] ) ); ?>"
 					onclick="return confirm('<?php esc_attr_e( 'Are you sure you want to remove this webhook?', 'surecart' ); ?>')"
 					class="button button-secondary"
 					aria-label="<?php esc_attr_e( 'Remove webhook', 'surecart' ); ?>">
@@ -161,12 +161,12 @@ class WebHooksHistoryService {
 	/**
 	 * Toggle archive action link and text.
 	 *
-	 * @param \CheckoutEngine\Models\Product $product Product model.
+	 * @param \SureCart\Models\Product $product Product model.
 	 * @return string
 	 */
 	public function actionRemoveWebhook( $webhook ) {
 		$confirm_message = __( 'Are you sure you want to remove this webhook?', 'surecart' );
-		$link            = \CheckoutEngine::getUrl()->editModel( 'remove_webhook', $webhook->id );
+		$link            = \SureCart::getUrl()->editModel( 'remove_webhook', $webhook->id );
 		$text            = sprintf( esc_html__( 'My website domain has permanently changed. Remove webhook for %s', 'surecart' ), esc_url_raw( $webhook->url ) );
 
 		return sprintf(

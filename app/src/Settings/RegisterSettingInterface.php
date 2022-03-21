@@ -1,5 +1,5 @@
 <?php
-namespace CheckoutEngine\Settings;
+namespace SureCart\Settings;
 
 /**
  * Register setting interface

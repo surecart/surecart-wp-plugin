@@ -1,10 +1,10 @@
 <?php
 
-namespace CheckoutEngine\Controllers\Admin\Subscriptions;
+namespace SureCart\Controllers\Admin\Subscriptions;
 
-use CheckoutEngine\Support\Currency;
-use CheckoutEngine\Controllers\Admin\Tables\ListTable;
-use CheckoutEngine\Models\Subscription;
+use SureCart\Support\Currency;
+use SureCart\Controllers\Admin\Tables\ListTable;
+use SureCart\Models\Subscription;
 
 /**
  * Create a new table class that will extend the WP_List_Table
@@ -62,7 +62,7 @@ class SubscriptionsListTable extends ListTable {
 			'canceled' => __( 'Canceled', 'surecart' ),
 		];
 
-		$link = \CheckoutEngine::getUrl()->index( 'subscriptions' );
+		$link = \SureCart::getUrl()->index( 'subscriptions' );
 
 		foreach ( $stati as $status => $label ) {
 			$current_link_attributes = '';
@@ -124,7 +124,7 @@ class SubscriptionsListTable extends ListTable {
 		if ( empty( $subscription->price->product ) ) {
 			return __( 'No product', 'surecart' );
 		}
-		return '<a href="' . esc_url( \CheckoutEngine::getUrl()->edit( 'product', $subscription->price->product->id ) ) . '">' . $subscription->price->product->name . '</a>';
+		return '<a href="' . esc_url( \SureCart::getUrl()->edit( 'product', $subscription->price->product->id ) ) . '">' . $subscription->price->product->name . '</a>';
 	}
 
 	/**
@@ -180,7 +180,7 @@ class SubscriptionsListTable extends ListTable {
 	/**
 	 * Handle the total column
 	 *
-	 * @param \CheckoutEngine\Models\Order $subscription Checkout Session Model.
+	 * @param \SureCart\Models\Order $subscription Checkout Session Model.
 	 *
 	 * @return string
 	 */
@@ -290,7 +290,7 @@ class SubscriptionsListTable extends ListTable {
 	/**
 	 * Handle the status
 	 *
-	 * @param \CheckoutEngine\Models\Price $product Product model.
+	 * @param \SureCart\Models\Price $product Product model.
 	 *
 	 * @return string
 	 */
@@ -324,7 +324,7 @@ class SubscriptionsListTable extends ListTable {
 	/**
 	 * Name of the coupon
 	 *
-	 * @param \CheckoutEngine\Models\Promotion $promotion Promotion model.
+	 * @param \SureCart\Models\Promotion $promotion Promotion model.
 	 *
 	 * @return string
 	 */
@@ -335,14 +335,14 @@ class SubscriptionsListTable extends ListTable {
 			$name = $subscription->customer->email ?? __( 'No name provided', 'surecart' );
 		}
 		?>
-		<a class="row-title" aria-label="<?php echo esc_attr__( 'Edit Subscription', 'surecart' ); ?>" href="<?php echo esc_url( \CheckoutEngine::getUrl()->show( 'subscription', $subscription->id ) ); ?>">
+		<a class="row-title" aria-label="<?php echo esc_attr__( 'Edit Subscription', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->show( 'subscription', $subscription->id ) ); ?>">
 			<?php echo esc_html( $name ); ?>
 		</a>
 
 		<?php
 		echo $this->row_actions(
 			[
-				'edit' => '<a href="' . esc_url( \CheckoutEngine::getUrl()->show( 'subscription', $subscription->id ) ) . '" aria-label="' . esc_attr( 'Edit Subscription', 'surecart' ) . '">' . __( 'Edit', 'surecart' ) . '</a>',
+				'edit' => '<a href="' . esc_url( \SureCart::getUrl()->show( 'subscription', $subscription->id ) ) . '" aria-label="' . esc_attr( 'Edit Subscription', 'surecart' ) . '">' . __( 'Edit', 'surecart' ) . '</a>',
 			],
 		);
 		?>

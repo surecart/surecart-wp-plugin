@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngineBlocks\Blocks\Dashboard\DashboardPage;
+namespace SureCartBlocks\Blocks\Dashboard\DashboardPage;
 
-use CheckoutEngineBlocks\Blocks\Dashboard\DashboardPage;
+use SureCartBlocks\Blocks\Dashboard\DashboardPage;
 
 /**
  * Checkout block
@@ -14,14 +14,14 @@ class Block extends DashboardPage {
 	 * @var array
 	 */
 	protected $blocks = [
-		'subscription'   => \CheckoutEngineBlocks\Controllers\SubscriptionController::class,
-		'payment_method' => \CheckoutEngineBlocks\Controllers\PaymentMethodController::class,
-		'charge'         => \CheckoutEngineBlocks\Controllers\ChargeController::class,
-		'order'          => \CheckoutEngineBlocks\Controllers\OrderController::class,
-		'user'           => \CheckoutEngineBlocks\Controllers\UserController::class,
-		'customer'       => \CheckoutEngineBlocks\Controllers\CustomerController::class,
-		'download'       => \CheckoutEngineBlocks\Controllers\DownloadController::class,
-		'invoice'        => \CheckoutEngineBlocks\Controllers\InvoiceController::class,
+		'subscription'   => \SureCartBlocks\Controllers\SubscriptionController::class,
+		'payment_method' => \SureCartBlocks\Controllers\PaymentMethodController::class,
+		'charge'         => \SureCartBlocks\Controllers\ChargeController::class,
+		'order'          => \SureCartBlocks\Controllers\OrderController::class,
+		'user'           => \SureCartBlocks\Controllers\UserController::class,
+		'customer'       => \SureCartBlocks\Controllers\CustomerController::class,
+		'download'       => \SureCartBlocks\Controllers\DownloadController::class,
+		'invoice'        => \SureCartBlocks\Controllers\InvoiceController::class,
 	];
 
 

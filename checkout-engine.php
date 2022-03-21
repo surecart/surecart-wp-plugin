@@ -17,7 +17,7 @@
  * to bootstrapping the theme should go into a service provider or a separate helper file
  * (refer to the directory structure in README.md).
  *
- * @package CheckoutEngine
+ * @package SureCart
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -37,11 +37,11 @@ if ( file_exists( __DIR__ . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR
 }
 
 // Load helpers.
-require_once __DIR__ . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'CheckoutEngine.php';
+require_once __DIR__ . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'SureCart.php';
 require_once __DIR__ . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'helpers.php';
 
 // Bootstrap plugin after all dependencies and helpers are loaded.
-\CheckoutEngine::make()->bootstrap( require __DIR__ . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'config.php' );
+\SureCart::make()->bootstrap( require __DIR__ . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'config.php' );
 
 // Register hooks.
 require_once __DIR__ . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'hooks.php';

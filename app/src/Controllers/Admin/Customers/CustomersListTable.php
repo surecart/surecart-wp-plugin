@@ -1,12 +1,12 @@
 <?php
 
-namespace CheckoutEngine\Controllers\Admin\Customers;
+namespace SureCart\Controllers\Admin\Customers;
 
-use CheckoutEngine\Models\Product;
-use CheckoutEngine\Models\Customer;
-use CheckoutEngine\Support\Currency;
-use CheckoutEngine\Support\TimeDate;
-use CheckoutEngine\Controllers\Admin\Tables\ListTable;
+use SureCart\Models\Product;
+use SureCart\Models\Customer;
+use SureCart\Support\Currency;
+use SureCart\Support\TimeDate;
+use SureCart\Controllers\Admin\Tables\ListTable;
 /**
  * Create a new table class that will extend the WP_List_Table
  */
@@ -163,7 +163,7 @@ class CustomersListTable extends ListTable {
 	/**
 	 * Handle the orders column.
 	 *
-	 * @param \CheckoutEngine\Models\Customer $customer Customer model.
+	 * @param \SureCart\Models\Customer $customer Customer model.
 	 *
 	 * @return string
 	 */
@@ -174,7 +174,7 @@ class CustomersListTable extends ListTable {
 	/**
 	 * Handle the status
 	 *
-	 * @param \CheckoutEngine\Models\Price $product Product model.
+	 * @param \SureCart\Models\Price $product Product model.
 	 *
 	 * @return string
 	 */
@@ -202,21 +202,21 @@ class CustomersListTable extends ListTable {
 	/**
 	 * Name column
 	 *
-	 * @param \CheckoutEngine\Models\Customer $customer Customer model.
+	 * @param \SureCart\Models\Customer $customer Customer model.
 	 *
 	 * @return string
 	 */
 	public function column_name( $customer ) {
 		ob_start();
 		?>
-		<a class="row-title" aria-label="<?php echo esc_attr( 'Edit Customer', 'surecart' ); ?>" href="<?php echo esc_url( \CheckoutEngine::getUrl()->edit( 'customers', $customer->id ) ); ?>">
+		<a class="row-title" aria-label="<?php echo esc_attr( 'Edit Customer', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'customers', $customer->id ) ); ?>">
 			<?php echo wp_kses_post( $customer->name ?? $customer->email ); ?>
 		</a>
 
 		<?php
 		echo $this->row_actions(
 			[
-				'edit' => '<a href="' . esc_url( \CheckoutEngine::getUrl()->edit( 'customers', $customer->id ) ) . '" aria-label="' . esc_attr( 'Edit Customer', 'surecart' ) . '">' . __( 'Edit', 'surecart' ) . '</a>',
+				'edit' => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'customers', $customer->id ) ) . '" aria-label="' . esc_attr( 'Edit Customer', 'surecart' ) . '">' . __( 'Edit', 'surecart' ) . '</a>',
 			],
 		);
 		?>
@@ -228,13 +228,13 @@ class CustomersListTable extends ListTable {
 	/**
 	 * Toggle archive action link and text.
 	 *
-	 * @param \CheckoutEngine\Models\Product $product Product model.
+	 * @param \SureCart\Models\Product $product Product model.
 	 * @return string
 	 */
 	public function action_toggle_archive( $product ) {
 		$text            = $product->archived ? __( 'Un-Archive', 'surecart' ) : __( 'Archive', 'surecart' );
 		$confirm_message = $product->archived ? __( 'Are you sure you want to restore this product? This will be be available to purchase.', 'surecart' ) : __( 'Are you sure you want to archive this product? This will be unavailable for purchase.', 'surecart' );
-		$link            = \CheckoutEngine::getUrl()->toggleArchive( 'product', $product->id );
+		$link            = \SureCart::getUrl()->toggleArchive( 'product', $product->id );
 
 		return sprintf(
 			'<a class="submitdelete" onclick="return confirm(\'%1s\')" href="%2s" aria-label="%3s">%4s</a>',
@@ -248,15 +248,15 @@ class CustomersListTable extends ListTable {
 	/**
 	 * Define what data to show on each column of the table
 	 *
-	 * @param \CheckoutEngine\Models\Product $product Product model.
-	 * @param String                         $column_name - Current column name.
+	 * @param \SureCart\Models\Product $product Product model.
+	 * @param String                   $column_name - Current column name.
 	 *
 	 * @return Mixed
 	 */
 	public function column_default( $product, $column_name ) {
 		switch ( $column_name ) {
 			case 'name':
-				return '<a href="' . \CheckoutEngine::getUrl()->edit( 'product', $product->id ) . '">' . $product->name . '</a>';
+				return '<a href="' . \SureCart::getUrl()->edit( 'product', $product->id ) . '">' . $product->name . '</a>';
 			case 'name':
 			case 'description':
 				return $product->$column_name ?? '';

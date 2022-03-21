@@ -1,10 +1,10 @@
 <?php
 
-namespace CheckoutEngine\Rest;
+namespace SureCart\Rest;
 
-use CheckoutEngine\Models\Model;
-use CheckoutEngine\Rest\RestServiceInterface;
-use CheckoutEngine\Controllers\Rest\OrderController;
+use SureCart\Models\Model;
+use SureCart\Rest\RestServiceInterface;
+use SureCart\Controllers\Rest\OrderController;
 
 /**
  * Abstract Rest Service Provider interface
@@ -176,7 +176,7 @@ abstract class RestServiceProvider extends \WP_REST_Controller implements RestSe
 	public function callback( $class, $method ) {
 		return function ( $request ) use ( $class, $method ) {
 			// get and call controller with request.
-			$controller = \CheckoutEngine::closure()->method( $class, $method );
+			$controller = \SureCart::closure()->method( $class, $method );
 			$model      = $controller( $request );
 
 			// check and filter context.

@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngine\WordPress\Admin\Menus;
+namespace SureCart\WordPress\Admin\Menus;
 
-use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
+use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 /**
  * Register plugin options.

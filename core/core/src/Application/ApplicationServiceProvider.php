@@ -1,18 +1,18 @@
 <?php
 /**
- * @package   CheckoutEngineCore
+ * @package   SureCartCore
  * @author    Andre Gagnon <me@andregagnon.me>
  * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
  * @link      https://surecart.com/
  */
 
-namespace CheckoutEngineCore\Application;
+namespace SureCartCore\Application;
 
-use CheckoutEngineCore\Helpers\HandlerFactory;
-use CheckoutEngineCore\Helpers\MixedType;
-use CheckoutEngineCore\ServiceProviders\ExtendsConfigTrait;
-use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
+use SureCartCore\Helpers\HandlerFactory;
+use SureCartCore\Helpers\MixedType;
+use SureCartCore\ServiceProviders\ExtendsConfigTrait;
+use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 /**
  * Provide application dependencies.

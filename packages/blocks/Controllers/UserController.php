@@ -1,9 +1,9 @@
 <?php
-namespace CheckoutEngineBlocks\Controllers;
+namespace SureCartBlocks\Controllers;
 
-use CheckoutEngine\Models\Component;
-use CheckoutEngine\Models\Customer;
-use CheckoutEngine\Models\User;
+use SureCart\Models\Component;
+use SureCart\Models\Customer;
+use SureCart\Models\User;
 
 /**
  * Payment method block controller class.
@@ -52,7 +52,7 @@ class UserController extends BaseController {
 			return '';
 		}
 		$data = get_userdata( $user->ID );
-		$back = add_query_arg( [ 'tab' => $this->getTab() ], \CheckoutEngine::pages()->url( 'dashboard' ) );
+		$back = add_query_arg( [ 'tab' => $this->getTab() ], \SureCart::pages()->url( 'dashboard' ) );
 		ob_start(); ?>
 
 		<ce-spacing style="--spacing: var(--ce-spacing-large)">

@@ -18,7 +18,7 @@
 
 <?php
 // This dynamically adds prop data to a component since we cannot pass objects data as a prop.
-\CheckoutEngine::assets()->addComponentData(
+\SureCart::assets()->addComponentData(
 	'ce-checkout',
 	'#' . $id,
 	[

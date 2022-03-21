@@ -1,7 +1,7 @@
 <?php
-namespace CheckoutEngine\Install;
+namespace SureCart\Install;
 
-use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
+use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 class InstallServiceProvider implements ServiceProviderInterface {
 	/**

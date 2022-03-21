@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngine\Controllers\Admin\Abandoned;
+namespace SureCart\Controllers\Admin\Abandoned;
 
-use CheckoutEngine\Controllers\Admin\Abandoned\AbandonedOrderListTable;
+use SureCart\Controllers\Admin\Abandoned\AbandonedOrderListTable;
 
 
 /**
@@ -15,7 +15,7 @@ class AbandonedOrderViewController {
 	public function index() {
 		$table = new AbandonedOrderListTable();
 		$table->prepare_items();
-		return \CheckoutEngine::view( 'admin/abandoned-orders/index' )->with(
+		return \SureCart::view( 'admin/abandoned-orders/index' )->with(
 			[
 				'table' => $table,
 			]

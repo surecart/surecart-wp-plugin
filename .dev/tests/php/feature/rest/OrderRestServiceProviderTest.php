@@ -1,13 +1,13 @@
 <?php
-namespace CheckoutEngine\Tests\Feature\Rest;
+namespace SureCart\Tests\Feature\Rest;
 
-use CheckoutEngine\Request\RequestServiceProvider;
-use CheckoutEngine\Rest\OrderRestServiceProvider;
-use CheckoutEngine\Support\Errors\ErrorsServiceProvider;
-use CheckoutEngine\Tests\CheckoutEngineUnitTestCase;
+use SureCart\Request\RequestServiceProvider;
+use SureCart\Rest\OrderRestServiceProvider;
+use SureCart\Support\Errors\ErrorsServiceProvider;
+use SureCart\Tests\SureCartUnitTestCase;
 use WP_REST_Request;
 
-class OrderRestServiceProviderTest extends CheckoutEngineUnitTestCase {
+class OrderRestServiceProviderTest extends SureCartUnitTestCase {
 	use \Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 
 	/**
@@ -18,7 +18,7 @@ class OrderRestServiceProviderTest extends CheckoutEngineUnitTestCase {
 		parent::setUp();
 
 		// Set up an app instance with whatever stubs and mocks we need before every test.
-		\CheckoutEngine::make()->bootstrap([
+		\SureCart::make()->bootstrap([
 			'providers' => [
 				OrderRestServiceProvider::class,
 				RequestServiceProvider::class,
@@ -36,7 +36,7 @@ class OrderRestServiceProviderTest extends CheckoutEngineUnitTestCase {
 
 		// mock the requests in the container
 		$requests =  \Mockery::mock(RequestService::class);
-		\CheckoutEngine::alias('request', function () use ($requests) {
+		\SureCart::alias('request', function () use ($requests) {
 			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
 		});
 
@@ -58,7 +58,7 @@ class OrderRestServiceProviderTest extends CheckoutEngineUnitTestCase {
 	{
 		// mock the requests in the container
 		$requests =  \Mockery::mock(RequestService::class);
-		\CheckoutEngine::alias('request', function () use ($requests) {
+		\SureCart::alias('request', function () use ($requests) {
 			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
 		});
 
@@ -94,7 +94,7 @@ class OrderRestServiceProviderTest extends CheckoutEngineUnitTestCase {
 
 		// mock the requests in the container
 		$requests =  \Mockery::mock(RequestService::class);
-		\CheckoutEngine::alias('request', function () use ($requests) {
+		\SureCart::alias('request', function () use ($requests) {
 			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
 		});
 
@@ -129,7 +129,7 @@ class OrderRestServiceProviderTest extends CheckoutEngineUnitTestCase {
 
 		// mock the requests in the container
 		$requests =  \Mockery::mock(RequestService::class);
-		\CheckoutEngine::alias('request', function () use ($requests) {
+		\SureCart::alias('request', function () use ($requests) {
 			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
 		});
 
@@ -158,7 +158,7 @@ class OrderRestServiceProviderTest extends CheckoutEngineUnitTestCase {
 	{
 		// mock the requests in the container
 		$requests =  \Mockery::mock(RequestService::class);
-		\CheckoutEngine::alias('request', function () use ($requests) {
+		\SureCart::alias('request', function () use ($requests) {
 			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
 		});
 

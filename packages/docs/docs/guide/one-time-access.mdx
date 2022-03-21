@@ -13,7 +13,7 @@ The `order_paid` event is very handy for this, as it's triggered when an order i
 to provide them with access to something specific. We will use the [Order Model](../models/order.mdx) to get the price_id and the customer_id.
 
 ```php
-use \CheckoutEngine\Models\Order;
+use \SureCart\Models\Order;
 
 $membership_price_id = '8ba8d60f-5277-4e6b-807c-dee8166446d5';
 
@@ -51,7 +51,7 @@ you can use the `forPriceIds` method on the Charge `refund` method.
 
 ```php
 <?php
-\CheckoutEngine\Models\Charge::refund()
+\SureCart\Models\Charge::refund()
 	->forPriceIds( [
 		// access will be revoked for these price ids.
 		'8ba8d60f-5277-4e6b-807c-dee8166446d5',
@@ -64,7 +64,7 @@ you can use the `forPriceIds` method on the Charge `refund` method.
 :::
 
 ```php
-use \CheckoutEngine\Models\Order;
+use \SureCart\Models\Order;
 
 $membership_price_id = '8ba8d60f-5277-4e6b-807c-dee8166446d5';
 

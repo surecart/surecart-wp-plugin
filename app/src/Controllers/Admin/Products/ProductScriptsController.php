@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngine\Controllers\Admin\Products;
+namespace SureCart\Controllers\Admin\Products;
 
-use CheckoutEngine\Support\Scripts\AdminModelEditController;
+use SureCart\Support\Scripts\AdminModelEditController;
 
 /**
  * Product Page
@@ -20,7 +20,7 @@ class ProductScriptsController extends AdminModelEditController {
 	 *
 	 * @var string
 	 */
-	protected $handle = 'checkoutengine/scripts/admin/product';
+	protected $handle = 'SureCart/scripts/admin/product';
 
 	/**
 	 * Script path.
@@ -33,6 +33,6 @@ class ProductScriptsController extends AdminModelEditController {
 	 * Add the app url to the data.
 	 */
 	public function __construct() {
-		$this->data['app_url'] = \CheckoutEngine::requests()->getBaseUrl();
+		$this->data['app_url'] = \SureCart::requests()->getBaseUrl();
 	}
 }

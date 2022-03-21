@@ -1,9 +1,9 @@
 <?php
 
-use CheckoutEngine\Support\Encryption;
-use CheckoutEngine\Tests\CheckoutEngineUnitTestCase;
+use SureCart\Support\Encryption;
+use SureCart\Tests\SureCartUnitTestCase;
 
-class EncryptionTest extends CheckoutEngineUnitTestCase {
+class EncryptionTest extends SureCartUnitTestCase {
 	public function test_can_encrypt_and_decrypt()
 	{
 		$string = 'asdfasjk;dflkj123523609u';

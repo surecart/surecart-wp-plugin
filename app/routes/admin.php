@@ -1,12 +1,12 @@
 <?php
 /**
  * WordPress Admin Routes.
- * WARNING: Do not use \CheckoutEngine::route()->all() here, otherwise you will override
+ * WARNING: Do not use \SureCart::route()->all() here, otherwise you will override
  * ALL custom admin pages which you most likely do not want to do.
  *
  * @link https://docs.wpemerge.com/#/framework/routing/methods
  *
- * @package CheckoutEngine
+ * @package SureCart
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -18,21 +18,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 | Onboarding
 |--------------------------------------------------------------------------
 */
-\CheckoutEngine::route()
+\SureCart::route()
 ->get()
 ->where( 'admin', 'ce-getting-started' )
 ->name( 'onboarding.show' )
 ->middleware( 'user.can:manage_options' )
 ->handle( 'Onboarding@show' );
 
-\CheckoutEngine::route()
+\SureCart::route()
 ->get()
 ->where( 'admin', 'ce-complete-signup' )
 ->middleware( 'user.can:manage_options' )
 ->group(
 	function() {
-		\CheckoutEngine::route()->get()->name( 'onboarding.complete' )->handle( 'Onboarding@complete' );
-		\CheckoutEngine::route()->post()->middleware( 'nonce:update_plugin_settings' )->name( 'onboarding.save' )->handle( 'Onboarding@save' );
+		\SureCart::route()->get()->name( 'onboarding.complete' )->handle( 'Onboarding@complete' );
+		\SureCart::route()->post()->middleware( 'nonce:update_plugin_settings' )->name( 'onboarding.save' )->handle( 'Onboarding@save' );
 	}
 );
 
@@ -41,7 +41,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 | Dashboard
 |--------------------------------------------------------------------------
 */
-\CheckoutEngine::route()->get()->where( 'admin', 'ce-dashboard' )->name( 'dashboard' )->handle( 'Dashboard@show' );
+\SureCart::route()->get()->where( 'admin', 'ce-dashboard' )->name( 'dashboard' )->handle( 'Dashboard@show' );
 
 
 /*
@@ -49,15 +49,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 | Orders
 |--------------------------------------------------------------------------
 */
-\CheckoutEngine::route()
+\SureCart::route()
 ->where( 'admin', 'ce-orders' )
 ->middleware( 'user.can:edit_ce_orders' ) // TODO: change to manage coupons.
-->setNamespace( '\\CheckoutEngine\\Controllers\\Admin\\Orders\\' )
+->setNamespace( '\\SureCart\\Controllers\\Admin\\Orders\\' )
 ->group(
 	function() {
-		\CheckoutEngine::route()->get()->where( 'ce_url_var', false, 'action' )->name( 'orders.index' )->handle( 'OrdersViewController@index' );
-		\CheckoutEngine::route()->get()->where( 'ce_url_var', 'edit', 'action' )->name( 'orders.edit' )->handle( 'OrdersViewController@edit' );
-		\CheckoutEngine::route()->get()->where( 'ce_url_var', 'archive', 'action' )->name( 'orders.archive' )->handle( 'OrdersViewController@archive' );
+		\SureCart::route()->get()->where( 'ce_url_var', false, 'action' )->name( 'orders.index' )->handle( 'OrdersViewController@index' );
+		\SureCart::route()->get()->where( 'ce_url_var', 'edit', 'action' )->name( 'orders.edit' )->handle( 'OrdersViewController@edit' );
+		\SureCart::route()->get()->where( 'ce_url_var', 'archive', 'action' )->name( 'orders.archive' )->handle( 'OrdersViewController@archive' );
 	}
 );
 
@@ -66,15 +66,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 | Orders
 |--------------------------------------------------------------------------
 */
-\CheckoutEngine::route()
+\SureCart::route()
 ->where( 'admin', 'ce-invoices' )
 ->middleware( 'user.can:edit_ce_invoices' ) // TODO: change to manage coupons.
-->setNamespace( '\\CheckoutEngine\\Controllers\\Admin\\Invoices\\' )
+->setNamespace( '\\SureCart\\Controllers\\Admin\\Invoices\\' )
 ->group(
 	function() {
-		\CheckoutEngine::route()->get()->where( 'ce_url_var', false, 'action' )->name( 'invoices.index' )->handle( 'InvoicesViewController@index' );
-		\CheckoutEngine::route()->get()->where( 'ce_url_var', 'edit', 'action' )->name( 'invoices.edit' )->handle( 'InvoicesViewController@edit' );
-		\CheckoutEngine::route()->get()->where( 'ce_url_var', 'archive', 'action' )->name( 'invoices.archive' )->handle( 'InvoicesViewController@archive' );
+		\SureCart::route()->get()->where( 'ce_url_var', false, 'action' )->name( 'invoices.index' )->handle( 'InvoicesViewController@index' );
+		\SureCart::route()->get()->where( 'ce_url_var', 'edit', 'action' )->name( 'invoices.edit' )->handle( 'InvoicesViewController@edit' );
+		\SureCart::route()->get()->where( 'ce_url_var', 'archive', 'action' )->name( 'invoices.archive' )->handle( 'InvoicesViewController@archive' );
 	}
 );
 
@@ -83,15 +83,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 | Products
 |--------------------------------------------------------------------------
 */
-\CheckoutEngine::route()
+\SureCart::route()
 ->where( 'admin', 'ce-products' )
 ->middleware( 'user.can:edit_ce_products' ) // TODO: change to manage products.
-->setNamespace( '\\CheckoutEngine\\Controllers\\Admin\\Products\\' )
+->setNamespace( '\\SureCart\\Controllers\\Admin\\Products\\' )
 ->group(
 	function() {
-		\CheckoutEngine::route()->get()->where( 'ce_url_var', false, 'action' )->name( 'products.index' )->handle( 'ProductsController@index' );
-		\CheckoutEngine::route()->get()->where( 'ce_url_var', 'edit', 'action' )->name( 'product.edit' )->handle( 'ProductsController@edit' );
-		\CheckoutEngine::route()->get()->where( 'ce_url_var', 'toggle_archive', 'action' )->name( 'product.archive' )->middleware( 'archive_model:product' )->handle( 'ProductsController@toggleArchive' );
+		\SureCart::route()->get()->where( 'ce_url_var', false, 'action' )->name( 'products.index' )->handle( 'ProductsController@index' );
+		\SureCart::route()->get()->where( 'ce_url_var', 'edit', 'action' )->name( 'product.edit' )->handle( 'ProductsController@edit' );
+		\SureCart::route()->get()->where( 'ce_url_var', 'toggle_archive', 'action' )->name( 'product.archive' )->middleware( 'archive_model:product' )->handle( 'ProductsController@toggleArchive' );
 	}
 );
 
@@ -100,14 +100,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 | Coupons
 |--------------------------------------------------------------------------
 */
-\CheckoutEngine::route()
+\SureCart::route()
 ->where( 'admin', 'ce-coupons' )
 ->middleware( 'user.can:edit_ce_coupons' ) // TODO: change to manage coupons.
-->setNamespace( '\\CheckoutEngine\\Controllers\\Admin\\Coupons\\' )
+->setNamespace( '\\SureCart\\Controllers\\Admin\\Coupons\\' )
 ->group(
 	function() {
-		\CheckoutEngine::route()->get()->where( 'ce_url_var', false, 'action' )->name( 'coupons.index' )->handle( 'CouponsController@index' );
-		\CheckoutEngine::route()->get()->where( 'ce_url_var', 'edit', 'action' )->name( 'coupons.edit' )->handle( 'CouponsController@edit' );
+		\SureCart::route()->get()->where( 'ce_url_var', false, 'action' )->name( 'coupons.index' )->handle( 'CouponsController@index' );
+		\SureCart::route()->get()->where( 'ce_url_var', 'edit', 'action' )->name( 'coupons.edit' )->handle( 'CouponsController@edit' );
 	}
 );
 
@@ -116,14 +116,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 | Customers
 |--------------------------------------------------------------------------
 */
-\CheckoutEngine::route()
+\SureCart::route()
 ->where( 'admin', 'ce-customers' )
 ->middleware( 'user.can:edit_ce_customers' ) // TODO: change to manage products.
-->setNamespace( '\\CheckoutEngine\\Controllers\\Admin\\Customers\\' )
+->setNamespace( '\\SureCart\\Controllers\\Admin\\Customers\\' )
 ->group(
 	function() {
-		\CheckoutEngine::route()->get()->where( 'ce_url_var', false, 'action' )->name( 'customer.index' )->handle( 'CustomersController@index' );
-		\CheckoutEngine::route()->get()->where( 'ce_url_var', 'edit', 'action' )->name( 'customer.edit' )->handle( 'CustomersController@edit' );
+		\SureCart::route()->get()->where( 'ce_url_var', false, 'action' )->name( 'customer.index' )->handle( 'CustomersController@index' );
+		\SureCart::route()->get()->where( 'ce_url_var', 'edit', 'action' )->name( 'customer.edit' )->handle( 'CustomersController@edit' );
 	}
 );
 
@@ -132,14 +132,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 | Abandoned Orders
 |--------------------------------------------------------------------------
 */
-\CheckoutEngine::route()
+\SureCart::route()
 ->where( 'admin', 'ce-abandoned-orders' )
 ->middleware( 'user.can:edit_ce_orders' ) // TODO: change to manage coupons.
-->setNamespace( '\\CheckoutEngine\\Controllers\\Admin\\Abandoned\\' )
+->setNamespace( '\\SureCart\\Controllers\\Admin\\Abandoned\\' )
 ->group(
 	function() {
-		\CheckoutEngine::route()->get()->where( 'ce_url_var', false, 'action' )->name( 'abandoned.index' )->handle( 'AbandonedOrderViewController@index' );
-		\CheckoutEngine::route()->get()->where( 'ce_url_var', 'edit', 'action' )->name( 'abandoned.edit' )->handle( 'AbandonedOrderViewController@edit' );
+		\SureCart::route()->get()->where( 'ce_url_var', false, 'action' )->name( 'abandoned.index' )->handle( 'AbandonedOrderViewController@index' );
+		\SureCart::route()->get()->where( 'ce_url_var', 'edit', 'action' )->name( 'abandoned.edit' )->handle( 'AbandonedOrderViewController@edit' );
 	}
 );
 
@@ -148,15 +148,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 | Subscriptions
 |--------------------------------------------------------------------------
 */
-\CheckoutEngine::route()
+\SureCart::route()
 ->where( 'admin', 'ce-subscriptions' )
 ->middleware( 'user.can:edit_ce_subscriptions' ) // TODO: change to manage coupons.
-->setNamespace( '\\CheckoutEngine\\Controllers\\Admin\\Subscriptions\\' )
+->setNamespace( '\\SureCart\\Controllers\\Admin\\Subscriptions\\' )
 ->group(
 	function() {
-		\CheckoutEngine::route()->get()->where( 'ce_url_var', false, 'action' )->name( 'subscriptions.index' )->handle( 'SubscriptionsController@index' );
-		\CheckoutEngine::route()->get()->where( 'ce_url_var', 'show', 'action' )->name( 'subscriptions.show' )->handle( 'SubscriptionsController@show' );
-		\CheckoutEngine::route()->get()->where( 'ce_url_var', 'edit', 'action' )->name( 'subscriptions.edit' )->handle( 'SubscriptionsController@edit' );
+		\SureCart::route()->get()->where( 'ce_url_var', false, 'action' )->name( 'subscriptions.index' )->handle( 'SubscriptionsController@index' );
+		\SureCart::route()->get()->where( 'ce_url_var', 'show', 'action' )->name( 'subscriptions.show' )->handle( 'SubscriptionsController@show' );
+		\SureCart::route()->get()->where( 'ce_url_var', 'edit', 'action' )->name( 'subscriptions.edit' )->handle( 'SubscriptionsController@edit' );
 	}
 );
 
@@ -165,15 +165,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 | Upgrade Paths
 |--------------------------------------------------------------------------
 */
-\CheckoutEngine::route()
+\SureCart::route()
 ->where( 'admin', 'ce-product-groups' )
 ->middleware( 'user.can:edit_ce_products' ) // TODO: change to manage coupons.
-->setNamespace( '\\CheckoutEngine\\Controllers\\Admin\\ProductGroups\\' )
+->setNamespace( '\\SureCart\\Controllers\\Admin\\ProductGroups\\' )
 ->group(
 	function() {
-		\CheckoutEngine::route()->get()->where( 'ce_url_var', false, 'action' )->name( 'product_groups.index' )->handle( 'ProductGroupsController@index' );
-		\CheckoutEngine::route()->get()->where( 'ce_url_var', 'show', 'action' )->name( 'product_groups.show' )->handle( 'ProductGroupsController@show' );
-		\CheckoutEngine::route()->get()->where( 'ce_url_var', 'edit', 'action' )->name( 'product_groups.edit' )->handle( 'ProductGroupsController@show' );
+		\SureCart::route()->get()->where( 'ce_url_var', false, 'action' )->name( 'product_groups.index' )->handle( 'ProductGroupsController@index' );
+		\SureCart::route()->get()->where( 'ce_url_var', 'show', 'action' )->name( 'product_groups.show' )->handle( 'ProductGroupsController@show' );
+		\SureCart::route()->get()->where( 'ce_url_var', 'edit', 'action' )->name( 'product_groups.edit' )->handle( 'ProductGroupsController@show' );
 
 	}
 );
@@ -183,7 +183,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 | Settings
 |--------------------------------------------------------------------------
 */
-\CheckoutEngine::route()
+\SureCart::route()
 ->get()
 ->where( 'admin', 'ce-settings' )
 ->middleware( 'user.can:manage_ce_account_settings' )
@@ -194,14 +194,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 | Connection
 |--------------------------------------------------------------------------
 */
-\CheckoutEngine::route()
+\SureCart::route()
 ->get()
 ->where( 'admin', 'ce-plugin' )
 ->middleware( 'user.can:manage_options' )
 ->group(
 	function() {
-		\CheckoutEngine::route()->get()->name( 'plugin.show' )->handle( 'PluginSettings@show' );
-		\CheckoutEngine::route()->post()->middleware( 'nonce:update_plugin_settings' )->name( 'plugin.save' )->handle( 'PluginSettings@save' );
+		\SureCart::route()->get()->name( 'plugin.show' )->handle( 'PluginSettings@show' );
+		\SureCart::route()->post()->middleware( 'nonce:update_plugin_settings' )->name( 'plugin.save' )->handle( 'PluginSettings@save' );
 	}
 );
 
@@ -210,18 +210,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 | Webhooks
 |--------------------------------------------------------------------------
 */
-\CheckoutEngine::route()
+\SureCart::route()
 	->get()
 	->where( 'ce_url_var', 'remove_webhook', 'action' )
 	->name( 'webhook.remove' )
 	->middleware( 'nonce:remove_webhook' )
 	->middleware( 'user.can:edit_ce_webhooks' )
-	->handle( '\\CheckoutEngine\\Controllers\\Web\\WebhookController@remove' );
+	->handle( '\\SureCart\\Controllers\\Web\\WebhookController@remove' );
 
-\CheckoutEngine::route()
+\SureCart::route()
 	->get()
 	->where( 'ce_url_var', 'ignore_webhook', 'action' )
 	->name( 'webhook.ignore' )
 	->middleware( 'nonce:ignore_webhook' )
 	->middleware( 'user.can:edit_ce_webhooks' )
-	->handle( '\\CheckoutEngine\\Controllers\\Web\\WebhookController@ignore' );
+	->handle( '\\SureCart\\Controllers\\Web\\WebhookController@ignore' );

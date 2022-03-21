@@ -1,10 +1,10 @@
 <?php
-namespace CheckoutEngineBlocks\Controllers;
+namespace SureCartBlocks\Controllers;
 
-use CheckoutEngine\Models\Component;
-use CheckoutEngine\Models\Subscription;
-use CheckoutEngine\Models\SubscriptionProtocol;
-use CheckoutEngine\Models\User;
+use SureCart\Models\Component;
+use SureCart\Models\Subscription;
+use SureCart\Models\SubscriptionProtocol;
+use SureCart\Models\User;
 
 /**
  * The subscription controller.
@@ -28,7 +28,7 @@ class SubscriptionController extends BaseController {
 							'model'  => 'subscription',
 							'action' => 'index',
 						],
-						\CheckoutEngine::pages()->url( 'dashboard' )
+						\SureCart::pages()->url( 'dashboard' )
 					),
 					'query'   => [
 						'customer_ids' => array_values( User::current()->customerIds() ),
@@ -47,7 +47,7 @@ class SubscriptionController extends BaseController {
 	 * @return function
 	 */
 	public function index() {
-		\CheckoutEngine::assets()->addComponentData(
+		\SureCart::assets()->addComponentData(
 			'ce-subscriptions-list',
 			'#customer-subscriptions-index',
 			[
@@ -89,7 +89,7 @@ class SubscriptionController extends BaseController {
 
 		<ce-spacing style="--spacing: var(--ce-spacing-large)">
 			<ce-breadcrumbs>
-				<ce-breadcrumb href="<?php echo esc_url( add_query_arg( [ 'tab' => $this->getTab() ], \CheckoutEngine::pages()->url( 'dashboard' ) ) ); ?>">
+				<ce-breadcrumb href="<?php echo esc_url( add_query_arg( [ 'tab' => $this->getTab() ], \SureCart::pages()->url( 'dashboard' ) ) ); ?>">
 					<?php esc_html_e( 'Dashboard', 'surecart' ); ?>
 				</ce-breadcrumb>
 				<ce-breadcrumb>
@@ -137,7 +137,7 @@ class SubscriptionController extends BaseController {
 	 * Get the terms text.
 	 */
 	public function getTermsText() {
-		$account     = \CheckoutEngine::account();
+		$account     = \SureCart::account();
 		$privacy_url = $account->portal_protocol->privacy_url ?? \get_privacy_policy_url();
 		$terms_url   = $account->portal_protocol->terms_url ?? '';
 
@@ -162,12 +162,12 @@ class SubscriptionController extends BaseController {
 	 * @return function
 	 */
 	public function confirm() {
-		$back = add_query_arg( [ 'tab' => $this->getTab() ], \CheckoutEngine::pages()->url( 'dashboard' ) );
+		$back = add_query_arg( [ 'tab' => $this->getTab() ], \SureCart::pages()->url( 'dashboard' ) );
 		ob_start();
 		?>
 	<ce-spacing style="--spacing: var(--ce-spacing-xx-large)">
 			<ce-breadcrumbs>
-				<ce-breadcrumb href="<?php echo esc_url( add_query_arg( [ 'tab' => $this->getTab() ], \CheckoutEngine::pages()->url( 'dashboard' ) ) ); ?>">
+				<ce-breadcrumb href="<?php echo esc_url( add_query_arg( [ 'tab' => $this->getTab() ], \SureCart::pages()->url( 'dashboard' ) ) ); ?>">
 					<?php esc_html_e( 'Dashboard', 'surecart' ); ?>
 				</ce-breadcrumb>
 				<ce-breadcrumb href="
@@ -180,7 +180,7 @@ class SubscriptionController extends BaseController {
 							'model'  => 'subscription',
 							'id'     => $this->getId(),
 						],
-						\CheckoutEngine::pages()->url( 'dashboard' )
+						\SureCart::pages()->url( 'dashboard' )
 					)
 				);
 				?>
@@ -224,7 +224,7 @@ class SubscriptionController extends BaseController {
 	 * @return function
 	 */
 	public function cancel() {
-		$back_url              = add_query_arg( [ 'tab' => $this->getTab() ], \CheckoutEngine::pages()->url( 'dashboard' ) );
+		$back_url              = add_query_arg( [ 'tab' => $this->getTab() ], \SureCart::pages()->url( 'dashboard' ) );
 		$edit_subscription_url = add_query_arg(
 			[
 				'tab'    => $this->getTab(),
@@ -232,7 +232,7 @@ class SubscriptionController extends BaseController {
 				'model'  => 'subscription',
 				'id'     => $this->getId(),
 			],
-			\CheckoutEngine::pages()->url( 'dashboard' )
+			\SureCart::pages()->url( 'dashboard' )
 		);
 		ob_start();
 		?>
@@ -274,7 +274,7 @@ class SubscriptionController extends BaseController {
 	 * @return function
 	 */
 	public function renew() {
-		$back_url              = add_query_arg( [ 'tab' => $this->getTab() ], \CheckoutEngine::pages()->url( 'dashboard' ) );
+		$back_url              = add_query_arg( [ 'tab' => $this->getTab() ], \SureCart::pages()->url( 'dashboard' ) );
 		$edit_subscription_url = add_query_arg(
 			[
 				'tab'    => $this->getTab(),
@@ -282,7 +282,7 @@ class SubscriptionController extends BaseController {
 				'model'  => 'subscription',
 				'id'     => $this->getId(),
 			],
-			\CheckoutEngine::pages()->url( 'dashboard' )
+			\SureCart::pages()->url( 'dashboard' )
 		);
 		ob_start();
 		?>
@@ -324,7 +324,7 @@ class SubscriptionController extends BaseController {
 	 * @return function
 	 */
 	public function payment() {
-		$back_url = add_query_arg( [ 'tab' => $this->getTab() ], \CheckoutEngine::pages()->url( 'dashboard' ) );
+		$back_url = add_query_arg( [ 'tab' => $this->getTab() ], \SureCart::pages()->url( 'dashboard' ) );
 
 		$edit_subscription_url = add_query_arg(
 			[
@@ -333,7 +333,7 @@ class SubscriptionController extends BaseController {
 				'model'  => 'subscription',
 				'id'     => $this->getId(),
 			],
-			\CheckoutEngine::pages()->url( 'dashboard' )
+			\SureCart::pages()->url( 'dashboard' )
 		);
 
 		$confirm_subscription_url = add_query_arg(
@@ -344,7 +344,7 @@ class SubscriptionController extends BaseController {
 				'id'       => $this->getId(),
 				'price_id' => $this->getParam( 'price_id' ),
 			],
-			\CheckoutEngine::pages()->url( 'dashboard' )
+			\SureCart::pages()->url( 'dashboard' )
 		);
 
 		$subscription = Subscription::find( $this->getId() );

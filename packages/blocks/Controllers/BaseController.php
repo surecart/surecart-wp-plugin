@@ -1,7 +1,7 @@
 <?php
-namespace CheckoutEngineBlocks\Controllers;
+namespace SureCartBlocks\Controllers;
 
-use CheckoutEngine\Models\User;
+use SureCart\Models\User;
 
 /**
  * Base controller for dashboard pages.

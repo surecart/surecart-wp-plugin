@@ -1,5 +1,5 @@
 <?php
-namespace CheckoutEngine\Activation;
+namespace SureCart\Activation;
 
 /**
  * Service for plugin activation.
@@ -8,24 +8,24 @@ class ActivationService {
 	/**
 	 * Holds the roles service.
 	 *
-	 * @var \CheckoutEngine\Permissions\RolesService
+	 * @var \SureCart\Permissions\RolesService
 	 */
 	protected $roles = null;
 
 	/**
 	 * Holds the roles service.
 	 *
-	 * @var \CheckoutEngine\WordPress\Pages\PageSeeder
+	 * @var \SureCart\WordPress\Pages\PageSeeder
 	 */
 	protected $seeder = null;
 
 	/**
 	 * Get dependencies for this service.
 	 *
-	 * @param \CheckoutEngine\Permissions\RolesService   $roles Roles service.
-	 * @param \CheckoutEngine\WordPress\Pages\PageSeeder $seeder Seeder service.
+	 * @param \SureCart\Permissions\RolesService   $roles Roles service.
+	 * @param \SureCart\WordPress\Pages\PageSeeder $seeder Seeder service.
 	 */
-	public function __construct( \CheckoutEngine\Permissions\RolesService $roles, \CheckoutEngine\WordPress\Pages\PageSeeder $seeder ) {
+	public function __construct( \SureCart\Permissions\RolesService $roles, \SureCart\WordPress\Pages\PageSeeder $seeder ) {
 		$this->roles  = $roles;
 		$this->seeder = $seeder;
 	}

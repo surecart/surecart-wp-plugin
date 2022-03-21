@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngineBlocks\Blocks\Dashboard\CustomerOrders;
+namespace SureCartBlocks\Blocks\Dashboard\CustomerOrders;
 
-use CheckoutEngineBlocks\Blocks\Dashboard\DashboardPage;
+use SureCartBlocks\Blocks\Dashboard\DashboardPage;
 
 /**
  * Checkout block
@@ -32,7 +32,7 @@ class Block extends DashboardPage {
 	 * @return function
 	 */
 	public function show( $id ) {
-		return \CheckoutEngine::blocks()->render(
+		return \SureCart::blocks()->render(
 			'web/dashboard/shipping_address/show',
 			[
 				'customer_id' => $this->customer_id,
@@ -51,7 +51,7 @@ class Block extends DashboardPage {
 		if ( empty( $this->customer_id ) ) {
 			return;
 		}
-		return \CheckoutEngine::blocks()->render(
+		return \SureCart::blocks()->render(
 			'web/dashboard/orders/index',
 			[
 				'query' => [

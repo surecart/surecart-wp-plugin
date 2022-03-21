@@ -8,7 +8,7 @@ id: inserting-updating
 The most common way to create or update a model is to use the save method. This will create a new model if there is no id. Otherwise it will update an existing model if an id is provided.
 
 ```php
-use CheckoutEngine\Models\Product;
+use SureCart\Models\Product;
 
 $product = new Product([
 	'name' => 'iPhone',
@@ -22,7 +22,7 @@ $product->save();
 In order to query by specific parameters, you can use the `where` method. This will send query parameters over the API and return the matching records.
 
 ```php
-use CheckoutEngine\Models\Product;
+use SureCart\Models\Product;
 $archived_products = Product::where([
 	'archived' => false
 ])->get();
@@ -32,7 +32,7 @@ $archived_products = Product::where([
 You can paginate and get subsquent pages of results by using the `paginate` method. This method takes 2 parameters, `page` and `per_page`. The default pagination `per_page` limit is `100`.
 
 ```php
-use CheckoutEngine\Models\Product;
+use SureCart\Models\Product;
 
 $archived_products = Product::where([
 	'archived' => false

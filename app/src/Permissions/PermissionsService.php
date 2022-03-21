@@ -1,11 +1,11 @@
 <?php
 
-namespace CheckoutEngine\Permissions;
+namespace SureCart\Permissions;
 
-use CheckoutEngine\Permissions\Models\ChargePermissionsController;
-use CheckoutEngine\Permissions\Models\OrderPermissionsController;
-use CheckoutEngine\Permissions\Models\PaymentMethodPermissionsController;
-use CheckoutEngine\Permissions\Models\SubscriptionPermissionsController;
+use SureCart\Permissions\Models\ChargePermissionsController;
+use SureCart\Permissions\Models\OrderPermissionsController;
+use SureCart\Permissions\Models\PaymentMethodPermissionsController;
+use SureCart\Permissions\Models\SubscriptionPermissionsController;
 
 /**
  * Permissions Service

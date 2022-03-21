@@ -1,5 +1,5 @@
 <?php
-namespace CheckoutEngine\Permissions;
+namespace SureCart\Permissions;
 
 /**
  * Adds roles and capabilities.
@@ -23,7 +23,7 @@ class RolesService {
 	public function addRoles() {
 		add_role(
 			'ce_shop_manager',
-			__( 'CheckoutEngine Shop Manager', 'surecart' ),
+			__( 'SureCart Shop Manager', 'surecart' ),
 			[
 				'read'                   => true,
 				'edit_posts'             => true,
@@ -58,7 +58,7 @@ class RolesService {
 
 		add_role(
 			'ce_shop_accountant',
-			__( 'CheckoutEngine Accountant', 'surecart' ),
+			__( 'SureCart Accountant', 'surecart' ),
 			[
 				'read'         => true,
 				'edit_posts'   => false,
@@ -68,7 +68,7 @@ class RolesService {
 
 		add_role(
 			'ce_shop_worker',
-			__( 'CheckoutEngine Shop Worker', 'surecart' ),
+			__( 'SureCart Shop Worker', 'surecart' ),
 			[
 				'read'         => true,
 				'edit_posts'   => false,

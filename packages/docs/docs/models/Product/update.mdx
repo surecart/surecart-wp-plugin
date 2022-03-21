@@ -9,7 +9,7 @@ import MethodText from '../../../components/MethodText.js';
 
 All at once:
 ```php
-$product = \CheckoutEngine\Models\Product::find('8ba8d60f-5277-4e6b-807c-dee8166446d5');
+$product = \SureCart\Models\Product::find('8ba8d60f-5277-4e6b-807c-dee8166446d5');
 $product->update([
 	'name' => 'New name',
 	'description' => 'New description',
@@ -18,7 +18,7 @@ $product->update([
 
 Wait until attributes are updated:
 ```php
-$product = \CheckoutEngine\Models\Product::find('8ba8d60f-5277-4e6b-807c-dee8166446d5');
+$product = \SureCart\Models\Product::find('8ba8d60f-5277-4e6b-807c-dee8166446d5');
 $product->name = 'New name';
 $product->descriptoin = 'New description';
 $product->save();

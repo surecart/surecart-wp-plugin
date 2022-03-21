@@ -2,7 +2,7 @@
 /**
  * Replaceable type translations
  *
- * @package CheckoutEngine
+ * @package SureCart
  */
 
 return [

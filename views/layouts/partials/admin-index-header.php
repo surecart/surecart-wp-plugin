@@ -1,4 +1,4 @@
-<?php \CheckoutEngine::render( 'components/admin/flash-messages' ); ?>
+<?php \SureCart::render( 'components/admin/flash-messages' ); ?>
 
 <h1 class="wp-heading-inline"><?php echo wp_kses_post( $title ?? '' ); ?></h1>
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngine\Support\Errors;
+namespace SureCart\Support\Errors;
 
-use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
+use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 class ErrorsServiceProvider implements ServiceProviderInterface {
 	/**

@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngine\Controllers\Rest;
+namespace SureCart\Controllers\Rest;
 
-use CheckoutEngine\Models\File;
+use SureCart\Models\File;
 
 /**
  * Handle File requests through the REST API

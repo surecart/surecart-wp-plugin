@@ -1,8 +1,8 @@
 <?php
-namespace CheckoutEngineBlocks\Controllers;
+namespace SureCartBlocks\Controllers;
 
-use CheckoutEngine\Models\Component;
-use CheckoutEngine\Models\User;
+use SureCart\Models\Component;
+use SureCart\Models\User;
 
 class ChargeController extends BaseController {
 	/**
@@ -15,7 +15,7 @@ class ChargeController extends BaseController {
 
 		<ce-spacing style="--spacing: var(--ce-spacing-large)">
 			<ce-breadcrumbs>
-				<ce-breadcrumb href="<?php echo esc_url( add_query_arg( [ 'tab' => $this->getTab() ], \CheckoutEngine::pages()->url( 'dashboard' ) ) ); ?>">
+				<ce-breadcrumb href="<?php echo esc_url( add_query_arg( [ 'tab' => $this->getTab() ], \SureCart::pages()->url( 'dashboard' ) ) ); ?>">
 					<?php esc_html_e( 'Dashboard', 'surecart' ); ?>
 				</ce-breadcrumb>
 				<ce-breadcrumb>

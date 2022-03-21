@@ -1,9 +1,9 @@
 <?php
 
-namespace CheckoutEngine\WordPress;
+namespace SureCart\WordPress;
 
-use CheckoutEngine\WordPress\PluginService;
-use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
+use SureCart\WordPress\PluginService;
+use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 /**
  * Register plugin options.

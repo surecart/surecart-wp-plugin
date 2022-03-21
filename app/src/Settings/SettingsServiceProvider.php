@@ -1,9 +1,9 @@
 <?php
 
-namespace CheckoutEngine\Settings;
+namespace SureCart\Settings;
 
-use CheckoutEngine\Settings\SettingsService;
-use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
+use SureCart\Settings\SettingsService;
+use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 /**
  * Register a session for Flash and OldInput to work with.

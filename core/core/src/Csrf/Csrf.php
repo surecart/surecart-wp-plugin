@@ -1,15 +1,15 @@
 <?php
 /**
- * @package   CheckoutEngineCore
+ * @package   SureCartCore
  * @author    Andre Gagnon <me@andregagnon.me>
  * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
  * @link      https://surecart.com/
  */
 
-namespace CheckoutEngineCore\Csrf;
+namespace SureCartCore\Csrf;
 
-use CheckoutEngineCore\Requests\RequestInterface;
+use SureCartCore\Requests\RequestInterface;
 
 /**
  * Provide CSRF protection utilities through WordPress nonces.
@@ -51,7 +51,7 @@ class Csrf {
 	 * @param string  $key
 	 * @param integer $maximum_lifetime
 	 */
-	public function __construct( $key = '__checkoutEngineCsrfToken', $maximum_lifetime = 2 ) {
+	public function __construct( $key = '__SureCartCsrfToken', $maximum_lifetime = 2 ) {
 		$this->key              = $key;
 		$this->maximum_lifetime = $maximum_lifetime;
 	}

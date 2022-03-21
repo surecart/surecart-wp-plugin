@@ -9,7 +9,7 @@
  * @link      https://sitekit.withgoogle.com
  */
 
-namespace CheckoutEngine\Support;
+namespace SureCart\Support;
 
 /**
  * Class responsible for encrypting and decrypting data.

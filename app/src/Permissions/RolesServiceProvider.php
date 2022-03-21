@@ -1,12 +1,12 @@
 <?php
 
-namespace CheckoutEngine\Permissions;
+namespace SureCart\Permissions;
 
-use CheckoutEngine\Models\Charge;
-use CheckoutEngine\Models\Subscription;
-use CheckoutEngine\Models\User;
-use CheckoutEngine\Permissions\RolesService;
-use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
+use SureCart\Models\Charge;
+use SureCart\Models\Subscription;
+use SureCart\Models\User;
+use SureCart\Permissions\RolesService;
+use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 /**
  * Handles the request service

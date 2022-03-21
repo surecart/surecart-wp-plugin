@@ -1,6 +1,6 @@
 <?php
 
-namespace CheckoutEngine\WordPress\Pages;
+namespace SureCart\WordPress\Pages;
 
 /**
  * Handles page creation

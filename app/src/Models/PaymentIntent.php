@@ -1,7 +1,7 @@
 <?php
-namespace CheckoutEngine\Models;
+namespace SureCart\Models;
 
-use CheckoutEngine\Models\Traits\HasCustomer;
+use SureCart\Models\Traits\HasCustomer;
 
 /**
  * Payment intent model.

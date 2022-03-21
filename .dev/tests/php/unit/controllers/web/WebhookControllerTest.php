@@ -1,11 +1,11 @@
 <?php
 
-namespace CheckoutEngine\Tests\Controllers\Rest;
+namespace SureCart\Tests\Controllers\Rest;
 
-use CheckoutEngine\Controllers\Web\WebhookController;
-use CheckoutEngine\Tests\CheckoutEngineUnitTestCase;
+use SureCart\Controllers\Web\WebhookController;
+use SureCart\Tests\SureCartUnitTestCase;
 
-class WebhookControllerTest extends CheckoutEngineUnitTestCase
+class WebhookControllerTest extends SureCartUnitTestCase
 {
 	public function test_creates_event_name()
 	{

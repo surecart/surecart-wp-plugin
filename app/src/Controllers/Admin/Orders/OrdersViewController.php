@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngine\Controllers\Admin\Orders;
+namespace SureCart\Controllers\Admin\Orders;
 
-use CheckoutEngine\Controllers\Admin\Orders\OrdersListTable;
+use SureCart\Controllers\Admin\Orders\OrdersListTable;
 
 /**
  * Handles product admin requests.
@@ -14,7 +14,7 @@ class OrdersViewController {
 	public function index() {
 		$table = new OrdersListTable();
 		$table->prepare_items();
-		return \CheckoutEngine::view( 'admin/orders/index' )->with(
+		return \SureCart::view( 'admin/orders/index' )->with(
 			[
 				'table' => $table,
 			]
@@ -26,15 +26,15 @@ class OrdersViewController {
 	 */
 	public function edit() {
 		// enqueue needed script.
-		add_action( 'admin_enqueue_scripts', \CheckoutEngine::closure()->method( OrderScriptsController::class, 'enqueue' ) );
+		add_action( 'admin_enqueue_scripts', \SureCart::closure()->method( OrderScriptsController::class, 'enqueue' ) );
 		// return view.
 		return '<div id="app"></div>';
 	}
 
 	public function archive( $request ) {
 		// flash an error message
-		\CheckoutEngine::flash()->add( 'errors', 'Please enter a valid email address.' );
+		\SureCart::flash()->add( 'errors', 'Please enter a valid email address.' );
 		// redirect to order index page.
-		return \CheckoutEngine::redirect()->to( \CheckoutEngine::getUrl()->index( 'order' ) );
+		return \SureCart::redirect()->to( \SureCart::getUrl()->index( 'order' ) );
 	}
 }

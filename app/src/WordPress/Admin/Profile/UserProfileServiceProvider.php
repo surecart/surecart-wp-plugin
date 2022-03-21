@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngine\WordPress\Admin\Profile;
+namespace SureCart\WordPress\Admin\Profile;
 
-use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
+use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 /**
  * Register plugin options.

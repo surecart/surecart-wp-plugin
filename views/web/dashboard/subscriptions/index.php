@@ -3,7 +3,7 @@
 </ce-subscriptions-list>
 
 <?php
-\CheckoutEngine::assets()->addComponentData(
+\SureCart::assets()->addComponentData(
 	'ce-subscriptions-list',
 	'#customer-subscriptions-list',
 	[

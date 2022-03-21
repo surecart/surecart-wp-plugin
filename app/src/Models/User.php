@@ -1,5 +1,5 @@
 <?php
-namespace CheckoutEngine\Models;
+namespace SureCart\Models;
 
 use ArrayAccess;
 use JsonSerializable;
@@ -18,7 +18,7 @@ class User implements ArrayAccess, JsonSerializable {
 	/**
 	 * Holds the cutomser
 	 *
-	 * @var \CheckoutEngine\Models\Customer;
+	 * @var \SureCart\Models\Customer;
 	 */
 	protected $customer;
 
@@ -110,7 +110,7 @@ class User implements ArrayAccess, JsonSerializable {
 	 * Get a users orders
 	 *
 	 * @param array $query Query args.
-	 * @return CheckoutEngine\Models\Order[];
+	 * @return SureCart\Models\Order[];
 	 */
 	protected function orders() {
 		return Order::where( [ 'customer_ids' => [ $this->customerId() ] ] );
@@ -189,7 +189,7 @@ class User implements ArrayAccess, JsonSerializable {
 	/**
 	 * Get the customer from the user.
 	 *
-	 * @return \CheckoutEngine\Models\Customer|false
+	 * @return \SureCart\Models\Customer|false
 	 */
 	protected function customer() {
 		$id = $this->customerId();

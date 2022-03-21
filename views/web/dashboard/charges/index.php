@@ -1,7 +1,7 @@
 <ce-charges-list id="customer-charges-list"></ce-charges-list>
 
 <?php
-\CheckoutEngine::assets()->addComponentData(
+\SureCart::assets()->addComponentData(
 	'ce-charges-list',
 	'#customer-charges-list',
 	[

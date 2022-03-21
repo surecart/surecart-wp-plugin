@@ -1,6 +1,6 @@
 <?php
 
-namespace CheckoutEngine\Support;
+namespace SureCart\Support;
 
 /**
  * Handles currency coversion and formatting

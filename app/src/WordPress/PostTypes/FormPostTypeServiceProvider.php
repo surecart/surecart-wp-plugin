@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngine\WordPress\PostTypes;
+namespace SureCart\WordPress\PostTypes;
 
-use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
+use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 /**
  * Register our form post type

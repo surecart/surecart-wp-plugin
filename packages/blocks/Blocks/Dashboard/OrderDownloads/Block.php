@@ -1,10 +1,10 @@
 <?php
 
-namespace CheckoutEngineBlocks\Blocks\Dashboard\CustomerDownloads;
+namespace SureCartBlocks\Blocks\Dashboard\CustomerDownloads;
 
-use CheckoutEngine\Models\User;
-use CheckoutEngineBlocks\Blocks\Dashboard\DashboardPage;
-use CheckoutEngineBlocks\Controllers\DownloadController;
+use SureCart\Models\User;
+use SureCartBlocks\Blocks\Dashboard\DashboardPage;
+use SureCartBlocks\Controllers\DownloadController;
 
 /**
  * Checkout block
@@ -33,7 +33,7 @@ class Block extends DashboardPage {
 							'model'  => 'download',
 							'action' => 'index',
 						],
-						\CheckoutEngine::pages()->url( 'dashboard' )
+						\SureCart::pages()->url( 'dashboard' )
 					),
 					'nonce'   => wp_create_nonce( 'customer-download' ),
 					'query'   => [

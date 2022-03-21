@@ -1,15 +1,15 @@
 <?php
 /**
- * @package   CheckoutEngineAppCore
+ * @package   SureCartAppCore
  * @author    Andre Gagnon <me@andregagnon.me>
  * @copyright  Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://checkoutengine.com
+ * @link      https://SureCart.com
  */
 
-namespace CheckoutEngineAppCore\Application;
+namespace SureCartAppCore\Application;
 
-use CheckoutEngineAppCore\AppCore\AppCore;
+use SureCartAppCore\AppCore\AppCore;
 
 /**
  * Can be applied to your App class via a "@mixin" annotation for better IDE support.

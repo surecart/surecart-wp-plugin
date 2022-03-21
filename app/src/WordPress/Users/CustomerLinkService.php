@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngine\WordPress\Users;
+namespace SureCart\WordPress\Users;
 
-use CheckoutEngine\Models\User;
+use SureCart\Models\User;
 
 /**
  * WordPress Users service.
@@ -18,17 +18,17 @@ class CustomerLinkService {
 	/**
 	 * Holds the model for the link.
 	 *
-	 * @var \CheckoutEngine\Models\Order
+	 * @var \SureCart\Models\Order
 	 */
 	protected $order;
 
 	/**
 	 * Get things going.
 	 *
-	 * @param \CheckoutEngine\Models\Order $order Model for the link.
-	 * @param string                       $password The password.
+	 * @param \SureCart\Models\Order $order Model for the link.
+	 * @param string                 $password The password.
 	 */
-	public function __construct( \CheckoutEngine\Models\Order $order, $password = '' ) {
+	public function __construct( \SureCart\Models\Order $order, $password = '' ) {
 		$this->order    = $order;
 		$this->password = $password;
 	}
@@ -36,7 +36,7 @@ class CustomerLinkService {
 	/**
 	 * Link the user to the order.
 	 *
-	 * @return \CheckoutEngine\Models\User|\WP_Error
+	 * @return \SureCart\Models\User|\WP_Error
 	 */
 	public function link() {
 		// if the customer already linked.
@@ -57,7 +57,7 @@ class CustomerLinkService {
 	/**
 	 * Find the user by customer id.
 	 *
-	 * @return \CheckoutEngine\Models\User|false
+	 * @return \SureCart\Models\User|false
 	 */
 	protected function getLinked() {
 		return User::findByCustomerId( $this->order->customer_id );
@@ -66,7 +66,7 @@ class CustomerLinkService {
 	/**
 	 * Link a user with email.
 	 *
-	 * @return \CheckoutEngine\Models\User|false
+	 * @return \SureCart\Models\User|false
 	 */
 	protected function linkUserWithEmail() {
 		// next check if email has a user.
@@ -88,7 +88,7 @@ class CustomerLinkService {
 	/**
 	 * Create the user and link it.
 	 *
-	 * @return \CheckoutEngine\Models\User|\WP_Error
+	 * @return \SureCart\Models\User|\WP_Error
 	 */
 	protected function createUser() {
 		// if no user, create one with a password if provided.

@@ -1,9 +1,9 @@
 <?php
 
-namespace CheckoutEngine\Request;
+namespace SureCart\Request;
 
-use CheckoutEngine\Models\ApiToken;
-use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
+use SureCart\Models\ApiToken;
+use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 /**
  * Handles the request service

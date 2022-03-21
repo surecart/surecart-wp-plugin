@@ -1,9 +1,9 @@
 <?php
 
-namespace CheckoutEngineBlocks\Blocks\Dashboard\WordPressAccount;
+namespace SureCartBlocks\Blocks\Dashboard\WordPressAccount;
 
-use CheckoutEngineBlocks\Blocks\Dashboard\DashboardPage;
-use CheckoutEngineBlocks\Controllers\UserController;
+use SureCartBlocks\Blocks\Dashboard\DashboardPage;
+use SureCartBlocks\Controllers\UserController;
 
 /**
  * Checkout block

@@ -1,9 +1,9 @@
 <?php
-namespace CheckoutEngine\Settings\Setting;
+namespace SureCart\Settings\Setting;
 
-use CheckoutEngine\Models\Account;
-use CheckoutEngine\Settings\RegisterSetting;
-use CheckoutEngine\Settings\RegisterSettingInterface;
+use SureCart\Models\Account;
+use SureCart\Settings\RegisterSetting;
+use SureCart\Settings\RegisterSettingInterface;
 
 /**
  * Provides an account setting to register.

@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngine\Controllers\Web;
+namespace SureCart\Controllers\Web;
 
-use CheckoutEngine\Models\CustomerLink;
+use SureCart\Models\CustomerLink;
 
 /**
  * Thank you routes
@@ -12,7 +12,7 @@ class DashboardController {
 	 * Show the dashboard.
 	 */
 	public function show( $request, $view ) {
-		return \CheckoutEngine::view( $view );
+		return \SureCart::view( $view );
 	}
 
 	/**

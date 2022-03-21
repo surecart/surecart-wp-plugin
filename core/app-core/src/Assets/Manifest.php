@@ -1,17 +1,17 @@
 <?php
 /**
- * @package   CheckoutEngineAppCore
+ * @package   SureCartAppCore
  * @author    Andre Gagnon <me@andregagnon.me>
  * @copyright  Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://checkoutengine.com
+ * @link      https://SureCart.com
  */
 
-namespace CheckoutEngineAppCore\Assets;
+namespace SureCartAppCore\Assets;
 
-use CheckoutEngineCore\Helpers\MixedType;
-use CheckoutEngineAppCore\Concerns\JsonFileNotFoundException;
-use CheckoutEngineAppCore\Concerns\ReadsJsonTrait;
+use SureCartCore\Helpers\MixedType;
+use SureCartAppCore\Concerns\JsonFileNotFoundException;
+use SureCartAppCore\Concerns\ReadsJsonTrait;
 
 class Manifest {
 	use ReadsJsonTrait {

@@ -1,16 +1,16 @@
 <?php
 
-namespace CheckoutEngine\Tests\Unit\Services;
+namespace SureCart\Tests\Unit\Services;
 
-use CheckoutEngine\Models\Webhook;
-use CheckoutEngine\Tests\CheckoutEngineUnitTestCase;
-use CheckoutEngine\Webhooks\WebhooksHistoryService;
-use CheckoutEngine\Webhooks\WebhooksService;
+use SureCart\Models\Webhook;
+use SureCart\Tests\SureCartUnitTestCase;
+use SureCart\Webhooks\WebhooksHistoryService;
+use SureCart\Webhooks\WebhooksService;
 
 /**
  * @group webhooks
  */
-class WebhookServiceTest extends CheckoutEngineUnitTestCase {
+class WebhookServiceTest extends SureCartUnitTestCase {
 	use \Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 
 	public function test_does_not_create_webhooks_if_already_registered()

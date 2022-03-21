@@ -1,10 +1,10 @@
 <?php
-namespace CheckoutEngine\Tests\WordPress\Admin;
+namespace SureCart\Tests\WordPress\Admin;
 
-use CheckoutEngine\Tests\CheckoutEngineUnitTestCase;
-use CheckoutEngine\WordPress\Pages\PageService;
+use SureCart\Tests\SureCartUnitTestCase;
+use SureCart\WordPress\Pages\PageService;
 
-class PageServiceTest extends CheckoutEngineUnitTestCase {
+class PageServiceTest extends SureCartUnitTestCase {
 	public $service;
 
 

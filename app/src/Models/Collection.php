@@ -1,5 +1,5 @@
 <?php
-namespace CheckoutEngine\Models;
+namespace SureCart\Models;
 
 /**
  * Stores a collection of items.

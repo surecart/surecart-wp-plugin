@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngine\Controllers\Admin;
+namespace SureCart\Controllers\Admin;
 
-use CheckoutEngine\Controllers\Admin\Tables\OrdersListTable;
+use SureCart\Controllers\Admin\Tables\OrdersListTable;
 
 /**
  * Handles product admin requests.
@@ -19,6 +19,6 @@ class Orders {
 	public function list( $request, $view ) {
 		$table = new OrdersListTable();
 		$table->prepare_items();
-		return \CheckoutEngine::view( 'admin/orders/index' )->with( [ 'table' => $table ] );
+		return \SureCart::view( 'admin/orders/index' )->with( [ 'table' => $table ] );
 	}
 }

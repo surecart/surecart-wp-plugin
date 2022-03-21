@@ -1,10 +1,10 @@
 
 <div class="wrap">
-	<?php \CheckoutEngine::render(
+	<?php \SureCart::render(
 		'layouts/partials/admin-index-header',
 		[
 			'title'    => __( 'Upgrade Groups', 'surecart' ),
-			'new_link' => \CheckoutEngine::getUrl()->edit( 'product_group' ),
+			'new_link' => \SureCart::getUrl()->edit( 'product_group' ),
 		]
 	); ?>
 

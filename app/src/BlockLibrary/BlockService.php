@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngine\BlockLibrary;
+namespace SureCart\BlockLibrary;
 
-use CheckoutEngineCore\Application\Application;
+use SureCartCore\Application\Application;
 
 /**
  * Provide general block-related functionality.

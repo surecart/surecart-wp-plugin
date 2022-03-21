@@ -1,7 +1,6 @@
 <?php
 
-namespace CheckoutEngine\Models\Traits;
-
+namespace SureCart\Models\Traits;
 
 /**
  * If the model has an attached customer.

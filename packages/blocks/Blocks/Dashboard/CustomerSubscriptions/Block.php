@@ -1,11 +1,11 @@
 <?php
 
-namespace CheckoutEngineBlocks\Blocks\Dashboard\CustomerSubscriptions;
+namespace SureCartBlocks\Blocks\Dashboard\CustomerSubscriptions;
 
-use CheckoutEngine\Models\Subscription;
-use CheckoutEngine\Models\User;
-use CheckoutEngineBlocks\Blocks\Dashboard\DashboardPage;
-use CheckoutEngineBlocks\Controllers\SubscriptionController;
+use SureCart\Models\Subscription;
+use SureCart\Models\User;
+use SureCartBlocks\Blocks\Dashboard\DashboardPage;
+use SureCartBlocks\Controllers\SubscriptionController;
 
 /**
  * Checkout block
@@ -34,7 +34,7 @@ class Block extends DashboardPage {
 	 * @return function
 	 */
 	public function show( $id ) {
-		return \CheckoutEngine::blocks()->render(
+		return \SureCart::blocks()->render(
 			'web/dashboard/subscriptions/show',
 			[
 				'id' => $id,
@@ -52,7 +52,7 @@ class Block extends DashboardPage {
 		$tab          = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : false;
 		$subscription = Subscription::with( [ 'price', 'price.product', 'latest_invoice', 'product.product_group' ] )->find( $id );
 
-		\CheckoutEngine::assets()->addComponentData(
+		\SureCart::assets()->addComponentData(
 			'ce-subscription',
 			'#customer-subscription',
 			[
@@ -60,7 +60,7 @@ class Block extends DashboardPage {
 				'subscription' => $subscription,
 			]
 		);
-		\CheckoutEngine::assets()->addComponentData(
+		\SureCart::assets()->addComponentData(
 			'ce-subscription-switch',
 			'#customer-subscription-switch',
 			[
@@ -72,7 +72,7 @@ class Block extends DashboardPage {
 		ob_start(); ?>
 		<ce-spacing style="--spacing: var(--ce-spacing-large)">
 			<ce-breadcrumbs>
-				<ce-breadcrumb href="<?php echo esc_url( add_query_arg( [ 'tab' => $tab ], \CheckoutEngine::pages()->url( 'dashboard' ) ) ); ?>">
+				<ce-breadcrumb href="<?php echo esc_url( add_query_arg( [ 'tab' => $tab ], \SureCart::pages()->url( 'dashboard' ) ) ); ?>">
 					<?php esc_html_e( 'Dashboard', 'surecart' ); ?>
 				</ce-breadcrumb>
 				<ce-breadcrumb>
@@ -99,7 +99,7 @@ class Block extends DashboardPage {
 		if ( ! User::current()->isCustomer() ) {
 			return;
 		}
-		\CheckoutEngine::assets()->addComponentData(
+		\SureCart::assets()->addComponentData(
 			'ce-subscriptions-list',
 			'#customer-subscriptions-index',
 			[

@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngine\Models;
+namespace SureCart\Models;
 
-use CheckoutEngine\Support\Encryption;
+use SureCart\Support\Encryption;
 
 /**
  * The API token model.

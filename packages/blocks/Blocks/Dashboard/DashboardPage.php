@@ -1,9 +1,9 @@
 <?php
 
-namespace CheckoutEngineBlocks\Blocks\Dashboard;
+namespace SureCartBlocks\Blocks\Dashboard;
 
-use CheckoutEngineBlocks\Blocks\BaseBlock;
-use CheckoutEngine\Models\User;
+use SureCartBlocks\Blocks\BaseBlock;
+use SureCart\Models\User;
 
 /**
  * Checkout block
@@ -12,7 +12,7 @@ abstract class DashboardPage extends BaseBlock {
 	/**
 	 * Holds the customer object.
 	 *
-	 * @var \CheckoutEngine\Models\Customer|null|\WP_Error;
+	 * @var \SureCart\Models\Customer|null|\WP_Error;
 	 */
 	protected $customer = null;
 

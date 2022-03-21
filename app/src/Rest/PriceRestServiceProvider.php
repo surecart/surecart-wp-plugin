@@ -1,9 +1,9 @@
 <?php
 
-namespace CheckoutEngine\Rest;
+namespace SureCart\Rest;
 
-use CheckoutEngine\Rest\RestServiceInterface;
-use CheckoutEngine\Controllers\Rest\PricesController;
+use SureCart\Rest\RestServiceInterface;
+use SureCart\Controllers\Rest\PricesController;
 
 /**
  * Service provider for Price Rest Requests

@@ -1,9 +1,9 @@
 <?php
 
-namespace CheckoutEngine\WordPress\Users;
+namespace SureCart\WordPress\Users;
 
-use CheckoutEngine\Models\Order;
-use CheckoutEngine\Models\User;
+use SureCart\Models\Order;
+use SureCart\Models\User;
 
 /**
  * WordPress Users service.

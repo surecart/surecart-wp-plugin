@@ -1,30 +1,30 @@
 <?php
 
-namespace CheckoutEngine\WordPress\Pages;
+namespace SureCart\WordPress\Pages;
 
 /**
  * Service for installation related functions.
  */
 class PageSeeder {
 	/**
-	 * CheckoutEngine instance.
+	 * SureCart instance.
 	 *
-	 * @var \CheckoutEngine\WordPress\PostTypes\FormPostTypeService
+	 * @var \SureCart\WordPress\PostTypes\FormPostTypeService
 	 */
 	protected $forms = null;
 
 	/**
-	 * CheckoutEngine instance.
+	 * SureCart instance.
 	 *
-	 * @var \CheckoutEngine\WordPress\Pages\PageService
+	 * @var \SureCart\WordPress\Pages\PageService
 	 */
 	protected $pages = null;
 
 	/**
 	 * Constructor.
 	 *
-	 * @param \CheckoutEngine\WordPress\PostTypes\FormPostTypeService $forms Forms service.
-	 * @param \CheckoutEngine\WordPress\Pages\PageService             $pages Forms service.
+	 * @param \SureCart\WordPress\PostTypes\FormPostTypeService $forms Forms service.
+	 * @param \SureCart\WordPress\Pages\PageService             $pages Forms service.
 	 */
 	public function __construct( $forms, $pages ) {
 		$this->forms = $forms;
@@ -112,7 +112,7 @@ class PageSeeder {
 				$key,
 				$post['title'],
 				$post['content'],
-				! empty( $post['parent'] ) ? \CheckoutEngine::pages()->findOrCreate( $post['parent'] ) : '',
+				! empty( $post['parent'] ) ? \SureCart::pages()->findOrCreate( $post['parent'] ) : '',
 				! empty( $post['post_status'] ) ? $post['post_status'] : 'publish',
 				! empty( $post['post_type'] ) ? $post['post_type'] : 'page'
 			);

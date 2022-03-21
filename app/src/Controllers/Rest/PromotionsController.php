@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngine\Controllers\Rest;
+namespace SureCart\Controllers\Rest;
 
-use CheckoutEngine\Models\Promotion;
+use SureCart\Models\Promotion;
 
 /**
  * Handle Promotion requests through the REST API

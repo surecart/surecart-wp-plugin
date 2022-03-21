@@ -1,6 +1,6 @@
 <?php
 
-namespace CheckoutEngineBlocks\Divider;
+namespace SureCartBlocks\Divider;
 
 /**
  * Logout Button Block.

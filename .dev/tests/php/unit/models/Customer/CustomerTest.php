@@ -1,12 +1,12 @@
 <?php
 
-namespace CheckoutEngine\Tests\Models;
+namespace SureCart\Tests\Models;
 
-use CheckoutEngine\Models\Customer;
-use CheckoutEngine\Models\User;
-use CheckoutEngine\Tests\CheckoutEngineUnitTestCase;
+use SureCart\Models\Customer;
+use SureCart\Models\User;
+use SureCart\Tests\SureCartUnitTestCase;
 
-class CustomerTest extends CheckoutEngineUnitTestCase
+class CustomerTest extends SureCartUnitTestCase
 {
 	protected $requests;
 
@@ -16,9 +16,9 @@ class CustomerTest extends CheckoutEngineUnitTestCase
 	public function setUp()
 	{
 		// Set up an app instance with whatever stubs and mocks we need before every test.
-		\CheckoutEngine::make()->bootstrap([
+		\SureCart::make()->bootstrap([
 			'providers' => [
-				\CheckoutEngine\Request\RequestServiceProvider::class,
+				\SureCart\Request\RequestServiceProvider::class,
 			]
 		], false);
 

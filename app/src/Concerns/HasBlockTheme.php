@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngine\Concerns;
+namespace SureCart\Concerns;
 
-use CheckoutEngineCore\Helpers\MixedType;
+use SureCartCore\Helpers\MixedType;
 
 trait HasBlockTheme {
 
@@ -17,7 +17,7 @@ trait HasBlockTheme {
 	 * @return void
 	 */
 	public function registerBlockTheme( $block_name, $slug, $name, $path ) {
-		$url = trailingslashit( \CheckoutEngine::core()->assets()->getUrl() ) . $path;
+		$url = trailingslashit( \SureCart::core()->assets()->getUrl() ) . $path;
 
 		wp_register_style(
 			"surecart/themes/$slug",

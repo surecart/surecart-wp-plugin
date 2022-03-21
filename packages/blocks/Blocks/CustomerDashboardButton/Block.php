@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngineBlocks\Blocks\CustomerDashboardButton;
+namespace SureCartBlocks\Blocks\CustomerDashboardButton;
 
-use CheckoutEngineBlocks\Blocks\BaseBlock;
+use SureCartBlocks\Blocks\BaseBlock;
 /**
  * Logout Button Block.
  */
@@ -16,7 +16,7 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
-		$href = \CheckoutEngine::pages()->url( 'dashboard' );
+		$href = \SureCart::pages()->url( 'dashboard' );
 
 		ob_start(); ?>
 

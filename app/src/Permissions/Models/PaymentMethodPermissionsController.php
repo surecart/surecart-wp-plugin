@@ -1,7 +1,7 @@
 <?php
-namespace CheckoutEngine\Permissions\Models;
+namespace SureCart\Permissions\Models;
 
-use CheckoutEngine\Models\PaymentMethod;
+use SureCart\Models\PaymentMethod;
 
 /**
  * Handle various payment methods permissions.
@@ -10,9 +10,9 @@ class PaymentMethodPermissionsController extends ModelPermissionsController {
 	/**
 	 * Can user read
 	 *
-	 * @param \CheckoutEngine\Models\User $user User model.
-	 * @param array                       $args {
-	 *                        Arguments that accompany the requested capability check.
+	 * @param \SureCart\Models\User $user User model.
+	 * @param array                 $args {
+	 *                  Arguments that accompany the requested capability check.
 	 *
 	 *     @type string    $0 Requested capability.
 	 *     @type int       $1 Concerned user ID.

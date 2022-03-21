@@ -1,9 +1,9 @@
 <?php
 
-namespace CheckoutEngine\Models;
+namespace SureCart\Models;
 
-use CheckoutEngine\Models\Coupon;
-use CheckoutEngine\Models\Traits\HasCoupon;
+use SureCart\Models\Coupon;
+use SureCart\Models\Traits\HasCoupon;
 
 /**
  * Price model

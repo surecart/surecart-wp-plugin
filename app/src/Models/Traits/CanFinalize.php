@@ -1,6 +1,6 @@
 <?php
 
-namespace CheckoutEngine\Models\Traits;
+namespace SureCart\Models\Traits;
 
 /**
  * If the model has an attached customer.
@@ -24,7 +24,7 @@ trait CanFinalize {
 			return new \WP_Error( 'no_processor', 'Please provide a processor' );
 		}
 
-		$finalized = \CheckoutEngine::request(
+		$finalized = \SureCart::request(
 			$this->endpoint . '/' . $this->attributes['id'] . '/finalize/',
 			[
 				'method' => 'PATCH',

@@ -1,11 +1,11 @@
 <?php
-namespace CheckoutEngine\Tests\Feature\Rest;
+namespace SureCart\Tests\Feature\Rest;
 
-use CheckoutEngine\Rest\UploadsRestServiceProvider;
-use CheckoutEngine\Tests\CheckoutEngineUnitTestCase;
+use SureCart\Rest\UploadsRestServiceProvider;
+use SureCart\Tests\SureCartUnitTestCase;
 use WP_REST_Request;
 
-class UploadsRestServiceProviderTest extends CheckoutEngineUnitTestCase {
+class UploadsRestServiceProviderTest extends SureCartUnitTestCase {
 	/**
 	 * Set up a new app instance to use for tests.
 	 */
@@ -14,10 +14,10 @@ class UploadsRestServiceProviderTest extends CheckoutEngineUnitTestCase {
 		parent::setUp();
 
 		// Set up an app instance with whatever stubs and mocks we need before every test.
-		\CheckoutEngine::make()->bootstrap([
+		\SureCart::make()->bootstrap([
 			'providers' => [
 				UploadsRestServiceProvider::class,
-				\CheckoutEngine\Request\RequestServiceProvider::class,
+				\SureCart\Request\RequestServiceProvider::class,
 			]
 		], false);
 

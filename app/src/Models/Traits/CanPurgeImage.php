@@ -1,6 +1,6 @@
 <?php
 
-namespace CheckoutEngine\Models\Traits;
+namespace SureCart\Models\Traits;
 
 /**
  * If the model has an attached customer.
@@ -20,7 +20,7 @@ trait CanPurgeImage {
 			return new \WP_Error( 'not_saved', 'Please create the product.' );
 		}
 
-		$purged = \CheckoutEngine::request(
+		$purged = \SureCart::request(
 			$this->endpoint . '/' . $this->attributes['id'] . '/purge_image/',
 			[
 				'method' => 'DELETE',

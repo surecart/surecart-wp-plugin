@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngine\WordPress;
+namespace SureCart\WordPress;
 
-use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
+use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 /**
  * Register shortcodes.
@@ -48,7 +48,7 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 			return;
 		}
 
-		$form = \CheckoutEngine::forms()->get( $atts['id'] );
+		$form = \SureCart::forms()->get( $atts['id'] );
 
 		return do_blocks( $form->post_content );
 	}

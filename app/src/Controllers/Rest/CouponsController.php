@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngine\Controllers\Rest;
+namespace SureCart\Controllers\Rest;
 
-use CheckoutEngine\Models\Coupon;
+use SureCart\Models\Coupon;
 
 /**
  * Handle Coupon requests through the REST API

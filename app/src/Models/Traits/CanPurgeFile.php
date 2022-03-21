@@ -1,6 +1,6 @@
 <?php
 
-namespace CheckoutEngine\Models\Traits;
+namespace SureCart\Models\Traits;
 
 /**
  * If the model has an attached customer.
@@ -25,7 +25,7 @@ trait CanPurgeFile {
 			return new \WP_Error( 'not_saved', 'Please provide a file id.' );
 		}
 
-		$purged = \CheckoutEngine::request(
+		$purged = \SureCart::request(
 			$this->endpoint . '/' . $this->attributes['id'] . '/purge_file/' . $file_id,
 			[
 				'method' => 'DELETE',

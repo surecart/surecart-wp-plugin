@@ -1,6 +1,6 @@
 <?php
 
-namespace CheckoutEngine\Models\Traits;
+namespace SureCart\Models\Traits;
 
 trait HasDiscount {
 	/**

@@ -1,8 +1,8 @@
 <?php
-namespace CheckoutEngineBlocks\Controllers;
+namespace SureCartBlocks\Controllers;
 
-use CheckoutEngine\Models\Component;
-use CheckoutEngine\Models\User;
+use SureCart\Models\Component;
+use SureCart\Models\User;
 
 /**
  * The subscription controller.
@@ -28,7 +28,7 @@ class InvoiceController extends BaseController {
 							'model'  => 'invoice',
 							'action' => 'index',
 						],
-						\CheckoutEngine::pages()->url( 'dashboard' )
+						\SureCart::pages()->url( 'dashboard' )
 					),
 					'query'   => [
 						'customer_ids' => array_values( User::current()->customerIds() ),

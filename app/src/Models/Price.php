@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngine\Models;
+namespace SureCart\Models;
 
-use CheckoutEngine\Models\Product;
+use SureCart\Models\Product;
 
 /**
  * Price model

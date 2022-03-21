@@ -23,11 +23,11 @@
 
 
 <div class="wrap">
-	<?php \CheckoutEngine::render(
+	<?php \SureCart::render(
 		'layouts/partials/admin-index-header',
 		[
 			'title'    => __( 'Products', 'surecart' ),
-			'new_link' => \CheckoutEngine::getUrl()->edit( 'product' ),
+			'new_link' => \SureCart::getUrl()->edit( 'product' ),
 		]
 	); ?>
 

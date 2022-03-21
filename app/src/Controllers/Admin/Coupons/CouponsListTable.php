@@ -1,13 +1,13 @@
 <?php
 
-namespace CheckoutEngine\Controllers\Admin\Coupons;
+namespace SureCart\Controllers\Admin\Coupons;
 
 use NumberFormatter;
-use CheckoutEngine\Models\Coupon;
-use CheckoutEngine\Models\Product;
-use CheckoutEngine\Models\Promotion;
-use CheckoutEngine\Support\Currency;
-use CheckoutEngine\Controllers\Admin\Tables\ListTable;
+use SureCart\Models\Coupon;
+use SureCart\Models\Product;
+use SureCart\Models\Promotion;
+use SureCart\Support\Currency;
+use SureCart\Controllers\Admin\Tables\ListTable;
 
 // WP_List_Table is not loaded automatically so we need to load it in our application.
 if ( ! class_exists( 'WP_List_Table' ) ) {
@@ -78,7 +78,7 @@ class CouponsListTable extends ListTable {
 	// 'all'      => __( 'All', 'surecart' ),
 	// ];
 
-	// $link = \CheckoutEngine::getUrl()->index( 'coupon' );
+	// $link = \SureCart::getUrl()->index( 'coupon' );
 
 	// foreach ( $stati as $status => $label ) {
 	// $current_link_attributes = '';
@@ -176,7 +176,7 @@ class CouponsListTable extends ListTable {
 	/**
 	 * Handle the price column.
 	 *
-	 * @param \CheckoutEngine\Models\Coupon $coupon Coupon model.
+	 * @param \SureCart\Models\Coupon $coupon Coupon model.
 	 *
 	 * @return string
 	 */
@@ -225,7 +225,7 @@ class CouponsListTable extends ListTable {
 	/**
 	 * Get the price string for the coupon.
 	 *
-	 * @param \CheckoutEngine\Models\Coupon|null $coupon Coupon model.
+	 * @param \SureCart\Models\Coupon|null $coupon Coupon model.
 	 * @return string
 	 */
 	public function get_price_string( $coupon = null ) {
@@ -270,7 +270,7 @@ class CouponsListTable extends ListTable {
 	/**
 	 * Handle the status
 	 *
-	 * @param \CheckoutEngine\Models\Price $product Product model.
+	 * @param \SureCart\Models\Price $product Product model.
 	 *
 	 * @return string
 	 */
@@ -288,21 +288,21 @@ class CouponsListTable extends ListTable {
 	/**
 	 * Name of the coupon
 	 *
-	 * @param \CheckoutEngine\Models\Promotion $promotion Promotion model.
+	 * @param \SureCart\Models\Promotion $promotion Promotion model.
 	 *
 	 * @return string
 	 */
 	public function column_name( $coupon ) {
 		ob_start();
 		?>
-		<a class="row-title" aria-label="Edit Coupon" href="<?php echo esc_url( \CheckoutEngine::getUrl()->edit( 'coupon', $coupon->id ) ); ?>">
+		<a class="row-title" aria-label="Edit Coupon" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'coupon', $coupon->id ) ); ?>">
 			<?php echo esc_html_e( $coupon->name ); ?>
 		</a>
 
 		<?php
 		echo $this->row_actions(
 			[
-				'edit' => '<a href="' . esc_url( \CheckoutEngine::getUrl()->edit( 'coupon', $coupon->id ) ) . '" aria-label="' . esc_attr( 'Edit Coupon', 'surecart' ) . '">' . __( 'Edit', 'surecart' ) . '</a>',
+				'edit' => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'coupon', $coupon->id ) ) . '" aria-label="' . esc_attr( 'Edit Coupon', 'surecart' ) . '">' . __( 'Edit', 'surecart' ) . '</a>',
 			],
 		);
 
@@ -312,7 +312,7 @@ class CouponsListTable extends ListTable {
 	/**
 	 * Name of the coupon
 	 *
-	 * @param \CheckoutEngine\Models\Promotion $promotion Promotion model.
+	 * @param \SureCart\Models\Promotion $promotion Promotion model.
 	 *
 	 * @return string
 	 */
@@ -330,13 +330,13 @@ class CouponsListTable extends ListTable {
 		/**
 		 * Toggle archive action link and text.
 		 *
-		 * @param \CheckoutEngine\Models\Product $product Product model.
+		 * @param \SureCart\Models\Product $product Product model.
 		 * @return string
 		 */
 	public function action_toggle_archive( $coupon ) {
 		$text            = $coupon->archived ? __( 'Un-Archive', 'surecart' ) : __( 'Archive', 'surecart' );
 		$confirm_message = $coupon->archived ? __( 'Are you sure you want to restore this coupon? This will be be available to purchase.', 'surecart' ) : __( 'Are you sure you want to archive this coupon? This will be unavailable for purchase.', 'surecart' );
-		$link            = \CheckoutEngine::getUrl()->toggleArchive( 'coupon', $coupon->id );
+		$link            = \SureCart::getUrl()->toggleArchive( 'coupon', $coupon->id );
 
 		return sprintf(
 			'<a class="submitdelete" onclick="return confirm(\'%1s\')" href="%2s" aria-label="%3s">%4s</a>',

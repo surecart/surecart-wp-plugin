@@ -1,10 +1,10 @@
 <?php
 
-namespace CheckoutEngine\Rest;
+namespace SureCart\Rest;
 
-use CheckoutEngine\Rest\RestServiceInterface;
-use CheckoutEngine\Controllers\Rest\AccountController;
-use CheckoutEngine\Controllers\Rest\LoginController;
+use SureCart\Rest\RestServiceInterface;
+use SureCart\Controllers\Rest\AccountController;
+use SureCart\Controllers\Rest\LoginController;
 
 /**
  * Service provider for Price Rest Requests

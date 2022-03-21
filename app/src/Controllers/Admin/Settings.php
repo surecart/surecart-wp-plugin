@@ -1,9 +1,9 @@
 <?php
 
-namespace CheckoutEngine\Controllers\Admin;
+namespace SureCart\Controllers\Admin;
 
-use CheckoutEngine\Models\Account;
-use CheckoutEngine\Models\AccountPortalSession;
+use SureCart\Models\Account;
+use SureCart\Models\AccountPortalSession;
 
 /**
  * Controls the settings page.
@@ -29,7 +29,7 @@ class Settings {
 			$session->url = str_replace( 'http://', 'https://', $session->url );
 		}
 
-		return \CheckoutEngine::view( 'admin/settings' )->with(
+		return \SureCart::view( 'admin/settings' )->with(
 			[
 				'session_url' => $session->url,
 			]

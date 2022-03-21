@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngine\Models;
+namespace SureCart\Models;
 
-use CheckoutEngine\Support\Encryption;
+use SureCart\Support\Encryption;
 
 /**
  * Price model
@@ -55,7 +55,7 @@ class Webhook extends Model {
 	/**
 	 * Find existing webhook with the same listner url.
 	 *
-	 * @return \CheckoutEngine\Models\Webhook|false
+	 * @return \SureCart\Models\Webhook|false
 	 */
 	public function findExisting() {
 		$webhooks = $this->setPagination( [ 'per_page' => 100 ] )->get();

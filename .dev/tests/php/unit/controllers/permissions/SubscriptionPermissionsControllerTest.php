@@ -1,14 +1,14 @@
 <?php
-namespace CheckoutEngine\Tests\Controllers\Permissions;
+namespace SureCart\Tests\Controllers\Permissions;
 
-use CheckoutEngine\Models\User;
-use CheckoutEngine\Permissions\Models\SubscriptionPermissionsController;
-use CheckoutEngine\Permissions\RolesServiceProvider;
-use CheckoutEngine\Request\RequestServiceProvider;
-use CheckoutEngine\Support\Errors\ErrorsServiceProvider;
-use CheckoutEngine\Tests\CheckoutEngineUnitTestCase;
+use SureCart\Models\User;
+use SureCart\Permissions\Models\SubscriptionPermissionsController;
+use SureCart\Permissions\RolesServiceProvider;
+use SureCart\Request\RequestServiceProvider;
+use SureCart\Support\Errors\ErrorsServiceProvider;
+use SureCart\Tests\SureCartUnitTestCase;
 
-class SubscriptionPermissionsControllerTest extends CheckoutEngineUnitTestCase {
+class SubscriptionPermissionsControllerTest extends SureCartUnitTestCase {
 	use \Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 
 	/**
@@ -17,7 +17,7 @@ class SubscriptionPermissionsControllerTest extends CheckoutEngineUnitTestCase {
 	public function setUp()
 	{
 		// Set up an app instance with whatever stubs and mocks we need before every test.
-		\CheckoutEngine::make()->bootstrap([
+		\SureCart::make()->bootstrap([
 			'providers' => [
 				RequestServiceProvider::class,
 				RolesServiceProvider::class,
@@ -32,7 +32,7 @@ class SubscriptionPermissionsControllerTest extends CheckoutEngineUnitTestCase {
 	{
 		// mock the requests in the container
 		$requests =  \Mockery::mock(RequestService::class);
-		\CheckoutEngine::alias('request', function () use ($requests) {
+		\SureCart::alias('request', function () use ($requests) {
 			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
 		});
 

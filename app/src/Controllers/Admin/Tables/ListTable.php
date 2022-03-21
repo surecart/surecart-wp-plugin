@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngine\Controllers\Admin\Tables;
+namespace SureCart\Controllers\Admin\Tables;
 
-use CheckoutEngine\Support\TimeDate;
+use SureCart\Support\TimeDate;
 
 // WP_List_Table is not loaded automatically so we need to load it in our application.
 if ( ! class_exists( 'WP_List_Table' ) ) {
@@ -58,7 +58,7 @@ abstract class ListTable extends \WP_List_Table {
 	/**
 	 * Handle the date
 	 *
-	 * @param \CheckoutEngine\Models\Model $model Model.
+	 * @param \SureCart\Models\Model $model Model.
 	 *
 	 * @return string
 	 */
@@ -82,7 +82,7 @@ abstract class ListTable extends \WP_List_Table {
 	/**
 	 * Handle the created column
 	 *
-	 * @param \CheckoutEngine\Models\Model $model Model.
+	 * @param \SureCart\Models\Model $model Model.
 	 *
 	 * @return string
 	 */

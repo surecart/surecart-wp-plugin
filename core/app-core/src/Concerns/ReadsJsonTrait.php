@@ -1,15 +1,15 @@
 <?php
 /**
- * @package   CheckoutEngineAppCore
+ * @package   SureCartAppCore
  * @author    Andre Gagnon <me@andregagnon.me>
  * @copyright  Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://checkoutengine.com
+ * @link      https://SureCart.com
  */
 
-namespace CheckoutEngineAppCore\Concerns;
+namespace SureCartAppCore\Concerns;
 
-use CheckoutEngineCore\Support\Arr;
+use SureCartCore\Support\Arr;
 
 trait ReadsJsonTrait {
 	/**

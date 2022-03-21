@@ -1,10 +1,10 @@
 <?php
 
-namespace CheckoutEngine\Models;
+namespace SureCart\Models;
 
-use CheckoutEngine\Models\Traits\HasCustomer;
-use CheckoutEngine\Models\Traits\HasOrder;
-use CheckoutEngine\Models\Traits\HasSubscription;
+use SureCart\Models\Traits\HasCustomer;
+use SureCart\Models\Traits\HasOrder;
+use SureCart\Models\Traits\HasSubscription;
 
 /**
  * Subscription model
@@ -29,7 +29,7 @@ class Charge extends Model {
 	/**
 	 * Refund this specific charge
 	 *
-	 * @return \CheckoutEngine\Models\Refund
+	 * @return \SureCart\Models\Refund
 	 */
 	protected function refund() {
 		return new Refund( [ 'charge' => $this->id ] );

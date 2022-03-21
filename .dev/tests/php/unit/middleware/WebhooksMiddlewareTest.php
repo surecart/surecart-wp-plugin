@@ -1,12 +1,12 @@
 <?php
 
-use CheckoutEngine\Middleware\WebhooksMiddleware;
-use CheckoutEngine\Tests\CheckoutEngineUnitTestCase;
+use SureCart\Middleware\WebhooksMiddleware;
+use SureCart\Tests\SureCartUnitTestCase;
 
 /**
  * @group webhooks
  */
-class WebhookMiddlewareTest extends CheckoutEngineUnitTestCase {
+class WebhookMiddlewareTest extends SureCartUnitTestCase {
 	public function test_getSignedPayload()
 	{
 		$middleware = \Mockery::mock(WebhooksMiddleware::class)->makePartial();

@@ -1,7 +1,7 @@
 {
 	"name": "@surecart/blocks",
 	"version": "1.0.0",
-	"description": "Block library for CheckoutEngine",
+	"description": "Block library for SureCart",
 	"license": "GPL-2.0-or-later",
 	"keywords": [
 		"checkout",

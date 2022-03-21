@@ -1,11 +1,11 @@
 <?php
 
-namespace CheckoutEngine\Controllers\Admin\Invoices;
+namespace SureCart\Controllers\Admin\Invoices;
 
-use CheckoutEngine\Support\Currency;
-use CheckoutEngine\Support\TimeDate;
-use CheckoutEngine\Controllers\Admin\Tables\ListTable;
-use CheckoutEngine\Models\Invoice;
+use SureCart\Support\Currency;
+use SureCart\Support\TimeDate;
+use SureCart\Controllers\Admin\Tables\ListTable;
+use SureCart\Models\Invoice;
 
 /**
  * Create a new table class that will extend the WP_List_Table
@@ -139,7 +139,7 @@ class InvoicesListTable extends ListTable {
 	/**
 	 * Handle the total column
 	 *
-	 * @param \CheckoutEngine\Models\Order $order Checkout Session Model.
+	 * @param \SureCart\Models\Order $order Checkout Session Model.
 	 *
 	 * @return string
 	 */
@@ -150,7 +150,7 @@ class InvoicesListTable extends ListTable {
 	/**
 	 * Handle the total column
 	 *
-	 * @param \CheckoutEngine\Models\Order $order Checkout Session Model.
+	 * @param \SureCart\Models\Order $order Checkout Session Model.
 	 *
 	 * @return string
 	 */
@@ -237,7 +237,7 @@ class InvoicesListTable extends ListTable {
 	/**
 	 * Handle the status
 	 *
-	 * @param \CheckoutEngine\Models\Order $order Order Model.
+	 * @param \SureCart\Models\Order $order Order Model.
 	 *
 	 * @return string
 	 */
@@ -251,18 +251,18 @@ class InvoicesListTable extends ListTable {
 	/**
 	 * Name of the coupon
 	 *
-	 * @param \CheckoutEngine\Models\Promotion $promotion Promotion model.
+	 * @param \SureCart\Models\Promotion $promotion Promotion model.
 	 *
 	 * @return string
 	 */
 	public function column_invoice( $invoice ) {
 		ob_start();
 		?>
-		<a class="row-title" aria-label="<?php echo esc_attr__( 'Edit Order', 'surecart' ); ?>" href="<?php echo esc_url( \CheckoutEngine::getUrl()->edit( 'invoice', $invoice->id ) ); ?>">
+		<a class="row-title" aria-label="<?php echo esc_attr__( 'Edit Order', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'invoice', $invoice->id ) ); ?>">
 			<?php echo sanitize_text_field( $invoice->number ?? $invoice->id ); ?>
 		</a>
 		<br />
-		<a  aria-label="<?php echo esc_attr__( 'Edit Order', 'surecart' ); ?>" href="<?php echo esc_url( \CheckoutEngine::getUrl()->edit( 'invoice', $invoice->id ) ); ?>">
+		<a  aria-label="<?php echo esc_attr__( 'Edit Order', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'invoice', $invoice->id ) ); ?>">
 			<?php
 			// translators: Customer name.
 			echo esc_html( $invoice->customer->name ?? $invoice->customer->email );

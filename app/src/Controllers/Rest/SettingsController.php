@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngine\Controllers\Rest;
+namespace SureCart\Controllers\Rest;
 
-use CheckoutEngine\Models\Account;
+use SureCart\Models\Account;
 
 /**
  * Handle price requests through the REST API

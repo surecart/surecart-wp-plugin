@@ -1,6 +1,6 @@
 <?php /** @noinspection ALL */
 
-namespace CheckoutEngineCore\Support;
+namespace SureCartCore\Support;
 
 use ArrayAccess;
 

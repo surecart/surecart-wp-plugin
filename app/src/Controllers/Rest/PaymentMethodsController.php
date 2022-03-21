@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngine\Controllers\Rest;
+namespace SureCart\Controllers\Rest;
 
-use CheckoutEngine\Models\PaymentMethod;
+use SureCart\Models\PaymentMethod;
 
 /**
  * Handle Price requests through the REST API
