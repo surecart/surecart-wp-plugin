@@ -3,53 +3,51 @@
  *
  * @param {string} name the name of the child block to add.
  */
-export function addFormChild( name ) {
-	cy.get(
-		'[data-type="checkout-engine/form"] [data-type^="checkout-engine/field"]'
-	)
+export function addFormChild(name) {
+	cy.get('[data-type="surecart/form"] [data-type^="surecart/field"]')
 		.first()
-		.click( { force: true } );
-	cy.get( '.block-editor-block-settings-menu' ).click();
-	cy.get( '.components-popover__content button' )
-		.contains( /insert after/i )
-		.click( { force: true } );
-	cy.get(
-		'[data-type="checkout-engine/form"] [data-type="core/paragraph"]'
-	).click( { force: true } );
+		.click({ force: true });
+	cy.get('.block-editor-block-settings-menu').click();
+	cy.get('.components-popover__content button')
+		.contains(/insert after/i)
+		.click({ force: true });
+	cy.get('[data-type="surecart/form"] [data-type="core/paragraph"]').click({
+		force: true,
+	});
 
-	cy.get( '.edit-post-header-toolbar' )
-		.find( '.edit-post-header-toolbar__inserter-toggle' )
-		.click( { force: true } );
-	cy.get( '.block-editor-inserter__search' ).click().type( name );
+	cy.get('.edit-post-header-toolbar')
+		.find('.edit-post-header-toolbar__inserter-toggle')
+		.click({ force: true });
+	cy.get('.block-editor-inserter__search').click().type(name);
 
 	cy.get(
-		'.block-editor-inserter__content .editor-block-list-item-checkout-engine-field-' +
+		'.block-editor-inserter__content .editor-block-list-item-surecart-field-' +
 			name
 	)
 		.first()
-		.click( { force: true } );
-	cy.get( `[data-type="checkout-engine/field-${ name }"]` )
-		.should( 'exist' )
-		.click( { force: true } );
+		.click({ force: true });
+	cy.get(`[data-type="surecart/field-${name}"]`)
+		.should('exist')
+		.click({ force: true });
 }
 
 /**
  * Login to our test WordPress site
  */
 export function loginToSite() {
-	goTo( '/wp-admin/post-new.php?post_type=post' ).then( ( window ) => {
-		if ( window.location.pathname === '/wp-login.php' ) {
+	goTo('/wp-admin/post-new.php?post_type=post').then((window) => {
+		if (window.location.pathname === '/wp-login.php') {
 			// WordPress has a wp_attempt_focus() function that fires 200ms after the wp-login.php page loads.
 			// We need to wait a short time before trying to login.
-			cy.wait( 250 );
+			cy.wait(250);
 
-			cy.get( '#user_login' ).type( Cypress.env( 'wpUsername' ) );
-			cy.get( '#user_pass' ).type( Cypress.env( 'wpPassword' ) );
-			cy.get( '#wp-submit' ).click();
+			cy.get('#user_login').type(Cypress.env('wpUsername'));
+			cy.get('#user_pass').type(Cypress.env('wpPassword'));
+			cy.get('#wp-submit').click();
 		}
-	} );
+	});
 
-	cy.get( '.block-editor-page' ).should( 'exist' );
+	cy.get('.block-editor-page').should('exist');
 }
 
 /**
@@ -57,8 +55,8 @@ export function loginToSite() {
  *
  * @param {string} path The URI path to go to.
  */
-export function goTo( path = '/wp-admin' ) {
-	cy.visit( path );
+export function goTo(path = '/wp-admin') {
+	cy.visit(path);
 }
 
 /**
@@ -67,7 +65,7 @@ export function goTo( path = '/wp-admin' ) {
  */
 export function getWindowObject() {
 	// const editorUrlStrings = [ 'post-new.php', 'action=edit' ];
-	return cy.window().then( ( win ) => {
+	return cy.window().then((win) => {
 		// const isEditorPage = editorUrlStrings.filter( ( str ) =>
 		// 	win.location.href.includes( str )
 		// );
@@ -85,57 +83,57 @@ export function getWindowObject() {
 		// }
 
 		return win;
-	} );
+	});
 }
 
 /**
  * Disable Gutenberg Tips
  */
 export function disableGutenbergFeatures() {
-	getWindowObject().then( ( safeWin ) => {
-		if ( ! safeWin.wp || ! safeWin.wp.data ) return;
+	getWindowObject().then((safeWin) => {
+		if (!safeWin.wp || !safeWin.wp.data) return;
 		// Enable "Top Toolbar"
 		if (
-			! safeWin.wp.data
-				.select( 'core/edit-post' )
-				.isFeatureActive( 'fixedToolbar' )
+			!safeWin.wp.data
+				.select('core/edit-post')
+				.isFeatureActive('fixedToolbar')
 		) {
 			safeWin.wp.data
-				.dispatch( 'core/edit-post' )
-				.toggleFeature( 'fixedToolbar' );
+				.dispatch('core/edit-post')
+				.toggleFeature('fixedToolbar');
 		}
 
 		if (
-			! safeWin.wp.data
-				.select( 'core/edit-post' )
-				.isFeatureActive( 'welcomeGuide' )
+			!safeWin.wp.data
+				.select('core/edit-post')
+				.isFeatureActive('welcomeGuide')
 		) {
 			return;
 		}
 
 		safeWin.wp.data
-			.dispatch( 'core/edit-post' )
-			.toggleFeature( 'welcomeGuide' );
-		safeWin.wp.data.dispatch( 'core/editor' ).disablePublishSidebar();
-	} );
+			.dispatch('core/edit-post')
+			.toggleFeature('welcomeGuide');
+		safeWin.wp.data.dispatch('core/editor').disablePublishSidebar();
+	});
 }
 
 /**
- * From inside the WordPress editor open the checkout-engine Gutenberg editor panel
+ * From inside the WordPress editor open the surecart Gutenberg editor panel
  *
  * @param {string}  blockName   The name to find in the block inserter
- *                              e.g 'core/image' or 'checkout-engine/accordion'.
+ *                              e.g 'core/image' or 'surecart/accordion'.
  * @param {boolean} clearEditor Should clear editor of all blocks
  */
-export function addBlockToPost( blockName, clearEditor = false ) {
-	const blockCategory = blockName.split( '/' )[ 0 ] || false;
-	const blockID = blockName.split( '/' )[ 1 ] || false;
+export function addBlockToPost(blockName, clearEditor = false) {
+	const blockCategory = blockName.split('/')[0] || false;
+	const blockID = blockName.split('/')[1] || false;
 
-	if ( ! blockCategory || ! blockID ) {
+	if (!blockCategory || !blockID) {
 		return;
 	}
 
-	if ( clearEditor ) {
+	if (clearEditor) {
 		clearBlocks();
 	}
 
@@ -146,40 +144,37 @@ export function addBlockToPost( blockName, clearEditor = false ) {
 		'.block-editor-inserter__search-input,input.block-editor-inserter__search, .components-search-control__input'
 	)
 		.click()
-		.type( blockName );
+		.type(blockName);
 
 	const targetClassName =
-		( blockCategory === 'core' ? '' : `-${ blockCategory }` ) +
-		`-${ blockID }`;
-	cy.get( '.editor-block-list-item' + targetClassName )
+		(blockCategory === 'core' ? '' : `-${blockCategory}`) + `-${blockID}`;
+	cy.get('.editor-block-list-item' + targetClassName)
 		.first()
-		.click( { force: true } );
+		.click({ force: true });
 
 	// Make sure the block was added to our page
-	cy.get( `[class*="-visual-editor"] [data-type="${ blockName }"]` )
-		.should( 'exist' )
-		.then( () => {
+	cy.get(`[class*="-visual-editor"] [data-type="${blockName}"]`)
+		.should('exist')
+		.then(() => {
 			// Then close the block inserter if still open.
 			const inserterButton = Cypress.$(
 				'button[class*="__inserter-toggle"].is-pressed'
 			);
-			if ( !! inserterButton.length ) {
-				cy.get(
-					'button[class*="__inserter-toggle"].is-pressed'
-				).click();
+			if (!!inserterButton.length) {
+				cy.get('button[class*="__inserter-toggle"].is-pressed').click();
 			}
-		} );
+		});
 }
 
 /**
- * From inside the WordPress editor open the checkout-engine Gutenberg editor panel
+ * From inside the WordPress editor open the surecart Gutenberg editor panel
  */
 export function savePage() {
-	cy.get( '.edit-post-header__settings button.is-primary' ).click();
+	cy.get('.edit-post-header__settings button.is-primary').click();
 
-	cy.get( '.components-editor-notices__snackbar', {
+	cy.get('.components-editor-notices__snackbar', {
 		timeout: 120000,
-	} ).should( 'not.be.empty' );
+	}).should('not.be.empty');
 
 	// Reload the page to ensure that we're not hitting any block errors
 	cy.reload();
@@ -189,61 +184,61 @@ export function savePage() {
  * Check the page for block errors
  *
  * @param {string} blockName blockName the block to check for
- *                           e.g 'core/image' or 'checkout-engine/accordion'.
+ *                           e.g 'core/image' or 'surecart/accordion'.
  */
 
-export function checkForBlockErrors( blockName ) {
+export function checkForBlockErrors(blockName) {
 	disableGutenbergFeatures();
 
-	cy.get( '.block-editor-warning' ).should( 'not.exist' );
+	cy.get('.block-editor-warning').should('not.exist');
 
-	cy.get( 'body.php-error' ).should( 'not.exist' );
+	cy.get('body.php-error').should('not.exist');
 
-	cy.get( `[data-type="${ blockName }"]` ).should( 'exist' );
+	cy.get(`[data-type="${blockName}"]`).should('exist');
 }
 
 /**
  * View the currently edited page on the front of site
  */
 export function viewPage() {
-	cy.get( 'button[aria-label="Settings"]' ).then( ( settingsButton ) => {
+	cy.get('button[aria-label="Settings"]').then((settingsButton) => {
 		if (
-			! Cypress.$( settingsButton ).hasClass( 'is-pressed' ) &&
-			! Cypress.$( settingsButton ).hasClass( 'is-toggled' )
+			!Cypress.$(settingsButton).hasClass('is-pressed') &&
+			!Cypress.$(settingsButton).hasClass('is-toggled')
 		) {
-			cy.get( settingsButton ).click();
+			cy.get(settingsButton).click();
 		}
-	} );
+	});
 
-	cy.get( 'button[data-label="Post"]' );
+	cy.get('button[data-label="Post"]');
 
-	openSettingsPanel( /permalink/i );
+	openSettingsPanel(/permalink/i);
 
-	cy.get( '.edit-post-post-link__link' ).then( ( pageLink ) => {
-		const linkAddress = Cypress.$( pageLink ).attr( 'href' );
-		cy.visit( linkAddress );
-	} );
+	cy.get('.edit-post-post-link__link').then((pageLink) => {
+		const linkAddress = Cypress.$(pageLink).attr('href');
+		cy.visit(linkAddress);
+	});
 }
 
 /**
  * Edit the currently viewed page
  */
 export function editPage() {
-	cy.get( '#wp-admin-bar-edit' ).click();
+	cy.get('#wp-admin-bar-edit').click();
 }
 
 /**
  * Clear all blocks from the editor
  */
 export function clearBlocks() {
-	getWindowObject().then( ( safeWin ) => {
-		safeWin.wp.data.dispatch( 'core/block-editor' ).removeBlocks(
+	getWindowObject().then((safeWin) => {
+		safeWin.wp.data.dispatch('core/block-editor').removeBlocks(
 			safeWin.wp.data
-				.select( 'core/block-editor' )
+				.select('core/block-editor')
 				.getBlocks()
-				.map( ( block ) => block.clientId )
+				.map((block) => block.clientId)
 		);
-	} );
+	});
 }
 
 /**
@@ -253,7 +248,7 @@ export function clearBlocks() {
 export function getBlockSlug() {
 	const specFile = Cypress.spec.name;
 
-	return specFile.split( '/' ).pop().replace( '.cypress.js', '' );
+	return specFile.split('/').pop().replace('.cypress.js', '');
 }
 
 /**
@@ -261,12 +256,12 @@ export function getBlockSlug() {
  *
  * @param {string} style Name of the style to apply
  */
-export function setBlockStyle( style ) {
-	openSettingsPanel( RegExp( 'styles', 'i' ) );
+export function setBlockStyle(style) {
+	openSettingsPanel(RegExp('styles', 'i'));
 
-	cy.get( '.edit-post-sidebar [class*="editor-block-styles"]' )
-		.contains( RegExp( style, 'i' ) )
-		.click( { force: true } );
+	cy.get('.edit-post-sidebar [class*="editor-block-styles"]')
+		.contains(RegExp(style, 'i'))
+		.click({ force: true });
 }
 
 /**
@@ -276,28 +271,26 @@ export function setBlockStyle( style ) {
  * @param {string}  name         The name of the block to select eg: highlight or click-to-tweet
  * @param {boolean} isChildBlock Optional selector for children blocks. Default will be top level blocks.
  */
-export function selectBlock( name, isChildBlock = false ) {
-	cy.get( '.edit-post-header__toolbar' )
+export function selectBlock(name, isChildBlock = false) {
+	cy.get('.edit-post-header__toolbar')
 		.find(
 			'.block-editor-block-navigation,.edit-post-header-toolbar__list-view-toggle'
 		)
 		.click();
-	cy.get( '.block-editor-block-navigation-leaf,.block-editor-list-view-leaf' )
-		.contains(
-			isChildBlock ? RegExp( `${ name }$`, 'i' ) : RegExp( name, 'i' )
-		)
+	cy.get('.block-editor-block-navigation-leaf,.block-editor-list-view-leaf')
+		.contains(isChildBlock ? RegExp(`${name}$`, 'i') : RegExp(name, 'i'))
 		.click()
-		.then( () => {
+		.then(() => {
 			// Then close the block navigator if still open.
 			const inserterButton = Cypress.$(
 				'.edit-post-header__toolbar button.edit-post-header-toolbar__list-view-toggle.is-pressed'
 			);
-			if ( !! inserterButton.length ) {
+			if (!!inserterButton.length) {
 				cy.get(
 					'.edit-post-header__toolbar button.edit-post-header-toolbar__list-view-toggle.is-pressed'
 				).click();
 			}
-		} );
+		});
 }
 
 /**
@@ -314,17 +307,17 @@ export function setInputValue(
 	value,
 	ignoreCase = true
 ) {
-	openSettingsPanel( ignoreCase ? RegExp( panelName, 'i' ) : panelName );
+	openSettingsPanel(ignoreCase ? RegExp(panelName, 'i') : panelName);
 
-	cy.get( '.edit-post-sidebar' )
-		.contains( ignoreCase ? RegExp( settingName, 'i' ) : settingName )
-		.not( '.block-editor-block-card__description' )
-		.then( ( $settingSection ) => {
-			cy.get( Cypress.$( $settingSection ).parent() )
-				.find( 'input[type="number"]' )
+	cy.get('.edit-post-sidebar')
+		.contains(ignoreCase ? RegExp(settingName, 'i') : settingName)
+		.not('.block-editor-block-card__description')
+		.then(($settingSection) => {
+			cy.get(Cypress.$($settingSection).parent())
+				.find('input[type="number"]')
 				.focus()
-				.type( `{selectall}${ value }` );
-		} );
+				.type(`{selectall}${value}`);
+		});
 }
 
 /**
@@ -338,64 +331,60 @@ export const upload = {
 	 * Upload image to input element and trigger replace image flow.
 	 *
 	 * @param {string} blockName The name of the block that is replace target
-	 *                           imageReplaceFlow works with checkout-engine Galleries: Carousel, Collage, Masonry, Offset, Stacked.
+	 *                           imageReplaceFlow works with surecart Galleries: Carousel, Collage, Masonry, Offset, Stacked.
 	 */
-	imageReplaceFlow: ( blockName ) => {
-		const selectBlockBy = blockName.split( '-' )?.[ 1 ];
+	imageReplaceFlow: (blockName) => {
+		const selectBlockBy = blockName.split('-')?.[1];
 
-		upload.imageToBlock( blockName );
+		upload.imageToBlock(blockName);
 
-		selectBlock( selectBlockBy );
+		selectBlock(selectBlockBy);
 
-		cy.get( '.checkout-engine-gallery-item__button-replace' ).should(
-			'not.exist'
-		);
+		cy.get('.surecart-gallery-item__button-replace').should('not.exist');
 
-		cy.get( `[class*="-visual-editor"] [data-type="${ blockName }"] img` )
+		cy.get(`[class*="-visual-editor"] [data-type="${blockName}"] img`)
 			.first()
-			.click( { force: true } );
+			.click({ force: true });
 
-		cy.get( '.checkout-engine-gallery-item__button-replace' ).click( {
+		cy.get('.surecart-gallery-item__button-replace').click({
 			force: true,
-		} );
+		});
 
-		cy.get( '#menu-item-browse' ).click();
+		cy.get('#menu-item-browse').click();
 
-		cy.get( 'ul.attachments' );
+		cy.get('ul.attachments');
 
 		// Replace the image.
 		const newImageBase = 'R150x150';
-		const newFilePath = `../.dev/tests/cypress/fixtures/images/${ newImageBase }.png`;
+		const newFilePath = `../.dev/tests/cypress/fixtures/images/${newImageBase}.png`;
 		/* eslint-disable */
-		cy.fixture( newFilePath ).then( ( fileContent ) => {
-			cy.get( '[class^="moxie"] [type="file"]' ).attachFile(
+		cy.fixture(newFilePath).then((fileContent) => {
+			cy.get('[class^="moxie"] [type="file"]').attachFile(
 				{ fileContent, filePath: newFilePath, mimeType: 'image/png' },
 				{ force: true }
 			);
-		} );
+		});
 		/* eslint-enable */
 
-		cy.get( '.attachment.selected.save-ready' );
-		cy.get( '.media-modal .media-button-select' ).click();
+		cy.get('.attachment.selected.save-ready');
+		cy.get('.media-modal .media-button-select').click();
 
-		cy.get( '[class*="-visual-editor"]' )
-			.find( `[data-type="${ blockName }"] img` )
+		cy.get('[class*="-visual-editor"]')
+			.find(`[data-type="${blockName}"] img`)
 			.first()
-			.should( 'have.attr', 'src' )
-			.should( 'include', newImageBase );
+			.should('have.attr', 'src')
+			.should('include', newImageBase);
 	},
 	/**
 	 * Upload image to input element.
 	 *
 	 * @param {string} blockName The name of the block that is upload target
-	 *                           e.g 'core/image' or 'checkout-engine/accordion'.
+	 *                           e.g 'core/image' or 'surecart/accordion'.
 	 */
-	imageToBlock: ( blockName ) => {
+	imageToBlock: (blockName) => {
 		const { fileName, pathToFixtures } = upload.spec;
-		cy.fixture( pathToFixtures + fileName ).then( ( fileContent ) => {
-			cy.get(
-				`[data-type="${ blockName }"] input[type="file"]`
-			).attachFile(
+		cy.fixture(pathToFixtures + fileName).then((fileContent) => {
+			cy.get(`[data-type="${blockName}"] input[type="file"]`).attachFile(
 				{
 					fileContent,
 					filePath: pathToFixtures + fileName,
@@ -406,9 +395,9 @@ export const upload = {
 
 			// Now validate upload is complete and is not a blob.
 			cy.get(
-				`[class*="-visual-editor"] [data-type="${ blockName }"] [src^="http"]`
+				`[class*="-visual-editor"] [data-type="${blockName}"] [src^="http"]`
 			);
-		} );
+		});
 	},
 	spec: {
 		fileName: '150x150.png',
@@ -423,56 +412,52 @@ export const upload = {
  * @param {string} settingName The setting to update. background|text
  * @param {string} hexColor
  */
-export function setColorSetting( settingName, hexColor ) {
-	openSettingsPanel( /color settings|color/i );
-	cy.get( '.components-base-control__field' )
-		.contains( RegExp( settingName, 'i' ) )
-		.then( ( $subColorPanel ) => {
+export function setColorSetting(settingName, hexColor) {
+	openSettingsPanel(/color settings|color/i);
+	cy.get('.components-base-control__field')
+		.contains(RegExp(settingName, 'i'))
+		.then(($subColorPanel) => {
 			// < WP 5.9
 			if (
-				Cypress.$( '.components-color-palette__custom-color' )
-					.length === 0
+				Cypress.$('.components-color-palette__custom-color').length ===
+				0
 			) {
 				cy.get(
-					Cypress.$( $subColorPanel ).closest(
+					Cypress.$($subColorPanel).closest(
 						'.components-base-control'
 					)
 				)
-					.contains( /custom color/i )
+					.contains(/custom color/i)
 					.click();
 				cy.get(
 					'.components-color-picker__inputs-field input[type="text"]'
 				)
 					.clear()
-					.type( hexColor );
+					.type(hexColor);
 				cy.get(
-					Cypress.$( $subColorPanel ).closest(
+					Cypress.$($subColorPanel).closest(
 						'.components-base-control'
 					)
 				)
-					.contains( /custom color/i )
+					.contains(/custom color/i)
 					.click();
 				// WP 5.9
 			} else {
-				cy.get(
-					Cypress.$( $subColorPanel ).closest( '.components-flex' )
-				)
-					.find( '.components-color-palette__custom-color' )
-					.click( { force: true } );
-				cy.get( '.components-color-picker' )
-					.find( '.components-button' )
-					.click( { force: true } );
-				cy.get( '.components-color-picker' )
-					.find( '.components-input-control' )
+				cy.get(Cypress.$($subColorPanel).closest('.components-flex'))
+					.find('.components-color-palette__custom-color')
+					.click({ force: true });
+				cy.get('.components-color-picker')
+					.find('.components-button')
+					.click({ force: true });
+				cy.get('.components-color-picker')
+					.find('.components-input-control')
 					.clear()
-					.type( hexColor.substring( 1 ) ); // remove the #
-				cy.get(
-					Cypress.$( $subColorPanel ).closest( '.components-flex' )
-				)
-					.find( '.components-color-palette__custom-color' )
-					.click( { force: true } );
+					.type(hexColor.substring(1)); // remove the #
+				cy.get(Cypress.$($subColorPanel).closest('.components-flex'))
+					.find('.components-color-palette__custom-color')
+					.click({ force: true });
 			}
-		} );
+		});
 }
 
 /**
@@ -480,17 +465,17 @@ export function setColorSetting( settingName, hexColor ) {
  *
  * @param {RegExp} panelText The panel label text to open. eg: Color Settings
  */
-export function openSettingsPanel( panelText ) {
-	cy.get( '.components-panel__body' )
-		.contains( panelText )
-		.then( ( $panelTop ) => {
-			const $parentPanel = Cypress.$( $panelTop ).closest(
+export function openSettingsPanel(panelText) {
+	cy.get('.components-panel__body')
+		.contains(panelText)
+		.then(($panelTop) => {
+			const $parentPanel = Cypress.$($panelTop).closest(
 				'div.components-panel__body'
 			);
-			if ( ! $parentPanel.hasClass( 'is-opened' ) ) {
-				$panelTop.trigger( 'click' );
+			if (!$parentPanel.hasClass('is-opened')) {
+				$panelTop.trigger('click');
 			}
-		} );
+		});
 }
 
 /**
@@ -498,17 +483,17 @@ export function openSettingsPanel( panelText ) {
  *
  * @param {number} headingLevel The button that should be located and clicked
  */
-export function openHeadingToolbarAndSelect( headingLevel ) {
+export function openHeadingToolbarAndSelect(headingLevel) {
 	cy.get(
 		'.block-editor-block-toolbar .block-editor-block-toolbar__slot button'
-	).each( ( button, index ) => {
-		if ( index === 1 ) {
+	).each((button, index) => {
+		if (index === 1) {
 			// represents the second position in the toolbar
-			cy.get( button ).click( { force: true } );
+			cy.get(button).click({ force: true });
 		}
-	} );
-	cy.get( '.components-popover__content div[role="menu"] button' )
-		.contains( headingLevel )
+	});
+	cy.get('.components-popover__content div[role="menu"] button')
+		.contains(headingLevel)
 		.focus()
 		.click();
 }
@@ -518,11 +503,11 @@ export function openHeadingToolbarAndSelect( headingLevel ) {
  *
  * @param {string} checkboxLabelText The checkbox label text. eg: Drop Cap
  */
-export function toggleSettingCheckbox( checkboxLabelText ) {
-	cy.get( '.components-toggle-control__label' )
-		.contains( checkboxLabelText )
-		.parent( '.components-base-control__field' )
-		.find( '.components-form-toggle__input' )
+export function toggleSettingCheckbox(checkboxLabelText) {
+	cy.get('.components-toggle-control__label')
+		.contains(checkboxLabelText)
+		.parent('.components-base-control__field')
+		.find('.components-form-toggle__input')
 		.click();
 }
 
@@ -532,41 +517,41 @@ export function toggleSettingCheckbox( checkboxLabelText ) {
  * @param {string} classes Custom classe(s) to add to the block
  * @param {string} blockID The name of the block e.g. (accordion, alert, map)
  */
-export function addCustomBlockClass( classes, blockID = '' ) {
-	if ( ! blockID.length ) {
+export function addCustomBlockClass(classes, blockID = '') {
+	if (!blockID.length) {
 		blockID = getBlockSlug();
 	}
 
 	// Force click the target element so that we don't select any innerBlocks by mistake.
 	cy.get(
-		'[class*="-visual-editor"] .wp-block[data-type="checkout-engine/' +
+		'[class*="-visual-editor"] .wp-block[data-type="surecart/' +
 			blockID +
 			'"]'
 	)
 		.last()
-		.click( { force: true } );
+		.click({ force: true });
 
-	cy.get( '.block-editor-block-inspector__advanced' )
+	cy.get('.block-editor-block-inspector__advanced')
 		.scrollIntoView()
-		.find( 'button' )
+		.find('button')
 		.click();
 
-	cy.get( 'div.edit-post-sidebar' )
-		.contains( /Additional CSS/i )
-		.next( 'input' )
-		.then( ( $inputElem ) => {
-			cy.get( $inputElem )
-				.invoke( 'val' )
-				.then( ( val ) => {
-					if ( val.length > 0 ) {
-						cy.get( $inputElem ).type(
-							`{selectall}${ [ val, classes ].join( ' ' ) }`
+	cy.get('div.edit-post-sidebar')
+		.contains(/Additional CSS/i)
+		.next('input')
+		.then(($inputElem) => {
+			cy.get($inputElem)
+				.invoke('val')
+				.then((val) => {
+					if (val.length > 0) {
+						cy.get($inputElem).type(
+							`{selectall}${[val, classes].join(' ')}`
 						);
 					} else {
-						cy.get( $inputElem ).type( classes );
+						cy.get($inputElem).type(classes);
 					}
-				} );
-		} );
+				});
+		});
 }
 
 /**
@@ -574,15 +559,15 @@ export function addCustomBlockClass( classes, blockID = '' ) {
  */
 export function openEditorSettingsModal() {
 	// Open "more" menu.
-	cy.get( '.edit-post-more-menu button' ).click();
-	cy.get( '.components-menu-group' ).contains( 'Editor settings' ).click();
+	cy.get('.edit-post-more-menu button').click();
+	cy.get('.components-menu-group').contains('Editor settings').click();
 
-	cy.get( '.components-modal__frame' )
-		.contains( 'Editor settings' )
-		.should( 'exist' );
+	cy.get('.components-modal__frame')
+		.contains('Editor settings')
+		.should('exist');
 
 	// Ensure settings have loaded.
-	cy.get( '.checkout-engine-settings-modal input[type="checkbox"]' ).should(
+	cy.get('.surecart-settings-modal input[type="checkbox"]').should(
 		'have.length',
 		6
 	);
@@ -594,40 +579,40 @@ export function openEditorSettingsModal() {
  * @param {string} hex Hex string. eg: #55e7ff
  * @return {string} RGB string.
  */
-export function hexToRGB( hex ) {
+export function hexToRGB(hex) {
 	let r = 0;
 	let g = 0;
 	let b = 0;
 
 	// 3 digits
-	if ( hex.length === 4 ) {
-		r = '0x' + hex[ 1 ] + hex[ 1 ];
-		g = '0x' + hex[ 2 ] + hex[ 2 ];
-		b = '0x' + hex[ 3 ] + hex[ 3 ];
+	if (hex.length === 4) {
+		r = '0x' + hex[1] + hex[1];
+		g = '0x' + hex[2] + hex[2];
+		b = '0x' + hex[3] + hex[3];
 		// 6 digits
-	} else if ( hex.length === 7 ) {
-		r = '0x' + hex[ 1 ] + hex[ 2 ];
-		g = '0x' + hex[ 3 ] + hex[ 4 ];
-		b = '0x' + hex[ 5 ] + hex[ 6 ];
+	} else if (hex.length === 7) {
+		r = '0x' + hex[1] + hex[2];
+		g = '0x' + hex[3] + hex[4];
+		b = '0x' + hex[5] + hex[6];
 	}
 
 	return 'rgb(' + +r + ', ' + +g + ', ' + +b + ')';
 }
 
-function getIframeDocument( containerClass ) {
+function getIframeDocument(containerClass) {
 	return cy
-		.get( containerClass + ' iframe' )
-		.its( '0.contentDocument' )
-		.should( 'exist' );
+		.get(containerClass + ' iframe')
+		.its('0.contentDocument')
+		.should('exist');
 }
 
-export function getIframeBody( containerClass ) {
+export function getIframeBody(containerClass) {
 	return (
-		getIframeDocument( containerClass )
-			.its( 'body' )
-			.should( 'not.be.undefined' )
+		getIframeDocument(containerClass)
+			.its('body')
+			.should('not.be.undefined')
 			// wraps "body" DOM element to allow
 			// chaining more Cypress commands, like ".find(...)"
-			.then( cy.wrap )
+			.then(cy.wrap)
 	);
 }

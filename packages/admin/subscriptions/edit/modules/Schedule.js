@@ -1,7 +1,7 @@
 import { __ } from '@wordpress/i18n';
 import Box from '../../../ui/Box';
 import DatePicker from '../../../components/DatePicker';
-import { CeFormControl } from '@checkout-engine/components-react';
+import { CeFormControl } from '@surecart/components-react';
 
 export default ({ subscription, updateSubscription, loading }) => {
 	return (

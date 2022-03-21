@@ -10,7 +10,7 @@ import SelectProductGroup from '../../components/SelectProductGroup';
 import useEntities from '../../mixins/useEntities';
 import apiFetch from '@wordpress/api-fetch';
 
-import { CeForm, CeInput } from '@checkout-engine/components-react';
+import { CeForm, CeInput } from '@surecart/components-react';
 
 export default ({ loading, product, updateProduct }) => {
 	const [saving, setSaving] = useState(false);
@@ -48,7 +48,7 @@ export default ({ loading, product, updateProduct }) => {
 
 		try {
 			const group = await apiFetch({
-				path: 'checkout-engine/v1/product_groups/',
+				path: 'surecart/v1/product_groups/',
 				method: 'POST',
 				data: {
 					name,

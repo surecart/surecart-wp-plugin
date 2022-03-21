@@ -74,7 +74,7 @@ export class CeInvoicesList {
   /** Get all orders */
   async getItems() {
     const response = await await apiFetch({
-      path: addQueryArgs(`checkout-engine/v1/invoices/`, {
+      path: addQueryArgs(`surecart/v1/invoices/`, {
         expand: ['invoice_items', 'charge'],
         ...this.query,
       }),

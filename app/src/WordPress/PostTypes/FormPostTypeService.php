@@ -201,7 +201,7 @@ class FormPostTypeService {
 				),
 				'template'              => [
 					[
-						'checkout-engine/form',
+						'surecart/form',
 						[],
 						[],
 					],

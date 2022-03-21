@@ -20,34 +20,34 @@ if ( $is_admin && ! $is_ajax ) {
 	?>
 	<!--suppress CssUnusedSymbol -->
 	<style>
-		.checkout-engine-whoops {
+		.surecart-whoops {
 			position: relative;
 			z-index: 1;
 			margin: 20px 20px 0 0;
 		}
 
-		.checkout-engine-whoops .stack-container {
+		.surecart-whoops .stack-container {
 			display: flex;
 		}
 
-		.checkout-engine-whoops .left-panel {
+		.surecart-whoops .left-panel {
 			position: static;
 			height: auto;
 			overflow: visible;
 		}
 
-		.checkout-engine-whoops .details-container {
+		.surecart-whoops .details-container {
 			position: static;
 			height: auto;
 			overflow: visible;
 		}
 
 		@media (max-width: 600px) {
-			.checkout-engine-whoops {
+			.surecart-whoops {
 				margin: 10px 10px 0 0;
 			}
 
-			.checkout-engine-whoops .stack-container {
+			.surecart-whoops .stack-container {
 				display: block;
 			}
 		}
@@ -63,7 +63,7 @@ if ( $is_admin && ! $is_ajax ) {
 		});
 	</script>
 	<?php
-	require 'checkout-engine-body.html.php';
+	require 'surecart-body.html.php';
 	return;
 }
 ?>
@@ -77,6 +77,6 @@ if ( $is_admin && ! $is_ajax ) {
 	<?php echo '<' . 'title' . '>' . $tpl->escape( $page_title ) . '</' . 'title' . '>'; ?>
 </head>
 <body>
-	<?php require 'checkout-engine-body.html.php'; ?>
+	<?php require 'surecart-body.html.php'; ?>
 </body>
 </html>

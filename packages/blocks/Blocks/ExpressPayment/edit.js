@@ -1,7 +1,7 @@
 /**
  * Component Dependencies
  */
-import { CeExpressPayment } from '@checkout-engine/components-react';
+import { CeExpressPayment } from '@surecart/components-react';
 import { Disabled } from '@wordpress/components';
 /**
  * WordPress dependencies

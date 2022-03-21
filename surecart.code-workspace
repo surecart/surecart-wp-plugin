@@ -12,7 +12,7 @@
 		"php-docblocker.qualifyClassNames": true,
 		"php-docblocker.author": {
 			"name": "Andre Gagnon",
-			"email": "andre@checkoutengine.com"
+			"email": "andre@surecart.com"
 		},
 		"[php]": {
 			"editor.defaultFormatter": "wongjn.php-sniffer"
@@ -32,7 +32,7 @@
 				"request": "launch",
 				"port": 9003,
 				"pathMappings": {
-					"/var/www/html/wp-content/plugins/checkout-engine": "${workspaceRoot}/"
+					"/var/www/html/wp-content/plugins/surecart": "${workspaceRoot}/"
 				}
 			}
 		]

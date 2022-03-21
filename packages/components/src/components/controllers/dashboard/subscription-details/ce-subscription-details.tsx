@@ -41,7 +41,7 @@ export class CeSubscriptionDetails {
     try {
       this.loading = true;
       const price = await apiFetch({
-        path: addQueryArgs(`checkout-engine/v1/prices/${price_id}`, {
+        path: addQueryArgs(`surecart/v1/prices/${price_id}`, {
           expand: ['product'],
         }),
       });

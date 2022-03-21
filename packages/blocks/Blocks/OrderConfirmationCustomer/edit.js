@@ -11,7 +11,7 @@ import {
 	ToggleControl,
 } from '@wordpress/components';
 import { useBlockProps } from '@wordpress/block-editor';
-import { CeOrderConfirmationCustomer } from '@checkout-engine/components-react';
+import { CeOrderConfirmationCustomer } from '@surecart/components-react';
 
 export default ({ attributes }) => {
 	const { title } = attributes;
@@ -21,10 +21,10 @@ export default ({ attributes }) => {
 	return (
 		<Fragment>
 			<InspectorControls>
-				<PanelBody title={__('Attributes', 'checkout-engine')}>
+				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<TextControl
-							label={__('Title', 'checkout-engine')}
+							label={__('Title', 'surecart')}
 							value={title}
 							onChange={(title) => setAttributes({ title })}
 						/>

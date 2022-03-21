@@ -27,7 +27,7 @@ export default ({ subscription, children }) => {
 		try {
 			const result = await apiFetch({
 				path: addQueryArgs(
-					`checkout-engine/v1/subscriptions/${subscription.id}`,
+					`surecart/v1/subscriptions/${subscription.id}`,
 					{
 						expand: [
 							'price',

@@ -1,7 +1,7 @@
 import { __ } from '@wordpress/i18n';
 
 import { useBlockProps } from '@wordpress/block-editor';
-import { CeChoice, CeFormatNumber } from '@checkout-engine/components-react';
+import { CeChoice, CeFormatNumber } from '@surecart/components-react';
 
 export default ({ attributes, isSelected }) => {
 	const { amount, currency } = attributes;

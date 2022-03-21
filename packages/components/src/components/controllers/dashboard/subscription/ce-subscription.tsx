@@ -40,7 +40,7 @@ export class CeSubscription {
     try {
       this.busy = true;
       this.subscription = (await apiFetch({
-        path: addQueryArgs(`checkout-engine/v1/subscriptions/${this.subscription?.id}/`, { expand: ['price', 'price.product', 'latest_invoice', 'product'] }),
+        path: addQueryArgs(`surecart/v1/subscriptions/${this.subscription?.id}/`, { expand: ['price', 'price.product', 'latest_invoice', 'product'] }),
         method: 'PATCH',
         data: {
           purge_pending_update: true,
@@ -64,7 +64,7 @@ export class CeSubscription {
     try {
       this.loading = true;
       this.subscription = (await await apiFetch({
-        path: addQueryArgs(`checkout-engine/v1/subscriptions/${this.subscriptionId}`, {
+        path: addQueryArgs(`surecart/v1/subscriptions/${this.subscriptionId}`, {
           expand: ['price', 'price.product', 'latest_invoice'],
           ...(this.query || {}),
         }),

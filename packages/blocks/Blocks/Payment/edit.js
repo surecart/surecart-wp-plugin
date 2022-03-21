@@ -9,35 +9,39 @@ import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
 /**
  * Component Dependencies
  */
-import { CePayment } from '@checkout-engine/components-react';
+import { CePayment } from '@surecart/components-react';
 
-export default ( { className, attributes, setAttributes } ) => {
+export default ({ className, attributes, setAttributes }) => {
 	const { label, secure_notice } = attributes;
 
 	return (
 		<Fragment>
 			<InspectorControls>
-				<PanelBody title={ __( 'Attributes', 'checkout-engine' ) }>
+				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<TextControl
-							label={ __( 'Label', 'checkout-engine' ) }
-							value={ label }
-							onChange={ ( label ) => setAttributes( { label } ) }
+							label={__('Label', 'surecart')}
+							value={label}
+							onChange={(label) => setAttributes({ label })}
 						/>
 					</PanelRow>
 					<PanelRow>
 						<TextControl
-							label={ __( 'Secure Notice', 'checkout-engine' ) }
-							value={ secure_notice }
-							onChange={ ( secure_notice ) =>
-								setAttributes( { secure_notice } )
+							label={__('Secure Notice', 'surecart')}
+							value={secure_notice}
+							onChange={(secure_notice) =>
+								setAttributes({ secure_notice })
 							}
 						/>
 					</PanelRow>
 				</PanelBody>
 			</InspectorControls>
 
-			<CePayment className={ className } label={ label } secureNotice={ secure_notice }></CePayment>
+			<CePayment
+				className={className}
+				label={label}
+				secureNotice={secure_notice}
+			></CePayment>
 		</Fragment>
 	);
 };

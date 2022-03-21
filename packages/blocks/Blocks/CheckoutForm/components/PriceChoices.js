@@ -102,7 +102,7 @@ export default ({ choices, onUpdate, onRemove, onAddProduct, description }) => {
 					? description
 					: __(
 							'To add some products "Add Products" button.',
-							'checkout-engine'
+							'surecart'
 					  )}
 			</div>
 		);

@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
-import { CeButton, CeCard, CeInput } from '@checkout-engine/components-react';
+import { CeButton, CeCard, CeInput } from '@surecart/components-react';
 
 export default () => {
 	return (

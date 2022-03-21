@@ -11,7 +11,7 @@
  * @noinspection ALL
  */
 ?>
-<div class="checkout-engine-whoops">
+<div class="surecart-whoops">
 	<style><?php echo $stylesheet; ?></style>
 
 	<div class="Whoops container">

@@ -1,4 +1,4 @@
-import { CeSelect } from '@checkout-engine/components-react';
+import { CeSelect } from '@surecart/components-react';
 import { useRef, useState } from '@wordpress/element';
 import { throttle } from 'lodash';
 import { store as coreStore } from '@wordpress/core-data';

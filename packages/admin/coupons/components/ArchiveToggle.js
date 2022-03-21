@@ -1,6 +1,6 @@
 import { __ } from '@wordpress/i18n';
 
-import { CeSwitch } from '@checkout-engine/components-react';
+import { CeSwitch } from '@surecart/components-react';
 
 // hocs
 import withConfirm from '../../hocs/withConfirm';

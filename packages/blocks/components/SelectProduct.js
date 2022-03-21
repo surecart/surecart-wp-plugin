@@ -1,5 +1,5 @@
 import { __ } from '@wordpress/i18n';
-import { CeSelect } from '@checkout-engine/components-react';
+import { CeSelect } from '@surecart/components-react';
 import { useState, useEffect } from '@wordpress/element';
 import throttle from 'lodash/throttle';
 import apiFetch from '@wordpress/api-fetch';
@@ -29,7 +29,7 @@ export default ({ onSelect }) => {
 		setBusy(true);
 		try {
 			const response = await apiFetch({
-				path: addQueryArgs(`checkout-engine/v1/products`, {
+				path: addQueryArgs(`surecart/v1/products`, {
 					query,
 					archived: false,
 					expand: ['prices'],

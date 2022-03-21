@@ -22,7 +22,7 @@ class ConfigServiceProvider implements ServiceProviderInterface {
 	 */
 	public function register( $container ) {
 		$container['surecart_app_core.config.config'] = function( $c ) {
-			return new Config( $c[ CHECKOUT_ENGINE_CONFIG_KEY ]['app_core']['path'] );
+			return new Config( $c[ SURECART_CONFIG_KEY ]['app_core']['path'] );
 		};
 	}
 

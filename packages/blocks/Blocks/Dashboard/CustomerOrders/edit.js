@@ -11,7 +11,7 @@ import {
 	TextControl,
 	ToggleControl,
 } from '@wordpress/components';
-import { CeDashboardModule } from '@checkout-engine/components-react';
+import { CeDashboardModule } from '@surecart/components-react';
 import { Fragment } from 'react';
 
 export default ({ attributes, setAttributes }) => {

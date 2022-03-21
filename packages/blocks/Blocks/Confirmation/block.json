@@ -1,11 +1,11 @@
 {
 	"$schema": "https://json.schemastore.org/block.json",
 	"apiVersion": 2,
-	"name": "checkout-engine/order-confirmation",
+	"name": "surecart/order-confirmation",
 	"title": "Order Confirmation",
 	"description": "Display an order confirmation section.",
 	"category": "layout",
-	"keywords": [ "thank", "thank you", "confirm" ],
+	"keywords": ["thank", "thank you", "confirm"],
 	"supports": {
 		"reusable": false,
 		"html": false

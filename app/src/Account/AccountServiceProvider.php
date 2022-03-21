@@ -19,7 +19,7 @@ class AccountServiceProvider implements ServiceProviderInterface {
 			return new AccountService();
 		};
 
-		$app = $container[ CHECKOUT_ENGINE_APPLICATION_KEY ];
+		$app = $container[ SURECART_APPLICATION_KEY ];
 		$app->alias( 'account', 'surecart.account' );
 	}
 

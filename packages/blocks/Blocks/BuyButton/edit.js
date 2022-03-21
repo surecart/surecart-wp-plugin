@@ -16,7 +16,7 @@ import {
 /**
  * Component Dependencies
  */
-import { CeButton } from '@checkout-engine/components-react';
+import { CeButton } from '@surecart/components-react';
 import Placeholder from './Placeholder';
 
 export default ({ className, attributes, setAttributes }) => {
@@ -44,10 +44,10 @@ export default ({ className, attributes, setAttributes }) => {
 	return (
 		<div className={className} css={css``}>
 			<InspectorControls>
-				<PanelBody title={__('Attributes', 'checkout-engine')}>
+				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<TextControl
-							label={__('Button Text', 'checkout-engine')}
+							label={__('Button Text', 'surecart')}
 							value={label}
 							onChange={(label) => setAttributes({ label })}
 						/>

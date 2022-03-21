@@ -62,8 +62,8 @@ abstract class AdminModelEditController {
 	}
 
 	public function enqueueComponents() {
-		wp_enqueue_script( 'checkout-engine-components' );
-		wp_enqueue_style( 'checkout-engine-themes-default' );
+		wp_enqueue_script( 'surecart-components' );
+		wp_enqueue_style( 'surecart-themes-default' );
 	}
 
 	/**
@@ -93,7 +93,7 @@ abstract class AdminModelEditController {
 		$this->enqueueScriptDependencies();
 
 		// automatically load dependencies and version
-		$asset_file = include plugin_dir_path( CHECKOUT_ENGINE_PLUGIN_FILE ) . "dist/$this->path.asset.php";
+		$asset_file = include plugin_dir_path( SURECART_PLUGIN_FILE ) . "dist/$this->path.asset.php";
 
 		// Enqueue scripts.
 		\CheckoutEngine::core()->assets()->enqueueScript(

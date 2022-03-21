@@ -21,7 +21,7 @@ class InvoiceController extends BaseController {
 			->id( 'customer-invoices-preview' )
 			->with(
 				[
-					'heading' => $attributes['title'] ?? __( 'Invoice History', 'checkout-engine' ),
+					'heading' => $attributes['title'] ?? __( 'Invoice History', 'surecart' ),
 					'allLink' => add_query_arg(
 						[
 							'tab'    => $this->getTab(),
@@ -54,7 +54,7 @@ class InvoiceController extends BaseController {
 			->id( 'customer-invoices-index' )
 			->with(
 				[
-					'heading' => __( 'Invoice History', 'checkout-engine' ),
+					'heading' => __( 'Invoice History', 'surecart' ),
 					'query'   => [
 						'customer_ids' => array_values( User::current()->customerIds() ),
 						'status'       => [ 'paid' ],

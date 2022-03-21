@@ -39,7 +39,7 @@ export class CeSubscriptionPayment {
   async fetchSubscription() {
     if (!this.subscriptionId) return;
     this.subscription = (await apiFetch({
-      path: addQueryArgs(`/checkout-engine/v1/subscriptions/${this.subscriptionId}`, {
+      path: addQueryArgs(`/surecart/v1/subscriptions/${this.subscriptionId}`, {
         expand: ['price', 'price.product', 'latest_invoice', 'product'],
       }),
     })) as Subscription;
@@ -47,7 +47,7 @@ export class CeSubscriptionPayment {
 
   async fetchPaymentMethods() {
     this.paymentMethods = (await apiFetch({
-      path: addQueryArgs(`/checkout-engine/v1/payment_methods`, {
+      path: addQueryArgs(`/surecart/v1/payment_methods`, {
         expand: ['card'],
         customer_ids: this.customerIds,
         ...(this.subscription?.live_mode !== null ? { live_mode: this.subscription.live_mode } : {}),
@@ -62,7 +62,7 @@ export class CeSubscriptionPayment {
       this.error = '';
       this.busy = true;
       await apiFetch({
-        path: `/checkout-engine/v1/subscriptions/${this.subscription?.id}`,
+        path: `/surecart/v1/subscriptions/${this.subscription?.id}`,
         method: 'PATCH',
         data: {
           payment_method: method,

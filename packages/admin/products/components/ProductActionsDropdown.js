@@ -5,7 +5,7 @@ import {
 	CeDropdown,
 	CeMenu,
 	CeMenuItem,
-} from '@checkout-engine/components-react';
+} from '@surecart/components-react';
 
 export default ({ product, onDelete, onToggleArchive }) => {
 	const confirmArchive = () => {

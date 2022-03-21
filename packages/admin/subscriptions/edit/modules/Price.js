@@ -3,7 +3,7 @@ import { __ } from '@wordpress/i18n';
 import DataTable from '../../../components/DataTable';
 import { translateInterval } from '@scripts/admin/util/translations';
 import { css, jsx } from '@emotion/core';
-import { CeInput } from '@checkout-engine/components-react';
+import { CeInput } from '@surecart/components-react';
 import PriceSelector from '@admin/components/PriceSelector';
 
 export default ({

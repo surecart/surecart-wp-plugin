@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 const { __ } = wp.i18n;
-import { CeButton } from '@checkout-engine/components-react';
+import { CeButton } from '@surecart/components-react';
 
 export default ({ isOpen, setIsOpen, children, buttons, type, className }) => {
 	return (

@@ -2,13 +2,11 @@
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import Box from '../components/Box';
-import { CeInput } from '@checkout-engine/components-react';
+import { CeInput } from '@surecart/components-react';
 import { useDispatch } from '@wordpress/data';
 
 export default ({}) => {
-	const { updateSetting, getSetting } = useDispatch(
-		'checkout-engine/settings'
-	);
+	const { updateSetting, getSetting } = useDispatch('surecart/settings');
 
 	return (
 		<div

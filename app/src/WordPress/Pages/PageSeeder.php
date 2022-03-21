@@ -47,8 +47,8 @@ class PageSeeder {
 	 * @return void
 	 */
 	public function createCheckoutForm() {
-		$content = file_get_contents( plugin_dir_path( CHECKOUT_ENGINE_PLUGIN_FILE ) . 'templates/forms/default.html' );
-		$content = '<!-- wp:checkout-engine/form -->' . $content . '<!-- /wp:checkout-engine/form -->';
+		$content = file_get_contents( plugin_dir_path( SURECART_PLUGIN_FILE ) . 'templates/forms/default.html' );
+		$content = '<!-- wp:surecart/form -->' . $content . '<!-- /wp:surecart/form -->';
 
 		$forms = apply_filters(
 			'surecart/create_forms',
@@ -79,19 +79,19 @@ class PageSeeder {
 				'checkout'           => [
 					'name'    => _x( 'checkout', 'Page slug', 'surecart' ),
 					'title'   => _x( 'Checkout', 'Page title', 'surecart' ),
-					'content' => '<!-- wp:checkout-engine/checkout-form {"id":' . (int) $form->ID . '} -->
-					<!-- wp:checkout-engine/form /-->
-					<!-- /wp:checkout-engine/checkout-form -->',
+					'content' => '<!-- wp:surecart/checkout-form {"id":' . (int) $form->ID . '} -->
+					<!-- wp:surecart/form /-->
+					<!-- /wp:surecart/checkout-form -->',
 				],
 				'order-confirmation' => [
 					'name'    => _x( 'order-confirmation', 'Page slug', 'surecart' ),
 					'title'   => _x( 'Thank you!', 'Page title', 'surecart' ),
-					'content' => file_get_contents( plugin_dir_path( CHECKOUT_ENGINE_PLUGIN_FILE ) . 'templates/confirmation/order-confirmation.html' ),
+					'content' => file_get_contents( plugin_dir_path( SURECART_PLUGIN_FILE ) . 'templates/confirmation/order-confirmation.html' ),
 				],
 				'dashboard'          => [
 					'name'    => _x( 'customer-dashboard', 'Page slug', 'surecart' ),
 					'title'   => _x( 'Dashboard', 'Page title', 'surecart' ),
-					'content' => file_get_contents( plugin_dir_path( CHECKOUT_ENGINE_PLUGIN_FILE ) . 'templates/dashboard/customer-dashboard.html' ),
+					'content' => file_get_contents( plugin_dir_path( SURECART_PLUGIN_FILE ) . 'templates/dashboard/customer-dashboard.html' ),
 				],
 			)
 		);

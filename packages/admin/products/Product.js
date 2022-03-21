@@ -22,7 +22,7 @@ import Sidebar from './Sidebar';
 import useCurrentPage from '../mixins/useCurrentPage';
 import ErrorFlash from '../components/ErrorFlash';
 import useEntities from '../mixins/useEntities';
-import { CeButton } from '@checkout-engine/components-react';
+import { CeButton } from '@surecart/components-react';
 import ProductActionsDropdown from './components/ProductActionsDropdown';
 
 export default () => {

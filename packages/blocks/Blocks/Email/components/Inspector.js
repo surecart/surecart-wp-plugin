@@ -10,17 +10,17 @@ export default ({ attributes, setAttributes }) => {
 
 	return (
 		<InspectorControls>
-			<PanelBody title={__('Attributes', 'checkout-engine')}>
+			<PanelBody title={__('Attributes', 'surecart')}>
 				<PanelRow>
 					<TextControl
-						label={__('Label', 'checkout-engine')}
+						label={__('Label', 'surecart')}
 						value={label}
 						onChange={(label) => setAttributes({ label })}
 					/>
 				</PanelRow>
 				<PanelRow>
 					<TextControl
-						label={__('Placeholder', 'checkout-engine')}
+						label={__('Placeholder', 'surecart')}
 						value={placeholder}
 						onChange={(placeholder) =>
 							setAttributes({ placeholder })
@@ -29,7 +29,7 @@ export default ({ attributes, setAttributes }) => {
 				</PanelRow>
 				<PanelRow>
 					<TextControl
-						label={__('Help', 'checkout-engine')}
+						label={__('Help', 'surecart')}
 						value={help}
 						onChange={(help) => setAttributes({ help })}
 					/>

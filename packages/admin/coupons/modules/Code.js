@@ -9,7 +9,7 @@ import {
 	CeMenu,
 	CeMenuItem,
 	CeTag,
-} from '@checkout-engine/components-react';
+} from '@surecart/components-react';
 import { Icon, box, trash, moreHorizontalMobile } from '@wordpress/icons';
 import { css, jsx } from '@emotion/core';
 import useEntity from '../../mixins/useEntity';
@@ -40,7 +40,7 @@ export default ({ promotion: promotionEntity, index }) => {
 			const r = confirm(
 				__(
 					'Are you sure you want to delete this promotion code?',
-					'checkout-engine'
+					'surecart'
 				)
 			);
 			if (!r) return;

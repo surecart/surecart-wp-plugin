@@ -7,7 +7,7 @@ describe('ce-checkout', () => {
     setResponses(
       [
         {
-          path: '/checkout-engine/v1/orders',
+          path: '/surecart/v1/orders',
           data: {},
         },
       ],
@@ -23,7 +23,7 @@ describe('ce-checkout', () => {
     setResponses(
       [
         {
-          path: '/checkout-engine/v1/orders',
+          path: '/surecart/v1/orders',
           data: {
             id: '0df38be0-5d52-4f80-af56-0a9a6eea7998',
             object: 'order',

@@ -4,7 +4,7 @@ import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 
 import PriceChoice from './PriceChoice';
-import { CeButton } from '@checkout-engine/components-react';
+import { CeButton } from '@surecart/components-react';
 
 export default ({ choices, onUpdate, onRemove, onAddProduct, description }) => {
 	const renderTable = () => {
@@ -52,7 +52,7 @@ export default ({ choices, onUpdate, onRemove, onAddProduct, description }) => {
 					? description
 					: __(
 							'To add some default checkout products, click the "Add Products" button.',
-							'checkout-engine'
+							'surecart'
 					  )}
 			</div>
 		);

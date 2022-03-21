@@ -4,7 +4,7 @@ import { css, jsx } from '@emotion/core';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { store } from '../../store/data';
 import { translateInterval } from '../../util/translations';
-import { CeButton } from '@checkout-engine/components-react';
+import { CeButton } from '@surecart/components-react';
 
 export default ({ product }) => {
 	const prices = useSelect((select) =>

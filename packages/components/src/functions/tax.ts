@@ -1,11 +1,11 @@
 import { __ } from '@wordpress/i18n';
 export const zones = {
   ca_gst: {
-    label: __('GST Number', 'checkout-engine'),
+    label: __('GST Number', 'surecart'),
     label_small: __('CA GST', 'surecart'),
   },
   au_abn: {
-    label: __('ABN Number', 'checkout-engine'),
+    label: __('ABN Number', 'surecart'),
     label_small: __('AU ABN', 'surecart'),
   },
   gb_vat: {
@@ -17,7 +17,7 @@ export const zones = {
     label_small: __('EU VAT', 'surecart'),
   },
   other: {
-    label: __('Tax ID', 'checkout-engine'),
+    label: __('Tax ID', 'surecart'),
     label_small: __('Other', 'surecart'),
   },
 };

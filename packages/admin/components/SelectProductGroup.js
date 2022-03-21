@@ -1,10 +1,6 @@
 import { __ } from '@wordpress/i18n';
 import { useRef } from '@wordpress/element';
-import {
-	CeSelect,
-	CeDivider,
-	CeMenuItem,
-} from '@checkout-engine/components-react';
+import { CeSelect, CeDivider, CeMenuItem } from '@surecart/components-react';
 import throttle from 'lodash/throttle';
 import { translateInterval } from '../util/translations';
 import { formatNumber } from '../util';

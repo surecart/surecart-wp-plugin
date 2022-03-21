@@ -1,5 +1,5 @@
 {
-	"name": "@checkout-engine/admin",
+	"name": "@surecart/admin",
 	"version": "1.0.0",
 	"description": "Admin functionality for CheckoutEngine",
 	"license": "GPL-2.0-or-later",

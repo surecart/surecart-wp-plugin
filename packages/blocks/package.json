@@ -1,5 +1,5 @@
 {
-	"name": "@checkout-engine/blocks",
+	"name": "@surecart/blocks",
 	"version": "1.0.0",
 	"description": "Block library for CheckoutEngine",
 	"license": "GPL-2.0-or-later",
@@ -38,8 +38,8 @@
 		"test:unit": "wp-scripts test-unit-js"
 	},
 	"dependencies": {
-		"@checkout-engine/components": "workspace:^",
-		"@checkout-engine/docs": "workspace:^"
+		"@surecart/components": "workspace:^",
+		"@surecart/docs": "workspace:^"
 	},
 	"devDependencies": {
 		"@wordpress/prettier-config": "^1.1.1",

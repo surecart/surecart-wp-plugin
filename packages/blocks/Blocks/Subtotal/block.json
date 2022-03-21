@@ -1,9 +1,9 @@
 {
-	"name": "checkout-engine/subtotal",
+	"name": "surecart/subtotal",
 	"title": "Subtotal Line Item",
 	"description": "Display a subtotal line item.",
 	"category": "layout",
-	"parent": ["checkout-engine/totals"],
+	"parent": ["surecart/totals"],
 	"keywords": ["submit", "button"],
 	"supports": {
 		"reusable": false,

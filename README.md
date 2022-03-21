@@ -17,7 +17,7 @@ Checkout Engine. Based on the [WP Emerge](https://github.com/htmlburger/wpemerge
 ## Directory structure
 
 ```
-wp-content/plugins/checkout-engine
+wp-content/plugins/surecart
 ├── app/
 │   ├── helpers/              # Helper files, add your own here as well.
 │   ├── routes/               # Register your WP Emerge routes.
@@ -53,7 +53,7 @@ wp-content/plugins/checkout-engine
 │   ├── layouts/
 │   └── partials/
 ├── screenshot-1.png          # Plugin screenshot.
-├── checkout-engine.php              # Bootstrap plugin.
+├── surecart.php              # Bootstrap plugin.
 └── ...
 ```
 

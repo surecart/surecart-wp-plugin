@@ -10,7 +10,7 @@
 				"request": "launch",
 				"port": 9003,
 				"pathMappings": {
-					"/var/www/html/wp-content/plugins/checkout-engine": "${workspaceRoot}/"
+					"/var/www/html/wp-content/plugins/surecart": "${workspaceRoot}/"
 				}
 			},
     ]

@@ -1,10 +1,10 @@
 {
-	"name": "checkout-engine/submit",
+	"name": "surecart/submit",
 	"title": "Submit Button",
 	"description": "Display a submit button.",
 	"category": "layout",
 	"keywords": ["submit", "button"],
-	"parent": ["checkout-engine/form", "checkout-engine/column"],
+	"parent": ["surecart/form", "surecart/column"],
 	"supports": {
 		"reusable": false,
 		"html": false

@@ -8,7 +8,7 @@ import { css, jsx } from '@emotion/core';
 
 import throttle from 'lodash/throttle';
 
-import { CeSelect } from '@checkout-engine/components-react';
+import { CeSelect } from '@surecart/components-react';
 
 export default ({ form, setForm }) => {
 	const [formsData, setFormsData] = useState([]);

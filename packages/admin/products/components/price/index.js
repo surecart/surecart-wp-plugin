@@ -11,7 +11,7 @@ import {
 	CeFormControl,
 	CeTooltip,
 	CeSelect,
-} from '@checkout-engine/components-react';
+} from '@surecart/components-react';
 import Header from './Header';
 
 // hocs

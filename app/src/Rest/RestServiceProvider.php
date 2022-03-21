@@ -23,7 +23,7 @@ abstract class RestServiceProvider extends \WP_REST_Controller implements RestSe
 	 *
 	 * @var string
 	 */
-	protected $name = 'checkout-engine';
+	protected $name = 'surecart';
 
 	/**
 	 * API Version

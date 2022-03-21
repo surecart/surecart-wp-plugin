@@ -55,7 +55,7 @@ class Form {
 	public function getAttribute( $attribute ) {
 		$blocks     = parse_blocks( $this->post->post_content );
 		$form_block = $blocks[0] ?? false;
-		if ( ! $form_block || 'checkout-engine/form' !== $form_block['blockName'] ) {
+		if ( ! $form_block || 'surecart/form' !== $form_block['blockName'] ) {
 			return '';
 		}
 		return $form_block['attrs'][ $attribute ] ?? null;
@@ -71,7 +71,7 @@ class Form {
 		$this->post = get_post( $id );
 		$blocks     = parse_blocks( $this->post->post_content );
 		$form_block = $blocks[0] ?? false;
-		if ( ! $form_block || 'checkout-engine/form' !== $form_block['blockName'] ) {
+		if ( ! $form_block || 'surecart/form' !== $form_block['blockName'] ) {
 			return '';
 		}
 		return $form_block['attrs']['mode'] ?? 'live';
@@ -132,7 +132,7 @@ class Form {
 	public function searchBlocks( $id ) {
 		return get_posts(
 			[
-				's'         => '<!-- wp:checkout-engine/checkout-form {"id":' . (int) $id,
+				's'         => '<!-- wp:surecart/checkout-form {"id":' . (int) $id,
 				'sentence'  => 1,
 				'post_type' => 'any',
 				'per_page'  => -1,
@@ -176,7 +176,7 @@ class Form {
 	public function findCheckoutBlocks( $post_blocks, \WP_Post $post_object ) {
 		$blocks = [];
 		foreach ( $post_blocks as $block ) {
-			if ( 'checkout-engine/checkout-form' === $block['blockName'] ) {
+			if ( 'surecart/checkout-form' === $block['blockName'] ) {
 				$block['post'] = $post_object;
 				$blocks[]      = $block;
 			} elseif ( ! empty( $block['innerBlocks'] ) ) {

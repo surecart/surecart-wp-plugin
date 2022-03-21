@@ -1,10 +1,10 @@
 {
-	"name": "checkout-engine/customer-downloads",
+	"name": "surecart/customer-downloads",
 	"title": "Customer Downloads",
 	"description": "Displays the customer's downloads.",
 	"category": "layout",
 	"keywords": ["download", "customer", "dashboard"],
-	"parent": ["checkout-engine/dashboard-page"],
+	"parent": ["surecart/dashboard-page"],
 	"supports": {
 		"reusable": false,
 		"html": false,

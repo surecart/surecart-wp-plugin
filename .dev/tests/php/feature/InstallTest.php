@@ -39,17 +39,17 @@ class InstallTest extends CheckoutEngineUnitTestCase {
 		$page_service = new PageService();
 		$form = $page_service->get('checkout', 'sc_form');
 		$this->assertSame($form->post_type, 'sc_form');
-		$this->assertStringContainsString('wp:checkout-engine/form', $form->post_content);
+		$this->assertStringContainsString('wp:surecart/form', $form->post_content);
 
 		$default_form = \CheckoutEngine::forms()->getDefault();
 		$this->assertEquals($form->ID, $default_form->ID);
 
 		$page = $page_service->get('checkout');
 		$this->assertSame($page->post_type, 'page');
-		$this->assertStringContainsString('wp:checkout-engine/checkout-form', $page->post_content);
+		$this->assertStringContainsString('wp:surecart/checkout-form', $page->post_content);
 
 		$page = $page_service->get('dashboard');
 		$this->assertSame($page->post_type, 'page');
-		$this->assertStringContainsString('wp:checkout-engine/dashboard', $page->post_content);
+		$this->assertStringContainsString('wp:surecart/dashboard', $page->post_content);
 	}
 }

@@ -7,7 +7,7 @@ import { css, jsx } from '@emotion/core';
 import { useEffect } from 'react';
 import useEntity from '../../../mixins/useEntity';
 import Box from '../../../ui/Box';
-import { CeFormatDate } from '@checkout-engine/components-react';
+import { CeFormatDate } from '@surecart/components-react';
 
 export default ({ subscription }) => {
 	const { pending_update } = subscription || {};

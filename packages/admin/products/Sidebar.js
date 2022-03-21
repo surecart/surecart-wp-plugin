@@ -7,7 +7,7 @@ import { Fragment } from '@wordpress/element';
 
 import Box from '../ui/Box';
 import Definition from '../ui/Definition';
-import { CeSwitch } from '@checkout-engine/components-react';
+import { CeSwitch } from '@surecart/components-react';
 import Image from './modules/Image';
 import Upgrades from './modules/Upgrades';
 import Files from './modules/Files';

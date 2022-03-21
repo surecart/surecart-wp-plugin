@@ -1,10 +1,10 @@
 {
-	"name": "checkout-engine/input",
+	"name": "surecart/input",
 	"title": "Input",
 	"description": "Displays a form text input.",
 	"category": "layout",
 	"keywords": ["email", "mail"],
-	"parent": ["checkout-engine/form", "checkout-engine/column"],
+	"parent": ["surecart/form", "surecart/column"],
 	"supports": {
 		"reusable": false,
 		"html": false

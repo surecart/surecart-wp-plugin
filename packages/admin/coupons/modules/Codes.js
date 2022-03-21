@@ -3,7 +3,7 @@
 import { __ } from '@wordpress/i18n';
 
 import Box from '../../ui/Box';
-import { CeButton, CeSwitch } from '@checkout-engine/components-react';
+import { CeButton, CeSwitch } from '@surecart/components-react';
 import { useState, Fragment } from '@wordpress/element';
 import { css, jsx } from '@emotion/core';
 import useEntities from '../../mixins/useEntities';

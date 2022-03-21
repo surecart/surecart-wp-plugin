@@ -1,15 +1,11 @@
 {
 	"apiVersion": 2,
-	"name": "checkout-engine/heading",
+	"name": "surecart/heading",
 	"title": "Title/Heading Section",
 	"description": "Displays a title/heading section",
 	"category": "layout",
 	"keywords": ["heading", "title"],
-	"parent": [
-		"checkout-engine/form",
-		"checkout-engine/column",
-		"checkout-engine/dashboard-page"
-	],
+	"parent": ["surecart/form", "surecart/column", "surecart/dashboard-page"],
 	"supports": {
 		"reusable": false,
 		"html": false,

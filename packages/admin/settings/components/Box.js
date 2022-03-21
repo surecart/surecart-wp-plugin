@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { CeCard } from '@checkout-engine/components-react';
+import { CeCard } from '@surecart/components-react';
 
 export default ({ title, description, children }) => {
 	return (

@@ -9,7 +9,7 @@ import {
 	CeDropdown,
 	CeMenu,
 	CeMenuItem,
-} from '@checkout-engine/components-react';
+} from '@surecart/components-react';
 import { Icon, trash, moreHorizontalMobile } from '@wordpress/icons';
 import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';

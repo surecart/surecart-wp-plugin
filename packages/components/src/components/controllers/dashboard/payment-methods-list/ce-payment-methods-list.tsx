@@ -46,7 +46,7 @@ export class CePaymentMethodsList {
     try {
       this.busy = true;
       (await apiFetch({
-        path: `checkout-engine/v1/payment_methods/${method?.id}/detach`,
+        path: `surecart/v1/payment_methods/${method?.id}/detach`,
         method: 'PATCH',
       })) as PaymentMethod;
       // remove from view.
@@ -62,14 +62,14 @@ export class CePaymentMethodsList {
     try {
       this.busy = true;
       (await apiFetch({
-        path: `checkout-engine/v1/customers/${(method?.customer as Customer)?.id}`,
+        path: `surecart/v1/customers/${(method?.customer as Customer)?.id}`,
         method: 'PATCH',
         data: {
           default_payment_method: method.id,
         },
       })) as PaymentMethod;
       this.paymentMethods = (await await apiFetch({
-        path: addQueryArgs(`checkout-engine/v1/payment_methods/`, {
+        path: addQueryArgs(`surecart/v1/payment_methods/`, {
           expand: ['card', 'customer'],
           ...this.query,
         }),
@@ -86,7 +86,7 @@ export class CePaymentMethodsList {
     try {
       this.loading = true;
       this.paymentMethods = (await await apiFetch({
-        path: addQueryArgs(`checkout-engine/v1/payment_methods/`, {
+        path: addQueryArgs(`surecart/v1/payment_methods/`, {
           expand: ['card', 'customer'],
           ...this.query,
         }),

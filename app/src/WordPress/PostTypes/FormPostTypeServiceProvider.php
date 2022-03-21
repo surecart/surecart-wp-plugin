@@ -18,7 +18,7 @@ class FormPostTypeServiceProvider implements ServiceProviderInterface {
 			return new FormPostTypeService( $container['surecart.pages'] );
 		};
 
-		$app = $container[ CHECKOUT_ENGINE_APPLICATION_KEY ];
+		$app = $container[ SURECART_APPLICATION_KEY ];
 		$app->alias( 'forms', 'surecart.forms' );
 	}
 

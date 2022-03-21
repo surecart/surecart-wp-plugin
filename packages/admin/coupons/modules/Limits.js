@@ -5,11 +5,7 @@ import { __ } from '@wordpress/i18n';
 import { BaseControl, DateTimePicker } from '@wordpress/components';
 
 import Box from '../../ui/Box';
-import {
-	CeCheckbox,
-	CeInput,
-	CeSwitch,
-} from '@checkout-engine/components-react';
+import { CeCheckbox, CeInput, CeSwitch } from '@surecart/components-react';
 
 export default ({ coupon, loading, updateCoupon }) => {
 	return (

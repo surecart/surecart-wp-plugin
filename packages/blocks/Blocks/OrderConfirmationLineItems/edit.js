@@ -1,5 +1,5 @@
 import { useBlockProps } from '@wordpress/block-editor';
-import { CeDashboardModule } from '@checkout-engine/components-react';
+import { CeDashboardModule } from '@surecart/components-react';
 
 export default ({ attributes }) => {
 	const { title } = attributes;

@@ -208,6 +208,6 @@ return [
 	 */
 	'app_core'            => [
 		'path' => dirname( __DIR__ ),
-		'url'  => plugin_dir_url( CHECKOUT_ENGINE_PLUGIN_FILE ),
+		'url'  => plugin_dir_url( SURECART_PLUGIN_FILE ),
 	],
 ];

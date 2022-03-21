@@ -3,10 +3,10 @@ import { select, useDispatch, useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { useState } from '@wordpress/element';
 import { addQueryArgs } from '@wordpress/url';
-import { CeButton } from '@checkout-engine/components-react';
+import { CeButton } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 import Definition from '../../ui/Definition';
-import { CeFormControl } from '@checkout-engine/components-react';
+import { CeFormControl } from '@surecart/components-react';
 import UserSelect from '../../components/UserSelect';
 import { css, jsx } from '@emotion/core';
 

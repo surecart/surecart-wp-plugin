@@ -1,1 +1,1 @@
-export default 'checkout-engine/ui';
+export default 'surecart/ui';

@@ -7,14 +7,14 @@ import {
 	TextControl,
 	SelectControl,
 } from '@wordpress/components';
-import { CeSessionDetail } from '@checkout-engine/components-react';
+import { CeSessionDetail } from '@surecart/components-react';
 
 export default ({ attributes, setAttributes }) => {
 	const { value, label } = attributes;
 	return (
 		<Fragment>
 			<InspectorControls>
-				<PanelBody title={__('Attributes', 'checkout-engine')}>
+				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<SelectControl
 							value={value}
@@ -69,7 +69,7 @@ export default ({ attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<TextControl
-							label={__('Label', 'checkout-engine')}
+							label={__('Label', 'surecart')}
 							value={label}
 							onChange={(label) => setAttributes({ label })}
 						/>

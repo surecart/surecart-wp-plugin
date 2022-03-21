@@ -9,7 +9,7 @@ import {
 	CeRadioGroup,
 	CeSelect,
 	CeRadio,
-} from '@checkout-engine/components-react';
+} from '@surecart/components-react';
 import PriceChoices from '@scripts/blocks/components/PriceChoices';
 
 export default ({ attributes, setAttributes, onCreate, onCancel, isNew }) => {

@@ -8,7 +8,7 @@ import {
 	CeDropdown,
 	CeMenu,
 	CeMenuItem,
-} from '@checkout-engine/components-react';
+} from '@surecart/components-react';
 import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { translateInterval } from '@scripts/admin/util/translations';

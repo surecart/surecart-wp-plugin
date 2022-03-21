@@ -25,7 +25,7 @@ import {
 	CeDonationChoices,
 	CeForm,
 	CePriceInput,
-} from '@checkout-engine/components-react';
+} from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
 import PriceInfo from '../PriceChoice/components/PriceInfo';
 
@@ -40,15 +40,15 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 		: __experimentalUseInnerBlocksProps;
 
 	const [template, setTemplate] = useState([
-		['checkout-engine/donation-amount', { amount: 100, currency }],
-		['checkout-engine/donation-amount', { amount: 200, currency }],
-		['checkout-engine/donation-amount', { amount: 500, currency }],
-		['checkout-engine/donation-amount', { amount: 1000, currency }],
-		['checkout-engine/donation-amount', { amount: 2000, currency }],
-		['checkout-engine/donation-amount', { amount: 5000, currency }],
-		['checkout-engine/donation-amount', { amount: 10000, currency }],
-		['checkout-engine/donation-amount', { amount: 20000, currency }],
-		['checkout-engine/donation-amount', { amount: 50000, currency }],
+		['surecart/donation-amount', { amount: 100, currency }],
+		['surecart/donation-amount', { amount: 200, currency }],
+		['surecart/donation-amount', { amount: 500, currency }],
+		['surecart/donation-amount', { amount: 1000, currency }],
+		['surecart/donation-amount', { amount: 2000, currency }],
+		['surecart/donation-amount', { amount: 5000, currency }],
+		['surecart/donation-amount', { amount: 10000, currency }],
+		['surecart/donation-amount', { amount: 20000, currency }],
+		['surecart/donation-amount', { amount: 50000, currency }],
 	]);
 
 	const price = useSelect(
@@ -73,7 +73,7 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 	const innerBlocksProps = useInnerBlocksProps(
 		{},
 		{
-			allowedBlocks: ['checkout-engine/donation-amount'],
+			allowedBlocks: ['surecart/donation-amount'],
 			renderAppender: false,
 			orientation: 'horizontal',
 			template,
@@ -86,7 +86,7 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 
 		insertBlocks(
 			createBlocksFromInnerBlocksTemplate([
-				['checkout-engine/donation-amount', { amount, currency }],
+				['surecart/donation-amount', { amount, currency }],
 			]),
 			999999,
 			clientId
@@ -134,10 +134,10 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 	return (
 		<Fragment>
 			<InspectorControls>
-				<PanelBody title={__('Attributes', 'checkout-engine')}>
+				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<TextControl
-							label={__('Label', 'checkout-engine')}
+							label={__('Label', 'surecart')}
 							value={label}
 							onChange={(label) => setAttributes({ label })}
 						/>
@@ -146,7 +146,7 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 						<ToggleControl
 							label={__(
 								'Allow custom amount to be entered',
-								'checkout-engine'
+								'surecart'
 							)}
 							checked={custom_amount}
 							onChange={(custom_amount) =>
@@ -167,7 +167,7 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 						></CePriceInput>
 					</PanelRow>
 				</PanelBody>
-				<PanelBody title={__('Product Info', 'checkout-engine')}>
+				<PanelBody title={__('Product Info', 'surecart')}>
 					<PriceInfo price_id={price_id} />
 				</PanelBody>
 			</InspectorControls>

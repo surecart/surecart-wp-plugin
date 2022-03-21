@@ -22,13 +22,13 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 	 */
 	public function register( $container ) {
 		$container['surecart_app_core.assets.manifest'] = function( $c ) {
-			return new Manifest( $c[ CHECKOUT_ENGINE_CONFIG_KEY ]['app_core']['path'] );
+			return new Manifest( $c[ SURECART_CONFIG_KEY ]['app_core']['path'] );
 		};
 
 		$container['surecart_app_core.assets.assets'] = function( $container ) {
 			return new Assets(
-				$container[ CHECKOUT_ENGINE_CONFIG_KEY ]['app_core']['path'],
-				$container[ CHECKOUT_ENGINE_CONFIG_KEY ]['app_core']['url'],
+				$container[ SURECART_CONFIG_KEY ]['app_core']['path'],
+				$container[ SURECART_CONFIG_KEY ]['app_core']['url'],
 				$container['surecart_app_core.config.config'],
 				$container['surecart_app_core.assets.manifest']
 			);

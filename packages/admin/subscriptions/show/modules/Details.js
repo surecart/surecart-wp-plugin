@@ -6,7 +6,7 @@ import { formatTime } from '../../../util/time';
 import {
 	CeFormatDate,
 	CeSubscriptionStatusBadge,
-} from '@checkout-engine/components-react';
+} from '@surecart/components-react';
 
 export default ({ subscription, customer, product, loading }) => {
 	if (!subscription?.id) {

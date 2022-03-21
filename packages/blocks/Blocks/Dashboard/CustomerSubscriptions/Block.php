@@ -56,7 +56,7 @@ class Block extends DashboardPage {
 			'ce-subscription',
 			'#customer-subscription',
 			[
-				'heading'      => $attributes['title'] ?? __( 'Update Subscription', 'checkout-engine' ),
+				'heading'      => $attributes['title'] ?? __( 'Update Subscription', 'surecart' ),
 				'subscription' => $subscription,
 			]
 		);
@@ -64,7 +64,7 @@ class Block extends DashboardPage {
 			'ce-subscription-switch',
 			'#customer-subscription-switch',
 			[
-				'heading'       => $attributes['title'] ?? __( 'Update Subscription', 'checkout-engine' ),
+				'heading'       => $attributes['title'] ?? __( 'Update Subscription', 'surecart' ),
 				'product-group' => $subscription->price->product->product_group ?? null,
 				'subscription'  => $subscription,
 			]
@@ -103,7 +103,7 @@ class Block extends DashboardPage {
 			'ce-subscriptions-list',
 			'#customer-subscriptions-index',
 			[
-				'heading' => $attributes['title'] ?? __( 'Subscriptions', 'checkout-engine' ),
+				'heading' => $attributes['title'] ?? __( 'Subscriptions', 'surecart' ),
 				'query'   => [
 					'customer_ids' => array_values( User::current()->customerIds() ),
 					'status'       => [ 'active', 'trialing' ],

@@ -1,5 +1,5 @@
 {
-	"name": "checkout-engine/logout-button",
+	"name": "surecart/logout-button",
 	"apiVersion": 2,
 	"title": "Logout Button",
 	"description": "Display a logout button.",

@@ -27,7 +27,7 @@ trait HasBlockTheme {
 		);
 
 		register_block_style(
-			"checkout-engine/$block_name",
+			"surecart/$block_name",
 			[
 				'name'         => $slug,
 				'label'        => $name,

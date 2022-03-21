@@ -10,7 +10,7 @@ import {
 } from '@wordpress/block-editor';
 import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
 import { useBlockProps } from '@wordpress/block-editor';
-import { CeHeading } from '@checkout-engine/components-react';
+import { CeHeading } from '@surecart/components-react';
 
 export default ({ attributes, setAttributes, isSelected }) => {
 	const { title, description } = attributes;
@@ -20,17 +20,17 @@ export default ({ attributes, setAttributes, isSelected }) => {
 	return (
 		<Fragment>
 			<InspectorControls>
-				<PanelBody title={__('Attributes', 'checkout-engine')}>
+				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<TextControl
-							label={__('Title', 'checkout-engine')}
+							label={__('Title', 'surecart')}
 							value={title}
 							onChange={(title) => setAttributes({ title })}
 						/>
 					</PanelRow>
 					<PanelRow>
 						<TextControl
-							label={__('Description', 'checkout-engine')}
+							label={__('Description', 'surecart')}
 							value={description}
 							onChange={(description) =>
 								setAttributes({ description })

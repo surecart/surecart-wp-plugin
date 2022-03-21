@@ -42,18 +42,18 @@ import {
 	toWidthPrecision,
 } from './utils';
 
-import { CeColumns } from '@checkout-engine/components-react';
+import { CeColumns } from '@surecart/components-react';
 
 /**
  * Allowed blocks constant is passed to InnerBlocks precisely as specified here.
  * The contents of the array should never change.
  * The array should contain the name of each block that is allowed.
- * In columns block, the only block we allow is 'checkout-engine/column'.
+ * In columns block, the only block we allow is 'surecart/column'.
  *
  * @constant
  * @type {string[]}
  */
-const ALLOWED_BLOCKS = ['checkout-engine/column'];
+const ALLOWED_BLOCKS = ['surecart/column'];
 
 function ColumnsEditContainer({
 	attributes,
@@ -188,7 +188,7 @@ const ColumnsEditContainerWrapper = withDispatch(
 				innerBlocks = [
 					...getMappedColumnWidths(innerBlocks, widths),
 					...times(newColumns - previousColumns, () => {
-						return createBlock('checkout-engine/column', {
+						return createBlock('surecart/column', {
 							width: `${newColumnWidth}%`,
 						});
 					}),
@@ -197,7 +197,7 @@ const ColumnsEditContainerWrapper = withDispatch(
 				innerBlocks = [
 					...innerBlocks,
 					...times(newColumns - previousColumns, () => {
-						return createBlock('checkout-engine/column');
+						return createBlock('surecart/column');
 					}),
 				];
 			} else {

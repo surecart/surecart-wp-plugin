@@ -1,96 +1,96 @@
-import { store as dataStore } from '@checkout-engine/data';
+import { store as dataStore } from '@surecart/data';
 import { dispatch } from '@wordpress/data';
 
 // add entities.
 dispatch(dataStore).registerEntities([
 	{
 		name: 'order',
-		baseURL: 'checkout-engine/v1/orders',
+		baseURL: 'surecart/v1/orders',
 		baseURLParams: { context: 'edit' },
 	},
 	{
 		name: 'charge',
-		baseURL: 'checkout-engine/v1/charges',
+		baseURL: 'surecart/v1/charges',
 		baseURLParams: { context: 'edit' },
 	},
 	{
 		name: 'invoice',
-		baseURL: 'checkout-engine/v1/invoices',
+		baseURL: 'surecart/v1/invoices',
 		baseURLParams: { context: 'edit' },
 	},
 	{
 		name: 'subscription',
-		baseURL: 'checkout-engine/v1/subscriptions',
+		baseURL: 'surecart/v1/subscriptions',
 		baseURLParams: { context: 'edit' },
 	},
 	{
 		name: 'product',
-		baseURL: 'checkout-engine/v1/products',
+		baseURL: 'surecart/v1/products',
 		baseURLParams: { context: 'edit' },
 	},
 	{
 		name: 'product-group',
-		baseURL: 'checkout-engine/v1/product-groups',
+		baseURL: 'surecart/v1/product-groups',
 		baseURLParams: { context: 'edit' },
 	},
 	{
 		name: 'price',
-		baseURL: 'checkout-engine/v1/prices',
+		baseURL: 'surecart/v1/prices',
 		baseURLParams: { context: 'edit' },
 	},
 	{
 		name: 'purchase',
-		baseURL: 'checkout-engine/v1/purchases',
+		baseURL: 'surecart/v1/purchases',
 		baseURLParams: { context: 'edit' },
 	},
 	{
 		name: 'payment_method',
-		baseURL: 'checkout-engine/v1/payment_methods',
+		baseURL: 'surecart/v1/payment_methods',
 		baseURLParams: { context: 'edit' },
 	},
 	{
 		name: 'customer',
-		baseURL: 'checkout-engine/v1/customers',
+		baseURL: 'surecart/v1/customers',
 		baseURLParams: { context: 'edit' },
 	},
 	{
 		name: 'line_item',
-		baseURL: 'checkout-engine/v1/line_items',
+		baseURL: 'surecart/v1/line_items',
 		baseURLParams: { context: 'edit' },
 	},
 	{
 		name: 'coupon',
-		baseURL: 'checkout-engine/v1/coupons',
+		baseURL: 'surecart/v1/coupons',
 		baseURLParams: { context: 'edit' },
 	},
 	{
 		name: 'promotion',
-		baseURL: 'checkout-engine/v1/promotions',
+		baseURL: 'surecart/v1/promotions',
 		baseURLParams: { context: 'edit' },
 	},
 	{
 		name: 'product_group',
-		baseURL: 'checkout-engine/v1/product_groups',
+		baseURL: 'surecart/v1/product_groups',
 		baseURLParams: { context: 'edit' },
 	},
 	{
 		name: 'refund',
-		baseURL: 'checkout-engine/v1/refunds',
+		baseURL: 'surecart/v1/refunds',
 		baseURLParams: { context: 'edit' },
 	},
 	{
 		name: 'setting',
-		baseURL: 'checkout-engine/v1/settings',
+		baseURL: 'surecart/v1/settings',
 		baseURLParams: { context: 'edit' },
 	},
 	{
 		name: 'account',
-		baseURL: 'checkout-engine/v1/account',
+		baseURL: 'surecart/v1/account',
 		baseURLParams: { context: 'edit' },
 	},
 	{
 		name: 'customer_notification_protocol',
-		baseURL: 'checkout-engine/v1/customer_notification_protocol',
+		baseURL: 'surecart/v1/customer_notification_protocol',
 		baseURLParams: { context: 'edit' },
 	},
 ]);

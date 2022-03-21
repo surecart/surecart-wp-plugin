@@ -1,6 +1,6 @@
 if (typeof window !== 'undefined') {
 	const {
 		defineCustomElements,
-	} = require('@checkout-engine/components/dist/custom-elements');
+	} = require('@surecart/components/dist/custom-elements');
 	defineCustomElements();
 }

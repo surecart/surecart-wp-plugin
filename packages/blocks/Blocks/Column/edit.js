@@ -25,7 +25,7 @@ import {
 } from '@wordpress/components';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { sprintf, __ } from '@wordpress/i18n';
-import { CeColumn } from '@checkout-engine/components-react';
+import { CeColumn } from '@surecart/components-react';
 
 function ColumnEdit({
 	attributes: {
@@ -143,7 +143,7 @@ function ColumnEdit({
 				</PanelBody>
 				<PanelBody title={__('Sticky')}>
 					<ToggleControl
-						label={__('Sticky', 'checkout-engine')}
+						label={__('Sticky', 'surecart')}
 						checked={sticky}
 						onChange={(sticky) => setAttributes({ sticky })}
 					/>

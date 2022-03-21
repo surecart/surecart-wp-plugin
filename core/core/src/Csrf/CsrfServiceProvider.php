@@ -21,16 +21,16 @@ class CsrfServiceProvider implements ServiceProviderInterface {
 	 * {@inheritDoc}
 	 */
 	public function register( $container ) {
-		$container[ CHECKOUT_ENGINE_CSRF_KEY ] = function () {
+		$container[ SURECART_CSRF_KEY ] = function () {
 			return new Csrf();
 		};
 
 		$container[ CsrfMiddleware::class ] = function ( $c ) {
-			return new CsrfMiddleware( $c[ CHECKOUT_ENGINE_CSRF_KEY ] );
+			return new CsrfMiddleware( $c[ SURECART_CSRF_KEY ] );
 		};
 
-		$app = $container[ CHECKOUT_ENGINE_APPLICATION_KEY ];
-		$app->alias( 'csrf', CHECKOUT_ENGINE_CSRF_KEY );
+		$app = $container[ SURECART_APPLICATION_KEY ];
+		$app->alias( 'csrf', SURECART_CSRF_KEY );
 	}
 
 	/**

@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { CeCard } from '@checkout-engine/components-react';
+import { CeCard } from '@surecart/components-react';
 import { css, jsx } from '@emotion/core';
 
 import { Card, CardBody, CardFooter, CardHeader } from '@wordpress/components';

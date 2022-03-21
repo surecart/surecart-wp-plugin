@@ -23,7 +23,7 @@ class PageServiceProvider implements ServiceProviderInterface {
 			return new PageSeeder( $container['surecart.forms'], $container['surecart.pages'] );
 		};
 
-		$app = $container[ CHECKOUT_ENGINE_APPLICATION_KEY ];
+		$app = $container[ SURECART_APPLICATION_KEY ];
 		$app->alias( 'pages', 'surecart.pages' );
 	}
 

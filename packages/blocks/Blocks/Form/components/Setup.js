@@ -4,11 +4,7 @@ import { __ } from '@wordpress/i18n';
 import { css, jsx } from '@emotion/core';
 import { __experimentalLinkControl as LinkControl } from '@wordpress/block-editor';
 
-import {
-	CeRadioGroup,
-	CeRadio,
-	CeButton,
-} from '@checkout-engine/components-react';
+import { CeRadioGroup, CeRadio, CeButton } from '@surecart/components-react';
 import PriceChoices from '@scripts/blocks/components/PriceChoices';
 import { useEffect, useState } from 'react';
 import ChooseDesign from './ChooseDesign';
@@ -35,7 +31,7 @@ export default ({ onCreate }) => {
 
 	return (
 		<PlaceholderTemplate
-			header={__('Products & Behavior', 'checkout-engine')}
+			header={__('Products & Behavior', 'surecart')}
 			footerRight={
 				<CeButton
 					type="primary"

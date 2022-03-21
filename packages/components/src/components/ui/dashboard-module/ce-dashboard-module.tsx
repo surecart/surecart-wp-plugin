@@ -15,7 +15,7 @@ export class CeDashboardModule {
       <div class="dashboard-module">
         {!!this.error && (
           <ce-alert open={!!this.error} type="danger">
-            <span slot="title">{__('Error', 'surecartan>
+            <span slot="title">{__('Error', 'surecart')}</span>
             {this.error}
           </ce-alert>
         )}

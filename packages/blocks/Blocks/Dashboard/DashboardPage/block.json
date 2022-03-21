@@ -1,6 +1,6 @@
 {
 	"apiVersion": 2,
-	"name": "checkout-engine/dashboard-page",
+	"name": "surecart/dashboard-page",
 	"title": "Customer Dashboard Page",
 	"description": "Displays the users customer dashboard tab.",
 	"category": "layout",

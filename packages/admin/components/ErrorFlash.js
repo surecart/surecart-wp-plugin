@@ -1,4 +1,4 @@
-import { CeAlert } from '@checkout-engine/components-react';
+import { CeAlert } from '@surecart/components-react';
 
 export default ({ errors, onHide }) => {
 	if (!errors?.[0]?.message) return null;

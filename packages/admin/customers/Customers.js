@@ -15,7 +15,7 @@ import Subscriptions from './modules/Subscriptions';
 import Sidebar from './Sidebar';
 import useCurrentPage from '../mixins/useCurrentPage';
 import { useEffect } from 'react';
-import { CeButton } from '@checkout-engine/components-react';
+import { CeButton } from '@surecart/components-react';
 import { useDispatch } from '@wordpress/data';
 
 export default () => {

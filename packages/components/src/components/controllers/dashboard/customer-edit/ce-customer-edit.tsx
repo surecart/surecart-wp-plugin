@@ -39,7 +39,7 @@ export class CeCustomerEdit {
         billing_state,
       } = await e.target.getFormJson();
       await apiFetch({
-        path: addQueryArgs(`checkout-engine/v1/customers/${this.customer?.id}`, { expand: ['tax_identifier'] }),
+        path: addQueryArgs(`surecart/v1/customers/${this.customer?.id}`, { expand: ['tax_identifier'] }),
         method: 'PATCH',
         data: {
           email,

@@ -42,7 +42,7 @@ class ExceptionsServiceProvider implements ServiceProviderInterface {
 
 		$container[ PrettyPageHandler::class ] = function ( $container ) {
 			$handler = new PrettyPageHandler();
-			$handler->addResourcePath( implode( DIRECTORY_SEPARATOR, [ CHECKOUT_ENGINE_DIR, 'src', 'Exceptions', 'Whoops' ] ) );
+			$handler->addResourcePath( implode( DIRECTORY_SEPARATOR, [ SURECART_DIR, 'src', 'Exceptions', 'Whoops' ] ) );
 
 			$handler->addDataTableCallback(
 				'WP Emerge: Route',
@@ -71,16 +71,16 @@ class ExceptionsServiceProvider implements ServiceProviderInterface {
 			return $run;
 		};
 
-		$container[ CHECKOUT_ENGINE_EXCEPTIONS_ERROR_HANDLER_KEY ] = function ( $container ) {
-			$debug  = $container[ CHECKOUT_ENGINE_CONFIG_KEY ]['debug'];
+		$container[ SURECART_EXCEPTIONS_ERROR_HANDLER_KEY ] = function ( $container ) {
+			$debug  = $container[ SURECART_CONFIG_KEY ]['debug'];
 			$whoops = $debug['pretty_errors'] ? $container[ Run::class ] : null;
-			return new ErrorHandler( $container[ CHECKOUT_ENGINE_RESPONSE_SERVICE_KEY ], $whoops, $debug['enable'] );
+			return new ErrorHandler( $container[ SURECART_RESPONSE_SERVICE_KEY ], $whoops, $debug['enable'] );
 		};
 
-		$container[ CHECKOUT_ENGINE_EXCEPTIONS_CONFIGURATION_ERROR_HANDLER_KEY ] = function ( $container ) {
-			$debug  = $container[ CHECKOUT_ENGINE_CONFIG_KEY ]['debug'];
+		$container[ SURECART_EXCEPTIONS_CONFIGURATION_ERROR_HANDLER_KEY ] = function ( $container ) {
+			$debug  = $container[ SURECART_CONFIG_KEY ]['debug'];
 			$whoops = $debug['pretty_errors'] ? $container[ Run::class ] : null;
-			return new ErrorHandler( $container[ CHECKOUT_ENGINE_RESPONSE_SERVICE_KEY ], $whoops, $debug['enable'] );
+			return new ErrorHandler( $container[ SURECART_RESPONSE_SERVICE_KEY ], $whoops, $debug['enable'] );
 		};
 	}
 

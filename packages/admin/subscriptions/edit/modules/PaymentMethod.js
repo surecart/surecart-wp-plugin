@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { CeChoice, CeChoices } from '@checkout-engine/components-react';
+import { CeChoice, CeChoices } from '@surecart/components-react';
 import { select } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import { useEffect } from 'react';

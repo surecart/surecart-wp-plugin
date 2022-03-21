@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { __ } from '@wordpress/i18n';
-import { CeFormatDate, CeButton } from '@checkout-engine/components-react';
+import { CeFormatDate, CeButton } from '@surecart/components-react';
 import { Button, Popover, DateTimePicker } from '@wordpress/components';
 import { useState, Fragment } from '@wordpress/element';
 import { css, jsx } from '@emotion/core';

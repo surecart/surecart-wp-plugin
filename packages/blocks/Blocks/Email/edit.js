@@ -6,7 +6,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Component Dependencies
  */
-import { CeInput } from '@checkout-engine/components-react';
+import { CeInput } from '@surecart/components-react';
 import Inspector from './components/Inspector';
 
 export default ({ className, attributes, setAttributes }) => {

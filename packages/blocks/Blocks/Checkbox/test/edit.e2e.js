@@ -8,19 +8,17 @@ import {
 	getEditedPostContent,
 } from '@wordpress/e2e-test-utils';
 
-describe( 'checkout-engine/checkout-form', () => {
-	beforeAll( async () => {
+describe('surecart/checkout-form', () => {
+	beforeAll(async () => {
 		await enablePageDialogAccept();
-	} );
-	beforeEach( async () => {
+	});
+	beforeEach(async () => {
 		await createNewPost();
-	} );
+	});
 
-	it( 'Should render', async () => {
-		await insertBlock( 'Checkout Button' );
-		expect(
-			await page.$( `[data-type="checkout-engine/button"]` )
-		).not.toBeNull();
-		expect( await getEditedPostContent() ).toMatchSnapshot();
-	} );
-} );
+	it('Should render', async () => {
+		await insertBlock('Checkout Button');
+		expect(await page.$(`[data-type="surecart/button"]`)).not.toBeNull();
+		expect(await getEditedPostContent()).toMatchSnapshot();
+	});
+});

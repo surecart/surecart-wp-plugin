@@ -14,7 +14,7 @@ Default.args = {
 Default.parameters = {
   mockData: [
     {
-      url: '/checkout-engine/v1/purchases/?expand%5B0%5D=product&expand%5B1%5D=product.files&downloadable=true&page=1&per_page=10&_locale=user',
+      url: '/surecart/v1/purchases/?expand%5B0%5D=product&expand%5B1%5D=product.files&downloadable=true&page=1&per_page=10&_locale=user',
       method: 'GET',
       status: 200,
       response: [

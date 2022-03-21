@@ -6,7 +6,7 @@ import {
 	CeDropdown,
 	CeMenu,
 	CeMenuItem,
-} from '@checkout-engine/components-react';
+} from '@surecart/components-react';
 import {
 	Icon,
 	box,

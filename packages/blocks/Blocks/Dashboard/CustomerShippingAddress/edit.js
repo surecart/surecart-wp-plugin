@@ -1,6 +1,6 @@
 import { __, _n } from '@wordpress/i18n';
 import { Disabled } from '@wordpress/components';
-import { CeAddress } from '@checkout-engine/components-react';
+import { CeAddress } from '@surecart/components-react';
 
 export default ({ attributes, setAttributes }) => {
 	const { label } = attributes;

@@ -74,7 +74,7 @@ export class CeSubscriptionsList {
   /** Get all subscriptions */
   async getSubscriptions() {
     const response = await await apiFetch({
-      path: addQueryArgs(`checkout-engine/v1/subscriptions/`, {
+      path: addQueryArgs(`surecart/v1/subscriptions/`, {
         expand: ['price', 'price.product', 'latest_invoice'],
         ...this.query,
       }),

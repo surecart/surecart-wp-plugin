@@ -16,7 +16,7 @@ import {
 	CeButton,
 	CeMenuItem,
 	CeMenu,
-} from '@checkout-engine/components-react';
+} from '@surecart/components-react';
 
 export default ({ coupon, loading, updateCoupon }) => {
 	const [type, setType] = useState('percentage');
@@ -66,7 +66,7 @@ export default ({ coupon, loading, updateCoupon }) => {
 						disabled={type !== 'percentage'}
 						max="100"
 						attribute="percent_off"
-						label={__('Percent Off', 'checkout-engine')}
+						label={__('Percent Off', 'surecart')}
 						value={coupon?.percent_off || null}
 						onCeChange={(e) =>
 							updateCoupon({
@@ -84,7 +84,7 @@ export default ({ coupon, loading, updateCoupon }) => {
 						currencyCode={coupon?.currency}
 						disabled={type === 'percentage'}
 						attribute="amount_off"
-						label={__('Amount Off', 'checkout-engine')}
+						label={__('Amount Off', 'surecart')}
 						value={coupon?.amount_off || null}
 						required={type === 'fixed'}
 						onCeChange={(e) => {

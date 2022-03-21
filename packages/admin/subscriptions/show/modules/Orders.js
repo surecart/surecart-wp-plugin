@@ -1,7 +1,7 @@
 import { __ } from '@wordpress/i18n';
 import DataTable from '../../../components/DataTable';
 import { addQueryArgs } from '@wordpress/url';
-import { CeOrderStatusBadge } from '@checkout-engine/components-react';
+import { CeOrderStatusBadge } from '@surecart/components-react';
 
 export default ({ order, loading }) => {
 	if (!loading && !order) {

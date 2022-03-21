@@ -5,17 +5,17 @@ import { dispatch } from '@wordpress/data';
 dispatch(dataStore).registerEntities([
 	{
 		name: 'order',
-		baseURL: 'checkout-engine/v1/orders',
+		baseURL: 'surecart/v1/orders',
 		baseURLParams: { context: 'edit' },
 	},
 	{
 		name: 'subscription',
-		baseURL: 'checkout-engine/v1/subscriptions',
+		baseURL: 'surecart/v1/subscriptions',
 		baseURLParams: { context: 'edit' },
 	},
 	{
 		name: 'customer',
-		baseURL: 'checkout-engine/v1/customers',
+		baseURL: 'surecart/v1/customers',
 		baseURLParams: { context: 'edit' },
 	},
 ]);

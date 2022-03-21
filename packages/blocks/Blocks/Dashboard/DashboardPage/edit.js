@@ -12,7 +12,7 @@ import {
 	__experimentalUseInnerBlocksProps,
 } from '@wordpress/block-editor';
 import { Fragment } from '@wordpress/element';
-import { CeTabPanel } from '@checkout-engine/components-react';
+import { CeTabPanel } from '@surecart/components-react';
 import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
 
 export default ({ attributes, setAttributes }) => {
@@ -39,10 +39,10 @@ export default ({ attributes, setAttributes }) => {
 	return (
 		<Fragment>
 			<InspectorControls>
-				<PanelBody title={__('Attributes', 'checkout-engine')}>
+				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<TextControl
-							label={__('Url Slug', 'checkout-engine')}
+							label={__('Url Slug', 'surecart')}
 							value={name}
 							onChange={(name) => setAttributes({ name })}
 						/>

@@ -19,7 +19,7 @@ class WebhooksServiceProvider implements ServiceProviderInterface {
 			return new WebhooksService( new WebhooksHistoryService() );
 		};
 
-		$app = $container[ CHECKOUT_ENGINE_APPLICATION_KEY ];
+		$app = $container[ SURECART_APPLICATION_KEY ];
 		$app->alias( 'webhooks', 'surecart.webhooks' );
 	}
 

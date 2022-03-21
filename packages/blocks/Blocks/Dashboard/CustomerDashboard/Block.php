@@ -54,7 +54,7 @@ class Block extends BaseBlock {
 			global $post;
 			$postcontent = $post->post_content;
 			$blocks      = parse_blocks( $postcontent );
-			$named       = \CheckoutEngine::blocks()->filterBy( 'blockName', 'checkout-engine/dashboard-tab', $blocks );
+			$named       = \CheckoutEngine::blocks()->filterBy( 'blockName', 'surecart/dashboard-tab', $blocks );
 
 			if ( ! empty( $named[0]['attrs']['panel'] ) ) {
 				wp_redirect( esc_url_raw( add_query_arg( [ 'tab' => $named[0]['attrs']['panel'] ] ) ) );

@@ -21,16 +21,16 @@ class OldInputServiceProvider implements ServiceProviderInterface {
 	 * {@inheritDoc}
 	 */
 	public function register( $container ) {
-		$container[ CHECKOUT_ENGINE_OLD_INPUT_KEY ] = function ( $c ) {
-			return new OldInput( $c[ CHECKOUT_ENGINE_FLASH_KEY ] );
+		$container[ SURECART_OLD_INPUT_KEY ] = function ( $c ) {
+			return new OldInput( $c[ SURECART_FLASH_KEY ] );
 		};
 
 		$container[ OldInputMiddleware::class ] = function ( $c ) {
-			return new OldInputMiddleware( $c[ CHECKOUT_ENGINE_OLD_INPUT_KEY ] );
+			return new OldInputMiddleware( $c[ SURECART_OLD_INPUT_KEY ] );
 		};
 
-		$app = $container[ CHECKOUT_ENGINE_APPLICATION_KEY ];
-		$app->alias( 'oldInput', CHECKOUT_ENGINE_OLD_INPUT_KEY );
+		$app = $container[ SURECART_APPLICATION_KEY ];
+		$app->alias( 'oldInput', SURECART_OLD_INPUT_KEY );
 	}
 
 	/**

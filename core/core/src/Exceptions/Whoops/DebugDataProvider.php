@@ -50,7 +50,7 @@ class DebugDataProvider {
 	 */
 	public function route( $inspector ) {
 		/** @var \CheckoutEngineCore\Routing\RouteInterface|null $route */
-		$route = $this->container[ CHECKOUT_ENGINE_ROUTING_ROUTER_KEY ]->getCurrentRoute();
+		$route = $this->container[ SURECART_ROUTING_ROUTER_KEY ]->getCurrentRoute();
 
 		if ( ! $route ) {
 			return [];

@@ -7,7 +7,7 @@ describe('ce-subscription-cancel', () => {
     setResponses(
       [
         {
-          path: '/checkout-engine/v1/subscription_protocol',
+          path: '/surecart/v1/subscription_protocol',
           data: {},
         },
       ],

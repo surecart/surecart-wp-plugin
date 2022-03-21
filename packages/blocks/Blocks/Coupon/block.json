@@ -1,15 +1,11 @@
 {
 	"apiVersion": 2,
-	"name": "checkout-engine/coupon",
+	"name": "surecart/coupon",
 	"title": "Coupon",
 	"description": "Display a coupon form.",
 	"category": "layout",
 	"keywords": ["coupon", "promo"],
-	"parent": [
-		"checkout-engine/form",
-		"checkout-engine/column",
-		"checkout-engine/totals"
-	],
+	"parent": ["surecart/form", "surecart/column", "surecart/totals"],
 	"supports": {
 		"reusable": false,
 		"html": false,

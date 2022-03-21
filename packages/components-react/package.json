@@ -1,9 +1,9 @@
 {
-	"name": "@checkout-engine/components-react",
+	"name": "@surecart/components-react",
 	"sideEffects": false,
 	"version": "0.0.1",
 	"private": true,
-	"description": "React specific wrapper for checkout-engine/components",
+	"description": "React specific wrapper for surecart/components",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/ionic-team/ionic.git"

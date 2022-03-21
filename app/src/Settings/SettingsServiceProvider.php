@@ -13,7 +13,7 @@ class SettingsServiceProvider implements ServiceProviderInterface {
 	 * {@inheritDoc}
 	 */
 	public function register( $container ) {
-		$app = $container[ CHECKOUT_ENGINE_APPLICATION_KEY ];
+		$app = $container[ SURECART_APPLICATION_KEY ];
 
 		// Service for registering a setting.
 		$container['surecart.settings'] = function () {
@@ -37,7 +37,7 @@ class SettingsServiceProvider implements ServiceProviderInterface {
 		);
 
 		// register our settings from config.
-		$config = $container[ CHECKOUT_ENGINE_CONFIG_KEY ];
+		$config = $container[ SURECART_CONFIG_KEY ];
 		if ( ! empty( $config['settings'] ) ) {
 			foreach ( $config['settings'] as $setting ) {
 				$app->register_setting( $setting );

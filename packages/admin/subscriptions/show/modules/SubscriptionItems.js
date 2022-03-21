@@ -5,7 +5,7 @@ import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';
 import Box from '../../ui/Box';
 import { translateInterval } from '../../util/translations';
-import { CeButton } from '@checkout-engine/components-react';
+import { CeButton } from '@surecart/components-react';
 import Definition from '../../ui/Definition';
 
 import useSubscriptionItemsData from '../hooks/useSubscriptionItemsData';

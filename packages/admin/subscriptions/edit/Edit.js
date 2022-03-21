@@ -18,11 +18,7 @@ import Sidebar from './Sidebar';
 
 // components
 import ErrorFlash from '../../components/ErrorFlash';
-import {
-	CeButton,
-	CeFormatDate,
-	CeSwitch,
-} from '@checkout-engine/components-react';
+import { CeButton, CeFormatDate, CeSwitch } from '@surecart/components-react';
 import PendingUpdate from '../show/modules/PendingUpdate';
 
 export default () => {

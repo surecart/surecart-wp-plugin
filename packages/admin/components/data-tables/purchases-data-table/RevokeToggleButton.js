@@ -2,7 +2,7 @@ import { __, _n } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import { useState } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
-import { CeButton } from '@checkout-engine/components-react';
+import { CeButton } from '@surecart/components-react';
 import useEntity from '../../../mixins/useEntity';
 
 export default ({ purchase }) => {
@@ -31,7 +31,7 @@ export default ({ purchase }) => {
 		try {
 			const result = await apiFetch({
 				path: addQueryArgs(
-					`checkout-engine/v1/purchases/${id}/${
+					`surecart/v1/purchases/${id}/${
 						revoke ? 'revoke' : 'invoke'
 					}`,
 					{

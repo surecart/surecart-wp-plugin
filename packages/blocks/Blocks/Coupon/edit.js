@@ -19,7 +19,7 @@ import { useBlockProps } from '@wordpress/block-editor';
 /**
  * Component Dependencies
  */
-import { CeCouponForm } from '@checkout-engine/components-react';
+import { CeCouponForm } from '@surecart/components-react';
 
 export default ({ attributes, setAttributes, isSelected }) => {
 	const { text, button_text, disabled } = attributes;
@@ -32,7 +32,7 @@ export default ({ attributes, setAttributes, isSelected }) => {
 	return (
 		<Fragment>
 			<InspectorControls>
-				<PanelBody title={__('Attributes', 'checkout-engine')}>
+				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<ToggleControl
 							label={__('Disabled', 'surecart')}
@@ -42,14 +42,14 @@ export default ({ attributes, setAttributes, isSelected }) => {
 					</PanelRow>
 					<PanelRow>
 						<TextControl
-							label={__('Text', 'checkout-engine')}
+							label={__('Text', 'surecart')}
 							value={text}
 							onChange={(text) => setAttributes({ text })}
 						/>
 					</PanelRow>
 					<PanelRow>
 						<TextControl
-							label={__('Button Text', 'checkout-engine')}
+							label={__('Button Text', 'surecart')}
 							value={button_text}
 							onChange={(button_text) =>
 								setAttributes({ button_text })

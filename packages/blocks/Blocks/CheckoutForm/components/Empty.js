@@ -23,7 +23,7 @@ import { receipt as icon } from '@wordpress/icons';
  * Components
  */
 import SelectForm from './SelectForm';
-import { CeButton, CeInput } from '@checkout-engine/components-react';
+import { CeButton, CeInput } from '@surecart/components-react';
 import PlaceholderTemplate from '../../../components/PlaceholderTemplate';
 
 export default ({ attributes, setAttributes }) => {
@@ -53,7 +53,7 @@ export default ({ attributes, setAttributes }) => {
 					title: title || __('Untitled Form', 'surecart'),
 					content: serialize(
 						createBlock(
-							'checkout-engine/form', // name
+							'surecart/form', // name
 							{},
 							[]
 						)
@@ -74,7 +74,7 @@ export default ({ attributes, setAttributes }) => {
 		return (
 			<div {...blockProps}>
 				<PlaceholderTemplate
-					header={__('Create a Checkout Form', 'checkout-engine')}
+					header={__('Create a Checkout Form', 'surecart')}
 				>
 					<div
 						css={css`
@@ -127,7 +127,7 @@ export default ({ attributes, setAttributes }) => {
 		return (
 			<div {...blockProps}>
 				<PlaceholderTemplate
-					header={__('Select a checkout form', 'checkout-engine')}
+					header={__('Select a checkout form', 'surecart')}
 				>
 					<div
 						css={css`

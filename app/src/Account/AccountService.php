@@ -30,6 +30,6 @@ class AccountService {
 	 * @return mixed
 	 */
 	public function __get( $attribute ) {
-		return $this->account->$attribute;
+		return $this->account->$attribute ?? null;
 	}
 }

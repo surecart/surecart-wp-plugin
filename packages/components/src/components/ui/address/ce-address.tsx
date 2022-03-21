@@ -103,7 +103,7 @@ export class CeAddress {
             }}
             choices={this.countryChoices}
             autocomplete={'country-name'}
-            placeholder={__('Country', 'surecart
+            placeholder={__('Country', 'surecart')}
             name={this.names.country}
             search
             squared-bottom
@@ -114,7 +114,7 @@ export class CeAddress {
             value={this?.address?.line_1}
             onCeChange={(e: any) => this.updateAddress({ line_1: e.target.value })}
             autocomplete="street-address"
-            placeholder={__('Address', 'surecart
+            placeholder={__('Address', 'surecart')}
             name={this.names.line_1}
             squared
             required={this.required}
@@ -122,7 +122,7 @@ export class CeAddress {
 
           <div class="ce-address__columns">
             <ce-input
-              placeholder={__('City', 'surecart
+              placeholder={__('City', 'surecart')}
               name={this.names.city}
               value={this?.address?.city}
               onCeChange={(e: any) => this.updateAddress({ city: e.target.value })}
@@ -134,7 +134,7 @@ export class CeAddress {
               squared-right={this.showPostal}
             />
             <ce-input
-              placeholder={__('Postal Code/Zip', 'surecart
+              placeholder={__('Postal Code/Zip', 'surecart')}
               name={this.names.postal_code}
               onCeChange={(e: any) => this.updateAddress({ postal_code: e.target.value })}
               autocomplete={'postal-code'}
@@ -148,7 +148,7 @@ export class CeAddress {
           </div>
 
           <ce-select
-            placeholder={__('State/Province/Region', 'surecart
+            placeholder={__('State/Province/Region', 'surecart')}
             name={this.names.state}
             autocomplete={'address-level1'}
             value={this?.address?.state}

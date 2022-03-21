@@ -51,7 +51,7 @@ export default ({ attributes, setAttributes }) => {
 			value: blocks,
 			onInput,
 			onChange,
-			template: [['checkout-engine/form', {}]],
+			template: [['surecart/form', {}]],
 			templateLock: 'all',
 		}
 	);
@@ -113,10 +113,10 @@ export default ({ attributes, setAttributes }) => {
 	return (
 		<RecursionProvider>
 			<InspectorControls>
-				<PanelBody title={__('Form Title', 'checkout-engine')}>
+				<PanelBody title={__('Form Title', 'surecart')}>
 					<PanelRow>
 						<TextControl
-							label={__('Form Title', 'checkout-engine')}
+							label={__('Form Title', 'surecart')}
 							value={title}
 							onChange={(title) => setTitle(title)}
 						/>

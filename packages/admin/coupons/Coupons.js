@@ -26,7 +26,7 @@ import ErrorFlash from '../components/ErrorFlash';
 import useCurrentPage from '../mixins/useCurrentPage';
 import useEntities from '../mixins/useEntities';
 import { useDispatch } from '@wordpress/data';
-import { CeButton } from '@checkout-engine/components-react';
+import { CeButton } from '@surecart/components-react';
 
 export default () => {
 	const { saveModel, saveDraft, clearDrafts } = useDispatch(dataStore);

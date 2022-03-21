@@ -7,7 +7,7 @@ import {
 	CeFormControl,
 	CePriceInput,
 	CeSelect,
-} from '@checkout-engine/components-react';
+} from '@surecart/components-react';
 import { css, jsx } from '@emotion/core';
 import { useState } from '@wordpress/element';
 import useEntity from '../../../mixins/useEntity';

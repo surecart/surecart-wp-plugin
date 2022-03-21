@@ -30,7 +30,7 @@ const variations = [
 				/>
 			</SVG>
 		),
-		innerBlocks: [['checkout-engine/column']],
+		innerBlocks: [['surecart/column']],
 		scope: ['block'],
 	},
 	{
@@ -52,7 +52,7 @@ const variations = [
 			</SVG>
 		),
 		isDefault: true,
-		innerBlocks: [['checkout-engine/column'], ['checkout-engine/column']],
+		innerBlocks: [['surecart/column'], ['surecart/column']],
 		scope: ['block'],
 	},
 	{
@@ -74,8 +74,8 @@ const variations = [
 			</SVG>
 		),
 		innerBlocks: [
-			['checkout-engine/column', { width: '33.33%' }],
-			['checkout-engine/column', { width: '66.66%' }],
+			['surecart/column', { width: '33.33%' }],
+			['surecart/column', { width: '66.66%' }],
 		],
 		scope: ['block'],
 	},
@@ -98,8 +98,8 @@ const variations = [
 			</SVG>
 		),
 		innerBlocks: [
-			['checkout-engine/column', { width: '66.66%' }],
-			['checkout-engine/column', { width: '33.33%' }],
+			['surecart/column', { width: '66.66%' }],
+			['surecart/column', { width: '33.33%' }],
 		],
 		scope: ['block'],
 	},
@@ -121,9 +121,9 @@ const variations = [
 			</SVG>
 		),
 		innerBlocks: [
-			['checkout-engine/column'],
-			['checkout-engine/column'],
-			['checkout-engine/column'],
+			['surecart/column'],
+			['surecart/column'],
+			['surecart/column'],
 		],
 		scope: ['block'],
 	},
@@ -145,9 +145,9 @@ const variations = [
 			</SVG>
 		),
 		innerBlocks: [
-			['checkout-engine/column', { width: '25%' }],
-			['checkout-engine/column', { width: '50%' }],
-			['checkout-engine/column', { width: '25%' }],
+			['surecart/column', { width: '25%' }],
+			['surecart/column', { width: '50%' }],
+			['surecart/column', { width: '25%' }],
 		],
 		scope: ['block'],
 	},

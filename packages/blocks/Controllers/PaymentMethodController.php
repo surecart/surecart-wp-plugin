@@ -81,7 +81,7 @@ class PaymentMethodController extends BaseController {
 	 */
 	public function renderCreate( $payment_intent ) {
 		if ( empty( $payment_intent->processor_data->stripe->account_id ) ) {
-			return '<ce-alert type="info" open>' . __( 'You cannot currently add a payment method. Please contact us for support.', 'checkout-engine' ) . '</ce-alert>';
+			return '<ce-alert type="info" open>' . __( 'You cannot currently add a payment method. Please contact us for support.', 'surecart' ) . '</ce-alert>';
 		}
 
 		ob_start(); ?>
@@ -120,7 +120,7 @@ class PaymentMethodController extends BaseController {
 
 			<div>
 				<ce-text style="--color: var(--ce-color-gray-700); --font-size: var(--ce-font-size-small); --line-height: var(--ce-line-height-normal); --text-align: center;">
-					<?php esc_html_e( 'By providing your card information, you allow Sure Cart to charge your card for future payments in accordance with their terms. You can review important information from Sure Cart on their Terms of Service and Privacy Policy pages.', 'checkout-engine' ); ?>
+					<?php esc_html_e( 'By providing your card information, you allow Sure Cart to charge your card for future payments in accordance with their terms. You can review important information from Sure Cart on their Terms of Service and Privacy Policy pages.', 'surecart' ); ?>
 				</ce-text>
 			</div>
 		</ce-spacing>

@@ -1,10 +1,10 @@
 {
-	"name": "checkout-engine/express-payment",
+	"name": "surecart/express-payment",
 	"title": "Express Payment",
 	"description": "Display express payment options (Google Pay, Apple Pay, etc.)",
 	"category": "layout",
 	"keywords": ["apple", "google", "android"],
-	"parent": ["checkout-engine/form", "checkout-engine/column"],
+	"parent": ["surecart/form", "surecart/column"],
 	"supports": {
 		"reusable": false,
 		"html": false

@@ -3,11 +3,11 @@ import apiFetch from '../../functions/fetch';
 import { Price, Product } from '../../types';
 import { addQueryArgs } from '@wordpress/url';
 
-const path = 'checkout-engine/v1/products/';
+const path = 'surecart/v1/products/';
 
 export const getPricesAndProducts = async ({ ids, archived = false }: { ids: Array<string>; archived: boolean }) => {
   const prices = (await apiFetch({
-    path: addQueryArgs('checkout-engine/v1/prices/', {
+    path: addQueryArgs('surecart/v1/prices/', {
       ids,
       archived,
       expand: ['product'],

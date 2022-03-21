@@ -29,7 +29,7 @@ class UserController extends BaseController {
 			->id( 'wordpress-user-edit' )
 			->with(
 				[
-					'heading' => __( 'Account Details', 'checkout-engine' ),
+					'heading' => __( 'Account Details', 'surecart' ),
 					'user'    => [
 						'display_name' => $user->display_name,
 						'email'        => $user->user_email,
@@ -71,7 +71,7 @@ class UserController extends BaseController {
 					->id( 'wordpress-user-edit' )
 					->with(
 						[
-							'heading'    => $attributes['title'] ?? __( 'Update Account Details', 'checkout-engine' ),
+							'heading'    => $attributes['title'] ?? __( 'Update Account Details', 'surecart' ),
 							'user'       => [
 								'id'           => $user->ID,
 								'display_name' => $user->display_name,
@@ -92,7 +92,7 @@ class UserController extends BaseController {
 					->id( 'wordpress-password-edit' )
 					->with(
 						[
-							'heading'    => $attributes['title'] ?? __( 'Update Password', 'checkout-engine' ),
+							'heading'    => $attributes['title'] ?? __( 'Update Password', 'surecart' ),
 							'user'       => [
 								'id'           => $user->ID,
 								'display_name' => $user->display_name,

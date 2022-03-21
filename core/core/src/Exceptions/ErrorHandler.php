@@ -156,7 +156,7 @@ class ErrorHandler implements ErrorHandlerInterface {
 			return $response;
 		}
 
-		if ( ! defined( 'CHECKOUT_ENGINE_TEST_DIR' ) ) {
+		if ( ! defined( 'SURECART_TEST_DIR' ) ) {
 			// Only log errors if we are not running the WP Emerge test suite.
 			error_log( $exception );
 		}

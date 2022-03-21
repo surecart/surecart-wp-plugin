@@ -30,7 +30,7 @@ const fetchFromAPI = (options) => {
 	const { path, query, ...fetchOptions } = options;
 	return apiFetch({
 		...(fetchOptions || {}),
-		path: addQueryArgs(`checkout-engine/v1/${path}`, query),
+		path: addQueryArgs(`surecart/v1/${path}`, query),
 	});
 };
 

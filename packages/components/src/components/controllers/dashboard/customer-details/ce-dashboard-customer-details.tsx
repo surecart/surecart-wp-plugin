@@ -28,7 +28,7 @@ export class CeDashboardCustomerDetails {
     try {
       this.loading = true;
       this.customer = (await await apiFetch({
-        path: addQueryArgs(`checkout-engine/v1/customers/${this.customerId}`, {
+        path: addQueryArgs(`surecart/v1/customers/${this.customerId}`, {
           expand: ['shipping_address', 'billing_address', 'tax_identifier'],
         }),
       })) as Customer;

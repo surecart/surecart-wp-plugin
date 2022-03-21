@@ -3,7 +3,7 @@ import { css, jsx } from '@emotion/core';
 
 import { __ } from '@wordpress/i18n';
 
-import { CeInput, CeSwitch, CeSelect } from '@checkout-engine/components-react';
+import { CeInput, CeSwitch, CeSelect } from '@surecart/components-react';
 import Box from '../../ui/Box';
 
 export default ({ id, productGroup, updateProductGroup, loading }) => {

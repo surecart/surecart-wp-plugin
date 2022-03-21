@@ -63,7 +63,7 @@ class CustomerController extends BaseController {
 					->id( 'customer-customer-edit' )
 					->with(
 						[
-							'header'     => __( 'Update Billing Details', 'checkout-engine' ),
+							'header'     => __( 'Update Billing Details', 'surecart' ),
 							'customer'   => $customer,
 							'successUrl' => esc_url( $back ),
 						]
@@ -78,7 +78,7 @@ class CustomerController extends BaseController {
 					->id( 'customer-customer-edit' )
 					->with(
 						[
-							'header'     => __( 'Update Billing Details', 'checkout-engine' ),
+							'header'     => __( 'Update Billing Details', 'surecart' ),
 							'customer'   => $customer,
 							'successUrl' => esc_url( $back ),
 						]

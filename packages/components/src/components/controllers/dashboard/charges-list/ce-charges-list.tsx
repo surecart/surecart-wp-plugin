@@ -53,7 +53,7 @@ export class CeChargesList {
     try {
       this.loading = true;
       const response = await await apiFetch({
-        path: addQueryArgs(`checkout-engine/v1/charges/`, {
+        path: addQueryArgs(`surecart/v1/charges/`, {
           expand: ['order', 'invoice'],
           ...this.query,
         }),

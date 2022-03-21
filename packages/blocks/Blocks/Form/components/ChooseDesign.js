@@ -2,7 +2,7 @@
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import Thumbnail from './Thumbnail';
-import { CeButton } from '@checkout-engine/components-react';
+import { CeButton } from '@surecart/components-react';
 import { useState } from 'react';
 import PlaceholderTemplate from './PlaceholderTemplate';
 
@@ -17,7 +17,7 @@ export default ({ template, setTemplate }) => {
 
 	return (
 		<PlaceholderTemplate
-			header={__('Choose A Starting Design', 'checkout-engine')}
+			header={__('Choose A Starting Design', 'surecart')}
 			footerRight={
 				<CeButton
 					type="primary"

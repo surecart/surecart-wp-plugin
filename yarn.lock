@@ -1923,112 +1923,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@checkout-engine/admin@workspace:packages/admin":
-  version: 0.0.0-use.local
-  resolution: "@checkout-engine/admin@workspace:packages/admin"
-  dependencies:
-    "@wordpress/prettier-config": ^1.1.1
-    prettier: ^2.5.1
-  languageName: unknown
-  linkType: soft
-
-"@checkout-engine/blocks@workspace:packages/blocks":
-  version: 0.0.0-use.local
-  resolution: "@checkout-engine/blocks@workspace:packages/blocks"
-  dependencies:
-    "@checkout-engine/components": "workspace:^"
-    "@checkout-engine/docs": "workspace:^"
-    "@wordpress/prettier-config": ^1.1.1
-    "@wordpress/scripts": ^21.0.2
-    prettier: ^2.5.1
-    webpack-cli: ^4.9.2
-  languageName: unknown
-  linkType: soft
-
-"@checkout-engine/components-react@workspace:^, @checkout-engine/components-react@workspace:packages/components-react":
-  version: 0.0.0-use.local
-  resolution: "@checkout-engine/components-react@workspace:packages/components-react"
-  dependencies:
-    "@types/jest": 23.3.9
-    "@types/node": ^15.12.2
-    "@types/react": ^17.0.34
-    "@types/react-dom": ^17.0.11
-    np: ^3.1.0
-    react: ^17.0.2
-    react-dom: ^17.0.2
-    typescript: ^3.3.4000
-  peerDependencies:
-    react: ^16.7.0
-    react-dom: ^16.7.0
-  languageName: unknown
-  linkType: soft
-
-"@checkout-engine/components@workspace:^, @checkout-engine/components@workspace:packages/components":
-  version: 0.0.0-use.local
-  resolution: "@checkout-engine/components@workspace:packages/components"
-  dependencies:
-    "@babel/core": ^7.13.16
-    "@babel/plugin-transform-react-jsx": ^7.17.3
-    "@babel/preset-env": ^7.13.15
-    "@mdx-js/react": ^1.6.22
-    "@stencil/core": 2.14.2
-    "@stencil/react-output-target": ^0.3.1
-    "@stencil/sass": ^1.4.0
-    "@storybook/addon-a11y": ^6.4.19
-    "@storybook/addon-actions": ^6.4.19
-    "@storybook/addon-docs": ^6.4.19
-    "@storybook/addon-essentials": ^6.4.19
-    "@storybook/addon-interactions": ^6.4.19
-    "@storybook/addon-links": ^6.4.19
-    "@storybook/html": ^6.4.19
-    "@storybook/testing-library": ^0.0.9
-    "@stripe/stripe-js": ^1.21.1
-    "@types/jest": ^27.0.3
-    "@types/node": ^15.0.3
-    "@types/puppeteer": ^5.4.0
-    "@wordpress/api-fetch": ^5.1.1
-    "@wordpress/hooks": ^3.2.1
-    "@wordpress/i18n": ^4.2.3
-    "@wordpress/url": ^3.1.1
-    "@xstate/fsm": ^1.6.2
-    babel-loader: ^8.2.3
-    clsx: ^1.1.1
-    copy-webpack-plugin: ^10.2.4
-    country-region-data: ^2.0.0
-    fuse.js: ^6.4.6
-    import: ^0.0.6
-    jest: ^27.4.5
-    jest-cli: ^27.4.5
-    localized-address-format: ^1.1.0
-    prettier: ^2.5.1
-    puppeteer: ^10.0.0
-    sass: ^1.29.0
-    stencil-wormhole: ^3.4.1
-    storybook-addon-mock: ^2.3.0
-  languageName: unknown
-  linkType: soft
-
-"@checkout-engine/docs@workspace:^, @checkout-engine/docs@workspace:packages/docs":
-  version: 0.0.0-use.local
-  resolution: "@checkout-engine/docs@workspace:packages/docs"
-  dependencies:
-    "@apidevtools/swagger-parser": ^10.0.3
-    "@checkout-engine/components": "workspace:^"
-    "@checkout-engine/components-react": "workspace:^"
-    "@docusaurus/core": 2.0.0-beta.14
-    "@docusaurus/preset-classic": 2.0.0-beta.14
-    "@mdx-js/react": ^1.6.22
-    clsx: ^1.1.1
-    docusaurus-plugin-sass: ^0.1.14
-    dotenv: ^8.2.0
-    react: ^17.0.1
-    react-dom: ^17.0.1
-    remark-import-partial: ^0.0.2
-    sass: ^1.32.13
-    swagger-client: ^3.18.0
-  languageName: unknown
-  linkType: soft
-
 "@cnakazawa/watch@npm:^1.0.3":
   version: 1.0.4
   resolution: "@cnakazawa/watch@npm:1.0.4"
@@ -4859,6 +4753,112 @@ __metadata:
   checksum: 5e39bca575356992c27d59fd9ca9ee38867369bdf5bb3d9e31dc074680b77b4b820d48074e5cc0337e047edd8c1e7ef18996bc83199376138f42fbc8ed0cabeb
   languageName: node
   linkType: hard
+
+"@surecart/admin@workspace:packages/admin":
+  version: 0.0.0-use.local
+  resolution: "@surecart/admin@workspace:packages/admin"
+  dependencies:
+    "@wordpress/prettier-config": ^1.1.1
+    prettier: ^2.5.1
+  languageName: unknown
+  linkType: soft
+
+"@surecart/blocks@workspace:packages/blocks":
+  version: 0.0.0-use.local
+  resolution: "@surecart/blocks@workspace:packages/blocks"
+  dependencies:
+    "@surecart/components": "workspace:^"
+    "@surecart/docs": "workspace:^"
+    "@wordpress/prettier-config": ^1.1.1
+    "@wordpress/scripts": ^21.0.2
+    prettier: ^2.5.1
+    webpack-cli: ^4.9.2
+  languageName: unknown
+  linkType: soft
+
+"@surecart/components-react@workspace:^, @surecart/components-react@workspace:packages/components-react":
+  version: 0.0.0-use.local
+  resolution: "@surecart/components-react@workspace:packages/components-react"
+  dependencies:
+    "@types/jest": 23.3.9
+    "@types/node": ^15.12.2
+    "@types/react": ^17.0.34
+    "@types/react-dom": ^17.0.11
+    np: ^3.1.0
+    react: ^17.0.2
+    react-dom: ^17.0.2
+    typescript: ^3.3.4000
+  peerDependencies:
+    react: ^16.7.0
+    react-dom: ^16.7.0
+  languageName: unknown
+  linkType: soft
+
+"@surecart/components@workspace:^, @surecart/components@workspace:packages/components":
+  version: 0.0.0-use.local
+  resolution: "@surecart/components@workspace:packages/components"
+  dependencies:
+    "@babel/core": ^7.13.16
+    "@babel/plugin-transform-react-jsx": ^7.17.3
+    "@babel/preset-env": ^7.13.15
+    "@mdx-js/react": ^1.6.22
+    "@stencil/core": 2.14.2
+    "@stencil/react-output-target": ^0.3.1
+    "@stencil/sass": ^1.4.0
+    "@storybook/addon-a11y": ^6.4.19
+    "@storybook/addon-actions": ^6.4.19
+    "@storybook/addon-docs": ^6.4.19
+    "@storybook/addon-essentials": ^6.4.19
+    "@storybook/addon-interactions": ^6.4.19
+    "@storybook/addon-links": ^6.4.19
+    "@storybook/html": ^6.4.19
+    "@storybook/testing-library": ^0.0.9
+    "@stripe/stripe-js": ^1.21.1
+    "@types/jest": ^27.0.3
+    "@types/node": ^15.0.3
+    "@types/puppeteer": ^5.4.0
+    "@wordpress/api-fetch": ^5.1.1
+    "@wordpress/hooks": ^3.2.1
+    "@wordpress/i18n": ^4.2.3
+    "@wordpress/url": ^3.1.1
+    "@xstate/fsm": ^1.6.2
+    babel-loader: ^8.2.3
+    clsx: ^1.1.1
+    copy-webpack-plugin: ^10.2.4
+    country-region-data: ^2.0.0
+    fuse.js: ^6.4.6
+    import: ^0.0.6
+    jest: ^27.4.5
+    jest-cli: ^27.4.5
+    localized-address-format: ^1.1.0
+    prettier: ^2.5.1
+    puppeteer: ^10.0.0
+    sass: ^1.29.0
+    stencil-wormhole: ^3.4.1
+    storybook-addon-mock: ^2.3.0
+  languageName: unknown
+  linkType: soft
+
+"@surecart/docs@workspace:^, @surecart/docs@workspace:packages/docs":
+  version: 0.0.0-use.local
+  resolution: "@surecart/docs@workspace:packages/docs"
+  dependencies:
+    "@apidevtools/swagger-parser": ^10.0.3
+    "@docusaurus/core": 2.0.0-beta.14
+    "@docusaurus/preset-classic": 2.0.0-beta.14
+    "@mdx-js/react": ^1.6.22
+    "@surecart/components": "workspace:^"
+    "@surecart/components-react": "workspace:^"
+    clsx: ^1.1.1
+    docusaurus-plugin-sass: ^0.1.14
+    dotenv: ^8.2.0
+    react: ^17.0.1
+    react-dom: ^17.0.1
+    remark-import-partial: ^0.0.2
+    sass: ^1.32.13
+    swagger-client: ^3.18.0
+  languageName: unknown
+  linkType: soft
 
 "@surecart/surecart@workspace:.":
   version: 0.0.0-use.local

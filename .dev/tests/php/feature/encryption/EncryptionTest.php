@@ -14,7 +14,7 @@ class EncryptionTest extends CheckoutEngineUnitTestCase {
 		$this->assertSame($string, $decripted);
 
 		// Test with a custom key
-		define('CHECKOUT_ENGINE_ENCRYPTION_KEY', 'logged_in_key');
+		define('SURECART_ENCRYPTION_KEY', 'logged_in_key');
 		$string = 'asdfasjk;dflkj123523609u';
 		$encrypted_ce_key = Encryption::encrypt($string);
 		$decripted_ce_key = Encryption::decrypt($encrypted_ce_key);

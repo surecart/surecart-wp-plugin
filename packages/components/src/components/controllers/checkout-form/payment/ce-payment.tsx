@@ -66,7 +66,7 @@ export class CePayment {
                 text={__('In test mode, you can use the card 4242 4242 4242 4242 and any code/expiration date.', 'surecart')}
               >
                 <ce-tag type="warning" size="small">
-                  {__('Test Mode', 'checkout-engine')}
+                  {__('Test Mode', 'surecart')}
                 </ce-tag>
               </ce-tooltip>
             )}

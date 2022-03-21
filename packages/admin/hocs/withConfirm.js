@@ -5,7 +5,7 @@ const { __ } = wp.i18n;
 const { createHigherOrderComponent } = wp.compose;
 const { useState, Fragment } = wp.element;
 const { Modal, Button } = wp.components;
-import { CeButton } from '@checkout-engine/components-react';
+import { CeButton } from '@surecart/components-react';
 
 /**
  * Higher order component factory for injecting the editor colors as the

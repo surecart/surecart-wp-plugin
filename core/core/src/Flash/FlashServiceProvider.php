@@ -25,10 +25,10 @@ class FlashServiceProvider implements ServiceProviderInterface {
 		global $ce_session;
 		$ce_session = [];
 
-		$container[ CHECKOUT_ENGINE_FLASH_KEY ] = function ( $c ) use ( $ce_session ) {
+		$container[ SURECART_FLASH_KEY ] = function ( $c ) use ( $ce_session ) {
 			$session = null;
-			if ( isset( $c[ CHECKOUT_ENGINE_SESSION_KEY ] ) ) {
-				$session = &$c[ CHECKOUT_ENGINE_SESSION_KEY ];
+			if ( isset( $c[ SURECART_SESSION_KEY ] ) ) {
+				$session = &$c[ SURECART_SESSION_KEY ];
 			} else {
 				$session = &$ce_session;
 			}
@@ -36,11 +36,11 @@ class FlashServiceProvider implements ServiceProviderInterface {
 		};
 
 		$container[ FlashMiddleware::class ] = function ( $c ) {
-			return new FlashMiddleware( $c[ CHECKOUT_ENGINE_FLASH_KEY ] );
+			return new FlashMiddleware( $c[ SURECART_FLASH_KEY ] );
 		};
 
-		$app = $container[ CHECKOUT_ENGINE_APPLICATION_KEY ];
-		$app->alias( 'flash', CHECKOUT_ENGINE_FLASH_KEY );
+		$app = $container[ SURECART_APPLICATION_KEY ];
+		$app->alias( 'flash', SURECART_FLASH_KEY );
 	}
 
 	/**

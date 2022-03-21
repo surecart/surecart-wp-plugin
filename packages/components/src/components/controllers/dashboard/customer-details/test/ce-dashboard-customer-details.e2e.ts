@@ -7,7 +7,7 @@ describe('ce-customer-details', () => {
     setResponses(
       [
         {
-          path: '/checkout-engine/v1/customers',
+          path: '/surecart/v1/customers',
           data: {},
         },
       ],

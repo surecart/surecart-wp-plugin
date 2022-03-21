@@ -1,11 +1,11 @@
 {
 	"apiVersion": 2,
-	"name": "checkout-engine/button",
+	"name": "surecart/button",
 	"title": "Button",
 	"description": "Display a checkout form button.",
 	"category": "layout",
 	"keywords": ["button", "submit", "checkout", "engine"],
-	"parent": ["checkout-engine/form", "checkout-engine/column"],
+	"parent": ["surecart/form", "surecart/column"],
 	"supports": {
 		"reusable": false,
 		"html": false

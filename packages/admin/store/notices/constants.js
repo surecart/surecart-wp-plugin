@@ -1,1 +1,1 @@
-export default 'checkout-engine/notices';
+export default 'surecart/notices';

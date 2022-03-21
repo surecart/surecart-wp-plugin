@@ -37,7 +37,7 @@ export class CeLogin {
       this.loading = true;
       await apiFetch({
         method: 'POST',
-        path: 'checkout-engine/v1/customer_links',
+        path: 'surecart/v1/customer_links',
         data: {
           email: this.email,
           return_url: window.location.href,
@@ -61,7 +61,7 @@ export class CeLogin {
       this.loading = true;
       const { redirect_url } = await apiFetch({
         method: 'POST',
-        path: 'checkout-engine/v1/login',
+        path: 'surecart/v1/login',
         data: {
           login: this.email,
           password: this.password,

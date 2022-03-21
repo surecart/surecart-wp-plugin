@@ -111,8 +111,8 @@ class Encryption {
 	 * @return string Default (not user-based) encryption key.
 	 */
 	protected function getDefaultKey() {
-		if ( defined( 'CHECKOUT_ENGINE_ENCRYPTION_KEY' ) && '' !== CHECKOUT_ENGINE_ENCRYPTION_KEY ) {
-			return CHECKOUT_ENGINE_ENCRYPTION_KEY;
+		if ( defined( 'SURECART_ENCRYPTION_KEY' ) && '' !== SURECART_ENCRYPTION_KEY ) {
+			return SURECART_ENCRYPTION_KEY;
 		}
 
 		if ( defined( 'LOGGED_IN_KEY' ) && '' !== LOGGED_IN_KEY ) {
@@ -131,8 +131,8 @@ class Encryption {
 	 * @return string Encryption salt.
 	 */
 	private function getDefaultSalt() {
-		if ( defined( 'CHECKOUT_ENGINE_ENCRYPTION_SALT' ) && '' !== CHECKOUT_ENGINE_ENCRYPTION_SALT ) {
-			return CHECKOUT_ENGINE_ENCRYPTION_SALT;
+		if ( defined( 'SURECART_ENCRYPTION_SALT' ) && '' !== SURECART_ENCRYPTION_SALT ) {
+			return SURECART_ENCRYPTION_SALT;
 		}
 
 		if ( defined( 'LOGGED_IN_SALT' ) && '' !== LOGGED_IN_SALT ) {

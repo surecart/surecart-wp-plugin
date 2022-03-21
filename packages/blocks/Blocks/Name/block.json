@@ -1,10 +1,10 @@
 {
-	"name": "checkout-engine/name",
+	"name": "surecart/name",
 	"title": "Name",
 	"description": "Display a name collection field.",
 	"category": "layout",
 	"keywords": ["name", "customer"],
-	"parent": ["checkout-engine/form", "checkout-engine/column"],
+	"parent": ["surecart/form", "surecart/column"],
 	"supports": {
 		"reusable": false,
 		"html": false

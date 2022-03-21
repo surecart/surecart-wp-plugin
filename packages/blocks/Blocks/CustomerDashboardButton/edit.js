@@ -17,7 +17,7 @@ import {
 /**
  * Component Dependencies
  */
-import { CeButton } from '@checkout-engine/components-react';
+import { CeButton } from '@surecart/components-react';
 
 export default ({ className, attributes, setAttributes }) => {
 	const { type, label, submit, size, show_icon, full } = attributes;
@@ -25,10 +25,10 @@ export default ({ className, attributes, setAttributes }) => {
 	return (
 		<div className={className} css={css``}>
 			<InspectorControls>
-				<PanelBody title={__('Attributes', 'checkout-engine')}>
+				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<TextControl
-							label={__('Button Text', 'checkout-engine')}
+							label={__('Button Text', 'surecart')}
 							value={label}
 							onChange={(label) => setAttributes({ label })}
 						/>
@@ -36,7 +36,7 @@ export default ({ className, attributes, setAttributes }) => {
 					<PanelRow>
 						<ToggleControl
 							checked={show_icon}
-							label={__('Show Icon', 'checkout-engine')}
+							label={__('Show Icon', 'surecart')}
 							onChange={(show_icon) =>
 								setAttributes({ show_icon })
 							}
@@ -44,7 +44,7 @@ export default ({ className, attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<ToggleControl
-							label={__('Full', 'checkout-engine')}
+							label={__('Full', 'surecart')}
 							checked={full}
 							onChange={(full) => setAttributes({ full })}
 						/>

@@ -39,14 +39,14 @@ export class CeSubscriptionCancel {
 
   async fetchProtocol() {
     this.protocol = (await apiFetch({
-      path: '/checkout-engine/v1/subscription_protocol',
+      path: '/surecart/v1/subscription_protocol',
     })) as SubscriptionProtocol;
   }
 
   async fetchSubscription() {
     if (!this.subscriptionId) return;
     this.subscription = (await apiFetch({
-      path: addQueryArgs(`/checkout-engine/v1/subscriptions/${this.subscriptionId}`, {
+      path: addQueryArgs(`/surecart/v1/subscriptions/${this.subscriptionId}`, {
         expand: ['price', 'price.product', 'latest_invoice', 'product'],
       }),
     })) as Subscription;
@@ -57,7 +57,7 @@ export class CeSubscriptionCancel {
       this.error = '';
       this.busy = true;
       await apiFetch({
-        path: `/checkout-engine/v1/subscriptions/${this.subscriptionId}/cancel`,
+        path: `/surecart/v1/subscriptions/${this.subscriptionId}/cancel`,
         method: 'PATCH',
       });
       if (this.successUrl) {

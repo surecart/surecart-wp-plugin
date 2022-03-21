@@ -61,7 +61,7 @@ export class CeUpcomingInvoice {
   async getPrice() {
     if (!this.priceId) return;
     this.price = (await apiFetch({
-      path: addQueryArgs(`checkout-engine/v1/prices/${this.priceId}`, {
+      path: addQueryArgs(`surecart/v1/prices/${this.priceId}`, {
         expand: ['product'],
       }),
     })) as Price;
@@ -70,7 +70,7 @@ export class CeUpcomingInvoice {
   async getInvoice() {
     if (!this.subscriptionId) return;
     this.invoice = (await apiFetch({
-      path: addQueryArgs(`checkout-engine/v1/subscriptions/${this.subscriptionId}/upcoming_invoice/`, {
+      path: addQueryArgs(`surecart/v1/subscriptions/${this.subscriptionId}/upcoming_invoice/`, {
         expand: ['invoice.subscription', 'subscription.payment_method', 'payment_method.card', 'invoice.discount'],
         subscription: {
           price: this.priceId,
@@ -115,7 +115,7 @@ export class CeUpcomingInvoice {
       this.error = '';
       this.busy = true;
       await apiFetch({
-        path: `checkout-engine/v1/subscriptions/${this.subscriptionId}`,
+        path: `surecart/v1/subscriptions/${this.subscriptionId}`,
         method: 'PATCH',
         data: {
           price: this.priceId,

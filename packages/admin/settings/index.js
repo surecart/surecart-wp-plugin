@@ -2,7 +2,7 @@ import { render } from '@wordpress/element';
 import { registerStore } from '@wordpress/data';
 
 import store from './store';
-registerStore('checkout-engine/settings', store);
+registerStore('surecart/settings', store);
 
 /**
  * register store entities.

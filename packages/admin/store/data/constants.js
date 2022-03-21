@@ -1,1 +1,1 @@
-export default 'checkout-engine/core-data';
+export default 'surecart/core-data';

@@ -3,7 +3,7 @@ import { css, jsx } from '@emotion/core';
 
 import { __ } from '@wordpress/i18n';
 
-import { CeFormControl } from '@checkout-engine/components-react';
+import { CeFormControl } from '@surecart/components-react';
 import { useState, useEffect } from '@wordpress/element';
 import {
 	FormFileUpload,
@@ -37,7 +37,7 @@ export default ({ product, updateProduct, loading }) => {
 			if (product?.id) {
 				await apiFetch({
 					method: 'DELETE',
-					path: `/checkout-engine/v1/products/${product.id}/purge_image`,
+					path: `/surecart/v1/products/${product.id}/purge_image`,
 				});
 			}
 			updateProduct({
@@ -62,7 +62,7 @@ export default ({ product, updateProduct, loading }) => {
 			// first get the unique upload id.
 			const { id } = await apiFetch({
 				method: 'POST',
-				path: '/checkout-engine/v1/uploads',
+				path: '/surecart/v1/uploads',
 			});
 
 			// then upload the file.

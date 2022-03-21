@@ -33,7 +33,7 @@ class OrderControllerTest extends CheckoutEngineUnitTestCase
 	 */
 	public function test_middlewareGetsCalled()
 	{
-		$request = new WP_REST_Request('POST', '/checkout-engine/v1/orders', [
+		$request = new WP_REST_Request('POST', '/surecart/v1/orders', [
 			'form_id' => 1,
 		]);
 
@@ -67,7 +67,7 @@ class OrderControllerTest extends CheckoutEngineUnitTestCase
 	 * Test validation.
 	 */
 	public function test_validate() {
-		$request = new WP_REST_Request('POST', '/checkout-engine/v1/orders/finalize');
+		$request = new WP_REST_Request('POST', '/surecart/v1/orders/finalize');
 		$request->set_param('email', 'testuser@test.com');
 		$request->set_param('password', 'pass123');
 

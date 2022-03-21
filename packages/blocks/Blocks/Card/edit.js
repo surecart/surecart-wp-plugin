@@ -13,54 +13,54 @@ import {
 	TextControl,
 	ToggleControl,
 } from '@wordpress/components';
-import { CeCard } from '@checkout-engine/components-react';
+import { CeCard } from '@surecart/components-react';
 
-export default ( { attributes, setAttributes, isSelected } ) => {
+export default ({ attributes, setAttributes, isSelected }) => {
 	const { borderless, title } = attributes;
 	const blockProps = useBlockProps();
 
 	return (
-		<div { ...blockProps }>
+		<div {...blockProps}>
 			<InspectorControls>
-				<PanelBody title={ __( 'Attributes', 'checkout-engine' ) }>
+				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<TextControl
-							label={ __( 'Title', 'checkout-engine' ) }
-							value={ title }
-							onChange={ ( title ) => setAttributes( { title } ) }
+							label={__('Title', 'surecart')}
+							value={title}
+							onChange={(title) => setAttributes({ title })}
 						/>
 					</PanelRow>
 					<PanelRow>
 						<ToggleControl
-							label={ __( 'Borderless', 'checkout-engine' ) }
-							checked={ borderless }
-							onChange={ ( borderless ) =>
-								setAttributes( { borderless } )
+							label={__('Borderless', 'surecart')}
+							checked={borderless}
+							onChange={(borderless) =>
+								setAttributes({ borderless })
 							}
 						/>
 					</PanelRow>
 				</PanelBody>
 			</InspectorControls>
 			<CeCard
-				borderless={ borderless }
-				css={ css`
+				borderless={borderless}
+				css={css`
 					.wp-block {
 						margin-top: 30px !important;
 						margin-bottom: 30px !important;
 					}
-				` }
+				`}
 			>
-				{ ( isSelected || !! title ) && (
+				{(isSelected || !!title) && (
 					<RichText
 						slot="title"
-						aria-label={ __( 'Card Title' ) }
-						placeholder={ __( 'Add title…' ) }
-						value={ title }
-						onChange={ ( title ) => setAttributes( { title } ) }
+						aria-label={__('Card Title')}
+						placeholder={__('Add title…')}
+						value={title}
+						onChange={(title) => setAttributes({ title })}
 						withoutInteractiveFormatting
-						allowedFormats={ [ 'core/bold', 'core/italic' ] }
+						allowedFormats={['core/bold', 'core/italic']}
 					/>
-				) }
+				)}
 				<InnerBlocks />
 			</CeCard>
 		</div>

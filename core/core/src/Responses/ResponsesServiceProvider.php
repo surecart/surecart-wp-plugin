@@ -21,12 +21,12 @@ class ResponsesServiceProvider implements ServiceProviderInterface {
 	 * {@inheritDoc}
 	 */
 	public function register( $container ) {
-		$container[ CHECKOUT_ENGINE_RESPONSE_SERVICE_KEY ] = function ( $c ) {
-			return new ResponseService( $c[ CHECKOUT_ENGINE_REQUEST_KEY ], $c[ CHECKOUT_ENGINE_VIEW_SERVICE_KEY ] );
+		$container[ SURECART_RESPONSE_SERVICE_KEY ] = function ( $c ) {
+			return new ResponseService( $c[ SURECART_REQUEST_KEY ], $c[ SURECART_VIEW_SERVICE_KEY ] );
 		};
 
-		$app = $container[ CHECKOUT_ENGINE_APPLICATION_KEY ];
-		$app->alias( 'responses', CHECKOUT_ENGINE_RESPONSE_SERVICE_KEY );
+		$app = $container[ SURECART_APPLICATION_KEY ];
+		$app->alias( 'responses', SURECART_RESPONSE_SERVICE_KEY );
 
 		$app->alias(
 			'response',

@@ -1,9 +1,9 @@
 {
-	"name": "checkout-engine/session-detail",
+	"name": "surecart/session-detail",
 	"title": "Session Info",
 	"description": "Display infor for a specific session.",
 	"category": "layout",
-	"keywords": [ "meta", "customer" ],
+	"keywords": ["meta", "customer"],
 	"supports": {
 		"reusable": false,
 		"html": false,

@@ -6,7 +6,7 @@ import {
 	CeIcon,
 	CeMenu,
 	CeMenuItem,
-} from '@checkout-engine/components-react';
+} from '@surecart/components-react';
 import { useEffect, useState } from 'react';
 import apiFetch from '@wordpress/api-fetch';
 import useFileUpload from '../../mixins/useFileUpload';
@@ -55,7 +55,7 @@ export default ({ file, onUploaded, onRemoved }) => {
 			if (file.id) {
 				await apiFetch({
 					method: 'DELETE',
-					path: `/checkout-engine/v1/files/${file.id}`,
+					path: `/surecart/v1/files/${file.id}`,
 				});
 			}
 			onRemoved({

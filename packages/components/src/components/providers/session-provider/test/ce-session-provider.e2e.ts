@@ -7,7 +7,7 @@ describe('ce-session-provider', () => {
     setResponses(
       [
         {
-          path: '/checkout-engine/v1/orders',
+          path: '/surecart/v1/orders',
           data: {},
         },
       ],

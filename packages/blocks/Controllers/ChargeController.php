@@ -29,7 +29,7 @@ class ChargeController extends BaseController {
 					->id( 'ce-customer-charges' )
 					->with(
 						[
-							'heading' => __( 'Payment History', 'checkout-engine' ),
+							'heading' => __( 'Payment History', 'surecart' ),
 							'query'   => [
 								'customer_ids' => array_values( User::current()->customerIds() ),
 								'page'         => $this->getPage(),

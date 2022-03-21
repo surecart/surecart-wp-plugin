@@ -5,7 +5,7 @@ import {
 	CeCard,
 	CeFormControl,
 	CeStackedList,
-} from '@checkout-engine/components-react';
+} from '@surecart/components-react';
 import { FormFileUpload, DropZone } from '@wordpress/components';
 import SingleFile from './SingleFile';
 import Box from '../../ui/Box';

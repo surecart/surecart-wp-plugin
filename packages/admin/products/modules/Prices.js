@@ -12,7 +12,7 @@ import {
 	CeChoice,
 	CeChoices,
 	CeSwitch,
-} from '@checkout-engine/components-react';
+} from '@surecart/components-react';
 import useEntities from '../../mixins/useEntities';
 import useCurrentPage from '../../mixins/useCurrentPage';
 import { useEffect } from 'react';

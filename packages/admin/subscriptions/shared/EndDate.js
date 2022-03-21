@@ -1,4 +1,4 @@
-import { CeFormatDate } from '@checkout-engine/components-react';
+import { CeFormatDate } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 
 export default ({ subscription }) => {

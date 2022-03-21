@@ -7,7 +7,7 @@ import {
 	InspectorControls,
 	store as blockEditorStore,
 } from '@wordpress/block-editor';
-import { CeCheckout } from '@checkout-engine/components-react';
+import { CeCheckout } from '@surecart/components-react';
 import { Fragment, useState } from '@wordpress/element';
 import { parse } from '@wordpress/blocks';
 import {
@@ -25,24 +25,24 @@ import Setup from './components/Setup';
 
 const ALLOWED_BLOCKS = [
 	'core/spacer',
-	'checkout-engine/columns',
-	'checkout-engine/input',
-	'checkout-engine/password',
-	'checkout-engine/price-selector',
-	'checkout-engine/checkbox',
-	'checkout-engine/divider',
-	'checkout-engine/heading',
-	'checkout-engine/button',
-	'checkout-engine/email',
-	'checkout-engine/switch',
-	'checkout-engine/name',
-	'checkout-engine/payment',
-	'checkout-engine/express-payment',
-	'checkout-engine/pricing-section',
-	'checkout-engine/totals',
-	'checkout-engine/form',
-	'checkout-engine/section-title',
-	'checkout-engine/submit',
+	'surecart/columns',
+	'surecart/input',
+	'surecart/password',
+	'surecart/price-selector',
+	'surecart/checkbox',
+	'surecart/divider',
+	'surecart/heading',
+	'surecart/button',
+	'surecart/email',
+	'surecart/switch',
+	'surecart/name',
+	'surecart/payment',
+	'surecart/express-payment',
+	'surecart/pricing-section',
+	'surecart/totals',
+	'surecart/form',
+	'surecart/section-title',
+	'surecart/submit',
 ];
 
 export default function edit({ clientId, attributes, setAttributes }) {
@@ -62,7 +62,7 @@ export default function edit({ clientId, attributes, setAttributes }) {
 		const r = confirm(
 			__(
 				'Are you sure you want to change the template? This will completely replace your current form.',
-				'checkout-engine'
+				'surecart'
 			)
 		);
 		if (!r) return;
@@ -112,14 +112,14 @@ export default function edit({ clientId, attributes, setAttributes }) {
 
 		// look through nested blocks and add or remove prices.
 		blocks.forEach(function iter(block, index, blocks) {
-			if (block.name === 'checkout-engine/price-selector') {
+			if (block.name === 'surecart/price-selector') {
 				if (remove) {
 					blocks.splice(index, 1);
 				} else {
 					blocks[index].attributes.type = choice_type;
 					blocks[index].innerBlocks = choices.map((choice, index) => {
 						return [
-							'checkout-engine/price-choice',
+							'surecart/price-choice',
 							{
 								price_id: choice?.id,
 								quantity: choice?.quantity || 1,
@@ -144,7 +144,7 @@ export default function edit({ clientId, attributes, setAttributes }) {
 
 		// look through nested blocks and add or remove prices.
 		blocks.forEach(function iter(block, index, blocks) {
-			if (block.name === 'checkout-engine/donation') {
+			if (block.name === 'surecart/donation') {
 				if (remove) {
 					blocks.splice(index, 1);
 				} else {

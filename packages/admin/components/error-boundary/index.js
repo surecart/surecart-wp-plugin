@@ -3,7 +3,7 @@
  */
 import { Component } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-import { CeButton, CeAlert } from '@checkout-engine/components-react';
+import { CeButton, CeAlert } from '@surecart/components-react';
 import { useCopyToClipboard } from '@wordpress/compose';
 
 function CopyButton({ text, children }) {

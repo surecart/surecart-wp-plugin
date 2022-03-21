@@ -19,7 +19,7 @@ export default ({
 		<DataTable
 			title={__('Subscriptions', 'surecart')}
 			columns={columns}
-			empty={empty || __('None found.', 'checkout-engine')}
+			empty={empty || __('None found.', 'surecart')}
 			items={(data || [])
 				.sort((a, b) => b.created_at - a.created_at)
 				.map((subscription) => subscriptionItem(subscription))}

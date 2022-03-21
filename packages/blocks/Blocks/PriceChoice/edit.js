@@ -12,7 +12,7 @@ import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
 /**
  * Component Dependencies
  */
-import { CePriceChoice } from '@checkout-engine/components-react';
+import { CePriceChoice } from '@surecart/components-react';
 import PriceInfo from './components/PriceInfo';
 
 import PriceSelector from '@scripts/blocks/components/PriceSelector';
@@ -48,17 +48,17 @@ export default ({ attributes, setAttributes, isSelected }) => {
 	return (
 		<Fragment>
 			<InspectorControls>
-				<PanelBody title={__('Attributes', 'checkout-engine')}>
+				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<TextControl
-							label={__('Label', 'checkout-engine')}
+							label={__('Label', 'surecart')}
 							value={label}
 							onChange={(label) => setAttributes({ label })}
 						/>
 					</PanelRow>
 					<PanelRow>
 						<TextControl
-							label={__('Description', 'checkout-engine')}
+							label={__('Description', 'surecart')}
 							value={description}
 							onChange={(description) =>
 								setAttributes({ description })
@@ -67,14 +67,14 @@ export default ({ attributes, setAttributes, isSelected }) => {
 					</PanelRow>
 					<PanelRow>
 						<ToggleControl
-							label={__('Checked By Default', 'checkout-engine')}
+							label={__('Checked By Default', 'surecart')}
 							checked={checked}
 							onChange={(checked) => setAttributes({ checked })}
 						/>
 					</PanelRow>
 					<PanelRow>
 						<ToggleControl
-							label={__('Show Label', 'checkout-engine')}
+							label={__('Show Label', 'surecart')}
 							checked={show_label}
 							onChange={(show_label) =>
 								setAttributes({ show_label })
@@ -83,7 +83,7 @@ export default ({ attributes, setAttributes, isSelected }) => {
 					</PanelRow>
 					<PanelRow>
 						<ToggleControl
-							label={__('Show Price Amount', 'checkout-engine')}
+							label={__('Show Price Amount', 'surecart')}
 							checked={show_price}
 							onChange={(show_price) =>
 								setAttributes({ show_price })
@@ -92,7 +92,7 @@ export default ({ attributes, setAttributes, isSelected }) => {
 					</PanelRow>
 					<PanelRow>
 						<ToggleControl
-							label={__('Show control', 'checkout-engine')}
+							label={__('Show control', 'surecart')}
 							checked={show_control}
 							onChange={(show_control) =>
 								setAttributes({ show_control })
@@ -100,7 +100,7 @@ export default ({ attributes, setAttributes, isSelected }) => {
 						/>
 					</PanelRow>
 				</PanelBody>
-				<PanelBody title={__('Product Info', 'checkout-engine')}>
+				<PanelBody title={__('Product Info', 'surecart')}>
 					<PanelRow>
 						<PriceInfo price_id={price_id} />
 					</PanelRow>

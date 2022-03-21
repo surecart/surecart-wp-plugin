@@ -2,7 +2,7 @@
 import { __, _n } from '@wordpress/i18n';
 import DataTable from '../../DataTable';
 import { css, jsx } from '@emotion/core';
-import { store } from '@checkout-engine/data';
+import { store } from '@surecart/data';
 import Refund from './Refund';
 import { Fragment } from '@wordpress/element';
 import { useState } from '@wordpress/element';
@@ -64,7 +64,7 @@ export default ({
 			<DataTable
 				title={title || __('Charges', 'surecart')}
 				columns={columns}
-				empty={empty || __('None found.', 'checkout-engine')}
+				empty={empty || __('None found.', 'surecart')}
 				items={(data || [])
 					.sort((a, b) => b.created_at - a.created_at)
 					.map((charge) => {

@@ -5,7 +5,7 @@ import {
 	useBlockProps,
 } from '@wordpress/block-editor';
 import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
-import { CeDashboardModule } from '@checkout-engine/components-react';
+import { CeDashboardModule } from '@surecart/components-react';
 import { Fragment } from 'react';
 
 export default ({ attributes, setAttributes }) => {

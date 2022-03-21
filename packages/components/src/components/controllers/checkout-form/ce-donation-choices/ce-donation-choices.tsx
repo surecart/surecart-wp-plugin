@@ -167,7 +167,7 @@ export class CeDonationChoices {
               value={this.lineItem?.ad_hoc_amount.toString()}
             ></ce-price-input>
             <ce-button type="primary" onClick={() => this.updateCustomAmount()} full busy={this.busy}>
-              {__('Update', 'checkout-engine')}
+              {__('Update', 'surecart')}
             </ce-button>
           </div>
         )}

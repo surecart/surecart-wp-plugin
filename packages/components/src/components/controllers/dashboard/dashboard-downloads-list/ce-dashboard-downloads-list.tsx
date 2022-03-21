@@ -75,7 +75,7 @@ export class CeDownloadsList {
   /** Get all subscriptions */
   async getItems() {
     const response = await await apiFetch({
-      path: addQueryArgs(`checkout-engine/v1/purchases/`, {
+      path: addQueryArgs(`surecart/v1/purchases/`, {
         expand: ['product', 'product.files'],
         downloadable: true,
         ...this.query,

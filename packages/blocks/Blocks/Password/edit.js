@@ -14,58 +14,56 @@ import {
 /**
  * Component Dependencies
  */
-import { CeInput } from '@checkout-engine/components-react';
+import { CeInput } from '@surecart/components-react';
 
-export default ( { className, attributes, setAttributes, isSelected } ) => {
+export default ({ className, attributes, setAttributes, isSelected }) => {
 	const { label, placeholder, help, required } = attributes;
 
 	return (
 		<Fragment>
 			<InspectorControls>
-				<PanelBody title={ __( 'Attributes', 'checkout-engine' ) }>
+				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<ToggleControl
-							label={ __( 'Required', 'checkout-engine' ) }
-							checked={ required }
-							onChange={ ( required ) =>
-								setAttributes( { required } )
+							label={__('Required', 'surecart')}
+							checked={required}
+							onChange={(required) => setAttributes({ required })}
+						/>
+					</PanelRow>
+					<PanelRow>
+						<TextControl
+							label={__('Label', 'surecart')}
+							value={label}
+							onChange={(label) => setAttributes({ label })}
+						/>
+					</PanelRow>
+					<PanelRow>
+						<TextControl
+							label={__('Placeholder', 'surecart')}
+							value={placeholder}
+							onChange={(placeholder) =>
+								setAttributes({ placeholder })
 							}
 						/>
 					</PanelRow>
 					<PanelRow>
 						<TextControl
-							label={ __( 'Label', 'checkout-engine' ) }
-							value={ label }
-							onChange={ ( label ) => setAttributes( { label } ) }
-						/>
-					</PanelRow>
-					<PanelRow>
-						<TextControl
-							label={ __( 'Placeholder', 'checkout-engine' ) }
-							value={ placeholder }
-							onChange={ ( placeholder ) =>
-								setAttributes( { placeholder } )
-							}
-						/>
-					</PanelRow>
-					<PanelRow>
-						<TextControl
-							label={ __( 'Help', 'checkout-engine' ) }
-							value={ help }
-							onChange={ ( help ) => setAttributes( { help } ) }
+							label={__('Help', 'surecart')}
+							value={help}
+							onChange={(help) => setAttributes({ help })}
 						/>
 					</PanelRow>
 				</PanelBody>
 			</InspectorControls>
 
 			<CeInput
-				className={ className }
-				name={ 'password' }
-				label={ label }
-				placeholder={ placeholder }
-				required={ true }
-				type={ 'password' }
-				help={ help }
+				className={className}
+				name={'password'}
+				label={label}
+				placeholder={placeholder}
+				required={true}
+				type={'password'}
+				help={help}
 			></CeInput>
 		</Fragment>
 	);

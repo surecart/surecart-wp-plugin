@@ -1,6 +1,6 @@
 import { __ } from '@wordpress/i18n';
 import { useRef } from '@wordpress/element';
-import { CeSelect } from '@checkout-engine/components-react';
+import { CeSelect } from '@surecart/components-react';
 import throttle from 'lodash/throttle';
 
 export default ({

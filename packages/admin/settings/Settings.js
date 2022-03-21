@@ -17,7 +17,7 @@ import { routes } from './routes';
 // get pages.
 import General from './pages/General';
 import Account from './pages/Account';
-import { CeButton } from '@checkout-engine/components-react';
+import { CeButton } from '@surecart/components-react';
 import { useSelect } from '@wordpress/data';
 import useEntity from '../mixins/useEntity';
 import { useEffect } from 'react';
@@ -46,7 +46,7 @@ export default () => {
 	}, []);
 
 	// const settings = useSelect((select) =>
-	// 	select('checkout-engine/settings').getSettings()
+	// 	select('surecart/settings').getSettings()
 	// );
 
 	return (

@@ -26,7 +26,7 @@ import styles from './editor-styles';
 /**
  * Component Dependencies
  */
-import { CePriceChoices } from '@checkout-engine/components-react';
+import { CePriceChoices } from '@surecart/components-react';
 
 export default ({ attributes, setAttributes, clientId, isSelected }) => {
 	const useInnerBlocksProps = __stableUseInnerBlocksProps
@@ -39,7 +39,7 @@ export default ({ attributes, setAttributes, clientId, isSelected }) => {
 		const innerCount =
 			select('core/editor').getBlocksByClientId(clientId)[0].innerBlocks
 				.length;
-		let block = createBlock('checkout-engine/price-choice');
+		let block = createBlock('surecart/price-choice');
 		dispatch('core/block-editor').insertBlock(block, innerCount, clientId);
 	};
 
@@ -61,7 +61,7 @@ export default ({ attributes, setAttributes, clientId, isSelected }) => {
 		{},
 		{
 			className: 'ce-choices',
-			allowedBlocks: ['checkout-engine/price-choice'],
+			allowedBlocks: ['surecart/price-choice'],
 			renderAppender:
 				isSelected || childIsSelected
 					? InnerBlocks.ButtonBlockAppender
@@ -85,10 +85,10 @@ export default ({ attributes, setAttributes, clientId, isSelected }) => {
 		<Fragment>
 			<Global styles={styles} />
 			<InspectorControls>
-				<PanelBody title={__('Attributes', 'checkout-engine')}>
+				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<TextControl
-							label={__('Label', 'checkout-engine')}
+							label={__('Label', 'surecart')}
 							value={label}
 							onChange={(label) => setAttributes({ label })}
 						/>

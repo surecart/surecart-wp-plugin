@@ -15,17 +15,17 @@ const settingsReducer = (state = {}, action) => {
 
 		case 'SAVE_SETTINGS':
 			apiFetch({
-				path: 'checkout-engine/v1/settings',
+				path: 'surecart/v1/settings',
 				method: 'PATCH',
 				data: state,
 			})
 				.then(() => {
-					dispatch('checkout-engine/settings').addNotice({
+					dispatch('surecart/settings').addNotice({
 						content: __('Settings saved.', 'presto-player'),
 					});
 				})
 				.catch((e) => {
-					dispatch('checkout-engine/settings').addNotice({
+					dispatch('surecart/settings').addNotice({
 						content: e.message
 							? e.message
 							: 'Something went wrong.',

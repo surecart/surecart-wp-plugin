@@ -36,8 +36,8 @@ class ActivationService {
 	 * @return void
 	 */
 	public function bootstrap() {
-		register_activation_hook( CHECKOUT_ENGINE_PLUGIN_FILE, [ $this, 'activate' ] );
-		register_deactivation_hook( CHECKOUT_ENGINE_PLUGIN_FILE, [ $this, 'deactivate' ] );
+		register_activation_hook( SURECART_PLUGIN_FILE, [ $this, 'activate' ] );
+		register_deactivation_hook( SURECART_PLUGIN_FILE, [ $this, 'deactivate' ] );
 	}
 
 	/**

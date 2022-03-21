@@ -56,11 +56,11 @@ trait ExtendsConfigTrait {
 	 * @return void
 	 */
 	public function extendConfig( $container, $key, $default ) {
-		$config = isset( $container[ CHECKOUT_ENGINE_CONFIG_KEY ] ) ? $container[ CHECKOUT_ENGINE_CONFIG_KEY ] : [];
+		$config = isset( $container[ SURECART_CONFIG_KEY ] ) ? $container[ SURECART_CONFIG_KEY ] : [];
 		$config = Arr::get( $config, $key, $default );
 
-		$container[ CHECKOUT_ENGINE_CONFIG_KEY ] = array_merge(
-			$container[ CHECKOUT_ENGINE_CONFIG_KEY ],
+		$container[ SURECART_CONFIG_KEY ] = array_merge(
+			$container[ SURECART_CONFIG_KEY ],
 			[ $key => $this->replaceConfig( $default, $config ) ]
 		);
 	}

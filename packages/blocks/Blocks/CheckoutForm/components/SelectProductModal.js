@@ -9,7 +9,7 @@ import { css, jsx } from '@emotion/core';
 
 import throttle from 'lodash/throttle';
 
-import { CeSelect } from '@checkout-engine/components-react';
+import { CeSelect } from '@surecart/components-react';
 import { convertPricesToChoices } from '../../../utils/prices';
 import { useSelect, dispatch, select } from '@wordpress/data';
 import { BLOCKS_STORE_KEY } from '../store';
@@ -54,7 +54,7 @@ export default ({ onRequestClose, onChoose }) => {
 			try {
 				// fetch product's prices.
 				const pricesResponse = await apiFetch({
-					path: addQueryArgs('checkout-engine/v1/prices', {
+					path: addQueryArgs('surecart/v1/prices', {
 						product_ids: [product.id],
 						archived: false,
 					}),

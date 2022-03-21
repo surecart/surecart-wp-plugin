@@ -24,11 +24,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'CHECKOUT_ENGINE_PLUGIN_FILE', __FILE__ );
+define( 'SURECART_PLUGIN_FILE', __FILE__ );
 
 // define host url.
-if ( ! defined( 'CHECKOUT_ENGINE_APP_URL' ) ) {
-	define( 'CHECKOUT_ENGINE_APP_URL', 'https://staging.surecart.com' );
+if ( ! defined( 'SURECART_APP_URL' ) ) {
+	define( 'SURECART_APP_URL', 'https://staging.surecart.com' );
 }
 
 // Load composer dependencies.

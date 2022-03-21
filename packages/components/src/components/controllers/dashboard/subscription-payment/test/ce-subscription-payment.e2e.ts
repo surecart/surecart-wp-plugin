@@ -7,7 +7,7 @@ describe('ce-subscription-payment', () => {
     setResponses(
       [
         {
-          path: '/checkout-engine/v1/payment_methods',
+          path: '/surecart/v1/payment_methods',
           data: {},
         },
       ],

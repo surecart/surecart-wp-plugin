@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { CeButton, CeForm, CeInput } from '@checkout-engine/components-react';
+import { CeButton, CeForm, CeInput } from '@surecart/components-react';
 import { useDispatch } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import { store as uiStore } from '../store/ui';

@@ -1,11 +1,11 @@
 {
 	"apiVersion": 2,
-	"name": "checkout-engine/price-selector",
+	"name": "surecart/price-selector",
 	"title": "Price Selector",
 	"description": "Displays a selector for product prices.",
 	"category": "layout",
 	"keywords": ["price", "product", "choice", "checkout"],
-	"parent": ["checkout-engine/form", "checkout-engine/column"],
+	"parent": ["surecart/form", "surecart/column"],
 	"supports": {
 		"reusable": false,
 		"html": false

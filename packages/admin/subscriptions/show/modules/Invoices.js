@@ -1,9 +1,9 @@
 import { select } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import DataTable from '../../../components/DataTable';
-import { store } from '@checkout-engine/data';
+import { store } from '@surecart/data';
 import { addQueryArgs } from '@wordpress/url';
-import { CeOrderStatusBadge } from '@checkout-engine/components-react';
+import { CeOrderStatusBadge } from '@surecart/components-react';
 import useEntities from '../../../mixins/useEntities';
 import { Flex } from '@wordpress/components';
 import InfinitePaginationButton from '@admin/ui/InfinitePaginationButton';

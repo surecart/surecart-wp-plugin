@@ -20,7 +20,7 @@ class NameProxyViewEngine implements ViewEngineInterface {
 	 *
 	 * @var string
 	 */
-	protected $default = CHECKOUT_ENGINE_VIEW_PHP_VIEW_ENGINE_KEY;
+	protected $default = SURECART_VIEW_PHP_VIEW_ENGINE_KEY;
 
 	/**
 	 * Application.

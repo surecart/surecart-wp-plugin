@@ -1,10 +1,10 @@
 {
-	"name": "checkout-engine/customer-shipping-address",
+	"name": "surecart/customer-shipping-address",
 	"title": "Customer Shipping and Tax Address",
 	"description": "Displays the customers shipping addresses and lets them update details.",
 	"category": "layout",
 	"keywords": ["name", "customer", "dashboard"],
-	"parent": ["checkout-engine/dashboard-page"],
+	"parent": ["surecart/dashboard-page"],
 	"supports": {
 		"reusable": false,
 		"html": false

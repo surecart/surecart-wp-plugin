@@ -2,7 +2,7 @@
 import { __ } from '@wordpress/i18n';
 import { css, jsx } from '@emotion/core';
 
-import { CeRadioGroup, CeRadio } from '@checkout-engine/components-react';
+import { CeRadioGroup, CeRadio } from '@surecart/components-react';
 import PriceChoices from '@scripts/blocks/components/PriceChoices';
 import PriceSelector from '../../../components/PriceSelector';
 import { Fragment } from 'react';

@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { __ } from '@wordpress/i18n';
 import { Modal, Button } from '@wordpress/components';
-import { CeForm } from '@checkout-engine/components-react';
+import { CeForm } from '@surecart/components-react';
 import { css, jsx } from '@emotion/core';
 import { useState, Fragment } from '@wordpress/element';
 import { useEffect } from 'react';

@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { __ } from '@wordpress/i18n';
 import { Modal, Button } from '@wordpress/components';
-import { CeForm } from '@checkout-engine/components-react';
+import { CeForm } from '@surecart/components-react';
 import { css, jsx } from '@emotion/core';
 import apiFetch from '@wordpress/api-fetch';
 import { useState } from '@wordpress/element';
@@ -23,7 +23,7 @@ export default ({ subscription, children }) => {
 		try {
 			const result = await apiFetch({
 				path: addQueryArgs(
-					`checkout-engine/v1/subscriptions/${subscription.id}/cancel`,
+					`surecart/v1/subscriptions/${subscription.id}/cancel`,
 					{
 						cancel_behavior,
 						expand: [

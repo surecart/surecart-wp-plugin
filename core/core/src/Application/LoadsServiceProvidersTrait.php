@@ -57,9 +57,9 @@ trait LoadsServiceProvidersTrait {
 	 * @return void
 	 */
 	protected function loadServiceProviders( Container $container ) {
-		$container[ CHECKOUT_ENGINE_SERVICE_PROVIDERS_KEY ] = array_merge(
+		$container[ SURECART_SERVICE_PROVIDERS_KEY ] = array_merge(
 			$this->service_providers,
-			Arr::get( $container[ CHECKOUT_ENGINE_CONFIG_KEY ], 'providers', [] )
+			Arr::get( $container[ SURECART_CONFIG_KEY ], 'providers', [] )
 		);
 
 		$service_providers = array_map(
@@ -78,7 +78,7 @@ trait LoadsServiceProvidersTrait {
 
 				return $container[ $service_provider ];
 			},
-			$container[ CHECKOUT_ENGINE_SERVICE_PROVIDERS_KEY ]
+			$container[ SURECART_SERVICE_PROVIDERS_KEY ]
 		);
 
 		$this->registerServiceProviders( $service_providers, $container );

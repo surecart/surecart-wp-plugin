@@ -1,13 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`checkout-engine/buttons can be required 1`] = `
-"<!-- wp:checkout-engine/password {\\"required\\":true} -->
-<ce-input label=\\"Password\\" placeholder=\\"\\" size=\\"\\" type=\\"password\\" name=\\"password\\" value=\\"\\" required class=\\"wp-block-checkout-engine-password\\"></ce-input>
-<!-- /wp:checkout-engine/password -->"
+exports[`surecart/buttons can be required 1`] = `
+"<!-- wp:surecart/password {\\"required\\":true} -->
+<ce-input label=\\"Password\\" placeholder=\\"\\" size=\\"\\" type=\\"password\\" name=\\"password\\" value=\\"\\" required class=\\"wp-block-surecart-password\\"></ce-input>
+<!-- /wp:surecart/password -->"
 `;
 
-exports[`checkout-engine/buttons should render with custom class name 1`] = `
-"<!-- wp:checkout-engine/password {\\"className\\":\\"my-custom-class\\"} -->
-<ce-input label=\\"Password\\" placeholder=\\"\\" size=\\"\\" type=\\"password\\" name=\\"password\\" value=\\"\\" class=\\"wp-block-checkout-engine-password my-custom-class\\"></ce-input>
-<!-- /wp:checkout-engine/password -->"
+exports[`surecart/buttons should render with custom class name 1`] = `
+"<!-- wp:surecart/password {\\"className\\":\\"my-custom-class\\"} -->
+<ce-input label=\\"Password\\" placeholder=\\"\\" size=\\"\\" type=\\"password\\" name=\\"password\\" value=\\"\\" class=\\"wp-block-surecart-password my-custom-class\\"></ce-input>
+<!-- /wp:surecart/password -->"
 `;

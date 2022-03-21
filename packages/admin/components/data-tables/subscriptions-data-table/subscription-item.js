@@ -8,7 +8,7 @@ import {
 	CeMenu,
 	CeMenuItem,
 	CeSubscriptionStatusBadge,
-} from '@checkout-engine/components-react';
+} from '@surecart/components-react';
 import Cancel from './Cancel';
 import UnCancel from './UnCancel';
 import { select } from '@wordpress/data';

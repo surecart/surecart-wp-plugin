@@ -34,10 +34,10 @@ class AppCoreServiceProvider implements ServiceProviderInterface {
 		);
 
 		$container['surecart_app_core.app_core.app_core'] = function( $c ) {
-			return new AppCore( $c[ CHECKOUT_ENGINE_APPLICATION_KEY ] );
+			return new AppCore( $c[ SURECART_APPLICATION_KEY ] );
 		};
 
-		$app = $container[ CHECKOUT_ENGINE_APPLICATION_KEY ];
+		$app = $container[ SURECART_APPLICATION_KEY ];
 		$app->alias( 'core', 'surecart_app_core.app_core.app_core' );
 	}
 

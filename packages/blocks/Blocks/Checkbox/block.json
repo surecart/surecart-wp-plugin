@@ -1,11 +1,11 @@
 {
 	"apiVersion": 2,
-	"name": "checkout-engine/checkbox",
+	"name": "surecart/checkbox",
 	"title": "Checkbox",
 	"description": "Display a checkbox input",
 	"category": "layout",
 	"keywords": ["checkbox", "toggle", "checkout", "engine"],
-	"parent": ["checkout-engine/form", "checkout-engine/column"],
+	"parent": ["surecart/form", "surecart/column"],
 	"supports": {
 		"reusable": false,
 		"html": false

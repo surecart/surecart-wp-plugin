@@ -4,7 +4,7 @@ import {
 	CeDropdown,
 	CeMenu,
 	CeMenuItem,
-} from '@checkout-engine/components-react';
+} from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 import { Fragment, useEffect } from 'react';
 import ErrorFlash from '../../components/ErrorFlash';

@@ -18,7 +18,7 @@ class AdminRouteServiceProvider implements ServiceProviderInterface {
 			return new AdminRouteService();
 		};
 
-		$app = $container[ CHECKOUT_ENGINE_APPLICATION_KEY ];
+		$app = $container[ SURECART_APPLICATION_KEY ];
 
 		$app->alias(
 			'getUrl',

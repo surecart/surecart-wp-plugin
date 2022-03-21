@@ -77,7 +77,7 @@ export class CeSubscriptionSwitch {
     try {
       this.loading = true;
       this.products = (await await apiFetch({
-        path: addQueryArgs(`checkout-engine/v1/products/`, {
+        path: addQueryArgs(`surecart/v1/products/`, {
           product_group_ids: [this.productGroupId],
           expand: ['prices'],
           ...this.query,

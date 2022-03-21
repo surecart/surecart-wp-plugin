@@ -10,7 +10,7 @@ class Onboarding {
 		if ( ! ApiToken::get() || is_wp_error( Account::find() ) ) {
 			return \CheckoutEngine::view( 'admin/onboarding/install' )->with(
 				[
-					'url' => esc_url_raw( untrailingslashit( CHECKOUT_ENGINE_APP_URL ) . '/sign_up?return_url=' . esc_url( admin_url( 'admin.php?page=ce-complete-signup' ) ) ),
+					'url' => esc_url_raw( untrailingslashit( SURECART_APP_URL ) . '/sign_up?return_url=' . esc_url( admin_url( 'admin.php?page=ce-complete-signup' ) ) ),
 				]
 			);
 		}

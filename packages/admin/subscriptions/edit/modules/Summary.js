@@ -1,4 +1,4 @@
-import { CeFormatDate } from '@checkout-engine/components-react';
+import { CeFormatDate } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 import Box from '../../../ui/Box';
 import EndDate from '../../shared/EndDate';

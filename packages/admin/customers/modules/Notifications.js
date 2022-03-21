@@ -1,5 +1,5 @@
 import { __ } from '@wordpress/i18n';
-import { CeSwitch } from '@checkout-engine/components-react';
+import { CeSwitch } from '@surecart/components-react';
 
 export default ({ customer, updateCustomer }) => {
 	if (!customer) return '';

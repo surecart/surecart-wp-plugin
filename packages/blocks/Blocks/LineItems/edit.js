@@ -17,10 +17,10 @@ export default ({ attributes, setAttributes }) => {
 	return (
 		<Fragment>
 			<InspectorControls>
-				<PanelBody title={__('Attributes', 'checkout-engine')}>
+				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<ToggleControl
-							label={__('Removable', 'checkout-engine')}
+							label={__('Removable', 'surecart')}
 							help={__(
 								'Allow line items to be removed.',
 								'surecart'
@@ -33,7 +33,7 @@ export default ({ attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<ToggleControl
-							label={__('Editable', 'checkout-engine')}
+							label={__('Editable', 'surecart')}
 							help={__(
 								'Allow line item quantities to be editable.',
 								'surecart'

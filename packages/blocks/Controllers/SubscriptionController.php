@@ -51,7 +51,7 @@ class SubscriptionController extends BaseController {
 			'ce-subscriptions-list',
 			'#customer-subscriptions-index',
 			[
-				'heading' => $attributes['title'] ?? __( 'Subscriptions', 'checkout-engine' ),
+				'heading' => $attributes['title'] ?? __( 'Subscriptions', 'surecart' ),
 				'query'   => [
 					'customer_ids' => array_values( User::current()->customerIds() ),
 					'status'       => [ 'active', 'trialing', 'canceled' ],
@@ -103,7 +103,7 @@ class SubscriptionController extends BaseController {
 				->id( 'customer-subscription-edit' )
 				->with(
 					[
-						'heading'      => __( 'Current Plan', 'checkout-engine' ),
+						'heading'      => __( 'Current Plan', 'surecart' ),
 						'subscription' => $subscription,
 					]
 				)->render()
@@ -119,7 +119,7 @@ class SubscriptionController extends BaseController {
 				->id( 'customer-subscription-switch' )
 				->with(
 					[
-						'heading'        => __( 'Update Plan', 'checkout-engine' ),
+						'heading'        => __( 'Update Plan', 'surecart' ),
 						'productGroupId' => $subscription->price->product->product_group,
 						'subscription'   => $subscription,
 					]
@@ -142,15 +142,15 @@ class SubscriptionController extends BaseController {
 		$terms_url   = $account->portal_protocol->terms_url ?? '';
 
 		if ( ! empty( $privacy_url ) && ! empty( $terms_url ) ) {
-			return sprintf( __( 'By updating or canceling your plan, you agree to the <a href="%1$1s" target="_blank">%2$2s</a> and <a href="%3$3s" target="_blank">%4$4s</a>', 'surecart' ), esc_url( $terms_url ), __( 'Terms', 'surecart' ), esc_url( $privacy_url ), __( 'Privacy Policy', 'checkout-engine' ) );
+			return sprintf( __( 'By updating or canceling your plan, you agree to the <a href="%1$1s" target="_blank">%2$2s</a> and <a href="%3$3s" target="_blank">%4$4s</a>', 'surecart' ), esc_url( $terms_url ), __( 'Terms', 'surecart' ), esc_url( $privacy_url ), __( 'Privacy Policy', 'surecart' ) );
 		}
 
 		if ( ! empty( $privacy_url ) ) {
-			return sprintf( __( 'By updating or canceling your plan, you agree to the <a href="%1$1s" target="_blank">%2$2s</a>', 'surecart' ), esc_url( $privacy_url ), __( 'Privacy Policy', 'checkout-engine' ) );
+			return sprintf( __( 'By updating or canceling your plan, you agree to the <a href="%1$1s" target="_blank">%2$2s</a>', 'surecart' ), esc_url( $privacy_url ), __( 'Privacy Policy', 'surecart' ) );
 		}
 
 		if ( ! empty( $terms_url ) ) {
-			return sprintf( __( 'By updating or canceling your plan, you agree to the <a href="%1$1s" target="_blank">%2$2s</a>', 'surecart' ), esc_url( $terms_url ), __( 'Terms', 'checkout-engine' ) );
+			return sprintf( __( 'By updating or canceling your plan, you agree to the <a href="%1$1s" target="_blank">%2$2s</a>', 'surecart' ), esc_url( $terms_url ), __( 'Terms', 'surecart' ) );
 		}
 
 		return '';
@@ -200,7 +200,7 @@ class SubscriptionController extends BaseController {
 				->id( 'customer-upcoming-invoice' )
 				->with(
 					[
-						'heading'        => __( 'New Plan', 'checkout-engine' ),
+						'heading'        => __( 'New Plan', 'surecart' ),
 						'subscriptionId' => $this->getId(),
 						'priceId'        => $this->getParam( 'price_id' ),
 						'successUrl'     => esc_url( $back ),

@@ -1,11 +1,11 @@
 {
 	"apiVersion": 2,
-	"name": "checkout-engine/address",
+	"name": "surecart/address",
 	"title": "Address",
 	"description": "Display an address form.",
 	"category": "layout",
 	"keywords": ["button", "submit", "checkout", "engine"],
-	"parent": ["checkout-engine/form", "checkout-engine/column"],
+	"parent": ["surecart/form", "surecart/column"],
 	"supports": {
 		"reusable": false,
 		"html": false

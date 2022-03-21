@@ -1,11 +1,11 @@
 {
 	"apiVersion": 2,
-	"name": "checkout-engine/customer-billing-details",
+	"name": "surecart/customer-billing-details",
 	"title": "Customer Billing Details",
 	"description": "Displays the customers billing details.",
 	"category": "layout",
 	"keywords": ["name", "customer", "dashboard"],
-	"parent": ["checkout-engine/dashboard-page"],
+	"parent": ["surecart/dashboard-page"],
 	"supports": {
 		"reusable": false,
 		"html": false

@@ -38,28 +38,28 @@ class ApplicationServiceProvider implements ServiceProviderInterface {
 			]
 		);
 
-		$container[ CHECKOUT_ENGINE_APPLICATION_GENERIC_FACTORY_KEY ] = function ( $c ) {
+		$container[ SURECART_APPLICATION_GENERIC_FACTORY_KEY ] = function ( $c ) {
 			return new GenericFactory( $c );
 		};
 
-		$container[ CHECKOUT_ENGINE_APPLICATION_CLOSURE_FACTORY_KEY ] = function ( $c ) {
-			return new ClosureFactory( $c[ CHECKOUT_ENGINE_APPLICATION_GENERIC_FACTORY_KEY ] );
+		$container[ SURECART_APPLICATION_CLOSURE_FACTORY_KEY ] = function ( $c ) {
+			return new ClosureFactory( $c[ SURECART_APPLICATION_GENERIC_FACTORY_KEY ] );
 		};
 
-		$container[ CHECKOUT_ENGINE_HELPERS_HANDLER_FACTORY_KEY ] = function ( $c ) {
-			return new HandlerFactory( $c[ CHECKOUT_ENGINE_APPLICATION_GENERIC_FACTORY_KEY ] );
+		$container[ SURECART_HELPERS_HANDLER_FACTORY_KEY ] = function ( $c ) {
+			return new HandlerFactory( $c[ SURECART_APPLICATION_GENERIC_FACTORY_KEY ] );
 		};
 
-		$app = $container[ CHECKOUT_ENGINE_APPLICATION_KEY ];
-		$app->alias( 'app', CHECKOUT_ENGINE_APPLICATION_KEY );
-		$app->alias( 'closure', CHECKOUT_ENGINE_APPLICATION_CLOSURE_FACTORY_KEY );
+		$app = $container[ SURECART_APPLICATION_KEY ];
+		$app->alias( 'app', SURECART_APPLICATION_KEY );
+		$app->alias( 'closure', SURECART_APPLICATION_CLOSURE_FACTORY_KEY );
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function bootstrap( $container ) {
-		$cache_dir = $container[ CHECKOUT_ENGINE_CONFIG_KEY ]['cache']['path'];
+		$cache_dir = $container[ SURECART_CONFIG_KEY ]['cache']['path'];
 		wp_mkdir_p( $cache_dir );
 	}
 }

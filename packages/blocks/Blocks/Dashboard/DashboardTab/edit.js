@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { CeTab } from '@checkout-engine/components-react';
+import { CeTab } from '@surecart/components-react';
 import { css, jsx } from '@emotion/core';
 import {
 	InspectorControls,
@@ -47,10 +47,10 @@ export default ({ attributes, setAttributes }) => {
 	return (
 		<Fragment>
 			<InspectorControls>
-				<PanelBody title={__('Attributes', 'checkout-engine')}>
+				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<TextControl
-							label={__('Title', 'checkout-engine')}
+							label={__('Title', 'surecart')}
 							value={title}
 							onChange={(title) => setAttributes({ title })}
 						/>

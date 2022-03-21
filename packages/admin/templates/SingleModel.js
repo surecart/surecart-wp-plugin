@@ -9,7 +9,7 @@ import StatusBadge from '../components/StatusBadge';
 import BrowserUrl from '../components/browser-url';
 import UnsavedChangesWarning from '../components/unsaved-changes-warning';
 import ErrorBoundary from '../components/error-boundary';
-import { CeForm, CeButton } from '@checkout-engine/components-react';
+import { CeForm, CeButton } from '@surecart/components-react';
 import useSnackbar from '../hooks/useSnackbar';
 
 export default ({

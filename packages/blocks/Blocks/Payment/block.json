@@ -1,10 +1,10 @@
 {
-	"name": "checkout-engine/payment",
+	"name": "surecart/payment",
 	"title": "Payment",
 	"description": "Display payment options",
 	"category": "layout",
 	"keywords": ["credit", "card", "paypal", "stripe"],
-	"parent": ["checkout-engine/form", "checkout-engine/column"],
+	"parent": ["surecart/form", "surecart/column"],
 	"supports": {
 		"reusable": false,
 		"html": false

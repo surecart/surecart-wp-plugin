@@ -1,10 +1,10 @@
 {
-	"name": "checkout-engine/password",
+	"name": "surecart/password",
 	"title": "Password",
 	"description": "Displays a password field.",
 	"category": "layout",
 	"keywords": ["password", "input"],
-	"parent": ["checkout-engine/form", "checkout-engine/column"],
+	"parent": ["surecart/form", "surecart/column"],
 	"supports": {
 		"reusable": false,
 		"html": false

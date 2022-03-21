@@ -57,7 +57,7 @@ class DownloadController extends BaseController {
 			->id( 'customer-orders-index' )
 			->with(
 				[
-					'heading' => __( 'Order History', 'checkout-engine' ),
+					'heading' => __( 'Order History', 'surecart' ),
 
 					'query'   => [
 						'customer_ids' => array_values( User::current()->customerIds() ),

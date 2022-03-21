@@ -8,7 +8,7 @@ import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
 import {
 	CeSubscriptionDetails,
 	CeDashboardModule,
-} from '@checkout-engine/components-react';
+} from '@surecart/components-react';
 import { Fragment } from 'react';
 
 export default ({ attributes, setAttributes }) => {

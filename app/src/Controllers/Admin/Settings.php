@@ -22,7 +22,7 @@ class Settings {
 		);
 
 		if ( ! $session || is_wp_error( $session ) ) {
-			wp_die( esc_html__( 'Could not load settings page.', 'checkout-engine' ) );
+			wp_die( esc_html__( 'Could not load settings page.', 'surecart' ) );
 		}
 
 		if ( is_ssl() ) {

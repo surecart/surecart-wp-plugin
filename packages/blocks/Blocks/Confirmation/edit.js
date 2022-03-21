@@ -2,7 +2,7 @@
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { InnerBlocks, useBlockProps } from '@wordpress/block-editor';
-import { CeOrderConfirmation } from '@checkout-engine/components-react';
+import { CeOrderConfirmation } from '@surecart/components-react';
 
 export default () => {
 	const blockProps = useBlockProps();

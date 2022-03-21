@@ -31,7 +31,7 @@ class OrderRestServiceProviderTest extends CheckoutEngineUnitTestCase {
 	{
 		$test_form = self::factory()->post->create_and_get( array(
 			'post_type' => 'sc_form',
-			'post_content' => '<!-- wp:checkout-engine/form {"mode":"test"} --><!-- /wp:checkout-engine/form -->'
+			'post_content' => '<!-- wp:surecart/form {"mode":"test"} --><!-- /wp:surecart/form -->'
 		) );
 
 		// mock the requests in the container
@@ -47,7 +47,7 @@ class OrderRestServiceProviderTest extends CheckoutEngineUnitTestCase {
 				'email' => 'test@test.com'
 			]);
 
-		$request = new WP_REST_Request('PATCH', '/checkout-engine/v1/orders/testid/finalize');
+		$request = new WP_REST_Request('PATCH', '/surecart/v1/orders/testid/finalize');
 		$request->set_query_params(['form_id'=> $test_form->ID]);
 		$request->set_param('processor_type', 'stripe');
 		$response = rest_do_request( $request );
@@ -65,14 +65,14 @@ class OrderRestServiceProviderTest extends CheckoutEngineUnitTestCase {
 		$requests->shouldReceive('makeRequest')->never();
 
 		// must pass form id.
-		$request = new WP_REST_Request('PATCH', '/checkout-engine/v1/orders/testid/finalize');
+		$request = new WP_REST_Request('PATCH', '/surecart/v1/orders/testid/finalize');
 		$request->set_param('processor_type', 'stripe');
 		$response = rest_do_request( $request );
 		$this->assertSame($response->get_status(), 400);
 		$this->assertSame($response->get_data()['code'], 'form_id_required');
 
 		// must be a valid form id.
-		$request = new WP_REST_Request('PATCH', '/checkout-engine/v1/orders/testid/finalize');
+		$request = new WP_REST_Request('PATCH', '/surecart/v1/orders/testid/finalize');
 		$request->set_param('processor_type', 'stripe');
 		$request->set_param('form_id', 1234567789);
 		$response = rest_do_request( $request );
@@ -84,12 +84,12 @@ class OrderRestServiceProviderTest extends CheckoutEngineUnitTestCase {
 	{
 		$test_form = self::factory()->post->create_and_get( array(
 			'post_type' => 'sc_form',
-			'post_content' => '<!-- wp:checkout-engine/form {"mode":"test"} --><!-- /wp:checkout-engine/form -->'
+			'post_content' => '<!-- wp:surecart/form {"mode":"test"} --><!-- /wp:surecart/form -->'
 		) );
 
 		$live_form = self::factory()->post->create_and_get( array(
 			'post_type' => 'sc_form',
-			'post_content' => '<!-- wp:checkout-engine/form {"mode":"live"} --><!-- /wp:checkout-engine/form -->'
+			'post_content' => '<!-- wp:surecart/form {"mode":"live"} --><!-- /wp:surecart/form -->'
 		) );
 
 		// mock the requests in the container
@@ -100,20 +100,20 @@ class OrderRestServiceProviderTest extends CheckoutEngineUnitTestCase {
 
 		$requests->shouldReceive('makeRequest')->andReturn([]);
 
-		$request = new WP_REST_Request('POST', '/checkout-engine/v1/orders');
+		$request = new WP_REST_Request('POST', '/surecart/v1/orders');
 		$request->set_param('live_mode', false);
 		$request->set_query_params(['form_id'=> $test_form->ID]);
 		$response = rest_do_request( $request );
 		$this->assertSame($response->get_status(), 200);
 
-		$request = new WP_REST_Request('POST', '/checkout-engine/v1/orders');
+		$request = new WP_REST_Request('POST', '/surecart/v1/orders');
 		$request->set_param('live_mode', true);
 		$request->set_query_params(['form_id'=> $live_form->ID]);
 		$response = rest_do_request( $request );
 		$this->assertSame($response->get_status(), 200);
 
 		// don't let someone make a test payment on a form that is live.
-		$request = new WP_REST_Request('POST', '/checkout-engine/v1/orders');
+		$request = new WP_REST_Request('POST', '/surecart/v1/orders');
 		$request->set_param('live_mode', false);
 		$request->set_query_params(['form_id'=> $live_form->ID]);
 		$response = rest_do_request( $request );
@@ -124,7 +124,7 @@ class OrderRestServiceProviderTest extends CheckoutEngineUnitTestCase {
 	{
 		$live_form = self::factory()->post->create_and_get( array(
 			'post_type' => 'sc_form',
-			'post_content' => '<!-- wp:checkout-engine/form {"mode":"live"} --><!-- /wp:checkout-engine/form -->'
+			'post_content' => '<!-- wp:surecart/form {"mode":"live"} --><!-- /wp:surecart/form -->'
 		) );
 
 		// mock the requests in the container
@@ -136,7 +136,7 @@ class OrderRestServiceProviderTest extends CheckoutEngineUnitTestCase {
 		$requests->shouldReceive('makeRequest')->andReturn([]);
 
 		// users with edit session permissions can do this, though.
-		$request = new WP_REST_Request('POST', '/checkout-engine/v1/orders');
+		$request = new WP_REST_Request('POST', '/surecart/v1/orders');
 		$request->set_param('live_mode', false);
 		$request->set_query_params(['form_id'=> $live_form->ID]);
 		$response = rest_do_request( $request );
@@ -147,7 +147,7 @@ class OrderRestServiceProviderTest extends CheckoutEngineUnitTestCase {
 		wp_set_current_user($user->ID);
 
 		// users with edit session permissions can do this, though.
-		$request = new WP_REST_Request('POST', '/checkout-engine/v1/orders');
+		$request = new WP_REST_Request('POST', '/surecart/v1/orders');
 		$request->set_param('live_mode', false);
 		$request->set_query_params(['form_id'=> $live_form->ID]);
 		$response = rest_do_request( $request );
@@ -164,20 +164,20 @@ class OrderRestServiceProviderTest extends CheckoutEngineUnitTestCase {
 
 		$form = self::factory()->post->create_and_get( array(
 			'post_type' => 'sc_form',
-			'post_content' => '<!-- wp:checkout-engine/form {"mode":"test"} --><!-- /wp:checkout-engine/form -->'
+			'post_content' => '<!-- wp:surecart/form {"mode":"test"} --><!-- /wp:surecart/form -->'
 		) );
 
 		$requests->shouldReceive('makeRequest')->andReturn([]);
 
 		// always allow forced live payments, even on a test form.
-		$request = new WP_REST_Request('POST', '/checkout-engine/v1/orders');
+		$request = new WP_REST_Request('POST', '/surecart/v1/orders');
 		$request->set_param('live_mode', true);
 		$request->set_query_params(['form_id'=> $form->ID]);
 		$response = rest_do_request( $request );
 		$this->assertSame($response->get_status(), 200);
 
 		// default to live if no mode is sent with the request, even if the form is in test mode.
-		$request = new WP_REST_Request('POST', '/checkout-engine/v1/orders');
+		$request = new WP_REST_Request('POST', '/surecart/v1/orders');
 		$request->set_query_params(['form_id'=> $form->ID]);
 		$response = rest_do_request( $request );
 		$this->assertSame($response->get_status(), 200);

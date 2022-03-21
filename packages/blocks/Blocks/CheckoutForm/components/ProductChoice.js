@@ -17,7 +17,7 @@ import {
 	CeDropdown,
 	CeMenu,
 	CeMenuItem,
-} from '@checkout-engine/components-react';
+} from '@surecart/components-react';
 
 import { __experimentalNumberControl as NumberControl } from '@wordpress/components';
 
@@ -45,7 +45,7 @@ export default ( { attributes, setAttributes, choice } ) => {
 		setIsLoading( true );
 		try {
 			const prices = await apiFetch( {
-				path: addQueryArgs( '/checkout-engine/v1/prices', {
+				path: addQueryArgs( '/surecart/v1/prices', {
 					ids: [ id ],
 				} ),
 			} );

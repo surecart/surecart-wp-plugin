@@ -1,10 +1,10 @@
 {
 	"apiVersion": 2,
-	"name": "checkout-engine/donation",
+	"name": "surecart/donation",
 	"title": "Donation",
 	"description": "Displays a donation amount for the user to choose from.",
 	"category": "layout",
-	"parent": ["checkout-engine/form", "checkout-engine/column"],
+	"parent": ["surecart/form", "surecart/column"],
 	"keywords": ["donation", "ad hoc", "custom", "amount"],
 	"supports": {
 		"reusable": false,

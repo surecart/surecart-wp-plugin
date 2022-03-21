@@ -17,10 +17,7 @@ import { css, jsx } from '@emotion/core';
  * @constant
  * @type {string[]}
  */
-const ALLOWED_BLOCKS = [
-	'checkout-engine/dashboard-tab',
-	'checkout-engine/dashboard-logout',
-];
+const ALLOWED_BLOCKS = ['surecart/dashboard-tab', 'surecart/dashboard-logout'];
 
 export default ({}) => {
 	const useInnerBlocksProps = __stableUseInnerBlocksProps

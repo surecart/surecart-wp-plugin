@@ -1,11 +1,11 @@
 {
 	"apiVersion": 2,
-	"name": "checkout-engine/dashboard-tab",
+	"name": "surecart/dashboard-tab",
 	"title": "Customer Dashboard Tab",
 	"description": "Displays the users customer dashboard tab.",
 	"category": "layout",
-	"keywords": [ "name", "customer", "dashboard" ],
-	"parent": [ "checkout-engine/dashboard-tabs" ],
+	"keywords": ["name", "customer", "dashboard"],
+	"parent": ["surecart/dashboard-tabs"],
 	"supports": {
 		"reusable": false,
 		"html": false

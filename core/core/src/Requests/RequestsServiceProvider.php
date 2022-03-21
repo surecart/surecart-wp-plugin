@@ -21,7 +21,7 @@ class RequestsServiceProvider implements ServiceProviderInterface {
 	 * {@inheritDoc}
 	 */
 	public function register( $container ) {
-		$container[ CHECKOUT_ENGINE_REQUEST_KEY ] = function () {
+		$container[ SURECART_REQUEST_KEY ] = function () {
 			return Request::fromGlobals();
 		};
 	}
