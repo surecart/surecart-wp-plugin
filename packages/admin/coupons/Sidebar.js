@@ -11,10 +11,7 @@ import Definition from '../ui/Definition';
 export default ({ coupon, loading }) => {
 	const formattedDiscount = () => {
 		if (coupon?.percent_off) {
-			return sprintf(
-				__('%1s%% off', 'surecart
-				coupon?.percent_off
-			);
+			return sprintf(__('%1s%% off', 'surecart'), coupon?.percent_off);
 		}
 		if (coupon?.amount_off) {
 			return (
@@ -29,15 +26,15 @@ export default ({ coupon, loading }) => {
 
 	const renderDuration = () => {
 		if (coupon?.duration === 'once') {
-			return __('Once', 'surecart
+			return __('Once', 'surecart');
 		}
 		if (coupon?.duration === 'repeating' && coupon?.duration_in_months) {
 			return sprintf(
-				__('%d months', 'surecart
+				__('%d months', 'surecart'),
 				coupon?.duration_in_months
 			);
 		}
-		return __('Forever', 'surecart
+		return __('Forever', 'surecart');
 	};
 
 	return (
@@ -52,7 +49,7 @@ export default ({ coupon, loading }) => {
 							justify-content: space-between;
 						`}
 					>
-						{__('Summary', 'surecart}
+						{__('Summary', 'surecart')}
 					</div>
 				}
 				css={css`
@@ -61,12 +58,12 @@ export default ({ coupon, loading }) => {
 			>
 				<Fragment>
 					{formattedDiscount() && (
-						<Definition title={__('Discount', 'surecart
+						<Definition title={__('Discount', 'surecart')}>
 							{formattedDiscount()}
 						</Definition>
 					)}
 
-					<Definition title={__('Uses', 'surecart
+					<Definition title={__('Uses', 'surecart')}>
 						{coupon?.times_redeemed || 0} /{' '}
 						{!!coupon?.max_redemptions ? (
 							coupon?.max_redemptions
@@ -75,12 +72,12 @@ export default ({ coupon, loading }) => {
 						)}
 					</Definition>
 
-					<Definition title={__('Duration', 'surecart
+					<Definition title={__('Duration', 'surecart')}>
 						{renderDuration()}
 					</Definition>
 
 					{!!coupon?.redeem_by && (
-						<Definition title={__('Redeem By', 'surecart
+						<Definition title={__('Redeem By', 'surecart')}>
 							{format('F j, Y', new Date(coupon.redeem_by))}
 						</Definition>
 					)}
@@ -88,9 +85,7 @@ export default ({ coupon, loading }) => {
 					{!!coupon?.id && <hr />}
 
 					{!!coupon?.updated_at && (
-						<Definition
-							title={__('Last Updated', 'surecart
-						>
+						<Definition title={__('Last Updated', 'surecart')}>
 							{format(
 								'F j, Y',
 								new Date(coupon.updated_at * 1000)
@@ -99,7 +94,7 @@ export default ({ coupon, loading }) => {
 					)}
 
 					{!!coupon?.created_at && (
-						<Definition title={__('Created', 'surecart
+						<Definition title={__('Created', 'surecart')}>
 							{format(
 								'F j, Y',
 								new Date(coupon.created_at * 1000)
@@ -111,7 +106,7 @@ export default ({ coupon, loading }) => {
 							css={css`
 								margin-bottom: 1em;
 							`}
-							title={__('Archived On', 'surecart
+							title={__('Archived On', 'surecart')}
 						>
 							{format(
 								'F j, Y',

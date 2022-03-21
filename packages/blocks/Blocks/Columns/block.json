@@ -5,7 +5,7 @@
 	"title": "Columns",
 	"category": "design",
 	"description": "Display content in multiple columns, with blocks added to each column.",
-	"textdomain": "surecart
+	"textdomain": "surecart",
 	"parent": ["checkout-engine/form"],
 	"attributes": {
 		"verticalAlignment": {

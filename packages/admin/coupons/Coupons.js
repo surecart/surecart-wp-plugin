@@ -70,8 +70,8 @@ export default () => {
 			);
 		}
 		return coupon?.id
-			? __('Edit Coupon', 'surecart
-			: __('New Coupon', 'surecart
+			? __('Edit Coupon', 'surecart')
+			: __('New Coupon', 'surecart');
 	};
 
 	const onSubmit = async (e) => {
@@ -167,7 +167,7 @@ export default () => {
 			onSubmit={onSubmit}
 			pageModelName={'coupon'}
 			backUrl={'admin.php?page=ce-coupons'}
-			backText={__('Back to All Coupons', 'surecart
+			backText={__('Back to All Coupons', 'surecart')}
 			title={title()}
 			button={
 				isLoading ? (
@@ -192,8 +192,8 @@ export default () => {
 							submit
 						>
 							{coupon?.id
-								? __('Update Coupon', 'surecart
-								: __('Create Coupon', 'surecart
+								? __('Update Coupon', 'surecart')
+								: __('Create Coupon', 'surecart')}
 						</CeButton>
 					</div>
 				)

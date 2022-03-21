@@ -71,7 +71,7 @@ export default ( { attributes, setAttributes, choice } ) => {
 		const r = confirm(
 			__(
 				'Are you sure you want to remove this product from the form?',
-				'surecart
+				'surecart'
 			)
 		);
 		if ( r ) {
