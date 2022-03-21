@@ -29,7 +29,7 @@ export class CeSubscriptionCancel {
       await this.fetchSubscription();
     } catch (e) {
       console.error(this.error);
-      this.error = e?.message || __('Something went wrong', 'checkout_engine');
+      this.error = e?.message || __('Something went wrong', 'surecart');
     } finally {
       this.loading = false;
     }
@@ -58,7 +58,7 @@ export class CeSubscriptionCancel {
         this.busy = false;
       }
     } catch (e) {
-      this.error = e?.message || __('Something went wrong', 'checkout_engine');
+      this.error = e?.message || __('Something went wrong', 'surecart');
       this.busy = false;
     }
   }
@@ -72,7 +72,7 @@ export class CeSubscriptionCancel {
       <Fragment>
         <ce-subscription-details subscription={this?.subscription} hideRenewalText={true}></ce-subscription-details>
         <ce-alert type="info" open>
-          {__('This plan will no longer be canceled. It will renew on', 'checkout_engine')}{' '}
+          {__('This plan will no longer be canceled. It will renew on', 'surecart')}{' '}
           <ce-format-date type="timestamp" date={this?.subscription?.current_period_end_at as number} month="long" day="numeric" year="numeric"></ce-format-date>.{' '}
         </ce-alert>
       </Fragment>
@@ -91,17 +91,17 @@ export class CeSubscriptionCancel {
 
   render() {
     return (
-      <ce-dashboard-module heading={this.heading || __('Renew your plan', 'checkout_engine')} class="subscription-cancel" error={this.error}>
+      <ce-dashboard-module heading={this.heading || __('Renew your plan', 'surecart')} class="subscription-cancel" error={this.error}>
         <ce-card>
           {this.renderContent()}
 
           <ce-button type="primary" full loading={this.loading || this.busy} disabled={this.loading || this.busy} onClick={() => this.renewSubscription()}>
-            {__('Renew Plan', 'checkout_engine')}
+            {__('Renew Plan', 'surecart')}
           </ce-button>
 
           {!!this.backUrl && (
             <ce-button href={this.backUrl} full loading={this.loading || this.busy} disabled={this.loading || this.busy}>
-              {__('Go Back', 'checkout_engine')}
+              {__('Go Back', 'surecart')}
             </ce-button>
           )}
         </ce-card>

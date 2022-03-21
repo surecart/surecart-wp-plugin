@@ -13,7 +13,7 @@ export default ({ customer, updateCustomer }) => {
 					updateCustomer({ unsubscribed: !e.target.checked });
 				}}
 			>
-				{__('Subscribed to emails', 'checkout_engine')}
+				{__('Subscribed to emails', 'surecart')}
 			</CeSwitch>
 		</div>
 	);

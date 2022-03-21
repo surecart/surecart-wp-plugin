@@ -54,7 +54,7 @@ class RefundsRestServiceProvider extends RestServiceProvider implements RestServ
 			// In JSON Schema you can specify object properties in the properties attribute.
 			'properties' => [
 				'id' => [
-					'description' => esc_html__( 'Unique identifier for the object.', 'checkout_engine' ),
+					'description' => esc_html__( 'Unique identifier for the object.', 'surecart' ),
 					'type'        => 'string',
 					'context'     => [ 'view', 'edit', 'embed' ],
 					'readonly'    => true,

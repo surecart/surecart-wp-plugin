@@ -5,10 +5,10 @@ import EndDate from '../../shared/EndDate';
 
 export default ({ loading, subscription }) => {
 	return (
-		<Box title={__('Summary', 'checkout_engine')} loading={loading}>
+		<Box title={__('Summary', 'surecart')} loading={loading}>
 			<div>
 				<div>
-					<strong>{__('Started', 'checkout_engine')}</strong>
+					<strong>{__('Started', 'surecart')}</strong>
 				</div>
 				<CeFormatDate
 					date={subscription?.current_period_start_at}

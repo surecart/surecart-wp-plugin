@@ -60,9 +60,9 @@ class ProductsListTable extends ListTable {
 	 */
 	protected function get_views() {
 		$stati = [
-			'active'   => __( 'Active', 'checkout_engine' ),
-			'archived' => __( 'Archived', 'checkout_engine' ),
-			'all'      => __( 'All', 'checkout_engine' ),
+			'active'   => __( 'Active', 'surecart' ),
+			'archived' => __( 'Archived', 'surecart' ),
+			'all'      => __( 'All', 'surecart' ),
 		];
 
 		$link = admin_url( 'admin.php?page=ce-products' );
@@ -103,11 +103,11 @@ class ProductsListTable extends ListTable {
 	public function get_columns() {
 		return [
 			// 'cb'          => '<input type="checkbox" />',
-			'name'  => __( 'Name', 'checkout_engine' ),
-			// 'description' => __( 'Description', 'checkout_engine' ),
-			'price' => __( 'Price', 'checkout_engine' ),
-			'type'  => __( 'Type', 'checkout_engine' ),
-			'date'  => __( 'Date', 'checkout_engine' ),
+			'name'  => __( 'Name', 'surecart' ),
+			// 'description' => __( 'Description', 'surecart' ),
+			'price' => __( 'Price', 'surecart' ),
+			'type'  => __( 'Type', 'surecart' ),
+			'date'  => __( 'Date', 'surecart' ),
 		];
 	}
 
@@ -169,7 +169,7 @@ class ProductsListTable extends ListTable {
 			echo esc_html( $this->error );
 			return;
 		}
-		echo esc_html_e( 'No products found.', 'checkout_engine' );
+		echo esc_html_e( 'No products found.', 'surecart' );
 	}
 
 	/**
@@ -189,7 +189,7 @@ class ProductsListTable extends ListTable {
 					gap: 0.5em;"
 			>
 				<ce-icon name="repeat"></ce-icon>
-				' . esc_html__( 'Subscription', 'checkout_engine' ) . '
+				' . esc_html__( 'Subscription', 'surecart' ) . '
 			</div>
 		</ce-tag>';
 		}
@@ -202,7 +202,7 @@ class ProductsListTable extends ListTable {
 				gap: 0.5em;"
 		>
 			<ce-icon name="bookmark"></ce-icon>
-			' . esc_html__( 'One-Time', 'checkout_engine' ) . '
+			' . esc_html__( 'One-Time', 'surecart' ) . '
 		</div>
 	</ce-tag>';
 	}
@@ -218,22 +218,22 @@ class ProductsListTable extends ListTable {
 		$currency = $product->metrics->currency ?? 'usd';
 
 		if ( empty( $product->metrics->prices_count ) ) {
-			return '<ce-tag type="warning">' . __( 'No price', 'checkout_engine' ) . '</ce-tag>';
+			return '<ce-tag type="warning">' . __( 'No price', 'surecart' ) . '</ce-tag>';
 		}
 
 		if ( ! empty( $product->metrics->min_price_amount ) ) {
 			$amount = '<ce-format-number type="currency" currency="' . $currency . '" value="' . $product->metrics->min_price_amount . '"></ce-format-number>';
 			if ( $product->metrics->prices_count > 1 ) {
 				// translators: Price starting at.
-				$starting_at = sprintf( __( 'Starting at %s', 'checkout_engine' ), $amount );
+				$starting_at = sprintf( __( 'Starting at %s', 'surecart' ), $amount );
 				// translators: Other prices.
-				$others = sprintf( _n( 'and %d other price.', 'and %d other prices.', $product->metrics->prices_count - 1, 'checkout_engine' ), $product->metrics->prices_count - 1 );
+				$others = sprintf( _n( 'and %d other price.', 'and %d other prices.', $product->metrics->prices_count - 1, 'surecart' ), $product->metrics->prices_count - 1 );
 				return $starting_at . '<br /><small style="opacity: 0.75">' . $others . '</small>';
 			} else {
 				return $amount;
 			}
 		}
-		return __( 'No price', 'checkout_engine' );
+		return __( 'No price', 'surecart' );
 	}
 
 	/**
@@ -252,7 +252,7 @@ class ProductsListTable extends ListTable {
 		);
 		$updated = sprintf(
 			'%1$s <time datetime="%2$s" title="%3$s">%4$s</time>',
-			__( 'Updated', 'checkout_engine' ),
+			__( 'Updated', 'surecart' ),
 			esc_attr( $product->updated_at ),
 			esc_html( TimeDate::formatDateAndTime( $product->updated_at ) ),
 			esc_html( TimeDate::humanTimeDiff( $product->updated_at ) )
@@ -283,14 +283,14 @@ class ProductsListTable extends ListTable {
 	  <?php } ?>
 
 	  <div>
-		<a class="row-title" aria-label="<?php echo esc_attr( 'Edit Product', 'checkout_engine' ); ?>" href="<?php echo esc_url( \CheckoutEngine::getUrl()->edit( 'product', $product->id ) ); ?>">
+		<a class="row-title" aria-label="<?php echo esc_attr( 'Edit Product', 'surecart' ); ?>" href="<?php echo esc_url( \CheckoutEngine::getUrl()->edit( 'product', $product->id ) ); ?>">
 			<?php echo esc_html_e( $product->name ); ?>
 		</a>
 
 		<?php
 		echo $this->row_actions(
 			[
-				'edit'  => '<a href="' . esc_url( \CheckoutEngine::getUrl()->edit( 'product', $product->id ) ) . '" aria-label="' . esc_attr( 'Edit Product', 'checkout_engine' ) . '">' . __( 'Edit', 'checkout_engine' ) . '</a>',
+				'edit'  => '<a href="' . esc_url( \CheckoutEngine::getUrl()->edit( 'product', $product->id ) ) . '" aria-label="' . esc_attr( 'Edit Product', 'surecart' ) . '">' . __( 'Edit', 'surecart' ) . '</a>',
 				'trash' => $this->action_toggle_archive( $product ),
 			],
 		);
@@ -309,15 +309,15 @@ class ProductsListTable extends ListTable {
 	 * @return string
 	 */
 	public function action_toggle_archive( $product ) {
-		$text            = $product->archived ? __( 'Un-Archive', 'checkout_engine' ) : __( 'Archive', 'checkout_engine' );
-		$confirm_message = $product->archived ? __( 'Are you sure you want to restore this product? This will be be available to purchase.', 'checkout_engine' ) : __( 'Are you sure you want to archive this product? This will be unavailable for purchase.', 'checkout_engine' );
+		$text            = $product->archived ? __( 'Un-Archive', 'surecart' ) : __( 'Archive', 'surecart' );
+		$confirm_message = $product->archived ? __( 'Are you sure you want to restore this product? This will be be available to purchase.', 'surecart' ) : __( 'Are you sure you want to archive this product? This will be unavailable for purchase.', 'surecart' );
 		$link            = \CheckoutEngine::getUrl()->toggleArchive( 'product', $product->id );
 
 		return sprintf(
 			'<a class="submitdelete" onclick="return confirm(\'%1s\')" href="%2s" aria-label="%3s">%4s</a>',
 			esc_attr( $confirm_message ),
 			esc_url( $link ),
-			esc_attr__( 'Toggle Product Archive', 'checkout_engine' ),
+			esc_attr__( 'Toggle Product Archive', 'surecart' ),
 			esc_html( $text )
 		);
 	}

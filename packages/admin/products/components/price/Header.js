@@ -50,9 +50,7 @@ export default ({
 	const buttons = (
 		<div>
 			{price?.archived && (
-				<CeTag type="warning">
-					{__('Archived', 'checkout_engine')}
-				</CeTag>
+				<CeTag type="warning">{__('Archived', 'surecart')}</CeTag>
 			)}
 			<CeDropdown slot="suffix" position="bottom-right">
 				<CeButton type="text" slot="trigger" circle>
@@ -70,8 +68,8 @@ export default ({
 								size={20}
 							/>
 							{price?.archived
-								? __('Un-Archive', 'checkout_engine')
-								: __('Archive', 'checkout_engine')}
+								? __('Un-Archive', 'surecart')
+								: __('Archive', 'surecart')}
 						</CeMenuItem>
 					)}
 					<CeMenuItem onClick={onDelete}>
@@ -83,7 +81,7 @@ export default ({
 							icon={trash}
 							size={20}
 						/>
-						{__('Delete', 'checkout_engine')}
+						{__('Delete', 'surecart')}
 					</CeMenuItem>
 				</CeMenu>
 			</CeDropdown>

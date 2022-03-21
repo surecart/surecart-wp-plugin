@@ -4,7 +4,7 @@
  * @author    Andre Gagnon <me@andregagnon.me>
  * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://checkout_engine.com/
+ * @link      https://surecart.com/
  */
 
 namespace CheckoutEngineCore\Application;
@@ -176,7 +176,7 @@ class Application {
 			$request = Request::fromGlobals();
 			$handler = $this->resolve( CHECKOUT_ENGINE_EXCEPTIONS_CONFIGURATION_ERROR_HANDLER_KEY );
 
-			add_filter( 'checkout_engine.pretty_errors.apply_admin_styles', '__return_false' );
+			add_filter( 'surecart.pretty_errors.apply_admin_styles', '__return_false' );
 
 			$response_service = $this->resolve( CHECKOUT_ENGINE_RESPONSE_SERVICE_KEY );
 			$response_service->respond( $handler->getResponse( $request, $exception ) );

@@ -36,7 +36,7 @@ export default () => {
 		<CreateTemplate>
 			<FlashError path="product_group" scrollIntoView />
 
-			<Box title={__('Create New Upgrade Group', 'checkout_engine')}>
+			<Box title={__('Create New Upgrade Group', 'surecart')}>
 				<CeForm onCeSubmit={onSubmit}>
 					<div
 						css={css`
@@ -45,11 +45,11 @@ export default () => {
 						`}
 					>
 						<CeInput
-							label={__('Group Name', 'checkout_engine')}
+							label={__('Group Name', 'surecart')}
 							className="ce-product-name hydrated"
 							help={__(
 								'A name for your product group. This is not shown to customers.',
-								'checkout_engine'
+								'surecart'
 							)}
 							onCeChange={(e) => {
 								updateProductgroup({ name: e.target.value });
@@ -63,14 +63,14 @@ export default () => {
 							css={css`display: flex gap: var(--ce-spacing-small);`}
 						>
 							<CeButton type="primary" submit loading={isSaving}>
-								{__('Create', 'checkout_engine')}
+								{__('Create', 'surecart')}
 							</CeButton>
 
 							<CeButton
 								href={'admin.php?page=ce-product-groups'}
 								type="text"
 							>
-								{__('Cancel', 'checkout_engine')}
+								{__('Cancel', 'surecart')}
 							</CeButton>
 						</div>
 					</div>

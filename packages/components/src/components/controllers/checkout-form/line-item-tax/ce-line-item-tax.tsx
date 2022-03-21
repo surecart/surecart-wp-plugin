@@ -17,7 +17,7 @@ export class CeLineItemTax {
       return this?.order?.tax_label;
     }
     // translators: %s: tax label
-    return sprintf(__('Estimated %s', 'checkout_engine'), this?.order?.tax_label);
+    return sprintf(__('Estimated %s', 'surecart'), this?.order?.tax_label);
   }
 
   render() {

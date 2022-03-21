@@ -34,16 +34,16 @@ export const getCurrencySymbol = (code: string = 'usd') => {
   return currency?.value;
 };
 
-export const translatedInterval = (amount: number, interval: string, prefix: string = __('every', 'checkout_engine'), fallback: string = __('once', 'checkout_engine')) => {
+export const translatedInterval = (amount: number, interval: string, prefix: string = __('every', 'surecart'), fallback: string = __('once', 'surecart')) => {
   switch (interval) {
     case 'day':
-      return `${prefix} ${sprintf(_n('day', '%d days', amount, 'checkout_engine'), amount)}`;
+      return `${prefix} ${sprintf(_n('day', '%d days', amount, 'surecart'), amount)}`;
     case 'week':
-      return `${prefix} ${sprintf(_n('week', '%d weeks', amount, 'checkout_engine'), amount)}`;
+      return `${prefix} ${sprintf(_n('week', '%d weeks', amount, 'surecart'), amount)}`;
     case 'month':
-      return `${prefix} ${sprintf(_n('month', '%d months', amount, 'checkout_engine'), amount)}`;
+      return `${prefix} ${sprintf(_n('month', '%d months', amount, 'surecart'), amount)}`;
     case 'year':
-      return `${prefix} ${sprintf(_n('year', '%d years', amount, 'checkout_engine'), amount)}`;
+      return `${prefix} ${sprintf(_n('year', '%d years', amount, 'surecart'), amount)}`;
     default:
       return fallback;
   }

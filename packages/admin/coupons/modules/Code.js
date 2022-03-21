@@ -74,11 +74,11 @@ export default ({ promotion: promotionEntity, index }) => {
 						promotion?.id
 							? __(
 									'Customers will enter this discount code at checkout.',
-									'checkout_engine'
+									'surecart
 							  )
 							: __(
 									'Customers will enter this discount code at checkout. Leave this blank and we will generate one for you.',
-									'checkout_engine'
+									'surecart
 							  )
 					}
 					attribute="name"
@@ -89,7 +89,7 @@ export default ({ promotion: promotionEntity, index }) => {
 				>
 					{promotion?.archived && (
 						<CeTag type="warning" slot="suffix">
-							{__('Archived', 'checkout_engine')}
+							{__('Archived', 'surecart
 						</CeTag>
 					)}
 				</CeInput>
@@ -110,8 +110,8 @@ export default ({ promotion: promotionEntity, index }) => {
 								size={20}
 							/>
 							{promotion?.archived
-								? __('Un-Archive', 'checkout_engine')
-								: __('Archive', 'checkout_engine')}
+								? __('Un-Archive', 'surecart
+								: __('Archive', 'surecart
 						</CeMenuItem>
 					)}
 					<CeMenuItem onClick={() => onDelete(index)}>
@@ -123,7 +123,7 @@ export default ({ promotion: promotionEntity, index }) => {
 							icon={trash}
 							size={20}
 						/>
-						{__('Delete', 'checkout_engine')}
+						{__('Delete', 'surecart
 					</CeMenuItem>
 				</CeMenu>
 			</CeDropdown>

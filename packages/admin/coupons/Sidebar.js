@@ -12,7 +12,7 @@ export default ({ coupon, loading }) => {
 	const formattedDiscount = () => {
 		if (coupon?.percent_off) {
 			return sprintf(
-				__('%1s%% off', 'checkout_engine'),
+				__('%1s%% off', 'surecart
 				coupon?.percent_off
 			);
 		}
@@ -29,15 +29,15 @@ export default ({ coupon, loading }) => {
 
 	const renderDuration = () => {
 		if (coupon?.duration === 'once') {
-			return __('Once', 'checkout_engine');
+			return __('Once', 'surecart
 		}
 		if (coupon?.duration === 'repeating' && coupon?.duration_in_months) {
 			return sprintf(
-				__('%d months', 'checkout_engine'),
+				__('%d months', 'surecart
 				coupon?.duration_in_months
 			);
 		}
-		return __('Forever', 'checkout_engine');
+		return __('Forever', 'surecart
 	};
 
 	return (
@@ -52,7 +52,7 @@ export default ({ coupon, loading }) => {
 							justify-content: space-between;
 						`}
 					>
-						{__('Summary', 'checkout_engine')}{' '}
+						{__('Summary', 'surecart}
 					</div>
 				}
 				css={css`
@@ -61,12 +61,12 @@ export default ({ coupon, loading }) => {
 			>
 				<Fragment>
 					{formattedDiscount() && (
-						<Definition title={__('Discount', 'checkout_engine')}>
+						<Definition title={__('Discount', 'surecart
 							{formattedDiscount()}
 						</Definition>
 					)}
 
-					<Definition title={__('Uses', 'checkout_engine')}>
+					<Definition title={__('Uses', 'surecart
 						{coupon?.times_redeemed || 0} /{' '}
 						{!!coupon?.max_redemptions ? (
 							coupon?.max_redemptions
@@ -75,12 +75,12 @@ export default ({ coupon, loading }) => {
 						)}
 					</Definition>
 
-					<Definition title={__('Duration', 'checkout_engine')}>
+					<Definition title={__('Duration', 'surecart
 						{renderDuration()}
 					</Definition>
 
 					{!!coupon?.redeem_by && (
-						<Definition title={__('Redeem By', 'checkout_engine')}>
+						<Definition title={__('Redeem By', 'surecart
 							{format('F j, Y', new Date(coupon.redeem_by))}
 						</Definition>
 					)}
@@ -89,7 +89,7 @@ export default ({ coupon, loading }) => {
 
 					{!!coupon?.updated_at && (
 						<Definition
-							title={__('Last Updated', 'checkout_engine')}
+							title={__('Last Updated', 'surecart
 						>
 							{format(
 								'F j, Y',
@@ -99,7 +99,7 @@ export default ({ coupon, loading }) => {
 					)}
 
 					{!!coupon?.created_at && (
-						<Definition title={__('Created', 'checkout_engine')}>
+						<Definition title={__('Created', 'surecart
 							{format(
 								'F j, Y',
 								new Date(coupon.created_at * 1000)
@@ -111,7 +111,7 @@ export default ({ coupon, loading }) => {
 							css={css`
 								margin-bottom: 1em;
 							`}
-							title={__('Archived On', 'checkout_engine')}
+							title={__('Archived On', 'surecart
 						>
 							{format(
 								'F j, Y',

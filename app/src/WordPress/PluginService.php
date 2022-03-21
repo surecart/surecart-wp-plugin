@@ -37,7 +37,7 @@ class PluginService {
 	 * @return \CheckoutEngine\Account\AccountService
 	 */
 	public function account() {
-		return $this->app->reolve( 'checkout_engine.account' );
+		return $this->app->reolve( 'surecart.account' );
 	}
 
 	/**
@@ -46,7 +46,7 @@ class PluginService {
 	 * @return \CheckoutEngine\Install\InstallService
 	 */
 	public function install() {
-		return $this->app->resolve( 'checkout_engine.install' );
+		return $this->app->resolve( 'surecart.install' );
 	}
 
 	/**
@@ -55,7 +55,7 @@ class PluginService {
 	 * @return \CheckoutEngine\WordPress\Pages\PageService
 	 */
 	public function pages() {
-		return $this->app->resolve( 'checkout_engine.pages' );
+		return $this->app->resolve( 'surecart.pages' );
 	}
 	/**
 	 * Shortcut to \CheckoutEngine\WordPress\Pages\PageService.
@@ -63,7 +63,7 @@ class PluginService {
 	 * @return \CheckoutEngine\WordPress\Pages\PageService
 	 */
 	public function activation() {
-		return $this->app->resolve( 'checkout_engine.activation' );
+		return $this->app->resolve( 'surecart.activation' );
 	}
 
 	/**
@@ -72,6 +72,6 @@ class PluginService {
 	 * @return \CheckoutEngine\Permissions\RolesService;
 	 */
 	public function roles() {
-		return $this->app->resolve( 'checkout_engine.permissions.roles' );
+		return $this->app->resolve( 'surecart.permissions.roles' );
 	}
 }

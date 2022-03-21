@@ -19,11 +19,11 @@ class InstallService {
 	 */
 	public function createCheckoutForm() {
 		$forms = apply_filters(
-			'checkout_engine/create_forms',
+			'surecart/create_forms',
 			[
 				'checkout' => [
-					'name'      => _x( 'checkout', 'Form slug', 'checkout_engine' ),
-					'title'     => _x( 'Checkout', 'Form title', 'checkout_engine' ),
+					'name'      => _x( 'checkout', 'Form slug', 'surecart' ),
+					'title'     => _x( 'Checkout', 'Form title', 'surecart' ),
 					'content'   => '<!-- wp:checkout-engine/form -->
 
 					<!-- wp:checkout-engine/express-payment -->
@@ -118,23 +118,23 @@ class InstallService {
 	public function createPages() {
 		$form  = \CheckoutEngine::forms()->getDefault();
 		$pages = apply_filters(
-			'checkout_engine/create_pages',
+			'surecart/create_pages',
 			array(
 				'checkout'           => [
-					'name'    => _x( 'checkout', 'Page slug', 'checkout_engine' ),
-					'title'   => _x( 'Checkout', 'Page title', 'checkout_engine' ),
+					'name'    => _x( 'checkout', 'Page slug', 'surecart' ),
+					'title'   => _x( 'Checkout', 'Page title', 'surecart' ),
 					'content' => '<!-- wp:checkout-engine/checkout-form {"id":' . (int) $form->ID . '} -->
 					<!-- wp:checkout-engine/form /-->
 					<!-- /wp:checkout-engine/checkout-form -->',
 				],
 				'order-confirmation' => [
-					'name'    => _x( 'order-confirmation', 'Page slug', 'checkout_engine' ),
-					'title'   => _x( 'Thank you!', 'Page title', 'checkout_engine' ),
+					'name'    => _x( 'order-confirmation', 'Page slug', 'surecart' ),
+					'title'   => _x( 'Thank you!', 'Page title', 'surecart' ),
 					'content' => '<!-- wp:checkout-engine/order-confirmation --> <!-- /wp:checkout-engine/order-confirmation -->',
 				],
 				'dashboard'          => [
-					'name'    => _x( 'customer-dashboard', 'Page slug', 'checkout_engine' ),
-					'title'   => _x( 'Dashboard', 'Page title', 'checkout_engine' ),
+					'name'    => _x( 'customer-dashboard', 'Page slug', 'surecart' ),
+					'title'   => _x( 'Dashboard', 'Page title', 'surecart' ),
 					'content' => '<!-- wp:checkout-engine/dashboard --> <!-- /wp:checkout-engine/dashboard -->',
 				],
 			)

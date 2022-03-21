@@ -70,8 +70,8 @@ export default () => {
 		}
 
 		return id
-			? __('Edit Customer', 'checkout_engine')
-			: __('Add Customer', 'checkout_engine');
+			? __('Edit Customer', 'surecart')
+			: __('Add Customer', 'surecart');
 	};
 
 	return (
@@ -79,7 +79,7 @@ export default () => {
 			pageModelName={'customers'}
 			onSubmit={onSubmit}
 			backUrl={'admin.php?page=ce-customers'}
-			backText={__('Back to All Customers', 'checkout_engine')}
+			backText={__('Back to All Customers', 'surecart')}
 			title={title()}
 			button={
 				isLoading ? (
@@ -100,8 +100,8 @@ export default () => {
 					>
 						<CeButton type="primary" loading={isSaving} submit>
 							{id
-								? __('Update Customer', 'checkout_engine')
-								: __('Create Customer', 'checkout_engine')}
+								? __('Update Customer', 'surecart')
+								: __('Create Customer', 'surecart')}
 						</CeButton>
 					</div>
 				)

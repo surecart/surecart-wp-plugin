@@ -50,7 +50,7 @@ export default ({ onCreate }) => {
 						})
 					}
 				>
-					{__('Create', 'checkout_engine')}
+					{__('Create', 'surecart')}
 				</CeButton>
 			}
 			footerLeft={
@@ -62,7 +62,7 @@ export default ({ onCreate }) => {
 					}}
 				>
 					<ce-icon name="arrow-left" slot="prefix"></ce-icon>
-					{__('Back', 'checkout_engine')}
+					{__('Back', 'surecart')}
 				</CeButton>
 			}
 		>
@@ -81,11 +81,9 @@ export default ({ onCreate }) => {
 					setChoiceType={setChoiceType}
 				/>
 
-				<ce-dashboard-module
-					heading={__('Thank You Page', 'checkout_engine')}
-				>
+				<ce-dashboard-module heading={__('Thank You Page', 'surecart')}>
 					<ToggleControl
-						label={__('Custom Thank You Page', 'checkout_engine')}
+						label={__('Custom Thank You Page', 'surecart')}
 						checked={custom_success_url}
 						onChange={(custom_success_url) =>
 							setCustomSuccessUrl(custom_success_url)

@@ -33,12 +33,12 @@ class AppCoreServiceProvider implements ServiceProviderInterface {
 			]
 		);
 
-		$container['checkout_engine_app_core.app_core.app_core'] = function( $c ) {
+		$container['surecart_app_core.app_core.app_core'] = function( $c ) {
 			return new AppCore( $c[ CHECKOUT_ENGINE_APPLICATION_KEY ] );
 		};
 
 		$app = $container[ CHECKOUT_ENGINE_APPLICATION_KEY ];
-		$app->alias( 'core', 'checkout_engine_app_core.app_core.app_core' );
+		$app->alias( 'core', 'surecart_app_core.app_core.app_core' );
 	}
 
 	/**

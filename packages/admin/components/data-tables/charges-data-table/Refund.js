@@ -48,8 +48,7 @@ export default ({ charge, onRequestClose }) => {
 				setError(e?.additional_errors?.[0]?.message);
 			} else {
 				setError(
-					e?.message ||
-						__('Failed to create refund.', 'checkout_engine')
+					e?.message || __('Failed to create refund.', 'surecart')
 				);
 			}
 		} finally {
@@ -59,7 +58,7 @@ export default ({ charge, onRequestClose }) => {
 
 	return (
 		<Modal
-			title={__('Refund Payment', 'checkout_engine')}
+			title={__('Refund Payment', 'surecart')}
 			css={css`
 				max-width: 500px !important;
 			`}
@@ -75,14 +74,14 @@ export default ({ charge, onRequestClose }) => {
 				<CeAlert type="info" open>
 					{__(
 						"Refunds can take 5-10 days to appear on a customer's statement. Processor fees are typically not returned.",
-						'checkout_engine'
+						'surecart'
 					)}
 				</CeAlert>
 				<div>
 					<CePriceInput
 						required
 						name="amount"
-						label={__('Refund', 'checkout_engine')}
+						label={__('Refund', 'surecart')}
 						currencyCode={charge?.currency}
 						value={charge?.amount - charge?.refunded_amount}
 						max={charge?.amount - charge?.refunded_amount}
@@ -93,14 +92,11 @@ export default ({ charge, onRequestClose }) => {
 					/>
 				</div>
 				<div>
-					<CeFormControl label={__('Reason', 'checkout_engine')}>
+					<CeFormControl label={__('Reason', 'surecart')}>
 						<CeSelect
 							name="reason"
 							value={reason}
-							placeholder={__(
-								'Select a reason',
-								'checkout_engine'
-							)}
+							placeholder={__('Select a reason', 'surecart')}
 							onCeChange={(e) => {
 								setReason(e.target.value);
 							}}
@@ -134,10 +130,10 @@ export default ({ charge, onRequestClose }) => {
 					`}
 				>
 					<Button isPrimary isBusy={loading} type="submit">
-						{__('Refund', 'checkout_engine')}
+						{__('Refund', 'surecart')}
 					</Button>
 					<Button onClick={onRequestClose}>
-						{__('Cancel', 'checkout_engine')}
+						{__('Cancel', 'surecart')}
 					</Button>
 				</div>
 

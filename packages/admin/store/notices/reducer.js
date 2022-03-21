@@ -1,5 +1,5 @@
-export default ( state = [], action ) => {
-	switch ( action.type ) {
+export default (state = [], action) => {
+	switch (action.type) {
 		case 'ADD_SNACKBAR_NOTICE':
 			return [
 				...state,
@@ -13,7 +13,7 @@ export default ( state = [], action ) => {
 				},
 			];
 		case 'REMOVE_SNACKBAR_NOTICE':
-			return state.filter( ( notice ) => notice.id !== action.id );
+			return state.filter((notice) => notice.id !== action.id);
 		case 'SAVE_ERROR':
 			return [
 				...state,
@@ -22,7 +22,7 @@ export default ( state = [], action ) => {
 					className: 'is-snackbar-error',
 					content:
 						action?.message ||
-						__( 'Something went wrong.', 'checkout_engine' ),
+						__('Something went wrong.', 'surecart'),
 				},
 			];
 	}

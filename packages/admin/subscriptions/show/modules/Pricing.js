@@ -9,13 +9,13 @@ export default ({ product, price, subscription, loading }) => {
 	return (
 		<DataTable
 			loading={loading}
-			title={__('Product', 'checkout_engine')}
+			title={__('Product', 'surecart')}
 			columns={{
 				product: {
-					label: __('Product', 'checkout_engine'),
+					label: __('Product', 'surecart'),
 				},
 				quantity: {
-					label: __('Qty', 'checkout_engine'),
+					label: __('Qty', 'surecart'),
 					width: '75px',
 				},
 				total: {
@@ -26,7 +26,7 @@ export default ({ product, price, subscription, loading }) => {
 								justify-content: flex-end;
 							`}
 						>
-							{__('Total', 'checkout_engine')}
+							{__('Total', 'surecart')}
 						</div>
 					),
 				},
@@ -86,7 +86,7 @@ export default ({ product, price, subscription, loading }) => {
 									id: subscription?.id,
 								})}
 							>
-								{__('Change', 'checkout_engine')}
+								{__('Change', 'surecart')}
 							</ce-button>
 						),
 				},

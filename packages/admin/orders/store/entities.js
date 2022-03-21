@@ -51,7 +51,7 @@ dispatch(coreStore).addEntities([
 	{
 		name: 'charge',
 		kind: 'root',
-		label: __('Charge', 'checkout_engine'),
+		label: __('Charge', 'surecart'),
 		baseURL: 'checkout-engine/v1/charges',
 		baseURLParams: { context: 'edit' },
 		__experimentalNoFetch: true,
@@ -59,7 +59,7 @@ dispatch(coreStore).addEntities([
 	{
 		name: 'invoice',
 		kind: 'root',
-		label: __('Invoice', 'checkout_engine'),
+		label: __('Invoice', 'surecart'),
 		baseURL: 'checkout-engine/v1/invoices',
 		baseURLParams: { context: 'edit' },
 		__experimentalNoFetch: true,
@@ -67,7 +67,7 @@ dispatch(coreStore).addEntities([
 	{
 		name: 'subscription',
 		kind: 'root',
-		label: __('Subscription', 'checkout_engine'),
+		label: __('Subscription', 'surecart'),
 		baseURL: 'checkout-engine/v1/subscriptions',
 		baseURLParams: { context: 'edit' },
 		__experimentalNoFetch: true,
@@ -75,7 +75,7 @@ dispatch(coreStore).addEntities([
 	{
 		name: 'product',
 		kind: 'root',
-		label: __('Product', 'checkout_engine'),
+		label: __('Product', 'surecart'),
 		baseURL: 'checkout-engine/v1/products',
 		baseURLParams: { context: 'edit' },
 		__experimentalNoFetch: true,
@@ -83,7 +83,7 @@ dispatch(coreStore).addEntities([
 	{
 		name: 'purchase',
 		kind: 'root',
-		label: __('Purchase', 'checkout_engine'),
+		label: __('Purchase', 'surecart'),
 		baseURL: 'checkout-engine/v1/purchases',
 		baseURLParams: { context: 'edit' },
 		__experimentalNoFetch: true,
@@ -91,7 +91,7 @@ dispatch(coreStore).addEntities([
 	{
 		name: 'customer',
 		kind: 'root',
-		label: __('Customer', 'checkout_engine'),
+		label: __('Customer', 'surecart'),
 		baseURL: 'checkout-engine/v1/customers',
 		baseURLParams: { context: 'edit' },
 		__experimentalNoFetch: true,

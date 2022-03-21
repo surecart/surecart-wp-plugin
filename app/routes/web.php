@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 */
 \CheckoutEngine::route()
 	->post()
-	->url( '/checkout_engine/webhooks' )
+	->url( '/surecart/webhooks' )
 	->name( 'webhooks' )
 	->middleware( 'webhooks' )
 	->handle( 'WebhookController@receive' );

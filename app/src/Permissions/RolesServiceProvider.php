@@ -19,11 +19,11 @@ class RolesServiceProvider implements ServiceProviderInterface {
 	 *  @param  \Pimple\Container $container Service Container.
 	 */
 	public function register( $container ) {
-		$container['checkout_engine.permissions.roles'] = function () {
+		$container['surecart.permissions.roles'] = function () {
 			return new RolesService();
 		};
 
-		$container['checkout_engine.permissions.permissions'] = function () {
+		$container['surecart.permissions.permissions'] = function () {
 			return new PermissionsService();
 		};
 	}
@@ -38,6 +38,6 @@ class RolesServiceProvider implements ServiceProviderInterface {
 	 * phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter
 	 */
 	public function bootstrap( $container ) {
-		$container['checkout_engine.permissions.permissions']->bootstrap();
+		$container['surecart.permissions.permissions']->bootstrap();
 	}
 }

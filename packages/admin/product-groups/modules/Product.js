@@ -54,7 +54,7 @@ export default ({ product }) => {
 				</div>
 				<div>
 					<CeButton size="small" onClick={onRemove}>
-						{__('Remove', 'checkout_engine')}
+						{__('Remove', 'surecart')}
 					</CeButton>
 				</div>
 			</ce-flex>

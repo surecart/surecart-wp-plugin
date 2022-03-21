@@ -45,7 +45,7 @@ export default ({ file, onUploaded, onRemoved }) => {
 		const r = confirm(
 			__(
 				'Are you sure you want to remove this file? This cannot be undone.',
-				'checkout_engine'
+				'surecart'
 			)
 		);
 		if (!r) return;
@@ -122,7 +122,7 @@ export default ({ file, onUploaded, onRemoved }) => {
 				</CeButton>
 				<CeMenu>
 					<CeMenuItem onClick={onRemove}>
-						{__('Delete', 'checkout_engine')}
+						{__('Delete', 'surecart')}
 					</CeMenuItem>
 				</CeMenu>
 			</CeDropdown>

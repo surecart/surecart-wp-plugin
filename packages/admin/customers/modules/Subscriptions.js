@@ -32,17 +32,17 @@ export default ({ id }) => {
 			hideHeader={true}
 			columns={{
 				status: {
-					label: __('Status', 'checkout_engine'),
+					label: __('Status', 'surecart'),
 					width: '100px',
 				},
 				product: {
-					label: __('Product', 'checkout_engine'),
+					label: __('Product', 'surecart'),
 				},
 				renews: {
-					label: __('Renews', 'checkout_engine'),
+					label: __('Renews', 'surecart'),
 				},
 				created: {
-					label: __('Created', 'checkout_engine'),
+					label: __('Created', 'surecart'),
 				},
 				view: {
 					width: '100px',
@@ -50,7 +50,7 @@ export default ({ id }) => {
 			}}
 			empty={__(
 				'This customer does not have any subscriptions.',
-				'checkout_engine'
+				'surecart'
 			)}
 			data={subscriptions}
 			isLoading={isLoading}

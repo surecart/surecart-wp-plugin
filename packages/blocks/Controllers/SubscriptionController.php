@@ -90,10 +90,10 @@ class SubscriptionController extends BaseController {
 		<ce-spacing style="--spacing: var(--ce-spacing-large)">
 			<ce-breadcrumbs>
 				<ce-breadcrumb href="<?php echo esc_url( add_query_arg( [ 'tab' => $this->getTab() ], \CheckoutEngine::pages()->url( 'dashboard' ) ) ); ?>">
-					<?php esc_html_e( 'Dashboard', 'checkout_engine' ); ?>
+					<?php esc_html_e( 'Dashboard', 'surecart' ); ?>
 				</ce-breadcrumb>
 				<ce-breadcrumb>
-					<?php esc_html_e( 'Subscription', 'checkout_engine' ); ?>
+					<?php esc_html_e( 'Subscription', 'surecart' ); ?>
 				</ce-breadcrumb>
 			</ce-breadcrumbs>
 
@@ -142,15 +142,15 @@ class SubscriptionController extends BaseController {
 		$terms_url   = $account->portal_protocol->terms_url ?? '';
 
 		if ( ! empty( $privacy_url ) && ! empty( $terms_url ) ) {
-			return sprintf( __( 'By updating or canceling your plan, you agree to the <a href="%1$1s" target="_blank">%2$2s</a> and <a href="%3$3s" target="_blank">%4$4s</a>', 'checkout_engine' ), esc_url( $terms_url ), __( 'Terms', 'checkout_engine' ), esc_url( $privacy_url ), __( 'Privacy Policy', 'checkout-engine' ) );
+			return sprintf( __( 'By updating or canceling your plan, you agree to the <a href="%1$1s" target="_blank">%2$2s</a> and <a href="%3$3s" target="_blank">%4$4s</a>', 'surecart' ), esc_url( $terms_url ), __( 'Terms', 'surecart' ), esc_url( $privacy_url ), __( 'Privacy Policy', 'checkout-engine' ) );
 		}
 
 		if ( ! empty( $privacy_url ) ) {
-			return sprintf( __( 'By updating or canceling your plan, you agree to the <a href="%1$1s" target="_blank">%2$2s</a>', 'checkout_engine' ), esc_url( $privacy_url ), __( 'Privacy Policy', 'checkout-engine' ) );
+			return sprintf( __( 'By updating or canceling your plan, you agree to the <a href="%1$1s" target="_blank">%2$2s</a>', 'surecart' ), esc_url( $privacy_url ), __( 'Privacy Policy', 'checkout-engine' ) );
 		}
 
 		if ( ! empty( $terms_url ) ) {
-			return sprintf( __( 'By updating or canceling your plan, you agree to the <a href="%1$1s" target="_blank">%2$2s</a>', 'checkout_engine' ), esc_url( $terms_url ), __( 'Terms', 'checkout-engine' ) );
+			return sprintf( __( 'By updating or canceling your plan, you agree to the <a href="%1$1s" target="_blank">%2$2s</a>', 'surecart' ), esc_url( $terms_url ), __( 'Terms', 'checkout-engine' ) );
 		}
 
 		return '';
@@ -168,7 +168,7 @@ class SubscriptionController extends BaseController {
 	<ce-spacing style="--spacing: var(--ce-spacing-xx-large)">
 			<ce-breadcrumbs>
 				<ce-breadcrumb href="<?php echo esc_url( add_query_arg( [ 'tab' => $this->getTab() ], \CheckoutEngine::pages()->url( 'dashboard' ) ) ); ?>">
-					<?php esc_html_e( 'Dashboard', 'checkout_engine' ); ?>
+					<?php esc_html_e( 'Dashboard', 'surecart' ); ?>
 				</ce-breadcrumb>
 				<ce-breadcrumb href="
 				<?php
@@ -185,10 +185,10 @@ class SubscriptionController extends BaseController {
 				);
 				?>
 				">
-					<?php esc_html_e( 'Subscription', 'checkout_engine' ); ?>
+					<?php esc_html_e( 'Subscription', 'surecart' ); ?>
 				</ce-breadcrumb>
 				<ce-breadcrumb>
-					<?php esc_html_e( 'Confirm', 'checkout_engine' ); ?>
+					<?php esc_html_e( 'Confirm', 'surecart' ); ?>
 				</ce-breadcrumb>
 			</ce-breadcrumbs>
 
@@ -239,13 +239,13 @@ class SubscriptionController extends BaseController {
 		<ce-spacing style="--spacing: var(--ce-spacing-xx-large)">
 			<ce-breadcrumbs>
 				<ce-breadcrumb href="<?php echo esc_url( $back_url ); ?>">
-					<?php esc_html_e( 'Dashboard', 'checkout_engine' ); ?>
+					<?php esc_html_e( 'Dashboard', 'surecart' ); ?>
 				</ce-breadcrumb>
 				<ce-breadcrumb href="<?php echo esc_url( $edit_subscription_url ); ?>" >
-					<?php esc_html_e( 'Subscription', 'checkout_engine' ); ?>
+					<?php esc_html_e( 'Subscription', 'surecart' ); ?>
 				</ce-breadcrumb>
 				<ce-breadcrumb>
-					<?php esc_html_e( 'Cancel', 'checkout_engine' ); ?>
+					<?php esc_html_e( 'Cancel', 'surecart' ); ?>
 				</ce-breadcrumb>
 			</ce-breadcrumbs>
 
@@ -289,13 +289,13 @@ class SubscriptionController extends BaseController {
 		<ce-spacing style="--spacing: var(--ce-spacing-xx-large)">
 			<ce-breadcrumbs>
 				<ce-breadcrumb href="<?php echo esc_url( $back_url ); ?>">
-					<?php esc_html_e( 'Dashboard', 'checkout_engine' ); ?>
+					<?php esc_html_e( 'Dashboard', 'surecart' ); ?>
 				</ce-breadcrumb>
 				<ce-breadcrumb href="<?php echo esc_url( $edit_subscription_url ); ?>" >
-					<?php esc_html_e( 'Subscription', 'checkout_engine' ); ?>
+					<?php esc_html_e( 'Subscription', 'surecart' ); ?>
 				</ce-breadcrumb>
 				<ce-breadcrumb>
-					<?php esc_html_e( 'Renew', 'checkout_engine' ); ?>
+					<?php esc_html_e( 'Renew', 'surecart' ); ?>
 				</ce-breadcrumb>
 			</ce-breadcrumbs>
 
@@ -354,16 +354,16 @@ class SubscriptionController extends BaseController {
 		<ce-spacing style="--spacing: var(--ce-spacing-xx-large)">
 			<ce-breadcrumbs>
 				<ce-breadcrumb href="<?php echo esc_url( $back_url ); ?>">
-					<?php esc_html_e( 'Dashboard', 'checkout_engine' ); ?>
+					<?php esc_html_e( 'Dashboard', 'surecart' ); ?>
 				</ce-breadcrumb>
 				<ce-breadcrumb href="<?php echo esc_url( $edit_subscription_url ); ?>">
-					<?php esc_html_e( 'Subscription', 'checkout_engine' ); ?>
+					<?php esc_html_e( 'Subscription', 'surecart' ); ?>
 				</ce-breadcrumb>
 				<ce-breadcrumb href="<?php echo esc_url( $confirm_subscription_url ); ?>">
-					<?php esc_html_e( 'Confirm', 'checkout_engine' ); ?>
+					<?php esc_html_e( 'Confirm', 'surecart' ); ?>
 				</ce-breadcrumb>
 				<ce-breadcrumb>
-					<?php esc_html_e( 'Payment Method', 'checkout_engine' ); ?>
+					<?php esc_html_e( 'Payment Method', 'surecart' ); ?>
 				</ce-breadcrumb>
 			</ce-breadcrumbs>
 

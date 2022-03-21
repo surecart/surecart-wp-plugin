@@ -15,12 +15,12 @@ class AccountServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function register( $container ) {
-		$container['checkout_engine.account'] = function () {
+		$container['surecart.account'] = function () {
 			return new AccountService();
 		};
 
 		$app = $container[ CHECKOUT_ENGINE_APPLICATION_KEY ];
-		$app->alias( 'account', 'checkout_engine.account' );
+		$app->alias( 'account', 'surecart.account' );
 	}
 
 	/**

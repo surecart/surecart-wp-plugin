@@ -77,36 +77,36 @@ class OrderRestServiceProvider extends RestServiceProvider implements RestServic
 			// In JSON Schema you can specify object properties in the properties attribute.
 			'properties' => [
 				'id'          => [
-					'description' => esc_html__( 'Unique identifier for the object.', 'checkout_engine' ),
+					'description' => esc_html__( 'Unique identifier for the object.', 'surecart' ),
 					'type'        => 'string',
 					'context'     => [ 'view', 'edit', 'embed' ],
 					'readonly'    => true,
 				],
 				'currency'    => [
-					'description' => esc_html__( 'The currency for the session.', 'checkout_engine' ),
+					'description' => esc_html__( 'The currency for the session.', 'surecart' ),
 					'type'        => 'string',
 				],
 				'metadata'    => [
-					'description' => esc_html__( 'Metadata for the order.', 'checkout_engine' ),
+					'description' => esc_html__( 'Metadata for the order.', 'surecart' ),
 					'type'        => 'object',
 					'context'     => [ 'edit' ],
 				],
 				'customer_id' => [
-					'description' => esc_html__( 'The customer id for the order.', 'checkout_engine' ),
+					'description' => esc_html__( 'The customer id for the order.', 'surecart' ),
 					'type'        => 'string',
 					'context'     => [ 'edit' ],
 				],
 				'customer'    => [
-					'description' => esc_html__( 'The customer for the session.', 'checkout_engine' ),
+					'description' => esc_html__( 'The customer for the session.', 'surecart' ),
 					'type'        => 'object',
 					'context'     => [ 'edit' ],
 				],
 				'line_items'  => [
-					'description' => esc_html__( 'The line items for the session.', 'checkout_engine' ),
+					'description' => esc_html__( 'The line items for the session.', 'surecart' ),
 					'type'        => 'object',
 				],
 				'discount'    => [
-					'description' => esc_html__( 'The discount for the session.', 'checkout_engine' ),
+					'description' => esc_html__( 'The discount for the session.', 'surecart' ),
 					'type'        => 'object',
 				],
 			],
@@ -123,7 +123,7 @@ class OrderRestServiceProvider extends RestServiceProvider implements RestServic
 	public function finalize_permissions_check( \WP_REST_Request $request ) {
 		// form id is required.
 		if ( empty( $request['form_id'] ) ) {
-			return new \WP_Error( 'form_id_required', esc_html__( 'Form ID is required.', 'checkout_engine' ), [ 'status' => 400 ] );
+			return new \WP_Error( 'form_id_required', esc_html__( 'Form ID is required.', 'surecart' ), [ 'status' => 400 ] );
 		}
 
 		// get form.
@@ -132,7 +132,7 @@ class OrderRestServiceProvider extends RestServiceProvider implements RestServic
 		if ( ! $form || 'sc_form' !== Form::getPostType() ) {
 			// TODO: check form manual registration on server here. (ce_register_form)
 			// form not found.
-			return new \WP_Error( 'form_id_invalid', esc_html__( 'Form ID is invalid.', 'checkout_engine' ), [ 'status' => 400 ] );
+			return new \WP_Error( 'form_id_invalid', esc_html__( 'Form ID is invalid.', 'surecart' ), [ 'status' => 400 ] );
 		}
 
 		$validator = new FormValidationService( $form->post_content, $request->get_body_params() );

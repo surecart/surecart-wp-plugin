@@ -67,14 +67,14 @@ export default ({ invoice, loading }) => {
 					></ce-order-status-badge>
 				</div>
 				{sprintf(
-					__('Created on %s', 'checkout_engine'),
+					__('Created on %s', 'surecart'),
 					formatTime(invoice.updated_at)
 				)}
 			</div>
 			<div>
 				{!invoice?.live_mode && (
 					<ce-tag type="warning">
-						{__('Test Mode', 'checkout_engine')}
+						{__('Test Mode', 'surecart')}
 					</ce-tag>
 				)}
 			</div>

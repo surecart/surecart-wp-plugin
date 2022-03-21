@@ -41,7 +41,7 @@ export class CePaymentMethodsList {
   }
 
   async deleteMethod(method: PaymentMethod) {
-    const r = confirm(__('Are you sure you want to remove this payment method?', 'checkout_engine'));
+    const r = confirm(__('Are you sure you want to remove this payment method?', 'surecart'));
     if (!r) return;
     try {
       this.busy = true;
@@ -52,7 +52,7 @@ export class CePaymentMethodsList {
       // remove from view.
       this.paymentMethods = this.paymentMethods.filter(m => m.id !== method.id);
     } catch (e) {
-      alert(e?.messsage || __('Something went wrong', 'checkout_engine'));
+      alert(e?.messsage || __('Something went wrong', 'surecart'));
     } finally {
       this.busy = false;
     }
@@ -75,7 +75,7 @@ export class CePaymentMethodsList {
         }),
       })) as PaymentMethod[];
     } catch (e) {
-      alert(e?.messsage || __('Something went wrong', 'checkout_engine'));
+      alert(e?.messsage || __('Something went wrong', 'surecart'));
     } finally {
       this.busy = false;
     }
@@ -95,7 +95,7 @@ export class CePaymentMethodsList {
       if (e?.message) {
         this.error = e.message;
       } else {
-        this.error = __('Something went wrong', 'checkout_engine');
+        this.error = __('Something went wrong', 'surecart');
       }
       console.error(this.error);
     } finally {
@@ -122,7 +122,7 @@ export class CePaymentMethodsList {
       <div>
         <ce-divider style={{ '--spacing': '0' }}></ce-divider>
         <slot name="empty">
-          <ce-empty icon="credit-card">{__("You don't have any saved payment methods.", 'checkout_engine')}</ce-empty>
+          <ce-empty icon="credit-card">{__("You don't have any saved payment methods.", 'surecart')}</ce-empty>
         </slot>
       </div>
     );
@@ -142,12 +142,12 @@ export class CePaymentMethodsList {
           </ce-flex>
 
           <div>
-            {__('Exp.', 'checkout_engine')} {card?.exp_month}/{card?.exp_year}
+            {__('Exp.', 'surecart')} {card?.exp_month}/{card?.exp_year}
           </div>
 
           <div>
-            {typeof customer !== 'string' && customer?.default_payment_method === id && <ce-tag type="info">{__('Default', 'checkout_engine')}</ce-tag>}
-            {!live_mode && <ce-tag type="warning">{__('Test', 'checkout_engine')}</ce-tag>}
+            {typeof customer !== 'string' && customer?.default_payment_method === id && <ce-tag type="info">{__('Default', 'surecart')}</ce-tag>}
+            {!live_mode && <ce-tag type="warning">{__('Test', 'surecart')}</ce-tag>}
           </div>
 
           <div>
@@ -155,9 +155,9 @@ export class CePaymentMethodsList {
               <ce-icon name="more-horizontal" slot="trigger"></ce-icon>
               <ce-menu>
                 {typeof customer !== 'string' && customer?.default_payment_method !== id && (
-                  <ce-menu-item onClick={() => this.setDefault(paymentMethod)}>{__('Make Default', 'checkout_engine')}</ce-menu-item>
+                  <ce-menu-item onClick={() => this.setDefault(paymentMethod)}>{__('Make Default', 'surecart')}</ce-menu-item>
                 )}
-                <ce-menu-item onClick={() => this.deleteMethod(paymentMethod)}>{__('Delete', 'checkout_engine')}</ce-menu-item>
+                <ce-menu-item onClick={() => this.deleteMethod(paymentMethod)}>{__('Delete', 'surecart')}</ce-menu-item>
               </ce-menu>
             </ce-dropdown>
           </div>
@@ -186,7 +186,7 @@ export class CePaymentMethodsList {
     return (
       <ce-dashboard-module class="payment-methods-list" error={this.error}>
         <span slot="heading">
-          <slot name="heading">{this.heading || __('Payment Methods', 'checkout_engine')}</slot>
+          <slot name="heading">{this.heading || __('Payment Methods', 'surecart')}</slot>
         </span>
 
         <ce-flex slot="end">
@@ -198,7 +198,7 @@ export class CePaymentMethodsList {
             })}
           >
             <ce-icon name="clock" slot="prefix"></ce-icon>
-            {__('Payment History', 'checkout_engine')}
+            {__('Payment History', 'surecart')}
           </ce-button>
           <ce-button
             type="link"
@@ -208,7 +208,7 @@ export class CePaymentMethodsList {
             })}
           >
             <ce-icon name="plus" slot="prefix"></ce-icon>
-            {__('Add', 'checkout_engine')}
+            {__('Add', 'surecart')}
           </ce-button>
         </ce-flex>
 

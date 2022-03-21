@@ -45,9 +45,9 @@ class AbandonedOrderListTable extends ListTable {
 		 */
 	protected function get_views() {
 		$stati = [
-			'all'       => __( 'All', 'checkout_engine' ),
-			'recovered' => __( 'Recovered', 'checkout_engine' ),
-			'notified'  => __( 'Notified', 'checkout_engine' ),
+			'all'       => __( 'All', 'surecart' ),
+			'recovered' => __( 'Recovered', 'surecart' ),
+			'notified'  => __( 'Notified', 'surecart' ),
 		];
 
 		$link = \CheckoutEngine::getUrl()->index( 'abandoned_orders' );
@@ -84,7 +84,7 @@ class AbandonedOrderListTable extends ListTable {
 		?>
 	<form class="search-form"
 		method="get">
-		<?php $this->search_box( __( 'Search Abanonded Orders', 'checkout_engine' ), 'abandoned_order' ); ?>
+		<?php $this->search_box( __( 'Search Abanonded Orders', 'surecart' ), 'abandoned_order' ); ?>
 		<input type="hidden"
 			name="id"
 			value="1" />
@@ -99,11 +99,11 @@ class AbandonedOrderListTable extends ListTable {
 	 */
 	public function get_columns() {
 		return [
-			'order'    => __( 'Order', 'checkout_engine' ),
-			'date'     => __( 'Date', 'checkout_engine' ),
-			'delivery' => __( 'Delivery', 'checkout_engine' ),
-			'status'   => __( 'Status', 'checkout_engine' ),
-			'total'    => __( 'Total', 'checkout_engine' ),
+			'order'    => __( 'Order', 'surecart' ),
+			'date'     => __( 'Date', 'surecart' ),
+			'delivery' => __( 'Delivery', 'surecart' ),
+			'status'   => __( 'Status', 'surecart' ),
+			'total'    => __( 'Total', 'surecart' ),
 		];
 	}
 
@@ -170,7 +170,7 @@ class AbandonedOrderListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_delivery( $abandoned ) {
-		return 'notified' === $abandoned->status ? '<ce-tag type="success">' . __( 'Sent', 'checkout_engine' ) . '</ce-tag>' : '<ce-tag>' . __( 'Not Sent', 'checkout_engine' ) . '</ce-tag>';
+		return 'notified' === $abandoned->status ? '<ce-tag type="success">' . __( 'Sent', 'surecart' ) . '</ce-tag>' : '<ce-tag>' . __( 'Not Sent', 'surecart' ) . '</ce-tag>';
 	}
 
 
@@ -182,7 +182,7 @@ class AbandonedOrderListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_status( $abandoned ) {
-		return 'recovered' === $abandoned->status ? '<ce-tag type="success">' . __( 'Recovered', 'checkout_engine' ) . '</ce-tag>' : '<ce-tag>' . __( 'Not Recovered', 'checkout_engine' ) . '</ce-tag>';
+		return 'recovered' === $abandoned->status ? '<ce-tag type="success">' . __( 'Recovered', 'surecart' ) . '</ce-tag>' : '<ce-tag>' . __( 'Not Recovered', 'surecart' ) . '</ce-tag>';
 	}
 
 	/**

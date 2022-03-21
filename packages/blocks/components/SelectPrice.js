@@ -81,7 +81,7 @@ export default ({
 						return {
 							value: price.id,
 							label: price?.ad_hoc
-								? __('Name Your Price', 'checkout_engine')
+								? __('Name Your Price', 'surecart')
 								: formatNumber(price.amount, price.currency),
 							suffix: translateInterval(
 								price?.recurring_interval_count,
@@ -103,8 +103,8 @@ export default ({
 			open={open}
 			showParentLabel
 			loading={loading}
-			placeholder={__('Select a product', 'checkout_engine')}
-			searchPlaceholder={__('Search for a product...', 'checkout_engine')}
+			placeholder={__('Select a product', 'surecart')}
+			searchPlaceholder={__('Search for a product...', 'surecart')}
 			search
 			onCeOpen={onFetch}
 			onCeSearch={(e) => findProduct(e.detail)}
@@ -117,7 +117,7 @@ export default ({
 				<span slot="prefix">
 					<CeMenuItem onClick={onNew}>
 						<span slot="prefix">+</span>
-						{__('Add New Product', 'checkout_engine')}
+						{__('Add New Product', 'surecart')}
 					</CeMenuItem>
 					<CeDivider
 						style={{ '--spacing': 'var(--ce-spacing-x-small)' }}

@@ -188,7 +188,7 @@ export class CePriceChoice {
     if (window?.wp?.blocks) {
       return (
         <ce-alert type="danger" open style={{ margin: '0px' }}>
-          {__('This product has been archived.', 'checkout_engine')}
+          {__('This product has been archived.', 'surecart')}
         </ce-alert>
       );
     }

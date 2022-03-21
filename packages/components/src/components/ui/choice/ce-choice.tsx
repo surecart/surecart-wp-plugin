@@ -85,7 +85,7 @@ export class CEChoice {
     if (this.type === 'radio') {
       const choices = this.getAllChoices();
       if (!choices.some(c => c.checked)) {
-        this.input.setCustomValidity(__('Please choose one.', 'checkout_engine'));
+        this.input.setCustomValidity(__('Please choose one.', 'surecart
         this.invalid = !this.input.checkValidity();
       } else {
         this.input.setCustomValidity('');

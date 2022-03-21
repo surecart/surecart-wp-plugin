@@ -35,7 +35,7 @@ export class CeSubscription {
   }
 
   async cancelPendingUpdate() {
-    const r = confirm(__('Are you sure you want to cancel the pending update to your plan?', 'checkout_engine'));
+    const r = confirm(__('Are you sure you want to cancel the pending update to your plan?', 'surecart'));
     if (!r) return;
     try {
       this.busy = true;
@@ -50,7 +50,7 @@ export class CeSubscription {
       if (e?.message) {
         this.error = e.message;
       } else {
-        this.error = __('Something went wrong', 'checkout_engine');
+        this.error = __('Something went wrong', 'surecart');
       }
       console.error(this.error);
     } finally {
@@ -73,7 +73,7 @@ export class CeSubscription {
       if (e?.message) {
         this.error = e.message;
       } else {
-        this.error = __('Something went wrong', 'checkout_engine');
+        this.error = __('Something went wrong', 'surecart');
       }
       console.error(this.error);
     } finally {
@@ -85,7 +85,7 @@ export class CeSubscription {
     if (typeof subscription?.price?.product !== 'string') {
       return subscription?.price?.product?.name;
     }
-    return __('Subscription', 'checkout_engine');
+    return __('Subscription', 'surecart');
   }
 
   renderRenewalText(subscription) {
@@ -94,7 +94,7 @@ export class CeSubscription {
     if (subscription?.cancel_at_period_end && subscription.current_period_end_at) {
       return (
         <span>
-          {tag} {sprintf(__('Your plan will be canceled on', 'checkout_engine'))}{' '}
+          {tag} {sprintf(__('Your plan will be canceled on', 'surecart'))}{' '}
           <ce-format-date date={subscription.current_period_end_at * 1000} month="long" day="numeric" year="numeric"></ce-format-date>
         </span>
       );
@@ -102,15 +102,14 @@ export class CeSubscription {
     if (subscription.status === 'trialing' && subscription.trial_end_at) {
       return (
         <span>
-          {tag} {sprintf(__('Your plan begins on', 'checkout_engine'))}{' '}
-          <ce-format-date date={subscription.trial_end_at * 1000} month="long" day="numeric" year="numeric"></ce-format-date>
+          {tag} {sprintf(__('Your plan begins on', 'surecart'))} <ce-format-date date={subscription.trial_end_at * 1000} month="long" day="numeric" year="numeric"></ce-format-date>
         </span>
       );
     }
     if (subscription.status === 'active' && subscription.current_period_end_at) {
       return (
         <span>
-          {tag} {sprintf(__('Your plan renews on', 'checkout_engine'))}{' '}
+          {tag} {sprintf(__('Your plan renews on', 'surecart'))}{' '}
           <ce-format-date date={subscription.current_period_end_at * 1000} month="long" day="numeric" year="numeric"></ce-format-date>
         </span>
       );
@@ -120,7 +119,7 @@ export class CeSubscription {
   }
 
   renderEmpty() {
-    return <slot name="empty">{__('This subscription does not exist.', 'checkout_engine')}</slot>;
+    return <slot name="empty">{__('This subscription does not exist.', 'surecart')}</slot>;
   }
 
   renderLoading() {
@@ -153,13 +152,13 @@ export class CeSubscription {
 
   render() {
     return (
-      <ce-dashboard-module heading={this.heading || __('Current Plan', 'checkout_engine')} class="subscription" error={this.error}>
+      <ce-dashboard-module heading={this.heading || __('Current Plan', 'surecart')} class="subscription" error={this.error}>
         {!!this.subscription && (
           <ce-flex slot="end">
             {!!Object.keys(this.subscription?.pending_update).length && (
               <ce-button type="link" onClick={() => this.cancelPendingUpdate()}>
                 <ce-icon name="x-octagon" slot="prefix"></ce-icon>
-                {__('Cancel Scheduled Update', 'checkout_engine')}
+                {__('Cancel Scheduled Update', 'surecart')}
               </ce-button>
             )}
             {this?.subscription?.cancel_at_period_end ? (
@@ -170,7 +169,7 @@ export class CeSubscription {
                 })}
               >
                 <ce-icon name="repeat" slot="prefix"></ce-icon>
-                {__('Renew Plan', 'checkout_engine')}
+                {__('Renew Plan', 'surecart')}
               </ce-button>
             ) : (
               this.subscription?.status !== 'canceled' &&
@@ -182,7 +181,7 @@ export class CeSubscription {
                   })}
                 >
                   <ce-icon name="x" slot="prefix"></ce-icon>
-                  {__('Cancel Plan', 'checkout_engine')}
+                  {__('Cancel Plan', 'surecart')}
                 </ce-button>
               )
             )}

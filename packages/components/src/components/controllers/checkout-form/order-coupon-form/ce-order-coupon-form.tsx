@@ -39,7 +39,7 @@ export class CeOrderCouponForm {
         currency={this?.order?.currency}
         discount-amount={this?.order?.discount_amount}
       >
-        <slot>{__('Apply Coupon', 'checkout_engine')}</slot>
+        <slot>{__('Apply Coupon', 'surecart')}</slot>
       </ce-coupon-form>
     );
   }

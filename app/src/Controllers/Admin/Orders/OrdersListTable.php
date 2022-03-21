@@ -45,7 +45,7 @@ class OrdersListTable extends ListTable {
 		?>
 	<form class="search-form"
 		method="get">
-		<?php $this->search_box( __( 'Search Orders', 'checkout_engine' ), 'order' ); ?>
+		<?php $this->search_box( __( 'Search Orders', 'surecart' ), 'order' ); ?>
 		<input type="hidden"
 			name="id"
 			value="1" />
@@ -60,9 +60,9 @@ class OrdersListTable extends ListTable {
 	 */
 	// protected function get_views() {
 	// $stati = [
-	// 'paid'    => __( 'Paid', 'checkout_engine' ),
-	// 'pending' => __( 'Pending', 'checkout_engine' ),
-	// 'all'     => __( 'All', 'checkout_engine' ),
+	// 'paid'    => __( 'Paid', 'surecart' ),
+	// 'pending' => __( 'Pending', 'surecart' ),
+	// 'all'     => __( 'All', 'surecart' ),
 	// ];
 
 	// $link = \CheckoutEngine::getUrl()->index( 'orders' );
@@ -104,12 +104,12 @@ class OrdersListTable extends ListTable {
 		return [
 			// 'cb'          => '<input type="checkbox" />',
 
-			'order'  => __( 'Order', 'checkout_engine' ),
-			'date'   => __( 'Date', 'checkout_engine' ),
-			'status' => __( 'Status', 'checkout_engine' ),
-			'total'  => __( 'Total', 'checkout_engine' ),
+			'order'  => __( 'Order', 'surecart' ),
+			'date'   => __( 'Date', 'surecart' ),
+			'status' => __( 'Status', 'surecart' ),
+			'total'  => __( 'Total', 'surecart' ),
 			'mode'   => '',
-			// 'usage' => __( 'Usage', 'checkout_engine' ),
+			// 'usage' => __( 'Usage', 'surecart' ),
 
 		];
 	}
@@ -238,7 +238,7 @@ class OrdersListTable extends ListTable {
 			return '';
 		}
 		// translators: coupon expiration date.
-		return sprintf( __( 'Valid until %s', 'checkout_engine' ), date_i18n( get_option( 'date_format' ), $timestamp / 1000 ) );
+		return sprintf( __( 'Valid until %s', 'surecart' ), date_i18n( get_option( 'date_format' ), $timestamp / 1000 ) );
 	}
 
 	public function get_price_string( $coupon = '' ) {
@@ -247,7 +247,7 @@ class OrdersListTable extends ListTable {
 		}
 		if ( ! empty( $coupon->percent_off ) ) {
 			// translators: Coupon % off.
-			return sprintf( esc_html( __( '%1d%% off', 'checkout_engine' ) ), $coupon->percent_off );
+			return sprintf( esc_html( __( '%1d%% off', 'surecart' ) ), $coupon->percent_off );
 		}
 
 		if ( ! empty( $coupon->amount_off ) ) {
@@ -255,7 +255,7 @@ class OrdersListTable extends ListTable {
 			return Currency::formatCurrencyNumber( $coupon->amount_off ) . ' <small style="opacity: 0.75;">' . strtoupper( esc_html( $coupon->currency ) ) . '</small>';
 		}
 
-		return esc_html__( 'No discount.', 'checkout_engine' );
+		return esc_html__( 'No discount.', 'surecart' );
 	}
 
 	/**
@@ -270,14 +270,14 @@ class OrdersListTable extends ListTable {
 		}
 
 		if ( 'forever' === $coupon->duration ) {
-			return __( 'Forever', 'checkout_engine' );
+			return __( 'Forever', 'surecart' );
 		}
 		if ( 'repeating' === $coupon->duration ) {
 			// translators: number of months.
-			return sprintf( __( 'For %d months', 'checkout_engine' ), $coupon->duration_in_months ?? 1 );
+			return sprintf( __( 'For %d months', 'surecart' ), $coupon->duration_in_months ?? 1 );
 		}
 
-		return __( 'Once', 'checkout_engine' );
+		return __( 'Once', 'surecart' );
 	}
 
 	/**
@@ -289,7 +289,7 @@ class OrdersListTable extends ListTable {
 	 */
 	public function column_status( $order ) {
 		if ( ! empty( $order->charge->fully_refunded ) ) {
-			return '<ce-tag type="danger">' . __( 'Refunded', 'checkout_engine' ) . '</ce-tag>';
+			return '<ce-tag type="danger">' . __( 'Refunded', 'surecart' ) . '</ce-tag>';
 		}
 		return '<ce-order-status-badge status="' . esc_attr( $order->status ) . '"></ce-order-status-badge>';
 	}
@@ -304,14 +304,14 @@ class OrdersListTable extends ListTable {
 	public function column_order( $order ) {
 		ob_start();
 		?>
-		<a class="row-title" aria-label="<?php echo esc_attr__( 'Edit Order', 'checkout_engine' ); ?>" href="<?php echo esc_url( \CheckoutEngine::getUrl()->edit( 'order', $order->id ) ); ?>">
+		<a class="row-title" aria-label="<?php echo esc_attr__( 'Edit Order', 'surecart' ); ?>" href="<?php echo esc_url( \CheckoutEngine::getUrl()->edit( 'order', $order->id ) ); ?>">
 			<?php echo sanitize_text_field( $order->number ?? $order->id ); ?>
 		</a>
 		<br />
-		<a  aria-label="<?php echo esc_attr__( 'Edit Order', 'checkout_engine' ); ?>" href="<?php echo esc_url( \CheckoutEngine::getUrl()->edit( 'order', $order->id ) ); ?>">
+		<a  aria-label="<?php echo esc_attr__( 'Edit Order', 'surecart' ); ?>" href="<?php echo esc_url( \CheckoutEngine::getUrl()->edit( 'order', $order->id ) ); ?>">
 			<?php
 			// translators: Customer name.
-			echo sprintf( esc_html__( 'By %s', 'checkout_engine' ), esc_html( $order->name ?? $order->email ) );
+			echo sprintf( esc_html__( 'By %s', 'surecart' ), esc_html( $order->name ?? $order->email ) );
 			?>
 		</a>
 		<?php

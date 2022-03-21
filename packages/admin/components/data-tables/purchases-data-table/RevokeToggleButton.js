@@ -14,11 +14,11 @@ export default ({ purchase }) => {
 			revoke
 				? __(
 						'Are you sure you want to revoke this purchase?',
-						'checkout_engine'
+						'surecart'
 				  )
 				: __(
 						'Are you sure you want to reinstate this purchase?',
-						'checkout_engine'
+						'surecart'
 				  )
 		);
 
@@ -60,7 +60,7 @@ export default ({ purchase }) => {
 			size="small"
 			loading={loading}
 		>
-			{__('Unrevoke', 'checkout_engine')}
+			{__('Unrevoke', 'surecart')}
 		</CeButton>
 	) : (
 		<CeButton
@@ -69,7 +69,7 @@ export default ({ purchase }) => {
 			size="small"
 			loading={loading}
 		>
-			{__('Revoke', 'checkout_engine')}
+			{__('Revoke', 'surecart')}
 		</CeButton>
 	);
 };

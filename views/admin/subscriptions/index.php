@@ -4,7 +4,7 @@
 	\CheckoutEngine::render(
 		'layouts/partials/admin-index-header',
 		[
-			'title' => __( 'Subscriptions', 'checkout_engine' ),
+			'title' => __( 'Subscriptions', 'surecart' ),
 		]
 	);
 	?>

@@ -64,11 +64,11 @@ class LoginRestServiceProvider extends RestServiceProvider implements RestServic
 			// In JSON Schema you can specify object properties in the properties attribute.
 			'properties' => [
 				'login'    => [
-					'description' => esc_html__( 'Login', 'checkout_engine' ),
+					'description' => esc_html__( 'Login', 'surecart' ),
 					'type'        => 'string',
 				],
 				'password' => [
-					'description' => esc_html__( 'Password', 'checkout_engine' ),
+					'description' => esc_html__( 'Password', 'surecart' ),
 					'type'        => 'integer',
 				],
 			],

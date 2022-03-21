@@ -4,7 +4,7 @@
 
 <?php if ( isset( $new_link ) ) : ?>
 	<a href="<?php echo esc_url( $new_link ); ?>" class="page-title-action">
-		<?php esc_html_e( 'Add New', 'checkout_engine' ); ?>
+		<?php esc_html_e( 'Add New', 'surecart' ); ?>
 	</a>
 <?php endif; ?>
 

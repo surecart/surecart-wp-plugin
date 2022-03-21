@@ -51,7 +51,7 @@ export default ({ customer_id, customer }) => {
 		const r = confirm(
 			__(
 				'Are you sure you want to disconnect this from this customer? This will cause them to lose access to their purchases.',
-				'checkout_engine'
+				'surecart'
 			)
 		);
 		if (r) {
@@ -148,7 +148,7 @@ export default ({ customer_id, customer }) => {
 						outline
 						onClick={() => disconnect(user?.id)}
 					>
-						{__('Disconnect', 'checkout_engine')}
+						{__('Disconnect', 'surecart')}
 					</CeButton>
 				</Definition>
 			</div>
@@ -157,7 +157,7 @@ export default ({ customer_id, customer }) => {
 
 	return (
 		<div>
-			<CeFormControl label={__('Connect a user', 'checkout_engine')}>
+			<CeFormControl label={__('Connect a user', 'surecart')}>
 				<UserSelect
 					value={users?.[0]?.id}
 					onSelect={(id) => {

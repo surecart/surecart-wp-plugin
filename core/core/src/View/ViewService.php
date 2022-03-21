@@ -4,7 +4,7 @@
  * @author    Andre Gagnon <me@andregagnon.me>
  * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://checkout_engine.com/
+ * @link      https://surecart.com/
  */
 
 namespace CheckoutEngineCore\View;
@@ -189,7 +189,7 @@ class ViewService {
 		$matches      = [];
 		$is_partial   = preg_match( $core_partial, $name, $matches );
 
-		if ( $is_partial && apply_filters( "checkout_engine.partials.{$matches[1]}.hook", true ) ) {
+		if ( $is_partial && apply_filters( "surecart.partials.{$matches[1]}.hook", true ) ) {
 			do_action( "get_{$matches[1]}", $matches[2] );
 		}
 	}

@@ -71,7 +71,7 @@ export default ( { attributes, setAttributes, choice } ) => {
 		const r = confirm(
 			__(
 				'Are you sure you want to remove this product from the form?',
-				'checkout_engine'
+				'surecart
 			)
 		);
 		if ( r ) {
@@ -142,7 +142,7 @@ export default ( { attributes, setAttributes, choice } ) => {
 							icon={ external }
 							size={ 16 }
 						/>
-						{ __( 'Edit', 'checkout_engine' ) }
+						{ __( 'Edit', 'surecart
 					</CeMenuItem>
 					<CeMenuItem onClick={ removeChoice }>
 						<Icon
@@ -154,7 +154,7 @@ export default ( { attributes, setAttributes, choice } ) => {
 							icon={ close }
 							size={ 16 }
 						/>
-						{ __( 'Remove', 'checkout_engine' ) }
+						{ __( 'Remove', 'surecart
 					</CeMenuItem>
 				</CeMenu>
 			</CeDropdown>
@@ -225,7 +225,7 @@ export default ( { attributes, setAttributes, choice } ) => {
 									}
 								</div>
 								<NumberControl
-									label={ __( 'Qty:', 'checkout_engine' ) }
+									label={ __( 'Qty:', 'surecart
 									labelPosition="side"
 									onChange={ ( number ) => {
 										setAttributes( {
@@ -257,7 +257,7 @@ export default ( { attributes, setAttributes, choice } ) => {
 								>
 									{ price.recurring_interval
 										? `/ ${ price.recurring_interval }`
-										: __( 'once', 'checkout_engine' ) }
+										: __( 'once', 'surecart
 								</span>
 							</span>
 							{ buttons }

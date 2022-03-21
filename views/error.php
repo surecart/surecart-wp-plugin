@@ -1,3 +1,3 @@
 <h3 class="heading">
-	<?php esc_html_e( 'SureCart', 'checkout_engine' ); ?>
+	<?php esc_html_e( 'SureCart', 'surecart' ); ?>
 </h3>

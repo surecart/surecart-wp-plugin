@@ -22,7 +22,7 @@ export class CeWordPressUser {
         {!!this?.user?.display_name && (
           <ce-stacked-list-row style={{ '--columns': '3' }} mobileSize={480}>
             <div>
-              <strong>{__('Display Name', 'checkout_engine')}</strong>
+              <strong>{__('Display Name', 'surecart')}</strong>
             </div>
             <div>{this.user?.display_name}</div>
             <div></div>
@@ -31,7 +31,7 @@ export class CeWordPressUser {
         {!!this?.user?.email && (
           <ce-stacked-list-row style={{ '--columns': '3' }} mobileSize={480}>
             <div>
-              <strong>{__('Account Email', 'checkout_engine')}</strong>
+              <strong>{__('Account Email', 'surecart')}</strong>
             </div>
             <div>{this.user?.email}</div>
             <div></div>
@@ -41,7 +41,7 @@ export class CeWordPressUser {
         {!!this?.user?.first_name && (
           <ce-stacked-list-row style={{ '--columns': '3' }} mobileSize={480}>
             <div>
-              <strong>{__('First Name', 'checkout_engine')}</strong>
+              <strong>{__('First Name', 'surecart')}</strong>
             </div>
             <div>{this.user?.first_name}</div>
             <div></div>
@@ -50,7 +50,7 @@ export class CeWordPressUser {
         {!!this?.user?.last_name && (
           <ce-stacked-list-row style={{ '--columns': '3' }} mobileSize={480}>
             <div>
-              <strong>{__('Last Name', 'checkout_engine')}</strong>
+              <strong>{__('Last Name', 'surecart')}</strong>
             </div>
             <div>{this.user?.last_name}</div>
             <div></div>
@@ -61,13 +61,13 @@ export class CeWordPressUser {
   }
 
   renderEmpty() {
-    return <slot name="empty">{__('User not found.', 'checkout_engine')}</slot>;
+    return <slot name="empty">{__('User not found.', 'surecart')}</slot>;
   }
 
   render() {
     return (
       <ce-dashboard-module class="customer-details">
-        <span slot="heading">{this.heading || __('Account Details', 'checkout_engine')} </span>
+        <span slot="heading">{this.heading || __('Account Details', 'surecart')} </span>
 
         <ce-button
           type="link"
@@ -78,7 +78,7 @@ export class CeWordPressUser {
           slot="end"
         >
           <ce-icon name="edit-3" slot="prefix"></ce-icon>
-          {__('Update', 'checkout_engine')}
+          {__('Update', 'surecart')}
         </ce-button>
 
         <ce-card no-padding>

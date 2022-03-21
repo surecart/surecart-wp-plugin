@@ -94,9 +94,7 @@ export default ({ attributes, setAttributes, onCreate, onCancel, isNew }) => {
 			>
 				{isNew && (
 					<div>
-						<div css={label}>
-							{__('Form Title', 'checkout_engine')}
-						</div>
+						<div css={label}>{__('Form Title', 'surecart')}</div>
 						<CeInput
 							css={css`
 								max-width: 400px;
@@ -104,7 +102,7 @@ export default ({ attributes, setAttributes, onCreate, onCancel, isNew }) => {
 							value={title}
 							placeholder={__(
 								'Enter a title for your form',
-								'checkout_engine'
+								'surecart'
 							)}
 							onCeChange={(e) =>
 								setAttributes({ title: e.target.value })
@@ -114,7 +112,7 @@ export default ({ attributes, setAttributes, onCreate, onCancel, isNew }) => {
 				)}
 
 				<div>
-					<div css={label}>{__('Products', 'checkout_engine')}</div>
+					<div css={label}>{__('Products', 'surecart')}</div>
 					<PriceChoices
 						choices={choices}
 						onAddProduct={addProduct}
@@ -127,7 +125,7 @@ export default ({ attributes, setAttributes, onCreate, onCancel, isNew }) => {
 				{hasValidChoices() && (
 					<div>
 						<div css={label}>
-							{__('Product Options', 'checkout_engine')}
+							{__('Product Options', 'surecart')}
 						</div>
 
 						<CeRadioGroup
@@ -141,7 +139,7 @@ export default ({ attributes, setAttributes, onCreate, onCancel, isNew }) => {
 							>
 								{__(
 									'Customer must purchase all products',
-									'checkout_engine'
+									'surecart'
 								)}
 							</CeRadio>
 							<CeRadio
@@ -150,7 +148,7 @@ export default ({ attributes, setAttributes, onCreate, onCancel, isNew }) => {
 							>
 								{__(
 									'Customer must select one price from the options.',
-									'checkout_engine'
+									'surecart'
 								)}
 							</CeRadio>
 							<CeRadio
@@ -159,7 +157,7 @@ export default ({ attributes, setAttributes, onCreate, onCancel, isNew }) => {
 							>
 								{__(
 									'Customer can select multiple prices.',
-									'checkout_engine'
+									'surecart'
 								)}
 							</CeRadio>
 						</CeRadioGroup>
@@ -167,16 +165,13 @@ export default ({ attributes, setAttributes, onCreate, onCancel, isNew }) => {
 				)}
 
 				<div>
-					<div css={label}>{__('Design', 'checkout_engine')}</div>
+					<div css={label}>{__('Design', 'surecart')}</div>
 
 					<CeSelect
 						css={css`
 							max-width: 400px;
 						`}
-						placeholder={__(
-							'Select a Form Template',
-							'checkout_engine'
-						)}
+						placeholder={__('Select a Form Template', 'surecart')}
 						value={template}
 						onCeChange={(e) =>
 							setAttributes({
@@ -186,30 +181,28 @@ export default ({ attributes, setAttributes, onCreate, onCancel, isNew }) => {
 						choices={[
 							{
 								value: 'default',
-								label: __('Default', 'checkout_engine'),
+								label: __('Default', 'surecart'),
 							},
 							{
 								value: 'sections',
-								label: __('Sections', 'checkout_engine'),
+								label: __('Sections', 'surecart'),
 							},
 							{
 								value: 'two-column',
-								label: __('Two Column', 'checkout_engine'),
+								label: __('Two Column', 'surecart'),
 							},
 							{
 								value: 'simple',
-								label: __('Simple', 'checkout_engine'),
+								label: __('Simple', 'surecart'),
 							},
 						]}
 					/>
 				</div>
 
 				<div>
-					<div css={label}>
-						{__('Thank You Page', 'checkout_engine')}
-					</div>
+					<div css={label}>{__('Thank You Page', 'surecart')}</div>
 					<ToggleControl
-						label={__('Custom Thank You Page', 'checkout_engine')}
+						label={__('Custom Thank You Page', 'surecart')}
 						checked={custom_success_url}
 						onChange={(custom_success_url) =>
 							setAttributes({ custom_success_url })
@@ -228,11 +221,11 @@ export default ({ attributes, setAttributes, onCreate, onCancel, isNew }) => {
 				{!!onCreate && (
 					<div>
 						<Button isPrimary onClick={onCreate}>
-							{__('Create Form', 'checkout_engine')}
+							{__('Create Form', 'surecart')}
 						</Button>
 						{onCancel && (
 							<Button onClick={onCancel}>
-								{__('Cancel', 'checkout_engine')}
+								{__('Cancel', 'surecart')}
 							</Button>
 						)}
 					</div>

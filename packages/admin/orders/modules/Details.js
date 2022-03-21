@@ -67,14 +67,14 @@ export default ({ order, loading }) => {
 					></ce-order-status-badge>
 				</div>
 				{sprintf(
-					__('Created on %s', 'checkout_engine'),
+					__('Created on %s', 'surecart'),
 					formatTime(order.updated_at)
 				)}
 			</div>
 			<div>
 				{!order?.live_mode && (
 					<ce-tag type="warning">
-						{__('Test Mode', 'checkout_engine')}
+						{__('Test Mode', 'surecart')}
 					</ce-tag>
 				)}
 			</div>

@@ -5,21 +5,18 @@ import { CeFormControl } from '@checkout-engine/components-react';
 
 export default ({ subscription, updateSubscription, loading }) => {
 	return (
-		<Box title={__('Trial', 'checkout_engine')} loading={loading}>
+		<Box title={__('Trial', 'surecart')} loading={loading}>
 			<div className="trial-ends">
 				<CeFormControl
 					label={
 						subscription?.trial_end_at
-							? __('Free Trial Ends', 'checkout_engine')
-							: __('Free Trial', 'checkout_engine')
+							? __('Free Trial Ends', 'surecart')
+							: __('Free Trial', 'surecart')
 					}
 				>
 					<DatePicker
-						placeholder={__('Add Free Trial', 'checkout_engine')}
-						popoverTitle={__(
-							'Choose a trial end date',
-							'checkout_engine'
-						)}
+						placeholder={__('Add Free Trial', 'surecart')}
+						popoverTitle={__('Choose a trial end date', 'surecart')}
 						currentDate={
 							subscription?.trial_end_at
 								? new Date(subscription?.trial_end_at * 1000)

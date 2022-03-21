@@ -44,7 +44,7 @@
 
 		<?php if ( ! empty( $status ) && 'missing' === $status ) : ?>
 			<div class="notice notice-error is-dismissible">
-				<p><?php esc_html_e( 'Please enter an API key.', 'checkout_engine' ); ?></p>
+				<p><?php esc_html_e( 'Please enter an API key.', 'surecart' ); ?></p>
 			</div>
 		<?php endif; ?>
 
@@ -52,7 +52,7 @@
 		<div class="ce-section-heading">
 			<h3>
 				<ce-icon name="download-cloud"></ce-icon>
-				<?php esc_html_e( 'Just one last step!', 'checkout_engine' ); ?>
+				<?php esc_html_e( 'Just one last step!', 'surecart' ); ?>
 			</h3>
 		</div>
 
@@ -63,9 +63,9 @@
 				<ce-flex flex-direction="column">
 					<ce-dashboard-module>
 						<ce-card>
-							<ce-input size="large" label="<?php echo esc_attr_e( 'Enter your API Token', 'checkout_engine' ); ?>" type="password" name="api_token" placeholder="<?php echo esc_attr_e( 'Api token', 'checkout_engine' ); ?>" autofocus></ce-input>
+							<ce-input size="large" label="<?php echo esc_attr_e( 'Enter your API Token', 'surecart' ); ?>" type="password" name="api_token" placeholder="<?php echo esc_attr_e( 'Api token', 'surecart' ); ?>" autofocus></ce-input>
 							<ce-button type="primary" size="large" full submit>
-								<?php esc_html_e( 'Complete Installation', 'checkout_engine' ); ?>
+								<?php esc_html_e( 'Complete Installation', 'surecart' ); ?>
 								<ce-icon name="arrow-right" slot="suffix"></ce-icon>
 							</ce-button>
 						</ce-card>

@@ -47,23 +47,23 @@ export class CeSubscriptionStatusBadge {
     if (this.subscription?.cancel_at_period_end && this.subscription.current_period_end_at) {
       return (
         <Fragment>
-          {__('Cancels', 'checkout_engine')} <ce-format-date type="timestamp" date={this.subscription.current_period_end_at} month="short" day="numeric"></ce-format-date>
+          {__('Cancels', 'surecart')} <ce-format-date type="timestamp" date={this.subscription.current_period_end_at} month="short" day="numeric"></ce-format-date>
         </Fragment>
       );
     }
     switch (this.status || this.subscription?.status) {
       case 'incomplete':
-        return __('Incomplete', 'checkout_engine');
+        return __('Incomplete', 'surecart');
       case 'trialing':
-        return __('Trialing', 'checkout_engine');
+        return __('Trialing', 'surecart');
       case 'active':
-        return __('Active', 'checkout_engine');
+        return __('Active', 'surecart');
       case 'past_due':
-        return __('Past Due', 'checkout_engine');
+        return __('Past Due', 'surecart');
       case 'canceled':
-        return __('Canceled', 'checkout_engine');
+        return __('Canceled', 'surecart');
       case 'unpaid':
-        return __('Unpaid', 'checkout_engine');
+        return __('Unpaid', 'surecart');
     }
   }
 

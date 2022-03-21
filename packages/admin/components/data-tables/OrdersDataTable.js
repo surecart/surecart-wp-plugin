@@ -18,7 +18,7 @@ export default ({
 }) => {
 	return (
 		<DataTable
-			title={title || __('Orders', 'checkout_engine')}
+			title={title || __('Orders', 'surecart')}
 			columns={columns}
 			empty={empty || __('None found.', 'checkout-engine')}
 			items={(data || [])
@@ -57,7 +57,7 @@ export default ({
 											'%s item',
 											'%s items',
 											line_items?.pagination?.count || 0,
-											'checkout_engine'
+											'surecart'
 										),
 										line_items?.pagination?.count || 0
 									)}
@@ -93,7 +93,7 @@ export default ({
 									})}
 									size="small"
 								>
-									{__('View', 'checkout_engine')}
+									{__('View', 'surecart')}
 								</ce-button>
 							),
 						};

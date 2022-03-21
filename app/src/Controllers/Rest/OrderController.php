@@ -173,7 +173,7 @@ class OrderController extends RestController {
 			$errors->add( $valid_login->get_error_code(), $valid_login->get_error_message() );
 		}
 
-		return apply_filters( 'checkout_engine/checkout/validate', $errors, $args, $request );
+		return apply_filters( 'surecart/checkout/validate', $errors, $args, $request );
 	}
 
 	/**

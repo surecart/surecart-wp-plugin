@@ -79,10 +79,7 @@ export default ({ attributes, setAttributes }) => {
 		return (
 			<div {...blockProps}>
 				<Warning>
-					{__(
-						'Form cannot be rendered inside itself.',
-						'checkout_engine'
-					)}
+					{__('Form cannot be rendered inside itself.', 'surecart')}
 				</Warning>
 			</div>
 		);
@@ -106,7 +103,7 @@ export default ({ attributes, setAttributes }) => {
 				<Warning>
 					{__(
 						'This form has been deleted or is unavailable.',
-						'checkout_engine'
+						'surecart'
 					)}
 				</Warning>
 			</div>

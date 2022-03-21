@@ -21,7 +21,7 @@ class ConfigServiceProvider implements ServiceProviderInterface {
 	 * {@inheritDoc}
 	 */
 	public function register( $container ) {
-		$container['checkout_engine_app_core.config.config'] = function( $c ) {
+		$container['surecart_app_core.config.config'] = function( $c ) {
 			return new Config( $c[ CHECKOUT_ENGINE_CONFIG_KEY ]['app_core']['path'] );
 		};
 	}

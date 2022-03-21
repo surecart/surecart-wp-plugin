@@ -59,7 +59,7 @@ export class CeOrderConfirmation {
       if (e?.message) {
         this.error = e.message;
       } else {
-        this.error = __('Something went wrong', 'checkout_engine');
+        this.error = __('Something went wrong', 'surecart');
       }
     } finally {
       this.loading = false;
@@ -90,8 +90,8 @@ export class CeOrderConfirmation {
           </div>
           {!this.order?.id && !this.loading && (
             <ce-heading>
-              {__('Order not found.', 'checkout_engine')}
-              <span slot="description">{__('This order could not be found. Please try again.', 'checkout_engine')}</span>
+              {__('Order not found.', 'surecart')}
+              <span slot="description">{__('This order could not be found. Please try again.', 'surecart')}</span>
             </ce-heading>
           )}
         </div>

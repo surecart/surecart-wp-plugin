@@ -51,7 +51,7 @@ export default ({ className, attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<SelectControl
-							label={__('Size', 'checkout_engine')}
+							label={__('Size', 'surecart')}
 							value={size}
 							onChange={(size) => {
 								setAttributes({ size });
@@ -64,22 +64,22 @@ export default ({ className, attributes, setAttributes }) => {
 								},
 								{
 									value: 'small',
-									label: __('Small', 'checkout_engine'),
+									label: __('Small', 'surecart'),
 								},
 								{
 									value: 'medium',
-									label: __('Medium', 'checkout_engine'),
+									label: __('Medium', 'surecart'),
 								},
 								{
 									value: 'large',
-									label: __('Large', 'checkout_engine'),
+									label: __('Large', 'surecart'),
 								},
 							]}
 						/>
 					</PanelRow>
 					<PanelRow>
 						<SelectControl
-							label={__('Type', 'checkout_engine')}
+							label={__('Type', 'surecart')}
 							value={type}
 							onChange={(type) => {
 								setAttributes({ type });
@@ -87,11 +87,11 @@ export default ({ className, attributes, setAttributes }) => {
 							options={[
 								{
 									value: 'primary',
-									label: __('Button', 'checkout_engine'),
+									label: __('Button', 'surecart'),
 								},
 								{
 									value: 'info',
-									label: __('Info', 'checkout_engine'),
+									label: __('Info', 'surecart'),
 								},
 							]}
 						/>

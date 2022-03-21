@@ -20,7 +20,7 @@ export class CePaymentMethodCreate {
   async handleSubmit() {
     const element = this.el.querySelector('ce-stripe-element') as HTMLCeStripeElementElement;
     if (!element || !this.clientSecret) {
-      this.error = __('Something went wrong', 'checkout_engine');
+      this.error = __('Something went wrong', 'surecart');
       return;
     }
     this.loading = true;
@@ -32,7 +32,7 @@ export class CePaymentMethodCreate {
         this.loading = false;
       }
     } catch (e) {
-      this.error = e?.message || __('Something went wrong', 'checkout_engine');
+      this.error = e?.message || __('Something went wrong', 'surecart');
       this.loading = false;
     }
   }
@@ -43,7 +43,7 @@ export class CePaymentMethodCreate {
         <ce-form onCeFormSubmit={() => this.handleSubmit()}>
           {this.error && (
             <ce-alert open={!!this.error} type="danger">
-              <span slot="title">{__('Error', 'checkout_engine')}</span>
+              <span slot="title">{__('Error', 'surecart')}</span>
               {this.error}
             </ce-alert>
           )}
@@ -51,7 +51,7 @@ export class CePaymentMethodCreate {
           <slot />
 
           <ce-button type="primary" submit full loading={this.loading}>
-            {__('Save Payment Method', 'checkout_engine')}
+            {__('Save Payment Method', 'surecart')}
           </ce-button>
 
           {this.loading && <ce-block-ui></ce-block-ui>}

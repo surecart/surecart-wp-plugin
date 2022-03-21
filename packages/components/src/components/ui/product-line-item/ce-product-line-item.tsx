@@ -50,7 +50,7 @@ export class CeProductLineItem {
         <Fragment>
           <span slot="price">{sprintf(_n('%d day free', '%d days free', this.trialDurationDays), this.trialDurationDays)}</span>
           <span slot="price-description">
-            {__('Then', 'checkout_engine')} <ce-format-number type="currency" currency={this.currency} value={this.amount}></ce-format-number> {!!this.interval && this.interval}
+            {__('Then', 'surecart')} <ce-format-number type="currency" currency={this.currency} value={this.amount}></ce-format-number> {!!this.interval && this.interval}
           </span>
         </Fragment>
       );

@@ -15,10 +15,10 @@ export default ({ attributes, setAttributes }) => {
 	return (
 		<Fragment>
 			<InspectorControls>
-				<PanelBody title={__('Attributes', 'checkout_engine')}>
+				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<TextControl
-							label={__('Title', 'checkout_engine')}
+							label={__('Title', 'surecart')}
 							value={title}
 							onChange={(title) => setAttributes({ title })}
 						/>
@@ -39,28 +39,28 @@ export default ({ attributes, setAttributes }) => {
 
 				<ce-button type="link" slot="end">
 					<ce-icon name="edit-3" slot="prefix"></ce-icon>
-					{__('Update', 'checkout_engine')}
+					{__('Update', 'surecart')}
 				</ce-button>
 
 				<ce-card no-padding>
 					<ce-stacked-list>
 						<ce-stacked-list-row style={{ '--columns': '3' }}>
-							<div>{__('Display Name', 'checkout_engine')}</div>
+							<div>{__('Display Name', 'surecart')}</div>
 							<div>Jane Doe</div>
 							<div></div>
 						</ce-stacked-list-row>
 						<ce-stacked-list-row style={{ '--columns': '3' }}>
-							<div>{__('Email Address', 'checkout_engine')}</div>
+							<div>{__('Email Address', 'surecart')}</div>
 							<div>customer@email.com</div>
 							<div></div>
 						</ce-stacked-list-row>
 						<ce-stacked-list-row style={{ '--columns': '3' }}>
-							<div>{__('First Name', 'checkout_engine')}</div>
+							<div>{__('First Name', 'surecart')}</div>
 							<div>Jane Doe</div>
 							<div></div>
 						</ce-stacked-list-row>
 						<ce-stacked-list-row style={{ '--columns': '3' }}>
-							<div>{__('Last Name', 'checkout_engine')}</div>
+							<div>{__('Last Name', 'surecart')}</div>
 							<div>Jane Doe</div>
 							<div></div>
 						</ce-stacked-list-row>

@@ -132,7 +132,7 @@ export class CeStripePaymentRequest {
         status: 'success',
         total: {
           amount: order?.amount_due || 0,
-          label: __('Total', 'checkout_engine'),
+          label: __('Total', 'surecart'),
           pending: true,
         },
       });
@@ -170,7 +170,7 @@ export class CeStripePaymentRequest {
       currency: this.currencyCode,
       total: {
         amount: order?.amount_due || 0,
-        label: __('Total', 'checkout_engine'),
+        label: __('Total', 'surecart'),
         pending: true,
       },
       displayItems,
@@ -202,12 +202,12 @@ export class CeStripePaymentRequest {
         if (!result) {
           if (location.protocol !== 'https:') {
             if (this.debug) {
-              this.debugError = __('You must serve this page over HTTPS to display express payment buttons.', 'checkout_engine');
+              this.debugError = __('You must serve this page over HTTPS to display express payment buttons.', 'surecart');
             }
             console.log('SSL needed to display payment buttons.');
           } else {
             if (this.debug) {
-              this.debugError = __('No payment methods available.', 'checkout_engine');
+              this.debugError = __('No payment methods available.', 'surecart');
             }
             console.log('No payment methods available.');
           }
@@ -338,7 +338,7 @@ export class CeStripePaymentRequest {
           <div>
             <slot name="debug-fallback" />
             <ce-alert type="info" open>
-              <span slot="title">{__('Express Payment', 'checkout_engine')}</span>
+              <span slot="title">{__('Express Payment', 'surecart')}</span>
               {this.debugError}
             </ce-alert>
           </div>

@@ -88,7 +88,7 @@ export class CeSubscriptionSwitch {
       if (e?.message) {
         this.error = e.message;
       } else {
-        this.error = __('Something went wrong', 'checkout_engine');
+        this.error = __('Something went wrong', 'surecart');
       }
     } finally {
       this.loading = false;
@@ -114,22 +114,22 @@ export class CeSubscriptionSwitch {
       <ce-flex slot="end" class="subscriptions-switch__switcher">
         {this.hasFilters.month && (
           <ce-button onClick={() => (this.filter = 'month')} size="small" type={this.filter === 'month' ? 'default' : 'text'}>
-            {__('Monthly', 'checkout_engine')}
+            {__('Monthly', 'surecart')}
           </ce-button>
         )}
         {this.hasFilters.week && (
           <ce-button onClick={() => (this.filter = 'week')} size="small" type={this.filter === 'week' ? 'default' : 'text'}>
-            {__('Weekly', 'checkout_engine')}
+            {__('Weekly', 'surecart')}
           </ce-button>
         )}
         {this.hasFilters.year && (
           <ce-button onClick={() => (this.filter = 'year')} size="small" type={this.filter === 'year' ? 'default' : 'text'}>
-            {__('Yearly', 'checkout_engine')}
+            {__('Yearly', 'surecart')}
           </ce-button>
         )}
         {this.hasFilters.never && (
           <ce-button onClick={() => (this.filter = 'never')} size="small" type={this.filter === 'never' ? 'default' : 'text'}>
-            {__('Lifetime', 'checkout_engine')}
+            {__('Lifetime', 'surecart')}
           </ce-button>
         )}
       </ce-flex>
@@ -172,7 +172,7 @@ export class CeSubscriptionSwitch {
                 </div>
                 {currentPlan && (
                   <ce-tag type="warning" slot="price">
-                    {__('Current Plan', 'checkout_engine')}
+                    {__('Current Plan', 'surecart')}
                   </ce-tag>
                 )}
               </ce-choice>
@@ -185,13 +185,13 @@ export class CeSubscriptionSwitch {
 
   render() {
     return (
-      <ce-dashboard-module heading={this.heading || __('Update Plan', 'checkout_engine')} class="subscription-switch" error={this.error}>
+      <ce-dashboard-module heading={this.heading || __('Update Plan', 'surecart')} class="subscription-switch" error={this.error}>
         <span slot="end">{this.renderSwitcher()}</span>
         <ce-form class="subscriptions-switch" onCeFormSubmit={e => this.handleSubmit(e)}>
           {this.renderContent()}
 
           <ce-button type="primary" full submit loading={this.loading || this.busy}>
-            {__('Next', 'checkout_engine')} <ce-icon name="arrow-right" slot="suffix"></ce-icon>
+            {__('Next', 'surecart')} <ce-icon name="arrow-right" slot="suffix"></ce-icon>
           </ce-button>
 
           {this.busy && <ce-block-ui style={{ zIndex: '9' }}></ce-block-ui>}

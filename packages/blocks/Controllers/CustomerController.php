@@ -48,10 +48,10 @@ class CustomerController extends BaseController {
 		<ce-spacing style="--spacing: var(--ce-spacing-large)">
 			<ce-breadcrumbs>
 				<ce-breadcrumb href="<?php echo esc_url( $back ); ?>">
-					<?php esc_html_e( 'Dashboard', 'checkout_engine' ); ?>
+					<?php esc_html_e( 'Dashboard', 'surecart' ); ?>
 				</ce-breadcrumb>
 				<ce-breadcrumb>
-					<?php esc_html_e( 'Billing Details', 'checkout_engine' ); ?>
+					<?php esc_html_e( 'Billing Details', 'surecart' ); ?>
 				</ce-breadcrumb>
 			</ce-breadcrumbs>
 

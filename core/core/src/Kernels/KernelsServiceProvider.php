@@ -4,7 +4,7 @@
  * @author    Andre Gagnon <me@andregagnon.me>
  * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://checkout_engine.com/
+ * @link      https://surecart.com/
  */
 
 namespace CheckoutEngineCore\Kernels;
@@ -41,14 +41,14 @@ class KernelsServiceProvider implements ServiceProviderInterface {
 			$container,
 			'middleware_groups',
 			[
-				'checkout_engine' => [
+				'surecart' => [
 					'flash',
 					'old_input',
 				],
-				'global'          => [],
-				'web'             => [],
-				'ajax'            => [],
-				'admin'           => [],
+				'global'   => [],
+				'web'      => [],
+				'ajax'     => [],
+				'admin'    => [],
 			]
 		);
 

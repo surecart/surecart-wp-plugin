@@ -4,7 +4,7 @@
  * @author    Andre Gagnon <me@andregagnon.me>
  * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://checkout_engine.com/
+ * @link      https://surecart.com/
  */
 
 namespace CheckoutEngineCore\Kernels;
@@ -344,7 +344,7 @@ class HttpKernel implements HttpKernelInterface {
 				$wp_query->set_404();
 			}
 
-			add_action( 'checkout_engine.kernels.http_kernel.respond', [ $this, 'respond' ] );
+			add_action( 'surecart.kernels.http_kernel.respond', [ $this, 'respond' ] );
 
 			return CHECKOUT_ENGINE_DIR . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'view.php';
 		}
@@ -353,7 +353,7 @@ class HttpKernel implements HttpKernelInterface {
 		$composers = $this->view_service->getComposersForView( $template );
 
 		if ( ! empty( $composers ) ) {
-			add_action( 'checkout_engine.kernels.http_kernel.respond', [ $this, 'compose' ] );
+			add_action( 'surecart.kernels.http_kernel.respond', [ $this, 'compose' ] );
 
 			return CHECKOUT_ENGINE_DIR . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'view.php';
 		}

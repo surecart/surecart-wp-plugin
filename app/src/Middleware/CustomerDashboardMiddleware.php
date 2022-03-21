@@ -75,7 +75,7 @@ class CustomerDashboardMiddleware {
 	 */
 	public function error( $error ) {
 		if ( $error->get_error_code() === 'customer_link.expired' ) {
-			return wp_die( esc_html__( 'This link has expired.', 'checkout_engine' ) );
+			return wp_die( esc_html__( 'This link has expired.', 'surecart' ) );
 		}
 		return wp_die( wp_kses_post( $error->get_error_message() ) );
 	}

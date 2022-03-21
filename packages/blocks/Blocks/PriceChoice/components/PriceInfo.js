@@ -52,7 +52,7 @@ export default ({ price_id }) => {
 				`}
 			>
 				{price?.ad_hoc ? (
-					__('Name Your Price', 'checkout_engine')
+					__('Name Your Price', 'surecart')
 				) : (
 					<>
 						<ce-format-number
@@ -77,7 +77,7 @@ export default ({ price_id }) => {
 				})}
 				isSecondary
 			>
-				{__('Edit Product', 'checkout_engine')}
+				{__('Edit Product', 'surecart')}
 			</Button>
 		</div>
 	);

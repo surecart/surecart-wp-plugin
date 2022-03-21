@@ -19,52 +19,47 @@ import {
 import { CeButton } from '@checkout-engine/components-react';
 import Placeholder from './Placeholder';
 
-export default ( { className, attributes, setAttributes } ) => {
+export default ({ className, attributes, setAttributes }) => {
 	const { type, label, submit, size, line_items } = attributes;
 
 	const renderButton = () => {
-		if ( ! line_items || ! line_items?.length ) {
-			return <Placeholder setAttributes={ setAttributes } />;
+		if (!line_items || !line_items?.length) {
+			return <Placeholder setAttributes={setAttributes} />;
 		}
 
 		return (
-			<CeButton
-				type={ type }
-				submit={ submit }
-				size={ size }
-				type={ type }
-			>
+			<CeButton type={type} submit={submit} size={size} type={type}>
 				<RichText
-					aria-label={ __( 'Button text' ) }
-					placeholder={ __( 'Add text…' ) }
-					value={ label }
-					onChange={ ( label ) => setAttributes( { label } ) }
+					aria-label={__('Button text')}
+					placeholder={__('Add text…')}
+					value={label}
+					onChange={(label) => setAttributes({ label })}
 					withoutInteractiveFormatting
-					allowedFormats={ [ 'core/bold', 'core/italic' ] }
+					allowedFormats={['core/bold', 'core/italic']}
 				/>
 			</CeButton>
 		);
 	};
 
 	return (
-		<div className={ className } css={ css`` }>
+		<div className={className} css={css``}>
 			<InspectorControls>
-				<PanelBody title={ __( 'Attributes', 'checkout-engine' ) }>
+				<PanelBody title={__('Attributes', 'checkout-engine')}>
 					<PanelRow>
 						<TextControl
-							label={ __( 'Button Text', 'checkout-engine' ) }
-							value={ label }
-							onChange={ ( label ) => setAttributes( { label } ) }
+							label={__('Button Text', 'checkout-engine')}
+							value={label}
+							onChange={(label) => setAttributes({ label })}
 						/>
 					</PanelRow>
 					<PanelRow>
 						<SelectControl
-							label={ __( 'Size', 'checkout_engine' ) }
-							value={ size }
-							onChange={ ( size ) => {
-								setAttributes( { size } );
-							} }
-							options={ [
+							label={__('Size', 'surecart')}
+							value={size}
+							onChange={(size) => {
+								setAttributes({ size });
+							}}
+							options={[
 								{
 									value: null,
 									label: 'Select a Size',
@@ -72,42 +67,42 @@ export default ( { className, attributes, setAttributes } ) => {
 								},
 								{
 									value: 'small',
-									label: __( 'Small', 'checkout_engine' ),
+									label: __('Small', 'surecart'),
 								},
 								{
 									value: 'medium',
-									label: __( 'Medium', 'checkout_engine' ),
+									label: __('Medium', 'surecart'),
 								},
 								{
 									value: 'large',
-									label: __( 'Large', 'checkout_engine' ),
+									label: __('Large', 'surecart'),
 								},
-							] }
+							]}
 						/>
 					</PanelRow>
 					<PanelRow>
 						<SelectControl
-							label={ __( 'Type', 'checkout_engine' ) }
-							value={ type }
-							onChange={ ( type ) => {
-								setAttributes( { type } );
-							} }
-							options={ [
+							label={__('Type', 'surecart')}
+							value={type}
+							onChange={(type) => {
+								setAttributes({ type });
+							}}
+							options={[
 								{
 									value: 'primary',
-									label: __( 'Button', 'checkout_engine' ),
+									label: __('Button', 'surecart'),
 								},
 								{
 									value: 'text',
-									label: __( 'Text Link', 'checkout_engine' ),
+									label: __('Text Link', 'surecart'),
 								},
-							] }
+							]}
 						/>
 					</PanelRow>
 				</PanelBody>
 			</InspectorControls>
 
-			{ renderButton() }
+			{renderButton()}
 		</div>
 	);
 };

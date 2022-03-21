@@ -14,14 +14,14 @@ export default ({ product, onDelete, onToggleArchive }) => {
 				? sprintf(
 						__(
 							'Un-Archive %s? This will make the product purchaseable again.',
-							'checkout_engine'
+							'surecart'
 						),
 						product?.name || 'Product'
 				  )
 				: sprintf(
 						__(
 							'This product will not be purchaseable and all unsaved changes will be lost.',
-							'checkout_engine'
+							'surecart'
 						),
 						product?.name || 'Product'
 				  )
@@ -35,7 +35,7 @@ export default ({ product, onDelete, onToggleArchive }) => {
 			sprintf(
 				__(
 					'Permanently delete %s? You cannot undo this action.',
-					'checkout_engine'
+					'surecart'
 				),
 				product?.name || 'Product'
 			)
@@ -93,8 +93,8 @@ export default ({ product, onDelete, onToggleArchive }) => {
 							</svg>
 						</span>
 						{product?.archived_at
-							? __('Un-Archive', 'checkout_engine')
-							: __('Archive', 'checkout_engine')}
+							? __('Un-Archive', 'surecart')
+							: __('Archive', 'surecart')}
 					</CeMenuItem>
 				)}
 				{product?.id && (
@@ -122,7 +122,7 @@ export default ({ product, onDelete, onToggleArchive }) => {
 								<line x1="14" y1="11" x2="14" y2="17"></line>
 							</svg>
 						</span>
-						{__('Delete', 'checkout_engine')}
+						{__('Delete', 'surecart')}
 					</CeMenuItem>
 				)}
 			</CeMenu>

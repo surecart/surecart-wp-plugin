@@ -23,7 +23,7 @@ export default ({ attributes, setAttributes }) => {
 							label={__('Removable', 'checkout-engine')}
 							help={__(
 								'Allow line items to be removed.',
-								'checkout_engine'
+								'surecart'
 							)}
 							checked={removable}
 							onChange={(removable) =>
@@ -36,7 +36,7 @@ export default ({ attributes, setAttributes }) => {
 							label={__('Editable', 'checkout-engine')}
 							help={__(
 								'Allow line item quantities to be editable.',
-								'checkout_engine'
+								'surecart'
 							)}
 							checked={editable}
 							onChange={(editable) => setAttributes({ editable })}

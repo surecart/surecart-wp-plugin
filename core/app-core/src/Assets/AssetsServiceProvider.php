@@ -21,16 +21,16 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 	 * {@inheritDoc}
 	 */
 	public function register( $container ) {
-		$container['checkout_engine_app_core.assets.manifest'] = function( $c ) {
+		$container['surecart_app_core.assets.manifest'] = function( $c ) {
 			return new Manifest( $c[ CHECKOUT_ENGINE_CONFIG_KEY ]['app_core']['path'] );
 		};
 
-		$container['checkout_engine_app_core.assets.assets'] = function( $container ) {
+		$container['surecart_app_core.assets.assets'] = function( $container ) {
 			return new Assets(
 				$container[ CHECKOUT_ENGINE_CONFIG_KEY ]['app_core']['path'],
 				$container[ CHECKOUT_ENGINE_CONFIG_KEY ]['app_core']['url'],
-				$container['checkout_engine_app_core.config.config'],
-				$container['checkout_engine_app_core.assets.manifest']
+				$container['surecart_app_core.config.config'],
+				$container['surecart_app_core.assets.manifest']
 			);
 		};
 	}

@@ -17,21 +17,21 @@ export default () => {
 						margin: 0;
 					`}
 				>
-					{__('Connection', 'checkout_engine')}
+					{__('Connection', 'surecart')}
 				</h4>
 				<p>
 					{__(
 						'Update your API Token to connect your WordPress install to SureCart.',
-						'checkout_engine'
+						'surecart'
 					)}
 				</p>
 				<CeCard>
 					<CeInput
-						label={__('Api Key', 'checkout_engine')}
+						label={__('Api Key', 'surecart')}
 						type="password"
 					/>
 					<CeButton type="primary">
-						{__('Check Connection', 'checkout_engine')}
+						{__('Check Connection', 'surecart')}
 					</CeButton>
 				</CeCard>
 			</div>

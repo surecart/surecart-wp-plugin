@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 // redirect to an admin page that they can't access instead of homepage.
 // Otherwise the homepage if they cannot access admin.
 add_filter(
-	'checkout_engine.middleware.user.can.redirect_url',
+	'surecart.middleware.user.can.redirect_url',
 	function( $url ) {
 		if ( current_user_can( 'read' ) ) {
 			return get_admin_url() . 'admin.php?page=ce-denied';

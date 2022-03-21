@@ -22,13 +22,13 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 	 * @param  \Pimple\Container $container Service Container.
 	 */
 	public function register( $container ) {
-		$container['checkout_engine.assets'] = function () {
+		$container['surecart.assets'] = function () {
 			return new AssetsService();
 		};
 
 		$app = $container[ CHECKOUT_ENGINE_APPLICATION_KEY ];
 
-		$app->alias( 'assets', 'checkout_engine.assets' );
+		$app->alias( 'assets', 'surecart.assets' );
 	}
 
 	/**
@@ -129,7 +129,7 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 			filemtime( trailingslashit( $this->container[ CHECKOUT_ENGINE_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/checkout-engine/checkout-engine.esm.js' ),
 			false
 		);
-		wp_set_script_translations( 'checkout-engine-components', 'checkout_engine' );
+		wp_set_script_translations( 'checkout-engine-components', 'surecart' );
 		wp_localize_script(
 			'checkout-engine-components',
 			'ceData',
@@ -237,7 +237,7 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 					'window.ce = window.ce || {};',
 					sprintf(
 						'wp.apiFetch.use( wp.apiFetch.createRootURLMiddleware( " % s" ) );',
-						esc_url_raw( get_rest_url() ) . 'checkout_engine/v1/'
+						esc_url_raw( get_rest_url() ) . 'surecart/v1/'
 					),
 				]
 			)

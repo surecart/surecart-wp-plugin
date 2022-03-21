@@ -15,8 +15,8 @@ Here we will listen for the event and update the users meta to provide them with
 use \CheckoutEngine\Models\Subscription;
 
 // Use the subscription_paid event to update the users meta
-add_action( 'checkout_engine/subscription_made_active', 'my_provide_access_function' );
-add_action( 'checkout_engine/subscription_made_trialing', 'my_provide_access_function' );
+add_action( 'surecart/subscription_made_active', 'my_provide_access_function' );
+add_action( 'surecart/subscription_made_trialing', 'my_provide_access_function' );
 
 /**
  * Provide access to the membership
@@ -49,7 +49,7 @@ function my_provide_access_function ( $subscription_id ) {
 ## Revoke access using the `subscription_canceled` event.
 
 We'll want to revoke access for the user when a subscription is canceled. We will use the
-[Subscription Canceled Action](../events/Actions/subscription-actions.mdx#checkout_enginesubscription_canceled) to listen for the event and update the users meta to revoke access to something specific.
+[Subscription Canceled Action](../events/Actions/subscription-actions.mdx#surecartsubscription_canceled) to listen for the event and update the users meta to revoke access to something specific.
 
 ```php
 use \CheckoutEngine\Models\Subscription;
@@ -57,7 +57,7 @@ use \CheckoutEngine\Models\Subscription;
 $membership_price_id = '8ba8d60f-5277-4e6b-807c-dee8166446d5';
 
 // Use the subscription_canceled event to update the users meta
-add_action( 'checkout_engine/subscription_canceled', function( $subscription_id ) {
+add_action( 'surecart/subscription_canceled', function( $subscription_id ) {
 		// maybe you'll fetch this from your plugin.
 	$membership_price_id = '8ba8d60f-5277-4e6b-807c-dee8166446d5';
 

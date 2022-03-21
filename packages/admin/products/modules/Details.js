@@ -8,7 +8,7 @@ import Box from '../../ui/Box';
 
 export default ({ product, updateProduct, loading }) => {
 	return (
-		<Box title={__('Details', 'checkout_engine')} loading={loading}>
+		<Box title={__('Details', 'surecart')} loading={loading}>
 			<div
 				css={css`
 					display: grid;
@@ -16,9 +16,9 @@ export default ({ product, updateProduct, loading }) => {
 				`}
 			>
 				<CeInput
-					label={__('Name', 'checkout_engine')}
+					label={__('Name', 'surecart')}
 					className="ce-product-name hydrated"
-					help={__('A name for your product.', 'checkout_engine')}
+					help={__('A name for your product.', 'surecart')}
 					value={product?.name}
 					onCeChange={(e) => {
 						updateProduct({ name: e.target.value });
@@ -38,7 +38,7 @@ export default ({ product, updateProduct, loading }) => {
 						})
 					}
 				>
-					{__('Charge tax on this product', 'checkout_engine')}
+					{__('Charge tax on this product', 'surecart')}
 				</CeSwitch>
 				{product?.tax_enabled && (
 					<div>
@@ -55,23 +55,23 @@ export default ({ product, updateProduct, loading }) => {
 									value: 'tangible',
 									label: __(
 										'General/Tangible Goods',
-										'checkout_engine'
+										'surecart'
 									),
 								},
 								{
 									value: 'digital',
-									label: __('Digital', 'checkout_engine'),
+									label: __('Digital', 'surecart'),
 								},
 								{
 									value: 'saas',
 									label: __(
 										'Sofware As A Service',
-										'checkout_engine'
+										'surecart'
 									),
 								},
 								{
 									value: 'service',
-									label: __('Service', 'checkout_engine'),
+									label: __('Service', 'surecart'),
 								},
 							]}
 						/>

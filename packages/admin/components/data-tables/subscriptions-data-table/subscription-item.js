@@ -29,7 +29,7 @@ export default (subscription) => {
 		) {
 			return (
 				<span>
-					{__('Cancels', 'checkout_engine')}{' '}
+					{__('Cancels', 'surecart')}{' '}
 					<ce-format-date
 						type="timestamp"
 						date={subscription?.current_period_end_at}
@@ -44,7 +44,7 @@ export default (subscription) => {
 		if (subscription?.status === 'trialing' && subscription?.trial_end_at) {
 			return (
 				<span>
-					{__('Begins', 'checkout_engine')}{' '}
+					{__('Begins', 'surecart')}{' '}
 					<ce-format-date
 						type="timestamp"
 						date={subscription?.trial_end_at}
@@ -62,7 +62,7 @@ export default (subscription) => {
 		) {
 			return (
 				<span>
-					{__('Renews', 'checkout_engine')}{' '}
+					{__('Renews', 'surecart')}{' '}
 					<ce-format-date
 						type="timestamp"
 						date={subscription?.current_period_end_at}
@@ -77,7 +77,7 @@ export default (subscription) => {
 		if (subscription?.status === 'canceled' && subscription?.ended_at) {
 			return (
 				<span>
-					{__('Ended', 'checkout_engine')}{' '}
+					{__('Ended', 'surecart')}{' '}
 					<ce-format-date
 						type="timestamp"
 						date={subscription?.ended_at}
@@ -112,7 +112,7 @@ export default (subscription) => {
 					{subscription?.status === 'trialing' && (
 						<StartPlan subscription={subscription}>
 							<CeMenuItem>
-								{__('Start Plan', 'checkout_engine')}
+								{__('Start Plan', 'surecart')}
 							</CeMenuItem>
 						</StartPlan>
 					)}
@@ -120,16 +120,14 @@ export default (subscription) => {
 					{subscription?.cancel_at_period_end && (
 						<UnCancel subscription={subscription}>
 							<CeMenuItem>
-								{__("Don't Cancel", 'checkout_engine')}
+								{__("Don't Cancel", 'surecart')}
 							</CeMenuItem>
 						</UnCancel>
 					)}
 
 					{!subscription?.cancel_at_period_end && (
 						<Cancel subscription={subscription}>
-							<CeMenuItem>
-								{__('Cancel', 'checkout_engine')}
-							</CeMenuItem>
+							<CeMenuItem>{__('Cancel', 'surecart')}</CeMenuItem>
 						</Cancel>
 					)}
 				</CeMenu>
@@ -178,7 +176,7 @@ export default (subscription) => {
 				})}
 				size="small"
 			>
-				{__('View', 'checkout_engine')}
+				{__('View', 'surecart')}
 			</ce-button>
 		),
 	};

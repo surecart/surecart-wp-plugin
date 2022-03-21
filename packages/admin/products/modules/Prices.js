@@ -88,7 +88,7 @@ export default ({ product, updateProduct, loading }) => {
 	return (
 		<div>
 			<Box
-				title={__('Pricing', 'checkout_engine')}
+				title={__('Pricing', 'surecart')}
 				description={
 					!activePrices?.length ? __('Please add a price.') : ''
 				}
@@ -138,7 +138,7 @@ export default ({ product, updateProduct, loading }) => {
 											y2="12"
 										></line>
 									</svg>
-									{__('Add Another Price', 'checkout_engine')}
+									{__('Add Another Price', 'surecart')}
 								</CeButton>
 							)}
 							{!!archivedPrices?.length && (
@@ -159,11 +159,11 @@ export default ({ product, updateProduct, loading }) => {
 											!showArchived
 												? __(
 														'Show %d Archived Prices',
-														'checkout_engine'
+														'surecart'
 												  )
 												: __(
 														'Hide %d Archived Prices',
-														'checkout_engine'
+														'surecart'
 												  ),
 											archivedPrices?.length
 										)}
@@ -181,7 +181,7 @@ export default ({ product, updateProduct, loading }) => {
 							margin-bottom: 1em;
 						`}
 						required
-						label={__('Product Type', 'checkout_engine')}
+						label={__('Product Type', 'surecart')}
 						style={{ '--columns': 2 }}
 					>
 						<div>
@@ -193,12 +193,9 @@ export default ({ product, updateProduct, loading }) => {
 									updateProduct({ recurring: false });
 								}}
 							>
-								{__('Single Payment', 'checkout_engine')}
+								{__('Single Payment', 'surecart')}
 								<span slot="description">
-									{__(
-										'Charge a one-time fee.',
-										'checkout_engine'
-									)}
+									{__('Charge a one-time fee.', 'surecart')}
 								</span>
 							</CeChoice>
 							<CeChoice
@@ -211,12 +208,9 @@ export default ({ product, updateProduct, loading }) => {
 									});
 								}}
 							>
-								{__('Subscription', 'checkout_engine')}
+								{__('Subscription', 'surecart')}
 								<span slot="description">
-									{__(
-										'Charge an ongoing fee.',
-										'checkout_engine'
-									)}
+									{__('Charge an ongoing fee.', 'surecart')}
 								</span>
 							</CeChoice>
 						</div>

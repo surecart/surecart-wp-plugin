@@ -72,7 +72,7 @@ class DownloadController extends BaseController {
 
 	public function edit() {
 		if ( ! wp_verify_nonce( $_GET['nonce'], 'customer-download' ) ) {
-			die( __( 'Your session expired. Please go back and try again.', 'checkout_engine' ) );
+			die( __( 'Your session expired. Please go back and try again.', 'surecart' ) );
 		}
 
 		if ( ! User::current()->isCustomer() ) {

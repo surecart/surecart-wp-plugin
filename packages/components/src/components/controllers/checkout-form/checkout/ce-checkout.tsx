@@ -158,7 +158,7 @@ export class CECheckout {
 
   getErrorMessage(error) {
     if (error.code === 'order.line_items.price.blank') {
-      return __('This product is no longer purchasable.', 'checkout_engine');
+      return __('This product is no longer purchasable.', 'surecart');
     }
     return error?.message;
   }
@@ -201,8 +201,8 @@ export class CECheckout {
     if (this?.order?.status === 'paid') {
       return (
         <ce-alert type="success" open>
-          <span slot="title">{__('You have already paid for this order.', 'checkout_engine')}</span>
-          {__('Please visit your account dashboard to view your order.', 'checkout_engine')}
+          <span slot="title">{__('You have already paid for this order.', 'surecart')}</span>
+          {__('Please visit your account dashboard to view your order.', 'surecart')}
         </ce-alert>
       );
     }
@@ -210,7 +210,7 @@ export class CECheckout {
     if (this.checkoutState.value === 'expired') {
       return (
         <ce-block-ui>
-          <div>{__('Please refresh the page.', 'checkout_engine')}</div>
+          <div>{__('Please refresh the page.', 'surecart')}</div>
         </ce-block-ui>
       );
     }

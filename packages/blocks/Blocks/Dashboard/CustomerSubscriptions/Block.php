@@ -73,10 +73,10 @@ class Block extends DashboardPage {
 		<ce-spacing style="--spacing: var(--ce-spacing-large)">
 			<ce-breadcrumbs>
 				<ce-breadcrumb href="<?php echo esc_url( add_query_arg( [ 'tab' => $tab ], \CheckoutEngine::pages()->url( 'dashboard' ) ) ); ?>">
-					<?php esc_html_e( 'Dashboard', 'checkout_engine' ); ?>
+					<?php esc_html_e( 'Dashboard', 'surecart' ); ?>
 				</ce-breadcrumb>
 				<ce-breadcrumb>
-					<?php esc_html_e( 'Subscription', 'checkout_engine' ); ?>
+					<?php esc_html_e( 'Subscription', 'surecart' ); ?>
 				</ce-breadcrumb>
 			</ce-breadcrumbs>
 

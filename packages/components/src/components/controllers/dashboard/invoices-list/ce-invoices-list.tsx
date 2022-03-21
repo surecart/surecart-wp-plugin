@@ -53,7 +53,7 @@ export class CeInvoicesList {
       await this.getItems();
     } catch (e) {
       console.error(this.error);
-      this.error = e?.message || __('Something went wrong', 'checkout_engine');
+      this.error = e?.message || __('Something went wrong', 'surecart');
     } finally {
       this.loading = false;
     }
@@ -65,7 +65,7 @@ export class CeInvoicesList {
       await this.getItems();
     } catch (e) {
       console.error(this.error);
-      this.error = e?.message || __('Something went wrong', 'checkout_engine');
+      this.error = e?.message || __('Something went wrong', 'surecart');
     } finally {
       this.busy = false;
     }
@@ -102,10 +102,10 @@ export class CeInvoicesList {
     const { status, charge } = invoice;
     if (typeof charge === 'object') {
       if (charge?.fully_refunded) {
-        return <ce-tag type="danger">{__('Refunded', 'checkout_engine')}</ce-tag>;
+        return <ce-tag type="danger">{__('Refunded', 'surecart')}</ce-tag>;
       }
       if (charge?.refunded_amount) {
-        return <ce-tag type="info">{__('Partially Refunded', 'checkout_engine')}</ce-tag>;
+        return <ce-tag type="info">{__('Partially Refunded', 'surecart')}</ce-tag>;
       }
     }
 
@@ -131,7 +131,7 @@ export class CeInvoicesList {
       <div>
         <ce-divider style={{ '--spacing': '0' }}></ce-divider>
         <slot name="empty">
-          <ce-empty icon="tag">{__("You don't have any invoices.", 'checkout_engine')}</ce-empty>
+          <ce-empty icon="tag">{__("You don't have any invoices.", 'surecart')}</ce-empty>
         </slot>
       </div>
     );
@@ -152,7 +152,7 @@ export class CeInvoicesList {
                 '--color': 'var(--ce-color-gray-500)',
               }}
             >
-              {sprintf(_n('%s item', '%s items', invoice_items?.pagination?.count || 0, 'checkout_engine'), invoice_items?.pagination?.count || 0)}
+              {sprintf(_n('%s item', '%s items', invoice_items?.pagination?.count || 0, 'surecart'), invoice_items?.pagination?.count || 0)}
             </ce-text>
           </div>
           <div>{this.renderStatusBadge(invoice)}</div>
@@ -184,12 +184,12 @@ export class CeInvoicesList {
     return (
       <ce-dashboard-module class="invoices-list" error={this.error}>
         <span slot="heading">
-          <slot name="heading">{this.heading || __('Invoice History', 'checkout_engine')}</slot>
+          <slot name="heading">{this.heading || __('Invoice History', 'surecart')}</slot>
         </span>
 
         {!!this.allLink && !!this.invoices?.length && (
           <ce-button type="link" href={this.allLink} slot="end">
-            {__('View all', 'checkout_engine')}
+            {__('View all', 'surecart')}
             <ce-icon name="chevron-right" slot="suffix"></ce-icon>
           </ce-button>
         )}

@@ -123,7 +123,7 @@ class User implements ArrayAccess, JsonSerializable {
 	 */
 	protected function login() {
 		if ( empty( $this->user->ID ) ) {
-			return new \Error( 'not_found', esc_html__( 'This user could not be found.', 'checkout_engine' ) );
+			return new \Error( 'not_found', esc_html__( 'This user could not be found.', 'surecart' ) );
 		}
 
 		wp_clear_auth_cookie();

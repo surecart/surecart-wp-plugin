@@ -35,7 +35,7 @@ export class CEOrderSummary {
     return (
       <ce-line-item style={{ '--price-size': 'var(--ce-font-size-x-large)' }}>
         <span class="collapse-link" slot="title" onClick={e => this.handleClick(e)}>
-          {this.collapsed ? __('Show Summary', 'checkout_engine') : __('Summary', 'checkout_engine')}
+          {this.collapsed ? __('Show Summary', 'surecart') : __('Summary', 'surecart')}
           <svg xmlns="http://www.w3.org/2000/svg" class="collapse-link__icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
           </svg>
@@ -63,7 +63,7 @@ export class CEOrderSummary {
         >
           <slot />
         </div>
-        {this.empty && !this.loading && <p class="empty">{__('Your cart is empty.', 'checkout_engine')}</p>}
+        {this.empty && !this.loading && <p class="empty">{__('Your cart is empty.', 'surecart')}</p>}
       </div>
     );
   }

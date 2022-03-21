@@ -10,7 +10,7 @@
  * Author URI: https://andregagnon.me
  * License: GPL-2.0-only
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain: checkout_engine
+ * Text Domain: surecart
  * Domain Path: /languages
  *
  * YOU SHOULD NORMALLY NOT NEED TO ADD ANYTHING HERE - any custom functionality unrelated

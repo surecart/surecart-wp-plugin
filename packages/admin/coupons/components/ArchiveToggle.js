@@ -19,30 +19,30 @@ export default withConfirm( ( { setConfirm, children } ) => {
 		setConfirm( {
 			title: promotion?.archived_at
 				? sprintf(
-						__( 'Un-Archive %s?', 'checkout_engine' ),
+						__( 'Un-Archive %s?', 'surecart
 						promotion?.name || 'Coupon'
 				  )
 				: sprintf(
-						__( 'Archive %s?', 'checkout_engine' ),
+						__( 'Archive %s?', 'surecart
 						promotion?.name || 'Coupon'
 				  ),
 			message: promotion?.archived_at
 				? __(
 						'This will make the coupon purchaseable again.',
-						'checkout_engine'
+						'surecart
 				  )
 				: __(
 						'This coupon will not be purchaseable and all unsaved changes will be lost.',
-						'checkout_engine'
+						'surecart
 				  ),
 			confirmButtonText: promotion?.archived_at
 				? sprintf(
-						__( 'Un-Archive %s?', 'checkout_engine' ),
-						promotion?.name || __( 'Coupon', 'checkout_engine' )
+						__( 'Un-Archive %s?', 'surecart
+						promotion?.name || __( 'Coupon', 'surecart
 				  )
 				: sprintf(
-						__( 'Archive %s?', 'checkout_engine' ),
-						promotion?.name || __( 'Coupon', 'checkout_engine' )
+						__( 'Archive %s?', 'surecart
+						promotion?.name || __( 'Coupon', 'surecart
 				  ),
 			open: true,
 			isSaving,

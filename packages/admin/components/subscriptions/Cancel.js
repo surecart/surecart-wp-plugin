@@ -28,12 +28,12 @@ export default ({ onCancel, subscription, loading, error, children, open }) => {
 					onClick={() => setModal(!modal)}
 					loading={loading}
 				>
-					{__('Cancel', 'checkout_engine')}
+					{__('Cancel', 'surecart')}
 				</ce-button>
 			)}
 			{modal && (
 				<Modal
-					title={__('Cancel Subscription', 'checkout_engine')}
+					title={__('Cancel Subscription', 'surecart')}
 					css={css`
 						max-width: 500px !important;
 					`}
@@ -50,14 +50,14 @@ export default ({ onCancel, subscription, loading, error, children, open }) => {
 							{error}
 						</ce-alert>
 
-						<ce-choices label={__('Cancel', 'checkout_engine')}>
+						<ce-choices label={__('Cancel', 'surecart')}>
 							<div>
 								<ce-choice
 									name="cancel_behavior"
 									value="immediate"
 									checked
 								>
-									{__('Immediately', 'checkout_engine')}
+									{__('Immediately', 'surecart')}
 								</ce-choice>
 								{subscription?.current_period_end_at !==
 									null && (
@@ -67,7 +67,7 @@ export default ({ onCancel, subscription, loading, error, children, open }) => {
 									>
 										{__(
 											'	At end of current period',
-											'checkout_engine'
+											'surecart'
 										)}
 									</ce-choice>
 								)}
@@ -82,10 +82,10 @@ export default ({ onCancel, subscription, loading, error, children, open }) => {
 							`}
 						>
 							<Button isPrimary isBusy={loading} type="submit">
-								{__('Cancel Subscription', 'checkout_engine')}
+								{__('Cancel Subscription', 'surecart')}
 							</Button>
 							<Button onClick={() => setModal(false)}>
-								{__("Don't Cancel", 'checkout_engine')}
+								{__("Don't Cancel", 'surecart')}
 							</Button>
 						</div>
 					</CeForm>

@@ -13,10 +13,7 @@ import {
 
 export default ({ coupon, loading, updateCoupon }) => {
 	return (
-		<Box
-			title={__('Redemption Limits', 'checkout_engine')}
-			loading={loading}
-		>
+		<Box title={__('Redemption Limits', 'surecart')} loading={loading}>
 			<div
 				css={css`
 					display: grid;
@@ -50,7 +47,7 @@ export default ({ coupon, loading, updateCoupon }) => {
 							<BaseControl.VisualLabel>
 								{__(
 									'Users must redeem this coupon by:',
-									'checkout_engine'
+									'surecart'
 								)}
 							</BaseControl.VisualLabel>
 							<DateTimePicker
@@ -92,10 +89,10 @@ export default ({ coupon, loading, updateCoupon }) => {
 					{!!coupon?.max_redemptions && (
 						<BaseControl>
 							<CeInput
-								label={__('Number of Times', 'checkout_engine')}
+								label={__('Number of Times', 'surecart')}
 								help={__(
 									"This limit applies across customers so it won't prevent a single customer from redeeming multiple times.",
-									'checkout_engine'
+									'surecart'
 								)}
 								class="max-redemptions-input"
 								value={coupon?.max_redemptions || 1}

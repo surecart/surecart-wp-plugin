@@ -48,7 +48,7 @@ export class CeLogin {
       if (e?.message) {
         this.error = e.message;
       } else {
-        this.error = __('Something went wrong', 'checkout_engine');
+        this.error = __('Something went wrong', 'surecart');
       }
       console.error(this.error);
     } finally {
@@ -79,7 +79,7 @@ export class CeLogin {
       if (e?.message) {
         this.error = e.message;
       } else {
-        this.error = __('Something went wrong', 'checkout_engine');
+        this.error = __('Something went wrong', 'surecart');
       }
     }
   }
@@ -89,8 +89,8 @@ export class CeLogin {
       return (
         <ce-alert type="success" open>
           <ce-icon slot="icon" name="check"></ce-icon>
-          <span slot="title">{__('Sent!', 'checkout_engine')}</span>
-          <p>{__('You should receive an email shortly with a link to login.', 'checkout_engine')}</p>
+          <span slot="title">{__('Sent!', 'surecart')}</span>
+          <p>{__('You should receive an email shortly with a link to login.', 'surecart')}</p>
         </ce-alert>
       );
     }
@@ -101,13 +101,13 @@ export class CeLogin {
           <ce-form onCeFormSubmit={() => this.submitMagicLink()}>
             <ce-button type="primary" submit full>
               <ce-icon name="mail" slot="prefix" />
-              {__('Send a magic link', 'checkout_engine')}
+              {__('Send a magic link', 'surecart')}
             </ce-button>
           </ce-form>
-          <ce-divider>{__('or', 'checkout_engine')}</ce-divider>
+          <ce-divider>{__('or', 'surecart')}</ce-divider>
           <ce-form onCeFormSubmit={() => this.login()}>
             <ce-input
-              label={__('Enter your password', 'checkout_engine')}
+              label={__('Enter your password', 'surecart')}
               type="password"
               ref={el => (this.passwordInput = el as HTMLCeInputElement)}
               autofocus
@@ -116,7 +116,7 @@ export class CeLogin {
             ></ce-input>
             <ce-button type="primary" outline submit full>
               <ce-icon name="lock" slot="prefix" />
-              {__('Login', 'checkout_engine')}
+              {__('Login', 'surecart')}
             </ce-button>
           </ce-form>
         </div>
@@ -135,7 +135,7 @@ export class CeLogin {
         ></ce-input>
         <ce-button type="primary" submit full>
           <ce-icon name="arrow-right" slot="suffix" />
-          {__('Next', 'checkout_engine')}
+          {__('Next', 'surecart')}
         </ce-button>
       </ce-form>
     );
@@ -145,7 +145,7 @@ export class CeLogin {
     if (this.error) {
       return (
         <ce-alert open type="danger">
-          <span slot="title">{__('Error', 'checkout_engine')}</span>
+          <span slot="title">{__('Error', 'surecart')}</span>
           <span innerHTML={this.error}></span>
         </ce-alert>
       );

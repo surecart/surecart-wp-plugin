@@ -50,7 +50,7 @@ export default ({
 
 	const renderPrice = (withQuantity = false) => {
 		if (!price?.id) return '—';
-		if (price?.ad_hoc) return __('Custom', 'checkout_engine');
+		if (price?.ad_hoc) return __('Custom', 'surecart');
 		return (
 			<ce-format-number
 				type="currency"
@@ -117,7 +117,7 @@ export default ({
 								slot="prefix"
 								style={{ opacity: 0.5 }}
 							></ce-icon>
-							{__('Remove', 'checkout_engine')}
+							{__('Remove', 'surecart')}
 						</CeMenuItem>
 					</CeMenu>
 				</CeDropdown>

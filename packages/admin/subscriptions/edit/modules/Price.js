@@ -16,13 +16,13 @@ export default ({
 	return (
 		<DataTable
 			loading={loading}
-			title={__('Product', 'checkout_engine')}
+			title={__('Product', 'surecart')}
 			columns={{
 				product: {
-					label: __('Price', 'checkout_engine'),
+					label: __('Price', 'surecart'),
 				},
 				quantity: {
-					label: __('Qty', 'checkout_engine'),
+					label: __('Qty', 'surecart'),
 					width: '75px',
 				},
 				total: {
@@ -33,7 +33,7 @@ export default ({
 								justify-content: flex-end;
 							`}
 						>
-							{__('Total', 'checkout_engine')}
+							{__('Total', 'surecart')}
 						</div>
 					),
 				},

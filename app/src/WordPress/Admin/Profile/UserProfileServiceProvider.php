@@ -15,7 +15,7 @@ class UserProfileServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function register( $container ) {
-		$container['checkout_engine.admin.profile'] = function () {
+		$container['surecart.admin.profile'] = function () {
 			return new UserProfileService();
 		};
 	}
@@ -27,6 +27,6 @@ class UserProfileServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function bootstrap( $container ) {
-		$container['checkout_engine.admin.profile']->bootstrap();
+		$container['surecart.admin.profile']->bootstrap();
 	}
 }

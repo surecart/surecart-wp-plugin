@@ -21,10 +21,10 @@ export default ({ attributes, setAttributes }) => {
 	return (
 		<Fragment>
 			<InspectorControls>
-				<PanelBody title={__('Attributes', 'checkout_engine')}>
+				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<TextControl
-							label={__('Title', 'checkout_engine')}
+							label={__('Title', 'surecart')}
 							value={title}
 							onChange={(title) => setAttributes({ title })}
 						/>
@@ -44,7 +44,7 @@ export default ({ attributes, setAttributes }) => {
 				/>
 
 				<ce-button type="link" slot="end">
-					{__('View all', 'checkout_engine')}
+					{__('View all', 'surecart')}
 					<ce-icon name="chevron-right" slot="suffix"></ce-icon>
 				</ce-button>
 
@@ -76,7 +76,7 @@ export default ({ attributes, setAttributes }) => {
 											'%s item',
 											'%s items',
 											1,
-											'checkout_engine'
+											'surecart'
 										),
 										1
 									)}
@@ -84,7 +84,7 @@ export default ({ attributes, setAttributes }) => {
 							</div>
 							<div>
 								<ce-tag type="success">
-									{__('Paid', 'checkout_engine')}
+									{__('Paid', 'surecart')}
 								</ce-tag>
 							</div>
 							<div>
@@ -121,7 +121,7 @@ export default ({ attributes, setAttributes }) => {
 											'%s item',
 											'%s items',
 											1,
-											'checkout_engine'
+											'surecart'
 										),
 										1
 									)}
@@ -129,7 +129,7 @@ export default ({ attributes, setAttributes }) => {
 							</div>
 							<div>
 								<ce-tag type="danger">
-									{__('Refunded', 'checkout_engine')}
+									{__('Refunded', 'surecart')}
 								</ce-tag>
 							</div>
 							<div>

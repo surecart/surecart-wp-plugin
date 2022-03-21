@@ -19,7 +19,7 @@ class PageServiceTest extends CheckoutEngineUnitTestCase {
 
 	public function test_getOptionName()
 	{
-		$this->assertEquals('checkout_engine_test_name_post_type_name_id', $this->service->getOptionName('test_name', 'post_type_name'));
+		$this->assertEquals('surecart_test_name_post_type_name_id', $this->service->getOptionName('test_name', 'post_type_name'));
 	}
 
 	public function test_find() {

@@ -25,7 +25,7 @@ export default ({ template, setTemplate }) => {
 					onClick={() => setTemplate(choice)}
 				>
 					<ce-icon name="arrow-right" slot="suffix"></ce-icon>
-					{__('Next', 'checkout_engine')}
+					{__('Next', 'surecart')}
 				</CeButton>
 			}
 			maxHeight={'300px'}

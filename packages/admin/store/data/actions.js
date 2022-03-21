@@ -157,7 +157,7 @@ export function* deleteModel(name, id) {
 	if (response) {
 		// add notice.
 		yield controls.dispatch(uiStore, 'addSnackbarNotice', {
-			content: __('Deleted.', 'checkout_engine'),
+			content: __('Deleted.', 'surecart'),
 		});
 		return {
 			type: 'DELETE_MODEL',
@@ -224,7 +224,7 @@ export function* saveData(name, data, { query, ...requestArgs } = {}) {
 	// didn't update.
 	if (!response || !response?.id) {
 		throw {
-			message: __('Failed to save.', 'checkout_engine'),
+			message: __('Failed to save.', 'surecart'),
 		};
 	}
 
@@ -266,7 +266,7 @@ export function* saveModel(
 	// didn't update.
 	if (!response || !response?.id) {
 		throw {
-			message: __('Failed to save.', 'checkout_engine'),
+			message: __('Failed to save.', 'surecart'),
 		};
 	}
 
@@ -349,7 +349,7 @@ export function* saveDraft(
 	// didn't update.
 	if (!response || !response?.id) {
 		throw {
-			message: __('Failed to save.', 'checkout_engine'),
+			message: __('Failed to save.', 'surecart'),
 		};
 	}
 

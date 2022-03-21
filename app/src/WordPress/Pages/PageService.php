@@ -23,7 +23,7 @@ class PageService {
 	 * @return string
 	 */
 	public function getOptionName( $option, $post_type ) {
-		return 'checkout_engine_' . $option . '_' . $post_type . '_id';
+		return 'surecart_' . $option . '_' . $post_type . '_id';
 	}
 
 	/**
@@ -58,15 +58,15 @@ class PageService {
 		}
 
 		if ( $post->ID === $this->getId( 'checkout' ) ) {
-			$states[] = __( 'Checkout Page', 'checkout_engine' );
+			$states[] = __( 'Checkout Page', 'surecart' );
 		}
 
 		if ( $post->ID === $this->getId( 'dashboard' ) ) {
-			$states[] = __( 'Customer Dashboard', 'checkout_engine' );
+			$states[] = __( 'Customer Dashboard', 'surecart' );
 		}
 
 		if ( $post->ID === $this->getId( 'order-confirmation' ) ) {
-			$states[] = __( 'Order Confirmation', 'checkout_engine' );
+			$states[] = __( 'Order Confirmation', 'surecart' );
 		}
 
 		return $states;
@@ -181,7 +181,7 @@ class PageService {
 
 		$page_id = wp_insert_post( $page_data );
 
-		do_action( 'checkout_engine/post_created', $page_id, $page_data );
+		do_action( 'surecart/post_created', $page_id, $page_data );
 
 		if ( $option ) {
 			update_option( $this->getOptionName( $option, $post_type ), $page_id );

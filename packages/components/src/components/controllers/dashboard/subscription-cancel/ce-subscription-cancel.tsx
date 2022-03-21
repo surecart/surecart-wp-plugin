@@ -31,7 +31,7 @@ export class CeSubscriptionCancel {
       await Promise.all([this.fetchProtocol(), this.fetchSubscription()]);
     } catch (e) {
       console.error(this.error);
-      this.error = e?.message || __('Something went wrong', 'checkout_engine');
+      this.error = e?.message || __('Something went wrong', 'surecart');
     } finally {
       this.loading = false;
     }
@@ -66,7 +66,7 @@ export class CeSubscriptionCancel {
         this.busy = false;
       }
     } catch (e) {
-      this.error = e?.message || __('Something went wrong', 'checkout_engine');
+      this.error = e?.message || __('Something went wrong', 'surecart');
       this.busy = false;
     }
   }
@@ -82,15 +82,15 @@ export class CeSubscriptionCancel {
 
         {this?.protocol?.cancel_behavior === 'pending' ? (
           <ce-alert type="info" open>
-            {__('Your plan will be canceled, but is still available until the end of your billing period on', 'checkout_engine')}{' '}
+            {__('Your plan will be canceled, but is still available until the end of your billing period on', 'surecart')}{' '}
             <strong>
               <ce-format-date type="timestamp" date={this?.subscription?.current_period_end_at as number} month="long" day="numeric" year="numeric"></ce-format-date>
             </strong>
-            . {__('If you change your mind, you can renew your subscription.', 'checkout_engine')}
+            . {__('If you change your mind, you can renew your subscription.', 'surecart')}
           </ce-alert>
         ) : (
           <ce-alert type="info" open>
-            {__('Your plan will be canceled immediately. You cannot change your mind.', 'checkout_engine')}
+            {__('Your plan will be canceled immediately. You cannot change your mind.', 'surecart')}
           </ce-alert>
         )}
       </Fragment>
@@ -109,17 +109,17 @@ export class CeSubscriptionCancel {
 
   render() {
     return (
-      <ce-dashboard-module heading={this.heading || __('Cancel your plan', 'checkout_engine')} class="subscription-cancel" error={this.error}>
+      <ce-dashboard-module heading={this.heading || __('Cancel your plan', 'surecart')} class="subscription-cancel" error={this.error}>
         <ce-card>
           {this.renderContent()}
 
           <ce-button type="primary" full loading={this.loading || this.busy} disabled={this.loading || this.busy} onClick={() => this.cancelSubscription()}>
-            {__('Cancel Plan', 'checkout_engine')}
+            {__('Cancel Plan', 'surecart')}
           </ce-button>
 
           {!!this.backUrl && (
             <ce-button href={this.backUrl} full loading={this.loading || this.busy} disabled={this.loading || this.busy}>
-              {__('Go Back', 'checkout_engine')}
+              {__('Go Back', 'surecart')}
             </ce-button>
           )}
         </ce-card>

@@ -22,7 +22,7 @@ export class CeSubscriptionDetails {
     if (typeof this.subscription?.price?.product !== 'string') {
       return this.subscription?.price?.product?.name;
     }
-    return __('Subscription', 'checkout_engine');
+    return __('Subscription', 'surecart');
   }
 
   @Watch('subscription')
@@ -59,7 +59,7 @@ export class CeSubscriptionDetails {
     if (this?.subscription?.cancel_at_period_end && this?.subscription?.current_period_end_at) {
       return (
         <span>
-          {tag} {sprintf(__('Your plan will be canceled on', 'checkout_engine'))}{' '}
+          {tag} {sprintf(__('Your plan will be canceled on', 'surecart'))}{' '}
           <ce-format-date date={this.subscription.current_period_end_at * 1000} month="long" day="numeric" year="numeric"></ce-format-date>
         </span>
       );
@@ -68,7 +68,7 @@ export class CeSubscriptionDetails {
     if (this.hasPendingUpdate) {
       return this.pendingPrice ? (
         <span>
-          {__('Your plan switches to', 'checkout_engine')} <strong>{(this.pendingPrice.product as Product).name}</strong> {__('on', 'checkout_engine')}{' '}
+          {__('Your plan switches to', 'surecart')} <strong>{(this.pendingPrice.product as Product).name}</strong> {__('on', 'surecart')}{' '}
           <ce-format-date date={this.subscription.current_period_end_at as number} type="timestamp" month="long" day="numeric" year="numeric"></ce-format-date>
         </span>
       ) : (
@@ -79,7 +79,7 @@ export class CeSubscriptionDetails {
     if (this?.subscription?.status === 'trialing' && this?.subscription?.trial_end_at) {
       return (
         <span>
-          {tag} {sprintf(__('Your plan begins on', 'checkout_engine'))}{' '}
+          {tag} {sprintf(__('Your plan begins on', 'surecart'))}{' '}
           <ce-format-date date={this?.subscription?.trial_end_at} type="timestamp" month="long" day="numeric" year="numeric"></ce-format-date>
         </span>
       );
@@ -87,7 +87,7 @@ export class CeSubscriptionDetails {
     if (this.subscription?.status === 'active' && this.subscription?.current_period_end_at) {
       return (
         <span>
-          {tag} {sprintf(__('Your plan renews on', 'checkout_engine'))}{' '}
+          {tag} {sprintf(__('Your plan renews on', 'surecart'))}{' '}
           <ce-format-date date={this?.subscription?.current_period_end_at} type="timestamp" month="long" day="numeric" year="numeric"></ce-format-date>
         </span>
       );
@@ -100,7 +100,7 @@ export class CeSubscriptionDetails {
     return (
       <div class="subscription-details">
         <ce-text style={{ '--font-weight': 'var(--ce-font-weight-bold)' }}>
-          {this.renderName()} {this.hasPendingUpdate && <ce-tag size="small">{__('Update Scheduled', 'checkout_engine')}</ce-tag>}
+          {this.renderName()} {this.hasPendingUpdate && <ce-tag size="small">{__('Update Scheduled', 'surecart')}</ce-tag>}
         </ce-text>
         <div>
           <ce-format-number

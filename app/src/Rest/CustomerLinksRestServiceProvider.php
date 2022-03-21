@@ -50,19 +50,19 @@ class CustomerLinksRestServiceProvider extends RestServiceProvider implements Re
 			// In JSON Schema you can specify object properties in the properties attribute.
 			'properties' => [
 				'id'         => [
-					'description' => esc_html__( 'Unique identifier for the object.', 'checkout_engine' ),
+					'description' => esc_html__( 'Unique identifier for the object.', 'surecart' ),
 					'type'        => 'string',
 					'context'     => [ 'view', 'edit', 'embed' ],
 					'readonly'    => true,
 				],
 				'email'      => [
-					'description' => esc_html__( 'Email or username for the request', 'checkout_engine' ),
+					'description' => esc_html__( 'Email or username for the request', 'surecart' ),
 					'type'        => 'string',
 					'context'     => [ 'view', 'edit', 'embed' ],
 					'required'    => true,
 				],
 				'return_url' => [
-					'description' => esc_html__( 'The URL that the customer should be directed to when the click the link from their email.', 'checkout_engine' ),
+					'description' => esc_html__( 'The URL that the customer should be directed to when the click the link from their email.', 'surecart' ),
 					'type'        => 'string',
 					'context'     => [ 'view', 'edit', 'embed' ],
 					'required'    => true,

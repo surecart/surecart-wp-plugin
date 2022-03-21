@@ -12,14 +12,14 @@ export default ({ attributes, setAttributes }) => {
 		if (mode === 'test') {
 			return (
 				<ce-button type="warning" size="small" caret>
-					{__('Test', 'checkout_engine')}
+					{__('Test', 'surecart')}
 				</ce-button>
 			);
 		}
 
 		return (
 			<ce-button type="success" size="small" caret>
-				{__('Live', 'checkout_engine')}
+				{__('Live', 'surecart')}
 			</ce-button>
 		);
 	};
@@ -32,13 +32,13 @@ export default ({ attributes, setAttributes }) => {
 					onClick={() => setAttributes({ mode: 'test' })}
 					checked={mode === 'test'}
 				>
-					{__('Test', 'checkout_engine')}
+					{__('Test', 'surecart')}
 				</CeMenuItem>
 				<CeMenuItem
 					onClick={() => setAttributes({ mode: 'live' })}
 					checked={mode === 'live' || !mode}
 				>
-					{__('Live', 'checkout_engine')}
+					{__('Live', 'surecart')}
 				</CeMenuItem>
 			</CeMenu>
 		</CeDropdown>

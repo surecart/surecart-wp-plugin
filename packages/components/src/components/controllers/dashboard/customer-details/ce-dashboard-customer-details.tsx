@@ -36,7 +36,7 @@ export class CeDashboardCustomerDetails {
       if (e?.message) {
         this.error = e.message;
       } else {
-        this.error = __('Something went wrong', 'checkout_engine');
+        this.error = __('Something went wrong', 'surecart');
       }
       console.error(this.error);
     } finally {

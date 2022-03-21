@@ -62,7 +62,7 @@ import * as totals from '@blocks/totals';
 
 // Register block collection
 registerBlockCollection('checkout-engine', {
-	title: __('Checkout Engine', 'checkout_engine'),
+	title: __('Checkout Engine', 'surecart'),
 });
 
 const dashboardComponents = [
@@ -125,7 +125,7 @@ const registerBlock = (block) => {
 	registerBlockType(
 		{
 			...metadata,
-			text_domain: 'checkout_engine', // set our textdomain for everything.
+			text_domain: 'surecart', // set our textdomain for everything.
 		},
 		{
 			...settings,

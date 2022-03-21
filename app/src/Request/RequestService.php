@@ -92,8 +92,8 @@ class RequestService {
 			);
 
 			// filter args and endpoint.
-			$args     = apply_filters( 'checkout_engine/request/args', $args, $endpoint );
-			$endpoint = apply_filters( 'checkout_engine/request/endpoint', $endpoint, $args );
+			$args     = apply_filters( 'surecart/request/args', $args, $endpoint );
+			$endpoint = apply_filters( 'surecart/request/endpoint', $endpoint, $args );
 
 			// make url.
 			$url = trailingslashit( $this->base_url ) . untrailingslashit( $endpoint );
@@ -134,7 +134,7 @@ class RequestService {
 		}
 
 		// return response.
-		return apply_filters( 'checkout_engine/request/response', $response_body, $args, $endpoint );
+		return apply_filters( 'surecart/request/response', $response_body, $args, $endpoint );
 	}
 
 

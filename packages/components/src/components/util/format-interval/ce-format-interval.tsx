@@ -11,20 +11,20 @@ export class CeFormatNumber {
 
   @Prop() interval: string = '';
 
-  @Prop() every: string = __('every', 'checkout_engine');
+  @Prop() every: string = __('every', 'surecart');
 
-  @Prop() fallback: string = __('once', 'checkout_engine');
+  @Prop() fallback: string = __('once', 'surecart');
 
   render() {
     switch (this.interval) {
       case 'day':
-        return `${this.every} ${sprintf(_n('day', '%d days', this.value, 'checkout_engine'), this.value)}`;
+        return `${this.every} ${sprintf(_n('day', '%d days', this.value, 'surecart'), this.value)}`;
       case 'week':
-        return `${this.every} ${sprintf(_n('week', '%d weeks', this.value, 'checkout_engine'), this.value)}`;
+        return `${this.every} ${sprintf(_n('week', '%d weeks', this.value, 'surecart'), this.value)}`;
       case 'month':
-        return `${this.every} ${sprintf(_n('month', '%d months', this.value, 'checkout_engine'), this.value)}`;
+        return `${this.every} ${sprintf(_n('month', '%d months', this.value, 'surecart'), this.value)}`;
       case 'year':
-        return `${this.every} ${sprintf(_n('year', '%d years', this.value, 'checkout_engine'), this.value)}`;
+        return `${this.every} ${sprintf(_n('year', '%d years', this.value, 'surecart'), this.value)}`;
       default:
         return this.fallback;
     }

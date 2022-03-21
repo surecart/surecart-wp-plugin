@@ -90,7 +90,7 @@ export default ({ clientId }) => {
 			);
 
 			const title = sprintf(
-				__('New Tab %d', 'checkout_engine'),
+				__('New Tab %d', 'surecart'),
 				tabBlocks.length
 			);
 

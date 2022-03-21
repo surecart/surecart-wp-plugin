@@ -54,7 +54,7 @@ export class CeDownloadsList {
       await this.getItems();
     } catch (e) {
       console.error(this.error);
-      this.error = e?.message || __('Something went wrong', 'checkout_engine');
+      this.error = e?.message || __('Something went wrong', 'surecart');
     } finally {
       this.loading = false;
     }
@@ -66,7 +66,7 @@ export class CeDownloadsList {
       await this.getItems();
     } catch (e) {
       console.error(this.error);
-      this.error = e?.message || __('Something went wrong', 'checkout_engine');
+      this.error = e?.message || __('Something went wrong', 'surecart');
     } finally {
       this.busy = false;
     }
@@ -112,7 +112,7 @@ export class CeDownloadsList {
         purchases={this.purchases}
       >
         <span slot="heading">
-          <slot name="heading">{this.heading || __('Downloads', 'checkout_engine')}</slot>
+          <slot name="heading">{this.heading || __('Downloads', 'surecart')}</slot>
         </span>
 
         <ce-pagination

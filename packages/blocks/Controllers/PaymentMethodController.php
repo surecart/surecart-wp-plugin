@@ -89,15 +89,15 @@ class PaymentMethodController extends BaseController {
 		<ce-spacing style="--spacing: var(--ce-spacing-large)">
 			<ce-breadcrumbs>
 				<ce-breadcrumb href="<?php echo esc_url( add_query_arg( [ 'tab' => $this->getTab() ], \CheckoutEngine::pages()->url( 'dashboard' ) ) ); ?>">
-					<?php esc_html_e( 'Dashboard', 'checkout_engine' ); ?>
+					<?php esc_html_e( 'Dashboard', 'surecart' ); ?>
 				</ce-breadcrumb>
 				<ce-breadcrumb>
-					<?php esc_html_e( 'Add Payment Method', 'checkout_engine' ); ?>
+					<?php esc_html_e( 'Add Payment Method', 'surecart' ); ?>
 				</ce-breadcrumb>
 			</ce-breadcrumbs>
 
 			<ce-heading>
-				<?php esc_html_e( 'Add Payment Method', 'checkout_engine' ); ?>
+				<?php esc_html_e( 'Add Payment Method', 'surecart' ); ?>
 			</ce-heading>
 
 			<ce-payment-method-create

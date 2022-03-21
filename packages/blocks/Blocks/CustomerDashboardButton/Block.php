@@ -24,7 +24,7 @@ class Block extends BaseBlock {
 			<?php if ( ! empty( $attributes['show_icon'] ) ) : ?>
 				<ce-icon name="user" style="font-size: 18px" slot="prefix"></ce-icon>
 			<?php endif; ?>
-			<?php echo esc_html( $attributes['label'] ?? __( 'Dashboard', 'checkout_engine' ) ); ?>
+			<?php echo esc_html( $attributes['label'] ?? __( 'Dashboard', 'surecart' ) ); ?>
 		</ce-button>
 
 		<?php

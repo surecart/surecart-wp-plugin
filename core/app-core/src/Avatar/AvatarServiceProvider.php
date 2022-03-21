@@ -21,7 +21,7 @@ class AvatarServiceProvider implements ServiceProviderInterface {
 	 * {@inheritDoc}
 	 */
 	public function register( $container ) {
-		$container['checkout_engine_app_core.avatar.avatar'] = function() {
+		$container['surecart_app_core.avatar.avatar'] = function() {
 			return new Avatar();
 		};
 	}
@@ -30,6 +30,6 @@ class AvatarServiceProvider implements ServiceProviderInterface {
 	 * {@inheritDoc}
 	 */
 	public function bootstrap( $container ) {
-		$container['checkout_engine_app_core.avatar.avatar']->bootstrap();
+		$container['surecart_app_core.avatar.avatar']->bootstrap();
 	}
 }

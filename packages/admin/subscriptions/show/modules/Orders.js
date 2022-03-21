@@ -12,19 +12,19 @@ export default ({ order, loading }) => {
 		<div>
 			<DataTable
 				loading={loading}
-				title={__('Order', 'checkout_engine')}
+				title={__('Order', 'surecart')}
 				columns={{
 					amount: {
-						label: __('Amount', 'checkout_engine'),
+						label: __('Amount', 'surecart'),
 					},
 					status: {
-						label: __('Status', 'checkout_engine'),
+						label: __('Status', 'surecart'),
 					},
 					created: {
-						label: __('Created', 'checkout_engine'),
+						label: __('Created', 'surecart'),
 					},
 					number: {
-						label: __('Number', 'checkout_engine'),
+						label: __('Number', 'surecart'),
 					},
 					actions: {
 						width: '100px',

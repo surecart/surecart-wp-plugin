@@ -315,7 +315,7 @@ export class CeSelectDropdown {
                   </div>
                 );
               })}
-              {!this.loading && !this.filteredChoices.length && <div class="select__empty">{__('Nothing Found', 'checkout_engine')}</div>}
+              {!this.loading && !this.filteredChoices.length && <div class="select__empty">{__('Nothing Found', 'surecart')}</div>}
               <slot name="suffix"></slot>
             </ce-menu>
           </ce-dropdown>

@@ -37,7 +37,7 @@ class AppCore {
 	 * @return \CheckoutEngineAppCore\Assets\Assets
 	 */
 	public function assets() {
-		return $this->app->resolve( 'checkout_engine_app_core.assets.assets' );
+		return $this->app->resolve( 'surecart_app_core.assets.assets' );
 	}
 
 	/**
@@ -46,7 +46,7 @@ class AppCore {
 	 * @return \CheckoutEngineAppCore\Avatar\Avatar
 	 */
 	public function avatar() {
-		return $this->app->resolve( 'checkout_engine_app_core.avatar.avatar' );
+		return $this->app->resolve( 'surecart_app_core.avatar.avatar' );
 	}
 
 	/**
@@ -55,7 +55,7 @@ class AppCore {
 	 * @return \CheckoutEngineAppCore\Config\Config
 	 */
 	public function config() {
-		return $this->app->resolve( 'checkout_engine_app_core.config.config' );
+		return $this->app->resolve( 'surecart_app_core.config.config' );
 	}
 
 	/**
@@ -64,7 +64,7 @@ class AppCore {
 	 * @return \CheckoutEngineAppCore\Image\Image
 	 */
 	public function image() {
-		return $this->app->resolve( 'checkout_engine_app_core.image.image' );
+		return $this->app->resolve( 'surecart_app_core.image.image' );
 	}
 
 	/**
@@ -73,6 +73,6 @@ class AppCore {
 	 * @return \CheckoutEngineAppCore\Sidebar\Sidebar
 	 */
 	public function sidebar() {
-		return $this->app->resolve( 'checkout_engine_app_core.sidebar.sidebar' );
+		return $this->app->resolve( 'surecart_app_core.sidebar.sidebar' );
 	}
 }

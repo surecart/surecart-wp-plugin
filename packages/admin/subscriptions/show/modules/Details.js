@@ -18,11 +18,9 @@ export default ({ subscription, customer, product, loading }) => {
 			return (
 				<div>
 					<div>
-						<strong>
-							{sprintf(__('Lifetime', 'checkout_engine'))}
-						</strong>
+						<strong>{sprintf(__('Lifetime', 'surecart'))}</strong>
 					</div>
-					{__('Lifetime Subscription', 'checkout_engine')}
+					{__('Lifetime Subscription', 'surecart')}
 				</div>
 			);
 		}
@@ -34,9 +32,7 @@ export default ({ subscription, customer, product, loading }) => {
 			return (
 				<div>
 					<div>
-						<strong>
-							{sprintf(__('Cancels on', 'checkout_engine'))}
-						</strong>
+						<strong>{sprintf(__('Cancels on', 'surecart'))}</strong>
 					</div>
 					<CeFormatDate
 						date={subscription.current_period_end_at}
@@ -53,9 +49,7 @@ export default ({ subscription, customer, product, loading }) => {
 			return (
 				<div>
 					<div>
-						<strong>
-							{sprintf(__('Ended', 'checkout_engine'))}
-						</strong>
+						<strong>{sprintf(__('Ended', 'surecart'))}</strong>
 					</div>
 					<CeFormatDate
 						date={subscription.ended_at}
@@ -73,7 +67,7 @@ export default ({ subscription, customer, product, loading }) => {
 				<div>
 					<div>
 						<strong>
-							{sprintf(__('Trial ends on', 'checkout_engine'))}
+							{sprintf(__('Trial ends on', 'surecart'))}
 						</strong>
 					</div>
 					<CeFormatDate
@@ -93,9 +87,7 @@ export default ({ subscription, customer, product, loading }) => {
 			return (
 				<div>
 					<div>
-						<strong>
-							{sprintf(__('Renews on', 'checkout_engine'))}
-						</strong>
+						<strong>{sprintf(__('Renews on', 'surecart'))}</strong>
 					</div>
 					<CeFormatDate
 						date={subscription.current_period_end_at}
@@ -136,13 +128,13 @@ export default ({ subscription, customer, product, loading }) => {
 						<p>
 							{!!product &&
 								sprintf(
-									__('for %s', 'checkout_engine'),
+									__('for %s', 'surecart'),
 									product?.name
 								)}
 						</p>
 					</div>
 					{sprintf(
-						__('Created on %s', 'checkout_engine'),
+						__('Created on %s', 'surecart'),
 						formatTime(subscription.created_at)
 					)}
 				</div>
@@ -150,7 +142,7 @@ export default ({ subscription, customer, product, loading }) => {
 					<CeSubscriptionStatusBadge subscription={subscription} />
 					{!subscription?.live_mode && (
 						<ce-tag type="warning">
-							{__('Test Mode', 'checkout_engine')}{' '}
+							{__('Test Mode', 'surecart')}{' '}
 						</ce-tag>
 					)}
 				</div>
@@ -166,7 +158,7 @@ export default ({ subscription, customer, product, loading }) => {
 			>
 				<div>
 					<div>
-						<strong>{__('Started', 'checkout_engine')}</strong>
+						<strong>{__('Started', 'surecart')}</strong>
 					</div>
 					<CeFormatDate
 						date={subscription.current_period_start_at}

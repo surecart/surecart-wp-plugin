@@ -16,7 +16,7 @@ export default ({ order, charge, loading }) => {
 
 	return (
 		<Box
-			title={__('Order Details', 'checkout_engine')}
+			title={__('Order Details', 'surecart')}
 			footer={
 				!loading &&
 				!!charge && (
@@ -27,7 +27,7 @@ export default ({ order, charge, loading }) => {
 						}}
 					>
 						<span slot="title">
-							{__('Amount Paid', 'checkout_engine')}
+							{__('Amount Paid', 'surecart')}
 						</span>
 						<span slot="price">
 							<ce-format-number
@@ -71,7 +71,7 @@ export default ({ order, charge, loading }) => {
 
 					<hr />
 
-					<Definition title={__('Subtotal', 'checkout_engine')}>
+					<Definition title={__('Subtotal', 'surecart')}>
 						<ce-format-number
 							style={{
 								'font-weight': 'var(--ce-font-weight-semibold)',
@@ -82,7 +82,7 @@ export default ({ order, charge, loading }) => {
 							value={order?.subtotal_amount}
 						></ce-format-number>
 					</Definition>
-					<Definition title={__('Discounts', 'checkout_engine')}>
+					<Definition title={__('Discounts', 'surecart')}>
 						<ce-format-number
 							style={{
 								'font-weight': 'var(--ce-font-weight-semibold)',
@@ -102,9 +102,7 @@ export default ({ order, charge, loading }) => {
 							'--price-size': 'var(--ce-font-size-x-large)',
 						}}
 					>
-						<span slot="title">
-							{__('Total Due', 'checkout_engine')}
-						</span>
+						<span slot="title">{__('Total Due', 'surecart')}</span>
 						<span slot="price">
 							<ce-format-number
 								type="currency"
@@ -122,7 +120,7 @@ export default ({ order, charge, loading }) => {
 							}}
 						>
 							<span slot="description">
-								{__('Refunded', 'checkout_engine')}
+								{__('Refunded', 'surecart')}
 							</span>
 							<span slot="price">
 								-

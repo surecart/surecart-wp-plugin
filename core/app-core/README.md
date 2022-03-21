@@ -1,3 +1,3 @@
 # CheckoutEngine App Core
 
-Forked from http://checkout_engine.com/.
+Forked from http://surecart.com/.

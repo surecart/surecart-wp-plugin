@@ -28,7 +28,7 @@ class Webhook extends Model {
 	 * @return string
 	 */
 	protected function getListenerUrl() {
-		return get_site_url( null, '/checkout_engine/webhooks', is_ssl() ? 'https' : 'http' );
+		return get_site_url( null, '/surecart/webhooks', is_ssl() ? 'https' : 'http' );
 	}
 
 	/**

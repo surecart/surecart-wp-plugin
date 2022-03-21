@@ -20,7 +20,7 @@ trait HasBlockTheme {
 		$url = trailingslashit( \CheckoutEngine::core()->assets()->getUrl() ) . $path;
 
 		wp_register_style(
-			"checkout_engine/themes/$slug",
+			"surecart/themes/$slug",
 			$url,
 			false,
 			$this->generateFileVersion( $url )
@@ -31,7 +31,7 @@ trait HasBlockTheme {
 			[
 				'name'         => $slug,
 				'label'        => $name,
-				'style_handle' => "checkout_engine/themes/$slug",
+				'style_handle' => "surecart/themes/$slug",
 			]
 		);
 	}

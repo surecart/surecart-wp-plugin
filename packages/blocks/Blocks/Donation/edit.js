@@ -156,7 +156,7 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 					</PanelRow>
 					<PanelRow>
 						<CePriceInput
-							label={__('Default Amount', 'checkout_engine')}
+							label={__('Default Amount', 'surecart')}
 							currency={currency}
 							value={default_amount}
 							onCeChange={(e) =>
@@ -185,16 +185,13 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 							size="small"
 							value="ad_hoc"
 						>
-							{__('Other', 'checkout_engine')}
+							{__('Other', 'surecart')}
 						</ce-choice>
 					)}
 				</CeDonationChoices>
 
 				{isSelected && (
-					<Tooltip
-						text={__('Add Amount', 'checkout_engine')}
-						delay={0}
-					>
+					<Tooltip text={__('Add Amount', 'surecart')} delay={0}>
 						<div
 							onClick={() => {
 								setShowModal(true);
@@ -227,10 +224,7 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 
 				{showModal && (
 					<Modal
-						title={__(
-							'Add Suggested Donation Amount',
-							'checkout_engine'
-						)}
+						title={__('Add Suggested Donation Amount', 'surecart')}
 						css={css`
 							max-width: 500px !important;
 						`}
@@ -239,7 +233,7 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 					>
 						<CeForm onCeSubmit={onNewAmount}>
 							<CePriceInput
-								label={__('Amount', 'checkout_engine')}
+								label={__('Amount', 'surecart')}
 								required
 								currency={currency}
 								ref={amountInput}
@@ -248,7 +242,7 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 								name="amount"
 							/>
 							<CeButton type="primary" submit>
-								{__('Add  Amount', 'checkout_engine')}
+								{__('Add  Amount', 'surecart')}
 							</CeButton>
 						</CeForm>
 					</Modal>

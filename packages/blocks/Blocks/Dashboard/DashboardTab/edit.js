@@ -58,7 +58,7 @@ export default ({ attributes, setAttributes }) => {
 					<PanelRow>
 						<Flex>
 							<BaseControl.VisualLabel>
-								{__('Tab Icon', 'checkout_engine')}
+								{__('Tab Icon', 'surecart')}
 							</BaseControl.VisualLabel>
 							<div
 								css={css`
@@ -79,10 +79,7 @@ export default ({ attributes, setAttributes }) => {
 											}}
 										></ce-icon>
 									}
-									label={__(
-										'Select an icon',
-										'checkout_engine'
-									)}
+									label={__('Select an icon', 'surecart')}
 									controls={Object.keys(
 										feather.icons || {}
 									).map((icon) => {

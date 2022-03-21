@@ -14,7 +14,7 @@ export default ({ customer, loading }) => {
 
 	return (
 		<Box
-			title={__('Customer', 'checkout_engine')}
+			title={__('Customer', 'surecart')}
 			footer={
 				<div>
 					<CeButton
@@ -24,7 +24,7 @@ export default ({ customer, loading }) => {
 							id: customer?.id,
 						})}
 					>
-						{__('Edit Customer', 'checkout_engine')}
+						{__('Edit Customer', 'surecart')}
 					</CeButton>
 				</div>
 			}

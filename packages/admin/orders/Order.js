@@ -67,11 +67,11 @@ export default () => {
 			onSubmit={onSubmit}
 			onInvalid={onInvalid}
 			backUrl={'admin.php?page=ce-orders'}
-			backText={__('Back to All Orders', 'checkout_engine')}
+			backText={__('Back to All Orders', 'surecart')}
 			title={
 				id
-					? __('Edit Order', 'checkout_engine')
-					: __('Create Order', 'checkout_engine')
+					? __('Edit Order', 'surecart')
+					: __('Create Order', 'surecart')
 			}
 			notices={snackbarNotices}
 			removeNotice={removeSnackbarNotice}

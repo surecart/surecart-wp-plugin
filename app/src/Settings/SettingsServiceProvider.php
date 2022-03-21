@@ -16,7 +16,7 @@ class SettingsServiceProvider implements ServiceProviderInterface {
 		$app = $container[ CHECKOUT_ENGINE_APPLICATION_KEY ];
 
 		// Service for registering a setting.
-		$container['checkout_engine.settings'] = function () {
+		$container['surecart.settings'] = function () {
 			return SettingsService::getInstance();
 		};
 
@@ -24,7 +24,7 @@ class SettingsServiceProvider implements ServiceProviderInterface {
 		$app->alias(
 			'register_setting',
 			function () use ( $container ) {
-				return call_user_func_array( [ $container['checkout_engine.settings'], 'register' ], func_get_args() );
+				return call_user_func_array( [ $container['surecart.settings'], 'register' ], func_get_args() );
 			}
 		);
 
@@ -32,7 +32,7 @@ class SettingsServiceProvider implements ServiceProviderInterface {
 		$app->alias(
 			'get_registered_settings',
 			function () use ( $container ) {
-				return call_user_func_array( [ $container['checkout_engine.settings'], 'getRegisteredSettings' ], func_get_args() );
+				return call_user_func_array( [ $container['surecart.settings'], 'getRegisteredSettings' ], func_get_args() );
 			}
 		);
 

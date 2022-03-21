@@ -23,13 +23,13 @@ class NonceMiddleware {
 		$nonce = $request->query( 'nonce' ) ?? $request->body( 'nonce' );
 
 		if ( empty( $nonce ) ) {
-			wp_die( esc_html__( 'Something is wrong with the provided link.', 'checkout_engine' ) );
+			wp_die( esc_html__( 'Something is wrong with the provided link.', 'surecart' ) );
 			exit;
 		}
 
 		// check nonce.
 		if ( ! wp_verify_nonce( $nonce, $nonce_name ) ) {
-			wp_die( esc_html__( 'Your session expired - please try again.', 'checkout_engine' ) );
+			wp_die( esc_html__( 'Your session expired - please try again.', 'surecart' ) );
 			exit;
 		}
 

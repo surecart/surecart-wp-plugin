@@ -36,7 +36,7 @@ export default ({ subscriptionId }) => {
 		<div>
 			<DataTable
 				loading={isLoading}
-				title={__('Invoices', 'checkout_engine')}
+				title={__('Invoices', 'surecart')}
 				footer={
 					<Flex justify="space-between">
 						<div>
@@ -47,23 +47,23 @@ export default ({ subscriptionId }) => {
 							page={page}
 							totalPages={pagination?.total_pages}
 							loading={isFetching}
-							button_text={__('Load More', 'checkout_engine')}
+							button_text={__('Load More', 'surecart')}
 							onClick={() => setPage(page + 1)}
 						/>
 					</Flex>
 				}
 				columns={{
 					amount: {
-						label: __('Amount', 'checkout_engine'),
+						label: __('Amount', 'surecart'),
 					},
 					status: {
-						label: __('Status', 'checkout_engine'),
+						label: __('Status', 'surecart'),
 					},
 					created: {
-						label: __('Created', 'checkout_engine'),
+						label: __('Created', 'surecart'),
 					},
 					number: {
-						label: __('Number', 'checkout_engine'),
+						label: __('Number', 'surecart'),
 					},
 					actions: {
 						width: '100px',

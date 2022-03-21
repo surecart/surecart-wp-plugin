@@ -25,7 +25,7 @@ export default ({ subscription, updateSubscription, loading }) => {
 	}, [subscription?.customer]);
 
 	return (
-		<Box title={__('Payment Method', 'checkout_engine')} loading={loading}>
+		<Box title={__('Payment Method', 'surecart')} loading={loading}>
 			<CeChoices label={__('Choose a payment method')}>
 				<div>
 					{(payment_methods || []).map((method) => {

@@ -186,16 +186,16 @@ export default function edit({ clientId, attributes, setAttributes }) {
 	return (
 		<Fragment>
 			<InspectorControls>
-				<PanelBody title={__('Form Template', 'checkout_engine')}>
+				<PanelBody title={__('Form Template', 'surecart')}>
 					<PanelRow>
 						<div>
 							<Button isPrimary onClick={changeTemplate}>
-								{__('Change Template', 'checkout_engine')}
+								{__('Change Template', 'surecart')}
 							</Button>
 						</div>
 					</PanelRow>
 				</PanelBody>
-				<PanelBody title={__('Dimensions', 'checkout_engine')}>
+				<PanelBody title={__('Dimensions', 'surecart')}>
 					<PanelRow>
 						<UnitControl
 							label={__('Row Gap')}
@@ -203,7 +203,7 @@ export default function edit({ clientId, attributes, setAttributes }) {
 							value={gap}
 							help={__(
 								'The this is the space between the rows of form elements.',
-								'checkout_engine'
+								'surecart'
 							)}
 							units={[
 								{ value: 'px', label: 'px', default: 0 },
@@ -262,7 +262,7 @@ export default function edit({ clientId, attributes, setAttributes }) {
 									);
 								`}
 							>
-								{__('Form', 'checkout_engine')}
+								{__('Form', 'surecart')}
 							</div>
 							<div
 								css={css`

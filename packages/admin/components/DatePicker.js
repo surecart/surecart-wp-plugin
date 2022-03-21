@@ -50,7 +50,7 @@ export default (props) => {
 						year="numeric"
 					/>
 				) : (
-					placeholder || __('Select date', 'checkout_engine')
+					placeholder || __('Select date', 'surecart')
 				)}
 			</CeButton>
 
@@ -86,10 +86,10 @@ export default (props) => {
 								toggleVisible();
 							}}
 						>
-							{__('Choose', 'checkout_engine')}
+							{__('Choose', 'surecart')}
 						</CeButton>
 						<CeButton onClick={toggleVisible}>
-							{__('Cancel', 'checkout_engine')}
+							{__('Cancel', 'surecart')}
 						</CeButton>
 					</div>
 				</Popover>

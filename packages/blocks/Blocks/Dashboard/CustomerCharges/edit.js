@@ -7,10 +7,10 @@ export default ({ attributes, setAttributes }) => {
 	return (
 		<div>
 			<InspectorControls>
-				<PanelBody title={__('Attributes', 'checkout_engine')}>
+				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<RangeControl
-							label={__('Per Page', 'checkout_engine')}
+							label={__('Per Page', 'surecart')}
 							value={per_page}
 							onChange={(per_page) => setAttributes({ per_page })}
 							min={1}
@@ -26,16 +26,16 @@ export default ({ attributes, setAttributes }) => {
 			>
 				<ce-table>
 					<ce-table-cell slot="head">
-						{__('Number', 'checkout_engine')}
+						{__('Number', 'surecart')}
 					</ce-table-cell>
 					<ce-table-cell slot="head">
-						{__('Items', 'checkout_engine')}
+						{__('Items', 'surecart')}
 					</ce-table-cell>
 					<ce-table-cell slot="head">
-						{__('Total', 'checkout_engine')}
+						{__('Total', 'surecart')}
 					</ce-table-cell>
 					<ce-table-cell slot="head" style={{ width: '100px' }}>
-						{__('Status', 'checkout_engine')}
+						{__('Status', 'surecart')}
 					</ce-table-cell>
 					<ce-table-cell
 						slot="head"
@@ -67,7 +67,7 @@ export default ({ attributes, setAttributes }) => {
 											'%s item',
 											'%s items',
 											2,
-											'checkout_engine'
+											'surecart'
 										),
 										2
 									)}
@@ -85,7 +85,7 @@ export default ({ attributes, setAttributes }) => {
 							</ce-table-cell>
 							<ce-table-cell>
 								<ce-button size="small">
-									{__('View', 'checkout_engine')}
+									{__('View', 'surecart')}
 								</ce-button>
 							</ce-table-cell>
 						</ce-table-row>
@@ -103,16 +103,12 @@ export default ({ attributes, setAttributes }) => {
 							'--color': 'var(--ce-color-gray-500)',
 						}}
 					>
-						{__('Showing 1 to 10 of 20 results', 'checkout_engine')}
+						{__('Showing 1 to 10 of 20 results', 'surecart')}
 					</ce-text>
 
 					<ce-flex>
-						<ce-button>
-							{__('Prev Page', 'checkout_engine')}
-						</ce-button>
-						<ce-button>
-							{__('Next Page', 'checkout_engine')}
-						</ce-button>
+						<ce-button>{__('Prev Page', 'surecart')}</ce-button>
+						<ce-button>{__('Next Page', 'surecart')}</ce-button>
 					</ce-flex>
 				</ce-flex>
 			</ce-flex>

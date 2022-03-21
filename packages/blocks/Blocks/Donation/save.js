@@ -14,7 +14,7 @@ export default ({ attributes }) => {
 			<InnerBlocks.Content />
 			{custom_amount && (
 				<ce-choice show-control="false" size="small" value="ad_hoc">
-					{__('Other', 'checkout_engine')}
+					{__('Other', 'surecart')}
 				</ce-choice>
 			)}
 		</ce-donation-choices>

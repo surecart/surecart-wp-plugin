@@ -30,16 +30,16 @@ export default ({ coupon, loading, updateCoupon }) => {
 	const translateDuration = (amount) => {
 		switch (amount) {
 			case 'once':
-				return __('Once', 'checkout_engine');
+				return __('Once', 'surecart');
 			case 'repeating':
-				return __('Repeating', 'checkout_engine');
+				return __('Repeating', 'surecart');
 			default:
-				return __('Forever', 'checkout_engine');
+				return __('Forever', 'surecart');
 		}
 	};
 
 	return (
-		<Box title={__('Amount', 'checkout_engine')} loading={loading}>
+		<Box title={__('Amount', 'surecart')} loading={loading}>
 			<div
 				css={css`
 					display: grid;
@@ -47,14 +47,14 @@ export default ({ coupon, loading, updateCoupon }) => {
 				`}
 			>
 				<CeRadioGroup
-					label={__('Choose a type', 'checkout_engine')}
+					label={__('Choose a type', 'surecart')}
 					onCeChange={(e) => setType(e.target.value)}
 				>
 					<CeRadio value="percentage" checked={type === 'percentage'}>
-						{__('Percentage Discount', 'checkout_engine')}
+						{__('Percentage Discount', 'surecart')}
 					</CeRadio>
 					<CeRadio value="fixed" checked={type === 'fixed'}>
-						{__('Fixed Discount', 'checkout_engine')}
+						{__('Fixed Discount', 'surecart')}
 					</CeRadio>
 				</CeRadioGroup>
 
@@ -96,9 +96,7 @@ export default ({ coupon, loading, updateCoupon }) => {
 					/>
 				)}
 
-				<CeFormControl
-					label={__('Discount Duration', 'checkout_engine')}
-				>
+				<CeFormControl label={__('Discount Duration', 'surecart')}>
 					<div>
 						<CeDropdown
 							slot="suffix"
@@ -118,14 +116,14 @@ export default ({ coupon, loading, updateCoupon }) => {
 										updateCoupon({ duration: 'forever' })
 									}
 								>
-									{__('Forever', 'checkout_engine')}
+									{__('Forever', 'surecart')}
 								</CeMenuItem>
 								<CeMenuItem
 									onClick={() =>
 										updateCoupon({ duration: 'once' })
 									}
 								>
-									{__('Once', 'checkout_engine')}
+									{__('Once', 'surecart')}
 								</CeMenuItem>
 								<CeMenuItem
 									className="ce-discount-menu-repeating"
@@ -135,7 +133,7 @@ export default ({ coupon, loading, updateCoupon }) => {
 										})
 									}
 								>
-									{__('Repeating', 'checkout_engine')}
+									{__('Repeating', 'surecart')}
 								</CeMenuItem>
 							</CeMenu>
 						</CeDropdown>
@@ -144,7 +142,7 @@ export default ({ coupon, loading, updateCoupon }) => {
 
 				{coupon?.duration === 'repeating' && (
 					<CeInput
-						label={__('Number of months', 'checkout_engine')}
+						label={__('Number of months', 'surecart')}
 						className="ce-duration-in-months"
 						value={coupon?.duration_in_months || null}
 						onCeChange={(e) => {

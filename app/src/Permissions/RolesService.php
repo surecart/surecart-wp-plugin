@@ -23,7 +23,7 @@ class RolesService {
 	public function addRoles() {
 		add_role(
 			'ce_shop_manager',
-			__( 'CheckoutEngine Shop Manager', 'checkout_engine' ),
+			__( 'CheckoutEngine Shop Manager', 'surecart' ),
 			[
 				'read'                   => true,
 				'edit_posts'             => true,
@@ -58,7 +58,7 @@ class RolesService {
 
 		add_role(
 			'ce_shop_accountant',
-			__( 'CheckoutEngine Accountant', 'checkout_engine' ),
+			__( 'CheckoutEngine Accountant', 'surecart' ),
 			[
 				'read'         => true,
 				'edit_posts'   => false,
@@ -68,7 +68,7 @@ class RolesService {
 
 		add_role(
 			'ce_shop_worker',
-			__( 'CheckoutEngine Shop Worker', 'checkout_engine' ),
+			__( 'CheckoutEngine Shop Worker', 'surecart' ),
 			[
 				'read'         => true,
 				'edit_posts'   => false,

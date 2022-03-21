@@ -35,13 +35,13 @@ export class CeOrderStatusBadge {
   getText() {
     switch (this.status) {
       case 'draft':
-        return __('Draft', 'checkout_engine');
+        return __('Draft', 'surecart');
       case 'finalized':
-        return __('Pending Payment', 'checkout_engine');
+        return __('Pending Payment', 'surecart');
       case 'paid':
-        return __('Paid', 'checkout_engine');
+        return __('Paid', 'surecart');
       case 'completed':
-        return __('Completed', 'checkout_engine');
+        return __('Completed', 'surecart');
       default:
         return this.status;
     }

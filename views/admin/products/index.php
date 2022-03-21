@@ -26,7 +26,7 @@
 	<?php \CheckoutEngine::render(
 		'layouts/partials/admin-index-header',
 		[
-			'title'    => __( 'Products', 'checkout_engine' ),
+			'title'    => __( 'Products', 'surecart' ),
 			'new_link' => \CheckoutEngine::getUrl()->edit( 'product' ),
 		]
 	); ?>

@@ -4,7 +4,7 @@ declare global {
       apiFetch: any;
       blocks: any;
     };
-    checkout_engine: {
+    surecart: {
       root_url: string;
       nonce: string;
       nonce_endpoint: string;

@@ -99,11 +99,11 @@ export default () => {
 				action: 'show',
 				id: id,
 			})}
-			backText={__('Cancel Editing', 'checkout_engine')}
+			backText={__('Cancel Editing', 'surecart')}
 			title={
 				id
-					? __('Update Subscription', 'checkout_engine')
-					: __('Create Subscription', 'checkout_engine')
+					? __('Update Subscription', 'surecart')
+					: __('Create Subscription', 'surecart')
 			}
 			sidebar={
 				<Sidebar subscription={subscription} loading={isLoading} />
@@ -131,7 +131,7 @@ export default () => {
 								setSkipProration(e.target.checked)
 							}
 						>
-							{__('Skip Proration', 'checkout_engine')}
+							{__('Skip Proration', 'surecart')}
 						</CeSwitch>
 						<CeButton
 							className={'ce-schedule-model'}
@@ -145,7 +145,7 @@ export default () => {
 								console.log({ update_behavior });
 							}}
 						>
-							{__('Schedule for', 'checkout_engine')}
+							{__('Schedule for', 'surecart')}
 							{'\u00A0'}
 							<CeFormatDate
 								date={subscription?.current_period_end_at}
@@ -166,7 +166,7 @@ export default () => {
 								update_behavior = 'immediate';
 							}}
 						>
-							{__('Update Now', 'checkout_engine')}
+							{__('Update Now', 'surecart')}
 						</CeButton>
 					</div>
 				)

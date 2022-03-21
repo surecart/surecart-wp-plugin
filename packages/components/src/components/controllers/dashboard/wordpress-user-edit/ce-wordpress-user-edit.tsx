@@ -17,7 +17,7 @@ export class CeWordPressUserEdit {
   @State() error: string;
 
   renderEmpty() {
-    return <slot name="empty">{__('User not found.', 'checkout_engine')}</slot>;
+    return <slot name="empty">{__('User not found.', 'surecart')}</slot>;
   }
 
   async handleSubmit(e) {
@@ -40,7 +40,7 @@ export class CeWordPressUserEdit {
         this.loading = false;
       }
     } catch (e) {
-      this.error = e?.message || __('Something went wrong', 'checkout_engine');
+      this.error = e?.message || __('Something went wrong', 'surecart');
       this.loading = false;
     }
   }
@@ -48,23 +48,23 @@ export class CeWordPressUserEdit {
   render() {
     return (
       <ce-dashboard-module class="account-details" error={this.error}>
-        <span slot="heading">{this.heading || __('Account Details', 'checkout_engine')} </span>
+        <span slot="heading">{this.heading || __('Account Details', 'surecart')} </span>
 
         <ce-card>
           <ce-form onCeFormSubmit={e => this.handleSubmit(e)}>
-            <ce-input label={__('Billing Email', 'checkout_engine')} name="email" value={this.user?.email} required />
+            <ce-input label={__('Billing Email', 'surecart')} name="email" value={this.user?.email} required />
             <ce-columns style={{ '--ce-column-spacing': 'var(--ce-spacing-medium)' }}>
               <ce-column>
-                <ce-input label={__('First Name', 'checkout_engine')} name="first_name" value={this.user?.first_name} />
+                <ce-input label={__('First Name', 'surecart')} name="first_name" value={this.user?.first_name} />
               </ce-column>
               <ce-column>
-                <ce-input label={__('Last Name', 'checkout_engine')} name="last_name" value={this.user?.last_name} />
+                <ce-input label={__('Last Name', 'surecart')} name="last_name" value={this.user?.last_name} />
               </ce-column>
             </ce-columns>
-            <ce-input label={__('Display Name', 'checkout_engine')} name="name" value={this.user?.display_name} />
+            <ce-input label={__('Display Name', 'surecart')} name="name" value={this.user?.display_name} />
             <div>
               <ce-button type="primary" full submit>
-                {__('Save', 'checkout_engine')}
+                {__('Save', 'surecart')}
               </ce-button>
             </div>
           </ce-form>

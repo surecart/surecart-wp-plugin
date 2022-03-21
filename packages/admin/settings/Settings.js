@@ -120,7 +120,7 @@ export default () => {
 							`}
 						>
 							<CeButton type="primary" submit>
-								{__('Save Settings', 'checkout_engine')}
+								{__('Save Settings', 'surecart')}
 							</CeButton>
 						</FlexItem>
 					</Flex>

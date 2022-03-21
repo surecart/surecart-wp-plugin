@@ -94,16 +94,14 @@ export default () => {
 						});
 					}}
 				>
-					{__("Don't Cancel", 'checkout_engine')}
+					{__("Don't Cancel", 'surecart')}
 				</CeMenuItem>
 			);
 		}
 
 		return (
 			<Cancel onCancel={() => setSaving(true)}>
-				<CeMenuItem>
-					{__('Cancel Subscription', 'checkout_engine')}
-				</CeMenuItem>
+				<CeMenuItem>{__('Cancel Subscription', 'surecart')}</CeMenuItem>
 			</Cancel>
 		);
 	};
@@ -112,8 +110,8 @@ export default () => {
 		<Template
 			pageModelName={'subscriptions'}
 			backUrl={'admin.php?page=ce-subscriptions'}
-			backText={__('Back to all subscriptions.', 'checkout_engine')}
-			title={__('Subscription', 'checkout_engine')}
+			backText={__('Back to all subscriptions.', 'surecart')}
+			title={__('Subscription', 'surecart')}
 			sidebar={<Sidebar loading={isLoading} />}
 			button={
 				isLoading ? (
@@ -127,7 +125,7 @@ export default () => {
 				) : (
 					<CeDropdown position="bottom-right">
 						<CeButton type="primary" slot="trigger" caret>
-							{__('Actions', 'checkout_engine')}
+							{__('Actions', 'surecart')}
 						</CeButton>
 						<CeMenu>
 							{!!Object.keys(subscription?.pending_update || {})
@@ -139,7 +137,7 @@ export default () => {
 									<CeMenuItem>
 										{__(
 											'Manage Pending Update',
-											'checkout_engine'
+											'surecart'
 										)}
 									</CeMenuItem>
 								</UpdatePending>
@@ -153,10 +151,7 @@ export default () => {
 											id: id,
 										})}
 									>
-										{__(
-											'Update Subscription',
-											'checkout_engine'
-										)}
+										{__('Update Subscription', 'surecart')}
 									</CeMenuItem>
 								)
 							)}

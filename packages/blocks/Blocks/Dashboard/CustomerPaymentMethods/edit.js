@@ -14,10 +14,10 @@ export default ({ attributes, setAttributes }) => {
 	return (
 		<Fragment>
 			<InspectorControls>
-				<PanelBody title={__('Attributes', 'checkout_engine')}>
+				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<TextControl
-							label={__('Title', 'checkout_engine')}
+							label={__('Title', 'surecart')}
 							value={title}
 							onChange={(title) => setAttributes({ title })}
 						/>
@@ -39,11 +39,11 @@ export default ({ attributes, setAttributes }) => {
 				<ce-flex slot="end">
 					<ce-button type="link">
 						<ce-icon name="clock" slot="prefix"></ce-icon>
-						{__('Payment History', 'checkout_engine')}
+						{__('Payment History', 'surecart')}
 					</ce-button>
 					<ce-button type="link">
 						<ce-icon name="plus" slot="prefix"></ce-icon>
-						{__('Add', 'checkout_engine')}
+						{__('Add', 'surecart')}
 					</ce-button>
 				</ce-flex>
 
@@ -73,11 +73,11 @@ export default ({ attributes, setAttributes }) => {
 								<span>1234</span>
 							</ce-flex>
 
-							<div>{__('Exp.', 'checkout_engine')} 11/29</div>
+							<div>{__('Exp.', 'surecart')} 11/29</div>
 
 							<div>
 								<ce-tag type="info">
-									{__('Default', 'checkout_engine')}
+									{__('Default', 'surecart')}
 								</ce-tag>
 							</div>
 
@@ -112,7 +112,7 @@ export default ({ attributes, setAttributes }) => {
 								<span>1234</span>
 							</ce-flex>
 
-							<div>{__('Exp.', 'checkout_engine')} 11/29</div>
+							<div>{__('Exp.', 'surecart')} 11/29</div>
 
 							<div></div>
 

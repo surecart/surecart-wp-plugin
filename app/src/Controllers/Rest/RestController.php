@@ -22,7 +22,7 @@ abstract class RestController {
 	 * @return \CheckoutEngine\Models\Model
 	 */
 	protected function middleware( \CheckoutEngine\Models\Model $class, \WP_REST_Request $request ) {
-		return apply_filters( 'checkout_engine/request/model', $class, $request );
+		return apply_filters( 'surecart/request/model', $class, $request );
 	}
 
 	/**

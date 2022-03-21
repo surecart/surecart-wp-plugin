@@ -22,7 +22,7 @@ export default (purchase) => {
 					<span>Qty: {quantity}</span>{' '}
 					{revoked && (
 						<ce-tag size="small" type="danger">
-							{__('Revoked', 'checkout_engine')}
+							{__('Revoked', 'surecart')}
 						</ce-tag>
 					)}
 				</span>

@@ -46,7 +46,7 @@ export class CeLineItemTotal {
             </span>
           </ce-line-item>
           <ce-line-item style={{ '--price-size': 'var(--ce-font-size-x-large)' }}>
-            <span slot="title">{__('Total Due Today', 'checkout_engine')}</span>
+            <span slot="title">{__('Total Due Today', 'surecart')}</span>
             <span slot="description">
               <slot name="description" />
             </span>

@@ -32,13 +32,13 @@ export default ({ subscription }) => {
 	return (
 		<DataTable
 			loading={isLoading}
-			title={__('Pending Update', 'checkout_engine')}
+			title={__('Pending Update', 'surecart')}
 			columns={{
 				product: {
-					label: __('Product', 'checkout_engine'),
+					label: __('Product', 'surecart'),
 				},
 				quantity: {
-					label: __('Qty', 'checkout_engine'),
+					label: __('Qty', 'surecart'),
 					width: '75px',
 				},
 				schedule: {
@@ -49,7 +49,7 @@ export default ({ subscription }) => {
 								justify-content: flex-end;
 							`}
 						>
-							{__('Scheduled', 'checkout_engine')}
+							{__('Scheduled', 'surecart')}
 						</div>
 					),
 				},
@@ -82,7 +82,7 @@ export default ({ subscription }) => {
 						pending_update?.quantity || subscription?.quantity,
 					schedule: (
 						<div>
-							{sprintf(__('Scheduled', 'checkout_engine'))}
+							{sprintf(__('Scheduled', 'surecart'))}
 							<div
 								css={css`
 									opacity: 0.5;

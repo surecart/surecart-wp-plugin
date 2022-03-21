@@ -28,7 +28,7 @@ export default ({ product, updateProduct, loading }) => {
 
 	const onRemove = async () => {
 		const r = confirm(
-			__('Are you sure you want to remove this image?', 'checkout_engine')
+			__('Are you sure you want to remove this image?', 'surecart')
 		);
 		if (!r) return;
 		try {
@@ -134,10 +134,10 @@ export default ({ product, updateProduct, loading }) => {
 							accept="image/*"
 							onChange={uploadImage}
 						>
-							{__('Replace', 'checkout_engine')}
+							{__('Replace', 'surecart')}
 						</FormFileUpload>
 						<Button isTertiary onClick={onRemove}>
-							{__('Remove', 'checkout_engine')}
+							{__('Remove', 'surecart')}
 						</Button>
 					</div>
 				</div>
@@ -158,14 +158,14 @@ export default ({ product, updateProduct, loading }) => {
 			>
 				{__(
 					'Drag and drop an image here or click to select a file.',
-					'checkout_engine'
+					'surecart'
 				)}
 				<FormFileUpload
 					isPrimary
 					accept="image/*"
 					onChange={uploadImage}
 				>
-					{__('Upload File', 'checkout_engine')}
+					{__('Upload File', 'surecart')}
 				</FormFileUpload>
 				<DropZone onFilesDrop={uploadImage} />
 			</div>
@@ -173,9 +173,9 @@ export default ({ product, updateProduct, loading }) => {
 	};
 
 	return (
-		<Box title={__('Product Image', 'checkout_engine')} loading={loading}>
+		<Box title={__('Product Image', 'surecart')} loading={loading}>
 			<CeFormControl
-				label={__('Product Image', 'checkout_engine')}
+				label={__('Product Image', 'surecart')}
 				showLabel={false}
 			>
 				{renderContent()}

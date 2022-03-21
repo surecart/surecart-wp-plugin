@@ -17,7 +17,7 @@ export class CeWordPressPasswordEdit {
   @State() error: string;
 
   renderEmpty() {
-    return <slot name="empty">{__('User not found.', 'checkout_engine')}</slot>;
+    return <slot name="empty">{__('User not found.', 'surecart')}</slot>;
   }
 
   async handleSubmit(e) {
@@ -26,7 +26,7 @@ export class CeWordPressPasswordEdit {
     try {
       const { password, password_confirm } = await e.target.getFormJson();
       if (password !== password_confirm) {
-        throw { message: __('Passwords do not match.', 'checkout_engine') };
+        throw { message: __('Passwords do not match.', 'surecart') };
       }
       await apiFetch({
         path: `wp/v2/users/me`,
@@ -41,7 +41,7 @@ export class CeWordPressPasswordEdit {
         this.loading = false;
       }
     } catch (e) {
-      this.error = e?.message || __('Something went wrong', 'checkout_engine');
+      this.error = e?.message || __('Something went wrong', 'surecart');
       this.loading = false;
     }
   }
@@ -49,15 +49,15 @@ export class CeWordPressPasswordEdit {
   render() {
     return (
       <ce-dashboard-module class="customer-details" error={this.error}>
-        <span slot="heading">{this.heading || __('Update Password', 'checkout_engine')} </span>
+        <span slot="heading">{this.heading || __('Update Password', 'surecart')} </span>
 
         <ce-card>
           <ce-form onCeFormSubmit={e => this.handleSubmit(e)}>
-            <ce-input label={__('New Password', 'checkout_engine')} name="password" type="password" required />
-            <ce-input label={__('Confirm New Password', 'checkout_engine')} name="password_confirm" type="password" required />
+            <ce-input label={__('New Password', 'surecart')} name="password" type="password" required />
+            <ce-input label={__('Confirm New Password', 'surecart')} name="password_confirm" type="password" required />
             <div>
               <ce-button type="primary" full submit>
-                {__('Update Password', 'checkout_engine')}
+                {__('Update Password', 'surecart')}
               </ce-button>
             </div>
           </ce-form>

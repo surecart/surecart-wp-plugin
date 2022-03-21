@@ -76,7 +76,7 @@ export class CeCustomerEdit {
         this.loading = false;
       }
     } catch (e) {
-      this.error = e?.message || __('Something went wrong', 'checkout_engine');
+      this.error = e?.message || __('Something went wrong', 'surecart');
       this.loading = false;
     }
   }
@@ -85,29 +85,29 @@ export class CeCustomerEdit {
     return (
       <ce-dashboard-module class="customer-edit" error={this.error}>
         <span slot="heading">
-          {this.heading || __('Update Billing Details', 'checkout_engine')}{' '}
+          {this.heading || __('Update Billing Details', 'surecart')}{' '}
           {!this?.customer?.live_mode === false && (
             <ce-tag type="warning" size="small">
-              {__('Test', 'checkout_engine')}
+              {__('Test', 'surecart')}
             </ce-tag>
           )}
         </span>
 
         <ce-card>
           <ce-form onCeFormSubmit={e => this.handleSubmit(e)}>
-            <ce-input label={__('Billing Email', 'checkout_engine')} name="email" value={this.customer?.email} required />
+            <ce-input label={__('Billing Email', 'surecart')} name="email" value={this.customer?.email} required />
 
             <ce-columns style={{ '--ce-column-spacing': 'var(--ce-spacing-medium)' }}>
               <ce-column>
-                <ce-input label={__('Name', 'checkout_engine')} name="name" value={this.customer?.name} />
+                <ce-input label={__('Name', 'surecart')} name="name" value={this.customer?.name} />
               </ce-column>
               <ce-column>
-                <ce-input label={__('Phone', 'checkout_engine')} name="phone" value={this.customer?.phone} />
+                <ce-input label={__('Phone', 'surecart')} name="phone" value={this.customer?.phone} />
               </ce-column>
             </ce-columns>
             <div>
               <ce-address
-                label={__('Shipping Address', 'checkout_engine')}
+                label={__('Shipping Address', 'surecart')}
                 address={{
                   ...(this.customer?.shipping_address as Address),
                 }}
@@ -135,13 +135,13 @@ export class CeCustomerEdit {
                 }}
                 value="on"
               >
-                {__('Billing address same as shipping', 'checkout_engine')}
+                {__('Billing address same as shipping', 'surecart')}
               </ce-switch>
             </div>
 
             <div style={{ display: this.customer?.billing_matches_shipping ? 'none' : 'block' }}>
               <ce-address
-                label={__('Billing Address', 'checkout_engine')}
+                label={__('Billing Address', 'surecart')}
                 address={{
                   ...(this.customer?.billing_address as Address),
                 }}
@@ -161,7 +161,7 @@ export class CeCustomerEdit {
 
             <div>
               <ce-button type="primary" full submit>
-                {__('Save', 'checkout_engine')}
+                {__('Save', 'surecart')}
               </ce-button>
             </div>
           </ce-form>

@@ -57,7 +57,7 @@ class CustomersController {
 
 		\CheckoutEngine::flash()->add(
 			'success',
-			$updated->archived ? __( 'Product archived.', 'checkout_engine' ) : __( 'Product restored.', 'checkout_engine' )
+			$updated->archived ? __( 'Product archived.', 'surecart' ) : __( 'Product restored.', 'surecart' )
 		);
 
 		return $this->redirectBack( $request );

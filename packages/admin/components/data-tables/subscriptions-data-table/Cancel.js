@@ -40,7 +40,7 @@ export default ({ subscription, children }) => {
 				receiveEntity(result);
 				setModal(false);
 			} else {
-				throw __('Could not cancel subscription.', 'checkout_engine');
+				throw __('Could not cancel subscription.', 'surecart');
 			}
 		} catch (e) {
 			console.error(e);
@@ -49,7 +49,7 @@ export default ({ subscription, children }) => {
 			} else {
 				setError(
 					e?.message ||
-						__('Failed to cancel subscription.', 'checkout_engine')
+						__('Failed to cancel subscription.', 'surecart')
 				);
 			}
 		} finally {
@@ -67,12 +67,12 @@ export default ({ subscription, children }) => {
 					onClick={() => setModal(!modal)}
 					loading={loading}
 				>
-					{__('Cancel', 'checkout_engine')}
+					{__('Cancel', 'surecart')}
 				</ce-button>
 			)}
 			{modal && (
 				<Modal
-					title={__('Cancel Subscription', 'checkout_engine')}
+					title={__('Cancel Subscription', 'surecart')}
 					css={css`
 						max-width: 500px !important;
 					`}
@@ -89,7 +89,7 @@ export default ({ subscription, children }) => {
 							{error}
 						</ce-alert>
 
-						<ce-choices label={__('Cancel', 'checkout_engine')}>
+						<ce-choices label={__('Cancel', 'surecart')}>
 							<div>
 								{subscription?.current_period_end_at !==
 									null && (
@@ -100,7 +100,7 @@ export default ({ subscription, children }) => {
 									>
 										{__(
 											'	At end of current period',
-											'checkout_engine'
+											'surecart'
 										)}
 									</ce-choice>
 								)}
@@ -108,7 +108,7 @@ export default ({ subscription, children }) => {
 									name="cancel_behavior"
 									value="immediate"
 								>
-									{__('Immediately', 'checkout_engine')}
+									{__('Immediately', 'surecart')}
 								</ce-choice>
 							</div>
 						</ce-choices>
@@ -121,10 +121,10 @@ export default ({ subscription, children }) => {
 							`}
 						>
 							<Button isPrimary isBusy={loading} type="submit">
-								{__('Cancel Subscription', 'checkout_engine')}
+								{__('Cancel Subscription', 'surecart')}
 							</Button>
 							<Button onClick={() => setModal(false)}>
-								{__("Don't Cancel", 'checkout_engine')}
+								{__("Don't Cancel", 'surecart')}
 							</Button>
 						</div>
 					</CeForm>

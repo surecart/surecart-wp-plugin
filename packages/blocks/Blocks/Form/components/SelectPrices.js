@@ -48,13 +48,13 @@ export default ({
 		let heading;
 		switch (template) {
 			case 'donation':
-				heading = __('Choose A Donation Product', 'checkout_engine');
+				heading = __('Choose A Donation Product', 'surecart');
 				break;
 			case 'invoice':
-				heading = __('Choose An Invoice Product', 'checkout_engine');
+				heading = __('Choose An Invoice Product', 'surecart');
 				break;
 			default:
-				heading = __('Choose A  Product', 'checkout_engine');
+				heading = __('Choose A  Product', 'surecart');
 				break;
 		}
 
@@ -81,7 +81,7 @@ export default ({
 
 	return (
 		<Fragment>
-			<ce-dashboard-module heading={__('Products', 'checkout_engine')}>
+			<ce-dashboard-module heading={__('Products', 'surecart')}>
 				<PriceChoices
 					choices={choices}
 					onAddProduct={addProduct}
@@ -92,7 +92,7 @@ export default ({
 
 			{hasValidChoices() && (
 				<ce-dashboard-module
-					heading={__('Product Options', 'checkout_engine')}
+					heading={__('Product Options', 'surecart')}
 				>
 					<CeRadioGroup
 						onCeChange={(e) => setChoiceType(e.target.value)}
@@ -100,7 +100,7 @@ export default ({
 						<CeRadio value="all" checked={choice_type === 'all'}>
 							{__(
 								'Customer must purchase all products',
-								'checkout_engine'
+								'surecart'
 							)}
 						</CeRadio>
 						<CeRadio
@@ -109,7 +109,7 @@ export default ({
 						>
 							{__(
 								'Customer must select one price from the options.',
-								'checkout_engine'
+								'surecart'
 							)}
 						</CeRadio>
 						<CeRadio
@@ -118,7 +118,7 @@ export default ({
 						>
 							{__(
 								'Customer can select multiple prices.',
-								'checkout_engine'
+								'surecart'
 							)}
 						</CeRadio>
 					</CeRadioGroup>

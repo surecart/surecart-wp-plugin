@@ -50,7 +50,7 @@ export default ({ attributes, setAttributes }) => {
 				'postType',
 				'sc_form',
 				{
-					title: title || __('Untitled Form', 'checkout_engine'),
+					title: title || __('Untitled Form', 'surecart'),
 					content: serialize(
 						createBlock(
 							'checkout-engine/form', // name
@@ -83,7 +83,7 @@ export default ({ attributes, setAttributes }) => {
 							width: 100%;
 						`}
 					>
-						<div>{__('Form Title', 'checkout_engine')}</div>
+						<div>{__('Form Title', 'surecart')}</div>
 						<CeInput
 							css={css`
 								max-width: 400px;
@@ -91,7 +91,7 @@ export default ({ attributes, setAttributes }) => {
 							value={title}
 							placeholder={__(
 								'Enter a title for your form',
-								'checkout_engine'
+								'surecart'
 							)}
 							onCeChange={(e) =>
 								setAttributes({ title: e.target.value })
@@ -104,7 +104,7 @@ export default ({ attributes, setAttributes }) => {
 									saveFormBlock();
 								}}
 							>
-								{__('Next', 'checkout_engine')}
+								{__('Next', 'surecart')}
 								<ce-icon
 									name="arrow-right"
 									slot="suffix"
@@ -114,7 +114,7 @@ export default ({ attributes, setAttributes }) => {
 								type="text"
 								onClick={() => setAttributes({ step: null })}
 							>
-								{__('Cancel', 'checkout_engine')}
+								{__('Cancel', 'surecart')}
 							</CeButton>
 						</div>
 					</div>
@@ -144,7 +144,7 @@ export default ({ attributes, setAttributes }) => {
 									setAttributes({ id: form?.id });
 								}}
 							>
-								{__('Choose', 'checkout_engine')}
+								{__('Choose', 'surecart')}
 								<ce-icon
 									name="arrow-right"
 									slot="suffix"
@@ -154,7 +154,7 @@ export default ({ attributes, setAttributes }) => {
 								type="text"
 								onClick={() => setAttributes({ step: null })}
 							>
-								{__('Cancel', 'checkout_engine')}
+								{__('Cancel', 'surecart')}
 							</CeButton>
 						</div>
 					</div>
@@ -169,9 +169,9 @@ export default ({ attributes, setAttributes }) => {
 				icon={icon}
 				instructions={__(
 					'Get started by selecting a form or start build a new form.',
-					'checkout_engine'
+					'surecart'
 				)}
-				label={__('Add a checkout form', 'checkout_engine')}
+				label={__('Add a checkout form', 'surecart')}
 			>
 				<div
 					css={css`
@@ -183,13 +183,13 @@ export default ({ attributes, setAttributes }) => {
 						type="primary"
 						onClick={() => setAttributes({ step: 'new' })}
 					>
-						{__('New Form', 'checkout_engine')}
+						{__('New Form', 'surecart')}
 					</CeButton>
 					<CeButton
 						type="default"
 						onClick={() => setAttributes({ step: 'select' })}
 					>
-						{__('Select Form', 'checkout_engine')}
+						{__('Select Form', 'surecart')}
 					</CeButton>
 				</div>
 			</Placeholder>

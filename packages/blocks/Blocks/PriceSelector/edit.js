@@ -95,7 +95,7 @@ export default ({ attributes, setAttributes, clientId, isSelected }) => {
 					</PanelRow>
 					<PanelRow>
 						<RadioControl
-							label={__('Type', 'checkout_engine')}
+							label={__('Type', 'surecart')}
 							help="The type of product selection"
 							selected={type}
 							options={[
@@ -104,7 +104,7 @@ export default ({ attributes, setAttributes, clientId, isSelected }) => {
 									value: 'radio',
 								},
 								{
-									label: __('Choose many', 'checkout_engine'),
+									label: __('Choose many', 'surecart'),
 									value: 'checkbox',
 								},
 							]}
@@ -113,7 +113,7 @@ export default ({ attributes, setAttributes, clientId, isSelected }) => {
 					</PanelRow>
 					<PanelRow>
 						<RangeControl
-							label={__('Columns', 'checkout_engine')}
+							label={__('Columns', 'surecart')}
 							value={columns}
 							onChange={(columns) => setAttributes({ columns })}
 							min={1}

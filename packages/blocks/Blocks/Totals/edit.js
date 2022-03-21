@@ -37,14 +37,14 @@ export default ({ isSelected, attributes, setAttributes }) => {
 				[
 					'checkout-engine/subtotal',
 					{
-						text: __('Subtotal', 'checkout_engine'),
+						text: __('Subtotal', 'surecart'),
 					},
 				],
 				[
 					'checkout-engine/coupon',
 					{
-						text: __('Add Coupon Code', 'checkout_engine'),
-						button_text: __('Apply Coupon', 'checkout_engine'),
+						text: __('Add Coupon Code', 'surecart'),
+						button_text: __('Apply Coupon', 'surecart'),
 					},
 				],
 				['checkout-engine/tax-line-item', {}],
@@ -52,11 +52,8 @@ export default ({ isSelected, attributes, setAttributes }) => {
 				[
 					'checkout-engine/total',
 					{
-						text: __('Total', 'checkout_engine'),
-						subscription_text: __(
-							'Total Due Today',
-							'checkout_engine'
-						),
+						text: __('Total', 'surecart'),
+						subscription_text: __('Total Due Today', 'surecart'),
 					},
 				],
 			],

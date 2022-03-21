@@ -4,7 +4,7 @@
  * @author    Andre Gagnon <me@andregagnon.me>
  * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://checkout_engine.com/
+ * @link      https://surecart.com/
  */
 
 namespace CheckoutEngineCore\Middleware;
@@ -30,7 +30,7 @@ trait HasMiddlewareDefinitionsTrait {
 	protected $middleware_groups = [];
 
 	/**
-	 * Middleware groups that should have the 'checkout_engine' and 'global' groups prepended to them.
+	 * Middleware groups that should have the 'surecart' and 'global' groups prepended to them.
 	 *
 	 * @var string[]
 	 */
@@ -105,7 +105,7 @@ trait HasMiddlewareDefinitionsTrait {
 		$middleware = $this->middleware_groups[ $group ];
 
 		if ( in_array( $group, $this->prepend_special_groups_to, true ) ) {
-			$middleware = array_merge( [ 'checkout_engine', 'global' ], $middleware );
+			$middleware = array_merge( [ 'surecart', 'global' ], $middleware );
 		}
 
 		return $this->expandMiddleware( $middleware );

@@ -31,7 +31,7 @@ Client-side validation can be used to improve the UX of forms, but it is not a r
 When a form is first submitted, it's sent to validation on server side. Validation will let you check all the submitted data, including your own field for validation. This lets you check your field or combinations of fields to make sure the data submitted is valid. The checkout form will not submit if there are any validation errors.
 
 ```php
-add_filter('checkout_engine/checkout/validate', 'my_custom_validation', 10, 3);
+add_filter('surecart/checkout/validate', 'my_custom_validation', 10, 3);
 
 function my_custom_validation($errors, $fields, $checkout_form_id) {
     // check to see if it's valid
@@ -53,10 +53,10 @@ function my_custom_validation($errors, $fields, $checkout_form_id) {
 ## Transforming User Input
 
 You may also want to dynamically add, update or pull data before an order is submitted. This lets you take
-the users input and transform or change it before being added to the order when it's submitted. This is run after all validation has passed. Any validation should occur in the `checkout_engine/checkout/validate` filter.
+the users input and transform or change it before being added to the order when it's submitted. This is run after all validation has passed. Any validation should occur in the `surecart/checkout/validate` filter.
 
 ```php
-add_filter('checkout_engine/checkout/submit', 'my_custom_dynamic_field', 10, 2);
+add_filter('surecart/checkout/submit', 'my_custom_dynamic_field', 10, 2);
 
 function my_custom_dynamic_field($fields, $checkout_form_id) {
     // transform user input
@@ -71,7 +71,7 @@ function my_custom_dynamic_field($fields, $checkout_form_id) {
 When an order is submitted, your fields are saved in with the order's custom fields. Once an order has been successfully made, you can access your custom field data from the `custom_fields` key in the order. Note: this specific hook is an `action` where the previous have been `filters`.
 
 ```php
-add_action('checkout_engine/checkout/complete', 'my_custom_action', 10, 2);
+add_action('surecart/checkout/complete', 'my_custom_action', 10, 2);
 
 function my_custom_action($order, $checkout_form_id) {
     // only look for our field
@@ -90,7 +90,7 @@ function my_custom_action($order, $checkout_form_id) {
 Similar to order success, you can perform an action when the initial checkout order fails.
 
 ```php
-add_action('checkout_engine/checkout/failed', 'my_custom_failure_action', 10, 2);
+add_action('surecart/checkout/failed', 'my_custom_failure_action', 10, 2);
 
 function my_custom_failure_action($order, $checkout_form_id) {
     // only look for our field

@@ -4,7 +4,7 @@
  * @author    Andre Gagnon <me@andregagnon.me>
  * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://checkout_engine.com/
+ * @link      https://surecart.com/
  */
 
 /**
@@ -13,7 +13,7 @@
  * @noinspection ALL
  */
 
-$is_admin = function_exists( 'is_admin' ) && is_admin() && apply_filters( 'checkout_engine.pretty_errors.apply_admin_styles', true );
+$is_admin = function_exists( 'is_admin' ) && is_admin() && apply_filters( 'surecart.pretty_errors.apply_admin_styles', true );
 $is_ajax  = function_exists( 'wp_doing_ajax' ) && wp_doing_ajax();
 
 if ( $is_admin && ! $is_ajax ) {

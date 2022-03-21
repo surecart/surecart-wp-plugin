@@ -44,13 +44,13 @@ class PriceRestServiceProvider extends RestServiceProvider implements RestServic
 			// In JSON Schema you can specify object properties in the properties attribute.
 			'properties' => [
 				'id'      => [
-					'description' => esc_html__( 'Unique identifier for the object.', 'checkout_engine' ),
+					'description' => esc_html__( 'Unique identifier for the object.', 'surecart' ),
 					'type'        => 'string',
 					'context'     => array( 'view', 'edit', 'embed' ),
 					'readonly'    => true,
 				],
 				'content' => array(
-					'description' => esc_html__( 'The content for the object.', 'checkout_engine' ),
+					'description' => esc_html__( 'The content for the object.', 'surecart' ),
 					'type'        => 'string',
 				),
 			],
@@ -67,11 +67,11 @@ class PriceRestServiceProvider extends RestServiceProvider implements RestServic
 	public function get_collection_params() {
 		return [
 			'archived'    => [
-				'description' => esc_html__( 'Whether to get archived products or not.', 'checkout_engine' ),
+				'description' => esc_html__( 'Whether to get archived products or not.', 'surecart' ),
 				'type'        => 'boolean',
 			],
 			'ad_hoc'      => [
-				'description' => esc_html__( 'Only return prices that allow ad hoc amounts or not.', 'checkout_engine' ),
+				'description' => esc_html__( 'Only return prices that allow ad hoc amounts or not.', 'surecart' ),
 				'type'        => 'boolean',
 			],
 			'query'       => [
@@ -95,11 +95,11 @@ class PriceRestServiceProvider extends RestServiceProvider implements RestServic
 				'default'     => [],
 			],
 			'page'        => [
-				'description' => esc_html__( 'The page of items you want returned.', 'checkout_engine' ),
+				'description' => esc_html__( 'The page of items you want returned.', 'surecart' ),
 				'type'        => 'integer',
 			],
 			'per_page'    => [
-				'description' => esc_html__( 'A limit on the number of items to be returned, between 1 and 100.', 'checkout_engine' ),
+				'description' => esc_html__( 'A limit on the number of items to be returned, between 1 and 100.', 'surecart' ),
 				'type'        => 'integer',
 			],
 		];

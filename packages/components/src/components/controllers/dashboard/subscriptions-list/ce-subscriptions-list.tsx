@@ -53,7 +53,7 @@ export class CeSubscriptionsList {
       await this.getSubscriptions();
     } catch (e) {
       console.error(this.error);
-      this.error = e?.message || __('Something went wrong', 'checkout_engine');
+      this.error = e?.message || __('Something went wrong', 'surecart');
     } finally {
       this.loading = false;
     }
@@ -65,7 +65,7 @@ export class CeSubscriptionsList {
       await this.getSubscriptions();
     } catch (e) {
       console.error(this.error);
-      this.error = e?.message || __('Something went wrong', 'checkout_engine');
+      this.error = e?.message || __('Something went wrong', 'surecart');
     } finally {
       this.busy = false;
     }
@@ -103,7 +103,7 @@ export class CeSubscriptionsList {
       <div>
         <ce-divider style={{ '--spacing': '0' }}></ce-divider>
         <slot name="empty">
-          <ce-empty icon="repeat">{__("You don't have any subscriptions.", 'checkout_engine')}</ce-empty>
+          <ce-empty icon="repeat">{__("You don't have any subscriptions.", 'surecart')}</ce-empty>
         </slot>
       </div>
     );
@@ -168,12 +168,12 @@ export class CeSubscriptionsList {
     return (
       <ce-dashboard-module class="subscriptions-list" error={this.error}>
         <span slot="heading">
-          <slot name="heading">{this.heading || __('Subscriptions', 'checkout_engine')}</slot>
+          <slot name="heading">{this.heading || __('Subscriptions', 'surecart')}</slot>
         </span>
 
         {!!this.allLink && !!this.subscriptions?.length && (
           <ce-button type="link" href={this.allLink} slot="end">
-            {__('View all', 'checkout_engine')}
+            {__('View all', 'surecart')}
             <ce-icon name="chevron-right" slot="suffix"></ce-icon>
           </ce-button>
         )}

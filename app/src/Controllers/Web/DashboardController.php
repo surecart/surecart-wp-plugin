@@ -37,7 +37,7 @@ class DashboardController {
 	 */
 	public function loginUser( $wp_user ) {
 		if ( ! $wp_user ) {
-			return wp_die( esc_html__( 'This user could not be found.', 'checkout_engine' ) );
+			return wp_die( esc_html__( 'This user could not be found.', 'surecart' ) );
 		}
 
 		$id = ! empty( $wp_user->ID ) ? $wp_user->ID : $wp_user;

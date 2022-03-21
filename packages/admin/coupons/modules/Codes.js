@@ -62,7 +62,7 @@ export default ({ id, loading }) => {
 
 	return (
 		<Box
-			title={__('Promotion Codes', 'checkout_engine')}
+			title={__('Promotion Codes', 'surecart
 			footer={
 				!loading && (
 					<Fragment>
@@ -93,7 +93,7 @@ export default ({ id, loading }) => {
 							</svg>
 							{__(
 								'Add Another Promotion Code',
-								'checkout_engine'
+								'surecart
 							)}
 						</CeButton>
 
@@ -115,11 +115,11 @@ export default ({ id, loading }) => {
 										!showArchived
 											? __(
 													'Show %d Archived Promotion Codes',
-													'checkout_engine'
+													'surecart
 											  )
 											: __(
 													'Hide %d Archived Promotion Codes',
-													'checkout_engine'
+													'surecart
 											  ),
 										archivedPromotions?.length
 									)}

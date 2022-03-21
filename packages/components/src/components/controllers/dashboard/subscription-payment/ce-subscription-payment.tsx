@@ -30,7 +30,7 @@ export class CeSubscriptionPayment {
       await Promise.all([this.fetchSubscription(), this.fetchPaymentMethods()]);
     } catch (e) {
       console.error(this.error);
-      this.error = e?.message || __('Something went wrong', 'checkout_engine');
+      this.error = e?.message || __('Something went wrong', 'surecart');
     } finally {
       this.loading = false;
     }
@@ -74,7 +74,7 @@ export class CeSubscriptionPayment {
         this.busy = false;
       }
     } catch (e) {
-      this.error = e?.message || __('Something went wrong', 'checkout_engine');
+      this.error = e?.message || __('Something went wrong', 'surecart');
       this.busy = false;
     }
   }
@@ -103,10 +103,10 @@ export class CeSubscriptionPayment {
     if (!modeMethods?.length) {
       return (
         <Fragment>
-          <ce-empty icon="credit-card">{__('You have no saved payment methods.', 'checkout_engine')}</ce-empty>
+          <ce-empty icon="credit-card">{__('You have no saved payment methods.', 'surecart')}</ce-empty>
           {!!this.backUrl && (
             <ce-button href={this.backUrl} full>
-              {__('Go Back', 'checkout_engine')}
+              {__('Go Back', 'surecart')}
             </ce-button>
           )}
         </Fragment>
@@ -129,7 +129,7 @@ export class CeSubscriptionPayment {
                     <span>{card?.last4}</span>
                   </ce-flex>
                   <span slot="per">
-                    {__('Expires', 'checkout_engine')} {card?.exp_month}/{card?.exp_year}
+                    {__('Expires', 'surecart')} {card?.exp_month}/{card?.exp_year}
                   </span>
                 </ce-choice>
               );
@@ -138,12 +138,12 @@ export class CeSubscriptionPayment {
         </ce-choices>
 
         <ce-button type="primary" full submit loading={this.loading || this.busy} disabled={this.loading || this.busy}>
-          {__('Update', 'checkout_engine')}
+          {__('Update', 'surecart')}
         </ce-button>
 
         {!!this.backUrl && (
           <ce-button href={this.backUrl} full loading={this.loading || this.busy} disabled={this.loading || this.busy}>
-            {__('Go Back', 'checkout_engine')}
+            {__('Go Back', 'surecart')}
           </ce-button>
         )}
       </Fragment>
@@ -152,7 +152,7 @@ export class CeSubscriptionPayment {
 
   render() {
     return (
-      <ce-dashboard-module heading={__('Select a payment method', 'checkout_engine')} class="subscription-payment" error={this.error}>
+      <ce-dashboard-module heading={__('Select a payment method', 'surecart')} class="subscription-payment" error={this.error}>
         <ce-form onCeFormSubmit={e => this.handleSubmit(e)}>
           <ce-card>{this.renderContent()}</ce-card>
         </ce-form>

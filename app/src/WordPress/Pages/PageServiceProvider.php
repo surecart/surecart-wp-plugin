@@ -15,16 +15,16 @@ class PageServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function register( $container ) {
-		$container['checkout_engine.pages'] = function () {
+		$container['surecart.pages'] = function () {
 			return new PageService();
 		};
 
-		$container['checkout_engine.pages.seeder'] = function ( $container ) {
-			return new PageSeeder( $container['checkout_engine.forms'], $container['checkout_engine.pages'] );
+		$container['surecart.pages.seeder'] = function ( $container ) {
+			return new PageSeeder( $container['surecart.forms'], $container['surecart.pages'] );
 		};
 
 		$app = $container[ CHECKOUT_ENGINE_APPLICATION_KEY ];
-		$app->alias( 'pages', 'checkout_engine.pages' );
+		$app->alias( 'pages', 'surecart.pages' );
 	}
 
 	/**
@@ -34,6 +34,6 @@ class PageServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function bootstrap( $container ) {
-		$container['checkout_engine.pages']->bootstrap();
+		$container['surecart.pages']->bootstrap();
 	}
 }

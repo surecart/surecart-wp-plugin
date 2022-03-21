@@ -8,19 +8,19 @@ export default ({ refunds }) => {
 	return JSON.stringify(refunds);
 	return (
 		<ChargesDataTable
-			title={__('Payment', 'checkout_engine')}
+			title={__('Payment', 'surecart')}
 			columns={{
 				amount: {
-					label: __('Amount', 'checkout_engine'),
+					label: __('Amount', 'surecart'),
 				},
 				date: {
-					label: __('Date', 'checkout_engine'),
+					label: __('Date', 'surecart'),
 				},
 				method: {
-					label: __('Method', 'checkout_engine'),
+					label: __('Method', 'surecart'),
 				},
 				status: {
-					label: __('Status', 'checkout_engine'),
+					label: __('Status', 'surecart'),
 					width: '100px',
 				},
 				refund: {

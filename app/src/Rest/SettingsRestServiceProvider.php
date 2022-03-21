@@ -80,7 +80,7 @@ class SettingsRestServiceProvider extends RestServiceProvider implements RestSer
 			'title'      => $this->endpoint,
 			'type'       => 'object',
 			// In JSON Schema you can specify object properties in the properties attribute.
-			'properties' => apply_filters( 'checkout_engine/rest/settings/schema', [] ),
+			'properties' => apply_filters( 'surecart/rest/settings/schema', [] ),
 		];
 
 		return $this->schema;

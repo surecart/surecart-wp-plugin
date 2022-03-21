@@ -21,7 +21,7 @@ class SidebarServiceProvider implements ServiceProviderInterface {
 	 * {@inheritDoc}
 	 */
 	public function register( $container ) {
-		$container['checkout_engine_app_core.sidebar.sidebar'] = function() {
+		$container['surecart_app_core.sidebar.sidebar'] = function() {
 			return new Sidebar();
 		};
 	}

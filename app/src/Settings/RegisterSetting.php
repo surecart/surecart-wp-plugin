@@ -26,9 +26,9 @@ abstract class RegisterSetting {
 	 * @return void
 	 */
 	public function register() {
-		add_filter( 'checkout_engine/rest/settings/schema', [ $this, 'registerSchema' ] );
-		add_filter( 'checkout_engine/rest/settings/index', [ $this, 'index' ], 10, 2 );
-		add_filter( 'checkout_engine/rest/settings/update', [ $this, 'handleUpdate' ] );
+		add_filter( 'surecart/rest/settings/schema', [ $this, 'registerSchema' ] );
+		add_filter( 'surecart/rest/settings/index', [ $this, 'index' ], 10, 2 );
+		add_filter( 'surecart/rest/settings/update', [ $this, 'handleUpdate' ] );
 	}
 
 	/**

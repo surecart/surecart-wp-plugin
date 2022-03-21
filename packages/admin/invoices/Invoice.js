@@ -66,11 +66,11 @@ export default () => {
 			onSubmit={onSubmit}
 			onInvalid={onInvalid}
 			backUrl={'admin.php?page=ce-invoices'}
-			backText={__('Back to All Invoices', 'checkout_engine')}
+			backText={__('Back to All Invoices', 'surecart')}
 			title={
 				id
-					? __('Edit Invoice', 'checkout_engine')
-					: __('Create Invoice', 'checkout_engine')
+					? __('Edit Invoice', 'surecart')
+					: __('Create Invoice', 'surecart')
 			}
 			notices={snackbarNotices}
 			removeNotice={removeSnackbarNotice}

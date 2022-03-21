@@ -54,8 +54,8 @@ export default ({ required, value, className, onSelect }) => {
 			ref={selectRef}
 			className={className}
 			loading={loading}
-			placeholder={__('Select a user', 'checkout_engine')}
-			searchPlaceholder={__('Search for a user...', 'checkout_engine')}
+			placeholder={__('Select a user', 'surecart')}
+			searchPlaceholder={__('Search for a user...', 'surecart')}
 			search
 			onCeSearch={(e) => findUser(e.detail)}
 			onCeChange={(e) => onSelect(e.target.value)}

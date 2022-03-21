@@ -18,7 +18,7 @@ use \CheckoutEngine\Models\Order;
 $membership_price_id = '8ba8d60f-5277-4e6b-807c-dee8166446d5';
 
 // Use the order_paid event to update the users meta
-add_action( 'checkout_engine/order_paid', function( $order_id ) {
+add_action( 'surecart/order_paid', function( $order_id ) {
 	// fetch order with line items so we can get the purchased price_id.
 	$order = Order::with( ['line_items'] )->find( $order_id );
 
@@ -69,7 +69,7 @@ use \CheckoutEngine\Models\Order;
 $membership_price_id = '8ba8d60f-5277-4e6b-807c-dee8166446d5';
 
 // Use the order_paid event to update the users meta
-add_action( 'checkout_engine/refund_succeeded', function( $order_id ) {
+add_action( 'surecart/refund_succeeded', function( $order_id ) {
 	// fetch order with line items.
 	$refund = Refund::find( $order_id );
 

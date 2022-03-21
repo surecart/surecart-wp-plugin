@@ -32,7 +32,7 @@ export default ({ coupon, updateCoupon, loading }) => {
 	};
 
 	return (
-		<Box title={__('Coupon Name', 'checkout_engine')}>
+		<Box title={__('Coupon Name', 'surecart')}>
 			{loading ? (
 				renderLoading()
 			) : (
@@ -40,7 +40,7 @@ export default ({ coupon, updateCoupon, loading }) => {
 					className="ce-coupon-name"
 					help={__(
 						'This is an internal name for your coupon. This is not visible to customers.',
-						'checkout_engine'
+						'surecart'
 					)}
 					attribute="name"
 					required

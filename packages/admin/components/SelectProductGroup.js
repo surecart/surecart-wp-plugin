@@ -47,11 +47,8 @@ export default ({
 			className={className}
 			open={open}
 			loading={loading}
-			placeholder={__('Select an upgrade group', 'checkout_engine')}
-			searchPlaceholder={__(
-				'Search for an upgrade group...',
-				'checkout_engine'
-			)}
+			placeholder={__('Select an upgrade group', 'surecart')}
+			searchPlaceholder={__('Search for an upgrade group...', 'surecart')}
 			search
 			onCeOpen={onFetch}
 			onCeSearch={(e) => findItem(e.detail)}
@@ -64,7 +61,7 @@ export default ({
 				<span slot="prefix">
 					<CeMenuItem onClick={onNew}>
 						<span slot="prefix">+</span>
-						{__('Add New Upgrade Group', 'checkout_engine')}
+						{__('Add New Upgrade Group', 'surecart')}
 					</CeMenuItem>
 					<CeDivider
 						style={{ '--spacing': 'var(--ce-spacing-x-small)' }}

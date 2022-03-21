@@ -119,7 +119,7 @@ export const snackbar = (state = [], action) => {
 					className: 'is-snackbar-error',
 					content:
 						action?.message ||
-						__('Something went wrong.', 'checkout_engine'),
+						__('Something went wrong.', 'surecart'),
 				},
 			];
 	}

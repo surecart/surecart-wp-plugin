@@ -16,7 +16,7 @@ export default ({ invoice, charge, loading }) => {
 
 	return (
 		<Box
-			title={__('Invoice Details', 'checkout_engine')}
+			title={__('Invoice Details', 'surecart')}
 			footer={
 				!loading &&
 				!!charge && (
@@ -27,7 +27,7 @@ export default ({ invoice, charge, loading }) => {
 						}}
 					>
 						<span slot="title">
-							{__('Amount Paid', 'checkout_engine')}
+							{__('Amount Paid', 'surecart')}
 						</span>
 						<span slot="price">
 							<ce-format-number
@@ -71,7 +71,7 @@ export default ({ invoice, charge, loading }) => {
 
 					<hr />
 
-					<Definition title={__('Subtotal', 'checkout_engine')}>
+					<Definition title={__('Subtotal', 'surecart')}>
 						<ce-format-number
 							style={{
 								'font-weight': 'var(--ce-font-weight-semibold)',
@@ -82,7 +82,7 @@ export default ({ invoice, charge, loading }) => {
 							value={invoice?.subtotal_amount}
 						></ce-format-number>
 					</Definition>
-					<Definition title={__('Discounts', 'checkout_engine')}>
+					<Definition title={__('Discounts', 'surecart')}>
 						<ce-format-number
 							style={{
 								'font-weight': 'var(--ce-font-weight-semibold)',
@@ -94,9 +94,7 @@ export default ({ invoice, charge, loading }) => {
 						></ce-format-number>
 					</Definition>
 					{!!invoice?.proration_amount && (
-						<Definition
-							title={__('Proration Credit', 'checkout_engine')}
-						>
+						<Definition title={__('Proration Credit', 'surecart')}>
 							<ce-format-number
 								style={{
 									'font-weight':
@@ -118,9 +116,7 @@ export default ({ invoice, charge, loading }) => {
 							'--price-size': 'var(--ce-font-size-x-large)',
 						}}
 					>
-						<span slot="title">
-							{__('Total Due', 'checkout_engine')}
-						</span>
+						<span slot="title">{__('Total Due', 'surecart')}</span>
 						<span slot="price">
 							<ce-format-number
 								type="currency"
@@ -138,7 +134,7 @@ export default ({ invoice, charge, loading }) => {
 							}}
 						>
 							<span slot="description">
-								{__('Refunded', 'checkout_engine')}
+								{__('Refunded', 'surecart')}
 							</span>
 							<span slot="price">
 								-

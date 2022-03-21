@@ -31,9 +31,9 @@ $memberships = [
 ];
 
 // this action runs when a user checks out.
-add_action( 'checkout_engine/purchase_created', 'provide_access_to_membership', 10, 1 );
+add_action( 'surecart/purchase_created', 'provide_access_to_membership', 10, 1 );
 // this action runs when a revoked purchase is invoked ("un-revoked").
-add_action( 'checkout_engine/purchase_invoked', 'provide_access_to_membership', 10, 1 );
+add_action( 'surecart/purchase_invoked', 'provide_access_to_membership', 10, 1 );
 
 function provide_access_to_membership( \CheckoutEngine\Models\Purchase $purchase ) {
 	// we only want to proceed if the purchase is for one of our products
@@ -66,7 +66,7 @@ $memberships = [
 ];
 
 // this action runs when a user's purchase is revoked. This can occur on refunds or subscription cancelations.
-add_action( 'checkout_engine/purchase_revoked', 'remove_access_to_membership', 10, 1 );
+add_action( 'surecart/purchase_revoked', 'remove_access_to_membership', 10, 1 );
 
 // Use the order_paid event to update the users meta
 function remove_access_to_membership( \CheckoutEngine\Models\Purchase $purchase ) {
@@ -102,7 +102,7 @@ $memberships = [
 ];
 
 // this action runs when a user's purchase is revoked. This can occur on refunds or subscription cancelations.
-add_action( 'checkout_engine/purchase_updated', 'update_access_to_membership', 10, 1 );
+add_action( 'surecart/purchase_updated', 'update_access_to_membership', 10, 1 );
 
 // Use the order_paid event to update the users meta
 function update_access_to_membership( \CheckoutEngine\Models\Purchase $purchase ) {

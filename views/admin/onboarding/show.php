@@ -44,30 +44,30 @@
 		<div class="ce-section-heading">
 			<h3>
 				<ce-icon name="shopping-bag"></ce-icon>
-				<?php esc_html_e( 'Getting Started With SureCart', 'checkout_engine' ); ?>
+				<?php esc_html_e( 'Getting Started With SureCart', 'surecart' ); ?>
 			</h3>
 		</div>
 		<ce-dashboard-module>
 				<ce-card>
 					<ce-text style="--font-size: var(--ce-font-size-x-large); --line-height: var(--ce-line-height-normal)">
-					<?php esc_html_e( 'Get started by selecting a creating your first product or creating a new, custom form.', 'checkout_engine' ); ?>
+					<?php esc_html_e( 'Get started by selecting a creating your first product or creating a new, custom form.', 'surecart' ); ?>
 				</ce-text>
 				<ce-button type="primary" full size="large" href="<?php echo esc_url_raw( $settings_url ); ?>">
 					<ce-icon name="sliders" slot="prefix"></ce-icon>
-					<?php esc_html_e( 'Store Settings', 'checkout_engine' ); ?>
+					<?php esc_html_e( 'Store Settings', 'surecart' ); ?>
 				</ce-button>
 				<ce-button type="primary" full size="large" href="<?php echo esc_url_raw( $product_url ); ?>">
 					<ce-icon name="shopping-bag" slot="prefix"></ce-icon>
-					<?php esc_html_e( 'Create A Product', 'checkout_engine' ); ?>
+					<?php esc_html_e( 'Create A Product', 'surecart' ); ?>
 				</ce-button>
 				<ce-button type="primary" outline full size="large" href="<?php echo esc_url_raw( $form_url ); ?>">
 					<ce-icon name="layers" slot="prefix"></ce-icon>
-					<?php esc_html_e( 'Create A Form', 'checkout_engine' ); ?>
+					<?php esc_html_e( 'Create A Form', 'surecart' ); ?>
 				</ce-button>
 			</ce-card>
 			<ce-button full type="text" size="large" href="<?php echo esc_url_raw( $docs_url ); ?>" target="_blank">
 				<ce-icon name="life-buoy" slot="prefix"></ce-icon>
-				<?php esc_html_e( 'Get Help', 'checkout_engine' ); ?>
+				<?php esc_html_e( 'Get Help', 'surecart' ); ?>
 				<ce-icon name="external-link" slot="suffix"></ce-icon>
 			</ce-button>
 		</ce-dashboard-module>

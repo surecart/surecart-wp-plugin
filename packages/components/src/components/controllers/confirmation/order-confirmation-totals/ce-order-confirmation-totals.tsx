@@ -26,7 +26,7 @@ export class CeOrderConfirmationTotals {
     return (
       <ce-line-item style={{ marginTop: 'var(--ce-spacing-small)' }}>
         <span slot="description">
-          {__('Discount', 'checkout_engine')}
+          {__('Discount', 'surecart')}
           <br />
           {this.order?.discount?.promotion?.code && (
             <ce-tag type="success" size="small">
@@ -48,12 +48,12 @@ export class CeOrderConfirmationTotals {
     return (
       <div class={{ 'line-item-totals': true }}>
         <ce-line-item-total order={this.order} total="subtotal">
-          <span slot="description">{__('Subtotal', 'checkout_engine')}</span>
+          <span slot="description">{__('Subtotal', 'surecart')}</span>
         </ce-line-item-total>
         {this.renderDiscountLine()}
         <ce-divider style={{ '--spacing': 'var(--ce-spacing-small)' }}></ce-divider>
         <ce-line-item-total order={this.order} size="large" show-currency>
-          <span slot="description">{__('Total', 'checkout_engine')}</span>
+          <span slot="description">{__('Total', 'surecart')}</span>
         </ce-line-item-total>
       </div>
     );

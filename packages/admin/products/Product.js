@@ -191,7 +191,7 @@ export default () => {
 			pageModelName={'product'}
 			onSubmit={onSubmit}
 			backUrl={'admin.php?page=ce-products'}
-			backText={__('Back to All Product', 'checkout_engine')}
+			backText={__('Back to All Product', 'surecart')}
 			title={
 				<div
 					css={css`
@@ -208,13 +208,13 @@ export default () => {
 							}}
 						></ce-skeleton>
 					) : product?.id ? (
-						__('Edit Product', 'checkout_engine')
+						__('Edit Product', 'surecart')
 					) : (
-						__('Create Product', 'checkout_engine')
+						__('Create Product', 'surecart')
 					)}
 					{product?.archived && (
 						<ce-tag type="warning">
-							{__('Archived', 'checkout_engine')}
+							{__('Archived', 'surecart')}
 						</ce-tag>
 					)}
 				</div>
@@ -249,8 +249,8 @@ export default () => {
 							submit
 						>
 							{product?.id
-								? __('Update Product', 'checkout_engine')
-								: __('Create Product', 'checkout_engine')}
+								? __('Update Product', 'surecart')
+								: __('Create Product', 'surecart')}
 						</CeButton>
 					</div>
 				)

@@ -30,7 +30,7 @@ class SettingsController {
 	 */
 	public function update( \WP_REST_Request $request ) {
 		$settings = [];
-		$settings = apply_filters( 'checkout_engine/rest/settings/update', $settings, $request->get_params(), $request );
+		$settings = apply_filters( 'surecart/rest/settings/update', $settings, $request->get_params(), $request );
 		return rest_ensure_response( $settings );
 	}
 }

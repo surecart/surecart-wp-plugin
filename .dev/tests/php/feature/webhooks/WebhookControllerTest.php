@@ -29,7 +29,7 @@ class WebhookControllerTest extends CheckoutEngineUnitTestCase
 	 */
 	public function test_can_receive()
 	{
-		$this->assertEquals(did_action('checkout_engine/purchase_created'), 0);
+		$this->assertEquals(did_action('surecart/purchase_created'), 0);
 		$controller = \Mockery::mock(WebhookController::class)->makePartial();
 		$request = \Mockery::mock(Request::class)->makePartial();
 
@@ -51,6 +51,6 @@ class WebhookControllerTest extends CheckoutEngineUnitTestCase
 
 		$result = $controller->receive($request);
 		$this->assertSame($result->getStatusCode(), 200);
-		$this->assertEquals(did_action('checkout_engine/purchase_created'), 1);
+		$this->assertEquals(did_action('surecart/purchase_created'), 1);
 	}
 }

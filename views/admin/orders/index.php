@@ -5,7 +5,7 @@
 	\CheckoutEngine::render(
 		'layouts/partials/admin-index-header',
 		[
-			'title' => __( 'Orders', 'checkout_engine' ),
+			'title' => __( 'Orders', 'surecart' ),
 		]
 	);
 	?>

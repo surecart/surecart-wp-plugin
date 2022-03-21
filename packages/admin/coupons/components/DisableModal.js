@@ -16,7 +16,7 @@ export default ( {
 		<Modal
 			className={ 'ce-disable-confirm' }
 			title={ sprintf(
-				__( 'Disable "%s"?', 'checkout_engine' ),
+				__( 'Disable "%s"?', 'surecart
 				name || 'Coupon'
 			) }
 			onRequestClose={ onRequestClose }
@@ -24,7 +24,7 @@ export default ( {
 			<p>
 				{ __(
 					'This discount code will not be usable and all unsaved changes will be lost.',
-					'checkout_engine'
+					'surecart
 				) }
 			</p>
 			<Button
@@ -33,10 +33,10 @@ export default ( {
 				isBusy={ isSaving }
 				onClick={ onRequestDisable }
 			>
-				{ __( 'Disable', 'checkout_engine' ) }
+				{ __( 'Disable', 'surecart
 			</Button>
 			<Button variant="secondary" onClick={ onRequestClose }>
-				{ __( 'Cancel', 'checkout_engine' ) }
+				{ __( 'Cancel', 'surecart
 			</Button>
 		</Modal>
 	);

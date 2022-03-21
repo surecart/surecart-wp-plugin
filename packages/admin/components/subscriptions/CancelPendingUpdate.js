@@ -58,25 +58,19 @@ export default ({
 	const renderTitle = () => {
 		if (pending.price !== current.price) {
 			if (pending.quantity > current.quantity) {
-				return __(
-					'Change Product And Increase Quantity',
-					'checkout_engine'
-				);
+				return __('Change Product And Increase Quantity', 'surecart');
 			}
 			if (pending.quantity < current.quantity) {
-				return __(
-					'Change Product Decrease Quantity',
-					'checkout_engine'
-				);
+				return __('Change Product Decrease Quantity', 'surecart');
 			}
-			return __('Change Product', 'checkout_engine');
+			return __('Change Product', 'surecart');
 		}
 
 		if (pending.quantity > current.quantity) {
-			return __('Increase quantity', 'checkout_engine');
+			return __('Increase quantity', 'surecart');
 		}
 		if (pending.quantity < current.quantity) {
-			return __('Decrease quantity', 'checkout_engine');
+			return __('Decrease quantity', 'surecart');
 		}
 		return null;
 	};
@@ -155,12 +149,12 @@ export default ({
 					onClick={() => setModal(!modal)}
 					loading={loading}
 				>
-					{__('Cancel', 'checkout_engine')}
+					{__('Cancel', 'surecart')}
 				</ce-button>
 			)}
 			{modal && (
 				<Modal
-					title={__('Manage Scheduled Update', 'checkout_engine')}
+					title={__('Manage Scheduled Update', 'surecart')}
 					css={css`
 						max-width: 800px !important;
 					`}
@@ -196,10 +190,10 @@ export default ({
 							`}
 						>
 							<Button isPrimary isBusy={loading} type="submit">
-								{__('Delete Update', 'checkout_engine')}
+								{__('Delete Update', 'surecart')}
 							</Button>
 							<Button onClick={() => setModal(false)}>
-								{__('Keep Update', 'checkout_engine')}
+								{__('Keep Update', 'surecart')}
 							</Button>
 						</div>
 					</CeForm>

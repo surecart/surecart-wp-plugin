@@ -11,8 +11,8 @@ export default ({ id, productGroup, updateProductGroup, loading }) => {
 		<Box
 			title={
 				id
-					? __('Details', 'checkout_engine')
-					: __('New Upgrade Group', 'checkout_engine')
+					? __('Details', 'surecart')
+					: __('New Upgrade Group', 'surecart')
 			}
 			loading={loading}
 		>
@@ -23,12 +23,9 @@ export default ({ id, productGroup, updateProductGroup, loading }) => {
 				`}
 			>
 				<CeInput
-					label={__('Group Name', 'checkout_engine')}
+					label={__('Group Name', 'surecart')}
 					className="ce-product-name hydrated"
-					help={__(
-						'A name for your product group.',
-						'checkout_engine'
-					)}
+					help={__('A name for your product group.', 'surecart')}
 					value={productGroup?.name}
 					onCeChange={(e) => {
 						updateProductGroup({ name: e.target.value });

@@ -44,7 +44,7 @@
 		<div class="ce-section-heading">
 			<h3>
 				<ce-icon name="shopping-bag"></ce-icon>
-				<?php esc_html_e( 'Welcome to SureCart!', 'checkout_engine' ); ?>
+				<?php esc_html_e( 'Welcome to SureCart!', 'surecart' ); ?>
 			</h3>
 		</div>
 		<ce-dashboard-module>

@@ -1,4 +1,4 @@
-[![Packagist](https://img.shields.io/packagist/vpre/htmlburger/checkout_engine.svg?style=flat-square&colorB=0366d6)](https://packagist.org/packages/htmlburger/wpemerge) [![Travis branch](https://img.shields.io/travis/htmlburger/wpemerge/master.svg?style=flat-square)](https://travis-ci.org/htmlburger/wpemerge/builds) [![Scrutinizer](https://img.shields.io/scrutinizer/g/htmlburger/checkout_engine.svg?style=flat-square)](https://scrutinizer-ci.com/g/htmlburger/wpemerge/) [![Scrutinizer Coverage](https://img.shields.io/scrutinizer/coverage/g/htmlburger/checkout_engine.svg?style=flat-square)](https://scrutinizer-ci.com/g/htmlburger/wpemerge/code-structure/master/code-coverage) [![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg?style=flat-square&colorB=7d07d1)](https://gitter.im/wpemerge/Lobby)
+[![Packagist](https://img.shields.io/packagist/vpre/htmlburger/surecart.svg?style=flat-square&colorB=0366d6)](https://packagist.org/packages/htmlburger/wpemerge) [![Travis branch](https://img.shields.io/travis/htmlburger/wpemerge/master.svg?style=flat-square)](https://travis-ci.org/htmlburger/wpemerge/builds) [![Scrutinizer](https://img.shields.io/scrutinizer/g/htmlburger/surecart.svg?style=flat-square)](https://scrutinizer-ci.com/g/htmlburger/wpemerge/) [![Scrutinizer Coverage](https://img.shields.io/scrutinizer/coverage/g/htmlburger/surecart.svg?style=flat-square)](https://scrutinizer-ci.com/g/htmlburger/wpemerge/code-structure/master/code-coverage) [![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg?style=flat-square&colorB=7d07d1)](https://gitter.im/wpemerge/Lobby)
 
 📦 A micro framework which modernizes WordPress as a CMS development by providing tools to implement MVC and more.
 
@@ -16,13 +16,13 @@
 
 ## Features & Documentation
 
-[https://docs.checkout_engine.com/#/framework/overview](https://docs.checkout_engine.com/#/framework/overview)
+[https://docs.surecart.com/#/framework/overview](https://docs.surecart.com/#/framework/overview)
 
-[https://docs.checkout_engine.com/#/framework/quickstart](https://docs.checkout_engine.com/#/framework/quickstart)
+[https://docs.surecart.com/#/framework/quickstart](https://docs.surecart.com/#/framework/quickstart)
 
 ## API Reference
 
-[https://api.checkout_engine.com/](https://api.checkout_engine.com/)
+[https://api.surecart.com/](https://api.surecart.com/)
 
 ## Development Team
 

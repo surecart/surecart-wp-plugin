@@ -151,7 +151,7 @@ export default ({
 									<Tooltip
 										text={
 											backText ||
-											__('Go back.', 'checkout_engine')
+											__('Go back.', 'surecart')
 										}
 									>
 										{backButtonType === 'icon' ? (

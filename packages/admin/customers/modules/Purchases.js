@@ -35,7 +35,7 @@ export default () => {
 			hideHeader={true}
 			columns={{
 				item: {
-					label: __('Item', 'checkout_engine'),
+					label: __('Item', 'surecart'),
 				},
 				actions: {
 					width: '100px',

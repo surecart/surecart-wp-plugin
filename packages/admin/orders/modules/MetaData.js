@@ -11,7 +11,7 @@ export default ({ order, loading }) => {
 	}
 
 	return (
-		<Box title={__('Metadata', 'checkout_engine')}>
+		<Box title={__('Metadata', 'surecart')}>
 			<div
 				css={css`
 					display: grid;

@@ -89,7 +89,7 @@ export default ({ onRequestClose, onChoose }) => {
 				overflow: visible !important;
 			`}
 			shouldCloseOnClickOutside={false}
-			title={__('Add Product', 'checkout_engine')}
+			title={__('Add Product', 'surecart')}
 			onRequestClose={onRequestClose}
 		>
 			<div
@@ -106,10 +106,10 @@ export default ({ onRequestClose, onChoose }) => {
 						setProduct( products?.[ e.target.value ] );
 					} }
 					loading={ querying }
-					placeholder={ __( 'Choose a product', 'checkout_engine' ) }
+					placeholder={ __( 'Choose a product', 'surecart' ) }
 					searchPlaceholder={ __(
 						'Search for a product...',
-						'checkout_engine'
+						'surecart'
 					) }
 					search
 					onCeSearch={ ( e ) => findProduct( e.detail ) }
@@ -136,10 +136,10 @@ export default ({ onRequestClose, onChoose }) => {
 					`}
 				>
 					<Button isPrimary isBusy={busy} onClick={addProduct}>
-						{__('Add Product', 'checkout_engine')}
+						{__('Add Product', 'surecart')}
 					</Button>
 					<Button variant="link" onClick={onRequestClose}>
-						{__('Cancel', 'checkout_engine')}
+						{__('Cancel', 'surecart')}
 					</Button>
 				</div>
 			</div>

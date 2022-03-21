@@ -71,7 +71,7 @@ abstract class ListTable extends \WP_List_Table {
 		);
 		$updated = sprintf(
 			'%1$s <time datetime="%2$s" title="%3$s">%4$s</time>',
-			__( 'Updated', 'checkout_engine' ),
+			__( 'Updated', 'surecart' ),
 			esc_attr( $model->updated_at ),
 			esc_html( TimeDate::formatDateAndTime( $model->updated_at ) ),
 			esc_html( TimeDate::humanTimeDiff( $model->updated_at ) )
@@ -99,6 +99,6 @@ abstract class ListTable extends \WP_List_Table {
 	}
 
 	public function column_mode( $order ) {
-		return ! $order->live_mode ? '<ce-tag type="warning">' . __( 'Test', 'checkout_engine' ) . '</ce-tag>' : '';
+		return ! $order->live_mode ? '<ce-tag type="warning">' . __( 'Test', 'surecart' ) . '</ce-tag>' : '';
 	}
 }

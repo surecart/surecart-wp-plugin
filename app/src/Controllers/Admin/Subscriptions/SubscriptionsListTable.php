@@ -42,7 +42,7 @@ class SubscriptionsListTable extends ListTable {
 		?>
 	<form class="search-form"
 		method="get">
-		<?php $this->search_box( __( 'Search Subscriptions', 'checkout_engine' ), 'order' ); ?>
+		<?php $this->search_box( __( 'Search Subscriptions', 'surecart' ), 'order' ); ?>
 		<input type="hidden"
 			name="id"
 			value="1" />
@@ -57,9 +57,9 @@ class SubscriptionsListTable extends ListTable {
 	 */
 	protected function get_views() {
 		$stati = [
-			'all'      => __( 'All', 'checkout_engine' ),
-			'active'   => __( 'Active', 'checkout_engine' ),
-			'canceled' => __( 'Canceled', 'checkout_engine' ),
+			'all'      => __( 'All', 'surecart' ),
+			'active'   => __( 'Active', 'surecart' ),
+			'canceled' => __( 'Canceled', 'surecart' ),
 		];
 
 		$link = \CheckoutEngine::getUrl()->index( 'subscriptions' );
@@ -89,7 +89,7 @@ class SubscriptionsListTable extends ListTable {
 		 * @param string[] $status_links An associative array of fully-formed comment status links. Includes 'All', 'Mine',
 		 *                              'Pending', 'Approved', 'Spam', and 'Trash'.
 		 */
-		return apply_filters( 'checkout_engine/subscription/index/links', $status_links );
+		return apply_filters( 'surecart/subscription/index/links', $status_links );
 	}
 
 	/**
@@ -99,11 +99,11 @@ class SubscriptionsListTable extends ListTable {
 	 */
 	public function get_columns() {
 		return [
-			'customer' => __( 'Customer', 'checkout_engine' ),
-			'status'   => __( 'Status', 'checkout_engine' ),
-			'plan'     => __( 'Plan', 'checkout_engine' ),
-			'product'  => __( 'Product', 'checkout_engine' ),
-			'created'  => __( 'Created', 'checkout_engine' ),
+			'customer' => __( 'Customer', 'surecart' ),
+			'status'   => __( 'Status', 'surecart' ),
+			'plan'     => __( 'Plan', 'surecart' ),
+			'product'  => __( 'Product', 'surecart' ),
+			'created'  => __( 'Created', 'surecart' ),
 			'mode'     => '',
 		];
 	}
@@ -122,7 +122,7 @@ class SubscriptionsListTable extends ListTable {
 
 	public function column_product( $subscription ) {
 		if ( empty( $subscription->price->product ) ) {
-			return __( 'No product', 'checkout_engine' );
+			return __( 'No product', 'surecart' );
 		}
 		return '<a href="' . esc_url( \CheckoutEngine::getUrl()->edit( 'product', $subscription->price->product->id ) ) . '">' . $subscription->price->product->name . '</a>';
 	}
@@ -198,19 +198,19 @@ class SubscriptionsListTable extends ListTable {
 			case 'week':
 				return ' / ' . sprintf(
 					// phpcs:ignore
-					_n( 'week', '%d weeks', $count, 'checkout_engine' ),
+					_n( 'week', '%d weeks', $count, 'surecart' ),
 					$count
 				);
 			case 'month':
 				return ' / ' . sprintf(
 					// phpcs:ignore
-					_n( 'month', '%d months', $count, 'checkout_engine' ),
+					_n( 'month', '%d months', $count, 'surecart' ),
 					$count
 				);
 			case 'year':
 				return ' / ' . sprintf(
 					// phpcs:ignore
-					_n( 'year', '%d years', $count, 'checkout_engine' ),
+					_n( 'year', '%d years', $count, 'surecart' ),
 					$count
 				);
 		}
@@ -245,7 +245,7 @@ class SubscriptionsListTable extends ListTable {
 			return '';
 		}
 		// translators: coupon expiration date.
-		return sprintf( __( 'Valid until %s', 'checkout_engine' ), date_i18n( get_option( 'date_format' ), $timestamp / 1000 ) );
+		return sprintf( __( 'Valid until %s', 'surecart' ), date_i18n( get_option( 'date_format' ), $timestamp / 1000 ) );
 	}
 
 	public function get_price_string( $coupon = '' ) {
@@ -254,7 +254,7 @@ class SubscriptionsListTable extends ListTable {
 		}
 		if ( ! empty( $coupon->percent_off ) ) {
 			// translators: Coupon % off.
-			return sprintf( esc_html( __( '%1d%% off', 'checkout_engine' ) ), $coupon->percent_off );
+			return sprintf( esc_html( __( '%1d%% off', 'surecart' ) ), $coupon->percent_off );
 		}
 
 		if ( ! empty( $coupon->amount_off ) ) {
@@ -262,7 +262,7 @@ class SubscriptionsListTable extends ListTable {
 			return Currency::formatCurrencyNumber( $coupon->amount_off ) . ' <small style="opacity: 0.75;">' . strtoupper( esc_html( $coupon->currency ) ) . '</small>';
 		}
 
-		return esc_html__( 'No discount.', 'checkout_engine' );
+		return esc_html__( 'No discount.', 'surecart' );
 	}
 
 	/**
@@ -277,14 +277,14 @@ class SubscriptionsListTable extends ListTable {
 		}
 
 		if ( 'forever' === $coupon->duration ) {
-			return __( 'Forever', 'checkout_engine' );
+			return __( 'Forever', 'surecart' );
 		}
 		if ( 'repeating' === $coupon->duration ) {
 			// translators: number of months.
-			return sprintf( __( 'For %d months', 'checkout_engine' ), $coupon->duration_in_months ?? 1 );
+			return sprintf( __( 'For %d months', 'surecart' ), $coupon->duration_in_months ?? 1 );
 		}
 
-		return __( 'Once', 'checkout_engine' );
+		return __( 'Once', 'surecart' );
 	}
 
 	/**
@@ -298,16 +298,16 @@ class SubscriptionsListTable extends ListTable {
 
 		switch ( $subscription->status ) {
 			case 'active':
-				$status = '<ce-tag type="success">' . __( 'Active', 'checkout_engine' ) . '</ce-tag>';
+				$status = '<ce-tag type="success">' . __( 'Active', 'surecart' ) . '</ce-tag>';
 				break;
 			case 'canceled':
-				$status = '<ce-tag type="danger">' . __( 'Canceled', 'checkout_engine' ) . '</ce-tag>';
+				$status = '<ce-tag type="danger">' . __( 'Canceled', 'surecart' ) . '</ce-tag>';
 				break;
 			case 'trialing':
-				$status = '<ce-tag type="primary">' . __( 'Trialing', 'checkout_engine' ) . '</ce-tag>';
+				$status = '<ce-tag type="primary">' . __( 'Trialing', 'surecart' ) . '</ce-tag>';
 				break;
 			case 'draft':
-				$status = '<ce-tag>' . __( 'Draft', 'checkout_engine' ) . '</ce-tag>';
+				$status = '<ce-tag>' . __( 'Draft', 'surecart' ) . '</ce-tag>';
 				break;
 			default:
 				$status = '<ce-tag>' . $subscription->status . '</ce-tag>';
@@ -315,7 +315,7 @@ class SubscriptionsListTable extends ListTable {
 		}
 
 		if ( ! empty( (array) $subscription->pending_update ) ) {
-			$status .= ' <ce-tag type="info">' . __( 'Update Pending', 'checkout_engine' ) . '</ce-tag>';
+			$status .= ' <ce-tag type="info">' . __( 'Update Pending', 'surecart' ) . '</ce-tag>';
 		}
 
 		return $status;
@@ -332,17 +332,17 @@ class SubscriptionsListTable extends ListTable {
 		ob_start();
 		$name = $subscription->customer->name ?? '';
 		if ( ! $name ) {
-			$name = $subscription->customer->email ?? __( 'No name provided', 'checkout_engine' );
+			$name = $subscription->customer->email ?? __( 'No name provided', 'surecart' );
 		}
 		?>
-		<a class="row-title" aria-label="<?php echo esc_attr__( 'Edit Subscription', 'checkout_engine' ); ?>" href="<?php echo esc_url( \CheckoutEngine::getUrl()->show( 'subscription', $subscription->id ) ); ?>">
+		<a class="row-title" aria-label="<?php echo esc_attr__( 'Edit Subscription', 'surecart' ); ?>" href="<?php echo esc_url( \CheckoutEngine::getUrl()->show( 'subscription', $subscription->id ) ); ?>">
 			<?php echo esc_html( $name ); ?>
 		</a>
 
 		<?php
 		echo $this->row_actions(
 			[
-				'edit' => '<a href="' . esc_url( \CheckoutEngine::getUrl()->show( 'subscription', $subscription->id ) ) . '" aria-label="' . esc_attr( 'Edit Subscription', 'checkout_engine' ) . '">' . __( 'Edit', 'checkout_engine' ) . '</a>',
+				'edit' => '<a href="' . esc_url( \CheckoutEngine::getUrl()->show( 'subscription', $subscription->id ) ) . '" aria-label="' . esc_attr( 'Edit Subscription', 'surecart' ) . '">' . __( 'Edit', 'surecart' ) . '</a>',
 			],
 		);
 		?>

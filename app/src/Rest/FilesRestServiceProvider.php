@@ -51,7 +51,7 @@ class FilesRestServiceProvider extends RestServiceProvider implements RestServic
 			// In JSON Schema you can specify object properties in the properties attribute.
 			'properties' => [
 				'id' => [
-					'description' => esc_html__( 'Unique identifier for the object.', 'checkout_engine' ),
+					'description' => esc_html__( 'Unique identifier for the object.', 'surecart' ),
 					'type'        => 'string',
 					'context'     => [ 'view', 'edit', 'embed' ],
 					'readonly'    => true,
@@ -70,11 +70,11 @@ class FilesRestServiceProvider extends RestServiceProvider implements RestServic
 	public function get_collection_params() {
 		return [
 			'page'     => [
-				'description' => esc_html__( 'The page of items you want returned.', 'checkout_engine' ),
+				'description' => esc_html__( 'The page of items you want returned.', 'surecart' ),
 				'type'        => 'integer',
 			],
 			'per_page' => [
-				'description' => esc_html__( 'A limit on the number of items to be returned, between 1 and 100.', 'checkout_engine' ),
+				'description' => esc_html__( 'A limit on the number of items to be returned, between 1 and 100.', 'surecart' ),
 				'type'        => 'integer',
 			],
 		];

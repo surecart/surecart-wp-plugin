@@ -26,22 +26,18 @@ export default ({
 
 	const renderStatusTag = (charge) => {
 		if (charge?.fully_refunded) {
-			return (
-				<ce-tag type="danger">
-					{__('Refunded', 'checkout_engine')}
-				</ce-tag>
-			);
+			return <ce-tag type="danger">{__('Refunded', 'surecart')}</ce-tag>;
 		}
 
 		if (charge?.refunded_amount && charge?.refunded_amount) {
 			return (
 				<ce-tag type="warning">
-					{__('Partially Refunded', 'checkout_engine')}{' '}
+					{__('Partially Refunded', 'surecart')}{' '}
 				</ce-tag>
 			);
 		}
 
-		return <ce-tag type="success">{__('Paid', 'checkout_engine')}</ce-tag>;
+		return <ce-tag type="success">{__('Paid', 'surecart')}</ce-tag>;
 	};
 
 	const renderRefundButton = (charge) => {
@@ -58,7 +54,7 @@ export default ({
 				}
 				size="small"
 			>
-				{__('Refund', 'checkout_engine')}
+				{__('Refund', 'surecart')}
 			</ce-button>
 		);
 	};
@@ -66,7 +62,7 @@ export default ({
 	return (
 		<Fragment>
 			<DataTable
-				title={title || __('Charges', 'checkout_engine')}
+				title={title || __('Charges', 'surecart')}
 				columns={columns}
 				empty={empty || __('None found.', 'checkout-engine')}
 				items={(data || [])
@@ -104,7 +100,7 @@ export default ({
 												currency={charge?.currency}
 												value={charge?.refunded_amount}
 											></ce-format-number>{' '}
-											{__('Refunded', 'checkout_engine')}
+											{__('Refunded', 'surecart')}
 										</div>
 									)}
 								</ce-text>

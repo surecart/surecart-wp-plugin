@@ -44,13 +44,13 @@ export class CePagination {
     if (!this.hasNextPage && !this.hasPreviousPage) return null;
     return (
       <ce-flex>
-        <div>{sprintf(__('Displaying %1d to %2d of %3d items', 'checkout_engine'), this.from, this.to, this.total)}</div>
+        <div>{sprintf(__('Displaying %1d to %2d of %3d items', 'surecart'), this.from, this.to, this.total)}</div>
         <ce-flex>
           <ce-button onClick={() => this.cePrevPage.emit()} disabled={!this.hasPreviousPage} size="small">
-            {__('Previous', 'checkout_engine')}
+            {__('Previous', 'surecart')}
           </ce-button>
           <ce-button onClick={() => this.ceNextPage.emit()} disabled={!this.hasNextPage} size="small">
-            {__('Next', 'checkout_engine')}
+            {__('Next', 'surecart')}
           </ce-button>
         </ce-flex>
       </ce-flex>

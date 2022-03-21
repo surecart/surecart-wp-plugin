@@ -32,7 +32,7 @@ export default ({ customer, loading, updateCustomer }) => {
 	};
 
 	return (
-		<Box title={__('Customer Details', 'checkout_engine')}>
+		<Box title={__('Customer Details', 'surecart')}>
 			{loading ? (
 				renderLoading()
 			) : (
@@ -45,12 +45,9 @@ export default ({ customer, loading, updateCustomer }) => {
 					<ce-columns>
 						<ce-column>
 							<CeInput
-								label={__('Name', 'checkout_engine')}
+								label={__('Name', 'surecart')}
 								className="ce-customer-name"
-								help={__(
-									'Your customers name.',
-									'checkout_engine'
-								)}
+								help={__('Your customers name.', 'surecart')}
 								attribute="name"
 								value={customer?.name}
 								onCeChange={(e) =>
@@ -60,11 +57,11 @@ export default ({ customer, loading, updateCustomer }) => {
 						</ce-column>
 						<ce-column>
 							<CeInput
-								label={__('Email', 'checkout_engine')}
+								label={__('Email', 'surecart')}
 								className="ce-customer-email"
 								help={__(
 									"Your customer's email address.",
-									'checkout_engine'
+									'surecart'
 								)}
 								value={customer?.email}
 								name="email"
@@ -76,9 +73,9 @@ export default ({ customer, loading, updateCustomer }) => {
 						</ce-column>
 					</ce-columns>
 					{/* <CeInput
-						label={__('Name', 'checkout_engine')}
+						label={__('Name', 'surecart')}
 						className="ce-customer-name"
-						help={__('Your customers name.', 'checkout_engine')}
+						help={__('Your customers name.', 'surecart')}
 						attribute="name"
 						value={customer?.name}
 						onCeChange={(e) =>
@@ -86,11 +83,11 @@ export default ({ customer, loading, updateCustomer }) => {
 						}
 					/>
 					<CeInput
-						label={__('Email', 'checkout_engine')}
+						label={__('Email', 'surecart')}
 						className="ce-customer-email"
 						help={__(
 							"Your customer's email address.",
-							'checkout_engine'
+							'surecart'
 						)}
 						value={customer?.email}
 						name="email"

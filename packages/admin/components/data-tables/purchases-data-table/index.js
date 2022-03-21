@@ -17,7 +17,7 @@ export default ({
 }) => {
 	return (
 		<DataTable
-			title={__('Purchases', 'checkout_engine')}
+			title={__('Purchases', 'surecart')}
 			columns={columns}
 			empty={empty || __('None found.', 'checkout-engine')}
 			items={(data || [])

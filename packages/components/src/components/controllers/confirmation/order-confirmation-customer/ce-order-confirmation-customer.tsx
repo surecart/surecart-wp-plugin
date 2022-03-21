@@ -31,7 +31,7 @@ export class CeOrderConfirmationCustomer {
     return (
       <ce-customer-details customer={this.customer} loading={this.loading} error={this.error}>
         <span slot="heading">
-          <slot name="heading">{this.heading || __('Billing Details', 'checkout_engine')}</slot>
+          <slot name="heading">{this.heading || __('Billing Details', 'surecart')}</slot>
         </span>
       </ce-customer-details>
     );

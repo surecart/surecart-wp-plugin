@@ -174,9 +174,9 @@ return [
 	 * - 'admin'    - Automatically applied to admin routes.
 	 * - 'ajax'     - Automatically applied to ajax routes.
 	 * - 'global'   - Automatically applied to all of the above.
-	 * - 'checkout_engine' - Internal group applied the same way 'global' is.
+	 * - 'surecart' - Internal group applied the same way 'global' is.
 	 *
-	 * Warning: The 'checkout_engine' group contains some internal SureCart core
+	 * Warning: The 'surecart' group contains some internal SureCart core
 	 * middleware which you should avoid overriding.
 	 */
 	'middleware_groups'   => [

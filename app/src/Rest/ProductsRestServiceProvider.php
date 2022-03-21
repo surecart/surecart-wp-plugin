@@ -79,13 +79,13 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 			// In JSON Schema you can specify object properties in the properties attribute.
 			'properties' => [
 				'id'              => [
-					'description' => esc_html__( 'Unique identifier for the object.', 'checkout_engine' ),
+					'description' => esc_html__( 'Unique identifier for the object.', 'surecart' ),
 					'type'        => 'string',
 					'context'     => [ 'view', 'edit', 'embed' ],
 					'readonly'    => true,
 				],
 				'file_upload_ids' => [
-					'description' => esc_html__( 'Files attached to the product.', 'checkout_engine' ),
+					'description' => esc_html__( 'Files attached to the product.', 'surecart' ),
 					'context'     => [ 'edit' ],
 					'type'        => 'array',
 					'items'       => [
@@ -93,7 +93,7 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 					],
 				],
 				'metadata'        => [
-					'description' => esc_html__( 'Stored product metadata', 'checkout_engine' ),
+					'description' => esc_html__( 'Stored product metadata', 'surecart' ),
 					'type'        => 'object',
 					'properties'  => [
 						'wp_created_by' => [
@@ -104,7 +104,7 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 					],
 				],
 				'metrics'         => [
-					'description' => esc_html__( 'Top level metrics for the product.', 'checkout_engine' ),
+					'description' => esc_html__( 'Top level metrics for the product.', 'surecart' ),
 					'readonly'    => true,
 					'type'        => 'object',
 					'properties'  => [
@@ -137,11 +137,11 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 	public function get_collection_params() {
 		return [
 			'archived'          => [
-				'description' => esc_html__( 'Whether to get archived products or not.', 'checkout_engine' ),
+				'description' => esc_html__( 'Whether to get archived products or not.', 'surecart' ),
 				'type'        => 'boolean',
 			],
 			'recurring'         => [
-				'description' => esc_html__( 'Only return products that are recurring or not recurring (one time).', 'checkout_engine' ),
+				'description' => esc_html__( 'Only return products that are recurring or not recurring (one time).', 'surecart' ),
 				'type'        => 'boolean',
 			],
 			'query'             => [
@@ -165,11 +165,11 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 				'default'     => [],
 			],
 			'page'              => [
-				'description' => esc_html__( 'The page of items you want returned.', 'checkout_engine' ),
+				'description' => esc_html__( 'The page of items you want returned.', 'surecart' ),
 				'type'        => 'integer',
 			],
 			'per_page'          => [
-				'description' => esc_html__( 'A limit on the number of items to be returned, between 1 and 100.', 'checkout_engine' ),
+				'description' => esc_html__( 'A limit on the number of items to be returned, between 1 and 100.', 'surecart' ),
 				'type'        => 'integer',
 			],
 		];
@@ -185,7 +185,7 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 		if ( 'edit' === $request['context'] && ! current_user_can( 'edit_ce_products' ) ) {
 			return new \WP_Error(
 				'rest_forbidden_context',
-				__( 'Sorry, you are not allowed to edit products.', 'checkout_engine' ),
+				__( 'Sorry, you are not allowed to edit products.', 'surecart' ),
 				array( 'status' => rest_authorization_required_code() )
 			);
 		}
@@ -203,7 +203,7 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 		if ( 'edit' === $request['context'] && ! current_user_can( 'edit_ce_products' ) ) {
 			return new \WP_Error(
 				'rest_forbidden_context',
-				__( 'Sorry, you are not allowed to edit products.', 'checkout_engine' ),
+				__( 'Sorry, you are not allowed to edit products.', 'surecart' ),
 				array( 'status' => rest_authorization_required_code() )
 			);
 		}

@@ -32,7 +32,7 @@ export class CeCustomerDetails {
         {!!this?.customer?.name && (
           <ce-stacked-list-row style={{ '--columns': '3' }} mobileSize={480}>
             <div>
-              <strong>{__('Billing Name', 'checkout_engine')}</strong>
+              <strong>{__('Billing Name', 'surecart')}</strong>
             </div>
             <div>{this.customer?.name}</div>
             <div></div>
@@ -41,18 +41,18 @@ export class CeCustomerDetails {
         {!!this?.customer?.email && (
           <ce-stacked-list-row style={{ '--columns': '3' }} mobileSize={480}>
             <div>
-              <strong>{__('Billing Email', 'checkout_engine')}</strong>
+              <strong>{__('Billing Email', 'surecart')}</strong>
             </div>
             <div>{this.customer?.email}</div>
             <div></div>
           </ce-stacked-list-row>
         )}
-        {!!Object.keys(this?.customer?.shipping_address || {}).length && this.renderAddress(__('Shipping Address', 'checkout_engine'), this.customer.shipping_address)}
-        {!!Object.keys(this?.customer?.billing_address || {}).length && this.renderAddress(__('Billing Address', 'checkout_engine'), this.customer.billing_address)}
+        {!!Object.keys(this?.customer?.shipping_address || {}).length && this.renderAddress(__('Shipping Address', 'surecart'), this.customer.shipping_address)}
+        {!!Object.keys(this?.customer?.billing_address || {}).length && this.renderAddress(__('Billing Address', 'surecart'), this.customer.billing_address)}
         {!!this?.customer?.phone && (
           <ce-stacked-list-row style={{ '--columns': '3' }} mobileSize={480}>
             <div>
-              <strong>{__('Phone', 'checkout_engine')}</strong>
+              <strong>{__('Phone', 'surecart')}</strong>
             </div>
             <div>{this.customer?.phone}</div>
             <div></div>
@@ -61,7 +61,7 @@ export class CeCustomerDetails {
         {(() => {
           const { number_type, number } = this.customer?.tax_identifier || {};
           if (!number || !number_type) return;
-          const label = zones?.[number_type]?.label || __('Tax Id', 'checkout_engine');
+          const label = zones?.[number_type]?.label || __('Tax Id', 'surecart');
           const isInvalid = this.customer?.tax_identifier?.[`valid_${number_type}`] === false;
           return (
             <ce-stacked-list-row style={{ '--columns': '3' }} mobileSize={480}>
@@ -69,7 +69,7 @@ export class CeCustomerDetails {
                 <strong>{label}</strong>
               </div>
               <div>
-                {number} {isInvalid && <ce-tag type="warning">{__('Invalid', 'checkout_engine')}</ce-tag>}
+                {number} {isInvalid && <ce-tag type="warning">{__('Invalid', 'surecart')}</ce-tag>}
               </div>
               <div></div>
             </ce-stacked-list-row>
@@ -103,7 +103,7 @@ export class CeCustomerDetails {
   }
 
   renderEmpty() {
-    return <slot name="empty">{__('You are not a customer.', 'checkout_engine')}</slot>;
+    return <slot name="empty">{__('You are not a customer.', 'surecart')}</slot>;
   }
 
   renderLoading() {
@@ -122,10 +122,10 @@ export class CeCustomerDetails {
     return (
       <ce-dashboard-module class="customer-details" error={this.error}>
         <span slot="heading">
-          {this.heading || __('Billing Details', 'checkout_engine')}{' '}
+          {this.heading || __('Billing Details', 'surecart')}{' '}
           {!this?.customer?.live_mode === false && (
             <ce-tag type="warning" size="small">
-              {__('Test', 'checkout_engine')}
+              {__('Test', 'surecart')}
             </ce-tag>
           )}
         </span>
@@ -133,7 +133,7 @@ export class CeCustomerDetails {
         {this.editLink && (
           <ce-button type="link" href={this.editLink} slot="end">
             <ce-icon name="edit-3" slot="prefix"></ce-icon>
-            {__('Update', 'checkout_engine')}
+            {__('Update', 'surecart')}
           </ce-button>
         )}
 

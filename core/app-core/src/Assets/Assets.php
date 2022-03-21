@@ -218,7 +218,7 @@ class Assets {
 			return;
 		}
 
-		$favicon_url = apply_filters( 'checkout_engine_app_core_favicon_url', $this->getAssetUrl( 'images/favicon.ico' ) );
+		$favicon_url = apply_filters( 'surecart_app_core_favicon_url', $this->getAssetUrl( 'images/favicon.ico' ) );
 
 		echo '<link rel="shortcut icon" href="' . $favicon_url . '" />' . "\n";
 	}

@@ -17,7 +17,7 @@ class TimeDate {
 			// Return default date format if the option is empty.
 			$date_format = 'F j, Y';
 		}
-		return apply_filters( 'checkout_engine/date_format', $date_format );
+		return apply_filters( 'surecart/date_format', $date_format );
 	}
 
 	/**
@@ -31,7 +31,7 @@ class TimeDate {
 			// Return default time format if the option is empty.
 			$time_format = 'g:i a';
 		}
-		return apply_filters( 'checkout_engine/time_format', $time_format );
+		return apply_filters( 'surecart/time_format', $time_format );
 	}
 
 	/**
@@ -72,7 +72,7 @@ class TimeDate {
 		if ( $timestamp > strtotime( "-$ignore_after", time() ) ) {
 			return sprintf(
 			/* translators: %s: human-readable time difference */
-				_x( '%s ago', '%s = human-readable time difference', 'checkout_engine' ),
+				_x( '%s ago', '%s = human-readable time difference', 'surecart' ),
 				human_time_diff( $timestamp, time() )
 			);
 		} else {

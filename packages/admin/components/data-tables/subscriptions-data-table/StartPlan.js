@@ -14,7 +14,7 @@ export default ({ subscription, children }) => {
 		const r = confirm(
 			__(
 				'Are you sure you want to start the subscription? This will immediately charge the customer.',
-				'checkout_engine'
+				'surecart'
 			)
 		);
 		if (!r) return;
@@ -43,7 +43,7 @@ export default ({ subscription, children }) => {
 			if (result.id) {
 				receiveEntity(result);
 			} else {
-				throw __('Could not start subscription.', 'checkout_engine');
+				throw __('Could not start subscription.', 'surecart');
 			}
 		} catch (e) {
 			console.error(e);
@@ -52,7 +52,7 @@ export default ({ subscription, children }) => {
 			} else {
 				setError(
 					e?.message ||
-						__('Failed to start subscription.', 'checkout_engine')
+						__('Failed to start subscription.', 'surecart')
 				);
 			}
 		} finally {
@@ -70,7 +70,7 @@ export default ({ subscription, children }) => {
 					onClick={confirmStart}
 					loading={loading}
 				>
-					{__('Activate', 'checkout_engine')}
+					{__('Activate', 'surecart')}
 				</ce-button>
 			)}
 		</Fragment>

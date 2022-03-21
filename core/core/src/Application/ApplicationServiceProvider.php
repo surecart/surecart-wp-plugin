@@ -4,7 +4,7 @@
  * @author    Andre Gagnon <me@andregagnon.me>
  * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://checkout_engine.com/
+ * @link      https://surecart.com/
  */
 
 namespace CheckoutEngineCore\Application;
@@ -29,7 +29,7 @@ class ApplicationServiceProvider implements ServiceProviderInterface {
 		$this->extendConfig( $container, 'providers', [] );
 
 		$upload_dir = wp_upload_dir();
-		$cache_dir  = MixedType::addTrailingSlash( $upload_dir['basedir'] ) . 'checkout_engine' . DIRECTORY_SEPARATOR . 'cache';
+		$cache_dir  = MixedType::addTrailingSlash( $upload_dir['basedir'] ) . 'surecart' . DIRECTORY_SEPARATOR . 'cache';
 		$this->extendConfig(
 			$container,
 			'cache',

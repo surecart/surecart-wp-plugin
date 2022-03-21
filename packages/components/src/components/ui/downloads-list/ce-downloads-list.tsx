@@ -24,7 +24,7 @@ export class CeDownloadsList {
       <div>
         <ce-divider style={{ '--spacing': '0' }}></ce-divider>
         <slot name="empty">
-          <ce-empty icon="download">{__("You don't have any downloads.", 'checkout_engine')}</ce-empty>
+          <ce-empty icon="download">{__("You don't have any downloads.", 'surecart')}</ce-empty>
         </slot>
       </div>
     );
@@ -71,10 +71,7 @@ export class CeDownloadsList {
               <strong>{(purchase?.product as Product)?.name}</strong>
             </div>
             <div class="download__details">
-              {sprintf(
-                _n('%s file', '%s files', (purchase?.product as Product)?.files?.pagination?.count, 'checkout_engine'),
-                (purchase?.product as Product)?.files?.pagination?.count,
-              )}{' '}
+              {sprintf(_n('%s file', '%s files', (purchase?.product as Product)?.files?.pagination?.count, 'surecart'), (purchase?.product as Product)?.files?.pagination?.count)}{' '}
               &bull; <ce-format-bytes value={(purchase?.product as Product)?.files?.data.map(item => item.byte_size).reduce((prev, curr) => prev + curr, 0)}></ce-format-bytes>
             </div>
           </ce-spacing>
@@ -105,14 +102,14 @@ export class CeDownloadsList {
     return (
       <ce-dashboard-module class="downloads-list" error={this.error}>
         <span slot="heading">
-          <slot name="heading">{this.heading || __('Items', 'checkout_engine')}</slot>
+          <slot name="heading">{this.heading || __('Items', 'surecart')}</slot>
         </span>
 
         <slot name="before"></slot>
 
         {!!this.allLink && (
           <ce-button type="link" href={this.allLink} slot="end">
-            {__('View all', 'checkout_engine')}
+            {__('View all', 'surecart')}
             <ce-icon name="chevron-right" slot="suffix"></ce-icon>
           </ce-button>
         )}

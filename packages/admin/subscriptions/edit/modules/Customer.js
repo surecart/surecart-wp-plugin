@@ -9,7 +9,7 @@ export default ({ subscription, loading }) => {
 
 	return (
 		<Box
-			title={__('Customer', 'checkout_engine')}
+			title={__('Customer', 'surecart')}
 			loading={loading}
 			footer={
 				!loading && (
@@ -21,7 +21,7 @@ export default ({ subscription, loading }) => {
 								id: subscription?.customer,
 							})}
 						>
-							{__('Edit Customer', 'checkout_engine')}
+							{__('Edit Customer', 'surecart')}
 						</CeButton>
 					</div>
 				)

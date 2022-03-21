@@ -3,7 +3,7 @@
 	<?php \CheckoutEngine::render(
 		'layouts/partials/admin-index-header',
 		[
-			'title'    => __( 'Upgrade Groups', 'checkout_engine' ),
+			'title'    => __( 'Upgrade Groups', 'surecart' ),
 			'new_link' => \CheckoutEngine::getUrl()->edit( 'product_group' ),
 		]
 	); ?>

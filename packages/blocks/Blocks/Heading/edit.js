@@ -42,8 +42,8 @@ export default ({ attributes, setAttributes, isSelected }) => {
 
 			<CeHeading {...blockProps}>
 				<RichText
-					aria-label={__('Title', 'checkout_engine')}
-					placeholder={__('Add your title...', 'checkout_engine')}
+					aria-label={__('Title', 'surecart')}
+					placeholder={__('Add your title...', 'surecart')}
 					value={title}
 					onChange={(title) => setAttributes({ title })}
 					withoutInteractiveFormatting
@@ -53,10 +53,10 @@ export default ({ attributes, setAttributes, isSelected }) => {
 				{(isSelected || !!description) && (
 					<span slot="description">
 						<RichText
-							aria-label={__('Description', 'checkout_engine')}
+							aria-label={__('Description', 'surecart')}
 							placeholder={__(
 								'Add your description...',
-								'checkout_engine'
+								'surecart'
 							)}
 							value={description}
 							onChange={(description) =>

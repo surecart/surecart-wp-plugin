@@ -76,7 +76,7 @@ export default ({ choices, onUpdate, onRemove, onAddProduct, description }) => {
 			>
 				<CeButton onClick={onAddProduct}>
 					<ce-icon name="plus" slot="prefix"></ce-icon>
-					{__('Add Product', 'checkout_engine')}
+					{__('Add Product', 'surecart')}
 				</CeButton>
 			</div>
 		</div>

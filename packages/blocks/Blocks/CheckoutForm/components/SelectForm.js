@@ -46,10 +46,10 @@ export default ( { form, setForm } ) => {
 		<CeSelect
 			value={ form?.id }
 			loading={ loading }
-			placeholder={ __( 'Choose a form', 'checkout_engine' ) }
+			placeholder={ __( 'Choose a form', 'surecart
 			searchPlaceholder={ __(
 				'Search for a form...',
-				'checkout_engine'
+				'surecart
 			) }
 			search
 			onCeSearch={ ( e ) => findForm( e.detail ) }

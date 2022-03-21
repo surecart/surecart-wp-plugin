@@ -28,7 +28,7 @@ class Account extends Model {
 	 * @return array
 	 */
 	public static function processors() {
-		$key        = 'checkout_engine_account_processors';
+		$key        = 'surecart_account_processors';
 		$processors = get_transient( $key );
 
 		if ( false === $processors ) {

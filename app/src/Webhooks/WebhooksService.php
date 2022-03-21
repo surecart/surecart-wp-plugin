@@ -113,8 +113,8 @@ class WebhooksService {
 	public function showWebhooksErrorNotice( \WP_Error $error ) {
 		$messages = implode( '<br>', $error->get_error_messages() );
 		$class    = 'notice notice-error';
-		$message  = __( 'CheckoutEngine webhooks could not be created.', 'checkout_engine' ) . '<br />' . $messages;
-		printf( '<div class="%1$s"><p>%2$s</p></div>', esc_attr( $class ), wp_kses_post( $message ) );
+		$message  = __( 'CheckoutEngine webhooks could not be created.', 'surecart' ) . $messages;
+		printf( ' < div class = "%1$s" > < p > % 2$s < / p > < / div > ', esc_attr( $class ), wp_kses_post( $message ) );
 	}
 
 	/**

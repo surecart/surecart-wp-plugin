@@ -70,8 +70,8 @@ export default ({
 			className={className}
 			open={open}
 			loading={loading}
-			placeholder={__('Select a product', 'checkout_engine')}
-			searchPlaceholder={__('Search for a product...', 'checkout_engine')}
+			placeholder={__('Select a product', 'surecart')}
+			searchPlaceholder={__('Search for a product...', 'surecart')}
 			search
 			onCeOpen={onFetch}
 			onCeSearch={(e) => findProduct(e.detail)}
@@ -84,7 +84,7 @@ export default ({
 				<span slot="prefix">
 					<CeMenuItem onClick={onNew}>
 						<span slot="prefix">+</span>
-						{__('Add New Product', 'checkout_engine')}
+						{__('Add New Product', 'surecart')}
 					</CeMenuItem>
 					<CeDivider
 						style={{ '--spacing': 'var(--ce-spacing-x-small)' }}

@@ -32,10 +32,7 @@ export default ({ subscription, children }) => {
 			if (result.id) {
 				receiveEntity(result);
 			} else {
-				throw __(
-					'Could not un-cancel subscription.',
-					'checkout_engine'
-				);
+				throw __('Could not un-cancel subscription.', 'surecart');
 			}
 		} catch (e) {
 			console.error(e);
@@ -44,10 +41,7 @@ export default ({ subscription, children }) => {
 			} else {
 				setError(
 					e?.message ||
-						__(
-							'Failed to un-cancel subscription.',
-							'checkout_engine'
-						)
+						__('Failed to un-cancel subscription.', 'surecart')
 				);
 			}
 		} finally {
@@ -61,7 +55,7 @@ export default ({ subscription, children }) => {
 				<span onClick={unCancel}>{children}</span>
 			) : (
 				<ce-button size="small" onClick={unCancel} loading={loading}>
-					{__("Don't Cancel", 'checkout_engine')}
+					{__("Don't Cancel", 'surecart')}
 				</ce-button>
 			)}
 		</Fragment>

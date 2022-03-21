@@ -4,7 +4,7 @@
 	\CheckoutEngine::render(
 		'layouts/partials/admin-index-header',
 		[
-			'title'    => __( 'Customers', 'checkout_engine' ),
+			'title'    => __( 'Customers', 'surecart' ),
 			'new_link' => \CheckoutEngine::getUrl()->edit( 'customers' ),
 		]
 	);

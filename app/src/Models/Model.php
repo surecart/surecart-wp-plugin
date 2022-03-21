@@ -117,7 +117,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	 */
 	public function __construct( $attributes = [] ) {
 		// filter meta data setting.
-		add_filter( "checkout_engine/$this->object_name/set_meta_data", [ $this, 'filterMetaData' ], 9 );
+		add_filter( "surecart/$this->object_name/set_meta_data", [ $this, 'filterMetaData' ], 9 );
 
 		// if we have string here, assume it's the id.
 		if ( is_string( $attributes ) ) {
@@ -330,7 +330,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 		$event_name   = "model.{$called_class}.{$event}";
 
 		// fire global event.
-		\do_action( "checkout_engine/models/{$called_class}/{$event}", $this );
+		\do_action( "surecart/models/{$called_class}/{$event}", $this );
 
 		if ( isset( static::$events[ $event_name ] ) ) {
 			return call_user_func( static::$events[ $event_name ], $this );
@@ -387,7 +387,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 			}
 		}
 
-		return apply_filters( "checkout_engine/{$this->object_name}/set_attributes", $this );
+		return apply_filters( "surecart/{$this->object_name}/set_attributes", $this );
 	}
 
 	/**
@@ -450,7 +450,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	 * @return this
 	 */
 	public function setMetadataAttributes( $meta_data ) {
-		$this->attributes['metadata'] = apply_filters( "checkout_engine/$this->object_name/set_meta_data", $meta_data );
+		$this->attributes['metadata'] = apply_filters( "surecart/$this->object_name/set_meta_data", $meta_data );
 		return $this;
 	}
 

@@ -39,13 +39,13 @@ export const getCurrencySymbol = (code = 'usd') => {
 
 export const translate = (key) => {
 	const map = {
-		day: __('Day', 'checkout_engine'),
-		month: __('Month', 'checkout_engine'),
-		year: __('Year', 'checkout_engine'),
-		never: __('Lifetime', 'checkout_engine'),
-		archived: __('Archived', 'checkout_engine'),
-		draft: __('Draft', 'checkout_engine'),
-		active: __('Active', 'checkout_engine'),
+		day: __('Day', 'surecart'),
+		month: __('Month', 'surecart'),
+		year: __('Year', 'surecart'),
+		never: __('Lifetime', 'surecart'),
+		archived: __('Archived', 'surecart'),
+		draft: __('Draft', 'surecart'),
+		active: __('Active', 'surecart'),
 	};
 	return map?.[key] || key;
 };

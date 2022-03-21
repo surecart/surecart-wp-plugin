@@ -29,7 +29,7 @@ export default ({ id, product, updateProduct, loading }) => {
 	};
 
 	return (
-		<Box title={__('Files', 'checkout_engine')} loading={loading}>
+		<Box title={__('Files', 'surecart')} loading={loading}>
 			{(() => {
 				if (!(product?.files?.data || [])?.length && !uploads.length)
 					return null;
@@ -105,10 +105,7 @@ export default ({ id, product, updateProduct, loading }) => {
 				);
 			})()}
 
-			<CeFormControl
-				label={__('Files', 'checkout_engine')}
-				showLabel={false}
-			>
+			<CeFormControl label={__('Files', 'surecart')} showLabel={false}>
 				<div
 					css={css`
 						position: relative;
@@ -122,11 +119,11 @@ export default ({ id, product, updateProduct, loading }) => {
 				>
 					{__(
 						'Drag and drop an file here or click to select a file.',
-						'checkout_engine'
+						'surecart'
 					)}
 
 					<FormFileUpload isPrimary multiple onChange={doUpload}>
-						{__('Upload File', 'checkout_engine')}
+						{__('Upload File', 'surecart')}
 					</FormFileUpload>
 
 					<DropZone onFilesDrop={doUpload} />

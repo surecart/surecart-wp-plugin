@@ -52,7 +52,7 @@ export class CeUpcomingInvoice {
       await Promise.all([this.getInvoice(), this.getPrice()]);
     } catch (e) {
       console.error(this.error);
-      this.error = e?.message || __('Something went wrong', 'checkout_engine');
+      this.error = e?.message || __('Something went wrong', 'surecart');
     } finally {
       this.loading = false;
     }
@@ -91,7 +91,7 @@ export class CeUpcomingInvoice {
       };
       await this.getInvoice();
     } catch (e) {
-      this.couponError = e?.message || __('Something went wrong', 'checkout_engine');
+      this.couponError = e?.message || __('Something went wrong', 'surecart');
     } finally {
       this.busy = false;
     }
@@ -104,7 +104,7 @@ export class CeUpcomingInvoice {
       this.quantity = e.detail;
       await this.getInvoice();
     } catch (e) {
-      this.error = e?.message || __('Something went wrong', 'checkout_engine');
+      this.error = e?.message || __('Something went wrong', 'surecart');
     } finally {
       this.busy = false;
     }
@@ -129,7 +129,7 @@ export class CeUpcomingInvoice {
         this.busy = false;
       }
     } catch (e) {
-      this.error = e?.message || __('Something went wrong', 'checkout_engine');
+      this.error = e?.message || __('Something went wrong', 'surecart');
       this.busy = false;
     }
   }
@@ -138,16 +138,16 @@ export class CeUpcomingInvoice {
     if (typeof price?.product !== 'string') {
       return price?.product?.name;
     }
-    return __('Plan', 'checkout_engine');
+    return __('Plan', 'surecart');
   }
 
   renderRenewalText() {
     if (this.isFutureInvoice()) {
       return (
         <div>
-          {__("You'll be switched to this plan", 'checkout_engine')}{' '}
+          {__("You'll be switched to this plan", 'surecart')}{' '}
           <strong>
-            {__('at the end of your billing cycle on', 'checkout_engine')}{' '}
+            {__('at the end of your billing cycle on', 'surecart')}{' '}
             <ce-format-date type="timestamp" date={this.invoice?.period_start_at} month="short" day="numeric" year="numeric"></ce-format-date>
           </strong>
         </div>
@@ -156,13 +156,13 @@ export class CeUpcomingInvoice {
 
     return (
       <div>
-        {__("You'll be switched to this plan", 'checkout_engine')} <strong>{__('immediately', 'checkout_engine')}</strong>
+        {__("You'll be switched to this plan", 'surecart')} <strong>{__('immediately', 'surecart')}</strong>
       </div>
     );
   }
 
   renderEmpty() {
-    return <slot name="empty">{__('Something went wrong.', 'checkout_engine')}</slot>;
+    return <slot name="empty">{__('Something went wrong.', 'surecart')}</slot>;
   }
 
   renderLoading() {
@@ -224,7 +224,7 @@ export class CeUpcomingInvoice {
         ></ce-product-line-item>
 
         <ce-line-item>
-          <span slot="description">{__('Subtotal', 'checkout_engine')}</span>
+          <span slot="description">{__('Subtotal', 'surecart')}</span>
           <span slot="price">{this.renderPrice('subtotal_amount')}</span>
         </ce-line-item>
 
@@ -234,7 +234,7 @@ export class CeUpcomingInvoice {
 
         {!!this.invoice.tax_amount && (
           <ce-line-item>
-            <span slot="description">{this.invoice?.tax_label || __('Tax', 'checkout_engine')}</span>
+            <span slot="description">{this.invoice?.tax_label || __('Tax', 'surecart')}</span>
             <span slot="price">{this.renderPrice('tax_amount')}</span>
           </ce-line-item>
         )}
@@ -244,13 +244,13 @@ export class CeUpcomingInvoice {
             <ce-divider style={{ '--spacing': '0' }}></ce-divider>
 
             <ce-line-item>
-              <span slot="title">{__('Total', 'checkout_engine')}</span>
+              <span slot="title">{__('Total', 'surecart')}</span>
               <span slot="price">{this.renderPrice('total_amount')}</span>
             </ce-line-item>
 
             {!!this.invoice.proration_amount && (
               <ce-line-item>
-                <span slot="description">{__('Proration Credit', 'checkout_engine')}</span>
+                <span slot="description">{__('Proration Credit', 'surecart')}</span>
                 <span slot="price">{this.renderPrice('proration_amount')}</span>
               </ce-line-item>
             )}
@@ -260,7 +260,7 @@ export class CeUpcomingInvoice {
         <ce-divider style={{ '--spacing': '0' }}></ce-divider>
 
         <ce-line-item>
-          <span slot="description">{__('Payment', 'checkout_engine')}</span>
+          <span slot="description">{__('Payment', 'surecart')}</span>
           <a
             href={addQueryArgs(window.location.href, {
               action: 'payment',
@@ -279,7 +279,7 @@ export class CeUpcomingInvoice {
         </ce-line-item>
 
         <ce-line-item style={{ '--price-size': 'var(--ce-font-size-x-large)' }}>
-          <span slot="title">{__('Total Due Today', 'checkout_engine')}</span>
+          <span slot="title">{__('Total Due Today', 'surecart')}</span>
           {this.isFutureInvoice() ? (
             <ce-format-number type="currency" currency={this.invoice?.currency} slot="price"></ce-format-number>
           ) : (
@@ -296,21 +296,21 @@ export class CeUpcomingInvoice {
       <div class="upcoming-invoice">
         {this.error && (
           <ce-alert open={!!this.error} type="danger">
-            <span slot="title">{__('Error', 'checkout_engine')}</span>
+            <span slot="title">{__('Error', 'surecart')}</span>
             {this.error}
           </ce-alert>
         )}
 
-        <ce-dashboard-module heading={__('New Plan', 'checkout_engine')} class="plan-preview" error={this.error}>
+        <ce-dashboard-module heading={__('New Plan', 'surecart')} class="plan-preview" error={this.error}>
           <ce-card>{this.renderContent()}</ce-card>
         </ce-dashboard-module>
 
-        <ce-dashboard-module heading={__('Summary', 'checkout_engine')} class="plan-summary">
+        <ce-dashboard-module heading={__('Summary', 'surecart')} class="plan-summary">
           <ce-form onCeFormSubmit={() => this.onSubmit()}>
             <ce-card>{this.renderSummary()}</ce-card>
 
             <ce-button type="primary" full submit loading={this.loading || this.busy} disabled={this.loading || this.busy}>
-              {__('Confirm', 'checkout_engine')}
+              {__('Confirm', 'surecart')}
             </ce-button>
           </ce-form>
         </ce-dashboard-module>

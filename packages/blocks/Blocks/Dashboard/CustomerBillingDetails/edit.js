@@ -15,10 +15,10 @@ export default ({ attributes, setAttributes }) => {
 	return (
 		<Fragment>
 			<InspectorControls>
-				<PanelBody title={__('Attributes', 'checkout_engine')}>
+				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<TextControl
-							label={__('Title', 'checkout_engine')}
+							label={__('Title', 'surecart')}
 							value={title}
 							onChange={(title) => setAttributes({ title })}
 						/>
@@ -39,25 +39,23 @@ export default ({ attributes, setAttributes }) => {
 
 				<ce-button type="link" slot="end">
 					<ce-icon name="edit-3" slot="prefix"></ce-icon>
-					{__('Update', 'checkout_engine')}
+					{__('Update', 'surecart')}
 				</ce-button>
 
 				<ce-card no-padding>
 					<ce-stacked-list>
 						<ce-stacked-list-row style={{ '--columns': '3' }}>
-							<div>{__('Billing Name', 'checkout_engine')}</div>
+							<div>{__('Billing Name', 'surecart')}</div>
 							<div>Jane Doe</div>
 							<div></div>
 						</ce-stacked-list-row>
 						<ce-stacked-list-row style={{ '--columns': '3' }}>
-							<div>{__('Billing Email', 'checkout_engine')}</div>
+							<div>{__('Billing Email', 'surecart')}</div>
 							<div>customer@email.com</div>
 							<div></div>
 						</ce-stacked-list-row>
 						<ce-stacked-list-row style={{ '--columns': '3' }}>
-							<div>
-								{__('Shipping Address', 'checkout_engine')}
-							</div>
+							<div>{__('Shipping Address', 'surecart')}</div>
 							<div>
 								3606 Neville Street
 								<br />
@@ -68,9 +66,7 @@ export default ({ attributes, setAttributes }) => {
 							<div></div>
 						</ce-stacked-list-row>
 						<ce-stacked-list-row style={{ '--columns': '3' }}>
-							<div>
-								{__('Billing Address', 'checkout_engine')}
-							</div>
+							<div>{__('Billing Address', 'surecart')}</div>
 							<div>
 								3606 Neville Street
 								<br />
@@ -81,7 +77,7 @@ export default ({ attributes, setAttributes }) => {
 							<div></div>
 						</ce-stacked-list-row>
 						<ce-stacked-list-row style={{ '--columns': '3' }}>
-							<div>{__('Phone', 'checkout_engine')}</div>
+							<div>{__('Phone', 'surecart')}</div>
 							<div>555-867-5309</div>
 							<div></div>
 						</ce-stacked-list-row>

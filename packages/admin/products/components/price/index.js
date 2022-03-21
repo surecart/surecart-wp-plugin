@@ -49,7 +49,7 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 						css={css`
 							flex: 1 1 75%;
 						`}
-						label={__('Price', 'checkout_engine')}
+						label={__('Price', 'surecart')}
 						className="ce-price-amount"
 						currencyCode={ceData.currecy_code}
 						value={price?.amount}
@@ -67,7 +67,7 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 						`}
 					>
 						<CePriceInput
-							label={__('Minimum Amount', 'checkout_engine')}
+							label={__('Minimum Amount', 'surecart')}
 							className="ce-ad-hoc-min-amount"
 							value={price?.ad_hoc_min_amount}
 							onCeChange={(e) =>
@@ -77,7 +77,7 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 							}
 						/>
 						<CePriceInput
-							label={__('Maximum Amount', 'checkout_engine')}
+							label={__('Maximum Amount', 'surecart')}
 							className="ce-ad-hoc-max-amount"
 							value={price?.ad_hoc_max_amount}
 							min={price?.ad_hoc_min_amount / 100}
@@ -99,7 +99,7 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 					>
 						{__(
 							'Allow customers to pay what they want',
-							'checkout_engine'
+							'surecart'
 						)}
 					</CeSwitch>
 				</div>
@@ -115,7 +115,7 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 						css={css`
 							flex: 1 1 75%;
 						`}
-						label={__('Price', 'checkout_engine')}
+						label={__('Price', 'surecart')}
 						className="ce-price-amount"
 						currencyCode={ceData.currecy_code}
 						value={price?.amount}
@@ -134,7 +134,7 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 										price?.id
 											? __(
 													'To change the interval, create a new price.',
-													'checkout_engine'
+													'surecart'
 											  )
 											: null
 									}
@@ -148,10 +148,7 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 									flex: 1;
 								`}
 								disabled={price?.id}
-								label={__(
-									'Repeat Payment Every',
-									'checkout_engine'
-								)}
+								label={__('Repeat Payment Every', 'surecart')}
 							>
 								<div
 									css={css`
@@ -189,23 +186,17 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 										choices={[
 											{
 												value: 'month',
-												label: __(
-													'Month',
-													'checkout_engine'
-												),
+												label: __('Month', 'surecart'),
 											},
 											{
 												value: 'year',
-												label: __(
-													'Year',
-													'checkout_engine'
-												),
+												label: __('Year', 'surecart'),
 											},
 											{
 												value: 'never',
 												label: __(
 													'Lifetime',
-													'checkout_engine'
+													'surecart'
 												),
 											},
 										]}
@@ -225,7 +216,7 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 										price?.id
 											? __(
 													'To change the interval, create a new price.',
-													'checkout_engine'
+													'surecart'
 											  )
 											: null
 									}
@@ -245,7 +236,7 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 									})
 								}
 							>
-								{__('Lifetime subscription', 'checkout_engine')}
+								{__('Lifetime subscription', 'surecart')}
 							</CeSwitch>
 						</ConditionalWrapper>
 					</div>
@@ -253,11 +244,11 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 
 				{product?.recurring && (
 					<CeInput
-						label={__('Free Trial Days', 'checkout_engine')}
+						label={__('Free Trial Days', 'surecart')}
 						className="ce-free-trial"
 						help={__(
 							'If you want to add a free trial, enter the number of days.',
-							'checkout_engine'
+							'surecart'
 						)}
 						value={price?.trial_duration_days}
 						onCeChange={(e) =>
@@ -266,9 +257,7 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 							})
 						}
 					>
-						<span slot="suffix">
-							{__('Days', 'checkout_engine')}
-						</span>
+						<span slot="suffix">{__('Days', 'surecart')}</span>
 					</CeInput>
 				)}
 			</Fragment>
@@ -308,7 +297,7 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 							css={css`
 								flex: 1 1 75%;
 							`}
-							label={__('Price', 'checkout_engine')}
+							label={__('Price', 'surecart')}
 							className="ce-price-amount"
 							currencyCode={ceData.currecy_code}
 							value={price?.amount}
@@ -326,7 +315,7 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 							`}
 						>
 							<CePriceInput
-								label={__('Min Amount', 'checkout_engine')}
+								label={__('Min Amount', 'surecart')}
 								className="ce-ad-hoc-min-amount"
 								value={price?.ad_hoc_min_amount}
 								onCeChange={(e) =>
@@ -337,7 +326,7 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 								required
 							/>
 							<CePriceInput
-								label={__('Max Amount', 'checkout_engine')}
+								label={__('Max Amount', 'surecart')}
 								className="ce-ad-hoc-max-amount"
 								value={price?.ad_hoc_max_amount}
 								min={price?.ad_hoc_min_amount / 100}
@@ -358,7 +347,7 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 						>
 							{__(
 								'Allow customers to pay what they want',
-								'checkout_engine'
+								'surecart'
 							)}
 						</CeSwitch>
 					</div>
@@ -369,7 +358,7 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 						css={css`
 							flex: 1 1 75%;
 						`}
-						label={__('Price', 'checkout_engine')}
+						label={__('Price', 'surecart')}
 						className="ce-price-amount"
 						currencyCode={ceData.currecy_code}
 						value={price?.amount}
@@ -388,7 +377,7 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 										price?.id
 											? __(
 													'To change the interval, create a new price.',
-													'checkout_engine'
+													'surecart'
 											  )
 											: null
 									}
@@ -404,7 +393,7 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 								disabled={price?.id}
 								label={__(
 									'Repeat Payment Every',
-									'checkout_engine'
+									'surecart'
 								)}
 							>
 								<div
@@ -445,21 +434,21 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 												value: 'month',
 												label: __(
 													'Month',
-													'checkout_engine'
+													'surecart'
 												),
 											},
 											{
 												value: 'year',
 												label: __(
 													'Year',
-													'checkout_engine'
+													'surecart'
 												),
 											},
 											{
 												value: 'never',
 												label: __(
 													'Lifetime',
-													'checkout_engine'
+													'surecart'
 												),
 											},
 										]}
@@ -480,7 +469,7 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 						>
 							{__(
 								'Allow customers to pay what they want',
-								'checkout_engine'
+								'surecart'
 							)}
 						</CeSwitch>
 					</div>
@@ -495,7 +484,7 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 										price?.id
 											? __(
 													'To change the interval, create a new price.',
-													'checkout_engine'
+													'surecart'
 											  )
 											: null
 									}
@@ -515,18 +504,18 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 									})
 								}
 							>
-								{__('Lifetime subscription', 'checkout_engine')}
+								{__('Lifetime subscription', 'surecart')}
 							</CeSwitch>
 						</ConditionalWrapper>
 					</div>
 				)}
 				{product?.recurring && (
 					<CeInput
-						label={__('Free Trial Days', 'checkout_engine')}
+						label={__('Free Trial Days', 'surecart')}
 						className="ce-free-trial"
 						help={__(
 							'If you want to add a free trial, enter the number of days.',
-							'checkout_engine'
+							'surecart'
 						)}
 						value={price?.trial_duration_days}
 						onCeChange={(e) =>
@@ -536,7 +525,7 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 						}
 					>
 						<span slot="suffix">
-							{__('Days', 'checkout_engine')}
+							{__('Days', 'surecart')}
 						</span>
 					</CeInput>
 				)} */}
