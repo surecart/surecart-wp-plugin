@@ -23,7 +23,7 @@ import { receipt as icon } from '@wordpress/icons';
  * Components
  */
 import SelectForm from './SelectForm';
-import { CeButton, CeInput } from '@surecart/components-react';
+import { ScButton, ScInput } from '@surecart/components-react';
 import PlaceholderTemplate from '../../../components/PlaceholderTemplate';
 
 export default ({ attributes, setAttributes }) => {
@@ -32,9 +32,9 @@ export default ({ attributes, setAttributes }) => {
 
 	const blockProps = useBlockProps({
 		css: css`
-			--ce-color-primary-500: var(--wp-admin-theme-color);
-			--ce-focus-ring-color-primary: var(--wp-admin-theme-color);
-			--ce-input-border-color-focus: var(--wp-admin-theme-color);
+			--sc-color-primary-500: var(--wp-admin-theme-color);
+			--sc-focus-ring-color-primary: var(--wp-admin-theme-color);
+			--sc-input-border-color-focus: var(--wp-admin-theme-color);
 			.components-placeholder.components-placeholder {
 				padding: 2em;
 			}
@@ -84,7 +84,7 @@ export default ({ attributes, setAttributes }) => {
 						`}
 					>
 						<div>{__('Form Title', 'surecart')}</div>
-						<CeInput
+						<ScInput
 							css={css`
 								max-width: 400px;
 							`}
@@ -93,29 +93,29 @@ export default ({ attributes, setAttributes }) => {
 								'Enter a title for your form',
 								'surecart'
 							)}
-							onCeChange={(e) =>
+							onScChange={(e) =>
 								setAttributes({ title: e.target.value })
 							}
 						/>
 						<div>
-							<CeButton
+							<ScButton
 								type="primary"
 								onClick={() => {
 									saveFormBlock();
 								}}
 							>
 								{__('Next', 'surecart')}
-								<ce-icon
+								<sc-icon
 									name="arrow-right"
 									slot="suffix"
-								></ce-icon>
-							</CeButton>
-							<CeButton
+								></sc-icon>
+							</ScButton>
+							<ScButton
 								type="text"
 								onClick={() => setAttributes({ step: null })}
 							>
 								{__('Cancel', 'surecart')}
-							</CeButton>
+							</ScButton>
 						</div>
 					</div>
 				</PlaceholderTemplate>
@@ -138,24 +138,24 @@ export default ({ attributes, setAttributes }) => {
 					>
 						<SelectForm form={form} setForm={setForm} />
 						<div>
-							<CeButton
+							<ScButton
 								type="primary"
 								onClick={() => {
 									setAttributes({ id: form?.id });
 								}}
 							>
 								{__('Choose', 'surecart')}
-								<ce-icon
+								<sc-icon
 									name="arrow-right"
 									slot="suffix"
-								></ce-icon>
-							</CeButton>
-							<CeButton
+								></sc-icon>
+							</ScButton>
+							<ScButton
 								type="text"
 								onClick={() => setAttributes({ step: null })}
 							>
 								{__('Cancel', 'surecart')}
-							</CeButton>
+							</ScButton>
 						</div>
 					</div>
 				</PlaceholderTemplate>
@@ -179,18 +179,18 @@ export default ({ attributes, setAttributes }) => {
 						gap: 0.5em;
 					`}
 				>
-					<CeButton
+					<ScButton
 						type="primary"
 						onClick={() => setAttributes({ step: 'new' })}
 					>
 						{__('New Form', 'surecart')}
-					</CeButton>
-					<CeButton
+					</ScButton>
+					<ScButton
 						type="default"
 						onClick={() => setAttributes({ step: 'select' })}
 					>
 						{__('Select Form', 'surecart')}
-					</CeButton>
+					</ScButton>
 				</div>
 			</Placeholder>
 		</div>

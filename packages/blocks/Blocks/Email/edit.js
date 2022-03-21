@@ -6,7 +6,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Component Dependencies
  */
-import { CeInput } from '@surecart/components-react';
+import { ScInput } from '@surecart/components-react';
 import Inspector from './components/Inspector';
 
 export default ({ className, attributes, setAttributes }) => {
@@ -16,13 +16,13 @@ export default ({ className, attributes, setAttributes }) => {
 		<div className={className}>
 			<Inspector attributes={attributes} setAttributes={setAttributes} />
 
-			<CeInput
+			<ScInput
 				type="email"
 				label={label}
 				placeholder={placeholder}
 				help={help}
 				required
-			></CeInput>
+			></ScInput>
 		</div>
 	);
 };

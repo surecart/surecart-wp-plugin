@@ -1,4 +1,4 @@
-<ce-checkout
+<sc-checkout
 	class="checkout"
 	id="<?php echo esc_attr( $id ); ?>"
 	form-id="<?php echo esc_attr( $form_id ); ?>"
@@ -10,16 +10,16 @@
 	alignment="<?php echo esc_attr( $align ); ?>"
 	success-url="<?php echo esc_url( $success_url ); ?>"
 >
-	<ce-form>
+	<sc-form>
 		<?php echo filter_block_content( $content, 'post' ); ?>
-	</ce-form>
-</ce-checkout>
+	</sc-form>
+</sc-checkout>
 
 
 <?php
 // This dynamically adds prop data to a component since we cannot pass objects data as a prop.
 \SureCart::assets()->addComponentData(
-	'ce-checkout',
+	'sc-checkout',
 	'#' . $id,
 	[
 		'prices'   => $prices,

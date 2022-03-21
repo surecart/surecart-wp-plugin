@@ -62,7 +62,7 @@ class CustomersListTable extends ListTable {
 			'all'      => __( 'All', 'surecart' ),
 		];
 
-		$link = admin_url( 'admin.php?page=ce-products' );
+		$link = admin_url( 'admin.php?page=sc-products' );
 
 		foreach ( $stati as $status => $label ) {
 			$current_link_attributes = '';

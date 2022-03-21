@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { CeButton } from '@surecart/components-react';
+import { ScButton } from '@surecart/components-react';
 import { useDispatch } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import { useEffect } from 'react';
@@ -124,7 +124,7 @@ export default ({ id }) => {
 			});
 			window.location.assign(
 				addQueryArgs('admin.php', {
-					page: 'ce-product-groups',
+					page: 'sc-product-groups',
 				})
 			);
 		} catch (e) {
@@ -137,34 +137,34 @@ export default ({ id }) => {
 	return (
 		<Template
 			id={id}
-			backUrl={'admin.php?page=ce-product-groups'}
+			backUrl={'admin.php?page=sc-product-groups'}
 			backText={__('Back to upgrade groups list.', 'surecart')}
 			title={
-				<ce-flex align-items="center">
+				<sc-flex align-items="center">
 					{id
 						? __('Edit Upgrade Group', 'surecart')
 						: __('Create Upgrade Group', 'surecart')}
 					{product_group?.archived && (
-						<ce-tag type="warning">
+						<sc-tag type="warning">
 							{__('Archived', 'surecart')}
-						</ce-tag>
+						</sc-tag>
 					)}
-				</ce-flex>
+				</sc-flex>
 			}
 			pageModelName={'product_group'}
 			onSubmit={onSubmit}
 			button={
 				isLoading || isGroupLoading ? (
-					<ce-skeleton
+					<sc-skeleton
 						style={{
 							width: '120px',
 							height: '35px',
 							display: 'inline-block',
 						}}
-					></ce-skeleton>
+					></sc-skeleton>
 				) : (
-					<ce-flex align-items="center">
-						<CeButton
+					<sc-flex align-items="center">
+						<ScButton
 							loading={isSaving}
 							type="text"
 							onClick={confirmArchiveToggle}
@@ -172,11 +172,11 @@ export default ({ id }) => {
 							{product_group?.archived
 								? __('Un-Archive', 'surecart')
 								: __('Archive', 'surecart')}
-						</CeButton>
-						<CeButton type="primary" loading={isSaving} submit>
+						</ScButton>
+						<ScButton type="primary" loading={isSaving} submit>
 							{__('Update', 'surecart')}
-						</CeButton>
-					</ce-flex>
+						</ScButton>
+					</sc-flex>
 				)
 			}
 		>

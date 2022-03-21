@@ -3,7 +3,7 @@ import { css, jsx } from '@emotion/core';
 
 import { __ } from '@wordpress/i18n';
 
-import { CeInput, CeSwitch, CeSelect } from '@surecart/components-react';
+import { ScInput, ScSwitch, ScSelect } from '@surecart/components-react';
 import Box from '../../ui/Box';
 
 export default ({ product, updateProduct, loading }) => {
@@ -12,40 +12,40 @@ export default ({ product, updateProduct, loading }) => {
 			<div
 				css={css`
 					display: grid;
-					gap: var(--ce-spacing-large);
+					gap: var(--sc-spacing-large);
 				`}
 			>
-				<CeInput
+				<ScInput
 					label={__('Name', 'surecart')}
-					className="ce-product-name hydrated"
+					className="sc-product-name hydrated"
 					help={__('A name for your product.', 'surecart')}
 					value={product?.name}
-					onCeChange={(e) => {
+					onScChange={(e) => {
 						updateProduct({ name: e.target.value });
 					}}
 					name="name"
 					required
 				/>
 
-				<CeSwitch
+				<ScSwitch
 					css={css`
-						margin: var(--ce-spacing-small) 0;
+						margin: var(--sc-spacing-small) 0;
 					`}
 					checked={product?.tax_enabled}
-					onCeChange={() =>
+					onScChange={() =>
 						updateProduct({
 							tax_enabled: !product?.tax_enabled,
 						})
 					}
 				>
 					{__('Charge tax on this product', 'surecart')}
-				</CeSwitch>
+				</ScSwitch>
 				{product?.tax_enabled && (
 					<div>
-						<CeSelect
+						<ScSelect
 							value={product?.tax_category || 'tangible'}
 							required
-							onCeChange={(e) => {
+							onScChange={(e) => {
 								updateProduct({
 									tax_category: e.target.value,
 								});

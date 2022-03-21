@@ -1,0 +1,12 @@
+import { newSpecPage } from '@stencil/core/testing';
+import { ScFormatNumber } from '../sc-format-number';
+
+describe('sc-format-currency', () => {
+  it('renders', async () => {
+    const page = await newSpecPage({
+      components: [ScFormatNumber],
+      html: `<sc-format-number value="2000"></sc-format-number>`,
+    });
+    expect(page.root).toMatchSnapshot();
+  });
+});

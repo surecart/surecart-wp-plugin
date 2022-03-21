@@ -14,7 +14,7 @@ import {
 /**
  * Component Dependencies
  */
-import { CeCheckbox } from '@surecart/components-react';
+import { ScCheckbox } from '@surecart/components-react';
 import { useBlockProps } from '@wordpress/block-editor';
 
 export default ({ className, attributes, setAttributes }) => {
@@ -65,7 +65,7 @@ export default ({ className, attributes, setAttributes }) => {
 			</InspectorControls>
 
 			{/* <Disabled> */}
-			<CeCheckbox
+			<ScCheckbox
 				className={className}
 				name={name}
 				required={required}
@@ -79,7 +79,7 @@ export default ({ className, attributes, setAttributes }) => {
 					withoutInteractiveFormatting
 					allowedFormats={['core/bold', 'core/italic']}
 				/>
-			</CeCheckbox>
+			</ScCheckbox>
 			{/* </Disabled> */}
 		</Fragment>
 	);

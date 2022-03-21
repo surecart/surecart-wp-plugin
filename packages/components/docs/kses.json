@@ -1,5 +1,5 @@
 {
-  "ce-address": {
+  "sc-address": {
     "address": true,
     "label": true,
     "loading": true,
@@ -10,7 +10,7 @@
     "class": true,
     "slot": true
   },
-  "ce-alert": {
+  "sc-alert": {
     "closable": true,
     "duration": true,
     "open": true,
@@ -20,7 +20,7 @@
     "class": true,
     "slot": true
   },
-  "ce-badge-notice": {
+  "sc-badge-notice": {
     "label": true,
     "size": true,
     "type": true,
@@ -29,7 +29,7 @@
     "class": true,
     "slot": true
   },
-  "ce-block-ui": {
+  "sc-block-ui": {
     "spinner": true,
     "transparent": true,
     "z-index": true,
@@ -38,7 +38,7 @@
     "class": true,
     "slot": true
   },
-  "ce-breadcrumb": {
+  "sc-breadcrumb": {
     "href": true,
     "rel": true,
     "target": true,
@@ -47,14 +47,14 @@
     "class": true,
     "slot": true
   },
-  "ce-breadcrumbs": {
+  "sc-breadcrumbs": {
     "label": true,
     "style": true,
     "id": true,
     "class": true,
     "slot": true
   },
-  "ce-button": {
+  "sc-button": {
     "busy": true,
     "caret": true,
     "circle": true,
@@ -76,7 +76,7 @@
     "class": true,
     "slot": true
   },
-  "ce-button-group": {
+  "sc-button-group": {
     "label": true,
     "separate": true,
     "style": true,
@@ -84,7 +84,7 @@
     "class": true,
     "slot": true
   },
-  "ce-card": {
+  "sc-card": {
     "borderless": true,
     "loading": true,
     "no-divider": true,
@@ -94,14 +94,14 @@
     "class": true,
     "slot": true
   },
-  "ce-cc-logo": {
+  "sc-cc-logo": {
     "brand": true,
     "style": true,
     "id": true,
     "class": true,
     "slot": true
   },
-  "ce-charges-list": {
+  "sc-charges-list": {
     "all-link": true,
     "heading": true,
     "query": true,
@@ -111,7 +111,7 @@
     "class": true,
     "slot": true
   },
-  "ce-checkbox": {
+  "sc-checkbox": {
     "checked": true,
     "disabled": true,
     "indeterminate": true,
@@ -124,7 +124,7 @@
     "class": true,
     "slot": true
   },
-  "ce-checkout": {
+  "sc-checkout": {
     "alignment": true,
     "coupon": true,
     "currency-code": true,
@@ -143,7 +143,7 @@
     "class": true,
     "slot": true
   },
-  "ce-choice": {
+  "sc-choice": {
     "checked": true,
     "disabled": true,
     "invalid": true,
@@ -160,7 +160,7 @@
     "class": true,
     "slot": true
   },
-  "ce-choices": {
+  "sc-choices": {
     "auto-width": true,
     "columns": true,
     "error-message": true,
@@ -175,13 +175,13 @@
     "class": true,
     "slot": true
   },
-  "ce-column": {
+  "sc-column": {
     "style": true,
     "id": true,
     "class": true,
     "slot": true
   },
-  "ce-columns": {
+  "sc-columns": {
     "is-stacked-on-mobile": true,
     "vertical-alignment": true,
     "style": true,
@@ -189,14 +189,14 @@
     "class": true,
     "slot": true
   },
-  "ce-consumer": {
+  "sc-consumer": {
     "renderer": true,
     "style": true,
     "id": true,
     "class": true,
     "slot": true
   },
-  "ce-coupon-form": {
+  "sc-coupon-form": {
     "busy": true,
     "currency": true,
     "discount": true,
@@ -211,7 +211,7 @@
     "class": true,
     "slot": true
   },
-  "ce-customer-details": {
+  "sc-customer-details": {
     "customer": true,
     "edit-link": true,
     "error": true,
@@ -222,7 +222,7 @@
     "class": true,
     "slot": true
   },
-  "ce-customer-edit": {
+  "sc-customer-edit": {
     "customer": true,
     "heading": true,
     "success-url": true,
@@ -231,7 +231,7 @@
     "class": true,
     "slot": true
   },
-  "ce-customer-email": {
+  "sc-customer-email": {
     "autofocus": true,
     "customer": true,
     "disabled": true,
@@ -253,7 +253,7 @@
     "class": true,
     "slot": true
   },
-  "ce-customer-name": {
+  "sc-customer-name": {
     "autofocus": true,
     "customer": true,
     "disabled": true,
@@ -275,7 +275,7 @@
     "class": true,
     "slot": true
   },
-  "ce-dashboard-customer-details": {
+  "sc-dashboard-customer-details": {
     "customer-id": true,
     "heading": true,
     "style": true,
@@ -283,7 +283,7 @@
     "class": true,
     "slot": true
   },
-  "ce-dashboard-downloads-list": {
+  "sc-dashboard-downloads-list": {
     "all-link": true,
     "heading": true,
     "query": true,
@@ -293,7 +293,7 @@
     "class": true,
     "slot": true
   },
-  "ce-dashboard-module": {
+  "sc-dashboard-module": {
     "error": true,
     "heading": true,
     "style": true,
@@ -301,13 +301,13 @@
     "class": true,
     "slot": true
   },
-  "ce-divider": {
+  "sc-divider": {
     "style": true,
     "id": true,
     "class": true,
     "slot": true
   },
-  "ce-donation-choices": {
+  "sc-donation-choices": {
     "busy": true,
     "default-amount": true,
     "label": true,
@@ -320,7 +320,7 @@
     "class": true,
     "slot": true
   },
-  "ce-downloads-list": {
+  "sc-downloads-list": {
     "all-link": true,
     "busy": true,
     "error": true,
@@ -333,7 +333,7 @@
     "class": true,
     "slot": true
   },
-  "ce-dropdown": {
+  "sc-dropdown": {
     "click-el": true,
     "close-on-select": true,
     "disabled": true,
@@ -344,14 +344,14 @@
     "class": true,
     "slot": true
   },
-  "ce-empty": {
+  "sc-empty": {
     "icon": true,
     "style": true,
     "id": true,
     "class": true,
     "slot": true
   },
-  "ce-express-payment": {
+  "sc-express-payment": {
     "busy": true,
     "debug": true,
     "divider-text": true,
@@ -363,7 +363,7 @@
     "class": true,
     "slot": true
   },
-  "ce-flex": {
+  "sc-flex": {
     "align-items": true,
     "flex-direction": true,
     "justify-content": true,
@@ -372,14 +372,14 @@
     "class": true,
     "slot": true
   },
-  "ce-form": {
+  "sc-form": {
     "novalidate": true,
     "style": true,
     "id": true,
     "class": true,
     "slot": true
   },
-  "ce-form-components-validator": {
+  "sc-form-components-validator": {
     "disabled": true,
     "order": true,
     "style": true,
@@ -387,7 +387,7 @@
     "class": true,
     "slot": true
   },
-  "ce-form-control": {
+  "sc-form-control": {
     "error-message": true,
     "errors": true,
     "help": true,
@@ -404,20 +404,20 @@
     "class": true,
     "slot": true
   },
-  "ce-form-row": {
+  "sc-form-row": {
     "style": true,
     "id": true,
     "class": true,
     "slot": true
   },
-  "ce-form-section": {
+  "sc-form-section": {
     "label": true,
     "style": true,
     "id": true,
     "class": true,
     "slot": true
   },
-  "ce-format-bytes": {
+  "sc-format-bytes": {
     "display": true,
     "locale": true,
     "unit": true,
@@ -427,7 +427,7 @@
     "class": true,
     "slot": true
   },
-  "ce-format-date": {
+  "sc-format-date": {
     "date": true,
     "day": true,
     "era": true,
@@ -447,7 +447,7 @@
     "class": true,
     "slot": true
   },
-  "ce-format-interval": {
+  "sc-format-interval": {
     "every": true,
     "fallback": true,
     "interval": true,
@@ -457,7 +457,7 @@
     "class": true,
     "slot": true
   },
-  "ce-format-number": {
+  "sc-format-number": {
     "currency": true,
     "currency-display": true,
     "locale": true,
@@ -475,14 +475,14 @@
     "class": true,
     "slot": true
   },
-  "ce-heading": {
+  "sc-heading": {
     "size": true,
     "style": true,
     "id": true,
     "class": true,
     "slot": true
   },
-  "ce-icon": {
+  "sc-icon": {
     "label": true,
     "library": true,
     "name": true,
@@ -492,7 +492,7 @@
     "class": true,
     "slot": true
   },
-  "ce-input": {
+  "sc-input": {
     "autocomplete": true,
     "autocorrect": true,
     "autofocus": true,
@@ -531,7 +531,7 @@
     "class": true,
     "slot": true
   },
-  "ce-invoices-list": {
+  "sc-invoices-list": {
     "all-link": true,
     "heading": true,
     "query": true,
@@ -540,7 +540,7 @@
     "class": true,
     "slot": true
   },
-  "ce-line-item": {
+  "sc-line-item": {
     "currency": true,
     "price": true,
     "style": true,
@@ -548,7 +548,7 @@
     "class": true,
     "slot": true
   },
-  "ce-line-item-tax": {
+  "sc-line-item-tax": {
     "loading": true,
     "order": true,
     "style": true,
@@ -556,7 +556,7 @@
     "class": true,
     "slot": true
   },
-  "ce-line-item-total": {
+  "sc-line-item-total": {
     "loading": true,
     "order": true,
     "show-currency": true,
@@ -567,7 +567,7 @@
     "class": true,
     "slot": true
   },
-  "ce-line-items": {
+  "sc-line-items": {
     "editable": true,
     "loading": true,
     "locked-choices": true,
@@ -579,32 +579,32 @@
     "class": true,
     "slot": true
   },
-  "ce-line-items-provider": {
+  "sc-line-items-provider": {
     "order": true,
     "style": true,
     "id": true,
     "class": true,
     "slot": true
   },
-  "ce-login-form": {
+  "sc-login-form": {
     "style": true,
     "id": true,
     "class": true,
     "slot": true
   },
-  "ce-menu": {
+  "sc-menu": {
     "style": true,
     "id": true,
     "class": true,
     "slot": true
   },
-  "ce-menu-divider": {
+  "sc-menu-divider": {
     "style": true,
     "id": true,
     "class": true,
     "slot": true
   },
-  "ce-menu-item": {
+  "sc-menu-item": {
     "checked": true,
     "disabled": true,
     "href": true,
@@ -614,20 +614,20 @@
     "class": true,
     "slot": true
   },
-  "ce-menu-label": {
+  "sc-menu-label": {
     "style": true,
     "id": true,
     "class": true,
     "slot": true
   },
-  "ce-order-confirmation": {
+  "sc-order-confirmation": {
     "order": true,
     "style": true,
     "id": true,
     "class": true,
     "slot": true
   },
-  "ce-order-confirmation-customer": {
+  "sc-order-confirmation-customer": {
     "customer": true,
     "error": true,
     "heading": true,
@@ -638,7 +638,7 @@
     "class": true,
     "slot": true
   },
-  "ce-order-confirmation-line-items": {
+  "sc-order-confirmation-line-items": {
     "loading": true,
     "order": true,
     "style": true,
@@ -646,14 +646,14 @@
     "class": true,
     "slot": true
   },
-  "ce-order-confirmation-totals": {
+  "sc-order-confirmation-totals": {
     "order": true,
     "style": true,
     "id": true,
     "class": true,
     "slot": true
   },
-  "ce-order-coupon-form": {
+  "sc-order-coupon-form": {
     "busy": true,
     "error": true,
     "force-open": true,
@@ -665,7 +665,7 @@
     "class": true,
     "slot": true
   },
-  "ce-order-detail": {
+  "sc-order-detail": {
     "fallback": true,
     "label": true,
     "loading": true,
@@ -677,7 +677,7 @@
     "class": true,
     "slot": true
   },
-  "ce-order-password": {
+  "sc-order-password": {
     "autofocus": true,
     "disabled": true,
     "help": true,
@@ -695,7 +695,7 @@
     "class": true,
     "slot": true
   },
-  "ce-order-shipping-address": {
+  "sc-order-shipping-address": {
     "customer-shipping-address": true,
     "label": true,
     "loading": true,
@@ -707,7 +707,7 @@
     "class": true,
     "slot": true
   },
-  "ce-order-status-badge": {
+  "sc-order-status-badge": {
     "clearable": true,
     "pill": true,
     "size": true,
@@ -717,7 +717,7 @@
     "class": true,
     "slot": true
   },
-  "ce-order-submit": {
+  "sc-order-submit": {
     "busy": true,
     "full": true,
     "icon": true,
@@ -731,7 +731,7 @@
     "class": true,
     "slot": true
   },
-  "ce-order-summary": {
+  "sc-order-summary": {
     "collapsed": true,
     "collapsible": true,
     "empty": true,
@@ -742,7 +742,7 @@
     "class": true,
     "slot": true
   },
-  "ce-order-tax-id-input": {
+  "sc-order-tax-id-input": {
     "order": true,
     "show": true,
     "style": true,
@@ -750,7 +750,7 @@
     "class": true,
     "slot": true
   },
-  "ce-orders-list": {
+  "sc-orders-list": {
     "all-link": true,
     "heading": true,
     "query": true,
@@ -759,7 +759,7 @@
     "class": true,
     "slot": true
   },
-  "ce-pagination": {
+  "sc-pagination": {
     "page": true,
     "per-page": true,
     "total": true,
@@ -770,7 +770,7 @@
     "class": true,
     "slot": true
   },
-  "ce-payment": {
+  "sc-payment": {
     "label": true,
     "loading": true,
     "mode": true,
@@ -783,7 +783,7 @@
     "class": true,
     "slot": true
   },
-  "ce-payment-method-create": {
+  "sc-payment-method-create": {
     "client-secret": true,
     "error": true,
     "success-url": true,
@@ -792,7 +792,7 @@
     "class": true,
     "slot": true
   },
-  "ce-payment-methods-list": {
+  "sc-payment-methods-list": {
     "heading": true,
     "query": true,
     "style": true,
@@ -800,7 +800,7 @@
     "class": true,
     "slot": true
   },
-  "ce-price-choice": {
+  "sc-price-choice": {
     "checked": true,
     "description": true,
     "error": true,
@@ -822,7 +822,7 @@
     "class": true,
     "slot": true
   },
-  "ce-price-choices": {
+  "sc-price-choices": {
     "columns": true,
     "label": true,
     "required": true,
@@ -831,7 +831,7 @@
     "class": true,
     "slot": true
   },
-  "ce-price-input": {
+  "sc-price-input": {
     "autofocus": true,
     "clearable": true,
     "currency-code": true,
@@ -858,7 +858,7 @@
     "class": true,
     "slot": true
   },
-  "ce-product-line-item": {
+  "sc-product-line-item": {
     "amount": true,
     "currency": true,
     "editable": true,
@@ -873,14 +873,14 @@
     "class": true,
     "slot": true
   },
-  "ce-provider": {
+  "sc-provider": {
     "-s-t-e-n-c-i-l_-c-o-n-t-e-x-t": true,
     "style": true,
     "id": true,
     "class": true,
     "slot": true
   },
-  "ce-quantity-select": {
+  "sc-quantity-select": {
     "click-el": true,
     "max": true,
     "min": true,
@@ -890,7 +890,7 @@
     "class": true,
     "slot": true
   },
-  "ce-radio": {
+  "sc-radio": {
     "checked": true,
     "disabled": true,
     "invalid": true,
@@ -902,26 +902,26 @@
     "class": true,
     "slot": true
   },
-  "ce-radio-group": {
+  "sc-radio-group": {
     "label": true,
     "style": true,
     "id": true,
     "class": true,
     "slot": true
   },
-  "ce-register-icon-library": {
+  "sc-register-icon-library": {
     "style": true,
     "id": true,
     "class": true,
     "slot": true
   },
-  "ce-secure-notice": {
+  "sc-secure-notice": {
     "style": true,
     "id": true,
     "class": true,
     "slot": true
   },
-  "ce-select": {
+  "sc-select": {
     "autocomplete": true,
     "choices": true,
     "disabled": true,
@@ -949,7 +949,7 @@
     "class": true,
     "slot": true
   },
-  "ce-session-provider": {
+  "sc-session-provider": {
     "currency-code": true,
     "form-id": true,
     "group-id": true,
@@ -964,32 +964,32 @@
     "class": true,
     "slot": true
   },
-  "ce-skeleton": {
+  "sc-skeleton": {
     "effect": true,
     "style": true,
     "id": true,
     "class": true,
     "slot": true
   },
-  "ce-spacing": {
+  "sc-spacing": {
     "style": true,
     "id": true,
     "class": true,
     "slot": true
   },
-  "ce-spinner": {
+  "sc-spinner": {
     "style": true,
     "id": true,
     "class": true,
     "slot": true
   },
-  "ce-stacked-list": {
+  "sc-stacked-list": {
     "style": true,
     "id": true,
     "class": true,
     "slot": true
   },
-  "ce-stacked-list-row": {
+  "sc-stacked-list-row": {
     "href": true,
     "mobile-size": true,
     "style": true,
@@ -997,7 +997,7 @@
     "class": true,
     "slot": true
   },
-  "ce-stripe-element": {
+  "sc-stripe-element": {
     "disabled": true,
     "has-focus": true,
     "label": true,
@@ -1013,7 +1013,7 @@
     "class": true,
     "slot": true
   },
-  "ce-stripe-payment-request": {
+  "sc-stripe-payment-request": {
     "amount": true,
     "country": true,
     "currency-code": true,
@@ -1032,7 +1032,7 @@
     "class": true,
     "slot": true
   },
-  "ce-subscription": {
+  "sc-subscription": {
     "heading": true,
     "query": true,
     "subscription": true,
@@ -1042,7 +1042,7 @@
     "class": true,
     "slot": true
   },
-  "ce-subscription-cancel": {
+  "sc-subscription-cancel": {
     "back-url": true,
     "heading": true,
     "subscription": true,
@@ -1053,7 +1053,7 @@
     "class": true,
     "slot": true
   },
-  "ce-subscription-details": {
+  "sc-subscription-details": {
     "hide-renewal-text": true,
     "pending-price": true,
     "subscription": true,
@@ -1062,7 +1062,7 @@
     "class": true,
     "slot": true
   },
-  "ce-subscription-payment": {
+  "sc-subscription-payment": {
     "back-url": true,
     "customer-ids": true,
     "payment-methods": true,
@@ -1074,7 +1074,7 @@
     "class": true,
     "slot": true
   },
-  "ce-subscription-renew": {
+  "sc-subscription-renew": {
     "back-url": true,
     "heading": true,
     "subscription": true,
@@ -1085,7 +1085,7 @@
     "class": true,
     "slot": true
   },
-  "ce-subscription-status-badge": {
+  "sc-subscription-status-badge": {
     "clearable": true,
     "pill": true,
     "size": true,
@@ -1096,7 +1096,7 @@
     "class": true,
     "slot": true
   },
-  "ce-subscription-switch": {
+  "sc-subscription-switch": {
     "heading": true,
     "product-group-id": true,
     "query": true,
@@ -1106,7 +1106,7 @@
     "class": true,
     "slot": true
   },
-  "ce-subscriptions-list": {
+  "sc-subscriptions-list": {
     "all-link": true,
     "cancel-behavior": true,
     "heading": true,
@@ -1116,7 +1116,7 @@
     "class": true,
     "slot": true
   },
-  "ce-switch": {
+  "sc-switch": {
     "checked": true,
     "disabled": true,
     "invalid": true,
@@ -1128,7 +1128,7 @@
     "class": true,
     "slot": true
   },
-  "ce-tab": {
+  "sc-tab": {
     "active": true,
     "count": true,
     "disabled": true,
@@ -1139,13 +1139,13 @@
     "class": true,
     "slot": true
   },
-  "ce-tab-group": {
+  "sc-tab-group": {
     "style": true,
     "id": true,
     "class": true,
     "slot": true
   },
-  "ce-tab-panel": {
+  "sc-tab-panel": {
     "active": true,
     "name": true,
     "style": true,
@@ -1153,32 +1153,32 @@
     "class": true,
     "slot": true
   },
-  "ce-table": {
+  "sc-table": {
     "style": true,
     "id": true,
     "class": true,
     "slot": true
   },
-  "ce-table-cell": {
+  "sc-table-cell": {
     "style": true,
     "id": true,
     "class": true,
     "slot": true
   },
-  "ce-table-head": {
+  "sc-table-head": {
     "style": true,
     "id": true,
     "class": true,
     "slot": true
   },
-  "ce-table-row": {
+  "sc-table-row": {
     "href": true,
     "style": true,
     "id": true,
     "class": true,
     "slot": true
   },
-  "ce-tag": {
+  "sc-tag": {
     "clearable": true,
     "pill": true,
     "size": true,
@@ -1188,7 +1188,7 @@
     "class": true,
     "slot": true
   },
-  "ce-tax-id-input": {
+  "sc-tax-id-input": {
     "country": true,
     "number": true,
     "show": true,
@@ -1198,7 +1198,7 @@
     "class": true,
     "slot": true
   },
-  "ce-text": {
+  "sc-text": {
     "tag": true,
     "truncate": true,
     "style": true,
@@ -1206,7 +1206,7 @@
     "class": true,
     "slot": true
   },
-  "ce-tooltip": {
+  "sc-tooltip": {
     "freeze": true,
     "open": true,
     "padding": true,
@@ -1218,7 +1218,7 @@
     "class": true,
     "slot": true
   },
-  "ce-total": {
+  "sc-total": {
     "order": true,
     "total": true,
     "style": true,
@@ -1226,7 +1226,7 @@
     "class": true,
     "slot": true
   },
-  "ce-upcoming-invoice": {
+  "sc-upcoming-invoice": {
     "discount": true,
     "heading": true,
     "payment_method": true,
@@ -1239,7 +1239,7 @@
     "class": true,
     "slot": true
   },
-  "ce-wordpress-password-edit": {
+  "sc-wordpress-password-edit": {
     "heading": true,
     "success-url": true,
     "user": true,
@@ -1248,7 +1248,7 @@
     "class": true,
     "slot": true
   },
-  "ce-wordpress-user": {
+  "sc-wordpress-user": {
     "heading": true,
     "user": true,
     "style": true,
@@ -1256,7 +1256,7 @@
     "class": true,
     "slot": true
   },
-  "ce-wordpress-user-edit": {
+  "sc-wordpress-user-edit": {
     "heading": true,
     "success-url": true,
     "user": true,

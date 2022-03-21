@@ -16,13 +16,13 @@
 
 ### Depends on
 
-- [ce-heading](../../../ui/heading)
+- [sc-heading](../../../ui/heading)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-order-confirmation --> ce-heading
-  style ce-order-confirmation fill:#f9f,stroke:#333,stroke-width:4px
+  sc-order-confirmation --> sc-heading
+  style sc-order-confirmation fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

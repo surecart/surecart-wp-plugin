@@ -27,39 +27,39 @@
 
 ### Used by
 
- - [ce-charges-list](../../controllers/dashboard/charges-list)
- - [ce-coupon-form](../../ui/coupon-form)
- - [ce-invoices-list](../../controllers/dashboard/invoices-list)
- - [ce-line-item-tax](../../controllers/checkout-form/line-item-tax)
- - [ce-line-item-total](../../controllers/checkout-form/line-item-total)
- - [ce-order-confirmation-totals](../../controllers/confirmation/order-confirmation-totals)
- - [ce-order-detail](../../controllers/confirmation/order-detail)
- - [ce-orders-list](../../controllers/dashboard/orders-list)
- - [ce-price-choice](../../controllers/checkout-form/price-choice)
- - [ce-product-line-item](../../ui/product-line-item)
- - [ce-subscription-details](../../controllers/dashboard/subscription-details)
- - [ce-subscription-switch](../../controllers/dashboard/subscription-switch)
- - [ce-total](../../controllers/checkout-form/total)
- - [ce-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
+ - [sc-charges-list](../../controllers/dashboard/charges-list)
+ - [sc-coupon-form](../../ui/coupon-form)
+ - [sc-invoices-list](../../controllers/dashboard/invoices-list)
+ - [sc-line-item-tax](../../controllers/checkout-form/line-item-tax)
+ - [sc-line-item-total](../../controllers/checkout-form/line-item-total)
+ - [sc-order-confirmation-totals](../../controllers/confirmation/order-confirmation-totals)
+ - [sc-order-detail](../../controllers/confirmation/order-detail)
+ - [sc-orders-list](../../controllers/dashboard/orders-list)
+ - [sc-price-choice](../../controllers/checkout-form/price-choice)
+ - [sc-product-line-item](../../ui/product-line-item)
+ - [sc-subscription-details](../../controllers/dashboard/subscription-details)
+ - [sc-subscription-switch](../../controllers/dashboard/subscription-switch)
+ - [sc-total](../../controllers/checkout-form/total)
+ - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-charges-list --> ce-format-number
-  ce-coupon-form --> ce-format-number
-  ce-invoices-list --> ce-format-number
-  ce-line-item-tax --> ce-format-number
-  ce-line-item-total --> ce-format-number
-  ce-order-confirmation-totals --> ce-format-number
-  ce-order-detail --> ce-format-number
-  ce-orders-list --> ce-format-number
-  ce-price-choice --> ce-format-number
-  ce-product-line-item --> ce-format-number
-  ce-subscription-details --> ce-format-number
-  ce-subscription-switch --> ce-format-number
-  ce-total --> ce-format-number
-  ce-upcoming-invoice --> ce-format-number
-  style ce-format-number fill:#f9f,stroke:#333,stroke-width:4px
+  sc-charges-list --> sc-format-number
+  sc-coupon-form --> sc-format-number
+  sc-invoices-list --> sc-format-number
+  sc-line-item-tax --> sc-format-number
+  sc-line-item-total --> sc-format-number
+  sc-order-confirmation-totals --> sc-format-number
+  sc-order-detail --> sc-format-number
+  sc-orders-list --> sc-format-number
+  sc-price-choice --> sc-format-number
+  sc-product-line-item --> sc-format-number
+  sc-subscription-details --> sc-format-number
+  sc-subscription-switch --> sc-format-number
+  sc-total --> sc-format-number
+  sc-upcoming-invoice --> sc-format-number
+  style sc-format-number fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

@@ -26,11 +26,11 @@ class CustomerController extends BaseController {
 
 		// show test.
 		if ( ! empty( User::current()->customerId( 'test' ) ) ) {
-			$output .= '<ce-dashboard-customer-details customer-id="' . User::current()->customerId( 'test' ) . '"></ce-dashboard-customer-details>';
+			$output .= '<sc-dashboard-customer-details customer-id="' . User::current()->customerId( 'test' ) . '"></sc-dashboard-customer-details>';
 		}
 		// show live.
 		if ( ! empty( User::current()->customerId( 'live' ) ) ) {
-			$output .= '<ce-dashboard-customer-details customer-id="' . User::current()->customerId( 'live' ) . '"></ce-dashboard-customer-details>';
+			$output .= '<sc-dashboard-customer-details customer-id="' . User::current()->customerId( 'live' ) . '"></sc-dashboard-customer-details>';
 		}
 
 		return $output;
@@ -45,21 +45,21 @@ class CustomerController extends BaseController {
 		$back = add_query_arg( [ 'tab' => $this->getTab() ], \SureCart::pages()->url( 'dashboard' ) );
 		ob_start(); ?>
 
-		<ce-spacing style="--spacing: var(--ce-spacing-large)">
-			<ce-breadcrumbs>
-				<ce-breadcrumb href="<?php echo esc_url( $back ); ?>">
+		<sc-spacing style="--spacing: var(--sc-spacing-large)">
+			<sc-breadcrumbs>
+				<sc-breadcrumb href="<?php echo esc_url( $back ); ?>">
 					<?php esc_html_e( 'Dashboard', 'surecart' ); ?>
-				</ce-breadcrumb>
-				<ce-breadcrumb>
+				</sc-breadcrumb>
+				<sc-breadcrumb>
 					<?php esc_html_e( 'Billing Details', 'surecart' ); ?>
-				</ce-breadcrumb>
-			</ce-breadcrumbs>
+				</sc-breadcrumb>
+			</sc-breadcrumbs>
 
 			<?php
 			if ( ! empty( User::current()->customerId( 'live' ) ) ) {
 				$customer = Customer::with( [ 'shipping_address', 'billing_address', 'tax_identifier' ] )->find( User::current()->customerId( 'live' ) );
 				echo wp_kses_post(
-					Component::tag( 'ce-customer-edit' )
+					Component::tag( 'sc-customer-edit' )
 					->id( 'customer-customer-edit' )
 					->with(
 						[
@@ -74,7 +74,7 @@ class CustomerController extends BaseController {
 			if ( ! empty( User::current()->customerId( 'test' ) ) ) {
 				$customer = Customer::with( [ 'shipping_address', 'billing_address', 'tax_identifier' ] )->find( User::current()->customerId( 'test' ) );
 				echo wp_kses_post(
-					Component::tag( 'ce-customer-edit' )
+					Component::tag( 'sc-customer-edit' )
 					->id( 'customer-customer-edit' )
 					->with(
 						[
@@ -86,7 +86,7 @@ class CustomerController extends BaseController {
 				);
 			}
 			?>
-		</ce-spacing>
+		</sc-spacing>
 
 			<?php
 			return ob_get_clean();

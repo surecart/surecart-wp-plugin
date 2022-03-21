@@ -11,7 +11,7 @@ import {
 	ToggleControl,
 } from '@wordpress/components';
 import { useBlockProps } from '@wordpress/block-editor';
-import { CeOrderConfirmationCustomer } from '@surecart/components-react';
+import { ScOrderConfirmationCustomer } from '@surecart/components-react';
 
 export default ({ attributes }) => {
 	const { title } = attributes;
@@ -31,7 +31,7 @@ export default ({ attributes }) => {
 					</PanelRow>
 				</PanelBody>
 			</InspectorControls>
-			<CeOrderConfirmationCustomer {...blockProps}>
+			<ScOrderConfirmationCustomer {...blockProps}>
 				<RichText
 					aria-label={__('Button text')}
 					placeholder={__('Add text…')}
@@ -41,7 +41,7 @@ export default ({ attributes }) => {
 					slot="heading"
 					allowedFormats={['core/bold', 'core/italic']}
 				/>
-			</CeOrderConfirmationCustomer>
+			</ScOrderConfirmationCustomer>
 		</Fragment>
 	);
 };

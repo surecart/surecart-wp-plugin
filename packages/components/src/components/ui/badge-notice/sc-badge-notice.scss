@@ -1,0 +1,18 @@
+:host {
+  display: block;
+}
+
+.notice {
+  background: var(--sc-color-gray-100);
+  border-radius: var(--sc-border-radius-small);
+  padding: var(--sc-spacing-small);
+  font-size: var(--sc-font-size-x-small);
+  display: flex;
+  gap: 0.5em;
+  line-height: 1;
+}
+
+.notisc--warning {
+  background: var(--sc-color-warning-50);
+  color: var(--sc-color-warning-700);
+}

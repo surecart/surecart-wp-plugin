@@ -9,15 +9,15 @@
 
 ### Used by
 
- - [ce-customer-edit](../../controllers/dashboard/customer-edit)
- - [ce-wordpress-user-edit](../../controllers/dashboard/wordpress-user-edit)
+ - [sc-customer-edit](../../controllers/dashboard/customer-edit)
+ - [sc-wordpress-user-edit](../../controllers/dashboard/wordpress-user-edit)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-customer-edit --> ce-column
-  ce-wordpress-user-edit --> ce-column
-  style ce-column fill:#f9f,stroke:#333,stroke-width:4px
+  sc-customer-edit --> sc-column
+  sc-wordpress-user-edit --> sc-column
+  style sc-column fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

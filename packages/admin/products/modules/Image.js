@@ -3,7 +3,7 @@ import { css, jsx } from '@emotion/core';
 
 import { __ } from '@wordpress/i18n';
 
-import { CeFormControl } from '@surecart/components-react';
+import { ScFormControl } from '@surecart/components-react';
 import { useState, useEffect } from '@wordpress/element';
 import {
 	FormFileUpload,
@@ -117,7 +117,7 @@ export default ({ product, updateProduct, loading }) => {
 							object-fit: cover;
 							height: auto;
 							display: block;
-							border-radius: var(--ce-border-radius-medium);
+							border-radius: var(--sc-border-radius-medium);
 							background: #f3f3f3;
 						`}
 						onLoad={() => URL.revokeObjectURL(src)}
@@ -148,8 +148,8 @@ export default ({ product, updateProduct, loading }) => {
 			<div
 				css={css`
 					position: relative;
-					border: 2px dashed var(--ce-color-gray-200);
-					border-radius: var(--ce-border-radius-small);
+					border: 2px dashed var(--sc-color-gray-200);
+					border-radius: var(--sc-border-radius-small);
 					padding: 2em;
 					display: grid;
 					gap: 1em;
@@ -174,12 +174,12 @@ export default ({ product, updateProduct, loading }) => {
 
 	return (
 		<Box title={__('Product Image', 'surecart')} loading={loading}>
-			<CeFormControl
+			<ScFormControl
 				label={__('Product Image', 'surecart')}
 				showLabel={false}
 			>
 				{renderContent()}
-			</CeFormControl>
+			</ScFormControl>
 		</Box>
 	);
 };

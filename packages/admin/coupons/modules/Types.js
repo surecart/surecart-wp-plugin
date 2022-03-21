@@ -7,15 +7,15 @@ const { useState, useEffect } = wp.element;
 import Box from '../../ui/Box';
 
 import {
-	CeInput,
-	CePriceInput,
-	CeRadioGroup,
-	CeRadio,
-	CeDropdown,
-	CeFormControl,
-	CeButton,
-	CeMenuItem,
-	CeMenu,
+	ScInput,
+	ScPriceInput,
+	ScRadioGroup,
+	ScRadio,
+	ScDropdown,
+	ScFormControl,
+	ScButton,
+	ScMenuItem,
+	ScMenu,
 } from '@surecart/components-react';
 
 export default ({ coupon, loading, updateCoupon }) => {
@@ -43,24 +43,24 @@ export default ({ coupon, loading, updateCoupon }) => {
 			<div
 				css={css`
 					display: grid;
-					gap: var(--ce-form-row-spacing-large);
+					gap: var(--sc-form-row-spacing-large);
 				`}
 			>
-				<CeRadioGroup
+				<ScRadioGroup
 					label={__('Choose a type', 'surecart')}
-					onCeChange={(e) => setType(e.target.value)}
+					onScChange={(e) => setType(e.target.value)}
 				>
-					<CeRadio value="percentage" checked={type === 'percentage'}>
+					<ScRadio value="percentage" checked={type === 'percentage'}>
 						{__('Percentage Discount', 'surecart')}
-					</CeRadio>
-					<CeRadio value="fixed" checked={type === 'fixed'}>
+					</ScRadio>
+					<ScRadio value="fixed" checked={type === 'fixed'}>
 						{__('Fixed Discount', 'surecart')}
-					</CeRadio>
-				</CeRadioGroup>
+					</ScRadio>
+				</ScRadioGroup>
 
 				{type === 'percentage' ? (
-					<CeInput
-						className="ce-percent-off"
+					<ScInput
+						className="sc-percent-off"
 						type="number"
 						min="0"
 						disabled={type !== 'percentage'}
@@ -68,7 +68,7 @@ export default ({ coupon, loading, updateCoupon }) => {
 						attribute="percent_off"
 						label={__('Percent Off', 'surecart')}
 						value={coupon?.percent_off || null}
-						onCeChange={(e) =>
+						onScChange={(e) =>
 							updateCoupon({
 								amount_off: null,
 								percent_off: e.target.value,
@@ -77,17 +77,17 @@ export default ({ coupon, loading, updateCoupon }) => {
 						required={type === 'percentage'}
 					>
 						<span slot="suffix">%</span>
-					</CeInput>
+					</ScInput>
 				) : (
-					<CePriceInput
-						className="ce-amount-off"
+					<ScPriceInput
+						className="sc-amount-off"
 						currencyCode={coupon?.currency}
 						disabled={type === 'percentage'}
 						attribute="amount_off"
 						label={__('Amount Off', 'surecart')}
 						value={coupon?.amount_off || null}
 						required={type === 'fixed'}
-						onCeChange={(e) => {
+						onScChange={(e) => {
 							updateCoupon({
 								percent_off: null,
 								amount_off: e.target.value,
@@ -96,37 +96,37 @@ export default ({ coupon, loading, updateCoupon }) => {
 					/>
 				)}
 
-				<CeFormControl label={__('Discount Duration', 'surecart')}>
+				<ScFormControl label={__('Discount Duration', 'surecart')}>
 					<div>
-						<CeDropdown
+						<ScDropdown
 							slot="suffix"
-							class="ce-discount-duration-dropdown"
+							class="sc-discount-duration-dropdown"
 							position="bottom-left"
 						>
-							<CeButton
+							<ScButton
 								slot="trigger"
-								class="ce-discount-duration-trigger"
+								class="sc-discount-duration-trigger"
 								caret
 							>
 								{translateDuration(coupon?.duration)}
-							</CeButton>
-							<CeMenu>
-								<CeMenuItem
+							</ScButton>
+							<ScMenu>
+								<ScMenuItem
 									onClick={() =>
 										updateCoupon({ duration: 'forever' })
 									}
 								>
 									{__('Forever', 'surecart')}
-								</CeMenuItem>
-								<CeMenuItem
+								</ScMenuItem>
+								<ScMenuItem
 									onClick={() =>
 										updateCoupon({ duration: 'once' })
 									}
 								>
 									{__('Once', 'surecart')}
-								</CeMenuItem>
-								<CeMenuItem
-									className="ce-discount-menu-repeating"
+								</ScMenuItem>
+								<ScMenuItem
+									className="sc-discount-menu-repeating"
 									onClick={() =>
 										updateCoupon({
 											duration: 'repeating',
@@ -134,18 +134,18 @@ export default ({ coupon, loading, updateCoupon }) => {
 									}
 								>
 									{__('Repeating', 'surecart')}
-								</CeMenuItem>
-							</CeMenu>
-						</CeDropdown>
+								</ScMenuItem>
+							</ScMenu>
+						</ScDropdown>
 					</div>
-				</CeFormControl>
+				</ScFormControl>
 
 				{coupon?.duration === 'repeating' && (
-					<CeInput
+					<ScInput
 						label={__('Number of months', 'surecart')}
-						className="ce-duration-in-months"
+						className="sc-duration-in-months"
 						value={coupon?.duration_in_months || null}
-						onCeChange={(e) => {
+						onScChange={(e) => {
 							updateCoupon({
 								duration_in_months: e.target.value,
 							});

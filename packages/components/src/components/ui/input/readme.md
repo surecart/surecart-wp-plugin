@@ -46,11 +46,11 @@
 
 | Event      | Description                                 | Type                |
 | ---------- | ------------------------------------------- | ------------------- |
-| `ceBlur`   | Emitted when the control loses focus.       | `CustomEvent<void>` |
-| `ceChange` | Emitted when the control's value changes.   | `CustomEvent<void>` |
-| `ceClear`  | Emitted when the clear button is activated. | `CustomEvent<void>` |
-| `ceFocus`  | Emitted when the control gains focus.       | `CustomEvent<void>` |
-| `ceInput`  | Emitted when the control receives input.    | `CustomEvent<void>` |
+| `scBlur`   | Emitted when the control loses focus.       | `CustomEvent<void>` |
+| `scChange` | Emitted when the control's value changes.   | `CustomEvent<void>` |
+| `scClear`  | Emitted when the clear button is activated. | `CustomEvent<void>` |
+| `scFocus`  | Emitted when the control gains focus.       | `CustomEvent<void>` |
+| `scInput`  | Emitted when the control receives input.    | `CustomEvent<void>` |
 
 
 ## Methods
@@ -108,54 +108,47 @@ Type: `Promise<void>`
 | `"suffix"`       | Used to prepend an icon or element to the input. |
 
 
-## CSS Custom Properties
-
-| Name           | Description                                                                           |
-| -------------- | ------------------------------------------------------------------------------------- |
-| `--focus-ring` | The focus ring style to use when the control receives focus, a `box-shadow` property. |
-
-
 ## Dependencies
 
 ### Used by
 
- - [ce-address](../address)
- - [ce-coupon-form](../coupon-form)
- - [ce-customer-edit](../../controllers/dashboard/customer-edit)
- - [ce-customer-email](../../controllers/checkout-form/customer-email)
- - [ce-customer-name](../../controllers/checkout-form/customer-name)
- - [ce-login-form](../../controllers/login)
- - [ce-order-password](../../controllers/checkout-form/order-password)
- - [ce-price-input](../price-input)
- - [ce-select](../select)
- - [ce-stripe-element](../stripe-element)
- - [ce-tax-id-input](../tax-id-input)
- - [ce-wordpress-password-edit](../../controllers/dashboard/wordpress-password-edit)
- - [ce-wordpress-user-edit](../../controllers/dashboard/wordpress-user-edit)
+ - [sc-address](../address)
+ - [sc-coupon-form](../coupon-form)
+ - [sc-customer-edit](../../controllers/dashboard/customer-edit)
+ - [sc-customer-email](../../controllers/checkout-form/customer-email)
+ - [sc-customer-name](../../controllers/checkout-form/customer-name)
+ - [sc-login-form](../../controllers/login)
+ - [sc-order-password](../../controllers/checkout-form/order-password)
+ - [sc-price-input](../price-input)
+ - [sc-select](../select)
+ - [sc-stripe-element](../stripe-element)
+ - [sc-tax-id-input](../tax-id-input)
+ - [sc-wordpress-password-edit](../../controllers/dashboard/wordpress-password-edit)
+ - [sc-wordpress-user-edit](../../controllers/dashboard/wordpress-user-edit)
 
 ### Depends on
 
-- [ce-form-control](../form-control)
+- [sc-form-control](../form-control)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-input --> ce-form-control
-  ce-form-control --> ce-tooltip
-  ce-address --> ce-input
-  ce-coupon-form --> ce-input
-  ce-customer-edit --> ce-input
-  ce-customer-email --> ce-input
-  ce-customer-name --> ce-input
-  ce-login-form --> ce-input
-  ce-order-password --> ce-input
-  ce-price-input --> ce-input
-  ce-select --> ce-input
-  ce-stripe-element --> ce-input
-  ce-tax-id-input --> ce-input
-  ce-wordpress-password-edit --> ce-input
-  ce-wordpress-user-edit --> ce-input
-  style ce-input fill:#f9f,stroke:#333,stroke-width:4px
+  sc-input --> sc-form-control
+  sc-form-control --> sc-tooltip
+  sc-address --> sc-input
+  sc-coupon-form --> sc-input
+  sc-customer-edit --> sc-input
+  sc-customer-email --> sc-input
+  sc-customer-name --> sc-input
+  sc-login-form --> sc-input
+  sc-order-password --> sc-input
+  sc-price-input --> sc-input
+  sc-select --> sc-input
+  sc-stripe-element --> sc-input
+  sc-tax-id-input --> sc-input
+  sc-wordpress-password-edit --> sc-input
+  sc-wordpress-user-edit --> sc-input
+  style sc-input fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

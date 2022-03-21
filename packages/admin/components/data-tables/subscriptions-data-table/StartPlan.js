@@ -65,13 +65,13 @@ export default ({ subscription, children }) => {
 			{children ? (
 				<span onClick={confirmStart}>{children}</span>
 			) : (
-				<ce-button
+				<sc-button
 					size="small"
 					onClick={confirmStart}
 					loading={loading}
 				>
 					{__('Activate', 'surecart')}
-				</ce-button>
+				</sc-button>
 			)}
 		</Fragment>
 	);

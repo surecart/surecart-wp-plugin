@@ -1,12 +1,12 @@
 import { Component, Element, Prop, Event, EventEmitter, Watch, State, h } from '@stencil/core';
-import { CEMenu } from '../menu/ce-menu';
+import { ScMenu } from '../menu/sc-menu';
 
 @Component({
-  tag: 'ce-dropdown',
+  tag: 'sc-dropdown',
   styleUrl: 'dropdown.scss',
   shadow: true,
 })
-export class CEDropdown {
+export class ScDropdown {
   @Element() el: HTMLDivElement;
   private panel?: HTMLElement;
 
@@ -25,10 +25,10 @@ export class CEDropdown {
   @Prop({ attribute: 'close-on-select', reflect: true }) closeOnSelect: boolean = true;
 
   /** Emitted when the dropdown opens. Calling `event.preventDefault()` will prevent it from being opened. */
-  @Event() ceShow: EventEmitter<void>;
+  @Event() scShow: EventEmitter<void>;
 
   /** Emitted when the dropdown closes. Calling `event.preventDefault()` will prevent it from being closed. */
-  @Event() ceHide: EventEmitter<void>;
+  @Event() scHide: EventEmitter<void>;
 
   /* Internal visible state */
   @State() isVisible: boolean;
@@ -58,7 +58,7 @@ export class CEDropdown {
     this.isVisible = true;
     this.open = true;
     this.panel.focus();
-    this.ceShow.emit();
+    this.scShow.emit();
   }
 
   hide() {
@@ -69,7 +69,7 @@ export class CEDropdown {
 
     this.isVisible = false;
     this.open = false;
-    this.ceHide.emit();
+    this.scHide.emit();
   }
 
   handleClick(e) {
@@ -93,8 +93,8 @@ export class CEDropdown {
   getMenu() {
     let slotted = this.el.shadowRoot.querySelector('slot') as HTMLSlotElement;
     return slotted.assignedNodes().find(node => {
-      return node.nodeName === 'ce-menu';
-    }) as unknown as CEMenu;
+      return node.nodeName === 'sc-menu';
+    }) as unknown as ScMenu;
   }
 
   render() {

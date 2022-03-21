@@ -9,7 +9,7 @@ import { css, jsx } from '@emotion/core';
 
 import throttle from 'lodash/throttle';
 
-import { CeSelect } from '@surecart/components-react';
+import { ScSelect } from '@surecart/components-react';
 import { convertPricesToChoices } from '../../../utils/prices';
 import { useSelect, dispatch, select } from '@wordpress/data';
 import { BLOCKS_STORE_KEY } from '../store';
@@ -100,9 +100,9 @@ export default ({ onRequestClose, onChoose }) => {
 				`}
 			>
 				<SelectProduct onSelect={(product) => setProduct(product)} />
-				{/* <CeSelect
+				{/* <ScSelect
 					value={ product?.id }
-					onCeChange={ ( e ) => {
+					onScChange={ ( e ) => {
 						setProduct( products?.[ e.target.value ] );
 					} }
 					loading={ querying }
@@ -112,7 +112,7 @@ export default ({ onRequestClose, onChoose }) => {
 						'surecart'
 					) }
 					search
-					onCeSearch={ ( e ) => findProduct( e.detail ) }
+					onScSearch={ ( e ) => findProduct( e.detail ) }
 					choices={ ( Object.keys( products ) || {} ).map(
 						( key ) => {
 							const product = products[ key ];

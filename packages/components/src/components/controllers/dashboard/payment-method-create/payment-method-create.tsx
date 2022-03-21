@@ -2,11 +2,11 @@ import { Component, Element, h, Prop, State } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 
 @Component({
-  tag: 'ce-payment-method-create',
+  tag: 'sc-payment-method-create',
   styleUrl: 'payment-method-create.scss',
   shadow: false,
 })
-export class CePaymentMethodCreate {
+export class ScPaymentMethodCreate {
   @Element() el: HTMLElement;
   @Prop() error: string;
   @Prop() clientSecret: string;
@@ -18,7 +18,7 @@ export class CePaymentMethodCreate {
    * Handle form submission.
    */
   async handleSubmit() {
-    const element = this.el.querySelector('ce-stripe-element') as HTMLCeStripeElementElement;
+    const element = this.el.querySelector('sc-stripe-element') as HTMLScStripeElementElement;
     if (!element || !this.clientSecret) {
       this.error = __('Something went wrong', 'surecart');
       return;
@@ -39,24 +39,24 @@ export class CePaymentMethodCreate {
 
   render() {
     return (
-      <ce-card>
-        <ce-form onCeFormSubmit={() => this.handleSubmit()}>
+      <sc-card>
+        <sc-form onScFormSubmit={() => this.handleSubmit()}>
           {this.error && (
-            <ce-alert open={!!this.error} type="danger">
+            <sc-alert open={!!this.error} type="danger">
               <span slot="title">{__('Error', 'surecart')}</span>
               {this.error}
-            </ce-alert>
+            </sc-alert>
           )}
 
           <slot />
 
-          <ce-button type="primary" submit full loading={this.loading}>
+          <sc-button type="primary" submit full loading={this.loading}>
             {__('Save Payment Method', 'surecart')}
-          </ce-button>
+          </sc-button>
 
-          {this.loading && <ce-block-ui></ce-block-ui>}
-        </ce-form>
-      </ce-card>
+          {this.loading && <sc-block-ui></sc-block-ui>}
+        </sc-form>
+      </sc-card>
     );
   }
 }

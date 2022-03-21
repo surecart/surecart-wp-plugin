@@ -29,17 +29,17 @@
 
 ### Used by
 
- - [ce-form-control](../form-control)
- - [ce-payment](../../controllers/checkout-form/payment)
- - [ce-price-choice](../../controllers/checkout-form/price-choice)
+ - [sc-form-control](../form-control)
+ - [sc-payment](../../controllers/checkout-form/payment)
+ - [sc-price-choice](../../controllers/checkout-form/price-choice)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-form-control --> ce-tooltip
-  ce-payment --> ce-tooltip
-  ce-price-choice --> ce-tooltip
-  style ce-tooltip fill:#f9f,stroke:#333,stroke-width:4px
+  sc-form-control --> sc-tooltip
+  sc-payment --> sc-tooltip
+  sc-price-choice --> sc-tooltip
+  style sc-tooltip fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

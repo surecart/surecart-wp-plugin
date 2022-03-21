@@ -5,7 +5,7 @@ import {
 	useBlockProps,
 } from '@wordpress/block-editor';
 import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
-import { CeDashboardModule } from '@surecart/components-react';
+import { ScDashboardModule } from '@surecart/components-react';
 import { Fragment } from 'react';
 
 export default ({ attributes, setAttributes }) => {
@@ -26,7 +26,7 @@ export default ({ attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<CeDashboardModule {...blockProps}>
+			<ScDashboardModule {...blockProps}>
 				<RichText
 					aria-label={__('Title')}
 					placeholder={__('Add A Title…')}
@@ -37,17 +37,17 @@ export default ({ attributes, setAttributes }) => {
 					allowedFormats={['core/bold', 'core/italic']}
 				/>
 
-				<ce-button type="link" slot="end">
+				<sc-button type="link" slot="end">
 					{__('View all', 'surecart')}
-					<ce-icon name="chevron-right" slot="suffix"></ce-icon>
-				</ce-button>
+					<sc-icon name="chevron-right" slot="suffix"></sc-icon>
+				</sc-button>
 
-				<ce-card no-padding style={{ '--overflow': 'hidden' }}>
-					<ce-stacked-list>
-						<ce-stacked-list-row mobile-size={0}>
-							<ce-spacing
+				<sc-card no-padding style={{ '--overflow': 'hidden' }}>
+					<sc-stacked-list>
+						<sc-stacked-list-row mobile-size={0}>
+							<sc-spacing
 								style={{
-									'--spacing': 'var(--ce-spacing-small)',
+									'--spacing': 'var(--sc-spacing-small)',
 								}}
 							>
 								<div>
@@ -60,20 +60,20 @@ export default ({ attributes, setAttributes }) => {
 								</div>
 								<div>
 									4 files &bull;{' '}
-									<ce-format-bytes
+									<sc-format-bytes
 										value={1235}
-									></ce-format-bytes>
+									></sc-format-bytes>
 								</div>
-							</ce-spacing>
-							<ce-icon
+							</sc-spacing>
+							<sc-icon
 								name="chevron-right"
 								slot="suffix"
-							></ce-icon>
-						</ce-stacked-list-row>
-						<ce-stacked-list-row mobile-size={0}>
-							<ce-spacing
+							></sc-icon>
+						</sc-stacked-list-row>
+						<sc-stacked-list-row mobile-size={0}>
+							<sc-spacing
 								style={{
-									'--spacing': 'var(--ce-spacing-x-small)',
+									'--spacing': 'var(--sc-spacing-x-small)',
 								}}
 							>
 								<div>
@@ -86,19 +86,19 @@ export default ({ attributes, setAttributes }) => {
 								</div>
 								<div>
 									4 files &bull;{' '}
-									<ce-format-bytes
+									<sc-format-bytes
 										value={2345}
-									></ce-format-bytes>
+									></sc-format-bytes>
 								</div>
-							</ce-spacing>
-							<ce-icon
+							</sc-spacing>
+							<sc-icon
 								name="chevron-right"
 								slot="suffix"
-							></ce-icon>
-						</ce-stacked-list-row>
-					</ce-stacked-list>
-				</ce-card>
-			</CeDashboardModule>
+							></sc-icon>
+						</sc-stacked-list-row>
+					</sc-stacked-list>
+				</sc-card>
+			</ScDashboardModule>
 		</Fragment>
 	);
 };

@@ -7,7 +7,7 @@ import {
 	InspectorControls,
 	store as blockEditorStore,
 } from '@wordpress/block-editor';
-import { CeCheckout } from '@surecart/components-react';
+import { ScCheckout } from '@surecart/components-react';
 import { Fragment, useState } from '@wordpress/element';
 import { parse } from '@wordpress/blocks';
 import {
@@ -231,7 +231,7 @@ export default function edit({ clientId, attributes, setAttributes }) {
 							display: grid;
 							gap: 0.5em;
 							border: 1px solid transparent;
-							background: var(--ce-color-gray-100, #f9fafb);
+							background: var(--sc-color-gray-100, #f9fafb);
 						`}
 					>
 						<div
@@ -248,16 +248,16 @@ export default function edit({ clientId, attributes, setAttributes }) {
 									flex: 1;
 									user-select: none;
 									display: inline-block;
-									color: var(--ce-input-label-color);
+									color: var(--sc-input-label-color);
 									font-weight: var(
-										--ce-input-label-font-weight
+										--sc-input-label-font-weight
 									);
 									text-transform: var(
-										--ce-input-label-text-transform,
+										--sc-input-label-text-transform,
 										none
 									);
 									letter-spacing: var(
-										--ce-input-label-letter-spacing,
+										--sc-input-label-letter-spacing,
 										0
 									);
 								`}
@@ -315,7 +315,7 @@ export default function edit({ clientId, attributes, setAttributes }) {
 											</span>
 										</span>
 
-										<ce-icon
+										<sc-icon
 											name="shopping-bag"
 											style={{ fontSize: '18px' }}
 										/>
@@ -331,7 +331,7 @@ export default function edit({ clientId, attributes, setAttributes }) {
 							/>
 						)}
 					</div>
-					<CeCheckout
+					<ScCheckout
 						keys={ceData?.keys}
 						mode={mode}
 						formId={formId}
@@ -350,7 +350,7 @@ export default function edit({ clientId, attributes, setAttributes }) {
 							css={css`
 								*
 									> *
-									> .wp-block:not(ce-choice):not(ce-column):not(:last-child) {
+									> .wp-block:not(sc-choice):not(sc-column):not(:last-child) {
 									margin-bottom: ${gap} !important;
 								}
 							`}
@@ -365,7 +365,7 @@ export default function edit({ clientId, attributes, setAttributes }) {
 								}
 							/>
 						</div>
-					</CeCheckout>
+					</ScCheckout>
 				</div>
 			)}
 		</Fragment>

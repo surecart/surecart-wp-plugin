@@ -1,11 +1,11 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-describe('ce-payment-method-create', () => {
+describe('sc-payment-method-create', () => {
   it('renders', async () => {
     const page = await newE2EPage();
-    await page.setContent('<ce-payment-method-create></ce-payment-method-create>');
+    await page.setContent('<sc-payment-method-create></sc-payment-method-create>');
 
-    const element = await page.find('ce-payment-method-create');
+    const element = await page.find('sc-payment-method-create');
     expect(element).toHaveClass('hydrated');
   });
 });

@@ -1,7 +1,7 @@
 import { __ } from '@wordpress/i18n';
 import DataTable from '../../../components/DataTable';
 import { addQueryArgs } from '@wordpress/url';
-import { CeOrderStatusBadge } from '@surecart/components-react';
+import { ScOrderStatusBadge } from '@surecart/components-react';
 
 export default ({ order, loading }) => {
 	if (!loading && !order) {
@@ -33,38 +33,38 @@ export default ({ order, loading }) => {
 				items={[
 					{
 						amount: (
-							<ce-format-number
+							<sc-format-number
 								type="currency"
 								currency={order?.currency}
 								value={order?.amount_due}
-							></ce-format-number>
+							></sc-format-number>
 						),
 						status: (
-							<CeOrderStatusBadge
+							<ScOrderStatusBadge
 								status={order?.status}
-							></CeOrderStatusBadge>
+							></ScOrderStatusBadge>
 						),
 						created: (
-							<ce-format-date
+							<sc-format-date
 								type="timestamp"
 								date={order?.created_at}
 								month="short"
 								day="numeric"
 								year="numeric"
-							></ce-format-date>
+							></sc-format-date>
 						),
 						number: order.number,
 						actions: (
-							<ce-button
+							<sc-button
 								size="small"
 								href={addQueryArgs('admin.php', {
-									page: 'ce-orders',
+									page: 'sc-orders',
 									action: 'edit',
 									id: order?.id,
 								})}
 							>
 								View
-							</ce-button>
+							</sc-button>
 						),
 					},
 				]}

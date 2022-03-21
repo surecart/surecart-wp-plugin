@@ -27,7 +27,7 @@ class Block extends BaseBlock {
 	 */
 	public function getStyle( $attributes ) {
 		$style  = '';
-		$style .= '--ce-form-row-spacing: ' . ( $attributes['gap'] ?? '25' ) . ';';
+		$style .= '--sc-form-row-spacing: ' . ( $attributes['gap'] ?? '25' ) . ';';
 		return $style;
 	}
 
@@ -61,7 +61,7 @@ class Block extends BaseBlock {
 				'content'     => $content,
 				'mode'        => $attributes['mode'] ?? get_option( 'surecart_payment_mode', 'live' ),
 				'form_id'     => $sc_form_id,
-				'id'          => 'ce-checkout-' . $sc_form_id,
+				'id'          => 'sc-checkout-' . $sc_form_id,
 				'prices'      => $attributes['prices'] ?? [],
 				'success_url' => ! empty( $attributes['redirect'] ) ? $attributes['redirect'] : \SureCart::pages()->url( 'order-confirmation' ),
 				'i18n'        => $this->getTranslations(),

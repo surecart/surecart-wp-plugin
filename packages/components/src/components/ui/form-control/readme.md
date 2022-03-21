@@ -33,24 +33,24 @@
 
 ### Used by
 
- - [ce-address](../address)
- - [ce-choices](../choices)
- - [ce-input](../input)
- - [ce-select](../select)
+ - [sc-address](../address)
+ - [sc-choices](../choices)
+ - [sc-input](../input)
+ - [sc-select](../select)
 
 ### Depends on
 
-- [ce-tooltip](../tooltip)
+- [sc-tooltip](../tooltip)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-form-control --> ce-tooltip
-  ce-address --> ce-form-control
-  ce-choices --> ce-form-control
-  ce-input --> ce-form-control
-  ce-select --> ce-form-control
-  style ce-form-control fill:#f9f,stroke:#333,stroke-width:4px
+  sc-form-control --> sc-tooltip
+  sc-address --> sc-form-control
+  sc-choices --> sc-form-control
+  sc-input --> sc-form-control
+  sc-select --> sc-form-control
+  style sc-form-control fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

@@ -20,7 +20,7 @@
 
 | Event             | Description           | Type                                                                                                                                                                                                                                                                                                                                                                                         |
 | ----------------- | --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `ceChangeAddress` | Address change event. | `CustomEvent<{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }>` |
+| `scChangeAddress` | Address change event. | `CustomEvent<{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }>` |
 
 
 ## Shadow Parts
@@ -34,34 +34,34 @@
 
 ### Used by
 
- - [ce-customer-edit](../../controllers/dashboard/customer-edit)
- - [ce-order-shipping-address](../../controllers/checkout-form/order-shipping-address)
+ - [sc-customer-edit](../../controllers/dashboard/customer-edit)
+ - [sc-order-shipping-address](../../controllers/checkout-form/order-shipping-address)
 
 ### Depends on
 
-- [ce-form-control](../form-control)
-- [ce-select](../select)
-- [ce-input](../input)
+- [sc-form-control](../form-control)
+- [sc-select](../select)
+- [sc-input](../input)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-address --> ce-form-control
-  ce-address --> ce-select
-  ce-address --> ce-input
-  ce-form-control --> ce-tooltip
-  ce-select --> ce-menu-label
-  ce-select --> ce-menu-item
-  ce-select --> ce-form-control
-  ce-select --> ce-dropdown
-  ce-select --> ce-icon
-  ce-select --> ce-input
-  ce-select --> ce-spinner
-  ce-select --> ce-menu
-  ce-input --> ce-form-control
-  ce-customer-edit --> ce-address
-  ce-order-shipping-address --> ce-address
-  style ce-address fill:#f9f,stroke:#333,stroke-width:4px
+  sc-address --> sc-form-control
+  sc-address --> sc-select
+  sc-address --> sc-input
+  sc-form-control --> sc-tooltip
+  sc-select --> sc-menu-label
+  sc-select --> sc-menu-item
+  sc-select --> sc-form-control
+  sc-select --> sc-dropdown
+  sc-select --> sc-icon
+  sc-select --> sc-input
+  sc-select --> sc-spinner
+  sc-select --> sc-menu
+  sc-input --> sc-form-control
+  sc-customer-edit --> sc-address
+  sc-order-shipping-address --> sc-address
+  style sc-address fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

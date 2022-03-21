@@ -12,11 +12,11 @@ import apiFetch from '@wordpress/api-fetch';
 import dotProp from 'dot-prop-immutable';
 
 import {
-	CeButton,
-	CeFormatNumber,
-	CeDropdown,
-	CeMenu,
-	CeMenuItem,
+	ScButton,
+	ScFormatNumber,
+	ScDropdown,
+	ScMenu,
+	ScMenuItem,
 } from '@surecart/components-react';
 
 import { __experimentalNumberControl as NumberControl } from '@wordpress/components';
@@ -25,11 +25,11 @@ import { css, jsx } from '@emotion/core';
 
 export default ( { attributes, setAttributes, choice } ) => {
 	// styles
-	const border = '--ce-color-gray-200';
-	const bg = '--ce-color-white';
-	const bgHover = '--ce-color-gray-50';
-	const color = '--ce-color-gray-900';
-	const muted = '--ce-color-gray-500';
+	const border = '--sc-color-gray-200';
+	const bg = '--sc-color-white';
+	const bgHover = '--sc-color-gray-50';
+	const color = '--sc-color-gray-900';
+	const muted = '--sc-color-gray-500';
 
 	const { prices } = attributes;
 	const [ isLoading, setIsLoading ] = useState( false );
@@ -92,20 +92,20 @@ export default ( { attributes, setAttributes, choice } ) => {
 				` }
 			>
 				<div>
-					<ce-skeleton
+					<sc-skeleton
 						style={ {
 							width: '120px',
 							display: 'inline-block',
 						} }
-					></ce-skeleton>
+					></sc-skeleton>
 				</div>
 				<div>
-					<ce-skeleton
+					<sc-skeleton
 						style={ {
 							width: '300px',
 							display: 'inline-block',
 						} }
-					></ce-skeleton>
+					></sc-skeleton>
 				</div>
 			</div>
 		);
@@ -113,7 +113,7 @@ export default ( { attributes, setAttributes, choice } ) => {
 
 	const navigateToEditProduct = () => {
 		window.location.href = addQueryArgs( 'admin.php', {
-			page: 'ce-products',
+			page: 'sc-products',
 			action: 'edit',
 			id,
 		} );
@@ -127,12 +127,12 @@ export default ( { attributes, setAttributes, choice } ) => {
 				flex: 0 1 50px;
 			` }
 		>
-			<CeDropdown slot="suffix" position="bottom-right">
-				<CeButton type="text" slot="trigger" circle>
+			<ScDropdown slot="suffix" position="bottom-right">
+				<ScButton type="text" slot="trigger" circle>
 					<Icon icon={ moreHorizontal } size={ 24 } />
-				</CeButton>
-				<CeMenu>
-					<CeMenuItem onClick={ navigateToEditProduct }>
+				</ScButton>
+				<ScMenu>
+					<ScMenuItem onClick={ navigateToEditProduct }>
 						<Icon
 							slot="prefix"
 							css={ css`
@@ -143,8 +143,8 @@ export default ( { attributes, setAttributes, choice } ) => {
 							size={ 16 }
 						/>
 						{ __( 'Edit', 'surecart
-					</CeMenuItem>
-					<CeMenuItem onClick={ removeChoice }>
+					</ScMenuItem>
+					<ScMenuItem onClick={ removeChoice }>
 						<Icon
 							slot="prefix"
 							css={ css`
@@ -155,9 +155,9 @@ export default ( { attributes, setAttributes, choice } ) => {
 							size={ 16 }
 						/>
 						{ __( 'Remove', 'surecart
-					</CeMenuItem>
-				</CeMenu>
-			</CeDropdown>
+					</ScMenuItem>
+				</ScMenu>
+			</ScDropdown>
 		</div>
 	);
 
@@ -245,7 +245,7 @@ export default ( { attributes, setAttributes, choice } ) => {
 									text-align: center;
 								` }
 							>
-								<CeFormatNumber
+								<ScFormatNumber
 									type="currency"
 									currency={ price.currency }
 									value={ price.amount }

@@ -1,14 +1,14 @@
-<ce-button
+<sc-button
 href="<?php echo esc_url( $href ); ?>"
 type="<?php echo esc_attr( $type ); ?>"
 size="<?php echo esc_attr( $size ); ?>"
 >
 	<?php if ( ! empty( $show_icon ) ) : ?>
-		<ce-icon
+		<sc-icon
 			slot="prefix"
 			name="log-out"
-		></ce-icon>
+		></sc-icon>
 	<?php endif; ?>
 
 	<?php echo esc_html( $label ); ?>
-</ce-button>
+</sc-button>

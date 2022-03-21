@@ -18,7 +18,7 @@ import Sidebar from './Sidebar';
 
 // components
 import ErrorFlash from '../../components/ErrorFlash';
-import { CeButton, CeFormatDate, CeSwitch } from '@surecart/components-react';
+import { ScButton, ScFormatDate, ScSwitch } from '@surecart/components-react';
 import PendingUpdate from '../show/modules/PendingUpdate';
 
 export default () => {
@@ -56,7 +56,7 @@ export default () => {
 				});
 				setSaving(true);
 				window.location.href = addQueryArgs('admin.php', {
-					page: 'ce-subscriptions',
+					page: 'sc-subscriptions',
 					action: 'show',
 					id: id,
 				});
@@ -91,7 +91,7 @@ export default () => {
 			onInvalid={onInvalid}
 			backButtonType="icon"
 			backUrl={addQueryArgs('admin.php', {
-				page: 'ce-subscriptions',
+				page: 'sc-subscriptions',
 				action: 'show',
 				id: id,
 			})}
@@ -106,13 +106,13 @@ export default () => {
 			}
 			button={
 				isLoading ? (
-					<ce-skeleton
+					<sc-skeleton
 						style={{
 							width: '120px',
 							height: '35px',
 							display: 'inline-block',
 						}}
-					></ce-skeleton>
+					></sc-skeleton>
 				) : (
 					<div
 						css={css`
@@ -121,16 +121,16 @@ export default () => {
 							align-items: center;
 						`}
 					>
-						<CeSwitch
+						<ScSwitch
 							checked={skip_proration}
-							onCeChange={(e) =>
+							onScChange={(e) =>
 								setSkipProration(e.target.checked)
 							}
 						>
 							{__('Skip Proration', 'surecart')}
-						</CeSwitch>
-						<CeButton
-							className={'ce-schedule-model'}
+						</ScSwitch>
+						<ScButton
+							className={'sc-schedule-model'}
 							disabled={isSaving}
 							loading={isSaving}
 							submit
@@ -143,17 +143,17 @@ export default () => {
 						>
 							{__('Schedule for', 'surecart')}
 							{'\u00A0'}
-							<CeFormatDate
+							<ScFormatDate
 								date={subscription?.current_period_end_at}
 								month="short"
 								day="numeric"
 								year="numeric"
 								type="timestamp"
-							></CeFormatDate>
-						</CeButton>
-						<CeButton
+							></ScFormatDate>
+						</ScButton>
+						<ScButton
 							type="primary"
-							className={'ce-save-model'}
+							className={'sc-save-model'}
 							disabled={isSaving}
 							loading={isSaving}
 							submit
@@ -163,7 +163,7 @@ export default () => {
 							}}
 						>
 							{__('Update Now', 'surecart')}
-						</CeButton>
+						</ScButton>
 					</div>
 				)
 			}
@@ -196,10 +196,10 @@ export default () => {
 				/>
 
 				{isSaving && (
-					<ce-block-ui
+					<sc-block-ui
 						spinner
 						style={{ zIndex: 9, margin: 0 }}
-					></ce-block-ui>
+					></sc-block-ui>
 				)}
 			</Fragment>
 		</Template>

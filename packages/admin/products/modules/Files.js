@@ -2,9 +2,9 @@
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import {
-	CeCard,
-	CeFormControl,
-	CeStackedList,
+	ScCard,
+	ScFormControl,
+	ScStackedList,
 } from '@surecart/components-react';
 import { FormFileUpload, DropZone } from '@wordpress/components';
 import SingleFile from './SingleFile';
@@ -35,8 +35,8 @@ export default ({ id, product, updateProduct, loading }) => {
 					return null;
 
 				return (
-					<CeCard noPadding>
-						<CeStackedList>
+					<ScCard noPadding>
+						<ScStackedList>
 							{(product?.files?.data || [])
 								.sort((a, b) => a.created_at - b.created_at)
 								.map((file) => (
@@ -100,17 +100,17 @@ export default ({ id, product, updateProduct, loading }) => {
 									}}
 								/>
 							))}
-						</CeStackedList>
-					</CeCard>
+						</ScStackedList>
+					</ScCard>
 				);
 			})()}
 
-			<CeFormControl label={__('Files', 'surecart')} showLabel={false}>
+			<ScFormControl label={__('Files', 'surecart')} showLabel={false}>
 				<div
 					css={css`
 						position: relative;
-						border: 2px dashed var(--ce-color-gray-200);
-						border-radius: var(--ce-border-radius-small);
+						border: 2px dashed var(--sc-color-gray-200);
+						border-radius: var(--sc-border-radius-small);
 						padding: 2em;
 						display: grid;
 						gap: 1em;
@@ -128,7 +128,7 @@ export default ({ id, product, updateProduct, loading }) => {
 
 					<DropZone onFilesDrop={doUpload} />
 				</div>
-			</CeFormControl>
+			</ScFormControl>
 		</Box>
 	);
 };

@@ -35,7 +35,7 @@ abstract class AdminModelEditController {
 	 *
 	 * @var array
 	 */
-	protected $dependencies = [ 'ce-core-data', 'ce-ui-data' ];
+	protected $dependencies = [ 'sc-core-data', 'sc-ui-data' ];
 
 	/**
 	 * Data to pass to the page.

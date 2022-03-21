@@ -16,28 +16,28 @@
 
 ### Used by
 
- - [ce-downloads-list](../downloads-list)
- - [ce-invoices-list](../../controllers/dashboard/invoices-list)
- - [ce-orders-list](../../controllers/dashboard/orders-list)
- - [ce-payment-methods-list](../../controllers/dashboard/payment-methods-list)
- - [ce-subscription-payment](../../controllers/dashboard/subscription-payment)
- - [ce-subscriptions-list](../../controllers/dashboard/subscriptions-list)
+ - [sc-downloads-list](../downloads-list)
+ - [sc-invoices-list](../../controllers/dashboard/invoices-list)
+ - [sc-orders-list](../../controllers/dashboard/orders-list)
+ - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
+ - [sc-subscription-payment](../../controllers/dashboard/subscription-payment)
+ - [sc-subscriptions-list](../../controllers/dashboard/subscriptions-list)
 
 ### Depends on
 
-- [ce-icon](../icon)
+- [sc-icon](../icon)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-empty --> ce-icon
-  ce-downloads-list --> ce-empty
-  ce-invoices-list --> ce-empty
-  ce-orders-list --> ce-empty
-  ce-payment-methods-list --> ce-empty
-  ce-subscription-payment --> ce-empty
-  ce-subscriptions-list --> ce-empty
-  style ce-empty fill:#f9f,stroke:#333,stroke-width:4px
+  sc-empty --> sc-icon
+  sc-downloads-list --> sc-empty
+  sc-invoices-list --> sc-empty
+  sc-orders-list --> sc-empty
+  sc-payment-methods-list --> sc-empty
+  sc-subscription-payment --> sc-empty
+  sc-subscriptions-list --> sc-empty
+  style sc-empty fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

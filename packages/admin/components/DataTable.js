@@ -16,7 +16,7 @@ export default ({
 }) => {
 	const renderLoading = () => {
 		return (
-			<ce-table
+			<sc-table
 				style={{
 					'--shadow': 'none',
 					'--border-radius': '0',
@@ -26,23 +26,23 @@ export default ({
 			>
 				{!hideHeader &&
 					Object.keys(columns).map((key) => (
-						<ce-table-cell
+						<sc-table-cell
 							slot="head"
 							style={{ width: columns[key]?.width }}
 							key={key}
 						>
 							{columns[key]?.label}
-						</ce-table-cell>
+						</sc-table-cell>
 					))}
 
-				<ce-table-row>
+				<sc-table-row>
 					{Object.keys(columns).map((key) => (
-						<ce-table-cell key={key}>
-							<ce-skeleton></ce-skeleton>
-						</ce-table-cell>
+						<sc-table-cell key={key}>
+							<sc-skeleton></sc-skeleton>
+						</sc-table-cell>
 					))}
-				</ce-table-row>
-			</ce-table>
+				</sc-table-row>
+			</sc-table>
 		);
 	};
 
@@ -53,16 +53,16 @@ export default ({
 	return (
 		<div
 			css={css`
-				ce-table-cell:first-of-type {
+				sc-table-cell:first-of-type {
 					padding-left: 30px;
 				}
-				ce-table-cell:last-of-type {
+				sc-table-cell:last-of-type {
 					padding-right: 30px;
 				}
 				.components-card__body {
 					padding: 0 !important;
 				}
-				--ce-table-cell-spacing: var(--ce-spacing-large);
+				--sc-table-cell-spacing: var(--sc-spacing-large);
 			`}
 		>
 			<Box
@@ -70,7 +70,7 @@ export default ({
 				noPadding={true}
 				footer={
 					!!(loading && footer) ? (
-						<ce-skeleton style={{ width: '70px' }}></ce-skeleton>
+						<sc-skeleton style={{ width: '70px' }}></sc-skeleton>
 					) : (
 						footer
 					)
@@ -79,7 +79,7 @@ export default ({
 				{loading ? (
 					renderLoading()
 				) : (
-					<ce-table
+					<sc-table
 						style={{
 							'--shadow': 'none',
 							'--border-radius': '0',
@@ -89,25 +89,25 @@ export default ({
 					>
 						{!hideHeader &&
 							Object.keys(columns).map((key) => (
-								<ce-table-cell
+								<sc-table-cell
 									slot="head"
 									style={{ width: columns[key]?.width }}
 									key={key}
 								>
 									{columns[key]?.label}
-								</ce-table-cell>
+								</sc-table-cell>
 							))}
 
 						{(items || []).map((item) => (
-							<ce-table-row key={item.id}>
+							<sc-table-row key={item.id}>
 								{Object.keys(columns).map((key) => (
-									<ce-table-cell key={key}>
+									<sc-table-cell key={key}>
 										{item[key]}
-									</ce-table-cell>
+									</sc-table-cell>
 								))}
-							</ce-table-row>
+							</sc-table-row>
 						))}
-					</ce-table>
+					</sc-table>
 				)}
 				{children}
 			</Box>

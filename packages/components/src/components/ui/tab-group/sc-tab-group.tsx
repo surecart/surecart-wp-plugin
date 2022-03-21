@@ -1,0 +1,185 @@
+import { Component, h, Element, State, Event, EventEmitter } from '@stencil/core';
+
+@Component({
+  tag: 'sc-tab-group',
+  styleUrl: 'sc-tab-group.scss',
+  shadow: true,
+})
+export class ScTabGroup {
+  @Element() el: HTMLScTabGroupElement;
+  @State() activeTab: HTMLScTabElement;
+
+  private tabs: HTMLScTabElement[] = [];
+  private panels: HTMLScTabPanelElement[] = [];
+
+  @Event() scTabHide: EventEmitter<string>;
+  @Event() scTabShow: EventEmitter<string>;
+
+  private mutationObserver: MutationObserver;
+
+  componentDidLoad() {
+    this.syncTabsAndPanels();
+    this.setAriaLabels();
+    this.setActiveTab(this.getActiveTab() || this.tabs[0], { emitEvents: false });
+
+    this.mutationObserver = new MutationObserver(() => {
+      this.syncTabsAndPanels();
+    });
+    this.mutationObserver.observe(this.el, { attributes: true, childList: true, subtree: true });
+  }
+
+  disconnectedCallback() {
+    this.mutationObserver.disconnect();
+  }
+
+  syncTabsAndPanels() {
+    this.tabs = this.getAllTabs();
+    this.panels = this.getAllPanels();
+  }
+
+  setAriaLabels() {
+    // Link each tab with its corresponding panel
+    this.tabs.map(tab => {
+      const panel = this.panels.find(el => el.name === tab.panel) as HTMLScTabPanelElement;
+      if (panel) {
+        tab.setAttribute('aria-controls', panel.getAttribute('id') as string);
+        panel.setAttribute('aria-labelledby', tab.getAttribute('id') as string);
+      }
+    });
+  }
+
+  handleClick(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+    const tab = target.closest('sc-tab') as HTMLScTabElement;
+    const tabGroup = tab?.closest('sc-tab-group') as HTMLScTabGroupElement;
+
+    // Ensure the target tab is in this tab group
+    if (tabGroup !== this.el) {
+      return;
+    }
+
+    if (tab) {
+      this.setActiveTab(tab, { scrollBehavior: 'smooth' });
+    }
+  }
+
+  handleKeyDown(event: KeyboardEvent) {
+    const target = event.target as HTMLElement;
+    const tab = target.closest('sc-tab') as HTMLScTabElement;
+    const tabGroup = tab?.closest('sc-tab-group');
+
+    // Ensure the target tab is in this tab group
+    if (tabGroup !== this.el) {
+      return true;
+    }
+
+    // Activate a tab
+    if (['Enter', ' '].includes(event.key)) {
+      if (tab) {
+        this.setActiveTab(tab, { scrollBehavior: 'smooth' });
+      }
+    }
+
+    // Move focus left or right
+    if (['ArrowUp', 'ArrowDown', 'Home', 'End'].includes(event.key)) {
+      const activeEl = document.activeElement as HTMLScTabElement;
+
+      if (activeEl && activeEl.tagName.toLowerCase() === 'sc-tab') {
+        let index = this.tabs.indexOf(activeEl);
+
+        if (event.key === 'Home') {
+          index = 0;
+        } else if (event.key === 'End') {
+          index = this.tabs.length - 1;
+        } else if (event.key === 'ArrowUp') {
+          index = Math.max(0, index - 1);
+        } else if (event.key === 'ArrowDown') {
+          index = Math.min(this.tabs.length - 1, index + 1);
+        }
+
+        this.tabs[index].triggerFocus({ preventScroll: true });
+
+        event.preventDefault();
+      }
+    }
+  }
+
+  /** Handle the active tabl selection */
+  setActiveTab(tab: HTMLScTabElement, options?: { emitEvents?: boolean; scrollBehavior?: 'auto' | 'smooth' }) {
+    options = Object.assign(
+      {
+        emitEvents: true,
+        scrollBehavior: 'auto',
+      },
+      options,
+    );
+
+    if (tab && tab !== this.activeTab && !tab.disabled) {
+      const previousTab = this.activeTab;
+      this.activeTab = tab;
+
+      this.tabs.map(el => (el.active = el === this.activeTab));
+      this.panels.map(el => (el.active = el.name === this.activeTab.panel));
+
+      // Emit events
+      if (options.emitEvents) {
+        if (previousTab) {
+          this.scTabHide.emit(previousTab.panel);
+        }
+        this.scTabShow.emit(this.activeTab.panel);
+      }
+    }
+  }
+
+  getActiveTab() {
+    const tabs = this.getAllTabs();
+    return tabs.find(el => el.active);
+  }
+
+  getAllChildren() {
+    const slots = this.el.shadowRoot.querySelectorAll('slot') as NodeListOf<HTMLSlotElement>;
+    const tags = ['sc-tab', 'sc-tab-panel'];
+    const allSlots = Array.from(slots)
+      .map(slot => slot?.assignedElements?.({ flatten: true }))
+      .flat();
+    return allSlots
+      .reduce((all: HTMLElement[], el: HTMLElement) => all.concat(el, [...(el?.querySelectorAll?.('*') || [])] as HTMLElement[]), [])
+      .filter((el: HTMLElement) => tags.includes(el?.tagName?.toLowerCase?.())) as HTMLElement[];
+  }
+
+  /** Get all child tabs */
+  getAllTabs(includeDisabled = false) {
+    return this.getAllChildren().filter((el: any) => {
+      return includeDisabled ? el.tagName.toLowerCase() === 'sc-tab' : el.tagName.toLowerCase() === 'sc-tab' && !el.disabled;
+    }) as HTMLScTabElement[];
+  }
+
+  /** Get all child panels */
+  getAllPanels() {
+    return this.getAllChildren().filter((el: any) => el.tagName.toLowerCase() === 'sc-tab-panel') as [HTMLScTabPanelElement];
+  }
+
+  render() {
+    return (
+      <div
+        part="base"
+        class={{
+          'tab-group': true,
+        }}
+        onClick={e => this.handleClick(e)}
+        onKeyDown={e => this.handleKeyDown(e)}
+      >
+        <div class="tab-group__nav-container" part="nav">
+          <div class="tab-group__nav">
+            <div part="tabs" class="tab-group__tabs" role="tablist">
+              <slot onSlotchange={() => this.syncTabsAndPanels()} name="nav"></slot>
+            </div>
+          </div>
+        </div>
+        <div part="body" class="tab-group__body">
+          <slot onSlotchange={() => this.syncTabsAndPanels()} />
+        </div>
+      </div>
+    );
+  }
+}

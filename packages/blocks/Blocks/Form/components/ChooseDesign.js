@@ -2,7 +2,7 @@
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import Thumbnail from './Thumbnail';
-import { CeButton } from '@surecart/components-react';
+import { ScButton } from '@surecart/components-react';
 import { useState } from 'react';
 import PlaceholderTemplate from './PlaceholderTemplate';
 
@@ -19,14 +19,14 @@ export default ({ template, setTemplate }) => {
 		<PlaceholderTemplate
 			header={__('Choose A Starting Design', 'surecart')}
 			footerRight={
-				<CeButton
+				<ScButton
 					type="primary"
 					disabled={!choice}
 					onClick={() => setTemplate(choice)}
 				>
-					<ce-icon name="arrow-right" slot="suffix"></ce-icon>
+					<sc-icon name="arrow-right" slot="suffix"></sc-icon>
 					{__('Next', 'surecart')}
-				</CeButton>
+				</ScButton>
 			}
 			maxHeight={'300px'}
 			minHeight={'32rem'}

@@ -5,355 +5,355 @@ import { createReactComponent } from './react-component-lib';
 
 import type { JSX } from '@surecart/components';
 
-export const CeAlert = /*@__PURE__*/ createReactComponent<
-	JSX.CeAlert,
-	HTMLCeAlertElement
->('ce-alert');
-export const CeBadgeNotice = /*@__PURE__*/ createReactComponent<
-	JSX.CeBadgeNotice,
-	HTMLCeBadgeNoticeElement
->('ce-badge-notice');
-export const CeBlockUi = /*@__PURE__*/ createReactComponent<
-	JSX.CeBlockUi,
-	HTMLCeBlockUiElement
->('ce-block-ui');
-export const CeButton = /*@__PURE__*/ createReactComponent<
-	JSX.CeButton,
-	HTMLCeButtonElement
->('ce-button');
-export const CeCard = /*@__PURE__*/ createReactComponent<
-	JSX.CeCard,
-	HTMLCeCardElement
->('ce-card');
-export const CeCcLogo = /*@__PURE__*/ createReactComponent<
-	JSX.CeCcLogo,
-	HTMLCeCcLogoElement
->('ce-cc-logo');
-export const CeChargesList = /*@__PURE__*/ createReactComponent<
-	JSX.CeChargesList,
-	HTMLCeChargesListElement
->('ce-charges-list');
-export const CeCheckbox = /*@__PURE__*/ createReactComponent<
-	JSX.CeCheckbox,
-	HTMLCeCheckboxElement
->('ce-checkbox');
-export const CeCheckout = /*@__PURE__*/ createReactComponent<
-	JSX.CeCheckout,
-	HTMLCeCheckoutElement
->('ce-checkout');
-export const CeChoice = /*@__PURE__*/ createReactComponent<
-	JSX.CeChoice,
-	HTMLCeChoiceElement
->('ce-choice');
-export const CeChoices = /*@__PURE__*/ createReactComponent<
-	JSX.CeChoices,
-	HTMLCeChoicesElement
->('ce-choices');
-export const CeColumns = /*@__PURE__*/ createReactComponent<
-	JSX.CeColumns,
-	HTMLCeColumnsElement
->('ce-columns');
-export const CeConsumer = /*@__PURE__*/ createReactComponent<
-	JSX.CeConsumer,
-	HTMLCeConsumerElement
->('ce-consumer');
-export const CeCouponForm = /*@__PURE__*/ createReactComponent<
-	JSX.CeCouponForm,
-	HTMLCeCouponFormElement
->('ce-coupon-form');
-export const CeCustomerDashboard = /*@__PURE__*/ createReactComponent<
-	JSX.CeCustomerDashboard,
-	HTMLCeCustomerDashboardElement
->('ce-customer-dashboard');
-export const CeCustomerOrder = /*@__PURE__*/ createReactComponent<
-	JSX.CeCustomerOrder,
-	HTMLCeCustomerOrderElement
->('ce-customer-order');
-export const CeCustomerOrdersList = /*@__PURE__*/ createReactComponent<
-	JSX.CeCustomerOrdersList,
-	HTMLCeCustomerOrdersListElement
->('ce-customer-orders-list');
-export const CeCustomerSubscription = /*@__PURE__*/ createReactComponent<
-	JSX.CeCustomerSubscription,
-	HTMLCeCustomerSubscriptionElement
->('ce-customer-subscription');
-export const CeCustomerSubscriptionEdit = /*@__PURE__*/ createReactComponent<
-	JSX.CeCustomerSubscriptionEdit,
-	HTMLCeCustomerSubscriptionEditElement
->('ce-customer-subscription-edit');
-export const CeCustomerSubscriptionPlan = /*@__PURE__*/ createReactComponent<
-	JSX.CeCustomerSubscriptionPlan,
-	HTMLCeCustomerSubscriptionPlanElement
->('ce-customer-subscription-plan');
-export const CeCustomerSubscriptions = /*@__PURE__*/ createReactComponent<
-	JSX.CeCustomerSubscriptions,
-	HTMLCeCustomerSubscriptionsElement
->('ce-customer-subscriptions');
-export const CeCustomerSubscriptionsList = /*@__PURE__*/ createReactComponent<
-	JSX.CeCustomerSubscriptionsList,
-	HTMLCeCustomerSubscriptionsListElement
->('ce-customer-subscriptions-list');
-export const CeDivider = /*@__PURE__*/ createReactComponent<
-	JSX.CeDivider,
-	HTMLCeDividerElement
->('ce-divider');
-export const CeDropdown = /*@__PURE__*/ createReactComponent<
-	JSX.CeDropdown,
-	HTMLCeDropdownElement
->('ce-dropdown');
-export const CeEmail = /*@__PURE__*/ createReactComponent<
-	JSX.CeEmail,
-	HTMLCeEmailElement
->('ce-email');
-export const CeExpressPayment = /*@__PURE__*/ createReactComponent<
-	JSX.CeExpressPayment,
-	HTMLCeExpressPaymentElement
->('ce-express-payment');
-export const CeFlex = /*@__PURE__*/ createReactComponent<
-	JSX.CeFlex,
-	HTMLCeFlexElement
->('ce-flex');
-export const CeForm = /*@__PURE__*/ createReactComponent<
-	JSX.CeForm,
-	HTMLCeFormElement
->('ce-form');
-export const CeFormControl = /*@__PURE__*/ createReactComponent<
-	JSX.CeFormControl,
-	HTMLCeFormControlElement
->('ce-form-control');
-export const CeFormRow = /*@__PURE__*/ createReactComponent<
-	JSX.CeFormRow,
-	HTMLCeFormRowElement
->('ce-form-row');
-export const CeFormSection = /*@__PURE__*/ createReactComponent<
-	JSX.CeFormSection,
-	HTMLCeFormSectionElement
->('ce-form-section');
-export const CeFormatDate = /*@__PURE__*/ createReactComponent<
-	JSX.CeFormatDate,
-	HTMLCeFormatDateElement
->('ce-format-date');
-export const CeFormatInterval = /*@__PURE__*/ createReactComponent<
-	JSX.CeFormatInterval,
-	HTMLCeFormatIntervalElement
->('ce-format-interval');
-export const CeFormatNumber = /*@__PURE__*/ createReactComponent<
-	JSX.CeFormatNumber,
-	HTMLCeFormatNumberElement
->('ce-format-number');
-export const CeHeading = /*@__PURE__*/ createReactComponent<
-	JSX.CeHeading,
-	HTMLCeHeadingElement
->('ce-heading');
-export const CeIcon = /*@__PURE__*/ createReactComponent<
-	JSX.CeIcon,
-	HTMLCeIconElement
->('ce-icon');
-export const CeInput = /*@__PURE__*/ createReactComponent<
-	JSX.CeInput,
-	HTMLCeInputElement
->('ce-input');
-export const CeLineItem = /*@__PURE__*/ createReactComponent<
-	JSX.CeLineItem,
-	HTMLCeLineItemElement
->('ce-line-item');
-export const CeLineItemTotal = /*@__PURE__*/ createReactComponent<
-	JSX.CeLineItemTotal,
-	HTMLCeLineItemTotalElement
->('ce-line-item-total');
-export const CeLineItems = /*@__PURE__*/ createReactComponent<
-	JSX.CeLineItems,
-	HTMLCeLineItemsElement
->('ce-line-items');
-export const CeLineItemsProvider = /*@__PURE__*/ createReactComponent<
-	JSX.CeLineItemsProvider,
-	HTMLCeLineItemsProviderElement
->('ce-line-items-provider');
-export const CeLoginForm = /*@__PURE__*/ createReactComponent<
-	JSX.CeLoginForm,
-	HTMLCeLoginFormElement
->('ce-login-form');
-export const CeMenu = /*@__PURE__*/ createReactComponent<
-	JSX.CeMenu,
-	HTMLCeMenuElement
->('ce-menu');
-export const CeMenuDivider = /*@__PURE__*/ createReactComponent<
-	JSX.CeMenuDivider,
-	HTMLCeMenuDividerElement
->('ce-menu-divider');
-export const CeMenuItem = /*@__PURE__*/ createReactComponent<
-	JSX.CeMenuItem,
-	HTMLCeMenuItemElement
->('ce-menu-item');
-export const CeMenuLabel = /*@__PURE__*/ createReactComponent<
-	JSX.CeMenuLabel,
-	HTMLCeMenuLabelElement
->('ce-menu-label');
-export const CeOrderConfirmation = /*@__PURE__*/ createReactComponent<
-	JSX.CeOrderConfirmation,
-	HTMLCeOrderConfirmationElement
->('ce-order-confirmation');
-export const CeOrderConfirmationLineItems = /*@__PURE__*/ createReactComponent<
-	JSX.CeOrderConfirmationLineItems,
-	HTMLCeOrderConfirmationLineItemsElement
->('ce-order-confirmation-line-items');
-export const CeOrderConfirmationTotals = /*@__PURE__*/ createReactComponent<
-	JSX.CeOrderConfirmationTotals,
-	HTMLCeOrderConfirmationTotalsElement
->('ce-order-confirmation-totals');
-export const CeOrderStatusBadge = /*@__PURE__*/ createReactComponent<
-	JSX.CeOrderStatusBadge,
-	HTMLCeOrderStatusBadgeElement
->('ce-order-status-badge');
-export const CeOrderSummary = /*@__PURE__*/ createReactComponent<
-	JSX.CeOrderSummary,
-	HTMLCeOrderSummaryElement
->('ce-order-summary');
-export const CePayment = /*@__PURE__*/ createReactComponent<
-	JSX.CePayment,
-	HTMLCePaymentElement
->('ce-payment');
-export const CePriceChoice = /*@__PURE__*/ createReactComponent<
-	JSX.CePriceChoice,
-	HTMLCePriceChoiceElement
->('ce-price-choice');
-export const CePriceChoices = /*@__PURE__*/ createReactComponent<
-	JSX.CePriceChoices,
-	HTMLCePriceChoicesElement
->('ce-price-choices');
-export const CePriceInput = /*@__PURE__*/ createReactComponent<
-	JSX.CePriceInput,
-	HTMLCePriceInputElement
->('ce-price-input');
-export const CeProductLineItem = /*@__PURE__*/ createReactComponent<
-	JSX.CeProductLineItem,
-	HTMLCeProductLineItemElement
->('ce-product-line-item');
-export const CeProvider = /*@__PURE__*/ createReactComponent<
-	JSX.CeProvider,
-	HTMLCeProviderElement
->('ce-provider');
-export const CePurchase = /*@__PURE__*/ createReactComponent<
-	JSX.CePurchase,
-	HTMLCePurchaseElement
->('ce-purchase');
-export const CeQuantitySelect = /*@__PURE__*/ createReactComponent<
-	JSX.CeQuantitySelect,
-	HTMLCeQuantitySelectElement
->('ce-quantity-select');
-export const CeRadio = /*@__PURE__*/ createReactComponent<
-	JSX.CeRadio,
-	HTMLCeRadioElement
->('ce-radio');
-export const CeRadioGroup = /*@__PURE__*/ createReactComponent<
-	JSX.CeRadioGroup,
-	HTMLCeRadioGroupElement
->('ce-radio-group');
-export const CeRegisterIconLibrary = /*@__PURE__*/ createReactComponent<
-	JSX.CeRegisterIconLibrary,
-	HTMLCeRegisterIconLibraryElement
->('ce-register-icon-library');
-export const CeRoute = /*@__PURE__*/ createReactComponent<
-	JSX.CeRoute,
-	HTMLCeRouteElement
->('ce-route');
-export const CeRouter = /*@__PURE__*/ createReactComponent<
-	JSX.CeRouter,
-	HTMLCeRouterElement
->('ce-router');
-export const CeSecureNotice = /*@__PURE__*/ createReactComponent<
-	JSX.CeSecureNotice,
-	HTMLCeSecureNoticeElement
->('ce-secure-notice');
-export const CeSelect = /*@__PURE__*/ createReactComponent<
-	JSX.CeSelect,
-	HTMLCeSelectElement
->('ce-select');
-export const CeSessionDetail = /*@__PURE__*/ createReactComponent<
-	JSX.CeSessionDetail,
-	HTMLCeSessionDetailElement
->('ce-session-detail');
-export const CeSessionProvider = /*@__PURE__*/ createReactComponent<
-	JSX.CeSessionProvider,
-	HTMLCeSessionProviderElement
->('ce-session-provider');
-export const CeSkeleton = /*@__PURE__*/ createReactComponent<
-	JSX.CeSkeleton,
-	HTMLCeSkeletonElement
->('ce-skeleton');
-export const CeSpacing = /*@__PURE__*/ createReactComponent<
-	JSX.CeSpacing,
-	HTMLCeSpacingElement
->('ce-spacing');
-export const CeSpinner = /*@__PURE__*/ createReactComponent<
-	JSX.CeSpinner,
-	HTMLCeSpinnerElement
->('ce-spinner');
-export const CeStripeElement = /*@__PURE__*/ createReactComponent<
-	JSX.CeStripeElement,
-	HTMLCeStripeElementElement
->('ce-stripe-element');
-export const CeStripePaymentRequest = /*@__PURE__*/ createReactComponent<
-	JSX.CeStripePaymentRequest,
-	HTMLCeStripePaymentRequestElement
->('ce-stripe-payment-request');
-export const CeSubscriptionStatusBadge = /*@__PURE__*/ createReactComponent<
-	JSX.CeSubscriptionStatusBadge,
-	HTMLCeSubscriptionStatusBadgeElement
->('ce-subscription-status-badge');
-export const CeSubscriptionsList = /*@__PURE__*/ createReactComponent<
-	JSX.CeSubscriptionsList,
-	HTMLCeSubscriptionsListElement
->('ce-subscriptions-list');
-export const CeSwitch = /*@__PURE__*/ createReactComponent<
-	JSX.CeSwitch,
-	HTMLCeSwitchElement
->('ce-switch');
-export const CeTab = /*@__PURE__*/ createReactComponent<
-	JSX.CeTab,
-	HTMLCeTabElement
->('ce-tab');
-export const CeTabGroup = /*@__PURE__*/ createReactComponent<
-	JSX.CeTabGroup,
-	HTMLCeTabGroupElement
->('ce-tab-group');
-export const CeTabPanel = /*@__PURE__*/ createReactComponent<
-	JSX.CeTabPanel,
-	HTMLCeTabPanelElement
->('ce-tab-panel');
-export const CeTable = /*@__PURE__*/ createReactComponent<
-	JSX.CeTable,
-	HTMLCeTableElement
->('ce-table');
-export const CeTableBody = /*@__PURE__*/ createReactComponent<
-	JSX.CeTableBody,
-	HTMLCeTableBodyElement
->('ce-table-body');
-export const CeTableCell = /*@__PURE__*/ createReactComponent<
-	JSX.CeTableCell,
-	HTMLCeTableCellElement
->('ce-table-cell');
-export const CeTableHead = /*@__PURE__*/ createReactComponent<
-	JSX.CeTableHead,
-	HTMLCeTableHeadElement
->('ce-table-head');
-export const CeTableRow = /*@__PURE__*/ createReactComponent<
-	JSX.CeTableRow,
-	HTMLCeTableRowElement
->('ce-table-row');
-export const CeTag = /*@__PURE__*/ createReactComponent<
-	JSX.CeTag,
-	HTMLCeTagElement
->('ce-tag');
-export const CeText = /*@__PURE__*/ createReactComponent<
-	JSX.CeText,
-	HTMLCeTextElement
->('ce-text');
-export const CeTooltip = /*@__PURE__*/ createReactComponent<
-	JSX.CeTooltip,
-	HTMLCeTooltipElement
->('ce-tooltip');
-export const CeTotal = /*@__PURE__*/ createReactComponent<
-	JSX.CeTotal,
-	HTMLCeTotalElement
->('ce-total');
+export const ScAlert = /*@__PURE__*/ createReactComponent<
+	JSX.ScAlert,
+	HTMLScAlertElement
+>('sc-alert');
+export const ScBadgeNotice = /*@__PURE__*/ createReactComponent<
+	JSX.ScBadgeNotice,
+	HTMLScBadgeNoticeElement
+>('sc-badge-notice');
+export const ScBlockUi = /*@__PURE__*/ createReactComponent<
+	JSX.ScBlockUi,
+	HTMLScBlockUiElement
+>('sc-block-ui');
+export const ScButton = /*@__PURE__*/ createReactComponent<
+	JSX.ScButton,
+	HTMLScButtonElement
+>('sc-button');
+export const ScCard = /*@__PURE__*/ createReactComponent<
+	JSX.ScCard,
+	HTMLScCardElement
+>('sc-card');
+export const ScCcLogo = /*@__PURE__*/ createReactComponent<
+	JSX.ScCcLogo,
+	HTMLScCcLogoElement
+>('sc-cc-logo');
+export const ScChargesList = /*@__PURE__*/ createReactComponent<
+	JSX.ScChargesList,
+	HTMLScChargesListElement
+>('sc-charges-list');
+export const ScCheckbox = /*@__PURE__*/ createReactComponent<
+	JSX.ScCheckbox,
+	HTMLScCheckboxElement
+>('sc-checkbox');
+export const ScCheckout = /*@__PURE__*/ createReactComponent<
+	JSX.ScCheckout,
+	HTMLScCheckoutElement
+>('sc-checkout');
+export const ScChoice = /*@__PURE__*/ createReactComponent<
+	JSX.ScChoice,
+	HTMLScChoiceElement
+>('sc-choice');
+export const ScChoices = /*@__PURE__*/ createReactComponent<
+	JSX.ScChoices,
+	HTMLScChoicesElement
+>('sc-choices');
+export const ScColumns = /*@__PURE__*/ createReactComponent<
+	JSX.ScColumns,
+	HTMLScColumnsElement
+>('sc-columns');
+export const ScConsumer = /*@__PURE__*/ createReactComponent<
+	JSX.ScConsumer,
+	HTMLScConsumerElement
+>('sc-consumer');
+export const ScCouponForm = /*@__PURE__*/ createReactComponent<
+	JSX.ScCouponForm,
+	HTMLScCouponFormElement
+>('sc-coupon-form');
+export const ScCustomerDashboard = /*@__PURE__*/ createReactComponent<
+	JSX.ScCustomerDashboard,
+	HTMLScCustomerDashboardElement
+>('sc-customer-dashboard');
+export const ScCustomerOrder = /*@__PURE__*/ createReactComponent<
+	JSX.ScCustomerOrder,
+	HTMLScCustomerOrderElement
+>('sc-customer-order');
+export const ScCustomerOrdersList = /*@__PURE__*/ createReactComponent<
+	JSX.ScCustomerOrdersList,
+	HTMLScCustomerOrdersListElement
+>('sc-customer-orders-list');
+export const ScCustomerSubscription = /*@__PURE__*/ createReactComponent<
+	JSX.ScCustomerSubscription,
+	HTMLScCustomerSubscriptionElement
+>('sc-customer-subscription');
+export const ScCustomerSubscriptionEdit = /*@__PURE__*/ createReactComponent<
+	JSX.ScCustomerSubscriptionEdit,
+	HTMLScCustomerSubscriptionEditElement
+>('sc-customer-subscription-edit');
+export const ScCustomerSubscriptionPlan = /*@__PURE__*/ createReactComponent<
+	JSX.ScCustomerSubscriptionPlan,
+	HTMLScCustomerSubscriptionPlanElement
+>('sc-customer-subscription-plan');
+export const ScCustomerSubscriptions = /*@__PURE__*/ createReactComponent<
+	JSX.ScCustomerSubscriptions,
+	HTMLScCustomerSubscriptionsElement
+>('sc-customer-subscriptions');
+export const ScCustomerSubscriptionsList = /*@__PURE__*/ createReactComponent<
+	JSX.ScCustomerSubscriptionsList,
+	HTMLScCustomerSubscriptionsListElement
+>('sc-customer-subscriptions-list');
+export const ScDivider = /*@__PURE__*/ createReactComponent<
+	JSX.ScDivider,
+	HTMLScDividerElement
+>('sc-divider');
+export const ScDropdown = /*@__PURE__*/ createReactComponent<
+	JSX.ScDropdown,
+	HTMLScDropdownElement
+>('sc-dropdown');
+export const ScEmail = /*@__PURE__*/ createReactComponent<
+	JSX.ScEmail,
+	HTMLScEmailElement
+>('sc-email');
+export const ScExpressPayment = /*@__PURE__*/ createReactComponent<
+	JSX.ScExpressPayment,
+	HTMLScExpressPaymentElement
+>('sc-express-payment');
+export const ScFlex = /*@__PURE__*/ createReactComponent<
+	JSX.ScFlex,
+	HTMLScFlexElement
+>('sc-flex');
+export const ScForm = /*@__PURE__*/ createReactComponent<
+	JSX.ScForm,
+	HTMLScFormElement
+>('sc-form');
+export const ScFormControl = /*@__PURE__*/ createReactComponent<
+	JSX.ScFormControl,
+	HTMLScFormControlElement
+>('sc-form-control');
+export const ScFormRow = /*@__PURE__*/ createReactComponent<
+	JSX.ScFormRow,
+	HTMLScFormRowElement
+>('sc-form-row');
+export const ScFormSection = /*@__PURE__*/ createReactComponent<
+	JSX.ScFormSection,
+	HTMLScFormSectionElement
+>('sc-form-section');
+export const ScFormatDate = /*@__PURE__*/ createReactComponent<
+	JSX.ScFormatDate,
+	HTMLScFormatDateElement
+>('sc-format-date');
+export const ScFormatInterval = /*@__PURE__*/ createReactComponent<
+	JSX.ScFormatInterval,
+	HTMLScFormatIntervalElement
+>('sc-format-interval');
+export const ScFormatNumber = /*@__PURE__*/ createReactComponent<
+	JSX.ScFormatNumber,
+	HTMLScFormatNumberElement
+>('sc-format-number');
+export const ScHeading = /*@__PURE__*/ createReactComponent<
+	JSX.ScHeading,
+	HTMLScHeadingElement
+>('sc-heading');
+export const ScIcon = /*@__PURE__*/ createReactComponent<
+	JSX.ScIcon,
+	HTMLScIconElement
+>('sc-icon');
+export const ScInput = /*@__PURE__*/ createReactComponent<
+	JSX.ScInput,
+	HTMLScInputElement
+>('sc-input');
+export const ScLineItem = /*@__PURE__*/ createReactComponent<
+	JSX.ScLineItem,
+	HTMLScLineItemElement
+>('sc-line-item');
+export const ScLineItemTotal = /*@__PURE__*/ createReactComponent<
+	JSX.ScLineItemTotal,
+	HTMLScLineItemTotalElement
+>('sc-line-item-total');
+export const ScLineItems = /*@__PURE__*/ createReactComponent<
+	JSX.ScLineItems,
+	HTMLScLineItemsElement
+>('sc-line-items');
+export const ScLineItemsProvider = /*@__PURE__*/ createReactComponent<
+	JSX.ScLineItemsProvider,
+	HTMLScLineItemsProviderElement
+>('sc-line-items-provider');
+export const ScLoginForm = /*@__PURE__*/ createReactComponent<
+	JSX.ScLoginForm,
+	HTMLScLoginFormElement
+>('sc-login-form');
+export const ScMenu = /*@__PURE__*/ createReactComponent<
+	JSX.ScMenu,
+	HTMLScMenuElement
+>('sc-menu');
+export const ScMenuDivider = /*@__PURE__*/ createReactComponent<
+	JSX.ScMenuDivider,
+	HTMLScMenuDividerElement
+>('sc-menu-divider');
+export const ScMenuItem = /*@__PURE__*/ createReactComponent<
+	JSX.ScMenuItem,
+	HTMLScMenuItemElement
+>('sc-menu-item');
+export const ScMenuLabel = /*@__PURE__*/ createReactComponent<
+	JSX.ScMenuLabel,
+	HTMLScMenuLabelElement
+>('sc-menu-label');
+export const ScOrderConfirmation = /*@__PURE__*/ createReactComponent<
+	JSX.ScOrderConfirmation,
+	HTMLScOrderConfirmationElement
+>('sc-order-confirmation');
+export const ScOrderConfirmationLineItems = /*@__PURE__*/ createReactComponent<
+	JSX.ScOrderConfirmationLineItems,
+	HTMLScOrderConfirmationLineItemsElement
+>('sc-order-confirmation-line-items');
+export const ScOrderConfirmationTotals = /*@__PURE__*/ createReactComponent<
+	JSX.ScOrderConfirmationTotals,
+	HTMLScOrderConfirmationTotalsElement
+>('sc-order-confirmation-totals');
+export const ScOrderStatusBadge = /*@__PURE__*/ createReactComponent<
+	JSX.ScOrderStatusBadge,
+	HTMLScOrderStatusBadgeElement
+>('sc-order-status-badge');
+export const ScOrderSummary = /*@__PURE__*/ createReactComponent<
+	JSX.ScOrderSummary,
+	HTMLScOrderSummaryElement
+>('sc-order-summary');
+export const ScPayment = /*@__PURE__*/ createReactComponent<
+	JSX.ScPayment,
+	HTMLScPaymentElement
+>('sc-payment');
+export const ScPriceChoice = /*@__PURE__*/ createReactComponent<
+	JSX.ScPriceChoice,
+	HTMLScPriceChoiceElement
+>('sc-price-choice');
+export const ScPriceChoices = /*@__PURE__*/ createReactComponent<
+	JSX.ScPriceChoices,
+	HTMLScPriceChoicesElement
+>('sc-price-choices');
+export const ScPriceInput = /*@__PURE__*/ createReactComponent<
+	JSX.ScPriceInput,
+	HTMLScPriceInputElement
+>('sc-price-input');
+export const ScProductLineItem = /*@__PURE__*/ createReactComponent<
+	JSX.ScProductLineItem,
+	HTMLScProductLineItemElement
+>('sc-product-line-item');
+export const ScProvider = /*@__PURE__*/ createReactComponent<
+	JSX.ScProvider,
+	HTMLScProviderElement
+>('sc-provider');
+export const ScPurchase = /*@__PURE__*/ createReactComponent<
+	JSX.ScPurchase,
+	HTMLScPurchaseElement
+>('sc-purchase');
+export const ScQuantitySelect = /*@__PURE__*/ createReactComponent<
+	JSX.ScQuantitySelect,
+	HTMLScQuantitySelectElement
+>('sc-quantity-select');
+export const ScRadio = /*@__PURE__*/ createReactComponent<
+	JSX.ScRadio,
+	HTMLScRadioElement
+>('sc-radio');
+export const ScRadioGroup = /*@__PURE__*/ createReactComponent<
+	JSX.ScRadioGroup,
+	HTMLScRadioGroupElement
+>('sc-radio-group');
+export const ScRegisterIconLibrary = /*@__PURE__*/ createReactComponent<
+	JSX.ScRegisterIconLibrary,
+	HTMLScRegisterIconLibraryElement
+>('sc-register-icon-library');
+export const ScRoute = /*@__PURE__*/ createReactComponent<
+	JSX.ScRoute,
+	HTMLScRouteElement
+>('sc-route');
+export const ScRouter = /*@__PURE__*/ createReactComponent<
+	JSX.ScRouter,
+	HTMLScRouterElement
+>('sc-router');
+export const ScSecureNotice = /*@__PURE__*/ createReactComponent<
+	JSX.ScSecureNotice,
+	HTMLScSecureNoticeElement
+>('sc-secure-notice');
+export const ScSelect = /*@__PURE__*/ createReactComponent<
+	JSX.ScSelect,
+	HTMLScSelectElement
+>('sc-select');
+export const ScSessionDetail = /*@__PURE__*/ createReactComponent<
+	JSX.ScSessionDetail,
+	HTMLScSessionDetailElement
+>('sc-session-detail');
+export const ScSessionProvider = /*@__PURE__*/ createReactComponent<
+	JSX.ScSessionProvider,
+	HTMLScSessionProviderElement
+>('sc-session-provider');
+export const ScSkeleton = /*@__PURE__*/ createReactComponent<
+	JSX.ScSkeleton,
+	HTMLScSkeletonElement
+>('sc-skeleton');
+export const ScSpacing = /*@__PURE__*/ createReactComponent<
+	JSX.ScSpacing,
+	HTMLScSpacingElement
+>('sc-spacing');
+export const ScSpinner = /*@__PURE__*/ createReactComponent<
+	JSX.ScSpinner,
+	HTMLScSpinnerElement
+>('sc-spinner');
+export const ScStripeElement = /*@__PURE__*/ createReactComponent<
+	JSX.ScStripeElement,
+	HTMLScStripeElementElement
+>('sc-stripe-element');
+export const ScStripePaymentRequest = /*@__PURE__*/ createReactComponent<
+	JSX.ScStripePaymentRequest,
+	HTMLScStripePaymentRequestElement
+>('sc-stripe-payment-request');
+export const ScSubscriptionStatusBadge = /*@__PURE__*/ createReactComponent<
+	JSX.ScSubscriptionStatusBadge,
+	HTMLScSubscriptionStatusBadgeElement
+>('sc-subscription-status-badge');
+export const ScSubscriptionsList = /*@__PURE__*/ createReactComponent<
+	JSX.ScSubscriptionsList,
+	HTMLScSubscriptionsListElement
+>('sc-subscriptions-list');
+export const ScSwitch = /*@__PURE__*/ createReactComponent<
+	JSX.ScSwitch,
+	HTMLScSwitchElement
+>('sc-switch');
+export const ScTab = /*@__PURE__*/ createReactComponent<
+	JSX.ScTab,
+	HTMLScTabElement
+>('sc-tab');
+export const ScTabGroup = /*@__PURE__*/ createReactComponent<
+	JSX.ScTabGroup,
+	HTMLScTabGroupElement
+>('sc-tab-group');
+export const ScTabPanel = /*@__PURE__*/ createReactComponent<
+	JSX.ScTabPanel,
+	HTMLScTabPanelElement
+>('sc-tab-panel');
+export const ScTable = /*@__PURE__*/ createReactComponent<
+	JSX.ScTable,
+	HTMLScTableElement
+>('sc-table');
+export const ScTableBody = /*@__PURE__*/ createReactComponent<
+	JSX.ScTableBody,
+	HTMLScTableBodyElement
+>('sc-table-body');
+export const ScTableScll = /*@__PURE__*/ createReactComponent<
+	JSX.ScTableScll,
+	HTMLScTableScllElement
+>('sc-table-cell');
+export const ScTableHead = /*@__PURE__*/ createReactComponent<
+	JSX.ScTableHead,
+	HTMLScTableHeadElement
+>('sc-table-head');
+export const ScTableRow = /*@__PURE__*/ createReactComponent<
+	JSX.ScTableRow,
+	HTMLScTableRowElement
+>('sc-table-row');
+export const ScTag = /*@__PURE__*/ createReactComponent<
+	JSX.ScTag,
+	HTMLScTagElement
+>('sc-tag');
+export const ScText = /*@__PURE__*/ createReactComponent<
+	JSX.ScText,
+	HTMLScTextElement
+>('sc-text');
+export const ScTooltip = /*@__PURE__*/ createReactComponent<
+	JSX.ScTooltip,
+	HTMLScTooltipElement
+>('sc-tooltip');
+export const ScTotal = /*@__PURE__*/ createReactComponent<
+	JSX.ScTotal,
+	HTMLScTotalElement
+>('sc-total');

@@ -5,7 +5,7 @@ import {
 	useBlockProps,
 } from '@wordpress/block-editor';
 import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
-import { CeDashboardModule } from '@surecart/components-react';
+import { ScDashboardModule } from '@surecart/components-react';
 import { Fragment } from 'react';
 
 export default ({ attributes, setAttributes }) => {
@@ -26,7 +26,7 @@ export default ({ attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<CeDashboardModule {...blockProps}>
+			<ScDashboardModule {...blockProps}>
 				<RichText
 					aria-label={__('Title')}
 					placeholder={__('Add A Title…')}
@@ -37,36 +37,36 @@ export default ({ attributes, setAttributes }) => {
 					allowedFormats={['core/bold', 'core/italic']}
 				/>
 
-				<ce-button type="link" slot="end">
-					<ce-icon name="edit-3" slot="prefix"></ce-icon>
+				<sc-button type="link" slot="end">
+					<sc-icon name="edit-3" slot="prefix"></sc-icon>
 					{__('Update', 'surecart')}
-				</ce-button>
+				</sc-button>
 
-				<ce-card no-padding>
-					<ce-stacked-list>
-						<ce-stacked-list-row style={{ '--columns': '3' }}>
+				<sc-card no-padding>
+					<sc-stacked-list>
+						<sc-stacked-list-row style={{ '--columns': '3' }}>
 							<div>{__('Display Name', 'surecart')}</div>
 							<div>Jane Doe</div>
 							<div></div>
-						</ce-stacked-list-row>
-						<ce-stacked-list-row style={{ '--columns': '3' }}>
+						</sc-stacked-list-row>
+						<sc-stacked-list-row style={{ '--columns': '3' }}>
 							<div>{__('Email Address', 'surecart')}</div>
 							<div>customer@email.com</div>
 							<div></div>
-						</ce-stacked-list-row>
-						<ce-stacked-list-row style={{ '--columns': '3' }}>
+						</sc-stacked-list-row>
+						<sc-stacked-list-row style={{ '--columns': '3' }}>
 							<div>{__('First Name', 'surecart')}</div>
 							<div>Jane Doe</div>
 							<div></div>
-						</ce-stacked-list-row>
-						<ce-stacked-list-row style={{ '--columns': '3' }}>
+						</sc-stacked-list-row>
+						<sc-stacked-list-row style={{ '--columns': '3' }}>
 							<div>{__('Last Name', 'surecart')}</div>
 							<div>Jane Doe</div>
 							<div></div>
-						</ce-stacked-list-row>
-					</ce-stacked-list>
-				</ce-card>
-			</CeDashboardModule>
+						</sc-stacked-list-row>
+					</sc-stacked-list>
+				</sc-card>
+			</ScDashboardModule>
 		</Fragment>
 	);
 };

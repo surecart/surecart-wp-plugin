@@ -13,7 +13,7 @@ import {
 	TextControl,
 	ToggleControl,
 } from '@wordpress/components';
-import { CeCard } from '@surecart/components-react';
+import { ScCard } from '@surecart/components-react';
 
 export default ({ attributes, setAttributes, isSelected }) => {
 	const { borderless, title } = attributes;
@@ -41,7 +41,7 @@ export default ({ attributes, setAttributes, isSelected }) => {
 					</PanelRow>
 				</PanelBody>
 			</InspectorControls>
-			<CeCard
+			<ScCard
 				borderless={borderless}
 				css={css`
 					.wp-block {
@@ -62,7 +62,7 @@ export default ({ attributes, setAttributes, isSelected }) => {
 					/>
 				)}
 				<InnerBlocks />
-			</CeCard>
+			</ScCard>
 		</div>
 	);
 };

@@ -1,6 +1,6 @@
 import { __ } from '@wordpress/i18n';
 
-import { CeSwitch } from '@surecart/components-react';
+import { ScSwitch } from '@surecart/components-react';
 
 // hocs
 import withConfirm from '../../hocs/withConfirm';
@@ -46,7 +46,7 @@ export default withConfirm( ( { setConfirm, children } ) => {
 				  ),
 			open: true,
 			isSaving,
-			className: 'ce-disable-confirm',
+			className: 'sc-disable-confirm',
 			isDestructive: true,
 			onRequestClose: () => setConfirm( {} ),
 			onRequestConfirm: toggleArchive,
@@ -54,7 +54,7 @@ export default withConfirm( ( { setConfirm, children } ) => {
 	};
 
 	return (
-		<CeSwitch
+		<ScSwitch
 			checked={ ! promotion?.archived }
 			onClick={ ( e ) => {
 				e.preventDefault();
@@ -62,6 +62,6 @@ export default withConfirm( ( { setConfirm, children } ) => {
 			} }
 		>
 			{ children }
-		</CeSwitch>
+		</ScSwitch>
 	);
 } );

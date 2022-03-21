@@ -24,23 +24,23 @@
 
 ### Depends on
 
-- [ce-line-item](../../../ui/line-item)
-- [ce-skeleton](../../../ui/skeleton)
-- [ce-product-line-item](../../../ui/product-line-item)
+- [sc-line-item](../../../ui/line-item)
+- [sc-skeleton](../../../ui/skeleton)
+- [sc-product-line-item](../../../ui/product-line-item)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-order-confirmation-line-items --> ce-line-item
-  ce-order-confirmation-line-items --> ce-skeleton
-  ce-order-confirmation-line-items --> ce-product-line-item
-  ce-product-line-item --> ce-format-number
-  ce-product-line-item --> ce-line-item
-  ce-product-line-item --> ce-quantity-select
-  ce-quantity-select --> ce-dropdown
-  ce-quantity-select --> ce-menu
-  ce-quantity-select --> ce-menu-item
-  style ce-order-confirmation-line-items fill:#f9f,stroke:#333,stroke-width:4px
+  sc-order-confirmation-line-items --> sc-line-item
+  sc-order-confirmation-line-items --> sc-skeleton
+  sc-order-confirmation-line-items --> sc-product-line-item
+  sc-product-line-item --> sc-format-number
+  sc-product-line-item --> sc-line-item
+  sc-product-line-item --> sc-quantity-select
+  sc-quantity-select --> sc-dropdown
+  sc-quantity-select --> sc-menu
+  sc-quantity-select --> sc-menu-item
+  style sc-order-confirmation-line-items fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

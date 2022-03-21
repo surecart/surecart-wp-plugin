@@ -35,21 +35,21 @@ export default ({
 					}) => {
 						return {
 							number: (
-								<ce-text
+								<sc-text
 									truncate
 									style={{
 										'--font-weight':
-											'var(--ce-font-weight-semibold)',
+											'var(--sc-font-weight-semibold)',
 									}}
 								>
 									{number || id}
-								</ce-text>
+								</sc-text>
 							),
 							items: (
-								<ce-text
+								<sc-text
 									truncate
 									style={{
-										'--color': 'var(--ce-color-gray-500)',
+										'--color': 'var(--sc-color-gray-500)',
 									}}
 								>
 									{sprintf(
@@ -61,40 +61,40 @@ export default ({
 										),
 										line_items?.pagination?.count || 0
 									)}
-								</ce-text>
+								</sc-text>
 							),
 							total: (
-								<ce-format-number
+								<sc-format-number
 									type="currency"
 									currency={currency}
 									value={total_amount}
-								></ce-format-number>
+								></sc-format-number>
 							),
 							status: (
-								<ce-order-status-badge
+								<sc-order-status-badge
 									status={status}
-								></ce-order-status-badge>
+								></sc-order-status-badge>
 							),
 							date: (
-								<ce-format-date
+								<sc-format-date
 									type="timestamp"
 									month="short"
 									day="numeric"
 									year="numeric"
 									date={updated_at}
-								></ce-format-date>
+								></sc-format-date>
 							),
 							actions: (
-								<ce-button
+								<sc-button
 									href={addQueryArgs('admin.php', {
-										page: 'ce-orders',
+										page: 'sc-orders',
 										action: 'edit',
 										id: id,
 									})}
 									size="small"
 								>
 									{__('View', 'surecart')}
-								</ce-button>
+								</sc-button>
 							),
 						};
 					}

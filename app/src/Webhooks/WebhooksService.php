@@ -112,7 +112,7 @@ class WebhooksService {
 	 */
 	public function showWebhooksErrorNotice( \WP_Error $error ) {
 		$messages = implode( '<br>', $error->get_error_messages() );
-		$class    = 'notice notice-error';
+		$class    = 'notice notisc-error';
 		$message  = __( 'SureCart webhooks could not be created.', 'surecart' ) . $messages;
 		printf( ' < div class = "%1$s" > < p > % 2$s < / p > < / div > ', esc_attr( $class ), wp_kses_post( $message ) );
 	}

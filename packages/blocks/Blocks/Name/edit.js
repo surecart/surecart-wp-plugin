@@ -15,7 +15,7 @@ import {
 /**
  * Component Dependencies
  */
-import { CeInput } from '@surecart/components-react';
+import { ScInput } from '@surecart/components-react';
 
 export default ({ attributes, setAttributes }) => {
 	const { label, placeholder, help, required } = attributes;
@@ -58,13 +58,13 @@ export default ({ attributes, setAttributes }) => {
 			</InspectorControls>
 
 			<Disabled>
-				<CeInput
+				<ScInput
 					required={required}
 					label={label}
 					placeholder={placeholder}
 					name="name"
 					help={help}
-				></CeInput>
+				></ScInput>
 			</Disabled>
 		</Fragment>
 	);

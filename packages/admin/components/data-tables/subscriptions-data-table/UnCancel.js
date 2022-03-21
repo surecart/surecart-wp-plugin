@@ -54,9 +54,9 @@ export default ({ subscription, children }) => {
 			{children ? (
 				<span onClick={unCancel}>{children}</span>
 			) : (
-				<ce-button size="small" onClick={unCancel} loading={loading}>
+				<sc-button size="small" onClick={unCancel} loading={loading}>
 					{__("Don't Cancel", 'surecart')}
-				</ce-button>
+				</sc-button>
 			)}
 		</Fragment>
 	);

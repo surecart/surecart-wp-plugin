@@ -28,12 +28,12 @@
 
 | Event                    | Description | Type                   |
 | ------------------------ | ----------- | ---------------------- |
-| `ceFormSubmit`           |             | `CustomEvent<any>`     |
-| `cePaid`                 |             | `CustomEvent<void>`    |
-| `cePayError`             |             | `CustomEvent<any>`     |
-| `cePaymentRequestLoaded` |             | `CustomEvent<boolean>` |
-| `ceSetState`             |             | `CustomEvent<string>`  |
-| `ceUpdateOrderState`     |             | `CustomEvent<any>`     |
+| `scFormSubmit`           |             | `CustomEvent<any>`     |
+| `scPaid`                 |             | `CustomEvent<void>`    |
+| `scPayError`             |             | `CustomEvent<any>`     |
+| `scPaymentRequestLoaded` |             | `CustomEvent<boolean>` |
+| `scSetState`             |             | `CustomEvent<string>`  |
+| `scUpdateOrderState`     |             | `CustomEvent<any>`     |
 
 
 ## Shadow Parts
@@ -47,19 +47,19 @@
 
 ### Used by
 
- - [ce-express-payment](../../controllers/checkout-form/express-payment)
+ - [sc-express-payment](../../controllers/checkout-form/express-payment)
 
 ### Depends on
 
-- [ce-alert](../alert)
+- [sc-alert](../alert)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-stripe-payment-request --> ce-alert
-  ce-alert --> ce-icon
-  ce-express-payment --> ce-stripe-payment-request
-  style ce-stripe-payment-request fill:#f9f,stroke:#333,stroke-width:4px
+  sc-stripe-payment-request --> sc-alert
+  sc-alert --> sc-icon
+  sc-express-payment --> sc-stripe-payment-request
+  style sc-stripe-payment-request fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

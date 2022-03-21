@@ -8,7 +8,7 @@ import { css, jsx } from '@emotion/core';
 
 import throttle from 'lodash/throttle';
 
-import { CeSelect } from '@surecart/components-react';
+import { ScSelect } from '@surecart/components-react';
 
 export default ({ form, setForm }) => {
 	const [formsData, setFormsData] = useState([]);
@@ -32,7 +32,7 @@ export default ({ form, setForm }) => {
 		try {
 			setLoading(true);
 			response = await apiFetch({
-				path: addQueryArgs('wp/v2/ce-forms', {
+				path: addQueryArgs('wp/v2/sc-forms', {
 					search: query,
 				}),
 			});
@@ -43,14 +43,14 @@ export default ({ form, setForm }) => {
 	};
 
 	return (
-		<CeSelect
+		<ScSelect
 			value={form?.id}
 			loading={loading}
 			placeholder={__('Choose a form', 'surecart')}
 			searchPlaceholder={__('Search for a form...', 'surecart')}
 			search
-			onCeSearch={(e) => findForm(e.detail)}
-			onCeChange={(e) => {
+			onScSearch={(e) => findForm(e.detail)}
+			onScChange={(e) => {
 				const formData = formsData.find(
 					(form) => form.id === parseInt(e.target.value)
 				);

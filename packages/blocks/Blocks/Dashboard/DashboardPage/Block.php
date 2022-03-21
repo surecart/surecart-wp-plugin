@@ -54,6 +54,6 @@ class Block extends DashboardPage {
 			}
 		}
 
-		return '<ce-spacing style="--spacing: var(--ce-spacing-xxx-large); font-size: 15px;">' . wp_kses_post( $content ) . '</ce-spacing>';
+		return '<sc-spacing style="--spacing: var(--sc-spacing-xxx-large); font-size: 15px;">' . wp_kses_post( $content ) . '</sc-spacing>';
 	}
 }

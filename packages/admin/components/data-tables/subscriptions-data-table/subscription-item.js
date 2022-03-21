@@ -1,13 +1,13 @@
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import {
-	CeButton,
-	CeDropdown,
-	CeFormatDate,
-	CeIcon,
-	CeMenu,
-	CeMenuItem,
-	CeSubscriptionStatusBadge,
+	ScButton,
+	ScDropdown,
+	ScFormatDate,
+	ScIcon,
+	ScMenu,
+	ScMenuItem,
+	ScSubscriptionStatusBadge,
 } from '@surecart/components-react';
 import Cancel from './Cancel';
 import UnCancel from './UnCancel';
@@ -30,13 +30,13 @@ export default (subscription) => {
 			return (
 				<span>
 					{__('Cancels', 'surecart')}{' '}
-					<ce-format-date
+					<sc-format-date
 						type="timestamp"
 						date={subscription?.current_period_end_at}
 						month="short"
 						day="numeric"
 						year="numeric"
-					></ce-format-date>
+					></sc-format-date>
 				</span>
 			);
 		}
@@ -45,13 +45,13 @@ export default (subscription) => {
 			return (
 				<span>
 					{__('Begins', 'surecart')}{' '}
-					<ce-format-date
+					<sc-format-date
 						type="timestamp"
 						date={subscription?.trial_end_at}
 						month="short"
 						day="numeric"
 						year="numeric"
-					></ce-format-date>
+					></sc-format-date>
 				</span>
 			);
 		}
@@ -63,13 +63,13 @@ export default (subscription) => {
 			return (
 				<span>
 					{__('Renews', 'surecart')}{' '}
-					<ce-format-date
+					<sc-format-date
 						type="timestamp"
 						date={subscription?.current_period_end_at}
 						month="short"
 						day="numeric"
 						year="numeric"
-					></ce-format-date>
+					></sc-format-date>
 				</span>
 			);
 		}
@@ -78,13 +78,13 @@ export default (subscription) => {
 			return (
 				<span>
 					{__('Ended', 'surecart')}{' '}
-					<ce-format-date
+					<sc-format-date
 						type="timestamp"
 						date={subscription?.ended_at}
 						month="short"
 						day="numeric"
 						year="numeric"
-					></ce-format-date>
+					></sc-format-date>
 				</span>
 			);
 		}
@@ -104,47 +104,47 @@ export default (subscription) => {
 
 	const renderActionButtons = () => {
 		return (
-			<CeDropdown position="bottom-right">
-				<CeButton type="text" slot="trigger" circle>
-					<CeIcon name="more-horizontal" />
-				</CeButton>
-				<CeMenu>
+			<ScDropdown position="bottom-right">
+				<ScButton type="text" slot="trigger" circle>
+					<ScIcon name="more-horizontal" />
+				</ScButton>
+				<ScMenu>
 					{subscription?.status === 'trialing' && (
 						<StartPlan subscription={subscription}>
-							<CeMenuItem>
+							<ScMenuItem>
 								{__('Start Plan', 'surecart')}
-							</CeMenuItem>
+							</ScMenuItem>
 						</StartPlan>
 					)}
 
 					{subscription?.cancel_at_period_end && (
 						<UnCancel subscription={subscription}>
-							<CeMenuItem>
+							<ScMenuItem>
 								{__("Don't Cancel", 'surecart')}
-							</CeMenuItem>
+							</ScMenuItem>
 						</UnCancel>
 					)}
 
 					{!subscription?.cancel_at_period_end && (
 						<Cancel subscription={subscription}>
-							<CeMenuItem>{__('Cancel', 'surecart')}</CeMenuItem>
+							<ScMenuItem>{__('Cancel', 'surecart')}</ScMenuItem>
 						</Cancel>
 					)}
-				</CeMenu>
-			</CeDropdown>
+				</ScMenu>
+			</ScDropdown>
 		);
 	};
 
 	return {
 		status: (
-			<CeSubscriptionStatusBadge
+			<ScSubscriptionStatusBadge
 				subscription={subscription}
-			></CeSubscriptionStatusBadge>
+			></ScSubscriptionStatusBadge>
 		),
 		product: (
 			<a
 				href={addQueryArgs('admin.php', {
-					page: 'ce-products',
+					page: 'sc-products',
 					action: 'edit',
 					id: product?.id,
 				})}
@@ -153,13 +153,13 @@ export default (subscription) => {
 			</a>
 		),
 		created: (
-			<CeFormatDate
+			<ScFormatDate
 				date={subscription?.created_at}
 				month="short"
 				day="numeric"
 				year="numeric"
 				type="timestamp"
-			></CeFormatDate>
+			></ScFormatDate>
 		),
 		plan: renderPlan(subscription),
 		cancel: renderCancelButton(subscription),
@@ -168,16 +168,16 @@ export default (subscription) => {
 				? renderActionButtons(subscription)
 				: renderCancelButton(subscription),
 		view: (
-			<ce-button
+			<sc-button
 				href={addQueryArgs('admin.php', {
-					page: 'ce-subscriptions',
+					page: 'sc-subscriptions',
 					action: 'show',
 					id: subscription?.id,
 				})}
 				size="small"
 			>
 				{__('View', 'surecart')}
-			</ce-button>
+			</sc-button>
 		),
 	};
 };

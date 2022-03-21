@@ -27,7 +27,7 @@ export class FormSubmitController {
   constructor(input: any, options?: Partial<FormSubmitControllerOptions>) {
     this.input = input;
     this.options = {
-      form: (input: HTMLInputElement) => input?.closest('ce-form')?.shadowRoot?.querySelector('form') || input.closest('form'),
+      form: (input: HTMLInputElement) => input?.closest('sc-form')?.shadowRoot?.querySelector('form') || input.closest('form'),
       name: (input: HTMLInputElement) => input.name,
       value: (input: HTMLInputElement) => input.value,
       disabled: (input: HTMLInputElement) => input.disabled,

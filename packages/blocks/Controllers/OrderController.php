@@ -17,7 +17,7 @@ class OrderController extends BaseController {
 		}
 
 		return wp_kses_post(
-			Component::tag( 'ce-orders-list' )
+			Component::tag( 'sc-orders-list' )
 			->id( 'customer-orders-preview' )
 			->with(
 				[
@@ -49,7 +49,7 @@ class OrderController extends BaseController {
 		}
 
 		return wp_kses_post(
-			Component::tag( 'ce-orders-list' )
+			Component::tag( 'sc-orders-list' )
 			->id( 'customer-orders-index' )
 			->with(
 				[

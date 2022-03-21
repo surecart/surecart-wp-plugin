@@ -13,7 +13,7 @@ export default ({
 		<div
 			css={css`
 				background: #fff;
-				font-family: var(--ce-font-sans);
+				font-family: var(--sc-font-sans);
 				font-size: 14px;
 				box-sizing: border-box;
 				position: relative;
@@ -30,9 +30,9 @@ export default ({
 				outline: 1px solid transparent;
 			`}
 			style={{
-				'--ce-color-primary-500': 'var(--wp-admin-theme-color)',
-				'--ce-focus-ring-color-primary': 'var(--wp-admin-theme-color)',
-				'--ce-input-border-color-focus': 'var(--wp-admin-theme-color)',
+				'--sc-color-primary-500': 'var(--wp-admin-theme-color)',
+				'--sc-focus-ring-color-primary': 'var(--wp-admin-theme-color)',
+				'--sc-input-border-color-focus': 'var(--wp-admin-theme-color)',
 			}}
 		>
 			<div

@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { CeCard } from '@surecart/components-react';
+import { ScCard } from '@surecart/components-react';
 import { css, jsx } from '@emotion/core';
 
 import { Card, CardBody, CardFooter, CardHeader } from '@wordpress/components';
@@ -19,42 +19,42 @@ export default ({
 	return (
 		<div>
 			{' '}
-			<ce-text
+			<sc-text
 				tag="h2"
 				style={{
 					'--font-size': '16px',
-					'--font-weight': 'var(--ce-font-weight-bold)',
-					marginBottom: 'var(--ce-spacing-medium)',
+					'--font-weight': 'var(--sc-font-weight-bold)',
+					marginBottom: 'var(--sc-spacing-medium)',
 				}}
 			>
 				{title && (
 					<span>
 						{loading ? (
-							<ce-skeleton
+							<sc-skeleton
 								style={{
 									width: '120px',
 									display: 'inline-block',
 								}}
-							></ce-skeleton>
+							></sc-skeleton>
 						) : (
 							title
 						)}
 					</span>
 				)}
-			</ce-text>
+			</sc-text>
 			{header_action}
-			<CeCard
+			<ScCard
 				noPadding={noPadding}
 				css={css`
 					.components-card__footer {
-						background: var(--ce-color-gray-50, #f9fafb);
+						background: var(--sc-color-gray-50, #f9fafb);
 						margin-top: -1px;
 						position: relative;
 						border-bottom-left-radius: var(
-							--ce-input-border-radius-medium
+							--sc-input-border-radius-medium
 						);
 						border-bottom-right-radius: var(
-							--ce-input-border-radius-medium
+							--sc-input-border-radius-medium
 						);
 					}
 				`}
@@ -78,26 +78,26 @@ export default ({
 				>
 					{loading ? (
 						<div>
-							<ce-skeleton
+							<sc-skeleton
 								style={{
 									width: '100%',
 									marginBottom: '15px',
 									display: 'inline-block',
 								}}
-							></ce-skeleton>
-							<ce-skeleton
+							></sc-skeleton>
+							<sc-skeleton
 								style={{
 									width: '40%',
 									display: 'inline-block',
 								}}
-							></ce-skeleton>
+							></sc-skeleton>
 						</div>
 					) : (
 						children
 					)}
 				</div>
 				{!!footer && <CardFooter>{footer}</CardFooter>}
-			</CeCard>
+			</ScCard>
 		</div>
 	);
 };

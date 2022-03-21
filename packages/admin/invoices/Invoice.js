@@ -65,7 +65,7 @@ export default () => {
 			pageModelName={'invoices'}
 			onSubmit={onSubmit}
 			onInvalid={onInvalid}
-			backUrl={'admin.php?page=ce-invoices'}
+			backUrl={'admin.php?page=sc-invoices'}
 			backText={__('Back to All Invoices', 'surecart')}
 			title={
 				id

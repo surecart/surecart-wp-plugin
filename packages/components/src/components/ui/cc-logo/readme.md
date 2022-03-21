@@ -23,20 +23,20 @@
 
 ### Used by
 
- - [ce-payment-methods-list](../../controllers/dashboard/payment-methods-list)
- - [ce-subscription-payment](../../controllers/dashboard/subscription-payment)
+ - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
+ - [sc-subscription-payment](../../controllers/dashboard/subscription-payment)
 
 ### Depends on
 
-- [ce-icon](../icon)
+- [sc-icon](../icon)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-cc-logo --> ce-icon
-  ce-payment-methods-list --> ce-cc-logo
-  ce-subscription-payment --> ce-cc-logo
-  style ce-cc-logo fill:#f9f,stroke:#333,stroke-width:4px
+  sc-cc-logo --> sc-icon
+  sc-payment-methods-list --> sc-cc-logo
+  sc-subscription-payment --> sc-cc-logo
+  style sc-cc-logo fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

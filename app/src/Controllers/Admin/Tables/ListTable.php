@@ -88,17 +88,17 @@ abstract class ListTable extends \WP_List_Table {
 	 */
 	public function column_created( $model ) {
 		return sprintf(
-			'<ce-format-date
+			'<sc-format-date
 				date="%1$s"
 				month="long"
 				day="numeric"
 				year="numeric"
-				type="timestamp"></ce-format-date>',
+				type="timestamp"></sc-format-date>',
 			esc_attr( $model->created_at )
 		);
 	}
 
 	public function column_mode( $order ) {
-		return ! $order->live_mode ? '<ce-tag type="warning">' . __( 'Test', 'surecart' ) . '</ce-tag>' : '';
+		return ! $order->live_mode ? '<sc-tag type="warning">' . __( 'Test', 'surecart' ) . '</sc-tag>' : '';
 	}
 }

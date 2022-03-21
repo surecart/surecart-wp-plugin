@@ -2,7 +2,7 @@
 import { __ } from '@wordpress/i18n';
 
 import Box from '../../ui/Box';
-import { CeInput } from '@surecart/components-react';
+import { ScInput } from '@surecart/components-react';
 import { css, jsx } from '@emotion/core';
 
 export default ({ customer, loading, updateCustomer }) => {
@@ -14,19 +14,19 @@ export default ({ customer, loading, updateCustomer }) => {
 					gap: 0.5em;
 				`}
 			>
-				<ce-skeleton
+				<sc-skeleton
 					style={{
 						'--border-radius':
-							'var(--ce-input-border-radius-medium)',
-						height: 'var( --ce-input-height-medium )',
+							'var(--sc-input-border-radius-medium)',
+						height: 'var( --sc-input-height-medium )',
 						width: '100%',
 					}}
-				></ce-skeleton>
-				<ce-skeleton
+				></sc-skeleton>
+				<sc-skeleton
 					style={{
 						width: '80%',
 					}}
-				></ce-skeleton>
+				></sc-skeleton>
 			</div>
 		);
 	};
@@ -39,26 +39,26 @@ export default ({ customer, loading, updateCustomer }) => {
 				<div
 					css={css`
 						display: grid;
-						gap: var(--ce-form-row-spacing);
+						gap: var(--sc-form-row-spacing);
 					`}
 				>
-					<ce-columns>
-						<ce-column>
-							<CeInput
+					<sc-columns>
+						<sc-column>
+							<ScInput
 								label={__('Name', 'surecart')}
-								className="ce-customer-name"
+								className="sc-customer-name"
 								help={__('Your customers name.', 'surecart')}
 								attribute="name"
 								value={customer?.name}
-								onCeChange={(e) =>
+								onScChange={(e) =>
 									updateCustomer({ name: e.target.value })
 								}
 							/>
-						</ce-column>
-						<ce-column>
-							<CeInput
+						</sc-column>
+						<sc-column>
+							<ScInput
 								label={__('Email', 'surecart')}
-								className="ce-customer-email"
+								className="sc-customer-email"
 								help={__(
 									"Your customer's email address.",
 									'surecart'
@@ -66,25 +66,25 @@ export default ({ customer, loading, updateCustomer }) => {
 								value={customer?.email}
 								name="email"
 								required
-								onCeChange={(e) =>
+								onScChange={(e) =>
 									updateCustomer({ email: e.target.value })
 								}
 							/>
-						</ce-column>
-					</ce-columns>
-					{/* <CeInput
+						</sc-column>
+					</sc-columns>
+					{/* <ScInput
 						label={__('Name', 'surecart')}
-						className="ce-customer-name"
+						className="sc-customer-name"
 						help={__('Your customers name.', 'surecart')}
 						attribute="name"
 						value={customer?.name}
-						onCeChange={(e) =>
+						onScChange={(e) =>
 							updateCustomer({ name: e.target.value })
 						}
 					/>
-					<CeInput
+					<ScInput
 						label={__('Email', 'surecart')}
-						className="ce-customer-email"
+						className="sc-customer-email"
 						help={__(
 							"Your customer's email address.",
 							'surecart'
@@ -92,7 +92,7 @@ export default ({ customer, loading, updateCustomer }) => {
 						value={customer?.email}
 						name="email"
 						required
-						onCeChange={(e) =>
+						onScChange={(e) =>
 							updateCustomer({ email: e.target.value })
 						}
 					/> */}

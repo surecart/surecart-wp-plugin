@@ -21,10 +21,10 @@ import { createBlocksFromInnerBlocksTemplate } from '@wordpress/blocks';
 import { select, useDispatch, useSelect } from '@wordpress/data';
 import PriceSelector from '@scripts/blocks/components/PriceSelector';
 import {
-	CeButton,
-	CeDonationChoices,
-	CeForm,
-	CePriceInput,
+	ScButton,
+	ScDonationChoices,
+	ScForm,
+	ScPriceInput,
 } from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
 import PriceInfo from '../PriceChoice/components/PriceInfo';
@@ -64,7 +64,7 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 			display: 'grid',
 		},
 		css: css`
-			ce-choice.wp-block {
+			sc-choice.wp-block {
 				margin: 0;
 			}
 		`,
@@ -155,16 +155,16 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 						/>
 					</PanelRow>
 					<PanelRow>
-						<CePriceInput
+						<ScPriceInput
 							label={__('Default Amount', 'surecart')}
 							currency={currency}
 							value={default_amount}
-							onCeChange={(e) =>
+							onScChange={(e) =>
 								setAttributes({
 									default_amount: e.target.value,
 								})
 							}
-						></CePriceInput>
+						></ScPriceInput>
 					</PanelRow>
 				</PanelBody>
 				<PanelBody title={__('Product Info', 'surecart')}>
@@ -173,22 +173,22 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 			</InspectorControls>
 
 			<div {...blockProps}>
-				<CeDonationChoices
+				<ScDonationChoices
 					label={label}
 					priceId={price_id}
 					defaultAmount={default_amount}
 				>
 					<div {...innerBlocksProps}></div>
 					{custom_amount && (
-						<ce-choice
+						<sc-choice
 							show-control="false"
 							size="small"
 							value="ad_hoc"
 						>
 							{__('Other', 'surecart')}
-						</ce-choice>
+						</sc-choice>
 					)}
-				</CeDonationChoices>
+				</ScDonationChoices>
 
 				{isSelected && (
 					<Tooltip text={__('Add Amount', 'surecart')} delay={0}>
@@ -217,7 +217,7 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 								}
 							`}
 						>
-							<ce-icon name="plus"></ce-icon>
+							<sc-icon name="plus"></sc-icon>
 						</div>
 					</Tooltip>
 				)}
@@ -231,8 +231,8 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 						onRequestClose={() => setShowModal(false)}
 						shouldCloseOnClickOutside={false}
 					>
-						<CeForm onCeSubmit={onNewAmount}>
-							<CePriceInput
+						<ScForm onScSubmit={onNewAmount}>
+							<ScPriceInput
 								label={__('Amount', 'surecart')}
 								required
 								currency={currency}
@@ -241,10 +241,10 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 								max={price?.ad_hoc_max_amount}
 								name="amount"
 							/>
-							<CeButton type="primary" submit>
+							<ScButton type="primary" submit>
 								{__('Add  Amount', 'surecart')}
-							</CeButton>
-						</CeForm>
+							</ScButton>
+						</ScForm>
 					</Modal>
 				)}
 			</div>

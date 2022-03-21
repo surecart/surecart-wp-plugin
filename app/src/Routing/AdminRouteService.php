@@ -15,22 +15,22 @@ class AdminRouteService {
 	 * @var array
 	 */
 	protected $page_names = [
-		'product'          => 'ce-products',
-		'products'         => 'ce-products',
-		'order'            => 'ce-orders',
-		'orders'           => 'ce-orders',
-		'invoice'          => 'ce-invoices',
-		'invoices'         => 'ce-invoices',
-		'customers'        => 'ce-customers',
-		'customer'         => 'ce-customers',
-		'subscriptions'    => 'ce-subscriptions',
-		'subscription'     => 'ce-subscriptions',
-		'abandoned_orders' => 'ce-abandoned-orders',
-		'upgrade-paths'    => 'ce-product-groups',
-		'coupon'           => 'ce-coupons',
-		'coupons'          => 'ce-coupons',
-		'product_group'    => 'ce-product-groups',
-		'product_groups'   => 'ce-product-groups',
+		'product'          => 'sc-products',
+		'products'         => 'sc-products',
+		'order'            => 'sc-orders',
+		'orders'           => 'sc-orders',
+		'invoice'          => 'sc-invoices',
+		'invoices'         => 'sc-invoices',
+		'customers'        => 'sc-customers',
+		'customer'         => 'sc-customers',
+		'subscriptions'    => 'sc-subscriptions',
+		'subscription'     => 'sc-subscriptions',
+		'abandoned_orders' => 'sc-abandoned-orders',
+		'upgrade-paths'    => 'sc-product-groups',
+		'coupon'           => 'sc-coupons',
+		'coupons'          => 'sc-coupons',
+		'product_group'    => 'sc-product-groups',
+		'product_groups'   => 'sc-product-groups',
 	];
 
 	/**

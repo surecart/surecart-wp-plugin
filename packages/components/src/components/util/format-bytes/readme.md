@@ -19,13 +19,13 @@
 
 ### Used by
 
- - [ce-downloads-list](../../ui/downloads-list)
+ - [sc-downloads-list](../../ui/downloads-list)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-downloads-list --> ce-format-bytes
-  style ce-format-bytes fill:#f9f,stroke:#333,stroke-width:4px
+  sc-downloads-list --> sc-format-bytes
+  style sc-format-bytes fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

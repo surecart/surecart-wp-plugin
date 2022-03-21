@@ -46,10 +46,10 @@ export default ({ attributes, setAttributes }) => {
 			</InspectorControls>
 
 			<Disabled>
-				<ce-line-items
+				<sc-line-items
 					removable={removable}
 					editable={editable}
-				></ce-line-items>
+				></sc-line-items>
 			</Disabled>
 		</Fragment>
 	);

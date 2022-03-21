@@ -13,20 +13,20 @@ class ChargeController extends BaseController {
 	public function index() {
 		ob_start(); ?>
 
-		<ce-spacing style="--spacing: var(--ce-spacing-large)">
-			<ce-breadcrumbs>
-				<ce-breadcrumb href="<?php echo esc_url( add_query_arg( [ 'tab' => $this->getTab() ], \SureCart::pages()->url( 'dashboard' ) ) ); ?>">
+		<sc-spacing style="--spacing: var(--sc-spacing-large)">
+			<sc-breadcrumbs>
+				<sc-breadcrumb href="<?php echo esc_url( add_query_arg( [ 'tab' => $this->getTab() ], \SureCart::pages()->url( 'dashboard' ) ) ); ?>">
 					<?php esc_html_e( 'Dashboard', 'surecart' ); ?>
-				</ce-breadcrumb>
-				<ce-breadcrumb>
+				</sc-breadcrumb>
+				<sc-breadcrumb>
 					<?php esc_html_e( 'Payment History', 'surecart' ); ?>
-				</ce-breadcrumb>
-			</ce-breadcrumbs>
+				</sc-breadcrumb>
+			</sc-breadcrumbs>
 
 			<?php
 			echo wp_kses_post(
-				Component::tag( 'ce-charges-list' )
-					->id( 'ce-customer-charges' )
+				Component::tag( 'sc-charges-list' )
+					->id( 'sc-customer-charges' )
 					->with(
 						[
 							'heading' => __( 'Payment History', 'surecart' ),
@@ -40,7 +40,7 @@ class ChargeController extends BaseController {
 			);
 			?>
 
-		</ce-spacing>
+		</sc-spacing>
 
 		<?php
 		return ob_get_clean();

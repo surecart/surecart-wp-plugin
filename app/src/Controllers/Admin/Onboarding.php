@@ -10,7 +10,7 @@ class Onboarding {
 		if ( ! ApiToken::get() || is_wp_error( Account::find() ) ) {
 			return \SureCart::view( 'admin/onboarding/install' )->with(
 				[
-					'url' => esc_url_raw( untrailingslashit( SURECART_APP_URL ) . '/sign_up?return_url=' . esc_url( admin_url( 'admin.php?page=ce-complete-signup' ) ) ),
+					'url' => esc_url_raw( untrailingslashit( SURECART_APP_URL ) . '/sign_up?return_url=' . esc_url( admin_url( 'admin.php?page=sc-complete-signup' ) ) ),
 				]
 			);
 		}
@@ -18,7 +18,7 @@ class Onboarding {
 		return \SureCart::view( 'admin/onboarding/show' )->with(
 			[
 				'docs_url'     => 'https://surecart.com',
-				'settings_url' => esc_url( admin_url( 'admin.php?page=ce-settings' ) ),
+				'settings_url' => esc_url( admin_url( 'admin.php?page=sc-settings' ) ),
 				'product_url'  => esc_url( \SureCart::getUrl()->edit( 'product' ) ),
 				'form_url'     => esc_url( admin_url( 'post-new.php?post_type=sc_form' ) ),
 			]

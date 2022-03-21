@@ -1,13 +1,13 @@
 import { __ } from '@wordpress/i18n';
 import Box from '../../../ui/Box';
 import DatePicker from '../../../components/DatePicker';
-import { CeFormControl } from '@surecart/components-react';
+import { ScFormControl } from '@surecart/components-react';
 
 export default ({ subscription, updateSubscription, loading }) => {
 	return (
 		<Box title={__('Trial', 'surecart')} loading={loading}>
 			<div className="trial-ends">
-				<CeFormControl
+				<ScFormControl
 					label={
 						subscription?.trial_end_at
 							? __('Free Trial Ends', 'surecart')
@@ -28,7 +28,7 @@ export default ({ subscription, updateSubscription, loading }) => {
 							});
 						}}
 					/>
-				</CeFormControl>
+				</ScFormControl>
 			</div>
 		</Box>
 	);

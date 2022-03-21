@@ -8,10 +8,10 @@ import Box from '../../ui/Box';
 import Price from '../components/price/index.js';
 
 import {
-	CeButton,
-	CeChoice,
-	CeChoices,
-	CeSwitch,
+	ScButton,
+	ScChoice,
+	ScChoices,
+	ScSwitch,
 } from '@surecart/components-react';
 import useEntities from '../../mixins/useEntities';
 import useCurrentPage from '../../mixins/useCurrentPage';
@@ -98,7 +98,7 @@ export default ({ product, updateProduct, loading }) => {
 					(shouldShowButton || archivedPrices?.length) && (
 						<Fragment>
 							{shouldShowButton && (
-								<CeButton
+								<ScButton
 									onClick={(e) => {
 										e.preventDefault();
 										addPrice({
@@ -139,7 +139,7 @@ export default ({ product, updateProduct, loading }) => {
 										></line>
 									</svg>
 									{__('Add Another Price', 'surecart')}
-								</CeButton>
+								</ScButton>
 							)}
 							{!!archivedPrices?.length && (
 								<div
@@ -148,7 +148,7 @@ export default ({ product, updateProduct, loading }) => {
 										justify-content: flex-end;
 									`}
 								>
-									<CeSwitch
+									<ScSwitch
 										checked={!!showArchived}
 										onClick={(e) => {
 											e.preventDefault();
@@ -167,7 +167,7 @@ export default ({ product, updateProduct, loading }) => {
 												  ),
 											archivedPrices?.length
 										)}
-									</CeSwitch>
+									</ScSwitch>
 								</div>
 							)}
 						</Fragment>
@@ -176,7 +176,7 @@ export default ({ product, updateProduct, loading }) => {
 			>
 				<ErrorFlash errors={priceErrors} onHide={clearPriceErrors} />
 				{!id && (
-					<CeChoices
+					<ScChoices
 						css={css`
 							margin-bottom: 1em;
 						`}
@@ -185,10 +185,10 @@ export default ({ product, updateProduct, loading }) => {
 						style={{ '--columns': 2 }}
 					>
 						<div>
-							<CeChoice
+							<ScChoice
 								checked={!product?.recurring}
 								value="single"
-								onCeChange={(e) => {
+								onScChange={(e) => {
 									if (!e.target.checked) return;
 									updateProduct({ recurring: false });
 								}}
@@ -197,11 +197,11 @@ export default ({ product, updateProduct, loading }) => {
 								<span slot="description">
 									{__('Charge a one-time fee.', 'surecart')}
 								</span>
-							</CeChoice>
-							<CeChoice
+							</ScChoice>
+							<ScChoice
 								checked={product?.recurring}
 								value="subscription"
-								onCeChange={(e) => {
+								onScChange={(e) => {
 									if (!e.target.checked) return;
 									updateProduct({
 										recurring: true,
@@ -212,9 +212,9 @@ export default ({ product, updateProduct, loading }) => {
 								<span slot="description">
 									{__('Charge an ongoing fee.', 'surecart')}
 								</span>
-							</CeChoice>
+							</ScChoice>
 						</div>
-					</CeChoices>
+					</ScChoices>
 				)}
 				{renderPrices()}
 			</Box>

@@ -1,16 +1,16 @@
-import { CeAlert } from '@surecart/components-react';
+import { ScAlert } from '@surecart/components-react';
 
 export default ({ errors, onHide }) => {
 	if (!errors?.[0]?.message) return null;
 	return (
-		<CeAlert
+		<ScAlert
 			type="danger"
 			closable
 			open={errors?.[0]?.message}
-			onCeShow={(e) => {
+			onScShow={(e) => {
 				window.scrollTo({ top: 0, behavior: 'smooth' });
 			}}
-			onCeHide={onHide}
+			onScHide={onHide}
 		>
 			<span slot="title">{errors?.[0]?.message}</span>
 			{errors?.[0]?.additional_errors?.length && (
@@ -22,6 +22,6 @@ export default ({ errors, onHide }) => {
 					)}
 				</ul>
 			)}
-		</CeAlert>
+		</ScAlert>
 	);
 };

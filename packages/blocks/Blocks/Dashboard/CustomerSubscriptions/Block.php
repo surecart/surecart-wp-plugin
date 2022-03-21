@@ -53,7 +53,7 @@ class Block extends DashboardPage {
 		$subscription = Subscription::with( [ 'price', 'price.product', 'latest_invoice', 'product.product_group' ] )->find( $id );
 
 		\SureCart::assets()->addComponentData(
-			'ce-subscription',
+			'sc-subscription',
 			'#customer-subscription',
 			[
 				'heading'      => $attributes['title'] ?? __( 'Update Subscription', 'surecart' ),
@@ -61,7 +61,7 @@ class Block extends DashboardPage {
 			]
 		);
 		\SureCart::assets()->addComponentData(
-			'ce-subscription-switch',
+			'sc-subscription-switch',
 			'#customer-subscription-switch',
 			[
 				'heading'       => $attributes['title'] ?? __( 'Update Subscription', 'surecart' ),
@@ -70,19 +70,19 @@ class Block extends DashboardPage {
 			]
 		);
 		ob_start(); ?>
-		<ce-spacing style="--spacing: var(--ce-spacing-large)">
-			<ce-breadcrumbs>
-				<ce-breadcrumb href="<?php echo esc_url( add_query_arg( [ 'tab' => $tab ], \SureCart::pages()->url( 'dashboard' ) ) ); ?>">
+		<sc-spacing style="--spacing: var(--sc-spacing-large)">
+			<sc-breadcrumbs>
+				<sc-breadcrumb href="<?php echo esc_url( add_query_arg( [ 'tab' => $tab ], \SureCart::pages()->url( 'dashboard' ) ) ); ?>">
 					<?php esc_html_e( 'Dashboard', 'surecart' ); ?>
-				</ce-breadcrumb>
-				<ce-breadcrumb>
+				</sc-breadcrumb>
+				<sc-breadcrumb>
 					<?php esc_html_e( 'Subscription', 'surecart' ); ?>
-				</ce-breadcrumb>
-			</ce-breadcrumbs>
+				</sc-breadcrumb>
+			</sc-breadcrumbs>
 
-			<ce-subscription id="customer-subscription"></ce-subscription>
-			<ce-subscription-switch id="customer-subscription-switch"></ce-subscription-switch>
-		</ce-spacing>
+			<sc-subscription id="customer-subscription"></sc-subscription>
+			<sc-subscription-switch id="customer-subscription-switch"></sc-subscription-switch>
+		</sc-spacing>
 
 		<?php
 		return ob_get_clean();
@@ -100,7 +100,7 @@ class Block extends DashboardPage {
 			return;
 		}
 		\SureCart::assets()->addComponentData(
-			'ce-subscriptions-list',
+			'sc-subscriptions-list',
 			'#customer-subscriptions-index',
 			[
 				'heading' => $attributes['title'] ?? __( 'Subscriptions', 'surecart' ),
@@ -112,6 +112,6 @@ class Block extends DashboardPage {
 				],
 			]
 		);
-		return '<ce-subscriptions-list id="customer-subscriptions-index"></ce-subscriptions-list>';
+		return '<sc-subscriptions-list id="customer-subscriptions-index"></sc-subscriptions-list>';
 	}
 }

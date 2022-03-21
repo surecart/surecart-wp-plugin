@@ -1,3 +1,3 @@
 export default () => {
-	return <ce-order-tax-id-input></ce-order-tax-id-input>;
+	return <sc-order-tax-id-input></sc-order-tax-id-input>;
 };

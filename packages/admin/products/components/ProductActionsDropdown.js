@@ -1,10 +1,10 @@
 import { __ } from '@wordpress/i18n';
 
 import {
-	CeButton,
-	CeDropdown,
-	CeMenu,
-	CeMenuItem,
+	ScButton,
+	ScDropdown,
+	ScMenu,
+	ScMenuItem,
 } from '@surecart/components-react';
 
 export default ({ product, onDelete, onToggleArchive }) => {
@@ -49,8 +49,8 @@ export default ({ product, onDelete, onToggleArchive }) => {
 	}
 
 	return (
-		<CeDropdown slot="suffix" position="bottom-right">
-			<CeButton type="text" slot="trigger">
+		<ScDropdown slot="suffix" position="bottom-right">
+			<ScButton type="text" slot="trigger">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="16"
@@ -66,10 +66,10 @@ export default ({ product, onDelete, onToggleArchive }) => {
 					<circle cx="19" cy="12" r="1"></circle>
 					<circle cx="5" cy="12" r="1"></circle>
 				</svg>
-			</CeButton>
-			<CeMenu>
+			</ScButton>
+			<ScMenu>
 				{product?.id && (
-					<CeMenuItem onClick={confirmArchive}>
+					<ScMenuItem onClick={confirmArchive}>
 						<span
 							slot="prefix"
 							style={{
@@ -95,10 +95,10 @@ export default ({ product, onDelete, onToggleArchive }) => {
 						{product?.archived_at
 							? __('Un-Archive', 'surecart')
 							: __('Archive', 'surecart')}
-					</CeMenuItem>
+					</ScMenuItem>
 				)}
 				{product?.id && (
-					<CeMenuItem onClick={confirmDelete}>
+					<ScMenuItem onClick={confirmDelete}>
 						<span
 							slot="prefix"
 							style={{
@@ -123,9 +123,9 @@ export default ({ product, onDelete, onToggleArchive }) => {
 							</svg>
 						</span>
 						{__('Delete', 'surecart')}
-					</CeMenuItem>
+					</ScMenuItem>
 				)}
-			</CeMenu>
-		</CeDropdown>
+			</ScMenu>
+		</ScDropdown>
 	);
 };

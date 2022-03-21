@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 
-import { CeButton } from '@surecart/components-react';
+import { ScButton } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 
 import Box from '../../ui/Box';
@@ -9,7 +9,7 @@ import { addQueryArgs } from '@wordpress/url';
 
 export default ({ customer, loading }) => {
 	const renderLoading = () => {
-		return <ce-skeleton></ce-skeleton>;
+		return <sc-skeleton></sc-skeleton>;
 	};
 
 	return (
@@ -17,15 +17,15 @@ export default ({ customer, loading }) => {
 			title={__('Customer', 'surecart')}
 			footer={
 				<div>
-					<CeButton
+					<ScButton
 						href={addQueryArgs('admin.php', {
-							page: 'ce-customers',
+							page: 'sc-customers',
 							action: 'edit',
 							id: customer?.id,
 						})}
 					>
 						{__('Edit Customer', 'surecart')}
-					</CeButton>
+					</ScButton>
 				</div>
 			}
 		>
@@ -38,15 +38,15 @@ export default ({ customer, loading }) => {
 						gap: 0.5em;
 					`}
 				>
-					<ce-text
+					<sc-text
 						tag="h3"
 						style={{
-							'--font-weight': 'var(--ce-font-weight-bold)',
-							'--font-size': 'var(--ce-font-size-medium)',
+							'--font-weight': 'var(--sc-font-weight-bold)',
+							'--font-size': 'var(--sc-font-size-medium)',
 						}}
 					>
 						{customer?.name}
-					</ce-text>
+					</sc-text>
 					<div>{customer?.email}</div>
 					<div>{customer?.billing_address}</div>
 				</div>

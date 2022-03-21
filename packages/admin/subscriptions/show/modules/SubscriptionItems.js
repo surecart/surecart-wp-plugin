@@ -5,7 +5,7 @@ import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';
 import Box from '../../ui/Box';
 import { translateInterval } from '../../util/translations';
-import { CeButton } from '@surecart/components-react';
+import { ScButton } from '@surecart/components-react';
 import Definition from '../../ui/Definition';
 
 import useSubscriptionItemsData from '../hooks/useSubscriptionItemsData';
@@ -16,13 +16,13 @@ export default () => {
 	const { items } = useSubscriptionItemsData();
 
 	const renderLoading = () => {
-		return <ce-skeleton></ce-skeleton>;
+		return <sc-skeleton></sc-skeleton>;
 	};
 
 	const renderRefund = (
 		<Fragment>
 			<div>
-				<CeButton>Refund</CeButton>
+				<ScButton>Refund</ScButton>
 			</div>
 			<div>
 				{/* { [ 'finalized', 'paid' ].includes( subscription?.status ) &&
@@ -45,7 +45,7 @@ export default () => {
 				<Fragment>
 					{(items || []).map((item, index) => {
 						return (
-							<ce-product-line-item
+							<sc-product-line-item
 								key={item.id}
 								imageUrl={
 									item?.price?.metadata?.wp_attachment_src
@@ -67,33 +67,33 @@ export default () => {
 									item?.price?.recurring_interval_count,
 									item?.price?.recurring_interval
 								)}
-							></ce-product-line-item>
+							></sc-product-line-item>
 						);
 					})}
 
 					<hr />
 
 					<Definition title={__('Subtotal', 'order')}>
-						<ce-format-number
+						<sc-format-number
 							style={{
-								'font-weight': 'var(--ce-font-weight-semibold)',
-								color: 'var(--ce-color-gray-800)',
+								'font-weight': 'var(--sc-font-weight-semibold)',
+								color: 'var(--sc-color-gray-800)',
 							}}
 							type="currency"
 							currency={subscription?.currency}
 							value={subscription?.subtotal_amount}
-						></ce-format-number>
+						></sc-format-number>
 					</Definition>
 					<Definition title={__('Discounts', 'order')}>
-						<ce-format-number
+						<sc-format-number
 							style={{
-								'font-weight': 'var(--ce-font-weight-semibold)',
-								color: 'var(--ce-color-gray-800)',
+								'font-weight': 'var(--sc-font-weight-semibold)',
+								color: 'var(--sc-color-gray-800)',
 							}}
 							type="currency"
 							currency={subscription?.currency}
 							value={subscription?.discount_amount}
-						></ce-format-number>
+						></sc-format-number>
 					</Definition>
 
 					<hr />
@@ -113,17 +113,17 @@ export default () => {
 							>
 								{subscription?.currency}
 							</div>
-							<ce-format-number
+							<sc-format-number
 								style={{
-									fontSize: 'var(--ce-font-size-x-large)',
+									fontSize: 'var(--sc-font-size-x-large)',
 									fontWeight:
-										'var(--ce-font-weight-semibold)',
-									color: 'var(--ce-color-gray-800)',
+										'var(--sc-font-weight-semibold)',
+									color: 'var(--sc-color-gray-800)',
 								}}
 								type="currency"
 								currency={subscription?.currency}
 								value={subscription?.total_amount}
-							></ce-format-number>
+							></sc-format-number>
 						</div>
 					</Definition>
 				</Fragment>

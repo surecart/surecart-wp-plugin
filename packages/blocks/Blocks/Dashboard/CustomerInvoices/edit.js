@@ -5,7 +5,7 @@ import {
 	useBlockProps,
 } from '@wordpress/block-editor';
 import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
-import { CeDashboardModule } from '@surecart/components-react';
+import { ScDashboardModule } from '@surecart/components-react';
 import { Fragment } from 'react';
 
 export default ({ attributes, setAttributes }) => {
@@ -26,7 +26,7 @@ export default ({ attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<CeDashboardModule {...blockProps}>
+			<ScDashboardModule {...blockProps}>
 				<RichText
 					aria-label={__('Title')}
 					placeholder={__('Add A Title…')}
@@ -37,32 +37,32 @@ export default ({ attributes, setAttributes }) => {
 					allowedFormats={['core/bold', 'core/italic']}
 				/>
 
-				<ce-button type="link" slot="end">
+				<sc-button type="link" slot="end">
 					{__('View all', 'surecart')}
-					<ce-icon name="chevron-right" slot="suffix"></ce-icon>
-				</ce-button>
+					<sc-icon name="chevron-right" slot="suffix"></sc-icon>
+				</sc-button>
 
-				<ce-card no-padding>
-					<ce-stacked-list>
-						<ce-stacked-list-row
+				<sc-card no-padding>
+					<sc-stacked-list>
+						<sc-stacked-list-row
 							style={{ '--columns': '4' }}
 							mobile-size={500}
 						>
 							<div>
-								<ce-format-date
+								<sc-format-date
 									date={Date.now() / 1000}
 									type="timestamp"
 									month="short"
 									day="numeric"
 									year="numeric"
-								></ce-format-date>
+								></sc-format-date>
 							</div>
 
 							<div>
-								<ce-text
+								<sc-text
 									truncate
 									style={{
-										'--color': 'var(--ce-color-gray-500)',
+										'--color': 'var(--sc-color-gray-500)',
 									}}
 								>
 									{sprintf(
@@ -74,40 +74,40 @@ export default ({ attributes, setAttributes }) => {
 										),
 										1
 									)}
-								</ce-text>
+								</sc-text>
 							</div>
 							<div>
-								<ce-tag type="success">
+								<sc-tag type="success">
 									{__('Paid', 'surecart')}
-								</ce-tag>
+								</sc-tag>
 							</div>
 							<div>
-								<ce-format-number
+								<sc-format-number
 									type="currency"
 									currency={ceData?.currency || 'usd'}
 									value={12300}
-								></ce-format-number>
+								></sc-format-number>
 							</div>
-						</ce-stacked-list-row>
-						<ce-stacked-list-row
+						</sc-stacked-list-row>
+						<sc-stacked-list-row
 							style={{ '--columns': '4' }}
 							mobile-size={500}
 						>
 							<div>
-								<ce-format-date
+								<sc-format-date
 									date={Date.now() / 1000}
 									type="timestamp"
 									month="short"
 									day="numeric"
 									year="numeric"
-								></ce-format-date>
+								></sc-format-date>
 							</div>
 
 							<div>
-								<ce-text
+								<sc-text
 									truncate
 									style={{
-										'--color': 'var(--ce-color-gray-500)',
+										'--color': 'var(--sc-color-gray-500)',
 									}}
 								>
 									{sprintf(
@@ -119,24 +119,24 @@ export default ({ attributes, setAttributes }) => {
 										),
 										1
 									)}
-								</ce-text>
+								</sc-text>
 							</div>
 							<div>
-								<ce-tag type="danger">
+								<sc-tag type="danger">
 									{__('Refunded', 'surecart')}
-								</ce-tag>
+								</sc-tag>
 							</div>
 							<div>
-								<ce-format-number
+								<sc-format-number
 									type="currency"
 									currency={ceData?.currency || 'usd'}
 									value={45600}
-								></ce-format-number>
+								></sc-format-number>
 							</div>
-						</ce-stacked-list-row>
-					</ce-stacked-list>
-				</ce-card>
-			</CeDashboardModule>
+						</sc-stacked-list-row>
+					</sc-stacked-list>
+				</sc-card>
+			</ScDashboardModule>
 		</Fragment>
 	);
 };

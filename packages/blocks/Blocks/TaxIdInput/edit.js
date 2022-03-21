@@ -1,5 +1,5 @@
 import { __ } from '@wordpress/i18n';
 
 export default () => {
-	return <ce-order-tax-id-input show></ce-order-tax-id-input>;
+	return <sc-order-tax-id-input show></sc-order-tax-id-input>;
 };

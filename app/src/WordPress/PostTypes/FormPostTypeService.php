@@ -35,7 +35,7 @@ class FormPostTypeService {
 	 *
 	 * @var string
 	 */
-	protected $group_prefix = 'ce-checkout-';
+	protected $group_prefix = 'sc-checkout-';
 
 	/**
 	 * Get the page service from the application container.
@@ -185,7 +185,7 @@ class FormPostTypeService {
 				'show_in_menu'          => false,
 				'rewrite'               => false,
 				'show_in_rest'          => true,
-				'rest_base'             => 'ce-forms',
+				'rest_base'             => 'sc-forms',
 				'rest_controller_class' => 'WP_REST_Blocks_Controller',
 				'capability_type'       => 'block',
 				'capabilities'          => array(
@@ -267,11 +267,11 @@ class FormPostTypeService {
 	public function columnMode( $post_ID ) {
 		$mode = Form::getMode( $post_ID );
 		if ( 'test' === $mode ) {
-			echo '<ce-tag type="warning">' . esc_html__( 'Test', 'surecart' ) . '</ce-tag>';
+			echo '<sc-tag type="warning">' . esc_html__( 'Test', 'surecart' ) . '</sc-tag>';
 			return;
 		}
 
-		echo '<ce-tag type="success">' . esc_html__( 'Live', 'surecart' ) . '</ce-tag>';
+		echo '<sc-tag type="success">' . esc_html__( 'Live', 'surecart' ) . '</sc-tag>';
 	}
 
 	/**

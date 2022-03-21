@@ -18,7 +18,7 @@ class SubscriptionController extends BaseController {
 	 */
 	public function preview( $attributes = [] ) {
 		return wp_kses_post(
-			Component::tag( 'ce-subscriptions-list' )
+			Component::tag( 'sc-subscriptions-list' )
 			->id( 'customer-subscriptions-preview' )
 			->with(
 				[
@@ -48,7 +48,7 @@ class SubscriptionController extends BaseController {
 	 */
 	public function index() {
 		\SureCart::assets()->addComponentData(
-			'ce-subscriptions-list',
+			'sc-subscriptions-list',
 			'#customer-subscriptions-index',
 			[
 				'heading' => $attributes['title'] ?? __( 'Subscriptions', 'surecart' ),
@@ -60,7 +60,7 @@ class SubscriptionController extends BaseController {
 				],
 			]
 		);
-		return '<ce-subscriptions-list id="customer-subscriptions-index"></ce-subscriptions-list>';
+		return '<sc-subscriptions-list id="customer-subscriptions-index"></sc-subscriptions-list>';
 	}
 
 	/**
@@ -87,19 +87,19 @@ class SubscriptionController extends BaseController {
 
 		ob_start(); ?>
 
-		<ce-spacing style="--spacing: var(--ce-spacing-large)">
-			<ce-breadcrumbs>
-				<ce-breadcrumb href="<?php echo esc_url( add_query_arg( [ 'tab' => $this->getTab() ], \SureCart::pages()->url( 'dashboard' ) ) ); ?>">
+		<sc-spacing style="--spacing: var(--sc-spacing-large)">
+			<sc-breadcrumbs>
+				<sc-breadcrumb href="<?php echo esc_url( add_query_arg( [ 'tab' => $this->getTab() ], \SureCart::pages()->url( 'dashboard' ) ) ); ?>">
 					<?php esc_html_e( 'Dashboard', 'surecart' ); ?>
-				</ce-breadcrumb>
-				<ce-breadcrumb>
+				</sc-breadcrumb>
+				<sc-breadcrumb>
 					<?php esc_html_e( 'Subscription', 'surecart' ); ?>
-				</ce-breadcrumb>
-			</ce-breadcrumbs>
+				</sc-breadcrumb>
+			</sc-breadcrumbs>
 
 		<?php
 			echo wp_kses_post(
-				Component::tag( 'ce-subscription' )
+				Component::tag( 'sc-subscription' )
 				->id( 'customer-subscription-edit' )
 				->with(
 					[
@@ -115,7 +115,7 @@ class SubscriptionController extends BaseController {
 		&& ! $subscription->cancel_at_period_end && 'canceled' !== $subscription->status
 		&& $subscription->current_period_end_at ) {
 			echo wp_kses_post(
-				Component::tag( 'ce-subscription-switch' )
+				Component::tag( 'sc-subscription-switch' )
 				->id( 'customer-subscription-switch' )
 				->with(
 					[
@@ -127,7 +127,7 @@ class SubscriptionController extends BaseController {
 			);
 		}
 		?>
-		</ce-spacing>
+		</sc-spacing>
 
 		<?php
 		return ob_get_clean();
@@ -165,12 +165,12 @@ class SubscriptionController extends BaseController {
 		$back = add_query_arg( [ 'tab' => $this->getTab() ], \SureCart::pages()->url( 'dashboard' ) );
 		ob_start();
 		?>
-	<ce-spacing style="--spacing: var(--ce-spacing-xx-large)">
-			<ce-breadcrumbs>
-				<ce-breadcrumb href="<?php echo esc_url( add_query_arg( [ 'tab' => $this->getTab() ], \SureCart::pages()->url( 'dashboard' ) ) ); ?>">
+	<sc-spacing style="--spacing: var(--sc-spacing-xx-large)">
+			<sc-breadcrumbs>
+				<sc-breadcrumb href="<?php echo esc_url( add_query_arg( [ 'tab' => $this->getTab() ], \SureCart::pages()->url( 'dashboard' ) ) ); ?>">
 					<?php esc_html_e( 'Dashboard', 'surecart' ); ?>
-				</ce-breadcrumb>
-				<ce-breadcrumb href="
+				</sc-breadcrumb>
+				<sc-breadcrumb href="
 				<?php
 				echo esc_url(
 					add_query_arg(
@@ -186,17 +186,17 @@ class SubscriptionController extends BaseController {
 				?>
 				">
 					<?php esc_html_e( 'Subscription', 'surecart' ); ?>
-				</ce-breadcrumb>
-				<ce-breadcrumb>
+				</sc-breadcrumb>
+				<sc-breadcrumb>
 					<?php esc_html_e( 'Confirm', 'surecart' ); ?>
-				</ce-breadcrumb>
-			</ce-breadcrumbs>
+				</sc-breadcrumb>
+			</sc-breadcrumbs>
 
 			<?php
 			$terms = $this->getTermsText();
 
 			echo wp_kses_post(
-				Component::tag( 'ce-upcoming-invoice' )
+				Component::tag( 'sc-upcoming-invoice' )
 				->id( 'customer-upcoming-invoice' )
 				->with(
 					[
@@ -211,7 +211,7 @@ class SubscriptionController extends BaseController {
 			?>
 
 
-	</ce-spacing>
+	</sc-spacing>
 
 		<?php
 		return ob_get_clean();
@@ -236,22 +236,22 @@ class SubscriptionController extends BaseController {
 		);
 		ob_start();
 		?>
-		<ce-spacing style="--spacing: var(--ce-spacing-xx-large)">
-			<ce-breadcrumbs>
-				<ce-breadcrumb href="<?php echo esc_url( $back_url ); ?>">
+		<sc-spacing style="--spacing: var(--sc-spacing-xx-large)">
+			<sc-breadcrumbs>
+				<sc-breadcrumb href="<?php echo esc_url( $back_url ); ?>">
 					<?php esc_html_e( 'Dashboard', 'surecart' ); ?>
-				</ce-breadcrumb>
-				<ce-breadcrumb href="<?php echo esc_url( $edit_subscription_url ); ?>" >
+				</sc-breadcrumb>
+				<sc-breadcrumb href="<?php echo esc_url( $edit_subscription_url ); ?>" >
 					<?php esc_html_e( 'Subscription', 'surecart' ); ?>
-				</ce-breadcrumb>
-				<ce-breadcrumb>
+				</sc-breadcrumb>
+				<sc-breadcrumb>
 					<?php esc_html_e( 'Cancel', 'surecart' ); ?>
-				</ce-breadcrumb>
-			</ce-breadcrumbs>
+				</sc-breadcrumb>
+			</sc-breadcrumbs>
 
 			<?php
 			echo wp_kses_post(
-				Component::tag( 'ce-subscription-cancel' )
+				Component::tag( 'sc-subscription-cancel' )
 				->id( 'customer-subscription-cancel' )
 				->with(
 					[
@@ -263,7 +263,7 @@ class SubscriptionController extends BaseController {
 			);
 			?>
 
-		</ce-spacing>
+		</sc-spacing>
 		<?php
 		return ob_get_clean();
 	}
@@ -286,22 +286,22 @@ class SubscriptionController extends BaseController {
 		);
 		ob_start();
 		?>
-		<ce-spacing style="--spacing: var(--ce-spacing-xx-large)">
-			<ce-breadcrumbs>
-				<ce-breadcrumb href="<?php echo esc_url( $back_url ); ?>">
+		<sc-spacing style="--spacing: var(--sc-spacing-xx-large)">
+			<sc-breadcrumbs>
+				<sc-breadcrumb href="<?php echo esc_url( $back_url ); ?>">
 					<?php esc_html_e( 'Dashboard', 'surecart' ); ?>
-				</ce-breadcrumb>
-				<ce-breadcrumb href="<?php echo esc_url( $edit_subscription_url ); ?>" >
+				</sc-breadcrumb>
+				<sc-breadcrumb href="<?php echo esc_url( $edit_subscription_url ); ?>" >
 					<?php esc_html_e( 'Subscription', 'surecart' ); ?>
-				</ce-breadcrumb>
-				<ce-breadcrumb>
+				</sc-breadcrumb>
+				<sc-breadcrumb>
 					<?php esc_html_e( 'Renew', 'surecart' ); ?>
-				</ce-breadcrumb>
-			</ce-breadcrumbs>
+				</sc-breadcrumb>
+			</sc-breadcrumbs>
 
 			<?php
 			echo wp_kses_post(
-				Component::tag( 'ce-subscription-renew' )
+				Component::tag( 'sc-subscription-renew' )
 				->id( 'customer-subscription-renew' )
 				->with(
 					[
@@ -313,7 +313,7 @@ class SubscriptionController extends BaseController {
 			);
 			?>
 
-		</ce-spacing>
+		</sc-spacing>
 		<?php
 		return ob_get_clean();
 	}
@@ -351,25 +351,25 @@ class SubscriptionController extends BaseController {
 		ob_start();
 		?>
 
-		<ce-spacing style="--spacing: var(--ce-spacing-xx-large)">
-			<ce-breadcrumbs>
-				<ce-breadcrumb href="<?php echo esc_url( $back_url ); ?>">
+		<sc-spacing style="--spacing: var(--sc-spacing-xx-large)">
+			<sc-breadcrumbs>
+				<sc-breadcrumb href="<?php echo esc_url( $back_url ); ?>">
 					<?php esc_html_e( 'Dashboard', 'surecart' ); ?>
-				</ce-breadcrumb>
-				<ce-breadcrumb href="<?php echo esc_url( $edit_subscription_url ); ?>">
+				</sc-breadcrumb>
+				<sc-breadcrumb href="<?php echo esc_url( $edit_subscription_url ); ?>">
 					<?php esc_html_e( 'Subscription', 'surecart' ); ?>
-				</ce-breadcrumb>
-				<ce-breadcrumb href="<?php echo esc_url( $confirm_subscription_url ); ?>">
+				</sc-breadcrumb>
+				<sc-breadcrumb href="<?php echo esc_url( $confirm_subscription_url ); ?>">
 					<?php esc_html_e( 'Confirm', 'surecart' ); ?>
-				</ce-breadcrumb>
-				<ce-breadcrumb>
+				</sc-breadcrumb>
+				<sc-breadcrumb>
 					<?php esc_html_e( 'Payment Method', 'surecart' ); ?>
-				</ce-breadcrumb>
-			</ce-breadcrumbs>
+				</sc-breadcrumb>
+			</sc-breadcrumbs>
 
 			<?php
 			echo wp_kses_post(
-				Component::tag( 'ce-subscription-payment' )
+				Component::tag( 'sc-subscription-payment' )
 				->id( 'customer-subscription-payment' )
 				->with(
 					[
@@ -382,7 +382,7 @@ class SubscriptionController extends BaseController {
 				)->render()
 			);
 			?>
-		</ce-spacing>
+		</sc-spacing>
 
 		<?php
 		return ob_get_clean();

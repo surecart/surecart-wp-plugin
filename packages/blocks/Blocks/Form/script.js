@@ -1,4 +1,4 @@
-import { CeForm } from '../../../components/dist/components/ce-form';
+import { ScForm } from '../../../components/dist/components/sc-form';
 
-customElements.define('ce-form', CeForm);
-customElements.define('ce-checkout', CeForm);
+customElements.define('sc-form', ScForm);
+customElements.define('sc-checkout', ScForm);

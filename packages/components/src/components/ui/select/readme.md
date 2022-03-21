@@ -37,12 +37,12 @@
 
 | Event      | Description                                       | Type                  |
 | ---------- | ------------------------------------------------- | --------------------- |
-| `ceBlur`   | Emitted when the control loses focus.             | `CustomEvent<void>`   |
-| `ceChange` | Emitted when the control's value changes.         | `CustomEvent<void>`   |
-| `ceClose`  | Emitted whent the components search query changes | `CustomEvent<string>` |
-| `ceFocus`  | Emitted when the control gains focus.             | `CustomEvent<void>`   |
-| `ceOpen`   | Emitted whent the components search query changes | `CustomEvent<string>` |
-| `ceSearch` | Emitted whent the components search query changes | `CustomEvent<string>` |
+| `scBlur`   | Emitted when the control loses focus.             | `CustomEvent<void>`   |
+| `scChange` | Emitted when the control's value changes.         | `CustomEvent<void>`   |
+| `scClose`  | Emitted whent the components search query changes | `CustomEvent<string>` |
+| `scFocus`  | Emitted when the control gains focus.             | `CustomEvent<void>`   |
+| `scOpen`   | Emitted whent the components search query changes | `CustomEvent<string>` |
+| `scSearch` | Emitted whent the components search query changes | `CustomEvent<string>` |
 
 
 ## Methods
@@ -80,34 +80,34 @@ Type: `Promise<void>`
 
 ### Used by
 
- - [ce-address](../address)
+ - [sc-address](../address)
 
 ### Depends on
 
-- [ce-menu-label](../menu-label)
-- [ce-menu-item](../menu-item)
-- [ce-form-control](../form-control)
-- [ce-dropdown](../dropdown)
-- [ce-icon](../icon)
-- [ce-input](../input)
-- [ce-spinner](../spinner)
-- [ce-menu](../menu)
+- [sc-menu-label](../menu-label)
+- [sc-menu-item](../menu-item)
+- [sc-form-control](../form-control)
+- [sc-dropdown](../dropdown)
+- [sc-icon](../icon)
+- [sc-input](../input)
+- [sc-spinner](../spinner)
+- [sc-menu](../menu)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-select --> ce-menu-label
-  ce-select --> ce-menu-item
-  ce-select --> ce-form-control
-  ce-select --> ce-dropdown
-  ce-select --> ce-icon
-  ce-select --> ce-input
-  ce-select --> ce-spinner
-  ce-select --> ce-menu
-  ce-form-control --> ce-tooltip
-  ce-input --> ce-form-control
-  ce-address --> ce-select
-  style ce-select fill:#f9f,stroke:#333,stroke-width:4px
+  sc-select --> sc-menu-label
+  sc-select --> sc-menu-item
+  sc-select --> sc-form-control
+  sc-select --> sc-dropdown
+  sc-select --> sc-icon
+  sc-select --> sc-input
+  sc-select --> sc-spinner
+  sc-select --> sc-menu
+  sc-form-control --> sc-tooltip
+  sc-input --> sc-form-control
+  sc-address --> sc-select
+  style sc-select fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

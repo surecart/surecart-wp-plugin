@@ -18,8 +18,8 @@
 
 | Event    | Description                                                                                           | Type                |
 | -------- | ----------------------------------------------------------------------------------------------------- | ------------------- |
-| `ceHide` | Emitted when the dropdown closes. Calling `event.preventDefault()` will prevent it from being closed. | `CustomEvent<void>` |
-| `ceShow` | Emitted when the dropdown opens. Calling `event.preventDefault()` will prevent it from being opened.  | `CustomEvent<void>` |
+| `scHide` | Emitted when the dropdown closes. Calling `event.preventDefault()` will prevent it from being closed. | `CustomEvent<void>` |
+| `scShow` | Emitted when the dropdown opens. Calling `event.preventDefault()` will prevent it from being opened.  | `CustomEvent<void>` |
 
 
 ## Shadow Parts
@@ -34,19 +34,19 @@
 
 ### Used by
 
- - [ce-payment-methods-list](../../controllers/dashboard/payment-methods-list)
- - [ce-quantity-select](../quantity-select)
- - [ce-select](../select)
- - [ce-tax-id-input](../tax-id-input)
+ - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
+ - [sc-quantity-select](../quantity-select)
+ - [sc-select](../select)
+ - [sc-tax-id-input](../tax-id-input)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-payment-methods-list --> ce-dropdown
-  ce-quantity-select --> ce-dropdown
-  ce-select --> ce-dropdown
-  ce-tax-id-input --> ce-dropdown
-  style ce-dropdown fill:#f9f,stroke:#333,stroke-width:4px
+  sc-payment-methods-list --> sc-dropdown
+  sc-quantity-select --> sc-dropdown
+  sc-select --> sc-dropdown
+  sc-tax-id-input --> sc-dropdown
+  style sc-dropdown fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

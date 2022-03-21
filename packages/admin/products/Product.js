@@ -22,7 +22,7 @@ import Sidebar from './Sidebar';
 import useCurrentPage from '../mixins/useCurrentPage';
 import ErrorFlash from '../components/ErrorFlash';
 import useEntities from '../mixins/useEntities';
-import { CeButton } from '@surecart/components-react';
+import { ScButton } from '@surecart/components-react';
 import ProductActionsDropdown from './components/ProductActionsDropdown';
 
 export default () => {
@@ -190,7 +190,7 @@ export default () => {
 			status={product?.status}
 			pageModelName={'product'}
 			onSubmit={onSubmit}
-			backUrl={'admin.php?page=ce-products'}
+			backUrl={'admin.php?page=sc-products'}
 			backText={__('Back to All Product', 'surecart')}
 			title={
 				<div
@@ -201,33 +201,33 @@ export default () => {
 					`}
 				>
 					{isLoading ? (
-						<ce-skeleton
+						<sc-skeleton
 							style={{
 								width: '120px',
 								display: 'inline-block',
 							}}
-						></ce-skeleton>
+						></sc-skeleton>
 					) : product?.id ? (
 						__('Edit Product', 'surecart')
 					) : (
 						__('Create Product', 'surecart')
 					)}
 					{product?.archived && (
-						<ce-tag type="warning">
+						<sc-tag type="warning">
 							{__('Archived', 'surecart')}
-						</ce-tag>
+						</sc-tag>
 					)}
 				</div>
 			}
 			button={
 				isLoading ? (
-					<ce-skeleton
+					<sc-skeleton
 						style={{
 							width: '120px',
 							height: '35px',
 							display: 'inline-block',
 						}}
-					></ce-skeleton>
+					></sc-skeleton>
 				) : (
 					<div
 						css={css`
@@ -242,7 +242,7 @@ export default () => {
 							onToggleArchive={onToggleArchiveProduct}
 							isSaving={isSaving}
 						/>
-						<CeButton
+						<ScButton
 							type="primary"
 							loading={isSaving}
 							disabled={isSaving}
@@ -251,7 +251,7 @@ export default () => {
 							{product?.id
 								? __('Update Product', 'surecart')
 								: __('Create Product', 'surecart')}
-						</CeButton>
+						</ScButton>
 					</div>
 				)
 			}

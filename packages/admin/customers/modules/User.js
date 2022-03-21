@@ -3,10 +3,10 @@ import { select, useDispatch, useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { useState } from '@wordpress/element';
 import { addQueryArgs } from '@wordpress/url';
-import { CeButton } from '@surecart/components-react';
+import { ScButton } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 import Definition from '../../ui/Definition';
-import { CeFormControl } from '@surecart/components-react';
+import { ScFormControl } from '@surecart/components-react';
 import UserSelect from '../../components/UserSelect';
 import { css, jsx } from '@emotion/core';
 
@@ -93,11 +93,11 @@ export default ({ customer_id, customer }) => {
 
 	if (loading || saving) {
 		return (
-			<ce-skeleton
+			<sc-skeleton
 				style={{
 					width: '80%',
 				}}
-			></ce-skeleton>
+			></sc-skeleton>
 		);
 	}
 
@@ -141,7 +141,7 @@ export default ({ customer_id, customer }) => {
 						</div>
 					}
 				>
-					<CeButton
+					<ScButton
 						href=""
 						size="small"
 						type="danger"
@@ -149,7 +149,7 @@ export default ({ customer_id, customer }) => {
 						onClick={() => disconnect(user?.id)}
 					>
 						{__('Disconnect', 'surecart')}
-					</CeButton>
+					</ScButton>
 				</Definition>
 			</div>
 		));
@@ -157,7 +157,7 @@ export default ({ customer_id, customer }) => {
 
 	return (
 		<div>
-			<CeFormControl label={__('Connect a user', 'surecart')}>
+			<ScFormControl label={__('Connect a user', 'surecart')}>
 				<UserSelect
 					value={users?.[0]?.id}
 					onSelect={(id) => {
@@ -166,7 +166,7 @@ export default ({ customer_id, customer }) => {
 					}}
 					required
 				/>
-			</CeFormControl>
+			</ScFormControl>
 		</div>
 	);
 };

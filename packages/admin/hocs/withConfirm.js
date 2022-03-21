@@ -5,7 +5,7 @@ const { __ } = wp.i18n;
 const { createHigherOrderComponent } = wp.compose;
 const { useState, Fragment } = wp.element;
 const { Modal, Button } = wp.components;
-import { CeButton } from '@surecart/components-react';
+import { ScButton } from '@surecart/components-react';
 
 /**
  * Higher order component factory for injecting the editor colors as the
@@ -21,7 +21,7 @@ export default createHigherOrderComponent((OriginalComponent) => {
 			confirmButtonText: __('Okay', 'surecart'),
 			open: false,
 			isSaving: false,
-			className: 'ce-confirm',
+			className: 'sc-confirm',
 			isDestructive: false,
 			onRequestClose: () => {},
 			onRequestConfirm: () => {},
@@ -36,12 +36,12 @@ export default createHigherOrderComponent((OriginalComponent) => {
 				/>
 				{!!modal?.open && (
 					<Modal
-						className={'ce-disable-confirm'}
+						className={'sc-disable-confirm'}
 						title={modal?.title}
 						onRequestClose={modal?.onRequestClose}
 					>
 						<p>{modal?.message}</p>
-						<CeButton
+						<ScButton
 							type={modal?.isDestructive ? 'danger' : 'primary'}
 							loading={modal?.isSaving}
 							disabled={modal?.isSaving}
@@ -49,10 +49,10 @@ export default createHigherOrderComponent((OriginalComponent) => {
 						>
 							{modal?.confirmButtonText ||
 								__('Confirm', 'surecart')}
-						</CeButton>
-						<CeButton type="text" onClick={modal?.onRequestClose}>
+						</ScButton>
+						<ScButton type="text" onClick={modal?.onRequestClose}>
 							{__('Cancel', 'surecart')}
-						</CeButton>
+						</ScButton>
 					</Modal>
 				)}
 			</Fragment>

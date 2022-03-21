@@ -47,11 +47,11 @@ export default ({ price_id }) => {
 				{price.product.name} - {price.name}
 			</h2>
 			<p>
-				<ce-format-number
+				<sc-format-number
 					type="currency"
 					currency={price.currency}
 					value={price.amount}
-				></ce-format-number>{' '}
+				></sc-format-number>{' '}
 				{price?.recurring && price?.recurring_interval ? '/' : ''}{' '}
 				{translate(price?.recurring_interval) || ''}
 			</p>

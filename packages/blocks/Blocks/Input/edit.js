@@ -14,7 +14,7 @@ import {
 /**
  * Component Dependencies
  */
-import { CeInput } from '@surecart/components-react';
+import { ScInput } from '@surecart/components-react';
 
 export default ({ className, attributes, setAttributes, isSelected }) => {
 	const { label, placeholder, help, name, required } = attributes;
@@ -64,14 +64,14 @@ export default ({ className, attributes, setAttributes, isSelected }) => {
 			</InspectorControls>
 
 			{!isSelected && !name && <div>Please add a name</div>}
-			<CeInput
+			<ScInput
 				className={className}
 				required={required}
 				name={name}
 				label={label}
 				placeholder={placeholder}
 				help={help}
-			></CeInput>
+			></ScInput>
 		</Fragment>
 	);
 };

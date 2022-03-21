@@ -21,20 +21,20 @@
 
 ### Depends on
 
-- [ce-stripe-payment-request](../../../ui/stripe-payment-request)
-- [ce-divider](../../../ui/divider)
-- [ce-block-ui](../../../ui/block-ui)
+- [sc-stripe-payment-request](../../../ui/stripe-payment-request)
+- [sc-divider](../../../ui/divider)
+- [sc-block-ui](../../../ui/block-ui)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-express-payment --> ce-stripe-payment-request
-  ce-express-payment --> ce-divider
-  ce-express-payment --> ce-block-ui
-  ce-stripe-payment-request --> ce-alert
-  ce-alert --> ce-icon
-  ce-block-ui --> ce-spinner
-  style ce-express-payment fill:#f9f,stroke:#333,stroke-width:4px
+  sc-express-payment --> sc-stripe-payment-request
+  sc-express-payment --> sc-divider
+  sc-express-payment --> sc-block-ui
+  sc-stripe-payment-request --> sc-alert
+  sc-alert --> sc-icon
+  sc-block-ui --> sc-spinner
+  style sc-express-payment fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

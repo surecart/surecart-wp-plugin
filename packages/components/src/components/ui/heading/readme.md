@@ -23,13 +23,13 @@
 
 ### Used by
 
- - [ce-order-confirmation](../../controllers/confirmation/order-confirmation)
+ - [sc-order-confirmation](../../controllers/confirmation/order-confirmation)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-order-confirmation --> ce-heading
-  style ce-heading fill:#f9f,stroke:#333,stroke-width:4px
+  sc-order-confirmation --> sc-heading
+  style sc-heading fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

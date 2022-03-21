@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { CeButton, CeForm, CeInput } from '@surecart/components-react';
+import { ScButton, ScForm, ScInput } from '@surecart/components-react';
 import { useDispatch } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import { store as uiStore } from '../store/ui';
@@ -37,21 +37,21 @@ export default () => {
 			<FlashError path="product_group" scrollIntoView />
 
 			<Box title={__('Create New Upgrade Group', 'surecart')}>
-				<CeForm onCeSubmit={onSubmit}>
+				<ScForm onScSubmit={onSubmit}>
 					<div
 						css={css`
 							display: grid;
-							gap: var(--ce-spacing-large);
+							gap: var(--sc-spacing-large);
 						`}
 					>
-						<CeInput
+						<ScInput
 							label={__('Group Name', 'surecart')}
-							className="ce-product-name hydrated"
+							className="sc-product-name hydrated"
 							help={__(
 								'A name for your product group. This is not shown to customers.',
 								'surecart'
 							)}
-							onCeChange={(e) => {
+							onScChange={(e) => {
 								updateProductgroup({ name: e.target.value });
 							}}
 							name="name"
@@ -60,21 +60,21 @@ export default () => {
 						/>
 
 						<div
-							css={css`display: flex gap: var(--ce-spacing-small);`}
+							css={css`display: flex gap: var(--sc-spacing-small);`}
 						>
-							<CeButton type="primary" submit loading={isSaving}>
+							<ScButton type="primary" submit loading={isSaving}>
 								{__('Create', 'surecart')}
-							</CeButton>
+							</ScButton>
 
-							<CeButton
-								href={'admin.php?page=ce-product-groups'}
+							<ScButton
+								href={'admin.php?page=sc-product-groups'}
 								type="text"
 							>
 								{__('Cancel', 'surecart')}
-							</CeButton>
+							</ScButton>
 						</div>
 					</div>
-				</CeForm>
+				</ScForm>
 			</Box>
 		</CreateTemplate>
 	);

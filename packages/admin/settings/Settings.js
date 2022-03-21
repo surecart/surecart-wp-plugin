@@ -17,7 +17,7 @@ import { routes } from './routes';
 // get pages.
 import General from './pages/General';
 import Account from './pages/Account';
-import { CeButton } from '@surecart/components-react';
+import { ScButton } from '@surecart/components-react';
 import { useSelect } from '@wordpress/data';
 import useEntity from '../mixins/useEntity';
 import { useEffect } from 'react';
@@ -59,7 +59,7 @@ export default () => {
 				.components-snackbar.is-snackbar-error {
 					background: #cc1818;
 				}
-				.components-snackbar-list__notice-container {
+				.components-snackbar-list__notisc-container {
 					float: right;
 				}
 			`}
@@ -67,9 +67,9 @@ export default () => {
 			<Global
 				styles={css`
 					:root {
-						--ce-color-primary: 200 !important;
-						--ce-color-primary-luminance: 36% !important;
-						--ce-color-primary-saturation: 100% !important;
+						--sc-color-primary: 200 !important;
+						--sc-color-primary-luminance: 36% !important;
+						--sc-color-primary-saturation: 100% !important;
 					}
 				`}
 			/>
@@ -119,9 +119,9 @@ export default () => {
 								padding: 0 0.5em;
 							`}
 						>
-							<CeButton type="primary" submit>
+							<ScButton type="primary" submit>
 								{__('Save Settings', 'surecart')}
-							</CeButton>
+							</ScButton>
 						</FlexItem>
 					</Flex>
 				</Card>

@@ -27,15 +27,15 @@
 
 ### Depends on
 
-- [ce-input](../../../ui/input)
+- [sc-input](../../../ui/input)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-order-password --> ce-input
-  ce-input --> ce-form-control
-  ce-form-control --> ce-tooltip
-  style ce-order-password fill:#f9f,stroke:#333,stroke-width:4px
+  sc-order-password --> sc-input
+  sc-input --> sc-form-control
+  sc-form-control --> sc-tooltip
+  style sc-order-password fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

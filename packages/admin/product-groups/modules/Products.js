@@ -59,9 +59,9 @@ export default ({ id, products, loading }) => {
 						<Product key={product?.id} product={product} />
 					))
 			) : (
-				<ce-empty icon="shopping-bag">
+				<sc-empty icon="shopping-bag">
 					{__('Add some products to this upgrade group.', 'surecart')}
-				</ce-empty>
+				</sc-empty>
 			)}
 		</Box>
 	);

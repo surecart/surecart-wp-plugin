@@ -148,7 +148,7 @@ class AbandonedOrderListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_total( $abandoned ) {
-		return '<ce-format-number type="currency" currency="' . strtoupper( esc_html( $abandoned->latest_order->currency ?? 'usd' ) ) . '" value="' . (float) $abandoned->latest_order->total_amount . '"></ce-format-number>';
+		return '<sc-format-number type="currency" currency="' . strtoupper( esc_html( $abandoned->latest_order->currency ?? 'usd' ) ) . '" value="' . (float) $abandoned->latest_order->total_amount . '"></sc-format-number>';
 	}
 
 	/**
@@ -159,7 +159,7 @@ class AbandonedOrderListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_date( $abandoned ) {
-		return '<ce-format-date date="' . (int) $abandoned->latest_order->updated_at . '" type="timestamp" month="short" day="numeric" year="numeric" hour="numeric" minute="numeric"></ce-format-date>';
+		return '<sc-format-date date="' . (int) $abandoned->latest_order->updated_at . '" type="timestamp" month="short" day="numeric" year="numeric" hour="numeric" minute="numeric"></sc-format-date>';
 	}
 
 	/**
@@ -170,7 +170,7 @@ class AbandonedOrderListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_delivery( $abandoned ) {
-		return 'notified' === $abandoned->status ? '<ce-tag type="success">' . __( 'Sent', 'surecart' ) . '</ce-tag>' : '<ce-tag>' . __( 'Not Sent', 'surecart' ) . '</ce-tag>';
+		return 'notified' === $abandoned->status ? '<sc-tag type="success">' . __( 'Sent', 'surecart' ) . '</sc-tag>' : '<sc-tag>' . __( 'Not Sent', 'surecart' ) . '</sc-tag>';
 	}
 
 
@@ -182,7 +182,7 @@ class AbandonedOrderListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_status( $abandoned ) {
-		return 'recovered' === $abandoned->status ? '<ce-tag type="success">' . __( 'Recovered', 'surecart' ) . '</ce-tag>' : '<ce-tag>' . __( 'Not Recovered', 'surecart' ) . '</ce-tag>';
+		return 'recovered' === $abandoned->status ? '<sc-tag type="success">' . __( 'Recovered', 'surecart' ) . '</sc-tag>' : '<sc-tag>' . __( 'Not Recovered', 'surecart' ) . '</sc-tag>';
 	}
 
 	/**

@@ -5,12 +5,12 @@ import { __ } from '@wordpress/i18n';
 import { useState, useEffect, Fragment } from '@wordpress/element';
 
 import {
-	CeInput,
-	CePriceInput,
-	CeSwitch,
-	CeFormControl,
-	CeTooltip,
-	CeSelect,
+	ScInput,
+	ScPriceInput,
+	ScSwitch,
+	ScFormControl,
+	ScTooltip,
+	ScSelect,
 } from '@surecart/components-react';
 import Header from './Header';
 
@@ -45,16 +45,16 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 		return (
 			<Fragment>
 				{!price?.ad_hoc ? (
-					<CePriceInput
+					<ScPriceInput
 						css={css`
 							flex: 1 1 75%;
 						`}
 						label={__('Price', 'surecart')}
-						className="ce-price-amount"
+						className="sc-price-amount"
 						currencyCode={ceData.currecy_code}
 						value={price?.amount}
 						name="price"
-						onCeChange={(e) => {
+						onScChange={(e) => {
 							updatePrice({ amount: e.target.value });
 						}}
 						required
@@ -63,25 +63,25 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 					<div
 						css={css`
 							display: grid;
-							gap: var(--ce-form-row-spacing);
+							gap: var(--sc-form-row-spacing);
 						`}
 					>
-						<CePriceInput
+						<ScPriceInput
 							label={__('Minimum Amount', 'surecart')}
-							className="ce-ad-hoc-min-amount"
+							className="sc-ad-hoc-min-amount"
 							value={price?.ad_hoc_min_amount}
-							onCeChange={(e) =>
+							onScChange={(e) =>
 								updatePrice({
 									ad_hoc_min_amount: e.target.value,
 								})
 							}
 						/>
-						<CePriceInput
+						<ScPriceInput
 							label={__('Maximum Amount', 'surecart')}
-							className="ce-ad-hoc-max-amount"
+							className="sc-ad-hoc-max-amount"
 							value={price?.ad_hoc_max_amount}
 							min={price?.ad_hoc_min_amount / 100}
-							onCeChange={(e) =>
+							onScChange={(e) =>
 								updatePrice({
 									ad_hoc_max_amount: e.target.value,
 								})
@@ -91,9 +91,9 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 				)}
 
 				<div>
-					<CeSwitch
+					<ScSwitch
 						checked={price?.ad_hoc}
-						onCeChange={(e) =>
+						onScChange={(e) =>
 							updatePrice({ ad_hoc: e.target.checked })
 						}
 					>
@@ -101,7 +101,7 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 							'Allow customers to pay what they want',
 							'surecart'
 						)}
-					</CeSwitch>
+					</ScSwitch>
 				</div>
 			</Fragment>
 		);
@@ -110,17 +110,17 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 	const renderRecurring = () => {
 		return (
 			<Fragment>
-				<ce-flex>
-					<CePriceInput
+				<sc-flex>
+					<ScPriceInput
 						css={css`
 							flex: 1 1 75%;
 						`}
 						label={__('Price', 'surecart')}
-						className="ce-price-amount"
+						className="sc-price-amount"
 						currencyCode={ceData.currecy_code}
 						value={price?.amount}
 						name="price"
-						onCeChange={(e) => {
+						onScChange={(e) => {
 							updatePrice({ amount: e.target.value });
 						}}
 						required
@@ -129,7 +129,7 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 						<ConditionalWrapper
 							condition={price?.id}
 							wrapper={(children) => (
-								<CeTooltip
+								<ScTooltip
 									text={
 										price?.id
 											? __(
@@ -140,10 +140,10 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 									}
 								>
 									{children}
-								</CeTooltip>
+								</ScTooltip>
 							)}
 						>
-							<CeFormControl
+							<ScFormControl
 								css={css`
 									flex: 1;
 								`}
@@ -157,10 +157,10 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 										gap: 0.5em;
 									`}
 								>
-									<CeInput
+									<ScInput
 										disabled={price?.id}
 										value={price?.recurring_interval_count}
-										onCeChange={(e) =>
+										onScChange={(e) =>
 											updatePrice({
 												recurring_interval_count:
 													e.target.value,
@@ -174,10 +174,10 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 										}
 										required
 									/>
-									<CeSelect
+									<ScSelect
 										value={price?.recurring_interval}
 										disabled={price?.id}
-										onCeChange={(e) =>
+										onScChange={(e) =>
 											updatePrice({
 												recurring_interval:
 													e.target.value,
@@ -202,16 +202,16 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 										]}
 									/>
 								</div>
-							</CeFormControl>
+							</ScFormControl>
 						</ConditionalWrapper>
 					)}
-				</ce-flex>
+				</sc-flex>
 				{showLifetime() && (
 					<div>
 						<ConditionalWrapper
 							condition={price?.id}
 							wrapper={(children) => (
-								<CeTooltip
+								<ScTooltip
 									text={
 										price?.id
 											? __(
@@ -222,13 +222,13 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 									}
 								>
 									{children}
-								</CeTooltip>
+								</ScTooltip>
 							)}
 						>
-							<CeSwitch
+							<ScSwitch
 								disabled={price?.id}
 								checked={price?.recurring_interval === 'never'}
-								onCeChange={(e) =>
+								onScChange={(e) =>
 									updatePrice({
 										recurring_interval: e.target.checked
 											? 'never'
@@ -237,28 +237,28 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 								}
 							>
 								{__('Lifetime subscription', 'surecart')}
-							</CeSwitch>
+							</ScSwitch>
 						</ConditionalWrapper>
 					</div>
 				)}
 
 				{product?.recurring && (
-					<CeInput
+					<ScInput
 						label={__('Free Trial Days', 'surecart')}
-						className="ce-free-trial"
+						className="sc-free-trial"
 						help={__(
 							'If you want to add a free trial, enter the number of days.',
 							'surecart'
 						)}
 						value={price?.trial_duration_days}
-						onCeChange={(e) =>
+						onScChange={(e) =>
 							updatePrice({
 								trial_duration_days: e.target.value,
 							})
 						}
 					>
 						<span slot="suffix">{__('Days', 'surecart')}</span>
-					</CeInput>
+					</ScInput>
 				)}
 			</Fragment>
 		);
@@ -283,7 +283,7 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 			<div
 				css={css`
 					display: grid;
-					gap: var(--ce-form-row-spacing);
+					gap: var(--sc-form-row-spacing);
 					margin-top: ${isOpen && hasHeader ? '1em' : '0'};
 					height: ${isOpen ? 'auto' : 0};
 					overflow: ${isOpen ? 'visible' : 'hidden'};
@@ -291,18 +291,18 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 				`}
 			>
 				{product?.recurring ? renderRecurring() : renderOneTime()}
-				{/* <ce-flex>
+				{/* <sc-flex>
 					{!price?.ad_hoc ? (
-						<CePriceInput
+						<ScPriceInput
 							css={css`
 								flex: 1 1 75%;
 							`}
 							label={__('Price', 'surecart')}
-							className="ce-price-amount"
+							className="sc-price-amount"
 							currencyCode={ceData.currecy_code}
 							value={price?.amount}
 							name="price"
-							onCeChange={(e) => {
+							onScChange={(e) => {
 								updatePrice({ amount: e.target.value });
 							}}
 							required
@@ -311,26 +311,26 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 						<div
 							css={css`
 								display: grid;
-								gap: var(--ce-form-row-spacing);
+								gap: var(--sc-form-row-spacing);
 							`}
 						>
-							<CePriceInput
+							<ScPriceInput
 								label={__('Min Amount', 'surecart')}
-								className="ce-ad-hoc-min-amount"
+								className="sc-ad-hoc-min-amount"
 								value={price?.ad_hoc_min_amount}
-								onCeChange={(e) =>
+								onScChange={(e) =>
 									updatePrice({
 										ad_hoc_min_amount: e.target.value,
 									})
 								}
 								required
 							/>
-							<CePriceInput
+							<ScPriceInput
 								label={__('Max Amount', 'surecart')}
-								className="ce-ad-hoc-max-amount"
+								className="sc-ad-hoc-max-amount"
 								value={price?.ad_hoc_max_amount}
 								min={price?.ad_hoc_min_amount / 100}
-								onCeChange={(e) =>
+								onScChange={(e) =>
 									updatePrice({
 										ad_hoc_max_amount: e.target.value,
 									})
@@ -339,9 +339,9 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 						</div>
 					)}
 					<div>
-						<CeSwitch
+						<ScSwitch
 							checked={price?.ad_hoc}
-							onCeChange={(e) =>
+							onScChange={(e) =>
 								updatePrice({ ad_hoc: e.target.checked })
 							}
 						>
@@ -349,21 +349,21 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 								'Allow customers to pay what they want',
 								'surecart'
 							)}
-						</CeSwitch>
+						</ScSwitch>
 					</div>
-				</ce-flex>
+				</sc-flex>
 				) : (
-				<ce-flex>
-					<CePriceInput
+				<sc-flex>
+					<ScPriceInput
 						css={css`
 							flex: 1 1 75%;
 						`}
 						label={__('Price', 'surecart')}
-						className="ce-price-amount"
+						className="sc-price-amount"
 						currencyCode={ceData.currecy_code}
 						value={price?.amount}
 						name="price"
-						onCeChange={(e) => {
+						onScChange={(e) => {
 							updatePrice({ amount: e.target.value });
 						}}
 						required
@@ -372,7 +372,7 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 						<ConditionalWrapper
 							condition={price?.id}
 							wrapper={(children) => (
-								<CeTooltip
+								<ScTooltip
 									text={
 										price?.id
 											? __(
@@ -383,10 +383,10 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 									}
 								>
 									{children}
-								</CeTooltip>
+								</ScTooltip>
 							)}
 						>
-							<CeFormControl
+							<ScFormControl
 								css={css`
 									flex: 1;
 								`}
@@ -403,10 +403,10 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 										gap: 0.5em;
 									`}
 								>
-									<CeInput
+									<ScInput
 										disabled={price?.id}
 										value={price?.recurring_interval_count}
-										onCeChange={(e) =>
+										onScChange={(e) =>
 											updatePrice({
 												recurring_interval_count:
 													e.target.value,
@@ -420,10 +420,10 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 										}
 										required
 									/>
-									<CeSelect
+									<ScSelect
 										value={price?.recurring_interval}
 										disabled={price?.id}
-										onCeChange={(e) =>
+										onScChange={(e) =>
 											updatePrice({
 												recurring_interval:
 													e.target.value,
@@ -454,16 +454,16 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 										]}
 									/>
 								</div>
-							</CeFormControl>
+							</ScFormControl>
 						</ConditionalWrapper>
 					)}
-				</ce-flex>
+				</sc-flex>
 				)}
 				{!product?.recurring && (
 					<div>
-						<CeSwitch
+						<ScSwitch
 							checked={price?.ad_hoc}
-							onCeChange={(e) =>
+							onScChange={(e) =>
 								updatePrice({ ad_hoc: e.target.checked })
 							}
 						>
@@ -471,7 +471,7 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 								'Allow customers to pay what they want',
 								'surecart'
 							)}
-						</CeSwitch>
+						</ScSwitch>
 					</div>
 				)}
 				{showLifetime() && (
@@ -479,7 +479,7 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 						<ConditionalWrapper
 							condition={price?.id}
 							wrapper={(children) => (
-								<CeTooltip
+								<ScTooltip
 									text={
 										price?.id
 											? __(
@@ -490,13 +490,13 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 									}
 								>
 									{children}
-								</CeTooltip>
+								</ScTooltip>
 							)}
 						>
-							<CeSwitch
+							<ScSwitch
 								disabled={price?.id}
 								checked={price?.recurring_interval === 'never'}
-								onCeChange={(e) =>
+								onScChange={(e) =>
 									updatePrice({
 										recurring_interval: e.target.checked
 											? 'never'
@@ -505,20 +505,20 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 								}
 							>
 								{__('Lifetime subscription', 'surecart')}
-							</CeSwitch>
+							</ScSwitch>
 						</ConditionalWrapper>
 					</div>
 				)}
 				{product?.recurring && (
-					<CeInput
+					<ScInput
 						label={__('Free Trial Days', 'surecart')}
-						className="ce-free-trial"
+						className="sc-free-trial"
 						help={__(
 							'If you want to add a free trial, enter the number of days.',
 							'surecart'
 						)}
 						value={price?.trial_duration_days}
-						onCeChange={(e) =>
+						onScChange={(e) =>
 							updatePrice({
 								trial_duration_days: e.target.value,
 							})
@@ -527,7 +527,7 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 						<span slot="suffix">
 							{__('Days', 'surecart')}
 						</span>
-					</CeInput>
+					</ScInput>
 				)} */}
 			</div>
 		</div>

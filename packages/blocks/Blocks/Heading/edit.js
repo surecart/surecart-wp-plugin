@@ -10,7 +10,7 @@ import {
 } from '@wordpress/block-editor';
 import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
 import { useBlockProps } from '@wordpress/block-editor';
-import { CeHeading } from '@surecart/components-react';
+import { ScHeading } from '@surecart/components-react';
 
 export default ({ attributes, setAttributes, isSelected }) => {
 	const { title, description } = attributes;
@@ -40,7 +40,7 @@ export default ({ attributes, setAttributes, isSelected }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<CeHeading {...blockProps}>
+			<ScHeading {...blockProps}>
 				<RichText
 					aria-label={__('Title', 'surecart')}
 					placeholder={__('Add your title...', 'surecart')}
@@ -71,7 +71,7 @@ export default ({ attributes, setAttributes, isSelected }) => {
 				<div slot="end">
 					<InnerBlocks />
 				</div>
-			</CeHeading>
+			</ScHeading>
 		</Fragment>
 	);
 };

@@ -19,20 +19,20 @@
 
 ### Used by
 
- - [ce-invoices-list](../../controllers/dashboard/invoices-list)
- - [ce-orders-list](../../controllers/dashboard/orders-list)
+ - [sc-invoices-list](../../controllers/dashboard/invoices-list)
+ - [sc-orders-list](../../controllers/dashboard/orders-list)
 
 ### Depends on
 
-- [ce-tag](../tag)
+- [sc-tag](../tag)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-order-status-badge --> ce-tag
-  ce-invoices-list --> ce-order-status-badge
-  ce-orders-list --> ce-order-status-badge
-  style ce-order-status-badge fill:#f9f,stroke:#333,stroke-width:4px
+  sc-order-status-badge --> sc-tag
+  sc-invoices-list --> sc-order-status-badge
+  sc-orders-list --> sc-order-status-badge
+  style sc-order-status-badge fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

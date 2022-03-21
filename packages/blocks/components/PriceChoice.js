@@ -3,11 +3,11 @@ import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 
 import {
-	CeInput,
-	CeButton,
-	CeDropdown,
-	CeMenu,
-	CeMenuItem,
+	ScInput,
+	ScButton,
+	ScDropdown,
+	ScMenu,
+	ScMenuItem,
 } from '@surecart/components-react';
 import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
@@ -52,7 +52,7 @@ export default ({
 		if (!price?.id) return '—';
 		if (price?.ad_hoc) return __('Custom', 'surecart');
 		return (
-			<ce-format-number
+			<sc-format-number
 				type="currency"
 				value={
 					price?.amount * (withQuantity ? choice?.quantity || 1 : 1)
@@ -65,8 +65,8 @@ export default ({
 	console.log({ onNew });
 
 	return (
-		<ce-table-row>
-			<ce-table-cell
+		<sc-table-row>
+			<sc-table-cell
 				css={css`
 					width: 50%;
 					max-width: 50%;
@@ -77,23 +77,23 @@ export default ({
 				) : (
 					product?.name
 				)}
-			</ce-table-cell>
+			</sc-table-cell>
 			{!hideQuantity && (
-				<ce-table-cell style={{ width: '70px' }}>
-					<CeInput
+				<sc-table-cell style={{ width: '70px' }}>
+					<ScInput
 						type="number"
 						value={choice?.quantity}
-						onCeChange={(e) =>
+						onScChange={(e) =>
 							onUpdate({ quantity: e.target.value })
 						}
 					/>
-				</ce-table-cell>
+				</sc-table-cell>
 			)}
-			<ce-table-cell style={{ textAlign: 'right' }}>
+			<sc-table-cell style={{ textAlign: 'right' }}>
 				{renderPrice(true)}{' '}
 				<span
 					css={css`
-						color: var(--ce-color-gray-500);
+						color: var(--sc-color-gray-500);
 					`}
 				>
 					{price &&
@@ -104,24 +104,24 @@ export default ({
 							'once'
 						)}
 				</span>
-			</ce-table-cell>
-			<ce-table-cell>
-				<CeDropdown position="bottom-right">
-					<CeButton type="text" slot="trigger" circle>
-						<ce-icon name="more-horizontal"></ce-icon>
-					</CeButton>
-					<CeMenu>
-						<CeMenuItem onClick={onRemove}>
-							<ce-icon
+			</sc-table-cell>
+			<sc-table-cell>
+				<ScDropdown position="bottom-right">
+					<ScButton type="text" slot="trigger" circle>
+						<sc-icon name="more-horizontal"></sc-icon>
+					</ScButton>
+					<ScMenu>
+						<ScMenuItem onClick={onRemove}>
+							<sc-icon
 								name="trash"
 								slot="prefix"
 								style={{ opacity: 0.5 }}
-							></ce-icon>
+							></sc-icon>
 							{__('Remove', 'surecart')}
-						</CeMenuItem>
-					</CeMenu>
-				</CeDropdown>
-			</ce-table-cell>
-		</ce-table-row>
+						</ScMenuItem>
+					</ScMenu>
+				</ScDropdown>
+			</sc-table-cell>
+		</sc-table-row>
 	);
 };

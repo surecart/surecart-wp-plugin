@@ -65,7 +65,7 @@ class ProductsListTable extends ListTable {
 			'all'      => __( 'All', 'surecart' ),
 		];
 
-		$link = admin_url( 'admin.php?page=ce-products' );
+		$link = admin_url( 'admin.php?page=sc-products' );
 
 		foreach ( $stati as $status => $label ) {
 			$current_link_attributes = '';
@@ -181,30 +181,30 @@ class ProductsListTable extends ListTable {
 	 */
 	public function column_type( $product ) {
 		if ( $product->recurring ) {
-			return '<ce-tag type="success">
+			return '<sc-tag type="success">
 			<div
 				style="
 					display: flex;
 					align-items: center;
 					gap: 0.5em;"
 			>
-				<ce-icon name="repeat"></ce-icon>
+				<sc-icon name="repeat"></sc-icon>
 				' . esc_html__( 'Subscription', 'surecart' ) . '
 			</div>
-		</ce-tag>';
+		</sc-tag>';
 		}
 
-		return '<ce-tag type="info">
+		return '<sc-tag type="info">
 		<div
 			style="
 				display: flex;
 				align-items: center;
 				gap: 0.5em;"
 		>
-			<ce-icon name="bookmark"></ce-icon>
+			<sc-icon name="bookmark"></sc-icon>
 			' . esc_html__( 'One-Time', 'surecart' ) . '
 		</div>
-	</ce-tag>';
+	</sc-tag>';
 	}
 
 	/**
@@ -218,11 +218,11 @@ class ProductsListTable extends ListTable {
 		$currency = $product->metrics->currency ?? 'usd';
 
 		if ( empty( $product->metrics->prices_count ) ) {
-			return '<ce-tag type="warning">' . __( 'No price', 'surecart' ) . '</ce-tag>';
+			return '<sc-tag type="warning">' . __( 'No price', 'surecart' ) . '</sc-tag>';
 		}
 
 		if ( ! empty( $product->metrics->min_price_amount ) ) {
-			$amount = '<ce-format-number type="currency" currency="' . $currency . '" value="' . $product->metrics->min_price_amount . '"></ce-format-number>';
+			$amount = '<sc-format-number type="currency" currency="' . $currency . '" value="' . $product->metrics->min_price_amount . '"></sc-format-number>';
 			if ( $product->metrics->prices_count > 1 ) {
 				// translators: Price starting at.
 				$starting_at = sprintf( __( 'Starting at %s', 'surecart' ), $amount );
@@ -271,11 +271,11 @@ class ProductsListTable extends ListTable {
 		ob_start();
 		?>
 
-		<div class="ce-product-name">
+		<div class="sc-product-name">
 		<?php if ( $product->image_url ) { ?>
-			<img src="<?php echo esc_url( $product->image_url ); ?>" class="ce-product-image-preview" />
+			<img src="<?php echo esc_url( $product->image_url ); ?>" class="sc-product-image-preview" />
 		<?php } else { ?>
-		<div class="ce-product-image-preview">
+		<div class="sc-product-image-preview">
 			<svg xmlns="http://www.w3.org/2000/svg" style="width: 18px; height: 18px;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
 			  </svg>

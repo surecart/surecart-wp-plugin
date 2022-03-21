@@ -25,8 +25,8 @@
 
 | Event        | Description | Type                |
 | ------------ | ----------- | ------------------- |
-| `cePaid`     |             | `CustomEvent<void>` |
-| `cePayError` |             | `CustomEvent<any>`  |
+| `scPaid`     |             | `CustomEvent<void>` |
+| `scPayError` |             | `CustomEvent<any>`  |
 
 
 ## Methods
@@ -56,22 +56,22 @@ Type: `Promise<any>`
 
 ### Used by
 
- - [ce-payment](../../controllers/checkout-form/payment)
+ - [sc-payment](../../controllers/checkout-form/payment)
 
 ### Depends on
 
-- [ce-input](../input)
-- [ce-text](../text)
+- [sc-input](../input)
+- [sc-text](../text)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-stripe-element --> ce-input
-  ce-stripe-element --> ce-text
-  ce-input --> ce-form-control
-  ce-form-control --> ce-tooltip
-  ce-payment --> ce-stripe-element
-  style ce-stripe-element fill:#f9f,stroke:#333,stroke-width:4px
+  sc-stripe-element --> sc-input
+  sc-stripe-element --> sc-text
+  sc-input --> sc-form-control
+  sc-form-control --> sc-tooltip
+  sc-payment --> sc-stripe-element
+  style sc-stripe-element fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

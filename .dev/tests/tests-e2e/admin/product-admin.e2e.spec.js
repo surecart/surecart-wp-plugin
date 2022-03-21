@@ -106,12 +106,12 @@ const VALIDATION_ERROR = {
 	],
 };
 
-describe( 'Product Admin', () => {
+describe('Product Admin', () => {
 	let form, saveButton;
 
-	afterEach( async () => {
-		await setUpResponseMocking( [] );
-	} );
+	afterEach(async () => {
+		await setUpResponseMocking([]);
+	});
 
 	// it( 'Displays a generic error', async () => {
 	// 	setUpResponseMocking( [
@@ -134,10 +134,10 @@ describe( 'Product Admin', () => {
 
 	// 	await visitAdminPage(
 	// 		'admin.php',
-	// 		'page=ce-products&action=edit&id=test'
+	// 		'page=sc-products&action=edit&id=test'
 	// 	);
-	// 	form = await page.waitForSelector( 'ce-form' );
-	// 	saveButton = await page.waitForSelector( '.ce-save-model' );
+	// 	form = await page.waitForSelector( 'sc-form' );
+	// 	saveButton = await page.waitForSelector( '.sc-save-model' );
 
 	// 	// snackbar errors
 	// 	const notice = await page.waitForSelector(
@@ -182,16 +182,16 @@ describe( 'Product Admin', () => {
 	// 		},
 	// 	] );
 
-	// 	await visitAdminPage( 'admin.php', 'page=ce-products&action=edit' );
+	// 	await visitAdminPage( 'admin.php', 'page=sc-products&action=edit' );
 
-	// 	await page.$eval( '.ce-product-name', ( el ) => ( el.value = 'name' ) );
+	// 	await page.$eval( '.sc-product-name', ( el ) => ( el.value = 'name' ) );
 	// 	await page.$eval(
-	// 		'.ce-product-description',
+	// 		'.sc-product-description',
 	// 		( el ) => ( el.value = 'description' )
 	// 	);
-	// 	await page.$eval( '.ce-price-amount', ( el ) => ( el.value = '20' ) );
+	// 	await page.$eval( '.sc-price-amount', ( el ) => ( el.value = '20' ) );
 
-	// 	saveButton = await page.waitForSelector( '.ce-save-model' );
+	// 	saveButton = await page.waitForSelector( '.sc-save-model' );
 	// 	await saveButton.click();
 
 	// 	// snackbar
@@ -206,35 +206,35 @@ describe( 'Product Admin', () => {
 	// 	);
 	// } );
 
-	it( 'Displays snackbar and validation errors', async () => {
-		setUpResponseMocking( [
+	it('Displays snackbar and validation errors', async () => {
+		setUpResponseMocking([
 			{
-				match: ( request ) => {
+				match: (request) => {
 					return (
-						request.url().includes( 'coupons' ) &&
+						request.url().includes('coupons') &&
 						request.method() === 'POST'
 					);
 				},
-				onRequestMatch: ( request ) => {
-					return request.respond( {
+				onRequestMatch: (request) => {
+					return request.respond({
 						contentType: 'application/json',
 						status: 422,
-						body: JSON.stringify( VALIDATION_ERROR ),
-					} );
+						body: JSON.stringify(VALIDATION_ERROR),
+					});
 				},
 			},
-		] );
+		]);
 
-		await visitAdminPage( 'admin.php', 'page=ce-products&action=edit' );
+		await visitAdminPage('admin.php', 'page=sc-products&action=edit');
 
-		await page.$eval( '.ce-product-name', ( el ) => ( el.value = 'name' ) );
+		await page.$eval('.sc-product-name', (el) => (el.value = 'name'));
 		await page.$eval(
-			'.ce-product-description',
-			( el ) => ( el.value = 'description' )
+			'.sc-product-description',
+			(el) => (el.value = 'description')
 		);
-		await page.$eval( '.ce-price-amount', ( el ) => ( el.value = '20' ) );
+		await page.$eval('.sc-price-amount', (el) => (el.value = '20'));
 
-		saveButton = await page.$( '.ce-save-model' );
+		saveButton = await page.$('.sc-save-model');
 		await saveButton.click();
 
 		// snackbar errors
@@ -244,9 +244,9 @@ describe( 'Product Admin', () => {
 		// );
 
 		// make sure these fields are invalid.
-		// const nameError = await page.$( 'ce-alert' );
+		// const nameError = await page.$( 'sc-alert' );
 		// expect(
 		// 	await nameError.evaluate( ( node ) => node.innerText )
 		// ).toContain( 'Test name validation.' );
-	} );
-} );
+	});
+});

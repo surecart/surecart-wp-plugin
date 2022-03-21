@@ -15,7 +15,7 @@ import {
 /**
  * Component Dependencies
  */
-import { CeSwitch } from '@surecart/components-react';
+import { ScSwitch } from '@surecart/components-react';
 
 export default ({ className, attributes, setAttributes, isSelected }) => {
 	const { label, value, checked, name, required, description } = attributes;
@@ -73,7 +73,7 @@ export default ({ className, attributes, setAttributes, isSelected }) => {
 
 			{!isSelected && !name && <div>Please add a name</div>}
 
-			<CeSwitch className={className} name={name} required={required}>
+			<ScSwitch className={className} name={name} required={required}>
 				<RichText
 					tagName="span"
 					aria-label={__('Switch label')}
@@ -97,7 +97,7 @@ export default ({ className, attributes, setAttributes, isSelected }) => {
 						allowedFormats={['core/bold', 'core/italic']}
 					/>
 				)}
-			</CeSwitch>
+			</ScSwitch>
 		</Fragment>
 	);
 };

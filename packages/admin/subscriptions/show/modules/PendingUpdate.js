@@ -7,7 +7,7 @@ import { css, jsx } from '@emotion/core';
 import { useEffect } from 'react';
 import useEntity from '../../../mixins/useEntity';
 import Box from '../../../ui/Box';
-import { CeFormatDate } from '@surecart/components-react';
+import { ScFormatDate } from '@surecart/components-react';
 
 export default ({ subscription }) => {
 	const { pending_update } = subscription || {};
@@ -64,7 +64,7 @@ export default ({ subscription }) => {
 									opacity: 0.5;
 								`}
 							>
-								<ce-format-number
+								<sc-format-number
 									type="currency"
 									value={price?.amount}
 									currency={price?.currency}
@@ -88,13 +88,13 @@ export default ({ subscription }) => {
 									opacity: 0.5;
 								`}
 							>
-								<CeFormatDate
+								<ScFormatDate
 									date={subscription?.current_period_end_at}
 									type="timestamp"
 									month="long"
 									day="numeric"
 									year="numeric"
-								></CeFormatDate>
+								></ScFormatDate>
 							</div>
 						</div>
 					),

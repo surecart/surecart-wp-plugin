@@ -2,7 +2,7 @@ import { Order } from '../../../../types';
 
 // find the input based on the unique name.
 export const findInput = (el, name) => {
-  const slot = el.querySelector('ce-form')?.shadowRoot?.querySelector('slot') as HTMLSlotElement;
+  const slot = el.querySelector('sc-form')?.shadowRoot?.querySelector('slot') as HTMLSlotElement;
   if (!slot) return;
   return slot
     .assignedElements({ flatten: true })

@@ -169,7 +169,7 @@ class ProductGroupsListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_date( $order ) {
-		return "<ce-format-date date='$order->created' type='timestamp'></ce-format-date>";
+		return "<sc-format-date date='$order->created' type='timestamp'></sc-format-date>";
 	}
 
 	/**
@@ -180,7 +180,7 @@ class ProductGroupsListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_status( $group ) {
-		return $group->archived ? '<ce-tag type="warning">' . __( 'Archived', 'surecart' ) . '</ce-tag>' : '<ce-tag type="success">' . __( 'Live', 'surecart' ) . '</ce-tag>';
+		return $group->archived ? '<sc-tag type="warning">' . __( 'Archived', 'surecart' ) . '</sc-tag>' : '<sc-tag type="success">' . __( 'Live', 'surecart' ) . '</sc-tag>';
 	}
 
 	public function column_name( $group ) {

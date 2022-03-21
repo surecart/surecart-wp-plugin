@@ -27,19 +27,19 @@ class InstallService {
 					'content'   => '<!-- wp:surecart/form -->
 
 					<!-- wp:surecart/express-payment -->
-					<ce-express-payment divider-text="or" class="wp-block-surecart-express-payment"></ce-express-payment>
+					<sc-express-payment divider-text="or" class="wp-block-surecart-express-payment"></sc-express-payment>
 					<!-- /wp:surecart/express-payment -->
 
 					<!-- wp:surecart/heading {"title":"Contact Information"} -->
-					<ce-heading>Contact Information<span slot="description"></span><span slot="end"></span></ce-heading>
+					<sc-heading>Contact Information<span slot="description"></span><span slot="end"></span></sc-heading>
 					<!-- /wp:surecart/heading -->
 
 					<!-- wp:surecart/name -->
-					<ce-input label="Name" autocomplete="false" inputmode="false" spellcheck="false" name="name" type="text" class="wp-block-surecart-name"></ce-input>
+					<sc-input label="Name" autocomplete="false" inputmode="false" spellcheck="false" name="name" type="text" class="wp-block-surecart-name"></sc-input>
 					<!-- /wp:surecart/name -->
 
 					<!-- wp:surecart/email -->
-					<ce-input label="Email" autocomplete="false" inputmode="false" spellcheck="false" type="email" name="email" required class="wp-block-surecart-email"></ce-input>
+					<sc-input label="Email" autocomplete="false" inputmode="false" spellcheck="false" type="email" name="email" required class="wp-block-surecart-email"></sc-input>
 					<!-- /wp:surecart/email -->
 
 					<!-- wp:spacer {"height":20} -->
@@ -47,11 +47,11 @@ class InstallService {
 					<!-- /wp:spacer -->
 
 					<!-- wp:surecart/heading {"title":"Credit Card"} -->
-					<ce-heading>Credit Card<span slot="description"></span><span slot="end"></span></ce-heading>
+					<sc-heading>Credit Card<span slot="description"></span><span slot="end"></span></sc-heading>
 					<!-- /wp:surecart/heading -->
 
 					<!-- wp:surecart/payment {"secure_notice":"This is a secure, encrypted payment"} -->
-					<ce-payment secure-notice="This is a secure, encrypted payment" class="wp-block-surecart-payment"></ce-payment>
+					<sc-payment secure-notice="This is a secure, encrypted payment" class="wp-block-surecart-payment"></sc-payment>
 					<!-- /wp:surecart/payment -->
 
 					<!-- wp:spacer {"height":20} -->
@@ -59,37 +59,37 @@ class InstallService {
 					<!-- /wp:spacer -->
 
 					<!-- wp:surecart/heading {"title":"Totals"} -->
-					<ce-heading>Totals<span slot="description"></span><span slot="end"></span></ce-heading>
+					<sc-heading>Totals<span slot="description"></span><span slot="end"></span></sc-heading>
 					<!-- /wp:surecart/heading -->
 
 					<!-- wp:surecart/totals {"collapsible":false,"collapsed":false} -->
-					<ce-order-summary class="wp-block-surecart-totals"><!-- wp:surecart/divider -->
-					<ce-divider></ce-divider>
+					<sc-order-summary class="wp-block-surecart-totals"><!-- wp:surecart/divider -->
+					<sc-divider></sc-divider>
 					<!-- /wp:surecart/divider -->
 
 					<!-- wp:surecart/line-items -->
-					<ce-line-items removable="1" editable="1" class="wp-block-surecart-line-items"></ce-line-items>
+					<sc-line-items removable="1" editable="1" class="wp-block-surecart-line-items"></sc-line-items>
 					<!-- /wp:surecart/line-items -->
 
 					<!-- wp:surecart/divider -->
-					<ce-divider></ce-divider>
+					<sc-divider></sc-divider>
 					<!-- /wp:surecart/divider -->
 
 					<!-- wp:surecart/subtotal -->
-					<ce-line-item-total class="ce-subtotal" total="subtotal" class="wp-block-surecart-subtotal"><span slot="description">Subtotal</span></ce-line-item-total>
+					<sc-line-item-total class="sc-subtotal" total="subtotal" class="wp-block-surecart-subtotal"><span slot="description">Subtotal</span></sc-line-item-total>
 					<!-- /wp:surecart/subtotal -->
 
 					<!-- wp:surecart/coupon {"text":"Add Coupon Code","button_text":"Apply Coupon"} -->
-					<ce-coupon-form label="Add Coupon Code">Apply Coupon</ce-coupon-form>
+					<sc-coupon-form label="Add Coupon Code">Apply Coupon</sc-coupon-form>
 					<!-- /wp:surecart/coupon -->
 
 					<!-- wp:surecart/divider -->
-					<ce-divider></ce-divider>
+					<sc-divider></sc-divider>
 					<!-- /wp:surecart/divider -->
 
 					<!-- wp:surecart/total -->
-					<ce-line-item-total class="ce-line-item-total" total="total" size="large" show-currency="1" class="wp-block-surecart-total"><span slot="description">Total</span><span slot="subscription-title">Total Due Today</span></ce-line-item-total>
-					<!-- /wp:surecart/total --></ce-order-summary>
+					<sc-line-item-total class="sc-line-item-total" total="total" size="large" show-currency="1" class="wp-block-surecart-total"><span slot="description">Total</span><span slot="subscription-title">Total Due Today</span></sc-line-item-total>
+					<!-- /wp:surecart/total --></sc-order-summary>
 					<!-- /wp:surecart/totals -->
 
 					<!-- wp:spacer {"height":20} -->
@@ -97,7 +97,7 @@ class InstallService {
 					<!-- /wp:spacer -->
 
 					<!-- wp:surecart/submit {"show_total":true,"full":true} -->
-					<ce-button submit="1" type="primary" full="1" size="large" class="wp-block-surecart-submit"><svg slot="prefix" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewbox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>Purchase<span> <ce-total></ce-total></span></ce-button>
+					<sc-button submit="1" type="primary" full="1" size="large" class="wp-block-surecart-submit"><svg slot="prefix" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewbox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>Purchase<span> <sc-total></sc-total></span></sc-button>
 					<!-- /wp:surecart/submit -->
 
 					<!-- /wp:surecart/form -->

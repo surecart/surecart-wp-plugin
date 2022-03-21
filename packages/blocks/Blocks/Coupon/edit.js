@@ -19,7 +19,7 @@ import { useBlockProps } from '@wordpress/block-editor';
 /**
  * Component Dependencies
  */
-import { CeCouponForm } from '@surecart/components-react';
+import { ScCouponForm } from '@surecart/components-react';
 
 export default ({ attributes, setAttributes, isSelected }) => {
 	const { text, button_text, disabled } = attributes;
@@ -61,7 +61,7 @@ export default ({ attributes, setAttributes, isSelected }) => {
 
 			<div {...blockProps}>
 				<Disabled>
-					<CeCouponForm forceOpen={isSelected}>
+					<ScCouponForm forceOpen={isSelected}>
 						<span
 							css={css`
 								display: flex;
@@ -92,7 +92,7 @@ export default ({ attributes, setAttributes, isSelected }) => {
 							)}
 						</span>
 						{button_text}
-					</CeCouponForm>
+					</ScCouponForm>
 				</Disabled>
 			</div>
 		</Fragment>

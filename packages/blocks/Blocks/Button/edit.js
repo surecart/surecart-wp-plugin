@@ -7,14 +7,14 @@ import { RichText } from '@wordpress/block-editor';
 /**
  * Component Dependencies
  */
-import { CeButton } from '@surecart/components-react';
+import { ScButton } from '@surecart/components-react';
 
 export default ({ className, attributes, setAttributes }) => {
 	const { type, text, submit, full, size } = attributes;
 
 	return (
 		<div className={className}>
-			<CeButton type={type} full={full} size={size}>
+			<ScButton type={type} full={full} size={size}>
 				<RichText
 					aria-label={__('Button text')}
 					placeholder={__('Add text…')}
@@ -23,7 +23,7 @@ export default ({ className, attributes, setAttributes }) => {
 					withoutInteractiveFormatting
 					allowedFormats={['core/bold', 'core/italic']}
 				/>
-			</CeButton>
+			</ScButton>
 		</div>
 	);
 };

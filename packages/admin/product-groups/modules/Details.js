@@ -3,7 +3,7 @@ import { css, jsx } from '@emotion/core';
 
 import { __ } from '@wordpress/i18n';
 
-import { CeInput, CeSwitch, CeSelect } from '@surecart/components-react';
+import { ScInput, ScSwitch, ScSelect } from '@surecart/components-react';
 import Box from '../../ui/Box';
 
 export default ({ id, productGroup, updateProductGroup, loading }) => {
@@ -19,15 +19,15 @@ export default ({ id, productGroup, updateProductGroup, loading }) => {
 			<div
 				css={css`
 					display: grid;
-					gap: var(--ce-spacing-large);
+					gap: var(--sc-spacing-large);
 				`}
 			>
-				<CeInput
+				<ScInput
 					label={__('Group Name', 'surecart')}
-					className="ce-product-name hydrated"
+					className="sc-product-name hydrated"
 					help={__('A name for your product group.', 'surecart')}
 					value={productGroup?.name}
-					onCeChange={(e) => {
+					onScChange={(e) => {
 						updateProductGroup({ name: e.target.value });
 					}}
 					name="name"

@@ -6,7 +6,7 @@ import {
 } from '@wordpress/block-editor';
 import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
 import { Fragment } from 'react';
-import { CeDashboardModule } from '@surecart/components-react';
+import { ScDashboardModule } from '@surecart/components-react';
 
 export default ({ attributes, setAttributes }) => {
 	const { title } = attributes;
@@ -25,7 +25,7 @@ export default ({ attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<CeDashboardModule {...blockProps}>
+			<ScDashboardModule {...blockProps}>
 				<RichText
 					aria-label={__('Title')}
 					placeholder={__('Add A Title…')}
@@ -36,32 +36,32 @@ export default ({ attributes, setAttributes }) => {
 					allowedFormats={['core/bold', 'core/italic']}
 				/>
 
-				<ce-flex slot="end">
-					<ce-button type="link">
-						<ce-icon name="clock" slot="prefix"></ce-icon>
+				<sc-flex slot="end">
+					<sc-button type="link">
+						<sc-icon name="clock" slot="prefix"></sc-icon>
 						{__('Payment History', 'surecart')}
-					</ce-button>
-					<ce-button type="link">
-						<ce-icon name="plus" slot="prefix"></ce-icon>
+					</sc-button>
+					<sc-button type="link">
+						<sc-icon name="plus" slot="prefix"></sc-icon>
 						{__('Add', 'surecart')}
-					</ce-button>
-				</ce-flex>
+					</sc-button>
+				</sc-flex>
 
-				<ce-card no-padding>
-					<ce-stacked-list>
-						<ce-stacked-list-row
+				<sc-card no-padding>
+					<sc-stacked-list>
+						<sc-stacked-list-row
 							style={{ '--columns': '4' }}
 							mobile-size={0}
 						>
-							<ce-flex
+							<sc-flex
 								justify-content="flex-start"
 								align-items="center"
 								style={{ '--spacing': '0.5em' }}
 							>
-								<ce-cc-logo
+								<sc-cc-logo
 									style={{ fontSize: '36px' }}
 									brand={'visa'}
-								></ce-cc-logo>
+								></sc-cc-logo>
 								<span
 									style={{
 										fontSize: '7px',
@@ -71,36 +71,36 @@ export default ({ attributes, setAttributes }) => {
 									{'\u2B24'} {'\u2B24'} {'\u2B24'} {'\u2B24'}
 								</span>
 								<span>1234</span>
-							</ce-flex>
+							</sc-flex>
 
 							<div>{__('Exp.', 'surecart')} 11/29</div>
 
 							<div>
-								<ce-tag type="info">
+								<sc-tag type="info">
 									{__('Default', 'surecart')}
-								</ce-tag>
+								</sc-tag>
 							</div>
 
 							<div>
-								<ce-icon
+								<sc-icon
 									name="more-horizontal"
 									slot="trigger"
-								></ce-icon>
+								></sc-icon>
 							</div>
-						</ce-stacked-list-row>
-						<ce-stacked-list-row
+						</sc-stacked-list-row>
+						<sc-stacked-list-row
 							style={{ '--columns': '4' }}
 							mobile-size={0}
 						>
-							<ce-flex
+							<sc-flex
 								justify-content="flex-start"
 								align-items="center"
 								style={{ '--spacing': '0.5em' }}
 							>
-								<ce-cc-logo
+								<sc-cc-logo
 									style={{ fontSize: '36px' }}
 									brand={'mastercard'}
-								></ce-cc-logo>
+								></sc-cc-logo>
 								<span
 									style={{
 										fontSize: '7px',
@@ -110,22 +110,22 @@ export default ({ attributes, setAttributes }) => {
 									{'\u2B24'} {'\u2B24'} {'\u2B24'} {'\u2B24'}
 								</span>
 								<span>1234</span>
-							</ce-flex>
+							</sc-flex>
 
 							<div>{__('Exp.', 'surecart')} 11/29</div>
 
 							<div></div>
 
 							<div>
-								<ce-icon
+								<sc-icon
 									name="more-horizontal"
 									slot="trigger"
-								></ce-icon>
+								></sc-icon>
 							</div>
-						</ce-stacked-list-row>
-					</ce-stacked-list>
-				</ce-card>
-			</CeDashboardModule>
+						</sc-stacked-list-row>
+					</sc-stacked-list>
+				</sc-card>
+			</ScDashboardModule>
 		</Fragment>
 	);
 };

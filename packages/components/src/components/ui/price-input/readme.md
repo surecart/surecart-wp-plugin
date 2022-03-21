@@ -36,7 +36,7 @@
 
 | Event      | Description                               | Type                |
 | ---------- | ----------------------------------------- | ------------------- |
-| `ceChange` | Emitted when the control's value changes. | `CustomEvent<void>` |
+| `scChange` | Emitted when the control's value changes. | `CustomEvent<void>` |
 
 
 ## Methods
@@ -97,22 +97,22 @@ Type: `Promise<void>`
 
 ### Used by
 
- - [ce-donation-choices](../../controllers/checkout-form/ce-donation-choices)
- - [ce-price-choice](../../controllers/checkout-form/price-choice)
+ - [sc-donation-choices](../../controllers/checkout-form/sc-donation-choices)
+ - [sc-price-choice](../../controllers/checkout-form/price-choice)
 
 ### Depends on
 
-- [ce-input](../input)
+- [sc-input](../input)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-price-input --> ce-input
-  ce-input --> ce-form-control
-  ce-form-control --> ce-tooltip
-  ce-donation-choices --> ce-price-input
-  ce-price-choice --> ce-price-input
-  style ce-price-input fill:#f9f,stroke:#333,stroke-width:4px
+  sc-price-input --> sc-input
+  sc-input --> sc-form-control
+  sc-form-control --> sc-tooltip
+  sc-donation-choices --> sc-price-input
+  sc-price-choice --> sc-price-input
+  style sc-price-input fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

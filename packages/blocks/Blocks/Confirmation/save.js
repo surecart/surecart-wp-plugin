@@ -8,11 +8,11 @@
  */
 import { InnerBlocks } from '@wordpress/block-editor';
 
-export default function save( { attributes } ) {
+export default function save({ attributes }) {
 	const { title, description, button_text } = attributes;
 	return (
-		<ce-order-confirmation>
+		<sc-order-confirmation>
 			<InnerBlocks.Content />
-		</ce-order-confirmation>
+		</sc-order-confirmation>
 	);
 }

@@ -5,7 +5,7 @@ import { __ } from '@wordpress/i18n';
 import { BaseControl, DateTimePicker } from '@wordpress/components';
 
 import Box from '../../ui/Box';
-import { CeCheckbox, CeInput, CeSwitch } from '@surecart/components-react';
+import { ScCheckbox, ScInput, ScSwitch } from '@surecart/components-react';
 
 export default ({ coupon, loading, updateCoupon }) => {
 	return (
@@ -17,9 +17,9 @@ export default ({ coupon, loading, updateCoupon }) => {
 				`}
 			>
 				<div>
-					<CeSwitch
+					<ScSwitch
 						checked={!!coupon?.redeem_by}
-						onCeChange={(e) => {
+						onScChange={(e) => {
 							updateCoupon({
 								redeem_by: e.target.checked ? Date.now() : null,
 							});
@@ -31,7 +31,7 @@ export default ({ coupon, loading, updateCoupon }) => {
 								'Limit the end date when customers can redeem this coupon.'
 							)}
 						</span>
-					</CeSwitch>
+					</ScSwitch>
 					{!!coupon?.redeem_by && (
 						<div
 							className="redeem-by-date"
@@ -66,9 +66,9 @@ export default ({ coupon, loading, updateCoupon }) => {
 						gap: 1em;
 					`}
 				>
-					<CeSwitch
+					<ScSwitch
 						checked={!!coupon?.max_redemptions}
-						onCeChange={(e) => {
+						onScChange={(e) => {
 							updateCoupon({
 								max_redemptions: e.target.checked ? 1 : null,
 							});
@@ -80,11 +80,11 @@ export default ({ coupon, loading, updateCoupon }) => {
 								'Limit the total number of times this coupon can be redeemed.'
 							)}
 						</span>
-					</CeSwitch>
+					</ScSwitch>
 
 					{!!coupon?.max_redemptions && (
 						<BaseControl>
-							<CeInput
+							<ScInput
 								label={__('Number of Times', 'surecart')}
 								help={__(
 									"This limit applies across customers so it won't prevent a single customer from redeeming multiple times.",
@@ -92,7 +92,7 @@ export default ({ coupon, loading, updateCoupon }) => {
 								)}
 								class="max-redemptions-input"
 								value={coupon?.max_redemptions || 1}
-								onCeChange={(e) => {
+								onScChange={(e) => {
 									updateCoupon({
 										max_redemptions: e.target.value,
 									});

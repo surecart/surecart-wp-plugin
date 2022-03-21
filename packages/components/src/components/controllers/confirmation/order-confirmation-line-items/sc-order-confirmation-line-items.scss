@@ -1,0 +1,11 @@
+:host {
+  display: block;
+}
+.line-items {
+  display: grid;
+  gap: var(--sc-spacing-small);
+}
+::part(line-items) {
+  display: grid;
+  gap: var(--sc-spacing-small);
+}

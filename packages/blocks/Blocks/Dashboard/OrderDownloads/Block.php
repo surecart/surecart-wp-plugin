@@ -23,7 +23,7 @@ class Block extends DashboardPage {
 			return;
 		}
 		return wp_kses_post(
-			Component::tag( 'ce-downloads-list' )
+			Component::tag( 'sc-downloads-list' )
 			->id( 'customer-downloads-preview' )
 			->with(
 				[

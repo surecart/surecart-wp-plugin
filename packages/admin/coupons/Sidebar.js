@@ -15,11 +15,11 @@ export default ({ coupon, loading }) => {
 		}
 		if (coupon?.amount_off) {
 			return (
-				<ce-format-number
+				<sc-format-number
 					type="currency"
 					currency={coupon?.currency}
 					value={coupon?.amount_off}
-				></ce-format-number>
+				></sc-format-number>
 			);
 		}
 	};

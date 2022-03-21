@@ -1,0 +1,8 @@
+:host {
+  display: block;
+}
+
+::slotted(:not(.wp-block-spacer):not(:last-child)) {
+  margin-bottom: var(--sc-form-row-spacing, 0.75em);
+  display: block;
+}

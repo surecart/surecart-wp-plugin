@@ -13,7 +13,7 @@ export default (purchase) => {
 
 	return {
 		item: (
-			<ce-line-item key={id}>
+			<sc-line-item key={id}>
 				{!!product?.image_url && (
 					<img src={product?.image_url} slot="image" />
 				)}
@@ -21,12 +21,12 @@ export default (purchase) => {
 				<span className="product__description" slot="description">
 					<span>Qty: {quantity}</span>{' '}
 					{revoked && (
-						<ce-tag size="small" type="danger">
+						<sc-tag size="small" type="danger">
 							{__('Revoked', 'surecart')}
-						</ce-tag>
+						</sc-tag>
 					)}
 				</span>
-			</ce-line-item>
+			</sc-line-item>
 		),
 		actions: <RevokeToggleButton purchase={purchase} />,
 	};

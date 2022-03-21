@@ -1,6 +1,6 @@
 import { __ } from '@wordpress/i18n';
 import { useRef } from '@wordpress/element';
-import { CeSelect, CeDivider, CeMenuItem } from '@surecart/components-react';
+import { ScSelect, ScDivider, ScMenuItem } from '@surecart/components-react';
 import throttle from 'lodash/throttle';
 import { translateInterval } from '../util/translations';
 import { formatNumber } from '../util';
@@ -35,7 +35,7 @@ export default ({
 	});
 
 	return (
-		<CeSelect
+		<ScSelect
 			required={required}
 			ref={selectRef}
 			value={value}
@@ -46,24 +46,24 @@ export default ({
 			placeholder={__('Select an upgrade group', 'surecart')}
 			searchPlaceholder={__('Search for an upgrade group...', 'surecart')}
 			search
-			onCeOpen={onFetch}
-			onCeSearch={(e) => findItem(e.detail)}
-			onCeChange={(e) => {
+			onScOpen={onFetch}
+			onScSearch={(e) => findItem(e.detail)}
+			onScChange={(e) => {
 				onSelect(e.target.value);
 			}}
 			choices={choices}
 		>
 			{onNew && (
 				<span slot="prefix">
-					<CeMenuItem onClick={onNew}>
+					<ScMenuItem onClick={onNew}>
 						<span slot="prefix">+</span>
 						{__('Add New Upgrade Group', 'surecart')}
-					</CeMenuItem>
-					<CeDivider
-						style={{ '--spacing': 'var(--ce-spacing-x-small)' }}
-					></CeDivider>
+					</ScMenuItem>
+					<ScDivider
+						style={{ '--spacing': 'var(--sc-spacing-x-small)' }}
+					></ScDivider>
 				</span>
 			)}
-		</CeSelect>
+		</ScSelect>
 	);
 };

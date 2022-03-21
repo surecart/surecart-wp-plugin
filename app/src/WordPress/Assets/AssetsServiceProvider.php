@@ -57,7 +57,7 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 		$asset_file = include trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/store/data.asset.php';
 
 		wp_register_script(
-			'ce-core-data',
+			'sc-core-data',
 			trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/store/data.js',
 			array_merge( [ 'surecart-components' ], $asset_file['dependencies'] ),
 			filemtime( trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/surecart/surecart.esm.js' ),
@@ -67,7 +67,7 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 		// ui.
 		$asset_file = include trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/store/ui.asset.php';
 		wp_register_script(
-			'ce-ui-data',
+			'sc-ui-data',
 			trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/store/ui.js',
 			array_merge( [ 'surecart-components' ], $asset_file['dependencies'] ),
 			filemtime( trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/surecart/surecart.esm.js' ),
@@ -143,11 +143,11 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 		add_action(
 			'wp_footer',
 			function() { ?>
-		<ce-register-icon-library></ce-register-icon-library>
+		<sc-register-icon-library></sc-register-icon-library>
 		<script>
 			(async () => {
-				await customElements.whenDefined('ce-register-icon-library');
-				var library = document.querySelector('ce-register-icon-library');
+				await customElements.whenDefined('sc-register-icon-library');
+				var library = document.querySelector('sc-register-icon-library');
 				await library.registerIconLibrary(
 					'default', {
 						resolver: function(name) {
@@ -167,11 +167,11 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 			'admin_footer',
 			function() {
 				?>
-		<ce-register-icon-library></ce-register-icon-library>
+		<sc-register-icon-library></sc-register-icon-library>
 		<script>
 			(async () => {
-				await customElements.whenDefined('ce-register-icon-library');
-				var library = document.querySelector('ce-register-icon-library');
+				await customElements.whenDefined('sc-register-icon-library');
+				var library = document.querySelector('sc-register-icon-library');
 				await library.registerIconLibrary(
 					'default', {
 						resolver: function(name) {
@@ -198,20 +198,20 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 		wp_enqueue_style( 'surecart-themes-default' );
 
 		$brand  = \SureCart::account()->brand;
-		$style  = 'ce-form, ce-checkout {
+		$style  = 'sc-form, sc-checkout {
 			visibility: hidden;
 			opacity: 0;
 			transition: opacity 0.1s ease;
 		}
-		ce-checkout.hydrated,
-		ce-form.hydrated {
+		sc-checkout.hydrated,
+		sc-form.hydrated {
 			visibility: visible;
 			opacity: 1;
 		}';
 		$style .= ':root {';
-		$style .= '--ce-color-primary-500: #' . ( $brand->color ?? '000' ) . ';';
-		$style .= '--ce-focus-ring-color-primary: #' . ( $brand->color ?? '000' ) . ';';
-		$style .= '--ce-input-border-color-focus: #' . ( $brand->color ?? '000' ) . ';';
+		$style .= '--sc-color-primary-500: #' . ( $brand->color ?? '000' ) . ';';
+		$style .= '--sc-focus-ring-color-primary: #' . ( $brand->color ?? '000' ) . ';';
+		$style .= '--sc-input-border-color-focus: #' . ( $brand->color ?? '000' ) . ';';
 		$style .= '}';
 
 		wp_add_inline_style(
@@ -257,7 +257,7 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 					'wp.apiFetch.use( wp.apiFetch.mediaUploadMiddleware );',
 					sprintf(
 						'wp.apiFetch.nonceEndpoint = " % s";',
-						admin_url( 'admin-ajax.php?action=ce-rest-nonce' )
+						admin_url( 'admin-ajax.php?action=sc-rest-nonce' )
 					),
 				]
 			),

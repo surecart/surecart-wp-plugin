@@ -17,7 +17,7 @@ import {
 /**
  * Component Dependencies
  */
-import { CeButton } from '@surecart/components-react';
+import { ScButton } from '@surecart/components-react';
 
 export default ({ className, attributes, setAttributes }) => {
 	const { type, label, submit, size, show_icon, full } = attributes;
@@ -99,13 +99,13 @@ export default ({ className, attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<CeButton type={type} submit={submit} size={size} full={full}>
+			<ScButton type={type} submit={submit} size={size} full={full}>
 				{show_icon && (
-					<ce-icon
+					<sc-icon
 						name="user"
 						style={{ fontSize: '18px' }}
 						slot="prefix"
-					></ce-icon>
+					></sc-icon>
 				)}
 
 				<RichText
@@ -116,7 +116,7 @@ export default ({ className, attributes, setAttributes }) => {
 					withoutInteractiveFormatting
 					allowedFormats={['core/bold', 'core/italic']}
 				/>
-			</CeButton>
+			</ScButton>
 		</div>
 	);
 };

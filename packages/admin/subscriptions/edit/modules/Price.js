@@ -3,7 +3,7 @@ import { __ } from '@wordpress/i18n';
 import DataTable from '../../../components/DataTable';
 import { translateInterval } from '@scripts/admin/util/translations';
 import { css, jsx } from '@emotion/core';
-import { CeInput } from '@surecart/components-react';
+import { ScInput } from '@surecart/components-react';
 import PriceSelector from '@admin/components/PriceSelector';
 
 export default ({
@@ -51,7 +51,7 @@ export default ({
 							<div>
 								{product?.name}
 								<div style={{ opacity: 0.5 }}>
-									<ce-format-number
+									<sc-format-number
 										type="currency"
 										value={price?.amount}
 										currency={price?.currency}
@@ -64,14 +64,14 @@ export default ({
 									)}
 								</div>
 							</div>
-							<ce-button
+							<sc-button
 								size="small"
 								onClick={() =>
 									updateSubscription({ price: null })
 								}
 							>
 								Change
-							</ce-button>
+							</sc-button>
 						</div>
 					) : (
 						<PriceSelector
@@ -88,16 +88,16 @@ export default ({
 						/>
 					),
 					quantity: (
-						<CeInput
+						<ScInput
 							type="number"
 							value={subscription?.quantity}
-							onCeChange={(e) => {
+							onScChange={(e) => {
 								updateSubscription({
 									quantity: e.target.value,
 								});
 							}}
 							required
-						></CeInput>
+						></ScInput>
 					),
 					total: (
 						<div
@@ -106,7 +106,7 @@ export default ({
 								justify-content: flex-end;
 							`}
 						>
-							<ce-format-number
+							<sc-format-number
 								type="currency"
 								value={price?.amount * subscription?.quantity}
 								currency={price?.currency}

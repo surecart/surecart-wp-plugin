@@ -42,7 +42,7 @@ import {
 	toWidthPrecision,
 } from './utils';
 
-import { CeColumns } from '@surecart/components-react';
+import { ScColumns } from '@surecart/components-react';
 
 /**
  * Allowed blocks constant is passed to InnerBlocks precisely as specified here.
@@ -119,7 +119,7 @@ function ColumnsEditContainer({
 					/>
 				</PanelBody>
 			</InspectorControls>
-			<CeColumns
+			<ScColumns
 				vertical-alignment={verticalAlignment}
 				is-stacked-on-mobile={isStackedOnMobile}
 				{...innerBlocksProps}

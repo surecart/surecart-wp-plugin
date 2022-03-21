@@ -2,7 +2,7 @@
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import Box from '../components/Box';
-import { CeInput } from '@surecart/components-react';
+import { ScInput } from '@surecart/components-react';
 import { useDispatch } from '@wordpress/data';
 
 export default ({}) => {
@@ -22,10 +22,10 @@ export default ({}) => {
 					'surecart'
 				)}
 			>
-				<CeInput
+				<ScInput
 					label={__('Api Token', 'surecart')}
 					type="password"
-					onCeChange={(e) =>
+					onScChange={(e) =>
 						updateSetting('api_token', e.target.value)
 					}
 					name="api_token"
@@ -36,7 +36,7 @@ export default ({}) => {
 					help={
 						'Find your API Token in the Settings page of SureCart.'
 					}
-				></CeInput>
+				></ScInput>
 			</Box>
 		</div>
 	);

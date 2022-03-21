@@ -16,20 +16,20 @@
 
 | Event               | Description             | Type                          |
 | ------------------- | ----------------------- | ----------------------------- |
-| `ceUpdateLineItems` | Update line items event | `CustomEvent<LineItemData[]>` |
+| `scUpdateLineItems` | Update line items event | `CustomEvent<LineItemData[]>` |
 
 
 ## Dependencies
 
 ### Used by
 
- - [ce-session-provider](../session-provider)
+ - [sc-session-provider](../session-provider)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-session-provider --> ce-line-items-provider
-  style ce-line-items-provider fill:#f9f,stroke:#333,stroke-width:4px
+  sc-session-provider --> sc-line-items-provider
+  style sc-line-items-provider fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

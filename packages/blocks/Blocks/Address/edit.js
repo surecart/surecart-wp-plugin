@@ -2,7 +2,7 @@ import { Fragment } from '@wordpress/element';
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
 import { TextControl, PanelBody, PanelRow } from '@wordpress/components';
-import { CeAddress } from '@surecart/components-react';
+import { ScAddress } from '@surecart/components-react';
 
 export default ({ className, attributes, setAttributes }) => {
 	const { label } = attributes;
@@ -25,7 +25,7 @@ export default ({ className, attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<CeAddress {...blockProps}></CeAddress>
+			<ScAddress {...blockProps}></ScAddress>
 		</Fragment>
 	);
 };

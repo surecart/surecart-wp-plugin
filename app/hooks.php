@@ -17,7 +17,7 @@ add_filter(
 	'surecart.middleware.user.can.redirect_url',
 	function( $url ) {
 		if ( current_user_can( 'read' ) ) {
-			return get_admin_url() . 'admin.php?page=ce-denied';
+			return get_admin_url() . 'admin.php?page=sc-denied';
 		}
 		return $url;
 	}

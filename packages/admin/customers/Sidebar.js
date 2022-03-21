@@ -13,7 +13,7 @@ export default ({ id, customer, updateCustomer, loading }) => {
 		<div
 			css={css`
 				display: grid;
-				gap: var(--ce-spacing-xxx-large);
+				gap: var(--sc-spacing-xxx-large);
 			`}
 		>
 			{id && (

@@ -3,12 +3,12 @@
  */
 import { Component } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-import { CeButton, CeAlert } from '@surecart/components-react';
+import { ScButton, ScAlert } from '@surecart/components-react';
 import { useCopyToClipboard } from '@wordpress/compose';
 
 function CopyButton({ text, children }) {
 	const ref = useCopyToClipboard(text);
-	return <CeButton ref={ref}>{children}</CeButton>;
+	return <ScButton ref={ref}>{children}</ScButton>;
 }
 
 export default class ErrorBoundary extends Component {
@@ -39,18 +39,18 @@ export default class ErrorBoundary extends Component {
 
 		return (
 			<div>
-				<CeAlert type="danger">
+				<ScAlert type="danger">
 					{__(
 						'The editor has encountered an unexpected error.',
 						'surecart'
 					)}
-					<CeButton key="recovery" onClick={this.reboot}>
+					<ScButton key="recovery" onClick={this.reboot}>
 						{__('Attempt Recovery')}
-					</CeButton>
+					</ScButton>
 					<CopyButton key="copy-error" text={error.stack}>
 						{__('Copy Error')}
 					</CopyButton>
-				</CeAlert>
+				</ScAlert>
 				{this.props.children}
 			</div>
 		);

@@ -18,4 +18,4 @@ if ( ! defined( 'ABSPATH' ) ) {
 | Nonce Refresh
 |--------------------------------------------------------------------------
 */
-\SureCart::route()->get()->where( 'ajax', 'ce-rest-nonce', true, true )->handle( 'NonceController@get' );
+\SureCart::route()->get()->where( 'ajax', 'sc-rest-nonce', true, true )->handle( 'NonceController@get' );

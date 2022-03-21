@@ -39,29 +39,29 @@
 
 ### Used by
 
- - [ce-coupon-form](../coupon-form)
- - [ce-line-item-tax](../../controllers/checkout-form/line-item-tax)
- - [ce-line-item-total](../../controllers/checkout-form/line-item-total)
- - [ce-line-items](../../controllers/checkout-form/line-items)
- - [ce-order-confirmation-line-items](../../controllers/confirmation/order-confirmation-line-items)
- - [ce-order-confirmation-totals](../../controllers/confirmation/order-confirmation-totals)
- - [ce-order-summary](../../controllers/checkout-form/order-summary)
- - [ce-product-line-item](../product-line-item)
- - [ce-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
+ - [sc-coupon-form](../coupon-form)
+ - [sc-line-item-tax](../../controllers/checkout-form/line-item-tax)
+ - [sc-line-item-total](../../controllers/checkout-form/line-item-total)
+ - [sc-line-items](../../controllers/checkout-form/line-items)
+ - [sc-order-confirmation-line-items](../../controllers/confirmation/order-confirmation-line-items)
+ - [sc-order-confirmation-totals](../../controllers/confirmation/order-confirmation-totals)
+ - [sc-order-summary](../../controllers/checkout-form/order-summary)
+ - [sc-product-line-item](../product-line-item)
+ - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-coupon-form --> ce-line-item
-  ce-line-item-tax --> ce-line-item
-  ce-line-item-total --> ce-line-item
-  ce-line-items --> ce-line-item
-  ce-order-confirmation-line-items --> ce-line-item
-  ce-order-confirmation-totals --> ce-line-item
-  ce-order-summary --> ce-line-item
-  ce-product-line-item --> ce-line-item
-  ce-upcoming-invoice --> ce-line-item
-  style ce-line-item fill:#f9f,stroke:#333,stroke-width:4px
+  sc-coupon-form --> sc-line-item
+  sc-line-item-tax --> sc-line-item
+  sc-line-item-total --> sc-line-item
+  sc-line-items --> sc-line-item
+  sc-order-confirmation-line-items --> sc-line-item
+  sc-order-confirmation-totals --> sc-line-item
+  sc-order-summary --> sc-line-item
+  sc-product-line-item --> sc-line-item
+  sc-upcoming-invoice --> sc-line-item
+  style sc-line-item fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

@@ -72,7 +72,7 @@ if ( $is_admin && ! $is_ajax ) {
 <head>
 	<meta charset="utf-8">
 	<meta name="robots" content="noindex,nofollow"/>
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+	<meta name="viewport" content="width=devisc-width, initial-scale=1, shrink-to-fit=no"/>
 	<?php // Avoid triggering the Theme Check sniff as this is not a WordPress template. ?>
 	<?php echo '<' . 'title' . '>' . $tpl->escape( $page_title ) . '</' . 'title' . '>'; ?>
 </head>

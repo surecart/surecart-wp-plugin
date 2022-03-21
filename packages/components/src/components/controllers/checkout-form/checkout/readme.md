@@ -28,37 +28,37 @@
 
 ### Depends on
 
-- [ce-alert](../../../ui/alert)
-- [ce-block-ui](../../../ui/block-ui)
-- [ce-form-components-validator](../../../providers/form-components-validator)
-- [ce-session-provider](../../../providers/session-provider)
+- [sc-alert](../../../ui/alert)
+- [sc-block-ui](../../../ui/block-ui)
+- [sc-form-components-validator](../../../providers/form-components-validator)
+- [sc-session-provider](../../../providers/session-provider)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-checkout --> ce-alert
-  ce-checkout --> ce-block-ui
-  ce-checkout --> ce-form-components-validator
-  ce-checkout --> ce-session-provider
-  ce-alert --> ce-icon
-  ce-block-ui --> ce-spinner
-  ce-form-components-validator --> ce-order-shipping-address
-  ce-order-shipping-address --> ce-address
-  ce-address --> ce-form-control
-  ce-address --> ce-select
-  ce-address --> ce-input
-  ce-form-control --> ce-tooltip
-  ce-select --> ce-menu-label
-  ce-select --> ce-menu-item
-  ce-select --> ce-form-control
-  ce-select --> ce-dropdown
-  ce-select --> ce-icon
-  ce-select --> ce-input
-  ce-select --> ce-spinner
-  ce-select --> ce-menu
-  ce-input --> ce-form-control
-  ce-session-provider --> ce-line-items-provider
-  style ce-checkout fill:#f9f,stroke:#333,stroke-width:4px
+  sc-checkout --> sc-alert
+  sc-checkout --> sc-block-ui
+  sc-checkout --> sc-form-components-validator
+  sc-checkout --> sc-session-provider
+  sc-alert --> sc-icon
+  sc-block-ui --> sc-spinner
+  sc-form-components-validator --> sc-order-shipping-address
+  sc-order-shipping-address --> sc-address
+  sc-address --> sc-form-control
+  sc-address --> sc-select
+  sc-address --> sc-input
+  sc-form-control --> sc-tooltip
+  sc-select --> sc-menu-label
+  sc-select --> sc-menu-item
+  sc-select --> sc-form-control
+  sc-select --> sc-dropdown
+  sc-select --> sc-icon
+  sc-select --> sc-input
+  sc-select --> sc-spinner
+  sc-select --> sc-menu
+  sc-input --> sc-form-control
+  sc-session-provider --> sc-line-items-provider
+  style sc-checkout fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

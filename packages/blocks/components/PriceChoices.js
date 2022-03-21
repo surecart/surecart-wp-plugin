@@ -4,26 +4,26 @@ import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 
 import PriceChoice from './PriceChoice';
-import { CeButton } from '@surecart/components-react';
+import { ScButton } from '@surecart/components-react';
 
 export default ({ choices, onUpdate, onRemove, onAddProduct, description }) => {
 	const renderTable = () => {
 		return (
-			<ce-card no-padding>
-				<ce-table>
-					<ce-table-cell slot="head">{__('Product')}</ce-table-cell>
-					<ce-table-cell slot="head" style={{ width: '70px' }}>
+			<sc-card no-padding>
+				<sc-table>
+					<sc-table-cell slot="head">{__('Product')}</sc-table-cell>
+					<sc-table-cell slot="head" style={{ width: '70px' }}>
 						{__('Quantity')}
-					</ce-table-cell>
-					<ce-table-cell style={{ textAlign: 'right' }} slot="head">
+					</sc-table-cell>
+					<sc-table-cell style={{ textAlign: 'right' }} slot="head">
 						{__('Total')}
-					</ce-table-cell>
-					<ce-table-cell
+					</sc-table-cell>
+					<sc-table-cell
 						style={{
 							width: '100px',
 						}}
 						slot="head"
-					></ce-table-cell>
+					></sc-table-cell>
 
 					{(choices || []).map((choice, index) => {
 						return (
@@ -36,8 +36,8 @@ export default ({ choices, onUpdate, onRemove, onAddProduct, description }) => {
 							/>
 						);
 					})}
-				</ce-table>
-			</ce-card>
+				</sc-table>
+			</sc-card>
 		);
 	};
 
@@ -45,7 +45,7 @@ export default ({ choices, onUpdate, onRemove, onAddProduct, description }) => {
 		return (
 			<div
 				css={css`
-					color: var(--ce-color-gray-500);
+					color: var(--sc-color-gray-500);
 				`}
 			>
 				{description
@@ -74,10 +74,10 @@ export default ({ choices, onUpdate, onRemove, onAddProduct, description }) => {
 					align-items: center;
 				`}
 			>
-				<CeButton onClick={onAddProduct}>
-					<ce-icon name="plus" slot="prefix"></ce-icon>
+				<ScButton onClick={onAddProduct}>
+					<sc-icon name="plus" slot="prefix"></sc-icon>
 					{__('Add Product', 'surecart')}
-				</CeButton>
+				</ScButton>
 			</div>
 		</div>
 	);

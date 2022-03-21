@@ -10,7 +10,7 @@ import SelectProductGroup from '../../components/SelectProductGroup';
 import useEntities from '../../mixins/useEntities';
 import apiFetch from '@wordpress/api-fetch';
 
-import { CeForm, CeInput } from '@surecart/components-react';
+import { ScForm, ScInput } from '@surecart/components-react';
 
 export default ({ loading, product, updateProduct }) => {
 	const [saving, setSaving] = useState(false);
@@ -96,13 +96,13 @@ export default ({ loading, product, updateProduct }) => {
 					onRequestClose={() => setModal(false)}
 					shouldCloseOnClickOutside={false}
 				>
-					<CeForm
-						onCeFormSubmit={onCreate}
+					<ScForm
+						onScFormSubmit={onCreate}
 						css={css`
-							--ce-form-row-spacing: var(--ce-spacing-large);
+							--sc-form-row-spacing: var(--sc-spacing-large);
 						`}
 					>
-						<CeInput
+						<ScInput
 							required
 							name="name"
 							label={__('Group Name', 'surecart')}
@@ -127,7 +127,7 @@ export default ({ loading, product, updateProduct }) => {
 								{__('Cancel', 'surecart')}
 							</Button>
 						</div>
-					</CeForm>
+					</ScForm>
 				</Modal>
 			)}
 		</Box>

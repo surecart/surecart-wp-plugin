@@ -24,37 +24,37 @@
 
 | Event              | Description                        | Type                  |
 | ------------------ | ---------------------------------- | --------------------- |
-| `ceRemove`         | Emitted when the quantity changes. | `CustomEvent<void>`   |
-| `ceUpdateQuantity` | Emitted when the quantity changes. | `CustomEvent<number>` |
+| `scRemove`         | Emitted when the quantity changes. | `CustomEvent<void>`   |
+| `scUpdateQuantity` | Emitted when the quantity changes. | `CustomEvent<number>` |
 
 
 ## Dependencies
 
 ### Used by
 
- - [ce-line-items](../../controllers/checkout-form/line-items)
- - [ce-order-confirmation-line-items](../../controllers/confirmation/order-confirmation-line-items)
- - [ce-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
+ - [sc-line-items](../../controllers/checkout-form/line-items)
+ - [sc-order-confirmation-line-items](../../controllers/confirmation/order-confirmation-line-items)
+ - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
 
 ### Depends on
 
-- [ce-format-number](../../util/format-number)
-- [ce-line-item](../line-item)
-- [ce-quantity-select](../quantity-select)
+- [sc-format-number](../../util/format-number)
+- [sc-line-item](../line-item)
+- [sc-quantity-select](../quantity-select)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-product-line-item --> ce-format-number
-  ce-product-line-item --> ce-line-item
-  ce-product-line-item --> ce-quantity-select
-  ce-quantity-select --> ce-dropdown
-  ce-quantity-select --> ce-menu
-  ce-quantity-select --> ce-menu-item
-  ce-line-items --> ce-product-line-item
-  ce-order-confirmation-line-items --> ce-product-line-item
-  ce-upcoming-invoice --> ce-product-line-item
-  style ce-product-line-item fill:#f9f,stroke:#333,stroke-width:4px
+  sc-product-line-item --> sc-format-number
+  sc-product-line-item --> sc-line-item
+  sc-product-line-item --> sc-quantity-select
+  sc-quantity-select --> sc-dropdown
+  sc-quantity-select --> sc-menu
+  sc-quantity-select --> sc-menu-item
+  sc-line-items --> sc-product-line-item
+  sc-order-confirmation-line-items --> sc-product-line-item
+  sc-upcoming-invoice --> sc-product-line-item
+  style sc-product-line-item fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

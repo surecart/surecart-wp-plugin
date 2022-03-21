@@ -1,4 +1,4 @@
-import { CeSelect } from '@surecart/components-react';
+import { ScSelect } from '@surecart/components-react';
 import { useRef, useState } from '@wordpress/element';
 import { throttle } from 'lodash';
 import { store as coreStore } from '@wordpress/core-data';
@@ -49,7 +49,7 @@ export default ({ required, value, className, onSelect }) => {
 	);
 
 	return (
-		<CeSelect
+		<ScSelect
 			required={required}
 			ref={selectRef}
 			className={className}
@@ -57,8 +57,8 @@ export default ({ required, value, className, onSelect }) => {
 			placeholder={__('Select a user', 'surecart')}
 			searchPlaceholder={__('Search for a user...', 'surecart')}
 			search
-			onCeSearch={(e) => findUser(e.detail)}
-			onCeChange={(e) => onSelect(e.target.value)}
+			onScSearch={(e) => findUser(e.detail)}
+			onScChange={(e) => onSelect(e.target.value)}
 			choices={choices}
 		/>
 	);

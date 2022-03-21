@@ -1,11 +1,11 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { CePaymentMethodCreate } from '../payment-method-create';
+import { ScPaymentMethodCreate } from '../payment-method-create';
 
-describe('ce-payment-method-create', () => {
+describe('sc-payment-method-create', () => {
   it('renders', async () => {
     const page = await newSpecPage({
-      components: [CePaymentMethodCreate],
-      html: `<ce-payment-method-create></ce-payment-method-create>`,
+      components: [ScPaymentMethodCreate],
+      html: `<sc-payment-method-create></sc-payment-method-create>`,
     });
     expect(page.root).toMatchSnapshot();
   });

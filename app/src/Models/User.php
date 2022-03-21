@@ -165,7 +165,7 @@ class User implements ArrayAccess, JsonSerializable {
 		}
 
 		$user = new \WP_User( $user_id );
-		$user->add_role( 'ce-customer' );
+		$user->add_role( 'sc-customer' );
 
 		if ( $user_created ) {
 			wp_update_user( $user );

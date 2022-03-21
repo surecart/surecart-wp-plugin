@@ -1,11 +1,11 @@
 /** @jsx jsx */
 import { __ } from '@wordpress/i18n';
 import {
-	CeButton,
-	CeDropdown,
-	CeIcon,
-	CeMenu,
-	CeMenuItem,
+	ScButton,
+	ScDropdown,
+	ScIcon,
+	ScMenu,
+	ScMenuItem,
 } from '@surecart/components-react';
 import { useEffect, useState } from 'react';
 import apiFetch from '@wordpress/api-fetch';
@@ -70,8 +70,8 @@ export default ({ file, onUploaded, onRemoved }) => {
 	};
 
 	return (
-		<ce-stacked-list-row style={{ position: 'relative' }} mobile-size={0}>
-			{loading && <ce-block-ui spinner></ce-block-ui>}
+		<sc-stacked-list-row style={{ position: 'relative' }} mobile-size={0}>
+			{loading && <sc-block-ui spinner></sc-block-ui>}
 			<div
 				css={css`
 					display: flex;
@@ -87,8 +87,8 @@ export default ({ file, onUploaded, onRemoved }) => {
 						align-items: center;
 						justify-content: center;
 						padding: 1em;
-						background: var(--ce-color-gray-200);
-						border-radius: var(--ce-border-radius-small);
+						background: var(--sc-color-gray-200);
+						border-radius: var(--sc-border-radius-small);
 					`}
 				>
 					{file?.name?.split?.('.')?.pop?.()}
@@ -110,22 +110,22 @@ export default ({ file, onUploaded, onRemoved }) => {
 					>
 						{file.name || file.filename}
 					</div>
-					<ce-format-bytes
+					<sc-format-bytes
 						value={file.size || file.byte_size}
-					></ce-format-bytes>
+					></sc-format-bytes>
 				</div>
 			</div>
 
-			<CeDropdown slot="suffix" position="bottom-right">
-				<CeButton type="text" slot="trigger" circle>
-					<CeIcon name="more-horizontal" />
-				</CeButton>
-				<CeMenu>
-					<CeMenuItem onClick={onRemove}>
+			<ScDropdown slot="suffix" position="bottom-right">
+				<ScButton type="text" slot="trigger" circle>
+					<ScIcon name="more-horizontal" />
+				</ScButton>
+				<ScMenu>
+					<ScMenuItem onClick={onRemove}>
 						{__('Delete', 'surecart')}
-					</CeMenuItem>
-				</CeMenu>
-			</CeDropdown>
-		</ce-stacked-list-row>
+					</ScMenuItem>
+				</ScMenu>
+			</ScDropdown>
+		</sc-stacked-list-row>
 	);
 };

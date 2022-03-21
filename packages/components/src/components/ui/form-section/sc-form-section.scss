@@ -1,0 +1,38 @@
+:host {
+  display: block;
+}
+
+.section {
+  font-family: var(--sc-font-sans);
+  font-size: var(--sc-font-size-medium);
+  font-weight: var(--sc-font-weight-normal);
+}
+
+::slotted(*:not(sc-form-section)) {
+  margin-bottom: var(--sc-form-row-spacing, 0.75em);
+}
+
+.section___title,
+h3.section__title {
+  font-size: var(--sc-form-section-font-size);
+  font-weight: var(--sc-form-section-font-weight);
+  line-height: var(--sc-line-height-dense);
+  margin: 0;
+}
+
+.section__description {
+  color: var(--sc-color-gray-500);
+  line-height: var(--sc-line-height-dense);
+  margin: var(--sc-spacing-xx-small) 0;
+  font-size: var(--sc-font-size-medium);
+}
+
+slot[name='description']::slotted(*) {
+  margin: 0.75em 0;
+  line-height: 1em;
+  vertical-align: center;
+}
+
+.section__label {
+  margin-bottom: var(--sc-form-section-title-spacing);
+}

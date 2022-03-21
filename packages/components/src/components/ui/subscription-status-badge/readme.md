@@ -20,22 +20,22 @@
 
 ### Used by
 
- - [ce-subscription](../../controllers/dashboard/subscription)
- - [ce-subscription-details](../../controllers/dashboard/subscription-details)
+ - [sc-subscription](../../controllers/dashboard/subscription)
+ - [sc-subscription-details](../../controllers/dashboard/subscription-details)
 
 ### Depends on
 
-- [ce-format-date](../../util/format-date)
-- [ce-tag](../tag)
+- [sc-format-date](../../util/format-date)
+- [sc-tag](../tag)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-subscription-status-badge --> ce-format-date
-  ce-subscription-status-badge --> ce-tag
-  ce-subscription --> ce-subscription-status-badge
-  ce-subscription-details --> ce-subscription-status-badge
-  style ce-subscription-status-badge fill:#f9f,stroke:#333,stroke-width:4px
+  sc-subscription-status-badge --> sc-format-date
+  sc-subscription-status-badge --> sc-tag
+  sc-subscription --> sc-subscription-status-badge
+  sc-subscription-details --> sc-subscription-status-badge
+  style sc-subscription-status-badge fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

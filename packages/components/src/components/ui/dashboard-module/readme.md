@@ -25,51 +25,51 @@
 
 ### Used by
 
- - [ce-charges-list](../../controllers/dashboard/charges-list)
- - [ce-customer-details](../customer-details)
- - [ce-customer-edit](../../controllers/dashboard/customer-edit)
- - [ce-downloads-list](../downloads-list)
- - [ce-invoices-list](../../controllers/dashboard/invoices-list)
- - [ce-orders-list](../../controllers/dashboard/orders-list)
- - [ce-payment-methods-list](../../controllers/dashboard/payment-methods-list)
- - [ce-subscription](../../controllers/dashboard/subscription)
- - [ce-subscription-cancel](../../controllers/dashboard/subscription-cancel)
- - [ce-subscription-payment](../../controllers/dashboard/subscription-payment)
- - [ce-subscription-renew](../../controllers/dashboard/subscription-renew)
- - [ce-subscription-switch](../../controllers/dashboard/subscription-switch)
- - [ce-subscriptions-list](../../controllers/dashboard/subscriptions-list)
- - [ce-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
- - [ce-wordpress-password-edit](../../controllers/dashboard/wordpress-password-edit)
- - [ce-wordpress-user](../../controllers/dashboard/wordpress-user)
- - [ce-wordpress-user-edit](../../controllers/dashboard/wordpress-user-edit)
+ - [sc-charges-list](../../controllers/dashboard/charges-list)
+ - [sc-customer-details](../customer-details)
+ - [sc-customer-edit](../../controllers/dashboard/customer-edit)
+ - [sc-downloads-list](../downloads-list)
+ - [sc-invoices-list](../../controllers/dashboard/invoices-list)
+ - [sc-orders-list](../../controllers/dashboard/orders-list)
+ - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
+ - [sc-subscription](../../controllers/dashboard/subscription)
+ - [sc-subscription-cancel](../../controllers/dashboard/subscription-cancel)
+ - [sc-subscription-payment](../../controllers/dashboard/subscription-payment)
+ - [sc-subscription-renew](../../controllers/dashboard/subscription-renew)
+ - [sc-subscription-switch](../../controllers/dashboard/subscription-switch)
+ - [sc-subscriptions-list](../../controllers/dashboard/subscriptions-list)
+ - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
+ - [sc-wordpress-password-edit](../../controllers/dashboard/wordpress-password-edit)
+ - [sc-wordpress-user](../../controllers/dashboard/wordpress-user)
+ - [sc-wordpress-user-edit](../../controllers/dashboard/wordpress-user-edit)
 
 ### Depends on
 
-- [ce-alert](../alert)
+- [sc-alert](../alert)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-dashboard-module --> ce-alert
-  ce-alert --> ce-icon
-  ce-charges-list --> ce-dashboard-module
-  ce-customer-details --> ce-dashboard-module
-  ce-customer-edit --> ce-dashboard-module
-  ce-downloads-list --> ce-dashboard-module
-  ce-invoices-list --> ce-dashboard-module
-  ce-orders-list --> ce-dashboard-module
-  ce-payment-methods-list --> ce-dashboard-module
-  ce-subscription --> ce-dashboard-module
-  ce-subscription-cancel --> ce-dashboard-module
-  ce-subscription-payment --> ce-dashboard-module
-  ce-subscription-renew --> ce-dashboard-module
-  ce-subscription-switch --> ce-dashboard-module
-  ce-subscriptions-list --> ce-dashboard-module
-  ce-upcoming-invoice --> ce-dashboard-module
-  ce-wordpress-password-edit --> ce-dashboard-module
-  ce-wordpress-user --> ce-dashboard-module
-  ce-wordpress-user-edit --> ce-dashboard-module
-  style ce-dashboard-module fill:#f9f,stroke:#333,stroke-width:4px
+  sc-dashboard-module --> sc-alert
+  sc-alert --> sc-icon
+  sc-charges-list --> sc-dashboard-module
+  sc-customer-details --> sc-dashboard-module
+  sc-customer-edit --> sc-dashboard-module
+  sc-downloads-list --> sc-dashboard-module
+  sc-invoices-list --> sc-dashboard-module
+  sc-orders-list --> sc-dashboard-module
+  sc-payment-methods-list --> sc-dashboard-module
+  sc-subscription --> sc-dashboard-module
+  sc-subscription-cancel --> sc-dashboard-module
+  sc-subscription-payment --> sc-dashboard-module
+  sc-subscription-renew --> sc-dashboard-module
+  sc-subscription-switch --> sc-dashboard-module
+  sc-subscriptions-list --> sc-dashboard-module
+  sc-upcoming-invoice --> sc-dashboard-module
+  sc-wordpress-password-edit --> sc-dashboard-module
+  sc-wordpress-user --> sc-dashboard-module
+  sc-wordpress-user-edit --> sc-dashboard-module
+  style sc-dashboard-module fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

@@ -2,7 +2,7 @@ export default ({ attributes }) => {
 	const { type, full, size, text, show_total, show_icon } = attributes;
 
 	return (
-		<ce-order-submit
+		<sc-order-submit
 			type={type}
 			full={full ? 'true' : false}
 			size={size}
@@ -10,6 +10,6 @@ export default ({ attributes }) => {
 			show-total={show_total ? 'true' : false}
 		>
 			{text}
-		</ce-order-submit>
+		</sc-order-submit>
 	);
 };

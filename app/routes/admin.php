@@ -20,14 +20,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 */
 \SureCart::route()
 ->get()
-->where( 'admin', 'ce-getting-started' )
+->where( 'admin', 'sc-getting-started' )
 ->name( 'onboarding.show' )
 ->middleware( 'user.can:manage_options' )
 ->handle( 'Onboarding@show' );
 
 \SureCart::route()
 ->get()
-->where( 'admin', 'ce-complete-signup' )
+->where( 'admin', 'sc-complete-signup' )
 ->middleware( 'user.can:manage_options' )
 ->group(
 	function() {
@@ -41,7 +41,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 | Dashboard
 |--------------------------------------------------------------------------
 */
-\SureCart::route()->get()->where( 'admin', 'ce-dashboard' )->name( 'dashboard' )->handle( 'Dashboard@show' );
+\SureCart::route()->get()->where( 'admin', 'sc-dashboard' )->name( 'dashboard' )->handle( 'Dashboard@show' );
 
 
 /*
@@ -50,7 +50,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 |--------------------------------------------------------------------------
 */
 \SureCart::route()
-->where( 'admin', 'ce-orders' )
+->where( 'admin', 'sc-orders' )
 ->middleware( 'user.can:edit_ce_orders' ) // TODO: change to manage coupons.
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Orders\\' )
 ->group(
@@ -67,7 +67,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 |--------------------------------------------------------------------------
 */
 \SureCart::route()
-->where( 'admin', 'ce-invoices' )
+->where( 'admin', 'sc-invoices' )
 ->middleware( 'user.can:edit_ce_invoices' ) // TODO: change to manage coupons.
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Invoices\\' )
 ->group(
@@ -84,7 +84,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 |--------------------------------------------------------------------------
 */
 \SureCart::route()
-->where( 'admin', 'ce-products' )
+->where( 'admin', 'sc-products' )
 ->middleware( 'user.can:edit_ce_products' ) // TODO: change to manage products.
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Products\\' )
 ->group(
@@ -101,7 +101,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 |--------------------------------------------------------------------------
 */
 \SureCart::route()
-->where( 'admin', 'ce-coupons' )
+->where( 'admin', 'sc-coupons' )
 ->middleware( 'user.can:edit_ce_coupons' ) // TODO: change to manage coupons.
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Coupons\\' )
 ->group(
@@ -117,7 +117,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 |--------------------------------------------------------------------------
 */
 \SureCart::route()
-->where( 'admin', 'ce-customers' )
+->where( 'admin', 'sc-customers' )
 ->middleware( 'user.can:edit_ce_customers' ) // TODO: change to manage products.
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Customers\\' )
 ->group(
@@ -133,7 +133,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 |--------------------------------------------------------------------------
 */
 \SureCart::route()
-->where( 'admin', 'ce-abandoned-orders' )
+->where( 'admin', 'sc-abandoned-orders' )
 ->middleware( 'user.can:edit_ce_orders' ) // TODO: change to manage coupons.
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Abandoned\\' )
 ->group(
@@ -149,7 +149,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 |--------------------------------------------------------------------------
 */
 \SureCart::route()
-->where( 'admin', 'ce-subscriptions' )
+->where( 'admin', 'sc-subscriptions' )
 ->middleware( 'user.can:edit_ce_subscriptions' ) // TODO: change to manage coupons.
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Subscriptions\\' )
 ->group(
@@ -166,7 +166,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 |--------------------------------------------------------------------------
 */
 \SureCart::route()
-->where( 'admin', 'ce-product-groups' )
+->where( 'admin', 'sc-product-groups' )
 ->middleware( 'user.can:edit_ce_products' ) // TODO: change to manage coupons.
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\ProductGroups\\' )
 ->group(
@@ -185,7 +185,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 */
 \SureCart::route()
 ->get()
-->where( 'admin', 'ce-settings' )
+->where( 'admin', 'sc-settings' )
 ->middleware( 'user.can:manage_ce_account_settings' )
 ->handle( 'Settings@show' );
 
@@ -196,7 +196,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 */
 \SureCart::route()
 ->get()
-->where( 'admin', 'ce-plugin' )
+->where( 'admin', 'sc-plugin' )
 ->middleware( 'user.can:manage_options' )
 ->group(
 	function() {

@@ -3,12 +3,12 @@
 import { __ } from '@wordpress/i18n';
 
 import {
-	CeInput,
-	CeButton,
-	CeDropdown,
-	CeMenu,
-	CeMenuItem,
-	CeTag,
+	ScInput,
+	ScButton,
+	ScDropdown,
+	ScMenu,
+	ScMenuItem,
+	ScTag,
 } from '@surecart/components-react';
 import { Icon, box, trash, moreHorizontalMobile } from '@wordpress/icons';
 import { css, jsx } from '@emotion/core';
@@ -65,8 +65,8 @@ export default ({ promotion: promotionEntity, index }) => {
 					gap: 1em;
 				`}
 			>
-				<CeInput
-					className="ce-promotion-code"
+				<ScInput
+					className="sc-promotion-code"
 					css={css`
 						flex: 1;
 					`}
@@ -83,24 +83,24 @@ export default ({ promotion: promotionEntity, index }) => {
 					}
 					attribute="name"
 					value={promotion?.code}
-					onCeChange={(e) =>
+					onScChange={(e) =>
 						updatePromotion({ code: e.target.value })
 					}
 				>
 					{promotion?.archived && (
-						<CeTag type="warning" slot="suffix">
+						<ScTag type="warning" slot="suffix">
 							{__('Archived', 'surecart')}
-						</CeTag>
+						</ScTag>
 					)}
-				</CeInput>
+				</ScInput>
 			</div>
-			<CeDropdown slot="suffix" position="bottom-right">
-				<CeButton type="text" slot="trigger" loading={loading} circle>
+			<ScDropdown slot="suffix" position="bottom-right">
+				<ScButton type="text" slot="trigger" loading={loading} circle>
 					<Icon icon={moreHorizontalMobile} />
-				</CeButton>
-				<CeMenu>
+				</ScButton>
+				<ScMenu>
 					{promotion?.id && (
-						<CeMenuItem onClick={() => onArchive(index)}>
+						<ScMenuItem onClick={() => onArchive(index)}>
 							<Icon
 								slot="prefix"
 								style={{
@@ -112,9 +112,9 @@ export default ({ promotion: promotionEntity, index }) => {
 							{promotion?.archived
 								? __('Un-Archive', 'surecart')
 								: __('Archive', 'surecart')}
-						</CeMenuItem>
+						</ScMenuItem>
 					)}
-					<CeMenuItem onClick={() => onDelete(index)}>
+					<ScMenuItem onClick={() => onDelete(index)}>
 						<Icon
 							slot="prefix"
 							style={{
@@ -124,9 +124,9 @@ export default ({ promotion: promotionEntity, index }) => {
 							size={20}
 						/>
 						{__('Delete', 'surecart')}
-					</CeMenuItem>
-				</CeMenu>
-			</CeDropdown>
+					</ScMenuItem>
+				</ScMenu>
+			</ScDropdown>
 		</div>
 	);
 };

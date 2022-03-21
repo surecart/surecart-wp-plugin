@@ -18,13 +18,13 @@
 
 ### Used by
 
- - [ce-payment](../../controllers/checkout-form/payment)
+ - [sc-payment](../../controllers/checkout-form/payment)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-payment --> ce-secure-notice
-  style ce-secure-notice fill:#f9f,stroke:#333,stroke-width:4px
+  sc-payment --> sc-secure-notice
+  style sc-secure-notice fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

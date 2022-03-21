@@ -18,29 +18,29 @@
 
 ### Depends on
 
-- [ce-dashboard-module](../../../ui/dashboard-module)
-- [ce-card](../../../ui/card)
-- [ce-form](../../../ui/form)
-- [ce-input](../../../ui/input)
-- [ce-button](../../../ui/button)
-- [ce-block-ui](../../../ui/block-ui)
+- [sc-dashboard-module](../../../ui/dashboard-module)
+- [sc-card](../../../ui/card)
+- [sc-form](../../../ui/form)
+- [sc-input](../../../ui/input)
+- [sc-button](../../../ui/button)
+- [sc-block-ui](../../../ui/block-ui)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-wordpress-password-edit --> ce-dashboard-module
-  ce-wordpress-password-edit --> ce-card
-  ce-wordpress-password-edit --> ce-form
-  ce-wordpress-password-edit --> ce-input
-  ce-wordpress-password-edit --> ce-button
-  ce-wordpress-password-edit --> ce-block-ui
-  ce-dashboard-module --> ce-alert
-  ce-alert --> ce-icon
-  ce-input --> ce-form-control
-  ce-form-control --> ce-tooltip
-  ce-button --> ce-spinner
-  ce-block-ui --> ce-spinner
-  style ce-wordpress-password-edit fill:#f9f,stroke:#333,stroke-width:4px
+  sc-wordpress-password-edit --> sc-dashboard-module
+  sc-wordpress-password-edit --> sc-card
+  sc-wordpress-password-edit --> sc-form
+  sc-wordpress-password-edit --> sc-input
+  sc-wordpress-password-edit --> sc-button
+  sc-wordpress-password-edit --> sc-block-ui
+  sc-dashboard-module --> sc-alert
+  sc-alert --> sc-icon
+  sc-input --> sc-form-control
+  sc-form-control --> sc-tooltip
+  sc-button --> sc-spinner
+  sc-block-ui --> sc-spinner
+  style sc-wordpress-password-edit fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

@@ -135,7 +135,7 @@ class WebHooksHistoryService {
 		}
 
 		?>
-		<div class="notice notice-error">
+		<div class="notice notisc-error">
 			<p>
 				<?php _e( 'It looks like this site has moved or has been duplicated. SureCart has created new webhooks for the domain to prevent purchase sync issues. Should we remove the previous webook?', 'surecart' ); ?>
 			</p>

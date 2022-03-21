@@ -20,37 +20,37 @@
 
 | Event        | Description | Type                |
 | ------------ | ----------- | ------------------- |
-| `ceNextPage` |             | `CustomEvent<void>` |
-| `cePrevPage` |             | `CustomEvent<void>` |
+| `scNextPage` |             | `CustomEvent<void>` |
+| `scPrevPage` |             | `CustomEvent<void>` |
 
 
 ## Dependencies
 
 ### Used by
 
- - [ce-charges-list](../../controllers/dashboard/charges-list)
- - [ce-dashboard-downloads-list](../../controllers/dashboard/dashboard-downloads-list)
- - [ce-invoices-list](../../controllers/dashboard/invoices-list)
- - [ce-orders-list](../../controllers/dashboard/orders-list)
- - [ce-subscriptions-list](../../controllers/dashboard/subscriptions-list)
+ - [sc-charges-list](../../controllers/dashboard/charges-list)
+ - [sc-dashboard-downloads-list](../../controllers/dashboard/dashboard-downloads-list)
+ - [sc-invoices-list](../../controllers/dashboard/invoices-list)
+ - [sc-orders-list](../../controllers/dashboard/orders-list)
+ - [sc-subscriptions-list](../../controllers/dashboard/subscriptions-list)
 
 ### Depends on
 
-- [ce-flex](../flex)
-- [ce-button](../button)
+- [sc-flex](../flex)
+- [sc-button](../button)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-pagination --> ce-flex
-  ce-pagination --> ce-button
-  ce-button --> ce-spinner
-  ce-charges-list --> ce-pagination
-  ce-dashboard-downloads-list --> ce-pagination
-  ce-invoices-list --> ce-pagination
-  ce-orders-list --> ce-pagination
-  ce-subscriptions-list --> ce-pagination
-  style ce-pagination fill:#f9f,stroke:#333,stroke-width:4px
+  sc-pagination --> sc-flex
+  sc-pagination --> sc-button
+  sc-button --> sc-spinner
+  sc-charges-list --> sc-pagination
+  sc-dashboard-downloads-list --> sc-pagination
+  sc-invoices-list --> sc-pagination
+  sc-orders-list --> sc-pagination
+  sc-subscriptions-list --> sc-pagination
+  style sc-pagination fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

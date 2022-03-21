@@ -19,8 +19,8 @@
 
 | Event    | Description          | Type                |
 | -------- | -------------------- | ------------------- |
-| `ceHide` | When alert is hidden | `CustomEvent<void>` |
-| `ceShow` | When alert is shown  | `CustomEvent<void>` |
+| `scHide` | When alert is hidden | `CustomEvent<void>` |
+| `scShow` | When alert is shown  | `CustomEvent<void>` |
 
 
 ## Methods
@@ -61,36 +61,36 @@ Type: `Promise<void>`
 
 ### Used by
 
- - [ce-checkout](../../controllers/checkout-form/checkout)
- - [ce-coupon-form](../coupon-form)
- - [ce-dashboard-module](../dashboard-module)
- - [ce-login-form](../../controllers/login)
- - [ce-payment-method-create](../../controllers/dashboard/payment-method-create)
- - [ce-price-choice](../../controllers/checkout-form/price-choice)
- - [ce-stripe-payment-request](../stripe-payment-request)
- - [ce-subscription-cancel](../../controllers/dashboard/subscription-cancel)
- - [ce-subscription-renew](../../controllers/dashboard/subscription-renew)
- - [ce-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
+ - [sc-checkout](../../controllers/checkout-form/checkout)
+ - [sc-coupon-form](../coupon-form)
+ - [sc-dashboard-module](../dashboard-module)
+ - [sc-login-form](../../controllers/login)
+ - [sc-payment-method-create](../../controllers/dashboard/payment-method-create)
+ - [sc-price-choice](../../controllers/checkout-form/price-choice)
+ - [sc-stripe-payment-request](../stripe-payment-request)
+ - [sc-subscription-cancel](../../controllers/dashboard/subscription-cancel)
+ - [sc-subscription-renew](../../controllers/dashboard/subscription-renew)
+ - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
 
 ### Depends on
 
-- [ce-icon](../icon)
+- [sc-icon](../icon)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-alert --> ce-icon
-  ce-checkout --> ce-alert
-  ce-coupon-form --> ce-alert
-  ce-dashboard-module --> ce-alert
-  ce-login-form --> ce-alert
-  ce-payment-method-create --> ce-alert
-  ce-price-choice --> ce-alert
-  ce-stripe-payment-request --> ce-alert
-  ce-subscription-cancel --> ce-alert
-  ce-subscription-renew --> ce-alert
-  ce-upcoming-invoice --> ce-alert
-  style ce-alert fill:#f9f,stroke:#333,stroke-width:4px
+  sc-alert --> sc-icon
+  sc-checkout --> sc-alert
+  sc-coupon-form --> sc-alert
+  sc-dashboard-module --> sc-alert
+  sc-login-form --> sc-alert
+  sc-payment-method-create --> sc-alert
+  sc-price-choice --> sc-alert
+  sc-stripe-payment-request --> sc-alert
+  sc-subscription-cancel --> sc-alert
+  sc-subscription-renew --> sc-alert
+  sc-upcoming-invoice --> sc-alert
+  style sc-alert fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

@@ -24,46 +24,46 @@
 
 | Event           | Description                | Type                  |
 | --------------- | -------------------------- | --------------------- |
-| `ceApplyCoupon` | When the coupon is applied | `CustomEvent<string>` |
+| `scApplyCoupon` | When the coupon is applied | `CustomEvent<string>` |
 
 
 ## Dependencies
 
 ### Used by
 
- - [ce-order-coupon-form](../../controllers/checkout-form/order-coupon-form)
- - [ce-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
+ - [sc-order-coupon-form](../../controllers/checkout-form/order-coupon-form)
+ - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
 
 ### Depends on
 
-- [ce-skeleton](../skeleton)
-- [ce-line-item](../line-item)
-- [ce-tag](../tag)
-- [ce-format-number](../../util/format-number)
-- [ce-input](../input)
-- [ce-alert](../alert)
-- [ce-button](../button)
-- [ce-block-ui](../block-ui)
+- [sc-skeleton](../skeleton)
+- [sc-line-item](../line-item)
+- [sc-tag](../tag)
+- [sc-format-number](../../util/format-number)
+- [sc-input](../input)
+- [sc-alert](../alert)
+- [sc-button](../button)
+- [sc-block-ui](../block-ui)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-coupon-form --> ce-skeleton
-  ce-coupon-form --> ce-line-item
-  ce-coupon-form --> ce-tag
-  ce-coupon-form --> ce-format-number
-  ce-coupon-form --> ce-input
-  ce-coupon-form --> ce-alert
-  ce-coupon-form --> ce-button
-  ce-coupon-form --> ce-block-ui
-  ce-input --> ce-form-control
-  ce-form-control --> ce-tooltip
-  ce-alert --> ce-icon
-  ce-button --> ce-spinner
-  ce-block-ui --> ce-spinner
-  ce-order-coupon-form --> ce-coupon-form
-  ce-upcoming-invoice --> ce-coupon-form
-  style ce-coupon-form fill:#f9f,stroke:#333,stroke-width:4px
+  sc-coupon-form --> sc-skeleton
+  sc-coupon-form --> sc-line-item
+  sc-coupon-form --> sc-tag
+  sc-coupon-form --> sc-format-number
+  sc-coupon-form --> sc-input
+  sc-coupon-form --> sc-alert
+  sc-coupon-form --> sc-button
+  sc-coupon-form --> sc-block-ui
+  sc-input --> sc-form-control
+  sc-form-control --> sc-tooltip
+  sc-alert --> sc-icon
+  sc-button --> sc-spinner
+  sc-block-ui --> sc-spinner
+  sc-order-coupon-form --> sc-coupon-form
+  sc-upcoming-invoice --> sc-coupon-form
+  style sc-coupon-form fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

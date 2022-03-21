@@ -16,9 +16,9 @@
 
 | Event          | Description                                                                                                                                                                                                                                                                                                                                                                                                | Type                  |
 | -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- |
-| `ceFormChange` | Emitted when the form is submitted. This event will not be emitted if any form control inside of it is in an invalid state, unless the form has the `novalidate` attribute. Note that there is never a need to prevent this event, since it doen't send a GET or POST request like native forms. To "prevent" submission, use a conditional around the XHR request you use to submit the form's data with. | `CustomEvent<Object>` |
-| `ceFormSubmit` | Backwards compat.                                                                                                                                                                                                                                                                                                                                                                                          | `CustomEvent<void>`   |
-| `ceSubmit`     | Emitted when the form is submitted. This event will not be emitted if any form control inside of it is in an invalid state, unless the form has the `novalidate` attribute. Note that there is never a need to prevent this event, since it doen't send a GET or POST request like native forms. To "prevent" submission, use a conditional around the XHR request you use to submit the form's data with. | `CustomEvent<void>`   |
+| `scFormChange` | Emitted when the form is submitted. This event will not be emitted if any form control inside of it is in an invalid state, unless the form has the `novalidate` attribute. Note that there is never a need to prevent this event, since it doen't send a GET or POST request like native forms. To "prevent" submission, use a conditional around the XHR request you use to submit the form's data with. | `CustomEvent<Object>` |
+| `scFormSubmit` | Backwards compat.                                                                                                                                                                                                                                                                                                                                                                                          | `CustomEvent<void>`   |
+| `scSubmit`     | Emitted when the form is submitted. This event will not be emitted if any form control inside of it is in an invalid state, unless the form has the `novalidate` attribute. Note that there is never a need to prevent this event, since it doen't send a GET or POST request like native forms. To "prevent" submission, use a conditional around the XHR request you use to submit the form's data with. | `CustomEvent<void>`   |
 
 
 ## Methods
@@ -75,27 +75,27 @@ Type: `Promise<boolean>`
 
 ### Used by
 
- - [ce-customer-edit](../../controllers/dashboard/customer-edit)
- - [ce-login-form](../../controllers/login)
- - [ce-payment-method-create](../../controllers/dashboard/payment-method-create)
- - [ce-subscription-payment](../../controllers/dashboard/subscription-payment)
- - [ce-subscription-switch](../../controllers/dashboard/subscription-switch)
- - [ce-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
- - [ce-wordpress-password-edit](../../controllers/dashboard/wordpress-password-edit)
- - [ce-wordpress-user-edit](../../controllers/dashboard/wordpress-user-edit)
+ - [sc-customer-edit](../../controllers/dashboard/customer-edit)
+ - [sc-login-form](../../controllers/login)
+ - [sc-payment-method-create](../../controllers/dashboard/payment-method-create)
+ - [sc-subscription-payment](../../controllers/dashboard/subscription-payment)
+ - [sc-subscription-switch](../../controllers/dashboard/subscription-switch)
+ - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
+ - [sc-wordpress-password-edit](../../controllers/dashboard/wordpress-password-edit)
+ - [sc-wordpress-user-edit](../../controllers/dashboard/wordpress-user-edit)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-customer-edit --> ce-form
-  ce-login-form --> ce-form
-  ce-payment-method-create --> ce-form
-  ce-subscription-payment --> ce-form
-  ce-subscription-switch --> ce-form
-  ce-upcoming-invoice --> ce-form
-  ce-wordpress-password-edit --> ce-form
-  ce-wordpress-user-edit --> ce-form
-  style ce-form fill:#f9f,stroke:#333,stroke-width:4px
+  sc-customer-edit --> sc-form
+  sc-login-form --> sc-form
+  sc-payment-method-create --> sc-form
+  sc-subscription-payment --> sc-form
+  sc-subscription-switch --> sc-form
+  sc-upcoming-invoice --> sc-form
+  sc-wordpress-password-edit --> sc-form
+  sc-wordpress-user-edit --> sc-form
+  style sc-form fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

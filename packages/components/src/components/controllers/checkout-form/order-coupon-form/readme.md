@@ -21,33 +21,33 @@
 
 | Event           | Description | Type                  |
 | --------------- | ----------- | --------------------- |
-| `ceApplyCoupon` |             | `CustomEvent<string>` |
+| `scApplyCoupon` |             | `CustomEvent<string>` |
 
 
 ## Dependencies
 
 ### Depends on
 
-- [ce-coupon-form](../../../ui/coupon-form)
+- [sc-coupon-form](../../../ui/coupon-form)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-order-coupon-form --> ce-coupon-form
-  ce-coupon-form --> ce-skeleton
-  ce-coupon-form --> ce-line-item
-  ce-coupon-form --> ce-tag
-  ce-coupon-form --> ce-format-number
-  ce-coupon-form --> ce-input
-  ce-coupon-form --> ce-alert
-  ce-coupon-form --> ce-button
-  ce-coupon-form --> ce-block-ui
-  ce-input --> ce-form-control
-  ce-form-control --> ce-tooltip
-  ce-alert --> ce-icon
-  ce-button --> ce-spinner
-  ce-block-ui --> ce-spinner
-  style ce-order-coupon-form fill:#f9f,stroke:#333,stroke-width:4px
+  sc-order-coupon-form --> sc-coupon-form
+  sc-coupon-form --> sc-skeleton
+  sc-coupon-form --> sc-line-item
+  sc-coupon-form --> sc-tag
+  sc-coupon-form --> sc-format-number
+  sc-coupon-form --> sc-input
+  sc-coupon-form --> sc-alert
+  sc-coupon-form --> sc-button
+  sc-coupon-form --> sc-block-ui
+  sc-input --> sc-form-control
+  sc-form-control --> sc-tooltip
+  sc-alert --> sc-icon
+  sc-button --> sc-spinner
+  sc-block-ui --> sc-spinner
+  style sc-order-coupon-form fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

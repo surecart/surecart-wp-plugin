@@ -9,13 +9,13 @@
 
 ### Used by
 
- - [ce-downloads-list](../downloads-list)
+ - [sc-downloads-list](../downloads-list)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-downloads-list --> ce-spacing
-  style ce-spacing fill:#f9f,stroke:#333,stroke-width:4px
+  sc-downloads-list --> sc-spacing
+  style sc-spacing fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

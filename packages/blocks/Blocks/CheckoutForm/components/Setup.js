@@ -5,10 +5,10 @@ import { css, jsx } from '@emotion/core';
 import { __experimentalLinkControl as LinkControl } from '@wordpress/block-editor';
 
 import {
-	CeInput,
-	CeRadioGroup,
-	CeSelect,
-	CeRadio,
+	ScInput,
+	ScRadioGroup,
+	ScSelect,
+	ScRadio,
 } from '@surecart/components-react';
 import PriceChoices from '@scripts/blocks/components/PriceChoices';
 
@@ -66,7 +66,7 @@ export default ({ attributes, setAttributes, onCreate, onCancel, isNew }) => {
 	return (
 		<div
 			css={css`
-				font-family: var(--ce-font-sans);
+				font-family: var(--sc-font-sans);
 				font-size: 13px;
 				box-sizing: border-box;
 				position: relative;
@@ -75,12 +75,12 @@ export default ({ attributes, setAttributes, onCreate, onCancel, isNew }) => {
 				width: 100%;
 				text-align: left;
 				margin: 0;
-				color: var(--ce-color-gray-500);
+				color: var(--sc-color-gray-500);
 				-moz-font-smoothing: subpixel-antialiased;
 				-webkit-font-smoothing: subpixel-antialiased;
 				border-radius: 2px;
 				background-color: #fff;
-				box-shadow: inset 0 0 0 1px var(--ce-color-gray-300);
+				box-shadow: inset 0 0 0 1px var(--sc-color-gray-300);
 				outline: 1px solid transparent;
 			`}
 		>
@@ -95,7 +95,7 @@ export default ({ attributes, setAttributes, onCreate, onCancel, isNew }) => {
 				{isNew && (
 					<div>
 						<div css={label}>{__('Form Title', 'surecart')}</div>
-						<CeInput
+						<ScInput
 							css={css`
 								max-width: 400px;
 							`}
@@ -104,7 +104,7 @@ export default ({ attributes, setAttributes, onCreate, onCancel, isNew }) => {
 								'Enter a title for your form',
 								'surecart'
 							)}
-							onCeChange={(e) =>
+							onScChange={(e) =>
 								setAttributes({ title: e.target.value })
 							}
 						/>
@@ -128,12 +128,12 @@ export default ({ attributes, setAttributes, onCreate, onCancel, isNew }) => {
 							{__('Product Options', 'surecart')}
 						</div>
 
-						<CeRadioGroup
-							onCeChange={(e) =>
+						<ScRadioGroup
+							onScChange={(e) =>
 								setAttributes({ choice_type: e.target.value })
 							}
 						>
-							<CeRadio
+							<ScRadio
 								value="all"
 								checked={choice_type === 'all'}
 							>
@@ -141,8 +141,8 @@ export default ({ attributes, setAttributes, onCreate, onCancel, isNew }) => {
 									'Customer must purchase all products',
 									'surecart'
 								)}
-							</CeRadio>
-							<CeRadio
+							</ScRadio>
+							<ScRadio
 								value="radio"
 								checked={choice_type === 'radio'}
 							>
@@ -150,8 +150,8 @@ export default ({ attributes, setAttributes, onCreate, onCancel, isNew }) => {
 									'Customer must select one price from the options.',
 									'surecart'
 								)}
-							</CeRadio>
-							<CeRadio
+							</ScRadio>
+							<ScRadio
 								value="checkbox"
 								checked={choice_type === 'checkbox'}
 							>
@@ -159,21 +159,21 @@ export default ({ attributes, setAttributes, onCreate, onCancel, isNew }) => {
 									'Customer can select multiple prices.',
 									'surecart'
 								)}
-							</CeRadio>
-						</CeRadioGroup>
+							</ScRadio>
+						</ScRadioGroup>
 					</div>
 				)}
 
 				<div>
 					<div css={label}>{__('Design', 'surecart')}</div>
 
-					<CeSelect
+					<ScSelect
 						css={css`
 							max-width: 400px;
 						`}
 						placeholder={__('Select a Form Template', 'surecart')}
 						value={template}
-						onCeChange={(e) =>
+						onScChange={(e) =>
 							setAttributes({
 								template: e.target.value,
 							})

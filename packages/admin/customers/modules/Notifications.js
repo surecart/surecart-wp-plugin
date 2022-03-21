@@ -1,20 +1,20 @@
 import { __ } from '@wordpress/i18n';
-import { CeSwitch } from '@surecart/components-react';
+import { ScSwitch } from '@surecart/components-react';
 
 export default ({ customer, updateCustomer }) => {
 	if (!customer) return '';
 
 	return (
 		<div>
-			<CeSwitch
+			<ScSwitch
 				checked={!customer?.unsubscribed}
-				onCeChange={(e) => {
+				onScChange={(e) => {
 					console.log(e.target.checked);
 					updateCustomer({ unsubscribed: !e.target.checked });
 				}}
 			>
 				{__('Subscribed to emails', 'surecart')}
-			</CeSwitch>
+			</ScSwitch>
 		</div>
 	);
 };

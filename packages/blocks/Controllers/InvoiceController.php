@@ -17,7 +17,7 @@ class InvoiceController extends BaseController {
 		}
 
 		return wp_kses_post(
-			Component::tag( 'ce-invoices-list' )
+			Component::tag( 'sc-invoices-list' )
 			->id( 'customer-invoices-preview' )
 			->with(
 				[
@@ -50,7 +50,7 @@ class InvoiceController extends BaseController {
 		}
 
 		return wp_kses_post(
-			Component::tag( 'ce-invoices-list' )
+			Component::tag( 'sc-invoices-list' )
 			->id( 'customer-invoices-index' )
 			->with(
 				[

@@ -25,7 +25,7 @@ class UserController extends BaseController {
 		$data = get_userdata( $user->ID );
 
 		return wp_kses_post(
-			Component::tag( 'ce-wordpress-user' )
+			Component::tag( 'sc-wordpress-user' )
 			->id( 'wordpress-user-edit' )
 			->with(
 				[
@@ -55,19 +55,19 @@ class UserController extends BaseController {
 		$back = add_query_arg( [ 'tab' => $this->getTab() ], \SureCart::pages()->url( 'dashboard' ) );
 		ob_start(); ?>
 
-		<ce-spacing style="--spacing: var(--ce-spacing-large)">
-			<ce-breadcrumbs>
-				<ce-breadcrumb href="<?php echo esc_url( $back ); ?>">
+		<sc-spacing style="--spacing: var(--sc-spacing-large)">
+			<sc-breadcrumbs>
+				<sc-breadcrumb href="<?php echo esc_url( $back ); ?>">
 					<?php esc_html_e( 'Dashboard', 'surecart' ); ?>
-				</ce-breadcrumb>
-				<ce-breadcrumb>
+				</sc-breadcrumb>
+				<sc-breadcrumb>
 					<?php esc_html_e( 'Account Details', 'surecart' ); ?>
-				</ce-breadcrumb>
-			</ce-breadcrumbs>
+				</sc-breadcrumb>
+			</sc-breadcrumbs>
 
 			<?php
 				echo wp_kses_post(
-					Component::tag( 'ce-wordpress-user-edit' )
+					Component::tag( 'sc-wordpress-user-edit' )
 					->id( 'wordpress-user-edit' )
 					->with(
 						[
@@ -88,7 +88,7 @@ class UserController extends BaseController {
 
 		<?php
 				echo wp_kses_post(
-					Component::tag( 'ce-wordpress-password-edit' )
+					Component::tag( 'sc-wordpress-password-edit' )
 					->id( 'wordpress-password-edit' )
 					->with(
 						[
@@ -106,7 +106,7 @@ class UserController extends BaseController {
 				);
 
 		?>
-		</ce-spacing>
+		</sc-spacing>
 
 			<?php
 			return ob_get_clean();

@@ -7,7 +7,7 @@ import { Fragment } from '@wordpress/element';
 
 import Box from '../ui/Box';
 import Definition from '../ui/Definition';
-import { CeSwitch } from '@surecart/components-react';
+import { ScSwitch } from '@surecart/components-react';
 import Image from './modules/Image';
 import Upgrades from './modules/Upgrades';
 import Files from './modules/Files';
@@ -21,7 +21,7 @@ export default ({ id, loading, product, updateProduct, saveProduct }) => {
 			return null;
 		}
 		return product?.recurring ? (
-			<ce-tag type="success">
+			<sc-tag type="success">
 				<div
 					css={css`
 						display: flex;
@@ -29,12 +29,12 @@ export default ({ id, loading, product, updateProduct, saveProduct }) => {
 						gap: 0.5em;
 					`}
 				>
-					<ce-icon name="repeat" />
+					<sc-icon name="repeat" />
 					{__('Subscription Product', 'surecart')}
 				</div>
-			</ce-tag>
+			</sc-tag>
 		) : (
-			<ce-tag type="success">
+			<sc-tag type="success">
 				<div
 					css={css`
 						display: flex;
@@ -42,10 +42,10 @@ export default ({ id, loading, product, updateProduct, saveProduct }) => {
 						gap: 0.5em;
 					`}
 				>
-					<ce-icon name="bookmark" />
+					<sc-icon name="bookmark" />
 					{__('One-Time Product', 'surecart')}
 				</div>
-			</ce-tag>
+			</sc-tag>
 		);
 	};
 
@@ -86,7 +86,7 @@ export default ({ id, loading, product, updateProduct, saveProduct }) => {
 					<Definition
 						title={__('Available for purchase', 'surecart')}
 					>
-						<CeSwitch
+						<ScSwitch
 							checked={!product?.archived}
 							disabled={isSaving}
 							onClick={(e) => {
@@ -173,7 +173,7 @@ export default ({ id, loading, product, updateProduct, saveProduct }) => {
 				`}
 				footer={
 					!loading && (
-						<CeButton>
+						<ScButton>
 							<svg
 								slot="prefix"
 								xmlns="http://www.w3.org/2000/svg"
@@ -191,7 +191,7 @@ export default ({ id, loading, product, updateProduct, saveProduct }) => {
 							</svg>
 
 							{__('Add Automation', 'surecart')}
-						</CeButton>
+						</ScButton>
 					)
 				}
 			>

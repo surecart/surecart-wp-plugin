@@ -41,8 +41,8 @@ export default ({}) => {
 		<div
 			{...innerBlocksProps}
 			css={css`
-				ce-tab {
-					margin-bottom: var(--ce-spacing-xx-small) !important;
+				sc-tab {
+					margin-bottom: var(--sc-spacing-xx-small) !important;
 				}
 			`}
 		></div>

@@ -1,6 +1,6 @@
 <style>
 	#wpwrap {
-		background: var(--ce-color-gray-50);
+		background: var(--sc-color-gray-50);
 	}
 
 	.wrap {
@@ -8,13 +8,13 @@
 		height: calc(100vh - 32px);
 	}
 
-	.ce-container {
+	.sc-container {
 		margin: auto;
 		max-width: 500px;
 		padding: 2rem;
 	}
 
-	.ce-section-heading {
+	.sc-section-heading {
 		margin-bottom: 0.5rem;
 		display: flex;
 		align-items: center;
@@ -23,7 +23,7 @@
 		/* padding-bottom: 1rem; */
 	}
 
-	.ce-section-heading h3 {
+	.sc-section-heading h3 {
 		margin: 0;
 		overflow: hidden;
 		text-overflow: ellipsis;
@@ -35,29 +35,29 @@
 		display: flex;
 		align-items: center;
 		gap: 0.5em;
-		color: var(--ce-color-gray-900);
+		color: var(--sc-color-gray-900);
 	}
 </style>
 
 <div class="wrap">
-	<div class="ce-container">
-		<div class="ce-section-heading">
+	<div class="sc-container">
+		<div class="sc-section-heading">
 			<h3>
-				<ce-icon name="shopping-bag"></ce-icon>
+				<sc-icon name="shopping-bag"></sc-icon>
 				<?php esc_html_e( 'Welcome to SureCart!', 'surecart' ); ?>
 			</h3>
 		</div>
-		<ce-dashboard-module>
-			<ce-card>
-				<ce-text style="--font-size: var(--ce-font-size-x-large); --line-height: var(--ce-line-height-normal)">Commerce on WordPress has never been easier, faster, or more flexible.</ce-text>
-				<ce-button type="primary" full size="large" href="<?php echo esc_url_raw( $url ); ?>">
+		<sc-dashboard-module>
+			<sc-card>
+				<sc-text style="--font-size: var(--sc-font-size-x-large); --line-height: var(--sc-line-height-normal)">Commerce on WordPress has never been easier, faster, or more flexible.</sc-text>
+				<sc-button type="primary" full size="large" href="<?php echo esc_url_raw( $url ); ?>">
 					Set Up My Store
-					<ce-icon name="arrow-right" slot="suffix"></ce-icon>
-				</ce-button>
-			</ce-card>
-			<ce-text style="--font-size: var(--ce-font-sizesmall); --line-height: var(--ce-line-height-normal); --text-align: center; --color: var(--ce-color-gray-500)">
+					<sc-icon name="arrow-right" slot="suffix"></sc-icon>
+				</sc-button>
+			</sc-card>
+			<sc-text style="--font-size: var(--sc-font-sizesmall); --line-height: var(--sc-line-height-normal); --text-align: center; --color: var(--sc-color-gray-500)">
 				By clicking "Set Up", you agree to our <a href="#" target="_blank">Terms of Service</a>.
-			</ce-text>
-		</ce-dashboard-module>
+			</sc-text>
+		</sc-dashboard-module>
 	</div>
 </div>

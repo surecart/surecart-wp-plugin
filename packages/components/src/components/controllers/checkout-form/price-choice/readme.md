@@ -31,36 +31,36 @@
 
 | Event              | Description            | Type                        |
 | ------------------ | ---------------------- | --------------------------- |
-| `ceAddEntities`    | Add entities           | `CustomEvent<any>`          |
-| `ceRemoveLineItem` | Toggle line item event | `CustomEvent<LineItemData>` |
-| `ceUpdateLineItem` | Toggle line item event | `CustomEvent<LineItemData>` |
+| `scAddEntities`    | Add entities           | `CustomEvent<any>`          |
+| `scRemoveLineItem` | Toggle line item event | `CustomEvent<LineItemData>` |
+| `scUpdateLineItem` | Toggle line item event | `CustomEvent<LineItemData>` |
 
 
 ## Dependencies
 
 ### Depends on
 
-- [ce-price-input](../../../ui/price-input)
-- [ce-alert](../../../ui/alert)
-- [ce-format-number](../../../util/format-number)
-- [ce-choice](../../../ui/choice)
-- [ce-skeleton](../../../ui/skeleton)
-- [ce-tooltip](../../../ui/tooltip)
+- [sc-price-input](../../../ui/price-input)
+- [sc-alert](../../../ui/alert)
+- [sc-format-number](../../../util/format-number)
+- [sc-choice](../../../ui/choice)
+- [sc-skeleton](../../../ui/skeleton)
+- [sc-tooltip](../../../ui/tooltip)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-price-choice --> ce-price-input
-  ce-price-choice --> ce-alert
-  ce-price-choice --> ce-format-number
-  ce-price-choice --> ce-choice
-  ce-price-choice --> ce-skeleton
-  ce-price-choice --> ce-tooltip
-  ce-price-input --> ce-input
-  ce-input --> ce-form-control
-  ce-form-control --> ce-tooltip
-  ce-alert --> ce-icon
-  style ce-price-choice fill:#f9f,stroke:#333,stroke-width:4px
+  sc-price-choice --> sc-price-input
+  sc-price-choice --> sc-alert
+  sc-price-choice --> sc-format-number
+  sc-price-choice --> sc-choice
+  sc-price-choice --> sc-skeleton
+  sc-price-choice --> sc-tooltip
+  sc-price-input --> sc-input
+  sc-input --> sc-form-control
+  sc-form-control --> sc-tooltip
+  sc-alert --> sc-icon
+  style sc-price-choice fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

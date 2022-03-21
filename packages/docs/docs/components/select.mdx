@@ -8,7 +8,7 @@ This component lets the user select one option from a group of many.
 
 import DemoTabs from '../../components/Demo-Tabs.js';
 import ComponentDoc from '../../components/Component-Doc.js';
-import { CeSelect } from '@surecart/components-react';
+import { ScSelect } from '@surecart/components-react';
 
 <DemoTabs>
   <DemoTabs.Code>
@@ -29,12 +29,12 @@ import { CeSelect } from '@surecart/components-react';
   </DemoTabs.Code>
 
   <div></div>
-	<CeSelect placeholder="Make your choice" placeholderValue="Make your choice" choices={[
+	<ScSelect placeholder="Make your choice" placeholderValue="Make your choice" choices={[
     { "value": "pizza", "label": "Pizza", "selected": false, "disabled": false },
     { "value": "pasta", "label": "Pasta", "selected": false, "disabled": false },
     { "value": "breadsticks", "label": "Breadsticks", "selected": false, "disabled": false },
     { "value": "no-stock", "label": "Someting out of stock.", "selected": false, "disabled": true },
-  ]}></CeSelect>
+  ]}></ScSelect>
 </DemoTabs>
 
 ## Examples
@@ -60,12 +60,12 @@ import { CeSelect } from '@surecart/components-react';
   </DemoTabs.Code>
 
   <div></div>
-	<CeSelect placeholder="Make your choice" placeholderValue="Make your choice"  type="multiple"  removeItemButton choices={[
+	<ScSelect placeholder="Make your choice" placeholderValue="Make your choice"  type="multiple"  removeItemButton choices={[
     { "value": "pizza", "label": "Pizza", "selected": false, "disabled": false },
     { "value": "pasta", "label": "Pasta", "selected": false, "disabled": false },
     { "value": "breadsticks", "label": "Breadsticks", "selected": false, "disabled": false },
     { "value": "no-stock", "label": "Someting out of stock.", "selected": false, "disabled": true },
-  ]}></CeSelect>
+  ]}></ScSelect>
 </DemoTabs>
 
 ## Component Codex

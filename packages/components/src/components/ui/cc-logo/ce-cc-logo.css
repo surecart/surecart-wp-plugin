@@ -1,9 +1,0 @@
-:host {
-  display: inline-block;
-}
-
-.cc-logo {
-  border-radius: var(--ce-cc-border-radius, 4px);
-  line-height: 0;
-  overflow:hidden;
-}

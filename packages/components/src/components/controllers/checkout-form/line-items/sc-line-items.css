@@ -1,0 +1,11 @@
+:host {
+  display: block;
+}
+
+:slotted(* ~ *) {
+  margin-top: 20px;
+}
+sc-product-line-item ~ sc-product-line-item,
+sc-line-item ~ sc-line-item {
+  margin-top: 20px;
+}

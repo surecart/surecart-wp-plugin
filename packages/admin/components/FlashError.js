@@ -1,4 +1,4 @@
-import { CeAlert } from '@surecart/components-react';
+import { ScAlert } from '@surecart/components-react';
 import useValidationErrors from '../hooks/useValidationErrors';
 
 export default ({ onShow, scrollIntoView, path = '', index = 0 }) => {
@@ -9,11 +9,11 @@ export default ({ onShow, scrollIntoView, path = '', index = 0 }) => {
 	}
 
 	return (
-		<CeAlert
+		<ScAlert
 			type="danger"
 			closable
 			open={errors?.[0]?.error?.message}
-			onCeShow={(e) => {
+			onScShow={(e) => {
 				if (scrollIntoView) {
 					e.target.scrollIntoView({
 						behavior: 'smooth',
@@ -23,7 +23,7 @@ export default ({ onShow, scrollIntoView, path = '', index = 0 }) => {
 				}
 				onShow && onShow(e);
 			}}
-			onCeHide={() => clearErrors(index)}
+			onScHide={() => clearErrors(index)}
 		>
 			<span slot="title">{errors?.[0]?.error?.message}</span>
 			{errors?.[0]?.error?.additional_errors?.length && (
@@ -35,6 +35,6 @@ export default ({ onShow, scrollIntoView, path = '', index = 0 }) => {
 					)}
 				</ul>
 			)}
-		</CeAlert>
+		</ScAlert>
 	);
 };

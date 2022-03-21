@@ -1,7 +1,7 @@
 /**
  * Component Dependencies
  */
-import { CeExpressPayment } from '@surecart/components-react';
+import { ScExpressPayment } from '@surecart/components-react';
 import { Disabled } from '@wordpress/components';
 /**
  * WordPress dependencies
@@ -12,10 +12,10 @@ export default ({ attributes }) => {
 	const { divider_text } = attributes;
 	return (
 		<Disabled>
-			<CeExpressPayment
+			<ScExpressPayment
 				dividerText={divider_text}
 				debug
-			></CeExpressPayment>
+			></ScExpressPayment>
 		</Disabled>
 	);
 };

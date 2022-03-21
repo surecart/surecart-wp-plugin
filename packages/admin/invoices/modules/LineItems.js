@@ -11,7 +11,7 @@ export default ({ invoice, charge, loading }) => {
 	const line_items = invoice?.invoice_items?.data;
 
 	const renderLoading = () => {
-		return <ce-skeleton></ce-skeleton>;
+		return <sc-skeleton></sc-skeleton>;
 	};
 
 	return (
@@ -20,24 +20,24 @@ export default ({ invoice, charge, loading }) => {
 			footer={
 				!loading &&
 				!!charge && (
-					<ce-line-item
+					<sc-line-item
 						style={{
 							width: '100%',
-							'--price-size': 'var(--ce-font-size-x-large)',
+							'--price-size': 'var(--sc-font-size-x-large)',
 						}}
 					>
 						<span slot="title">
 							{__('Amount Paid', 'surecart')}
 						</span>
 						<span slot="price">
-							<ce-format-number
+							<sc-format-number
 								type="currency"
 								currency={charge?.currency}
 								value={charge?.amount - charge?.refunded_amount}
-							></ce-format-number>
+							></sc-format-number>
 						</span>
 						<span slot="currency">{charge?.currency}</span>
-					</ce-line-item>
+					</sc-line-item>
 				)
 			}
 		>
@@ -47,7 +47,7 @@ export default ({ invoice, charge, loading }) => {
 				<Fragment>
 					{(line_items || []).map((item) => {
 						return (
-							<ce-product-line-item
+							<sc-product-line-item
 								key={item.id}
 								imageUrl={
 									item?.price?.metadata?.wp_attachment_src
@@ -65,70 +65,70 @@ export default ({ invoice, charge, loading }) => {
 									item?.price?.recurring_interval_count,
 									item?.price?.recurring_interval
 								)}
-							></ce-product-line-item>
+							></sc-product-line-item>
 						);
 					})}
 
 					<hr />
 
 					<Definition title={__('Subtotal', 'surecart')}>
-						<ce-format-number
+						<sc-format-number
 							style={{
-								'font-weight': 'var(--ce-font-weight-semibold)',
-								color: 'var(--ce-color-gray-800)',
+								'font-weight': 'var(--sc-font-weight-semibold)',
+								color: 'var(--sc-color-gray-800)',
 							}}
 							type="currency"
 							currency={invoice?.currency}
 							value={invoice?.subtotal_amount}
-						></ce-format-number>
+						></sc-format-number>
 					</Definition>
 					<Definition title={__('Discounts', 'surecart')}>
-						<ce-format-number
+						<sc-format-number
 							style={{
-								'font-weight': 'var(--ce-font-weight-semibold)',
-								color: 'var(--ce-color-gray-800)',
+								'font-weight': 'var(--sc-font-weight-semibold)',
+								color: 'var(--sc-color-gray-800)',
 							}}
 							type="currency"
 							currency={invoice?.currency}
 							value={invoice?.discount_amount}
-						></ce-format-number>
+						></sc-format-number>
 					</Definition>
 					{!!invoice?.proration_amount && (
 						<Definition title={__('Proration Credit', 'surecart')}>
-							<ce-format-number
+							<sc-format-number
 								style={{
 									'font-weight':
-										'var(--ce-font-weight-semibold)',
-									color: 'var(--ce-color-gray-800)',
+										'var(--sc-font-weight-semibold)',
+									color: 'var(--sc-color-gray-800)',
 								}}
 								type="currency"
 								currency={invoice?.currency}
 								value={invoice?.proration_amount}
-							></ce-format-number>
+							></sc-format-number>
 						</Definition>
 					)}
 
 					<hr />
 
-					<ce-line-item
+					<sc-line-item
 						style={{
 							width: '100%',
-							'--price-size': 'var(--ce-font-size-x-large)',
+							'--price-size': 'var(--sc-font-size-x-large)',
 						}}
 					>
 						<span slot="title">{__('Total Due', 'surecart')}</span>
 						<span slot="price">
-							<ce-format-number
+							<sc-format-number
 								type="currency"
 								currency={invoice?.currency}
 								value={invoice?.amount_due}
-							></ce-format-number>
+							></sc-format-number>
 						</span>
 						<span slot="currency">{invoice?.currency}</span>
-					</ce-line-item>
+					</sc-line-item>
 
 					{!!charge?.refunded_amount && (
-						<ce-line-item
+						<sc-line-item
 							style={{
 								width: '100%',
 							}}
@@ -138,13 +138,13 @@ export default ({ invoice, charge, loading }) => {
 							</span>
 							<span slot="price">
 								-
-								<ce-format-number
+								<sc-format-number
 									type="currency"
 									currency={charge?.currency}
 									value={charge?.refunded_amount}
-								></ce-format-number>
+								></sc-format-number>
 							</span>
-						</ce-line-item>
+						</sc-line-item>
 					)}
 				</Fragment>
 			)}

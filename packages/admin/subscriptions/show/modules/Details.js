@@ -4,8 +4,8 @@ import { __, sprintf } from '@wordpress/i18n';
 import { css, jsx } from '@emotion/core';
 import { formatTime } from '../../../util/time';
 import {
-	CeFormatDate,
-	CeSubscriptionStatusBadge,
+	ScFormatDate,
+	ScSubscriptionStatusBadge,
 } from '@surecart/components-react';
 
 export default ({ subscription, customer, product, loading }) => {
@@ -34,13 +34,13 @@ export default ({ subscription, customer, product, loading }) => {
 					<div>
 						<strong>{sprintf(__('Cancels on', 'surecart'))}</strong>
 					</div>
-					<CeFormatDate
+					<ScFormatDate
 						date={subscription.current_period_end_at}
 						type="timestamp"
 						month="long"
 						day="numeric"
 						year="numeric"
-					></CeFormatDate>
+					></ScFormatDate>
 				</div>
 			);
 		}
@@ -51,13 +51,13 @@ export default ({ subscription, customer, product, loading }) => {
 					<div>
 						<strong>{sprintf(__('Ended', 'surecart'))}</strong>
 					</div>
-					<CeFormatDate
+					<ScFormatDate
 						date={subscription.ended_at}
 						type="timestamp"
 						month="long"
 						day="numeric"
 						year="numeric"
-					></CeFormatDate>
+					></ScFormatDate>
 				</div>
 			);
 		}
@@ -70,13 +70,13 @@ export default ({ subscription, customer, product, loading }) => {
 							{sprintf(__('Trial ends on', 'surecart'))}
 						</strong>
 					</div>
-					<CeFormatDate
+					<ScFormatDate
 						date={subscription?.current_period_end_at}
 						type="timestamp"
 						month="long"
 						day="numeric"
 						year="numeric"
-					></CeFormatDate>
+					></ScFormatDate>
 				</div>
 			);
 		}
@@ -89,13 +89,13 @@ export default ({ subscription, customer, product, loading }) => {
 					<div>
 						<strong>{sprintf(__('Renews on', 'surecart'))}</strong>
 					</div>
-					<CeFormatDate
+					<ScFormatDate
 						date={subscription.current_period_end_at}
 						type="timestamp"
 						month="long"
 						day="numeric"
 						year="numeric"
-					></CeFormatDate>
+					></ScFormatDate>
 				</div>
 			);
 		}
@@ -139,11 +139,11 @@ export default ({ subscription, customer, product, loading }) => {
 					)}
 				</div>
 				<div>
-					<CeSubscriptionStatusBadge subscription={subscription} />
+					<ScSubscriptionStatusBadge subscription={subscription} />
 					{!subscription?.live_mode && (
-						<ce-tag type="warning">
+						<sc-tag type="warning">
 							{__('Test Mode', 'surecart')}{' '}
-						</ce-tag>
+						</sc-tag>
 					)}
 				</div>
 			</div>
@@ -160,18 +160,18 @@ export default ({ subscription, customer, product, loading }) => {
 					<div>
 						<strong>{__('Started', 'surecart')}</strong>
 					</div>
-					<CeFormatDate
+					<ScFormatDate
 						date={subscription.current_period_start_at}
 						type="timestamp"
 						month="long"
 						day="numeric"
 						year="numeric"
-					></CeFormatDate>
+					></ScFormatDate>
 				</div>
 				<div
 					css={css`
 						padding-left: 1em;
-						border-left: 1px solid var(--ce-color-gray-500);
+						border-left: 1px solid var(--sc-color-gray-500);
 					`}
 				>
 					{renderStartDate()}

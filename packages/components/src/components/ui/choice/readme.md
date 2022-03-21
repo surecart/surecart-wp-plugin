@@ -26,9 +26,9 @@
 
 | Event      | Description                                       | Type                   |
 | ---------- | ------------------------------------------------- | ---------------------- |
-| `ceBlur`   | Emitted when the control loses focus.             | `CustomEvent<void>`    |
-| `ceChange` | Emitted when the control's checked state changes. | `CustomEvent<boolean>` |
-| `ceFocus`  | Emitted when the control gains focus.             | `CustomEvent<void>`    |
+| `scBlur`   | Emitted when the control loses focus.             | `CustomEvent<void>`    |
+| `scChange` | Emitted when the control's checked state changes. | `CustomEvent<boolean>` |
+| `scFocus`  | Emitted when the control gains focus.             | `CustomEvent<void>`    |
 
 
 ## Methods
@@ -80,17 +80,17 @@ Type: `Promise<void>`
 
 ### Used by
 
- - [ce-price-choice](../../controllers/checkout-form/price-choice)
- - [ce-subscription-payment](../../controllers/dashboard/subscription-payment)
- - [ce-subscription-switch](../../controllers/dashboard/subscription-switch)
+ - [sc-price-choice](../../controllers/checkout-form/price-choice)
+ - [sc-subscription-payment](../../controllers/dashboard/subscription-payment)
+ - [sc-subscription-switch](../../controllers/dashboard/subscription-switch)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-price-choice --> ce-choice
-  ce-subscription-payment --> ce-choice
-  ce-subscription-switch --> ce-choice
-  style ce-choice fill:#f9f,stroke:#333,stroke-width:4px
+  sc-price-choice --> sc-choice
+  sc-subscription-payment --> sc-choice
+  sc-subscription-switch --> sc-choice
+  style sc-choice fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

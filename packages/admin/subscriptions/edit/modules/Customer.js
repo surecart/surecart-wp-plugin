@@ -1,4 +1,4 @@
-import { CeButton } from '@surecart/components-react';
+import { ScButton } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 import useEntity from '../../../mixins/useEntity';
 import Box from '../../../ui/Box';
@@ -14,15 +14,15 @@ export default ({ subscription, loading }) => {
 			footer={
 				!loading && (
 					<div>
-						<CeButton
+						<ScButton
 							href={addQueryArgs('admin.php', {
-								page: 'ce-customers',
+								page: 'sc-customers',
 								action: 'edit',
 								id: subscription?.customer,
 							})}
 						>
 							{__('Edit Customer', 'surecart')}
-						</CeButton>
+						</ScButton>
 					</div>
 				)
 			}

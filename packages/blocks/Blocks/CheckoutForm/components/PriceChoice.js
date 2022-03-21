@@ -4,11 +4,11 @@ import { __ } from '@wordpress/i18n';
 
 import { Fragment } from '@wordpress/element';
 import {
-	CeInput,
-	CeButton,
-	CeDropdown,
-	CeMenu,
-	CeMenuItem,
+	ScInput,
+	ScButton,
+	ScDropdown,
+	ScMenu,
+	ScMenuItem,
 } from '@surecart/components-react';
 import { Icon, trash, moreHorizontalMobile } from '@wordpress/icons';
 import { useSelect } from '@wordpress/data';
@@ -48,7 +48,7 @@ export default ({ choice, onUpdate, onSelect, onRemove, onNew }) => {
 		if (price?.ad_hoc) return __('Custom', 'surecart');
 		return (
 			<Fragment>
-				<ce-format-number
+				<sc-format-number
 					type="currency"
 					value={
 						price?.amount *
@@ -68,12 +68,12 @@ export default ({ choice, onUpdate, onSelect, onRemove, onNew }) => {
 
 	const renderDropDown = () => {
 		return (
-			<CeDropdown slot="suffix" position="bottom-right">
-				<CeButton type="text" slot="trigger" circle>
+			<ScDropdown slot="suffix" position="bottom-right">
+				<ScButton type="text" slot="trigger" circle>
 					<Icon icon={moreHorizontalMobile} />
-				</CeButton>
-				<CeMenu>
-					<CeMenuItem onClick={onRemove}>
+				</ScButton>
+				<ScMenu>
+					<ScMenuItem onClick={onRemove}>
 						<Icon
 							slot="prefix"
 							style={{
@@ -83,9 +83,9 @@ export default ({ choice, onUpdate, onSelect, onRemove, onNew }) => {
 							size={20}
 						/>
 						{__('Remove', 'surecart')}
-					</CeMenuItem>
-				</CeMenu>
-			</CeDropdown>
+					</ScMenuItem>
+				</ScMenu>
+			</ScDropdown>
 		);
 	};
 	return (
@@ -109,17 +109,17 @@ export default ({ choice, onUpdate, onSelect, onRemove, onNew }) => {
 							{!!product?.name && !!price?.name ? (
 								`${product?.name} – ${price?.name}`
 							) : (
-								<ce-skeleton
+								<sc-skeleton
 									style={{
 										width: '120px',
 										display: 'inline-block',
 									}}
-								></ce-skeleton>
+								></sc-skeleton>
 							)}
 						</div>
 						<div
 							css={css`
-								color: var(--ce-color-gray-500);
+								color: var(--sc-color-gray-500);
 							`}
 						>
 							{renderPrice()}
@@ -133,10 +133,10 @@ export default ({ choice, onUpdate, onSelect, onRemove, onNew }) => {
 					width: 70px;
 				`}
 			>
-				<CeInput
+				<ScInput
 					type="number"
 					value={choice?.quantity}
-					onCeChange={(e) => onUpdate({ quantity: e.target.value })}
+					onScChange={(e) => onUpdate({ quantity: e.target.value })}
 				/>
 			</td>
 			<td

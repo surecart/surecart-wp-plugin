@@ -8,7 +8,7 @@ export default ({ open, name, onRequestClose, onRequestDisable, isSaving }) => {
 
 	return (
 		<Modal
-			className={'ce-disable-confirm'}
+			className={'sc-disable-confirm'}
 			title={sprintf(__('Disable "%s"?', 'surecart'), name || 'Coupon')}
 			onRequestClose={onRequestClose}
 		>

@@ -16,7 +16,7 @@ import {
 /**
  * Component Dependencies
  */
-import { CeButton } from '@surecart/components-react';
+import { ScButton } from '@surecart/components-react';
 import Placeholder from './Placeholder';
 
 export default ({ className, attributes, setAttributes }) => {
@@ -28,7 +28,7 @@ export default ({ className, attributes, setAttributes }) => {
 		}
 
 		return (
-			<CeButton type={type} submit={submit} size={size} type={type}>
+			<ScButton type={type} submit={submit} size={size} type={type}>
 				<RichText
 					aria-label={__('Button text')}
 					placeholder={__('Add text…')}
@@ -37,7 +37,7 @@ export default ({ className, attributes, setAttributes }) => {
 					withoutInteractiveFormatting
 					allowedFormats={['core/bold', 'core/italic']}
 				/>
-			</CeButton>
+			</ScButton>
 		);
 	};
 

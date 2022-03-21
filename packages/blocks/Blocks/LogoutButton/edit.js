@@ -14,7 +14,7 @@ import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
 /**
  * Component Dependencies
  */
-import { CeButton } from '@surecart/components-react';
+import { ScButton } from '@surecart/components-react';
 
 export default ({ className, attributes, setAttributes }) => {
 	const { type, label, submit, size, show_icon, redirectToCurrent } =
@@ -61,9 +61,9 @@ export default ({ className, attributes, setAttributes }) => {
 					className: 'logged-in',
 				})}
 			>
-				<CeButton type={type} submit={submit} size={size} type={type}>
+				<ScButton type={type} submit={submit} size={size} type={type}>
 					{show_icon && (
-						<ce-icon name="log-out" slot="prefix"></ce-icon>
+						<sc-icon name="log-out" slot="prefix"></sc-icon>
 					)}
 
 					<RichText
@@ -74,7 +74,7 @@ export default ({ className, attributes, setAttributes }) => {
 						withoutInteractiveFormatting
 						allowedFormats={['core/bold', 'core/italic']}
 					/>
-				</CeButton>
+				</ScButton>
 			</div>
 		</div>
 	);

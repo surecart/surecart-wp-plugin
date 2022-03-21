@@ -1,24 +1,24 @@
-<ce-breadcrumbs>
-	<ce-breadcrumb href="<?php echo esc_url( $back_url ); ?>">Dashboard</ce-breadcrumb>
-	<ce-breadcrumb>Order</ce-breadcrumb>
-</ce-breadcrumbs>
+<sc-breadcrumbs>
+	<sc-breadcrumb href="<?php echo esc_url( $back_url ); ?>">Dashboard</sc-breadcrumb>
+	<sc-breadcrumb>Order</sc-breadcrumb>
+</sc-breadcrumbs>
 
-<ce-card
-	style="--spacing: var(--ce-spacing-medium)"
+<sc-card
+	style="--spacing: var(--sc-spacing-medium)"
 	no-divider
 >
-	<ce-order-detail
+	<sc-order-detail
 		order-id="<?php echo esc_attr( $id ); ?>"
 		style="margin-bottom: 2em;"
 	>
 		<span slot="title">
 			<?php echo __( 'Order Details', 'surecart' ); ?>
-			<ce-divider></ce-divider>
+			<sc-divider></sc-divider>
 		</span>
-	</ce-order-detail>
+	</sc-order-detail>
 	<?php
 		\SureCart::assets()->addComponentData(
-			'ce-order-detail',
+			'sc-order-detail',
 			'',
 			[
 				'query' => $order['query'] ?? [],
@@ -26,26 +26,26 @@
 		);
 		?>
 
-	<ce-charges-list
+	<sc-charges-list
 		id="customer-order-charges-list"
 		style="margin-bottom: 2em;"
 	>
 		<span slot="title">
 			<?php echo __( 'Payment', 'surecart' ); ?>
-			<ce-divider></ce-divider>
+			<sc-divider></sc-divider>
 		</span>
 		<span slot="empty">
-			<ce-alert
+			<sc-alert
 				type="info"
 				open
 			>
 			<?php esc_html_e( 'You have not been charged for this order.', 'surecart' ); ?>
-			</ce-alert>
+			</sc-alert>
 		</span>
-	</ce-charges-list>
+	</sc-charges-list>
 	<?php
 		\SureCart::assets()->addComponentData(
-			'ce-charges-list',
+			'sc-charges-list',
 			'#customer-order-charges-list',
 			[
 				'query' => $charges['query'] ?? [],
@@ -53,20 +53,20 @@
 		);
 		?>
 
-	<ce-subscriptions-list id="<?php echo esc_attr( 'list' . $id ); ?>">
+	<sc-subscriptions-list id="<?php echo esc_attr( 'list' . $id ); ?>">
 		<span slot="title">
 			<?php echo __( 'Subscriptions', 'surecart' ); ?>
-			<ce-divider></ce-divider>
+			<sc-divider></sc-divider>
 		</span>
 		<span slot="empty"></span>
-	</ce-subscriptions-list>
+	</sc-subscriptions-list>
 	<?php
 		\SureCart::assets()->addComponentData(
-			'ce-subscriptions-list',
+			'sc-subscriptions-list',
 			'#list' . $id,
 			[
 				'query' => $subscriptions['query'] ?? [],
 			]
 		);
 		?>
-</ce-card>
+</sc-card>

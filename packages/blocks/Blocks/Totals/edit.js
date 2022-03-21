@@ -9,7 +9,7 @@ import {
 } from '@wordpress/block-editor';
 import { Fragment } from '@wordpress/element';
 import { PanelBody, PanelRow, ToggleControl } from '@wordpress/components';
-import { CeOrderSummary } from '@surecart/components-react';
+import { ScOrderSummary } from '@surecart/components-react';
 
 const ALLOWED_BLOCKS = [
 	'surecart/coupon',
@@ -93,11 +93,11 @@ export default ({ isSelected, attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<CeOrderSummary
+			<ScOrderSummary
 				collapsible={collapsible}
 				collapsed={collapsed}
 				{...innerBlocksProps}
-			></CeOrderSummary>
+			></ScOrderSummary>
 		</Fragment>
 	);
 };

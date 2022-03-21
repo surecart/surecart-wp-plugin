@@ -2,11 +2,11 @@
 import { __ } from '@wordpress/i18n';
 import { Modal, Button } from '@wordpress/components';
 import {
-	CeAlert,
-	CeForm,
-	CeFormControl,
-	CePriceInput,
-	CeSelect,
+	ScAlert,
+	ScForm,
+	ScFormControl,
+	ScPriceInput,
+	ScSelect,
 } from '@surecart/components-react';
 import { css, jsx } from '@emotion/core';
 import { useState } from '@wordpress/element';
@@ -65,39 +65,39 @@ export default ({ charge, onRequestClose }) => {
 			onRequestClose={onRequestClose}
 			shouldCloseOnClickOutside={false}
 		>
-			<CeForm
-				onCeFormSubmit={onSubmit}
+			<ScForm
+				onScFormSubmit={onSubmit}
 				css={css`
-					--ce-form-row-spacing: var(--ce-spacing-large);
+					--sc-form-row-spacing: var(--sc-spacing-large);
 				`}
 			>
-				<CeAlert type="info" open>
+				<ScAlert type="info" open>
 					{__(
 						"Refunds can take 5-10 days to appear on a customer's statement. Processor fees are typically not returned.",
 						'surecart'
 					)}
-				</CeAlert>
+				</ScAlert>
 				<div>
-					<CePriceInput
+					<ScPriceInput
 						required
 						name="amount"
 						label={__('Refund', 'surecart')}
 						currencyCode={charge?.currency}
 						value={charge?.amount - charge?.refunded_amount}
 						max={charge?.amount - charge?.refunded_amount}
-						onCeChange={(e) => {
+						onScChange={(e) => {
 							setAmount(e.target.value);
 						}}
 						showCode
 					/>
 				</div>
 				<div>
-					<CeFormControl label={__('Reason', 'surecart')}>
-						<CeSelect
+					<ScFormControl label={__('Reason', 'surecart')}>
+						<ScSelect
 							name="reason"
 							value={reason}
 							placeholder={__('Select a reason', 'surecart')}
-							onCeChange={(e) => {
+							onScChange={(e) => {
 								setReason(e.target.value);
 							}}
 							choices={[
@@ -115,12 +115,12 @@ export default ({ charge, onRequestClose }) => {
 								},
 							]}
 						/>
-					</CeFormControl>
+					</ScFormControl>
 				</div>
 
-				<CeAlert type="danger" open={error}>
+				<ScAlert type="danger" open={error}>
 					{error}
-				</CeAlert>
+				</ScAlert>
 
 				<div
 					css={css`
@@ -138,9 +138,9 @@ export default ({ charge, onRequestClose }) => {
 				</div>
 
 				{loading && (
-					<ce-block-ui spinner style={{ zIndex: 9 }}></ce-block-ui>
+					<sc-block-ui spinner style={{ zIndex: 9 }}></sc-block-ui>
 				)}
-			</CeForm>
+			</ScForm>
 		</Modal>
 	);
 };

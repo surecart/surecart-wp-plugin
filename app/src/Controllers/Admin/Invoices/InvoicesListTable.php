@@ -144,7 +144,7 @@ class InvoicesListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_total( $order ) {
-		return '<ce-format-number type="currency" currency="' . strtoupper( esc_html( $order->currency ) ) . '" value="' . (float) $order->total_amount . '"></ce-format-number>';
+		return '<sc-format-number type="currency" currency="' . strtoupper( esc_html( $order->currency ) ) . '" value="' . (float) $order->total_amount . '"></sc-format-number>';
 	}
 
 	/**
@@ -243,9 +243,9 @@ class InvoicesListTable extends ListTable {
 	 */
 	public function column_status( $order ) {
 		if ( ! empty( $order->charge->fully_refunded ) ) {
-			return '<ce-tag type="danger">' . __( 'Refunded', 'surecart' ) . '</ce-tag>';
+			return '<sc-tag type="danger">' . __( 'Refunded', 'surecart' ) . '</sc-tag>';
 		}
-		return '<ce-order-status-badge status="' . esc_attr( $order->status ) . '"></ce-order-status-badge>';
+		return '<sc-order-status-badge status="' . esc_attr( $order->status ) . '"></sc-order-status-badge>';
 	}
 
 	/**

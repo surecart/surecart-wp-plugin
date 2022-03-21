@@ -21,7 +21,7 @@ class DownloadController extends BaseController {
 		}
 
 		return wp_kses_post(
-			Component::tag( 'ce-dashboard-downloads-list' )
+			Component::tag( 'sc-dashboard-downloads-list' )
 			->id( 'customer-downloads-preview' )
 			->with(
 				[
@@ -53,7 +53,7 @@ class DownloadController extends BaseController {
 		}
 
 		return wp_kses_post(
-			Component::tag( 'ce-orders-list' )
+			Component::tag( 'sc-orders-list' )
 			->id( 'customer-orders-index' )
 			->with(
 				[

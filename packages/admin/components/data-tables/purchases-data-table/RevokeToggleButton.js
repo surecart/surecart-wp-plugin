@@ -2,7 +2,7 @@ import { __, _n } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import { useState } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
-import { CeButton } from '@surecart/components-react';
+import { ScButton } from '@surecart/components-react';
 import useEntity from '../../../mixins/useEntity';
 
 export default ({ purchase }) => {
@@ -54,22 +54,22 @@ export default ({ purchase }) => {
 	}
 
 	return purchase?.revoked ? (
-		<CeButton
+		<ScButton
 			href="#"
 			onClick={() => toggleRevoke(purchase?.id, false)}
 			size="small"
 			loading={loading}
 		>
 			{__('Unrevoke', 'surecart')}
-		</CeButton>
+		</ScButton>
 	) : (
-		<CeButton
+		<ScButton
 			href="#"
 			onClick={() => toggleRevoke(purchase?.id, true)}
 			size="small"
 			loading={loading}
 		>
 			{__('Revoke', 'surecart')}
-		</CeButton>
+		</ScButton>
 	);
 };

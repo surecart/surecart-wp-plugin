@@ -239,7 +239,7 @@ class CouponsListTable extends ListTable {
 
 		if ( ! empty( $coupon->amount_off ) ) {
 			// translators: Coupon amount off.
-			return '<ce-format-number type="currency" currency="' . $coupon->currency . '" value="' . $coupon->amount_off . '"></ce-format-number>';
+			return '<sc-format-number type="currency" currency="' . $coupon->currency . '" value="' . $coupon->amount_off . '"></sc-format-number>';
 		}
 
 		return esc_html__( 'No discount.', 'surecart' );

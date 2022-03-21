@@ -18,57 +18,57 @@
 
 ### Depends on
 
-- [ce-dashboard-module](../../../ui/dashboard-module)
-- [ce-tag](../../../ui/tag)
-- [ce-card](../../../ui/card)
-- [ce-form](../../../ui/form)
-- [ce-input](../../../ui/input)
-- [ce-columns](../../../ui/columns)
-- [ce-column](../../../ui/column)
-- [ce-address](../../../ui/address)
-- [ce-switch](../../../ui/switch)
-- [ce-tax-id-input](../../../ui/tax-id-input)
-- [ce-button](../../../ui/button)
-- [ce-block-ui](../../../ui/block-ui)
+- [sc-dashboard-module](../../../ui/dashboard-module)
+- [sc-tag](../../../ui/tag)
+- [sc-card](../../../ui/card)
+- [sc-form](../../../ui/form)
+- [sc-input](../../../ui/input)
+- [sc-columns](../../../ui/columns)
+- [sc-column](../../../ui/column)
+- [sc-address](../../../ui/address)
+- [sc-switch](../../../ui/switch)
+- [sc-tax-id-input](../../../ui/tax-id-input)
+- [sc-button](../../../ui/button)
+- [sc-block-ui](../../../ui/block-ui)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-customer-edit --> ce-dashboard-module
-  ce-customer-edit --> ce-tag
-  ce-customer-edit --> ce-card
-  ce-customer-edit --> ce-form
-  ce-customer-edit --> ce-input
-  ce-customer-edit --> ce-columns
-  ce-customer-edit --> ce-column
-  ce-customer-edit --> ce-address
-  ce-customer-edit --> ce-switch
-  ce-customer-edit --> ce-tax-id-input
-  ce-customer-edit --> ce-button
-  ce-customer-edit --> ce-block-ui
-  ce-dashboard-module --> ce-alert
-  ce-alert --> ce-icon
-  ce-input --> ce-form-control
-  ce-form-control --> ce-tooltip
-  ce-address --> ce-form-control
-  ce-address --> ce-select
-  ce-address --> ce-input
-  ce-select --> ce-menu-label
-  ce-select --> ce-menu-item
-  ce-select --> ce-form-control
-  ce-select --> ce-dropdown
-  ce-select --> ce-icon
-  ce-select --> ce-input
-  ce-select --> ce-spinner
-  ce-select --> ce-menu
-  ce-tax-id-input --> ce-input
-  ce-tax-id-input --> ce-dropdown
-  ce-tax-id-input --> ce-button
-  ce-tax-id-input --> ce-menu
-  ce-tax-id-input --> ce-menu-item
-  ce-button --> ce-spinner
-  ce-block-ui --> ce-spinner
-  style ce-customer-edit fill:#f9f,stroke:#333,stroke-width:4px
+  sc-customer-edit --> sc-dashboard-module
+  sc-customer-edit --> sc-tag
+  sc-customer-edit --> sc-card
+  sc-customer-edit --> sc-form
+  sc-customer-edit --> sc-input
+  sc-customer-edit --> sc-columns
+  sc-customer-edit --> sc-column
+  sc-customer-edit --> sc-address
+  sc-customer-edit --> sc-switch
+  sc-customer-edit --> sc-tax-id-input
+  sc-customer-edit --> sc-button
+  sc-customer-edit --> sc-block-ui
+  sc-dashboard-module --> sc-alert
+  sc-alert --> sc-icon
+  sc-input --> sc-form-control
+  sc-form-control --> sc-tooltip
+  sc-address --> sc-form-control
+  sc-address --> sc-select
+  sc-address --> sc-input
+  sc-select --> sc-menu-label
+  sc-select --> sc-menu-item
+  sc-select --> sc-form-control
+  sc-select --> sc-dropdown
+  sc-select --> sc-icon
+  sc-select --> sc-input
+  sc-select --> sc-spinner
+  sc-select --> sc-menu
+  sc-tax-id-input --> sc-input
+  sc-tax-id-input --> sc-dropdown
+  sc-tax-id-input --> sc-button
+  sc-tax-id-input --> sc-menu
+  sc-tax-id-input --> sc-menu-item
+  sc-button --> sc-spinner
+  sc-block-ui --> sc-spinner
+  style sc-customer-edit fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

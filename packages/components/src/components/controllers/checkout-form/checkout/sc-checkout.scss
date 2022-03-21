@@ -1,0 +1,30 @@
+sc-checkout {
+  display: block;
+  font-family: var(--sc-font-sans);
+  font-size: var(--sc-checkout-font-size, 16px);
+  position: relative;
+
+  h3 {
+    font-size: var(--sc-input-label-font-size-medium);
+  }
+}
+
+sc-alert {
+  margin-bottom: var(--sc-form-row-spacing);
+}
+.sc-checkout-container {
+  &.sc-align-center {
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  &.sc-align-wide {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+::slotted(*) {
+  font-family: var(--sc-font-sans);
+}

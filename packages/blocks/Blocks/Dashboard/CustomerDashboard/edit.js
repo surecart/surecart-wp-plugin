@@ -13,7 +13,7 @@ import { useDispatch, useSelect } from '@wordpress/data';
 import { useEffect, useRef } from '@wordpress/element';
 import { css, jsx } from '@emotion/core';
 import { __, sprintf } from '@wordpress/i18n';
-import { CeTabGroup } from '@surecart/components-react';
+import { ScTabGroup } from '@surecart/components-react';
 
 export default ({ clientId }) => {
 	const useInnerBlocksProps = __stableUseInnerBlocksProps
@@ -159,7 +159,7 @@ export default ({ clientId }) => {
 	}, [tabBlocks, panelBlocks]);
 
 	return (
-		<CeTabGroup
+		<ScTabGroup
 			{...innerBlocksProps}
 			css={css`
 				.block-list-appender {
@@ -173,6 +173,6 @@ export default ({ clientId }) => {
 					}
 				}
 			`}
-		></CeTabGroup>
+		></ScTabGroup>
 	);
 };

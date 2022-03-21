@@ -9,7 +9,7 @@ import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
 /**
  * Component Dependencies
  */
-import { CePayment } from '@surecart/components-react';
+import { ScPayment } from '@surecart/components-react';
 
 export default ({ className, attributes, setAttributes }) => {
 	const { label, secure_notice } = attributes;
@@ -37,11 +37,11 @@ export default ({ className, attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<CePayment
+			<ScPayment
 				className={className}
 				label={label}
 				secureNotice={secure_notice}
-			></CePayment>
+			></ScPayment>
 		</Fragment>
 	);
 };

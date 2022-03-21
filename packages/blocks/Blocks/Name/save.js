@@ -3,7 +3,7 @@ export default ({ className, attributes }) => {
 		attributes;
 
 	return (
-		<ce-customer-name
+		<sc-customer-name
 			class={className || false}
 			label={label || false}
 			help={help || false}
@@ -12,6 +12,6 @@ export default ({ className, attributes }) => {
 			showLabel={showLabel || false}
 			size={size || false}
 			required={required}
-		></ce-customer-name>
+		></sc-customer-name>
 	);
 };

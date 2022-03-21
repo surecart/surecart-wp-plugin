@@ -11,12 +11,12 @@ describe('Admin', () => {
 		});
 
 		it('Can create a coupon', () => {
-			cy.visit('/wp-admin/admin.php?page=ce-coupons&action=edit');
-			cy.get('.ce-coupon-name')
+			cy.visit('/wp-admin/admin.php?page=sc-coupons&action=edit');
+			cy.get('.sc-coupon-name')
 				.shadow()
 				.find('input')
 				.type('name', { force: true });
-			cy.get('.ce-percent-off')
+			cy.get('.sc-percent-off')
 				.shadow()
 				.find('input')
 				.type('10', { force: true });
@@ -31,7 +31,7 @@ describe('Admin', () => {
 				as: 'promotionRequest',
 			});
 
-			cy.get('.ce-save-model').click();
+			cy.get('.sc-save-model').click();
 
 			cy.wait('@couponRequest').then(({ response, request }) => {
 				expect(request.body.percent_off).to.equal('10');
@@ -43,7 +43,7 @@ describe('Admin', () => {
 			cy.wait('@promotionRequest').then(({ request }) => {
 				expect(request.body.coupon_id).to.equal(coupon.id);
 				expect(request.body.currency).to.equal(coupon.currency);
-				cy.get('.ce-promotion-code').should(
+				cy.get('.sc-promotion-code').should(
 					'have.value',
 					promotion.code
 				);
@@ -58,7 +58,7 @@ describe('Admin', () => {
 				'getPromotions'
 			);
 			cy.visit(
-				`/wp-admin/admin.php?page=ce-coupons&action=edit&id=${coupon.id}`
+				`/wp-admin/admin.php?page=sc-coupons&action=edit&id=${coupon.id}`
 			);
 			cy.wait('@getCoupons').then(({ response }) => {
 				expect(response.body.id).to.equal(coupon.id);
@@ -66,21 +66,21 @@ describe('Admin', () => {
 			});
 
 			// duration
-			cy.get('.ce-discount-duration-trigger').click({ force: true });
-			cy.get('.ce-discount-menu-repeating').click({ force: true });
-			cy.get('.ce-duration-in-months')
+			cy.get('.sc-discount-duration-trigger').click({ force: true });
+			cy.get('.sc-discount-menu-repeating').click({ force: true });
+			cy.get('.sc-duration-in-months')
 				.should('be.visible')
 				.shadow()
 				.find('input')
 				.type('4', { force: true });
 
 			// redemption
-			cy.get('.ce-redeem-by.hydrated')
+			cy.get('.sc-redeem-by.hydrated')
 				.shadow()
 				.find('input')
 				.click({ force: true });
 			cy.get('.redeem-by-date').should('be.visible');
-			cy.get('.ce-max-redemptions.hydrated')
+			cy.get('.sc-max-redemptions.hydrated')
 				.shadow()
 				.find('input')
 				.click({ force: true });
@@ -91,8 +91,8 @@ describe('Admin', () => {
 				.find('input')
 				.type('4', { force: true });
 
-			cy.get('.ce-promotion-code-add.hydrated').click();
-			cy.get('.ce-promotion-code').its('length').should('eq', 2);
+			cy.get('.sc-promotion-code-add.hydrated').click();
+			cy.get('.sc-promotion-code').its('length').should('eq', 2);
 
 			cy.interceptWithFixture('POST', '**coupons*', {
 				fixture: 'coupon/new-coupon',
@@ -104,7 +104,7 @@ describe('Admin', () => {
 				as: 'promotionsRequest',
 			});
 
-			cy.get('.ce-save-model').click();
+			cy.get('.sc-save-model').click();
 
 			cy.wait('@couponRequest').then(({ response, request }) => {
 				const time = new Date().getTime() - request.body.redeem_by;

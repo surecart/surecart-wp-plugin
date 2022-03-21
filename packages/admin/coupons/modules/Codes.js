@@ -3,7 +3,7 @@
 import { __ } from '@wordpress/i18n';
 
 import Box from '../../ui/Box';
-import { CeButton, CeSwitch } from '@surecart/components-react';
+import { ScButton, ScSwitch } from '@surecart/components-react';
 import { useState, Fragment } from '@wordpress/element';
 import { css, jsx } from '@emotion/core';
 import useEntities from '../../mixins/useEntities';
@@ -37,19 +37,19 @@ export default ({ id, loading }) => {
 					gap: 0.5em;
 				`}
 			>
-				<ce-skeleton
+				<sc-skeleton
 					style={{
 						'--border-radius':
-							'var(--ce-input-border-radius-medium)',
-						height: 'var( --ce-input-height-medium )',
+							'var(--sc-input-border-radius-medium)',
+						height: 'var( --sc-input-height-medium )',
 						width: '100%',
 					}}
-				></ce-skeleton>
-				<ce-skeleton
+				></sc-skeleton>
+				<sc-skeleton
 					style={{
 						width: '80%',
 					}}
-				></ce-skeleton>
+				></sc-skeleton>
 			</div>
 		);
 	};
@@ -66,8 +66,8 @@ export default ({ id, loading }) => {
 			footer={
 				!loading && (
 					<Fragment>
-						<CeButton
-							class={'ce-promotion-code-add'}
+						<ScButton
+							class={'sc-promotion-code-add'}
 							onClick={(e) => {
 								e.preventDefault();
 								addPromotion({
@@ -92,7 +92,7 @@ export default ({ id, loading }) => {
 								<line x1="5" y1="12" x2="19" y2="12"></line>
 							</svg>
 							{__('Add Another Promotion Code', 'surecart')}
-						</CeButton>
+						</ScButton>
 
 						{!!archivedPromotions?.length && (
 							<div
@@ -101,7 +101,7 @@ export default ({ id, loading }) => {
 									justify-content: flex-end;
 								`}
 							>
-								<CeSwitch
+								<ScSwitch
 									checked={!!showArchived}
 									onClick={(e) => {
 										e.preventDefault();
@@ -120,7 +120,7 @@ export default ({ id, loading }) => {
 											  ),
 										archivedPromotions?.length
 									)}
-								</CeSwitch>
+								</ScSwitch>
 							</div>
 						)}
 					</Fragment>

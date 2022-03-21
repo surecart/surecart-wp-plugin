@@ -1,5 +1,5 @@
 import { __ } from '@wordpress/i18n';
-import { CeSelect } from '@surecart/components-react';
+import { ScSelect } from '@surecart/components-react';
 import { useState, useEffect } from '@wordpress/element';
 import throttle from 'lodash/throttle';
 import apiFetch from '@wordpress/api-fetch';
@@ -74,14 +74,14 @@ export default ({ onSelect }) => {
 	});
 
 	return (
-		<CeSelect
+		<ScSelect
 			loading={busy}
 			placeholder={__('Select a product', 'surecart')}
 			searchPlaceholder={__('Search for a product...', 'surecart')}
 			search
-			onCeOpen={() => findProduct()}
-			onCeSearch={(e) => findProduct(e.detail)}
-			onCeChange={(e) => {
+			onScOpen={() => findProduct()}
+			onScSearch={(e) => findProduct(e.detail)}
+			onScChange={(e) => {
 				onSelect(e.target.value);
 			}}
 			choices={choices}

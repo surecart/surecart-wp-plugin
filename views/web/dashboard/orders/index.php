@@ -1,7 +1,7 @@
-<ce-orders-list id="customer-orders-index"></ce-orders-list>
+<sc-orders-list id="customer-orders-index"></sc-orders-list>
 <?php
 \SureCart::assets()->addComponentData(
-	'ce-orders-list',
+	'sc-orders-list',
 	'#customer-orders-index',
 	[
 		'query' => $query ?? [],

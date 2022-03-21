@@ -1,11 +1,11 @@
 import { __ } from '@wordpress/i18n';
 import { useState, useEffect } from '@wordpress/element';
 import {
-	CeButton,
-	CeFormSection,
-	CeSelect,
-	CeRadioGroup,
-	CeRadio,
+	ScButton,
+	ScFormSection,
+	ScSelect,
+	ScRadioGroup,
+	ScRadio,
 } from '@surecart/components-react';
 import SelectProduct from './SelectProductModal';
 import Choice from './Choice';
@@ -20,7 +20,7 @@ export default ({ attributes, setAttributes }) => {
 
 	return (
 		<div>
-			<CeFormSection label="Products">
+			<ScFormSection label="Products">
 				{Object.keys(choices).map((id) => {
 					const product = choices[id];
 					return (
@@ -33,30 +33,30 @@ export default ({ attributes, setAttributes }) => {
 						/>
 					);
 				})}
-				<ce-form-row>
+				<sc-form-row>
 					<div>
-						<CeButton type="primary" onClick={() => setOpen(true)}>
+						<ScButton type="primary" onClick={() => setOpen(true)}>
 							{__('Add Product', 'surecart')}
-						</CeButton>
-						<CeButton onClick={() => setOpen(true)}>
+						</ScButton>
+						<ScButton onClick={() => setOpen(true)}>
 							{__('Create Product', 'surecart')}
-						</CeButton>
+						</ScButton>
 					</div>
-				</ce-form-row>
-			</CeFormSection>
-			<CeFormSection>
-				<CeRadioGroup label={'Product Options'}>
-					<CeRadio value="all">
+				</sc-form-row>
+			</ScFormSection>
+			<ScFormSection>
+				<ScRadioGroup label={'Product Options'}>
+					<ScRadio value="all">
 						Customer must purchase all products
-					</CeRadio>
-					<CeRadio value="radio">
+					</ScRadio>
+					<ScRadio value="radio">
 						Customer must select one price from the options.
-					</CeRadio>
-					<CeRadio value="checkbox">
+					</ScRadio>
+					<ScRadio value="checkbox">
 						Customer can select multiple prices.
-					</CeRadio>
-				</CeRadioGroup>
-			</CeFormSection>
+					</ScRadio>
+				</ScRadioGroup>
+			</ScFormSection>
 			{open && (
 				<SelectProduct
 					attributes={attributes}

@@ -26,7 +26,7 @@ import styles from './editor-styles';
 /**
  * Component Dependencies
  */
-import { CePriceChoices } from '@surecart/components-react';
+import { ScPriceChoices } from '@surecart/components-react';
 
 export default ({ attributes, setAttributes, clientId, isSelected }) => {
 	const useInnerBlocksProps = __stableUseInnerBlocksProps
@@ -60,7 +60,7 @@ export default ({ attributes, setAttributes, clientId, isSelected }) => {
 	const innerBlocksProps = useInnerBlocksProps(
 		{},
 		{
-			className: 'ce-choices',
+			className: 'sc-choices',
 			allowedBlocks: ['surecart/price-choice'],
 			renderAppender:
 				isSelected || childIsSelected
@@ -124,9 +124,9 @@ export default ({ attributes, setAttributes, clientId, isSelected }) => {
 			</InspectorControls>
 
 			<div {...blockProps}>
-				<CePriceChoices label={label} type={type} columns={columns}>
+				<ScPriceChoices label={label} type={type} columns={columns}>
 					<div {...innerBlocksProps} />
-				</CePriceChoices>
+				</ScPriceChoices>
 			</div>
 		</Fragment>
 	);

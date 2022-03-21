@@ -1,0 +1,187 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: stretch;
+  min-width: 0;
+  align-self: stretch;
+}
+
+[hidden] {
+  border: 0 !important;
+  clip: rect(0 0 0 0)  !important;
+  height: 1px !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  position: absolute !important;
+  width: 1px !important;
+}
+
+.choice {
+  background: var(--sc-choice-background-color);
+  display: flex;
+  font-family: var(--sc-input-font-family);
+  font-size: var(--sc-input-font-size-medium);
+  font-weight: var(--sc-input-font-weight);
+  -webkit-user-select: none;
+  user-select: none;
+  border: var(--sc-choice-border);
+  border-radius: var(--sc-input-border-radius-large);
+  box-shadow: var(--sc-choice-box-shadow);
+  cursor: pointer;
+  padding: 1.3em 1.1em;
+  position: relative;
+  text-decoration: none;
+  color: var(--sc-input-color);
+  height: 100%; // TODO: test this.
+  transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease, box-shadow 150ms ease;
+
+  &--checked {
+    border-color: var(--sc-color-primary-500);
+    box-shadow: 0 0 0 1px var(--sc-color-primary-500);
+    z-index:1;
+  }
+
+  &__title {
+    display: inline-block;
+    font-weight: var(--sc-input-label-font-weight);
+    font-size: var(--sc-input-label-font-size-medium);
+  }
+
+  &--size-small {
+    padding: 0.75em 0.9em;
+  }
+  &--size-large {
+    padding: 1.3em 1.1em;
+  }
+}
+
+.choice__icon {
+  display: inline-flex;
+  width: var(--sc-radio-size);
+  height: var(--sc-radio-size);
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.choice__control {
+  flex: 0 0 auto;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 0.75em;
+  border: solid var(--sc-input-border-width) var(--sc-input-border-color);
+  background-color: var(--sc-input-background-color);
+  color: transparent;
+  transition: var(--sc-transition-fast) border-color, var(--sc-transition-fast) background-color, var(--sc-transition-fast) color, var(--sc-transition-fast) box-shadow;
+
+  &.choice__radio {
+    width: var(--sc-radio-size);
+    height: var(--sc-radio-size);
+    border-radius: 50%;
+  }
+
+  &.choice__checkbox {
+    width: var(--sc-toggle-size);
+    height: var(--sc-toggle-size);
+    border-radius: 4px;
+  }
+
+  input[type='radio'],
+  input[type='checkbox'] {
+    position: absolute;
+    opacity: 0;
+    padding: 0;
+    margin: 0;
+    pointer-events: none;
+  }
+}
+
+// Hover
+.choice:not(.choice--checked):not(.choice--disabled) .choice__control:hover {
+  border-color: var(--sc-input-border-color-hover);
+  background-color: var(--sc-input-background-color-hover);
+}
+
+// Focus
+.choice.choice--focused:not(.choice--checked):not(.choice--disabled) .choice__control {
+  border-color: var(--sc-color-white);
+  background-color: var(--sc-input-background-color-focus);
+  box-shadow: 0 0 0 var(--sc-focus-ring-width) var(--sc-color-primary-500);
+}
+
+// Checked
+.choice--checked .choice__control {
+  color: var(--sc-color-white);
+  border-color: var(--sc-color-primary-500);
+  background-color: var(--sc-color-primary-500);
+}
+
+// Checked + hover
+.choice.choice--checked:not(.choice--disabled) .choice__control:hover {
+  border-color: var(--sc-color-white);
+  background-color: var(--sc-color-primary-500);
+}
+
+// Checked + focus
+.choice.choice--checked:not(.choice--disabled).choice--focused .choice__control {
+  border-color: var(--sc-color-white);
+  background-color: var(--sc-color-primary-500);
+  box-shadow: 0 0 0 var(--sc-focus-ring-width) var(--sc-focus-ring-color-primary);
+}
+
+// Disabled
+.choice--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+// When the control isn't checked, hide the circle for Windows High Contrast mode a11y
+.choice:not(.choice--checked) svg circle {
+  opacity: 0;
+}
+
+.choice__label {
+  width: 100%;
+  line-height: 1;
+  user-select: none;
+}
+
+.choice--layout-columns {
+  .choice__label {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5em;
+  }
+  .choice__price {
+    text-align: right;
+    margin: 0;
+  }
+}
+
+.choice__description {
+  display: inline-block;
+  color: var(--sc-color-gray-500);
+  font-size: var(--sc-font-size-medium);
+}
+
+.choice__label-text {
+  display: block;
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.2em;
+  flex: 1 0 200px;
+}
+
+.choice__price {
+  display: block;
+  white-space: nowrap;
+  margin-left: 20px;
+}

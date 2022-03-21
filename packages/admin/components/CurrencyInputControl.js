@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { getCurrencySymbol } from '../util';
-import { CeInput } from '@surecart/components-react';
+import { ScInput } from '@surecart/components-react';
 
 export default (props) => {
 	const {
@@ -18,9 +18,9 @@ export default (props) => {
 	} = props;
 
 	return (
-		<CeInput
+		<ScInput
 			label={label}
-			className="ce-price-amount"
+			className="sc-price-amount"
 			value={value / 100 || null}
 			onChange={(e) => {
 				onChange(e.detail * 100);
@@ -39,6 +39,6 @@ export default (props) => {
 			>
 				{getCurrencySymbol(currency)}
 			</span>
-		</CeInput>
+		</ScInput>
 	);
 };

@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
-import { CeButton, CeCard, CeInput } from '@surecart/components-react';
+import { ScButton, ScCard, ScInput } from '@surecart/components-react';
 
 export default () => {
 	return (
@@ -25,15 +25,15 @@ export default () => {
 						'surecart'
 					)}
 				</p>
-				<CeCard>
-					<CeInput
+				<ScCard>
+					<ScInput
 						label={__('Api Key', 'surecart')}
 						type="password"
 					/>
-					<CeButton type="primary">
+					<ScButton type="primary">
 						{__('Check Connection', 'surecart')}
-					</CeButton>
-				</CeCard>
+					</ScButton>
+				</ScCard>
 			</div>
 		</div>
 	);

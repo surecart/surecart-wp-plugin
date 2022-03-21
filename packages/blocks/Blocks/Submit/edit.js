@@ -15,7 +15,7 @@ import {
 /**
  * Component Dependencies
  */
-import { CeButton } from '@surecart/components-react';
+import { ScButton } from '@surecart/components-react';
 
 export default ({ className, attributes, setAttributes }) => {
 	const { type, text, submit, full, size, show_total, show_icon } =
@@ -91,7 +91,7 @@ export default ({ className, attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<CeButton
+			<ScButton
 				type={type}
 				submit={submit}
 				{...(full ? { full: true } : {})}
@@ -126,10 +126,10 @@ export default ({ className, attributes, setAttributes }) => {
 				{show_total && (
 					<span>
 						{'\u00A0'}
-						<ce-total></ce-total>
+						<sc-total></sc-total>
 					</span>
 				)}
-			</CeButton>
+			</ScButton>
 		</div>
 	);
 };

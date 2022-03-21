@@ -18,24 +18,24 @@
 
 ### Depends on
 
-- [ce-card](../../../ui/card)
-- [ce-form](../../../ui/form)
-- [ce-alert](../../../ui/alert)
-- [ce-button](../../../ui/button)
-- [ce-block-ui](../../../ui/block-ui)
+- [sc-card](../../../ui/card)
+- [sc-form](../../../ui/form)
+- [sc-alert](../../../ui/alert)
+- [sc-button](../../../ui/button)
+- [sc-block-ui](../../../ui/block-ui)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-payment-method-create --> ce-card
-  ce-payment-method-create --> ce-form
-  ce-payment-method-create --> ce-alert
-  ce-payment-method-create --> ce-button
-  ce-payment-method-create --> ce-block-ui
-  ce-alert --> ce-icon
-  ce-button --> ce-spinner
-  ce-block-ui --> ce-spinner
-  style ce-payment-method-create fill:#f9f,stroke:#333,stroke-width:4px
+  sc-payment-method-create --> sc-card
+  sc-payment-method-create --> sc-form
+  sc-payment-method-create --> sc-alert
+  sc-payment-method-create --> sc-button
+  sc-payment-method-create --> sc-block-ui
+  sc-alert --> sc-icon
+  sc-button --> sc-spinner
+  sc-block-ui --> sc-spinner
+  style sc-payment-method-create fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

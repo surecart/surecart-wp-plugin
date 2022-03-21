@@ -1,5 +1,5 @@
 import { __ } from '@wordpress/i18n';
-import { CeSelect, CeDivider, CeMenuItem } from '@surecart/components-react';
+import { ScSelect, ScDivider, ScMenuItem } from '@surecart/components-react';
 import { useState, useEffect } from '@wordpress/element';
 import throttle from 'lodash/throttle';
 import apiFetch from '@wordpress/api-fetch';
@@ -74,28 +74,28 @@ export default ({ onSelect, className }) => {
 	});
 
 	return (
-		<CeSelect
+		<ScSelect
 			className={className}
 			loading={busy}
 			placeholder={__('Select a product', 'surecart')}
 			searchPlaceholder={__('Search for a product...', 'surecart')}
 			search
-			onCeOpen={fetchProducts}
-			onCeSearch={(e) => findProduct(e.detail)}
-			onCeChange={(e) => {
+			onScOpen={fetchProducts}
+			onScSearch={(e) => findProduct(e.detail)}
+			onScChange={(e) => {
 				onSelect(e.target.value);
 			}}
 			choices={choices}
 		>
 			<span slot="prefix">
-				<CeMenuItem onClick={() => console.log('new')}>
+				<ScMenuItem onClick={() => console.log('new')}>
 					<span slot="prefix">+</span>
 					{__('Add New Product')}
-				</CeMenuItem>
-				<CeDivider
-					style={{ '--spacing': 'var(--ce-spacing-x-small)' }}
-				></CeDivider>
+				</ScMenuItem>
+				<ScDivider
+					style={{ '--spacing': 'var(--sc-spacing-x-small)' }}
+				></ScDivider>
 			</span>
-		</CeSelect>
+		</ScSelect>
 	);
 };

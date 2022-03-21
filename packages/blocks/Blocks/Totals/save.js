@@ -3,14 +3,14 @@
  */
 import { InnerBlocks } from '@wordpress/block-editor';
 
-export default function save( { attributes } ) {
+export default function save({ attributes }) {
 	const { collapsed, collapsible } = attributes;
 	return (
-		<ce-order-summary
-			collapsible={ collapsible ? '1' : false }
-			collapsed={ collapsed ? '1' : false }
+		<sc-order-summary
+			collapsible={collapsible ? '1' : false}
+			collapsed={collapsed ? '1' : false}
 		>
 			<InnerBlocks.Content />
-		</ce-order-summary>
+		</sc-order-summary>
 	);
 }

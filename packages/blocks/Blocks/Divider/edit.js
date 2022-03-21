@@ -9,7 +9,7 @@ import { useBlockProps } from '@wordpress/block-editor';
 /**
  * Component Dependencies
  */
-import { CeDivider } from '@surecart/components-react';
+import { ScDivider } from '@surecart/components-react';
 
 export default ({ attributes, setAttributes }) => {
 	const { text } = attributes;
@@ -34,7 +34,7 @@ export default ({ attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<CeDivider {...blockProps}>{text}</CeDivider>
+			<ScDivider {...blockProps}>{text}</ScDivider>
 		</Fragment>
 	);
 };

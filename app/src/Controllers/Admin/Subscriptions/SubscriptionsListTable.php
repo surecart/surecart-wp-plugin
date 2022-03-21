@@ -188,7 +188,7 @@ class SubscriptionsListTable extends ListTable {
 		$interval = $subscription->price->recurring_interval ?? '';
 		$count    = $subscription->price->recurring_interval_count ?? 1;
 		ob_start();
-		echo '<ce-format-number type="currency" currency="' . esc_html( strtoupper( $subscription->latest_invoice->currency ?? 'usd' ) ) . '" value="' . (float) ( $subscription->latest_invoice->total_amount ?? 0 ) . '"></ce-format-number>';
+		echo '<sc-format-number type="currency" currency="' . esc_html( strtoupper( $subscription->latest_invoice->currency ?? 'usd' ) ) . '" value="' . (float) ( $subscription->latest_invoice->total_amount ?? 0 ) . '"></sc-format-number>';
 		echo esc_html( $this->getInterval( $interval, $count ) );
 		return ob_get_clean();
 	}
@@ -298,24 +298,24 @@ class SubscriptionsListTable extends ListTable {
 
 		switch ( $subscription->status ) {
 			case 'active':
-				$status = '<ce-tag type="success">' . __( 'Active', 'surecart' ) . '</ce-tag>';
+				$status = '<sc-tag type="success">' . __( 'Active', 'surecart' ) . '</sc-tag>';
 				break;
 			case 'canceled':
-				$status = '<ce-tag type="danger">' . __( 'Canceled', 'surecart' ) . '</ce-tag>';
+				$status = '<sc-tag type="danger">' . __( 'Canceled', 'surecart' ) . '</sc-tag>';
 				break;
 			case 'trialing':
-				$status = '<ce-tag type="primary">' . __( 'Trialing', 'surecart' ) . '</ce-tag>';
+				$status = '<sc-tag type="primary">' . __( 'Trialing', 'surecart' ) . '</sc-tag>';
 				break;
 			case 'draft':
-				$status = '<ce-tag>' . __( 'Draft', 'surecart' ) . '</ce-tag>';
+				$status = '<sc-tag>' . __( 'Draft', 'surecart' ) . '</sc-tag>';
 				break;
 			default:
-				$status = '<ce-tag>' . $subscription->status . '</ce-tag>';
+				$status = '<sc-tag>' . $subscription->status . '</sc-tag>';
 				break;
 		}
 
 		if ( ! empty( (array) $subscription->pending_update ) ) {
-			$status .= ' <ce-tag type="info">' . __( 'Update Pending', 'surecart' ) . '</ce-tag>';
+			$status .= ' <sc-tag type="info">' . __( 'Update Pending', 'surecart' ) . '</sc-tag>';
 		}
 
 		return $status;

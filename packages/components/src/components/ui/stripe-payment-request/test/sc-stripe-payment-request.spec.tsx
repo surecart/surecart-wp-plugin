@@ -1,0 +1,12 @@
+import { newSpecPage } from '@stencil/core/testing';
+import { ScStripePaymentRequest } from '../sc-stripe-payment-request';
+
+describe('sc-stripe-payment-request', () => {
+  it('renders', async () => {
+    const page = await newSpecPage({
+      components: [ScStripePaymentRequest],
+      html: `<sc-stripe-payment-request></sc-stripe-payment-request>`,
+    });
+    expect(page.root).toMatchSnapshot();
+  });
+});

@@ -12,7 +12,7 @@ import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
 /**
  * Component Dependencies
  */
-import { CePriceChoice } from '@surecart/components-react';
+import { ScPriceChoice } from '@surecart/components-react';
 import PriceInfo from './components/PriceInfo';
 
 import PriceSelector from '@scripts/blocks/components/PriceSelector';
@@ -107,7 +107,7 @@ export default ({ attributes, setAttributes, isSelected }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<CePriceChoice
+			<ScPriceChoice
 				{...blockProps}
 				onClick={(e) => e.preventDefault()}
 				priceId={price_id}

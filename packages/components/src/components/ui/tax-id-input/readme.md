@@ -19,39 +19,39 @@
 
 | Event        | Description                         | Type                                                    |
 | ------------ | ----------------------------------- | ------------------------------------------------------- |
-| `ceChange`   | Make a request to update the order. | `CustomEvent<{ number: string; number_type: string; }>` |
-| `ceSetState` | Set the checkout state.             | `CustomEvent<string>`                                   |
+| `scChange`   | Make a request to update the order. | `CustomEvent<{ number: string; number_type: string; }>` |
+| `scSetState` | Set the checkout state.             | `CustomEvent<string>`                                   |
 
 
 ## Dependencies
 
 ### Used by
 
- - [ce-customer-edit](../../controllers/dashboard/customer-edit)
- - [ce-order-tax-id-input](../../controllers/checkout-form/order-tax-id-input)
+ - [sc-customer-edit](../../controllers/dashboard/customer-edit)
+ - [sc-order-tax-id-input](../../controllers/checkout-form/order-tax-id-input)
 
 ### Depends on
 
-- [ce-input](../input)
-- [ce-dropdown](../dropdown)
-- [ce-button](../button)
-- [ce-menu](../menu)
-- [ce-menu-item](../menu-item)
+- [sc-input](../input)
+- [sc-dropdown](../dropdown)
+- [sc-button](../button)
+- [sc-menu](../menu)
+- [sc-menu-item](../menu-item)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-tax-id-input --> ce-input
-  ce-tax-id-input --> ce-dropdown
-  ce-tax-id-input --> ce-button
-  ce-tax-id-input --> ce-menu
-  ce-tax-id-input --> ce-menu-item
-  ce-input --> ce-form-control
-  ce-form-control --> ce-tooltip
-  ce-button --> ce-spinner
-  ce-customer-edit --> ce-tax-id-input
-  ce-order-tax-id-input --> ce-tax-id-input
-  style ce-tax-id-input fill:#f9f,stroke:#333,stroke-width:4px
+  sc-tax-id-input --> sc-input
+  sc-tax-id-input --> sc-dropdown
+  sc-tax-id-input --> sc-button
+  sc-tax-id-input --> sc-menu
+  sc-tax-id-input --> sc-menu-item
+  sc-input --> sc-form-control
+  sc-form-control --> sc-tooltip
+  sc-button --> sc-spinner
+  sc-customer-edit --> sc-tax-id-input
+  sc-order-tax-id-input --> sc-tax-id-input
+  style sc-tax-id-input fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------
