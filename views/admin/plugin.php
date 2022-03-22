@@ -80,10 +80,12 @@
 					<sc-text style="margin-bottom: 1em; --line-height:1; --color: var(--sc-color-gray-500)"><?php esc_html_e( 'Update your api token to change or update the connection to SureCart.', 'surecart' ); ?></sc-text>
 					<sc-card>
 						<sc-input label="<?php echo esc_attr_e( 'Api Token', 'surecart' ); ?>" type="password" value="<?php echo esc_attr( $api_token ); ?>" name="api_token" placeholder="<?php echo esc_attr_e( 'Enter your api token.', 'surecart' ); ?>"></sc-input>
-						<sc-button href="https://app.surecart.com" target="_blank">
+						<?php if ( defined( 'SURECART_APP_URL' ) ) : ?>
+						<sc-button href="<?php echo esc_url( SURECART_APP_URL ); ?>" target="_blank">
 							<?php esc_html_e( 'Find My Api Token', 'surecart' ); ?>
 							<sc-icon name="arrow-right" slot="suffix"></sc-icon>
 						</sc-button>
+						<?php endif; ?>
 					</sc-card>
 				</sc-flex>
 
