@@ -1,9 +1,9 @@
 {
 	"name": "surecart/form",
-	"title": "SureCart Form",
+	"title": "Checkout Form",
 	"description": "Displays a form.",
 	"category": "layout",
-	"parent": ["surecart/checkout-form"],
+	"parents": ["surecart/checkout-form"],
 	"keywords": ["email", "mail"],
 	"supports": {
 		"reusable": false,
