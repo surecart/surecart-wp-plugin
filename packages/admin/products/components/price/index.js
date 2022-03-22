@@ -51,7 +51,8 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 						`}
 						label={__('Price', 'surecart')}
 						className="sc-price-amount"
-						currencyCode={ceData.currecy_code}
+						showCode
+						currencyCode={ceData.currency_code}
 						value={price?.amount}
 						name="price"
 						onScChange={(e) => {
