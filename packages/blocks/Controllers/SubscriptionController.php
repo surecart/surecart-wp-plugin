@@ -32,7 +32,7 @@ class SubscriptionController extends BaseController {
 					),
 					'query'   => [
 						'customer_ids' => array_values( User::current()->customerIds() ),
-						'status'       => [ 'active', 'trialing' ],
+						'status'       => [ 'active', 'trialing', 'past_due', 'canceled' ],
 						'page'         => 1,
 						'per_page'     => 5,
 					],
