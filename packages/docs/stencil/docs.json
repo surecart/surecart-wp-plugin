@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-03-21T20:01:01",
+  "timestamp": "2022-03-22T22:04:12",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.14.2",
@@ -739,8 +739,14 @@
         }
       ],
       "dependents": [],
-      "dependencies": [],
-      "dependencyGraph": {}
+      "dependencies": [
+        "sc-icon"
+      ],
+      "dependencyGraph": {
+        "sc-breadcrumb": [
+          "sc-icon"
+        ]
+      }
     },
     {
       "filePath": "./src/components/ui/breadcrumbs/sc-breadcrumbs.tsx",
@@ -5891,51 +5897,6 @@
       "dependencyGraph": {}
     },
     {
-      "filePath": "./src/components/ui/form-section/sc-form-section.tsx",
-      "encapsulation": "shadow",
-      "tag": "sc-form-section",
-      "readme": "# ce-form-section\n\n\n",
-      "docs": "",
-      "docsTags": [],
-      "usage": {},
-      "props": [
-        {
-          "name": "label",
-          "type": "string",
-          "mutable": false,
-          "attr": "label",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        }
-      ],
-      "methods": [],
-      "events": [],
-      "listeners": [],
-      "styles": [],
-      "slots": [],
-      "parts": [
-        {
-          "name": "description",
-          "docs": ""
-        },
-        {
-          "name": "title",
-          "docs": ""
-        }
-      ],
-      "dependents": [],
-      "dependencies": [],
-      "dependencyGraph": {}
-    },
-    {
       "filePath": "./src/components/util/format-bytes/sc-format-bytes.tsx",
       "encapsulation": "shadow",
       "tag": "sc-format-bytes",
@@ -6961,6 +6922,7 @@
       ],
       "dependents": [
         "sc-alert",
+        "sc-breadcrumb",
         "sc-breadcrumbs",
         "sc-cc-logo",
         "sc-charges-list",
@@ -6982,6 +6944,9 @@
       "dependencies": [],
       "dependencyGraph": {
         "sc-alert": [
+          "sc-icon"
+        ],
+        "sc-breadcrumb": [
           "sc-icon"
         ],
         "sc-breadcrumbs": [
@@ -7776,7 +7741,13 @@
         }
       ],
       "listeners": [],
-      "styles": [],
+      "styles": [
+        {
+          "name": "--focus-ring",
+          "annotation": "prop",
+          "docs": "The focus ring style to use when the control receives focus, a `box-shadow` property."
+        }
+      ],
       "slots": [],
       "parts": [
         {
@@ -11433,7 +11404,7 @@
       }
     },
     {
-      "filePath": "./src/components/controllers/checkout-form/price-choices/sc-price-choice.tsx",
+      "filePath": "./src/components/controllers/checkout-form/price-choices/sc-price-choices.tsx",
       "encapsulation": "none",
       "tag": "sc-price-choices",
       "readme": "# ce-price-choices\n\n\n",
@@ -11611,7 +11582,7 @@
           "type": "string",
           "mutable": false,
           "attr": "currency-code",
-          "reflectToAttr": false,
+          "reflectToAttr": true,
           "docs": "3 letter currency code for input",
           "docsTags": [],
           "values": [
@@ -13531,7 +13502,23 @@
       "methods": [],
       "events": [],
       "listeners": [],
-      "styles": [],
+      "styles": [
+        {
+          "name": "--border-radius",
+          "annotation": "prop",
+          "docs": "The skeleton's border radius."
+        },
+        {
+          "name": "--color",
+          "annotation": "prop",
+          "docs": "The color of the skeleton."
+        },
+        {
+          "name": "--sheen-color",
+          "annotation": "prop",
+          "docs": "The sheen color when the skeleton is in its loading state."
+        }
+      ],
       "slots": [],
       "parts": [
         {
@@ -13678,7 +13665,23 @@
       "methods": [],
       "events": [],
       "listeners": [],
-      "styles": [],
+      "styles": [
+        {
+          "name": "--indicator-color",
+          "annotation": "prop",
+          "docs": "The color of the spinner's indicator."
+        },
+        {
+          "name": "--stroke-width",
+          "annotation": "prop",
+          "docs": "The width of the indicator."
+        },
+        {
+          "name": "--track-color",
+          "annotation": "prop",
+          "docs": "The color of the spinner's track."
+        }
+      ],
       "slots": [],
       "parts": [
         {
@@ -15682,7 +15685,23 @@
         }
       ],
       "listeners": [],
-      "styles": [],
+      "styles": [
+        {
+          "name": "--height",
+          "annotation": "prop",
+          "docs": "The height of the switch."
+        },
+        {
+          "name": "--thumb-size",
+          "annotation": "prop",
+          "docs": "The size of the thumb."
+        },
+        {
+          "name": "--width",
+          "annotation": "prop",
+          "docs": "The width of the switch."
+        }
+      ],
       "slots": [],
       "parts": [
         {
