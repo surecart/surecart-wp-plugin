@@ -29,6 +29,7 @@ $mobile-size: 750px;
     flex: 1 0 100%;
 
     @media screen and (min-width: $mobile-size) {
+      min-width: 225px;
       flex: 0 1 auto;
     }
   }
