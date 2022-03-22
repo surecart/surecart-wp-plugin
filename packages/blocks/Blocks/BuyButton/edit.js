@@ -20,7 +20,7 @@ import { ScButton } from '@surecart/components-react';
 import Placeholder from './Placeholder';
 
 export default ({ className, attributes, setAttributes }) => {
-	const { type, label, submit, size, line_items } = attributes;
+	const { type, label, size, line_items } = attributes;
 
 	const renderButton = () => {
 		if (!line_items || !line_items?.length) {
@@ -28,7 +28,7 @@ export default ({ className, attributes, setAttributes }) => {
 		}
 
 		return (
-			<ScButton type={type} submit={submit} size={size} type={type}>
+			<ScButton type={type} size={size}>
 				<RichText
 					aria-label={__('Button text')}
 					placeholder={__('Add text…')}
