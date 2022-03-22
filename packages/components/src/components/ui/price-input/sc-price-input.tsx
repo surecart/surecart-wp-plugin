@@ -82,7 +82,7 @@ export class ScPriceInput {
   @Prop({ mutable: true, reflect: true }) hasFocus: boolean;
 
   /** 3 letter currency code for input */
-  @Prop() currencyCode: string;
+  @Prop({ reflect: true }) currencyCode: string;
 
   /** Show the currency code with the input */
   @Prop() showCode: boolean;
