@@ -44,7 +44,7 @@ export default ({ id }) => {
 		e.preventDefault();
 		try {
 			setSaving(true);
-			id ? await updatePage() : await createPage();
+			await updatePage();
 			addSnackbarNotice({
 				content: __('Saved.'),
 			});
@@ -60,30 +60,16 @@ export default ({ id }) => {
 	 * Update product, prices and drafts all at once.
 	 */
 	const updatePage = async () => {
-		return Promise.all([saveProductgroup(), saveProducts(id)]);
-	};
-
-	/**
-	 * Create the page and clear all drafts.
-	 */
-	const createPage = async () => {
-		try {
-			const saved = await saveProductgroup();
-			if (saved?.id) {
-				await saveProducts(saved?.id);
-			}
-		} catch (e) {
-			throw e;
-		}
+		return Promise.all([saveProductgroup(), saveProducts()]);
 	};
 
 	/**
 	 * Save products.
 	 */
-	const saveProducts = async (product_group) => {
+	const saveProducts = async () => {
 		return await Promise.all(
-			(products || []).map(({ id, ...data }) => {
-				return saveProduct(id, { ...data, product_group });
+			(products || []).map(({ id }) => {
+				return saveModel('product', id);
 			})
 		);
 	};
@@ -186,13 +172,11 @@ export default ({ id }) => {
 				updateProductGroup={updateProductgroup}
 				loading={isLoading || isGroupLoading}
 			/>
-			{!!id && (
-				<Products
-					id={id}
-					products={products}
-					loading={isLoading || isGroupLoading}
-				/>
-			)}
+			<Products
+				id={id}
+				products={products}
+				loading={isLoading || isGroupLoading}
+			/>
 		</Template>
 	);
 };
