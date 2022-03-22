@@ -137,6 +137,7 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 			'ceData',
 			[
 				'plugin_url' => \SureCart::core()->assets()->getUrl(),
+				'currency'   => \SureCart::account()->currency,
 				'pages'      => [
 					'dashboard' => \SureCart::pages()->url( 'dashboard' ),
 				],

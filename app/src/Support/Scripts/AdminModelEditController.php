@@ -104,7 +104,7 @@ abstract class AdminModelEditController {
 		);
 
 		if ( in_array( 'currency', $this->with_data ) ) {
-			$this->data['currency_code'] = Account::find()->currency;
+			$this->data['currency_code'] = \SureCart::account()->currency;
 		}
 		if ( in_array( 'supported_currencies', $this->with_data ) ) {
 			$this->data['supported_currencies'] = Currency::getSupportedCurrencies();
