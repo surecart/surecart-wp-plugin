@@ -25,6 +25,9 @@
 		"redirect": {
 			"type": "string",
 			"default": ""
+		},
+		"currency": {
+			"type": "string"
 		}
 	}
 }
