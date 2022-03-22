@@ -1,4 +1,4 @@
-import { Component, h, Prop, Element, State } from '@stencil/core';
+import { Component, Element, h, Prop, State } from '@stencil/core';
 
 @Component({
   tag: 'sc-breadcrumb',
@@ -49,7 +49,9 @@ export class ScBreadcrumb {
           <slot name="suffix" onSlotchange={() => this.handleSlotChange()}></slot>
         </span>
         <span part="separator" class="breadcrumb-item__separator" aria-hidden="true">
-          <slot name="separator" onSlotchange={() => this.handleSlotChange()}></slot>
+          <slot name="separator" onSlotchange={() => this.handleSlotChange()}>
+            <sc-icon name="chevron-right"></sc-icon>
+          </slot>
         </span>
       </div>
     );
