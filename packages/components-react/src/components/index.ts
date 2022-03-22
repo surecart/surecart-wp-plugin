@@ -44,7 +44,6 @@ export const ScForm = /*@__PURE__*/createReactComponent<JSX.ScForm, HTMLScFormEl
 export const ScFormComponentsValidator = /*@__PURE__*/createReactComponent<JSX.ScFormComponentsValidator, HTMLScFormComponentsValidatorElement>('sc-form-components-validator');
 export const ScFormControl = /*@__PURE__*/createReactComponent<JSX.ScFormControl, HTMLScFormControlElement>('sc-form-control');
 export const ScFormRow = /*@__PURE__*/createReactComponent<JSX.ScFormRow, HTMLScFormRowElement>('sc-form-row');
-export const ScFormSection = /*@__PURE__*/createReactComponent<JSX.ScFormSection, HTMLScFormSectionElement>('sc-form-section');
 export const ScFormatBytes = /*@__PURE__*/createReactComponent<JSX.ScFormatBytes, HTMLScFormatBytesElement>('sc-format-bytes');
 export const ScFormatDate = /*@__PURE__*/createReactComponent<JSX.ScFormatDate, HTMLScFormatDateElement>('sc-format-date');
 export const ScFormatInterval = /*@__PURE__*/createReactComponent<JSX.ScFormatInterval, HTMLScFormatIntervalElement>('sc-format-interval');
