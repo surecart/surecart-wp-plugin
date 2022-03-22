@@ -1,13 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ce-menu-divider renders 1`] = `
-<ce-menu-divider>
-  <mock:shadow-root>
-    <div aria-hidden="true" class="menu-divider" part="base" role="separator"></div>
-  </mock:shadow-root>
-</ce-menu-divider>
-`;
-
 exports[`sc-menu-divider renders 1`] = `
 <sc-menu-divider>
   <mock:shadow-root>

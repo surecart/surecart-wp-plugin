@@ -1,11 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ce-line-item-tax renders 1`] = `
-<ce-line-item-tax>
-  <mock:shadow-root></mock:shadow-root>
-</ce-line-item-tax>
-`;
-
 exports[`sc-line-item-tax renders 1`] = `
 <sc-line-item-tax>
   <mock:shadow-root></mock:shadow-root>

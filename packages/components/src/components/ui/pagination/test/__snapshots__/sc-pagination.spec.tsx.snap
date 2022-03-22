@@ -1,11 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ce-pagination renders 1`] = `
-<ce-pagination>
-  <mock:shadow-root></mock:shadow-root>
-</ce-pagination>
-`;
-
 exports[`sc-pagination renders 1`] = `
 <sc-pagination>
   <mock:shadow-root></mock:shadow-root>

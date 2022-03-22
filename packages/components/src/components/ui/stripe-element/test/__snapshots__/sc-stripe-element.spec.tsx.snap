@@ -1,13 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ce-stripe-element renders 1`] = `
-<ce-stripe-element size="medium">
-  <ce-input class="ce-stripe" size="medium">
-    <div></div>
-  </ce-input>
-</ce-stripe-element>
-`;
-
 exports[`sc-stripe-element renders 1`] = `
 <sc-stripe-element size="medium">
   <sc-input class="sc-stripe" size="medium">

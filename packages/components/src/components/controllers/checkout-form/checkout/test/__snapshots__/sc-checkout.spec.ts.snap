@@ -1,19 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ce-checkout renders 1`] = `
-<ce-checkout>
-  <!---->
-  <div class="ce-checkout-container">
-    <ce-alert type="danger">
-      <span slot="title"></span>
-    </ce-alert>
-    <ce-form-components-validator>
-      <ce-session-provider currency-code="usd" group-id="" mode="live" persist=""></ce-session-provider>
-    </ce-form-components-validator>
-  </div>
-</ce-checkout>
-`;
-
 exports[`sc-checkout renders 1`] = `
 <sc-checkout>
   <!---->

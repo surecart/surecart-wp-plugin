@@ -33,9 +33,9 @@
     "test": "stencil test",
     "test.unit": "stencil test --spec",
     "test.e2e": "stencil test --e2e",
-    "test.watch": "stencil test --spec --e2e --watchAll",
+    "test.watch": "stencil test --spec --e2e --watch",
     "generate": "stencil generate",
-    "storybook": "start-storybook -p 6006 & yarn build --watch",
+    "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
   "dependencies": {

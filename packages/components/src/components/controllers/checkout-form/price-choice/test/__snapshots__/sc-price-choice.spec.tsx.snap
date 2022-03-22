@@ -1,5 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ce-price-choice renders 1`] = `<ce-price-choice style="display: none;"></ce-price-choice>`;
-
 exports[`sc-price-choice renders 1`] = `<sc-price-choice style="display: none;"></sc-price-choice>`;

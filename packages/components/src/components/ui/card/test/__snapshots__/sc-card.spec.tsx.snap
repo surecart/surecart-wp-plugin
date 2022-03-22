@@ -1,15 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ce-card renders 1`] = `
-<ce-card>
-  <mock:shadow-root>
-    <div class="card" part="base">
-      <slot></slot>
-    </div>
-  </mock:shadow-root>
-</ce-card>
-`;
-
 exports[`sc-card renders 1`] = `
 <sc-card>
   <mock:shadow-root>

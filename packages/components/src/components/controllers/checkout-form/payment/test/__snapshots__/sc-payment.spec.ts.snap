@@ -1,14 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ce-payment renders 1`] = `
-<ce-payment>
-  <div>
-    <ce-skeleton style="width: 100%; margin-bottom: 1em;"></ce-skeleton>
-    <ce-skeleton style="width: 35%;"></ce-skeleton>
-  </div>
-</ce-payment>
-`;
-
 exports[`sc-payment renders 1`] = `
 <sc-payment>
   <div>

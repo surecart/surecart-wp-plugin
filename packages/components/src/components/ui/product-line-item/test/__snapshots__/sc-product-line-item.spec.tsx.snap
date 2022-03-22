@@ -1,21 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ce-product-line-item renders 1`] = `
-<ce-product-line-item amount="1000" currency="CAD">
-  <mock:shadow-root>
-    <ce-line-item>
-      <span slot="title"></span>
-      <span class="product__description" slot="description">
-        <ce-quantity-select></ce-quantity-select>
-      </span>
-      <span slot="price">
-        <ce-format-number currency="CAD" type="currency" value="1000"></ce-format-number>
-      </span>
-    </ce-line-item>
-  </mock:shadow-root>
-</ce-product-line-item>
-`;
-
 exports[`sc-product-line-item renders 1`] = `
 <sc-product-line-item amount="1000" currency="CAD">
   <mock:shadow-root>

@@ -1,13 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ce-icon renders 1`] = `
-<ce-icon>
-  <mock:shadow-root>
-    <div aria-label="" class="icon" part="base" role="img"></div>
-  </mock:shadow-root>
-</ce-icon>
-`;
-
 exports[`sc-icon renders 1`] = `
 <sc-icon>
   <mock:shadow-root>

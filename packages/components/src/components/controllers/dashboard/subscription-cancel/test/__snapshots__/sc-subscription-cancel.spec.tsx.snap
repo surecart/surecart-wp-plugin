@@ -1,23 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ce-subscription-cancel renders 1`] = `
-<ce-subscription-cancel>
-  <mock:shadow-root>
-    <ce-dashboard-module class="subscription-cancel" error="window.fetch is not a function" heading="Cancel your plan">
-      <ce-card>
-        <ce-subscription-details hiderenewaltext=""></ce-subscription-details>
-        <ce-alert open="" type="info">
-          Your plan will be canceled immediately. You cannot change your mind.
-        </ce-alert>
-        <ce-button full="" type="primary">
-          Cancel Plan
-        </ce-button>
-      </ce-card>
-    </ce-dashboard-module>
-  </mock:shadow-root>
-</ce-subscription-cancel>
-`;
-
 exports[`sc-subscription-cancel renders 1`] = `
 <sc-subscription-cancel>
   <mock:shadow-root>

@@ -1,11 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ce-format-currency renders 1`] = `
-<ce-format-number value="2000">
-  20
-</ce-format-number>
-`;
-
 exports[`sc-format-currency renders 1`] = `
 <sc-format-number value="2000">
   20

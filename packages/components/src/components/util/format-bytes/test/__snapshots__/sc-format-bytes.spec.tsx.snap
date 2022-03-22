@@ -1,13 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ce-format-bytes renders 1`] = `
-<ce-format-bytes>
-  <mock:shadow-root>
-    0 byte
-  </mock:shadow-root>
-</ce-format-bytes>
-`;
-
 exports[`sc-format-bytes renders 1`] = `
 <sc-format-bytes>
   <mock:shadow-root>

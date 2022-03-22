@@ -1,17 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ce-order-summary renders 1`] = `
-<ce-order-summary>
-  <mock:shadow-root>
-    <div class="summary">
-      <div class="summary__content">
-        <slot></slot>
-      </div>
-    </div>
-  </mock:shadow-root>
-</ce-order-summary>
-`;
-
 exports[`sc-order-summary renders 1`] = `
 <sc-order-summary>
   <mock:shadow-root>

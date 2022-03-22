@@ -1,13 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ce-table-head renders 1`] = `
-<ce-table-head>
-  <mock:shadow-root>
-    <slot></slot>
-  </mock:shadow-root>
-</ce-table-head>
-`;
-
 exports[`sc-table-head renders 1`] = `
 <sc-table-head>
   <mock:shadow-root>

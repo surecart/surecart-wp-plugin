@@ -1,11 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ce-format-date renders 1`] = `
-<ce-format-date>
-  3/8/2022
-</ce-format-date>
-`;
-
 exports[`sc-format-date renders 1`] = `
 <sc-format-date>
   3/8/2022

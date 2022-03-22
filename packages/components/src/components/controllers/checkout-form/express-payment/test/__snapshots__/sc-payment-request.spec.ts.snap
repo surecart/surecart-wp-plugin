@@ -1,5 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ce-express-payment renders 1`] = `<ce-express-payment></ce-express-payment>`;
-
 exports[`sc-express-payment renders 1`] = `<sc-express-payment></sc-express-payment>`;

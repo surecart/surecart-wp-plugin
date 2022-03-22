@@ -1,18 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ce-payment-method-create renders 1`] = `
-<ce-payment-method-create>
-  <!---->
-  <ce-card>
-    <ce-form>
-      <ce-button full="" submit="" type="primary">
-        Save Payment Method
-      </ce-button>
-    </ce-form>
-  </ce-card>
-</ce-payment-method-create>
-`;
-
 exports[`sc-payment-method-create renders 1`] = `
 <sc-payment-method-create>
   <!---->

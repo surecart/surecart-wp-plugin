@@ -1,21 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ce-stacked-list-row renders 1`] = `
-<ce-stacked-list-row>
-  <mock:shadow-root>
-    <div class="list-row">
-      <span class="list-row__prefix">
-        <slot name="prefix"></slot>
-      </span>
-      <slot></slot>
-      <span class="list-row__suffix">
-        <slot name="suffix"></slot>
-      </span>
-    </div>
-  </mock:shadow-root>
-</ce-stacked-list-row>
-`;
-
 exports[`sc-stacked-list-row renders 1`] = `
 <sc-stacked-list-row>
   <mock:shadow-root>

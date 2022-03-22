@@ -1,13 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ce-table-cell renders 1`] = `
-<ce-table-cell>
-  <mock:shadow-root>
-    <slot></slot>
-  </mock:shadow-root>
-</ce-table-cell>
-`;
-
 exports[`sc-table-cell renders 1`] = `
 <sc-table-cell>
   <mock:shadow-root>

@@ -1,24 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ce-subscription-payment renders 1`] = `
-<ce-subscription-payment>
-  <mock:shadow-root>
-    <ce-dashboard-module class="subscription-payment" error="window.fetch is not a function" heading="Select a payment method">
-      <ce-form>
-        <ce-card>
-          <ce-choices>
-            <div></div>
-          </ce-choices>
-          <ce-button full="" submit="" type="primary">
-            Update
-          </ce-button>
-        </ce-card>
-      </ce-form>
-    </ce-dashboard-module>
-  </mock:shadow-root>
-</ce-subscription-payment>
-`;
-
 exports[`sc-subscription-payment renders 1`] = `
 <sc-subscription-payment>
   <mock:shadow-root>

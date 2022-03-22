@@ -1,21 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ce-address renders 1`] = `
-<ce-address required="">
-  <div class="ce-address">
-    <ce-form-control class="ce-address__control" part="control" required="">
-      <ce-select autocomplete="country-name" name="shipping_country" placeholder="Country" required="" search="" squared-bottom="" value=""></ce-select>
-      <ce-input autocomplete="street-address" name="shipping_line_1" placeholder="Address" required="" squared="" value=""></ce-input>
-      <div class="ce-address__columns">
-        <ce-input name="shipping_country" placeholder="City" required="" squared-right="" squared-top="" value="" style="margin-right: -1px;"></ce-input>
-        <ce-input autocomplete="postal-code" name="shipping_postal_code" placeholder="Postal Code/Zip" required="" squared-left="" squared-top="" value=""></ce-input>
-      </div>
-      <ce-select autocomplete="address-level1" hidden="" name="shipping_state" placeholder="State/Province/Region" search="" squared-top="" value=""></ce-select>
-    </ce-form-control>
-  </div>
-</ce-address>
-`;
-
 exports[`sc-address renders 1`] = `
 <sc-address required="">
   <div class="sc-address">
