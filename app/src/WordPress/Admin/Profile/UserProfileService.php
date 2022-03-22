@@ -24,13 +24,17 @@ class UserProfileService {
 	 * @return function
 	 */
 	public function showCustomerInfo( $user ) {
-		$customer = User::find( $user->ID )->customer();
-		$customer = is_wp_error( $customer ) ? false : $customer;
+		$user          = User::find( $user->ID );
+		$test_customer = $user->customer( 'test' );
+		$live_customer = $user->customer( 'live' );
+
 		return $this->render(
 			'admin/user-profile',
 			[
-				'customer'  => $customer,
-				'edit_link' => ! empty( $customer->id ) ? \SureCart::getUrl()->edit( 'customer', $customer->id ) : '',
+				'test_customer'  => $test_customer,
+				'live_customer'  => $live_customer,
+				'edit_test_link' => ! empty( $test_customer ) ? \SureCart::getUrl()->edit( 'customer', $test_customer->id ) : '',
+				'edit_live_link' => ! empty( $live_customer ) ? \SureCart::getUrl()->edit( 'customer', $live_customer->id ) : '',
 			]
 		);
 	}
