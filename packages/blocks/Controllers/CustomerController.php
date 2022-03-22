@@ -65,7 +65,7 @@ class CustomerController extends BaseController {
 						[
 							'header'     => __( 'Update Billing Details', 'surecart' ),
 							'customer'   => $customer,
-							'successUrl' => esc_url( $back ),
+							'successUrl' => esc_url_raw( $back ),
 						]
 					)->render()
 				);
@@ -80,7 +80,7 @@ class CustomerController extends BaseController {
 						[
 							'header'     => __( 'Update Billing Details', 'surecart' ),
 							'customer'   => $customer,
-							'successUrl' => esc_url( $back ),
+							'successUrl' => esc_url_raw( $back ),
 						]
 					)->render()
 				);
