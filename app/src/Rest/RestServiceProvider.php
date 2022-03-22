@@ -204,12 +204,13 @@ abstract class RestServiceProvider extends \WP_REST_Controller implements RestSe
 	 * @return boolean
 	 */
 	protected function requestOnlyHasKeys( $request, $keys ) {
-		$keys = array_merge( $keys, [ 'context', '_locale' ] );
+		$keys = array_merge( $keys, [ 'context', '_locale', 'rest_route', 'id', 'expand' ] );
 		foreach ( $request->get_params() as $key => $value ) {
 			if ( ! in_array( $key, $keys, true ) ) {
 				return false;
 			}
 		}
+		return true;
 	}
 
 	/**
