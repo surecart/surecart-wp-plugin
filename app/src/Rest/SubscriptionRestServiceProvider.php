@@ -211,7 +211,7 @@ class SubscriptionRestServiceProvider extends RestServiceProvider implements Res
 		// let customers modify pending cancel, quantity and price.
 		// if request is sent with only these keys, then we can modify the subscription.
 		// if they have permission to access it.
-		if ( $this->requestOnlyHasKeys( $request, [ 'cancel_at_period_end', 'quantity', 'price' ] ) ) {
+		if ( $this->requestOnlyHasKeys( $request, [ 'cancel_at_period_end', 'quantity', 'price', 'purge_pending_update' ] ) ) {
 			return current_user_can( 'edit_ce_subscription', $request['id'] );
 		}
 
