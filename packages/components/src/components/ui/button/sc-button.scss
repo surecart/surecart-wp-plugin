@@ -2,6 +2,8 @@
   display: inline-block;
   width: auto;
   cursor: pointer;
+  --primary-color: var(--sc-color-primary-text);
+  --primary-background: var(--sc-color-primary-500);
 }
 :host([full]) {
   display: block;
@@ -95,28 +97,28 @@
 
     &:hover:not(.button--disabled) {
       background-color: var(--sc-color-white);
-      border-color: var(--sc-color-primary-500);
-      color: var(--sc-color-primary-500);
+      border-color: var(--primary-background);
+      color: var(--primary-background);
     }
 
     &:focus:not(.button--disabled) {
       background-color: var(--sc-color-white);
       border-color: var(--sc-color-white);
-      color: var(--sc-color-primary-500);
+      color: var(--primary-background);
       box-shadow: 0 0 0 var(--sc-focus-ring-width) var(--sc-focus-ring-color-primary);
     }
 
     &:active:not(.button--disabled) {
       background-color: var(--sc-color-white);
       border-color: var(--sc-color-white);
-      color: var(--sc-color-primary-500);
+      color: var(--primary-background);
     }
   }
 
   &.button--primary {
-    background-color: var(--sc-color-primary-500);
-    border-color: var(--sc-color-primary-500);
-    color: var(--sc-color-primary-text);
+    background-color: var(--primary-background);
+    border-color: var(--primary-background);
+    color: var(--primary-color);
 
     &:hover:not(.button--disabled) {
       opacity: 0.8;
@@ -124,15 +126,15 @@
 
     &:focus:not(.button--disabled) {
       opacity: 0.8;
-      color: var(--sc-color-primary-text);
+      color: var(--primary-color);
       border-color: var(--sc-color-white);
       box-shadow: 0 0 0 var(--sc-focus-ring-width) var(--sc-focus-ring-color-primary);
     }
 
     &:active:not(.button--disabled) {
-      background-color: var(--sc-color-primary-500);
+      background-color: var(--primary-background);
       border-color: var(--sc-color-white);
-      color: var(--sc-color-primary-text);
+      color: var(--primary-color);
     }
   }
 
@@ -251,13 +253,13 @@
   color: var(--sc-color-gray-700);
 }
 .button--outline.button--default:hover:not(.button--disabled) {
-  border-color: var(--sc-color-primary-500);
-  background-color: var(--sc-color-primary-500);
+  border-color: var(--primary-background);
+  background-color: var(--primary-background);
   color: var(--sc-color-white);
 }
 .button--outline.button--default:focus:not(.button--disabled) {
-  border-color: var(--sc-color-primary-500);
-  box-shadow: 0 0 0 var(--sc-focus-ring-width) var(--sc-color-primary-500) / var(--sc-focus-ring-alpha);
+  border-color: var(--primary-background);
+  box-shadow: 0 0 0 var(--sc-focus-ring-width) var(--primary-background) / var(--sc-focus-ring-alpha);
 }
 .button--outline.button--default:active:not(.button--disabled) {
   opacity: 0.8;
@@ -265,21 +267,21 @@
 }
 /* Primary */
 .button--outline.button--primary {
-  border-color: var(--sc-color-primary-500);
-  color: var(--sc-color-primary-500);
+  border-color: var(--primary-background);
+  color: var(--primary-background);
 }
 .button--outline.button--primary:hover:not(.button--disabled) {
-  background-color: var(--sc-color-primary-500);
+  background-color: var(--primary-background);
   opacity: 0.8;
   color: var(--sc-color-white);
 }
 .button--outline.button--primary:focus:not(.button--disabled) {
-  border-color: var(--sc-color-primary-500);
-  box-shadow: 0 0 0 var(--sc-focus-ring-width) var(--sc-color-primary-500) / var(--sc-focus-ring-alpha);
+  border-color: var(--primary-background);
+  box-shadow: 0 0 0 var(--sc-focus-ring-width) var(--primary-background) / var(--sc-focus-ring-alpha);
 }
 .button--outline.button--primary:active:not(.button--disabled) {
-  border-color: var(--sc-color-primary-500);
-  background-color: var(--sc-color-primary-500);
+  border-color: var(--primary-background);
+  background-color: var(--primary-background);
   opacity: 0.9;
   color: var(--sc-color-white);
 }
@@ -391,7 +393,7 @@
   background-color: transparent;
   border-color: transparent;
   box-shadow: none;
-  color: var(--sc-color-primary-500);
+  color: var(--primary-background);
   transition: opacity var(--sc-transition-fast) ease;
 
   &.button--has-label {
@@ -450,21 +452,21 @@
   font-size: var(--sc-button-font-size-small);
   height: var(--sc-input-height-small);
   line-height: calc(var(--sc-input-height-small) - var(--sc-input-border-width) * 2);
-  border-radius: var(--sc-input-border-radius-small);
+  border-radius: var(--button-border-radius, var(--sc-input-border-radius-small));
 }
 
 .button--medium {
   font-size: var(--sc-button-font-size-medium);
   height: var(--sc-input-height-medium);
   line-height: calc(var(--sc-input-height-medium) - var(--sc-input-border-width) * 2);
-  border-radius: var(--sc-input-border-radius-medium);
+  border-radius: var(--button-border-radius, var(--sc-input-border-radius-medium));
 }
 
 .button--large {
   font-size: var(--sc-button-font-size-large);
   height: var(--sc-input-height-large);
   line-height: calc(var(--sc-input-height-large) - var(--sc-input-border-width) * 2);
-  border-radius: var(--sc-input-border-radius-large);
+  border-radius: var(--button-border-radius, var(--sc-input-border-radius-large));
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
