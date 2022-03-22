@@ -123,7 +123,7 @@ class CustomerRestServiceProvider extends RestServiceProvider implements RestSer
 		if ( ! current_user_can( 'edit_ce_customers' ) ) {
 			if ( $this->currentUserMatchesCustomerId( $request['id'] ) ) {
 				// whitelist specific params they are allowed to update.
-				return $this->requestOnlyHasKeys( $request, [ 'billing_address', 'shipping_address', 'default_payment_method', 'tax_identifier', 'unsubscribed', 'phone', 'name', 'email' ] );
+				return $this->requestOnlyHasKeys( $request, [ 'billing_address', 'billing_matches_shipping', 'shipping_address', 'default_payment_method', 'tax_identifier', 'unsubscribed', 'phone', 'name', 'email' ] );
 			}
 		}
 
