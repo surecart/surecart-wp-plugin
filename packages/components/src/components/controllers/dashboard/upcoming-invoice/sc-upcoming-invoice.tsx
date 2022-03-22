@@ -51,8 +51,8 @@ export class ScUpcomingInvoice {
       this.loading = true;
       await Promise.all([this.getInvoice(), this.getPrice()]);
     } catch (e) {
-      console.error(this.error);
-      this.error = e?.message || __('Something went wrong', 'surecart');
+      console.error(e);
+      this.error = e?.additional_errors?.[0]?.message || e?.message || __('Something went wrong', 'surecart');
     } finally {
       this.loading = false;
     }
