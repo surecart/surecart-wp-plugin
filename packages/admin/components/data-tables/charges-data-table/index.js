@@ -64,7 +64,7 @@ export default ({
 			<DataTable
 				title={title || __('Charges', 'surecart')}
 				columns={columns}
-				empty={empty || __('None found.', 'surecart')}
+				empty={empty || __('No charges', 'surecart')}
 				items={(data || [])
 					.sort((a, b) => b.created_at - a.created_at)
 					.map((charge) => {
