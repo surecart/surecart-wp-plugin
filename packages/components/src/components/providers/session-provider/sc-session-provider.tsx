@@ -1,8 +1,9 @@
-import { createOrUpdateOrder, finalizeSession } from '../../../services/session';
-import { Order, LineItemData, PriceChoice } from '../../../types';
-import { getSessionId, getURLLineItems, populateInputs, removeSessionId, setSessionId } from './helpers/session';
-import { Component, h, Prop, Event, EventEmitter, Element, State, Watch, Listen } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Listen, Prop, State, Watch } from '@stencil/core';
 import { removeQueryArgs } from '@wordpress/url';
+
+import { createOrUpdateOrder, finalizeSession } from '../../../services/session';
+import { LineItemData, Order, PriceChoice } from '../../../types';
+import { getSessionId, getURLLineItems, populateInputs, removeSessionId, setSessionId } from './helpers/session';
 
 @Component({
   tag: 'sc-session-provider',
