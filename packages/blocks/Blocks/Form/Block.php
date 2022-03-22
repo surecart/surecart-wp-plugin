@@ -48,23 +48,24 @@ class Block extends BaseBlock {
 		return \SureCart::blocks()->render(
 			'blocks/form',
 			[
-				'align'       => $attributes['align'] ?? '',
-				'label'       => $attributes['label'] ?? '',
-				'font_size'   => $attributes['font_size'] ?? 16,
-				'modified'    => $post->post_modified_gmt,
-				'customer'    => [
+				'align'         => $attributes['align'] ?? '',
+				'label'         => $attributes['label'] ?? '',
+				'font_size'     => $attributes['font_size'] ?? 16,
+				'modified'      => $post->post_modified_gmt,
+				'customer'      => [
 					'email' => $user->user_email,
 					'name'  => $user->display_name,
 				],
-				'classes'     => $this->getClasses( $attributes ),
-				'style'       => $this->getStyle( $attributes ),
-				'content'     => $content,
-				'mode'        => $attributes['mode'] ?? get_option( 'surecart_payment_mode', 'live' ),
-				'form_id'     => $sc_form_id,
-				'id'          => 'sc-checkout-' . $sc_form_id,
-				'prices'      => $attributes['prices'] ?? [],
-				'success_url' => ! empty( $attributes['redirect'] ) ? $attributes['redirect'] : \SureCart::pages()->url( 'order-confirmation' ),
-				'i18n'        => $this->getTranslations(),
+				'currency_code' => $attributes['currency'] ?? \SureCart::account()->currency,
+				'classes'       => $this->getClasses( $attributes ),
+				'style'         => $this->getStyle( $attributes ),
+				'content'       => $content,
+				'mode'          => $attributes['mode'] ?? get_option( 'surecart_payment_mode', 'live' ),
+				'form_id'       => $sc_form_id,
+				'id'            => 'sc-checkout-' . $sc_form_id,
+				'prices'        => $attributes['prices'] ?? [],
+				'success_url'   => ! empty( $attributes['redirect'] ) ? $attributes['redirect'] : \SureCart::pages()->url( 'order-confirmation' ),
+				'i18n'          => $this->getTranslations(),
 			]
 		);
 	}
