@@ -410,13 +410,6 @@
     "class": true,
     "slot": true
   },
-  "sc-form-section": {
-    "label": true,
-    "style": true,
-    "id": true,
-    "class": true,
-    "slot": true
-  },
   "sc-format-bytes": {
     "display": true,
     "locale": true,
