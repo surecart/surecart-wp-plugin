@@ -49,15 +49,19 @@
 		</div>
 		<sc-dashboard-module>
 			<sc-card>
-				<sc-text style="--font-size: var(--sc-font-size-x-large); --line-height: var(--sc-line-height-normal)">Commerce on WordPress has never been easier, faster, or more flexible.</sc-text>
+				<sc-text style="--font-size: var(--sc-font-size-x-large); --line-height: var(--sc-line-height-normal)">
+					<?php esc_html_e( 'Commerce on WordPress has never been easier, faster, or more flexible.', 'surecart' ); ?>
+				</sc-text>
 				<sc-button type="primary" full size="large" href="<?php echo esc_url_raw( $url ); ?>">
-					Set Up My Store
+					<?php esc_html_e( 'Set Up My Store', 'surecart' ); ?>
 					<sc-icon name="arrow-right" slot="suffix"></sc-icon>
 				</sc-button>
 			</sc-card>
+			<!--
 			<sc-text style="--font-size: var(--sc-font-sizesmall); --line-height: var(--sc-line-height-normal); --text-align: center; --color: var(--sc-color-gray-500)">
 				By clicking "Set Up", you agree to our <a href="#" target="_blank">Terms of Service</a>.
 			</sc-text>
+			-->
 		</sc-dashboard-module>
 	</div>
 </div>
