@@ -1,9 +1,9 @@
 <?php
 
-namespace CheckoutEngine\Controllers\Admin;
+namespace SureCart\Controllers\Admin;
 
-use CheckoutEngine\Controllers\Admin\Products\ProductsListTable;
-use CheckoutEngine\Models\Product;
+use SureCart\Controllers\Admin\Products\ProductsListTable;
+use SureCart\Models\Product;
 
 /**
  * Handles product admin requests.
@@ -13,11 +13,11 @@ class Products {
 	/**
 	 * Get the product query
 	 *
-	 * @param \CheckoutEngineCore\Requests\Request $request Request.
+	 * @param \SureCartCore\Requests\Request $request Request.
 	 *
 	 * @return string
 	 */
-	public function getProductQuery( \CheckoutEngineCore\Requests\Request $request ) {
+	public function getProductQuery( \SureCartCore\Requests\Request $request ) {
 		$params = $request->getQueryParams();
 		return ! empty( $params['product'] ) ? $params['product'] : null;
 	}
@@ -25,7 +25,7 @@ class Products {
 	/**
 	 * List product in a WP Table.
 	 *
-	 * @param \CheckoutEngineCore\Requests\Request $request
+	 * @param \SureCartCore\Requests\Request $request
 	 *
 	 * @return void
 	 */
@@ -38,13 +38,13 @@ class Products {
 	public function index( $request ) {
 		$table = new ProductsListTable();
 		$table->prepare_items();
-		return \CheckoutEngine::view( 'admin/orders/index' )->with( [ 'table' => $table ] );
+		return \SureCart::view( 'admin/orders/index' )->with( [ 'table' => $table ] );
 	}
 
 	public function show( $request ) {
 		$product = $this->getProductQuery( $request );
 		$product = Product::find( $product );
 
-		return \CheckoutEngine::view( 'admin/products/show' )->with( [ 'product' => $product ] );
+		return \SureCart::view( 'admin/products/show' )->with( [ 'product' => $product ] );
 	}
 }

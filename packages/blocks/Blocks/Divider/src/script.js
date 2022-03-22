@@ -1,1 +1,1 @@
-import '../../../../components/dist/components/ce-divider';
+import '../../../../components/dist/components/sc-divider';

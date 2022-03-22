@@ -14,7 +14,7 @@ import {
 /**
  * Component Dependencies
  */
-import { CeInput } from '@checkout-engine/components-react';
+import { ScInput } from '@surecart/components-react';
 
 export default ({ className, attributes, setAttributes, isSelected }) => {
 	const { label, placeholder, help, name, required } = attributes;
@@ -22,31 +22,31 @@ export default ({ className, attributes, setAttributes, isSelected }) => {
 	return (
 		<Fragment>
 			<InspectorControls>
-				<PanelBody title={__('Attributes', 'checkout-engine')}>
+				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<ToggleControl
-							label={__('Required', 'checkout-engine')}
+							label={__('Required', 'surecart')}
 							checked={required}
 							onChange={(required) => setAttributes({ required })}
 						/>
 					</PanelRow>
 					<PanelRow>
 						<TextControl
-							label={__('Name', 'checkout-engine')}
+							label={__('Name', 'surecart')}
 							value={name}
 							onChange={(name) => setAttributes({ name })}
 						/>
 					</PanelRow>
 					<PanelRow>
 						<TextControl
-							label={__('Label', 'checkout-engine')}
+							label={__('Label', 'surecart')}
 							value={label}
 							onChange={(label) => setAttributes({ label })}
 						/>
 					</PanelRow>
 					<PanelRow>
 						<TextControl
-							label={__('Placeholder', 'checkout-engine')}
+							label={__('Placeholder', 'surecart')}
 							value={placeholder}
 							onChange={(placeholder) =>
 								setAttributes({ placeholder })
@@ -55,7 +55,7 @@ export default ({ className, attributes, setAttributes, isSelected }) => {
 					</PanelRow>
 					<PanelRow>
 						<TextControl
-							label={__('Help', 'checkout-engine')}
+							label={__('Help', 'surecart')}
 							value={help}
 							onChange={(help) => setAttributes({ help })}
 						/>
@@ -64,14 +64,14 @@ export default ({ className, attributes, setAttributes, isSelected }) => {
 			</InspectorControls>
 
 			{!isSelected && !name && <div>Please add a name</div>}
-			<CeInput
+			<ScInput
 				className={className}
 				required={required}
 				name={name}
 				label={label}
 				placeholder={placeholder}
 				help={help}
-			></CeInput>
+			></ScInput>
 		</Fragment>
 	);
 };

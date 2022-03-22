@@ -1,19 +1,19 @@
 <?php
 /**
- * @package   CheckoutEngineCore
+ * @package   SureCartCore
  * @author    Andre Gagnon <me@andregagnon.me>
  * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://checkout_engine.com/
+ * @link      https://surecart.com/
  */
 
-namespace CheckoutEngineCore\Application;
+namespace SureCartCore\Application;
 
 use Closure;
 use Pimple\Container;
-use CheckoutEngineCore\Exceptions\ConfigurationException;
-use CheckoutEngineCore\Requests\Request;
-use CheckoutEngineCore\Support\Arr;
+use SureCartCore\Exceptions\ConfigurationException;
+use SureCartCore\Requests\Request;
+use SureCartCore\Support\Arr;
 
 /**
  * The core WP Emerge component representing an application.
@@ -55,8 +55,8 @@ class Application {
 	 */
 	public function __construct( Container $container, $render_config_exceptions = true ) {
 		$this->setContainer( $container );
-		$this->container()[ CHECKOUT_ENGINE_APPLICATION_KEY ] = $this;
-		$this->render_config_exceptions                       = $render_config_exceptions;
+		$this->container()[ SURECART_APPLICATION_KEY ] = $this;
+		$this->render_config_exceptions                = $render_config_exceptions;
 	}
 
 	/**
@@ -91,7 +91,7 @@ class Application {
 				$this->loadRoutes();
 
 				if ( $run ) {
-					  $kernel = $this->resolve( CHECKOUT_ENGINE_WORDPRESS_HTTP_KERNEL_KEY );
+					  $kernel = $this->resolve( SURECART_WORDPRESS_HTTP_KERNEL_KEY );
 					  $kernel->bootstrap();
 				}
 			}
@@ -107,7 +107,7 @@ class Application {
 	 * @return void
 	 */
 	protected function loadConfig( Container $container, $config ) {
-		$container[ CHECKOUT_ENGINE_CONFIG_KEY ] = $config;
+		$container[ SURECART_CONFIG_KEY ] = $config;
 	}
 
 	/**
@@ -138,7 +138,7 @@ class Application {
 	 * @return void
 	 */
 	protected function loadRoutesGroup( $group ) {
-		$config     = $this->resolve( CHECKOUT_ENGINE_CONFIG_KEY );
+		$config     = $this->resolve( SURECART_CONFIG_KEY );
 		$file       = Arr::get( $config, 'routes.' . $group . '.definitions', '' );
 		$attributes = Arr::get( $config, 'routes.' . $group . '.attributes', [] );
 
@@ -154,7 +154,7 @@ class Application {
 
 		$attributes['middleware'] = $middleware;
 
-		$blueprint = $this->resolve( CHECKOUT_ENGINE_ROUTING_ROUTE_BLUEPRINT_KEY );
+		$blueprint = $this->resolve( SURECART_ROUTING_ROUTE_BLUEPRINT_KEY );
 		$blueprint->attributes( $attributes )->group( $file );
 	}
 
@@ -174,11 +174,11 @@ class Application {
 			}
 
 			$request = Request::fromGlobals();
-			$handler = $this->resolve( CHECKOUT_ENGINE_EXCEPTIONS_CONFIGURATION_ERROR_HANDLER_KEY );
+			$handler = $this->resolve( SURECART_EXCEPTIONS_CONFIGURATION_ERROR_HANDLER_KEY );
 
-			add_filter( 'checkout_engine.pretty_errors.apply_admin_styles', '__return_false' );
+			add_filter( 'surecart.pretty_errors.apply_admin_styles', '__return_false' );
 
-			$response_service = $this->resolve( CHECKOUT_ENGINE_RESPONSE_SERVICE_KEY );
+			$response_service = $this->resolve( SURECART_RESPONSE_SERVICE_KEY );
 			$response_service->respond( $handler->getResponse( $request, $exception ) );
 
 			wp_die();

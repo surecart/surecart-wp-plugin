@@ -2,7 +2,7 @@
 import { __ } from '@wordpress/i18n';
 
 import Box from '../../ui/Box';
-import { CeInput } from '@checkout-engine/components-react';
+import { ScInput } from '@surecart/components-react';
 import { css, jsx } from '@emotion/core';
 
 export default ({ coupon, updateCoupon, loading }) => {
@@ -14,38 +14,38 @@ export default ({ coupon, updateCoupon, loading }) => {
 					gap: 0.5em;
 				`}
 			>
-				<ce-skeleton
+				<sc-skeleton
 					style={{
 						'--border-radius':
-							'var(--ce-input-border-radius-medium)',
-						height: 'var( --ce-input-height-medium )',
+							'var(--sc-input-border-radius-medium)',
+						height: 'var( --sc-input-height-medium )',
 						width: '100%',
 					}}
-				></ce-skeleton>
-				<ce-skeleton
+				></sc-skeleton>
+				<sc-skeleton
 					style={{
 						width: '80%',
 					}}
-				></ce-skeleton>
+				></sc-skeleton>
 			</div>
 		);
 	};
 
 	return (
-		<Box title={__('Coupon Name', 'checkout_engine')}>
+		<Box title={__('Coupon Name', 'surecart')}>
 			{loading ? (
 				renderLoading()
 			) : (
-				<CeInput
-					className="ce-coupon-name"
+				<ScInput
+					className="sc-coupon-name"
 					help={__(
 						'This is an internal name for your coupon. This is not visible to customers.',
-						'checkout_engine'
+						'surecart'
 					)}
 					attribute="name"
 					required
 					value={coupon?.name}
-					onCeChange={(e) => updateCoupon({ name: e.target.value })}
+					onScChange={(e) => updateCoupon({ name: e.target.value })}
 				/>
 			)}
 		</Box>

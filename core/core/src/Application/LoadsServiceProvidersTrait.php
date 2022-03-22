@@ -1,29 +1,29 @@
 <?php
 /**
- * @package   CheckoutEngineCore
+ * @package   SureCartCore
  * @author    Andre Gagnon <me@andregagnon.me>
  * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://checkout_engine.com/
+ * @link      https://surecart
  */
 
-namespace CheckoutEngineCore\Application;
+namespace SureCartCore\Application;
 
 use Pimple\Container;
-use CheckoutEngineCore\Controllers\ControllersServiceProvider;
-use CheckoutEngineCore\Csrf\CsrfServiceProvider;
-use CheckoutEngineCore\Exceptions\ConfigurationException;
-use CheckoutEngineCore\Exceptions\ExceptionsServiceProvider;
-use CheckoutEngineCore\Flash\FlashServiceProvider;
-use CheckoutEngineCore\Input\OldInputServiceProvider;
-use CheckoutEngineCore\Kernels\KernelsServiceProvider;
-use CheckoutEngineCore\Middleware\MiddlewareServiceProvider;
-use CheckoutEngineCore\Requests\RequestsServiceProvider;
-use CheckoutEngineCore\Responses\ResponsesServiceProvider;
-use CheckoutEngineCore\Routing\RoutingServiceProvider;
-use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
-use CheckoutEngineCore\Support\Arr;
-use CheckoutEngineCore\View\ViewServiceProvider;
+use SureCartCore\Controllers\ControllersServiceProvider;
+use SureCartCore\Csrf\CsrfServiceProvider;
+use SureCartCore\Exceptions\ConfigurationException;
+use SureCartCore\Exceptions\ExceptionsServiceProvider;
+use SureCartCore\Flash\FlashServiceProvider;
+use SureCartCore\Input\OldInputServiceProvider;
+use SureCartCore\Kernels\KernelsServiceProvider;
+use SureCartCore\Middleware\MiddlewareServiceProvider;
+use SureCartCore\Requests\RequestsServiceProvider;
+use SureCartCore\Responses\ResponsesServiceProvider;
+use SureCartCore\Routing\RoutingServiceProvider;
+use SureCartCore\ServiceProviders\ServiceProviderInterface;
+use SureCartCore\Support\Arr;
+use SureCartCore\View\ViewServiceProvider;
 
 /**
  * Load service providers.
@@ -57,9 +57,9 @@ trait LoadsServiceProvidersTrait {
 	 * @return void
 	 */
 	protected function loadServiceProviders( Container $container ) {
-		$container[ CHECKOUT_ENGINE_SERVICE_PROVIDERS_KEY ] = array_merge(
+		$container[ SURECART_SERVICE_PROVIDERS_KEY ] = array_merge(
 			$this->service_providers,
-			Arr::get( $container[ CHECKOUT_ENGINE_CONFIG_KEY ], 'providers', [] )
+			Arr::get( $container[ SURECART_CONFIG_KEY ], 'providers', [] )
 		);
 
 		$service_providers = array_map(
@@ -78,7 +78,7 @@ trait LoadsServiceProvidersTrait {
 
 				return $container[ $service_provider ];
 			},
-			$container[ CHECKOUT_ENGINE_SERVICE_PROVIDERS_KEY ]
+			$container[ SURECART_SERVICE_PROVIDERS_KEY ]
 		);
 
 		$this->registerServiceProviders( $service_providers, $container );

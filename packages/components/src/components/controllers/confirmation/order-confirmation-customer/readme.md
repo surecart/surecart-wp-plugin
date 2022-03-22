@@ -20,24 +20,24 @@
 
 ### Depends on
 
-- [ce-customer-details](../../../ui/customer-details)
+- [sc-customer-details](../../../ui/customer-details)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-order-confirmation-customer --> ce-customer-details
-  ce-customer-details --> ce-stacked-list-row
-  ce-customer-details --> ce-tag
-  ce-customer-details --> ce-skeleton
-  ce-customer-details --> ce-dashboard-module
-  ce-customer-details --> ce-button
-  ce-customer-details --> ce-icon
-  ce-customer-details --> ce-card
-  ce-customer-details --> ce-stacked-list
-  ce-dashboard-module --> ce-alert
-  ce-alert --> ce-icon
-  ce-button --> ce-spinner
-  style ce-order-confirmation-customer fill:#f9f,stroke:#333,stroke-width:4px
+  sc-order-confirmation-customer --> sc-customer-details
+  sc-customer-details --> sc-stacked-list-row
+  sc-customer-details --> sc-tag
+  sc-customer-details --> sc-skeleton
+  sc-customer-details --> sc-dashboard-module
+  sc-customer-details --> sc-button
+  sc-customer-details --> sc-icon
+  sc-customer-details --> sc-card
+  sc-customer-details --> sc-stacked-list
+  sc-dashboard-module --> sc-alert
+  sc-alert --> sc-icon
+  sc-button --> sc-spinner
+  style sc-order-confirmation-customer fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

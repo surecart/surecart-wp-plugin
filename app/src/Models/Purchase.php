@@ -1,11 +1,11 @@
 <?php
 
-namespace CheckoutEngine\Models;
+namespace SureCart\Models;
 
-use CheckoutEngine\Models\Traits\HasCustomer;
-use CheckoutEngine\Models\Traits\HasProduct;
-use CheckoutEngine\Models\Traits\HasRefund;
-use CheckoutEngine\Models\Traits\HasSubscription;
+use SureCart\Models\Traits\HasCustomer;
+use SureCart\Models\Traits\HasProduct;
+use SureCart\Models\Traits\HasRefund;
+use SureCart\Models\Traits\HasSubscription;
 
 /**
  * Purchase model.

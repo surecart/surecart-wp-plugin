@@ -1,10 +1,10 @@
 <?php
 
-namespace CheckoutEngine\Controllers\Admin\Subscriptions;
+namespace SureCart\Controllers\Admin\Subscriptions;
 
-use CheckoutEngine\Controllers\Admin\Subscriptions\SubscriptionsListTable;
-use CheckoutEngine\Controllers\Admin\Subscriptions\Scripts\EditScriptsController;
-use CheckoutEngine\Controllers\Admin\Subscriptions\Scripts\ShowScriptsController;
+use SureCart\Controllers\Admin\Subscriptions\SubscriptionsListTable;
+use SureCart\Controllers\Admin\Subscriptions\Scripts\EditScriptsController;
+use SureCart\Controllers\Admin\Subscriptions\Scripts\ShowScriptsController;
 
 /**
  * Handles product admin requests.
@@ -16,7 +16,7 @@ class SubscriptionsController {
 	public function index() {
 		$table = new SubscriptionsListTable();
 		$table->prepare_items();
-		return \CheckoutEngine::view( 'admin/subscriptions/index' )->with(
+		return \SureCart::view( 'admin/subscriptions/index' )->with(
 			[
 				'table' => $table,
 			]
@@ -30,7 +30,7 @@ class SubscriptionsController {
 	 */
 	public function edit() {
 		// enqueue needed script.
-		add_action( 'admin_enqueue_scripts', \CheckoutEngine::closure()->method( EditScriptsController::class, 'enqueue' ) );
+		add_action( 'admin_enqueue_scripts', \SureCart::closure()->method( EditScriptsController::class, 'enqueue' ) );
 		// return view.
 		return '<div id="app"></div>';
 	}
@@ -42,7 +42,7 @@ class SubscriptionsController {
 	 */
 	public function show() {
 		// enqueue needed script.
-		add_action( 'admin_enqueue_scripts', \CheckoutEngine::closure()->method( ShowScriptsController::class, 'enqueue' ) );
+		add_action( 'admin_enqueue_scripts', \SureCart::closure()->method( ShowScriptsController::class, 'enqueue' ) );
 		// return view.
 		return '<div id="app"></div>';
 	}

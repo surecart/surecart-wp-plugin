@@ -2,7 +2,7 @@ import { Fragment } from '@wordpress/element';
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
 import { TextControl, PanelBody, PanelRow } from '@wordpress/components';
-import { CeAddress } from '@checkout-engine/components-react';
+import { ScAddress } from '@surecart/components-react';
 
 export default ({ className, attributes, setAttributes }) => {
 	const { label } = attributes;
@@ -14,10 +14,10 @@ export default ({ className, attributes, setAttributes }) => {
 	return (
 		<Fragment>
 			<InspectorControls>
-				<PanelBody title={__('Attributes', 'checkout_engine')}>
+				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<TextControl
-							label={__('Label', 'checkout-engine')}
+							label={__('Label', 'surecart')}
 							value={label}
 							onChange={(label) => setAttributes({ label })}
 						/>
@@ -25,7 +25,7 @@ export default ({ className, attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<CeAddress {...blockProps}></CeAddress>
+			<ScAddress {...blockProps}></ScAddress>
 		</Fragment>
 	);
 };

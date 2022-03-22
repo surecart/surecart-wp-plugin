@@ -19,7 +19,7 @@
 
 | Event     | Description | Type                 |
 | --------- | ----------- | -------------------- |
-| `ceClear` |             | `CustomEvent<CeTag>` |
+| `scClear` |             | `CustomEvent<ScTag>` |
 
 
 ## Shadow Parts
@@ -34,39 +34,39 @@
 
 ### Used by
 
- - [ce-badge-notice](../badge-notice)
- - [ce-charges-list](../../controllers/dashboard/charges-list)
- - [ce-coupon-form](../coupon-form)
- - [ce-customer-details](../customer-details)
- - [ce-customer-edit](../../controllers/dashboard/customer-edit)
- - [ce-invoices-list](../../controllers/dashboard/invoices-list)
- - [ce-order-confirmation-totals](../../controllers/confirmation/order-confirmation-totals)
- - [ce-order-status-badge](../order-status-badge)
- - [ce-orders-list](../../controllers/dashboard/orders-list)
- - [ce-payment](../../controllers/checkout-form/payment)
- - [ce-payment-methods-list](../../controllers/dashboard/payment-methods-list)
- - [ce-subscription-details](../../controllers/dashboard/subscription-details)
- - [ce-subscription-status-badge](../subscription-status-badge)
- - [ce-subscription-switch](../../controllers/dashboard/subscription-switch)
+ - [sc-badge-notice](../badge-notice)
+ - [sc-charges-list](../../controllers/dashboard/charges-list)
+ - [sc-coupon-form](../coupon-form)
+ - [sc-customer-details](../customer-details)
+ - [sc-customer-edit](../../controllers/dashboard/customer-edit)
+ - [sc-invoices-list](../../controllers/dashboard/invoices-list)
+ - [sc-order-confirmation-totals](../../controllers/confirmation/order-confirmation-totals)
+ - [sc-order-status-badge](../order-status-badge)
+ - [sc-orders-list](../../controllers/dashboard/orders-list)
+ - [sc-payment](../../controllers/checkout-form/payment)
+ - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
+ - [sc-subscription-details](../../controllers/dashboard/subscription-details)
+ - [sc-subscription-status-badge](../subscription-status-badge)
+ - [sc-subscription-switch](../../controllers/dashboard/subscription-switch)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-badge-notice --> ce-tag
-  ce-charges-list --> ce-tag
-  ce-coupon-form --> ce-tag
-  ce-customer-details --> ce-tag
-  ce-customer-edit --> ce-tag
-  ce-invoices-list --> ce-tag
-  ce-order-confirmation-totals --> ce-tag
-  ce-order-status-badge --> ce-tag
-  ce-orders-list --> ce-tag
-  ce-payment --> ce-tag
-  ce-payment-methods-list --> ce-tag
-  ce-subscription-details --> ce-tag
-  ce-subscription-status-badge --> ce-tag
-  ce-subscription-switch --> ce-tag
-  style ce-tag fill:#f9f,stroke:#333,stroke-width:4px
+  sc-badge-notice --> sc-tag
+  sc-charges-list --> sc-tag
+  sc-coupon-form --> sc-tag
+  sc-customer-details --> sc-tag
+  sc-customer-edit --> sc-tag
+  sc-invoices-list --> sc-tag
+  sc-order-confirmation-totals --> sc-tag
+  sc-order-status-badge --> sc-tag
+  sc-orders-list --> sc-tag
+  sc-payment --> sc-tag
+  sc-payment-methods-list --> sc-tag
+  sc-subscription-details --> sc-tag
+  sc-subscription-status-badge --> sc-tag
+  sc-subscription-switch --> sc-tag
+  style sc-tag fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

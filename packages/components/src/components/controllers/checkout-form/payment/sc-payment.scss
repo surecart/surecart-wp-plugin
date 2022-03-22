@@ -1,0 +1,6 @@
+sc-payment {
+  display: flex !important;
+  flex-direction: column;
+  gap: var(--sc-input-label-margin);
+  position: relative;
+}

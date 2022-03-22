@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { __ } from '@wordpress/i18n';
 import { Modal, Button } from '@wordpress/components';
-import { CeForm } from '@checkout-engine/components-react';
+import { ScForm } from '@surecart/components-react';
 import { css, jsx } from '@emotion/core';
 import { useState, Fragment } from '@wordpress/element';
 import { useEffect } from 'react';
@@ -58,25 +58,19 @@ export default ({
 	const renderTitle = () => {
 		if (pending.price !== current.price) {
 			if (pending.quantity > current.quantity) {
-				return __(
-					'Change Product And Increase Quantity',
-					'checkout_engine'
-				);
+				return __('Change Product And Increase Quantity', 'surecart');
 			}
 			if (pending.quantity < current.quantity) {
-				return __(
-					'Change Product Decrease Quantity',
-					'checkout_engine'
-				);
+				return __('Change Product Decrease Quantity', 'surecart');
 			}
-			return __('Change Product', 'checkout_engine');
+			return __('Change Product', 'surecart');
 		}
 
 		if (pending.quantity > current.quantity) {
-			return __('Increase quantity', 'checkout_engine');
+			return __('Increase quantity', 'surecart');
 		}
 		if (pending.quantity < current.quantity) {
-			return __('Decrease quantity', 'checkout_engine');
+			return __('Decrease quantity', 'surecart');
 		}
 		return null;
 	};
@@ -92,14 +86,14 @@ export default ({
 				<div
 					css={css`
 						text-decoration: line-through;
-						padding: var(--ce-spacing-small);
-						background-color: var(--ce-color-gray-100);
-						border-radius: var(--ce-border-radius-small);
+						padding: var(--sc-spacing-small);
+						background-color: var(--sc-color-gray-100);
+						border-radius: var(--sc-border-radius-small);
 					`}
 				>
 					{currentProduct?.name} x {current?.quantity}
 					<div style={{ opacity: 0.5 }}>
-						<ce-format-number
+						<sc-format-number
 							type="currency"
 							value={
 								currentPrice?.amount * (current?.quantity || 1)
@@ -116,16 +110,16 @@ export default ({
 				</div>
 				<div
 					css={css`
-						padding: var(--ce-spacing-small);
-						background-color: var(--ce-color-success-100);
-						border-radius: var(--ce-border-radius-small);
-						color: var(--ce-color-success-900);
+						padding: var(--sc-spacing-small);
+						background-color: var(--sc-color-success-100);
+						border-radius: var(--sc-border-radius-small);
+						color: var(--sc-color-success-900);
 					`}
 				>
 					{pendingProduct?.name} x
 					{pending?.quantity || current?.quantity}
 					<div style={{ opacity: 0.5 }}>
-						<ce-format-number
+						<sc-format-number
 							type="currency"
 							value={
 								pendingPrice?.amount *
@@ -150,43 +144,43 @@ export default ({
 			{children ? (
 				<span onClick={() => setModal(!modal)}>{children}</span>
 			) : (
-				<ce-button
+				<sc-button
 					size="small"
 					onClick={() => setModal(!modal)}
 					loading={loading}
 				>
-					{__('Cancel', 'checkout_engine')}
-				</ce-button>
+					{__('Cancel', 'surecart')}
+				</sc-button>
 			)}
 			{modal && (
 				<Modal
-					title={__('Manage Scheduled Update', 'checkout_engine')}
+					title={__('Manage Scheduled Update', 'surecart')}
 					css={css`
 						max-width: 800px !important;
 					`}
 					onRequestClose={() => setModal(false)}
 					shouldCloseOnClickOutside={false}
 				>
-					<CeForm
-						onCeFormSubmit={onSubmit}
+					<ScForm
+						onScFormSubmit={onSubmit}
 						css={css`
-							--ce-form-row-spacing: var(--ce-spacing-large);
+							--sc-form-row-spacing: var(--sc-spacing-large);
 						`}
 					>
-						<ce-alert type="danger" open={error}>
+						<sc-alert type="danger" open={error}>
 							{error}
-						</ce-alert>
+						</sc-alert>
 
-						<ce-card>
-							<ce-text
+						<sc-card>
+							<sc-text
 								style={{
-									'--font-size': 'var(--ce-font-size-large)',
+									'--font-size': 'var(--sc-font-size-large)',
 								}}
 							>
 								{renderTitle()}
-							</ce-text>
+							</sc-text>
 							{renderPriceChange()}
-						</ce-card>
+						</sc-card>
 
 						<div
 							css={css`
@@ -196,13 +190,13 @@ export default ({
 							`}
 						>
 							<Button isPrimary isBusy={loading} type="submit">
-								{__('Delete Update', 'checkout_engine')}
+								{__('Delete Update', 'surecart')}
 							</Button>
 							<Button onClick={() => setModal(false)}>
-								{__('Keep Update', 'checkout_engine')}
+								{__('Keep Update', 'surecart')}
 							</Button>
 						</div>
-					</CeForm>
+					</ScForm>
 				</Modal>
 			)}
 		</Fragment>

@@ -3,27 +3,27 @@
  */
 import { Component } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-import { CeButton, CeAlert } from '@checkout-engine/components-react';
+import { ScButton, ScAlert } from '@surecart/components-react';
 import { useCopyToClipboard } from '@wordpress/compose';
 
-function CopyButton( { text, children } ) {
-	const ref = useCopyToClipboard( text );
-	return <CeButton ref={ ref }>{ children }</CeButton>;
+function CopyButton({ text, children }) {
+	const ref = useCopyToClipboard(text);
+	return <ScButton ref={ref}>{children}</ScButton>;
 }
 
 export default class ErrorBoundary extends Component {
 	constructor() {
-		super( ...arguments );
+		super(...arguments);
 
-		this.reboot = this.reboot.bind( this );
+		this.reboot = this.reboot.bind(this);
 
 		this.state = {
 			error: null,
 		};
 	}
 
-	componentDidCatch( error ) {
-		this.setState( { error } );
+	componentDidCatch(error) {
+		this.setState({ error });
 	}
 
 	reboot() {
@@ -33,25 +33,25 @@ export default class ErrorBoundary extends Component {
 	render() {
 		const { error } = this.state;
 
-		if ( ! error ) {
+		if (!error) {
 			return this.props.children;
 		}
 
 		return (
 			<div>
-				<CeAlert type="danger">
-					{ __(
+				<ScAlert type="danger">
+					{__(
 						'The editor has encountered an unexpected error.',
-						'checkout_engine'
-					) }
-					<CeButton key="recovery" onClick={ this.reboot }>
-						{ __( 'Attempt Recovery' ) }
-					</CeButton>
-					<CopyButton key="copy-error" text={ error.stack }>
-						{ __( 'Copy Error' ) }
+						'surecart'
+					)}
+					<ScButton key="recovery" onClick={this.reboot}>
+						{__('Attempt Recovery')}
+					</ScButton>
+					<CopyButton key="copy-error" text={error.stack}>
+						{__('Copy Error')}
 					</CopyButton>
-				</CeAlert>
-				{ this.props.children }
+				</ScAlert>
+				{this.props.children}
 			</div>
 		);
 	}

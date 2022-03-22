@@ -1,10 +1,10 @@
 <?php
 
-namespace CheckoutEngine\Controllers\Admin\Customers;
+namespace SureCart\Controllers\Admin\Customers;
 
-use CheckoutEngine\Models\Product;
-use CheckoutEngineCore\Responses\RedirectResponse;
-use CheckoutEngine\Controllers\Admin\Customers\CustomersListTable;
+use SureCart\Models\Product;
+use SureCartCore\Responses\RedirectResponse;
+use SureCart\Controllers\Admin\Customers\CustomersListTable;
 
 /**
  * Handles product admin requests.
@@ -17,7 +17,7 @@ class CustomersController {
 	public function index() {
 		$table = new CustomersListTable();
 		$table->prepare_items();
-		return \CheckoutEngine::view( 'admin/customers/index' )->with( [ 'table' => $table ] );
+		return \SureCart::view( 'admin/customers/index' )->with( [ 'table' => $table ] );
 	}
 
 	/**
@@ -25,7 +25,7 @@ class CustomersController {
 	 */
 	public function edit() {
 		// enqueue needed script.
-		add_action( 'admin_enqueue_scripts', \CheckoutEngine::closure()->method( CustomersScriptsController::class, 'enqueue' ) );
+		add_action( 'admin_enqueue_scripts', \SureCart::closure()->method( CustomersScriptsController::class, 'enqueue' ) );
 		// return view.
 		return '<div id="app"></div>';
 	}
@@ -33,14 +33,14 @@ class CustomersController {
 	/**
 	 * Change the archived attribute in the model
 	 *
-	 * @param \CheckoutEngineCore\Requests\RequestInterface $request Request.
+	 * @param \SureCartCore\Requests\RequestInterface $request Request.
 	 * @return void
 	 */
 	public function toggleArchive( $request ) {
 		$product = Product::find( $request->query( 'id' ) );
 
 		if ( is_wp_error( $product ) ) {
-			\CheckoutEngine::flash()->add( 'errors', $product->get_error_message() );
+			\SureCart::flash()->add( 'errors', $product->get_error_message() );
 			return $this->redirectBack( $request );
 		}
 
@@ -51,13 +51,13 @@ class CustomersController {
 		);
 
 		if ( is_wp_error( $updated ) ) {
-			\CheckoutEngine::flash()->add( 'errors', $updated->get_error_message() );
+			\SureCart::flash()->add( 'errors', $updated->get_error_message() );
 			return $this->redirectBack( $request );
 		}
 
-		\CheckoutEngine::flash()->add(
+		\SureCart::flash()->add(
 			'success',
-			$updated->archived ? __( 'Product archived.', 'checkout_engine' ) : __( 'Product restored.', 'checkout_engine' )
+			$updated->archived ? __( 'Product archived.', 'surecart' ) : __( 'Product restored.', 'surecart' )
 		);
 
 		return $this->redirectBack( $request );

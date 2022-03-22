@@ -1,17 +1,17 @@
 <?php
 /**
- * @package   CheckoutEngineCore
+ * @package   SureCartCore
  * @author    Andre Gagnon <me@andregagnon.me>
  * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://checkout_engine.com/
+ * @link      https://surecart.com/
  */
 
-namespace CheckoutEngineCore\Routing;
+namespace SureCartCore\Routing;
 
-use CheckoutEngineCore\Exceptions\ConfigurationException;
-use CheckoutEngineCore\Requests\RequestInterface;
-use CheckoutEngineCore\Routing\Conditions\CanFilterQueryInterface;
+use SureCartCore\Exceptions\ConfigurationException;
+use SureCartCore\Requests\RequestInterface;
+use SureCartCore\Routing\Conditions\CanFilterQueryInterface;
 
 /**
  * Represent an object which has a WordPress query filter attribute.

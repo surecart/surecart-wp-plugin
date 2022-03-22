@@ -1,16 +1,16 @@
 <?php
 /**
- * @package   CheckoutEngineAppCore
+ * @package   SureCartAppCore
  * @author    Andre Gagnon <me@andregagnon.me>
  * @copyright  Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://checkoutengine.com
+ * @link      https://surecart.com
  */
 
-namespace CheckoutEngineAppCore\AppCore;
+namespace SureCartAppCore\AppCore;
 
-use CheckoutEngineCore\ServiceProviders\ExtendsConfigTrait;
-use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
+use SureCartCore\ServiceProviders\ExtendsConfigTrait;
+use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 /**
  * Provide theme dependencies.
@@ -33,12 +33,12 @@ class AppCoreServiceProvider implements ServiceProviderInterface {
 			]
 		);
 
-		$container['checkout_engine_app_core.app_core.app_core'] = function( $c ) {
-			return new AppCore( $c[ CHECKOUT_ENGINE_APPLICATION_KEY ] );
+		$container['surecart_app_core.app_core.app_core'] = function( $c ) {
+			return new AppCore( $c[ SURECART_APPLICATION_KEY ] );
 		};
 
-		$app = $container[ CHECKOUT_ENGINE_APPLICATION_KEY ];
-		$app->alias( 'core', 'checkout_engine_app_core.app_core.app_core' );
+		$app = $container[ SURECART_APPLICATION_KEY ];
+		$app->alias( 'core', 'surecart_app_core.app_core.app_core' );
 	}
 
 	/**

@@ -18,51 +18,51 @@
 
 ### Depends on
 
-- [ce-tag](../../../ui/tag)
-- [ce-order-status-badge](../../../ui/order-status-badge)
-- [ce-card](../../../ui/card)
-- [ce-stacked-list](../../../ui/stacked-list)
-- [ce-stacked-list-row](../../../ui/stacked-list-row)
-- [ce-skeleton](../../../ui/skeleton)
-- [ce-divider](../../../ui/divider)
-- [ce-empty](../../../ui/empty)
-- [ce-format-date](../../../util/format-date)
-- [ce-text](../../../ui/text)
-- [ce-format-number](../../../util/format-number)
-- [ce-dashboard-module](../../../ui/dashboard-module)
-- [ce-button](../../../ui/button)
-- [ce-icon](../../../ui/icon)
-- [ce-pagination](../../../ui/pagination)
-- [ce-block-ui](../../../ui/block-ui)
+- [sc-tag](../../../ui/tag)
+- [sc-order-status-badge](../../../ui/order-status-badge)
+- [sc-card](../../../ui/card)
+- [sc-stacked-list](../../../ui/stacked-list)
+- [sc-stacked-list-row](../../../ui/stacked-list-row)
+- [sc-skeleton](../../../ui/skeleton)
+- [sc-divider](../../../ui/divider)
+- [sc-empty](../../../ui/empty)
+- [sc-format-date](../../../util/format-date)
+- [sc-text](../../../ui/text)
+- [sc-format-number](../../../util/format-number)
+- [sc-dashboard-module](../../../ui/dashboard-module)
+- [sc-button](../../../ui/button)
+- [sc-icon](../../../ui/icon)
+- [sc-pagination](../../../ui/pagination)
+- [sc-block-ui](../../../ui/block-ui)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-orders-list --> ce-tag
-  ce-orders-list --> ce-order-status-badge
-  ce-orders-list --> ce-card
-  ce-orders-list --> ce-stacked-list
-  ce-orders-list --> ce-stacked-list-row
-  ce-orders-list --> ce-skeleton
-  ce-orders-list --> ce-divider
-  ce-orders-list --> ce-empty
-  ce-orders-list --> ce-format-date
-  ce-orders-list --> ce-text
-  ce-orders-list --> ce-format-number
-  ce-orders-list --> ce-dashboard-module
-  ce-orders-list --> ce-button
-  ce-orders-list --> ce-icon
-  ce-orders-list --> ce-pagination
-  ce-orders-list --> ce-block-ui
-  ce-order-status-badge --> ce-tag
-  ce-empty --> ce-icon
-  ce-dashboard-module --> ce-alert
-  ce-alert --> ce-icon
-  ce-button --> ce-spinner
-  ce-pagination --> ce-flex
-  ce-pagination --> ce-button
-  ce-block-ui --> ce-spinner
-  style ce-orders-list fill:#f9f,stroke:#333,stroke-width:4px
+  sc-orders-list --> sc-tag
+  sc-orders-list --> sc-order-status-badge
+  sc-orders-list --> sc-card
+  sc-orders-list --> sc-stacked-list
+  sc-orders-list --> sc-stacked-list-row
+  sc-orders-list --> sc-skeleton
+  sc-orders-list --> sc-divider
+  sc-orders-list --> sc-empty
+  sc-orders-list --> sc-format-date
+  sc-orders-list --> sc-text
+  sc-orders-list --> sc-format-number
+  sc-orders-list --> sc-dashboard-module
+  sc-orders-list --> sc-button
+  sc-orders-list --> sc-icon
+  sc-orders-list --> sc-pagination
+  sc-orders-list --> sc-block-ui
+  sc-order-status-badge --> sc-tag
+  sc-empty --> sc-icon
+  sc-dashboard-module --> sc-alert
+  sc-alert --> sc-icon
+  sc-button --> sc-spinner
+  sc-pagination --> sc-flex
+  sc-pagination --> sc-button
+  sc-block-ui --> sc-spinner
+  style sc-orders-list fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngine\Models\Traits;
+namespace SureCart\Models\Traits;
 
-use CheckoutEngine\Models\Coupon;
+use SureCart\Models\Coupon;
 
 /**
  * If the model has an attached customer.

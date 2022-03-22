@@ -1,10 +1,10 @@
 <?php
 
-namespace CheckoutEngine\Rest;
+namespace SureCart\Rest;
 
-use CheckoutEngine\Controllers\Rest\SubscriptionProtocolController;
-use CheckoutEngine\Models\User;
-use CheckoutEngine\Rest\RestServiceInterface;
+use SureCart\Controllers\Rest\SubscriptionProtocolController;
+use SureCart\Models\User;
+use SureCart\Rest\RestServiceInterface;
 
 /**
  * Service provider for Price Rest Requests
@@ -72,7 +72,7 @@ class SubscriptionProtocolRestServiceProvider extends RestServiceProvider implem
 			// In JSON Schema you can specify object properties in the properties attribute.
 			'properties' => [
 				'id'                         => [
-					'description' => esc_html__( 'Unique identifier for the object.', 'checkout_engine' ),
+					'description' => esc_html__( 'Unique identifier for the object.', 'surecart' ),
 					'type'        => 'string',
 					'context'     => [ 'edit' ],
 					'readonly'    => true,
@@ -86,20 +86,20 @@ class SubscriptionProtocolRestServiceProvider extends RestServiceProvider implem
 					'context' => [ 'edit' ],
 				],
 				'payment_retry_window_weeks' => [
-					'description' => esc_html__( 'Payment retry window in weeks.', 'checkout_engine' ),
+					'description' => esc_html__( 'Payment retry window in weeks.', 'surecart' ),
 					'type'        => 'integer',
 					'context'     => [ 'edit' ],
 				],
 				'cancel_behavior'            => [
-					'description' => esc_html__( 'Cancel behavior. Either pending or immediate.', 'checkout_engine' ),
+					'description' => esc_html__( 'Cancel behavior. Either pending or immediate.', 'surecart' ),
 					'type'        => 'string',
 				],
 				'downgrade_behavior'         => [
-					'description' => esc_html__( 'Downgrade behavior. Either pending or immediate.', 'checkout_engine' ),
+					'description' => esc_html__( 'Downgrade behavior. Either pending or immediate.', 'surecart' ),
 					'type'        => 'string',
 				],
 				'upgrade_behavior'           => [
-					'description' => esc_html__( 'Upgrade behavior. Either pending or immediate.', 'checkout_engine' ),
+					'description' => esc_html__( 'Upgrade behavior. Either pending or immediate.', 'surecart' ),
 					'type'        => 'string',
 				],
 			],

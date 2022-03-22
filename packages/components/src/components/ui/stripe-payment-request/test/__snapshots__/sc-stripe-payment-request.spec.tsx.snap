@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-stripe-payment-request renders 1`] = `
+<sc-stripe-payment-request>
+  <!---->
+  <div class="request">
+    <div class="sc-payment-request-button" part="button"></div>
+  </div>
+</sc-stripe-payment-request>
+`;

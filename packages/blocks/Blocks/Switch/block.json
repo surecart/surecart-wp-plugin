@@ -1,10 +1,10 @@
 {
-	"name": "checkout-engine/switch",
+	"name": "surecart/switch",
 	"title": "Switch",
 	"description": "Display a toggle switch.",
 	"category": "layout",
 	"keywords": ["submit", "button"],
-	"parent": ["checkout-engine/form", "checkout-engine/column"],
+	"parent": ["surecart/form", "surecart/column"],
 	"supports": {
 		"reusable": false,
 		"html": false

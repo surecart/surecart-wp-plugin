@@ -1,12 +1,12 @@
 <?php
 
-use CheckoutEngine\Middleware\WebhooksMiddleware;
-use CheckoutEngine\Tests\CheckoutEngineUnitTestCase;
+use SureCart\Middleware\WebhooksMiddleware;
+use SureCart\Tests\SureCartUnitTestCase;
 
 /**
  * @group webhooks
  */
-class WebhookMiddlewareFeatureTest extends CheckoutEngineUnitTestCase {
+class WebhookMiddlewareFeatureTest extends SureCartUnitTestCase {
 	public function test_verifies_signature() {
 		$payload = json_encode(['test' => '1234']);
 		$secret = 'secret';

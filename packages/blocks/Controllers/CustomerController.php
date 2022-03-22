@@ -1,9 +1,9 @@
 <?php
-namespace CheckoutEngineBlocks\Controllers;
+namespace SureCartBlocks\Controllers;
 
-use CheckoutEngine\Models\Component;
-use CheckoutEngine\Models\Customer;
-use CheckoutEngine\Models\User;
+use SureCart\Models\Component;
+use SureCart\Models\Customer;
+use SureCart\Models\User;
 
 /**
  * Payment method block controller class.
@@ -26,11 +26,11 @@ class CustomerController extends BaseController {
 
 		// show test.
 		if ( ! empty( User::current()->customerId( 'test' ) ) ) {
-			$output .= '<ce-dashboard-customer-details customer-id="' . User::current()->customerId( 'test' ) . '"></ce-dashboard-customer-details>';
+			$output .= '<sc-dashboard-customer-details customer-id="' . User::current()->customerId( 'test' ) . '"></sc-dashboard-customer-details>';
 		}
 		// show live.
 		if ( ! empty( User::current()->customerId( 'live' ) ) ) {
-			$output .= '<ce-dashboard-customer-details customer-id="' . User::current()->customerId( 'live' ) . '"></ce-dashboard-customer-details>';
+			$output .= '<sc-dashboard-customer-details customer-id="' . User::current()->customerId( 'live' ) . '"></sc-dashboard-customer-details>';
 		}
 
 		return $output;
@@ -42,28 +42,28 @@ class CustomerController extends BaseController {
 	 * @return function
 	 */
 	public function edit() {
-		$back = add_query_arg( [ 'tab' => $this->getTab() ], \CheckoutEngine::pages()->url( 'dashboard' ) );
+		$back = add_query_arg( [ 'tab' => $this->getTab() ], \SureCart::pages()->url( 'dashboard' ) );
 		ob_start(); ?>
 
-		<ce-spacing style="--spacing: var(--ce-spacing-large)">
-			<ce-breadcrumbs>
-				<ce-breadcrumb href="<?php echo esc_url( $back ); ?>">
-					<?php esc_html_e( 'Dashboard', 'checkout_engine' ); ?>
-				</ce-breadcrumb>
-				<ce-breadcrumb>
-					<?php esc_html_e( 'Billing Details', 'checkout_engine' ); ?>
-				</ce-breadcrumb>
-			</ce-breadcrumbs>
+		<sc-spacing style="--spacing: var(--sc-spacing-large)">
+			<sc-breadcrumbs>
+				<sc-breadcrumb href="<?php echo esc_url( $back ); ?>">
+					<?php esc_html_e( 'Dashboard', 'surecart' ); ?>
+				</sc-breadcrumb>
+				<sc-breadcrumb>
+					<?php esc_html_e( 'Billing Details', 'surecart' ); ?>
+				</sc-breadcrumb>
+			</sc-breadcrumbs>
 
 			<?php
 			if ( ! empty( User::current()->customerId( 'live' ) ) ) {
 				$customer = Customer::with( [ 'shipping_address', 'billing_address', 'tax_identifier' ] )->find( User::current()->customerId( 'live' ) );
 				echo wp_kses_post(
-					Component::tag( 'ce-customer-edit' )
+					Component::tag( 'sc-customer-edit' )
 					->id( 'customer-customer-edit' )
 					->with(
 						[
-							'header'     => __( 'Update Billing Details', 'checkout-engine' ),
+							'header'     => __( 'Update Billing Details', 'surecart' ),
 							'customer'   => $customer,
 							'successUrl' => esc_url( $back ),
 						]
@@ -74,11 +74,11 @@ class CustomerController extends BaseController {
 			if ( ! empty( User::current()->customerId( 'test' ) ) ) {
 				$customer = Customer::with( [ 'shipping_address', 'billing_address', 'tax_identifier' ] )->find( User::current()->customerId( 'test' ) );
 				echo wp_kses_post(
-					Component::tag( 'ce-customer-edit' )
+					Component::tag( 'sc-customer-edit' )
 					->id( 'customer-customer-edit' )
 					->with(
 						[
-							'header'     => __( 'Update Billing Details', 'checkout-engine' ),
+							'header'     => __( 'Update Billing Details', 'surecart' ),
 							'customer'   => $customer,
 							'successUrl' => esc_url( $back ),
 						]
@@ -86,7 +86,7 @@ class CustomerController extends BaseController {
 				);
 			}
 			?>
-		</ce-spacing>
+		</sc-spacing>
 
 			<?php
 			return ob_get_clean();

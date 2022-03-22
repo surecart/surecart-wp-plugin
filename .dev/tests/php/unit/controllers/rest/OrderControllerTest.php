@@ -1,14 +1,14 @@
 <?php
 
-namespace CheckoutEngine\Tests\Controllers\Rest;
+namespace SureCart\Tests\Controllers\Rest;
 
-use CheckoutEngine\Controllers\Rest\OrderController;
-use CheckoutEngine\Models\Order;
-use CheckoutEngine\Models\User;
-use CheckoutEngine\Tests\CheckoutEngineUnitTestCase;
+use SureCart\Controllers\Rest\OrderController;
+use SureCart\Models\Order;
+use SureCart\Models\User;
+use SureCart\Tests\SureCartUnitTestCase;
 use WP_REST_Request;
 
-class OrderControllerTest extends CheckoutEngineUnitTestCase
+class OrderControllerTest extends SureCartUnitTestCase
 {
 	use \Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 
@@ -18,10 +18,10 @@ class OrderControllerTest extends CheckoutEngineUnitTestCase
 	public function setUp()
 	{
 		// Set up an app instance with whatever stubs and mocks we need before every test.
-		\CheckoutEngine::make()->bootstrap([
+		\SureCart::make()->bootstrap([
 			'providers' => [
-				\CheckoutEngine\Request\RequestServiceProvider::class,
-				\CheckoutEngine\Support\Errors\ErrorsServiceProvider::class,
+				\SureCart\Request\RequestServiceProvider::class,
+				\SureCart\Support\Errors\ErrorsServiceProvider::class,
 			]
 		], false);
 
@@ -33,7 +33,7 @@ class OrderControllerTest extends CheckoutEngineUnitTestCase
 	 */
 	public function test_middlewareGetsCalled()
 	{
-		$request = new WP_REST_Request('POST', '/checkout-engine/v1/orders', [
+		$request = new WP_REST_Request('POST', '/surecart/v1/orders', [
 			'form_id' => 1,
 		]);
 
@@ -67,7 +67,7 @@ class OrderControllerTest extends CheckoutEngineUnitTestCase
 	 * Test validation.
 	 */
 	public function test_validate() {
-		$request = new WP_REST_Request('POST', '/checkout-engine/v1/orders/finalize');
+		$request = new WP_REST_Request('POST', '/surecart/v1/orders/finalize');
 		$request->set_param('email', 'testuser@test.com');
 		$request->set_param('password', 'pass123');
 

@@ -18,11 +18,7 @@ import Sidebar from './Sidebar';
 
 // components
 import ErrorFlash from '../../components/ErrorFlash';
-import {
-	CeButton,
-	CeFormatDate,
-	CeSwitch,
-} from '@checkout-engine/components-react';
+import { ScButton, ScFormatDate, ScSwitch } from '@surecart/components-react';
 import PendingUpdate from '../show/modules/PendingUpdate';
 
 export default () => {
@@ -60,7 +56,7 @@ export default () => {
 				});
 				setSaving(true);
 				window.location.href = addQueryArgs('admin.php', {
-					page: 'ce-subscriptions',
+					page: 'sc-subscriptions',
 					action: 'show',
 					id: id,
 				});
@@ -95,28 +91,28 @@ export default () => {
 			onInvalid={onInvalid}
 			backButtonType="icon"
 			backUrl={addQueryArgs('admin.php', {
-				page: 'ce-subscriptions',
+				page: 'sc-subscriptions',
 				action: 'show',
 				id: id,
 			})}
-			backText={__('Cancel Editing', 'checkout_engine')}
+			backText={__('Cancel Editing', 'surecart')}
 			title={
 				id
-					? __('Update Subscription', 'checkout_engine')
-					: __('Create Subscription', 'checkout_engine')
+					? __('Update Subscription', 'surecart')
+					: __('Create Subscription', 'surecart')
 			}
 			sidebar={
 				<Sidebar subscription={subscription} loading={isLoading} />
 			}
 			button={
 				isLoading ? (
-					<ce-skeleton
+					<sc-skeleton
 						style={{
 							width: '120px',
 							height: '35px',
 							display: 'inline-block',
 						}}
-					></ce-skeleton>
+					></sc-skeleton>
 				) : (
 					<div
 						css={css`
@@ -125,16 +121,16 @@ export default () => {
 							align-items: center;
 						`}
 					>
-						<CeSwitch
+						<ScSwitch
 							checked={skip_proration}
-							onCeChange={(e) =>
+							onScChange={(e) =>
 								setSkipProration(e.target.checked)
 							}
 						>
-							{__('Skip Proration', 'checkout_engine')}
-						</CeSwitch>
-						<CeButton
-							className={'ce-schedule-model'}
+							{__('Skip Proration', 'surecart')}
+						</ScSwitch>
+						<ScButton
+							className={'sc-schedule-model'}
 							disabled={isSaving}
 							loading={isSaving}
 							submit
@@ -145,19 +141,19 @@ export default () => {
 								console.log({ update_behavior });
 							}}
 						>
-							{__('Schedule for', 'checkout_engine')}
+							{__('Schedule for', 'surecart')}
 							{'\u00A0'}
-							<CeFormatDate
+							<ScFormatDate
 								date={subscription?.current_period_end_at}
 								month="short"
 								day="numeric"
 								year="numeric"
 								type="timestamp"
-							></CeFormatDate>
-						</CeButton>
-						<CeButton
+							></ScFormatDate>
+						</ScButton>
+						<ScButton
 							type="primary"
-							className={'ce-save-model'}
+							className={'sc-save-model'}
 							disabled={isSaving}
 							loading={isSaving}
 							submit
@@ -166,8 +162,8 @@ export default () => {
 								update_behavior = 'immediate';
 							}}
 						>
-							{__('Update Now', 'checkout_engine')}
-						</CeButton>
+							{__('Update Now', 'surecart')}
+						</ScButton>
 					</div>
 				)
 			}
@@ -200,10 +196,10 @@ export default () => {
 				/>
 
 				{isSaving && (
-					<ce-block-ui
+					<sc-block-ui
 						spinner
 						style={{ zIndex: 9, margin: 0 }}
-					></ce-block-ui>
+					></sc-block-ui>
 				)}
 			</Fragment>
 		</Template>

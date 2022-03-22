@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngine\Controllers\Admin\Abandoned;
+namespace SureCart\Controllers\Admin\Abandoned;
 
-use CheckoutEngine\Support\Scripts\AdminModelEditController;
+use SureCart\Support\Scripts\AdminModelEditController;
 
 /**
  * Coupon page
@@ -20,7 +20,7 @@ class AbandonedOrderScriptsController extends AdminModelEditController {
 	 *
 	 * @var string
 	 */
-	protected $handle = 'checkoutengine/scripts/admin/abandoned_order';
+	protected $handle = 'SureCart/scripts/admin/abandoned_order';
 
 	/**
 	 * Script path.

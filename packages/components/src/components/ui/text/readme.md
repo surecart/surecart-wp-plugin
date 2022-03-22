@@ -17,23 +17,23 @@
 
 ### Used by
 
- - [ce-charges-list](../../controllers/dashboard/charges-list)
- - [ce-invoices-list](../../controllers/dashboard/invoices-list)
- - [ce-orders-list](../../controllers/dashboard/orders-list)
- - [ce-stripe-element](../stripe-element)
- - [ce-subscription-details](../../controllers/dashboard/subscription-details)
- - [ce-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
+ - [sc-charges-list](../../controllers/dashboard/charges-list)
+ - [sc-invoices-list](../../controllers/dashboard/invoices-list)
+ - [sc-orders-list](../../controllers/dashboard/orders-list)
+ - [sc-stripe-element](../stripe-element)
+ - [sc-subscription-details](../../controllers/dashboard/subscription-details)
+ - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-charges-list --> ce-text
-  ce-invoices-list --> ce-text
-  ce-orders-list --> ce-text
-  ce-stripe-element --> ce-text
-  ce-subscription-details --> ce-text
-  ce-upcoming-invoice --> ce-text
-  style ce-text fill:#f9f,stroke:#333,stroke-width:4px
+  sc-charges-list --> sc-text
+  sc-invoices-list --> sc-text
+  sc-orders-list --> sc-text
+  sc-stripe-element --> sc-text
+  sc-subscription-details --> sc-text
+  sc-upcoming-invoice --> sc-text
+  style sc-text fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

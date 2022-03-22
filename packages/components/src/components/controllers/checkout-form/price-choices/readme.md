@@ -18,23 +18,23 @@
 
 | Event              | Description            | Type                        |
 | ------------------ | ---------------------- | --------------------------- |
-| `ceRemoveLineItem` | Toggle line item event | `CustomEvent<LineItemData>` |
-| `ceUpdateLineItem` | Toggle line item event | `CustomEvent<LineItemData>` |
+| `scRemoveLineItem` | Toggle line item event | `CustomEvent<LineItemData>` |
+| `scUpdateLineItem` | Toggle line item event | `CustomEvent<LineItemData>` |
 
 
 ## Dependencies
 
 ### Depends on
 
-- [ce-choices](../../../ui/choices)
+- [sc-choices](../../../ui/choices)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-price-choices --> ce-choices
-  ce-choices --> ce-form-control
-  ce-form-control --> ce-tooltip
-  style ce-price-choices fill:#f9f,stroke:#333,stroke-width:4px
+  sc-price-choices --> sc-choices
+  sc-choices --> sc-form-control
+  sc-form-control --> sc-tooltip
+  style sc-price-choices fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

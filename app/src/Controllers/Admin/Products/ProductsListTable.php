@@ -1,11 +1,11 @@
 <?php
 
-namespace CheckoutEngine\Controllers\Admin\Products;
+namespace SureCart\Controllers\Admin\Products;
 
-use CheckoutEngine\Models\Product;
-use CheckoutEngine\Support\Currency;
-use CheckoutEngine\Support\TimeDate;
-use CheckoutEngine\Controllers\Admin\Tables\ListTable;
+use SureCart\Models\Product;
+use SureCart\Support\Currency;
+use SureCart\Support\TimeDate;
+use SureCart\Controllers\Admin\Tables\ListTable;
 /**
  * Create a new table class that will extend the WP_List_Table
  */
@@ -60,12 +60,12 @@ class ProductsListTable extends ListTable {
 	 */
 	protected function get_views() {
 		$stati = [
-			'active'   => __( 'Active', 'checkout_engine' ),
-			'archived' => __( 'Archived', 'checkout_engine' ),
-			'all'      => __( 'All', 'checkout_engine' ),
+			'active'   => __( 'Active', 'surecart' ),
+			'archived' => __( 'Archived', 'surecart' ),
+			'all'      => __( 'All', 'surecart' ),
 		];
 
-		$link = admin_url( 'admin.php?page=ce-products' );
+		$link = admin_url( 'admin.php?page=sc-products' );
 
 		foreach ( $stati as $status => $label ) {
 			$current_link_attributes = '';
@@ -103,11 +103,11 @@ class ProductsListTable extends ListTable {
 	public function get_columns() {
 		return [
 			// 'cb'          => '<input type="checkbox" />',
-			'name'  => __( 'Name', 'checkout_engine' ),
-			// 'description' => __( 'Description', 'checkout_engine' ),
-			'price' => __( 'Price', 'checkout_engine' ),
-			'type'  => __( 'Type', 'checkout_engine' ),
-			'date'  => __( 'Date', 'checkout_engine' ),
+			'name'  => __( 'Name', 'surecart' ),
+			// 'description' => __( 'Description', 'surecart' ),
+			'price' => __( 'Price', 'surecart' ),
+			'type'  => __( 'Type', 'surecart' ),
+			'date'  => __( 'Date', 'surecart' ),
 		];
 	}
 
@@ -169,48 +169,48 @@ class ProductsListTable extends ListTable {
 			echo esc_html( $this->error );
 			return;
 		}
-		echo esc_html_e( 'No products found.', 'checkout_engine' );
+		echo esc_html_e( 'No products found.', 'surecart' );
 	}
 
 	/**
 	 * Handle the type column output.
 	 *
-	 * @param \CheckoutEngine\Models\Price $product Product model.
+	 * @param \SureCart\Models\Price $product Product model.
 	 *
 	 * @return string
 	 */
 	public function column_type( $product ) {
 		if ( $product->recurring ) {
-			return '<ce-tag type="success">
+			return '<sc-tag type="success">
 			<div
 				style="
 					display: flex;
 					align-items: center;
 					gap: 0.5em;"
 			>
-				<ce-icon name="repeat"></ce-icon>
-				' . esc_html__( 'Subscription', 'checkout_engine' ) . '
+				<sc-icon name="repeat"></sc-icon>
+				' . esc_html__( 'Subscription', 'surecart' ) . '
 			</div>
-		</ce-tag>';
+		</sc-tag>';
 		}
 
-		return '<ce-tag type="info">
+		return '<sc-tag type="info">
 		<div
 			style="
 				display: flex;
 				align-items: center;
 				gap: 0.5em;"
 		>
-			<ce-icon name="bookmark"></ce-icon>
-			' . esc_html__( 'One-Time', 'checkout_engine' ) . '
+			<sc-icon name="bookmark"></sc-icon>
+			' . esc_html__( 'One-Time', 'surecart' ) . '
 		</div>
-	</ce-tag>';
+	</sc-tag>';
 	}
 
 	/**
 	 * Handle the price column.
 	 *
-	 * @param \CheckoutEngine\Models\Product $product Product model.
+	 * @param \SureCart\Models\Product $product Product model.
 	 *
 	 * @return string
 	 */
@@ -218,28 +218,28 @@ class ProductsListTable extends ListTable {
 		$currency = $product->metrics->currency ?? 'usd';
 
 		if ( empty( $product->metrics->prices_count ) ) {
-			return '<ce-tag type="warning">' . __( 'No price', 'checkout_engine' ) . '</ce-tag>';
+			return '<sc-tag type="warning">' . __( 'No price', 'surecart' ) . '</sc-tag>';
 		}
 
 		if ( ! empty( $product->metrics->min_price_amount ) ) {
-			$amount = '<ce-format-number type="currency" currency="' . $currency . '" value="' . $product->metrics->min_price_amount . '"></ce-format-number>';
+			$amount = '<sc-format-number type="currency" currency="' . $currency . '" value="' . $product->metrics->min_price_amount . '"></sc-format-number>';
 			if ( $product->metrics->prices_count > 1 ) {
 				// translators: Price starting at.
-				$starting_at = sprintf( __( 'Starting at %s', 'checkout_engine' ), $amount );
+				$starting_at = sprintf( __( 'Starting at %s', 'surecart' ), $amount );
 				// translators: Other prices.
-				$others = sprintf( _n( 'and %d other price.', 'and %d other prices.', $product->metrics->prices_count - 1, 'checkout_engine' ), $product->metrics->prices_count - 1 );
+				$others = sprintf( _n( 'and %d other price.', 'and %d other prices.', $product->metrics->prices_count - 1, 'surecart' ), $product->metrics->prices_count - 1 );
 				return $starting_at . '<br /><small style="opacity: 0.75">' . $others . '</small>';
 			} else {
 				return $amount;
 			}
 		}
-		return __( 'No price', 'checkout_engine' );
+		return __( 'No price', 'surecart' );
 	}
 
 	/**
 	 * Handle the status
 	 *
-	 * @param \CheckoutEngine\Models\Price $product Product model.
+	 * @param \SureCart\Models\Price $product Product model.
 	 *
 	 * @return string
 	 */
@@ -252,7 +252,7 @@ class ProductsListTable extends ListTable {
 		);
 		$updated = sprintf(
 			'%1$s <time datetime="%2$s" title="%3$s">%4$s</time>',
-			__( 'Updated', 'checkout_engine' ),
+			__( 'Updated', 'surecart' ),
 			esc_attr( $product->updated_at ),
 			esc_html( TimeDate::formatDateAndTime( $product->updated_at ) ),
 			esc_html( TimeDate::humanTimeDiff( $product->updated_at ) )
@@ -263,7 +263,7 @@ class ProductsListTable extends ListTable {
 	/**
 	 * Name column
 	 *
-	 * @param \CheckoutEngine\Models\Product $product Product model.
+	 * @param \SureCart\Models\Product $product Product model.
 	 *
 	 * @return string
 	 */
@@ -271,11 +271,11 @@ class ProductsListTable extends ListTable {
 		ob_start();
 		?>
 
-		<div class="ce-product-name">
+		<div class="sc-product-name">
 		<?php if ( $product->image_url ) { ?>
-			<img src="<?php echo esc_url( $product->image_url ); ?>" class="ce-product-image-preview" />
+			<img src="<?php echo esc_url( $product->image_url ); ?>" class="sc-product-image-preview" />
 		<?php } else { ?>
-		<div class="ce-product-image-preview">
+		<div class="sc-product-image-preview">
 			<svg xmlns="http://www.w3.org/2000/svg" style="width: 18px; height: 18px;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
 			  </svg>
@@ -283,14 +283,14 @@ class ProductsListTable extends ListTable {
 	  <?php } ?>
 
 	  <div>
-		<a class="row-title" aria-label="<?php echo esc_attr( 'Edit Product', 'checkout_engine' ); ?>" href="<?php echo esc_url( \CheckoutEngine::getUrl()->edit( 'product', $product->id ) ); ?>">
+		<a class="row-title" aria-label="<?php echo esc_attr( 'Edit Product', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'product', $product->id ) ); ?>">
 			<?php echo esc_html_e( $product->name ); ?>
 		</a>
 
 		<?php
 		echo $this->row_actions(
 			[
-				'edit'  => '<a href="' . esc_url( \CheckoutEngine::getUrl()->edit( 'product', $product->id ) ) . '" aria-label="' . esc_attr( 'Edit Product', 'checkout_engine' ) . '">' . __( 'Edit', 'checkout_engine' ) . '</a>',
+				'edit'  => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'product', $product->id ) ) . '" aria-label="' . esc_attr( 'Edit Product', 'surecart' ) . '">' . __( 'Edit', 'surecart' ) . '</a>',
 				'trash' => $this->action_toggle_archive( $product ),
 			],
 		);
@@ -305,19 +305,19 @@ class ProductsListTable extends ListTable {
 	/**
 	 * Toggle archive action link and text.
 	 *
-	 * @param \CheckoutEngine\Models\Product $product Product model.
+	 * @param \SureCart\Models\Product $product Product model.
 	 * @return string
 	 */
 	public function action_toggle_archive( $product ) {
-		$text            = $product->archived ? __( 'Un-Archive', 'checkout_engine' ) : __( 'Archive', 'checkout_engine' );
-		$confirm_message = $product->archived ? __( 'Are you sure you want to restore this product? This will be be available to purchase.', 'checkout_engine' ) : __( 'Are you sure you want to archive this product? This will be unavailable for purchase.', 'checkout_engine' );
-		$link            = \CheckoutEngine::getUrl()->toggleArchive( 'product', $product->id );
+		$text            = $product->archived ? __( 'Un-Archive', 'surecart' ) : __( 'Archive', 'surecart' );
+		$confirm_message = $product->archived ? __( 'Are you sure you want to restore this product? This will be be available to purchase.', 'surecart' ) : __( 'Are you sure you want to archive this product? This will be unavailable for purchase.', 'surecart' );
+		$link            = \SureCart::getUrl()->toggleArchive( 'product', $product->id );
 
 		return sprintf(
 			'<a class="submitdelete" onclick="return confirm(\'%1s\')" href="%2s" aria-label="%3s">%4s</a>',
 			esc_attr( $confirm_message ),
 			esc_url( $link ),
-			esc_attr__( 'Toggle Product Archive', 'checkout_engine' ),
+			esc_attr__( 'Toggle Product Archive', 'surecart' ),
 			esc_html( $text )
 		);
 	}
@@ -325,15 +325,15 @@ class ProductsListTable extends ListTable {
 	/**
 	 * Define what data to show on each column of the table
 	 *
-	 * @param \CheckoutEngine\Models\Product $product Product model.
-	 * @param String                         $column_name - Current column name.
+	 * @param \SureCart\Models\Product $product Product model.
+	 * @param String                   $column_name - Current column name.
 	 *
 	 * @return Mixed
 	 */
 	public function column_default( $product, $column_name ) {
 		switch ( $column_name ) {
 			case 'name':
-				return '<a href="' . \CheckoutEngine::getUrl()->edit( 'product', $product->id ) . '">' . $product->name . '</a>';
+				return '<a href="' . \SureCart::getUrl()->edit( 'product', $product->id ) . '">' . $product->name . '</a>';
 			case 'name':
 			case 'description':
 				return $product->$column_name ?? '';

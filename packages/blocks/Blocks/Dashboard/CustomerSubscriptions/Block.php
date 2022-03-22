@@ -1,11 +1,11 @@
 <?php
 
-namespace CheckoutEngineBlocks\Blocks\Dashboard\CustomerSubscriptions;
+namespace SureCartBlocks\Blocks\Dashboard\CustomerSubscriptions;
 
-use CheckoutEngine\Models\Subscription;
-use CheckoutEngine\Models\User;
-use CheckoutEngineBlocks\Blocks\Dashboard\DashboardPage;
-use CheckoutEngineBlocks\Controllers\SubscriptionController;
+use SureCart\Models\Subscription;
+use SureCart\Models\User;
+use SureCartBlocks\Blocks\Dashboard\DashboardPage;
+use SureCartBlocks\Controllers\SubscriptionController;
 
 /**
  * Checkout block
@@ -34,7 +34,7 @@ class Block extends DashboardPage {
 	 * @return function
 	 */
 	public function show( $id ) {
-		return \CheckoutEngine::blocks()->render(
+		return \SureCart::blocks()->render(
 			'web/dashboard/subscriptions/show',
 			[
 				'id' => $id,
@@ -52,37 +52,37 @@ class Block extends DashboardPage {
 		$tab          = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : false;
 		$subscription = Subscription::with( [ 'price', 'price.product', 'latest_invoice', 'product.product_group' ] )->find( $id );
 
-		\CheckoutEngine::assets()->addComponentData(
-			'ce-subscription',
+		\SureCart::assets()->addComponentData(
+			'sc-subscription',
 			'#customer-subscription',
 			[
-				'heading'      => $attributes['title'] ?? __( 'Update Subscription', 'checkout-engine' ),
+				'heading'      => $attributes['title'] ?? __( 'Update Subscription', 'surecart' ),
 				'subscription' => $subscription,
 			]
 		);
-		\CheckoutEngine::assets()->addComponentData(
-			'ce-subscription-switch',
+		\SureCart::assets()->addComponentData(
+			'sc-subscription-switch',
 			'#customer-subscription-switch',
 			[
-				'heading'       => $attributes['title'] ?? __( 'Update Subscription', 'checkout-engine' ),
+				'heading'       => $attributes['title'] ?? __( 'Update Subscription', 'surecart' ),
 				'product-group' => $subscription->price->product->product_group ?? null,
 				'subscription'  => $subscription,
 			]
 		);
 		ob_start(); ?>
-		<ce-spacing style="--spacing: var(--ce-spacing-large)">
-			<ce-breadcrumbs>
-				<ce-breadcrumb href="<?php echo esc_url( add_query_arg( [ 'tab' => $tab ], \CheckoutEngine::pages()->url( 'dashboard' ) ) ); ?>">
-					<?php esc_html_e( 'Dashboard', 'checkout_engine' ); ?>
-				</ce-breadcrumb>
-				<ce-breadcrumb>
-					<?php esc_html_e( 'Subscription', 'checkout_engine' ); ?>
-				</ce-breadcrumb>
-			</ce-breadcrumbs>
+		<sc-spacing style="--spacing: var(--sc-spacing-large)">
+			<sc-breadcrumbs>
+				<sc-breadcrumb href="<?php echo esc_url( add_query_arg( [ 'tab' => $tab ], \SureCart::pages()->url( 'dashboard' ) ) ); ?>">
+					<?php esc_html_e( 'Dashboard', 'surecart' ); ?>
+				</sc-breadcrumb>
+				<sc-breadcrumb>
+					<?php esc_html_e( 'Subscription', 'surecart' ); ?>
+				</sc-breadcrumb>
+			</sc-breadcrumbs>
 
-			<ce-subscription id="customer-subscription"></ce-subscription>
-			<ce-subscription-switch id="customer-subscription-switch"></ce-subscription-switch>
-		</ce-spacing>
+			<sc-subscription id="customer-subscription"></sc-subscription>
+			<sc-subscription-switch id="customer-subscription-switch"></sc-subscription-switch>
+		</sc-spacing>
 
 		<?php
 		return ob_get_clean();
@@ -99,11 +99,11 @@ class Block extends DashboardPage {
 		if ( ! User::current()->isCustomer() ) {
 			return;
 		}
-		\CheckoutEngine::assets()->addComponentData(
-			'ce-subscriptions-list',
+		\SureCart::assets()->addComponentData(
+			'sc-subscriptions-list',
 			'#customer-subscriptions-index',
 			[
-				'heading' => $attributes['title'] ?? __( 'Subscriptions', 'checkout-engine' ),
+				'heading' => $attributes['title'] ?? __( 'Subscriptions', 'surecart' ),
 				'query'   => [
 					'customer_ids' => array_values( User::current()->customerIds() ),
 					'status'       => [ 'active', 'trialing' ],
@@ -112,6 +112,6 @@ class Block extends DashboardPage {
 				],
 			]
 		);
-		return '<ce-subscriptions-list id="customer-subscriptions-index"></ce-subscriptions-list>';
+		return '<sc-subscriptions-list id="customer-subscriptions-index"></sc-subscriptions-list>';
 	}
 }

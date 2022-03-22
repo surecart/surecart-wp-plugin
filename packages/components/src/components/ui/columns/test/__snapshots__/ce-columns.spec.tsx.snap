@@ -1,7 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`ce-columns renders 1`] = `
-<ce-columns class="ce-columns">
-  <!---->
-</ce-columns>
-`;

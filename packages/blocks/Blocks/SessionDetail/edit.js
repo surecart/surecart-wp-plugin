@@ -7,18 +7,18 @@ import {
 	TextControl,
 	SelectControl,
 } from '@wordpress/components';
-import { CeSessionDetail } from '@checkout-engine/components-react';
+import { CeSessionDetail } from '@surecart/components-react';
 
-export default ( { attributes, setAttributes } ) => {
+export default ({ attributes, setAttributes }) => {
 	const { value, label } = attributes;
 	return (
 		<Fragment>
 			<InspectorControls>
-				<PanelBody title={ __( 'Attributes', 'checkout-engine' ) }>
+				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<SelectControl
-							value={ value }
-							options={ [
+							value={value}
+							options={[
 								{
 									label: 'Customer Name',
 									value: 'customer.name',
@@ -63,27 +63,27 @@ export default ( { attributes, setAttributes } ) => {
 									label: 'Order Number',
 									value: 'number',
 								},
-							] }
-							onChange={ ( value ) => setAttributes( { value } ) }
+							]}
+							onChange={(value) => setAttributes({ value })}
 						/>
 					</PanelRow>
 					<PanelRow>
 						<TextControl
-							label={ __( 'Label', 'checkout-engine' ) }
-							value={ label }
-							onChange={ ( label ) => setAttributes( { label } ) }
+							label={__('Label', 'surecart')}
+							value={label}
+							onChange={(label) => setAttributes({ label })}
 						/>
 					</PanelRow>
 				</PanelBody>
 			</InspectorControls>
-			<div style={ { minHeight: '20px' } }>
+			<div style={{ minHeight: '20px' }}>
 				<CeSessionDetail
-					label={ label }
-					value={ value }
-					fallback={ __(
+					label={label}
+					value={value}
+					fallback={__(
 						'(Not in this example order, but will be conditionally displayed)',
-						'checkout_engine'
-					) }
+						'surecart'
+					)}
 				></CeSessionDetail>
 			</div>
 		</Fragment>

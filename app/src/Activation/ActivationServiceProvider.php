@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngine\Activation;
+namespace SureCart\Activation;
 
-use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
+use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 /**
  * Provide users dependencies.
@@ -15,8 +15,8 @@ class ActivationServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function register( $container ) {
-		$container['checkout_engine.activation'] = function ( $container ) {
-			return new ActivationService( $container['checkout_engine.permissions.roles'], $container['checkout_engine.pages.seeder'] );
+		$container['surecart.activation'] = function ( $container ) {
+			return new ActivationService( $container['surecart.permissions.roles'], $container['surecart.pages.seeder'] );
 		};
 	}
 
@@ -27,6 +27,6 @@ class ActivationServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function bootstrap( $container ) {
-		$container['checkout_engine.activation']->bootstrap();
+		$container['surecart.activation']->bootstrap();
 	}
 }

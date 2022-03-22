@@ -32,23 +32,23 @@ export default ({ id }) => {
 	return (
 		<OrdersDataTable
 			hideHeader={true}
-			title={__('Customer Orders', 'checkout_engine')}
+			title={__('Customer Orders', 'surecart')}
 			columns={{
 				number: {
-					label: __('Number', 'checkout_engine'),
+					label: __('Number', 'surecart'),
 				},
 				items: {
-					label: __('Items', 'checkout_engine'),
+					label: __('Items', 'surecart'),
 				},
 				total: {
-					label: __('Total', 'checkout_engine'),
+					label: __('Total', 'surecart'),
 				},
 				status: {
-					label: __('Status', 'checkout_engine'),
+					label: __('Status', 'surecart'),
 					width: '100px',
 				},
 				date: {
-					label: __('Date', 'checkout_engine'),
+					label: __('Date', 'surecart'),
 				},
 				actions: {
 					width: '100px',

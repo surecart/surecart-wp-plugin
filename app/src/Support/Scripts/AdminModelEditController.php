@@ -1,9 +1,9 @@
 <?php
 
-namespace CheckoutEngine\Support\Scripts;
+namespace SureCart\Support\Scripts;
 
-use CheckoutEngine\Models\Account;
-use CheckoutEngine\Support\Currency;
+use SureCart\Models\Account;
+use SureCart\Support\Currency;
 
 /**
  * Class for model edit pages to extend.
@@ -35,7 +35,7 @@ abstract class AdminModelEditController {
 	 *
 	 * @var array
 	 */
-	protected $dependencies = [ 'ce-core-data', 'ce-ui-data' ];
+	protected $dependencies = [ 'sc-core-data', 'sc-ui-data' ];
 
 	/**
 	 * Data to pass to the page.
@@ -62,8 +62,8 @@ abstract class AdminModelEditController {
 	}
 
 	public function enqueueComponents() {
-		wp_enqueue_script( 'checkout-engine-components' );
-		wp_enqueue_style( 'checkout-engine-themes-default' );
+		wp_enqueue_script( 'surecart-components' );
+		wp_enqueue_style( 'surecart-themes-default' );
 	}
 
 	/**
@@ -93,12 +93,12 @@ abstract class AdminModelEditController {
 		$this->enqueueScriptDependencies();
 
 		// automatically load dependencies and version
-		$asset_file = include plugin_dir_path( CHECKOUT_ENGINE_PLUGIN_FILE ) . "dist/$this->path.asset.php";
+		$asset_file = include plugin_dir_path( SURECART_PLUGIN_FILE ) . "dist/$this->path.asset.php";
 
 		// Enqueue scripts.
-		\CheckoutEngine::core()->assets()->enqueueScript(
+		\SureCart::core()->assets()->enqueueScript(
 			$this->handle,
-			trailingslashit( \CheckoutEngine::core()->assets()->getUrl() ) . "dist/$this->path.js",
+			trailingslashit( \SureCart::core()->assets()->getUrl() ) . "dist/$this->path.js",
 			array_merge( $asset_file['dependencies'], $this->dependencies ),
 			$asset_file['version']
 		);
@@ -111,8 +111,8 @@ abstract class AdminModelEditController {
 		}
 		if ( in_array( 'links', $this->with_data ) ) {
 			$this->data['links'] = [];
-			foreach ( array_keys( \CheckoutEngine::getAdminPageNames() ) as $name ) {
-				$this->data['links'][ $name ] = esc_url_raw( add_query_arg( [ 'action' => 'edit' ], \CheckoutEngine::getUrl()->index( $name ) ) );
+			foreach ( array_keys( \SureCart::getAdminPageNames() ) as $name ) {
+				$this->data['links'][ $name ] = esc_url_raw( add_query_arg( [ 'action' => 'edit' ], \SureCart::getUrl()->index( $name ) ) );
 			}
 		}
 

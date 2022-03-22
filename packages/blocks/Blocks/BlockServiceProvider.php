@@ -4,16 +4,16 @@
  * Block Service Provider
  */
 
-namespace CheckoutEngineBlocks\Blocks;
+namespace SureCartBlocks\Blocks;
 
-use 'CheckoutEngineBlocks\Blocks\BlockService;
-use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
+use 'SureCartBlocks\Blocks\BlockService;
+use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 /**
  * Block Service Provider Class
  * Registers block service used throughout the plugin
  *
- * @author  Checkout Engine <andre@checkoutengine.com>
+ * @author  SureCart <andre@surecart.com>
  * @since   1.0.0
  * @license GPL
  */
@@ -24,7 +24,7 @@ class BlockServiceProvider implements ServiceProviderInterface {
 	 *  @param  \Pimple\Container $container Service Container.
 	 */
 	public function register( $container ) {
-		$app = $container[ CHECKOUT_ENGINE_APPLICATION_KEY ];
+		$app = $container[ SURECART_APPLICATION_KEY ];
 
 		$container['blocks'] = function () use ( $app ) {
 			return new BlockService( $app );
@@ -80,7 +80,7 @@ class BlockServiceProvider implements ServiceProviderInterface {
 	 * @return array
 	 */
 	public function ksesComponents( $tags ) {
-		$components = json_decode( file_get_contents( plugin_dir_path( CHECKOUT_ENGINE_PLUGIN_FILE ) . 'app / src / Support / kses . json' ), true );
+		$components = json_decode( file_get_contents( plugin_dir_path( SURECART_PLUGIN_FILE ) . 'app / src / Support / kses . json' ), true );
 
 		// add slot to defaults.
 		$tags['span']['slot'] = true;
@@ -97,7 +97,7 @@ class BlockServiceProvider implements ServiceProviderInterface {
 	 * @return  void
 	 */
 	public function registerBlocks( $container ) {
-		$service = \CheckoutEngine::resolve( CHECKOUT_ENGINE_CONFIG_KEY );
+		$service = \SureCart::resolve( SURECART_CONFIG_KEY );
 		if ( ! empty( $service['blocks'] ) ) {
 			foreach ( $service['blocks'] as $block ) {
 				( new $block() )->register( $container );

@@ -17,10 +17,7 @@ import { css, jsx } from '@emotion/core';
  * @constant
  * @type {string[]}
  */
-const ALLOWED_BLOCKS = [
-	'checkout-engine/dashboard-tab',
-	'checkout-engine/dashboard-logout',
-];
+const ALLOWED_BLOCKS = ['surecart/dashboard-tab', 'surecart/dashboard-logout'];
 
 export default ({}) => {
 	const useInnerBlocksProps = __stableUseInnerBlocksProps
@@ -44,8 +41,8 @@ export default ({}) => {
 		<div
 			{...innerBlocksProps}
 			css={css`
-				ce-tab {
-					margin-bottom: var(--ce-spacing-xx-small) !important;
+				sc-tab {
+					margin-bottom: var(--sc-spacing-xx-small) !important;
 				}
 			`}
 		></div>

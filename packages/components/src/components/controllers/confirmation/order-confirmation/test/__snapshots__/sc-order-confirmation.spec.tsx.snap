@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-order-confirmation renders 1`] = `
+<sc-order-confirmation>
+  <mock:shadow-root>
+    <div class="order-confirmation">
+      <div class="hidden order-confirmation__content">
+        <slot></slot>
+      </div>
+      <sc-heading>
+        Order not found.
+        <span slot="description">
+          This order could not be found. Please try again.
+        </span>
+      </sc-heading>
+    </div>
+  </mock:shadow-root>
+</sc-order-confirmation>
+`;

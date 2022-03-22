@@ -1,6 +1,6 @@
 import { __ } from '@wordpress/i18n';
 
-import { CeSwitch } from '@checkout-engine/components-react';
+import { ScSwitch } from '@surecart/components-react';
 
 // hocs
 import withConfirm from '../../hocs/withConfirm';
@@ -19,34 +19,34 @@ export default withConfirm( ( { setConfirm, children } ) => {
 		setConfirm( {
 			title: promotion?.archived_at
 				? sprintf(
-						__( 'Un-Archive %s?', 'checkout_engine' ),
+						__( 'Un-Archive %s?', 'surecart' ),
 						promotion?.name || 'Coupon'
 				  )
 				: sprintf(
-						__( 'Archive %s?', 'checkout_engine' ),
+						__( 'Archive %s?', 'surecart' ),
 						promotion?.name || 'Coupon'
 				  ),
 			message: promotion?.archived_at
 				? __(
 						'This will make the coupon purchaseable again.',
-						'checkout_engine'
+						'surecart'
 				  )
 				: __(
 						'This coupon will not be purchaseable and all unsaved changes will be lost.',
-						'checkout_engine'
+						'surecart
 				  ),
 			confirmButtonText: promotion?.archived_at
 				? sprintf(
-						__( 'Un-Archive %s?', 'checkout_engine' ),
-						promotion?.name || __( 'Coupon', 'checkout_engine' )
+						__( 'Un-Archive %s?', 'surecart' ),
+						promotion?.name || __( 'Coupon', 'surecart')
 				  )
 				: sprintf(
-						__( 'Archive %s?', 'checkout_engine' ),
-						promotion?.name || __( 'Coupon', 'checkout_engine' )
+						__( 'Archive %s?', 'surecart'),
+						promotion?.name || __( 'Coupon', 'surecart')
 				  ),
 			open: true,
 			isSaving,
-			className: 'ce-disable-confirm',
+			className: 'sc-disable-confirm',
 			isDestructive: true,
 			onRequestClose: () => setConfirm( {} ),
 			onRequestConfirm: toggleArchive,
@@ -54,7 +54,7 @@ export default withConfirm( ( { setConfirm, children } ) => {
 	};
 
 	return (
-		<CeSwitch
+		<ScSwitch
 			checked={ ! promotion?.archived }
 			onClick={ ( e ) => {
 				e.preventDefault();
@@ -62,6 +62,6 @@ export default withConfirm( ( { setConfirm, children } ) => {
 			} }
 		>
 			{ children }
-		</CeSwitch>
+		</ScSwitch>
 	);
 } );

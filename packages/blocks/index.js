@@ -61,8 +61,8 @@ import * as total from '@blocks/total';
 import * as totals from '@blocks/totals';
 
 // Register block collection
-registerBlockCollection('checkout-engine', {
-	title: __('Checkout Engine', 'checkout_engine'),
+registerBlockCollection('surecart', {
+	title: __('SureCart', 'surecart'),
 });
 
 const dashboardComponents = [
@@ -82,31 +82,28 @@ const dashboardComponents = [
 	customerCharges,
 ];
 
-export const BLOCK_PARENTS = [
-	'checkout-engine/columns',
-	'checkout-engine/form',
-];
+export const BLOCK_PARENTS = ['surecart/columns', 'surecart/form'];
 
 export const ALLOWED_BLOCKS = [
 	'core/spacer',
 	'core/columns',
-	'checkout-engine/input',
-	'checkout-engine/password',
-	'checkout-engine/price-selector',
-	'checkout-engine/checkbox',
-	'checkout-engine/divider',
-	'checkout-engine/button',
-	'checkout-engine/email',
-	'checkout-engine/header',
-	'checkout-engine/switch',
-	'checkout-engine/name',
-	'checkout-engine/payment',
-	'checkout-engine/express-payment',
-	'checkout-engine/pricing-section',
-	'checkout-engine/totals',
-	'checkout-engine/form',
-	'checkout-engine/section-title',
-	'checkout-engine/submit',
+	'surecart/input',
+	'surecart/password',
+	'surecart/price-selector',
+	'surecart/checkbox',
+	'surecart/divider',
+	'surecart/button',
+	'surecart/email',
+	'surecart/header',
+	'surecart/switch',
+	'surecart/name',
+	'surecart/payment',
+	'surecart/express-payment',
+	'surecart/pricing-section',
+	'surecart/totals',
+	'surecart/form',
+	'surecart/section-title',
+	'surecart/submit',
 ];
 
 /**
@@ -125,7 +122,7 @@ const registerBlock = (block) => {
 	registerBlockType(
 		{
 			...metadata,
-			text_domain: 'checkout_engine', // set our textdomain for everything.
+			text_domain: 'surecart', // set our textdomain for everything.
 		},
 		{
 			...settings,
@@ -135,9 +132,9 @@ const registerBlock = (block) => {
 };
 
 /**
- * Function to register blocks provided by Checkout Engine.
+ * Function to register blocks provided by SureCart.
  */
-export const registerCheckoutEngineBlocks = () => {
+export const registerSureCartBlocks = () => {
 	[
 		address,
 		checkout,
@@ -180,4 +177,4 @@ export const registerCheckoutEngineBlocks = () => {
 	].forEach(registerBlock);
 };
 
-registerCheckoutEngineBlocks();
+registerSureCartBlocks();

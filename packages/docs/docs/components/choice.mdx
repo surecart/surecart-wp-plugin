@@ -1,7 +1,7 @@
 # Choice
 
 ```html
-<ce-choice></ce-choice>
+<sc-choice></sc-choice>
 ```
 
 Choice buttons allow selection of a single or multiple options
@@ -9,7 +9,7 @@ from a set of predefined options. They are a good alternative to
 radio buttons, checkboxes, and select menus.
 
 :::info
-Choice components must be wrapped in the `<ce-choices></ce-choices>` component.
+Choice components must be wrapped in the `<sc-choices></sc-choices>` component.
 :::
 
 import DemoTabs from '../../components/Demo-Tabs.js';
@@ -18,35 +18,35 @@ import ComponentDoc from '../../components/Component-Doc.js';
 <DemoTabs>
   <DemoTabs.Code>
 {`
-<ce-choices>
-    <ce-choice>
+<sc-choices>
+    <sc-choice>
         Gold Plan
         <span slot="description">$9.99, then $49.99 per month</span>
-    </ce-choice>
-    <ce-choice checked>
+    </sc-choice>
+    <sc-choice checked>
         Silver Plan
         <span slot="description">$39.99 per month</span>
-    </ce-choice>
-    <ce-choice>
+    </sc-choice>
+    <sc-choice>
         Bronze Plan
         <span slot="description">$9.99 per month</span>
-    </ce-choice>
-</ce-choices>
+    </sc-choice>
+</sc-choices>
 `}
 
   </DemoTabs.Code>
-    <ce-choices>
-        <ce-choice>
+    <sc-choices>
+        <sc-choice>
             Gold Plan
             <span slot="description">$9.99, then $49.99 per month</span>
-        </ce-choice>
-        <ce-choice checked>Silver Plan
+        </sc-choice>
+        <sc-choice checked>Silver Plan
             <span slot="description">$39.99 per month</span>
-        </ce-choice>
-        <ce-choice>Bronze Plan
+        </sc-choice>
+        <sc-choice>Bronze Plan
             <span slot="description">$9.99 per month</span>
-        </ce-choice>
-    </ce-choices>
+        </sc-choice>
+    </sc-choices>
 </DemoTabs>
 
 ## Checkbox Type
@@ -58,35 +58,35 @@ any number of options, or none at all.
 <DemoTabs>
   <DemoTabs.Code>
 {`
-<ce-choices>
-    <ce-choice type="checkbox">
+<sc-choices>
+    <sc-choice type="checkbox">
         Gold Plan
         <span slot="description">$9.99, then $49.99 per month</span>
-    </ce-choice>
-    <ce-choice checked>
+    </sc-choice>
+    <sc-choice checked>
         Silver Plan
         <span slot="description">$39.99 per month</span>
-    </ce-choice>
-    <ce-choice type="checkbox">
+    </sc-choice>
+    <sc-choice type="checkbox">
         Bronze Plan
         <span slot="description">$9.99 per month</span>
-    </ce-choice>
-</ce-choices>
+    </sc-choice>
+</sc-choices>
 `}
 
   </DemoTabs.Code>
-    <ce-choices>
-        <ce-choice type="checkbox">
+    <sc-choices>
+        <sc-choice type="checkbox">
             Gold Plan
             <span slot="description">$9.99, then $49.99 per month</span>
-        </ce-choice>
-        <ce-choice type="checkbox" checked>Silver Plan
+        </sc-choice>
+        <sc-choice type="checkbox" checked>Silver Plan
             <span slot="description">$39.99 per month</span>
-        </ce-choice>
-        <ce-choice type="checkbox">Bronze Plan
+        </sc-choice>
+        <sc-choice type="checkbox">Bronze Plan
             <span slot="description">$9.99 per month</span>
-        </ce-choice>
-    </ce-choices>
+        </sc-choice>
+    </sc-choices>
 </DemoTabs>
 
 ## Disabled Choices
@@ -94,37 +94,37 @@ any number of options, or none at all.
 <DemoTabs>
   <DemoTabs.Code>
 {`
-<ce-choices>
-    <ce-choice>
+<sc-choices>
+    <sc-choice>
         Gold Plan
         <span slot="description">$9.99, then $49.99 per month</span>
-    </ce-choice>
-    <ce-choice checked>
+    </sc-choice>
+    <sc-choice checked>
         Silver Plan
         <span slot="description">$39.99 per month</span>
-    </ce-choice>
-    <ce-choice disabled>
+    </sc-choice>
+    <sc-choice disabled>
         Bronze Plan
         <span slot="description">$9.99 per month</span>
-    </ce-choice>
-</ce-choices>
+    </sc-choice>
+</sc-choices>
 `}
 
   </DemoTabs.Code>
-    <ce-choices>
-        <ce-choice>
+    <sc-choices>
+        <sc-choice>
             Gold Plan
             <span slot="description">$9.99, then $49.99 per month</span>
-        </ce-choice>
-        <ce-choice checked>Silver Plan
+        </sc-choice>
+        <sc-choice checked>Silver Plan
             <span slot="description">$39.99 per month</span>
-        </ce-choice>
-        <ce-choice disabled>Bronze Plan
+        </sc-choice>
+        <sc-choice disabled>Bronze Plan
             <span slot="description">$9.99 per month</span>
-        </ce-choice>
-    </ce-choices>
+        </sc-choice>
+    </sc-choices>
 </DemoTabs>
 
 ## Component Codex
 
-<ComponentDoc tag="ce-choice" />
+<ComponentDoc tag="sc-choice" />

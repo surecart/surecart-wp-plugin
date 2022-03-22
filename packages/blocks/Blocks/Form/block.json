@@ -1,9 +1,9 @@
 {
-	"name": "checkout-engine/form",
-	"title": "Checkout Engine Form",
+	"name": "surecart/form",
+	"title": "Checkout Form",
 	"description": "Displays a form.",
 	"category": "layout",
-	"parent": ["checkout-engine/checkout-form"],
+	"parents": ["surecart/checkout-form"],
 	"keywords": ["email", "mail"],
 	"supports": {
 		"reusable": false,

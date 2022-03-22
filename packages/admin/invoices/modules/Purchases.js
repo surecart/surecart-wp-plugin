@@ -28,7 +28,7 @@ export default () => {
 		<PurchasesDataTable
 			columns={{
 				item: {
-					label: __('Item', 'checkout_engine'),
+					label: __('Item', 'surecart'),
 				},
 				actions: {
 					width: '100px',

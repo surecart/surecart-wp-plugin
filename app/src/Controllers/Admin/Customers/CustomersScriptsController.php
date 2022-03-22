@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngine\Controllers\Admin\Customers;
+namespace SureCart\Controllers\Admin\Customers;
 
-use CheckoutEngine\Support\Scripts\AdminModelEditController;
+use SureCart\Support\Scripts\AdminModelEditController;
 
 /**
  * Customers Page
@@ -20,7 +20,7 @@ class CustomersScriptsController extends AdminModelEditController {
 	 *
 	 * @var string
 	 */
-	protected $handle = 'checkoutengine/scripts/admin/customers';
+	protected $handle = 'SureCart/scripts/admin/customers';
 
 	/**
 	 * Script path.

@@ -1,9 +1,9 @@
 <?php
 
-namespace CheckoutEngine\Rest;
+namespace SureCart\Rest;
 
-use CheckoutEngine\Rest\RestServiceInterface;
-use CheckoutEngine\Controllers\Rest\AccountController;
+use SureCart\Rest\RestServiceInterface;
+use SureCart\Controllers\Rest\AccountController;
 
 /**
  * Service provider for Price Rest Requests
@@ -43,46 +43,46 @@ class AccountRestServiceProvider extends RestServiceProvider implements RestServ
 			// In JSON Schema you can specify object properties in the properties attribute.
 			'properties' => [
 				'id'         => [
-					'description' => esc_html__( 'Unique identifier for the object.', 'checkout_engine' ),
+					'description' => esc_html__( 'Unique identifier for the object.', 'surecart' ),
 					'type'        => 'string',
 					'context'     => [ 'edit' ],
 					'readonly'    => true,
 				],
 				'object'     => [
-					'description' => esc_html__( 'Type of object (Account)', 'checkout_engine' ),
+					'description' => esc_html__( 'Type of object (Account)', 'surecart' ),
 					'type'        => 'string',
 					'context'     => [ 'view', 'edit' ],
 					'readonly'    => true,
 				],
 				'created_at' => [
-					'description' => esc_html__( 'Created at timestamp', 'checkout_engine' ),
+					'description' => esc_html__( 'Created at timestamp', 'surecart' ),
 					'type'        => 'integer',
 					'context'     => [ 'edit' ],
 					'readonly'    => true,
 				],
 				'updated_at' => [
-					'description' => esc_html__( 'Created at timestamp', 'checkout_engine' ),
+					'description' => esc_html__( 'Created at timestamp', 'surecart' ),
 					'type'        => 'integer',
 					'context'     => [ 'edit' ],
 					'readonly'    => true,
 				],
 				'name'       => [
-					'description' => esc_html__( 'The name of the account.', 'checkout_engine' ),
+					'description' => esc_html__( 'The name of the account.', 'surecart' ),
 					'type'        => 'string',
 					'context'     => [ 'view', 'edit' ],
 				],
 				'currency'   => [
-					'description' => esc_html__( 'The default currency for the account.', 'checkout_engine' ),
+					'description' => esc_html__( 'The default currency for the account.', 'surecart' ),
 					'type'        => 'string',
 					'context'     => [ 'view', 'edit' ],
 				],
 				'owner'      => [
-					'description' => esc_html__( 'Owner data.', 'checkout_engine' ),
+					'description' => esc_html__( 'Owner data.', 'surecart' ),
 					'type'        => 'object',
 					'context'     => [ 'edit' ],
 				],
 				'processors' => [
-					'description' => esc_html__( 'Connected processors', 'checkout_engine' ),
+					'description' => esc_html__( 'Connected processors', 'surecart' ),
 					'type'        => 'object',
 					'context'     => [ 'edit' ],
 				],

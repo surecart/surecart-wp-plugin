@@ -1,6 +1,6 @@
 # Providing or Revoking Access
 
-CheckoutEngine provides a convenient way to provide access after purchase. This is done through the
+SureCart provides a convenient way to provide access after purchase. This is done through the
 `Purchase` model and actions. The purchase model is a summary of all products that a customer current should have "access" to.
 This way you do not need to check subscriptions, refunds, orders or any other information to determine if a customer has access to a
 product.
@@ -31,11 +31,11 @@ $memberships = [
 ];
 
 // this action runs when a user checks out.
-add_action( 'checkout_engine/purchase_created', 'provide_access_to_membership', 10, 1 );
+add_action( 'surecart/purchase_created', 'provide_access_to_membership', 10, 1 );
 // this action runs when a revoked purchase is invoked ("un-revoked").
-add_action( 'checkout_engine/purchase_invoked', 'provide_access_to_membership', 10, 1 );
+add_action( 'surecart/purchase_invoked', 'provide_access_to_membership', 10, 1 );
 
-function provide_access_to_membership( \CheckoutEngine\Models\Purchase $purchase ) {
+function provide_access_to_membership( \SureCart\Models\Purchase $purchase ) {
 	// we only want to proceed if the purchase is for one of our products
 	if ( empty( $memberships[ $purchase->product_id ] ) ) {
 		return;
@@ -66,10 +66,10 @@ $memberships = [
 ];
 
 // this action runs when a user's purchase is revoked. This can occur on refunds or subscription cancelations.
-add_action( 'checkout_engine/purchase_revoked', 'remove_access_to_membership', 10, 1 );
+add_action( 'surecart/purchase_revoked', 'remove_access_to_membership', 10, 1 );
 
 // Use the order_paid event to update the users meta
-function remove_access_to_membership( \CheckoutEngine\Models\Purchase $purchase ) {
+function remove_access_to_membership( \SureCart\Models\Purchase $purchase ) {
 	// we only want to proceed if the purchase is for one of our products
 	if ( empty( $memberships[ $purchase->product_id ] ) ) {
 		return;
@@ -102,10 +102,10 @@ $memberships = [
 ];
 
 // this action runs when a user's purchase is revoked. This can occur on refunds or subscription cancelations.
-add_action( 'checkout_engine/purchase_updated', 'update_access_to_membership', 10, 1 );
+add_action( 'surecart/purchase_updated', 'update_access_to_membership', 10, 1 );
 
 // Use the order_paid event to update the users meta
-function update_access_to_membership( \CheckoutEngine\Models\Purchase $purchase ) {
+function update_access_to_membership( \SureCart\Models\Purchase $purchase ) {
 	// we only want to proceed if the purchase is for one of our products
 	if ( !in_array( $purchase->product_id, array_keys( $memberships ) ) ) {
 		return;

@@ -1,0 +1,10 @@
+:host {
+  display: table-row;
+}
+:host([href]:hover) {
+  background: var(--sc-color-gray-50);
+}
+:host(:not(:last-child)) {
+  border-bottom: 1px solid var(--sc-color-gray-200);
+}
+

@@ -9,7 +9,7 @@ The most common way to create or update a model is to use the save method. This 
 
 Create a new product:
 ```php
-use CheckoutEngine\Models\Product;
+use SureCart\Models\Product;
 
 // creates a new product
 $product = new Product([
@@ -42,7 +42,7 @@ $product->save();
 You can specify that you want to create a model directly by using the `create` method.
 
 ```php
-use CheckoutEngine\Models\Product;
+use SureCart\Models\Product;
 $archived_products = Product::create([
 	'name' => 'iPhone',
 	'description' => 'iPhone is a smartphone'
@@ -53,7 +53,7 @@ $archived_products = Product::create([
 You can specify that you want to update a model directly by using the `update` method.
 
 ```php
-use CheckoutEngine\Models\Product;
+use SureCart\Models\Product;
 
 $product = Product::find('8ba8d60f-5277-4e6b-807c-dee8166446d5');
 $product->update([

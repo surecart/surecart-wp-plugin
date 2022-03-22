@@ -1,9 +1,9 @@
 <?php
 
-namespace CheckoutEngine\Models\Traits;
+namespace SureCart\Models\Traits;
 
-use CheckoutEngine\Models\Customer;
-use CheckoutEngine\Models\User;
+use SureCart\Models\Customer;
+use SureCart\Models\User;
 
 /**
  * If the model has an attached customer.

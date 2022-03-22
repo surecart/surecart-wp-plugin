@@ -1,6 +1,6 @@
 <?php
 
-namespace CheckoutEngine\Support\Errors;
+namespace SureCart\Support\Errors;
 
 /**
  * Handles error translations from the API.
@@ -65,7 +65,7 @@ class ErrorsTranslationService {
 
 	public function attributeOptionsTranslation( $attribute, $type, $options ) {
 		if ( 'line_items.ad_hoc_amount' === $attribute && 'outside_range' === $type ) {
-			return sprintf( __( 'You must enter an amount between %1$s and %2$s', 'checkout_engine' ), $options['min'] / 100, $options['max'] / 100 );
+			return sprintf( __( 'You must enter an amount between %1$s and %2$s', 'surecart' ), $options['min'] / 100, $options['max'] / 100 );
 		}
 
 		return false;
@@ -118,7 +118,7 @@ class ErrorsTranslationService {
 		}
 
 		// fallback.
-		return $fallback ?? __( 'Error.', 'checkout_engine' );
+		return $fallback ?? __( 'Error.', 'surecart' );
 	}
 
 	/**
@@ -132,7 +132,7 @@ class ErrorsTranslationService {
 	public function translate( $response = null, $code = null ) {
 		// fallback.
 		if ( ! $response ) {
-			return new \WP_Error( 'error', __( 'Error.', 'checkout_engine' ) );
+			return new \WP_Error( 'error', __( 'Error.', 'surecart' ) );
 		}
 
 		$formatted = new \WP_Error(

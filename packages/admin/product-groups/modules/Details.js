@@ -3,7 +3,7 @@ import { css, jsx } from '@emotion/core';
 
 import { __ } from '@wordpress/i18n';
 
-import { CeInput, CeSwitch, CeSelect } from '@checkout-engine/components-react';
+import { ScInput, ScSwitch, ScSelect } from '@surecart/components-react';
 import Box from '../../ui/Box';
 
 export default ({ id, productGroup, updateProductGroup, loading }) => {
@@ -11,26 +11,23 @@ export default ({ id, productGroup, updateProductGroup, loading }) => {
 		<Box
 			title={
 				id
-					? __('Details', 'checkout_engine')
-					: __('New Upgrade Group', 'checkout_engine')
+					? __('Details', 'surecart')
+					: __('New Upgrade Group', 'surecart')
 			}
 			loading={loading}
 		>
 			<div
 				css={css`
 					display: grid;
-					gap: var(--ce-spacing-large);
+					gap: var(--sc-spacing-large);
 				`}
 			>
-				<CeInput
-					label={__('Group Name', 'checkout_engine')}
-					className="ce-product-name hydrated"
-					help={__(
-						'A name for your product group.',
-						'checkout_engine'
-					)}
+				<ScInput
+					label={__('Group Name', 'surecart')}
+					className="sc-product-name hydrated"
+					help={__('A name for your product group.', 'surecart')}
 					value={productGroup?.name}
-					onCeChange={(e) => {
+					onScChange={(e) => {
 						updateProductGroup({ name: e.target.value });
 					}}
 					name="name"

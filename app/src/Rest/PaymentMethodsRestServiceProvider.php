@@ -1,11 +1,11 @@
 <?php
 
-namespace CheckoutEngine\Rest;
+namespace SureCart\Rest;
 
-use CheckoutEngine\Controllers\Rest\PaymentMethodsController;
-use CheckoutEngine\Models\User;
-use CheckoutEngine\Rest\RestServiceInterface;
-use CheckoutEngine\Rest\Traits\CanListByCustomerIds;
+use SureCart\Controllers\Rest\PaymentMethodsController;
+use SureCart\Models\User;
+use SureCart\Rest\RestServiceInterface;
+use SureCart\Rest\Traits\CanListByCustomerIds;
 
 /**
  * Service provider for Price Rest Requests
@@ -76,7 +76,7 @@ class PaymentMethodsRestServiceProvider extends RestServiceProvider implements R
 			// In JSON Schema you can specify object properties in the properties attribute.
 			'properties' => [
 				'id' => [
-					'description' => esc_html__( 'Unique identifier for the object.', 'checkout_engine' ),
+					'description' => esc_html__( 'Unique identifier for the object.', 'surecart' ),
 					'type'        => 'string',
 					'context'     => [ 'view', 'edit', 'embed' ],
 					'readonly'    => true,

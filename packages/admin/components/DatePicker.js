@@ -1,8 +1,8 @@
 /** @jsx jsx */
 import { __ } from '@wordpress/i18n';
-import { CeFormatDate, CeButton } from '@checkout-engine/components-react';
-import { Button, Popover, DateTimePicker } from '@wordpress/components';
-import { useState, Fragment } from '@wordpress/element';
+import { ScFormatDate, ScButton } from '@surecart/components-react';
+import { Popover, DateTimePicker } from '@wordpress/components';
+import { useState } from '@wordpress/element';
 import { css, jsx } from '@emotion/core';
 import { useEffect } from 'react';
 
@@ -41,18 +41,18 @@ export default (props) => {
 				display: inline-block;
 			`}
 		>
-			<CeButton onClick={toggleVisible}>
+			<ScButton onClick={toggleVisible}>
 				{currentDate ? (
-					<CeFormatDate
+					<ScFormatDate
 						date={currentDate}
 						month="long"
 						day="numeric"
 						year="numeric"
 					/>
 				) : (
-					placeholder || __('Select date', 'checkout_engine')
+					placeholder || __('Select date', 'surecart')
 				)}
-			</CeButton>
+			</ScButton>
 
 			{isVisible && (
 				<Popover position="bottom">
@@ -79,18 +79,18 @@ export default (props) => {
 							gap: 1em;
 						`}
 					>
-						<CeButton
+						<ScButton
 							type="primary"
 							onClick={() => {
 								onChooseDate();
 								toggleVisible();
 							}}
 						>
-							{__('Choose', 'checkout_engine')}
-						</CeButton>
-						<CeButton onClick={toggleVisible}>
-							{__('Cancel', 'checkout_engine')}
-						</CeButton>
+							{__('Choose', 'surecart')}
+						</ScButton>
+						<ScButton onClick={toggleVisible}>
+							{__('Cancel', 'surecart')}
+						</ScButton>
 					</div>
 				</Popover>
 			)}

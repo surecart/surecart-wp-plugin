@@ -1,16 +1,16 @@
 <?php
 /**
- * @package   CheckoutEngineCore
+ * @package   SureCartCore
  * @author    Andre Gagnon <me@andregagnon.me>
  * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://checkout_engine.com/
+ * @link      https://surecart.com/
  */
 
-namespace CheckoutEngineCore\Controllers;
+namespace SureCartCore\Controllers;
 
-use CheckoutEngineCore;
-use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
+use SureCartCore;
+use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 /**
  * Provide controller dependencies
@@ -23,7 +23,7 @@ class ControllersServiceProvider implements ServiceProviderInterface {
 	 */
 	public function register( $container ) {
 		$container[ WordPressController::class ] = function ( $c ) {
-			return new WordPressController( $c[ CHECKOUT_ENGINE_VIEW_SERVICE_KEY ] );
+			return new WordPressController( $c[ SURECART_VIEW_SERVICE_KEY ] );
 		};
 	}
 

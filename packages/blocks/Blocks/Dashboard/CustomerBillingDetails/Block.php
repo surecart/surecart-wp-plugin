@@ -1,9 +1,9 @@
 <?php
 
-namespace CheckoutEngineBlocks\Blocks\Dashboard\CustomerBillingDetails;
+namespace SureCartBlocks\Blocks\Dashboard\CustomerBillingDetails;
 
-use CheckoutEngineBlocks\Blocks\Dashboard\DashboardPage;
-use CheckoutEngineBlocks\Controllers\CustomerController;
+use SureCartBlocks\Blocks\Dashboard\DashboardPage;
+use SureCartBlocks\Controllers\CustomerController;
 
 /**
  * Checkout block

@@ -4,13 +4,13 @@ const path = require('path');
 module.exports = {
 	title: 'SureCart',
 	tagline: 'Developer documentation.',
-	url: 'https://checkout-engine-docs.netlify.app', // Url to your site with no trailing slash
+	url: 'https://surecart-docs.netlify.app', // Url to your site with no trailing slash
 	baseUrl: '/', // Base directory of your site relative to your repo
 	onBrokenLinks: 'warn',
 	onBrokenMarkdownLinks: 'warn',
 	favicon: 'img/favicon.ico',
 	organizationName: 'Checkout-Engine', // Usually your GitHub org/user name.
-	projectName: 'checkout-engine-docs', // Usually your repo name.
+	projectName: 'surecart-docs', // Usually your repo name.
 	clientModules: [require.resolve('./src/js/components.js')],
 	scripts: ['https://unpkg.com/swagger-client'],
 	themeConfig: {

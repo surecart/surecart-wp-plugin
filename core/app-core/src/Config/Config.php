@@ -1,16 +1,16 @@
 <?php
 /**
- * @package   CheckoutEngineAppCore
+ * @package   SureCartAppCore
  * @author    Andre Gagnon <me@andregagnon.me>
  * @copyright  Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://checkoutengine.com
+ * @link      https://surecart.com
  */
 
-namespace CheckoutEngineAppCore\Config;
+namespace SureCartAppCore\Config;
 
-use CheckoutEngineCore\Helpers\MixedType;
-use CheckoutEngineAppCore\Concerns\ReadsJsonTrait;
+use SureCartCore\Helpers\MixedType;
+use SureCartAppCore\Concerns\ReadsJsonTrait;
 
 class Config {
 	use ReadsJsonTrait {

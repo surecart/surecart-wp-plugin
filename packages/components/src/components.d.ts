@@ -8,7 +8,7 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { Address, ChoiceItem, Coupon, Customer, DiscountResponse, LineItem, LineItemData, Order, OrderStatus, PaymentMethod, Price, PriceChoice, Prices, ProductGroup, Products, Purchase, ResponseError, Subscription, SubscriptionStatus, TaxStatus, WordPressUser } from "./types";
 import { IconLibraryMutator, IconLibraryResolver } from "./components/ui/icon/library";
 export namespace Components {
-    interface CeAddress {
+    interface ScAddress {
         /**
           * The address.
          */
@@ -27,7 +27,7 @@ export namespace Components {
          */
         "required": boolean;
     }
-    interface CeAlert {
+    interface ScAlert {
         /**
           * Makes the alert closable.
          */
@@ -53,17 +53,17 @@ export namespace Components {
          */
         "type": 'primary' | 'success' | 'info' | 'warning' | 'danger';
     }
-    interface CeBadgeNotice {
+    interface ScBadgeNotice {
         "label": string;
         "size": 'small' | 'medium' | 'large';
         "type": 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'default';
     }
-    interface CeBlockUi {
+    interface ScBlockUi {
         "spinner": boolean;
         "transparent": boolean;
         "zIndex": number;
     }
-    interface CeBreadcrumb {
+    interface ScBreadcrumb {
         /**
           * Optional URL to direct the user to when the breadcrumb item is activated. When set, a link will be rendered internally. When unset, a button will be rendered instead.
          */
@@ -77,13 +77,13 @@ export namespace Components {
          */
         "target"?: '_blank' | '_parent' | '_self' | '_top';
     }
-    interface CeBreadcrumbs {
+    interface ScBreadcrumbs {
         /**
           * The label to use for the breadcrumb control. This will not be shown, but it will be announced by screen readers and other assistive devices.
          */
         "label": string;
     }
-    interface CeButton {
+    interface ScButton {
         /**
           * Draws the button in a busy state.
          */
@@ -149,11 +149,11 @@ export namespace Components {
          */
         "value": string;
     }
-    interface CeButtonGroup {
+    interface ScButtonGroup {
         "label": string;
         "separate": boolean;
     }
-    interface CeCard {
+    interface ScCard {
         /**
           * Is this card borderless.
          */
@@ -171,10 +171,10 @@ export namespace Components {
          */
         "noPadding": boolean;
     }
-    interface CeCcLogo {
+    interface ScCcLogo {
         "brand": string;
     }
-    interface CeChargesList {
+    interface ScChargesList {
         "allLink": string;
         "heading": string;
         /**
@@ -186,7 +186,7 @@ export namespace Components {
   };
         "showPagination": boolean;
     }
-    interface CeCheckbox {
+    interface ScCheckbox {
         /**
           * Draws the checkbox in a checked state.
          */
@@ -232,7 +232,7 @@ export namespace Components {
          */
         "value": string;
     }
-    interface CeCheckout {
+    interface ScCheckout {
         /**
           * Alignment
          */
@@ -286,7 +286,7 @@ export namespace Components {
          */
         "successUrl": string;
     }
-    interface CeChoice {
+    interface ScChoice {
         /**
           * Draws the choice in a checked state.
          */
@@ -344,7 +344,7 @@ export namespace Components {
          */
         "value": string;
     }
-    interface CeChoices {
+    interface ScChoices {
         "autoWidth": boolean;
         /**
           * Number of columns on desktop
@@ -379,9 +379,9 @@ export namespace Components {
          */
         "size": 'small' | 'medium' | 'large';
     }
-    interface CeColumn {
+    interface ScColumn {
     }
-    interface CeColumns {
+    interface ScColumns {
         /**
           * Is this stacked on mobile
          */
@@ -391,10 +391,10 @@ export namespace Components {
          */
         "verticalAlignment": string;
     }
-    interface CeConsumer {
+    interface ScConsumer {
         "renderer": any;
     }
-    interface CeCouponForm {
+    interface ScCouponForm {
         /**
           * Is the form calculating
          */
@@ -432,19 +432,19 @@ export namespace Components {
          */
         "open": boolean;
     }
-    interface CeCustomerDetails {
+    interface ScCustomerDetails {
         "customer": Customer;
         "editLink": string;
         "error": string;
         "heading": string;
         "loading": boolean;
     }
-    interface CeCustomerEdit {
+    interface ScCustomerEdit {
         "customer": Customer;
         "heading": string;
         "successUrl": string;
     }
-    interface CeCustomerEmail {
+    interface ScCustomerEmail {
         /**
           * The input's autofocus attribute.
          */
@@ -478,7 +478,7 @@ export namespace Components {
          */
         "loggedIn": boolean;
         /**
-          * (passed from the ce-checkout component automatically)
+          * (passed from the sc-checkout component automatically)
          */
         "order": Order;
         /**
@@ -510,7 +510,7 @@ export namespace Components {
          */
         "value": string;
     }
-    interface CeCustomerName {
+    interface ScCustomerName {
         /**
           * The input's autofocus attribute.
          */
@@ -544,7 +544,7 @@ export namespace Components {
          */
         "loggedIn": boolean;
         /**
-          * (passed from the ce-checkout component automatically)
+          * (passed from the sc-checkout component automatically)
          */
         "order": Order;
         /**
@@ -576,11 +576,11 @@ export namespace Components {
          */
         "value": string;
     }
-    interface CeDashboardCustomerDetails {
+    interface ScDashboardCustomerDetails {
         "customerId": string;
         "heading": string;
     }
-    interface CeDashboardDownloadsList {
+    interface ScDashboardDownloadsList {
         "allLink": string;
         "heading": string;
         /**
@@ -592,13 +592,13 @@ export namespace Components {
   };
         "requestNonce": string;
     }
-    interface CeDashboardModule {
+    interface ScDashboardModule {
         "error": string;
         "heading": string;
     }
-    interface CeDivider {
+    interface ScDivider {
     }
-    interface CeDonationChoices {
+    interface ScDonationChoices {
         "busy": boolean;
         /**
           * The default amount to load the page with.
@@ -623,7 +623,7 @@ export namespace Components {
         "removeInvalid": boolean;
         "reportValidity": () => Promise<boolean>;
     }
-    interface CeDownloadsList {
+    interface ScDownloadsList {
         "allLink": string;
         "busy": boolean;
         "error": string;
@@ -632,7 +632,7 @@ export namespace Components {
         "purchases": Array<Purchase>;
         "requestNonce": string;
     }
-    interface CeDropdown {
+    interface ScDropdown {
         "clickEl"?: HTMLElement;
         /**
           * Determines whether the dropdown should hide when a menu item is selected
@@ -651,10 +651,10 @@ export namespace Components {
          */
         "position": 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
     }
-    interface CeEmpty {
+    interface ScEmpty {
         "icon": string;
     }
-    interface CeExpressPayment {
+    interface ScExpressPayment {
         "busy": boolean;
         "debug": boolean;
         "dividerText": string;
@@ -662,12 +662,12 @@ export namespace Components {
         "order": Order;
         "processor": 'stripe' | 'paypal';
     }
-    interface CeFlex {
+    interface ScFlex {
         "alignItems": string;
         "flexDirection": string;
         "justifyContent": string;
     }
-    interface CeForm {
+    interface ScForm {
         /**
           * Serializes all form controls elements and returns a `FormData` object.
          */
@@ -680,14 +680,14 @@ export namespace Components {
         "submit": () => Promise<void>;
         "validate": () => Promise<boolean>;
     }
-    interface CeFormComponentsValidator {
+    interface ScFormComponentsValidator {
         "disabled": boolean;
         /**
           * The order
          */
         "order": Order;
     }
-    interface CeFormControl {
+    interface ScFormControl {
         /**
           * Store the error message
          */
@@ -733,12 +733,9 @@ export namespace Components {
          */
         "size": 'small' | 'medium' | 'large';
     }
-    interface CeFormRow {
+    interface ScFormRow {
     }
-    interface CeFormSection {
-        "label": string;
-    }
-    interface CeFormatBytes {
+    interface ScFormatBytes {
         /**
           * Determines how to display the result, e.g. "100 bytes", "100 b", or "100b".
          */
@@ -756,7 +753,7 @@ export namespace Components {
          */
         "value": number;
     }
-    interface CeFormatDate {
+    interface ScFormatDate {
         /**
           * The date/time to format. If not set, the current date and time will be used.
          */
@@ -811,7 +808,7 @@ export namespace Components {
          */
         "year": 'numeric' | '2-digit';
     }
-    interface CeFormatInterval {
+    interface ScFormatInterval {
         "every": string;
         "fallback": string;
         "interval": string;
@@ -820,7 +817,7 @@ export namespace Components {
          */
         "value": number;
     }
-    interface CeFormatNumber {
+    interface ScFormatNumber {
         /**
           * The currency to use when formatting. Must be an ISO 4217 currency code such as `USD` or `EUR`.
          */
@@ -867,10 +864,10 @@ export namespace Components {
          */
         "value": number;
     }
-    interface CeHeading {
+    interface ScHeading {
         "size": 'small' | 'medium' | 'large';
     }
-    interface CeIcon {
+    interface ScIcon {
         /**
           * An alternative description to use for accessibility. If omitted, the name or src will be used to generate it.
          */
@@ -888,7 +885,7 @@ export namespace Components {
          */
         "src": string;
     }
-    interface CeInput {
+    interface ScInput {
         /**
           * The input's autocomplete attribute.
          */
@@ -1020,7 +1017,7 @@ export namespace Components {
          */
         "value": string;
     }
-    interface CeInvoicesList {
+    interface ScInvoicesList {
         "allLink": string;
         "heading": string;
         /**
@@ -1031,7 +1028,7 @@ export namespace Components {
     per_page: number;
   };
     }
-    interface CeLineItem {
+    interface ScLineItem {
         /**
           * Currency symbol
          */
@@ -1041,18 +1038,18 @@ export namespace Components {
          */
         "price": string;
     }
-    interface CeLineItemTax {
+    interface ScLineItemTax {
         "loading": boolean;
         "order": Order;
     }
-    interface CeLineItemTotal {
+    interface ScLineItemTotal {
         "loading": boolean;
         "order": Order;
         "showCurrency": boolean;
         "size": 'large' | 'medium';
         "total": 'total' | 'subtotal';
     }
-    interface CeLineItems {
+    interface ScLineItems {
         "editable": boolean;
         "loading": boolean;
         "lockedChoices": Array<PriceChoice>;
@@ -1060,19 +1057,19 @@ export namespace Components {
         "prices": Prices;
         "removable": boolean;
     }
-    interface CeLineItemsProvider {
+    interface ScLineItemsProvider {
         /**
           * Order Object
          */
         "order": Order;
     }
-    interface CeLoginForm {
+    interface ScLoginForm {
     }
-    interface CeMenu {
+    interface ScMenu {
     }
-    interface CeMenuDivider {
+    interface ScMenuDivider {
     }
-    interface CeMenuItem {
+    interface ScMenuItem {
         /**
           * Draws the item in a checked state.
          */
@@ -1098,12 +1095,12 @@ export namespace Components {
          */
         "value": string;
     }
-    interface CeMenuLabel {
+    interface ScMenuLabel {
     }
-    interface CeOrderConfirmation {
+    interface ScOrderConfirmation {
         "order": Order;
     }
-    interface CeOrderConfirmationCustomer {
+    interface ScOrderConfirmationCustomer {
         /**
           * The customer
          */
@@ -1125,14 +1122,14 @@ export namespace Components {
          */
         "order": Order;
     }
-    interface CeOrderConfirmationLineItems {
+    interface ScOrderConfirmationLineItems {
         "loading": boolean;
         "order": Order;
     }
-    interface CeOrderConfirmationTotals {
+    interface ScOrderConfirmationTotals {
         "order": Order;
     }
-    interface CeOrderCouponForm {
+    interface ScOrderCouponForm {
         "busy": boolean;
         "error": any;
         "forceOpen": boolean;
@@ -1140,7 +1137,7 @@ export namespace Components {
         "loading": boolean;
         "order": Order;
     }
-    interface CeOrderDetail {
+    interface ScOrderDetail {
         "fallback": string;
         "label": string;
         "loading": boolean;
@@ -1148,7 +1145,7 @@ export namespace Components {
         "order": Order;
         "value": string;
     }
-    interface CeOrderPassword {
+    interface ScOrderPassword {
         /**
           * The input's autofocus attribute.
          */
@@ -1195,7 +1192,7 @@ export namespace Components {
          */
         "value": string;
     }
-    interface CeOrderShippingAddress {
+    interface ScOrderShippingAddress {
         /**
           * Holds the customer's shipping address
          */
@@ -1221,7 +1218,7 @@ export namespace Components {
          */
         "taxStatus": TaxStatus;
     }
-    interface CeOrderStatusBadge {
+    interface ScOrderStatusBadge {
         /**
           * Makes the tag clearable.
          */
@@ -1239,7 +1236,7 @@ export namespace Components {
          */
         "status": OrderStatus;
     }
-    interface CeOrderSubmit {
+    interface ScOrderSubmit {
         /**
           * Is the order busy
          */
@@ -1273,14 +1270,14 @@ export namespace Components {
          */
         "type": 'default' | 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text' | 'link';
     }
-    interface CeOrderSummary {
+    interface ScOrderSummary {
         "collapsed": boolean;
         "collapsible": boolean;
         "empty": boolean;
         "loading": boolean;
         "order": Order;
     }
-    interface CeOrderTaxIdInput {
+    interface ScOrderTaxIdInput {
         /**
           * The order
          */
@@ -1290,7 +1287,7 @@ export namespace Components {
          */
         "show": boolean;
     }
-    interface CeOrdersList {
+    interface ScOrdersList {
         "allLink": string;
         "heading": string;
         /**
@@ -1301,14 +1298,14 @@ export namespace Components {
     per_page: number;
   };
     }
-    interface CePagination {
+    interface ScPagination {
         "page": number;
         "perPage": number;
         "total": number;
         "totalPages": number;
         "totalShowing": number;
     }
-    interface CePayment {
+    interface ScPayment {
         /**
           * The input's label.
          */
@@ -1322,7 +1319,7 @@ export namespace Components {
          */
         "mode": 'test' | 'live';
         /**
-          * Checkout Session from ce-checkout.
+          * Checkout Session from sc-checkout.
          */
         "order": Order;
         /**
@@ -1338,19 +1335,19 @@ export namespace Components {
          */
         "secureNotice": string;
     }
-    interface CePaymentMethodCreate {
+    interface ScPaymentMethodCreate {
         "clientSecret": string;
         "error": string;
         "successUrl": string;
     }
-    interface CePaymentMethodsList {
+    interface ScPaymentMethodsList {
         "heading": string;
         /**
           * Query to fetch paymentMethods
          */
         "query": object;
     }
-    interface CePriceChoice {
+    interface ScPriceChoice {
         /**
           * Is this checked by default
          */
@@ -1416,7 +1413,7 @@ export namespace Components {
          */
         "type": 'checkbox' | 'radio';
     }
-    interface CePriceChoices {
+    interface ScPriceChoices {
         /**
           * Number of columns
          */
@@ -1430,7 +1427,7 @@ export namespace Components {
          */
         "required": boolean;
     }
-    interface CePriceInput {
+    interface ScPriceInput {
         /**
           * The input's autofocus attribute.
          */
@@ -1529,7 +1526,7 @@ export namespace Components {
          */
         "value": string;
     }
-    interface CeProductLineItem {
+    interface ScProductLineItem {
         /**
           * Product monetary amount
          */
@@ -1567,16 +1564,16 @@ export namespace Components {
          */
         "trialDurationDays": number;
     }
-    interface CeProvider {
+    interface ScProvider {
         "STENCIL_CONTEXT": { [key: string]: any };
     }
-    interface CeQuantitySelect {
+    interface ScQuantitySelect {
         "clickEl"?: HTMLElement;
         "max": number;
         "min": number;
         "quantity": number;
     }
-    interface CeRadio {
+    interface ScRadio {
         /**
           * Simulates a click on the radio.
          */
@@ -1610,19 +1607,19 @@ export namespace Components {
          */
         "value": string;
     }
-    interface CeRadioGroup {
+    interface ScRadioGroup {
         /**
           * The radio group label. Required for proper accessibility.
          */
         "label": string;
     }
-    interface CeRegisterIconLibrary {
+    interface ScRegisterIconLibrary {
         "registerIconLibrary": (name: string, options: { resolver: IconLibraryResolver; mutator?: IconLibraryMutator; }) => Promise<void>;
         "unregisterIconLibrary": (name: string) => Promise<void>;
     }
-    interface CeSecureNotice {
+    interface ScSecureNotice {
     }
-    interface CeSelect {
+    interface ScSelect {
         /**
           * The input's autocomplete attribute.
          */
@@ -1687,7 +1684,7 @@ export namespace Components {
          */
         "value": string;
     }
-    interface CeSessionProvider {
+    interface ScSessionProvider {
         /**
           * Currency Code
          */
@@ -1725,23 +1722,23 @@ export namespace Components {
          */
         "setState": (state: string) => void;
     }
-    interface CeSkeleton {
+    interface ScSkeleton {
         /**
           * Animation effect
          */
         "effect": 'pulse' | 'sheen' | 'none';
     }
-    interface CeSpacing {
+    interface ScSpacing {
     }
-    interface CeSpinner {
+    interface ScSpinner {
     }
-    interface CeStackedList {
+    interface ScStackedList {
     }
-    interface CeStackedListRow {
+    interface ScStackedListRow {
         "href": string;
         "mobileSize": number;
     }
-    interface CeStripeElement {
+    interface ScStripeElement {
         /**
           * Confirm card payment
          */
@@ -1791,7 +1788,7 @@ export namespace Components {
          */
         "stripeAccountId": string;
     }
-    interface CeStripePaymentRequest {
+    interface ScStripePaymentRequest {
         /**
           * Amount
          */
@@ -1836,7 +1833,7 @@ export namespace Components {
          */
         "theme": string;
     }
-    interface CeSubscription {
+    interface ScSubscription {
         "heading": string;
         "query": object;
         "subscription": Subscription;
@@ -1845,19 +1842,19 @@ export namespace Components {
          */
         "subscriptionId": string;
     }
-    interface CeSubscriptionCancel {
+    interface ScSubscriptionCancel {
         "backUrl": string;
         "heading": string;
         "subscription": Subscription;
         "subscriptionId": string;
         "successUrl": string;
     }
-    interface CeSubscriptionDetails {
+    interface ScSubscriptionDetails {
         "hideRenewalText": boolean;
         "pendingPrice": Price;
         "subscription": Subscription;
     }
-    interface CeSubscriptionPayment {
+    interface ScSubscriptionPayment {
         "backUrl": string;
         "customerIds": Array<string>;
         "paymentMethods": Array<PaymentMethod>;
@@ -1865,14 +1862,14 @@ export namespace Components {
         "subscriptionId": string;
         "successUrl": string;
     }
-    interface CeSubscriptionRenew {
+    interface ScSubscriptionRenew {
         "backUrl": string;
         "heading": string;
         "subscription": Subscription;
         "subscriptionId": string;
         "successUrl": string;
     }
-    interface CeSubscriptionStatusBadge {
+    interface ScSubscriptionStatusBadge {
         /**
           * Makes the tag clearable.
          */
@@ -1894,7 +1891,7 @@ export namespace Components {
          */
         "subscription": Subscription;
     }
-    interface CeSubscriptionSwitch {
+    interface ScSubscriptionSwitch {
         "heading": string;
         "productGroupId": ProductGroup;
         /**
@@ -1903,7 +1900,7 @@ export namespace Components {
         "query": object;
         "subscription": Subscription;
     }
-    interface CeSubscriptionsList {
+    interface ScSubscriptionsList {
         "allLink": string;
         "cancelBehavior": 'period_end' | 'immediate';
         "heading": string;
@@ -1915,7 +1912,7 @@ export namespace Components {
     per_page: number;
   };
     }
-    interface CeSwitch {
+    interface ScSwitch {
         /**
           * Draws the switch in a checked state.
          */
@@ -1945,7 +1942,7 @@ export namespace Components {
          */
         "value": string;
     }
-    interface CeTab {
+    interface ScTab {
         /**
           * Draws the tab in an active state.
          */
@@ -1969,9 +1966,9 @@ export namespace Components {
          */
         "triggerFocus": (options?: FocusOptions) => Promise<void>;
     }
-    interface CeTabGroup {
+    interface ScTabGroup {
     }
-    interface CeTabPanel {
+    interface ScTabPanel {
         /**
           * When true, the tab panel will be shown.
          */
@@ -1981,16 +1978,16 @@ export namespace Components {
          */
         "name": string;
     }
-    interface CeTable {
+    interface ScTable {
     }
-    interface CeTableCell {
+    interface ScTableCell {
     }
-    interface CeTableHead {
+    interface ScTableHead {
     }
-    interface CeTableRow {
+    interface ScTableRow {
         "href": string;
     }
-    interface CeTag {
+    interface ScTag {
         /**
           * Makes the tag clearable.
          */
@@ -2008,7 +2005,7 @@ export namespace Components {
          */
         "type": 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'default';
     }
-    interface CeTaxIdInput {
+    interface ScTaxIdInput {
         /**
           * Label for the field.
          */
@@ -2026,11 +2023,11 @@ export namespace Components {
          */
         "type": string;
     }
-    interface CeText {
+    interface ScText {
         "tag": 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p';
         "truncate": boolean;
     }
-    interface CeTooltip {
+    interface ScTooltip {
         /**
           * Freeze open or closed.
          */
@@ -2056,11 +2053,11 @@ export namespace Components {
          */
         "width": string;
     }
-    interface CeTotal {
+    interface ScTotal {
         "order": Order;
         "total": 'total' | 'subtotal' | 'amount_due';
     }
-    interface CeUpcomingInvoice {
+    interface ScUpcomingInvoice {
         "discount": {
     promotion_code?: string;
     coupon?: string;
@@ -2072,846 +2069,839 @@ export namespace Components {
         "subscriptionId": string;
         "successUrl": string;
     }
-    interface CeWordpressPasswordEdit {
+    interface ScWordpressPasswordEdit {
         "heading": string;
         "successUrl": string;
         "user": WordPressUser;
     }
-    interface CeWordpressUser {
+    interface ScWordpressUser {
         "heading": string;
         "user": WordPressUser;
     }
-    interface CeWordpressUserEdit {
+    interface ScWordpressUserEdit {
         "heading": string;
         "successUrl": string;
         "user": WordPressUser;
     }
 }
 declare global {
-    interface HTMLCeAddressElement extends Components.CeAddress, HTMLStencilElement {
+    interface HTMLScAddressElement extends Components.ScAddress, HTMLStencilElement {
     }
-    var HTMLCeAddressElement: {
-        prototype: HTMLCeAddressElement;
-        new (): HTMLCeAddressElement;
+    var HTMLScAddressElement: {
+        prototype: HTMLScAddressElement;
+        new (): HTMLScAddressElement;
     };
-    interface HTMLCeAlertElement extends Components.CeAlert, HTMLStencilElement {
+    interface HTMLScAlertElement extends Components.ScAlert, HTMLStencilElement {
     }
-    var HTMLCeAlertElement: {
-        prototype: HTMLCeAlertElement;
-        new (): HTMLCeAlertElement;
+    var HTMLScAlertElement: {
+        prototype: HTMLScAlertElement;
+        new (): HTMLScAlertElement;
     };
-    interface HTMLCeBadgeNoticeElement extends Components.CeBadgeNotice, HTMLStencilElement {
+    interface HTMLScBadgeNoticeElement extends Components.ScBadgeNotice, HTMLStencilElement {
     }
-    var HTMLCeBadgeNoticeElement: {
-        prototype: HTMLCeBadgeNoticeElement;
-        new (): HTMLCeBadgeNoticeElement;
+    var HTMLScBadgeNoticeElement: {
+        prototype: HTMLScBadgeNoticeElement;
+        new (): HTMLScBadgeNoticeElement;
     };
-    interface HTMLCeBlockUiElement extends Components.CeBlockUi, HTMLStencilElement {
+    interface HTMLScBlockUiElement extends Components.ScBlockUi, HTMLStencilElement {
     }
-    var HTMLCeBlockUiElement: {
-        prototype: HTMLCeBlockUiElement;
-        new (): HTMLCeBlockUiElement;
+    var HTMLScBlockUiElement: {
+        prototype: HTMLScBlockUiElement;
+        new (): HTMLScBlockUiElement;
     };
-    interface HTMLCeBreadcrumbElement extends Components.CeBreadcrumb, HTMLStencilElement {
+    interface HTMLScBreadcrumbElement extends Components.ScBreadcrumb, HTMLStencilElement {
     }
-    var HTMLCeBreadcrumbElement: {
-        prototype: HTMLCeBreadcrumbElement;
-        new (): HTMLCeBreadcrumbElement;
+    var HTMLScBreadcrumbElement: {
+        prototype: HTMLScBreadcrumbElement;
+        new (): HTMLScBreadcrumbElement;
     };
-    interface HTMLCeBreadcrumbsElement extends Components.CeBreadcrumbs, HTMLStencilElement {
+    interface HTMLScBreadcrumbsElement extends Components.ScBreadcrumbs, HTMLStencilElement {
     }
-    var HTMLCeBreadcrumbsElement: {
-        prototype: HTMLCeBreadcrumbsElement;
-        new (): HTMLCeBreadcrumbsElement;
+    var HTMLScBreadcrumbsElement: {
+        prototype: HTMLScBreadcrumbsElement;
+        new (): HTMLScBreadcrumbsElement;
     };
-    interface HTMLCeButtonElement extends Components.CeButton, HTMLStencilElement {
+    interface HTMLScButtonElement extends Components.ScButton, HTMLStencilElement {
     }
-    var HTMLCeButtonElement: {
-        prototype: HTMLCeButtonElement;
-        new (): HTMLCeButtonElement;
+    var HTMLScButtonElement: {
+        prototype: HTMLScButtonElement;
+        new (): HTMLScButtonElement;
     };
-    interface HTMLCeButtonGroupElement extends Components.CeButtonGroup, HTMLStencilElement {
+    interface HTMLScButtonGroupElement extends Components.ScButtonGroup, HTMLStencilElement {
     }
-    var HTMLCeButtonGroupElement: {
-        prototype: HTMLCeButtonGroupElement;
-        new (): HTMLCeButtonGroupElement;
+    var HTMLScButtonGroupElement: {
+        prototype: HTMLScButtonGroupElement;
+        new (): HTMLScButtonGroupElement;
     };
-    interface HTMLCeCardElement extends Components.CeCard, HTMLStencilElement {
+    interface HTMLScCardElement extends Components.ScCard, HTMLStencilElement {
     }
-    var HTMLCeCardElement: {
-        prototype: HTMLCeCardElement;
-        new (): HTMLCeCardElement;
+    var HTMLScCardElement: {
+        prototype: HTMLScCardElement;
+        new (): HTMLScCardElement;
     };
-    interface HTMLCeCcLogoElement extends Components.CeCcLogo, HTMLStencilElement {
+    interface HTMLScCcLogoElement extends Components.ScCcLogo, HTMLStencilElement {
     }
-    var HTMLCeCcLogoElement: {
-        prototype: HTMLCeCcLogoElement;
-        new (): HTMLCeCcLogoElement;
+    var HTMLScCcLogoElement: {
+        prototype: HTMLScCcLogoElement;
+        new (): HTMLScCcLogoElement;
     };
-    interface HTMLCeChargesListElement extends Components.CeChargesList, HTMLStencilElement {
+    interface HTMLScChargesListElement extends Components.ScChargesList, HTMLStencilElement {
     }
-    var HTMLCeChargesListElement: {
-        prototype: HTMLCeChargesListElement;
-        new (): HTMLCeChargesListElement;
+    var HTMLScChargesListElement: {
+        prototype: HTMLScChargesListElement;
+        new (): HTMLScChargesListElement;
     };
-    interface HTMLCeCheckboxElement extends Components.CeCheckbox, HTMLStencilElement {
+    interface HTMLScCheckboxElement extends Components.ScCheckbox, HTMLStencilElement {
     }
-    var HTMLCeCheckboxElement: {
-        prototype: HTMLCeCheckboxElement;
-        new (): HTMLCeCheckboxElement;
+    var HTMLScCheckboxElement: {
+        prototype: HTMLScCheckboxElement;
+        new (): HTMLScCheckboxElement;
     };
-    interface HTMLCeCheckoutElement extends Components.CeCheckout, HTMLStencilElement {
+    interface HTMLScCheckoutElement extends Components.ScCheckout, HTMLStencilElement {
     }
-    var HTMLCeCheckoutElement: {
-        prototype: HTMLCeCheckoutElement;
-        new (): HTMLCeCheckoutElement;
+    var HTMLScCheckoutElement: {
+        prototype: HTMLScCheckoutElement;
+        new (): HTMLScCheckoutElement;
     };
-    interface HTMLCeChoiceElement extends Components.CeChoice, HTMLStencilElement {
+    interface HTMLScChoiceElement extends Components.ScChoice, HTMLStencilElement {
     }
-    var HTMLCeChoiceElement: {
-        prototype: HTMLCeChoiceElement;
-        new (): HTMLCeChoiceElement;
+    var HTMLScChoiceElement: {
+        prototype: HTMLScChoiceElement;
+        new (): HTMLScChoiceElement;
     };
-    interface HTMLCeChoicesElement extends Components.CeChoices, HTMLStencilElement {
+    interface HTMLScChoicesElement extends Components.ScChoices, HTMLStencilElement {
     }
-    var HTMLCeChoicesElement: {
-        prototype: HTMLCeChoicesElement;
-        new (): HTMLCeChoicesElement;
+    var HTMLScChoicesElement: {
+        prototype: HTMLScChoicesElement;
+        new (): HTMLScChoicesElement;
     };
-    interface HTMLCeColumnElement extends Components.CeColumn, HTMLStencilElement {
+    interface HTMLScColumnElement extends Components.ScColumn, HTMLStencilElement {
     }
-    var HTMLCeColumnElement: {
-        prototype: HTMLCeColumnElement;
-        new (): HTMLCeColumnElement;
+    var HTMLScColumnElement: {
+        prototype: HTMLScColumnElement;
+        new (): HTMLScColumnElement;
     };
-    interface HTMLCeColumnsElement extends Components.CeColumns, HTMLStencilElement {
+    interface HTMLScColumnsElement extends Components.ScColumns, HTMLStencilElement {
     }
-    var HTMLCeColumnsElement: {
-        prototype: HTMLCeColumnsElement;
-        new (): HTMLCeColumnsElement;
+    var HTMLScColumnsElement: {
+        prototype: HTMLScColumnsElement;
+        new (): HTMLScColumnsElement;
     };
-    interface HTMLCeConsumerElement extends Components.CeConsumer, HTMLStencilElement {
+    interface HTMLScConsumerElement extends Components.ScConsumer, HTMLStencilElement {
     }
-    var HTMLCeConsumerElement: {
-        prototype: HTMLCeConsumerElement;
-        new (): HTMLCeConsumerElement;
+    var HTMLScConsumerElement: {
+        prototype: HTMLScConsumerElement;
+        new (): HTMLScConsumerElement;
     };
-    interface HTMLCeCouponFormElement extends Components.CeCouponForm, HTMLStencilElement {
+    interface HTMLScCouponFormElement extends Components.ScCouponForm, HTMLStencilElement {
     }
-    var HTMLCeCouponFormElement: {
-        prototype: HTMLCeCouponFormElement;
-        new (): HTMLCeCouponFormElement;
+    var HTMLScCouponFormElement: {
+        prototype: HTMLScCouponFormElement;
+        new (): HTMLScCouponFormElement;
     };
-    interface HTMLCeCustomerDetailsElement extends Components.CeCustomerDetails, HTMLStencilElement {
+    interface HTMLScCustomerDetailsElement extends Components.ScCustomerDetails, HTMLStencilElement {
     }
-    var HTMLCeCustomerDetailsElement: {
-        prototype: HTMLCeCustomerDetailsElement;
-        new (): HTMLCeCustomerDetailsElement;
+    var HTMLScCustomerDetailsElement: {
+        prototype: HTMLScCustomerDetailsElement;
+        new (): HTMLScCustomerDetailsElement;
     };
-    interface HTMLCeCustomerEditElement extends Components.CeCustomerEdit, HTMLStencilElement {
+    interface HTMLScCustomerEditElement extends Components.ScCustomerEdit, HTMLStencilElement {
     }
-    var HTMLCeCustomerEditElement: {
-        prototype: HTMLCeCustomerEditElement;
-        new (): HTMLCeCustomerEditElement;
+    var HTMLScCustomerEditElement: {
+        prototype: HTMLScCustomerEditElement;
+        new (): HTMLScCustomerEditElement;
     };
-    interface HTMLCeCustomerEmailElement extends Components.CeCustomerEmail, HTMLStencilElement {
+    interface HTMLScCustomerEmailElement extends Components.ScCustomerEmail, HTMLStencilElement {
     }
-    var HTMLCeCustomerEmailElement: {
-        prototype: HTMLCeCustomerEmailElement;
-        new (): HTMLCeCustomerEmailElement;
+    var HTMLScCustomerEmailElement: {
+        prototype: HTMLScCustomerEmailElement;
+        new (): HTMLScCustomerEmailElement;
     };
-    interface HTMLCeCustomerNameElement extends Components.CeCustomerName, HTMLStencilElement {
+    interface HTMLScCustomerNameElement extends Components.ScCustomerName, HTMLStencilElement {
     }
-    var HTMLCeCustomerNameElement: {
-        prototype: HTMLCeCustomerNameElement;
-        new (): HTMLCeCustomerNameElement;
+    var HTMLScCustomerNameElement: {
+        prototype: HTMLScCustomerNameElement;
+        new (): HTMLScCustomerNameElement;
     };
-    interface HTMLCeDashboardCustomerDetailsElement extends Components.CeDashboardCustomerDetails, HTMLStencilElement {
+    interface HTMLScDashboardCustomerDetailsElement extends Components.ScDashboardCustomerDetails, HTMLStencilElement {
     }
-    var HTMLCeDashboardCustomerDetailsElement: {
-        prototype: HTMLCeDashboardCustomerDetailsElement;
-        new (): HTMLCeDashboardCustomerDetailsElement;
+    var HTMLScDashboardCustomerDetailsElement: {
+        prototype: HTMLScDashboardCustomerDetailsElement;
+        new (): HTMLScDashboardCustomerDetailsElement;
     };
-    interface HTMLCeDashboardDownloadsListElement extends Components.CeDashboardDownloadsList, HTMLStencilElement {
+    interface HTMLScDashboardDownloadsListElement extends Components.ScDashboardDownloadsList, HTMLStencilElement {
     }
-    var HTMLCeDashboardDownloadsListElement: {
-        prototype: HTMLCeDashboardDownloadsListElement;
-        new (): HTMLCeDashboardDownloadsListElement;
+    var HTMLScDashboardDownloadsListElement: {
+        prototype: HTMLScDashboardDownloadsListElement;
+        new (): HTMLScDashboardDownloadsListElement;
     };
-    interface HTMLCeDashboardModuleElement extends Components.CeDashboardModule, HTMLStencilElement {
+    interface HTMLScDashboardModuleElement extends Components.ScDashboardModule, HTMLStencilElement {
     }
-    var HTMLCeDashboardModuleElement: {
-        prototype: HTMLCeDashboardModuleElement;
-        new (): HTMLCeDashboardModuleElement;
+    var HTMLScDashboardModuleElement: {
+        prototype: HTMLScDashboardModuleElement;
+        new (): HTMLScDashboardModuleElement;
     };
-    interface HTMLCeDividerElement extends Components.CeDivider, HTMLStencilElement {
+    interface HTMLScDividerElement extends Components.ScDivider, HTMLStencilElement {
     }
-    var HTMLCeDividerElement: {
-        prototype: HTMLCeDividerElement;
-        new (): HTMLCeDividerElement;
+    var HTMLScDividerElement: {
+        prototype: HTMLScDividerElement;
+        new (): HTMLScDividerElement;
     };
-    interface HTMLCeDonationChoicesElement extends Components.CeDonationChoices, HTMLStencilElement {
+    interface HTMLScDonationChoicesElement extends Components.ScDonationChoices, HTMLStencilElement {
     }
-    var HTMLCeDonationChoicesElement: {
-        prototype: HTMLCeDonationChoicesElement;
-        new (): HTMLCeDonationChoicesElement;
+    var HTMLScDonationChoicesElement: {
+        prototype: HTMLScDonationChoicesElement;
+        new (): HTMLScDonationChoicesElement;
     };
-    interface HTMLCeDownloadsListElement extends Components.CeDownloadsList, HTMLStencilElement {
+    interface HTMLScDownloadsListElement extends Components.ScDownloadsList, HTMLStencilElement {
     }
-    var HTMLCeDownloadsListElement: {
-        prototype: HTMLCeDownloadsListElement;
-        new (): HTMLCeDownloadsListElement;
+    var HTMLScDownloadsListElement: {
+        prototype: HTMLScDownloadsListElement;
+        new (): HTMLScDownloadsListElement;
     };
-    interface HTMLCeDropdownElement extends Components.CeDropdown, HTMLStencilElement {
+    interface HTMLScDropdownElement extends Components.ScDropdown, HTMLStencilElement {
     }
-    var HTMLCeDropdownElement: {
-        prototype: HTMLCeDropdownElement;
-        new (): HTMLCeDropdownElement;
+    var HTMLScDropdownElement: {
+        prototype: HTMLScDropdownElement;
+        new (): HTMLScDropdownElement;
     };
-    interface HTMLCeEmptyElement extends Components.CeEmpty, HTMLStencilElement {
+    interface HTMLScEmptyElement extends Components.ScEmpty, HTMLStencilElement {
     }
-    var HTMLCeEmptyElement: {
-        prototype: HTMLCeEmptyElement;
-        new (): HTMLCeEmptyElement;
+    var HTMLScEmptyElement: {
+        prototype: HTMLScEmptyElement;
+        new (): HTMLScEmptyElement;
     };
-    interface HTMLCeExpressPaymentElement extends Components.CeExpressPayment, HTMLStencilElement {
+    interface HTMLScExpressPaymentElement extends Components.ScExpressPayment, HTMLStencilElement {
     }
-    var HTMLCeExpressPaymentElement: {
-        prototype: HTMLCeExpressPaymentElement;
-        new (): HTMLCeExpressPaymentElement;
+    var HTMLScExpressPaymentElement: {
+        prototype: HTMLScExpressPaymentElement;
+        new (): HTMLScExpressPaymentElement;
     };
-    interface HTMLCeFlexElement extends Components.CeFlex, HTMLStencilElement {
+    interface HTMLScFlexElement extends Components.ScFlex, HTMLStencilElement {
     }
-    var HTMLCeFlexElement: {
-        prototype: HTMLCeFlexElement;
-        new (): HTMLCeFlexElement;
+    var HTMLScFlexElement: {
+        prototype: HTMLScFlexElement;
+        new (): HTMLScFlexElement;
     };
-    interface HTMLCeFormElement extends Components.CeForm, HTMLStencilElement {
+    interface HTMLScFormElement extends Components.ScForm, HTMLStencilElement {
     }
-    var HTMLCeFormElement: {
-        prototype: HTMLCeFormElement;
-        new (): HTMLCeFormElement;
+    var HTMLScFormElement: {
+        prototype: HTMLScFormElement;
+        new (): HTMLScFormElement;
     };
-    interface HTMLCeFormComponentsValidatorElement extends Components.CeFormComponentsValidator, HTMLStencilElement {
+    interface HTMLScFormComponentsValidatorElement extends Components.ScFormComponentsValidator, HTMLStencilElement {
     }
-    var HTMLCeFormComponentsValidatorElement: {
-        prototype: HTMLCeFormComponentsValidatorElement;
-        new (): HTMLCeFormComponentsValidatorElement;
+    var HTMLScFormComponentsValidatorElement: {
+        prototype: HTMLScFormComponentsValidatorElement;
+        new (): HTMLScFormComponentsValidatorElement;
     };
-    interface HTMLCeFormControlElement extends Components.CeFormControl, HTMLStencilElement {
+    interface HTMLScFormControlElement extends Components.ScFormControl, HTMLStencilElement {
     }
-    var HTMLCeFormControlElement: {
-        prototype: HTMLCeFormControlElement;
-        new (): HTMLCeFormControlElement;
+    var HTMLScFormControlElement: {
+        prototype: HTMLScFormControlElement;
+        new (): HTMLScFormControlElement;
     };
-    interface HTMLCeFormRowElement extends Components.CeFormRow, HTMLStencilElement {
+    interface HTMLScFormRowElement extends Components.ScFormRow, HTMLStencilElement {
     }
-    var HTMLCeFormRowElement: {
-        prototype: HTMLCeFormRowElement;
-        new (): HTMLCeFormRowElement;
+    var HTMLScFormRowElement: {
+        prototype: HTMLScFormRowElement;
+        new (): HTMLScFormRowElement;
     };
-    interface HTMLCeFormSectionElement extends Components.CeFormSection, HTMLStencilElement {
+    interface HTMLScFormatBytesElement extends Components.ScFormatBytes, HTMLStencilElement {
     }
-    var HTMLCeFormSectionElement: {
-        prototype: HTMLCeFormSectionElement;
-        new (): HTMLCeFormSectionElement;
+    var HTMLScFormatBytesElement: {
+        prototype: HTMLScFormatBytesElement;
+        new (): HTMLScFormatBytesElement;
     };
-    interface HTMLCeFormatBytesElement extends Components.CeFormatBytes, HTMLStencilElement {
+    interface HTMLScFormatDateElement extends Components.ScFormatDate, HTMLStencilElement {
     }
-    var HTMLCeFormatBytesElement: {
-        prototype: HTMLCeFormatBytesElement;
-        new (): HTMLCeFormatBytesElement;
+    var HTMLScFormatDateElement: {
+        prototype: HTMLScFormatDateElement;
+        new (): HTMLScFormatDateElement;
     };
-    interface HTMLCeFormatDateElement extends Components.CeFormatDate, HTMLStencilElement {
+    interface HTMLScFormatIntervalElement extends Components.ScFormatInterval, HTMLStencilElement {
     }
-    var HTMLCeFormatDateElement: {
-        prototype: HTMLCeFormatDateElement;
-        new (): HTMLCeFormatDateElement;
+    var HTMLScFormatIntervalElement: {
+        prototype: HTMLScFormatIntervalElement;
+        new (): HTMLScFormatIntervalElement;
     };
-    interface HTMLCeFormatIntervalElement extends Components.CeFormatInterval, HTMLStencilElement {
+    interface HTMLScFormatNumberElement extends Components.ScFormatNumber, HTMLStencilElement {
     }
-    var HTMLCeFormatIntervalElement: {
-        prototype: HTMLCeFormatIntervalElement;
-        new (): HTMLCeFormatIntervalElement;
+    var HTMLScFormatNumberElement: {
+        prototype: HTMLScFormatNumberElement;
+        new (): HTMLScFormatNumberElement;
     };
-    interface HTMLCeFormatNumberElement extends Components.CeFormatNumber, HTMLStencilElement {
+    interface HTMLScHeadingElement extends Components.ScHeading, HTMLStencilElement {
     }
-    var HTMLCeFormatNumberElement: {
-        prototype: HTMLCeFormatNumberElement;
-        new (): HTMLCeFormatNumberElement;
+    var HTMLScHeadingElement: {
+        prototype: HTMLScHeadingElement;
+        new (): HTMLScHeadingElement;
     };
-    interface HTMLCeHeadingElement extends Components.CeHeading, HTMLStencilElement {
+    interface HTMLScIconElement extends Components.ScIcon, HTMLStencilElement {
     }
-    var HTMLCeHeadingElement: {
-        prototype: HTMLCeHeadingElement;
-        new (): HTMLCeHeadingElement;
+    var HTMLScIconElement: {
+        prototype: HTMLScIconElement;
+        new (): HTMLScIconElement;
     };
-    interface HTMLCeIconElement extends Components.CeIcon, HTMLStencilElement {
+    interface HTMLScInputElement extends Components.ScInput, HTMLStencilElement {
     }
-    var HTMLCeIconElement: {
-        prototype: HTMLCeIconElement;
-        new (): HTMLCeIconElement;
+    var HTMLScInputElement: {
+        prototype: HTMLScInputElement;
+        new (): HTMLScInputElement;
     };
-    interface HTMLCeInputElement extends Components.CeInput, HTMLStencilElement {
+    interface HTMLScInvoicesListElement extends Components.ScInvoicesList, HTMLStencilElement {
     }
-    var HTMLCeInputElement: {
-        prototype: HTMLCeInputElement;
-        new (): HTMLCeInputElement;
+    var HTMLScInvoicesListElement: {
+        prototype: HTMLScInvoicesListElement;
+        new (): HTMLScInvoicesListElement;
     };
-    interface HTMLCeInvoicesListElement extends Components.CeInvoicesList, HTMLStencilElement {
+    interface HTMLScLineItemElement extends Components.ScLineItem, HTMLStencilElement {
     }
-    var HTMLCeInvoicesListElement: {
-        prototype: HTMLCeInvoicesListElement;
-        new (): HTMLCeInvoicesListElement;
+    var HTMLScLineItemElement: {
+        prototype: HTMLScLineItemElement;
+        new (): HTMLScLineItemElement;
     };
-    interface HTMLCeLineItemElement extends Components.CeLineItem, HTMLStencilElement {
+    interface HTMLScLineItemTaxElement extends Components.ScLineItemTax, HTMLStencilElement {
     }
-    var HTMLCeLineItemElement: {
-        prototype: HTMLCeLineItemElement;
-        new (): HTMLCeLineItemElement;
+    var HTMLScLineItemTaxElement: {
+        prototype: HTMLScLineItemTaxElement;
+        new (): HTMLScLineItemTaxElement;
     };
-    interface HTMLCeLineItemTaxElement extends Components.CeLineItemTax, HTMLStencilElement {
+    interface HTMLScLineItemTotalElement extends Components.ScLineItemTotal, HTMLStencilElement {
     }
-    var HTMLCeLineItemTaxElement: {
-        prototype: HTMLCeLineItemTaxElement;
-        new (): HTMLCeLineItemTaxElement;
+    var HTMLScLineItemTotalElement: {
+        prototype: HTMLScLineItemTotalElement;
+        new (): HTMLScLineItemTotalElement;
     };
-    interface HTMLCeLineItemTotalElement extends Components.CeLineItemTotal, HTMLStencilElement {
+    interface HTMLScLineItemsElement extends Components.ScLineItems, HTMLStencilElement {
     }
-    var HTMLCeLineItemTotalElement: {
-        prototype: HTMLCeLineItemTotalElement;
-        new (): HTMLCeLineItemTotalElement;
+    var HTMLScLineItemsElement: {
+        prototype: HTMLScLineItemsElement;
+        new (): HTMLScLineItemsElement;
     };
-    interface HTMLCeLineItemsElement extends Components.CeLineItems, HTMLStencilElement {
+    interface HTMLScLineItemsProviderElement extends Components.ScLineItemsProvider, HTMLStencilElement {
     }
-    var HTMLCeLineItemsElement: {
-        prototype: HTMLCeLineItemsElement;
-        new (): HTMLCeLineItemsElement;
+    var HTMLScLineItemsProviderElement: {
+        prototype: HTMLScLineItemsProviderElement;
+        new (): HTMLScLineItemsProviderElement;
     };
-    interface HTMLCeLineItemsProviderElement extends Components.CeLineItemsProvider, HTMLStencilElement {
+    interface HTMLScLoginFormElement extends Components.ScLoginForm, HTMLStencilElement {
     }
-    var HTMLCeLineItemsProviderElement: {
-        prototype: HTMLCeLineItemsProviderElement;
-        new (): HTMLCeLineItemsProviderElement;
+    var HTMLScLoginFormElement: {
+        prototype: HTMLScLoginFormElement;
+        new (): HTMLScLoginFormElement;
     };
-    interface HTMLCeLoginFormElement extends Components.CeLoginForm, HTMLStencilElement {
+    interface HTMLScMenuElement extends Components.ScMenu, HTMLStencilElement {
     }
-    var HTMLCeLoginFormElement: {
-        prototype: HTMLCeLoginFormElement;
-        new (): HTMLCeLoginFormElement;
+    var HTMLScMenuElement: {
+        prototype: HTMLScMenuElement;
+        new (): HTMLScMenuElement;
     };
-    interface HTMLCeMenuElement extends Components.CeMenu, HTMLStencilElement {
+    interface HTMLScMenuDividerElement extends Components.ScMenuDivider, HTMLStencilElement {
     }
-    var HTMLCeMenuElement: {
-        prototype: HTMLCeMenuElement;
-        new (): HTMLCeMenuElement;
+    var HTMLScMenuDividerElement: {
+        prototype: HTMLScMenuDividerElement;
+        new (): HTMLScMenuDividerElement;
     };
-    interface HTMLCeMenuDividerElement extends Components.CeMenuDivider, HTMLStencilElement {
+    interface HTMLScMenuItemElement extends Components.ScMenuItem, HTMLStencilElement {
     }
-    var HTMLCeMenuDividerElement: {
-        prototype: HTMLCeMenuDividerElement;
-        new (): HTMLCeMenuDividerElement;
+    var HTMLScMenuItemElement: {
+        prototype: HTMLScMenuItemElement;
+        new (): HTMLScMenuItemElement;
     };
-    interface HTMLCeMenuItemElement extends Components.CeMenuItem, HTMLStencilElement {
+    interface HTMLScMenuLabelElement extends Components.ScMenuLabel, HTMLStencilElement {
     }
-    var HTMLCeMenuItemElement: {
-        prototype: HTMLCeMenuItemElement;
-        new (): HTMLCeMenuItemElement;
+    var HTMLScMenuLabelElement: {
+        prototype: HTMLScMenuLabelElement;
+        new (): HTMLScMenuLabelElement;
     };
-    interface HTMLCeMenuLabelElement extends Components.CeMenuLabel, HTMLStencilElement {
+    interface HTMLScOrderConfirmationElement extends Components.ScOrderConfirmation, HTMLStencilElement {
     }
-    var HTMLCeMenuLabelElement: {
-        prototype: HTMLCeMenuLabelElement;
-        new (): HTMLCeMenuLabelElement;
+    var HTMLScOrderConfirmationElement: {
+        prototype: HTMLScOrderConfirmationElement;
+        new (): HTMLScOrderConfirmationElement;
     };
-    interface HTMLCeOrderConfirmationElement extends Components.CeOrderConfirmation, HTMLStencilElement {
+    interface HTMLScOrderConfirmationCustomerElement extends Components.ScOrderConfirmationCustomer, HTMLStencilElement {
     }
-    var HTMLCeOrderConfirmationElement: {
-        prototype: HTMLCeOrderConfirmationElement;
-        new (): HTMLCeOrderConfirmationElement;
+    var HTMLScOrderConfirmationCustomerElement: {
+        prototype: HTMLScOrderConfirmationCustomerElement;
+        new (): HTMLScOrderConfirmationCustomerElement;
     };
-    interface HTMLCeOrderConfirmationCustomerElement extends Components.CeOrderConfirmationCustomer, HTMLStencilElement {
+    interface HTMLScOrderConfirmationLineItemsElement extends Components.ScOrderConfirmationLineItems, HTMLStencilElement {
     }
-    var HTMLCeOrderConfirmationCustomerElement: {
-        prototype: HTMLCeOrderConfirmationCustomerElement;
-        new (): HTMLCeOrderConfirmationCustomerElement;
+    var HTMLScOrderConfirmationLineItemsElement: {
+        prototype: HTMLScOrderConfirmationLineItemsElement;
+        new (): HTMLScOrderConfirmationLineItemsElement;
     };
-    interface HTMLCeOrderConfirmationLineItemsElement extends Components.CeOrderConfirmationLineItems, HTMLStencilElement {
+    interface HTMLScOrderConfirmationTotalsElement extends Components.ScOrderConfirmationTotals, HTMLStencilElement {
     }
-    var HTMLCeOrderConfirmationLineItemsElement: {
-        prototype: HTMLCeOrderConfirmationLineItemsElement;
-        new (): HTMLCeOrderConfirmationLineItemsElement;
+    var HTMLScOrderConfirmationTotalsElement: {
+        prototype: HTMLScOrderConfirmationTotalsElement;
+        new (): HTMLScOrderConfirmationTotalsElement;
     };
-    interface HTMLCeOrderConfirmationTotalsElement extends Components.CeOrderConfirmationTotals, HTMLStencilElement {
+    interface HTMLScOrderCouponFormElement extends Components.ScOrderCouponForm, HTMLStencilElement {
     }
-    var HTMLCeOrderConfirmationTotalsElement: {
-        prototype: HTMLCeOrderConfirmationTotalsElement;
-        new (): HTMLCeOrderConfirmationTotalsElement;
+    var HTMLScOrderCouponFormElement: {
+        prototype: HTMLScOrderCouponFormElement;
+        new (): HTMLScOrderCouponFormElement;
     };
-    interface HTMLCeOrderCouponFormElement extends Components.CeOrderCouponForm, HTMLStencilElement {
+    interface HTMLScOrderDetailElement extends Components.ScOrderDetail, HTMLStencilElement {
     }
-    var HTMLCeOrderCouponFormElement: {
-        prototype: HTMLCeOrderCouponFormElement;
-        new (): HTMLCeOrderCouponFormElement;
+    var HTMLScOrderDetailElement: {
+        prototype: HTMLScOrderDetailElement;
+        new (): HTMLScOrderDetailElement;
     };
-    interface HTMLCeOrderDetailElement extends Components.CeOrderDetail, HTMLStencilElement {
+    interface HTMLScOrderPasswordElement extends Components.ScOrderPassword, HTMLStencilElement {
     }
-    var HTMLCeOrderDetailElement: {
-        prototype: HTMLCeOrderDetailElement;
-        new (): HTMLCeOrderDetailElement;
+    var HTMLScOrderPasswordElement: {
+        prototype: HTMLScOrderPasswordElement;
+        new (): HTMLScOrderPasswordElement;
     };
-    interface HTMLCeOrderPasswordElement extends Components.CeOrderPassword, HTMLStencilElement {
+    interface HTMLScOrderShippingAddressElement extends Components.ScOrderShippingAddress, HTMLStencilElement {
     }
-    var HTMLCeOrderPasswordElement: {
-        prototype: HTMLCeOrderPasswordElement;
-        new (): HTMLCeOrderPasswordElement;
+    var HTMLScOrderShippingAddressElement: {
+        prototype: HTMLScOrderShippingAddressElement;
+        new (): HTMLScOrderShippingAddressElement;
     };
-    interface HTMLCeOrderShippingAddressElement extends Components.CeOrderShippingAddress, HTMLStencilElement {
+    interface HTMLScOrderStatusBadgeElement extends Components.ScOrderStatusBadge, HTMLStencilElement {
     }
-    var HTMLCeOrderShippingAddressElement: {
-        prototype: HTMLCeOrderShippingAddressElement;
-        new (): HTMLCeOrderShippingAddressElement;
+    var HTMLScOrderStatusBadgeElement: {
+        prototype: HTMLScOrderStatusBadgeElement;
+        new (): HTMLScOrderStatusBadgeElement;
     };
-    interface HTMLCeOrderStatusBadgeElement extends Components.CeOrderStatusBadge, HTMLStencilElement {
+    interface HTMLScOrderSubmitElement extends Components.ScOrderSubmit, HTMLStencilElement {
     }
-    var HTMLCeOrderStatusBadgeElement: {
-        prototype: HTMLCeOrderStatusBadgeElement;
-        new (): HTMLCeOrderStatusBadgeElement;
+    var HTMLScOrderSubmitElement: {
+        prototype: HTMLScOrderSubmitElement;
+        new (): HTMLScOrderSubmitElement;
     };
-    interface HTMLCeOrderSubmitElement extends Components.CeOrderSubmit, HTMLStencilElement {
+    interface HTMLScOrderSummaryElement extends Components.ScOrderSummary, HTMLStencilElement {
     }
-    var HTMLCeOrderSubmitElement: {
-        prototype: HTMLCeOrderSubmitElement;
-        new (): HTMLCeOrderSubmitElement;
+    var HTMLScOrderSummaryElement: {
+        prototype: HTMLScOrderSummaryElement;
+        new (): HTMLScOrderSummaryElement;
     };
-    interface HTMLCeOrderSummaryElement extends Components.CeOrderSummary, HTMLStencilElement {
+    interface HTMLScOrderTaxIdInputElement extends Components.ScOrderTaxIdInput, HTMLStencilElement {
     }
-    var HTMLCeOrderSummaryElement: {
-        prototype: HTMLCeOrderSummaryElement;
-        new (): HTMLCeOrderSummaryElement;
+    var HTMLScOrderTaxIdInputElement: {
+        prototype: HTMLScOrderTaxIdInputElement;
+        new (): HTMLScOrderTaxIdInputElement;
     };
-    interface HTMLCeOrderTaxIdInputElement extends Components.CeOrderTaxIdInput, HTMLStencilElement {
+    interface HTMLScOrdersListElement extends Components.ScOrdersList, HTMLStencilElement {
     }
-    var HTMLCeOrderTaxIdInputElement: {
-        prototype: HTMLCeOrderTaxIdInputElement;
-        new (): HTMLCeOrderTaxIdInputElement;
+    var HTMLScOrdersListElement: {
+        prototype: HTMLScOrdersListElement;
+        new (): HTMLScOrdersListElement;
     };
-    interface HTMLCeOrdersListElement extends Components.CeOrdersList, HTMLStencilElement {
+    interface HTMLScPaginationElement extends Components.ScPagination, HTMLStencilElement {
     }
-    var HTMLCeOrdersListElement: {
-        prototype: HTMLCeOrdersListElement;
-        new (): HTMLCeOrdersListElement;
+    var HTMLScPaginationElement: {
+        prototype: HTMLScPaginationElement;
+        new (): HTMLScPaginationElement;
     };
-    interface HTMLCePaginationElement extends Components.CePagination, HTMLStencilElement {
+    interface HTMLScPaymentElement extends Components.ScPayment, HTMLStencilElement {
     }
-    var HTMLCePaginationElement: {
-        prototype: HTMLCePaginationElement;
-        new (): HTMLCePaginationElement;
+    var HTMLScPaymentElement: {
+        prototype: HTMLScPaymentElement;
+        new (): HTMLScPaymentElement;
     };
-    interface HTMLCePaymentElement extends Components.CePayment, HTMLStencilElement {
+    interface HTMLScPaymentMethodCreateElement extends Components.ScPaymentMethodCreate, HTMLStencilElement {
     }
-    var HTMLCePaymentElement: {
-        prototype: HTMLCePaymentElement;
-        new (): HTMLCePaymentElement;
+    var HTMLScPaymentMethodCreateElement: {
+        prototype: HTMLScPaymentMethodCreateElement;
+        new (): HTMLScPaymentMethodCreateElement;
     };
-    interface HTMLCePaymentMethodCreateElement extends Components.CePaymentMethodCreate, HTMLStencilElement {
+    interface HTMLScPaymentMethodsListElement extends Components.ScPaymentMethodsList, HTMLStencilElement {
     }
-    var HTMLCePaymentMethodCreateElement: {
-        prototype: HTMLCePaymentMethodCreateElement;
-        new (): HTMLCePaymentMethodCreateElement;
+    var HTMLScPaymentMethodsListElement: {
+        prototype: HTMLScPaymentMethodsListElement;
+        new (): HTMLScPaymentMethodsListElement;
     };
-    interface HTMLCePaymentMethodsListElement extends Components.CePaymentMethodsList, HTMLStencilElement {
+    interface HTMLScPriceChoiceElement extends Components.ScPriceChoice, HTMLStencilElement {
     }
-    var HTMLCePaymentMethodsListElement: {
-        prototype: HTMLCePaymentMethodsListElement;
-        new (): HTMLCePaymentMethodsListElement;
+    var HTMLScPriceChoiceElement: {
+        prototype: HTMLScPriceChoiceElement;
+        new (): HTMLScPriceChoiceElement;
     };
-    interface HTMLCePriceChoiceElement extends Components.CePriceChoice, HTMLStencilElement {
+    interface HTMLScPriceChoicesElement extends Components.ScPriceChoices, HTMLStencilElement {
     }
-    var HTMLCePriceChoiceElement: {
-        prototype: HTMLCePriceChoiceElement;
-        new (): HTMLCePriceChoiceElement;
+    var HTMLScPriceChoicesElement: {
+        prototype: HTMLScPriceChoicesElement;
+        new (): HTMLScPriceChoicesElement;
     };
-    interface HTMLCePriceChoicesElement extends Components.CePriceChoices, HTMLStencilElement {
+    interface HTMLScPriceInputElement extends Components.ScPriceInput, HTMLStencilElement {
     }
-    var HTMLCePriceChoicesElement: {
-        prototype: HTMLCePriceChoicesElement;
-        new (): HTMLCePriceChoicesElement;
+    var HTMLScPriceInputElement: {
+        prototype: HTMLScPriceInputElement;
+        new (): HTMLScPriceInputElement;
     };
-    interface HTMLCePriceInputElement extends Components.CePriceInput, HTMLStencilElement {
+    interface HTMLScProductLineItemElement extends Components.ScProductLineItem, HTMLStencilElement {
     }
-    var HTMLCePriceInputElement: {
-        prototype: HTMLCePriceInputElement;
-        new (): HTMLCePriceInputElement;
+    var HTMLScProductLineItemElement: {
+        prototype: HTMLScProductLineItemElement;
+        new (): HTMLScProductLineItemElement;
     };
-    interface HTMLCeProductLineItemElement extends Components.CeProductLineItem, HTMLStencilElement {
+    interface HTMLScProviderElement extends Components.ScProvider, HTMLStencilElement {
     }
-    var HTMLCeProductLineItemElement: {
-        prototype: HTMLCeProductLineItemElement;
-        new (): HTMLCeProductLineItemElement;
+    var HTMLScProviderElement: {
+        prototype: HTMLScProviderElement;
+        new (): HTMLScProviderElement;
     };
-    interface HTMLCeProviderElement extends Components.CeProvider, HTMLStencilElement {
+    interface HTMLScQuantitySelectElement extends Components.ScQuantitySelect, HTMLStencilElement {
     }
-    var HTMLCeProviderElement: {
-        prototype: HTMLCeProviderElement;
-        new (): HTMLCeProviderElement;
+    var HTMLScQuantitySelectElement: {
+        prototype: HTMLScQuantitySelectElement;
+        new (): HTMLScQuantitySelectElement;
     };
-    interface HTMLCeQuantitySelectElement extends Components.CeQuantitySelect, HTMLStencilElement {
+    interface HTMLScRadioElement extends Components.ScRadio, HTMLStencilElement {
     }
-    var HTMLCeQuantitySelectElement: {
-        prototype: HTMLCeQuantitySelectElement;
-        new (): HTMLCeQuantitySelectElement;
+    var HTMLScRadioElement: {
+        prototype: HTMLScRadioElement;
+        new (): HTMLScRadioElement;
     };
-    interface HTMLCeRadioElement extends Components.CeRadio, HTMLStencilElement {
+    interface HTMLScRadioGroupElement extends Components.ScRadioGroup, HTMLStencilElement {
     }
-    var HTMLCeRadioElement: {
-        prototype: HTMLCeRadioElement;
-        new (): HTMLCeRadioElement;
+    var HTMLScRadioGroupElement: {
+        prototype: HTMLScRadioGroupElement;
+        new (): HTMLScRadioGroupElement;
     };
-    interface HTMLCeRadioGroupElement extends Components.CeRadioGroup, HTMLStencilElement {
+    interface HTMLScRegisterIconLibraryElement extends Components.ScRegisterIconLibrary, HTMLStencilElement {
     }
-    var HTMLCeRadioGroupElement: {
-        prototype: HTMLCeRadioGroupElement;
-        new (): HTMLCeRadioGroupElement;
+    var HTMLScRegisterIconLibraryElement: {
+        prototype: HTMLScRegisterIconLibraryElement;
+        new (): HTMLScRegisterIconLibraryElement;
     };
-    interface HTMLCeRegisterIconLibraryElement extends Components.CeRegisterIconLibrary, HTMLStencilElement {
+    interface HTMLScSecureNoticeElement extends Components.ScSecureNotice, HTMLStencilElement {
     }
-    var HTMLCeRegisterIconLibraryElement: {
-        prototype: HTMLCeRegisterIconLibraryElement;
-        new (): HTMLCeRegisterIconLibraryElement;
+    var HTMLScSecureNoticeElement: {
+        prototype: HTMLScSecureNoticeElement;
+        new (): HTMLScSecureNoticeElement;
     };
-    interface HTMLCeSecureNoticeElement extends Components.CeSecureNotice, HTMLStencilElement {
+    interface HTMLScSelectElement extends Components.ScSelect, HTMLStencilElement {
     }
-    var HTMLCeSecureNoticeElement: {
-        prototype: HTMLCeSecureNoticeElement;
-        new (): HTMLCeSecureNoticeElement;
+    var HTMLScSelectElement: {
+        prototype: HTMLScSelectElement;
+        new (): HTMLScSelectElement;
     };
-    interface HTMLCeSelectElement extends Components.CeSelect, HTMLStencilElement {
+    interface HTMLScSessionProviderElement extends Components.ScSessionProvider, HTMLStencilElement {
     }
-    var HTMLCeSelectElement: {
-        prototype: HTMLCeSelectElement;
-        new (): HTMLCeSelectElement;
+    var HTMLScSessionProviderElement: {
+        prototype: HTMLScSessionProviderElement;
+        new (): HTMLScSessionProviderElement;
     };
-    interface HTMLCeSessionProviderElement extends Components.CeSessionProvider, HTMLStencilElement {
+    interface HTMLScSkeletonElement extends Components.ScSkeleton, HTMLStencilElement {
     }
-    var HTMLCeSessionProviderElement: {
-        prototype: HTMLCeSessionProviderElement;
-        new (): HTMLCeSessionProviderElement;
+    var HTMLScSkeletonElement: {
+        prototype: HTMLScSkeletonElement;
+        new (): HTMLScSkeletonElement;
     };
-    interface HTMLCeSkeletonElement extends Components.CeSkeleton, HTMLStencilElement {
+    interface HTMLScSpacingElement extends Components.ScSpacing, HTMLStencilElement {
     }
-    var HTMLCeSkeletonElement: {
-        prototype: HTMLCeSkeletonElement;
-        new (): HTMLCeSkeletonElement;
+    var HTMLScSpacingElement: {
+        prototype: HTMLScSpacingElement;
+        new (): HTMLScSpacingElement;
     };
-    interface HTMLCeSpacingElement extends Components.CeSpacing, HTMLStencilElement {
+    interface HTMLScSpinnerElement extends Components.ScSpinner, HTMLStencilElement {
     }
-    var HTMLCeSpacingElement: {
-        prototype: HTMLCeSpacingElement;
-        new (): HTMLCeSpacingElement;
+    var HTMLScSpinnerElement: {
+        prototype: HTMLScSpinnerElement;
+        new (): HTMLScSpinnerElement;
     };
-    interface HTMLCeSpinnerElement extends Components.CeSpinner, HTMLStencilElement {
+    interface HTMLScStackedListElement extends Components.ScStackedList, HTMLStencilElement {
     }
-    var HTMLCeSpinnerElement: {
-        prototype: HTMLCeSpinnerElement;
-        new (): HTMLCeSpinnerElement;
+    var HTMLScStackedListElement: {
+        prototype: HTMLScStackedListElement;
+        new (): HTMLScStackedListElement;
     };
-    interface HTMLCeStackedListElement extends Components.CeStackedList, HTMLStencilElement {
+    interface HTMLScStackedListRowElement extends Components.ScStackedListRow, HTMLStencilElement {
     }
-    var HTMLCeStackedListElement: {
-        prototype: HTMLCeStackedListElement;
-        new (): HTMLCeStackedListElement;
+    var HTMLScStackedListRowElement: {
+        prototype: HTMLScStackedListRowElement;
+        new (): HTMLScStackedListRowElement;
     };
-    interface HTMLCeStackedListRowElement extends Components.CeStackedListRow, HTMLStencilElement {
+    interface HTMLScStripeElementElement extends Components.ScStripeElement, HTMLStencilElement {
     }
-    var HTMLCeStackedListRowElement: {
-        prototype: HTMLCeStackedListRowElement;
-        new (): HTMLCeStackedListRowElement;
+    var HTMLScStripeElementElement: {
+        prototype: HTMLScStripeElementElement;
+        new (): HTMLScStripeElementElement;
     };
-    interface HTMLCeStripeElementElement extends Components.CeStripeElement, HTMLStencilElement {
+    interface HTMLScStripePaymentRequestElement extends Components.ScStripePaymentRequest, HTMLStencilElement {
     }
-    var HTMLCeStripeElementElement: {
-        prototype: HTMLCeStripeElementElement;
-        new (): HTMLCeStripeElementElement;
+    var HTMLScStripePaymentRequestElement: {
+        prototype: HTMLScStripePaymentRequestElement;
+        new (): HTMLScStripePaymentRequestElement;
     };
-    interface HTMLCeStripePaymentRequestElement extends Components.CeStripePaymentRequest, HTMLStencilElement {
+    interface HTMLScSubscriptionElement extends Components.ScSubscription, HTMLStencilElement {
     }
-    var HTMLCeStripePaymentRequestElement: {
-        prototype: HTMLCeStripePaymentRequestElement;
-        new (): HTMLCeStripePaymentRequestElement;
+    var HTMLScSubscriptionElement: {
+        prototype: HTMLScSubscriptionElement;
+        new (): HTMLScSubscriptionElement;
     };
-    interface HTMLCeSubscriptionElement extends Components.CeSubscription, HTMLStencilElement {
+    interface HTMLScSubscriptionCancelElement extends Components.ScSubscriptionCancel, HTMLStencilElement {
     }
-    var HTMLCeSubscriptionElement: {
-        prototype: HTMLCeSubscriptionElement;
-        new (): HTMLCeSubscriptionElement;
+    var HTMLScSubscriptionCancelElement: {
+        prototype: HTMLScSubscriptionCancelElement;
+        new (): HTMLScSubscriptionCancelElement;
     };
-    interface HTMLCeSubscriptionCancelElement extends Components.CeSubscriptionCancel, HTMLStencilElement {
+    interface HTMLScSubscriptionDetailsElement extends Components.ScSubscriptionDetails, HTMLStencilElement {
     }
-    var HTMLCeSubscriptionCancelElement: {
-        prototype: HTMLCeSubscriptionCancelElement;
-        new (): HTMLCeSubscriptionCancelElement;
+    var HTMLScSubscriptionDetailsElement: {
+        prototype: HTMLScSubscriptionDetailsElement;
+        new (): HTMLScSubscriptionDetailsElement;
     };
-    interface HTMLCeSubscriptionDetailsElement extends Components.CeSubscriptionDetails, HTMLStencilElement {
+    interface HTMLScSubscriptionPaymentElement extends Components.ScSubscriptionPayment, HTMLStencilElement {
     }
-    var HTMLCeSubscriptionDetailsElement: {
-        prototype: HTMLCeSubscriptionDetailsElement;
-        new (): HTMLCeSubscriptionDetailsElement;
+    var HTMLScSubscriptionPaymentElement: {
+        prototype: HTMLScSubscriptionPaymentElement;
+        new (): HTMLScSubscriptionPaymentElement;
     };
-    interface HTMLCeSubscriptionPaymentElement extends Components.CeSubscriptionPayment, HTMLStencilElement {
+    interface HTMLScSubscriptionRenewElement extends Components.ScSubscriptionRenew, HTMLStencilElement {
     }
-    var HTMLCeSubscriptionPaymentElement: {
-        prototype: HTMLCeSubscriptionPaymentElement;
-        new (): HTMLCeSubscriptionPaymentElement;
+    var HTMLScSubscriptionRenewElement: {
+        prototype: HTMLScSubscriptionRenewElement;
+        new (): HTMLScSubscriptionRenewElement;
     };
-    interface HTMLCeSubscriptionRenewElement extends Components.CeSubscriptionRenew, HTMLStencilElement {
+    interface HTMLScSubscriptionStatusBadgeElement extends Components.ScSubscriptionStatusBadge, HTMLStencilElement {
     }
-    var HTMLCeSubscriptionRenewElement: {
-        prototype: HTMLCeSubscriptionRenewElement;
-        new (): HTMLCeSubscriptionRenewElement;
+    var HTMLScSubscriptionStatusBadgeElement: {
+        prototype: HTMLScSubscriptionStatusBadgeElement;
+        new (): HTMLScSubscriptionStatusBadgeElement;
     };
-    interface HTMLCeSubscriptionStatusBadgeElement extends Components.CeSubscriptionStatusBadge, HTMLStencilElement {
+    interface HTMLScSubscriptionSwitchElement extends Components.ScSubscriptionSwitch, HTMLStencilElement {
     }
-    var HTMLCeSubscriptionStatusBadgeElement: {
-        prototype: HTMLCeSubscriptionStatusBadgeElement;
-        new (): HTMLCeSubscriptionStatusBadgeElement;
+    var HTMLScSubscriptionSwitchElement: {
+        prototype: HTMLScSubscriptionSwitchElement;
+        new (): HTMLScSubscriptionSwitchElement;
     };
-    interface HTMLCeSubscriptionSwitchElement extends Components.CeSubscriptionSwitch, HTMLStencilElement {
+    interface HTMLScSubscriptionsListElement extends Components.ScSubscriptionsList, HTMLStencilElement {
     }
-    var HTMLCeSubscriptionSwitchElement: {
-        prototype: HTMLCeSubscriptionSwitchElement;
-        new (): HTMLCeSubscriptionSwitchElement;
+    var HTMLScSubscriptionsListElement: {
+        prototype: HTMLScSubscriptionsListElement;
+        new (): HTMLScSubscriptionsListElement;
     };
-    interface HTMLCeSubscriptionsListElement extends Components.CeSubscriptionsList, HTMLStencilElement {
+    interface HTMLScSwitchElement extends Components.ScSwitch, HTMLStencilElement {
     }
-    var HTMLCeSubscriptionsListElement: {
-        prototype: HTMLCeSubscriptionsListElement;
-        new (): HTMLCeSubscriptionsListElement;
+    var HTMLScSwitchElement: {
+        prototype: HTMLScSwitchElement;
+        new (): HTMLScSwitchElement;
     };
-    interface HTMLCeSwitchElement extends Components.CeSwitch, HTMLStencilElement {
+    interface HTMLScTabElement extends Components.ScTab, HTMLStencilElement {
     }
-    var HTMLCeSwitchElement: {
-        prototype: HTMLCeSwitchElement;
-        new (): HTMLCeSwitchElement;
+    var HTMLScTabElement: {
+        prototype: HTMLScTabElement;
+        new (): HTMLScTabElement;
     };
-    interface HTMLCeTabElement extends Components.CeTab, HTMLStencilElement {
+    interface HTMLScTabGroupElement extends Components.ScTabGroup, HTMLStencilElement {
     }
-    var HTMLCeTabElement: {
-        prototype: HTMLCeTabElement;
-        new (): HTMLCeTabElement;
+    var HTMLScTabGroupElement: {
+        prototype: HTMLScTabGroupElement;
+        new (): HTMLScTabGroupElement;
     };
-    interface HTMLCeTabGroupElement extends Components.CeTabGroup, HTMLStencilElement {
+    interface HTMLScTabPanelElement extends Components.ScTabPanel, HTMLStencilElement {
     }
-    var HTMLCeTabGroupElement: {
-        prototype: HTMLCeTabGroupElement;
-        new (): HTMLCeTabGroupElement;
+    var HTMLScTabPanelElement: {
+        prototype: HTMLScTabPanelElement;
+        new (): HTMLScTabPanelElement;
     };
-    interface HTMLCeTabPanelElement extends Components.CeTabPanel, HTMLStencilElement {
+    interface HTMLScTableElement extends Components.ScTable, HTMLStencilElement {
     }
-    var HTMLCeTabPanelElement: {
-        prototype: HTMLCeTabPanelElement;
-        new (): HTMLCeTabPanelElement;
+    var HTMLScTableElement: {
+        prototype: HTMLScTableElement;
+        new (): HTMLScTableElement;
     };
-    interface HTMLCeTableElement extends Components.CeTable, HTMLStencilElement {
+    interface HTMLScTableCellElement extends Components.ScTableCell, HTMLStencilElement {
     }
-    var HTMLCeTableElement: {
-        prototype: HTMLCeTableElement;
-        new (): HTMLCeTableElement;
+    var HTMLScTableCellElement: {
+        prototype: HTMLScTableCellElement;
+        new (): HTMLScTableCellElement;
     };
-    interface HTMLCeTableCellElement extends Components.CeTableCell, HTMLStencilElement {
+    interface HTMLScTableHeadElement extends Components.ScTableHead, HTMLStencilElement {
     }
-    var HTMLCeTableCellElement: {
-        prototype: HTMLCeTableCellElement;
-        new (): HTMLCeTableCellElement;
+    var HTMLScTableHeadElement: {
+        prototype: HTMLScTableHeadElement;
+        new (): HTMLScTableHeadElement;
     };
-    interface HTMLCeTableHeadElement extends Components.CeTableHead, HTMLStencilElement {
+    interface HTMLScTableRowElement extends Components.ScTableRow, HTMLStencilElement {
     }
-    var HTMLCeTableHeadElement: {
-        prototype: HTMLCeTableHeadElement;
-        new (): HTMLCeTableHeadElement;
+    var HTMLScTableRowElement: {
+        prototype: HTMLScTableRowElement;
+        new (): HTMLScTableRowElement;
     };
-    interface HTMLCeTableRowElement extends Components.CeTableRow, HTMLStencilElement {
+    interface HTMLScTagElement extends Components.ScTag, HTMLStencilElement {
     }
-    var HTMLCeTableRowElement: {
-        prototype: HTMLCeTableRowElement;
-        new (): HTMLCeTableRowElement;
+    var HTMLScTagElement: {
+        prototype: HTMLScTagElement;
+        new (): HTMLScTagElement;
     };
-    interface HTMLCeTagElement extends Components.CeTag, HTMLStencilElement {
+    interface HTMLScTaxIdInputElement extends Components.ScTaxIdInput, HTMLStencilElement {
     }
-    var HTMLCeTagElement: {
-        prototype: HTMLCeTagElement;
-        new (): HTMLCeTagElement;
+    var HTMLScTaxIdInputElement: {
+        prototype: HTMLScTaxIdInputElement;
+        new (): HTMLScTaxIdInputElement;
     };
-    interface HTMLCeTaxIdInputElement extends Components.CeTaxIdInput, HTMLStencilElement {
+    interface HTMLScTextElement extends Components.ScText, HTMLStencilElement {
     }
-    var HTMLCeTaxIdInputElement: {
-        prototype: HTMLCeTaxIdInputElement;
-        new (): HTMLCeTaxIdInputElement;
+    var HTMLScTextElement: {
+        prototype: HTMLScTextElement;
+        new (): HTMLScTextElement;
     };
-    interface HTMLCeTextElement extends Components.CeText, HTMLStencilElement {
+    interface HTMLScTooltipElement extends Components.ScTooltip, HTMLStencilElement {
     }
-    var HTMLCeTextElement: {
-        prototype: HTMLCeTextElement;
-        new (): HTMLCeTextElement;
+    var HTMLScTooltipElement: {
+        prototype: HTMLScTooltipElement;
+        new (): HTMLScTooltipElement;
     };
-    interface HTMLCeTooltipElement extends Components.CeTooltip, HTMLStencilElement {
+    interface HTMLScTotalElement extends Components.ScTotal, HTMLStencilElement {
     }
-    var HTMLCeTooltipElement: {
-        prototype: HTMLCeTooltipElement;
-        new (): HTMLCeTooltipElement;
+    var HTMLScTotalElement: {
+        prototype: HTMLScTotalElement;
+        new (): HTMLScTotalElement;
     };
-    interface HTMLCeTotalElement extends Components.CeTotal, HTMLStencilElement {
+    interface HTMLScUpcomingInvoiceElement extends Components.ScUpcomingInvoice, HTMLStencilElement {
     }
-    var HTMLCeTotalElement: {
-        prototype: HTMLCeTotalElement;
-        new (): HTMLCeTotalElement;
+    var HTMLScUpcomingInvoiceElement: {
+        prototype: HTMLScUpcomingInvoiceElement;
+        new (): HTMLScUpcomingInvoiceElement;
     };
-    interface HTMLCeUpcomingInvoiceElement extends Components.CeUpcomingInvoice, HTMLStencilElement {
+    interface HTMLScWordpressPasswordEditElement extends Components.ScWordpressPasswordEdit, HTMLStencilElement {
     }
-    var HTMLCeUpcomingInvoiceElement: {
-        prototype: HTMLCeUpcomingInvoiceElement;
-        new (): HTMLCeUpcomingInvoiceElement;
+    var HTMLScWordpressPasswordEditElement: {
+        prototype: HTMLScWordpressPasswordEditElement;
+        new (): HTMLScWordpressPasswordEditElement;
     };
-    interface HTMLCeWordpressPasswordEditElement extends Components.CeWordpressPasswordEdit, HTMLStencilElement {
+    interface HTMLScWordpressUserElement extends Components.ScWordpressUser, HTMLStencilElement {
     }
-    var HTMLCeWordpressPasswordEditElement: {
-        prototype: HTMLCeWordpressPasswordEditElement;
-        new (): HTMLCeWordpressPasswordEditElement;
+    var HTMLScWordpressUserElement: {
+        prototype: HTMLScWordpressUserElement;
+        new (): HTMLScWordpressUserElement;
     };
-    interface HTMLCeWordpressUserElement extends Components.CeWordpressUser, HTMLStencilElement {
+    interface HTMLScWordpressUserEditElement extends Components.ScWordpressUserEdit, HTMLStencilElement {
     }
-    var HTMLCeWordpressUserElement: {
-        prototype: HTMLCeWordpressUserElement;
-        new (): HTMLCeWordpressUserElement;
-    };
-    interface HTMLCeWordpressUserEditElement extends Components.CeWordpressUserEdit, HTMLStencilElement {
-    }
-    var HTMLCeWordpressUserEditElement: {
-        prototype: HTMLCeWordpressUserEditElement;
-        new (): HTMLCeWordpressUserEditElement;
+    var HTMLScWordpressUserEditElement: {
+        prototype: HTMLScWordpressUserEditElement;
+        new (): HTMLScWordpressUserEditElement;
     };
     interface HTMLElementTagNameMap {
-        "ce-address": HTMLCeAddressElement;
-        "ce-alert": HTMLCeAlertElement;
-        "ce-badge-notice": HTMLCeBadgeNoticeElement;
-        "ce-block-ui": HTMLCeBlockUiElement;
-        "ce-breadcrumb": HTMLCeBreadcrumbElement;
-        "ce-breadcrumbs": HTMLCeBreadcrumbsElement;
-        "ce-button": HTMLCeButtonElement;
-        "ce-button-group": HTMLCeButtonGroupElement;
-        "ce-card": HTMLCeCardElement;
-        "ce-cc-logo": HTMLCeCcLogoElement;
-        "ce-charges-list": HTMLCeChargesListElement;
-        "ce-checkbox": HTMLCeCheckboxElement;
-        "ce-checkout": HTMLCeCheckoutElement;
-        "ce-choice": HTMLCeChoiceElement;
-        "ce-choices": HTMLCeChoicesElement;
-        "ce-column": HTMLCeColumnElement;
-        "ce-columns": HTMLCeColumnsElement;
-        "ce-consumer": HTMLCeConsumerElement;
-        "ce-coupon-form": HTMLCeCouponFormElement;
-        "ce-customer-details": HTMLCeCustomerDetailsElement;
-        "ce-customer-edit": HTMLCeCustomerEditElement;
-        "ce-customer-email": HTMLCeCustomerEmailElement;
-        "ce-customer-name": HTMLCeCustomerNameElement;
-        "ce-dashboard-customer-details": HTMLCeDashboardCustomerDetailsElement;
-        "ce-dashboard-downloads-list": HTMLCeDashboardDownloadsListElement;
-        "ce-dashboard-module": HTMLCeDashboardModuleElement;
-        "ce-divider": HTMLCeDividerElement;
-        "ce-donation-choices": HTMLCeDonationChoicesElement;
-        "ce-downloads-list": HTMLCeDownloadsListElement;
-        "ce-dropdown": HTMLCeDropdownElement;
-        "ce-empty": HTMLCeEmptyElement;
-        "ce-express-payment": HTMLCeExpressPaymentElement;
-        "ce-flex": HTMLCeFlexElement;
-        "ce-form": HTMLCeFormElement;
-        "ce-form-components-validator": HTMLCeFormComponentsValidatorElement;
-        "ce-form-control": HTMLCeFormControlElement;
-        "ce-form-row": HTMLCeFormRowElement;
-        "ce-form-section": HTMLCeFormSectionElement;
-        "ce-format-bytes": HTMLCeFormatBytesElement;
-        "ce-format-date": HTMLCeFormatDateElement;
-        "ce-format-interval": HTMLCeFormatIntervalElement;
-        "ce-format-number": HTMLCeFormatNumberElement;
-        "ce-heading": HTMLCeHeadingElement;
-        "ce-icon": HTMLCeIconElement;
-        "ce-input": HTMLCeInputElement;
-        "ce-invoices-list": HTMLCeInvoicesListElement;
-        "ce-line-item": HTMLCeLineItemElement;
-        "ce-line-item-tax": HTMLCeLineItemTaxElement;
-        "ce-line-item-total": HTMLCeLineItemTotalElement;
-        "ce-line-items": HTMLCeLineItemsElement;
-        "ce-line-items-provider": HTMLCeLineItemsProviderElement;
-        "ce-login-form": HTMLCeLoginFormElement;
-        "ce-menu": HTMLCeMenuElement;
-        "ce-menu-divider": HTMLCeMenuDividerElement;
-        "ce-menu-item": HTMLCeMenuItemElement;
-        "ce-menu-label": HTMLCeMenuLabelElement;
-        "ce-order-confirmation": HTMLCeOrderConfirmationElement;
-        "ce-order-confirmation-customer": HTMLCeOrderConfirmationCustomerElement;
-        "ce-order-confirmation-line-items": HTMLCeOrderConfirmationLineItemsElement;
-        "ce-order-confirmation-totals": HTMLCeOrderConfirmationTotalsElement;
-        "ce-order-coupon-form": HTMLCeOrderCouponFormElement;
-        "ce-order-detail": HTMLCeOrderDetailElement;
-        "ce-order-password": HTMLCeOrderPasswordElement;
-        "ce-order-shipping-address": HTMLCeOrderShippingAddressElement;
-        "ce-order-status-badge": HTMLCeOrderStatusBadgeElement;
-        "ce-order-submit": HTMLCeOrderSubmitElement;
-        "ce-order-summary": HTMLCeOrderSummaryElement;
-        "ce-order-tax-id-input": HTMLCeOrderTaxIdInputElement;
-        "ce-orders-list": HTMLCeOrdersListElement;
-        "ce-pagination": HTMLCePaginationElement;
-        "ce-payment": HTMLCePaymentElement;
-        "ce-payment-method-create": HTMLCePaymentMethodCreateElement;
-        "ce-payment-methods-list": HTMLCePaymentMethodsListElement;
-        "ce-price-choice": HTMLCePriceChoiceElement;
-        "ce-price-choices": HTMLCePriceChoicesElement;
-        "ce-price-input": HTMLCePriceInputElement;
-        "ce-product-line-item": HTMLCeProductLineItemElement;
-        "ce-provider": HTMLCeProviderElement;
-        "ce-quantity-select": HTMLCeQuantitySelectElement;
-        "ce-radio": HTMLCeRadioElement;
-        "ce-radio-group": HTMLCeRadioGroupElement;
-        "ce-register-icon-library": HTMLCeRegisterIconLibraryElement;
-        "ce-secure-notice": HTMLCeSecureNoticeElement;
-        "ce-select": HTMLCeSelectElement;
-        "ce-session-provider": HTMLCeSessionProviderElement;
-        "ce-skeleton": HTMLCeSkeletonElement;
-        "ce-spacing": HTMLCeSpacingElement;
-        "ce-spinner": HTMLCeSpinnerElement;
-        "ce-stacked-list": HTMLCeStackedListElement;
-        "ce-stacked-list-row": HTMLCeStackedListRowElement;
-        "ce-stripe-element": HTMLCeStripeElementElement;
-        "ce-stripe-payment-request": HTMLCeStripePaymentRequestElement;
-        "ce-subscription": HTMLCeSubscriptionElement;
-        "ce-subscription-cancel": HTMLCeSubscriptionCancelElement;
-        "ce-subscription-details": HTMLCeSubscriptionDetailsElement;
-        "ce-subscription-payment": HTMLCeSubscriptionPaymentElement;
-        "ce-subscription-renew": HTMLCeSubscriptionRenewElement;
-        "ce-subscription-status-badge": HTMLCeSubscriptionStatusBadgeElement;
-        "ce-subscription-switch": HTMLCeSubscriptionSwitchElement;
-        "ce-subscriptions-list": HTMLCeSubscriptionsListElement;
-        "ce-switch": HTMLCeSwitchElement;
-        "ce-tab": HTMLCeTabElement;
-        "ce-tab-group": HTMLCeTabGroupElement;
-        "ce-tab-panel": HTMLCeTabPanelElement;
-        "ce-table": HTMLCeTableElement;
-        "ce-table-cell": HTMLCeTableCellElement;
-        "ce-table-head": HTMLCeTableHeadElement;
-        "ce-table-row": HTMLCeTableRowElement;
-        "ce-tag": HTMLCeTagElement;
-        "ce-tax-id-input": HTMLCeTaxIdInputElement;
-        "ce-text": HTMLCeTextElement;
-        "ce-tooltip": HTMLCeTooltipElement;
-        "ce-total": HTMLCeTotalElement;
-        "ce-upcoming-invoice": HTMLCeUpcomingInvoiceElement;
-        "ce-wordpress-password-edit": HTMLCeWordpressPasswordEditElement;
-        "ce-wordpress-user": HTMLCeWordpressUserElement;
-        "ce-wordpress-user-edit": HTMLCeWordpressUserEditElement;
+        "sc-address": HTMLScAddressElement;
+        "sc-alert": HTMLScAlertElement;
+        "sc-badge-notice": HTMLScBadgeNoticeElement;
+        "sc-block-ui": HTMLScBlockUiElement;
+        "sc-breadcrumb": HTMLScBreadcrumbElement;
+        "sc-breadcrumbs": HTMLScBreadcrumbsElement;
+        "sc-button": HTMLScButtonElement;
+        "sc-button-group": HTMLScButtonGroupElement;
+        "sc-card": HTMLScCardElement;
+        "sc-cc-logo": HTMLScCcLogoElement;
+        "sc-charges-list": HTMLScChargesListElement;
+        "sc-checkbox": HTMLScCheckboxElement;
+        "sc-checkout": HTMLScCheckoutElement;
+        "sc-choice": HTMLScChoiceElement;
+        "sc-choices": HTMLScChoicesElement;
+        "sc-column": HTMLScColumnElement;
+        "sc-columns": HTMLScColumnsElement;
+        "sc-consumer": HTMLScConsumerElement;
+        "sc-coupon-form": HTMLScCouponFormElement;
+        "sc-customer-details": HTMLScCustomerDetailsElement;
+        "sc-customer-edit": HTMLScCustomerEditElement;
+        "sc-customer-email": HTMLScCustomerEmailElement;
+        "sc-customer-name": HTMLScCustomerNameElement;
+        "sc-dashboard-customer-details": HTMLScDashboardCustomerDetailsElement;
+        "sc-dashboard-downloads-list": HTMLScDashboardDownloadsListElement;
+        "sc-dashboard-module": HTMLScDashboardModuleElement;
+        "sc-divider": HTMLScDividerElement;
+        "sc-donation-choices": HTMLScDonationChoicesElement;
+        "sc-downloads-list": HTMLScDownloadsListElement;
+        "sc-dropdown": HTMLScDropdownElement;
+        "sc-empty": HTMLScEmptyElement;
+        "sc-express-payment": HTMLScExpressPaymentElement;
+        "sc-flex": HTMLScFlexElement;
+        "sc-form": HTMLScFormElement;
+        "sc-form-components-validator": HTMLScFormComponentsValidatorElement;
+        "sc-form-control": HTMLScFormControlElement;
+        "sc-form-row": HTMLScFormRowElement;
+        "sc-format-bytes": HTMLScFormatBytesElement;
+        "sc-format-date": HTMLScFormatDateElement;
+        "sc-format-interval": HTMLScFormatIntervalElement;
+        "sc-format-number": HTMLScFormatNumberElement;
+        "sc-heading": HTMLScHeadingElement;
+        "sc-icon": HTMLScIconElement;
+        "sc-input": HTMLScInputElement;
+        "sc-invoices-list": HTMLScInvoicesListElement;
+        "sc-line-item": HTMLScLineItemElement;
+        "sc-line-item-tax": HTMLScLineItemTaxElement;
+        "sc-line-item-total": HTMLScLineItemTotalElement;
+        "sc-line-items": HTMLScLineItemsElement;
+        "sc-line-items-provider": HTMLScLineItemsProviderElement;
+        "sc-login-form": HTMLScLoginFormElement;
+        "sc-menu": HTMLScMenuElement;
+        "sc-menu-divider": HTMLScMenuDividerElement;
+        "sc-menu-item": HTMLScMenuItemElement;
+        "sc-menu-label": HTMLScMenuLabelElement;
+        "sc-order-confirmation": HTMLScOrderConfirmationElement;
+        "sc-order-confirmation-customer": HTMLScOrderConfirmationCustomerElement;
+        "sc-order-confirmation-line-items": HTMLScOrderConfirmationLineItemsElement;
+        "sc-order-confirmation-totals": HTMLScOrderConfirmationTotalsElement;
+        "sc-order-coupon-form": HTMLScOrderCouponFormElement;
+        "sc-order-detail": HTMLScOrderDetailElement;
+        "sc-order-password": HTMLScOrderPasswordElement;
+        "sc-order-shipping-address": HTMLScOrderShippingAddressElement;
+        "sc-order-status-badge": HTMLScOrderStatusBadgeElement;
+        "sc-order-submit": HTMLScOrderSubmitElement;
+        "sc-order-summary": HTMLScOrderSummaryElement;
+        "sc-order-tax-id-input": HTMLScOrderTaxIdInputElement;
+        "sc-orders-list": HTMLScOrdersListElement;
+        "sc-pagination": HTMLScPaginationElement;
+        "sc-payment": HTMLScPaymentElement;
+        "sc-payment-method-create": HTMLScPaymentMethodCreateElement;
+        "sc-payment-methods-list": HTMLScPaymentMethodsListElement;
+        "sc-price-choice": HTMLScPriceChoiceElement;
+        "sc-price-choices": HTMLScPriceChoicesElement;
+        "sc-price-input": HTMLScPriceInputElement;
+        "sc-product-line-item": HTMLScProductLineItemElement;
+        "sc-provider": HTMLScProviderElement;
+        "sc-quantity-select": HTMLScQuantitySelectElement;
+        "sc-radio": HTMLScRadioElement;
+        "sc-radio-group": HTMLScRadioGroupElement;
+        "sc-register-icon-library": HTMLScRegisterIconLibraryElement;
+        "sc-secure-notice": HTMLScSecureNoticeElement;
+        "sc-select": HTMLScSelectElement;
+        "sc-session-provider": HTMLScSessionProviderElement;
+        "sc-skeleton": HTMLScSkeletonElement;
+        "sc-spacing": HTMLScSpacingElement;
+        "sc-spinner": HTMLScSpinnerElement;
+        "sc-stacked-list": HTMLScStackedListElement;
+        "sc-stacked-list-row": HTMLScStackedListRowElement;
+        "sc-stripe-element": HTMLScStripeElementElement;
+        "sc-stripe-payment-request": HTMLScStripePaymentRequestElement;
+        "sc-subscription": HTMLScSubscriptionElement;
+        "sc-subscription-cancel": HTMLScSubscriptionCancelElement;
+        "sc-subscription-details": HTMLScSubscriptionDetailsElement;
+        "sc-subscription-payment": HTMLScSubscriptionPaymentElement;
+        "sc-subscription-renew": HTMLScSubscriptionRenewElement;
+        "sc-subscription-status-badge": HTMLScSubscriptionStatusBadgeElement;
+        "sc-subscription-switch": HTMLScSubscriptionSwitchElement;
+        "sc-subscriptions-list": HTMLScSubscriptionsListElement;
+        "sc-switch": HTMLScSwitchElement;
+        "sc-tab": HTMLScTabElement;
+        "sc-tab-group": HTMLScTabGroupElement;
+        "sc-tab-panel": HTMLScTabPanelElement;
+        "sc-table": HTMLScTableElement;
+        "sc-table-cell": HTMLScTableCellElement;
+        "sc-table-head": HTMLScTableHeadElement;
+        "sc-table-row": HTMLScTableRowElement;
+        "sc-tag": HTMLScTagElement;
+        "sc-tax-id-input": HTMLScTaxIdInputElement;
+        "sc-text": HTMLScTextElement;
+        "sc-tooltip": HTMLScTooltipElement;
+        "sc-total": HTMLScTotalElement;
+        "sc-upcoming-invoice": HTMLScUpcomingInvoiceElement;
+        "sc-wordpress-password-edit": HTMLScWordpressPasswordEditElement;
+        "sc-wordpress-user": HTMLScWordpressUserElement;
+        "sc-wordpress-user-edit": HTMLScWordpressUserEditElement;
     }
 }
 declare namespace LocalJSX {
-    interface CeAddress {
+    interface ScAddress {
         /**
           * The address.
          */
@@ -2928,13 +2918,13 @@ declare namespace LocalJSX {
         /**
           * Address change event.
          */
-        "onCeChangeAddress"?: (event: CustomEvent<Partial<Address>>) => void;
+        "onScChangeAddress"?: (event: CustomEvent<Partial<Address>>) => void;
         /**
           * Is this required?
          */
         "required"?: boolean;
     }
-    interface CeAlert {
+    interface ScAlert {
         /**
           * Makes the alert closable.
          */
@@ -2946,11 +2936,11 @@ declare namespace LocalJSX {
         /**
           * When alert is hidden
          */
-        "onCeHide"?: (event: CustomEvent<void>) => void;
+        "onScHide"?: (event: CustomEvent<void>) => void;
         /**
           * When alert is shown
          */
-        "onCeShow"?: (event: CustomEvent<void>) => void;
+        "onScShow"?: (event: CustomEvent<void>) => void;
         /**
           * Indicates whether or not the alert is open. You can use this in lieu of the show/hide methods.
          */
@@ -2960,17 +2950,17 @@ declare namespace LocalJSX {
          */
         "type"?: 'primary' | 'success' | 'info' | 'warning' | 'danger';
     }
-    interface CeBadgeNotice {
+    interface ScBadgeNotice {
         "label"?: string;
         "size"?: 'small' | 'medium' | 'large';
         "type"?: 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'default';
     }
-    interface CeBlockUi {
+    interface ScBlockUi {
         "spinner"?: boolean;
         "transparent"?: boolean;
         "zIndex"?: number;
     }
-    interface CeBreadcrumb {
+    interface ScBreadcrumb {
         /**
           * Optional URL to direct the user to when the breadcrumb item is activated. When set, a link will be rendered internally. When unset, a button will be rendered instead.
          */
@@ -2984,13 +2974,13 @@ declare namespace LocalJSX {
          */
         "target"?: '_blank' | '_parent' | '_self' | '_top';
     }
-    interface CeBreadcrumbs {
+    interface ScBreadcrumbs {
         /**
           * The label to use for the breadcrumb control. This will not be shown, but it will be announced by screen readers and other assistive devices.
          */
         "label"?: string;
     }
-    interface CeButton {
+    interface ScButton {
         /**
           * Draws the button in a busy state.
          */
@@ -3030,11 +3020,11 @@ declare namespace LocalJSX {
         /**
           * Emitted when the button loses focus.
          */
-        "onCeBlur"?: (event: CustomEvent<void>) => void;
+        "onScBlur"?: (event: CustomEvent<void>) => void;
         /**
           * Emitted when the button gains focus.
          */
-        "onCeFocus"?: (event: CustomEvent<void>) => void;
+        "onScFocus"?: (event: CustomEvent<void>) => void;
         /**
           * Draws an outlined button.
          */
@@ -3064,11 +3054,11 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
-    interface CeButtonGroup {
+    interface ScButtonGroup {
         "label"?: string;
         "separate"?: boolean;
     }
-    interface CeCard {
+    interface ScCard {
         /**
           * Is this card borderless.
          */
@@ -3086,10 +3076,10 @@ declare namespace LocalJSX {
          */
         "noPadding"?: boolean;
     }
-    interface CeCcLogo {
+    interface ScCcLogo {
         "brand"?: string;
     }
-    interface CeChargesList {
+    interface ScChargesList {
         "allLink"?: string;
         "heading"?: string;
         /**
@@ -3101,7 +3091,7 @@ declare namespace LocalJSX {
   };
         "showPagination"?: boolean;
     }
-    interface CeCheckbox {
+    interface ScCheckbox {
         /**
           * Draws the checkbox in a checked state.
          */
@@ -3125,15 +3115,15 @@ declare namespace LocalJSX {
         /**
           * Emitted when the control loses focus.
          */
-        "onCeBlur"?: (event: CustomEvent<void>) => void;
+        "onScBlur"?: (event: CustomEvent<void>) => void;
         /**
           * Emitted when the control's checked state changes.
          */
-        "onCeChange"?: (event: CustomEvent<void>) => void;
+        "onScChange"?: (event: CustomEvent<void>) => void;
         /**
           * Emitted when the control gains focus.
          */
-        "onCeFocus"?: (event: CustomEvent<void>) => void;
+        "onScFocus"?: (event: CustomEvent<void>) => void;
         /**
           * Makes the checkbox a required field.
          */
@@ -3143,7 +3133,7 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
-    interface CeCheckout {
+    interface ScCheckout {
         /**
           * Alignment
          */
@@ -3197,7 +3187,7 @@ declare namespace LocalJSX {
          */
         "successUrl"?: string;
     }
-    interface CeChoice {
+    interface ScChoice {
         /**
           * Draws the choice in a checked state.
          */
@@ -3217,15 +3207,15 @@ declare namespace LocalJSX {
         /**
           * Emitted when the control loses focus.
          */
-        "onCeBlur"?: (event: CustomEvent<void>) => void;
+        "onScBlur"?: (event: CustomEvent<void>) => void;
         /**
           * Emitted when the control's checked state changes.
          */
-        "onCeChange"?: (event: CustomEvent<boolean>) => void;
+        "onScChange"?: (event: CustomEvent<boolean>) => void;
         /**
           * Emitted when the control gains focus.
          */
-        "onCeFocus"?: (event: CustomEvent<void>) => void;
+        "onScFocus"?: (event: CustomEvent<void>) => void;
         /**
           * Is this required
          */
@@ -3255,7 +3245,7 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
-    interface CeChoices {
+    interface ScChoices {
         "autoWidth"?: boolean;
         /**
           * Number of columns on desktop
@@ -3290,9 +3280,9 @@ declare namespace LocalJSX {
          */
         "size"?: 'small' | 'medium' | 'large';
     }
-    interface CeColumn {
+    interface ScColumn {
     }
-    interface CeColumns {
+    interface ScColumns {
         /**
           * Is this stacked on mobile
          */
@@ -3302,11 +3292,11 @@ declare namespace LocalJSX {
          */
         "verticalAlignment"?: string;
     }
-    interface CeConsumer {
+    interface ScConsumer {
         "onMountConsumer"?: (event: CustomEvent<any>) => void;
         "renderer"?: any;
     }
-    interface CeCouponForm {
+    interface ScCouponForm {
         /**
           * Is the form calculating
          */
@@ -3342,25 +3332,25 @@ declare namespace LocalJSX {
         /**
           * When the coupon is applied
          */
-        "onCeApplyCoupon"?: (event: CustomEvent<string>) => void;
+        "onScApplyCoupon"?: (event: CustomEvent<string>) => void;
         /**
           * Is it open
          */
         "open"?: boolean;
     }
-    interface CeCustomerDetails {
+    interface ScCustomerDetails {
         "customer"?: Customer;
         "editLink"?: string;
         "error"?: string;
         "heading"?: string;
         "loading"?: boolean;
     }
-    interface CeCustomerEdit {
+    interface ScCustomerEdit {
         "customer"?: Customer;
         "heading"?: string;
         "successUrl"?: string;
     }
-    interface CeCustomerEmail {
+    interface ScCustomerEmail {
         /**
           * The input's autofocus attribute.
          */
@@ -3396,26 +3386,26 @@ declare namespace LocalJSX {
         /**
           * Emitted when the control loses focus.
          */
-        "onCeBlur"?: (event: CustomEvent<void>) => void;
+        "onScBlur"?: (event: CustomEvent<void>) => void;
         /**
           * Emitted when the control's value changes.
          */
-        "onCeChange"?: (event: CustomEvent<void>) => void;
+        "onScChange"?: (event: CustomEvent<void>) => void;
         /**
           * Emitted when the clear button is activated.
          */
-        "onCeClear"?: (event: CustomEvent<void>) => void;
+        "onScClear"?: (event: CustomEvent<void>) => void;
         /**
           * Emitted when the control gains focus.
          */
-        "onCeFocus"?: (event: CustomEvent<void>) => void;
+        "onScFocus"?: (event: CustomEvent<void>) => void;
         /**
           * Emitted when the control receives input.
          */
-        "onCeInput"?: (event: CustomEvent<void>) => void;
-        "onCeUpdateOrderState"?: (event: CustomEvent<{ email: string }>) => void;
+        "onScInput"?: (event: CustomEvent<void>) => void;
+        "onScUpdateOrderState"?: (event: CustomEvent<{ email: string }>) => void;
         /**
-          * (passed from the ce-checkout component automatically)
+          * (passed from the sc-checkout component automatically)
          */
         "order"?: Order;
         /**
@@ -3447,7 +3437,7 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
-    interface CeCustomerName {
+    interface ScCustomerName {
         /**
           * The input's autofocus attribute.
          */
@@ -3483,27 +3473,27 @@ declare namespace LocalJSX {
         /**
           * Emitted when the control loses focus.
          */
-        "onCeBlur"?: (event: CustomEvent<void>) => void;
+        "onScBlur"?: (event: CustomEvent<void>) => void;
         /**
           * Emitted when the control's value changes.
          */
-        "onCeChange"?: (event: CustomEvent<void>) => void;
+        "onScChange"?: (event: CustomEvent<void>) => void;
         /**
           * Emitted when the clear button is activated.
          */
-        "onCeClear"?: (event: CustomEvent<void>) => void;
+        "onScClear"?: (event: CustomEvent<void>) => void;
         /**
           * Emitted when the control gains focus.
          */
-        "onCeFocus"?: (event: CustomEvent<void>) => void;
+        "onScFocus"?: (event: CustomEvent<void>) => void;
         /**
           * Emitted when the control receives input.
          */
-        "onCeInput"?: (event: CustomEvent<void>) => void;
-        "onCeUpdateCustomer"?: (event: CustomEvent<{ email: string }>) => void;
-        "onCeUpdateOrderState"?: (event: CustomEvent<Partial<Order>>) => void;
+        "onScInput"?: (event: CustomEvent<void>) => void;
+        "onScUpdateCustomer"?: (event: CustomEvent<{ email: string }>) => void;
+        "onScUpdateOrderState"?: (event: CustomEvent<Partial<Order>>) => void;
         /**
-          * (passed from the ce-checkout component automatically)
+          * (passed from the sc-checkout component automatically)
          */
         "order"?: Order;
         /**
@@ -3535,11 +3525,11 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
-    interface CeDashboardCustomerDetails {
+    interface ScDashboardCustomerDetails {
         "customerId"?: string;
         "heading"?: string;
     }
-    interface CeDashboardDownloadsList {
+    interface ScDashboardDownloadsList {
         "allLink"?: string;
         "heading"?: string;
         /**
@@ -3551,13 +3541,13 @@ declare namespace LocalJSX {
   };
         "requestNonce"?: string;
     }
-    interface CeDashboardModule {
+    interface ScDashboardModule {
         "error"?: string;
         "heading"?: string;
     }
-    interface CeDivider {
+    interface ScDivider {
     }
-    interface CeDonationChoices {
+    interface ScDonationChoices {
         "busy"?: boolean;
         /**
           * The default amount to load the page with.
@@ -3578,22 +3568,22 @@ declare namespace LocalJSX {
         /**
           * Toggle line item event
          */
-        "onCeAddLineItem"?: (event: CustomEvent<LineItemData>) => void;
+        "onScAddLineItem"?: (event: CustomEvent<LineItemData>) => void;
         /**
           * Toggle line item event
          */
-        "onCeRemoveLineItem"?: (event: CustomEvent<LineItemData>) => void;
+        "onScRemoveLineItem"?: (event: CustomEvent<LineItemData>) => void;
         /**
           * Toggle line item event
          */
-        "onCeUpdateLineItem"?: (event: CustomEvent<LineItemData>) => void;
+        "onScUpdateLineItem"?: (event: CustomEvent<LineItemData>) => void;
         /**
           * The price id for the fields.
          */
         "priceId"?: string;
         "removeInvalid"?: boolean;
     }
-    interface CeDownloadsList {
+    interface ScDownloadsList {
         "allLink"?: string;
         "busy"?: boolean;
         "error"?: string;
@@ -3602,7 +3592,7 @@ declare namespace LocalJSX {
         "purchases"?: Array<Purchase>;
         "requestNonce"?: string;
     }
-    interface CeDropdown {
+    interface ScDropdown {
         "clickEl"?: HTMLElement;
         /**
           * Determines whether the dropdown should hide when a menu item is selected
@@ -3615,11 +3605,11 @@ declare namespace LocalJSX {
         /**
           * Emitted when the dropdown closes. Calling `event.preventDefault()` will prevent it from being closed.
          */
-        "onCeHide"?: (event: CustomEvent<void>) => void;
+        "onScHide"?: (event: CustomEvent<void>) => void;
         /**
           * Emitted when the dropdown opens. Calling `event.preventDefault()` will prevent it from being opened.
          */
-        "onCeShow"?: (event: CustomEvent<void>) => void;
+        "onScShow"?: (event: CustomEvent<void>) => void;
         /**
           * Indicates whether or not the dropdown is open. You can use this in lieu of the show/hide methods.
          */
@@ -3629,10 +3619,10 @@ declare namespace LocalJSX {
          */
         "position"?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
     }
-    interface CeEmpty {
+    interface ScEmpty {
         "icon"?: string;
     }
-    interface CeExpressPayment {
+    interface ScExpressPayment {
         "busy"?: boolean;
         "debug"?: boolean;
         "dividerText"?: string;
@@ -3640,12 +3630,12 @@ declare namespace LocalJSX {
         "order"?: Order;
         "processor"?: 'stripe' | 'paypal';
     }
-    interface CeFlex {
+    interface ScFlex {
         "alignItems"?: string;
         "flexDirection"?: string;
         "justifyContent"?: string;
     }
-    interface CeForm {
+    interface ScForm {
         /**
           * Prevent the form from validating inputs before submitting.
          */
@@ -3653,24 +3643,24 @@ declare namespace LocalJSX {
         /**
           * Emitted when the form is submitted. This event will not be emitted if any form control inside of it is in an invalid state, unless the form has the `novalidate` attribute. Note that there is never a need to prevent this event, since it doen't send a GET or POST request like native forms. To "prevent" submission, use a conditional around the XHR request you use to submit the form's data with.
          */
-        "onCeFormChange"?: (event: CustomEvent<Object>) => void;
+        "onScFormChange"?: (event: CustomEvent<Object>) => void;
         /**
           * Backwards compat.
          */
-        "onCeFormSubmit"?: (event: CustomEvent<void>) => void;
+        "onScFormSubmit"?: (event: CustomEvent<void>) => void;
         /**
           * Emitted when the form is submitted. This event will not be emitted if any form control inside of it is in an invalid state, unless the form has the `novalidate` attribute. Note that there is never a need to prevent this event, since it doen't send a GET or POST request like native forms. To "prevent" submission, use a conditional around the XHR request you use to submit the form's data with.
          */
-        "onCeSubmit"?: (event: CustomEvent<void>) => void;
+        "onScSubmit"?: (event: CustomEvent<void>) => void;
     }
-    interface CeFormComponentsValidator {
+    interface ScFormComponentsValidator {
         "disabled"?: boolean;
         /**
           * The order
          */
         "order"?: Order;
     }
-    interface CeFormControl {
+    interface ScFormControl {
         /**
           * Store the error message
          */
@@ -3716,12 +3706,9 @@ declare namespace LocalJSX {
          */
         "size"?: 'small' | 'medium' | 'large';
     }
-    interface CeFormRow {
+    interface ScFormRow {
     }
-    interface CeFormSection {
-        "label"?: string;
-    }
-    interface CeFormatBytes {
+    interface ScFormatBytes {
         /**
           * Determines how to display the result, e.g. "100 bytes", "100 b", or "100b".
          */
@@ -3739,7 +3726,7 @@ declare namespace LocalJSX {
          */
         "value"?: number;
     }
-    interface CeFormatDate {
+    interface ScFormatDate {
         /**
           * The date/time to format. If not set, the current date and time will be used.
          */
@@ -3794,7 +3781,7 @@ declare namespace LocalJSX {
          */
         "year"?: 'numeric' | '2-digit';
     }
-    interface CeFormatInterval {
+    interface ScFormatInterval {
         "every"?: string;
         "fallback"?: string;
         "interval"?: string;
@@ -3803,7 +3790,7 @@ declare namespace LocalJSX {
          */
         "value"?: number;
     }
-    interface CeFormatNumber {
+    interface ScFormatNumber {
         /**
           * The currency to use when formatting. Must be an ISO 4217 currency code such as `USD` or `EUR`.
          */
@@ -3850,10 +3837,10 @@ declare namespace LocalJSX {
          */
         "value"?: number;
     }
-    interface CeHeading {
+    interface ScHeading {
         "size"?: 'small' | 'medium' | 'large';
     }
-    interface CeIcon {
+    interface ScIcon {
         /**
           * An alternative description to use for accessibility. If omitted, the name or src will be used to generate it.
          */
@@ -3869,17 +3856,17 @@ declare namespace LocalJSX {
         /**
           * Emitted when the icon failed to load.
          */
-        "onCeError"?: (event: CustomEvent<{ status: number }>) => void;
+        "onScError"?: (event: CustomEvent<{ status: number }>) => void;
         /**
           * Emitted when the icon has loaded.
          */
-        "onCeLoad"?: (event: CustomEvent<void>) => void;
+        "onScLoad"?: (event: CustomEvent<void>) => void;
         /**
           * An external URL of an SVG file.
          */
         "src"?: string;
     }
-    interface CeInput {
+    interface ScInput {
         /**
           * The input's autocomplete attribute.
          */
@@ -3947,23 +3934,23 @@ declare namespace LocalJSX {
         /**
           * Emitted when the control loses focus.
          */
-        "onCeBlur"?: (event: CustomEvent<void>) => void;
+        "onScBlur"?: (event: CustomEvent<void>) => void;
         /**
           * Emitted when the control's value changes.
          */
-        "onCeChange"?: (event: CustomEvent<void>) => void;
+        "onScChange"?: (event: CustomEvent<void>) => void;
         /**
           * Emitted when the clear button is activated.
          */
-        "onCeClear"?: (event: CustomEvent<void>) => void;
+        "onScClear"?: (event: CustomEvent<void>) => void;
         /**
           * Emitted when the control gains focus.
          */
-        "onCeFocus"?: (event: CustomEvent<void>) => void;
+        "onScFocus"?: (event: CustomEvent<void>) => void;
         /**
           * Emitted when the control receives input.
          */
-        "onCeInput"?: (event: CustomEvent<void>) => void;
+        "onScInput"?: (event: CustomEvent<void>) => void;
         /**
           * A pattern to validate input against.
          */
@@ -4018,7 +4005,7 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
-    interface CeInvoicesList {
+    interface ScInvoicesList {
         "allLink"?: string;
         "heading"?: string;
         /**
@@ -4029,7 +4016,7 @@ declare namespace LocalJSX {
     per_page: number;
   };
     }
-    interface CeLineItem {
+    interface ScLineItem {
         /**
           * Currency symbol
          */
@@ -4039,51 +4026,51 @@ declare namespace LocalJSX {
          */
         "price"?: string;
     }
-    interface CeLineItemTax {
+    interface ScLineItemTax {
         "loading"?: boolean;
         "order"?: Order;
     }
-    interface CeLineItemTotal {
+    interface ScLineItemTotal {
         "loading"?: boolean;
         "order"?: Order;
         "showCurrency"?: boolean;
         "size"?: 'large' | 'medium';
         "total"?: 'total' | 'subtotal';
     }
-    interface CeLineItems {
+    interface ScLineItems {
         "editable"?: boolean;
         "loading"?: boolean;
         "lockedChoices"?: Array<PriceChoice>;
         /**
           * Remove the line item.
          */
-        "onCeRemoveLineItem"?: (event: CustomEvent<LineItemData>) => void;
+        "onScRemoveLineItem"?: (event: CustomEvent<LineItemData>) => void;
         /**
           * Update the line item.
          */
-        "onCeUpdateLineItem"?: (event: CustomEvent<LineItemData>) => void;
+        "onScUpdateLineItem"?: (event: CustomEvent<LineItemData>) => void;
         "order"?: Order;
         "prices"?: Prices;
         "removable"?: boolean;
     }
-    interface CeLineItemsProvider {
+    interface ScLineItemsProvider {
         /**
           * Update line items event
          */
-        "onCeUpdateLineItems"?: (event: CustomEvent<Array<LineItemData>>) => void;
+        "onScUpdateLineItems"?: (event: CustomEvent<Array<LineItemData>>) => void;
         /**
           * Order Object
          */
         "order"?: Order;
     }
-    interface CeLoginForm {
+    interface ScLoginForm {
     }
-    interface CeMenu {
-        "onCeSelect"?: (event: CustomEvent<{ item: HTMLCeMenuItemElement }>) => void;
+    interface ScMenu {
+        "onScSelect"?: (event: CustomEvent<{ item: HTMLScMenuItemElement }>) => void;
     }
-    interface CeMenuDivider {
+    interface ScMenuDivider {
     }
-    interface CeMenuItem {
+    interface ScMenuItem {
         /**
           * Draws the item in a checked state.
          */
@@ -4101,12 +4088,12 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
-    interface CeMenuLabel {
+    interface ScMenuLabel {
     }
-    interface CeOrderConfirmation {
+    interface ScOrderConfirmation {
         "order"?: Order;
     }
-    interface CeOrderConfirmationCustomer {
+    interface ScOrderConfirmationCustomer {
         /**
           * The customer
          */
@@ -4128,23 +4115,23 @@ declare namespace LocalJSX {
          */
         "order"?: Order;
     }
-    interface CeOrderConfirmationLineItems {
+    interface ScOrderConfirmationLineItems {
         "loading"?: boolean;
         "order"?: Order;
     }
-    interface CeOrderConfirmationTotals {
+    interface ScOrderConfirmationTotals {
         "order"?: Order;
     }
-    interface CeOrderCouponForm {
+    interface ScOrderCouponForm {
         "busy"?: boolean;
         "error"?: any;
         "forceOpen"?: boolean;
         "label"?: string;
         "loading"?: boolean;
-        "onCeApplyCoupon"?: (event: CustomEvent<string>) => void;
+        "onScApplyCoupon"?: (event: CustomEvent<string>) => void;
         "order"?: Order;
     }
-    interface CeOrderDetail {
+    interface ScOrderDetail {
         "fallback"?: string;
         "label"?: string;
         "loading"?: boolean;
@@ -4152,7 +4139,7 @@ declare namespace LocalJSX {
         "order"?: Order;
         "value"?: string;
     }
-    interface CeOrderPassword {
+    interface ScOrderPassword {
         /**
           * The input's autofocus attribute.
          */
@@ -4199,7 +4186,7 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
-    interface CeOrderShippingAddress {
+    interface ScOrderShippingAddress {
         /**
           * Holds the customer's shipping address
          */
@@ -4215,7 +4202,7 @@ declare namespace LocalJSX {
         /**
           * Make a request to update the order.
          */
-        "onCeUpdateOrder"?: (event: CustomEvent<Partial<Order>>) => void;
+        "onScUpdateOrder"?: (event: CustomEvent<Partial<Order>>) => void;
         /**
           * Is this required (defaults to true)
          */
@@ -4229,7 +4216,7 @@ declare namespace LocalJSX {
          */
         "taxStatus"?: TaxStatus;
     }
-    interface CeOrderStatusBadge {
+    interface ScOrderStatusBadge {
         /**
           * Makes the tag clearable.
          */
@@ -4247,7 +4234,7 @@ declare namespace LocalJSX {
          */
         "status"?: OrderStatus;
     }
-    interface CeOrderSubmit {
+    interface ScOrderSubmit {
         /**
           * Is the order busy
          */
@@ -4281,18 +4268,18 @@ declare namespace LocalJSX {
          */
         "type"?: 'default' | 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text' | 'link';
     }
-    interface CeOrderSummary {
+    interface ScOrderSummary {
         "collapsed"?: boolean;
         "collapsible"?: boolean;
         "empty"?: boolean;
         "loading"?: boolean;
         "order"?: Order;
     }
-    interface CeOrderTaxIdInput {
+    interface ScOrderTaxIdInput {
         /**
           * Make a request to update the order.
          */
-        "onCeUpdateOrder"?: (event: CustomEvent<Partial<Order>>) => void;
+        "onScUpdateOrder"?: (event: CustomEvent<Partial<Order>>) => void;
         /**
           * The order
          */
@@ -4302,7 +4289,7 @@ declare namespace LocalJSX {
          */
         "show"?: boolean;
     }
-    interface CeOrdersList {
+    interface ScOrdersList {
         "allLink"?: string;
         "heading"?: string;
         /**
@@ -4313,16 +4300,16 @@ declare namespace LocalJSX {
     per_page: number;
   };
     }
-    interface CePagination {
-        "onCeNextPage"?: (event: CustomEvent<void>) => void;
-        "onCePrevPage"?: (event: CustomEvent<void>) => void;
+    interface ScPagination {
+        "onScNextPage"?: (event: CustomEvent<void>) => void;
+        "onScPrevPage"?: (event: CustomEvent<void>) => void;
         "page"?: number;
         "perPage"?: number;
         "total"?: number;
         "totalPages"?: number;
         "totalShowing"?: number;
     }
-    interface CePayment {
+    interface ScPayment {
         /**
           * The input's label.
          */
@@ -4336,7 +4323,7 @@ declare namespace LocalJSX {
          */
         "mode"?: 'test' | 'live';
         /**
-          * Checkout Session from ce-checkout.
+          * Checkout Session from sc-checkout.
          */
         "order"?: Order;
         /**
@@ -4352,19 +4339,19 @@ declare namespace LocalJSX {
          */
         "secureNotice"?: string;
     }
-    interface CePaymentMethodCreate {
+    interface ScPaymentMethodCreate {
         "clientSecret"?: string;
         "error"?: string;
         "successUrl"?: string;
     }
-    interface CePaymentMethodsList {
+    interface ScPaymentMethodsList {
         "heading"?: string;
         /**
           * Query to fetch paymentMethods
          */
         "query"?: object;
     }
-    interface CePriceChoice {
+    interface ScPriceChoice {
         /**
           * Is this checked by default
          */
@@ -4392,15 +4379,15 @@ declare namespace LocalJSX {
         /**
           * Add entities
          */
-        "onCeAddEntities"?: (event: CustomEvent<any>) => void;
+        "onScAddEntities"?: (event: CustomEvent<any>) => void;
         /**
           * Toggle line item event
          */
-        "onCeRemoveLineItem"?: (event: CustomEvent<LineItemData>) => void;
+        "onScRemoveLineItem"?: (event: CustomEvent<LineItemData>) => void;
         /**
           * Toggle line item event
          */
-        "onCeUpdateLineItem"?: (event: CustomEvent<LineItemData>) => void;
+        "onScUpdateLineItem"?: (event: CustomEvent<LineItemData>) => void;
         /**
           * Session
          */
@@ -4442,7 +4429,7 @@ declare namespace LocalJSX {
          */
         "type"?: 'checkbox' | 'radio';
     }
-    interface CePriceChoices {
+    interface ScPriceChoices {
         /**
           * Number of columns
          */
@@ -4454,17 +4441,17 @@ declare namespace LocalJSX {
         /**
           * Toggle line item event
          */
-        "onCeRemoveLineItem"?: (event: CustomEvent<LineItemData>) => void;
+        "onScRemoveLineItem"?: (event: CustomEvent<LineItemData>) => void;
         /**
           * Toggle line item event
          */
-        "onCeUpdateLineItem"?: (event: CustomEvent<LineItemData>) => void;
+        "onScUpdateLineItem"?: (event: CustomEvent<LineItemData>) => void;
         /**
           * Required by default
          */
         "required"?: boolean;
     }
-    interface CePriceInput {
+    interface ScPriceInput {
         /**
           * The input's autofocus attribute.
          */
@@ -4520,7 +4507,7 @@ declare namespace LocalJSX {
         /**
           * Emitted when the control's value changes.
          */
-        "onCeChange"?: (event: CustomEvent<void>) => void;
+        "onScChange"?: (event: CustomEvent<void>) => void;
         /**
           * Draws a pill-style input with rounded edges.
          */
@@ -4554,7 +4541,7 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
-    interface CeProductLineItem {
+    interface ScProductLineItem {
         /**
           * Product monetary amount
          */
@@ -4582,11 +4569,11 @@ declare namespace LocalJSX {
         /**
           * Emitted when the quantity changes.
          */
-        "onCeRemove"?: (event: CustomEvent<void>) => void;
+        "onScRemove"?: (event: CustomEvent<void>) => void;
         /**
           * Emitted when the quantity changes.
          */
-        "onCeUpdateQuantity"?: (event: CustomEvent<number>) => void;
+        "onScUpdateQuantity"?: (event: CustomEvent<number>) => void;
         /**
           * Quantity
          */
@@ -4600,18 +4587,18 @@ declare namespace LocalJSX {
          */
         "trialDurationDays"?: number;
     }
-    interface CeProvider {
+    interface ScProvider {
         "STENCIL_CONTEXT"?: { [key: string]: any };
         "onMountConsumer"?: (event: CustomEvent<any>) => void;
     }
-    interface CeQuantitySelect {
+    interface ScQuantitySelect {
         "clickEl"?: HTMLElement;
         "max"?: number;
         "min"?: number;
-        "onCeChange"?: (event: CustomEvent<number>) => void;
+        "onScChange"?: (event: CustomEvent<number>) => void;
         "quantity"?: number;
     }
-    interface CeRadio {
+    interface ScRadio {
         /**
           * Draws the radio in a checked state.
          */
@@ -4631,15 +4618,15 @@ declare namespace LocalJSX {
         /**
           * Emitted when the control loses focus.
          */
-        "onCeBlur"?: (event: CustomEvent<void>) => void;
+        "onScBlur"?: (event: CustomEvent<void>) => void;
         /**
           * Emitted when the control's checked state changes.
          */
-        "onCeChange"?: (event: CustomEvent<void>) => void;
+        "onScChange"?: (event: CustomEvent<void>) => void;
         /**
           * Emitted when the control gains focus.
          */
-        "onCeFocus"?: (event: CustomEvent<void>) => void;
+        "onScFocus"?: (event: CustomEvent<void>) => void;
         /**
           * Is this required
          */
@@ -4649,17 +4636,17 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
-    interface CeRadioGroup {
+    interface ScRadioGroup {
         /**
           * The radio group label. Required for proper accessibility.
          */
         "label"?: string;
     }
-    interface CeRegisterIconLibrary {
+    interface ScRegisterIconLibrary {
     }
-    interface CeSecureNotice {
+    interface ScSecureNotice {
     }
-    interface CeSelect {
+    interface ScSelect {
         /**
           * The input's autocomplete attribute.
          */
@@ -4689,27 +4676,27 @@ declare namespace LocalJSX {
         /**
           * Emitted when the control loses focus.
          */
-        "onCeBlur"?: (event: CustomEvent<void>) => void;
+        "onScBlur"?: (event: CustomEvent<void>) => void;
         /**
           * Emitted when the control's value changes.
          */
-        "onCeChange"?: (event: CustomEvent<void>) => void;
+        "onScChange"?: (event: CustomEvent<void>) => void;
         /**
           * Emitted whent the components search query changes
          */
-        "onCeClose"?: (event: CustomEvent<string>) => void;
+        "onScClose"?: (event: CustomEvent<string>) => void;
         /**
           * Emitted when the control gains focus.
          */
-        "onCeFocus"?: (event: CustomEvent<void>) => void;
+        "onScFocus"?: (event: CustomEvent<void>) => void;
         /**
           * Emitted whent the components search query changes
          */
-        "onCeOpen"?: (event: CustomEvent<string>) => void;
+        "onScOpen"?: (event: CustomEvent<string>) => void;
         /**
           * Emitted whent the components search query changes
          */
-        "onCeSearch"?: (event: CustomEvent<string>) => void;
+        "onScSearch"?: (event: CustomEvent<string>) => void;
         /**
           * Is this open
          */
@@ -4743,7 +4730,7 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
-    interface CeSessionProvider {
+    interface ScSessionProvider {
         /**
           * Currency Code
          */
@@ -4767,23 +4754,23 @@ declare namespace LocalJSX {
         /**
           * Update line items event
          */
-        "onCeError"?: (event: CustomEvent<{ message: string; code?: string; data?: any; additional_errors?: any } | {}>) => void;
+        "onScError"?: (event: CustomEvent<{ message: string; code?: string; data?: any; additional_errors?: any } | {}>) => void;
         /**
           * Paid event
          */
-        "onCePaid"?: (event: CustomEvent<void>) => void;
+        "onScPaid"?: (event: CustomEvent<void>) => void;
         /**
           * Set the state
          */
-        "onCeSetState"?: (event: CustomEvent<string>) => void;
+        "onScSetState"?: (event: CustomEvent<string>) => void;
         /**
           * Update line items event
          */
-        "onCeUpdateDraftState"?: (event: CustomEvent<Order>) => void;
+        "onScUpdateDraftState"?: (event: CustomEvent<Order>) => void;
         /**
           * Update line items event
          */
-        "onCeUpdateOrderState"?: (event: CustomEvent<Order>) => void;
+        "onScUpdateOrderState"?: (event: CustomEvent<Order>) => void;
         /**
           * Order Object
          */
@@ -4801,23 +4788,23 @@ declare namespace LocalJSX {
          */
         "setState"?: (state: string) => void;
     }
-    interface CeSkeleton {
+    interface ScSkeleton {
         /**
           * Animation effect
          */
         "effect"?: 'pulse' | 'sheen' | 'none';
     }
-    interface CeSpacing {
+    interface ScSpacing {
     }
-    interface CeSpinner {
+    interface ScSpinner {
     }
-    interface CeStackedList {
+    interface ScStackedList {
     }
-    interface CeStackedListRow {
+    interface ScStackedListRow {
         "href"?: string;
         "mobileSize"?: number;
     }
-    interface CeStripeElement {
+    interface ScStripeElement {
         /**
           * Whether this field is disabled
          */
@@ -4834,8 +4821,8 @@ declare namespace LocalJSX {
           * Mode for the payment
          */
         "mode"?: 'live' | 'test';
-        "onCePaid"?: (event: CustomEvent<void>) => void;
-        "onCePayError"?: (event: CustomEvent<any>) => void;
+        "onScPaid"?: (event: CustomEvent<void>) => void;
+        "onScPayError"?: (event: CustomEvent<any>) => void;
         /**
           * The checkout session object for finalizing intents
          */
@@ -4861,7 +4848,7 @@ declare namespace LocalJSX {
          */
         "stripeAccountId"?: string;
     }
-    interface CeStripePaymentRequest {
+    interface ScStripePaymentRequest {
         /**
           * Amount
          */
@@ -4887,12 +4874,12 @@ declare namespace LocalJSX {
           * Label
          */
         "label"?: string;
-        "onCeFormSubmit"?: (event: CustomEvent<any>) => void;
-        "onCePaid"?: (event: CustomEvent<void>) => void;
-        "onCePayError"?: (event: CustomEvent<any>) => void;
-        "onCePaymentRequestLoaded"?: (event: CustomEvent<boolean>) => void;
-        "onCeSetState"?: (event: CustomEvent<string>) => void;
-        "onCeUpdateOrderState"?: (event: CustomEvent<any>) => void;
+        "onScFormSubmit"?: (event: CustomEvent<any>) => void;
+        "onScPaid"?: (event: CustomEvent<void>) => void;
+        "onScPayError"?: (event: CustomEvent<any>) => void;
+        "onScPaymentRequestLoaded"?: (event: CustomEvent<boolean>) => void;
+        "onScSetState"?: (event: CustomEvent<string>) => void;
+        "onScUpdateOrderState"?: (event: CustomEvent<any>) => void;
         /**
           * Checkout Session
          */
@@ -4912,7 +4899,7 @@ declare namespace LocalJSX {
          */
         "theme"?: string;
     }
-    interface CeSubscription {
+    interface ScSubscription {
         "heading"?: string;
         "query"?: object;
         "subscription"?: Subscription;
@@ -4921,19 +4908,19 @@ declare namespace LocalJSX {
          */
         "subscriptionId"?: string;
     }
-    interface CeSubscriptionCancel {
+    interface ScSubscriptionCancel {
         "backUrl"?: string;
         "heading"?: string;
         "subscription"?: Subscription;
         "subscriptionId"?: string;
         "successUrl"?: string;
     }
-    interface CeSubscriptionDetails {
+    interface ScSubscriptionDetails {
         "hideRenewalText"?: boolean;
         "pendingPrice"?: Price;
         "subscription"?: Subscription;
     }
-    interface CeSubscriptionPayment {
+    interface ScSubscriptionPayment {
         "backUrl"?: string;
         "customerIds"?: Array<string>;
         "paymentMethods"?: Array<PaymentMethod>;
@@ -4941,14 +4928,14 @@ declare namespace LocalJSX {
         "subscriptionId"?: string;
         "successUrl"?: string;
     }
-    interface CeSubscriptionRenew {
+    interface ScSubscriptionRenew {
         "backUrl"?: string;
         "heading"?: string;
         "subscription"?: Subscription;
         "subscriptionId"?: string;
         "successUrl"?: string;
     }
-    interface CeSubscriptionStatusBadge {
+    interface ScSubscriptionStatusBadge {
         /**
           * Makes the tag clearable.
          */
@@ -4970,7 +4957,7 @@ declare namespace LocalJSX {
          */
         "subscription"?: Subscription;
     }
-    interface CeSubscriptionSwitch {
+    interface ScSubscriptionSwitch {
         "heading"?: string;
         "productGroupId"?: ProductGroup;
         /**
@@ -4979,7 +4966,7 @@ declare namespace LocalJSX {
         "query"?: object;
         "subscription"?: Subscription;
     }
-    interface CeSubscriptionsList {
+    interface ScSubscriptionsList {
         "allLink"?: string;
         "cancelBehavior"?: 'period_end' | 'immediate';
         "heading"?: string;
@@ -4991,7 +4978,7 @@ declare namespace LocalJSX {
     per_page: number;
   };
     }
-    interface CeSwitch {
+    interface ScSwitch {
         /**
           * Draws the switch in a checked state.
          */
@@ -5011,15 +4998,15 @@ declare namespace LocalJSX {
         /**
           * Emitted when the control loses focus.
          */
-        "onCeBlur"?: (event: CustomEvent<void>) => void;
+        "onScBlur"?: (event: CustomEvent<void>) => void;
         /**
           * Emitted when the control's checked state changes.
          */
-        "onCeChange"?: (event: CustomEvent<void>) => void;
+        "onScChange"?: (event: CustomEvent<void>) => void;
         /**
           * Emitted when the control gains focus.
          */
-        "onCeFocus"?: (event: CustomEvent<void>) => void;
+        "onScFocus"?: (event: CustomEvent<void>) => void;
         /**
           * Makes the switch a required field.
          */
@@ -5029,7 +5016,7 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
-    interface CeTab {
+    interface ScTab {
         /**
           * Draws the tab in an active state.
          */
@@ -5043,17 +5030,17 @@ declare namespace LocalJSX {
         /**
           * Close event
          */
-        "onCeClose"?: (event: CustomEvent<void>) => void;
+        "onScClose"?: (event: CustomEvent<void>) => void;
         /**
           * The name of the tab panel the tab will control. The panel must be located in the same tab group.
          */
         "panel"?: string;
     }
-    interface CeTabGroup {
-        "onCeTabHide"?: (event: CustomEvent<string>) => void;
-        "onCeTabShow"?: (event: CustomEvent<string>) => void;
+    interface ScTabGroup {
+        "onScTabHide"?: (event: CustomEvent<string>) => void;
+        "onScTabShow"?: (event: CustomEvent<string>) => void;
     }
-    interface CeTabPanel {
+    interface ScTabPanel {
         /**
           * When true, the tab panel will be shown.
          */
@@ -5063,21 +5050,21 @@ declare namespace LocalJSX {
          */
         "name"?: string;
     }
-    interface CeTable {
+    interface ScTable {
     }
-    interface CeTableCell {
+    interface ScTableCell {
     }
-    interface CeTableHead {
+    interface ScTableHead {
     }
-    interface CeTableRow {
+    interface ScTableRow {
         "href"?: string;
     }
-    interface CeTag {
+    interface ScTag {
         /**
           * Makes the tag clearable.
          */
         "clearable"?: boolean;
-        "onCeClear"?: (event: CustomEvent<CeTag>) => void;
+        "onScClear"?: (event: CustomEvent<ScTag>) => void;
         /**
           * Draws a pill-style tag with rounded edges.
          */
@@ -5091,7 +5078,7 @@ declare namespace LocalJSX {
          */
         "type"?: 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'default';
     }
-    interface CeTaxIdInput {
+    interface ScTaxIdInput {
         /**
           * Label for the field.
          */
@@ -5103,11 +5090,11 @@ declare namespace LocalJSX {
         /**
           * Make a request to update the order.
          */
-        "onCeChange"?: (event: CustomEvent<{ number: string; number_type: string }>) => void;
+        "onScChange"?: (event: CustomEvent<{ number: string; number_type: string }>) => void;
         /**
           * Set the checkout state.
          */
-        "onCeSetState"?: (event: CustomEvent<string>) => void;
+        "onScSetState"?: (event: CustomEvent<string>) => void;
         /**
           * Force show the field.
          */
@@ -5117,11 +5104,11 @@ declare namespace LocalJSX {
          */
         "type"?: string;
     }
-    interface CeText {
+    interface ScText {
         "tag"?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p';
         "truncate"?: boolean;
     }
-    interface CeTooltip {
+    interface ScTooltip {
         /**
           * Freeze open or closed.
          */
@@ -5147,11 +5134,11 @@ declare namespace LocalJSX {
          */
         "width"?: string;
     }
-    interface CeTotal {
+    interface ScTotal {
         "order"?: Order;
         "total"?: 'total' | 'subtotal' | 'amount_due';
     }
-    interface CeUpcomingInvoice {
+    interface ScUpcomingInvoice {
         "discount"?: {
     promotion_code?: string;
     coupon?: string;
@@ -5163,261 +5150,259 @@ declare namespace LocalJSX {
         "subscriptionId"?: string;
         "successUrl"?: string;
     }
-    interface CeWordpressPasswordEdit {
+    interface ScWordpressPasswordEdit {
         "heading"?: string;
         "successUrl"?: string;
         "user"?: WordPressUser;
     }
-    interface CeWordpressUser {
+    interface ScWordpressUser {
         "heading"?: string;
         "user"?: WordPressUser;
     }
-    interface CeWordpressUserEdit {
+    interface ScWordpressUserEdit {
         "heading"?: string;
         "successUrl"?: string;
         "user"?: WordPressUser;
     }
     interface IntrinsicElements {
-        "ce-address": CeAddress;
-        "ce-alert": CeAlert;
-        "ce-badge-notice": CeBadgeNotice;
-        "ce-block-ui": CeBlockUi;
-        "ce-breadcrumb": CeBreadcrumb;
-        "ce-breadcrumbs": CeBreadcrumbs;
-        "ce-button": CeButton;
-        "ce-button-group": CeButtonGroup;
-        "ce-card": CeCard;
-        "ce-cc-logo": CeCcLogo;
-        "ce-charges-list": CeChargesList;
-        "ce-checkbox": CeCheckbox;
-        "ce-checkout": CeCheckout;
-        "ce-choice": CeChoice;
-        "ce-choices": CeChoices;
-        "ce-column": CeColumn;
-        "ce-columns": CeColumns;
-        "ce-consumer": CeConsumer;
-        "ce-coupon-form": CeCouponForm;
-        "ce-customer-details": CeCustomerDetails;
-        "ce-customer-edit": CeCustomerEdit;
-        "ce-customer-email": CeCustomerEmail;
-        "ce-customer-name": CeCustomerName;
-        "ce-dashboard-customer-details": CeDashboardCustomerDetails;
-        "ce-dashboard-downloads-list": CeDashboardDownloadsList;
-        "ce-dashboard-module": CeDashboardModule;
-        "ce-divider": CeDivider;
-        "ce-donation-choices": CeDonationChoices;
-        "ce-downloads-list": CeDownloadsList;
-        "ce-dropdown": CeDropdown;
-        "ce-empty": CeEmpty;
-        "ce-express-payment": CeExpressPayment;
-        "ce-flex": CeFlex;
-        "ce-form": CeForm;
-        "ce-form-components-validator": CeFormComponentsValidator;
-        "ce-form-control": CeFormControl;
-        "ce-form-row": CeFormRow;
-        "ce-form-section": CeFormSection;
-        "ce-format-bytes": CeFormatBytes;
-        "ce-format-date": CeFormatDate;
-        "ce-format-interval": CeFormatInterval;
-        "ce-format-number": CeFormatNumber;
-        "ce-heading": CeHeading;
-        "ce-icon": CeIcon;
-        "ce-input": CeInput;
-        "ce-invoices-list": CeInvoicesList;
-        "ce-line-item": CeLineItem;
-        "ce-line-item-tax": CeLineItemTax;
-        "ce-line-item-total": CeLineItemTotal;
-        "ce-line-items": CeLineItems;
-        "ce-line-items-provider": CeLineItemsProvider;
-        "ce-login-form": CeLoginForm;
-        "ce-menu": CeMenu;
-        "ce-menu-divider": CeMenuDivider;
-        "ce-menu-item": CeMenuItem;
-        "ce-menu-label": CeMenuLabel;
-        "ce-order-confirmation": CeOrderConfirmation;
-        "ce-order-confirmation-customer": CeOrderConfirmationCustomer;
-        "ce-order-confirmation-line-items": CeOrderConfirmationLineItems;
-        "ce-order-confirmation-totals": CeOrderConfirmationTotals;
-        "ce-order-coupon-form": CeOrderCouponForm;
-        "ce-order-detail": CeOrderDetail;
-        "ce-order-password": CeOrderPassword;
-        "ce-order-shipping-address": CeOrderShippingAddress;
-        "ce-order-status-badge": CeOrderStatusBadge;
-        "ce-order-submit": CeOrderSubmit;
-        "ce-order-summary": CeOrderSummary;
-        "ce-order-tax-id-input": CeOrderTaxIdInput;
-        "ce-orders-list": CeOrdersList;
-        "ce-pagination": CePagination;
-        "ce-payment": CePayment;
-        "ce-payment-method-create": CePaymentMethodCreate;
-        "ce-payment-methods-list": CePaymentMethodsList;
-        "ce-price-choice": CePriceChoice;
-        "ce-price-choices": CePriceChoices;
-        "ce-price-input": CePriceInput;
-        "ce-product-line-item": CeProductLineItem;
-        "ce-provider": CeProvider;
-        "ce-quantity-select": CeQuantitySelect;
-        "ce-radio": CeRadio;
-        "ce-radio-group": CeRadioGroup;
-        "ce-register-icon-library": CeRegisterIconLibrary;
-        "ce-secure-notice": CeSecureNotice;
-        "ce-select": CeSelect;
-        "ce-session-provider": CeSessionProvider;
-        "ce-skeleton": CeSkeleton;
-        "ce-spacing": CeSpacing;
-        "ce-spinner": CeSpinner;
-        "ce-stacked-list": CeStackedList;
-        "ce-stacked-list-row": CeStackedListRow;
-        "ce-stripe-element": CeStripeElement;
-        "ce-stripe-payment-request": CeStripePaymentRequest;
-        "ce-subscription": CeSubscription;
-        "ce-subscription-cancel": CeSubscriptionCancel;
-        "ce-subscription-details": CeSubscriptionDetails;
-        "ce-subscription-payment": CeSubscriptionPayment;
-        "ce-subscription-renew": CeSubscriptionRenew;
-        "ce-subscription-status-badge": CeSubscriptionStatusBadge;
-        "ce-subscription-switch": CeSubscriptionSwitch;
-        "ce-subscriptions-list": CeSubscriptionsList;
-        "ce-switch": CeSwitch;
-        "ce-tab": CeTab;
-        "ce-tab-group": CeTabGroup;
-        "ce-tab-panel": CeTabPanel;
-        "ce-table": CeTable;
-        "ce-table-cell": CeTableCell;
-        "ce-table-head": CeTableHead;
-        "ce-table-row": CeTableRow;
-        "ce-tag": CeTag;
-        "ce-tax-id-input": CeTaxIdInput;
-        "ce-text": CeText;
-        "ce-tooltip": CeTooltip;
-        "ce-total": CeTotal;
-        "ce-upcoming-invoice": CeUpcomingInvoice;
-        "ce-wordpress-password-edit": CeWordpressPasswordEdit;
-        "ce-wordpress-user": CeWordpressUser;
-        "ce-wordpress-user-edit": CeWordpressUserEdit;
+        "sc-address": ScAddress;
+        "sc-alert": ScAlert;
+        "sc-badge-notice": ScBadgeNotice;
+        "sc-block-ui": ScBlockUi;
+        "sc-breadcrumb": ScBreadcrumb;
+        "sc-breadcrumbs": ScBreadcrumbs;
+        "sc-button": ScButton;
+        "sc-button-group": ScButtonGroup;
+        "sc-card": ScCard;
+        "sc-cc-logo": ScCcLogo;
+        "sc-charges-list": ScChargesList;
+        "sc-checkbox": ScCheckbox;
+        "sc-checkout": ScCheckout;
+        "sc-choice": ScChoice;
+        "sc-choices": ScChoices;
+        "sc-column": ScColumn;
+        "sc-columns": ScColumns;
+        "sc-consumer": ScConsumer;
+        "sc-coupon-form": ScCouponForm;
+        "sc-customer-details": ScCustomerDetails;
+        "sc-customer-edit": ScCustomerEdit;
+        "sc-customer-email": ScCustomerEmail;
+        "sc-customer-name": ScCustomerName;
+        "sc-dashboard-customer-details": ScDashboardCustomerDetails;
+        "sc-dashboard-downloads-list": ScDashboardDownloadsList;
+        "sc-dashboard-module": ScDashboardModule;
+        "sc-divider": ScDivider;
+        "sc-donation-choices": ScDonationChoices;
+        "sc-downloads-list": ScDownloadsList;
+        "sc-dropdown": ScDropdown;
+        "sc-empty": ScEmpty;
+        "sc-express-payment": ScExpressPayment;
+        "sc-flex": ScFlex;
+        "sc-form": ScForm;
+        "sc-form-components-validator": ScFormComponentsValidator;
+        "sc-form-control": ScFormControl;
+        "sc-form-row": ScFormRow;
+        "sc-format-bytes": ScFormatBytes;
+        "sc-format-date": ScFormatDate;
+        "sc-format-interval": ScFormatInterval;
+        "sc-format-number": ScFormatNumber;
+        "sc-heading": ScHeading;
+        "sc-icon": ScIcon;
+        "sc-input": ScInput;
+        "sc-invoices-list": ScInvoicesList;
+        "sc-line-item": ScLineItem;
+        "sc-line-item-tax": ScLineItemTax;
+        "sc-line-item-total": ScLineItemTotal;
+        "sc-line-items": ScLineItems;
+        "sc-line-items-provider": ScLineItemsProvider;
+        "sc-login-form": ScLoginForm;
+        "sc-menu": ScMenu;
+        "sc-menu-divider": ScMenuDivider;
+        "sc-menu-item": ScMenuItem;
+        "sc-menu-label": ScMenuLabel;
+        "sc-order-confirmation": ScOrderConfirmation;
+        "sc-order-confirmation-customer": ScOrderConfirmationCustomer;
+        "sc-order-confirmation-line-items": ScOrderConfirmationLineItems;
+        "sc-order-confirmation-totals": ScOrderConfirmationTotals;
+        "sc-order-coupon-form": ScOrderCouponForm;
+        "sc-order-detail": ScOrderDetail;
+        "sc-order-password": ScOrderPassword;
+        "sc-order-shipping-address": ScOrderShippingAddress;
+        "sc-order-status-badge": ScOrderStatusBadge;
+        "sc-order-submit": ScOrderSubmit;
+        "sc-order-summary": ScOrderSummary;
+        "sc-order-tax-id-input": ScOrderTaxIdInput;
+        "sc-orders-list": ScOrdersList;
+        "sc-pagination": ScPagination;
+        "sc-payment": ScPayment;
+        "sc-payment-method-create": ScPaymentMethodCreate;
+        "sc-payment-methods-list": ScPaymentMethodsList;
+        "sc-price-choice": ScPriceChoice;
+        "sc-price-choices": ScPriceChoices;
+        "sc-price-input": ScPriceInput;
+        "sc-product-line-item": ScProductLineItem;
+        "sc-provider": ScProvider;
+        "sc-quantity-select": ScQuantitySelect;
+        "sc-radio": ScRadio;
+        "sc-radio-group": ScRadioGroup;
+        "sc-register-icon-library": ScRegisterIconLibrary;
+        "sc-secure-notice": ScSecureNotice;
+        "sc-select": ScSelect;
+        "sc-session-provider": ScSessionProvider;
+        "sc-skeleton": ScSkeleton;
+        "sc-spacing": ScSpacing;
+        "sc-spinner": ScSpinner;
+        "sc-stacked-list": ScStackedList;
+        "sc-stacked-list-row": ScStackedListRow;
+        "sc-stripe-element": ScStripeElement;
+        "sc-stripe-payment-request": ScStripePaymentRequest;
+        "sc-subscription": ScSubscription;
+        "sc-subscription-cancel": ScSubscriptionCancel;
+        "sc-subscription-details": ScSubscriptionDetails;
+        "sc-subscription-payment": ScSubscriptionPayment;
+        "sc-subscription-renew": ScSubscriptionRenew;
+        "sc-subscription-status-badge": ScSubscriptionStatusBadge;
+        "sc-subscription-switch": ScSubscriptionSwitch;
+        "sc-subscriptions-list": ScSubscriptionsList;
+        "sc-switch": ScSwitch;
+        "sc-tab": ScTab;
+        "sc-tab-group": ScTabGroup;
+        "sc-tab-panel": ScTabPanel;
+        "sc-table": ScTable;
+        "sc-table-cell": ScTableCell;
+        "sc-table-head": ScTableHead;
+        "sc-table-row": ScTableRow;
+        "sc-tag": ScTag;
+        "sc-tax-id-input": ScTaxIdInput;
+        "sc-text": ScText;
+        "sc-tooltip": ScTooltip;
+        "sc-total": ScTotal;
+        "sc-upcoming-invoice": ScUpcomingInvoice;
+        "sc-wordpress-password-edit": ScWordpressPasswordEdit;
+        "sc-wordpress-user": ScWordpressUser;
+        "sc-wordpress-user-edit": ScWordpressUserEdit;
     }
 }
 export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
-            "ce-address": LocalJSX.CeAddress & JSXBase.HTMLAttributes<HTMLCeAddressElement>;
-            "ce-alert": LocalJSX.CeAlert & JSXBase.HTMLAttributes<HTMLCeAlertElement>;
-            "ce-badge-notice": LocalJSX.CeBadgeNotice & JSXBase.HTMLAttributes<HTMLCeBadgeNoticeElement>;
-            "ce-block-ui": LocalJSX.CeBlockUi & JSXBase.HTMLAttributes<HTMLCeBlockUiElement>;
-            "ce-breadcrumb": LocalJSX.CeBreadcrumb & JSXBase.HTMLAttributes<HTMLCeBreadcrumbElement>;
-            "ce-breadcrumbs": LocalJSX.CeBreadcrumbs & JSXBase.HTMLAttributes<HTMLCeBreadcrumbsElement>;
-            "ce-button": LocalJSX.CeButton & JSXBase.HTMLAttributes<HTMLCeButtonElement>;
-            "ce-button-group": LocalJSX.CeButtonGroup & JSXBase.HTMLAttributes<HTMLCeButtonGroupElement>;
-            "ce-card": LocalJSX.CeCard & JSXBase.HTMLAttributes<HTMLCeCardElement>;
-            "ce-cc-logo": LocalJSX.CeCcLogo & JSXBase.HTMLAttributes<HTMLCeCcLogoElement>;
-            "ce-charges-list": LocalJSX.CeChargesList & JSXBase.HTMLAttributes<HTMLCeChargesListElement>;
-            "ce-checkbox": LocalJSX.CeCheckbox & JSXBase.HTMLAttributes<HTMLCeCheckboxElement>;
-            "ce-checkout": LocalJSX.CeCheckout & JSXBase.HTMLAttributes<HTMLCeCheckoutElement>;
-            "ce-choice": LocalJSX.CeChoice & JSXBase.HTMLAttributes<HTMLCeChoiceElement>;
-            "ce-choices": LocalJSX.CeChoices & JSXBase.HTMLAttributes<HTMLCeChoicesElement>;
-            "ce-column": LocalJSX.CeColumn & JSXBase.HTMLAttributes<HTMLCeColumnElement>;
-            "ce-columns": LocalJSX.CeColumns & JSXBase.HTMLAttributes<HTMLCeColumnsElement>;
-            "ce-consumer": LocalJSX.CeConsumer & JSXBase.HTMLAttributes<HTMLCeConsumerElement>;
-            "ce-coupon-form": LocalJSX.CeCouponForm & JSXBase.HTMLAttributes<HTMLCeCouponFormElement>;
-            "ce-customer-details": LocalJSX.CeCustomerDetails & JSXBase.HTMLAttributes<HTMLCeCustomerDetailsElement>;
-            "ce-customer-edit": LocalJSX.CeCustomerEdit & JSXBase.HTMLAttributes<HTMLCeCustomerEditElement>;
-            "ce-customer-email": LocalJSX.CeCustomerEmail & JSXBase.HTMLAttributes<HTMLCeCustomerEmailElement>;
-            "ce-customer-name": LocalJSX.CeCustomerName & JSXBase.HTMLAttributes<HTMLCeCustomerNameElement>;
-            "ce-dashboard-customer-details": LocalJSX.CeDashboardCustomerDetails & JSXBase.HTMLAttributes<HTMLCeDashboardCustomerDetailsElement>;
-            "ce-dashboard-downloads-list": LocalJSX.CeDashboardDownloadsList & JSXBase.HTMLAttributes<HTMLCeDashboardDownloadsListElement>;
-            "ce-dashboard-module": LocalJSX.CeDashboardModule & JSXBase.HTMLAttributes<HTMLCeDashboardModuleElement>;
-            "ce-divider": LocalJSX.CeDivider & JSXBase.HTMLAttributes<HTMLCeDividerElement>;
-            "ce-donation-choices": LocalJSX.CeDonationChoices & JSXBase.HTMLAttributes<HTMLCeDonationChoicesElement>;
-            "ce-downloads-list": LocalJSX.CeDownloadsList & JSXBase.HTMLAttributes<HTMLCeDownloadsListElement>;
-            "ce-dropdown": LocalJSX.CeDropdown & JSXBase.HTMLAttributes<HTMLCeDropdownElement>;
-            "ce-empty": LocalJSX.CeEmpty & JSXBase.HTMLAttributes<HTMLCeEmptyElement>;
-            "ce-express-payment": LocalJSX.CeExpressPayment & JSXBase.HTMLAttributes<HTMLCeExpressPaymentElement>;
-            "ce-flex": LocalJSX.CeFlex & JSXBase.HTMLAttributes<HTMLCeFlexElement>;
-            "ce-form": LocalJSX.CeForm & JSXBase.HTMLAttributes<HTMLCeFormElement>;
-            "ce-form-components-validator": LocalJSX.CeFormComponentsValidator & JSXBase.HTMLAttributes<HTMLCeFormComponentsValidatorElement>;
-            "ce-form-control": LocalJSX.CeFormControl & JSXBase.HTMLAttributes<HTMLCeFormControlElement>;
-            "ce-form-row": LocalJSX.CeFormRow & JSXBase.HTMLAttributes<HTMLCeFormRowElement>;
-            "ce-form-section": LocalJSX.CeFormSection & JSXBase.HTMLAttributes<HTMLCeFormSectionElement>;
-            "ce-format-bytes": LocalJSX.CeFormatBytes & JSXBase.HTMLAttributes<HTMLCeFormatBytesElement>;
-            "ce-format-date": LocalJSX.CeFormatDate & JSXBase.HTMLAttributes<HTMLCeFormatDateElement>;
-            "ce-format-interval": LocalJSX.CeFormatInterval & JSXBase.HTMLAttributes<HTMLCeFormatIntervalElement>;
-            "ce-format-number": LocalJSX.CeFormatNumber & JSXBase.HTMLAttributes<HTMLCeFormatNumberElement>;
-            "ce-heading": LocalJSX.CeHeading & JSXBase.HTMLAttributes<HTMLCeHeadingElement>;
-            "ce-icon": LocalJSX.CeIcon & JSXBase.HTMLAttributes<HTMLCeIconElement>;
-            "ce-input": LocalJSX.CeInput & JSXBase.HTMLAttributes<HTMLCeInputElement>;
-            "ce-invoices-list": LocalJSX.CeInvoicesList & JSXBase.HTMLAttributes<HTMLCeInvoicesListElement>;
-            "ce-line-item": LocalJSX.CeLineItem & JSXBase.HTMLAttributes<HTMLCeLineItemElement>;
-            "ce-line-item-tax": LocalJSX.CeLineItemTax & JSXBase.HTMLAttributes<HTMLCeLineItemTaxElement>;
-            "ce-line-item-total": LocalJSX.CeLineItemTotal & JSXBase.HTMLAttributes<HTMLCeLineItemTotalElement>;
-            "ce-line-items": LocalJSX.CeLineItems & JSXBase.HTMLAttributes<HTMLCeLineItemsElement>;
-            "ce-line-items-provider": LocalJSX.CeLineItemsProvider & JSXBase.HTMLAttributes<HTMLCeLineItemsProviderElement>;
-            "ce-login-form": LocalJSX.CeLoginForm & JSXBase.HTMLAttributes<HTMLCeLoginFormElement>;
-            "ce-menu": LocalJSX.CeMenu & JSXBase.HTMLAttributes<HTMLCeMenuElement>;
-            "ce-menu-divider": LocalJSX.CeMenuDivider & JSXBase.HTMLAttributes<HTMLCeMenuDividerElement>;
-            "ce-menu-item": LocalJSX.CeMenuItem & JSXBase.HTMLAttributes<HTMLCeMenuItemElement>;
-            "ce-menu-label": LocalJSX.CeMenuLabel & JSXBase.HTMLAttributes<HTMLCeMenuLabelElement>;
-            "ce-order-confirmation": LocalJSX.CeOrderConfirmation & JSXBase.HTMLAttributes<HTMLCeOrderConfirmationElement>;
-            "ce-order-confirmation-customer": LocalJSX.CeOrderConfirmationCustomer & JSXBase.HTMLAttributes<HTMLCeOrderConfirmationCustomerElement>;
-            "ce-order-confirmation-line-items": LocalJSX.CeOrderConfirmationLineItems & JSXBase.HTMLAttributes<HTMLCeOrderConfirmationLineItemsElement>;
-            "ce-order-confirmation-totals": LocalJSX.CeOrderConfirmationTotals & JSXBase.HTMLAttributes<HTMLCeOrderConfirmationTotalsElement>;
-            "ce-order-coupon-form": LocalJSX.CeOrderCouponForm & JSXBase.HTMLAttributes<HTMLCeOrderCouponFormElement>;
-            "ce-order-detail": LocalJSX.CeOrderDetail & JSXBase.HTMLAttributes<HTMLCeOrderDetailElement>;
-            "ce-order-password": LocalJSX.CeOrderPassword & JSXBase.HTMLAttributes<HTMLCeOrderPasswordElement>;
-            "ce-order-shipping-address": LocalJSX.CeOrderShippingAddress & JSXBase.HTMLAttributes<HTMLCeOrderShippingAddressElement>;
-            "ce-order-status-badge": LocalJSX.CeOrderStatusBadge & JSXBase.HTMLAttributes<HTMLCeOrderStatusBadgeElement>;
-            "ce-order-submit": LocalJSX.CeOrderSubmit & JSXBase.HTMLAttributes<HTMLCeOrderSubmitElement>;
-            "ce-order-summary": LocalJSX.CeOrderSummary & JSXBase.HTMLAttributes<HTMLCeOrderSummaryElement>;
-            "ce-order-tax-id-input": LocalJSX.CeOrderTaxIdInput & JSXBase.HTMLAttributes<HTMLCeOrderTaxIdInputElement>;
-            "ce-orders-list": LocalJSX.CeOrdersList & JSXBase.HTMLAttributes<HTMLCeOrdersListElement>;
-            "ce-pagination": LocalJSX.CePagination & JSXBase.HTMLAttributes<HTMLCePaginationElement>;
-            "ce-payment": LocalJSX.CePayment & JSXBase.HTMLAttributes<HTMLCePaymentElement>;
-            "ce-payment-method-create": LocalJSX.CePaymentMethodCreate & JSXBase.HTMLAttributes<HTMLCePaymentMethodCreateElement>;
-            "ce-payment-methods-list": LocalJSX.CePaymentMethodsList & JSXBase.HTMLAttributes<HTMLCePaymentMethodsListElement>;
-            "ce-price-choice": LocalJSX.CePriceChoice & JSXBase.HTMLAttributes<HTMLCePriceChoiceElement>;
-            "ce-price-choices": LocalJSX.CePriceChoices & JSXBase.HTMLAttributes<HTMLCePriceChoicesElement>;
-            "ce-price-input": LocalJSX.CePriceInput & JSXBase.HTMLAttributes<HTMLCePriceInputElement>;
-            "ce-product-line-item": LocalJSX.CeProductLineItem & JSXBase.HTMLAttributes<HTMLCeProductLineItemElement>;
-            "ce-provider": LocalJSX.CeProvider & JSXBase.HTMLAttributes<HTMLCeProviderElement>;
-            "ce-quantity-select": LocalJSX.CeQuantitySelect & JSXBase.HTMLAttributes<HTMLCeQuantitySelectElement>;
-            "ce-radio": LocalJSX.CeRadio & JSXBase.HTMLAttributes<HTMLCeRadioElement>;
-            "ce-radio-group": LocalJSX.CeRadioGroup & JSXBase.HTMLAttributes<HTMLCeRadioGroupElement>;
-            "ce-register-icon-library": LocalJSX.CeRegisterIconLibrary & JSXBase.HTMLAttributes<HTMLCeRegisterIconLibraryElement>;
-            "ce-secure-notice": LocalJSX.CeSecureNotice & JSXBase.HTMLAttributes<HTMLCeSecureNoticeElement>;
-            "ce-select": LocalJSX.CeSelect & JSXBase.HTMLAttributes<HTMLCeSelectElement>;
-            "ce-session-provider": LocalJSX.CeSessionProvider & JSXBase.HTMLAttributes<HTMLCeSessionProviderElement>;
-            "ce-skeleton": LocalJSX.CeSkeleton & JSXBase.HTMLAttributes<HTMLCeSkeletonElement>;
-            "ce-spacing": LocalJSX.CeSpacing & JSXBase.HTMLAttributes<HTMLCeSpacingElement>;
-            "ce-spinner": LocalJSX.CeSpinner & JSXBase.HTMLAttributes<HTMLCeSpinnerElement>;
-            "ce-stacked-list": LocalJSX.CeStackedList & JSXBase.HTMLAttributes<HTMLCeStackedListElement>;
-            "ce-stacked-list-row": LocalJSX.CeStackedListRow & JSXBase.HTMLAttributes<HTMLCeStackedListRowElement>;
-            "ce-stripe-element": LocalJSX.CeStripeElement & JSXBase.HTMLAttributes<HTMLCeStripeElementElement>;
-            "ce-stripe-payment-request": LocalJSX.CeStripePaymentRequest & JSXBase.HTMLAttributes<HTMLCeStripePaymentRequestElement>;
-            "ce-subscription": LocalJSX.CeSubscription & JSXBase.HTMLAttributes<HTMLCeSubscriptionElement>;
-            "ce-subscription-cancel": LocalJSX.CeSubscriptionCancel & JSXBase.HTMLAttributes<HTMLCeSubscriptionCancelElement>;
-            "ce-subscription-details": LocalJSX.CeSubscriptionDetails & JSXBase.HTMLAttributes<HTMLCeSubscriptionDetailsElement>;
-            "ce-subscription-payment": LocalJSX.CeSubscriptionPayment & JSXBase.HTMLAttributes<HTMLCeSubscriptionPaymentElement>;
-            "ce-subscription-renew": LocalJSX.CeSubscriptionRenew & JSXBase.HTMLAttributes<HTMLCeSubscriptionRenewElement>;
-            "ce-subscription-status-badge": LocalJSX.CeSubscriptionStatusBadge & JSXBase.HTMLAttributes<HTMLCeSubscriptionStatusBadgeElement>;
-            "ce-subscription-switch": LocalJSX.CeSubscriptionSwitch & JSXBase.HTMLAttributes<HTMLCeSubscriptionSwitchElement>;
-            "ce-subscriptions-list": LocalJSX.CeSubscriptionsList & JSXBase.HTMLAttributes<HTMLCeSubscriptionsListElement>;
-            "ce-switch": LocalJSX.CeSwitch & JSXBase.HTMLAttributes<HTMLCeSwitchElement>;
-            "ce-tab": LocalJSX.CeTab & JSXBase.HTMLAttributes<HTMLCeTabElement>;
-            "ce-tab-group": LocalJSX.CeTabGroup & JSXBase.HTMLAttributes<HTMLCeTabGroupElement>;
-            "ce-tab-panel": LocalJSX.CeTabPanel & JSXBase.HTMLAttributes<HTMLCeTabPanelElement>;
-            "ce-table": LocalJSX.CeTable & JSXBase.HTMLAttributes<HTMLCeTableElement>;
-            "ce-table-cell": LocalJSX.CeTableCell & JSXBase.HTMLAttributes<HTMLCeTableCellElement>;
-            "ce-table-head": LocalJSX.CeTableHead & JSXBase.HTMLAttributes<HTMLCeTableHeadElement>;
-            "ce-table-row": LocalJSX.CeTableRow & JSXBase.HTMLAttributes<HTMLCeTableRowElement>;
-            "ce-tag": LocalJSX.CeTag & JSXBase.HTMLAttributes<HTMLCeTagElement>;
-            "ce-tax-id-input": LocalJSX.CeTaxIdInput & JSXBase.HTMLAttributes<HTMLCeTaxIdInputElement>;
-            "ce-text": LocalJSX.CeText & JSXBase.HTMLAttributes<HTMLCeTextElement>;
-            "ce-tooltip": LocalJSX.CeTooltip & JSXBase.HTMLAttributes<HTMLCeTooltipElement>;
-            "ce-total": LocalJSX.CeTotal & JSXBase.HTMLAttributes<HTMLCeTotalElement>;
-            "ce-upcoming-invoice": LocalJSX.CeUpcomingInvoice & JSXBase.HTMLAttributes<HTMLCeUpcomingInvoiceElement>;
-            "ce-wordpress-password-edit": LocalJSX.CeWordpressPasswordEdit & JSXBase.HTMLAttributes<HTMLCeWordpressPasswordEditElement>;
-            "ce-wordpress-user": LocalJSX.CeWordpressUser & JSXBase.HTMLAttributes<HTMLCeWordpressUserElement>;
-            "ce-wordpress-user-edit": LocalJSX.CeWordpressUserEdit & JSXBase.HTMLAttributes<HTMLCeWordpressUserEditElement>;
+            "sc-address": LocalJSX.ScAddress & JSXBase.HTMLAttributes<HTMLScAddressElement>;
+            "sc-alert": LocalJSX.ScAlert & JSXBase.HTMLAttributes<HTMLScAlertElement>;
+            "sc-badge-notice": LocalJSX.ScBadgeNotice & JSXBase.HTMLAttributes<HTMLScBadgeNoticeElement>;
+            "sc-block-ui": LocalJSX.ScBlockUi & JSXBase.HTMLAttributes<HTMLScBlockUiElement>;
+            "sc-breadcrumb": LocalJSX.ScBreadcrumb & JSXBase.HTMLAttributes<HTMLScBreadcrumbElement>;
+            "sc-breadcrumbs": LocalJSX.ScBreadcrumbs & JSXBase.HTMLAttributes<HTMLScBreadcrumbsElement>;
+            "sc-button": LocalJSX.ScButton & JSXBase.HTMLAttributes<HTMLScButtonElement>;
+            "sc-button-group": LocalJSX.ScButtonGroup & JSXBase.HTMLAttributes<HTMLScButtonGroupElement>;
+            "sc-card": LocalJSX.ScCard & JSXBase.HTMLAttributes<HTMLScCardElement>;
+            "sc-cc-logo": LocalJSX.ScCcLogo & JSXBase.HTMLAttributes<HTMLScCcLogoElement>;
+            "sc-charges-list": LocalJSX.ScChargesList & JSXBase.HTMLAttributes<HTMLScChargesListElement>;
+            "sc-checkbox": LocalJSX.ScCheckbox & JSXBase.HTMLAttributes<HTMLScCheckboxElement>;
+            "sc-checkout": LocalJSX.ScCheckout & JSXBase.HTMLAttributes<HTMLScCheckoutElement>;
+            "sc-choice": LocalJSX.ScChoice & JSXBase.HTMLAttributes<HTMLScChoiceElement>;
+            "sc-choices": LocalJSX.ScChoices & JSXBase.HTMLAttributes<HTMLScChoicesElement>;
+            "sc-column": LocalJSX.ScColumn & JSXBase.HTMLAttributes<HTMLScColumnElement>;
+            "sc-columns": LocalJSX.ScColumns & JSXBase.HTMLAttributes<HTMLScColumnsElement>;
+            "sc-consumer": LocalJSX.ScConsumer & JSXBase.HTMLAttributes<HTMLScConsumerElement>;
+            "sc-coupon-form": LocalJSX.ScCouponForm & JSXBase.HTMLAttributes<HTMLScCouponFormElement>;
+            "sc-customer-details": LocalJSX.ScCustomerDetails & JSXBase.HTMLAttributes<HTMLScCustomerDetailsElement>;
+            "sc-customer-edit": LocalJSX.ScCustomerEdit & JSXBase.HTMLAttributes<HTMLScCustomerEditElement>;
+            "sc-customer-email": LocalJSX.ScCustomerEmail & JSXBase.HTMLAttributes<HTMLScCustomerEmailElement>;
+            "sc-customer-name": LocalJSX.ScCustomerName & JSXBase.HTMLAttributes<HTMLScCustomerNameElement>;
+            "sc-dashboard-customer-details": LocalJSX.ScDashboardCustomerDetails & JSXBase.HTMLAttributes<HTMLScDashboardCustomerDetailsElement>;
+            "sc-dashboard-downloads-list": LocalJSX.ScDashboardDownloadsList & JSXBase.HTMLAttributes<HTMLScDashboardDownloadsListElement>;
+            "sc-dashboard-module": LocalJSX.ScDashboardModule & JSXBase.HTMLAttributes<HTMLScDashboardModuleElement>;
+            "sc-divider": LocalJSX.ScDivider & JSXBase.HTMLAttributes<HTMLScDividerElement>;
+            "sc-donation-choices": LocalJSX.ScDonationChoices & JSXBase.HTMLAttributes<HTMLScDonationChoicesElement>;
+            "sc-downloads-list": LocalJSX.ScDownloadsList & JSXBase.HTMLAttributes<HTMLScDownloadsListElement>;
+            "sc-dropdown": LocalJSX.ScDropdown & JSXBase.HTMLAttributes<HTMLScDropdownElement>;
+            "sc-empty": LocalJSX.ScEmpty & JSXBase.HTMLAttributes<HTMLScEmptyElement>;
+            "sc-express-payment": LocalJSX.ScExpressPayment & JSXBase.HTMLAttributes<HTMLScExpressPaymentElement>;
+            "sc-flex": LocalJSX.ScFlex & JSXBase.HTMLAttributes<HTMLScFlexElement>;
+            "sc-form": LocalJSX.ScForm & JSXBase.HTMLAttributes<HTMLScFormElement>;
+            "sc-form-components-validator": LocalJSX.ScFormComponentsValidator & JSXBase.HTMLAttributes<HTMLScFormComponentsValidatorElement>;
+            "sc-form-control": LocalJSX.ScFormControl & JSXBase.HTMLAttributes<HTMLScFormControlElement>;
+            "sc-form-row": LocalJSX.ScFormRow & JSXBase.HTMLAttributes<HTMLScFormRowElement>;
+            "sc-format-bytes": LocalJSX.ScFormatBytes & JSXBase.HTMLAttributes<HTMLScFormatBytesElement>;
+            "sc-format-date": LocalJSX.ScFormatDate & JSXBase.HTMLAttributes<HTMLScFormatDateElement>;
+            "sc-format-interval": LocalJSX.ScFormatInterval & JSXBase.HTMLAttributes<HTMLScFormatIntervalElement>;
+            "sc-format-number": LocalJSX.ScFormatNumber & JSXBase.HTMLAttributes<HTMLScFormatNumberElement>;
+            "sc-heading": LocalJSX.ScHeading & JSXBase.HTMLAttributes<HTMLScHeadingElement>;
+            "sc-icon": LocalJSX.ScIcon & JSXBase.HTMLAttributes<HTMLScIconElement>;
+            "sc-input": LocalJSX.ScInput & JSXBase.HTMLAttributes<HTMLScInputElement>;
+            "sc-invoices-list": LocalJSX.ScInvoicesList & JSXBase.HTMLAttributes<HTMLScInvoicesListElement>;
+            "sc-line-item": LocalJSX.ScLineItem & JSXBase.HTMLAttributes<HTMLScLineItemElement>;
+            "sc-line-item-tax": LocalJSX.ScLineItemTax & JSXBase.HTMLAttributes<HTMLScLineItemTaxElement>;
+            "sc-line-item-total": LocalJSX.ScLineItemTotal & JSXBase.HTMLAttributes<HTMLScLineItemTotalElement>;
+            "sc-line-items": LocalJSX.ScLineItems & JSXBase.HTMLAttributes<HTMLScLineItemsElement>;
+            "sc-line-items-provider": LocalJSX.ScLineItemsProvider & JSXBase.HTMLAttributes<HTMLScLineItemsProviderElement>;
+            "sc-login-form": LocalJSX.ScLoginForm & JSXBase.HTMLAttributes<HTMLScLoginFormElement>;
+            "sc-menu": LocalJSX.ScMenu & JSXBase.HTMLAttributes<HTMLScMenuElement>;
+            "sc-menu-divider": LocalJSX.ScMenuDivider & JSXBase.HTMLAttributes<HTMLScMenuDividerElement>;
+            "sc-menu-item": LocalJSX.ScMenuItem & JSXBase.HTMLAttributes<HTMLScMenuItemElement>;
+            "sc-menu-label": LocalJSX.ScMenuLabel & JSXBase.HTMLAttributes<HTMLScMenuLabelElement>;
+            "sc-order-confirmation": LocalJSX.ScOrderConfirmation & JSXBase.HTMLAttributes<HTMLScOrderConfirmationElement>;
+            "sc-order-confirmation-customer": LocalJSX.ScOrderConfirmationCustomer & JSXBase.HTMLAttributes<HTMLScOrderConfirmationCustomerElement>;
+            "sc-order-confirmation-line-items": LocalJSX.ScOrderConfirmationLineItems & JSXBase.HTMLAttributes<HTMLScOrderConfirmationLineItemsElement>;
+            "sc-order-confirmation-totals": LocalJSX.ScOrderConfirmationTotals & JSXBase.HTMLAttributes<HTMLScOrderConfirmationTotalsElement>;
+            "sc-order-coupon-form": LocalJSX.ScOrderCouponForm & JSXBase.HTMLAttributes<HTMLScOrderCouponFormElement>;
+            "sc-order-detail": LocalJSX.ScOrderDetail & JSXBase.HTMLAttributes<HTMLScOrderDetailElement>;
+            "sc-order-password": LocalJSX.ScOrderPassword & JSXBase.HTMLAttributes<HTMLScOrderPasswordElement>;
+            "sc-order-shipping-address": LocalJSX.ScOrderShippingAddress & JSXBase.HTMLAttributes<HTMLScOrderShippingAddressElement>;
+            "sc-order-status-badge": LocalJSX.ScOrderStatusBadge & JSXBase.HTMLAttributes<HTMLScOrderStatusBadgeElement>;
+            "sc-order-submit": LocalJSX.ScOrderSubmit & JSXBase.HTMLAttributes<HTMLScOrderSubmitElement>;
+            "sc-order-summary": LocalJSX.ScOrderSummary & JSXBase.HTMLAttributes<HTMLScOrderSummaryElement>;
+            "sc-order-tax-id-input": LocalJSX.ScOrderTaxIdInput & JSXBase.HTMLAttributes<HTMLScOrderTaxIdInputElement>;
+            "sc-orders-list": LocalJSX.ScOrdersList & JSXBase.HTMLAttributes<HTMLScOrdersListElement>;
+            "sc-pagination": LocalJSX.ScPagination & JSXBase.HTMLAttributes<HTMLScPaginationElement>;
+            "sc-payment": LocalJSX.ScPayment & JSXBase.HTMLAttributes<HTMLScPaymentElement>;
+            "sc-payment-method-create": LocalJSX.ScPaymentMethodCreate & JSXBase.HTMLAttributes<HTMLScPaymentMethodCreateElement>;
+            "sc-payment-methods-list": LocalJSX.ScPaymentMethodsList & JSXBase.HTMLAttributes<HTMLScPaymentMethodsListElement>;
+            "sc-price-choice": LocalJSX.ScPriceChoice & JSXBase.HTMLAttributes<HTMLScPriceChoiceElement>;
+            "sc-price-choices": LocalJSX.ScPriceChoices & JSXBase.HTMLAttributes<HTMLScPriceChoicesElement>;
+            "sc-price-input": LocalJSX.ScPriceInput & JSXBase.HTMLAttributes<HTMLScPriceInputElement>;
+            "sc-product-line-item": LocalJSX.ScProductLineItem & JSXBase.HTMLAttributes<HTMLScProductLineItemElement>;
+            "sc-provider": LocalJSX.ScProvider & JSXBase.HTMLAttributes<HTMLScProviderElement>;
+            "sc-quantity-select": LocalJSX.ScQuantitySelect & JSXBase.HTMLAttributes<HTMLScQuantitySelectElement>;
+            "sc-radio": LocalJSX.ScRadio & JSXBase.HTMLAttributes<HTMLScRadioElement>;
+            "sc-radio-group": LocalJSX.ScRadioGroup & JSXBase.HTMLAttributes<HTMLScRadioGroupElement>;
+            "sc-register-icon-library": LocalJSX.ScRegisterIconLibrary & JSXBase.HTMLAttributes<HTMLScRegisterIconLibraryElement>;
+            "sc-secure-notice": LocalJSX.ScSecureNotice & JSXBase.HTMLAttributes<HTMLScSecureNoticeElement>;
+            "sc-select": LocalJSX.ScSelect & JSXBase.HTMLAttributes<HTMLScSelectElement>;
+            "sc-session-provider": LocalJSX.ScSessionProvider & JSXBase.HTMLAttributes<HTMLScSessionProviderElement>;
+            "sc-skeleton": LocalJSX.ScSkeleton & JSXBase.HTMLAttributes<HTMLScSkeletonElement>;
+            "sc-spacing": LocalJSX.ScSpacing & JSXBase.HTMLAttributes<HTMLScSpacingElement>;
+            "sc-spinner": LocalJSX.ScSpinner & JSXBase.HTMLAttributes<HTMLScSpinnerElement>;
+            "sc-stacked-list": LocalJSX.ScStackedList & JSXBase.HTMLAttributes<HTMLScStackedListElement>;
+            "sc-stacked-list-row": LocalJSX.ScStackedListRow & JSXBase.HTMLAttributes<HTMLScStackedListRowElement>;
+            "sc-stripe-element": LocalJSX.ScStripeElement & JSXBase.HTMLAttributes<HTMLScStripeElementElement>;
+            "sc-stripe-payment-request": LocalJSX.ScStripePaymentRequest & JSXBase.HTMLAttributes<HTMLScStripePaymentRequestElement>;
+            "sc-subscription": LocalJSX.ScSubscription & JSXBase.HTMLAttributes<HTMLScSubscriptionElement>;
+            "sc-subscription-cancel": LocalJSX.ScSubscriptionCancel & JSXBase.HTMLAttributes<HTMLScSubscriptionCancelElement>;
+            "sc-subscription-details": LocalJSX.ScSubscriptionDetails & JSXBase.HTMLAttributes<HTMLScSubscriptionDetailsElement>;
+            "sc-subscription-payment": LocalJSX.ScSubscriptionPayment & JSXBase.HTMLAttributes<HTMLScSubscriptionPaymentElement>;
+            "sc-subscription-renew": LocalJSX.ScSubscriptionRenew & JSXBase.HTMLAttributes<HTMLScSubscriptionRenewElement>;
+            "sc-subscription-status-badge": LocalJSX.ScSubscriptionStatusBadge & JSXBase.HTMLAttributes<HTMLScSubscriptionStatusBadgeElement>;
+            "sc-subscription-switch": LocalJSX.ScSubscriptionSwitch & JSXBase.HTMLAttributes<HTMLScSubscriptionSwitchElement>;
+            "sc-subscriptions-list": LocalJSX.ScSubscriptionsList & JSXBase.HTMLAttributes<HTMLScSubscriptionsListElement>;
+            "sc-switch": LocalJSX.ScSwitch & JSXBase.HTMLAttributes<HTMLScSwitchElement>;
+            "sc-tab": LocalJSX.ScTab & JSXBase.HTMLAttributes<HTMLScTabElement>;
+            "sc-tab-group": LocalJSX.ScTabGroup & JSXBase.HTMLAttributes<HTMLScTabGroupElement>;
+            "sc-tab-panel": LocalJSX.ScTabPanel & JSXBase.HTMLAttributes<HTMLScTabPanelElement>;
+            "sc-table": LocalJSX.ScTable & JSXBase.HTMLAttributes<HTMLScTableElement>;
+            "sc-table-cell": LocalJSX.ScTableCell & JSXBase.HTMLAttributes<HTMLScTableCellElement>;
+            "sc-table-head": LocalJSX.ScTableHead & JSXBase.HTMLAttributes<HTMLScTableHeadElement>;
+            "sc-table-row": LocalJSX.ScTableRow & JSXBase.HTMLAttributes<HTMLScTableRowElement>;
+            "sc-tag": LocalJSX.ScTag & JSXBase.HTMLAttributes<HTMLScTagElement>;
+            "sc-tax-id-input": LocalJSX.ScTaxIdInput & JSXBase.HTMLAttributes<HTMLScTaxIdInputElement>;
+            "sc-text": LocalJSX.ScText & JSXBase.HTMLAttributes<HTMLScTextElement>;
+            "sc-tooltip": LocalJSX.ScTooltip & JSXBase.HTMLAttributes<HTMLScTooltipElement>;
+            "sc-total": LocalJSX.ScTotal & JSXBase.HTMLAttributes<HTMLScTotalElement>;
+            "sc-upcoming-invoice": LocalJSX.ScUpcomingInvoice & JSXBase.HTMLAttributes<HTMLScUpcomingInvoiceElement>;
+            "sc-wordpress-password-edit": LocalJSX.ScWordpressPasswordEdit & JSXBase.HTMLAttributes<HTMLScWordpressPasswordEditElement>;
+            "sc-wordpress-user": LocalJSX.ScWordpressUser & JSXBase.HTMLAttributes<HTMLScWordpressUserElement>;
+            "sc-wordpress-user-edit": LocalJSX.ScWordpressUserEdit & JSXBase.HTMLAttributes<HTMLScWordpressUserEditElement>;
         }
     }
 }

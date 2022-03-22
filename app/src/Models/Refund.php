@@ -1,9 +1,9 @@
 <?php
 
-namespace CheckoutEngine\Models;
+namespace SureCart\Models;
 
-use CheckoutEngine\Models\Traits\HasCharge;
-use CheckoutEngine\Models\Traits\HasCustomer;
+use SureCart\Models\Traits\HasCharge;
+use SureCart\Models\Traits\HasCustomer;
 /**
  * Subscription model
  */

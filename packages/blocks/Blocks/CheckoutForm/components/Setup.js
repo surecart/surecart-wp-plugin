@@ -5,11 +5,11 @@ import { css, jsx } from '@emotion/core';
 import { __experimentalLinkControl as LinkControl } from '@wordpress/block-editor';
 
 import {
-	CeInput,
-	CeRadioGroup,
-	CeSelect,
-	CeRadio,
-} from '@checkout-engine/components-react';
+	ScInput,
+	ScRadioGroup,
+	ScSelect,
+	ScRadio,
+} from '@surecart/components-react';
 import PriceChoices from '@scripts/blocks/components/PriceChoices';
 
 export default ({ attributes, setAttributes, onCreate, onCancel, isNew }) => {
@@ -66,7 +66,7 @@ export default ({ attributes, setAttributes, onCreate, onCancel, isNew }) => {
 	return (
 		<div
 			css={css`
-				font-family: var(--ce-font-sans);
+				font-family: var(--sc-font-sans);
 				font-size: 13px;
 				box-sizing: border-box;
 				position: relative;
@@ -75,12 +75,12 @@ export default ({ attributes, setAttributes, onCreate, onCancel, isNew }) => {
 				width: 100%;
 				text-align: left;
 				margin: 0;
-				color: var(--ce-color-gray-500);
+				color: var(--sc-color-gray-500);
 				-moz-font-smoothing: subpixel-antialiased;
 				-webkit-font-smoothing: subpixel-antialiased;
 				border-radius: 2px;
 				background-color: #fff;
-				box-shadow: inset 0 0 0 1px var(--ce-color-gray-300);
+				box-shadow: inset 0 0 0 1px var(--sc-color-gray-300);
 				outline: 1px solid transparent;
 			`}
 		>
@@ -94,19 +94,17 @@ export default ({ attributes, setAttributes, onCreate, onCancel, isNew }) => {
 			>
 				{isNew && (
 					<div>
-						<div css={label}>
-							{__('Form Title', 'checkout_engine')}
-						</div>
-						<CeInput
+						<div css={label}>{__('Form Title', 'surecart')}</div>
+						<ScInput
 							css={css`
 								max-width: 400px;
 							`}
 							value={title}
 							placeholder={__(
 								'Enter a title for your form',
-								'checkout_engine'
+								'surecart'
 							)}
-							onCeChange={(e) =>
+							onScChange={(e) =>
 								setAttributes({ title: e.target.value })
 							}
 						/>
@@ -114,7 +112,7 @@ export default ({ attributes, setAttributes, onCreate, onCancel, isNew }) => {
 				)}
 
 				<div>
-					<div css={label}>{__('Products', 'checkout_engine')}</div>
+					<div css={label}>{__('Products', 'surecart')}</div>
 					<PriceChoices
 						choices={choices}
 						onAddProduct={addProduct}
@@ -127,58 +125,55 @@ export default ({ attributes, setAttributes, onCreate, onCancel, isNew }) => {
 				{hasValidChoices() && (
 					<div>
 						<div css={label}>
-							{__('Product Options', 'checkout_engine')}
+							{__('Product Options', 'surecart')}
 						</div>
 
-						<CeRadioGroup
-							onCeChange={(e) =>
+						<ScRadioGroup
+							onScChange={(e) =>
 								setAttributes({ choice_type: e.target.value })
 							}
 						>
-							<CeRadio
+							<ScRadio
 								value="all"
 								checked={choice_type === 'all'}
 							>
 								{__(
 									'Customer must purchase all products',
-									'checkout_engine'
+									'surecart'
 								)}
-							</CeRadio>
-							<CeRadio
+							</ScRadio>
+							<ScRadio
 								value="radio"
 								checked={choice_type === 'radio'}
 							>
 								{__(
 									'Customer must select one price from the options.',
-									'checkout_engine'
+									'surecart'
 								)}
-							</CeRadio>
-							<CeRadio
+							</ScRadio>
+							<ScRadio
 								value="checkbox"
 								checked={choice_type === 'checkbox'}
 							>
 								{__(
 									'Customer can select multiple prices.',
-									'checkout_engine'
+									'surecart'
 								)}
-							</CeRadio>
-						</CeRadioGroup>
+							</ScRadio>
+						</ScRadioGroup>
 					</div>
 				)}
 
 				<div>
-					<div css={label}>{__('Design', 'checkout_engine')}</div>
+					<div css={label}>{__('Design', 'surecart')}</div>
 
-					<CeSelect
+					<ScSelect
 						css={css`
 							max-width: 400px;
 						`}
-						placeholder={__(
-							'Select a Form Template',
-							'checkout_engine'
-						)}
+						placeholder={__('Select a Form Template', 'surecart')}
 						value={template}
-						onCeChange={(e) =>
+						onScChange={(e) =>
 							setAttributes({
 								template: e.target.value,
 							})
@@ -186,30 +181,28 @@ export default ({ attributes, setAttributes, onCreate, onCancel, isNew }) => {
 						choices={[
 							{
 								value: 'default',
-								label: __('Default', 'checkout_engine'),
+								label: __('Default', 'surecart'),
 							},
 							{
 								value: 'sections',
-								label: __('Sections', 'checkout_engine'),
+								label: __('Sections', 'surecart'),
 							},
 							{
 								value: 'two-column',
-								label: __('Two Column', 'checkout_engine'),
+								label: __('Two Column', 'surecart'),
 							},
 							{
 								value: 'simple',
-								label: __('Simple', 'checkout_engine'),
+								label: __('Simple', 'surecart'),
 							},
 						]}
 					/>
 				</div>
 
 				<div>
-					<div css={label}>
-						{__('Thank You Page', 'checkout_engine')}
-					</div>
+					<div css={label}>{__('Thank You Page', 'surecart')}</div>
 					<ToggleControl
-						label={__('Custom Thank You Page', 'checkout_engine')}
+						label={__('Custom Thank You Page', 'surecart')}
 						checked={custom_success_url}
 						onChange={(custom_success_url) =>
 							setAttributes({ custom_success_url })
@@ -228,11 +221,11 @@ export default ({ attributes, setAttributes, onCreate, onCancel, isNew }) => {
 				{!!onCreate && (
 					<div>
 						<Button isPrimary onClick={onCreate}>
-							{__('Create Form', 'checkout_engine')}
+							{__('Create Form', 'surecart')}
 						</Button>
 						{onCancel && (
 							<Button onClick={onCancel}>
-								{__('Cancel', 'checkout_engine')}
+								{__('Cancel', 'surecart')}
 							</Button>
 						)}
 					</div>

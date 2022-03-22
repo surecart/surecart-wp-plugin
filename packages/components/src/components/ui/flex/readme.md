@@ -18,23 +18,23 @@
 
 ### Used by
 
- - [ce-pagination](../pagination)
- - [ce-payment-methods-list](../../controllers/dashboard/payment-methods-list)
- - [ce-subscription](../../controllers/dashboard/subscription)
- - [ce-subscription-payment](../../controllers/dashboard/subscription-payment)
- - [ce-subscription-switch](../../controllers/dashboard/subscription-switch)
- - [ce-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
+ - [sc-pagination](../pagination)
+ - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
+ - [sc-subscription](../../controllers/dashboard/subscription)
+ - [sc-subscription-payment](../../controllers/dashboard/subscription-payment)
+ - [sc-subscription-switch](../../controllers/dashboard/subscription-switch)
+ - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-pagination --> ce-flex
-  ce-payment-methods-list --> ce-flex
-  ce-subscription --> ce-flex
-  ce-subscription-payment --> ce-flex
-  ce-subscription-switch --> ce-flex
-  ce-upcoming-invoice --> ce-flex
-  style ce-flex fill:#f9f,stroke:#333,stroke-width:4px
+  sc-pagination --> sc-flex
+  sc-payment-methods-list --> sc-flex
+  sc-subscription --> sc-flex
+  sc-subscription-payment --> sc-flex
+  sc-subscription-switch --> sc-flex
+  sc-upcoming-invoice --> sc-flex
+  style sc-flex fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

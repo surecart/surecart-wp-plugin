@@ -1,16 +1,16 @@
 <?php
 /**
- * @package   CheckoutEngineCore
+ * @package   SureCartCore
  * @author    Andre Gagnon <me@andregagnon.me>
  * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://checkout_engine.com/
+ * @link      https://surecart.com/
  */
 
-namespace CheckoutEngineCore\Application;
+namespace SureCartCore\Application;
 
 use BadMethodCallException;
-use CheckoutEngineCore\Exceptions\ConfigurationException;
+use SureCartCore\Exceptions\ConfigurationException;
 
 /**
  * Provides static access to an Application instance.

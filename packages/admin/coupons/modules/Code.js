@@ -3,13 +3,13 @@
 import { __ } from '@wordpress/i18n';
 
 import {
-	CeInput,
-	CeButton,
-	CeDropdown,
-	CeMenu,
-	CeMenuItem,
-	CeTag,
-} from '@checkout-engine/components-react';
+	ScInput,
+	ScButton,
+	ScDropdown,
+	ScMenu,
+	ScMenuItem,
+	ScTag,
+} from '@surecart/components-react';
 import { Icon, box, trash, moreHorizontalMobile } from '@wordpress/icons';
 import { css, jsx } from '@emotion/core';
 import useEntity from '../../mixins/useEntity';
@@ -40,7 +40,7 @@ export default ({ promotion: promotionEntity, index }) => {
 			const r = confirm(
 				__(
 					'Are you sure you want to delete this promotion code?',
-					'checkout-engine'
+					'surecart'
 				)
 			);
 			if (!r) return;
@@ -65,8 +65,8 @@ export default ({ promotion: promotionEntity, index }) => {
 					gap: 1em;
 				`}
 			>
-				<CeInput
-					className="ce-promotion-code"
+				<ScInput
+					className="sc-promotion-code"
 					css={css`
 						flex: 1;
 					`}
@@ -74,33 +74,33 @@ export default ({ promotion: promotionEntity, index }) => {
 						promotion?.id
 							? __(
 									'Customers will enter this discount code at checkout.',
-									'checkout_engine'
+									'surecart'
 							  )
 							: __(
 									'Customers will enter this discount code at checkout. Leave this blank and we will generate one for you.',
-									'checkout_engine'
+									'surecart'
 							  )
 					}
 					attribute="name"
 					value={promotion?.code}
-					onCeChange={(e) =>
+					onScChange={(e) =>
 						updatePromotion({ code: e.target.value })
 					}
 				>
 					{promotion?.archived && (
-						<CeTag type="warning" slot="suffix">
-							{__('Archived', 'checkout_engine')}
-						</CeTag>
+						<ScTag type="warning" slot="suffix">
+							{__('Archived', 'surecart')}
+						</ScTag>
 					)}
-				</CeInput>
+				</ScInput>
 			</div>
-			<CeDropdown slot="suffix" position="bottom-right">
-				<CeButton type="text" slot="trigger" loading={loading} circle>
+			<ScDropdown slot="suffix" position="bottom-right">
+				<ScButton type="text" slot="trigger" loading={loading} circle>
 					<Icon icon={moreHorizontalMobile} />
-				</CeButton>
-				<CeMenu>
+				</ScButton>
+				<ScMenu>
 					{promotion?.id && (
-						<CeMenuItem onClick={() => onArchive(index)}>
+						<ScMenuItem onClick={() => onArchive(index)}>
 							<Icon
 								slot="prefix"
 								style={{
@@ -110,11 +110,11 @@ export default ({ promotion: promotionEntity, index }) => {
 								size={20}
 							/>
 							{promotion?.archived
-								? __('Un-Archive', 'checkout_engine')
-								: __('Archive', 'checkout_engine')}
-						</CeMenuItem>
+								? __('Un-Archive', 'surecart')
+								: __('Archive', 'surecart')}
+						</ScMenuItem>
 					)}
-					<CeMenuItem onClick={() => onDelete(index)}>
+					<ScMenuItem onClick={() => onDelete(index)}>
 						<Icon
 							slot="prefix"
 							style={{
@@ -123,10 +123,10 @@ export default ({ promotion: promotionEntity, index }) => {
 							icon={trash}
 							size={20}
 						/>
-						{__('Delete', 'checkout_engine')}
-					</CeMenuItem>
-				</CeMenu>
-			</CeDropdown>
+						{__('Delete', 'surecart')}
+					</ScMenuItem>
+				</ScMenu>
+			</ScDropdown>
 		</div>
 	);
 };

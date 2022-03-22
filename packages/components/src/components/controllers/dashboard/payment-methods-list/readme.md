@@ -17,49 +17,49 @@
 
 ### Depends on
 
-- [ce-card](../../../ui/card)
-- [ce-stacked-list](../../../ui/stacked-list)
-- [ce-stacked-list-row](../../../ui/stacked-list-row)
-- [ce-skeleton](../../../ui/skeleton)
-- [ce-divider](../../../ui/divider)
-- [ce-empty](../../../ui/empty)
-- [ce-flex](../../../ui/flex)
-- [ce-cc-logo](../../../ui/cc-logo)
-- [ce-tag](../../../ui/tag)
-- [ce-dropdown](../../../ui/dropdown)
-- [ce-icon](../../../ui/icon)
-- [ce-menu](../../../ui/menu)
-- [ce-menu-item](../../../ui/menu-item)
-- [ce-dashboard-module](../../../ui/dashboard-module)
-- [ce-button](../../../ui/button)
-- [ce-block-ui](../../../ui/block-ui)
+- [sc-card](../../../ui/card)
+- [sc-stacked-list](../../../ui/stacked-list)
+- [sc-stacked-list-row](../../../ui/stacked-list-row)
+- [sc-skeleton](../../../ui/skeleton)
+- [sc-divider](../../../ui/divider)
+- [sc-empty](../../../ui/empty)
+- [sc-flex](../../../ui/flex)
+- [sc-cc-logo](../../../ui/cc-logo)
+- [sc-tag](../../../ui/tag)
+- [sc-dropdown](../../../ui/dropdown)
+- [sc-icon](../../../ui/icon)
+- [sc-menu](../../../ui/menu)
+- [sc-menu-item](../../../ui/menu-item)
+- [sc-dashboard-module](../../../ui/dashboard-module)
+- [sc-button](../../../ui/button)
+- [sc-block-ui](../../../ui/block-ui)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-payment-methods-list --> ce-card
-  ce-payment-methods-list --> ce-stacked-list
-  ce-payment-methods-list --> ce-stacked-list-row
-  ce-payment-methods-list --> ce-skeleton
-  ce-payment-methods-list --> ce-divider
-  ce-payment-methods-list --> ce-empty
-  ce-payment-methods-list --> ce-flex
-  ce-payment-methods-list --> ce-cc-logo
-  ce-payment-methods-list --> ce-tag
-  ce-payment-methods-list --> ce-dropdown
-  ce-payment-methods-list --> ce-icon
-  ce-payment-methods-list --> ce-menu
-  ce-payment-methods-list --> ce-menu-item
-  ce-payment-methods-list --> ce-dashboard-module
-  ce-payment-methods-list --> ce-button
-  ce-payment-methods-list --> ce-block-ui
-  ce-empty --> ce-icon
-  ce-cc-logo --> ce-icon
-  ce-dashboard-module --> ce-alert
-  ce-alert --> ce-icon
-  ce-button --> ce-spinner
-  ce-block-ui --> ce-spinner
-  style ce-payment-methods-list fill:#f9f,stroke:#333,stroke-width:4px
+  sc-payment-methods-list --> sc-card
+  sc-payment-methods-list --> sc-stacked-list
+  sc-payment-methods-list --> sc-stacked-list-row
+  sc-payment-methods-list --> sc-skeleton
+  sc-payment-methods-list --> sc-divider
+  sc-payment-methods-list --> sc-empty
+  sc-payment-methods-list --> sc-flex
+  sc-payment-methods-list --> sc-cc-logo
+  sc-payment-methods-list --> sc-tag
+  sc-payment-methods-list --> sc-dropdown
+  sc-payment-methods-list --> sc-icon
+  sc-payment-methods-list --> sc-menu
+  sc-payment-methods-list --> sc-menu-item
+  sc-payment-methods-list --> sc-dashboard-module
+  sc-payment-methods-list --> sc-button
+  sc-payment-methods-list --> sc-block-ui
+  sc-empty --> sc-icon
+  sc-cc-logo --> sc-icon
+  sc-dashboard-module --> sc-alert
+  sc-alert --> sc-icon
+  sc-button --> sc-spinner
+  sc-block-ui --> sc-spinner
+  style sc-payment-methods-list fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

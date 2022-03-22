@@ -1,11 +1,11 @@
 <?php
 
-namespace CheckoutEngine\Middleware;
+namespace SureCart\Middleware;
 
-use CheckoutEngine\Models\CustomerLink;
-use CheckoutEngine\Models\User;
+use SureCart\Models\CustomerLink;
+use SureCart\Models\User;
 use Closure;
-use CheckoutEngineCore\Requests\RequestInterface;
+use SureCartCore\Requests\RequestInterface;
 
 /**
  * Middleware for customer dashboard.
@@ -75,7 +75,7 @@ class CustomerDashboardMiddleware {
 	 */
 	public function error( $error ) {
 		if ( $error->get_error_code() === 'customer_link.expired' ) {
-			return wp_die( esc_html__( 'This link has expired.', 'checkout_engine' ) );
+			return wp_die( esc_html__( 'This link has expired.', 'surecart' ) );
 		}
 		return wp_die( wp_kses_post( $error->get_error_message() ) );
 	}

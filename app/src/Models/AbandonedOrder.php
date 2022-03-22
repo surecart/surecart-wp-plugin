@@ -1,9 +1,9 @@
 <?php
 
-namespace CheckoutEngine\Models;
+namespace SureCart\Models;
 
-use CheckoutEngine\Models\Traits\HasCustomer;
-use CheckoutEngine\Models\Order;
+use SureCart\Models\Traits\HasCustomer;
+use SureCart\Models\Order;
 
 /**
  * Order model

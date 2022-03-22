@@ -1,14 +1,14 @@
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import {
-	CeButton,
-	CeDropdown,
-	CeFormatDate,
-	CeIcon,
-	CeMenu,
-	CeMenuItem,
-	CeSubscriptionStatusBadge,
-} from '@checkout-engine/components-react';
+	ScButton,
+	ScDropdown,
+	ScFormatDate,
+	ScIcon,
+	ScMenu,
+	ScMenuItem,
+	ScSubscriptionStatusBadge,
+} from '@surecart/components-react';
 import Cancel from './Cancel';
 import UnCancel from './UnCancel';
 import { select } from '@wordpress/data';
@@ -29,14 +29,14 @@ export default (subscription) => {
 		) {
 			return (
 				<span>
-					{__('Cancels', 'checkout_engine')}{' '}
-					<ce-format-date
+					{__('Cancels', 'surecart')}{' '}
+					<sc-format-date
 						type="timestamp"
 						date={subscription?.current_period_end_at}
 						month="short"
 						day="numeric"
 						year="numeric"
-					></ce-format-date>
+					></sc-format-date>
 				</span>
 			);
 		}
@@ -44,14 +44,14 @@ export default (subscription) => {
 		if (subscription?.status === 'trialing' && subscription?.trial_end_at) {
 			return (
 				<span>
-					{__('Begins', 'checkout_engine')}{' '}
-					<ce-format-date
+					{__('Begins', 'surecart')}{' '}
+					<sc-format-date
 						type="timestamp"
 						date={subscription?.trial_end_at}
 						month="short"
 						day="numeric"
 						year="numeric"
-					></ce-format-date>
+					></sc-format-date>
 				</span>
 			);
 		}
@@ -62,14 +62,14 @@ export default (subscription) => {
 		) {
 			return (
 				<span>
-					{__('Renews', 'checkout_engine')}{' '}
-					<ce-format-date
+					{__('Renews', 'surecart')}{' '}
+					<sc-format-date
 						type="timestamp"
 						date={subscription?.current_period_end_at}
 						month="short"
 						day="numeric"
 						year="numeric"
-					></ce-format-date>
+					></sc-format-date>
 				</span>
 			);
 		}
@@ -77,14 +77,14 @@ export default (subscription) => {
 		if (subscription?.status === 'canceled' && subscription?.ended_at) {
 			return (
 				<span>
-					{__('Ended', 'checkout_engine')}{' '}
-					<ce-format-date
+					{__('Ended', 'surecart')}{' '}
+					<sc-format-date
 						type="timestamp"
 						date={subscription?.ended_at}
 						month="short"
 						day="numeric"
 						year="numeric"
-					></ce-format-date>
+					></sc-format-date>
 				</span>
 			);
 		}
@@ -104,49 +104,47 @@ export default (subscription) => {
 
 	const renderActionButtons = () => {
 		return (
-			<CeDropdown position="bottom-right">
-				<CeButton type="text" slot="trigger" circle>
-					<CeIcon name="more-horizontal" />
-				</CeButton>
-				<CeMenu>
+			<ScDropdown position="bottom-right">
+				<ScButton type="text" slot="trigger" circle>
+					<ScIcon name="more-horizontal" />
+				</ScButton>
+				<ScMenu>
 					{subscription?.status === 'trialing' && (
 						<StartPlan subscription={subscription}>
-							<CeMenuItem>
-								{__('Start Plan', 'checkout_engine')}
-							</CeMenuItem>
+							<ScMenuItem>
+								{__('Start Plan', 'surecart')}
+							</ScMenuItem>
 						</StartPlan>
 					)}
 
 					{subscription?.cancel_at_period_end && (
 						<UnCancel subscription={subscription}>
-							<CeMenuItem>
-								{__("Don't Cancel", 'checkout_engine')}
-							</CeMenuItem>
+							<ScMenuItem>
+								{__("Don't Cancel", 'surecart')}
+							</ScMenuItem>
 						</UnCancel>
 					)}
 
 					{!subscription?.cancel_at_period_end && (
 						<Cancel subscription={subscription}>
-							<CeMenuItem>
-								{__('Cancel', 'checkout_engine')}
-							</CeMenuItem>
+							<ScMenuItem>{__('Cancel', 'surecart')}</ScMenuItem>
 						</Cancel>
 					)}
-				</CeMenu>
-			</CeDropdown>
+				</ScMenu>
+			</ScDropdown>
 		);
 	};
 
 	return {
 		status: (
-			<CeSubscriptionStatusBadge
+			<ScSubscriptionStatusBadge
 				subscription={subscription}
-			></CeSubscriptionStatusBadge>
+			></ScSubscriptionStatusBadge>
 		),
 		product: (
 			<a
 				href={addQueryArgs('admin.php', {
-					page: 'ce-products',
+					page: 'sc-products',
 					action: 'edit',
 					id: product?.id,
 				})}
@@ -155,13 +153,13 @@ export default (subscription) => {
 			</a>
 		),
 		created: (
-			<CeFormatDate
+			<ScFormatDate
 				date={subscription?.created_at}
 				month="short"
 				day="numeric"
 				year="numeric"
 				type="timestamp"
-			></CeFormatDate>
+			></ScFormatDate>
 		),
 		plan: renderPlan(subscription),
 		cancel: renderCancelButton(subscription),
@@ -170,16 +168,16 @@ export default (subscription) => {
 				? renderActionButtons(subscription)
 				: renderCancelButton(subscription),
 		view: (
-			<ce-button
+			<sc-button
 				href={addQueryArgs('admin.php', {
-					page: 'ce-subscriptions',
+					page: 'sc-subscriptions',
 					action: 'show',
 					id: subscription?.id,
 				})}
 				size="small"
 			>
-				{__('View', 'checkout_engine')}
-			</ce-button>
+				{__('View', 'surecart')}
+			</sc-button>
 		),
 	};
 };

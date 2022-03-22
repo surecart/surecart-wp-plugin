@@ -1,17 +1,17 @@
 <?php
 
-namespace CheckoutEngine\Tests\Controllers\Rest;
+namespace SureCart\Tests\Controllers\Rest;
 
-use CheckoutEngine\Middleware\CustomerDashboardMiddleware;
-use CheckoutEngine\Models\User;
-use CheckoutEngine\Tests\CheckoutEngineUnitTestCase;
-use CheckoutEngineCore\Responses\ResponseService;
+use SureCart\Middleware\CustomerDashboardMiddleware;
+use SureCart\Models\User;
+use SureCart\Tests\SureCartUnitTestCase;
+use SureCartCore\Responses\ResponseService;
 use Psr\Http\Message\ResponseInterface;
 
 /**
  * @group middleware
  */
-class CustomerDashboardMiddlewareTest extends CheckoutEngineUnitTestCase
+class CustomerDashboardMiddlewareTest extends SureCartUnitTestCase
 {
 	use \Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 
@@ -20,9 +20,9 @@ class CustomerDashboardMiddlewareTest extends CheckoutEngineUnitTestCase
 		parent::setUp();
 
 		// Set up an app instance with whatever stubs and mocks we need before every test.
-		\CheckoutEngine::make()->bootstrap([
+		\SureCart::make()->bootstrap([
 			'providers' => [
-				\CheckoutEngine\Request\RequestServiceProvider::class,
+				\SureCart\Request\RequestServiceProvider::class,
 			]
 		], false);
 
@@ -31,7 +31,7 @@ class CustomerDashboardMiddlewareTest extends CheckoutEngineUnitTestCase
 		$this->subject = \Mockery::mock(CustomerDashboardMiddleware::class)->makePartial();
 		$this->api_request = \Mockery::mock(RequestService::class);
 		$self = $this;
-		\CheckoutEngine::alias('request', function () use ($self) {
+		\SureCart::alias('request', function () use ($self) {
 			return call_user_func_array([$self->api_request, 'makeRequest'], func_get_args());
 		});
 	}

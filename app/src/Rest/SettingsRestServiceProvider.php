@@ -1,9 +1,9 @@
 <?php
 
-namespace CheckoutEngine\Rest;
+namespace SureCart\Rest;
 
-use CheckoutEngine\Rest\RestServiceInterface;
-use CheckoutEngine\Controllers\Rest\SettingsController;
+use SureCart\Rest\RestServiceInterface;
+use SureCart\Controllers\Rest\SettingsController;
 
 /**
  * Service provider for Price Rest Requests
@@ -36,14 +36,14 @@ class SettingsRestServiceProvider extends RestServiceProvider implements RestSer
 			[
 				[
 					'methods'             => \WP_REST_Server::EDITABLE,
-					'callback'            => \CheckoutEngine::closure()->method( SettingsController::class, 'update' ),
+					'callback'            => \SureCart::closure()->method( SettingsController::class, 'update' ),
 					'permission_callback' => [ $this, 'get_item_permissions_check' ],
 				],
 				'schema' => [ $this, 'get_item_schema' ],
 			]
 		);
 
-		$settings = \CheckoutEngine::get_registered_settings();
+		$settings = \SureCart::get_registered_settings();
 
 		// register read route for each setting.
 		foreach ( $settings as $setting ) {
@@ -53,7 +53,7 @@ class SettingsRestServiceProvider extends RestServiceProvider implements RestSer
 				[
 					[
 						'methods'             => \WP_REST_Server::READABLE,
-						'callback'            => \CheckoutEngine::closure()->method( SettingsController::class, 'index' ),
+						'callback'            => \SureCart::closure()->method( SettingsController::class, 'index' ),
 						'permission_callback' => [ $this, 'get_item_permissions_check' ],
 					],
 					'schema' => [ $this, 'get_item_schema' ],
@@ -80,7 +80,7 @@ class SettingsRestServiceProvider extends RestServiceProvider implements RestSer
 			'title'      => $this->endpoint,
 			'type'       => 'object',
 			// In JSON Schema you can specify object properties in the properties attribute.
-			'properties' => apply_filters( 'checkout_engine/rest/settings/schema', [] ),
+			'properties' => apply_filters( 'surecart/rest/settings/schema', [] ),
 		];
 
 		return $this->schema;

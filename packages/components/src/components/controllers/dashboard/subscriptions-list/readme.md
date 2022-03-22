@@ -19,50 +19,50 @@
 
 ### Depends on
 
-- [ce-divider](../../../ui/divider)
-- [ce-empty](../../../ui/empty)
-- [ce-card](../../../ui/card)
-- [ce-stacked-list](../../../ui/stacked-list)
-- [ce-stacked-list-row](../../../ui/stacked-list-row)
-- [ce-skeleton](../../../ui/skeleton)
-- [ce-subscription-details](../subscription-details)
-- [ce-icon](../../../ui/icon)
-- [ce-dashboard-module](../../../ui/dashboard-module)
-- [ce-button](../../../ui/button)
-- [ce-pagination](../../../ui/pagination)
-- [ce-block-ui](../../../ui/block-ui)
+- [sc-divider](../../../ui/divider)
+- [sc-empty](../../../ui/empty)
+- [sc-card](../../../ui/card)
+- [sc-stacked-list](../../../ui/stacked-list)
+- [sc-stacked-list-row](../../../ui/stacked-list-row)
+- [sc-skeleton](../../../ui/skeleton)
+- [sc-subscription-details](../subscription-details)
+- [sc-icon](../../../ui/icon)
+- [sc-dashboard-module](../../../ui/dashboard-module)
+- [sc-button](../../../ui/button)
+- [sc-pagination](../../../ui/pagination)
+- [sc-block-ui](../../../ui/block-ui)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-subscriptions-list --> ce-divider
-  ce-subscriptions-list --> ce-empty
-  ce-subscriptions-list --> ce-card
-  ce-subscriptions-list --> ce-stacked-list
-  ce-subscriptions-list --> ce-stacked-list-row
-  ce-subscriptions-list --> ce-skeleton
-  ce-subscriptions-list --> ce-subscription-details
-  ce-subscriptions-list --> ce-icon
-  ce-subscriptions-list --> ce-dashboard-module
-  ce-subscriptions-list --> ce-button
-  ce-subscriptions-list --> ce-pagination
-  ce-subscriptions-list --> ce-block-ui
-  ce-empty --> ce-icon
-  ce-subscription-details --> ce-subscription-status-badge
-  ce-subscription-details --> ce-format-date
-  ce-subscription-details --> ce-skeleton
-  ce-subscription-details --> ce-text
-  ce-subscription-details --> ce-tag
-  ce-subscription-details --> ce-format-number
-  ce-subscription-status-badge --> ce-format-date
-  ce-subscription-status-badge --> ce-tag
-  ce-dashboard-module --> ce-alert
-  ce-alert --> ce-icon
-  ce-button --> ce-spinner
-  ce-pagination --> ce-flex
-  ce-pagination --> ce-button
-  ce-block-ui --> ce-spinner
-  style ce-subscriptions-list fill:#f9f,stroke:#333,stroke-width:4px
+  sc-subscriptions-list --> sc-divider
+  sc-subscriptions-list --> sc-empty
+  sc-subscriptions-list --> sc-card
+  sc-subscriptions-list --> sc-stacked-list
+  sc-subscriptions-list --> sc-stacked-list-row
+  sc-subscriptions-list --> sc-skeleton
+  sc-subscriptions-list --> sc-subscription-details
+  sc-subscriptions-list --> sc-icon
+  sc-subscriptions-list --> sc-dashboard-module
+  sc-subscriptions-list --> sc-button
+  sc-subscriptions-list --> sc-pagination
+  sc-subscriptions-list --> sc-block-ui
+  sc-empty --> sc-icon
+  sc-subscription-details --> sc-subscription-status-badge
+  sc-subscription-details --> sc-format-date
+  sc-subscription-details --> sc-skeleton
+  sc-subscription-details --> sc-text
+  sc-subscription-details --> sc-tag
+  sc-subscription-details --> sc-format-number
+  sc-subscription-status-badge --> sc-format-date
+  sc-subscription-status-badge --> sc-tag
+  sc-dashboard-module --> sc-alert
+  sc-alert --> sc-icon
+  sc-button --> sc-spinner
+  sc-pagination --> sc-flex
+  sc-pagination --> sc-button
+  sc-block-ui --> sc-spinner
+  style sc-subscriptions-list fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

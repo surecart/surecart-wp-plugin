@@ -10,7 +10,7 @@ import {
 } from '@wordpress/block-editor';
 import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
 import { useBlockProps } from '@wordpress/block-editor';
-import { CeHeading } from '@checkout-engine/components-react';
+import { ScHeading } from '@surecart/components-react';
 
 export default ({ attributes, setAttributes, isSelected }) => {
 	const { title, description } = attributes;
@@ -20,17 +20,17 @@ export default ({ attributes, setAttributes, isSelected }) => {
 	return (
 		<Fragment>
 			<InspectorControls>
-				<PanelBody title={__('Attributes', 'checkout-engine')}>
+				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<TextControl
-							label={__('Title', 'checkout-engine')}
+							label={__('Title', 'surecart')}
 							value={title}
 							onChange={(title) => setAttributes({ title })}
 						/>
 					</PanelRow>
 					<PanelRow>
 						<TextControl
-							label={__('Description', 'checkout-engine')}
+							label={__('Description', 'surecart')}
 							value={description}
 							onChange={(description) =>
 								setAttributes({ description })
@@ -40,10 +40,10 @@ export default ({ attributes, setAttributes, isSelected }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<CeHeading {...blockProps}>
+			<ScHeading {...blockProps}>
 				<RichText
-					aria-label={__('Title', 'checkout_engine')}
-					placeholder={__('Add your title...', 'checkout_engine')}
+					aria-label={__('Title', 'surecart')}
+					placeholder={__('Add your title...', 'surecart')}
 					value={title}
 					onChange={(title) => setAttributes({ title })}
 					withoutInteractiveFormatting
@@ -53,10 +53,10 @@ export default ({ attributes, setAttributes, isSelected }) => {
 				{(isSelected || !!description) && (
 					<span slot="description">
 						<RichText
-							aria-label={__('Description', 'checkout_engine')}
+							aria-label={__('Description', 'surecart')}
 							placeholder={__(
 								'Add your description...',
-								'checkout_engine'
+								'surecart'
 							)}
 							value={description}
 							onChange={(description) =>
@@ -71,7 +71,7 @@ export default ({ attributes, setAttributes, isSelected }) => {
 				<div slot="end">
 					<InnerBlocks />
 				</div>
-			</CeHeading>
+			</ScHeading>
 		</Fragment>
 	);
 };

@@ -1,15 +1,15 @@
 <?php
 /**
- * @package   CheckoutEngineAppCore
+ * @package   SureCartAppCore
  * @author    Andre Gagnon <me@andregagnon.me>
  * @copyright  Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://checkoutengine.com
+ * @link      https://surecart.com
  */
 
-namespace CheckoutEngineAppCore\Avatar;
+namespace SureCartAppCore\Avatar;
 
-use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
+use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 /**
  * Provide avatar dependencies.
@@ -21,7 +21,7 @@ class AvatarServiceProvider implements ServiceProviderInterface {
 	 * {@inheritDoc}
 	 */
 	public function register( $container ) {
-		$container['checkout_engine_app_core.avatar.avatar'] = function() {
+		$container['surecart_app_core.avatar.avatar'] = function() {
 			return new Avatar();
 		};
 	}
@@ -30,6 +30,6 @@ class AvatarServiceProvider implements ServiceProviderInterface {
 	 * {@inheritDoc}
 	 */
 	public function bootstrap( $container ) {
-		$container['checkout_engine_app_core.avatar.avatar']->bootstrap();
+		$container['surecart_app_core.avatar.avatar']->bootstrap();
 	}
 }

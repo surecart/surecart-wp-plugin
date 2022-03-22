@@ -1,46 +1,46 @@
 {
-  "apiVersion": 2,
-	"name": "checkout-engine/price-choice",
+	"apiVersion": 2,
+	"name": "surecart/price-choice",
 	"title": "Price Choice",
-  "description": "Displays a price choice for a product",
+	"description": "Displays a price choice for a product",
 	"category": "layout",
-	"parent": [ "checkout-engine/price-selector" ],
-  "keywords": ["price", "product", "choice", "checkout"],
-  "supports": {
-    "reusable": false,
+	"parent": ["surecart/price-selector"],
+	"keywords": ["price", "product", "choice", "checkout"],
+	"supports": {
+		"reusable": false,
 		"html": false
-  },
+	},
 	"attributes": {
-    "price_id": {
+		"price_id": {
 			"type": "string"
 		},
-    "label" : {
-      "type": "string"
-    },
-    "description" : {
-      "type": "string"
-    },
-    "quantity": {
+		"label": {
+			"type": "string"
+		},
+		"description": {
+			"type": "string"
+		},
+		"quantity": {
 			"type": "number"
 		},
 		"type": {
 			"type": "string",
 			"default": "radio"
 		},
-    "checked": {
+		"checked": {
 			"type": "boolean"
 		},
-    "show_label": {
-      "type": "boolean",
-      "default": true
-    },
-    "show_price": {
-      "type": "boolean",
-      "default": true
-    },
-    "show_control": {
-      "type": "boolean",
-      "default": true
-    }
+		"show_label": {
+			"type": "boolean",
+			"default": true
+		},
+		"show_price": {
+			"type": "boolean",
+			"default": true
+		},
+		"show_control": {
+			"type": "boolean",
+			"default": true
+		}
 	}
 }

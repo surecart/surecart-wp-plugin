@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { CeCard } from '@checkout-engine/components-react';
+import { ScCard } from '@surecart/components-react';
 
 export default ({ title, description, children }) => {
 	return (
@@ -28,7 +28,7 @@ export default ({ title, description, children }) => {
 					{description}
 				</p>
 			)}
-			<CeCard>{children}</CeCard>
+			<ScCard>{children}</ScCard>
 		</div>
 	);
 };

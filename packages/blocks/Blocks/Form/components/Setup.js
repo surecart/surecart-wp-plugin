@@ -4,11 +4,7 @@ import { __ } from '@wordpress/i18n';
 import { css, jsx } from '@emotion/core';
 import { __experimentalLinkControl as LinkControl } from '@wordpress/block-editor';
 
-import {
-	CeRadioGroup,
-	CeRadio,
-	CeButton,
-} from '@checkout-engine/components-react';
+import { ScRadioGroup, ScRadio, ScButton } from '@surecart/components-react';
 import PriceChoices from '@scripts/blocks/components/PriceChoices';
 import { useEffect, useState } from 'react';
 import ChooseDesign from './ChooseDesign';
@@ -35,9 +31,9 @@ export default ({ onCreate }) => {
 
 	return (
 		<PlaceholderTemplate
-			header={__('Products & Behavior', 'checkout-engine')}
+			header={__('Products & Behavior', 'surecart')}
 			footerRight={
-				<CeButton
+				<ScButton
 					type="primary"
 					disabled={createDisabled}
 					onClick={() =>
@@ -50,20 +46,20 @@ export default ({ onCreate }) => {
 						})
 					}
 				>
-					{__('Create', 'checkout_engine')}
-				</CeButton>
+					{__('Create', 'surecart')}
+				</ScButton>
 			}
 			footerLeft={
-				<CeButton
+				<ScButton
 					type="default"
 					onClick={() => {
 						setChoices([]);
 						setTemplate('');
 					}}
 				>
-					<ce-icon name="arrow-left" slot="prefix"></ce-icon>
-					{__('Back', 'checkout_engine')}
-				</CeButton>
+					<sc-icon name="arrow-left" slot="prefix"></sc-icon>
+					{__('Back', 'surecart')}
+				</ScButton>
 			}
 		>
 			<div
@@ -81,11 +77,9 @@ export default ({ onCreate }) => {
 					setChoiceType={setChoiceType}
 				/>
 
-				<ce-dashboard-module
-					heading={__('Thank You Page', 'checkout_engine')}
-				>
+				<sc-dashboard-module heading={__('Thank You Page', 'surecart')}>
 					<ToggleControl
-						label={__('Custom Thank You Page', 'checkout_engine')}
+						label={__('Custom Thank You Page', 'surecart')}
 						checked={custom_success_url}
 						onChange={(custom_success_url) =>
 							setCustomSuccessUrl(custom_success_url)
@@ -110,7 +104,7 @@ export default ({ onCreate }) => {
 							/>
 						</div>
 					)}
-				</ce-dashboard-module>
+				</sc-dashboard-module>
 			</div>
 		</PlaceholderTemplate>
 	);

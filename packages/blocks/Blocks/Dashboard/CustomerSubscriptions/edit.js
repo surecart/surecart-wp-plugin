@@ -6,9 +6,9 @@ import {
 } from '@wordpress/block-editor';
 import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
 import {
-	CeSubscriptionDetails,
-	CeDashboardModule,
-} from '@checkout-engine/components-react';
+	ScSubscriptionDetails,
+	ScDashboardModule,
+} from '@surecart/components-react';
 import { Fragment } from 'react';
 
 export default ({ attributes, setAttributes }) => {
@@ -25,7 +25,7 @@ export default ({ attributes, setAttributes }) => {
 				<PanelBody>
 					<PanelRow>
 						<TextControl
-							label={__('Title', 'checkout_engine')}
+							label={__('Title', 'surecart')}
 							value={title}
 							onChange={(title) => setAttributes({ title })}
 						/>
@@ -33,7 +33,7 @@ export default ({ attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<CeDashboardModule {...blockProps}>
+			<ScDashboardModule {...blockProps}>
 				<RichText
 					aria-label={__('Title')}
 					placeholder={__('Add A Title…')}
@@ -44,15 +44,15 @@ export default ({ attributes, setAttributes }) => {
 					allowedFormats={['core/bold', 'core/italic']}
 				/>
 
-				<ce-button type="link" slot="end">
-					{__('View all', 'checkout_engine')}
-					<ce-icon name="chevron-right" slot="suffix"></ce-icon>
-				</ce-button>
+				<sc-button type="link" slot="end">
+					{__('View all', 'surecart')}
+					<sc-icon name="chevron-right" slot="suffix"></sc-icon>
+				</sc-button>
 
-				<ce-card no-padding style={{ '--overflow': 'hidden' }}>
-					<ce-stacked-list>
-						<ce-stacked-list-row mobile-size={0}>
-							<CeSubscriptionDetails
+				<sc-card no-padding style={{ '--overflow': 'hidden' }}>
+					<sc-stacked-list>
+						<sc-stacked-list-row mobile-size={0}>
+							<ScSubscriptionDetails
 								subscription={{
 									id: 'a',
 									status: 'active',
@@ -70,14 +70,14 @@ export default ({ attributes, setAttributes }) => {
 										},
 									},
 								}}
-							></CeSubscriptionDetails>
-							<ce-icon
+							></ScSubscriptionDetails>
+							<sc-icon
 								name="chevron-right"
 								slot="suffix"
-							></ce-icon>
-						</ce-stacked-list-row>
-						<ce-stacked-list-row mobile-size={0}>
-							<CeSubscriptionDetails
+							></sc-icon>
+						</sc-stacked-list-row>
+						<sc-stacked-list-row mobile-size={0}>
+							<ScSubscriptionDetails
 								subscription={{
 									id: 'b',
 									status: 'trialing',
@@ -95,15 +95,15 @@ export default ({ attributes, setAttributes }) => {
 										},
 									},
 								}}
-							></CeSubscriptionDetails>
-							<ce-icon
+							></ScSubscriptionDetails>
+							<sc-icon
 								name="chevron-right"
 								slot="suffix"
-							></ce-icon>
-						</ce-stacked-list-row>
-					</ce-stacked-list>
-				</ce-card>
-			</CeDashboardModule>
+							></sc-icon>
+						</sc-stacked-list-row>
+					</sc-stacked-list>
+				</sc-card>
+			</ScDashboardModule>
 		</Fragment>
 	);
 };

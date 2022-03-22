@@ -7,7 +7,7 @@ import {
 	InspectorControls,
 	store as blockEditorStore,
 } from '@wordpress/block-editor';
-import { CeCheckout } from '@checkout-engine/components-react';
+import { ScCheckout } from '@surecart/components-react';
 import { Fragment, useState } from '@wordpress/element';
 import { parse } from '@wordpress/blocks';
 import {
@@ -25,24 +25,24 @@ import Setup from './components/Setup';
 
 const ALLOWED_BLOCKS = [
 	'core/spacer',
-	'checkout-engine/columns',
-	'checkout-engine/input',
-	'checkout-engine/password',
-	'checkout-engine/price-selector',
-	'checkout-engine/checkbox',
-	'checkout-engine/divider',
-	'checkout-engine/heading',
-	'checkout-engine/button',
-	'checkout-engine/email',
-	'checkout-engine/switch',
-	'checkout-engine/name',
-	'checkout-engine/payment',
-	'checkout-engine/express-payment',
-	'checkout-engine/pricing-section',
-	'checkout-engine/totals',
-	'checkout-engine/form',
-	'checkout-engine/section-title',
-	'checkout-engine/submit',
+	'surecart/columns',
+	'surecart/input',
+	'surecart/password',
+	'surecart/price-selector',
+	'surecart/checkbox',
+	'surecart/divider',
+	'surecart/heading',
+	'surecart/button',
+	'surecart/email',
+	'surecart/switch',
+	'surecart/name',
+	'surecart/payment',
+	'surecart/express-payment',
+	'surecart/pricing-section',
+	'surecart/totals',
+	'surecart/form',
+	'surecart/section-title',
+	'surecart/submit',
 ];
 
 export default function edit({ clientId, attributes, setAttributes }) {
@@ -62,7 +62,7 @@ export default function edit({ clientId, attributes, setAttributes }) {
 		const r = confirm(
 			__(
 				'Are you sure you want to change the template? This will completely replace your current form.',
-				'checkout-engine'
+				'surecart'
 			)
 		);
 		if (!r) return;
@@ -112,14 +112,14 @@ export default function edit({ clientId, attributes, setAttributes }) {
 
 		// look through nested blocks and add or remove prices.
 		blocks.forEach(function iter(block, index, blocks) {
-			if (block.name === 'checkout-engine/price-selector') {
+			if (block.name === 'surecart/price-selector') {
 				if (remove) {
 					blocks.splice(index, 1);
 				} else {
 					blocks[index].attributes.type = choice_type;
 					blocks[index].innerBlocks = choices.map((choice, index) => {
 						return [
-							'checkout-engine/price-choice',
+							'surecart/price-choice',
 							{
 								price_id: choice?.id,
 								quantity: choice?.quantity || 1,
@@ -144,7 +144,7 @@ export default function edit({ clientId, attributes, setAttributes }) {
 
 		// look through nested blocks and add or remove prices.
 		blocks.forEach(function iter(block, index, blocks) {
-			if (block.name === 'checkout-engine/donation') {
+			if (block.name === 'surecart/donation') {
 				if (remove) {
 					blocks.splice(index, 1);
 				} else {
@@ -186,16 +186,16 @@ export default function edit({ clientId, attributes, setAttributes }) {
 	return (
 		<Fragment>
 			<InspectorControls>
-				<PanelBody title={__('Form Template', 'checkout_engine')}>
+				<PanelBody title={__('Form Template', 'surecart')}>
 					<PanelRow>
 						<div>
 							<Button isPrimary onClick={changeTemplate}>
-								{__('Change Template', 'checkout_engine')}
+								{__('Change Template', 'surecart')}
 							</Button>
 						</div>
 					</PanelRow>
 				</PanelBody>
-				<PanelBody title={__('Dimensions', 'checkout_engine')}>
+				<PanelBody title={__('Dimensions', 'surecart')}>
 					<PanelRow>
 						<UnitControl
 							label={__('Row Gap')}
@@ -203,7 +203,7 @@ export default function edit({ clientId, attributes, setAttributes }) {
 							value={gap}
 							help={__(
 								'The this is the space between the rows of form elements.',
-								'checkout_engine'
+								'surecart'
 							)}
 							units={[
 								{ value: 'px', label: 'px', default: 0 },
@@ -231,7 +231,7 @@ export default function edit({ clientId, attributes, setAttributes }) {
 							display: grid;
 							gap: 0.5em;
 							border: 1px solid transparent;
-							background: var(--ce-color-gray-100, #f9fafb);
+							background: var(--sc-color-gray-100, #f9fafb);
 						`}
 					>
 						<div
@@ -248,21 +248,21 @@ export default function edit({ clientId, attributes, setAttributes }) {
 									flex: 1;
 									user-select: none;
 									display: inline-block;
-									color: var(--ce-input-label-color);
+									color: var(--sc-input-label-color);
 									font-weight: var(
-										--ce-input-label-font-weight
+										--sc-input-label-font-weight
 									);
 									text-transform: var(
-										--ce-input-label-text-transform,
+										--sc-input-label-text-transform,
 										none
 									);
 									letter-spacing: var(
-										--ce-input-label-letter-spacing,
+										--sc-input-label-letter-spacing,
 										0
 									);
 								`}
 							>
-								{__('Form', 'checkout_engine')}
+								{__('Form', 'surecart')}
 							</div>
 							<div
 								css={css`
@@ -315,7 +315,7 @@ export default function edit({ clientId, attributes, setAttributes }) {
 											</span>
 										</span>
 
-										<ce-icon
+										<sc-icon
 											name="shopping-bag"
 											style={{ fontSize: '18px' }}
 										/>
@@ -331,7 +331,7 @@ export default function edit({ clientId, attributes, setAttributes }) {
 							/>
 						)}
 					</div>
-					<CeCheckout
+					<ScCheckout
 						keys={ceData?.keys}
 						mode={mode}
 						formId={formId}
@@ -350,7 +350,7 @@ export default function edit({ clientId, attributes, setAttributes }) {
 							css={css`
 								*
 									> *
-									> .wp-block:not(ce-choice):not(ce-column):not(:last-child) {
+									> .wp-block:not(sc-choice):not(sc-column):not(:last-child) {
 									margin-bottom: ${gap} !important;
 								}
 							`}
@@ -365,7 +365,7 @@ export default function edit({ clientId, attributes, setAttributes }) {
 								}
 							/>
 						</div>
-					</CeCheckout>
+					</ScCheckout>
 				</div>
 			)}
 		</Fragment>

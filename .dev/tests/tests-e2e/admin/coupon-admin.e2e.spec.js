@@ -91,71 +91,71 @@ const VALIDATION_ERROR = {
 	],
 };
 
-describe( 'Coupon Admin', () => {
+describe('Coupon Admin', () => {
 	let form, saveButton;
 
-	beforeEach( async () => {
-		await visitAdminPage( 'admin.php', 'page=ce-coupons&action=edit' );
-		form = await page.waitForSelector( '.ce-model-form' );
-		saveButton = await page.waitForSelector( '.ce-save-model' );
-	} );
+	beforeEach(async () => {
+		await visitAdminPage('admin.php', 'page=sc-coupons&action=edit');
+		form = await page.waitForSelector('.sc-model-form');
+		saveButton = await page.waitForSelector('.sc-save-model');
+	});
 
-	afterEach( async () => {
-		await setUpResponseMocking( [] );
-	} );
+	afterEach(async () => {
+		await setUpResponseMocking([]);
+	});
 
 	// get html5 validation to pass
 	const fillDummyData = async () => {
-		await page.type( '.ce-coupon-name', 'name' );
-		await page.type( '.ce-percent-off', '10' );
+		await page.type('.sc-coupon-name', 'name');
+		await page.type('.sc-percent-off', '10');
 	};
 
 	// save the page.
 	const save = async () => {
-		await page.waitForSelector( '.ce-save-model' );
+		await page.waitForSelector('.sc-save-model');
 		await saveButton.click();
 	};
 
 	const createCoupon = async () => {
-		setUpResponseMocking( [
+		setUpResponseMocking([
 			{
-				match: ( request ) => {
+				match: (request) => {
 					return (
-						request.url().includes( 'coupons' ) &&
+						request.url().includes('coupons') &&
 						request.method() === 'POST'
 					);
 				},
-				onRequestMatch: ( request ) => {
-					return request.respond( {
+				onRequestMatch: (request) => {
+					return request.respond({
 						contentType: 'application/json',
 						status: 200,
-						body: JSON.stringify( COUPON_SUCCESS ),
-					} );
+						body: JSON.stringify(COUPON_SUCCESS),
+					});
 				},
 			},
 			{
-				match: ( request ) => {
+				match: (request) => {
 					return (
-						request.url().includes( 'promotions' ) &&
+						request.url().includes('promotions') &&
 						request.method() === 'POST'
 					);
 				},
-				onRequestMatch: ( request ) => {
-					return request.respond( {
+				onRequestMatch: (request) => {
+					return request.respond({
 						contentType: 'application/json',
 						status: 200,
-						body: JSON.stringify( PROMOTION_SUCCESS ),
-					} );
+						body: JSON.stringify(PROMOTION_SUCCESS),
+					});
 				},
 			},
-		] );
+		]);
 
 		// get html5 validation to pass
-		await page.type( '.ce-coupon-name', 'name' );
-		await page.type( '.ce-percent-off', '10' );
+		await page.type('.sc-coupon-name', 'name');
+		await page.type('.sc-percent-off', '10');
 
 		// submit
-		await page.waitForSelector( '.ce-save-model' );
+		await page.waitForSelector('.sc-save-model');
 		await saveButton.click();
 	};
 
@@ -228,19 +228,19 @@ describe( 'Coupon Admin', () => {
 
 	// 	// make sure these fields are invalid.
 	// 	const nameError = await page.waitForSelector(
-	// 		'.ce-coupon-name .ce-validation-error'
+	// 		'.sc-coupon-name .sc-validation-error'
 	// 	);
 	// 	expect(
 	// 		await nameError.evaluate( ( node ) => node.innerText )
 	// 	).toContain( 'Test name validation.' );
 
 	// 	const percentError = await page.waitForSelector(
-	// 		'.ce-percent-off .ce-validation-error'
+	// 		'.sc-percent-off .sc-validation-error'
 	// 	);
 	// 	expect(
 	// 		await percentError.evaluate( ( node ) => node.innerText )
 	// 	).toContain( 'Test percent validation.' );
-	// 	await page.click( '.ce-type input[value="fixed"]' );
+	// 	await page.click( '.sc-type input[value="fixed"]' );
 
 	// 	// check html5 validation
 	// 	await saveButton.click();
@@ -249,15 +249,15 @@ describe( 'Coupon Admin', () => {
 	// 	).toBeFalsy();
 
 	// 	// fill field
-	// 	await page.waitForSelector( '.ce-amount-off' );
-	// 	await page.type( '.ce-amount-off input', '20' );
+	// 	await page.waitForSelector( '.sc-amount-off' );
+	// 	await page.type( '.sc-amount-off input', '20' );
 
 	// 	// save
 	// 	await saveButton.click();
 
 	// 	// show server validation error.
 	// 	const amountError = await page.waitForSelector(
-	// 		'.ce-amount-off .ce-validation-error'
+	// 		'.sc-amount-off .sc-validation-error'
 	// 	);
 	// 	expect(
 	// 		await amountError.evaluate( ( node ) => node.innerText )
@@ -280,18 +280,18 @@ describe( 'Coupon Admin', () => {
 
 	// 	// name updated.
 	// 	expect(
-	// 		await page.$eval( '.ce-coupon-name', ( input ) => input.value )
+	// 		await page.$eval( '.sc-coupon-name', ( input ) => input.value )
 	// 	).toBe( 'SpringSale' );
 
 	// 	// code updated.
 	// 	expect(
-	// 		await page.$eval( '.ce-promotion-code', ( input ) => input.value )
+	// 		await page.$eval( '.sc-promotion-code', ( input ) => input.value )
 	// 	).toBe( 'SPRING2021' );
 
 	// 	// fixed should be checked by default.
 	// 	expect(
 	// 		await page.$eval(
-	// 			'.ce-type input[value="fixed"]',
+	// 			'.sc-type input[value="fixed"]',
 	// 			( input ) => input.checked
 	// 		)
 	// 	).toBeTruthy();
@@ -299,7 +299,7 @@ describe( 'Coupon Admin', () => {
 	// 	// redeem by should be checked by default.
 	// 	expect(
 	// 		await page.$eval(
-	// 			'.ce-redeem-by input[type="checkbox"]',
+	// 			'.sc-redeem-by input[type="checkbox"]',
 	// 			( input ) => input.checked
 	// 		)
 	// 	).toBeTruthy();
@@ -307,30 +307,30 @@ describe( 'Coupon Admin', () => {
 	// 	// assert date picker
 	// 	expect(
 	// 		await page.$eval(
-	// 			'.ce-redeem-by .components-datetime__time-field-month-select',
+	// 			'.sc-redeem-by .components-datetime__time-field-month-select',
 	// 			( input ) => input.value
 	// 		)
 	// 	).toBe( '01' );
 	// 	expect(
 	// 		await page.$eval(
-	// 			'.ce-redeem-by .components-datetime__time-field-day-input',
+	// 			'.sc-redeem-by .components-datetime__time-field-day-input',
 	// 			( input ) => input.value
 	// 		)
 	// 	).toBe( '01' );
 	// 	expect(
 	// 		await page.$eval(
-	// 			'.ce-redeem-by .components-datetime__time-field-year-input',
+	// 			'.sc-redeem-by .components-datetime__time-field-year-input',
 	// 			( input ) => input.value
 	// 		)
 	// 	).toBe( '2022' );
 
 	// 	// repeating
 	// 	expect(
-	// 		await page.$eval( '.ce-duration select', ( input ) => input.value )
+	// 		await page.$eval( '.sc-duration select', ( input ) => input.value )
 	// 	).toBe( 'repeating' );
 	// 	expect(
 	// 		await page.$eval(
-	// 			'.ce-duration-in-months input',
+	// 			'.sc-duration-in-months input',
 	// 			( input ) => input.value
 	// 		)
 	// 	).toBe( '11' );
@@ -338,7 +338,7 @@ describe( 'Coupon Admin', () => {
 	// 	// max redemptions.
 	// 	expect(
 	// 		await page.$eval(
-	// 			'.ce-max-redemptions input[type="checkbox"]',
+	// 			'.sc-max-redemptions input[type="checkbox"]',
 	// 			( input ) => input.checked
 	// 		)
 	// 	).toBeTruthy();
@@ -346,9 +346,9 @@ describe( 'Coupon Admin', () => {
 	// 	// max redemptions value.
 	// 	expect(
 	// 		await page.$eval(
-	// 			'.ce-max-redemptions input[type="number"]',
+	// 			'.sc-max-redemptions input[type="number"]',
 	// 			( input ) => input.value
 	// 		)
 	// 	).toBe( '11' );
 	// } );
-} );
+});

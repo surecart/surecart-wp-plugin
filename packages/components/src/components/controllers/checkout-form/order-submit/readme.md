@@ -23,19 +23,19 @@
 
 ### Depends on
 
-- [ce-button](../../../ui/button)
-- [ce-icon](../../../ui/icon)
-- [ce-total](../total)
+- [sc-button](../../../ui/button)
+- [sc-icon](../../../ui/icon)
+- [sc-total](../total)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-order-submit --> ce-button
-  ce-order-submit --> ce-icon
-  ce-order-submit --> ce-total
-  ce-button --> ce-spinner
-  ce-total --> ce-format-number
-  style ce-order-submit fill:#f9f,stroke:#333,stroke-width:4px
+  sc-order-submit --> sc-button
+  sc-order-submit --> sc-icon
+  sc-order-submit --> sc-total
+  sc-button --> sc-spinner
+  sc-total --> sc-format-number
+  style sc-order-submit fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

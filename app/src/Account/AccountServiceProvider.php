@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngine\Account;
+namespace SureCart\Account;
 
-use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
+use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 /**
  * Provide users dependencies.
@@ -15,12 +15,12 @@ class AccountServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function register( $container ) {
-		$container['checkout_engine.account'] = function () {
+		$container['surecart.account'] = function () {
 			return new AccountService();
 		};
 
-		$app = $container[ CHECKOUT_ENGINE_APPLICATION_KEY ];
-		$app->alias( 'account', 'checkout_engine.account' );
+		$app = $container[ SURECART_APPLICATION_KEY ];
+		$app->alias( 'account', 'surecart.account' );
 	}
 
 	/**

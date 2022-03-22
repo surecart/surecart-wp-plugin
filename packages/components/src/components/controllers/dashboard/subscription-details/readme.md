@@ -18,36 +18,36 @@
 
 ### Used by
 
- - [ce-subscription](../subscription)
- - [ce-subscription-cancel](../subscription-cancel)
- - [ce-subscription-renew](../subscription-renew)
- - [ce-subscriptions-list](../subscriptions-list)
+ - [sc-subscription](../subscription)
+ - [sc-subscription-cancel](../subscription-cancel)
+ - [sc-subscription-renew](../subscription-renew)
+ - [sc-subscriptions-list](../subscriptions-list)
 
 ### Depends on
 
-- [ce-subscription-status-badge](../../../ui/subscription-status-badge)
-- [ce-format-date](../../../util/format-date)
-- [ce-skeleton](../../../ui/skeleton)
-- [ce-text](../../../ui/text)
-- [ce-tag](../../../ui/tag)
-- [ce-format-number](../../../util/format-number)
+- [sc-subscription-status-badge](../../../ui/subscription-status-badge)
+- [sc-format-date](../../../util/format-date)
+- [sc-skeleton](../../../ui/skeleton)
+- [sc-text](../../../ui/text)
+- [sc-tag](../../../ui/tag)
+- [sc-format-number](../../../util/format-number)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-subscription-details --> ce-subscription-status-badge
-  ce-subscription-details --> ce-format-date
-  ce-subscription-details --> ce-skeleton
-  ce-subscription-details --> ce-text
-  ce-subscription-details --> ce-tag
-  ce-subscription-details --> ce-format-number
-  ce-subscription-status-badge --> ce-format-date
-  ce-subscription-status-badge --> ce-tag
-  ce-subscription --> ce-subscription-details
-  ce-subscription-cancel --> ce-subscription-details
-  ce-subscription-renew --> ce-subscription-details
-  ce-subscriptions-list --> ce-subscription-details
-  style ce-subscription-details fill:#f9f,stroke:#333,stroke-width:4px
+  sc-subscription-details --> sc-subscription-status-badge
+  sc-subscription-details --> sc-format-date
+  sc-subscription-details --> sc-skeleton
+  sc-subscription-details --> sc-text
+  sc-subscription-details --> sc-tag
+  sc-subscription-details --> sc-format-number
+  sc-subscription-status-badge --> sc-format-date
+  sc-subscription-status-badge --> sc-tag
+  sc-subscription --> sc-subscription-details
+  sc-subscription-cancel --> sc-subscription-details
+  sc-subscription-renew --> sc-subscription-details
+  sc-subscriptions-list --> sc-subscription-details
+  style sc-subscription-details fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

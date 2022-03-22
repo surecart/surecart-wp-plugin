@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngine\Rest\Traits;
+namespace SureCart\Rest\Traits;
 
-use CheckoutEngine\Models\User;
+use SureCart\Models\User;
 
 trait CanListByCustomerIds {
 	/**

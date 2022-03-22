@@ -19,7 +19,7 @@ import {
  * @constant
  * @type {string[]}
  */
-const ALLOWED_BLOCKS = ['checkout-engine/dashboard-page'];
+const ALLOWED_BLOCKS = ['surecart/dashboard-page'];
 
 export default () => {
 	const useInnerBlocksProps = __stableUseInnerBlocksProps

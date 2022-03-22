@@ -1,11 +1,11 @@
 <div class="wrap">
-	<?php \CheckoutEngine::render( 'layouts/partials/admin-index-styles' ); ?>
+	<?php \SureCart::render( 'layouts/partials/admin-index-styles' ); ?>
 	<?php
-	\CheckoutEngine::render(
+	\SureCart::render(
 		'layouts/partials/admin-index-header',
 		[
-			'title'    => __( 'Customers', 'checkout_engine' ),
-			'new_link' => \CheckoutEngine::getUrl()->edit( 'customers' ),
+			'title'    => __( 'Customers', 'surecart' ),
+			'new_link' => \SureCart::getUrl()->edit( 'customers' ),
 		]
 	);
 	?>

@@ -16,6 +16,6 @@ export const STORE_CONFIG = {
 };
 
 // export key
-export const BLOCKS_STORE_KEY = 'checkout-engine/blocks';
+export const BLOCKS_STORE_KEY = 'surecart/blocks';
 
-export default registerStore( BLOCKS_STORE_KEY, STORE_CONFIG );
+export default registerStore(BLOCKS_STORE_KEY, STORE_CONFIG);

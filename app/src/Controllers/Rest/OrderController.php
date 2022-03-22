@@ -1,11 +1,11 @@
 <?php
 
-namespace CheckoutEngine\Controllers\Rest;
+namespace SureCart\Controllers\Rest;
 
-use CheckoutEngine\Models\Order;
-use CheckoutEngine\Models\Form;
-use CheckoutEngine\Models\User;
-use CheckoutEngine\WordPress\Users\CustomerLinkService;
+use SureCart\Models\Order;
+use SureCart\Models\Form;
+use SureCart\Models\User;
+use SureCart\WordPress\Users\CustomerLinkService;
 
 /**
  * Handle price requests through the REST API
@@ -21,12 +21,12 @@ class OrderController extends RestController {
 	/**
 	 * Middleware before we make the request.
 	 *
-	 * @param \CheckoutEngine\Models\Model $class Model class instance.
-	 * @param \WP_REST_Request             $request Request object.
+	 * @param \SureCart\Models\Model $class Model class instance.
+	 * @param \WP_REST_Request       $request Request object.
 	 *
-	 * @return \CheckoutEngine\Models\Model|\WP_Error
+	 * @return \SureCart\Models\Model|\WP_Error
 	 */
-	protected function middleware( \CheckoutEngine\Models\Model $class, \WP_REST_Request $request ) {
+	protected function middleware( \SureCart\Models\Model $class, \WP_REST_Request $request ) {
 		$class = $this->setMode( $class, $request );
 		if ( is_wp_error( $class ) ) {
 			return $class;
@@ -38,12 +38,12 @@ class OrderController extends RestController {
 	/**
 	 * Let's set the customer's email and name if they are already logged in.
 	 *
-	 * @param \CheckoutEngine\Models\Model $class Model class instance.
-	 * @param \WP_REST_Request             $request Request object.
+	 * @param \SureCart\Models\Model $class Model class instance.
+	 * @param \WP_REST_Request       $request Request object.
 	 *
-	 * @return \CheckoutEngine\Models\Model|\WP_Error
+	 * @return \SureCart\Models\Model|\WP_Error
 	 */
-	protected function maybeSetUser( \CheckoutEngine\Models\Model $class, \WP_REST_Request $request ) {
+	protected function maybeSetUser( \SureCart\Models\Model $class, \WP_REST_Request $request ) {
 		// we only care about new sessions for now.
 		if ( $request->get_method() !== 'POST' ) {
 			return $class;
@@ -75,12 +75,12 @@ class OrderController extends RestController {
 	 * if a test payment is requested. This prevents the spamming of any
 	 * forms on your site that are not in test mode.
 	 *
-	 * @param \CheckoutEngine\Models\Model $class Model class instance.
-	 * @param \WP_REST_Request             $request Request object.
+	 * @param \SureCart\Models\Model $class Model class instance.
+	 * @param \WP_REST_Request       $request Request object.
 	 *
-	 * @return \CheckoutEngine\Models\Model|\WP_Error
+	 * @return \SureCart\Models\Model|\WP_Error
 	 */
-	protected function setMode( \CheckoutEngine\Models\Model $class, \WP_REST_Request $request ) {
+	protected function setMode( \SureCart\Models\Model $class, \WP_REST_Request $request ) {
 		$mode = 'live';
 		if ( false === $request['live_mode'] && ! current_user_can( 'edit_ce_orders' ) ) {
 			$mode = isset( $request['form_id'] ) ? $this->getFormMode( $request['form_id'] ) : 'live';
@@ -149,7 +149,7 @@ class OrderController extends RestController {
 	/**
 	 * Link the customer id to the order.
 	 *
-	 * @param \CheckoutEngine\Models\Order $order Order model.
+	 * @param \SureCart\Models\Order $order Order model.
 	 * @return \WP_User|\WP_Error
 	 */
 	public function linkCustomerId( $order, $request ) {
@@ -173,7 +173,7 @@ class OrderController extends RestController {
 			$errors->add( $valid_login->get_error_code(), $valid_login->get_error_message() );
 		}
 
-		return apply_filters( 'checkout_engine/checkout/validate', $errors, $args, $request );
+		return apply_filters( 'surecart/checkout/validate', $errors, $args, $request );
 	}
 
 	/**

@@ -1,0 +1,90 @@
+import { newE2EPage } from '@stencil/core/testing';
+
+describe('sc-choice', () => {
+  let page, element, label, input;
+
+  const selector = 'sc-choice';
+
+  beforeEach(async () => {
+    page = await newE2EPage();
+    await page.setContent(`<${selector}></${selector}>`);
+    element = await page.find(`${selector}`);
+    label = await page.find(`${selector} >>> .choice`);
+    input = await page.find(`${selector} >>> input`);
+  });
+
+  it('renders', async () => {
+    const page = await newE2EPage();
+    await page.setContent('<sc-choice></sc-choice>');
+
+    const element = await page.find(selector);
+    expect(element).toHaveClass('hydrated');
+  });
+
+  // it('Can report validity', async () => {
+  //   let page = await newE2EPage();
+  //   await page.setContent(`<${selector} required name="test" type="checkbox"></${selector}>`);
+  //   element = await page.find(`${selector}`);
+
+  //   let result = await element.callMethod('reportValidity');
+  //   expect(result).toBeFalsy();
+
+  //   result = await element.callMethod('setCustomValidity', 'message');
+  //   expect(result).toBeFalsy();
+  //   expect(label).not.toHaveClasses(['choice--checked', 'choice--focused']);
+
+  //   page = await newE2EPage();
+  //   await page.setContent(`<${selector} required name="test" type="checkbox" checked></${selector}>`);
+  //   element = await page.find(`${selector}`);
+
+  //   result = await element.callMethod('reportValidity');
+  //   expect(result).toBeTruthy();
+  // });
+
+  it('Should be clickable', async () => {
+    const scBlur = await page.spyOnEvent('scBlur');
+    const scFocus = await page.spyOnEvent('scFocus');
+
+    expect(label).toHaveClass('choice');
+    expect(label).not.toHaveClasses(['choice--checked', 'choice--focused']);
+
+    await input.click();
+    await page.waitForChanges();
+    expect(label).toHaveClass('choice');
+    expect(label).toHaveClasses(['choice--checked', 'choice--focused']);
+    expect(scFocus).toHaveReceivedEvent();
+
+    await page.$eval(selector, e => e.blur());
+    await page.waitForChanges();
+    expect(label).not.toHaveClass('choice--focused');
+    expect(scBlur).toHaveReceivedEvent();
+  });
+
+  it('Can be disabled', async () => {
+    expect(input).not.toHaveAttribute('disabled');
+    element.setProperty('disabled', true);
+    await page.waitForChanges();
+    expect(label).toHaveClasses(['choice', 'choice--disabled']);
+    expect(input).toHaveAttribute('disabled');
+  });
+
+  it('Can be radio or checkbox', async () => {
+    expect(input).toEqualAttribute('type', 'radio');
+    element.setProperty('type', 'checkbox');
+    await page.waitForChanges();
+    expect(input).toEqualAttribute('type', 'checkbox');
+  });
+
+  // it('Can be required', async () => {
+  //   page = await newE2EPage();
+  //   await page.setContent(`
+  //   <sc-form>
+  //     <sc-choice required name="test"></sc-choice>
+  //   </sc-form>`);
+  //   element = await page.find(`sc-choice`);
+  //   const form = await page.find(`sc-form`);
+  //   form.callMethod('submit');
+  //   await page.waitForChanges();
+  //   expect(element).toHaveAttribute('invalid');
+  // });
+});

@@ -20,7 +20,7 @@
 
 | Event     | Description | Type                |
 | --------- | ----------- | ------------------- |
-| `ceClose` | Close event | `CustomEvent<void>` |
+| `scClose` | Close event | `CustomEvent<void>` |
 
 
 ## Methods

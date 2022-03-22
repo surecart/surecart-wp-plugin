@@ -4,6 +4,6 @@ export default ({ attributes }) => {
 		return null;
 	}
 	return (
-		<ce-order-coupon-form label={text}>{button_text}</ce-order-coupon-form>
+		<sc-order-coupon-form label={text}>{button_text}</sc-order-coupon-form>
 	);
 };

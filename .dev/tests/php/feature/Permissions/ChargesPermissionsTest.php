@@ -1,11 +1,11 @@
 <?php
-namespace CheckoutEngine\Tests;
+namespace SureCart\Tests;
 
-use CheckoutEngine\Request\RequestService;
-use CheckoutEngine\Tests\CheckoutEngineUnitTestCase;
+use SureCart\Request\RequestService;
+use SureCart\Tests\SureCartUnitTestCase;
 
 
-class ChargesPermissionsTest extends CheckoutEngineUnitTestCase {
+class ChargesPermissionsTest extends SureCartUnitTestCase {
 	use \Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 	/**
 	 * Set up a new app instance to use for tests.
@@ -13,14 +13,14 @@ class ChargesPermissionsTest extends CheckoutEngineUnitTestCase {
 	public function setUp()
 	{
 		// Set up an app instance with whatever stubs and mocks we need before every test.
-		\CheckoutEngine::make()->bootstrap([
+		\SureCart::make()->bootstrap([
 			'providers' => [
-				\CheckoutEngine\Request\RequestServiceProvider::class,
-				\CheckoutEngine\Permissions\RolesServiceProvider::class,
-				\CheckoutEngine\WordPress\Pages\PageServiceProvider::class,
-				\CheckoutEngine\WordPress\PostTypes\FormPostTypeServiceProvider::class,
-				\CheckoutEngine\Activation\ActivationServiceProvider::class,
-				\CheckoutEngine\WordPress\PluginServiceProvider::class,
+				\SureCart\Request\RequestServiceProvider::class,
+				\SureCart\Permissions\RolesServiceProvider::class,
+				\SureCart\WordPress\Pages\PageServiceProvider::class,
+				\SureCart\WordPress\PostTypes\FormPostTypeServiceProvider::class,
+				\SureCart\Activation\ActivationServiceProvider::class,
+				\SureCart\WordPress\PluginServiceProvider::class,
 			]
 		], false);
 
@@ -29,11 +29,11 @@ class ChargesPermissionsTest extends CheckoutEngineUnitTestCase {
 
 	public function test_edit_permissions()
 	{
-		\CheckoutEngine::plugin()->activation()->bootstrap();
+		\SureCart::plugin()->activation()->bootstrap();
 
 		// mock the requests in the container
 		$requests =  \Mockery::mock(RequestService::class);
-		\CheckoutEngine::alias('request', function () use ($requests) {
+		\SureCart::alias('request', function () use ($requests) {
 			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
 		});
 

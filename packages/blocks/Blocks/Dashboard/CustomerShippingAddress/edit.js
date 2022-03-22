@@ -1,6 +1,6 @@
 import { __, _n } from '@wordpress/i18n';
 import { Disabled } from '@wordpress/components';
-import { CeAddress } from '@checkout-engine/components-react';
+import { ScAddress } from '@surecart/components-react';
 
 export default ({ attributes, setAttributes }) => {
 	const { label } = attributes;
@@ -8,7 +8,7 @@ export default ({ attributes, setAttributes }) => {
 	return (
 		<div>
 			<Disabled>
-				<CeAddress
+				<ScAddress
 					label={label}
 					shippingAddress={{
 						country: 'US',
@@ -17,7 +17,7 @@ export default ({ attributes, setAttributes }) => {
 						postal_code: '11754',
 						state: 'NY',
 					}}
-				></CeAddress>
+				></ScAddress>
 			</Disabled>
 		</div>
 	);

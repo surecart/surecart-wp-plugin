@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-stacked-list renders 1`] = `
+<sc-stacked-list>
+  <mock:shadow-root>
+    <slot></slot>
+  </mock:shadow-root>
+</sc-stacked-list>
+`;

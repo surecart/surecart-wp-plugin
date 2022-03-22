@@ -1,4 +1,4 @@
-<h2><?php esc_html_e( 'SureCart', 'checkout_engine' ); ?></h2>
+<h2><?php esc_html_e( 'SureCart', 'surecart' ); ?></h2>
 
 <table class="form-table">
 	<tr>
@@ -9,7 +9,7 @@
 					<?php echo wp_kses_post( $customer->name ?? $customer->email ); ?>
 				</a>
 			<?php else : ?>
-				<?php esc_html_e( 'This user is not a customer.', 'checkout_engine' ); ?>
+				<?php esc_html_e( 'This user is not a customer.', 'surecart' ); ?>
 			<?php endif; ?>
 		</td>
 	</tr>

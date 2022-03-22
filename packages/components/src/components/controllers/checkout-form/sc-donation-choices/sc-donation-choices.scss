@@ -1,0 +1,14 @@
+:host {
+  display: block;
+}
+
+.sc-donation-choices {
+  display: grid;
+  gap: var(--sc-spacing-small);
+  position: relative;
+
+  &__form {
+    display: grid;
+    gap: var(--sc-spacing-small);
+  }
+}

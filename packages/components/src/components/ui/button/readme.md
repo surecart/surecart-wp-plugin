@@ -29,8 +29,8 @@
 
 | Event     | Description                          | Type                |
 | --------- | ------------------------------------ | ------------------- |
-| `ceBlur`  | Emitted when the button loses focus. | `CustomEvent<void>` |
-| `ceFocus` | Emitted when the button gains focus. | `CustomEvent<void>` |
+| `scBlur`  | Emitted when the button loses focus. | `CustomEvent<void>` |
+| `scFocus` | Emitted when the button gains focus. | `CustomEvent<void>` |
 
 
 ## Shadow Parts
@@ -48,64 +48,64 @@
 
 ### Used by
 
- - [ce-charges-list](../../controllers/dashboard/charges-list)
- - [ce-coupon-form](../coupon-form)
- - [ce-customer-details](../customer-details)
- - [ce-customer-edit](../../controllers/dashboard/customer-edit)
- - [ce-donation-choices](../../controllers/checkout-form/ce-donation-choices)
- - [ce-downloads-list](../downloads-list)
- - [ce-invoices-list](../../controllers/dashboard/invoices-list)
- - [ce-login-form](../../controllers/login)
- - [ce-order-submit](../../controllers/checkout-form/order-submit)
- - [ce-orders-list](../../controllers/dashboard/orders-list)
- - [ce-pagination](../pagination)
- - [ce-payment-method-create](../../controllers/dashboard/payment-method-create)
- - [ce-payment-methods-list](../../controllers/dashboard/payment-methods-list)
- - [ce-subscription](../../controllers/dashboard/subscription)
- - [ce-subscription-cancel](../../controllers/dashboard/subscription-cancel)
- - [ce-subscription-payment](../../controllers/dashboard/subscription-payment)
- - [ce-subscription-renew](../../controllers/dashboard/subscription-renew)
- - [ce-subscription-switch](../../controllers/dashboard/subscription-switch)
- - [ce-subscriptions-list](../../controllers/dashboard/subscriptions-list)
- - [ce-tax-id-input](../tax-id-input)
- - [ce-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
- - [ce-wordpress-password-edit](../../controllers/dashboard/wordpress-password-edit)
- - [ce-wordpress-user](../../controllers/dashboard/wordpress-user)
- - [ce-wordpress-user-edit](../../controllers/dashboard/wordpress-user-edit)
+ - [sc-charges-list](../../controllers/dashboard/charges-list)
+ - [sc-coupon-form](../coupon-form)
+ - [sc-customer-details](../customer-details)
+ - [sc-customer-edit](../../controllers/dashboard/customer-edit)
+ - [sc-donation-choices](../../controllers/checkout-form/sc-donation-choices)
+ - [sc-downloads-list](../downloads-list)
+ - [sc-invoices-list](../../controllers/dashboard/invoices-list)
+ - [sc-login-form](../../controllers/login)
+ - [sc-order-submit](../../controllers/checkout-form/order-submit)
+ - [sc-orders-list](../../controllers/dashboard/orders-list)
+ - [sc-pagination](../pagination)
+ - [sc-payment-method-create](../../controllers/dashboard/payment-method-create)
+ - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
+ - [sc-subscription](../../controllers/dashboard/subscription)
+ - [sc-subscription-cancel](../../controllers/dashboard/subscription-cancel)
+ - [sc-subscription-payment](../../controllers/dashboard/subscription-payment)
+ - [sc-subscription-renew](../../controllers/dashboard/subscription-renew)
+ - [sc-subscription-switch](../../controllers/dashboard/subscription-switch)
+ - [sc-subscriptions-list](../../controllers/dashboard/subscriptions-list)
+ - [sc-tax-id-input](../tax-id-input)
+ - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
+ - [sc-wordpress-password-edit](../../controllers/dashboard/wordpress-password-edit)
+ - [sc-wordpress-user](../../controllers/dashboard/wordpress-user)
+ - [sc-wordpress-user-edit](../../controllers/dashboard/wordpress-user-edit)
 
 ### Depends on
 
-- [ce-spinner](../spinner)
+- [sc-spinner](../spinner)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-button --> ce-spinner
-  ce-charges-list --> ce-button
-  ce-coupon-form --> ce-button
-  ce-customer-details --> ce-button
-  ce-customer-edit --> ce-button
-  ce-donation-choices --> ce-button
-  ce-downloads-list --> ce-button
-  ce-invoices-list --> ce-button
-  ce-login-form --> ce-button
-  ce-order-submit --> ce-button
-  ce-orders-list --> ce-button
-  ce-pagination --> ce-button
-  ce-payment-method-create --> ce-button
-  ce-payment-methods-list --> ce-button
-  ce-subscription --> ce-button
-  ce-subscription-cancel --> ce-button
-  ce-subscription-payment --> ce-button
-  ce-subscription-renew --> ce-button
-  ce-subscription-switch --> ce-button
-  ce-subscriptions-list --> ce-button
-  ce-tax-id-input --> ce-button
-  ce-upcoming-invoice --> ce-button
-  ce-wordpress-password-edit --> ce-button
-  ce-wordpress-user --> ce-button
-  ce-wordpress-user-edit --> ce-button
-  style ce-button fill:#f9f,stroke:#333,stroke-width:4px
+  sc-button --> sc-spinner
+  sc-charges-list --> sc-button
+  sc-coupon-form --> sc-button
+  sc-customer-details --> sc-button
+  sc-customer-edit --> sc-button
+  sc-donation-choices --> sc-button
+  sc-downloads-list --> sc-button
+  sc-invoices-list --> sc-button
+  sc-login-form --> sc-button
+  sc-order-submit --> sc-button
+  sc-orders-list --> sc-button
+  sc-pagination --> sc-button
+  sc-payment-method-create --> sc-button
+  sc-payment-methods-list --> sc-button
+  sc-subscription --> sc-button
+  sc-subscription-cancel --> sc-button
+  sc-subscription-payment --> sc-button
+  sc-subscription-renew --> sc-button
+  sc-subscription-switch --> sc-button
+  sc-subscriptions-list --> sc-button
+  sc-tax-id-input --> sc-button
+  sc-upcoming-invoice --> sc-button
+  sc-wordpress-password-edit --> sc-button
+  sc-wordpress-user --> sc-button
+  sc-wordpress-user-edit --> sc-button
+  style sc-button fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

@@ -17,7 +17,7 @@ import {
 /**
  * Component Dependencies
  */
-import { CeButton } from '@checkout-engine/components-react';
+import { ScButton } from '@surecart/components-react';
 
 export default ({ className, attributes, setAttributes }) => {
 	const { type, label, submit, size, show_icon, full } = attributes;
@@ -25,10 +25,10 @@ export default ({ className, attributes, setAttributes }) => {
 	return (
 		<div className={className} css={css``}>
 			<InspectorControls>
-				<PanelBody title={__('Attributes', 'checkout-engine')}>
+				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<TextControl
-							label={__('Button Text', 'checkout-engine')}
+							label={__('Button Text', 'surecart')}
 							value={label}
 							onChange={(label) => setAttributes({ label })}
 						/>
@@ -36,7 +36,7 @@ export default ({ className, attributes, setAttributes }) => {
 					<PanelRow>
 						<ToggleControl
 							checked={show_icon}
-							label={__('Show Icon', 'checkout-engine')}
+							label={__('Show Icon', 'surecart')}
 							onChange={(show_icon) =>
 								setAttributes({ show_icon })
 							}
@@ -44,14 +44,14 @@ export default ({ className, attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<ToggleControl
-							label={__('Full', 'checkout-engine')}
+							label={__('Full', 'surecart')}
 							checked={full}
 							onChange={(full) => setAttributes({ full })}
 						/>
 					</PanelRow>
 					<PanelRow>
 						<SelectControl
-							label={__('Size', 'checkout_engine')}
+							label={__('Size', 'surecart')}
 							value={size}
 							onChange={(size) => {
 								setAttributes({ size });
@@ -64,22 +64,22 @@ export default ({ className, attributes, setAttributes }) => {
 								},
 								{
 									value: 'small',
-									label: __('Small', 'checkout_engine'),
+									label: __('Small', 'surecart'),
 								},
 								{
 									value: 'medium',
-									label: __('Medium', 'checkout_engine'),
+									label: __('Medium', 'surecart'),
 								},
 								{
 									value: 'large',
-									label: __('Large', 'checkout_engine'),
+									label: __('Large', 'surecart'),
 								},
 							]}
 						/>
 					</PanelRow>
 					<PanelRow>
 						<SelectControl
-							label={__('Type', 'checkout_engine')}
+							label={__('Type', 'surecart')}
 							value={type}
 							onChange={(type) => {
 								setAttributes({ type });
@@ -87,11 +87,11 @@ export default ({ className, attributes, setAttributes }) => {
 							options={[
 								{
 									value: 'primary',
-									label: __('Button', 'checkout_engine'),
+									label: __('Button', 'surecart'),
 								},
 								{
 									value: 'info',
-									label: __('Info', 'checkout_engine'),
+									label: __('Info', 'surecart'),
 								},
 							]}
 						/>
@@ -99,13 +99,13 @@ export default ({ className, attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<CeButton type={type} submit={submit} size={size} full={full}>
+			<ScButton type={type} submit={submit} size={size} full={full}>
 				{show_icon && (
-					<ce-icon
+					<sc-icon
 						name="user"
 						style={{ fontSize: '18px' }}
 						slot="prefix"
-					></ce-icon>
+					></sc-icon>
 				)}
 
 				<RichText
@@ -116,7 +116,7 @@ export default ({ className, attributes, setAttributes }) => {
 					withoutInteractiveFormatting
 					allowedFormats={['core/bold', 'core/italic']}
 				/>
-			</CeButton>
+			</ScButton>
 		</div>
 	);
 };

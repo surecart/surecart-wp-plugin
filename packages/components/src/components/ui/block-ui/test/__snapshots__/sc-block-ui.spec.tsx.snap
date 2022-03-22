@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-block-ui renders 1`] = `
+<sc-block-ui>
+  <mock:shadow-root>
+    <div class="overlay" style="z-index: 1;">
+      <slot></slot>
+    </div>
+  </mock:shadow-root>
+</sc-block-ui>
+`;

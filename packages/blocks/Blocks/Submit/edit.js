@@ -15,7 +15,7 @@ import {
 /**
  * Component Dependencies
  */
-import { CeButton } from '@checkout-engine/components-react';
+import { ScButton } from '@surecart/components-react';
 
 export default ({ className, attributes, setAttributes }) => {
 	const { type, text, submit, full, size, show_total, show_icon } =
@@ -24,17 +24,17 @@ export default ({ className, attributes, setAttributes }) => {
 	return (
 		<div className={className}>
 			<InspectorControls>
-				<PanelBody title={__('Attributes', 'checkout-engine')}>
+				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<TextControl
-							label={__('Button Text', 'checkout-engine')}
+							label={__('Button Text', 'surecart')}
 							value={text}
 							onChange={(text) => setAttributes({ text })}
 						/>
 					</PanelRow>
 					<PanelRow>
 						<ToggleControl
-							label={__('Full', 'checkout-engine')}
+							label={__('Full', 'surecart')}
 							checked={full}
 							onChange={(full) => setAttributes({ full })}
 						/>
@@ -43,7 +43,7 @@ export default ({ className, attributes, setAttributes }) => {
 						<ToggleControl
 							label={__(
 								'Show total due in button text.',
-								'checkout-engine'
+								'surecart'
 							)}
 							checked={show_total}
 							onChange={(show_total) =>
@@ -53,10 +53,7 @@ export default ({ className, attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<ToggleControl
-							label={__(
-								'Show a secure lock icon.',
-								'checkout-engine'
-							)}
+							label={__('Show a secure lock icon.', 'surecart')}
 							checked={show_icon}
 							onChange={(show_icon) =>
 								setAttributes({ show_icon })
@@ -65,7 +62,7 @@ export default ({ className, attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<SelectControl
-							label={__('Size', 'checkout_engine')}
+							label={__('Size', 'surecart')}
 							value={size}
 							onChange={(size) => {
 								setAttributes({ size });
@@ -78,15 +75,15 @@ export default ({ className, attributes, setAttributes }) => {
 								},
 								{
 									value: 'small',
-									label: __('Small', 'checkout_engine'),
+									label: __('Small', 'surecart'),
 								},
 								{
 									value: 'medium',
-									label: __('Medium', 'checkout_engine'),
+									label: __('Medium', 'surecart'),
 								},
 								{
 									value: 'large',
-									label: __('Large', 'checkout_engine'),
+									label: __('Large', 'surecart'),
 								},
 							]}
 						/>
@@ -94,7 +91,7 @@ export default ({ className, attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<CeButton
+			<ScButton
 				type={type}
 				submit={submit}
 				{...(full ? { full: true } : {})}
@@ -129,10 +126,10 @@ export default ({ className, attributes, setAttributes }) => {
 				{show_total && (
 					<span>
 						{'\u00A0'}
-						<ce-total></ce-total>
+						<sc-total></sc-total>
 					</span>
 				)}
-			</CeButton>
+			</ScButton>
 		</div>
 	);
 };

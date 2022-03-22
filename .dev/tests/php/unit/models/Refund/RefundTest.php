@@ -1,10 +1,10 @@
 <?php
 
-namespace CheckoutEngine\Tests\Models\Refund;
+namespace SureCart\Tests\Models\Refund;
 
-use CheckoutEngine\Models\Charge;
-use CheckoutEngine\Tests\CheckoutEngineUnitTestCase;
-class RefundTest extends CheckoutEngineUnitTestCase
+use SureCart\Models\Charge;
+use SureCart\Tests\SureCartUnitTestCase;
+class RefundTest extends SureCartUnitTestCase
 {
 	/**
 	 * Set up a new app instance to use for tests.
@@ -14,10 +14,10 @@ class RefundTest extends CheckoutEngineUnitTestCase
 		parent::setUp();
 
 		// Set up an app instance with whatever stubs and mocks we need before every test.
-		\CheckoutEngine::make()->bootstrap([
+		\SureCart::make()->bootstrap([
 			'providers' => [
-				\CheckoutEngine\Request\RequestServiceProvider::class,
-				\CheckoutEngine\Support\Errors\ErrorsServiceProvider::class,
+				\SureCart\Request\RequestServiceProvider::class,
+				\SureCart\Support\Errors\ErrorsServiceProvider::class,
 			]
 		], false);
 

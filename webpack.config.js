@@ -9,11 +9,11 @@ module.exports = {
 			'@scripts': path.resolve(__dirname, 'packages'),
 			'@blocks': path.resolve(__dirname, 'packages/blocks/Blocks'),
 			'@admin': path.resolve(__dirname, 'packages/admin'),
-			'@checkout-engine/data': path.resolve(
+			'@surecart/data': path.resolve(
 				__dirname,
 				'packages/admin/store/data'
 			),
-			'@checkout-engine/ui-data': path.resolve(
+			'@surecart/ui-data': path.resolve(
 				__dirname,
 				'packages/admin/store/data'
 			),

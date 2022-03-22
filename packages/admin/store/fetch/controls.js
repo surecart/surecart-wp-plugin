@@ -1,7 +1,7 @@
 const { apiFetch } = wp;
 const { addQueryArgs } = wp.url;
 
-export const fetch = ( options = {} ) => {
+export const fetch = (options = {}) => {
 	return {
 		type: 'FETCH_FROM_API',
 		options,
@@ -9,11 +9,11 @@ export const fetch = ( options = {} ) => {
 };
 
 export default {
-	FETCH_FROM_API( { options } ) {
+	FETCH_FROM_API({ options }) {
 		const { path, query } = options;
-		return apiFetch( {
-			...( options || {} ),
-			path: addQueryArgs( `checkout-engine/v1/${ path }`, query ),
-		} );
+		return apiFetch({
+			...(options || {}),
+			path: addQueryArgs(`surecart/v1/${path}`, query),
+		});
 	},
 };

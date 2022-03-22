@@ -1,8 +1,8 @@
 <?php
-namespace CheckoutEngine\Models;
+namespace SureCart\Models;
 
-use CheckoutEngine\Models\Traits\HasCustomer;
-use CheckoutEngine\Models\Traits\HasPaymentIntent;
+use SureCart\Models\Traits\HasCustomer;
+use SureCart\Models\Traits\HasPaymentIntent;
 
 /**
  * Payment intent model.
@@ -38,7 +38,7 @@ class PaymentMethod extends Model {
 			return new \WP_Error( 'not_saved', 'Please create the payment method.' );
 		}
 
-		$detached = \CheckoutEngine::request(
+		$detached = \SureCart::request(
 			$this->endpoint . '/' . $this->attributes['id'] . '/detach/',
 			[
 				'method' => 'PATCH',

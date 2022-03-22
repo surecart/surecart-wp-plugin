@@ -1,14 +1,14 @@
-export default ( { attributes } ) => {
+export default ({ attributes }) => {
 	const { text, subscription_text } = attributes;
 	return (
-		<ce-line-item-total
-			class="ce-line-item-total"
+		<sc-line-item-total
+			class="sc-line-item-total"
 			total="total"
 			size="large"
 			show-currency="1"
 		>
-			<span slot="description">{ text }</span>
-			<span slot="subscription-title">{ subscription_text || text }</span>
-		</ce-line-item-total>
+			<span slot="description">{text}</span>
+			<span slot="subscription-title">{subscription_text || text}</span>
+		</sc-line-item-total>
 	);
 };

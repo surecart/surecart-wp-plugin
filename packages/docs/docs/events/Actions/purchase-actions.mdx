@@ -1,49 +1,49 @@
 # Purchase Actions Reference
 
-### checkout_engine/purchase_created
+### surecart/purchase_created
 
 Occurs whenever a purchase is created. This is typically when a customer successfully pays for an order at checkout.
 
 ```php
 do_action(
-	'checkout_engine/purchase_created',
+	'surecart/purchase_created',
 	(string) $purchase_id,
 	(array) $webhook_data
 )
 ```
 
-### checkout_engine/purchase_revoked
+### surecart/purchase_revoked
 
 Occurs whenever a purchase is revoked. This can happen if an order's line-item is refunded,
 or a subscription is canceled or expired.
 
 ```php
 do_action(
-	'checkout_engine/purchase_revoked',
+	'surecart/purchase_revoked',
 	(string) $purchase_id,
 	(array) $webhook_data
 )
 ```
 
-### checkout_engine/purchase_invoked
+### surecart/purchase_invoked
 
 Occurs whenever a purchase is invoked. (This is the opposite of revoked). This can only occur if the purchase has been previously revoked.
 
 ```php
 do_action(
-	'checkout_engine/purchase_invoked',
+	'surecart/purchase_invoked',
 	(string) $purchase_id,
 	(array) $webhook_data
 )
 ```
 
-### checkout_engine/purchase_updated
+### surecart/purchase_updated
 
 Occurs whenever a purchase is updated. This only occurs when a subscription's product or quantity changes.
 
 ```php
 do_action(
-	'checkout_engine/purchase_updated',
+	'surecart/purchase_updated',
 	(string) $purchase_id,
 	(array) $webhook_data
 )

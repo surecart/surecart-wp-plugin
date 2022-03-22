@@ -1,17 +1,17 @@
 <?php
 /**
- * @package   CheckoutEngineCore
+ * @package   SureCartCore
  * @author    Andre Gagnon <me@andregagnon.me>
  * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://checkout_engine.com/
+ * @link      https://surecart.com/
  */
 
-namespace CheckoutEngineCore\Middleware;
+namespace SureCartCore\Middleware;
 
 use Closure;
-use CheckoutEngineCore\Requests\RequestInterface;
-use CheckoutEngineCore\Responses\ResponseService;
+use SureCartCore\Requests\RequestInterface;
+use SureCartCore\Responses\ResponseService;
 
 /**
  * Redirect logged in users to a specific URL.
@@ -46,7 +46,7 @@ class UserLoggedOutMiddleware {
 			$url = home_url();
 		}
 
-		$url = apply_filters( 'checkout_engine.middleware.user.logged_out.redirect_url', $url, $request );
+		$url = apply_filters( 'surecart.middleware.user.logged_out.redirect_url', $url, $request );
 
 		return $this->response_service->redirect( $request )->to( $url );
 	}

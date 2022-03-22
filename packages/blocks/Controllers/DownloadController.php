@@ -1,10 +1,10 @@
 <?php
-namespace CheckoutEngineBlocks\Controllers;
+namespace SureCartBlocks\Controllers;
 
-use CheckoutEngine\Models\Component;
-use CheckoutEngine\Models\PortalSession;
-use CheckoutEngine\Models\Purchase;
-use CheckoutEngine\Models\User;
+use SureCart\Models\Component;
+use SureCart\Models\PortalSession;
+use SureCart\Models\Purchase;
+use SureCart\Models\User;
 
 /**
  * The subscription controller.
@@ -21,7 +21,7 @@ class DownloadController extends BaseController {
 		}
 
 		return wp_kses_post(
-			Component::tag( 'ce-dashboard-downloads-list' )
+			Component::tag( 'sc-dashboard-downloads-list' )
 			->id( 'customer-downloads-preview' )
 			->with(
 				[
@@ -31,7 +31,7 @@ class DownloadController extends BaseController {
 							'model'  => 'download',
 							'action' => 'index',
 						],
-						\CheckoutEngine::pages()->url( 'dashboard' )
+						\SureCart::pages()->url( 'dashboard' )
 					),
 					'requestNonce' => wp_create_nonce( 'customer-download' ),
 					'query'        => [
@@ -53,11 +53,11 @@ class DownloadController extends BaseController {
 		}
 
 		return wp_kses_post(
-			Component::tag( 'ce-orders-list' )
+			Component::tag( 'sc-orders-list' )
 			->id( 'customer-orders-index' )
 			->with(
 				[
-					'heading' => __( 'Order History', 'checkout-engine' ),
+					'heading' => __( 'Order History', 'surecart' ),
 
 					'query'   => [
 						'customer_ids' => array_values( User::current()->customerIds() ),
@@ -72,7 +72,7 @@ class DownloadController extends BaseController {
 
 	public function edit() {
 		if ( ! wp_verify_nonce( $_GET['nonce'], 'customer-download' ) ) {
-			die( __( 'Your session expired. Please go back and try again.', 'checkout_engine' ) );
+			die( __( 'Your session expired. Please go back and try again.', 'surecart' ) );
 		}
 
 		if ( ! User::current()->isCustomer() ) {
@@ -90,7 +90,7 @@ class DownloadController extends BaseController {
 		$session = PortalSession::create(
 			[
 				'public'     => true,
-				'return_url' => add_query_arg( [ 'tab' => $this->getTab() ], \CheckoutEngine::pages()->url( 'dashboard' ) ),
+				'return_url' => add_query_arg( [ 'tab' => $this->getTab() ], \SureCart::pages()->url( 'dashboard' ) ),
 				'customer'   => $purchase->customer,
 			]
 		);

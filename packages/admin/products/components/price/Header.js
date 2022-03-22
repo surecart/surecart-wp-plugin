@@ -1,12 +1,12 @@
 import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';
 import {
-	CeTag,
-	CeButton,
-	CeDropdown,
-	CeMenu,
-	CeMenuItem,
-} from '@checkout-engine/components-react';
+	ScTag,
+	ScButton,
+	ScDropdown,
+	ScMenu,
+	ScMenuItem,
+} from '@surecart/components-react';
 import {
 	Icon,
 	box,
@@ -31,7 +31,7 @@ export default ({
 	const headerName = () => {
 		return (
 			<Fragment>
-				<ce-format-number
+				<sc-format-number
 					type="currency"
 					currency={price?.currency || ceData.currency_code}
 					value={price?.amount}
@@ -50,17 +50,15 @@ export default ({
 	const buttons = (
 		<div>
 			{price?.archived && (
-				<CeTag type="warning">
-					{__('Archived', 'checkout_engine')}
-				</CeTag>
+				<ScTag type="warning">{__('Archived', 'surecart')}</ScTag>
 			)}
-			<CeDropdown slot="suffix" position="bottom-right">
-				<CeButton type="text" slot="trigger" circle>
+			<ScDropdown slot="suffix" position="bottom-right">
+				<ScButton type="text" slot="trigger" circle>
 					<Icon icon={moreHorizontalMobile} />
-				</CeButton>
-				<CeMenu>
+				</ScButton>
+				<ScMenu>
 					{price?.id && (
-						<CeMenuItem onClick={onArchive}>
+						<ScMenuItem onClick={onArchive}>
 							<Icon
 								slot="prefix"
 								style={{
@@ -70,11 +68,11 @@ export default ({
 								size={20}
 							/>
 							{price?.archived
-								? __('Un-Archive', 'checkout_engine')
-								: __('Archive', 'checkout_engine')}
-						</CeMenuItem>
+								? __('Un-Archive', 'surecart')
+								: __('Archive', 'surecart')}
+						</ScMenuItem>
 					)}
-					<CeMenuItem onClick={onDelete}>
+					<ScMenuItem onClick={onDelete}>
 						<Icon
 							slot="prefix"
 							style={{
@@ -83,10 +81,10 @@ export default ({
 							icon={trash}
 							size={20}
 						/>
-						{__('Delete', 'checkout_engine')}
-					</CeMenuItem>
-				</CeMenu>
-			</CeDropdown>
+						{__('Delete', 'surecart')}
+					</ScMenuItem>
+				</ScMenu>
+			</ScDropdown>
 		</div>
 	);
 

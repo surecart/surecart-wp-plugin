@@ -13,7 +13,7 @@ import { useDispatch, useSelect } from '@wordpress/data';
 import { useEffect, useRef } from '@wordpress/element';
 import { css, jsx } from '@emotion/core';
 import { __, sprintf } from '@wordpress/i18n';
-import { CeTabGroup } from '@checkout-engine/components-react';
+import { ScTabGroup } from '@surecart/components-react';
 
 export default ({ clientId }) => {
 	const useInnerBlocksProps = __stableUseInnerBlocksProps
@@ -34,8 +34,8 @@ export default ({ clientId }) => {
 		templateLock: 'all',
 		renderAppender: false,
 		template: [
-			['checkout-engine/dashboard-tabs', {}],
-			['checkout-engine/dashboard-pages', {}],
+			['surecart/dashboard-tabs', {}],
+			['surecart/dashboard-pages', {}],
 		],
 	});
 
@@ -44,10 +44,10 @@ export default ({ clientId }) => {
 			const innerBlocks = select('core/block-editor').getBlocks(clientId);
 			console.log({ innerBlocks });
 			const tabsWrapper = (innerBlocks || []).find(
-				(block) => block.name === 'checkout-engine/dashboard-tabs'
+				(block) => block.name === 'surecart/dashboard-tabs'
 			);
 			const panelsWrapper = (innerBlocks || []).find(
-				(block) => block.name === 'checkout-engine/dashboard-pages'
+				(block) => block.name === 'surecart/dashboard-pages'
 			);
 			return {
 				tabsWrapper,
@@ -90,7 +90,7 @@ export default ({ clientId }) => {
 			);
 
 			const title = sprintf(
-				__('New Tab %d', 'checkout_engine'),
+				__('New Tab %d', 'surecart'),
 				tabBlocks.length
 			);
 
@@ -107,7 +107,7 @@ export default ({ clientId }) => {
 			});
 
 			const panel = createBlock(
-				'checkout-engine/dashboard-page',
+				'surecart/dashboard-page',
 				{
 					id: addedTab.clientId,
 					name,
@@ -159,7 +159,7 @@ export default ({ clientId }) => {
 	}, [tabBlocks, panelBlocks]);
 
 	return (
-		<CeTabGroup
+		<ScTabGroup
 			{...innerBlocksProps}
 			css={css`
 				.block-list-appender {
@@ -173,6 +173,6 @@ export default ({ clientId }) => {
 					}
 				}
 			`}
-		></CeTabGroup>
+		></ScTabGroup>
 	);
 };

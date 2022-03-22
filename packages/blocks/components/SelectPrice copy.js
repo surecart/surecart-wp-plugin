@@ -1,5 +1,5 @@
 import { __ } from '@wordpress/i18n';
-import { CeSelect, CeDivider, CeMenuItem } from '@checkout-engine/components-react';
+import { ScSelect, ScDivider, ScMenuItem } from '@surecart/components-react';
 import { useState, useEffect } from '@wordpress/element';
 import throttle from 'lodash/throttle';
 import apiFetch from '@wordpress/api-fetch';
@@ -7,98 +7,95 @@ import { addQueryArgs } from '@wordpress/url';
 import { translateInterval } from '../../../resources/scripts/admin/util/translations';
 import { formatNumber } from '../../../resources/scripts/admin/util';
 
-export default ( { onSelect, className } ) => {
-	const [ products, setProducts ] = useState( [] );
-	const [ query, setQuery ] = useState( '' );
-	const [ busy, setBusy ] = useState( false );
+export default ({ onSelect, className }) => {
+	const [products, setProducts] = useState([]);
+	const [query, setQuery] = useState('');
+	const [busy, setBusy] = useState(false);
 
 	const findProduct = throttle(
-		( value ) => {
-			setQuery( value );
+		(value) => {
+			setQuery(value);
 		},
 		750,
 		{ leading: false }
 	);
 
-	useEffect( () => {
-		if ( ! query ) return;
+	useEffect(() => {
+		if (!query) return;
 		fetchProducts();
-	}, [ query ] );
+	}, [query]);
 
 	const fetchProducts = async () => {
-		setBusy( true );
+		setBusy(true);
 		try {
-			const response = await apiFetch( {
-				path: addQueryArgs( `checkout-engine/v1/products`, {
+			const response = await apiFetch({
+				path: addQueryArgs(`surecart/v1/products`, {
 					query,
 					archived: false,
-					expand: [ 'prices' ],
-				} ),
-			} );
-			setProducts( response );
-		} catch ( error ) {
-			console.log( error );
+					expand: ['prices'],
+				}),
+			});
+			setProducts(response);
+		} catch (error) {
+			console.log(error);
 		} finally {
-			setBusy( false );
+			setBusy(false);
 		}
 	};
 
-	const displayPriceAmount = ( price ) => {
-		if ( price?.ad_hoc ) {
-			return __( 'Custom', 'checkout_engine' );
+	const displayPriceAmount = (price) => {
+		if (price?.ad_hoc) {
+			return __('Custom', 'surecart');
 		}
-		return `${ formatNumber(
+		return `${formatNumber(
 			price.amount,
 			price.currency
-		) }${ translateInterval(
+		)}${translateInterval(
 			price?.recurring_interval_count,
 			price?.recurring_interval,
 			'/',
 			''
-		) }`;
+		)}`;
 	};
 
-	const choices = products.map( ( product ) => {
+	const choices = products.map((product) => {
 		return {
 			label: product?.name,
 			id: product.id,
 			disabled: false,
-			choices: ( product?.prices?.data || [] ).map( ( price ) => {
+			choices: (product?.prices?.data || []).map((price) => {
 				return {
 					value: price.id,
 					label: price.name,
-					suffix: displayPriceAmount( price ),
+					suffix: displayPriceAmount(price),
 				};
-			} ),
+			}),
 		};
-	} );
+	});
 
 	return (
-		<CeSelect
-			className={ className }
-			loading={ busy }
-			placeholder={ __( 'Select a product', 'checkout_engine' ) }
-			searchPlaceholder={ __(
-				'Search for a product...',
-				'checkout_engine'
-			) }
+		<ScSelect
+			className={className}
+			loading={busy}
+			placeholder={__('Select a product', 'surecart')}
+			searchPlaceholder={__('Search for a product...', 'surecart')}
 			search
-			onCeOpen={ fetchProducts }
-			onCeSearch={ ( e ) => findProduct( e.detail ) }
-			onCeChange={ ( e ) => {
-				onSelect( e.target.value );
-			} }
-			choices={ choices }
+			onScOpen={fetchProducts}
+			onScSearch={(e) => findProduct(e.detail)}
+			onScChange={(e) => {
+				onSelect(e.target.value);
+			}}
+			choices={choices}
 		>
 			<span slot="prefix">
-				<CeMenuItem onClick={ () => console.log( 'new' ) }>
+				<ScMenuItem onClick={() => console.log('new')}>
 					<span slot="prefix">+</span>
-					{ __( 'Add New Product' ) }
-				</CeMenuItem>
-				<CeDivider
-					style={ { '--spacing': 'var(--ce-spacing-x-small)' } }
-				></CeDivider>
+					{__('Add New Product')}
+				</ScMenuItem>
+				<ScDivider
+					style={{ '--spacing': 'var(--sc-spacing-x-small)' }}
+				></ScDivider>
 			</span>
-		</CeSelect>
+		</ScSelect>
 	);
 };

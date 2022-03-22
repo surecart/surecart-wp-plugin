@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 const { __ } = wp.i18n;
-import { CeButton } from '@checkout-engine/components-react';
+import { ScButton } from '@surecart/components-react';
 
 export default ({ isOpen, setIsOpen, children, buttons, type, className }) => {
 	return (
@@ -15,10 +15,10 @@ export default ({ isOpen, setIsOpen, children, buttons, type, className }) => {
 				border-radius: 8px;
 				border: 1px solid transparent;
 				${type === 'warning'
-					? `background-color: var(--ce-color-warning-50);
-        border-color: var(--ce-color-warning-200);
-        color: var(--ce-color-warning-700);`
-					: `background: var( --ce-color-gray-100, #f9fafb )`}
+					? `background-color: var(--sc-color-warning-50);
+        border-color: var(--sc-color-warning-200);
+        color: var(--sc-color-warning-700);`
+					: `background: var( --sc-color-gray-100, #f9fafb )`}
 			`}
 		>
 			<div
@@ -28,10 +28,10 @@ export default ({ isOpen, setIsOpen, children, buttons, type, className }) => {
 					flex: 1;
 					user-select: none;
 					display: inline-block;
-					color: var(--ce-input-label-color);
-					font-weight: var(--ce-input-label-font-weight);
-					text-transform: var(--ce-input-label-text-transform, none);
-					letter-spacing: var(--ce-input-label-letter-spacing, 0);
+					color: var(--sc-input-label-color);
+					font-weight: var(--sc-input-label-font-weight);
+					text-transform: var(--sc-input-label-text-transform, none);
+					letter-spacing: var(--sc-input-label-letter-spacing, 0);
 				`}
 			>
 				{children}
@@ -50,7 +50,7 @@ export default ({ isOpen, setIsOpen, children, buttons, type, className }) => {
 				>
 					{buttons}
 				</div>
-				<CeButton type="text" circle onClick={() => setIsOpen(!isOpen)}>
+				<ScButton type="text" circle onClick={() => setIsOpen(!isOpen)}>
 					<svg
 						css={css`
 							transition: transform 250ms ease;
@@ -68,7 +68,7 @@ export default ({ isOpen, setIsOpen, children, buttons, type, className }) => {
 					>
 						<polyline points="6 9 12 15 18 9"></polyline>
 					</svg>
-				</CeButton>
+				</ScButton>
 			</div>
 		</div>
 	);

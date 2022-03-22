@@ -1,9 +1,9 @@
 <?php
-namespace CheckoutEngine\Controllers\Web;
+namespace SureCart\Controllers\Web;
 
-use CheckoutEngine\Models\Webhook;
-use CheckoutEngine\Webhooks\WebHooksHistoryService;
-use CheckoutEngineCore\Responses\RedirectResponse;
+use SureCart\Models\Webhook;
+use SureCart\Webhooks\WebHooksHistoryService;
+use SureCartCore\Responses\RedirectResponse;
 
 /**
  * Handles webhooks
@@ -15,13 +15,13 @@ class WebhookController {
 	 * @var array
 	 */
 	protected $models = [
-		'purchase' => \CheckoutEngine\Models\Purchase::class,
+		'purchase' => \SureCart\Models\Purchase::class,
 	];
 
 	/**
 	 * Remove the webhook.
 	 *
-	 * @param \CheckoutEngineCore\Requests\RequestInterface $request Request.
+	 * @param \SureCartCore\Requests\RequestInterface $request Request.
 	 * @return function
 	 */
 	public function remove( $request ) {
@@ -35,7 +35,7 @@ class WebhookController {
 	/**
 	 * Remove the webhook.
 	 *
-	 * @param \CheckoutEngineCore\Requests\RequestInterface $request Request.
+	 * @param \SureCartCore\Requests\RequestInterface $request Request.
 	 * @return function
 	 */
 	public function ignore( $request ) {
@@ -50,9 +50,9 @@ class WebhookController {
 	public function create() {
 		return Webhook::create(
 			[
-				'description' => 'Main webhook for Checkout Engine',
+				'description' => 'Main webhook for SureCart',
 				'enabled'     => true,
-				'url'         => \CheckoutEngine::routeUrl( 'webhooks.receive' ),
+				'url'         => \SureCart::routeUrl( 'webhooks.receive' ),
 			]
 		);
 	}
@@ -76,14 +76,14 @@ class WebhookController {
 	public function handleResponse( $data ) {
 		// handle the response.
 		if ( is_wp_error( $data ) ) {
-			return \CheckoutEngine::json( [ $data->get_error_code() => $data->get_error_message() ] )->withStatus( 500 );
+			return \SureCart::json( [ $data->get_error_code() => $data->get_error_message() ] )->withStatus( 500 );
 		}
 
 		if ( empty( $data ) ) {
-			return \CheckoutEngine::json( [ 'failed' => true ] )->withStatus( 400 );
+			return \SureCart::json( [ 'failed' => true ] )->withStatus( 400 );
 		}
 
-		return \CheckoutEngine::json(
+		return \SureCart::json(
 			[
 				'event_triggered' => $data['event'] ?? 'none',
 				'data'            => $data['model'] ?? [],
@@ -130,7 +130,7 @@ class WebhookController {
 	 */
 	public function createEventName( $type = '' ) {
 		$type = str_replace( '.', '_', $type );
-		return "checkout_engine/$type";
+		return "surecart/$type";
 	}
 
 	/**

@@ -30,15 +30,15 @@
 
 ### Depends on
 
-- [ce-format-number](../../../util/format-number)
-- [ce-skeleton](../../../ui/skeleton)
+- [sc-format-number](../../../util/format-number)
+- [sc-skeleton](../../../ui/skeleton)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-order-detail --> ce-format-number
-  ce-order-detail --> ce-skeleton
-  style ce-order-detail fill:#f9f,stroke:#333,stroke-width:4px
+  sc-order-detail --> sc-format-number
+  sc-order-detail --> sc-skeleton
+  style sc-order-detail fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

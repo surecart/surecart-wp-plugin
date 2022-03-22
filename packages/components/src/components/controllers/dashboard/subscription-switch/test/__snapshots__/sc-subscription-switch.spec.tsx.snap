@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-subscription-switch renders 1`] = `
+<sc-subscription-switch>
+  <mock:shadow-root>
+    <sc-dashboard-module class="subscription-switch" heading="Update Plan">
+      <span slot="end"></span>
+      <sc-form class="subscriptions-switch">
+        <sc-button full="" submit="" type="primary">
+          Next
+          <sc-icon name="arrow-right" slot="suffix"></sc-icon>
+        </sc-button>
+      </sc-form>
+    </sc-dashboard-module>
+  </mock:shadow-root>
+</sc-subscription-switch>
+`;

@@ -10,7 +10,7 @@ The PHP models provide a fluent syntax to query the database over the api. In th
 The model's all method will retrieve the record with a specific id.
 
 ```php
-use CheckoutEngine\Models\Product;
+use SureCart\Models\Product;
 $product = Product::find('8ba8d60f-5277-4e6b-807c-dee8166446d5');
 ```
 
@@ -18,7 +18,7 @@ $product = Product::find('8ba8d60f-5277-4e6b-807c-dee8166446d5');
 The model's all method will retrieve the first 10 of the records from the model's associated database table:
 
 ```php
-use CheckoutEngine\Models\Product;
+use SureCart\Models\Product;
 
 $products = Product::get();
 foreach ($products as $product) {
@@ -31,7 +31,7 @@ foreach ($products as $product) {
 In order to query by specific parameters, you can use the `where` method. This will send query parameters over the API and return the matching records.
 
 ```php
-use CheckoutEngine\Models\Product;
+use SureCart\Models\Product;
 $archived_products = Product::where([
 	'archived' => false
 ])->get();
@@ -41,7 +41,7 @@ $archived_products = Product::where([
 You can paginate and get subsquent pages of results by using the `paginate` method. This method takes 2 parameters, `page` and `per_page`. The default pagination `per_page` limit is `100`.
 
 ```php
-use CheckoutEngine\Models\Product;
+use SureCart\Models\Product;
 
 $archived_products = Product::where([
 	'archived' => false

@@ -1,18 +1,18 @@
 <?php
 /**
- * @package   CheckoutEngineCore
+ * @package   SureCartCore
  * @author    Andre Gagnon <me@andregagnon.me>
  * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://checkout_engine.com/
+ * @link      https://surecart.com/
  */
 
-namespace CheckoutEngineCore\Routing;
+namespace SureCartCore\Routing;
 
 use Pimple\Container;
-use CheckoutEngineCore\Routing\Conditions\ConditionFactory;
-use CheckoutEngineCore\ServiceProviders\ExtendsConfigTrait;
-use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
+use SureCartCore\Routing\Conditions\ConditionFactory;
+use SureCartCore\ServiceProviders\ExtendsConfigTrait;
+use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 /**
  * Provide routing dependencies
@@ -55,7 +55,7 @@ class RoutingServiceProvider implements ServiceProviderInterface {
 					'attributes'  => [
 						'middleware' => [ 'web' ],
 						'namespace'  => 'App\\Controllers\\Web\\',
-						'handler'    => 'CheckoutEngineCore\\Controllers\\WordPressController@handle',
+						'handler'    => 'SureCartCore\\Controllers\\WordPressController@handle',
 					],
 				],
 				'admin' => [
@@ -76,28 +76,28 @@ class RoutingServiceProvider implements ServiceProviderInterface {
 		);
 
 		/** @var Container $container */
-		$container[ CHECKOUT_ENGINE_ROUTING_CONDITION_TYPES_KEY ] = static::$condition_types;
+		$container[ SURECART_ROUTING_CONDITION_TYPES_KEY ] = static::$condition_types;
 
-		$container[ CHECKOUT_ENGINE_ROUTING_ROUTER_KEY ] = function ( $c ) {
+		$container[ SURECART_ROUTING_ROUTER_KEY ] = function ( $c ) {
 			return new Router(
-				$c[ CHECKOUT_ENGINE_ROUTING_CONDITIONS_CONDITION_FACTORY_KEY ],
-				$c[ CHECKOUT_ENGINE_HELPERS_HANDLER_FACTORY_KEY ]
+				$c[ SURECART_ROUTING_CONDITIONS_CONDITION_FACTORY_KEY ],
+				$c[ SURECART_HELPERS_HANDLER_FACTORY_KEY ]
 			);
 		};
 
-		$container[ CHECKOUT_ENGINE_ROUTING_CONDITIONS_CONDITION_FACTORY_KEY ] = function ( $c ) {
-			return new ConditionFactory( $c[ CHECKOUT_ENGINE_ROUTING_CONDITION_TYPES_KEY ] );
+		$container[ SURECART_ROUTING_CONDITIONS_CONDITION_FACTORY_KEY ] = function ( $c ) {
+			return new ConditionFactory( $c[ SURECART_ROUTING_CONDITION_TYPES_KEY ] );
 		};
 
-		$container[ CHECKOUT_ENGINE_ROUTING_ROUTE_BLUEPRINT_KEY ] = $container->factory(
+		$container[ SURECART_ROUTING_ROUTE_BLUEPRINT_KEY ] = $container->factory(
 			function ( $c ) {
-				return new RouteBlueprint( $c[ CHECKOUT_ENGINE_ROUTING_ROUTER_KEY ], $c[ CHECKOUT_ENGINE_VIEW_SERVICE_KEY ] );
+				return new RouteBlueprint( $c[ SURECART_ROUTING_ROUTER_KEY ], $c[ SURECART_VIEW_SERVICE_KEY ] );
 			}
 		);
 
-		$app = $container[ CHECKOUT_ENGINE_APPLICATION_KEY ];
-		$app->alias( 'route', CHECKOUT_ENGINE_ROUTING_ROUTE_BLUEPRINT_KEY );
-		$app->alias( 'routeUrl', CHECKOUT_ENGINE_ROUTING_ROUTER_KEY, 'getRouteUrl' );
+		$app = $container[ SURECART_APPLICATION_KEY ];
+		$app->alias( 'route', SURECART_ROUTING_ROUTE_BLUEPRINT_KEY );
+		$app->alias( 'routeUrl', SURECART_ROUTING_ROUTER_KEY, 'getRouteUrl' );
 	}
 
 	/**

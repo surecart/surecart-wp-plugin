@@ -1,5 +1,5 @@
 <?php
-namespace CheckoutEngine\Models;
+namespace SureCart\Models;
 
 use ArrayAccess;
 use JsonSerializable;
@@ -18,7 +18,7 @@ class User implements ArrayAccess, JsonSerializable {
 	/**
 	 * Holds the cutomser
 	 *
-	 * @var \CheckoutEngine\Models\Customer;
+	 * @var \SureCart\Models\Customer;
 	 */
 	protected $customer;
 
@@ -110,7 +110,7 @@ class User implements ArrayAccess, JsonSerializable {
 	 * Get a users orders
 	 *
 	 * @param array $query Query args.
-	 * @return CheckoutEngine\Models\Order[];
+	 * @return SureCart\Models\Order[];
 	 */
 	protected function orders() {
 		return Order::where( [ 'customer_ids' => [ $this->customerId() ] ] );
@@ -123,7 +123,7 @@ class User implements ArrayAccess, JsonSerializable {
 	 */
 	protected function login() {
 		if ( empty( $this->user->ID ) ) {
-			return new \Error( 'not_found', esc_html__( 'This user could not be found.', 'checkout_engine' ) );
+			return new \Error( 'not_found', esc_html__( 'This user could not be found.', 'surecart' ) );
 		}
 
 		wp_clear_auth_cookie();
@@ -165,7 +165,7 @@ class User implements ArrayAccess, JsonSerializable {
 		}
 
 		$user = new \WP_User( $user_id );
-		$user->add_role( 'ce-customer' );
+		$user->add_role( 'sc-customer' );
 
 		if ( $user_created ) {
 			wp_update_user( $user );
@@ -189,7 +189,7 @@ class User implements ArrayAccess, JsonSerializable {
 	/**
 	 * Get the customer from the user.
 	 *
-	 * @return \CheckoutEngine\Models\Customer|false
+	 * @return \SureCart\Models\Customer|false
 	 */
 	protected function customer() {
 		$id = $this->customerId();

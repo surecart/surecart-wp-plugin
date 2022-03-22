@@ -25,9 +25,9 @@ export default ({ invoice, loading }) => {
 							gap: 0.5em;
 						`}
 					>
-						<ce-skeleton style={{ flex: 1 }}></ce-skeleton>
+						<sc-skeleton style={{ flex: 1 }}></sc-skeleton>
 					</div>
-					<ce-skeleton></ce-skeleton>
+					<sc-skeleton></sc-skeleton>
 				</div>
 			</div>
 		);
@@ -56,26 +56,26 @@ export default ({ invoice, loading }) => {
 					`}
 				>
 					<h1>
-						<ce-format-number
+						<sc-format-number
 							type="currency"
 							currency={invoice?.currency}
 							value={invoice?.amount_due}
-						></ce-format-number>
+						></sc-format-number>
 					</h1>
-					<ce-order-status-badge
+					<sc-order-status-badge
 						status={invoice?.status}
-					></ce-order-status-badge>
+					></sc-order-status-badge>
 				</div>
 				{sprintf(
-					__('Created on %s', 'checkout_engine'),
+					__('Created on %s', 'surecart'),
 					formatTime(invoice.updated_at)
 				)}
 			</div>
 			<div>
 				{!invoice?.live_mode && (
-					<ce-tag type="warning">
-						{__('Test Mode', 'checkout_engine')}
-					</ce-tag>
+					<sc-tag type="warning">
+						{__('Test Mode', 'surecart')}
+					</sc-tag>
 				)}
 			</div>
 		</div>

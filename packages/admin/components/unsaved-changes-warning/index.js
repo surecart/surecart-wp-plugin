@@ -38,7 +38,7 @@ export default function UnsavedChangesWarning() {
 			event.preventDefault();
 			event.returnValue = __(
 				'You have unsaved changes. If you proceed, they will be lost.',
-				'checkout_engine'
+				'surecart'
 			);
 			return event.returnValue;
 		}

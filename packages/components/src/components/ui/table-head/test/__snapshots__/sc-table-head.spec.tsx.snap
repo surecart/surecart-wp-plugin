@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-table-head renders 1`] = `
+<sc-table-head>
+  <mock:shadow-root>
+    <slot></slot>
+  </mock:shadow-root>
+</sc-table-head>
+`;

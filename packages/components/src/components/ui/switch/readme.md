@@ -19,9 +19,9 @@
 
 | Event      | Description                                       | Type                |
 | ---------- | ------------------------------------------------- | ------------------- |
-| `ceBlur`   | Emitted when the control loses focus.             | `CustomEvent<void>` |
-| `ceChange` | Emitted when the control's checked state changes. | `CustomEvent<void>` |
-| `ceFocus`  | Emitted when the control gains focus.             | `CustomEvent<void>` |
+| `scBlur`   | Emitted when the control loses focus.             | `CustomEvent<void>` |
+| `scChange` | Emitted when the control's checked state changes. | `CustomEvent<void>` |
+| `scFocus`  | Emitted when the control gains focus.             | `CustomEvent<void>` |
 
 
 ## Methods
@@ -48,26 +48,17 @@ Type: `Promise<boolean>`
 | `"title"`       |             |
 
 
-## CSS Custom Properties
-
-| Name           | Description               |
-| -------------- | ------------------------- |
-| `--height`     | The height of the switch. |
-| `--thumb-size` | The size of the thumb.    |
-| `--width`      | The width of the switch.  |
-
-
 ## Dependencies
 
 ### Used by
 
- - [ce-customer-edit](../../controllers/dashboard/customer-edit)
+ - [sc-customer-edit](../../controllers/dashboard/customer-edit)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-customer-edit --> ce-switch
-  style ce-switch fill:#f9f,stroke:#333,stroke-width:4px
+  sc-customer-edit --> sc-switch
+  style sc-switch fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

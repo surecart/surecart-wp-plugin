@@ -1,14 +1,14 @@
 <?php
 
-namespace CheckoutEngine\Tests\Unit\Services;
+namespace SureCart\Tests\Unit\Services;
 
-use CheckoutEngine\Tests\CheckoutEngineUnitTestCase;
-use CheckoutEngine\Webhooks\WebHooksHistoryService;
+use SureCart\Tests\SureCartUnitTestCase;
+use SureCart\Webhooks\WebHooksHistoryService;
 
 /**
  * @group webhooks
  */
-class WebhooksHistoryServiceFeatureTest extends CheckoutEngineUnitTestCase {
+class WebhooksHistoryServiceFeatureTest extends SureCartUnitTestCase {
 	use \Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 
 	/**
@@ -17,13 +17,13 @@ class WebhooksHistoryServiceFeatureTest extends CheckoutEngineUnitTestCase {
 	public function setUp()
 	{
 		// Set up an app instance with whatever stubs and mocks we need before every test.
-		\CheckoutEngine::make()->bootstrap([
+		\SureCart::make()->bootstrap([
 			'providers' => [
-				\CheckoutEngine\WordPress\Pages\PageServiceProvider::class,
-				\CheckoutEngine\Routing\AdminRouteServiceProvider::class,
-				\CheckoutEngine\WordPress\PluginServiceProvider::class,
-				\CheckoutEngine\Request\RequestServiceProvider::class,
-				\CheckoutEngine\Permissions\RolesServiceProvider::class,
+				\SureCart\WordPress\Pages\PageServiceProvider::class,
+				\SureCart\Routing\AdminRouteServiceProvider::class,
+				\SureCart\WordPress\PluginServiceProvider::class,
+				\SureCart\Request\RequestServiceProvider::class,
+				\SureCart\Permissions\RolesServiceProvider::class,
 			]
 		], false);
 

@@ -20,70 +20,61 @@
 | `"indicator"` |             |
 
 
-## CSS Custom Properties
-
-| Name              | Description                                                |
-| ----------------- | ---------------------------------------------------------- |
-| `--border-radius` | The skeleton's border radius.                              |
-| `--color`         | The color of the skeleton.                                 |
-| `--sheen-color`   | The sheen color when the skeleton is in its loading state. |
-
-
 ## Dependencies
 
 ### Used by
 
- - [ce-charges-list](../../controllers/dashboard/charges-list)
- - [ce-coupon-form](../coupon-form)
- - [ce-customer-details](../customer-details)
- - [ce-donation-choices](../../controllers/checkout-form/ce-donation-choices)
- - [ce-downloads-list](../downloads-list)
- - [ce-invoices-list](../../controllers/dashboard/invoices-list)
- - [ce-line-item-total](../../controllers/checkout-form/line-item-total)
- - [ce-line-items](../../controllers/checkout-form/line-items)
- - [ce-order-confirmation-line-items](../../controllers/confirmation/order-confirmation-line-items)
- - [ce-order-detail](../../controllers/confirmation/order-detail)
- - [ce-order-summary](../../controllers/checkout-form/order-summary)
- - [ce-orders-list](../../controllers/dashboard/orders-list)
- - [ce-payment](../../controllers/checkout-form/payment)
- - [ce-payment-methods-list](../../controllers/dashboard/payment-methods-list)
- - [ce-price-choice](../../controllers/checkout-form/price-choice)
- - [ce-subscription](../../controllers/dashboard/subscription)
- - [ce-subscription-cancel](../../controllers/dashboard/subscription-cancel)
- - [ce-subscription-details](../../controllers/dashboard/subscription-details)
- - [ce-subscription-payment](../../controllers/dashboard/subscription-payment)
- - [ce-subscription-renew](../../controllers/dashboard/subscription-renew)
- - [ce-subscription-switch](../../controllers/dashboard/subscription-switch)
- - [ce-subscriptions-list](../../controllers/dashboard/subscriptions-list)
- - [ce-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
+ - [sc-charges-list](../../controllers/dashboard/charges-list)
+ - [sc-coupon-form](../coupon-form)
+ - [sc-customer-details](../customer-details)
+ - [sc-donation-choices](../../controllers/checkout-form/sc-donation-choices)
+ - [sc-downloads-list](../downloads-list)
+ - [sc-invoices-list](../../controllers/dashboard/invoices-list)
+ - [sc-line-item-total](../../controllers/checkout-form/line-item-total)
+ - [sc-line-items](../../controllers/checkout-form/line-items)
+ - [sc-order-confirmation-line-items](../../controllers/confirmation/order-confirmation-line-items)
+ - [sc-order-detail](../../controllers/confirmation/order-detail)
+ - [sc-order-summary](../../controllers/checkout-form/order-summary)
+ - [sc-orders-list](../../controllers/dashboard/orders-list)
+ - [sc-payment](../../controllers/checkout-form/payment)
+ - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
+ - [sc-price-choice](../../controllers/checkout-form/price-choice)
+ - [sc-subscription](../../controllers/dashboard/subscription)
+ - [sc-subscription-cancel](../../controllers/dashboard/subscription-cancel)
+ - [sc-subscription-details](../../controllers/dashboard/subscription-details)
+ - [sc-subscription-payment](../../controllers/dashboard/subscription-payment)
+ - [sc-subscription-renew](../../controllers/dashboard/subscription-renew)
+ - [sc-subscription-switch](../../controllers/dashboard/subscription-switch)
+ - [sc-subscriptions-list](../../controllers/dashboard/subscriptions-list)
+ - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-charges-list --> ce-skeleton
-  ce-coupon-form --> ce-skeleton
-  ce-customer-details --> ce-skeleton
-  ce-donation-choices --> ce-skeleton
-  ce-downloads-list --> ce-skeleton
-  ce-invoices-list --> ce-skeleton
-  ce-line-item-total --> ce-skeleton
-  ce-line-items --> ce-skeleton
-  ce-order-confirmation-line-items --> ce-skeleton
-  ce-order-detail --> ce-skeleton
-  ce-order-summary --> ce-skeleton
-  ce-orders-list --> ce-skeleton
-  ce-payment --> ce-skeleton
-  ce-payment-methods-list --> ce-skeleton
-  ce-price-choice --> ce-skeleton
-  ce-subscription --> ce-skeleton
-  ce-subscription-cancel --> ce-skeleton
-  ce-subscription-details --> ce-skeleton
-  ce-subscription-payment --> ce-skeleton
-  ce-subscription-renew --> ce-skeleton
-  ce-subscription-switch --> ce-skeleton
-  ce-subscriptions-list --> ce-skeleton
-  ce-upcoming-invoice --> ce-skeleton
-  style ce-skeleton fill:#f9f,stroke:#333,stroke-width:4px
+  sc-charges-list --> sc-skeleton
+  sc-coupon-form --> sc-skeleton
+  sc-customer-details --> sc-skeleton
+  sc-donation-choices --> sc-skeleton
+  sc-downloads-list --> sc-skeleton
+  sc-invoices-list --> sc-skeleton
+  sc-line-item-total --> sc-skeleton
+  sc-line-items --> sc-skeleton
+  sc-order-confirmation-line-items --> sc-skeleton
+  sc-order-detail --> sc-skeleton
+  sc-order-summary --> sc-skeleton
+  sc-orders-list --> sc-skeleton
+  sc-payment --> sc-skeleton
+  sc-payment-methods-list --> sc-skeleton
+  sc-price-choice --> sc-skeleton
+  sc-subscription --> sc-skeleton
+  sc-subscription-cancel --> sc-skeleton
+  sc-subscription-details --> sc-skeleton
+  sc-subscription-payment --> sc-skeleton
+  sc-subscription-renew --> sc-skeleton
+  sc-subscription-switch --> sc-skeleton
+  sc-subscriptions-list --> sc-skeleton
+  sc-upcoming-invoice --> sc-skeleton
+  style sc-skeleton fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

@@ -1,0 +1,51 @@
+:host {
+  display: block;
+}
+
+.coupon-form {
+  position: relative;
+}
+// .coupon-tag {
+//   margin-bottom: 4px;
+// }
+
+// sc-input {
+//   margin-bottom: var(--sc-spacing-small);
+// }
+
+.form {
+  opacity: 0;
+  visibility: hidden;
+  height: 0;
+  transition: opacity var(--sc-transition-fast) ease-in-out;
+}
+
+.coupon-form--is-open {
+  .form {
+    opacity: 1;
+    visibility: visible;
+    height: auto;
+    margin-top: var(--sc-spacing-small);
+    display: grid;
+    gap: var(--sc-spacing-small);
+  }
+
+  .trigger {
+    color: var(--sc-input-label-color);
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
+
+.trigger {
+  cursor: pointer;
+  font-size: var(--sc-font-size-small);
+  color: var(--sc-color-gray-500);
+  user-select: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

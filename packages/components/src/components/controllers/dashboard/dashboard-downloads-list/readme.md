@@ -19,34 +19,34 @@
 
 ### Depends on
 
-- [ce-downloads-list](../../../ui/downloads-list)
-- [ce-pagination](../../../ui/pagination)
+- [sc-downloads-list](../../../ui/downloads-list)
+- [sc-pagination](../../../ui/pagination)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-dashboard-downloads-list --> ce-downloads-list
-  ce-dashboard-downloads-list --> ce-pagination
-  ce-downloads-list --> ce-divider
-  ce-downloads-list --> ce-empty
-  ce-downloads-list --> ce-card
-  ce-downloads-list --> ce-stacked-list
-  ce-downloads-list --> ce-stacked-list-row
-  ce-downloads-list --> ce-skeleton
-  ce-downloads-list --> ce-spacing
-  ce-downloads-list --> ce-format-bytes
-  ce-downloads-list --> ce-icon
-  ce-downloads-list --> ce-dashboard-module
-  ce-downloads-list --> ce-button
-  ce-downloads-list --> ce-block-ui
-  ce-empty --> ce-icon
-  ce-dashboard-module --> ce-alert
-  ce-alert --> ce-icon
-  ce-button --> ce-spinner
-  ce-block-ui --> ce-spinner
-  ce-pagination --> ce-flex
-  ce-pagination --> ce-button
-  style ce-dashboard-downloads-list fill:#f9f,stroke:#333,stroke-width:4px
+  sc-dashboard-downloads-list --> sc-downloads-list
+  sc-dashboard-downloads-list --> sc-pagination
+  sc-downloads-list --> sc-divider
+  sc-downloads-list --> sc-empty
+  sc-downloads-list --> sc-card
+  sc-downloads-list --> sc-stacked-list
+  sc-downloads-list --> sc-stacked-list-row
+  sc-downloads-list --> sc-skeleton
+  sc-downloads-list --> sc-spacing
+  sc-downloads-list --> sc-format-bytes
+  sc-downloads-list --> sc-icon
+  sc-downloads-list --> sc-dashboard-module
+  sc-downloads-list --> sc-button
+  sc-downloads-list --> sc-block-ui
+  sc-empty --> sc-icon
+  sc-dashboard-module --> sc-alert
+  sc-alert --> sc-icon
+  sc-button --> sc-spinner
+  sc-block-ui --> sc-spinner
+  sc-pagination --> sc-flex
+  sc-pagination --> sc-button
+  style sc-dashboard-downloads-list fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

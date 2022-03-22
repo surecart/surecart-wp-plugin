@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { CeTab } from '@checkout-engine/components-react';
+import { ScTab } from '@surecart/components-react';
 import { css, jsx } from '@emotion/core';
 import {
 	InspectorControls,
@@ -47,10 +47,10 @@ export default ({ attributes, setAttributes }) => {
 	return (
 		<Fragment>
 			<InspectorControls>
-				<PanelBody title={__('Attributes', 'checkout-engine')}>
+				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<TextControl
-							label={__('Title', 'checkout-engine')}
+							label={__('Title', 'surecart')}
 							value={title}
 							onChange={(title) => setAttributes({ title })}
 						/>
@@ -58,7 +58,7 @@ export default ({ attributes, setAttributes }) => {
 					<PanelRow>
 						<Flex>
 							<BaseControl.VisualLabel>
-								{__('Tab Icon', 'checkout_engine')}
+								{__('Tab Icon', 'surecart')}
 							</BaseControl.VisualLabel>
 							<div
 								css={css`
@@ -69,32 +69,29 @@ export default ({ attributes, setAttributes }) => {
 							>
 								<DropdownMenu
 									popoverProps={{
-										className: 'ce-tab-icon-dropdown',
+										className: 'sc-tab-icon-dropdown',
 									}}
 									icon={
-										<ce-icon
+										<sc-icon
 											name={icon || 'home'}
 											style={{
 												fontSize: '20px',
 											}}
-										></ce-icon>
+										></sc-icon>
 									}
-									label={__(
-										'Select an icon',
-										'checkout_engine'
-									)}
+									label={__('Select an icon', 'surecart')}
 									controls={Object.keys(
 										feather.icons || {}
 									).map((icon) => {
 										return {
 											icon: (
-												<ce-icon
+												<sc-icon
 													name={icon}
 													style={{
 														fontSize: '20px',
 														'margin-right': '10px',
 													}}
-												></ce-icon>
+												></sc-icon>
 											),
 											title: feather.icons[icon].name,
 											onClick: () =>
@@ -110,12 +107,12 @@ export default ({ attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<CeTab {...blockProps}>
-				<ce-icon
+			<ScTab {...blockProps}>
+				<sc-icon
 					style={{ fontSize: '18px' }}
 					slot="prefix"
 					name={icon || 'home'}
-				></ce-icon>
+				></sc-icon>
 
 				<RichText
 					aria-label={__('Tab Name')}
@@ -125,7 +122,7 @@ export default ({ attributes, setAttributes }) => {
 					withoutInteractiveFormatting
 					allowedFormats={['core/bold', 'core/italic']}
 				/>
-			</CeTab>
+			</ScTab>
 		</Fragment>
 	);
 };

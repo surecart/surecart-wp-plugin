@@ -1,6 +1,6 @@
 <?php
 
-namespace CheckoutEngine\Models;
+namespace SureCart\Models;
 
 class Component {
 	/**
@@ -64,7 +64,7 @@ class Component {
 	 * @return string
 	 */
 	protected function render( $inner_html = '' ) {
-		\CheckoutEngine::assets()->addComponentData(
+		\SureCart::assets()->addComponentData(
 			$this->tag,
 			"#$this->id",
 			$this->data

@@ -1,10 +1,10 @@
 {
-	"name": "checkout-engine/totals",
+	"name": "surecart/totals",
 	"title": "Totals",
 	"description": "Display the session totals.",
 	"category": "layout",
 	"keywords": ["totals", "summary"],
-	"parent": ["checkout-engine/form", "checkout-engine/column"],
+	"parent": ["surecart/form", "surecart/column"],
 	"supports": {
 		"reusable": false,
 		"html": false

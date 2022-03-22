@@ -1,8 +1,8 @@
 <?php
-namespace CheckoutEngineBlocks\Controllers;
+namespace SureCartBlocks\Controllers;
 
-use CheckoutEngine\Models\Component;
-use CheckoutEngine\Models\User;
+use SureCart\Models\Component;
+use SureCart\Models\User;
 
 /**
  * The subscription controller.
@@ -17,7 +17,7 @@ class OrderController extends BaseController {
 		}
 
 		return wp_kses_post(
-			Component::tag( 'ce-orders-list' )
+			Component::tag( 'sc-orders-list' )
 			->id( 'customer-orders-preview' )
 			->with(
 				[
@@ -27,7 +27,7 @@ class OrderController extends BaseController {
 							'model'  => 'order',
 							'action' => 'index',
 						],
-						\CheckoutEngine::pages()->url( 'dashboard' )
+						\SureCart::pages()->url( 'dashboard' )
 					),
 					'query'   => [
 						'customer_ids' => array_values( User::current()->customerIds() ),
@@ -49,11 +49,11 @@ class OrderController extends BaseController {
 		}
 
 		return wp_kses_post(
-			Component::tag( 'ce-orders-list' )
+			Component::tag( 'sc-orders-list' )
 			->id( 'customer-orders-index' )
 			->with(
 				[
-					'heading' => __( 'Order History', 'checkout-engine' ),
+					'heading' => __( 'Order History', 'surecart' ),
 					'query'   => [
 						'customer_ids' => array_values( User::current()->customerIds() ),
 						'status'       => [ 'paid' ],

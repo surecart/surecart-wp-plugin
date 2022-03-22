@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngine\Controllers\Admin\Tables;
+namespace SureCart\Controllers\Admin\Tables;
 
-use CheckoutEngine\Support\TimeDate;
+use SureCart\Support\TimeDate;
 
 // WP_List_Table is not loaded automatically so we need to load it in our application.
 if ( ! class_exists( 'WP_List_Table' ) ) {
@@ -58,7 +58,7 @@ abstract class ListTable extends \WP_List_Table {
 	/**
 	 * Handle the date
 	 *
-	 * @param \CheckoutEngine\Models\Model $model Model.
+	 * @param \SureCart\Models\Model $model Model.
 	 *
 	 * @return string
 	 */
@@ -71,7 +71,7 @@ abstract class ListTable extends \WP_List_Table {
 		);
 		$updated = sprintf(
 			'%1$s <time datetime="%2$s" title="%3$s">%4$s</time>',
-			__( 'Updated', 'checkout_engine' ),
+			__( 'Updated', 'surecart' ),
 			esc_attr( $model->updated_at ),
 			esc_html( TimeDate::formatDateAndTime( $model->updated_at ) ),
 			esc_html( TimeDate::humanTimeDiff( $model->updated_at ) )
@@ -82,23 +82,23 @@ abstract class ListTable extends \WP_List_Table {
 	/**
 	 * Handle the created column
 	 *
-	 * @param \CheckoutEngine\Models\Model $model Model.
+	 * @param \SureCart\Models\Model $model Model.
 	 *
 	 * @return string
 	 */
 	public function column_created( $model ) {
 		return sprintf(
-			'<ce-format-date
+			'<sc-format-date
 				date="%1$s"
 				month="long"
 				day="numeric"
 				year="numeric"
-				type="timestamp"></ce-format-date>',
+				type="timestamp"></sc-format-date>',
 			esc_attr( $model->created_at )
 		);
 	}
 
 	public function column_mode( $order ) {
-		return ! $order->live_mode ? '<ce-tag type="warning">' . __( 'Test', 'checkout_engine' ) . '</ce-tag>' : '';
+		return ! $order->live_mode ? '<sc-tag type="warning">' . __( 'Test', 'surecart' ) . '</sc-tag>' : '';
 	}
 }

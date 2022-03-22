@@ -9,7 +9,7 @@ import StatusBadge from '../components/StatusBadge';
 import BrowserUrl from '../components/browser-url';
 import UnsavedChangesWarning from '../components/unsaved-changes-warning';
 import ErrorBoundary from '../components/error-boundary';
-import { CeForm, CeButton } from '@checkout-engine/components-react';
+import { ScForm, ScButton } from '@surecart/components-react';
 import useSnackbar from '../hooks/useSnackbar';
 
 export default ({
@@ -40,16 +40,16 @@ export default ({
 				<Global
 					styles={css`
 						:root {
-							--ce-color-primary-500: var(--wp-admin-theme-color);
-							--ce-focus-ring-color-primary: var(
+							--sc-color-primary-500: var(--wp-admin-theme-color);
+							--sc-focus-ring-color-primary: var(
 								--wp-admin-theme-color
 							);
-							--ce-input-border-color-focus: var(
+							--sc-input-border-color-focus: var(
 								--wp-admin-theme-color
 							);
 						}
 						#wpwrap {
-							background-color: var(--ce-color-gray-100);
+							background-color: var(--sc-color-gray-100);
 						}
 					`}
 				/>
@@ -80,24 +80,24 @@ export default ({
 			<Global
 				styles={css`
 					:root {
-						--ce-color-primary-500: var(--wp-admin-theme-color);
-						--ce-focus-ring-color-primary: var(
+						--sc-color-primary-500: var(--wp-admin-theme-color);
+						--sc-focus-ring-color-primary: var(
 							--wp-admin-theme-color
 						);
-						--ce-input-border-color-focus: var(
+						--sc-input-border-color-focus: var(
 							--wp-admin-theme-color
 						);
 					}
 					#wpwrap {
-						background-color: var(--ce-color-gray-100);
+						background-color: var(--sc-color-gray-100);
 					}
 				`}
 			/>
 			<ErrorBoundary onError={onError}>
 				<UnsavedChangesWarning />
-				<CeForm
-					className="ce-model-form"
-					onCeFormSubmit={onSubmit}
+				<ScForm
+					className="sc-model-form"
+					onScFormSubmit={onSubmit}
 					css={css`
 						font-size: 14px;
 						margin-right: 20px;
@@ -106,10 +106,10 @@ export default ({
 							font-size: 13px;
 						}
 
-						--ce-highlight-color: 200 !important;
-						--ce-color-luminance: 36% !important;
+						--sc-highlight-color: 200 !important;
+						--sc-color-luminance: 36% !important;
 
-						ce-form-row:not(:last-child) {
+						sc-form-row:not(:last-child) {
 							margin-bottom: 20px;
 						}
 
@@ -120,7 +120,7 @@ export default ({
 						.components-snackbar.is-snackbar-error {
 							background: #cc1818;
 						}
-						.components-snackbar-list__notice-container {
+						.components-snackbar-list__notisc-container {
 							float: right;
 						}
 
@@ -192,7 +192,7 @@ export default ({
 									<Tooltip
 										text={
 											backText ||
-											__('Go back.', 'checkout_engine')
+											__('Go back.', 'surecart')
 										}
 									>
 										{backButtonType === 'icon' ? (
@@ -208,16 +208,16 @@ export default ({
 														#dcdcdc;
 												`}
 											>
-												<ce-icon name="x"></ce-icon>
+												<sc-icon name="x"></sc-icon>
 											</a>
 										) : (
-											<CeButton
+											<ScButton
 												circle
 												size="small"
 												href={backUrl}
 											>
 												&larr;
-											</CeButton>
+											</ScButton>
 										)}
 									</Tooltip>
 								)}
@@ -225,7 +225,7 @@ export default ({
 								<h1
 									css={css`
 										margin: 0;
-										font-size: var(--ce-font-size-large);
+										font-size: var(--sc-font-size-large);
 									`}
 								>
 									{title}
@@ -257,7 +257,7 @@ export default ({
 							${sidebar &&
 							`@media screen and (min-width: 960px) {
 								grid-template-columns: 1fr 380px;
-								grid-gap: var(--ce-spacing-xxx-large);
+								grid-gap: var(--sc-spacing-xxx-large);
 								grid-template-areas: 'nav    sidebar';
 							}`}
 						`}
@@ -266,7 +266,7 @@ export default ({
 							css={css`
 								margin-bottom: 3em;
 								> * ~ * {
-									margin-top: var(--ce-spacing-xxx-large);
+									margin-top: var(--sc-spacing-xxx-large);
 								}
 							`}
 						>
@@ -310,7 +310,7 @@ export default ({
 						notices={snackbarNotices}
 						onRemove={removeSnackbarNotice}
 					/>
-				</CeForm>
+				</ScForm>
 			</ErrorBoundary>
 			<PostLockedModal />
 		</Fragment>

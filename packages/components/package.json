@@ -1,7 +1,7 @@
 {
-  "name": "@checkout-engine/components",
+  "name": "@surecart/components",
   "version": "0.0.1",
-  "description": "CheckoutEngine Components",
+  "description": "SureCart Components",
   "main": "dist/index.cjs.js",
   "docs": "docs/docs.json",
   "module": "dist/custom-elements/index.js",
@@ -12,7 +12,7 @@
   "collection:main": "dist/collection/index.js",
   "unpkg": "dist/ce-components/ce-components.js",
   "repository": {
-    "url": "git@github.com:checkout-engine/checkout-engine-components.git"
+    "url": "git@github.com:surecart/surecart-components.git"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
@@ -33,9 +33,9 @@
     "test": "stencil test",
     "test.unit": "stencil test --spec",
     "test.e2e": "stencil test --e2e",
-    "test.watch": "stencil test --spec --e2e --watchAll",
+    "test.watch": "stencil test --spec --e2e --watch",
     "generate": "stencil generate",
-    "storybook": "start-storybook -p 6006 & yarn build --watch",
+    "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
   "dependencies": {

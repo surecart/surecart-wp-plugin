@@ -6,7 +6,7 @@ export default () => {
 		// first get the unique upload id.
 		const { id } = await apiFetch({
 			method: 'POST',
-			path: '/checkout-engine/v1/uploads',
+			path: '/surecart/v1/uploads',
 		});
 
 		// then upload the file.

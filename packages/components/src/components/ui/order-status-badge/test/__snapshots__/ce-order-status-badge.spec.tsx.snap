@@ -1,9 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`ce-order-status-badge renders 1`] = `
-<ce-order-status-badge size="medium">
-  <mock:shadow-root>
-    <ce-tag></ce-tag>
-  </mock:shadow-root>
-</ce-order-status-badge>
-`;

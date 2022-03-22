@@ -2,153 +2,151 @@
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 
-import {Fragment } from '@wordpress/element';
+import { Fragment } from '@wordpress/element';
 import {
-	CeInput,
-	CeButton,
-	CeDropdown,
-	CeMenu,
-	CeMenuItem,
-} from '@checkout-engine/components-react';
+	ScInput,
+	ScButton,
+	ScDropdown,
+	ScMenu,
+	ScMenuItem,
+} from '@surecart/components-react';
 import { Icon, trash, moreHorizontalMobile } from '@wordpress/icons';
 import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { translateInterval } from '@scripts/admin/util/translations';
 import PriceSelector from './PriceSelector';
 
-export default ( { choice, onUpdate, onSelect, onRemove, onNew } ) => {
+export default ({ choice, onUpdate, onSelect, onRemove, onNew }) => {
 	// get price from choice.
 	const price = useSelect(
-		( select ) => {
-			if ( ! choice?.id ) return;
-			return select( coreStore ).getEntityRecord(
+		(select) => {
+			if (!choice?.id) return;
+			return select(coreStore).getEntityRecord(
 				'root',
 				'price',
 				choice?.id
 			);
 		},
-		[ choice?.id ]
+		[choice?.id]
 	);
 
 	// get product from price.
 	const product = useSelect(
-		( select ) => {
-			if ( ! price?.product ) return;
-			return select( coreStore ).getEntityRecord(
+		(select) => {
+			if (!price?.product) return;
+			return select(coreStore).getEntityRecord(
 				'root',
 				'product',
 				price.product
 			);
 		},
-		[ price ]
+		[price]
 	);
 
-	const renderPrice = ( withQuantity = false ) => {
-		if ( ! price?.id ) return '—';
-		if ( price?.ad_hoc ) return __( 'Custom', 'checkout_engine' );
+	const renderPrice = (withQuantity = false) => {
+		if (!price?.id) return '—';
+		if (price?.ad_hoc) return __('Custom', 'surecart');
 		return (
 			<Fragment>
-				<ce-format-number
+				<sc-format-number
 					type="currency"
 					value={
 						price?.amount *
-						( withQuantity ? choice?.quantity || 1 : 1 )
+						(withQuantity ? choice?.quantity || 1 : 1)
 					}
-					currency={ price?.currency }
+					currency={price?.currency}
 				/>
-				{ translateInterval(
+				{translateInterval(
 					price?.recurring_interval_count,
 					price?.recurring_interval,
 					' /',
 					''
-				) }
+				)}
 			</Fragment>
 		);
 	};
 
 	const renderDropDown = () => {
 		return (
-			<CeDropdown slot="suffix" position="bottom-right">
-				<CeButton type="text" slot="trigger" circle>
-					<Icon icon={ moreHorizontalMobile } />
-				</CeButton>
-				<CeMenu>
-					<CeMenuItem onClick={ onRemove }>
+			<ScDropdown slot="suffix" position="bottom-right">
+				<ScButton type="text" slot="trigger" circle>
+					<Icon icon={moreHorizontalMobile} />
+				</ScButton>
+				<ScMenu>
+					<ScMenuItem onClick={onRemove}>
 						<Icon
 							slot="prefix"
-							style={ {
+							style={{
 								opacity: 0.5,
-							} }
-							icon={ trash }
-							size={ 20 }
+							}}
+							icon={trash}
+							size={20}
 						/>
-						{ __( 'Remove', 'checkout_engine' ) }
-					</CeMenuItem>
-				</CeMenu>
-			</CeDropdown>
+						{__('Remove', 'surecart')}
+					</ScMenuItem>
+				</ScMenu>
+			</ScDropdown>
 		);
 	};
 	return (
 		<tr>
 			<td
-				css={ css`
+				css={css`
 					width: 50%;
 					max-width: 50%;
-				` }
+				`}
 			>
-				{ ! choice?.id ? (
+				{!choice?.id ? (
 					<PriceSelector
-						ad_hoc={ false }
-						createNew={ true }
-						onNewProduct={ onNew }
-						onSelect={ onSelect }
+						ad_hoc={false}
+						createNew={true}
+						onNewProduct={onNew}
+						onSelect={onSelect}
 					/>
 				) : (
 					<div>
 						<div>
-							{ !! product?.name && !! price?.name ? (
-								`${ product?.name } – ${ price?.name }`
+							{!!product?.name && !!price?.name ? (
+								`${product?.name} – ${price?.name}`
 							) : (
-								<ce-skeleton
-									style={ {
+								<sc-skeleton
+									style={{
 										width: '120px',
 										display: 'inline-block',
-									} }
-								></ce-skeleton>
-							) }
+									}}
+								></sc-skeleton>
+							)}
 						</div>
 						<div
-							css={ css`
-								color: var( --ce-color-gray-500 );
-							` }
+							css={css`
+								color: var(--sc-color-gray-500);
+							`}
 						>
-							{ renderPrice() }
+							{renderPrice()}
 						</div>
 					</div>
-				) }
+				)}
 			</td>
 			<td
-				css={ css`
+				css={css`
 					max-width: 70px;
 					width: 70px;
-				` }
+				`}
 			>
-				<CeInput
+				<ScInput
 					type="number"
-					value={ choice?.quantity }
-					onCeChange={ ( e ) =>
-						onUpdate( { quantity: e.target.value } )
-					}
+					value={choice?.quantity}
+					onScChange={(e) => onUpdate({ quantity: e.target.value })}
 				/>
 			</td>
 			<td
-				css={ css`
+				css={css`
 					text-align: right;
-				` }
+				`}
 			>
-				{ renderPrice( true ) }
+				{renderPrice(true)}
 			</td>
-			<td>{ renderDropDown() }</td>
+			<td>{renderDropDown()}</td>
 		</tr>
 	);
 };

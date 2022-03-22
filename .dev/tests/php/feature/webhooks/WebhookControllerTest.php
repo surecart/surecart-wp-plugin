@@ -1,15 +1,15 @@
 <?php
 
-namespace CheckoutEngine\Tests\Feature;
+namespace SureCart\Tests\Feature;
 
-use CheckoutEngine\Controllers\Web\WebhookController;
-use CheckoutEngine\Tests\CheckoutEngineUnitTestCase;
-use CheckoutEngineCore\Requests\Request;
+use SureCart\Controllers\Web\WebhookController;
+use SureCart\Tests\SureCartUnitTestCase;
+use SureCartCore\Requests\Request;
 
 /**
  * @group webhooks
  */
-class WebhookControllerTest extends CheckoutEngineUnitTestCase
+class WebhookControllerTest extends SureCartUnitTestCase
 {
 	use \Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 
@@ -21,7 +21,7 @@ class WebhookControllerTest extends CheckoutEngineUnitTestCase
 		parent::setUp();
 
 		// Set up an app instance with whatever stubs and mocks we need before every test.
-		\CheckoutEngine::make()->bootstrap([], false);
+		\SureCart::make()->bootstrap([], false);
 	}
 
 	/**
@@ -29,7 +29,7 @@ class WebhookControllerTest extends CheckoutEngineUnitTestCase
 	 */
 	public function test_can_receive()
 	{
-		$this->assertEquals(did_action('checkout_engine/purchase_created'), 0);
+		$this->assertEquals(did_action('surecart/purchase_created'), 0);
 		$controller = \Mockery::mock(WebhookController::class)->makePartial();
 		$request = \Mockery::mock(Request::class)->makePartial();
 
@@ -51,6 +51,6 @@ class WebhookControllerTest extends CheckoutEngineUnitTestCase
 
 		$result = $controller->receive($request);
 		$this->assertSame($result->getStatusCode(), 200);
-		$this->assertEquals(did_action('checkout_engine/purchase_created'), 1);
+		$this->assertEquals(did_action('surecart/purchase_created'), 1);
 	}
 }

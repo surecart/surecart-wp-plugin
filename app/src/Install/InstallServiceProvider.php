@@ -1,7 +1,7 @@
 <?php
-namespace CheckoutEngine\Install;
+namespace SureCart\Install;
 
-use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
+use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 class InstallServiceProvider implements ServiceProviderInterface {
 	/**
@@ -11,7 +11,7 @@ class InstallServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function register( $container ) {
-		$container['checkout_engine.install'] = function () {
+		$container['surecart.install'] = function () {
 			return new InstallService();
 		};
 	}
@@ -24,6 +24,6 @@ class InstallServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function bootstrap( $container ) {
-		$container['checkout_engine.users']->register_rest_queries();
+		$container['surecart.users']->register_rest_queries();
 	}
 }

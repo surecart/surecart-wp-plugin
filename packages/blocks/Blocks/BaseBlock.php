@@ -1,6 +1,6 @@
 <?php
 
-namespace CheckoutEngineBlocks\Blocks;
+namespace SureCartBlocks\Blocks;
 
 /**
  * Checkout block
@@ -24,7 +24,7 @@ abstract class BaseBlock {
 		register_block_type_from_metadata(
 			$this->getDir(),
 			apply_filters(
-				'checkout_engine/block/registration/args',
+				'surecart/block/registration/args',
 				[ 'render_callback' => [ $this, 'preRender' ] ],
 			),
 		);

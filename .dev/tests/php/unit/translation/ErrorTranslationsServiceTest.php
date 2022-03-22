@@ -1,11 +1,11 @@
 <?php
 
-namespace CheckoutEngine\Tests;
+namespace SureCart\Tests;
 
-use CheckoutEngine\Support\Errors\ErrorsTranslationService;
+use SureCart\Support\Errors\ErrorsTranslationService;
 use \Mockery;
 
-class ErrorsTranslationServiceTest extends CheckoutEngineUnitTestCase
+class ErrorsTranslationServiceTest extends SureCartUnitTestCase
 {
 	/**
 	 * Set up a new app instance to use for tests.
@@ -15,16 +15,16 @@ class ErrorsTranslationServiceTest extends CheckoutEngineUnitTestCase
 		parent::setUp();
 
 		// Set up an app instance with whatever stubs and mocks we need before every test.
-		\CheckoutEngine::make()->bootstrap([
+		\SureCart::make()->bootstrap([
 			'providers' => [
-				\CheckoutEngine\Support\Errors\ErrorsServiceProvider::class,
+				\SureCart\Support\Errors\ErrorsServiceProvider::class,
 			]
 		], false);
 	}
 
 	public function test_has_fallback()
 	{
-		$translation_service = \CheckoutEngine::errors()->translate();
+		$translation_service = \SureCart::errors()->translate();
 		$this->assertWPError($translation_service, 'Error.');
 	}
 

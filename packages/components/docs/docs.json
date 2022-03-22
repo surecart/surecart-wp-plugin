@@ -2898,7 +2898,7 @@
       "events": [
         {
           "event": "ceSelect",
-          "detail": "{ item: HTMLCeMenuItemElement; }",
+          "detail": "{ item: HTMLScMenuItemElement; }",
           "bubbles": true,
           "cancelable": true,
           "composed": true,
@@ -5939,7 +5939,7 @@
       "events": [
         {
           "event": "prestoClear",
-          "detail": "CeTag",
+          "detail": "ScTag",
           "bubbles": true,
           "cancelable": true,
           "composed": true,

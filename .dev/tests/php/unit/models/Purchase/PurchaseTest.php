@@ -1,11 +1,11 @@
 <?php
 
-namespace CheckoutEngine\Tests\Models\Product;
+namespace SureCart\Tests\Models\Product;
 
-use CheckoutEngine\Models\Purchase;
-use CheckoutEngine\Tests\CheckoutEngineUnitTestCase;
+use SureCart\Models\Purchase;
+use SureCart\Tests\SureCartUnitTestCase;
 
-class PurchaseTest extends CheckoutEngineUnitTestCase
+class PurchaseTest extends SureCartUnitTestCase
 {
 	use \Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 	/**
@@ -16,9 +16,9 @@ class PurchaseTest extends CheckoutEngineUnitTestCase
 		parent::setUp();
 
 		// Set up an app instance with whatever stubs and mocks we need before every test.
-		\CheckoutEngine::make()->bootstrap([
+		\SureCart::make()->bootstrap([
 			'providers' => [
-				\CheckoutEngine\Request\RequestServiceProvider::class,
+				\SureCart\Request\RequestServiceProvider::class,
 			]
 		], false);
 	}
@@ -27,7 +27,7 @@ class PurchaseTest extends CheckoutEngineUnitTestCase
 	{
 		// mock the requests in the container
 		$requests =  \Mockery::mock(RequestService::class);
-		\CheckoutEngine::alias('request', function () use ($requests) {
+		\SureCart::alias('request', function () use ($requests) {
 			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
 		});
 
@@ -49,7 +49,7 @@ class PurchaseTest extends CheckoutEngineUnitTestCase
 	{
 		// mock the requests in the container
 		$requests =  \Mockery::mock(RequestService::class);
-		\CheckoutEngine::alias('request', function () use ($requests) {
+		\SureCart::alias('request', function () use ($requests) {
 			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
 		});
 

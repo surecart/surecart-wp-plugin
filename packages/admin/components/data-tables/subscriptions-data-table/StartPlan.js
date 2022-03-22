@@ -14,7 +14,7 @@ export default ({ subscription, children }) => {
 		const r = confirm(
 			__(
 				'Are you sure you want to start the subscription? This will immediately charge the customer.',
-				'checkout_engine'
+				'surecart'
 			)
 		);
 		if (!r) return;
@@ -27,7 +27,7 @@ export default ({ subscription, children }) => {
 		try {
 			const result = await apiFetch({
 				path: addQueryArgs(
-					`checkout-engine/v1/subscriptions/${subscription.id}`,
+					`surecart/v1/subscriptions/${subscription.id}`,
 					{
 						expand: [
 							'price',
@@ -43,7 +43,7 @@ export default ({ subscription, children }) => {
 			if (result.id) {
 				receiveEntity(result);
 			} else {
-				throw __('Could not start subscription.', 'checkout_engine');
+				throw __('Could not start subscription.', 'surecart');
 			}
 		} catch (e) {
 			console.error(e);
@@ -52,7 +52,7 @@ export default ({ subscription, children }) => {
 			} else {
 				setError(
 					e?.message ||
-						__('Failed to start subscription.', 'checkout_engine')
+						__('Failed to start subscription.', 'surecart')
 				);
 			}
 		} finally {
@@ -65,13 +65,13 @@ export default ({ subscription, children }) => {
 			{children ? (
 				<span onClick={confirmStart}>{children}</span>
 			) : (
-				<ce-button
+				<sc-button
 					size="small"
 					onClick={confirmStart}
 					loading={loading}
 				>
-					{__('Activate', 'checkout_engine')}
-				</ce-button>
+					{__('Activate', 'surecart')}
+				</sc-button>
 			)}
 		</Fragment>
 	);

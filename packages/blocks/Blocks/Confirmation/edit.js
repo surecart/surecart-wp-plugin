@@ -2,7 +2,7 @@
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { InnerBlocks, useBlockProps } from '@wordpress/block-editor';
-import { CeOrderConfirmation } from '@checkout-engine/components-react';
+import { ScOrderConfirmation } from '@surecart/components-react';
 
 export default () => {
 	const blockProps = useBlockProps();
@@ -279,7 +279,7 @@ export default () => {
 
 	return (
 		<div {...blockProps}>
-			<CeOrderConfirmation {...blockProps} order={order}>
+			<ScOrderConfirmation {...blockProps} order={order}>
 				<div
 					css={css`
 						.wp-block {
@@ -290,7 +290,7 @@ export default () => {
 				>
 					<InnerBlocks templateLock={false} />
 				</div>
-			</CeOrderConfirmation>
+			</ScOrderConfirmation>
 		</div>
 	);
 };

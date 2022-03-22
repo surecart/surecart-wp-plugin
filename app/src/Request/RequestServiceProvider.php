@@ -1,9 +1,9 @@
 <?php
 
-namespace CheckoutEngine\Request;
+namespace SureCart\Request;
 
-use CheckoutEngine\Models\ApiToken;
-use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
+use SureCart\Models\ApiToken;
+use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 /**
  * Handles the request service
@@ -15,7 +15,7 @@ class RequestServiceProvider implements ServiceProviderInterface {
 	 *  @param  \Pimple\Container $container Service Container.
 	 */
 	public function register( $container ) {
-		$app = $container[ CHECKOUT_ENGINE_APPLICATION_KEY ];
+		$app = $container[ SURECART_APPLICATION_KEY ];
 
 		$container['requests'] = function () {
 			return new RequestService( ApiToken::get() );

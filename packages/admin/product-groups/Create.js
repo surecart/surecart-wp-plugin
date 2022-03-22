@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { CeButton, CeForm, CeInput } from '@checkout-engine/components-react';
+import { ScButton, ScForm, ScInput } from '@surecart/components-react';
 import { useDispatch } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import { store as uiStore } from '../store/ui';
@@ -36,22 +36,22 @@ export default () => {
 		<CreateTemplate>
 			<FlashError path="product_group" scrollIntoView />
 
-			<Box title={__('Create New Upgrade Group', 'checkout_engine')}>
-				<CeForm onCeSubmit={onSubmit}>
+			<Box title={__('Create New Upgrade Group', 'surecart')}>
+				<ScForm onScSubmit={onSubmit}>
 					<div
 						css={css`
 							display: grid;
-							gap: var(--ce-spacing-large);
+							gap: var(--sc-spacing-large);
 						`}
 					>
-						<CeInput
-							label={__('Group Name', 'checkout_engine')}
-							className="ce-product-name hydrated"
+						<ScInput
+							label={__('Group Name', 'surecart')}
+							className="sc-product-name hydrated"
 							help={__(
 								'A name for your product group. This is not shown to customers.',
-								'checkout_engine'
+								'surecart'
 							)}
-							onCeChange={(e) => {
+							onScChange={(e) => {
 								updateProductgroup({ name: e.target.value });
 							}}
 							name="name"
@@ -60,21 +60,21 @@ export default () => {
 						/>
 
 						<div
-							css={css`display: flex gap: var(--ce-spacing-small);`}
+							css={css`display: flex gap: var(--sc-spacing-small);`}
 						>
-							<CeButton type="primary" submit loading={isSaving}>
-								{__('Create', 'checkout_engine')}
-							</CeButton>
+							<ScButton type="primary" submit loading={isSaving}>
+								{__('Create', 'surecart')}
+							</ScButton>
 
-							<CeButton
-								href={'admin.php?page=ce-product-groups'}
+							<ScButton
+								href={'admin.php?page=sc-product-groups'}
 								type="text"
 							>
-								{__('Cancel', 'checkout_engine')}
-							</CeButton>
+								{__('Cancel', 'surecart')}
+							</ScButton>
 						</div>
 					</div>
-				</CeForm>
+				</ScForm>
 			</Box>
 		</CreateTemplate>
 	);

@@ -1,13 +1,13 @@
 <?php
 
-namespace CheckoutEngine\Controllers\Admin\Coupons;
+namespace SureCart\Controllers\Admin\Coupons;
 
 use NumberFormatter;
-use CheckoutEngine\Models\Coupon;
-use CheckoutEngine\Models\Product;
-use CheckoutEngine\Models\Promotion;
-use CheckoutEngine\Support\Currency;
-use CheckoutEngine\Controllers\Admin\Tables\ListTable;
+use SureCart\Models\Coupon;
+use SureCart\Models\Product;
+use SureCart\Models\Promotion;
+use SureCart\Support\Currency;
+use SureCart\Controllers\Admin\Tables\ListTable;
 
 // WP_List_Table is not loaded automatically so we need to load it in our application.
 if ( ! class_exists( 'WP_List_Table' ) ) {
@@ -56,7 +56,7 @@ class CouponsListTable extends ListTable {
 		?>
 	<form class="search-form"
 		method="get">
-		<?php $this->search_box( __( 'Search Coupons', 'checkout_engine' ), 'coupon' ); ?>
+		<?php $this->search_box( __( 'Search Coupons', 'surecart' ), 'coupon' ); ?>
 		<input type="hidden"
 			name="id"
 			value="1" />
@@ -73,12 +73,12 @@ class CouponsListTable extends ListTable {
 	 */
 	// protected function get_views() {
 	// $stati = [
-	// 'active'   => __( 'Active', 'checkout_engine' ),
-	// 'archived' => __( 'Archived', 'checkout_engine' ),
-	// 'all'      => __( 'All', 'checkout_engine' ),
+	// 'active'   => __( 'Active', 'surecart' ),
+	// 'archived' => __( 'Archived', 'surecart' ),
+	// 'all'      => __( 'All', 'surecart' ),
 	// ];
 
-	// $link = \CheckoutEngine::getUrl()->index( 'coupon' );
+	// $link = \SureCart::getUrl()->index( 'coupon' );
 
 	// foreach ( $stati as $status => $label ) {
 	// $current_link_attributes = '';
@@ -116,11 +116,11 @@ class CouponsListTable extends ListTable {
 	public function get_columns() {
 		return [
 			// 'cb'          => '<input type="checkbox" />',
-			'name'           => __( 'Name', 'checkout_engine' ),
-			'promotion_code' => __( 'Code', 'checkout_engine' ),
-			'price'          => __( 'Price', 'checkout_engine' ),
-			'usage'          => __( 'Usage', 'checkout_engine' ),
-			'date'           => __( 'Date', 'checkout_engine' ),
+			'name'           => __( 'Name', 'surecart' ),
+			'promotion_code' => __( 'Code', 'surecart' ),
+			'price'          => __( 'Price', 'surecart' ),
+			'usage'          => __( 'Usage', 'surecart' ),
+			'date'           => __( 'Date', 'surecart' ),
 		];
 	}
 
@@ -176,7 +176,7 @@ class CouponsListTable extends ListTable {
 	/**
 	 * Handle the price column.
 	 *
-	 * @param \CheckoutEngine\Models\Coupon $coupon Coupon model.
+	 * @param \SureCart\Models\Coupon $coupon Coupon model.
 	 *
 	 * @return string
 	 */
@@ -219,13 +219,13 @@ class CouponsListTable extends ListTable {
 			return '';
 		}
 		// translators: coupon expiration date.
-		return sprintf( __( 'Valid until %s', 'checkout_engine' ), date_i18n( get_option( 'date_format' ), $timestamp / 1000 ) );
+		return sprintf( __( 'Valid until %s', 'surecart' ), date_i18n( get_option( 'date_format' ), $timestamp / 1000 ) );
 	}
 
 	/**
 	 * Get the price string for the coupon.
 	 *
-	 * @param \CheckoutEngine\Models\Coupon|null $coupon Coupon model.
+	 * @param \SureCart\Models\Coupon|null $coupon Coupon model.
 	 * @return string
 	 */
 	public function get_price_string( $coupon = null ) {
@@ -234,15 +234,15 @@ class CouponsListTable extends ListTable {
 		}
 		if ( ! empty( $coupon->percent_off ) ) {
 			// translators: Coupon % off.
-			return sprintf( esc_html( __( '%1d%% off', 'checkout_engine' ) ), $coupon->percent_off );
+			return sprintf( esc_html( __( '%1d%% off', 'surecart' ) ), $coupon->percent_off );
 		}
 
 		if ( ! empty( $coupon->amount_off ) ) {
 			// translators: Coupon amount off.
-			return '<ce-format-number type="currency" currency="' . $coupon->currency . '" value="' . $coupon->amount_off . '"></ce-format-number>';
+			return '<sc-format-number type="currency" currency="' . $coupon->currency . '" value="' . $coupon->amount_off . '"></sc-format-number>';
 		}
 
-		return esc_html__( 'No discount.', 'checkout_engine' );
+		return esc_html__( 'No discount.', 'surecart' );
 	}
 
 	/**
@@ -257,26 +257,26 @@ class CouponsListTable extends ListTable {
 		}
 
 		if ( 'forever' === $coupon->duration ) {
-			return __( 'Forever', 'checkout_engine' );
+			return __( 'Forever', 'surecart' );
 		}
 		if ( 'repeating' === $coupon->duration ) {
 			// translators: number of months.
-			return sprintf( __( 'For %d months', 'checkout_engine' ), $coupon->duration_in_months ?? 1 );
+			return sprintf( __( 'For %d months', 'surecart' ), $coupon->duration_in_months ?? 1 );
 		}
 
-		return __( 'Once', 'checkout_engine' );
+		return __( 'Once', 'surecart' );
 	}
 
 	/**
 	 * Handle the status
 	 *
-	 * @param \CheckoutEngine\Models\Price $product Product model.
+	 * @param \SureCart\Models\Price $product Product model.
 	 *
 	 * @return string
 	 */
 	public function column_status( $coupon ) {
 		// TODO: Add Badge.
-		return $coupon->expired ? __( 'Expired', 'checkout_engine' ) : __( 'Active', 'checkout_engine' );
+		return $coupon->expired ? __( 'Expired', 'surecart' ) : __( 'Active', 'surecart' );
 	}
 
 	protected function extra_tablenav( $which ) {
@@ -288,21 +288,21 @@ class CouponsListTable extends ListTable {
 	/**
 	 * Name of the coupon
 	 *
-	 * @param \CheckoutEngine\Models\Promotion $promotion Promotion model.
+	 * @param \SureCart\Models\Promotion $promotion Promotion model.
 	 *
 	 * @return string
 	 */
 	public function column_name( $coupon ) {
 		ob_start();
 		?>
-		<a class="row-title" aria-label="Edit Coupon" href="<?php echo esc_url( \CheckoutEngine::getUrl()->edit( 'coupon', $coupon->id ) ); ?>">
+		<a class="row-title" aria-label="Edit Coupon" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'coupon', $coupon->id ) ); ?>">
 			<?php echo esc_html_e( $coupon->name ); ?>
 		</a>
 
 		<?php
 		echo $this->row_actions(
 			[
-				'edit' => '<a href="' . esc_url( \CheckoutEngine::getUrl()->edit( 'coupon', $coupon->id ) ) . '" aria-label="' . esc_attr( 'Edit Coupon', 'checkout_engine' ) . '">' . __( 'Edit', 'checkout_engine' ) . '</a>',
+				'edit' => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'coupon', $coupon->id ) ) . '" aria-label="' . esc_attr( 'Edit Coupon', 'surecart' ) . '">' . __( 'Edit', 'surecart' ) . '</a>',
 			],
 		);
 
@@ -312,17 +312,17 @@ class CouponsListTable extends ListTable {
 	/**
 	 * Name of the coupon
 	 *
-	 * @param \CheckoutEngine\Models\Promotion $promotion Promotion model.
+	 * @param \SureCart\Models\Promotion $promotion Promotion model.
 	 *
 	 * @return string
 	 */
 	public function column_promotion_code( $coupon ) {
 		if ( empty( $coupon->promotions->data[0]->code ) ) {
-			return __( 'No code specified', 'checkout_engine' );
+			return __( 'No code specified', 'surecart' );
 		}
 		$and = '';
 		if ( $coupon->promotions->pagination->count > 1 ) {
-			$and = sprintf( __( '+ %d more', 'checkout_engine' ), number_format_i18n( $coupon->promotions->pagination->count ) );
+			$and = sprintf( __( '+ %d more', 'surecart' ), number_format_i18n( $coupon->promotions->pagination->count ) );
 		}
 		return '<code>' . sanitize_text_field( $coupon->promotions->data[0]->code ) . '</code> ' . $and;
 	}
@@ -330,19 +330,19 @@ class CouponsListTable extends ListTable {
 		/**
 		 * Toggle archive action link and text.
 		 *
-		 * @param \CheckoutEngine\Models\Product $product Product model.
+		 * @param \SureCart\Models\Product $product Product model.
 		 * @return string
 		 */
 	public function action_toggle_archive( $coupon ) {
-		$text            = $coupon->archived ? __( 'Un-Archive', 'checkout_engine' ) : __( 'Archive', 'checkout_engine' );
-		$confirm_message = $coupon->archived ? __( 'Are you sure you want to restore this coupon? This will be be available to purchase.', 'checkout_engine' ) : __( 'Are you sure you want to archive this coupon? This will be unavailable for purchase.', 'checkout_engine' );
-		$link            = \CheckoutEngine::getUrl()->toggleArchive( 'coupon', $coupon->id );
+		$text            = $coupon->archived ? __( 'Un-Archive', 'surecart' ) : __( 'Archive', 'surecart' );
+		$confirm_message = $coupon->archived ? __( 'Are you sure you want to restore this coupon? This will be be available to purchase.', 'surecart' ) : __( 'Are you sure you want to archive this coupon? This will be unavailable for purchase.', 'surecart' );
+		$link            = \SureCart::getUrl()->toggleArchive( 'coupon', $coupon->id );
 
 		return sprintf(
 			'<a class="submitdelete" onclick="return confirm(\'%1s\')" href="%2s" aria-label="%3s">%4s</a>',
 			esc_attr( $confirm_message ),
 			esc_url( $link ),
-			esc_attr__( 'Toggle Coupon Archive', 'checkout_engine' ),
+			esc_attr__( 'Toggle Coupon Archive', 'surecart' ),
 			esc_html( $text )
 		);
 	}

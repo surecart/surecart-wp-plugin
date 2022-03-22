@@ -17,13 +17,13 @@ export default ({ attributes, setAttributes }) => {
 	return (
 		<Fragment>
 			<InspectorControls>
-				<PanelBody title={__('Attributes', 'checkout-engine')}>
+				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<ToggleControl
-							label={__('Removable', 'checkout-engine')}
+							label={__('Removable', 'surecart')}
 							help={__(
 								'Allow line items to be removed.',
-								'checkout_engine'
+								'surecart'
 							)}
 							checked={removable}
 							onChange={(removable) =>
@@ -33,10 +33,10 @@ export default ({ attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<ToggleControl
-							label={__('Editable', 'checkout-engine')}
+							label={__('Editable', 'surecart')}
 							help={__(
 								'Allow line item quantities to be editable.',
-								'checkout_engine'
+								'surecart'
 							)}
 							checked={editable}
 							onChange={(editable) => setAttributes({ editable })}
@@ -46,10 +46,10 @@ export default ({ attributes, setAttributes }) => {
 			</InspectorControls>
 
 			<Disabled>
-				<ce-line-items
+				<sc-line-items
 					removable={removable}
 					editable={editable}
-				></ce-line-items>
+				></sc-line-items>
 			</Disabled>
 		</Fragment>
 	);

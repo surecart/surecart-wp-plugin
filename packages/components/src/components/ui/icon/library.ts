@@ -1,4 +1,4 @@
-import { CeIcon } from './ce-icon';
+import { ScIcon } from './sc-icon';
 
 export type IconLibraryResolver = (name: string) => string;
 export type IconLibraryMutator = (svg: SVGElement) => void;
@@ -9,13 +9,13 @@ export interface IconLibrary {
 }
 
 let registry: IconLibrary[] = [];
-let watchedIcons: CeIcon[] = [];
+let watchedIcons: ScIcon[] = [];
 
-export function watchIcon(icon: CeIcon) {
+export function watchIcon(icon: ScIcon) {
   watchedIcons.push(icon);
 }
 
-export function unwatchIcon(icon: CeIcon) {
+export function unwatchIcon(icon: ScIcon) {
   watchedIcons = watchedIcons.filter(el => el !== icon);
 }
 

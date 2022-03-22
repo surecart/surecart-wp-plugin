@@ -12,7 +12,7 @@ import {
 	__experimentalUseInnerBlocksProps,
 } from '@wordpress/block-editor';
 import { Fragment } from '@wordpress/element';
-import { CeTabPanel } from '@checkout-engine/components-react';
+import { ScTabPanel } from '@surecart/components-react';
 import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
 
 export default ({ attributes, setAttributes }) => {
@@ -25,7 +25,7 @@ export default ({ attributes, setAttributes }) => {
 	const blockProps = useBlockProps({
 		name,
 		css: css`
-			> .wp-block:not(ce-columns):not(ce-column):not(:last-child) {
+			> .wp-block:not(sc-columns):not(sc-column):not(:last-child) {
 				margin-bottom: ${gap} !important;
 			}
 		`,
@@ -39,17 +39,17 @@ export default ({ attributes, setAttributes }) => {
 	return (
 		<Fragment>
 			<InspectorControls>
-				<PanelBody title={__('Attributes', 'checkout-engine')}>
+				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<TextControl
-							label={__('Url Slug', 'checkout-engine')}
+							label={__('Url Slug', 'surecart')}
 							value={name}
 							onChange={(name) => setAttributes({ name })}
 						/>
 					</PanelRow>
 				</PanelBody>
 			</InspectorControls>
-			<CeTabPanel {...innerBlocksProps}></CeTabPanel>
+			<ScTabPanel {...innerBlocksProps}></ScTabPanel>
 		</Fragment>
 	);
 };

@@ -1,0 +1,5471 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2022-03-22T13:08:42+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.6.0\n"
+
+#: src/Controllers/Admin/Abandoned/AbandonedOrderListTable.php:48
+#: src/Controllers/Admin/Customers/CustomersListTable.php:62
+#: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:63
+#: src/Controllers/Admin/Products/ProductsListTable.php:65
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:60
+msgid "All"
+msgstr ""
+
+#: src/Controllers/Admin/Abandoned/AbandonedOrderListTable.php:49
+#: src/Controllers/Admin/Abandoned/AbandonedOrderListTable.php:185
+msgid "Recovered"
+msgstr ""
+
+#: src/Controllers/Admin/Abandoned/AbandonedOrderListTable.php:50
+msgid "Notified"
+msgstr ""
+
+#: src/Controllers/Admin/Abandoned/AbandonedOrderListTable.php:87
+msgid "Search Abanonded Orders"
+msgstr ""
+
+#: src/Controllers/Admin/Abandoned/AbandonedOrderListTable.php:102
+#: src/Controllers/Admin/Orders/OrdersListTable.php:107
+#: admin/subscriptions/show.js:6366
+msgid "Order"
+msgstr ""
+
+#: src/Controllers/Admin/Abandoned/AbandonedOrderListTable.php:103
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:123
+#: src/Controllers/Admin/Invoices/InvoicesListTable.php:64
+#: src/Controllers/Admin/Orders/OrdersListTable.php:108
+#: src/Controllers/Admin/Products/ProductsListTable.php:110
+#: admin/customers.js:4324
+#: admin/customers.js:4532
+#: admin/invoices.js:4088
+#: admin/orders.js:4604
+msgid "Date"
+msgstr ""
+
+#: src/Controllers/Admin/Abandoned/AbandonedOrderListTable.php:104
+msgid "Delivery"
+msgstr ""
+
+#: src/Controllers/Admin/Abandoned/AbandonedOrderListTable.php:105
+#: src/Controllers/Admin/Invoices/InvoicesListTable.php:65
+#: src/Controllers/Admin/Orders/OrdersListTable.php:109
+#: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:104
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:103
+#: admin/customers.js:4330
+#: admin/customers.js:4528
+#: admin/customers.js:4678
+#: admin/invoices.js:4094
+#: admin/invoices.js:4449
+#: admin/orders.js:4610
+#: admin/orders.js:5030
+#: admin/subscriptions/show.js:6288
+#: admin/subscriptions/show.js:6372
+#: blocks/library.js:7735
+msgid "Status"
+msgstr ""
+
+#: src/Controllers/Admin/Abandoned/AbandonedOrderListTable.php:106
+#: src/Controllers/Admin/Invoices/InvoicesListTable.php:66
+#: src/Controllers/Admin/Orders/OrdersListTable.php:110
+#: admin/customers.js:4525
+#: admin/subscriptions/edit.js:7521
+#: admin/subscriptions/show.js:6569
+#: blocks/library.js:7730
+#: blocks/library.js:12365
+#: blocks/library.js:12691
+#: components/cjs/sc-order-confirmation-totals.cjs.entry.js:29
+#: components/cjs/sc-stripe-payment-request.cjs.entry.js:98
+#: components/cjs/sc-stripe-payment-request.cjs.entry.js:136
+#: components/cjs/sc-upcoming-invoice.cjs.entry.js:164
+#: components/collection/components/controllers/confirmation/order-confirmation-totals/sc-order-confirmation-totals.js:33
+#: components/collection/components/controllers/dashboard/upcoming-invoice/sc-upcoming-invoice.js:180
+#: components/collection/components/ui/stripe-payment-request/sc-stripe-payment-request.js:81
+#: components/collection/components/ui/stripe-payment-request/sc-stripe-payment-request.js:119
+#: components/components/sc-order-confirmation-totals.js:33
+#: components/components/sc-stripe-payment-request2.js:94
+#: components/components/sc-stripe-payment-request2.js:132
+#: components/components/sc-upcoming-invoice.js:186
+#: components/custom-elements/index.js:6873
+#: components/custom-elements/index.js:11726
+#: components/custom-elements/index.js:11764
+#: components/custom-elements/index.js:13354
+#: components/esm/sc-order-confirmation-totals.entry.js:25
+#: components/esm/sc-stripe-payment-request.entry.js:94
+#: components/esm/sc-stripe-payment-request.entry.js:132
+#: components/esm/sc-upcoming-invoice.entry.js:160
+msgid "Total"
+msgstr ""
+
+#: src/Controllers/Admin/Abandoned/AbandonedOrderListTable.php:173
+msgid "Sent"
+msgstr ""
+
+#: src/Controllers/Admin/Abandoned/AbandonedOrderListTable.php:173
+msgid "Not Sent"
+msgstr ""
+
+#: src/Controllers/Admin/Abandoned/AbandonedOrderListTable.php:185
+msgid "Not Recovered"
+msgstr ""
+
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:59
+msgid "Search Coupons"
+msgstr ""
+
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:119
+#: src/Controllers/Admin/Customers/CustomersListTable.php:102
+#: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:103
+#: src/Controllers/Admin/Products/ProductsListTable.php:106
+#: src/Support/Errors/Translations/attributes.php:11
+#: admin/customers.js:4401
+#: admin/products.js:5491
+#: blocks/library.js:5863
+#: blocks/library.js:11057
+#: blocks/library.js:12050
+#: components/cjs/sc-customer-edit.cjs.entry.js:68
+#: components/collection/components/controllers/dashboard/customer-edit/sc-customer-edit.js:67
+#: components/components/sc-customer-edit.js:87
+#: components/custom-elements/index.js:4783
+#: components/esm/sc-customer-edit.entry.js:64
+msgid "Name"
+msgstr ""
+
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:120
+msgid "Code"
+msgstr ""
+
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:121
+#: src/Controllers/Admin/Products/ProductsListTable.php:108
+#: admin/products.js:5307
+#: admin/products.js:5352
+#: admin/subscriptions/edit.js:7512
+#: blocks/library.js:6519
+msgid "Price"
+msgstr ""
+
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:122
+msgid "Usage"
+msgstr ""
+
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:134
+#: src/Controllers/Admin/Customers/CustomersListTable.php:116
+#: src/Controllers/Admin/Invoices/InvoicesListTable.php:78
+#: src/Controllers/Admin/Orders/OrdersListTable.php:124
+#: src/Controllers/Admin/Products/ProductsListTable.php:121
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:118
+msgid "Select comment"
+msgstr ""
+
+#. translators: coupon expiration date.
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:222
+#: src/Controllers/Admin/Invoices/InvoicesListTable.php:195
+#: src/Controllers/Admin/Orders/OrdersListTable.php:241
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:248
+msgid "Valid until %s"
+msgstr ""
+
+#. translators: Coupon % off.
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:237
+#: src/Controllers/Admin/Invoices/InvoicesListTable.php:204
+#: src/Controllers/Admin/Orders/OrdersListTable.php:250
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:257
+msgid "%1d%% off"
+msgstr ""
+
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:245
+#: src/Controllers/Admin/Invoices/InvoicesListTable.php:212
+#: src/Controllers/Admin/Orders/OrdersListTable.php:258
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:265
+msgid "No discount."
+msgstr ""
+
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:260
+#: src/Controllers/Admin/Invoices/InvoicesListTable.php:227
+#: src/Controllers/Admin/Orders/OrdersListTable.php:273
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:280
+#: admin/coupons.js:3038
+#: admin/coupons.js:3646
+#: admin/coupons.js:3714
+msgid "Forever"
+msgstr ""
+
+#. translators: number of months.
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:264
+#: src/Controllers/Admin/Invoices/InvoicesListTable.php:231
+#: src/Controllers/Admin/Orders/OrdersListTable.php:277
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:284
+msgid "For %d months"
+msgstr ""
+
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:267
+#: src/Controllers/Admin/Invoices/InvoicesListTable.php:234
+#: src/Controllers/Admin/Orders/OrdersListTable.php:280
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:287
+#: admin/coupons.js:3031
+#: admin/coupons.js:3640
+#: admin/coupons.js:3720
+msgid "Once"
+msgstr ""
+
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:279
+msgid "Expired"
+msgstr ""
+
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:279
+#: src/Controllers/Admin/Customers/CustomersListTable.php:60
+#: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:61
+#: src/Controllers/Admin/Products/ProductsListTable.php:63
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:61
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:301
+#: admin/coupons.js:6795
+#: admin/customers.js:7914
+#: admin/invoices.js:7853
+#: admin/orders.js:7945
+#: admin/product-groups.js:6378
+#: admin/products.js:9041
+#: admin/settings.js:5102
+#: admin/subscriptions/edit.js:8088
+#: admin/subscriptions/show.js:7028
+#: blocks/library.js:2760
+#: components/cjs/sc-subscription-details_2.cjs.entry.js:122
+#: components/collection/components/ui/subscription-status-badge/sc-subscription-status-badge.js:46
+#: components/components/sc-subscription-status-badge2.js:51
+#: components/custom-elements/index.js:12403
+#: components/esm/sc-subscription-details_2.entry.js:118
+msgid "Active"
+msgstr ""
+
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:305
+#: src/Controllers/Admin/Customers/CustomersListTable.php:219
+#: src/Controllers/Admin/Products/ProductsListTable.php:293
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:345
+msgid "Edit"
+msgstr ""
+
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:321
+msgid "No code specified"
+msgstr ""
+
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:325
+msgid "+ %d more"
+msgstr ""
+
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:337
+#: src/Controllers/Admin/Customers/CustomersListTable.php:235
+#: src/Controllers/Admin/Products/ProductsListTable.php:312
+#: admin/coupons.js:3271
+#: admin/product-groups.js:3599
+#: admin/products.js:5110
+#: admin/products.js:5213
+msgid "Un-Archive"
+msgstr ""
+
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:337
+#: src/Controllers/Admin/Customers/CustomersListTable.php:235
+#: src/Controllers/Admin/Products/ProductsListTable.php:312
+#: admin/coupons.js:3271
+#: admin/product-groups.js:3599
+#: admin/products.js:5110
+#: admin/products.js:5213
+msgid "Archive"
+msgstr ""
+
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:338
+msgid "Are you sure you want to restore this coupon? This will be be available to purchase."
+msgstr ""
+
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:338
+msgid "Are you sure you want to archive this coupon? This will be unavailable for purchase."
+msgstr ""
+
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:345
+msgid "Toggle Coupon Archive"
+msgstr ""
+
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:390
+msgid "Unapprove"
+msgstr ""
+
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:393
+msgid "Approve"
+msgstr ""
+
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:396
+msgctxt "comment"
+msgid "Mark as spam"
+msgstr ""
+
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:400
+msgid "Restore"
+msgstr ""
+
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:402
+msgctxt "comment"
+msgid "Not spam"
+msgstr ""
+
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:406
+msgid "Delete permanently"
+msgstr ""
+
+#: src/Controllers/Admin/Coupons/CouponsListTable.php:408
+msgid "Move to Trash"
+msgstr ""
+
+#: src/Controllers/Admin/Customers/CustomersController.php:60
+#: src/Controllers/Admin/Products/ProductsController.php:60
+msgid "Product archived."
+msgstr ""
+
+#: src/Controllers/Admin/Customers/CustomersController.php:60
+#: src/Controllers/Admin/Products/ProductsController.php:60
+msgid "Product restored."
+msgstr ""
+
+#: src/Controllers/Admin/Customers/CustomersListTable.php:45
+msgid "Search Customers"
+msgstr ""
+
+#: src/Controllers/Admin/Customers/CustomersListTable.php:61
+#: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:62
+#: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:183
+#: src/Controllers/Admin/Products/ProductsListTable.php:64
+#: admin/coupons.js:3250
+#: admin/coupons.js:6793
+#: admin/customers.js:7912
+#: admin/invoices.js:7851
+#: admin/orders.js:7943
+#: admin/product-groups.js:3584
+#: admin/product-groups.js:6376
+#: admin/products.js:4811
+#: admin/products.js:5195
+#: admin/products.js:9039
+#: admin/settings.js:5100
+#: admin/subscriptions/edit.js:8086
+#: admin/subscriptions/show.js:7026
+#: blocks/library.js:2758
+msgid "Archived"
+msgstr ""
+
+#: src/Controllers/Admin/Customers/CustomersListTable.php:103
+#: admin/customers.js:4412
+msgid "Email"
+msgstr ""
+
+#: src/Controllers/Admin/Customers/CustomersListTable.php:104
+#: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:105
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:106
+#: admin/coupons.js:3058
+#: admin/customers.js:4688
+#: admin/invoices.js:4459
+#: admin/orders.js:5040
+#: admin/subscriptions/show.js:6291
+#: admin/subscriptions/show.js:6375
+msgid "Created"
+msgstr ""
+
+#: src/Controllers/Admin/Customers/CustomersListTable.php:160
+#: src/Controllers/Admin/Products/ProductsListTable.php:172
+msgid "No products found."
+msgstr ""
+
+#: src/Controllers/Admin/Customers/CustomersListTable.php:171
+#: src/Controllers/Admin/Products/ProductsListTable.php:221
+#: src/Controllers/Admin/Products/ProductsListTable.php:236
+msgid "No price"
+msgstr ""
+
+#: src/Controllers/Admin/Customers/CustomersListTable.php:190
+#: src/Controllers/Admin/Products/ProductsListTable.php:255
+#: src/Controllers/Admin/Tables/ListTable.php:74
+msgid "Updated"
+msgstr ""
+
+#: src/Controllers/Admin/Customers/CustomersListTable.php:236
+#: src/Controllers/Admin/Products/ProductsListTable.php:313
+msgid "Are you sure you want to restore this product? This will be be available to purchase."
+msgstr ""
+
+#: src/Controllers/Admin/Customers/CustomersListTable.php:236
+#: src/Controllers/Admin/Products/ProductsListTable.php:313
+msgid "Are you sure you want to archive this product? This will be unavailable for purchase."
+msgstr ""
+
+#: src/Controllers/Admin/Customers/CustomersListTable.php:243
+#: src/Controllers/Admin/Products/ProductsListTable.php:320
+msgid "Toggle Product Archive"
+msgstr ""
+
+#: src/Controllers/Admin/Invoices/InvoicesListTable.php:48
+msgid "Search Invoices"
+msgstr ""
+
+#: src/Controllers/Admin/Invoices/InvoicesListTable.php:63
+#: admin/invoices.js:4575
+#: admin/orders.js:5158
+msgid "Invoice"
+msgstr ""
+
+#: src/Controllers/Admin/Invoices/InvoicesListTable.php:246
+#: src/Controllers/Admin/Orders/OrdersListTable.php:292
+#: admin/customers.js:2853
+#: admin/customers.js:2913
+#: admin/invoices.js:2650
+#: admin/invoices.js:2710
+#: admin/invoices.js:4352
+#: admin/orders.js:2650
+#: admin/orders.js:2710
+#: admin/orders.js:4860
+#: blocks/library.js:8267
+#: blocks/library.js:8418
+#: components/cjs/sc-charges-list.cjs.entry.js:77
+#: components/cjs/sc-invoices-list.cjs.entry.js:88
+#: components/cjs/sc-orders-list.cjs.entry.js:88
+#: components/collection/components/controllers/dashboard/charges-list/sc-charges-list.js:68
+#: components/collection/components/controllers/dashboard/invoices-list/sc-invoices-list.js:79
+#: components/collection/components/controllers/dashboard/orders-list/sc-orders-list.js:79
+#: components/components/sc-charges-list.js:90
+#: components/components/sc-invoices-list.js:104
+#: components/components/sc-orders-list.js:104
+#: components/custom-elements/index.js:3834
+#: components/custom-elements/index.js:6161
+#: components/custom-elements/index.js:7458
+#: components/esm/sc-charges-list.entry.js:73
+#: components/esm/sc-invoices-list.entry.js:84
+#: components/esm/sc-orders-list.entry.js:84
+msgid "Refunded"
+msgstr ""
+
+#: src/Controllers/Admin/Invoices/InvoicesListTable.php:261
+#: src/Controllers/Admin/Invoices/InvoicesListTable.php:265
+#: src/Controllers/Admin/Orders/OrdersListTable.php:307
+#: src/Controllers/Admin/Orders/OrdersListTable.php:311
+#: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:189
+#: admin/orders.js:4500
+msgid "Edit Order"
+msgstr ""
+
+#: src/Controllers/Admin/Orders/OrdersListTable.php:48
+#: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:46
+msgid "Search Orders"
+msgstr ""
+
+#. translators: Customer name.
+#: src/Controllers/Admin/Orders/OrdersListTable.php:314
+msgid "By %s"
+msgstr ""
+
+#: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:183
+#: src/WordPress/PostTypes/FormPostTypeService.php:274
+#: blocks/library.js:10044
+#: blocks/library.js:10065
+msgid "Live"
+msgstr ""
+
+#: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:195
+#: admin/customers.js:2537
+#: admin/customers.js:3835
+#: admin/invoices.js:3632
+#: admin/orders.js:3632
+#: blocks/library.js:7759
+msgid "View"
+msgstr ""
+
+#: src/Controllers/Admin/Products/ProductsListTable.php:48
+msgid "Search Products"
+msgstr ""
+
+#: src/Controllers/Admin/Products/ProductsListTable.php:109
+#: blocks/library.js:3165
+#: blocks/library.js:3992
+#: blocks/library.js:5402
+msgid "Type"
+msgstr ""
+
+#: src/Controllers/Admin/Products/ProductsListTable.php:192
+#: admin/invoices.js:4584
+#: admin/orders.js:5167
+#: admin/products.js:6181
+#: admin/subscriptions/show.js:5924
+#: components/cjs/sc-subscription-details_2.cjs.entry.js:23
+#: components/cjs/sc-subscription.cjs.entry.js:82
+#: components/collection/components/controllers/dashboard/subscription-details/sc-subscription-details.js:12
+#: components/collection/components/controllers/dashboard/subscription/sc-subscription.js:71
+#: components/components/sc-subscription-details2.js:26
+#: components/components/sc-subscription.js:96
+#: components/custom-elements/index.js:12007
+#: components/custom-elements/index.js:12137
+#: components/esm/sc-subscription-details_2.entry.js:19
+#: components/esm/sc-subscription.entry.js:78
+msgid "Subscription"
+msgstr ""
+
+#: src/Controllers/Admin/Products/ProductsListTable.php:205
+msgid "One-Time"
+msgstr ""
+
+#. translators: Price starting at.
+#: src/Controllers/Admin/Products/ProductsListTable.php:228
+msgid "Starting at %s"
+msgstr ""
+
+#. translators: Other prices.
+#: src/Controllers/Admin/Products/ProductsListTable.php:230
+msgid "and %d other price."
+msgid_plural "and %d other prices."
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/Controllers/Admin/Settings.php:25
+msgid "Could not load settings page."
+msgstr ""
+
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:45
+msgid "Search Subscriptions"
+msgstr ""
+
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:62
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:304
+#: components/cjs/sc-subscription-details_2.cjs.entry.js:126
+#: components/collection/components/ui/subscription-status-badge/sc-subscription-status-badge.js:50
+#: components/components/sc-subscription-status-badge2.js:55
+#: components/custom-elements/index.js:12407
+#: components/esm/sc-subscription-details_2.entry.js:122
+msgid "Canceled"
+msgstr ""
+
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:102
+#: admin/invoices.js:4148
+#: admin/invoices.js:4611
+#: admin/orders.js:4666
+#: admin/orders.js:5194
+#: admin/subscriptions/edit.js:7370
+msgid "Customer"
+msgstr ""
+
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:104
+#: admin/invoices.js:4456
+#: admin/orders.js:5037
+#: components/cjs/sc-upcoming-invoice.cjs.entry.js:126
+#: components/collection/components/controllers/dashboard/upcoming-invoice/sc-upcoming-invoice.js:114
+#: components/components/sc-upcoming-invoice.js:148
+#: components/custom-elements/index.js:13316
+#: components/esm/sc-upcoming-invoice.entry.js:122
+msgid "Plan"
+msgstr ""
+
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:105
+#: src/Support/Errors/Translations/attributes.php:17
+#: src/Support/Errors/Translations/attributes.php:18
+#: admin/customers.js:4682
+#: admin/invoices.js:4453
+#: admin/invoices.js:4593
+#: admin/orders.js:5034
+#: admin/orders.js:5176
+#: admin/subscriptions/edit.js:7509
+#: admin/subscriptions/edit.js:7798
+#: admin/subscriptions/show.js:6484
+#: admin/subscriptions/show.js:6557
+#: admin/subscriptions/show.js:6560
+#: blocks/library.js:6511
+#: blocks/library.js:12681
+msgid "Product"
+msgstr ""
+
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:125
+msgid "No product"
+msgstr ""
+
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:201
+#: admin/invoices.js:7923
+#: admin/orders.js:8015
+#: admin/product-groups.js:6424
+#: admin/products.js:9087
+#: admin/subscriptions/edit.js:8134
+#: admin/subscriptions/show.js:7098
+#: blocks/library.js:2806
+#: components/cjs/price-b727fc39.js:38
+#: components/cjs/sc-format-interval.cjs.entry.js:23
+#: components/collection/components/util/format-interval/sc-format-interval.js:16
+#: components/collection/functions/price.js:35
+#: components/components/price.js:36
+#: components/components/sc-format-interval.js:19
+#: components/custom-elements/index.js:4561
+#: components/custom-elements/index.js:5713
+#: components/esm/price-3cc28e73.js:36
+#: components/esm/sc-format-interval.entry.js:19
+msgid "week"
+msgid_plural "%d weeks"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:207
+#: admin/invoices.js:7926
+#: admin/orders.js:8018
+#: admin/product-groups.js:6427
+#: admin/products.js:9090
+#: admin/subscriptions/edit.js:8137
+#: admin/subscriptions/show.js:7101
+#: blocks/library.js:2809
+#: components/cjs/price-b727fc39.js:40
+#: components/cjs/sc-format-interval.cjs.entry.js:25
+#: components/collection/components/util/format-interval/sc-format-interval.js:18
+#: components/collection/functions/price.js:37
+#: components/components/price.js:38
+#: components/components/sc-format-interval.js:21
+#: components/custom-elements/index.js:4563
+#: components/custom-elements/index.js:5715
+#: components/esm/price-3cc28e73.js:38
+#: components/esm/sc-format-interval.entry.js:21
+msgid "month"
+msgid_plural "%d months"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:213
+#: admin/invoices.js:7929
+#: admin/orders.js:8021
+#: admin/product-groups.js:6430
+#: admin/products.js:9093
+#: admin/subscriptions/edit.js:8140
+#: admin/subscriptions/show.js:7104
+#: blocks/library.js:2812
+#: components/cjs/price-b727fc39.js:42
+#: components/cjs/sc-format-interval.cjs.entry.js:27
+#: components/collection/components/util/format-interval/sc-format-interval.js:20
+#: components/collection/functions/price.js:39
+#: components/components/price.js:40
+#: components/components/sc-format-interval.js:23
+#: components/custom-elements/index.js:4565
+#: components/custom-elements/index.js:5717
+#: components/esm/price-3cc28e73.js:40
+#: components/esm/sc-format-interval.entry.js:23
+msgid "year"
+msgid_plural "%d years"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:307
+#: components/cjs/sc-subscription-details_2.cjs.entry.js:120
+#: components/collection/components/ui/subscription-status-badge/sc-subscription-status-badge.js:44
+#: components/components/sc-subscription-status-badge2.js:49
+#: components/custom-elements/index.js:12401
+#: components/esm/sc-subscription-details_2.entry.js:116
+msgid "Trialing"
+msgstr ""
+
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:310
+#: admin/coupons.js:6794
+#: admin/customers.js:7913
+#: admin/invoices.js:7852
+#: admin/orders.js:7944
+#: admin/product-groups.js:6377
+#: admin/products.js:9040
+#: admin/settings.js:5101
+#: admin/subscriptions/edit.js:8087
+#: admin/subscriptions/show.js:7027
+#: blocks/library.js:2759
+#: components/cjs/sc-order-status-badge.cjs.entry.js:35
+#: components/collection/components/ui/order-status-badge/sc-order-status-badge.js:26
+#: components/components/sc-order-status-badge2.js:33
+#: components/custom-elements/index.js:7281
+#: components/esm/sc-order-status-badge.entry.js:31
+msgid "Draft"
+msgstr ""
+
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:318
+msgid "Update Pending"
+msgstr ""
+
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:335
+msgid "No name provided"
+msgstr ""
+
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:338
+msgid "Edit Subscription"
+msgstr ""
+
+#: src/Controllers/Admin/Tables/ListTable.php:102
+#: src/WordPress/PostTypes/FormPostTypeService.php:270
+#: blocks/library.js:10037
+#: blocks/library.js:10058
+#: components/cjs/sc-customer-details.cjs.entry.js:61
+#: components/cjs/sc-customer-edit.cjs.entry.js:68
+#: components/cjs/sc-payment-methods-list.cjs.entry.js:109
+#: components/collection/components/controllers/dashboard/customer-edit/sc-customer-edit.js:61
+#: components/collection/components/controllers/dashboard/payment-methods-list/sc-payment-methods-list.js:123
+#: components/collection/components/ui/customer-details/sc-customer-details.js:83
+#: components/components/sc-customer-details2.js:69
+#: components/components/sc-customer-edit.js:87
+#: components/components/sc-payment-methods-list.js:124
+#: components/custom-elements/index.js:4718
+#: components/custom-elements/index.js:4783
+#: components/custom-elements/index.js:7708
+#: components/esm/sc-customer-details.entry.js:57
+#: components/esm/sc-customer-edit.entry.js:64
+#: components/esm/sc-payment-methods-list.entry.js:105
+msgid "Test"
+msgstr ""
+
+#: src/Controllers/Web/DashboardController.php:40
+#: src/Models/User.php:126
+msgid "This user could not be found."
+msgstr ""
+
+#: src/Install/InstallService.php:25
+#: src/WordPress/Pages/PageSeeder.php:57
+msgctxt "Form slug"
+msgid "checkout"
+msgstr ""
+
+#: src/Install/InstallService.php:26
+#: src/WordPress/Pages/PageSeeder.php:58
+msgctxt "Form title"
+msgid "Checkout"
+msgstr ""
+
+#: src/Install/InstallService.php:124
+#: src/WordPress/Pages/PageSeeder.php:80
+msgctxt "Page slug"
+msgid "checkout"
+msgstr ""
+
+#: src/Install/InstallService.php:125
+#: src/WordPress/Pages/PageSeeder.php:81
+msgctxt "Page title"
+msgid "Checkout"
+msgstr ""
+
+#: src/Install/InstallService.php:131
+#: src/WordPress/Pages/PageSeeder.php:87
+msgctxt "Page slug"
+msgid "order-confirmation"
+msgstr ""
+
+#: src/Install/InstallService.php:132
+#: src/WordPress/Pages/PageSeeder.php:88
+msgctxt "Page title"
+msgid "Thank you!"
+msgstr ""
+
+#: src/Install/InstallService.php:136
+#: src/WordPress/Pages/PageSeeder.php:92
+msgctxt "Page slug"
+msgid "customer-dashboard"
+msgstr ""
+
+#: src/Install/InstallService.php:137
+#: src/WordPress/Pages/PageSeeder.php:93
+msgctxt "Page title"
+msgid "Dashboard"
+msgstr ""
+
+#: src/Middleware/ArchiveModelMiddleware.php:24
+#: src/Middleware/EditModelMiddleware.php:24
+#: src/Middleware/LoginMiddleware.php:14
+#: src/Middleware/NonceMiddleware.php:32
+msgid "Your session expired - please try again."
+msgstr ""
+
+#: src/Middleware/ArchiveModelMiddleware.php:29
+#: src/Middleware/EditModelMiddleware.php:29
+msgid "You do not have permission do this."
+msgstr ""
+
+#: src/Middleware/CustomerDashboardMiddleware.php:78
+msgid "This link has expired."
+msgstr ""
+
+#: src/Middleware/NonceMiddleware.php:26
+msgid "Something is wrong with the provided link."
+msgstr ""
+
+#: src/Permissions/RolesService.php:26
+msgid "SureCart Shop Manager"
+msgstr ""
+
+#: src/Permissions/RolesService.php:61
+msgid "SureCart Accountant"
+msgstr ""
+
+#: src/Permissions/RolesService.php:71
+msgid "SureCart Shop Worker"
+msgstr ""
+
+#: src/Rest/AccountRestServiceProvider.php:46
+#: src/Rest/ChargesRestServiceProvider.php:77
+#: src/Rest/CouponRestServiceProvider.php:46
+#: src/Rest/CustomerLinksRestServiceProvider.php:53
+#: src/Rest/CustomerRestServiceProvider.php:47
+#: src/Rest/FilesRestServiceProvider.php:54
+#: src/Rest/InvoicesRestServiceProvider.php:79
+#: src/Rest/OrderRestServiceProvider.php:80
+#: src/Rest/PaymentMethodsRestServiceProvider.php:79
+#: src/Rest/PriceRestServiceProvider.php:47
+#: src/Rest/ProductGroupsRestServiceProvider.php:47
+#: src/Rest/ProductsRestServiceProvider.php:82
+#: src/Rest/PromotionRestServiceProvider.php:46
+#: src/Rest/PurchasesRestServiceProvider.php:91
+#: src/Rest/RefundsRestServiceProvider.php:57
+#: src/Rest/SubscriptionProtocolRestServiceProvider.php:75
+#: src/Rest/SubscriptionRestServiceProvider.php:106
+#: src/Rest/UploadsRestServiceProvider.php:54
+#: src/Rest/WebhooksRestServiceProvider.php:46
+msgid "Unique identifier for the object."
+msgstr ""
+
+#: src/Rest/AccountRestServiceProvider.php:52
+msgid "Type of object (Account)"
+msgstr ""
+
+#: src/Rest/AccountRestServiceProvider.php:58
+#: src/Rest/AccountRestServiceProvider.php:64
+msgid "Created at timestamp"
+msgstr ""
+
+#: src/Rest/AccountRestServiceProvider.php:70
+msgid "The name of the account."
+msgstr ""
+
+#: src/Rest/AccountRestServiceProvider.php:75
+msgid "The default currency for the account."
+msgstr ""
+
+#: src/Rest/AccountRestServiceProvider.php:80
+msgid "Owner data."
+msgstr ""
+
+#: src/Rest/AccountRestServiceProvider.php:85
+msgid "Connected processors"
+msgstr ""
+
+#: src/Rest/CustomerLinksRestServiceProvider.php:59
+msgid "Email or username for the request"
+msgstr ""
+
+#: src/Rest/CustomerLinksRestServiceProvider.php:65
+msgid "The URL that the customer should be directed to when the click the link from their email."
+msgstr ""
+
+#: src/Rest/FilesRestServiceProvider.php:73
+#: src/Rest/PriceRestServiceProvider.php:98
+#: src/Rest/ProductsRestServiceProvider.php:168
+msgid "The page of items you want returned."
+msgstr ""
+
+#: src/Rest/FilesRestServiceProvider.php:77
+#: src/Rest/PriceRestServiceProvider.php:102
+#: src/Rest/ProductsRestServiceProvider.php:172
+msgid "A limit on the number of items to be returned, between 1 and 100."
+msgstr ""
+
+#: src/Rest/LoginRestServiceProvider.php:67
+#: components/cjs/sc-login-form.cjs.entry.js:92
+#: components/collection/components/controllers/login/sc-login-form.js:95
+#: components/components/sc-login-form.js:99
+#: components/custom-elements/index.js:6558
+#: components/esm/sc-login-form.entry.js:88
+msgid "Login"
+msgstr ""
+
+#: src/Rest/LoginRestServiceProvider.php:71
+msgid "Password"
+msgstr ""
+
+#: src/Rest/OrderRestServiceProvider.php:86
+msgid "The currency for the session."
+msgstr ""
+
+#: src/Rest/OrderRestServiceProvider.php:90
+msgid "Metadata for the order."
+msgstr ""
+
+#: src/Rest/OrderRestServiceProvider.php:95
+msgid "The customer id for the order."
+msgstr ""
+
+#: src/Rest/OrderRestServiceProvider.php:100
+msgid "The customer for the session."
+msgstr ""
+
+#: src/Rest/OrderRestServiceProvider.php:105
+msgid "The line items for the session."
+msgstr ""
+
+#: src/Rest/OrderRestServiceProvider.php:109
+msgid "The discount for the session."
+msgstr ""
+
+#: src/Rest/OrderRestServiceProvider.php:126
+msgid "Form ID is required."
+msgstr ""
+
+#: src/Rest/OrderRestServiceProvider.php:135
+msgid "Form ID is invalid."
+msgstr ""
+
+#: src/Rest/PriceRestServiceProvider.php:53
+#: src/Rest/ProductGroupsRestServiceProvider.php:53
+#: src/Rest/UploadsRestServiceProvider.php:60
+msgid "The content for the object."
+msgstr ""
+
+#: src/Rest/PriceRestServiceProvider.php:70
+#: src/Rest/ProductsRestServiceProvider.php:140
+msgid "Whether to get archived products or not."
+msgstr ""
+
+#: src/Rest/PriceRestServiceProvider.php:74
+msgid "Only return prices that allow ad hoc amounts or not."
+msgstr ""
+
+#: src/Rest/PriceRestServiceProvider.php:78
+#: src/Rest/ProductsRestServiceProvider.php:148
+msgid "The query to be used for full text search of this collection."
+msgstr ""
+
+#: src/Rest/PriceRestServiceProvider.php:82
+#: src/Rest/ProductsRestServiceProvider.php:152
+msgid "Ensure result set excludes specific IDs."
+msgstr ""
+
+#: src/Rest/PriceRestServiceProvider.php:90
+msgid "Only return objects that belong to the given products."
+msgstr ""
+
+#: src/Rest/ProductsRestServiceProvider.php:88
+msgid "Files attached to the product."
+msgstr ""
+
+#: src/Rest/ProductsRestServiceProvider.php:96
+msgid "Stored product metadata"
+msgstr ""
+
+#: src/Rest/ProductsRestServiceProvider.php:107
+msgid "Top level metrics for the product."
+msgstr ""
+
+#: src/Rest/ProductsRestServiceProvider.php:144
+msgid "Only return products that are recurring or not recurring (one time)."
+msgstr ""
+
+#: src/Rest/ProductsRestServiceProvider.php:160
+msgid "Only return objects that belong to the given product groups."
+msgstr ""
+
+#: src/Rest/ProductsRestServiceProvider.php:188
+#: src/Rest/ProductsRestServiceProvider.php:206
+msgid "Sorry, you are not allowed to edit products."
+msgstr ""
+
+#: src/Rest/SubscriptionProtocolRestServiceProvider.php:89
+msgid "Payment retry window in weeks."
+msgstr ""
+
+#: src/Rest/SubscriptionProtocolRestServiceProvider.php:94
+msgid "Cancel behavior. Either pending or immediate."
+msgstr ""
+
+#: src/Rest/SubscriptionProtocolRestServiceProvider.php:98
+msgid "Downgrade behavior. Either pending or immediate."
+msgstr ""
+
+#: src/Rest/SubscriptionProtocolRestServiceProvider.php:102
+msgid "Upgrade behavior. Either pending or immediate."
+msgstr ""
+
+#: src/Support/Currency.php:240
+msgid "Australia Dollars"
+msgstr ""
+
+#: src/Support/Currency.php:241
+msgid "Brazilian Real"
+msgstr ""
+
+#: src/Support/Currency.php:242
+msgid "Canadian Dollars"
+msgstr ""
+
+#: src/Support/Currency.php:243
+msgid "Chinese Yuan"
+msgstr ""
+
+#: src/Support/Currency.php:244
+msgid "Czech Koruna"
+msgstr ""
+
+#: src/Support/Currency.php:245
+msgid "Danish Krone"
+msgstr ""
+
+#: src/Support/Currency.php:246
+msgid "Euros"
+msgstr ""
+
+#: src/Support/Currency.php:247
+msgid "Hong Kong Dollar"
+msgstr ""
+
+#: src/Support/Currency.php:248
+msgid "Hungarian Forint"
+msgstr ""
+
+#: src/Support/Currency.php:249
+msgid "Indian Rupee"
+msgstr ""
+
+#: src/Support/Currency.php:250
+msgid "Indonesia Rupiah"
+msgstr ""
+
+#: src/Support/Currency.php:251
+msgid "Israeli Shekel"
+msgstr ""
+
+#: src/Support/Currency.php:252
+msgid "Japanese Yen"
+msgstr ""
+
+#: src/Support/Currency.php:253
+msgid "Mexican Peso"
+msgstr ""
+
+#: src/Support/Currency.php:254
+msgid "New Zealand Dollar"
+msgstr ""
+
+#: src/Support/Currency.php:255
+msgid "Norwegian Krone"
+msgstr ""
+
+#: src/Support/Currency.php:256
+msgid "Philippine Pesos"
+msgstr ""
+
+#: src/Support/Currency.php:257
+msgid "Polish Zloty"
+msgstr ""
+
+#: src/Support/Currency.php:258
+msgid "Pounds Sterling"
+msgstr ""
+
+#: src/Support/Currency.php:259
+msgid "Singapore Dollar"
+msgstr ""
+
+#: src/Support/Currency.php:260
+msgid "South African Rand"
+msgstr ""
+
+#: src/Support/Currency.php:261
+msgid "South Korean Won"
+msgstr ""
+
+#: src/Support/Currency.php:262
+msgid "Swedish Krona"
+msgstr ""
+
+#: src/Support/Currency.php:263
+msgid "Swiss Franc"
+msgstr ""
+
+#: src/Support/Currency.php:264
+msgid "Taiwan New Dollars"
+msgstr ""
+
+#: src/Support/Currency.php:265
+msgid "Thai Baht"
+msgstr ""
+
+#: src/Support/Currency.php:266
+msgid "Turkish Lira"
+msgstr ""
+
+#: src/Support/Currency.php:267
+msgid "US Dollars"
+msgstr ""
+
+#: src/Support/Currency.php:268
+msgid "Vietnamese Dong"
+msgstr ""
+
+#. translators: field name.
+#. translators: attribute.
+#: src/Support/Errors/ErrorsTranslationService.php:60
+#: src/Support/Errors/Translations/types-replaceable.php:10
+msgid "%s is invalid."
+msgstr ""
+
+#: src/Support/Errors/ErrorsTranslationService.php:68
+msgid "You must enter an amount between %1$s and %2$s"
+msgstr ""
+
+#: src/Support/Errors/ErrorsTranslationService.php:121
+#: src/Support/Errors/ErrorsTranslationService.php:135
+msgid "Error."
+msgstr ""
+
+#: src/Support/Errors/Translations/attributes.php:10
+msgid "Promotion code"
+msgstr ""
+
+#: src/Support/Errors/Translations/attributes.php:12
+#: admin/coupons.js:3689
+msgid "Amount Off"
+msgstr ""
+
+#: src/Support/Errors/Translations/attributes.php:13
+#: admin/coupons.js:3673
+msgid "Percent Off"
+msgstr ""
+
+#: src/Support/Errors/Translations/attributes.php:14
+#: admin/coupons.js:3651
+#: admin/customers.js:4321
+#: admin/invoices.js:4085
+#: admin/orders.js:4601
+#: admin/subscriptions/show.js:6285
+#: admin/subscriptions/show.js:6369
+#: blocks/library.js:4351
+msgid "Amount"
+msgstr ""
+
+#: src/Support/Errors/Translations/attributes.php:15
+msgid "Pay what you want"
+msgstr ""
+
+#: src/Support/Errors/Translations/attributes.php:16
+msgid "Repeat payment"
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:9
+msgid "Could not complete the request. Please try again."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:10
+msgid "Failed to save coupon."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:11
+msgid "The price is already being used in subscriptions or checkout sessions. Please archive the price and create another one."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:12
+msgid "Invalid promotion code."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:13
+msgid "Failed to update. Please check for errors and try again."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:14
+msgid "Please add at least one product."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:15
+#: src/Support/Errors/Translations/codes.php:21
+msgid "Please fill out your address."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:16
+msgid "The refund amount is greater than the refundable amount."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:17
+msgid "You cannot add a one-time product to a subscription."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:18
+msgid "A price with this currency and recurring interval already exists. Please create a new product to create this price."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:19
+msgid "This promotion code already exists. Please archive the old code or use a different code."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:20
+msgid "This product has prices that are currently being used. Please archive the product instead."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:22
+msgid "The prices in this checkout session have changed. Please recheck it before submitting again."
+msgstr ""
+
+#. translators: attribute.
+#: src/Support/Errors/Translations/types-replaceable.php:12
+msgid "%s can't be blank."
+msgstr ""
+
+#. translators: attribute.
+#: src/Support/Errors/Translations/types-replaceable.php:14
+msgid "%s must be a number."
+msgstr ""
+
+#. translators: attribute.
+#: src/Support/Errors/Translations/types-replaceable.php:16
+msgid "%s is not available with subscriptions."
+msgstr ""
+
+#. translators: attribute.
+#: src/Support/Errors/Translations/types-replaceable.php:18
+msgid "%s is too high."
+msgstr ""
+
+#. translators: attribute.
+#: src/Support/Errors/Translations/types-replaceable.php:20
+msgid "%s is no longer purchasable."
+msgstr ""
+
+#: src/Support/Errors/Translations/types.php:9
+msgid "Invalid."
+msgstr ""
+
+#: src/Support/Errors/Translations/types.php:10
+msgid "There were some validation errors."
+msgstr ""
+
+#: src/Support/Errors/Translations/types.php:11
+msgid "Can't be empty."
+msgstr ""
+
+#: src/Support/Errors/Translations/types.php:12
+msgid "Can't be blank."
+msgstr ""
+
+#: src/Support/Errors/Translations/types.php:13
+msgid "Must be blank"
+msgstr ""
+
+#: src/Support/Errors/Translations/types.php:14
+msgid "Not found."
+msgstr ""
+
+#: src/Support/Errors/Translations/types.php:15
+msgid "Not a number"
+msgstr ""
+
+#: src/Support/Errors/Translations/types.php:16
+msgid "Must be an integer"
+msgstr ""
+
+#: src/Support/Errors/Translations/types.php:17
+msgid "Validation failed"
+msgstr ""
+
+#: src/Support/Errors/Translations/types.php:18
+msgid "This is not included in the list."
+msgstr ""
+
+#: src/Support/Errors/Translations/types.php:19
+msgid "This is reserved."
+msgstr ""
+
+#: src/Support/Errors/Translations/types.php:20
+msgid "This doesn't match"
+msgstr ""
+
+#: src/Support/Errors/Translations/types.php:21
+msgid "Must be accepted."
+msgstr ""
+
+#: src/Support/Errors/Translations/types.php:22
+msgid "Too long."
+msgstr ""
+
+#: src/Support/Errors/Translations/types.php:23
+msgid "Too short."
+msgstr ""
+
+#: src/Support/Errors/Translations/types.php:24
+#: src/Support/Errors/Translations/types.php:25
+msgid "Must be larger."
+msgstr ""
+
+#: src/Support/Errors/Translations/types.php:26
+#: src/Support/Errors/Translations/types.php:27
+msgid "Must be smaller."
+msgstr ""
+
+#: src/Support/Errors/Translations/types.php:28
+msgid "Wrong length."
+msgstr ""
+
+#: src/Support/Errors/Translations/types.php:29
+msgid "Must be odd"
+msgstr ""
+
+#: src/Support/Errors/Translations/types.php:30
+msgid "Must be even"
+msgstr ""
+
+#: src/Support/Errors/Translations/types.php:31
+msgid "It is archived."
+msgstr ""
+
+#: src/Support/Errors/Translations/types.php:32
+msgid "It does not match parent currency."
+msgstr ""
+
+#: src/Support/Errors/Translations/types.php:33
+msgid "It is expired."
+msgstr ""
+
+#: src/Support/Errors/Translations/types.php:34
+msgid "It is not valid or enabled."
+msgstr ""
+
+#: src/Support/Errors/Translations/types.php:35
+msgid "It is not a valid hex color."
+msgstr ""
+
+#: src/Support/Errors/Translations/types.php:36
+msgid "Only one active abandoned checkout is allowed at a time"
+msgstr ""
+
+#: src/Support/Errors/Translations/types.php:37
+msgid "must be 15 minutes or more"
+msgstr ""
+
+#: src/Support/Errors/Translations/types.php:38
+msgid "must be less than 1 week"
+msgstr ""
+
+#: src/Support/Errors/Translations/types.php:39
+msgid "must be at least 12 hours between emails"
+msgstr ""
+
+#: src/Support/Errors/Translations/types.php:40
+msgid "max count reached"
+msgstr ""
+
+#: src/Support/Errors/Translations/types.php:41
+msgid "must be between %1$s and %2$s"
+msgstr ""
+
+#. translators: %s: human-readable time difference
+#: src/Support/TimeDate.php:75
+msgctxt "%s = human-readable time difference"
+msgid "%s ago"
+msgstr ""
+
+#: src/Webhooks/WebhooksHistoryService.php:140
+msgid "It looks like this site has moved or has been duplicated. SureCart has created new webhooks for the domain to prevent purchase sync issues. Should we remove the previous webook?"
+msgstr ""
+
+#: src/Webhooks/WebhooksHistoryService.php:145
+msgid "Ignore notice."
+msgstr ""
+
+#: src/Webhooks/WebhooksHistoryService.php:146
+msgid "Ignore this notice. This is a duplicate or staging site."
+msgstr ""
+
+#: src/Webhooks/WebhooksHistoryService.php:149
+#: src/Webhooks/WebhooksHistoryService.php:168
+msgid "Are you sure you want to remove this webhook?"
+msgstr ""
+
+#: src/Webhooks/WebhooksHistoryService.php:151
+msgid "Remove webhook"
+msgstr ""
+
+#: src/Webhooks/WebhooksHistoryService.php:152
+#: src/Webhooks/WebhooksHistoryService.php:170
+msgid "My website domain has permanently changed. Remove webhook for %s"
+msgstr ""
+
+#: src/Webhooks/WebhooksHistoryService.php:176
+msgid "Remove webhook."
+msgstr ""
+
+#: src/Webhooks/WebhooksService.php:116
+msgid "SureCart webhooks could not be created."
+msgstr ""
+
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:38
+msgid "Dashboard"
+msgstr ""
+
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:38
+#: blocks/library.js:18330
+msgid "SureCart"
+msgstr ""
+
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:43
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:51
+msgid "Getting Started"
+msgstr ""
+
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:44
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:52
+msgid "Complete Signup"
+msgstr ""
+
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:45
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:63
+msgid "Plugin"
+msgstr ""
+
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:53
+#: admin/product-groups.js:3812
+#: blocks/library.js:10225
+msgid "Products"
+msgstr ""
+
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:54
+msgid "Coupons"
+msgstr ""
+
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:55
+#: admin/customers.js:2487
+msgid "Orders"
+msgstr ""
+
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:56
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:59
+#: admin/subscriptions/show.js:6271
+msgid "Invoices"
+msgstr ""
+
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:57
+msgid "Customers"
+msgstr ""
+
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:58
+#: admin/customers.js:3675
+#: admin/invoices.js:3472
+#: admin/orders.js:3472
+#: components/cjs/sc-subscriptions-list.cjs.entry.js:113
+#: components/collection/components/controllers/dashboard/subscriptions-list/sc-subscriptions-list.js:118
+#: components/components/sc-subscriptions-list.js:130
+#: components/custom-elements/index.js:12623
+#: components/esm/sc-subscriptions-list.entry.js:109
+msgid "Subscriptions"
+msgstr ""
+
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:60
+msgid "Upgrade Groups"
+msgstr ""
+
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:62
+msgid "Forms"
+msgstr ""
+
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:64
+msgid "Settings"
+msgstr ""
+
+#: src/WordPress/Pages/PageService.php:61
+msgid "Checkout Page"
+msgstr ""
+
+#: src/WordPress/Pages/PageService.php:65
+msgid "Customer Dashboard"
+msgstr ""
+
+#: src/WordPress/Pages/PageService.php:69
+msgid "Order Confirmation"
+msgstr ""
+
+#: src/WordPress/PostTypes/FormPostTypeService.php:88
+#: blocks/library.js:8554
+#: components/cjs/sc-payment-methods-list.cjs.entry.js:109
+#: components/collection/components/controllers/dashboard/payment-methods-list/sc-payment-methods-list.js:122
+#: components/components/sc-payment-methods-list.js:124
+#: components/custom-elements/index.js:7708
+#: components/esm/sc-payment-methods-list.entry.js:105
+msgid "Default"
+msgstr ""
+
+#: src/WordPress/PostTypes/FormPostTypeService.php:163
+msgctxt "post type general name"
+msgid "Checkout Forms"
+msgstr ""
+
+#: src/WordPress/PostTypes/FormPostTypeService.php:164
+msgctxt "post type singular name"
+msgid "Checkout Form"
+msgstr ""
+
+#: src/WordPress/PostTypes/FormPostTypeService.php:165
+msgctxt "Checkout Form"
+msgid "Add New"
+msgstr ""
+
+#: src/WordPress/PostTypes/FormPostTypeService.php:166
+msgid "Add new Checkout Form"
+msgstr ""
+
+#: src/WordPress/PostTypes/FormPostTypeService.php:167
+msgid "New Checkout Form"
+msgstr ""
+
+#: src/WordPress/PostTypes/FormPostTypeService.php:168
+msgid "Edit Checkout Form"
+msgstr ""
+
+#: src/WordPress/PostTypes/FormPostTypeService.php:169
+msgid "View Checkout Form"
+msgstr ""
+
+#: src/WordPress/PostTypes/FormPostTypeService.php:170
+msgid "All Checkout Forms"
+msgstr ""
+
+#: src/WordPress/PostTypes/FormPostTypeService.php:171
+msgid "Search Checkout Forms"
+msgstr ""
+
+#: src/WordPress/PostTypes/FormPostTypeService.php:172
+msgid "No checkout forms found."
+msgstr ""
+
+#: src/WordPress/PostTypes/FormPostTypeService.php:173
+msgid "No checkout forms found in Trash."
+msgstr ""
+
+#: src/WordPress/PostTypes/FormPostTypeService.php:174
+msgid "Filter checkout forms list"
+msgstr ""
+
+#: src/WordPress/PostTypes/FormPostTypeService.php:175
+msgid "Checkout Forms list navigation"
+msgstr ""
+
+#: src/WordPress/PostTypes/FormPostTypeService.php:176
+msgid "Checkout Forms list"
+msgstr ""
+
+#: src/WordPress/PostTypes/FormPostTypeService.php:177
+msgid "Checkout Form published."
+msgstr ""
+
+#: src/WordPress/PostTypes/FormPostTypeService.php:178
+msgid "Checkout Form published privately."
+msgstr ""
+
+#: src/WordPress/PostTypes/FormPostTypeService.php:179
+msgid "Checkout Form reverted to draft."
+msgstr ""
+
+#: src/WordPress/PostTypes/FormPostTypeService.php:180
+msgid "Checkout Form scheduled."
+msgstr ""
+
+#: src/WordPress/PostTypes/FormPostTypeService.php:181
+msgid "Checkout Form updated."
+msgstr ""
+
+#: src/WordPress/PostTypes/FormPostTypeService.php:226
+msgid "Published In"
+msgstr ""
+
+#: src/WordPress/PostTypes/FormPostTypeService.php:227
+msgid "Mode"
+msgstr ""
+
+#: src/WordPress/PostTypes/FormPostTypeService.php:229
+msgid "Shortcode"
+msgstr ""
+
+#: src/WordPress/Users/UsersService.php:32
+msgid "Limit result set to users with a customer."
+msgstr ""
+
+#: src/WordPress/Users/UsersService.php:36
+msgid "Limit result set to users with specific customer ids."
+msgstr ""
+
+#: admin/coupons.js:2449
+#: admin/customers.js:3935
+#: admin/invoices.js:3732
+#: admin/orders.js:3732
+#: admin/product-groups.js:2400
+#: admin/products.js:3566
+#: admin/subscriptions/edit.js:4312
+#: admin/subscriptions/show.js:2702
+msgid "The editor has encountered an unexpected error."
+msgstr ""
+
+#: admin/coupons.js:2452
+#: admin/customers.js:3938
+#: admin/invoices.js:3735
+#: admin/orders.js:3735
+#: admin/product-groups.js:2403
+#: admin/products.js:3569
+#: admin/subscriptions/edit.js:4315
+#: admin/subscriptions/show.js:2705
+msgid "Attempt Recovery"
+msgstr ""
+
+#: admin/coupons.js:2455
+#: admin/customers.js:3941
+#: admin/invoices.js:3738
+#: admin/orders.js:3738
+#: admin/product-groups.js:2406
+#: admin/products.js:3572
+#: admin/subscriptions/edit.js:4318
+#: admin/subscriptions/show.js:2708
+msgid "Copy Error"
+msgstr ""
+
+#: admin/coupons.js:2522
+#: admin/customers.js:4008
+#: admin/invoices.js:3805
+#: admin/orders.js:3805
+#: admin/product-groups.js:2473
+#: admin/products.js:3639
+#: admin/subscriptions/edit.js:4385
+#: admin/subscriptions/show.js:3098
+msgid "You have unsaved changes. If you proceed, they will be lost."
+msgstr ""
+
+#: admin/coupons.js:2653
+msgid "Edit Coupon"
+msgstr ""
+
+#: admin/coupons.js:2653
+msgid "New Coupon"
+msgstr ""
+
+#: admin/coupons.js:2684
+#: admin/customers.js:4120
+#: admin/product-groups.js:3341
+#: admin/products.js:4463
+msgid "Saved."
+msgstr ""
+
+#: admin/coupons.js:2935
+msgid "Back to All Coupons"
+msgstr ""
+
+#: admin/coupons.js:2949
+msgid "Update Coupon"
+msgstr ""
+
+#: admin/coupons.js:2949
+msgid "Create Coupon"
+msgstr ""
+
+#: admin/coupons.js:3017
+msgid "%1s%% off"
+msgstr ""
+
+#: admin/coupons.js:3035
+msgid "%d months"
+msgstr ""
+
+#: admin/coupons.js:3045
+#: admin/products.js:4978
+#: admin/subscriptions/edit.js:7648
+#: components/cjs/sc-order-summary.cjs.entry.js:27
+#: components/cjs/sc-upcoming-invoice.cjs.entry.js:169
+#: components/collection/components/controllers/checkout-form/order-summary/sc-order-summary.js:23
+#: components/collection/components/controllers/dashboard/upcoming-invoice/sc-upcoming-invoice.js:215
+#: components/components/sc-order-summary.js:28
+#: components/components/sc-upcoming-invoice.js:191
+#: components/custom-elements/index.js:7337
+#: components/custom-elements/index.js:13359
+#: components/esm/sc-order-summary.entry.js:23
+#: components/esm/sc-upcoming-invoice.entry.js:165
+msgid "Summary"
+msgstr ""
+
+#: admin/coupons.js:3048
+#: components/cjs/sc-coupon-form.cjs.entry.js:44
+#: components/cjs/sc-order-confirmation-totals.cjs.entry.js:26
+#: components/collection/components/controllers/confirmation/order-confirmation-totals/sc-order-confirmation-totals.js:17
+#: components/collection/components/ui/coupon-form/sc-coupon-form.js:34
+#: components/components/sc-coupon-form2.js:53
+#: components/components/sc-order-confirmation-totals.js:30
+#: components/custom-elements/index.js:4607
+#: components/custom-elements/index.js:6870
+#: components/esm/sc-coupon-form.entry.js:40
+#: components/esm/sc-order-confirmation-totals.entry.js:22
+msgid "Discount"
+msgstr ""
+
+#: admin/coupons.js:3050
+msgid "Uses"
+msgstr ""
+
+#: admin/coupons.js:3052
+msgid "Duration"
+msgstr ""
+
+#: admin/coupons.js:3054
+msgid "Redeem By"
+msgstr ""
+
+#: admin/coupons.js:3056
+#: admin/products.js:4995
+msgid "Last Updated"
+msgstr ""
+
+#: admin/coupons.js:3061
+#: admin/products.js:4993
+msgid "Archived On"
+msgstr ""
+
+#: admin/coupons.js:3201
+msgid "Are you sure you want to delete this promotion code?"
+msgstr ""
+
+#: admin/coupons.js:3239
+msgid "Customers will enter this discount code at checkout."
+msgstr ""
+
+#: admin/coupons.js:3239
+msgid "Customers will enter this discount code at checkout. Leave this blank and we will generate one for you."
+msgstr ""
+
+#: admin/coupons.js:3282
+#: admin/products.js:5141
+#: admin/products.js:5222
+#: admin/products.js:6401
+#: components/cjs/sc-payment-methods-list.cjs.entry.js:109
+#: components/collection/components/controllers/dashboard/payment-methods-list/sc-payment-methods-list.js:129
+#: components/components/sc-payment-methods-list.js:124
+#: components/custom-elements/index.js:7708
+#: components/esm/sc-payment-methods-list.entry.js:105
+msgid "Delete"
+msgstr ""
+
+#: admin/coupons.js:3390
+msgid "Promotion Codes"
+msgstr ""
+
+#: admin/coupons.js:3423
+msgid "Add Another Promotion Code"
+msgstr ""
+
+#: admin/coupons.js:3431
+msgid "Show %d Archived Promotion Codes"
+msgstr ""
+
+#: admin/coupons.js:3431
+msgid "Hide %d Archived Promotion Codes"
+msgstr ""
+
+#: admin/coupons.js:3475
+msgid "Redemption Limits"
+msgstr ""
+
+#: admin/coupons.js:3486
+msgid "End Date"
+msgstr ""
+
+#: admin/coupons.js:3488
+msgid "Limit the end date when customers can redeem this coupon."
+msgstr ""
+
+#: admin/coupons.js:3491
+msgid "Users must redeem this coupon by:"
+msgstr ""
+
+#: admin/coupons.js:3507
+msgid "Max Redemptions"
+msgstr ""
+
+#: admin/coupons.js:3509
+msgid "Limit the total number of times this coupon can be redeemed."
+msgstr ""
+
+#: admin/coupons.js:3510
+msgid "Number of Times"
+msgstr ""
+
+#: admin/coupons.js:3511
+msgid "This limit applies across customers so it won't prevent a single customer from redeeming multiple times."
+msgstr ""
+
+#: admin/coupons.js:3574
+msgid "Coupon Name"
+msgstr ""
+
+#: admin/coupons.js:3577
+msgid "This is an internal name for your coupon. This is not visible to customers."
+msgstr ""
+
+#: admin/coupons.js:3643
+#: admin/coupons.js:3727
+msgid "Repeating"
+msgstr ""
+
+#: admin/coupons.js:3656
+msgid "Choose a type"
+msgstr ""
+
+#: admin/coupons.js:3663
+msgid "Percentage Discount"
+msgstr ""
+
+#: admin/coupons.js:3666
+msgid "Fixed Discount"
+msgstr ""
+
+#: admin/coupons.js:3699
+msgid "Discount Duration"
+msgstr ""
+
+#: admin/coupons.js:3728
+msgid "Number of months"
+msgstr ""
+
+#: admin/coupons.js:3785
+#: admin/products.js:3696
+msgid "Okay"
+msgstr ""
+
+#: admin/coupons.js:3809
+#: admin/products.js:3720
+#: components/cjs/sc-upcoming-invoice.cjs.entry.js:169
+#: components/collection/components/controllers/dashboard/upcoming-invoice/sc-upcoming-invoice.js:218
+#: components/components/sc-upcoming-invoice.js:191
+#: components/custom-elements/index.js:13359
+#: components/esm/sc-upcoming-invoice.entry.js:165
+msgid "Confirm"
+msgstr ""
+
+#: admin/coupons.js:3812
+#: admin/customers.js:2778
+#: admin/customers.js:3336
+#: admin/customers.js:3350
+#: admin/customers.js:3804
+#: admin/invoices.js:2575
+#: admin/invoices.js:3133
+#: admin/invoices.js:3147
+#: admin/invoices.js:3601
+#: admin/orders.js:2575
+#: admin/orders.js:3133
+#: admin/orders.js:3147
+#: admin/orders.js:3601
+#: admin/product-groups.js:3185
+#: admin/products.js:3723
+#: admin/products.js:6595
+#: admin/subscriptions/edit.js:3868
+#: admin/subscriptions/show.js:2815
+#: admin/subscriptions/show.js:2829
+#: admin/subscriptions/show.js:3010
+#: blocks/library.js:6252
+#: blocks/library.js:6280
+msgid "Cancel"
+msgstr ""
+
+#: admin/coupons.js:4991
+#: admin/customers.js:6078
+#: admin/invoices.js:6017
+#: admin/orders.js:6109
+#: admin/product-groups.js:4478
+#: admin/products.js:7237
+#: admin/settings.js:3517
+#: admin/subscriptions/edit.js:5564
+#: admin/subscriptions/show.js:4277
+#: store/data.js:515
+#: store/data.js:299
+msgid "Deleted."
+msgstr ""
+
+#: admin/coupons.js:5121
+#: admin/coupons.js:5197
+#: admin/coupons.js:5353
+#: admin/customers.js:6208
+#: admin/customers.js:6284
+#: admin/customers.js:6440
+#: admin/invoices.js:6147
+#: admin/invoices.js:6223
+#: admin/invoices.js:6379
+#: admin/orders.js:6239
+#: admin/orders.js:6315
+#: admin/orders.js:6471
+#: admin/product-groups.js:4608
+#: admin/product-groups.js:4684
+#: admin/product-groups.js:4840
+#: admin/products.js:7367
+#: admin/products.js:7443
+#: admin/products.js:7599
+#: admin/settings.js:3647
+#: admin/settings.js:3723
+#: admin/settings.js:3879
+#: admin/subscriptions/edit.js:5694
+#: admin/subscriptions/edit.js:5770
+#: admin/subscriptions/edit.js:5926
+#: admin/subscriptions/show.js:4407
+#: admin/subscriptions/show.js:4483
+#: admin/subscriptions/show.js:4639
+#: store/data.js:645
+#: store/data.js:721
+#: store/data.js:877
+#: store/data.js:366
+#: store/data.js:408
+#: store/data.js:491
+msgid "Failed to save."
+msgstr ""
+
+#: admin/coupons.js:6405
+#: admin/customers.js:7492
+#: admin/invoices.js:7431
+#: admin/orders.js:7523
+#: admin/product-groups.js:5892
+#: admin/products.js:8651
+#: admin/settings.js:4931
+#: admin/subscriptions/edit.js:6978
+#: admin/subscriptions/show.js:5691
+#: components/cjs/sc-upcoming-invoice.cjs.entry.js:136
+#: components/collection/components/controllers/dashboard/upcoming-invoice/sc-upcoming-invoice.js:133
+#: components/components/sc-upcoming-invoice.js:158
+#: components/custom-elements/index.js:13326
+#: components/esm/sc-upcoming-invoice.entry.js:132
+#: store/data.js:1929
+#: store/ui.js:306
+#: store/data.js:1110
+#: store/ui.js:217
+msgid "Something went wrong."
+msgstr ""
+
+#: admin/coupons.js:6591
+#: admin/customers.js:7678
+#: admin/invoices.js:7617
+#: admin/orders.js:7709
+#: admin/product-groups.js:6091
+#: admin/product-groups.js:6206
+#: admin/products.js:8837
+#: admin/subscriptions/edit.js:7916
+#: admin/subscriptions/show.js:6824
+msgid "Go back."
+msgstr ""
+
+#: admin/coupons.js:6789
+#: admin/customers.js:7908
+#: admin/invoices.js:7847
+#: admin/orders.js:7939
+#: admin/product-groups.js:6372
+#: admin/products.js:9035
+#: admin/settings.js:5096
+#: admin/subscriptions/edit.js:8082
+#: admin/subscriptions/show.js:7022
+#: blocks/library.js:2754
+msgid "Day"
+msgstr ""
+
+#: admin/coupons.js:6790
+#: admin/customers.js:7909
+#: admin/invoices.js:7848
+#: admin/orders.js:7940
+#: admin/product-groups.js:6373
+#: admin/products.js:5397
+#: admin/products.js:9036
+#: admin/settings.js:5097
+#: admin/subscriptions/edit.js:8083
+#: admin/subscriptions/show.js:7023
+#: blocks/library.js:2755
+msgid "Month"
+msgstr ""
+
+#: admin/coupons.js:6791
+#: admin/customers.js:7910
+#: admin/invoices.js:7849
+#: admin/orders.js:7941
+#: admin/product-groups.js:6374
+#: admin/products.js:5400
+#: admin/products.js:9037
+#: admin/settings.js:5098
+#: admin/subscriptions/edit.js:8084
+#: admin/subscriptions/show.js:7024
+#: blocks/library.js:2756
+msgid "Year"
+msgstr ""
+
+#: admin/coupons.js:6792
+#: admin/customers.js:7911
+#: admin/invoices.js:7850
+#: admin/orders.js:7942
+#: admin/product-groups.js:6375
+#: admin/products.js:5403
+#: admin/products.js:9038
+#: admin/settings.js:5099
+#: admin/subscriptions/edit.js:7683
+#: admin/subscriptions/edit.js:8085
+#: admin/subscriptions/show.js:6127
+#: admin/subscriptions/show.js:7025
+#: blocks/library.js:2757
+#: components/cjs/sc-subscription-switch.cjs.entry.js:81
+#: components/collection/components/controllers/dashboard/subscription-switch/sc-subscription-switch.js:76
+#: components/components/sc-subscription-switch.js:93
+#: components/custom-elements/index.js:12488
+#: components/esm/sc-subscription-switch.entry.js:77
+msgid "Lifetime"
+msgstr ""
+
+#: admin/customers.js:2348
+msgid "Select a user"
+msgstr ""
+
+#: admin/customers.js:2349
+msgid "Search for a user..."
+msgstr ""
+
+#: admin/customers.js:2489
+#: admin/customers.js:2885
+#: admin/customers.js:3115
+#: admin/customers.js:3677
+#: admin/invoices.js:2682
+#: admin/invoices.js:2912
+#: admin/invoices.js:3474
+#: admin/orders.js:2682
+#: admin/orders.js:2912
+#: admin/orders.js:3474
+#: admin/subscriptions/show.js:2539
+msgid "None found."
+msgstr ""
+
+#: admin/customers.js:2514
+#: blocks/library.js:7751
+#: blocks/library.js:8243
+#: blocks/library.js:8265
+#: blocks/library.js:8394
+#: blocks/library.js:8416
+#: components/cjs/sc-invoices-list.cjs.entry.js:108
+#: components/cjs/sc-orders-list.cjs.entry.js:108
+#: components/collection/components/controllers/dashboard/invoices-list/sc-invoices-list.js:108
+#: components/collection/components/controllers/dashboard/orders-list/sc-orders-list.js:107
+#: components/components/sc-invoices-list.js:124
+#: components/components/sc-orders-list.js:124
+#: components/custom-elements/index.js:6181
+#: components/custom-elements/index.js:7478
+#: components/esm/sc-invoices-list.entry.js:104
+#: components/esm/sc-orders-list.entry.js:104
+msgid "%s item"
+msgid_plural "%s items"
+msgstr[0] ""
+msgstr[1] ""
+
+#: admin/customers.js:2591
+#: admin/customers.js:7842
+#: admin/invoices.js:2388
+#: admin/invoices.js:7781
+#: admin/orders.js:2388
+#: admin/orders.js:7873
+#: admin/subscriptions/show.js:2367
+#: admin/subscriptions/show.js:6278
+#: admin/subscriptions/show.js:6956
+msgid "Load More"
+msgstr ""
+
+#: admin/customers.js:2705
+#: admin/invoices.js:2502
+#: admin/orders.js:2502
+msgid "Failed to create refund."
+msgstr ""
+
+#: admin/customers.js:2727
+#: admin/invoices.js:2524
+#: admin/orders.js:2524
+msgid "Refund Payment"
+msgstr ""
+
+#: admin/customers.js:2737
+#: admin/invoices.js:2534
+#: admin/orders.js:2534
+msgid "Refunds can take 5-10 days to appear on a customer's statement. Processor fees are typically not returned."
+msgstr ""
+
+#: admin/customers.js:2740
+#: admin/customers.js:2776
+#: admin/customers.js:2879
+#: admin/invoices.js:2537
+#: admin/invoices.js:2573
+#: admin/invoices.js:2676
+#: admin/orders.js:2537
+#: admin/orders.js:2573
+#: admin/orders.js:2676
+msgid "Refund"
+msgstr ""
+
+#: admin/customers.js:2749
+#: admin/invoices.js:2546
+#: admin/orders.js:2546
+msgid "Reason"
+msgstr ""
+
+#: admin/customers.js:2753
+#: admin/invoices.js:2550
+#: admin/orders.js:2550
+msgid "Select a reason"
+msgstr ""
+
+#: admin/customers.js:2758
+#: admin/invoices.js:2555
+#: admin/orders.js:2555
+msgid "Duplicate"
+msgstr ""
+
+#: admin/customers.js:2761
+#: admin/invoices.js:2558
+#: admin/orders.js:2558
+msgid "Fraudulent"
+msgstr ""
+
+#: admin/customers.js:2764
+#: admin/invoices.js:2561
+#: admin/orders.js:2561
+msgid "Requested By Customer"
+msgstr ""
+
+#: admin/customers.js:2859
+#: admin/invoices.js:2656
+#: admin/orders.js:2656
+#: components/cjs/sc-charges-list.cjs.entry.js:80
+#: components/cjs/sc-invoices-list.cjs.entry.js:91
+#: components/cjs/sc-orders-list.cjs.entry.js:91
+#: components/collection/components/controllers/dashboard/charges-list/sc-charges-list.js:71
+#: components/collection/components/controllers/dashboard/invoices-list/sc-invoices-list.js:82
+#: components/collection/components/controllers/dashboard/orders-list/sc-orders-list.js:82
+#: components/components/sc-charges-list.js:93
+#: components/components/sc-invoices-list.js:107
+#: components/components/sc-orders-list.js:107
+#: components/custom-elements/index.js:3837
+#: components/custom-elements/index.js:6164
+#: components/custom-elements/index.js:7461
+#: components/esm/sc-charges-list.entry.js:76
+#: components/esm/sc-invoices-list.entry.js:87
+#: components/esm/sc-orders-list.entry.js:87
+msgid "Partially Refunded"
+msgstr ""
+
+#: admin/customers.js:2864
+#: admin/invoices.js:2661
+#: admin/orders.js:2661
+#: blocks/library.js:8245
+#: blocks/library.js:8396
+#: components/cjs/sc-charges-list.cjs.entry.js:82
+#: components/cjs/sc-order-status-badge.cjs.entry.js:39
+#: components/collection/components/controllers/dashboard/charges-list/sc-charges-list.js:73
+#: components/collection/components/ui/order-status-badge/sc-order-status-badge.js:30
+#: components/components/sc-charges-list.js:95
+#: components/components/sc-order-status-badge2.js:37
+#: components/custom-elements/index.js:3839
+#: components/custom-elements/index.js:7285
+#: components/esm/sc-charges-list.entry.js:78
+#: components/esm/sc-order-status-badge.entry.js:35
+msgid "Paid"
+msgstr ""
+
+#: admin/customers.js:2883
+#: admin/invoices.js:2680
+#: admin/orders.js:2680
+msgid "Charges"
+msgstr ""
+
+#: admin/customers.js:3002
+#: admin/invoices.js:2799
+#: admin/orders.js:2799
+#: admin/subscriptions/show.js:2426
+msgid "Are you sure you want to revoke this purchase?"
+msgstr ""
+
+#: admin/customers.js:3002
+#: admin/invoices.js:2799
+#: admin/orders.js:2799
+#: admin/subscriptions/show.js:2426
+msgid "Are you sure you want to reinstate this purchase?"
+msgstr ""
+
+#: admin/customers.js:3063
+#: admin/invoices.js:2860
+#: admin/orders.js:2860
+#: admin/subscriptions/show.js:2487
+msgid "Unrevoke"
+msgstr ""
+
+#: admin/customers.js:3070
+#: admin/invoices.js:2867
+#: admin/orders.js:2867
+#: admin/subscriptions/show.js:2494
+msgid "Revoke"
+msgstr ""
+
+#: admin/customers.js:3113
+#: admin/invoices.js:2910
+#: admin/orders.js:2910
+#: admin/subscriptions/show.js:2537
+msgid "Purchases"
+msgstr ""
+
+#: admin/customers.js:3175
+#: admin/invoices.js:2972
+#: admin/orders.js:2972
+#: admin/subscriptions/show.js:2599
+msgid "Revoked"
+msgstr ""
+
+#: admin/customers.js:3291
+#: admin/invoices.js:3088
+#: admin/orders.js:3088
+msgid "Could not cancel subscription."
+msgstr ""
+
+#: admin/customers.js:3305
+#: admin/invoices.js:3102
+#: admin/orders.js:3102
+msgid "Failed to cancel subscription."
+msgstr ""
+
+#: admin/customers.js:3337
+#: admin/customers.js:3364
+#: admin/invoices.js:3134
+#: admin/invoices.js:3161
+#: admin/orders.js:3134
+#: admin/orders.js:3161
+#: admin/subscriptions/show.js:2816
+#: admin/subscriptions/show.js:2843
+#: admin/subscriptions/show.js:5917
+msgid "Cancel Subscription"
+msgstr ""
+
+#: admin/customers.js:3355
+#: admin/invoices.js:3152
+#: admin/orders.js:3152
+#: admin/subscriptions/show.js:2837
+msgid "\tAt end of current period"
+msgstr ""
+
+#: admin/customers.js:3358
+#: admin/invoices.js:3155
+#: admin/orders.js:3155
+#: admin/subscriptions/show.js:2834
+msgid "Immediately"
+msgstr ""
+
+#: admin/customers.js:3368
+#: admin/customers.js:3632
+#: admin/customers.js:3802
+#: admin/invoices.js:3165
+#: admin/invoices.js:3429
+#: admin/invoices.js:3599
+#: admin/orders.js:3165
+#: admin/orders.js:3429
+#: admin/orders.js:3599
+#: admin/subscriptions/show.js:2847
+#: admin/subscriptions/show.js:5910
+msgid "Don't Cancel"
+msgstr ""
+
+#: admin/customers.js:3422
+#: admin/invoices.js:3219
+#: admin/orders.js:3219
+msgid "Are you sure you want to start the subscription? This will immediately charge the customer."
+msgstr ""
+
+#: admin/customers.js:3462
+#: admin/invoices.js:3259
+#: admin/orders.js:3259
+msgid "Could not start subscription."
+msgstr ""
+
+#: admin/customers.js:3476
+#: admin/invoices.js:3273
+#: admin/orders.js:3273
+msgid "Failed to start subscription."
+msgstr ""
+
+#: admin/customers.js:3503
+#: admin/invoices.js:3300
+#: admin/orders.js:3300
+msgid "Activate"
+msgstr ""
+
+#: admin/customers.js:3591
+#: admin/invoices.js:3388
+#: admin/orders.js:3388
+msgid "Could not un-cancel subscription."
+msgstr ""
+
+#: admin/customers.js:3605
+#: admin/invoices.js:3402
+#: admin/orders.js:3402
+msgid "Failed to un-cancel subscription."
+msgstr ""
+
+#: admin/customers.js:3733
+#: admin/invoices.js:3530
+#: admin/orders.js:3530
+#: components/cjs/sc-subscription-details_2.cjs.entry.js:114
+#: components/collection/components/ui/subscription-status-badge/sc-subscription-status-badge.js:36
+#: components/components/sc-subscription-status-badge2.js:43
+#: components/custom-elements/index.js:12395
+#: components/esm/sc-subscription-details_2.entry.js:110
+msgid "Cancels"
+msgstr ""
+
+#: admin/customers.js:3743
+#: admin/invoices.js:3540
+#: admin/orders.js:3540
+msgid "Begins"
+msgstr ""
+
+#: admin/customers.js:3753
+#: admin/customers.js:4685
+#: admin/invoices.js:3550
+#: admin/orders.js:3550
+msgid "Renews"
+msgstr ""
+
+#: admin/customers.js:3763
+#: admin/invoices.js:3560
+#: admin/orders.js:3560
+#: admin/subscriptions/edit.js:7697
+#: admin/subscriptions/show.js:6141
+msgid "Ended"
+msgstr ""
+
+#: admin/customers.js:3800
+#: admin/invoices.js:3597
+#: admin/orders.js:3597
+msgid "Start Plan"
+msgstr ""
+
+#: admin/customers.js:4159
+#: admin/invoices.js:4155
+#: admin/orders.js:4673
+#: admin/subscriptions/edit.js:7378
+msgid "Edit Customer"
+msgstr ""
+
+#: admin/customers.js:4159
+msgid "Add Customer"
+msgstr ""
+
+#: admin/customers.js:4166
+msgid "Back to All Customers"
+msgstr ""
+
+#: admin/customers.js:4180
+msgid "Update Customer"
+msgstr ""
+
+#: admin/customers.js:4180
+msgid "Create Customer"
+msgstr ""
+
+#: admin/customers.js:4245
+msgid "WordPress User"
+msgstr ""
+
+#: admin/customers.js:4252
+msgid "Notifications"
+msgstr ""
+
+#: admin/customers.js:4327
+#: admin/invoices.js:4091
+#: admin/orders.js:4607
+msgid "Method"
+msgstr ""
+
+#: admin/customers.js:4397
+msgid "Customer Details"
+msgstr ""
+
+#: admin/customers.js:4403
+msgid "Your customers name."
+msgstr ""
+
+#: admin/customers.js:4414
+msgid "Your customer's email address."
+msgstr ""
+
+#: admin/customers.js:4456
+msgid "Subscribed to emails"
+msgstr ""
+
+#: admin/customers.js:4516
+msgid "Customer Orders"
+msgstr ""
+
+#: admin/customers.js:4519
+#: admin/subscriptions/show.js:6294
+#: admin/subscriptions/show.js:6378
+#: blocks/library.js:7726
+msgid "Number"
+msgstr ""
+
+#: admin/customers.js:4522
+#: blocks/library.js:7728
+#: components/cjs/sc-downloads-list.cjs.entry.js:49
+#: components/collection/components/ui/downloads-list/sc-downloads-list.js:60
+#: components/components/sc-downloads-list2.js:60
+#: components/custom-elements/index.js:5298
+#: components/esm/sc-downloads-list.entry.js:45
+msgid "Items"
+msgstr ""
+
+#: admin/customers.js:4607
+#: admin/invoices.js:4412
+#: admin/orders.js:4971
+#: admin/subscriptions/show.js:6644
+msgid "Item"
+msgstr ""
+
+#: admin/customers.js:4694
+msgid "This customer does not have any subscriptions."
+msgstr ""
+
+#: admin/customers.js:4796
+msgid "Are you sure you want to disconnect this from this customer? This will cause them to lose access to their purchases."
+msgstr ""
+
+#: admin/customers.js:4856
+msgid "Disconnect"
+msgstr ""
+
+#: admin/customers.js:4861
+msgid "Connect a user"
+msgstr ""
+
+#: admin/invoices.js:4006
+msgid "Back to All Invoices"
+msgstr ""
+
+#: admin/invoices.js:4007
+msgid "Edit Invoice"
+msgstr ""
+
+#: admin/invoices.js:4007
+msgid "Create Invoice"
+msgstr ""
+
+#: admin/invoices.js:4082
+#: admin/invoices.js:4566
+#: admin/orders.js:4598
+#: admin/orders.js:5149
+msgid "Charge"
+msgstr ""
+
+#: admin/invoices.js:4224
+#: admin/orders.js:4742
+#: admin/subscriptions/show.js:6179
+msgid "Created on %s"
+msgstr ""
+
+#: admin/invoices.js:4226
+#: admin/orders.js:4744
+#: admin/subscriptions/show.js:6183
+#: components/cjs/sc-payment.cjs.entry.js:32
+#: components/collection/components/controllers/checkout-form/payment/sc-payment.js:31
+#: components/components/sc-payment.js:36
+#: components/custom-elements/index.js:7563
+#: components/esm/sc-payment.entry.js:28
+msgid "Test Mode"
+msgstr ""
+
+#: admin/invoices.js:4269
+msgid "Invoice Details"
+msgstr ""
+
+#: admin/invoices.js:4277
+#: admin/orders.js:4795
+msgid "Amount Paid"
+msgstr ""
+
+#: admin/invoices.js:4302
+#: admin/orders.js:4820
+#: blocks/library.js:12360
+#: components/cjs/sc-order-confirmation-totals.cjs.entry.js:29
+#: components/cjs/sc-upcoming-invoice.cjs.entry.js:164
+#: components/collection/components/controllers/confirmation/order-confirmation-totals/sc-order-confirmation-totals.js:29
+#: components/collection/components/controllers/dashboard/upcoming-invoice/sc-upcoming-invoice.js:171
+#: components/components/sc-order-confirmation-totals.js:33
+#: components/components/sc-upcoming-invoice.js:186
+#: components/custom-elements/index.js:6873
+#: components/custom-elements/index.js:13354
+#: components/esm/sc-order-confirmation-totals.entry.js:25
+#: components/esm/sc-upcoming-invoice.entry.js:160
+msgid "Subtotal"
+msgstr ""
+
+#: admin/invoices.js:4312
+#: admin/orders.js:4830
+msgid "Discounts"
+msgstr ""
+
+#: admin/invoices.js:4322
+#: components/cjs/sc-upcoming-invoice.cjs.entry.js:164
+#: components/collection/components/controllers/dashboard/upcoming-invoice/sc-upcoming-invoice.js:183
+#: components/components/sc-upcoming-invoice.js:186
+#: components/custom-elements/index.js:13354
+#: components/esm/sc-upcoming-invoice.entry.js:160
+msgid "Proration Credit"
+msgstr ""
+
+#: admin/invoices.js:4338
+#: admin/orders.js:4846
+msgid "Total Due"
+msgstr ""
+
+#: admin/invoices.js:4602
+#: admin/orders.js:5185
+msgid "Purchase"
+msgstr ""
+
+#: admin/invoices.js:7915
+#: admin/orders.js:8007
+#: admin/product-groups.js:6416
+#: admin/products.js:9079
+#: admin/subscriptions/edit.js:8126
+#: admin/subscriptions/show.js:7090
+#: blocks/library.js:2798
+#: components/cjs/price-b727fc39.js:33
+#: components/cjs/sc-format-interval.cjs.entry.js:15
+#: components/collection/components/util/format-interval/sc-format-interval.js:8
+#: components/collection/functions/price.js:30
+#: components/components/price.js:31
+#: components/components/sc-format-interval.js:11
+#: components/custom-elements/index.js:4556
+#: components/custom-elements/index.js:5705
+#: components/esm/price-3cc28e73.js:31
+#: components/esm/sc-format-interval.entry.js:11
+msgid "every"
+msgstr ""
+
+#: admin/invoices.js:7916
+#: admin/orders.js:8008
+#: admin/product-groups.js:6417
+#: admin/products.js:9080
+#: admin/subscriptions/edit.js:8127
+#: admin/subscriptions/show.js:7091
+#: blocks/library.js:2799
+#: components/cjs/price-b727fc39.js:33
+#: components/cjs/sc-format-interval.cjs.entry.js:16
+#: components/collection/components/util/format-interval/sc-format-interval.js:9
+#: components/collection/functions/price.js:30
+#: components/components/price.js:31
+#: components/components/sc-format-interval.js:12
+#: components/custom-elements/index.js:4556
+#: components/custom-elements/index.js:5706
+#: components/esm/price-3cc28e73.js:31
+#: components/esm/sc-format-interval.entry.js:12
+msgid "once"
+msgstr ""
+
+#: admin/invoices.js:7920
+#: admin/orders.js:8012
+#: admin/product-groups.js:6421
+#: admin/products.js:9084
+#: admin/subscriptions/edit.js:8131
+#: admin/subscriptions/show.js:7095
+#: blocks/library.js:2803
+#: components/cjs/price-b727fc39.js:36
+#: components/cjs/sc-format-interval.cjs.entry.js:21
+#: components/collection/components/util/format-interval/sc-format-interval.js:14
+#: components/collection/functions/price.js:33
+#: components/components/price.js:34
+#: components/components/sc-format-interval.js:17
+#: components/custom-elements/index.js:4559
+#: components/custom-elements/index.js:5711
+#: components/esm/price-3cc28e73.js:34
+#: components/esm/sc-format-interval.entry.js:17
+msgid "day"
+msgid_plural "%d days"
+msgstr[0] ""
+msgstr[1] ""
+
+#: admin/orders.js:4499
+msgid "Back to All Orders"
+msgstr ""
+
+#: admin/orders.js:4500
+msgid "Create Order"
+msgstr ""
+
+#: admin/orders.js:4787
+msgid "Order Details"
+msgstr ""
+
+#: admin/orders.js:4911
+msgid "Metadata"
+msgstr ""
+
+#: admin/product-groups.js:3126
+msgid "Created."
+msgstr ""
+
+#: admin/product-groups.js:3159
+msgid "Create New Upgrade Group"
+msgstr ""
+
+#: admin/product-groups.js:3165
+#: admin/product-groups.js:3656
+#: admin/products.js:6582
+msgid "Group Name"
+msgstr ""
+
+#: admin/product-groups.js:3167
+msgid "A name for your product group. This is not shown to customers."
+msgstr ""
+
+#: admin/product-groups.js:3182
+#: admin/products.js:6591
+#: blocks/library.js:10353
+msgid "Create"
+msgstr ""
+
+#: admin/product-groups.js:3527
+msgid "Are you sure you want to un-archive this product group?"
+msgstr ""
+
+#: admin/product-groups.js:3527
+msgid "Are you sure you want to archive this product group?"
+msgstr ""
+
+#: admin/product-groups.js:3548
+msgid "Un-archived."
+msgstr ""
+
+#: admin/product-groups.js:3548
+msgid "Archived."
+msgstr ""
+
+#: admin/product-groups.js:3579
+msgid "Back to upgrade groups list."
+msgstr ""
+
+#: admin/product-groups.js:3582
+msgid "Edit Upgrade Group"
+msgstr ""
+
+#: admin/product-groups.js:3582
+msgid "Create Upgrade Group"
+msgstr ""
+
+#: admin/product-groups.js:3603
+#: blocks/library.js:7615
+#: blocks/library.js:9460
+#: components/cjs/sc-customer-details.cjs.entry.js:61
+#: components/cjs/sc-donation-choices.cjs.entry.js:116
+#: components/cjs/sc-subscription-payment.cjs.entry.js:97
+#: components/cjs/sc-wordpress-user.cjs.entry.js:30
+#: components/collection/components/controllers/checkout-form/sc-donation-choices/sc-donation-choices.js:112
+#: components/collection/components/controllers/dashboard/subscription-payment/sc-subscription-payment.js:114
+#: components/collection/components/controllers/dashboard/wordpress-user/sc-wordpress-user.js:45
+#: components/collection/components/ui/customer-details/sc-customer-details.js:86
+#: components/components/sc-customer-details2.js:69
+#: components/components/sc-donation-choices.js:122
+#: components/components/sc-subscription-payment.js:110
+#: components/components/sc-wordpress-user.js:35
+#: components/custom-elements/index.js:4718
+#: components/custom-elements/index.js:5245
+#: components/custom-elements/index.js:12281
+#: components/custom-elements/index.js:13431
+#: components/esm/sc-customer-details.entry.js:57
+#: components/esm/sc-donation-choices.entry.js:112
+#: components/esm/sc-subscription-payment.entry.js:93
+#: components/esm/sc-wordpress-user.entry.js:26
+msgid "Update"
+msgstr ""
+
+#: admin/product-groups.js:3651
+#: admin/products.js:5486
+msgid "Details"
+msgstr ""
+
+#: admin/product-groups.js:3651
+msgid "New Upgrade Group"
+msgstr ""
+
+#: admin/product-groups.js:3658
+msgid "A name for your product group."
+msgstr ""
+
+#: admin/product-groups.js:3737
+#: admin/products.js:5958
+#: blocks/library.js:12637
+msgid "Remove"
+msgstr ""
+
+#: admin/product-groups.js:3815
+msgid "Add Another Product"
+msgstr ""
+
+#: admin/product-groups.js:3836
+msgid "Add some products to this upgrade group."
+msgstr ""
+
+#: admin/products.js:3260
+msgid "Select an upgrade group"
+msgstr ""
+
+#: admin/products.js:3261
+msgid "Search for an upgrade group..."
+msgstr ""
+
+#: admin/products.js:3277
+msgid "Add New Upgrade Group"
+msgstr ""
+
+#: admin/products.js:4801
+msgid "Back to All Product"
+msgstr ""
+
+#: admin/products.js:4809
+#: blocks/library.js:5086
+msgid "Edit Product"
+msgstr ""
+
+#: admin/products.js:4809
+#: admin/products.js:4830
+msgid "Create Product"
+msgstr ""
+
+#: admin/products.js:4830
+msgid "Update Product"
+msgstr ""
+
+#: admin/products.js:4922
+msgid "Subscription Product"
+msgstr ""
+
+#: admin/products.js:4928
+msgid "One-Time Product"
+msgstr ""
+
+#: admin/products.js:4980
+msgid "Available for purchase"
+msgstr ""
+
+#: admin/products.js:4987
+#: admin/products.js:5038
+msgid "Un-Archive %s? This will make the product purchaseable again."
+msgstr ""
+
+#: admin/products.js:4987
+msgid "Archive %s? This product will not be purchaseable and all unsaved changes will be lost."
+msgstr ""
+
+#: admin/products.js:4997
+msgid "Created On"
+msgstr ""
+
+#: admin/products.js:5038
+msgid "This product will not be purchaseable and all unsaved changes will be lost."
+msgstr ""
+
+#: admin/products.js:5044
+msgid "Permanently delete %s? You cannot undo this action."
+msgstr ""
+
+#: admin/products.js:5321
+msgid "Minimum Amount"
+msgstr ""
+
+#: admin/products.js:5330
+msgid "Maximum Amount"
+msgstr ""
+
+#: admin/products.js:5346
+msgid "Allow customers to pay what they want"
+msgstr ""
+
+#: admin/products.js:5367
+#: admin/products.js:5409
+msgid "To change the interval, create a new price."
+msgstr ""
+
+#: admin/products.js:5373
+msgid "Repeat Payment Every"
+msgstr ""
+
+#: admin/products.js:5420
+msgid "Lifetime subscription"
+msgstr ""
+
+#: admin/products.js:5421
+msgid "Free Trial Days"
+msgstr ""
+
+#: admin/products.js:5423
+msgid "If you want to add a free trial, enter the number of days."
+msgstr ""
+
+#: admin/products.js:5432
+msgid "Days"
+msgstr ""
+
+#: admin/products.js:5493
+msgid "A name for your product."
+msgstr ""
+
+#: admin/products.js:5510
+msgid "Charge tax on this product"
+msgstr ""
+
+#: admin/products.js:5520
+msgid "General/Tangible Goods"
+msgstr ""
+
+#: admin/products.js:5523
+msgid "Digital"
+msgstr ""
+
+#: admin/products.js:5526
+msgid "Sofware As A Service"
+msgstr ""
+
+#: admin/products.js:5529
+msgid "Service"
+msgstr ""
+
+#: admin/products.js:5637
+#: admin/products.js:5708
+msgid "Files"
+msgstr ""
+
+#: admin/products.js:5712
+msgid "Drag and drop an file here or click to select a file."
+msgstr ""
+
+#: admin/products.js:5716
+#: admin/products.js:5967
+msgid "Upload File"
+msgstr ""
+
+#: admin/products.js:5795
+msgid "Are you sure you want to remove this image?"
+msgstr ""
+
+#: admin/products.js:5955
+msgid "Replace"
+msgstr ""
+
+#: admin/products.js:5963
+msgid "Drag and drop an image here or click to select a file."
+msgstr ""
+
+#: admin/products.js:5973
+#: admin/products.js:5976
+msgid "Product Image"
+msgstr ""
+
+#: admin/products.js:6103
+msgid "Pricing"
+msgstr ""
+
+#: admin/products.js:6104
+msgid "Please add a price."
+msgstr ""
+
+#: admin/products.js:6142
+msgid "Add Another Price"
+msgstr ""
+
+#: admin/products.js:6150
+msgid "Show %d Archived Prices"
+msgstr ""
+
+#: admin/products.js:6150
+msgid "Hide %d Archived Prices"
+msgstr ""
+
+#: admin/products.js:6157
+msgid "Product Type"
+msgstr ""
+
+#: admin/products.js:6170
+msgid "Single Payment"
+msgstr ""
+
+#: admin/products.js:6172
+msgid "Charge a one-time fee."
+msgstr ""
+
+#: admin/products.js:6183
+msgid "Charge an ongoing fee."
+msgstr ""
+
+#: admin/products.js:6318
+msgid "Are you sure you want to remove this file? This cannot be undone."
+msgstr ""
+
+#: admin/products.js:6555
+msgid "Upgrade Group"
+msgstr ""
+
+#: admin/products.js:6559
+msgid "Add this product to a group with others you want the purchaser to switch between."
+msgstr ""
+
+#: admin/products.js:6570
+msgid "Create Product Group"
+msgstr ""
+
+#: admin/products.js:6583
+msgid "This is not shown to the customer, but is used help you identify the group."
+msgstr ""
+
+#: admin/settings.js:2690
+msgid "General"
+msgstr ""
+
+#: admin/settings.js:2696
+msgid "Account"
+msgstr ""
+
+#: admin/settings.js:2701
+msgid "Save Settings"
+msgstr ""
+
+#: admin/settings.js:2791
+#: admin/settings.js:2837
+msgid "Connection"
+msgstr ""
+
+#: admin/settings.js:2792
+msgid "Update your API Token to connect your WordPress installation to SureCart."
+msgstr ""
+
+#: admin/settings.js:2794
+msgid "Api Token"
+msgstr ""
+
+#: admin/settings.js:2800
+msgid "Enter to update your API Token"
+msgstr ""
+
+#: admin/settings.js:2837
+msgid "Update your API Token to connect your WordPress install to SureCart."
+msgstr ""
+
+#: admin/settings.js:2838
+msgid "Api Key"
+msgstr ""
+
+#: admin/settings.js:2842
+msgid "Check Connection"
+msgstr ""
+
+#: admin/settings.js:3024
+msgid "Settings saved."
+msgstr ""
+
+#: admin/subscriptions/edit.js:3850
+msgid "Select date"
+msgstr ""
+
+#: admin/subscriptions/edit.js:3866
+#: blocks/library.js:6270
+msgid "Choose"
+msgstr ""
+
+#: admin/subscriptions/edit.js:4072
+#: blocks/library.js:12979
+msgid "Select a product"
+msgstr ""
+
+#: admin/subscriptions/edit.js:4073
+#: blocks/library.js:12980
+msgid "Search for a product..."
+msgstr ""
+
+#: admin/subscriptions/edit.js:4089
+#: blocks/library.js:12996
+msgid "Add New Product"
+msgstr ""
+
+#: admin/subscriptions/edit.js:7231
+msgid "Cancel Editing"
+msgstr ""
+
+#: admin/subscriptions/edit.js:7232
+#: admin/subscriptions/show.js:5951
+msgid "Update Subscription"
+msgstr ""
+
+#: admin/subscriptions/edit.js:7232
+msgid "Create Subscription"
+msgstr ""
+
+#: admin/subscriptions/edit.js:7250
+msgid "Skip Proration"
+msgstr ""
+
+#: admin/subscriptions/edit.js:7263
+msgid "Schedule for"
+msgstr ""
+
+#: admin/subscriptions/edit.js:7279
+msgid "Update Now"
+msgstr ""
+
+#: admin/subscriptions/edit.js:7442
+msgid "Payment Method"
+msgstr ""
+
+#: admin/subscriptions/edit.js:7445
+msgid "Choose a payment method"
+msgstr ""
+
+#: admin/subscriptions/edit.js:7515
+#: admin/subscriptions/edit.js:7801
+#: admin/subscriptions/show.js:6487
+#: admin/subscriptions/show.js:6563
+#: components/cjs/sc-product-line-item_2.cjs.entry.js:59
+#: components/collection/components/ui/quantity-select/sc-quantity-select.js:22
+#: components/components/sc-quantity-select2.js:30
+#: components/custom-elements/index.js:8726
+#: components/esm/sc-product-line-item_2.entry.js:55
+msgid "Qty"
+msgstr ""
+
+#: admin/subscriptions/edit.js:7604
+msgid "Trial"
+msgstr ""
+
+#: admin/subscriptions/edit.js:7609
+msgid "Free Trial Ends"
+msgstr ""
+
+#: admin/subscriptions/edit.js:7609
+msgid "Free Trial"
+msgstr ""
+
+#: admin/subscriptions/edit.js:7611
+msgid "Add Free Trial"
+msgstr ""
+
+#: admin/subscriptions/edit.js:7612
+msgid "Choose a trial end date"
+msgstr ""
+
+#: admin/subscriptions/edit.js:7650
+#: admin/subscriptions/show.js:6185
+msgid "Started"
+msgstr ""
+
+#: admin/subscriptions/edit.js:7683
+#: admin/subscriptions/show.js:6127
+msgid "Lifetime Subscription"
+msgstr ""
+
+#: admin/subscriptions/edit.js:7687
+#: admin/subscriptions/show.js:6131
+msgid "Cancels on"
+msgstr ""
+
+#: admin/subscriptions/edit.js:7707
+#: admin/subscriptions/show.js:6151
+msgid "Trial ends on"
+msgstr ""
+
+#: admin/subscriptions/edit.js:7717
+#: admin/subscriptions/show.js:6161
+msgid "Renews on"
+msgstr ""
+
+#: admin/subscriptions/edit.js:7795
+#: admin/subscriptions/show.js:6481
+msgid "Pending Update"
+msgstr ""
+
+#: admin/subscriptions/edit.js:7807
+#: admin/subscriptions/edit.js:7819
+#: admin/subscriptions/show.js:6493
+#: admin/subscriptions/show.js:6505
+msgid "Scheduled"
+msgstr ""
+
+#: admin/subscriptions/show.js:2953
+msgid "Change Product And Increase Quantity"
+msgstr ""
+
+#: admin/subscriptions/show.js:2957
+msgid "Change Product Decrease Quantity"
+msgstr ""
+
+#: admin/subscriptions/show.js:2960
+msgid "Change Product"
+msgstr ""
+
+#: admin/subscriptions/show.js:2964
+msgid "Increase quantity"
+msgstr ""
+
+#: admin/subscriptions/show.js:2968
+msgid "Decrease quantity"
+msgstr ""
+
+#: admin/subscriptions/show.js:3011
+msgid "Manage Scheduled Update"
+msgstr ""
+
+#: admin/subscriptions/show.js:3033
+msgid "Delete Update"
+msgstr ""
+
+#: admin/subscriptions/show.js:3037
+msgid "Keep Update"
+msgstr ""
+
+#: admin/subscriptions/show.js:5923
+msgid "Back to all subscriptions."
+msgstr ""
+
+#: admin/subscriptions/show.js:5940
+msgid "Actions"
+msgstr ""
+
+#: admin/subscriptions/show.js:5945
+msgid "Manage Pending Update"
+msgstr ""
+
+#: admin/subscriptions/show.js:6179
+msgid "for %s"
+msgstr ""
+
+#: admin/subscriptions/show.js:6600
+msgid "Change"
+msgstr ""
+
+#: blocks/library.js:2864
+#: blocks/library.js:3116
+#: blocks/library.js:4018
+#: blocks/library.js:4858
+#: blocks/library.js:11823
+msgid "Button text"
+msgstr ""
+
+#: blocks/library.js:2865
+#: blocks/library.js:3117
+#: blocks/library.js:4019
+#: blocks/library.js:4859
+#: blocks/library.js:11824
+msgid "Add text…"
+msgstr ""
+
+#: blocks/library.js:3027
+msgid "Select some products"
+msgstr ""
+
+#: blocks/library.js:3045
+msgid "Create Buy Button"
+msgstr ""
+
+#: blocks/library.js:3133
+#: blocks/library.js:3261
+#: blocks/library.js:3775
+#: blocks/library.js:3944
+#: blocks/library.js:4290
+#: blocks/library.js:4686
+#: blocks/library.js:5155
+#: blocks/library.js:5392
+#: blocks/library.js:5730
+#: blocks/library.js:5853
+#: blocks/library.js:7588
+#: blocks/library.js:7707
+#: blocks/library.js:8068
+#: blocks/library.js:8198
+#: blocks/library.js:8349
+#: blocks/library.js:8496
+#: blocks/library.js:8900
+#: blocks/library.js:9148
+#: blocks/library.js:9433
+#: blocks/library.js:9563
+#: blocks/library.js:9669
+#: blocks/library.js:10885
+#: blocks/library.js:11047
+#: blocks/library.js:11245
+#: blocks/library.js:11406
+#: blocks/library.js:11608
+#: blocks/library.js:11747
+#: blocks/library.js:12040
+#: blocks/library.js:12372
+msgid "Attributes"
+msgstr ""
+
+#: blocks/library.js:3135
+#: blocks/library.js:3793
+#: blocks/library.js:3946
+#: blocks/library.js:11749
+msgid "Button Text"
+msgstr ""
+
+#: blocks/library.js:3143
+#: blocks/library.js:3970
+#: blocks/library.js:11781
+msgid "Size"
+msgstr ""
+
+#: blocks/library.js:3156
+#: blocks/library.js:3983
+#: blocks/library.js:11794
+msgid "Small"
+msgstr ""
+
+#: blocks/library.js:3159
+#: blocks/library.js:3986
+#: blocks/library.js:11797
+msgid "Medium"
+msgstr ""
+
+#: blocks/library.js:3162
+#: blocks/library.js:3989
+#: blocks/library.js:11800
+msgid "Large"
+msgstr ""
+
+#: blocks/library.js:3174
+#: blocks/library.js:4001
+msgid "Button"
+msgstr ""
+
+#: blocks/library.js:3177
+msgid "Text Link"
+msgstr ""
+
+#: blocks/library.js:3263
+#: blocks/library.js:7590
+#: blocks/library.js:7598
+#: blocks/library.js:8070
+#: blocks/library.js:8078
+#: blocks/library.js:8200
+#: blocks/library.js:8208
+#: blocks/library.js:8351
+#: blocks/library.js:8359
+#: blocks/library.js:8498
+#: blocks/library.js:8506
+#: blocks/library.js:8732
+#: blocks/library.js:8740
+#: blocks/library.js:9150
+#: blocks/library.js:9435
+#: blocks/library.js:9443
+#: blocks/library.js:10887
+#: blocks/library.js:10903
+msgid "Title"
+msgstr ""
+
+#: blocks/library.js:3271
+msgid "Borderless"
+msgstr ""
+
+#: blocks/library.js:3283
+msgid "Card Title"
+msgstr ""
+
+#: blocks/library.js:3284
+msgid "Add title…"
+msgstr ""
+
+#: blocks/library.js:3777
+msgid "Disabled"
+msgstr ""
+
+#: blocks/library.js:3785
+#: blocks/library.js:9565
+msgid "Text"
+msgstr ""
+
+#: blocks/library.js:3955
+msgid "Show Icon"
+msgstr ""
+
+#: blocks/library.js:3962
+#: blocks/library.js:11757
+msgid "Full"
+msgstr ""
+
+#: blocks/library.js:4004
+msgid "Info"
+msgstr ""
+
+#: blocks/library.js:4292
+#: blocks/library.js:4825
+#: blocks/library.js:5157
+#: blocks/library.js:5394
+#: blocks/library.js:5732
+#: blocks/library.js:5871
+#: blocks/library.js:9671
+#: blocks/library.js:11065
+#: blocks/library.js:11255
+#: blocks/library.js:11416
+#: blocks/library.js:11610
+#: blocks/library.js:12058
+msgid "Label"
+msgstr ""
+
+#: blocks/library.js:4300
+msgid "Allow custom amount to be entered"
+msgstr ""
+
+#: blocks/library.js:4308
+msgid "Default Amount"
+msgstr ""
+
+#: blocks/library.js:4317
+#: blocks/library.js:5205
+msgid "Product Info"
+msgstr ""
+
+#: blocks/library.js:4328
+#: blocks/library.js:4440
+#: components/cjs/tax-9f2713fa.js:24
+#: components/collection/functions/tax.js:21
+#: components/components/tax.js:22
+#: components/custom-elements/index.js:4651
+#: components/esm/tax-3845d933.js:22
+msgid "Other"
+msgstr ""
+
+#: blocks/library.js:4329
+msgid "Add Amount"
+msgstr ""
+
+#: blocks/library.js:4342
+msgid "Add Suggested Donation Amount"
+msgstr ""
+
+#: blocks/library.js:4361
+msgid "Add  Amount"
+msgstr ""
+
+#: blocks/library.js:4688
+msgid "Removable"
+msgstr ""
+
+#: blocks/library.js:4689
+msgid "Allow line items to be removed."
+msgstr ""
+
+#: blocks/library.js:4697
+msgid "Editable"
+msgstr ""
+
+#: blocks/library.js:4698
+msgid "Allow line item quantities to be editable."
+msgstr ""
+
+#: blocks/library.js:4823
+msgid "Logout button settings"
+msgstr ""
+
+#: blocks/library.js:4833
+msgid "Redirect to current URL"
+msgstr ""
+
+#: blocks/library.js:4841
+msgid "Show icon"
+msgstr ""
+
+#: blocks/library.js:5075
+#: blocks/library.js:12965
+msgid "Name Your Price"
+msgstr ""
+
+#: blocks/library.js:5165
+#: blocks/library.js:10895
+#: blocks/library.js:10916
+#: blocks/library.js:12066
+msgid "Description"
+msgstr ""
+
+#: blocks/library.js:5173
+msgid "Checked By Default"
+msgstr ""
+
+#: blocks/library.js:5181
+msgid "Show Label"
+msgstr ""
+
+#: blocks/library.js:5189
+msgid "Show Price Amount"
+msgstr ""
+
+#: blocks/library.js:5197
+msgid "Show control"
+msgstr ""
+
+#: blocks/library.js:5406
+msgid "Choose one"
+msgstr ""
+
+#: blocks/library.js:5409
+msgid "Choose many"
+msgstr ""
+
+#: blocks/library.js:5418
+#: blocks/library.js:6970
+msgid "Columns"
+msgstr ""
+
+#: blocks/library.js:5855
+#: blocks/library.js:11049
+#: blocks/library.js:11247
+#: blocks/library.js:11408
+#: blocks/library.js:12042
+msgid "Required"
+msgstr ""
+
+#: blocks/library.js:5879
+#: blocks/library.js:12074
+msgid "Value"
+msgstr ""
+
+#: blocks/library.js:5887
+#: blocks/library.js:12082
+msgid "Checked by default"
+msgstr ""
+
+#: blocks/library.js:5899
+#: blocks/library.js:11618
+msgid "Secure Notice"
+msgstr ""
+
+#: blocks/library.js:5900
+msgid "Add some checkbox text..."
+msgstr ""
+
+#: blocks/library.js:6067
+msgid "Form cannot be rendered inside itself."
+msgstr ""
+
+#: blocks/library.js:6077
+msgid "This form has been deleted or is unavailable."
+msgstr ""
+
+#: blocks/library.js:6081
+#: blocks/library.js:6083
+#: blocks/library.js:6228
+msgid "Form Title"
+msgstr ""
+
+#: blocks/library.js:6183
+msgid "Untitled Form"
+msgstr ""
+
+#: blocks/library.js:6225
+msgid "Create a Checkout Form"
+msgstr ""
+
+#: blocks/library.js:6231
+msgid "Enter a title for your form"
+msgstr ""
+
+#: blocks/library.js:6242
+#: blocks/library.js:9955
+#: components/cjs/sc-login-form.cjs.entry.js:94
+#: components/cjs/sc-pagination.cjs.entry.js:36
+#: components/cjs/sc-subscription-switch.cjs.entry.js:102
+#: components/collection/components/controllers/dashboard/subscription-switch/sc-subscription-switch.js:113
+#: components/collection/components/controllers/login/sc-login-form.js:101
+#: components/collection/components/ui/pagination/sc-pagination.js:29
+#: components/components/sc-login-form.js:101
+#: components/components/sc-pagination2.js:36
+#: components/components/sc-subscription-switch.js:114
+#: components/custom-elements/index.js:6560
+#: components/custom-elements/index.js:7528
+#: components/custom-elements/index.js:12509
+#: components/esm/sc-login-form.entry.js:90
+#: components/esm/sc-pagination.entry.js:32
+#: components/esm/sc-subscription-switch.entry.js:98
+msgid "Next"
+msgstr ""
+
+#: blocks/library.js:6257
+msgid "Select a checkout form"
+msgstr ""
+
+#: blocks/library.js:6285
+msgid "Get started by selecting a form or start build a new form."
+msgstr ""
+
+#: blocks/library.js:6286
+msgid "Add a checkout form"
+msgstr ""
+
+#: blocks/library.js:6296
+msgid "New Form"
+msgstr ""
+
+#: blocks/library.js:6303
+msgid "Select Form"
+msgstr ""
+
+#: blocks/library.js:6414
+msgid "Choose a form"
+msgstr ""
+
+#: blocks/library.js:6415
+msgid "Search for a form..."
+msgstr ""
+
+#. translators: 1: Block label (i.e. "Block: Column"), 2: Position of the selected block, 3: Total number of sibling blocks of the same type
+#: blocks/library.js:6712
+msgid "%1$s (%2$d of %3$d)"
+msgstr ""
+
+#: blocks/library.js:6724
+msgid "Column settings"
+msgstr ""
+
+#: blocks/library.js:6726
+msgid "Width"
+msgstr ""
+
+#: blocks/library.js:6738
+#: blocks/library.js:6740
+msgid "Sticky"
+msgstr ""
+
+#: blocks/library.js:6748
+msgid "Top Offset"
+msgstr ""
+
+#: blocks/library.js:6980
+msgid "This column count exceeds the recommended amount and may cause visual breakage."
+msgstr ""
+
+#: blocks/library.js:6981
+msgid "Stack on mobile"
+msgstr ""
+
+#: blocks/library.js:7445
+msgid "100"
+msgstr ""
+
+#: blocks/library.js:7446
+msgid "One column"
+msgstr ""
+
+#: blocks/library.js:7461
+msgid "50 / 50"
+msgstr ""
+
+#: blocks/library.js:7462
+msgid "Two columns; equal split"
+msgstr ""
+
+#: blocks/library.js:7478
+msgid "30 / 70"
+msgstr ""
+
+#: blocks/library.js:7479
+msgid "Two columns; one-third, two-thirds split"
+msgstr ""
+
+#: blocks/library.js:7498
+msgid "70 / 30"
+msgstr ""
+
+#: blocks/library.js:7499
+msgid "Two columns; two-thirds, one-third split"
+msgstr ""
+
+#: blocks/library.js:7518
+msgid "33 / 33 / 33"
+msgstr ""
+
+#: blocks/library.js:7519
+msgid "Three columns; equal split"
+msgstr ""
+
+#: blocks/library.js:7533
+msgid "25 / 50 / 25"
+msgstr ""
+
+#: blocks/library.js:7534
+msgid "Three columns; wide center column"
+msgstr ""
+
+#: blocks/library.js:7599
+#: blocks/library.js:8079
+#: blocks/library.js:8209
+#: blocks/library.js:8360
+#: blocks/library.js:8507
+#: blocks/library.js:8741
+#: blocks/library.js:9444
+msgid "Add A Title…"
+msgstr ""
+
+#: blocks/library.js:7621
+#: components/cjs/sc-customer-details.cjs.entry.js:29
+#: components/collection/components/ui/customer-details/sc-customer-details.js:18
+#: components/components/sc-customer-details2.js:37
+#: components/custom-elements/index.js:4686
+#: components/esm/sc-customer-details.entry.js:25
+msgid "Billing Name"
+msgstr ""
+
+#: blocks/library.js:7625
+#: components/cjs/sc-customer-details.cjs.entry.js:29
+#: components/cjs/sc-customer-edit.cjs.entry.js:68
+#: components/cjs/sc-wordpress-user-edit.cjs.entry.js:48
+#: components/collection/components/controllers/dashboard/customer-edit/sc-customer-edit.js:64
+#: components/collection/components/controllers/dashboard/wordpress-user-edit/sc-wordpress-user-edit.js:42
+#: components/collection/components/ui/customer-details/sc-customer-details.js:23
+#: components/components/sc-customer-details2.js:37
+#: components/components/sc-customer-edit.js:87
+#: components/components/sc-wordpress-user-edit.js:57
+#: components/custom-elements/index.js:4686
+#: components/custom-elements/index.js:4783
+#: components/custom-elements/index.js:13475
+#: components/esm/sc-customer-details.entry.js:25
+#: components/esm/sc-customer-edit.entry.js:64
+#: components/esm/sc-wordpress-user-edit.entry.js:44
+msgid "Billing Email"
+msgstr ""
+
+#: blocks/library.js:7629
+#: components/cjs/sc-customer-details.cjs.entry.js:29
+#: components/cjs/sc-customer-edit.cjs.entry.js:68
+#: components/collection/components/controllers/dashboard/customer-edit/sc-customer-edit.js:71
+#: components/collection/components/ui/customer-details/sc-customer-details.js:26
+#: components/components/sc-customer-details2.js:37
+#: components/components/sc-customer-edit.js:87
+#: components/custom-elements/index.js:4686
+#: components/custom-elements/index.js:4783
+#: components/esm/sc-customer-details.entry.js:25
+#: components/esm/sc-customer-edit.entry.js:64
+msgid "Shipping Address"
+msgstr ""
+
+#: blocks/library.js:7633
+#: components/cjs/sc-customer-details.cjs.entry.js:29
+#: components/cjs/sc-customer-edit.cjs.entry.js:82
+#: components/collection/components/controllers/dashboard/customer-edit/sc-customer-edit.js:89
+#: components/collection/components/ui/customer-details/sc-customer-details.js:27
+#: components/components/sc-customer-details2.js:37
+#: components/components/sc-customer-edit.js:101
+#: components/custom-elements/index.js:4686
+#: components/custom-elements/index.js:4797
+#: components/esm/sc-customer-details.entry.js:25
+#: components/esm/sc-customer-edit.entry.js:78
+msgid "Billing Address"
+msgstr ""
+
+#: blocks/library.js:7637
+#: components/cjs/sc-customer-details.cjs.entry.js:29
+#: components/cjs/sc-customer-edit.cjs.entry.js:68
+#: components/collection/components/controllers/dashboard/customer-edit/sc-customer-edit.js:69
+#: components/collection/components/ui/customer-details/sc-customer-details.js:30
+#: components/components/sc-customer-details2.js:37
+#: components/components/sc-customer-edit.js:87
+#: components/custom-elements/index.js:4686
+#: components/custom-elements/index.js:4783
+#: components/esm/sc-customer-details.entry.js:25
+#: components/esm/sc-customer-edit.entry.js:64
+msgid "Phone"
+msgstr ""
+
+#: blocks/library.js:7709
+msgid "Per Page"
+msgstr ""
+
+#: blocks/library.js:7771
+msgid "Showing 1 to 10 of 20 results"
+msgstr ""
+
+#: blocks/library.js:7771
+msgid "Prev Page"
+msgstr ""
+
+#: blocks/library.js:7771
+msgid "Next Page"
+msgstr ""
+
+#: blocks/library.js:7917
+msgid "New Tab %d"
+msgstr ""
+
+#: blocks/library.js:8092
+#: blocks/library.js:8222
+#: blocks/library.js:8373
+#: blocks/library.js:8754
+#: components/cjs/sc-charges-list.cjs.entry.js:114
+#: components/cjs/sc-downloads-list.cjs.entry.js:49
+#: components/cjs/sc-invoices-list.cjs.entry.js:123
+#: components/cjs/sc-orders-list.cjs.entry.js:123
+#: components/cjs/sc-subscriptions-list.cjs.entry.js:113
+#: components/collection/components/controllers/dashboard/charges-list/sc-charges-list.js:119
+#: components/collection/components/controllers/dashboard/invoices-list/sc-invoices-list.js:131
+#: components/collection/components/controllers/dashboard/orders-list/sc-orders-list.js:130
+#: components/collection/components/controllers/dashboard/subscriptions-list/sc-subscriptions-list.js:120
+#: components/collection/components/ui/downloads-list/sc-downloads-list.js:63
+#: components/components/sc-charges-list.js:127
+#: components/components/sc-downloads-list2.js:60
+#: components/components/sc-invoices-list.js:139
+#: components/components/sc-orders-list.js:139
+#: components/components/sc-subscriptions-list.js:130
+#: components/custom-elements/index.js:3871
+#: components/custom-elements/index.js:5298
+#: components/custom-elements/index.js:6196
+#: components/custom-elements/index.js:7493
+#: components/custom-elements/index.js:12623
+#: components/esm/sc-charges-list.entry.js:110
+#: components/esm/sc-downloads-list.entry.js:45
+#: components/esm/sc-invoices-list.entry.js:119
+#: components/esm/sc-orders-list.entry.js:119
+#: components/esm/sc-subscriptions-list.entry.js:109
+msgid "View all"
+msgstr ""
+
+#: blocks/library.js:8106
+msgid "Camping & Hiking Icons"
+msgstr ""
+
+#: blocks/library.js:8117
+msgid "Application UI Icon Pack"
+msgstr ""
+
+#: blocks/library.js:8524
+#: components/cjs/sc-charges-list.cjs.entry.js:114
+#: components/cjs/sc-payment-methods-list.cjs.entry.js:126
+#: components/collection/components/controllers/dashboard/charges-list/sc-charges-list.js:117
+#: components/collection/components/controllers/dashboard/payment-methods-list/sc-payment-methods-list.js:153
+#: components/components/sc-charges-list.js:127
+#: components/components/sc-payment-methods-list.js:141
+#: components/custom-elements/index.js:3871
+#: components/custom-elements/index.js:7725
+#: components/esm/sc-charges-list.entry.js:110
+#: components/esm/sc-payment-methods-list.entry.js:122
+msgid "Payment History"
+msgstr ""
+
+#: blocks/library.js:8529
+#: components/cjs/sc-payment-methods-list.cjs.entry.js:129
+#: components/collection/components/controllers/dashboard/payment-methods-list/sc-payment-methods-list.js:159
+#: components/components/sc-payment-methods-list.js:144
+#: components/custom-elements/index.js:7728
+#: components/esm/sc-payment-methods-list.entry.js:125
+msgid "Add"
+msgstr ""
+
+#: blocks/library.js:8552
+#: blocks/library.js:8578
+#: components/cjs/sc-payment-methods-list.cjs.entry.js:107
+#: components/collection/components/controllers/dashboard/payment-methods-list/sc-payment-methods-list.js:116
+#: components/components/sc-payment-methods-list.js:122
+#: components/custom-elements/index.js:7706
+#: components/esm/sc-payment-methods-list.entry.js:103
+msgid "Exp."
+msgstr ""
+
+#: blocks/library.js:8902
+msgid "Url Slug"
+msgstr ""
+
+#: blocks/library.js:9157
+msgid "Tab Icon"
+msgstr ""
+
+#: blocks/library.js:9169
+msgid "Select an icon"
+msgstr ""
+
+#: blocks/library.js:9194
+msgid "Tab Name"
+msgstr ""
+
+#: blocks/library.js:9195
+msgid "Add a tab name"
+msgstr ""
+
+#: blocks/library.js:9466
+#: components/cjs/sc-wordpress-user-edit.cjs.entry.js:48
+#: components/cjs/sc-wordpress-user.cjs.entry.js:21
+#: components/collection/components/controllers/dashboard/wordpress-user-edit/sc-wordpress-user-edit.js:48
+#: components/collection/components/controllers/dashboard/wordpress-user/sc-wordpress-user.js:13
+#: components/components/sc-wordpress-user-edit.js:57
+#: components/components/sc-wordpress-user.js:26
+#: components/custom-elements/index.js:13422
+#: components/custom-elements/index.js:13475
+#: components/esm/sc-wordpress-user-edit.entry.js:44
+#: components/esm/sc-wordpress-user.entry.js:17
+msgid "Display Name"
+msgstr ""
+
+#: blocks/library.js:9470
+msgid "Email Address"
+msgstr ""
+
+#: blocks/library.js:9474
+#: components/cjs/sc-wordpress-user-edit.cjs.entry.js:48
+#: components/cjs/sc-wordpress-user.cjs.entry.js:21
+#: components/collection/components/controllers/dashboard/wordpress-user-edit/sc-wordpress-user-edit.js:45
+#: components/collection/components/controllers/dashboard/wordpress-user/sc-wordpress-user.js:23
+#: components/components/sc-wordpress-user-edit.js:57
+#: components/components/sc-wordpress-user.js:26
+#: components/custom-elements/index.js:13422
+#: components/custom-elements/index.js:13475
+#: components/esm/sc-wordpress-user-edit.entry.js:44
+#: components/esm/sc-wordpress-user.entry.js:17
+msgid "First Name"
+msgstr ""
+
+#: blocks/library.js:9478
+#: components/cjs/sc-wordpress-user-edit.cjs.entry.js:48
+#: components/cjs/sc-wordpress-user.cjs.entry.js:21
+#: components/collection/components/controllers/dashboard/wordpress-user-edit/sc-wordpress-user-edit.js:47
+#: components/collection/components/controllers/dashboard/wordpress-user/sc-wordpress-user.js:28
+#: components/components/sc-wordpress-user-edit.js:57
+#: components/components/sc-wordpress-user.js:26
+#: components/custom-elements/index.js:13422
+#: components/custom-elements/index.js:13475
+#: components/esm/sc-wordpress-user-edit.entry.js:44
+#: components/esm/sc-wordpress-user.entry.js:17
+msgid "Last Name"
+msgstr ""
+
+#: blocks/library.js:9679
+#: blocks/library.js:11073
+#: blocks/library.js:11263
+#: blocks/library.js:11424
+msgid "Placeholder"
+msgstr ""
+
+#: blocks/library.js:9687
+#: blocks/library.js:11081
+#: blocks/library.js:11271
+#: blocks/library.js:11432
+msgid "Help"
+msgstr ""
+
+#: blocks/library.js:9945
+msgid "Choose A Starting Design"
+msgstr ""
+
+#: blocks/library.js:10192
+msgid "Choose A Donation Product"
+msgstr ""
+
+#: blocks/library.js:10196
+msgid "Choose An Invoice Product"
+msgstr ""
+
+#: blocks/library.js:10200
+msgid "Choose A  Product"
+msgstr ""
+
+#: blocks/library.js:10232
+msgid "Product Options"
+msgstr ""
+
+#: blocks/library.js:10240
+msgid "Customer must purchase all products"
+msgstr ""
+
+#: blocks/library.js:10243
+msgid "Customer must select one price from the options."
+msgstr ""
+
+#: blocks/library.js:10246
+msgid "Customer can select multiple prices."
+msgstr ""
+
+#: blocks/library.js:10340
+msgid "Products & Behavior"
+msgstr ""
+
+#: blocks/library.js:10363
+msgid "Back"
+msgstr ""
+
+#: blocks/library.js:10373
+msgid "Thank You Page"
+msgstr ""
+
+#: blocks/library.js:10375
+msgid "Custom Thank You Page"
+msgstr ""
+
+#: blocks/library.js:10530
+msgid "Are you sure you want to change the template? This will completely replace your current form."
+msgstr ""
+
+#: blocks/library.js:10699
+msgid "Form Template"
+msgstr ""
+
+#: blocks/library.js:10703
+msgid "Change Template"
+msgstr ""
+
+#: blocks/library.js:10704
+msgid "Dimensions"
+msgstr ""
+
+#: blocks/library.js:10706
+msgid "Row Gap"
+msgstr ""
+
+#: blocks/library.js:10713
+msgid "The this is the space between the rows of form elements."
+msgstr ""
+
+#: blocks/library.js:10734
+msgid "Form"
+msgstr ""
+
+#: blocks/library.js:10904
+msgid "Add your title..."
+msgstr ""
+
+#: blocks/library.js:10917
+msgid "Add your description..."
+msgstr ""
+
+#: blocks/library.js:11765
+msgid "Show total due in button text."
+msgstr ""
+
+#: blocks/library.js:11773
+msgid "Show a secure lock icon."
+msgstr ""
+
+#: blocks/library.js:12095
+#: blocks/library.js:12108
+msgid "Switch label"
+msgstr ""
+
+#: blocks/library.js:12096
+msgid "Add some text..."
+msgstr ""
+
+#: blocks/library.js:12109
+msgid "Enter a description..."
+msgstr ""
+
+#: blocks/library.js:12362
+#: components/cjs/sc-upcoming-invoice.cjs.entry.js:164
+#: components/collection/components/controllers/dashboard/upcoming-invoice/sc-upcoming-invoice.js:173
+#: components/components/sc-upcoming-invoice.js:186
+#: components/custom-elements/index.js:13354
+#: components/esm/sc-upcoming-invoice.entry.js:160
+msgid "Add Coupon Code"
+msgstr ""
+
+#: blocks/library.js:12363
+#: components/cjs/sc-order-coupon-form.cjs.entry.js:24
+#: components/collection/components/controllers/checkout-form/order-coupon-form/sc-order-coupon-form.js:13
+#: components/components/sc-order-coupon-form.js:34
+#: components/custom-elements/index.js:6895
+#: components/esm/sc-order-coupon-form.entry.js:20
+msgid "Apply Coupon"
+msgstr ""
+
+#: blocks/library.js:12366
+#: components/cjs/sc-line-item-total.cjs.entry.js:30
+#: components/cjs/sc-upcoming-invoice.cjs.entry.js:166
+#: components/collection/components/controllers/checkout-form/line-item-total/sc-line-item-total.js:31
+#: components/collection/components/controllers/dashboard/upcoming-invoice/sc-upcoming-invoice.js:204
+#: components/components/sc-line-item-total2.js:31
+#: components/components/sc-upcoming-invoice.js:188
+#: components/custom-elements/index.js:6283
+#: components/custom-elements/index.js:13356
+#: components/esm/sc-line-item-total.entry.js:26
+#: components/esm/sc-upcoming-invoice.entry.js:162
+msgid "Total Due Today"
+msgstr ""
+
+#: blocks/library.js:12374
+msgid "Collapsible"
+msgstr ""
+
+#: blocks/library.js:12388
+msgid "Collapsed By Default"
+msgstr ""
+
+#: blocks/library.js:12587
+msgid "Custom"
+msgstr ""
+
+#: blocks/library.js:12686
+msgid "Quantity"
+msgstr ""
+
+#: blocks/library.js:12718
+msgid "To add some default checkout products, click the \"Add Products\" button."
+msgstr ""
+
+#: blocks/library.js:12730
+msgid "Add Product"
+msgstr ""
+
+#: components/cjs/address-da1d220f.js:18
+#: components/collection/functions/address.js:42
+#: components/components/address.js:16
+#: components/custom-elements/index.js:2089
+#: components/esm/address-9262cc57.js:16
+msgid "Australia"
+msgstr ""
+
+#: components/cjs/address-da1d220f.js:19
+#: components/collection/functions/address.js:43
+#: components/components/address.js:17
+#: components/custom-elements/index.js:2090
+#: components/esm/address-9262cc57.js:17
+msgid "Belgium"
+msgstr ""
+
+#: components/cjs/address-da1d220f.js:20
+#: components/collection/functions/address.js:44
+#: components/components/address.js:18
+#: components/custom-elements/index.js:2091
+#: components/esm/address-9262cc57.js:18
+msgid "Brazil"
+msgstr ""
+
+#: components/cjs/address-da1d220f.js:21
+#: components/collection/functions/address.js:45
+#: components/components/address.js:19
+#: components/custom-elements/index.js:2092
+#: components/esm/address-9262cc57.js:19
+msgid "Bulgaria"
+msgstr ""
+
+#: components/cjs/address-da1d220f.js:22
+#: components/collection/functions/address.js:46
+#: components/components/address.js:20
+#: components/custom-elements/index.js:2093
+#: components/esm/address-9262cc57.js:20
+msgid "Canada"
+msgstr ""
+
+#: components/cjs/address-da1d220f.js:23
+#: components/collection/functions/address.js:47
+#: components/components/address.js:21
+#: components/custom-elements/index.js:2094
+#: components/esm/address-9262cc57.js:21
+msgid "China"
+msgstr ""
+
+#: components/cjs/address-da1d220f.js:24
+#: components/collection/functions/address.js:48
+#: components/components/address.js:22
+#: components/custom-elements/index.js:2095
+#: components/esm/address-9262cc57.js:22
+msgid "Cyprus"
+msgstr ""
+
+#: components/cjs/address-da1d220f.js:25
+#: components/collection/functions/address.js:49
+#: components/components/address.js:23
+#: components/custom-elements/index.js:2096
+#: components/esm/address-9262cc57.js:23
+msgid "Czechia"
+msgstr ""
+
+#: components/cjs/address-da1d220f.js:26
+#: components/collection/functions/address.js:50
+#: components/components/address.js:24
+#: components/custom-elements/index.js:2097
+#: components/esm/address-9262cc57.js:24
+msgid "Denmark"
+msgstr ""
+
+#: components/cjs/address-da1d220f.js:27
+#: components/collection/functions/address.js:51
+#: components/components/address.js:25
+#: components/custom-elements/index.js:2098
+#: components/esm/address-9262cc57.js:25
+msgid "Estonia"
+msgstr ""
+
+#: components/cjs/address-da1d220f.js:28
+#: components/collection/functions/address.js:52
+#: components/components/address.js:26
+#: components/custom-elements/index.js:2099
+#: components/esm/address-9262cc57.js:26
+msgid "Finland"
+msgstr ""
+
+#: components/cjs/address-da1d220f.js:29
+#: components/collection/functions/address.js:53
+#: components/components/address.js:27
+#: components/custom-elements/index.js:2100
+#: components/esm/address-9262cc57.js:27
+msgid "France"
+msgstr ""
+
+#: components/cjs/address-da1d220f.js:30
+#: components/collection/functions/address.js:54
+#: components/components/address.js:28
+#: components/custom-elements/index.js:2101
+#: components/esm/address-9262cc57.js:28
+msgid "Germany"
+msgstr ""
+
+#: components/cjs/address-da1d220f.js:31
+#: components/collection/functions/address.js:55
+#: components/components/address.js:29
+#: components/custom-elements/index.js:2102
+#: components/esm/address-9262cc57.js:29
+msgid "Greece"
+msgstr ""
+
+#: components/cjs/address-da1d220f.js:32
+#: components/collection/functions/address.js:56
+#: components/components/address.js:30
+#: components/custom-elements/index.js:2103
+#: components/esm/address-9262cc57.js:30
+msgid "Hong Kong"
+msgstr ""
+
+#: components/cjs/address-da1d220f.js:33
+#: components/collection/functions/address.js:57
+#: components/components/address.js:31
+#: components/custom-elements/index.js:2104
+#: components/esm/address-9262cc57.js:31
+msgid "India"
+msgstr ""
+
+#: components/cjs/address-da1d220f.js:34
+#: components/collection/functions/address.js:58
+#: components/components/address.js:32
+#: components/custom-elements/index.js:2105
+#: components/esm/address-9262cc57.js:32
+msgid "Ireland"
+msgstr ""
+
+#: components/cjs/address-da1d220f.js:35
+#: components/collection/functions/address.js:59
+#: components/components/address.js:33
+#: components/custom-elements/index.js:2106
+#: components/esm/address-9262cc57.js:33
+msgid "Italy"
+msgstr ""
+
+#: components/cjs/address-da1d220f.js:36
+#: components/collection/functions/address.js:60
+#: components/components/address.js:34
+#: components/custom-elements/index.js:2107
+#: components/esm/address-9262cc57.js:34
+msgid "Japan"
+msgstr ""
+
+#: components/cjs/address-da1d220f.js:37
+#: components/collection/functions/address.js:61
+#: components/components/address.js:35
+#: components/custom-elements/index.js:2108
+#: components/esm/address-9262cc57.js:35
+msgid "Latvia"
+msgstr ""
+
+#: components/cjs/address-da1d220f.js:38
+#: components/collection/functions/address.js:62
+#: components/components/address.js:36
+#: components/custom-elements/index.js:2109
+#: components/esm/address-9262cc57.js:36
+msgid "Lithuania"
+msgstr ""
+
+#: components/cjs/address-da1d220f.js:39
+#: components/collection/functions/address.js:63
+#: components/components/address.js:37
+#: components/custom-elements/index.js:2110
+#: components/esm/address-9262cc57.js:37
+msgid "Luxembourg"
+msgstr ""
+
+#: components/cjs/address-da1d220f.js:40
+#: components/collection/functions/address.js:64
+#: components/components/address.js:38
+#: components/custom-elements/index.js:2111
+#: components/esm/address-9262cc57.js:38
+msgid "Malaysia"
+msgstr ""
+
+#: components/cjs/address-da1d220f.js:41
+#: components/collection/functions/address.js:65
+#: components/components/address.js:39
+#: components/custom-elements/index.js:2112
+#: components/esm/address-9262cc57.js:39
+msgid "Malta"
+msgstr ""
+
+#: components/cjs/address-da1d220f.js:42
+#: components/collection/functions/address.js:66
+#: components/components/address.js:40
+#: components/custom-elements/index.js:2113
+#: components/esm/address-9262cc57.js:40
+msgid "Mexico"
+msgstr ""
+
+#: components/cjs/address-da1d220f.js:43
+#: components/collection/functions/address.js:67
+#: components/components/address.js:41
+#: components/custom-elements/index.js:2114
+#: components/esm/address-9262cc57.js:41
+msgid "Netherlands"
+msgstr ""
+
+#: components/cjs/address-da1d220f.js:44
+#: components/collection/functions/address.js:68
+#: components/components/address.js:42
+#: components/custom-elements/index.js:2115
+#: components/esm/address-9262cc57.js:42
+msgid "New Zealand"
+msgstr ""
+
+#: components/cjs/address-da1d220f.js:45
+#: components/collection/functions/address.js:69
+#: components/components/address.js:43
+#: components/custom-elements/index.js:2116
+#: components/esm/address-9262cc57.js:43
+msgid "Norway"
+msgstr ""
+
+#: components/cjs/address-da1d220f.js:46
+#: components/collection/functions/address.js:70
+#: components/components/address.js:44
+#: components/custom-elements/index.js:2117
+#: components/esm/address-9262cc57.js:44
+msgid "Poland"
+msgstr ""
+
+#: components/cjs/address-da1d220f.js:47
+#: components/collection/functions/address.js:71
+#: components/components/address.js:45
+#: components/custom-elements/index.js:2118
+#: components/esm/address-9262cc57.js:45
+msgid "Portugal"
+msgstr ""
+
+#: components/cjs/address-da1d220f.js:48
+#: components/collection/functions/address.js:72
+#: components/components/address.js:46
+#: components/custom-elements/index.js:2119
+#: components/esm/address-9262cc57.js:46
+msgid "Romania"
+msgstr ""
+
+#: components/cjs/address-da1d220f.js:49
+#: components/collection/functions/address.js:73
+#: components/components/address.js:47
+#: components/custom-elements/index.js:2120
+#: components/esm/address-9262cc57.js:47
+msgid "Singapore"
+msgstr ""
+
+#: components/cjs/address-da1d220f.js:50
+#: components/collection/functions/address.js:74
+#: components/components/address.js:48
+#: components/custom-elements/index.js:2121
+#: components/esm/address-9262cc57.js:48
+msgid "Slovakia"
+msgstr ""
+
+#: components/cjs/address-da1d220f.js:51
+#: components/collection/functions/address.js:75
+#: components/components/address.js:49
+#: components/custom-elements/index.js:2122
+#: components/esm/address-9262cc57.js:49
+msgid "Slovenia"
+msgstr ""
+
+#: components/cjs/address-da1d220f.js:52
+#: components/collection/functions/address.js:76
+#: components/components/address.js:50
+#: components/custom-elements/index.js:2123
+#: components/esm/address-9262cc57.js:50
+msgid "Spain"
+msgstr ""
+
+#: components/cjs/address-da1d220f.js:53
+#: components/collection/functions/address.js:77
+#: components/components/address.js:51
+#: components/custom-elements/index.js:2124
+#: components/esm/address-9262cc57.js:51
+msgid "Sweden"
+msgstr ""
+
+#: components/cjs/address-da1d220f.js:54
+#: components/collection/functions/address.js:78
+#: components/components/address.js:52
+#: components/custom-elements/index.js:2125
+#: components/esm/address-9262cc57.js:52
+msgid "Switzerland"
+msgstr ""
+
+#: components/cjs/address-da1d220f.js:55
+#: components/collection/functions/address.js:79
+#: components/components/address.js:53
+#: components/custom-elements/index.js:2126
+#: components/esm/address-9262cc57.js:53
+msgid "United Kingdom"
+msgstr ""
+
+#: components/cjs/address-da1d220f.js:56
+#: components/collection/functions/address.js:80
+#: components/components/address.js:54
+#: components/custom-elements/index.js:2127
+#: components/esm/address-9262cc57.js:54
+msgid "United States"
+msgstr ""
+
+#: components/cjs/default-i18n-0b030693.js:1348
+#: components/components/default-i18n.js:1346
+#: components/custom-elements/index.js:1363
+#: components/esm/default-i18n-e6e2f25c.js:1346
+msgctxt "text direction"
+msgid "ltr"
+msgstr ""
+
+#: components/cjs/fetch-c0d33d3e.js:467
+#: components/components/fetch.js:465
+#: components/custom-elements/index.js:3447
+#: components/esm/fetch-aaff64ae.js:465
+msgid "The response is not a valid JSON response."
+msgstr ""
+
+#: components/cjs/fetch-c0d33d3e.js:510
+#: components/components/fetch.js:508
+#: components/custom-elements/index.js:3490
+#: components/esm/fetch-aaff64ae.js:508
+msgid "An unknown error occurred."
+msgstr ""
+
+#: components/cjs/fetch-c0d33d3e.js:580
+#: components/components/fetch.js:578
+#: components/custom-elements/index.js:3560
+#: components/esm/fetch-aaff64ae.js:578
+msgid "Media upload failed. If this is a photo or a large image, please scale it down and try again."
+msgstr ""
+
+#: components/cjs/fetch-c0d33d3e.js:698
+#: components/components/fetch.js:696
+#: components/custom-elements/index.js:3678
+#: components/esm/fetch-aaff64ae.js:696
+msgid "You are probably offline."
+msgstr ""
+
+#: components/cjs/sc-address_3.cjs.entry.js:84
+#: components/collection/components/ui/address/sc-address.js:75
+#: components/components/sc-address2.js:89
+#: components/custom-elements/index.js:2211
+#: components/esm/sc-address_3.entry.js:80
+msgid "Country"
+msgstr ""
+
+#: components/cjs/sc-address_3.cjs.entry.js:84
+#: components/cjs/sc-form-components-validator_2.cjs.entry.js:59
+#: components/collection/components/providers/form-components-validator/sc-form-components-validator.js:11
+#: components/collection/components/ui/address/sc-address.js:76
+#: components/components/sc-address2.js:89
+#: components/components/sc-form-components-validator2.js:29
+#: components/custom-elements/index.js:2211
+#: components/custom-elements/index.js:5551
+#: components/esm/sc-address_3.entry.js:80
+#: components/esm/sc-form-components-validator_2.entry.js:55
+msgid "Address"
+msgstr ""
+
+#: components/cjs/sc-address_3.cjs.entry.js:84
+#: components/collection/components/ui/address/sc-address.js:78
+#: components/components/sc-address2.js:89
+#: components/custom-elements/index.js:2211
+#: components/esm/sc-address_3.entry.js:80
+msgid "City"
+msgstr ""
+
+#: components/cjs/sc-address_3.cjs.entry.js:84
+#: components/collection/components/ui/address/sc-address.js:79
+#: components/components/sc-address2.js:89
+#: components/custom-elements/index.js:2211
+#: components/esm/sc-address_3.entry.js:80
+msgid "Postal Code/Zip"
+msgstr ""
+
+#: components/cjs/sc-address_3.cjs.entry.js:84
+#: components/collection/components/ui/address/sc-address.js:80
+#: components/components/sc-address2.js:89
+#: components/custom-elements/index.js:2211
+#: components/esm/sc-address_3.entry.js:80
+msgid "State/Province/Region"
+msgstr ""
+
+#: components/cjs/sc-address_3.cjs.entry.js:2042
+#: components/collection/components/ui/select/sc-select.js:173
+#: components/components/sc-select2.js:1954
+#: components/custom-elements/index.js:10835
+#: components/esm/sc-address_3.entry.js:2038
+msgid "Nothing Found"
+msgstr ""
+
+#: components/cjs/sc-alert_3.cjs.entry.js:211
+#: components/cjs/sc-dashboard-module_3.cjs.entry.js:16
+#: components/cjs/sc-login-form.cjs.entry.js:98
+#: components/cjs/sc-payment-method-create.cjs.entry.js:41
+#: components/cjs/sc-upcoming-invoice.cjs.entry.js:169
+#: components/collection/components/controllers/dashboard/payment-method-create/payment-method-create.js:35
+#: components/collection/components/controllers/dashboard/upcoming-invoice/sc-upcoming-invoice.js:211
+#: components/collection/components/controllers/login/sc-login-form.js:106
+#: components/collection/components/ui/dashboard-module/sc-dashboard-module.js:7
+#: components/components/sc-dashboard-module2.js:15
+#: components/components/sc-login-form.js:105
+#: components/components/sc-payment-method-create.js:44
+#: components/components/sc-upcoming-invoice.js:191
+#: components/custom-elements/index.js:5118
+#: components/custom-elements/index.js:6564
+#: components/custom-elements/index.js:7603
+#: components/custom-elements/index.js:13359
+#: components/esm/sc-alert_3.entry.js:207
+#: components/esm/sc-dashboard-module_3.entry.js:12
+#: components/esm/sc-login-form.entry.js:94
+#: components/esm/sc-payment-method-create.entry.js:37
+#: components/esm/sc-upcoming-invoice.entry.js:165
+msgid "Error"
+msgstr ""
+
+#: components/cjs/sc-charges-list.cjs.entry.js:57
+#: components/cjs/sc-customer-edit.cjs.entry.js:62
+#: components/cjs/sc-dashboard-customer-details.cjs.entry.js:37
+#: components/cjs/sc-dashboard-downloads-list.cjs.entry.js:40
+#: components/cjs/sc-dashboard-downloads-list.cjs.entry.js:53
+#: components/cjs/sc-invoices-list.cjs.entry.js:41
+#: components/cjs/sc-invoices-list.cjs.entry.js:54
+#: components/cjs/sc-login-form.cjs.entry.js:50
+#: components/cjs/sc-login-form.cjs.entry.js:83
+#: components/cjs/sc-order-confirmation.cjs.entry.js:65
+#: components/cjs/sc-orders-list.cjs.entry.js:41
+#: components/cjs/sc-orders-list.cjs.entry.js:54
+#: components/cjs/sc-payment-method-create.cjs.entry.js:22
+#: components/cjs/sc-payment-method-create.cjs.entry.js:36
+#: components/cjs/sc-payment-methods-list.cjs.entry.js:43
+#: components/cjs/sc-payment-methods-list.cjs.entry.js:68
+#: components/cjs/sc-payment-methods-list.cjs.entry.js:90
+#: components/cjs/sc-subscription-cancel.cjs.entry.js:27
+#: components/cjs/sc-subscription-cancel.cjs.entry.js:63
+#: components/cjs/sc-subscription-payment.cjs.entry.js:29
+#: components/cjs/sc-subscription-payment.cjs.entry.js:75
+#: components/cjs/sc-subscription-renew.cjs.entry.js:27
+#: components/cjs/sc-subscription-renew.cjs.entry.js:58
+#: components/cjs/sc-subscription-switch.cjs.entry.js:62
+#: components/cjs/sc-subscription.cjs.entry.js:43
+#: components/cjs/sc-subscription.cjs.entry.js:69
+#: components/cjs/sc-subscriptions-list.cjs.entry.js:41
+#: components/cjs/sc-subscriptions-list.cjs.entry.js:54
+#: components/cjs/sc-upcoming-invoice.cjs.entry.js:36
+#: components/cjs/sc-upcoming-invoice.cjs.entry.js:76
+#: components/cjs/sc-upcoming-invoice.cjs.entry.js:90
+#: components/cjs/sc-upcoming-invoice.cjs.entry.js:117
+#: components/cjs/sc-wordpress-password-edit.cjs.entry.js:43
+#: components/cjs/sc-wordpress-user-edit.cjs.entry.js:42
+#: components/collection/components/controllers/confirmation/order-confirmation/sc-order-confirmation.js:56
+#: components/collection/components/controllers/dashboard/charges-list/sc-charges-list.js:48
+#: components/collection/components/controllers/dashboard/customer-details/sc-dashboard-customer-details.js:26
+#: components/collection/components/controllers/dashboard/customer-edit/sc-customer-edit.js:51
+#: components/collection/components/controllers/dashboard/dashboard-downloads-list/sc-dashboard-downloads-list.js:31
+#: components/collection/components/controllers/dashboard/dashboard-downloads-list/sc-dashboard-downloads-list.js:44
+#: components/collection/components/controllers/dashboard/invoices-list/sc-invoices-list.js:32
+#: components/collection/components/controllers/dashboard/invoices-list/sc-invoices-list.js:45
+#: components/collection/components/controllers/dashboard/orders-list/sc-orders-list.js:32
+#: components/collection/components/controllers/dashboard/orders-list/sc-orders-list.js:45
+#: components/collection/components/controllers/dashboard/payment-method-create/payment-method-create.js:13
+#: components/collection/components/controllers/dashboard/payment-method-create/payment-method-create.js:27
+#: components/collection/components/controllers/dashboard/payment-methods-list/sc-payment-methods-list.js:34
+#: components/collection/components/controllers/dashboard/payment-methods-list/sc-payment-methods-list.js:59
+#: components/collection/components/controllers/dashboard/payment-methods-list/sc-payment-methods-list.js:81
+#: components/collection/components/controllers/dashboard/subscription-cancel/sc-subscription-cancel.js:16
+#: components/collection/components/controllers/dashboard/subscription-cancel/sc-subscription-cancel.js:52
+#: components/collection/components/controllers/dashboard/subscription-payment/sc-subscription-payment.js:20
+#: components/collection/components/controllers/dashboard/subscription-payment/sc-subscription-payment.js:66
+#: components/collection/components/controllers/dashboard/subscription-renew/sc-subscription-renew.js:16
+#: components/collection/components/controllers/dashboard/subscription-renew/sc-subscription-renew.js:47
+#: components/collection/components/controllers/dashboard/subscription-switch/sc-subscription-switch.js:53
+#: components/collection/components/controllers/dashboard/subscription/sc-subscription.js:32
+#: components/collection/components/controllers/dashboard/subscription/sc-subscription.js:58
+#: components/collection/components/controllers/dashboard/subscriptions-list/sc-subscriptions-list.js:32
+#: components/collection/components/controllers/dashboard/subscriptions-list/sc-subscriptions-list.js:45
+#: components/collection/components/controllers/dashboard/upcoming-invoice/sc-upcoming-invoice.js:24
+#: components/collection/components/controllers/dashboard/upcoming-invoice/sc-upcoming-invoice.js:64
+#: components/collection/components/controllers/dashboard/upcoming-invoice/sc-upcoming-invoice.js:78
+#: components/collection/components/controllers/dashboard/upcoming-invoice/sc-upcoming-invoice.js:105
+#: components/collection/components/controllers/dashboard/wordpress-password-edit/sc-wordpress-password-edit.js:31
+#: components/collection/components/controllers/dashboard/wordpress-user-edit/sc-wordpress-user-edit.js:30
+#: components/collection/components/controllers/login/sc-login-form.js:40
+#: components/collection/components/controllers/login/sc-login-form.js:73
+#: components/components/sc-charges-list.js:70
+#: components/components/sc-customer-edit.js:81
+#: components/components/sc-dashboard-customer-details.js:45
+#: components/components/sc-dashboard-downloads-list.js:54
+#: components/components/sc-dashboard-downloads-list.js:67
+#: components/components/sc-invoices-list.js:57
+#: components/components/sc-invoices-list.js:70
+#: components/components/sc-login-form.js:57
+#: components/components/sc-login-form.js:90
+#: components/components/sc-order-confirmation.js:63
+#: components/components/sc-orders-list.js:57
+#: components/components/sc-orders-list.js:70
+#: components/components/sc-payment-method-create.js:25
+#: components/components/sc-payment-method-create.js:39
+#: components/components/sc-payment-methods-list.js:58
+#: components/components/sc-payment-methods-list.js:83
+#: components/components/sc-payment-methods-list.js:105
+#: components/components/sc-subscription-cancel.js:38
+#: components/components/sc-subscription-cancel.js:74
+#: components/components/sc-subscription-payment.js:42
+#: components/components/sc-subscription-payment.js:88
+#: components/components/sc-subscription-renew.js:38
+#: components/components/sc-subscription-renew.js:69
+#: components/components/sc-subscription-switch.js:74
+#: components/components/sc-subscription.js:57
+#: components/components/sc-subscription.js:83
+#: components/components/sc-subscriptions-list.js:58
+#: components/components/sc-subscriptions-list.js:71
+#: components/components/sc-upcoming-invoice.js:58
+#: components/components/sc-upcoming-invoice.js:98
+#: components/components/sc-upcoming-invoice.js:112
+#: components/components/sc-upcoming-invoice.js:139
+#: components/components/sc-wordpress-password-edit.js:50
+#: components/components/sc-wordpress-user-edit.js:51
+#: components/custom-elements/index.js:3814
+#: components/custom-elements/index.js:4777
+#: components/custom-elements/index.js:5009
+#: components/custom-elements/index.js:5057
+#: components/custom-elements/index.js:5070
+#: components/custom-elements/index.js:6114
+#: components/custom-elements/index.js:6127
+#: components/custom-elements/index.js:6516
+#: components/custom-elements/index.js:6549
+#: components/custom-elements/index.js:6786
+#: components/custom-elements/index.js:7411
+#: components/custom-elements/index.js:7424
+#: components/custom-elements/index.js:7584
+#: components/custom-elements/index.js:7598
+#: components/custom-elements/index.js:7642
+#: components/custom-elements/index.js:7667
+#: components/custom-elements/index.js:7689
+#: components/custom-elements/index.js:11968
+#: components/custom-elements/index.js:11994
+#: components/custom-elements/index.js:12068
+#: components/custom-elements/index.js:12104
+#: components/custom-elements/index.js:12213
+#: components/custom-elements/index.js:12259
+#: components/custom-elements/index.js:12307
+#: components/custom-elements/index.js:12338
+#: components/custom-elements/index.js:12469
+#: components/custom-elements/index.js:12551
+#: components/custom-elements/index.js:12564
+#: components/custom-elements/index.js:13226
+#: components/custom-elements/index.js:13266
+#: components/custom-elements/index.js:13280
+#: components/custom-elements/index.js:13307
+#: components/custom-elements/index.js:13399
+#: components/custom-elements/index.js:13469
+#: components/esm/sc-charges-list.entry.js:53
+#: components/esm/sc-customer-edit.entry.js:58
+#: components/esm/sc-dashboard-customer-details.entry.js:33
+#: components/esm/sc-dashboard-downloads-list.entry.js:36
+#: components/esm/sc-dashboard-downloads-list.entry.js:49
+#: components/esm/sc-invoices-list.entry.js:37
+#: components/esm/sc-invoices-list.entry.js:50
+#: components/esm/sc-login-form.entry.js:46
+#: components/esm/sc-login-form.entry.js:79
+#: components/esm/sc-order-confirmation.entry.js:61
+#: components/esm/sc-orders-list.entry.js:37
+#: components/esm/sc-orders-list.entry.js:50
+#: components/esm/sc-payment-method-create.entry.js:18
+#: components/esm/sc-payment-method-create.entry.js:32
+#: components/esm/sc-payment-methods-list.entry.js:39
+#: components/esm/sc-payment-methods-list.entry.js:64
+#: components/esm/sc-payment-methods-list.entry.js:86
+#: components/esm/sc-subscription-cancel.entry.js:23
+#: components/esm/sc-subscription-cancel.entry.js:59
+#: components/esm/sc-subscription-payment.entry.js:25
+#: components/esm/sc-subscription-payment.entry.js:71
+#: components/esm/sc-subscription-renew.entry.js:23
+#: components/esm/sc-subscription-renew.entry.js:54
+#: components/esm/sc-subscription-switch.entry.js:58
+#: components/esm/sc-subscription.entry.js:39
+#: components/esm/sc-subscription.entry.js:65
+#: components/esm/sc-subscriptions-list.entry.js:37
+#: components/esm/sc-subscriptions-list.entry.js:50
+#: components/esm/sc-upcoming-invoice.entry.js:32
+#: components/esm/sc-upcoming-invoice.entry.js:72
+#: components/esm/sc-upcoming-invoice.entry.js:86
+#: components/esm/sc-upcoming-invoice.entry.js:113
+#: components/esm/sc-wordpress-password-edit.entry.js:39
+#: components/esm/sc-wordpress-user-edit.entry.js:38
+msgid "Something went wrong"
+msgstr ""
+
+#: components/cjs/sc-charges-list.cjs.entry.js:69
+#: components/collection/components/controllers/dashboard/charges-list/sc-charges-list.js:60
+#: components/components/sc-charges-list.js:82
+#: components/custom-elements/index.js:3826
+#: components/esm/sc-charges-list.entry.js:65
+msgid "Order #%s"
+msgstr ""
+
+#: components/cjs/sc-charges-list.cjs.entry.js:72
+#: components/collection/components/controllers/dashboard/charges-list/sc-charges-list.js:63
+#: components/components/sc-charges-list.js:85
+#: components/custom-elements/index.js:3829
+#: components/esm/sc-charges-list.entry.js:68
+msgid "Invoice #%s"
+msgstr ""
+
+#: components/cjs/sc-charges-list.cjs.entry.js:85
+#: components/cjs/sc-subscription-payment.cjs.entry.js:88
+#: components/collection/components/controllers/dashboard/charges-list/sc-charges-list.js:76
+#: components/collection/components/controllers/dashboard/subscription-payment/sc-subscription-payment.js:86
+#: components/components/sc-charges-list.js:98
+#: components/components/sc-subscription-payment.js:101
+#: components/custom-elements/index.js:3842
+#: components/custom-elements/index.js:12272
+#: components/esm/sc-charges-list.entry.js:81
+#: components/esm/sc-subscription-payment.entry.js:84
+msgid "You have no saved payment methods."
+msgstr ""
+
+#: components/cjs/sc-checkout.cjs.entry.js:173
+#: components/collection/components/controllers/checkout-form/checkout/sc-checkout.js:95
+#: components/components/sc-checkout.js:186
+#: components/custom-elements/index.js:4183
+#: components/esm/sc-checkout.entry.js:169
+msgid "This product is no longer purchasable."
+msgstr ""
+
+#: components/cjs/sc-checkout.cjs.entry.js:212
+#: components/collection/components/controllers/checkout-form/checkout/sc-checkout.js:135
+#: components/components/sc-checkout.js:225
+#: components/custom-elements/index.js:4222
+#: components/esm/sc-checkout.entry.js:208
+msgid "You have already paid for this order."
+msgstr ""
+
+#: components/cjs/sc-checkout.cjs.entry.js:212
+#: components/collection/components/controllers/checkout-form/checkout/sc-checkout.js:136
+#: components/components/sc-checkout.js:225
+#: components/custom-elements/index.js:4222
+#: components/esm/sc-checkout.entry.js:208
+msgid "Please visit your account dashboard to view your order."
+msgstr ""
+
+#: components/cjs/sc-checkout.cjs.entry.js:215
+#: components/collection/components/controllers/checkout-form/checkout/sc-checkout.js:140
+#: components/components/sc-checkout.js:228
+#: components/custom-elements/index.js:4225
+#: components/esm/sc-checkout.entry.js:211
+msgid "Please refresh the page."
+msgstr ""
+
+#: components/cjs/sc-choice.cjs.entry.js:54
+#: components/collection/components/ui/choice/sc-choice.js:42
+#: components/components/sc-choice2.js:51
+#: components/custom-elements/index.js:4294
+#: components/esm/sc-choice.entry.js:50
+msgid "Please choose one."
+msgstr ""
+
+#: components/cjs/sc-customer-details.cjs.entry.js:34
+#: components/collection/components/ui/customer-details/sc-customer-details.js:38
+#: components/components/sc-customer-details2.js:42
+#: components/custom-elements/index.js:4691
+#: components/esm/sc-customer-details.entry.js:30
+msgid "Tax Id"
+msgstr ""
+
+#: components/cjs/sc-customer-details.cjs.entry.js:36
+#: components/collection/components/ui/customer-details/sc-customer-details.js:46
+#: components/components/sc-customer-details2.js:44
+#: components/custom-elements/index.js:4693
+#: components/esm/sc-customer-details.entry.js:32
+msgid "Invalid"
+msgstr ""
+
+#: components/cjs/sc-customer-details.cjs.entry.js:54
+#: components/collection/components/ui/customer-details/sc-customer-details.js:68
+#: components/components/sc-customer-details2.js:62
+#: components/custom-elements/index.js:4711
+#: components/esm/sc-customer-details.entry.js:50
+msgid "You are not a customer."
+msgstr ""
+
+#: components/cjs/sc-customer-details.cjs.entry.js:61
+#: components/cjs/sc-order-confirmation-customer.cjs.entry.js:20
+#: components/collection/components/controllers/confirmation/order-confirmation-customer/sc-order-confirmation-customer.js:11
+#: components/collection/components/ui/customer-details/sc-customer-details.js:81
+#: components/components/sc-customer-details2.js:69
+#: components/components/sc-order-confirmation-customer.js:28
+#: components/custom-elements/index.js:4718
+#: components/custom-elements/index.js:6825
+#: components/esm/sc-customer-details.entry.js:57
+#: components/esm/sc-order-confirmation-customer.entry.js:16
+msgid "Billing Details"
+msgstr ""
+
+#: components/cjs/sc-customer-edit.cjs.entry.js:68
+#: components/collection/components/controllers/dashboard/customer-edit/sc-customer-edit.js:59
+#: components/components/sc-customer-edit.js:87
+#: components/custom-elements/index.js:4783
+#: components/esm/sc-customer-edit.entry.js:64
+msgid "Update Billing Details"
+msgstr ""
+
+#: components/cjs/sc-customer-edit.cjs.entry.js:82
+#: components/collection/components/controllers/dashboard/customer-edit/sc-customer-edit.js:87
+#: components/components/sc-customer-edit.js:101
+#: components/custom-elements/index.js:4797
+#: components/esm/sc-customer-edit.entry.js:78
+msgid "Billing address same as shipping"
+msgstr ""
+
+#: components/cjs/sc-customer-edit.cjs.entry.js:91
+#: components/cjs/sc-wordpress-user-edit.cjs.entry.js:48
+#: components/collection/components/controllers/dashboard/customer-edit/sc-customer-edit.js:101
+#: components/collection/components/controllers/dashboard/wordpress-user-edit/sc-wordpress-user-edit.js:50
+#: components/components/sc-customer-edit.js:110
+#: components/components/sc-wordpress-user-edit.js:57
+#: components/custom-elements/index.js:4806
+#: components/custom-elements/index.js:13475
+#: components/esm/sc-customer-edit.entry.js:87
+#: components/esm/sc-wordpress-user-edit.entry.js:44
+msgid "Save"
+msgstr ""
+
+#: components/cjs/sc-dashboard-downloads-list.cjs.entry.js:86
+#: components/collection/components/controllers/dashboard/dashboard-downloads-list/sc-dashboard-downloads-list.js:79
+#: components/components/sc-dashboard-downloads-list.js:100
+#: components/custom-elements/index.js:5103
+#: components/esm/sc-dashboard-downloads-list.entry.js:82
+msgid "Downloads"
+msgstr ""
+
+#: components/cjs/sc-downloads-list.cjs.entry.js:18
+#: components/collection/components/ui/downloads-list/sc-downloads-list.js:12
+#: components/components/sc-downloads-list2.js:29
+#: components/custom-elements/index.js:5267
+#: components/esm/sc-downloads-list.entry.js:14
+msgid "You don't have any downloads."
+msgstr ""
+
+#: components/cjs/sc-downloads-list.cjs.entry.js:35
+#: components/collection/components/ui/downloads-list/sc-downloads-list.js:39
+#: components/components/sc-downloads-list2.js:46
+#: components/custom-elements/index.js:5284
+#: components/esm/sc-downloads-list.entry.js:31
+msgid "%s file"
+msgid_plural "%s files"
+msgstr[0] ""
+msgstr[1] ""
+
+#: components/cjs/sc-invoices-list.cjs.entry.js:100
+#: components/collection/components/controllers/dashboard/invoices-list/sc-invoices-list.js:96
+#: components/components/sc-invoices-list.js:116
+#: components/custom-elements/index.js:6173
+#: components/esm/sc-invoices-list.entry.js:96
+msgid "You don't have any invoices."
+msgstr ""
+
+#: components/cjs/sc-invoices-list.cjs.entry.js:123
+#: components/collection/components/controllers/dashboard/invoices-list/sc-invoices-list.js:129
+#: components/components/sc-invoices-list.js:139
+#: components/custom-elements/index.js:6196
+#: components/esm/sc-invoices-list.entry.js:119
+msgid "Invoice History"
+msgstr ""
+
+#. translators: %s: tax label
+#: components/cjs/sc-line-item-tax.cjs.entry.js:22
+#: components/collection/components/controllers/checkout-form/line-item-tax/sc-line-item-tax.js:11
+#: components/components/sc-line-item-tax.js:21
+#: components/custom-elements/index.js:6247
+#: components/esm/sc-line-item-tax.entry.js:18
+msgid "Estimated %s"
+msgstr ""
+
+#: components/cjs/sc-login-form.cjs.entry.js:89
+#: components/collection/components/controllers/login/sc-login-form.js:81
+#: components/components/sc-login-form.js:96
+#: components/custom-elements/index.js:6555
+#: components/esm/sc-login-form.entry.js:85
+msgid "Sent!"
+msgstr ""
+
+#: components/cjs/sc-login-form.cjs.entry.js:89
+#: components/collection/components/controllers/login/sc-login-form.js:82
+#: components/components/sc-login-form.js:96
+#: components/custom-elements/index.js:6555
+#: components/esm/sc-login-form.entry.js:85
+msgid "You should receive an email shortly with a link to login."
+msgstr ""
+
+#: components/cjs/sc-login-form.cjs.entry.js:92
+#: components/collection/components/controllers/login/sc-login-form.js:89
+#: components/components/sc-login-form.js:99
+#: components/custom-elements/index.js:6558
+#: components/esm/sc-login-form.entry.js:88
+msgid "Send a magic link"
+msgstr ""
+
+#: components/cjs/sc-login-form.cjs.entry.js:92
+#: components/collection/components/controllers/login/sc-login-form.js:90
+#: components/components/sc-login-form.js:99
+#: components/custom-elements/index.js:6558
+#: components/esm/sc-login-form.entry.js:88
+msgid "or"
+msgstr ""
+
+#: components/cjs/sc-login-form.cjs.entry.js:92
+#: components/collection/components/controllers/login/sc-login-form.js:92
+#: components/components/sc-login-form.js:99
+#: components/custom-elements/index.js:6558
+#: components/esm/sc-login-form.entry.js:88
+msgid "Enter your password"
+msgstr ""
+
+#: components/cjs/sc-order-confirmation.cjs.entry.js:87
+#: components/collection/components/controllers/confirmation/order-confirmation/sc-order-confirmation.js:83
+#: components/components/sc-order-confirmation.js:85
+#: components/custom-elements/index.js:6808
+#: components/esm/sc-order-confirmation.entry.js:83
+msgid "Order not found."
+msgstr ""
+
+#: components/cjs/sc-order-confirmation.cjs.entry.js:87
+#: components/collection/components/controllers/confirmation/order-confirmation/sc-order-confirmation.js:84
+#: components/components/sc-order-confirmation.js:85
+#: components/custom-elements/index.js:6808
+#: components/esm/sc-order-confirmation.entry.js:83
+msgid "This order could not be found. Please try again."
+msgstr ""
+
+#: components/cjs/sc-order-status-badge.cjs.entry.js:37
+#: components/collection/components/ui/order-status-badge/sc-order-status-badge.js:28
+#: components/components/sc-order-status-badge2.js:35
+#: components/custom-elements/index.js:7283
+#: components/esm/sc-order-status-badge.entry.js:33
+msgid "Pending Payment"
+msgstr ""
+
+#: components/cjs/sc-order-status-badge.cjs.entry.js:41
+#: components/collection/components/ui/order-status-badge/sc-order-status-badge.js:32
+#: components/components/sc-order-status-badge2.js:39
+#: components/custom-elements/index.js:7287
+#: components/esm/sc-order-status-badge.entry.js:37
+msgid "Completed"
+msgstr ""
+
+#: components/cjs/sc-order-summary.cjs.entry.js:27
+#: components/collection/components/controllers/checkout-form/order-summary/sc-order-summary.js:23
+#: components/components/sc-order-summary.js:28
+#: components/custom-elements/index.js:7337
+#: components/esm/sc-order-summary.entry.js:23
+msgid "Show Summary"
+msgstr ""
+
+#: components/cjs/sc-order-summary.cjs.entry.js:33
+#: components/collection/components/controllers/checkout-form/order-summary/sc-order-summary.js:40
+#: components/components/sc-order-summary.js:34
+#: components/custom-elements/index.js:7343
+#: components/esm/sc-order-summary.entry.js:29
+msgid "Your cart is empty."
+msgstr ""
+
+#: components/cjs/sc-orders-list.cjs.entry.js:100
+#: components/collection/components/controllers/dashboard/orders-list/sc-orders-list.js:96
+#: components/components/sc-orders-list.js:116
+#: components/custom-elements/index.js:7470
+#: components/esm/sc-orders-list.entry.js:96
+msgid "You don't have any orders."
+msgstr ""
+
+#: components/cjs/sc-orders-list.cjs.entry.js:123
+#: components/collection/components/controllers/dashboard/orders-list/sc-orders-list.js:128
+#: components/components/sc-orders-list.js:139
+#: components/custom-elements/index.js:7493
+#: components/esm/sc-orders-list.entry.js:119
+msgid "Order History"
+msgstr ""
+
+#: components/cjs/sc-pagination.cjs.entry.js:36
+#: components/collection/components/ui/pagination/sc-pagination.js:26
+#: components/components/sc-pagination2.js:36
+#: components/custom-elements/index.js:7528
+#: components/esm/sc-pagination.entry.js:32
+msgid "Displaying %1d to %2d of %3d items"
+msgstr ""
+
+#: components/cjs/sc-pagination.cjs.entry.js:36
+#: components/collection/components/ui/pagination/sc-pagination.js:28
+#: components/components/sc-pagination2.js:36
+#: components/custom-elements/index.js:7528
+#: components/esm/sc-pagination.entry.js:32
+msgid "Previous"
+msgstr ""
+
+#: components/cjs/sc-payment-method-create.cjs.entry.js:41
+#: components/collection/components/controllers/dashboard/payment-method-create/payment-method-create.js:38
+#: components/components/sc-payment-method-create.js:44
+#: components/custom-elements/index.js:7603
+#: components/esm/sc-payment-method-create.entry.js:37
+msgid "Save Payment Method"
+msgstr ""
+
+#: components/cjs/sc-payment-methods-list.cjs.entry.js:30
+#: components/collection/components/controllers/dashboard/payment-methods-list/sc-payment-methods-list.js:21
+#: components/components/sc-payment-methods-list.js:45
+#: components/custom-elements/index.js:7629
+#: components/esm/sc-payment-methods-list.entry.js:26
+msgid "Are you sure you want to remove this payment method?"
+msgstr ""
+
+#: components/cjs/sc-payment-methods-list.cjs.entry.js:102
+#: components/collection/components/controllers/dashboard/payment-methods-list/sc-payment-methods-list.js:98
+#: components/components/sc-payment-methods-list.js:117
+#: components/custom-elements/index.js:7701
+#: components/esm/sc-payment-methods-list.entry.js:98
+msgid "You don't have any saved payment methods."
+msgstr ""
+
+#: components/cjs/sc-payment-methods-list.cjs.entry.js:109
+#: components/collection/components/controllers/dashboard/payment-methods-list/sc-payment-methods-list.js:128
+#: components/components/sc-payment-methods-list.js:124
+#: components/custom-elements/index.js:7708
+#: components/esm/sc-payment-methods-list.entry.js:105
+msgid "Make Default"
+msgstr ""
+
+#: components/cjs/sc-payment-methods-list.cjs.entry.js:123
+#: components/collection/components/controllers/dashboard/payment-methods-list/sc-payment-methods-list.js:146
+#: components/components/sc-payment-methods-list.js:138
+#: components/custom-elements/index.js:7722
+#: components/esm/sc-payment-methods-list.entry.js:119
+msgid "Payment Methods"
+msgstr ""
+
+#: components/cjs/sc-payment.cjs.entry.js:32
+#: components/collection/components/controllers/checkout-form/payment/sc-payment.js:30
+#: components/components/sc-payment.js:36
+#: components/custom-elements/index.js:7563
+#: components/esm/sc-payment.entry.js:28
+msgid "In test mode, you can use the card 4242 4242 4242 4242 and any code/expiration date."
+msgstr ""
+
+#: components/cjs/sc-price-choice.cjs.entry.js:773
+#: components/collection/components/controllers/checkout-form/price-choice/sc-price-choice.js:117
+#: components/components/sc-price-choice.js:778
+#: components/custom-elements/index.js:8494
+#: components/esm/sc-price-choice.entry.js:769
+msgid "This product has been archived."
+msgstr ""
+
+#: components/cjs/sc-product-line-item_2.cjs.entry.js:27
+#: components/collection/components/ui/product-line-item/sc-product-line-item.js:12
+#: components/components/sc-product-line-item2.js:30
+#: components/custom-elements/index.js:8663
+#: components/esm/sc-product-line-item_2.entry.js:23
+msgid "%d day free"
+msgid_plural "%d days free"
+msgstr[0] ""
+msgstr[1] ""
+
+#: components/cjs/sc-product-line-item_2.cjs.entry.js:27
+#: components/collection/components/ui/product-line-item/sc-product-line-item.js:14
+#: components/components/sc-product-line-item2.js:30
+#: components/custom-elements/index.js:8663
+#: components/esm/sc-product-line-item_2.entry.js:23
+msgid "Then"
+msgstr ""
+
+#: components/cjs/sc-stripe-payment-request.cjs.entry.js:164
+#: components/collection/components/ui/stripe-payment-request/sc-stripe-payment-request.js:147
+#: components/components/sc-stripe-payment-request2.js:160
+#: components/custom-elements/index.js:11792
+#: components/esm/sc-stripe-payment-request.entry.js:160
+msgid "You must serve this page over HTTPS to display express payment buttons."
+msgstr ""
+
+#: components/cjs/sc-stripe-payment-request.cjs.entry.js:170
+#: components/collection/components/ui/stripe-payment-request/sc-stripe-payment-request.js:153
+#: components/components/sc-stripe-payment-request2.js:166
+#: components/custom-elements/index.js:11798
+#: components/esm/sc-stripe-payment-request.entry.js:166
+msgid "No payment methods available."
+msgstr ""
+
+#: components/cjs/sc-stripe-payment-request.cjs.entry.js:295
+#: components/collection/components/ui/stripe-payment-request/sc-stripe-payment-request.js:282
+#: components/components/sc-stripe-payment-request2.js:291
+#: components/custom-elements/index.js:11923
+#: components/esm/sc-stripe-payment-request.entry.js:291
+msgid "Express Payment"
+msgstr ""
+
+#: components/cjs/sc-subscription-cancel.cjs.entry.js:72
+#: components/collection/components/controllers/dashboard/subscription-cancel/sc-subscription-cancel.js:64
+#: components/components/sc-subscription-cancel.js:83
+#: components/custom-elements/index.js:12113
+#: components/esm/sc-subscription-cancel.entry.js:68
+msgid "Your plan will be canceled, but is still available until the end of your billing period on"
+msgstr ""
+
+#: components/cjs/sc-subscription-cancel.cjs.entry.js:72
+#: components/collection/components/controllers/dashboard/subscription-cancel/sc-subscription-cancel.js:69
+#: components/components/sc-subscription-cancel.js:83
+#: components/custom-elements/index.js:12113
+#: components/esm/sc-subscription-cancel.entry.js:68
+msgid "If you change your mind, you can renew your subscription."
+msgstr ""
+
+#: components/cjs/sc-subscription-cancel.cjs.entry.js:72
+#: components/collection/components/controllers/dashboard/subscription-cancel/sc-subscription-cancel.js:69
+#: components/components/sc-subscription-cancel.js:83
+#: components/custom-elements/index.js:12113
+#: components/esm/sc-subscription-cancel.entry.js:68
+msgid "Your plan will be canceled immediately. You cannot change your mind."
+msgstr ""
+
+#: components/cjs/sc-subscription-cancel.cjs.entry.js:78
+#: components/collection/components/controllers/dashboard/subscription-cancel/sc-subscription-cancel.js:78
+#: components/components/sc-subscription-cancel.js:89
+#: components/custom-elements/index.js:12119
+#: components/esm/sc-subscription-cancel.entry.js:74
+msgid "Cancel your plan"
+msgstr ""
+
+#: components/cjs/sc-subscription-cancel.cjs.entry.js:78
+#: components/cjs/sc-subscription.cjs.entry.js:119
+#: components/collection/components/controllers/dashboard/subscription-cancel/sc-subscription-cancel.js:81
+#: components/collection/components/controllers/dashboard/subscription/sc-subscription.js:137
+#: components/components/sc-subscription-cancel.js:89
+#: components/components/sc-subscription.js:133
+#: components/custom-elements/index.js:12044
+#: components/custom-elements/index.js:12119
+#: components/esm/sc-subscription-cancel.entry.js:74
+#: components/esm/sc-subscription.entry.js:115
+msgid "Cancel Plan"
+msgstr ""
+
+#: components/cjs/sc-subscription-cancel.cjs.entry.js:78
+#: components/cjs/sc-subscription-payment.cjs.entry.js:88
+#: components/cjs/sc-subscription-payment.cjs.entry.js:97
+#: components/cjs/sc-subscription-renew.cjs.entry.js:73
+#: components/collection/components/controllers/dashboard/subscription-cancel/sc-subscription-cancel.js:82
+#: components/collection/components/controllers/dashboard/subscription-payment/sc-subscription-payment.js:87
+#: components/collection/components/controllers/dashboard/subscription-payment/sc-subscription-payment.js:115
+#: components/collection/components/controllers/dashboard/subscription-renew/sc-subscription-renew.js:76
+#: components/components/sc-subscription-cancel.js:89
+#: components/components/sc-subscription-payment.js:101
+#: components/components/sc-subscription-payment.js:110
+#: components/components/sc-subscription-renew.js:84
+#: components/custom-elements/index.js:12119
+#: components/custom-elements/index.js:12272
+#: components/custom-elements/index.js:12281
+#: components/custom-elements/index.js:12353
+#: components/esm/sc-subscription-cancel.entry.js:74
+#: components/esm/sc-subscription-payment.entry.js:84
+#: components/esm/sc-subscription-payment.entry.js:93
+#: components/esm/sc-subscription-renew.entry.js:69
+msgid "Go Back"
+msgstr ""
+
+#: components/cjs/sc-subscription-details_2.cjs.entry.js:56
+#: components/cjs/sc-subscription.cjs.entry.js:87
+#: components/collection/components/controllers/dashboard/subscription-details/sc-subscription-details.js:48
+#: components/collection/components/controllers/dashboard/subscription/sc-subscription.js:79
+#: components/components/sc-subscription-details2.js:59
+#: components/components/sc-subscription.js:101
+#: components/custom-elements/index.js:12012
+#: components/custom-elements/index.js:12170
+#: components/esm/sc-subscription-details_2.entry.js:52
+#: components/esm/sc-subscription.entry.js:83
+msgid "Your plan will be canceled on"
+msgstr ""
+
+#: components/cjs/sc-subscription-details_2.cjs.entry.js:59
+#: components/collection/components/controllers/dashboard/subscription-details/sc-subscription-details.js:54
+#: components/components/sc-subscription-details2.js:62
+#: components/custom-elements/index.js:12173
+#: components/esm/sc-subscription-details_2.entry.js:55
+msgid "Your plan switches to"
+msgstr ""
+
+#: components/cjs/sc-subscription-details_2.cjs.entry.js:59
+#: components/collection/components/controllers/dashboard/subscription-details/sc-subscription-details.js:58
+#: components/components/sc-subscription-details2.js:62
+#: components/custom-elements/index.js:12173
+#: components/esm/sc-subscription-details_2.entry.js:55
+msgid "on"
+msgstr ""
+
+#: components/cjs/sc-subscription-details_2.cjs.entry.js:62
+#: components/cjs/sc-subscription.cjs.entry.js:90
+#: components/collection/components/controllers/dashboard/subscription-details/sc-subscription-details.js:66
+#: components/collection/components/controllers/dashboard/subscription/sc-subscription.js:87
+#: components/components/sc-subscription-details2.js:65
+#: components/components/sc-subscription.js:104
+#: components/custom-elements/index.js:12015
+#: components/custom-elements/index.js:12176
+#: components/esm/sc-subscription-details_2.entry.js:58
+#: components/esm/sc-subscription.entry.js:86
+msgid "Your plan begins on"
+msgstr ""
+
+#: components/cjs/sc-subscription-details_2.cjs.entry.js:65
+#: components/cjs/sc-subscription.cjs.entry.js:93
+#: components/collection/components/controllers/dashboard/subscription-details/sc-subscription-details.js:74
+#: components/collection/components/controllers/dashboard/subscription/sc-subscription.js:95
+#: components/components/sc-subscription-details2.js:68
+#: components/components/sc-subscription.js:107
+#: components/custom-elements/index.js:12018
+#: components/custom-elements/index.js:12179
+#: components/esm/sc-subscription-details_2.entry.js:61
+#: components/esm/sc-subscription.entry.js:89
+msgid "Your plan renews on"
+msgstr ""
+
+#: components/cjs/sc-subscription-details_2.cjs.entry.js:71
+#: components/collection/components/controllers/dashboard/subscription-details/sc-subscription-details.js:86
+#: components/components/sc-subscription-details2.js:74
+#: components/custom-elements/index.js:12185
+#: components/esm/sc-subscription-details_2.entry.js:67
+msgid "Update Scheduled"
+msgstr ""
+
+#: components/cjs/sc-subscription-details_2.cjs.entry.js:118
+#: components/collection/components/ui/subscription-status-badge/sc-subscription-status-badge.js:42
+#: components/components/sc-subscription-status-badge2.js:47
+#: components/custom-elements/index.js:12399
+#: components/esm/sc-subscription-details_2.entry.js:114
+msgid "Incomplete"
+msgstr ""
+
+#: components/cjs/sc-subscription-details_2.cjs.entry.js:124
+#: components/collection/components/ui/subscription-status-badge/sc-subscription-status-badge.js:48
+#: components/components/sc-subscription-status-badge2.js:53
+#: components/custom-elements/index.js:12405
+#: components/esm/sc-subscription-details_2.entry.js:120
+msgid "Past Due"
+msgstr ""
+
+#: components/cjs/sc-subscription-details_2.cjs.entry.js:128
+#: components/collection/components/ui/subscription-status-badge/sc-subscription-status-badge.js:52
+#: components/components/sc-subscription-status-badge2.js:57
+#: components/custom-elements/index.js:12409
+#: components/esm/sc-subscription-details_2.entry.js:124
+msgid "Unpaid"
+msgstr ""
+
+#: components/cjs/sc-subscription-payment.cjs.entry.js:94
+#: components/collection/components/controllers/dashboard/subscription-payment/sc-subscription-payment.js:108
+#: components/components/sc-subscription-payment.js:107
+#: components/custom-elements/index.js:12278
+#: components/esm/sc-subscription-payment.entry.js:90
+msgid "Expires"
+msgstr ""
+
+#: components/cjs/sc-subscription-payment.cjs.entry.js:100
+#: components/collection/components/controllers/dashboard/subscription-payment/sc-subscription-payment.js:118
+#: components/components/sc-subscription-payment.js:113
+#: components/custom-elements/index.js:12284
+#: components/esm/sc-subscription-payment.entry.js:96
+msgid "Select a payment method"
+msgstr ""
+
+#: components/cjs/sc-subscription-renew.cjs.entry.js:67
+#: components/collection/components/controllers/dashboard/subscription-renew/sc-subscription-renew.js:59
+#: components/components/sc-subscription-renew.js:78
+#: components/custom-elements/index.js:12347
+#: components/esm/sc-subscription-renew.entry.js:63
+msgid "This plan will no longer be canceled. It will renew on"
+msgstr ""
+
+#: components/cjs/sc-subscription-renew.cjs.entry.js:73
+#: components/collection/components/controllers/dashboard/subscription-renew/sc-subscription-renew.js:72
+#: components/components/sc-subscription-renew.js:84
+#: components/custom-elements/index.js:12353
+#: components/esm/sc-subscription-renew.entry.js:69
+msgid "Renew your plan"
+msgstr ""
+
+#: components/cjs/sc-subscription-renew.cjs.entry.js:73
+#: components/cjs/sc-subscription.cjs.entry.js:116
+#: components/collection/components/controllers/dashboard/subscription-renew/sc-subscription-renew.js:75
+#: components/collection/components/controllers/dashboard/subscription/sc-subscription.js:132
+#: components/components/sc-subscription-renew.js:84
+#: components/components/sc-subscription.js:130
+#: components/custom-elements/index.js:12041
+#: components/custom-elements/index.js:12353
+#: components/esm/sc-subscription-renew.entry.js:69
+#: components/esm/sc-subscription.entry.js:112
+msgid "Renew Plan"
+msgstr ""
+
+#: components/cjs/sc-subscription-switch.cjs.entry.js:81
+#: components/collection/components/controllers/dashboard/subscription-switch/sc-subscription-switch.js:73
+#: components/components/sc-subscription-switch.js:93
+#: components/custom-elements/index.js:12488
+#: components/esm/sc-subscription-switch.entry.js:77
+msgid "Monthly"
+msgstr ""
+
+#: components/cjs/sc-subscription-switch.cjs.entry.js:81
+#: components/collection/components/controllers/dashboard/subscription-switch/sc-subscription-switch.js:74
+#: components/components/sc-subscription-switch.js:93
+#: components/custom-elements/index.js:12488
+#: components/esm/sc-subscription-switch.entry.js:77
+msgid "Weekly"
+msgstr ""
+
+#: components/cjs/sc-subscription-switch.cjs.entry.js:81
+#: components/collection/components/controllers/dashboard/subscription-switch/sc-subscription-switch.js:75
+#: components/components/sc-subscription-switch.js:93
+#: components/custom-elements/index.js:12488
+#: components/esm/sc-subscription-switch.entry.js:77
+msgid "Yearly"
+msgstr ""
+
+#: components/cjs/sc-subscription-switch.cjs.entry.js:98
+#: components/cjs/sc-subscription.cjs.entry.js:114
+#: components/collection/components/controllers/dashboard/subscription-switch/sc-subscription-switch.js:104
+#: components/collection/components/controllers/dashboard/subscription/sc-subscription.js:123
+#: components/components/sc-subscription-switch.js:110
+#: components/components/sc-subscription.js:128
+#: components/custom-elements/index.js:12039
+#: components/custom-elements/index.js:12505
+#: components/esm/sc-subscription-switch.entry.js:94
+#: components/esm/sc-subscription.entry.js:110
+msgid "Current Plan"
+msgstr ""
+
+#: components/cjs/sc-subscription-switch.cjs.entry.js:102
+#: components/collection/components/controllers/dashboard/subscription-switch/sc-subscription-switch.js:108
+#: components/components/sc-subscription-switch.js:114
+#: components/custom-elements/index.js:12509
+#: components/esm/sc-subscription-switch.entry.js:98
+msgid "Update Plan"
+msgstr ""
+
+#: components/cjs/sc-subscription.cjs.entry.js:25
+#: components/collection/components/controllers/dashboard/subscription/sc-subscription.js:14
+#: components/components/sc-subscription.js:39
+#: components/custom-elements/index.js:11950
+#: components/esm/sc-subscription.entry.js:21
+msgid "Are you sure you want to cancel the pending update to your plan?"
+msgstr ""
+
+#: components/cjs/sc-subscription.cjs.entry.js:98
+#: components/collection/components/controllers/dashboard/subscription/sc-subscription.js:102
+#: components/components/sc-subscription.js:112
+#: components/custom-elements/index.js:12023
+#: components/esm/sc-subscription.entry.js:94
+msgid "This subscription does not exist."
+msgstr ""
+
+#: components/cjs/sc-subscription.cjs.entry.js:114
+#: components/collection/components/controllers/dashboard/subscription/sc-subscription.js:127
+#: components/components/sc-subscription.js:128
+#: components/custom-elements/index.js:12039
+#: components/esm/sc-subscription.entry.js:110
+msgid "Cancel Scheduled Update"
+msgstr ""
+
+#: components/cjs/sc-subscriptions-list.cjs.entry.js:85
+#: components/collection/components/controllers/dashboard/subscriptions-list/sc-subscriptions-list.js:79
+#: components/components/sc-subscriptions-list.js:102
+#: components/custom-elements/index.js:12595
+#: components/esm/sc-subscriptions-list.entry.js:81
+msgid "You don't have any subscriptions."
+msgstr ""
+
+#: components/cjs/sc-upcoming-invoice.cjs.entry.js:131
+#: components/cjs/sc-upcoming-invoice.cjs.entry.js:133
+#: components/collection/components/controllers/dashboard/upcoming-invoice/sc-upcoming-invoice.js:120
+#: components/collection/components/controllers/dashboard/upcoming-invoice/sc-upcoming-invoice.js:128
+#: components/components/sc-upcoming-invoice.js:153
+#: components/components/sc-upcoming-invoice.js:155
+#: components/custom-elements/index.js:13321
+#: components/custom-elements/index.js:13323
+#: components/esm/sc-upcoming-invoice.entry.js:127
+#: components/esm/sc-upcoming-invoice.entry.js:129
+msgid "You'll be switched to this plan"
+msgstr ""
+
+#: components/cjs/sc-upcoming-invoice.cjs.entry.js:131
+#: components/collection/components/controllers/dashboard/upcoming-invoice/sc-upcoming-invoice.js:123
+#: components/components/sc-upcoming-invoice.js:153
+#: components/custom-elements/index.js:13321
+#: components/esm/sc-upcoming-invoice.entry.js:127
+msgid "at the end of your billing cycle on"
+msgstr ""
+
+#: components/cjs/sc-upcoming-invoice.cjs.entry.js:133
+#: components/collection/components/controllers/dashboard/upcoming-invoice/sc-upcoming-invoice.js:130
+#: components/components/sc-upcoming-invoice.js:155
+#: components/custom-elements/index.js:13323
+#: components/esm/sc-upcoming-invoice.entry.js:129
+msgid "immediately"
+msgstr ""
+
+#: components/cjs/sc-upcoming-invoice.cjs.entry.js:164
+#: components/collection/components/controllers/dashboard/upcoming-invoice/sc-upcoming-invoice.js:175
+#: components/components/sc-upcoming-invoice.js:186
+#: components/custom-elements/index.js:13354
+#: components/esm/sc-upcoming-invoice.entry.js:160
+msgid "Tax"
+msgstr ""
+
+#: components/cjs/sc-upcoming-invoice.cjs.entry.js:164
+#: components/collection/components/controllers/dashboard/upcoming-invoice/sc-upcoming-invoice.js:187
+#: components/components/sc-upcoming-invoice.js:186
+#: components/custom-elements/index.js:13354
+#: components/esm/sc-upcoming-invoice.entry.js:160
+msgid "Payment"
+msgstr ""
+
+#: components/cjs/sc-upcoming-invoice.cjs.entry.js:169
+#: components/collection/components/controllers/dashboard/upcoming-invoice/sc-upcoming-invoice.js:213
+#: components/components/sc-upcoming-invoice.js:191
+#: components/custom-elements/index.js:13359
+#: components/esm/sc-upcoming-invoice.entry.js:165
+msgid "New Plan"
+msgstr ""
+
+#: components/cjs/sc-wordpress-password-edit.cjs.entry.js:18
+#: components/cjs/sc-wordpress-user-edit.cjs.entry.js:18
+#: components/cjs/sc-wordpress-user.cjs.entry.js:24
+#: components/collection/components/controllers/dashboard/wordpress-password-edit/sc-wordpress-password-edit.js:6
+#: components/collection/components/controllers/dashboard/wordpress-user-edit/sc-wordpress-user-edit.js:6
+#: components/collection/components/controllers/dashboard/wordpress-user/sc-wordpress-user.js:33
+#: components/components/sc-wordpress-password-edit.js:25
+#: components/components/sc-wordpress-user-edit.js:27
+#: components/components/sc-wordpress-user.js:29
+#: components/custom-elements/index.js:13374
+#: components/custom-elements/index.js:13425
+#: components/custom-elements/index.js:13445
+#: components/esm/sc-wordpress-password-edit.entry.js:14
+#: components/esm/sc-wordpress-user-edit.entry.js:14
+#: components/esm/sc-wordpress-user.entry.js:20
+msgid "User not found."
+msgstr ""
+
+#: components/cjs/sc-wordpress-password-edit.cjs.entry.js:26
+#: components/collection/components/controllers/dashboard/wordpress-password-edit/sc-wordpress-password-edit.js:14
+#: components/components/sc-wordpress-password-edit.js:33
+#: components/custom-elements/index.js:13382
+#: components/esm/sc-wordpress-password-edit.entry.js:22
+msgid "Passwords do not match."
+msgstr ""
+
+#: components/cjs/sc-wordpress-password-edit.cjs.entry.js:48
+#: components/collection/components/controllers/dashboard/wordpress-password-edit/sc-wordpress-password-edit.js:38
+#: components/collection/components/controllers/dashboard/wordpress-password-edit/sc-wordpress-password-edit.js:45
+#: components/components/sc-wordpress-password-edit.js:55
+#: components/custom-elements/index.js:13404
+#: components/esm/sc-wordpress-password-edit.entry.js:44
+msgid "Update Password"
+msgstr ""
+
+#: components/cjs/sc-wordpress-password-edit.cjs.entry.js:48
+#: components/collection/components/controllers/dashboard/wordpress-password-edit/sc-wordpress-password-edit.js:42
+#: components/components/sc-wordpress-password-edit.js:55
+#: components/custom-elements/index.js:13404
+#: components/esm/sc-wordpress-password-edit.entry.js:44
+msgid "New Password"
+msgstr ""
+
+#: components/cjs/sc-wordpress-password-edit.cjs.entry.js:48
+#: components/collection/components/controllers/dashboard/wordpress-password-edit/sc-wordpress-password-edit.js:43
+#: components/components/sc-wordpress-password-edit.js:55
+#: components/custom-elements/index.js:13404
+#: components/esm/sc-wordpress-password-edit.entry.js:44
+msgid "Confirm New Password"
+msgstr ""
+
+#: components/cjs/sc-wordpress-user-edit.cjs.entry.js:48
+#: components/cjs/sc-wordpress-user.cjs.entry.js:27
+#: components/collection/components/controllers/dashboard/wordpress-user-edit/sc-wordpress-user-edit.js:38
+#: components/collection/components/controllers/dashboard/wordpress-user/sc-wordpress-user.js:38
+#: components/components/sc-wordpress-user-edit.js:57
+#: components/components/sc-wordpress-user.js:32
+#: components/custom-elements/index.js:13428
+#: components/custom-elements/index.js:13475
+#: components/esm/sc-wordpress-user-edit.entry.js:44
+#: components/esm/sc-wordpress-user.entry.js:23
+msgid "Account Details"
+msgstr ""
+
+#: components/cjs/sc-wordpress-user.cjs.entry.js:21
+#: components/collection/components/controllers/dashboard/wordpress-user/sc-wordpress-user.js:18
+#: components/components/sc-wordpress-user.js:26
+#: components/custom-elements/index.js:13422
+#: components/esm/sc-wordpress-user.entry.js:17
+msgid "Account Email"
+msgstr ""
+
+#: components/cjs/tax-9f2713fa.js:7
+#: components/collection/functions/tax.js:4
+#: components/components/tax.js:5
+#: components/custom-elements/index.js:4634
+#: components/esm/tax-3845d933.js:5
+msgid "GST Number"
+msgstr ""
+
+#: components/cjs/tax-9f2713fa.js:8
+#: components/collection/functions/tax.js:5
+#: components/components/tax.js:6
+#: components/custom-elements/index.js:4635
+#: components/esm/tax-3845d933.js:6
+msgid "CA GST"
+msgstr ""
+
+#: components/cjs/tax-9f2713fa.js:11
+#: components/collection/functions/tax.js:8
+#: components/components/tax.js:9
+#: components/custom-elements/index.js:4638
+#: components/esm/tax-3845d933.js:9
+msgid "ABN Number"
+msgstr ""
+
+#: components/cjs/tax-9f2713fa.js:12
+#: components/collection/functions/tax.js:9
+#: components/components/tax.js:10
+#: components/custom-elements/index.js:4639
+#: components/esm/tax-3845d933.js:10
+msgid "AU ABN"
+msgstr ""
+
+#: components/cjs/tax-9f2713fa.js:15
+#: components/cjs/tax-9f2713fa.js:19
+#: components/collection/functions/tax.js:12
+#: components/collection/functions/tax.js:16
+#: components/components/tax.js:13
+#: components/components/tax.js:17
+#: components/custom-elements/index.js:4642
+#: components/custom-elements/index.js:4646
+#: components/esm/tax-3845d933.js:13
+#: components/esm/tax-3845d933.js:17
+msgid "VAT Number"
+msgstr ""
+
+#: components/cjs/tax-9f2713fa.js:16
+#: components/collection/functions/tax.js:13
+#: components/components/tax.js:14
+#: components/custom-elements/index.js:4643
+#: components/esm/tax-3845d933.js:14
+msgid "UK VAT"
+msgstr ""
+
+#: components/cjs/tax-9f2713fa.js:20
+#: components/collection/functions/tax.js:17
+#: components/components/tax.js:18
+#: components/custom-elements/index.js:4647
+#: components/esm/tax-3845d933.js:18
+msgid "EU VAT"
+msgstr ""
+
+#: components/cjs/tax-9f2713fa.js:23
+#: components/collection/functions/tax.js:20
+#: components/components/tax.js:21
+#: components/custom-elements/index.js:4650
+#: components/esm/tax-3845d933.js:21
+msgid "Tax ID"
+msgstr ""

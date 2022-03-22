@@ -5,7 +5,7 @@ import {
 	useBlockProps,
 } from '@wordpress/block-editor';
 import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
-import { CeDashboardModule } from '@checkout-engine/components-react';
+import { ScDashboardModule } from '@surecart/components-react';
 import { Fragment } from 'react';
 
 export default ({ attributes, setAttributes }) => {
@@ -15,10 +15,10 @@ export default ({ attributes, setAttributes }) => {
 	return (
 		<Fragment>
 			<InspectorControls>
-				<PanelBody title={__('Attributes', 'checkout_engine')}>
+				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<TextControl
-							label={__('Title', 'checkout_engine')}
+							label={__('Title', 'surecart')}
 							value={title}
 							onChange={(title) => setAttributes({ title })}
 						/>
@@ -26,7 +26,7 @@ export default ({ attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<CeDashboardModule {...blockProps}>
+			<ScDashboardModule {...blockProps}>
 				<RichText
 					aria-label={__('Title')}
 					placeholder={__('Add A Title…')}
@@ -37,27 +37,25 @@ export default ({ attributes, setAttributes }) => {
 					allowedFormats={['core/bold', 'core/italic']}
 				/>
 
-				<ce-button type="link" slot="end">
-					<ce-icon name="edit-3" slot="prefix"></ce-icon>
-					{__('Update', 'checkout_engine')}
-				</ce-button>
+				<sc-button type="link" slot="end">
+					<sc-icon name="edit-3" slot="prefix"></sc-icon>
+					{__('Update', 'surecart')}
+				</sc-button>
 
-				<ce-card no-padding>
-					<ce-stacked-list>
-						<ce-stacked-list-row style={{ '--columns': '3' }}>
-							<div>{__('Billing Name', 'checkout_engine')}</div>
+				<sc-card no-padding>
+					<sc-stacked-list>
+						<sc-stacked-list-row style={{ '--columns': '3' }}>
+							<div>{__('Billing Name', 'surecart')}</div>
 							<div>Jane Doe</div>
 							<div></div>
-						</ce-stacked-list-row>
-						<ce-stacked-list-row style={{ '--columns': '3' }}>
-							<div>{__('Billing Email', 'checkout_engine')}</div>
+						</sc-stacked-list-row>
+						<sc-stacked-list-row style={{ '--columns': '3' }}>
+							<div>{__('Billing Email', 'surecart')}</div>
 							<div>customer@email.com</div>
 							<div></div>
-						</ce-stacked-list-row>
-						<ce-stacked-list-row style={{ '--columns': '3' }}>
-							<div>
-								{__('Shipping Address', 'checkout_engine')}
-							</div>
+						</sc-stacked-list-row>
+						<sc-stacked-list-row style={{ '--columns': '3' }}>
+							<div>{__('Shipping Address', 'surecart')}</div>
 							<div>
 								3606 Neville Street
 								<br />
@@ -66,11 +64,9 @@ export default ({ attributes, setAttributes }) => {
 								USA
 							</div>
 							<div></div>
-						</ce-stacked-list-row>
-						<ce-stacked-list-row style={{ '--columns': '3' }}>
-							<div>
-								{__('Billing Address', 'checkout_engine')}
-							</div>
+						</sc-stacked-list-row>
+						<sc-stacked-list-row style={{ '--columns': '3' }}>
+							<div>{__('Billing Address', 'surecart')}</div>
 							<div>
 								3606 Neville Street
 								<br />
@@ -79,15 +75,15 @@ export default ({ attributes, setAttributes }) => {
 								USA
 							</div>
 							<div></div>
-						</ce-stacked-list-row>
-						<ce-stacked-list-row style={{ '--columns': '3' }}>
-							<div>{__('Phone', 'checkout_engine')}</div>
+						</sc-stacked-list-row>
+						<sc-stacked-list-row style={{ '--columns': '3' }}>
+							<div>{__('Phone', 'surecart')}</div>
 							<div>555-867-5309</div>
 							<div></div>
-						</ce-stacked-list-row>
-					</ce-stacked-list>
-				</ce-card>
-			</CeDashboardModule>
+						</sc-stacked-list-row>
+					</sc-stacked-list>
+				</sc-card>
+			</ScDashboardModule>
 		</Fragment>
 	);
 };

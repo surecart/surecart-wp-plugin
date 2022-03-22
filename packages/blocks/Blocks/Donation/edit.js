@@ -21,11 +21,11 @@ import { createBlocksFromInnerBlocksTemplate } from '@wordpress/blocks';
 import { select, useDispatch, useSelect } from '@wordpress/data';
 import PriceSelector from '@scripts/blocks/components/PriceSelector';
 import {
-	CeButton,
-	CeDonationChoices,
-	CeForm,
-	CePriceInput,
-} from '@checkout-engine/components-react';
+	ScButton,
+	ScDonationChoices,
+	ScForm,
+	ScPriceInput,
+} from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
 import PriceInfo from '../PriceChoice/components/PriceInfo';
 
@@ -40,15 +40,15 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 		: __experimentalUseInnerBlocksProps;
 
 	const [template, setTemplate] = useState([
-		['checkout-engine/donation-amount', { amount: 100, currency }],
-		['checkout-engine/donation-amount', { amount: 200, currency }],
-		['checkout-engine/donation-amount', { amount: 500, currency }],
-		['checkout-engine/donation-amount', { amount: 1000, currency }],
-		['checkout-engine/donation-amount', { amount: 2000, currency }],
-		['checkout-engine/donation-amount', { amount: 5000, currency }],
-		['checkout-engine/donation-amount', { amount: 10000, currency }],
-		['checkout-engine/donation-amount', { amount: 20000, currency }],
-		['checkout-engine/donation-amount', { amount: 50000, currency }],
+		['surecart/donation-amount', { amount: 100, currency }],
+		['surecart/donation-amount', { amount: 200, currency }],
+		['surecart/donation-amount', { amount: 500, currency }],
+		['surecart/donation-amount', { amount: 1000, currency }],
+		['surecart/donation-amount', { amount: 2000, currency }],
+		['surecart/donation-amount', { amount: 5000, currency }],
+		['surecart/donation-amount', { amount: 10000, currency }],
+		['surecart/donation-amount', { amount: 20000, currency }],
+		['surecart/donation-amount', { amount: 50000, currency }],
 	]);
 
 	const price = useSelect(
@@ -64,7 +64,7 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 			display: 'grid',
 		},
 		css: css`
-			ce-choice.wp-block {
+			sc-choice.wp-block {
 				margin: 0;
 			}
 		`,
@@ -73,7 +73,7 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 	const innerBlocksProps = useInnerBlocksProps(
 		{},
 		{
-			allowedBlocks: ['checkout-engine/donation-amount'],
+			allowedBlocks: ['surecart/donation-amount'],
 			renderAppender: false,
 			orientation: 'horizontal',
 			template,
@@ -86,7 +86,7 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 
 		insertBlocks(
 			createBlocksFromInnerBlocksTemplate([
-				['checkout-engine/donation-amount', { amount, currency }],
+				['surecart/donation-amount', { amount, currency }],
 			]),
 			999999,
 			clientId
@@ -134,10 +134,10 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 	return (
 		<Fragment>
 			<InspectorControls>
-				<PanelBody title={__('Attributes', 'checkout-engine')}>
+				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<TextControl
-							label={__('Label', 'checkout-engine')}
+							label={__('Label', 'surecart')}
 							value={label}
 							onChange={(label) => setAttributes({ label })}
 						/>
@@ -146,7 +146,7 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 						<ToggleControl
 							label={__(
 								'Allow custom amount to be entered',
-								'checkout-engine'
+								'surecart'
 							)}
 							checked={custom_amount}
 							onChange={(custom_amount) =>
@@ -155,46 +155,43 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 						/>
 					</PanelRow>
 					<PanelRow>
-						<CePriceInput
-							label={__('Default Amount', 'checkout_engine')}
+						<ScPriceInput
+							label={__('Default Amount', 'surecart')}
 							currency={currency}
 							value={default_amount}
-							onCeChange={(e) =>
+							onScChange={(e) =>
 								setAttributes({
 									default_amount: e.target.value,
 								})
 							}
-						></CePriceInput>
+						></ScPriceInput>
 					</PanelRow>
 				</PanelBody>
-				<PanelBody title={__('Product Info', 'checkout-engine')}>
+				<PanelBody title={__('Product Info', 'surecart')}>
 					<PriceInfo price_id={price_id} />
 				</PanelBody>
 			</InspectorControls>
 
 			<div {...blockProps}>
-				<CeDonationChoices
+				<ScDonationChoices
 					label={label}
 					priceId={price_id}
 					defaultAmount={default_amount}
 				>
 					<div {...innerBlocksProps}></div>
 					{custom_amount && (
-						<ce-choice
+						<sc-choice
 							show-control="false"
 							size="small"
 							value="ad_hoc"
 						>
-							{__('Other', 'checkout_engine')}
-						</ce-choice>
+							{__('Other', 'surecart')}
+						</sc-choice>
 					)}
-				</CeDonationChoices>
+				</ScDonationChoices>
 
 				{isSelected && (
-					<Tooltip
-						text={__('Add Amount', 'checkout_engine')}
-						delay={0}
-					>
+					<Tooltip text={__('Add Amount', 'surecart')} delay={0}>
 						<div
 							onClick={() => {
 								setShowModal(true);
@@ -220,26 +217,23 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 								}
 							`}
 						>
-							<ce-icon name="plus"></ce-icon>
+							<sc-icon name="plus"></sc-icon>
 						</div>
 					</Tooltip>
 				)}
 
 				{showModal && (
 					<Modal
-						title={__(
-							'Add Suggested Donation Amount',
-							'checkout_engine'
-						)}
+						title={__('Add Suggested Donation Amount', 'surecart')}
 						css={css`
 							max-width: 500px !important;
 						`}
 						onRequestClose={() => setShowModal(false)}
 						shouldCloseOnClickOutside={false}
 					>
-						<CeForm onCeSubmit={onNewAmount}>
-							<CePriceInput
-								label={__('Amount', 'checkout_engine')}
+						<ScForm onScSubmit={onNewAmount}>
+							<ScPriceInput
+								label={__('Amount', 'surecart')}
 								required
 								currency={currency}
 								ref={amountInput}
@@ -247,10 +241,10 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 								max={price?.ad_hoc_max_amount}
 								name="amount"
 							/>
-							<CeButton type="primary" submit>
-								{__('Add  Amount', 'checkout_engine')}
-							</CeButton>
-						</CeForm>
+							<ScButton type="primary" submit>
+								{__('Add  Amount', 'surecart')}
+							</ScButton>
+						</ScForm>
 					</Modal>
 				)}
 			</div>

@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-tab-panel renders 1`] = `
+<sc-tab-panel id="tab-panel-1" style="display: none;">
+  <mock:shadow-root>
+    <div aria-hidden="true" class="tab-panel" part="base" role="tabpanel">
+      <slot></slot>
+    </div>
+  </mock:shadow-root>
+</sc-tab-panel>
+`;

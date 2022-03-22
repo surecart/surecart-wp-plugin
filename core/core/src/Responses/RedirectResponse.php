@@ -1,17 +1,17 @@
 <?php
 /**
- * @package   CheckoutEngineCore
+ * @package   SureCartCore
  * @author    Andre Gagnon <me@andregagnon.me>
  * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://checkout_engine.com/
+ * @link      https://surecart.com/
  */
 
-namespace CheckoutEngineCore\Responses;
+namespace SureCartCore\Responses;
 
 use GuzzleHttp\Psr7\Response as Psr7Response;
 use Psr\Http\Message\ResponseInterface;
-use CheckoutEngineCore\Requests\RequestInterface;
+use SureCartCore\Requests\RequestInterface;
 
 /**
  * A collection of tools for the creation of responses

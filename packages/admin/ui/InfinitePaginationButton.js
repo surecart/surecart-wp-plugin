@@ -7,9 +7,9 @@ export default ({ page, totalPages, loading, button_text, onClick }) => {
 
 	return (
 		hasButton() && (
-			<ce-button onClick={onClick} loading={loading}>
-				{button_text || __('Load More', 'checkout_engine')}
-			</ce-button>
+			<sc-button onClick={onClick} loading={loading}>
+				{button_text || __('Load More', 'surecart')}
+			</sc-button>
 		)
 	);
 };

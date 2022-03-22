@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-coupon-form handles applied coupons 1`] = `
+<sc-coupon-form>
+  <mock:shadow-root>
+    <sc-line-item>
+      <span slot="description">
+        <div>
+          Discount
+        </div>
+        <sc-tag class="coupon-tag" clearable="" type="success">
+          TESTCODE
+        </sc-tag>
+      </span>
+      <span class="coupon-human-discount" slot="price-description">
+        (25% off)
+      </span>
+      <span slot="price">
+        <sc-format-number currency="usd" type="currency" value="725"></sc-format-number>
+      </span>
+    </sc-line-item>
+  </mock:shadow-root>
+</sc-coupon-form>
+`;
+
+exports[`sc-coupon-form renders 1`] = `
+<sc-coupon-form>
+  <mock:shadow-root>
+    <div class="coupon-form">
+      <div class="trigger">
+        <slot name="label"></slot>
+      </div>
+      <div class="form">
+        <sc-input clearable=""></sc-input>
+        <sc-button full="" type="primary">
+          <slot></slot>
+        </sc-button>
+      </div>
+    </div>
+  </mock:shadow-root>
+</sc-coupon-form>
+`;

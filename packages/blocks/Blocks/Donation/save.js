@@ -5,7 +5,7 @@ export default ({ attributes }) => {
 	const { price_id, label, currency, custom_amount, default_amount } =
 		attributes;
 	return (
-		<ce-donation-choices
+		<sc-donation-choices
 			price-id={price_id}
 			default-amount={default_amount}
 			label={label}
@@ -13,10 +13,10 @@ export default ({ attributes }) => {
 		>
 			<InnerBlocks.Content />
 			{custom_amount && (
-				<ce-choice show-control="false" size="small" value="ad_hoc">
-					{__('Other', 'checkout_engine')}
-				</ce-choice>
+				<sc-choice show-control="false" size="small" value="ad_hoc">
+					{__('Other', 'surecart')}
+				</sc-choice>
 			)}
-		</ce-donation-choices>
+		</sc-donation-choices>
 	);
 };

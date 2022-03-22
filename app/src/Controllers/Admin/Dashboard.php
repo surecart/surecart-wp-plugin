@@ -1,9 +1,9 @@
 <?php
 
-namespace CheckoutEngine\Controllers\Admin;
+namespace SureCart\Controllers\Admin;
 
 class Dashboard {
 	public function show( $request, $view ) {
-		return \CheckoutEngine::view( 'admin.dashboard' );
+		return \SureCart::view( 'admin.dashboard' );
 	}
 }

@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngineBlocks\Blocks;
+namespace SureCartBlocks\Blocks;
 
-use CheckoutEngineCore\Application\Application;
+use SureCartCore\Application\Application;
 
 /**
  * Provide general block-related functionality.
@@ -32,7 +32,7 @@ class BlockService {
 	 * @return string View html output.
 	 */
 	public function render( $views, $context = [] ) {
-		return apply_filters( 'checkout_engine_block_output', $this->app->views()->make( $views )->with( $context )->toString() );
+		return apply_filters( 'surecart_block_output', $this->app->views()->make( $views )->with( $context )->toString() );
 	}
 
 	/**

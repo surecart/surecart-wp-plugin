@@ -1,10 +1,10 @@
 <?php
-namespace CheckoutEngineBlocks\Controllers;
+namespace SureCartBlocks\Controllers;
 
-use CheckoutEngine\Models\Component;
-use CheckoutEngine\Models\Subscription;
-use CheckoutEngine\Models\SubscriptionProtocol;
-use CheckoutEngine\Models\User;
+use SureCart\Models\Component;
+use SureCart\Models\Subscription;
+use SureCart\Models\SubscriptionProtocol;
+use SureCart\Models\User;
 
 /**
  * The subscription controller.
@@ -18,7 +18,7 @@ class SubscriptionController extends BaseController {
 	 */
 	public function preview( $attributes = [] ) {
 		return wp_kses_post(
-			Component::tag( 'ce-subscriptions-list' )
+			Component::tag( 'sc-subscriptions-list' )
 			->id( 'customer-subscriptions-preview' )
 			->with(
 				[
@@ -28,7 +28,7 @@ class SubscriptionController extends BaseController {
 							'model'  => 'subscription',
 							'action' => 'index',
 						],
-						\CheckoutEngine::pages()->url( 'dashboard' )
+						\SureCart::pages()->url( 'dashboard' )
 					),
 					'query'   => [
 						'customer_ids' => array_values( User::current()->customerIds() ),
@@ -47,11 +47,11 @@ class SubscriptionController extends BaseController {
 	 * @return function
 	 */
 	public function index() {
-		\CheckoutEngine::assets()->addComponentData(
-			'ce-subscriptions-list',
+		\SureCart::assets()->addComponentData(
+			'sc-subscriptions-list',
 			'#customer-subscriptions-index',
 			[
-				'heading' => $attributes['title'] ?? __( 'Subscriptions', 'checkout-engine' ),
+				'heading' => $attributes['title'] ?? __( 'Subscriptions', 'surecart' ),
 				'query'   => [
 					'customer_ids' => array_values( User::current()->customerIds() ),
 					'status'       => [ 'active', 'trialing', 'canceled' ],
@@ -60,7 +60,7 @@ class SubscriptionController extends BaseController {
 				],
 			]
 		);
-		return '<ce-subscriptions-list id="customer-subscriptions-index"></ce-subscriptions-list>';
+		return '<sc-subscriptions-list id="customer-subscriptions-index"></sc-subscriptions-list>';
 	}
 
 	/**
@@ -87,23 +87,23 @@ class SubscriptionController extends BaseController {
 
 		ob_start(); ?>
 
-		<ce-spacing style="--spacing: var(--ce-spacing-large)">
-			<ce-breadcrumbs>
-				<ce-breadcrumb href="<?php echo esc_url( add_query_arg( [ 'tab' => $this->getTab() ], \CheckoutEngine::pages()->url( 'dashboard' ) ) ); ?>">
-					<?php esc_html_e( 'Dashboard', 'checkout_engine' ); ?>
-				</ce-breadcrumb>
-				<ce-breadcrumb>
-					<?php esc_html_e( 'Subscription', 'checkout_engine' ); ?>
-				</ce-breadcrumb>
-			</ce-breadcrumbs>
+		<sc-spacing style="--spacing: var(--sc-spacing-large)">
+			<sc-breadcrumbs>
+				<sc-breadcrumb href="<?php echo esc_url( add_query_arg( [ 'tab' => $this->getTab() ], \SureCart::pages()->url( 'dashboard' ) ) ); ?>">
+					<?php esc_html_e( 'Dashboard', 'surecart' ); ?>
+				</sc-breadcrumb>
+				<sc-breadcrumb>
+					<?php esc_html_e( 'Subscription', 'surecart' ); ?>
+				</sc-breadcrumb>
+			</sc-breadcrumbs>
 
 		<?php
 			echo wp_kses_post(
-				Component::tag( 'ce-subscription' )
+				Component::tag( 'sc-subscription' )
 				->id( 'customer-subscription-edit' )
 				->with(
 					[
-						'heading'      => __( 'Current Plan', 'checkout-engine' ),
+						'heading'      => __( 'Current Plan', 'surecart' ),
 						'subscription' => $subscription,
 					]
 				)->render()
@@ -115,11 +115,11 @@ class SubscriptionController extends BaseController {
 		&& ! $subscription->cancel_at_period_end && 'canceled' !== $subscription->status
 		&& $subscription->current_period_end_at ) {
 			echo wp_kses_post(
-				Component::tag( 'ce-subscription-switch' )
+				Component::tag( 'sc-subscription-switch' )
 				->id( 'customer-subscription-switch' )
 				->with(
 					[
-						'heading'        => __( 'Update Plan', 'checkout-engine' ),
+						'heading'        => __( 'Update Plan', 'surecart' ),
 						'productGroupId' => $subscription->price->product->product_group,
 						'subscription'   => $subscription,
 					]
@@ -127,7 +127,7 @@ class SubscriptionController extends BaseController {
 			);
 		}
 		?>
-		</ce-spacing>
+		</sc-spacing>
 
 		<?php
 		return ob_get_clean();
@@ -137,20 +137,20 @@ class SubscriptionController extends BaseController {
 	 * Get the terms text.
 	 */
 	public function getTermsText() {
-		$account     = \CheckoutEngine::account();
+		$account     = \SureCart::account();
 		$privacy_url = $account->portal_protocol->privacy_url ?? \get_privacy_policy_url();
 		$terms_url   = $account->portal_protocol->terms_url ?? '';
 
 		if ( ! empty( $privacy_url ) && ! empty( $terms_url ) ) {
-			return sprintf( __( 'By updating or canceling your plan, you agree to the <a href="%1$1s" target="_blank">%2$2s</a> and <a href="%3$3s" target="_blank">%4$4s</a>', 'checkout_engine' ), esc_url( $terms_url ), __( 'Terms', 'checkout_engine' ), esc_url( $privacy_url ), __( 'Privacy Policy', 'checkout-engine' ) );
+			return sprintf( __( 'By updating or canceling your plan, you agree to the <a href="%1$1s" target="_blank">%2$2s</a> and <a href="%3$3s" target="_blank">%4$4s</a>', 'surecart' ), esc_url( $terms_url ), __( 'Terms', 'surecart' ), esc_url( $privacy_url ), __( 'Privacy Policy', 'surecart' ) );
 		}
 
 		if ( ! empty( $privacy_url ) ) {
-			return sprintf( __( 'By updating or canceling your plan, you agree to the <a href="%1$1s" target="_blank">%2$2s</a>', 'checkout_engine' ), esc_url( $privacy_url ), __( 'Privacy Policy', 'checkout-engine' ) );
+			return sprintf( __( 'By updating or canceling your plan, you agree to the <a href="%1$1s" target="_blank">%2$2s</a>', 'surecart' ), esc_url( $privacy_url ), __( 'Privacy Policy', 'surecart' ) );
 		}
 
 		if ( ! empty( $terms_url ) ) {
-			return sprintf( __( 'By updating or canceling your plan, you agree to the <a href="%1$1s" target="_blank">%2$2s</a>', 'checkout_engine' ), esc_url( $terms_url ), __( 'Terms', 'checkout-engine' ) );
+			return sprintf( __( 'By updating or canceling your plan, you agree to the <a href="%1$1s" target="_blank">%2$2s</a>', 'surecart' ), esc_url( $terms_url ), __( 'Terms', 'surecart' ) );
 		}
 
 		return '';
@@ -162,15 +162,15 @@ class SubscriptionController extends BaseController {
 	 * @return function
 	 */
 	public function confirm() {
-		$back = add_query_arg( [ 'tab' => $this->getTab() ], \CheckoutEngine::pages()->url( 'dashboard' ) );
+		$back = add_query_arg( [ 'tab' => $this->getTab() ], \SureCart::pages()->url( 'dashboard' ) );
 		ob_start();
 		?>
-	<ce-spacing style="--spacing: var(--ce-spacing-xx-large)">
-			<ce-breadcrumbs>
-				<ce-breadcrumb href="<?php echo esc_url( add_query_arg( [ 'tab' => $this->getTab() ], \CheckoutEngine::pages()->url( 'dashboard' ) ) ); ?>">
-					<?php esc_html_e( 'Dashboard', 'checkout_engine' ); ?>
-				</ce-breadcrumb>
-				<ce-breadcrumb href="
+	<sc-spacing style="--spacing: var(--sc-spacing-xx-large)">
+			<sc-breadcrumbs>
+				<sc-breadcrumb href="<?php echo esc_url( add_query_arg( [ 'tab' => $this->getTab() ], \SureCart::pages()->url( 'dashboard' ) ) ); ?>">
+					<?php esc_html_e( 'Dashboard', 'surecart' ); ?>
+				</sc-breadcrumb>
+				<sc-breadcrumb href="
 				<?php
 				echo esc_url(
 					add_query_arg(
@@ -180,27 +180,27 @@ class SubscriptionController extends BaseController {
 							'model'  => 'subscription',
 							'id'     => $this->getId(),
 						],
-						\CheckoutEngine::pages()->url( 'dashboard' )
+						\SureCart::pages()->url( 'dashboard' )
 					)
 				);
 				?>
 				">
-					<?php esc_html_e( 'Subscription', 'checkout_engine' ); ?>
-				</ce-breadcrumb>
-				<ce-breadcrumb>
-					<?php esc_html_e( 'Confirm', 'checkout_engine' ); ?>
-				</ce-breadcrumb>
-			</ce-breadcrumbs>
+					<?php esc_html_e( 'Subscription', 'surecart' ); ?>
+				</sc-breadcrumb>
+				<sc-breadcrumb>
+					<?php esc_html_e( 'Confirm', 'surecart' ); ?>
+				</sc-breadcrumb>
+			</sc-breadcrumbs>
 
 			<?php
 			$terms = $this->getTermsText();
 
 			echo wp_kses_post(
-				Component::tag( 'ce-upcoming-invoice' )
+				Component::tag( 'sc-upcoming-invoice' )
 				->id( 'customer-upcoming-invoice' )
 				->with(
 					[
-						'heading'        => __( 'New Plan', 'checkout-engine' ),
+						'heading'        => __( 'New Plan', 'surecart' ),
 						'subscriptionId' => $this->getId(),
 						'priceId'        => $this->getParam( 'price_id' ),
 						'successUrl'     => esc_url( $back ),
@@ -211,7 +211,7 @@ class SubscriptionController extends BaseController {
 			?>
 
 
-	</ce-spacing>
+	</sc-spacing>
 
 		<?php
 		return ob_get_clean();
@@ -224,7 +224,7 @@ class SubscriptionController extends BaseController {
 	 * @return function
 	 */
 	public function cancel() {
-		$back_url              = add_query_arg( [ 'tab' => $this->getTab() ], \CheckoutEngine::pages()->url( 'dashboard' ) );
+		$back_url              = add_query_arg( [ 'tab' => $this->getTab() ], \SureCart::pages()->url( 'dashboard' ) );
 		$edit_subscription_url = add_query_arg(
 			[
 				'tab'    => $this->getTab(),
@@ -232,26 +232,26 @@ class SubscriptionController extends BaseController {
 				'model'  => 'subscription',
 				'id'     => $this->getId(),
 			],
-			\CheckoutEngine::pages()->url( 'dashboard' )
+			\SureCart::pages()->url( 'dashboard' )
 		);
 		ob_start();
 		?>
-		<ce-spacing style="--spacing: var(--ce-spacing-xx-large)">
-			<ce-breadcrumbs>
-				<ce-breadcrumb href="<?php echo esc_url( $back_url ); ?>">
-					<?php esc_html_e( 'Dashboard', 'checkout_engine' ); ?>
-				</ce-breadcrumb>
-				<ce-breadcrumb href="<?php echo esc_url( $edit_subscription_url ); ?>" >
-					<?php esc_html_e( 'Subscription', 'checkout_engine' ); ?>
-				</ce-breadcrumb>
-				<ce-breadcrumb>
-					<?php esc_html_e( 'Cancel', 'checkout_engine' ); ?>
-				</ce-breadcrumb>
-			</ce-breadcrumbs>
+		<sc-spacing style="--spacing: var(--sc-spacing-xx-large)">
+			<sc-breadcrumbs>
+				<sc-breadcrumb href="<?php echo esc_url( $back_url ); ?>">
+					<?php esc_html_e( 'Dashboard', 'surecart' ); ?>
+				</sc-breadcrumb>
+				<sc-breadcrumb href="<?php echo esc_url( $edit_subscription_url ); ?>" >
+					<?php esc_html_e( 'Subscription', 'surecart' ); ?>
+				</sc-breadcrumb>
+				<sc-breadcrumb>
+					<?php esc_html_e( 'Cancel', 'surecart' ); ?>
+				</sc-breadcrumb>
+			</sc-breadcrumbs>
 
 			<?php
 			echo wp_kses_post(
-				Component::tag( 'ce-subscription-cancel' )
+				Component::tag( 'sc-subscription-cancel' )
 				->id( 'customer-subscription-cancel' )
 				->with(
 					[
@@ -263,7 +263,7 @@ class SubscriptionController extends BaseController {
 			);
 			?>
 
-		</ce-spacing>
+		</sc-spacing>
 		<?php
 		return ob_get_clean();
 	}
@@ -274,7 +274,7 @@ class SubscriptionController extends BaseController {
 	 * @return function
 	 */
 	public function renew() {
-		$back_url              = add_query_arg( [ 'tab' => $this->getTab() ], \CheckoutEngine::pages()->url( 'dashboard' ) );
+		$back_url              = add_query_arg( [ 'tab' => $this->getTab() ], \SureCart::pages()->url( 'dashboard' ) );
 		$edit_subscription_url = add_query_arg(
 			[
 				'tab'    => $this->getTab(),
@@ -282,26 +282,26 @@ class SubscriptionController extends BaseController {
 				'model'  => 'subscription',
 				'id'     => $this->getId(),
 			],
-			\CheckoutEngine::pages()->url( 'dashboard' )
+			\SureCart::pages()->url( 'dashboard' )
 		);
 		ob_start();
 		?>
-		<ce-spacing style="--spacing: var(--ce-spacing-xx-large)">
-			<ce-breadcrumbs>
-				<ce-breadcrumb href="<?php echo esc_url( $back_url ); ?>">
-					<?php esc_html_e( 'Dashboard', 'checkout_engine' ); ?>
-				</ce-breadcrumb>
-				<ce-breadcrumb href="<?php echo esc_url( $edit_subscription_url ); ?>" >
-					<?php esc_html_e( 'Subscription', 'checkout_engine' ); ?>
-				</ce-breadcrumb>
-				<ce-breadcrumb>
-					<?php esc_html_e( 'Renew', 'checkout_engine' ); ?>
-				</ce-breadcrumb>
-			</ce-breadcrumbs>
+		<sc-spacing style="--spacing: var(--sc-spacing-xx-large)">
+			<sc-breadcrumbs>
+				<sc-breadcrumb href="<?php echo esc_url( $back_url ); ?>">
+					<?php esc_html_e( 'Dashboard', 'surecart' ); ?>
+				</sc-breadcrumb>
+				<sc-breadcrumb href="<?php echo esc_url( $edit_subscription_url ); ?>" >
+					<?php esc_html_e( 'Subscription', 'surecart' ); ?>
+				</sc-breadcrumb>
+				<sc-breadcrumb>
+					<?php esc_html_e( 'Renew', 'surecart' ); ?>
+				</sc-breadcrumb>
+			</sc-breadcrumbs>
 
 			<?php
 			echo wp_kses_post(
-				Component::tag( 'ce-subscription-renew' )
+				Component::tag( 'sc-subscription-renew' )
 				->id( 'customer-subscription-renew' )
 				->with(
 					[
@@ -313,7 +313,7 @@ class SubscriptionController extends BaseController {
 			);
 			?>
 
-		</ce-spacing>
+		</sc-spacing>
 		<?php
 		return ob_get_clean();
 	}
@@ -324,7 +324,7 @@ class SubscriptionController extends BaseController {
 	 * @return function
 	 */
 	public function payment() {
-		$back_url = add_query_arg( [ 'tab' => $this->getTab() ], \CheckoutEngine::pages()->url( 'dashboard' ) );
+		$back_url = add_query_arg( [ 'tab' => $this->getTab() ], \SureCart::pages()->url( 'dashboard' ) );
 
 		$edit_subscription_url = add_query_arg(
 			[
@@ -333,7 +333,7 @@ class SubscriptionController extends BaseController {
 				'model'  => 'subscription',
 				'id'     => $this->getId(),
 			],
-			\CheckoutEngine::pages()->url( 'dashboard' )
+			\SureCart::pages()->url( 'dashboard' )
 		);
 
 		$confirm_subscription_url = add_query_arg(
@@ -344,32 +344,32 @@ class SubscriptionController extends BaseController {
 				'id'       => $this->getId(),
 				'price_id' => $this->getParam( 'price_id' ),
 			],
-			\CheckoutEngine::pages()->url( 'dashboard' )
+			\SureCart::pages()->url( 'dashboard' )
 		);
 
 		$subscription = Subscription::find( $this->getId() );
 		ob_start();
 		?>
 
-		<ce-spacing style="--spacing: var(--ce-spacing-xx-large)">
-			<ce-breadcrumbs>
-				<ce-breadcrumb href="<?php echo esc_url( $back_url ); ?>">
-					<?php esc_html_e( 'Dashboard', 'checkout_engine' ); ?>
-				</ce-breadcrumb>
-				<ce-breadcrumb href="<?php echo esc_url( $edit_subscription_url ); ?>">
-					<?php esc_html_e( 'Subscription', 'checkout_engine' ); ?>
-				</ce-breadcrumb>
-				<ce-breadcrumb href="<?php echo esc_url( $confirm_subscription_url ); ?>">
-					<?php esc_html_e( 'Confirm', 'checkout_engine' ); ?>
-				</ce-breadcrumb>
-				<ce-breadcrumb>
-					<?php esc_html_e( 'Payment Method', 'checkout_engine' ); ?>
-				</ce-breadcrumb>
-			</ce-breadcrumbs>
+		<sc-spacing style="--spacing: var(--sc-spacing-xx-large)">
+			<sc-breadcrumbs>
+				<sc-breadcrumb href="<?php echo esc_url( $back_url ); ?>">
+					<?php esc_html_e( 'Dashboard', 'surecart' ); ?>
+				</sc-breadcrumb>
+				<sc-breadcrumb href="<?php echo esc_url( $edit_subscription_url ); ?>">
+					<?php esc_html_e( 'Subscription', 'surecart' ); ?>
+				</sc-breadcrumb>
+				<sc-breadcrumb href="<?php echo esc_url( $confirm_subscription_url ); ?>">
+					<?php esc_html_e( 'Confirm', 'surecart' ); ?>
+				</sc-breadcrumb>
+				<sc-breadcrumb>
+					<?php esc_html_e( 'Payment Method', 'surecart' ); ?>
+				</sc-breadcrumb>
+			</sc-breadcrumbs>
 
 			<?php
 			echo wp_kses_post(
-				Component::tag( 'ce-subscription-payment' )
+				Component::tag( 'sc-subscription-payment' )
 				->id( 'customer-subscription-payment' )
 				->with(
 					[
@@ -382,7 +382,7 @@ class SubscriptionController extends BaseController {
 				)->render()
 			);
 			?>
-		</ce-spacing>
+		</sc-spacing>
 
 		<?php
 		return ob_get_clean();

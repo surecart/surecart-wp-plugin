@@ -32,10 +32,10 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"CheckoutEngine\\": "app/src/",
-			"CheckoutEngineCore\\": "core/core/src/",
-			"CheckoutEngineAppCore\\": "core/app-core/src/",
-			"CheckoutEngineBlocks\\": "packages/blocks/"
+			"SureCart\\": "app/src/",
+			"SureCartCore\\": "core/core/src/",
+			"SureCartAppCore\\": "core/app-core/src/",
+			"SureCartBlocks\\": "packages/blocks/"
 		},
 		"files": [
 			"core/core/config.php",
@@ -44,7 +44,7 @@
 	},
 	"autoload-dev": {
 		"psr-4": {
-			"CheckoutEngine\\Tests\\": "tests/"
+			"SureCart\\Tests\\": "tests/"
 		}
 	},
 	"scripts": {

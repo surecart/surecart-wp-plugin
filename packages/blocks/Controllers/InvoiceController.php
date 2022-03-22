@@ -1,8 +1,8 @@
 <?php
-namespace CheckoutEngineBlocks\Controllers;
+namespace SureCartBlocks\Controllers;
 
-use CheckoutEngine\Models\Component;
-use CheckoutEngine\Models\User;
+use SureCart\Models\Component;
+use SureCart\Models\User;
 
 /**
  * The subscription controller.
@@ -17,18 +17,18 @@ class InvoiceController extends BaseController {
 		}
 
 		return wp_kses_post(
-			Component::tag( 'ce-invoices-list' )
+			Component::tag( 'sc-invoices-list' )
 			->id( 'customer-invoices-preview' )
 			->with(
 				[
-					'heading' => $attributes['title'] ?? __( 'Invoice History', 'checkout-engine' ),
+					'heading' => $attributes['title'] ?? __( 'Invoice History', 'surecart' ),
 					'allLink' => add_query_arg(
 						[
 							'tab'    => $this->getTab(),
 							'model'  => 'invoice',
 							'action' => 'index',
 						],
-						\CheckoutEngine::pages()->url( 'dashboard' )
+						\SureCart::pages()->url( 'dashboard' )
 					),
 					'query'   => [
 						'customer_ids' => array_values( User::current()->customerIds() ),
@@ -50,11 +50,11 @@ class InvoiceController extends BaseController {
 		}
 
 		return wp_kses_post(
-			Component::tag( 'ce-invoices-list' )
+			Component::tag( 'sc-invoices-list' )
 			->id( 'customer-invoices-index' )
 			->with(
 				[
-					'heading' => __( 'Invoice History', 'checkout-engine' ),
+					'heading' => __( 'Invoice History', 'surecart' ),
 					'query'   => [
 						'customer_ids' => array_values( User::current()->customerIds() ),
 						'status'       => [ 'paid' ],

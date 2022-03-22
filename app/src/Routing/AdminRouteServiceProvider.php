@@ -1,9 +1,9 @@
 <?php
 
-namespace CheckoutEngine\Routing;
+namespace SureCart\Routing;
 
-use CheckoutEngine\Routing\AdminRouteService;
-use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
+use SureCart\Routing\AdminRouteService;
+use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 /**
  * Provide custom route conditions.
@@ -14,23 +14,23 @@ class AdminRouteServiceProvider implements ServiceProviderInterface {
 	 * {@inheritDoc}
 	 */
 	public function register( $container ) {
-		$container['checkout_engine.admin.route'] = function () {
+		$container['surecart.admin.route'] = function () {
 			return new AdminRouteService();
 		};
 
-		$app = $container[ CHECKOUT_ENGINE_APPLICATION_KEY ];
+		$app = $container[ SURECART_APPLICATION_KEY ];
 
 		$app->alias(
 			'getUrl',
 			function () use ( $container ) {
-				return call_user_func_array( [ $container['checkout_engine.admin.route'], 'getUrl' ], func_get_args() );
+				return call_user_func_array( [ $container['surecart.admin.route'], 'getUrl' ], func_get_args() );
 			}
 		);
 
 		$app->alias(
 			'getAdminPageNames',
 			function () use ( $container ) {
-				return call_user_func_array( [ $container['checkout_engine.admin.route'], 'getPageNames' ], func_get_args() );
+				return call_user_func_array( [ $container['surecart.admin.route'], 'getPageNames' ], func_get_args() );
 			}
 		);
 	}

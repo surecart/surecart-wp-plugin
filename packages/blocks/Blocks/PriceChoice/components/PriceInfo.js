@@ -52,14 +52,14 @@ export default ({ price_id }) => {
 				`}
 			>
 				{price?.ad_hoc ? (
-					__('Name Your Price', 'checkout_engine')
+					__('Name Your Price', 'surecart')
 				) : (
 					<>
-						<ce-format-number
+						<sc-format-number
 							type="currency"
 							currency={price?.currency}
 							value={price?.amount}
-						></ce-format-number>{' '}
+						></sc-format-number>{' '}
 						{translateInterval(
 							price?.recurring_interval_count,
 							price?.recurring_interval,
@@ -71,13 +71,13 @@ export default ({ price_id }) => {
 			</p>
 			<Button
 				href={addQueryArgs('admin.php', {
-					page: 'ce-products',
+					page: 'sc-products',
 					action: 'edit',
 					id: product?.id,
 				})}
 				isSecondary
 			>
-				{__('Edit Product', 'checkout_engine')}
+				{__('Edit Product', 'surecart')}
 			</Button>
 		</div>
 	);

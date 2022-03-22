@@ -3,49 +3,49 @@ import { css, jsx } from '@emotion/core';
 
 import { __ } from '@wordpress/i18n';
 
-import { CeInput, CeSwitch, CeSelect } from '@checkout-engine/components-react';
+import { ScInput, ScSwitch, ScSelect } from '@surecart/components-react';
 import Box from '../../ui/Box';
 
 export default ({ product, updateProduct, loading }) => {
 	return (
-		<Box title={__('Details', 'checkout_engine')} loading={loading}>
+		<Box title={__('Details', 'surecart')} loading={loading}>
 			<div
 				css={css`
 					display: grid;
-					gap: var(--ce-spacing-large);
+					gap: var(--sc-spacing-large);
 				`}
 			>
-				<CeInput
-					label={__('Name', 'checkout_engine')}
-					className="ce-product-name hydrated"
-					help={__('A name for your product.', 'checkout_engine')}
+				<ScInput
+					label={__('Name', 'surecart')}
+					className="sc-product-name hydrated"
+					help={__('A name for your product.', 'surecart')}
 					value={product?.name}
-					onCeChange={(e) => {
+					onScChange={(e) => {
 						updateProduct({ name: e.target.value });
 					}}
 					name="name"
 					required
 				/>
 
-				<CeSwitch
+				<ScSwitch
 					css={css`
-						margin: var(--ce-spacing-small) 0;
+						margin: var(--sc-spacing-small) 0;
 					`}
 					checked={product?.tax_enabled}
-					onCeChange={() =>
+					onScChange={() =>
 						updateProduct({
 							tax_enabled: !product?.tax_enabled,
 						})
 					}
 				>
-					{__('Charge tax on this product', 'checkout_engine')}
-				</CeSwitch>
+					{__('Charge tax on this product', 'surecart')}
+				</ScSwitch>
 				{product?.tax_enabled && (
 					<div>
-						<CeSelect
+						<ScSelect
 							value={product?.tax_category || 'tangible'}
 							required
-							onCeChange={(e) => {
+							onScChange={(e) => {
 								updateProduct({
 									tax_category: e.target.value,
 								});
@@ -55,23 +55,23 @@ export default ({ product, updateProduct, loading }) => {
 									value: 'tangible',
 									label: __(
 										'General/Tangible Goods',
-										'checkout_engine'
+										'surecart'
 									),
 								},
 								{
 									value: 'digital',
-									label: __('Digital', 'checkout_engine'),
+									label: __('Digital', 'surecart'),
 								},
 								{
 									value: 'saas',
 									label: __(
 										'Sofware As A Service',
-										'checkout_engine'
+										'surecart'
 									),
 								},
 								{
 									value: 'service',
-									label: __('Service', 'checkout_engine'),
+									label: __('Service', 'surecart'),
 								},
 							]}
 						/>

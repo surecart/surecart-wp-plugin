@@ -7,10 +7,10 @@ export default ({ attributes, setAttributes }) => {
 	return (
 		<div>
 			<InspectorControls>
-				<PanelBody title={__('Attributes', 'checkout_engine')}>
+				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<RangeControl
-							label={__('Per Page', 'checkout_engine')}
+							label={__('Per Page', 'surecart')}
 							value={per_page}
 							onChange={(per_page) => setAttributes({ per_page })}
 							min={1}
@@ -19,47 +19,47 @@ export default ({ attributes, setAttributes }) => {
 					</PanelRow>
 				</PanelBody>
 			</InspectorControls>
-			<ce-flex
+			<sc-flex
 				justify-content="flex-end"
 				flex-direction="column"
-				style={{ '--spacing': 'var(--ce-spacing-large)' }}
+				style={{ '--spacing': 'var(--sc-spacing-large)' }}
 			>
-				<ce-table>
-					<ce-table-cell slot="head">
-						{__('Number', 'checkout_engine')}
-					</ce-table-cell>
-					<ce-table-cell slot="head">
-						{__('Items', 'checkout_engine')}
-					</ce-table-cell>
-					<ce-table-cell slot="head">
-						{__('Total', 'checkout_engine')}
-					</ce-table-cell>
-					<ce-table-cell slot="head" style={{ width: '100px' }}>
-						{__('Status', 'checkout_engine')}
-					</ce-table-cell>
-					<ce-table-cell
+				<sc-table>
+					<sc-table-cell slot="head">
+						{__('Number', 'surecart')}
+					</sc-table-cell>
+					<sc-table-cell slot="head">
+						{__('Items', 'surecart')}
+					</sc-table-cell>
+					<sc-table-cell slot="head">
+						{__('Total', 'surecart')}
+					</sc-table-cell>
+					<sc-table-cell slot="head" style={{ width: '100px' }}>
+						{__('Status', 'surecart')}
+					</sc-table-cell>
+					<sc-table-cell
 						slot="head"
 						style={{ width: '100px' }}
-					></ce-table-cell>
+					></sc-table-cell>
 
 					{[...Array(per_page || 10)].map(() => (
-						<ce-table-row>
-							<ce-table-cell>
-								<ce-text
+						<sc-table-row>
+							<sc-table-cell>
+								<sc-text
 									truncate
 									style={{
 										'--font-weight':
-											'var(--ce-font-weight-semibold)',
+											'var(--sc-font-weight-semibold)',
 									}}
 								>
 									15AG68LR
-								</ce-text>
-							</ce-table-cell>
-							<ce-table-cell>
-								<ce-text
+								</sc-text>
+							</sc-table-cell>
+							<sc-table-cell>
+								<sc-text
 									truncate
 									style={{
-										'--color': 'var(--ce-color-gray-500)',
+										'--color': 'var(--sc-color-gray-500)',
 									}}
 								>
 									{sprintf(
@@ -67,55 +67,51 @@ export default ({ attributes, setAttributes }) => {
 											'%s item',
 											'%s items',
 											2,
-											'checkout_engine'
+											'surecart'
 										),
 										2
 									)}
-								</ce-text>
-							</ce-table-cell>
-							<ce-table-cell>
-								<ce-format-number
+								</sc-text>
+							</sc-table-cell>
+							<sc-table-cell>
+								<sc-format-number
 									type="currency"
 									currency={'USD'}
 									value={2500}
-								></ce-format-number>
-							</ce-table-cell>
-							<ce-table-cell>
-								<ce-order-status-badge status="paid"></ce-order-status-badge>
-							</ce-table-cell>
-							<ce-table-cell>
-								<ce-button size="small">
-									{__('View', 'checkout_engine')}
-								</ce-button>
-							</ce-table-cell>
-						</ce-table-row>
+								></sc-format-number>
+							</sc-table-cell>
+							<sc-table-cell>
+								<sc-order-status-badge status="paid"></sc-order-status-badge>
+							</sc-table-cell>
+							<sc-table-cell>
+								<sc-button size="small">
+									{__('View', 'surecart')}
+								</sc-button>
+							</sc-table-cell>
+						</sc-table-row>
 					))}
-				</ce-table>
+				</sc-table>
 
-				<ce-flex
+				<sc-flex
 					justify-content="space-between"
 					align-items="center"
-					style={{ '--spacing': 'var(--ce-spacing-large)' }}
+					style={{ '--spacing': 'var(--sc-spacing-large)' }}
 				>
-					<ce-text
+					<sc-text
 						style={{
-							'--size': 'var(--ce-font-size-small)',
-							'--color': 'var(--ce-color-gray-500)',
+							'--size': 'var(--sc-font-size-small)',
+							'--color': 'var(--sc-color-gray-500)',
 						}}
 					>
-						{__('Showing 1 to 10 of 20 results', 'checkout_engine')}
-					</ce-text>
+						{__('Showing 1 to 10 of 20 results', 'surecart')}
+					</sc-text>
 
-					<ce-flex>
-						<ce-button>
-							{__('Prev Page', 'checkout_engine')}
-						</ce-button>
-						<ce-button>
-							{__('Next Page', 'checkout_engine')}
-						</ce-button>
-					</ce-flex>
-				</ce-flex>
-			</ce-flex>
+					<sc-flex>
+						<sc-button>{__('Prev Page', 'surecart')}</sc-button>
+						<sc-button>{__('Next Page', 'surecart')}</sc-button>
+					</sc-flex>
+				</sc-flex>
+			</sc-flex>
 		</div>
 	);
 };

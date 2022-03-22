@@ -51,5 +51,5 @@ export default function save({ attributes }) {
 	});
 	const innerBlocksProps = useInnerBlocksProps.save(blockProps);
 
-	return <ce-column {...innerBlocksProps} />;
+	return <sc-column {...innerBlocksProps} />;
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace CheckoutEngine\Support\Errors;
+namespace SureCart\Support\Errors;
 
 /**
  * Handles error translations from the API.

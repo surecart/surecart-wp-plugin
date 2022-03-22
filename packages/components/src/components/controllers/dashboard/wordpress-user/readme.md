@@ -17,26 +17,26 @@
 
 ### Depends on
 
-- [ce-stacked-list-row](../../../ui/stacked-list-row)
-- [ce-dashboard-module](../../../ui/dashboard-module)
-- [ce-button](../../../ui/button)
-- [ce-icon](../../../ui/icon)
-- [ce-card](../../../ui/card)
-- [ce-stacked-list](../../../ui/stacked-list)
+- [sc-stacked-list-row](../../../ui/stacked-list-row)
+- [sc-dashboard-module](../../../ui/dashboard-module)
+- [sc-button](../../../ui/button)
+- [sc-icon](../../../ui/icon)
+- [sc-card](../../../ui/card)
+- [sc-stacked-list](../../../ui/stacked-list)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-wordpress-user --> ce-stacked-list-row
-  ce-wordpress-user --> ce-dashboard-module
-  ce-wordpress-user --> ce-button
-  ce-wordpress-user --> ce-icon
-  ce-wordpress-user --> ce-card
-  ce-wordpress-user --> ce-stacked-list
-  ce-dashboard-module --> ce-alert
-  ce-alert --> ce-icon
-  ce-button --> ce-spinner
-  style ce-wordpress-user fill:#f9f,stroke:#333,stroke-width:4px
+  sc-wordpress-user --> sc-stacked-list-row
+  sc-wordpress-user --> sc-dashboard-module
+  sc-wordpress-user --> sc-button
+  sc-wordpress-user --> sc-icon
+  sc-wordpress-user --> sc-card
+  sc-wordpress-user --> sc-stacked-list
+  sc-dashboard-module --> sc-alert
+  sc-alert --> sc-icon
+  sc-button --> sc-spinner
+  style sc-wordpress-user fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

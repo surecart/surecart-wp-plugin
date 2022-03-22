@@ -1,4 +1,4 @@
-Checkout Engine. Based on the [WP Emerge](https://github.com/htmlburger/wpemerge) framework.
+SureCart. Based on the [WP Emerge](https://github.com/htmlburger/wpemerge) framework.
 
 ## Summary
 
@@ -17,7 +17,7 @@ Checkout Engine. Based on the [WP Emerge](https://github.com/htmlburger/wpemerge
 ## Directory structure
 
 ```
-wp-content/plugins/checkout-engine
+wp-content/plugins/surecart
 ├── app/
 │   ├── helpers/              # Helper files, add your own here as well.
 │   ├── routes/               # Register your WP Emerge routes.
@@ -53,7 +53,7 @@ wp-content/plugins/checkout-engine
 │   ├── layouts/
 │   └── partials/
 ├── screenshot-1.png          # Plugin screenshot.
-├── checkout-engine.php              # Bootstrap plugin.
+├── surecart.php              # Bootstrap plugin.
 └── ...
 ```
 
@@ -65,7 +65,7 @@ Add PHP helper files here. Helper files should include **function definitions on
 
 #### `app/src/`
 
-Add PHP class files here. All clases in the `CheckoutEngine\` namespace are autoloaded in accordance with [PSR-4](http://www.php-fig.org/psr/psr-4/).
+Add PHP class files here. All clases in the `SureCart\` namespace are autoloaded in accordance with [PSR-4](http://www.php-fig.org/psr/psr-4/).
 
 #### `resources/images/`
 
@@ -101,4 +101,4 @@ Avoid adding any PHP logic in any of these views, unless it pertains to layoutin
 
 ## Credits
 
-Checkout Engine is powered by the [WP Emerge framework](https://wpemerge.com/).
+SureCart is powered by the [WP Emerge framework](https://wpemerge.com/).

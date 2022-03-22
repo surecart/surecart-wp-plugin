@@ -1,7 +1,7 @@
 <?php
-namespace CheckoutEngine\Permissions\Models;
+namespace SureCart\Permissions\Models;
 
-use CheckoutEngine\Models\Charge;
+use SureCart\Models\Charge;
 
 /**
  * Handle various charge permissions.
@@ -10,9 +10,9 @@ class ChargePermissionsController extends ModelPermissionsController {
 	/**
 	 * Can user read
 	 *
-	 * @param \CheckoutEngine\Models\User $user User model.
-	 * @param array                       $args {
-	 *                        Arguments that accompany the requested capability check.
+	 * @param \SureCart\Models\User $user User model.
+	 * @param array                 $args {
+	 *                  Arguments that accompany the requested capability check.
 	 *
 	 *     @type string    $0 Requested capability.
 	 *     @type int       $1 Concerned user ID.

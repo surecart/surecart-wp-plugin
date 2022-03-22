@@ -19,29 +19,29 @@
 
 | Event      | Description | Type                  |
 | ---------- | ----------- | --------------------- |
-| `ceChange` |             | `CustomEvent<number>` |
+| `scChange` |             | `CustomEvent<number>` |
 
 
 ## Dependencies
 
 ### Used by
 
- - [ce-product-line-item](../product-line-item)
+ - [sc-product-line-item](../product-line-item)
 
 ### Depends on
 
-- [ce-dropdown](../dropdown)
-- [ce-menu](../menu)
-- [ce-menu-item](../menu-item)
+- [sc-dropdown](../dropdown)
+- [sc-menu](../menu)
+- [sc-menu-item](../menu-item)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-quantity-select --> ce-dropdown
-  ce-quantity-select --> ce-menu
-  ce-quantity-select --> ce-menu-item
-  ce-product-line-item --> ce-quantity-select
-  style ce-quantity-select fill:#f9f,stroke:#333,stroke-width:4px
+  sc-quantity-select --> sc-dropdown
+  sc-quantity-select --> sc-menu
+  sc-quantity-select --> sc-menu-item
+  sc-product-line-item --> sc-quantity-select
+  style sc-quantity-select fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

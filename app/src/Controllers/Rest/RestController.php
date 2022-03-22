@@ -1,6 +1,6 @@
 <?php
 
-namespace CheckoutEngine\Controllers\Rest;
+namespace SureCart\Controllers\Rest;
 
 /**
  * Rest controller base class.
@@ -16,13 +16,13 @@ abstract class RestController {
 	/**
 	 * Run some middleware to run before request.
 	 *
-	 * @param \CheckoutEngine\Models\Model $class Model class instance.
-	 * @param \WP_REST_Request             $request Request object.
+	 * @param \SureCart\Models\Model $class Model class instance.
+	 * @param \WP_REST_Request       $request Request object.
 	 *
-	 * @return \CheckoutEngine\Models\Model
+	 * @return \SureCart\Models\Model
 	 */
-	protected function middleware( \CheckoutEngine\Models\Model $class, \WP_REST_Request $request ) {
-		return apply_filters( 'checkout_engine/request/model', $class, $request );
+	protected function middleware( \SureCart\Models\Model $class, \WP_REST_Request $request ) {
+		return apply_filters( 'surecart/request/model', $class, $request );
 	}
 
 	/**

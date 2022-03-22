@@ -5,18 +5,18 @@ import Translate from '@docusaurus/Translate';
 import styles from './styles/styles.module.css';
 import docsJSON from '../stencil/docs.json';
 
-export default ( { tag } ) => {
+export default ({ tag }) => {
 	// find item.
-	const item = ( docsJSON.components || [] ).find( ( doc ) => {
+	const item = (docsJSON.components || []).find((doc) => {
 		return doc.tag === tag;
-	} );
+	});
 
-	if ( item ) {
+	if (item) {
 		return (
 			<div>
-				{ !! item.props.length && (
+				{!!item.props.length && (
 					<div>
-						<h3 className={ styles.h3 }>
+						<h3 className={styles.h3}>
 							<Translate
 								id="component.properties"
 								description="Properties Title"
@@ -34,26 +34,26 @@ export default ( { tag } ) => {
 								</tr>
 							</thead>
 							<tbody>
-								{ item.props.map( ( prop ) => {
+								{item.props.map((prop) => {
 									return (
-										<tr key={ prop.name }>
-											<td>{ prop.name }</td>
-											<td>{ prop.docs }</td>
+										<tr key={prop.name}>
+											<td>{prop.name}</td>
+											<td>{prop.docs}</td>
 											<td>
-												<code>{ prop.type }</code>
+												<code>{prop.type}</code>
 											</td>
-											<td>{ prop.default }</td>
+											<td>{prop.default}</td>
 										</tr>
 									);
-								} ) }
+								})}
 							</tbody>
 						</table>
 					</div>
-				) }
+				)}
 
-				{ !! item.events.length && (
+				{!!item.events.length && (
 					<div>
-						<h3 className={ styles.h3 }>
+						<h3 className={styles.h3}>
 							<Translate
 								id="component.events"
 								description="Events Title"
@@ -71,30 +71,30 @@ export default ( { tag } ) => {
 								</tr>
 							</thead>
 							<tbody>
-								{ item.events.map( ( item ) => {
+								{item.events.map((item) => {
 									return (
-										<tr key={ item.event }>
+										<tr key={item.event}>
 											<td>
-												<code>{ item.event }</code>
+												<code>{item.event}</code>
 											</td>
-											<td>{ item.docs }</td>
+											<td>{item.docs}</td>
 											<td>
 												CustomEvent
 												<code>
-													&#x3C;{ item.detail }&#x3E;
+													&#x3C;{item.detail}&#x3E;
 												</code>
 											</td>
 										</tr>
 									);
-								} ) }
+								})}
 							</tbody>
 						</table>
 					</div>
-				) }
+				)}
 
-				{ !! item.methods.length && (
+				{!!item.methods.length && (
 					<div>
-						<h3 className={ styles.h3 }>
+						<h3 className={styles.h3}>
 							<Translate
 								id="component.methods"
 								description="Methods Title"
@@ -103,20 +103,20 @@ export default ( { tag } ) => {
 							</Translate>
 						</h3>
 
-						{ item.methods.map( ( item ) => {
+						{item.methods.map((item) => {
 							return (
 								<>
-									<h4>{ item.signature }</h4>
-									<p>{ item.docs }</p>
+									<h4>{item.signature}</h4>
+									<p>{item.docs}</p>
 								</>
 							);
-						} ) }
+						})}
 					</div>
-				) }
+				)}
 
-				{ !! item.slots.length && (
+				{!!item.slots.length && (
 					<div>
-						<h3 className={ styles.h3 }>
+						<h3 className={styles.h3}>
 							<Translate
 								id="component.slots"
 								description="Slots Title"
@@ -134,24 +134,24 @@ export default ( { tag } ) => {
 							</thead>
 
 							<tbody>
-								{ item.slots.map( ( slot ) => {
+								{item.slots.map((slot) => {
 									return (
-										<tr key={ slot.name }>
+										<tr key={slot.name}>
 											<td>
-												<code>{ slot.name }</code>
+												<code>{slot.name}</code>
 											</td>
-											<td>{ slot.docs }</td>
+											<td>{slot.docs}</td>
 										</tr>
 									);
-								} ) }
+								})}
 							</tbody>
 						</table>
 					</div>
-				) }
+				)}
 
-				{ !! item.parts.length && (
+				{!!item.parts.length && (
 					<div>
-						<h3 className={ styles.h3 }>Shadow Parts</h3>
+						<h3 className={styles.h3}>Shadow Parts</h3>
 
 						<table>
 							<thead>
@@ -162,64 +162,64 @@ export default ( { tag } ) => {
 							</thead>
 
 							<tbody>
-								{ item.parts.map( ( part ) => {
+								{item.parts.map((part) => {
 									return (
-										<tr key={ part.name }>
+										<tr key={part.name}>
 											<td>
-												<code>{ part.name }</code>
+												<code>{part.name}</code>
 											</td>
-											<td>{ part.docs }</td>
+											<td>{part.docs}</td>
 										</tr>
 									);
-								} ) }
+								})}
 							</tbody>
 						</table>
 					</div>
-				) }
+				)}
 
-				{ !! item.dependents.length && (
+				{!!item.dependents.length && (
 					<div>
-						<h3 className={ styles.h3 }>Used By</h3>
+						<h3 className={styles.h3}>Used By</h3>
 						<ul>
-							{ item.dependents.map( ( dependent ) => {
+							{item.dependents.map((dependent) => {
 								return (
 									<li>
 										<Link
-											to={ `/docs/components/${ dependent.replace(
-												'ce-',
+											to={`/docs/components/${dependent.replace(
+												'sc-',
 												''
-											) }` }
+											)}`}
 										>
-											{ dependent }
+											{dependent}
 										</Link>
 									</li>
 								);
-							} ) }
+							})}
 						</ul>
 					</div>
-				) }
+				)}
 
-				{ !! item.dependencies.length && (
+				{!!item.dependencies.length && (
 					<div>
-						<h3 className={ styles.h3 }>Uses</h3>
+						<h3 className={styles.h3}>Uses</h3>
 						<ul>
-							{ item.dependencies.map( ( dependent ) => {
+							{item.dependencies.map((dependent) => {
 								return (
 									<li>
 										<Link
-											to={ `/docs/components/${ dependent.replace(
-												'ce-',
+											to={`/docs/components/${dependent.replace(
+												'sc-',
 												''
-											) }` }
+											)}`}
 										>
-											{ dependent }
+											{dependent}
 										</Link>
 									</li>
 								);
-							} ) }
+							})}
 						</ul>
 					</div>
-				) }
+				)}
 			</div>
 		);
 	}

@@ -15,7 +15,7 @@ import Subscriptions from './modules/Subscriptions';
 import Sidebar from './Sidebar';
 import useCurrentPage from '../mixins/useCurrentPage';
 import { useEffect } from 'react';
-import { CeButton } from '@checkout-engine/components-react';
+import { ScButton } from '@surecart/components-react';
 import { useDispatch } from '@wordpress/data';
 
 export default () => {
@@ -60,36 +60,36 @@ export default () => {
 	const title = () => {
 		if (isLoading) {
 			return (
-				<ce-skeleton
+				<sc-skeleton
 					style={{
 						width: '120px',
 						display: 'inline-block',
 					}}
-				></ce-skeleton>
+				></sc-skeleton>
 			);
 		}
 
 		return id
-			? __('Edit Customer', 'checkout_engine')
-			: __('Add Customer', 'checkout_engine');
+			? __('Edit Customer', 'surecart')
+			: __('Add Customer', 'surecart');
 	};
 
 	return (
 		<Template
 			pageModelName={'customers'}
 			onSubmit={onSubmit}
-			backUrl={'admin.php?page=ce-customers'}
-			backText={__('Back to All Customers', 'checkout_engine')}
+			backUrl={'admin.php?page=sc-customers'}
+			backText={__('Back to All Customers', 'surecart')}
 			title={title()}
 			button={
 				isLoading ? (
-					<ce-skeleton
+					<sc-skeleton
 						style={{
 							width: '120px',
 							height: '35px',
 							display: 'inline-block',
 						}}
-					></ce-skeleton>
+					></sc-skeleton>
 				) : (
 					<div
 						css={css`
@@ -98,11 +98,11 @@ export default () => {
 							gap: 0.5em;
 						`}
 					>
-						<CeButton type="primary" loading={isSaving} submit>
+						<ScButton type="primary" loading={isSaving} submit>
 							{id
-								? __('Update Customer', 'checkout_engine')
-								: __('Create Customer', 'checkout_engine')}
-						</CeButton>
+								? __('Update Customer', 'surecart')
+								: __('Create Customer', 'surecart')}
+						</ScButton>
 					</div>
 				)
 			}

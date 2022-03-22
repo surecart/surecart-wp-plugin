@@ -1,9 +1,9 @@
 <?php
 
-namespace CheckoutEngine\Models;
+namespace SureCart\Models;
 
-use CheckoutEngine\Models\Traits\CanPurgeFile;
-use CheckoutEngine\Models\Traits\CanPurgeImage;
+use SureCart\Models\Traits\CanPurgeFile;
+use SureCart\Models\Traits\CanPurgeImage;
 
 /**
  * Price model

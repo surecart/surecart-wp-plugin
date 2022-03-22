@@ -41,7 +41,7 @@ function _manually_load_plugin()
 {
     // Update array with plugins to include
     $plugins_to_active = array(
-        'checkout-engine/checkout-engine.php',
+        'surecart/surecart.php',
     );
 
     update_option('active_plugins', $plugins_to_active);

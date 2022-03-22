@@ -1,3 +1,3 @@
 export default function save() {
-	return <ce-order-confirmation-customer></ce-order-confirmation-customer>;
+	return <sc-order-confirmation-customer></sc-order-confirmation-customer>;
 }

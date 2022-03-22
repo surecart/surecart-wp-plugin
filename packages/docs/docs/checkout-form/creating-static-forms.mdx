@@ -7,7 +7,7 @@ There's a few instances where you'll want to create a static form.
 1. You are creating a form that you **do not** wish to be editable by site users.
 2. You want to add your own user interface to have your customer create or edit a form.
 
-A common example of this is if you're developing a plugin, and want to use Checkout Engine to power your plugin's checkout solution.
+A common example of this is if you're developing a plugin, and want to use SureCart to power your plugin's checkout solution.
 You may want to prevent your user from editing a form, or may want to provide more minimal options.
 
 ## Add A New Checkout Form
@@ -18,11 +18,11 @@ This lets you create a custom form with minimal configuration.
 At the minimum, a <Link to="/components/email">`ce-email`</Link>, <Link to="/components/payment">`ce-payment`</Link> and <Link to="/components/submit">`ce-submit`</Link> component are needed in the form:
 
 ```html
-<ce-checkout id="my-checkout">
-	<ce-customer-email></ce-customer-email>
-	<ce-payment></ce-payment>
-	<ce-submit><ce-submit>
-</ce-checkout>
+<sc-checkout id="my-checkout">
+	<sc-customer-email></sc-customer-email>
+	<sc-payment></sc-payment>
+	<sc-submit><sc-submit>
+</sc-checkout>
 ```
 
 ### Pre-Populating Prices
@@ -32,11 +32,11 @@ In order to add a product to the form, you must pass an array of prices to the `
 attribute of the <Link to="/components/checkout">`ce-checkout`</Link> component.
 
 ```html
-<ce-checkout id="my-checkout">
-	<ce-customer-email></ce-customer-email>
-	<ce-payment></ce-payment>
-	<ce-submit><ce-submit>
-</ce-checkout>
+<sc-checkout id="my-checkout">
+	<sc-customer-email></sc-customer-email>
+	<sc-payment></sc-payment>
+	<sc-submit><sc-submit>
+</sc-checkout>
 
 <script>
 	var checkout = document.querySelector( '#my-checkout' );
@@ -60,13 +60,13 @@ You can set this with the product choices option.
 ### Select a Single Option
 
 ```html
-<ce-checkout id="my-checkout">
-	<ce-price-choices default="6b6f10b8-1054-455b-83e5-86be0e6fa74e">
-	</ce-price-choices>
-	<ce-payment></ce-payment>
-	<ce-customer-email></ce-customer-email>
-	<ce-submit><ce-submit>
-</ce-checkout>
+<sc-checkout id="my-checkout">
+	<sc-price-choices default="6b6f10b8-1054-455b-83e5-86be0e6fa74e">
+	</sc-price-choices>
+	<sc-payment></sc-payment>
+	<sc-customer-email></sc-customer-email>
+	<sc-submit><sc-submit>
+</sc-checkout>
 
 <script>
 	var choiceComponent = document.querySelector("#my-checkout ce-price-choices");
@@ -90,15 +90,15 @@ To have the user select a single option from a list of options, pass the "checkb
 option in the `ce-price-choices` component.
 
 ```html
-<ce-checkout id="my-checkout">
-	<ce-price-choices
+<sc-checkout id="my-checkout">
+	<sc-price-choices
 		type="checkbox"
 		default="6b6f10b8-1054-455b-83e5-86be0e6fa74e">
-	</ce-price-choices>
-	<ce-payment></ce-payment>
-	<ce-customer-email></ce-customer-email>
-	<ce-submit><ce-submit>
-</ce-checkout>
+	</sc-price-choices>
+	<sc-payment></sc-payment>
+	<sc-customer-email></sc-customer-email>
+	<sc-submit><sc-submit>
+</sc-checkout>
 
 <script>
 	var choiceComponent = document.querySelector("#my-checkout ce-price-choices");
@@ -123,12 +123,12 @@ a specific price from checkout, you can use the `addPrice`, `removePrice` or `to
 on the `ce-checkout` component.
 
 ```html
-<ce-checkout id="my-checkout">
-	<ce-payment></ce-payment>
-	<ce-customer-email></ce-customer-email>
-	<ce-button class="my-order-bump">Add Something to my order</ce-button>
-	<ce-submit><ce-submit>
-</ce-checkout>
+<sc-checkout id="my-checkout">
+	<sc-payment></sc-payment>
+	<sc-customer-email></sc-customer-email>
+	<sc-button class="my-order-bump">Add Something to my order</sc-button>
+	<sc-submit><sc-submit>
+</sc-checkout>
 
 <script>
 	var checkout = document.querySelector("#my-checkout");

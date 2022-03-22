@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngine\WordPress\Users;
+namespace SureCart\WordPress\Users;
 
-use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
+use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 /**
  * Provide users dependencies.
@@ -15,7 +15,7 @@ class UsersServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function register( $container ) {
-		$container['checkout_engine.users'] = function () {
+		$container['surecart.users'] = function () {
 			return new UsersService();
 		};
 	}
@@ -27,6 +27,6 @@ class UsersServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function bootstrap( $container ) {
-		$container['checkout_engine.users']->bootstrap();
+		$container['surecart.users']->bootstrap();
 	}
 }

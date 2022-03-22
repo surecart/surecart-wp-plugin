@@ -1,29 +1,29 @@
 <?php
 
-namespace CheckoutEngine\Controllers\Admin;
+namespace SureCart\Controllers\Admin;
 
-use CheckoutEngine\Models\ApiToken;
+use SureCart\Models\ApiToken;
 
 class Connection {
-	public function show( \CheckoutEngineCore\Requests\RequestInterface $request, $view ) {
-		return \CheckoutEngine::view( 'admin/connection' )->with(
+	public function show( \SureCartCore\Requests\RequestInterface $request, $view ) {
+		return \SureCart::view( 'admin/connection' )->with(
 			[
 				'api_token' => ApiToken::get(),
 				'status'    => $request->query( 'status' ),
 			]
 		);
 	}
-	public function save( \CheckoutEngineCore\Requests\RequestInterface $request, $view ) {
+	public function save( \SureCartCore\Requests\RequestInterface $request, $view ) {
 		$url       = $request->getHeaderLine( 'Referer' );
 		$api_token = $request->body( 'api_token' );
 
 		if ( empty( $api_token ) ) {
-			return \CheckoutEngine::redirect()->to( esc_url_raw( add_query_arg( 'status', 'missing', $url ) ) );
+			return \SureCart::redirect()->to( esc_url_raw( add_query_arg( 'status', 'missing', $url ) ) );
 		}
 
 		// save token.
 		ApiToken::save( $api_token );
 
-		return \CheckoutEngine::redirect()->to( esc_url_raw( add_query_arg( 'status', 'saved', $url ) ) );
+		return \SureCart::redirect()->to( esc_url_raw( add_query_arg( 'status', 'saved', $url ) ) );
 	}
 }

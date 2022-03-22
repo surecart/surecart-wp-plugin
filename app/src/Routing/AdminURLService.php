@@ -1,6 +1,6 @@
 <?php
 
-namespace CheckoutEngine\Routing;
+namespace SureCart\Routing;
 
 /**
  * Generates links for specific amdin urls.

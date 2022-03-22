@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngine\Controllers\Admin;
+namespace SureCart\Controllers\Admin;
 
-use CheckoutEngine\Models\ApiToken;
+use SureCart\Models\ApiToken;
 
 /**
  * Handles the plugin settings page.
@@ -11,11 +11,11 @@ class PluginSettings {
 	/**
 	 * Show the page.
 	 *
-	 * @param \CheckoutEngineCore\Requests\RequestInterface $request Request.
+	 * @param \SureCartCore\Requests\RequestInterface $request Request.
 	 * @return function
 	 */
-	public function show( \CheckoutEngineCore\Requests\RequestInterface $request ) {
-		return \CheckoutEngine::view( 'admin/plugin' )->with(
+	public function show( \SureCartCore\Requests\RequestInterface $request ) {
+		return \SureCart::view( 'admin/plugin' )->with(
 			[
 				'api_token' => ApiToken::get(),
 				'uninstall' => get_option( 'ce_uninstall', false ),
@@ -27,15 +27,15 @@ class PluginSettings {
 	/**
 	 * Save the page.
 	 *
-	 * @param \CheckoutEngineCore\Requests\RequestInterface $request Request.
+	 * @param \SureCartCore\Requests\RequestInterface $request Request.
 	 * @return function
 	 */
-	public function save( \CheckoutEngineCore\Requests\RequestInterface $request ) {
+	public function save( \SureCartCore\Requests\RequestInterface $request ) {
 		$url       = $request->getHeaderLine( 'Referer' );
 		$api_token = $request->body( 'api_token' );
 
 		if ( empty( $api_token ) ) {
-			return \CheckoutEngine::redirect()->to( esc_url_raw( add_query_arg( 'status', 'missing', $url ) ) );
+			return \SureCart::redirect()->to( esc_url_raw( add_query_arg( 'status', 'missing', $url ) ) );
 		}
 
 		// update uninstall option.
@@ -44,6 +44,6 @@ class PluginSettings {
 		// save token.
 		ApiToken::save( $api_token );
 
-		return \CheckoutEngine::redirect()->to( esc_url_raw( add_query_arg( 'status', 'saved', $url ) ) );
+		return \SureCart::redirect()->to( esc_url_raw( add_query_arg( 'status', 'saved', $url ) ) );
 	}
 }

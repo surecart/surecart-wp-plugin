@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngine\Request;
+namespace SureCart\Request;
 
-use CheckoutEngine\Support\Errors\ErrorsService;
+use SureCart\Support\Errors\ErrorsService;
 
 /**
  * Provide api request functionality.
@@ -32,7 +32,7 @@ class RequestService {
 	/**
 	 * Errors service container
 	 *
-	 * @var \CheckoutEngine\Support\Errors\ErrorsService;
+	 * @var \SureCart\Support\Errors\ErrorsService;
 	 */
 	protected $errors_service;
 
@@ -55,7 +55,7 @@ class RequestService {
 	 * Get the base url.
 	 */
 	public function getBaseUrl() {
-		return untrailingslashit( CHECKOUT_ENGINE_APP_URL ) . trailingslashit( $this->base_path );
+		return untrailingslashit( SURECART_APP_URL ) . trailingslashit( $this->base_path );
 	}
 
 	/**
@@ -92,8 +92,8 @@ class RequestService {
 			);
 
 			// filter args and endpoint.
-			$args     = apply_filters( 'checkout_engine/request/args', $args, $endpoint );
-			$endpoint = apply_filters( 'checkout_engine/request/endpoint', $endpoint, $args );
+			$args     = apply_filters( 'surecart/request/args', $args, $endpoint );
+			$endpoint = apply_filters( 'surecart/request/endpoint', $endpoint, $args );
 
 			// make url.
 			$url = trailingslashit( $this->base_url ) . untrailingslashit( $endpoint );
@@ -134,7 +134,7 @@ class RequestService {
 		}
 
 		// return response.
-		return apply_filters( 'checkout_engine/request/response', $response_body, $args, $endpoint );
+		return apply_filters( 'surecart/request/response', $response_body, $args, $endpoint );
 	}
 
 

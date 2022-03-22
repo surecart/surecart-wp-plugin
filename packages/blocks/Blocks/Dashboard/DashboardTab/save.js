@@ -1,13 +1,13 @@
 export default ({ attributes }) => {
 	const { icon, title } = attributes;
 	return (
-		<ce-tab slot="nav">
-			<ce-icon
+		<sc-tab slot="nav">
+			<sc-icon
 				style={{ 'font-size': '18px' }}
 				slot="prefix"
 				name={icon || 'home'}
-			></ce-icon>
+			></sc-icon>
 			{title}
-		</ce-tab>
+		</sc-tab>
 	);
 };

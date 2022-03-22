@@ -1,9 +1,9 @@
 <?php
 
-namespace CheckoutEngineBlocks\Blocks\Dashboard;
+namespace SureCartBlocks\Blocks\Dashboard;
 
-use CheckoutEngineBlocks\Blocks\BaseBlock;
-use CheckoutEngine\Models\User;
+use SureCartBlocks\Blocks\BaseBlock;
+use SureCart\Models\User;
 
 /**
  * Checkout block
@@ -12,7 +12,7 @@ abstract class DashboardPage extends BaseBlock {
 	/**
 	 * Holds the customer object.
 	 *
-	 * @var \CheckoutEngine\Models\Customer|null|\WP_Error;
+	 * @var \SureCart\Models\Customer|null|\WP_Error;
 	 */
 	protected $customer = null;
 
@@ -50,7 +50,7 @@ abstract class DashboardPage extends BaseBlock {
 		}
 
 		if ( ! $user->isCustomer() ) {
-			return '<ce-alert type="error" open>' . esc_html__( 'You must be a customer to access this page.', 'checkout-engine' ) . '</ce-alert>';
+			return '<sc-alert type="error" open>' . esc_html__( 'You must be a customer to access this page.', 'surecart' ) . '</sc-alert>';
 		}
 
 		return true;

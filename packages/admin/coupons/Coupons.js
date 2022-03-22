@@ -26,7 +26,7 @@ import ErrorFlash from '../components/ErrorFlash';
 import useCurrentPage from '../mixins/useCurrentPage';
 import useEntities from '../mixins/useEntities';
 import { useDispatch } from '@wordpress/data';
-import { CeButton } from '@checkout-engine/components-react';
+import { ScButton } from '@surecart/components-react';
 
 export default () => {
 	const { saveModel, saveDraft, clearDrafts } = useDispatch(dataStore);
@@ -61,17 +61,17 @@ export default () => {
 	const title = () => {
 		if (isLoading) {
 			return (
-				<ce-skeleton
+				<sc-skeleton
 					style={{
 						width: '120px',
 						display: 'inline-block',
 					}}
-				></ce-skeleton>
+				></sc-skeleton>
 			);
 		}
 		return coupon?.id
-			? __('Edit Coupon', 'checkout_engine')
-			: __('New Coupon', 'checkout_engine');
+			? __('Edit Coupon', 'surecart')
+			: __('New Coupon', 'surecart');
 	};
 
 	const onSubmit = async (e) => {
@@ -166,18 +166,18 @@ export default () => {
 		<Template
 			onSubmit={onSubmit}
 			pageModelName={'coupon'}
-			backUrl={'admin.php?page=ce-coupons'}
-			backText={__('Back to All Coupons', 'checkout_engine')}
+			backUrl={'admin.php?page=sc-coupons'}
+			backText={__('Back to All Coupons', 'surecart')}
 			title={title()}
 			button={
 				isLoading ? (
-					<ce-skeleton
+					<sc-skeleton
 						style={{
 							width: '120px',
 							height: '35px',
 							display: 'inline-block',
 						}}
-					></ce-skeleton>
+					></sc-skeleton>
 				) : (
 					<div
 						css={css`
@@ -186,15 +186,15 @@ export default () => {
 							gap: 0.5em;
 						`}
 					>
-						<CeButton
+						<ScButton
 							type="primary"
 							loading={saving || isSaving}
 							submit
 						>
 							{coupon?.id
-								? __('Update Coupon', 'checkout_engine')
-								: __('Create Coupon', 'checkout_engine')}
-						</CeButton>
+								? __('Update Coupon', 'surecart')
+								: __('Create Coupon', 'surecart')}
+						</ScButton>
 					</div>
 				)
 			}

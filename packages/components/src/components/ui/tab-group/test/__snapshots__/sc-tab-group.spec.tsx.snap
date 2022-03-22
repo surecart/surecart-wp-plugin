@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-tab-group renders 1`] = `
+<sc-tab-group>
+  <mock:shadow-root>
+    <div class="tab-group" part="base">
+      <div class="tab-group__nav-container" part="nav">
+        <div class="tab-group__nav">
+          <div class="tab-group__tabs" part="tabs" role="tablist">
+            <slot name="nav"></slot>
+          </div>
+        </div>
+      </div>
+      <div class="tab-group__body" part="body">
+        <slot></slot>
+      </div>
+    </div>
+  </mock:shadow-root>
+</sc-tab-group>
+`;

@@ -10,13 +10,13 @@ Many models allow you to request additional information relational models by usi
 In many cases, an object contains the ID of a related object in its response properties. For example, a price has an associated product ID. Those models can be queried together in one call. ID fields that can be expanded into models are noted in this documentation with the expandable label. Here's an example:
 
 ```php
-$prices = \CheckoutEngine\Models\Price::with([
+$prices = \SureCart\Models\Price::with([
 	'product'
 ])->paginate(['page'=> 1]);
 ```
 
 ```php
-$promo = \CheckoutEngine\Models\Promotion::with([
+$promo = \SureCart\Models\Promotion::with([
 	'coupon'
 ])->find('8ba8d60f-5277-4e6b-807c-dee8166446d5');
 ```
@@ -25,7 +25,7 @@ $promo = \CheckoutEngine\Models\Promotion::with([
 In some cases, such as a list of all prices for a product, there are available fields that are not included in responses by default. You can request these fields as an expanded response by using the `with` method. Fields that can be included in an expanded response are noted in this documentation with the expandable label.
 
 ```php
-$products = \CheckoutEngine\Models\Product::with([
+$products = \SureCart\Models\Product::with([
 	'prices'
 ])->paginate(['page'=> 1]);
 ```
@@ -34,7 +34,7 @@ $products = \CheckoutEngine\Models\Product::with([
 You can expand recursively by specifying nested fields after a dot (.). For example, requesting customer and customer.billing_address on an order will expand the customer and the customer's billing_address.
 
 ```php
-$orders = \CheckoutEngine\Models\Order::with([
+$orders = \SureCart\Models\Order::with([
 	'customer.billing_address'
 ])->paginate(['page'=> 1]);
 ```
@@ -45,7 +45,7 @@ Expanding list requests are plural, but expanding objects within a list are sing
 
 Example:
 ```php
-$orders = \CheckoutEngine\Models\Order::with( [
+$orders = \SureCart\Models\Order::with( [
 	'line_items',
 	'line_item.price',
 	'price.product'
@@ -54,7 +54,7 @@ $orders = \CheckoutEngine\Models\Order::with( [
 
 Complex Example:
 ```php
-$charges = \CheckoutEngine\Models\Charge::where([
+$charges = \SureCart\Models\Charge::where([
 	'customer_ids' => [ $customer_id ],
 ])->with( [
 	'order',
@@ -72,7 +72,7 @@ You can expand multiple objects at once by identifying multiple items in the `wi
 This is not only limited to `get` or `paginate`. You can use this on `create` or `update` requests as well. This will allow you to create or update a model and fetch it's relations all in one request.
 
 ```php
-\CheckoutEngine\Models\Price::create([
+\SureCart\Models\Price::create([
 	'name' => 'New Price',
 	'amount' => 5000, // $50.00
 	'currency' => 'usd',

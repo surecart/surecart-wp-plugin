@@ -1,6 +1,6 @@
 import { __ } from '@wordpress/i18n';
 import { useRef } from '@wordpress/element';
-import { CeSelect } from '@checkout-engine/components-react';
+import { ScSelect } from '@surecart/components-react';
 import throttle from 'lodash/throttle';
 
 export default ({
@@ -29,7 +29,7 @@ export default ({
 	);
 
 	return (
-		<CeSelect
+		<ScSelect
 			required={required}
 			ref={selectRef}
 			value={value}
@@ -40,15 +40,15 @@ export default ({
 			searchPlaceholder={searchPlaceholder}
 			search
 			position={position}
-			onCeOpen={onFetch}
-			onCeClose={onClose}
-			onCeSearch={(e) => findItem(e.detail)}
-			onCeChange={(e) => {
+			onScOpen={onFetch}
+			onScClose={onClose}
+			onScSearch={(e) => findItem(e.detail)}
+			onScChange={(e) => {
 				onSelect(e.target.value);
 			}}
 			choices={choices}
 		>
 			{!!prefix && prefix}
-		</CeSelect>
+		</ScSelect>
 	);
 };

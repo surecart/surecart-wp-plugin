@@ -1,15 +1,15 @@
 <?php
 /**
- * @package   CheckoutEngineAppCore
+ * @package   SureCartAppCore
  * @author    Andre Gagnon <me@andregagnon.me>
  * @copyright  Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://checkoutengine.com
+ * @link      https://surecart.com
  */
 
-namespace CheckoutEngineAppCore\AppCore;
+namespace SureCartAppCore\AppCore;
 
-use CheckoutEngineCore\Application\Application;
+use SureCartCore\Application\Application;
 
 /**
  * Main communication channel with the theme.
@@ -32,47 +32,47 @@ class AppCore {
 	}
 
 	/**
-	 * Shortcut to \CheckoutEngineAppCore\Assets\Assets.
+	 * Shortcut to \SureCartAppCore\Assets\Assets.
 	 *
-	 * @return \CheckoutEngineAppCore\Assets\Assets
+	 * @return \SureCartAppCore\Assets\Assets
 	 */
 	public function assets() {
-		return $this->app->resolve( 'checkout_engine_app_core.assets.assets' );
+		return $this->app->resolve( 'surecart_app_core.assets.assets' );
 	}
 
 	/**
-	 * Shortcut to \CheckoutEngineAppCore\Avatar\Avatar.
+	 * Shortcut to \SureCartAppCore\Avatar\Avatar.
 	 *
-	 * @return \CheckoutEngineAppCore\Avatar\Avatar
+	 * @return \SureCartAppCore\Avatar\Avatar
 	 */
 	public function avatar() {
-		return $this->app->resolve( 'checkout_engine_app_core.avatar.avatar' );
+		return $this->app->resolve( 'surecart_app_core.avatar.avatar' );
 	}
 
 	/**
-	 * Shortcut to \CheckoutEngineAppCore\Config\Config.
+	 * Shortcut to \SureCartAppCore\Config\Config.
 	 *
-	 * @return \CheckoutEngineAppCore\Config\Config
+	 * @return \SureCartAppCore\Config\Config
 	 */
 	public function config() {
-		return $this->app->resolve( 'checkout_engine_app_core.config.config' );
+		return $this->app->resolve( 'surecart_app_core.config.config' );
 	}
 
 	/**
-	 * Shortcut to \CheckoutEngineAppCore\Image\Image.
+	 * Shortcut to \SureCartAppCore\Image\Image.
 	 *
-	 * @return \CheckoutEngineAppCore\Image\Image
+	 * @return \SureCartAppCore\Image\Image
 	 */
 	public function image() {
-		return $this->app->resolve( 'checkout_engine_app_core.image.image' );
+		return $this->app->resolve( 'surecart_app_core.image.image' );
 	}
 
 	/**
-	 * Shortcut to \CheckoutEngineAppCore\Sidebar\Sidebar.
+	 * Shortcut to \SureCartAppCore\Sidebar\Sidebar.
 	 *
-	 * @return \CheckoutEngineAppCore\Sidebar\Sidebar
+	 * @return \SureCartAppCore\Sidebar\Sidebar
 	 */
 	public function sidebar() {
-		return $this->app->resolve( 'checkout_engine_app_core.sidebar.sidebar' );
+		return $this->app->resolve( 'surecart_app_core.sidebar.sidebar' );
 	}
 }

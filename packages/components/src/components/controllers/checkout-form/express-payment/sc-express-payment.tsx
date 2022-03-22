@@ -1,0 +1,52 @@
+import { Order } from '../../../../types';
+import { Component, Fragment, h, Listen, Prop, State } from '@stencil/core';
+import { openWormhole } from 'stencil-wormhole';
+
+@Component({
+  tag: 'sc-express-payment',
+  styleUrl: 'sc-express-payment.css',
+  shadow: false,
+})
+export class ScExpressPayment {
+  @Prop() processor: 'stripe' | 'paypal';
+  @Prop() formId: number | string;
+  @Prop() busy: boolean;
+  @Prop() order: Order;
+  @Prop() dividerText: string;
+  @Prop() debug: boolean;
+
+  @State() hasPaymentOptions: boolean;
+
+  @Listen('scPaymentRequestLoaded')
+  onPaymentRequestLoaded() {
+    this.hasPaymentOptions = true;
+  }
+
+  renderStripePaymentRequest() {
+    if (!this?.order?.processor_data?.stripe?.publishable_key || !this?.order?.processor_data?.stripe?.account_id) {
+      return '';
+    }
+
+    return (
+      <sc-stripe-payment-request
+        formId={this.formId}
+        debug={this.debug}
+        order={this.order}
+        stripeAccountId={this?.order?.processor_data?.stripe?.account_id}
+        publishableKey={this?.order?.processor_data?.stripe?.publishable_key}
+      ></sc-stripe-payment-request>
+    );
+  }
+
+  render() {
+    return (
+      <Fragment>
+        {this.renderStripePaymentRequest()}
+        {(this.hasPaymentOptions || this.debug) && <sc-divider style={{ '--spacing': 'calc(var(--sc-form-row-spacing)/2)' }}>{this.dividerText}</sc-divider>}
+        {this.busy && <sc-block-ui></sc-block-ui>}
+      </Fragment>
+    );
+  }
+}
+
+openWormhole(ScExpressPayment, ['order', 'formId', 'busy'], false);

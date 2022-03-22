@@ -6,7 +6,7 @@ import { sass } from '@stencil/sass';
 import { readFileSync } from 'fs';
 
 export const config: Config = {
-  namespace: 'checkout-engine',
+  namespace: 'surecart',
   globalStyle: './src/themes/base.css',
   devServer: {
     https: {
@@ -25,7 +25,7 @@ export const config: Config = {
   },
   outputTargets: [
     reactOutputTarget({
-      componentCorePackage: '@checkout-engine/components',
+      componentCorePackage: '@surecart/components',
       proxiesFile: '../components-react/src/components/index.ts',
       includeDefineCustomElements: false,
     }),

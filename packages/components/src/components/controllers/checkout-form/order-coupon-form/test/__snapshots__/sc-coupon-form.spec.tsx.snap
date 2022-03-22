@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-order-coupon-form renders 1`] = `
+<sc-order-coupon-form>
+  <mock:shadow-root>
+    <sc-coupon-form>
+      <slot>
+        Apply Coupon
+      </slot>
+    </sc-coupon-form>
+  </mock:shadow-root>
+</sc-order-coupon-form>
+`;

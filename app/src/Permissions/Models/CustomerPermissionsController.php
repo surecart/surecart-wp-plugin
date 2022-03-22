@@ -1,5 +1,5 @@
 <?php
-namespace CheckoutEngine\Permissions\Models;
+namespace SureCart\Permissions\Models;
 
 /**
  * Handle permissions.
@@ -8,9 +8,9 @@ class CustomerPermissionsController extends ModelPermissionsController {
 	/**
 	 * Can user edit
 	 *
-	 * @param \CheckoutEngine\Models\User $user User model.
-	 * @param array                       $args {
-	 *                        Arguments that accompany the requested capability check.
+	 * @param \SureCart\Models\User $user User model.
+	 * @param array                 $args {
+	 *                  Arguments that accompany the requested capability check.
 	 *     @type string    $0 Requested capability.
 	 *     @type int       $1 Concerned user ID.
 	 *     @type mixed  ...$2 Optional second and further parameters, typically object ID.
@@ -24,9 +24,9 @@ class CustomerPermissionsController extends ModelPermissionsController {
 	/**
 	 * Can user read
 	 *
-	 * @param \CheckoutEngine\Models\User $user User model.
-	 * @param array                       $args {
-	 *                        Arguments that accompany the requested capability check.
+	 * @param \SureCart\Models\User $user User model.
+	 * @param array                 $args {
+	 *                  Arguments that accompany the requested capability check.
 	 *     @type string    $0 Requested capability.
 	 *     @type int       $1 Concerned user ID.
 	 *     @type mixed  ...$2 Optional second and further parameters, typically object ID.
@@ -40,8 +40,8 @@ class CustomerPermissionsController extends ModelPermissionsController {
 	/**
 	 * Does the customer id match the user id.
 	 *
-	 * @param \CheckoutEngine\Models\User $user User model.
-	 * @param string                      $id Customer ID.
+	 * @param \SureCart\Models\User $user User model.
+	 * @param string                $id Customer ID.
 	 * @return boolean
 	 */
 	public function customerIdMatches( $user, $id ) {

@@ -1,9 +1,9 @@
 <?php
-namespace CheckoutEngineBlocks\Controllers;
+namespace SureCartBlocks\Controllers;
 
-use CheckoutEngine\Models\Component;
-use CheckoutEngine\Models\Customer;
-use CheckoutEngine\Models\User;
+use SureCart\Models\Component;
+use SureCart\Models\Customer;
+use SureCart\Models\User;
 
 /**
  * Payment method block controller class.
@@ -25,11 +25,11 @@ class UserController extends BaseController {
 		$data = get_userdata( $user->ID );
 
 		return wp_kses_post(
-			Component::tag( 'ce-wordpress-user' )
+			Component::tag( 'sc-wordpress-user' )
 			->id( 'wordpress-user-edit' )
 			->with(
 				[
-					'heading' => __( 'Account Details', 'checkout-engine' ),
+					'heading' => __( 'Account Details', 'surecart' ),
 					'user'    => [
 						'display_name' => $user->display_name,
 						'email'        => $user->user_email,
@@ -52,26 +52,26 @@ class UserController extends BaseController {
 			return '';
 		}
 		$data = get_userdata( $user->ID );
-		$back = add_query_arg( [ 'tab' => $this->getTab() ], \CheckoutEngine::pages()->url( 'dashboard' ) );
+		$back = add_query_arg( [ 'tab' => $this->getTab() ], \SureCart::pages()->url( 'dashboard' ) );
 		ob_start(); ?>
 
-		<ce-spacing style="--spacing: var(--ce-spacing-large)">
-			<ce-breadcrumbs>
-				<ce-breadcrumb href="<?php echo esc_url( $back ); ?>">
-					<?php esc_html_e( 'Dashboard', 'checkout_engine' ); ?>
-				</ce-breadcrumb>
-				<ce-breadcrumb>
-					<?php esc_html_e( 'Account Details', 'checkout_engine' ); ?>
-				</ce-breadcrumb>
-			</ce-breadcrumbs>
+		<sc-spacing style="--spacing: var(--sc-spacing-large)">
+			<sc-breadcrumbs>
+				<sc-breadcrumb href="<?php echo esc_url( $back ); ?>">
+					<?php esc_html_e( 'Dashboard', 'surecart' ); ?>
+				</sc-breadcrumb>
+				<sc-breadcrumb>
+					<?php esc_html_e( 'Account Details', 'surecart' ); ?>
+				</sc-breadcrumb>
+			</sc-breadcrumbs>
 
 			<?php
 				echo wp_kses_post(
-					Component::tag( 'ce-wordpress-user-edit' )
+					Component::tag( 'sc-wordpress-user-edit' )
 					->id( 'wordpress-user-edit' )
 					->with(
 						[
-							'heading'    => $attributes['title'] ?? __( 'Update Account Details', 'checkout-engine' ),
+							'heading'    => $attributes['title'] ?? __( 'Update Account Details', 'surecart' ),
 							'user'       => [
 								'id'           => $user->ID,
 								'display_name' => $user->display_name,
@@ -88,11 +88,11 @@ class UserController extends BaseController {
 
 		<?php
 				echo wp_kses_post(
-					Component::tag( 'ce-wordpress-password-edit' )
+					Component::tag( 'sc-wordpress-password-edit' )
 					->id( 'wordpress-password-edit' )
 					->with(
 						[
-							'heading'    => $attributes['title'] ?? __( 'Update Password', 'checkout-engine' ),
+							'heading'    => $attributes['title'] ?? __( 'Update Password', 'surecart' ),
 							'user'       => [
 								'id'           => $user->ID,
 								'display_name' => $user->display_name,
@@ -106,7 +106,7 @@ class UserController extends BaseController {
 				);
 
 		?>
-		</ce-spacing>
+		</sc-spacing>
 
 			<?php
 			return ob_get_clean();

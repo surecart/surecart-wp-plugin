@@ -26,47 +26,47 @@
 
 ### Used by
 
- - [ce-charges-list](../../controllers/dashboard/charges-list)
- - [ce-customer-details](../customer-details)
- - [ce-customer-edit](../../controllers/dashboard/customer-edit)
- - [ce-downloads-list](../downloads-list)
- - [ce-invoices-list](../../controllers/dashboard/invoices-list)
- - [ce-login-form](../../controllers/login)
- - [ce-orders-list](../../controllers/dashboard/orders-list)
- - [ce-payment-method-create](../../controllers/dashboard/payment-method-create)
- - [ce-payment-methods-list](../../controllers/dashboard/payment-methods-list)
- - [ce-subscription](../../controllers/dashboard/subscription)
- - [ce-subscription-cancel](../../controllers/dashboard/subscription-cancel)
- - [ce-subscription-payment](../../controllers/dashboard/subscription-payment)
- - [ce-subscription-renew](../../controllers/dashboard/subscription-renew)
- - [ce-subscriptions-list](../../controllers/dashboard/subscriptions-list)
- - [ce-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
- - [ce-wordpress-password-edit](../../controllers/dashboard/wordpress-password-edit)
- - [ce-wordpress-user](../../controllers/dashboard/wordpress-user)
- - [ce-wordpress-user-edit](../../controllers/dashboard/wordpress-user-edit)
+ - [sc-charges-list](../../controllers/dashboard/charges-list)
+ - [sc-customer-details](../customer-details)
+ - [sc-customer-edit](../../controllers/dashboard/customer-edit)
+ - [sc-downloads-list](../downloads-list)
+ - [sc-invoices-list](../../controllers/dashboard/invoices-list)
+ - [sc-login-form](../../controllers/login)
+ - [sc-orders-list](../../controllers/dashboard/orders-list)
+ - [sc-payment-method-create](../../controllers/dashboard/payment-method-create)
+ - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
+ - [sc-subscription](../../controllers/dashboard/subscription)
+ - [sc-subscription-cancel](../../controllers/dashboard/subscription-cancel)
+ - [sc-subscription-payment](../../controllers/dashboard/subscription-payment)
+ - [sc-subscription-renew](../../controllers/dashboard/subscription-renew)
+ - [sc-subscriptions-list](../../controllers/dashboard/subscriptions-list)
+ - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
+ - [sc-wordpress-password-edit](../../controllers/dashboard/wordpress-password-edit)
+ - [sc-wordpress-user](../../controllers/dashboard/wordpress-user)
+ - [sc-wordpress-user-edit](../../controllers/dashboard/wordpress-user-edit)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-charges-list --> ce-card
-  ce-customer-details --> ce-card
-  ce-customer-edit --> ce-card
-  ce-downloads-list --> ce-card
-  ce-invoices-list --> ce-card
-  ce-login-form --> ce-card
-  ce-orders-list --> ce-card
-  ce-payment-method-create --> ce-card
-  ce-payment-methods-list --> ce-card
-  ce-subscription --> ce-card
-  ce-subscription-cancel --> ce-card
-  ce-subscription-payment --> ce-card
-  ce-subscription-renew --> ce-card
-  ce-subscriptions-list --> ce-card
-  ce-upcoming-invoice --> ce-card
-  ce-wordpress-password-edit --> ce-card
-  ce-wordpress-user --> ce-card
-  ce-wordpress-user-edit --> ce-card
-  style ce-card fill:#f9f,stroke:#333,stroke-width:4px
+  sc-charges-list --> sc-card
+  sc-customer-details --> sc-card
+  sc-customer-edit --> sc-card
+  sc-downloads-list --> sc-card
+  sc-invoices-list --> sc-card
+  sc-login-form --> sc-card
+  sc-orders-list --> sc-card
+  sc-payment-method-create --> sc-card
+  sc-payment-methods-list --> sc-card
+  sc-subscription --> sc-card
+  sc-subscription-cancel --> sc-card
+  sc-subscription-payment --> sc-card
+  sc-subscription-renew --> sc-card
+  sc-subscriptions-list --> sc-card
+  sc-upcoming-invoice --> sc-card
+  sc-wordpress-password-edit --> sc-card
+  sc-wordpress-user --> sc-card
+  sc-wordpress-user-edit --> sc-card
+  style sc-card fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

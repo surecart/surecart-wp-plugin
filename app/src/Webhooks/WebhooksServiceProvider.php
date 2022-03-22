@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngine\Webhooks;
+namespace SureCart\Webhooks;
 
-use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
+use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 /**
  * WordPress Users service.
@@ -15,12 +15,12 @@ class WebhooksServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function register( $container ) {
-		$container['checkout_engine.webhooks'] = function () use ( $container ) {
+		$container['surecart.webhooks'] = function () use ( $container ) {
 			return new WebhooksService( new WebhooksHistoryService() );
 		};
 
-		$app = $container[ CHECKOUT_ENGINE_APPLICATION_KEY ];
-		$app->alias( 'webhooks', 'checkout_engine.webhooks' );
+		$app = $container[ SURECART_APPLICATION_KEY ];
+		$app->alias( 'webhooks', 'surecart.webhooks' );
 	}
 
 	/**
@@ -30,9 +30,9 @@ class WebhooksServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function bootstrap( $container ) {
-		if ( ! empty( $container['checkout_engine.webhooks'] ) ) {
-			$container['checkout_engine.webhooks']->maybeCreateWebooks();
-			$container['checkout_engine.webhooks']->listenForDomainChanges();
+		if ( ! empty( $container['surecart.webhooks'] ) ) {
+			$container['surecart.webhooks']->maybeCreateWebooks();
+			$container['surecart.webhooks']->listenForDomainChanges();
 		}
 	}
 }

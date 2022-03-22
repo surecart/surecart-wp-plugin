@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngine\Permissions\Models;
+namespace SureCart\Permissions\Models;
 
-use CheckoutEngine\Models\User;
+use SureCart\Models\User;
 
 /**
  * Model permissions abstract class.
@@ -56,9 +56,9 @@ abstract class ModelPermissionsController {
 	/**
 	 * Does the model belong to the user?
 	 *
-	 * @param string                      $model Model name.
-	 * @param string                      $id Model ID.
-	 * @param \CheckoutEngine\Models\User $user User model.
+	 * @param string                $model Model name.
+	 * @param string                $id Model ID.
+	 * @param \SureCart\Models\User $user User model.
 	 * @return boolean
 	 */
 	public function belongsToUser( $model, $id, $user ) {

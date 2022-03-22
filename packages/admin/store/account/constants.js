@@ -1,1 +1,1 @@
-export default 'checkout-engine/account';
+export default 'surecart/account';

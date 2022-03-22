@@ -9,29 +9,29 @@
 
 ### Used by
 
- - [ce-charges-list](../../controllers/dashboard/charges-list)
- - [ce-customer-details](../customer-details)
- - [ce-downloads-list](../downloads-list)
- - [ce-invoices-list](../../controllers/dashboard/invoices-list)
- - [ce-orders-list](../../controllers/dashboard/orders-list)
- - [ce-payment-methods-list](../../controllers/dashboard/payment-methods-list)
- - [ce-subscription](../../controllers/dashboard/subscription)
- - [ce-subscriptions-list](../../controllers/dashboard/subscriptions-list)
- - [ce-wordpress-user](../../controllers/dashboard/wordpress-user)
+ - [sc-charges-list](../../controllers/dashboard/charges-list)
+ - [sc-customer-details](../customer-details)
+ - [sc-downloads-list](../downloads-list)
+ - [sc-invoices-list](../../controllers/dashboard/invoices-list)
+ - [sc-orders-list](../../controllers/dashboard/orders-list)
+ - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
+ - [sc-subscription](../../controllers/dashboard/subscription)
+ - [sc-subscriptions-list](../../controllers/dashboard/subscriptions-list)
+ - [sc-wordpress-user](../../controllers/dashboard/wordpress-user)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-charges-list --> ce-stacked-list
-  ce-customer-details --> ce-stacked-list
-  ce-downloads-list --> ce-stacked-list
-  ce-invoices-list --> ce-stacked-list
-  ce-orders-list --> ce-stacked-list
-  ce-payment-methods-list --> ce-stacked-list
-  ce-subscription --> ce-stacked-list
-  ce-subscriptions-list --> ce-stacked-list
-  ce-wordpress-user --> ce-stacked-list
-  style ce-stacked-list fill:#f9f,stroke:#333,stroke-width:4px
+  sc-charges-list --> sc-stacked-list
+  sc-customer-details --> sc-stacked-list
+  sc-downloads-list --> sc-stacked-list
+  sc-invoices-list --> sc-stacked-list
+  sc-orders-list --> sc-stacked-list
+  sc-payment-methods-list --> sc-stacked-list
+  sc-subscription --> sc-stacked-list
+  sc-subscriptions-list --> sc-stacked-list
+  sc-wordpress-user --> sc-stacked-list
+  style sc-stacked-list fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

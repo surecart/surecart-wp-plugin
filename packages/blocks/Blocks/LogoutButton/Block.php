@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngineBlocks\Blocks\LogoutButton;
+namespace SureCartBlocks\Blocks\LogoutButton;
 
-use CheckoutEngineBlocks\Blocks\BaseBlock;
+use SureCartBlocks\Blocks\BaseBlock;
 
 /**
  * Logout Button Block.
@@ -33,14 +33,14 @@ class Block extends BaseBlock {
 		$current_url = ( is_ssl() ? 'https://' : 'http://' ) . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 		$current_url = remove_query_arg( 'tab', $current_url );
 
-		return \CheckoutEngine::blocks()->render(
+		return \SureCart::blocks()->render(
 			'blocks/logout-button',
 			[
 				'href'      => esc_url( wp_logout_url( $attributes['redirectToCurrent'] ? $current_url : '' ) ),
 				'type'      => $attributes['type'] ?? 'primary',
 				'size'      => $attributes['size'] ?? 'medium',
 				'show_icon' => (bool) $attributes['show_icon'] ?? false,
-				'label'     => $attributes['label'] ?? __( 'Logout', 'checkout_engine' ),
+				'label'     => $attributes['label'] ?? __( 'Logout', 'surecart' ),
 			]
 		);
 	}

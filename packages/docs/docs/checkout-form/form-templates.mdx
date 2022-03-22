@@ -11,24 +11,24 @@ If you wish to create a form that a user cannot edit, you may want to try creati
 
 ## Register Your Form Template
 
-You can register your form template using Checkout Engines `checkout_engine_register_form_template` function:
+You can register your form template using SureCarts `surecart_register_form_template` function:
 
 ```php
-checkout_engine_register_form_template([
+surecart_register_form_template([
 	'name' => 'Donation Form',
 	'category' => 'Donation',
 	'post_type' => 'any',
 	'template' => [
-		[ "checkout-engine/pricing-section",
+		[ "surecart/pricing-section",
 			[
 				'label' => 'My Label',
 				'columns' = 2
 			]
 		],
-		[ "checkout-engine/contact-section" ],
-		[ "checkout-engine/payment-section" ],
-		[ "checkout-engine/totals-section" ],
-		[ "checkout-engine/submit" ]
+		[ "surecart/contact-section" ],
+		[ "surecart/payment-section" ],
+		[ "surecart/totals-section" ],
+		[ "surecart/submit" ]
 	]
 ]);
 ```

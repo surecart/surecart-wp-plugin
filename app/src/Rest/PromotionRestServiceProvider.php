@@ -1,9 +1,9 @@
 <?php
 
-namespace CheckoutEngine\Rest;
+namespace SureCart\Rest;
 
-use CheckoutEngine\Rest\RestServiceInterface;
-use CheckoutEngine\Controllers\Rest\PromotionsController;
+use SureCart\Rest\RestServiceInterface;
+use SureCart\Controllers\Rest\PromotionsController;
 
 /**
  * Service provider for Price Rest Requests
@@ -43,7 +43,7 @@ class PromotionRestServiceProvider extends RestServiceProvider implements RestSe
 			// In JSON Schema you can specify object properties in the properties attribute.
 			'properties' => [
 				'id' => [
-					'description' => esc_html__( 'Unique identifier for the object.', 'checkout_engine' ),
+					'description' => esc_html__( 'Unique identifier for the object.', 'surecart' ),
 					'type'        => 'string',
 					'readonly'    => true,
 				],

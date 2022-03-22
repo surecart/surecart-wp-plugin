@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-format-date renders 1`] = `
+<sc-format-date>
+  3/8/2022
+</sc-format-date>
+`;

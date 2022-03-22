@@ -12,65 +12,62 @@ import { button as icon } from '@wordpress/icons';
 
 import PriceChoices from '@scripts/blocks/components/PriceChoices';
 
-export default ( { setAttributes } ) => {
-	const [ line_items, setLineItems ] = useState( [ { quantity: 1 } ] );
+export default ({ setAttributes }) => {
+	const [line_items, setLineItems] = useState([{ quantity: 1 }]);
 
-	const removeLineItem = ( index ) => {
-		setLineItems( line_items.filter( ( _, i ) => i !== index ) );
+	const removeLineItem = (index) => {
+		setLineItems(line_items.filter((_, i) => i !== index));
 	};
 
-	const updateLineItem = ( data, index ) => {
+	const updateLineItem = (data, index) => {
 		setLineItems(
-			line_items.map( ( item, i ) => {
-				if ( i !== index ) return item;
+			line_items.map((item, i) => {
+				if (i !== index) return item;
 				return {
 					...item,
 					...data,
 				};
-			} )
+			})
 		);
 	};
 
 	const addLineItem = () => {
-		setLineItems( [
-			...( line_items || [] ),
+		setLineItems([
+			...(line_items || []),
 			{
 				quantity: 1,
 			},
-		] );
+		]);
 	};
 
 	return (
-		<Placeholder
-			icon={ icon }
-			label={ __( 'Select some products', 'checkout_engine' ) }
-		>
+		<Placeholder icon={icon} label={__('Select some products', 'surecart')}>
 			<div
-				css={ css`
+				css={css`
 					display: grid;
 					gap: 0.5em;
 					width: 100%;
-				` }
+				`}
 			>
 				<PriceChoices
-					choices={ line_items }
-					onAddProduct={ addLineItem }
-					onUpdate={ updateLineItem }
-					onRemove={ removeLineItem }
-					onNew={ () => {} }
+					choices={line_items}
+					onAddProduct={addLineItem}
+					onUpdate={updateLineItem}
+					onRemove={removeLineItem}
+					onNew={() => {}}
 				/>
 				<hr />
 				<div
-					css={ css`
+					css={css`
 						display: flex;
 						justify-content: flex-end;
-					` }
+					`}
 				>
 					<Button
 						isPrimary
-						onClick={ () => setAttributes( { line_items } ) }
+						onClick={() => setAttributes({ line_items })}
 					>
-						{ __( 'Create Buy Button', 'checkout_engine' ) }
+						{__('Create Buy Button', 'surecart')}
 					</Button>
 				</div>
 			</div>

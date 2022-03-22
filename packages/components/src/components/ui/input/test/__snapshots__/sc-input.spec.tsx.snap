@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-input renders 1`] = `
+<sc-input size="medium" type="text" value="">
+  <mock:shadow-root>
+    <sc-form-control help="" helpid="input-help-text-1" inputid="input-1" labelid="input-label-1" showlabel="" size="medium">
+      <div class="input input--medium" part="base">
+        <span class="input__prefix" part="prefix">
+          <slot name="prefix"></slot>
+        </span>
+        <slot>
+          <input class="input__control" id="input-1" part="input" type="text" value="">
+        </slot>
+        <span class="input__suffix" part="suffix">
+          <slot name="suffix"></slot>
+        </span>
+      </div>
+    </sc-form-control>
+  </mock:shadow-root>
+</sc-input>
+`;

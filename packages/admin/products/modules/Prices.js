@@ -8,11 +8,11 @@ import Box from '../../ui/Box';
 import Price from '../components/price/index.js';
 
 import {
-	CeButton,
-	CeChoice,
-	CeChoices,
-	CeSwitch,
-} from '@checkout-engine/components-react';
+	ScButton,
+	ScChoice,
+	ScChoices,
+	ScSwitch,
+} from '@surecart/components-react';
 import useEntities from '../../mixins/useEntities';
 import useCurrentPage from '../../mixins/useCurrentPage';
 import { useEffect } from 'react';
@@ -88,7 +88,7 @@ export default ({ product, updateProduct, loading }) => {
 	return (
 		<div>
 			<Box
-				title={__('Pricing', 'checkout_engine')}
+				title={__('Pricing', 'surecart')}
 				description={
 					!activePrices?.length ? __('Please add a price.') : ''
 				}
@@ -98,7 +98,7 @@ export default ({ product, updateProduct, loading }) => {
 					(shouldShowButton || archivedPrices?.length) && (
 						<Fragment>
 							{shouldShowButton && (
-								<CeButton
+								<ScButton
 									onClick={(e) => {
 										e.preventDefault();
 										addPrice({
@@ -138,8 +138,8 @@ export default ({ product, updateProduct, loading }) => {
 											y2="12"
 										></line>
 									</svg>
-									{__('Add Another Price', 'checkout_engine')}
-								</CeButton>
+									{__('Add Another Price', 'surecart')}
+								</ScButton>
 							)}
 							{!!archivedPrices?.length && (
 								<div
@@ -148,7 +148,7 @@ export default ({ product, updateProduct, loading }) => {
 										justify-content: flex-end;
 									`}
 								>
-									<CeSwitch
+									<ScSwitch
 										checked={!!showArchived}
 										onClick={(e) => {
 											e.preventDefault();
@@ -159,15 +159,15 @@ export default ({ product, updateProduct, loading }) => {
 											!showArchived
 												? __(
 														'Show %d Archived Prices',
-														'checkout_engine'
+														'surecart'
 												  )
 												: __(
 														'Hide %d Archived Prices',
-														'checkout_engine'
+														'surecart'
 												  ),
 											archivedPrices?.length
 										)}
-									</CeSwitch>
+									</ScSwitch>
 								</div>
 							)}
 						</Fragment>
@@ -176,51 +176,45 @@ export default ({ product, updateProduct, loading }) => {
 			>
 				<ErrorFlash errors={priceErrors} onHide={clearPriceErrors} />
 				{!id && (
-					<CeChoices
+					<ScChoices
 						css={css`
 							margin-bottom: 1em;
 						`}
 						required
-						label={__('Product Type', 'checkout_engine')}
+						label={__('Product Type', 'surecart')}
 						style={{ '--columns': 2 }}
 					>
 						<div>
-							<CeChoice
+							<ScChoice
 								checked={!product?.recurring}
 								value="single"
-								onCeChange={(e) => {
+								onScChange={(e) => {
 									if (!e.target.checked) return;
 									updateProduct({ recurring: false });
 								}}
 							>
-								{__('Single Payment', 'checkout_engine')}
+								{__('Single Payment', 'surecart')}
 								<span slot="description">
-									{__(
-										'Charge a one-time fee.',
-										'checkout_engine'
-									)}
+									{__('Charge a one-time fee.', 'surecart')}
 								</span>
-							</CeChoice>
-							<CeChoice
+							</ScChoice>
+							<ScChoice
 								checked={product?.recurring}
 								value="subscription"
-								onCeChange={(e) => {
+								onScChange={(e) => {
 									if (!e.target.checked) return;
 									updateProduct({
 										recurring: true,
 									});
 								}}
 							>
-								{__('Subscription', 'checkout_engine')}
+								{__('Subscription', 'surecart')}
 								<span slot="description">
-									{__(
-										'Charge an ongoing fee.',
-										'checkout_engine'
-									)}
+									{__('Charge an ongoing fee.', 'surecart')}
 								</span>
-							</CeChoice>
+							</ScChoice>
 						</div>
-					</CeChoices>
+					</ScChoices>
 				)}
 				{renderPrices()}
 			</Box>

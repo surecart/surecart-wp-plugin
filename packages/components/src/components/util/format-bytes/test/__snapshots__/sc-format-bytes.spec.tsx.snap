@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-format-bytes renders 1`] = `
+<sc-format-bytes>
+  <mock:shadow-root>
+    0 byte
+  </mock:shadow-root>
+</sc-format-bytes>
+`;

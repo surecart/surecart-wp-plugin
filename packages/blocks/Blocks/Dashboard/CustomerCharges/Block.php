@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngineBlocks\Blocks\Dashboard\CustomerCharges;
+namespace SureCartBlocks\Blocks\Dashboard\CustomerCharges;
 
-use CheckoutEngineBlocks\Blocks\Dashboard\DashboardPage;
+use SureCartBlocks\Blocks\Dashboard\DashboardPage;
 
 /**
  * Checkout block
@@ -32,7 +32,7 @@ class Block extends DashboardPage {
 	 * @return function
 	 */
 	public function show( $id ) {
-		return \CheckoutEngine::blocks()->render(
+		return \SureCart::blocks()->render(
 			'web/dashboard/charges/show',
 			[
 				'id'            => $id,
@@ -74,7 +74,7 @@ class Block extends DashboardPage {
 		if ( empty( $this->customer_id ) ) {
 			return;
 		}
-		return \CheckoutEngine::blocks()->render(
+		return \SureCart::blocks()->render(
 			'web/dashboard/charges/index',
 			[
 				'query' => [

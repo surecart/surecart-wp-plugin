@@ -1,4 +1,4 @@
-import controls from '@checkout-engine/data/controls';
+import controls from '@surecart/data/controls';
 import reducer from './reducer';
 import * as selectors from './selectors';
 import * as actions from './actions';

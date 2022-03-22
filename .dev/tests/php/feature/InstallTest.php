@@ -1,16 +1,16 @@
 <?php
-namespace CheckoutEngine\Tests\WordPress\Admin;
+namespace SureCart\Tests\WordPress\Admin;
 
 
-use CheckoutEngine\Activation\ActivationServiceProvider;
-use CheckoutEngine\Permissions\RolesServiceProvider;
-use CheckoutEngine\Tests\CheckoutEngineUnitTestCase;
-use CheckoutEngine\WordPress\Pages\PageService;
-use CheckoutEngine\WordPress\Pages\PageServiceProvider;
-use CheckoutEngine\WordPress\PluginServiceProvider;
-use CheckoutEngine\WordPress\PostTypes\FormPostTypeServiceProvider;
+use SureCart\Activation\ActivationServiceProvider;
+use SureCart\Permissions\RolesServiceProvider;
+use SureCart\Tests\SureCartUnitTestCase;
+use SureCart\WordPress\Pages\PageService;
+use SureCart\WordPress\Pages\PageServiceProvider;
+use SureCart\WordPress\PluginServiceProvider;
+use SureCart\WordPress\PostTypes\FormPostTypeServiceProvider;
 
-class InstallTest extends CheckoutEngineUnitTestCase {
+class InstallTest extends SureCartUnitTestCase {
 	use \Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 
 	/**
@@ -21,7 +21,7 @@ class InstallTest extends CheckoutEngineUnitTestCase {
 		parent::setUp();
 
 		// Set up an app instance with whatever stubs and mocks we need before every test.
-		\CheckoutEngine::make()->bootstrap([
+		\SureCart::make()->bootstrap([
 			'providers' => [
 				PageServiceProvider::class,
 				RolesServiceProvider::class,
@@ -34,22 +34,22 @@ class InstallTest extends CheckoutEngineUnitTestCase {
 
 	public function test_creates_posts_and_forms()
 	{
-		\CheckoutEngine::plugin()->activation()->activate();
+		\SureCart::plugin()->activation()->activate();
 
 		$page_service = new PageService();
 		$form = $page_service->get('checkout', 'sc_form');
 		$this->assertSame($form->post_type, 'sc_form');
-		$this->assertStringContainsString('wp:checkout-engine/form', $form->post_content);
+		$this->assertStringContainsString('wp:surecart/form', $form->post_content);
 
-		$default_form = \CheckoutEngine::forms()->getDefault();
+		$default_form = \SureCart::forms()->getDefault();
 		$this->assertEquals($form->ID, $default_form->ID);
 
 		$page = $page_service->get('checkout');
 		$this->assertSame($page->post_type, 'page');
-		$this->assertStringContainsString('wp:checkout-engine/checkout-form', $page->post_content);
+		$this->assertStringContainsString('wp:surecart/checkout-form', $page->post_content);
 
 		$page = $page_service->get('dashboard');
 		$this->assertSame($page->post_type, 'page');
-		$this->assertStringContainsString('wp:checkout-engine/dashboard', $page->post_content);
+		$this->assertStringContainsString('wp:surecart/dashboard', $page->post_content);
 	}
 }

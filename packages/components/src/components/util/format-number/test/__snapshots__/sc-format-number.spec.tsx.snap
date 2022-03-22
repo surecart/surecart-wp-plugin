@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-format-currency renders 1`] = `
+<sc-format-number value="2000">
+  20
+</sc-format-number>
+`;

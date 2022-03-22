@@ -5,7 +5,7 @@ import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';
 import Box from '../../ui/Box';
 import { translateInterval } from '../../util/translations';
-import { CeButton } from '@checkout-engine/components-react';
+import { ScButton } from '@surecart/components-react';
 import Definition from '../../ui/Definition';
 
 import useSubscriptionItemsData from '../hooks/useSubscriptionItemsData';
@@ -16,118 +16,118 @@ export default () => {
 	const { items } = useSubscriptionItemsData();
 
 	const renderLoading = () => {
-		return <ce-skeleton></ce-skeleton>;
+		return <sc-skeleton></sc-skeleton>;
 	};
 
 	const renderRefund = (
 		<Fragment>
 			<div>
-				<CeButton>Refund</CeButton>
+				<ScButton>Refund</ScButton>
 			</div>
 			<div>
-				{ /* { [ 'finalized', 'paid' ].includes( subscription?.status ) &&
+				{/* { [ 'finalized', 'paid' ].includes( subscription?.status ) &&
 					__(
 						'This subscription is no longer editable',
-						'checkout_engine'
-					) } */ }
+						'surecart'
+					) } */}
 			</div>
 		</Fragment>
 	);
 
 	return (
 		<Box
-			title={ __( 'Subscription Details', 'checkout_engine' ) }
-			footer={ renderRefund }
+			title={__('Subscription Details', 'surecart')}
+			footer={renderRefund}
 		>
-			{ loading ? (
+			{loading ? (
 				renderLoading()
 			) : (
 				<Fragment>
-					{ ( items || [] ).map( ( item, index ) => {
+					{(items || []).map((item, index) => {
 						return (
-							<ce-product-line-item
-								key={ item.id }
+							<sc-product-line-item
+								key={item.id}
 								imageUrl={
 									item?.price?.metadata?.wp_attachment_src
 								}
-								name={ `${ item?.price?.product?.name } \u2013 ${ item?.price?.name }` }
-								editable={ false }
-								removable={ false }
-								quantity={ item.quantity }
+								name={`${item?.price?.product?.name} \u2013 ${item?.price?.name}`}
+								editable={false}
+								removable={false}
+								quantity={item.quantity}
 								amount={
 									item.ad_hoc_amount !== null
 										? item.ad_hoc_amount
 										: item.price.amount
 								}
-								currency={ item?.price?.currency }
+								currency={item?.price?.currency}
 								trialDurationDays={
 									item?.price?.trial_duration_days
 								}
-								interval={ translateInterval(
+								interval={translateInterval(
 									item?.price?.recurring_interval_count,
 									item?.price?.recurring_interval
-								) }
-							></ce-product-line-item>
+								)}
+							></sc-product-line-item>
 						);
-					} ) }
+					})}
 
 					<hr />
 
-					<Definition title={ __( 'Subtotal', 'order' ) }>
-						<ce-format-number
-							style={ {
-								'font-weight': 'var(--ce-font-weight-semibold)',
-								color: 'var(--ce-color-gray-800)',
-							} }
+					<Definition title={__('Subtotal', 'order')}>
+						<sc-format-number
+							style={{
+								'font-weight': 'var(--sc-font-weight-semibold)',
+								color: 'var(--sc-color-gray-800)',
+							}}
 							type="currency"
-							currency={ subscription?.currency }
-							value={ subscription?.subtotal_amount }
-						></ce-format-number>
+							currency={subscription?.currency}
+							value={subscription?.subtotal_amount}
+						></sc-format-number>
 					</Definition>
-					<Definition title={ __( 'Discounts', 'order' ) }>
-						<ce-format-number
-							style={ {
-								'font-weight': 'var(--ce-font-weight-semibold)',
-								color: 'var(--ce-color-gray-800)',
-							} }
+					<Definition title={__('Discounts', 'order')}>
+						<sc-format-number
+							style={{
+								'font-weight': 'var(--sc-font-weight-semibold)',
+								color: 'var(--sc-color-gray-800)',
+							}}
 							type="currency"
-							currency={ subscription?.currency }
-							value={ subscription?.discount_amount }
-						></ce-format-number>
+							currency={subscription?.currency}
+							value={subscription?.discount_amount}
+						></sc-format-number>
 					</Definition>
 
 					<hr />
 
-					<Definition title={ __( 'Total', 'order' ) }>
+					<Definition title={__('Total', 'order')}>
 						<div
-							css={ css`
+							css={css`
 								display: flex;
 								align-items: center;
 								gap: 1em;
-							` }
+							`}
 						>
 							<div
-								css={ css`
+								css={css`
 									text-transform: uppercase;
-								` }
+								`}
 							>
-								{ subscription?.currency }
+								{subscription?.currency}
 							</div>
-							<ce-format-number
-								style={ {
-									fontSize: 'var(--ce-font-size-x-large)',
+							<sc-format-number
+								style={{
+									fontSize: 'var(--sc-font-size-x-large)',
 									fontWeight:
-										'var(--ce-font-weight-semibold)',
-									color: 'var(--ce-color-gray-800)',
-								} }
+										'var(--sc-font-weight-semibold)',
+									color: 'var(--sc-color-gray-800)',
+								}}
 								type="currency"
-								currency={ subscription?.currency }
-								value={ subscription?.total_amount }
-							></ce-format-number>
+								currency={subscription?.currency}
+								value={subscription?.total_amount}
+							></sc-format-number>
 						</div>
 					</Definition>
 				</Fragment>
-			) }
+			)}
 		</Box>
 	);
 };

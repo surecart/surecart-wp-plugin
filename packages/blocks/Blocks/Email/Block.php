@@ -1,6 +1,6 @@
 <?php
 
-namespace CheckoutEngineBlocks\Email;
+namespace SureCartBlocks\Email;
 
 /**
  * Logout Button Block.

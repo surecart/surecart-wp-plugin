@@ -2,13 +2,11 @@
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import Box from '../components/Box';
-import { CeInput } from '@checkout-engine/components-react';
+import { ScInput } from '@surecart/components-react';
 import { useDispatch } from '@wordpress/data';
 
 export default ({}) => {
-	const { updateSetting, getSetting } = useDispatch(
-		'checkout-engine/settings'
-	);
+	const { updateSetting, getSetting } = useDispatch('surecart/settings');
 
 	return (
 		<div
@@ -18,27 +16,27 @@ export default ({}) => {
 			`}
 		>
 			<Box
-				title={__('Connection', 'checkout_engine')}
+				title={__('Connection', 'surecart')}
 				description={__(
 					'Update your API Token to connect your WordPress installation to SureCart.',
-					'checkout_engine'
+					'surecart'
 				)}
 			>
-				<CeInput
-					label={__('Api Token', 'checkout_engine')}
+				<ScInput
+					label={__('Api Token', 'surecart')}
 					type="password"
-					onCeChange={(e) =>
+					onScChange={(e) =>
 						updateSetting('api_token', e.target.value)
 					}
 					name="api_token"
 					placeholder={__(
 						'Enter to update your API Token',
-						'checkout_engine'
+						'surecart'
 					)}
 					help={
 						'Find your API Token in the Settings page of SureCart.'
 					}
-				></CeInput>
+				></ScInput>
 			</Box>
 		</div>
 	);

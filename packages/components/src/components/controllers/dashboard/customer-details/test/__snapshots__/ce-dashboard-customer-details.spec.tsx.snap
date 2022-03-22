@@ -1,9 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`ce-customer-details renders 1`] = `
-<ce-dashboard-customer-details>
-  <mock:shadow-root>
-    <ce-customer-details edit-link="http://testing.stenciljs.com/?action=edit&amp;model=customer"></ce-customer-details>
-  </mock:shadow-root>
-</ce-dashboard-customer-details>
-`;

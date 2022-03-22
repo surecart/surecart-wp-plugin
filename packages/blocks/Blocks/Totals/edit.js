@@ -9,15 +9,15 @@ import {
 } from '@wordpress/block-editor';
 import { Fragment } from '@wordpress/element';
 import { PanelBody, PanelRow, ToggleControl } from '@wordpress/components';
-import { CeOrderSummary } from '@checkout-engine/components-react';
+import { ScOrderSummary } from '@surecart/components-react';
 
 const ALLOWED_BLOCKS = [
-	'checkout-engine/coupon',
-	'checkout-engine/divider',
-	'checkout-engine/line-items',
-	'checkout-engine/tax-line-item',
-	'checkout-engine/total',
-	'checkout-engine/subtotal',
+	'surecart/coupon',
+	'surecart/divider',
+	'surecart/line-items',
+	'surecart/tax-line-item',
+	'surecart/total',
+	'surecart/subtotal',
 ];
 
 export default ({ isSelected, attributes, setAttributes }) => {
@@ -31,32 +31,29 @@ export default ({ isSelected, attributes, setAttributes }) => {
 		{},
 		{
 			template: [
-				['checkout-engine/divider', {}],
-				['checkout-engine/line-items', {}],
-				['checkout-engine/divider', {}],
+				['surecart/divider', {}],
+				['surecart/line-items', {}],
+				['surecart/divider', {}],
 				[
-					'checkout-engine/subtotal',
+					'surecart/subtotal',
 					{
-						text: __('Subtotal', 'checkout_engine'),
+						text: __('Subtotal', 'surecart'),
 					},
 				],
 				[
-					'checkout-engine/coupon',
+					'surecart/coupon',
 					{
-						text: __('Add Coupon Code', 'checkout_engine'),
-						button_text: __('Apply Coupon', 'checkout_engine'),
+						text: __('Add Coupon Code', 'surecart'),
+						button_text: __('Apply Coupon', 'surecart'),
 					},
 				],
-				['checkout-engine/tax-line-item', {}],
-				['checkout-engine/divider', {}],
+				['surecart/tax-line-item', {}],
+				['surecart/divider', {}],
 				[
-					'checkout-engine/total',
+					'surecart/total',
 					{
-						text: __('Total', 'checkout_engine'),
-						subscription_text: __(
-							'Total Due Today',
-							'checkout_engine'
-						),
+						text: __('Total', 'surecart'),
+						subscription_text: __('Total Due Today', 'surecart'),
 					},
 				],
 			],
@@ -68,10 +65,10 @@ export default ({ isSelected, attributes, setAttributes }) => {
 	return (
 		<Fragment>
 			<InspectorControls>
-				<PanelBody title={__('Attributes', 'checkout-engine')}>
+				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<ToggleControl
-							label={__('Collapsible', 'checkout-engine')}
+							label={__('Collapsible', 'surecart')}
 							checked={collapsible}
 							onChange={(collapsible) => {
 								setAttributes({ collapsible });
@@ -83,10 +80,7 @@ export default ({ isSelected, attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<ToggleControl
-							label={__(
-								'Collapsed By Default',
-								'checkout-engine'
-							)}
+							label={__('Collapsed By Default', 'surecart')}
 							checked={collapsed}
 							onChange={(collapsed) => {
 								setAttributes({ collapsed });
@@ -99,11 +93,11 @@ export default ({ isSelected, attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<CeOrderSummary
+			<ScOrderSummary
 				collapsible={collapsible}
 				collapsed={collapsed}
 				{...innerBlocksProps}
-			></CeOrderSummary>
+			></ScOrderSummary>
 		</Fragment>
 	);
 };

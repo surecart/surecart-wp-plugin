@@ -1,10 +1,10 @@
 import {
 	CeBlockUi,
-	CeButton,
-	CeDropdown,
-	CeMenu,
-	CeMenuItem,
-} from '@checkout-engine/components-react';
+	ScButton,
+	ScDropdown,
+	ScMenu,
+	ScMenuItem,
+} from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 import { Fragment, useEffect } from 'react';
 import ErrorFlash from '../../components/ErrorFlash';
@@ -82,7 +82,7 @@ export default () => {
 		if (subscription?.status === 'canceled') return null;
 		if (subscription?.cancel_at_period_end) {
 			return (
-				<CeMenuItem
+				<ScMenuItem
 					onClick={async () => {
 						saveSubscription({
 							data: {
@@ -94,16 +94,14 @@ export default () => {
 						});
 					}}
 				>
-					{__("Don't Cancel", 'checkout_engine')}
-				</CeMenuItem>
+					{__("Don't Cancel", 'surecart')}
+				</ScMenuItem>
 			);
 		}
 
 		return (
 			<Cancel onCancel={() => setSaving(true)}>
-				<CeMenuItem>
-					{__('Cancel Subscription', 'checkout_engine')}
-				</CeMenuItem>
+				<ScMenuItem>{__('Cancel Subscription', 'surecart')}</ScMenuItem>
 			</Cancel>
 		);
 	};
@@ -111,58 +109,55 @@ export default () => {
 	return (
 		<Template
 			pageModelName={'subscriptions'}
-			backUrl={'admin.php?page=ce-subscriptions'}
-			backText={__('Back to all subscriptions.', 'checkout_engine')}
-			title={__('Subscription', 'checkout_engine')}
+			backUrl={'admin.php?page=sc-subscriptions'}
+			backText={__('Back to all subscriptions.', 'surecart')}
+			title={__('Subscription', 'surecart')}
 			sidebar={<Sidebar loading={isLoading} />}
 			button={
 				isLoading ? (
-					<ce-skeleton
+					<sc-skeleton
 						style={{
 							width: '120px',
 							height: '35px',
 							display: 'inline-block',
 						}}
-					></ce-skeleton>
+					></sc-skeleton>
 				) : (
-					<CeDropdown position="bottom-right">
-						<CeButton type="primary" slot="trigger" caret>
-							{__('Actions', 'checkout_engine')}
-						</CeButton>
-						<CeMenu>
+					<ScDropdown position="bottom-right">
+						<ScButton type="primary" slot="trigger" caret>
+							{__('Actions', 'surecart')}
+						</ScButton>
+						<ScMenu>
 							{!!Object.keys(subscription?.pending_update || {})
 								.length ? (
 								<UpdatePending
 									id={id}
 									onCancel={() => setSaving(true)}
 								>
-									<CeMenuItem>
+									<ScMenuItem>
 										{__(
 											'Manage Pending Update',
-											'checkout_engine'
+											'surecart'
 										)}
-									</CeMenuItem>
+									</ScMenuItem>
 								</UpdatePending>
 							) : (
 								subscription?.current_period_end_at !==
 									null && (
-									<CeMenuItem
+									<ScMenuItem
 										href={addQueryArgs('admin.php', {
-											page: 'ce-subscriptions',
+											page: 'sc-subscriptions',
 											action: 'edit',
 											id: id,
 										})}
 									>
-										{__(
-											'Update Subscription',
-											'checkout_engine'
-										)}
-									</CeMenuItem>
+										{__('Update Subscription', 'surecart')}
+									</ScMenuItem>
 								)
 							)}
 							{renderCancelButton()}
-						</CeMenu>
-					</CeDropdown>
+						</ScMenu>
+					</ScDropdown>
 				)
 			}
 		>
@@ -195,10 +190,10 @@ export default () => {
 				<Invoices subscriptionId={id} subscription={subscription} />
 
 				{isSaving && (
-					<ce-block-ui
+					<sc-block-ui
 						spinner
 						style={{ zIndex: 9, margin: 0 }}
-					></ce-block-ui>
+					></sc-block-ui>
 				)}
 			</Fragment>
 		</Template>

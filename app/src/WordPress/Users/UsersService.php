@@ -1,9 +1,9 @@
 <?php
 
-namespace CheckoutEngine\WordPress\Users;
+namespace SureCart\WordPress\Users;
 
-use CheckoutEngine\Models\Order;
-use CheckoutEngine\Models\User;
+use SureCart\Models\Order;
+use SureCart\Models\User;
 
 /**
  * WordPress Users service.
@@ -29,11 +29,11 @@ class UsersService {
 	 */
 	public function collectionParams( $query_params ) {
 		$query_params['is_customer']     = [
-			'description' => __( 'Limit result set to users with a customer.', 'checkout-engine' ),
+			'description' => __( 'Limit result set to users with a customer.', 'surecart' ),
 			'type'        => 'boolean',
 		];
 		$query_params['ce_customer_ids'] = [
-			'description' => __( 'Limit result set to users with specific customer ids.', 'checkout-engine' ),
+			'description' => __( 'Limit result set to users with specific customer ids.', 'surecart' ),
 			'type'        => 'array',
 			'items'       => [
 				'type' => 'string',

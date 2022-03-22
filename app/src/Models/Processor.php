@@ -1,6 +1,6 @@
 <?php
 
-namespace CheckoutEngine\Models;
+namespace SureCart\Models;
 
 /**
  * Processor model.

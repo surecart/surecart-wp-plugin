@@ -1,18 +1,18 @@
 <?php
 /**
- * @package   CheckoutEngineCore
+ * @package   SureCartCore
  * @author    Andre Gagnon <me@andregagnon.me>
  * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://checkout_engine.com/
+ * @link      https://surecart.com/
  */
 
-namespace CheckoutEngineCore\Routing;
+namespace SureCartCore\Routing;
 
 use Closure;
-use CheckoutEngineCore\Helpers\HasAttributesTrait;
-use CheckoutEngineCore\Routing\Conditions\ConditionInterface;
-use CheckoutEngineCore\View\ViewService;
+use SureCartCore\Helpers\HasAttributesTrait;
+use SureCartCore\Routing\Conditions\ConditionInterface;
+use SureCartCore\View\ViewService;
 
 /**
  * Provide a fluent interface for registering routes with the router.

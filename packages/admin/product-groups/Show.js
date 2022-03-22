@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { CeButton } from '@checkout-engine/components-react';
+import { ScButton } from '@surecart/components-react';
 import { useDispatch } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import { useEffect } from 'react';
@@ -119,12 +119,12 @@ export default ({ id }) => {
 			});
 			addSnackbarNotice({
 				content: product_group?.archived
-					? __('Un-archived.', 'checkout_engine')
-					: __('Archived.', 'checkout_engine'),
+					? __('Un-archived.', 'surecart')
+					: __('Archived.', 'surecart'),
 			});
 			window.location.assign(
 				addQueryArgs('admin.php', {
-					page: 'ce-product-groups',
+					page: 'sc-product-groups',
 				})
 			);
 		} catch (e) {
@@ -137,46 +137,46 @@ export default ({ id }) => {
 	return (
 		<Template
 			id={id}
-			backUrl={'admin.php?page=ce-product-groups'}
-			backText={__('Back to upgrade groups list.', 'checkout_engine')}
+			backUrl={'admin.php?page=sc-product-groups'}
+			backText={__('Back to upgrade groups list.', 'surecart')}
 			title={
-				<ce-flex align-items="center">
+				<sc-flex align-items="center">
 					{id
-						? __('Edit Upgrade Group', 'checkout_engine')
-						: __('Create Upgrade Group', 'checkout_engine')}
+						? __('Edit Upgrade Group', 'surecart')
+						: __('Create Upgrade Group', 'surecart')}
 					{product_group?.archived && (
-						<ce-tag type="warning">
-							{__('Archived', 'checkout_engine')}
-						</ce-tag>
+						<sc-tag type="warning">
+							{__('Archived', 'surecart')}
+						</sc-tag>
 					)}
-				</ce-flex>
+				</sc-flex>
 			}
 			pageModelName={'product_group'}
 			onSubmit={onSubmit}
 			button={
 				isLoading || isGroupLoading ? (
-					<ce-skeleton
+					<sc-skeleton
 						style={{
 							width: '120px',
 							height: '35px',
 							display: 'inline-block',
 						}}
-					></ce-skeleton>
+					></sc-skeleton>
 				) : (
-					<ce-flex align-items="center">
-						<CeButton
+					<sc-flex align-items="center">
+						<ScButton
 							loading={isSaving}
 							type="text"
 							onClick={confirmArchiveToggle}
 						>
 							{product_group?.archived
-								? __('Un-Archive', 'checkout_engine')
-								: __('Archive', 'checkout_engine')}
-						</CeButton>
-						<CeButton type="primary" loading={isSaving} submit>
-							{__('Update', 'checkout_engine')}
-						</CeButton>
-					</ce-flex>
+								? __('Un-Archive', 'surecart')
+								: __('Archive', 'surecart')}
+						</ScButton>
+						<ScButton type="primary" loading={isSaving} submit>
+							{__('Update', 'surecart')}
+						</ScButton>
+					</sc-flex>
 				)
 			}
 		>

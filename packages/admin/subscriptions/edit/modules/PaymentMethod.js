@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { CeChoice, CeChoices } from '@checkout-engine/components-react';
+import { ScChoice, ScChoices } from '@surecart/components-react';
 import { select } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import { useEffect } from 'react';
@@ -25,8 +25,8 @@ export default ({ subscription, updateSubscription, loading }) => {
 	}, [subscription?.customer]);
 
 	return (
-		<Box title={__('Payment Method', 'checkout_engine')} loading={loading}>
-			<CeChoices label={__('Choose a payment method')}>
+		<Box title={__('Payment Method', 'surecart')} loading={loading}>
+			<ScChoices label={__('Choose a payment method')}>
 				<div>
 					{(payment_methods || []).map((method) => {
 						const card = select(store).selectRelation(
@@ -35,12 +35,12 @@ export default ({ subscription, updateSubscription, loading }) => {
 							'card'
 						);
 						return (
-							<CeChoice
+							<ScChoice
 								checked={
 									method?.id === subscription?.payment_method
 								}
 								value={method?.id}
-								onCeChange={(e) => {
+								onScChange={(e) => {
 									if (!e.target.checked) return;
 									updateSubscription({
 										payment_method: method?.id,
@@ -53,20 +53,20 @@ export default ({ subscription, updateSubscription, loading }) => {
 										gap: 1em;
 									`}
 								>
-									<ce-cc-logo
+									<sc-cc-logo
 										style={{ fontSize: '36px' }}
 										brand={card?.brand}
-									></ce-cc-logo>
+									></sc-cc-logo>
 									<div>**** {card?.last4}</div>
 									<div>
 										{card?.exp_month}/{card?.exp_year}
 									</div>
 								</div>
-							</CeChoice>
+							</ScChoice>
 						);
 					})}
 				</div>
-			</CeChoices>
+			</ScChoices>
 		</Box>
 	);
 };

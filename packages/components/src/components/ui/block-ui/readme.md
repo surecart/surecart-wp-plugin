@@ -18,58 +18,58 @@
 
 ### Used by
 
- - [ce-charges-list](../../controllers/dashboard/charges-list)
- - [ce-checkout](../../controllers/checkout-form/checkout)
- - [ce-coupon-form](../coupon-form)
- - [ce-customer-edit](../../controllers/dashboard/customer-edit)
- - [ce-donation-choices](../../controllers/checkout-form/ce-donation-choices)
- - [ce-downloads-list](../downloads-list)
- - [ce-express-payment](../../controllers/checkout-form/express-payment)
- - [ce-invoices-list](../../controllers/dashboard/invoices-list)
- - [ce-login-form](../../controllers/login)
- - [ce-orders-list](../../controllers/dashboard/orders-list)
- - [ce-payment-method-create](../../controllers/dashboard/payment-method-create)
- - [ce-payment-methods-list](../../controllers/dashboard/payment-methods-list)
- - [ce-subscription](../../controllers/dashboard/subscription)
- - [ce-subscription-cancel](../../controllers/dashboard/subscription-cancel)
- - [ce-subscription-payment](../../controllers/dashboard/subscription-payment)
- - [ce-subscription-renew](../../controllers/dashboard/subscription-renew)
- - [ce-subscription-switch](../../controllers/dashboard/subscription-switch)
- - [ce-subscriptions-list](../../controllers/dashboard/subscriptions-list)
- - [ce-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
- - [ce-wordpress-password-edit](../../controllers/dashboard/wordpress-password-edit)
- - [ce-wordpress-user-edit](../../controllers/dashboard/wordpress-user-edit)
+ - [sc-charges-list](../../controllers/dashboard/charges-list)
+ - [sc-checkout](../../controllers/checkout-form/checkout)
+ - [sc-coupon-form](../coupon-form)
+ - [sc-customer-edit](../../controllers/dashboard/customer-edit)
+ - [sc-donation-choices](../../controllers/checkout-form/sc-donation-choices)
+ - [sc-downloads-list](../downloads-list)
+ - [sc-express-payment](../../controllers/checkout-form/express-payment)
+ - [sc-invoices-list](../../controllers/dashboard/invoices-list)
+ - [sc-login-form](../../controllers/login)
+ - [sc-orders-list](../../controllers/dashboard/orders-list)
+ - [sc-payment-method-create](../../controllers/dashboard/payment-method-create)
+ - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
+ - [sc-subscription](../../controllers/dashboard/subscription)
+ - [sc-subscription-cancel](../../controllers/dashboard/subscription-cancel)
+ - [sc-subscription-payment](../../controllers/dashboard/subscription-payment)
+ - [sc-subscription-renew](../../controllers/dashboard/subscription-renew)
+ - [sc-subscription-switch](../../controllers/dashboard/subscription-switch)
+ - [sc-subscriptions-list](../../controllers/dashboard/subscriptions-list)
+ - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
+ - [sc-wordpress-password-edit](../../controllers/dashboard/wordpress-password-edit)
+ - [sc-wordpress-user-edit](../../controllers/dashboard/wordpress-user-edit)
 
 ### Depends on
 
-- [ce-spinner](../spinner)
+- [sc-spinner](../spinner)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-block-ui --> ce-spinner
-  ce-charges-list --> ce-block-ui
-  ce-checkout --> ce-block-ui
-  ce-coupon-form --> ce-block-ui
-  ce-customer-edit --> ce-block-ui
-  ce-donation-choices --> ce-block-ui
-  ce-downloads-list --> ce-block-ui
-  ce-express-payment --> ce-block-ui
-  ce-invoices-list --> ce-block-ui
-  ce-login-form --> ce-block-ui
-  ce-orders-list --> ce-block-ui
-  ce-payment-method-create --> ce-block-ui
-  ce-payment-methods-list --> ce-block-ui
-  ce-subscription --> ce-block-ui
-  ce-subscription-cancel --> ce-block-ui
-  ce-subscription-payment --> ce-block-ui
-  ce-subscription-renew --> ce-block-ui
-  ce-subscription-switch --> ce-block-ui
-  ce-subscriptions-list --> ce-block-ui
-  ce-upcoming-invoice --> ce-block-ui
-  ce-wordpress-password-edit --> ce-block-ui
-  ce-wordpress-user-edit --> ce-block-ui
-  style ce-block-ui fill:#f9f,stroke:#333,stroke-width:4px
+  sc-block-ui --> sc-spinner
+  sc-charges-list --> sc-block-ui
+  sc-checkout --> sc-block-ui
+  sc-coupon-form --> sc-block-ui
+  sc-customer-edit --> sc-block-ui
+  sc-donation-choices --> sc-block-ui
+  sc-downloads-list --> sc-block-ui
+  sc-express-payment --> sc-block-ui
+  sc-invoices-list --> sc-block-ui
+  sc-login-form --> sc-block-ui
+  sc-orders-list --> sc-block-ui
+  sc-payment-method-create --> sc-block-ui
+  sc-payment-methods-list --> sc-block-ui
+  sc-subscription --> sc-block-ui
+  sc-subscription-cancel --> sc-block-ui
+  sc-subscription-payment --> sc-block-ui
+  sc-subscription-renew --> sc-block-ui
+  sc-subscription-switch --> sc-block-ui
+  sc-subscriptions-list --> sc-block-ui
+  sc-upcoming-invoice --> sc-block-ui
+  sc-wordpress-password-edit --> sc-block-ui
+  sc-wordpress-user-edit --> sc-block-ui
+  style sc-block-ui fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

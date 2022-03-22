@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { __ } from '@wordpress/i18n';
 import { Modal, Button } from '@wordpress/components';
-import { CeForm } from '@checkout-engine/components-react';
+import { ScForm } from '@surecart/components-react';
 import { css, jsx } from '@emotion/core';
 import { useState, Fragment } from '@wordpress/element';
 import { useEffect } from 'react';
@@ -23,56 +23,56 @@ export default ({ onCancel, subscription, loading, error, children, open }) => {
 			{children ? (
 				<span onClick={() => setModal(!modal)}>{children}</span>
 			) : (
-				<ce-button
+				<sc-button
 					size="small"
 					onClick={() => setModal(!modal)}
 					loading={loading}
 				>
-					{__('Cancel', 'checkout_engine')}
-				</ce-button>
+					{__('Cancel', 'surecart')}
+				</sc-button>
 			)}
 			{modal && (
 				<Modal
-					title={__('Cancel Subscription', 'checkout_engine')}
+					title={__('Cancel Subscription', 'surecart')}
 					css={css`
 						max-width: 500px !important;
 					`}
 					onRequestClose={() => setModal(false)}
 					shouldCloseOnClickOutside={false}
 				>
-					<CeForm
-						onCeFormSubmit={onSubmit}
+					<ScForm
+						onScFormSubmit={onSubmit}
 						css={css`
-							--ce-form-row-spacing: var(--ce-spacing-large);
+							--sc-form-row-spacing: var(--sc-spacing-large);
 						`}
 					>
-						<ce-alert type="danger" open={error}>
+						<sc-alert type="danger" open={error}>
 							{error}
-						</ce-alert>
+						</sc-alert>
 
-						<ce-choices label={__('Cancel', 'checkout_engine')}>
+						<sc-choices label={__('Cancel', 'surecart')}>
 							<div>
-								<ce-choice
+								<sc-choice
 									name="cancel_behavior"
 									value="immediate"
 									checked
 								>
-									{__('Immediately', 'checkout_engine')}
-								</ce-choice>
+									{__('Immediately', 'surecart')}
+								</sc-choice>
 								{subscription?.current_period_end_at !==
 									null && (
-									<ce-choice
+									<sc-choice
 										name="cancel_behavior"
 										value="pending"
 									>
 										{__(
 											'	At end of current period',
-											'checkout_engine'
+											'surecart'
 										)}
-									</ce-choice>
+									</sc-choice>
 								)}
 							</div>
-						</ce-choices>
+						</sc-choices>
 
 						<div
 							css={css`
@@ -82,13 +82,13 @@ export default ({ onCancel, subscription, loading, error, children, open }) => {
 							`}
 						>
 							<Button isPrimary isBusy={loading} type="submit">
-								{__('Cancel Subscription', 'checkout_engine')}
+								{__('Cancel Subscription', 'surecart')}
 							</Button>
 							<Button onClick={() => setModal(false)}>
-								{__("Don't Cancel", 'checkout_engine')}
+								{__("Don't Cancel", 'surecart')}
 							</Button>
 						</div>
-					</CeForm>
+					</ScForm>
 				</Modal>
 			)}
 		</Fragment>

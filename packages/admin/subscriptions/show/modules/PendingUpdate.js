@@ -7,7 +7,7 @@ import { css, jsx } from '@emotion/core';
 import { useEffect } from 'react';
 import useEntity from '../../../mixins/useEntity';
 import Box from '../../../ui/Box';
-import { CeFormatDate } from '@checkout-engine/components-react';
+import { ScFormatDate } from '@surecart/components-react';
 
 export default ({ subscription }) => {
 	const { pending_update } = subscription || {};
@@ -32,13 +32,13 @@ export default ({ subscription }) => {
 	return (
 		<DataTable
 			loading={isLoading}
-			title={__('Pending Update', 'checkout_engine')}
+			title={__('Pending Update', 'surecart')}
 			columns={{
 				product: {
-					label: __('Product', 'checkout_engine'),
+					label: __('Product', 'surecart'),
 				},
 				quantity: {
-					label: __('Qty', 'checkout_engine'),
+					label: __('Qty', 'surecart'),
 					width: '75px',
 				},
 				schedule: {
@@ -49,7 +49,7 @@ export default ({ subscription }) => {
 								justify-content: flex-end;
 							`}
 						>
-							{__('Scheduled', 'checkout_engine')}
+							{__('Scheduled', 'surecart')}
 						</div>
 					),
 				},
@@ -64,7 +64,7 @@ export default ({ subscription }) => {
 									opacity: 0.5;
 								`}
 							>
-								<ce-format-number
+								<sc-format-number
 									type="currency"
 									value={price?.amount}
 									currency={price?.currency}
@@ -82,19 +82,19 @@ export default ({ subscription }) => {
 						pending_update?.quantity || subscription?.quantity,
 					schedule: (
 						<div>
-							{sprintf(__('Scheduled', 'checkout_engine'))}
+							{sprintf(__('Scheduled', 'surecart'))}
 							<div
 								css={css`
 									opacity: 0.5;
 								`}
 							>
-								<CeFormatDate
+								<ScFormatDate
 									date={subscription?.current_period_end_at}
 									type="timestamp"
 									month="long"
 									day="numeric"
 									year="numeric"
-								></CeFormatDate>
+								></ScFormatDate>
 							</div>
 						</div>
 					),

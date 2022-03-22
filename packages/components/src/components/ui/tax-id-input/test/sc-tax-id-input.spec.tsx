@@ -1,0 +1,40 @@
+import { newSpecPage } from '@stencil/core/testing';
+import { ScTaxIdInput } from '../sc-tax-id-input';
+
+describe('sc-tax-id-input', () => {
+  it('renders', async () => {
+    const page = await newSpecPage({
+      components: [ScTaxIdInput],
+      html: `<sc-tax-id-input></sc-tax-id-input>`,
+    });
+    expect(page.root).toMatchSnapshot();
+  });
+  it('Renders UK VAT Tax Type', async () => {
+    const page = await newSpecPage({
+      components: [ScTaxIdInput],
+      html: `<sc-tax-id-input country="GB"></sc-tax-id-input>`,
+    });
+    expect(page.root).toMatchSnapshot();
+  });
+  it('Renders EU VAT Tax Type', async () => {
+    const page = await newSpecPage({
+      components: [ScTaxIdInput],
+      html: `<sc-tax-id-input country="DE"></sc-tax-id-input>`,
+    });
+    expect(page.root).toMatchSnapshot();
+  });
+  it('Renders CA Tax Type', async () => {
+    const page = await newSpecPage({
+      components: [ScTaxIdInput],
+      html: `<sc-tax-id-input country="CA"></sc-tax-id-input>`,
+    });
+    expect(page.root).toMatchSnapshot();
+  });
+  it('Renders AU Tax Type', async () => {
+    const page = await newSpecPage({
+      components: [ScTaxIdInput],
+      html: `<sc-tax-id-input country="AU"></sc-tax-id-input>`,
+    });
+    expect(page.root).toMatchSnapshot();
+  });
+});

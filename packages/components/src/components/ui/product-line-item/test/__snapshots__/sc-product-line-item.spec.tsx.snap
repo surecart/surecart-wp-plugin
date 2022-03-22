@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-product-line-item renders 1`] = `
+<sc-product-line-item amount="1000" currency="CAD">
+  <mock:shadow-root>
+    <sc-line-item>
+      <span slot="title"></span>
+      <span class="product__description" slot="description">
+        <sc-quantity-select></sc-quantity-select>
+      </span>
+      <span slot="price">
+        <sc-format-number currency="CAD" type="currency" value="1000"></sc-format-number>
+      </span>
+    </sc-line-item>
+  </mock:shadow-root>
+</sc-product-line-item>
+`;

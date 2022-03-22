@@ -1,8 +1,8 @@
-<ce-charges-list id="customer-charges-list"></ce-charges-list>
+<sc-charges-list id="customer-charges-list"></sc-charges-list>
 
 <?php
-\CheckoutEngine::assets()->addComponentData(
-	'ce-charges-list',
+\SureCart::assets()->addComponentData(
+	'sc-charges-list',
 	'#customer-charges-list',
 	[
 		'query' => $query ?? [],

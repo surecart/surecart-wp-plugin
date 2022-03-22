@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ruleset name="CheckoutEngine">
+<ruleset name="SureCart">
 	<description>Plugin Coding Standard</description>
 
 	<!-- <exclude-pattern>app/src</exclude-pattern> -->
@@ -24,7 +24,7 @@
 
 	<rule ref="WordPress.WP.I18n">
 		<properties>
-			<property name="text_domain" type="string" value="checkout_engine" />
+			<property name="text_domain" type="string" value="surecart" />
 		</properties>
 	</rule>
 

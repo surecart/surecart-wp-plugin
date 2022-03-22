@@ -1,9 +1,9 @@
 <?php
 
-namespace CheckoutEngineBlocks\Blocks\Dashboard\CustomerDashboard;
+namespace SureCartBlocks\Blocks\Dashboard\CustomerDashboard;
 
-use CheckoutEngineBlocks\Blocks\BaseBlock;
-use CheckoutEngine\Models\User;
+use SureCartBlocks\Blocks\BaseBlock;
+use SureCart\Models\User;
 
 /**
  * Checkout block
@@ -19,17 +19,17 @@ class Block extends BaseBlock {
 	 */
 	public function render( $attributes, $content ) {
 		if ( ! is_user_logged_in() ) {
-			return \CheckoutEngine::blocks()->render( 'web/login' );
+			return \SureCart::blocks()->render( 'web/login' );
 		}
 
 		// cannot get user.
 		$user = User::current();
 		if ( ! $user ) {
-			return \CheckoutEngine::blocks()->render( 'web/login' );
+			return \SureCart::blocks()->render( 'web/login' );
 		}
 
 		if ( ! $user->isCustomer() ) {
-			return \CheckoutEngine::blocks()->render( 'web/no-customer' );
+			return \SureCart::blocks()->render( 'web/no-customer' );
 		}
 
 		// maybe redirect to the first tab if one is not specified.
@@ -54,7 +54,7 @@ class Block extends BaseBlock {
 			global $post;
 			$postcontent = $post->post_content;
 			$blocks      = parse_blocks( $postcontent );
-			$named       = \CheckoutEngine::blocks()->filterBy( 'blockName', 'checkout-engine/dashboard-tab', $blocks );
+			$named       = \SureCart::blocks()->filterBy( 'blockName', 'surecart/dashboard-tab', $blocks );
 
 			if ( ! empty( $named[0]['attrs']['panel'] ) ) {
 				wp_redirect( esc_url_raw( add_query_arg( [ 'tab' => $named[0]['attrs']['panel'] ] ) ) );

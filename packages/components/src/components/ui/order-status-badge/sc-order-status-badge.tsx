@@ -1,0 +1,53 @@
+import { Component, h, Prop } from '@stencil/core';
+import { __ } from '@wordpress/i18n';
+import { OrderStatus } from '../../../types';
+
+@Component({
+  tag: 'sc-order-status-badge',
+  styleUrl: 'sc-order-status-badge.css',
+  shadow: true,
+})
+export class ScOrderStatusBadge {
+  /** The tag's statux type. */
+  @Prop() status: OrderStatus;
+
+  /** The tag's size. */
+  @Prop({ reflect: true }) size: 'small' | 'medium' | 'large' = 'medium';
+
+  /** Draws a pill-style tag with rounded edges. */
+  @Prop({ reflect: true }) pill: boolean = false;
+
+  /** Makes the tag clearable. */
+  @Prop() clearable: boolean = false;
+
+  getType() {
+    switch (this.status) {
+      case 'draft':
+        return 'info';
+      case 'finalized':
+        return 'warning';
+      case 'completed':
+      case 'paid':
+        return 'success';
+    }
+  }
+
+  getText() {
+    switch (this.status) {
+      case 'draft':
+        return __('Draft', 'surecart');
+      case 'finalized':
+        return __('Pending Payment', 'surecart');
+      case 'paid':
+        return __('Paid', 'surecart');
+      case 'completed':
+        return __('Completed', 'surecart');
+      default:
+        return this.status;
+    }
+  }
+
+  render() {
+    return <sc-tag type={this.getType()}>{this.getText()}</sc-tag>;
+  }
+}

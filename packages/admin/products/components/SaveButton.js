@@ -1,22 +1,22 @@
 import { __ } from '@wordpress/i18n';
-import { CeButton } from '@checkout-engine/components-react';
+import { ScButton } from '@surecart/components-react';
 import { useSelect } from '@wordpress/data';
 
 import { store as uiStore } from '../../store/ui';
 
-export default ( { style, children } ) => {
-	const isSaving = useSelect( ( select ) => select( uiStore ).isSaving() );
+export default ({ style, children }) => {
+	const isSaving = useSelect((select) => select(uiStore).isSaving());
 
 	return (
-		<CeButton
+		<ScButton
 			type="primary"
 			submit
-			style={ style }
-			className={ 'ce-save-model' }
-			disabled={ isSaving }
-			loading={ isSaving }
+			style={style}
+			className={'sc-save-model'}
+			disabled={isSaving}
+			loading={isSaving}
 		>
-			{ children }
-		</CeButton>
+			{children}
+		</ScButton>
 	);
 };

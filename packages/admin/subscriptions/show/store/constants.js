@@ -1,1 +1,1 @@
-export default 'checkout-engine/editor';
+export default 'surecart/editor';

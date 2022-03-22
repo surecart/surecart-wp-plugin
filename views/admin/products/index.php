@@ -3,12 +3,12 @@
 		width: 40px;
 	}
 
-	.ce-product-name {
+	.sc-product-name {
 		display: flex;
 		gap: 1em;
 	}
 
-	.ce-product-image-preview {
+	.sc-product-image-preview {
 		width: 40px;
 		height: 40px;
 		object-fit: cover;
@@ -16,18 +16,18 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		border-radius: var(--ce-border-radius-small);
+		border-radius: var(--sc-border-radius-small);
 	}
 
 </style>
 
 
 <div class="wrap">
-	<?php \CheckoutEngine::render(
+	<?php \SureCart::render(
 		'layouts/partials/admin-index-header',
 		[
-			'title'    => __( 'Products', 'checkout_engine' ),
-			'new_link' => \CheckoutEngine::getUrl()->edit( 'product' ),
+			'title'    => __( 'Products', 'surecart' ),
+			'new_link' => \SureCart::getUrl()->edit( 'product' ),
 		]
 	); ?>
 

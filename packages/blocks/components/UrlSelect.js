@@ -8,8 +8,8 @@ const { prependHTTP } = wp.url;
 
 import { css, jsx } from '@emotion/core';
 
-export default ( { setSettings, settings } ) => {
-	const [ visible, setVisible ] = useState( false );
+export default ({ setSettings, settings }) => {
+	const [visible, setVisible] = useState(false);
 	const { url } = settings;
 
 	/**
@@ -20,7 +20,7 @@ export default ( { setSettings, settings } ) => {
 	 *
 	 * @type {[Object|undefined,Function]}
 	 */
-	const [ nextLinkValue, setNextLinkValue ] = useState();
+	const [nextLinkValue, setNextLinkValue] = useState();
 
 	const linkValue = {
 		url: settings?.url,
@@ -30,7 +30,7 @@ export default ( { setSettings, settings } ) => {
 		...nextLinkValue,
 	};
 
-	const onChangeLink = ( nextValue ) => {
+	const onChangeLink = (nextValue) => {
 		// Merge with values from state, both for the purpose of assigning the
 		// next state value, and for use in constructing the new link format if
 		// the link is ready to be applied.
@@ -52,53 +52,53 @@ export default ( { setSettings, settings } ) => {
 
 		// If link will be assigned, the state value can be considered flushed.
 		// Otherwise, persist the pending changes.
-		setNextLinkValue( didToggleSettingForNewLink ? nextValue : undefined );
+		setNextLinkValue(didToggleSettingForNewLink ? nextValue : undefined);
 
-		if ( didToggleSettingForNewLink ) {
+		if (didToggleSettingForNewLink) {
 			return;
 		}
 
-		const newUrl = prependHTTP( nextValue.url );
-		setSettings( {
+		const newUrl = prependHTTP(nextValue.url);
+		setSettings({
 			url: newUrl,
 			type: nextValue.type,
 			id:
 				nextValue.id !== undefined && nextValue.id !== null
-					? String( nextValue.id )
+					? String(nextValue.id)
 					: undefined,
 			opensInNewTab: nextValue.opensInNewTab,
-		} );
+		});
 	};
 
 	const confirmTrash = () => {
 		const r = confirm(
-			__( 'Are you sure you wish to remove this link?', 'presto-player' )
+			__('Are you sure you wish to remove this link?', 'presto-player')
 		);
-		if ( r ) {
-			setSettings( {} );
+		if (r) {
+			setSettings({});
 		}
 	};
 
 	return (
 		<span>
-			{ url ? (
+			{url ? (
 				<div
-					css={ css`
+					css={css`
 						display: flex;
 						justify-content: space-between;
-					` }
+					`}
 				>
 					<div
-						css={ css`
+						css={css`
 							max-width: 85%;
 							overflow: hidden;
 							display: flex;
 							align-items: center;
-						` }
+						`}
 					>
 						<a
 							href="#"
-							css={ css`
+							css={css`
 								padding: 10px;
 								background: #f3f3f3;
 								border-radius: 4px;
@@ -109,12 +109,12 @@ export default ( { setSettings, settings } ) => {
 								overflow: hidden;
 								text-overflow: ellipsis;
 								text-decoration: none;
-							` }
-							onClick={ () => setVisible( ! visible ) }
+							`}
+							onClick={() => setVisible(!visible)}
 						>
 							<Icon
 								icon="edit"
-								css={ css`
+								css={css`
 									cursor: pointer;
 									opacity: 0.75;
 									margin: 0 2px;
@@ -122,33 +122,33 @@ export default ( { setSettings, settings } ) => {
 									width: 16px;
 									height: 16px;
 									text-decoration: none;
-								` }
+								`}
 							/>
-							{ url }
+							{url}
 						</a>
-						{ visible && (
+						{visible && (
 							<Popover
 								position="bottom center"
-								onClose={ () => setVisible( false ) }
+								onClose={() => setVisible(false)}
 							>
 								<LinkControl
-									value={ settings }
-									onChange={ onChangeLink }
+									value={settings}
+									onChange={onChangeLink}
 								/>
 							</Popover>
-						) }
+						)}
 					</div>
 					<div
-						css={ css`
+						css={css`
 							display: flex;
 							align-items: center;
-						` }
+						`}
 					>
 						<Icon
-							onClick={ confirmTrash }
+							onClick={confirmTrash}
 							icon="trash"
 							className="presto-icon"
-							css={ css`
+							css={css`
 								cursor: pointer;
 								opacity: 0.75;
 								margin: 0 2px;
@@ -159,7 +159,7 @@ export default ( { setSettings, settings } ) => {
 								&:hover {
 									color: #cc1818;
 								}
-							` }
+							`}
 						/>
 					</div>
 				</div>
@@ -168,23 +168,23 @@ export default ( { setSettings, settings } ) => {
 					<Button
 						isPrimary
 						isSmall
-						onClick={ () => setVisible( ! visible ) }
+						onClick={() => setVisible(!visible)}
 					>
-						{ __( 'Add Link', 'presto-player' ) }
+						{__('Add Link', 'presto-player')}
 					</Button>
-					{ visible && (
+					{visible && (
 						<Popover
 							position="bottom center"
-							onClose={ () => setVisible( false ) }
+							onClose={() => setVisible(false)}
 						>
 							<LinkControl
-								value={ settings }
-								onChange={ onChangeLink }
+								value={settings}
+								onChange={onChangeLink}
 							/>
 						</Popover>
-					) }
+					)}
 				</span>
-			) }
+			)}
 		</span>
 	);
 };

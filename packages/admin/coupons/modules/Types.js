@@ -7,16 +7,16 @@ const { useState, useEffect } = wp.element;
 import Box from '../../ui/Box';
 
 import {
-	CeInput,
-	CePriceInput,
-	CeRadioGroup,
-	CeRadio,
-	CeDropdown,
-	CeFormControl,
-	CeButton,
-	CeMenuItem,
-	CeMenu,
-} from '@checkout-engine/components-react';
+	ScInput,
+	ScPriceInput,
+	ScRadioGroup,
+	ScRadio,
+	ScDropdown,
+	ScFormControl,
+	ScButton,
+	ScMenuItem,
+	ScMenu,
+} from '@surecart/components-react';
 
 export default ({ coupon, loading, updateCoupon }) => {
 	const [type, setType] = useState('percentage');
@@ -30,45 +30,45 @@ export default ({ coupon, loading, updateCoupon }) => {
 	const translateDuration = (amount) => {
 		switch (amount) {
 			case 'once':
-				return __('Once', 'checkout_engine');
+				return __('Once', 'surecart');
 			case 'repeating':
-				return __('Repeating', 'checkout_engine');
+				return __('Repeating', 'surecart');
 			default:
-				return __('Forever', 'checkout_engine');
+				return __('Forever', 'surecart');
 		}
 	};
 
 	return (
-		<Box title={__('Amount', 'checkout_engine')} loading={loading}>
+		<Box title={__('Amount', 'surecart')} loading={loading}>
 			<div
 				css={css`
 					display: grid;
-					gap: var(--ce-form-row-spacing-large);
+					gap: var(--sc-form-row-spacing-large);
 				`}
 			>
-				<CeRadioGroup
-					label={__('Choose a type', 'checkout_engine')}
-					onCeChange={(e) => setType(e.target.value)}
+				<ScRadioGroup
+					label={__('Choose a type', 'surecart')}
+					onScChange={(e) => setType(e.target.value)}
 				>
-					<CeRadio value="percentage" checked={type === 'percentage'}>
-						{__('Percentage Discount', 'checkout_engine')}
-					</CeRadio>
-					<CeRadio value="fixed" checked={type === 'fixed'}>
-						{__('Fixed Discount', 'checkout_engine')}
-					</CeRadio>
-				</CeRadioGroup>
+					<ScRadio value="percentage" checked={type === 'percentage'}>
+						{__('Percentage Discount', 'surecart')}
+					</ScRadio>
+					<ScRadio value="fixed" checked={type === 'fixed'}>
+						{__('Fixed Discount', 'surecart')}
+					</ScRadio>
+				</ScRadioGroup>
 
 				{type === 'percentage' ? (
-					<CeInput
-						className="ce-percent-off"
+					<ScInput
+						className="sc-percent-off"
 						type="number"
 						min="0"
 						disabled={type !== 'percentage'}
 						max="100"
 						attribute="percent_off"
-						label={__('Percent Off', 'checkout-engine')}
+						label={__('Percent Off', 'surecart')}
 						value={coupon?.percent_off || null}
-						onCeChange={(e) =>
+						onScChange={(e) =>
 							updateCoupon({
 								amount_off: null,
 								percent_off: e.target.value,
@@ -77,17 +77,17 @@ export default ({ coupon, loading, updateCoupon }) => {
 						required={type === 'percentage'}
 					>
 						<span slot="suffix">%</span>
-					</CeInput>
+					</ScInput>
 				) : (
-					<CePriceInput
-						className="ce-amount-off"
+					<ScPriceInput
+						className="sc-amount-off"
 						currencyCode={coupon?.currency}
 						disabled={type === 'percentage'}
 						attribute="amount_off"
-						label={__('Amount Off', 'checkout-engine')}
+						label={__('Amount Off', 'surecart')}
 						value={coupon?.amount_off || null}
 						required={type === 'fixed'}
-						onCeChange={(e) => {
+						onScChange={(e) => {
 							updateCoupon({
 								percent_off: null,
 								amount_off: e.target.value,
@@ -96,58 +96,56 @@ export default ({ coupon, loading, updateCoupon }) => {
 					/>
 				)}
 
-				<CeFormControl
-					label={__('Discount Duration', 'checkout_engine')}
-				>
+				<ScFormControl label={__('Discount Duration', 'surecart')}>
 					<div>
-						<CeDropdown
+						<ScDropdown
 							slot="suffix"
-							class="ce-discount-duration-dropdown"
+							class="sc-discount-duration-dropdown"
 							position="bottom-left"
 						>
-							<CeButton
+							<ScButton
 								slot="trigger"
-								class="ce-discount-duration-trigger"
+								class="sc-discount-duration-trigger"
 								caret
 							>
 								{translateDuration(coupon?.duration)}
-							</CeButton>
-							<CeMenu>
-								<CeMenuItem
+							</ScButton>
+							<ScMenu>
+								<ScMenuItem
 									onClick={() =>
 										updateCoupon({ duration: 'forever' })
 									}
 								>
-									{__('Forever', 'checkout_engine')}
-								</CeMenuItem>
-								<CeMenuItem
+									{__('Forever', 'surecart')}
+								</ScMenuItem>
+								<ScMenuItem
 									onClick={() =>
 										updateCoupon({ duration: 'once' })
 									}
 								>
-									{__('Once', 'checkout_engine')}
-								</CeMenuItem>
-								<CeMenuItem
-									className="ce-discount-menu-repeating"
+									{__('Once', 'surecart')}
+								</ScMenuItem>
+								<ScMenuItem
+									className="sc-discount-menu-repeating"
 									onClick={() =>
 										updateCoupon({
 											duration: 'repeating',
 										})
 									}
 								>
-									{__('Repeating', 'checkout_engine')}
-								</CeMenuItem>
-							</CeMenu>
-						</CeDropdown>
+									{__('Repeating', 'surecart')}
+								</ScMenuItem>
+							</ScMenu>
+						</ScDropdown>
 					</div>
-				</CeFormControl>
+				</ScFormControl>
 
 				{coupon?.duration === 'repeating' && (
-					<CeInput
-						label={__('Number of months', 'checkout_engine')}
-						className="ce-duration-in-months"
+					<ScInput
+						label={__('Number of months', 'surecart')}
+						className="sc-duration-in-months"
 						value={coupon?.duration_in_months || null}
-						onCeChange={(e) => {
+						onScChange={(e) => {
 							updateCoupon({
 								duration_in_months: e.target.value,
 							});

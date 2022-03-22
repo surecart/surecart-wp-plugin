@@ -1,23 +1,23 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 
-export default ( { title, children } ) => {
+export default ({ title, children }) => {
 	return (
 		<div
-			css={ css`
+			css={css`
 				display: flex;
 				align-items: baseline;
 				justify-content: space-between;
-			` }
+			`}
 		>
 			<div
-				css={ css`
-					color: rgb( 107, 114, 128 );
-				` }
+				css={css`
+					color: rgb(107, 114, 128);
+				`}
 			>
-				{ title }
+				{title}
 			</div>
-			<div>{ children }</div>
+			<div>{children}</div>
 		</div>
 	);
 };

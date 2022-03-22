@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngine\Controllers\Rest;
+namespace SureCart\Controllers\Rest;
 
-use CheckoutEngine\Models\Product;
+use SureCart\Models\Product;
 
 /**
  * Handle Product requests through the REST API

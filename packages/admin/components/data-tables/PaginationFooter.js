@@ -17,7 +17,7 @@ export default ({ showing, total, total_pages, page, setPage, isFetching }) => {
 				page={page}
 				totalPages={total_pages}
 				loading={isFetching}
-				button_text={__('Load More', 'checkout_engine')}
+				button_text={__('Load More', 'surecart')}
 				onClick={() => setPage(page + 1)}
 			/>
 		</Flex>

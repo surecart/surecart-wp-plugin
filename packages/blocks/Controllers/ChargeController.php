@@ -1,8 +1,8 @@
 <?php
-namespace CheckoutEngineBlocks\Controllers;
+namespace SureCartBlocks\Controllers;
 
-use CheckoutEngine\Models\Component;
-use CheckoutEngine\Models\User;
+use SureCart\Models\Component;
+use SureCart\Models\User;
 
 class ChargeController extends BaseController {
 	/**
@@ -13,23 +13,23 @@ class ChargeController extends BaseController {
 	public function index() {
 		ob_start(); ?>
 
-		<ce-spacing style="--spacing: var(--ce-spacing-large)">
-			<ce-breadcrumbs>
-				<ce-breadcrumb href="<?php echo esc_url( add_query_arg( [ 'tab' => $this->getTab() ], \CheckoutEngine::pages()->url( 'dashboard' ) ) ); ?>">
-					<?php esc_html_e( 'Dashboard', 'checkout_engine' ); ?>
-				</ce-breadcrumb>
-				<ce-breadcrumb>
-					<?php esc_html_e( 'Payment History', 'checkout_engine' ); ?>
-				</ce-breadcrumb>
-			</ce-breadcrumbs>
+		<sc-spacing style="--spacing: var(--sc-spacing-large)">
+			<sc-breadcrumbs>
+				<sc-breadcrumb href="<?php echo esc_url( add_query_arg( [ 'tab' => $this->getTab() ], \SureCart::pages()->url( 'dashboard' ) ) ); ?>">
+					<?php esc_html_e( 'Dashboard', 'surecart' ); ?>
+				</sc-breadcrumb>
+				<sc-breadcrumb>
+					<?php esc_html_e( 'Payment History', 'surecart' ); ?>
+				</sc-breadcrumb>
+			</sc-breadcrumbs>
 
 			<?php
 			echo wp_kses_post(
-				Component::tag( 'ce-charges-list' )
-					->id( 'ce-customer-charges' )
+				Component::tag( 'sc-charges-list' )
+					->id( 'sc-customer-charges' )
 					->with(
 						[
-							'heading' => __( 'Payment History', 'checkout-engine' ),
+							'heading' => __( 'Payment History', 'surecart' ),
 							'query'   => [
 								'customer_ids' => array_values( User::current()->customerIds() ),
 								'page'         => $this->getPage(),
@@ -40,7 +40,7 @@ class ChargeController extends BaseController {
 			);
 			?>
 
-		</ce-spacing>
+		</sc-spacing>
 
 		<?php
 		return ob_get_clean();

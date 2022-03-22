@@ -10,7 +10,7 @@ import SelectProductGroup from '../../components/SelectProductGroup';
 import useEntities from '../../mixins/useEntities';
 import apiFetch from '@wordpress/api-fetch';
 
-import { CeForm, CeInput } from '@checkout-engine/components-react';
+import { ScForm, ScInput } from '@surecart/components-react';
 
 export default ({ loading, product, updateProduct }) => {
 	const [saving, setSaving] = useState(false);
@@ -48,7 +48,7 @@ export default ({ loading, product, updateProduct }) => {
 
 		try {
 			const group = await apiFetch({
-				path: 'checkout-engine/v1/product_groups/',
+				path: 'surecart/v1/product_groups/',
 				method: 'POST',
 				data: {
 					name,
@@ -70,14 +70,14 @@ export default ({ loading, product, updateProduct }) => {
 	if (!product?.recurring) return null;
 
 	return (
-		<Box title={__('Upgrade Group', 'checkout_engine')} loading={loading}>
+		<Box title={__('Upgrade Group', 'surecart')} loading={loading}>
 			<SelectProductGroup
 				css={css`
 					flex: 0 1 50%;
 				`}
 				help={__(
 					'Add this product to a group with others you want the purchaser to switch between.',
-					'checkout_engine'
+					'surecart'
 				)}
 				value={product?.product_group?.id || product?.product_group}
 				groups={product_groups}
@@ -89,26 +89,26 @@ export default ({ loading, product, updateProduct }) => {
 			/>
 			{modal && (
 				<Modal
-					title={__('Create Product Group', 'checkout_engine')}
+					title={__('Create Product Group', 'surecart')}
 					css={css`
 						max-width: 500px !important;
 					`}
 					onRequestClose={() => setModal(false)}
 					shouldCloseOnClickOutside={false}
 				>
-					<CeForm
-						onCeFormSubmit={onCreate}
+					<ScForm
+						onScFormSubmit={onCreate}
 						css={css`
-							--ce-form-row-spacing: var(--ce-spacing-large);
+							--sc-form-row-spacing: var(--sc-spacing-large);
 						`}
 					>
-						<CeInput
+						<ScInput
 							required
 							name="name"
-							label={__('Group Name', 'checkout_engine')}
+							label={__('Group Name', 'surecart')}
 							help={__(
 								'This is not shown to the customer, but is used help you identify the group.',
-								'checkout_engine'
+								'surecart'
 							)}
 							autofocus
 						/>
@@ -121,13 +121,13 @@ export default ({ loading, product, updateProduct }) => {
 							`}
 						>
 							<Button isPrimary isBusy={saving} type="submit">
-								{__('Create', 'checkout_engine')}
+								{__('Create', 'surecart')}
 							</Button>
 							<Button onClick={() => setModal(false)}>
-								{__('Cancel', 'checkout_engine')}
+								{__('Cancel', 'surecart')}
 							</Button>
 						</div>
-					</CeForm>
+					</ScForm>
 				</Modal>
 			)}
 		</Box>

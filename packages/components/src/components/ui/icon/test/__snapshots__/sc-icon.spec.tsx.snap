@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-icon renders 1`] = `
+<sc-icon>
+  <mock:shadow-root>
+    <div aria-label="" class="icon" part="base" role="img"></div>
+  </mock:shadow-root>
+</sc-icon>
+`;

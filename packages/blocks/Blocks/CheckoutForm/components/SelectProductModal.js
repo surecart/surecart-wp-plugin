@@ -9,7 +9,7 @@ import { css, jsx } from '@emotion/core';
 
 import throttle from 'lodash/throttle';
 
-import { CeSelect } from '@checkout-engine/components-react';
+import { ScSelect } from '@surecart/components-react';
 import { convertPricesToChoices } from '../../../utils/prices';
 import { useSelect, dispatch, select } from '@wordpress/data';
 import { BLOCKS_STORE_KEY } from '../store';
@@ -54,7 +54,7 @@ export default ({ onRequestClose, onChoose }) => {
 			try {
 				// fetch product's prices.
 				const pricesResponse = await apiFetch({
-					path: addQueryArgs('checkout-engine/v1/prices', {
+					path: addQueryArgs('surecart/v1/prices', {
 						product_ids: [product.id],
 						archived: false,
 					}),
@@ -89,7 +89,7 @@ export default ({ onRequestClose, onChoose }) => {
 				overflow: visible !important;
 			`}
 			shouldCloseOnClickOutside={false}
-			title={__('Add Product', 'checkout_engine')}
+			title={__('Add Product', 'surecart')}
 			onRequestClose={onRequestClose}
 		>
 			<div
@@ -100,19 +100,19 @@ export default ({ onRequestClose, onChoose }) => {
 				`}
 			>
 				<SelectProduct onSelect={(product) => setProduct(product)} />
-				{/* <CeSelect
+				{/* <ScSelect
 					value={ product?.id }
-					onCeChange={ ( e ) => {
+					onScChange={ ( e ) => {
 						setProduct( products?.[ e.target.value ] );
 					} }
 					loading={ querying }
-					placeholder={ __( 'Choose a product', 'checkout_engine' ) }
+					placeholder={ __( 'Choose a product', 'surecart' ) }
 					searchPlaceholder={ __(
 						'Search for a product...',
-						'checkout_engine'
+						'surecart'
 					) }
 					search
-					onCeSearch={ ( e ) => findProduct( e.detail ) }
+					onScSearch={ ( e ) => findProduct( e.detail ) }
 					choices={ ( Object.keys( products ) || {} ).map(
 						( key ) => {
 							const product = products[ key ];
@@ -136,10 +136,10 @@ export default ({ onRequestClose, onChoose }) => {
 					`}
 				>
 					<Button isPrimary isBusy={busy} onClick={addProduct}>
-						{__('Add Product', 'checkout_engine')}
+						{__('Add Product', 'surecart')}
 					</Button>
 					<Button variant="link" onClick={onRequestClose}>
-						{__('Cancel', 'checkout_engine')}
+						{__('Cancel', 'surecart')}
 					</Button>
 				</div>
 			</div>

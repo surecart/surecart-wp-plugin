@@ -22,7 +22,7 @@ import Sidebar from './Sidebar';
 import useCurrentPage from '../mixins/useCurrentPage';
 import ErrorFlash from '../components/ErrorFlash';
 import useEntities from '../mixins/useEntities';
-import { CeButton } from '@checkout-engine/components-react';
+import { ScButton } from '@surecart/components-react';
 import ProductActionsDropdown from './components/ProductActionsDropdown';
 
 export default () => {
@@ -190,8 +190,8 @@ export default () => {
 			status={product?.status}
 			pageModelName={'product'}
 			onSubmit={onSubmit}
-			backUrl={'admin.php?page=ce-products'}
-			backText={__('Back to All Product', 'checkout_engine')}
+			backUrl={'admin.php?page=sc-products'}
+			backText={__('Back to All Product', 'surecart')}
 			title={
 				<div
 					css={css`
@@ -201,33 +201,33 @@ export default () => {
 					`}
 				>
 					{isLoading ? (
-						<ce-skeleton
+						<sc-skeleton
 							style={{
 								width: '120px',
 								display: 'inline-block',
 							}}
-						></ce-skeleton>
+						></sc-skeleton>
 					) : product?.id ? (
-						__('Edit Product', 'checkout_engine')
+						__('Edit Product', 'surecart')
 					) : (
-						__('Create Product', 'checkout_engine')
+						__('Create Product', 'surecart')
 					)}
 					{product?.archived && (
-						<ce-tag type="warning">
-							{__('Archived', 'checkout_engine')}
-						</ce-tag>
+						<sc-tag type="warning">
+							{__('Archived', 'surecart')}
+						</sc-tag>
 					)}
 				</div>
 			}
 			button={
 				isLoading ? (
-					<ce-skeleton
+					<sc-skeleton
 						style={{
 							width: '120px',
 							height: '35px',
 							display: 'inline-block',
 						}}
-					></ce-skeleton>
+					></sc-skeleton>
 				) : (
 					<div
 						css={css`
@@ -242,16 +242,16 @@ export default () => {
 							onToggleArchive={onToggleArchiveProduct}
 							isSaving={isSaving}
 						/>
-						<CeButton
+						<ScButton
 							type="primary"
 							loading={isSaving}
 							disabled={isSaving}
 							submit
 						>
 							{product?.id
-								? __('Update Product', 'checkout_engine')
-								: __('Create Product', 'checkout_engine')}
-						</CeButton>
+								? __('Update Product', 'surecart')
+								: __('Create Product', 'surecart')}
+						</ScButton>
 					</div>
 				)
 			}

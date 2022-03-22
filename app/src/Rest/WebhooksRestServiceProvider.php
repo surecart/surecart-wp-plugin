@@ -1,9 +1,9 @@
 <?php
 
-namespace CheckoutEngine\Rest;
+namespace SureCart\Rest;
 
-use CheckoutEngine\Controllers\Rest\WebhooksController;
-use CheckoutEngine\Rest\RestServiceInterface;
+use SureCart\Controllers\Rest\WebhooksController;
+use SureCart\Rest\RestServiceInterface;
 
 /**
  * Service provider for Webhooks Rest Requests
@@ -43,7 +43,7 @@ class WebhooksRestServiceProvider extends RestServiceProvider implements RestSer
 			// In JSON Schema you can specify object properties in the properties attribute.
 			'properties' => [
 				'id' => [
-					'description' => esc_html__( 'Unique identifier for the object.', 'checkout_engine' ),
+					'description' => esc_html__( 'Unique identifier for the object.', 'surecart' ),
 					'type'        => 'string',
 					'context'     => [ 'view', 'edit', 'embed' ],
 					'readonly'    => true,

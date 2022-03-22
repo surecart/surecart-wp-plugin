@@ -23,13 +23,13 @@
 
 ### Depends on
 
-- [ce-icon](../icon)
+- [sc-icon](../icon)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-breadcrumbs --> ce-icon
-  style ce-breadcrumbs fill:#f9f,stroke:#333,stroke-width:4px
+  sc-breadcrumbs --> sc-icon
+  style sc-breadcrumbs fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

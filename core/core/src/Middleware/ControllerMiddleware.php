@@ -1,15 +1,15 @@
 <?php
 /**
- * @package   CheckoutEngineCore
+ * @package   SureCartCore
  * @author    Andre Gagnon <me@andregagnon.me>
  * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://checkout_engine.com/
+ * @link      https://surecart.com/
  */
 
-namespace CheckoutEngineCore\Middleware;
+namespace SureCartCore\Middleware;
 
-use CheckoutEngineCore;
+use SureCartCore;
 
 /**
  * Redirect users who do not have a capability to a specific URL.

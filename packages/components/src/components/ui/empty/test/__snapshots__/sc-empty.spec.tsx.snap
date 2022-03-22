@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-empty renders 1`] = `
+<sc-empty>
+  <mock:shadow-root>
+    <div class="empty">
+      <slot></slot>
+    </div>
+  </mock:shadow-root>
+</sc-empty>
+`;

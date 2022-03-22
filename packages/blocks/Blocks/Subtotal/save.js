@@ -1,8 +1,8 @@
-export default ( { attributes } ) => {
+export default ({ attributes }) => {
 	const { text } = attributes;
 	return (
-		<ce-line-item-total class="ce-subtotal" total="subtotal">
-			<span slot="description">{ text }</span>
-		</ce-line-item-total>
+		<sc-line-item-total class="sc-subtotal" total="subtotal">
+			<span slot="description">{text}</span>
+		</sc-line-item-total>
 	);
 };

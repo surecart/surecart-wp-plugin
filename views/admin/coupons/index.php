@@ -1,9 +1,9 @@
 <div class="wrap">
-	<?php \CheckoutEngine::render(
+	<?php \SureCart::render(
 		'layouts/partials/admin-index-header',
 		[
-			'title'    => __( 'Coupons', 'checkout_engine' ),
-			'new_link' => \CheckoutEngine::getUrl()->edit( 'coupon' ),
+			'title'    => __( 'Coupons', 'surecart' ),
+			'new_link' => \SureCart::getUrl()->edit( 'coupon' ),
 		]
 	); ?>
 

@@ -16,13 +16,13 @@
 
 ### Used by
 
- - [ce-select](../select)
+ - [sc-select](../select)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-select --> ce-menu-label
-  style ce-menu-label fill:#f9f,stroke:#333,stroke-width:4px
+  sc-select --> sc-menu-label
+  style sc-menu-label fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

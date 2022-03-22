@@ -2,10 +2,10 @@
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import {
-	CeCard,
-	CeFormControl,
-	CeStackedList,
-} from '@checkout-engine/components-react';
+	ScCard,
+	ScFormControl,
+	ScStackedList,
+} from '@surecart/components-react';
 import { FormFileUpload, DropZone } from '@wordpress/components';
 import SingleFile from './SingleFile';
 import Box from '../../ui/Box';
@@ -29,14 +29,14 @@ export default ({ id, product, updateProduct, loading }) => {
 	};
 
 	return (
-		<Box title={__('Files', 'checkout_engine')} loading={loading}>
+		<Box title={__('Files', 'surecart')} loading={loading}>
 			{(() => {
 				if (!(product?.files?.data || [])?.length && !uploads.length)
 					return null;
 
 				return (
-					<CeCard noPadding>
-						<CeStackedList>
+					<ScCard noPadding>
+						<ScStackedList>
 							{(product?.files?.data || [])
 								.sort((a, b) => a.created_at - b.created_at)
 								.map((file) => (
@@ -100,20 +100,17 @@ export default ({ id, product, updateProduct, loading }) => {
 									}}
 								/>
 							))}
-						</CeStackedList>
-					</CeCard>
+						</ScStackedList>
+					</ScCard>
 				);
 			})()}
 
-			<CeFormControl
-				label={__('Files', 'checkout_engine')}
-				showLabel={false}
-			>
+			<ScFormControl label={__('Files', 'surecart')} showLabel={false}>
 				<div
 					css={css`
 						position: relative;
-						border: 2px dashed var(--ce-color-gray-200);
-						border-radius: var(--ce-border-radius-small);
+						border: 2px dashed var(--sc-color-gray-200);
+						border-radius: var(--sc-border-radius-small);
 						padding: 2em;
 						display: grid;
 						gap: 1em;
@@ -122,16 +119,16 @@ export default ({ id, product, updateProduct, loading }) => {
 				>
 					{__(
 						'Drag and drop an file here or click to select a file.',
-						'checkout_engine'
+						'surecart'
 					)}
 
 					<FormFileUpload isPrimary multiple onChange={doUpload}>
-						{__('Upload File', 'checkout_engine')}
+						{__('Upload File', 'surecart')}
 					</FormFileUpload>
 
 					<DropZone onFilesDrop={doUpload} />
 				</div>
-			</CeFormControl>
+			</ScFormControl>
 		</Box>
 	);
 };

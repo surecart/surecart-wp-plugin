@@ -1,17 +1,17 @@
 <?php
 /**
- * @package   CheckoutEngineCore
+ * @package   SureCartCore
  * @author    Andre Gagnon <me@andregagnon.me>
  * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://checkout_engine.com/
+ * @link      https://surecart.com/
  */
 
-namespace CheckoutEngineCore\Application;
+namespace SureCartCore\Application;
 
 use Closure;
 use BadMethodCallException;
-use CheckoutEngineCore\Support\Arr;
+use SureCartCore\Support\Arr;
 
 /**
  * Add methods to classes at runtime.

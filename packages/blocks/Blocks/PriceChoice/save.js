@@ -1,4 +1,4 @@
-export default ( { attributes } ) => {
+export default ({ attributes }) => {
 	const {
 		price_id,
 		type,
@@ -11,16 +11,16 @@ export default ( { attributes } ) => {
 		checked,
 	} = attributes;
 	return (
-		<ce-price-choice
-			price-id={ price_id }
-			type={ type }
-			label={ label }
-			description={ description }
-			checked={ checked }
-			show-label={ show_label ? '1' : 'false' }
-			show-price={ show_price ? '1' : 'false' }
-			show-control={ show_control ? '1' : 'false' }
-			quantity={ quantity }
-		></ce-price-choice>
+		<sc-price-choice
+			price-id={price_id}
+			type={type}
+			label={label}
+			description={description}
+			checked={checked}
+			show-label={show_label ? '1' : 'false'}
+			show-price={show_price ? '1' : 'false'}
+			show-control={show_control ? '1' : 'false'}
+			quantity={quantity}
+		></sc-price-choice>
 	);
 };

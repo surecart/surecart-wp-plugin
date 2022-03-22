@@ -1,7 +1,7 @@
 <?php
-namespace CheckoutEngine\Permissions\Models;
+namespace SureCart\Permissions\Models;
 
-use CheckoutEngine\Models\Subscription;
+use SureCart\Models\Subscription;
 
 /**
  * Handle various permissions.
@@ -10,9 +10,9 @@ class SubscriptionPermissionsController extends ModelPermissionsController {
 	/**
 	 * Can user read.
 	 *
-	 * @param \CheckoutEngine\Models\User $user User model.
-	 * @param array                       $args {
-	 *                        Arguments that accompany the requested capability check.
+	 * @param \SureCart\Models\User $user User model.
+	 * @param array                 $args {
+	 *                  Arguments that accompany the requested capability check.
 	 *     @type string    $0 Requested capability.
 	 *     @type int       $1 Concerned user ID.
 	 *     @type mixed  ...$2 Optional second and further parameters, typically object ID.
@@ -26,9 +26,9 @@ class SubscriptionPermissionsController extends ModelPermissionsController {
 	/**
 	 * Can user edit.
 	 *
-	 * @param \CheckoutEngine\Models\User $user User model.
-	 * @param array                       $args {
-	 *                        Arguments that accompany the requested capability check.
+	 * @param \SureCart\Models\User $user User model.
+	 * @param array                 $args {
+	 *                  Arguments that accompany the requested capability check.
 	 *     @type string    $0 Requested capability.
 	 *     @type int       $1 Concerned user ID.
 	 *     @type mixed  ...$2 Optional second and further parameters, typically object ID.

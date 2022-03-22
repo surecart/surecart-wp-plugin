@@ -1,9 +1,9 @@
 import { select } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import DataTable from '../../../components/DataTable';
-import { store } from '@checkout-engine/data';
+import { store } from '@surecart/data';
 import { addQueryArgs } from '@wordpress/url';
-import { CeOrderStatusBadge } from '@checkout-engine/components-react';
+import { ScOrderStatusBadge } from '@surecart/components-react';
 import useEntities from '../../../mixins/useEntities';
 import { Flex } from '@wordpress/components';
 import InfinitePaginationButton from '@admin/ui/InfinitePaginationButton';
@@ -36,7 +36,7 @@ export default ({ subscriptionId }) => {
 		<div>
 			<DataTable
 				loading={isLoading}
-				title={__('Invoices', 'checkout_engine')}
+				title={__('Invoices', 'surecart')}
 				footer={
 					<Flex justify="space-between">
 						<div>
@@ -47,23 +47,23 @@ export default ({ subscriptionId }) => {
 							page={page}
 							totalPages={pagination?.total_pages}
 							loading={isFetching}
-							button_text={__('Load More', 'checkout_engine')}
+							button_text={__('Load More', 'surecart')}
 							onClick={() => setPage(page + 1)}
 						/>
 					</Flex>
 				}
 				columns={{
 					amount: {
-						label: __('Amount', 'checkout_engine'),
+						label: __('Amount', 'surecart'),
 					},
 					status: {
-						label: __('Status', 'checkout_engine'),
+						label: __('Status', 'surecart'),
 					},
 					created: {
-						label: __('Created', 'checkout_engine'),
+						label: __('Created', 'surecart'),
 					},
 					number: {
-						label: __('Number', 'checkout_engine'),
+						label: __('Number', 'surecart'),
 					},
 					actions: {
 						width: '100px',
@@ -75,38 +75,38 @@ export default ({ subscriptionId }) => {
 					.map((invoice) => {
 						return {
 							amount: (
-								<ce-format-number
+								<sc-format-number
 									type="currency"
 									currency={invoice?.currency}
 									value={invoice?.amount_due}
-								></ce-format-number>
+								></sc-format-number>
 							),
 							status: (
-								<CeOrderStatusBadge
+								<ScOrderStatusBadge
 									status={invoice?.status}
-								></CeOrderStatusBadge>
+								></ScOrderStatusBadge>
 							),
 							created: (
-								<ce-format-date
+								<sc-format-date
 									type="timestamp"
 									date={invoice?.created_at}
 									month="short"
 									day="numeric"
 									year="numeric"
-								></ce-format-date>
+								></sc-format-date>
 							),
 							number: invoice.number,
 							actions: (
-								<ce-button
+								<sc-button
 									size="small"
 									href={addQueryArgs('admin.php', {
-										page: 'ce-invoices',
+										page: 'sc-invoices',
 										action: 'edit',
 										id: invoice?.id,
 									})}
 								>
 									View
-								</ce-button>
+								</sc-button>
 							),
 						};
 					})}

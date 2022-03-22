@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-menu-label renders 1`] = `
+<sc-menu-label>
+  <mock:shadow-root>
+    <div class="menu-label" part="base">
+      <slot></slot>
+    </div>
+  </mock:shadow-root>
+</sc-menu-label>
+`;

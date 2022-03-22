@@ -1,12 +1,12 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 2,
-	"name": "checkout-engine/columns",
+	"name": "surecart/columns",
 	"title": "Columns",
 	"category": "design",
 	"description": "Display content in multiple columns, with blocks added to each column.",
-	"textdomain": "checkout_engine",
-	"parent": ["checkout-engine/form"],
+	"textdomain": "surecart",
+	"parent": ["surecart/form"],
 	"attributes": {
 		"verticalAlignment": {
 			"type": "string"

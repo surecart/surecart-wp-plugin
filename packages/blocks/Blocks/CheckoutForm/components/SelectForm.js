@@ -8,20 +8,20 @@ import { css, jsx } from '@emotion/core';
 
 import throttle from 'lodash/throttle';
 
-import { CeSelect } from '@checkout-engine/components-react';
+import { ScSelect } from '@surecart/components-react';
 
-export default ( { form, setForm } ) => {
-	const [ formsData, setFormsData ] = useState( [] );
-	const [ query, setQuery ] = useState( '' );
-	const [ loading, setLoading ] = useState( false );
+export default ({ form, setForm }) => {
+	const [formsData, setFormsData] = useState([]);
+	const [query, setQuery] = useState('');
+	const [loading, setLoading] = useState(false);
 
-	useEffect( () => {
+	useEffect(() => {
 		fetchForms();
-	}, [ query ] );
+	}, [query]);
 
 	const findForm = throttle(
-		( value ) => {
-			setQuery( value );
+		(value) => {
+			setQuery(value);
 		},
 		750,
 		{ leading: false }
@@ -30,41 +30,38 @@ export default ( { form, setForm } ) => {
 	const fetchForms = async () => {
 		let response;
 		try {
-			setLoading( true );
-			response = await apiFetch( {
-				path: addQueryArgs( 'wp/v2/ce-forms', {
+			setLoading(true);
+			response = await apiFetch({
+				path: addQueryArgs('wp/v2/sc-forms', {
 					search: query,
-				} ),
-			} );
-			setFormsData( response );
+				}),
+			});
+			setFormsData(response);
 		} finally {
-			setLoading( false );
+			setLoading(false);
 		}
 	};
 
 	return (
-		<CeSelect
-			value={ form?.id }
-			loading={ loading }
-			placeholder={ __( 'Choose a form', 'checkout_engine' ) }
-			searchPlaceholder={ __(
-				'Search for a form...',
-				'checkout_engine'
-			) }
+		<ScSelect
+			value={form?.id}
+			loading={loading}
+			placeholder={__('Choose a form', 'surecart')}
+			searchPlaceholder={__('Search for a form...', 'surecart')}
 			search
-			onCeSearch={ ( e ) => findForm( e.detail ) }
-			onCeChange={ ( e ) => {
+			onScSearch={(e) => findForm(e.detail)}
+			onScChange={(e) => {
 				const formData = formsData.find(
-					( form ) => form.id === parseInt( e.target.value )
+					(form) => form.id === parseInt(e.target.value)
 				);
-				setForm( formData );
-			} }
-			choices={ ( formsData || [] ).map( ( form ) => {
+				setForm(formData);
+			}}
+			choices={(formsData || []).map((form) => {
 				return {
 					value: form.id,
 					label: form.title.raw,
 				};
-			} ) }
+			})}
 		/>
 	);
 };

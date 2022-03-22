@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngine\Controllers\Admin\Subscriptions;
+namespace SureCart\Controllers\Admin\Subscriptions;
 
-use CheckoutEngine\Support\Scripts\AdminModelEditController;
+use SureCart\Support\Scripts\AdminModelEditController;
 
 /**
  * Coupon page
@@ -20,7 +20,7 @@ class SubscriptionScriptsController extends AdminModelEditController {
 	 *
 	 * @var string
 	 */
-	protected $handle = 'checkoutengine/scripts/admin/subscription';
+	protected $handle = 'SureCart/scripts/admin/subscription';
 
 	/**
 	 * Script path.

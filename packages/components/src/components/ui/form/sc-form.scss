@@ -1,0 +1,11 @@
+sc-form form > *:not(:last-child) {
+  margin-bottom: var(--sc-form-row-spacing, 0.75em);
+
+  &.wp-block-spacer {
+    margin-bottom: 0;
+  }
+}
+
+sc-form .wp-block-columns .wp-block-column {
+  margin: 50px;
+}

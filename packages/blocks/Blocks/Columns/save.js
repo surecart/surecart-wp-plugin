@@ -18,7 +18,7 @@ export default function save({ attributes }) {
 	const innerBlocksProps = useInnerBlocksProps.save(blockProps);
 
 	return (
-		<ce-columns
+		<sc-columns
 			vertical-alignment={verticalAlignment}
 			is-stacked-on-mobile={isStackedOnMobile}
 			{...innerBlocksProps}

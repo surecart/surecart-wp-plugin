@@ -1,18 +1,18 @@
 <?php
 /**
- * @package   CheckoutEngineCore
+ * @package   SureCartCore
  * @author    Andre Gagnon <me@andregagnon.me>
  * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://checkout_engine.com/
+ * @link      https://surecart.com/
  */
 
-namespace CheckoutEngineCore\Flash;
+namespace SureCartCore\Flash;
 
 use ArrayAccess;
-use CheckoutEngineCore\Exceptions\ConfigurationException;
-use CheckoutEngineCore\Helpers\MixedType;
-use CheckoutEngineCore\Support\Arr;
+use SureCartCore\Exceptions\ConfigurationException;
+use SureCartCore\Helpers\MixedType;
+use SureCartCore\Support\Arr;
 
 /**
  * Provide a way to flash data into the session for the next request.
@@ -52,7 +52,7 @@ class Flash {
 	 * @param array|ArrayAccess $store
 	 * @param string            $store_key
 	 */
-	public function __construct( &$store, $store_key = '__checkoutEngineFlash' ) {
+	public function __construct( &$store, $store_key = '__SureCartFlash' ) {
 		$this->store_key = $store_key;
 		$this->setStore( $store );
 	}

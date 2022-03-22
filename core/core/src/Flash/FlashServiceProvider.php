@@ -1,16 +1,16 @@
 <?php
 /**
- * @package   CheckoutEngineCore
+ * @package   SureCartCore
  * @author    Andre Gagnon <me@andregagnon.me>
  * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://checkout_engine.com/
+ * @link      https://surecart.com/
  */
 
-namespace CheckoutEngineCore\Flash;
+namespace SureCartCore\Flash;
 
-use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
-use CheckoutEngineCore\Session\Session;
+use SureCartCore\ServiceProviders\ServiceProviderInterface;
+use SureCartCore\Session\Session;
 
 /**
  * Provide flash dependencies.
@@ -25,10 +25,10 @@ class FlashServiceProvider implements ServiceProviderInterface {
 		global $ce_session;
 		$ce_session = [];
 
-		$container[ CHECKOUT_ENGINE_FLASH_KEY ] = function ( $c ) use ( $ce_session ) {
+		$container[ SURECART_FLASH_KEY ] = function ( $c ) use ( $ce_session ) {
 			$session = null;
-			if ( isset( $c[ CHECKOUT_ENGINE_SESSION_KEY ] ) ) {
-				$session = &$c[ CHECKOUT_ENGINE_SESSION_KEY ];
+			if ( isset( $c[ SURECART_SESSION_KEY ] ) ) {
+				$session = &$c[ SURECART_SESSION_KEY ];
 			} else {
 				$session = &$ce_session;
 			}
@@ -36,11 +36,11 @@ class FlashServiceProvider implements ServiceProviderInterface {
 		};
 
 		$container[ FlashMiddleware::class ] = function ( $c ) {
-			return new FlashMiddleware( $c[ CHECKOUT_ENGINE_FLASH_KEY ] );
+			return new FlashMiddleware( $c[ SURECART_FLASH_KEY ] );
 		};
 
-		$app = $container[ CHECKOUT_ENGINE_APPLICATION_KEY ];
-		$app->alias( 'flash', CHECKOUT_ENGINE_FLASH_KEY );
+		$app = $container[ SURECART_APPLICATION_KEY ];
+		$app->alias( 'flash', SURECART_FLASH_KEY );
 	}
 
 	/**

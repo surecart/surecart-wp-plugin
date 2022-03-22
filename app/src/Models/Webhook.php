@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngine\Models;
+namespace SureCart\Models;
 
-use CheckoutEngine\Support\Encryption;
+use SureCart\Support\Encryption;
 
 /**
  * Price model
@@ -28,7 +28,7 @@ class Webhook extends Model {
 	 * @return string
 	 */
 	protected function getListenerUrl() {
-		return get_site_url( null, '/checkout_engine/webhooks', is_ssl() ? 'https' : 'http' );
+		return get_site_url( null, '/surecart/webhooks', is_ssl() ? 'https' : 'http' );
 	}
 
 	/**
@@ -45,7 +45,7 @@ class Webhook extends Model {
 
 		return $this->create(
 			[
-				'description' => 'Main webhook for Checkout Engine',
+				'description' => 'Main webhook for SureCart',
 				'enabled'     => true,
 				'url'         => $this->getListenerUrl(),
 			]
@@ -55,7 +55,7 @@ class Webhook extends Model {
 	/**
 	 * Find existing webhook with the same listner url.
 	 *
-	 * @return \CheckoutEngine\Models\Webhook|false
+	 * @return \SureCart\Models\Webhook|false
 	 */
 	public function findExisting() {
 		$webhooks = $this->setPagination( [ 'per_page' => 100 ] )->get();

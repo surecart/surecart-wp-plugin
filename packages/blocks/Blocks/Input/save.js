@@ -25,7 +25,7 @@ export default ({ className, attributes }) => {
 	} = attributes;
 
 	return (
-		<ce-input
+		<sc-input
 			class={className}
 			label={label}
 			clearable={clearable ? '1' : null}
@@ -49,6 +49,6 @@ export default ({ className, attributes }) => {
 			type={type}
 			value={value}
 			required={required ? '1' : null}
-		></ce-input>
+		></sc-input>
 	);
 };

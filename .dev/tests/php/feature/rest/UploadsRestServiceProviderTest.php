@@ -1,11 +1,11 @@
 <?php
-namespace CheckoutEngine\Tests\Feature\Rest;
+namespace SureCart\Tests\Feature\Rest;
 
-use CheckoutEngine\Rest\UploadsRestServiceProvider;
-use CheckoutEngine\Tests\CheckoutEngineUnitTestCase;
+use SureCart\Rest\UploadsRestServiceProvider;
+use SureCart\Tests\SureCartUnitTestCase;
 use WP_REST_Request;
 
-class UploadsRestServiceProviderTest extends CheckoutEngineUnitTestCase {
+class UploadsRestServiceProviderTest extends SureCartUnitTestCase {
 	/**
 	 * Set up a new app instance to use for tests.
 	 */
@@ -14,10 +14,10 @@ class UploadsRestServiceProviderTest extends CheckoutEngineUnitTestCase {
 		parent::setUp();
 
 		// Set up an app instance with whatever stubs and mocks we need before every test.
-		\CheckoutEngine::make()->bootstrap([
+		\SureCart::make()->bootstrap([
 			'providers' => [
 				UploadsRestServiceProvider::class,
-				\CheckoutEngine\Request\RequestServiceProvider::class,
+				\SureCart\Request\RequestServiceProvider::class,
 			]
 		], false);
 
@@ -27,20 +27,20 @@ class UploadsRestServiceProviderTest extends CheckoutEngineUnitTestCase {
 
 	public function test_create_upload_permissions()
 	{
-		$request = new WP_REST_Request('POST', '/checkout-engine/v1/uploads');
+		$request = new WP_REST_Request('POST', '/surecart/v1/uploads');
 		$response = rest_do_request( $request );
 		$this->assertSame($response->get_status(), 401);
 
 		$user = $this->factory->user->create_and_get();
 		wp_set_current_user( $user->ID );
 
-		$request = new WP_REST_Request('POST', '/checkout-engine/v1/uploads');
+		$request = new WP_REST_Request('POST', '/surecart/v1/uploads');
 		$response = rest_do_request( $request );
 		$this->assertSame($response->get_status(), 403);
 
 		$user->add_cap('upload_files');
 		wp_set_current_user( $user->ID );
-		$request = new WP_REST_Request('POST', '/checkout-engine/v1/uploads');
+		$request = new WP_REST_Request('POST', '/surecart/v1/uploads');
 		$response = rest_do_request( $request );
 		$this->assertSame($response->get_status(), 403);
 	}
@@ -81,7 +81,7 @@ class UploadsRestServiceProviderTest extends CheckoutEngineUnitTestCase {
 			"updated_at": 1637709542
 		  }'));
 
-		$request = new WP_REST_Request('POST', '/checkout-engine/v1/uploads');
+		$request = new WP_REST_Request('POST', '/surecart/v1/uploads');
 		$response = rest_do_request( $request );
 
 		$this->assertSame($response->get_status(), 200);

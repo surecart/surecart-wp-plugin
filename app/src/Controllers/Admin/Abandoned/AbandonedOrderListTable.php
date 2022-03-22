@@ -1,10 +1,10 @@
 <?php
 
-namespace CheckoutEngine\Controllers\Admin\Abandoned;
+namespace SureCart\Controllers\Admin\Abandoned;
 
-use CheckoutEngine\Support\TimeDate;
-use CheckoutEngine\Controllers\Admin\Tables\ListTable;
-use CheckoutEngine\Models\AbandonedOrder;
+use SureCart\Support\TimeDate;
+use SureCart\Controllers\Admin\Tables\ListTable;
+use SureCart\Models\AbandonedOrder;
 
 /**
  * Create a new table class that will extend the WP_List_Table
@@ -45,12 +45,12 @@ class AbandonedOrderListTable extends ListTable {
 		 */
 	protected function get_views() {
 		$stati = [
-			'all'       => __( 'All', 'checkout_engine' ),
-			'recovered' => __( 'Recovered', 'checkout_engine' ),
-			'notified'  => __( 'Notified', 'checkout_engine' ),
+			'all'       => __( 'All', 'surecart' ),
+			'recovered' => __( 'Recovered', 'surecart' ),
+			'notified'  => __( 'Notified', 'surecart' ),
 		];
 
-		$link = \CheckoutEngine::getUrl()->index( 'abandoned_orders' );
+		$link = \SureCart::getUrl()->index( 'abandoned_orders' );
 
 		foreach ( $stati as $status => $label ) {
 			$current_link_attributes = '';
@@ -84,7 +84,7 @@ class AbandonedOrderListTable extends ListTable {
 		?>
 	<form class="search-form"
 		method="get">
-		<?php $this->search_box( __( 'Search Abanonded Orders', 'checkout_engine' ), 'abandoned_order' ); ?>
+		<?php $this->search_box( __( 'Search Abanonded Orders', 'surecart' ), 'abandoned_order' ); ?>
 		<input type="hidden"
 			name="id"
 			value="1" />
@@ -99,11 +99,11 @@ class AbandonedOrderListTable extends ListTable {
 	 */
 	public function get_columns() {
 		return [
-			'order'    => __( 'Order', 'checkout_engine' ),
-			'date'     => __( 'Date', 'checkout_engine' ),
-			'delivery' => __( 'Delivery', 'checkout_engine' ),
-			'status'   => __( 'Status', 'checkout_engine' ),
-			'total'    => __( 'Total', 'checkout_engine' ),
+			'order'    => __( 'Order', 'surecart' ),
+			'date'     => __( 'Date', 'surecart' ),
+			'delivery' => __( 'Delivery', 'surecart' ),
+			'status'   => __( 'Status', 'surecart' ),
+			'total'    => __( 'Total', 'surecart' ),
 		];
 	}
 
@@ -143,52 +143,52 @@ class AbandonedOrderListTable extends ListTable {
 	/**
 	 * Handle the total column
 	 *
-	 * @param \CheckoutEngine\Models\AbandonedOrder $checkout Checkout Session Model.
+	 * @param \SureCart\Models\AbandonedOrder $checkout Checkout Session Model.
 	 *
 	 * @return string
 	 */
 	public function column_total( $abandoned ) {
-		return '<ce-format-number type="currency" currency="' . strtoupper( esc_html( $abandoned->latest_order->currency ?? 'usd' ) ) . '" value="' . (float) $abandoned->latest_order->total_amount . '"></ce-format-number>';
+		return '<sc-format-number type="currency" currency="' . strtoupper( esc_html( $abandoned->latest_order->currency ?? 'usd' ) ) . '" value="' . (float) $abandoned->latest_order->total_amount . '"></sc-format-number>';
 	}
 
 	/**
 	 * Handle the total column
 	 *
-	 * @param \CheckoutEngine\Models\AbandonedOrder $abandoned Abandoned checkout model.
+	 * @param \SureCart\Models\AbandonedOrder $abandoned Abandoned checkout model.
 	 *
 	 * @return string
 	 */
 	public function column_date( $abandoned ) {
-		return '<ce-format-date date="' . (int) $abandoned->latest_order->updated_at . '" type="timestamp" month="short" day="numeric" year="numeric" hour="numeric" minute="numeric"></ce-format-date>';
+		return '<sc-format-date date="' . (int) $abandoned->latest_order->updated_at . '" type="timestamp" month="short" day="numeric" year="numeric" hour="numeric" minute="numeric"></sc-format-date>';
 	}
 
 	/**
 	 * Handle the status
 	 *
-	 * @param \CheckoutEngine\Models\AbandonedOrder $abandoned Abandoned checkout session.
+	 * @param \SureCart\Models\AbandonedOrder $abandoned Abandoned checkout session.
 	 *
 	 * @return string
 	 */
 	public function column_delivery( $abandoned ) {
-		return 'notified' === $abandoned->status ? '<ce-tag type="success">' . __( 'Sent', 'checkout_engine' ) . '</ce-tag>' : '<ce-tag>' . __( 'Not Sent', 'checkout_engine' ) . '</ce-tag>';
+		return 'notified' === $abandoned->status ? '<sc-tag type="success">' . __( 'Sent', 'surecart' ) . '</sc-tag>' : '<sc-tag>' . __( 'Not Sent', 'surecart' ) . '</sc-tag>';
 	}
 
 
 	/**
 	 * Handle the status
 	 *
-	 * @param \CheckoutEngine\Models\AbandonedOrder $abandoned Abandoned checkout session.
+	 * @param \SureCart\Models\AbandonedOrder $abandoned Abandoned checkout session.
 	 *
 	 * @return string
 	 */
 	public function column_status( $abandoned ) {
-		return 'recovered' === $abandoned->status ? '<ce-tag type="success">' . __( 'Recovered', 'checkout_engine' ) . '</ce-tag>' : '<ce-tag>' . __( 'Not Recovered', 'checkout_engine' ) . '</ce-tag>';
+		return 'recovered' === $abandoned->status ? '<sc-tag type="success">' . __( 'Recovered', 'surecart' ) . '</sc-tag>' : '<sc-tag>' . __( 'Not Recovered', 'surecart' ) . '</sc-tag>';
 	}
 
 	/**
 	 * Email of customer
 	 *
-	 * @param \CheckoutEngine\Models\AbandonedOrder $abandoned Abandoned checkout model.
+	 * @param \SureCart\Models\AbandonedOrder $abandoned Abandoned checkout model.
 	 *
 	 * @return string
 	 */

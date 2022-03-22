@@ -2,7 +2,7 @@ import { __, _n } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import { useState } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
-import { CeButton } from '@checkout-engine/components-react';
+import { ScButton } from '@surecart/components-react';
 import useEntity from '../../../mixins/useEntity';
 
 export default ({ purchase }) => {
@@ -14,11 +14,11 @@ export default ({ purchase }) => {
 			revoke
 				? __(
 						'Are you sure you want to revoke this purchase?',
-						'checkout_engine'
+						'surecart'
 				  )
 				: __(
 						'Are you sure you want to reinstate this purchase?',
-						'checkout_engine'
+						'surecart'
 				  )
 		);
 
@@ -31,7 +31,7 @@ export default ({ purchase }) => {
 		try {
 			const result = await apiFetch({
 				path: addQueryArgs(
-					`checkout-engine/v1/purchases/${id}/${
+					`surecart/v1/purchases/${id}/${
 						revoke ? 'revoke' : 'invoke'
 					}`,
 					{
@@ -54,22 +54,22 @@ export default ({ purchase }) => {
 	}
 
 	return purchase?.revoked ? (
-		<CeButton
+		<ScButton
 			href="#"
 			onClick={() => toggleRevoke(purchase?.id, false)}
 			size="small"
 			loading={loading}
 		>
-			{__('Unrevoke', 'checkout_engine')}
-		</CeButton>
+			{__('Unrevoke', 'surecart')}
+		</ScButton>
 	) : (
-		<CeButton
+		<ScButton
 			href="#"
 			onClick={() => toggleRevoke(purchase?.id, true)}
 			size="small"
 			loading={loading}
 		>
-			{__('Revoke', 'checkout_engine')}
-		</CeButton>
+			{__('Revoke', 'surecart')}
+		</ScButton>
 	);
 };

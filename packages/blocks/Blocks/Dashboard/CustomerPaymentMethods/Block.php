@@ -1,9 +1,9 @@
 <?php
 
-namespace CheckoutEngineBlocks\Blocks\Dashboard\CustomerPaymentMethods;
+namespace SureCartBlocks\Blocks\Dashboard\CustomerPaymentMethods;
 
-use CheckoutEngineBlocks\Blocks\Dashboard\DashboardPage;
-use CheckoutEngineBlocks\Controllers\PaymentMethodController;
+use SureCartBlocks\Blocks\Dashboard\DashboardPage;
+use SureCartBlocks\Controllers\PaymentMethodController;
 
 /**
  * Checkout block

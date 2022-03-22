@@ -1,15 +1,15 @@
 <?php
 /**
- * @package   CheckoutEngineAppCore
+ * @package   SureCartAppCore
  * @author    Andre Gagnon <me@andregagnon.me>
  * @copyright  Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://checkoutengine.com
+ * @link      https://surecart.com
  */
 
-namespace CheckoutEngine\WordPress;
+namespace SureCart\WordPress;
 
-use CheckoutEngineCore\Application\Application;
+use SureCartCore\Application\Application;
 
 /**
  * Main communication channel with the theme.
@@ -32,46 +32,46 @@ class PluginService {
 	}
 
 	/**
-	 * Shortcute to \CheckoutEngine\Account\AccountService
+	 * Shortcute to \SureCart\Account\AccountService
 	 *
-	 * @return \CheckoutEngine\Account\AccountService
+	 * @return \SureCart\Account\AccountService
 	 */
 	public function account() {
-		return $this->app->reolve( 'checkout_engine.account' );
+		return $this->app->reolve( 'surecart.account' );
 	}
 
 	/**
-	 * Shortcut to \CheckoutEngine\Install\InstallService.
+	 * Shortcut to \SureCart\Install\InstallService.
 	 *
-	 * @return \CheckoutEngine\Install\InstallService
+	 * @return \SureCart\Install\InstallService
 	 */
 	public function install() {
-		return $this->app->resolve( 'checkout_engine.install' );
+		return $this->app->resolve( 'surecart.install' );
 	}
 
 	/**
-	 * Shortcut to \CheckoutEngine\WordPress\Pages\PageService.
+	 * Shortcut to \SureCart\WordPress\Pages\PageService.
 	 *
-	 * @return \CheckoutEngine\WordPress\Pages\PageService
+	 * @return \SureCart\WordPress\Pages\PageService
 	 */
 	public function pages() {
-		return $this->app->resolve( 'checkout_engine.pages' );
+		return $this->app->resolve( 'surecart.pages' );
 	}
 	/**
-	 * Shortcut to \CheckoutEngine\WordPress\Pages\PageService.
+	 * Shortcut to \SureCart\WordPress\Pages\PageService.
 	 *
-	 * @return \CheckoutEngine\WordPress\Pages\PageService
+	 * @return \SureCart\WordPress\Pages\PageService
 	 */
 	public function activation() {
-		return $this->app->resolve( 'checkout_engine.activation' );
+		return $this->app->resolve( 'surecart.activation' );
 	}
 
 	/**
-	 * Shortcut to \CheckoutEngine\WordPress\Pages\PageService.
+	 * Shortcut to \SureCart\WordPress\Pages\PageService.
 	 *
-	 * @return \CheckoutEngine\Permissions\RolesService;
+	 * @return \SureCart\Permissions\RolesService;
 	 */
 	public function roles() {
-		return $this->app->resolve( 'checkout_engine.permissions.roles' );
+		return $this->app->resolve( 'surecart.permissions.roles' );
 	}
 }

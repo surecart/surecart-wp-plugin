@@ -1,11 +1,11 @@
 {
 	"apiVersion": 2,
-	"name": "checkout-engine/wordpress-account",
+	"name": "surecart/wordpress-account",
 	"title": "WordPress User Account",
 	"description": "WordPress User Account Information",
 	"category": "layout",
 	"keywords": ["account", "user", "dashboard"],
-	"parent": ["checkout-engine/dashboard-page"],
+	"parent": ["surecart/dashboard-page"],
 	"supports": {
 		"reusable": false,
 		"html": false

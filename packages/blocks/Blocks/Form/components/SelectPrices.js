@@ -2,7 +2,7 @@
 import { __ } from '@wordpress/i18n';
 import { css, jsx } from '@emotion/core';
 
-import { CeRadioGroup, CeRadio } from '@checkout-engine/components-react';
+import { ScRadioGroup, ScRadio } from '@surecart/components-react';
 import PriceChoices from '@scripts/blocks/components/PriceChoices';
 import PriceSelector from '../../../components/PriceSelector';
 import { Fragment } from 'react';
@@ -48,19 +48,19 @@ export default ({
 		let heading;
 		switch (template) {
 			case 'donation':
-				heading = __('Choose A Donation Product', 'checkout_engine');
+				heading = __('Choose A Donation Product', 'surecart');
 				break;
 			case 'invoice':
-				heading = __('Choose An Invoice Product', 'checkout_engine');
+				heading = __('Choose An Invoice Product', 'surecart');
 				break;
 			default:
-				heading = __('Choose A  Product', 'checkout_engine');
+				heading = __('Choose A  Product', 'surecart');
 				break;
 		}
 
 		return (
 			<Fragment>
-				<ce-dashboard-module heading={heading}>
+				<sc-dashboard-module heading={heading}>
 					<PriceSelector
 						ad_hoc={true}
 						open={false}
@@ -74,55 +74,55 @@ export default ({
 						}}
 						required
 					/>
-				</ce-dashboard-module>
+				</sc-dashboard-module>
 			</Fragment>
 		);
 	}
 
 	return (
 		<Fragment>
-			<ce-dashboard-module heading={__('Products', 'checkout_engine')}>
+			<sc-dashboard-module heading={__('Products', 'surecart')}>
 				<PriceChoices
 					choices={choices}
 					onAddProduct={addProduct}
 					onUpdate={updateChoice}
 					onRemove={removeChoice}
 				/>
-			</ce-dashboard-module>
+			</sc-dashboard-module>
 
 			{hasValidChoices() && (
-				<ce-dashboard-module
-					heading={__('Product Options', 'checkout_engine')}
+				<sc-dashboard-module
+					heading={__('Product Options', 'surecart')}
 				>
-					<CeRadioGroup
-						onCeChange={(e) => setChoiceType(e.target.value)}
+					<ScRadioGroup
+						onScChange={(e) => setChoiceType(e.target.value)}
 					>
-						<CeRadio value="all" checked={choice_type === 'all'}>
+						<ScRadio value="all" checked={choice_type === 'all'}>
 							{__(
 								'Customer must purchase all products',
-								'checkout_engine'
+								'surecart'
 							)}
-						</CeRadio>
-						<CeRadio
+						</ScRadio>
+						<ScRadio
 							value="radio"
 							checked={choice_type === 'radio'}
 						>
 							{__(
 								'Customer must select one price from the options.',
-								'checkout_engine'
+								'surecart'
 							)}
-						</CeRadio>
-						<CeRadio
+						</ScRadio>
+						<ScRadio
 							value="checkbox"
 							checked={choice_type === 'checkbox'}
 						>
 							{__(
 								'Customer can select multiple prices.',
-								'checkout_engine'
+								'surecart'
 							)}
-						</CeRadio>
-					</CeRadioGroup>
-				</ce-dashboard-module>
+						</ScRadio>
+					</ScRadioGroup>
+				</sc-dashboard-module>
 			)}
 		</Fragment>
 	);

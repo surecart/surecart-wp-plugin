@@ -4,7 +4,7 @@ import { css, jsx } from '@emotion/core';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { store } from '../../store/data';
 import { translateInterval } from '../../util/translations';
-import { CeButton } from '@checkout-engine/components-react';
+import { ScButton } from '@surecart/components-react';
 
 export default ({ product }) => {
 	const prices = useSelect((select) =>
@@ -19,16 +19,16 @@ export default ({ product }) => {
 	};
 
 	return (
-		<ce-card>
-			<ce-flex>
+		<sc-card>
+			<sc-flex>
 				<div>
-					<ce-text
+					<sc-text
 						style={{
-							'--font-size': 'var(--ce-font-size-large)',
+							'--font-size': 'var(--sc-font-size-large)',
 						}}
 					>
 						{product?.name}
-					</ce-text>
+					</sc-text>
 					{(prices || []).map((price) => {
 						return (
 							<div
@@ -37,7 +37,7 @@ export default ({ product }) => {
 								`}
 								key={price?.id}
 							>
-								<ce-format-number
+								<sc-format-number
 									type="currency"
 									value={price?.amount}
 									currency={price?.currency}
@@ -53,11 +53,11 @@ export default ({ product }) => {
 					})}
 				</div>
 				<div>
-					<CeButton size="small" onClick={onRemove}>
-						{__('Remove', 'checkout_engine')}
-					</CeButton>
+					<ScButton size="small" onClick={onRemove}>
+						{__('Remove', 'surecart')}
+					</ScButton>
 				</div>
-			</ce-flex>
-		</ce-card>
+			</sc-flex>
+		</sc-card>
 	);
 };

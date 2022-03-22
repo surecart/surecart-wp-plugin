@@ -51,7 +51,7 @@ export default ({ attributes, setAttributes }) => {
 			value: blocks,
 			onInput,
 			onChange,
-			template: [['checkout-engine/form', {}]],
+			template: [['surecart/form', {}]],
 			templateLock: 'all',
 		}
 	);
@@ -79,10 +79,7 @@ export default ({ attributes, setAttributes }) => {
 		return (
 			<div {...blockProps}>
 				<Warning>
-					{__(
-						'Form cannot be rendered inside itself.',
-						'checkout_engine'
-					)}
+					{__('Form cannot be rendered inside itself.', 'surecart')}
 				</Warning>
 			</div>
 		);
@@ -106,7 +103,7 @@ export default ({ attributes, setAttributes }) => {
 				<Warning>
 					{__(
 						'This form has been deleted or is unavailable.',
-						'checkout_engine'
+						'surecart'
 					)}
 				</Warning>
 			</div>
@@ -116,10 +113,10 @@ export default ({ attributes, setAttributes }) => {
 	return (
 		<RecursionProvider>
 			<InspectorControls>
-				<PanelBody title={__('Form Title', 'checkout-engine')}>
+				<PanelBody title={__('Form Title', 'surecart')}>
 					<PanelRow>
 						<TextControl
-							label={__('Form Title', 'checkout-engine')}
+							label={__('Form Title', 'surecart')}
 							value={title}
 							onChange={(title) => setTitle(title)}
 						/>

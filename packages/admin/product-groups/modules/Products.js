@@ -34,15 +34,12 @@ export default ({ id, products, loading }) => {
 
 	return (
 		<Box
-			title={__('Products', 'checkout_engine')}
+			title={__('Products', 'surecart')}
 			loading={loading}
 			footer={
 				<div>
 					<SelectModel
-						placeholder={__(
-							'Add Another Product',
-							'checkout_engine'
-						)}
+						placeholder={__('Add Another Product', 'surecart')}
 						position={'bottom-left'}
 						choices={productsQuery.map((product) => ({
 							label: product.name,
@@ -62,12 +59,9 @@ export default ({ id, products, loading }) => {
 						<Product key={product?.id} product={product} />
 					))
 			) : (
-				<ce-empty icon="shopping-bag">
-					{__(
-						'Add some products to this upgrade group.',
-						'checkout_engine'
-					)}
-				</ce-empty>
+				<sc-empty icon="shopping-bag">
+					{__('Add some products to this upgrade group.', 'surecart')}
+				</sc-empty>
 			)}
 		</Box>
 	);

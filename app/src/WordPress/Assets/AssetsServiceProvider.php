@@ -1,9 +1,9 @@
 <?php
 
-namespace CheckoutEngine\WordPress\Assets;
+namespace SureCart\WordPress\Assets;
 
-use CheckoutEngine\Models\Brand;
-use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
+use SureCart\Models\Brand;
+use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 /**
  * Register and enqueues assets.
@@ -22,13 +22,13 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 	 * @param  \Pimple\Container $container Service Container.
 	 */
 	public function register( $container ) {
-		$container['checkout_engine.assets'] = function () {
+		$container['surecart.assets'] = function () {
 			return new AssetsService();
 		};
 
-		$app = $container[ CHECKOUT_ENGINE_APPLICATION_KEY ];
+		$app = $container[ SURECART_APPLICATION_KEY ];
 
-		$app->alias( 'assets', 'checkout_engine.assets' );
+		$app->alias( 'assets', 'surecart.assets' );
 	}
 
 	/**
@@ -54,23 +54,23 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 
 	public function registerDependencies() {
 		// core-data
-		$asset_file = include trailingslashit( $this->container[ CHECKOUT_ENGINE_CONFIG_KEY ]['app_core']['path'] ) . 'dist/store/data.asset.php';
+		$asset_file = include trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/store/data.asset.php';
 
 		wp_register_script(
-			'ce-core-data',
-			trailingslashit( \CheckoutEngine::core()->assets()->getUrl() ) . 'dist/store/data.js',
-			array_merge( [ 'checkout-engine-components' ], $asset_file['dependencies'] ),
-			filemtime( trailingslashit( $this->container[ CHECKOUT_ENGINE_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/checkout-engine/checkout-engine.esm.js' ),
+			'sc-core-data',
+			trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/store/data.js',
+			array_merge( [ 'surecart-components' ], $asset_file['dependencies'] ),
+			filemtime( trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/surecart/surecart.esm.js' ),
 			true
 		);
 
 		// ui.
-		$asset_file = include trailingslashit( $this->container[ CHECKOUT_ENGINE_CONFIG_KEY ]['app_core']['path'] ) . 'dist/store/ui.asset.php';
+		$asset_file = include trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/store/ui.asset.php';
 		wp_register_script(
-			'ce-ui-data',
-			trailingslashit( \CheckoutEngine::core()->assets()->getUrl() ) . 'dist/store/ui.js',
-			array_merge( [ 'checkout-engine-components' ], $asset_file['dependencies'] ),
-			filemtime( trailingslashit( $this->container[ CHECKOUT_ENGINE_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/checkout-engine/checkout-engine.esm.js' ),
+			'sc-ui-data',
+			trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/store/ui.js',
+			array_merge( [ 'surecart-components' ], $asset_file['dependencies'] ),
+			filemtime( trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/surecart/surecart.esm.js' ),
 			true
 		);
 	}
@@ -85,7 +85,7 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 	 * @return string
 	 */
 	public function componentsTag( $tag, $handle, $source ) {
-		if ( 'checkout-engine-components' !== $handle ) {
+		if ( 'surecart-components' !== $handle ) {
 			return $tag;
 		}
 
@@ -109,10 +109,10 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 	 */
 	public function registerDefaultTheme() {
 		wp_register_style(
-			'checkout-engine-themes-default',
-			trailingslashit( \CheckoutEngine::core()->assets()->getUrl() ) . 'dist/components/checkout-engine/checkout-engine.css',
+			'surecart-themes-default',
+			trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/components/surecart/surecart.css',
 			[],
-			filemtime( trailingslashit( $this->container[ CHECKOUT_ENGINE_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/checkout-engine/checkout-engine.css' ),
+			filemtime( trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/surecart/surecart.css' ),
 		);
 	}
 
@@ -123,35 +123,35 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 	 */
 	public function registerComponentScripts() {
 		wp_register_script(
-			'checkout-engine-components',
-			trailingslashit( \CheckoutEngine::core()->assets()->getUrl() ) . 'dist/components/checkout-engine/checkout-engine.esm.js',
+			'surecart-components',
+			trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/components/surecart/surecart.esm.js',
 			[ 'wp-api-fetch' ],
-			filemtime( trailingslashit( $this->container[ CHECKOUT_ENGINE_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/checkout-engine/checkout-engine.esm.js' ),
+			filemtime( trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/surecart/surecart.esm.js' ),
 			false
 		);
-		wp_set_script_translations( 'checkout-engine-components', 'checkout_engine' );
+		wp_set_script_translations( 'surecart-components', 'surecart' );
 		wp_localize_script(
-			'checkout-engine-components',
+			'surecart-components',
 			'ceData',
 			[
-				'plugin_url' => \CheckoutEngine::core()->assets()->getUrl(),
+				'plugin_url' => \SureCart::core()->assets()->getUrl(),
 				'pages'      => [
-					'dashboard' => \CheckoutEngine::pages()->url( 'dashboard' ),
+					'dashboard' => \SureCart::pages()->url( 'dashboard' ),
 				],
 			]
 		);
 		add_action(
 			'wp_footer',
 			function() { ?>
-		<ce-register-icon-library></ce-register-icon-library>
+		<sc-register-icon-library></sc-register-icon-library>
 		<script>
 			(async () => {
-				await customElements.whenDefined('ce-register-icon-library');
-				var library = document.querySelector('ce-register-icon-library');
+				await customElements.whenDefined('sc-register-icon-library');
+				var library = document.querySelector('sc-register-icon-library');
 				await library.registerIconLibrary(
 					'default', {
 						resolver: function(name) {
-							return '<?php echo esc_url_raw( plugin_dir_url( CHECKOUT_ENGINE_PLUGIN_FILE ) . "packages/icons/feather/'+name+'.svg" ); ?>';
+							return '<?php echo esc_url_raw( plugin_dir_url( SURECART_PLUGIN_FILE ) . "packages/icons/feather/'+name+'.svg" ); ?>';
 						},
 						mutator: function(svg) {
 							return svg.setAttribute('fill', 'none')
@@ -167,15 +167,15 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 			'admin_footer',
 			function() {
 				?>
-		<ce-register-icon-library></ce-register-icon-library>
+		<sc-register-icon-library></sc-register-icon-library>
 		<script>
 			(async () => {
-				await customElements.whenDefined('ce-register-icon-library');
-				var library = document.querySelector('ce-register-icon-library');
+				await customElements.whenDefined('sc-register-icon-library');
+				var library = document.querySelector('sc-register-icon-library');
 				await library.registerIconLibrary(
 					'default', {
 						resolver: function(name) {
-							return '<?php echo plugin_dir_url( CHECKOUT_ENGINE_PLUGIN_FILE ); ?>packages/icons/feather/' + name + '.svg'
+							return '<?php echo plugin_dir_url( SURECART_PLUGIN_FILE ); ?>packages/icons/feather/' + name + '.svg'
 						},
 						mutator: function(svg) {
 							return svg.setAttribute('fill', 'none')
@@ -195,27 +195,27 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function enqueueDefaultTheme() {
-		wp_enqueue_style( 'checkout-engine-themes-default' );
+		wp_enqueue_style( 'surecart-themes-default' );
 
-		$brand  = \CheckoutEngine::account()->brand;
-		$style  = 'ce-form, ce-checkout {
+		$brand  = \SureCart::account()->brand;
+		$style  = 'sc-form, sc-checkout {
 			visibility: hidden;
 			opacity: 0;
 			transition: opacity 0.1s ease;
 		}
-		ce-checkout.hydrated,
-		ce-form.hydrated {
+		sc-checkout.hydrated,
+		sc-form.hydrated {
 			visibility: visible;
 			opacity: 1;
 		}';
 		$style .= ':root {';
-		$style .= '--ce-color-primary-500: #' . ( $brand->color ?? '000' ) . ';';
-		$style .= '--ce-focus-ring-color-primary: #' . ( $brand->color ?? '000' ) . ';';
-		$style .= '--ce-input-border-color-focus: #' . ( $brand->color ?? '000' ) . ';';
+		$style .= '--sc-color-primary-500: #' . ( $brand->color ?? '000' ) . ';';
+		$style .= '--sc-focus-ring-color-primary: #' . ( $brand->color ?? '000' ) . ';';
+		$style .= '--sc-input-border-color-focus: #' . ( $brand->color ?? '000' ) . ';';
 		$style .= '}';
 
 		wp_add_inline_style(
-			'checkout-engine-themes-default',
+			'surecart-themes-default',
 			$style
 		);
 	}
@@ -226,8 +226,8 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function enqueueComponents() {
-		wp_enqueue_script( 'checkout-engine-components' );
-		wp_enqueue_style( 'checkout-engine-themes-default' );
+		wp_enqueue_script( 'surecart-components' );
+		wp_enqueue_style( 'surecart-themes-default' );
 
 		wp_add_inline_script(
 			'wp-api-fetch',
@@ -237,7 +237,7 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 					'window.ce = window.ce || {};',
 					sprintf(
 						'wp.apiFetch.use( wp.apiFetch.createRootURLMiddleware( " % s" ) );',
-						esc_url_raw( get_rest_url() ) . 'checkout_engine/v1/'
+						esc_url_raw( get_rest_url() ) . 'surecart/v1/'
 					),
 				]
 			)
@@ -257,7 +257,7 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 					'wp.apiFetch.use( wp.apiFetch.mediaUploadMiddleware );',
 					sprintf(
 						'wp.apiFetch.nonceEndpoint = " % s";',
-						admin_url( 'admin-ajax.php?action=ce-rest-nonce' )
+						admin_url( 'admin-ajax.php?action=sc-rest-nonce' )
 					),
 				]
 			),
@@ -270,12 +270,12 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function editorAssets() {
-		$asset_file = include trailingslashit( $this->container[ CHECKOUT_ENGINE_CONFIG_KEY ]['app_core']['path'] ) . 'dist/blocks/library.asset.php';
+		$asset_file = include trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/blocks/library.asset.php';
 
-		\CheckoutEngine::core()->assets()->enqueueScript(
-			'checkout-engine-blocks',
-			trailingslashit( \CheckoutEngine::core()->assets()->getUrl() ) . 'dist/blocks/library.js',
-			array_merge( [ 'checkout-engine-components' ], $asset_file['dependencies'] ),
+		\SureCart::core()->assets()->enqueueScript(
+			'surecart-blocks',
+			trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/blocks/library.js',
+			array_merge( [ 'surecart-components' ], $asset_file['dependencies'] ),
 			true
 		);
 

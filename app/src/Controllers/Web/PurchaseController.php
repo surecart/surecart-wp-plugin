@@ -1,6 +1,6 @@
 <?php
 
-namespace CheckoutEngine\Controllers\Web;
+namespace SureCart\Controllers\Web;
 
 /**
  * Thank you routes
@@ -10,6 +10,6 @@ class PurchaseController {
 	 * Edit a product.
 	 */
 	public function show() {
-		return \CheckoutEngine::view( 'web.purchased' );
+		return \SureCart::view( 'web.purchased' );
 	}
 }

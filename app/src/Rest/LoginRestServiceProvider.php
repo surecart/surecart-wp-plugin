@@ -1,10 +1,10 @@
 <?php
 
-namespace CheckoutEngine\Rest;
+namespace SureCart\Rest;
 
-use CheckoutEngine\Rest\RestServiceInterface;
-use CheckoutEngine\Controllers\Rest\AccountController;
-use CheckoutEngine\Controllers\Rest\LoginController;
+use SureCart\Rest\RestServiceInterface;
+use SureCart\Controllers\Rest\AccountController;
+use SureCart\Controllers\Rest\LoginController;
 
 /**
  * Service provider for Price Rest Requests
@@ -64,11 +64,11 @@ class LoginRestServiceProvider extends RestServiceProvider implements RestServic
 			// In JSON Schema you can specify object properties in the properties attribute.
 			'properties' => [
 				'login'    => [
-					'description' => esc_html__( 'Login', 'checkout_engine' ),
+					'description' => esc_html__( 'Login', 'surecart' ),
 					'type'        => 'string',
 				],
 				'password' => [
-					'description' => esc_html__( 'Password', 'checkout_engine' ),
+					'description' => esc_html__( 'Password', 'surecart' ),
 					'type'        => 'integer',
 				],
 			],

@@ -7,7 +7,7 @@ import { Fragment } from '@wordpress/element';
 
 import Box from '../ui/Box';
 import Definition from '../ui/Definition';
-import { CeSwitch } from '@checkout-engine/components-react';
+import { ScSwitch } from '@surecart/components-react';
 import Image from './modules/Image';
 import Upgrades from './modules/Upgrades';
 import Files from './modules/Files';
@@ -21,7 +21,7 @@ export default ({ id, loading, product, updateProduct, saveProduct }) => {
 			return null;
 		}
 		return product?.recurring ? (
-			<ce-tag type="success">
+			<sc-tag type="success">
 				<div
 					css={css`
 						display: flex;
@@ -29,12 +29,12 @@ export default ({ id, loading, product, updateProduct, saveProduct }) => {
 						gap: 0.5em;
 					`}
 				>
-					<ce-icon name="repeat" />
-					{__('Subscription Product', 'checkout_engine')}
+					<sc-icon name="repeat" />
+					{__('Subscription Product', 'surecart')}
 				</div>
-			</ce-tag>
+			</sc-tag>
 		) : (
-			<ce-tag type="success">
+			<sc-tag type="success">
 				<div
 					css={css`
 						display: flex;
@@ -42,10 +42,10 @@ export default ({ id, loading, product, updateProduct, saveProduct }) => {
 						gap: 0.5em;
 					`}
 				>
-					<ce-icon name="bookmark" />
-					{__('One-Time Product', 'checkout_engine')}
+					<sc-icon name="bookmark" />
+					{__('One-Time Product', 'surecart')}
 				</div>
-			</ce-tag>
+			</sc-tag>
 		);
 	};
 
@@ -78,15 +78,15 @@ export default ({ id, loading, product, updateProduct, saveProduct }) => {
 							justify-content: space-between;
 						`}
 					>
-						{__('Summary', 'checkout_engine')}
+						{__('Summary', 'surecart')}
 					</div>
 				}
 			>
 				<Fragment>
 					<Definition
-						title={__('Available for purchase', 'checkout_engine')}
+						title={__('Available for purchase', 'surecart')}
 					>
-						<CeSwitch
+						<ScSwitch
 							checked={!product?.archived}
 							disabled={isSaving}
 							onClick={(e) => {
@@ -97,14 +97,14 @@ export default ({ id, loading, product, updateProduct, saveProduct }) => {
 										? sprintf(
 												__(
 													'Un-Archive %s? This will make the product purchaseable again.',
-													'checkout_engine'
+													'surecart'
 												),
 												product?.name || 'Product'
 										  )
 										: sprintf(
 												__(
 													'Archive %s? This product will not be purchaseable and all unsaved changes will be lost.',
-													'checkout_engine'
+													'surecart'
 												),
 												product?.name || 'Product'
 										  )
@@ -119,7 +119,7 @@ export default ({ id, loading, product, updateProduct, saveProduct }) => {
 							css={css`
 								margin-bottom: 1em;
 							`}
-							title={__('Archived On', 'checkout_engine')}
+							title={__('Archived On', 'surecart')}
 						>
 							{format(
 								'F j, Y',
@@ -128,9 +128,7 @@ export default ({ id, loading, product, updateProduct, saveProduct }) => {
 						</Definition>
 					)}
 					{!!product?.updated_at && (
-						<Definition
-							title={__('Last Updated', 'checkout_engine')}
-						>
+						<Definition title={__('Last Updated', 'surecart')}>
 							{format(
 								'F j, Y',
 								new Date(product.updated_at * 1000)
@@ -138,7 +136,7 @@ export default ({ id, loading, product, updateProduct, saveProduct }) => {
 						</Definition>
 					)}
 					{!!product?.created_at && (
-						<Definition title={__('Created On', 'checkout_engine')}>
+						<Definition title={__('Created On', 'surecart')}>
 							{format(
 								'F j, Y',
 								new Date(product.created_at * 1000)
@@ -169,13 +167,13 @@ export default ({ id, loading, product, updateProduct, saveProduct }) => {
 			{/*
 			<Box
 				loading={loading}
-				title={__('Automations', 'checkout_engine')}
+				title={__('Automations', 'surecart')}
 				css={css`
 					font-size: 14px;
 				`}
 				footer={
 					!loading && (
-						<CeButton>
+						<ScButton>
 							<svg
 								slot="prefix"
 								xmlns="http://www.w3.org/2000/svg"
@@ -192,12 +190,12 @@ export default ({ id, loading, product, updateProduct, saveProduct }) => {
 								<line x1="5" y1="12" x2="19" y2="12"></line>
 							</svg>
 
-							{__('Add Automation', 'checkout_engine')}
-						</CeButton>
+							{__('Add Automation', 'surecart')}
+						</ScButton>
 					)
 				}
 			>
-				{__('Coming soon...', 'checkout_engine')}
+				{__('Coming soon...', 'surecart')}
 			</Box> */}
 		</Fragment>
 	);

@@ -19,7 +19,7 @@ export default ({
 			css={css`
 				/* box-shadow: rgb( 0 0 0 / 10% ) 0px 2px 4px 0px; */
 				.components-card__footer {
-					background: var(--ce-color-gray-50, #f9fafb);
+					background: var(--sc-color-gray-50, #f9fafb);
 				}
 			`}
 			size={size}
@@ -27,28 +27,28 @@ export default ({
 			className={className}
 		>
 			<CardHeader isBorderless={!hasDivider}>
-				<ce-text
+				<sc-text
 					tag="h2"
 					style={{
 						'--font-size': '15px',
-						'--font-weight': 'var(--ce-font-weight-bold)',
+						'--font-weight': 'var(--sc-font-weight-bold)',
 					}}
 				>
 					{title && (
 						<span>
 							{loading ? (
-								<ce-skeleton
+								<sc-skeleton
 									style={{
 										width: '120px',
 										display: 'inline-block',
 									}}
-								></ce-skeleton>
+								></sc-skeleton>
 							) : (
 								title
 							)}
 						</span>
 					)}
-				</ce-text>
+				</sc-text>
 				{header_action}
 			</CardHeader>
 			<CardBody
@@ -66,19 +66,19 @@ export default ({
 			>
 				{loading ? (
 					<div>
-						<ce-skeleton
+						<sc-skeleton
 							style={{
 								width: '100%',
 								marginBottom: '15px',
 								display: 'inline-block',
 							}}
-						></ce-skeleton>
-						<ce-skeleton
+						></sc-skeleton>
+						<sc-skeleton
 							style={{
 								width: '40%',
 								display: 'inline-block',
 							}}
-						></ce-skeleton>
+						></sc-skeleton>
 					</div>
 				) : (
 					children

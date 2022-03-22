@@ -6,17 +6,17 @@ export default ({ subscription, loading }) => {
 		<SubscriptionsDataTable
 			columns={{
 				status: {
-					label: __('Status', 'checkout_engine'),
+					label: __('Status', 'surecart'),
 					width: '100px',
 				},
 				product: {
-					label: __('Product', 'checkout_engine'),
+					label: __('Product', 'surecart'),
 				},
 				plan: {
-					label: __('Plan', 'checkout_engine'),
+					label: __('Plan', 'surecart'),
 				},
 				created: {
-					label: __('Created', 'checkout_engine'),
+					label: __('Created', 'surecart'),
 				},
 				view: {
 					width: '100px',

@@ -13,14 +13,14 @@ export default ({ id, customer, updateCustomer, loading }) => {
 		<div
 			css={css`
 				display: grid;
-				gap: var(--ce-spacing-xxx-large);
+				gap: var(--sc-spacing-xxx-large);
 			`}
 		>
 			{id && (
 				<Fragment>
 					<Purchases />
 					<Box
-						title={__('WordPress User', 'checkout_engine')}
+						title={__('WordPress User', 'surecart')}
 						css={css`
 							font-size: 14px;
 						`}
@@ -31,7 +31,7 @@ export default ({ id, customer, updateCustomer, loading }) => {
 						</Fragment>
 					</Box>
 					<Box
-						title={__('Notifications', 'checkout_engine')}
+						title={__('Notifications', 'surecart')}
 						css={css`
 							font-size: 14px;
 						`}

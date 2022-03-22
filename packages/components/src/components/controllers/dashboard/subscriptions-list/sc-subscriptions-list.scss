@@ -1,0 +1,40 @@
+:host {
+  display: block;
+}
+
+.subscriptions-list {
+  display: grid;
+  gap: 0.5em;
+
+  &__heading {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 0.5em;
+  }
+
+  &__title {
+    font-size: var(--sc-font-size-x-large);
+    font-weight: var(--sc-font-weight-bold);
+    line-height: var(--sc-line-height-dense);
+  }
+
+  a {
+    text-decoration: none;
+    font-weight: var(--sc-font-weight-semibold);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25em;
+    color: var(--sc-color-primary-500);
+  }
+}
+.subscriptions {
+  &__title {
+    display: none;
+  }
+
+  &--has-title-slot &__title {
+    display: block;
+  }
+}

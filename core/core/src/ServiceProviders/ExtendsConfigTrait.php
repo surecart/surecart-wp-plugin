@@ -1,16 +1,16 @@
 <?php
 /**
- * @package   CheckoutEngineCore
+ * @package   SureCartCore
  * @author    Andre Gagnon <me@andregagnon.me>
  * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://checkout_engine.com/
+ * @link      https://surecart.com/
  */
 
-namespace CheckoutEngineCore\ServiceProviders;
+namespace SureCartCore\ServiceProviders;
 
 use Pimple\Container;
-use CheckoutEngineCore\Support\Arr;
+use SureCartCore\Support\Arr;
 
 /**
  * Allows objects to extend the config.
@@ -56,11 +56,11 @@ trait ExtendsConfigTrait {
 	 * @return void
 	 */
 	public function extendConfig( $container, $key, $default ) {
-		$config = isset( $container[ CHECKOUT_ENGINE_CONFIG_KEY ] ) ? $container[ CHECKOUT_ENGINE_CONFIG_KEY ] : [];
+		$config = isset( $container[ SURECART_CONFIG_KEY ] ) ? $container[ SURECART_CONFIG_KEY ] : [];
 		$config = Arr::get( $config, $key, $default );
 
-		$container[ CHECKOUT_ENGINE_CONFIG_KEY ] = array_merge(
-			$container[ CHECKOUT_ENGINE_CONFIG_KEY ],
+		$container[ SURECART_CONFIG_KEY ] = array_merge(
+			$container[ SURECART_CONFIG_KEY ],
 			[ $key => $this->replaceConfig( $default, $config ) ]
 		);
 	}

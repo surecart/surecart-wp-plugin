@@ -13,7 +13,7 @@ export default ({ className, attributes }) => {
 	} = attributes;
 
 	return (
-		<ce-order-password
+		<sc-order-password
 			class={className}
 			label={label}
 			help={help}
@@ -27,6 +27,6 @@ export default ({ className, attributes }) => {
 			name="password"
 			value={value}
 			required={required}
-		></ce-order-password>
+		></sc-order-password>
 	);
 };

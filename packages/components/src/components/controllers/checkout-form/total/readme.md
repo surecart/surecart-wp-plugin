@@ -17,22 +17,22 @@
 
 ### Used by
 
- - [ce-line-item-total](../line-item-total)
- - [ce-order-submit](../order-submit)
- - [ce-order-summary](../order-summary)
+ - [sc-line-item-total](../line-item-total)
+ - [sc-order-submit](../order-submit)
+ - [sc-order-summary](../order-summary)
 
 ### Depends on
 
-- [ce-format-number](../../../util/format-number)
+- [sc-format-number](../../../util/format-number)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-total --> ce-format-number
-  ce-line-item-total --> ce-total
-  ce-order-submit --> ce-total
-  ce-order-summary --> ce-total
-  style ce-total fill:#f9f,stroke:#333,stroke-width:4px
+  sc-total --> sc-format-number
+  sc-line-item-total --> sc-total
+  sc-order-submit --> sc-total
+  sc-order-summary --> sc-total
+  style sc-total fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

@@ -29,29 +29,29 @@
 
 ### Used by
 
- - [ce-charges-list](../../controllers/dashboard/charges-list)
- - [ce-invoices-list](../../controllers/dashboard/invoices-list)
- - [ce-orders-list](../../controllers/dashboard/orders-list)
- - [ce-subscription](../../controllers/dashboard/subscription)
- - [ce-subscription-cancel](../../controllers/dashboard/subscription-cancel)
- - [ce-subscription-details](../../controllers/dashboard/subscription-details)
- - [ce-subscription-renew](../../controllers/dashboard/subscription-renew)
- - [ce-subscription-status-badge](../../ui/subscription-status-badge)
- - [ce-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
+ - [sc-charges-list](../../controllers/dashboard/charges-list)
+ - [sc-invoices-list](../../controllers/dashboard/invoices-list)
+ - [sc-orders-list](../../controllers/dashboard/orders-list)
+ - [sc-subscription](../../controllers/dashboard/subscription)
+ - [sc-subscription-cancel](../../controllers/dashboard/subscription-cancel)
+ - [sc-subscription-details](../../controllers/dashboard/subscription-details)
+ - [sc-subscription-renew](../../controllers/dashboard/subscription-renew)
+ - [sc-subscription-status-badge](../../ui/subscription-status-badge)
+ - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-charges-list --> ce-format-date
-  ce-invoices-list --> ce-format-date
-  ce-orders-list --> ce-format-date
-  ce-subscription --> ce-format-date
-  ce-subscription-cancel --> ce-format-date
-  ce-subscription-details --> ce-format-date
-  ce-subscription-renew --> ce-format-date
-  ce-subscription-status-badge --> ce-format-date
-  ce-upcoming-invoice --> ce-format-date
-  style ce-format-date fill:#f9f,stroke:#333,stroke-width:4px
+  sc-charges-list --> sc-format-date
+  sc-invoices-list --> sc-format-date
+  sc-orders-list --> sc-format-date
+  sc-subscription --> sc-format-date
+  sc-subscription-cancel --> sc-format-date
+  sc-subscription-details --> sc-format-date
+  sc-subscription-renew --> sc-format-date
+  sc-subscription-status-badge --> sc-format-date
+  sc-upcoming-invoice --> sc-format-date
+  style sc-format-date fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

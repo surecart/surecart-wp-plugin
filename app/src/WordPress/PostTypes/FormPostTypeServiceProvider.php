@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngine\WordPress\PostTypes;
+namespace SureCart\WordPress\PostTypes;
 
-use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
+use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 /**
  * Register our form post type
@@ -14,12 +14,12 @@ class FormPostTypeServiceProvider implements ServiceProviderInterface {
 	 *  @param  \Pimple\Container $container Service Container.
 	 */
 	public function register( $container ) {
-		$container['checkout_engine.forms'] = function ( $container ) {
-			return new FormPostTypeService( $container['checkout_engine.pages'] );
+		$container['surecart.forms'] = function ( $container ) {
+			return new FormPostTypeService( $container['surecart.pages'] );
 		};
 
-		$app = $container[ CHECKOUT_ENGINE_APPLICATION_KEY ];
-		$app->alias( 'forms', 'checkout_engine.forms' );
+		$app = $container[ SURECART_APPLICATION_KEY ];
+		$app->alias( 'forms', 'surecart.forms' );
 	}
 
 	/**
@@ -28,6 +28,6 @@ class FormPostTypeServiceProvider implements ServiceProviderInterface {
 	 *  @param  \Pimple\Container $container Service Container.
 	 */
 	public function bootstrap( $container ) {
-		$container['checkout_engine.forms']->bootstrap();
+		$container['surecart.forms']->bootstrap();
 	}
 }

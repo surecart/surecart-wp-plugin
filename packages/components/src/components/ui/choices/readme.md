@@ -32,25 +32,25 @@
 
 ### Used by
 
- - [ce-donation-choices](../../controllers/checkout-form/ce-donation-choices)
- - [ce-price-choices](../../controllers/checkout-form/price-choices)
- - [ce-subscription-payment](../../controllers/dashboard/subscription-payment)
- - [ce-subscription-switch](../../controllers/dashboard/subscription-switch)
+ - [sc-donation-choices](../../controllers/checkout-form/sc-donation-choices)
+ - [sc-price-choices](../../controllers/checkout-form/price-choices)
+ - [sc-subscription-payment](../../controllers/dashboard/subscription-payment)
+ - [sc-subscription-switch](../../controllers/dashboard/subscription-switch)
 
 ### Depends on
 
-- [ce-form-control](../form-control)
+- [sc-form-control](../form-control)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-choices --> ce-form-control
-  ce-form-control --> ce-tooltip
-  ce-donation-choices --> ce-choices
-  ce-price-choices --> ce-choices
-  ce-subscription-payment --> ce-choices
-  ce-subscription-switch --> ce-choices
-  style ce-choices fill:#f9f,stroke:#333,stroke-width:4px
+  sc-choices --> sc-form-control
+  sc-form-control --> sc-tooltip
+  sc-donation-choices --> sc-choices
+  sc-price-choices --> sc-choices
+  sc-subscription-payment --> sc-choices
+  sc-subscription-switch --> sc-choices
+  style sc-choices fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

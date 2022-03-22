@@ -1,11 +1,11 @@
 <?php
 
-namespace CheckoutEngine\Tests\Models;
+namespace SureCart\Tests\Models;
 
-use CheckoutEngine\Models\User;
-use CheckoutEngine\Tests\CheckoutEngineUnitTestCase;
+use SureCart\Models\User;
+use SureCart\Tests\SureCartUnitTestCase;
 
-class UserTest extends CheckoutEngineUnitTestCase {
+class UserTest extends SureCartUnitTestCase {
 	public function test_getsCurrentUser()
 	{
 		$user = $this->factory->user->create_and_get();

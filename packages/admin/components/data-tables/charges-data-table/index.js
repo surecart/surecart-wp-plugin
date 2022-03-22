@@ -2,7 +2,7 @@
 import { __, _n } from '@wordpress/i18n';
 import DataTable from '../../DataTable';
 import { css, jsx } from '@emotion/core';
-import { store } from '@checkout-engine/data';
+import { store } from '@surecart/data';
 import Refund from './Refund';
 import { Fragment } from '@wordpress/element';
 import { useState } from '@wordpress/element';
@@ -26,22 +26,18 @@ export default ({
 
 	const renderStatusTag = (charge) => {
 		if (charge?.fully_refunded) {
-			return (
-				<ce-tag type="danger">
-					{__('Refunded', 'checkout_engine')}
-				</ce-tag>
-			);
+			return <sc-tag type="danger">{__('Refunded', 'surecart')}</sc-tag>;
 		}
 
 		if (charge?.refunded_amount && charge?.refunded_amount) {
 			return (
-				<ce-tag type="warning">
-					{__('Partially Refunded', 'checkout_engine')}{' '}
-				</ce-tag>
+				<sc-tag type="warning">
+					{__('Partially Refunded', 'surecart')}{' '}
+				</sc-tag>
 			);
 		}
 
-		return <ce-tag type="success">{__('Paid', 'checkout_engine')}</ce-tag>;
+		return <sc-tag type="success">{__('Paid', 'surecart')}</sc-tag>;
 	};
 
 	const renderRefundButton = (charge) => {
@@ -50,7 +46,7 @@ export default ({
 		}
 
 		return (
-			<ce-button
+			<sc-button
 				onClick={() =>
 					setConfirmRefund({
 						charge,
@@ -58,17 +54,17 @@ export default ({
 				}
 				size="small"
 			>
-				{__('Refund', 'checkout_engine')}
-			</ce-button>
+				{__('Refund', 'surecart')}
+			</sc-button>
 		);
 	};
 
 	return (
 		<Fragment>
 			<DataTable
-				title={title || __('Charges', 'checkout_engine')}
+				title={title || __('Charges', 'surecart')}
 				columns={columns}
-				empty={empty || __('None found.', 'checkout-engine')}
+				empty={empty || __('None found.', 'surecart')}
 				items={(data || [])
 					.sort((a, b) => b.created_at - a.created_at)
 					.map((charge) => {
@@ -81,42 +77,42 @@ export default ({
 						} = charge;
 						return {
 							amount: (
-								<ce-text
+								<sc-text
 									style={{
 										'--font-weight':
-											'var(--ce-font-weight-bold)',
+											'var(--sc-font-weight-bold)',
 									}}
 								>
-									<ce-format-number
+									<sc-format-number
 										type="currency"
 										currency={currency}
 										value={amount}
-									></ce-format-number>
+									></sc-format-number>
 									{!!charge?.refunded_amount && (
 										<div
 											style={{
-												color: 'var(--ce-color-danger-500)',
+												color: 'var(--sc-color-danger-500)',
 											}}
 										>
 											-{' '}
-											<ce-format-number
+											<sc-format-number
 												type="currency"
 												currency={charge?.currency}
 												value={charge?.refunded_amount}
-											></ce-format-number>{' '}
-											{__('Refunded', 'checkout_engine')}
+											></sc-format-number>{' '}
+											{__('Refunded', 'surecart')}
 										</div>
 									)}
-								</ce-text>
+								</sc-text>
 							),
 							date: (
-								<ce-format-date
+								<sc-format-date
 									type="timestamp"
 									date={created_at}
 									month="long"
 									day="numeric"
 									year="numeric"
-								></ce-format-date>
+								></sc-format-date>
 							),
 							method: payment_method?.card?.brand && (
 								<div
@@ -126,10 +122,10 @@ export default ({
 										gap: 1em;
 									`}
 								>
-									<ce-cc-logo
+									<sc-cc-logo
 										style={{ fontSize: '36px' }}
 										brand={payment_method?.card?.brand}
-									></ce-cc-logo>
+									></sc-cc-logo>
 									**** {payment_method?.card?.last4}
 								</div>
 							),

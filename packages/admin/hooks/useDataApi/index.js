@@ -50,8 +50,7 @@ export default (initialData) => {
 			dispatch({
 				type: 'FETCH_FAILURE',
 				payload:
-					error?.message ||
-					__('Something went wrong.', 'checkout_engine'),
+					error?.message || __('Something went wrong.', 'surecart'),
 			});
 		}
 	};

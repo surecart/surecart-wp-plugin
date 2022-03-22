@@ -9,13 +9,13 @@ export default ({ product, price, subscription, loading }) => {
 	return (
 		<DataTable
 			loading={loading}
-			title={__('Product', 'checkout_engine')}
+			title={__('Product', 'surecart')}
 			columns={{
 				product: {
-					label: __('Product', 'checkout_engine'),
+					label: __('Product', 'surecart'),
 				},
 				quantity: {
-					label: __('Qty', 'checkout_engine'),
+					label: __('Qty', 'surecart'),
 					width: '75px',
 				},
 				total: {
@@ -26,7 +26,7 @@ export default ({ product, price, subscription, loading }) => {
 								justify-content: flex-end;
 							`}
 						>
-							{__('Total', 'checkout_engine')}
+							{__('Total', 'surecart')}
 						</div>
 					),
 				},
@@ -40,7 +40,7 @@ export default ({ product, price, subscription, loading }) => {
 						<div>
 							{product?.name}
 							<div style={{ opacity: 0.5 }}>
-								<ce-format-number
+								<sc-format-number
 									type="currency"
 									value={price?.amount}
 									currency={price?.currency}
@@ -62,7 +62,7 @@ export default ({ product, price, subscription, loading }) => {
 								justify-content: flex-end;
 							`}
 						>
-							<ce-format-number
+							<sc-format-number
 								type="currency"
 								value={price?.amount * subscription?.quantity}
 								currency={price?.currency}
@@ -78,16 +78,16 @@ export default ({ product, price, subscription, loading }) => {
 					actions: !Object.keys(subscription?.pending_update || {})
 						.length &&
 						subscription?.current_period_end_at !== null && (
-							<ce-button
+							<sc-button
 								size="small"
 								href={addQueryArgs('admin.php', {
-									page: 'ce-subscriptions',
+									page: 'sc-subscriptions',
 									action: 'edit',
 									id: subscription?.id,
 								})}
 							>
-								{__('Change', 'checkout_engine')}
-							</ce-button>
+								{__('Change', 'surecart')}
+							</sc-button>
 						),
 				},
 			]}

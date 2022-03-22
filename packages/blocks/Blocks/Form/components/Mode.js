@@ -1,8 +1,4 @@
-import {
-	CeDropdown,
-	CeMenu,
-	CeMenuItem,
-} from '@checkout-engine/components-react';
+import { ScDropdown, ScMenu, ScMenuItem } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 
 export default ({ attributes, setAttributes }) => {
@@ -11,36 +7,36 @@ export default ({ attributes, setAttributes }) => {
 	const renderBadge = () => {
 		if (mode === 'test') {
 			return (
-				<ce-button type="warning" size="small" caret>
-					{__('Test', 'checkout_engine')}
-				</ce-button>
+				<sc-button type="warning" size="small" caret>
+					{__('Test', 'surecart')}
+				</sc-button>
 			);
 		}
 
 		return (
-			<ce-button type="success" size="small" caret>
-				{__('Live', 'checkout_engine')}
-			</ce-button>
+			<sc-button type="success" size="small" caret>
+				{__('Live', 'surecart')}
+			</sc-button>
 		);
 	};
 
 	return (
-		<CeDropdown position="bottom-right">
+		<ScDropdown position="bottom-right">
 			<span slot="trigger">{renderBadge()}</span>
-			<CeMenu>
-				<CeMenuItem
+			<ScMenu>
+				<ScMenuItem
 					onClick={() => setAttributes({ mode: 'test' })}
 					checked={mode === 'test'}
 				>
-					{__('Test', 'checkout_engine')}
-				</CeMenuItem>
-				<CeMenuItem
+					{__('Test', 'surecart')}
+				</ScMenuItem>
+				<ScMenuItem
 					onClick={() => setAttributes({ mode: 'live' })}
 					checked={mode === 'live' || !mode}
 				>
-					{__('Live', 'checkout_engine')}
-				</CeMenuItem>
-			</CeMenu>
-		</CeDropdown>
+					{__('Live', 'surecart')}
+				</ScMenuItem>
+			</ScMenu>
+		</ScDropdown>
 	);
 };

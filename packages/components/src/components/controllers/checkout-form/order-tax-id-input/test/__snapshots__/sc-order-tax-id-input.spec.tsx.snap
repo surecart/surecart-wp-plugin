@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-order-tax-id-input Defaults to type and number first 1`] = `
+<sc-order-tax-id-input>
+  <sc-tax-id-input number="123456" type="eu_vat"></sc-tax-id-input>
+</sc-order-tax-id-input>
+`;
+
+exports[`sc-order-tax-id-input Renders AU Tax Type 1`] = `
+<sc-order-tax-id-input>
+  <sc-tax-id-input country="AU"></sc-tax-id-input>
+</sc-order-tax-id-input>
+`;
+
+exports[`sc-order-tax-id-input Renders CA Tax Type 1`] = `
+<sc-order-tax-id-input>
+  <sc-tax-id-input country="CA"></sc-tax-id-input>
+</sc-order-tax-id-input>
+`;
+
+exports[`sc-order-tax-id-input Renders EU VAT Tax Type 1`] = `
+<sc-order-tax-id-input>
+  <sc-tax-id-input country="DE"></sc-tax-id-input>
+</sc-order-tax-id-input>
+`;
+
+exports[`sc-order-tax-id-input Renders UK VAT Tax Type 1`] = `
+<sc-order-tax-id-input>
+  <sc-tax-id-input country="GB"></sc-tax-id-input>
+</sc-order-tax-id-input>
+`;
+
+exports[`sc-order-tax-id-input renders 1`] = `
+<sc-order-tax-id-input>
+  <sc-tax-id-input></sc-tax-id-input>
+</sc-order-tax-id-input>
+`;

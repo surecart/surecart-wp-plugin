@@ -1,15 +1,15 @@
 <?php
 /**
- * @package   CheckoutEngineAppCore
+ * @package   SureCartAppCore
  * @author    Andre Gagnon <me@andregagnon.me>
  * @copyright  Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://checkoutengine.com
+ * @link      https://surecart.com
  */
 
-namespace CheckoutEngineAppCore\Assets;
+namespace SureCartAppCore\Assets;
 
-use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
+use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 /**
  * Provide assets dependencies.
@@ -21,16 +21,16 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 	 * {@inheritDoc}
 	 */
 	public function register( $container ) {
-		$container['checkout_engine_app_core.assets.manifest'] = function( $c ) {
-			return new Manifest( $c[ CHECKOUT_ENGINE_CONFIG_KEY ]['app_core']['path'] );
+		$container['surecart_app_core.assets.manifest'] = function( $c ) {
+			return new Manifest( $c[ SURECART_CONFIG_KEY ]['app_core']['path'] );
 		};
 
-		$container['checkout_engine_app_core.assets.assets'] = function( $container ) {
+		$container['surecart_app_core.assets.assets'] = function( $container ) {
 			return new Assets(
-				$container[ CHECKOUT_ENGINE_CONFIG_KEY ]['app_core']['path'],
-				$container[ CHECKOUT_ENGINE_CONFIG_KEY ]['app_core']['url'],
-				$container['checkout_engine_app_core.config.config'],
-				$container['checkout_engine_app_core.assets.manifest']
+				$container[ SURECART_CONFIG_KEY ]['app_core']['path'],
+				$container[ SURECART_CONFIG_KEY ]['app_core']['url'],
+				$container['surecart_app_core.config.config'],
+				$container['surecart_app_core.assets.manifest']
 			);
 		};
 	}

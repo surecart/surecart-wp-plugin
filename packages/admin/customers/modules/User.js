@@ -3,10 +3,10 @@ import { select, useDispatch, useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { useState } from '@wordpress/element';
 import { addQueryArgs } from '@wordpress/url';
-import { CeButton } from '@checkout-engine/components-react';
+import { ScButton } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 import Definition from '../../ui/Definition';
-import { CeFormControl } from '@checkout-engine/components-react';
+import { ScFormControl } from '@surecart/components-react';
 import UserSelect from '../../components/UserSelect';
 import { css, jsx } from '@emotion/core';
 
@@ -51,7 +51,7 @@ export default ({ customer_id, customer }) => {
 		const r = confirm(
 			__(
 				'Are you sure you want to disconnect this from this customer? This will cause them to lose access to their purchases.',
-				'checkout_engine'
+				'surecart'
 			)
 		);
 		if (r) {
@@ -93,11 +93,11 @@ export default ({ customer_id, customer }) => {
 
 	if (loading || saving) {
 		return (
-			<ce-skeleton
+			<sc-skeleton
 				style={{
 					width: '80%',
 				}}
-			></ce-skeleton>
+			></sc-skeleton>
 		);
 	}
 
@@ -141,15 +141,15 @@ export default ({ customer_id, customer }) => {
 						</div>
 					}
 				>
-					<CeButton
+					<ScButton
 						href=""
 						size="small"
 						type="danger"
 						outline
 						onClick={() => disconnect(user?.id)}
 					>
-						{__('Disconnect', 'checkout_engine')}
-					</CeButton>
+						{__('Disconnect', 'surecart')}
+					</ScButton>
 				</Definition>
 			</div>
 		));
@@ -157,7 +157,7 @@ export default ({ customer_id, customer }) => {
 
 	return (
 		<div>
-			<CeFormControl label={__('Connect a user', 'checkout_engine')}>
+			<ScFormControl label={__('Connect a user', 'surecart')}>
 				<UserSelect
 					value={users?.[0]?.id}
 					onSelect={(id) => {
@@ -166,7 +166,7 @@ export default ({ customer_id, customer }) => {
 					}}
 					required
 				/>
-			</CeFormControl>
+			</ScFormControl>
 		</div>
 	);
 };

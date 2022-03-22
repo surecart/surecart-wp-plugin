@@ -1,9 +1,9 @@
 <?php
 
-namespace CheckoutEngine\Middleware;
+namespace SureCart\Middleware;
 
 use Closure;
-use CheckoutEngineCore\Requests\RequestInterface;
+use SureCartCore\Requests\RequestInterface;
 
 /**
  * Middleware for handling model archiving.
@@ -27,7 +27,7 @@ class WebhooksMiddleware {
 		$this->request = $request;
 
 		if ( ! $this->verifySignature( $request ) ) {
-			return \CheckoutEngine::json( [ 'error' => 'Invalid signature' ] )->withStatus( 403 );
+			return \SureCart::json( [ 'error' => 'Invalid signature' ] )->withStatus( 403 );
 		}
 
 		return $next( $request );
@@ -58,7 +58,7 @@ class WebhooksMiddleware {
 	 * @return string
 	 */
 	public function getSigningSecret() {
-		return \CheckoutEngine::webhooks()->getSigningSecret();
+		return \SureCart::webhooks()->getSigningSecret();
 	}
 
 	/**

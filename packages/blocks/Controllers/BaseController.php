@@ -1,7 +1,7 @@
 <?php
-namespace CheckoutEngineBlocks\Controllers;
+namespace SureCartBlocks\Controllers;
 
-use CheckoutEngine\Models\User;
+use SureCart\Models\User;
 
 /**
  * Base controller for dashboard pages.
@@ -60,7 +60,7 @@ abstract class BaseController {
 	 * @return string
 	 */
 	protected function notFound() {
-		return '<ce-alert type="danger" open>' . esc_html__( 'Not found.', 'checkout-engine' ) . '</ce-alert>';
+		return '<sc-alert type="danger" open>' . esc_html__( 'Not found.', 'surecart' ) . '</sc-alert>';
 	}
 
 	/**
@@ -69,6 +69,6 @@ abstract class BaseController {
 	 * @return string
 	 */
 	protected function noAccess() {
-		return '<ce-alert type="danger" open>' . esc_html__( 'You do not have permission to do this.', 'checkout-engine' ) . '</ce-alert>';
+		return '<sc-alert type="danger" open>' . esc_html__( 'You do not have permission to do this.', 'surecart' ) . '</sc-alert>';
 	}
 }

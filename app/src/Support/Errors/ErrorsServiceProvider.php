@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngine\Support\Errors;
+namespace SureCart\Support\Errors;
 
-use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
+use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 class ErrorsServiceProvider implements ServiceProviderInterface {
 	/**
@@ -11,7 +11,7 @@ class ErrorsServiceProvider implements ServiceProviderInterface {
 	 *  @param  \Pimple\Container $container Service Container.
 	 */
 	public function register( $container ) {
-		$app = $container[ CHECKOUT_ENGINE_APPLICATION_KEY ];
+		$app = $container[ SURECART_APPLICATION_KEY ];
 
 		$container['checkout.errors_service'] = function () {
 			return new ErrorsService();

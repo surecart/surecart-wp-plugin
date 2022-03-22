@@ -1,6 +1,6 @@
 <?php
 
-namespace CheckoutEngine\Controllers\Rest;
+namespace SureCart\Controllers\Rest;
 
 /**
  * Handle coupon requests through the REST API
@@ -25,6 +25,6 @@ class LoginController extends RestController {
 
 		$redirect = $request->get_param( 'redirect_url' );
 
-		return [ 'redirect_url' => $redirect ?? \CheckoutEngine::pages()->url( 'dashboard' ) ];
+		return [ 'redirect_url' => $redirect ?? \SureCart::pages()->url( 'dashboard' ) ];
 	}
 }

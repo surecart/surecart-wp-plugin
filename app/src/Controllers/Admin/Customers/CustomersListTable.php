@@ -1,12 +1,12 @@
 <?php
 
-namespace CheckoutEngine\Controllers\Admin\Customers;
+namespace SureCart\Controllers\Admin\Customers;
 
-use CheckoutEngine\Models\Product;
-use CheckoutEngine\Models\Customer;
-use CheckoutEngine\Support\Currency;
-use CheckoutEngine\Support\TimeDate;
-use CheckoutEngine\Controllers\Admin\Tables\ListTable;
+use SureCart\Models\Product;
+use SureCart\Models\Customer;
+use SureCart\Support\Currency;
+use SureCart\Support\TimeDate;
+use SureCart\Controllers\Admin\Tables\ListTable;
 /**
  * Create a new table class that will extend the WP_List_Table
  */
@@ -57,12 +57,12 @@ class CustomersListTable extends ListTable {
 	 */
 	protected function get_views() {
 		$stati = [
-			'active'   => __( 'Active', 'checkout_engine' ),
-			'archived' => __( 'Archived', 'checkout_engine' ),
-			'all'      => __( 'All', 'checkout_engine' ),
+			'active'   => __( 'Active', 'surecart' ),
+			'archived' => __( 'Archived', 'surecart' ),
+			'all'      => __( 'All', 'surecart' ),
 		];
 
-		$link = admin_url( 'admin.php?page=ce-products' );
+		$link = admin_url( 'admin.php?page=sc-products' );
 
 		foreach ( $stati as $status => $label ) {
 			$current_link_attributes = '';
@@ -99,9 +99,9 @@ class CustomersListTable extends ListTable {
 	 */
 	public function get_columns() {
 		return [
-			'name'    => __( 'Name', 'checkout_engine' ),
-			'email'   => __( 'Email', 'checkout_engine' ),
-			'created' => __( 'Created', 'checkout_engine' ),
+			'name'    => __( 'Name', 'surecart' ),
+			'email'   => __( 'Email', 'surecart' ),
+			'created' => __( 'Created', 'surecart' ),
 			'mode'    => '',
 		];
 	}
@@ -157,24 +157,24 @@ class CustomersListTable extends ListTable {
 	 * @return void
 	 */
 	public function no_items() {
-		echo esc_html_e( 'No products found.', 'checkout_engine' );
+		echo esc_html_e( 'No products found.', 'surecart' );
 	}
 
 	/**
 	 * Handle the orders column.
 	 *
-	 * @param \CheckoutEngine\Models\Customer $customer Customer model.
+	 * @param \SureCart\Models\Customer $customer Customer model.
 	 *
 	 * @return string
 	 */
 	public function column_orders( $customer ) {
-		return __( 'No price', 'checkout_engine' );
+		return __( 'No price', 'surecart' );
 	}
 
 	/**
 	 * Handle the status
 	 *
-	 * @param \CheckoutEngine\Models\Price $product Product model.
+	 * @param \SureCart\Models\Price $product Product model.
 	 *
 	 * @return string
 	 */
@@ -187,7 +187,7 @@ class CustomersListTable extends ListTable {
 		);
 		$updated = sprintf(
 			'%1$s <time datetime="%2$s" title="%3$s">%4$s</time>',
-			__( 'Updated', 'checkout_engine' ),
+			__( 'Updated', 'surecart' ),
 			esc_attr( $product->updated_at ),
 			esc_html( TimeDate::formatDateAndTime( $product->updated_at ) ),
 			esc_html( TimeDate::humanTimeDiff( $product->updated_at ) )
@@ -202,21 +202,21 @@ class CustomersListTable extends ListTable {
 	/**
 	 * Name column
 	 *
-	 * @param \CheckoutEngine\Models\Customer $customer Customer model.
+	 * @param \SureCart\Models\Customer $customer Customer model.
 	 *
 	 * @return string
 	 */
 	public function column_name( $customer ) {
 		ob_start();
 		?>
-		<a class="row-title" aria-label="<?php echo esc_attr( 'Edit Customer', 'checkout_engine' ); ?>" href="<?php echo esc_url( \CheckoutEngine::getUrl()->edit( 'customers', $customer->id ) ); ?>">
+		<a class="row-title" aria-label="<?php echo esc_attr( 'Edit Customer', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'customers', $customer->id ) ); ?>">
 			<?php echo wp_kses_post( $customer->name ?? $customer->email ); ?>
 		</a>
 
 		<?php
 		echo $this->row_actions(
 			[
-				'edit' => '<a href="' . esc_url( \CheckoutEngine::getUrl()->edit( 'customers', $customer->id ) ) . '" aria-label="' . esc_attr( 'Edit Customer', 'checkout_engine' ) . '">' . __( 'Edit', 'checkout_engine' ) . '</a>',
+				'edit' => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'customers', $customer->id ) ) . '" aria-label="' . esc_attr( 'Edit Customer', 'surecart' ) . '">' . __( 'Edit', 'surecart' ) . '</a>',
 			],
 		);
 		?>
@@ -228,19 +228,19 @@ class CustomersListTable extends ListTable {
 	/**
 	 * Toggle archive action link and text.
 	 *
-	 * @param \CheckoutEngine\Models\Product $product Product model.
+	 * @param \SureCart\Models\Product $product Product model.
 	 * @return string
 	 */
 	public function action_toggle_archive( $product ) {
-		$text            = $product->archived ? __( 'Un-Archive', 'checkout_engine' ) : __( 'Archive', 'checkout_engine' );
-		$confirm_message = $product->archived ? __( 'Are you sure you want to restore this product? This will be be available to purchase.', 'checkout_engine' ) : __( 'Are you sure you want to archive this product? This will be unavailable for purchase.', 'checkout_engine' );
-		$link            = \CheckoutEngine::getUrl()->toggleArchive( 'product', $product->id );
+		$text            = $product->archived ? __( 'Un-Archive', 'surecart' ) : __( 'Archive', 'surecart' );
+		$confirm_message = $product->archived ? __( 'Are you sure you want to restore this product? This will be be available to purchase.', 'surecart' ) : __( 'Are you sure you want to archive this product? This will be unavailable for purchase.', 'surecart' );
+		$link            = \SureCart::getUrl()->toggleArchive( 'product', $product->id );
 
 		return sprintf(
 			'<a class="submitdelete" onclick="return confirm(\'%1s\')" href="%2s" aria-label="%3s">%4s</a>',
 			esc_attr( $confirm_message ),
 			esc_url( $link ),
-			esc_attr__( 'Toggle Product Archive', 'checkout_engine' ),
+			esc_attr__( 'Toggle Product Archive', 'surecart' ),
 			esc_html( $text )
 		);
 	}
@@ -248,15 +248,15 @@ class CustomersListTable extends ListTable {
 	/**
 	 * Define what data to show on each column of the table
 	 *
-	 * @param \CheckoutEngine\Models\Product $product Product model.
-	 * @param String                         $column_name - Current column name.
+	 * @param \SureCart\Models\Product $product Product model.
+	 * @param String                   $column_name - Current column name.
 	 *
 	 * @return Mixed
 	 */
 	public function column_default( $product, $column_name ) {
 		switch ( $column_name ) {
 			case 'name':
-				return '<a href="' . \CheckoutEngine::getUrl()->edit( 'product', $product->id ) . '">' . $product->name . '</a>';
+				return '<a href="' . \SureCart::getUrl()->edit( 'product', $product->id ) . '">' . $product->name . '</a>';
 			case 'name':
 			case 'description':
 				return $product->$column_name ?? '';

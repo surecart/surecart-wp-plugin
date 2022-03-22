@@ -14,7 +14,7 @@ import {
 /**
  * Component Dependencies
  */
-import { CeCheckbox } from '@checkout-engine/components-react';
+import { ScCheckbox } from '@surecart/components-react';
 import { useBlockProps } from '@wordpress/block-editor';
 
 export default ({ className, attributes, setAttributes }) => {
@@ -25,38 +25,38 @@ export default ({ className, attributes, setAttributes }) => {
 	return (
 		<Fragment>
 			<InspectorControls>
-				<PanelBody title={__('Attributes', 'checkout-engine')}>
+				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<ToggleControl
-							label={__('Required', 'checkout-engine')}
+							label={__('Required', 'surecart')}
 							checked={required}
 							onChange={(required) => setAttributes({ required })}
 						/>
 					</PanelRow>
 					<PanelRow>
 						<TextControl
-							label={__('Name', 'checkout-engine')}
+							label={__('Name', 'surecart')}
 							value={name}
 							onChange={(name) => setAttributes({ name })}
 						/>
 					</PanelRow>
 					<PanelRow>
 						<TextControl
-							label={__('Label', 'checkout-engine')}
+							label={__('Label', 'surecart')}
 							value={label}
 							onChange={(label) => setAttributes({ label })}
 						/>
 					</PanelRow>
 					<PanelRow>
 						<TextControl
-							label={__('Value', 'checkout-engine')}
+							label={__('Value', 'surecart')}
 							value={value}
 							onChange={(value) => setAttributes({ value })}
 						/>
 					</PanelRow>
 					<PanelRow>
 						<ToggleControl
-							label={__('Checked by default', 'checkout-engine')}
+							label={__('Checked by default', 'surecart')}
 							checked={checked}
 							onChange={(checked) => setAttributes({ checked })}
 						/>
@@ -65,7 +65,7 @@ export default ({ className, attributes, setAttributes }) => {
 			</InspectorControls>
 
 			{/* <Disabled> */}
-			<CeCheckbox
+			<ScCheckbox
 				className={className}
 				name={name}
 				required={required}
@@ -79,7 +79,7 @@ export default ({ className, attributes, setAttributes }) => {
 					withoutInteractiveFormatting
 					allowedFormats={['core/bold', 'core/italic']}
 				/>
-			</CeCheckbox>
+			</ScCheckbox>
 			{/* </Disabled> */}
 		</Fragment>
 	);

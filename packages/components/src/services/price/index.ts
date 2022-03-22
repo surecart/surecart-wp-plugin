@@ -1,7 +1,7 @@
 import { Price } from '../../types';
 import apiFetch from '../../functions/fetch';
 import { addQueryArgs } from '@wordpress/url';
-const path = 'checkout-engine/v1/price/';
+const path = 'surecart/v1/price/';
 
 /**
  * Get prices

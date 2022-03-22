@@ -5,7 +5,7 @@
  * work well for content-centric websites.
  */
 
-@import '~@checkout-engine/components/dist/checkout-engine/checkout-engine.css';
+@import '~@surecart/components/dist/surecart/surecart.css';
 
 .docusaurus-highlight-code-line {
 	background-color: rgb(72, 77, 91);
@@ -14,22 +14,22 @@
 	padding: 0 var(--ifm-pre-padding);
 }
 body {
-	color: var(--ce-color-gray-950);
+	color: var(--sc-color-gray-950);
 }
 
 /* You can override the default Infima variables here. */
 :root {
-	--ifm-color-primary: var(--ce-color-primary-500);
-	--ifm-color-primary-dark: var(--ce-color-primary-600);
-	--ifm-color-primary-darker: var(--ce-color-primary-700);
-	--ifm-color-primary-darkest: var(--ce-color-primary-800);
-	--ifm-color-primary-light: var(--ce-color-primary-400);
-	--ifm-color-primary-lighter: var(--ce-color-primary-300);
-	--ifm-color-primary-lightest: var(--ce-color-primary-200);
+	--ifm-color-primary: var(--sc-color-primary-500);
+	--ifm-color-primary-dark: var(--sc-color-primary-600);
+	--ifm-color-primary-darker: var(--sc-color-primary-700);
+	--ifm-color-primary-darkest: var(--sc-color-primary-800);
+	--ifm-color-primary-light: var(--sc-color-primary-400);
+	--ifm-color-primary-lighter: var(--sc-color-primary-300);
+	--ifm-color-primary-lightest: var(--sc-color-primary-200);
 	--ifm-code-font-size: 95%;
 	--ifm-pre-line-height: 2em;
-	--ifm-color-warning: var(--ce-color-warning-500);
-	--ifm-color-info: var(--ce-color-primary-500);
+	--ifm-color-warning: var(--sc-color-warning-500);
+	--ifm-color-info: var(--sc-color-primary-500);
 	--ifm-code-background: rgba(0, 0, 0, 0.05);
 }
 
@@ -61,15 +61,15 @@ article {
 
 html[data-theme='dark'] {
 	--ifm-background-color: var(
-		--ce-color-gray-950,
+		--sc-color-gray-950,
 		--ifm-background-color
 	);
 	--ifm-navbar-background-color: var(
-		--ce-color-gray-900,
+		--sc-color-gray-900,
 		--ifm-navbar-background-color
 	);
-	--ifm-heading-color: var(--ce-color-white);
+	--ifm-heading-color: var(--sc-color-white);
 }
 html[data-theme='dark'] body {
-	color: var(--ce-color-gray-300);
+	color: var(--sc-color-gray-300);
 }

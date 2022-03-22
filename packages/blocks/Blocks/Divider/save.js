@@ -1,5 +1,5 @@
-export default ( { className, attributes } ) => {
+export default ({ className, attributes }) => {
 	const { text } = attributes;
 
-	return <ce-divider>{ text }</ce-divider>;
+	return <sc-divider>{text}</sc-divider>;
 };

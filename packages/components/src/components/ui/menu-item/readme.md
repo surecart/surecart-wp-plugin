@@ -51,19 +51,19 @@ Type: `Promise<void>`
 
 ### Used by
 
- - [ce-payment-methods-list](../../controllers/dashboard/payment-methods-list)
- - [ce-quantity-select](../quantity-select)
- - [ce-select](../select)
- - [ce-tax-id-input](../tax-id-input)
+ - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
+ - [sc-quantity-select](../quantity-select)
+ - [sc-select](../select)
+ - [sc-tax-id-input](../tax-id-input)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-payment-methods-list --> ce-menu-item
-  ce-quantity-select --> ce-menu-item
-  ce-select --> ce-menu-item
-  ce-tax-id-input --> ce-menu-item
-  style ce-menu-item fill:#f9f,stroke:#333,stroke-width:4px
+  sc-payment-methods-list --> sc-menu-item
+  sc-quantity-select --> sc-menu-item
+  sc-select --> sc-menu-item
+  sc-tax-id-input --> sc-menu-item
+  style sc-menu-item fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

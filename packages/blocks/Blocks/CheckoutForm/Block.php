@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngineBlocks\Blocks\CheckoutForm;
+namespace SureCartBlocks\Blocks\CheckoutForm;
 
-use CheckoutEngineBlocks\Blocks\BaseBlock;
+use SureCartBlocks\Blocks\BaseBlock;
 
 /**
  * Logout Button Block.

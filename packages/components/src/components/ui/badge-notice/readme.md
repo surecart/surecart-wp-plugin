@@ -18,13 +18,13 @@
 
 ### Depends on
 
-- [ce-tag](../tag)
+- [sc-tag](../tag)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-badge-notice --> ce-tag
-  style ce-badge-notice fill:#f9f,stroke:#333,stroke-width:4px
+  sc-badge-notice --> sc-tag
+  style sc-badge-notice fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

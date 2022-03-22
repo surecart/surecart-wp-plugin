@@ -9,7 +9,7 @@ import { useBlockProps } from '@wordpress/block-editor';
 /**
  * Component Dependencies
  */
-import { CeDivider } from '@checkout-engine/components-react';
+import { ScDivider } from '@surecart/components-react';
 
 export default ({ attributes, setAttributes }) => {
 	const { text } = attributes;
@@ -23,10 +23,10 @@ export default ({ attributes, setAttributes }) => {
 	return (
 		<Fragment>
 			<InspectorControls>
-				<PanelBody title={__('Attributes', 'checkout-engine')}>
+				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<TextControl
-							label={__('Text', 'checkout-engine')}
+							label={__('Text', 'surecart')}
 							value={text}
 							onChange={(text) => setAttributes({ text })}
 						/>
@@ -34,7 +34,7 @@ export default ({ attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<CeDivider {...blockProps}>{text}</CeDivider>
+			<ScDivider {...blockProps}>{text}</ScDivider>
 		</Fragment>
 	);
 };

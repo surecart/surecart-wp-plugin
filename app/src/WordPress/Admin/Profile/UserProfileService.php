@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngine\WordPress\Admin\Profile;
+namespace SureCart\WordPress\Admin\Profile;
 
-use CheckoutEngine\Models\User;
+use SureCart\Models\User;
 
 /**
  * Admin user profile service
@@ -30,7 +30,7 @@ class UserProfileService {
 			'admin/user-profile',
 			[
 				'customer'  => $customer,
-				'edit_link' => ! empty( $customer->id ) ? \CheckoutEngine::getUrl()->edit( 'customer', $customer->id ) : '',
+				'edit_link' => ! empty( $customer->id ) ? \SureCart::getUrl()->edit( 'customer', $customer->id ) : '',
 			]
 		);
 	}
@@ -43,6 +43,6 @@ class UserProfileService {
 	 * @return void
 	 */
 	public function render( $views, $context = [] ) {
-		echo wp_kses_post( \CheckoutEngine::views()->make( $views )->with( $context )->toString() );
+		echo wp_kses_post( \SureCart::views()->make( $views )->with( $context )->toString() );
 	}
 }

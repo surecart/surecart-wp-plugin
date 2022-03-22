@@ -1,12 +1,12 @@
 {
-	"name": "checkout-engine/logout-button",
+	"name": "surecart/logout-button",
 	"apiVersion": 2,
 	"title": "Logout Button",
 	"description": "Display a logout button.",
 	"category": "layout",
-	"keywords": [ "name", "customer", "dashboard" ],
+	"keywords": ["name", "customer", "dashboard"],
 	"parent": null,
-	"textdomain": "checkout_engine",
+	"textdomain": "surecart",
 	"supports": {
 		"reusable": false,
 		"html": false

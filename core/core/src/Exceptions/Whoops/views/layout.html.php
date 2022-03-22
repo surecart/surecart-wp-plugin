@@ -1,10 +1,10 @@
 <?php
 /**
- * @package   CheckoutEngineCore
+ * @package   SureCartCore
  * @author    Andre Gagnon <me@andregagnon.me>
  * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://checkout_engine.com/
+ * @link      https://surecart.com/
  */
 
 /**
@@ -13,41 +13,41 @@
  * @noinspection ALL
  */
 
-$is_admin = function_exists( 'is_admin' ) && is_admin() && apply_filters( 'checkout_engine.pretty_errors.apply_admin_styles', true );
+$is_admin = function_exists( 'is_admin' ) && is_admin() && apply_filters( 'surecart.pretty_errors.apply_admin_styles', true );
 $is_ajax  = function_exists( 'wp_doing_ajax' ) && wp_doing_ajax();
 
 if ( $is_admin && ! $is_ajax ) {
 	?>
 	<!--suppress CssUnusedSymbol -->
 	<style>
-		.checkout-engine-whoops {
+		.surecart-whoops {
 			position: relative;
 			z-index: 1;
 			margin: 20px 20px 0 0;
 		}
 
-		.checkout-engine-whoops .stack-container {
+		.surecart-whoops .stack-container {
 			display: flex;
 		}
 
-		.checkout-engine-whoops .left-panel {
+		.surecart-whoops .left-panel {
 			position: static;
 			height: auto;
 			overflow: visible;
 		}
 
-		.checkout-engine-whoops .details-container {
+		.surecart-whoops .details-container {
 			position: static;
 			height: auto;
 			overflow: visible;
 		}
 
 		@media (max-width: 600px) {
-			.checkout-engine-whoops {
+			.surecart-whoops {
 				margin: 10px 10px 0 0;
 			}
 
-			.checkout-engine-whoops .stack-container {
+			.surecart-whoops .stack-container {
 				display: block;
 			}
 		}
@@ -63,7 +63,7 @@ if ( $is_admin && ! $is_ajax ) {
 		});
 	</script>
 	<?php
-	require 'checkout-engine-body.html.php';
+	require 'surecart-body.html.php';
 	return;
 }
 ?>
@@ -72,11 +72,11 @@ if ( $is_admin && ! $is_ajax ) {
 <head>
 	<meta charset="utf-8">
 	<meta name="robots" content="noindex,nofollow"/>
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+	<meta name="viewport" content="width=devisc-width, initial-scale=1, shrink-to-fit=no"/>
 	<?php // Avoid triggering the Theme Check sniff as this is not a WordPress template. ?>
 	<?php echo '<' . 'title' . '>' . $tpl->escape( $page_title ) . '</' . 'title' . '>'; ?>
 </head>
 <body>
-	<?php require 'checkout-engine-body.html.php'; ?>
+	<?php require 'surecart-body.html.php'; ?>
 </body>
 </html>

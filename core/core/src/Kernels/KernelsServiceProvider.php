@@ -1,16 +1,16 @@
 <?php
 /**
- * @package   CheckoutEngineCore
+ * @package   SureCartCore
  * @author    Andre Gagnon <me@andregagnon.me>
  * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://checkout_engine.com/
+ * @link      https://surecart.com/
  */
 
-namespace CheckoutEngineCore\Kernels;
+namespace SureCartCore\Kernels;
 
-use CheckoutEngineCore\ServiceProviders\ExtendsConfigTrait;
-use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
+use SureCartCore\ServiceProviders\ExtendsConfigTrait;
+use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 /**
  * Provide old input dependencies.
@@ -28,12 +28,12 @@ class KernelsServiceProvider implements ServiceProviderInterface {
 			$container,
 			'middleware',
 			[
-				'flash'           => \CheckoutEngineCore\Flash\FlashMiddleware::class,
-				'old_input'       => \CheckoutEngineCore\Input\OldInputMiddleware::class,
-				'csrf'            => \CheckoutEngineCore\Csrf\CsrfMiddleware::class,
-				'user.logged_in'  => \CheckoutEngineCore\Middleware\UserLoggedInMiddleware::class,
-				'user.logged_out' => \CheckoutEngineCore\Middleware\UserLoggedOutMiddleware::class,
-				'user.can'        => \CheckoutEngineCore\Middleware\UserCanMiddleware::class,
+				'flash'           => \SureCartCore\Flash\FlashMiddleware::class,
+				'old_input'       => \SureCartCore\Input\OldInputMiddleware::class,
+				'csrf'            => \SureCartCore\Csrf\CsrfMiddleware::class,
+				'user.logged_in'  => \SureCartCore\Middleware\UserLoggedInMiddleware::class,
+				'user.logged_out' => \SureCartCore\Middleware\UserLoggedOutMiddleware::class,
+				'user.can'        => \SureCartCore\Middleware\UserCanMiddleware::class,
 			]
 		);
 
@@ -41,44 +41,44 @@ class KernelsServiceProvider implements ServiceProviderInterface {
 			$container,
 			'middleware_groups',
 			[
-				'checkout_engine' => [
+				'surecart' => [
 					'flash',
 					'old_input',
 				],
-				'global'          => [],
-				'web'             => [],
-				'ajax'            => [],
-				'admin'           => [],
+				'global'   => [],
+				'web'      => [],
+				'ajax'     => [],
+				'admin'    => [],
 			]
 		);
 
 		$this->extendConfig( $container, 'middleware_priority', [] );
 
-		$container[ CHECKOUT_ENGINE_WORDPRESS_HTTP_KERNEL_KEY ] = function ( $c ) {
+		$container[ SURECART_WORDPRESS_HTTP_KERNEL_KEY ] = function ( $c ) {
 			$kernel = new HttpKernel(
 				$c,
-				$c[ CHECKOUT_ENGINE_APPLICATION_GENERIC_FACTORY_KEY ],
-				$c[ CHECKOUT_ENGINE_HELPERS_HANDLER_FACTORY_KEY ],
-				$c[ CHECKOUT_ENGINE_RESPONSE_SERVICE_KEY ],
-				$c[ CHECKOUT_ENGINE_REQUEST_KEY ],
-				$c[ CHECKOUT_ENGINE_ROUTING_ROUTER_KEY ],
-				$c[ CHECKOUT_ENGINE_VIEW_SERVICE_KEY ],
-				$c[ CHECKOUT_ENGINE_EXCEPTIONS_ERROR_HANDLER_KEY ]
+				$c[ SURECART_APPLICATION_GENERIC_FACTORY_KEY ],
+				$c[ SURECART_HELPERS_HANDLER_FACTORY_KEY ],
+				$c[ SURECART_RESPONSE_SERVICE_KEY ],
+				$c[ SURECART_REQUEST_KEY ],
+				$c[ SURECART_ROUTING_ROUTER_KEY ],
+				$c[ SURECART_VIEW_SERVICE_KEY ],
+				$c[ SURECART_EXCEPTIONS_ERROR_HANDLER_KEY ]
 			);
 
-			$kernel->setMiddleware( $c[ CHECKOUT_ENGINE_CONFIG_KEY ]['middleware'] );
-			$kernel->setMiddlewareGroups( $c[ CHECKOUT_ENGINE_CONFIG_KEY ]['middleware_groups'] );
-			$kernel->setMiddlewarePriority( $c[ CHECKOUT_ENGINE_CONFIG_KEY ]['middleware_priority'] );
+			$kernel->setMiddleware( $c[ SURECART_CONFIG_KEY ]['middleware'] );
+			$kernel->setMiddlewareGroups( $c[ SURECART_CONFIG_KEY ]['middleware_groups'] );
+			$kernel->setMiddlewarePriority( $c[ SURECART_CONFIG_KEY ]['middleware_priority'] );
 
 			return $kernel;
 		};
 
-		$app = $container[ CHECKOUT_ENGINE_APPLICATION_KEY ];
+		$app = $container[ SURECART_APPLICATION_KEY ];
 
 		$app->alias(
 			'run',
 			function () use ( $app ) {
-				$kernel = $app->resolve( CHECKOUT_ENGINE_WORDPRESS_HTTP_KERNEL_KEY );
+				$kernel = $app->resolve( SURECART_WORDPRESS_HTTP_KERNEL_KEY );
 				return call_user_func_array( [ $kernel, 'run' ], func_get_args() );
 			}
 		);

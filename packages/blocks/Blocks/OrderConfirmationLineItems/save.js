@@ -5,12 +5,12 @@ export default function save({ attributes }) {
 		heading: title,
 	});
 	return (
-		<ce-dashboard-module {...blockProps}>
-			<ce-card>
-				<ce-order-confirmation-line-items></ce-order-confirmation-line-items>
-				<ce-divider></ce-divider>
-				<ce-order-confirmation-totals></ce-order-confirmation-totals>
-			</ce-card>
-		</ce-dashboard-module>
+		<sc-dashboard-module {...blockProps}>
+			<sc-card>
+				<sc-order-confirmation-line-items></sc-order-confirmation-line-items>
+				<sc-divider></sc-divider>
+				<sc-order-confirmation-totals></sc-order-confirmation-totals>
+			</sc-card>
+		</sc-dashboard-module>
 	);
 }

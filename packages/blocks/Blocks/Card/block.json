@@ -1,11 +1,11 @@
 {
 	"$schema": "https://json.schemastore.org/block.json",
 	"apiVersion": 2,
-	"name": "checkout-engine/card",
+	"name": "surecart/card",
 	"title": "Card",
 	"description": "Display an card block.",
 	"category": "layout",
-	"keywords": [ "card", "details", "confirm" ],
+	"keywords": ["card", "details", "confirm"],
 	"supports": {
 		"reusable": false,
 		"html": false

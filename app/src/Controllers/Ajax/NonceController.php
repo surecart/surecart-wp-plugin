@@ -1,6 +1,6 @@
 <?php
 
-namespace CheckoutEngine\Controllers\Ajax;
+namespace SureCart\Controllers\Ajax;
 
 class NonceController {
 	public function get() {

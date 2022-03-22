@@ -1,0 +1,14 @@
+:host {
+  display: block;
+  position: relative;
+}
+
+.upcoming-invoice {
+  display: grid;
+  gap: var(--sc-spacing-large);
+
+  > *  {
+    display: grid;
+    gap: var(--sc-spacing-medium);
+  }
+}

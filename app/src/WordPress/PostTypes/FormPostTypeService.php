@@ -1,9 +1,9 @@
 <?php
 
-namespace CheckoutEngine\WordPress\PostTypes;
+namespace SureCart\WordPress\PostTypes;
 
-use CheckoutEngine\Models\Form;
-use CheckoutEngine\WordPress\Pages\PageService;
+use SureCart\Models\Form;
+use SureCart\WordPress\Pages\PageService;
 
 /**
  * Form post type service class.
@@ -35,7 +35,7 @@ class FormPostTypeService {
 	 *
 	 * @var string
 	 */
-	protected $group_prefix = 'ce-checkout-';
+	protected $group_prefix = 'sc-checkout-';
 
 	/**
 	 * Get the page service from the application container.
@@ -85,7 +85,7 @@ class FormPostTypeService {
 		}
 
 		if ( $post->ID === $this->getDefaultId() ) {
-			$states[] = __( 'Default', 'checkout_engine' );
+			$states[] = __( 'Default', 'surecart' );
 		}
 
 		return $states;
@@ -160,32 +160,32 @@ class FormPostTypeService {
 			$this->post_type,
 			array(
 				'labels'                => array(
-					'name'                     => _x( 'Checkout Forms', 'post type general name', 'checkout_engine' ),
-					'singular_name'            => _x( 'Checkout Form', 'post type singular name', 'checkout_engine' ),
-					'add_new'                  => _x( 'Add New', 'Checkout Form', 'checkout_engine' ),
-					'add_new_item'             => __( 'Add new Checkout Form', 'checkout_engine' ),
-					'new_item'                 => __( 'New Checkout Form', 'checkout_engine' ),
-					'edit_item'                => __( 'Edit Checkout Form', 'checkout_engine' ),
-					'view_item'                => __( 'View Checkout Form', 'checkout_engine' ),
-					'all_items'                => __( 'All Checkout Forms', 'checkout_engine' ),
-					'search_items'             => __( 'Search Checkout Forms', 'checkout_engine' ),
-					'not_found'                => __( 'No checkout forms found.', 'checkout_engine' ),
-					'not_found_in_trash'       => __( 'No checkout forms found in Trash.', 'checkout_engine' ),
-					'filter_items_list'        => __( 'Filter checkout forms list', 'checkout_engine' ),
-					'items_list_navigation'    => __( 'Checkout Forms list navigation', 'checkout_engine' ),
-					'items_list'               => __( 'Checkout Forms list', 'checkout_engine' ),
-					'item_published'           => __( 'Checkout Form published.', 'checkout_engine' ),
-					'item_published_privately' => __( 'Checkout Form published privately.', 'checkout_engine' ),
-					'item_reverted_to_draft'   => __( 'Checkout Form reverted to draft.', 'checkout_engine' ),
-					'item_scheduled'           => __( 'Checkout Form scheduled.', 'checkout_engine' ),
-					'item_updated'             => __( 'Checkout Form updated.', 'checkout_engine' ),
+					'name'                     => _x( 'Checkout Forms', 'post type general name', 'surecart' ),
+					'singular_name'            => _x( 'Checkout Form', 'post type singular name', 'surecart' ),
+					'add_new'                  => _x( 'Add New', 'Checkout Form', 'surecart' ),
+					'add_new_item'             => __( 'Add new Checkout Form', 'surecart' ),
+					'new_item'                 => __( 'New Checkout Form', 'surecart' ),
+					'edit_item'                => __( 'Edit Checkout Form', 'surecart' ),
+					'view_item'                => __( 'View Checkout Form', 'surecart' ),
+					'all_items'                => __( 'All Checkout Forms', 'surecart' ),
+					'search_items'             => __( 'Search Checkout Forms', 'surecart' ),
+					'not_found'                => __( 'No checkout forms found.', 'surecart' ),
+					'not_found_in_trash'       => __( 'No checkout forms found in Trash.', 'surecart' ),
+					'filter_items_list'        => __( 'Filter checkout forms list', 'surecart' ),
+					'items_list_navigation'    => __( 'Checkout Forms list navigation', 'surecart' ),
+					'items_list'               => __( 'Checkout Forms list', 'surecart' ),
+					'item_published'           => __( 'Checkout Form published.', 'surecart' ),
+					'item_published_privately' => __( 'Checkout Form published privately.', 'surecart' ),
+					'item_reverted_to_draft'   => __( 'Checkout Form reverted to draft.', 'surecart' ),
+					'item_scheduled'           => __( 'Checkout Form scheduled.', 'surecart' ),
+					'item_updated'             => __( 'Checkout Form updated.', 'surecart' ),
 				),
 				'public'                => false,
 				'show_ui'               => true,
 				'show_in_menu'          => false,
 				'rewrite'               => false,
 				'show_in_rest'          => true,
-				'rest_base'             => 'ce-forms',
+				'rest_base'             => 'sc-forms',
 				'rest_controller_class' => 'WP_REST_Blocks_Controller',
 				'capability_type'       => 'block',
 				'capabilities'          => array(
@@ -201,7 +201,7 @@ class FormPostTypeService {
 				),
 				'template'              => [
 					[
-						'checkout-engine/form',
+						'surecart/form',
 						[],
 						[],
 					],
@@ -223,9 +223,9 @@ class FormPostTypeService {
 			$defaults,
 			array(
 				'title'     => $defaults['title'],
-				'public'    => __( 'Published In', 'checkout_engine' ),
-				'mode'      => __( 'Mode', 'checkout_engine' ),
-				// 'products'  => __( 'Included Products', 'checkout_engine' ),
+				'public'    => __( 'Published In', 'surecart' ),
+				'mode'      => __( 'Mode', 'surecart' ),
+				// 'products'  => __( 'Included Products', 'surecart' ),
 				'shortcode' => __( 'Shortcode', 'presto-player' ),
 			)
 		);
@@ -267,11 +267,11 @@ class FormPostTypeService {
 	public function columnMode( $post_ID ) {
 		$mode = Form::getMode( $post_ID );
 		if ( 'test' === $mode ) {
-			echo '<ce-tag type="warning">' . esc_html__( 'Test', 'checkout_engine' ) . '</ce-tag>';
+			echo '<sc-tag type="warning">' . esc_html__( 'Test', 'surecart' ) . '</sc-tag>';
 			return;
 		}
 
-		echo '<ce-tag type="success">' . esc_html__( 'Live', 'checkout_engine' ) . '</ce-tag>';
+		echo '<sc-tag type="success">' . esc_html__( 'Live', 'surecart' ) . '</sc-tag>';
 	}
 
 	/**
@@ -314,7 +314,7 @@ class FormPostTypeService {
 
 		$product_names = array_map(
 			function ( $product ) {
-				return '<a href="' . esc_url( \CheckoutEngine::getUrl()->edit( 'product', $product->id ) ) . '">' . wp_kses_post( $product->name ) . '</a>';
+				return '<a href="' . esc_url( \SureCart::getUrl()->edit( 'product', $product->id ) ) . '">' . wp_kses_post( $product->name ) . '</a>';
 			},
 			$products,
 		);

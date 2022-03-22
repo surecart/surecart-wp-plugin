@@ -1,10 +1,10 @@
 <?php
 
-namespace CheckoutEngine\Models;
+namespace SureCart\Models;
 
-use CheckoutEngine\Models\Traits\HasCustomer;
-use CheckoutEngine\Models\Traits\HasOrder;
-use CheckoutEngine\Models\Traits\HasPrice;
+use SureCart\Models\Traits\HasCustomer;
+use SureCart\Models\Traits\HasOrder;
+use SureCart\Models\Traits\HasPrice;
 
 /**
  * Subscription model
@@ -45,7 +45,7 @@ class Subscription extends Model {
 			return new \WP_Error( 'not_saved', 'Please create the subscription.' );
 		}
 
-		$canceled = \CheckoutEngine::request(
+		$canceled = \SureCart::request(
 			$this->endpoint . '/' . $this->attributes['id'] . '/cancel/',
 			[
 				'method' => 'PATCH',
@@ -85,7 +85,7 @@ class Subscription extends Model {
 			return new \WP_Error( 'not_saved', 'Please create the subscription.' );
 		}
 
-		$renewed = \CheckoutEngine::request(
+		$renewed = \SureCart::request(
 			$this->endpoint . '/' . $this->attributes['id'],
 			[
 				'method' => 'PATCH',
@@ -129,7 +129,7 @@ class Subscription extends Model {
 			return new \WP_Error( 'not_saved', 'Please create the subscription' );
 		}
 
-		$invoice = \CheckoutEngine::request(
+		$invoice = \SureCart::request(
 			$this->endpoint . '/' . $this->attributes['id'] . '/upcoming_invoice/',
 			[
 				'method' => 'GET',

@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-order-summary renders 1`] = `
+<sc-order-summary>
+  <mock:shadow-root>
+    <div class="summary">
+      <div class="summary__content">
+        <slot></slot>
+      </div>
+    </div>
+  </mock:shadow-root>
+</sc-order-summary>
+`;

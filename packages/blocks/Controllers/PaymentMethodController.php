@@ -1,9 +1,9 @@
 <?php
-namespace CheckoutEngineBlocks\Controllers;
+namespace SureCartBlocks\Controllers;
 
-use CheckoutEngine\Models\Component;
-use CheckoutEngine\Models\PaymentIntent;
-use CheckoutEngine\Models\User;
+use SureCart\Models\Component;
+use SureCart\Models\PaymentIntent;
+use SureCart\Models\User;
 
 /**
  * Payment method block controller class.
@@ -23,8 +23,8 @@ class PaymentMethodController extends BaseController {
 		}
 
 		return wp_kses_post(
-			Component::tag( 'ce-payment-methods-list' )
-			->id( 'ce-customer-payment-methods-list' )
+			Component::tag( 'sc-payment-methods-list' )
+			->id( 'sc-customer-payment-methods-list' )
 			->with(
 				[
 					'query' => [
@@ -76,37 +76,37 @@ class PaymentMethodController extends BaseController {
 	/**
 	 * Render the create view.
 	 *
-	 * @param \CheckoutEngine\Models\PaymentIntent $payment_intent the payment intent.
+	 * @param \SureCart\Models\PaymentIntent $payment_intent the payment intent.
 	 * @return string
 	 */
 	public function renderCreate( $payment_intent ) {
 		if ( empty( $payment_intent->processor_data->stripe->account_id ) ) {
-			return '<ce-alert type="info" open>' . __( 'You cannot currently add a payment method. Please contact us for support.', 'checkout-engine' ) . '</ce-alert>';
+			return '<sc-alert type="info" open>' . __( 'You cannot currently add a payment method. Please contact us for support.', 'surecart' ) . '</sc-alert>';
 		}
 
 		ob_start(); ?>
 
-		<ce-spacing style="--spacing: var(--ce-spacing-large)">
-			<ce-breadcrumbs>
-				<ce-breadcrumb href="<?php echo esc_url( add_query_arg( [ 'tab' => $this->getTab() ], \CheckoutEngine::pages()->url( 'dashboard' ) ) ); ?>">
-					<?php esc_html_e( 'Dashboard', 'checkout_engine' ); ?>
-				</ce-breadcrumb>
-				<ce-breadcrumb>
-					<?php esc_html_e( 'Add Payment Method', 'checkout_engine' ); ?>
-				</ce-breadcrumb>
-			</ce-breadcrumbs>
+		<sc-spacing style="--spacing: var(--sc-spacing-large)">
+			<sc-breadcrumbs>
+				<sc-breadcrumb href="<?php echo esc_url( add_query_arg( [ 'tab' => $this->getTab() ], \SureCart::pages()->url( 'dashboard' ) ) ); ?>">
+					<?php esc_html_e( 'Dashboard', 'surecart' ); ?>
+				</sc-breadcrumb>
+				<sc-breadcrumb>
+					<?php esc_html_e( 'Add Payment Method', 'surecart' ); ?>
+				</sc-breadcrumb>
+			</sc-breadcrumbs>
 
-			<ce-heading>
-				<?php esc_html_e( 'Add Payment Method', 'checkout_engine' ); ?>
-			</ce-heading>
+			<sc-heading>
+				<?php esc_html_e( 'Add Payment Method', 'surecart' ); ?>
+			</sc-heading>
 
-			<ce-payment-method-create
+			<sc-payment-method-create
 				client-secret="<?php echo esc_attr( $payment_intent->processor_data->stripe->client_secret ); ?>"
-				success-url="<?php echo esc_url( add_query_arg( [ 'tab' => $this->getTab() ], \CheckoutEngine::pages()->url( 'dashboard' ) ) ); ?>"
+				success-url="<?php echo esc_url( add_query_arg( [ 'tab' => $this->getTab() ], \SureCart::pages()->url( 'dashboard' ) ) ); ?>"
 				>
 					<?php
 						echo wp_kses_post(
-							Component::tag( 'ce-stripe-element' )
+							Component::tag( 'sc-stripe-element' )
 							->id( 'customer-payment-method-add' )
 							->with(
 								[
@@ -116,14 +116,14 @@ class PaymentMethodController extends BaseController {
 							)->render()
 						);
 					?>
-			</ce-payment-method-create>
+			</sc-payment-method-create>
 
 			<div>
-				<ce-text style="--color: var(--ce-color-gray-700); --font-size: var(--ce-font-size-small); --line-height: var(--ce-line-height-normal); --text-align: center;">
-					<?php esc_html_e( 'By providing your card information, you allow Sure Cart to charge your card for future payments in accordance with their terms. You can review important information from Sure Cart on their Terms of Service and Privacy Policy pages.', 'checkout-engine' ); ?>
-				</ce-text>
+				<sc-text style="--color: var(--sc-color-gray-700); --font-size: var(--sc-font-size-small); --line-height: var(--sc-line-height-normal); --text-align: center;">
+					<?php esc_html_e( 'By providing your card information, you allow Sure Cart to charge your card for future payments in accordance with their terms. You can review important information from Sure Cart on their Terms of Service and Privacy Policy pages.', 'surecart' ); ?>
+				</sc-text>
 			</div>
-		</ce-spacing>
+		</sc-spacing>
 		<?php
 		return ob_get_clean();
 	}

@@ -2,12 +2,12 @@
 import { __ } from '@wordpress/i18n';
 import { Modal, Button } from '@wordpress/components';
 import {
-	CeAlert,
-	CeForm,
-	CeFormControl,
-	CePriceInput,
-	CeSelect,
-} from '@checkout-engine/components-react';
+	ScAlert,
+	ScForm,
+	ScFormControl,
+	ScPriceInput,
+	ScSelect,
+} from '@surecart/components-react';
 import { css, jsx } from '@emotion/core';
 import { useState } from '@wordpress/element';
 import useEntity from '../../../mixins/useEntity';
@@ -48,8 +48,7 @@ export default ({ charge, onRequestClose }) => {
 				setError(e?.additional_errors?.[0]?.message);
 			} else {
 				setError(
-					e?.message ||
-						__('Failed to create refund.', 'checkout_engine')
+					e?.message || __('Failed to create refund.', 'surecart')
 				);
 			}
 		} finally {
@@ -59,49 +58,46 @@ export default ({ charge, onRequestClose }) => {
 
 	return (
 		<Modal
-			title={__('Refund Payment', 'checkout_engine')}
+			title={__('Refund Payment', 'surecart')}
 			css={css`
 				max-width: 500px !important;
 			`}
 			onRequestClose={onRequestClose}
 			shouldCloseOnClickOutside={false}
 		>
-			<CeForm
-				onCeFormSubmit={onSubmit}
+			<ScForm
+				onScFormSubmit={onSubmit}
 				css={css`
-					--ce-form-row-spacing: var(--ce-spacing-large);
+					--sc-form-row-spacing: var(--sc-spacing-large);
 				`}
 			>
-				<CeAlert type="info" open>
+				<ScAlert type="info" open>
 					{__(
 						"Refunds can take 5-10 days to appear on a customer's statement. Processor fees are typically not returned.",
-						'checkout_engine'
+						'surecart'
 					)}
-				</CeAlert>
+				</ScAlert>
 				<div>
-					<CePriceInput
+					<ScPriceInput
 						required
 						name="amount"
-						label={__('Refund', 'checkout_engine')}
+						label={__('Refund', 'surecart')}
 						currencyCode={charge?.currency}
 						value={charge?.amount - charge?.refunded_amount}
 						max={charge?.amount - charge?.refunded_amount}
-						onCeChange={(e) => {
+						onScChange={(e) => {
 							setAmount(e.target.value);
 						}}
 						showCode
 					/>
 				</div>
 				<div>
-					<CeFormControl label={__('Reason', 'checkout_engine')}>
-						<CeSelect
+					<ScFormControl label={__('Reason', 'surecart')}>
+						<ScSelect
 							name="reason"
 							value={reason}
-							placeholder={__(
-								'Select a reason',
-								'checkout_engine'
-							)}
-							onCeChange={(e) => {
+							placeholder={__('Select a reason', 'surecart')}
+							onScChange={(e) => {
 								setReason(e.target.value);
 							}}
 							choices={[
@@ -119,12 +115,12 @@ export default ({ charge, onRequestClose }) => {
 								},
 							]}
 						/>
-					</CeFormControl>
+					</ScFormControl>
 				</div>
 
-				<CeAlert type="danger" open={error}>
+				<ScAlert type="danger" open={error}>
 					{error}
-				</CeAlert>
+				</ScAlert>
 
 				<div
 					css={css`
@@ -134,17 +130,17 @@ export default ({ charge, onRequestClose }) => {
 					`}
 				>
 					<Button isPrimary isBusy={loading} type="submit">
-						{__('Refund', 'checkout_engine')}
+						{__('Refund', 'surecart')}
 					</Button>
 					<Button onClick={onRequestClose}>
-						{__('Cancel', 'checkout_engine')}
+						{__('Cancel', 'surecart')}
 					</Button>
 				</div>
 
 				{loading && (
-					<ce-block-ui spinner style={{ zIndex: 9 }}></ce-block-ui>
+					<sc-block-ui spinner style={{ zIndex: 9 }}></sc-block-ui>
 				)}
-			</CeForm>
+			</ScForm>
 		</Modal>
 	);
 };

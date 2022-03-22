@@ -1,8 +1,8 @@
 <?php
 
-namespace CheckoutEngine\View;
+namespace SureCart\View;
 
-use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
+use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 /**
  * Register view composers and globals.
@@ -35,7 +35,7 @@ class ViewServiceProvider implements ServiceProviderInterface {
 		 * @link https://docs.wpemerge.com/#/framework/views/overview
 		 */
 		// phpcs:ignore
-		// \CheckoutEngine::views()->addGlobal( 'foo', 'bar' );
+		// \SureCart::views()->addGlobal( 'foo', 'bar' );
 	}
 
 	/**
@@ -50,6 +50,6 @@ class ViewServiceProvider implements ServiceProviderInterface {
 		 * @link https://docs.wpemerge.com/#/framework/views/view-composers
 		 */
 		// phpcs:ignore
-		// \CheckoutEngine::views()->addComposer( 'partials/foo', 'FooPartialViewComposer' );
+		// \SureCart::views()->addComposer( 'partials/foo', 'FooPartialViewComposer' );
 	}
 }

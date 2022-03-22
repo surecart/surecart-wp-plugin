@@ -20,39 +20,39 @@
 
 ### Depends on
 
-- [ce-subscription-details](../subscription-details)
-- [ce-alert](../../../ui/alert)
-- [ce-format-date](../../../util/format-date)
-- [ce-skeleton](../../../ui/skeleton)
-- [ce-dashboard-module](../../../ui/dashboard-module)
-- [ce-card](../../../ui/card)
-- [ce-button](../../../ui/button)
-- [ce-block-ui](../../../ui/block-ui)
+- [sc-subscription-details](../subscription-details)
+- [sc-alert](../../../ui/alert)
+- [sc-format-date](../../../util/format-date)
+- [sc-skeleton](../../../ui/skeleton)
+- [sc-dashboard-module](../../../ui/dashboard-module)
+- [sc-card](../../../ui/card)
+- [sc-button](../../../ui/button)
+- [sc-block-ui](../../../ui/block-ui)
 
 ### Graph
 ```mermaid
 graph TD;
-  ce-subscription-cancel --> ce-subscription-details
-  ce-subscription-cancel --> ce-alert
-  ce-subscription-cancel --> ce-format-date
-  ce-subscription-cancel --> ce-skeleton
-  ce-subscription-cancel --> ce-dashboard-module
-  ce-subscription-cancel --> ce-card
-  ce-subscription-cancel --> ce-button
-  ce-subscription-cancel --> ce-block-ui
-  ce-subscription-details --> ce-subscription-status-badge
-  ce-subscription-details --> ce-format-date
-  ce-subscription-details --> ce-skeleton
-  ce-subscription-details --> ce-text
-  ce-subscription-details --> ce-tag
-  ce-subscription-details --> ce-format-number
-  ce-subscription-status-badge --> ce-format-date
-  ce-subscription-status-badge --> ce-tag
-  ce-alert --> ce-icon
-  ce-dashboard-module --> ce-alert
-  ce-button --> ce-spinner
-  ce-block-ui --> ce-spinner
-  style ce-subscription-cancel fill:#f9f,stroke:#333,stroke-width:4px
+  sc-subscription-cancel --> sc-subscription-details
+  sc-subscription-cancel --> sc-alert
+  sc-subscription-cancel --> sc-format-date
+  sc-subscription-cancel --> sc-skeleton
+  sc-subscription-cancel --> sc-dashboard-module
+  sc-subscription-cancel --> sc-card
+  sc-subscription-cancel --> sc-button
+  sc-subscription-cancel --> sc-block-ui
+  sc-subscription-details --> sc-subscription-status-badge
+  sc-subscription-details --> sc-format-date
+  sc-subscription-details --> sc-skeleton
+  sc-subscription-details --> sc-text
+  sc-subscription-details --> sc-tag
+  sc-subscription-details --> sc-format-number
+  sc-subscription-status-badge --> sc-format-date
+  sc-subscription-status-badge --> sc-tag
+  sc-alert --> sc-icon
+  sc-dashboard-module --> sc-alert
+  sc-button --> sc-spinner
+  sc-block-ui --> sc-spinner
+  style sc-subscription-cancel fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

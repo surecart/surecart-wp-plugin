@@ -1,19 +1,19 @@
 <?php
 /**
- * @package   CheckoutEngineCore
+ * @package   SureCartCore
  * @author    Andre Gagnon <me@andregagnon.me>
  * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://checkout_engine.com/
+ * @link      https://surecart.com/
  */
 
-namespace CheckoutEngineCore\Exceptions;
+namespace SureCartCore\Exceptions;
 
 use Whoops\Handler\PrettyPageHandler;
 use Whoops\Run;
-use CheckoutEngineCore\Exceptions\Whoops\DebugDataProvider;
-use CheckoutEngineCore\ServiceProviders\ExtendsConfigTrait;
-use CheckoutEngineCore\ServiceProviders\ServiceProviderInterface;
+use SureCartCore\Exceptions\Whoops\DebugDataProvider;
+use SureCartCore\ServiceProviders\ExtendsConfigTrait;
+use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 /**
  * Provide exceptions dependencies.
@@ -42,7 +42,7 @@ class ExceptionsServiceProvider implements ServiceProviderInterface {
 
 		$container[ PrettyPageHandler::class ] = function ( $container ) {
 			$handler = new PrettyPageHandler();
-			$handler->addResourcePath( implode( DIRECTORY_SEPARATOR, [ CHECKOUT_ENGINE_DIR, 'src', 'Exceptions', 'Whoops' ] ) );
+			$handler->addResourcePath( implode( DIRECTORY_SEPARATOR, [ SURECART_DIR, 'src', 'Exceptions', 'Whoops' ] ) );
 
 			$handler->addDataTableCallback(
 				'WP Emerge: Route',
@@ -71,16 +71,16 @@ class ExceptionsServiceProvider implements ServiceProviderInterface {
 			return $run;
 		};
 
-		$container[ CHECKOUT_ENGINE_EXCEPTIONS_ERROR_HANDLER_KEY ] = function ( $container ) {
-			$debug  = $container[ CHECKOUT_ENGINE_CONFIG_KEY ]['debug'];
+		$container[ SURECART_EXCEPTIONS_ERROR_HANDLER_KEY ] = function ( $container ) {
+			$debug  = $container[ SURECART_CONFIG_KEY ]['debug'];
 			$whoops = $debug['pretty_errors'] ? $container[ Run::class ] : null;
-			return new ErrorHandler( $container[ CHECKOUT_ENGINE_RESPONSE_SERVICE_KEY ], $whoops, $debug['enable'] );
+			return new ErrorHandler( $container[ SURECART_RESPONSE_SERVICE_KEY ], $whoops, $debug['enable'] );
 		};
 
-		$container[ CHECKOUT_ENGINE_EXCEPTIONS_CONFIGURATION_ERROR_HANDLER_KEY ] = function ( $container ) {
-			$debug  = $container[ CHECKOUT_ENGINE_CONFIG_KEY ]['debug'];
+		$container[ SURECART_EXCEPTIONS_CONFIGURATION_ERROR_HANDLER_KEY ] = function ( $container ) {
+			$debug  = $container[ SURECART_CONFIG_KEY ]['debug'];
 			$whoops = $debug['pretty_errors'] ? $container[ Run::class ] : null;
-			return new ErrorHandler( $container[ CHECKOUT_ENGINE_RESPONSE_SERVICE_KEY ], $whoops, $debug['enable'] );
+			return new ErrorHandler( $container[ SURECART_RESPONSE_SERVICE_KEY ], $whoops, $debug['enable'] );
 		};
 	}
 

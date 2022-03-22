@@ -1,20 +1,20 @@
 <?php
 /**
- * @package   CheckoutEngineCore
+ * @package   SureCartCore
  * @author    Andre Gagnon <me@andregagnon.me>
  * @copyright 2017-2019 Andre Gagnon
  * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0
- * @link      https://checkout_engine.com/
+ * @link      https://surecart.com/
  */
 
-namespace CheckoutEngineCore\Application;
+namespace SureCartCore\Application;
 
 use Pimple\Container;
 use Psr\Http\Message\ResponseInterface;
-use CheckoutEngineCore\Requests\RequestInterface;
-use CheckoutEngineCore\Responses\RedirectResponse;
-use CheckoutEngineCore\Routing\RouteBlueprint;
-use CheckoutEngineCore\View\ViewInterface;
+use SureCartCore\Requests\RequestInterface;
+use SureCartCore\Responses\RedirectResponse;
+use SureCartCore\Routing\RouteBlueprint;
+use SureCartCore\View\ViewInterface;
 
 /**
  * Can be applied to your App class via a "@mixin" annotation for better IDE support.
@@ -77,7 +77,7 @@ final class ApplicationMixin {
 	 * Get the Application instance.
 	 *
 	 * @codeCoverageIgnore
-	 * @return \CheckoutEngineCore\Application\Application
+	 * @return \SureCartCore\Application\Application
 	 */
 	public static function app() {}
 
@@ -93,7 +93,7 @@ final class ApplicationMixin {
 	 * Get the CSRF service instance.
 	 *
 	 * @codeCoverageIgnore
-	 * @return \CheckoutEngineCore\Csrf\Csrf
+	 * @return \SureCartCore\Csrf\Csrf
 	 */
 	public static function csrf() {}
 
@@ -101,7 +101,7 @@ final class ApplicationMixin {
 	 * Get the Flash service instance.
 	 *
 	 * @codeCoverageIgnore
-	 * @return \CheckoutEngineCore\Flash\Flash
+	 * @return \SureCartCore\Flash\Flash
 	 */
 	public static function flash() {}
 
@@ -109,7 +109,7 @@ final class ApplicationMixin {
 	 * Get the OldInput service instance.
 	 *
 	 * @codeCoverageIgnore
-	 * @return \CheckoutEngineCore\Input\OldInput
+	 * @return \SureCartCore\Input\OldInput
 	 */
 	public static function oldInput() {}
 
@@ -117,7 +117,7 @@ final class ApplicationMixin {
 	 * Run a full middleware + handler pipeline independently of routes.
 	 *
 	 * @codeCoverageIgnore
-	 * @see    \CheckoutEngineCore\Kernels\HttpKernel::run()
+	 * @see    \SureCartCore\Kernels\HttpKernel::run()
 	 * @param  RequestInterface $request
 	 * @param  string[]         $middleware
 	 * @param  string|\Closure  $handler
@@ -130,7 +130,7 @@ final class ApplicationMixin {
 	 * Get the ResponseService instance.
 	 *
 	 * @codeCoverageIgnore
-	 * @return \CheckoutEngineCore\Responses\ResponseService
+	 * @return \SureCartCore\Responses\ResponseService
 	 */
 	public static function responses() {}
 
@@ -138,7 +138,7 @@ final class ApplicationMixin {
 	 * Create a "blank" response.
 	 *
 	 * @codeCoverageIgnore
-	 * @see    \CheckoutEngineCore\Responses\ResponseService::response()
+	 * @see    \SureCartCore\Responses\ResponseService::response()
 	 * @return ResponseInterface
 	 */
 	public static function response() {}
@@ -147,7 +147,7 @@ final class ApplicationMixin {
 	 * Create a response with the specified string as its body.
 	 *
 	 * @codeCoverageIgnore
-	 * @see    \CheckoutEngineCore\Responses\ResponseService::output()
+	 * @see    \SureCartCore\Responses\ResponseService::output()
 	 * @param  string $output
 	 * @return ResponseInterface
 	 */
@@ -157,7 +157,7 @@ final class ApplicationMixin {
 	 * Create a response with the specified data encoded as JSON as its body.
 	 *
 	 * @codeCoverageIgnore
-	 * @see    \CheckoutEngineCore\Responses\ResponseService::json()
+	 * @see    \SureCartCore\Responses\ResponseService::json()
 	 * @param  mixed $data
 	 * @return ResponseInterface
 	 */
@@ -167,7 +167,7 @@ final class ApplicationMixin {
 	 * Create a redirect response.
 	 *
 	 * @codeCoverageIgnore
-	 * @see    \CheckoutEngineCore\Responses\ResponseService::redirect()
+	 * @see    \SureCartCore\Responses\ResponseService::redirect()
 	 * @return RedirectResponse
 	 */
 	public static function redirect() {}
@@ -176,7 +176,7 @@ final class ApplicationMixin {
 	 * Create a response with the specified error status code.
 	 *
 	 * @codeCoverageIgnore
-	 * @see    \CheckoutEngineCore\Responses\ResponseService::error()
+	 * @see    \SureCartCore\Responses\ResponseService::error()
 	 * @param  integer $status
 	 * @return ResponseInterface
 	 */
@@ -186,7 +186,7 @@ final class ApplicationMixin {
 	 * Get the ViewService instance.
 	 *
 	 * @codeCoverageIgnore
-	 * @return \CheckoutEngineCore\View\ViewService
+	 * @return \SureCartCore\View\ViewService
 	 */
 	public static function views() {}
 
@@ -194,7 +194,7 @@ final class ApplicationMixin {
 	 * Create a view.
 	 *
 	 * @codeCoverageIgnore
-	 * @see    \CheckoutEngineCore\View\ViewService::make()
+	 * @see    \SureCartCore\View\ViewService::make()
 	 * @param  string|string[] $views
 	 * @return ViewInterface
 	 */
@@ -204,7 +204,7 @@ final class ApplicationMixin {
 	 * Output child layout content.
 	 *
 	 * @codeCoverageIgnore
-	 * @see    \CheckoutEngineCore\View\PhpViewEngine::getLayoutContent()
+	 * @see    \SureCartCore\View\PhpViewEngine::getLayoutContent()
 	 * @return void
 	 */
 	public static function layoutContent() {}
@@ -221,8 +221,8 @@ final class ApplicationMixin {
 	 * Output the specified view.
 	 *
 	 * @codeCoverageIgnore
-	 * @see    \CheckoutEngineCore\View\ViewService::make()
-	 * @see    \CheckoutEngineCore\View\ViewInterface::toString()
+	 * @see    \SureCartCore\View\ViewService::make()
+	 * @see    \SureCartCore\View\ViewInterface::toString()
 	 * @param  string|string[]      $views
 	 * @param  array<string, mixed> $context
 	 * @return void

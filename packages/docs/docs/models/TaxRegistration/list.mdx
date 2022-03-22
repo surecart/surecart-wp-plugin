@@ -8,7 +8,7 @@ import MethodText from '../../../components/MethodText.js';
 
 Get 20 tax registrations.
 ```php
-\CheckoutEngine\Models\TaxRegistration::with([
+\SureCart\Models\TaxRegistration::with([
 	'tax_zone'
 ])->paginate([
 	'page' => 1,

@@ -3,7 +3,7 @@ import { css, jsx } from '@emotion/core';
 
 import { __ } from '@wordpress/i18n';
 
-import { CeFormControl } from '@checkout-engine/components-react';
+import { ScFormControl } from '@surecart/components-react';
 import { useState, useEffect } from '@wordpress/element';
 import {
 	FormFileUpload,
@@ -28,7 +28,7 @@ export default ({ product, updateProduct, loading }) => {
 
 	const onRemove = async () => {
 		const r = confirm(
-			__('Are you sure you want to remove this image?', 'checkout_engine')
+			__('Are you sure you want to remove this image?', 'surecart')
 		);
 		if (!r) return;
 		try {
@@ -37,7 +37,7 @@ export default ({ product, updateProduct, loading }) => {
 			if (product?.id) {
 				await apiFetch({
 					method: 'DELETE',
-					path: `/checkout-engine/v1/products/${product.id}/purge_image`,
+					path: `/surecart/v1/products/${product.id}/purge_image`,
 				});
 			}
 			updateProduct({
@@ -62,7 +62,7 @@ export default ({ product, updateProduct, loading }) => {
 			// first get the unique upload id.
 			const { id } = await apiFetch({
 				method: 'POST',
-				path: '/checkout-engine/v1/uploads',
+				path: '/surecart/v1/uploads',
 			});
 
 			// then upload the file.
@@ -117,7 +117,7 @@ export default ({ product, updateProduct, loading }) => {
 							object-fit: cover;
 							height: auto;
 							display: block;
-							border-radius: var(--ce-border-radius-medium);
+							border-radius: var(--sc-border-radius-medium);
 							background: #f3f3f3;
 						`}
 						onLoad={() => URL.revokeObjectURL(src)}
@@ -134,10 +134,10 @@ export default ({ product, updateProduct, loading }) => {
 							accept="image/*"
 							onChange={uploadImage}
 						>
-							{__('Replace', 'checkout_engine')}
+							{__('Replace', 'surecart')}
 						</FormFileUpload>
 						<Button isTertiary onClick={onRemove}>
-							{__('Remove', 'checkout_engine')}
+							{__('Remove', 'surecart')}
 						</Button>
 					</div>
 				</div>
@@ -148,8 +148,8 @@ export default ({ product, updateProduct, loading }) => {
 			<div
 				css={css`
 					position: relative;
-					border: 2px dashed var(--ce-color-gray-200);
-					border-radius: var(--ce-border-radius-small);
+					border: 2px dashed var(--sc-color-gray-200);
+					border-radius: var(--sc-border-radius-small);
 					padding: 2em;
 					display: grid;
 					gap: 1em;
@@ -158,14 +158,14 @@ export default ({ product, updateProduct, loading }) => {
 			>
 				{__(
 					'Drag and drop an image here or click to select a file.',
-					'checkout_engine'
+					'surecart'
 				)}
 				<FormFileUpload
 					isPrimary
 					accept="image/*"
 					onChange={uploadImage}
 				>
-					{__('Upload File', 'checkout_engine')}
+					{__('Upload File', 'surecart')}
 				</FormFileUpload>
 				<DropZone onFilesDrop={uploadImage} />
 			</div>
@@ -173,13 +173,13 @@ export default ({ product, updateProduct, loading }) => {
 	};
 
 	return (
-		<Box title={__('Product Image', 'checkout_engine')} loading={loading}>
-			<CeFormControl
-				label={__('Product Image', 'checkout_engine')}
+		<Box title={__('Product Image', 'surecart')} loading={loading}>
+			<ScFormControl
+				label={__('Product Image', 'surecart')}
 				showLabel={false}
 			>
 				{renderContent()}
-			</CeFormControl>
+			</ScFormControl>
 		</Box>
 	);
 };

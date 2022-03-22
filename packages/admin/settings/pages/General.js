@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
-import { CeButton, CeCard, CeInput } from '@checkout-engine/components-react';
+import { ScButton, ScCard, ScInput } from '@surecart/components-react';
 
 export default () => {
 	return (
@@ -17,23 +17,23 @@ export default () => {
 						margin: 0;
 					`}
 				>
-					{__('Connection', 'checkout_engine')}
+					{__('Connection', 'surecart')}
 				</h4>
 				<p>
 					{__(
 						'Update your API Token to connect your WordPress install to SureCart.',
-						'checkout_engine'
+						'surecart'
 					)}
 				</p>
-				<CeCard>
-					<CeInput
-						label={__('Api Key', 'checkout_engine')}
+				<ScCard>
+					<ScInput
+						label={__('Api Key', 'surecart')}
 						type="password"
 					/>
-					<CeButton type="primary">
-						{__('Check Connection', 'checkout_engine')}
-					</CeButton>
-				</CeCard>
+					<ScButton type="primary">
+						{__('Check Connection', 'surecart')}
+					</ScButton>
+				</ScCard>
 			</div>
 		</div>
 	);

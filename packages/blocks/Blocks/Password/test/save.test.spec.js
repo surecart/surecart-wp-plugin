@@ -13,37 +13,37 @@ const { metadata, settings } = blockData;
 let block;
 let serializedBlock;
 
-describe( 'checkout-engine/buttons', () => {
-	beforeAll( () => {
-		registerBlockType( metadata, settings );
-	} );
+describe('surecart/buttons', () => {
+	beforeAll(() => {
+		registerBlockType(metadata, settings);
+	});
 
-	beforeEach( () => {
+	beforeEach(() => {
 		// Create the block with the minimum attributes.
-		block = createBlock( metadata.name );
+		block = createBlock(metadata.name);
 
 		// Reset the reused variables.
 		serializedBlock = '';
-	} );
-	it( 'Should render with defaults', () => {
-		serializedBlock = serialize( block );
-		expect( serializedBlock ).toBeDefined();
-		expect( serializedBlock ).toContain( `wp:checkout-engine/password` );
-	} );
+	});
+	it('Should render with defaults', () => {
+		serializedBlock = serialize(block);
+		expect(serializedBlock).toBeDefined();
+		expect(serializedBlock).toContain(`wp:surecart/password`);
+	});
 
-	it( 'should render with custom class name', () => {
+	it('should render with custom class name', () => {
 		block.attributes.className = 'my-custom-class';
-		serializedBlock = serialize( block );
-		expect( serializedBlock ).toBeDefined();
-		expect( serializedBlock ).toContain( 'my-custom-class' );
-		expect( serializedBlock ).toMatchSnapshot();
-	} );
+		serializedBlock = serialize(block);
+		expect(serializedBlock).toBeDefined();
+		expect(serializedBlock).toContain('my-custom-class');
+		expect(serializedBlock).toMatchSnapshot();
+	});
 
-	it( 'can be required', () => {
+	it('can be required', () => {
 		block.attributes.required = true;
-		serializedBlock = serialize( block );
-		expect( serializedBlock ).toBeDefined();
-		expect( serializedBlock ).toContain( `{\"required\":true}` );
-		expect( serializedBlock ).toMatchSnapshot();
-	} );
-} );
+		serializedBlock = serialize(block);
+		expect(serializedBlock).toBeDefined();
+		expect(serializedBlock).toContain(`{\"required\":true}`);
+		expect(serializedBlock).toMatchSnapshot();
+	});
+});

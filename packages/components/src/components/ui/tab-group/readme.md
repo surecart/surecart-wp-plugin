@@ -9,8 +9,8 @@
 
 | Event       | Description | Type                  |
 | ----------- | ----------- | --------------------- |
-| `ceTabHide` |             | `CustomEvent<string>` |
-| `ceTabShow` |             | `CustomEvent<string>` |
+| `scTabHide` |             | `CustomEvent<string>` |
+| `scTabShow` |             | `CustomEvent<string>` |
 
 
 ## Shadow Parts

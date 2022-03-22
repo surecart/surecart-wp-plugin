@@ -1,3 +1,3 @@
 export default ({ attributes }) => {
-	return <ce-line-item-tax></ce-line-item-tax>;
+	return <sc-line-item-tax></sc-line-item-tax>;
 };

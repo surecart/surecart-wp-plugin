@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-button-group renders 1`] = `
+<sc-button-group>
+  <mock:shadow-root>
+    <div class="button-group" part="base" role="group">
+      <slot></slot>
+    </div>
+  </mock:shadow-root>
+</sc-button-group>
+`;

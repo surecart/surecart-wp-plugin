@@ -1,7 +1,7 @@
 <?php
-namespace CheckoutEngine\Account;
+namespace SureCart\Account;
 
-use CheckoutEngine\Models\Account;
+use SureCart\Models\Account;
 
 /**
  * Service for plugin activation.
@@ -10,7 +10,7 @@ class AccountService {
 	/**
 	 * Holds the global account model.
 	 *
-	 * @var \CheckoutEngine\Models\Account;
+	 * @var \SureCart\Models\Account;
 	 */
 	protected $account = null;
 
@@ -30,6 +30,6 @@ class AccountService {
 	 * @return mixed
 	 */
 	public function __get( $attribute ) {
-		return $this->account->$attribute;
+		return $this->account->$attribute ?? null;
 	}
 }
