@@ -4,6 +4,8 @@
 import { registerBlockCollection, registerBlockType } from '@wordpress/blocks';
 import { __ } from '@wordpress/i18n';
 
+// import './hooks/controls';
+
 // blocks
 import * as button from '@blocks/Button';
 import * as buyButton from '@blocks/BuyButton';
