@@ -16,6 +16,27 @@ class Onboarding {
 			);
 		}
 
+		// check if the token is valid.
+		$account  = \SureCart::account();
+		$products = Product::get();
+
+		if ( empty( $products ) ) {
+			// create a donation product for an example.
+			Product::create(
+				[
+					'name'        => __( 'Donation', 'surecart' ),
+					'recurring'   => false,
+					'tax_enabled' => false,
+					'prices'      => [
+						[
+							'ad_hoc'   => true,
+							'currency' => $account->currency,
+						],
+					],
+				]
+			);
+		}
+
 		return \SureCart::view( 'admin/onboarding/show' )->with(
 			[
 				'docs_url'     => 'https://surecart.com',
@@ -57,14 +78,13 @@ class Onboarding {
 		ApiToken::save( $api_token );
 
 		// check if the token is valid.
-		$products = Product::get();
+		$account = \SureCart::account();
 
-		if ( is_wp_error( $products ) ) {
+		if ( is_wp_error( $account ) ) {
 			// save token.
 			ApiToken::save( $old_token );
+			wp_die( __( 'Invalid API Token', 'surecart' ) );
 		}
-
-		// create donation product.
 
 		return \SureCart::redirect()->to( \SureCart::routeUrl( 'onboarding.show' ) );
 	}
