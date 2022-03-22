@@ -5,12 +5,17 @@ import { css, jsx } from '@emotion/core';
  */
 import { __ } from '@wordpress/i18n';
 import { InspectorControls } from '@wordpress/block-editor';
-import { RichText } from '@wordpress/block-editor';
+import {
+	RichText,
+	__experimentalUseColorProps as useColorProps,
+	__experimentalUseBorderProps as useBorderProps,
+} from '@wordpress/block-editor';
 import {
 	PanelBody,
 	PanelRow,
 	SelectControl,
 	TextControl,
+	ColorPicker,
 } from '@wordpress/components';
 
 /**
@@ -21,6 +26,10 @@ import Placeholder from './Placeholder';
 
 export default ({ className, attributes, setAttributes }) => {
 	const { type, label, size, line_items } = attributes;
+	const borderProps = useBorderProps(attributes);
+	const { style: borderStyle } = borderProps;
+	const colorProps = useColorProps(attributes);
+	const { style: colorStyle } = colorProps;
 
 	const renderButton = () => {
 		if (!line_items || !line_items?.length) {
@@ -28,7 +37,24 @@ export default ({ className, attributes, setAttributes }) => {
 		}
 
 		return (
-			<ScButton type={type} size={size}>
+			<ScButton
+				type={type}
+				size={size}
+				style={{
+					...(colorStyle?.backgroundColor
+						? { '--primary-background': colorStyle.backgroundColor }
+						: {}),
+					...(colorStyle?.background
+						? { '--primary-background': colorStyle.background }
+						: {}),
+					...(colorStyle?.color
+						? { '--primary-color': colorStyle.color }
+						: {}),
+					...(borderStyle?.borderRadius
+						? { '--button-border-radius': borderStyle.borderRadius }
+						: {}),
+				}}
+			>
 				<RichText
 					aria-label={__('Button text')}
 					placeholder={__('Add text…')}

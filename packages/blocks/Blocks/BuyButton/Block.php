@@ -16,11 +16,13 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
+
 		return \SureCart::blocks()->render(
 			'blocks/buy-button',
 			[
 				'type'  => $attributes['type'] ?? 'primary',
 				'size'  => $attributes['size'] ?? 'medium',
+				'style' => '',
 				'href'  => $this->href( $attributes['line_items'] ?? [] ),
 				'label' => $attributes['label'] ?? __( 'Buy Now', 'order' ),
 			]
