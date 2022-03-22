@@ -13,6 +13,7 @@ return [
 	 */
 	'providers'           => [
 		\SureCartAppCore\AppCore\AppCoreServiceProvider::class,
+		\SureCart\WordPress\TranslationsServiceProvider::class,
 		\SureCart\Account\AccountServiceProvider::class,
 		\SureCart\WordPress\Pages\PageServiceProvider::class,
 		\SureCart\WordPress\Users\UsersServiceProvider::class,

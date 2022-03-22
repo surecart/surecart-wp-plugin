@@ -11,25 +11,20 @@
 		"html": false
 	},
 	"attributes": {
-		"text": {
+		"label": {
 			"type": "string",
-			"default": "Purchase"
+			"default": "Checkbox"
 		},
-		"type": {
+		"value": {
 			"type": "string",
-			"default": "primary"
+			"default": "on"
 		},
-		"submit": {
-			"type": "boolean",
-			"default": true
-		},
-		"size": {
+		"name": {
 			"type": "string",
-			"default": "large"
+			"default": "checkbox"
 		},
-		"full": {
-			"type": "boolean",
-			"default": true
+		"required": {
+			"type": "boolean"
 		}
 	}
 }

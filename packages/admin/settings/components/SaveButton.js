@@ -20,7 +20,7 @@ export default ({ style, className }) => {
 			disabled={ui.saving}
 			onClick={save}
 		>
-			{__('Save Changes', 'presto-player')}
+			{__('Save Changes', 'surecart')}
 		</Button>
 	);
 };

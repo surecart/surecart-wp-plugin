@@ -10,8 +10,11 @@ export default ({ showing, total, total_pages, page, setPage, isFetching }) => {
 	return (
 		<Flex justify="space-between">
 			<div>
-				Showing <strong>{showing}</strong> of <strong>{total}</strong>{' '}
-				total
+				{sprintf(
+					__('Showing %1d of %2d total', 'surecart'),
+					showing,
+					total
+				)}
 			</div>
 			<InfinitePaginationButton
 				page={page}

@@ -99,18 +99,18 @@ export default () => {
 									type="button"
 									role="tab"
 									activeClassName="is-active"
-									className="components-button components-tab-panel__tabs-item presto-player__nav-general"
+									className="components-button components-tab-panel__tabs-item surecart__nav-general"
 								>
-									{__('General', 'presto-player')}
+									{__('General', 'surecart')}
 								</Link>
 								<Link
 									to={routes?.account?.path}
 									type="button"
 									role="tab"
 									activeClassName="is-active"
-									className="components-button components-tab-panel__tabs-item presto-player__nav-account"
+									className="components-button components-tab-panel__tabs-item surecart__nav-account"
 								>
-									{__('Account', 'presto-player')}
+									{__('Account', 'surecart')}
 								</Link>
 							</div>
 						</FlexBlock>

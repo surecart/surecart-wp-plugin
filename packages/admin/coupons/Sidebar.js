@@ -11,7 +11,7 @@ import Definition from '../ui/Definition';
 export default ({ coupon, loading }) => {
 	const formattedDiscount = () => {
 		if (coupon?.percent_off) {
-			return sprintf(__('%1s%% off', 'surecart'), coupon?.percent_off);
+			return sprintf(__('%s%% off', 'surecart'), coupon?.percent_off);
 		}
 		if (coupon?.amount_off) {
 			return (

@@ -116,6 +116,8 @@ abstract class AdminModelEditController {
 			}
 		}
 
+		wp_set_script_translations( $this->handle, 'surecart', WP_LANG_DIR . '/plugins/' );
+
 		// common localizations.
 		wp_localize_script(
 			$this->handle,

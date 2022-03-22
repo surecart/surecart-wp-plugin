@@ -72,7 +72,7 @@ export default ({ setSettings, settings }) => {
 
 	const confirmTrash = () => {
 		const r = confirm(
-			__('Are you sure you wish to remove this link?', 'presto-player')
+			__('Are you sure you wish to remove this link?', 'surecart')
 		);
 		if (r) {
 			setSettings({});
@@ -170,7 +170,7 @@ export default ({ setSettings, settings }) => {
 						isSmall
 						onClick={() => setVisible(!visible)}
 					>
-						{__('Add Link', 'presto-player')}
+						{__('Add Link', 'surecart')}
 					</Button>
 					{visible && (
 						<Popover

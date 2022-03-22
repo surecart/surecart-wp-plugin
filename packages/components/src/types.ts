@@ -3,6 +3,7 @@ declare global {
     wp: {
       apiFetch: any;
       blocks: any;
+      i18n: any;
     };
     surecart: {
       root_url: string;

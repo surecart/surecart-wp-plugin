@@ -21,7 +21,7 @@ const settingsReducer = (state = {}, action) => {
 			})
 				.then(() => {
 					dispatch('surecart/settings').addNotice({
-						content: __('Settings saved.', 'presto-player'),
+						content: __('Settings saved.', 'surecart'),
 					});
 				})
 				.catch((e) => {

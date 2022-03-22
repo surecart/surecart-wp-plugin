@@ -57,7 +57,7 @@ class ErrorsTranslationService {
 				return sprintf( $type_translations_replaceable[ $type ], $attribute_translations[ $attribute ] );
 			}
 			// translators: field name.
-			return sprintf( __( '%s is invalid.', 'checkount_engine' ), $attribute_translations[ $attribute ] );
+			return sprintf( __( '%s is invalid.', 'surecart' ), $attribute_translations[ $attribute ] );
 		}
 
 		return false;

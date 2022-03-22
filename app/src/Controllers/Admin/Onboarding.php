@@ -4,13 +4,14 @@ namespace SureCart\Controllers\Admin;
 
 use SureCart\Models\ApiToken;
 use SureCart\Models\Account;
+use SureCart\Models\Product;
 
 class Onboarding {
 	public function show( \SureCartCore\Requests\RequestInterface $request, $view ) {
 		if ( ! ApiToken::get() || is_wp_error( Account::find() ) ) {
 			return \SureCart::view( 'admin/onboarding/install' )->with(
 				[
-					'url' => esc_url_raw( untrailingslashit( SURECART_APP_URL ) . '/sign_up?return_url=' . esc_url( admin_url( 'admin.php?page=sc-complete-signup' ) ) ),
+					'url' => esc_url( untrailingslashit( SURECART_APP_URL ) . '/sign_up?return_url=' . esc_url_raw( admin_url( 'admin.php?page=sc-complete-signup' ) ) ),
 				]
 			);
 		}
@@ -49,8 +50,21 @@ class Onboarding {
 			return \SureCart::redirect()->to( esc_url_raw( add_query_arg( 'status', 'missing', $url ) ) );
 		}
 
+		// get the saved token.
+		$old_token = ApiToken::get();
+
 		// save token.
 		ApiToken::save( $api_token );
+
+		// check if the token is valid.
+		$products = Product::get();
+
+		if ( is_wp_error( $products ) ) {
+			// save token.
+			ApiToken::save( $old_token );
+		}
+
+		// create donation product.
 
 		return \SureCart::redirect()->to( \SureCart::routeUrl( 'onboarding.show' ) );
 	}

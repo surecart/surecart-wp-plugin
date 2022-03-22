@@ -20,7 +20,7 @@ class ProductScriptsController extends AdminModelEditController {
 	 *
 	 * @var string
 	 */
-	protected $handle = 'SureCart/scripts/admin/product';
+	protected $handle = 'surecart/scripts/admin/product';
 
 	/**
 	 * Script path.

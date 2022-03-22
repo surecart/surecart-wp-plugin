@@ -5,7 +5,7 @@ import { __ } from '@wordpress/i18n';
 import { BaseControl, DateTimePicker } from '@wordpress/components';
 
 import Box from '../../ui/Box';
-import { ScCheckbox, ScInput, ScSwitch } from '@surecart/components-react';
+import { ScInput, ScSwitch } from '@surecart/components-react';
 
 export default ({ coupon, loading, updateCoupon }) => {
 	return (
@@ -25,10 +25,11 @@ export default ({ coupon, loading, updateCoupon }) => {
 							});
 						}}
 					>
-						{__('End Date')}
+						{__('End Date', 'surecart')}
 						<span slot="description">
 							{__(
-								'Limit the end date when customers can redeem this coupon.'
+								'Limit the end date when customers can redeem this coupon.',
+								'surecart'
 							)}
 						</span>
 					</ScSwitch>
@@ -74,10 +75,11 @@ export default ({ coupon, loading, updateCoupon }) => {
 							});
 						}}
 					>
-						{__('Max Redemptions')}
+						{__('Max Redemptions', 'surecart')}
 						<span slot="description">
 							{__(
-								'Limit the total number of times this coupon can be redeemed.'
+								'Limit the total number of times this coupon can be redeemed.',
+								'surecart'
 							)}
 						</span>
 					</ScSwitch>

@@ -20,7 +20,7 @@ class CouponScriptsController extends AdminModelEditController {
 	 *
 	 * @var string
 	 */
-	protected $handle = 'SureCart/scripts/admin/coupon';
+	protected $handle = 'surecart/scripts/admin/coupon';
 
 	/**
 	 * Script path.

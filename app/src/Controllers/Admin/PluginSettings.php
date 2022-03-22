@@ -34,9 +34,9 @@ class PluginSettings {
 		$url       = $request->getHeaderLine( 'Referer' );
 		$api_token = $request->body( 'api_token' );
 
-		if ( empty( $api_token ) ) {
-			return \SureCart::redirect()->to( esc_url_raw( add_query_arg( 'status', 'missing', $url ) ) );
-		}
+		// if ( empty( $api_token ) ) {
+		// return \SureCart::redirect()->to( esc_url_raw( add_query_arg( 'status', 'missing', $url ) ) );
+		// }
 
 		// update uninstall option.
 		update_option( 'ce_uninstall', $request->body( 'uninstall' ) === 'on' );

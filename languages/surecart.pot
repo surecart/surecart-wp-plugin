@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-03-22T13:08:42+00:00\n"
+"POT-Creation-Date: 2022-03-22T18:08:04+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 
@@ -464,7 +464,7 @@ msgid "By %s"
 msgstr ""
 
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:183
-#: src/WordPress/PostTypes/FormPostTypeService.php:274
+#: src/WordPress/PostTypes/FormPostTypeService.php:273
 #: blocks/library.js:10044
 #: blocks/library.js:10065
 msgid "Live"
@@ -543,6 +543,7 @@ msgid "Canceled"
 msgstr ""
 
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:102
+#: admin/user-profile.php:5
 #: admin/invoices.js:4148
 #: admin/invoices.js:4611
 #: admin/orders.js:4666
@@ -694,7 +695,7 @@ msgid "Edit Subscription"
 msgstr ""
 
 #: src/Controllers/Admin/Tables/ListTable.php:102
-#: src/WordPress/PostTypes/FormPostTypeService.php:270
+#: src/WordPress/PostTypes/FormPostTypeService.php:269
 #: blocks/library.js:10037
 #: blocks/library.js:10058
 #: components/cjs/sc-customer-details.cjs.entry.js:61
@@ -1396,6 +1397,8 @@ msgid "Dashboard"
 msgstr ""
 
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:38
+#: admin/user-profile.php:1
+#: error.php:2
 #: blocks/library.js:18330
 msgid "SureCart"
 msgstr ""
@@ -1416,31 +1419,38 @@ msgid "Plugin"
 msgstr ""
 
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:53
+#: admin/products/index.php:29
 #: admin/product-groups.js:3812
 #: blocks/library.js:10225
 msgid "Products"
 msgstr ""
 
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:54
+#: admin/coupons/index.php:5
 msgid "Coupons"
 msgstr ""
 
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:55
+#: admin/orders/index.php:8
 #: admin/customers.js:2487
 msgid "Orders"
 msgstr ""
 
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:56
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:59
+#: admin/invoices/index.php:8
 #: admin/subscriptions/show.js:6271
 msgid "Invoices"
 msgstr ""
 
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:57
+#: admin/customers/index.php:7
 msgid "Customers"
 msgstr ""
 
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:58
+#: admin/subscriptions/index.php:7
+#: web/dashboard/orders/show.php:58
 #: admin/customers.js:3675
 #: admin/invoices.js:3472
 #: admin/orders.js:3472
@@ -1453,6 +1463,7 @@ msgid "Subscriptions"
 msgstr ""
 
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:60
+#: admin/product-groups/index.php:6
 msgid "Upgrade Groups"
 msgstr ""
 
@@ -1573,7 +1584,7 @@ msgstr ""
 msgid "Mode"
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:229
+#: src/WordPress/PostTypes/FormPostTypeService.php:228
 msgid "Shortcode"
 msgstr ""
 
@@ -1583,6 +1594,159 @@ msgstr ""
 
 #: src/WordPress/Users/UsersService.php:36
 msgid "Limit result set to users with specific customer ids."
+msgstr ""
+
+#: admin/abandoned-orders/index.php:5
+msgid "Abandoned Orders"
+msgstr ""
+
+#: admin/onboarding/complete.php:47
+#: admin/plugin.php:60
+msgid "Please enter an API key."
+msgstr ""
+
+#: admin/onboarding/complete.php:55
+msgid "Just one last step!"
+msgstr ""
+
+#: admin/onboarding/complete.php:66
+msgid "Enter your API Token"
+msgstr ""
+
+#: admin/onboarding/complete.php:66
+msgid "Api token"
+msgstr ""
+
+#: admin/onboarding/complete.php:68
+msgid "Complete Installation"
+msgstr ""
+
+#: admin/onboarding/install.php:47
+msgid "Welcome to SureCart!"
+msgstr ""
+
+#: admin/onboarding/show.php:47
+msgid "Getting Started With SureCart"
+msgstr ""
+
+#: admin/onboarding/show.php:53
+msgid "Get started by selecting a creating your first product or creating a new, custom form."
+msgstr ""
+
+#: admin/onboarding/show.php:57
+msgid "Store Settings"
+msgstr ""
+
+#: admin/onboarding/show.php:61
+msgid "Create A Product"
+msgstr ""
+
+#: admin/onboarding/show.php:65
+msgid "Create A Form"
+msgstr ""
+
+#: admin/onboarding/show.php:70
+msgid "Get Help"
+msgstr ""
+
+#: admin/plugin.php:54
+#: admin/coupons.js:2684
+#: admin/customers.js:4120
+#: admin/product-groups.js:3341
+#: admin/products.js:4463
+msgid "Saved."
+msgstr ""
+
+#: admin/plugin.php:68
+msgid "Plugin Settings"
+msgstr ""
+
+#: admin/plugin.php:71
+#: admin/settings.js:2701
+msgid "Save Settings"
+msgstr ""
+
+#: admin/plugin.php:79
+msgid "Connection Details"
+msgstr ""
+
+#: admin/plugin.php:80
+msgid "Update your api token to change or update the connection to SureCart."
+msgstr ""
+
+#: admin/plugin.php:82
+#: admin/settings.js:2794
+msgid "Api Token"
+msgstr ""
+
+#: admin/plugin.php:82
+msgid "Enter your api token."
+msgstr ""
+
+#: admin/plugin.php:84
+msgid "Find My Api Token"
+msgstr ""
+
+#: admin/plugin.php:91
+msgid "Uninstall"
+msgstr ""
+
+#: admin/plugin.php:92
+msgid "Change your plugin uninstall settings."
+msgstr ""
+
+#: admin/plugin.php:95
+msgid "Uninstall On Delete"
+msgstr ""
+
+#: admin/plugin.php:96
+msgid "Completely remove all plugin data when deleted. This cannot be undone."
+msgstr ""
+
+#: admin/user-profile.php:12
+msgid "This user is not a customer."
+msgstr ""
+
+#: layouts/partials/admin-index-header.php:7
+msgid "Add New"
+msgstr ""
+
+#: web/dashboard/orders/show.php:15
+#: admin/orders.js:4787
+msgid "Order Details"
+msgstr ""
+
+#: web/dashboard/orders/show.php:34
+#: components/cjs/sc-upcoming-invoice.cjs.entry.js:164
+#: components/collection/components/controllers/dashboard/upcoming-invoice/sc-upcoming-invoice.js:187
+#: components/components/sc-upcoming-invoice.js:186
+#: components/custom-elements/index.js:13354
+#: components/esm/sc-upcoming-invoice.entry.js:160
+msgid "Payment"
+msgstr ""
+
+#: web/dashboard/orders/show.php:42
+msgid "You have not been charged for this order."
+msgstr ""
+
+#: web/login.php:2
+msgid "Sign in to your account"
+msgstr ""
+
+#: web/no-customer.php:3
+msgid "It looks like you are not yet a customer."
+msgstr ""
+
+#: web/no-customer.php:5
+msgid "You must first purchase something to access your dashboard."
+msgstr ""
+
+#: web/no-customer.php:8
+msgid "Home"
+msgstr ""
+
+#: web/no-customer.php:11
+msgid "Logout"
 msgstr ""
 
 #: admin/coupons.js:2449
@@ -1635,13 +1799,6 @@ msgstr ""
 
 #: admin/coupons.js:2653
 msgid "New Coupon"
-msgstr ""
-
-#: admin/coupons.js:2684
-#: admin/customers.js:4120
-#: admin/product-groups.js:3341
-#: admin/products.js:4463
-msgid "Saved."
 msgstr ""
 
 #: admin/coupons.js:2935
@@ -2586,10 +2743,6 @@ msgstr ""
 msgid "Create Order"
 msgstr ""
 
-#: admin/orders.js:4787
-msgid "Order Details"
-msgstr ""
-
 #: admin/orders.js:4911
 msgid "Metadata"
 msgstr ""
@@ -2918,10 +3071,6 @@ msgstr ""
 msgid "Account"
 msgstr ""
 
-#: admin/settings.js:2701
-msgid "Save Settings"
-msgstr ""
-
 #: admin/settings.js:2791
 #: admin/settings.js:2837
 msgid "Connection"
@@ -2929,10 +3078,6 @@ msgstr ""
 
 #: admin/settings.js:2792
 msgid "Update your API Token to connect your WordPress installation to SureCart."
-msgstr ""
-
-#: admin/settings.js:2794
-msgid "Api Token"
 msgstr ""
 
 #: admin/settings.js:2800
@@ -5311,14 +5456,6 @@ msgstr ""
 #: components/custom-elements/index.js:13354
 #: components/esm/sc-upcoming-invoice.entry.js:160
 msgid "Tax"
-msgstr ""
-
-#: components/cjs/sc-upcoming-invoice.cjs.entry.js:164
-#: components/collection/components/controllers/dashboard/upcoming-invoice/sc-upcoming-invoice.js:187
-#: components/components/sc-upcoming-invoice.js:186
-#: components/custom-elements/index.js:13354
-#: components/esm/sc-upcoming-invoice.entry.js:160
-msgid "Payment"
 msgstr ""
 
 #: components/cjs/sc-upcoming-invoice.cjs.entry.js:169

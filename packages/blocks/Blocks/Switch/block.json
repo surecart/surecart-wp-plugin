@@ -19,10 +19,11 @@
 		},
 		"value": {
 			"type": "string",
-			"default": ""
+			"default": "on"
 		},
 		"label": {
-			"type": "string"
+			"type": "string",
+			"default": "Switch"
 		},
 		"description": {
 			"type": "string"

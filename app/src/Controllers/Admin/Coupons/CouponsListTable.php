@@ -234,7 +234,7 @@ class CouponsListTable extends ListTable {
 		}
 		if ( ! empty( $coupon->percent_off ) ) {
 			// translators: Coupon % off.
-			return sprintf( esc_html( __( '%1d%% off', 'surecart' ) ), $coupon->percent_off );
+			return esc_html( sprintf( __( '%d off', 'surecart' ), $coupon->percent_off ) );
 		}
 
 		if ( ! empty( $coupon->amount_off ) ) {

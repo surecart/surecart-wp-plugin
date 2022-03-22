@@ -225,8 +225,7 @@ class FormPostTypeService {
 				'title'     => $defaults['title'],
 				'public'    => __( 'Published In', 'surecart' ),
 				'mode'      => __( 'Mode', 'surecart' ),
-				// 'products'  => __( 'Included Products', 'surecart' ),
-				'shortcode' => __( 'Shortcode', 'presto-player' ),
+				'shortcode' => __( 'Shortcode', 'surecart' ),
 			)
 		);
 

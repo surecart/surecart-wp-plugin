@@ -129,7 +129,9 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 			filemtime( trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/surecart/surecart.esm.js' ),
 			false
 		);
-		wp_set_script_translations( 'surecart-components', 'surecart' );
+
+		wp_set_script_translations( 'surecart-components', 'surecart', WP_LANG_DIR . '/plugins/' );
+
 		wp_localize_script(
 			'surecart-components',
 			'ceData',
@@ -140,6 +142,7 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 				],
 			]
 		);
+
 		add_action(
 			'wp_footer',
 			function() { ?>

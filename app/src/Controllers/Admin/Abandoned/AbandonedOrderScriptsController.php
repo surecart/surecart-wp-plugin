@@ -20,7 +20,7 @@ class AbandonedOrderScriptsController extends AdminModelEditController {
 	 *
 	 * @var string
 	 */
-	protected $handle = 'SureCart/scripts/admin/abandoned_order';
+	protected $handle = 'surecart/scripts/admin/abandoned_order';
 
 	/**
 	 * Script path.
