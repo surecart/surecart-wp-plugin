@@ -4,6 +4,7 @@ import { ScSelect, ScDivider, ScMenuItem } from '@surecart/components-react';
 import throttle from 'lodash/throttle';
 import { translateInterval } from '../../admin/util/translations';
 import { formatNumber } from '../../admin/util';
+import { styles } from '../../admin/styles/admin';
 
 export default ({
 	open,
@@ -60,6 +61,7 @@ export default ({
 
 	return (
 		<ScSelect
+			style={styles}
 			required={required}
 			ref={selectRef}
 			value={value}

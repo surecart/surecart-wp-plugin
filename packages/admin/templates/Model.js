@@ -11,6 +11,7 @@ import UnsavedChangesWarning from '../components/unsaved-changes-warning';
 import ErrorBoundary from '../components/error-boundary';
 import { ScForm, ScButton } from '@surecart/components-react';
 import useSnackbar from '../hooks/useSnackbar';
+import admin from '../styles/admin';
 
 export default ({
 	id,
@@ -39,15 +40,7 @@ export default ({
 			<ErrorBoundary onError={onError}>
 				<Global
 					styles={css`
-						:root {
-							--sc-color-primary-500: var(--wp-admin-theme-color);
-							--sc-focus-ring-color-primary: var(
-								--wp-admin-theme-color
-							);
-							--sc-input-border-color-focus: var(
-								--wp-admin-theme-color
-							);
-						}
+						${admin}
 						#wpwrap {
 							background-color: var(--sc-color-gray-100);
 						}
@@ -79,15 +72,7 @@ export default ({
 		<Fragment>
 			<Global
 				styles={css`
-					:root {
-						--sc-color-primary-500: var(--wp-admin-theme-color);
-						--sc-focus-ring-color-primary: var(
-							--wp-admin-theme-color
-						);
-						--sc-input-border-color-focus: var(
-							--wp-admin-theme-color
-						);
-					}
+					${admin}
 					#wpwrap {
 						background-color: var(--sc-color-gray-100);
 					}
@@ -105,9 +90,6 @@ export default ({
 						button {
 							font-size: 13px;
 						}
-
-						--sc-highlight-color: 200 !important;
-						--sc-color-luminance: 36% !important;
 
 						sc-form-row:not(:last-child) {
 							margin-bottom: 20px;

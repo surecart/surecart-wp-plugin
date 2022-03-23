@@ -24,7 +24,7 @@ export default ({ id, loading }) => {
 	useEffect(() => {
 		if (!id) {
 			addPromotion({
-				currency: ceData?.currency_code || 'usd',
+				currency: scData?.currency_code || 'usd',
 			});
 		}
 	}, []);
@@ -71,7 +71,7 @@ export default ({ id, loading }) => {
 							onClick={(e) => {
 								e.preventDefault();
 								addPromotion({
-									currency: ceData?.currency_code || 'usd',
+									currency: scData?.currency_code || 'usd',
 									coupon_id: id,
 								});
 							}}

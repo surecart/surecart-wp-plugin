@@ -35,7 +35,7 @@ class AdminMenuPageService {
 	 * @return void
 	 */
 	public function registerAdminPages() {
-		\add_menu_page( __( 'Dashboard', 'surecart' ), __( 'SureCart', 'surecart' ), 'install_plugins', $this->slug, '__return_false', 'dashicons-cart' );
+		\add_menu_page( __( 'Dashboard', 'surecart' ), __( 'SureCart', 'surecart' ), 'install_plugins', $this->slug, '__return_false', 'dashicons-cart', 30 );
 
 		// not yet installed.
 		if ( ! ApiToken::get() ) {

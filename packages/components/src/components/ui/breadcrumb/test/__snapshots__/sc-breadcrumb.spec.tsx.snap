@@ -14,7 +14,9 @@ exports[`sc-breadcrumb renders 1`] = `
         <slot name="suffix"></slot>
       </span>
       <span aria-hidden="true" class="breadcrumb-item__separator" part="separator">
-        <slot name="separator"></slot>
+        <slot name="separator">
+          <sc-icon name="chevron-right"></sc-icon>
+        </slot>
       </span>
     </div>
   </mock:shadow-root>

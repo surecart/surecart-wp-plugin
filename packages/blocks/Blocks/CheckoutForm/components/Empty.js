@@ -18,6 +18,7 @@ import {
 import apiFetch from '@wordpress/api-fetch';
 
 import { receipt as icon } from '@wordpress/icons';
+import admin from '../../../../admin/styles/admin';
 
 /**
  * Components
@@ -32,9 +33,7 @@ export default ({ attributes, setAttributes }) => {
 
 	const blockProps = useBlockProps({
 		css: css`
-			--sc-color-primary-500: var(--wp-admin-theme-color);
-			--sc-focus-ring-color-primary: var(--wp-admin-theme-color);
-			--sc-input-border-color-focus: var(--wp-admin-theme-color);
+			${admin}
 			.components-placeholder.components-placeholder {
 				padding: 2em;
 			}

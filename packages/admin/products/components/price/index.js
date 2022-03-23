@@ -32,7 +32,7 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 		}
 	}, [priceErrors]);
 
-	const hasHeader = prices?.length > 1;
+	const collapsible = prices?.length > 1;
 
 	const showLifetime = () => {
 		// need to be a recurring product
@@ -52,7 +52,7 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 						label={__('Price', 'surecart')}
 						className="sc-price-amount"
 						showCode
-						currencyCode={ceData.currency_code}
+						currencyCode={scData.currency_code}
 						value={price?.amount}
 						name="price"
 						onScChange={(e) => {
@@ -118,7 +118,7 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 						`}
 						label={__('Price', 'surecart')}
 						className="sc-price-amount"
-						currencyCode={ceData.currecy_code}
+						currencyCode={scData.currecy_code}
 						value={price?.amount}
 						name="price"
 						onScChange={(e) => {
@@ -131,6 +131,7 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 							condition={price?.id}
 							wrapper={(children) => (
 								<ScTooltip
+									type="text"
 									text={
 										price?.id
 											? __(
@@ -254,7 +255,7 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 						value={price?.trial_duration_days}
 						onScChange={(e) =>
 							updatePrice({
-								trial_duration_days: e.target.value,
+								trial_duration_days: parseInt(e.target.value),
 							})
 						}
 					>
@@ -267,269 +268,45 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 
 	return (
 		<div>
-			{hasHeader && (
-				<Header
-					isOpen={isOpen}
-					setIsOpen={setIsOpen}
-					price={price}
-					onArchive={() =>
-						updatePrice({
-							archived: !price.archived,
-						})
+			<Header
+				isOpen={isOpen}
+				setIsOpen={setIsOpen}
+				price={price}
+				onArchive={() =>
+					updatePrice({
+						archived: !price.archived,
+					})
+				}
+				collapsible={collapsible}
+				onDelete={() => deletePrice()}
+				css={css`
+					.sc-price-copy {
+						visibility: hidden;
+						opacity: 0;
+						transition: opacity var(--sc-transition-fast)
+								ease-in-out,
+							visibility var(--sc-transition-fast) ease-in-out;
 					}
-					onDelete={() => deletePrice()}
-				/>
-			)}
+					&:hover {
+						.sc-price-copy {
+							visibility: visible;
+							opacity: 1;
+						}
+					}
+				`}
+			/>
 
 			<div
 				css={css`
 					display: grid;
 					gap: var(--sc-form-row-spacing);
-					margin-top: ${isOpen && hasHeader ? '1em' : '0'};
+					margin-top: 1em;
 					height: ${isOpen ? 'auto' : 0};
 					overflow: ${isOpen ? 'visible' : 'hidden'};
 					visibility: ${isOpen ? 'visibile' : 'hidden'};
 				`}
 			>
 				{product?.recurring ? renderRecurring() : renderOneTime()}
-				{/* <sc-flex>
-					{!price?.ad_hoc ? (
-						<ScPriceInput
-							css={css`
-								flex: 1 1 75%;
-							`}
-							label={__('Price', 'surecart')}
-							className="sc-price-amount"
-							currencyCode={ceData.currecy_code}
-							value={price?.amount}
-							name="price"
-							onScChange={(e) => {
-								updatePrice({ amount: e.target.value });
-							}}
-							required
-						/>
-					) : (
-						<div
-							css={css`
-								display: grid;
-								gap: var(--sc-form-row-spacing);
-							`}
-						>
-							<ScPriceInput
-								label={__('Min Amount', 'surecart')}
-								className="sc-ad-hoc-min-amount"
-								value={price?.ad_hoc_min_amount}
-								onScChange={(e) =>
-									updatePrice({
-										ad_hoc_min_amount: e.target.value,
-									})
-								}
-								required
-							/>
-							<ScPriceInput
-								label={__('Max Amount', 'surecart')}
-								className="sc-ad-hoc-max-amount"
-								value={price?.ad_hoc_max_amount}
-								min={price?.ad_hoc_min_amount / 100}
-								onScChange={(e) =>
-									updatePrice({
-										ad_hoc_max_amount: e.target.value,
-									})
-								}
-							/>
-						</div>
-					)}
-					<div>
-						<ScSwitch
-							checked={price?.ad_hoc}
-							onScChange={(e) =>
-								updatePrice({ ad_hoc: e.target.checked })
-							}
-						>
-							{__(
-								'Allow customers to pay what they want',
-								'surecart'
-							)}
-						</ScSwitch>
-					</div>
-				</sc-flex>
-				) : (
-				<sc-flex>
-					<ScPriceInput
-						css={css`
-							flex: 1 1 75%;
-						`}
-						label={__('Price', 'surecart')}
-						className="sc-price-amount"
-						currencyCode={ceData.currecy_code}
-						value={price?.amount}
-						name="price"
-						onScChange={(e) => {
-							updatePrice({ amount: e.target.value });
-						}}
-						required
-					/>
-					{price?.recurring_interval !== 'never' && (
-						<ConditionalWrapper
-							condition={price?.id}
-							wrapper={(children) => (
-								<ScTooltip
-									text={
-										price?.id
-											? __(
-													'To change the interval, create a new price.',
-													'surecart'
-											  )
-											: null
-									}
-								>
-									{children}
-								</ScTooltip>
-							)}
-						>
-							<ScFormControl
-								css={css`
-									flex: 1;
-								`}
-								disabled={price?.id}
-								label={__(
-									'Repeat Payment Every',
-									'surecart'
-								)}
-							>
-								<div
-									css={css`
-										display: flex;
-										align-items: center;
-										gap: 0.5em;
-									`}
-								>
-									<ScInput
-										disabled={price?.id}
-										value={price?.recurring_interval_count}
-										onScChange={(e) =>
-											updatePrice({
-												recurring_interval_count:
-													e.target.value,
-											})
-										}
-										type="number"
-										max={
-											price?.recurring_interval === 'year'
-												? 1
-												: null
-										}
-										required
-									/>
-									<ScSelect
-										value={price?.recurring_interval}
-										disabled={price?.id}
-										onScChange={(e) =>
-											updatePrice({
-												recurring_interval:
-													e.target.value,
-											})
-										}
-										choices={[
-											{
-												value: 'month',
-												label: __(
-													'Month',
-													'surecart'
-												),
-											},
-											{
-												value: 'year',
-												label: __(
-													'Year',
-													'surecart'
-												),
-											},
-											{
-												value: 'never',
-												label: __(
-													'Lifetime',
-													'surecart'
-												),
-											},
-										]}
-									/>
-								</div>
-							</ScFormControl>
-						</ConditionalWrapper>
-					)}
-				</sc-flex>
-				)}
-				{!product?.recurring && (
-					<div>
-						<ScSwitch
-							checked={price?.ad_hoc}
-							onScChange={(e) =>
-								updatePrice({ ad_hoc: e.target.checked })
-							}
-						>
-							{__(
-								'Allow customers to pay what they want',
-								'surecart'
-							)}
-						</ScSwitch>
-					</div>
-				)}
-				{showLifetime() && (
-					<div>
-						<ConditionalWrapper
-							condition={price?.id}
-							wrapper={(children) => (
-								<ScTooltip
-									text={
-										price?.id
-											? __(
-													'To change the interval, create a new price.',
-													'surecart'
-											  )
-											: null
-									}
-								>
-									{children}
-								</ScTooltip>
-							)}
-						>
-							<ScSwitch
-								disabled={price?.id}
-								checked={price?.recurring_interval === 'never'}
-								onScChange={(e) =>
-									updatePrice({
-										recurring_interval: e.target.checked
-											? 'never'
-											: 'month',
-									})
-								}
-							>
-								{__('Lifetime subscription', 'surecart')}
-							</ScSwitch>
-						</ConditionalWrapper>
-					</div>
-				)}
-				{product?.recurring && (
-					<ScInput
-						label={__('Free Trial Days', 'surecart')}
-						className="sc-free-trial"
-						help={__(
-							'If you want to add a free trial, enter the number of days.',
-							'surecart'
-						)}
-						value={price?.trial_duration_days}
-						onScChange={(e) =>
-							updatePrice({
-								trial_duration_days: e.target.value,
-							})
-						}
-					>
-						<span slot="suffix">
-							{__('Days', 'surecart')}
-						</span>
-					</ScInput>
-				)} */}
 			</div>
 		</div>
 	);

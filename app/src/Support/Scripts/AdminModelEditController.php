@@ -106,6 +106,12 @@ abstract class AdminModelEditController {
 		if ( in_array( 'currency', $this->with_data ) ) {
 			$this->data['currency_code'] = \SureCart::account()->currency;
 		}
+		if ( in_array( 'tax_protocol', $this->with_data ) ) {
+			$this->data['tax_protocol'] = \SureCart::account()->tax_protocol;
+		}
+		if ( in_array( 'checkout_page_url', $this->with_data ) ) {
+			$this->data['checkout_page_url'] = \SureCart::getUrl()->checkout();
+		}
 		if ( in_array( 'supported_currencies', $this->with_data ) ) {
 			$this->data['supported_currencies'] = Currency::getSupportedCurrencies();
 		}
@@ -121,7 +127,7 @@ abstract class AdminModelEditController {
 		// common localizations.
 		wp_localize_script(
 			$this->handle,
-			'ceData',
+			'scData',
 			$this->data
 		);
 

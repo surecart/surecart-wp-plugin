@@ -22,6 +22,7 @@ import apiFetch from '@wordpress/api-fetch';
 import Cart from './components/Cart';
 import Mode from './components/Mode';
 import Setup from './components/Setup';
+import { styles } from '../../../admin/styles/admin';
 
 const ALLOWED_BLOCKS = [
 	'core/spacer',
@@ -89,7 +90,7 @@ export default function edit({ clientId, attributes, setAttributes }) {
 		choice_type,
 	}) => {
 		const result = await apiFetch({
-			url: ceData.plugin_url + '/templates/forms/' + template + '.html',
+			url: scData.plugin_url + '/templates/forms/' + template + '.html',
 			parse: false,
 			cache: 'no-cache',
 		});
@@ -225,6 +226,7 @@ export default function edit({ clientId, attributes, setAttributes }) {
 					`}
 				>
 					<div
+						style={styles}
 						css={css`
 							padding: 10px 16px;
 							border-radius: 8px;
@@ -332,7 +334,7 @@ export default function edit({ clientId, attributes, setAttributes }) {
 						)}
 					</div>
 					<ScCheckout
-						keys={ceData?.keys}
+						keys={scData?.keys}
 						mode={mode}
 						formId={formId}
 						css={css`
@@ -342,7 +344,7 @@ export default function edit({ clientId, attributes, setAttributes }) {
 						disableComponentsValidation={true}
 						persistSession={false}
 						alignment={align}
-						currencyCode={ceData.currency}
+						currencyCode={scData.currency}
 						className={className}
 						choiceType={choice_type}
 						prices={prices}

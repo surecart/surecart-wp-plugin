@@ -287,6 +287,19 @@ class ProductsListTable extends ListTable {
 			<?php echo esc_html_e( $product->name ); ?>
 		</a>
 
+		<script> function copyClick(e, content){
+			navigator.clipboard.writeText(content).then(() =>{
+				const oldText = e.target.innerText;
+				e.target.innerText = '<?php echo esc_html_e( 'Copied!', 'surecart' ); ?>';
+				setTimeout(() =>{
+					e.target.innerText = oldText;
+				}, 2000);
+			}).catch(err => {
+
+			});
+		} </script>
+
+
 		<?php
 		echo $this->row_actions(
 			[

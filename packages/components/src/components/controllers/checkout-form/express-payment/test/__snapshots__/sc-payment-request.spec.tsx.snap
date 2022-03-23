@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-express-payment renders empty 1`] = `<sc-express-payment class="is-empty"></sc-express-payment>`;
+
+exports[`sc-express-payment renders express payment if there are payment options 1`] = `
+<sc-express-payment has-payment-options="">
+  <sc-stripe-payment-request publishablekey="pk_test_12345" stripeaccountid="acct_12345"></sc-stripe-payment-request>
+  <sc-divider style="--spacing: calc(var(--sc-form-row-spacing)/2);"></sc-divider>
+</sc-express-payment>
+`;

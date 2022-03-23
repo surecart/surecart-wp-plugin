@@ -2,7 +2,7 @@
   display: block;
 }
 
-::slotted(:not(.wp-block-spacer):not(:last-child)) {
+::slotted(:not(.wp-block-spacer):not(:last-child):not(.is-empty)) {
   margin-bottom: var(--sc-form-row-spacing, 0.75em);
   display: block;
 }

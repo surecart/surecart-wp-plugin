@@ -54,7 +54,7 @@ export default ({ template, setTemplate }) => {
 				>
 					<img
 						css={imageCSS}
-						src={ceData.plugin_url + '/templates/forms/default.png'}
+						src={scData.plugin_url + '/templates/forms/default.png'}
 					/>
 				</Thumbnail>
 				<Thumbnail
@@ -64,7 +64,7 @@ export default ({ template, setTemplate }) => {
 				>
 					<img
 						css={imageCSS}
-						src={ceData.plugin_url + '/templates/forms/simple.png'}
+						src={scData.plugin_url + '/templates/forms/simple.png'}
 					/>
 				</Thumbnail>
 				<Thumbnail
@@ -75,7 +75,7 @@ export default ({ template, setTemplate }) => {
 					<img
 						css={imageCSS}
 						src={
-							ceData.plugin_url + '/templates/forms/sections.png'
+							scData.plugin_url + '/templates/forms/sections.png'
 						}
 					/>
 				</Thumbnail>
@@ -87,7 +87,7 @@ export default ({ template, setTemplate }) => {
 					<img
 						css={imageCSS}
 						src={
-							ceData.plugin_url +
+							scData.plugin_url +
 							'/templates/forms/two-column.png'
 						}
 					/>
@@ -100,7 +100,7 @@ export default ({ template, setTemplate }) => {
 					<img
 						css={imageCSS}
 						src={
-							ceData.plugin_url + '/templates/forms/donation.png'
+							scData.plugin_url + '/templates/forms/donation.png'
 						}
 					/>
 				</Thumbnail>

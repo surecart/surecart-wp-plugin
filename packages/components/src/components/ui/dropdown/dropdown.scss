@@ -19,6 +19,11 @@
     display: block;
     cursor: pointer;
   }
+
+  &--disabled,
+  &--disabled .dropdown__trigger {
+    cursor: not-allowed;
+  }
 }
 
 .dropdown__panel {

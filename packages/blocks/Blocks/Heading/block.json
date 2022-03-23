@@ -5,7 +5,12 @@
 	"description": "Displays a title/heading section",
 	"category": "surecart",
 	"keywords": ["heading", "title"],
-	"parent": ["surecart/form", "surecart/column", "surecart/dashboard-page"],
+	"parent": [
+		"surecart/form",
+		"surecart/column",
+		"surecart/dashboard-page",
+		"surecart/card"
+	],
 	"supports": {
 		"reusable": false,
 		"html": false,

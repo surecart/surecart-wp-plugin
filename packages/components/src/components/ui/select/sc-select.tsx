@@ -245,6 +245,7 @@ export class ScSelectDropdown {
           'select--placeholder': !this.value,
           'select--focused': this.hasFocus,
           'select--is-open': !!this.open,
+          'select--disabled': this.disabled,
           'select--has-choices': !!this?.choices?.length,
           'select--squared': this.squared,
           'select--squared-bottom': this.squaredBottom,

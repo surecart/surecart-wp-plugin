@@ -125,4 +125,37 @@ class AdminURLService {
 			)
 		);
 	}
+
+	/**
+	 * Build the checkout url.
+	 *
+	 * @param array $line_items Line items.
+	 * @return string url
+	 */
+	public function checkout( $line_items = [] ) {
+		return add_query_arg(
+			[
+				...( $line_items ? [ 'line_items' => $this->lineItems( $line_items ?? [] ) ] : [] ),
+			],
+			\SureCart::pages()->url( 'checkout' )
+		);
+	}
+
+	/**
+	 * Build the line items array.
+	 *
+	 * @param array $line_items Line items.
+	 * @return array Line items.
+	 */
+	public function lineItems( $line_items ) {
+		return array_map(
+			function( $item ) {
+				return [
+					'price_id' => $item['id'],
+					'quantity' => $item['quantity'],
+				];
+			},
+			$line_items ?? []
+		);
+	}
 }

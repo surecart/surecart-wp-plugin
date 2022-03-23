@@ -34,7 +34,7 @@ export default ({ product, updateProduct, loading }) => {
 			addPrice({
 				recurring: false,
 				recurring_interval: 'month',
-				currency: ceData?.currency_code || 'usd',
+				currency: scData?.currency_code || 'usd',
 				recurring_interval_count: 1,
 				archived: false,
 			});
@@ -106,7 +106,7 @@ export default ({ product, updateProduct, loading }) => {
 											recurring: false,
 											recurring_interval: 'month',
 											currency:
-												ceData?.currency_code || 'usd',
+												scData?.currency_code || 'usd',
 											recurring_interval_count: 1,
 											archived: false,
 										});

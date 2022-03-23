@@ -68,7 +68,7 @@ export default ({ product, updateProduct, loading }) => {
 			// then upload the file.
 			const directUpload = new DirectUpload(
 				file,
-				`${ceData.app_url}uploads/${id}/presign`
+				`${scData.app_url}uploads/${id}/presign`
 			);
 
 			directUpload.create(async (error, blob) => {

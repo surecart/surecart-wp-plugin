@@ -1,5 +1,5 @@
 import { Order } from '../../../../types';
-import { Component, Fragment, h, Listen, Prop, State } from '@stencil/core';
+import { Component, Host, h, Listen, Prop, State } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
 
 @Component({
@@ -14,8 +14,7 @@ export class ScExpressPayment {
   @Prop() order: Order;
   @Prop() dividerText: string;
   @Prop() debug: boolean;
-
-  @State() hasPaymentOptions: boolean;
+  @Prop({ mutable: true }) hasPaymentOptions: boolean;
 
   @Listen('scPaymentRequestLoaded')
   onPaymentRequestLoaded() {
@@ -40,11 +39,11 @@ export class ScExpressPayment {
 
   render() {
     return (
-      <Fragment>
+      <Host class={{ 'is-empty': !this.hasPaymentOptions && !this.debug }}>
         {this.renderStripePaymentRequest()}
         {(this.hasPaymentOptions || this.debug) && <sc-divider style={{ '--spacing': 'calc(var(--sc-form-row-spacing)/2)' }}>{this.dividerText}</sc-divider>}
         {this.busy && <sc-block-ui></sc-block-ui>}
-      </Fragment>
+      </Host>
     );
   }
 }

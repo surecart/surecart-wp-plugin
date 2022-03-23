@@ -134,7 +134,7 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 
 		wp_localize_script(
 			'surecart-components',
-			'ceData',
+			'scData',
 			[
 				'plugin_url' => \SureCart::core()->assets()->getUrl(),
 				'currency'   => \SureCart::account()->currency,

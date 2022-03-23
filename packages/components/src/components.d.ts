@@ -659,6 +659,7 @@ export namespace Components {
         "debug": boolean;
         "dividerText": string;
         "formId": number | string;
+        "hasPaymentOptions": boolean;
         "order": Order;
         "processor": 'stripe' | 'paypal';
     }
@@ -3627,6 +3628,7 @@ declare namespace LocalJSX {
         "debug"?: boolean;
         "dividerText"?: string;
         "formId"?: number | string;
+        "hasPaymentOptions"?: boolean;
         "order"?: Order;
         "processor"?: 'stripe' | 'paypal';
     }

@@ -3,7 +3,15 @@ import { css, jsx } from '@emotion/core';
 const { __ } = wp.i18n;
 import { ScButton } from '@surecart/components-react';
 
-export default ({ isOpen, setIsOpen, children, buttons, type, className }) => {
+export default ({
+	isOpen,
+	setIsOpen,
+	children,
+	buttons,
+	type,
+	className,
+	collapsible = true,
+}) => {
 	return (
 		<div
 			className={className}
@@ -50,25 +58,31 @@ export default ({ isOpen, setIsOpen, children, buttons, type, className }) => {
 				>
 					{buttons}
 				</div>
-				<ScButton type="text" circle onClick={() => setIsOpen(!isOpen)}>
-					<svg
-						css={css`
-							transition: transform 250ms ease;
-							transform: rotate(${isOpen ? '180deg' : '0'});
-						`}
-						xmlns="http://www.w3.org/2000/svg"
-						width="16"
-						height="16"
-						viewBox="0 0 24 24"
-						fill="none"
-						stroke="currentColor"
-						strokeWidth="2"
-						strokeLinecap="round"
-						strokeLinejoin="round"
+				{collapsible && (
+					<ScButton
+						type="text"
+						circle
+						onClick={() => setIsOpen(!isOpen)}
 					>
-						<polyline points="6 9 12 15 18 9"></polyline>
-					</svg>
-				</ScButton>
+						<svg
+							css={css`
+								transition: transform 250ms ease;
+								transform: rotate(${isOpen ? '180deg' : '0'});
+							`}
+							xmlns="http://www.w3.org/2000/svg"
+							width="16"
+							height="16"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							strokeWidth="2"
+							strokeLinecap="round"
+							strokeLinejoin="round"
+						>
+							<polyline points="6 9 12 15 18 9"></polyline>
+						</svg>
+					</ScButton>
+				)}
 			</div>
 		</div>
 	);

@@ -7,17 +7,12 @@ import {
 	ScMenu,
 	ScMenuItem,
 } from '@surecart/components-react';
-import {
-	Icon,
-	box,
-	trash,
-	addSubmenu,
-	moreHorizontalMobile,
-} from '@wordpress/icons';
+import { Icon, box, trash, moreHorizontalMobile } from '@wordpress/icons';
+import { addQueryArgs } from '@wordpress/url';
 
 import ToggleHeader from '../../../components/ToggleHeader';
-import { translate } from '../../../util';
 import { translateInterval } from '../../../util/translations';
+import Copy from './Copy';
 
 export default ({
 	isOpen,
@@ -25,6 +20,7 @@ export default ({
 	className,
 	price,
 	onArchive,
+	collapsible,
 	onDelete,
 }) => {
 	/** Header name */
@@ -33,7 +29,7 @@ export default ({
 			<Fragment>
 				<sc-format-number
 					type="currency"
-					currency={price?.currency || ceData.currency_code}
+					currency={price?.currency || scData.currency_code}
 					value={price?.amount}
 				/>
 				{translateInterval(
@@ -49,6 +45,15 @@ export default ({
 	/** Action buttons */
 	const buttons = (
 		<div>
+			{!!scData?.checkout_page_url && (
+				<Copy
+					className={'sc-price-copy'}
+					url={addQueryArgs(scData?.checkout_page_url, {
+						line_items: [{ price_id: price?.id, quantity: 1 }],
+					})}
+				></Copy>
+			)}
+
 			{price?.archived && (
 				<ScTag type="warning">{__('Archived', 'surecart')}</ScTag>
 			)}
@@ -90,6 +95,7 @@ export default ({
 
 	return (
 		<ToggleHeader
+			collapsible={collapsible}
 			className={className}
 			isOpen={isOpen}
 			setIsOpen={setIsOpen}

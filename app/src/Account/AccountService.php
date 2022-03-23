@@ -20,7 +20,7 @@ class AccountService {
 	 * cached so it only fetches once, no matter how many calls.
 	 */
 	public function __construct() {
-		$this->account = Account::with( [ 'brand', 'portal_protocol' ] )->find();
+		$this->account = Account::with( [ 'brand', 'portal_protocol', 'tax_protocol' ] )->find();
 	}
 
 	/**

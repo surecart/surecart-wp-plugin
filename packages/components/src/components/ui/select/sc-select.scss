@@ -58,6 +58,10 @@ sc-dropdown {
     box-shadow: var(--focus-ring);
     z-index: 2;
   }
+
+  &--disabled {
+    cursor: not-allowed;
+  }
 }
 
 .select__value {

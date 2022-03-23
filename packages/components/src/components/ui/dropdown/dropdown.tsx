@@ -103,6 +103,7 @@ export class ScDropdown {
         class={{
           'dropdown': true,
           'dropdown--open': this.open,
+          'dropdown--disabled': this.disabled,
         }}
       >
         <span
