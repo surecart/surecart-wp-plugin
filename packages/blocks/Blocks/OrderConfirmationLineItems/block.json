@@ -5,6 +5,7 @@
 	"title": "Order Confirmation Line Items",
 	"description": "Display an order confirmation line items summary section.",
 	"category": "surecart",
+	"parent": ["surecart/order-confirmation"],
 	"keywords": ["thank", "thank you", "confirm"],
 	"supports": {
 		"reusable": false,

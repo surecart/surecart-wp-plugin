@@ -5,6 +5,7 @@
 	"title": "Card",
 	"description": "Display an card block.",
 	"category": "surecart",
+	"parent": ["surecart/form", "surecart/column"],
 	"keywords": ["card", "details", "confirm"],
 	"supports": {
 		"reusable": false,
