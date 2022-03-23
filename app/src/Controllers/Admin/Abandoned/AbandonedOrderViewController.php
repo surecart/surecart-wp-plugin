@@ -13,6 +13,9 @@ class AbandonedOrderViewController {
 	 * Orders index.
 	 */
 	public function index() {
+		return \SureCart::view( 'admin/coming-soon' );
+
+		// TODO: when pro launches.
 		$table = new AbandonedOrderListTable();
 		$table->prepare_items();
 		return \SureCart::view( 'admin/abandoned-orders/index' )->with(
