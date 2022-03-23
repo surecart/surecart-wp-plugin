@@ -22,7 +22,7 @@
  - [sc-checkout](../../controllers/checkout-form/checkout)
  - [sc-coupon-form](../coupon-form)
  - [sc-customer-edit](../../controllers/dashboard/customer-edit)
- - [sc-donation-choices](../../controllers/checkout-form/sc-donation-choices)
+ - [sc-donation-choices](../../controllers/checkout-form/donation-choices)
  - [sc-downloads-list](../downloads-list)
  - [sc-express-payment](../../controllers/checkout-form/express-payment)
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)

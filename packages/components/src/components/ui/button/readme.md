@@ -52,7 +52,7 @@
  - [sc-coupon-form](../coupon-form)
  - [sc-customer-details](../customer-details)
  - [sc-customer-edit](../../controllers/dashboard/customer-edit)
- - [sc-donation-choices](../../controllers/checkout-form/sc-donation-choices)
+ - [sc-donation-choices](../../controllers/checkout-form/donation-choices)
  - [sc-downloads-list](../downloads-list)
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
  - [sc-login-form](../../controllers/login)

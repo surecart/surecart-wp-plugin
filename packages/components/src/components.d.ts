@@ -432,6 +432,28 @@ export namespace Components {
          */
         "open": boolean;
     }
+    interface ScCustomOrderPriceInput {
+        /**
+          * Help text.
+         */
+        "help": string;
+        /**
+          * Label for the choice.
+         */
+        "label": string;
+        /**
+          * Is this loading
+         */
+        "loading": boolean;
+        /**
+          * Stores the price
+         */
+        "price": Price;
+        /**
+          * Id of the price.
+         */
+        "priceId": string;
+    }
     interface ScCustomerDetails {
         "customer": Customer;
         "editLink": string;
@@ -2200,6 +2222,12 @@ declare global {
         prototype: HTMLScCouponFormElement;
         new (): HTMLScCouponFormElement;
     };
+    interface HTMLScCustomOrderPriceInputElement extends Components.ScCustomOrderPriceInput, HTMLStencilElement {
+    }
+    var HTMLScCustomOrderPriceInputElement: {
+        prototype: HTMLScCustomOrderPriceInputElement;
+        new (): HTMLScCustomOrderPriceInputElement;
+    };
     interface HTMLScCustomerDetailsElement extends Components.ScCustomerDetails, HTMLStencilElement {
     }
     var HTMLScCustomerDetailsElement: {
@@ -2802,6 +2830,7 @@ declare global {
         "sc-columns": HTMLScColumnsElement;
         "sc-consumer": HTMLScConsumerElement;
         "sc-coupon-form": HTMLScCouponFormElement;
+        "sc-custom-order-price-input": HTMLScCustomOrderPriceInputElement;
         "sc-customer-details": HTMLScCustomerDetailsElement;
         "sc-customer-edit": HTMLScCustomerEditElement;
         "sc-customer-email": HTMLScCustomerEmailElement;
@@ -3338,6 +3367,28 @@ declare namespace LocalJSX {
           * Is it open
          */
         "open"?: boolean;
+    }
+    interface ScCustomOrderPriceInput {
+        /**
+          * Help text.
+         */
+        "help"?: string;
+        /**
+          * Label for the choice.
+         */
+        "label"?: string;
+        /**
+          * Is this loading
+         */
+        "loading"?: boolean;
+        /**
+          * Stores the price
+         */
+        "price"?: Price;
+        /**
+          * Id of the price.
+         */
+        "priceId"?: string;
     }
     interface ScCustomerDetails {
         "customer"?: Customer;
@@ -5186,6 +5237,7 @@ declare namespace LocalJSX {
         "sc-columns": ScColumns;
         "sc-consumer": ScConsumer;
         "sc-coupon-form": ScCouponForm;
+        "sc-custom-order-price-input": ScCustomOrderPriceInput;
         "sc-customer-details": ScCustomerDetails;
         "sc-customer-edit": ScCustomerEdit;
         "sc-customer-email": ScCustomerEmail;
@@ -5308,6 +5360,7 @@ declare module "@stencil/core" {
             "sc-columns": LocalJSX.ScColumns & JSXBase.HTMLAttributes<HTMLScColumnsElement>;
             "sc-consumer": LocalJSX.ScConsumer & JSXBase.HTMLAttributes<HTMLScConsumerElement>;
             "sc-coupon-form": LocalJSX.ScCouponForm & JSXBase.HTMLAttributes<HTMLScCouponFormElement>;
+            "sc-custom-order-price-input": LocalJSX.ScCustomOrderPriceInput & JSXBase.HTMLAttributes<HTMLScCustomOrderPriceInputElement>;
             "sc-customer-details": LocalJSX.ScCustomerDetails & JSXBase.HTMLAttributes<HTMLScCustomerDetailsElement>;
             "sc-customer-edit": LocalJSX.ScCustomerEdit & JSXBase.HTMLAttributes<HTMLScCustomerEditElement>;
             "sc-customer-email": LocalJSX.ScCustomerEmail & JSXBase.HTMLAttributes<HTMLScCustomerEmailElement>;

@@ -211,6 +211,17 @@
     "class": true,
     "slot": true
   },
+  "sc-custom-order-price-input": {
+    "help": true,
+    "label": true,
+    "loading": true,
+    "price": true,
+    "price-id": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-customer-details": {
     "customer": true,
     "edit-link": true,
@@ -356,6 +367,7 @@
     "debug": true,
     "divider-text": true,
     "form-id": true,
+    "has-payment-options": true,
     "order": true,
     "processor": true,
     "style": true,

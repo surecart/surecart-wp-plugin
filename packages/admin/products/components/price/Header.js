@@ -13,6 +13,7 @@ import { addQueryArgs } from '@wordpress/url';
 import ToggleHeader from '../../../components/ToggleHeader';
 import { translateInterval } from '../../../util/translations';
 import Copy from './Copy';
+import useCurrentPage from '../../../mixins/useCurrentPage';
 
 export default ({
 	isOpen,
@@ -23,6 +24,7 @@ export default ({
 	collapsible,
 	onDelete,
 }) => {
+	const { product } = useCurrentPage('product');
 	/** Header name */
 	const headerName = () => {
 		return (
@@ -32,12 +34,13 @@ export default ({
 					currency={price?.currency || scData.currency_code}
 					value={price?.amount}
 				/>
-				{translateInterval(
-					price?.recurring_interval_count,
-					price?.recurring_interval,
-					' /',
-					''
-				)}
+				{!!product?.recurring &&
+					translateInterval(
+						price?.recurring_interval_count,
+						price?.recurring_interval,
+						' /',
+						''
+					)}
 			</Fragment>
 		);
 	};
@@ -45,7 +48,7 @@ export default ({
 	/** Action buttons */
 	const buttons = (
 		<div>
-			{!!scData?.checkout_page_url && (
+			{!!scData?.checkout_page_url && !!price?.id && (
 				<Copy
 					className={'sc-price-copy'}
 					url={addQueryArgs(scData?.checkout_page_url, {

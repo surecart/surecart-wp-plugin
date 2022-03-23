@@ -1,3 +1,7 @@
+sc-form {
+  display: block;
+}
+
 sc-form form > *:not(:last-child) {
   margin-bottom: var(--sc-form-row-spacing, 0.75em);
 

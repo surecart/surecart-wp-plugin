@@ -35,8 +35,9 @@
 
  - [sc-charges-list](../../controllers/dashboard/charges-list)
  - [sc-coupon-form](../coupon-form)
+ - [sc-custom-order-price-input](../../controllers/checkout-form/custom-order-price-input)
  - [sc-customer-details](../customer-details)
- - [sc-donation-choices](../../controllers/checkout-form/sc-donation-choices)
+ - [sc-donation-choices](../../controllers/checkout-form/donation-choices)
  - [sc-downloads-list](../downloads-list)
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
  - [sc-line-item-total](../../controllers/checkout-form/line-item-total)
@@ -62,6 +63,7 @@
 graph TD;
   sc-charges-list --> sc-skeleton
   sc-coupon-form --> sc-skeleton
+  sc-custom-order-price-input --> sc-skeleton
   sc-customer-details --> sc-skeleton
   sc-donation-choices --> sc-skeleton
   sc-downloads-list --> sc-skeleton

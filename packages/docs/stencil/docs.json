@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-03-23T14:56:15",
+  "timestamp": "2022-03-23T19:14:16",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.14.2",
@@ -3123,6 +3123,122 @@
       }
     },
     {
+      "filePath": "./src/components/controllers/checkout-form/custom-order-price-input/sc-custom-order-price-input.tsx",
+      "encapsulation": "none",
+      "tag": "sc-custom-order-price-input",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "help",
+          "type": "string",
+          "mutable": false,
+          "attr": "help",
+          "reflectToAttr": false,
+          "docs": "Help text.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "label",
+          "type": "string",
+          "mutable": false,
+          "attr": "label",
+          "reflectToAttr": false,
+          "docs": "Label for the choice.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "loading",
+          "type": "boolean",
+          "mutable": true,
+          "attr": "loading",
+          "reflectToAttr": false,
+          "docs": "Is this loading",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "price",
+          "type": "Price",
+          "mutable": true,
+          "reflectToAttr": false,
+          "docs": "Stores the price",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Price"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "priceId",
+          "type": "string",
+          "mutable": false,
+          "attr": "price-id",
+          "reflectToAttr": true,
+          "docs": "Id of the price.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "sc-skeleton",
+        "sc-price-input"
+      ],
+      "dependencyGraph": {
+        "sc-custom-order-price-input": [
+          "sc-skeleton",
+          "sc-price-input"
+        ],
+        "sc-price-input": [
+          "sc-input"
+        ],
+        "sc-input": [
+          "sc-form-control"
+        ],
+        "sc-form-control": [
+          "sc-tooltip"
+        ]
+      }
+    },
+    {
       "filePath": "./src/components/ui/customer-details/sc-customer-details.tsx",
       "encapsulation": "shadow",
       "tag": "sc-customer-details",
@@ -4533,7 +4649,7 @@
       }
     },
     {
-      "filePath": "./src/components/controllers/checkout-form/sc-donation-choices/sc-donation-choices.tsx",
+      "filePath": "./src/components/controllers/checkout-form/donation-choices/sc-donation-choices.tsx",
       "encapsulation": "shadow",
       "tag": "sc-donation-choices",
       "readme": "# ce-donation-choices\n\n\n",
@@ -5221,6 +5337,22 @@
             },
             {
               "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "hasPaymentOptions",
+          "type": "boolean",
+          "mutable": true,
+          "attr": "has-payment-options",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
             }
           ],
           "optional": false,
@@ -11983,6 +12115,7 @@
         }
       ],
       "dependents": [
+        "sc-custom-order-price-input",
         "sc-donation-choices",
         "sc-price-choice"
       ],
@@ -11998,6 +12131,9 @@
         ],
         "sc-form-control": [
           "sc-tooltip"
+        ],
+        "sc-custom-order-price-input": [
+          "sc-price-input"
         ],
         "sc-donation-choices": [
           "sc-price-input"
@@ -13533,6 +13669,7 @@
       "dependents": [
         "sc-charges-list",
         "sc-coupon-form",
+        "sc-custom-order-price-input",
         "sc-customer-details",
         "sc-donation-choices",
         "sc-downloads-list",
@@ -13561,6 +13698,9 @@
           "sc-skeleton"
         ],
         "sc-coupon-form": [
+          "sc-skeleton"
+        ],
+        "sc-custom-order-price-input": [
           "sc-skeleton"
         ],
         "sc-customer-details": [

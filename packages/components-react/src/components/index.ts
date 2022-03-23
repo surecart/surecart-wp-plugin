@@ -26,6 +26,7 @@ export const ScColumn = /*@__PURE__*/createReactComponent<JSX.ScColumn, HTMLScCo
 export const ScColumns = /*@__PURE__*/createReactComponent<JSX.ScColumns, HTMLScColumnsElement>('sc-columns');
 export const ScConsumer = /*@__PURE__*/createReactComponent<JSX.ScConsumer, HTMLScConsumerElement>('sc-consumer');
 export const ScCouponForm = /*@__PURE__*/createReactComponent<JSX.ScCouponForm, HTMLScCouponFormElement>('sc-coupon-form');
+export const ScCustomOrderPriceInput = /*@__PURE__*/createReactComponent<JSX.ScCustomOrderPriceInput, HTMLScCustomOrderPriceInputElement>('sc-custom-order-price-input');
 export const ScCustomerDetails = /*@__PURE__*/createReactComponent<JSX.ScCustomerDetails, HTMLScCustomerDetailsElement>('sc-customer-details');
 export const ScCustomerEdit = /*@__PURE__*/createReactComponent<JSX.ScCustomerEdit, HTMLScCustomerEditElement>('sc-customer-edit');
 export const ScCustomerEmail = /*@__PURE__*/createReactComponent<JSX.ScCustomerEmail, HTMLScCustomerEmailElement>('sc-customer-email');

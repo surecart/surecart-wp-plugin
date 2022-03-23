@@ -1,7 +1,7 @@
 import { LineItem, Price } from '../../../../types';
 
 export default {
-  title: 'Components/Donation Choices',
+  title: 'Components/Checkout/Donation Choices',
 };
 
 const Template = ({ loading, priceId, amount, ad_hoc_max_amount, ad_hoc_min_amount }) => {

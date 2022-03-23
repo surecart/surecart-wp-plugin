@@ -1,0 +1,31 @@
+{
+	"name": "surecart/name-your-price",
+	"title": "Name Your Own Price",
+	"description": "Display a name your own price field.",
+	"category": "surecart",
+	"keywords": ["name", "customer"],
+	"parent": ["surecart/form", "surecart/column"],
+	"supports": {
+		"reusable": false,
+		"html": false
+	},
+	"attributes": {
+		"price_id": {
+			"type": "string"
+		},
+		"required": {
+			"typoe": "boolean"
+		},
+		"label": {
+			"type": "string",
+			"default": "Name"
+		},
+		"help": {
+			"type": "string",
+			"default": ""
+		},
+		"placeholder": {
+			"type": "string"
+		}
+	}
+}

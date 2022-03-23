@@ -1,5 +1,5 @@
 import { Order } from '../../../../types';
-import { Component, Host, h, Listen, Prop, State } from '@stencil/core';
+import { Component, Host, h, Listen, Prop } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
 
 @Component({

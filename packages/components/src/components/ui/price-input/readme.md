@@ -97,7 +97,8 @@ Type: `Promise<void>`
 
 ### Used by
 
- - [sc-donation-choices](../../controllers/checkout-form/sc-donation-choices)
+ - [sc-custom-order-price-input](../../controllers/checkout-form/custom-order-price-input)
+ - [sc-donation-choices](../../controllers/checkout-form/donation-choices)
  - [sc-price-choice](../../controllers/checkout-form/price-choice)
 
 ### Depends on
@@ -110,6 +111,7 @@ graph TD;
   sc-price-input --> sc-input
   sc-input --> sc-form-control
   sc-form-control --> sc-tooltip
+  sc-custom-order-price-input --> sc-price-input
   sc-donation-choices --> sc-price-input
   sc-price-choice --> sc-price-input
   style sc-price-input fill:#f9f,stroke:#333,stroke-width:4px

@@ -32,7 +32,7 @@
 
 ### Used by
 
- - [sc-donation-choices](../../controllers/checkout-form/sc-donation-choices)
+ - [sc-donation-choices](../../controllers/checkout-form/donation-choices)
  - [sc-price-choices](../../controllers/checkout-form/price-choices)
  - [sc-subscription-payment](../../controllers/dashboard/subscription-payment)
  - [sc-subscription-switch](../../controllers/dashboard/subscription-switch)
