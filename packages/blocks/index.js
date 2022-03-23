@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies
  */
-import { registerBlockCollection, registerBlockType } from '@wordpress/blocks';
+import { registerBlockType } from '@wordpress/blocks';
 import { __ } from '@wordpress/i18n';
 
 // import './hooks/controls';
@@ -61,11 +61,6 @@ import * as subtotal from '@blocks/subtotal';
 import * as switchBlock from '@blocks/switch';
 import * as total from '@blocks/total';
 import * as totals from '@blocks/totals';
-
-// Register block collection
-registerBlockCollection('surecart', {
-	title: __('SureCart', 'surecart'),
-});
 
 const dashboardComponents = [
 	customerDashboard,
