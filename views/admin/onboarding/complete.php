@@ -43,7 +43,7 @@
 	<div class="sc-container">
 
 		<?php if ( ! empty( $status ) && 'missing' === $status ) : ?>
-			<div class="notice notisc-error is-dismissible">
+			<div class="notice notice-error is-dismissible">
 				<p><?php esc_html_e( 'Please enter an API key.', 'surecart' ); ?></p>
 			</div>
 		<?php endif; ?>

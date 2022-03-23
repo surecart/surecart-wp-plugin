@@ -50,13 +50,13 @@
 	<div class="sc-container">
 
 		<?php if ( 'saved' === $status ) : ?>
-			<div class="notice notisc-success is-dismissible">
+			<div class="notice notice-success is-dismissible">
 				<p><?php _e( 'Saved.', 'surecart' ); ?></p>
 			</div>
 		<?php endif; ?>
 
 		<?php if ( 'missing' === $status ) : ?>
-			<div class="notice notisc-error is-dismissible">
+			<div class="notice notice-error is-dismissible">
 				<p><?php _e( 'Please enter an API key.', 'surecart' ); ?></p>
 			</div>
 		<?php endif; ?>

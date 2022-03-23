@@ -120,7 +120,7 @@ export default ({
 						.components-snackbar.is-snackbar-error {
 							background: #cc1818;
 						}
-						.components-snackbar-list__notisc-container {
+						.components-snackbar-list__notice-container {
 							float: right;
 						}
 

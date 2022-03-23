@@ -1,13 +1,13 @@
 :host {
   display: block;
-  --sc-secure-notisc-icon-color: var(--sc-color-gray-300);
-  --sc-secure-notisc-font-size: var(--sc-font-size-small);
-  --sc-secure-notisc-color: var(--sc-color-gray-500);
+  --sc-secure-notice-icon-color: var(--sc-color-gray-300);
+  --sc-secure-notice-font-size: var(--sc-font-size-small);
+  --sc-secure-notice-color: var(--sc-color-gray-500);
 }
 
 .notice {
-  color: var(--sc-secure-notisc-color);
-  font-size: var(--sc-secure-notisc-font-size);
+  color: var(--sc-secure-notice-color);
+  font-size: var(--sc-secure-notice-font-size);
   display: flex;
   align-items: center;
 
@@ -21,6 +21,6 @@
 }
 
 .notice__icon {
-  color: var(--sc-secure-notisc-icon-color);
+  color: var(--sc-secure-notice-icon-color);
   margin-right: 5px;
 }
