@@ -81,15 +81,15 @@ class BlockServiceProvider implements ServiceProviderInterface {
 	 * @return array
 	 */
 	public function registerBlockCategories( $categories ) {
-		return array_merge(
-			$categories,
-			[
+		return [
+			...[
 				[
 					'slug'  => 'surecart',
-					'title' => '<span>' . esc_html__( 'SureCart', 'surecart' ) . '</span>',
+					'title' => esc_html__( 'SureCart', 'surecart' ),
 				],
-			]
-		);
+			],
+			...$categories,
+		];
 	}
 
 	/**
