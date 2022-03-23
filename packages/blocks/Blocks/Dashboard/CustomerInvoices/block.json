@@ -3,7 +3,7 @@
 	"name": "surecart/customer-invoices",
 	"title": "Customer Invoices",
 	"description": "Displays the customers invoices.",
-	"category": "layout",
+	"category": "surecart",
 	"keywords": ["name", "customer", "dashboard"],
 	"parent": ["surecart/dashboard-page"],
 	"supports": {

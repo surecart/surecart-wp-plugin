@@ -2,7 +2,7 @@
 	"name": "surecart/form",
 	"title": "Form",
 	"description": "Displays a form.",
-	"category": "layout",
+	"category": "surecart",
 	"parent": ["surecart/checkout-form"],
 	"keywords": ["email", "mail"],
 	"supports": {

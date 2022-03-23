@@ -3,7 +3,7 @@
 	"name": "surecart/customer-payment-methods",
 	"title": "Customer Payment Methods",
 	"description": "Lets the customer update payment methods.",
-	"category": "layout",
+	"category": "surecart",
 	"keywords": ["name", "customer", "dashboard"],
 	"parent": ["surecart/dashboard-page"],
 	"supports": {

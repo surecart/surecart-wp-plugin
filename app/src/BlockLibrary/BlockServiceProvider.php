@@ -70,6 +70,26 @@ class BlockServiceProvider implements ServiceProviderInterface {
 		add_filter( 'wp_kses_allowed_html', [ $this, 'ksesComponents' ] );
 		// register our blocks.
 		add_action( 'init', [ $this, 'registerBlocks' ] );
+		// register our category.
+		add_action( 'block_categories_all', [ $this, 'registerBlockCategories' ] );
+	}
+
+	/**
+	 * Register our custom block category.
+	 *
+	 * @param array $categories Array of categories.
+	 * @return array
+	 */
+	public function registerBlockCategories( $categories ) {
+		return array_merge(
+			$categories,
+			[
+				[
+					'slug'  => 'surecart',
+					'title' => '<span>' . esc_html__( 'SureCart', 'surecart' ) . '</span>',
+				],
+			]
+		);
 	}
 
 	/**

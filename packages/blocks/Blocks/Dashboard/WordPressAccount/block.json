@@ -3,7 +3,7 @@
 	"name": "surecart/wordpress-account",
 	"title": "WordPress User Account",
 	"description": "WordPress User Account Information",
-	"category": "layout",
+	"category": "surecart",
 	"keywords": ["account", "user", "dashboard"],
 	"parent": ["surecart/dashboard-page"],
 	"supports": {

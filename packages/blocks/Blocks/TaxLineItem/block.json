@@ -2,7 +2,7 @@
 	"name": "surecart/tax-line-item",
 	"title": "Tax Line Item",
 	"description": "Displays the order tax. (if there is tax)",
-	"category": "layout",
+	"category": "surecart",
 	"parent": ["surecart/totals"],
 	"keywords": ["tax", "checkout", "total", "subtotal"],
 	"supports": {

@@ -3,7 +3,7 @@
 	"name": "surecart/divider",
 	"title": "Divider",
 	"description": "Displays a divider.",
-	"category": "layout",
+	"category": "surecart",
 	"keywords": ["divider", "hr"],
 	"supports": {
 		"reusable": false,

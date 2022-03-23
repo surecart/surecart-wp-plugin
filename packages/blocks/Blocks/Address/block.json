@@ -3,7 +3,7 @@
 	"name": "surecart/address",
 	"title": "Address",
 	"description": "Display an address form.",
-	"category": "layout",
+	"category": "surecart",
 	"keywords": ["button", "submit", "checkout", "engine"],
 	"parent": ["surecart/form", "surecart/column"],
 	"supports": {

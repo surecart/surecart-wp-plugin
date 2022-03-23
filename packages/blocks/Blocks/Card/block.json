@@ -4,7 +4,7 @@
 	"name": "surecart/card",
 	"title": "Card",
 	"description": "Display an card block.",
-	"category": "layout",
+	"category": "surecart",
 	"keywords": ["card", "details", "confirm"],
 	"supports": {
 		"reusable": false,

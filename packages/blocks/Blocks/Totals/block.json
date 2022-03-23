@@ -2,7 +2,7 @@
 	"name": "surecart/totals",
 	"title": "Totals",
 	"description": "Display the session totals.",
-	"category": "layout",
+	"category": "surecart",
 	"keywords": ["totals", "summary"],
 	"parent": ["surecart/form", "surecart/column"],
 	"supports": {

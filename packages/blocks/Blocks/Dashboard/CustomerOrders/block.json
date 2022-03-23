@@ -3,7 +3,7 @@
 	"name": "surecart/customer-orders",
 	"title": "Customer Orders",
 	"description": "Displays the customers orders.",
-	"category": "layout",
+	"category": "surecart",
 	"keywords": ["name", "customer", "dashboard"],
 	"parent": ["surecart/dashboard-page"],
 	"supports": {

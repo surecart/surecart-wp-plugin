@@ -3,7 +3,7 @@
 	"name": "surecart/heading",
 	"title": "Title/Heading Section",
 	"description": "Displays a title/heading section",
-	"category": "layout",
+	"category": "surecart",
 	"keywords": ["heading", "title"],
 	"parent": ["surecart/form", "surecart/column", "surecart/dashboard-page"],
 	"supports": {

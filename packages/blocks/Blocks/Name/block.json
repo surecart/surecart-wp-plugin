@@ -2,7 +2,7 @@
 	"name": "surecart/name",
 	"title": "Name",
 	"description": "Display a name collection field.",
-	"category": "layout",
+	"category": "surecart",
 	"keywords": ["name", "customer"],
 	"parent": ["surecart/form", "surecart/column"],
 	"supports": {

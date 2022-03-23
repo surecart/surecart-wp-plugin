@@ -2,7 +2,7 @@
 	"name": "surecart/customer-charges",
 	"title": "Customer Charges",
 	"description": "Displays the customers charges.",
-	"category": "layout",
+	"category": "surecart",
 	"keywords": ["name", "customer", "dashboard"],
 	"parent": ["surecart/dashboard-page"],
 	"supports": {

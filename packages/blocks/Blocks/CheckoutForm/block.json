@@ -4,7 +4,7 @@
 	"name": "surecart/checkout-form",
 	"title": "Checkout Form",
 	"description": "Display a checkout form",
-	"category": "layout",
+	"category": "surecart",
 	"keywords": ["form", "checkout", "form"],
 	"supports": {
 		"reusable": false,

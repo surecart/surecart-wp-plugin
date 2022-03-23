@@ -2,7 +2,7 @@
 	"name": "surecart/customer-downloads",
 	"title": "Customer Downloads",
 	"description": "Displays the customer's downloads.",
-	"category": "layout",
+	"category": "surecart",
 	"keywords": ["download", "customer", "dashboard"],
 	"parent": ["surecart/dashboard-page"],
 	"supports": {

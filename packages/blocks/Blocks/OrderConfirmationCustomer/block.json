@@ -4,7 +4,7 @@
 	"name": "surecart/order-confirmation-customer",
 	"title": "Order Confirmation Customer Details",
 	"description": "Display an order confirmation customer section.",
-	"category": "layout",
+	"category": "surecart",
 	"keywords": ["customer", "thank you", "confirm"],
 	"supports": {
 		"reusable": false,

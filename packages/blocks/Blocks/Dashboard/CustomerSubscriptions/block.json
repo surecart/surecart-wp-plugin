@@ -3,7 +3,7 @@
 	"name": "surecart/customer-subscriptions",
 	"title": "Customer Subscriptions",
 	"description": "Displays a customer's subscriptions.",
-	"category": "layout",
+	"category": "surecart",
 	"keywords": ["name", "customer", "dashboard"],
 	"parent": ["surecart/dashboard-page"],
 	"supports": {

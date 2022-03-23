@@ -3,7 +3,7 @@
 	"apiVersion": 2,
 	"title": "Logout Button",
 	"description": "Display a logout button.",
-	"category": "layout",
+	"category": "surecart",
 	"keywords": ["name", "customer", "dashboard"],
 	"parent": null,
 	"textdomain": "surecart",

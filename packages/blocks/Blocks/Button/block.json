@@ -3,7 +3,7 @@
 	"name": "surecart/button",
 	"title": "Button",
 	"description": "Display a checkout form button.",
-	"category": "layout",
+	"category": "surecart",
 	"keywords": ["button", "submit", "checkout", "engine"],
 	"parent": ["surecart/form", "surecart/column"],
 	"supports": {

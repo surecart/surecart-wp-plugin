@@ -2,7 +2,7 @@
 	"name": "surecart/submit",
 	"title": "Submit Button",
 	"description": "Display a submit button.",
-	"category": "layout",
+	"category": "surecart",
 	"keywords": ["submit", "button"],
 	"parent": ["surecart/form", "surecart/column"],
 	"supports": {

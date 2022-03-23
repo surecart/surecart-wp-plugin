@@ -2,7 +2,7 @@
 	"name": "surecart/switch",
 	"title": "Switch",
 	"description": "Display a toggle switch.",
-	"category": "layout",
+	"category": "surecart",
 	"keywords": ["submit", "button"],
 	"parent": ["surecart/form", "surecart/column"],
 	"supports": {

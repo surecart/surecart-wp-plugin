@@ -2,7 +2,7 @@
 	"name": "surecart/payment",
 	"title": "Payment",
 	"description": "Display payment options",
-	"category": "layout",
+	"category": "surecart",
 	"keywords": ["credit", "card", "paypal", "stripe"],
 	"parent": ["surecart/form", "surecart/column"],
 	"supports": {

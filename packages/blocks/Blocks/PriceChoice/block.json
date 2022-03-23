@@ -3,7 +3,7 @@
 	"name": "surecart/price-choice",
 	"title": "Price Choice",
 	"description": "Displays a price choice for a product",
-	"category": "layout",
+	"category": "surecart",
 	"parent": ["surecart/price-selector"],
 	"keywords": ["price", "product", "choice", "checkout"],
 	"supports": {

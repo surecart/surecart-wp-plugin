@@ -2,7 +2,7 @@
 	"name": "surecart/session-detail",
 	"title": "Session Info",
 	"description": "Display infor for a specific session.",
-	"category": "layout",
+	"category": "surecart",
 	"keywords": ["meta", "customer"],
 	"supports": {
 		"reusable": false,

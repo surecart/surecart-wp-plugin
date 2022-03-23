@@ -2,7 +2,7 @@
 	"name": "surecart/line-items",
 	"title": "Line Items",
 	"description": "Displays checkout line items.",
-	"category": "layout",
+	"category": "surecart",
 	"keywords": ["total", "line-items"],
 	"parent": ["surecart/totals"],
 	"supports": {

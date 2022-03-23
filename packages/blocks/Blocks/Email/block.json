@@ -2,7 +2,7 @@
 	"name": "surecart/email",
 	"title": "Email",
 	"description": "Displays an email form field.",
-	"category": "layout",
+	"category": "surecart",
 	"keywords": ["email", "mail"],
 	"parent": ["surecart/form", "surecart/column"],
 	"supports": {

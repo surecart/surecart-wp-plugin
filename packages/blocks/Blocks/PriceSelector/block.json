@@ -3,7 +3,7 @@
 	"name": "surecart/price-selector",
 	"title": "Price Selector",
 	"description": "Displays a selector for product prices.",
-	"category": "layout",
+	"category": "surecart",
 	"keywords": ["price", "product", "choice", "checkout"],
 	"parent": ["surecart/form", "surecart/column"],
 	"supports": {

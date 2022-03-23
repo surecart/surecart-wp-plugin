@@ -2,7 +2,7 @@
 	"name": "surecart/password",
 	"title": "Password",
 	"description": "Displays a password field.",
-	"category": "layout",
+	"category": "surecart",
 	"keywords": ["password", "input"],
 	"parent": ["surecart/form", "surecart/column"],
 	"supports": {

@@ -3,7 +3,7 @@
 	"name": "surecart/customer-billing-details",
 	"title": "Customer Billing Details",
 	"description": "Displays the customers billing details.",
-	"category": "layout",
+	"category": "surecart",
 	"keywords": ["name", "customer", "dashboard"],
 	"parent": ["surecart/dashboard-page"],
 	"supports": {

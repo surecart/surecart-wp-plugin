@@ -2,7 +2,7 @@
 	"name": "surecart/customer-dashboard-button",
 	"title": "Customer Dashboard Button",
 	"description": "Display a button to link the user to their customer dashboard.",
-	"category": "layout",
+	"category": "surecart",
 	"keywords": ["name", "customer", "dashboard"],
 	"parent": null,
 	"supports": {

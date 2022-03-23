@@ -3,7 +3,7 @@
 	"name": "surecart/dashboard-page",
 	"title": "Customer Dashboard Page",
 	"description": "Displays the users customer dashboard tab.",
-	"category": "layout",
+	"category": "surecart",
 	"keywords": ["name", "customer", "dashboard"],
 	"parent": null,
 	"supports": {

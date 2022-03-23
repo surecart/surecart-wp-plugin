@@ -3,7 +3,7 @@
 	"name": "surecart/coupon",
 	"title": "Coupon",
 	"description": "Display a coupon form.",
-	"category": "layout",
+	"category": "surecart",
 	"keywords": ["coupon", "promo"],
 	"parent": ["surecart/form", "surecart/column", "surecart/totals"],
 	"supports": {
