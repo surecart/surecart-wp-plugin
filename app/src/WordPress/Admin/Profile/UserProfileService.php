@@ -44,7 +44,7 @@ class UserProfileService {
 	 *
 	 * @param  string|string[]      $views A view or array of views.
 	 * @param  array<string, mixed> $context Context to send.
-	 * @return void
+	 * @return string
 	 */
 	public function render( $views, $context = [] ) {
 		echo wp_kses_post( \SureCart::views()->make( $views )->with( $context )->toString() );
