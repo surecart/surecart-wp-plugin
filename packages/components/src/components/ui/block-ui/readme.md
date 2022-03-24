@@ -21,6 +21,7 @@
  - [sc-charges-list](../../controllers/dashboard/charges-list)
  - [sc-checkout](../../controllers/checkout-form/checkout)
  - [sc-coupon-form](../coupon-form)
+ - [sc-custom-order-price-input](../../controllers/checkout-form/custom-order-price-input)
  - [sc-customer-edit](../../controllers/dashboard/customer-edit)
  - [sc-donation-choices](../../controllers/checkout-form/donation-choices)
  - [sc-downloads-list](../downloads-list)
@@ -28,6 +29,7 @@
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
  - [sc-login-form](../../controllers/login)
  - [sc-orders-list](../../controllers/dashboard/orders-list)
+ - [sc-payment](../../controllers/checkout-form/payment)
  - [sc-payment-method-create](../../controllers/dashboard/payment-method-create)
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
  - [sc-subscription](../../controllers/dashboard/subscription)
@@ -51,6 +53,7 @@ graph TD;
   sc-charges-list --> sc-block-ui
   sc-checkout --> sc-block-ui
   sc-coupon-form --> sc-block-ui
+  sc-custom-order-price-input --> sc-block-ui
   sc-customer-edit --> sc-block-ui
   sc-donation-choices --> sc-block-ui
   sc-downloads-list --> sc-block-ui
@@ -58,6 +61,7 @@ graph TD;
   sc-invoices-list --> sc-block-ui
   sc-login-form --> sc-block-ui
   sc-orders-list --> sc-block-ui
+  sc-payment --> sc-block-ui
   sc-payment-method-create --> sc-block-ui
   sc-payment-methods-list --> sc-block-ui
   sc-subscription --> sc-block-ui

@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-03-24T12:56:50+00:00\n"
+"POT-Creation-Date: 2022-03-24T17:58:52+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 
@@ -1142,6 +1142,10 @@ msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:22
 msgid "The prices in this checkout session have changed. Please recheck it before submitting again."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:23
+msgid "This coupon code is invalid."
 msgstr ""
 
 #. translators: attribute.
@@ -3181,6 +3185,25 @@ msgstr ""
 
 #: blocks/library.js:1
 #: blocks/library.js:3
+msgid "Required"
+msgstr ""
+
+#: blocks/library.js:1
+#: blocks/library.js:3
+msgid "Placeholder"
+msgstr ""
+
+#: blocks/library.js:1
+#: blocks/library.js:3
+msgid "Help"
+msgstr ""
+
+#: blocks/library.js:1
+msgid "Show Currency Code"
+msgstr ""
+
+#: blocks/library.js:1
+#: blocks/library.js:3
 msgid "Title"
 msgstr ""
 
@@ -3276,10 +3299,6 @@ msgstr ""
 
 #: blocks/library.js:3
 msgid "Top Offset"
-msgstr ""
-
-#: blocks/library.js:3
-msgid "Required"
 msgstr ""
 
 #: blocks/library.js:3
@@ -3604,14 +3623,6 @@ msgstr ""
 
 #: blocks/library.js:3
 msgid "Add a tab name"
-msgstr ""
-
-#: blocks/library.js:3
-msgid "Placeholder"
-msgstr ""
-
-#: blocks/library.js:3
-msgid "Help"
 msgstr ""
 
 #: blocks/library.js:3

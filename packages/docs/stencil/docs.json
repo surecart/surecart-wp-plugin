@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-03-24T12:56:44",
+  "timestamp": "2022-03-24T17:58:46",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.14.2",
@@ -548,6 +548,7 @@
         "sc-charges-list",
         "sc-checkout",
         "sc-coupon-form",
+        "sc-custom-order-price-input",
         "sc-customer-edit",
         "sc-donation-choices",
         "sc-downloads-list",
@@ -555,6 +556,7 @@
         "sc-invoices-list",
         "sc-login-form",
         "sc-orders-list",
+        "sc-payment",
         "sc-payment-method-create",
         "sc-payment-methods-list",
         "sc-subscription",
@@ -583,6 +585,9 @@
         "sc-coupon-form": [
           "sc-block-ui"
         ],
+        "sc-custom-order-price-input": [
+          "sc-block-ui"
+        ],
         "sc-customer-edit": [
           "sc-block-ui"
         ],
@@ -602,6 +607,9 @@
           "sc-block-ui"
         ],
         "sc-orders-list": [
+          "sc-block-ui"
+        ],
+        "sc-payment": [
           "sc-block-ui"
         ],
         "sc-payment-method-create": [
@@ -3132,6 +3140,23 @@
       "usage": {},
       "props": [
         {
+          "name": "busy",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "busy",
+          "reflectToAttr": false,
+          "docs": "Is this busy",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "help",
           "type": "string",
           "mutable": false,
@@ -3153,7 +3178,7 @@
           "mutable": false,
           "attr": "label",
           "reflectToAttr": false,
-          "docs": "Label for the choice.",
+          "docs": "Label for the field.",
           "docsTags": [],
           "values": [
             {
@@ -3164,9 +3189,25 @@
           "required": false
         },
         {
+          "name": "lineItems",
+          "type": "LineItem[]",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "Label for the choice.",
+          "docsTags": [],
+          "default": "[]",
+          "values": [
+            {
+              "type": "LineItem[]"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "loading",
           "type": "boolean",
-          "mutable": true,
+          "mutable": false,
           "attr": "loading",
           "reflectToAttr": false,
           "docs": "Is this loading",
@@ -3175,6 +3216,22 @@
           "values": [
             {
               "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "placeholder",
+          "type": "string",
+          "mutable": false,
+          "attr": "placeholder",
+          "reflectToAttr": false,
+          "docs": "Input placeholder.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
             }
           ],
           "optional": false,
@@ -3210,23 +3267,73 @@
           ],
           "optional": false,
           "required": false
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "required",
+          "reflectToAttr": false,
+          "docs": "Is this required?",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "showCode",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "show-code",
+          "reflectToAttr": true,
+          "docs": "Show the currency code?",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
         }
       ],
       "methods": [],
-      "events": [],
-      "listeners": [],
+      "events": [
+        {
+          "event": "scUpdateLineItem",
+          "detail": "LineItemData",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Toggle line item event",
+          "docsTags": []
+        }
+      ],
+      "listeners": [
+        {
+          "event": "scBlur",
+          "capture": false,
+          "passive": false
+        }
+      ],
       "styles": [],
       "slots": [],
       "parts": [],
       "dependents": [],
       "dependencies": [
         "sc-skeleton",
-        "sc-price-input"
+        "sc-price-input",
+        "sc-block-ui"
       ],
       "dependencyGraph": {
         "sc-custom-order-price-input": [
           "sc-skeleton",
-          "sc-price-input"
+          "sc-price-input",
+          "sc-block-ui"
         ],
         "sc-price-input": [
           "sc-input"
@@ -3236,6 +3343,9 @@
         ],
         "sc-form-control": [
           "sc-tooltip"
+        ],
+        "sc-block-ui": [
+          "sc-spinner"
         ]
       }
     },
@@ -10848,6 +10958,22 @@
       "usage": {},
       "props": [
         {
+          "name": "busy",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "busy",
+          "reflectToAttr": false,
+          "docs": "Is this busy.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "label",
           "type": "string",
           "mutable": false,
@@ -10979,7 +11105,8 @@
         "sc-stripe-element",
         "sc-secure-notice",
         "sc-tooltip",
-        "sc-tag"
+        "sc-tag",
+        "sc-block-ui"
       ],
       "dependencyGraph": {
         "sc-payment": [
@@ -10987,7 +11114,8 @@
           "sc-stripe-element",
           "sc-secure-notice",
           "sc-tooltip",
-          "sc-tag"
+          "sc-tag",
+          "sc-block-ui"
         ],
         "sc-stripe-element": [
           "sc-input",
@@ -10998,6 +11126,9 @@
         ],
         "sc-form-control": [
           "sc-tooltip"
+        ],
+        "sc-block-ui": [
+          "sc-spinner"
         ]
       }
     },
