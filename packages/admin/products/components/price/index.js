@@ -272,13 +272,16 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 				isOpen={isOpen}
 				setIsOpen={setIsOpen}
 				price={price}
-				onArchive={() =>
-					updatePrice({
-						archived: !price.archived,
-					})
+				onArchive={
+					product?.recurring
+						? () =>
+								updatePrice({
+									archived: !price.archived,
+								})
+						: null
 				}
 				collapsible={collapsible}
-				onDelete={() => deletePrice()}
+				onDelete={product?.recurring ? () => deletePrice() : null}
 				css={css`
 					.sc-price-copy {
 						visibility: hidden;

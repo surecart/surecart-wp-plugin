@@ -45,27 +45,18 @@ export default ({
 		);
 	};
 
-	/** Action buttons */
-	const buttons = (
-		<div>
-			{!!scData?.checkout_page_url && !!price?.id && (
-				<Copy
-					className={'sc-price-copy'}
-					url={addQueryArgs(scData?.checkout_page_url, {
-						line_items: [{ price_id: price?.id, quantity: 1 }],
-					})}
-				></Copy>
-			)}
+	const renderDropdown = () => {
+		if (!onArchive && !onDelete) {
+			return null;
+		}
 
-			{price?.archived && (
-				<ScTag type="warning">{__('Archived', 'surecart')}</ScTag>
-			)}
+		return (
 			<ScDropdown slot="suffix" position="bottom-right">
 				<ScButton type="text" slot="trigger" circle>
 					<Icon icon={moreHorizontalMobile} />
 				</ScButton>
 				<ScMenu>
-					{price?.id && (
+					{price?.id && !!onArchive && (
 						<ScMenuItem onClick={onArchive}>
 							<Icon
 								slot="prefix"
@@ -80,19 +71,40 @@ export default ({
 								: __('Archive', 'surecart')}
 						</ScMenuItem>
 					)}
-					<ScMenuItem onClick={onDelete}>
-						<Icon
-							slot="prefix"
-							style={{
-								opacity: 0.5,
-							}}
-							icon={trash}
-							size={20}
-						/>
-						{__('Delete', 'surecart')}
-					</ScMenuItem>
+					{!!onDelete && (
+						<ScMenuItem onClick={onDelete}>
+							<Icon
+								slot="prefix"
+								style={{
+									opacity: 0.5,
+								}}
+								icon={trash}
+								size={20}
+							/>
+							{__('Delete', 'surecart')}
+						</ScMenuItem>
+					)}
 				</ScMenu>
 			</ScDropdown>
+		);
+	};
+
+	/** Action buttons */
+	const buttons = (
+		<div>
+			{!!scData?.checkout_page_url && !!price?.id && !price?.ad_hoc && (
+				<Copy
+					className={'sc-price-copy'}
+					url={addQueryArgs(scData?.checkout_page_url, {
+						line_items: [{ price_id: price?.id, quantity: 1 }],
+					})}
+				></Copy>
+			)}
+
+			{price?.archived && (
+				<ScTag type="warning">{__('Archived', 'surecart')}</ScTag>
+			)}
+			{renderDropdown()}
 		</div>
 	);
 
