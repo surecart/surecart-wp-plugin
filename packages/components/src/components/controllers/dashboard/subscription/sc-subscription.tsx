@@ -14,6 +14,7 @@ export class ScSubscription {
   @Element() el: HTMLScSubscriptionsListElement;
   /** Customer id to fetch subscriptions */
   @Prop() subscriptionId: string;
+  @Prop() showCancel: boolean;
   @Prop() heading: string;
   @Prop() query: object;
 
@@ -173,7 +174,8 @@ export class ScSubscription {
               </sc-button>
             ) : (
               this.subscription?.status !== 'canceled' &&
-              this.subscription?.current_period_end_at && (
+              this.subscription?.current_period_end_at &&
+              this.showCancel && (
                 <sc-button
                   type="link"
                   href={addQueryArgs(window.location.href, {
