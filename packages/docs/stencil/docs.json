@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-03-23T19:14:16",
+  "timestamp": "2022-03-23T19:16:28",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.14.2",
@@ -3126,6 +3126,7 @@
       "filePath": "./src/components/controllers/checkout-form/custom-order-price-input/sc-custom-order-price-input.tsx",
       "encapsulation": "none",
       "tag": "sc-custom-order-price-input",
+      "readme": "# sc-custom-order-price-input\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
