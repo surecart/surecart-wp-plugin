@@ -133,7 +133,7 @@ export class ScCouponForm {
               <span slot="title">{this.error}</span>
             </sc-alert>
           )}
-          <sc-button type="primary" full onClick={() => this.applyCoupon()}>
+          <sc-button type="primary" loading={this.busy} full onClick={() => this.applyCoupon()}>
             <slot />
           </sc-button>
         </div>
