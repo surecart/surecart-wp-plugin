@@ -56,7 +56,6 @@ class AdminMenuPageService {
 			'invoices'        => \add_submenu_page( $this->slug, __( 'Invoices', 'surecart' ), __( 'Invoices', 'surecart' ), 'edit_ce_invoices', 'sc-invoices', '__return_false' ),
 			'customers'       => \add_submenu_page( $this->slug, __( 'Customers', 'surecart' ), __( 'Customers', 'surecart' ), 'edit_ce_customers', 'sc-customers', '__return_false' ),
 			'subscriptions'   => \add_submenu_page( $this->slug, __( 'Subscriptions', 'surecart' ), __( 'Subscriptions', 'surecart' ), 'edit_ce_subscriptions', 'sc-subscriptions', '__return_false' ),
-			'invoices'        => \add_submenu_page( null, __( 'Invoices', 'surecart' ), __( 'Invoices', 'surecart' ), 'edit_ce_invoices', 'sc-invoices', '__return_false' ),
 			'upgrade-paths'   => \add_submenu_page( $this->slug, __( 'Upgrade Groups', 'surecart' ), __( 'Upgrade Groups', 'surecart' ), 'edit_ce_products', 'sc-product-groups', '__return_false' ),
 			// 'abandoned'       => \add_submenu_page( $this->slug, __( 'Abandoned Orders', 'surecart' ), __( 'Abandoned Orders', 'surecart' ), 'edit_ce_orders', 'sc-abandoned-orders', '__return_false' ),
 			'forms'           => \add_submenu_page( $this->slug, __( 'Forms', 'surecart' ), __( 'Forms', 'surecart' ), 'edit_posts', 'edit.php?post_type=sc_form', '' ),
