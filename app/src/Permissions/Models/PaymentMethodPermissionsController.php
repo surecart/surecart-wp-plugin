@@ -18,9 +18,14 @@ class PaymentMethodPermissionsController extends ModelPermissionsController {
 	 *     @type int       $1 Concerned user ID.
 	 *     @type mixed  ...$2 Optional second and further parameters, typically object ID.
 	 * }
+	 * @param bool[]                $allcaps Array of key/value pairs where keys represent a capability name
+	 *                                       and boolean values represent whether the user has that capability.
 	 * @return boolean Does user have permission.
 	 */
-	public function edit_sc_payment_method( $user, $args ) {
+	public function edit_sc_payment_method( $user, $args, $allcaps ) {
+		if ( $allcaps['edit_sc_payment_methods'] ) {
+			return true;
+		}
 		return $this->belongsToUser( PaymentMethod::class, $args[2], $user );
 	}
 }

@@ -15,9 +15,14 @@ class CustomerPermissionsController extends ModelPermissionsController {
 	 *     @type int       $1 Concerned user ID.
 	 *     @type mixed  ...$2 Optional second and further parameters, typically object ID.
 	 * }
+	 * @param bool[]                $allcaps Array of key/value pairs where keys represent a capability name
+	 *                                       and boolean values represent whether the user has that capability.
 	 * @return boolean Does user have permission.
 	 */
-	public function edit_sc_customer( $user, $args ) {
+	public function edit_sc_customer( $user, $args, $allcaps ) {
+		if ( $allcaps['edit_sc_customers'] ) {
+			return true;
+		}
 		return $this->customerIdMatches( $user, $args[2] );
 	}
 
@@ -31,9 +36,14 @@ class CustomerPermissionsController extends ModelPermissionsController {
 	 *     @type int       $1 Concerned user ID.
 	 *     @type mixed  ...$2 Optional second and further parameters, typically object ID.
 	 * }
+	 * @param bool[]                $allcaps Array of key/value pairs where keys represent a capability name
+	 *                                       and boolean values represent whether the user has that capability.
 	 * @return boolean Does user have permission.
 	 */
-	public function read_sc_customer( $user, $args ) {
+	public function read_sc_customer( $user, $args, $allcaps ) {
+		if ( $allcaps['read_sc_customers'] ) {
+			return true;
+		}
 		return $this->customerIdMatches( $user, $args[2] );
 	}
 
@@ -45,6 +55,6 @@ class CustomerPermissionsController extends ModelPermissionsController {
 	 * @return boolean
 	 */
 	public function customerIdMatches( $user, $id ) {
-		return ( $user->customerId() ?? null ) === $id;
+		return in_array( $id, (array) $user->customerIds(), true );
 	}
 }

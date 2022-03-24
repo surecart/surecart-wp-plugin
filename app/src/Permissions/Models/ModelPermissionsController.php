@@ -43,7 +43,7 @@ abstract class ModelPermissionsController {
 			}
 
 			// check permission.
-			$permission = $this->$name( $user, $args );
+			$permission = $this->$name( $user, $args, $allcaps );
 			if ( $permission ) {
 				$allcaps[ $caps[0] ] = true;
 				return $allcaps;
@@ -67,5 +67,23 @@ abstract class ModelPermissionsController {
 			return $subscription;
 		}
 		return $subscription->belongsToUser( $user );
+	}
+
+	/**
+	 * Check permissions for specific properties of the request.
+	 *
+	 * @param \WP_REST_Request $request Full details about the request.
+	 * @param array            $keys Keys to check.
+	 *
+	 * @return boolean
+	 */
+	protected function requestOnlyHasKeys( $request, $keys ) {
+		$keys = array_merge( $keys, [ 'context', '_locale', 'rest_route', 'id', 'expand' ] );
+		foreach ( $request->get_params() as $key => $value ) {
+			if ( ! in_array( $key, $keys, true ) ) {
+				return false;
+			}
+		}
+		return true;
 	}
 }
