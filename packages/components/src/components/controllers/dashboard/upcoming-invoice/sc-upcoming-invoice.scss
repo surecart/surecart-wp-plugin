@@ -7,8 +7,20 @@
   display: grid;
   gap: var(--sc-spacing-large);
 
+
   > *  {
     display: grid;
     gap: var(--sc-spacing-medium);
+  }
+}
+
+.new-plan {
+  display: grid;
+  gap: 0.25em;
+  color: var(--sc-color-gray-600);
+
+  &__heading {
+    font-weight: var(--sc-font-weight-bold);
+    color: var(--sc-color-gray-800);
   }
 }

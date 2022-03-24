@@ -152,5 +152,98 @@ class Subscription extends Model {
 
 		return $this;
 	}
+
+	/**
+	 * Is this subscription a lifetime one?
+	 *
+	 * @return boolean
+	 */
+	protected function isLifetime() {
+		return $this->attributes['id'] && empty( $this->attributes['current_period_end_at'] );
+	}
+
+	/**
+	 * Can the user upgrade this subscription?
+	 *
+	 * @return boolean
+	 */
+	protected function canBeSwitched() {
+		return apply_filters( 'surecart/subscription/can_be_changed', $this->checkIfCanBeSwitched(), $this );
+	}
+
+	/**
+	 * Can the subscription be changed?
+	 *
+	 * @return boolean
+	 */
+	private function checkIfCanBeSwitched() {
+		// updates are not enabled for the account.
+		if ( empty( \SureCart::account()->portal_protocol->subscription_updates_enabled ) ) {
+			return false;
+		}
+		// already set to canceling.
+		if ( $this->attributes['cancel_at_period_end'] ) {
+			return false;
+		}
+		// can't update canceled, incomplete, or past due subscriptions.
+		if ( in_array( $this->attributes['status'], [ 'canceled', 'incomplete', 'past_due' ] ) ) {
+			return false;
+		}
+		// must not be lifetime.
+		if ( $this->isLifetime() ) {
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Can we cancel the subscription?
+	 *
+	 * @return boolean
+	 */
+	public function canBeCanceled() {
+		return apply_filters( 'surecart/subscription/can_be_canceled', $this->checkIfCanBeSwitched(), $this );
+	}
+
+	/**
+	 * Can the subscription be canceled?
+	 *
+	 * @return boolean
+	 */
+	private function checkIfCanBeCanceled() {
+		// updates are not enabled for the account.
+		if ( empty( \SureCart::account()->portal_protocol->subscription_cancellations_enabled ) ) {
+			return false;
+		}
+
+		// can't cancel canceled, incomplete, or past due subscriptions.
+		if ( in_array( $this->attributes['status'], [ 'canceled', 'incomplete', 'past_due' ] ) ) {
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Can we update the quantity?
+	 *
+	 * @return boolean
+	 */
+	protected function canUpdateQuantity() {
+		return apply_filters( 'surecart/subscription/can_update_quantity', $this->checkIfCanBeSwitched(), $this );
+	}
+
+	/**
+	 * Check if we can update the quantity.
+	 *
+	 * @return boolean
+	 */
+	private function checkIfCanUpdateQuantity() {
+		// quantity changes are not enabled for this account.
+		if ( empty( \SureCart::account()->portal_protocol->subscription_quantity_updates_enabled ) ) {
+			return false;
+		}
+		return true;
+	}
 }
 

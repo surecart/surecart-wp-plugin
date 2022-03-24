@@ -1110,6 +1110,7 @@
   "sc-subscription-switch": {
     "heading": true,
     "product-group-id": true,
+    "product-id": true,
     "query": true,
     "subscription": true,
     "style": true,
@@ -1243,6 +1244,7 @@
     "payment_method": true,
     "price-id": true,
     "quantity": true,
+    "quantity-updates-enabled": true,
     "subscription-id": true,
     "success-url": true,
     "style": true,

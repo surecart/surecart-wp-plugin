@@ -111,22 +111,23 @@ class SubscriptionController extends BaseController {
 		?>
 
 		<?php
-		if ( ! empty( $subscription->price->product->product_group )
-		&& ! $subscription->cancel_at_period_end && 'canceled' !== $subscription->status
-		&& $subscription->current_period_end_at ) {
+		// show switch if we can change it.
+		if ( $subscription->canBeSwitched() ) :
 			echo wp_kses_post(
 				Component::tag( 'sc-subscription-switch' )
 				->id( 'customer-subscription-switch' )
 				->with(
 					[
 						'heading'        => __( 'Update Plan', 'surecart' ),
+						'productId'      => $subscription->price->product->id,
 						'productGroupId' => $subscription->price->product->product_group,
 						'subscription'   => $subscription,
 					]
 				)->render()
 			);
-		}
+		endif;
 		?>
+
 		</sc-spacing>
 
 		<?php
@@ -165,7 +166,8 @@ class SubscriptionController extends BaseController {
 		$back = add_query_arg( [ 'tab' => $this->getTab() ], \SureCart::pages()->url( 'dashboard' ) );
 		ob_start();
 		?>
-	<sc-spacing style="--spacing: var(--sc-spacing-xx-large)">
+
+		<sc-spacing style="--spacing: var(--sc-spacing-xx-large)">
 			<sc-breadcrumbs>
 				<sc-breadcrumb href="<?php echo esc_url( add_query_arg( [ 'tab' => $this->getTab() ], \SureCart::pages()->url( 'dashboard' ) ) ); ?>">
 					<?php esc_html_e( 'Dashboard', 'surecart' ); ?>
@@ -200,11 +202,12 @@ class SubscriptionController extends BaseController {
 				->id( 'customer-upcoming-invoice' )
 				->with(
 					[
-						'heading'        => __( 'New Plan', 'surecart' ),
-						'subscriptionId' => $this->getId(),
-						'priceId'        => $this->getParam( 'price_id' ),
-						'successUrl'     => esc_url( $back ),
-						'quantity'       => 1,
+						'heading'                => __( 'New Plan', 'surecart' ),
+						'subscriptionId'         => $this->getId(),
+						'priceId'                => $this->getParam( 'price_id' ),
+						'successUrl'             => esc_url( $back ),
+						'quantityUpdatesEnabled' => \SureCart::account()->portal_protocol->subscription_quantity_updates_enabled,
+						'quantity'               => 1,
 					]
 				)->render( $terms ? '<span slot="terms">' . wp_kses_post( $terms ) . '</span>' : '' )
 			);

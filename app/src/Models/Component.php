@@ -31,7 +31,7 @@ class Component {
 	 * @return this
 	 */
 	protected function with( $args ) {
-		$this->data = array_merge( $this->data, $args );
+		$this->data = apply_filters( 'surecart/components/props', array_merge( $this->data, $args ), $this->tag, $this );
 		return $this;
 	}
 

@@ -17,10 +17,11 @@ export class ScSubscriptionSwitch {
   @Prop() query: object;
   @Prop() heading: string;
   @Prop() productGroupId: ProductGroup;
+  @Prop() productId: string;
   @Prop() subscription: Subscription;
 
   /** Holds the products */
-  @State() products: Array<Product>;
+  @State() products: Array<Product> = [];
 
   /** Holds the prices */
   @State() prices: Array<Price>;
@@ -45,15 +46,30 @@ export class ScSubscriptionSwitch {
   @State() error: string;
 
   componentWillLoad() {
-    onFirstVisible(this.el, () => {
-      this.getItems();
+    onFirstVisible(this.el, async () => {
+      try {
+        this.loading = true;
+        await Promise.all([this.getGroup(), this.getProductPrices()]);
+      } catch (e) {
+        console.error(e);
+        if (e?.message) {
+          this.error = e.message;
+        } else {
+          this.error = __('Something went wrong', 'surecart');
+        }
+      } finally {
+        this.loading = false;
+      }
     });
     this.handleSubscriptionChange();
   }
 
   @Watch('products')
   handleProductsChange() {
-    this.prices = this.products.map(product => (product as Product)?.prices?.data).flat();
+    this.prices = this.products
+      .map(product => (product as Product)?.prices?.data)
+      .flat()
+      .filter((v, i, a) => a.findIndex(t => t.id === v.id) === i); // remove duplicates.
   }
 
   @Watch('prices')
@@ -72,27 +88,27 @@ export class ScSubscriptionSwitch {
   }
 
   /** Get all subscriptions */
-  async getItems() {
+  async getGroup() {
     if (!this.productGroupId) return;
-    try {
-      this.loading = true;
-      this.products = (await await apiFetch({
-        path: addQueryArgs(`surecart/v1/products/`, {
-          product_group_ids: [this.productGroupId],
-          expand: ['prices'],
-          ...this.query,
-        }),
-      })) as Product[];
-    } catch (e) {
-      console.error(e);
-      if (e?.message) {
-        this.error = e.message;
-      } else {
-        this.error = __('Something went wrong', 'surecart');
-      }
-    } finally {
-      this.loading = false;
-    }
+    const products = (await await apiFetch({
+      path: addQueryArgs(`surecart/v1/products/`, {
+        product_group_ids: [this.productGroupId],
+        expand: ['prices'],
+        ...this.query,
+      }),
+    })) as Product[];
+    this.products = [...this.products, ...products];
+  }
+
+  /** Get the product's prices. */
+  async getProductPrices() {
+    if (!this.productId) return;
+    const product = (await await apiFetch({
+      path: addQueryArgs(`surecart/v1/products/${this.productId}`, {
+        expand: ['prices'],
+      }),
+    })) as Product;
+    this.products = [...this.products, ...[product]];
   }
 
   async handleSubmit(e) {
@@ -151,10 +167,6 @@ export class ScSubscriptionSwitch {
       return this.renderLoading();
     }
 
-    if (!this?.products?.length) {
-      return;
-    }
-
     return (
       <sc-choices required>
         <div>
@@ -184,6 +196,9 @@ export class ScSubscriptionSwitch {
   }
 
   render() {
+    // we are not loading and we don't have enough prices to switch.
+    if (!this.loading && this.prices?.length < 2) return null;
+
     return (
       <sc-dashboard-module heading={this.heading || __('Update Plan', 'surecart')} class="subscription-switch" error={this.error}>
         <span slot="end">{this.renderSwitcher()}</span>

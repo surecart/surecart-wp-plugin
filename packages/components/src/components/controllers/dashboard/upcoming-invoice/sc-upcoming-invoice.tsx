@@ -25,6 +25,7 @@ export class ScUpcomingInvoice {
     coupon?: string;
   };
   @Prop({ mutable: true }) payment_method: PaymentMethod;
+  @Prop() quantityUpdatesEnabled: boolean = true;
 
   /** Loading state */
   @State() loading: boolean;
@@ -185,10 +186,12 @@ export class ScUpcomingInvoice {
     }
 
     return (
-      <div>
-        <sc-text style={{ '--font-weight': 'var(--sc-font-weight-bold)' }}>{this.renderName(this.price)}</sc-text>
-        <sc-format-number type="currency" currency={(this?.price as Price)?.currency} value={(this?.price as Price)?.amount}></sc-format-number>
-        {translatedInterval(this?.price?.recurring_interval_count || 0, this?.price?.recurring_interval, ' /', '')}
+      <div class="new-plan">
+        <div class="new-plan__heading">{this.renderName(this.price)}</div>
+        <div>
+          <sc-format-number type="currency" currency={(this?.price as Price)?.currency} value={(this?.price as Price)?.amount}></sc-format-number>
+          {translatedInterval(this?.price?.recurring_interval_count || 0, this?.price?.recurring_interval, ' /', '')}
+        </div>
         <div style={{ fontSize: 'var(--sc-font-size-small)' }}>{this.renderRenewalText()}</div>
       </div>
     );
@@ -214,7 +217,7 @@ export class ScUpcomingInvoice {
         <sc-product-line-item
           imageUrl={(this.price?.product as Product)?.image_url}
           name={(this.price?.product as Product)?.name}
-          editable={true}
+          editable={this.quantityUpdatesEnabled}
           removable={false}
           quantity={1}
           amount={this.price.amount}

@@ -5,4 +5,5 @@
 .subscription-details {
   display: grid;
   gap: 0.25em;
+  color: var(--sc-input-label-color);
 }

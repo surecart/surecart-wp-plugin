@@ -1941,6 +1941,7 @@ export namespace Components {
     interface ScSubscriptionSwitch {
         "heading": string;
         "productGroupId": ProductGroup;
+        "productId": string;
         /**
           * Customer id to fetch subscriptions
          */
@@ -2113,6 +2114,7 @@ export namespace Components {
         "payment_method": PaymentMethod;
         "priceId": string;
         "quantity": number;
+        "quantityUpdatesEnabled": boolean;
         "subscriptionId": string;
         "successUrl": string;
     }
@@ -5065,6 +5067,7 @@ declare namespace LocalJSX {
     interface ScSubscriptionSwitch {
         "heading"?: string;
         "productGroupId"?: ProductGroup;
+        "productId"?: string;
         /**
           * Customer id to fetch subscriptions
          */
@@ -5252,6 +5255,7 @@ declare namespace LocalJSX {
         "payment_method"?: PaymentMethod;
         "priceId"?: string;
         "quantity"?: number;
+        "quantityUpdatesEnabled"?: boolean;
         "subscriptionId"?: string;
         "successUrl"?: string;
     }
