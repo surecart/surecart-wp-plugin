@@ -104,6 +104,16 @@ export default ({ template, setTemplate }) => {
 						}
 					/>
 				</Thumbnail>
+				<Thumbnail
+					label={'Invoice'}
+					selected={choice === 'invoice'}
+					onSelect={() => setChoice('invoice')}
+				>
+					<img
+						css={imageCSS}
+						src={scData.plugin_url + '/templates/forms/invoice.png'}
+					/>
+				</Thumbnail>
 			</div>
 		</PlaceholderTemplate>
 	);

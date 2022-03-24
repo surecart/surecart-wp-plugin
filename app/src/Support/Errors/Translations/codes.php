@@ -20,4 +20,5 @@ return [
 	'product.restrict_dependent_destroy.has_many'  => __( 'This product has prices that are currently being used. Please archive the product instead.', 'surecart' ),
 	'order.shipping_address.invalid_tax_address'   => __( 'Please fill out your address.', 'surecart' ),
 	'order.line_items.old_price_versions'          => __( 'The prices in this checkout session have changed. Please recheck it before submitting again.', 'surecart' ),
+	'order.discount.coupon.blank' 				   => __('This coupon code is invalid.', 'surecart'),
 ];

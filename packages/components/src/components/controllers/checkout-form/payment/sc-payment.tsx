@@ -18,6 +18,9 @@ export class ScPayment {
   /** Is this loading. */
   @Prop() loading: boolean;
 
+  /** Is this busy. */
+  @Prop() busy: boolean;
+
   /** Is this created in "test" mode */
   @Prop() mode: 'test' | 'live' = 'live';
 
@@ -71,10 +74,12 @@ export class ScPayment {
               </sc-tooltip>
             )}
           </sc-secure-notice>
+
+          {this.busy && <sc-block-ui style={{ zIndex: '9' }}></sc-block-ui>}
         </Host>
       );
     }
   }
 }
 
-openWormhole(ScPayment, ['processor', 'order', 'mode', 'paymentMethod', 'loading'], false);
+openWormhole(ScPayment, ['processor', 'order', 'mode', 'paymentMethod', 'loading', 'busy'], false);

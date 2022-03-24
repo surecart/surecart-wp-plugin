@@ -11,27 +11,16 @@ import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
 /**
  * Component Dependencies
  */
-import { ScPriceChoice, ScPriceInput } from '@surecart/components-react';
-import PriceInfo from './components/PriceInfo';
+import { ScCustomOrderPriceInput } from '@surecart/components-react';
+import PriceInfo from '../PriceChoice/components/PriceInfo';
 
 import PriceSelector from '@scripts/blocks/components/PriceSelector';
 
-export default ({ attributes, setAttributes, isSelected }) => {
-	const {
-		price_id,
-		label,
-		help,
-		type,
-		quantity,
-		show_label,
-		show_price,
-		show_control,
-		checked,
-	} = attributes;
+export default ({ attributes, setAttributes }) => {
+	const { price_id, label, help, show_currency_code, required, placeholder } =
+		attributes;
 
-	const blockProps = useBlockProps({
-		style: { width: '100%' },
-	});
+	const blockProps = useBlockProps();
 
 	if (!price_id) {
 		return (
@@ -49,10 +38,26 @@ export default ({ attributes, setAttributes, isSelected }) => {
 			<InspectorControls>
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
+						<ToggleControl
+							label={__('Required', 'surecart')}
+							checked={required}
+							onChange={(required) => setAttributes({ required })}
+						/>
+					</PanelRow>
+					<PanelRow>
 						<TextControl
 							label={__('Label', 'surecart')}
 							value={label}
 							onChange={(label) => setAttributes({ label })}
+						/>
+					</PanelRow>
+					<PanelRow>
+						<TextControl
+							label={__('Placeholder', 'surecart')}
+							value={placeholder}
+							onChange={(placeholder) =>
+								setAttributes({ placeholder })
+							}
 						/>
 					</PanelRow>
 					<PanelRow>
@@ -62,7 +67,17 @@ export default ({ attributes, setAttributes, isSelected }) => {
 							onChange={(help) => setAttributes({ help })}
 						/>
 					</PanelRow>
+					<PanelRow>
+						<ToggleControl
+							label={__('Show Currency Code', 'surecart')}
+							checked={show_currency_code}
+							onChange={(show_currency_code) =>
+								setAttributes({ show_currency_code })
+							}
+						/>
+					</PanelRow>
 				</PanelBody>
+
 				<PanelBody title={__('Product Info', 'surecart')}>
 					<PanelRow>
 						<PriceInfo price_id={price_id} />
@@ -70,16 +85,14 @@ export default ({ attributes, setAttributes, isSelected }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<ScPriceInput
+			<ScCustomOrderPriceInput
 				{...blockProps}
 				priceId={price_id}
-				type={type}
 				label={label}
-				showPrice={show_price}
-				showControl={show_control}
+				placeholder={placeholder}
 				help={help}
-				checked={checked}
-				quantity={quantity}
+				showCode={show_currency_code}
+				required={required}
 			/>
 		</Fragment>
 	);

@@ -212,11 +212,16 @@
     "slot": true
   },
   "sc-custom-order-price-input": {
+    "busy": true,
     "help": true,
     "label": true,
+    "line-items": true,
     "loading": true,
+    "placeholder": true,
     "price": true,
     "price-id": true,
+    "required": true,
+    "show-code": true,
     "style": true,
     "id": true,
     "class": true,
@@ -776,6 +781,7 @@
     "slot": true
   },
   "sc-payment": {
+    "busy": true,
     "label": true,
     "loading": true,
     "mode": true,

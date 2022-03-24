@@ -434,17 +434,29 @@ export namespace Components {
     }
     interface ScCustomOrderPriceInput {
         /**
+          * Is this busy
+         */
+        "busy": boolean;
+        /**
           * Help text.
          */
         "help": string;
         /**
-          * Label for the choice.
+          * Label for the field.
          */
         "label": string;
+        /**
+          * Label for the choice.
+         */
+        "lineItems": LineItem[];
         /**
           * Is this loading
          */
         "loading": boolean;
+        /**
+          * Input placeholder.
+         */
+        "placeholder": string;
         /**
           * Stores the price
          */
@@ -453,6 +465,14 @@ export namespace Components {
           * Id of the price.
          */
         "priceId": string;
+        /**
+          * Is this required?
+         */
+        "required": boolean;
+        /**
+          * Show the currency code?
+         */
+        "showCode": boolean;
     }
     interface ScCustomerDetails {
         "customer": Customer;
@@ -1329,6 +1349,10 @@ export namespace Components {
         "totalShowing": number;
     }
     interface ScPayment {
+        /**
+          * Is this busy.
+         */
+        "busy": boolean;
         /**
           * The input's label.
          */
@@ -3370,17 +3394,33 @@ declare namespace LocalJSX {
     }
     interface ScCustomOrderPriceInput {
         /**
+          * Is this busy
+         */
+        "busy"?: boolean;
+        /**
           * Help text.
          */
         "help"?: string;
         /**
-          * Label for the choice.
+          * Label for the field.
          */
         "label"?: string;
+        /**
+          * Label for the choice.
+         */
+        "lineItems"?: LineItem[];
         /**
           * Is this loading
          */
         "loading"?: boolean;
+        /**
+          * Toggle line item event
+         */
+        "onScUpdateLineItem"?: (event: CustomEvent<LineItemData>) => void;
+        /**
+          * Input placeholder.
+         */
+        "placeholder"?: string;
         /**
           * Stores the price
          */
@@ -3389,6 +3429,14 @@ declare namespace LocalJSX {
           * Id of the price.
          */
         "priceId"?: string;
+        /**
+          * Is this required?
+         */
+        "required"?: boolean;
+        /**
+          * Show the currency code?
+         */
+        "showCode"?: boolean;
     }
     interface ScCustomerDetails {
         "customer"?: Customer;
@@ -4363,6 +4411,10 @@ declare namespace LocalJSX {
         "totalShowing"?: number;
     }
     interface ScPayment {
+        /**
+          * Is this busy.
+         */
+        "busy"?: boolean;
         /**
           * The input's label.
          */

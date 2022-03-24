@@ -13,19 +13,22 @@
 		"price_id": {
 			"type": "string"
 		},
-		"required": {
-			"typoe": "boolean"
-		},
 		"label": {
 			"type": "string",
-			"default": "Name"
+			"default": "Enter An Amount"
 		},
 		"help": {
 			"type": "string",
 			"default": ""
 		},
+		"required": {
+			"typoe": "boolean"
+		},
 		"placeholder": {
 			"type": "string"
+		},
+		"show_currency_code": {
+			"type": "boolean"
 		}
 	}
 }

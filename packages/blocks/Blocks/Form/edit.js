@@ -99,7 +99,8 @@ export default function edit({ clientId, attributes, setAttributes }) {
 		let parsed = parse(await result.text());
 
 		parsed = populateChoicesBlock(parsed, choices, choice_type);
-		parsed = populateDonationBlock(parsed, choices);
+		parsed = populateBlock(parsed, choices, 'surecart/donation');
+		parsed = populateBlock(parsed, choices, 'surecart/name-your-price');
 
 		return parsed;
 	};
@@ -140,12 +141,12 @@ export default function edit({ clientId, attributes, setAttributes }) {
 	/**
 	 * Maybe populated the donation block with the correct price.
 	 */
-	const populateDonationBlock = (blocks, choices) => {
+	const populateBlock = (blocks, choices, name) => {
 		const remove = !choices?.length;
 
 		// look through nested blocks and add or remove prices.
 		blocks.forEach(function iter(block, index, blocks) {
-			if (block.name === 'surecart/donation') {
+			if (block.name === name) {
 				if (remove) {
 					blocks.splice(index, 1);
 				} else {

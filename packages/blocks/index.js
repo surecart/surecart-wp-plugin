@@ -11,6 +11,7 @@ import * as button from '@blocks/Button';
 import * as buyButton from '@blocks/BuyButton';
 import * as donation from '@blocks/Donation';
 import * as donationAmount from '@blocks/DonationAmount';
+import * as nameYourPrice from '@blocks/NameYourPrice';
 import * as card from '@blocks/Card';
 import * as address from '@blocks/address';
 import * as columns from '@blocks/columns';
@@ -144,6 +145,7 @@ export const registerSureCartBlocks = () => {
 		donation,
 		donationAmount,
 		confirmationLineItems,
+		nameYourPrice,
 		// confirmationCustomer,
 		heading,
 		// sessionDetail,
