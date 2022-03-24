@@ -6,7 +6,7 @@
  * Version: 0.0.2
  * Requires at least: 5.9
  * Requires PHP: 7.3
- * Author: Andre Gagnon
+ * Author: SureCart
  * Author URI: https://andregagnon.me
  * License: GPL-2.0-only
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html

@@ -26,7 +26,7 @@
 
 ## Development Team
 
-Brought to you by [Andre Gagnon](https://atanas.dev/) and the lovely folks at [htmlBurger](http://htmlburger.com).
+Brought to you by [SureCart](https://atanas.dev/) and the lovely folks at [htmlBurger](http://htmlburger.com).
 
 ## Contributing
 
@@ -35,7 +35,7 @@ WP Emerge is completely open source and we encourage everybody to participate by
 - Reviewing `.github/CONTRIBUTING.md`.
 - ⭐ the project on GitHub \([https://github.com/htmlburger/wpemerge](https://github.com/htmlburger/wpemerge)\)
 - Posting bug reports \([https://github.com/htmlburger/wpemerge/issues](https://github.com/htmlburger/wpemerge/issues)\)
-- (Emailing security issues to [me@andregagnon.me](mailto:me@andregagnon.me) instead)
+- (Emailing security issues to [support@surecart.com](mailto:support@surecart.com) instead)
 - Posting feature suggestions \([https://github.com/htmlburger/wpemerge/issues](https://github.com/htmlburger/wpemerge/issues)\)
 - Posting and/or answering questions \([https://github.com/htmlburger/wpemerge/issues](https://github.com/htmlburger/wpemerge/issues)\)
 - Submitting pull requests \([https://github.com/htmlburger/wpemerge/pulls](https://github.com/htmlburger/wpemerge/pulls)\)

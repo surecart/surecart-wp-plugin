@@ -11,7 +11,7 @@
 		"php-docblocker.returnGap": true,
 		"php-docblocker.qualifyClassNames": true,
 		"php-docblocker.author": {
-			"name": "Andre Gagnon",
+			"name": "SureCart",
 			"email": "andre@surecart.com"
 		},
 		"[php]": {
