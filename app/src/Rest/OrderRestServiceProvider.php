@@ -157,7 +157,7 @@ class OrderRestServiceProvider extends RestServiceProvider implements RestServic
 		$schema = $this->get_item_schema();
 
 		// if the user can edit customers, show the edit context.
-		if ( current_user_can( 'edit_ce_customers' ) ) {
+		if ( current_user_can( 'edit_sc_customers' ) ) {
 			return rest_filter_response_by_context( $data, $schema, 'edit' );
 		}
 
@@ -194,13 +194,13 @@ class OrderRestServiceProvider extends RestServiceProvider implements RestServic
 	 */
 	public function get_items_permissions_check( $request ) {
 		// if the current user can't read.
-		if ( ! current_user_can( 'read_ce_orders' ) ) {
+		if ( ! current_user_can( 'read_sc_orders' ) ) {
 			// they can list if they are listing their own customer id.
 			return $this->isListingOwnCustomerId( $request );
 		}
 
 		// need read priveleges.
-		return current_user_can( 'read_ce_orders' );
+		return current_user_can( 'read_sc_orders' );
 	}
 
 	/**

@@ -106,7 +106,7 @@ class PurchasesRestServiceProvider extends RestServiceProvider implements RestSe
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_item_permissions_check( $request ) {
-		return current_user_can( 'read_ce_purchase', $request['id'] );
+		return current_user_can( 'read_sc_purchase', $request['id'] );
 	}
 
 	/**
@@ -117,13 +117,13 @@ class PurchasesRestServiceProvider extends RestServiceProvider implements RestSe
 	 */
 	public function get_items_permissions_check( $request ) {
 		// a customer can list their own purchases.
-		if ( ! current_user_can( 'read_ce_purchases' ) ) {
+		if ( ! current_user_can( 'read_sc_purchases' ) ) {
 			// they can list if they are listing their own customer id.
 			return $this->isListingOwnCustomerId( $request );
 		}
 
 		// need read priveleges.
-		return current_user_can( 'read_ce_purchases' );
+		return current_user_can( 'read_sc_purchases' );
 	}
 
 	/**
@@ -133,6 +133,6 @@ class PurchasesRestServiceProvider extends RestServiceProvider implements RestSe
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function update_item_permissions_check( $request ) {
-		return current_user_can( 'edit_ce_purchases' );
+		return current_user_can( 'edit_sc_purchases' );
 	}
 }

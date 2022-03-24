@@ -143,7 +143,7 @@ class OrderRestServiceProviderTest extends SureCartUnitTestCase {
 		$this->assertSame($response->get_status(), 400);
 
 		$user = self::factory()->user->create_and_get();
-		$user->add_cap('edit_ce_orders');
+		$user->add_cap('edit_sc_orders');
 		wp_set_current_user($user->ID);
 
 		// users with edit session permissions can do this, though.

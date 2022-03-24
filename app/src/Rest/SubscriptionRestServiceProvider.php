@@ -126,14 +126,14 @@ class SubscriptionRestServiceProvider extends RestServiceProvider implements Res
 	 * @var array
 	 */
 	protected $property_permissions = [
-		'skip_product_group_validation' => 'update_ce_subscriptions',
-		'update_behavior'               => 'update_ce_subscriptions',
-		'skip_proration'                => 'update_ce_subscriptions',
-		'currency'                      => 'update_ce_subscriptions',
-		'trial_end_at'                  => 'update_ce_subscriptions',
-		'metadata'                      => 'update_ce_subscriptions',
-		'customer'                      => 'update_ce_subscriptions',
-		'discount'                      => 'update_ce_subscriptions',
+		'skip_product_group_validation' => 'update_sc_subscriptions',
+		'update_behavior'               => 'update_sc_subscriptions',
+		'skip_proration'                => 'update_sc_subscriptions',
+		'currency'                      => 'update_sc_subscriptions',
+		'trial_end_at'                  => 'update_sc_subscriptions',
+		'metadata'                      => 'update_sc_subscriptions',
+		'customer'                      => 'update_sc_subscriptions',
+		'discount'                      => 'update_sc_subscriptions',
 	];
 
 	/**
@@ -144,7 +144,7 @@ class SubscriptionRestServiceProvider extends RestServiceProvider implements Res
 	 */
 	public function cancel_permissions_check( $request ) {
 		// user has access.
-		if ( current_user_can( 'edit_ce_subscriptions' ) ) {
+		if ( current_user_can( 'edit_sc_subscriptions' ) ) {
 			return true;
 		}
 
@@ -154,7 +154,7 @@ class SubscriptionRestServiceProvider extends RestServiceProvider implements Res
 		}
 
 		// check if user can cancel this subscription.
-		return current_user_can( 'edit_ce_subscription', $request['id'] );
+		return current_user_can( 'edit_sc_subscription', $request['id'] );
 	}
 
 	/**
@@ -164,11 +164,11 @@ class SubscriptionRestServiceProvider extends RestServiceProvider implements Res
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function renew_permissions_check( $request ) {
-		if ( current_user_can( 'edit_ce_subscriptions' ) ) {
+		if ( current_user_can( 'edit_sc_subscriptions' ) ) {
 			return true;
 		}
 
-		return current_user_can( 'edit_ce_subscription', $request['id'] );
+		return current_user_can( 'edit_sc_subscription', $request['id'] );
 	}
 
 	/**
@@ -178,10 +178,10 @@ class SubscriptionRestServiceProvider extends RestServiceProvider implements Res
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_item_permissions_check( $request ) {
-		if ( current_user_can( 'read_ce_subscriptions' ) ) {
+		if ( current_user_can( 'read_sc_subscriptions' ) ) {
 			return true;
 		}
-		return current_user_can( 'read_ce_subscription', $request['id'] );
+		return current_user_can( 'read_sc_subscription', $request['id'] );
 	}
 
 	/**
@@ -192,13 +192,13 @@ class SubscriptionRestServiceProvider extends RestServiceProvider implements Res
 	 */
 	public function get_items_permissions_check( $request ) {
 		// if the current user can't read.
-		if ( ! current_user_can( 'read_ce_subscriptions' ) ) {
+		if ( ! current_user_can( 'read_sc_subscriptions' ) ) {
 			// they can list if they are listing their own customer id.
 			return $this->isListingOwnCustomerId( $request );
 		}
 
 		// need read priveleges.
-		return current_user_can( 'read_ce_subscriptions' );
+		return current_user_can( 'read_sc_subscriptions' );
 	}
 
 	/**
@@ -208,7 +208,7 @@ class SubscriptionRestServiceProvider extends RestServiceProvider implements Res
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function preview_item_permissions_check( $request ) {
-		return current_user_can( 'edit_ce_subscription', $request['id'] );
+		return current_user_can( 'edit_sc_subscription', $request['id'] );
 	}
 
 	/**
@@ -218,7 +218,7 @@ class SubscriptionRestServiceProvider extends RestServiceProvider implements Res
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function update_item_permissions_check( $request ) {
-		if ( current_user_can( 'edit_ce_subscriptions' ) ) {
+		if ( current_user_can( 'edit_sc_subscriptions' ) ) {
 			return true;
 		}
 
@@ -235,7 +235,7 @@ class SubscriptionRestServiceProvider extends RestServiceProvider implements Res
 				return $quantity;
 			}
 
-			return current_user_can( 'edit_ce_subscription', $request['id'] );
+			return current_user_can( 'edit_sc_subscription', $request['id'] );
 		}
 
 		return false;
@@ -268,6 +268,6 @@ class SubscriptionRestServiceProvider extends RestServiceProvider implements Res
 	 * @return false
 	 */
 	public function delete_item_permissions_check( $request ) {
-		return current_user_can( 'delete_ce_subscriptions' );
+		return current_user_can( 'delete_sc_subscriptions' );
 	}
 }

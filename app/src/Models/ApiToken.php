@@ -14,14 +14,14 @@ class ApiToken {
 	 *
 	 * @var string
 	 */
-	protected $key = 'ce_api_token';
+	protected $key = 'sc_api_token';
 
 	/**
 	 * Reference for the salt.
 	 *
 	 * @var string
 	 */
-	protected $salt_ref_key = 'ce_salt_ref';
+	protected $salt_ref_key = 'sc_salt_ref';
 
 	/**
 	 * Save and encrypt the API token.

@@ -46,10 +46,10 @@ class ChargesPermissionsTest extends SureCartUnitTestCase {
 			]);
 
 		$user = self::factory()->user->create_and_get();
-		add_user_meta( $user->ID, 'ce_customer_id', 'testcustomerid' );
+		add_user_meta( $user->ID, 'sc_customer_id', 'testcustomerid' );
 
-		$this->assertFalse(user_can($user, 'read_ce_charges')); // they can't read charges
-		$this->assertFalse(user_can($user, 'edit_ce_charge', 'testid')); // they can't edit charges
-		$this->assertFalse(user_can($user, 'read_ce_charge', 'testid')); // they can read a specific charge
+		$this->assertFalse(user_can($user, 'read_sc_charges')); // they can't read charges
+		$this->assertFalse(user_can($user, 'edit_sc_charge', 'testid')); // they can't edit charges
+		$this->assertFalse(user_can($user, 'read_sc_charge', 'testid')); // they can read a specific charge
 	}
 }

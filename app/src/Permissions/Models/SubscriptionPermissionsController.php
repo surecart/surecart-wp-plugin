@@ -7,6 +7,16 @@ use SureCart\Models\Subscription;
  * Handle various permissions.
  */
 class SubscriptionPermissionsController extends ModelPermissionsController {
+	public function cancel_sc_subscription() {
+
+	}
+	public function update_sc_subscription_quantity() {
+
+	}
+	public function switch_sc_subscription() {
+
+	}
+
 	/**
 	 * Can user read.
 	 *
@@ -19,7 +29,7 @@ class SubscriptionPermissionsController extends ModelPermissionsController {
 	 * }
 	 * @return boolean Does user have permission.
 	 */
-	public function read_ce_subscription( $user, $args ) {
+	public function read_sc_subscription( $user, $args ) {
 		return $this->belongsToUser( Subscription::class, $args[2], $user );
 	}
 
@@ -35,7 +45,7 @@ class SubscriptionPermissionsController extends ModelPermissionsController {
 	 * }
 	 * @return boolean Does user have permission.
 	 */
-	public function edit_ce_subscription( $user, $args ) {
+	public function edit_sc_subscription( $user, $args ) {
 		return $this->belongsToUser( Subscription::class, $args[2], $user );
 	}
 }

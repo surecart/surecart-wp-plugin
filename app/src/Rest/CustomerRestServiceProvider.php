@@ -88,7 +88,7 @@ class CustomerRestServiceProvider extends RestServiceProvider implements RestSer
 		}
 
 		// need to be able to read customers.
-		return current_user_can( 'read_ce_customers' );
+		return current_user_can( 'read_sc_customers' );
 	}
 
 	/**
@@ -98,7 +98,7 @@ class CustomerRestServiceProvider extends RestServiceProvider implements RestSer
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_items_permissions_check( $request ) {
-		return current_user_can( 'read_ce_customers' );
+		return current_user_can( 'read_sc_customers' );
 	}
 
 
@@ -109,7 +109,7 @@ class CustomerRestServiceProvider extends RestServiceProvider implements RestSer
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function create_item_permissions_check( $request ) {
-		return current_user_can( 'publish_ce_customers' );
+		return current_user_can( 'publish_sc_customers' );
 	}
 
 	/**
@@ -120,14 +120,14 @@ class CustomerRestServiceProvider extends RestServiceProvider implements RestSer
 	 */
 	public function update_item_permissions_check( $request ) {
 		// if the current user matches the customer id.
-		if ( ! current_user_can( 'edit_ce_customers' ) ) {
+		if ( ! current_user_can( 'edit_sc_customers' ) ) {
 			if ( $this->currentUserMatchesCustomerId( $request['id'] ) ) {
 				// whitelist specific params they are allowed to update.
 				return $this->requestOnlyHasKeys( $request, [ 'billing_address', 'billing_matches_shipping', 'shipping_address', 'default_payment_method', 'tax_identifier', 'unsubscribed', 'phone', 'name', 'email' ] );
 			}
 		}
 
-		return current_user_can( 'edit_ce_customers' );
+		return current_user_can( 'edit_sc_customers' );
 	}
 
 	/**
@@ -137,6 +137,6 @@ class CustomerRestServiceProvider extends RestServiceProvider implements RestSer
 	 * @return false
 	 */
 	public function delete_item_permissions_check( $request ) {
-		return current_user_can( 'delete_ce_customers' );
+		return current_user_can( 'delete_sc_customers' );
 	}
 }

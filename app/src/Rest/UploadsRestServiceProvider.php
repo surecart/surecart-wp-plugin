@@ -73,6 +73,6 @@ class UploadsRestServiceProvider extends RestServiceProvider implements RestServ
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function create_item_permissions_check( $request ) {
-		return current_user_can( 'upload_files' ) && current_user_can( 'edit_ce_products' );
+		return current_user_can( 'upload_files' ) && current_user_can( 'edit_sc_products' );
 	}
 }

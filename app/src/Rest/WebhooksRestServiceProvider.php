@@ -61,7 +61,7 @@ class WebhooksRestServiceProvider extends RestServiceProvider implements RestSer
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_item_permissions_check( $request ) {
-		return current_user_can( 'read_ce_webhooks' );
+		return current_user_can( 'read_sc_webhooks' );
 	}
 
 	/**
@@ -71,7 +71,7 @@ class WebhooksRestServiceProvider extends RestServiceProvider implements RestSer
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_items_permissions_check( $request ) {
-		return current_user_can( 'read_ce_webhooks' );
+		return current_user_can( 'read_sc_webhooks' );
 	}
 
 	/**
@@ -81,7 +81,7 @@ class WebhooksRestServiceProvider extends RestServiceProvider implements RestSer
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function update_item_permissions_check( $request ) {
-		return current_user_can( 'edit_ce_webhooks' );
+		return current_user_can( 'edit_sc_webhooks' );
 	}
 
 	/**
@@ -91,6 +91,6 @@ class WebhooksRestServiceProvider extends RestServiceProvider implements RestSer
 	 * @return false
 	 */
 	public function delete_item_permissions_check( $request ) {
-		return current_user_can( 'edit_ce_webhooks' );
+		return current_user_can( 'edit_sc_webhooks' );
 	}
 }

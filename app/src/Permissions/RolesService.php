@@ -22,7 +22,7 @@ class RolesService {
 	 */
 	public function addRoles() {
 		add_role(
-			'ce_shop_manager',
+			'sc_shop_manager',
 			__( 'SureCart Shop Manager', 'surecart' ),
 			[
 				'read'                   => true,
@@ -57,7 +57,7 @@ class RolesService {
 		);
 
 		add_role(
-			'ce_shop_accountant',
+			'sc_shop_accountant',
 			__( 'SureCart Accountant', 'surecart' ),
 			[
 				'read'         => true,
@@ -67,7 +67,7 @@ class RolesService {
 		);
 
 		add_role(
-			'ce_shop_worker',
+			'sc_shop_worker',
 			__( 'SureCart Shop Worker', 'surecart' ),
 			[
 				'read'         => true,
@@ -96,31 +96,31 @@ class RolesService {
 		}
 
 		if ( is_object( $wp_roles ) ) {
-			$wp_roles->add_cap( 'ce_shop_manager', 'view_ce_shop_reports' );
-			$wp_roles->add_cap( 'ce_shop_manager', 'view_ce_shop_sensitive_data' );
-			$wp_roles->add_cap( 'ce_shop_manager', 'export_ce_shop_reports' );
-			$wp_roles->add_cap( 'ce_shop_manager', 'manage_ce_shop_settings' );
+			$wp_roles->add_cap( 'sc_shop_manager', 'view_sc_shop_reports' );
+			$wp_roles->add_cap( 'sc_shop_manager', 'view_sc_shop_sensitive_data' );
+			$wp_roles->add_cap( 'sc_shop_manager', 'export_sc_shop_reports' );
+			$wp_roles->add_cap( 'sc_shop_manager', 'manage_sc_shop_settings' );
 
-			$wp_roles->add_cap( 'administrator', 'view_ce_shop_reports' );
-			$wp_roles->add_cap( 'administrator', 'view_ce_shop_sensitive_data' );
-			$wp_roles->add_cap( 'administrator', 'export_ce_shop_reports' );
-			$wp_roles->add_cap( 'administrator', 'manage_ce_shop_settings' );
-			$wp_roles->add_cap( 'administrator', 'manage_ce_account_settings' );
+			$wp_roles->add_cap( 'administrator', 'view_sc_shop_reports' );
+			$wp_roles->add_cap( 'administrator', 'view_sc_shop_sensitive_data' );
+			$wp_roles->add_cap( 'administrator', 'export_sc_shop_reports' );
+			$wp_roles->add_cap( 'administrator', 'manage_sc_shop_settings' );
+			$wp_roles->add_cap( 'administrator', 'manage_sc_account_settings' );
 
 			// Add the main model capabilities
 			$capabilities = $this->getModelCaps();
 			foreach ( $capabilities as $cap_group ) {
 				foreach ( $cap_group as $cap ) {
 					$wp_roles->add_cap( 'administrator', $cap );
-					$wp_roles->add_cap( 'ce_shop_manager', $cap );
-					$wp_roles->add_cap( 'ce_shop_worker', $cap );
+					$wp_roles->add_cap( 'sc_shop_manager', $cap );
+					$wp_roles->add_cap( 'sc_shop_worker', $cap );
 				}
 			}
 
-			$wp_roles->add_cap( 'ce_shop_accountant', 'edit_ce_products' );
-			$wp_roles->add_cap( 'ce_shop_accountant', 'view_ce_shop_reports' );
-			$wp_roles->add_cap( 'ce_shop_accountant', 'export_ce_shop_reports' );
-			$wp_roles->add_cap( 'ce_shop_accountant', 'edit_ce_shop_charges' );
+			$wp_roles->add_cap( 'sc_shop_accountant', 'edit_sc_products' );
+			$wp_roles->add_cap( 'sc_shop_accountant', 'view_sc_shop_reports' );
+			$wp_roles->add_cap( 'sc_shop_accountant', 'export_sc_shop_reports' );
+			$wp_roles->add_cap( 'sc_shop_accountant', 'edit_sc_shop_charges' );
 		}
 	}
 
@@ -134,20 +134,19 @@ class RolesService {
 		$capabilities = [];
 
 		$capability_types = [
-			'ce_coupon',
-			'ce_promotion',
-			'ce_purchase',
-			'ce_webhook',
-			'ce_product',
-			'ce_customer',
-			'ce_order',
-			'ce_invoice',
-			'ce_price',
-			'ce_order',
-			'ce_refund',
-			'ce_charge',
-			'ce_payment_method',
-			'ce_subscription',
+			'sc_coupon',
+			'sc_promotion',
+			'sc_purchase',
+			'sc_webhook',
+			'sc_product',
+			'sc_customer',
+			'sc_order',
+			'sc_invoice',
+			'sc_price',
+			'sc_refund',
+			'sc_charge',
+			'sc_payment_method',
+			'sc_subscription',
 		];
 
 		foreach ( $capability_types as $capability_type ) {

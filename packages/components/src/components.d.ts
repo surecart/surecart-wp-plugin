@@ -1883,6 +1883,7 @@ export namespace Components {
     interface ScSubscription {
         "heading": string;
         "query": object;
+        "showCancel": boolean;
         "subscription": Subscription;
         /**
           * Customer id to fetch subscriptions
@@ -5009,6 +5010,7 @@ declare namespace LocalJSX {
     interface ScSubscription {
         "heading"?: string;
         "query"?: object;
+        "showCancel"?: boolean;
         "subscription"?: Subscription;
         /**
           * Customer id to fetch subscriptions

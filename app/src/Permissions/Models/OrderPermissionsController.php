@@ -20,7 +20,7 @@ class OrderPermissionsController extends ModelPermissionsController {
 	 * }
 	 * @return boolean Does user have permission.
 	 */
-	public function edit_ce_order( $user, $args ) {
+	public function edit_sc_order( $user, $args ) {
 		$order = Order::find( $args[2] );
 		if ( ! $order || is_wp_error( $order ) ) {
 			return false;
@@ -41,7 +41,7 @@ class OrderPermissionsController extends ModelPermissionsController {
 	 * }
 	 * @return boolean Does user have permission.
 	 */
-	public function read_ce_order( $user, $args ) {
+	public function read_sc_order( $user, $args ) {
 		$order = Order::find( $args[2] );
 		if ( in_array( $order->status, [ 'draft', 'finalized' ] ) ) {
 			return true;

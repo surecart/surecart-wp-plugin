@@ -92,7 +92,7 @@ class ChargesRestServiceProvider extends RestServiceProvider implements RestServ
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_item_permissions_check( $request ) {
-		return current_user_can( 'read_ce_charge', $request['id'] );
+		return current_user_can( 'read_sc_charge', $request['id'] );
 	}
 
 	/**
@@ -103,12 +103,12 @@ class ChargesRestServiceProvider extends RestServiceProvider implements RestServ
 	 */
 	public function get_items_permissions_check( $request ) {
 		// if the current user can't read charges.
-		if ( ! current_user_can( 'read_ce_charges' ) ) {
+		if ( ! current_user_can( 'read_sc_charges' ) ) {
 			// they can list if they are listing their own customer id.
 			return $this->isListingOwnCustomerId( $request );
 		}
 
 		// need read priveleges.
-		return current_user_can( 'read_ce_charges' );
+		return current_user_can( 'read_sc_charges' );
 	}
 }

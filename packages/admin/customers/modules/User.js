@@ -22,8 +22,8 @@ export default ({ customer_id, customer }) => {
 				'root',
 				'user',
 				{
-					ce_customer_ids: [customer_id],
-					meta: { ce_customer_ids: [customer_id] },
+					sc_customer_ids: [customer_id],
+					meta: { sc_customer_ids: [customer_id] },
 				},
 			];
 			const users = select(coreStore).getEntityRecords(...queryArgs);
@@ -64,8 +64,8 @@ export default ({ customer_id, customer }) => {
 			saveEntityRecord('root', 'user', {
 				id,
 				meta: {
-					ce_customer_ids: {
-						...(user?.meta?.ce_customer_ids || {}),
+					sc_customer_ids: {
+						...(user?.meta?.sc_customer_ids || {}),
 						...{ [mode]: '' },
 					},
 				},
@@ -83,8 +83,8 @@ export default ({ customer_id, customer }) => {
 		saveEntityRecord('root', 'user', {
 			id,
 			meta: {
-				ce_customer_ids: {
-					...(user?.meta?.ce_customer_ids || {}),
+				sc_customer_ids: {
+					...(user?.meta?.sc_customer_ids || {}),
 					...{ [mode]: customer_id },
 				},
 			},

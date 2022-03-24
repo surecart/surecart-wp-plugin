@@ -94,7 +94,7 @@ class PaymentMethodsRestServiceProvider extends RestServiceProvider implements R
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_item_permissions_check( $request ) {
-		return current_user_can( 'read_ce_payment_method', $request['id'] );
+		return current_user_can( 'read_sc_payment_method', $request['id'] );
 	}
 
 	/**
@@ -104,7 +104,7 @@ class PaymentMethodsRestServiceProvider extends RestServiceProvider implements R
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function detach_item_permissions_check( $request ) {
-		return current_user_can( 'edit_ce_payment_method', $request['id'] );
+		return current_user_can( 'edit_sc_payment_method', $request['id'] );
 	}
 
 	/**
@@ -115,13 +115,13 @@ class PaymentMethodsRestServiceProvider extends RestServiceProvider implements R
 	 */
 	public function get_items_permissions_check( $request ) {
 		// a customer can list their own payment methods.
-		if ( ! current_user_can( 'read_ce_payment_methods' ) ) {
+		if ( ! current_user_can( 'read_sc_payment_methods' ) ) {
 			// they can list if they are listing their own customer id.
 			return $this->isListingOwnCustomerId( $request );
 		}
 
 		// need read priveleges.
-		return current_user_can( 'read_ce_payment_methods' );
+		return current_user_can( 'read_sc_payment_methods' );
 	}
 
 	/**
@@ -131,7 +131,7 @@ class PaymentMethodsRestServiceProvider extends RestServiceProvider implements R
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function update_item_permissions_check( $request ) {
-		return current_user_can( 'edit_ce_payment_methods' );
+		return current_user_can( 'edit_sc_payment_methods' );
 	}
 
 	/**
@@ -141,6 +141,6 @@ class PaymentMethodsRestServiceProvider extends RestServiceProvider implements R
 	 * @return false
 	 */
 	public function delete_item_permissions_check( $request ) {
-		return current_user_can( 'delete_ce_payment_methods' );
+		return current_user_can( 'delete_sc_payment_methods' );
 	}
 }

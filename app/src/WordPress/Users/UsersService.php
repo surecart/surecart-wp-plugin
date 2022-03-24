@@ -32,7 +32,7 @@ class UsersService {
 			'description' => __( 'Limit result set to users with a customer.', 'surecart' ),
 			'type'        => 'boolean',
 		];
-		$query_params['ce_customer_ids'] = [
+		$query_params['sc_customer_ids'] = [
 			'description' => __( 'Limit result set to users with specific customer ids.', 'surecart' ),
 			'type'        => 'array',
 			'items'       => [
@@ -50,7 +50,7 @@ class UsersService {
 	public function registerMeta() {
 		register_meta(
 			'user',
-			'ce_customer_ids',
+			'sc_customer_ids',
 			[
 				'type'              => 'object',
 				'show_in_rest'      => [
@@ -71,7 +71,7 @@ class UsersService {
 					return (object) array_map( 'sanitize_text_field', (array) $value );
 				},
 				'auth_callback'     => function () {
-					return current_user_can( 'edit_ce_customers' );
+					return current_user_can( 'edit_sc_customers' );
 				},
 			]
 		);
@@ -86,7 +86,7 @@ class UsersService {
 	 */
 	public function userMetaQuery( $args, $request ) {
 		$key          = User::getCustomerMetaKey();
-		$customer_ids = $request->get_param( 'ce_customer_ids' );
+		$customer_ids = $request->get_param( 'sc_customer_ids' );
 
 		// we're only concerned about our param.
 		if ( empty( $customer_ids ) ) {
@@ -94,7 +94,7 @@ class UsersService {
 		}
 
 		// lets double-check our permissions in case other permissions fail.
-		if ( ! current_user_can( 'edit_ce_customers' ) ) {
+		if ( ! current_user_can( 'edit_sc_customers' ) ) {
 			return $args;
 		}
 

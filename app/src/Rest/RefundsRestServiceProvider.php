@@ -72,7 +72,7 @@ class RefundsRestServiceProvider extends RestServiceProvider implements RestServ
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_item_permissions_check( $request ) {
-		return current_user_can( 'read_ce_refund', $request['id'] );
+		return current_user_can( 'read_sc_refund', $request['id'] );
 	}
 
 	/**
@@ -83,13 +83,13 @@ class RefundsRestServiceProvider extends RestServiceProvider implements RestServ
 	 */
 	public function get_items_permissions_check( $request ) {
 		// a customer can list their own sessions.
-		if ( ! current_user_can( 'read_ce_refunds' ) ) {
+		if ( ! current_user_can( 'read_sc_refunds' ) ) {
 			// they can list if they are listing their own customer id.
 			return $this->isListingOwnCustomerId( $request );
 		}
 
 		// need read priveleges.
-		return current_user_can( 'read_ce_refunds' );
+		return current_user_can( 'read_sc_refunds' );
 	}
 
 	/**
@@ -99,6 +99,6 @@ class RefundsRestServiceProvider extends RestServiceProvider implements RestServ
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function create_item_permissions_check( $request ) {
-		return current_user_can( 'publish_ce_refunds' );
+		return current_user_can( 'publish_sc_refunds' );
 	}
 }

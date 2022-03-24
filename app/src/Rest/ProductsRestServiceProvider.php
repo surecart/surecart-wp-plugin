@@ -182,7 +182,7 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_item_permissions_check( $request ) {
-		if ( 'edit' === $request['context'] && ! current_user_can( 'edit_ce_products' ) ) {
+		if ( 'edit' === $request['context'] && ! current_user_can( 'edit_sc_products' ) ) {
 			return new \WP_Error(
 				'rest_forbidden_context',
 				__( 'Sorry, you are not allowed to edit products.', 'surecart' ),
@@ -200,7 +200,7 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_items_permissions_check( $request ) {
-		if ( 'edit' === $request['context'] && ! current_user_can( 'edit_ce_products' ) ) {
+		if ( 'edit' === $request['context'] && ! current_user_can( 'edit_sc_products' ) ) {
 			return new \WP_Error(
 				'rest_forbidden_context',
 				__( 'Sorry, you are not allowed to edit products.', 'surecart' ),
@@ -209,7 +209,7 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 		}
 
 		if ( $request['archived'] ) {
-			return current_user_can( 'edit_ce_products' );
+			return current_user_can( 'edit_sc_products' );
 		}
 
 		return true;
@@ -222,7 +222,7 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function create_item_permissions_check( $request ) {
-		return current_user_can( 'publish_ce_products' );
+		return current_user_can( 'publish_sc_products' );
 	}
 
 	/**
@@ -232,7 +232,7 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function update_item_permissions_check( $request ) {
-		return current_user_can( 'edit_ce_products' );
+		return current_user_can( 'edit_sc_products' );
 	}
 
 	/**
@@ -242,6 +242,6 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function delete_item_permissions_check( $request ) {
-		return current_user_can( 'delete_ce_products' );
+		return current_user_can( 'delete_sc_products' );
 	}
 }

@@ -20,7 +20,7 @@ class ChargePermissionsController extends ModelPermissionsController {
 	 * }
 	 * @return boolean Does user have permission.
 	 */
-	public function read_ce_charge( $user, $args ) {
+	public function read_sc_charge( $user, $args ) {
 		return $this->belongsToUser( Charge::class, $args[2], $user );
 	}
 }

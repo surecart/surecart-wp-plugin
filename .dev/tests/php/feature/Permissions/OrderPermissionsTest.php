@@ -51,9 +51,9 @@ class OrderPermissionsTest extends SureCartUnitTestCase {
 
 		$user = self::factory()->user->create_and_get();
 
-		$this->assertFalse(user_can($user, 'read_ce_orders', 'Users should not be able to read orders by default'));
-		$this->assertTrue(user_can($user, 'edit_ce_order', 'testid'), 'Anyone can edit a draft order.');
-		$this->assertTrue(user_can($user, 'read_ce_order', 'testid', 'Anyone can read a draft order.'));
+		$this->assertFalse(user_can($user, 'read_sc_orders', 'Users should not be able to read orders by default'));
+		$this->assertTrue(user_can($user, 'edit_sc_order', 'testid'), 'Anyone can edit a draft order.');
+		$this->assertTrue(user_can($user, 'read_sc_order', 'testid', 'Anyone can read a draft order.'));
 	}
 
 	public function test_edit_and_view_paid_completed_permissions() {
@@ -77,9 +77,9 @@ class OrderPermissionsTest extends SureCartUnitTestCase {
 		$user = User::find(self::factory()->user->create());
 		$user->setCustomerId('testcustomerid');
 
-		$this->assertFalse(user_can($user->ID, 'read_ce_orders'));
-		$this->assertFalse(user_can($user->ID, 'edit_ce_order', 'testid'));
-		$this->assertTrue(user_can($user->ID, 'read_ce_order', 'testid'));
+		$this->assertFalse(user_can($user->ID, 'read_sc_orders'));
+		$this->assertFalse(user_can($user->ID, 'edit_sc_order', 'testid'));
+		$this->assertTrue(user_can($user->ID, 'read_sc_order', 'testid'));
 
 		$requests->shouldReceive('makeRequest')
 		->withSomeOfArgs('orders/testid')
@@ -90,9 +90,9 @@ class OrderPermissionsTest extends SureCartUnitTestCase {
 			'status' => 'paid'
 		]);
 
-		$this->assertFalse(user_can($user->ID, 'read_ce_orders'));
-		$this->assertFalse(user_can($user->ID, 'edit_ce_order', 'testid'));
-		$this->assertTrue(user_can($user->ID, 'read_ce_order', 'testid'));
+		$this->assertFalse(user_can($user->ID, 'read_sc_orders'));
+		$this->assertFalse(user_can($user->ID, 'edit_sc_order', 'testid'));
+		$this->assertTrue(user_can($user->ID, 'read_sc_order', 'testid'));
 	}
 
 }

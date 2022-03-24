@@ -1046,6 +1046,7 @@
   "sc-subscription": {
     "heading": true,
     "query": true,
+    "show-cancel": true,
     "subscription": true,
     "subscription-id": true,
     "style": true,

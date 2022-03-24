@@ -27,7 +27,7 @@ class User implements ArrayAccess, JsonSerializable {
 	 *
 	 * @var string
 	 */
-	protected $customer_id_key = 'ce_customer_ids';
+	protected $customer_id_key = 'sc_customer_ids';
 
 	/**
 	 * Get the customer meta key.

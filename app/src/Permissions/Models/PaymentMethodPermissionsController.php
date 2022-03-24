@@ -20,7 +20,7 @@ class PaymentMethodPermissionsController extends ModelPermissionsController {
 	 * }
 	 * @return boolean Does user have permission.
 	 */
-	public function edit_ce_payment_method( $user, $args ) {
+	public function edit_sc_payment_method( $user, $args ) {
 		return $this->belongsToUser( PaymentMethod::class, $args[2], $user );
 	}
 }

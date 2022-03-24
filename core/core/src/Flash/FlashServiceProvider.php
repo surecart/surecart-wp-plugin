@@ -22,15 +22,15 @@ class FlashServiceProvider implements ServiceProviderInterface {
 	 * {@inheritDoc}
 	 */
 	public function register( $container ) {
-		global $ce_session;
-		$ce_session = [];
+		global $sc_session;
+		$sc_session = [];
 
-		$container[ SURECART_FLASH_KEY ] = function ( $c ) use ( $ce_session ) {
+		$container[ SURECART_FLASH_KEY ] = function ( $c ) use ( $sc_session ) {
 			$session = null;
 			if ( isset( $c[ SURECART_SESSION_KEY ] ) ) {
 				$session = &$c[ SURECART_SESSION_KEY ];
 			} else {
-				$session = &$ce_session;
+				$session = &$sc_session;
 			}
 			return new Flash( $session );
 		};

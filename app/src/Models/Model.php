@@ -699,11 +699,11 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	 * @return $this
 	 */
 	protected function findCached( $id = '' ) {
-		$cache_key = 'ce_cached_request' . wp_json_encode( $this->prepareRequest( [ 'id' => $id ] ) );
+		$cache_key = 'sc_cached_request' . wp_json_encode( $this->prepareRequest( [ 'id' => $id ] ) );
 		$value     = get_transient( $cache_key );
 		if ( false === $value ) {
 			$value = $this->find( $id );
-			set_transient( $cache_key, $value, apply_filters( 'ce_cached_request_transient_time', $this->transient_cache_time, $this ) );
+			set_transient( $cache_key, $value, apply_filters( 'sc_cached_request_transient_time', $this->transient_cache_time, $this ) );
 		}
 		return $value;
 	}

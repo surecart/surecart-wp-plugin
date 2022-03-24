@@ -17,7 +17,7 @@ class CustomerPermissionsController extends ModelPermissionsController {
 	 * }
 	 * @return boolean Does user have permission.
 	 */
-	public function edit_ce_customer( $user, $args ) {
+	public function edit_sc_customer( $user, $args ) {
 		return $this->customerIdMatches( $user, $args[2] );
 	}
 
@@ -33,7 +33,7 @@ class CustomerPermissionsController extends ModelPermissionsController {
 	 * }
 	 * @return boolean Does user have permission.
 	 */
-	public function read_ce_customer( $user, $args ) {
+	public function read_sc_customer( $user, $args ) {
 		return $this->customerIdMatches( $user, $args[2] );
 	}
 

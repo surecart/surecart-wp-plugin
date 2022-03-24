@@ -18,7 +18,7 @@ class PluginSettings {
 		return \SureCart::view( 'admin/plugin' )->with(
 			[
 				'api_token' => ApiToken::get(),
-				'uninstall' => get_option( 'ce_uninstall', false ),
+				'uninstall' => get_option( 'sc_uninstall', false ),
 				'status'    => $request->query( 'status' ),
 			]
 		);
@@ -35,7 +35,7 @@ class PluginSettings {
 		$api_token = $request->body( 'api_token' );
 
 		// update uninstall option.
-		update_option( 'ce_uninstall', $request->body( 'uninstall' ) === 'on' );
+		update_option( 'sc_uninstall', $request->body( 'uninstall' ) === 'on' );
 
 		// save token.
 		ApiToken::save( $api_token );

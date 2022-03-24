@@ -15,7 +15,7 @@ class WebhooksService {
 	 *
 	 * @var string
 	 */
-	protected $signing_key = 'ce_webhook_signing_secret';
+	protected $signing_key = 'sc_webhook_signing_secret';
 
 	/**
 	 * Hold the domain service.
