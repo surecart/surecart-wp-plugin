@@ -1,4 +1,6 @@
+/** @jsx jsx */
 import { __, _n } from '@wordpress/i18n';
+import { css, jsx } from '@emotion/core';
 import {
 	InspectorControls,
 	RichText,
@@ -10,6 +12,7 @@ import {
 	ScDashboardModule,
 } from '@surecart/components-react';
 import { Fragment } from 'react';
+import OverlayLabel from '../../../components/OverlayLabel';
 
 export default ({ attributes, setAttributes }) => {
 	const { title } = attributes;
@@ -34,6 +37,7 @@ export default ({ attributes, setAttributes }) => {
 			</InspectorControls>
 
 			<ScDashboardModule {...blockProps}>
+				<OverlayLabel>{__('Sample Data', 'surecart')}</OverlayLabel>
 				<RichText
 					aria-label={__('Title')}
 					placeholder={__('Add A Title…')}

@@ -7,6 +7,7 @@ import {
 import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
 import { ScDashboardModule } from '@surecart/components-react';
 import { Fragment } from 'react';
+import OverlayLabel from '../../../components/OverlayLabel';
 
 export default ({ attributes, setAttributes }) => {
 	const { title } = attributes;
@@ -27,6 +28,7 @@ export default ({ attributes, setAttributes }) => {
 			</InspectorControls>
 
 			<ScDashboardModule {...blockProps}>
+				<OverlayLabel>{__('Sample Data', 'surecart')}</OverlayLabel>
 				<RichText
 					aria-label={__('Title')}
 					placeholder={__('Add A Title…')}

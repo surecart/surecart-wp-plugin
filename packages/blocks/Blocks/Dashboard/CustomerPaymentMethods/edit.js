@@ -7,6 +7,7 @@ import {
 import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
 import { Fragment } from 'react';
 import { ScDashboardModule } from '@surecart/components-react';
+import OverlayLabel from '../../../components/OverlayLabel';
 
 export default ({ attributes, setAttributes }) => {
 	const { title } = attributes;
@@ -48,6 +49,7 @@ export default ({ attributes, setAttributes }) => {
 				</sc-flex>
 
 				<sc-card no-padding>
+					<OverlayLabel>{__('Sample Data', 'surecart')}</OverlayLabel>
 					<sc-stacked-list>
 						<sc-stacked-list-row
 							style={{ '--columns': '4' }}
