@@ -1,4 +1,4 @@
-import { Component, Prop, h, State, Watch, Event, EventEmitter, Method, Element } from '@stencil/core';
+import { Component, Prop, h, State, Watch, Event, EventEmitter, Method, Element, Listen } from '@stencil/core';
 import { ChoiceItem } from '../../../types';
 import Fuse from 'fuse.js';
 import { FormSubmitController } from '../../../functions/form-data';
@@ -19,6 +19,7 @@ export class ScSelectDropdown {
 
   private searchInput: HTMLScInputElement;
   private input: HTMLInputElement;
+  private menu: HTMLScMenuElement;
 
   private inputId: string = `select-${++id}`;
   private helpId = `select-help-text-${id}`;
@@ -220,17 +221,75 @@ export class ScSelectDropdown {
     }
   }
 
+  getItems() {
+    return [...this.el.shadowRoot.querySelectorAll<HTMLScMenuItemElement>('sc-menu-item')];
+  }
+
+  @Listen('keydown')
+  handleKeyDown(event: KeyboardEvent) {
+    const target = event.target as HTMLElement;
+    const items = this.getItems();
+    const firstItem = items[0];
+    const lastItem = items[items.length - 1];
+
+    // Ignore key presses on tags
+    if (target.tagName.toLowerCase() === 'sc-tag') {
+      return;
+    }
+
+    // Tabbing out of the control closes it
+    if (event.key === 'Tab') {
+      if (this.open) {
+        this.handleHide();
+      }
+      return;
+    }
+
+    // Up/down opens the menu
+    if (['ArrowDown', 'ArrowUp'].includes(event.key)) {
+      event.preventDefault();
+
+      // Show the menu if it's not already open
+      if (!this.open) {
+        this.handleShow();
+      }
+
+      // Focus on a menu item
+      if (event.key === 'ArrowDown') {
+        this.menu.setCurrentItem(firstItem);
+        firstItem.setFocus();
+        return;
+      }
+
+      if (event.key === 'ArrowUp') {
+        this.menu.setCurrentItem(lastItem);
+        lastItem.setFocus();
+        return;
+      }
+    }
+
+    // don't open the menu when a CTRL/Command key is pressed
+    if (event.ctrlKey || event.metaKey) {
+      return;
+    }
+
+    // All other "printable" keys open the menu and initiate type to select
+    if (!this.open && event.key.length === 1) {
+      this.handleShow();
+    }
+  }
+
   disconnectedCallback() {
     this.formController?.removeFormData();
   }
 
-  renderItem(choice: ChoiceItem) {
+  renderItem(choice: ChoiceItem, index: number) {
     if (choice?.choices?.length) {
-      return <sc-menu-label>{choice.label}</sc-menu-label>;
+      return <sc-menu-label key={index}>{choice.label}</sc-menu-label>;
     }
 
     return (
-      <sc-menu-item checked={this.isChecked(choice)} onClick={() => this.handleSelect(choice.value)} disabled={choice.disabled}>
+      <sc-menu-item key={index} checked={this.isChecked(choice)} onClick={() => this.handleSelect(choice.value)} disabled={choice.disabled}>
         {choice.label}
         {choice?.suffix && <span slot="suffix">{choice.suffix}</span>}
       </sc-menu-item>
@@ -301,7 +360,7 @@ export class ScSelectDropdown {
               </sc-input>
             )}
 
-            <sc-menu style={{ maxHeight: '210px', overflow: 'auto' }}>
+            <sc-menu style={{ maxHeight: '210px', overflow: 'auto' }} ref={el => (this.menu = el as HTMLScMenuElement)}>
               <slot name="prefix"></slot>
               {this.loading && !this.filteredChoices.length && (
                 <div class="loading">
@@ -309,12 +368,7 @@ export class ScSelectDropdown {
                 </div>
               )}
               {(this.filteredChoices || []).map((choice, index) => {
-                return (
-                  <div key={index}>
-                    {this.renderItem(choice)}
-                    {(choice.choices || []).map(choice => this.renderItem(choice))}
-                  </div>
-                );
+                return [this.renderItem(choice, index), (choice.choices || []).map(choice => this.renderItem(choice, index))];
               })}
               {!this.loading && !this.filteredChoices.length && <div class="select__empty">{__('Nothing Found', 'surecart')}</div>}
               <slot name="suffix"></slot>

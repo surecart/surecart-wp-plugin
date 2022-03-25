@@ -1,4 +1,4 @@
-import { Component, h, Event, EventEmitter, Element } from '@stencil/core';
+import { Component, h, Event, EventEmitter, Element, Method } from '@stencil/core';
 @Component({
   tag: 'sc-menu',
   styleUrl: 'sc-menu.scss',
@@ -23,7 +23,7 @@ export class ScMenu {
   handleKeyDown(event: KeyboardEvent) {
     // Make a selection when pressing enter
     if (event.key === 'Enter') {
-      const item = this.getActiveItem();
+      const item = this.getCurrentItem();
       event.preventDefault();
 
       if (item) {
@@ -38,7 +38,7 @@ export class ScMenu {
 
     // Move the selection when pressing down or up
     if (['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(event.key)) {
-      const selectedItem = this.getActiveItem();
+      const selectedItem = this.getCurrentItem();
       let index = selectedItem ? this.items.indexOf(selectedItem) : 0;
 
       if (this.items.length) {
@@ -57,28 +57,37 @@ export class ScMenu {
         if (index < 0) index = 0;
         if (index > this.items.length - 1) index = this.items.length - 1;
 
-        this.setActiveItem(this.items[index]);
+        this.setCurrentItem(this.items[index]);
 
         return;
       }
     }
   }
 
-  /** Sets the active item */
-  setActiveItem(item: HTMLScMenuItemElement) {
-    item.setFocus();
+  /** Get the active item */
+  getCurrentItem() {
+    return this.items.find(i => i.getAttribute('tabindex') === '0');
   }
 
-  /** Get the active item */
-  getActiveItem() {
-    // TODO: Check if this works
-    return this.el.querySelector('.menu-item--focused') as HTMLScMenuItemElement;
+  /**
+   * @internal Sets the current menu item to the specified element. This sets `tabindex="0"` on the target element and
+   * `tabindex="-1"` to all other items. This method must be called prior to setting focus on a menu item.
+   */
+  @Method()
+  async setCurrentItem(item: HTMLScMenuItemElement) {
+    const activeItem = item.disabled ? this.items[0] : item;
+    // Update tab indexes
+    this.items.forEach(i => {
+      console.log({ i, activeItem });
+      i.setAttribute('tabindex', i === activeItem ? '0' : '-1');
+    });
   }
 
   /** Sync slotted items with internal state */
   syncItems() {
-    const slotted = this.el.shadowRoot.querySelector('slot') as HTMLSlotElement;
-    this.items = slotted.assignedNodes().filter(node => {
+    const slottedElements = (this.el.shadowRoot.querySelector('slot') as HTMLSlotElement).assignedElements({ flatten: true });
+    console.log(slottedElements);
+    this.items = slottedElements.filter(node => {
       return node.nodeName === 'sc-menu-item';
     }) as HTMLScMenuItemElement[];
   }
@@ -90,7 +99,7 @@ export class ScMenu {
 
   render() {
     return (
-      <div part="base" class="menu" role="menu" tabindex="0">
+      <div part="base" class="menu" role="menu" tabindex="0" onKeyDown={e => this.handleKeyDown(e)}>
         <slot onSlotchange={() => this.handleSlotChange()}></slot>
       </div>
     );

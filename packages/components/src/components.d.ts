@@ -1109,6 +1109,7 @@ export namespace Components {
     interface ScLoginForm {
     }
     interface ScMenu {
+        "setCurrentItem": (item: HTMLScMenuItemElement) => Promise<void>;
     }
     interface ScMenuDivider {
     }
