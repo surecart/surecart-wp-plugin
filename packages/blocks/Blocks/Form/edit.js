@@ -8,7 +8,7 @@ import {
 	store as blockEditorStore,
 } from '@wordpress/block-editor';
 import { ScCheckout } from '@surecart/components-react';
-import { Fragment, useState } from '@wordpress/element';
+import { Fragment, useState, useEffect } from '@wordpress/element';
 import { parse } from '@wordpress/blocks';
 import {
 	PanelRow,
@@ -57,7 +57,19 @@ export default function edit({ clientId, attributes, setAttributes }) {
 	const blockCount = useSelect((select) =>
 		select(blockEditorStore).getBlockCount(clientId)
 	);
-	const { replaceInnerBlocks } = useDispatch(blockEditorStore);
+	const { replaceInnerBlocks, setTemplateValidity } =
+		useDispatch(blockEditorStore);
+
+	// set template to valid for our post type.
+	// prevents template changed warnings.
+	const postType = useSelect((select) =>
+		select('core/editor').getCurrentPostType()
+	);
+	useEffect(() => {
+		if (postType === 'sc_form') {
+			setTemplateValidity(true);
+		}
+	}, [postType]);
 
 	const changeTemplate = async () => {
 		const r = confirm(
