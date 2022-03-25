@@ -11,7 +11,7 @@ return [
 	/**
 	 * Array of service providers you wish to enable.
 	 */
-	'providers'           => [
+	'providers'              => [
 		\SureCartAppCore\AppCore\AppCoreServiceProvider::class,
 		\SureCart\WordPress\TranslationsServiceProvider::class,
 		\SureCart\Account\AccountServiceProvider::class,
@@ -43,7 +43,6 @@ return [
 		\SureCart\Rest\PurchasesRestServiceProvider::class,
 		\SureCart\Rest\CustomerRestServiceProvider::class,
 		\SureCart\Rest\CustomerLinksRestServiceProvider::class,
-		\SureCart\Rest\SettingsRestServiceProvider::class,
 		\SureCart\Rest\PaymentMethodsRestServiceProvider::class,
 		\SureCart\Rest\ProductsRestServiceProvider::class,
 		\SureCart\Rest\ProductGroupsRestServiceProvider::class,
@@ -63,7 +62,7 @@ return [
 	/**
 	* SSR Blocks
 	*/
-	'blocks'              => [
+	'blocks'                 => [
 		\SureCartBlocks\Blocks\BuyButton\Block::class,
 		\SureCartBlocks\Blocks\CustomerDashboardButton\Block::class,
 		\SureCartBlocks\Blocks\CheckoutForm\Block::class,
@@ -83,9 +82,23 @@ return [
 	],
 
 	/**
+	* Permission Controllers
+	*/
+	'permission_controllers' => [
+		\SureCart\Permissions\Models\ChargePermissionsController::class,
+		\SureCart\Permissions\Models\CustomerPermissionsController::class,
+		\SureCart\Permissions\Models\OrderPermissionsController::class,
+		\SureCart\Permissions\Models\InvoicePermissionsController::class,
+		\SureCart\Permissions\Models\PaymentMethodPermissionsController::class,
+		\SureCart\Permissions\Models\PurchasePermissionsController::class,
+		\SureCart\Permissions\Models\RefundPermissionsController::class,
+		\SureCart\Permissions\Models\SubscriptionPermissionsController::class,
+	],
+
+	/**
 	 * And array of plugin settings to register
 	 */
-	'settings'            => [
+	'settings'               => [
 		\SureCart\Settings\Setting\AccountSetting::class,
 	],
 
@@ -96,7 +109,7 @@ return [
 	 * If we are not using routing at all we can skip
 	 * the entire 'routes' option.
 	 */
-	'routes'              => [
+	'routes'                 => [
 		'web'   => [
 			'definitions' => __DIR__ . DIRECTORY_SEPARATOR . 'routes' . DIRECTORY_SEPARATOR . 'web.php',
 			'attributes'  => [
@@ -120,7 +133,7 @@ return [
 	/**
 	 * View Composers settings.
 	 */
-	'view_composers'      => [
+	'view_composers'         => [
 		'namespace' => 'SureCart\\ViewComposers\\',
 	],
 
@@ -136,7 +149,7 @@ return [
 	 * - 'user.logged_out'
 	 * - 'user.can'
 	 */
-	'middleware'          => [
+	'middleware'             => [
 		'archive_model' => \SureCart\Middleware\ArchiveModelMiddleware::class,
 		'edit_model'    => \SureCart\Middleware\EditModelMiddleware::class,
 		'nonce'         => \SureCart\Middleware\NonceMiddleware::class,
@@ -147,7 +160,7 @@ return [
 	 * Map model names to their corresponding classes.
 	 * This lets you reference a model based on a simple string.
 	 */
-	'models'              => [
+	'models'                 => [
 		'abandoned_order' => \SureCart\Models\AbandonedOrder::class,
 		'account'         => \SureCart\Models\Account::class,
 		'charge'          => \SureCart\Models\Charge::class,
@@ -180,7 +193,7 @@ return [
 	 * Warning: The 'surecart' group contains some internal SureCart core
 	 * middleware which you should avoid overriding.
 	 */
-	'middleware_groups'   => [
+	'middleware_groups'      => [
 		'global' => [],
 		'web'    => [],
 		'ajax'   => [],
@@ -191,7 +204,7 @@ return [
 	 * Optionally specify middleware execution order.
 	 * Use fully qualified middleware class names.
 	 */
-	'middleware_priority' => [
+	'middleware_priority'    => [
 		// phpcs:ignore
 		// \SureCart\Middleware\MyMiddlewareThatShouldRunFirst::class,
 		// \SureCart\Middleware\MyMiddlewareThatShouldRunSecond::class,
@@ -202,12 +215,12 @@ return [
 	 * Use absolute paths or leave blank to disable.
 	 * Applies only to the default PhpViewEngine.
 	 */
-	'views'               => [ dirname( __DIR__ ) . DIRECTORY_SEPARATOR . 'views' ],
+	'views'                  => [ dirname( __DIR__ ) . DIRECTORY_SEPARATOR . 'views' ],
 
 	/**
 	 * App Core configuration.
 	 */
-	'app_core'            => [
+	'app_core'               => [
 		'path' => dirname( __DIR__ ),
 		'url'  => plugin_dir_url( SURECART_PLUGIN_FILE ),
 	],

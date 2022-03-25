@@ -13,6 +13,7 @@ import {
 } from '@wordpress/components';
 import { ScDashboardModule } from '@surecart/components-react';
 import { Fragment } from 'react';
+import OverlayLabel from '../../../components/OverlayLabel';
 
 export default ({ attributes, setAttributes }) => {
 	const { per_page, paginate, title } = attributes;
@@ -49,6 +50,7 @@ export default ({ attributes, setAttributes }) => {
 				</sc-button>
 
 				<sc-card no-padding>
+					<OverlayLabel>{__('Sample Data', 'surecart')}</OverlayLabel>
 					<sc-stacked-list>
 						<sc-stacked-list-row
 							style={{ '--columns': '4' }}

@@ -206,7 +206,7 @@ class SubscriptionController extends BaseController {
 						'heading'                => __( 'New Plan', 'surecart' ),
 						'subscriptionId'         => $this->getId(),
 						'priceId'                => $this->getParam( 'price_id' ),
-						'successUrl'             => esc_url( $back ),
+						'successUrl'             => esc_url_raw( $back ),
 						'quantityUpdatesEnabled' => \SureCart::account()->portal_protocol->subscription_quantity_updates_enabled,
 						'quantity'               => 1,
 					]

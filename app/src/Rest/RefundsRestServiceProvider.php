@@ -3,16 +3,13 @@
 namespace SureCart\Rest;
 
 use SureCart\Controllers\Rest\RefundsController;
-use SureCart\Models\User;
+
 use SureCart\Rest\RestServiceInterface;
-use SureCart\Rest\Traits\CanListByCustomerIds;
 
 /**
  * Service provider for Price Rest Requests
  */
 class RefundsRestServiceProvider extends RestServiceProvider implements RestServiceInterface {
-	use CanListByCustomerIds;
-
 	/**
 	 * Endpoint.
 	 *
@@ -82,14 +79,7 @@ class RefundsRestServiceProvider extends RestServiceProvider implements RestServ
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_items_permissions_check( $request ) {
-		// a customer can list their own sessions.
-		if ( ! current_user_can( 'read_sc_refunds' ) ) {
-			// they can list if they are listing their own customer id.
-			return $this->isListingOwnCustomerId( $request );
-		}
-
-		// need read priveleges.
-		return current_user_can( 'read_sc_refunds' );
+		return current_user_can( 'read_sc_refunds', $request->get_params() );
 	}
 
 	/**

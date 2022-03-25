@@ -4,50 +4,50 @@ import { __ } from '@wordpress/i18n';
 
 import PriceChoices from '@scripts/blocks/components/PriceChoices';
 
-export default ( { attributes, setAttributes } ) => {
+export default ({ attributes, setAttributes }) => {
 	const { prices } = attributes;
 
-	const removeChoice = ( index ) => {
-		setAttributes( {
-			prices: prices.filter( ( item, i ) => i !== index ),
-		} );
+	const removeChoice = (index) => {
+		setAttributes({
+			prices: prices.filter((item, i) => i !== index),
+		});
 	};
 
-	const updateChoice = ( data, index ) => {
-		setAttributes( {
-			prices: prices.map( ( item, i ) => {
-				if ( i !== index ) return item;
+	const updateChoice = (data, index) => {
+		setAttributes({
+			prices: prices.map((item, i) => {
+				if (i !== index) return item;
 				return {
 					...item,
 					...data,
 				};
-			} ),
-		} );
+			}),
+		});
 	};
 
 	const addProduct = () => {
-		setAttributes( {
+		setAttributes({
 			prices: [
-				...( prices || [] ),
+				...(prices || []),
 				{
 					quantity: 1,
 				},
 			],
-		} );
+		});
 	};
 
 	return (
 		<div
-			css={ css`
+			css={css`
 				font-size: 13px;
 				padding-bottom: 8px;
-			` }
+			`}
 		>
 			<PriceChoices
-				choices={ prices }
-				onAddProduct={ addProduct }
-				onUpdate={ updateChoice }
-				onRemove={ removeChoice }
+				choices={prices}
+				onAddProduct={addProduct}
+				onUpdate={updateChoice}
+				onRemove={removeChoice}
 			/>
 		</div>
 	);

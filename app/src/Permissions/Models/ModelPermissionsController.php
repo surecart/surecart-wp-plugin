@@ -43,7 +43,7 @@ abstract class ModelPermissionsController {
 			}
 
 			// check permission.
-			$permission = $this->$name( $user, $args );
+			$permission = $this->$name( $user, $args, $allcaps );
 			if ( $permission ) {
 				$allcaps[ $caps[0] ] = true;
 				return $allcaps;
@@ -67,5 +67,46 @@ abstract class ModelPermissionsController {
 			return $subscription;
 		}
 		return $subscription->belongsToUser( $user );
+	}
+
+	/**
+	 * Is ths user listing their own customer ids.
+	 *
+	 * @param \SureCart\Models\User $user User model.
+	 * @param array                 $customer_ids Array of customer ids.
+	 * @return boolean
+	 */
+	protected function isListingOwnCustomerIds( $user, $customer_ids ) {
+		// must have list.
+		if ( empty( $customer_ids ) ) {
+			return false;
+		}
+
+		// check each one.
+		foreach ( $customer_ids as $id ) {
+			if ( ! $id || ! in_array( $id, (array) $user->customerIds() ) ) {
+				return false; // this id does not belong to the user.
+			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * Check permissions for specific properties of the request.
+	 *
+	 * @param \WP_REST_Request $request Full details about the request.
+	 * @param array            $keys Keys to check.
+	 *
+	 * @return boolean
+	 */
+	protected function requestOnlyHasKeys( $request, $keys ) {
+		$keys = array_merge( $keys, [ 'context', '_locale', 'rest_route', 'id', 'expand' ] );
+		foreach ( (array) $request as $key => $value ) {
+			if ( ! in_array( $key, $keys, true ) ) {
+				return false;
+			}
+		}
+		return true;
 	}
 }

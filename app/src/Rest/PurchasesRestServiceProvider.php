@@ -3,15 +3,12 @@
 namespace SureCart\Rest;
 
 use SureCart\Controllers\Rest\PurchasesController;
-use SureCart\Models\User;
 use SureCart\Rest\RestServiceInterface;
-use SureCart\Rest\Traits\CanListByCustomerIds;
 
 /**
  * Service provider for Price Rest Requests
  */
 class PurchasesRestServiceProvider extends RestServiceProvider implements RestServiceInterface {
-	use CanListByCustomerIds;
 
 	/**
 	 * Endpoint.
@@ -116,18 +113,11 @@ class PurchasesRestServiceProvider extends RestServiceProvider implements RestSe
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_items_permissions_check( $request ) {
-		// a customer can list their own purchases.
-		if ( ! current_user_can( 'read_sc_purchases' ) ) {
-			// they can list if they are listing their own customer id.
-			return $this->isListingOwnCustomerId( $request );
-		}
-
-		// need read priveleges.
-		return current_user_can( 'read_sc_purchases' );
+		return current_user_can( 'read_sc_purchases', $request->get_params() );
 	}
 
 	/**
-	 * Anyone can update.
+	 * Update permissions.
 	 *
 	 * @param \WP_REST_Request $request Full details about the request.
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
