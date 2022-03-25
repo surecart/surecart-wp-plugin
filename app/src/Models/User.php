@@ -374,6 +374,10 @@ class User implements ArrayAccess, JsonSerializable {
 		$this->user->$offset = null;
 	}
 
+	public function getUser() {
+		return $this->user;
+	}
+
 	/**
 	 * Determine if an attribute or relation exists on the model.
 	 *

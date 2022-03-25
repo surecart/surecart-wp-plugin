@@ -55,25 +55,35 @@ class CustomerRestServiceProvider extends RestServiceProvider implements RestSer
 		return $this->schema;
 	}
 
+		/**
+		 * Register REST Routes
+		 *
+		 * @return void
+		 */
+	public function registerRoutes() {
+		register_rest_route(
+			"$this->name/v$this->version",
+			$this->endpoint . '/(?P<id>\S+)/connect/(?P<user_id>\S+)',
+			[
+				[
+					'methods'             => \WP_REST_Server::EDITABLE,
+					'callback'            => $this->callback( $this->controller, 'connect' ),
+					'permission_callback' => [ $this, 'connect_permissions_check' ],
+				],
+				// Register our schema callback.
+				'schema' => [ $this, 'get_item_schema' ],
+			]
+		);
+	}
+
 	/**
-	 * Does the current user match the customer?
+	 * A WordPress user can read their own customer record.
 	 *
-	 * @param string $id Customer id.
-	 *
-	 * @return bool
+	 * @param \WP_REST_Request $request Full details about the request.
+	 * @return boolean
 	 */
-	public function currentUserMatchesCustomerId( $id ) {
-		$user = User::findByCustomerId( $id );
-		if ( ! $user || is_wp_error( $user ) ) {
-			return false;
-		}
-
-		// user can get their own customer record.
-		if ( User::current()->ID === $user->ID ) {
-			return true;
-		}
-
-		return false;
+	public function connect_permissions_check( $request ) {
+		return current_user_can( 'edit_sc_customers' );
 	}
 
 	/**
@@ -83,12 +93,7 @@ class CustomerRestServiceProvider extends RestServiceProvider implements RestSer
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_item_permissions_check( $request ) {
-		if ( $this->currentUserMatchesCustomerId( $request['id'] ) ) {
-			return true;
-		}
-
-		// need to be able to read customers.
-		return current_user_can( 'read_sc_customers' );
+		return current_user_can( 'read_sc_customers', $request->get_params() );
 	}
 
 	/**
@@ -119,15 +124,7 @@ class CustomerRestServiceProvider extends RestServiceProvider implements RestSer
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function update_item_permissions_check( $request ) {
-		// if the current user matches the customer id.
-		if ( ! current_user_can( 'edit_sc_customers' ) ) {
-			if ( $this->currentUserMatchesCustomerId( $request['id'] ) ) {
-				// whitelist specific params they are allowed to update.
-				return $this->requestOnlyHasKeys( $request, [ 'billing_address', 'billing_matches_shipping', 'shipping_address', 'default_payment_method', 'tax_identifier', 'unsubscribed', 'phone', 'name', 'email' ] );
-			}
-		}
-
-		return current_user_can( 'edit_sc_customers' );
+		return current_user_can( 'edit_sc_customer', $request['id'], $request->get_params() );
 	}
 
 	/**
