@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
-om;
 
 import PriceChoices from '@scripts/blocks/components/PriceChoices';
 
