@@ -2,14 +2,6 @@
 
 namespace SureCart\Permissions;
 
-use SureCart\Permissions\Models\ChargePermissionsController;
-use SureCart\Permissions\Models\CustomerPermissionsController;
-use SureCart\Permissions\Models\OrderPermissionsController;
-use SureCart\Permissions\Models\PaymentMethodPermissionsController;
-use SureCart\Permissions\Models\SubscriptionPermissionsController;
-use SureCart\Permissions\Models\PurchasePermissionsController;
-use SureCart\Permissions\Models\RefundPermissionsController;
-
 /**
  * Permissions Service
  */
@@ -20,13 +12,13 @@ class PermissionsService {
 	 * @var array
 	 */
 	protected $controllers = [
-		ChargePermissionsController::class,
-		CustomerPermissionsController::class,
-		OrderPermissionsController::class,
-		PaymentMethodPermissionsController::class,
-		PurchasePermissionsController::class,
-		RefundPermissionsController::class,
-		SubscriptionPermissionsController::class,
+		\SureCart\Permissions\Models\ChargePermissionsController::class,
+		\SureCart\Permissions\Models\CustomerPermissionsController::class,
+		\SureCart\Permissions\Models\OrderPermissionsController::class,
+		\SureCart\Permissions\Models\PaymentMethodPermissionsController::class,
+		\SureCart\Permissions\Models\PurchasePermissionsController::class,
+		\SureCart\Permissions\Models\RefundPermissionsController::class,
+		\SureCart\Permissions\Models\SubscriptionPermissionsController::class,
 	];
 
 	/**
