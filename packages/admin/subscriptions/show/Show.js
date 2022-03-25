@@ -21,8 +21,12 @@ import Cancel from './modules/Cancel';
 import Sidebar from './Sidebar';
 import PendingUpdate from './modules/PendingUpdate';
 import UpdatePending from './modules/UpdatePending';
+import { useDispatch } from '@wordpress/data';
+import { store as uiStore } from '@surecart/ui-data';
 
 export default () => {
+	const { addSnackbarNotice, addModelErrors } = useDispatch(uiStore);
+
 	const {
 		id,
 		subscription,
@@ -31,6 +35,7 @@ export default () => {
 		getRelation,
 		saveSubscription,
 		isSaving,
+		setSaving,
 		subscriptionErrors,
 		clearSubscriptionErrors,
 	} = useCurrentPage('subscription', {
@@ -52,8 +57,6 @@ export default () => {
 	const price = getRelation('price');
 	const order = getRelation('order');
 	const product = getRelation('price.product');
-
-	console.log({ order });
 
 	useEffect(() => {
 		if (id) {
@@ -84,14 +87,28 @@ export default () => {
 			return (
 				<ScMenuItem
 					onClick={async () => {
-						saveSubscription({
-							data: {
-								cancel_at_period_end: false,
-							},
-							query: {
-								context: 'edit',
-							},
-						});
+						setSaving(true);
+						try {
+							await saveSubscription({
+								data: {
+									cancel_at_period_end: false,
+								},
+								query: {
+									context: 'edit',
+								},
+							});
+							addSnackbarNotice({
+								content: __('Saved.'),
+							});
+						} catch (e) {
+							console.error(e);
+							addModelErrors(
+								'subscription',
+								e?.message || __('Something went wrong')
+							);
+						} finally {
+							setSaving(false);
+						}
 					}}
 				>
 					{__("Don't Cancel", 'surecart')}
@@ -124,7 +141,12 @@ export default () => {
 					></sc-skeleton>
 				) : (
 					<ScDropdown position="bottom-right">
-						<ScButton type="primary" slot="trigger" caret>
+						<ScButton
+							type="primary"
+							slot="trigger"
+							loading={isSaving}
+							caret
+						>
 							{__('Actions', 'surecart')}
 						</ScButton>
 						<ScMenu>

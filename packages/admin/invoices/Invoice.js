@@ -13,16 +13,13 @@ import Template from '../templates/SingleModel';
 
 import Details from './modules/Details';
 
-import useSnackbar from '../hooks/useSnackbar';
 import LineItems from './modules/LineItems';
 import Charges from './modules/Charges';
 import Subscriptions from './modules/Subscriptions';
 import useCurrentPage from '../mixins/useCurrentPage';
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 
 export default () => {
-	const { snackbarNotices, removeSnackbarNotice } = useSnackbar();
-
 	const onSubmit = async (e) => {
 		e.preventDefault();
 		dispatch(store).save();
@@ -72,8 +69,6 @@ export default () => {
 					? __('Edit Invoice', 'surecart')
 					: __('Create Invoice', 'surecart')
 			}
-			notices={snackbarNotices}
-			removeNotice={removeSnackbarNotice}
 			sidebar={<Sidebar customer={customer} loading={isLoading} />}
 		>
 			<Fragment>

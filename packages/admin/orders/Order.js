@@ -21,8 +21,6 @@ import useCurrentPage from '../mixins/useCurrentPage';
 import { useEffect } from 'react';
 
 export default () => {
-	const { snackbarNotices, removeSnackbarNotice } = useSnackbar();
-
 	const onSubmit = async (e) => {
 		e.preventDefault();
 		dispatch(store).save();
@@ -36,8 +34,6 @@ export default () => {
 		useCurrentPage('order');
 	const customer = getRelation('customer');
 	const charge = getRelation('charge');
-
-	console.log({ charge });
 
 	useEffect(() => {
 		if (id) {
@@ -73,8 +69,6 @@ export default () => {
 					? __('Edit Order', 'surecart')
 					: __('Create Order', 'surecart')
 			}
-			notices={snackbarNotices}
-			removeNotice={removeSnackbarNotice}
 			sidebar={
 				<Sidebar
 					order={order}
@@ -87,7 +81,7 @@ export default () => {
 				<FlashError path="orders" scrollIntoView />
 				<Details order={order} loading={isLoading} />
 				<LineItems order={order} charge={charge} loading={isLoading} />
-				<Charges />
+				<Charges charge={charge} loading={isLoading} />
 				<Subscriptions />
 			</Fragment>
 		</Template>

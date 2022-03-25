@@ -15,7 +15,7 @@ module.exports = {
 			),
 			'@surecart/ui-data': path.resolve(
 				__dirname,
-				'packages/admin/store/data'
+				'packages/admin/store/ui'
 			),
 		},
 	},

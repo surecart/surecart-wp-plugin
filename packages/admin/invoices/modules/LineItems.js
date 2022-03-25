@@ -6,9 +6,16 @@ import { Fragment } from '@wordpress/element';
 import Box from '../../ui/Box';
 import { translateInterval } from '../../util/translations';
 import Definition from '../../ui/Definition';
+import { useSelect } from '@wordpress/data';
+import { store } from '@surecart/data';
 
-export default ({ invoice, charge, loading }) => {
+export default ({ invoice, charge: chargeInput, loading }) => {
 	const line_items = invoice?.invoice_items?.data;
+
+	const charge = useSelect(
+		(select) => select(store).selectModel('charge', chargeInput?.id) || {},
+		[chargeInput]
+	);
 
 	const renderLoading = () => {
 		return <sc-skeleton></sc-skeleton>;

@@ -1,7 +1,13 @@
+import { useSelect } from '@wordpress/data';
 import { __, _n } from '@wordpress/i18n';
+import { store } from '@surecart/data';
 import ChargesDataTable from '../../components/data-tables/charges-data-table';
 
 export default ({ charge, loading }) => {
+	const chargeModel = useSelect(
+		(select) => select(store).selectModel('charge', charge?.id) || {},
+		[charge]
+	);
 	return (
 		<ChargesDataTable
 			title={__('Charge', 'surecart')}
@@ -24,7 +30,7 @@ export default ({ charge, loading }) => {
 				},
 			}}
 			showTotal
-			data={[charge]}
+			data={[chargeModel]}
 			isLoading={loading}
 		/>
 	);
