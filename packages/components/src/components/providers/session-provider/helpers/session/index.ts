@@ -6,6 +6,11 @@ export const getURLLineItems = () => {
   return getQueryArg(window.location.href, 'line_items');
 };
 
+export const getURLCoupon = () => {
+  // check the url query first
+  return ((getQueryArg(window.location.href, 'coupon') as string) || '').toUpperCase();
+};
+
 /**
  * Attempt to get the session id
  *

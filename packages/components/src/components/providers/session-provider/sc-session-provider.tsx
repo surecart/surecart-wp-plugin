@@ -3,7 +3,7 @@ import { removeQueryArgs } from '@wordpress/url';
 
 import { createOrUpdateOrder, finalizeSession } from '../../../services/session';
 import { LineItemData, Order, PriceChoice } from '../../../types';
-import { getSessionId, getURLLineItems, populateInputs, removeSessionId, setSessionId } from './helpers/session';
+import { getSessionId, getURLCoupon, getURLLineItems, populateInputs, removeSessionId, setSessionId } from './helpers/session';
 
 @Component({
   tag: 'sc-session-provider',
@@ -277,6 +277,7 @@ export class ScSessionProvider {
   /** Find or create session on load. */
   componentDidLoad() {
     const line_items = getURLLineItems();
+    const promotion_code = getURLCoupon();
 
     if (line_items && line_items?.length) {
       // remove line items from url
@@ -288,21 +289,21 @@ export class ScSessionProvider {
 
     // fetch or initialize a session.
     if (id && this.persist) {
-      this.fetch();
+      this.fetch({ ...(promotion_code ? { discount: { promotion_code } } : {}) });
     } else {
-      this.initialize();
+      this.initialize({ ...(promotion_code ? { discount: { promotion_code } } : {}) });
     }
   }
 
   /** Looks through children and finds items needed for initial session. */
-  async initialize() {
+  async initialize(args = {}) {
     let line_items = this.addInitialPrices() || [];
     line_items = this.addPriceChoices(line_items);
 
     if (line_items?.length) {
-      return this.loadUpdate({ line_items });
+      return this.loadUpdate({ line_items, ...args });
     } else {
-      return this.loadUpdate();
+      return this.loadUpdate({ ...args });
     }
   }
 
@@ -362,8 +363,8 @@ export class ScSessionProvider {
   }
 
   /** Fetch a session. */
-  async fetch() {
-    this.loadUpdate({ status: 'draft' });
+  async fetch(args = {}) {
+    this.loadUpdate({ status: 'draft', ...args });
   }
 
   /** Update a session */
