@@ -43,7 +43,6 @@ return [
 		\SureCart\Rest\PurchasesRestServiceProvider::class,
 		\SureCart\Rest\CustomerRestServiceProvider::class,
 		\SureCart\Rest\CustomerLinksRestServiceProvider::class,
-		\SureCart\Rest\SettingsRestServiceProvider::class,
 		\SureCart\Rest\PaymentMethodsRestServiceProvider::class,
 		\SureCart\Rest\ProductsRestServiceProvider::class,
 		\SureCart\Rest\ProductGroupsRestServiceProvider::class,

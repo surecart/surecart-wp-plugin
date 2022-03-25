@@ -146,20 +146,7 @@ class SubscriptionPermissionsController extends ModelPermissionsController {
 		if ( $allcaps['read_sc_subscriptions'] ) {
 			return true;
 		}
-
-		if ( empty( $args[2] ) ) {
-			return false;
-		}
-
-		// check to make sure they are not trying to list an ID that's not one of their own.
-		$customer_ids = $args[2];
-		foreach ( $customer_ids as $id ) {
-			if ( ! $id || ! in_array( $id, (array) $user->customerIds() ) ) {
-				return false; // this id does not belong to the user.
-			}
-		}
-
-		return true;
+		return $this->isListingOwnCustomerIds( $user, $args[2]['customer_ids'] ?? [] );
 	}
 
 	/**
@@ -187,11 +174,23 @@ class SubscriptionPermissionsController extends ModelPermissionsController {
 			return false;
 		}
 
-		// these keys are the only ones that we want to be able to update.
-		if ( $this->requestOnlyHasKeys( [ 'cancel_at_period_end', 'quantity', 'price', 'purge_pending_update' ], $args[3] ) ) {
-			return $this->belongsToUser( Subscription::class, $args[2], $user );
+		$params = $args[3];
+
+		// request has blacklisted keys.
+		if ( ! $this->requestOnlyHasKeys( [ 'cancel_at_period_end', 'quantity', 'price', 'purge_pending_update' ], $params ) ) {
+			return false;
 		}
 
-		return false;
+		// check if they can modify price.
+		if ( ! empty( $params['price'] ) && ! $this->switch_sc_subscription( $user, $args, $allcaps ) ) {
+			return false;
+		}
+
+		// check if user can modify quantity.
+		if ( ! empty( $params['quantity'] ) && ! $this->update_sc_subscription_quantity( $user, $args, $allcaps ) ) {
+			return false;
+		}
+
+		return $this->belongsToUser( Subscription::class, $args[2], $user );
 	}
 }

@@ -5,13 +5,11 @@ namespace SureCart\Rest;
 use SureCart\Controllers\Rest\PaymentMethodsController;
 use SureCart\Models\User;
 use SureCart\Rest\RestServiceInterface;
-use SureCart\Rest\Traits\CanListByCustomerIds;
 
 /**
  * Service provider for Price Rest Requests
  */
 class PaymentMethodsRestServiceProvider extends RestServiceProvider implements RestServiceInterface {
-	use CanListByCustomerIds;
 
 	/**
 	 * Endpoint.
@@ -114,14 +112,7 @@ class PaymentMethodsRestServiceProvider extends RestServiceProvider implements R
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_items_permissions_check( $request ) {
-		// a customer can list their own payment methods.
-		if ( ! current_user_can( 'read_sc_payment_methods' ) ) {
-			// they can list if they are listing their own customer id.
-			return $this->isListingOwnCustomerId( $request );
-		}
-
-		// need read priveleges.
-		return current_user_can( 'read_sc_payment_methods' );
+		return current_user_can( 'read_sc_payment_methods', $request->get_params() );
 	}
 
 	/**

@@ -3,16 +3,12 @@
 namespace SureCart\Rest;
 
 use SureCart\Controllers\Rest\InvoicesController;
-use SureCart\Models\User;
 use SureCart\Rest\RestServiceInterface;
-use SureCart\Rest\Traits\CanListByCustomerIds;
 
 /**
  * Service provider for Invoice Rest Requests
  */
 class InvoicesRestServiceProvider extends RestServiceProvider implements RestServiceInterface {
-	use CanListByCustomerIds;
-
 	/**
 	 * Endpoint.
 	 *
@@ -94,7 +90,7 @@ class InvoicesRestServiceProvider extends RestServiceProvider implements RestSer
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_item_permissions_check( $request ) {
-		return current_user_can( 'read_sc_invoice', $request['id'] );
+		return current_user_can( 'read_sc_invoice', $request['id'], $request->get_params() );
 	}
 
 	/**
@@ -104,14 +100,7 @@ class InvoicesRestServiceProvider extends RestServiceProvider implements RestSer
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_items_permissions_check( $request ) {
-		// if the current user can't read.
-		if ( ! current_user_can( 'read_sc_invoices' ) ) {
-			// they can list if they are listing their own customer id.
-			return $this->isListingOwnCustomerId( $request );
-		}
-
-		// need read priveleges.
-		return current_user_can( 'read_sc_invoices' );
+		return current_user_can( 'read_sc_invoices', $request->get_params() );
 	}
 
 	/**

@@ -70,6 +70,29 @@ abstract class ModelPermissionsController {
 	}
 
 	/**
+	 * Is ths user listing their own customer ids.
+	 *
+	 * @param \SureCart\Models\User $user User model.
+	 * @param array                 $customer_ids Array of customer ids.
+	 * @return boolean
+	 */
+	protected function isListingOwnCustomerIds( $user, $customer_ids ) {
+		// must have list.
+		if ( empty( $customer_ids ) ) {
+			return false;
+		}
+
+		// check each one.
+		foreach ( $customer_ids as $id ) {
+			if ( ! $id || ! in_array( $id, (array) $user->customerIds() ) ) {
+				return false; // this id does not belong to the user.
+			}
+		}
+
+		return true;
+	}
+
+	/**
 	 * Check permissions for specific properties of the request.
 	 *
 	 * @param \WP_REST_Request $request Full details about the request.

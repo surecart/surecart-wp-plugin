@@ -4,14 +4,11 @@ namespace SureCart\Rest;
 
 use SureCart\Controllers\Rest\ChargesController;
 use SureCart\Rest\RestServiceInterface;
-use SureCart\Rest\Traits\CanListByCustomerIds;
 
 /**
  * Service provider for Price Rest Requests
  */
 class ChargesRestServiceProvider extends RestServiceProvider implements RestServiceInterface {
-	use CanListByCustomerIds;
-
 	/**
 	 * Endpoint.
 	 *
@@ -102,13 +99,6 @@ class ChargesRestServiceProvider extends RestServiceProvider implements RestServ
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_items_permissions_check( $request ) {
-		// if the current user can't read charges.
-		if ( ! current_user_can( 'read_sc_charges' ) ) {
-			// they can list if they are listing their own customer id.
-			return $this->isListingOwnCustomerId( $request );
-		}
-
-		// need read priveleges.
-		return current_user_can( 'read_sc_charges' );
+		return current_user_can( 'read_sc_charges', $request->get_params() );
 	}
 }

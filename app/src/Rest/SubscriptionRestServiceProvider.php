@@ -4,16 +4,10 @@ namespace SureCart\Rest;
 
 use SureCart\Rest\RestServiceInterface;
 use SureCart\Controllers\Rest\SubscriptionsController;
-use SureCart\Models\Subscription;
-use SureCart\Models\User;
-use SureCart\Rest\Traits\CanListByCustomerIds;
-
 /**
  * Service provider for Price Rest Requests
  */
 class SubscriptionRestServiceProvider extends RestServiceProvider implements RestServiceInterface {
-	use CanListByCustomerIds;
-
 	/**
 	 * Endpoint.
 	 *
@@ -62,7 +56,7 @@ class SubscriptionRestServiceProvider extends RestServiceProvider implements Res
 				[
 					'methods'             => \WP_REST_Server::EDITABLE,
 					'callback'            => $this->callback( $this->controller, 'renew' ),
-					'permission_callback' => [ $this, 'renew_permissions_check' ],
+					'permission_callback' => [ $this, 'update_item_permissions_check' ],
 				],
 				// Register our schema callback.
 				'schema' => [ $this, 'get_item_schema' ],
@@ -120,43 +114,6 @@ class SubscriptionRestServiceProvider extends RestServiceProvider implements Res
 	}
 
 	/**
-	 * Mark specific properties that need additional permissions checks
-	 * before modifying. We don't want customers being able to modify these.
-	 *
-	 * @var array
-	 */
-	protected $property_permissions = [
-		'skip_product_group_validation' => 'update_sc_subscriptions',
-		'update_behavior'               => 'update_sc_subscriptions',
-		'skip_proration'                => 'update_sc_subscriptions',
-		'currency'                      => 'update_sc_subscriptions',
-		'trial_end_at'                  => 'update_sc_subscriptions',
-		'metadata'                      => 'update_sc_subscriptions',
-		'customer'                      => 'update_sc_subscriptions',
-		'discount'                      => 'update_sc_subscriptions',
-	];
-
-	/**
-	 * Check cancel permissions.
-	 *
-	 * @param \WP_REST_Request $request Full details about the request.
-	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
-	 */
-	public function cancel_permissions_check( $request ) {
-		return current_user_can( 'cancel_ce_subscription', $request['id'] );
-	}
-
-	/**
-	 * Check cancel permissions.
-	 *
-	 * @param \WP_REST_Request $request Full details about the request.
-	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
-	 */
-	public function renew_permissions_check( $request ) {
-		return current_user_can( 'edit_sc_subscription', $request['id'], $request->get_params() );
-	}
-
-	/**
 	 * Anyone can get a specific subscription
 	 *
 	 * @param \WP_REST_Request $request Full details about the request.
@@ -173,41 +130,27 @@ class SubscriptionRestServiceProvider extends RestServiceProvider implements Res
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_items_permissions_check( $request ) {
-		return current_user_can( 'read_sc_subscriptions', $request['customer_ids'] );
+		return current_user_can( 'read_sc_subscriptions', $request->get_params() );
 	}
 
 	/**
-	 * Can the user preview an upcoming invoice?
-	 *
-	 * @param \WP_REST_Request $request Full details about the request.
-	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
-	 */
-	public function preview_item_permissions_check( $request ) {
-		return current_user_can( 'edit_sc_subscription', $request['id'], $request->get_params() );
-	}
-
-	/**
-	 * Anyone can update.
+	 * Check update permissions.
 	 *
 	 * @param \WP_REST_Request $request Full details about the request.
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function update_item_permissions_check( $request ) {
-		// let customers modify pending cancel, quantity and price.
-		// if request is sent with only these keys, then we can modify the subscription.
-		// if they have permission to access it.
-		if ( $this->requestOnlyHasKeys( $request, [ 'cancel_at_period_end', 'quantity', 'price', 'purge_pending_update' ] ) ) {
-			// check if user can switch subscription.
-			if ( $request['price'] && ! current_user_can( 'switch_sc_subscription', $request['price'] ) ) {
-				return new \WP_Error( 'subscription_update_disabled', __( 'Subscription updates are disabled.', 'surecart' ), [ 'status' => 400 ] );
-			}
-			// check if user can modify quantity.
-			if ( $request['quantity'] && ! current_user_can( 'update_sc_subscription_quantity', $request['id'], $request['quantity'] ) ) {
-				return new \WP_Error( 'quantity_update_disabled', __( 'Subscription quantity updates are disabled.', 'surecart' ), [ 'status' => 400 ] );
-			}
-		}
-
 		return current_user_can( 'edit_sc_subscription', $request['id'], $request->get_params() );
+	}
+
+	/**
+	 * Check cancel permissions.
+	 *
+	 * @param \WP_REST_Request $request Full details about the request.
+	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
+	 */
+	public function cancel_permissions_check( $request ) {
+		return current_user_can( 'cancel_ce_subscription', $request['id'] );
 	}
 
 	/**

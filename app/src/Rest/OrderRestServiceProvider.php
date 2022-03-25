@@ -7,14 +7,11 @@ use SureCart\Controllers\Rest\OrderController;
 use SureCart\Form\FormValidationService;
 use SureCart\Models\Form;
 use SureCart\Models\User;
-use SureCart\Rest\Traits\CanListByCustomerIds;
 
 /**
  * Service provider for Price Rest Requests
  */
 class OrderRestServiceProvider extends RestServiceProvider implements RestServiceInterface {
-	use CanListByCustomerIds;
-
 	/**
 	 * Endpoint.
 	 *
@@ -135,6 +132,7 @@ class OrderRestServiceProvider extends RestServiceProvider implements RestServic
 			return new \WP_Error( 'form_id_invalid', esc_html__( 'Form ID is invalid.', 'surecart' ), [ 'status' => 400 ] );
 		}
 
+		// validate form input.
 		$validator = new FormValidationService( $form->post_content, $request->get_body_params() );
 		$validated = $validator->validate();
 		if ( is_wp_error( $validated ) ) {
@@ -193,14 +191,7 @@ class OrderRestServiceProvider extends RestServiceProvider implements RestServic
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_items_permissions_check( $request ) {
-		// if the current user can't read.
-		if ( ! current_user_can( 'read_sc_orders' ) ) {
-			// they can list if they are listing their own customer id.
-			return $this->isListingOwnCustomerId( $request );
-		}
-
-		// need read priveleges.
-		return current_user_can( 'read_sc_orders' );
+		return current_user_can( 'read_sc_orders', $request->get_params() );
 	}
 
 	/**
