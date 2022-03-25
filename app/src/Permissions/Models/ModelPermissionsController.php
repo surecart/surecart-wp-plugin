@@ -102,7 +102,7 @@ abstract class ModelPermissionsController {
 	 */
 	protected function requestOnlyHasKeys( $request, $keys ) {
 		$keys = array_merge( $keys, [ 'context', '_locale', 'rest_route', 'id', 'expand' ] );
-		foreach ( $request->get_params() as $key => $value ) {
+		foreach ( (array) $request as $key => $value ) {
 			if ( ! in_array( $key, $keys, true ) ) {
 				return false;
 			}

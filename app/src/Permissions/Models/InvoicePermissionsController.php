@@ -1,12 +1,12 @@
 <?php
 namespace SureCart\Permissions\Models;
 
-use SureCart\Models\Order;
+use SureCart\Models\Invoice;
 
 /**
  * Handle various charge permissions.
  */
-class OrderPermissionsController extends ModelPermissionsController {
+class InvoicePermissionsController extends ModelPermissionsController {
 	/**
 	 * Can user edit charge.
 	 *
@@ -22,15 +22,15 @@ class OrderPermissionsController extends ModelPermissionsController {
 	 *                                       and boolean values represent whether the user has that capability.
 	 * @return boolean Does user have permission.
 	 */
-	public function edit_sc_order( $user, $args, $allcaps ) {
-		if ( $allcaps['edit_sc_orders'] ) {
+	public function edit_sc_invoice( $user, $args, $allcaps ) {
+		if ( $allcaps['edit_sc_invoices'] ) {
 			return true;
 		}
-		$order = Order::find( $args[2] );
-		if ( ! $order || is_wp_error( $order ) ) {
+		$invoice = Invoice::find( $args[2] );
+		if ( ! $invoice || is_wp_error( $invoice ) ) {
 			return false;
 		}
-		return in_array( $order->status, [ 'draft', 'finalized' ] );
+		return in_array( $invoice->status, [ 'draft', 'finalized' ] );
 	}
 
 	/**
@@ -48,15 +48,15 @@ class OrderPermissionsController extends ModelPermissionsController {
 	 *                                       and boolean values represent whether the user has that capability.
 	 * @return boolean Does user have permission.
 	 */
-	public function read_sc_order( $user, $args, $allcaps ) {
-		if ( $allcaps['read_sc_orders'] ) {
+	public function read_sc_invoice( $user, $args, $allcaps ) {
+		if ( $allcaps['read_sc_invoices'] ) {
 			return true;
 		}
-		$order = Order::find( $args[2] );
-		if ( in_array( $order->status, [ 'draft', 'finalized' ] ) ) {
+		$invoice = Invoice::find( $args[2] );
+		if ( in_array( $invoice->status, [ 'draft', 'finalized' ] ) ) {
 			return true;
 		}
-		return $this->belongsToUser( Order::class, $args[2], $user );
+		return $this->belongsToUser( Invoice::class, $args[2], $user );
 	}
 
 	/**
@@ -74,8 +74,8 @@ class OrderPermissionsController extends ModelPermissionsController {
 	 *                                       and boolean values represent whether the user has that capability.
 	 * @return boolean Does user have permission.
 	 */
-	public function read_sc_orders( $user, $args, $allcaps ) {
-		if ( $allcaps['read_sc_orders'] ) {
+	public function read_sc_invoices( $user, $args, $allcaps ) {
+		if ( $allcaps['read_sc_invoices'] ) {
 			return true;
 		}
 		return $this->isListingOwnCustomerIds( $user, $args[2]['customer_ids'] ?? [] );
