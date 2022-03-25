@@ -79,7 +79,7 @@ class UserController extends BaseController {
 								'first_name'   => $data->user_firstname,
 								'last_name'    => $data->user_lastname,
 							],
-							'successUrl' => esc_url( $back ),
+							'successUrl' => esc_url_raw( $back ),
 						]
 					)->render()
 				);
@@ -100,7 +100,7 @@ class UserController extends BaseController {
 								'first_name'   => $data->user_firstname,
 								'last_name'    => $data->user_lastname,
 							],
-							'successUrl' => esc_url( $back ),
+							'successUrl' => esc_url_raw( $back ),
 						]
 					)->render()
 				);
