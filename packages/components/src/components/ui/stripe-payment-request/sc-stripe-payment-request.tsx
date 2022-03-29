@@ -243,15 +243,15 @@ export class ScStripePaymentRequest {
             ...(shippingAddress?.postalCode ? { postal_code: shippingAddress?.postalCode } : {}),
             ...(shippingAddress?.region ? { state: shippingAddress?.region } : {}),
           },
-          billing_address: {
-            ...(billing_details?.name ? { name: billing_details?.name } : {}),
-            ...(billing_details?.address?.line_1 ? { line_1: billing_details?.address?.line_1 } : {}),
-            ...(billing_details?.address?.line_2 ? { line_2: billing_details?.address?.line_2 } : {}),
-            ...(billing_details?.address?.city ? { city: billing_details?.address?.city } : {}),
-            ...(billing_details?.address?.country ? { country: billing_details?.address?.country } : {}),
-            ...(billing_details?.address?.postal_code ? { postal_code: billing_details?.address?.postal_code } : {}),
-            ...(billing_details?.region ? { state: billing_details?.region } : {}),
-          },
+          // billing_address: {
+          //   ...(billing_details?.name ? { name: billing_details?.name } : {}),
+          //   ...(billing_details?.address?.line_1 ? { line_1: billing_details?.address?.line_1 } : {}),
+          //   ...(billing_details?.address?.line_2 ? { line_2: billing_details?.address?.line_2 } : {}),
+          //   ...(billing_details?.address?.city ? { city: billing_details?.address?.city } : {}),
+          //   ...(billing_details?.address?.country ? { country: billing_details?.address?.country } : {}),
+          //   ...(billing_details?.address?.postal_code ? { postal_code: billing_details?.address?.postal_code } : {}),
+          //   ...(billing_details?.region ? { state: billing_details?.region } : {}),
+          // },
         },
       })) as Order;
 
