@@ -85,11 +85,11 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 	 * @return string
 	 */
 	public function componentsTag( $tag, $handle, $source ) {
-		if ( 'surecart-components' !== $handle ) {
+		if ( 'surecart-components' !== $handle || ! $source ) {
 			return $tag;
 		}
-
-		return str_replace( '<script src', '<script type="module" src', $tag );
+		// phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedScript
+		return '<script src="' . esc_url_raw( $source ) . '" type="module"></script>';
 	}
 
 	/**
@@ -141,6 +141,9 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 				'pages'      => [
 					'dashboard' => \SureCart::pages()->url( 'dashboard' ),
 				],
+				'root_url' => esc_url_raw( get_rest_url() ) . 'surecart/v1/',
+				'nonce' => ( wp_installing() && ! is_multisite() ) ? '' : wp_create_nonce( 'wp_rest' ),
+				'nonce_endpoint' => admin_url( 'admin-ajax.php?action=sc-rest-nonce' ),
 			]
 		);
 
