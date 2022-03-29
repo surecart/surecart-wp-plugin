@@ -60,14 +60,14 @@ export default ({ product, updateProduct, loading }) => {
 							}
 						`}
 					>
-						{!!showArchived && renderPriceList({ archived: true })}
+						{!!showArchived && renderPriceList(archivedPrices)}
 					</div>
 				)}
 			</div>
 		);
 	};
 
-	const renderPriceList = (list) => {
+	const renderPriceList = (list = []) => {
 		return (list || []).map((price, index) => {
 			return (
 				<Price
