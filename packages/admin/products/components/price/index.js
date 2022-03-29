@@ -280,6 +280,11 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 								})
 						: null
 				}
+				onUnArchive={() =>
+					updatePrice({
+						archived: false,
+					})
+				}
 				collapsible={collapsible}
 				onDelete={product?.recurring ? () => deletePrice() : null}
 				css={css`
