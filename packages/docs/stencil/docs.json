@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-03-24T17:58:46",
+  "timestamp": "2022-03-25T21:50:07",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.14.2",
@@ -13426,7 +13426,13 @@
           "docsTags": []
         }
       ],
-      "listeners": [],
+      "listeners": [
+        {
+          "event": "keydown",
+          "capture": false,
+          "passive": false
+        }
+      ],
       "styles": [],
       "slots": [],
       "parts": [
@@ -14734,6 +14740,22 @@
           "required": false
         },
         {
+          "name": "showCancel",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "show-cancel",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "subscription",
           "type": "Subscription",
           "mutable": true,
@@ -15565,6 +15587,22 @@
           "values": [
             {
               "type": "ProductGroup"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "productId",
+          "type": "string",
+          "mutable": false,
+          "attr": "product-id",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
             }
           ],
           "optional": false,
@@ -17148,6 +17186,23 @@
           "required": false
         },
         {
+          "name": "quantityUpdatesEnabled",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "quantity-updates-enabled",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "subscriptionId",
           "type": "string",
           "mutable": false,
@@ -17190,7 +17245,6 @@
       "dependencies": [
         "sc-format-date",
         "sc-skeleton",
-        "sc-text",
         "sc-format-number",
         "sc-product-line-item",
         "sc-line-item",
@@ -17203,13 +17257,13 @@
         "sc-card",
         "sc-form",
         "sc-button",
+        "sc-text",
         "sc-block-ui"
       ],
       "dependencyGraph": {
         "sc-upcoming-invoice": [
           "sc-format-date",
           "sc-skeleton",
-          "sc-text",
           "sc-format-number",
           "sc-product-line-item",
           "sc-line-item",
@@ -17222,6 +17276,7 @@
           "sc-card",
           "sc-form",
           "sc-button",
+          "sc-text",
           "sc-block-ui"
         ],
         "sc-product-line-item": [

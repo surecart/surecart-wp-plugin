@@ -7,15 +7,16 @@
 
 ## Properties
 
-| Property         | Attribute         | Description | Type                                            | Default     |
-| ---------------- | ----------------- | ----------- | ----------------------------------------------- | ----------- |
-| `discount`       | --                |             | `{ promotion_code?: string; coupon?: string; }` | `undefined` |
-| `heading`        | `heading`         |             | `string`                                        | `undefined` |
-| `payment_method` | --                |             | `PaymentMethod`                                 | `undefined` |
-| `priceId`        | `price-id`        |             | `string`                                        | `undefined` |
-| `quantity`       | `quantity`        |             | `number`                                        | `undefined` |
-| `subscriptionId` | `subscription-id` |             | `string`                                        | `undefined` |
-| `successUrl`     | `success-url`     |             | `string`                                        | `undefined` |
+| Property                 | Attribute                  | Description | Type                                            | Default     |
+| ------------------------ | -------------------------- | ----------- | ----------------------------------------------- | ----------- |
+| `discount`               | --                         |             | `{ promotion_code?: string; coupon?: string; }` | `undefined` |
+| `heading`                | `heading`                  |             | `string`                                        | `undefined` |
+| `payment_method`         | --                         |             | `PaymentMethod`                                 | `undefined` |
+| `priceId`                | `price-id`                 |             | `string`                                        | `undefined` |
+| `quantity`               | `quantity`                 |             | `number`                                        | `undefined` |
+| `quantityUpdatesEnabled` | `quantity-updates-enabled` |             | `boolean`                                       | `true`      |
+| `subscriptionId`         | `subscription-id`          |             | `string`                                        | `undefined` |
+| `successUrl`             | `success-url`              |             | `string`                                        | `undefined` |
 
 
 ## Dependencies
@@ -24,7 +25,6 @@
 
 - [sc-format-date](../../../util/format-date)
 - [sc-skeleton](../../../ui/skeleton)
-- [sc-text](../../../ui/text)
 - [sc-format-number](../../../util/format-number)
 - [sc-product-line-item](../../../ui/product-line-item)
 - [sc-line-item](../../../ui/line-item)
@@ -37,6 +37,7 @@
 - [sc-card](../../../ui/card)
 - [sc-form](../../../ui/form)
 - [sc-button](../../../ui/button)
+- [sc-text](../../../ui/text)
 - [sc-block-ui](../../../ui/block-ui)
 
 ### Graph
@@ -44,7 +45,6 @@
 graph TD;
   sc-upcoming-invoice --> sc-format-date
   sc-upcoming-invoice --> sc-skeleton
-  sc-upcoming-invoice --> sc-text
   sc-upcoming-invoice --> sc-format-number
   sc-upcoming-invoice --> sc-product-line-item
   sc-upcoming-invoice --> sc-line-item
@@ -57,6 +57,7 @@ graph TD;
   sc-upcoming-invoice --> sc-card
   sc-upcoming-invoice --> sc-form
   sc-upcoming-invoice --> sc-button
+  sc-upcoming-invoice --> sc-text
   sc-upcoming-invoice --> sc-block-ui
   sc-product-line-item --> sc-format-number
   sc-product-line-item --> sc-line-item

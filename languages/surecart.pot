@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-03-24T17:58:52+00:00\n"
+"POT-Creation-Date: 2022-03-25T21:50:13+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 
@@ -749,22 +749,22 @@ msgid "SureCart Shop Worker"
 msgstr ""
 
 #: src/Rest/AccountRestServiceProvider.php:46
-#: src/Rest/ChargesRestServiceProvider.php:77
+#: src/Rest/ChargesRestServiceProvider.php:74
 #: src/Rest/CouponRestServiceProvider.php:46
 #: src/Rest/CustomerLinksRestServiceProvider.php:53
 #: src/Rest/CustomerRestServiceProvider.php:47
 #: src/Rest/FilesRestServiceProvider.php:54
-#: src/Rest/InvoicesRestServiceProvider.php:79
-#: src/Rest/OrderRestServiceProvider.php:80
-#: src/Rest/PaymentMethodsRestServiceProvider.php:79
+#: src/Rest/InvoicesRestServiceProvider.php:75
+#: src/Rest/OrderRestServiceProvider.php:77
+#: src/Rest/PaymentMethodsRestServiceProvider.php:77
 #: src/Rest/PriceRestServiceProvider.php:47
 #: src/Rest/ProductGroupsRestServiceProvider.php:47
 #: src/Rest/ProductsRestServiceProvider.php:82
 #: src/Rest/PromotionRestServiceProvider.php:46
-#: src/Rest/PurchasesRestServiceProvider.php:91
-#: src/Rest/RefundsRestServiceProvider.php:57
+#: src/Rest/PurchasesRestServiceProvider.php:88
+#: src/Rest/RefundsRestServiceProvider.php:54
 #: src/Rest/SubscriptionProtocolRestServiceProvider.php:75
-#: src/Rest/SubscriptionRestServiceProvider.php:106
+#: src/Rest/SubscriptionRestServiceProvider.php:101
 #: src/Rest/UploadsRestServiceProvider.php:54
 #: src/Rest/WebhooksRestServiceProvider.php:46
 msgid "Unique identifier for the object."
@@ -828,35 +828,35 @@ msgstr ""
 msgid "Password"
 msgstr ""
 
-#: src/Rest/OrderRestServiceProvider.php:86
+#: src/Rest/OrderRestServiceProvider.php:83
 msgid "The currency for the session."
 msgstr ""
 
-#: src/Rest/OrderRestServiceProvider.php:90
+#: src/Rest/OrderRestServiceProvider.php:87
 msgid "Metadata for the order."
 msgstr ""
 
-#: src/Rest/OrderRestServiceProvider.php:95
+#: src/Rest/OrderRestServiceProvider.php:92
 msgid "The customer id for the order."
 msgstr ""
 
-#: src/Rest/OrderRestServiceProvider.php:100
+#: src/Rest/OrderRestServiceProvider.php:97
 msgid "The customer for the session."
 msgstr ""
 
-#: src/Rest/OrderRestServiceProvider.php:105
+#: src/Rest/OrderRestServiceProvider.php:102
 msgid "The line items for the session."
 msgstr ""
 
-#: src/Rest/OrderRestServiceProvider.php:109
+#: src/Rest/OrderRestServiceProvider.php:106
 msgid "The discount for the session."
 msgstr ""
 
-#: src/Rest/OrderRestServiceProvider.php:126
+#: src/Rest/OrderRestServiceProvider.php:123
 msgid "Form ID is required."
 msgstr ""
 
-#: src/Rest/OrderRestServiceProvider.php:135
+#: src/Rest/OrderRestServiceProvider.php:132
 msgid "Form ID is invalid."
 msgstr ""
 
@@ -1354,7 +1354,7 @@ msgid "Complete Signup"
 msgstr ""
 
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:45
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:63
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:62
 msgid "Plugin"
 msgstr ""
 
@@ -1377,7 +1377,6 @@ msgid "Orders"
 msgstr ""
 
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:56
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:59
 #: admin/invoices/index.php:8
 #: admin/subscriptions/show.js:1
 msgid "Invoices"
@@ -1402,16 +1401,16 @@ msgstr ""
 msgid "Subscriptions"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:60
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:59
 #: admin/product-groups/index.php:6
 msgid "Upgrade Groups"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:62
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:61
 msgid "Forms"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:64
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:63
 msgid "Settings"
 msgstr ""
 
@@ -1610,6 +1609,7 @@ msgstr ""
 #: admin/customers.js:1
 #: admin/product-groups.js:1
 #: admin/products.js:1
+#: admin/subscriptions/show.js:1
 msgid "Saved."
 msgstr ""
 
@@ -3016,6 +3016,10 @@ msgid "Change"
 msgstr ""
 
 #: admin/subscriptions/show.js:1
+msgid "Canceled."
+msgstr ""
+
+#: admin/subscriptions/show.js:1
 msgid "Pending Update"
 msgstr ""
 
@@ -3065,6 +3069,88 @@ msgstr ""
 
 #: admin/subscriptions/show.js:1
 msgid "Manage Pending Update"
+msgstr ""
+
+#: admin/subscriptions/show.js:1
+#: components/cjs/sc-charges-list.cjs.entry.js:1
+#: components/cjs/sc-customer-edit.cjs.entry.js:1
+#: components/cjs/sc-dashboard-customer-details.cjs.entry.js:1
+#: components/cjs/sc-dashboard-downloads-list.cjs.entry.js:1
+#: components/cjs/sc-invoices-list.cjs.entry.js:1
+#: components/cjs/sc-login-form.cjs.entry.js:1
+#: components/cjs/sc-order-confirmation.cjs.entry.js:1
+#: components/cjs/sc-orders-list.cjs.entry.js:1
+#: components/cjs/sc-payment-method-create.cjs.entry.js:1
+#: components/cjs/sc-payment-methods-list.cjs.entry.js:1
+#: components/cjs/sc-subscription-cancel.cjs.entry.js:1
+#: components/cjs/sc-subscription-payment.cjs.entry.js:1
+#: components/cjs/sc-subscription-renew.cjs.entry.js:1
+#: components/cjs/sc-subscription-switch.cjs.entry.js:1
+#: components/cjs/sc-subscription.cjs.entry.js:1
+#: components/cjs/sc-subscriptions-list.cjs.entry.js:1
+#: components/cjs/sc-upcoming-invoice.cjs.entry.js:1
+#: components/cjs/sc-wordpress-password-edit.cjs.entry.js:1
+#: components/cjs/sc-wordpress-user-edit.cjs.entry.js:1
+#: components/collection/components/controllers/confirmation/order-confirmation/sc-order-confirmation.js:1
+#: components/collection/components/controllers/dashboard/charges-list/sc-charges-list.js:1
+#: components/collection/components/controllers/dashboard/customer-details/sc-dashboard-customer-details.js:1
+#: components/collection/components/controllers/dashboard/customer-edit/sc-customer-edit.js:1
+#: components/collection/components/controllers/dashboard/dashboard-downloads-list/sc-dashboard-downloads-list.js:1
+#: components/collection/components/controllers/dashboard/invoices-list/sc-invoices-list.js:1
+#: components/collection/components/controllers/dashboard/orders-list/sc-orders-list.js:1
+#: components/collection/components/controllers/dashboard/payment-method-create/payment-method-create.js:1
+#: components/collection/components/controllers/dashboard/payment-methods-list/sc-payment-methods-list.js:1
+#: components/collection/components/controllers/dashboard/subscription-cancel/sc-subscription-cancel.js:1
+#: components/collection/components/controllers/dashboard/subscription-payment/sc-subscription-payment.js:1
+#: components/collection/components/controllers/dashboard/subscription-renew/sc-subscription-renew.js:1
+#: components/collection/components/controllers/dashboard/subscription-switch/sc-subscription-switch.js:1
+#: components/collection/components/controllers/dashboard/subscription/sc-subscription.js:1
+#: components/collection/components/controllers/dashboard/subscriptions-list/sc-subscriptions-list.js:1
+#: components/collection/components/controllers/dashboard/upcoming-invoice/sc-upcoming-invoice.js:1
+#: components/collection/components/controllers/dashboard/wordpress-password-edit/sc-wordpress-password-edit.js:1
+#: components/collection/components/controllers/dashboard/wordpress-user-edit/sc-wordpress-user-edit.js:1
+#: components/collection/components/controllers/login/sc-login-form.js:1
+#: components/components/sc-charges-list.js:1
+#: components/components/sc-customer-edit.js:1
+#: components/components/sc-dashboard-customer-details.js:1
+#: components/components/sc-dashboard-downloads-list.js:1
+#: components/components/sc-invoices-list.js:1
+#: components/components/sc-login-form.js:1
+#: components/components/sc-order-confirmation.js:1
+#: components/components/sc-orders-list.js:1
+#: components/components/sc-payment-method-create.js:1
+#: components/components/sc-payment-methods-list.js:1
+#: components/components/sc-subscription-cancel.js:1
+#: components/components/sc-subscription-payment.js:1
+#: components/components/sc-subscription-renew.js:1
+#: components/components/sc-subscription-switch.js:1
+#: components/components/sc-subscription.js:1
+#: components/components/sc-subscriptions-list.js:1
+#: components/components/sc-upcoming-invoice.js:1
+#: components/components/sc-wordpress-password-edit.js:1
+#: components/components/sc-wordpress-user-edit.js:1
+#: components/custom-elements/index.js:1
+#: components/custom-elements/index.js:3
+#: components/esm/sc-charges-list.entry.js:1
+#: components/esm/sc-customer-edit.entry.js:1
+#: components/esm/sc-dashboard-customer-details.entry.js:1
+#: components/esm/sc-dashboard-downloads-list.entry.js:1
+#: components/esm/sc-invoices-list.entry.js:1
+#: components/esm/sc-login-form.entry.js:1
+#: components/esm/sc-order-confirmation.entry.js:1
+#: components/esm/sc-orders-list.entry.js:1
+#: components/esm/sc-payment-method-create.entry.js:1
+#: components/esm/sc-payment-methods-list.entry.js:1
+#: components/esm/sc-subscription-cancel.entry.js:1
+#: components/esm/sc-subscription-payment.entry.js:1
+#: components/esm/sc-subscription-renew.entry.js:1
+#: components/esm/sc-subscription-switch.entry.js:1
+#: components/esm/sc-subscription.entry.js:1
+#: components/esm/sc-subscriptions-list.entry.js:1
+#: components/esm/sc-upcoming-invoice.entry.js:1
+#: components/esm/sc-wordpress-password-edit.entry.js:1
+#: components/esm/sc-wordpress-user-edit.entry.js:1
+msgid "Something went wrong"
 msgstr ""
 
 #: blocks/library.js:1
@@ -3424,6 +3510,10 @@ msgstr ""
 
 #: blocks/library.js:3
 msgid "New Tab %d"
+msgstr ""
+
+#: blocks/library.js:3
+msgid "Sample Data"
 msgstr ""
 
 #: blocks/library.js:3
@@ -4144,31 +4234,31 @@ msgctxt "text direction"
 msgid "ltr"
 msgstr ""
 
-#: components/cjs/fetch-453035ea.js:1
+#: components/cjs/fetch-7957eb45.js:1
 #: components/components/fetch.js:1
 #: components/custom-elements/index.js:1
-#: components/esm/fetch-acce801f.js:1
+#: components/esm/fetch-a31e34ba.js:1
 msgid "The response is not a valid JSON response."
 msgstr ""
 
-#: components/cjs/fetch-453035ea.js:1
+#: components/cjs/fetch-7957eb45.js:1
 #: components/components/fetch.js:1
 #: components/custom-elements/index.js:1
-#: components/esm/fetch-acce801f.js:1
+#: components/esm/fetch-a31e34ba.js:1
 msgid "An unknown error occurred."
 msgstr ""
 
-#: components/cjs/fetch-453035ea.js:1
+#: components/cjs/fetch-7957eb45.js:1
 #: components/components/fetch.js:1
 #: components/custom-elements/index.js:1
-#: components/esm/fetch-acce801f.js:1
+#: components/esm/fetch-a31e34ba.js:1
 msgid "Media upload failed. If this is a photo or a large image, please scale it down and try again."
 msgstr ""
 
-#: components/cjs/fetch-453035ea.js:1
+#: components/cjs/fetch-7957eb45.js:1
 #: components/components/fetch.js:1
 #: components/custom-elements/index.js:1
-#: components/esm/fetch-acce801f.js:1
+#: components/esm/fetch-a31e34ba.js:1
 msgid "You are probably offline."
 msgstr ""
 
@@ -4243,87 +4333,6 @@ msgstr ""
 #: components/esm/sc-payment-method-create.entry.js:1
 #: components/esm/sc-upcoming-invoice.entry.js:1
 msgid "Error"
-msgstr ""
-
-#: components/cjs/sc-charges-list.cjs.entry.js:1
-#: components/cjs/sc-customer-edit.cjs.entry.js:1
-#: components/cjs/sc-dashboard-customer-details.cjs.entry.js:1
-#: components/cjs/sc-dashboard-downloads-list.cjs.entry.js:1
-#: components/cjs/sc-invoices-list.cjs.entry.js:1
-#: components/cjs/sc-login-form.cjs.entry.js:1
-#: components/cjs/sc-order-confirmation.cjs.entry.js:1
-#: components/cjs/sc-orders-list.cjs.entry.js:1
-#: components/cjs/sc-payment-method-create.cjs.entry.js:1
-#: components/cjs/sc-payment-methods-list.cjs.entry.js:1
-#: components/cjs/sc-subscription-cancel.cjs.entry.js:1
-#: components/cjs/sc-subscription-payment.cjs.entry.js:1
-#: components/cjs/sc-subscription-renew.cjs.entry.js:1
-#: components/cjs/sc-subscription-switch.cjs.entry.js:1
-#: components/cjs/sc-subscription.cjs.entry.js:1
-#: components/cjs/sc-subscriptions-list.cjs.entry.js:1
-#: components/cjs/sc-upcoming-invoice.cjs.entry.js:1
-#: components/cjs/sc-wordpress-password-edit.cjs.entry.js:1
-#: components/cjs/sc-wordpress-user-edit.cjs.entry.js:1
-#: components/collection/components/controllers/confirmation/order-confirmation/sc-order-confirmation.js:1
-#: components/collection/components/controllers/dashboard/charges-list/sc-charges-list.js:1
-#: components/collection/components/controllers/dashboard/customer-details/sc-dashboard-customer-details.js:1
-#: components/collection/components/controllers/dashboard/customer-edit/sc-customer-edit.js:1
-#: components/collection/components/controllers/dashboard/dashboard-downloads-list/sc-dashboard-downloads-list.js:1
-#: components/collection/components/controllers/dashboard/invoices-list/sc-invoices-list.js:1
-#: components/collection/components/controllers/dashboard/orders-list/sc-orders-list.js:1
-#: components/collection/components/controllers/dashboard/payment-method-create/payment-method-create.js:1
-#: components/collection/components/controllers/dashboard/payment-methods-list/sc-payment-methods-list.js:1
-#: components/collection/components/controllers/dashboard/subscription-cancel/sc-subscription-cancel.js:1
-#: components/collection/components/controllers/dashboard/subscription-payment/sc-subscription-payment.js:1
-#: components/collection/components/controllers/dashboard/subscription-renew/sc-subscription-renew.js:1
-#: components/collection/components/controllers/dashboard/subscription-switch/sc-subscription-switch.js:1
-#: components/collection/components/controllers/dashboard/subscription/sc-subscription.js:1
-#: components/collection/components/controllers/dashboard/subscriptions-list/sc-subscriptions-list.js:1
-#: components/collection/components/controllers/dashboard/upcoming-invoice/sc-upcoming-invoice.js:1
-#: components/collection/components/controllers/dashboard/wordpress-password-edit/sc-wordpress-password-edit.js:1
-#: components/collection/components/controllers/dashboard/wordpress-user-edit/sc-wordpress-user-edit.js:1
-#: components/collection/components/controllers/login/sc-login-form.js:1
-#: components/components/sc-charges-list.js:1
-#: components/components/sc-customer-edit.js:1
-#: components/components/sc-dashboard-customer-details.js:1
-#: components/components/sc-dashboard-downloads-list.js:1
-#: components/components/sc-invoices-list.js:1
-#: components/components/sc-login-form.js:1
-#: components/components/sc-order-confirmation.js:1
-#: components/components/sc-orders-list.js:1
-#: components/components/sc-payment-method-create.js:1
-#: components/components/sc-payment-methods-list.js:1
-#: components/components/sc-subscription-cancel.js:1
-#: components/components/sc-subscription-payment.js:1
-#: components/components/sc-subscription-renew.js:1
-#: components/components/sc-subscription-switch.js:1
-#: components/components/sc-subscription.js:1
-#: components/components/sc-subscriptions-list.js:1
-#: components/components/sc-upcoming-invoice.js:1
-#: components/components/sc-wordpress-password-edit.js:1
-#: components/components/sc-wordpress-user-edit.js:1
-#: components/custom-elements/index.js:1
-#: components/custom-elements/index.js:3
-#: components/esm/sc-charges-list.entry.js:1
-#: components/esm/sc-customer-edit.entry.js:1
-#: components/esm/sc-dashboard-customer-details.entry.js:1
-#: components/esm/sc-dashboard-downloads-list.entry.js:1
-#: components/esm/sc-invoices-list.entry.js:1
-#: components/esm/sc-login-form.entry.js:1
-#: components/esm/sc-order-confirmation.entry.js:1
-#: components/esm/sc-orders-list.entry.js:1
-#: components/esm/sc-payment-method-create.entry.js:1
-#: components/esm/sc-payment-methods-list.entry.js:1
-#: components/esm/sc-subscription-cancel.entry.js:1
-#: components/esm/sc-subscription-payment.entry.js:1
-#: components/esm/sc-subscription-renew.entry.js:1
-#: components/esm/sc-subscription-switch.entry.js:1
-#: components/esm/sc-subscription.entry.js:1
-#: components/esm/sc-subscriptions-list.entry.js:1
-#: components/esm/sc-upcoming-invoice.entry.js:1
-#: components/esm/sc-wordpress-password-edit.entry.js:1
-#: components/esm/sc-wordpress-user-edit.entry.js:1
-msgid "Something went wrong"
 msgstr ""
 
 #: components/cjs/sc-charges-list.cjs.entry.js:1

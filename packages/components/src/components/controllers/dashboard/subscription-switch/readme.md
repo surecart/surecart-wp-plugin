@@ -7,12 +7,13 @@
 
 ## Properties
 
-| Property         | Attribute | Description                        | Type           | Default     |
-| ---------------- | --------- | ---------------------------------- | -------------- | ----------- |
-| `heading`        | `heading` |                                    | `string`       | `undefined` |
-| `productGroupId` | --        |                                    | `ProductGroup` | `undefined` |
-| `query`          | --        | Customer id to fetch subscriptions | `object`       | `undefined` |
-| `subscription`   | --        |                                    | `Subscription` | `undefined` |
+| Property         | Attribute    | Description                        | Type           | Default     |
+| ---------------- | ------------ | ---------------------------------- | -------------- | ----------- |
+| `heading`        | `heading`    |                                    | `string`       | `undefined` |
+| `productGroupId` | --           |                                    | `ProductGroup` | `undefined` |
+| `productId`      | `product-id` |                                    | `string`       | `undefined` |
+| `query`          | --           | Customer id to fetch subscriptions | `object`       | `undefined` |
+| `subscription`   | --           |                                    | `Subscription` | `undefined` |
 
 
 ## Dependencies

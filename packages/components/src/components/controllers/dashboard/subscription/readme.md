@@ -11,6 +11,7 @@
 | ---------------- | ----------------- | ---------------------------------- | -------------- | ----------- |
 | `heading`        | `heading`         |                                    | `string`       | `undefined` |
 | `query`          | --                |                                    | `object`       | `undefined` |
+| `showCancel`     | `show-cancel`     |                                    | `boolean`      | `undefined` |
 | `subscription`   | --                |                                    | `Subscription` | `undefined` |
 | `subscriptionId` | `subscription-id` | Customer id to fetch subscriptions | `string`       | `undefined` |
 
