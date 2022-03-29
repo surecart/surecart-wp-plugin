@@ -46,7 +46,7 @@ export default ({
 	};
 
 	const renderDropdown = () => {
-		if (!onArchive && !onDelete) {
+		if (!onArchive && !onDelete && !price?.archived) {
 			return null;
 		}
 
