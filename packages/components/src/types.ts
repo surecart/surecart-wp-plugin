@@ -5,7 +5,7 @@ declare global {
       blocks: any;
       i18n: any;
     };
-    surecart: {
+    scData: {
       root_url: string;
       nonce: string;
       nonce_endpoint: string;

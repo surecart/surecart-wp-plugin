@@ -3507,7 +3507,7 @@ declare namespace LocalJSX {
           * Emitted when the control receives input.
          */
         "onScInput"?: (event: CustomEvent<void>) => void;
-        "onScUpdateOrderState"?: (event: CustomEvent<{ email: string }>) => void;
+        "onScUpdateOrderState"?: (event: CustomEvent<Order>) => void;
         /**
           * (passed from the sc-checkout component automatically)
          */

@@ -52,17 +52,17 @@ export class ScChargesList {
   async getItems() {
     try {
       this.loading = true;
-      const response = await await apiFetch({
+      const response = (await apiFetch({
         path: addQueryArgs(`surecart/v1/charges/`, {
           expand: ['order', 'invoice'],
           ...this.query,
         }),
         parse: false,
-      });
+      })) as Response;
 
       this.pagination = {
-        total: response.headers.get('X-WP-Total'),
-        total_pages: response.headers.get('X-WP-TotalPages'),
+        total: parseInt(response.headers.get('X-WP-Total')),
+        total_pages: parseInt(response.headers.get('X-WP-TotalPages')),
       };
       this.charges = (await response.json()) as Charge[];
     } catch (e) {

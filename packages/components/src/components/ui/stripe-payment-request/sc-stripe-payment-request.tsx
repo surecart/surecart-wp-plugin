@@ -114,7 +114,7 @@ export class ScStripePaymentRequest {
   async handleShippingChange(ev: any) {
     const { shippingAddress, updateWith } = ev;
     try {
-      const order = await createOrUpdateOrder({
+      const order = (await createOrUpdateOrder({
         id: this.order?.id,
         data: {
           shipping_address: {
@@ -127,7 +127,7 @@ export class ScStripePaymentRequest {
             ...(shippingAddress?.region ? { state: shippingAddress?.region } : {}),
           },
         },
-      });
+      })) as Order;
       updateWith({
         status: 'success',
         total: {

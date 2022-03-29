@@ -73,16 +73,16 @@ export class ScOrdersList {
 
   /** Get all orders */
   async getOrders() {
-    const response = await await apiFetch({
+    const response = (await await apiFetch({
       path: addQueryArgs(`surecart/v1/orders/`, {
         expand: ['line_items', 'charge'],
         ...this.query,
       }),
       parse: false,
-    });
+    })) as Response;
     this.pagination = {
-      total: response.headers.get('X-WP-Total'),
-      total_pages: response.headers.get('X-WP-TotalPages'),
+      total: parseInt(response.headers.get('X-WP-Total')),
+      total_pages: parseInt(response.headers.get('X-WP-TotalPages')),
     };
     this.orders = (await response.json()) as Order[];
     return this.orders;

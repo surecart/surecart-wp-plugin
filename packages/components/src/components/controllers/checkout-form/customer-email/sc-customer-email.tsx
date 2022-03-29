@@ -77,7 +77,7 @@ export class ScCustomerEmail {
   /** Emitted when the control loses focus. */
   @Event() scBlur: EventEmitter<void>;
 
-  @Event() scUpdateOrderState: EventEmitter<{ email: string }>;
+  @Event() scUpdateOrderState: EventEmitter<Order>;
 
   async handleChange() {
     this.value = this.input.value;
@@ -85,7 +85,7 @@ export class ScCustomerEmail {
 
     // update order state.
     try {
-      const order = await createOrUpdateOrder({ id: this.order?.id, data: { email: this.input.value } });
+      const order = (await createOrUpdateOrder({ id: this.order?.id, data: { email: this.input.value } })) as Order;
       this.scUpdateOrderState.emit(order);
     } catch (error) {
       console.error(error);

@@ -74,17 +74,17 @@ export class ScDownloadsList {
 
   /** Get all subscriptions */
   async getItems() {
-    const response = await await apiFetch({
+    const response = (await await apiFetch({
       path: addQueryArgs(`surecart/v1/purchases/`, {
         expand: ['product', 'product.files'],
         downloadable: true,
         ...this.query,
       }),
       parse: false,
-    });
+    })) as Response;
     this.pagination = {
-      total: response.headers.get('X-WP-Total'),
-      total_pages: response.headers.get('X-WP-TotalPages'),
+      total: parseInt(response.headers.get('X-WP-Total')),
+      total_pages: parseInt(response.headers.get('X-WP-TotalPages')),
     };
     this.purchases = (await response.json()) as Purchase[];
     return this.purchases;

@@ -73,16 +73,16 @@ export class ScInvoicesList {
 
   /** Get all orders */
   async getItems() {
-    const response = await await apiFetch({
+    const response = (await await apiFetch({
       path: addQueryArgs(`surecart/v1/invoices/`, {
         expand: ['invoice_items', 'charge'],
         ...this.query,
       }),
       parse: false,
-    });
+    })) as Response;
     this.pagination = {
-      total: response.headers.get('X-WP-Total'),
-      total_pages: response.headers.get('X-WP-TotalPages'),
+      total: parseInt(response.headers.get('X-WP-Total')),
+      total_pages: parseInt(response.headers.get('X-WP-TotalPages')),
     };
     this.invoices = (await response.json()) as Invoice[];
     return this.invoices;
