@@ -47,7 +47,9 @@ export default ({
 				.map((price) => {
 					return {
 						value: price.id,
-						label: formatNumber(price.amount, price.currency),
+						label: `${formatNumber(price.amount, price.currency)}${
+							price?.archived ? ' (Archived)' : ''
+						}`,
 						suffix: translateInterval(
 							price?.recurring_interval_count,
 							price?.recurring_interval,
