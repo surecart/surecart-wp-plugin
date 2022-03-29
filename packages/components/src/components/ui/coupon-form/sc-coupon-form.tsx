@@ -62,7 +62,7 @@ export class ScCouponForm {
 
   /** Apply the coupon. */
   applyCoupon() {
-    this.scApplyCoupon.emit(this.input.value);
+    this.scApplyCoupon.emit(this.input.value.toUpperCase());
   }
 
   render() {
