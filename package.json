@@ -26,7 +26,7 @@
 	"prettier": "@wordpress/prettier-config",
 	"scripts": {
 		"wp-env": "wp-env",
-		"dev": "composer install && wp-env start --xdebug && yarn start:workspace",
+		"dev": "composer install && yarn start:workspace",
 		"docs:release": "yarn workspaces foreach run docs:release",
 		"dev:docs": "yarn workspace @surecart/docs run start",
 		"i18n": "run-s -cl i18n:textdomain i18n:pot",
