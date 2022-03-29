@@ -86,7 +86,7 @@ class WebhookController {
 		return \SureCart::json(
 			[
 				'event_triggered' => $data['event'] ?? 'none',
-				'data'            => $data['model'] ?? [],
+				'data'            => $data,
 			]
 		);
 	}
@@ -140,11 +140,7 @@ class WebhookController {
 	 * @return string
 	 */
 	public function getObjectId( $data ) {
-		$id = current( $data );
-		if ( is_string( $id ) ) {
-			return $id;
-		}
-		return $id->id ?? '';
+		return $data->object->id ?? '';
 	}
 
 	/**
