@@ -18,6 +18,7 @@ return [
 		\SureCart\WordPress\Pages\PageServiceProvider::class,
 		\SureCart\WordPress\Users\UsersServiceProvider::class,
 		\SureCart\WordPress\Admin\Profile\UserProfileServiceProvider::class,
+		\SureCart\Integrations\DiviServiceProvider::class,
 		\SureCart\WordPress\PluginServiceProvider::class,
 		\SureCartAppCore\Assets\AssetsServiceProvider::class,
 		\SureCartAppCore\Config\ConfigServiceProvider::class,
