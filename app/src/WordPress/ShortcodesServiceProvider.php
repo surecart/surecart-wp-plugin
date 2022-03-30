@@ -50,6 +50,9 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 
 		$form = \SureCart::forms()->get( $atts['id'] );
 
+		global $sc_form_id;
+		$sc_form_id = $atts['id'];
+
 		return do_blocks( $form->post_content );
 	}
 }
