@@ -99,7 +99,7 @@ export default ({
 					>
 						<ScRadio value="all" checked={choice_type === 'all'}>
 							{__(
-								'Customer must purchase all products',
+								'Customer must purchase all options.',
 								'surecart'
 							)}
 						</ScRadio>
@@ -108,7 +108,7 @@ export default ({
 							checked={choice_type === 'radio'}
 						>
 							{__(
-								'Customer must select one price from the options.',
+								'Customer must select one of the options.',
 								'surecart'
 							)}
 						</ScRadio>
@@ -117,7 +117,7 @@ export default ({
 							checked={choice_type === 'checkbox'}
 						>
 							{__(
-								'Customer can select multiple prices.',
+								'Customer can select multiple options.',
 								'surecart'
 							)}
 						</ScRadio>
