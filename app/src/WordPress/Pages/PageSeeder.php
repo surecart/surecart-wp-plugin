@@ -47,8 +47,7 @@ class PageSeeder {
 	 * @return void
 	 */
 	public function createCheckoutForm() {
-		$content = file_get_contents( plugin_dir_path( SURECART_PLUGIN_FILE ) . 'templates/forms/default.html' );
-		$content = '<!-- wp:surecart/form -->' . $content . '<!-- /wp:surecart/form -->';
+		$content = file_get_contents( plugin_dir_path( SURECART_PLUGIN_FILE ) . 'templates/forms/checkout.html' );
 
 		$forms = apply_filters(
 			'surecart/create_forms',
