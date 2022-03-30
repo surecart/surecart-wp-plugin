@@ -141,7 +141,7 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 				'pages'      => [
 					'dashboard' => \SureCart::pages()->url( 'dashboard' ),
 				],
-				'root_url' => esc_url_raw( get_rest_url() ) . 'surecart/v1/',
+				'root_url' => esc_url_raw( get_rest_url() ),
 				'nonce' => ( wp_installing() && ! is_multisite() ) ? '' : wp_create_nonce( 'wp_rest' ),
 				'nonce_endpoint' => admin_url( 'admin-ajax.php?action=sc-rest-nonce' ),
 			]
@@ -236,40 +236,40 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 		wp_enqueue_script( 'surecart-components' );
 		wp_enqueue_style( 'surecart-themes-default' );
 
-		wp_add_inline_script(
-			'wp-api-fetch',
-			implode(
-				"\n",
-				[
-					'window.ce = window.ce || {};',
-					sprintf(
-						'wp.apiFetch.use( wp.apiFetch.createRootURLMiddleware( " % s" ) );',
-						esc_url_raw( get_rest_url() ) . 'surecart/v1/'
-					),
-				]
-			)
-		);
+		// wp_add_inline_script(
+		// 	'wp-api-fetch',
+		// 	implode(
+		// 		"\n",
+		// 		[
+		// 			'window.ce = window.ce || {};',
+		// 			sprintf(
+		// 				'wp.apiFetch.use( wp.apiFetch.createRootURLMiddleware( " % s" ) );',
+		// 				esc_url_raw( get_rest_url() ) . 'surecart/v1/'
+		// 			),
+		// 		]
+		// 	)
+		// );
 
-		// add our own middleware to api fetch.
-		if ( ! is_admin() ) {
-			wp_add_inline_script(
-				'wp-api-fetch',
-				implode(
-					"\n",
-					[
-						sprintf(
-							'wp.apiFetch.nonceMiddleware = wp.apiFetch.createNonceMiddleware( " % s" );',
-							( wp_installing() && ! is_multisite() ) ? '' : wp_create_nonce( 'wp_rest' )
-						),
-						'wp.apiFetch.use( wp.apiFetch.nonceMiddleware );',
-						sprintf(
-							'wp.apiFetch.nonceEndpoint = " % s";',
-							admin_url( 'admin-ajax.php?action=sc-rest-nonce' )
-						),
-					]
-				),
-			);
-		}
+		// // add our own middleware to api fetch.
+		// if ( ! is_admin() ) {
+		// 	wp_add_inline_script(
+		// 		'wp-api-fetch',
+		// 		implode(
+		// 			"\n",
+		// 			[
+		// 				sprintf(
+		// 					'wp.apiFetch.nonceMiddleware = wp.apiFetch.createNonceMiddleware( " % s" );',
+		// 					( wp_installing() && ! is_multisite() ) ? '' : wp_create_nonce( 'wp_rest' )
+		// 				),
+		// 				'wp.apiFetch.use( wp.apiFetch.nonceMiddleware );',
+		// 				sprintf(
+		// 					'wp.apiFetch.nonceEndpoint = " % s";',
+		// 					admin_url( 'admin-ajax.php?action=sc-rest-nonce' )
+		// 				),
+		// 			]
+		// 		),
+		// 	);
+		// }
 	}
 
 	/**
