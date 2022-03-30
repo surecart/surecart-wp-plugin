@@ -2,7 +2,6 @@
 
 namespace SureCart\WordPress\Assets;
 
-use SureCart\Models\Brand;
 use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 /**
@@ -233,43 +232,11 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function enqueueComponents() {
+		if ( ! apply_filters( 'surecart/components/load', true ) ) {
+			return;
+		}
 		wp_enqueue_script( 'surecart-components' );
 		wp_enqueue_style( 'surecart-themes-default' );
-
-		// wp_add_inline_script(
-		// 	'wp-api-fetch',
-		// 	implode(
-		// 		"\n",
-		// 		[
-		// 			'window.ce = window.ce || {};',
-		// 			sprintf(
-		// 				'wp.apiFetch.use( wp.apiFetch.createRootURLMiddleware( " % s" ) );',
-		// 				esc_url_raw( get_rest_url() ) . 'surecart/v1/'
-		// 			),
-		// 		]
-		// 	)
-		// );
-
-		// // add our own middleware to api fetch.
-		// if ( ! is_admin() ) {
-		// 	wp_add_inline_script(
-		// 		'wp-api-fetch',
-		// 		implode(
-		// 			"\n",
-		// 			[
-		// 				sprintf(
-		// 					'wp.apiFetch.nonceMiddleware = wp.apiFetch.createNonceMiddleware( " % s" );',
-		// 					( wp_installing() && ! is_multisite() ) ? '' : wp_create_nonce( 'wp_rest' )
-		// 				),
-		// 				'wp.apiFetch.use( wp.apiFetch.nonceMiddleware );',
-		// 				sprintf(
-		// 					'wp.apiFetch.nonceEndpoint = " % s";',
-		// 					admin_url( 'admin-ajax.php?action=sc-rest-nonce' )
-		// 				),
-		// 			]
-		// 		),
-		// 	);
-		// }
 	}
 
 	/**
