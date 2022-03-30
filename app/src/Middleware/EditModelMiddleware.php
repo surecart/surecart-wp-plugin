@@ -21,13 +21,11 @@ class EditModelMiddleware {
 	public function handle( RequestInterface $request, Closure $next, $model_name ) {
 		// check nonce.
 		if ( ! $request->query( 'nonce' ) || ! wp_verify_nonce( $request->query( 'nonce' ), "edit_$model_name" ) ) {
-			\SureCart::flash()->add( 'errors', __( 'Your session expired - please try again.', 'surecart' ) );
-			return ( new RedirectResponse( $request ) )->back();
+			wp_die( __( 'Your session expired - please try again.', 'surecart' ) );
 		}
 
-		if ( ! current_user_can( "edit_ce_{$model_name}s" ) ) {
-			\SureCart::flash()->add( 'errors', __( 'You do not have permission do this.', 'surecart' ) );
-			return ( new RedirectResponse( $request ) )->back();
+		if ( ! current_user_can( "edit_sc_{$model_name}s" ) ) {
+			wp_die( __( 'You do not have permission do this.', 'surecart' ) );
 		}
 
 		return $next( $request );
