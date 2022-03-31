@@ -51,9 +51,6 @@ class Block extends BaseBlock {
 		$wrapper_attributes = get_block_wrapper_attributes( [ 'class' => $attributes['textalign'] ?? '' ] );
 		$result             = do_blocks( $form->post_content );
 		unset( $seen_forms[ $attributes['id'] ] );
-		return sprintf(
-			'<div %1$s>' . $result . '</div>',
-			$wrapper_attributes,
-		);
+		return '<div ' . $wrapper_attributes . '>' . $result . '</div>';
 	}
 }
