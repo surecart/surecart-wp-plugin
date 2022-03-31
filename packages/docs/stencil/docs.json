@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-03-25T21:50:07",
+  "timestamp": "2022-03-30T20:04:50",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.14.2",
@@ -3952,7 +3952,7 @@
         },
         {
           "event": "scUpdateOrderState",
-          "detail": "{ email: string; }",
+          "detail": "Order",
           "bubbles": true,
           "cancelable": true,
           "composed": true,

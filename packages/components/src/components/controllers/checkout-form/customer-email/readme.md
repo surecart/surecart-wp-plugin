@@ -29,14 +29,14 @@
 
 ## Events
 
-| Event                | Description                                 | Type                              |
-| -------------------- | ------------------------------------------- | --------------------------------- |
-| `scBlur`             | Emitted when the control loses focus.       | `CustomEvent<void>`               |
-| `scChange`           | Emitted when the control's value changes.   | `CustomEvent<void>`               |
-| `scClear`            | Emitted when the clear button is activated. | `CustomEvent<void>`               |
-| `scFocus`            | Emitted when the control gains focus.       | `CustomEvent<void>`               |
-| `scInput`            | Emitted when the control receives input.    | `CustomEvent<void>`               |
-| `scUpdateOrderState` |                                             | `CustomEvent<{ email: string; }>` |
+| Event                | Description                                 | Type                 |
+| -------------------- | ------------------------------------------- | -------------------- |
+| `scBlur`             | Emitted when the control loses focus.       | `CustomEvent<void>`  |
+| `scChange`           | Emitted when the control's value changes.   | `CustomEvent<void>`  |
+| `scClear`            | Emitted when the clear button is activated. | `CustomEvent<void>`  |
+| `scFocus`            | Emitted when the control gains focus.       | `CustomEvent<void>`  |
+| `scInput`            | Emitted when the control receives input.    | `CustomEvent<void>`  |
+| `scUpdateOrderState` |                                             | `CustomEvent<Order>` |
 
 
 ## Dependencies
