@@ -57,7 +57,23 @@ class FormPostTypeService {
 
 		add_filter( "manage_{$this->post_type}_posts_columns", [ $this, 'postTypeColumns' ], 1 );
 		add_action( "manage_{$this->post_type}_posts_custom_column", [ $this, 'postTypeContent' ], 10, 2 );
+		add_action( "use_block_editor_for_post", [ $this, 'forceGutenberg' ], 999, 2 );
 	}
+
+	/**
+     * Force gutenberg in case of classic editor
+	 *
+	 * @param boolean $use Whether to use Gutenberg.
+	 * @param \WP_Post $post Post object.
+	 *
+	 * @return boolean;
+     */
+    public function forceGutenberg( $use, $post ) {
+        if ( $this->post_type === $post->post_type ) {
+            return true;
+        }
+        return $use;
+    }
 
 	/**
 	 * Get the form post type.
