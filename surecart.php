@@ -3,11 +3,11 @@
  * Plugin Name: SureCart
  * Plugin URI: https://surecart.com/
  * Description:
- * Version: 0.0.2
+ * Version: 0.0.3
  * Requires at least: 5.9
- * Requires PHP: 7.3
+ * Requires PHP: 7.4
  * Author: SureCart
- * Author URI: https://andregagnon.me
+ * Author URI: https://surecart.com
  * License: GPL-2.0-only
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: surecart
