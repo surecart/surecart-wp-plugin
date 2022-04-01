@@ -40,7 +40,12 @@ export default ({ order, charge: chargeInput, loading }) => {
 							<sc-format-number
 								type="currency"
 								currency={charge?.currency}
-								value={charge?.amount - charge?.refunded_amount}
+								value={
+									charge?.amount
+										? charge?.amount -
+										  charge?.refunded_amount
+										: 0
+								}
 							></sc-format-number>
 						</span>
 						<span slot="currency">{charge?.currency}</span>
