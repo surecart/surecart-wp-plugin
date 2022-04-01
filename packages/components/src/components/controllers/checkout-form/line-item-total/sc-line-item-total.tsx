@@ -12,7 +12,6 @@ export class ScLineItemTotal {
   @Prop() total: 'total' | 'subtotal' = 'total';
   @Prop() loading: boolean;
   @Prop() order: Order;
-  @Prop() showCurrency: boolean;
   @Prop() size: 'large' | 'medium';
 
   session_key = {
@@ -53,7 +52,6 @@ export class ScLineItemTotal {
             <span slot="price">
               <sc-format-number type="currency" currency={this.order?.currency} value={this.order?.amount_due}></sc-format-number>
             </span>
-            {this.showCurrency && <span slot="currency">{this.order?.currency}</span>}
           </sc-line-item>
         </div>
       );
@@ -70,7 +68,6 @@ export class ScLineItemTotal {
         <span slot="price">
           <sc-total order={this.order} total={this.total}></sc-total>
         </span>
-        {this.showCurrency && <span slot="currency">{this.order?.currency}</span>}
       </sc-line-item>
     );
   }

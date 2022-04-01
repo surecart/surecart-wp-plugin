@@ -1088,7 +1088,6 @@ export namespace Components {
     interface ScLineItemTotal {
         "loading": boolean;
         "order": Order;
-        "showCurrency": boolean;
         "size": 'large' | 'medium';
         "total": 'total' | 'subtotal';
     }
@@ -4138,7 +4137,6 @@ declare namespace LocalJSX {
     interface ScLineItemTotal {
         "loading"?: boolean;
         "order"?: Order;
-        "showCurrency"?: boolean;
         "size"?: 'large' | 'medium';
         "total"?: 'total' | 'subtotal';
     }

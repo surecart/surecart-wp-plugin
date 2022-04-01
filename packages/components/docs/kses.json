@@ -1233,6 +1233,7 @@
   },
   "sc-total": {
     "order": true,
+    "show-currency": true,
     "total": true,
     "style": true,
     "id": true,
