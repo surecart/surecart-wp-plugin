@@ -89,7 +89,6 @@ export class ScCheckout {
 
   @Listen('scPaid')
   async handlePaid() {
-    console.log(this.order);
     window.localStorage.removeItem(this.el.id);
     window.location.assign(addQueryArgs(this.successUrl, { order: this.order.id }));
   }
