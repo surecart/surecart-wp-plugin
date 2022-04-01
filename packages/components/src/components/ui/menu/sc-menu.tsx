@@ -78,7 +78,6 @@ export class ScMenu {
     const activeItem = item.disabled ? this.items[0] : item;
     // Update tab indexes
     this.items.forEach(i => {
-      console.log({ i, activeItem });
       i.setAttribute('tabindex', i === activeItem ? '0' : '-1');
     });
   }
@@ -86,7 +85,6 @@ export class ScMenu {
   /** Sync slotted items with internal state */
   syncItems() {
     const slottedElements = (this.el.shadowRoot.querySelector('slot') as HTMLSlotElement).assignedElements({ flatten: true });
-    console.log(slottedElements);
     this.items = slottedElements.filter(node => {
       return node.nodeName === 'sc-menu-item';
     }) as HTMLScMenuItemElement[];
