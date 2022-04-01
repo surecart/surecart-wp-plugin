@@ -1,8 +1,6 @@
 import { Component, h, Prop, Event, EventEmitter, Element, Fragment } from '@stencil/core';
 import { __, _n, sprintf } from '@wordpress/i18n';
 
-import { TrashIcon } from '../../icons';
-
 @Component({
   tag: 'sc-product-line-item',
   styleUrl: 'sc-product-line-item.css',
@@ -76,9 +74,13 @@ export class ScProductLineItem {
           {!this.editable && <span>Qty: {this.quantity}</span>}
 
           {this.removable && (
-            <div class="price__remove" onClick={() => this.scRemove.emit()}>
-              <TrashIcon size={15} strokeWidth={2.5} />
-            </div>
+            <Fragment>
+              <span class="actions__divider">|</span>
+              <div class="price__remove" onClick={() => this.scRemove.emit()}>
+                <sc-icon name="trash-2"></sc-icon>
+                {__('Remove', 'surecart')}
+              </div>
+            </Fragment>
           )}
         </span>
         {this.renderPriceAndInterval()}

@@ -12,4 +12,12 @@
   cursor: pointer;
   line-height: 0;
   color: var(--sc-color-gray-500);
+  display: flex;
+  gap: 0.3em;
+  align-items: center;
+}
+
+.actions__divider {
+  opacity: 0.25;
+  margin: 0 0.2em;
 }

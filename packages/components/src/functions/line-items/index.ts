@@ -122,3 +122,11 @@ export const getSessionId = (formId, order, refresh = false) => {
   // check id in localstorage
   return window.localStorage.getItem(formId);
 };
+
+/** Check if the checkout is mixed (subscription and one time) */
+export const hasSubscription = (order: Order) => {
+  // no line items.
+  if (!order?.line_items?.data?.length) return false;
+  // has subscription product.
+  return order?.line_items.data?.some(item => (item?.price?.product as Product)?.recurring);
+};
