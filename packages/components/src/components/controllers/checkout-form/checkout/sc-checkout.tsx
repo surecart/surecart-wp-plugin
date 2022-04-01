@@ -223,20 +223,23 @@ export class ScCheckout {
           'sc-align-full': this.alignment === 'full',
         }}
       >
-        <sc-alert
-          type="danger"
-          onScShow={e => {
-            const target = e.target as HTMLElement;
-            target.scrollIntoView({
-              behavior: 'smooth',
-              block: 'start',
-              inline: 'nearest',
-            });
-          }}
-          open={!!this.errorMessage()}
-        >
-          <span slot="title">{this.errorMessage()}</span>
-        </sc-alert>
+        {!!this.errorMessage() && (
+          <sc-alert
+            type="danger"
+            onScShow={e => {
+              const target = e.target as HTMLElement;
+              target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start',
+                inline: 'nearest',
+              });
+            }}
+            open={!!this.errorMessage()}
+          >
+            <span slot="title">{this.errorMessage()}</span>
+          </sc-alert>
+        )}
+
         <Universe.Provider state={this.state()}>
           <sc-form-components-validator order={this.order} disabled={this.disableComponentsValidation}>
             <sc-session-provider
