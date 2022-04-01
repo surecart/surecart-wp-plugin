@@ -1,3 +1,10 @@
+<?php
+// let's make sure this page is not cached.
+header( 'Cache-Control: no-cache, no-store, must-revalidate' );
+header( 'Pragma: no-cache' );
+header( 'Expires: 0' );
+?>
+
 <?php \SureCart::render( 'components/admin/flash-messages' ); ?>
 
 <h1 class="wp-heading-inline"><?php echo wp_kses_post( $title ?? '' ); ?></h1>
