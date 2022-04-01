@@ -76,8 +76,12 @@ export interface Product extends Object {
   name: string;
   description: string;
   archived: boolean;
+  archived_at: string;
   metadata: any;
   image_url: string;
+  recurring: boolean;
+  tax_category: string;
+  tax_enabled: boolean;
   prices: {
     object: 'list';
     pagination: Pagination;
