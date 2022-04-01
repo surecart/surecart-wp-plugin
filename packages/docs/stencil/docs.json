@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-03-30T20:04:50",
+  "timestamp": "2022-04-01T20:58:20",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.14.2",
@@ -7177,6 +7177,7 @@
         "sc-order-submit",
         "sc-orders-list",
         "sc-payment-methods-list",
+        "sc-product-line-item",
         "sc-select",
         "sc-subscription",
         "sc-subscription-switch",
@@ -7223,6 +7224,9 @@
           "sc-icon"
         ],
         "sc-payment-methods-list": [
+          "sc-icon"
+        ],
+        "sc-product-line-item": [
           "sc-icon"
         ],
         "sc-select": [
@@ -8467,22 +8471,6 @@
           "required": false
         },
         {
-          "name": "showCurrency",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "show-currency",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
           "name": "size",
           "type": "\"large\" | \"medium\"",
           "mutable": false,
@@ -8702,7 +8690,8 @@
         "sc-product-line-item": [
           "sc-format-number",
           "sc-line-item",
-          "sc-quantity-select"
+          "sc-quantity-select",
+          "sc-icon"
         ],
         "sc-quantity-select": [
           "sc-dropdown",
@@ -9328,7 +9317,8 @@
         "sc-product-line-item": [
           "sc-format-number",
           "sc-line-item",
-          "sc-quantity-select"
+          "sc-quantity-select",
+          "sc-icon"
         ],
         "sc-quantity-select": [
           "sc-dropdown",
@@ -12463,13 +12453,15 @@
       "dependencies": [
         "sc-format-number",
         "sc-line-item",
-        "sc-quantity-select"
+        "sc-quantity-select",
+        "sc-icon"
       ],
       "dependencyGraph": {
         "sc-product-line-item": [
           "sc-format-number",
           "sc-line-item",
-          "sc-quantity-select"
+          "sc-quantity-select",
+          "sc-icon"
         ],
         "sc-quantity-select": [
           "sc-dropdown",
@@ -17282,7 +17274,8 @@
         "sc-product-line-item": [
           "sc-format-number",
           "sc-line-item",
-          "sc-quantity-select"
+          "sc-quantity-select",
+          "sc-icon"
         ],
         "sc-quantity-select": [
           "sc-dropdown",

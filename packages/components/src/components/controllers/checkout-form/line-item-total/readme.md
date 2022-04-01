@@ -7,13 +7,12 @@
 
 ## Properties
 
-| Property       | Attribute       | Description | Type                    | Default     |
-| -------------- | --------------- | ----------- | ----------------------- | ----------- |
-| `loading`      | `loading`       |             | `boolean`               | `undefined` |
-| `order`        | --              |             | `Order`                 | `undefined` |
-| `showCurrency` | `show-currency` |             | `boolean`               | `undefined` |
-| `size`         | `size`          |             | `"large" \| "medium"`   | `undefined` |
-| `total`        | `total`         |             | `"subtotal" \| "total"` | `'total'`   |
+| Property  | Attribute | Description | Type                    | Default     |
+| --------- | --------- | ----------- | ----------------------- | ----------- |
+| `loading` | `loading` |             | `boolean`               | `undefined` |
+| `order`   | --        |             | `Order`                 | `undefined` |
+| `size`    | `size`    |             | `"large" \| "medium"`   | `undefined` |
+| `total`   | `total`   |             | `"subtotal" \| "total"` | `'total'`   |
 
 
 ## Dependencies

@@ -41,6 +41,7 @@
 - [sc-format-number](../../util/format-number)
 - [sc-line-item](../line-item)
 - [sc-quantity-select](../quantity-select)
+- [sc-icon](../icon)
 
 ### Graph
 ```mermaid
@@ -48,6 +49,7 @@ graph TD;
   sc-product-line-item --> sc-format-number
   sc-product-line-item --> sc-line-item
   sc-product-line-item --> sc-quantity-select
+  sc-product-line-item --> sc-icon
   sc-quantity-select --> sc-dropdown
   sc-quantity-select --> sc-menu
   sc-quantity-select --> sc-menu-item

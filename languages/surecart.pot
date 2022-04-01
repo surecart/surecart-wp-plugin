@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-03-30T20:04:56+00:00\n"
+"POT-Creation-Date: 2022-04-01T20:58:26+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 
@@ -555,12 +555,14 @@ msgstr ""
 #: admin/subscriptions/show.js:1
 #: blocks/library.js:1
 #: components/cjs/price-22f956c0.js:1
+#: components/cjs/price-321d9c29.js:1
 #: components/cjs/sc-format-interval.cjs.entry.js:1
 #: components/collection/components/util/format-interval/sc-format-interval.js:1
 #: components/collection/functions/price.js:1
 #: components/components/price.js:1
 #: components/components/sc-format-interval.js:1
 #: components/custom-elements/index.js:1
+#: components/esm/price-8ef7b859.js:1
 #: components/esm/price-eca81a63.js:1
 #: components/esm/sc-format-interval.entry.js:1
 msgid "week"
@@ -577,12 +579,14 @@ msgstr[1] ""
 #: admin/subscriptions/show.js:1
 #: blocks/library.js:1
 #: components/cjs/price-22f956c0.js:1
+#: components/cjs/price-321d9c29.js:1
 #: components/cjs/sc-format-interval.cjs.entry.js:1
 #: components/collection/components/util/format-interval/sc-format-interval.js:1
 #: components/collection/functions/price.js:1
 #: components/components/price.js:1
 #: components/components/sc-format-interval.js:1
 #: components/custom-elements/index.js:1
+#: components/esm/price-8ef7b859.js:1
 #: components/esm/price-eca81a63.js:1
 #: components/esm/sc-format-interval.entry.js:1
 msgid "month"
@@ -599,12 +603,14 @@ msgstr[1] ""
 #: admin/subscriptions/show.js:1
 #: blocks/library.js:1
 #: components/cjs/price-22f956c0.js:1
+#: components/cjs/price-321d9c29.js:1
 #: components/cjs/sc-format-interval.cjs.entry.js:1
 #: components/collection/components/util/format-interval/sc-format-interval.js:1
 #: components/collection/functions/price.js:1
 #: components/components/price.js:1
 #: components/components/sc-format-interval.js:1
 #: components/custom-elements/index.js:1
+#: components/esm/price-8ef7b859.js:1
 #: components/esm/price-eca81a63.js:1
 #: components/esm/sc-format-interval.entry.js:1
 msgid "year"
@@ -1663,7 +1669,7 @@ msgstr ""
 msgid "This user is not a customer."
 msgstr ""
 
-#: layouts/partials/admin-index-header.php:7
+#: layouts/partials/admin-index-header.php:14
 msgid "Add New"
 msgstr ""
 
@@ -2408,14 +2414,21 @@ msgstr ""
 #: admin/subscriptions/show.js:1
 #: blocks/library.js:1
 #: components/cjs/price-22f956c0.js:1
+#: components/cjs/price-321d9c29.js:1
 #: components/cjs/sc-format-interval.cjs.entry.js:1
+#: components/cjs/sc-line-items.cjs.entry.js:1
+#: components/collection/components/controllers/checkout-form/line-items/sc-line-items.js:1
 #: components/collection/components/util/format-interval/sc-format-interval.js:1
 #: components/collection/functions/price.js:1
 #: components/components/price.js:1
 #: components/components/sc-format-interval.js:1
+#: components/components/sc-line-items.js:1
 #: components/custom-elements/index.js:1
+#: components/custom-elements/index.js:3
+#: components/esm/price-8ef7b859.js:1
 #: components/esm/price-eca81a63.js:1
 #: components/esm/sc-format-interval.entry.js:1
+#: components/esm/sc-line-items.entry.js:1
 msgid "every"
 msgstr ""
 
@@ -2427,12 +2440,14 @@ msgstr ""
 #: admin/subscriptions/show.js:1
 #: blocks/library.js:1
 #: components/cjs/price-22f956c0.js:1
+#: components/cjs/price-321d9c29.js:1
 #: components/cjs/sc-format-interval.cjs.entry.js:1
 #: components/collection/components/util/format-interval/sc-format-interval.js:1
 #: components/collection/functions/price.js:1
 #: components/components/price.js:1
 #: components/components/sc-format-interval.js:1
 #: components/custom-elements/index.js:1
+#: components/esm/price-8ef7b859.js:1
 #: components/esm/price-eca81a63.js:1
 #: components/esm/sc-format-interval.entry.js:1
 msgid "once"
@@ -2446,12 +2461,14 @@ msgstr ""
 #: admin/subscriptions/show.js:1
 #: blocks/library.js:1
 #: components/cjs/price-22f956c0.js:1
+#: components/cjs/price-321d9c29.js:1
 #: components/cjs/sc-format-interval.cjs.entry.js:1
 #: components/collection/components/util/format-interval/sc-format-interval.js:1
 #: components/collection/functions/price.js:1
 #: components/components/price.js:1
 #: components/components/sc-format-interval.js:1
 #: components/custom-elements/index.js:1
+#: components/esm/price-8ef7b859.js:1
 #: components/esm/price-eca81a63.js:1
 #: components/esm/sc-format-interval.entry.js:1
 msgid "day"
@@ -2565,6 +2582,11 @@ msgstr ""
 #: admin/product-groups.js:1
 #: admin/products.js:1
 #: blocks/library.js:1
+#: components/cjs/sc-product-line-item_2.cjs.entry.js:1
+#: components/collection/components/ui/product-line-item/sc-product-line-item.js:1
+#: components/components/sc-product-line-item2.js:1
+#: components/custom-elements/index.js:3
+#: components/esm/sc-product-line-item_2.entry.js:1
 msgid "Remove"
 msgstr ""
 

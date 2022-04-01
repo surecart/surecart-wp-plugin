@@ -569,7 +569,6 @@
   "sc-line-item-total": {
     "loading": true,
     "order": true,
-    "show-currency": true,
     "size": true,
     "total": true,
     "style": true,
@@ -1233,7 +1232,6 @@
   },
   "sc-total": {
     "order": true,
-    "show-currency": true,
     "total": true,
     "style": true,
     "id": true,

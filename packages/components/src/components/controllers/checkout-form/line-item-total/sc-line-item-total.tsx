@@ -26,7 +26,6 @@ export class ScLineItemTotal {
         <sc-line-item>
           <sc-skeleton slot="title" style={{ width: '120px', display: 'inline-block' }}></sc-skeleton>
           <sc-skeleton slot="price" style={{ 'width': '70px', 'display': 'inline-block', 'height': this.size === 'large' ? '40px' : '', '--border-radius': '6px' }}></sc-skeleton>
-          {this.showCurrency && <sc-skeleton slot="currency" style={{ width: '30px', display: 'inline-block' }}></sc-skeleton>}
         </sc-line-item>
       );
     }
