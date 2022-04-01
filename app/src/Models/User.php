@@ -126,6 +126,11 @@ class User implements ArrayAccess, JsonSerializable {
 			return new \Error( 'not_found', esc_html__( 'This user could not be found.', 'surecart' ) );
 		}
 
+		$current_user = wp_get_current_user();
+		if ( $current_user && $current_user->ID === $this->user->ID) {
+			return;
+		}
+
 		wp_clear_auth_cookie();
 		wp_set_current_user( $this->user->ID );
 		wp_set_auth_cookie( $this->user->ID );
