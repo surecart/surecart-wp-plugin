@@ -15,6 +15,9 @@
 			"enum": ["test", "live"],
 			"default": "live"
 		},
+    "success_url": {
+      "type": "string"
+    },
 		"prices": {
 			"type": "array"
 		},

@@ -6,6 +6,7 @@ import {
 	InnerBlocks,
 	InspectorControls,
 	store as blockEditorStore,
+	__experimentalLinkControl as LinkControl,
 } from '@wordpress/block-editor';
 import { ScCheckout } from '@surecart/components-react';
 import { Fragment, useState, useEffect } from '@wordpress/element';
@@ -15,6 +16,7 @@ import {
 	PanelBody,
 	Button,
 	BaseControl,
+	ToggleControl,
 	UnitControl as __stableUnitControl,
 	__experimentalUnitControl,
 } from '@wordpress/components';
@@ -62,7 +64,15 @@ export default function edit({ clientId, attributes, setAttributes }) {
 		mode,
 		gap,
 		color,
+		success_url,
 	} = attributes;
+
+	const [custom_success_url, setCustomSuccessUrl] = useState(!!success_url);
+	useEffect(() => {
+		if (!custom_success_url) {
+			setAttributes({ success_url: '' });
+		}
+	}, [custom_success_url]);
 
 	const [tab, setTab] = useState('');
 	const blockCount = useSelect((select) =>
@@ -247,6 +257,50 @@ export default function edit({ clientId, attributes, setAttributes }) {
 							]}
 						/>
 					</PanelRow>
+				</PanelBody>
+				<PanelBody title={__('Thank You Page', 'surecart')}>
+					<PanelRow>
+						<ToggleControl
+							label={__('Custom Thank You Page', 'surecart')}
+							checked={custom_success_url}
+							onChange={(custom_success_url) =>
+								setCustomSuccessUrl(custom_success_url)
+							}
+						/>
+					</PanelRow>
+					{custom_success_url && (
+						<PanelRow>
+							<div
+								css={css`
+									border: 1px solid #ddd;
+									box-sizing: border-box;
+									.block-editor-link-control {
+										min-width: 248px;
+										max-width: 248px;
+										overflow: hidden;
+									}
+
+									.block-editor-link-control__search-item-header {
+										white-space: normal;
+										overflow-wrap: anywhere;
+									}
+								`}
+							>
+								<LinkControl
+									value={{ url: success_url }}
+									settings={{}}
+									shownUnlinkControl={true}
+									noURLSuggestion
+									showInitialSuggestions
+									onChange={(nextValue) => {
+										setAttributes({
+											success_url: nextValue.url,
+										});
+									}}
+								/>
+							</div>
+						</PanelRow>
+					)}
 				</PanelBody>
 			</InspectorControls>
 
