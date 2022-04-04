@@ -28,6 +28,9 @@
 		},
 		"currency": {
 			"type": "string"
-		}
+		},
+    "color": {
+      "type": "string"
+    }
 	}
 }

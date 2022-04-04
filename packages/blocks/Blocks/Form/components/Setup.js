@@ -4,8 +4,7 @@ import { __ } from '@wordpress/i18n';
 import { css, jsx } from '@emotion/core';
 import { __experimentalLinkControl as LinkControl } from '@wordpress/block-editor';
 
-import { ScRadioGroup, ScRadio, ScButton } from '@surecart/components-react';
-import PriceChoices from '@scripts/blocks/components/PriceChoices';
+import { ScButton } from '@surecart/components-react';
 import { useEffect, useState } from 'react';
 import ChooseDesign from './ChooseDesign';
 import PlaceholderTemplate from './PlaceholderTemplate';

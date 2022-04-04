@@ -28,6 +28,11 @@ class Block extends BaseBlock {
 	public function getStyle( $attributes ) {
 		$style  = '';
 		$style .= '--sc-form-row-spacing: ' . ( $attributes['gap'] ?? '25' ) . ';';
+		if ( ! empty( $attributes['color'] ) ) {
+			$style .= '--sc-color-primary-500: ' . sanitize_hex_color( $attributes['color'] ) . ';';
+			$style .= '--sc-focus-ring-color-primary: ' . sanitize_hex_color( $attributes['color'] ) . ';';
+			$style .= '--sc-input-border-color-focus: ' . sanitize_hex_color( $attributes['color'] ) . ';';
+		}
 		return $style;
 	}
 

@@ -14,6 +14,7 @@ import {
 	PanelRow,
 	PanelBody,
 	Button,
+	BaseControl,
 	UnitControl as __stableUnitControl,
 	__experimentalUnitControl,
 } from '@wordpress/components';
@@ -23,6 +24,7 @@ import Cart from './components/Cart';
 import Mode from './components/Mode';
 import Setup from './components/Setup';
 import { styles } from '../../../admin/styles/admin';
+import ColorPopup from '../../components/ColorPopup';
 
 const ALLOWED_BLOCKS = [
 	'core/spacer',
@@ -51,8 +53,17 @@ export default function edit({ clientId, attributes, setAttributes }) {
 		? __stableUnitControl
 		: __experimentalUnitControl;
 
-	const { align, className, prices, font_size, choice_type, mode, gap } =
-		attributes;
+	const {
+		align,
+		className,
+		prices,
+		font_size,
+		choice_type,
+		mode,
+		gap,
+		color,
+	} = attributes;
+
 	const [tab, setTab] = useState('');
 	const blockCount = useSelect((select) =>
 		select(blockEditorStore).getBlockCount(clientId)
@@ -209,7 +220,18 @@ export default function edit({ clientId, attributes, setAttributes }) {
 						</div>
 					</PanelRow>
 				</PanelBody>
-				<PanelBody title={__('Dimensions', 'surecart')}>
+				<PanelBody title={__('Style', 'surecart')}>
+					<PanelRow>
+						<BaseControl.VisualLabel>
+							{__('Form Highlight Color', 'presto-player')}
+						</BaseControl.VisualLabel>
+						<ColorPopup
+							color={color}
+							setColor={(color) => {
+								setAttributes({ color: color?.hex });
+							}}
+						/>
+					</PanelRow>
 					<PanelRow>
 						<UnitControl
 							label={__('Row Gap')}
@@ -354,6 +376,15 @@ export default function edit({ clientId, attributes, setAttributes }) {
 							margin-top: 2em;
 							font-size: ${font_size}px;
 						`}
+						style={{
+							...(color
+								? {
+										'--sc-color-primary-500': color,
+										'--sc-focus-ring-color-primary': color,
+										'--sc-input-border-color-focus': color,
+								  }
+								: {}),
+						}}
 						disableComponentsValidation={true}
 						persistSession={false}
 						alignment={align}
