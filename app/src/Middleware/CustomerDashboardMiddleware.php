@@ -6,6 +6,7 @@ use SureCart\Models\CustomerLink;
 use SureCart\Models\User;
 use Closure;
 use SureCartCore\Requests\RequestInterface;
+use SureCartCore\Responses\RedirectResponse;
 
 /**
  * Middleware for customer dashboard.
@@ -38,14 +39,14 @@ class CustomerDashboardMiddleware {
 		$user = User::getUserBy( 'email', $link->email );
 		if ( $user ) {
 			$user->login();
-			return $next( $request );
+			return $this->success( $request );
 		}
 
 		// login the user using the customer id from the link.
 		$user = $link->getUser();
 		if ( $user ) {
 			$user->login();
-			return $next( $request );
+			return $this->success( $request );
 		}
 
 		// there's no user with this email or customer id. Let's create one.
@@ -60,11 +61,20 @@ class CustomerDashboardMiddleware {
 			if ( $user ) {
 				$user->setCustomerId( $link->customer );
 				$user->login();
-				return $next( $request );
+				return $this->success( $request );
 			}
 		}
 
 		return $this->error( new \WP_Error( 'user_not_found', 'This user was not found.' ) );
+	}
+
+	/**
+	 * Request success. Removes link id from the request and redirects.
+	 *
+	 * @return RedirectResponse
+	 */
+	public function success( $request ) {
+		return ( new RedirectResponse( $request ) )->to( remove_query_arg( 'customer_link_id', $request->getUrl() ) );
 	}
 
 	/**
