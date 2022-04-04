@@ -26,6 +26,7 @@ import admin from '../../../../admin/styles/admin';
 import SelectForm from './SelectForm';
 import { ScButton, ScInput } from '@surecart/components-react';
 import PlaceholderTemplate from '../../../components/PlaceholderTemplate';
+import { styles } from '../../../../admin/styles/admin';
 
 export default ({ attributes, setAttributes }) => {
 	const { title, step } = attributes;
@@ -33,11 +34,11 @@ export default ({ attributes, setAttributes }) => {
 
 	const blockProps = useBlockProps({
 		css: css`
-			${admin}
 			.components-placeholder.components-placeholder {
 				padding: 2em;
 			}
 		`,
+		style: styles,
 	});
 
 	// save the form block.
