@@ -8,6 +8,7 @@ import { translateInterval } from '../../util/translations';
 import Definition from '../../ui/Definition';
 import { useSelect } from '@wordpress/data';
 import { store } from '@surecart/data';
+import { ScButton } from '@surecart/components-react';
 
 export default ({ invoice, charge: chargeInput, loading }) => {
 	const line_items = invoice?.invoice_items?.data;
@@ -24,6 +25,36 @@ export default ({ invoice, charge: chargeInput, loading }) => {
 	return (
 		<Box
 			title={__('Invoice Details', 'surecart')}
+			header_action={
+				invoice?.id && (
+					<div
+						css={css`
+							display: flex;
+							gap: 0.5em;
+							align-items: center;
+							justify-content: flex-end;
+							flex-wrap: wrap;
+						`}
+					>
+						<ScButton
+							href={`${scData?.surecart_app_url}/portal/invoices/${invoice?.id}/generate/receipt.pdf`}
+							type="default"
+							size="small"
+						>
+							{__('Download Receipt', 'surecart')}
+							<sc-icon slot="prefix" name="download"></sc-icon>
+						</ScButton>
+						<ScButton
+							href={`${scData?.surecart_app_url}/portal/invoices/${invoice?.id}/generate.pdf`}
+							type="primary"
+							size="small"
+						>
+							{__('Download Invoice', 'surecart')}
+							<sc-icon slot="prefix" name="download"></sc-icon>
+						</ScButton>
+					</div>
+				)
+			}
 			footer={
 				!loading &&
 				!!charge && (
