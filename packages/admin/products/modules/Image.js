@@ -53,7 +53,9 @@ export default ({ product, updateProduct, loading }) => {
 	};
 
 	const uploadImage = async (e) => {
-		const file = e.currentTarget.files[0];
+		// set uploads from file input.
+		const files = [...(e?.currentTarget?.files || e)];
+		const file = files[0];
 		setSrc(URL.createObjectURL(file));
 		if (!file) return;
 		try {
