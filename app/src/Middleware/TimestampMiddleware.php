@@ -21,6 +21,6 @@ class TimeStampMiddleware {
 		if ( $request->query( 't' ) ) {
 			return $next( $request );
 		}
-		return ( new RedirectResponse( $request ) )->to( add_query_arg( [ 't' => time() ], $request->getUrl() ) );
+		return ( new RedirectResponse( $request ) )->to( add_query_arg( array_merge( $request->getQueryParams(), [ 't' => time() ] ), $request->getRequestTarget() ) );
 	}
 }
