@@ -7,7 +7,7 @@
 			[
 				'name'  => 'invoice_info',
 				'title' => esc_html__( 'What are Invoices?', 'surecart' ),
-				'text'  => esc_html__( 'Invoices are similar to orders, but instead are used for payments and plan changes on active subscriptions. In the future you will be able to create an invoice to send out.', 'surecart' ),
+				'text'  => esc_html__( 'Invoices are similar to orders, but are used for payments and plan changes on active subscriptions. In the future you will be able to create an invoice to send out.', 'surecart' ),
 			]
 		)
 	);
