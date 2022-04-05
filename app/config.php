@@ -36,6 +36,7 @@ return [
 		\SureCart\Support\Errors\ErrorsServiceProvider::class,
 		\SureCart\Activation\ActivationServiceProvider::class,
 		\SureCart\WordPress\Admin\Menus\AdminMenuPageServiceProvider::class,
+		\SureCart\WordPress\Admin\Notices\AdminNoticesServiceProvider::class,
 
 		// REST providers.
 		\SureCart\Rest\AccountRestServiceProvider::class,
