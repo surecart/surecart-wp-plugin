@@ -60,7 +60,10 @@ export default ({ id, products, loading }) => {
 					))
 			) : (
 				<sc-empty icon="shopping-bag">
-					{__('Add some products to this upgrade group.', 'surecart')}
+					{__(
+						'Add some products to this upgrade group. A customer who has purchased one of these products can switch between others in this group.',
+						'surecart'
+					)}
 				</sc-empty>
 			)}
 		</Box>
