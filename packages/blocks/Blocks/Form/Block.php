@@ -69,7 +69,7 @@ class Block extends BaseBlock {
 				'form_id'       => $sc_form_id,
 				'id'            => 'sc-checkout-' . $sc_form_id,
 				'prices'        => $attributes['prices'] ?? [],
-				'success_url'   => ! empty( $attributes['redirect'] ) ? $attributes['redirect'] : \SureCart::pages()->url( 'order-confirmation' ),
+				'success_url'   => ! empty( $attributes['success_url'] ) ? $attributes['success_url'] : \SureCart::pages()->url( 'order-confirmation' ),
 				'i18n'          => $this->getTranslations(),
 			]
 		);
