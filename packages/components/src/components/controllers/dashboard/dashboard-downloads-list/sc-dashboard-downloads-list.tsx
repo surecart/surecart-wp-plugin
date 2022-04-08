@@ -78,6 +78,7 @@ export class ScDownloadsList {
       path: addQueryArgs(`surecart/v1/purchases/`, {
         expand: ['product', 'product.files'],
         downloadable: true,
+        revoked: false,
         ...this.query,
       }),
       parse: false,
