@@ -1,9 +1,9 @@
 :host {
-  display: inline-block;
+  display: block;
 }
 
 .checkbox {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   font-family: var(--sc-input-font-family);
   font-size: var(--sc-input-font-size-medium);
@@ -90,5 +90,16 @@
 .checkbox__label {
   line-height: var(--sc-checkbox-size);
   margin-left: 0.5em;
+  flex: 1;
   // user-select: none;
+}
+
+
+.checkbox--is-required .checkbox__label:after {
+  content: " *";
+  color: var(--sc-color-danger-500);
+}
+
+::slotted(*) {
+  display: inline-block;
 }

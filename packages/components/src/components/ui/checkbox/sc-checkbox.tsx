@@ -127,6 +127,7 @@ export class ScCheckbox {
         part="base"
         class={{
           'checkbox': true,
+          'checkbox--is-required': this.required,
           'checkbox--checked': this.checked,
           'checkbox--disabled': this.disabled,
           'checkbox--focused': this.hasFocus,
