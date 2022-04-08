@@ -1,3 +1,5 @@
+import { RichText } from '@wordpress/block-editor';
+
 export default ({ className, attributes }) => {
 	const { name, checked, value, required, label } = attributes;
 
@@ -9,7 +11,7 @@ export default ({ className, attributes }) => {
 			value={value || false}
 			required={required || false}
 		>
-			{label}
+			<RichText.Content value={label} />
 		</sc-checkbox>
 	);
 };

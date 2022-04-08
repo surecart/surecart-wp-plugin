@@ -26,6 +26,9 @@ export class ScCheckbox {
   /** Disables the checkbox. */
   @Prop({ reflect: true }) disabled: boolean = false;
 
+  /** Makes this static and not editable. */
+  @Prop({ reflect: true }) static: boolean = false;
+
   /** Makes the checkbox a required field. */
   @Prop({ reflect: true }) required: boolean = false;
 
@@ -97,9 +100,9 @@ export class ScCheckbox {
     this.scFocus.emit();
   }
 
-  handleLabelMouseDown(event: MouseEvent) {
+  handleLabelMouseDown() {
     // Prevent clicks on the label from briefly blurring the input
-    event.preventDefault();
+    // event.preventDefault();
     this.input.focus();
   }
 
@@ -122,8 +125,9 @@ export class ScCheckbox {
   }
 
   render() {
+    const Tag = this.static ? 'div' : 'label';
     return (
-      <label
+      <Tag
         part="base"
         class={{
           'checkbox': true,
@@ -134,7 +138,7 @@ export class ScCheckbox {
           'checkbox--indeterminate': this.indeterminate,
         }}
         htmlFor={this.inputId}
-        onMouseDown={e => this.handleLabelMouseDown(e)}
+        onMouseDown={() => this.handleLabelMouseDown()}
       >
         <span part="control" class="checkbox__control">
           {this.checked ? (
@@ -188,7 +192,7 @@ export class ScCheckbox {
         <span part="label" id={this.labelId} class="checkbox__label">
           <slot></slot>
         </span>
-      </label>
+      </Tag>
     );
   }
 }

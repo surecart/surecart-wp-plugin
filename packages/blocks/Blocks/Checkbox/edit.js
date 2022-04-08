@@ -64,23 +64,20 @@ export default ({ className, attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			{/* <Disabled> */}
 			<ScCheckbox
 				className={className}
 				name={name}
 				required={required}
+				static
 				{...blockProps}
 			>
 				<RichText
-					aria-label={__('Secure Notice')}
-					placeholder={__('Add some checkbox text...')}
+					aria-label={__('Checkbox Text', 'surecart')}
+					placeholder={__('Add some checkbox text...', 'surecart')}
 					value={label}
 					onChange={(label) => setAttributes({ label })}
-					withoutInteractiveFormatting
-					allowedFormats={['core/bold', 'core/italic']}
 				/>
 			</ScCheckbox>
-			{/* </Disabled> */}
 		</Fragment>
 	);
 };

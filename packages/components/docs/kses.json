@@ -118,6 +118,7 @@
     "invalid": true,
     "name": true,
     "required": true,
+    "static": true,
     "value": true,
     "style": true,
     "id": true,

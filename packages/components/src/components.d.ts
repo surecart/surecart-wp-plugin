@@ -216,6 +216,10 @@ export namespace Components {
          */
         "required": boolean;
         /**
+          * Makes this static and not editable.
+         */
+        "static": boolean;
+        /**
           * Removes focus from the checkbox.
          */
         "triggerBlur": () => Promise<void>;
@@ -3185,6 +3189,10 @@ declare namespace LocalJSX {
           * Makes the checkbox a required field.
          */
         "required"?: boolean;
+        /**
+          * Makes this static and not editable.
+         */
+        "static"?: boolean;
         /**
           * The checkbox's value attribute.
          */
