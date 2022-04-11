@@ -43,7 +43,7 @@
 	<div class="sc-container">
 		<div class="sc-section-heading">
 			<h3>
-				<sc-icon name="shopping-bag"></sc-icon>
+				<sc-icon name="surecart"></sc-icon>
 				<?php esc_html_e( 'Getting Started With SureCart', 'surecart' ); ?>
 			</h3>
 		</div>
