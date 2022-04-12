@@ -42,13 +42,6 @@ export default ({ className, attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<TextControl
-							label={__('Label', 'surecart')}
-							value={label}
-							onChange={(label) => setAttributes({ label })}
-						/>
-					</PanelRow>
-					<PanelRow>
-						<TextControl
 							label={__('Value', 'surecart')}
 							value={value}
 							onChange={(value) => setAttributes({ value })}
