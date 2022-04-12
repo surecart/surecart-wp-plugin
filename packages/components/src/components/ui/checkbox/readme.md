@@ -15,6 +15,7 @@
 | `invalid`       | `invalid`       | This will be true when the control is in an invalid state. Validity is determined by the `required` prop. | `boolean` | `false`     |
 | `name`          | `name`          | The checkbox's name attribute.                                                                            | `string`  | `undefined` |
 | `required`      | `required`      | Makes the checkbox a required field.                                                                      | `boolean` | `false`     |
+| `static`        | `static`        | Makes this static and not editable.                                                                       | `boolean` | `false`     |
 | `value`         | `value`         | The checkbox's value attribute.                                                                           | `string`  | `undefined` |
 
 
