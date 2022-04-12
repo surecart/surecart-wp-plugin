@@ -46,14 +46,13 @@ export class ScOrderSummary {
         <span slot="price">
           <sc-total total={'total'} order={this.order}></sc-total>
         </span>
-        <span slot="currency">{this.order?.currency}</span>
       </sc-line-item>
     );
   }
 
   render() {
     return (
-      <div class={{ 'summary': true, 'summary--collapsed': !!this.collapsed }}>
+      <div class={{ 'summary': true, 'summary--collapsed': !!this.collapsed, 'summary--expanded': !this.collapsed }}>
         {this.collapsible && this.renderHeader()}
         <div
           class={{

@@ -29,28 +29,36 @@
   user-select: none;
   cursor: pointer;
 
-  .summary__content {
-    transition: max-height 1s ease-in-out;
-    max-height: 9999px;
+  &__content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 1.2s ease-in-out;
+    transition-timing-function: cubic-bezier(.22,.68,0,1.71);
   }
 
   .collapse-link__icon {
-    transform: rotate(180deg);
+    transform: rotate(0);
     transition: transform 0.25s ease-in-out;
   }
 }
 
-.summary--collapsed {
+.summary--expanded {
   .summary__content {
-    overflow: hidden;
-    max-height: 0;
-    transition: max-height 0.5s cubic-bezier(0, 1, 0, 1);
-  }
-  .empty {
-    display: none;
+    overflow: visible;
+    max-height: 99em;
+    animation: hide-scroll 1s backwards;
+    @keyframes hide-scroll {
+      from, to { overflow: hidden; }
+    }
   }
   .collapse-link__icon {
-    transform: rotate(0deg);
+    transform: rotate(180deg);
+  }
+}
+
+.summary--collapsed {
+  .empty {
+    display: none;
   }
 }
 
