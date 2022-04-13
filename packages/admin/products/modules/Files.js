@@ -29,7 +29,7 @@ export default ({ id, product, updateProduct, loading }) => {
 	};
 
 	return (
-		<Box title={__('File Downloads', 'surecart')} loading={loading}>
+		<Box title={__('Downloads', 'surecart')} loading={loading}>
 			{(() => {
 				if (!(product?.files?.data || [])?.length && !uploads.length)
 					return null;
