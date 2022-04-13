@@ -139,6 +139,7 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 				'currency'   => \SureCart::account()->currency,
 				'pages'      => [
 					'dashboard' => \SureCart::pages()->url( 'dashboard' ),
+					'checkout'  => \SureCart::pages()->url( 'checkout' ),
 				],
 				'root_url' => esc_url_raw( get_rest_url() ),
 				'nonce' => ( wp_installing() && ! is_multisite() ) ? '' : wp_create_nonce( 'wp_rest' ),
