@@ -1,44 +1,38 @@
 /** @jsx jsx */
 import { __ } from '@wordpress/i18n';
-import { css, jsx, Global } from '@emotion/core';
+import { css, Global, jsx } from '@emotion/core';
 import { Button, Modal, Flex } from '@wordpress/components';
-import { useState } from '@wordpress/element';
 import PriceChoices from '@scripts/blocks/components/PriceChoices';
 import { addQueryArgs } from '@wordpress/url';
-import { create, insert, isCollapsed, applyFormat } from '@wordpress/rich-text';
 
-export default ({ value, onChange, setAddingLink, addingLink, isActive }) => {
-	const initialLineItemsJSON = value?.activeFormats.find(
-		(format) => format.type === 'surecart/buy-link'
-	)?.attributes?.line_items;
-	const initialLineItems = initialLineItemsJSON
-		? JSON.parse(initialLineItemsJSON)
-		: [{ quantity: 1 }];
-	const [line_items, setLineItems] = useState(initialLineItems);
+export default ({ attributes, setAttributes, onChange, setAddingLink }) => {
+	const { url, line_items } = attributes;
 
 	const removeLineItem = (index) => {
-		setLineItems(line_items.filter((_, i) => i !== index));
+		setAttributes({ line_items: line_items.filter((_, i) => i !== index) });
 	};
 
 	const updateLineItem = (data, index) => {
-		setLineItems(
-			line_items.map((item, i) => {
+		setAttributes({
+			line_items: line_items.map((item, i) => {
 				if (i !== index) return item;
 				return {
 					...item,
 					...data,
 				};
-			})
-		);
+			}),
+		});
 	};
 
 	const addLineItem = () => {
-		setLineItems([
-			...(line_items || []),
-			{
-				quantity: 1,
-			},
-		]);
+		setAttributes({
+			line_items: [
+				...(line_items || []),
+				{
+					quantity: 1,
+				},
+			],
+		});
 	};
 
 	const createLink = () => {
@@ -54,31 +48,13 @@ export default ({ value, onChange, setAddingLink, addingLink, isActive }) => {
 			})),
 		});
 
-		const format = {
-			type: 'surecart/buy-link',
-			attributes: {
-				url,
-				line_items: JSON.stringify(line_items),
-			},
-		};
-
-		if (isCollapsed(value) && !isActive) {
-			const toInsert = applyFormat(
-				create({ text: url }),
-				format,
-				0,
-				url.length
-			);
-			onChange(insert(value, toInsert));
-		} else {
-			onChange(applyFormat(value, format));
-		}
+		onChange({ url, line_items });
 		setAddingLink(false);
 	};
 
 	return (
 		<Modal
-			title={__('Create A Buy Link', 'surecart')}
+			title={__('Add A Buy Link', 'surecart')}
 			onRequestClose={() => setAddingLink(false)}
 			shouldCloseOnClickOutside={false}
 			css={css`
@@ -111,7 +87,9 @@ export default ({ value, onChange, setAddingLink, addingLink, isActive }) => {
 					{__('Cancel', 'surecart')}
 				</Button>
 				<Button isPrimary onClick={createLink}>
-					{__('Insert Buy Link', 'surecart')}
+					{url
+						? __('Update Link', 'surecart')
+						: __('Add Link', 'surecart')}
 				</Button>
 			</Flex>
 		</Modal>

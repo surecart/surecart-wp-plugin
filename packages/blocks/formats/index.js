@@ -31,7 +31,7 @@ export const buyLink = {
 	attributes: {
 		url: 'href',
 		target: 'target',
-		line_items: 'data-line-items',
+		// line_items: 'data-line-items',
 	},
 	edit: withSpokenMessages(({ isActive, value, onChange, speak }) => {
 		const [addingLink, setAddingLink] = useState(false);
