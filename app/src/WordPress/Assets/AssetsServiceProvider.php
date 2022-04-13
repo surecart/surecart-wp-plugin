@@ -121,13 +121,13 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function registerComponentScripts() {
-		// wp_register_script(
-		// 	'surecart-components',
-		// 	trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/components/surecart/surecart.esm.js',
-		// 	[ 'wp-api-fetch' ],
-		// 	filemtime( trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/surecart/surecart.esm.js' ),
-		// 	false
-		// );
+		wp_register_script(
+			'surecart-components',
+			trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/components/surecart/surecart.esm.js',
+			[ 'wp-api-fetch' ],
+			filemtime( trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/surecart/surecart.esm.js' ),
+			false
+		);
 
 		wp_set_script_translations( 'surecart-components', 'surecart', WP_LANG_DIR . '/plugins/' );
 
@@ -205,29 +205,8 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 		wp_enqueue_style( 'surecart-themes-default' );
 
 		$brand  = \SureCart::account()->brand;
-		$style  = '
-		sc-form {
-			display: block;
-		  }
 
-		  sc-form form > *:not(:last-child) {
-			margin-bottom: var(--sc-form-row-spacing, 0.75em);
-
-			&.wp-block-spacer {
-			  margin-bottom: 0;
-			}
-		  }
-
-		  sc-form .wp-block-columns .wp-block-column {
-			margin: 50px;
-		  }
-
-		sc-input:not(.hydrated), sc-customer-name:not(.hydrated), sc-customer-email:not(.hydrated) {
-			height: 50px;
-			width: 100%;
-			display: block;
-			background: var(--sc-color-gray-500);
-		}';
+		$style = file_get_contents( plugin_dir_path( SURECART_PLUGIN_FILE ) . 'dist/blocks/cloak.css' );
 
 		$style .= ':root {';
 		$style .= '--sc-color-primary-500: #' . ( $brand->color ?? '000' ) . ';';
