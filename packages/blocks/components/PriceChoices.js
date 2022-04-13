@@ -5,6 +5,7 @@ import { __ } from '@wordpress/i18n';
 
 import PriceChoice from './PriceChoice';
 import { ScButton } from '@surecart/components-react';
+import { styles } from '@admin/styles/admin';
 
 export default ({ choices, onUpdate, onRemove, onAddProduct, description }) => {
 	const renderTable = () => {
@@ -60,6 +61,7 @@ export default ({ choices, onUpdate, onRemove, onAddProduct, description }) => {
 
 	return (
 		<div
+			style={styles}
 			css={css`
 				display: grid;
 				gap: 1em;
