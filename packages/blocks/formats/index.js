@@ -85,7 +85,7 @@ export const buyLink = {
 						</svg>
 					}
 					title={title}
-					onClick={isActive ? onRemoveFormat : addLink}
+					onClick={addLink}
 					isActive={isActive}
 				/>
 				{addingLink && (
