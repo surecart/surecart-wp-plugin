@@ -4,7 +4,7 @@
 import { registerBlockType } from '@wordpress/blocks';
 import { __ } from '@wordpress/i18n';
 
-// import './hooks/controls';
+import './formats';
 
 // blocks
 import * as button from '@blocks/Button';
