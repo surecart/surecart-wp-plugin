@@ -29,7 +29,7 @@ export default ({ id, product, updateProduct, loading }) => {
 	};
 
 	return (
-		<Box title={__('Files', 'surecart')} loading={loading}>
+		<Box title={__('File Downloads', 'surecart')} loading={loading}>
 			{(() => {
 				if (!(product?.files?.data || [])?.length && !uploads.length)
 					return null;
@@ -105,7 +105,7 @@ export default ({ id, product, updateProduct, loading }) => {
 				);
 			})()}
 
-			<ScFormControl label={__('Files', 'surecart')} showLabel={false}>
+			<ScFormControl label={__('File', 'surecart')} showLabel={false}>
 				<div
 					css={css`
 						position: relative;
