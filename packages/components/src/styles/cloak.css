@@ -1,0 +1,12 @@
+/**
+* Initial styles to load before the component is lazy loaded with Javascript
+*/
+
+sc-input {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.1s ease;
+}
+sc-input.hydrated {
+
+}
