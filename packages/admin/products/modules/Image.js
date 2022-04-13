@@ -158,16 +158,14 @@ export default ({ product, updateProduct, loading }) => {
 					text-align: center;
 				`}
 			>
-				{__(
-					'Drag and drop an image here or click to select a file.',
-					'surecart'
-				)}
+				{__('Drag and drop an image here', 'surecart')}
+				<sc-divider>{__('Or', 'surecart')}</sc-divider>
 				<FormFileUpload
 					isPrimary
 					accept="image/*"
 					onChange={uploadImage}
 				>
-					{__('Upload File', 'surecart')}
+					{__('Upload Image', 'surecart')}
 				</FormFileUpload>
 				<DropZone onFilesDrop={uploadImage} />
 			</div>

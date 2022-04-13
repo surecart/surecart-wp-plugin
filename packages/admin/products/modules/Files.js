@@ -117,13 +117,10 @@ export default ({ id, product, updateProduct, loading }) => {
 						text-align: center;
 					`}
 				>
-					{__(
-						'Drag and drop an file here or click to select a file.',
-						'surecart'
-					)}
-
+					{__('Drag and drop files here', 'surecart')}
+					<sc-divider>{__('Or', 'surecart')}</sc-divider>
 					<FormFileUpload isPrimary multiple onChange={doUpload}>
-						{__('Upload File', 'surecart')}
+						{__('Upload Files', 'surecart')}
 					</FormFileUpload>
 
 					<DropZone onFilesDrop={doUpload} />
