@@ -33,22 +33,30 @@ export class ScPayment {
   /** Payment mode inside individual payment method (i.e. Payment Buttons) */
   @Prop() paymentMethod: 'stripe-payment-request' | null;
 
+  renderLoading() {
+    return (
+      <div>
+        <sc-skeleton style={{ width: '10%', marginBottom: '1em' }}></sc-skeleton>
+        <sc-skeleton style={{ width: '100%', marginBottom: '1em' }}></sc-skeleton>
+        <sc-skeleton style={{ width: '35%' }}></sc-skeleton>
+      </div>
+    );
+  }
+
   render() {
     if (this.loading) {
-      return <sc-skeleton></sc-skeleton>;
+      return this.renderLoading();
     }
+
     if (!this.processor) {
-      return <div>Please contact us for payment</div>;
+      return <div>{__('Please contact us for payment', 'surecart')}</div>;
     }
+
     if ('stripe' === this.processor) {
       if (!this?.order?.processor_data?.stripe?.publishable_key || !this?.order?.processor_data?.stripe?.account_id) {
-        return (
-          <div>
-            <sc-skeleton style={{ width: '100%', marginBottom: '1em' }}></sc-skeleton>
-            <sc-skeleton style={{ width: '35%' }}></sc-skeleton>
-          </div>
-        );
+        return this.renderLoading();
       }
+
       return (
         <Host>
           <sc-stripe-element
