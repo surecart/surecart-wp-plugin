@@ -1,17 +1,34 @@
+@mixin sheen() {
+  background: linear-gradient(270deg, rgba(75, 85, 99, 0.2), rgba(75, 85, 99, 0.1), rgba(75, 85, 99, 0.1), rgba(75, 85, 99, 0.2));
+  background-size: 400% 100%;
+  background-size: 400% 100%;
+  animation: sheen 3s ease-in-out infinite;
+}
+
 @mixin input_cloak() {
   display: block;
   height: var(--sc-input-height-medium);
   border-radius: var(--sc-input-border-radius-medium);
-  background: var(--sc-color-gray-100);
+  @include sheen();
 }
+
 @mixin button_cloak() {
   display: block;
   width: auto;
   border-radius: var(--sc-input-border-radius-medium);
-  background: var(--sc-color-gray-100);
   height: var(--sc-input-height-large);
   text-align: center;
   color: transparent;
+  @include sheen();
+}
+
+@keyframes sheen {
+  0% {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
 }
 
 // form.
@@ -30,14 +47,16 @@ sc-form {
 
 // inputs
 sc-input, sc-customer-name, sc-customer-email {
-  &:not(.hydrated) {
+  &:not(.hydrated),
+  &:not(:defined) {
     @include input-cloak();
   }
 }
 
 // buttons
 sc-order-submit, sc-button {
-  &:not(.hydrated) {
+  &:not(.hydrated),
+  &:not(:defined) {
     @include button_cloak();
   }
 }
