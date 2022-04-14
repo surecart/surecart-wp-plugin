@@ -16,6 +16,16 @@ class RolesService {
 	}
 
 	/**
+	 * Create roles and caps.
+	 *
+	 * @return void
+	 */
+	public function delete() {
+		$this->removeRoles();
+		$this->removeCaps();
+	}
+
+	/**
 	 * Add Roles.
 	 *
 	 * @return void
@@ -168,5 +178,49 @@ class RolesService {
 		}
 
 		return $capabilities;
+	}
+
+	/**
+	 * Remove Roles.
+	 *
+	 * @return void
+	 */
+	public function removeRoles() {
+		remove_role( 'sc_shop_manager' );
+		remove_role( 'sc_shop_accountant' );
+		remove_role( 'sc_shop_worker' );
+	}
+
+	/**
+	 * Remove Caps.
+	 *
+	 * @return void
+	 */
+	public function removeCaps() {
+		global $wp_roles;
+
+		if ( class_exists( 'WP_Roles' ) ) {
+			if ( ! isset( $wp_roles ) ) {
+				// phpcs:ignore
+				$wp_roles = new \WP_Roles();
+			}
+		}
+
+		$delete_caps = array_merge(
+			[
+				'view_sc_shop_reports',
+				'view_sc_shop_sensitive_data',
+				'export_sc_shop_reports',
+				'manage_sc_shop_settings',
+				'manage_sc_account_settings',
+			],
+			$this->getModelCaps()
+		);
+
+		foreach ( $delete_caps as $cap ) {
+			foreach ( array_keys( $wp_roles->roles ) as $role ) {
+				$wp_roles->remove_cap( $role, $cap );
+			}
+		}
 	}
 }
