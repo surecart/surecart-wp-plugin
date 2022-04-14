@@ -32,6 +32,9 @@ class ApiToken {
 	 * @return string The decoded API token.
 	 */
 	protected function get() {
+		if ( defined( 'SURECART_API_TOKEN' ) ) {
+			return SURECART_API_TOKEN;
+		}
 		return Encryption::decrypt( get_option( $this->key, '' ) );
 	}
 
