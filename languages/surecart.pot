@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-04-12T17:57:38+00:00\n"
+"POT-Creation-Date: 2022-04-14T15:46:44+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 
@@ -440,6 +440,7 @@ msgstr ""
 #: admin/customers.js:1
 #: admin/invoices.js:1
 #: admin/orders.js:1
+#: blocks/library.js:1
 #: blocks/library.js:3
 msgid "View"
 msgstr ""
@@ -669,49 +670,49 @@ msgid "This user could not be found."
 msgstr ""
 
 #: src/Install/InstallService.php:25
-#: src/WordPress/Pages/PageSeeder.php:56
+#: src/WordPress/Pages/PageSeeder.php:65
 msgctxt "Form slug"
 msgid "checkout"
 msgstr ""
 
 #: src/Install/InstallService.php:26
-#: src/WordPress/Pages/PageSeeder.php:57
+#: src/WordPress/Pages/PageSeeder.php:66
 msgctxt "Form title"
 msgid "Checkout"
 msgstr ""
 
 #: src/Install/InstallService.php:124
-#: src/WordPress/Pages/PageSeeder.php:79
+#: src/WordPress/Pages/PageSeeder.php:88
 msgctxt "Page slug"
 msgid "checkout"
 msgstr ""
 
 #: src/Install/InstallService.php:125
-#: src/WordPress/Pages/PageSeeder.php:80
+#: src/WordPress/Pages/PageSeeder.php:89
 msgctxt "Page title"
 msgid "Checkout"
 msgstr ""
 
 #: src/Install/InstallService.php:131
-#: src/WordPress/Pages/PageSeeder.php:86
+#: src/WordPress/Pages/PageSeeder.php:95
 msgctxt "Page slug"
 msgid "order-confirmation"
 msgstr ""
 
 #: src/Install/InstallService.php:132
-#: src/WordPress/Pages/PageSeeder.php:87
+#: src/WordPress/Pages/PageSeeder.php:96
 msgctxt "Page title"
 msgid "Thank you!"
 msgstr ""
 
 #: src/Install/InstallService.php:136
-#: src/WordPress/Pages/PageSeeder.php:91
+#: src/WordPress/Pages/PageSeeder.php:100
 msgctxt "Page slug"
 msgid "customer-dashboard"
 msgstr ""
 
 #: src/Install/InstallService.php:137
-#: src/WordPress/Pages/PageSeeder.php:92
+#: src/WordPress/Pages/PageSeeder.php:101
 msgctxt "Page title"
 msgid "Dashboard"
 msgstr ""
@@ -737,15 +738,15 @@ msgstr ""
 msgid "Something is wrong with the provided link."
 msgstr ""
 
-#: src/Permissions/RolesService.php:26
+#: src/Permissions/RolesService.php:36
 msgid "SureCart Shop Manager"
 msgstr ""
 
-#: src/Permissions/RolesService.php:61
+#: src/Permissions/RolesService.php:71
 msgid "SureCart Accountant"
 msgstr ""
 
-#: src/Permissions/RolesService.php:71
+#: src/Permissions/RolesService.php:81
 msgid "SureCart Shop Worker"
 msgstr ""
 
@@ -2051,6 +2052,7 @@ msgstr ""
 #: admin/products.js:1
 #: admin/subscriptions/edit.js:1
 #: admin/subscriptions/show.js:1
+#: blocks/library.js:1
 #: blocks/library.js:3
 msgid "Cancel"
 msgstr ""
@@ -2815,11 +2817,15 @@ msgid "Replace"
 msgstr ""
 
 #: admin/products.js:1
-msgid "Drag and drop an image here or click to select a file."
+msgid "Drag and drop an image here"
 msgstr ""
 
 #: admin/products.js:1
-msgid "Upload File"
+msgid "Or"
+msgstr ""
+
+#: admin/products.js:1
+msgid "Upload Image"
 msgstr ""
 
 #: admin/products.js:1
@@ -2855,11 +2861,24 @@ msgid "Are you sure you want to remove this file? This cannot be undone."
 msgstr ""
 
 #: admin/products.js:1
-msgid "Files"
+#: components/cjs/sc-dashboard-downloads-list.cjs.entry.js:1
+#: components/collection/components/controllers/dashboard/dashboard-downloads-list/sc-dashboard-downloads-list.js:1
+#: components/components/sc-dashboard-downloads-list.js:1
+#: components/custom-elements/index.js:1
+#: components/esm/sc-dashboard-downloads-list.entry.js:1
+msgid "Downloads"
 msgstr ""
 
 #: admin/products.js:1
-msgid "Drag and drop an file here or click to select a file."
+msgid "File"
+msgstr ""
+
+#: admin/products.js:1
+msgid "Drag and drop files here"
+msgstr ""
+
+#: admin/products.js:1
+msgid "Upload Files"
 msgstr ""
 
 #: admin/products.js:1
@@ -3202,16 +3221,6 @@ msgid "Something went wrong"
 msgstr ""
 
 #: blocks/library.js:1
-#: blocks/library.js:3
-msgid "Button text"
-msgstr ""
-
-#: blocks/library.js:1
-#: blocks/library.js:3
-msgid "Add text…"
-msgstr ""
-
-#: blocks/library.js:1
 msgid "Name Your Price"
 msgstr ""
 
@@ -3229,6 +3238,48 @@ msgstr ""
 
 #: blocks/library.js:1
 msgid "Add Product"
+msgstr ""
+
+#: blocks/library.js:1
+msgid "Add A Buy Link"
+msgstr ""
+
+#: blocks/library.js:1
+msgid "Update Link"
+msgstr ""
+
+#: blocks/library.js:1
+msgid "Add Link"
+msgstr ""
+
+#: blocks/library.js:1
+msgid "Buy Link"
+msgstr ""
+
+#: blocks/library.js:1
+msgid "Create A Buy Link"
+msgstr ""
+
+#: blocks/library.js:1
+msgid "Insert Buy Link"
+msgstr ""
+
+#: blocks/library.js:1
+msgid "Are you sure you want to remove this link?"
+msgstr ""
+
+#: blocks/library.js:1
+msgid "Link removed."
+msgstr ""
+
+#: blocks/library.js:1
+#: blocks/library.js:3
+msgid "Button text"
+msgstr ""
+
+#: blocks/library.js:1
+#: blocks/library.js:3
+msgid "Add text…"
 msgstr ""
 
 #: blocks/library.js:1
@@ -6212,14 +6263,6 @@ msgstr ""
 #: components/esm/sc-customer-edit.entry.js:1
 #: components/esm/sc-wordpress-user-edit.entry.js:1
 msgid "Save"
-msgstr ""
-
-#: components/cjs/sc-dashboard-downloads-list.cjs.entry.js:1
-#: components/collection/components/controllers/dashboard/dashboard-downloads-list/sc-dashboard-downloads-list.js:1
-#: components/components/sc-dashboard-downloads-list.js:1
-#: components/custom-elements/index.js:1
-#: components/esm/sc-dashboard-downloads-list.entry.js:1
-msgid "Downloads"
 msgstr ""
 
 #: components/cjs/sc-downloads-list.cjs.entry.js:1

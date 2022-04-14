@@ -37,7 +37,6 @@ class ActivationService {
 	 */
 	public function bootstrap() {
 		register_activation_hook( SURECART_PLUGIN_FILE, [ $this, 'activate' ] );
-		register_deactivation_hook( SURECART_PLUGIN_FILE, [ $this, 'deactivate' ] );
 	}
 
 	/**
@@ -50,5 +49,56 @@ class ActivationService {
 		$this->roles->create();
 		// seed pages and forms.
 		$this->seeder->seed();
+	}
+
+	/**
+	 * Remove roles and all data.
+	 *
+	 * @return void
+	 */
+	public function uninstall() {
+		// remove roles.
+		$this->roles->delete();
+		// remove pages that were automatically seeded.
+		$this->seeder->delete();
+		// remove all forms.
+		$this->removeFormPosts();
+		// remove all options from the options table.
+		$this->removeOptions();
+	}
+
+	/**
+	 * Remove all posts from our post type.
+	 *
+	 * @return void
+	 */
+	public function removeFormPosts() {
+		// remove all form posts.
+		$form_ids = get_posts(
+			[
+				'post_type'   => 'sc_form',
+				'numberposts' => -1,
+				'fields'      => 'ids',
+			]
+		);
+		foreach ( $form_ids as $form_id ) {
+			wp_delete_post( $form_id, true );
+		}
+	}
+
+	/**
+	 * Remove all our options from the options table.
+	 *
+	 * @return void
+	 */
+	public function removeOptions() {
+		delete_option( 'ce_registered_webhook' );
+		delete_option( 'surecart_order-confirmation_page_id' );
+		delete_option( 'surecart_dashboard_page_id' );
+		delete_option( 'surecart_checkout_sc_form_id' );
+		delete_option( 'surecart_checkout_page_id' );
+		delete_option( 'sc_webhook_signing_secret' );
+		delete_option( 'sc_api_token' );
+		delete_option( 'sc_uninstall' );
 	}
 }

@@ -18,6 +18,10 @@ class ActivationServiceProvider implements ServiceProviderInterface {
 		$container['surecart.activation'] = function ( $container ) {
 			return new ActivationService( $container['surecart.permissions.roles'], $container['surecart.pages.seeder'] );
 		};
+
+		// register alias.
+		$app = $container[ SURECART_APPLICATION_KEY ];
+		$app->alias( 'activation', 'surecart.activation' );
 	}
 
 	/**
