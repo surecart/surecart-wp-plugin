@@ -12,6 +12,7 @@
 			"config": {
 				"FS_METHOD": "direct",
 				"WP_DEBUG": true,
+				"SURECART_API_TOKEN": "test",
 				"SURECART_APP_URL": "https://staging.surecart.com",
 				"CE_TESTING": true
 			}

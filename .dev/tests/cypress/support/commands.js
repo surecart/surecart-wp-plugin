@@ -1,94 +1,96 @@
 import { loginToSite, disableGutenbergFeatures } from '../helpers';
 import 'cypress-file-upload';
 
-before( function () {
-	cy.visit( '/wp-admin' );
-	cy.location( 'pathname' ).then( ( pathname ) => {
-		if ( pathname === '/wp-login.php' ) {
-			cy.get( '#user_login' )
-				.wait( 200 )
-				.type( Cypress.env( 'wpUsername' ), { force: true } );
-			cy.get( '#user_pass' )
-				.wait( 200 )
-				.type( Cypress.env( 'wpPassword' ), { force: true } );
-			cy.get( '#wp-submit' ).click();
-		}
-	} );
+Cypress.Cookies.defaults({
+	preserve: /wp|wordpress/,
+});
 
+before(function () {
 	disableGutenbergFeatures();
-} );
+});
 
-// Maintain WordPress logged in state
-Cypress.Cookies.defaults( {
-	preserve: /wordpress_.*/,
-} );
+Cypress.Commands.add('login', (username, password) => {
+	cy.getCookies().then((cookies) => {
+		let hasMatch = false;
+		cookies.forEach((cookie) => {
+			if (cookie.name.substr(0, 20) === 'wordpress_logged_in_') {
+				hasMatch = true;
+			}
+		});
+		if (!hasMatch) {
+			cy.visit('/wp-login.php').wait(1000);
+			cy.get('#user_login').type(username);
+			cy.get('#user_pass').type(`${password}{enter}`);
+		}
+	});
+});
 
-const waitForSomething = async ( name, res ) => {
+const waitForSomething = async (name, res) => {
 	await cy.writeFile(
-		`cypress/fixtures/${ name }.json`,
-		JSON.stringify( res.body )
+		`cypress/fixtures/${name}.json`,
+		JSON.stringify(res.body)
 	);
 	return res;
 };
 
-Cypress.Commands.add( 'mockBody', ( body ) => {
-	return Cypress.env( 'mockRequests' ) ? body : null;
-} );
+Cypress.Commands.add('mockBody', (body) => {
+	return Cypress.env('mockRequests') ? body : null;
+});
 
 const usingLiveRequests = () => {
-	return Cypress.env( 'mockRequests' ) === false;
+	return Cypress.env('mockRequests') === false;
 };
 
 Cypress.Commands.add(
 	'interceptWithFixture',
-	( method, url, { fixture, as = 'request' } ) => {
-		cy.fixture( fixture ).then( ( body ) => {
-			if ( usingLiveRequests() ) {
-				cy.intercept( method, url ).as( as );
+	(method, url, { fixture, as = 'request' }) => {
+		cy.fixture(fixture).then((body) => {
+			if (usingLiveRequests()) {
+				cy.intercept(method, url).as(as);
 			} else {
-				cy.intercept( method, url, body ).as( as );
+				cy.intercept(method, url, body).as(as);
 			}
-		} );
+		});
 	}
 );
 
-Cypress.Commands.add( 'updateFixture', ( fixture, content, json = true ) => {
-	if ( ! usingLiveRequests() ) return;
+Cypress.Commands.add('updateFixture', (fixture, content, json = true) => {
+	if (!usingLiveRequests()) return;
 	cy.writeFile(
-		`.dev/tests/cypress/fixtures/${ fixture }.json`,
-		json ? JSON.stringify( content, null, 2 ) : content
+		`.dev/tests/cypress/fixtures/${fixture}.json`,
+		json ? JSON.stringify(content, null, 2) : content
 	);
-} );
+});
 
 // Custom uploadFile command
-Cypress.Commands.add( 'uploadFile', ( fileName, fileType, selector ) => {
-	cy.get( selector ).then( ( subject ) => {
-		cy.fixture( fileName, 'hex' ).then( ( fileHex ) => {
-			const fileBytes = hexStringToByte( fileHex );
-			const testFile = new File( [ fileBytes ], fileName, {
+Cypress.Commands.add('uploadFile', (fileName, fileType, selector) => {
+	cy.get(selector).then((subject) => {
+		cy.fixture(fileName, 'hex').then((fileHex) => {
+			const fileBytes = hexStringToByte(fileHex);
+			const testFile = new File([fileBytes], fileName, {
 				type: fileType,
-			} );
+			});
 			const dataTransfer = new DataTransfer();
-			const el = subject[ 0 ];
+			const el = subject[0];
 
-			dataTransfer.items.add( testFile );
+			dataTransfer.items.add(testFile);
 			el.files = dataTransfer.files;
-		} );
-	} );
-} );
+		});
+	});
+});
 
 // Utilities
-function hexStringToByte( str ) {
-	if ( ! str ) {
+function hexStringToByte(str) {
+	if (!str) {
 		return new Uint8Array();
 	}
 
 	const a = [];
-	for ( let i = 0, len = str.length; i < len; i += 2 ) {
-		a.push( parseInt( str.substr( i, 2 ), 16 ) );
+	for (let i = 0, len = str.length; i < len; i += 2) {
+		a.push(parseInt(str.substr(i, 2), 16));
 	}
 
-	return new Uint8Array( a );
+	return new Uint8Array(a);
 }
 
 /**
@@ -96,7 +98,7 @@ function hexStringToByte( str ) {
  * Sometimes unhandled exceptions occur in Core that do not effect the UX created by CoBlocks.
  * We discard unhandled exceptions and pass the test as long as assertions continue expectedly.
  */
-Cypress.on( 'uncaught:exception', () => {
+Cypress.on('uncaught:exception', () => {
 	// returning false here prevents Cypress from failing the test.
 	return false;
-} );
+});
