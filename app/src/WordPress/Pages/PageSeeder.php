@@ -42,6 +42,15 @@ class PageSeeder {
 	}
 
 	/**
+	 * Delete checkout pages.
+	 *
+	 * @return void
+	 */
+	public function delete() {
+		$this->deletePages();
+	}
+
+	/**
 	 * Create the main checkout form.
 	 *
 	 * @return void
@@ -65,20 +74,20 @@ class PageSeeder {
 	}
 
 	/**
-	 * Create pages that the plugin relies on, storing page IDs in variables.
+	 * Get pages for seeding.
 	 *
-	 * @return void
+	 * @param \WP_Post $form Form post.
+	 *
+	 * @return array
 	 */
-	public function createPages() {
-		$form = $this->forms->getDefault();
-
-		$pages = apply_filters(
+	public function getPages( $form = null ) {
+		return apply_filters(
 			'surecart/create_pages',
 			array(
 				'checkout'           => [
 					'name'    => _x( 'checkout', 'Page slug', 'surecart' ),
 					'title'   => _x( 'Checkout', 'Page title', 'surecart' ),
-					'content' => '<!-- wp:surecart/checkout-form {"id":' . (int) $form->ID . '} -->
+					'content' => '<!-- wp:surecart/checkout-form {"id":' . (int) $form->ID ?? 0 . '} -->
 					<!-- wp:surecart/form /-->
 					<!-- /wp:surecart/checkout-form -->',
 				],
@@ -94,8 +103,30 @@ class PageSeeder {
 				],
 			)
 		);
+	}
 
+	/**
+	 * Create pages that the plugin relies on, storing page IDs in variables.
+	 *
+	 * @return void
+	 */
+	public function createPages() {
+		// get default form page.
+		$form = $this->forms->getDefault();
+		// get pages for seeding.
+		$pages = $this->getPages( $form );
+		// seed posts.
 		$this->createPosts( $pages );
+	}
+
+	/**
+	 * Delete pages that were created by the plugin.
+	 *
+	 * @return void
+	 */
+	public function deletePages() {
+		$pages = $this->getPages();
+		$this->deletePosts( $pages );
 	}
 
 	/**
@@ -115,6 +146,24 @@ class PageSeeder {
 				! empty( $post['post_status'] ) ? $post['post_status'] : 'publish',
 				! empty( $post['post_type'] ) ? $post['post_type'] : 'page'
 			);
+		}
+	}
+
+	/**
+	 * Delete posts from an array of post data.
+	 *
+	 * @param array $posts Array of post data.
+	 * @return void
+	 */
+	public function deletePosts( $posts ) {
+		foreach ( $posts as $key => $post ) {
+			$page = $this->pages->get(
+				$key,
+				! empty( $post['post_type'] ) ? $post['post_type'] : 'page'
+			);
+			if ( $page ) {
+				wp_delete_post( $page->ID, true );
+			}
 		}
 	}
 }
