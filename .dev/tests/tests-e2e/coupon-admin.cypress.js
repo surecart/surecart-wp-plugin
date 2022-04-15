@@ -2,6 +2,12 @@ describe('Admin', () => {
 	describe('Coupon', () => {
 		let coupon, promotion;
 
+		before(() => {
+			Cypress.Cookies.defaults({
+				preserve: /wp|wordpress/,
+			});
+		});
+
 		beforeEach(() => {
 			cy.fixture('coupon/new-coupon').then((json) => {
 				coupon = json;

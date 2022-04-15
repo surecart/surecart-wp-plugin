@@ -49,7 +49,7 @@ class SubscriptionPermissionsTest extends SureCartUnitTestCase {
 		$user = User::find(self::factory()->user->create());
 		$user->setCustomerId('testcustomerid');
 		$this->assertFalse(user_can($user->ID, 'read_sc_subscriptions'));
-		$this->assertTrue(user_can($user->ID, 'edit_sc_subscription', 'testid'));
+		$this->assertTrue(user_can($user->ID, 'edit_sc_subscription', 'testid', []));
 	}
 
 }

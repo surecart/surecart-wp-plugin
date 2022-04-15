@@ -7,6 +7,7 @@ use SureCart\Models\User;
 use SureCart\Tests\SureCartUnitTestCase;
 use SureCartCore\Responses\ResponseService;
 use Psr\Http\Message\ResponseInterface;
+use SureCartCore\Requests\RequestInterface;
 
 /**
  * @group middleware
@@ -121,19 +122,18 @@ class CustomerDashboardMiddlewareTest extends SureCartUnitTestCase
 
 		$request = \Mockery::mock(RequestInterface::class);
 		$request->shouldReceive('query')->with('customer_link_id')->andReturn('testid');
+		$request->shouldReceive('getUrl')->andReturn('https://example.com');
 
 		$this->subject->shouldNotReceive('error');
+		$this->subject->shouldReceive('success')->once()->andReturn('redirect');
 
-		$next = $this->subject->handle($request, function () {
-			return 'redirect';
-		});
+		$this->subject->handle($request, function () {});
 
 		// user is logged in.
 		$current_user = User::current();
 		// user account is created.
 		$this->assertSame($current_user->user_email, 'newaccount@example.com');
 		$this->assertSame($current_user->customerId(), 'testcustomerid');
-		$this->assertSame('redirect', $next);
 	}
 
 	/**
@@ -201,18 +201,20 @@ class CustomerDashboardMiddlewareTest extends SureCartUnitTestCase
 			]);
 
 
-		$request = \Mockery::mock(RequestInterface::class);
+		$request = \Mockery::mock(RequestInterface::class, RequestInterface::class);
 		$request->shouldReceive('query')->with('customer_link_id')->andReturn('testid');
+		$request->shouldReceive('getUrl')->andReturn('https://example.com');
 
 		$this->subject->shouldNotReceive('error');
-		$next = $this->subject->handle($request, function () {
+
+		// run function.
+		$this->subject->handle($request, function () {
 			return 'redirect';
 		});
 
 		// user is logged in.
 		$current_user = wp_get_current_user();
 		$this->assertSame($user->ID, $current_user->ID);
-		$this->assertSame('redirect', $next);
 	}
 
 	public function test_should_login_if_customer_id_matches_a_wordpress_user()
@@ -243,15 +245,14 @@ class CustomerDashboardMiddlewareTest extends SureCartUnitTestCase
 
 		$request = \Mockery::mock(RequestInterface::class);
 		$request->shouldReceive('query')->with('customer_link_id')->andReturn('testid');
+		$request->shouldReceive('getUrl')->andReturn('https://example.com');
 
 		$this->subject->shouldNotReceive('error');
-		$next = $this->subject->handle($request, function () {
-			return 'redirect';
+		$this->subject->handle($request, function () {
 		});
 
 		// user is logged in.
 		$current_user = wp_get_current_user();
 		$this->assertSame($user->ID, $current_user->ID);
-		$this->assertSame('redirect', $next);
 	}
 }

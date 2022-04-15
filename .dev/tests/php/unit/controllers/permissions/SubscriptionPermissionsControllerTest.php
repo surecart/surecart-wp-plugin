@@ -50,7 +50,14 @@ class SubscriptionPermissionsControllerTest extends SureCartUnitTestCase {
 		]);
 
 		$controller = new SubscriptionPermissionsController();
-		$this->assertTrue($controller->edit_sc_subscription( $user->ID, [null, null, 'testid']));
-		$this->assertFalse($controller->edit_sc_subscription( $user_fail->ID, [null, null, 'testid']));
+
+		// user should be able to get this request.
+		$this->assertTrue($controller->edit_sc_subscription( $user, [null, null, 'testid', [] ], ['edit_sc_subscription' => false]));
+		// trying to update something they shouldn't
+		$this->assertFalse($controller->edit_sc_subscription( $user, [null, null, 'testid', [ 'discount' => 'something' ] ], ['edit_sc_subscription' => false]));
+		$this->assertFalse($controller->edit_sc_subscription( $user, [null, null, 'testid', [ 'customer' => 'something' ] ], ['edit_sc_subscription' => false]));
+		$this->assertFalse($controller->edit_sc_subscription( $user, [null, null, 'testid', [ 'trial_end_at' => 'something' ] ], ['edit_sc_subscription' => false]));
+
+		$this->assertFalse($controller->edit_sc_subscription( $user_fail, [null, null, 'testid', [] ], ['edit_sc_subscription' => false]));
 	}
 }

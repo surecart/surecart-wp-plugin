@@ -1,10 +1,6 @@
 import { loginToSite, disableGutenbergFeatures } from '../helpers';
 import 'cypress-file-upload';
 
-Cypress.Cookies.defaults({
-	preserve: /wp|wordpress/,
-});
-
 before(function () {
 	disableGutenbergFeatures();
 });
@@ -43,8 +39,11 @@ const usingLiveRequests = () => {
 
 Cypress.Commands.add(
 	'interceptWithFixture',
-	(method, url, { fixture, as = 'request' }) => {
+	(method, url, { fixture, as = 'request', callback = null }) => {
 		cy.fixture(fixture).then((body) => {
+			if (callback) {
+				body = callback(body);
+			}
 			if (usingLiveRequests()) {
 				cy.intercept(method, url).as(as);
 			} else {
