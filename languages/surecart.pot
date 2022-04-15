@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-04-14T15:46:44+00:00\n"
+"POT-Creation-Date: 2022-04-15T14:06:23+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 
@@ -41,6 +41,7 @@ msgstr ""
 
 #: src/Controllers/Admin/Abandoned/AbandonedOrderListTable.php:102
 #: src/Controllers/Admin/Orders/OrdersListTable.php:107
+#: admin/subscriptions/show.js:1
 msgid "Order"
 msgstr ""
 
@@ -49,6 +50,9 @@ msgstr ""
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:64
 #: src/Controllers/Admin/Orders/OrdersListTable.php:108
 #: src/Controllers/Admin/Products/ProductsListTable.php:110
+#: admin/customers.js:1
+#: admin/invoices.js:1
+#: admin/orders.js:1
 msgid "Date"
 msgstr ""
 
@@ -61,12 +65,35 @@ msgstr ""
 #: src/Controllers/Admin/Orders/OrdersListTable.php:109
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:104
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:103
+#: admin/customers.js:1
+#: admin/invoices.js:1
+#: admin/orders.js:1
+#: admin/subscriptions/show.js:1
+#: blocks/library.js:3
 msgid "Status"
 msgstr ""
 
 #: src/Controllers/Admin/Abandoned/AbandonedOrderListTable.php:106
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:66
 #: src/Controllers/Admin/Orders/OrdersListTable.php:110
+#: admin/customers.js:1
+#: admin/subscriptions/edit.js:1
+#: admin/subscriptions/show.js:1
+#: blocks/library.js:1
+#: blocks/library.js:3
+#: components/cjs/sc-order-confirmation-totals.cjs.entry.js:1
+#: components/cjs/sc-stripe-payment-request.cjs.entry.js:1
+#: components/cjs/sc-upcoming-invoice.cjs.entry.js:1
+#: components/collection/components/controllers/confirmation/order-confirmation-totals/sc-order-confirmation-totals.js:1
+#: components/collection/components/controllers/dashboard/upcoming-invoice/sc-upcoming-invoice.js:1
+#: components/collection/components/ui/stripe-payment-request/sc-stripe-payment-request.js:1
+#: components/components/sc-order-confirmation-totals.js:1
+#: components/components/sc-stripe-payment-request2.js:1
+#: components/components/sc-upcoming-invoice.js:1
+#: components/custom-elements/index.js:3
+#: components/esm/sc-order-confirmation-totals.entry.js:1
+#: components/esm/sc-stripe-payment-request.entry.js:1
+#: components/esm/sc-upcoming-invoice.entry.js:1
 msgid "Total"
 msgstr ""
 
@@ -91,6 +118,14 @@ msgstr ""
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:103
 #: src/Controllers/Admin/Products/ProductsListTable.php:106
 #: src/Support/Errors/Translations/attributes.php:11
+#: admin/customers.js:1
+#: admin/products.js:1
+#: blocks/library.js:3
+#: components/cjs/sc-customer-edit.cjs.entry.js:1
+#: components/collection/components/controllers/dashboard/customer-edit/sc-customer-edit.js:1
+#: components/components/sc-customer-edit.js:1
+#: components/custom-elements/index.js:1
+#: components/esm/sc-customer-edit.entry.js:1
 msgid "Name"
 msgstr ""
 
@@ -100,6 +135,9 @@ msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:121
 #: src/Controllers/Admin/Products/ProductsListTable.php:108
+#: admin/products.js:1
+#: admin/subscriptions/edit.js:1
+#: blocks/library.js:3
 msgid "Price"
 msgstr ""
 
@@ -140,6 +178,7 @@ msgstr ""
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:227
 #: src/Controllers/Admin/Orders/OrdersListTable.php:273
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:280
+#: admin/coupons.js:1
 msgid "Forever"
 msgstr ""
 
@@ -155,6 +194,7 @@ msgstr ""
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:234
 #: src/Controllers/Admin/Orders/OrdersListTable.php:280
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:287
+#: admin/coupons.js:1
 msgid "Once"
 msgstr ""
 
@@ -168,6 +208,11 @@ msgstr ""
 #: src/Controllers/Admin/Products/ProductsListTable.php:63
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:61
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:301
+#: components/cjs/sc-subscription-details_2.cjs.entry.js:1
+#: components/collection/components/ui/subscription-status-badge/sc-subscription-status-badge.js:1
+#: components/components/sc-subscription-status-badge2.js:1
+#: components/custom-elements/index.js:3
+#: components/esm/sc-subscription-details_2.entry.js:1
 msgid "Active"
 msgstr ""
 
@@ -189,12 +234,18 @@ msgstr ""
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:337
 #: src/Controllers/Admin/Customers/CustomersListTable.php:235
 #: src/Controllers/Admin/Products/ProductsListTable.php:325
+#: admin/coupons.js:1
+#: admin/product-groups.js:1
+#: admin/products.js:1
 msgid "Un-Archive"
 msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:337
 #: src/Controllers/Admin/Customers/CustomersListTable.php:235
 #: src/Controllers/Admin/Products/ProductsListTable.php:325
+#: admin/coupons.js:1
+#: admin/product-groups.js:1
+#: admin/products.js:1
 msgid "Archive"
 msgstr ""
 
@@ -258,16 +309,25 @@ msgstr ""
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:62
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:183
 #: src/Controllers/Admin/Products/ProductsListTable.php:64
+#: admin/coupons.js:1
+#: admin/product-groups.js:1
+#: admin/products.js:1
 msgid "Archived"
 msgstr ""
 
 #: src/Controllers/Admin/Customers/CustomersListTable.php:103
+#: admin/customers.js:1
 msgid "Email"
 msgstr ""
 
 #: src/Controllers/Admin/Customers/CustomersListTable.php:104
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:105
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:106
+#: admin/coupons.js:1
+#: admin/customers.js:1
+#: admin/invoices.js:1
+#: admin/orders.js:1
+#: admin/subscriptions/show.js:1
 msgid "Created"
 msgstr ""
 
@@ -308,6 +368,8 @@ msgid "Search Invoices"
 msgstr ""
 
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:63
+#: admin/invoices.js:1
+#: admin/orders.js:1
 msgid "Invoice"
 msgstr ""
 
@@ -320,6 +382,24 @@ msgstr ""
 
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:246
 #: src/Controllers/Admin/Orders/OrdersListTable.php:292
+#: admin/customers.js:1
+#: admin/invoices.js:1
+#: admin/orders.js:1
+#: blocks/library.js:3
+#: components/cjs/sc-charges-list.cjs.entry.js:1
+#: components/cjs/sc-invoices-list.cjs.entry.js:1
+#: components/cjs/sc-orders-list.cjs.entry.js:1
+#: components/collection/components/controllers/dashboard/charges-list/sc-charges-list.js:1
+#: components/collection/components/controllers/dashboard/invoices-list/sc-invoices-list.js:1
+#: components/collection/components/controllers/dashboard/orders-list/sc-orders-list.js:1
+#: components/components/sc-charges-list.js:1
+#: components/components/sc-invoices-list.js:1
+#: components/components/sc-orders-list.js:1
+#: components/custom-elements/index.js:1
+#: components/custom-elements/index.js:3
+#: components/esm/sc-charges-list.entry.js:1
+#: components/esm/sc-invoices-list.entry.js:1
+#: components/esm/sc-orders-list.entry.js:1
 msgid "Refunded"
 msgstr ""
 
@@ -328,6 +408,7 @@ msgstr ""
 #: src/Controllers/Admin/Orders/OrdersListTable.php:307
 #: src/Controllers/Admin/Orders/OrdersListTable.php:311
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:189
+#: admin/orders.js:1
 msgid "Edit Order"
 msgstr ""
 
@@ -351,6 +432,7 @@ msgstr ""
 
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:183
 #: src/WordPress/PostTypes/FormPostTypeService.php:289
+#: blocks/library.js:3
 msgid "Live"
 msgstr ""
 
@@ -368,10 +450,25 @@ msgid "Search Products"
 msgstr ""
 
 #: src/Controllers/Admin/Products/ProductsListTable.php:109
+#: blocks/library.js:1
+#: blocks/library.js:3
 msgid "Type"
 msgstr ""
 
 #: src/Controllers/Admin/Products/ProductsListTable.php:192
+#: admin/invoices.js:1
+#: admin/orders.js:1
+#: admin/products.js:1
+#: admin/subscriptions/show.js:1
+#: components/cjs/sc-subscription-details_2.cjs.entry.js:1
+#: components/cjs/sc-subscription.cjs.entry.js:1
+#: components/collection/components/controllers/dashboard/subscription-details/sc-subscription-details.js:1
+#: components/collection/components/controllers/dashboard/subscription/sc-subscription.js:1
+#: components/components/sc-subscription-details2.js:1
+#: components/components/sc-subscription.js:1
+#: components/custom-elements/index.js:3
+#: components/esm/sc-subscription-details_2.entry.js:1
+#: components/esm/sc-subscription.entry.js:1
 msgid "Subscription"
 msgstr ""
 
@@ -392,6 +489,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: src/Controllers/Admin/Products/ProductsListTable.php:293
+#: admin/products.js:1
 msgid "Copied!"
 msgstr ""
 
@@ -405,21 +503,43 @@ msgstr ""
 
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:62
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:304
+#: components/cjs/sc-subscription-details_2.cjs.entry.js:1
+#: components/collection/components/ui/subscription-status-badge/sc-subscription-status-badge.js:1
+#: components/components/sc-subscription-status-badge2.js:1
+#: components/custom-elements/index.js:3
+#: components/esm/sc-subscription-details_2.entry.js:1
 msgid "Canceled"
 msgstr ""
 
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:102
 #: admin/user-profile.php:5
+#: admin/invoices.js:1
+#: admin/orders.js:1
+#: admin/subscriptions/edit.js:1
 msgid "Customer"
 msgstr ""
 
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:104
+#: admin/invoices.js:1
+#: admin/orders.js:1
+#: components/cjs/sc-upcoming-invoice.cjs.entry.js:1
+#: components/collection/components/controllers/dashboard/upcoming-invoice/sc-upcoming-invoice.js:1
+#: components/components/sc-upcoming-invoice.js:1
+#: components/custom-elements/index.js:3
+#: components/esm/sc-upcoming-invoice.entry.js:1
 msgid "Plan"
 msgstr ""
 
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:105
 #: src/Support/Errors/Translations/attributes.php:17
 #: src/Support/Errors/Translations/attributes.php:18
+#: admin/customers.js:1
+#: admin/invoices.js:1
+#: admin/orders.js:1
+#: admin/subscriptions/edit.js:1
+#: admin/subscriptions/show.js:1
+#: blocks/library.js:1
+#: blocks/library.js:3
 msgid "Product"
 msgstr ""
 
@@ -428,28 +548,86 @@ msgid "No product"
 msgstr ""
 
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:201
+#: admin/invoices.js:1
+#: admin/orders.js:1
+#: admin/product-groups.js:1
+#: admin/products.js:1
+#: admin/subscriptions/edit.js:1
+#: admin/subscriptions/show.js:1
+#: blocks/library.js:1
+#: components/cjs/price-22f956c0.js:1
+#: components/cjs/sc-format-interval.cjs.entry.js:1
+#: components/collection/components/util/format-interval/sc-format-interval.js:1
+#: components/collection/functions/price.js:1
+#: components/components/price.js:1
+#: components/components/sc-format-interval.js:1
+#: components/custom-elements/index.js:1
+#: components/esm/price-eca81a63.js:1
+#: components/esm/sc-format-interval.entry.js:1
 msgid "week"
 msgid_plural "%d weeks"
 msgstr[0] ""
 msgstr[1] ""
 
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:207
+#: admin/invoices.js:1
+#: admin/orders.js:1
+#: admin/product-groups.js:1
+#: admin/products.js:1
+#: admin/subscriptions/edit.js:1
+#: admin/subscriptions/show.js:1
+#: blocks/library.js:1
+#: components/cjs/price-22f956c0.js:1
+#: components/cjs/sc-format-interval.cjs.entry.js:1
+#: components/collection/components/util/format-interval/sc-format-interval.js:1
+#: components/collection/functions/price.js:1
+#: components/components/price.js:1
+#: components/components/sc-format-interval.js:1
+#: components/custom-elements/index.js:1
+#: components/esm/price-eca81a63.js:1
+#: components/esm/sc-format-interval.entry.js:1
 msgid "month"
 msgid_plural "%d months"
 msgstr[0] ""
 msgstr[1] ""
 
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:213
+#: admin/invoices.js:1
+#: admin/orders.js:1
+#: admin/product-groups.js:1
+#: admin/products.js:1
+#: admin/subscriptions/edit.js:1
+#: admin/subscriptions/show.js:1
+#: blocks/library.js:1
+#: components/cjs/price-22f956c0.js:1
+#: components/cjs/sc-format-interval.cjs.entry.js:1
+#: components/collection/components/util/format-interval/sc-format-interval.js:1
+#: components/collection/functions/price.js:1
+#: components/components/price.js:1
+#: components/components/sc-format-interval.js:1
+#: components/custom-elements/index.js:1
+#: components/esm/price-eca81a63.js:1
+#: components/esm/sc-format-interval.entry.js:1
 msgid "year"
 msgid_plural "%d years"
 msgstr[0] ""
 msgstr[1] ""
 
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:307
+#: components/cjs/sc-subscription-details_2.cjs.entry.js:1
+#: components/collection/components/ui/subscription-status-badge/sc-subscription-status-badge.js:1
+#: components/components/sc-subscription-status-badge2.js:1
+#: components/custom-elements/index.js:3
+#: components/esm/sc-subscription-details_2.entry.js:1
 msgid "Trialing"
 msgstr ""
 
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:310
+#: components/cjs/sc-order-status-badge.cjs.entry.js:1
+#: components/collection/components/ui/order-status-badge/sc-order-status-badge.js:1
+#: components/components/sc-order-status-badge2.js:1
+#: components/custom-elements/index.js:3
+#: components/esm/sc-order-status-badge.entry.js:1
 msgid "Draft"
 msgstr ""
 
@@ -468,6 +646,21 @@ msgstr ""
 #: src/Controllers/Admin/Tables/ListTable.php:102
 #: src/WordPress/PostTypes/FormPostTypeService.php:285
 #: admin/user-profile.php:13
+#: blocks/library.js:3
+#: components/cjs/sc-customer-details.cjs.entry.js:1
+#: components/cjs/sc-customer-edit.cjs.entry.js:1
+#: components/cjs/sc-payment-methods-list.cjs.entry.js:1
+#: components/collection/components/controllers/dashboard/customer-edit/sc-customer-edit.js:1
+#: components/collection/components/controllers/dashboard/payment-methods-list/sc-payment-methods-list.js:1
+#: components/collection/components/ui/customer-details/sc-customer-details.js:1
+#: components/components/sc-customer-details2.js:1
+#: components/components/sc-customer-edit.js:1
+#: components/components/sc-payment-methods-list.js:1
+#: components/custom-elements/index.js:1
+#: components/custom-elements/index.js:3
+#: components/esm/sc-customer-details.entry.js:1
+#: components/esm/sc-customer-edit.entry.js:1
+#: components/esm/sc-payment-methods-list.entry.js:1
 msgid "Test"
 msgstr ""
 
@@ -625,6 +818,11 @@ msgid "A limit on the number of items to be returned, between 1 and 100."
 msgstr ""
 
 #: src/Rest/LoginRestServiceProvider.php:67
+#: components/cjs/sc-login-form.cjs.entry.js:1
+#: components/collection/components/controllers/login/sc-login-form.js:1
+#: components/components/sc-login-form.js:1
+#: components/custom-elements/index.js:3
+#: components/esm/sc-login-form.entry.js:1
 msgid "Login"
 msgstr ""
 
@@ -879,6 +1077,11 @@ msgid "Percent Off"
 msgstr ""
 
 #: src/Support/Errors/Translations/attributes.php:14
+#: admin/customers.js:1
+#: admin/invoices.js:1
+#: admin/orders.js:1
+#: admin/subscriptions/show.js:1
+#: blocks/library.js:1
 msgid "Amount"
 msgstr ""
 
@@ -1134,7 +1337,7 @@ msgstr ""
 msgid "Remove webhook."
 msgstr ""
 
-#: src/Webhooks/WebhooksService.php:116
+#: src/Webhooks/WebhooksService.php:117
 msgid "SureCart webhooks could not be created."
 msgstr ""
 
@@ -1159,6 +1362,8 @@ msgstr ""
 
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:54
 #: admin/products/index.php:29
+#: admin/product-groups.js:1
+#: blocks/library.js:3
 msgid "Products"
 msgstr ""
 
@@ -1169,11 +1374,13 @@ msgstr ""
 
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:56
 #: admin/orders/index.php:8
+#: admin/customers.js:1
 msgid "Orders"
 msgstr ""
 
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:57
 #: admin/invoices/index.php:22
+#: admin/subscriptions/show.js:1
 msgid "Invoices"
 msgstr ""
 
@@ -1185,6 +1392,14 @@ msgstr ""
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:59
 #: admin/subscriptions/index.php:21
 #: web/dashboard/orders/show.php:58
+#: admin/customers.js:1
+#: admin/invoices.js:1
+#: admin/orders.js:1
+#: components/cjs/sc-subscriptions-list.cjs.entry.js:1
+#: components/collection/components/controllers/dashboard/subscriptions-list/sc-subscriptions-list.js:1
+#: components/components/sc-subscriptions-list.js:1
+#: components/custom-elements/index.js:3
+#: components/esm/sc-subscriptions-list.entry.js:1
 msgid "Subscriptions"
 msgstr ""
 
@@ -1213,6 +1428,12 @@ msgid "Order Confirmation"
 msgstr ""
 
 #: src/WordPress/PostTypes/FormPostTypeService.php:104
+#: blocks/library.js:3
+#: components/cjs/sc-payment-methods-list.cjs.entry.js:1
+#: components/collection/components/controllers/dashboard/payment-methods-list/sc-payment-methods-list.js:1
+#: components/components/sc-payment-methods-list.js:1
+#: components/custom-elements/index.js:3
+#: components/esm/sc-payment-methods-list.entry.js:1
 msgid "Default"
 msgstr ""
 
@@ -1393,6 +1614,11 @@ msgid "Get Help"
 msgstr ""
 
 #: admin/plugin.php:54
+#: admin/coupons.js:1
+#: admin/customers.js:1
+#: admin/product-groups.js:1
+#: admin/products.js:1
+#: admin/subscriptions/show.js:1
 msgid "Saved."
 msgstr ""
 
@@ -1401,6 +1627,7 @@ msgid "Plugin Settings"
 msgstr ""
 
 #: admin/plugin.php:71
+#: admin/settings.js:1
 msgid "Save Settings"
 msgstr ""
 
@@ -1413,6 +1640,7 @@ msgid "Update your api token to change or update the connection to SureCart."
 msgstr ""
 
 #: admin/plugin.php:82
+#: admin/settings.js:1
 msgid "Api Token"
 msgstr ""
 
@@ -1469,10 +1697,16 @@ msgid "Add New"
 msgstr ""
 
 #: web/dashboard/orders/show.php:15
+#: admin/orders.js:1
 msgid "Order Details"
 msgstr ""
 
 #: web/dashboard/orders/show.php:34
+#: components/cjs/sc-upcoming-invoice.cjs.entry.js:1
+#: components/collection/components/controllers/dashboard/upcoming-invoice/sc-upcoming-invoice.js:1
+#: components/components/sc-upcoming-invoice.js:1
+#: components/custom-elements/index.js:3
+#: components/esm/sc-upcoming-invoice.entry.js:1
 msgid "Payment"
 msgstr ""
 
@@ -6239,6 +6473,14 @@ msgstr ""
 #: components/custom-elements/index.js:3
 #: components/esm/sc-payment.entry.js:1
 msgid "In test mode, you can use the card 4242 4242 4242 4242 and any code/expiration date."
+msgstr ""
+
+#: components/cjs/sc-payment.cjs.entry.js:1
+#: components/collection/components/controllers/checkout-form/payment/sc-payment.js:1
+#: components/components/sc-payment.js:1
+#: components/custom-elements/index.js:3
+#: components/esm/sc-payment.entry.js:1
+msgid "Please contact us for payment"
 msgstr ""
 
 #: components/cjs/sc-price-choice.cjs.entry.js:1
