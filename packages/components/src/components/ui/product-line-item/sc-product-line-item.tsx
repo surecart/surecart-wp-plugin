@@ -71,7 +71,11 @@ export class ScProductLineItem {
         <span slot="title">{this.name}</span>
         <span class="product__description" slot="description">
           {this.editable && <sc-quantity-select clickEl={this.el} quantity={this.quantity} onScChange={e => this.scUpdateQuantity.emit(e.detail)}></sc-quantity-select>}
-          {!this.editable && <span>Qty: {this.quantity}</span>}
+          {!this.editable && (
+            <span>
+              {__('Qty:', 'surecart')} {this.quantity}
+            </span>
+          )}
 
           {this.removable && (
             <Fragment>
