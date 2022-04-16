@@ -2111,6 +2111,10 @@ export namespace Components {
           * Are these collapsible?
          */
         "collapsible": boolean;
+        /**
+          * Theme for the toggles
+         */
+        "theme": 'default' | 'container';
     }
     interface ScTooltip {
         /**
@@ -5310,6 +5314,10 @@ declare namespace LocalJSX {
           * Are these collapsible?
          */
         "collapsible"?: boolean;
+        /**
+          * Theme for the toggles
+         */
+        "theme"?: 'default' | 'container';
     }
     interface ScTooltip {
         /**

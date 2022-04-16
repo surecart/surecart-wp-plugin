@@ -2,22 +2,44 @@ export default {
   title: 'Components/Toggle',
 };
 
-const Template = () => /*html*/ `<sc-card no-padding>
-  <sc-toggles collapsible="false">
-    <sc-toggle borderless style="border-bottom: 1px solid var(--sc-color-gray-200)">
+const DefaultTemplate = ({ collapsible }) => /*html*/ `
+  <sc-toggles collapsible="${collapsible ? 'true' : 'false'}" style="--toggle-spacing: 3px">
+    <sc-toggle>
       <span slot="summary">Summary Slot</span>
       This is text
     </sc-toggle>
-    <sc-toggle borderless summary="Summary Prop" style="border-bottom: 1px solid var(--sc-color-gray-200)">
+    <sc-toggle summary="Summary Prop">
     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
     aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
     </sc-toggle>
-    <sc-toggle borderless>
+    <sc-toggle>
       <span slot="summary">PayPal</span>
       This is text
     </sc-toggle>
-   </sc-toggles>
-  </sc-card>`;
+   </sc-toggles>`;
 
-export const Default = Template.bind({});
-Default.args = {};
+export const Default = DefaultTemplate.bind({});
+Default.args = {
+  collapsible: false,
+};
+
+const ContainerTemplate = ({ collapsible }) => /*html*/ `
+<sc-toggles collapsible="${collapsible ? 'true' : 'false'}" theme="container">
+    <sc-toggle>
+      <span slot="summary">Summary Slot</span>
+      This is text
+    </sc-toggle>
+    <sc-toggle summary="Summary Prop">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+    aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+    </sc-toggle>
+    <sc-toggle>
+      <span slot="summary">PayPal</span>
+      This is text
+    </sc-toggle>
+   </sc-toggles>`;
+
+export const Container = ContainerTemplate.bind({});
+Container.args = {
+  collapsible: false,
+};

@@ -1233,6 +1233,7 @@
   "sc-toggles": {
     "accordion": true,
     "collapsible": true,
+    "theme": true,
     "style": true,
     "id": true,
     "class": true,
