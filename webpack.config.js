@@ -65,6 +65,10 @@ module.exports = {
 			__dirname,
 			'packages/admin/store/ui/register.js'
 		),
+		['blocks/cloak']: path.resolve(
+			__dirname,
+			'packages/blocks/styles/cloak.js'
+		),
 	},
 	output: {
 		filename: '[name].js',

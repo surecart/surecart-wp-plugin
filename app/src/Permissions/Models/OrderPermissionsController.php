@@ -23,7 +23,7 @@ class OrderPermissionsController extends ModelPermissionsController {
 	 * @return boolean Does user have permission.
 	 */
 	public function edit_sc_order( $user, $args, $allcaps ) {
-		if ( $allcaps['edit_sc_orders'] ) {
+		if ( ! empty( $allcaps['edit_sc_orders'] ) ) {
 			return true;
 		}
 		$order = Order::find( $args[2] );
@@ -49,7 +49,7 @@ class OrderPermissionsController extends ModelPermissionsController {
 	 * @return boolean Does user have permission.
 	 */
 	public function read_sc_order( $user, $args, $allcaps ) {
-		if ( $allcaps['read_sc_orders'] ) {
+		if ( ! empty( $allcaps['read_sc_orders'] ) ) {
 			return true;
 		}
 		$order = Order::find( $args[2] );
@@ -75,7 +75,7 @@ class OrderPermissionsController extends ModelPermissionsController {
 	 * @return boolean Does user have permission.
 	 */
 	public function read_sc_orders( $user, $args, $allcaps ) {
-		if ( $allcaps['read_sc_orders'] ) {
+		if ( ! empty( $allcaps['read_sc_orders'] ) ) {
 			return true;
 		}
 		return $this->isListingOwnCustomerIds( $user, $args[2]['customer_ids'] ?? [] );

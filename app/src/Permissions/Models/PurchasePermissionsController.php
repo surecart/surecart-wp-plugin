@@ -23,7 +23,7 @@ class PurchasePermissionsController extends ModelPermissionsController {
 	 * @return boolean Does user have permission.
 	 */
 	public function read_sc_purchase( $user, $args, $allcaps ) {
-		if ( $allcaps['read_sc_purchases'] ) {
+		if ( ! empty( $allcaps['read_sc_purchases'] ) ) {
 			return true;
 		}
 		return $this->belongsToUser( Purchase::class, $args[2], $user );
@@ -43,7 +43,7 @@ class PurchasePermissionsController extends ModelPermissionsController {
 	 *                                       and boolean values represent whether the user has that capability.
 	 */
 	public function read_sc_purchases( $user, $args, $allcaps ) {
-		if ( $allcaps['read_sc_purchases'] ) {
+		if ( ! empty( $allcaps['read_sc_purchases'] ) ) {
 			return true;
 		}
 		return $this->isListingOwnCustomerIds( $user, $args[2]['customer_ids'] ?? [] );
@@ -65,6 +65,6 @@ class PurchasePermissionsController extends ModelPermissionsController {
 	 * @return boolean Does user have permission.
 	 */
 	public function edit_sc_purchase( $user, $args, $allcaps ) {
-		return $allcaps['edit_sc_purchases'];
+		return ! empty( $allcaps['edit_sc_purchases'] );
 	}
 }

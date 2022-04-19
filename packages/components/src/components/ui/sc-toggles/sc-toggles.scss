@@ -1,0 +1,11 @@
+:host {
+  display: block;
+  --toggle-spacing: 0;
+}
+
+::slotted(*) {
+  margin-bottom: var(--toggle-spacing);
+}
+::slotted([borderless]:not(:last-child)) {
+  border-bottom: 1px solid var(--sc-color-gray-200);
+}

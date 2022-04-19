@@ -2127,6 +2127,42 @@ export namespace Components {
         "tag": 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p';
         "truncate": boolean;
     }
+    interface ScToggle {
+        /**
+          * Is this a borderless toggle?
+         */
+        "borderless": boolean;
+        /**
+          * Are these collapsible?
+         */
+        "collapsible": boolean;
+        /**
+          * Disables the details so it can't be toggled.
+         */
+        "disabled": boolean;
+        /**
+          * Indicates whether or not the details is open. You can use this in lieu of the show/hide methods.
+         */
+        "open": boolean;
+        /**
+          * The summary to show in the details header. If you need to display HTML, use the `summary` slot instead.
+         */
+        "summary": string;
+    }
+    interface ScToggles {
+        /**
+          * Should this function as an accordion?
+         */
+        "accordion": boolean;
+        /**
+          * Are these collapsible?
+         */
+        "collapsible": boolean;
+        /**
+          * Theme for the toggles
+         */
+        "theme": 'default' | 'container';
+    }
     interface ScTooltip {
         /**
           * Freeze open or closed.
@@ -2858,6 +2894,18 @@ declare global {
         prototype: HTMLScTextElement;
         new (): HTMLScTextElement;
     };
+    interface HTMLScToggleElement extends Components.ScToggle, HTMLStencilElement {
+    }
+    var HTMLScToggleElement: {
+        prototype: HTMLScToggleElement;
+        new (): HTMLScToggleElement;
+    };
+    interface HTMLScTogglesElement extends Components.ScToggles, HTMLStencilElement {
+    }
+    var HTMLScTogglesElement: {
+        prototype: HTMLScTogglesElement;
+        new (): HTMLScTogglesElement;
+    };
     interface HTMLScTooltipElement extends Components.ScTooltip, HTMLStencilElement {
     }
     var HTMLScTooltipElement: {
@@ -3007,6 +3055,8 @@ declare global {
         "sc-tag": HTMLScTagElement;
         "sc-tax-id-input": HTMLScTaxIdInputElement;
         "sc-text": HTMLScTextElement;
+        "sc-toggle": HTMLScToggleElement;
+        "sc-toggles": HTMLScTogglesElement;
         "sc-tooltip": HTMLScTooltipElement;
         "sc-total": HTMLScTotalElement;
         "sc-upcoming-invoice": HTMLScUpcomingInvoiceElement;
@@ -5327,6 +5377,50 @@ declare namespace LocalJSX {
         "tag"?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p';
         "truncate"?: boolean;
     }
+    interface ScToggle {
+        /**
+          * Is this a borderless toggle?
+         */
+        "borderless"?: boolean;
+        /**
+          * Are these collapsible?
+         */
+        "collapsible"?: boolean;
+        /**
+          * Disables the details so it can't be toggled.
+         */
+        "disabled"?: boolean;
+        /**
+          * Show the toggle
+         */
+        "onScHide"?: (event: CustomEvent<void>) => void;
+        /**
+          * Show the toggle
+         */
+        "onScShow"?: (event: CustomEvent<void>) => void;
+        /**
+          * Indicates whether or not the details is open. You can use this in lieu of the show/hide methods.
+         */
+        "open"?: boolean;
+        /**
+          * The summary to show in the details header. If you need to display HTML, use the `summary` slot instead.
+         */
+        "summary"?: string;
+    }
+    interface ScToggles {
+        /**
+          * Should this function as an accordion?
+         */
+        "accordion"?: boolean;
+        /**
+          * Are these collapsible?
+         */
+        "collapsible"?: boolean;
+        /**
+          * Theme for the toggles
+         */
+        "theme"?: 'default' | 'container';
+    }
     interface ScTooltip {
         /**
           * Freeze open or closed.
@@ -5497,6 +5591,8 @@ declare namespace LocalJSX {
         "sc-tag": ScTag;
         "sc-tax-id-input": ScTaxIdInput;
         "sc-text": ScText;
+        "sc-toggle": ScToggle;
+        "sc-toggles": ScToggles;
         "sc-tooltip": ScTooltip;
         "sc-total": ScTotal;
         "sc-upcoming-invoice": ScUpcomingInvoice;
@@ -5621,6 +5717,8 @@ declare module "@stencil/core" {
             "sc-tag": LocalJSX.ScTag & JSXBase.HTMLAttributes<HTMLScTagElement>;
             "sc-tax-id-input": LocalJSX.ScTaxIdInput & JSXBase.HTMLAttributes<HTMLScTaxIdInputElement>;
             "sc-text": LocalJSX.ScText & JSXBase.HTMLAttributes<HTMLScTextElement>;
+            "sc-toggle": LocalJSX.ScToggle & JSXBase.HTMLAttributes<HTMLScToggleElement>;
+            "sc-toggles": LocalJSX.ScToggles & JSXBase.HTMLAttributes<HTMLScTogglesElement>;
             "sc-tooltip": LocalJSX.ScTooltip & JSXBase.HTMLAttributes<HTMLScTooltipElement>;
             "sc-total": LocalJSX.ScTotal & JSXBase.HTMLAttributes<HTMLScTotalElement>;
             "sc-upcoming-invoice": LocalJSX.ScUpcomingInvoice & JSXBase.HTMLAttributes<HTMLScUpcomingInvoiceElement>;

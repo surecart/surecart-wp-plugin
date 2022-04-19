@@ -23,7 +23,7 @@ class PaymentMethodPermissionsController extends ModelPermissionsController {
 	 * @return boolean Does user have permission.
 	 */
 	public function edit_sc_payment_method( $user, $args, $allcaps ) {
-		if ( $allcaps['edit_sc_payment_methods'] ) {
+		if ( ! empty( $allcaps['edit_sc_payment_methods'] ) ) {
 			return true;
 		}
 		return $this->belongsToUser( PaymentMethod::class, $args[2], $user );
@@ -45,7 +45,7 @@ class PaymentMethodPermissionsController extends ModelPermissionsController {
 	 * @return boolean Does user have permission.
 	 */
 	public function read_sc_payment_methods( $user, $args, $allcaps ) {
-		if ( $allcaps['read_sc_payment_methods'] ) {
+		if ( ! empty( $allcaps['read_sc_payment_methods'] ) ) {
 			return true;
 		}
 		return $this->isListingOwnCustomerIds( $user, $args[2]['customer_ids'] ?? [] );

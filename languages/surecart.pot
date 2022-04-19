@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-04-14T15:46:44+00:00\n"
+"POT-Creation-Date: 2022-04-15T14:06:23+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 
@@ -1337,7 +1337,7 @@ msgstr ""
 msgid "Remove webhook."
 msgstr ""
 
-#: src/Webhooks/WebhooksService.php:116
+#: src/Webhooks/WebhooksService.php:117
 msgid "SureCart webhooks could not be created."
 msgstr ""
 
@@ -6473,6 +6473,14 @@ msgstr ""
 #: components/custom-elements/index.js:3
 #: components/esm/sc-payment.entry.js:1
 msgid "In test mode, you can use the card 4242 4242 4242 4242 and any code/expiration date."
+msgstr ""
+
+#: components/cjs/sc-payment.cjs.entry.js:1
+#: components/collection/components/controllers/checkout-form/payment/sc-payment.js:1
+#: components/components/sc-payment.js:1
+#: components/custom-elements/index.js:3
+#: components/esm/sc-payment.entry.js:1
+msgid "Please contact us for payment"
 msgstr ""
 
 #: components/cjs/sc-price-choice.cjs.entry.js:1

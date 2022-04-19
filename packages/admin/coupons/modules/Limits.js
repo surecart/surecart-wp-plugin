@@ -18,6 +18,7 @@ export default ({ coupon, loading, updateCoupon }) => {
 			>
 				<div>
 					<ScSwitch
+						class="sc-redeem-by"
 						checked={!!coupon?.redeem_by}
 						onScChange={(e) => {
 							updateCoupon({
@@ -35,7 +36,7 @@ export default ({ coupon, loading, updateCoupon }) => {
 					</ScSwitch>
 					{!!coupon?.redeem_by && (
 						<div
-							className="redeem-by-date"
+							className="sc-redeem-by-date"
 							css={css`
 								max-width: 288px;
 								margin-top: 30px;
@@ -68,6 +69,7 @@ export default ({ coupon, loading, updateCoupon }) => {
 					`}
 				>
 					<ScSwitch
+						class="sc-max-redemptions"
 						checked={!!coupon?.max_redemptions}
 						onScChange={(e) => {
 							updateCoupon({

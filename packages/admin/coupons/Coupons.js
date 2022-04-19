@@ -187,6 +187,7 @@ export default () => {
 						`}
 					>
 						<ScButton
+							class="sc-save-model"
 							type="primary"
 							loading={saving || isSaving}
 							submit

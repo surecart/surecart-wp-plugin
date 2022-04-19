@@ -23,7 +23,7 @@ class InvoicePermissionsController extends ModelPermissionsController {
 	 * @return boolean Does user have permission.
 	 */
 	public function edit_sc_invoice( $user, $args, $allcaps ) {
-		if ( $allcaps['edit_sc_invoices'] ) {
+		if ( ! empty( $allcaps['edit_sc_invoices'] ) ) {
 			return true;
 		}
 		$invoice = Invoice::find( $args[2] );
@@ -49,7 +49,7 @@ class InvoicePermissionsController extends ModelPermissionsController {
 	 * @return boolean Does user have permission.
 	 */
 	public function read_sc_invoice( $user, $args, $allcaps ) {
-		if ( $allcaps['read_sc_invoices'] ) {
+		if ( ! empty( $allcaps['read_sc_invoices'] ) ) {
 			return true;
 		}
 		$invoice = Invoice::find( $args[2] );
@@ -75,7 +75,7 @@ class InvoicePermissionsController extends ModelPermissionsController {
 	 * @return boolean Does user have permission.
 	 */
 	public function read_sc_invoices( $user, $args, $allcaps ) {
-		if ( $allcaps['read_sc_invoices'] ) {
+		if ( ! empty( $allcaps['read_sc_invoices'] ) ) {
 			return true;
 		}
 		return $this->isListingOwnCustomerIds( $user, $args[2]['customer_ids'] ?? [] );
