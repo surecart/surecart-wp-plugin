@@ -1,5 +1,6 @@
-import { Component, Event, EventEmitter, h, Prop, Watch } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Prop, Watch } from '@stencil/core';
 import { Order } from '../../../types';
+import { __ } from '@wordpress/i18n';
 import { loadScript } from '@paypal/paypal-js';
 
 @Component({
@@ -7,15 +8,13 @@ import { loadScript } from '@paypal/paypal-js';
   styleUrl: 'paypal-buttons.scss',
   shadow: true,
 })
-export class PaypalButtons {
+export class ScPaypalButtons {
+  @Element() el!: HTMLScPaypalButtonsElement;
   /** Holds the buttons */
   private container: HTMLDivElement;
 
   /** Client id for the script. */
   @Prop() clientId: string;
-
-  /** The label. */
-  @Prop() label: string;
 
   /** Test or live mode. */
   @Prop() mode: 'test' | 'live';
@@ -23,7 +22,14 @@ export class PaypalButtons {
   /** The order. */
   @Prop() order: Order;
 
+  @Prop() buttons: string[] = ['paypal', 'card'];
+
+  @Prop() label: 'paypal' | 'checkout' | 'buynow' | 'pay' | 'installment' = 'paypal';
+
+  @Prop() color: 'gold' | 'blue' | 'silver' | 'black' | 'white' = 'gold';
+
   @Event() scSetOrderState: EventEmitter<object>;
+  @Event() scError: EventEmitter<object>;
 
   async loadScript() {
     if (!this.clientId) return;
@@ -47,7 +53,6 @@ export class PaypalButtons {
 
   @Watch('order')
   async confirmPayment(val: Order) {
-    console.log(val);
     // must be finalized
     if (val?.status !== 'finalized') return;
     // must be a stripe session
@@ -60,45 +65,67 @@ export class PaypalButtons {
 
   renderButtons(paypal) {
     const config = {
-      onClick: data => {
+      onClick: async (data, actions) => {
         // set the funding source when clicked.
         this.scSetOrderState.emit({ fundingSource: data?.fundingSource });
+        // validate the form client-side.
+        const form = this.el.closest('sc-form') as HTMLScFormElement;
+        const isValid = await form.validate();
+        return isValid ? actions.resolve() : actions.reject();
       },
-      // Sets up the transaction when a payment button is clicked
-      createOrder: (_, actions) => {
-        return actions.order.create({
-          purchase_units: [
-            {
-              amount: {
-                value: this?.order?.amount_due || 1, // Can also reference a variable or function
-              },
+      createOrder: async () => {
+        return new Promise(async (resolve, reject) => {
+          const form = this.el.closest('sc-form') as HTMLScFormElement;
+          const checkout = this.el.closest('sc-checkout') as HTMLScCheckoutElement;
+
+          // listen for when the order is finalized.
+          checkout.addEventListener(
+            'scOrderFinalized',
+            (e: any) => {
+              // if we have the right payment intent, resolve.
+              const payment_intent_id = e?.detail?.processor_data?.paypal?.payment_intent_id;
+              if (payment_intent_id) {
+                return resolve(payment_intent_id);
+              }
+              // we don't have the correct payment intent.
+              this.scError.emit({ code: 'missing_payment_intent', message: __('Something went wrong. Please contact us for payment.', 'surecart') });
+              return reject();
             },
-          ],
-          application_context: {
-            shipping_preference: 'NO_SHIPPING',
-          },
+            { once: true },
+          );
+
+          // reject on error.
+          checkout.addEventListener(
+            'scOrderError',
+            (e: any) => {
+              reject(e.detail);
+            },
+            { once: true },
+          );
+
+          // submit the form.
+          form.submit();
+
+          // 10 seconds - taking too long, bail.
+          setTimeout(() => {
+            this.scError.emit({ code: 'paypal_timeout', message: __('PayPal payment timed out.', 'surecart') });
+            reject();
+          }, 10000);
         });
       },
+
       // Finalize the transaction after payer approval
-      onApprove: (_, actions) => {
-        return actions.order.capture().then(function (orderData) {
-          // Successful capture! For dev/demo purposes:
-          console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
-          const transaction = orderData.purchase_units[0].payments.captures[0];
-          alert(`Transaction ${transaction.status}: ${transaction.id}\n\nSee console for all available details`);
-          // When ready to go live, remove the alert and show a success message within this page. For example:
-          // const element = document.getElementById('paypal-button-container');
-          // element.innerHTML = '<h3>Thank you for your payment!</h3>';
-          // Or go to another URL:  actions.redirect('thank_you.html');
-        });
+      onApprove: () => {
+        // capture with saas and return promise.
       },
     };
 
-    if (paypal.FUNDING.PAYPAL) {
+    if (paypal.FUNDING.PAYPAL && this.buttons.includes('paypal')) {
       const paypalButton = paypal.Buttons({
         fundingSource: paypal.FUNDING.PAYPAL,
         style: {
-          color: 'silver',
+          label: this.label,
+          color: this.color,
         },
         ...config,
       });
@@ -107,7 +134,7 @@ export class PaypalButtons {
       }
     }
 
-    if (paypal.FUNDING.CARD) {
+    if (paypal.FUNDING.CARD && this.buttons.includes('card')) {
       const cardButton = paypal.Buttons({
         fundingSource: paypal.FUNDING.CARD,
         style: {
@@ -122,10 +149,6 @@ export class PaypalButtons {
   }
 
   render() {
-    return (
-      <sc-form-control label={this.label}>
-        <div class="sc-paypal-button-container" ref={el => (this.container = el as HTMLDivElement)}></div>
-      </sc-form-control>
-    );
+    return <div class="sc-paypal-button-container" ref={el => (this.container = el as HTMLDivElement)}></div>;
   }
 }

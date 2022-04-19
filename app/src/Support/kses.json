@@ -819,7 +819,9 @@
     "slot": true
   },
   "sc-paypal-buttons": {
+    "buttons": true,
     "client-id": true,
+    "color": true,
     "label": true,
     "mode": true,
     "order": true,
@@ -1232,6 +1234,27 @@
   "sc-text": {
     "tag": true,
     "truncate": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-toggle": {
+    "borderless": true,
+    "collapsible": true,
+    "disabled": true,
+    "open": true,
+    "show-control": true,
+    "summary": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-toggles": {
+    "accordion": true,
+    "collapsible": true,
+    "theme": true,
     "style": true,
     "id": true,
     "class": true,

@@ -1,6 +1,6 @@
 import { Component, h, Prop } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
-import { Processor } from '../../../../types';
+import { ProcessorData } from '../../../../types';
 
 @Component({
   tag: 'sc-order-submit',
@@ -36,7 +36,7 @@ export class ScOrderSubmit {
   @Prop() mode: 'test' | 'live' = 'live';
 
   /** Keys and secrets for processors. */
-  @Prop() processors: Processor[];
+  @Prop() processors: ProcessorData;
 
   /** Currency Code */
   @Prop() currencyCode: string = 'usd';
@@ -44,13 +44,13 @@ export class ScOrderSubmit {
   @Prop() processor: 'stripe' | 'paypal';
 
   render() {
-    console.log(this.processor);
     if (this.processor === 'paypal') {
-      const clientId = (this?.processors || []).find(processor => processor?.processor_type === 'paypal' && processor?.live_mode === !!(this.mode === 'live'))?.processor_data
-        ?.client_id;
+      // const clientId = (this?.processors || []).find(processor => processor?.processor_type === 'paypal' && processor?.live_mode === !!(this.mode === 'live'))?.processor_data
+      //   ?.client_id;
+      const clientId = this.processors?.paypal?.client_id;
       if (clientId) {
         return (
-          <sc-paypal-buttons mode={this.mode} currency-code={this.currencyCode} client-id={clientId}>
+          <sc-paypal-buttons buttons={['paypal']} mode={this.mode} currency-code={this.currencyCode} client-id={clientId} label="checkout" color="blue">
             <slot />
           </sc-paypal-buttons>
         );

@@ -161,12 +161,6 @@ export class ScSessionProvider {
   async handleFormSubmit() {
     this.scError.emit({});
 
-    // paypal needs a payment intent.
-    if (this.processor === 'paypal') {
-      setTimeout(() => this.scError.emit({ message: __('Please choose a payment method.', 'surecart') }));
-      return this.scSetState.emit('REJECT');
-    }
-
     this.scSetState.emit('FINALIZE');
 
     // Get current form state.

@@ -1,6 +1,6 @@
 import { Coupon, Order, Customer, PriceChoice, Prices, Products, ResponseError, Processor } from '../../../../types';
 import { checkoutMachine } from './helpers/checkout-machine';
-import { Component, h, Prop, Element, State, Listen, Watch } from '@stencil/core';
+import { Component, h, Prop, Element, State, Listen, Watch, Event, EventEmitter } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import { interpret } from '@xstate/fsm';
@@ -58,7 +58,7 @@ export class ScCheckout {
   @Prop() disableComponentsValidation: boolean;
 
   /** Processors enabled for this form. */
-  @Prop() processors: Processor[];
+  @Prop({ mutable: true }) processors: Processor[];
 
   /** Stores fetched prices for use throughout component.  */
   @State() pricesEntities: Prices = {};
@@ -80,14 +80,30 @@ export class ScCheckout {
 
   @State() fundingSource: string = '';
 
-  @State() processor: 'stripe' | 'paypal' = 'paypal';
+  @State() processor: 'stripe' | 'paypal' = 'stripe';
 
   /** Payment mode inside individual payment method (i.e. Payment Buttons) */
   @State() paymentMethod: 'stripe-payment-request' | null;
 
+  @Event() scOrderUpdated: EventEmitter<Order>;
+  @Event() scOrderFinalized: EventEmitter<Order>;
+  @Event() scOrderError: EventEmitter<ResponseError>;
+
   @Watch('order')
   handleOrderChange() {
     this.error = null;
+    this.scOrderUpdated.emit(this.order);
+    if (this.order?.status === 'finalized') {
+      this.scOrderFinalized.emit(this.order);
+    }
+  }
+
+  @Watch('error')
+  handleErrorChange() {
+    if (Object.keys(this.error || {})?.length) {
+      console.log('error');
+      this.scOrderError.emit(this.error);
+    }
   }
 
   @Listen('scFormSubmit')
@@ -188,7 +204,7 @@ export class ScCheckout {
   state() {
     return {
       processor: this.processor,
-      processors: this.processors,
+      processors: this.order?.processor_data,
       processor_data: this.order?.processor_data,
       state: this.checkoutState.value,
       fundingSource: this.fundingSource,

@@ -1,5 +1,5 @@
 import { Order, Processor } from '../../../../types';
-import { Component, h, Prop, Host } from '@stencil/core';
+import { Component, h, Prop, Host, Event, EventEmitter } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
 
@@ -36,11 +36,26 @@ export class ScPayment {
   /** Payment mode inside individual payment method (i.e. Payment Buttons) */
   @Prop() paymentMethod: 'stripe-payment-request' | null;
 
+  @Event() scSetOrderState: EventEmitter<object>;
+
   renderStripeAndPayPal() {
     return (
       <sc-choices label={this.label}>
-        <sc-choice checked={this.processor === 'stripe'}>{__('Credit Card', 'surecart')}</sc-choice>
-        <sc-choice checked={this.processor === 'paypal'}>{__('PayPal', 'surecart')}</sc-choice>
+        <sc-choice checked={this.processor === 'stripe'} onClick={() => this.scSetOrderState.emit({ processor: 'stripe' })}>
+          {__('Credit Card', 'surecart')}
+          <sc-stripe-element
+            slot="toggle-content"
+            mode={this.mode}
+            order={this.order}
+            stripeAccountId={this?.order?.processor_data?.stripe?.account_id}
+            publishableKey={this?.order?.processor_data?.stripe?.publishable_key}
+            disabled={!!this.paymentMethod}
+          ></sc-stripe-element>
+        </sc-choice>
+        <sc-choice checked={this.processor === 'paypal'} onClick={() => this.scSetOrderState.emit({ processor: 'paypal' })}>
+          {__('PayPal', 'surecart')}
+          <div slot="toggle-content">PayPal Instructions</div>
+        </sc-choice>
       </sc-choices>
     );
   }

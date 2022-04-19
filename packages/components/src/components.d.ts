@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Address, ChoiceItem, Coupon, Customer, DiscountResponse, LineItem, LineItemData, Order, OrderStatus, PaymentMethod, Price, PriceChoice, Prices, Processor, ProductGroup, Products, Purchase, ResponseError, Subscription, SubscriptionStatus, TaxStatus, WordPressUser } from "./types";
+import { Address, ChoiceItem, Coupon, Customer, DiscountResponse, LineItem, LineItemData, Order, OrderStatus, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorData, ProductGroup, Products, Purchase, ResponseError, Subscription, SubscriptionStatus, TaxStatus, WordPressUser } from "./types";
 import { IconLibraryMutator, IconLibraryResolver } from "./components/ui/icon/library";
 export namespace Components {
     interface ScAddress {
@@ -1324,7 +1324,7 @@ export namespace Components {
         /**
           * Keys and secrets for processors.
          */
-        "processors": Processor[];
+        "processors": ProcessorData;
         /**
           * Show the total.
          */
@@ -1424,14 +1424,13 @@ export namespace Components {
         "query": object;
     }
     interface ScPaypalButtons {
+        "buttons": string[];
         /**
           * Client id for the script.
          */
         "clientId": string;
-        /**
-          * The label.
-         */
-        "label": string;
+        "color": 'gold' | 'blue' | 'silver' | 'black' | 'white';
+        "label": 'paypal' | 'checkout' | 'buynow' | 'pay' | 'installment';
         /**
           * Test or live mode.
          */
@@ -2144,6 +2143,7 @@ export namespace Components {
           * Indicates whether or not the details is open. You can use this in lieu of the show/hide methods.
          */
         "open": boolean;
+        "showControl": boolean;
         /**
           * The summary to show in the details header. If you need to display HTML, use the `summary` slot instead.
          */
@@ -3347,6 +3347,9 @@ declare namespace LocalJSX {
           * When the form was modified.
          */
         "modified"?: string;
+        "onScOrderError"?: (event: CustomEvent<ResponseError>) => void;
+        "onScOrderFinalized"?: (event: CustomEvent<Order>) => void;
+        "onScOrderUpdated"?: (event: CustomEvent<Order>) => void;
         /**
           * Where to go on success
          */
@@ -4490,7 +4493,7 @@ declare namespace LocalJSX {
         /**
           * Keys and secrets for processors.
          */
-        "processors"?: Processor[];
+        "processors"?: ProcessorData;
         /**
           * Show the total.
          */
@@ -4562,6 +4565,7 @@ declare namespace LocalJSX {
           * Is this created in "test" mode
          */
         "mode"?: 'test' | 'live';
+        "onScSetOrderState"?: (event: CustomEvent<object>) => void;
         /**
           * Checkout Session from sc-checkout.
          */
@@ -4596,18 +4600,18 @@ declare namespace LocalJSX {
         "query"?: object;
     }
     interface ScPaypalButtons {
+        "buttons"?: string[];
         /**
           * Client id for the script.
          */
         "clientId"?: string;
-        /**
-          * The label.
-         */
-        "label"?: string;
+        "color"?: 'gold' | 'blue' | 'silver' | 'black' | 'white';
+        "label"?: 'paypal' | 'checkout' | 'buynow' | 'pay' | 'installment';
         /**
           * Test or live mode.
          */
         "mode"?: 'test' | 'live';
+        "onScError"?: (event: CustomEvent<object>) => void;
         "onScSetOrderState"?: (event: CustomEvent<object>) => void;
         /**
           * The order.
@@ -5402,6 +5406,7 @@ declare namespace LocalJSX {
           * Indicates whether or not the details is open. You can use this in lieu of the show/hide methods.
          */
         "open"?: boolean;
+        "showControl"?: boolean;
         /**
           * The summary to show in the details header. If you need to display HTML, use the `summary` slot instead.
          */
