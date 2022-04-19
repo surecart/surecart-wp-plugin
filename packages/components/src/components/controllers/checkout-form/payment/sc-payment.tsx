@@ -37,9 +37,24 @@ export class ScPayment {
     if (this.loading) {
       return <sc-skeleton></sc-skeleton>;
     }
+
     if (!this.processor) {
       return <div>Please contact us for payment</div>;
     }
+
+    if ('paypal' === this.processor) {
+      if (!this?.order?.processor_data?.paypal?.client_id || !this?.order?.processor_data?.paypal?.account_id) {
+        return (
+          <div>
+            <sc-skeleton style={{ width: '100%', marginBottom: '1em' }}></sc-skeleton>
+            <sc-skeleton style={{ width: '35%' }}></sc-skeleton>
+          </div>
+        );
+      }
+
+      return <sc-paypal-buttons label={this.label} mode={this.mode} order={this.order} client-id={this?.order?.processor_data?.paypal?.client_id}></sc-paypal-buttons>;
+    }
+
     if ('stripe' === this.processor) {
       if (!this?.order?.processor_data?.stripe?.publishable_key || !this?.order?.processor_data?.stripe?.account_id) {
         return (
@@ -49,6 +64,7 @@ export class ScPayment {
           </div>
         );
       }
+
       return (
         <Host>
           <sc-stripe-element

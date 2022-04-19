@@ -86,7 +86,6 @@ export class ScForm {
         <form
           ref={el => (this.formElement = el as HTMLFormElement)}
           onSubmit={async e => {
-            console.log(e);
             e.preventDefault();
             const isValid = await this.validate();
             if (!isValid) {

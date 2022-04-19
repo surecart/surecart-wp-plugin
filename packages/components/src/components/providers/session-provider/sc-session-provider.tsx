@@ -1,5 +1,6 @@
 import { Component, Element, Event, EventEmitter, h, Listen, Prop, State, Watch } from '@stencil/core';
 import { removeQueryArgs } from '@wordpress/url';
+import { __ } from '@wordpress/i18n';
 
 import { createOrUpdateOrder, finalizeSession } from '../../../services/session';
 import { LineItemData, Order, PriceChoice } from '../../../types';
@@ -39,6 +40,9 @@ export class ScSessionProvider {
 
   /** Set the checkout state */
   @Prop() setState: (state: string) => void;
+
+  /** The processor. */
+  @Prop() processor: 'stripe' | 'paypal' = 'stripe';
 
   /** Update line items event */
   @Event() scUpdateOrderState: EventEmitter<Order>;
@@ -155,8 +159,15 @@ export class ScSessionProvider {
    */
   @Listen('scFormSubmit')
   async handleFormSubmit() {
-    this.scSetState.emit('FINALIZE');
     this.scError.emit({});
+
+    // paypal needs a payment intent.
+    if (this.processor === 'paypal') {
+      setTimeout(() => this.scError.emit({ message: __('Please choose a payment method.', 'surecart') }));
+      return this.scSetState.emit('REJECT');
+    }
+
+    this.scSetState.emit('FINALIZE');
 
     // Get current form state.
     const json = await this.el.querySelector('sc-form').getFormJson();
@@ -179,7 +190,7 @@ export class ScSessionProvider {
         query: {
           ...this.defaultFormQuery(),
         },
-        processor: 'stripe',
+        processor: this.processor,
       });
     } catch (e) {
       // handle old price versions by refreshing.

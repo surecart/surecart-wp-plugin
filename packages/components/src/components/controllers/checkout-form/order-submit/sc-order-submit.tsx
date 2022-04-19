@@ -1,5 +1,6 @@
 import { Component, h, Prop } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
+import { Processor } from '../../../../types';
 
 @Component({
   tag: 'sc-order-submit',
@@ -31,7 +32,15 @@ export class ScOrderSubmit {
   /** Show the total. */
   @Prop() showTotal: boolean;
 
+  /** Keys and secrets for processors. */
+  @Prop() processors: Processor[];
+
+  @Prop() processor: 'stripe' | 'paypal';
+
   render() {
+    if (this.processor === 'paypal') {
+    }
+
     return (
       <sc-button submit type={this.type} size={this.size} full={this.full} loading={this.loading || this.paying} disabled={this.loading || this.paying || this.busy}>
         {!!this.icon && <sc-icon name={this.icon} slot="prefix"></sc-icon>}
@@ -46,4 +55,4 @@ export class ScOrderSubmit {
     );
   }
 }
-openWormhole(ScOrderSubmit, ['busy', 'loading', 'paying'], false);
+openWormhole(ScOrderSubmit, ['busy', 'loading', 'paying', 'processors', 'processor'], false);

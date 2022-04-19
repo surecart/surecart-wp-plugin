@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Address, ChoiceItem, Coupon, Customer, DiscountResponse, LineItem, LineItemData, Order, OrderStatus, PaymentMethod, Price, PriceChoice, Prices, ProductGroup, Products, Purchase, ResponseError, Subscription, SubscriptionStatus, TaxStatus, WordPressUser } from "./types";
+import { Address, ChoiceItem, Coupon, Customer, DiscountResponse, LineItem, LineItemData, Order, OrderStatus, PaymentMethod, Price, PriceChoice, Prices, Processor, ProductGroup, Products, Purchase, ResponseError, Subscription, SubscriptionStatus, TaxStatus, WordPressUser } from "./types";
 import { IconLibraryMutator, IconLibraryResolver } from "./components/ui/icon/library";
 export namespace Components {
     interface ScAddress {
@@ -44,6 +44,10 @@ export namespace Components {
           * Indicates whether or not the alert is open. You can use this in lieu of the show/hide methods.
          */
         "open": boolean;
+        /**
+          * Scroll into view.
+         */
+        "scrollOnOpen": boolean;
         /**
           * Shows the alert.
          */
@@ -285,6 +289,10 @@ export namespace Components {
           * An array of prices to pre-fill in the form.
          */
         "prices": Array<PriceChoice>;
+        /**
+          * Processors enabled for this form.
+         */
+        "processors": Processor[];
         /**
           * Where to go on success
          */
@@ -1304,6 +1312,11 @@ export namespace Components {
           * Is the order paying.
          */
         "paying": boolean;
+        "processor": 'stripe' | 'paypal';
+        /**
+          * Keys and secrets for processors.
+         */
+        "processors": Processor[];
         /**
           * Show the total.
          */
@@ -1397,6 +1410,24 @@ export namespace Components {
           * Query to fetch paymentMethods
          */
         "query": object;
+    }
+    interface ScPaypalButtons {
+        /**
+          * Client id for the script.
+         */
+        "clientId": string;
+        /**
+          * The label.
+         */
+        "label": string;
+        /**
+          * Test or live mode.
+         */
+        "mode": 'test' | 'live';
+        /**
+          * The order.
+         */
+        "order": Order;
     }
     interface ScPriceChoice {
         /**
@@ -1768,6 +1799,10 @@ export namespace Components {
           * An array of prices to pre-fill in the form.
          */
         "prices": Array<PriceChoice>;
+        /**
+          * The processor.
+         */
+        "processor": 'stripe' | 'paypal';
         /**
           * Set the checkout state
          */
@@ -2577,6 +2612,12 @@ declare global {
         prototype: HTMLScPaymentMethodsListElement;
         new (): HTMLScPaymentMethodsListElement;
     };
+    interface HTMLScPaypalButtonsElement extends Components.ScPaypalButtons, HTMLStencilElement {
+    }
+    var HTMLScPaypalButtonsElement: {
+        prototype: HTMLScPaypalButtonsElement;
+        new (): HTMLScPaypalButtonsElement;
+    };
     interface HTMLScPriceChoiceElement extends Components.ScPriceChoice, HTMLStencilElement {
     }
     var HTMLScPriceChoiceElement: {
@@ -2915,6 +2956,7 @@ declare global {
         "sc-payment": HTMLScPaymentElement;
         "sc-payment-method-create": HTMLScPaymentMethodCreateElement;
         "sc-payment-methods-list": HTMLScPaymentMethodsListElement;
+        "sc-paypal-buttons": HTMLScPaypalButtonsElement;
         "sc-price-choice": HTMLScPriceChoiceElement;
         "sc-price-choices": HTMLScPriceChoicesElement;
         "sc-price-input": HTMLScPriceInputElement;
@@ -3006,6 +3048,10 @@ declare namespace LocalJSX {
           * Indicates whether or not the alert is open. You can use this in lieu of the show/hide methods.
          */
         "open"?: boolean;
+        /**
+          * Scroll into view.
+         */
+        "scrollOnOpen"?: boolean;
         /**
           * The type of alert.
          */
@@ -3247,6 +3293,10 @@ declare namespace LocalJSX {
           * An array of prices to pre-fill in the form.
          */
         "prices"?: Array<PriceChoice>;
+        /**
+          * Processors enabled for this form.
+         */
+        "processors"?: Processor[];
         /**
           * Where to go on success
          */
@@ -4366,6 +4416,11 @@ declare namespace LocalJSX {
           * Is the order paying.
          */
         "paying"?: boolean;
+        "processor"?: 'stripe' | 'paypal';
+        /**
+          * Keys and secrets for processors.
+         */
+        "processors"?: Processor[];
         /**
           * Show the total.
          */
@@ -4465,6 +4520,25 @@ declare namespace LocalJSX {
           * Query to fetch paymentMethods
          */
         "query"?: object;
+    }
+    interface ScPaypalButtons {
+        /**
+          * Client id for the script.
+         */
+        "clientId"?: string;
+        /**
+          * The label.
+         */
+        "label"?: string;
+        /**
+          * Test or live mode.
+         */
+        "mode"?: 'test' | 'live';
+        "onScSetOrderState"?: (event: CustomEvent<object>) => void;
+        /**
+          * The order.
+         */
+        "order"?: Order;
     }
     interface ScPriceChoice {
         /**
@@ -4898,6 +4972,10 @@ declare namespace LocalJSX {
           * An array of prices to pre-fill in the form.
          */
         "prices"?: Array<PriceChoice>;
+        /**
+          * The processor.
+         */
+        "processor"?: 'stripe' | 'paypal';
         /**
           * Set the checkout state
          */
@@ -5356,6 +5434,7 @@ declare namespace LocalJSX {
         "sc-payment": ScPayment;
         "sc-payment-method-create": ScPaymentMethodCreate;
         "sc-payment-methods-list": ScPaymentMethodsList;
+        "sc-paypal-buttons": ScPaypalButtons;
         "sc-price-choice": ScPriceChoice;
         "sc-price-choices": ScPriceChoices;
         "sc-price-input": ScPriceInput;
@@ -5479,6 +5558,7 @@ declare module "@stencil/core" {
             "sc-payment": LocalJSX.ScPayment & JSXBase.HTMLAttributes<HTMLScPaymentElement>;
             "sc-payment-method-create": LocalJSX.ScPaymentMethodCreate & JSXBase.HTMLAttributes<HTMLScPaymentMethodCreateElement>;
             "sc-payment-methods-list": LocalJSX.ScPaymentMethodsList & JSXBase.HTMLAttributes<HTMLScPaymentMethodsListElement>;
+            "sc-paypal-buttons": LocalJSX.ScPaypalButtons & JSXBase.HTMLAttributes<HTMLScPaypalButtonsElement>;
             "sc-price-choice": LocalJSX.ScPriceChoice & JSXBase.HTMLAttributes<HTMLScPriceChoiceElement>;
             "sc-price-choices": LocalJSX.ScPriceChoices & JSXBase.HTMLAttributes<HTMLScPriceChoicesElement>;
             "sc-price-input": LocalJSX.ScPriceInput & JSXBase.HTMLAttributes<HTMLScPriceInputElement>;

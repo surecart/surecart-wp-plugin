@@ -267,6 +267,20 @@ export interface ProcessorData {
     client_secret?: string;
     type: 'payment' | 'setup';
   };
+  paypal: {
+    account_id: string;
+    client_id: string;
+  };
+}
+
+export interface Processor {
+  live_mode: boolean;
+  processor_data: {
+    account_id: string;
+    recurring_enabled: boolean;
+    client_id: string;
+  };
+  processor_type: 'paypal' | 'stripe';
 }
 
 export interface Purchase {

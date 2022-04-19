@@ -1,4 +1,4 @@
-import { Coupon, Order, Customer, PriceChoice, Prices, Products, ResponseError } from '../../../../types';
+import { Coupon, Order, Customer, PriceChoice, Prices, Products, ResponseError, Processor } from '../../../../types';
 import { checkoutMachine } from './helpers/checkout-machine';
 import { Component, h, Prop, Element, State, Listen, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
@@ -57,6 +57,9 @@ export class ScCheckout {
   /** Should we disable components validation */
   @Prop() disableComponentsValidation: boolean;
 
+  /** Processors enabled for this form. */
+  @Prop() processors: Processor[];
+
   /** Stores fetched prices for use throughout component.  */
   @State() pricesEntities: Prices = {};
 
@@ -72,7 +75,12 @@ export class ScCheckout {
   /** Error to display. */
   @State() error: ResponseError | null;
 
+  /** Missing address */
   @State() missingAddress: boolean;
+
+  @State() fundingSource: string = '';
+
+  @State() processor: 'stripe' | 'paypal' = 'paypal';
 
   /** Payment mode inside individual payment method (i.e. Payment Buttons) */
   @State() paymentMethod: 'stripe-payment-request' | null;
@@ -106,9 +114,24 @@ export class ScCheckout {
     this.setState(e.detail);
   }
 
+  @Listen('scSetOrderState')
+  handleOrderStateChange(e) {
+    const items = e.detail;
+    Object.keys(items || {}).forEach(key => {
+      this[key] = items[key];
+    });
+  }
+
   setState(name) {
     const { send } = this._stateService;
     return send(name);
+  }
+
+  setOrderState(state) {
+    this.state = {
+      ...this.state,
+      ...state,
+    };
   }
 
   @Listen('scAddEntities')
@@ -164,9 +187,11 @@ export class ScCheckout {
 
   state() {
     return {
-      processor: 'stripe',
+      processor: this.processor,
+      processors: this.processors,
       processor_data: this.order?.processor_data,
       state: this.checkoutState.value,
+      fundingSource: this.fundingSource,
 
       // checkout states
       loading: this.checkoutState.value === 'loading',
@@ -224,40 +249,32 @@ export class ScCheckout {
         }}
       >
         {!!this.errorMessage() && (
-          <sc-alert
-            type="danger"
-            onScShow={e => {
-              const target = e.target as HTMLElement;
-              target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start',
-                inline: 'nearest',
-              });
-            }}
-            open={!!this.errorMessage()}
-          >
+          <sc-alert type="danger" scrollOnOpen open={!!this.errorMessage()} closable onScHide={() => (this.error = null)}>
             <span slot="title">{this.errorMessage()}</span>
           </sc-alert>
         )}
 
         <Universe.Provider state={this.state()}>
-          <sc-form-components-validator order={this.order} disabled={this.disableComponentsValidation}>
-            <sc-session-provider
-              order={this.order}
-              prices={this.prices}
-              persist={this.persistSession}
-              modified={this.modified}
-              mode={this.mode}
-              form-id={this.formId}
-              group-id={this.el.id}
-              currency-code={this.currencyCode}
-              onScUpdateOrderState={e => (this.order = e.detail)}
-              onScError={e => (this.error = e.detail as ResponseError)}
-            >
-              <slot />
-            </sc-session-provider>
-          </sc-form-components-validator>
-          {this.state().busy && <sc-block-ui z-index={9}></sc-block-ui>}
+          <sc-processor-provider>
+            <sc-form-components-validator order={this.order} disabled={this.disableComponentsValidation}>
+              <sc-session-provider
+                order={this.order}
+                prices={this.prices}
+                persist={this.persistSession}
+                modified={this.modified}
+                mode={this.mode}
+                form-id={this.formId}
+                group-id={this.el.id}
+                processor={this.processor}
+                currency-code={this.currencyCode}
+                onScUpdateOrderState={e => (this.order = e.detail)}
+                onScError={e => (this.error = e.detail as ResponseError)}
+              >
+                <slot />
+              </sc-session-provider>
+            </sc-form-components-validator>
+            {this.state().busy && <sc-block-ui z-index={9}></sc-block-ui>}
+          </sc-processor-provider>
         </Universe.Provider>
       </div>
     );
