@@ -51,7 +51,7 @@ export class ScForm {
 
   @Method('submit')
   async submit() {
-    return this.formElement.submit();
+    return this.submitForm();
   }
 
   // private controls = ['button', 'fieldset', 'input', 'keygen', 'label', 'meter', 'output', 'progress', 'select', 'textarea', 'sc-button', 'sc-price-input', 'sc-input'];
@@ -78,6 +78,25 @@ export class ScForm {
     }
 
     return true;
+  }
+
+  submitForm() {
+    // Calling form.submit() seems to bypass the submit event and constraint validation. Instead, we can inject a
+    // native submit button into the form, click it, then remove it to simulate a standard form submission.
+    const button = document.createElement('button');
+    if (this.formElement) {
+      button.type = 'submit';
+      button.style.position = 'absolute';
+      button.style.width = '0';
+      button.style.height = '0';
+      button.style.clip = 'rect(0 0 0 0)';
+      button.style.clipPath = 'inset(50%)';
+      button.style.overflow = 'hidden';
+      button.style.whiteSpace = 'nowrap';
+      this.formElement.append(button);
+      button.click();
+      button.remove();
+    }
   }
 
   render() {
