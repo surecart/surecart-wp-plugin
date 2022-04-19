@@ -24,6 +24,8 @@ export class ScToggle {
   /** Is this a borderless toggle? */
   @Prop({ reflect: true }) borderless: boolean = false;
 
+  @Prop() showControl: boolean = false;
+
   /** Are these collapsible? */
   @Prop() collapsible: boolean = true;
 
@@ -131,6 +133,18 @@ export class ScToggle {
           onClick={() => this.handleSummaryClick()}
           onKeyDown={e => this.handleSummaryKeyDown(e)}
         >
+          {this.showControl && (
+            <span part="radio" class="details__radio">
+              <svg viewBox="0 0 16 16">
+                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                  <g fill="currentColor">
+                    <circle cx="8" cy="8" r="3.42857143"></circle>
+                  </g>
+                </g>
+              </svg>
+            </span>
+          )}
+
           <div part="summary" class="details__summary">
             <slot name="summary">{this.summary}</slot>
           </div>
