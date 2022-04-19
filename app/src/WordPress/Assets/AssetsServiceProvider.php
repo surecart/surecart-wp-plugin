@@ -121,13 +121,33 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function registerComponentScripts() {
-		wp_register_script(
-			'surecart-components',
-			trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/components/surecart/surecart.esm.js',
-			[],
-			filemtime( trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/surecart/surecart.esm.js' ),
-			false
-		);
+		// should we use the esm loader directly?
+		if ( \SureCart::assets()->usesEsmLoader() ) {
+			wp_register_script(
+				'surecart-components',
+				trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/components/surecart/surecart.esm.js',
+				[],
+				filemtime( trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/surecart/surecart.esm.js' ),
+				false
+			);
+		} else {
+			// instead, use a static loader that injects the script at runtime.
+			$static_assets = include trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/static-loader.asset.php';
+			wp_register_script(
+				'surecart-components',
+				trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/components/static-loader.js',
+				$static_assets['dependencies'],
+				$static_assets['version'],
+				true
+			);
+			wp_localize_script(
+				'surecart-components',
+				'surecartComponents',
+				[
+					'url' => trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/components/surecart/surecart.esm.js?ver=' . filemtime( trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/surecart/surecart.esm.js' ),
+				]
+			);
+		}
 
 		wp_set_script_translations( 'surecart-components', 'surecart', WP_LANG_DIR . '/plugins/' );
 
