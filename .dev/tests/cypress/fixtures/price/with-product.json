@@ -1,0 +1,43 @@
+[
+	{
+		"id": "test_price_1",
+		"object": "price",
+		"ad_hoc": false,
+		"ad_hoc_max_amount": null,
+		"ad_hoc_min_amount": 0,
+		"amount": 5000,
+		"archived": false,
+		"archived_at": null,
+		"currency": "usd",
+		"current_version": true,
+		"metadata": {},
+		"recurring_interval": null,
+		"recurring_interval_count": null,
+		"tax_behavior": "exclusive",
+		"trial_duration_days": null,
+		"product": {
+			"id": "test_product_1",
+			"object": "product",
+			"archived": false,
+			"archived_at": null,
+			"description": null,
+			"image_url": null,
+			"metadata": { "wp_created_by": "1" },
+			"metrics": {
+				"currency": "usd",
+				"max_price_amount": 5000,
+				"min_price_amount": 5000,
+				"prices_count": 1
+			},
+			"name": "Test Product 1",
+			"recurring": false,
+			"tax_enabled": true,
+			"tax_category": null,
+			"product_group": null,
+			"created_at": 1648691902,
+			"updated_at": 1649868704
+		},
+		"created_at": 1648691902,
+		"updated_at": 1649868704
+	}
+]

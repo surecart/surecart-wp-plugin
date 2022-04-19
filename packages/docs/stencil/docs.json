@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-04-14T15:46:39",
+  "timestamp": "2022-04-19T16:31:02",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.14.2",
@@ -7199,6 +7199,7 @@
         "sc-subscription",
         "sc-subscription-switch",
         "sc-subscriptions-list",
+        "sc-toggle",
         "sc-upcoming-invoice",
         "sc-wordpress-user"
       ],
@@ -7256,6 +7257,9 @@
           "sc-icon"
         ],
         "sc-subscriptions-list": [
+          "sc-icon"
+        ],
+        "sc-toggle": [
           "sc-icon"
         ],
         "sc-upcoming-invoice": [
@@ -16851,6 +16855,221 @@
           "sc-text"
         ]
       }
+    },
+    {
+      "filePath": "./src/components/ui/sc-toggle/sc-toggle.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-toggle",
+      "readme": "# sc-toggle\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "borderless",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "borderless",
+          "reflectToAttr": true,
+          "docs": "Is this a borderless toggle?",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "collapsible",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "collapsible",
+          "reflectToAttr": false,
+          "docs": "Are these collapsible?",
+          "docsTags": [],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "disabled",
+          "reflectToAttr": true,
+          "docs": "Disables the details so it can't be toggled.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "open",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "open",
+          "reflectToAttr": true,
+          "docs": "Indicates whether or not the details is open. You can use this in lieu of the show/hide methods.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "summary",
+          "type": "string",
+          "mutable": false,
+          "attr": "summary",
+          "reflectToAttr": false,
+          "docs": "The summary to show in the details header. If you need to display HTML, use the `summary` slot instead.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [
+        {
+          "event": "scHide",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Show the toggle",
+          "docsTags": []
+        },
+        {
+          "event": "scShow",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Show the toggle",
+          "docsTags": []
+        }
+      ],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [
+        {
+          "name": "base",
+          "docs": ""
+        },
+        {
+          "name": "content",
+          "docs": ""
+        },
+        {
+          "name": "header",
+          "docs": ""
+        },
+        {
+          "name": "summary",
+          "docs": ""
+        },
+        {
+          "name": "summary-icon",
+          "docs": ""
+        }
+      ],
+      "dependents": [],
+      "dependencies": [
+        "sc-icon"
+      ],
+      "dependencyGraph": {
+        "sc-toggle": [
+          "sc-icon"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/ui/sc-toggles/sc-toggles.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-toggles",
+      "readme": "# sc-toggles\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "accordion",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "accordion",
+          "reflectToAttr": false,
+          "docs": "Should this function as an accordion?",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "collapsible",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "collapsible",
+          "reflectToAttr": false,
+          "docs": "Are these collapsible?",
+          "docsTags": [],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [
+        {
+          "event": "scShow",
+          "capture": false,
+          "passive": false
+        }
+      ],
+      "styles": [],
+      "slots": [],
+      "parts": [
+        {
+          "name": "base",
+          "docs": ""
+        }
+      ],
+      "dependents": [],
+      "dependencies": [],
+      "dependencyGraph": {}
     },
     {
       "filePath": "./src/components/ui/tooltip/sc-tooltip.tsx",

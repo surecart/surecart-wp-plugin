@@ -65,7 +65,7 @@ class Block extends BaseBlock {
 				'classes'       => $this->getClasses( $attributes ),
 				'style'         => $this->getStyle( $attributes ),
 				'content'       => $content,
-				'mode'          => $attributes['mode'] ?? get_option( 'surecart_payment_mode', 'live' ),
+				'mode'          => apply_filters( 'surecart/payments/mode', $attributes['mode'] ?? 'live' ),
 				'form_id'       => $sc_form_id,
 				'id'            => 'sc-checkout-' . $sc_form_id,
 				'prices'        => $attributes['prices'] ?? [],

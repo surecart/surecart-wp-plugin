@@ -1,6 +1,13 @@
 describe('Admin', () => {
 	describe('Coupon', () => {
 		let coupon, promotion;
+
+		before(() => {
+			Cypress.Cookies.defaults({
+				preserve: /wp|wordpress/,
+			});
+		});
+
 		beforeEach(() => {
 			cy.fixture('coupon/new-coupon').then((json) => {
 				coupon = json;
@@ -8,6 +15,7 @@ describe('Admin', () => {
 			cy.fixture('promotion/new-promotion').then((json) => {
 				promotion = json;
 			});
+			cy.login(Cypress.env('wpUsername'), Cypress.env('wpPassword'));
 		});
 
 		it('Can create a coupon', () => {
@@ -26,44 +34,27 @@ describe('Admin', () => {
 				as: 'couponRequest',
 			});
 
-			cy.interceptWithFixture('POST', '**promotions*', {
-				fixture: 'promotion/new-promotion',
-				as: 'promotionRequest',
-			});
+			cy.get('.sc-save-model')
+				.shadow()
+				.find('button')
+				.click({ force: true });
 
-			cy.get('.sc-save-model').click();
-
-			cy.wait('@couponRequest').then(({ response, request }) => {
-				expect(request.body.percent_off).to.equal('10');
-				expect(request.body.name).to.equal('name');
-				expect(response.statusCode).to.eq(200);
-				cy.updateFixture('coupon/new-coupon', response.body);
-			});
-
-			cy.wait('@promotionRequest').then(({ request }) => {
-				expect(request.body.coupon_id).to.equal(coupon.id);
-				expect(request.body.currency).to.equal(coupon.currency);
+			cy.wait('@couponRequest').then(({ request }) => {
 				cy.get('.sc-promotion-code').should(
 					'have.value',
-					promotion.code
+					coupon.promotions.data[0].code
 				);
 			});
 		});
 
 		it('Can edit a coupon', () => {
-			cy.intercept('GET', '**surecart**coupons*', coupon).as(
-				'getCoupons'
-			);
-			cy.intercept('GET', '**surecart**promotions*', [promotion]).as(
-				'getPromotions'
-			);
+			cy.interceptWithFixture('GET', '**surecart**coupons*', {
+				fixture: 'coupon/new-coupon',
+			});
+
 			cy.visit(
 				`/wp-admin/admin.php?page=sc-coupons&action=edit&id=${coupon.id}`
 			);
-			cy.wait('@getCoupons').then(({ response }) => {
-				expect(response.body.id).to.equal(coupon.id);
-				expect(response.statusCode).to.eq(200);
-			});
 
 			// duration
 			cy.get('.sc-discount-duration-trigger').click({ force: true });
@@ -79,7 +70,7 @@ describe('Admin', () => {
 				.shadow()
 				.find('input')
 				.click({ force: true });
-			cy.get('.redeem-by-date').should('be.visible');
+			cy.get('.sc-redeem-by-date').should('be.visible');
 			cy.get('.sc-max-redemptions.hydrated')
 				.shadow()
 				.find('input')
@@ -91,7 +82,7 @@ describe('Admin', () => {
 				.find('input')
 				.type('4', { force: true });
 
-			cy.get('.sc-promotion-code-add.hydrated').click();
+			cy.get('.sc-promotion-code-add.hydrated').click({ force: true });
 			cy.get('.sc-promotion-code').its('length').should('eq', 2);
 
 			cy.interceptWithFixture('POST', '**coupons*', {
@@ -104,7 +95,10 @@ describe('Admin', () => {
 				as: 'promotionsRequest',
 			});
 
-			cy.get('.sc-save-model').click();
+			cy.get('.sc-save-model')
+				.shadow()
+				.find('button')
+				.click({ force: true });
 
 			cy.wait('@couponRequest').then(({ response, request }) => {
 				const time = new Date().getTime() - request.body.redeem_by;

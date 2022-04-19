@@ -23,7 +23,7 @@ class RefundPermissionsController extends ModelPermissionsController {
 	 * @return boolean Does user have permission.
 	 */
 	public function read_sc_charges( $user, $args, $allcaps ) {
-		if ( $allcaps['read_sc_charges'] ) {
+		if ( ! empty( $allcaps['read_sc_charges'] ) ) {
 			return true;
 		}
 		return $this->isListingOwnCustomerIds( $user, $args[2]['customer_ids'] ?? [] );

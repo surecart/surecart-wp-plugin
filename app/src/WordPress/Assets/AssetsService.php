@@ -24,6 +24,16 @@ class AssetsService {
 	}
 
 	/**
+	 * Should we use the esm loader directly?
+	 * If false, we inject the loader script at runtime.
+	 *
+	 * @return boolean
+	 */
+	public function usesEsmLoader() {
+		return (bool) get_option( 'surecart_use_esm_loader', false );
+	}
+
+	/**
 	 * Output the component initialization script.
 	 *
 	 * @param string $tag Tag of the web component.

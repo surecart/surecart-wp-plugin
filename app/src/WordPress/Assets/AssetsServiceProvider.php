@@ -121,13 +121,33 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function registerComponentScripts() {
-		wp_register_script(
-			'surecart-components',
-			trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/components/surecart/surecart.esm.js',
-			[ 'wp-api-fetch' ],
-			filemtime( trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/surecart/surecart.esm.js' ),
-			false
-		);
+		// should we use the esm loader directly?
+		if ( \SureCart::assets()->usesEsmLoader() ) {
+			wp_register_script(
+				'surecart-components',
+				trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/components/surecart/surecart.esm.js',
+				[],
+				filemtime( trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/surecart/surecart.esm.js' ),
+				false
+			);
+		} else {
+			// instead, use a static loader that injects the script at runtime.
+			$static_assets = include trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/static-loader.asset.php';
+			wp_register_script(
+				'surecart-components',
+				trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/components/static-loader.js',
+				$static_assets['dependencies'],
+				$static_assets['version'],
+				true
+			);
+			wp_localize_script(
+				'surecart-components',
+				'surecartComponents',
+				[
+					'url' => trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/components/surecart/surecart.esm.js?ver=' . filemtime( trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/surecart/surecart.esm.js' ),
+				]
+			);
+		}
 
 		wp_set_script_translations( 'surecart-components', 'surecart', WP_LANG_DIR . '/plugins/' );
 
@@ -135,14 +155,14 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 			'surecart-components',
 			'scData',
 			[
-				'plugin_url' => \SureCart::core()->assets()->getUrl(),
-				'currency'   => \SureCart::account()->currency,
-				'pages'      => [
+				'plugin_url'     => \SureCart::core()->assets()->getUrl(),
+				'currency'       => \SureCart::account()->currency,
+				'pages'          => [
 					'dashboard' => \SureCart::pages()->url( 'dashboard' ),
 					'checkout'  => \SureCart::pages()->url( 'checkout' ),
 				],
-				'root_url' => esc_url_raw( get_rest_url() ),
-				'nonce' => ( wp_installing() && ! is_multisite() ) ? '' : wp_create_nonce( 'wp_rest' ),
+				'root_url'       => esc_url_raw( get_rest_url() ),
+				'nonce'          => ( wp_installing() && ! is_multisite() ) ? '' : wp_create_nonce( 'wp_rest' ),
 				'nonce_endpoint' => admin_url( 'admin-ajax.php?action=sc-rest-nonce' ),
 			]
 		);
@@ -204,17 +224,10 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 	public function enqueueDefaultTheme() {
 		wp_enqueue_style( 'surecart-themes-default' );
 
-		$brand  = \SureCart::account()->brand;
-		$style  = 'sc-form, sc-checkout {
-			visibility: hidden;
-			opacity: 0;
-			transition: opacity 0.1s ease;
-		}
-		sc-checkout.hydrated,
-		sc-form.hydrated {
-			visibility: visible;
-			opacity: 1;
-		}';
+		$brand = \SureCart::account()->brand;
+
+		$style = file_get_contents( plugin_dir_path( SURECART_PLUGIN_FILE ) . 'dist/blocks/cloak.css' );
+
 		$style .= ':root {';
 		$style .= '--sc-color-primary-500: #' . ( $brand->color ?? '000' ) . ';';
 		$style .= '--sc-focus-ring-color-primary: #' . ( $brand->color ?? '000' ) . ';';

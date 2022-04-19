@@ -48,7 +48,8 @@ class WebhooksService {
 	 * @return boolean
 	 */
 	public function hasToken() {
-		return ! empty( ApiToken::get() );
+		$token = ApiToken::get();
+		return ! empty( ApiToken::get() ) && 'test' !== $token;
 	}
 
 	/**

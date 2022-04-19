@@ -20,11 +20,11 @@ class CustomerPermissionsController extends ModelPermissionsController {
 	 * @return boolean Does user have permission.
 	 */
 	public function edit_sc_customer( $user, $args, $allcaps ) {
-		if ( $allcaps['edit_sc_customers'] ) {
+		if ( ! empty( $allcaps['edit_sc_customers'] ) ) {
 			return true;
 		}
 		// no data provided to update. Make sure to at least pass an empty array.
-		if ( is_null( $args[3] ) ) {
+		if ( is_null( $args[3] ?? null ) ) {
 			return false;
 		}
 
@@ -53,7 +53,7 @@ class CustomerPermissionsController extends ModelPermissionsController {
 	 * @return boolean Does user have permission.
 	 */
 	public function read_sc_customer( $user, $args, $allcaps ) {
-		if ( $allcaps['read_sc_customers'] ) {
+		if ( ! empty( $allcaps['read_sc_customers'] ) ) {
 			return true;
 		}
 		return $this->customerIdMatches( $user, $args[2] );
@@ -75,7 +75,7 @@ class CustomerPermissionsController extends ModelPermissionsController {
 	 * @return boolean Does user have permission.
 	 */
 	public function read_sc_customers( $user, $args, $allcaps ) {
-		if ( $allcaps['read_sc_customers'] ) {
+		if ( ! empty( $allcaps['read_sc_customers'] ) ) {
 			return true;
 		}
 		return $this->isListingOwnCustomerIds( $user, $args[2]['ids'] ?? [] );
