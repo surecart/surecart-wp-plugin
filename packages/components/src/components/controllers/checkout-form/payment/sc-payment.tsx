@@ -1,4 +1,4 @@
-import { Order } from '../../../../types';
+import { Order, Processor } from '../../../../types';
 import { Component, h, Prop, Host } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
@@ -11,6 +11,9 @@ import { openWormhole } from 'stencil-wormhole';
 export class ScPayment {
   /** The current payment method for the payment */
   @Prop() processor: string = 'stripe';
+
+  /** List of available processors. */
+  @Prop() processors: Processor[];
 
   /** Checkout Session from sc-checkout. */
   @Prop() order: Order;
@@ -33,6 +36,15 @@ export class ScPayment {
   /** Payment mode inside individual payment method (i.e. Payment Buttons) */
   @Prop() paymentMethod: 'stripe-payment-request' | null;
 
+  renderStripeAndPayPal() {
+    return (
+      <sc-choices label={this.label}>
+        <sc-choice checked={this.processor === 'stripe'}>{__('Credit Card', 'surecart')}</sc-choice>
+        <sc-choice checked={this.processor === 'paypal'}>{__('PayPal', 'surecart')}</sc-choice>
+      </sc-choices>
+    );
+  }
+
   render() {
     if (this.loading) {
       return <sc-skeleton></sc-skeleton>;
@@ -42,19 +54,27 @@ export class ScPayment {
       return <div>Please contact us for payment</div>;
     }
 
-    if ('paypal' === this.processor) {
-      if (!this?.order?.processor_data?.paypal?.client_id || !this?.order?.processor_data?.paypal?.account_id) {
-        return (
-          <div>
-            <sc-skeleton style={{ width: '100%', marginBottom: '1em' }}></sc-skeleton>
-            <sc-skeleton style={{ width: '35%' }}></sc-skeleton>
-          </div>
-        );
-      }
+    // @ts-ignore
 
-      return <sc-paypal-buttons label={this.label} mode={this.mode} order={this.order} client-id={this?.order?.processor_data?.paypal?.client_id}></sc-paypal-buttons>;
-    }
+    // both stripe and paypal are enabled.
+    // if (this.processors.find(processor => processor.processor_type === 'stripe') && this.processors.find(processor => processor.processor_type === 'paypal')) {
+    return this.renderStripeAndPayPal();
+    // }
 
+    // if ('paypal' === this.processor) {
+    //   if (!this?.order?.processor_data?.paypal?.client_id || !this?.order?.processor_data?.paypal?.account_id) {
+    //     return (
+    //       <div>
+    //         <sc-skeleton style={{ width: '100%', marginBottom: '1em' }}></sc-skeleton>
+    //         <sc-skeleton style={{ width: '35%' }}></sc-skeleton>
+    //       </div>
+    //     );
+    //   }
+
+    //   return <sc-paypal-buttons label={this.label} mode={this.mode} order={this.order} client-id={this?.order?.processor_data?.paypal?.client_id}></sc-paypal-buttons>;
+    // }
+
+    // @ts-ignore
     if ('stripe' === this.processor) {
       if (!this?.order?.processor_data?.stripe?.publishable_key || !this?.order?.processor_data?.stripe?.account_id) {
         return (
@@ -98,4 +118,4 @@ export class ScPayment {
   }
 }
 
-openWormhole(ScPayment, ['processor', 'order', 'mode', 'paymentMethod', 'loading', 'busy'], false);
+openWormhole(ScPayment, ['processor', 'processors', 'order', 'mode', 'paymentMethod', 'loading', 'busy', 'currencyCode'], false);

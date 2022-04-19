@@ -1297,6 +1297,10 @@ export namespace Components {
          */
         "busy": boolean;
         /**
+          * Currency Code
+         */
+        "currencyCode": string;
+        /**
           * Show a full-width button.
          */
         "full": boolean;
@@ -1308,6 +1312,10 @@ export namespace Components {
           * Is the order loading.
          */
         "loading": boolean;
+        /**
+          * Is this created in "test" mode
+         */
+        "mode": 'test' | 'live';
         /**
           * Is the order paying.
          */
@@ -1394,6 +1402,10 @@ export namespace Components {
           * The current payment method for the payment
          */
         "processor": string;
+        /**
+          * List of available processors.
+         */
+        "processors": Processor[];
         /**
           * Secure notice
          */
@@ -4401,6 +4413,10 @@ declare namespace LocalJSX {
          */
         "busy"?: boolean;
         /**
+          * Currency Code
+         */
+        "currencyCode"?: string;
+        /**
           * Show a full-width button.
          */
         "full"?: boolean;
@@ -4412,6 +4428,10 @@ declare namespace LocalJSX {
           * Is the order loading.
          */
         "loading"?: boolean;
+        /**
+          * Is this created in "test" mode
+         */
+        "mode"?: 'test' | 'live';
         /**
           * Is the order paying.
          */
@@ -4504,6 +4524,10 @@ declare namespace LocalJSX {
           * The current payment method for the payment
          */
         "processor"?: string;
+        /**
+          * List of available processors.
+         */
+        "processors"?: Processor[];
         /**
           * Secure notice
          */

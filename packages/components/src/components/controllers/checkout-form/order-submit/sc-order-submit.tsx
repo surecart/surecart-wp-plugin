@@ -32,13 +32,35 @@ export class ScOrderSubmit {
   /** Show the total. */
   @Prop() showTotal: boolean;
 
+  /** Is this created in "test" mode */
+  @Prop() mode: 'test' | 'live' = 'live';
+
   /** Keys and secrets for processors. */
   @Prop() processors: Processor[];
+
+  /** Currency Code */
+  @Prop() currencyCode: string = 'usd';
 
   @Prop() processor: 'stripe' | 'paypal';
 
   render() {
+    console.log(this.processor);
     if (this.processor === 'paypal') {
+      const clientId = (this?.processors || []).find(processor => processor?.processor_type === 'paypal' && processor?.live_mode === !!(this.mode === 'live'))?.processor_data
+        ?.client_id;
+      if (clientId) {
+        return (
+          <sc-paypal-buttons mode={this.mode} currency-code={this.currencyCode} client-id={clientId}>
+            <slot />
+          </sc-paypal-buttons>
+        );
+      }
+      return (
+        /** Need to return the slot so slot content doesn't show. */
+        <div hidden>
+          <slot />
+        </div>
+      );
     }
 
     return (
@@ -55,4 +77,4 @@ export class ScOrderSubmit {
     );
   }
 }
-openWormhole(ScOrderSubmit, ['busy', 'loading', 'paying', 'processors', 'processor'], false);
+openWormhole(ScOrderSubmit, ['busy', 'loading', 'paying', 'processors', 'processor', 'mode', 'currencyCode'], false);
