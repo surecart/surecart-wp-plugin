@@ -1219,6 +1219,25 @@
     "class": true,
     "slot": true
   },
+  "sc-toggle": {
+    "borderless": true,
+    "collapsible": true,
+    "disabled": true,
+    "open": true,
+    "summary": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-toggles": {
+    "accordion": true,
+    "collapsible": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-tooltip": {
     "freeze": true,
     "open": true,

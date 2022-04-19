@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-04-15T14:06:23+00:00\n"
+"POT-Creation-Date: 2022-04-19T13:52:50+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 
@@ -6507,6 +6507,14 @@ msgstr[1] ""
 #: components/custom-elements/index.js:3
 #: components/esm/sc-product-line-item_2.entry.js:1
 msgid "Then"
+msgstr ""
+
+#: components/cjs/sc-product-line-item_2.cjs.entry.js:1
+#: components/collection/components/ui/product-line-item/sc-product-line-item.js:1
+#: components/components/sc-product-line-item2.js:1
+#: components/custom-elements/index.js:3
+#: components/esm/sc-product-line-item_2.entry.js:1
+msgid "Qty:"
 msgstr ""
 
 #: components/cjs/sc-stripe-payment-request.cjs.entry.js:1
