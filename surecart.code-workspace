@@ -3,6 +3,9 @@
 		{
 			"path": "."
 		},
+		{
+			"path": "../../.."
+		}
 	],
 	"settings": {
 		"phpSniffer.autoDetect": true,

@@ -15,6 +15,7 @@
 		<?php echo filter_block_content( $content, 'post' ); ?>
 	</sc-form>
 </sc-checkout>
+<sc-register-icon-library></sc-register-icon-library>
 
 
 <?php

@@ -1,0 +1,48 @@
+:host {
+  display: block;
+}
+
+.cart {
+  position: fixed;
+  bottom: var(--sc-cart-icon-bottom, 30px);
+  right: var(--sc-cart-icon-right, 30px);
+  left: var(--sc-cart-icon-left, auto);
+  top: var(--sc-cart-icon-top, auto);
+  background: var(--sc-color-primary-500);
+  border-radius: var(--sc-cart-icon-border-radius, var(--sc-input-border-radius-medium));
+  width: var(--sc-cart-icon-width, 60px);
+  height: var(--sc-cart-icon-height, 60px);
+  color: var(--sc-color-white);
+  font-family: var(--sc-cart-font-family, var(--sc-input-font-family));
+  font-weight: var(--sc-font-weight-semibold);
+  transition: opacity var(--sc-transition-medium) ease;
+  box-shadow: var(--sc-shadow-small);
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  &__container {
+    font-size: 24px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 100%;
+  }
+
+  &__counter {
+    position: absolute;
+    top: -8px;
+    left: auto;
+    bottom: auto;
+    right: -8px;
+    font-size: 12px;
+    border-radius: var(--sc-cart-counter-border-radius, 9999px);
+    background: var(--sc-color-gray-900);
+    padding: 4px 10px;
+    z-index: 1;
+  }
+}

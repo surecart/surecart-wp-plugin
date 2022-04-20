@@ -171,6 +171,58 @@ export namespace Components {
          */
         "noPadding": boolean;
     }
+    interface ScCart {
+        /**
+          * The button text.
+         */
+        "buttonText": string;
+        /**
+          * The template for the pop-out cart.
+         */
+        "cartTemplate": string;
+        /**
+          * The title for the cart.
+         */
+        "cartTitle": string;
+        /**
+          * The checkout url for the button.
+         */
+        "checkoutUrl": string;
+        /**
+          * Should we force show the cart, even if there's a form on the page?
+         */
+        "forceShow": boolean;
+        /**
+          * The form id to use for the cart.
+         */
+        "formId": string;
+        /**
+          * The current UI state.
+         */
+        "uiState": 'loading' | 'busy' | 'navigating' | 'idle';
+    }
+    interface ScCartIcon {
+        /**
+          * The count to show in the cart icon.
+         */
+        "count": number;
+        /**
+          * The icon to show.
+         */
+        "icon": string;
+    }
+    interface ScCartLineItems {
+    }
+    interface ScCartProvider {
+        /**
+          * The form id to use for the cart.
+         */
+        "formId": string;
+        /**
+          * The current UI state.
+         */
+        "uiState": 'loading' | 'busy' | 'navigating' | 'idle';
+    }
     interface ScCcLogo {
         "brand": string;
     }
@@ -677,6 +729,28 @@ export namespace Components {
         "loading": boolean;
         "purchases": Array<Purchase>;
         "requestNonce": string;
+    }
+    interface ScDrawer {
+        /**
+          * By default, the drawer slides out of its containing block (usually the viewport). To make the drawer slide out of its parent element, set this prop and add `position: relative` to the parent.
+         */
+        "contained": boolean;
+        /**
+          * The drawer's label as displayed in the header. You should always include a relevant label even when using `no-header`, as it is required for proper accessibility.
+         */
+        "label": string;
+        /**
+          * Removes the header. This will also remove the default close button, so please ensure you provide an easy, accessible way for users to dismiss the drawer.
+         */
+        "noHeader": boolean;
+        /**
+          * Indicates whether or not the drawer is open. You can use this in lieu of the show/hide methods.
+         */
+        "open": boolean;
+        /**
+          * The direction from which the drawer will open.
+         */
+        "placement": 'top' | 'end' | 'bottom' | 'start';
     }
     interface ScDropdown {
         "clickEl"?: HTMLElement;
@@ -2225,6 +2299,30 @@ declare global {
         prototype: HTMLScCardElement;
         new (): HTMLScCardElement;
     };
+    interface HTMLScCartElement extends Components.ScCart, HTMLStencilElement {
+    }
+    var HTMLScCartElement: {
+        prototype: HTMLScCartElement;
+        new (): HTMLScCartElement;
+    };
+    interface HTMLScCartIconElement extends Components.ScCartIcon, HTMLStencilElement {
+    }
+    var HTMLScCartIconElement: {
+        prototype: HTMLScCartIconElement;
+        new (): HTMLScCartIconElement;
+    };
+    interface HTMLScCartLineItemsElement extends Components.ScCartLineItems, HTMLStencilElement {
+    }
+    var HTMLScCartLineItemsElement: {
+        prototype: HTMLScCartLineItemsElement;
+        new (): HTMLScCartLineItemsElement;
+    };
+    interface HTMLScCartProviderElement extends Components.ScCartProvider, HTMLStencilElement {
+    }
+    var HTMLScCartProviderElement: {
+        prototype: HTMLScCartProviderElement;
+        new (): HTMLScCartProviderElement;
+    };
     interface HTMLScCcLogoElement extends Components.ScCcLogo, HTMLStencilElement {
     }
     var HTMLScCcLogoElement: {
@@ -2350,6 +2448,12 @@ declare global {
     var HTMLScDownloadsListElement: {
         prototype: HTMLScDownloadsListElement;
         new (): HTMLScDownloadsListElement;
+    };
+    interface HTMLScDrawerElement extends Components.ScDrawer, HTMLStencilElement {
+    }
+    var HTMLScDrawerElement: {
+        prototype: HTMLScDrawerElement;
+        new (): HTMLScDrawerElement;
     };
     interface HTMLScDropdownElement extends Components.ScDropdown, HTMLStencilElement {
     }
@@ -2895,6 +2999,10 @@ declare global {
         "sc-button": HTMLScButtonElement;
         "sc-button-group": HTMLScButtonGroupElement;
         "sc-card": HTMLScCardElement;
+        "sc-cart": HTMLScCartElement;
+        "sc-cart-icon": HTMLScCartIconElement;
+        "sc-cart-line-items": HTMLScCartLineItemsElement;
+        "sc-cart-provider": HTMLScCartProviderElement;
         "sc-cc-logo": HTMLScCcLogoElement;
         "sc-charges-list": HTMLScChargesListElement;
         "sc-checkbox": HTMLScCheckboxElement;
@@ -2916,6 +3024,7 @@ declare global {
         "sc-divider": HTMLScDividerElement;
         "sc-donation-choices": HTMLScDonationChoicesElement;
         "sc-downloads-list": HTMLScDownloadsListElement;
+        "sc-drawer": HTMLScDrawerElement;
         "sc-dropdown": HTMLScDropdownElement;
         "sc-empty": HTMLScEmptyElement;
         "sc-express-payment": HTMLScExpressPaymentElement;
@@ -3182,6 +3291,58 @@ declare namespace LocalJSX {
           * Remove padding
          */
         "noPadding"?: boolean;
+    }
+    interface ScCart {
+        /**
+          * The button text.
+         */
+        "buttonText"?: string;
+        /**
+          * The template for the pop-out cart.
+         */
+        "cartTemplate"?: string;
+        /**
+          * The title for the cart.
+         */
+        "cartTitle"?: string;
+        /**
+          * The checkout url for the button.
+         */
+        "checkoutUrl"?: string;
+        /**
+          * Should we force show the cart, even if there's a form on the page?
+         */
+        "forceShow"?: boolean;
+        /**
+          * The form id to use for the cart.
+         */
+        "formId"?: string;
+        /**
+          * The current UI state.
+         */
+        "uiState"?: 'loading' | 'busy' | 'navigating' | 'idle';
+    }
+    interface ScCartIcon {
+        /**
+          * The count to show in the cart icon.
+         */
+        "count"?: number;
+        /**
+          * The icon to show.
+         */
+        "icon"?: string;
+    }
+    interface ScCartLineItems {
+    }
+    interface ScCartProvider {
+        /**
+          * The form id to use for the cart.
+         */
+        "formId"?: string;
+        /**
+          * The current UI state.
+         */
+        "uiState"?: 'loading' | 'busy' | 'navigating' | 'idle';
     }
     interface ScCcLogo {
         "brand"?: string;
@@ -3748,6 +3909,34 @@ declare namespace LocalJSX {
         "loading"?: boolean;
         "purchases"?: Array<Purchase>;
         "requestNonce"?: string;
+    }
+    interface ScDrawer {
+        /**
+          * By default, the drawer slides out of its containing block (usually the viewport). To make the drawer slide out of its parent element, set this prop and add `position: relative` to the parent.
+         */
+        "contained"?: boolean;
+        /**
+          * The drawer's label as displayed in the header. You should always include a relevant label even when using `no-header`, as it is required for proper accessibility.
+         */
+        "label"?: string;
+        /**
+          * Removes the header. This will also remove the default close button, so please ensure you provide an easy, accessible way for users to dismiss the drawer.
+         */
+        "noHeader"?: boolean;
+        "onScAfterHide"?: (event: CustomEvent<void>) => void;
+        "onScAfterShow"?: (event: CustomEvent<void>) => void;
+        "onScHide"?: (event: CustomEvent<void>) => void;
+        "onScInitialFocus"?: (event: CustomEvent<void>) => void;
+        "onScRequestClose"?: (event: CustomEvent<'close-button' | 'keyboard' | 'overlay'>) => void;
+        "onScShow"?: (event: CustomEvent<void>) => void;
+        /**
+          * Indicates whether or not the drawer is open. You can use this in lieu of the show/hide methods.
+         */
+        "open"?: boolean;
+        /**
+          * The direction from which the drawer will open.
+         */
+        "placement"?: 'top' | 'end' | 'bottom' | 'start';
     }
     interface ScDropdown {
         "clickEl"?: HTMLElement;
@@ -5378,6 +5567,10 @@ declare namespace LocalJSX {
         "sc-button": ScButton;
         "sc-button-group": ScButtonGroup;
         "sc-card": ScCard;
+        "sc-cart": ScCart;
+        "sc-cart-icon": ScCartIcon;
+        "sc-cart-line-items": ScCartLineItems;
+        "sc-cart-provider": ScCartProvider;
         "sc-cc-logo": ScCcLogo;
         "sc-charges-list": ScChargesList;
         "sc-checkbox": ScCheckbox;
@@ -5399,6 +5592,7 @@ declare namespace LocalJSX {
         "sc-divider": ScDivider;
         "sc-donation-choices": ScDonationChoices;
         "sc-downloads-list": ScDownloadsList;
+        "sc-drawer": ScDrawer;
         "sc-dropdown": ScDropdown;
         "sc-empty": ScEmpty;
         "sc-express-payment": ScExpressPayment;
@@ -5503,6 +5697,10 @@ declare module "@stencil/core" {
             "sc-button": LocalJSX.ScButton & JSXBase.HTMLAttributes<HTMLScButtonElement>;
             "sc-button-group": LocalJSX.ScButtonGroup & JSXBase.HTMLAttributes<HTMLScButtonGroupElement>;
             "sc-card": LocalJSX.ScCard & JSXBase.HTMLAttributes<HTMLScCardElement>;
+            "sc-cart": LocalJSX.ScCart & JSXBase.HTMLAttributes<HTMLScCartElement>;
+            "sc-cart-icon": LocalJSX.ScCartIcon & JSXBase.HTMLAttributes<HTMLScCartIconElement>;
+            "sc-cart-line-items": LocalJSX.ScCartLineItems & JSXBase.HTMLAttributes<HTMLScCartLineItemsElement>;
+            "sc-cart-provider": LocalJSX.ScCartProvider & JSXBase.HTMLAttributes<HTMLScCartProviderElement>;
             "sc-cc-logo": LocalJSX.ScCcLogo & JSXBase.HTMLAttributes<HTMLScCcLogoElement>;
             "sc-charges-list": LocalJSX.ScChargesList & JSXBase.HTMLAttributes<HTMLScChargesListElement>;
             "sc-checkbox": LocalJSX.ScCheckbox & JSXBase.HTMLAttributes<HTMLScCheckboxElement>;
@@ -5524,6 +5722,7 @@ declare module "@stencil/core" {
             "sc-divider": LocalJSX.ScDivider & JSXBase.HTMLAttributes<HTMLScDividerElement>;
             "sc-donation-choices": LocalJSX.ScDonationChoices & JSXBase.HTMLAttributes<HTMLScDonationChoicesElement>;
             "sc-downloads-list": LocalJSX.ScDownloadsList & JSXBase.HTMLAttributes<HTMLScDownloadsListElement>;
+            "sc-drawer": LocalJSX.ScDrawer & JSXBase.HTMLAttributes<HTMLScDrawerElement>;
             "sc-dropdown": LocalJSX.ScDropdown & JSXBase.HTMLAttributes<HTMLScDropdownElement>;
             "sc-empty": LocalJSX.ScEmpty & JSXBase.HTMLAttributes<HTMLScEmptyElement>;
             "sc-express-payment": LocalJSX.ScExpressPayment & JSXBase.HTMLAttributes<HTMLScExpressPaymentElement>;

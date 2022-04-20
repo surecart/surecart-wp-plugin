@@ -71,7 +71,7 @@ export class ScSessionProvider {
   @Watch('order')
   handleOrderChange(val) {
     if (val?.id) {
-      setSessionId(this.groupId, val.id, this.modified);
+      setSessionId(this.groupId, val.id, this.modified, this.session?.line_items?.pagination?.count);
     }
     if (val.status === 'paid') {
       removeSessionId(this.groupId);

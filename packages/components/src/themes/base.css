@@ -273,8 +273,8 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
   --sc-tooltip-padding: var(--sc-spacing-xx-small) var(--sc-spacing-x-small);
   --sc-tooltip-arrow-size: 5px;
   --sc-tooltip-arrow-start-end-offset: 8px;
-  --sc-z-index-drawer: 700;
-  --sc-z-index-dialog: 800;
+  --sc-z-index-drawer: 99999;
+  --sc-z-index-dialog: 100000;
   --sc-z-index-dropdown: 900;
   --sc-z-index-toast: 950;
   --sc-z-index-tooltip: 1000;

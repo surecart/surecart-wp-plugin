@@ -31,6 +31,7 @@ return [
 		\SureCart\Settings\SettingsServiceProvider::class,
 		\SureCart\Request\RequestServiceProvider::class,
 		\SureCart\View\ViewServiceProvider::class,
+		\SureCart\Cart\CartServiceProvider::class,
 		\SureCart\Webhooks\WebhooksServiceProvider::class,
 		\SureCart\BlockLibrary\BlockServiceProvider::class,
 		\SureCart\Support\Errors\ErrorsServiceProvider::class,
