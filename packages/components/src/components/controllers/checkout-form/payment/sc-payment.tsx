@@ -2,6 +2,7 @@ import { Order, Processor } from '../../../../types';
 import { Component, h, Prop, Host, Event, EventEmitter } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
+import { hasSubscription } from '../../../../functions/line-items';
 
 @Component({
   tag: 'sc-payment',
@@ -44,15 +45,37 @@ export class ScPayment {
   renderStripeAndPayPal() {
     return (
       <sc-form-control label={this.label}>
-        <sc-toggles collapsible={false} style={{ '--toggle-spacing': '3px' }} theme="container">
-          <sc-toggle show-control shady open={this.processor === 'stripe'} onScShow={() => this.scSetOrderState.emit({ processor: 'stripe' })}>
+        <sc-toggles collapsible={false} theme="container">
+          <sc-toggle show-control shady borderless open={this.processor === 'stripe'} onScShow={() => this.scSetOrderState.emit({ processor: 'stripe' })}>
             <span slot="summary" class="sc-payment-toggle-summary">
               <sc-icon name="credit-card" style={{ fontSize: '24px' }}></sc-icon>
               <span>{__('Credit Card', 'surecart')}</span>
             </span>
             <sc-order-stripe-payment-element mode={this.mode} processors={this.processors} currency-code={this.currencyCode}></sc-order-stripe-payment-element>
           </sc-toggle>
-          <sc-toggle show-control shady open={this.processor === 'paypal'} onScShow={() => this.scSetOrderState.emit({ processor: 'paypal' })}>
+          <sc-toggle show-control shady borderless open={this.processor === 'paypal'} onScShow={() => this.scSetOrderState.emit({ processor: 'paypal' })}>
+            <span slot="summary" class="sc-payment-toggle-summary">
+              <sc-icon name="paypal" style={{ width: '80px', fontSize: '24px' }}></sc-icon>
+            </span>
+            <div class="sc-payment-instructions">{__('You will be prompted by PayPal to complete your purchase securely.', 'surecart')}</div>
+          </sc-toggle>
+        </sc-toggles>
+      </sc-form-control>
+    );
+  }
+
+  renderPayPal() {
+    return (
+      <sc-form-control label={this.label}>
+        <sc-toggles collapsible={false} theme="container">
+          <sc-toggle show-control shady borderless open={this.processor === 'stripe'} onScShow={() => this.scSetOrderState.emit({ processor: 'stripe' })}>
+            <span slot="summary" class="sc-payment-toggle-summary">
+              <sc-icon name="credit-card" style={{ fontSize: '24px' }}></sc-icon>
+              <span>{__('Credit Card', 'surecart')}</span>
+            </span>
+            <div class="sc-payment-instructions">{__('You will be prompted to complete your purchase securely.', 'surecart')}</div>
+          </sc-toggle>
+          <sc-toggle show-control shady borderless open={this.processor === 'paypal'} onScShow={() => this.scSetOrderState.emit({ processor: 'paypal' })}>
             <span slot="summary" class="sc-payment-toggle-summary">
               <sc-icon name="paypal" style={{ width: '80px', fontSize: '24px' }}></sc-icon>
             </span>
@@ -79,8 +102,26 @@ export class ScPayment {
     }
 
     // both stripe and paypal are enabled.
-    if (this.processors.find(processor => processor.processor_type === 'stripe') && this.processors.find(processor => processor.processor_type === 'paypal')) {
-      return this.renderStripeAndPayPal();
+    if (!hasSubscription(this.order)) {
+      if (this.processors.find(processor => processor.processor_type === 'stripe') && this.processors.find(processor => processor.processor_type === 'paypal')) {
+        return this.renderStripeAndPayPal();
+      }
+    }
+
+    if (this.processors.find(processor => processor.processor_type === 'stripe')) {
+      return (
+        <sc-form-control label={this.label}>
+          <sc-card>
+            <sc-order-stripe-payment-element mode={this.mode} processors={this.processors} currency-code={this.currencyCode}></sc-order-stripe-payment-element>
+          </sc-card>
+        </sc-form-control>
+      );
+    }
+
+    if (!hasSubscription(this.order)) {
+      if (this.processors.find(processor => processor.processor_type === 'paypal')) {
+        return this.renderPayPal();
+      }
     }
 
     // if ('paypal' === this.processor) {

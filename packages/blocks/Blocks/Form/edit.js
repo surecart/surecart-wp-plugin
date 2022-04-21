@@ -426,6 +426,7 @@ export default function edit({ clientId, attributes, setAttributes }) {
 						keys={scData?.keys}
 						mode={'test'}
 						formId={formId}
+						processors={scData?.processors}
 						css={css`
 							margin-top: 2em;
 							font-size: ${font_size}px;

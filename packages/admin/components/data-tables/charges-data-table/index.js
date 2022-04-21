@@ -2,11 +2,9 @@
 import { __, _n } from '@wordpress/i18n';
 import DataTable from '../../DataTable';
 import { css, jsx } from '@emotion/core';
-import { store } from '@surecart/data';
 import Refund from './Refund';
 import { Fragment } from '@wordpress/element';
 import { useState } from '@wordpress/element';
-import { select } from '@wordpress/data';
 import PaginationFooter from '../PaginationFooter';
 
 export default ({

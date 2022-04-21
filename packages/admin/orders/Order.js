@@ -13,7 +13,6 @@ import Template from '../templates/SingleModel';
 
 import Details from './modules/Details';
 
-import useSnackbar from '../hooks/useSnackbar';
 import LineItems from './modules/LineItems';
 import Charges from './modules/Charges';
 import Subscriptions from './modules/Subscriptions';

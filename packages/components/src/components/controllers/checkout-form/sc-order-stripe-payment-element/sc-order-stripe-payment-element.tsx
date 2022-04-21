@@ -48,7 +48,7 @@ export class ScOrderStripePaymentElement {
       method: 'POST',
       path: 'surecart/v1/payment_intents',
       data: {
-        amount: 100,
+        amount: typeof this?.order?.amount_due === 'number' ? this.order.amount_due : 100,
         currency: this.currencyCode,
         processor_type: 'stripe',
         live_mode: this.mode === 'live',
@@ -58,6 +58,7 @@ export class ScOrderStripePaymentElement {
   }
 
   async updatePaymentIntent() {
+    console.log('update');
     this.paymentIntent = (await apiFetch({
       method: 'PATCH',
       path: `surecart/v1/payment_intents`,
@@ -72,6 +73,7 @@ export class ScOrderStripePaymentElement {
 
   @Watch('order')
   handleOrderChange(val, prev) {
+    console.log(val, prev);
     // update the payment intent if the amount due changes.
     if (prev?.amount_due !== val?.amount_due) {
       this.updatePaymentIntent();
