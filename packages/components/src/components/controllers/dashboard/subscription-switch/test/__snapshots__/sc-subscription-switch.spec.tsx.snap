@@ -6,6 +6,9 @@ exports[`sc-subscription-switch renders 1`] = `
     <sc-dashboard-module class="subscription-switch" heading="Update Plan">
       <span slot="end"></span>
       <sc-form class="subscriptions-switch">
+        <sc-choices required="">
+          <div></div>
+        </sc-choices>
         <sc-button full="" submit="" type="primary">
           Next
           <sc-icon name="arrow-right" slot="suffix"></sc-icon>

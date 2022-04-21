@@ -4,9 +4,6 @@ exports[`sc-checkout renders 1`] = `
 <sc-checkout>
   <!---->
   <div class="sc-checkout-container">
-    <sc-alert type="danger">
-      <span slot="title"></span>
-    </sc-alert>
     <sc-form-components-validator>
       <sc-session-provider currency-code="usd" group-id="" mode="live" persist=""></sc-session-provider>
     </sc-form-components-validator>

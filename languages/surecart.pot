@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-04-19T16:31:08+00:00\n"
+"POT-Creation-Date: 2022-04-21T01:16:42+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 
@@ -19,7 +19,6 @@ msgid "SureCart"
 msgstr ""
 
 #: src/Controllers/Admin/Abandoned/AbandonedOrderListTable.php:48
-#: src/Controllers/Admin/Customers/CustomersListTable.php:62
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:63
 #: src/Controllers/Admin/Products/ProductsListTable.php:65
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:60
@@ -203,7 +202,6 @@ msgid "Expired"
 msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:279
-#: src/Controllers/Admin/Customers/CustomersListTable.php:60
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:61
 #: src/Controllers/Admin/Products/ProductsListTable.php:63
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:61
@@ -303,16 +301,6 @@ msgstr ""
 
 #: src/Controllers/Admin/Customers/CustomersListTable.php:45
 msgid "Search Customers"
-msgstr ""
-
-#: src/Controllers/Admin/Customers/CustomersListTable.php:61
-#: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:62
-#: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:183
-#: src/Controllers/Admin/Products/ProductsListTable.php:64
-#: admin/coupons.js:1
-#: admin/product-groups.js:1
-#: admin/products.js:1
-msgid "Archived"
 msgstr ""
 
 #: src/Controllers/Admin/Customers/CustomersListTable.php:103
@@ -428,6 +416,15 @@ msgstr ""
 #. translators: Customer name.
 #: src/Controllers/Admin/Orders/OrdersListTable.php:314
 msgid "By %s"
+msgstr ""
+
+#: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:62
+#: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:183
+#: src/Controllers/Admin/Products/ProductsListTable.php:64
+#: admin/coupons.js:1
+#: admin/product-groups.js:1
+#: admin/products.js:1
+msgid "Archived"
 msgstr ""
 
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:183

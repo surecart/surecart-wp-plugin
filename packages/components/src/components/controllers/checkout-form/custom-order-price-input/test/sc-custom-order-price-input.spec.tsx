@@ -7,12 +7,6 @@ describe('sc-custom-order-price-input', () => {
       components: [ScCustomOrderPriceInput],
       html: `<sc-custom-order-price-input></sc-custom-order-price-input>`,
     });
-    expect(page.root).toEqualHtml(`
-      <sc-custom-order-price-input>
-        <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
-      </sc-custom-order-price-input>
-    `);
+    expect(page.root).toMatchSnapshot();
   });
 });

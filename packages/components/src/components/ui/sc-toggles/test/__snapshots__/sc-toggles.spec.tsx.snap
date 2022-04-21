@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-toggles renders 1`] = `
+<sc-toggles>
+  <mock:shadow-root>
+    <div class="toggles" part="base">
+      <slot></slot>
+    </div>
+  </mock:shadow-root>
+</sc-toggles>
+`;
