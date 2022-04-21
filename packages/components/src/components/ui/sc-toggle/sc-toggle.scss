@@ -85,6 +85,11 @@
   overflow: hidden;
   border-top: solid var(--sc-input-border-width) var(--sc-input-border-color);
 }
+.details--shady {
+  .details__body {
+    background: var(--sc-color-gray-50);
+  }
+}
 .details__content {
   padding: var(--sc-spacing-medium);
 }

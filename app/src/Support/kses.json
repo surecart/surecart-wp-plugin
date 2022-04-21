@@ -729,6 +729,16 @@
     "class": true,
     "slot": true
   },
+  "sc-order-stripe-payment-element": {
+    "currency-code": true,
+    "mode": true,
+    "order": true,
+    "processors": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-order-submit": {
     "busy": true,
     "currency-code": true,
@@ -789,6 +799,7 @@
   },
   "sc-payment": {
     "busy": true,
+    "currency-code": true,
     "label": true,
     "loading": true,
     "mode": true,
@@ -824,6 +835,7 @@
     "client-id": true,
     "color": true,
     "label": true,
+    "merchant-id": true,
     "mode": true,
     "order": true,
     "style": true,
@@ -1046,6 +1058,15 @@
     "class": true,
     "slot": true
   },
+  "sc-stripe-payment-element": {
+    "client-secret": true,
+    "name": true,
+    "stripe": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-stripe-payment-request": {
     "amount": true,
     "country": true,
@@ -1246,6 +1267,7 @@
     "collapsible": true,
     "disabled": true,
     "open": true,
+    "shady": true,
     "show-control": true,
     "summary": true,
     "style": true,

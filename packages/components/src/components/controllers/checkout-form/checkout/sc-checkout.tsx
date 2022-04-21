@@ -1,4 +1,4 @@
-import { Component, h, Prop, Element, State, Listen, Watch, Event, EventEmitter } from '@stencil/core';
+import { Component, h, Prop, Element, State, Listen, Watch, Event, EventEmitter, Method } from '@stencil/core';
 import { Coupon, Order, Customer, PriceChoice, Prices, Products, ResponseError, Processor } from '../../../../types';
 import { checkoutMachine } from './helpers/checkout-machine';
 import { __ } from '@wordpress/i18n';
@@ -13,6 +13,9 @@ import { Universe } from 'stencil-wormhole';
 export class ScCheckout {
   /** Holds our state machine service */
   private _stateService = interpret(checkoutMachine);
+
+  /** Holds the session provider reference. */
+  private sessionProvider: HTMLScSessionProviderElement;
 
   /** Element */
   @Element() el: HTMLElement;
@@ -74,18 +77,19 @@ export class ScCheckout {
   /** Error to display. */
   @State() error: ResponseError | null;
 
-  /** Missing address */
-  @State() missingAddress: boolean;
-
-  @State() fundingSource: string = '';
-
+  /** The currenly selected processor */
   @State() processor: 'stripe' | 'paypal' = 'stripe';
 
   /** Payment mode inside individual payment method (i.e. Payment Buttons) */
   @State() paymentMethod: 'stripe-payment-request' | null;
 
+  /** Order has been updated. */
   @Event() scOrderUpdated: EventEmitter<Order>;
+
+  /** Order has been finalized. */
   @Event() scOrderFinalized: EventEmitter<Order>;
+
+  /** Order has an error. */
   @Event() scOrderError: EventEmitter<ResponseError>;
 
   @Watch('order')
@@ -100,7 +104,6 @@ export class ScCheckout {
   @Watch('error')
   handleErrorChange() {
     if (Object.keys(this.error || {})?.length) {
-      console.log('error');
       this.scOrderError.emit(this.error);
     }
   }
@@ -118,24 +121,17 @@ export class ScCheckout {
     this.setState(e.detail);
   }
 
+  @Listen('scSetProcessor')
+  handleProcessorChange(e) {
+    this.processor = e.detail;
+  }
+
   @Listen('scSetOrderState')
   handleOrderStateChange(e) {
     const items = e.detail;
     Object.keys(items || {}).forEach(key => {
       this[key] = items[key];
     });
-  }
-
-  setState(name) {
-    const { send } = this._stateService;
-    return send(name);
-  }
-
-  setOrderState(state) {
-    this.state = {
-      ...this.state,
-      ...state,
-    };
   }
 
   @Listen('scAddEntities')
@@ -156,6 +152,36 @@ export class ScCheckout {
         ...prices,
       };
     }
+  }
+
+  /**
+   * Submit the form
+   */
+  @Method()
+  async submit({ skip_validation } = { skip_validation: false }) {
+    if (!skip_validation) {
+      await this.validate();
+    }
+    console.log(this.sessionProvider);
+    return await this.sessionProvider.finalize();
+  }
+
+  @Method()
+  async validate() {
+    const form = this.el.querySelector('sc-form') as HTMLScFormElement;
+    return await form.validate();
+  }
+
+  setState(name) {
+    const { send } = this._stateService;
+    return send(name);
+  }
+
+  setOrderState(state) {
+    this.state = {
+      ...this.state,
+      ...state,
+    };
   }
 
   componentWillLoad() {
@@ -195,7 +221,6 @@ export class ScCheckout {
       processors: this.processors,
       processor_data: this.order?.processor_data,
       state: this.checkoutState.value,
-      fundingSource: this.fundingSource,
 
       // checkout states
       loading: this.checkoutState.value === 'loading',
@@ -262,6 +287,7 @@ export class ScCheckout {
           <sc-processor-provider>
             <sc-form-components-validator order={this.order} disabled={this.disableComponentsValidation}>
               <sc-session-provider
+                ref={el => (this.sessionProvider = el as HTMLScSessionProviderElement)}
                 success-url={this.successUrl}
                 order={this.order}
                 prices={this.prices}

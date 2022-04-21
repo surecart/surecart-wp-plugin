@@ -24,6 +24,9 @@ export class ScToggle {
   /** Is this a borderless toggle? */
   @Prop({ reflect: true }) borderless: boolean = false;
 
+  /** Is this a shady */
+  @Prop({ reflect: true }) shady: boolean = false;
+
   @Prop() showControl: boolean = false;
 
   /** Are these collapsible? */
@@ -118,6 +121,7 @@ export class ScToggle {
           'details--open': this.open,
           'details--disabled': this.disabled,
           'details--borderless': this.borderless,
+          'details--shady': this.shady,
         }}
       >
         <header

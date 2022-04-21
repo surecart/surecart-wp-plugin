@@ -7,6 +7,7 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { Address, ChoiceItem, Coupon, Customer, DiscountResponse, LineItem, LineItemData, Order, OrderStatus, PaymentMethod, Price, PriceChoice, Prices, Processor, ProductGroup, Products, Purchase, ResponseError, Subscription, SubscriptionStatus, TaxStatus, WordPressUser } from "./types";
 import { IconLibraryMutator, IconLibraryResolver } from "./components/ui/icon/library";
+import { Stripe } from "@stripe/stripe-js";
 export namespace Components {
     interface ScAddress {
         /**
@@ -294,9 +295,14 @@ export namespace Components {
          */
         "processors": Processor[];
         /**
+          * Submit the form
+         */
+        "submit": ({ skip_validation }?: { skip_validation: boolean; }) => Promise<Order>;
+        /**
           * Where to go on success
          */
         "successUrl": string;
+        "validate": () => Promise<boolean>;
     }
     interface ScChoice {
         /**
@@ -1291,6 +1297,24 @@ export namespace Components {
          */
         "status": OrderStatus;
     }
+    interface ScOrderStripePaymentElement {
+        /**
+          * The currency code for the payment element.
+         */
+        "currencyCode": string;
+        /**
+          * Payment mode.
+         */
+        "mode": 'test' | 'live';
+        /**
+          * The order.
+         */
+        "order": Order;
+        /**
+          * Available processors
+         */
+        "processors": Processor[];
+    }
     interface ScOrderSubmit {
         /**
           * Is the order busy
@@ -1383,6 +1407,10 @@ export namespace Components {
          */
         "busy": boolean;
         /**
+          * The currency code.
+         */
+        "currencyCode": string;
+        /**
           * The input's label.
          */
         "label": string;
@@ -1428,13 +1456,26 @@ export namespace Components {
         "query": object;
     }
     interface ScPaypalButtons {
+        /**
+          * Buttons to render
+         */
         "buttons": string[];
         /**
           * Client id for the script.
          */
         "clientId": string;
+        /**
+          * Button color.
+         */
         "color": 'gold' | 'blue' | 'silver' | 'black' | 'white';
+        /**
+          * Label for the button.
+         */
         "label": 'paypal' | 'checkout' | 'buynow' | 'pay' | 'installment';
+        /**
+          * The merchant id for paypal.
+         */
+        "merchantId": string;
         /**
           * Test or live mode.
          */
@@ -1787,6 +1828,11 @@ export namespace Components {
          */
         "currencyCode": string;
         /**
+          * Finalize the order.
+          * @returns
+         */
+        "finalize": () => Promise<Order>;
+        /**
           * The checkout form id
          */
         "formId": number;
@@ -1892,6 +1938,20 @@ export namespace Components {
           * Your stripe connected account id.
          */
         "stripeAccountId": string;
+    }
+    interface ScStripePaymentElement {
+        /**
+          * The client secret to render the payment element
+         */
+        "clientSecret": string;
+        /**
+          * A name to send to the element.
+         */
+        "name": string;
+        /**
+          * Stripe instance.
+         */
+        "stripe": Stripe;
     }
     interface ScStripePaymentRequest {
         /**
@@ -2151,6 +2211,10 @@ export namespace Components {
           * Indicates whether or not the details is open. You can use this in lieu of the show/hide methods.
          */
         "open": boolean;
+        /**
+          * Is this a shady
+         */
+        "shady": boolean;
         "showControl": boolean;
         /**
           * The summary to show in the details header. If you need to display HTML, use the `summary` slot instead.
@@ -2620,6 +2684,12 @@ declare global {
         prototype: HTMLScOrderStatusBadgeElement;
         new (): HTMLScOrderStatusBadgeElement;
     };
+    interface HTMLScOrderStripePaymentElementElement extends Components.ScOrderStripePaymentElement, HTMLStencilElement {
+    }
+    var HTMLScOrderStripePaymentElementElement: {
+        prototype: HTMLScOrderStripePaymentElementElement;
+        new (): HTMLScOrderStripePaymentElementElement;
+    };
     interface HTMLScOrderSubmitElement extends Components.ScOrderSubmit, HTMLStencilElement {
     }
     var HTMLScOrderSubmitElement: {
@@ -2781,6 +2851,12 @@ declare global {
     var HTMLScStripeElementElement: {
         prototype: HTMLScStripeElementElement;
         new (): HTMLScStripeElementElement;
+    };
+    interface HTMLScStripePaymentElementElement extends Components.ScStripePaymentElement, HTMLStencilElement {
+    }
+    var HTMLScStripePaymentElementElement: {
+        prototype: HTMLScStripePaymentElementElement;
+        new (): HTMLScStripePaymentElementElement;
     };
     interface HTMLScStripePaymentRequestElement extends Components.ScStripePaymentRequest, HTMLStencilElement {
     }
@@ -3016,6 +3092,7 @@ declare global {
         "sc-order-password": HTMLScOrderPasswordElement;
         "sc-order-shipping-address": HTMLScOrderShippingAddressElement;
         "sc-order-status-badge": HTMLScOrderStatusBadgeElement;
+        "sc-order-stripe-payment-element": HTMLScOrderStripePaymentElementElement;
         "sc-order-submit": HTMLScOrderSubmitElement;
         "sc-order-summary": HTMLScOrderSummaryElement;
         "sc-order-tax-id-input": HTMLScOrderTaxIdInputElement;
@@ -3043,6 +3120,7 @@ declare global {
         "sc-stacked-list": HTMLScStackedListElement;
         "sc-stacked-list-row": HTMLScStackedListRowElement;
         "sc-stripe-element": HTMLScStripeElementElement;
+        "sc-stripe-payment-element": HTMLScStripePaymentElementElement;
         "sc-stripe-payment-request": HTMLScStripePaymentRequestElement;
         "sc-subscription": HTMLScSubscriptionElement;
         "sc-subscription-cancel": HTMLScSubscriptionCancelElement;
@@ -3355,8 +3433,17 @@ declare namespace LocalJSX {
           * When the form was modified.
          */
         "modified"?: string;
+        /**
+          * Order has an error.
+         */
         "onScOrderError"?: (event: CustomEvent<ResponseError>) => void;
+        /**
+          * Order has been finalized.
+         */
         "onScOrderFinalized"?: (event: CustomEvent<Order>) => void;
+        /**
+          * Order has been updated.
+         */
         "onScOrderUpdated"?: (event: CustomEvent<Order>) => void;
         /**
           * Where to go on success
@@ -4468,6 +4555,24 @@ declare namespace LocalJSX {
          */
         "status"?: OrderStatus;
     }
+    interface ScOrderStripePaymentElement {
+        /**
+          * The currency code for the payment element.
+         */
+        "currencyCode"?: string;
+        /**
+          * Payment mode.
+         */
+        "mode"?: 'test' | 'live';
+        /**
+          * The order.
+         */
+        "order"?: Order;
+        /**
+          * Available processors
+         */
+        "processors"?: Processor[];
+    }
     interface ScOrderSubmit {
         /**
           * Is the order busy
@@ -4566,6 +4671,10 @@ declare namespace LocalJSX {
          */
         "busy"?: boolean;
         /**
+          * The currency code.
+         */
+        "currencyCode"?: string;
+        /**
           * The input's label.
          */
         "label"?: string;
@@ -4612,19 +4721,43 @@ declare namespace LocalJSX {
         "query"?: object;
     }
     interface ScPaypalButtons {
+        /**
+          * Buttons to render
+         */
         "buttons"?: string[];
         /**
           * Client id for the script.
          */
         "clientId"?: string;
+        /**
+          * Button color.
+         */
         "color"?: 'gold' | 'blue' | 'silver' | 'black' | 'white';
+        /**
+          * Label for the button.
+         */
         "label"?: 'paypal' | 'checkout' | 'buynow' | 'pay' | 'installment';
+        /**
+          * The merchant id for paypal.
+         */
+        "merchantId"?: string;
         /**
           * Test or live mode.
          */
         "mode"?: 'test' | 'live';
+        /**
+          * Emit an error
+         */
         "onScError"?: (event: CustomEvent<object>) => void;
+        "onScPaid"?: (event: CustomEvent<void>) => void;
+        /**
+          * Set the order state
+         */
         "onScSetOrderState"?: (event: CustomEvent<object>) => void;
+        /**
+          * Set the state machine
+         */
+        "onScSetState"?: (event: CustomEvent<string>) => void;
         /**
           * The order.
          */
@@ -5135,6 +5268,24 @@ declare namespace LocalJSX {
          */
         "stripeAccountId"?: string;
     }
+    interface ScStripePaymentElement {
+        /**
+          * The client secret to render the payment element
+         */
+        "clientSecret"?: string;
+        /**
+          * A name to send to the element.
+         */
+        "name"?: string;
+        /**
+          * When the payment element is ready.
+         */
+        "onScStripeElementReady"?: (event: CustomEvent<void>) => void;
+        /**
+          * Stripe instance.
+         */
+        "stripe"?: Stripe;
+    }
     interface ScStripePaymentRequest {
         /**
           * Amount
@@ -5422,6 +5573,10 @@ declare namespace LocalJSX {
           * Indicates whether or not the details is open. You can use this in lieu of the show/hide methods.
          */
         "open"?: boolean;
+        /**
+          * Is this a shady
+         */
+        "shady"?: boolean;
         "showControl"?: boolean;
         /**
           * The summary to show in the details header. If you need to display HTML, use the `summary` slot instead.
@@ -5565,6 +5720,7 @@ declare namespace LocalJSX {
         "sc-order-password": ScOrderPassword;
         "sc-order-shipping-address": ScOrderShippingAddress;
         "sc-order-status-badge": ScOrderStatusBadge;
+        "sc-order-stripe-payment-element": ScOrderStripePaymentElement;
         "sc-order-submit": ScOrderSubmit;
         "sc-order-summary": ScOrderSummary;
         "sc-order-tax-id-input": ScOrderTaxIdInput;
@@ -5592,6 +5748,7 @@ declare namespace LocalJSX {
         "sc-stacked-list": ScStackedList;
         "sc-stacked-list-row": ScStackedListRow;
         "sc-stripe-element": ScStripeElement;
+        "sc-stripe-payment-element": ScStripePaymentElement;
         "sc-stripe-payment-request": ScStripePaymentRequest;
         "sc-subscription": ScSubscription;
         "sc-subscription-cancel": ScSubscriptionCancel;
@@ -5691,6 +5848,7 @@ declare module "@stencil/core" {
             "sc-order-password": LocalJSX.ScOrderPassword & JSXBase.HTMLAttributes<HTMLScOrderPasswordElement>;
             "sc-order-shipping-address": LocalJSX.ScOrderShippingAddress & JSXBase.HTMLAttributes<HTMLScOrderShippingAddressElement>;
             "sc-order-status-badge": LocalJSX.ScOrderStatusBadge & JSXBase.HTMLAttributes<HTMLScOrderStatusBadgeElement>;
+            "sc-order-stripe-payment-element": LocalJSX.ScOrderStripePaymentElement & JSXBase.HTMLAttributes<HTMLScOrderStripePaymentElementElement>;
             "sc-order-submit": LocalJSX.ScOrderSubmit & JSXBase.HTMLAttributes<HTMLScOrderSubmitElement>;
             "sc-order-summary": LocalJSX.ScOrderSummary & JSXBase.HTMLAttributes<HTMLScOrderSummaryElement>;
             "sc-order-tax-id-input": LocalJSX.ScOrderTaxIdInput & JSXBase.HTMLAttributes<HTMLScOrderTaxIdInputElement>;
@@ -5718,6 +5876,7 @@ declare module "@stencil/core" {
             "sc-stacked-list": LocalJSX.ScStackedList & JSXBase.HTMLAttributes<HTMLScStackedListElement>;
             "sc-stacked-list-row": LocalJSX.ScStackedListRow & JSXBase.HTMLAttributes<HTMLScStackedListRowElement>;
             "sc-stripe-element": LocalJSX.ScStripeElement & JSXBase.HTMLAttributes<HTMLScStripeElementElement>;
+            "sc-stripe-payment-element": LocalJSX.ScStripePaymentElement & JSXBase.HTMLAttributes<HTMLScStripePaymentElementElement>;
             "sc-stripe-payment-request": LocalJSX.ScStripePaymentRequest & JSXBase.HTMLAttributes<HTMLScStripePaymentRequestElement>;
             "sc-subscription": LocalJSX.ScSubscription & JSXBase.HTMLAttributes<HTMLScSubscriptionElement>;
             "sc-subscription-cancel": LocalJSX.ScSubscriptionCancel & JSXBase.HTMLAttributes<HTMLScSubscriptionCancelElement>;

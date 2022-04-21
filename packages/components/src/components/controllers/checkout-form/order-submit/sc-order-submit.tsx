@@ -58,7 +58,7 @@ export class ScOrderSubmit {
         order={this.order}
         currency-code={this.currencyCode}
         client-id={client_id}
-        account-id={account_id}
+        merchant-id={account_id}
         label="checkout"
         color="blue"
       ></sc-paypal-buttons>

@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, h, Listen, Prop, State, Watch } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Listen, Method, Prop, State, Watch } from '@stencil/core';
 import { addQueryArgs, removeQueryArgs } from '@wordpress/url';
 import { __ } from '@wordpress/i18n';
 
@@ -158,8 +158,18 @@ export class ScSessionProvider {
       ...(Object.keys(shipping_address || {}).length ? { shipping_address } : {}),
       ...(Object.keys(billing_address || {}).length ? { billing_address } : {}),
       ...(tax_number_type && tax_number ? { tax_identifier: { number: tax_number, number_type: tax_number_type } } : {}),
-      metadata: rest || {},
+      ...(Object.keys(rest)?.length ? { metadata: rest } : {}),
     };
+  }
+
+  /**
+   * Finalize the order.
+   *
+   * @returns {Promise<Order>}
+   */
+  @Method()
+  async finalize() {
+    return await this.handleFormSubmit();
   }
 
   /**
@@ -195,6 +205,7 @@ export class ScSessionProvider {
         },
         processor: this.processor,
       });
+      return this.session;
     } catch (e) {
       // handle old price versions by refreshing.
       if (e?.additional_errors?.[0]?.code === 'order.line_items.old_price_versions') {

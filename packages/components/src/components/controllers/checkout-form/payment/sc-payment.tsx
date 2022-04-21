@@ -36,27 +36,30 @@ export class ScPayment {
   /** Payment mode inside individual payment method (i.e. Payment Buttons) */
   @Prop() paymentMethod: 'stripe-payment-request' | null;
 
+  /** The currency code. */
+  @Prop() currencyCode: string = 'usd';
+
   @Event() scSetOrderState: EventEmitter<object>;
 
   renderStripeAndPayPal() {
     return (
-      <sc-choices label={this.label}>
-        <sc-choice checked={this.processor === 'stripe'} onClick={() => this.scSetOrderState.emit({ processor: 'stripe' })}>
-          {__('Credit Card', 'surecart')}
-          <sc-stripe-element
-            slot="toggle-content"
-            mode={this.mode}
-            order={this.order}
-            stripeAccountId={this?.order?.processor_data?.stripe?.account_id}
-            publishableKey={this?.order?.processor_data?.stripe?.publishable_key}
-            disabled={!!this.paymentMethod}
-          ></sc-stripe-element>
-        </sc-choice>
-        <sc-choice checked={this.processor === 'paypal'} onClick={() => this.scSetOrderState.emit({ processor: 'paypal' })}>
-          {__('PayPal', 'surecart')}
-          <div slot="toggle-content">PayPal Instructions</div>
-        </sc-choice>
-      </sc-choices>
+      <sc-form-control label={this.label}>
+        <sc-toggles collapsible={false} style={{ '--toggle-spacing': '3px' }} theme="container">
+          <sc-toggle show-control shady open={this.processor === 'stripe'} onScShow={() => this.scSetOrderState.emit({ processor: 'stripe' })}>
+            <span slot="summary" class="sc-payment-toggle-summary">
+              <sc-icon name="credit-card" style={{ fontSize: '24px' }}></sc-icon>
+              <span>{__('Credit Card', 'surecart')}</span>
+            </span>
+            <sc-order-stripe-payment-element mode={this.mode} processors={this.processors} currency-code={this.currencyCode}></sc-order-stripe-payment-element>
+          </sc-toggle>
+          <sc-toggle show-control shady open={this.processor === 'paypal'} onScShow={() => this.scSetOrderState.emit({ processor: 'paypal' })}>
+            <span slot="summary" class="sc-payment-toggle-summary">
+              <sc-icon name="paypal" style={{ width: '80px', fontSize: '24px' }}></sc-icon>
+            </span>
+            <div class="sc-payment-instructions">{__('You will be prompted by PayPal to complete your purchase securely.', 'surecart')}</div>
+          </sc-toggle>
+        </sc-toggles>
+      </sc-form-control>
     );
   }
 
@@ -71,20 +74,14 @@ export class ScPayment {
   }
 
   render() {
-    if (this.loading) {
-      return this.renderLoading();
-    }
-
     if (!this.processor) {
       return <div>{__('Please contact us for payment', 'surecart')}</div>;
     }
 
-    // @ts-ignore
-
     // both stripe and paypal are enabled.
-    // if (this.processors.find(processor => processor.processor_type === 'stripe') && this.processors.find(processor => processor.processor_type === 'paypal')) {
-    return this.renderStripeAndPayPal();
-    // }
+    if (this.processors.find(processor => processor.processor_type === 'stripe') && this.processors.find(processor => processor.processor_type === 'paypal')) {
+      return this.renderStripeAndPayPal();
+    }
 
     // if ('paypal' === this.processor) {
     //   if (!this?.order?.processor_data?.paypal?.client_id || !this?.order?.processor_data?.paypal?.account_id) {
