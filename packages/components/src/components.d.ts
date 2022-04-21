@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Address, ChoiceItem, Coupon, Customer, DiscountResponse, LineItem, LineItemData, Order, OrderStatus, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorData, ProductGroup, Products, Purchase, ResponseError, Subscription, SubscriptionStatus, TaxStatus, WordPressUser } from "./types";
+import { Address, ChoiceItem, Coupon, Customer, DiscountResponse, LineItem, LineItemData, Order, OrderStatus, PaymentMethod, Price, PriceChoice, Prices, Processor, ProductGroup, Products, Purchase, ResponseError, Subscription, SubscriptionStatus, TaxStatus, WordPressUser } from "./types";
 import { IconLibraryMutator, IconLibraryResolver } from "./components/ui/icon/library";
 export namespace Components {
     interface ScAddress {
@@ -1317,6 +1317,10 @@ export namespace Components {
          */
         "mode": 'test' | 'live';
         /**
+          * The current order.
+         */
+        "order": Order;
+        /**
           * Is the order paying.
          */
         "paying": boolean;
@@ -1324,7 +1328,7 @@ export namespace Components {
         /**
           * Keys and secrets for processors.
          */
-        "processors": ProcessorData;
+        "processors": Processor[];
         /**
           * Show the total.
          */
@@ -1818,6 +1822,10 @@ export namespace Components {
           * Set the checkout state
          */
         "setState": (state: string) => void;
+        /**
+          * Url to redirect upon success.
+         */
+        "successUrl": string;
     }
     interface ScSkeleton {
         /**
@@ -4486,6 +4494,10 @@ declare namespace LocalJSX {
          */
         "mode"?: 'test' | 'live';
         /**
+          * The current order.
+         */
+        "order"?: Order;
+        /**
           * Is the order paying.
          */
         "paying"?: boolean;
@@ -4493,7 +4505,7 @@ declare namespace LocalJSX {
         /**
           * Keys and secrets for processors.
          */
-        "processors"?: ProcessorData;
+        "processors"?: Processor[];
         /**
           * Show the total.
          */
@@ -5058,6 +5070,10 @@ declare namespace LocalJSX {
           * Set the checkout state
          */
         "setState"?: (state: string) => void;
+        /**
+          * Url to redirect upon success.
+         */
+        "successUrl"?: string;
     }
     interface ScSkeleton {
         /**

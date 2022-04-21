@@ -1,6 +1,7 @@
-import { Component, h, Prop } from '@stencil/core';
+import { Component, Fragment, h, Prop } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
-import { ProcessorData } from '../../../../types';
+import { getProcessorData } from '../../../../functions/processor';
+import { Order, Processor } from '../../../../types';
 
 @Component({
   tag: 'sc-order-submit',
@@ -36,45 +37,58 @@ export class ScOrderSubmit {
   @Prop() mode: 'test' | 'live' = 'live';
 
   /** Keys and secrets for processors. */
-  @Prop() processors: ProcessorData;
+  @Prop() processors: Processor[];
+
+  /** The current order. */
+  @Prop() order: Order;
 
   /** Currency Code */
   @Prop() currencyCode: string = 'usd';
 
   @Prop() processor: 'stripe' | 'paypal';
 
-  render() {
-    if (this.processor === 'paypal') {
-      // const clientId = (this?.processors || []).find(processor => processor?.processor_type === 'paypal' && processor?.live_mode === !!(this.mode === 'live'))?.processor_data
-      //   ?.client_id;
-      const clientId = this.processors?.paypal?.client_id;
-      if (clientId) {
-        return (
-          <sc-paypal-buttons buttons={['paypal']} mode={this.mode} currency-code={this.currencyCode} client-id={clientId} label="checkout" color="blue">
-            <slot />
-          </sc-paypal-buttons>
-        );
-      }
-      return (
-        /** Need to return the slot so slot content doesn't show. */
-        <div hidden>
-          <slot />
-        </div>
-      );
-    }
+  renderPayPalButton() {
+    const { client_id, account_id } = getProcessorData(this.processors, 'paypal', this.mode);
+    if (!client_id && !account_id) return null;
 
     return (
-      <sc-button submit type={this.type} size={this.size} full={this.full} loading={this.loading || this.paying} disabled={this.loading || this.paying || this.busy}>
-        {!!this.icon && <sc-icon name={this.icon} slot="prefix"></sc-icon>}
-        <slot />
-        {this.showTotal && (
-          <span>
-            {'\u00A0'}
-            <sc-total></sc-total>
-          </span>
-        )}
-      </sc-button>
+      <sc-paypal-buttons
+        buttons={['paypal']}
+        mode={this.mode}
+        order={this.order}
+        currency-code={this.currencyCode}
+        client-id={client_id}
+        account-id={account_id}
+        label="checkout"
+        color="blue"
+      ></sc-paypal-buttons>
+    );
+  }
+
+  render() {
+    return (
+      <Fragment>
+        {this.processor === 'paypal' && this.renderPayPalButton()}
+        <sc-button
+          hidden={this.processor == 'paypal'}
+          submit
+          type={this.type}
+          size={this.size}
+          full={this.full}
+          loading={this.loading || this.paying}
+          disabled={this.loading || this.paying || this.busy}
+        >
+          {!!this.icon && <sc-icon name={this.icon} slot="prefix"></sc-icon>}
+          <slot />
+          {this.showTotal && (
+            <span>
+              {'\u00A0'}
+              <sc-total></sc-total>
+            </span>
+          )}
+        </sc-button>
+      </Fragment>
     );
   }
 }
-openWormhole(ScOrderSubmit, ['busy', 'loading', 'paying', 'processors', 'processor', 'mode', 'currencyCode'], false);
+openWormhole(ScOrderSubmit, ['busy', 'loading', 'paying', 'processors', 'processor', 'mode', 'currencyCode', 'order'], false);

@@ -1,8 +1,7 @@
+import { Component, h, Prop, Element, State, Listen, Watch, Event, EventEmitter } from '@stencil/core';
 import { Coupon, Order, Customer, PriceChoice, Prices, Products, ResponseError, Processor } from '../../../../types';
 import { checkoutMachine } from './helpers/checkout-machine';
-import { Component, h, Prop, Element, State, Listen, Watch, Event, EventEmitter } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
-import { addQueryArgs } from '@wordpress/url';
 import { interpret } from '@xstate/fsm';
 import { Universe } from 'stencil-wormhole';
 
@@ -106,17 +105,6 @@ export class ScCheckout {
     }
   }
 
-  @Listen('scFormSubmit')
-  handlePaymentModeChange(e) {
-    this.paymentMethod = e?.detail?.payentMethod;
-  }
-
-  @Listen('scPaid')
-  async handlePaid() {
-    window.localStorage.removeItem(this.el.id);
-    window.location.assign(addQueryArgs(this.successUrl, { order: this.order.id }));
-  }
-
   @Listen('scPayError')
   handlePayError(e) {
     this.error = e.detail?.message || {
@@ -204,7 +192,7 @@ export class ScCheckout {
   state() {
     return {
       processor: this.processor,
-      processors: this.order?.processor_data,
+      processors: this.processors,
       processor_data: this.order?.processor_data,
       state: this.checkoutState.value,
       fundingSource: this.fundingSource,
@@ -274,6 +262,7 @@ export class ScCheckout {
           <sc-processor-provider>
             <sc-form-components-validator order={this.order} disabled={this.disableComponentsValidation}>
               <sc-session-provider
+                success-url={this.successUrl}
                 order={this.order}
                 prices={this.prices}
                 persist={this.persistSession}

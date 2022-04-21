@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, h, Listen, Prop, State, Watch } from '@stencil/core';
-import { removeQueryArgs } from '@wordpress/url';
+import { addQueryArgs, removeQueryArgs } from '@wordpress/url';
 import { __ } from '@wordpress/i18n';
 
 import { createOrUpdateOrder, finalizeSession } from '../../../services/session';
@@ -44,6 +44,9 @@ export class ScSessionProvider {
   /** The processor. */
   @Prop() processor: 'stripe' | 'paypal' = 'stripe';
 
+  /** Url to redirect upon success. */
+  @Prop() successUrl: string;
+
   /** Update line items event */
   @Event() scUpdateOrderState: EventEmitter<Order>;
 
@@ -61,6 +64,12 @@ export class ScSessionProvider {
 
   /** Holds the checkout session to update. */
   @State() session: Order;
+
+  @Listen('scPaid')
+  handlePaidEvent() {
+    removeSessionId(this.groupId);
+    window.location.assign(addQueryArgs(this.successUrl, { order: this.order.id }));
+  }
 
   /** Sync this session back to parent. */
   @Watch('session')

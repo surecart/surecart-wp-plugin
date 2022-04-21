@@ -1,6 +1,7 @@
 import { Component, Element, Event, EventEmitter, h, Prop, Watch } from '@stencil/core';
 import { Order } from '../../../types';
 import { __ } from '@wordpress/i18n';
+import apiFetch from '../../../functions/fetch';
 import { loadScript } from '@paypal/paypal-js';
 
 @Component({
@@ -51,20 +52,13 @@ export class ScPaypalButtons {
     this.loadScript();
   }
 
-  @Watch('order')
-  async confirmPayment(val: Order) {
-    // must be finalized
-    if (val?.status !== 'finalized') return;
-    // must be a stripe session
-    if (val?.payment_intent?.processor_type !== 'paypal') return;
-  }
-
   componentDidLoad() {
     this.loadScript();
   }
 
   renderButtons(paypal) {
     const config = {
+      /** Validate the form when the button is clicked. */
       onClick: async (data, actions) => {
         // set the funding source when clicked.
         this.scSetOrderState.emit({ fundingSource: data?.fundingSource });
@@ -73,6 +67,11 @@ export class ScPaypalButtons {
         const isValid = await form.validate();
         return isValid ? actions.resolve() : actions.reject();
       },
+
+      /**
+       * Create the order.
+       * This creates a payment intent and attaches it to our order.
+       */
       createOrder: async () => {
         return new Promise(async (resolve, reject) => {
           const form = this.el.closest('sc-form') as HTMLScFormElement;
@@ -83,7 +82,7 @@ export class ScPaypalButtons {
             'scOrderFinalized',
             (e: any) => {
               // if we have the right payment intent, resolve.
-              const payment_intent_id = e?.detail?.processor_data?.paypal?.payment_intent_id;
+              const payment_intent_id = e?.detail?.payment_intent?.external_intent_id;
               if (payment_intent_id) {
                 return resolve(payment_intent_id);
               }
@@ -105,18 +104,23 @@ export class ScPaypalButtons {
 
           // submit the form.
           form.submit();
-
-          // 10 seconds - taking too long, bail.
-          setTimeout(() => {
-            this.scError.emit({ code: 'paypal_timeout', message: __('PayPal payment timed out.', 'surecart') });
-            reject();
-          }, 10000);
         });
       },
 
-      // Finalize the transaction after payer approval
-      onApprove: () => {
-        // capture with saas and return promise.
+      /**
+       * The transaction has been approved.
+       * We can capture it.
+       */
+      onApprove: async () => {
+        try {
+          return await apiFetch({
+            method: 'PATCH',
+            path: `surecart/v1/payment_intents/${this.order?.payment_intent?.id}/capture`,
+          });
+        } catch (err) {
+          console.error(err);
+          this.scError.emit({ code: 'could_not_capture', message: __('The payment did not process. Something went wrong. Please try again.', 'surecart') });
+        }
       },
     };
 
