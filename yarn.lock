@@ -3395,12 +3395,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@stencil/core@npm:2.14.2":
-  version: 2.14.2
-  resolution: "@stencil/core@npm:2.14.2"
+"@stencil/core@npm:2.15.1":
+  version: 2.15.1
+  resolution: "@stencil/core@npm:2.15.1"
   bin:
     stencil: bin/stencil
-  checksum: 9c6345da4d155096c685c2e3176cd3e6d67e46bd27cab4278c94ca69bdd66a46bb2d58c60f2c5529b69bc7ee0a70d10ebea9026b94efdbe8964352349c75843c
+  checksum: 3df40b9ad03f5408dbc73495f0727b5b36b3ac916e4551debd4a90d1b414cb9bdd32d64f55c14223fd6aa2e015d82b1228afa3fbef4735031bcb1fbbd633cd9e
   languageName: node
   linkType: hard
 
@@ -4812,7 +4812,7 @@ __metadata:
     "@babel/preset-env": ^7.13.15
     "@mdx-js/react": ^1.6.22
     "@paypal/paypal-js": ^5.0.4
-    "@stencil/core": 2.14.2
+    "@stencil/core": 2.15.1
     "@stencil/react-output-target": ^0.3.1
     "@stencil/sass": ^1.4.0
     "@storybook/addon-a11y": ^6.4.19

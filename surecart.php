@@ -3,7 +3,7 @@
  * Plugin Name: SureCart
  * Plugin URI: https://surecart.com/
  * Description:
- * Version: 0.0.5
+ * Version: 0.0.7
  * Requires at least: 5.9
  * Requires PHP: 7.4
  * Author: SureCart
