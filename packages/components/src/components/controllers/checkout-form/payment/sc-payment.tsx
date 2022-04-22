@@ -1,5 +1,5 @@
 import { Order, Processor } from '../../../../types';
-import { Component, h, Prop, Host, Event, EventEmitter } from '@stencil/core';
+import { Component, h, Prop, Host, Event, EventEmitter, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
 import { hasSubscription } from '../../../../functions/line-items';
@@ -42,6 +42,15 @@ export class ScPayment {
 
   @Event() scSetOrderState: EventEmitter<object>;
 
+  @Watch('order')
+  handleOrderChange() {
+    if (hasSubscription(this.order)) {
+      setTimeout(() => {
+        this.scSetOrderState.emit({ processor: 'stripe' });
+      });
+    }
+  }
+
   renderStripeAndPayPal() {
     return (
       <sc-form-control label={this.label}>
@@ -53,7 +62,14 @@ export class ScPayment {
             </span>
             <sc-order-stripe-payment-element mode={this.mode} processors={this.processors} currency-code={this.currencyCode}></sc-order-stripe-payment-element>
           </sc-toggle>
-          <sc-toggle show-control shady borderless open={this.processor === 'paypal'} onScShow={() => this.scSetOrderState.emit({ processor: 'paypal' })}>
+          <sc-toggle
+            disabled={hasSubscription(this.order)}
+            show-control
+            shady
+            borderless
+            open={this.processor === 'paypal'}
+            onScShow={() => this.scSetOrderState.emit({ processor: 'paypal' })}
+          >
             <span slot="summary" class="sc-payment-toggle-summary">
               <sc-icon name="paypal" style={{ width: '80px', fontSize: '24px' }}></sc-icon>
             </span>
@@ -102,10 +118,8 @@ export class ScPayment {
     }
 
     // both stripe and paypal are enabled.
-    if (!hasSubscription(this.order)) {
-      if (this.processors.find(processor => processor.processor_type === 'stripe') && this.processors.find(processor => processor.processor_type === 'paypal')) {
-        return this.renderStripeAndPayPal();
-      }
+    if (this.processors.find(processor => processor.processor_type === 'stripe') && this.processors.find(processor => processor.processor_type === 'paypal')) {
+      return this.renderStripeAndPayPal();
     }
 
     if (this.processors.find(processor => processor.processor_type === 'stripe')) {

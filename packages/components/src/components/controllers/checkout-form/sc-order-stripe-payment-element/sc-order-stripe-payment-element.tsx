@@ -73,7 +73,6 @@ export class ScOrderStripePaymentElement {
 
   @Watch('order')
   handleOrderChange(val, prev) {
-    console.log(val, prev);
     // update the payment intent if the amount due changes.
     if (prev?.amount_due !== val?.amount_due) {
       this.updatePaymentIntent();
