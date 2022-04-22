@@ -426,6 +426,8 @@ export interface ResponseError {
   }>;
 }
 
+export type ProcessorName = 'stripe' | 'paypal' | 'paypal-card';
+
 export interface PaymentIntent extends Object {
   id: string;
   object: 'payment_intent';

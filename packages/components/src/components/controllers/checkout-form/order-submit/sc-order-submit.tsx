@@ -45,15 +45,16 @@ export class ScOrderSubmit {
   /** Currency Code */
   @Prop() currencyCode: string = 'usd';
 
-  @Prop() processor: 'stripe' | 'paypal';
+  @Prop() processor: 'stripe' | 'paypal' | 'paypal-card';
 
-  renderPayPalButton() {
+  renderPayPalButton(buttons) {
     const { client_id, account_id } = getProcessorData(this.processors, 'paypal', this.mode);
     if (!client_id && !account_id) return null;
 
     return (
       <sc-paypal-buttons
-        buttons={['paypal']}
+        buttons={buttons}
+        busy={this.busy}
         mode={this.mode}
         order={this.order}
         currency-code={this.currencyCode}
@@ -68,9 +69,10 @@ export class ScOrderSubmit {
   render() {
     return (
       <Fragment>
-        {this.processor === 'paypal' && this.renderPayPalButton()}
+        {this.processor === 'paypal' && this.renderPayPalButton(['paypal'])}
+        {this.processor === 'paypal-card' && this.renderPayPalButton(['card'])}
         <sc-button
-          hidden={this.processor == 'paypal'}
+          hidden={this.processor !== 'stripe'}
           submit
           type={this.type}
           size={this.size}

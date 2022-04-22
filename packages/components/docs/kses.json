@@ -730,6 +730,7 @@
     "slot": true
   },
   "sc-order-stripe-payment-element": {
+    "address": true,
     "currency-code": true,
     "mode": true,
     "order": true,
@@ -831,6 +832,7 @@
     "slot": true
   },
   "sc-paypal-buttons": {
+    "busy": true,
     "buttons": true,
     "client-id": true,
     "color": true,
@@ -1059,9 +1061,11 @@
     "slot": true
   },
   "sc-stripe-payment-element": {
+    "account-id": true,
+    "address": true,
     "client-secret": true,
-    "name": true,
-    "stripe": true,
+    "order": true,
+    "publishable-key": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1269,6 +1273,7 @@
     "open": true,
     "shady": true,
     "show-control": true,
+    "show-icon": true,
     "summary": true,
     "style": true,
     "id": true,

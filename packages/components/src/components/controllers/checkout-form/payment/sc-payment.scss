@@ -13,6 +13,11 @@ sc-payment {
   gap: 0.5em;
 }
 
+.sc-payment-label {
+  display: flex;
+  justify-content: space-between;
+}
+
 .sc-payment-instructions {
   color: var(--sc-color-gray-600);
 }

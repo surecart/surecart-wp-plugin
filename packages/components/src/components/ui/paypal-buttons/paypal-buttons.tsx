@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Fragment, h, Prop, State } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Prop, State } from '@stencil/core';
 import { Order, PaymentIntent } from '../../../types';
 import { __ } from '@wordpress/i18n';
 import apiFetch from '../../../functions/fetch';
@@ -13,11 +13,17 @@ export class ScPaypalButtons {
   /** This element. */
   @Element() el!: HTMLScPaypalButtonsElement;
 
-  /** Holds the buttons */
-  private container: HTMLDivElement;
+  /** Holds the card button */
+  private cardContainer: HTMLDivElement;
+
+  /** Holds the paypal buttons */
+  private paypalContainer: HTMLDivElement;
 
   /** Client id for the script. */
   @Prop() clientId: string;
+
+  /** Is this busy? */
+  @Prop() busy: boolean = false;
 
   /** The merchant id for paypal. */
   @Prop() merchantId: string;
@@ -59,7 +65,7 @@ export class ScPaypalButtons {
         'client-id': this.clientId.replace(/ /g, ''),
         'merchant-id': this.merchantId,
         'commit': false,
-        'vault': false,
+        'vault': true,
         'currency': this.order?.currency.toUpperCase() || 'USD',
       });
       this.renderButtons(paypal);
@@ -87,6 +93,10 @@ export class ScPaypalButtons {
 
       onInit: () => {
         this.loaded = true;
+      },
+
+      onCancel: () => {
+        this.scSetState.emit('REJECT');
       },
 
       /**
@@ -156,7 +166,7 @@ export class ScPaypalButtons {
       },
     };
 
-    if (paypal.FUNDING.PAYPAL && this.buttons.includes('paypal')) {
+    if (paypal.FUNDING.PAYPAL) {
       const paypalButton = paypal.Buttons({
         fundingSource: paypal.FUNDING.PAYPAL,
         style: {
@@ -166,11 +176,11 @@ export class ScPaypalButtons {
         ...config,
       });
       if (paypalButton.isEligible()) {
-        paypalButton.render(this.container);
+        paypalButton.render(this.paypalContainer);
       }
     }
 
-    if (paypal.FUNDING.CARD && this.buttons.includes('card')) {
+    if (paypal.FUNDING.CARD) {
       const cardButton = paypal.Buttons({
         fundingSource: paypal.FUNDING.CARD,
         style: {
@@ -179,17 +189,20 @@ export class ScPaypalButtons {
         ...config,
       });
       if (cardButton.isEligible()) {
-        cardButton.render(this.container);
+        cardButton.render(this.cardContainer);
       }
     }
   }
 
   render() {
     return (
-      <Fragment>
-        {!this.loaded && <sc-skeleton style={{ 'height': '55px', '--border-radius': '4px', 'cursor': 'wait' }}></sc-skeleton>}
-        <div class="sc-paypal-button-container" ref={el => (this.container = el as HTMLDivElement)} hidden={!this.loaded}></div>
-      </Fragment>
+      <div class={{ 'paypal-buttons': true, 'paypal-buttons--busy': this.busy }}>
+        {(!this.loaded || this.busy) && <sc-skeleton style={{ 'height': '55px', '--border-radius': '4px', 'cursor': 'wait' }}></sc-skeleton>}
+        <div class="sc-paypal-button-container" hidden={!this.loaded || this.busy}>
+          <div hidden={!this.buttons.includes('card')} class="sc-paypal-card-button" ref={el => (this.cardContainer = el as HTMLDivElement)}></div>
+          <div hidden={!this.buttons.includes('paypal')} class="sc-paypal-button" ref={el => (this.paypalContainer = el as HTMLDivElement)}></div>
+        </div>
+      </div>
     );
   }
 }

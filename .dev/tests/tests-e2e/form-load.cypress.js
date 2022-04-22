@@ -20,7 +20,7 @@ describe('Form', () => {
 
 		it('Loads the default form', () => {
 			cy.exec(
-				`yarn wp-env run tests-cli "wp post create --post_content='<!-- wp:surecart/form {"mode":"test", currency: "usd"} -->${defaultForm}<!-- /wp:surecart/form -->' --post_type=page --post_title='Default Form' --post_status='publish' --porcelain"`
+				`yarn wp-env run tests-cli "wp post create --post_content='${defaultForm}' --post_type=page --post_title='Default Form' --post_status='publish' --porcelain"`
 			).then((response) => {
 				cy.interceptWithFixture('POST', '**surecart**orders*', {
 					fixture: 'orders/with-everything',
@@ -44,6 +44,10 @@ describe('Form', () => {
 					},
 				});
 
+				cy.intercept('POST', '**payment_intents*').as(
+					'createPaymentIntent'
+				);
+
 				cy.clearCookies();
 				cy.visit(`?p=${parseInt(response.stdout)}`);
 
@@ -60,6 +64,19 @@ describe('Form', () => {
 						.shadow()
 						.find('input')
 						.should('be.checked');
+				});
+
+				// this is how we fill out the form:
+				cy.wait('@createPaymentIntent').then(() => {
+					cy.get('.StripeElement').should('exist');
+					cy.getStripeElement('numberInput').type('4242424242424242');
+					cy.getStripeElement('expiryInput').type('0242');
+					cy.getStripeElement('cvcInput').type('0242');
+					cy.getStripeElement('postalCodeInput').type('12345');
+					cy.get('sc-button[submit]')
+						.shadow()
+						.find('button')
+						.click({ force: true });
 				});
 			});
 		});

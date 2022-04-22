@@ -5,9 +5,8 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Address, ChoiceItem, Coupon, Customer, DiscountResponse, LineItem, LineItemData, Order, OrderStatus, PaymentMethod, Price, PriceChoice, Prices, Processor, ProductGroup, Products, Purchase, ResponseError, Subscription, SubscriptionStatus, TaxStatus, WordPressUser } from "./types";
+import { Address, ChoiceItem, Coupon, Customer, DiscountResponse, Invoice, LineItem, LineItemData, Order, OrderStatus, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, ProductGroup, Products, Purchase, ResponseError, Subscription, SubscriptionStatus, TaxStatus, WordPressUser } from "./types";
 import { IconLibraryMutator, IconLibraryResolver } from "./components/ui/icon/library";
-import { Stripe } from "@stripe/stripe-js";
 export namespace Components {
     interface ScAddress {
         /**
@@ -1299,6 +1298,10 @@ export namespace Components {
     }
     interface ScOrderStripePaymentElement {
         /**
+          * Should we collect an address?
+         */
+        "address": boolean;
+        /**
           * The currency code for the payment element.
          */
         "currencyCode": string;
@@ -1348,7 +1351,7 @@ export namespace Components {
           * Is the order paying.
          */
         "paying": boolean;
-        "processor": 'stripe' | 'paypal';
+        "processor": 'stripe' | 'paypal' | 'paypal-card';
         /**
           * Keys and secrets for processors.
          */
@@ -1456,6 +1459,10 @@ export namespace Components {
         "query": object;
     }
     interface ScPaypalButtons {
+        /**
+          * Is this busy?
+         */
+        "busy": boolean;
         /**
           * Buttons to render
          */
@@ -1863,7 +1870,7 @@ export namespace Components {
         /**
           * The processor.
          */
-        "processor": 'stripe' | 'paypal';
+        "processor": ProcessorName;
         /**
           * Set the checkout state
          */
@@ -1941,17 +1948,25 @@ export namespace Components {
     }
     interface ScStripePaymentElement {
         /**
+          * The account id.
+         */
+        "accountId": string;
+        /**
+          * Should we collect an address?
+         */
+        "address": boolean;
+        /**
           * The client secret to render the payment element
          */
         "clientSecret": string;
         /**
-          * A name to send to the element.
+          * Order to watch
          */
-        "name": string;
+        "order": Order | Invoice;
         /**
-          * Stripe instance.
+          * The stripe publishable key.
          */
-        "stripe": Stripe;
+        "publishableKey": string;
     }
     interface ScStripePaymentRequest {
         /**
@@ -2215,7 +2230,14 @@ export namespace Components {
           * Is this a shady
          */
         "shady": boolean;
+        /**
+          * Should we show a radio control?
+         */
         "showControl": boolean;
+        /**
+          * Should we show the arrow icon?
+         */
+        "showIcon": boolean;
         /**
           * The summary to show in the details header. If you need to display HTML, use the `summary` slot instead.
          */
@@ -4557,6 +4579,10 @@ declare namespace LocalJSX {
     }
     interface ScOrderStripePaymentElement {
         /**
+          * Should we collect an address?
+         */
+        "address"?: boolean;
+        /**
           * The currency code for the payment element.
          */
         "currencyCode"?: string;
@@ -4564,6 +4590,8 @@ declare namespace LocalJSX {
           * Payment mode.
          */
         "mode"?: 'test' | 'live';
+        "onScPaid"?: (event: CustomEvent<void>) => void;
+        "onScPayError"?: (event: CustomEvent<any>) => void;
         /**
           * The order.
          */
@@ -4606,7 +4634,7 @@ declare namespace LocalJSX {
           * Is the order paying.
          */
         "paying"?: boolean;
-        "processor"?: 'stripe' | 'paypal';
+        "processor"?: 'stripe' | 'paypal' | 'paypal-card';
         /**
           * Keys and secrets for processors.
          */
@@ -4686,6 +4714,9 @@ declare namespace LocalJSX {
           * Is this created in "test" mode
          */
         "mode"?: 'test' | 'live';
+        /**
+          * Set the order state.
+         */
         "onScSetOrderState"?: (event: CustomEvent<object>) => void;
         /**
           * Checkout Session from sc-checkout.
@@ -4721,6 +4752,10 @@ declare namespace LocalJSX {
         "query"?: object;
     }
     interface ScPaypalButtons {
+        /**
+          * Is this busy?
+         */
+        "busy"?: boolean;
         /**
           * Buttons to render
          */
@@ -5198,7 +5233,7 @@ declare namespace LocalJSX {
         /**
           * The processor.
          */
-        "processor"?: 'stripe' | 'paypal';
+        "processor"?: ProcessorName;
         /**
           * Set the checkout state
          */
@@ -5270,21 +5305,33 @@ declare namespace LocalJSX {
     }
     interface ScStripePaymentElement {
         /**
+          * The account id.
+         */
+        "accountId"?: string;
+        /**
+          * Should we collect an address?
+         */
+        "address"?: boolean;
+        /**
           * The client secret to render the payment element
          */
         "clientSecret"?: string;
         /**
-          * A name to send to the element.
+          * The order/invoice was paid for.
          */
-        "name"?: string;
+        "onScPaid"?: (event: CustomEvent<void>) => void;
         /**
-          * When the payment element is ready.
+          * There was a payment error.
          */
-        "onScStripeElementReady"?: (event: CustomEvent<void>) => void;
+        "onScPayError"?: (event: CustomEvent<any>) => void;
         /**
-          * Stripe instance.
+          * Order to watch
          */
-        "stripe"?: Stripe;
+        "order"?: Order | Invoice;
+        /**
+          * The stripe publishable key.
+         */
+        "publishableKey"?: string;
     }
     interface ScStripePaymentRequest {
         /**
@@ -5577,7 +5624,14 @@ declare namespace LocalJSX {
           * Is this a shady
          */
         "shady"?: boolean;
+        /**
+          * Should we show a radio control?
+         */
         "showControl"?: boolean;
+        /**
+          * Should we show the arrow icon?
+         */
+        "showIcon"?: boolean;
         /**
           * The summary to show in the details header. If you need to display HTML, use the `summary` slot instead.
          */

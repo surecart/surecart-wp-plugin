@@ -1,8 +1,8 @@
-import { Component, Fragment, h, Prop, State, Watch } from '@stencil/core';
+import { Component, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
 import { Stripe } from '@stripe/stripe-js';
-import { loadStripe } from '@stripe/stripe-js/pure';
-import { getProcessorData } from '../../../../functions/processor';
+
 import apiFetch from '../../../../functions/fetch';
+import { getProcessorData } from '../../../../functions/processor';
 import { Order, PaymentIntent, Processor } from '../../../../types';
 
 @Component({
@@ -23,8 +23,8 @@ export class ScOrderStripePaymentElement {
   /** The order. */
   @Prop() order: Order;
 
-  /** Has the element loaded yet? */
-  @State() loaded: boolean = false;
+  /** Should we collect an address? */
+  @Prop() address: boolean;
 
   /** Holds the stripe instance. */
   @State() stripe: Stripe;
@@ -35,13 +35,11 @@ export class ScOrderStripePaymentElement {
   /** Holds the current payment intent */
   @State() paymentIntent: PaymentIntent;
 
-  async componentWillLoad() {
-    const { publishable_key, account_id } = getProcessorData(this.processors, 'stripe', this.mode);
-    if (!publishable_key || !account_id) {
-      return;
-    }
-    this.stripe = await loadStripe(publishable_key, { stripeAccount: account_id });
-  }
+  @Event() scPaid: EventEmitter<void>;
+  @Event() scPayError: EventEmitter<any>;
+
+  @State() error: string;
+  @State() confirming: boolean;
 
   async componentDidLoad() {
     this.paymentIntent = (await apiFetch({
@@ -58,10 +56,12 @@ export class ScOrderStripePaymentElement {
   }
 
   async updatePaymentIntent() {
-    console.log('update');
+    if (!this.paymentIntent?.id) {
+      return;
+    }
     this.paymentIntent = (await apiFetch({
       method: 'PATCH',
-      path: `surecart/v1/payment_intents`,
+      path: `surecart/v1/payment_intents/${this.paymentIntent.id}`,
       data: {
         amount: this.order.amount_due,
         currency: this.currencyCode,
@@ -69,53 +69,44 @@ export class ScOrderStripePaymentElement {
         live_mode: this.mode === 'live',
       },
     })) as PaymentIntent;
+    this.clientSecret = this.paymentIntent.processor_data?.stripe?.client_secret;
   }
 
   @Watch('order')
-  handleOrderChange(val, prev) {
-    // update the payment intent if the amount due changes.
-    if (prev?.amount_due !== val?.amount_due) {
+  async handleOrderChange(val, prev) {
+    // only in previous or current is zero.
+    if (val?.amount_due === 0 || prev?.amount_due === 0) {
+      // update the payment intent if the amount due changes.
+      if (prev?.amount_due !== val?.amount_due) {
+        this.clientSecret = null;
+        await this.updatePaymentIntent();
+      }
+    }
+  }
+
+  /**
+   * When the payment intent is first set,
+   * we need to sync it if we have an order.
+   */
+  @Watch('paymentIntent')
+  handlePaymentIntentChange(_, prev) {
+    if (!prev && this.order) {
       this.updatePaymentIntent();
     }
   }
 
-  renderLoading() {
-    return (
-      <div class="loader">
-        <div class="loader__row">
-          <div style={{ width: '50%' }}>
-            <sc-skeleton style={{ width: '50%', marginBottom: '0.5em' }}></sc-skeleton>
-            <sc-skeleton></sc-skeleton>
-          </div>
-          <div style={{ flex: '1' }}>
-            <sc-skeleton style={{ width: '50%', marginBottom: '0.5em' }}></sc-skeleton>
-            <sc-skeleton></sc-skeleton>
-          </div>
-          <div style={{ flex: '1' }}>
-            <sc-skeleton style={{ width: '50%', marginBottom: '0.5em' }}></sc-skeleton>
-            <sc-skeleton></sc-skeleton>
-          </div>
-        </div>
-        <div class="loader__details">
-          <sc-skeleton style={{ height: '1rem' }}></sc-skeleton>
-          <sc-skeleton style={{ height: '1rem', width: '30%' }}></sc-skeleton>
-        </div>
-      </div>
-    );
-  }
-
   render() {
-    if (!this.stripe || !this.clientSecret) return this.renderLoading();
+    // get account id and publishable key from the stripe processor for this mode.
+    const data = getProcessorData(this.processors, 'stripe', this.mode);
     return (
-      <Fragment>
-        {!this.loaded && this.renderLoading()}
-        <sc-stripe-payment-element
-          hidden={!this.loaded}
-          stripe={this.stripe}
-          client-secret={this.clientSecret}
-          onScStripeElementReady={() => (this.loaded = true)}
-        ></sc-stripe-payment-element>
-      </Fragment>
+      <sc-stripe-payment-element
+        order={this.order}
+        address={this.address}
+        client-secret={this.clientSecret}
+        publishableKey={data?.publishable_key}
+        accountId={data?.account_id}
+        key={this.clientSecret}
+      ></sc-stripe-payment-element>
     );
   }
 }

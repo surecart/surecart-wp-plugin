@@ -27,7 +27,11 @@ export class ScToggle {
   /** Is this a shady */
   @Prop({ reflect: true }) shady: boolean = false;
 
+  /** Should we show a radio control?  */
   @Prop() showControl: boolean = false;
+
+  /** Should we show the arrow icon? */
+  @Prop() showIcon: boolean = true;
 
   /** Are these collapsible? */
   @Prop() collapsible: boolean = true;
@@ -153,11 +157,13 @@ export class ScToggle {
             <slot name="summary">{this.summary}</slot>
           </div>
 
-          <span part="summary-icon" class="details__summary-icon">
-            <slot name="icon">
-              <sc-icon name="chevron-right"></sc-icon>
-            </slot>
-          </span>
+          {this.showIcon && (
+            <span part="summary-icon" class="details__summary-icon">
+              <slot name="icon">
+                <sc-icon name="chevron-right"></sc-icon>
+              </slot>
+            </span>
+          )}
         </header>
 
         <div class="details__body" ref={el => (this.body = el as HTMLElement)}>

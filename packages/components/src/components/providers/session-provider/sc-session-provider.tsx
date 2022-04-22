@@ -3,7 +3,7 @@ import { addQueryArgs, removeQueryArgs } from '@wordpress/url';
 import { __ } from '@wordpress/i18n';
 
 import { createOrUpdateOrder, finalizeSession } from '../../../services/session';
-import { LineItemData, Order, PriceChoice } from '../../../types';
+import { LineItemData, Order, PriceChoice, ProcessorName } from '../../../types';
 import { getSessionId, getURLCoupon, getURLLineItems, populateInputs, removeSessionId, setSessionId } from './helpers/session';
 
 @Component({
@@ -42,7 +42,7 @@ export class ScSessionProvider {
   @Prop() setState: (state: string) => void;
 
   /** The processor. */
-  @Prop() processor: 'stripe' | 'paypal' = 'stripe';
+  @Prop() processor: ProcessorName = 'stripe';
 
   /** Url to redirect upon success. */
   @Prop() successUrl: string;
@@ -172,6 +172,16 @@ export class ScSessionProvider {
     return await this.handleFormSubmit();
   }
 
+  getProcessor() {
+    switch (this.processor) {
+      case 'paypal':
+      case 'paypal-card':
+        return 'paypal';
+      default:
+        return 'stripe';
+    }
+  }
+
   /**
    * Handles the form submission.
    * @param e
@@ -203,7 +213,7 @@ export class ScSessionProvider {
         query: {
           ...this.defaultFormQuery(),
         },
-        processor: this.processor,
+        processor: this.getProcessor(),
       });
       return this.session;
     } catch (e) {
