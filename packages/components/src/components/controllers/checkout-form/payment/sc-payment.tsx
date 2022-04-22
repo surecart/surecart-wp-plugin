@@ -62,19 +62,14 @@ export class ScPayment {
             </span>
             <sc-order-stripe-payment-element mode={this.mode} processors={this.processors} currency-code={this.currencyCode}></sc-order-stripe-payment-element>
           </sc-toggle>
-          <sc-toggle
-            disabled={hasSubscription(this.order)}
-            show-control
-            shady
-            borderless
-            open={this.processor === 'paypal'}
-            onScShow={() => this.scSetOrderState.emit({ processor: 'paypal' })}
-          >
-            <span slot="summary" class="sc-payment-toggle-summary">
-              <sc-icon name="paypal" style={{ width: '80px', fontSize: '24px' }}></sc-icon>
-            </span>
-            <div class="sc-payment-instructions">{__('You will be prompted by PayPal to complete your purchase securely.', 'surecart')}</div>
-          </sc-toggle>
+          {!hasSubscription(this.order) && (
+            <sc-toggle show-control shady borderless open={this.processor === 'paypal'} onScShow={() => this.scSetOrderState.emit({ processor: 'paypal' })}>
+              <span slot="summary" class="sc-payment-toggle-summary">
+                <sc-icon name="paypal" style={{ width: '80px', fontSize: '24px' }}></sc-icon>
+              </span>
+              <div class="sc-payment-instructions">{__('You will be prompted by PayPal to complete your purchase securely.', 'surecart')}</div>
+            </sc-toggle>
+          )}
         </sc-toggles>
       </sc-form-control>
     );
