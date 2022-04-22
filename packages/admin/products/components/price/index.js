@@ -254,6 +254,8 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 							'If you want to add a free trial, enter the number of days.',
 							'surecart'
 						)}
+						type="number"
+						min={1}
 						value={price?.trial_duration_days}
 						onScChange={(e) =>
 							updatePrice({
