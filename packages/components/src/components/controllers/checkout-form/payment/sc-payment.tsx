@@ -172,7 +172,7 @@ export class ScPayment {
     // we have stripe.
     if (this.processors.find(processor => processor.processor_type === 'stripe' && processor?.live_mode === (this.mode === 'live'))) {
       return (
-        <sc-form-control>
+        <sc-form-control label={this.label}>
           <div class="sc-payment-label" slot="label">
             <div>{this.label}</div>
             {this.mode === 'test' && (
