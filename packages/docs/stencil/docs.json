@@ -1,8 +1,8 @@
 {
-  "timestamp": "2022-04-21T01:16:36",
+  "timestamp": "2022-04-25T16:57:14",
   "compiler": {
     "name": "@stencil/core",
-    "version": "2.14.2",
+    "version": "2.15.1",
     "typescriptVersion": "4.5.4"
   },
   "components": [
@@ -4796,6 +4796,23 @@
           "values": [
             {
               "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "currencyCode",
+          "type": "string",
+          "mutable": false,
+          "attr": "currency-code",
+          "reflectToAttr": false,
+          "docs": "Currency code for the donation.",
+          "docsTags": [],
+          "default": "'usd'",
+          "values": [
+            {
+              "type": "string"
             }
           ],
           "optional": false,

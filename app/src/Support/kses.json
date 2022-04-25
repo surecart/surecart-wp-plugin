@@ -326,6 +326,7 @@
   },
   "sc-donation-choices": {
     "busy": true,
+    "currency-code": true,
     "default-amount": true,
     "label": true,
     "line-items": true,

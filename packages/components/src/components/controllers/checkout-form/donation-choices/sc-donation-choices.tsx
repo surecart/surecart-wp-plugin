@@ -18,6 +18,9 @@ export class ScDonationChoices {
   /** The default amount to load the page with. */
   @Prop() defaultAmount: string;
 
+  /** Currency code for the donation. */
+  @Prop() currencyCode: string = 'usd';
+
   /** Order line items. */
   @Prop() lineItems: LineItem[] = [];
 
@@ -163,6 +166,7 @@ export class ScDonationChoices {
             <sc-price-input
               ref={el => (this.input = el as HTMLScPriceInputElement)}
               required
+              currencyCode={this.currencyCode}
               label={'Enter an amount'}
               value={this.lineItem?.ad_hoc_amount.toString()}
             ></sc-price-input>
@@ -178,4 +182,4 @@ export class ScDonationChoices {
   }
 }
 
-openWormhole(ScDonationChoices, ['lineItems', 'loading', 'busy'], false);
+openWormhole(ScDonationChoices, ['lineItems', 'loading', 'busy', 'currencyCode'], false);
