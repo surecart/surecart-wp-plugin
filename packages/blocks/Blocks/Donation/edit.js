@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { __, sprinf } from '@wordpress/i18n';
-import { Fragment, useState, useRef } from '@wordpress/element';
+import { Fragment, useState, useRef, useEffect } from '@wordpress/element';
 import {
 	PanelBody,
 	PanelRow,
@@ -34,7 +34,8 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 		attributes;
 
 	const [showModal, setShowModal] = useState(false);
-	const { insertBlocks } = useDispatch(blockEditorStore);
+	const { insertBlocks, updateBlockAttributes } =
+		useDispatch(blockEditorStore);
 	const useInnerBlocksProps = __stableUseInnerBlocksProps
 		? __stableUseInnerBlocksProps
 		: __experimentalUseInnerBlocksProps;
@@ -56,6 +57,23 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 			select(coreStore).getEntityRecord('root', 'price', price_id),
 		[price_id]
 	);
+
+	const children = useSelect(
+		(select) =>
+			select(blockEditorStore).getBlocksByClientId(clientId)?.[0]
+				.innerBlocks
+	);
+
+	useEffect(() => {
+		if (!children.length) {
+			return;
+		}
+		children.forEach(function (child) {
+			updateBlockAttributes(child.clientId, {
+				currency: price?.currency,
+			});
+		});
+	}, [price?.currency, children]);
 
 	const amountInput = useRef();
 
@@ -157,7 +175,7 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 					<PanelRow>
 						<ScPriceInput
 							label={__('Default Amount', 'surecart')}
-							currency={currency}
+							currencyCode={price?.currency}
 							value={default_amount}
 							onScChange={(e) =>
 								setAttributes({
@@ -235,7 +253,7 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 							<ScPriceInput
 								label={__('Amount', 'surecart')}
 								required
-								currency={currency}
+								currencyCode={price?.currency}
 								ref={amountInput}
 								min={price?.ad_hoc_min_amount}
 								max={price?.ad_hoc_max_amount}
