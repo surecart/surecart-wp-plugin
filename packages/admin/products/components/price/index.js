@@ -120,7 +120,7 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 						`}
 						label={__('Price', 'surecart')}
 						className="sc-price-amount"
-						currencyCode={scData.currecy_code}
+						currencyCode={scData.currency_code}
 						value={price?.amount}
 						name="price"
 						onScChange={(e) => {
@@ -254,6 +254,8 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 							'If you want to add a free trial, enter the number of days.',
 							'surecart'
 						)}
+						type="number"
+						min={1}
 						value={price?.trial_duration_days}
 						onScChange={(e) =>
 							updatePrice({
