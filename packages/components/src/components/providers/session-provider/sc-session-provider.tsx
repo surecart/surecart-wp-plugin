@@ -324,7 +324,7 @@ export class ScSessionProvider {
   defaultFormData() {
     return {
       return_url: window.top.location.href,
-      currency: this.currencyCode,
+      currency: this.order?.currency || this.currencyCode,
       live_mode: this.mode !== 'test',
       group_key: this.groupId,
     };
