@@ -4657,6 +4657,14 @@ declare namespace LocalJSX {
         "collapsible"?: boolean;
         "empty"?: boolean;
         "loading"?: boolean;
+        /**
+          * Show the toggle
+         */
+        "onScHide"?: (event: CustomEvent<void>) => void;
+        /**
+          * Show the toggle
+         */
+        "onScShow"?: (event: CustomEvent<void>) => void;
         "order"?: Order;
     }
     interface ScOrderTaxIdInput {
