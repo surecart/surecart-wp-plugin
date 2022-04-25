@@ -19,7 +19,6 @@ export class ScPaymentMethodCreate {
    */
   async handleSubmit() {
     const element = this.el.querySelector('sc-stripe-payment-element') as HTMLScStripePaymentElementElement;
-    console.log(element);
     if (!element) {
       this.error = __('Something went wrong', 'surecart');
       return;
