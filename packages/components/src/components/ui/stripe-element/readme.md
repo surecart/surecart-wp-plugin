@@ -54,10 +54,6 @@ Type: `Promise<any>`
 
 ## Dependencies
 
-### Used by
-
- - [sc-payment](../../controllers/checkout-form/payment)
-
 ### Depends on
 
 - [sc-input](../input)
@@ -70,7 +66,6 @@ graph TD;
   sc-stripe-element --> sc-text
   sc-input --> sc-form-control
   sc-form-control --> sc-tooltip
-  sc-payment --> sc-stripe-element
   style sc-stripe-element fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

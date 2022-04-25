@@ -36,6 +36,7 @@
  - [sc-address](../address)
  - [sc-choices](../choices)
  - [sc-input](../input)
+ - [sc-payment](../../controllers/checkout-form/payment)
  - [sc-select](../select)
 
 ### Depends on
@@ -49,6 +50,7 @@ graph TD;
   sc-address --> sc-form-control
   sc-choices --> sc-form-control
   sc-input --> sc-form-control
+  sc-payment --> sc-form-control
   sc-select --> sc-form-control
   style sc-form-control fill:#f9f,stroke:#333,stroke-width:4px
 ```

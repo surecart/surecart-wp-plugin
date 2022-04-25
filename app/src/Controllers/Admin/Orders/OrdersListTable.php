@@ -107,6 +107,7 @@ class OrdersListTable extends ListTable {
 			'order'  => __( 'Order', 'surecart' ),
 			'date'   => __( 'Date', 'surecart' ),
 			'status' => __( 'Status', 'surecart' ),
+			'method' => __( 'Method', 'surecart' ),
 			'total'  => __( 'Total', 'surecart' ),
 			'mode'   => '',
 			// 'usage' => __( 'Usage', 'surecart' ),
@@ -154,7 +155,7 @@ class OrdersListTable extends ListTable {
 			[
 				'status' => $this->getStatus(),
 			]
-		)->with( [ 'charge' ] )
+		)->with( [ 'charge', 'payment_intent' ] )
 		->paginate(
 			[
 				'per_page' => $this->get_items_per_page( 'orders' ),
@@ -191,6 +192,13 @@ class OrdersListTable extends ListTable {
 	 */
 	public function column_total( $order ) {
 		return '<sc-format-number type="currency" currency="' . strtoupper( esc_html( $order->currency ) ) . '" value="' . (float) $order->total_amount . '"></sc-format-number>';
+	}
+
+	public function column_method( $order ) {
+		if ( 'paypal' === $order->payment_intent->processor_type ) {
+			return '<sc-icon name="paypal" style="font-size: 64px; line-height:1; height: 32px;"></sc-icon>';
+		}
+		return $order->payment_intent->processor_type ?? '-';
 	}
 
 	/**

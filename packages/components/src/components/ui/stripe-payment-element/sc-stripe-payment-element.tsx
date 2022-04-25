@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Method, Prop, State, Watch } from '@stencil/core';
 import { Stripe } from '@stripe/stripe-js';
 import { loadStripe } from '@stripe/stripe-js/pure';
 
@@ -6,7 +6,7 @@ import { Invoice, Order } from '../../../types';
 
 @Component({
   tag: 'sc-stripe-payment-element',
-  styleUrl: 'sc-stripe-payment-element.css',
+  styleUrl: 'sc-stripe-payment-element.scss',
   shadow: false,
 })
 export class ScStripePaymentElement {
@@ -34,6 +34,9 @@ export class ScStripePaymentElement {
 
   /** Should we collect an address? */
   @Prop() address: boolean;
+
+  /** Success url to redirect. */
+  @Prop() successUrl: string;
 
   /** The error. */
   @State() error: string;
@@ -66,6 +69,9 @@ export class ScStripePaymentElement {
     }
   }
 
+  /**
+   * Watch order status and maybe confirm the order.
+   */
   @Watch('order')
   async maybeConfirmOrder(val) {
     // must be finalized
@@ -74,20 +80,25 @@ export class ScStripePaymentElement {
     if (val?.payment_intent?.processor_type !== 'stripe') return;
     // need an external_type
     if (!val?.payment_intent?.processor_data?.stripe?.type) return;
-    // prevent possible double-charges
-    if (this.confirming) return;
+    // confirm the intent.
+    return await this.confirm(val?.payment_intent?.processor_data?.stripe?.type);
+  }
 
-    const type = val?.payment_intent?.processor_data?.stripe?.type;
-    const args = {
+  @Method()
+  async confirm(type, args = {}) {
+    const confirmArgs = {
       elements: this.elements,
       confirmParams: {
-        return_url: 'http://localhost:4242/checkout.html',
+        return_url: this.successUrl,
       },
       redirect: 'if_required',
-    } as any;
+      ...args,
+    };
 
+    // prevent possible double-charges
+    if (this.confirming) return;
     try {
-      const response = type === 'setup' ? await this.stripe.confirmSetup(args) : await this.stripe.confirmPayment(args);
+      const response = type === 'setup' ? await this.stripe.confirmSetup(confirmArgs as any) : await this.stripe.confirmPayment(confirmArgs as any);
       if (response?.error) {
         this.error = response.error.message;
         throw response.error;

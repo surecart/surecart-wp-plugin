@@ -1,5 +1,5 @@
 import { Component, h, Prop, Element, State, Listen, Watch, Event, EventEmitter, Method } from '@stencil/core';
-import { Coupon, Order, Customer, PriceChoice, Prices, Products, ResponseError, Processor } from '../../../../types';
+import { Coupon, Order, Customer, PriceChoice, Prices, Products, ResponseError, Processor, PaymentIntent, PaymentIntents } from '../../../../types';
 import { checkoutMachine } from './helpers/checkout-machine';
 import { __ } from '@wordpress/i18n';
 import { interpret } from '@xstate/fsm';
@@ -83,6 +83,9 @@ export class ScCheckout {
   /** Payment mode inside individual payment method (i.e. Payment Buttons) */
   @State() paymentMethod: 'stripe-payment-request' | null;
 
+  /** Holds the payment intents for the checkout. */
+  @State() paymentIntents: PaymentIntents = {};
+
   /** Order has been updated. */
   @Event() scOrderUpdated: EventEmitter<Order>;
 
@@ -106,6 +109,13 @@ export class ScCheckout {
     if (Object.keys(this.error || {})?.length) {
       this.scOrderError.emit(this.error);
     }
+  }
+
+  @Listen('scSetPaymentIntent')
+  handleSetPaymentIntent(e) {
+    const paymentIntent = e.detail?.payment_intent as PaymentIntent;
+    const processor = e.detail?.processor;
+    this.paymentIntents[processor] = paymentIntent;
   }
 
   @Listen('scPayError')
@@ -221,6 +231,8 @@ export class ScCheckout {
       processors: this.processors,
       processor_data: this.order?.processor_data,
       state: this.checkoutState.value,
+      paymentIntents: this.paymentIntents,
+      successUrl: this.successUrl,
 
       // checkout states
       loading: this.checkoutState.value === 'loading',
@@ -289,6 +301,7 @@ export class ScCheckout {
               <sc-session-provider
                 ref={el => (this.sessionProvider = el as HTMLScSessionProviderElement)}
                 success-url={this.successUrl}
+                paymentIntents={this.paymentIntents}
                 order={this.order}
                 prices={this.prices}
                 persist={this.persistSession}

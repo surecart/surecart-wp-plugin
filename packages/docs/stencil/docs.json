@@ -1,8 +1,8 @@
 {
-  "timestamp": "2022-04-21T01:16:36",
+  "timestamp": "2022-04-25T13:15:36",
   "compiler": {
     "name": "@stencil/core",
-    "version": "2.14.2",
+    "version": "2.15.1",
     "typescriptVersion": "4.5.4"
   },
   "components": [
@@ -219,6 +219,22 @@
           "required": false
         },
         {
+          "name": "scrollOnOpen",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "scroll-on-open",
+          "reflectToAttr": false,
+          "docs": "Scroll into view.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "type",
           "type": "\"danger\" | \"info\" | \"primary\" | \"success\" | \"warning\"",
           "mutable": false,
@@ -327,6 +343,7 @@
         "sc-coupon-form",
         "sc-dashboard-module",
         "sc-login-form",
+        "sc-payment",
         "sc-payment-method-create",
         "sc-price-choice",
         "sc-stripe-payment-request",
@@ -351,6 +368,9 @@
           "sc-alert"
         ],
         "sc-login-form": [
+          "sc-alert"
+        ],
+        "sc-payment": [
           "sc-alert"
         ],
         "sc-payment-method-create": [
@@ -556,7 +576,6 @@
         "sc-invoices-list",
         "sc-login-form",
         "sc-orders-list",
-        "sc-payment",
         "sc-payment-method-create",
         "sc-payment-methods-list",
         "sc-subscription",
@@ -607,9 +626,6 @@
           "sc-block-ui"
         ],
         "sc-orders-list": [
-          "sc-block-ui"
-        ],
-        "sc-payment": [
           "sc-block-ui"
         ],
         "sc-payment-method-create": [
@@ -1435,6 +1451,7 @@
         "sc-invoices-list",
         "sc-login-form",
         "sc-orders-list",
+        "sc-payment",
         "sc-payment-method-create",
         "sc-payment-methods-list",
         "sc-subscription",
@@ -1468,6 +1485,9 @@
           "sc-card"
         ],
         "sc-orders-list": [
+          "sc-card"
+        ],
+        "sc-payment": [
           "sc-card"
         ],
         "sc-payment-method-create": [
@@ -2156,6 +2176,21 @@
           "required": false
         },
         {
+          "name": "processors",
+          "type": "Processor[]",
+          "mutable": true,
+          "reflectToAttr": false,
+          "docs": "Processors enabled for this form.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Processor[]"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "successUrl",
           "type": "string",
           "mutable": false,
@@ -2173,19 +2208,60 @@
           "required": false
         }
       ],
-      "methods": [],
-      "events": [],
+      "methods": [
+        {
+          "name": "submit",
+          "returns": {
+            "type": "Promise<Order>",
+            "docs": ""
+          },
+          "signature": "submit({ skip_validation }?: { skip_validation: boolean; }) => Promise<Order>",
+          "parameters": [],
+          "docs": "Submit the form",
+          "docsTags": []
+        },
+        {
+          "name": "validate",
+          "returns": {
+            "type": "Promise<boolean>",
+            "docs": ""
+          },
+          "signature": "validate() => Promise<boolean>",
+          "parameters": [],
+          "docs": "",
+          "docsTags": []
+        }
+      ],
+      "events": [
+        {
+          "event": "scOrderError",
+          "detail": "ResponseError",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Order has an error.",
+          "docsTags": []
+        },
+        {
+          "event": "scOrderFinalized",
+          "detail": "Order",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Order has been finalized.",
+          "docsTags": []
+        },
+        {
+          "event": "scOrderUpdated",
+          "detail": "Order",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Order has been updated.",
+          "docsTags": []
+        }
+      ],
       "listeners": [
-        {
-          "event": "scFormSubmit",
-          "capture": false,
-          "passive": false
-        },
-        {
-          "event": "scPaid",
-          "capture": false,
-          "passive": false
-        },
         {
           "event": "scPayError",
           "capture": false,
@@ -2193,6 +2269,16 @@
         },
         {
           "event": "scSetState",
+          "capture": false,
+          "passive": false
+        },
+        {
+          "event": "scSetProcessor",
+          "capture": false,
+          "passive": false
+        },
+        {
+          "event": "scSetOrderState",
           "capture": false,
           "passive": false
         },
@@ -6114,6 +6200,7 @@
         "sc-address",
         "sc-choices",
         "sc-input",
+        "sc-payment",
         "sc-select"
       ],
       "dependencies": [
@@ -6130,6 +6217,9 @@
           "sc-form-control"
         ],
         "sc-input": [
+          "sc-form-control"
+        ],
+        "sc-payment": [
           "sc-form-control"
         ],
         "sc-select": [
@@ -7193,6 +7283,7 @@
         "sc-login-form",
         "sc-order-submit",
         "sc-orders-list",
+        "sc-payment",
         "sc-payment-methods-list",
         "sc-product-line-item",
         "sc-select",
@@ -7239,6 +7330,9 @@
           "sc-icon"
         ],
         "sc-orders-list": [
+          "sc-icon"
+        ],
+        "sc-payment": [
           "sc-icon"
         ],
         "sc-payment-methods-list": [
@@ -10246,6 +10340,145 @@
       }
     },
     {
+      "filePath": "./src/components/controllers/checkout-form/sc-order-stripe-payment-element/sc-order-stripe-payment-element.tsx",
+      "encapsulation": "none",
+      "tag": "sc-order-stripe-payment-element",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "address",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "address",
+          "reflectToAttr": false,
+          "docs": "Should we collect an address?",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "currencyCode",
+          "type": "string",
+          "mutable": false,
+          "attr": "currency-code",
+          "reflectToAttr": false,
+          "docs": "The currency code for the payment element.",
+          "docsTags": [],
+          "default": "'usd'",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "mode",
+          "type": "\"live\" | \"test\"",
+          "mutable": false,
+          "attr": "mode",
+          "reflectToAttr": false,
+          "docs": "Payment mode.",
+          "docsTags": [],
+          "default": "'live'",
+          "values": [
+            {
+              "value": "live",
+              "type": "string"
+            },
+            {
+              "value": "test",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "order",
+          "type": "Order",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "The order.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Order"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "processors",
+          "type": "Processor[]",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "Available processors",
+          "docsTags": [],
+          "default": "[]",
+          "values": [
+            {
+              "type": "Processor[]"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [
+        {
+          "event": "scPaid",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        },
+        {
+          "event": "scPayError",
+          "detail": "any",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        }
+      ],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "sc-payment"
+      ],
+      "dependencies": [
+        "sc-stripe-payment-element"
+      ],
+      "dependencyGraph": {
+        "sc-order-stripe-payment-element": [
+          "sc-stripe-payment-element"
+        ],
+        "sc-stripe-payment-element": [
+          "sc-text",
+          "sc-skeleton"
+        ],
+        "sc-payment": [
+          "sc-order-stripe-payment-element"
+        ]
+      }
+    },
+    {
       "filePath": "./src/components/controllers/checkout-form/order-submit/sc-order-submit.tsx",
       "encapsulation": "none",
       "tag": "sc-order-submit",
@@ -10265,6 +10498,23 @@
           "values": [
             {
               "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "currencyCode",
+          "type": "string",
+          "mutable": false,
+          "attr": "currency-code",
+          "reflectToAttr": false,
+          "docs": "Currency Code",
+          "docsTags": [],
+          "default": "'usd'",
+          "values": [
+            {
+              "type": "string"
             }
           ],
           "optional": false,
@@ -10320,6 +10570,43 @@
           "required": false
         },
         {
+          "name": "mode",
+          "type": "\"live\" | \"test\"",
+          "mutable": false,
+          "attr": "mode",
+          "reflectToAttr": false,
+          "docs": "Is this created in \"test\" mode",
+          "docsTags": [],
+          "default": "'live'",
+          "values": [
+            {
+              "value": "live",
+              "type": "string"
+            },
+            {
+              "value": "test",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "order",
+          "type": "Order",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "The current order.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Order"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "paying",
           "type": "boolean",
           "mutable": false,
@@ -10330,6 +10617,46 @@
           "values": [
             {
               "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "processor",
+          "type": "\"paypal\" | \"paypal-card\" | \"stripe\"",
+          "mutable": false,
+          "attr": "processor",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "value": "paypal",
+              "type": "string"
+            },
+            {
+              "value": "paypal-card",
+              "type": "string"
+            },
+            {
+              "value": "stripe",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "processors",
+          "type": "Processor[]",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "Keys and secrets for processors.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Processor[]"
             }
           ],
           "optional": false,
@@ -10432,15 +10759,20 @@
       "parts": [],
       "dependents": [],
       "dependencies": [
+        "sc-paypal-buttons",
         "sc-button",
         "sc-icon",
         "sc-total"
       ],
       "dependencyGraph": {
         "sc-order-submit": [
+          "sc-paypal-buttons",
           "sc-button",
           "sc-icon",
           "sc-total"
+        ],
+        "sc-paypal-buttons": [
+          "sc-skeleton"
         ],
         "sc-button": [
           "sc-spinner"
@@ -10541,7 +10873,26 @@
         }
       ],
       "methods": [],
-      "events": [],
+      "events": [
+        {
+          "event": "scHide",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Show the toggle",
+          "docsTags": []
+        },
+        {
+          "event": "scShow",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Show the toggle",
+          "docsTags": []
+        }
+      ],
       "listeners": [],
       "styles": [],
       "slots": [],
@@ -10985,6 +11336,23 @@
           "required": false
         },
         {
+          "name": "currencyCode",
+          "type": "string",
+          "mutable": false,
+          "attr": "currency-code",
+          "reflectToAttr": false,
+          "docs": "The currency code.",
+          "docsTags": [],
+          "default": "'usd'",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "label",
           "type": "string",
           "mutable": false,
@@ -11088,6 +11456,21 @@
           "required": false
         },
         {
+          "name": "processors",
+          "type": "Processor[]",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "List of available processors.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Processor[]"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "secureNotice",
           "type": "string",
           "mutable": false,
@@ -11105,41 +11488,60 @@
         }
       ],
       "methods": [],
-      "events": [],
+      "events": [
+        {
+          "event": "scSetOrderState",
+          "detail": "object",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Set the order state.",
+          "docsTags": []
+        }
+      ],
       "listeners": [],
       "styles": [],
       "slots": [],
       "parts": [],
       "dependents": [],
       "dependencies": [
-        "sc-skeleton",
-        "sc-stripe-element",
-        "sc-secure-notice",
-        "sc-tooltip",
+        "sc-order-stripe-payment-element",
+        "sc-form-control",
         "sc-tag",
-        "sc-block-ui"
+        "sc-toggles",
+        "sc-toggle",
+        "sc-icon",
+        "sc-skeleton",
+        "sc-alert",
+        "sc-card"
       ],
       "dependencyGraph": {
         "sc-payment": [
-          "sc-skeleton",
-          "sc-stripe-element",
-          "sc-secure-notice",
-          "sc-tooltip",
+          "sc-order-stripe-payment-element",
+          "sc-form-control",
           "sc-tag",
-          "sc-block-ui"
+          "sc-toggles",
+          "sc-toggle",
+          "sc-icon",
+          "sc-skeleton",
+          "sc-alert",
+          "sc-card"
         ],
-        "sc-stripe-element": [
-          "sc-input",
-          "sc-text"
+        "sc-order-stripe-payment-element": [
+          "sc-stripe-payment-element"
         ],
-        "sc-input": [
-          "sc-form-control"
+        "sc-stripe-payment-element": [
+          "sc-text",
+          "sc-skeleton"
         ],
         "sc-form-control": [
           "sc-tooltip"
         ],
-        "sc-block-ui": [
-          "sc-spinner"
+        "sc-toggle": [
+          "sc-icon"
+        ],
+        "sc-alert": [
+          "sc-icon"
         ]
       }
     },
@@ -11336,6 +11738,242 @@
         ],
         "sc-block-ui": [
           "sc-spinner"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/ui/paypal-buttons/paypal-buttons.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-paypal-buttons",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "busy",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "busy",
+          "reflectToAttr": false,
+          "docs": "Is this busy?",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "buttons",
+          "type": "string[]",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "Buttons to render",
+          "docsTags": [],
+          "default": "['paypal', 'card']",
+          "values": [
+            {
+              "type": "string[]"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "clientId",
+          "type": "string",
+          "mutable": false,
+          "attr": "client-id",
+          "reflectToAttr": false,
+          "docs": "Client id for the script.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "color",
+          "type": "\"black\" | \"blue\" | \"gold\" | \"silver\" | \"white\"",
+          "mutable": false,
+          "attr": "color",
+          "reflectToAttr": false,
+          "docs": "Button color.",
+          "docsTags": [],
+          "default": "'gold'",
+          "values": [
+            {
+              "value": "black",
+              "type": "string"
+            },
+            {
+              "value": "blue",
+              "type": "string"
+            },
+            {
+              "value": "gold",
+              "type": "string"
+            },
+            {
+              "value": "silver",
+              "type": "string"
+            },
+            {
+              "value": "white",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "label",
+          "type": "\"buynow\" | \"checkout\" | \"installment\" | \"pay\" | \"paypal\"",
+          "mutable": false,
+          "attr": "label",
+          "reflectToAttr": false,
+          "docs": "Label for the button.",
+          "docsTags": [],
+          "default": "'paypal'",
+          "values": [
+            {
+              "value": "buynow",
+              "type": "string"
+            },
+            {
+              "value": "checkout",
+              "type": "string"
+            },
+            {
+              "value": "installment",
+              "type": "string"
+            },
+            {
+              "value": "pay",
+              "type": "string"
+            },
+            {
+              "value": "paypal",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "merchantId",
+          "type": "string",
+          "mutable": false,
+          "attr": "merchant-id",
+          "reflectToAttr": false,
+          "docs": "The merchant id for paypal.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "mode",
+          "type": "\"live\" | \"test\"",
+          "mutable": false,
+          "attr": "mode",
+          "reflectToAttr": false,
+          "docs": "Test or live mode.",
+          "docsTags": [],
+          "values": [
+            {
+              "value": "live",
+              "type": "string"
+            },
+            {
+              "value": "test",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "order",
+          "type": "Order",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "The order.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Order"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [
+        {
+          "event": "scError",
+          "detail": "object",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Emit an error",
+          "docsTags": []
+        },
+        {
+          "event": "scPaid",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        },
+        {
+          "event": "scSetOrderState",
+          "detail": "object",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Set the order state",
+          "docsTags": []
+        },
+        {
+          "event": "scSetState",
+          "detail": "string",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Set the state machine",
+          "docsTags": []
+        }
+      ],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "sc-order-submit"
+      ],
+      "dependencies": [
+        "sc-skeleton"
+      ],
+      "dependencyGraph": {
+        "sc-paypal-buttons": [
+          "sc-skeleton"
+        ],
+        "sc-order-submit": [
+          "sc-paypal-buttons"
         ]
       }
     },
@@ -12966,15 +13604,9 @@
           "docs": ""
         }
       ],
-      "dependents": [
-        "sc-payment"
-      ],
+      "dependents": [],
       "dependencies": [],
-      "dependencyGraph": {
-        "sc-payment": [
-          "sc-secure-notice"
-        ]
-      }
+      "dependencyGraph": {}
     },
     {
       "filePath": "./src/components/ui/select/sc-select.tsx",
@@ -13637,6 +14269,32 @@
           "required": false
         },
         {
+          "name": "processor",
+          "type": "\"paypal\" | \"paypal-card\" | \"stripe\"",
+          "mutable": false,
+          "attr": "processor",
+          "reflectToAttr": false,
+          "docs": "The processor.",
+          "docsTags": [],
+          "default": "'stripe'",
+          "values": [
+            {
+              "value": "paypal",
+              "type": "string"
+            },
+            {
+              "value": "paypal-card",
+              "type": "string"
+            },
+            {
+              "value": "stripe",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "setState",
           "type": "(state: string) => void",
           "mutable": false,
@@ -13650,9 +14308,41 @@
           ],
           "optional": false,
           "required": false
+        },
+        {
+          "name": "successUrl",
+          "type": "string",
+          "mutable": false,
+          "attr": "success-url",
+          "reflectToAttr": false,
+          "docs": "Url to redirect upon success.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
         }
       ],
-      "methods": [],
+      "methods": [
+        {
+          "name": "finalize",
+          "returns": {
+            "type": "Promise<Order>",
+            "docs": ""
+          },
+          "signature": "finalize() => Promise<Order>",
+          "parameters": [],
+          "docs": "Finalize the order.",
+          "docsTags": [
+            {
+              "name": "returns"
+            }
+          ]
+        }
+      ],
       "events": [
         {
           "event": "scError",
@@ -13701,6 +14391,11 @@
         }
       ],
       "listeners": [
+        {
+          "event": "scPaid",
+          "capture": false,
+          "passive": false
+        },
         {
           "event": "scUpdateOrder",
           "capture": false,
@@ -13833,7 +14528,9 @@
         "sc-orders-list",
         "sc-payment",
         "sc-payment-methods-list",
+        "sc-paypal-buttons",
         "sc-price-choice",
+        "sc-stripe-payment-element",
         "sc-subscription",
         "sc-subscription-cancel",
         "sc-subscription-details",
@@ -13890,7 +14587,13 @@
         "sc-payment-methods-list": [
           "sc-skeleton"
         ],
+        "sc-paypal-buttons": [
+          "sc-skeleton"
+        ],
         "sc-price-choice": [
+          "sc-skeleton"
+        ],
+        "sc-stripe-payment-element": [
           "sc-skeleton"
         ],
         "sc-subscription": [
@@ -14381,9 +15084,7 @@
       "styles": [],
       "slots": [],
       "parts": [],
-      "dependents": [
-        "sc-payment"
-      ],
+      "dependents": [],
       "dependencies": [
         "sc-input",
         "sc-text"
@@ -14398,9 +15099,139 @@
         ],
         "sc-form-control": [
           "sc-tooltip"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/ui/stripe-payment-element/sc-stripe-payment-element.tsx",
+      "encapsulation": "none",
+      "tag": "sc-stripe-payment-element",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "accountId",
+          "type": "string",
+          "mutable": false,
+          "attr": "account-id",
+          "reflectToAttr": false,
+          "docs": "The account id.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "address",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "address",
+          "reflectToAttr": false,
+          "docs": "Should we collect an address?",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "clientSecret",
+          "type": "string",
+          "mutable": false,
+          "attr": "client-secret",
+          "reflectToAttr": false,
+          "docs": "The client secret to render the payment element",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "order",
+          "type": "Invoice | Order",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "Order to watch",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Invoice"
+            },
+            {
+              "type": "Order"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "publishableKey",
+          "type": "string",
+          "mutable": false,
+          "attr": "publishable-key",
+          "reflectToAttr": false,
+          "docs": "The stripe publishable key.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [
+        {
+          "event": "scPaid",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "The order/invoice was paid for.",
+          "docsTags": []
+        },
+        {
+          "event": "scPayError",
+          "detail": "any",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "There was a payment error.",
+          "docsTags": []
+        }
+      ],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "sc-order-stripe-payment-element"
+      ],
+      "dependencies": [
+        "sc-text",
+        "sc-skeleton"
+      ],
+      "dependencyGraph": {
+        "sc-stripe-payment-element": [
+          "sc-text",
+          "sc-skeleton"
         ],
-        "sc-payment": [
-          "sc-stripe-element"
+        "sc-order-stripe-payment-element": [
+          "sc-stripe-payment-element"
         ]
       }
     },
@@ -16831,6 +17662,7 @@
         "sc-invoices-list",
         "sc-orders-list",
         "sc-stripe-element",
+        "sc-stripe-payment-element",
         "sc-subscription-details",
         "sc-upcoming-invoice"
       ],
@@ -16846,6 +17678,9 @@
           "sc-text"
         ],
         "sc-stripe-element": [
+          "sc-text"
+        ],
+        "sc-stripe-payment-element": [
           "sc-text"
         ],
         "sc-subscription-details": [
@@ -16934,6 +17769,57 @@
           "required": false
         },
         {
+          "name": "shady",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "shady",
+          "reflectToAttr": true,
+          "docs": "Is this a shady",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "showControl",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "show-control",
+          "reflectToAttr": false,
+          "docs": "Should we show a radio control?",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "showIcon",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "show-icon",
+          "reflectToAttr": false,
+          "docs": "Should we show the arrow icon?",
+          "docsTags": [],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "summary",
           "type": "string",
           "mutable": false,
@@ -16988,6 +17874,10 @@
           "docs": ""
         },
         {
+          "name": "radio",
+          "docs": ""
+        },
+        {
           "name": "summary",
           "docs": ""
         },
@@ -16996,13 +17886,18 @@
           "docs": ""
         }
       ],
-      "dependents": [],
+      "dependents": [
+        "sc-payment"
+      ],
       "dependencies": [
         "sc-icon"
       ],
       "dependencyGraph": {
         "sc-toggle": [
           "sc-icon"
+        ],
+        "sc-payment": [
+          "sc-toggle"
         ]
       }
     },
@@ -17048,6 +17943,28 @@
           ],
           "optional": false,
           "required": false
+        },
+        {
+          "name": "theme",
+          "type": "\"container\" | \"default\"",
+          "mutable": false,
+          "attr": "theme",
+          "reflectToAttr": false,
+          "docs": "Theme for the toggles",
+          "docsTags": [],
+          "default": "'default'",
+          "values": [
+            {
+              "value": "container",
+              "type": "string"
+            },
+            {
+              "value": "default",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
         }
       ],
       "methods": [],
@@ -17067,9 +17984,15 @@
           "docs": ""
         }
       ],
-      "dependents": [],
+      "dependents": [
+        "sc-payment"
+      ],
       "dependencies": [],
-      "dependencyGraph": {}
+      "dependencyGraph": {
+        "sc-payment": [
+          "sc-toggles"
+        ]
+      }
     },
     {
       "filePath": "./src/components/ui/tooltip/sc-tooltip.tsx",
@@ -17230,15 +18153,11 @@
       ],
       "dependents": [
         "sc-form-control",
-        "sc-payment",
         "sc-price-choice"
       ],
       "dependencies": [],
       "dependencyGraph": {
         "sc-form-control": [
-          "sc-tooltip"
-        ],
-        "sc-payment": [
           "sc-tooltip"
         ],
         "sc-price-choice": [

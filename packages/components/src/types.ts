@@ -441,6 +441,11 @@ export interface PaymentIntent extends Object {
   updated_at: number;
 }
 
+export interface PaymentIntents {
+  stripe?: PaymentIntent;
+  paypal?: PaymentIntent;
+}
+
 export interface SetupIntent extends Object {
   id: string;
   object: 'setup_intent';

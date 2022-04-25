@@ -18,14 +18,17 @@ export class ScPaymentMethodCreate {
    * Handle form submission.
    */
   async handleSubmit() {
-    const element = this.el.querySelector('sc-stripe-element') as HTMLScStripeElementElement;
-    if (!element || !this.clientSecret) {
+    const element = this.el.querySelector('sc-stripe-payment-element') as HTMLScStripePaymentElementElement;
+    console.log(element);
+    if (!element) {
       this.error = __('Something went wrong', 'surecart');
       return;
     }
     this.loading = true;
     try {
-      await element.confirmCardSetup(this.clientSecret);
+      await element.confirm('setup', {
+        successUrl: this.successUrl,
+      });
       if (this.successUrl) {
         window.location.assign(this.successUrl);
       } else {

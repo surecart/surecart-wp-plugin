@@ -3,7 +3,7 @@ import { addQueryArgs, removeQueryArgs } from '@wordpress/url';
 import { __ } from '@wordpress/i18n';
 
 import { createOrUpdateOrder, finalizeSession } from '../../../services/session';
-import { LineItemData, Order, PriceChoice, ProcessorName } from '../../../types';
+import { LineItemData, Order, PaymentIntents, PriceChoice, ProcessorName } from '../../../types';
 import { getSessionId, getURLCoupon, getURLLineItems, populateInputs, removeSessionId, setSessionId } from './helpers/session';
 
 @Component({
@@ -46,6 +46,9 @@ export class ScSessionProvider {
 
   /** Url to redirect upon success. */
   @Prop() successUrl: string;
+
+  /** Holds all available payment intents. */
+  @Prop() paymentIntents: PaymentIntents;
 
   /** Update line items event */
   @Event() scUpdateOrderState: EventEmitter<Order>;
@@ -182,6 +185,11 @@ export class ScSessionProvider {
     }
   }
 
+  getPaymentIntent() {
+    const processor_type = this.getProcessor();
+    return this.paymentIntents?.[processor_type];
+  }
+
   /**
    * Handles the form submission.
    * @param e
@@ -189,6 +197,15 @@ export class ScSessionProvider {
   @Listen('scFormSubmit')
   async handleFormSubmit() {
     this.scError.emit({});
+
+    const payment_intent = this.getPaymentIntent();
+
+    // Important: Stripe needs a payment intent ahead of time, or the
+    // order will not be attached to the payment.
+    if (!payment_intent && this.getProcessor() === 'stripe') {
+      this.scError.emit({ message: 'Something went wrong. Please try again.' });
+      return this.scSetState.emit('REJECT');
+    }
 
     this.scSetState.emit('FINALIZE');
 
@@ -207,14 +224,24 @@ export class ScSessionProvider {
 
     // first validate server-side and get key
     try {
-      this.session = await finalizeSession({
+      const order = await finalizeSession({
         id: this.order.id,
         data,
         query: {
           ...this.defaultFormQuery(),
+          ...(payment_intent?.id ? { payment_intent_id: payment_intent?.id } : {}),
         },
         processor: this.getProcessor(),
       });
+
+      // payment intent must match what we sent to make sure it's attached to an order.
+      if (payment_intent?.id && order?.payment_intent?.id !== payment_intent?.id) {
+        console.error('Payment intent mismatch', payment_intent?.id, order?.payment_intent?.id);
+        this.scError.emit({ message: 'Something went wrong. Please try again.' });
+        return this.scSetState.emit('REJECT');
+      }
+
+      this.session = order;
       return this.session;
     } catch (e) {
       // handle old price versions by refreshing.

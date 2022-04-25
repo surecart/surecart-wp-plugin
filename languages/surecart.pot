@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-04-21T01:16:42+00:00\n"
+"POT-Creation-Date: 2022-04-25T13:15:42+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 
@@ -755,6 +755,7 @@ msgstr ""
 #: src/Rest/FilesRestServiceProvider.php:54
 #: src/Rest/InvoicesRestServiceProvider.php:75
 #: src/Rest/OrderRestServiceProvider.php:77
+#: src/Rest/PaymentIntentsRestServiceProvider.php:76
 #: src/Rest/PaymentMethodsRestServiceProvider.php:77
 #: src/Rest/PriceRestServiceProvider.php:47
 #: src/Rest/ProductGroupsRestServiceProvider.php:47
@@ -6485,7 +6486,23 @@ msgstr ""
 #: components/components/sc-payment.js:1
 #: components/custom-elements/index.js:3
 #: components/esm/sc-payment.entry.js:1
-msgid "In test mode, you can use the card 4242 4242 4242 4242 and any code/expiration date."
+msgid "Credit Card"
+msgstr ""
+
+#: components/cjs/sc-payment.cjs.entry.js:1
+#: components/collection/components/controllers/checkout-form/payment/sc-payment.js:1
+#: components/components/sc-payment.js:1
+#: components/custom-elements/index.js:3
+#: components/esm/sc-payment.entry.js:1
+msgid "You will be prompted by PayPal to complete your purchase securely."
+msgstr ""
+
+#: components/cjs/sc-payment.cjs.entry.js:1
+#: components/collection/components/controllers/checkout-form/payment/sc-payment.js:1
+#: components/components/sc-payment.js:1
+#: components/custom-elements/index.js:3
+#: components/esm/sc-payment.entry.js:1
+msgid "You will be prompted to complete your purchase securely."
 msgstr ""
 
 #: components/cjs/sc-payment.cjs.entry.js:1
@@ -6494,6 +6511,22 @@ msgstr ""
 #: components/custom-elements/index.js:3
 #: components/esm/sc-payment.entry.js:1
 msgid "Please contact us for payment"
+msgstr ""
+
+#: components/cjs/sc-paypal-buttons.cjs.entry.js:1
+#: components/collection/components/ui/paypal-buttons/paypal-buttons.js:1
+#: components/components/paypal-buttons.js:1
+#: components/custom-elements/index.js:3
+#: components/esm/sc-paypal-buttons.entry.js:1
+msgid "Something went wrong. Please contact us for payment."
+msgstr ""
+
+#: components/cjs/sc-paypal-buttons.cjs.entry.js:1
+#: components/collection/components/ui/paypal-buttons/paypal-buttons.js:1
+#: components/components/paypal-buttons.js:1
+#: components/custom-elements/index.js:3
+#: components/esm/sc-paypal-buttons.entry.js:1
+msgid "The payment did not process. Please try again."
 msgstr ""
 
 #: components/cjs/sc-price-choice.cjs.entry.js:1

@@ -21,7 +21,40 @@
 | `modified`                    | `modified`                      | When the form was modified.                 | `string`                       | `undefined` |
 | `persistSession`              | `persist-session`               | Where to go on success                      | `boolean`                      | `true`      |
 | `prices`                      | --                              | An array of prices to pre-fill in the form. | `PriceChoice[]`                | `[]`        |
+| `processors`                  | --                              | Processors enabled for this form.           | `Processor[]`                  | `undefined` |
 | `successUrl`                  | `success-url`                   | Where to go on success                      | `string`                       | `''`        |
+
+
+## Events
+
+| Event              | Description               | Type                         |
+| ------------------ | ------------------------- | ---------------------------- |
+| `scOrderError`     | Order has an error.       | `CustomEvent<ResponseError>` |
+| `scOrderFinalized` | Order has been finalized. | `CustomEvent<Order>`         |
+| `scOrderUpdated`   | Order has been updated.   | `CustomEvent<Order>`         |
+
+
+## Methods
+
+### `submit({ skip_validation }?: { skip_validation: boolean; }) => Promise<Order>`
+
+Submit the form
+
+#### Returns
+
+Type: `Promise<Order>`
+
+
+
+### `validate() => Promise<boolean>`
+
+
+
+#### Returns
+
+Type: `Promise<boolean>`
+
+
 
 
 ## Dependencies

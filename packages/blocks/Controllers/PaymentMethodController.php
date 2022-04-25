@@ -50,6 +50,7 @@ class PaymentMethodController extends BaseController {
 				[
 					'processor_type' => 'stripe',
 					'live_mode'      => true,
+					'currency'       => \SureCart::account()->currency,
 					'customer_id'    => User::current()->customerId( 'live' ),
 				]
 			);
@@ -61,7 +62,8 @@ class PaymentMethodController extends BaseController {
 			$payment_intent_test = PaymentIntent::with( [ 'owner' ] )->create(
 				[
 					'processor_type' => 'stripe',
-					'live_mode'      => true,
+					'live_mode'      => false,
+					'currency'       => \SureCart::account()->currency,
 					'customer_id'    => User::current()->customerId( 'test' ),
 				]
 			);
@@ -106,23 +108,19 @@ class PaymentMethodController extends BaseController {
 				>
 					<?php
 						echo wp_kses_post(
-							Component::tag( 'sc-stripe-element' )
+							Component::tag( 'sc-stripe-payment-element' )
 							->id( 'customer-payment-method-add' )
 							->with(
 								[
-									'stripeAccountId' => $payment_intent->processor_data->stripe->account_id,
-									'publishableKey'  => $payment_intent->processor_data->stripe->publishable_key,
+									'accountId'      => $payment_intent->processor_data->stripe->account_id,
+									'publishableKey' => $payment_intent->processor_data->stripe->publishable_key,
+									'clientSecret'   => $payment_intent->processor_data->stripe->client_secret,
 								]
 							)->render()
 						);
 					?>
 			</sc-payment-method-create>
 
-			<div>
-				<sc-text style="--color: var(--sc-color-gray-700); --font-size: var(--sc-font-size-small); --line-height: var(--sc-line-height-normal); --text-align: center;">
-					<?php esc_html_e( 'By providing your card information, you allow Sure Cart to charge your card for future payments in accordance with their terms. You can review important information from Sure Cart on their Terms of Service and Privacy Policy pages.', 'surecart' ); ?>
-				</sc-text>
-			</div>
 		</sc-spacing>
 		<?php
 		return ob_get_clean();

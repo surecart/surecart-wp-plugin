@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Address, ChoiceItem, Coupon, Customer, DiscountResponse, Invoice, LineItem, LineItemData, Order, OrderStatus, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, ProductGroup, Products, Purchase, ResponseError, Subscription, SubscriptionStatus, TaxStatus, WordPressUser } from "./types";
+import { Address, ChoiceItem, Coupon, Customer, DiscountResponse, Invoice, LineItem, LineItemData, Order, OrderStatus, PaymentIntent, PaymentIntents, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, ProductGroup, Products, Purchase, ResponseError, Subscription, SubscriptionStatus, TaxStatus, WordPressUser } from "./types";
 import { IconLibraryMutator, IconLibraryResolver } from "./components/ui/icon/library";
 export namespace Components {
     interface ScAddress {
@@ -296,7 +296,7 @@ export namespace Components {
         /**
           * Submit the form
          */
-        "submit": ({ skip_validation }?: { skip_validation: boolean; }) => Promise<Order>;
+        "submit": ({ skip_validation }?: { skip_validation: boolean; }) => Promise<Order | CustomEvent<string>>;
         /**
           * Where to go on success
          */
@@ -1838,7 +1838,7 @@ export namespace Components {
           * Finalize the order.
           * @returns
          */
-        "finalize": () => Promise<Order>;
+        "finalize": () => Promise<Order | CustomEvent<string>>;
         /**
           * The checkout form id
          */
@@ -1859,6 +1859,10 @@ export namespace Components {
           * Order Object
          */
         "order": Order;
+        /**
+          * Holds all available payment intents.
+         */
+        "paymentIntents": PaymentIntents;
         /**
           * Should we persist the session.
          */
@@ -1959,6 +1963,7 @@ export namespace Components {
           * The client secret to render the payment element
          */
         "clientSecret": string;
+        "confirm": (type: any, args?: {}) => Promise<void>;
         /**
           * Order to watch
          */
@@ -1967,6 +1972,10 @@ export namespace Components {
           * The stripe publishable key.
          */
         "publishableKey": string;
+        /**
+          * Success url to redirect.
+         */
+        "successUrl": string;
     }
     interface ScStripePaymentRequest {
         /**
@@ -4592,6 +4601,7 @@ declare namespace LocalJSX {
         "mode"?: 'test' | 'live';
         "onScPaid"?: (event: CustomEvent<void>) => void;
         "onScPayError"?: (event: CustomEvent<any>) => void;
+        "onScSetPaymentIntent"?: (event: CustomEvent<{ processor: 'stripe'; payment_intent: PaymentIntent }>) => void;
         /**
           * The order.
          */
@@ -5231,6 +5241,10 @@ declare namespace LocalJSX {
          */
         "order"?: Order;
         /**
+          * Holds all available payment intents.
+         */
+        "paymentIntents"?: PaymentIntents;
+        /**
           * Should we persist the session.
          */
         "persist"?: boolean;
@@ -5340,6 +5354,10 @@ declare namespace LocalJSX {
           * The stripe publishable key.
          */
         "publishableKey"?: string;
+        /**
+          * Success url to redirect.
+         */
+        "successUrl"?: string;
     }
     interface ScStripePaymentRequest {
         /**

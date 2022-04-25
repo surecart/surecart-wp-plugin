@@ -37,6 +37,7 @@ export class ScOrderStripePaymentElement {
 
   @Event() scPaid: EventEmitter<void>;
   @Event() scPayError: EventEmitter<any>;
+  @Event() scSetPaymentIntent: EventEmitter<{ processor: 'stripe'; payment_intent: PaymentIntent }>;
 
   @State() error: string;
   @State() confirming: boolean;
@@ -89,10 +90,12 @@ export class ScOrderStripePaymentElement {
    * we need to sync it if we have an order.
    */
   @Watch('paymentIntent')
-  handlePaymentIntentChange(_, prev) {
+  async handlePaymentIntentChange(_, prev) {
     if (!prev && this.order) {
-      this.updatePaymentIntent();
+      await this.updatePaymentIntent();
     }
+    // update payment intent in form when it's set.
+    this.scSetPaymentIntent.emit({ processor: 'stripe', payment_intent: this.paymentIntent });
   }
 
   render() {
