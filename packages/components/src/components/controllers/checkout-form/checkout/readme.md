@@ -36,13 +36,13 @@
 
 ## Methods
 
-### `submit({ skip_validation }?: { skip_validation: boolean; }) => Promise<Order>`
+### `submit({ skip_validation }?: { skip_validation: boolean; }) => Promise<Order | CustomEvent<string>>`
 
 Submit the form
 
 #### Returns
 
-Type: `Promise<Order>`
+Type: `Promise<Order | CustomEvent<string>>`
 
 
 

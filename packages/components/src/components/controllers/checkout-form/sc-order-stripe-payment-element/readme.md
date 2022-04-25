@@ -18,10 +18,11 @@
 
 ## Events
 
-| Event        | Description | Type                |
-| ------------ | ----------- | ------------------- |
-| `scPaid`     |             | `CustomEvent<void>` |
-| `scPayError` |             | `CustomEvent<any>`  |
+| Event                | Description | Type                                                                   |
+| -------------------- | ----------- | ---------------------------------------------------------------------- |
+| `scPaid`             |             | `CustomEvent<void>`                                                    |
+| `scPayError`         |             | `CustomEvent<any>`                                                     |
+| `scSetPaymentIntent` |             | `CustomEvent<{ processor: "stripe"; payment_intent: PaymentIntent; }>` |
 
 
 ## Dependencies

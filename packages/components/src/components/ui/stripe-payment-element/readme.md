@@ -14,6 +14,7 @@
 | `clientSecret`   | `client-secret`   | The client secret to render the payment element | `string`           | `undefined` |
 | `order`          | --                | Order to watch                                  | `Invoice \| Order` | `undefined` |
 | `publishableKey` | `publishable-key` | The stripe publishable key.                     | `string`           | `undefined` |
+| `successUrl`     | `success-url`     | Success url to redirect.                        | `string`           | `undefined` |
 
 
 ## Events
@@ -22,6 +23,19 @@
 | ------------ | ------------------------------- | ------------------- |
 | `scPaid`     | The order/invoice was paid for. | `CustomEvent<void>` |
 | `scPayError` | There was a payment error.      | `CustomEvent<any>`  |
+
+
+## Methods
+
+### `confirm(type: any, args?: {}) => Promise<void>`
+
+
+
+#### Returns
+
+Type: `Promise<void>`
+
+
 
 
 ## Dependencies

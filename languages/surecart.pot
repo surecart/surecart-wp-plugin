@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-04-25T16:57:20+00:00\n"
+"POT-Creation-Date: 2022-04-25T17:32:34+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 
@@ -74,7 +74,7 @@ msgstr ""
 
 #: src/Controllers/Admin/Abandoned/AbandonedOrderListTable.php:106
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:66
-#: src/Controllers/Admin/Orders/OrdersListTable.php:110
+#: src/Controllers/Admin/Orders/OrdersListTable.php:111
 #: admin/customers.js:1
 #: admin/subscriptions/edit.js:1
 #: admin/subscriptions/show.js:1
@@ -147,7 +147,7 @@ msgstr ""
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:134
 #: src/Controllers/Admin/Customers/CustomersListTable.php:116
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:78
-#: src/Controllers/Admin/Orders/OrdersListTable.php:124
+#: src/Controllers/Admin/Orders/OrdersListTable.php:125
 #: src/Controllers/Admin/Products/ProductsListTable.php:121
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:118
 msgid "Select comment"
@@ -156,7 +156,7 @@ msgstr ""
 #. translators: coupon expiration date.
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:222
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:195
-#: src/Controllers/Admin/Orders/OrdersListTable.php:241
+#: src/Controllers/Admin/Orders/OrdersListTable.php:249
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:248
 msgid "Valid until %s"
 msgstr ""
@@ -168,14 +168,14 @@ msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:245
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:212
-#: src/Controllers/Admin/Orders/OrdersListTable.php:258
+#: src/Controllers/Admin/Orders/OrdersListTable.php:266
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:265
 msgid "No discount."
 msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:260
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:227
-#: src/Controllers/Admin/Orders/OrdersListTable.php:273
+#: src/Controllers/Admin/Orders/OrdersListTable.php:281
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:280
 #: admin/coupons.js:1
 msgid "Forever"
@@ -184,14 +184,14 @@ msgstr ""
 #. translators: number of months.
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:264
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:231
-#: src/Controllers/Admin/Orders/OrdersListTable.php:277
+#: src/Controllers/Admin/Orders/OrdersListTable.php:285
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:284
 msgid "For %d months"
 msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:267
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:234
-#: src/Controllers/Admin/Orders/OrdersListTable.php:280
+#: src/Controllers/Admin/Orders/OrdersListTable.php:288
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:287
 #: admin/coupons.js:1
 msgid "Once"
@@ -363,13 +363,13 @@ msgstr ""
 
 #. translators: Coupon % off.
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:204
-#: src/Controllers/Admin/Orders/OrdersListTable.php:250
+#: src/Controllers/Admin/Orders/OrdersListTable.php:258
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:257
 msgid "%1d%% off"
 msgstr ""
 
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:246
-#: src/Controllers/Admin/Orders/OrdersListTable.php:292
+#: src/Controllers/Admin/Orders/OrdersListTable.php:300
 #: admin/customers.js:1
 #: admin/invoices.js:1
 #: admin/orders.js:1
@@ -393,8 +393,8 @@ msgstr ""
 
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:261
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:265
-#: src/Controllers/Admin/Orders/OrdersListTable.php:307
-#: src/Controllers/Admin/Orders/OrdersListTable.php:311
+#: src/Controllers/Admin/Orders/OrdersListTable.php:315
+#: src/Controllers/Admin/Orders/OrdersListTable.php:319
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:189
 #: admin/orders.js:1
 msgid "Edit Order"
@@ -413,8 +413,15 @@ msgstr ""
 msgid "Search Orders"
 msgstr ""
 
+#: src/Controllers/Admin/Orders/OrdersListTable.php:110
+#: admin/customers.js:1
+#: admin/invoices.js:1
+#: admin/orders.js:1
+msgid "Method"
+msgstr ""
+
 #. translators: Customer name.
-#: src/Controllers/Admin/Orders/OrdersListTable.php:314
+#: src/Controllers/Admin/Orders/OrdersListTable.php:322
 msgid "By %s"
 msgstr ""
 
@@ -2132,12 +2139,6 @@ msgstr ""
 #: admin/invoices.js:1
 #: admin/orders.js:1
 msgid "No charges"
-msgstr ""
-
-#: admin/customers.js:1
-#: admin/invoices.js:1
-#: admin/orders.js:1
-msgid "Method"
 msgstr ""
 
 #: admin/customers.js:1
