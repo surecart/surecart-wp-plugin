@@ -35,7 +35,7 @@ describe('sc-coupon-form', () => {
   });
 
   it('Triggers a coupon apply event', async () => {
-    const ceApplyCoupon = await page.spyOnEvent('ceApplyCoupon');
+    const ceApplyCoupon = await page.spyOnEvent('scApplyCoupon');
 
     await trigger.click();
     await page.waitForChanges();

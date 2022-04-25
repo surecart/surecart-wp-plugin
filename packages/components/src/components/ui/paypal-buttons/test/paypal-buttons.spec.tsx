@@ -1,18 +1,12 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { PaypalButtons } from '../paypal-buttons';
+import { ScPaypalButtons } from '../paypal-buttons';
 
 describe('paypal-buttons', () => {
   it('renders', async () => {
     const page = await newSpecPage({
-      components: [PaypalButtons],
-      html: `<paypal-buttons></paypal-buttons>`,
+      components: [ScPaypalButtons],
+      html: `<sc-paypal-buttons></sc-paypal-buttons>`,
     });
-    expect(page.root).toEqualHtml(`
-      <paypal-buttons>
-        <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
-      </paypal-buttons>
-    `);
+    expect(page.root).toMatchSnapshot();
   });
 });

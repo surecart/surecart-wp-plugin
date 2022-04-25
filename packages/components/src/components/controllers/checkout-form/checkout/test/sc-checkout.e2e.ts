@@ -1,4 +1,5 @@
 import { newE2EPage } from '@stencil/core/testing';
+
 import { setResponses } from '../../../../../testing';
 
 describe('sc-checkout', () => {
@@ -163,5 +164,25 @@ describe('sc-checkout', () => {
       page,
     );
     await page.setContent('<sc-checkout></sc-checkout>');
+  });
+
+  it('Can be submitted', async () => {
+    const page = await newE2EPage();
+    await page.setContent('<sc-checkout><sc-form></sc-form></sc-checkout>');
+    const checkout = await page.find('sc-checkout');
+    const onSubmit = await page.spyOnEvent('scSubmit');
+    setResponses(
+      [
+        {
+          path: '/surecart/v1/orders',
+          data: {
+            id: '0df38be0-5d52-4f80-af56-0a9a6eea7998',
+          },
+        },
+      ],
+      page,
+    );
+    const result = await checkout.callMethod('submit');
+    console.log({ result });
   });
 });

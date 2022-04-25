@@ -1,5 +1,7 @@
-import { Component, h, Element, Prop, Event, EventEmitter, Method, Listen } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Listen, Method, Prop } from '@stencil/core';
+
 import { serialize } from '../../../functions/form';
+
 @Component({
   tag: 'sc-form',
   styleUrl: 'sc-form.scss',
@@ -112,6 +114,7 @@ export class ScForm {
             }
             this.scSubmit.emit();
             this.scFormSubmit.emit();
+            console.log('emit events');
           }}
           novalidate={this.novalidate}
         >

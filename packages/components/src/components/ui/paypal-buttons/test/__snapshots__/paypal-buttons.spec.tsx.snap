@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`paypal-buttons renders 1`] = `
+<sc-paypal-buttons>
+  <mock:shadow-root>
+    <div class="paypal-buttons">
+      <sc-skeleton style="height: 55px; --border-radius: 4px; cursor: wait;"></sc-skeleton>
+      <div class="sc-paypal-button-container" hidden="">
+        <div class="sc-paypal-card-button"></div>
+        <div class="sc-paypal-button"></div>
+      </div>
+    </div>
+  </mock:shadow-root>
+</sc-paypal-buttons>
+`;

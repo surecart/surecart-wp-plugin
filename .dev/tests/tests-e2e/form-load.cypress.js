@@ -1,6 +1,6 @@
 describe('Form', () => {
-	describe('Load', () => {
-		let defaultForm;
+	describe('Processors', () => {
+		let defaultForm, simpleForm;
 
 		before(() => {
 			Cypress.Cookies.defaults({
@@ -16,14 +16,17 @@ describe('Form', () => {
 			cy.fixture('forms/default').then((template) => {
 				defaultForm = template.replace(/[\""]/g, '\\"');
 			});
+			cy.fixture('forms/simple').then((template) => {
+				simpleForm = template.replace(/[\""]/g, '\\"');
+			});
 		});
 
-		it('Loads the default form', () => {
+		it('Loads Paypal and Stripe Processors', () => {
 			cy.exec(
 				`yarn wp-env run tests-cli "wp post create --post_content='${defaultForm}' --post_type=page --post_title='Default Form' --post_status='publish' --porcelain"`
 			).then((response) => {
 				cy.interceptWithFixture('POST', '**surecart**orders*', {
-					fixture: 'orders/with-everything',
+					fixture: 'orders/one-time',
 					as: 'createOrder',
 				});
 				cy.interceptWithFixture('GET', '**test_price_1*', {
@@ -51,32 +54,128 @@ describe('Form', () => {
 				cy.clearCookies();
 				cy.visit(`?p=${parseInt(response.stdout)}`);
 
-				cy.wait('@createOrder').then(({ request }) => {
-					cy.get('sc-customer-name.hydrated').should(
-						'have.value',
-						'admin'
+				// this is how we fill out the form:
+				cy.wait('@createPaymentIntent').then(() => {
+					cy.get('.StripeElement').should('exist');
+					cy.getStripeElement('numberInput').should('be.visible');
+					cy.getStripeElement('expiryInput').should('be.visible');
+					cy.getStripeElement('cvcInput').should('be.visible');
+					cy.getStripeElement('postalCodeInput').should('be.visible');
+				});
+
+				// cy.wait('@createOrder').then(({ request }) => {
+				// 	cy.get('sc-customer-name.hydrated').should(
+				// 		'have.value',
+				// 		'admin'
+				// 	);
+				// 	cy.get('sc-customer-email.hydrated').should(
+				// 		'have.value',
+				// 		'wordpress@example.com'
+				// 	);
+				// 	cy.get('sc-choice.hydrated[value="test_price_1"]')
+				// 		.shadow()
+				// 		.find('input')
+				// 		.should('be.checked');
+				// });
+			});
+		});
+
+		it('Loads Paypal Only Processors', () => {
+			cy.exec(
+				`yarn wp-env run tests-cli "wp post create --post_content='${simpleForm}' --post_type=page --post_title='Default Form' --post_status='publish' --porcelain"`
+			).then((response) => {
+				cy.fixture('orders/one-time').then((body) => {
+					cy.intercept('POST', '**surecart**orders*', (req) => {
+						req.reply({
+							body,
+							delay: 1000,
+						});
+					}).as('createOrder');
+				});
+
+				cy.clearCookies();
+				cy.visit(`?p=${parseInt(response.stdout)}`);
+
+				cy.get('sc-checkout').then(function ($input) {
+					$input[0].processors = $input[0].processors.filter(
+						(processor) => processor?.processor_type === 'paypal'
 					);
-					cy.get('sc-customer-email.hydrated').should(
-						'have.value',
-						'wordpress@example.com'
+					$input.processor = 'paypal';
+				});
+
+				cy.get('[data-test-id="paypal-credit-card-toggle"]').click();
+
+				cy.get(
+					'sc-payment [data-test-id="paypal-credit-card-toggle"]'
+				).should('have.attr', 'open');
+				cy.get('sc-payment [data-test-id="paypal-toggle"]').should(
+					'not.have.attr',
+					'open'
+				);
+
+				cy.get('sc-paypal-buttons')
+					.shadow()
+					.find('.sc-paypal-card-button')
+					.should('be.visible');
+				cy.get('sc-paypal-buttons')
+					.shadow()
+					.find('.sc-paypal-button')
+					.should('not.be.visible');
+
+				cy.get('[data-test-id="paypal-toggle"]').click();
+				cy.get(
+					'sc-payment [data-test-id="paypal-credit-card-toggle"]'
+				).should('not.have.attr', 'open');
+				cy.get('sc-payment [data-test-id="paypal-toggle"]').should(
+					'have.attr',
+					'open'
+				);
+
+				cy.get('sc-paypal-buttons')
+					.shadow()
+					.find('.sc-paypal-card-button')
+					.should('not.be.visible');
+				cy.get('sc-paypal-buttons')
+					.shadow()
+					.find('.sc-paypal-button')
+					.should('be.visible');
+			});
+		});
+
+		it('Loads Stripe Only Processors', () => {
+			cy.exec(
+				`yarn wp-env run tests-cli "wp post create --post_content='${simpleForm}' --post_type=page --post_title='Default Form' --post_status='publish' --porcelain"`
+			).then((response) => {
+				cy.fixture('orders/one-time').then((body) => {
+					cy.intercept('POST', '**surecart**orders*', (req) => {
+						req.reply({
+							body,
+							delay: 1000,
+						});
+					}).as('createOrder');
+				});
+
+				cy.intercept('POST', '**payment_intents*').as(
+					'createPaymentIntent'
+				);
+
+				cy.clearCookies();
+				cy.visit(`?p=${parseInt(response.stdout)}`);
+
+				cy.get('sc-checkout').then(function ($input) {
+					$input[0].processors = $input[0].processors.filter(
+						(processor) => processor?.processor_type === 'stripe'
 					);
-					cy.get('sc-choice.hydrated[value="test_price_1"]')
-						.shadow()
-						.find('input')
-						.should('be.checked');
+					$input.processor = 'stripe';
 				});
 
 				// this is how we fill out the form:
 				cy.wait('@createPaymentIntent').then(() => {
 					cy.get('.StripeElement').should('exist');
-					cy.getStripeElement('numberInput').type('4242424242424242');
-					cy.getStripeElement('expiryInput').type('0242');
-					cy.getStripeElement('cvcInput').type('0242');
-					cy.getStripeElement('postalCodeInput').type('12345');
-					cy.get('sc-button[submit]')
-						.shadow()
-						.find('button')
-						.click({ force: true });
+					cy.getStripeElement('numberInput').should('be.visible');
+					cy.getStripeElement('expiryInput').should('be.visible');
+					cy.getStripeElement('cvcInput').should('be.visible');
+					cy.getStripeElement('postalCodeInput').should('be.visible');
 				});
 			});
 		});

@@ -118,14 +118,28 @@ export class ScPayment {
           )}
         </div>
         <sc-toggles collapsible={false} theme="container">
-          <sc-toggle show-control shady borderless open={this.processor === 'paypal-card'} onScShow={() => this.scSetOrderState.emit({ processor: 'paypal-card' })}>
+          <sc-toggle
+            data-test-id="paypal-credit-card-toggle"
+            show-control
+            shady
+            borderless
+            open={this.processor === 'paypal-card'}
+            onScShow={() => this.scSetOrderState.emit({ processor: 'paypal-card' })}
+          >
             <span slot="summary" class="sc-payment-toggle-summary">
               <sc-icon name="credit-card" style={{ fontSize: '24px' }}></sc-icon>
               <span>{__('Credit Card', 'surecart')}</span>
             </span>
             <div class="sc-payment-instructions">{__('You will be prompted to complete your purchase securely.', 'surecart')}</div>
           </sc-toggle>
-          <sc-toggle show-control shady borderless open={this.processor === 'paypal'} onScShow={() => this.scSetOrderState.emit({ processor: 'paypal' })}>
+          <sc-toggle
+            data-test-id="paypal-toggle"
+            show-control
+            shady
+            borderless
+            open={this.processor === 'paypal'}
+            onScShow={() => this.scSetOrderState.emit({ processor: 'paypal' })}
+          >
             <span slot="summary" class="sc-payment-toggle-summary">
               <sc-icon name="paypal" style={{ width: '80px', fontSize: '24px' }}></sc-icon>
             </span>

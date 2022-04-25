@@ -18,7 +18,7 @@ describe('sc-form', () => {
       <sc-button submit>Test CE</sc-button>
     </sc-form>
     `);
-    const ceSubmit = await page.spyOnEvent('ceFormSubmit');
+    const ceSubmit = await page.spyOnEvent('scSubmit');
 
     const button = await page.find('button');
     button.click();
