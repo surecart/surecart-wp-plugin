@@ -25,15 +25,6 @@ export default ({ className, attributes, setAttributes }) => {
 							onChange={(label) => setAttributes({ label })}
 						/>
 					</PanelRow>
-					<PanelRow>
-						<TextControl
-							label={__('Secure Notice', 'surecart')}
-							value={secure_notice}
-							onChange={(secure_notice) =>
-								setAttributes({ secure_notice })
-							}
-						/>
-					</PanelRow>
 				</PanelBody>
 			</InspectorControls>
 
