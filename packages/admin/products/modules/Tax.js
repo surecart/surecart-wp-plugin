@@ -57,7 +57,7 @@ export default ({ loading, product, updateProduct }) => {
 					<Definition
 						title={__('Charge tax on this product', 'surecart')}
 					>
-						<ScSwitch />
+						<ScSwitch disabled />
 					</Definition>
 				</ScTooltip>
 			</div>
