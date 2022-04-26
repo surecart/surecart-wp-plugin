@@ -15,7 +15,7 @@ export class ScPayment {
   @Prop() processor: string = 'stripe';
 
   /** List of available processors. */
-  @Prop() processors: Processor[];
+  @Prop() processors: Processor[] = [];
 
   /** Checkout Session from sc-checkout. */
   @Prop() order: Order;
@@ -59,7 +59,7 @@ export class ScPayment {
     }
   }
 
-  componentDidLoad() {
+  componentWillLoad() {
     this.setProcessors();
   }
 

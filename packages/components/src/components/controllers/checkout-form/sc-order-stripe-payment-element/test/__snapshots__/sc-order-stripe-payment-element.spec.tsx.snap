@@ -1,7 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`sc-order-stripe-payment-element renders 1`] = `
-<sc-order-stripe-payment-element>
-  <sc-stripe-payment-element></sc-stripe-payment-element>
-</sc-order-stripe-payment-element>
-`;
