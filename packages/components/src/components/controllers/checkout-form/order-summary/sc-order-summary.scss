@@ -10,6 +10,10 @@
   gap: 0.35em;
 }
 
+.summary__content--empty {
+  display: none;
+}
+
 .collapse-link__icon {
   width: 18px;
   height: 18px;

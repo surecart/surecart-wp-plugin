@@ -7,12 +7,6 @@ describe('sc-order-stripe-payment-element', () => {
       components: [ScOrderStripePaymentElement],
       html: `<sc-order-stripe-payment-element></sc-order-stripe-payment-element>`,
     });
-    expect(page.root).toEqualHtml(`
-      <sc-order-stripe-payment-element>
-        <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
-      </sc-order-stripe-payment-element>
-    `);
+    expect(page.root).toMatchSnapshot();
   });
 });

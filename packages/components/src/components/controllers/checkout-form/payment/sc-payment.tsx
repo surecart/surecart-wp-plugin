@@ -169,6 +169,16 @@ export class ScPayment {
   }
 
   render() {
+    // we don't have line items.
+    if (this.order?.line_items?.pagination?.count === 0) {
+      return null;
+    }
+
+    // we don't have to buy anything, so don't show purchase options.
+    if (this.order?.total_amount === 0) {
+      return null;
+    }
+
     // we don't have any processors.
     if (!this.processors?.length) {
       console.error('No processors are configured for this merchant.');

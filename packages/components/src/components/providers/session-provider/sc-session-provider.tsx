@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, h, Listen, Method, Prop, State, Watch } from '@stencil/core';
-import { addQueryArgs, removeQueryArgs } from '@wordpress/url';
 import { __ } from '@wordpress/i18n';
+import { addQueryArgs, removeQueryArgs } from '@wordpress/url';
 
 import { createOrUpdateOrder, finalizeSession } from '../../../services/session';
 import { LineItemData, Order, PaymentIntents, PriceChoice, ProcessorName } from '../../../types';
@@ -200,13 +200,6 @@ export class ScSessionProvider {
 
     const payment_intent = this.getPaymentIntent();
 
-    // Important: Stripe needs a payment intent ahead of time, or the
-    // order will not be attached to the payment.
-    if (!payment_intent && this.getProcessor() === 'stripe') {
-      this.scError.emit({ message: 'Something went wrong. Please try again.' });
-      return this.scSetState.emit('REJECT');
-    }
-
     this.scSetState.emit('FINALIZE');
 
     // Get current form state.
@@ -222,6 +215,13 @@ export class ScSessionProvider {
       this.handleErrorResponse(e);
     }
 
+    // Important: Stripe needs a payment intent ahead of time, or the
+    // order will not be attached to the payment.
+    if (this.session.total_amount > 0 && !payment_intent && this.getProcessor() === 'stripe') {
+      this.scError.emit({ message: 'Something went wrong. Please try again.' });
+      return this.scSetState.emit('REJECT');
+    }
+
     // first validate server-side and get key
     try {
       const order = await finalizeSession({
@@ -235,7 +235,7 @@ export class ScSessionProvider {
       });
 
       // payment intent must match what we sent to make sure it's attached to an order.
-      if (payment_intent?.id && order?.payment_intent?.id !== payment_intent?.id) {
+      if (this.session.total_amount > 0 && payment_intent?.id && order?.payment_intent?.id !== payment_intent?.id) {
         console.error('Payment intent mismatch', payment_intent?.id, order?.payment_intent?.id);
         this.scError.emit({ message: 'Something went wrong. Please try again.' });
         return this.scSetState.emit('REJECT');

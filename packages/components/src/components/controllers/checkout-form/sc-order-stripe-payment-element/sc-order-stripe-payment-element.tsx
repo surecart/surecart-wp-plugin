@@ -78,7 +78,7 @@ export class ScOrderStripePaymentElement {
     // only in previous or current is zero.
     if (val?.amount_due === 0 || prev?.amount_due === 0) {
       // update the payment intent if the amount due changes.
-      if (prev?.amount_due !== val?.amount_due) {
+      if (prev?.amount_due !== val?.amount_due && val?.line_items?.pagination?.count > 0) {
         this.clientSecret = null;
         await this.updatePaymentIntent();
       }

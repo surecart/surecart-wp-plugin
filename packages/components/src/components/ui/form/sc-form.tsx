@@ -114,7 +114,6 @@ export class ScForm {
             }
             this.scSubmit.emit();
             this.scFormSubmit.emit();
-            console.log('emit events');
           }}
           novalidate={this.novalidate}
         >

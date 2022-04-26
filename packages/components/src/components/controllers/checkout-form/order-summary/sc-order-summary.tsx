@@ -1,9 +1,10 @@
-import { Order } from '../../../../types';
 import { Component, Element, Event, EventEmitter, h, Prop, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
+
 import { animateTo, shimKeyframesHeightAuto, stopAnimations } from '../../../../functions/animate';
 import { getAnimation, setDefaultAnimation } from '../../../../functions/animation-registry';
+import { Order } from '../../../../types';
 
 @Component({
   tag: 'sc-order-summary',
@@ -32,6 +33,7 @@ export class ScOrderSummary {
 
   handleClick(e) {
     e.preventDefault();
+    if (this.empty && !this.loading) return;
     this.collapsed = !this.collapsed;
   }
 
@@ -91,7 +93,8 @@ export class ScOrderSummary {
         <div
           ref={el => (this.body = el as HTMLElement)}
           class={{
-            summary__content: true,
+            'summary__content': true,
+            'summary__content--empty': this.empty && !this.loading,
           }}
         >
           <slot />
