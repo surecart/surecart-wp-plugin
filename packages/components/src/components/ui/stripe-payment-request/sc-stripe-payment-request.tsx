@@ -207,9 +207,9 @@ export class ScStripePaymentRequest {
             console.log('SSL needed to display payment buttons.');
           } else {
             if (this.debug) {
-              this.debugError = __('No payment methods available.', 'surecart');
+              this.debugError = __('No wallets available.', 'surecart');
             }
-            console.log('No payment methods available.');
+            console.log('No wallets available.');
           }
           return;
         }

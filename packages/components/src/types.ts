@@ -280,6 +280,7 @@ export interface Processor {
     recurring_enabled: boolean;
     client_id: string;
   };
+  recurring_enabled: boolean;
   processor_type: 'paypal' | 'stripe';
 }
 
@@ -431,6 +432,8 @@ export type ProcessorName = 'stripe' | 'paypal' | 'paypal-card';
 export interface PaymentIntent extends Object {
   id: string;
   object: 'payment_intent';
+  amount: number;
+  currency: string;
   processor_type: 'stripe' | 'paypal';
   status: 'pending' | 'succeeded' | 'canceled';
   external_intent_id: string;

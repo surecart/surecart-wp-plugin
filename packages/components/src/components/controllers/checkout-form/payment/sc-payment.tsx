@@ -1,4 +1,4 @@
-import { Component, Event, EventEmitter, h, Prop, Watch } from '@stencil/core';
+import { Component, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
 
@@ -41,6 +41,12 @@ export class ScPayment {
   /** The currency code. */
   @Prop() currencyCode: string = 'usd';
 
+  /** Hold the stripe processor */
+  @State() stripe: Processor;
+
+  /** Holds the paypal processor. */
+  @State() paypal: Processor;
+
   /** Set the order state. */
   @Event() scSetOrderState: EventEmitter<object>;
 
@@ -53,6 +59,17 @@ export class ScPayment {
     }
   }
 
+  componentDidLoad() {
+    this.setProcessors();
+  }
+
+  /** Set the processors for this order. */
+  @Watch('processors')
+  setProcessors() {
+    this.stripe = this.processors.find(processor => processor.processor_type === 'stripe' && processor?.live_mode === (this.mode === 'live'));
+    this.paypal = this.processors.find(processor => processor.processor_type === 'paypal' && processor?.live_mode === (this.mode === 'live'));
+  }
+
   /**
    * Render the payment element.
    */
@@ -60,11 +77,21 @@ export class ScPayment {
     return <sc-order-stripe-payment-element order={this.order} mode={this.mode} processors={this.processors} currency-code={this.currencyCode}></sc-order-stripe-payment-element>;
   }
 
+  /** Should we show the processor */
+  showProcessor(processor: Processor) {
+    // does the order have a subscription?
+    // If so, it must have a recurring processor.
+    if (hasSubscription(this.order)) {
+      return processor?.processor_data?.recurring_enabled;
+    }
+    return true;
+  }
+
   /**
    * Render Stripe and Paypal radio buttons.
    */
   renderStripeAndPayPal() {
-    const showPayPal = hasSubscription(this.order);
+    const showPayPal = this.showProcessor(this.paypal);
     return (
       <sc-form-control label={this.label}>
         <div class="sc-payment-label" slot="label">
@@ -77,8 +104,8 @@ export class ScPayment {
         </div>
         <sc-toggles collapsible={false} theme="container">
           <sc-toggle
-            show-control={!showPayPal}
-            show-icon={!showPayPal}
+            show-control={showPayPal}
+            show-icon={showPayPal}
             shady
             borderless
             open={this.processor === 'stripe'}
@@ -90,7 +117,7 @@ export class ScPayment {
             </span>
             {this.renderStripePaymentElement()}
           </sc-toggle>
-          {!showPayPal && (
+          {showPayPal && (
             <sc-toggle show-control shady borderless open={this.processor === 'paypal'} onScShow={() => this.scSetOrderState.emit({ processor: 'paypal' })}>
               <span slot="summary" class="sc-payment-toggle-summary">
                 <sc-icon name="paypal" style={{ width: '80px', fontSize: '24px' }}></sc-icon>
@@ -169,13 +196,8 @@ export class ScPayment {
   }
 
   render() {
-    // we don't have line items.
-    if (this.order?.line_items?.pagination?.count === 0) {
-      return null;
-    }
-
-    // we don't have to buy anything, so don't show purchase options.
-    if (this.order?.total_amount === 0) {
+    // no payment is required.
+    if (this.order?.line_items?.pagination?.count > 1 && this.order?.total_amount === 0) {
       return null;
     }
 
@@ -186,15 +208,12 @@ export class ScPayment {
     }
 
     // both stripe and paypal are enabled.
-    if (
-      this.processors.find(processor => processor.processor_type === 'stripe' && processor?.live_mode === (this.mode === 'live')) &&
-      this.processors.find(processor => processor.processor_type === 'paypal' && processor?.live_mode === (this.mode === 'live'))
-    ) {
+    if (this.stripe && this.paypal) {
       return this.renderStripeAndPayPal();
     }
 
     // we have stripe.
-    if (this.processors.find(processor => processor.processor_type === 'stripe' && processor?.live_mode === (this.mode === 'live'))) {
+    if (this.stripe) {
       return (
         <sc-form-control label={this.label}>
           <div class="sc-payment-label" slot="label">
@@ -211,10 +230,8 @@ export class ScPayment {
     }
 
     // we have paypal.
-    if (!hasSubscription(this.order)) {
-      if (this.processors.find(processor => processor.processor_type === 'paypal' && processor?.live_mode === (this.mode === 'live'))) {
-        return this.renderPayPal();
-      }
+    if (this.paypal && this.showProcessor(this.paypal)) {
+      return this.renderPayPal();
     }
 
     console.error(`No processors are configured for the current cart items and mode. (${this.mode})`);

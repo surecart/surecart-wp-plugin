@@ -143,7 +143,7 @@ export class ScStripePaymentElement {
     this.elements
       .create('payment', {
         wallets: {
-          applyPay: 'never',
+          applePay: 'never',
           googlePay: 'never',
         },
       })

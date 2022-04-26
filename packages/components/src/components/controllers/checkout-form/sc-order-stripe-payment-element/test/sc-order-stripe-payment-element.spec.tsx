@@ -1,4 +1,5 @@
 import { newSpecPage } from '@stencil/core/testing';
+
 import { ScOrderStripePaymentElement } from '../sc-order-stripe-payment-element';
 
 describe('sc-order-stripe-payment-element', () => {

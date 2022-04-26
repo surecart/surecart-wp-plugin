@@ -47,6 +47,7 @@ export default () => {
 						'subscription.price',
 						'charge',
 						'charge.payment_method',
+						'charge.payment_intent',
 						'payment_method.card',
 						'customer',
 					],

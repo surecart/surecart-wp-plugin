@@ -4,6 +4,7 @@ import { Stripe } from '@stripe/stripe-js';
 import apiFetch from '../../../../functions/fetch';
 import { getProcessorData } from '../../../../functions/processor';
 import { Order, PaymentIntent, Processor } from '../../../../types';
+import { shouldReloadElement } from './functions';
 
 @Component({
   tag: 'sc-order-stripe-payment-element',
@@ -74,15 +75,10 @@ export class ScOrderStripePaymentElement {
   }
 
   @Watch('order')
-  async handleOrderChange(val, prev) {
-    // only in previous or current is zero.
-    if (val?.amount_due === 0 || prev?.amount_due === 0) {
-      // update the payment intent if the amount due changes.
-      if (prev?.amount_due !== val?.amount_due && val?.line_items?.pagination?.count > 0) {
-        this.clientSecret = null;
-        await this.updatePaymentIntent();
-      }
-    }
+  async handleOrderChange() {
+    if (!shouldReloadElement(this.paymentIntent, this.order)) return;
+    this.clientSecret = null;
+    await this.updatePaymentIntent();
   }
 
   /**
@@ -90,8 +86,9 @@ export class ScOrderStripePaymentElement {
    * we need to sync it if we have an order.
    */
   @Watch('paymentIntent')
-  async handlePaymentIntentChange(_, prev) {
-    if (!prev && this.order) {
+  async handlePaymentIntentChange() {
+    // check if we should reload the payment intent
+    if (shouldReloadElement(this.paymentIntent, this.order)) {
       await this.updatePaymentIntent();
     }
     // update payment intent in form when it's set.
