@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-04-25T16:57:20+00:00\n"
+"POT-Creation-Date: 2022-04-26T18:10:31+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 
@@ -2062,7 +2062,6 @@ msgstr ""
 #: admin/invoices.js:1
 #: admin/orders.js:1
 #: admin/product-groups.js:1
-#: admin/products.js:1
 #: admin/subscriptions/edit.js:1
 #: admin/subscriptions/show.js:1
 #: blocks/library.js:1
@@ -2593,7 +2592,6 @@ msgid "Create New Upgrade Group"
 msgstr ""
 
 #: admin/product-groups.js:1
-#: admin/products.js:1
 msgid "Group Name"
 msgstr ""
 
@@ -2602,7 +2600,6 @@ msgid "A name for your product group. This is not shown to customers."
 msgstr ""
 
 #: admin/product-groups.js:1
-#: admin/products.js:1
 #: blocks/library.js:3
 msgid "Create"
 msgstr ""
@@ -2695,30 +2692,6 @@ msgid "A name for your product."
 msgstr ""
 
 #: admin/products.js:1
-msgid "Charge tax on this product"
-msgstr ""
-
-#: admin/products.js:1
-msgid "General/Tangible Goods"
-msgstr ""
-
-#: admin/products.js:1
-msgid "Digital"
-msgstr ""
-
-#: admin/products.js:1
-msgid "Sofware As A Service"
-msgstr ""
-
-#: admin/products.js:1
-msgid "Service"
-msgstr ""
-
-#: admin/products.js:1
-msgid "To charge tax, please set up your tax information on the settings page."
-msgstr ""
-
-#: admin/products.js:1
 msgid "Error copying to clipboard"
 msgstr ""
 
@@ -2732,6 +2705,14 @@ msgstr ""
 
 #: admin/products.js:1
 msgid "Repeat Payment Every"
+msgstr ""
+
+#: admin/products.js:1
+msgid "Day"
+msgstr ""
+
+#: admin/products.js:1
+msgid "Week"
 msgstr ""
 
 #: admin/products.js:1
@@ -2822,6 +2803,10 @@ msgid "Are you sure you want to remove this image?"
 msgstr ""
 
 #: admin/products.js:1
+msgid "There was a problem with the upload. Please try again."
+msgstr ""
+
+#: admin/products.js:1
 msgid "Product Image"
 msgstr ""
 
@@ -2842,31 +2827,19 @@ msgid "Upload Image"
 msgstr ""
 
 #: admin/products.js:1
-msgid "Select an upgrade group"
+msgid "Taxes"
 msgstr ""
 
 #: admin/products.js:1
-msgid "Search for an upgrade group..."
+msgid "Charge tax on this product"
 msgstr ""
 
 #: admin/products.js:1
-msgid "Add New Upgrade Group"
+msgid "This is a physical product"
 msgstr ""
 
 #: admin/products.js:1
-msgid "Upgrade Group"
-msgstr ""
-
-#: admin/products.js:1
-msgid "Add this product to a group with others you want the purchaser to switch between."
-msgstr ""
-
-#: admin/products.js:1
-msgid "Create Product Group"
-msgstr ""
-
-#: admin/products.js:1
-msgid "This is not shown to the customer, but is used help you identify the group."
+msgid "To charge tax, please set up your tax information on the settings page."
 msgstr ""
 
 #: admin/products.js:1
@@ -6042,31 +6015,31 @@ msgctxt "text direction"
 msgid "ltr"
 msgstr ""
 
-#: components/cjs/fetch-63ba3830.js:1
+#: components/cjs/fetch-6d4bc1c9.js:1
 #: components/components/fetch.js:1
 #: components/custom-elements/index.js:1
-#: components/esm/fetch-d56a3ec0.js:1
+#: components/esm/fetch-af0b00a4.js:1
 msgid "The response is not a valid JSON response."
 msgstr ""
 
-#: components/cjs/fetch-63ba3830.js:1
+#: components/cjs/fetch-6d4bc1c9.js:1
 #: components/components/fetch.js:1
 #: components/custom-elements/index.js:1
-#: components/esm/fetch-d56a3ec0.js:1
+#: components/esm/fetch-af0b00a4.js:1
 msgid "An unknown error occurred."
 msgstr ""
 
-#: components/cjs/fetch-63ba3830.js:1
+#: components/cjs/fetch-6d4bc1c9.js:1
 #: components/components/fetch.js:1
 #: components/custom-elements/index.js:1
-#: components/esm/fetch-d56a3ec0.js:1
+#: components/esm/fetch-af0b00a4.js:1
 msgid "Media upload failed. If this is a photo or a large image, please scale it down and try again."
 msgstr ""
 
-#: components/cjs/fetch-63ba3830.js:1
+#: components/cjs/fetch-6d4bc1c9.js:1
 #: components/components/fetch.js:1
 #: components/custom-elements/index.js:1
-#: components/esm/fetch-d56a3ec0.js:1
+#: components/esm/fetch-af0b00a4.js:1
 msgid "You are probably offline."
 msgstr ""
 
