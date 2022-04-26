@@ -125,6 +125,19 @@ abstract class AdminModelEditController {
 			}
 		}
 
+		// This adds a timestamp to API request to prevent caching in some instances.
+		wp_add_inline_script(
+			'wp-api-fetch',
+			'wp.apiFetch.use( ( options, next ) => {
+					if ( typeof wp.url.addQueryArgs === "function" ) {
+						options.path = wp.url.addQueryArgs(options.path, { timestamp: Date.now() });
+					}
+					const result = next( options );
+					return result;
+				} );',
+			'after'
+		);
+
 		wp_set_script_translations( $this->handle, 'surecart', WP_LANG_DIR . '/plugins/' );
 
 		// common localizations.

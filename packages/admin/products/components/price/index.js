@@ -189,6 +189,14 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 										}
 										choices={[
 											{
+												value: 'day',
+												label: __('Day', 'surecart'),
+											},
+											{
+												value: 'week',
+												label: __('Week', 'surecart'),
+											},
+											{
 												value: 'month',
 												label: __('Month', 'surecart'),
 											},

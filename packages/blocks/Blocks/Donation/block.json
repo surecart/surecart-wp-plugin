@@ -21,6 +21,10 @@
 		"price_id": {
 			"type": "string"
 		},
+		"currency": {
+			"type": "string",
+			"default": "USD"
+		},
 		"custom_amount": {
 			"type": "boolean",
 			"default": true

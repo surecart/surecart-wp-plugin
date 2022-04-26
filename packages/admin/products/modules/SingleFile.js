@@ -15,6 +15,7 @@ import useCurrentPage from '../../mixins/useCurrentPage';
 
 export default ({ file, onUploaded, onRemoved }) => {
 	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState('');
 	const [id, setId] = useState('');
 	const uploadFile = useFileUpload();
 	const { setSaving } = useCurrentPage('product');
@@ -30,10 +31,17 @@ export default ({ file, onUploaded, onRemoved }) => {
 		try {
 			setLoading(true);
 			setSaving(true);
+			setError('');
 			const id = await uploadFile(file);
 			setId(id);
 			onUploaded(id);
 		} catch (e) {
+			setError(
+				__(
+					'There was a problem with the upload. Please try again.',
+					'surecart'
+				)
+			);
 			console.error(e);
 		} finally {
 			setLoading(false);
@@ -68,6 +76,14 @@ export default ({ file, onUploaded, onRemoved }) => {
 			setLoading(false);
 		}
 	};
+
+	if (!!error) {
+		return (
+			<sc-alert open={!!error} type="danger">
+				{error}
+			</sc-alert>
+		);
+	}
 
 	return (
 		<sc-stacked-list-row style={{ position: 'relative' }} mobile-size={0}>

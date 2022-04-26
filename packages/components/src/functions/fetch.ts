@@ -1,4 +1,5 @@
 import apiFetch from '@wordpress/api-fetch';
+import { addQueryArgs } from '@wordpress/url';
 
 if (window?.scData) {
   apiFetch.use(apiFetch.createRootURLMiddleware(window?.scData?.root_url));
@@ -9,5 +10,12 @@ if (window?.scData) {
   // @ts-ignore
   apiFetch.nonceEndpoint = window?.scData?.nonce_endpoint;
 }
+
+// We append a timestamp to the URL to prevent caching.
+apiFetch.use((options, next) => {
+  options.path = addQueryArgs(options.path, { timestamp: Date.now() });
+  const result = next(options);
+  return result;
+});
 
 export default apiFetch;

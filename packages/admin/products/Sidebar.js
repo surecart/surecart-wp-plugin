@@ -10,6 +10,7 @@ import Definition from '../ui/Definition';
 import { ScSwitch } from '@surecart/components-react';
 import Image from './modules/Image';
 import Upgrades from './modules/Upgrades';
+import Taxes from './modules/Tax';
 import Files from './modules/Files';
 import useCurrentPage from '../mixins/useCurrentPage';
 
@@ -146,6 +147,12 @@ export default ({ id, loading, product, updateProduct, saveProduct }) => {
 				</Fragment>
 			</Box>
 
+			<Taxes
+				product={product}
+				updateProduct={updateProduct}
+				loading={loading}
+			/>
+
 			<Image
 				product={product}
 				updateProduct={updateProduct}
@@ -159,44 +166,11 @@ export default ({ id, loading, product, updateProduct, saveProduct }) => {
 				loading={loading}
 			/>
 
-			<Upgrades
+			{/* <Upgrades
 				product={product}
 				updateProduct={updateProduct}
 				loading={loading}
-			/>
-			{/*
-			<Box
-				loading={loading}
-				title={__('Automations', 'surecart')}
-				css={css`
-					font-size: 14px;
-				`}
-				footer={
-					!loading && (
-						<ScButton>
-							<svg
-								slot="prefix"
-								xmlns="http://www.w3.org/2000/svg"
-								width="16"
-								height="16"
-								viewBox="0 0 24 24"
-								fill="none"
-								stroke="currentColor"
-								strokeWidth="2"
-								strokeLinecap="round"
-								strokeLinejoin="round"
-							>
-								<line x1="12" y1="5" x2="12" y2="19"></line>
-								<line x1="5" y1="12" x2="19" y2="12"></line>
-							</svg>
-
-							{__('Add Automation', 'surecart')}
-						</ScButton>
-					)
-				}
-			>
-				{__('Coming soon...', 'surecart')}
-			</Box> */}
+			/> */}
 		</Fragment>
 	);
 };

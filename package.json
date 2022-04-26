@@ -18,6 +18,7 @@
 		"core/",
 		"vendor/",
 		"views/",
+		"!node_modules",
 		"LICENSE",
 		"README.md",
 		"readme.txt",
