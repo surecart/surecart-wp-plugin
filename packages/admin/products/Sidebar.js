@@ -10,6 +10,7 @@ import Definition from '../ui/Definition';
 import { ScSwitch } from '@surecart/components-react';
 import Image from './modules/Image';
 import Upgrades from './modules/Upgrades';
+import Taxes from './modules/Tax';
 import Files from './modules/Files';
 import useCurrentPage from '../mixins/useCurrentPage';
 
@@ -145,6 +146,12 @@ export default ({ id, loading, product, updateProduct, saveProduct }) => {
 					)}
 				</Fragment>
 			</Box>
+
+			<Taxes
+				product={product}
+				updateProduct={updateProduct}
+				loading={loading}
+			/>
 
 			<Image
 				product={product}

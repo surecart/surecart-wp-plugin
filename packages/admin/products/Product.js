@@ -59,6 +59,7 @@ export default () => {
 		} else {
 			updateProduct({
 				tax_enabled: true,
+				tax_category: 'digital',
 			});
 		}
 	}, []);
