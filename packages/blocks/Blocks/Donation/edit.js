@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { __, sprinf } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 import { Fragment, useState, useRef, useEffect } from '@wordpress/element';
 import {
 	PanelBody,
@@ -56,6 +56,10 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 		(select) =>
 			select(coreStore).getEntityRecord('root', 'price', price_id),
 		[price_id]
+	);
+
+	const isParentOfSelectedBlock = useSelect((select) =>
+		select(blockEditorStore).hasSelectedInnerBlock(clientId, true)
 	);
 
 	const children = useSelect(
@@ -208,7 +212,7 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 					)}
 				</ScDonationChoices>
 
-				{isSelected && (
+				{(isSelected || isParentOfSelectedBlock) && (
 					<Tooltip text={__('Add Amount', 'surecart')} delay={0}>
 						<div
 							onClick={() => {
