@@ -1422,6 +1422,14 @@ export namespace Components {
          */
         "debug": boolean;
         /**
+          * Default
+         */
+        "default": 'stripe' | 'paypal' | 'paypal-card';
+        /**
+          * Hide the test mode badge
+         */
+        "hideTestModeBadge": boolean;
+        /**
           * The input's label.
          */
         "label": string;
@@ -4736,6 +4744,14 @@ declare namespace LocalJSX {
           * Show debug messages.
          */
         "debug"?: boolean;
+        /**
+          * Default
+         */
+        "default"?: 'stripe' | 'paypal' | 'paypal-card';
+        /**
+          * Hide the test mode badge
+         */
+        "hideTestModeBadge"?: boolean;
         /**
           * The input's label.
          */

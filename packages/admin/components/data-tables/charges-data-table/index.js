@@ -57,6 +57,51 @@ export default ({
 		);
 	};
 
+	const renderMethod = (charge) => {
+		if (charge?.payment_method?.card?.brand) {
+			return (
+				<div
+					css={css`
+						display: flex;
+						align-items: center;
+						gap: 1em;
+					`}
+				>
+					<sc-cc-logo
+						style={{ fontSize: '36px' }}
+						brand={charge?.payment_method?.card?.brand}
+					></sc-cc-logo>
+					**** {charge?.payment_method?.card?.last4}
+				</div>
+			);
+		}
+		console.log(charge?.payment_intent);
+
+		if (charge?.payment_intent?.processor_type === 'paypal') {
+			return (
+				<sc-tooltip
+					type="text"
+					style={{ display: 'inline-block' }}
+					text={
+						charge?.payment_intent?.processor_data?.paypal
+							?.payer_email || __('Unknown email', 'surecart')
+					}
+				>
+					<sc-icon
+						name="paypal"
+						style={{
+							fontSize: '56px',
+							lineHeight: '1',
+							height: '28px',
+						}}
+					></sc-icon>
+				</sc-tooltip>
+			);
+		}
+
+		return charge?.payment_intent?.processor_type;
+	};
+
 	return (
 		<Fragment>
 			<DataTable
@@ -112,21 +157,7 @@ export default ({
 									year="numeric"
 								></sc-format-date>
 							),
-							method: payment_method?.card?.brand && (
-								<div
-									css={css`
-										display: flex;
-										align-items: center;
-										gap: 1em;
-									`}
-								>
-									<sc-cc-logo
-										style={{ fontSize: '36px' }}
-										brand={payment_method?.card?.brand}
-									></sc-cc-logo>
-									**** {payment_method?.card?.last4}
-								</div>
-							),
+							method: renderMethod(charge),
 							status: renderStatusTag(charge),
 							refund: renderRefundButton(charge),
 						};

@@ -803,6 +803,8 @@
     "busy": true,
     "currency-code": true,
     "debug": true,
+    "default": true,
+    "hide-test-mode-badge": true,
     "label": true,
     "loading": true,
     "mode": true,

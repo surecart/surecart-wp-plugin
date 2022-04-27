@@ -1,5 +1,5 @@
 import { Component, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
-import { sprintf, __ } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
 
 import { hasSubscription } from '../../../../functions/line-items';
@@ -44,6 +44,12 @@ export class ScPayment {
   /** The currency code. */
   @Prop() currencyCode: string = 'usd';
 
+  /** Default */
+  @Prop() default: 'stripe' | 'paypal' | 'paypal-card' = 'stripe';
+
+  /** Hide the test mode badge */
+  @Prop() hideTestModeBadge: boolean;
+
   /** Hold the stripe processor */
   @State() stripe: Processor;
 
@@ -62,16 +68,24 @@ export class ScPayment {
     }
   }
 
+  @Watch('default')
+  handleDefaultChange() {
+    if (this.default) {
+      this.scSetOrderState.emit({ processor: this.default });
+    }
+  }
+
   componentWillLoad() {
     this.setProcessors();
+    this.handleDefaultChange();
   }
 
   /** Set the processors for this order. */
   @Watch('processors')
   @Watch('mode')
   setProcessors() {
-    this.stripe = this.processors.find(processor => processor.processor_type === 'stripe' && processor?.live_mode === (this.mode === 'live'));
-    this.paypal = this.processors.find(processor => processor.processor_type === 'paypal' && processor?.live_mode === (this.mode === 'live'));
+    this.stripe = (this.processors || []).find(processor => processor.processor_type === 'stripe' && processor?.live_mode === (this.mode === 'live'));
+    this.paypal = (this.processors || []).find(processor => processor.processor_type === 'paypal' && processor?.live_mode === (this.mode === 'live'));
   }
 
   /**
@@ -91,6 +105,17 @@ export class ScPayment {
     return true;
   }
 
+  renderTestModeBadge() {
+    if (this.hideTestModeBadge) return null;
+    return (
+      this.mode === 'test' && (
+        <sc-tag type="warning" size="small">
+          {__('Test Mode', 'surecart')}
+        </sc-tag>
+      )
+    );
+  }
+
   /**
    * Render Stripe and Paypal radio buttons.
    */
@@ -100,11 +125,7 @@ export class ScPayment {
       <sc-form-control label={this.label}>
         <div class="sc-payment-label" slot="label">
           <div>{this.label}</div>
-          {this.mode === 'test' && (
-            <sc-tag type="warning" size="small">
-              {__('Test Mode', 'surecart')}
-            </sc-tag>
-          )}
+          {this.renderTestModeBadge()}
         </div>
         <sc-toggles collapsible={false} theme="container">
           <sc-toggle
@@ -142,11 +163,7 @@ export class ScPayment {
       <sc-form-control label={this.label}>
         <div class="sc-payment-label" slot="label">
           <div>{this.label}</div>
-          {this.mode === 'test' && (
-            <sc-tag type="warning" size="small">
-              {__('Test Mode', 'surecart')}
-            </sc-tag>
-          )}
+          {this.renderTestModeBadge()}
         </div>
         <sc-toggles collapsible={false} theme="container">
           <sc-toggle
@@ -202,17 +219,6 @@ export class ScPayment {
   }
 
   renderNoProcessors() {
-    if (this.debug) {
-      return (
-        <sc-alert type="danger" open>
-          {sprintf(
-            __('There is no payment method for %1s payments. You may need to connect and verify your account with the processor in order to process live payments.', 'surecart'),
-            this.mode,
-            this.getProcessor(),
-          )}
-        </sc-alert>
-      );
-    }
     return (
       <sc-alert type="info" open>
         {__('Please contact us for payment', 'surecart')}
@@ -243,11 +249,7 @@ export class ScPayment {
         <sc-form-control label={this.label}>
           <div class="sc-payment-label" slot="label">
             <div>{this.label}</div>
-            {this.mode === 'test' && (
-              <sc-tag type="warning" size="small">
-                {__('Test Mode', 'surecart')}
-              </sc-tag>
-            )}
+            {this.renderTestModeBadge()}
           </div>
           <sc-card>{this.renderStripePaymentElement()}</sc-card>
         </sc-form-control>

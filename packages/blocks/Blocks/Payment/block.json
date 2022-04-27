@@ -18,6 +18,11 @@
 		"label": {
 			"type": "string",
 			"default": "Payment"
+		},
+		"default_processor": {
+			"type": "string",
+			"default": "stripe"
 		}
-	}
+	},
+	"usesContext": ["surecart/form/mode"]
 }
