@@ -1,5 +1,5 @@
 import { Component, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
-import { __ } from '@wordpress/i18n';
+import { sprintf, __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
 
 import { hasSubscription } from '../../../../functions/line-items';
@@ -22,6 +22,9 @@ export class ScPayment {
 
   /** Is this loading. */
   @Prop() loading: boolean;
+
+  /** Show debug messages. */
+  @Prop() debug: boolean;
 
   /** Is this busy. */
   @Prop() busy: boolean;
@@ -65,6 +68,7 @@ export class ScPayment {
 
   /** Set the processors for this order. */
   @Watch('processors')
+  @Watch('mode')
   setProcessors() {
     this.stripe = this.processors.find(processor => processor.processor_type === 'stripe' && processor?.live_mode === (this.mode === 'live'));
     this.paypal = this.processors.find(processor => processor.processor_type === 'paypal' && processor?.live_mode === (this.mode === 'live'));
@@ -187,7 +191,28 @@ export class ScPayment {
     );
   }
 
+  getProcessor() {
+    switch (this.processor) {
+      case 'paypal':
+      case 'paypal-card':
+        return 'paypal';
+      default:
+        return 'stripe';
+    }
+  }
+
   renderNoProcessors() {
+    if (this.debug) {
+      return (
+        <sc-alert type="danger" open>
+          {sprintf(
+            __('There is no payment method for %1s payments. You may need to connect and verify your account with the processor in order to process live payments.', 'surecart'),
+            this.mode,
+            this.getProcessor(),
+          )}
+        </sc-alert>
+      );
+    }
     return (
       <sc-alert type="info" open>
         {__('Please contact us for payment', 'surecart')}

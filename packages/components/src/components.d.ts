@@ -1418,6 +1418,10 @@ export namespace Components {
          */
         "currencyCode": string;
         /**
+          * Show debug messages.
+         */
+        "debug": boolean;
+        /**
           * The input's label.
          */
         "label": string;
@@ -4728,6 +4732,10 @@ declare namespace LocalJSX {
           * The currency code.
          */
         "currencyCode"?: string;
+        /**
+          * Show debug messages.
+         */
+        "debug"?: boolean;
         /**
           * The input's label.
          */

@@ -802,6 +802,7 @@
   "sc-payment": {
     "busy": true,
     "currency-code": true,
+    "debug": true,
     "label": true,
     "loading": true,
     "mode": true,
