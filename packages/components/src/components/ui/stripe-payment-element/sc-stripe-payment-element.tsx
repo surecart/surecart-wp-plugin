@@ -134,7 +134,15 @@ export class ScStripePaymentElement {
           colorText: styles.getPropertyValue('--sc-input-label-color'),
           borderRadius: styles.getPropertyValue('--sc-input-border-radius-medium'),
           colorBackground: styles.getPropertyValue('--sc-input-background-color'),
-          fontSizeBase: '16px',
+          fontSizeBase: styles.getPropertyValue('--sc-input-font-size-medium'),
+        },
+        rules: {
+          '.Input': {
+            border: styles.getPropertyValue('--sc-input-border'),
+          },
+          '.Input::placeholder': {
+            color: styles.getPropertyValue('--sc-input-placeholder-color'),
+          },
         },
       },
     });
