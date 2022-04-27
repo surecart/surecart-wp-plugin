@@ -9,6 +9,13 @@ use SureCart\Support\Errors\ErrorsService;
  */
 class RequestService {
 	/**
+	 * Has this been cached yet for the request?
+	 *
+	 * @var boolean
+	 */
+	protected static $cached = false;
+
+	/**
 	 * Undocumented variable
 	 *
 	 * @var string
@@ -68,7 +75,14 @@ class RequestService {
 	 */
 	public function makeRequest( $endpoint, $args = [] ) {
 		// we cache this so we can request it several times.
-		$cache_key     = $endpoint . wp_json_encode( $args );
+		$cache_key = $endpoint . wp_json_encode( $args );
+
+		// flush the cache on the first request to clear any redis caching.
+		if ( ! self::$cached ) {
+			wp_cache_flush( $cache_key );
+			self::$cached = true;
+		}
+
 		$response_body = wp_cache_get( $cache_key );
 
 		if ( false === $response_body ) {
