@@ -39,6 +39,7 @@
 	},
 	"dependencies": {
 		"@surecart/components": "workspace:^",
+		"@surecart/components-react": "workspace:^",
 		"@surecart/docs": "workspace:^"
 	},
 	"devDependencies": {
