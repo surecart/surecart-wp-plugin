@@ -156,7 +156,6 @@ return [
 		'edit_model'    => \SureCart\Middleware\EditModelMiddleware::class,
 		'nonce'         => \SureCart\Middleware\NonceMiddleware::class,
 		'webhooks'      => \SureCart\Middleware\WebhooksMiddleware::class,
-		'timestamp'     => \SureCart\Middleware\TimestampMiddleware::class,
 	],
 
 	/**

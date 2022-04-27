@@ -1,5 +1,4 @@
 import apiFetch from '@wordpress/api-fetch';
-import { addQueryArgs } from '@wordpress/url';
 
 if (window?.scData) {
   apiFetch.use(apiFetch.createRootURLMiddleware(window?.scData?.root_url));
