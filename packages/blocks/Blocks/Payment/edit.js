@@ -31,6 +31,7 @@ export default ({ className, attributes, setAttributes }) => {
 			<ScPayment
 				className={className}
 				label={label}
+				debug
 				secureNotice={secure_notice}
 			></ScPayment>
 		</Fragment>

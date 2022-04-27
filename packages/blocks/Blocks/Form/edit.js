@@ -424,7 +424,7 @@ export default function edit({ clientId, attributes, setAttributes }) {
 					</div>
 					<ScCheckout
 						keys={scData?.keys}
-						mode={'test'}
+						mode={mode}
 						formId={formId}
 						processors={scData?.processors}
 						css={css`
