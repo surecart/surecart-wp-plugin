@@ -87,6 +87,10 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 		if ( 'surecart-components' !== $handle || ! $source ) {
 			return $tag;
 		}
+		// don't use javascript module if we are not using esm loader.
+		if ( ! \SureCart::assets()->usesEsmLoader() ) {
+			return $tag;
+		}
 		// phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedScript
 		return '<script src="' . esc_url_raw( $source ) . '" type="module"></script>';
 	}
