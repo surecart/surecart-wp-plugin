@@ -118,8 +118,6 @@ const registerBlock = (block) => {
 
 	const { metadata, settings } = block;
 
-	console.log({ ...settings });
-
 	registerBlockType(
 		{
 			...metadata,
