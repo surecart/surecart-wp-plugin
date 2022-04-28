@@ -17,30 +17,23 @@ export class ScFormComponentsValidator {
   /** Is there an address field? */
   @State() hasAddress: boolean;
 
+  private paymentField: HTMLScPaymentElement;
+
   @Watch('order')
   handleOrderChange() {
     if (this.disabled) return;
     // address is required, add before the payment field
     if (this?.order?.tax_status === 'address_invalid' && !this.hasAddress) {
-      // create the element.
       const address = document.createElement('sc-order-shipping-address');
       address.label = __('Address', 'surecart');
-
-      // insert before the payment field.
-      const paymentField = this.el.querySelector('sc-payment');
-      if (!paymentField) {
-        console.warn('Payment field is missing.');
-        return;
-      }
-
-      // insert.
-      paymentField.before(address);
+      this.el.insertBefore(address, this.paymentField);
       this.hasAddress = true;
     }
   }
 
   componentWillLoad() {
     this.hasAddress = !!this.el.querySelector('sc-address');
+    this.paymentField = this.el.querySelector('sc-payment');
   }
 
   render() {
