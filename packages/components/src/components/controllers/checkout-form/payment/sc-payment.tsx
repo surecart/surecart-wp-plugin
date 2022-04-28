@@ -233,7 +233,7 @@ export class ScPayment {
 
     // we don't have any processors.
     if (!this.processors?.length) {
-      console.error('No processors are configured for this merchant.');
+      console.warn('No processors are configured for this merchant.');
       return this.renderNoProcessors();
     }
 
@@ -260,7 +260,7 @@ export class ScPayment {
       return this.renderPayPal();
     }
 
-    console.error(`No processors are configured for the current cart items and mode. (${this.mode})`);
+    console.warn(`No processors are configured for the current cart items and mode. (${this.mode})`);
     // render no processors message.
     return this.renderNoProcessors();
   }
