@@ -165,7 +165,7 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 					'dashboard' => \SureCart::pages()->url( 'dashboard' ),
 					'checkout'  => \SureCart::pages()->url( 'checkout' ),
 				],
-				'processors'     => \SureCart::account()->processors,
+				'processors'     => (array) \SureCart::account()->processors ?? [],
 				'root_url'       => esc_url_raw( get_rest_url() ),
 				'nonce'          => ( wp_installing() && ! is_multisite() ) ? '' : wp_create_nonce( 'wp_rest' ),
 				'nonce_endpoint' => admin_url( 'admin-ajax.php?action=sc-rest-nonce' ),
@@ -265,11 +265,13 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 	 */
 	public function editorAssets() {
 		$asset_file = include trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/blocks/library.asset.php';
-
+		$deps       = $asset_file['dependencies'];
+		// fix bug in deps array.
+		$deps[ array_search( 'wp-blockEditor', $deps ) ] = 'wp-block-editor';
 		\SureCart::core()->assets()->enqueueScript(
 			'surecart-blocks',
 			trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/blocks/library.js',
-			array_merge( [ 'surecart-components' ], $asset_file['dependencies'] ),
+			array_merge( [ 'surecart-components' ], $deps ),
 			true
 		);
 
