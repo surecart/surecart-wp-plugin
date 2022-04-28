@@ -60,6 +60,20 @@
       background-color: var(--sc-color-danger-200);
     }
   }
+  &.alert--warning {
+    background-color: var(--sc-color-warning-100);
+    color: var(--sc-color-warning-800);
+
+    .alert__title {
+      color: var(--sc-color-warning-900);
+    }
+    .alert__icon {
+      color: var(--sc-color-warning-600);
+    }
+    .alert__close:hover {
+      background-color: var(--sc-color-warning-200);
+    }
+  }
   &.alert--success {
     background-color: var(--sc-color-success-100);
     color: var(--sc-color-success-800);
