@@ -114,7 +114,7 @@ export default ({ className, attributes, setAttributes, context }) => {
 					label={label}
 					debug={true}
 					hideTestModeBadge={mode === 'live'}
-					default={default_processor}
+					defaultProcessor={default_processor}
 					secureNotice={secure_notice}
 				></ScPayment>
 			)}
