@@ -11,7 +11,7 @@ import {
 	ScSubscriptionDetails,
 	ScDashboardModule,
 } from '@surecart/components-react';
-import { Fragment } from 'react';
+import { Fragment } from '@wordpress/element';
 import OverlayLabel from '../../../components/OverlayLabel';
 
 export default ({ attributes, setAttributes }) => {

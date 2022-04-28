@@ -24,6 +24,7 @@
 	"prettier": "@wordpress/prettier-config",
 	"scripts": {
 		"build": "wp-scripts build",
+		"release": "yarn build",
 		"check-engines": "wp-scripts check-engines",
 		"check-licenses": "wp-scripts check-licenses",
 		"format": "wp-scripts format",
