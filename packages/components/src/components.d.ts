@@ -1418,13 +1418,9 @@ export namespace Components {
          */
         "currencyCode": string;
         /**
-          * Show debug messages.
-         */
-        "debug": boolean;
-        /**
           * Default
          */
-        "default": 'stripe' | 'paypal' | 'paypal-card';
+        "defaultProcessor": 'stripe' | 'paypal' | 'paypal-card';
         /**
           * Hide the test mode badge
          */
@@ -4741,13 +4737,9 @@ declare namespace LocalJSX {
          */
         "currencyCode"?: string;
         /**
-          * Show debug messages.
-         */
-        "debug"?: boolean;
-        /**
           * Default
          */
-        "default"?: 'stripe' | 'paypal' | 'paypal-card';
+        "defaultProcessor"?: 'stripe' | 'paypal' | 'paypal-card';
         /**
           * Hide the test mode badge
          */
