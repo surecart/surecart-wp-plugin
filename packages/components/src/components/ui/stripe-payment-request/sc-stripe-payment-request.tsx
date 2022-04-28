@@ -207,7 +207,7 @@ export class ScStripePaymentRequest {
             console.log('SSL needed to display payment buttons.');
           } else {
             if (this.debug) {
-              this.debugError = __('No wallets available.', 'surecart');
+              this.debugError = __('You do not have any wallets set up in your browser.', 'surecart');
             }
             console.log('No wallets available.');
           }
