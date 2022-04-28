@@ -26,7 +26,7 @@ export class ScFormComponentsValidator {
     if (this?.order?.tax_status === 'address_invalid' && !this.hasAddress) {
       const address = document.createElement('sc-order-shipping-address');
       address.label = __('Address', 'surecart');
-      this.paymentField.before(address);
+      this.el.insertBefore(address, this.paymentField);
       this.hasAddress = true;
     }
   }
