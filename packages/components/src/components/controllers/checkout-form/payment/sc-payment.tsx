@@ -23,9 +23,6 @@ export class ScPayment {
   /** Is this loading. */
   @Prop() loading: boolean;
 
-  /** Show debug messages. */
-  @Prop() debug: boolean;
-
   /** Is this busy. */
   @Prop() busy: boolean;
 
@@ -45,7 +42,7 @@ export class ScPayment {
   @Prop() currencyCode: string = 'usd';
 
   /** Default */
-  @Prop() default: 'stripe' | 'paypal' | 'paypal-card' = 'stripe';
+  @Prop() defaultProcessor: 'stripe' | 'paypal' | 'paypal-card' = 'stripe';
 
   /** Hide the test mode badge */
   @Prop() hideTestModeBadge: boolean;
@@ -68,10 +65,10 @@ export class ScPayment {
     }
   }
 
-  @Watch('default')
+  @Watch('defaultProcessor')
   handleDefaultChange() {
-    if (this.default) {
-      this.scSetOrderState.emit({ processor: this.default });
+    if (this.defaultProcessor) {
+      this.scSetOrderState.emit({ processor: this.defaultProcessor });
     }
   }
 
@@ -220,9 +217,11 @@ export class ScPayment {
 
   renderNoProcessors() {
     return (
-      <sc-alert type="info" open>
-        {__('Please contact us for payment', 'surecart')}
-      </sc-alert>
+      <sc-form-control label={this.label}>
+        <sc-alert type="info" open>
+          {__('Please contact us for payment', 'surecart')}
+        </sc-alert>
+      </sc-form-control>
     );
   }
 
