@@ -57,11 +57,14 @@ export class ScPayment {
   @Event() scSetOrderState: EventEmitter<object>;
 
   @Watch('order')
-  handleOrderChange() {
-    if (hasSubscription(this.order)) {
-      setTimeout(() => {
+  handleOrderChange(_, prev) {
+    if (hasSubscription(this.order) || !this.defaultProcessor) {
+      return setTimeout(() => {
         this.scSetOrderState.emit({ processor: 'stripe' });
       });
+    }
+    if (!prev) {
+      this.handleDefaultChange();
     }
   }
 
@@ -74,7 +77,6 @@ export class ScPayment {
 
   componentWillLoad() {
     this.setProcessors();
-    this.handleDefaultChange();
   }
 
   /** Set the processors for this order. */
