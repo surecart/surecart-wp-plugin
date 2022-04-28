@@ -14,14 +14,15 @@
 | `currencyCode`                | `currency-code`                 | Currency to use for this checkout.          | `string`                       | `'usd'`     |
 | `customer`                    | --                              | Stores the current customer                 | `Customer`                     | `undefined` |
 | `disableComponentsValidation` | `disable-components-validation` | Should we disable components validation     | `boolean`                      | `undefined` |
+| `editLineItems`               | `edit-line-items`               | Can we edit line items?                     | `boolean`                      | `true`      |
 | `formId`                      | `form-id`                       | The checkout form id                        | `number`                       | `undefined` |
-| `i18n`                        | --                              | Translation object.                         | `Object`                       | `undefined` |
 | `loggedIn`                    | `logged-in`                     | Is this user logged in?                     | `boolean`                      | `undefined` |
 | `mode`                        | `mode`                          | Are we in test or live mode.                | `"live" \| "test"`             | `'live'`    |
 | `modified`                    | `modified`                      | When the form was modified.                 | `string`                       | `undefined` |
 | `persistSession`              | `persist-session`               | Where to go on success                      | `boolean`                      | `true`      |
 | `prices`                      | --                              | An array of prices to pre-fill in the form. | `PriceChoice[]`                | `[]`        |
 | `processors`                  | --                              | Processors enabled for this form.           | `Processor[]`                  | `undefined` |
+| `removeLineItems`             | `remove-line-items`             | Can we remove line items?                   | `boolean`                      | `true`      |
 | `successUrl`                  | `success-url`                   | Where to go on success                      | `string`                       | `''`        |
 
 
