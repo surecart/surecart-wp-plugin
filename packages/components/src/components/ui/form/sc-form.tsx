@@ -56,12 +56,9 @@ export class ScForm {
     return this.submitForm();
   }
 
-  // private controls = ['button', 'fieldset', 'input', 'keygen', 'label', 'meter', 'output', 'progress', 'select', 'textarea', 'sc-button', 'sc-price-input', 'sc-input'];
-
   /** Gets all form control elements (native and custom). */
   getFormControls() {
     return [...this.form.querySelectorAll('*')] as HTMLElement[];
-    // return ([...this.form.querySelectorAll('*')] as HTMLElement[]).filter((el: HTMLElement) => this.controls.includes(el.tagName.toLowerCase())) as HTMLElement[];
   }
 
   @Method('validate')
