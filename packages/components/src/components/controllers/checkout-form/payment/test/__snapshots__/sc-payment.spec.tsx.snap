@@ -2,9 +2,11 @@
 
 exports[`sc-payment renders no processors 1`] = `
 <sc-payment>
-  <sc-alert open="" type="info">
-    Please contact us for payment
-  </sc-alert>
+  <sc-form-control>
+    <sc-alert open="" type="info">
+      Please contact us for payment
+    </sc-alert>
+  </sc-form-control>
 </sc-payment>
 `;
 
