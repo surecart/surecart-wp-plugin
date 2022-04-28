@@ -14,8 +14,10 @@ export class ScLineItems {
   @Prop() order: Order;
   @Prop() loading: boolean;
   @Prop() prices: Prices;
-  @Prop() editable: boolean = true;
-  @Prop() removable: boolean = true;
+  @Prop() editable: boolean;
+  @Prop() removable: boolean;
+  @Prop() editLineItems: boolean = true;
+  @Prop() removeLineItems: boolean = true;
   @Prop() lockedChoices: Array<PriceChoice> = [];
 
   /** Update the line item. */
@@ -55,6 +57,16 @@ export class ScLineItems {
     return this.lockedChoices.some(choice => choice.id === item.price.id);
   }
 
+  isEditable() {
+    if (this.editable !== null) return this.editable;
+    return this.editLineItems;
+  }
+
+  isRemovable() {
+    if (this.removable !== null) return this.removable;
+    return this.removeLineItems;
+  }
+
   render() {
     if (!!this.loading) {
       return (
@@ -76,8 +88,8 @@ export class ScLineItems {
               key={item.id}
               imageUrl={(item?.price?.product as Product)?.image_url}
               name={(item?.price?.product as Product)?.name}
-              editable={this.editable && !item?.ad_hoc_amount}
-              removable={this.removable}
+              editable={this.isEditable() && !item?.ad_hoc_amount}
+              removable={this.isRemovable()}
               quantity={item.quantity}
               amount={item.ad_hoc_amount !== null ? item.ad_hoc_amount : item.price.amount * item.quantity}
               currency={this.order?.currency}
@@ -93,4 +105,4 @@ export class ScLineItems {
   }
 }
 
-openWormhole(ScLineItems, ['order', 'loading', 'prices', 'lockedChoices'], false);
+openWormhole(ScLineItems, ['order', 'loading', 'prices', 'lockedChoices', 'editLineItems', 'removeLineItems'], false);

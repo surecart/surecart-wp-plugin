@@ -262,13 +262,13 @@ export namespace Components {
          */
         "disableComponentsValidation": boolean;
         /**
+          * Can we edit line items?
+         */
+        "editLineItems": boolean;
+        /**
           * The checkout form id
          */
         "formId": number;
-        /**
-          * Translation object.
-         */
-        "i18n": Object;
         /**
           * Is this user logged in?
          */
@@ -293,6 +293,10 @@ export namespace Components {
           * Processors enabled for this form.
          */
         "processors": Processor[];
+        /**
+          * Can we remove line items?
+         */
+        "removeLineItems": boolean;
         /**
           * Submit the form
          */
@@ -1113,12 +1117,14 @@ export namespace Components {
         "total": 'total' | 'subtotal';
     }
     interface ScLineItems {
+        "editLineItems": boolean;
         "editable": boolean;
         "loading": boolean;
         "lockedChoices": Array<PriceChoice>;
         "order": Order;
         "prices": Prices;
         "removable": boolean;
+        "removeLineItems": boolean;
     }
     interface ScLineItemsProvider {
         /**
@@ -3457,13 +3463,13 @@ declare namespace LocalJSX {
          */
         "disableComponentsValidation"?: boolean;
         /**
+          * Can we edit line items?
+         */
+        "editLineItems"?: boolean;
+        /**
           * The checkout form id
          */
         "formId"?: number;
-        /**
-          * Translation object.
-         */
-        "i18n"?: Object;
         /**
           * Is this user logged in?
          */
@@ -3500,6 +3506,10 @@ declare namespace LocalJSX {
           * Processors enabled for this form.
          */
         "processors"?: Processor[];
+        /**
+          * Can we remove line items?
+         */
+        "removeLineItems"?: boolean;
         /**
           * Where to go on success
          */
@@ -4406,6 +4416,7 @@ declare namespace LocalJSX {
         "total"?: 'total' | 'subtotal';
     }
     interface ScLineItems {
+        "editLineItems"?: boolean;
         "editable"?: boolean;
         "loading"?: boolean;
         "lockedChoices"?: Array<PriceChoice>;
@@ -4420,6 +4431,7 @@ declare namespace LocalJSX {
         "order"?: Order;
         "prices"?: Prices;
         "removable"?: boolean;
+        "removeLineItems"?: boolean;
     }
     interface ScLineItemsProvider {
         /**

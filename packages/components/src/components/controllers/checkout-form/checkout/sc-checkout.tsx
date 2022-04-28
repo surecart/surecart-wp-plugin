@@ -50,9 +50,6 @@ export class ScCheckout {
   /** Alignment */
   @Prop() alignment: 'center' | 'wide' | 'full';
 
-  /** Translation object. */
-  @Prop() i18n: Object;
-
   /** Is this user logged in? */
   @Prop() loggedIn: boolean;
 
@@ -61,6 +58,12 @@ export class ScCheckout {
 
   /** Processors enabled for this form. */
   @Prop({ mutable: true }) processors: Processor[];
+
+  /** Can we edit line items? */
+  @Prop() editLineItems: boolean = true;
+
+  /** Can we remove line items? */
+  @Prop() removeLineItems: boolean = true;
 
   /** Stores fetched prices for use throughout component.  */
   @State() pricesEntities: Prices = {};
@@ -203,6 +206,8 @@ export class ScCheckout {
     Universe.create(this, this.state());
   }
 
+  componentDidLoad() {}
+
   /** Remove state machine on disconnect. */
   disconnectedCallback() {
     this._stateService.stop();
@@ -234,6 +239,11 @@ export class ScCheckout {
       paymentIntents: this.paymentIntents,
       successUrl: this.successUrl,
 
+      order: this.order,
+      lineItems: this.order?.line_items?.data || [],
+      editLineItems: this.editLineItems,
+      removeLineItems: this.removeLineItems,
+
       // checkout states
       loading: this.checkoutState.value === 'loading',
       busy: ['updating', 'finalizing', 'paid'].includes(this.checkoutState.value),
@@ -242,8 +252,6 @@ export class ScCheckout {
       // checkout states
 
       error: this.error,
-      order: this.order,
-      lineItems: this.order?.line_items?.data || [],
       customer: this.customer,
       tax_status: this?.order?.tax_status,
       customerShippingAddress: typeof this.order?.customer !== 'string' ? this?.order?.customer?.shipping_address : {},
@@ -258,7 +266,6 @@ export class ScCheckout {
       mode: this.mode,
       currencyCode: this.currencyCode,
       paymentMethod: this.paymentMethod,
-      i18n: this.i18n,
     };
   }
 
