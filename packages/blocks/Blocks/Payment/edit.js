@@ -51,7 +51,7 @@ export default ({ className, attributes, setAttributes, context }) => {
 
 	useEffect(() => {
 		setActiveProcessors(
-			scData?.processors
+			(scData?.processors || [])
 				// find only processors for this mode.
 				.filter(
 					(processor) => processor?.live_mode === (mode === 'live')
