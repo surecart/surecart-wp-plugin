@@ -94,28 +94,30 @@ export default ({ className, attributes, setAttributes, context }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			{!activeProcessors?.length && (
-				<sc-alert type="danger" open>
-					<span slot="title">{__('Debug Notice')}</span>
-					{sprintf(
-						__(
-							'There is no payment method for %1s payments. You may need to connect and verify your account with the processor in order to process %1s payments.',
-							'surecart'
-						),
-						mode
-					)}
-				</sc-alert>
+			{!activeProcessors?.length ? (
+				<sc-form-control label={label}>
+					<sc-alert type="warning" open>
+						<span slot="title">{__('Admin Notice')}</span>
+						{sprintf(
+							__(
+								'There is no payment method for %1s payments. You will need to connect and verify your account with at least one processor in order to process %2s payments.',
+								'surecart'
+							),
+							mode,
+							mode
+						)}
+					</sc-alert>
+				</sc-form-control>
+			) : (
+				<ScPayment
+					className={className}
+					label={label}
+					debug={true}
+					hideTestModeBadge={mode === 'live'}
+					default={default_processor}
+					secureNotice={secure_notice}
+				></ScPayment>
 			)}
-
-			<ScPayment
-				className={className}
-				label={label}
-				debug={true}
-				processors={activeProcessors}
-				hideTestModeBadge={false}
-				default={default_processor}
-				secureNotice={secure_notice}
-			></ScPayment>
 		</Fragment>
 	);
 };

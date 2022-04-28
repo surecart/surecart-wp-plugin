@@ -5,7 +5,7 @@ export default ({ className, attributes }) => {
 		<sc-payment
 			class={className}
 			label={label}
-			default={default_processor || 'stripe'}
+			default-processor={default_processor}
 			secure-notice={secure_notice}
 		></sc-payment>
 	);
