@@ -242,20 +242,22 @@ export class ScCheckout {
 
         <Universe.Provider state={this.state()}>
           <sc-form-components-validator order={this.order} disabled={this.disableComponentsValidation}>
-            <sc-session-provider
-              order={this.order}
-              prices={this.prices}
-              persist={this.persistSession}
-              modified={this.modified}
-              mode={this.mode}
-              form-id={this.formId}
-              group-id={this.el.id}
-              currency-code={this.currencyCode}
-              onScUpdateOrderState={e => (this.order = e.detail)}
-              onScError={e => (this.error = e.detail as ResponseError)}
-            >
-              <slot />
-            </sc-session-provider>
+            <sc-order-status-provider>
+              <sc-session-provider
+                order={this.order}
+                prices={this.prices}
+                persist={this.persistSession}
+                modified={this.modified}
+                mode={this.mode}
+                form-id={this.formId}
+                group-id={this.el.id}
+                currency-code={this.currencyCode}
+                onScUpdateOrderState={e => (this.order = e.detail)}
+                onScError={e => (this.error = e.detail as ResponseError)}
+              >
+                <slot />
+              </sc-session-provider>
+            </sc-order-status-provider>
           </sc-form-components-validator>
           {this.state().busy && <sc-block-ui z-index={9}></sc-block-ui>}
         </Universe.Provider>
