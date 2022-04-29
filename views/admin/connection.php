@@ -30,7 +30,7 @@
 			<form action="" method="post">
 				<div class="sc-section-heading">
 					<h3>
-						<sc-icon name="sliders"></sc-icon>
+						<sc-icon name="upload-cloud"></sc-icon>
 						<span><?php esc_html_e( 'Connection Settings', 'surecart' ); ?></span>
 					</h3>
 					<sc-button type="primary" submit>
