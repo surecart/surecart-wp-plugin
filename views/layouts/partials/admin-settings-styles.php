@@ -1,0 +1,95 @@
+<style>
+
+	:root {
+		--wp-admin-theme-color: #1e40af; /*#08ba4f;*/
+		--sc-color-primary-500: var(--wp-admin-theme-color);
+		--sc-focus-ring-color-primary: var(
+			--wp-admin-theme-color
+		);
+		--sc-input-border-color-focus: var(
+			--wp-admin-theme-color
+		);
+	}
+
+	#wpbody-content, #wpcontent {
+		padding: 0 !important;
+		font-size: 14px;
+	}
+	#wpbody, #wpbody-content, #wpcontent, #wpwrap, body, html {
+		height: 100% !important;
+		background-color: transparent;
+	}
+	#sc-settings-container {
+		position: absolute;
+		top: 0;
+		height: 100% !important;
+		width: 100% !important;
+		left: 0;
+		background: var(--sc-color-gray-50);
+		display: flex;
+		flex-direction: column;
+	}
+	@media screen and (max-width: 600px) {
+		#sc-settings-container {
+   			margin-top: 46px;
+		}
+	}
+
+	#sc-settings-content {
+		display: flex;
+		flex: 1;
+	}
+	#sc-settings {
+		flex: 1;
+	}
+	#sc-nav {
+		background: #fff;
+		padding: 20px;
+		border-right: 1px solid var(--sc-color-gray-200);
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+		min-width: 225px;
+	}
+	.sc-container {
+		width: 100%;
+	}
+
+	.sc-container {
+		margin-left: auto;
+		margin-right: auto;
+		max-width: 768px;
+		padding: 2rem;
+		display: flex;
+		flex-direction: column;
+		gap: var(--sc-spacing-large);
+	}
+
+	.sc-section-heading {
+		margin-bottom: 1.5rem;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		border-bottom: 1px solid rgba(229, 231, 235, 1);
+		padding-bottom: 1rem;
+	}
+
+	.sc-section-heading h3 {
+		margin: 0;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		font-size: 1rem;
+		line-height: 1.75rem;
+		font-weight: 600;
+		color: rgba(17, 24, 39, 1);
+		display: flex;
+		align-items: center;
+		gap: 0.5em;
+		color: var(--sc-color-gray-900);
+	}
+
+	.sc-section-heading sc-icon {
+		font-size: 1.3rem;
+	}
+</style>
