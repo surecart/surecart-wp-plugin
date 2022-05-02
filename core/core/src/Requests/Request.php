@@ -9,7 +9,7 @@
 
 namespace SureCartCore\Requests;
 
-use GuzzleHttp\Psr7\ServerRequest;
+use SureCartVendors\GuzzleHttp\Psr7\ServerRequest;
 use SureCartCore\Support\Arr;
 
 /**
