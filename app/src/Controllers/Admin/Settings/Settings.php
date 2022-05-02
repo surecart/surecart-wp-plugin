@@ -1,6 +1,6 @@
 <?php
 
-namespace SureCart\Controllers\Admin;
+namespace SureCart\Controllers\Admin\Settings;
 
 use SureCart\Models\Account;
 use SureCart\Models\AccountPortalSession;
@@ -10,6 +10,27 @@ use SureCart\Models\ApiToken;
  * Controls the settings page.
  */
 class Settings {
+	/**
+	 * Get the frame url for the iframed settings.
+	 */
+	public function getFrameUrl( $endpoint ) {
+		$session = AccountPortalSession::create(
+			[
+				'frame_url' => ( is_ssl() ? 'https://' : 'http://' ) . $_SERVER['HTTP_HOST'],
+			]
+		);
+
+		if ( ! $session || is_wp_error( $session ) ) {
+			wp_die( esc_html__( 'Could not load settings page.', 'surecart' ) );
+		}
+
+		if ( is_ssl() ) {
+			$session->url = str_replace( 'http://', 'https://', $session->url );
+		}
+
+		return trailingslashit( SURECART_APP_URL ) . 'account_portal/' . $session->id . '/' . $endpoint;
+	}
+
 	/**
 	 * Show the settings page.
 	 *
