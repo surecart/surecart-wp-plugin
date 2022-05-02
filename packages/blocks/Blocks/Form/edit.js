@@ -51,6 +51,7 @@ const ALLOWED_BLOCKS = [
 ];
 
 export default function edit({ clientId, attributes, setAttributes }) {
+	const [patterns, setPatterns] = useState([]);
 	const UnitControl = __stableUnitControl
 		? __stableUnitControl
 		: __experimentalUnitControl;
@@ -114,6 +115,17 @@ export default function edit({ clientId, attributes, setAttributes }) {
 		return parentBlock?.[0]?.attributes?.id || post_id;
 	});
 
+	useEffect(() => {
+		getPatterns();
+	}, []);
+
+	const getPatterns = async () => {
+		const patterns = await apiFetch({
+			path: '/surecart/v1/form-patterns',
+		});
+		setPatterns(patterns);
+	};
+
 	/**
 	 * Maybe create the template for the form.
 	 */
@@ -122,14 +134,16 @@ export default function edit({ clientId, attributes, setAttributes }) {
 		choices,
 		choice_type,
 	}) => {
-		const result = await apiFetch({
-			url: scData.plugin_url + '/templates/forms/' + template + '.html',
-			parse: false,
-			cache: 'no-cache',
-		});
+		const pattern = patterns.find(
+			(pattern) => pattern.name === `surecart/${template}`
+		);
 
+		if (!pattern) {
+			alert('Something went wrong');
+			return;
+		}
 		// parse blocks.
-		let parsed = parse(await result.text());
+		let parsed = parse(pattern.content);
 
 		parsed = populateChoicesBlock(parsed, choices, choice_type);
 		parsed = populateBlock(parsed, choices, 'surecart/donation');
@@ -305,7 +319,11 @@ export default function edit({ clientId, attributes, setAttributes }) {
 			</InspectorControls>
 
 			{blockCount === 0 ? (
-				<Setup onCreate={onCreate} clientId={clientId} />
+				<Setup
+					templates={patterns}
+					onCreate={onCreate}
+					clientId={clientId}
+				/>
 			) : (
 				<div
 					css={css`

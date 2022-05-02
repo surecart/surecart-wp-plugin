@@ -30,6 +30,10 @@ class BlockServiceProvider implements ServiceProviderInterface {
 			return new BlockService( $app );
 		};
 
+		$container['blocks.patterns'] = function () use ( $app ) {
+			return new BlockPatternsService( $app );
+		};
+
 		$app->alias( 'blocks', 'blocks' );
 
 		$app->alias(
@@ -50,6 +54,7 @@ class BlockServiceProvider implements ServiceProviderInterface {
 	 * phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter
 	 */
 	public function bootstrap( $container ) {
+		$container['blocks.patterns']->bootstrap();
 		// allow design tokens in css.
 		add_filter(
 			'safe_style_css',

@@ -10,7 +10,7 @@
 namespace SureCartCore\Exceptions;
 
 use Exception as PhpException;
-use Psr\Http\Message\ResponseInterface;
+use SureCartVendors\Psr\Http\Message\ResponseInterface;
 use Whoops\RunInterface;
 use SureCartCore\Csrf\InvalidCsrfTokenException;
 use SureCartCore\Requests\RequestInterface;

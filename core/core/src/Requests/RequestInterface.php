@@ -9,7 +9,7 @@
 
 namespace SureCartCore\Requests;
 
-use Psr\Http\Message\ServerRequestInterface;
+use SureCartVendors\Psr\Http\Message\ServerRequestInterface;
 
 /**
  * A representation of a request to the server.

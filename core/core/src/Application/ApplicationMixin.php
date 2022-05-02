@@ -9,8 +9,8 @@
 
 namespace SureCartCore\Application;
 
-use Pimple\Container;
-use Psr\Http\Message\ResponseInterface;
+use SureCartVendors\Pimple\Container;
+use SureCartVendors\Psr\Http\Message\ResponseInterface;
 use SureCartCore\Requests\RequestInterface;
 use SureCartCore\Responses\RedirectResponse;
 use SureCartCore\Routing\RouteBlueprint;
