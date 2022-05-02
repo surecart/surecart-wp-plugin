@@ -1,6 +1,6 @@
 <?php
 
-namespace SureCartBlocks\Blocks\Dashboard\CustomerDownloads;
+namespace SureCartBlocks\Blocks\Dashboard\OrderDownloads;
 
 use SureCart\Models\User;
 use SureCartBlocks\Blocks\Dashboard\DashboardPage;

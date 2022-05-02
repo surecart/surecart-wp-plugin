@@ -9,7 +9,7 @@
 
 namespace SureCartCore\Application;
 
-use Pimple\Container;
+use SureCartVendors\Pimple\Container;
 use SureCartCore\Exceptions\ClassNotFoundException;
 
 /**

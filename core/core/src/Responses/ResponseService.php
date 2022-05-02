@@ -9,11 +9,11 @@
 
 namespace SureCartCore\Responses;
 
-use GuzzleHttp\Psr7;
-use GuzzleHttp\Psr7\Response as Psr7Response;
+use SureCartVendors\GuzzleHttp\Psr7;
+use SureCartVendors\GuzzleHttp\Psr7\Response as Psr7Response;
 use SureCartCore\Requests\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\StreamInterface;
+use SureCartVendors\Psr\Http\Message\ResponseInterface;
+use SureCartVendors\Psr\Http\Message\StreamInterface;
 use SureCartCore\View\ViewService;
 
 /**

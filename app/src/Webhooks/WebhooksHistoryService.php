@@ -8,7 +8,7 @@ use SureCart\Models\Webhook;
  * Handles domain name changes to webhook
  * Shows notices and allows user to remove old webhooks.
  */
-class WebHooksHistoryService {
+class WebhooksHistoryService {
 	/**
 	 * Webhooks service.
 	 *
