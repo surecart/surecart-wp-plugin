@@ -39,6 +39,7 @@ return [
 		\SureCart\WordPress\Admin\Notices\AdminNoticesServiceProvider::class,
 
 		// REST providers.
+		\SureCart\Rest\BlockPatternsRestServiceProvider::class,
 		\SureCart\Rest\AccountRestServiceProvider::class,
 		\SureCart\Rest\LoginRestServiceProvider::class,
 		\SureCart\Rest\FilesRestServiceProvider::class,

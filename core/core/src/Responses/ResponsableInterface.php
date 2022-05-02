@@ -9,11 +9,11 @@
 
 namespace SureCartCore\Responses;
 
-use Psr\Http\Message\ResponseInterface;
+use SureCartVendors\Psr\Http\Message\ResponseInterface;
 
 interface ResponsableInterface {
 	/**
-	 * Convert to Psr\Http\Message\ResponseInterface.
+	 * Convert to SureCartVendors\Psr\Http\Message\ResponseInterface.
 	 *
 	 * @return ResponseInterface
 	 */

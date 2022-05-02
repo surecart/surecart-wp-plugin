@@ -9,7 +9,7 @@
 
 namespace SureCartCore\Routing;
 
-use Pimple\Container;
+use SureCartVendors\Pimple\Container;
 use SureCartCore\Routing\Conditions\ConditionFactory;
 use SureCartCore\ServiceProviders\ExtendsConfigTrait;
 use SureCartCore\ServiceProviders\ServiceProviderInterface;

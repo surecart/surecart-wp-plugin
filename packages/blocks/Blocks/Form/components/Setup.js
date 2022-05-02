@@ -10,7 +10,7 @@ import ChooseDesign from './ChooseDesign';
 import PlaceholderTemplate from './PlaceholderTemplate';
 import SelectPrices from './SelectPrices';
 
-export default ({ onCreate }) => {
+export default ({ onCreate, templates }) => {
 	const [choices, setChoices] = useState([]);
 	const [choice_type, setChoiceType] = useState('all');
 	const [template, setTemplate] = useState('');
@@ -25,7 +25,13 @@ export default ({ onCreate }) => {
 	}, [choices, template]);
 
 	if (!template) {
-		return <ChooseDesign template={template} setTemplate={setTemplate} />;
+		return (
+			<ChooseDesign
+				templates={templates}
+				template={template}
+				setTemplate={setTemplate}
+			/>
+		);
 	}
 
 	return (

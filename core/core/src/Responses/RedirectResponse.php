@@ -9,8 +9,8 @@
 
 namespace SureCartCore\Responses;
 
-use GuzzleHttp\Psr7\Response as Psr7Response;
-use Psr\Http\Message\ResponseInterface;
+use SureCartVendors\GuzzleHttp\Psr7\Response as Psr7Response;
+use SureCartVendors\Psr\Http\Message\ResponseInterface;
 use SureCartCore\Requests\RequestInterface;
 
 /**

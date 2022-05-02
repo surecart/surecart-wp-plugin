@@ -7,11 +7,15 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-04-28T20:48:12+00:00\n"
+"POT-Creation-Date: 2022-05-02T19:27:21+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 
-#: src/BlockLibrary/BlockServiceProvider.php:88
+#: src/BlockLibrary/BlockPatternsService.php:28
+msgid "Checkout Form"
+msgstr ""
+
+#: src/BlockLibrary/BlockServiceProvider.php:93
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:39
 #: admin/user-profile.php:1
 #: error.php:2
@@ -686,37 +690,37 @@ msgid "Checkout"
 msgstr ""
 
 #: src/Install/InstallService.php:124
-#: src/WordPress/Pages/PageSeeder.php:88
+#: src/WordPress/Pages/PageSeeder.php:91
 msgctxt "Page slug"
 msgid "checkout"
 msgstr ""
 
 #: src/Install/InstallService.php:125
-#: src/WordPress/Pages/PageSeeder.php:89
+#: src/WordPress/Pages/PageSeeder.php:92
 msgctxt "Page title"
 msgid "Checkout"
 msgstr ""
 
 #: src/Install/InstallService.php:131
-#: src/WordPress/Pages/PageSeeder.php:95
+#: src/WordPress/Pages/PageSeeder.php:96
 msgctxt "Page slug"
 msgid "order-confirmation"
 msgstr ""
 
 #: src/Install/InstallService.php:132
-#: src/WordPress/Pages/PageSeeder.php:96
+#: src/WordPress/Pages/PageSeeder.php:97
 msgctxt "Page title"
 msgid "Thank you!"
 msgstr ""
 
 #: src/Install/InstallService.php:136
-#: src/WordPress/Pages/PageSeeder.php:100
+#: src/WordPress/Pages/PageSeeder.php:101
 msgctxt "Page slug"
 msgid "customer-dashboard"
 msgstr ""
 
 #: src/Install/InstallService.php:137
-#: src/WordPress/Pages/PageSeeder.php:101
+#: src/WordPress/Pages/PageSeeder.php:102
 msgctxt "Page title"
 msgid "Dashboard"
 msgstr ""
@@ -800,6 +804,46 @@ msgstr ""
 
 #: src/Rest/AccountRestServiceProvider.php:85
 msgid "Connected processors"
+msgstr ""
+
+#: src/Rest/BlockPatternsRestServiceProvider.php:93
+msgid "Sorry, you are not allowed to view the registered form patterns."
+msgstr ""
+
+#: src/Rest/BlockPatternsRestServiceProvider.php:171
+msgid "The pattern name."
+msgstr ""
+
+#: src/Rest/BlockPatternsRestServiceProvider.php:177
+msgid "The pattern title, in human readable format."
+msgstr ""
+
+#: src/Rest/BlockPatternsRestServiceProvider.php:183
+msgid "The pattern detailed description."
+msgstr ""
+
+#: src/Rest/BlockPatternsRestServiceProvider.php:189
+msgid "The pattern viewport width for inserter preview."
+msgstr ""
+
+#: src/Rest/BlockPatternsRestServiceProvider.php:195
+msgid "Block types that the pattern is intended to be used with."
+msgstr ""
+
+#: src/Rest/BlockPatternsRestServiceProvider.php:201
+msgid "The pattern category slugs."
+msgstr ""
+
+#: src/Rest/BlockPatternsRestServiceProvider.php:207
+msgid "The pattern keywords."
+msgstr ""
+
+#: src/Rest/BlockPatternsRestServiceProvider.php:213
+msgid "The pattern content."
+msgstr ""
+
+#: src/Rest/BlockPatternsRestServiceProvider.php:219
+msgid "Determines whether the pattern is visible in inserter."
 msgstr ""
 
 #: src/Rest/CustomerLinksRestServiceProvider.php:59

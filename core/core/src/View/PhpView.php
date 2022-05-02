@@ -9,8 +9,8 @@
 
 namespace SureCartCore\View;
 
-use GuzzleHttp\Psr7;
-use GuzzleHttp\Psr7\Response;
+use SureCartVendors\GuzzleHttp\Psr7;
+use SureCartVendors\GuzzleHttp\Psr7\Response;
 
 /**
  * Render a view file with php.

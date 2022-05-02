@@ -9,7 +9,7 @@
 
 namespace SureCartCore\ServiceProviders;
 
-use Pimple\Container;
+use SureCartVendors\Pimple\Container;
 use SureCartCore\Support\Arr;
 
 /**

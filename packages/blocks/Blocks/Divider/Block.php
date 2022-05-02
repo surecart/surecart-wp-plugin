@@ -1,6 +1,6 @@
 <?php
 
-namespace SureCartBlocks\Divider;
+namespace SureCartBlocks\Blocks\Divider;
 
 /**
  * Logout Button Block.
