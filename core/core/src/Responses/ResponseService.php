@@ -9,7 +9,7 @@
 
 namespace SureCartCore\Responses;
 
-use SureCartVendors\GuzzleHttp\Psr7;
+use SureCartVendors\GuzzleHttp\Psr7\Utils as Psr7Utils;
 use SureCartVendors\GuzzleHttp\Psr7\Response as Psr7Response;
 use SureCartCore\Requests\RequestInterface;
 use SureCartVendors\Psr\Http\Message\ResponseInterface;
@@ -200,7 +200,7 @@ class ResponseService {
 	 */
 	public function output( $output ) {
 		$response = $this->response();
-		$response = $response->withBody( Psr7\stream_for( $output ) );
+		$response = $response->withBody( Psr7Utils::streamFor( $output ) );
 		return $response;
 	}
 
@@ -213,7 +213,7 @@ class ResponseService {
 	public function json( $data ) {
 		$response = $this->response();
 		$response = $response->withHeader( 'Content-Type', 'application/json' );
-		$response = $response->withBody( Psr7\stream_for( wp_json_encode( $data ) ) );
+		$response = $response->withBody( Psr7Utils::streamFor( wp_json_encode( $data ) ) );
 		return $response;
 	}
 
