@@ -10,8 +10,8 @@
 namespace SureCartCore\Kernels;
 
 use Exception;
-use Pimple\Container;
-use Psr\Http\Message\ResponseInterface;
+use SureCartVendors\Pimple\Container;
+use SureCartVendors\Psr\Http\Message\ResponseInterface;
 use WP_Query;
 use SureCartCore\Application\GenericFactory;
 use SureCartCore\Exceptions\ConfigurationException;

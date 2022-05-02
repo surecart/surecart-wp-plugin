@@ -2,7 +2,7 @@
 
 namespace SureCartCore\Exceptions\Whoops;
 
-use Pimple\Container;
+use SureCartVendors\Pimple\Container;
 
 /**
  * Provide debug data for usage with \Whoops\Handler\PrettyPageHandler.
