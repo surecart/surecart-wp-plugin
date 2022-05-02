@@ -3,6 +3,7 @@
 namespace SureCart\Controllers\Admin\Settings;
 
 use SureCart\Models\AccountPortalSession;
+use SureCart\Models\ApiToken;
 
 /**
  * Controls the settings page.
@@ -27,7 +28,7 @@ abstract class FrameSettings {
 	 * Get the frame url for the iframed settings.
 	 *
 	 * @param  string $endpoint The endpoint for the frame.
-	 * @return string
+	 * @return string|\WP_Error
 	 */
 	protected function getFrameUrl() {
 		$session = AccountPortalSession::create(
@@ -37,7 +38,7 @@ abstract class FrameSettings {
 		);
 
 		if ( ! $session || is_wp_error( $session ) ) {
-			wp_die( esc_html__( 'Could not load settings page.', 'surecart' ) );
+			return $session;
 		}
 
 		if ( is_ssl() ) {
@@ -69,6 +70,21 @@ abstract class FrameSettings {
 	 * @return string
 	 */
 	public function show( \SureCartCore\Requests\RequestInterface $request ) {
+		$frame_url = $this->getFrameUrl();
+
+		// cannot create frame url.
+		if ( $frame_url && is_wp_error( $frame_url ) ) {
+			if ('unauthorized' === $frame_url->get_error_code()) {
+				return \SureCart::view( 'admin/connection-invalid' )->with(
+					[
+						'api_token' => '',
+						'status' => 'unauthorized',
+					]
+				);
+			}
+			wp_die( esc_html__( 'Could not load settings page.', 'surecart' ) );
+		}
+
 		// merge args.
 		$args = wp_parse_args(
 			$this->with( $request ),
