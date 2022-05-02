@@ -9,6 +9,7 @@ export class ScStackedListRow {
   @Element() el: HTMLElement;
 
   @Prop() href: string;
+  @Prop() target: string = '_self';
 
   @Prop() mobileSize: number = 600;
 
@@ -39,6 +40,7 @@ export class ScStackedListRow {
     return (
       <Tag
         href={this.href}
+        target={this.target}
         class={{
           'list-row': true,
           'list-row--has-prefix': this.hasPrefix,

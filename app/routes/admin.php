@@ -219,9 +219,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 		\SureCart::route()->get()->where( 'sc_url_var', 'connection', 'tab' )->name( 'settings.connection' )->handle( 'ConnectionSettings@show' );
 		\SureCart::route()->post()->where( 'sc_url_var', 'connection', 'tab' )->middleware( 'nonce:update_plugin_settings' )->name( 'settings.connection.save' )->handle( 'ConnectionSettings@save' );
 
-		// Advanced
+		// Advanced.
 		\SureCart::route()->get()->where( 'sc_url_var', 'advanced', 'tab' )->name( 'settings.advanced' )->handle( 'AdvancedSettings@show' );
 		\SureCart::route()->post()->where( 'sc_url_var', 'advanced', 'tab' )->middleware( 'nonce:update_plugin_settings' )->name( 'settings.advanced.save' )->handle( 'AdvancedSettings@save' );
+
+		// Processors.
+		\SureCart::route()->get()->where( 'sc_url_var', 'processors', 'tab' )->name( 'settings.processors' )->handle( 'ProcessorsSettings@show' );
 	}
 );
 

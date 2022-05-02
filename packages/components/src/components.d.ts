@@ -1917,6 +1917,7 @@ export namespace Components {
     interface ScStackedListRow {
         "href": string;
         "mobileSize": number;
+        "target": string;
     }
     interface ScStripeElement {
         /**
@@ -5316,6 +5317,7 @@ declare namespace LocalJSX {
     interface ScStackedListRow {
         "href"?: string;
         "mobileSize"?: number;
+        "target"?: string;
     }
     interface ScStripeElement {
         /**

@@ -1046,6 +1046,7 @@
   "sc-stacked-list-row": {
     "href": true,
     "mobile-size": true,
+    "target": true,
     "style": true,
     "id": true,
     "class": true,

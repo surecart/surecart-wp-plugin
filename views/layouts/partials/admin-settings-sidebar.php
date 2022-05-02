@@ -7,7 +7,7 @@
 			</svg>
 			<?php esc_html_e( 'Store Settings', 'surecart' ); ?>
 		</sc-tab>
-		<sc-tab href="<?php echo add_query_arg( [ 'tab' => 'brand' ], menu_page_url( 'sc-settings', false ) ); ?>" <?php echo 'brand' === $tab ? 'active' : ''; ?>>
+		<sc-tab href="<?php echo esc_url( add_query_arg( [ 'tab' => 'brand' ], menu_page_url( 'sc-settings', false ) ) ); ?>" <?php echo 'brand' === $tab ? 'active' : ''; ?>>
 			<svg stroke="var(--sc-color-gray-500)" xmlns="http://www.w3.org/2000/svg" slot="prefix" fill="none" viewBox="0 0 24 24" stroke="currentColor" role="img" aria-labelledby="ai12f1ydn6kusa0itfwnv692wi78pgld" style="width: 22px; height: 22px;">
 				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path>
 			</svg>
@@ -36,6 +36,12 @@
 				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 3.5 2 3.5-2 3.5 2zM10 8.5a.5.5 0 11-1 0 .5.5 0 011 0zm5 5a.5.5 0 11-1 0 .5.5 0 011 0z"></path>
 			</svg>
 			<?php esc_html_e( 'Taxes', 'surecart' ); ?>
+		</sc-tab>
+		<sc-tab href="<?php echo esc_url( add_query_arg( [ 'tab' => 'processors' ], menu_page_url( 'sc-settings', false ) ) ); ?>" <?php echo 'processors' === $tab ? 'active' : ''; ?>>
+			<svg stroke="var(--sc-color-gray-500)" xmlns="http://www.w3.org/2000/svg" slot="prefix" fill="none" viewBox="0 0 24 24" stroke="currentColor" role="img" aria-labelledby="ai12f1ydn6kusa0itfwnv692wi78pgld" style="width: 22px; height: 22px;">
+				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14v6m-3-3h6M6 10h2a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2zm10 0h2a2 2 0 002-2V6a2 2 0 00-2-2h-2a2 2 0 00-2 2v2a2 2 0 002 2zM6 20h2a2 2 0 002-2v-2a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2z"></path>
+			</svg>
+			<?php esc_html_e( 'Processors', 'surecart' ); ?>
 		</sc-tab>
 	<?php endif; ?>
 
