@@ -86,7 +86,7 @@ export class ScCustomerEdit {
       <sc-dashboard-module class="customer-edit" error={this.error}>
         <span slot="heading">
           {this.heading || __('Update Billing Details', 'surecart')}{' '}
-          {!this?.customer?.live_mode === false && (
+          {!this?.customer?.live_mode && (
             <sc-tag type="warning" size="small">
               {__('Test', 'surecart')}
             </sc-tag>
