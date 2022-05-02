@@ -9,13 +9,13 @@
 
 	<div id="sc-settings-content">
 		<?php
-			\SureCart::render(
-				'layouts/partials/admin-settings-sidebar',
-				[
-					'tab' => $tab,
-				]
-			);
-			?>
+		\SureCart::render(
+			'layouts/partials/admin-settings-sidebar',
+			[
+				'tab' => $tab,
+			]
+		);
+		?>
 
 		<div class="sc-container">
 			<?php
@@ -27,7 +27,7 @@
 			);
 			?>
 
-			<form action="" method="post">
+			<form action="<?php echo esc_url( add_query_arg( [ 'tab' => 'connection' ], menu_page_url( 'sc-settings', false ) ) ); ?>" method="post">
 				<div class="sc-section-heading">
 					<h3>
 						<sc-icon name="upload-cloud"></sc-icon>
