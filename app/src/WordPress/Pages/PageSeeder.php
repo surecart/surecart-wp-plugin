@@ -83,13 +83,14 @@ class PageSeeder {
 	public function getPages( $form = null ) {
 		$order_confirmation = require plugin_dir_path( SURECART_PLUGIN_FILE ) . 'templates/confirmation/order-confirmation.php';
 		$customer_dashboard = require plugin_dir_path( SURECART_PLUGIN_FILE ) . 'templates/dashboard/customer-dashboard.php';
+
 		return apply_filters(
 			'surecart/create_pages',
 			array(
 				'checkout'           => [
 					'name'    => _x( 'checkout', 'Page slug', 'surecart' ),
 					'title'   => _x( 'Checkout', 'Page title', 'surecart' ),
-					'content' => '<!-- wp:surecart/checkout-form {"id":' . (int) $form->ID ?? 0 . '} --><!-- /wp:surecart/checkout-form -->',
+					'content' => '<!-- wp:surecart/checkout-form {"id":' . (int) $form->ID . '} --><!-- /wp:surecart/checkout-form -->',
 				],
 				'order-confirmation' => [
 					'name'    => _x( 'order-confirmation', 'Page slug', 'surecart' ),

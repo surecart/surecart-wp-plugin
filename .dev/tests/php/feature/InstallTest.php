@@ -48,7 +48,7 @@ class InstallTest extends SureCartUnitTestCase {
 		$page = $page_service->get('checkout');
 		$this->assertSame($page->post_type, 'page');
 		$this->assertStringContainsString('wp:surecart/checkout-form', $page->post_content);
-		$this->assertStringContainsString('wp:surecart/checkout-form {"id":' . (int) $default_form->ID, htmlspecialchars_decode($page->post_content));
+		$this->assertStringContainsString('wp:surecart/checkout-form {"id":' . (int) $default_form->ID . '}', htmlspecialchars_decode($page->post_content));
 
 		$page = $page_service->get('dashboard');
 		$this->assertSame($page->post_type, 'page');
