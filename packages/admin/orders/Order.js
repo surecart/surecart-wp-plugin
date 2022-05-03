@@ -1,6 +1,3 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
-
 import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';
 import { dispatch } from '@wordpress/data';
@@ -13,7 +10,6 @@ import Template from '../templates/SingleModel';
 
 import Details from './modules/Details';
 
-import useSnackbar from '../hooks/useSnackbar';
 import LineItems from './modules/LineItems';
 import Charges from './modules/Charges';
 import Subscriptions from './modules/Subscriptions';

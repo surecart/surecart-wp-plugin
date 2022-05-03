@@ -1,5 +1,12 @@
-	<!-- wp:surecart/form -->
-	<!-- wp:surecart/express-payment -->
+<?php
+/**
+ * Donation form block pattern
+ */
+return [
+	'title'      => __( 'Checkout', 'surecart' ),
+	'categories' => [],
+	'blockTypes' => [],
+	'content'    => '<!-- wp:surecart/express-payment -->
 	<sc-express-payment divider-text="or" class="wp-block-surecart-express-payment"></sc-express-payment>
 	<!-- /wp:surecart/express-payment -->
 
@@ -57,5 +64,5 @@
 
 	<!-- wp:surecart/submit {"show_total":true,"full":true} -->
 	<sc-order-submit type="primary" full="true" size="large" icon="lock" show-total="true" class="wp-block-surecart-submit">Purchase</sc-order-submit>
-	<!-- /wp:surecart/submit -->
-	<!-- /wp:surecart/form -->
+	<!-- /wp:surecart/submit -->',
+];

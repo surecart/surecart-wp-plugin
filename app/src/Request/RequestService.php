@@ -96,6 +96,9 @@ class RequestService {
 				$args['headers']['Authorization'] = "Bearer $this->token";
 			}
 
+			// add version header.
+			$args['headers']['X-SURECART-WP-PLUGIN-VERSION'] = \SureCart::plugin()->version();
+
 			// parse args.
 			$args = wp_parse_args(
 				$args,
