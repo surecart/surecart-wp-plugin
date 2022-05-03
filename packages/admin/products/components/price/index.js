@@ -11,6 +11,7 @@ import {
 	ScFormControl,
 	ScTooltip,
 	ScSelect,
+	ScToggle,
 } from '@surecart/components-react';
 import Header from './Header';
 
@@ -39,6 +40,27 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 		if (!product?.recurring) return false;
 		if (!price?.id) return true;
 		return price?.recurring_interval === 'never';
+	};
+
+	const renderTaxInput = () => {
+		if (!product?.tax_enabled || !scData?.tax_protocol?.tax_enabled)
+			return null;
+		return (
+			<ScSwitch
+				style={{ marginTop: '0.5em', display: 'inline-block' }}
+				checked={price?.tax_behavior === 'inclusive'}
+				onScChange={() =>
+					updatePrice({
+						tax_behavior:
+							price?.tax_behavior === 'inclusive'
+								? 'exclusive'
+								: 'inclusive',
+					})
+				}
+			>
+				{__('Tax is included', 'surecart')}
+			</ScSwitch>
+		);
 	};
 
 	const renderOneTime = () => {
@@ -327,6 +349,7 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 				`}
 			>
 				{product?.recurring ? renderRecurring() : renderOneTime()}
+				{renderTaxInput()}
 			</div>
 		</div>
 	);
