@@ -10,7 +10,7 @@ export class ScFormatNumber {
   @Prop() value: number = 0;
 
   /** The locale to use when formatting the number. */
-  @Prop() locale: string;
+  @Prop({ mutable: true }) locale: string;
 
   /** The formatting style to use. */
   @Prop() type: 'currency' | 'decimal' | 'percent' = 'decimal';
@@ -45,7 +45,7 @@ export class ScFormatNumber {
     if (isNaN(this.value)) {
       return '';
     }
-    return new Intl.NumberFormat(this.locale, {
+    return new Intl.NumberFormat(this.locale || navigator.language || (navigator as any)?.browserLanguage || (navigator.languages || ['en'])[0], {
       style: this.type,
       currency: this.currency.toUpperCase(),
       currencyDisplay: this.currencyDisplay,
