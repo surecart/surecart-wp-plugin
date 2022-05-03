@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Address, ChoiceItem, Coupon, Customer, DiscountResponse, LineItem, LineItemData, Order, OrderStatus, PaymentMethod, Price, PriceChoice, Prices, ProductGroup, Products, Purchase, ResponseError, Subscription, SubscriptionStatus, TaxStatus, WordPressUser } from "./types";
+import { Address, ChoiceItem, Coupon, Customer, DiscountResponse, Invoice, LineItem, LineItemData, Order, OrderStatus, PaymentIntent, PaymentMethod, Price, PriceChoice, Prices, Processor, ProductGroup, Products, Purchase, ResponseError, Subscription, SubscriptionStatus, TaxStatus, WordPressUser } from "./types";
 import { IconLibraryMutator, IconLibraryResolver } from "./components/ui/icon/library";
 export namespace Components {
     interface ScAddress {
@@ -1287,6 +1287,28 @@ export namespace Components {
          */
         "status": OrderStatus;
     }
+    interface ScOrderStripePaymentElement {
+        /**
+          * Should we collect an address?
+         */
+        "address": boolean;
+        /**
+          * The currency code for the payment element.
+         */
+        "currencyCode": string;
+        /**
+          * Payment mode.
+         */
+        "mode": 'test' | 'live';
+        /**
+          * The order.
+         */
+        "order": Order;
+        /**
+          * Available processors
+         */
+        "processors": Processor[];
+    }
     interface ScOrderSubmit {
         /**
           * Is the order busy
@@ -1401,6 +1423,40 @@ export namespace Components {
           * Query to fetch paymentMethods
          */
         "query": object;
+    }
+    interface ScPaypalButtons {
+        /**
+          * Is this busy?
+         */
+        "busy": boolean;
+        /**
+          * Buttons to render
+         */
+        "buttons": string[];
+        /**
+          * Client id for the script.
+         */
+        "clientId": string;
+        /**
+          * Button color.
+         */
+        "color": 'gold' | 'blue' | 'silver' | 'black' | 'white';
+        /**
+          * Label for the button.
+         */
+        "label": 'paypal' | 'checkout' | 'buynow' | 'pay' | 'installment';
+        /**
+          * The merchant id for paypal.
+         */
+        "merchantId": string;
+        /**
+          * Test or live mode.
+         */
+        "mode": 'test' | 'live';
+        /**
+          * The order.
+         */
+        "order": Order;
     }
     interface ScPriceChoice {
         /**
@@ -1842,6 +1898,33 @@ export namespace Components {
           * Your stripe connected account id.
          */
         "stripeAccountId": string;
+    }
+    interface ScStripePaymentElement {
+        /**
+          * The account id.
+         */
+        "accountId": string;
+        /**
+          * Should we collect an address?
+         */
+        "address": boolean;
+        /**
+          * The client secret to render the payment element
+         */
+        "clientSecret": string;
+        "confirm": (type: any, args?: {}) => Promise<void>;
+        /**
+          * Order to watch
+         */
+        "order": Order | Invoice;
+        /**
+          * The stripe publishable key.
+         */
+        "publishableKey": string;
+        /**
+          * Success url to redirect.
+         */
+        "successUrl": string;
     }
     interface ScStripePaymentRequest {
         /**
@@ -2565,6 +2648,12 @@ declare global {
         prototype: HTMLScOrderStatusBadgeElement;
         new (): HTMLScOrderStatusBadgeElement;
     };
+    interface HTMLScOrderStripePaymentElementElement extends Components.ScOrderStripePaymentElement, HTMLStencilElement {
+    }
+    var HTMLScOrderStripePaymentElementElement: {
+        prototype: HTMLScOrderStripePaymentElementElement;
+        new (): HTMLScOrderStripePaymentElementElement;
+    };
     interface HTMLScOrderSubmitElement extends Components.ScOrderSubmit, HTMLStencilElement {
     }
     var HTMLScOrderSubmitElement: {
@@ -2612,6 +2701,12 @@ declare global {
     var HTMLScPaymentMethodsListElement: {
         prototype: HTMLScPaymentMethodsListElement;
         new (): HTMLScPaymentMethodsListElement;
+    };
+    interface HTMLScPaypalButtonsElement extends Components.ScPaypalButtons, HTMLStencilElement {
+    }
+    var HTMLScPaypalButtonsElement: {
+        prototype: HTMLScPaypalButtonsElement;
+        new (): HTMLScPaypalButtonsElement;
     };
     interface HTMLScPriceChoiceElement extends Components.ScPriceChoice, HTMLStencilElement {
     }
@@ -2720,6 +2815,12 @@ declare global {
     var HTMLScStripeElementElement: {
         prototype: HTMLScStripeElementElement;
         new (): HTMLScStripeElementElement;
+    };
+    interface HTMLScStripePaymentElementElement extends Components.ScStripePaymentElement, HTMLStencilElement {
+    }
+    var HTMLScStripePaymentElementElement: {
+        prototype: HTMLScStripePaymentElementElement;
+        new (): HTMLScStripePaymentElementElement;
     };
     interface HTMLScStripePaymentRequestElement extends Components.ScStripePaymentRequest, HTMLStencilElement {
     }
@@ -2955,6 +3056,7 @@ declare global {
         "sc-order-password": HTMLScOrderPasswordElement;
         "sc-order-shipping-address": HTMLScOrderShippingAddressElement;
         "sc-order-status-badge": HTMLScOrderStatusBadgeElement;
+        "sc-order-stripe-payment-element": HTMLScOrderStripePaymentElementElement;
         "sc-order-submit": HTMLScOrderSubmitElement;
         "sc-order-summary": HTMLScOrderSummaryElement;
         "sc-order-tax-id-input": HTMLScOrderTaxIdInputElement;
@@ -2963,6 +3065,7 @@ declare global {
         "sc-payment": HTMLScPaymentElement;
         "sc-payment-method-create": HTMLScPaymentMethodCreateElement;
         "sc-payment-methods-list": HTMLScPaymentMethodsListElement;
+        "sc-paypal-buttons": HTMLScPaypalButtonsElement;
         "sc-price-choice": HTMLScPriceChoiceElement;
         "sc-price-choices": HTMLScPriceChoicesElement;
         "sc-price-input": HTMLScPriceInputElement;
@@ -2981,6 +3084,7 @@ declare global {
         "sc-stacked-list": HTMLScStackedListElement;
         "sc-stacked-list-row": HTMLScStackedListRowElement;
         "sc-stripe-element": HTMLScStripeElementElement;
+        "sc-stripe-payment-element": HTMLScStripePaymentElementElement;
         "sc-stripe-payment-request": HTMLScStripePaymentRequestElement;
         "sc-subscription": HTMLScSubscriptionElement;
         "sc-subscription-cancel": HTMLScSubscriptionCancelElement;
@@ -4399,6 +4503,31 @@ declare namespace LocalJSX {
          */
         "status"?: OrderStatus;
     }
+    interface ScOrderStripePaymentElement {
+        /**
+          * Should we collect an address?
+         */
+        "address"?: boolean;
+        /**
+          * The currency code for the payment element.
+         */
+        "currencyCode"?: string;
+        /**
+          * Payment mode.
+         */
+        "mode"?: 'test' | 'live';
+        "onScPaid"?: (event: CustomEvent<void>) => void;
+        "onScPayError"?: (event: CustomEvent<any>) => void;
+        "onScSetPaymentIntent"?: (event: CustomEvent<{ processor: 'stripe'; payment_intent: PaymentIntent }>) => void;
+        /**
+          * The order.
+         */
+        "order"?: Order;
+        /**
+          * Available processors
+         */
+        "processors"?: Processor[];
+    }
     interface ScOrderSubmit {
         /**
           * Is the order busy
@@ -4519,6 +4648,53 @@ declare namespace LocalJSX {
           * Query to fetch paymentMethods
          */
         "query"?: object;
+    }
+    interface ScPaypalButtons {
+        /**
+          * Is this busy?
+         */
+        "busy"?: boolean;
+        /**
+          * Buttons to render
+         */
+        "buttons"?: string[];
+        /**
+          * Client id for the script.
+         */
+        "clientId"?: string;
+        /**
+          * Button color.
+         */
+        "color"?: 'gold' | 'blue' | 'silver' | 'black' | 'white';
+        /**
+          * Label for the button.
+         */
+        "label"?: 'paypal' | 'checkout' | 'buynow' | 'pay' | 'installment';
+        /**
+          * The merchant id for paypal.
+         */
+        "merchantId"?: string;
+        /**
+          * Test or live mode.
+         */
+        "mode"?: 'test' | 'live';
+        /**
+          * Emit an error
+         */
+        "onScError"?: (event: CustomEvent<object>) => void;
+        "onScPaid"?: (event: CustomEvent<void>) => void;
+        /**
+          * Set the order state
+         */
+        "onScSetOrderState"?: (event: CustomEvent<object>) => void;
+        /**
+          * Set the state machine
+         */
+        "onScSetState"?: (event: CustomEvent<string>) => void;
+        /**
+          * The order.
+         */
+        "order"?: Order;
     }
     interface ScPriceChoice {
         /**
@@ -5017,6 +5193,40 @@ declare namespace LocalJSX {
          */
         "stripeAccountId"?: string;
     }
+    interface ScStripePaymentElement {
+        /**
+          * The account id.
+         */
+        "accountId"?: string;
+        /**
+          * Should we collect an address?
+         */
+        "address"?: boolean;
+        /**
+          * The client secret to render the payment element
+         */
+        "clientSecret"?: string;
+        /**
+          * The order/invoice was paid for.
+         */
+        "onScPaid"?: (event: CustomEvent<void>) => void;
+        /**
+          * There was a payment error.
+         */
+        "onScPayError"?: (event: CustomEvent<any>) => void;
+        /**
+          * Order to watch
+         */
+        "order"?: Order | Invoice;
+        /**
+          * The stripe publishable key.
+         */
+        "publishableKey"?: string;
+        /**
+          * Success url to redirect.
+         */
+        "successUrl"?: string;
+    }
     interface ScStripePaymentRequest {
         /**
           * Amount
@@ -5442,6 +5652,7 @@ declare namespace LocalJSX {
         "sc-order-password": ScOrderPassword;
         "sc-order-shipping-address": ScOrderShippingAddress;
         "sc-order-status-badge": ScOrderStatusBadge;
+        "sc-order-stripe-payment-element": ScOrderStripePaymentElement;
         "sc-order-submit": ScOrderSubmit;
         "sc-order-summary": ScOrderSummary;
         "sc-order-tax-id-input": ScOrderTaxIdInput;
@@ -5450,6 +5661,7 @@ declare namespace LocalJSX {
         "sc-payment": ScPayment;
         "sc-payment-method-create": ScPaymentMethodCreate;
         "sc-payment-methods-list": ScPaymentMethodsList;
+        "sc-paypal-buttons": ScPaypalButtons;
         "sc-price-choice": ScPriceChoice;
         "sc-price-choices": ScPriceChoices;
         "sc-price-input": ScPriceInput;
@@ -5468,6 +5680,7 @@ declare namespace LocalJSX {
         "sc-stacked-list": ScStackedList;
         "sc-stacked-list-row": ScStackedListRow;
         "sc-stripe-element": ScStripeElement;
+        "sc-stripe-payment-element": ScStripePaymentElement;
         "sc-stripe-payment-request": ScStripePaymentRequest;
         "sc-subscription": ScSubscription;
         "sc-subscription-cancel": ScSubscriptionCancel;
@@ -5567,6 +5780,7 @@ declare module "@stencil/core" {
             "sc-order-password": LocalJSX.ScOrderPassword & JSXBase.HTMLAttributes<HTMLScOrderPasswordElement>;
             "sc-order-shipping-address": LocalJSX.ScOrderShippingAddress & JSXBase.HTMLAttributes<HTMLScOrderShippingAddressElement>;
             "sc-order-status-badge": LocalJSX.ScOrderStatusBadge & JSXBase.HTMLAttributes<HTMLScOrderStatusBadgeElement>;
+            "sc-order-stripe-payment-element": LocalJSX.ScOrderStripePaymentElement & JSXBase.HTMLAttributes<HTMLScOrderStripePaymentElementElement>;
             "sc-order-submit": LocalJSX.ScOrderSubmit & JSXBase.HTMLAttributes<HTMLScOrderSubmitElement>;
             "sc-order-summary": LocalJSX.ScOrderSummary & JSXBase.HTMLAttributes<HTMLScOrderSummaryElement>;
             "sc-order-tax-id-input": LocalJSX.ScOrderTaxIdInput & JSXBase.HTMLAttributes<HTMLScOrderTaxIdInputElement>;
@@ -5575,6 +5789,7 @@ declare module "@stencil/core" {
             "sc-payment": LocalJSX.ScPayment & JSXBase.HTMLAttributes<HTMLScPaymentElement>;
             "sc-payment-method-create": LocalJSX.ScPaymentMethodCreate & JSXBase.HTMLAttributes<HTMLScPaymentMethodCreateElement>;
             "sc-payment-methods-list": LocalJSX.ScPaymentMethodsList & JSXBase.HTMLAttributes<HTMLScPaymentMethodsListElement>;
+            "sc-paypal-buttons": LocalJSX.ScPaypalButtons & JSXBase.HTMLAttributes<HTMLScPaypalButtonsElement>;
             "sc-price-choice": LocalJSX.ScPriceChoice & JSXBase.HTMLAttributes<HTMLScPriceChoiceElement>;
             "sc-price-choices": LocalJSX.ScPriceChoices & JSXBase.HTMLAttributes<HTMLScPriceChoicesElement>;
             "sc-price-input": LocalJSX.ScPriceInput & JSXBase.HTMLAttributes<HTMLScPriceInputElement>;
@@ -5593,6 +5808,7 @@ declare module "@stencil/core" {
             "sc-stacked-list": LocalJSX.ScStackedList & JSXBase.HTMLAttributes<HTMLScStackedListElement>;
             "sc-stacked-list-row": LocalJSX.ScStackedListRow & JSXBase.HTMLAttributes<HTMLScStackedListRowElement>;
             "sc-stripe-element": LocalJSX.ScStripeElement & JSXBase.HTMLAttributes<HTMLScStripeElementElement>;
+            "sc-stripe-payment-element": LocalJSX.ScStripePaymentElement & JSXBase.HTMLAttributes<HTMLScStripePaymentElementElement>;
             "sc-stripe-payment-request": LocalJSX.ScStripePaymentRequest & JSXBase.HTMLAttributes<HTMLScStripePaymentRequestElement>;
             "sc-subscription": LocalJSX.ScSubscription & JSXBase.HTMLAttributes<HTMLScSubscriptionElement>;
             "sc-subscription-cancel": LocalJSX.ScSubscriptionCancel & JSXBase.HTMLAttributes<HTMLScSubscriptionCancelElement>;
