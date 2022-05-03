@@ -52,6 +52,19 @@ class OrderRestServiceProvider extends RestServiceProvider implements RestServic
 				'schema' => [ $this, 'get_item_schema' ],
 			]
 		);
+		register_rest_route(
+			"$this->name/v$this->version",
+			$this->endpoint . '/(?P<id>\S+)/confirm/',
+			[
+				[
+					'methods'             => \WP_REST_Server::READABLE,
+					'callback'            => $this->callback( $this->controller, 'confirm' ),
+					'permission_callback' => [ $this, 'confirm_permissions_check' ],
+				],
+				// Register our schema callback.
+				'schema' => [ $this, 'get_item_schema' ],
+			]
+		);
 	}
 
 	/**
@@ -113,7 +126,7 @@ class OrderRestServiceProvider extends RestServiceProvider implements RestServic
 	}
 
 	/**
-	 * Anyone can finalize checkout sessions.
+	 * Finalizing an order requires some server side form validation.
 	 *
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
@@ -140,6 +153,15 @@ class OrderRestServiceProvider extends RestServiceProvider implements RestServic
 		}
 
 		return true;
+	}
+
+	/**
+	 * Confirming an order was paid for.
+	 *
+	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
+	 */
+	public function confirm_permissions_check( \WP_REST_Request $request ) {
+		return $this->get_item_permissions_check( $request );
 	}
 
 	/**
