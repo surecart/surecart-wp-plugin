@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Address, ChoiceItem, Coupon, Customer, DiscountResponse, LineItem, LineItemData, Order, OrderStatus, PaymentMethod, Price, PriceChoice, Prices, ProductGroup, Products, Purchase, ResponseError, Subscription, SubscriptionStatus, TaxStatus, WordPressUser } from "./types";
+import { Address, ChoiceItem, Customer, DiscountResponse, FormState, LineItem, LineItemData, Order, OrderStatus, PaymentMethod, Price, PriceChoice, Prices, ProductGroup, Products, Purchase, ResponseError, Subscription, SubscriptionStatus, TaxStatus, WordPressUser } from "./types";
 import { IconLibraryMutator, IconLibraryResolver } from "./components/ui/icon/library";
 export namespace Components {
     interface ScAddress {
@@ -242,10 +242,6 @@ export namespace Components {
          */
         "alignment": 'center' | 'wide' | 'full';
         /**
-          * Optionally pass a coupon.
-         */
-        "coupon": Coupon;
-        /**
           * Currency to use for this checkout.
          */
         "currencyCode": string;
@@ -262,10 +258,6 @@ export namespace Components {
          */
         "formId": number;
         /**
-          * Translation object.
-         */
-        "i18n": Object;
-        /**
           * Is this user logged in?
          */
         "loggedIn": boolean;
@@ -278,7 +270,7 @@ export namespace Components {
          */
         "modified": string;
         /**
-          * Where to go on success
+          * Whether to persist the session in the browser between visits.
          */
         "persistSession": boolean;
         /**
@@ -784,7 +776,15 @@ export namespace Components {
          */
         "size": 'small' | 'medium' | 'large';
     }
+    interface ScFormErrorProvider {
+        /**
+          * The current order.
+         */
+        "order": Order;
+    }
     interface ScFormRow {
+    }
+    interface ScFormStateProvider {
     }
     interface ScFormatBytes {
         /**
@@ -1148,6 +1148,12 @@ export namespace Components {
     }
     interface ScMenuLabel {
     }
+    interface ScOrderConfirmProvider {
+        /**
+          * The current order.
+         */
+        "order": Order;
+    }
     interface ScOrderConfirmation {
         "order": Order;
     }
@@ -1243,6 +1249,16 @@ export namespace Components {
          */
         "value": string;
     }
+    interface ScOrderRedirectProvider {
+        /**
+          * The current order.
+         */
+        "order": Order;
+        /**
+          * The success url.
+         */
+        "successUrl": string;
+    }
     interface ScOrderShippingAddress {
         /**
           * Holds the customer's shipping address
@@ -1286,16 +1302,6 @@ export namespace Components {
           * The tag's statux type.
          */
         "status": OrderStatus;
-    }
-    interface ScOrderStatusProvider {
-        /**
-          * The current order.
-         */
-        "order": Order;
-        /**
-          * The success url.
-         */
-        "successUrl": string;
     }
     interface ScOrderSubmit {
         /**
@@ -2407,11 +2413,23 @@ declare global {
         prototype: HTMLScFormControlElement;
         new (): HTMLScFormControlElement;
     };
+    interface HTMLScFormErrorProviderElement extends Components.ScFormErrorProvider, HTMLStencilElement {
+    }
+    var HTMLScFormErrorProviderElement: {
+        prototype: HTMLScFormErrorProviderElement;
+        new (): HTMLScFormErrorProviderElement;
+    };
     interface HTMLScFormRowElement extends Components.ScFormRow, HTMLStencilElement {
     }
     var HTMLScFormRowElement: {
         prototype: HTMLScFormRowElement;
         new (): HTMLScFormRowElement;
+    };
+    interface HTMLScFormStateProviderElement extends Components.ScFormStateProvider, HTMLStencilElement {
+    }
+    var HTMLScFormStateProviderElement: {
+        prototype: HTMLScFormStateProviderElement;
+        new (): HTMLScFormStateProviderElement;
     };
     interface HTMLScFormatBytesElement extends Components.ScFormatBytes, HTMLStencilElement {
     }
@@ -2521,6 +2539,12 @@ declare global {
         prototype: HTMLScMenuLabelElement;
         new (): HTMLScMenuLabelElement;
     };
+    interface HTMLScOrderConfirmProviderElement extends Components.ScOrderConfirmProvider, HTMLStencilElement {
+    }
+    var HTMLScOrderConfirmProviderElement: {
+        prototype: HTMLScOrderConfirmProviderElement;
+        new (): HTMLScOrderConfirmProviderElement;
+    };
     interface HTMLScOrderConfirmationElement extends Components.ScOrderConfirmation, HTMLStencilElement {
     }
     var HTMLScOrderConfirmationElement: {
@@ -2563,6 +2587,12 @@ declare global {
         prototype: HTMLScOrderPasswordElement;
         new (): HTMLScOrderPasswordElement;
     };
+    interface HTMLScOrderRedirectProviderElement extends Components.ScOrderRedirectProvider, HTMLStencilElement {
+    }
+    var HTMLScOrderRedirectProviderElement: {
+        prototype: HTMLScOrderRedirectProviderElement;
+        new (): HTMLScOrderRedirectProviderElement;
+    };
     interface HTMLScOrderShippingAddressElement extends Components.ScOrderShippingAddress, HTMLStencilElement {
     }
     var HTMLScOrderShippingAddressElement: {
@@ -2574,12 +2604,6 @@ declare global {
     var HTMLScOrderStatusBadgeElement: {
         prototype: HTMLScOrderStatusBadgeElement;
         new (): HTMLScOrderStatusBadgeElement;
-    };
-    interface HTMLScOrderStatusProviderElement extends Components.ScOrderStatusProvider, HTMLStencilElement {
-    }
-    var HTMLScOrderStatusProviderElement: {
-        prototype: HTMLScOrderStatusProviderElement;
-        new (): HTMLScOrderStatusProviderElement;
     };
     interface HTMLScOrderSubmitElement extends Components.ScOrderSubmit, HTMLStencilElement {
     }
@@ -2943,7 +2967,9 @@ declare global {
         "sc-form": HTMLScFormElement;
         "sc-form-components-validator": HTMLScFormComponentsValidatorElement;
         "sc-form-control": HTMLScFormControlElement;
+        "sc-form-error-provider": HTMLScFormErrorProviderElement;
         "sc-form-row": HTMLScFormRowElement;
+        "sc-form-state-provider": HTMLScFormStateProviderElement;
         "sc-format-bytes": HTMLScFormatBytesElement;
         "sc-format-date": HTMLScFormatDateElement;
         "sc-format-interval": HTMLScFormatIntervalElement;
@@ -2962,6 +2988,7 @@ declare global {
         "sc-menu-divider": HTMLScMenuDividerElement;
         "sc-menu-item": HTMLScMenuItemElement;
         "sc-menu-label": HTMLScMenuLabelElement;
+        "sc-order-confirm-provider": HTMLScOrderConfirmProviderElement;
         "sc-order-confirmation": HTMLScOrderConfirmationElement;
         "sc-order-confirmation-customer": HTMLScOrderConfirmationCustomerElement;
         "sc-order-confirmation-line-items": HTMLScOrderConfirmationLineItemsElement;
@@ -2969,9 +2996,9 @@ declare global {
         "sc-order-coupon-form": HTMLScOrderCouponFormElement;
         "sc-order-detail": HTMLScOrderDetailElement;
         "sc-order-password": HTMLScOrderPasswordElement;
+        "sc-order-redirect-provider": HTMLScOrderRedirectProviderElement;
         "sc-order-shipping-address": HTMLScOrderShippingAddressElement;
         "sc-order-status-badge": HTMLScOrderStatusBadgeElement;
-        "sc-order-status-provider": HTMLScOrderStatusProviderElement;
         "sc-order-submit": HTMLScOrderSubmitElement;
         "sc-order-summary": HTMLScOrderSummaryElement;
         "sc-order-tax-id-input": HTMLScOrderTaxIdInputElement;
@@ -3271,10 +3298,6 @@ declare namespace LocalJSX {
          */
         "alignment"?: 'center' | 'wide' | 'full';
         /**
-          * Optionally pass a coupon.
-         */
-        "coupon"?: Coupon;
-        /**
           * Currency to use for this checkout.
          */
         "currencyCode"?: string;
@@ -3291,10 +3314,6 @@ declare namespace LocalJSX {
          */
         "formId"?: number;
         /**
-          * Translation object.
-         */
-        "i18n"?: Object;
-        /**
           * Is this user logged in?
          */
         "loggedIn"?: boolean;
@@ -3307,7 +3326,7 @@ declare namespace LocalJSX {
          */
         "modified"?: string;
         /**
-          * Where to go on success
+          * Whether to persist the session in the browser between visits.
          */
         "persistSession"?: boolean;
         /**
@@ -3889,7 +3908,23 @@ declare namespace LocalJSX {
          */
         "size"?: 'small' | 'medium' | 'large';
     }
+    interface ScFormErrorProvider {
+        /**
+          * Set the state.
+         */
+        "onScUpdateError"?: (event: CustomEvent<ResponseError>) => void;
+        /**
+          * The current order.
+         */
+        "order"?: Order;
+    }
     interface ScFormRow {
+    }
+    interface ScFormStateProvider {
+        /**
+          * Set the state.
+         */
+        "onScSetCheckoutFormState"?: (event: CustomEvent<FormState>) => void;
     }
     interface ScFormatBytes {
         /**
@@ -4272,6 +4307,24 @@ declare namespace LocalJSX {
     }
     interface ScMenuLabel {
     }
+    interface ScOrderConfirmProvider {
+        /**
+          * The order is confirmed event.
+         */
+        "onScConfirmed"?: (event: CustomEvent<void>) => void;
+        /**
+          * Error event.
+         */
+        "onScError"?: (event: CustomEvent<{ message: string; code?: string; data?: any; additional_errors?: any } | {}>) => void;
+        /**
+          * Update the order in the universe store.
+         */
+        "onScUpdateOrderState"?: (event: CustomEvent<Order>) => void;
+        /**
+          * The current order.
+         */
+        "order"?: Order;
+    }
     interface ScOrderConfirmation {
         "order"?: Order;
     }
@@ -4368,6 +4421,24 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
+    interface ScOrderRedirectProvider {
+        /**
+          * The order is confirmed event.
+         */
+        "onScConfirmed"?: (event: CustomEvent<void>) => void;
+        /**
+          * Error event.
+         */
+        "onScError"?: (event: CustomEvent<{ message: string; code?: string; data?: any; additional_errors?: any } | {}>) => void;
+        /**
+          * The current order.
+         */
+        "order"?: Order;
+        /**
+          * The success url.
+         */
+        "successUrl"?: string;
+    }
     interface ScOrderShippingAddress {
         /**
           * Holds the customer's shipping address
@@ -4415,24 +4486,6 @@ declare namespace LocalJSX {
           * The tag's statux type.
          */
         "status"?: OrderStatus;
-    }
-    interface ScOrderStatusProvider {
-        /**
-          * Finalized event
-         */
-        "onScFinalized"?: (event: CustomEvent<void>) => void;
-        /**
-          * Paid event
-         */
-        "onScPaid"?: (event: CustomEvent<void>) => void;
-        /**
-          * The current order.
-         */
-        "order"?: Order;
-        /**
-          * The success url.
-         */
-        "successUrl"?: string;
     }
     interface ScOrderSubmit {
         /**
@@ -4956,13 +5009,9 @@ declare namespace LocalJSX {
          */
         "modified"?: string;
         /**
-          * Update line items event
+          * Error event
          */
         "onScError"?: (event: CustomEvent<{ message: string; code?: string; data?: any; additional_errors?: any } | {}>) => void;
-        /**
-          * Paid event
-         */
-        "onScPaid"?: (event: CustomEvent<void>) => void;
         /**
           * Set the state
          */
@@ -5449,7 +5498,9 @@ declare namespace LocalJSX {
         "sc-form": ScForm;
         "sc-form-components-validator": ScFormComponentsValidator;
         "sc-form-control": ScFormControl;
+        "sc-form-error-provider": ScFormErrorProvider;
         "sc-form-row": ScFormRow;
+        "sc-form-state-provider": ScFormStateProvider;
         "sc-format-bytes": ScFormatBytes;
         "sc-format-date": ScFormatDate;
         "sc-format-interval": ScFormatInterval;
@@ -5468,6 +5519,7 @@ declare namespace LocalJSX {
         "sc-menu-divider": ScMenuDivider;
         "sc-menu-item": ScMenuItem;
         "sc-menu-label": ScMenuLabel;
+        "sc-order-confirm-provider": ScOrderConfirmProvider;
         "sc-order-confirmation": ScOrderConfirmation;
         "sc-order-confirmation-customer": ScOrderConfirmationCustomer;
         "sc-order-confirmation-line-items": ScOrderConfirmationLineItems;
@@ -5475,9 +5527,9 @@ declare namespace LocalJSX {
         "sc-order-coupon-form": ScOrderCouponForm;
         "sc-order-detail": ScOrderDetail;
         "sc-order-password": ScOrderPassword;
+        "sc-order-redirect-provider": ScOrderRedirectProvider;
         "sc-order-shipping-address": ScOrderShippingAddress;
         "sc-order-status-badge": ScOrderStatusBadge;
-        "sc-order-status-provider": ScOrderStatusProvider;
         "sc-order-submit": ScOrderSubmit;
         "sc-order-summary": ScOrderSummary;
         "sc-order-tax-id-input": ScOrderTaxIdInput;
@@ -5575,7 +5627,9 @@ declare module "@stencil/core" {
             "sc-form": LocalJSX.ScForm & JSXBase.HTMLAttributes<HTMLScFormElement>;
             "sc-form-components-validator": LocalJSX.ScFormComponentsValidator & JSXBase.HTMLAttributes<HTMLScFormComponentsValidatorElement>;
             "sc-form-control": LocalJSX.ScFormControl & JSXBase.HTMLAttributes<HTMLScFormControlElement>;
+            "sc-form-error-provider": LocalJSX.ScFormErrorProvider & JSXBase.HTMLAttributes<HTMLScFormErrorProviderElement>;
             "sc-form-row": LocalJSX.ScFormRow & JSXBase.HTMLAttributes<HTMLScFormRowElement>;
+            "sc-form-state-provider": LocalJSX.ScFormStateProvider & JSXBase.HTMLAttributes<HTMLScFormStateProviderElement>;
             "sc-format-bytes": LocalJSX.ScFormatBytes & JSXBase.HTMLAttributes<HTMLScFormatBytesElement>;
             "sc-format-date": LocalJSX.ScFormatDate & JSXBase.HTMLAttributes<HTMLScFormatDateElement>;
             "sc-format-interval": LocalJSX.ScFormatInterval & JSXBase.HTMLAttributes<HTMLScFormatIntervalElement>;
@@ -5594,6 +5648,7 @@ declare module "@stencil/core" {
             "sc-menu-divider": LocalJSX.ScMenuDivider & JSXBase.HTMLAttributes<HTMLScMenuDividerElement>;
             "sc-menu-item": LocalJSX.ScMenuItem & JSXBase.HTMLAttributes<HTMLScMenuItemElement>;
             "sc-menu-label": LocalJSX.ScMenuLabel & JSXBase.HTMLAttributes<HTMLScMenuLabelElement>;
+            "sc-order-confirm-provider": LocalJSX.ScOrderConfirmProvider & JSXBase.HTMLAttributes<HTMLScOrderConfirmProviderElement>;
             "sc-order-confirmation": LocalJSX.ScOrderConfirmation & JSXBase.HTMLAttributes<HTMLScOrderConfirmationElement>;
             "sc-order-confirmation-customer": LocalJSX.ScOrderConfirmationCustomer & JSXBase.HTMLAttributes<HTMLScOrderConfirmationCustomerElement>;
             "sc-order-confirmation-line-items": LocalJSX.ScOrderConfirmationLineItems & JSXBase.HTMLAttributes<HTMLScOrderConfirmationLineItemsElement>;
@@ -5601,9 +5656,9 @@ declare module "@stencil/core" {
             "sc-order-coupon-form": LocalJSX.ScOrderCouponForm & JSXBase.HTMLAttributes<HTMLScOrderCouponFormElement>;
             "sc-order-detail": LocalJSX.ScOrderDetail & JSXBase.HTMLAttributes<HTMLScOrderDetailElement>;
             "sc-order-password": LocalJSX.ScOrderPassword & JSXBase.HTMLAttributes<HTMLScOrderPasswordElement>;
+            "sc-order-redirect-provider": LocalJSX.ScOrderRedirectProvider & JSXBase.HTMLAttributes<HTMLScOrderRedirectProviderElement>;
             "sc-order-shipping-address": LocalJSX.ScOrderShippingAddress & JSXBase.HTMLAttributes<HTMLScOrderShippingAddressElement>;
             "sc-order-status-badge": LocalJSX.ScOrderStatusBadge & JSXBase.HTMLAttributes<HTMLScOrderStatusBadgeElement>;
-            "sc-order-status-provider": LocalJSX.ScOrderStatusProvider & JSXBase.HTMLAttributes<HTMLScOrderStatusProviderElement>;
             "sc-order-submit": LocalJSX.ScOrderSubmit & JSXBase.HTMLAttributes<HTMLScOrderSubmitElement>;
             "sc-order-summary": LocalJSX.ScOrderSummary & JSXBase.HTMLAttributes<HTMLScOrderSummaryElement>;
             "sc-order-tax-id-input": LocalJSX.ScOrderTaxIdInput & JSXBase.HTMLAttributes<HTMLScOrderTaxIdInputElement>;

@@ -46,14 +46,11 @@ export class ScSessionProvider {
   /** Update line items event */
   @Event() scUpdateDraftState: EventEmitter<Order>;
 
-  /** Update line items event */
+  /** Error event */
   @Event() scError: EventEmitter<{ message: string; code?: string; data?: any; additional_errors?: any } | {}>;
 
   /** Set the state */
   @Event() scSetState: EventEmitter<string>;
-
-  /** Paid event */
-  @Event() scPaid: EventEmitter<void>;
 
   /** Holds the checkout session to update. */
   @State() session: Order;
@@ -61,9 +58,6 @@ export class ScSessionProvider {
   /** Sync this session back to parent. */
   @Watch('session')
   handleSessionUpdate(val) {
-    if (val?.status === 'paid') {
-      this.scPaid.emit();
-    }
     this.scUpdateOrderState.emit(val);
   }
 
@@ -208,9 +202,20 @@ export class ScSessionProvider {
     }
   }
 
+  /**
+   * Handle paid event and update the
+   */
   @Listen('scPaid')
   async handlePaid() {
     this.scSetState.emit('PAID');
+  }
+
+  /**
+   * Handle confirm event.
+   */
+  @Listen('scConfirmed')
+  async handleConfirmed() {
+    window.localStorage.removeItem(this.groupId);
   }
 
   @Listen('scPayError')

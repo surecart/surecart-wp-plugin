@@ -71,6 +71,8 @@ export interface File {
   created_at: number;
 }
 
+export type FormState = 'idle' | 'loading' | 'draft' | 'updating' | 'finalizing' | 'paid' | 'failure' | 'expired';
+
 export interface Product extends Object {
   id: string;
   name: string;

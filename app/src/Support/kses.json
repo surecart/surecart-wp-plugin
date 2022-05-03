@@ -127,12 +127,10 @@
   },
   "sc-checkout": {
     "alignment": true,
-    "coupon": true,
     "currency-code": true,
     "customer": true,
     "disable-components-validation": true,
     "form-id": true,
-    "i18n": true,
     "logged-in": true,
     "mode": true,
     "modified": true,
@@ -423,7 +421,20 @@
     "class": true,
     "slot": true
   },
+  "sc-form-error-provider": {
+    "order": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-form-row": {
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-form-state-provider": {
     "style": true,
     "id": true,
     "class": true,
@@ -631,6 +642,13 @@
     "class": true,
     "slot": true
   },
+  "sc-order-confirm-provider": {
+    "order": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-order-confirmation": {
     "order": true,
     "style": true,
@@ -706,6 +724,14 @@
     "class": true,
     "slot": true
   },
+  "sc-order-redirect-provider": {
+    "order": true,
+    "success-url": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-order-shipping-address": {
     "customer-shipping-address": true,
     "label": true,
@@ -723,14 +749,6 @@
     "pill": true,
     "size": true,
     "status": true,
-    "style": true,
-    "id": true,
-    "class": true,
-    "slot": true
-  },
-  "sc-order-status-provider": {
-    "order": true,
-    "success-url": true,
     "style": true,
     "id": true,
     "class": true,

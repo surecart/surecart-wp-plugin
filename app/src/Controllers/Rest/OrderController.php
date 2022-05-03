@@ -107,7 +107,7 @@ class OrderController extends RestController {
 	 *
 	 * @param \WP_REST_Request $request Rest Request.
 	 *
-	 * @return \WP_REST_Response
+	 * @return \SureCart\Models\Order|\WP_Error
 	 */
 	public function finalize( \WP_REST_Request $request ) {
 		$args = $request->get_params();
@@ -120,18 +120,46 @@ class OrderController extends RestController {
 			return $errors;
 		}
 
-		$order           = new $this->class( [ 'id' => $request['id'] ] );
-		$finalized_order = $order->setProcessor( $request['processor_type'] )
+		$order = new $this->class( [ 'id' => $request['id'] ] );
+		return $order->setProcessor( $request['processor_type'] )
 			->where( $request->get_query_params() )
 			->finalize( array_diff_assoc( $request->get_params(), $request->get_query_params() ) );
+	}
 
-		// return early if errors.
-		if ( is_wp_error( $finalized_order ) ) {
-			return $finalized_order;
+	/**
+	 * Confirm an order.
+	 *
+	 * This force-fetches the order from the API and
+	 * creates/syncs a WordPress user account if paid.
+	 *
+	 * @param \WP_REST_Request $request  Rest Request.
+	 *
+	 * @return \SureCart\Models\Order|\WP_Error
+	 */
+	public function confirm( \WP_REST_Request $request ) {
+		$order = $this->middleware( new $this->class(), $request );
+		if ( is_wp_error( $order ) ) {
+			return $order;
+		}
+
+		$order = $order->where(
+			array_merge(
+				$request->get_query_params(),
+				[ 'refresh_status' => true ] // this part is important to sync with the processor for payment.
+			)
+		)->find( $request['id'] );
+
+		if ( is_wp_error( $order ) ) {
+			return $order;
+		}
+
+		// the order must be paid.
+		if ( empty( $order->status ) || 'paid' !== $order->status ) {
+			return new \WP_Error( 'invalid_status', 'The order is not paid.', [ 'status' => 400 ] );
 		}
 
 		// link the customer id to the user.
-		$linked = $this->linkCustomerId( $finalized_order, $request );
+		$linked = $this->linkCustomerId( $order, $request );
 		if ( is_wp_error( $linked ) ) {
 			return $linked;
 		}
@@ -142,14 +170,15 @@ class OrderController extends RestController {
 			return $login;
 		}
 
-		// finalize the order.
-		return $finalized_order;
+		// return the order.
+		return $order;
 	}
 
 	/**
 	 * Link the customer id to the order.
 	 *
 	 * @param \SureCart\Models\Order $order Order model.
+	 * @param \WP_REST_Request       $request Request object.
 	 * @return \WP_User|\WP_Error
 	 */
 	public function linkCustomerId( $order, $request ) {

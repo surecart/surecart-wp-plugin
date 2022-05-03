@@ -1,9 +1,6 @@
-import { Coupon, Order, Customer, PriceChoice, Prices, Products, ResponseError } from '../../../../types';
-import { checkoutMachine } from './helpers/checkout-machine';
-import { Component, h, Prop, Element, State, Listen, Watch } from '@stencil/core';
+import { Order, Customer, PriceChoice, Prices, Products, ResponseError, FormState } from '../../../../types';
+import { Component, h, Prop, Element, State, Listen } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
-import { addQueryArgs } from '@wordpress/url';
-import { interpret } from '@xstate/fsm';
 import { Universe } from 'stencil-wormhole';
 
 @Component({
@@ -12,9 +9,6 @@ import { Universe } from 'stencil-wormhole';
   shadow: false,
 })
 export class ScCheckout {
-  /** Holds our state machine service */
-  private _stateService = interpret(checkoutMachine);
-
   /** Element */
   @Element() el: HTMLElement;
 
@@ -33,23 +27,17 @@ export class ScCheckout {
   /** Currency to use for this checkout. */
   @Prop() currencyCode: string = 'usd';
 
-  /** Where to go on success */
+  /** Whether to persist the session in the browser between visits. */
   @Prop() persistSession: boolean = true;
 
   /** Where to go on success */
   @Prop() successUrl: string = '';
-
-  /** Optionally pass a coupon. */
-  @Prop({ mutable: true }) coupon: Coupon;
 
   /** Stores the current customer */
   @Prop({ mutable: true }) customer: Customer;
 
   /** Alignment */
   @Prop() alignment: 'center' | 'wide' | 'full';
-
-  /** Translation object. */
-  @Prop() i18n: Object;
 
   /** Is this user logged in? */
   @Prop() loggedIn: boolean;
@@ -64,52 +52,13 @@ export class ScCheckout {
   @State() productsEntities: Products = {};
 
   /** Loading states for different parts of the form. */
-  @State() checkoutState = checkoutMachine.initialState;
+  @State() checkoutState: FormState = 'idle';
 
-  /** Stores the current Order */
+  /** Holds the current Order */
   @State() order: Order;
 
   /** Error to display. */
   @State() error: ResponseError | null;
-
-  @State() missingAddress: boolean;
-
-  /** Payment mode inside individual payment method (i.e. Payment Buttons) */
-  @State() paymentMethod: 'stripe-payment-request' | null;
-
-  @Watch('order')
-  handleOrderChange() {
-    this.error = null;
-  }
-
-  @Listen('scFormSubmit')
-  handlePaymentModeChange(e) {
-    this.paymentMethod = e?.detail?.payentMethod;
-  }
-
-  @Listen('scPaid')
-  async handlePaid() {
-    window.localStorage.removeItem(this.el.id);
-    window.location.assign(addQueryArgs(this.successUrl, { order: this.order.id }));
-  }
-
-  @Listen('scPayError')
-  handlePayError(e) {
-    this.error = e.detail?.message || {
-      code: '',
-      message: 'Something went wrong with your payment.',
-    };
-  }
-
-  @Listen('scSetState')
-  handleSetStateEvent(e) {
-    this.setState(e.detail);
-  }
-
-  setState(name) {
-    const { send } = this._stateService;
-    return send(name);
-  }
 
   @Listen('scAddEntities')
   handleAddEntities(e) {
@@ -132,47 +81,21 @@ export class ScCheckout {
   }
 
   componentWillLoad() {
-    // Start state machine.
-    this._stateService.subscribe(state => (this.checkoutState = state));
-    this._stateService.start();
-
     // @ts-ignore
     Universe.create(this, this.state());
-  }
-
-  /** Remove state machine on disconnect. */
-  disconnectedCallback() {
-    this._stateService.stop();
-  }
-
-  /** First will display validation error, then main error if no validation errors. */
-  errorMessage() {
-    if (this.error?.additional_errors?.[0]?.message) {
-      return this.getErrorMessage(this.error?.additional_errors?.[0]);
-    } else if (this?.error?.message) {
-      return this.getErrorMessage(this?.error);
-    }
-    return '';
-  }
-
-  getErrorMessage(error) {
-    if (error.code === 'order.line_items.price.blank') {
-      return __('This product is no longer purchasable.', 'surecart');
-    }
-    return error?.message;
   }
 
   state() {
     return {
       processor: 'stripe',
       processor_data: this.order?.processor_data,
-      state: this.checkoutState.value,
+      state: this.checkoutState,
 
       // checkout states
-      loading: this.checkoutState.value === 'loading',
-      busy: ['updating', 'finalizing', 'paid'].includes(this.checkoutState.value),
-      paying: ['finalizing', 'paid'].includes(this.checkoutState.value),
-      empty: !['loading', 'updating'].includes(this.checkoutState.value) && !this.order?.line_items?.pagination?.count,
+      loading: this.checkoutState === 'loading',
+      busy: ['updating', 'finalizing', 'paid', 'confirmed'].includes(this.checkoutState),
+      paying: ['finalizing', 'paid', 'confirmed'].includes(this.checkoutState),
+      empty: !['loading', 'updating'].includes(this.checkoutState) && !this.order?.line_items?.pagination?.count,
       // checkout states
 
       error: this.error,
@@ -191,8 +114,6 @@ export class ScCheckout {
       formId: this.formId,
       mode: this.mode,
       currencyCode: this.currencyCode,
-      paymentMethod: this.paymentMethod,
-      i18n: this.i18n,
     };
   }
 
@@ -206,14 +127,6 @@ export class ScCheckout {
       );
     }
 
-    if (this.checkoutState.value === 'expired') {
-      return (
-        <sc-block-ui>
-          <div>{__('Please refresh the page.', 'surecart')}</div>
-        </sc-block-ui>
-      );
-    }
-
     return (
       <div
         class={{
@@ -223,42 +136,37 @@ export class ScCheckout {
           'sc-align-full': this.alignment === 'full',
         }}
       >
-        {!!this.errorMessage() && (
-          <sc-alert
-            type="danger"
-            onScShow={e => {
-              const target = e.target as HTMLElement;
-              target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start',
-                inline: 'nearest',
-              });
-            }}
-            open={!!this.errorMessage()}
-          >
-            <span slot="title">{this.errorMessage()}</span>
-          </sc-alert>
-        )}
-
         <Universe.Provider state={this.state()}>
-          <sc-form-components-validator order={this.order} disabled={this.disableComponentsValidation}>
-            <sc-order-status-provider>
-              <sc-session-provider
-                order={this.order}
-                prices={this.prices}
-                persist={this.persistSession}
-                modified={this.modified}
-                mode={this.mode}
-                form-id={this.formId}
-                group-id={this.el.id}
-                currency-code={this.currencyCode}
-                onScUpdateOrderState={e => (this.order = e.detail)}
-                onScError={e => (this.error = e.detail as ResponseError)}
-              >
-                <slot />
-              </sc-session-provider>
-            </sc-order-status-provider>
-          </sc-form-components-validator>
+          <sc-form-error-provider order={this.order} onScUpdateError={e => (this.error = e.detail)}>
+            {/* Handles the current checkout form state. */}
+            <sc-form-state-provider onScSetCheckoutFormState={e => (this.checkoutState = e.detail)}>
+              {/* Validate components in the form based on order state. */}
+              <sc-form-components-validator order={this.order} disabled={this.disableComponentsValidation}>
+                {/* Handles the current session. */}
+                <sc-session-provider
+                  order={this.order}
+                  prices={this.prices}
+                  persist={this.persistSession}
+                  modified={this.modified}
+                  mode={this.mode}
+                  form-id={this.formId}
+                  group-id={this.el.id}
+                  currency-code={this.currencyCode}
+                  onScUpdateOrderState={e => (this.order = e.detail)}
+                  onScError={e => (this.error = e.detail as ResponseError)}
+                >
+                  {/* Maybe redirect to the success url if requirements are met. */}
+                  <sc-order-redirect-provider order={this.order} success-url={this.successUrl}>
+                    {/* Handle confirming of order after it is "Paid" by processors. */}
+                    <sc-order-confirm-provider order={this.order}>
+                      <slot />
+                    </sc-order-confirm-provider>
+                  </sc-order-redirect-provider>
+                </sc-session-provider>
+              </sc-form-components-validator>
+            </sc-form-state-provider>
+          </sc-form-error-provider>
+
           {this.state().busy && <sc-block-ui z-index={9}></sc-block-ui>}
         </Universe.Provider>
       </div>
