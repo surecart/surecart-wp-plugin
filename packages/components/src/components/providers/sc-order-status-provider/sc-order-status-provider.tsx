@@ -1,6 +1,7 @@
 import { Component, h, Prop, Watch, Event, EventEmitter } from '@stencil/core';
 import { addQueryArgs } from '@wordpress/url';
 import { Order } from '../../../types';
+import apiFetch from '../../../functions/fetch';
 
 /**
  * This component listens to the order status
@@ -55,6 +56,11 @@ export class ScOrderStatusProvider {
   }
 
   async confirmOrder() {
+    this.order = (await await apiFetch({
+      path: addQueryArgs(`surecart/v1/orders/${this.order?.id}`, {
+        refresh_status: true,
+      }),
+    })) as Order;
     return;
   }
 

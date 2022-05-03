@@ -72,6 +72,7 @@ export const ScOrderDetail = /*@__PURE__*/createReactComponent<JSX.ScOrderDetail
 export const ScOrderPassword = /*@__PURE__*/createReactComponent<JSX.ScOrderPassword, HTMLScOrderPasswordElement>('sc-order-password');
 export const ScOrderShippingAddress = /*@__PURE__*/createReactComponent<JSX.ScOrderShippingAddress, HTMLScOrderShippingAddressElement>('sc-order-shipping-address');
 export const ScOrderStatusBadge = /*@__PURE__*/createReactComponent<JSX.ScOrderStatusBadge, HTMLScOrderStatusBadgeElement>('sc-order-status-badge');
+export const ScOrderStatusProvider = /*@__PURE__*/createReactComponent<JSX.ScOrderStatusProvider, HTMLScOrderStatusProviderElement>('sc-order-status-provider');
 export const ScOrderSubmit = /*@__PURE__*/createReactComponent<JSX.ScOrderSubmit, HTMLScOrderSubmitElement>('sc-order-submit');
 export const ScOrderSummary = /*@__PURE__*/createReactComponent<JSX.ScOrderSummary, HTMLScOrderSummaryElement>('sc-order-summary');
 export const ScOrderTaxIdInput = /*@__PURE__*/createReactComponent<JSX.ScOrderTaxIdInput, HTMLScOrderTaxIdInputElement>('sc-order-tax-id-input');

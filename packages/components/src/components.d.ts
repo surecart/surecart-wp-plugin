@@ -1287,6 +1287,16 @@ export namespace Components {
          */
         "status": OrderStatus;
     }
+    interface ScOrderStatusProvider {
+        /**
+          * The current order.
+         */
+        "order": Order;
+        /**
+          * The success url.
+         */
+        "successUrl": string;
+    }
     interface ScOrderSubmit {
         /**
           * Is the order busy
@@ -2565,6 +2575,12 @@ declare global {
         prototype: HTMLScOrderStatusBadgeElement;
         new (): HTMLScOrderStatusBadgeElement;
     };
+    interface HTMLScOrderStatusProviderElement extends Components.ScOrderStatusProvider, HTMLStencilElement {
+    }
+    var HTMLScOrderStatusProviderElement: {
+        prototype: HTMLScOrderStatusProviderElement;
+        new (): HTMLScOrderStatusProviderElement;
+    };
     interface HTMLScOrderSubmitElement extends Components.ScOrderSubmit, HTMLStencilElement {
     }
     var HTMLScOrderSubmitElement: {
@@ -2955,6 +2971,7 @@ declare global {
         "sc-order-password": HTMLScOrderPasswordElement;
         "sc-order-shipping-address": HTMLScOrderShippingAddressElement;
         "sc-order-status-badge": HTMLScOrderStatusBadgeElement;
+        "sc-order-status-provider": HTMLScOrderStatusProviderElement;
         "sc-order-submit": HTMLScOrderSubmitElement;
         "sc-order-summary": HTMLScOrderSummaryElement;
         "sc-order-tax-id-input": HTMLScOrderTaxIdInputElement;
@@ -4399,6 +4416,24 @@ declare namespace LocalJSX {
          */
         "status"?: OrderStatus;
     }
+    interface ScOrderStatusProvider {
+        /**
+          * Finalized event
+         */
+        "onScFinalized"?: (event: CustomEvent<void>) => void;
+        /**
+          * Paid event
+         */
+        "onScPaid"?: (event: CustomEvent<void>) => void;
+        /**
+          * The current order.
+         */
+        "order"?: Order;
+        /**
+          * The success url.
+         */
+        "successUrl"?: string;
+    }
     interface ScOrderSubmit {
         /**
           * Is the order busy
@@ -5442,6 +5477,7 @@ declare namespace LocalJSX {
         "sc-order-password": ScOrderPassword;
         "sc-order-shipping-address": ScOrderShippingAddress;
         "sc-order-status-badge": ScOrderStatusBadge;
+        "sc-order-status-provider": ScOrderStatusProvider;
         "sc-order-submit": ScOrderSubmit;
         "sc-order-summary": ScOrderSummary;
         "sc-order-tax-id-input": ScOrderTaxIdInput;
@@ -5567,6 +5603,7 @@ declare module "@stencil/core" {
             "sc-order-password": LocalJSX.ScOrderPassword & JSXBase.HTMLAttributes<HTMLScOrderPasswordElement>;
             "sc-order-shipping-address": LocalJSX.ScOrderShippingAddress & JSXBase.HTMLAttributes<HTMLScOrderShippingAddressElement>;
             "sc-order-status-badge": LocalJSX.ScOrderStatusBadge & JSXBase.HTMLAttributes<HTMLScOrderStatusBadgeElement>;
+            "sc-order-status-provider": LocalJSX.ScOrderStatusProvider & JSXBase.HTMLAttributes<HTMLScOrderStatusProviderElement>;
             "sc-order-submit": LocalJSX.ScOrderSubmit & JSXBase.HTMLAttributes<HTMLScOrderSubmitElement>;
             "sc-order-summary": LocalJSX.ScOrderSummary & JSXBase.HTMLAttributes<HTMLScOrderSummaryElement>;
             "sc-order-tax-id-input": LocalJSX.ScOrderTaxIdInput & JSXBase.HTMLAttributes<HTMLScOrderTaxIdInputElement>;

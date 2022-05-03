@@ -728,6 +728,14 @@
     "class": true,
     "slot": true
   },
+  "sc-order-status-provider": {
+    "order": true,
+    "success-url": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-order-submit": {
     "busy": true,
     "full": true,
