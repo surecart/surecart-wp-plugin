@@ -3,12 +3,19 @@
 namespace SureCart\Controllers\Admin;
 
 use SureCart\Models\ApiToken;
-use SureCart\Models\Account;
 use SureCart\Models\Product;
 
+/**
+ * Handles onboarding http requests.
+ */
 class Onboarding {
-	public function show( \SureCartCore\Requests\RequestInterface $request, $view ) {
-		if ( ! ApiToken::get() || is_wp_error( Account::find() ) ) {
+	/**
+	 * Show the onboarding page.
+	 *
+	 * @return string
+	 */
+	public function show() {
+		if ( ! ApiToken::get() || is_wp_error( \SureCart::account() ) ) {
 			return \SureCart::view( 'admin/onboarding/install' )->with(
 				[
 					'url' => esc_url( untrailingslashit( SURECART_APP_URL ) . '/sign_up?return_url=' . esc_url_raw( admin_url( 'admin.php?page=sc-complete-signup' ) ) ),
@@ -83,7 +90,7 @@ class Onboarding {
 		if ( is_wp_error( $account ) ) {
 			// save token.
 			ApiToken::save( $old_token );
-			wp_die( __( 'Invalid API Token', 'surecart' ) );
+			wp_die( esc_html__( 'Invalid API Token', 'surecart' ) );
 		}
 
 		return \SureCart::redirect()->to( \SureCart::routeUrl( 'onboarding.show' ) );
