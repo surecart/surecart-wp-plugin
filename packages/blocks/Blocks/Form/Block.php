@@ -26,7 +26,7 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function getStyle( $attributes ) {
-		$style  = '';
+		$style  = 'text-align: left;';
 		$style .= '--sc-form-row-spacing: ' . ( $attributes['gap'] ?? '25' ) . ';';
 		if ( ! empty( $attributes['color'] ) ) {
 			$style .= '--sc-color-primary-500: ' . sanitize_hex_color( $attributes['color'] ) . ';';
