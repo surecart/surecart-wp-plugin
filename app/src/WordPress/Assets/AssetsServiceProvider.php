@@ -159,12 +159,6 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 			'surecart-components',
 			'scData',
 			[
-				'plugin_url'     => \SureCart::core()->assets()->getUrl(),
-				'currency'       => \SureCart::account()->currency,
-				'pages'          => [
-					'dashboard' => \SureCart::pages()->url( 'dashboard' ),
-					'checkout'  => \SureCart::pages()->url( 'checkout' ),
-				],
 				'root_url'       => esc_url_raw( get_rest_url() ),
 				'nonce'          => ( wp_installing() && ! is_multisite() ) ? '' : wp_create_nonce( 'wp_rest' ),
 				'nonce_endpoint' => admin_url( 'admin-ajax.php?action=sc-rest-nonce' ),
@@ -270,6 +264,19 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 			trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/blocks/library.js',
 			array_merge( [ 'surecart-components' ], $asset_file['dependencies'] ),
 			true
+		);
+
+		wp_localize_script(
+			'surecart-blocks',
+			'scBlockData',
+			[
+				'plugin_url' => \SureCart::core()->assets()->getUrl(),
+				'currency'   => \SureCart::account()->currency,
+				'pages'      => [
+					'dashboard' => \SureCart::pages()->url( 'dashboard' ),
+					'checkout'  => \SureCart::pages()->url( 'checkout' ),
+				],
+			]
 		);
 
 		$this->enqueueDefaultTheme();

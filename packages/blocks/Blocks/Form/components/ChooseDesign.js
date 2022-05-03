@@ -58,7 +58,7 @@ export default ({ templates, template, setTemplate }) => {
 							<img
 								css={imageCSS}
 								src={
-									scData.plugin_url +
+									scBlockData.plugin_url +
 									`/templates/forms/${name}.png`
 								}
 							/>

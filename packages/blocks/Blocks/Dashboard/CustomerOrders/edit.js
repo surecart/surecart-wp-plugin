@@ -92,7 +92,7 @@ export default ({ attributes, setAttributes }) => {
 							<div>
 								<sc-format-number
 									type="currency"
-									currency={scData?.currency || 'usd'}
+									currency={scBlockData?.currency || 'usd'}
 									value={12300}
 								></sc-format-number>
 							</div>
@@ -137,7 +137,7 @@ export default ({ attributes, setAttributes }) => {
 							<div>
 								<sc-format-number
 									type="currency"
-									currency={scData?.currency || 'usd'}
+									currency={scBlockData?.currency || 'usd'}
 									value={45600}
 								></sc-format-number>
 							</div>

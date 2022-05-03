@@ -441,7 +441,6 @@ export default function edit({ clientId, attributes, setAttributes }) {
 						)}
 					</div>
 					<ScCheckout
-						keys={scData?.keys}
 						mode={'test'}
 						formId={formId}
 						css={css`
@@ -460,7 +459,7 @@ export default function edit({ clientId, attributes, setAttributes }) {
 						disableComponentsValidation={true}
 						persistSession={false}
 						alignment={align}
-						currencyCode={scData.currency}
+						currencyCode={scBlockData.currency}
 						className={className}
 						choiceType={choice_type}
 						prices={prices}
