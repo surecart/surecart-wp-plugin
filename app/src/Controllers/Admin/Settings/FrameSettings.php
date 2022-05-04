@@ -71,7 +71,6 @@ abstract class FrameSettings {
 	 */
 	public function show( \SureCartCore\Requests\RequestInterface $request ) {
 		$frame_url = $this->getFrameUrl();
-		\SureCart::assets()->enqueueComponents();
 
 		// cannot create frame url.
 		if ( $frame_url && is_wp_error( $frame_url ) ) {
