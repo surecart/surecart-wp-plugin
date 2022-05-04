@@ -21,8 +21,8 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 	 * @param  \Pimple\Container $container Service Container.
 	 */
 	public function register( $container ) {
-		$container['surecart.assets'] = function () {
-			return new AssetsService();
+		$container['surecart.assets'] = function () use ( $container ) {
+			return new AssetsService( new BlockAssetsLoadService( $container ), new ScriptsService( $container ), new StylesService( $container ) );
 		};
 
 		$app = $container[ SURECART_APPLICATION_KEY ];
@@ -37,18 +37,19 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 	 */
 	public function bootstrap( $container ) {
 		$this->container = $container;
+		$container['surecart.assets']->bootstrap();
 
-		// add module to components tag.
-		add_filter( 'script_loader_tag', [ $this, 'componentsTag' ], 10, 3 );
+		// // add module to components tag.
+		// add_filter( 'script_loader_tag', [ $this, 'componentsTag' ], 10, 3 );
 
-		// register component scripts.
-		add_action( 'init', [ $this, 'registerComponents' ] );
-		add_action( 'init', [ $this, 'registerDependencies' ] );
+		// // register component scripts.
+		// add_action( 'init', [ $this, 'registerComponents' ] );
+		// add_action( 'init', [ $this, 'registerDependencies' ] );
 
-		// enqueue assets on front end and editor.
-		add_action( 'enqueue_block_editor_assets', [ $this, 'editorAssets' ] );
-		add_action( 'wp_enqueue_scripts', [ $this, 'frontAssets' ] );
-		add_action( 'admin_enqueue_scripts', [ $this, 'enqueueComponents' ] );
+		// // enqueue assets on front end and editor.
+		// add_action( 'enqueue_block_editor_assets', [ $this, 'editorAssets' ] );
+		// $this->frontAssets();
+		// add_action( 'admin_enqueue_scripts', [ $this, 'enqueueComponents' ] );
 	}
 
 	public function registerDependencies() {
@@ -120,7 +121,7 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 	}
 
 	/**
-	 * Register the component scripts
+	 * Register the component scripts and translations.
 	 *
 	 * @return void
 	 */
@@ -154,6 +155,43 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 		}
 
 		wp_set_script_translations( 'surecart-components', 'surecart', WP_LANG_DIR . '/plugins/' );
+	}
+
+	/**
+	 * Print custom styles for theme.
+	 *
+	 * @param string $handle Style handle for inline style.
+	 *
+	 * @return void
+	 */
+	public function printCustomStyles( $handle = '' ) {
+		$brand = \SureCart::account()->brand;
+
+		$style = file_get_contents( plugin_dir_path( SURECART_PLUGIN_FILE ) . 'dist/blocks/cloak.css' );
+
+		$style .= ':root {';
+		$style .= '--sc-color-primary-500: #' . ( $brand->color ?? '000' ) . ';';
+		$style .= '--sc-focus-ring-color-primary: #' . ( $brand->color ?? '000' ) . ';';
+		$style .= '--sc-input-border-color-focus: #' . ( $brand->color ?? '000' ) . ';';
+		$style .= '}';
+
+		wp_add_inline_style(
+			$handle,
+			$style
+		);
+	}
+
+	/**
+	 * Enqueue components
+	 *
+	 * @return void
+	 */
+	public function enqueueComponents() {
+		if ( ! apply_filters( 'surecart/components/load', true ) ) {
+			return;
+		}
+		wp_enqueue_script( 'surecart-components' );
+		wp_enqueue_style( 'surecart-themes-default' );
 
 		wp_localize_script(
 			'surecart-components',
@@ -173,7 +211,8 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 
 		add_action(
 			'wp_footer',
-			function() { ?>
+			function() {
+				?>
 		<sc-register-icon-library></sc-register-icon-library>
 		<script>
 			(async () => {
@@ -221,58 +260,35 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 	}
 
 	/**
-	 * Enqueue default theme
-	 *
-	 * @return void
-	 */
-	public function enqueueDefaultTheme() {
-		wp_enqueue_style( 'surecart-themes-default' );
-
-		$brand = \SureCart::account()->brand;
-
-		$style = file_get_contents( plugin_dir_path( SURECART_PLUGIN_FILE ) . 'dist/blocks/cloak.css' );
-
-		$style .= ':root {';
-		$style .= '--sc-color-primary-500: #' . ( $brand->color ?? '000' ) . ';';
-		$style .= '--sc-focus-ring-color-primary: #' . ( $brand->color ?? '000' ) . ';';
-		$style .= '--sc-input-border-color-focus: #' . ( $brand->color ?? '000' ) . ';';
-		$style .= '}';
-
-		wp_add_inline_style(
-			'surecart-themes-default',
-			$style
-		);
-	}
-
-	/**
-	 * Enqueue components
-	 *
-	 * @return void
-	 */
-	public function enqueueComponents() {
-		if ( ! apply_filters( 'surecart/components/load', true ) ) {
-			return;
-		}
-		wp_enqueue_script( 'surecart-components' );
-		wp_enqueue_style( 'surecart-themes-default' );
-	}
-
-	/**
-	 * Enqueue default theme
+	 * Enqueue editor assets.
 	 *
 	 * @return void
 	 */
 	public function editorAssets() {
-		$asset_file = include trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/blocks/library.asset.php';
+		// enqueue the default theme.
+		$this->enqueueDefaultTheme();
 
+		$asset_file = include trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/blocks/library.asset.php';
 		\SureCart::core()->assets()->enqueueScript(
 			'surecart-blocks',
 			trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/blocks/library.js',
-			array_merge( [ 'surecart-components' ], $asset_file['dependencies'] ),
 			true
 		);
 
-		$this->enqueueDefaultTheme();
+			array_merge( [ 'surecart-components' ], $asset_file['dependencies'] ),
+
+		wp_localize_script(
+			'surecart-blocks',
+			'scBlockData',
+			[
+				'plugin_url' => \SureCart::core()->assets()->getUrl(),
+				'currency'   => \SureCart::account()->currency,
+				'pages'      => [
+					'dashboard' => \SureCart::pages()->url( 'dashboard' ),
+					'checkout'  => \SureCart::pages()->url( 'checkout' ),
+				],
+			]
+		);
 	}
 
 	/**
@@ -281,8 +297,64 @@ class AssetsServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function frontAssets() {
-		// TODO: only enqueue when block renders.
-		$this->enqueueComponents();
+		// Enqueue front-end assets when the block is used.
+		$this->enqueueBlockViewScript( 'surecart/checkout-form', [ $this, 'enqueueFrontAssets' ] );
+		$this->enqueueBlockViewScript( 'surecart/buy-button', [ $this, 'enqueueFrontAssets' ] );
+		$this->enqueueBlockViewScript( 'surecart/customer-dashboard', [ $this, 'enqueueFrontAssets' ] );
+	}
+
+	/**
+	 * Enqueues a frontend script for a specific block.
+	 *
+	 * Scripts enqueued using this function will only get printed
+	 * when the block gets rendered on the frontend.
+	 *
+	 * @param string $block_name The block name, including namespace.
+	 * @param array  $args       An array of arguments [handle,src,deps,ver,media,textdomain].
+	 *
+	 * @return void
+	 */
+	public function enqueueBlockViewScript( $block_name, $enqueue_callback = null ) {
+		/**
+		 * Callback function to register and enqueue scripts.
+		 *
+		 * @param string $content When the callback is used for the render_block filter,
+		 *                        the content needs to be returned so the function parameter
+		 *                        is to ensure the content exists.
+		 * @return string Block content.
+		 */
+		$callback = static function( $content, $block ) use ( $block_name, $enqueue_callback ) {
+			// Sanity check.
+			if ( empty( $block['blockName'] ) || $block_name !== $block['blockName'] ) {
+				return $content;
+			}
+
+			if ( ! empty( $enqueue_callback ) ) {
+				call_user_func( $enqueue_callback, $content, $block );
+			}
+
+			return $content;
+		};
+
+		/*
+		 * The filter's callback here is an anonymous function because
+		 * using a named function in this case is not possible.
+		 *
+		 * The function cannot be unhooked, however, users are still able
+		 * to dequeue the script registered/enqueued by the callback
+		 * which is why in this case, using an anonymous function
+		 * was deemed acceptable.
+		 */
+		add_filter( 'render_block', $callback, 10, 2 );
+	}
+
+	/**
+	 * Enqueue front-end assets
+	 *
+	 * @return void
+	 */
+	public function enqueueFrontAssets() {
 		$this->enqueueDefaultTheme();
+		$this->enqueueComponents();
 	}
 }
