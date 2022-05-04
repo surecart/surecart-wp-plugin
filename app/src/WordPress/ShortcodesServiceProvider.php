@@ -53,6 +53,9 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 		global $sc_form_id;
 		$sc_form_id = $atts['id'];
 
+		global $load_sc_js;
+		$load_sc_js = true;
+
 		return apply_filters( 'surecart/shortcode/render', do_blocks( $form->post_content ), $atts, $form );
 	}
 }

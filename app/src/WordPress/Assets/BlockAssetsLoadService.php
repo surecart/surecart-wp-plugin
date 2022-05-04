@@ -7,6 +7,24 @@ namespace SureCart\WordPress\Assets;
  */
 class BlockAssetsLoadService {
 	/**
+	 * Runs a callback when our components are detected through several means
+	 *
+	 * @param string        $block_name The block name, including namespace.
+	 * @param callable|null $enqueue_callback A function to run when the block is rendered.
+	 *
+	 * @return void
+	 */
+	public function whenRendered( $block_name, $enqueue_callback = null ) {
+		$this->whenBlockRenders( $block_name, $enqueue_callback );
+		$this->whenUsingPageBuilder( $enqueue_callback );
+		// global variable as a fallback.
+		global $load_sc_js;
+		if ( $load_sc_js ) {
+			add_action( 'wp_enqueue_script', $enqueue_callback );
+		}
+	}
+
+	/**
 	 * Runs a callback when a block is rendered.
 	 * Typical usage: scripts to be enqueued using this function will only get printed
 	 * when the block gets rendered on the frontend.
@@ -16,7 +34,7 @@ class BlockAssetsLoadService {
 	 *
 	 * @return void
 	 */
-	public function whenRendered( $block_name, $enqueue_callback = null ) {
+	public function whenBlockRenders( $block_name, $enqueue_callback ) {
 		/**
 		 * Callback function to when a block is rendered.
 		 * Typically to enqueue scripts when needed.
@@ -51,5 +69,44 @@ class BlockAssetsLoadService {
 		 * was deemed acceptable.
 		 */
 		add_filter( 'render_block', $callback, 10, 2 );
+	}
+
+	/**
+	 * Handle when using a page builder.
+	 *
+	 * @return void
+	 */
+	public function whenUsingPageBuilder( $enqueue_callback ) {
+		if ( $this->isUsingPageBuilder() ) {
+			add_action( 'wp_enqueue_script', $enqueue_callback );
+		}
+	}
+
+	/**
+	 * Are we using a known page builder?
+	 *
+	 * @return boolean
+	 */
+	public function isUsingPageBuilder() {
+		// enable on Elementor.
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( ! empty( $_GET['action'] ) && 'elementor' === $_GET['action'] ) {
+			return true;
+		}
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( isset( $_GET['elementor-preview'] ) ) {
+			return true;
+		}
+		// load for beaver builder.
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( isset( $_GET['fl_builder'] ) ) {
+			return true;
+		}
+		// load for Divi builder.
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( isset( $_GET['et_fb'] ) ) {
+			return true;
+		}
+		return false;
 	}
 }
