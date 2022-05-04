@@ -20,8 +20,8 @@
 
   &.tab--active,
   &:hover {
-    color: var(--sc-color-gray-900);
-    background-color: var(--sc-color-gray-100);
+    color: var(--sc-tab-active-color, var(--sc-color-gray-900));
+    background-color: var(--sc-tab-active-background, var(--sc-color-gray-100) );
   }
 
   &.tab--disabled {

@@ -1,19 +1,8 @@
 <style>
-
-	:root {
-		--wp-admin-theme-color: #1e40af; /*#08ba4f;*/
-		--sc-color-primary-500: var(--wp-admin-theme-color);
-		--sc-focus-ring-color-primary: var(
-			--wp-admin-theme-color
-		);
-		--sc-input-border-color-focus: var(
-			--wp-admin-theme-color
-		);
-	}
-
 	#wpbody-content, #wpcontent {
 		padding: 0 !important;
 		font-size: 14px;
+		color: var(--sc-color-brand-body);
 	}
 	#wpbody, #wpbody-content, #wpcontent, #wpwrap, body, html {
 		height: 100% !important;
@@ -25,7 +14,7 @@
 		height: 100% !important;
 		width: 100% !important;
 		left: 0;
-		background: var(--sc-color-gray-50);
+		background: var(--sc-color-brand-main-background);
 		display: flex;
 		flex-direction: column;
 	}

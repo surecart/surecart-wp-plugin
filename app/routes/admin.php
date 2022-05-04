@@ -192,6 +192,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->where( 'admin', 'sc-settings' )
 ->middleware( 'user.can:manage_sc_account_settings' )
 ->middleware( 'assets.components' )
+->middleware( 'assets.brand_colors' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Settings\\' )
 ->group(
 	function() {

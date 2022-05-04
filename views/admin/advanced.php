@@ -38,8 +38,8 @@
 
 				<sc-flex flex-direction="column" style="--spacing: var(--sc-spacing-xx-large)">
 					<sc-flex flex-direction="column">
-						<sc-text style="--font-size: var(--sc-font-size-large); --font-weight: var(--sc-font-weight-bold); --line-height:1;"><?php esc_html_e( 'Performance', 'surecart' ); ?></sc-text>
-						<sc-text style="margin-bottom: 1em; --line-height:1; --color: var(--sc-color-gray-500)"><?php esc_html_e( 'Change your plugin performance settings.', 'surecart' ); ?></sc-text>
+						<sc-text style="--font-size: var(--sc-font-size-large); --font-weight: var(--sc-font-weight-bold); --line-height:1; --color: var(--sc-color-brand-heading)"><?php esc_html_e( 'Performance', 'surecart' ); ?></sc-text>
+						<sc-text style="margin-bottom: 1em; --line-height:1; --color: var(--sc-color-brand-body)"><?php esc_html_e( 'Change your plugin performance settings.', 'surecart' ); ?></sc-text>
 						<sc-card>
 							<sc-switch name="use_esm_loader" <?php checked( $use_esm_loader, 1 ); ?> value="on">
 								<?php esc_html_e( 'Use JavaScript ESM Loader', 'surecart' ); ?>
@@ -50,7 +50,7 @@
 
 					<sc-flex flex-direction="column">
 						<sc-text style="--font-size: var(--sc-font-size-large); --font-weight: var(--sc-font-weight-bold); --line-height:1;"><?php esc_html_e( 'Uninstall', 'surecart' ); ?></sc-text>
-						<sc-text style="margin-bottom: 1em; --line-height:1; --color: var(--sc-color-gray-500)"><?php esc_html_e( 'Change your plugin uninstall settings.', 'surecart' ); ?></sc-text>
+						<sc-text style="margin-bottom: 1em; --line-height:1; --color: var(--sc-color-brand-body)"><?php esc_html_e( 'Change your plugin uninstall settings.', 'surecart' ); ?></sc-text>
 						<sc-card>
 							<sc-switch name="uninstall" <?php checked( $uninstall, 1 ); ?> value="on">
 								<?php esc_html_e( 'Uninstall On Delete', 'surecart' ); ?>
