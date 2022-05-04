@@ -310,12 +310,12 @@ class FormPostTypeService {
 
 		$post_names = array_map(
 			function ( $post ) {
-				return '<a href="' . esc_url( get_edit_post_link( $post->ID ) ) . '">' . wp_kses_post( $post->post_title ) . '</a>';
+				return '<a href="' . esc_url( get_edit_post_link( $post->ID ) ) . '">' . wp_kses_post( $post->post_title ? $post->post_title : esc_html__( '(no title)', 'surecart' ) ) . '</a>';
 			},
 			$posts,
 		);
 
-		echo implode( ', ', $post_names );
+		echo wp_kses_post( implode( ', ', array_filter( $post_names ) ) );
 	}
 
 	/**
