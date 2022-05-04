@@ -26,6 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->name( 'onboarding.show' )
 ->middleware( 'user.can:manage_options' )
 ->middleware( 'assets.components' )
+->middleware( 'assets.brand_colors' )
 ->handle( 'Onboarding@show' );
 
 \SureCart::route()
@@ -33,6 +34,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->where( 'admin', 'sc-complete-signup' )
 ->middleware( 'user.can:manage_options' )
 ->middleware( 'assets.components' )
+->middleware( 'assets.brand_colors' )
 ->group(
 	function() {
 		\SureCart::route()->get()->name( 'onboarding.complete' )->handle( 'Onboarding@complete' );
