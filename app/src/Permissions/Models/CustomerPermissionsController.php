@@ -57,7 +57,10 @@ class CustomerPermissionsController extends ModelPermissionsController {
 		if ( ! empty( $allcaps['read_sc_customers'] ) ) {
 			return true;
 		}
-		return $this->customerIdMatches( $user, $args[2] );
+		if ( empty( $args[2]['id'] ) ) {
+			return false;
+		}
+		return $this->customerIdMatches( $user, $args[2]['id'] );
 	}
 
 	/**
