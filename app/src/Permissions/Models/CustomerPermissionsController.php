@@ -23,6 +23,7 @@ class CustomerPermissionsController extends ModelPermissionsController {
 		if ( ! empty( $allcaps['edit_sc_customers'] ) ) {
 			return true;
 		}
+
 		// no data provided to update. Make sure to at least pass an empty array.
 		if ( is_null( $args[3] ?? null ) ) {
 			return false;

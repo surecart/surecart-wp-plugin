@@ -36,12 +36,12 @@ export default ({ attributes, setAttributes, onChange, setAddingLink }) => {
 	};
 
 	const createLink = () => {
-		if (!scData?.pages?.checkout) {
+		if (!scBlockData?.pages?.checkout) {
 			alert('Your checkout page is not set', 'surecart');
 			return;
 		}
 
-		const url = addQueryArgs(scData?.pages?.checkout, {
+		const url = addQueryArgs(scBlockData?.pages?.checkout, {
 			line_items: (line_items || []).map((item) => ({
 				price_id: item?.id,
 				quantity: item?.quantity,

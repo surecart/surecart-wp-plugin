@@ -53,6 +53,7 @@ export class ScDashboardCustomerDetails {
         edit-link={addQueryArgs(window.location.href, {
           action: 'edit',
           model: 'customer',
+          id: this.customerId,
         })}
       ></sc-customer-details>
     );
