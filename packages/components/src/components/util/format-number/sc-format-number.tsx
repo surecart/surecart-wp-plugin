@@ -45,7 +45,8 @@ export class ScFormatNumber {
     if (isNaN(this.value)) {
       return '';
     }
-    return new Intl.NumberFormat(this.locale || navigator.language || (navigator as any)?.browserLanguage || (navigator.languages || ['en'])[0], {
+    const lang = navigator.language || (navigator as any)?.browserLanguage || (navigator.languages || ['en'])[0];
+    return new Intl.NumberFormat(this.locale || lang, {
       style: this.type,
       currency: this.currency.toUpperCase(),
       currencyDisplay: this.currencyDisplay,
