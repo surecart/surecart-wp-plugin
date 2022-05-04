@@ -137,6 +137,7 @@ export class ScCheckout {
         }}
       >
         <Universe.Provider state={this.state()}>
+          {/* Handles errors in the form. */}
           <sc-form-error-provider order={this.order} onScUpdateError={e => (this.error = e.detail)}>
             {/* Handles the current checkout form state. */}
             <sc-form-state-provider onScSetCheckoutFormState={e => (this.checkoutState = e.detail)}>

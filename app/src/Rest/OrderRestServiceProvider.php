@@ -128,6 +128,7 @@ class OrderRestServiceProvider extends RestServiceProvider implements RestServic
 	/**
 	 * Finalizing an order requires some server side form validation.
 	 *
+	 * @param \WP_REST_Request $request Full details about the request.
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function finalize_permissions_check( \WP_REST_Request $request ) {
@@ -158,6 +159,7 @@ class OrderRestServiceProvider extends RestServiceProvider implements RestServic
 	/**
 	 * Confirming an order was paid for.
 	 *
+	 * @param \WP_REST_Request $request Full details about the request.
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function confirm_permissions_check( \WP_REST_Request $request ) {
