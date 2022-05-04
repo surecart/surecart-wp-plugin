@@ -25,25 +25,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->where( 'admin', 'sc-getting-started' )
 ->name( 'onboarding.show' )
 ->middleware( 'user.can:manage_options' )
+->middleware( 'assets.components' )
 ->handle( 'Onboarding@show' );
 
 \SureCart::route()
 ->get()
 ->where( 'admin', 'sc-complete-signup' )
 ->middleware( 'user.can:manage_options' )
+->middleware( 'assets.components' )
 ->group(
 	function() {
 		\SureCart::route()->get()->name( 'onboarding.complete' )->handle( 'Onboarding@complete' );
 		\SureCart::route()->post()->middleware( 'nonce:update_plugin_settings' )->name( 'onboarding.save' )->handle( 'Onboarding@save' );
 	}
 );
-
-/*
-|--------------------------------------------------------------------------
-| Dashboard
-|--------------------------------------------------------------------------
-*/
-\SureCart::route()->get()->where( 'admin', 'sc-dashboard' )->name( 'dashboard' )->handle( 'Dashboard@show' );
 
 
 /*
@@ -54,6 +49,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 \SureCart::route()
 ->where( 'admin', 'sc-orders' )
 ->middleware( 'user.can:edit_sc_orders' )
+->middleware( 'assets.components' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Orders\\' )
 ->group(
 	function() {
@@ -71,6 +67,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 \SureCart::route()
 ->where( 'admin', 'sc-invoices' )
 ->middleware( 'user.can:edit_sc_invoices' )
+->middleware( 'assets.components' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Invoices\\' )
 ->group(
 	function() {
@@ -88,6 +85,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 \SureCart::route()
 ->where( 'admin', 'sc-products' )
 ->middleware( 'user.can:edit_sc_products' )
+->middleware( 'assets.components' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Products\\' )
 ->group(
 	function() {
@@ -105,6 +103,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 \SureCart::route()
 ->where( 'admin', 'sc-coupons' )
 ->middleware( 'user.can:edit_sc_coupons' )
+->middleware( 'assets.components' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Coupons\\' )
 ->group(
 	function() {
@@ -121,6 +120,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 \SureCart::route()
 ->where( 'admin', 'sc-customers' )
 ->middleware( 'user.can:edit_sc_customers' )
+->middleware( 'assets.components' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Customers\\' )
 ->group(
 	function() {
@@ -137,6 +137,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 \SureCart::route()
 ->where( 'admin', 'sc-abandoned-orders' )
 ->middleware( 'user.can:edit_sc_orders' )
+->middleware( 'assets.components' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Abandoned\\' )
 ->group(
 	function() {
@@ -153,6 +154,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 \SureCart::route()
 ->where( 'admin', 'sc-subscriptions' )
 ->middleware( 'user.can:edit_sc_subscriptions' )
+->middleware( 'assets.components' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Subscriptions\\' )
 ->group(
 	function() {
@@ -170,6 +172,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 \SureCart::route()
 ->where( 'admin', 'sc-product-groups' )
 ->middleware( 'user.can:edit_sc_products' )
+->middleware( 'assets.components' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\ProductGroups\\' )
 ->group(
 	function() {
@@ -188,6 +191,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->get()
 ->where( 'admin', 'sc-settings' )
 ->middleware( 'user.can:manage_sc_account_settings' )
+->middleware( 'assets.components' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Settings\\' )
 ->group(
 	function() {
@@ -237,6 +241,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->get()
 ->where( 'admin', 'sc-plugin' )
 ->middleware( 'user.can:manage_options' )
+->middleware( 'assets.components' )
 ->group(
 	function() {
 		\SureCart::route()->get()->name( 'plugin.show' )->handle( 'PluginSettings@show' );

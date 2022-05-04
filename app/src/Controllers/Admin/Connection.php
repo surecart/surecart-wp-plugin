@@ -5,7 +5,7 @@ namespace SureCart\Controllers\Admin;
 use SureCart\Models\ApiToken;
 
 class Connection {
-	public function show( \SureCartCore\Requests\RequestInterface $request, $view ) {
+	public function show( \SureCartCore\Requests\RequestInterface $request ) {
 		return \SureCart::view( 'admin/connection' )->with(
 			[
 				'api_token' => ApiToken::get(),
@@ -13,6 +13,7 @@ class Connection {
 			]
 		);
 	}
+
 	public function save( \SureCartCore\Requests\RequestInterface $request, $view ) {
 		$url       = $request->getHeaderLine( 'Referer' );
 		$api_token = $request->body( 'api_token' );

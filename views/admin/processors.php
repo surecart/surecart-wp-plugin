@@ -67,7 +67,7 @@
 										<sc-tag type="warning"><?php esc_html_e( 'Test Payment Not Allowed', 'surecart' ); ?></sc-tag>
 									<?php endif; ?>
 									<?php if ( ! empty( $processors->stripe_test ) ) : ?>
-										<sc-tag type="info"><?php esc_html_e( 'Test Payments Allowed', 'surecart' ); ?></sc-tag>
+										<sc-tag type="success"><?php esc_html_e( 'Test Payments Allowed', 'surecart' ); ?></sc-tag>
 										<sc-tag type="warning"><?php esc_html_e( 'Live Payments Not Allowed', 'surecart' ); ?></sc-tag>
 									<?php endif; ?>
 								<?php endif; ?>
@@ -212,7 +212,7 @@
 							</sc-text>
 							<div>
 								<?php if ( ! empty( $processors->paypal_test ) ) : ?>
-									<sc-tag type="success"><?php esc_html_e( 'Connected', 'surecart' ); ?></sc-tag>
+									<sc-tag type="success"><?php esc_html_e( 'Test Payments Allowed', 'surecart' ); ?></sc-tag>
 								<?php else : ?>
 									<sc-tag type="default"><?php esc_html_e( 'Not Connected', 'surecart' ); ?></sc-tag>
 								<?php endif; ?>
