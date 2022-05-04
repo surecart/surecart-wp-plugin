@@ -212,6 +212,7 @@ class FormPostTypeService {
 					'edit_posts'             => 'edit_posts',
 					'edit_published_posts'   => 'edit_published_posts',
 					'delete_published_posts' => 'delete_published_posts',
+					'delete_posts'           => 'delete_posts',
 					'edit_others_posts'      => 'edit_others_posts',
 					'delete_others_posts'    => 'delete_others_posts',
 				),
@@ -234,7 +235,13 @@ class FormPostTypeService {
 		);
 	}
 
+	/**
+	 * Filter the post type columns.
+	 */
 	public function postTypeColumns( $defaults ) {
+		// add our components.
+		\SureCart::assets()->enqueueComponents();
+
 		$columns = array_merge(
 			$defaults,
 			array(
