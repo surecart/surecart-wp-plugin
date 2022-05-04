@@ -155,7 +155,7 @@ class OrdersListTable extends ListTable {
 			[
 				'status' => $this->getStatus(),
 			]
-		)->with( [ 'charge', 'charge.payment_method', 'payment_method.card', 'payment_intent' ] )
+		)->with( [ 'charge', 'payment_intent', 'payment_intent.payment_method', 'payment_method.card' ] )
 		->paginate(
 			[
 				'per_page' => $this->get_items_per_page( 'orders' ),
@@ -205,9 +205,10 @@ class OrdersListTable extends ListTable {
 		if ( ! empty( $order->payment_intent->processor_type ) && 'paypal' === $order->payment_intent->processor_type ) {
 			return '<sc-icon name="paypal" style="font-size: 56px; line-height:1; height: 28px;"></sc-icon>';
 		}
-		if ( ! empty( $order->charge->payment_method->card ) ) {
-			return '<sc-cc-logo style="font-size: 32px; line-height:1;" brand="' . esc_html( $order->charge->payment_method->card->brand ) . '"></sc-cc-logo>';
+		if ( ! empty( $order->payment_intent->payment_method->card->brand ) ) {
+			return '<sc-cc-logo style="font-size: 32px; line-height:1;" brand="' . esc_html( $order->payment_intent->payment_method->card->brand ) . '"></sc-cc-logo>';
 		}
+
 		return $order->payment_intent->processor_type ?? '-';
 	}
 
