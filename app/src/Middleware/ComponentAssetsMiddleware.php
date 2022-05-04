@@ -4,7 +4,6 @@ namespace SureCart\Middleware;
 
 use Closure;
 use SureCartCore\Requests\RequestInterface;
-use SureCartCore\Responses\RedirectResponse;
 
 /**
  * Middleware for handling model archiving.
