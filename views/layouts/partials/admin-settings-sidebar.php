@@ -54,4 +54,9 @@
 		<sc-icon style="font-size: 18px; width: 22px; stroke-width: 4; opacity: 0.7" name="sliders" slot="prefix"></sc-icon>
 		<?php esc_html_e( 'Advanced', 'surecart' ); ?>
 	</sc-tab>
+
+	<sc-tab href="mailto:hello@surecart.com" target="_blank">
+		<sc-icon style="font-size: 18px; width: 22px; stroke-width: 4; opacity: 0.7" name="life-buoy" slot="prefix"></sc-icon>
+		<?php esc_html_e( 'Help', 'surecart' ); ?>
+	</sc-tab>
 </div>
