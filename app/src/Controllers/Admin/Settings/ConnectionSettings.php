@@ -15,6 +15,7 @@ class ConnectionSettings {
 	 * @return function
 	 */
 	public function show( \SureCartCore\Requests\RequestInterface $request ) {
+		\SureCart::assets()->enqueueComponents();
 		return \SureCart::view( 'admin/connection' )->with(
 			[
 				'tab'       => $request->query( 'tab' ) ?? '',

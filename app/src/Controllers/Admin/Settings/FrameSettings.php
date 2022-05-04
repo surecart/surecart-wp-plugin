@@ -71,14 +71,15 @@ abstract class FrameSettings {
 	 */
 	public function show( \SureCartCore\Requests\RequestInterface $request ) {
 		$frame_url = $this->getFrameUrl();
+		\SureCart::assets()->enqueueComponents();
 
 		// cannot create frame url.
 		if ( $frame_url && is_wp_error( $frame_url ) ) {
-			if ('unauthorized' === $frame_url->get_error_code()) {
+			if ( 'unauthorized' === $frame_url->get_error_code() ) {
 				return \SureCart::view( 'admin/connection-invalid' )->with(
 					[
 						'api_token' => '',
-						'status' => 'unauthorized',
+						'status'    => 'unauthorized',
 					]
 				);
 			}

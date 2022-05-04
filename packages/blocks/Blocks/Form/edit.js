@@ -235,7 +235,7 @@ export default function edit({ clientId, attributes, setAttributes }) {
 
 	useEffect(() => {
 		setActiveProcessors(
-			(scData?.processors || [])
+			(scBlockData?.processors || [])
 				// find only processors for this mode.
 				.filter(
 					(processor) => processor?.live_mode === (mode === 'live')

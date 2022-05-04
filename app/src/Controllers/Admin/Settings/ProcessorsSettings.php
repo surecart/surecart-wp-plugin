@@ -13,6 +13,7 @@ class ProcessorsSettings {
 	 * @return function
 	 */
 	public function show( \SureCartCore\Requests\RequestInterface $request ) {
+		\SureCart::assets()->enqueueComponents();
 		$processors = [];
 		foreach ( \SureCart::account()->processors ?? [] as $processor ) {
 			$processors[ $processor->processor_type . '_' . ( $processor->live_mode ? 'live' : 'test' ) ] = $processor;

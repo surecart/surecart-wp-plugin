@@ -23,7 +23,7 @@ export default ({ className, attributes, setAttributes, context }) => {
 
 	const processorOptions = () => {
 		return (
-			(scData?.processors || [])
+			(scBlockData?.processors || [])
 				.map((processor) => {
 					if (processor.processor_type === 'stripe') {
 						return {
@@ -51,7 +51,7 @@ export default ({ className, attributes, setAttributes, context }) => {
 
 	useEffect(() => {
 		setActiveProcessors(
-			(scData?.processors || [])
+			(scBlockData?.processors || [])
 				// find only processors for this mode.
 				.filter(
 					(processor) => processor?.live_mode === (mode === 'live')
