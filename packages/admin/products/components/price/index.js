@@ -320,7 +320,11 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 					})
 				}
 				collapsible={collapsible}
-				onDelete={product?.recurring ? () => deletePrice() : null}
+				onDelete={
+					product?.recurring && !price?.id
+						? () => deletePrice()
+						: null
+				}
 				css={css`
 					.sc-price-copy {
 						visibility: hidden;
