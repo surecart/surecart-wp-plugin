@@ -6,6 +6,9 @@ exports[`sc-customer-details has a loading state 1`] = `
     <sc-dashboard-module class="customer-details">
       <span slot="heading">
         Billing Details
+        <sc-tag size="small" type="warning">
+          Test
+        </sc-tag>
       </span>
       <sc-card no-padding="">
         <sc-stacked-list>
@@ -34,12 +37,17 @@ exports[`sc-customer-details has an error state 1`] = `
     <sc-dashboard-module class="customer-details" error="testmessage">
       <span slot="heading">
         Billing Details
+        <sc-tag size="small" type="warning">
+          Test
+        </sc-tag>
       </span>
       <sc-card no-padding="">
         <sc-stacked-list>
-          <slot name="empty">
-            You are not a customer.
-          </slot>
+          <sc-stacked-list-row mobile-size="0">
+            <slot name="empty">
+              You are not a customer.
+            </slot>
+          </sc-stacked-list-row>
         </sc-stacked-list>
       </sc-card>
     </sc-dashboard-module>
@@ -58,6 +66,9 @@ exports[`sc-customer-details renders 1`] = `
     <sc-dashboard-module class="customer-details">
       <span slot="heading">
         Billing Details
+        <sc-tag size="small" type="warning">
+          Test
+        </sc-tag>
       </span>
       <sc-card no-padding="">
         <sc-stacked-list>
