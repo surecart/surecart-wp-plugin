@@ -132,6 +132,12 @@ class ScriptsService {
 			'scData',
 			[
 				'root_url'       => esc_url_raw( get_rest_url() ),
+				'plugin_url'     => \SureCart::core()->assets()->getUrl(),
+				'currency'   => \SureCart::account()->currency,
+				'pages'      => [
+					'dashboard' => \SureCart::pages()->url( 'dashboard' ),
+					'checkout'  => \SureCart::pages()->url( 'checkout' ),
+				],
 				'nonce'          => ( wp_installing() && ! is_multisite() ) ? '' : wp_create_nonce( 'wp_rest' ),
 				'nonce_endpoint' => admin_url( 'admin-ajax.php?action=sc-rest-nonce' ),
 			]

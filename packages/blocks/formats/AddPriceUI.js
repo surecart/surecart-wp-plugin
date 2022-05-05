@@ -42,12 +42,14 @@ export default ({ value, onChange, setAddingLink, addingLink, isActive }) => {
 	};
 
 	const createLink = () => {
-		if (!scData?.pages?.checkout) {
+		const checkoutPage =
+			scBlockData?.pages?.checkout || scData?.pages?.checkout;
+		if (!checkoutPage) {
 			alert('Your checkout page is not set', 'surecart');
 			return;
 		}
 
-		const url = addQueryArgs(scData?.pages?.checkout, {
+		const url = addQueryArgs(checkoutPage, {
 			line_items: (line_items || []).map((item) => ({
 				price_id: item?.id,
 				quantity: item?.quantity,
