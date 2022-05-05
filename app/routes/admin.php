@@ -225,7 +225,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	->middleware( 'nonce:remove_webhook' )
 	->middleware( 'user.can:edit_sc_webhooks' )
 	->handle( '\\SureCart\\Controllers\\Web\\WebhookController@remove' );
-
 \SureCart::route()
 	->get()
 	->where( 'sc_url_var', 'ignore_webhook', 'action' )
