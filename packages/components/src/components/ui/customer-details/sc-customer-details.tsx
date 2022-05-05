@@ -103,7 +103,11 @@ export class ScCustomerDetails {
   }
 
   renderEmpty() {
-    return <slot name="empty">{__('You are not a customer.', 'surecart')}</slot>;
+    return (
+      <sc-stacked-list-row mobile-size={0}>
+        <slot name="empty">{__('You are not a customer.', 'surecart')}</slot>
+      </sc-stacked-list-row>
+    );
   }
 
   renderLoading() {
@@ -123,7 +127,7 @@ export class ScCustomerDetails {
       <sc-dashboard-module class="customer-details" error={this.error}>
         <span slot="heading">
           {this.heading || __('Billing Details', 'surecart')}{' '}
-          {!this?.customer?.live_mode === false && (
+          {!this?.customer?.live_mode && (
             <sc-tag type="warning" size="small">
               {__('Test', 'surecart')}
             </sc-tag>

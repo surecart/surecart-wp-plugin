@@ -40,6 +40,7 @@ return [
 		\SureCart\WordPress\Admin\Notices\AdminNoticesServiceProvider::class,
 
 		// REST providers.
+		\SureCart\Rest\BlockPatternsRestServiceProvider::class,
 		\SureCart\Rest\AccountRestServiceProvider::class,
 		\SureCart\Rest\LoginRestServiceProvider::class,
 		\SureCart\Rest\FilesRestServiceProvider::class,
@@ -153,11 +154,11 @@ return [
 	 * - 'user.can'
 	 */
 	'middleware'             => [
-		'archive_model' => \SureCart\Middleware\ArchiveModelMiddleware::class,
-		'edit_model'    => \SureCart\Middleware\EditModelMiddleware::class,
-		'nonce'         => \SureCart\Middleware\NonceMiddleware::class,
-		'webhooks'      => \SureCart\Middleware\WebhooksMiddleware::class,
-		'timestamp'     => \SureCart\Middleware\TimestampMiddleware::class,
+		'archive_model'     => \SureCart\Middleware\ArchiveModelMiddleware::class,
+		'edit_model'        => \SureCart\Middleware\EditModelMiddleware::class,
+		'nonce'             => \SureCart\Middleware\NonceMiddleware::class,
+		'webhooks'          => \SureCart\Middleware\WebhooksMiddleware::class,
+		'assets.components' => \SureCart\Middleware\ComponentAssetsMiddleware::class,
 	],
 
 	/**

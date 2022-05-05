@@ -10,6 +10,7 @@
 | Property        | Attribute        | Description                               | Type         | Default     |
 | --------------- | ---------------- | ----------------------------------------- | ------------ | ----------- |
 | `busy`          | `busy`           |                                           | `boolean`    | `undefined` |
+| `currencyCode`  | `currency-code`  | Currency code for the donation.           | `string`     | `'usd'`     |
 | `defaultAmount` | `default-amount` | The default amount to load the page with. | `string`     | `undefined` |
 | `label`         | `label`          | The label for the field.                  | `string`     | `undefined` |
 | `lineItems`     | --               | Order line items.                         | `LineItem[]` | `[]`        |

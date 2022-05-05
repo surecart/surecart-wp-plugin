@@ -50,8 +50,16 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 
 		$form = \SureCart::forms()->get( $atts['id'] );
 
+		global $load_sc_js;
+		$load_sc_js = true;
+
 		global $sc_form_id;
 		$sc_form_id = $atts['id'];
+
+		// check to make sure we have a form post.
+		if ( ! is_a( $form, 'WP_Post' ) ) {
+			return __( 'This form is not available or has been deleted.', 'surecart' );
+		}
 
 		return apply_filters( 'surecart/shortcode/render', do_blocks( $form->post_content ), $atts, $form );
 	}

@@ -56,7 +56,6 @@ module.exports = {
 			__dirname,
 			'packages/admin/subscriptions/edit/index.js'
 		),
-		['blocks/library']: path.resolve(__dirname, 'packages/blocks/index.js'),
 		['store/data']: path.resolve(
 			__dirname,
 			'packages/admin/store/data/register/index.js'
@@ -64,10 +63,6 @@ module.exports = {
 		['store/ui']: path.resolve(
 			__dirname,
 			'packages/admin/store/ui/register.js'
-		),
-		['blocks/cloak']: path.resolve(
-			__dirname,
-			'packages/blocks/styles/cloak.js'
 		),
 		['components/static-loader']: path.resolve(
 			__dirname,
@@ -85,6 +80,11 @@ module.exports = {
 				{
 					from: './packages/components/dist',
 					to: './components/',
+					toType: 'dir',
+				},
+				{
+					from: './packages/blocks/dist',
+					to: './blocks/',
 					toType: 'dir',
 				},
 				{

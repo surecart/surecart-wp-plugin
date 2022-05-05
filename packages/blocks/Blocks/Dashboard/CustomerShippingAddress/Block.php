@@ -1,6 +1,6 @@
 <?php
 
-namespace SureCartBlocks\Blocks\Dashboard\CustomerOrders;
+namespace SureCartBlocks\Blocks\Dashboard\CustomerShippingAddress;
 
 use SureCartBlocks\Blocks\Dashboard\DashboardPage;
 

@@ -10,7 +10,7 @@
 namespace SureCartCore\Kernels;
 
 use Closure;
-use Psr\Http\Message\ResponseInterface;
+use SureCartVendors\Psr\Http\Message\ResponseInterface;
 use SureCartCore\Helpers\Handler;
 use SureCartCore\Middleware\HasMiddlewareDefinitionsInterface;
 use SureCartCore\Requests\RequestInterface;

@@ -11,6 +11,7 @@ import {
 	ScFormControl,
 	ScTooltip,
 	ScSelect,
+	ScToggle,
 } from '@surecart/components-react';
 import Header from './Header';
 
@@ -39,6 +40,27 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 		if (!product?.recurring) return false;
 		if (!price?.id) return true;
 		return price?.recurring_interval === 'never';
+	};
+
+	const renderTaxInput = () => {
+		if (!product?.tax_enabled || !scData?.tax_protocol?.tax_enabled)
+			return null;
+		return (
+			<ScSwitch
+				style={{ marginTop: '0.5em', display: 'inline-block' }}
+				checked={price?.tax_behavior === 'inclusive'}
+				onScChange={() =>
+					updatePrice({
+						tax_behavior:
+							price?.tax_behavior === 'inclusive'
+								? 'exclusive'
+								: 'inclusive',
+					})
+				}
+			>
+				{__('Tax is included', 'surecart')}
+			</ScSwitch>
+		);
 	};
 
 	const renderOneTime = () => {
@@ -70,6 +92,7 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 						<ScPriceInput
 							label={__('Minimum Amount', 'surecart')}
 							className="sc-ad-hoc-min-amount"
+							currencyCode={scData.currency_code}
 							value={price?.ad_hoc_min_amount}
 							onScChange={(e) =>
 								updatePrice({
@@ -80,6 +103,7 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 						<ScPriceInput
 							label={__('Maximum Amount', 'surecart')}
 							className="sc-ad-hoc-max-amount"
+							currencyCode={scData.currency_code}
 							value={price?.ad_hoc_max_amount}
 							min={price?.ad_hoc_min_amount / 100}
 							onScChange={(e) =>
@@ -118,7 +142,7 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 						`}
 						label={__('Price', 'surecart')}
 						className="sc-price-amount"
-						currencyCode={scData.currecy_code}
+						currencyCode={scData.currency_code}
 						value={price?.amount}
 						name="price"
 						onScChange={(e) => {
@@ -187,6 +211,14 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 										}
 										choices={[
 											{
+												value: 'day',
+												label: __('Day', 'surecart'),
+											},
+											{
+												value: 'week',
+												label: __('Week', 'surecart'),
+											},
+											{
 												value: 'month',
 												label: __('Month', 'surecart'),
 											},
@@ -252,6 +284,8 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 							'If you want to add a free trial, enter the number of days.',
 							'surecart'
 						)}
+						type="number"
+						min={1}
 						value={price?.trial_duration_days}
 						onScChange={(e) =>
 							updatePrice({
@@ -286,7 +320,11 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 					})
 				}
 				collapsible={collapsible}
-				onDelete={product?.recurring ? () => deletePrice() : null}
+				onDelete={
+					product?.recurring && !price?.id
+						? () => deletePrice()
+						: null
+				}
 				css={css`
 					.sc-price-copy {
 						visibility: hidden;
@@ -315,6 +353,7 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 				`}
 			>
 				{product?.recurring ? renderRecurring() : renderOneTime()}
+				{renderTaxInput()}
 			</div>
 		</div>
 	);

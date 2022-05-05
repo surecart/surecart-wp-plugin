@@ -9,7 +9,7 @@
 
 namespace SureCartCore\ServiceProviders;
 
-use Pimple\Container;
+use SureCartVendors\Pimple\Container;
 
 /**
  * Interface that service providers must implement

@@ -699,6 +699,10 @@ export namespace Components {
     interface ScDonationChoices {
         "busy": boolean;
         /**
+          * Currency code for the donation.
+         */
+        "currencyCode": string;
+        /**
           * The default amount to load the page with.
          */
         "defaultAmount": string;
@@ -3867,6 +3871,10 @@ declare namespace LocalJSX {
     }
     interface ScDonationChoices {
         "busy"?: boolean;
+        /**
+          * Currency code for the donation.
+         */
+        "currencyCode"?: string;
         /**
           * The default amount to load the page with.
          */

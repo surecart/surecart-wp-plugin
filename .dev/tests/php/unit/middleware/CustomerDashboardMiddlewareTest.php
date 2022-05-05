@@ -6,7 +6,7 @@ use SureCart\Middleware\CustomerDashboardMiddleware;
 use SureCart\Models\User;
 use SureCart\Tests\SureCartUnitTestCase;
 use SureCartCore\Responses\ResponseService;
-use Psr\Http\Message\ResponseInterface;
+use SureCartVendors\Psr\Http\Message\ResponseInterface;
 use SureCartCore\Requests\RequestInterface;
 
 /**
@@ -24,6 +24,7 @@ class CustomerDashboardMiddlewareTest extends SureCartUnitTestCase
 		\SureCart::make()->bootstrap([
 			'providers' => [
 				\SureCart\Request\RequestServiceProvider::class,
+				\SureCart\WordPress\Pages\PageServiceProvider::class,
 			]
 		], false);
 

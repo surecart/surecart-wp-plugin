@@ -61,7 +61,7 @@ class PaymentMethodController extends BaseController {
 			$payment_intent_test = PaymentIntent::with( [ 'owner' ] )->create(
 				[
 					'processor_type' => 'stripe',
-					'live_mode'      => true,
+					'live_mode'      => false,
 					'customer_id'    => User::current()->customerId( 'test' ),
 				]
 			);

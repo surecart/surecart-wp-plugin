@@ -100,7 +100,11 @@ export class ScChargesList {
   }
 
   renderEmpty() {
-    return <slot name="empty">{__('You have no saved payment methods.', 'surecart')}</slot>;
+    return (
+      <sc-stacked-list-row mobile-size={0}>
+        <slot name="empty">{__('You have no saved payment methods.', 'surecart')}</slot>
+      </sc-stacked-list-row>
+    );
   }
 
   renderLoading() {

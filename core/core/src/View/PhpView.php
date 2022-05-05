@@ -9,8 +9,8 @@
 
 namespace SureCartCore\View;
 
-use GuzzleHttp\Psr7;
-use GuzzleHttp\Psr7\Response;
+use SureCartVendors\GuzzleHttp\Psr7\Utils as Psr7Utils;
+use SureCartVendors\GuzzleHttp\Psr7\Response;
 
 /**
  * Render a view file with php.
@@ -120,6 +120,6 @@ class PhpView implements ViewInterface {
 	public function toResponse() {
 		return ( new Response() )
 			->withHeader( 'Content-Type', 'text/html' )
-			->withBody( Psr7\stream_for( $this->toString() ) );
+			->withBody( Psr7Utils::streamFor( $this->toString() ) );
 	}
 }

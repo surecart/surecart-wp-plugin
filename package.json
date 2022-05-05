@@ -18,6 +18,7 @@
 		"core/",
 		"vendor/",
 		"views/",
+		"!node_modules",
 		"LICENSE",
 		"README.md",
 		"readme.txt",
@@ -32,7 +33,7 @@
 		"dev:docs": "yarn workspace @surecart/docs run start",
 		"i18n": "run-s -cl i18n:textdomain i18n:pot",
 		"i18n:textdomain": "wpi18n addtextdomain --exclude=dist,node_modules,resources,tests,vendor --textdomain=surecart",
-		"i18n:pot": "./vendor/bin/wp i18n make-pot ./app languages/surecart.pot --ignore-domain && ./vendor/bin/wp i18n make-pot ./views languages/surecart.pot --ignore-domain --merge && ./vendor/bin/wp  i18n make-pot ./dist languages/surecart.pot --ignore-domain --merge",
+		"i18n:pot": "./vendor/bin/wp i18n make-pot ./app languages/surecart.pot --ignore-domain && ./vendor/bin/wp i18n make-pot ./views languages/surecart.pot --ignore-domain --merge",
 		"release:build": "yarn workspaces foreach run release",
 		"composer:release": "composer install --no-dev && composer update surecart/blocks --no-dev",
 		"plugin:release": "composer install && run-s build release:build i18n:pot composer:release plugin-zip",
@@ -112,7 +113,7 @@
 		"@wordpress/dependency-extraction-webpack-plugin": "^3.2.1",
 		"@wordpress/e2e-test-utils": "^5.4.1",
 		"@wordpress/env": "^4.0.5",
-		"@wordpress/scripts": "^21.0.2",
+		"@wordpress/scripts": "^22.5.0",
 		"adm-zip": "^0.5.9",
 		"archiver": "^4.0.1",
 		"chalk": "^4.0.0",
@@ -142,6 +143,7 @@
 		"stylelint-config-recommended-scss": "^4.2.0",
 		"stylelint-order": "^4.0.0",
 		"stylelint-scss": "^3.17.1",
+		"webpack-cli": "^4.9.2",
 		"webpack-dev-server": "^3.10.3"
 	},
 	"resolutions": {

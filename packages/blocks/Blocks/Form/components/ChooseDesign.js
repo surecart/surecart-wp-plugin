@@ -6,7 +6,7 @@ import { ScButton } from '@surecart/components-react';
 import { useState } from 'react';
 import PlaceholderTemplate from './PlaceholderTemplate';
 
-export default ({ template, setTemplate }) => {
+export default ({ templates, template, setTemplate }) => {
 	const [choice, setChoice] = useState(template);
 
 	const imageCSS = css`
@@ -41,79 +41,28 @@ export default ({ template, setTemplate }) => {
 						grid-template-columns: repeat(2, 1fr);
 					}
 					@media (min-width: 960px) {
-						grid-template-columns: repeat(3, 1fr);
+						grid-template-columns: repeat(2, 1fr);
 					}
 					overflow-y: scroll;
 					overflow-x: visible;
 				`}
 			>
-				<Thumbnail
-					label={'Default'}
-					selected={choice === 'default'}
-					onSelect={() => setChoice('default')}
-				>
-					<img
-						css={imageCSS}
-						src={scData.plugin_url + '/templates/forms/default.png'}
-					/>
-				</Thumbnail>
-				<Thumbnail
-					label={'Simple'}
-					selected={choice === 'simple'}
-					onSelect={() => setChoice('simple')}
-				>
-					<img
-						css={imageCSS}
-						src={scData.plugin_url + '/templates/forms/simple.png'}
-					/>
-				</Thumbnail>
-				<Thumbnail
-					label={'Sections'}
-					selected={choice === 'sections'}
-					onSelect={() => setChoice('sections')}
-				>
-					<img
-						css={imageCSS}
-						src={
-							scData.plugin_url + '/templates/forms/sections.png'
-						}
-					/>
-				</Thumbnail>
-				<Thumbnail
-					label={'Two Columns'}
-					selected={choice === 'two-column'}
-					onSelect={() => setChoice('two-column')}
-				>
-					<img
-						css={imageCSS}
-						src={
-							scData.plugin_url +
-							'/templates/forms/two-column.png'
-						}
-					/>
-				</Thumbnail>
-				<Thumbnail
-					label={'Donation'}
-					selected={choice === 'donation'}
-					onSelect={() => setChoice('donation')}
-				>
-					<img
-						css={imageCSS}
-						src={
-							scData.plugin_url + '/templates/forms/donation.png'
-						}
-					/>
-				</Thumbnail>
-				<Thumbnail
-					label={'Invoice'}
-					selected={choice === 'invoice'}
-					onSelect={() => setChoice('invoice')}
-				>
-					<img
-						css={imageCSS}
-						src={scData.plugin_url + '/templates/forms/invoice.png'}
-					/>
-				</Thumbnail>
+				{templates.map((template) => {
+					const url = scBlockData?.plugin_url || scData?.plugin_url;
+					const name = template.name.replace('surecart/', '');
+					return (
+						<Thumbnail
+							label={template?.title}
+							selected={choice === name}
+							onSelect={() => setChoice(name)}
+						>
+							<img
+								css={imageCSS}
+								src={`${url}/templates/forms/${name}.png`}
+							/>
+						</Thumbnail>
+					);
+				})}
 			</div>
 		</PlaceholderTemplate>
 	);

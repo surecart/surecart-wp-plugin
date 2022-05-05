@@ -40,19 +40,17 @@ class ProductsController {
 		$product = Product::find( $request->query( 'id' ) );
 
 		if ( is_wp_error( $product ) ) {
-			\SureCart::flash()->add( 'errors', $product->get_error_message() );
-			return $this->redirectBack( $request );
+			wp_die( implode( ' ', array_map( 'esc_html', $product->get_error_messages() ) ) );
 		}
 
 		$updated = $product->update(
 			[
-				'archived' => ! $product->archived,
+				'archived' => ! (bool) $product->archived,
 			]
 		);
 
 		if ( is_wp_error( $updated ) ) {
-			\SureCart::flash()->add( 'errors', $updated->get_error_message() );
-			return $this->redirectBack( $request );
+			wp_die( implode( ' ', array_map( 'esc_html', $updated->get_error_messages() ) ) );
 		}
 
 		\SureCart::flash()->add(

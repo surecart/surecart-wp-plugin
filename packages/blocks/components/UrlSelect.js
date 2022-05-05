@@ -1,10 +1,9 @@
 /** @jsx jsx */
-const { __ } = wp.i18n;
-const { Button, Popover, Icon } = wp.components;
-
-const { __experimentalLinkControl: LinkControl } = wp.blockEditor;
-const { useState } = wp.element;
-const { prependHTTP } = wp.url;
+import { __ } from '@wordpress/i18n';
+import { Button, Popover, Icon } from '@wordpress/components';
+import { __experimentalLinkControl as LinkControl } from '@wordpress/block-editor';
+import { useState } from '@wordpress/element';
+import { prependHTTP } from '@wordpress/url';
 
 import { css, jsx } from '@emotion/core';
 

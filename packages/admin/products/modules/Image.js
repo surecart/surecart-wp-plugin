@@ -13,11 +13,12 @@ import {
 } from '@wordpress/components';
 import apiFetch from '@wordpress/api-fetch';
 import Box from '../../ui/Box';
-
-import { DirectUpload } from '@rails/activestorage';
+import useFileUpload from '../../mixins/useFileUpload';
 
 export default ({ product, updateProduct, loading }) => {
 	const [busy, setBusy] = useState(false);
+	const [error, setError] = useState('');
+	const uploadFile = useFileUpload();
 	const [src, setSrc] = useState('');
 
 	useEffect(() => {
@@ -56,32 +57,38 @@ export default ({ product, updateProduct, loading }) => {
 		// set uploads from file input.
 		const files = [...(e?.currentTarget?.files || e)];
 		const file = files[0];
-		setSrc(URL.createObjectURL(file));
+
+		// set the preview in the browser.
+		try {
+			setSrc(URL.createObjectURL(file));
+		} catch (e) {
+			console.error(e);
+			setError(
+				__(
+					'There was a problem with the upload. Please try again.',
+					'surecart'
+				)
+			);
+			return;
+		}
+
 		if (!file) return;
+
 		try {
 			setBusy(true);
-
-			// first get the unique upload id.
-			const { id } = await apiFetch({
-				method: 'POST',
-				path: '/surecart/v1/uploads',
-			});
-
-			// then upload the file.
-			const directUpload = new DirectUpload(
-				file,
-				`${scData.app_url}uploads/${id}/presign`
-			);
-
-			directUpload.create(async (error, blob) => {
-				if (error) {
-					setBusy(false);
-				} else {
-					updateProduct({ image_upload_id: id });
-					setBusy(false);
-				}
-			});
+			setError('');
+			const id = await uploadFile(file);
+			updateProduct({ image_upload_id: id });
 		} catch (e) {
+			console.error(e);
+			setSrc('');
+			setError(
+				__(
+					'There was a problem with the upload. Please try again.',
+					'surecart'
+				)
+			);
+		} finally {
 			setBusy(false);
 		}
 	};
@@ -178,6 +185,11 @@ export default ({ product, updateProduct, loading }) => {
 				label={__('Product Image', 'surecart')}
 				showLabel={false}
 			>
+				{!!error && (
+					<sc-alert open={!!error} type="danger">
+						{error}
+					</sc-alert>
+				)}
 				{renderContent()}
 			</ScFormControl>
 		</Box>

@@ -30,6 +30,6 @@ class RequestServiceTest extends SureCartUnitTestCase
 	public function test_gets_base_url()
 	{
 		$service = new RequestService();
-		$this->assertSame('https://staging.surecart.com/api/v1/', $service->getBaseUrl());
+		$this->assertSame(SURECART_APP_URL . '/api/v1/', $service->getBaseUrl());
 	}
 }

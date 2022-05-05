@@ -1,102 +1,10 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-
 import { __ } from '@wordpress/i18n';
-
-import {
-	ScInput,
-	ScSwitch,
-	ScSelect,
-	ScTooltip,
-} from '@surecart/components-react';
+import { ScInput } from '@surecart/components-react';
 import Box from '../../ui/Box';
-import { Fragment } from 'react';
 
 export default ({ product, updateProduct, loading }) => {
-	const renderTaxInput = () => {
-		if (scData?.tax_protocol?.tax_enabled) {
-			return (
-				<Fragment>
-					<ScSwitch
-						css={css`
-							margin: var(--sc-spacing-small) 0;
-						`}
-						checked={product?.tax_enabled}
-						onScChange={() =>
-							updateProduct({
-								tax_enabled: !product?.tax_enabled,
-							})
-						}
-					>
-						{__('Charge tax on this product', 'surecart')}
-					</ScSwitch>
-					{product?.tax_enabled && (
-						<div>
-							<ScSelect
-								value={product?.tax_category || 'tangible'}
-								required
-								onScChange={(e) => {
-									updateProduct({
-										tax_category: e.target.value,
-									});
-								}}
-								choices={[
-									{
-										value: 'tangible',
-										label: __(
-											'General/Tangible Goods',
-											'surecart'
-										),
-									},
-									{
-										value: 'digital',
-										label: __('Digital', 'surecart'),
-									},
-									{
-										value: 'saas',
-										label: __(
-											'Sofware As A Service',
-											'surecart'
-										),
-									},
-									{
-										value: 'service',
-										label: __('Service', 'surecart'),
-									},
-								]}
-							/>
-						</div>
-					)}
-				</Fragment>
-			);
-		}
-
-		return (
-			<div>
-				<ScTooltip
-					text={__(
-						'To charge tax, please set up your tax information on the settings page.',
-						'surecart'
-					)}
-					type="text"
-					css={css`
-						display: inline-block;
-					`}
-				>
-					<ScSwitch
-						css={css`
-							margin: var(--sc-spacing-small) 0;
-						`}
-						checked={false}
-						disabled
-					>
-						{__('Charge tax on this product', 'surecart')}
-					</ScSwitch>
-				</ScTooltip>
-			</div>
-		);
-	};
-
 	return (
 		<Box title={__('Details', 'surecart')} loading={loading}>
 			<div
@@ -116,8 +24,6 @@ export default ({ product, updateProduct, loading }) => {
 					name="name"
 					required
 				/>
-
-				{renderTaxInput()}
 			</div>
 		</Box>
 	);

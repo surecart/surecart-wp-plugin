@@ -10,7 +10,7 @@
 namespace SureCartCore\Application;
 
 use Closure;
-use Pimple\Container;
+use SureCartVendors\Pimple\Container;
 use SureCartCore\Exceptions\ConfigurationException;
 use SureCartCore\Requests\Request;
 use SureCartCore\Support\Arr;

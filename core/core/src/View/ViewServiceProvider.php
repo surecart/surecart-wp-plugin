@@ -9,7 +9,7 @@
 
 namespace SureCartCore\View;
 
-use Pimple\Container;
+use SureCartVendors\Pimple\Container;
 use SureCartCore\Helpers\MixedType;
 use SureCartCore\ServiceProviders\ExtendsConfigTrait;
 use SureCartCore\ServiceProviders\ServiceProviderInterface;

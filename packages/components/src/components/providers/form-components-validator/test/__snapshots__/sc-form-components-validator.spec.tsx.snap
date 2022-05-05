@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-form-components-validator appends missing address field if required 1`] = `
+<sc-form-components-validator>
+  <mock:shadow-root>
+    <slot></slot>
+  </mock:shadow-root>
+  <sc-order-shipping-address></sc-order-shipping-address>
+  <sc-payment></sc-payment>
+</sc-form-components-validator>
+`;
+
+exports[`sc-form-components-validator renders 1`] = `
+<sc-form-components-validator>
+  <mock:shadow-root>
+    <slot></slot>
+  </mock:shadow-root>
+</sc-form-components-validator>
+`;

@@ -7,12 +7,6 @@ describe('sc-toggles', () => {
       components: [ScToggles],
       html: `<sc-toggles></sc-toggles>`,
     });
-    expect(page.root).toEqualHtml(`
-      <sc-toggles>
-        <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
-      </sc-toggles>
-    `);
+    expect(page.root).toMatchSnapshot();
   });
 });

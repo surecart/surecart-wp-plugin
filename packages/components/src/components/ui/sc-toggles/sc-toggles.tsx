@@ -17,7 +17,8 @@ export class ScToggles {
 
   getToggles() {
     let slotted = this.el.shadowRoot.querySelector('slot') as HTMLSlotElement;
-    return slotted.assignedNodes().filter(node => node.nodeName === 'SC-TOGGLE') as HTMLScToggleElement[];
+    if (!slotted) return;
+    return (slotted?.assignedNodes?.()?.filter?.(node => node.nodeName === 'SC-TOGGLE') as HTMLScToggleElement[]) || [];
   }
 
   @Listen('scShow')
@@ -33,7 +34,7 @@ export class ScToggles {
   componentDidLoad() {
     this.handleCollapibleChange();
     const toggles = this.getToggles();
-    if (!toggles.some(toggle => toggle.open)) {
+    if (toggles?.length && !toggles.some(toggle => toggle.open)) {
       toggles[0].open = true;
     }
   }

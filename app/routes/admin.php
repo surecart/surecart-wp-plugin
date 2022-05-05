@@ -23,25 +23,25 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->where( 'admin', 'sc-getting-started' )
 ->name( 'onboarding.show' )
 ->middleware( 'user.can:manage_options' )
+->middleware( 'assets.components' )
 ->handle( 'Onboarding@show' );
 
+/*
+|--------------------------------------------------------------------------
+| Complete Signup
+|--------------------------------------------------------------------------
+*/
 \SureCart::route()
 ->get()
 ->where( 'admin', 'sc-complete-signup' )
 ->middleware( 'user.can:manage_options' )
+->middleware( 'assets.components' )
 ->group(
 	function() {
-		\SureCart::route()->get()->name( 'onboarding.complete' )->handle( 'Onboarding@complete' );
-		\SureCart::route()->post()->middleware( 'nonce:update_plugin_settings' )->name( 'onboarding.save' )->handle( 'Onboarding@save' );
+		\SureCart::route()->get()->handle( 'Onboarding@complete' );
+		\SureCart::route()->post()->middleware( 'nonce:update_plugin_settings' )->handle( 'Onboarding@save' );
 	}
 );
-
-/*
-|--------------------------------------------------------------------------
-| Dashboard
-|--------------------------------------------------------------------------
-*/
-\SureCart::route()->get()->where( 'admin', 'sc-dashboard' )->name( 'dashboard' )->handle( 'Dashboard@show' );
 
 
 /*
@@ -52,12 +52,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 \SureCart::route()
 ->where( 'admin', 'sc-orders' )
 ->middleware( 'user.can:edit_sc_orders' )
+->middleware( 'assets.components' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Orders\\' )
 ->group(
 	function() {
-		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->middleware( 'timestamp' )->name( 'orders.index' )->handle( 'OrdersViewController@index' );
-		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->name( 'orders.edit' )->handle( 'OrdersViewController@edit' );
-		\SureCart::route()->get()->where( 'sc_url_var', 'archive', 'action' )->name( 'orders.archive' )->handle( 'OrdersViewController@archive' );
+		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'OrdersViewController@index' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'OrdersViewController@edit' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'archive', 'action' )->handle( 'OrdersViewController@archive' );
 	}
 );
 
@@ -69,12 +70,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 \SureCart::route()
 ->where( 'admin', 'sc-invoices' )
 ->middleware( 'user.can:edit_sc_invoices' )
+->middleware( 'assets.components' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Invoices\\' )
 ->group(
 	function() {
-		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->middleware( 'timestamp' )->name( 'invoices.index' )->handle( 'InvoicesViewController@index' );
-		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->name( 'invoices.edit' )->handle( 'InvoicesViewController@edit' );
-		\SureCart::route()->get()->where( 'sc_url_var', 'archive', 'action' )->name( 'invoices.archive' )->handle( 'InvoicesViewController@archive' );
+		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'InvoicesViewController@index' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'InvoicesViewController@edit' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'archive', 'action' )->handle( 'InvoicesViewController@archive' );
 	}
 );
 
@@ -86,12 +88,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 \SureCart::route()
 ->where( 'admin', 'sc-products' )
 ->middleware( 'user.can:edit_sc_products' )
+->middleware( 'assets.components' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Products\\' )
 ->group(
 	function() {
-		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->middleware( 'timestamp' )->name( 'products.index' )->handle( 'ProductsController@index' );
-		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->name( 'product.edit' )->handle( 'ProductsController@edit' );
-		\SureCart::route()->get()->where( 'sc_url_var', 'toggle_archive', 'action' )->name( 'product.archive' )->middleware( 'archive_model:product' )->handle( 'ProductsController@toggleArchive' );
+		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'ProductsController@index' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'ProductsController@edit' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'toggle_archive', 'action' )->middleware( 'archive_model:product' )->handle( 'ProductsController@toggleArchive' );
 	}
 );
 
@@ -103,11 +106,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 \SureCart::route()
 ->where( 'admin', 'sc-coupons' )
 ->middleware( 'user.can:edit_sc_coupons' )
+->middleware( 'assets.components' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Coupons\\' )
 ->group(
 	function() {
-		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->middleware( 'timestamp' )->name( 'coupons.index' )->handle( 'CouponsController@index' );
-		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->name( 'coupons.edit' )->handle( 'CouponsController@edit' );
+		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'CouponsController@index' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'CouponsController@edit' );
 	}
 );
 
@@ -119,11 +123,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 \SureCart::route()
 ->where( 'admin', 'sc-customers' )
 ->middleware( 'user.can:edit_sc_customers' )
+->middleware( 'assets.components' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Customers\\' )
 ->group(
 	function() {
-		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->middleware( 'timestamp' )->name( 'customer.index' )->handle( 'CustomersController@index' );
-		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->name( 'customer.edit' )->handle( 'CustomersController@edit' );
+		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'CustomersController@index' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'CustomersController@edit' );
 	}
 );
 
@@ -135,11 +140,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 \SureCart::route()
 ->where( 'admin', 'sc-abandoned-orders' )
 ->middleware( 'user.can:edit_sc_orders' )
+->middleware( 'assets.components' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Abandoned\\' )
 ->group(
 	function() {
-		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->middleware( 'timestamp' )->name( 'abandoned.index' )->handle( 'AbandonedOrderViewController@index' );
-		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->name( 'abandoned.edit' )->handle( 'AbandonedOrderViewController@edit' );
+		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'AbandonedOrderViewController@index' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'AbandonedOrderViewController@edit' );
 	}
 );
 
@@ -151,12 +157,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 \SureCart::route()
 ->where( 'admin', 'sc-subscriptions' )
 ->middleware( 'user.can:edit_sc_subscriptions' )
+->middleware( 'assets.components' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Subscriptions\\' )
 ->group(
 	function() {
-		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->middleware( 'timestamp' )->name( 'subscriptions.index' )->handle( 'SubscriptionsController@index' );
-		\SureCart::route()->get()->where( 'sc_url_var', 'show', 'action' )->name( 'subscriptions.show' )->handle( 'SubscriptionsController@show' );
-		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->name( 'subscriptions.edit' )->handle( 'SubscriptionsController@edit' );
+		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'SubscriptionsController@index' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'show', 'action' )->handle( 'SubscriptionsController@show' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'SubscriptionsController@edit' );
 	}
 );
 
@@ -168,12 +175,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 \SureCart::route()
 ->where( 'admin', 'sc-product-groups' )
 ->middleware( 'user.can:edit_sc_products' )
+->middleware( 'assets.components' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\ProductGroups\\' )
 ->group(
 	function() {
-		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->middleware( 'timestamp' )->name( 'product_groups.index' )->handle( 'ProductGroupsController@index' );
-		\SureCart::route()->get()->where( 'sc_url_var', 'show', 'action' )->name( 'product_groups.show' )->handle( 'ProductGroupsController@show' );
-		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->name( 'product_groups.edit' )->handle( 'ProductGroupsController@show' );
+		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'ProductGroupsController@index' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'show', 'action' )->handle( 'ProductGroupsController@show' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'ProductGroupsController@show' );
 	}
 );
 
@@ -197,10 +205,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->get()
 ->where( 'admin', 'sc-plugin' )
 ->middleware( 'user.can:manage_options' )
+->middleware( 'assets.components' )
 ->group(
 	function() {
 		\SureCart::route()->get()->name( 'plugin.show' )->handle( 'PluginSettings@show' );
-		\SureCart::route()->post()->middleware( 'nonce:update_plugin_settings' )->name( 'plugin.save' )->handle( 'PluginSettings@save' );
+		\SureCart::route()->post()->middleware( 'nonce:update_plugin_settings' )->handle( 'PluginSettings@save' );
 	}
 );
 
@@ -216,7 +225,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	->middleware( 'nonce:remove_webhook' )
 	->middleware( 'user.can:edit_sc_webhooks' )
 	->handle( '\\SureCart\\Controllers\\Web\\WebhookController@remove' );
-
 \SureCart::route()
 	->get()
 	->where( 'sc_url_var', 'ignore_webhook', 'action' )
