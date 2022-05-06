@@ -4707,6 +4707,7 @@ declare namespace LocalJSX {
           * Show the toggle
          */
         "onScShow"?: (event: CustomEvent<void>) => void;
+        "openText"?: string;
         "order"?: Order;
     }
     interface ScOrderTaxIdInput {
