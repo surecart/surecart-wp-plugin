@@ -724,6 +724,9 @@ export namespace Components {
         "validate": () => Promise<boolean>;
     }
     interface ScFormComponentsValidator {
+        /**
+          * Disable validation?
+         */
         "disabled": boolean;
         /**
           * The order
@@ -3858,6 +3861,9 @@ declare namespace LocalJSX {
         "onScSubmit"?: (event: CustomEvent<void>) => void;
     }
     interface ScFormComponentsValidator {
+        /**
+          * Disable validation?
+         */
         "disabled"?: boolean;
         /**
           * The order
