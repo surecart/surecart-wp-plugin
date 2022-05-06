@@ -1717,10 +1717,6 @@ export namespace Components {
          */
         "value": string;
     }
-    interface ScProcessorProvider {
-        "paymentIntents": { [key: string]: PaymentIntent };
-        "processor": ProcessorName;
-    }
     interface ScProductLineItem {
         /**
           * Product monetary amount
@@ -2868,12 +2864,6 @@ declare global {
         prototype: HTMLScPriceInputElement;
         new (): HTMLScPriceInputElement;
     };
-    interface HTMLScProcessorProviderElement extends Components.ScProcessorProvider, HTMLStencilElement {
-    }
-    var HTMLScProcessorProviderElement: {
-        prototype: HTMLScProcessorProviderElement;
-        new (): HTMLScProcessorProviderElement;
-    };
     interface HTMLScProductLineItemElement extends Components.ScProductLineItem, HTMLStencilElement {
     }
     var HTMLScProductLineItemElement: {
@@ -3221,7 +3211,6 @@ declare global {
         "sc-price-choice": HTMLScPriceChoiceElement;
         "sc-price-choices": HTMLScPriceChoicesElement;
         "sc-price-input": HTMLScPriceInputElement;
-        "sc-processor-provider": HTMLScProcessorProviderElement;
         "sc-product-line-item": HTMLScProductLineItemElement;
         "sc-provider": HTMLScProviderElement;
         "sc-quantity-select": HTMLScQuantitySelectElement;
@@ -5167,10 +5156,6 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
-    interface ScProcessorProvider {
-        "paymentIntents"?: { [key: string]: PaymentIntent };
-        "processor"?: ProcessorName;
-    }
     interface ScProductLineItem {
         /**
           * Product monetary amount
@@ -5979,7 +5964,6 @@ declare namespace LocalJSX {
         "sc-price-choice": ScPriceChoice;
         "sc-price-choices": ScPriceChoices;
         "sc-price-input": ScPriceInput;
-        "sc-processor-provider": ScProcessorProvider;
         "sc-product-line-item": ScProductLineItem;
         "sc-provider": ScProvider;
         "sc-quantity-select": ScQuantitySelect;
@@ -6112,7 +6096,6 @@ declare module "@stencil/core" {
             "sc-price-choice": LocalJSX.ScPriceChoice & JSXBase.HTMLAttributes<HTMLScPriceChoiceElement>;
             "sc-price-choices": LocalJSX.ScPriceChoices & JSXBase.HTMLAttributes<HTMLScPriceChoicesElement>;
             "sc-price-input": LocalJSX.ScPriceInput & JSXBase.HTMLAttributes<HTMLScPriceInputElement>;
-            "sc-processor-provider": LocalJSX.ScProcessorProvider & JSXBase.HTMLAttributes<HTMLScProcessorProviderElement>;
             "sc-product-line-item": LocalJSX.ScProductLineItem & JSXBase.HTMLAttributes<HTMLScProductLineItemElement>;
             "sc-provider": LocalJSX.ScProvider & JSXBase.HTMLAttributes<HTMLScProviderElement>;
             "sc-quantity-select": LocalJSX.ScQuantitySelect & JSXBase.HTMLAttributes<HTMLScQuantitySelectElement>;

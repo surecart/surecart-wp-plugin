@@ -193,41 +193,39 @@ export class ScCheckout {
         }}
       >
         <Universe.Provider state={this.state()}>
-          <sc-processor-provider>
-            {/* Handles the current checkout form state. */}
-            <sc-form-state-provider onScSetCheckoutFormState={e => (this.checkoutState = e.detail)}>
-              {/* Handles errors in the form. */}
-              <sc-form-error-provider order={this.order} onScUpdateError={e => (this.error = e.detail)}>
-                {/* Validate components in the form based on order state. */}
-                <sc-form-components-validator order={this.order} disabled={this.disableComponentsValidation}>
-                  {/* Handles the current session. */}
-                  <sc-session-provider
-                    ref={el => (this.sessionProvider = el as HTMLScSessionProviderElement)}
-                    order={this.order}
-                    prices={this.prices}
-                    paymentIntents={this.paymentIntents}
-                    persist={this.persistSession}
-                    modified={this.modified}
-                    mode={this.mode}
-                    form-id={this.formId}
-                    group-id={this.el.id}
-                    processor={this.processor}
-                    currency-code={this.currencyCode}
-                    onScUpdateOrderState={e => (this.order = e.detail)}
-                    onScError={e => (this.error = e.detail as ResponseError)}
-                  >
-                    {/* Maybe redirect to the success url if requirements are met. */}
-                    <sc-order-redirect-provider order={this.order} success-url={this.successUrl}>
-                      {/* Handle confirming of order after it is "Paid" by processors. */}
-                      <sc-order-confirm-provider order={this.order}>
-                        <slot />
-                      </sc-order-confirm-provider>
-                    </sc-order-redirect-provider>
-                  </sc-session-provider>
-                </sc-form-components-validator>
-              </sc-form-error-provider>
-            </sc-form-state-provider>
-          </sc-processor-provider>
+          {/* Handles the current checkout form state. */}
+          <sc-form-state-provider onScSetCheckoutFormState={e => (this.checkoutState = e.detail)}>
+            {/* Handles errors in the form. */}
+            <sc-form-error-provider order={this.order} onScUpdateError={e => (this.error = e.detail)}>
+              {/* Validate components in the form based on order state. */}
+              <sc-form-components-validator order={this.order} disabled={this.disableComponentsValidation}>
+                {/* Handles the current session. */}
+                <sc-session-provider
+                  ref={el => (this.sessionProvider = el as HTMLScSessionProviderElement)}
+                  order={this.order}
+                  prices={this.prices}
+                  paymentIntents={this.paymentIntents}
+                  persist={this.persistSession}
+                  modified={this.modified}
+                  mode={this.mode}
+                  form-id={this.formId}
+                  group-id={this.el.id}
+                  processor={this.processor}
+                  currency-code={this.currencyCode}
+                  onScUpdateOrderState={e => (this.order = e.detail)}
+                  onScError={e => (this.error = e.detail as ResponseError)}
+                >
+                  {/* Maybe redirect to the success url if requirements are met. */}
+                  <sc-order-redirect-provider order={this.order} success-url={this.successUrl}>
+                    {/* Handle confirming of order after it is "Paid" by processors. */}
+                    <sc-order-confirm-provider order={this.order}>
+                      <slot />
+                    </sc-order-confirm-provider>
+                  </sc-order-redirect-provider>
+                </sc-session-provider>
+              </sc-form-components-validator>
+            </sc-form-error-provider>
+          </sc-form-state-provider>
 
           {this.state().busy && <sc-block-ui z-index={9}></sc-block-ui>}
         </Universe.Provider>
