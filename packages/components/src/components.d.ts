@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Address, ChoiceItem, Customer, DiscountResponse, FormState, LineItem, LineItemData, Order, OrderStatus, PaymentMethod, Price, PriceChoice, Prices, ProductGroup, Products, Purchase, ResponseError, Subscription, SubscriptionStatus, TaxStatus, WordPressUser } from "./types";
+import { Address, ChoiceItem, Customer, DiscountResponse, FormState, FormStateSetter, LineItem, LineItemData, Order, OrderStatus, PaymentMethod, Price, PriceChoice, Prices, ProductGroup, Products, Purchase, ResponseError, Subscription, SubscriptionStatus, TaxStatus, WordPressUser } from "./types";
 import { IconLibraryMutator, IconLibraryResolver } from "./components/ui/icon/library";
 export namespace Components {
     interface ScAddress {
@@ -4433,6 +4433,10 @@ declare namespace LocalJSX {
          */
         "onScError"?: (event: CustomEvent<{ message: string; code?: string; data?: any; additional_errors?: any } | {}>) => void;
         /**
+          * Form state event.
+         */
+        "onScSetState"?: (event: CustomEvent<FormStateSetter>) => void;
+        /**
           * The current order.
          */
         "order"?: Order;
@@ -5019,7 +5023,7 @@ declare namespace LocalJSX {
         /**
           * Set the state
          */
-        "onScSetState"?: (event: CustomEvent<string>) => void;
+        "onScSetState"?: (event: CustomEvent<FormStateSetter>) => void;
         /**
           * Update line items event
          */

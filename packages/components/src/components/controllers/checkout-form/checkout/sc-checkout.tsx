@@ -118,15 +118,6 @@ export class ScCheckout {
   }
 
   render() {
-    if (this?.order?.status === 'paid') {
-      return (
-        <sc-alert type="success" open>
-          <span slot="title">{__('You have already paid for this order.', 'surecart')}</span>
-          {__('Please visit your account dashboard to view your order.', 'surecart')}
-        </sc-alert>
-      );
-    }
-
     return (
       <div
         class={{

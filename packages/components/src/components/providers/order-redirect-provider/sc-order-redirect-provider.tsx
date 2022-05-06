@@ -1,6 +1,6 @@
-import { Component, h, Prop, Event, EventEmitter, Listen } from '@stencil/core';
+import { Component, h, Prop, Event, EventEmitter, Watch } from '@stencil/core';
 import { addQueryArgs } from '@wordpress/url';
-import { Order } from '../../../types';
+import { FormStateSetter, Order } from '../../../types';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -20,22 +20,22 @@ export class ScOrderRedirectProvider {
   /** The order is confirmed event. */
   @Event() scConfirmed: EventEmitter<void>;
 
+  /** Form state event. */
+  @Event() scSetState: EventEmitter<FormStateSetter>;
+
   /** Error event. */
   @Event() scError: EventEmitter<{ message: string; code?: string; data?: any; additional_errors?: any } | {}>;
 
-  /** Listen for paid event. This is triggered by Stripe or Paypal elements when payment succeeds. */
-  @Listen('scConfirmed')
-  handleConfirmedEvent() {
-    // order status must be paid at this point.
-    if (this.order?.status === 'paid') {
-      return this.redirect();
-    }
+  /** Listen for when an order comes back as paid, then redirect. */
+  @Watch('order')
+  handleOrderPaid() {
+    if (this.order?.status !== 'paid') return;
+    this.scSetState.emit('PAID'); // make sure we are setting the correct state.
+    return this.redirect();
+  }
 
-    // something went wrong and the order did not sync.
-    this.scError.emit({
-      code: 'confirm_failed',
-      message: __('Something went wrong. Please contact us for support.', 'surecart'),
-    });
+  componentDidLoad() {
+    this.handleOrderPaid();
   }
 
   /** Redirect to the success url. */

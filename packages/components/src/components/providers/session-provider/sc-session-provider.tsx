@@ -2,7 +2,7 @@ import { Component, Element, Event, EventEmitter, h, Listen, Prop, State, Watch 
 import { removeQueryArgs } from '@wordpress/url';
 
 import { createOrUpdateOrder, finalizeSession } from '../../../services/session';
-import { LineItemData, Order, PriceChoice } from '../../../types';
+import { FormStateSetter, LineItemData, Order, PriceChoice } from '../../../types';
 import { getSessionId, getURLCoupon, getURLLineItems, populateInputs, removeSessionId, setSessionId } from './helpers/session';
 
 @Component({
@@ -50,7 +50,7 @@ export class ScSessionProvider {
   @Event() scError: EventEmitter<{ message: string; code?: string; data?: any; additional_errors?: any } | {}>;
 
   /** Set the state */
-  @Event() scSetState: EventEmitter<string>;
+  @Event() scSetState: EventEmitter<FormStateSetter>;
 
   /** Holds the checkout session to update. */
   @State() session: Order;

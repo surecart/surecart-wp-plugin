@@ -2,7 +2,7 @@ import { Component, h, State, Event, EventEmitter, Listen, Watch } from '@stenci
 import { checkoutMachine } from './checkout-machine';
 import { interpret } from '@xstate/fsm';
 import { __ } from '@wordpress/i18n';
-import { FormState } from '../../../types';
+import { FormState, FormStateSetter } from '../../../types';
 
 /**
  * This component listens for a confirmed event and redirects to the success url.
@@ -48,7 +48,7 @@ export class ScFormStateProvider {
   /** Allow children to set the form state. */
   @Listen('scSetState')
   handleSetStateEvent(e) {
-    this.setState(e.detail);
+    this.setState(e.detail as FormStateSetter);
   }
 
   /** Update the state when the order is paid. */

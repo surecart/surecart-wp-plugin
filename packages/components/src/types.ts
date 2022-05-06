@@ -72,6 +72,7 @@ export interface File {
 }
 
 export type FormState = 'idle' | 'loading' | 'draft' | 'updating' | 'finalizing' | 'paid' | 'failure' | 'expired';
+export type FormStateSetter = 'RESOLVE' | 'REJECT' | 'FINALIZE' | 'PAID' | 'EXPIRE' | 'FETCH';
 
 export interface Product extends Object {
   id: string;
