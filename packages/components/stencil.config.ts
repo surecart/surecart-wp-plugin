@@ -20,7 +20,6 @@ export const config: Config = {
     transform: {
       '^.+\\.(ts|tsx|js|jsx|css)$': '@stencil/core/testing/jest-preprocessor',
     },
-    testRegex: '/src/.*\\.spec\\.(ts|tsx|js)$',
     transformIgnorePatterns: ['node_modules/(?!stencil-fragment)'],
     setupFilesAfterEnv: ['./setup-tests.js'],
   },
