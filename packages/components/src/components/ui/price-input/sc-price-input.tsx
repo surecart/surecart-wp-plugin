@@ -120,7 +120,7 @@ export class ScPriceInput {
   }
 
   handleChange() {
-    this.value = this.scInput.value ? (parseFloat(this.scInput.value) * 100).toString() : '';
+    this.value = this.scInput.value ? (parseFloat(this.scInput.value) * 100).toFixed(2).toString() : '';
   }
 
   componentDidLoad() {
