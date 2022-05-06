@@ -99,6 +99,11 @@ class RequestService {
 			// add version header.
 			$args['headers']['X-SURECART-WP-PLUGIN-VERSION'] = \SureCart::plugin()->version();
 
+			// add referer header.
+			if ( isset( $_SERVER['HTTP_REFERER'] ) ) {
+				$args['headers']['X-SURECART-REFERRER'] = $_SERVER['HTTP_REFERER'];
+			}
+
 			// parse args.
 			$args = wp_parse_args(
 				$args,
