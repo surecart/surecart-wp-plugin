@@ -128,10 +128,10 @@ export class ScCheckout {
         }}
       >
         <Universe.Provider state={this.state()}>
-          {/* Handles errors in the form. */}
-          <sc-form-error-provider order={this.order} onScUpdateError={e => (this.error = e.detail)}>
-            {/* Handles the current checkout form state. */}
-            <sc-form-state-provider onScSetCheckoutFormState={e => (this.checkoutState = e.detail)}>
+          {/* Handles the current checkout form state. */}
+          <sc-form-state-provider onScSetCheckoutFormState={e => (this.checkoutState = e.detail)}>
+            {/* Handles errors in the form. */}
+            <sc-form-error-provider order={this.order} onScUpdateError={e => (this.error = e.detail)}>
               {/* Validate components in the form based on order state. */}
               <sc-form-components-validator order={this.order} disabled={this.disableComponentsValidation}>
                 {/* Handles the current session. */}
@@ -156,8 +156,8 @@ export class ScCheckout {
                   </sc-order-redirect-provider>
                 </sc-session-provider>
               </sc-form-components-validator>
-            </sc-form-state-provider>
-          </sc-form-error-provider>
+            </sc-form-error-provider>
+          </sc-form-state-provider>
 
           {this.state().busy && <sc-block-ui z-index={9}></sc-block-ui>}
         </Universe.Provider>
