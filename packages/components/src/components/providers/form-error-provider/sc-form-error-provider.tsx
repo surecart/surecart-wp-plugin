@@ -37,7 +37,9 @@ export class ScFormErrorProvider {
   @Listen('scError')
   handleErrorEvent(e) {
     this.error = e.detail as ResponseError;
-    this.scSetState.emit('REJECT'); // make sure we are rejecting the current state.
+    if (Object.keys(e?.detail || {}).length) {
+      this.scSetState.emit('REJECT'); // make sure we are rejecting the current state.
+    }
   }
 
   /** Listen for pay errors. */
