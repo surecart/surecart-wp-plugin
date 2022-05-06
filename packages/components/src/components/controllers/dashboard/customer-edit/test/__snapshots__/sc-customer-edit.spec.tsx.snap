@@ -6,6 +6,9 @@ exports[`sc-customer-edit renders 1`] = `
     <sc-dashboard-module class="customer-edit">
       <span slot="heading">
         Update Billing Details
+        <sc-tag size="small" type="warning">
+          Test
+        </sc-tag>
       </span>
       <sc-card>
         <sc-form>

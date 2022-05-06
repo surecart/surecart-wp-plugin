@@ -478,7 +478,7 @@ export default function edit({ clientId, attributes, setAttributes }) {
 						disableComponentsValidation={true}
 						persistSession={false}
 						alignment={align}
-						currencyCode={scBlockData.currency}
+						currencyCode={scBlockData.currency || scData?.currency}
 						className={className}
 						choiceType={choice_type}
 						prices={prices}

@@ -29,6 +29,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->middleware( 'assets.brand_colors' )
 ->handle( 'Onboarding@show' );
 
+/*
+|--------------------------------------------------------------------------
+| Complete Signup
+|--------------------------------------------------------------------------
+*/
 \SureCart::route()
 ->get()
 ->where( 'admin', 'sc-complete-signup' )
@@ -37,8 +42,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->middleware( 'assets.brand_colors' )
 ->group(
 	function() {
-		\SureCart::route()->get()->name( 'onboarding.complete' )->handle( 'Onboarding@complete' );
-		\SureCart::route()->post()->middleware( 'nonce:update_plugin_settings' )->name( 'onboarding.save' )->handle( 'Onboarding@save' );
+		\SureCart::route()->get()->handle( 'Onboarding@complete' );
+		\SureCart::route()->post()->middleware( 'nonce:update_plugin_settings' )->handle( 'Onboarding@save' );
 	}
 );
 
@@ -55,9 +60,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Orders\\' )
 ->group(
 	function() {
-		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->name( 'orders.index' )->handle( 'OrdersViewController@index' );
-		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->name( 'orders.edit' )->handle( 'OrdersViewController@edit' );
-		\SureCart::route()->get()->where( 'sc_url_var', 'archive', 'action' )->name( 'orders.archive' )->handle( 'OrdersViewController@archive' );
+		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'OrdersViewController@index' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'OrdersViewController@edit' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'archive', 'action' )->handle( 'OrdersViewController@archive' );
 	}
 );
 
@@ -73,9 +78,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Invoices\\' )
 ->group(
 	function() {
-		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->name( 'invoices.index' )->handle( 'InvoicesViewController@index' );
-		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->name( 'invoices.edit' )->handle( 'InvoicesViewController@edit' );
-		\SureCart::route()->get()->where( 'sc_url_var', 'archive', 'action' )->name( 'invoices.archive' )->handle( 'InvoicesViewController@archive' );
+		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'InvoicesViewController@index' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'InvoicesViewController@edit' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'archive', 'action' )->handle( 'InvoicesViewController@archive' );
 	}
 );
 
@@ -91,9 +96,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Products\\' )
 ->group(
 	function() {
-		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->name( 'products.index' )->handle( 'ProductsController@index' );
-		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->name( 'product.edit' )->handle( 'ProductsController@edit' );
-		\SureCart::route()->get()->where( 'sc_url_var', 'toggle_archive', 'action' )->name( 'product.archive' )->middleware( 'archive_model:product' )->handle( 'ProductsController@toggleArchive' );
+		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'ProductsController@index' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'ProductsController@edit' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'toggle_archive', 'action' )->middleware( 'archive_model:product' )->handle( 'ProductsController@toggleArchive' );
 	}
 );
 
@@ -109,8 +114,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Coupons\\' )
 ->group(
 	function() {
-		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->name( 'coupons.index' )->handle( 'CouponsController@index' );
-		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->name( 'coupons.edit' )->handle( 'CouponsController@edit' );
+		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'CouponsController@index' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'CouponsController@edit' );
 	}
 );
 
@@ -126,8 +131,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Customers\\' )
 ->group(
 	function() {
-		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->name( 'customer.index' )->handle( 'CustomersController@index' );
-		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->name( 'customer.edit' )->handle( 'CustomersController@edit' );
+		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'CustomersController@index' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'CustomersController@edit' );
 	}
 );
 
@@ -143,8 +148,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Abandoned\\' )
 ->group(
 	function() {
-		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->name( 'abandoned.index' )->handle( 'AbandonedOrderViewController@index' );
-		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->name( 'abandoned.edit' )->handle( 'AbandonedOrderViewController@edit' );
+		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'AbandonedOrderViewController@index' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'AbandonedOrderViewController@edit' );
 	}
 );
 
@@ -160,9 +165,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Subscriptions\\' )
 ->group(
 	function() {
-		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->name( 'subscriptions.index' )->handle( 'SubscriptionsController@index' );
-		\SureCart::route()->get()->where( 'sc_url_var', 'show', 'action' )->name( 'subscriptions.show' )->handle( 'SubscriptionsController@show' );
-		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->name( 'subscriptions.edit' )->handle( 'SubscriptionsController@edit' );
+		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'SubscriptionsController@index' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'show', 'action' )->handle( 'SubscriptionsController@show' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'SubscriptionsController@edit' );
 	}
 );
 
@@ -178,9 +183,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\ProductGroups\\' )
 ->group(
 	function() {
-		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->name( 'product_groups.index' )->handle( 'ProductGroupsController@index' );
-		\SureCart::route()->get()->where( 'sc_url_var', 'show', 'action' )->name( 'product_groups.show' )->handle( 'ProductGroupsController@show' );
-		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->name( 'product_groups.edit' )->handle( 'ProductGroupsController@show' );
+		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'ProductGroupsController@index' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'show', 'action' )->handle( 'ProductGroupsController@show' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'ProductGroupsController@show' );
 	}
 );
 
@@ -248,7 +253,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->group(
 	function() {
 		\SureCart::route()->get()->name( 'plugin.show' )->handle( 'PluginSettings@show' );
-		\SureCart::route()->post()->middleware( 'nonce:update_plugin_settings' )->name( 'plugin.save' )->handle( 'PluginSettings@save' );
+		\SureCart::route()->post()->middleware( 'nonce:update_plugin_settings' )->handle( 'PluginSettings@save' );
 	}
 );
 
@@ -264,7 +269,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	->middleware( 'nonce:remove_webhook' )
 	->middleware( 'user.can:edit_sc_webhooks' )
 	->handle( '\\SureCart\\Controllers\\Web\\WebhookController@remove' );
-
 \SureCart::route()
 	->get()
 	->where( 'sc_url_var', 'ignore_webhook', 'action' )

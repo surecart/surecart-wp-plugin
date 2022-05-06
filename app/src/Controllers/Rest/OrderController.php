@@ -58,7 +58,7 @@ class OrderController extends RestController {
 		}
 
 		// fetch the user's customer object.
-		$customer = $user->customer();
+		$customer = $user->customerId( ! empty( $request['live_mode'] ) ? 'live' : 'test' );
 
 		if ( ! empty( $customer->id ) ) {
 			$class['customer'] = $customer->id;

@@ -764,10 +764,12 @@
     "slot": true
   },
   "sc-order-summary": {
+    "closed-text": true,
     "collapsed": true,
     "collapsible": true,
     "empty": true,
     "loading": true,
+    "open-text": true,
     "order": true,
     "style": true,
     "id": true,

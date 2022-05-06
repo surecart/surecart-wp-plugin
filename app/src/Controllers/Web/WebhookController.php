@@ -76,11 +76,15 @@ class WebhookController {
 	public function handleResponse( $data ) {
 		// handle the response.
 		if ( is_wp_error( $data ) ) {
-			return \SureCart::json( [ $data->get_error_code() => $data->get_error_message() ] )->withStatus( 500 );
+			return \SureCart::json( [ $data->get_error_code() => $data->get_error_message() ] )
+				->withHeader( 'X-SURECART-WP-PLUGIN-VERSION', \SureCart::plugin()->version() )
+				->withStatus( 500 );
 		}
 
 		if ( empty( $data ) ) {
-			return \SureCart::json( [ 'failed' => true ] )->withStatus( 400 );
+			return \SureCart::json( [ 'failed' => true ] )
+				->withHeader( 'X-SURECART-WP-PLUGIN-VERSION', \SureCart::plugin()->version() )
+				->withStatus( 400 );
 		}
 
 		return \SureCart::json(
@@ -88,7 +92,7 @@ class WebhookController {
 				'event_triggered' => $data['event'] ?? 'none',
 				'data'            => $data,
 			]
-		);
+		)->withHeader( 'X-SURECART-WP-PLUGIN-VERSION', \SureCart::plugin()->version() );
 	}
 
 	/**

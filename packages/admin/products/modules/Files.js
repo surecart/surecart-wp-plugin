@@ -70,6 +70,7 @@ export default ({ id, product, updateProduct, loading }) => {
 									file={file}
 									key={index}
 									onUploaded={async (upload_id) => {
+										console.log({ upload_id });
 										const product = id
 											? select(store).selectModel(
 													'product',
@@ -81,7 +82,8 @@ export default ({ id, product, updateProduct, loading }) => {
 											  );
 										await updateProduct({
 											file_upload_ids: [
-												...product?.file_upload_ids,
+												...(product?.file_upload_ids ||
+													[]),
 												upload_id,
 											],
 										});

@@ -24,6 +24,7 @@ class CustomerDashboardMiddlewareTest extends SureCartUnitTestCase
 		\SureCart::make()->bootstrap([
 			'providers' => [
 				\SureCart\Request\RequestServiceProvider::class,
+				\SureCart\WordPress\Pages\PageServiceProvider::class,
 			]
 		], false);
 

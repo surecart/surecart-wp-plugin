@@ -1380,10 +1380,12 @@ export namespace Components {
         "type": 'default' | 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text' | 'link';
     }
     interface ScOrderSummary {
+        "closedText": string;
         "collapsed": boolean;
         "collapsible": boolean;
         "empty": boolean;
         "loading": boolean;
+        "openText": string;
         "order": Order;
     }
     interface ScOrderTaxIdInput {
@@ -4692,6 +4694,7 @@ declare namespace LocalJSX {
         "type"?: 'default' | 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text' | 'link';
     }
     interface ScOrderSummary {
+        "closedText"?: string;
         "collapsed"?: boolean;
         "collapsible"?: boolean;
         "empty"?: boolean;

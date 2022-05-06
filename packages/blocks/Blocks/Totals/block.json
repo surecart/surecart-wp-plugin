@@ -15,6 +15,14 @@
 		},
 		"collapsed": {
 			"type": "boolean"
+		},
+		"closed_text": {
+			"type": "string",
+			"default": "Show Summary"
+		},
+		"open_text": {
+			"type": "string",
+			"default": "Summary"
 		}
 	}
 }
