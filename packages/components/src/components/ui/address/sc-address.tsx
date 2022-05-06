@@ -89,6 +89,8 @@ export class ScAddress {
 
   componentWillLoad() {
     this.handleAddressChange();
+    const country = this.countryChoices.find(country => country.value === this.address.country)?.value || 'US';
+    this.updateAddress({ country });
   }
 
   render() {
@@ -96,7 +98,7 @@ export class ScAddress {
       <div class="sc-address">
         <sc-form-control label={this.label} class="sc-address__control" part="control" required={this.required}>
           <sc-select
-            value={this?.address?.country}
+            value={this.address?.country}
             onScChange={(e: any) => {
               this.clearAddress();
               this.updateAddress({ country: e.target.value });

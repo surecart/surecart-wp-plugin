@@ -90,7 +90,7 @@ export class ScOrderShippingAddress {
 
     /** Set the country by browser language if not set. */
     if (!this.address?.country) {
-      const country = navigator?.language?.slice(-2);
+      const country = navigator?.language?.slice(-2).toUpperCase();
       if (country) {
         this.address = {
           ...this.address,
