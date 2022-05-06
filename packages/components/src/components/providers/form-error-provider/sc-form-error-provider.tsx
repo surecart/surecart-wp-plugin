@@ -1,6 +1,6 @@
 import { Component, h, State, Event, EventEmitter, Listen, Watch, Prop, Host } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
-import { Order, ResponseError } from '../../../types';
+import { FormStateSetter, Order, ResponseError } from '../../../types';
 
 /**
  * This component listens for a confirmed event and redirects to the success url.
@@ -15,6 +15,9 @@ export class ScFormErrorProvider {
 
   /** Set the state. */
   @Event() scUpdateError: EventEmitter<ResponseError>;
+
+  /** Form state event. */
+  @Event() scSetState: EventEmitter<FormStateSetter>;
 
   /** Error to display. */
   @State() error: ResponseError | null;
@@ -34,6 +37,7 @@ export class ScFormErrorProvider {
   @Listen('scError')
   handleErrorEvent(e) {
     this.error = e.detail as ResponseError;
+    this.scSetState.emit('REJECT'); // make sure we are rejecting the current state.
   }
 
   /** Listen for pay errors. */
