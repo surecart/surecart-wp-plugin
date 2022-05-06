@@ -35,7 +35,6 @@ export class ScAlert {
     if (this.open) {
       return;
     }
-
     this.open = true;
   }
 
@@ -84,6 +83,12 @@ export class ScAlert {
 
   icon() {
     return <sc-icon name={this.iconName()} />;
+  }
+
+  componentDidLoad() {
+    if (this.open) {
+      this.scShow.emit();
+    }
   }
 
   render() {
