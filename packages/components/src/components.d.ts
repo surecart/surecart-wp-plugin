@@ -173,6 +173,10 @@ export namespace Components {
     }
     interface ScCart {
         /**
+          * Should we force show the cart, even if there's a form on the page?
+         */
+        "alwaysShow": boolean;
+        /**
           * The button text.
          */
         "buttonText": string;
@@ -188,10 +192,6 @@ export namespace Components {
           * The checkout url for the button.
          */
         "checkoutUrl": string;
-        /**
-          * Should we force show the cart, even if there's a form on the page?
-         */
-        "forceShow": boolean;
         /**
           * The form id to use for the cart.
          */
@@ -3298,6 +3298,10 @@ declare namespace LocalJSX {
     }
     interface ScCart {
         /**
+          * Should we force show the cart, even if there's a form on the page?
+         */
+        "alwaysShow"?: boolean;
+        /**
           * The button text.
          */
         "buttonText"?: string;
@@ -3313,10 +3317,6 @@ declare namespace LocalJSX {
           * The checkout url for the button.
          */
         "checkoutUrl"?: string;
-        /**
-          * Should we force show the cart, even if there's a form on the page?
-         */
-        "forceShow"?: boolean;
         /**
           * The form id to use for the cart.
          */

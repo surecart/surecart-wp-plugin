@@ -2,6 +2,9 @@
 
 namespace SureCart\Cart;
 
+/**
+ * The cart service.
+ */
 class CartService {
 	/**
 	 * Bootstrap the cart.
@@ -9,10 +12,21 @@ class CartService {
 	 * @return void
 	 */
 	public function bootstrap() {
-		add_action( 'wp_head', [ $this, 'addComponentData' ] );
+		add_action(
+			'wp_enqueue_scripts',
+			function() {
+				$this->addComponentData();
+				\SureCart::assets()->enqueueComponents();
+			}
+		);
 		add_action( 'wp_footer', [ $this, 'renderCartComponent' ] );
 	}
 
+	/**
+	 * Add cart component data.
+	 *
+	 * @return void
+	 */
 	public function addComponentData() {
 		\SureCart::assets()->addComponentData(
 			'sc-cart',
@@ -21,7 +35,6 @@ class CartService {
 				'cartTitle'    => esc_html__( 'My Cart', 'surecart' ),
 				'cartTemplate' => $this->cartTemplate(),
 				'checkoutUrl'  => \SureCart::pages()->url( 'checkout' ),
-				'formId'       => 'sc-checkout-' . \SureCart::forms()->getDefaultId(),
 			]
 		);
 	}
@@ -46,20 +59,7 @@ class CartService {
 	 * @return void
 	 */
 	public function renderCartComponent() {
-		if ( $this->pageHasForm() ) {
-			return '';
-		}
 		// This dynamically adds prop data to a component since we cannot pass objects data as a prop.
-		echo '<sc-cart id="sc-cart"></sc-cart>';
-	}
-
-	/**
-	 * Does the current page have a form?
-	 *
-	 * @return void
-	 */
-	public function pageHasForm() {
-		global $post;
-
+		echo '<sc-cart id="sc-cart" always-show form-id="' . \SureCart::forms()->getDefaultId() . '"></sc-cart>';
 	}
 }

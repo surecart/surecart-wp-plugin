@@ -1,5 +1,6 @@
-import { Component, h, Prop, State, Fragment, Watch } from '@stencil/core';
+import { Component, Fragment, h, Prop, State, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
+
 import { Order, ResponseError } from '../../../../types';
 
 @Component({
@@ -21,7 +22,7 @@ export class ScCart {
   @Prop() buttonText: string = 'Proceed To Checkout';
 
   /** The form id to use for the cart. */
-  @Prop() formId: string;
+  @Prop({ reflect: true }) formId: string;
 
   /** The checkout url for the button. */
   @Prop() checkoutUrl: string;
@@ -30,7 +31,7 @@ export class ScCart {
   @Prop() uiState: 'loading' | 'busy' | 'navigating' | 'idle' = 'idle';
 
   /** Should we force show the cart, even if there's a form on the page? */
-  @Prop() forceShow: boolean;
+  @Prop() alwaysShow: boolean;
 
   @State() order: Order;
 
@@ -47,11 +48,11 @@ export class ScCart {
   }
 
   getCount() {
-    return parseInt(window.localStorage.getItem(`${this.formId}-line-items-count`) || '0');
+    return parseInt(window.localStorage.getItem(`sc-checkout-${this.formId}-line-items-count`) || '0');
   }
 
   getSessionId() {
-    return this.formId ? window.localStorage.getItem(this.formId) : null;
+    return this.formId ? window.localStorage.getItem(`sc-checkout-${this.formId}`) : null;
   }
 
   @Watch('open')
@@ -61,37 +62,43 @@ export class ScCart {
 
   render() {
     // don't render if we're on a checkout page.
-    if (this.pageHasForm() && !this.forceShow) return null;
+    if (this.pageHasForm()) return null;
 
     // if we don't have a cart in storage, don't render anything.
-    if (!this.getSessionId() || this.getCount() === 0) return null;
+    if (!this.alwaysShow) {
+      if (!this.getSessionId() || this.getCount() === 0) return null;
+    }
 
     // we have a cart, render all necessary components.
     return (
       <Fragment>
-        <sc-cart-icon count={this.getCount()} onClick={() => (this.open = !this.open)}></sc-cart-icon>
-        <sc-drawer label={this.cartTitle} open={this.open} onScAfterHide={() => (this.open = false)} onScAfterShow={() => (this.open = true)}>
-          {this.loaded && (
-            <sc-cart-provider style={{ position: 'relative', height: '100%' }} formId={this.formId}>
-              <div class="cart" innerHTML={this.cartTemplate}>
-                <slot name="drawer"></slot>
-              </div>
-              {this.uiState === 'loading' && <sc-block-ui spinner></sc-block-ui>}
-            </sc-cart-provider>
-          )}
+        <sc-cart-context-provider>
+          <sc-cart-icon count={this.getCount()} onClick={() => (this.open = !this.open)}></sc-cart-icon>
+          <sc-drawer label={this.cartTitle} open={this.open} onScAfterHide={() => (this.open = false)} onScAfterShow={() => (this.open = true)}>
+            {this.loaded && (
+              <sc-cart-provider style={{ position: 'relative', height: '100%' }} formId={this.formId}>
+                <div class="cart" innerHTML={this.cartTemplate}>
+                  <slot name="drawer"></slot>
+                </div>
+                {this.uiState === 'loading' && <sc-block-ui spinner></sc-block-ui>}
+              </sc-cart-provider>
+            )}
 
-          <sc-button
-            style={{ position: 'relative', zIndex: '99' }}
-            href={this.checkoutUrl}
-            type="primary"
-            slot="footer"
-            full
-            loading={this.uiState === 'navigating'}
-            onClick={() => (this.uiState = 'navigating')}
-          >
-            {__('Proceed To Checkout', 'surecart')}
-          </sc-button>
-        </sc-drawer>
+            <sc-line-item-total slot="footer"></sc-line-item-total>
+
+            <sc-button
+              style={{ position: 'relative', zIndex: '99' }}
+              href={this.checkoutUrl}
+              type="primary"
+              slot="footer"
+              full
+              loading={this.uiState === 'navigating'}
+              onClick={() => (this.uiState = 'navigating')}
+            >
+              {__('Proceed To Checkout', 'surecart')}
+            </sc-button>
+          </sc-drawer>
+        </sc-cart-context-provider>
       </Fragment>
     );
   }

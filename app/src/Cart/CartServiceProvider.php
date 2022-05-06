@@ -15,7 +15,7 @@ class CartServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function register( $container ) {
-		$container['surecart.cart'] = function ( $container ) {
+		$container['surecart.cart'] = function () {
 			return new CartService();
 		};
 	}

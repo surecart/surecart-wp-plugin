@@ -95,11 +95,11 @@
     "slot": true
   },
   "sc-cart": {
+    "always-show": true,
     "button-text": true,
     "cart-template": true,
     "cart-title": true,
     "checkout-url": true,
-    "force-show": true,
     "form-id": true,
     "ui-state": true,
     "style": true,

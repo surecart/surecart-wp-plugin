@@ -26,7 +26,7 @@ export class ScCart {
 
   /** Get the order id from storage. */
   getOrderId() {
-    return this.formId ? window.localStorage.getItem(this.formId) : null;
+    return this.formId ? window.localStorage.getItem(`sc-checkout-${this.formId}`) : null;
   }
 
   /** Maybe fetch order on load. */
@@ -43,8 +43,7 @@ export class ScCart {
       this.uiState = 'loading';
       this.order = (await apiFetch({
         method: 'GET', // create or update
-        path: addQueryArgs(baseUrl, {
-          id,
+        path: addQueryArgs(`${baseUrl}${id}`, {
           expand: ['line_items', 'line_item.price', 'price.product'],
         }),
       })) as Order;

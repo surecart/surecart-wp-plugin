@@ -30,7 +30,7 @@ export class ScLineItemTotal {
       );
     }
 
-    if (!this.order?.currency) return;
+    if (!this.order?.currency) return null;
 
     if (this.total === 'total' && this.order.trial_amount !== 0) {
       return (
