@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, h, Listen, Method, Prop, State, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
-import { addQueryArgs, removeQueryArgs } from '@wordpress/url';
+import { removeQueryArgs } from '@wordpress/url';
 
 import { createOrUpdateOrder, finalizeSession } from '../../../services/session';
 import { FormStateSetter, PaymentIntents, ProcessorName, LineItemData, Order, PriceChoice } from '../../../types';
@@ -64,12 +64,6 @@ export class ScSessionProvider {
 
   /** Holds the checkout session to update. */
   @State() session: Order;
-
-  @Listen('scPaid')
-  handlePaidEvent() {
-    removeSessionId(this.groupId);
-    window.location.assign(addQueryArgs(this.successUrl, { order: this.order.id }));
-  }
 
   /** Sync this session back to parent. */
   @Watch('session')
@@ -272,14 +266,6 @@ export class ScSessionProvider {
     this.scSetState.emit('PAID');
   }
 
-  /**
-   * Handle confirm event.
-   */
-  @Listen('scConfirmed')
-  async handleConfirmed() {
-    window.localStorage.removeItem(this.groupId);
-  }
-
   @Listen('scPayError')
   async handlePayError() {
     this.scSetState.emit('REJECT');
@@ -307,8 +293,8 @@ export class ScSessionProvider {
 
     // paid
     if (e?.code === 'readonly') {
-      window.localStorage.removeItem(this.groupId);
-      this.scSetState.emit('PAID');
+      removeSessionId(this.groupId);
+      window.location.assign(removeQueryArgs(window.location.href, 'order'));
       return;
     }
 
