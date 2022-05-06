@@ -3918,6 +3918,10 @@ declare namespace LocalJSX {
     }
     interface ScFormErrorProvider {
         /**
+          * Form state event.
+         */
+        "onScSetState"?: (event: CustomEvent<FormStateSetter>) => void;
+        /**
           * Set the state.
          */
         "onScUpdateError"?: (event: CustomEvent<ResponseError>) => void;
