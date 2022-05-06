@@ -218,14 +218,14 @@ class ProductsListTable extends ListTable {
 		$currency = $product->metrics->currency ?? 'usd';
 
 		if ( empty( $product->metrics->prices_count ) ) {
-			return '<sc-tag type="warning">' . __( 'No price', 'surecart' ) . '</sc-tag>';
+			return '<sc-tag type="warning">' . esc_html__( 'No price', 'surecart' ) . '</sc-tag>';
 		}
 
 		if ( ! empty( $product->metrics->min_price_amount ) ) {
 			$amount = '<sc-format-number type="currency" currency="' . $currency . '" value="' . $product->metrics->min_price_amount . '"></sc-format-number>';
 			if ( $product->metrics->prices_count > 1 ) {
 				// translators: Price starting at.
-				$starting_at = sprintf( __( 'Starting at %s', 'surecart' ), $amount );
+				$starting_at = sprintf( esc_html__( 'Starting at %s', 'surecart' ), $amount );
 				// translators: Other prices.
 				$others = sprintf( _n( 'and %d other price.', 'and %d other prices.', $product->metrics->prices_count - 1, 'surecart' ), $product->metrics->prices_count - 1 );
 				return $starting_at . '<br /><small style="opacity: 0.75">' . $others . '</small>';
@@ -233,7 +233,12 @@ class ProductsListTable extends ListTable {
 				return $amount;
 			}
 		}
-		return __( 'No price', 'surecart' );
+
+		if ( 1 === $product->metrics->prices_count ) {
+			return esc_html__( 'Name your own price', 'surecart' );
+		}
+
+		return esc_html__( 'No price', 'surecart' );
 	}
 
 	/**

@@ -103,7 +103,11 @@ export class ScCustomerDetails {
   }
 
   renderEmpty() {
-    return <slot name="empty">{__('You are not a customer.', 'surecart')}</slot>;
+    return (
+      <sc-stacked-list-row mobile-size={0}>
+        <slot name="empty">{__('You are not a customer.', 'surecart')}</slot>
+      </sc-stacked-list-row>
+    );
   }
 
   renderLoading() {

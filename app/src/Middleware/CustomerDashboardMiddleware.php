@@ -74,7 +74,7 @@ class CustomerDashboardMiddleware {
 	 * @return RedirectResponse
 	 */
 	public function success( $request ) {
-		return ( new RedirectResponse( $request ) )->to( remove_query_arg( 'customer_link_id', $request->getUrl() ) );
+		return ( new RedirectResponse( $request ) )->to( \SureCart::pages()->url( 'dashboard' ) );
 	}
 
 	/**

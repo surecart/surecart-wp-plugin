@@ -97,7 +97,7 @@ export default ({ product, onDelete, onToggleArchive }) => {
 							: __('Archive', 'surecart')}
 					</ScMenuItem>
 				)}
-				{product?.id && (
+				{/* {product?.id && (
 					<ScMenuItem onClick={confirmDelete}>
 						<span
 							slot="prefix"
@@ -124,7 +124,7 @@ export default ({ product, onDelete, onToggleArchive }) => {
 						</span>
 						{__('Delete', 'surecart')}
 					</ScMenuItem>
-				)}
+				)} */}
 			</ScMenu>
 		</ScDropdown>
 	);

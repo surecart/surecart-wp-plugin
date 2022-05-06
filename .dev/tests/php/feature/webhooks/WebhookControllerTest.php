@@ -21,7 +21,11 @@ class WebhookControllerTest extends SureCartUnitTestCase
 		parent::setUp();
 
 		// Set up an app instance with whatever stubs and mocks we need before every test.
-		\SureCart::make()->bootstrap([], false);
+		\SureCart::make()->bootstrap([
+			'providers' => [
+				\SureCart\WordPress\PluginServiceProvider::class,
+			]
+		], false);
 	}
 
 	/**

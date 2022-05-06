@@ -41,7 +41,7 @@ return [
 
 		<!-- wp:surecart/customer-downloads /-->
 
-		<!-- wp:surecart/customer-payment-methods {"title":"Payment History"} /-->
+		<!-- wp:surecart/customer-payment-methods {"title":"Payment Methods"} /-->
 
 		<!-- wp:surecart/customer-orders /-->
 

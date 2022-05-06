@@ -48,6 +48,7 @@ export default ({ templates, template, setTemplate }) => {
 				`}
 			>
 				{templates.map((template) => {
+					const url = scBlockData?.plugin_url || scData?.plugin_url;
 					const name = template.name.replace('surecart/', '');
 					return (
 						<Thumbnail
@@ -57,10 +58,7 @@ export default ({ templates, template, setTemplate }) => {
 						>
 							<img
 								css={imageCSS}
-								src={
-									scData.plugin_url +
-									`/templates/forms/${name}.png`
-								}
+								src={`${url}/templates/forms/${name}.png`}
 							/>
 						</Thumbnail>
 					);

@@ -97,8 +97,14 @@ abstract class ListTable extends \WP_List_Table {
 			esc_attr( $model->created_at )
 		);
 	}
-
-	public function column_mode( $order ) {
-		return ! $order->live_mode ? '<sc-tag type="warning">' . __( 'Test', 'surecart' ) . '</sc-tag>' : '';
+	/**
+	 * The mode for the model.
+	 *
+	 * @param SureCart\Model $model Model.
+	 *
+	 * @return string
+	 */
+	public function column_mode( $model ) {
+		return empty( $model->live_mode ) ? '<sc-tag type="warning">' . __( 'Test', 'surecart' ) . '</sc-tag>' : '';
 	}
 }

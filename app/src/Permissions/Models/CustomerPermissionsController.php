@@ -32,7 +32,7 @@ class CustomerPermissionsController extends ModelPermissionsController {
 		$params = $args[3];
 
 		// request has blacklisted keys.
-		if ( ! $this->requestOnlyHasKeys( $params, [ 'cancel_at_period_end', 'quantity', 'price', 'purge_pending_update' ] ) ) {
+		if ( ! $this->requestOnlyHasKeys( $params, [ 'billing_matches_shipping', 'email', 'name', 'phone', 'unsubscribed', 'billing_address', 'default_payment_method', 'shipping_address', 'tax_identifier' ] ) ) {
 			return false;
 		}
 
@@ -57,7 +57,10 @@ class CustomerPermissionsController extends ModelPermissionsController {
 		if ( ! empty( $allcaps['read_sc_customers'] ) ) {
 			return true;
 		}
-		return $this->customerIdMatches( $user, $args[2] );
+		if ( empty( $args[2]['id'] ) ) {
+			return false;
+		}
+		return $this->customerIdMatches( $user, $args[2]['id'] );
 	}
 
 	/**
