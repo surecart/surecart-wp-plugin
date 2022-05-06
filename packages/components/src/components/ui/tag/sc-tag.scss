@@ -23,15 +23,15 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 .tag--primary {
-  background-color: var(--sc-color-primary-100);
-  border-color: var(--sc-color-primary-200);
-  color: var(--sc-color-primary-700);
+  background-color: var(--sc-tag-primary-background-color, var(--sc-color-primary-100));
+  border-color:  var(--sc-tag-primary-border-color, var(--sc-color-primary-200));
+  color:  var(--sc-tag-primary-color, var(--sc-color-primary-700));
 }
 
 .tag--success {
-  background-color: var(--sc-color-success-100);
-  border-color: var(--sc-color-success-200);
-  color: var(--sc-color-success-800);
+  background-color: var(--sc-tag-success-background-color, var(--sc-color-success-100));
+  border-color: var(--sc-tag-success-border-color, var(--sc-color-success-200));
+  color: var(--sc-tag-success-color, var(--sc-color-success-800));
 }
 
 .tag--info {
@@ -41,9 +41,9 @@
 }
 
 .tag--default {
-  background-color: var(--sc-color-gray-100);
-  border-color: var(--sc-color-gray-200);
-  color: var(--sc-color-gray-700);
+  background-color: var(--sc-tag-default-background-color, var(--sc-color-gray-100));
+  border-color: var(--sc-tag-default-border-color, var(--sc-color-gray-200));
+  color: var(--sc-tag-default-color, var(--sc-color-gray-700));
 }
 
 .tag--warning {

@@ -1,5 +1,5 @@
-import { Order, Customer, PriceChoice, Prices, Products, ResponseError, FormState } from '../../../../types';
-import { Component, h, Prop, Element, State, Listen } from '@stencil/core';
+import { Order, Customer, PriceChoice, Prices, Products, ResponseError, FormState, Processor, PaymentIntents, PaymentIntent } from '../../../../types';
+import { Component, h, Prop, Element, State, Listen, Method, Event, EventEmitter, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { Universe } from 'stencil-wormhole';
 
@@ -11,6 +11,9 @@ import { Universe } from 'stencil-wormhole';
 export class ScCheckout {
   /** Element */
   @Element() el: HTMLElement;
+
+  /** Holds the session provider reference. */
+  private sessionProvider: HTMLScSessionProviderElement;
 
   /** An array of prices to pre-fill in the form. */
   @Prop() prices: Array<PriceChoice> = [];
@@ -45,6 +48,15 @@ export class ScCheckout {
   /** Should we disable components validation */
   @Prop() disableComponentsValidation: boolean;
 
+  /** Processors enabled for this form. */
+  @Prop({ mutable: true }) processors: Processor[];
+
+  /** Can we edit line items? */
+  @Prop() editLineItems: boolean = true;
+
+  /** Can we remove line items? */
+  @Prop() removeLineItems: boolean = true;
+
   /** Stores fetched prices for use throughout component.  */
   @State() pricesEntities: Prices = {};
 
@@ -59,6 +71,65 @@ export class ScCheckout {
 
   /** Error to display. */
   @State() error: ResponseError | null;
+
+  /** The currenly selected processor */
+  @State() processor: 'stripe' | 'paypal' = 'stripe';
+
+  /** Holds the payment intents for the checkout. */
+  @State() paymentIntents: PaymentIntents = {};
+
+  /** Order has been updated. */
+  @Event() scOrderUpdated: EventEmitter<Order>;
+
+  /** Order has been finalized. */
+  @Event() scOrderFinalized: EventEmitter<Order>;
+
+  /** Order has an error. */
+  @Event() scOrderError: EventEmitter<ResponseError>;
+
+  @Watch('order')
+  handleOrderChange() {
+    this.error = null;
+    this.scOrderUpdated.emit(this.order);
+    if (this.order?.status === 'finalized') {
+      this.scOrderFinalized.emit(this.order);
+    }
+  }
+
+  @Watch('error')
+  handleErrorChange() {
+    if (Object.keys(this.error || {})?.length) {
+      this.scOrderError.emit(this.error);
+    }
+  }
+
+  @Listen('scSetPaymentIntent')
+  handleSetPaymentIntent(e) {
+    const paymentIntent = e.detail?.payment_intent as PaymentIntent;
+    const processor = e.detail?.processor;
+    this.paymentIntents[processor] = paymentIntent;
+  }
+
+  @Listen('scPayError')
+  handlePayError(e) {
+    this.error = e.detail?.message || {
+      code: '',
+      message: 'Something went wrong with your payment.',
+    };
+  }
+
+  @Listen('scSetProcessor')
+  handleProcessorChange(e) {
+    this.processor = e.detail;
+  }
+
+  @Listen('scSetOrderState')
+  handleOrderStateChange(e) {
+    const items = e.detail;
+    Object.keys(items || {}).forEach(key => {
+      this[key] = items[key];
+    });
+  }
 
   @Listen('scAddEntities')
   handleAddEntities(e) {
@@ -80,6 +151,30 @@ export class ScCheckout {
     }
   }
 
+  /**
+   * Submit the form
+   */
+  @Method()
+  async submit({ skip_validation } = { skip_validation: false }) {
+    if (!skip_validation) {
+      await this.validate();
+    }
+    return await this.sessionProvider.finalize();
+  }
+
+  @Method()
+  async validate() {
+    const form = this.el.querySelector('sc-form') as HTMLScFormElement;
+    return await form.validate();
+  }
+
+  setOrderState(state) {
+    this.state = {
+      ...this.state,
+      ...state,
+    };
+  }
+
   componentWillLoad() {
     // @ts-ignore
     Universe.create(this, this.state());
@@ -87,9 +182,17 @@ export class ScCheckout {
 
   state() {
     return {
-      processor: 'stripe',
+      processor: this.processor,
+      processors: this.processors,
       processor_data: this.order?.processor_data,
       state: this.checkoutState,
+      paymentIntents: this.paymentIntents,
+      successUrl: this.successUrl,
+
+      order: this.order,
+      lineItems: this.order?.line_items?.data || [],
+      editLineItems: this.editLineItems,
+      removeLineItems: this.removeLineItems,
 
       // checkout states
       loading: this.checkoutState === 'loading',
@@ -99,8 +202,6 @@ export class ScCheckout {
       // checkout states
 
       error: this.error,
-      order: this.order,
-      lineItems: this.order?.line_items?.data || [],
       customer: this.customer,
       tax_status: this?.order?.tax_status,
       customerShippingAddress: typeof this.order?.customer !== 'string' ? this?.order?.customer?.shipping_address : {},
@@ -128,36 +229,41 @@ export class ScCheckout {
         }}
       >
         <Universe.Provider state={this.state()}>
-          {/* Handles the current checkout form state. */}
-          <sc-form-state-provider onScSetCheckoutFormState={e => (this.checkoutState = e.detail)}>
-            {/* Handles errors in the form. */}
-            <sc-form-error-provider order={this.order} onScUpdateError={e => (this.error = e.detail)}>
-              {/* Validate components in the form based on order state. */}
-              <sc-form-components-validator order={this.order} disabled={this.disableComponentsValidation}>
-                {/* Handles the current session. */}
-                <sc-session-provider
-                  order={this.order}
-                  prices={this.prices}
-                  persist={this.persistSession}
-                  modified={this.modified}
-                  mode={this.mode}
-                  form-id={this.formId}
-                  group-id={this.el.id}
-                  currency-code={this.currencyCode}
-                  onScUpdateOrderState={e => (this.order = e.detail)}
-                  onScError={e => (this.error = e.detail as ResponseError)}
-                >
-                  {/* Maybe redirect to the success url if requirements are met. */}
-                  <sc-order-redirect-provider order={this.order} success-url={this.successUrl}>
-                    {/* Handle confirming of order after it is "Paid" by processors. */}
-                    <sc-order-confirm-provider order={this.order}>
-                      <slot />
-                    </sc-order-confirm-provider>
-                  </sc-order-redirect-provider>
-                </sc-session-provider>
-              </sc-form-components-validator>
-            </sc-form-error-provider>
-          </sc-form-state-provider>
+          <sc-processor-provider>
+            {/* Handles the current checkout form state. */}
+            <sc-form-state-provider onScSetCheckoutFormState={e => (this.checkoutState = e.detail)}>
+              {/* Handles errors in the form. */}
+              <sc-form-error-provider order={this.order} onScUpdateError={e => (this.error = e.detail)}>
+                {/* Validate components in the form based on order state. */}
+                <sc-form-components-validator order={this.order} disabled={this.disableComponentsValidation}>
+                  {/* Handles the current session. */}
+                  <sc-session-provider
+                    ref={el => (this.sessionProvider = el as HTMLScSessionProviderElement)}
+                    order={this.order}
+                    prices={this.prices}
+                    paymentIntents={this.paymentIntents}
+                    persist={this.persistSession}
+                    modified={this.modified}
+                    mode={this.mode}
+                    form-id={this.formId}
+                    group-id={this.el.id}
+                    processor={this.processor}
+                    currency-code={this.currencyCode}
+                    onScUpdateOrderState={e => (this.order = e.detail)}
+                    onScError={e => (this.error = e.detail as ResponseError)}
+                  >
+                    {/* Maybe redirect to the success url if requirements are met. */}
+                    <sc-order-redirect-provider order={this.order} success-url={this.successUrl}>
+                      {/* Handle confirming of order after it is "Paid" by processors. */}
+                      <sc-order-confirm-provider order={this.order}>
+                        <slot />
+                      </sc-order-confirm-provider>
+                    </sc-order-redirect-provider>
+                  </sc-session-provider>
+                </sc-form-components-validator>
+              </sc-form-error-provider>
+            </sc-form-state-provider>
+          </sc-processor-provider>
 
           {this.state().busy && <sc-block-ui z-index={9}></sc-block-ui>}
         </Universe.Provider>

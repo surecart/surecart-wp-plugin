@@ -33,6 +33,7 @@ export default ({ charge, onRequestClose }) => {
 						'charge',
 						'charge.payment_method',
 						'charge.payment_method.card',
+						'charge.payment_intent',
 					],
 				},
 				data: {

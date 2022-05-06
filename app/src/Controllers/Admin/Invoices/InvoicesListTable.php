@@ -63,6 +63,7 @@ class InvoicesListTable extends ListTable {
 			'invoice' => __( 'Invoice', 'surecart' ),
 			'date'    => __( 'Date', 'surecart' ),
 			'status'  => __( 'Status', 'surecart' ),
+			'method'  => __( 'Method', 'surecart' ),
 			'total'   => __( 'Total', 'surecart' ),
 			'mode'    => '',
 		];
@@ -78,6 +79,24 @@ class InvoicesListTable extends ListTable {
 		<label class="screen-reader-text" for="cb-select-<?php echo esc_attr( $product['id'] ); ?>"><?php _e( 'Select comment' ); ?></label>
 		<input id="cb-select-<?php echo esc_attr( $product['id'] ); ?>" type="checkbox" name="delete_comments[]" value="<?php echo esc_attr( $product['id'] ); ?>" />
 			<?php
+	}
+
+	/**
+	 * Show the payment method for the invoice.
+	 *
+	 * @param \SureCart\Models\Invoice $invoice Invoice model.
+	 *
+	 * @return string
+	 */
+	public function column_method( $invoice ) {
+		if ( ! empty( $invoice->payment_intent->processor_type ) && 'paypal' === $invoice->payment_intent->processor_type ) {
+			return '<sc-icon name="paypal" style="font-size: 56px; line-height:1; height: 28px;"></sc-icon>';
+		}
+		if ( ! empty( $invoice->payment_intent->payment_method->card->brand ) ) {
+			return '<sc-cc-logo style="font-size: 32px; line-height:1;" brand="' . esc_html( $invoice->payment_intent->payment_method->card->brand ) . '"></sc-cc-logo>';
+		}
+
+		return $invoice->payment_intent->processor_type ?? '-';
 	}
 
 	/**
@@ -108,7 +127,7 @@ class InvoicesListTable extends ListTable {
 			[
 				'status' => $this->getStatus(),
 			]
-		)->with( [ 'charge', 'customer' ] )
+		)->with( [ 'charge', 'customer', 'payment_intent', 'payment_intent.payment_method', 'payment_method.card' ] )
 		->paginate(
 			[
 				'per_page' => $this->get_items_per_page( 'invoices' ),
@@ -139,27 +158,27 @@ class InvoicesListTable extends ListTable {
 	/**
 	 * Handle the total column
 	 *
-	 * @param \SureCart\Models\Order $order Checkout Session Model.
+	 * @param \SureCart\Models\Invoice $invoice Invoice Model.
 	 *
 	 * @return string
 	 */
-	public function column_total( $order ) {
-		return '<sc-format-number type="currency" currency="' . strtoupper( esc_html( $order->currency ) ) . '" value="' . (float) $order->total_amount . '"></sc-format-number>';
+	public function column_total( $invoice ) {
+		return '<sc-format-number type="currency" currency="' . strtoupper( esc_html( $invoice->currency ) ) . '" value="' . (float) $invoice->amount_due . '"></sc-format-number>';
 	}
 
 	/**
 	 * Handle the total column
 	 *
-	 * @param \SureCart\Models\Order $order Checkout Session Model.
+	 * @param \SureCart\Models\Invoice $invoice Invoice model.
 	 *
 	 * @return string
 	 */
-	public function column_date( $order ) {
+	public function column_date( $invoice ) {
 		return sprintf(
 			'<time datetime="%1$s" title="%2$s">%3$s</time>',
-			esc_attr( $order->updated_at ),
-			esc_html( TimeDate::formatDateAndTime( $order->updated_at ) ),
-			esc_html( TimeDate::humanTimeDiff( $order->updated_at ) )
+			esc_attr( $invoice->updated_at ),
+			esc_html( TimeDate::formatDateAndTime( $invoice->updated_at ) ),
+			esc_html( TimeDate::humanTimeDiff( $invoice->updated_at ) )
 		);
 	}
 
@@ -237,15 +256,15 @@ class InvoicesListTable extends ListTable {
 	/**
 	 * Handle the status
 	 *
-	 * @param \SureCart\Models\Order $order Order Model.
+	 * @param \SureCart\Models\Invoice $invoice Order Model.
 	 *
 	 * @return string
 	 */
-	public function column_status( $order ) {
-		if ( ! empty( $order->charge->fully_refunded ) ) {
+	public function column_status( $invoice ) {
+		if ( ! empty( $invoice->charge->fully_refunded ) ) {
 			return '<sc-tag type="danger">' . __( 'Refunded', 'surecart' ) . '</sc-tag>';
 		}
-		return '<sc-order-status-badge status="' . esc_attr( $order->status ) . '"></sc-order-status-badge>';
+		return '<sc-order-status-badge status="' . esc_attr( $invoice->status ) . '"></sc-order-status-badge>';
 	}
 
 	/**

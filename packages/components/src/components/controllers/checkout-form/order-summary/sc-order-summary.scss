@@ -10,6 +10,10 @@
   gap: 0.35em;
 }
 
+.summary__content--empty {
+  display: none;
+}
+
 .collapse-link__icon {
   width: 18px;
   height: 18px;
@@ -29,41 +33,15 @@
   user-select: none;
   cursor: pointer;
 
-  &__content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 1.2s ease-in-out;
-    transition-timing-function: cubic-bezier(.22,.68,0,1.71);
-  }
-
   .collapse-link__icon {
-    transform: rotate(0);
     transition: transform 0.25s ease-in-out;
   }
-}
 
-.summary--expanded {
-  .summary__content {
-    overflow: visible;
-    max-height: 99em;
-    animation: hide-scroll 1s backwards;
-    @keyframes hide-scroll {
-      from, to { overflow: hidden; }
+  &--open {
+    .collapse-link__icon {
+      transform: rotate(180deg);
     }
   }
-  .collapse-link__icon {
-    transform: rotate(180deg);
-  }
-}
-
-.summary--collapsed {
-  .empty {
-    display: none;
-  }
-}
-
-.summary__content.hidden {
-  display: none;
 }
 
 ::slotted(*) {

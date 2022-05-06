@@ -5,7 +5,7 @@ import { css, jsx } from '@emotion/core';
 import { __experimentalLinkControl as LinkControl } from '@wordpress/block-editor';
 
 import { ScButton } from '@surecart/components-react';
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from '@wordpress/element';
 import ChooseDesign from './ChooseDesign';
 import PlaceholderTemplate from './PlaceholderTemplate';
 import SelectPrices from './SelectPrices';

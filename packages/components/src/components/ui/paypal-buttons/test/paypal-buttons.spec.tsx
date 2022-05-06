@@ -1,11 +1,11 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { ScPayment } from '../sc-payment';
+import { ScPaypalButtons } from '../paypal-buttons';
 
-describe('sc-payment', () => {
+describe('paypal-buttons', () => {
   it('renders', async () => {
     const page = await newSpecPage({
-      components: [ScPayment],
-      html: `<sc-payment></sc-payment>`,
+      components: [ScPaypalButtons],
+      html: `<sc-paypal-buttons></sc-paypal-buttons>`,
     });
     expect(page.root).toMatchSnapshot();
   });

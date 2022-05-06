@@ -40,10 +40,11 @@
   },
   "dependencies": {
     "@babel/plugin-transform-react-jsx": "^7.17.3",
+    "@paypal/paypal-js": "^5.0.4",
     "@storybook/addon-a11y": "^6.4.19",
     "@storybook/addon-interactions": "^6.4.19",
     "@storybook/testing-library": "^0.0.9",
-    "@stripe/stripe-js": "^1.21.1",
+    "@stripe/stripe-js": "^1.28",
     "@wordpress/api-fetch": "^5.1.1",
     "@wordpress/hooks": "^3.2.1",
     "@wordpress/i18n": "^4.2.3",

@@ -6,7 +6,7 @@ import {
 } from '@wordpress/block-editor';
 import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
 import { ScDashboardModule } from '@surecart/components-react';
-import { Fragment } from 'react';
+import { Fragment } from '@wordpress/element';
 
 export default ({ attributes, setAttributes }) => {
 	const { title } = attributes;

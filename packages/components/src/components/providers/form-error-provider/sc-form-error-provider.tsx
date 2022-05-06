@@ -73,18 +73,7 @@ export class ScFormErrorProvider {
     return (
       <Host>
         {!!this.errorMessage() && (
-          <sc-alert
-            type="danger"
-            onScShow={e => {
-              const target = e.target as HTMLElement;
-              target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start',
-                inline: 'nearest',
-              });
-            }}
-            open={!!this.errorMessage()}
-          >
+          <sc-alert type="danger" scrollOnOpen={true} open={!!this.errorMessage()}>
             <span slot="title">{this.errorMessage()}</span>
           </sc-alert>
         )}

@@ -1,7 +1,10 @@
-import { Order } from '../../../../types';
-import { Component, h, Prop } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Prop, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
+
+import { animateTo, shimKeyframesHeightAuto, stopAnimations } from '../../../../functions/animate';
+import { getAnimation, setDefaultAnimation } from '../../../../functions/animation-registry';
+import { Order } from '../../../../types';
 
 @Component({
   tag: 'sc-order-summary',
@@ -9,6 +12,8 @@ import { openWormhole } from 'stencil-wormhole';
   shadow: true,
 })
 export class ScOrderSummary {
+  private body: HTMLElement;
+  @Element() el: HTMLScOrderSummaryElement;
   @Prop() order: Order;
   @Prop() loading: boolean;
   @Prop() empty: boolean;
@@ -17,8 +22,20 @@ export class ScOrderSummary {
   @Prop() collapsible: boolean = false;
   @Prop({ mutable: true }) collapsed: boolean;
 
+  /** Show the toggle */
+  @Event() scShow: EventEmitter<void>;
+
+  /** Show the toggle */
+  @Event() scHide: EventEmitter<void>;
+
+  componentDidLoad() {
+    this.body.hidden = this.collapsed;
+    this.body.style.height = !this.collapsed ? 'auto' : '0';
+  }
+
   handleClick(e) {
     e.preventDefault();
+    if (this.empty && !this.loading) return;
     this.collapsed = !this.collapsed;
   }
 
@@ -52,14 +69,34 @@ export class ScOrderSummary {
     );
   }
 
+  @Watch('collapsed')
+  async handleOpenChange() {
+    if (!this.collapsed) {
+      this.scShow.emit();
+      await stopAnimations(this.body);
+      this.body.hidden = false;
+      const { keyframes, options } = getAnimation(this.el, 'summary.show');
+      await animateTo(this.body, shimKeyframesHeightAuto(keyframes, this.body.scrollHeight), options);
+      this.body.style.height = 'auto';
+    } else {
+      this.scHide.emit();
+      await stopAnimations(this.body);
+      const { keyframes, options } = getAnimation(this.el, 'summary.hide');
+      await animateTo(this.body, shimKeyframesHeightAuto(keyframes, this.body.scrollHeight), options);
+      this.body.hidden = true;
+      this.body.style.height = 'auto';
+    }
+  }
+
   render() {
     return (
-      <div class={{ 'summary': true, 'summary--collapsed': !!this.collapsed, 'summary--expanded': !this.collapsed }}>
+      <div class={{ 'summary': true, 'summary--open': !this.collapsed }}>
         {this.collapsible && this.renderHeader()}
         <div
+          ref={el => (this.body = el as HTMLElement)}
           class={{
-            summary__content: true,
-            hidden: this.empty,
+            'summary__content': true,
+            'summary__content--empty': this.empty && !this.loading,
           }}
         >
           <slot />
@@ -69,5 +106,21 @@ export class ScOrderSummary {
     );
   }
 }
+
+setDefaultAnimation('summary.show', {
+  keyframes: [
+    { height: '0', opacity: '0' },
+    { height: 'auto', opacity: '1' },
+  ],
+  options: { duration: 250, easing: 'ease' },
+});
+
+setDefaultAnimation('summary.hide', {
+  keyframes: [
+    { height: 'auto', opacity: '1' },
+    { height: '0', opacity: '0' },
+  ],
+  options: { duration: 250, easing: 'ease' },
+});
 
 openWormhole(ScOrderSummary, ['order', 'loading', 'empty'], false);

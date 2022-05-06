@@ -18,14 +18,56 @@ export default {
 
 const Template = () =>
   `<sc-choices>
-  <sc-choice>test</sc-choice>
-  <sc-choice>test</sc-choice>
-  <sc-choice>test</sc-choice>
-    </sc-choices>
+<sc-choice>
+This is a Title
+<span slot="description">This is a description</span>
+<span slot="price">Test</span>
+<span slot="per"> / Month</span>
+</sc-choice>
+<sc-choice>
+This is a Title
+<span slot="description">This is a description</span>
+<span slot="price">Test</span>
+<span slot="per"> / Month</span>
+</sc-choice>
+<sc-choice>
+This is a Title
+<span slot="description">This is a description</span>
+<span slot="price">Test</span>
+<span slot="per"> / Month</span>
+</sc-choice>
+  </sc-choices>
 `;
 
 export const Default = Template.bind({});
 Default.args = {
+  separate: true,
+  type: 'default',
+  size: 'medium',
+  loading: false,
+  caret: false,
+  full: false,
+  disabled: false,
+  outline: false,
+  pill: false,
+  circle: false,
+};
+
+const ToggleTemplate = () =>
+  `<sc-choices>
+<sc-choice>
+Credit Card
+<span slot="toggle-content">This is only shown when toggled</span>
+</sc-choice>
+<sc-choice>
+PayPal
+<span slot="toggle-content">This is only shown when toggled</span>
+</sc-choice>
+  </sc-choices>
+`;
+
+export const Toggle = ToggleTemplate.bind({});
+Toggle.args = {
   separate: true,
   type: 'default',
   size: 'medium',
@@ -45,19 +87,19 @@ const ContainerTemplate = ({ columns }) =>
   This is a Title
   <span slot="description">This is a description</span>
   <span slot="price">Test</span>
-  <span slot="per">/ Month</span>
+  <span slot="per"> / Month</span>
   </sc-choice>
   <sc-choice>
   This is a Title
   <span slot="description">This is a description</span>
   <span slot="price">Test</span>
-  <span slot="per">/ Month</span>
+  <span slot="per"> / Month</span>
   </sc-choice>
   <sc-choice>
   This is a Title
   <span slot="description">This is a description</span>
   <span slot="price">Test</span>
-  <span slot="per">/ Month</span>
+  <span slot="per"> / Month</span>
   </sc-choice>
   </div>
     </sc-choices>`;
@@ -95,6 +137,30 @@ const AutoWidthTemplate = () =>
 export const AutoWidth = AutoWidthTemplate.bind({});
 AutoWidth.args = {
   type: 'radio',
+  size: 'medium',
+  loading: false,
+  caret: false,
+  full: false,
+  disabled: false,
+  outline: false,
+  pill: false,
+  circle: false,
+};
+
+const BodyTemplate = () =>
+  `<sc-choices>
+  <sc-choice>test
+    <span slot="body">This is only shown when toggled</span>
+    </sc-choice>
+  <sc-choice>test</sc-choice>
+  <sc-choice>test</sc-choice>
+    </sc-choices>
+`;
+
+export const Body = BodyTemplate.bind({});
+Body.args = {
+  separate: true,
+  type: 'default',
   size: 'medium',
   loading: false,
   caret: false,

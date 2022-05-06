@@ -23,9 +23,9 @@
 	'sc-checkout',
 	'#' . $id,
 	[
-		'prices'   => $prices,
-		'i18n'     => $i18n,
-		'customer' => $customer,
+		'prices'     => $prices,
+		'customer'   => $customer,
+		'processors' => $processors,
 	]
 );
 ?>

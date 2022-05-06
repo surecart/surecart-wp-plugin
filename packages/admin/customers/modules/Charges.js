@@ -16,7 +16,11 @@ export default ({ id }) => {
 					context: 'edit',
 					status: ['paid', 'failed'],
 					customer_ids: [id],
-					expand: ['payment_method', 'payment_method.card'],
+					expand: [
+						'payment_method',
+						'payment_method.card',
+						'payment_intent',
+					],
 					page,
 					per_page: 5,
 				},

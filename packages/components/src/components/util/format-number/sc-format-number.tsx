@@ -10,7 +10,7 @@ export class ScFormatNumber {
   @Prop() value: number = 0;
 
   /** The locale to use when formatting the number. */
-  @Prop() locale: string;
+  @Prop({ mutable: true }) locale: string;
 
   /** The formatting style to use. */
   @Prop() type: 'currency' | 'decimal' | 'percent' = 'decimal';

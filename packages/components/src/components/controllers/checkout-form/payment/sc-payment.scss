@@ -3,4 +3,21 @@ sc-payment {
   flex-direction: column;
   gap: var(--sc-input-label-margin);
   position: relative;
+  font-family: var(--sc-font-sans);
+}
+
+.sc-payment-toggle-summary {
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.sc-payment-label {
+  display: flex;
+  justify-content: space-between;
+}
+
+.sc-payment-instructions {
+  color: var(--sc-color-gray-600);
 }

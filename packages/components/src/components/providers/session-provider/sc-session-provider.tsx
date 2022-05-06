@@ -1,8 +1,9 @@
-import { Component, Element, Event, EventEmitter, h, Listen, Prop, State, Watch } from '@stencil/core';
-import { removeQueryArgs } from '@wordpress/url';
+import { Component, Element, Event, EventEmitter, h, Listen, Method, Prop, State, Watch } from '@stencil/core';
+import { __ } from '@wordpress/i18n';
+import { addQueryArgs, removeQueryArgs } from '@wordpress/url';
 
 import { createOrUpdateOrder, finalizeSession } from '../../../services/session';
-import { FormStateSetter, LineItemData, Order, PriceChoice } from '../../../types';
+import { FormStateSetter, PaymentIntents, ProcessorName, LineItemData, Order, PriceChoice } from '../../../types';
 import { getSessionId, getURLCoupon, getURLLineItems, populateInputs, removeSessionId, setSessionId } from './helpers/session';
 
 @Component({
@@ -40,6 +41,15 @@ export class ScSessionProvider {
   /** Set the checkout state */
   @Prop() setState: (state: string) => void;
 
+  /** The processor. */
+  @Prop() processor: ProcessorName = 'stripe';
+
+  /** Url to redirect upon success. */
+  @Prop() successUrl: string;
+
+  /** Holds all available payment intents. */
+  @Prop() paymentIntents: PaymentIntents;
+
   /** Update line items event */
   @Event() scUpdateOrderState: EventEmitter<Order>;
 
@@ -54,6 +64,12 @@ export class ScSessionProvider {
 
   /** Holds the checkout session to update. */
   @State() session: Order;
+
+  @Listen('scPaid')
+  handlePaidEvent() {
+    removeSessionId(this.groupId);
+    window.location.assign(addQueryArgs(this.successUrl, { order: this.order.id }));
+  }
 
   /** Sync this session back to parent. */
   @Watch('session')
@@ -139,8 +155,33 @@ export class ScSessionProvider {
       ...(Object.keys(shipping_address || {}).length ? { shipping_address } : {}),
       ...(Object.keys(billing_address || {}).length ? { billing_address } : {}),
       ...(tax_number_type && tax_number ? { tax_identifier: { number: tax_number, number_type: tax_number_type } } : {}),
-      metadata: rest || {},
+      ...(Object.keys(rest)?.length ? { metadata: rest } : {}),
     };
+  }
+
+  /**
+   * Finalize the order.
+   *
+   * @returns {Promise<Order>}
+   */
+  @Method()
+  async finalize() {
+    return await this.handleFormSubmit();
+  }
+
+  getProcessor() {
+    switch (this.processor) {
+      case 'paypal':
+      case 'paypal-card':
+        return 'paypal';
+      default:
+        return 'stripe';
+    }
+  }
+
+  getPaymentIntent() {
+    const processor_type = this.getProcessor();
+    return this.paymentIntents?.[processor_type];
   }
 
   /**
@@ -149,8 +190,11 @@ export class ScSessionProvider {
    */
   @Listen('scFormSubmit')
   async handleFormSubmit() {
-    this.scSetState.emit('FINALIZE');
     this.scError.emit({});
+
+    const payment_intent = this.getPaymentIntent();
+
+    this.scSetState.emit('FINALIZE');
 
     // Get current form state.
     const json = await this.el.querySelector('sc-form').getFormJson();
@@ -165,16 +209,34 @@ export class ScSessionProvider {
       this.handleErrorResponse(e);
     }
 
+    // Important: Stripe needs a payment intent ahead of time, or the
+    // order will not be attached to the payment.
+    if (this.session.total_amount > 0 && !payment_intent && this.getProcessor() === 'stripe') {
+      this.scError.emit({ message: 'Something went wrong. Please try again.' });
+      return this.scSetState.emit('REJECT');
+    }
+
     // first validate server-side and get key
     try {
-      this.session = await finalizeSession({
+      const order = await finalizeSession({
         id: this.order.id,
         data,
         query: {
           ...this.defaultFormQuery(),
+          ...(payment_intent?.id ? { payment_intent_id: payment_intent?.id } : {}),
         },
-        processor: 'stripe',
+        processor: this.getProcessor(),
       });
+
+      // payment intent must match what we sent to make sure it's attached to an order.
+      if (this.session.total_amount > 0 && payment_intent?.id && order?.payment_intent?.id !== payment_intent?.id) {
+        console.error('Payment intent mismatch', payment_intent?.id, order?.payment_intent?.id);
+        this.scError.emit({ message: 'Something went wrong. Please try again.' });
+        return this.scSetState.emit('REJECT');
+      }
+
+      this.session = order;
+      return this.session;
     } catch (e) {
       // handle old price versions by refreshing.
       if (e?.additional_errors?.[0]?.code === 'order.line_items.old_price_versions') {
@@ -267,7 +329,7 @@ export class ScSessionProvider {
   defaultFormData() {
     return {
       return_url: window.top.location.href,
-      currency: this.currencyCode,
+      currency: this.order?.currency || this.currencyCode,
       live_mode: this.mode !== 'test',
       group_key: this.groupId,
     };

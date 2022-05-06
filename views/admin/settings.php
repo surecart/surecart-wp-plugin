@@ -1,36 +1,21 @@
 <!-- refresh this page every 15 minutes to prevent session from expiring -->
 <meta http-equiv="refresh" content="1800" >
 
-<style>
-	#wpbody-content, #wpcontent {
-		padding: 0 !important;
-	}
-	#wpbody, #wpbody-content, #wpcontent, #wpwrap, body, html {
-		height: 100% !important;
-		background-color: transparent;
-	}
-	#sc-settings-container {
-		position: absolute;
-		top: 0;
-		height: 100% !important;
-		width: 100% !important;
-		left: 0;
-		background: white;
-	}
-	#sc-settings {
-		position: absolute;
-		top: 0;
-		border: 0 none transparent !important;
-		padding: 0 !important;
-		width: 100% !important;
-		left: 0;
-		background: white;
-		z-index:9;
-	}
-</style>
-
+<?php \SureCart::render( 'layouts/partials/admin-settings-styles' ); ?>
 
 <div id="sc-settings-container">
+	<?php \SureCart::render( 'layouts/partials/admin-settings-header' ); ?>
+
+	<div id="sc-settings-content">
+		<?php
+		\SureCart::render(
+			'layouts/partials/admin-settings-sidebar',
+			[
+				'tab' => $tab,
+			]
+		);
+		?>
 	<iframe id="sc-settings" src="<?php echo esc_url( $session_url ); ?>" width="100%" height="100%" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+	</div>
 </div>
 

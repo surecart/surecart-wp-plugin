@@ -107,6 +107,7 @@ class OrdersListTable extends ListTable {
 			'order'  => __( 'Order', 'surecart' ),
 			'date'   => __( 'Date', 'surecart' ),
 			'status' => __( 'Status', 'surecart' ),
+			'method' => __( 'Method', 'surecart' ),
 			'total'  => __( 'Total', 'surecart' ),
 			'mode'   => '',
 			// 'usage' => __( 'Usage', 'surecart' ),
@@ -154,7 +155,7 @@ class OrdersListTable extends ListTable {
 			[
 				'status' => $this->getStatus(),
 			]
-		)->with( [ 'charge' ] )
+		)->with( [ 'charge', 'payment_intent', 'payment_intent.payment_method', 'payment_method.card' ] )
 		->paginate(
 			[
 				'per_page' => $this->get_items_per_page( 'orders' ),
@@ -185,12 +186,30 @@ class OrdersListTable extends ListTable {
 	/**
 	 * Handle the total column
 	 *
-	 * @param \SureCart\Models\Order $order Checkout Session Model.
+	 * @param \SureCart\Models\Order $order The order model.
 	 *
 	 * @return string
 	 */
 	public function column_total( $order ) {
 		return '<sc-format-number type="currency" currency="' . strtoupper( esc_html( $order->currency ) ) . '" value="' . (float) $order->total_amount . '"></sc-format-number>';
+	}
+
+	/**
+	 * Show the payment method for the order.
+	 *
+	 * @param \SureCart\Models\Order $order The order model.
+	 *
+	 * @return void
+	 */
+	public function column_method( $order ) {
+		if ( ! empty( $order->payment_intent->processor_type ) && 'paypal' === $order->payment_intent->processor_type ) {
+			return '<sc-icon name="paypal" style="font-size: 56px; line-height:1; height: 28px;"></sc-icon>';
+		}
+		if ( ! empty( $order->payment_intent->payment_method->card->brand ) ) {
+			return '<sc-cc-logo style="font-size: 32px; line-height:1;" brand="' . esc_html( $order->payment_intent->payment_method->card->brand ) . '"></sc-cc-logo>';
+		}
+
+		return $order->payment_intent->processor_type ?? '-';
 	}
 
 	/**

@@ -1,6 +1,7 @@
-import { Order } from '../../../types';
-import { Component, Prop, Element, State, Watch, h, EventEmitter, Event, Fragment, Method } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Fragment, h, Method, Prop, State, Watch } from '@stencil/core';
 import { loadStripe } from '@stripe/stripe-js/pure';
+
+import { Order } from '../../../types';
 
 @Component({
   tag: 'sc-stripe-element',

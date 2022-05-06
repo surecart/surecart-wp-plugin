@@ -47,6 +47,7 @@ return [
 		\SureCart\Rest\CustomerRestServiceProvider::class,
 		\SureCart\Rest\CustomerLinksRestServiceProvider::class,
 		\SureCart\Rest\PaymentMethodsRestServiceProvider::class,
+		\SureCart\Rest\PaymentIntentsRestServiceProvider::class,
 		\SureCart\Rest\ProductsRestServiceProvider::class,
 		\SureCart\Rest\ProductGroupsRestServiceProvider::class,
 		\SureCart\Rest\PriceRestServiceProvider::class,
@@ -153,11 +154,12 @@ return [
 	 * - 'user.can'
 	 */
 	'middleware'             => [
-		'archive_model'     => \SureCart\Middleware\ArchiveModelMiddleware::class,
-		'edit_model'        => \SureCart\Middleware\EditModelMiddleware::class,
-		'nonce'             => \SureCart\Middleware\NonceMiddleware::class,
-		'webhooks'          => \SureCart\Middleware\WebhooksMiddleware::class,
-		'assets.components' => \SureCart\Middleware\ComponentAssetsMiddleware::class,
+		'archive_model'       => \SureCart\Middleware\ArchiveModelMiddleware::class,
+		'edit_model'          => \SureCart\Middleware\EditModelMiddleware::class,
+		'nonce'               => \SureCart\Middleware\NonceMiddleware::class,
+		'webhooks'            => \SureCart\Middleware\WebhooksMiddleware::class,
+		'assets.components'   => \SureCart\Middleware\ComponentAssetsMiddleware::class,
+		'assets.brand_colors' => \SureCart\Middleware\BrandColorMiddleware::class,
 	],
 
 	/**
