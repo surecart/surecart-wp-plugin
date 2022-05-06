@@ -34,7 +34,7 @@ export class ScOrderConfirmProvider {
   /** Confirm the order. */
   async confirmOrder() {
     try {
-      const confirmed = (await await apiFetch({
+      const confirmed = (await apiFetch({
         path: addQueryArgs(`surecart/v1/orders/${this.order?.id}/confirm`),
       })) as Order;
       // make sure we update the state in the central store.
