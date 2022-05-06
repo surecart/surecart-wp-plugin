@@ -1,5 +1,5 @@
 import { Order, Customer, PriceChoice, Prices, Products, ResponseError, FormState, Processor, PaymentIntents, PaymentIntent } from '../../../../types';
-import { Component, h, Prop, Element, State, Listen, Method, Event, EventEmitter, Watch } from '@stencil/core';
+import { Component, h, Prop, Element, State, Listen, Method, Event, EventEmitter } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { Universe } from 'stencil-wormhole';
 
@@ -87,22 +87,6 @@ export class ScCheckout {
   /** Order has an error. */
   @Event() scOrderError: EventEmitter<ResponseError>;
 
-  @Watch('order')
-  handleOrderChange() {
-    this.error = null;
-    this.scOrderUpdated.emit(this.order);
-    if (this.order?.status === 'finalized') {
-      this.scOrderFinalized.emit(this.order);
-    }
-  }
-
-  @Watch('error')
-  handleErrorChange() {
-    if (Object.keys(this.error || {})?.length) {
-      this.scOrderError.emit(this.error);
-    }
-  }
-
   @Listen('scSetPaymentIntent')
   handleSetPaymentIntent(e) {
     const paymentIntent = e.detail?.payment_intent as PaymentIntent;
@@ -110,25 +94,9 @@ export class ScCheckout {
     this.paymentIntents[processor] = paymentIntent;
   }
 
-  @Listen('scPayError')
-  handlePayError(e) {
-    this.error = e.detail?.message || {
-      code: '',
-      message: 'Something went wrong with your payment.',
-    };
-  }
-
   @Listen('scSetProcessor')
   handleProcessorChange(e) {
     this.processor = e.detail;
-  }
-
-  @Listen('scSetOrderState')
-  handleOrderStateChange(e) {
-    const items = e.detail;
-    Object.keys(items || {}).forEach(key => {
-      this[key] = items[key];
-    });
   }
 
   @Listen('scAddEntities')
@@ -162,17 +130,13 @@ export class ScCheckout {
     return await this.sessionProvider.finalize();
   }
 
+  /**
+   * Validate the form.
+   */
   @Method()
   async validate() {
     const form = this.el.querySelector('sc-form') as HTMLScFormElement;
     return await form.validate();
-  }
-
-  setOrderState(state) {
-    this.state = {
-      ...this.state,
-      ...state,
-    };
   }
 
   componentWillLoad() {

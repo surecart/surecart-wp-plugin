@@ -89,6 +89,7 @@ export const ScPaypalButtons = /*@__PURE__*/createReactComponent<JSX.ScPaypalBut
 export const ScPriceChoice = /*@__PURE__*/createReactComponent<JSX.ScPriceChoice, HTMLScPriceChoiceElement>('sc-price-choice');
 export const ScPriceChoices = /*@__PURE__*/createReactComponent<JSX.ScPriceChoices, HTMLScPriceChoicesElement>('sc-price-choices');
 export const ScPriceInput = /*@__PURE__*/createReactComponent<JSX.ScPriceInput, HTMLScPriceInputElement>('sc-price-input');
+export const ScProcessorProvider = /*@__PURE__*/createReactComponent<JSX.ScProcessorProvider, HTMLScProcessorProviderElement>('sc-processor-provider');
 export const ScProductLineItem = /*@__PURE__*/createReactComponent<JSX.ScProductLineItem, HTMLScProductLineItemElement>('sc-product-line-item');
 export const ScProvider = /*@__PURE__*/createReactComponent<JSX.ScProvider, HTMLScProviderElement>('sc-provider');
 export const ScQuantitySelect = /*@__PURE__*/createReactComponent<JSX.ScQuantitySelect, HTMLScQuantitySelectElement>('sc-quantity-select');

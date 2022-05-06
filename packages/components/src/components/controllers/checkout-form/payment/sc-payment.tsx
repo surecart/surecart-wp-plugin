@@ -3,7 +3,7 @@ import { __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
 
 import { hasSubscription } from '../../../../functions/line-items';
-import { Order, Processor } from '../../../../types';
+import { Order, Processor, ProcessorName } from '../../../../types';
 
 @Component({
   tag: 'sc-payment',
@@ -42,7 +42,7 @@ export class ScPayment {
   @Prop() currencyCode: string = 'usd';
 
   /** Default */
-  @Prop() defaultProcessor: 'stripe' | 'paypal' | 'paypal-card' = 'stripe';
+  @Prop() defaultProcessor: ProcessorName = 'stripe';
 
   /** Hide the test mode badge */
   @Prop() hideTestModeBadge: boolean;
@@ -53,14 +53,14 @@ export class ScPayment {
   /** Holds the paypal processor. */
   @State() paypal: Processor;
 
-  /** Set the order state. */
-  @Event() scSetOrderState: EventEmitter<object>;
+  /** Set the order procesor. */
+  @Event() scSetProcessor: EventEmitter<ProcessorName>;
 
   @Watch('order')
   handleOrderChange(_, prev) {
     if (hasSubscription(this.order) || !this.defaultProcessor) {
       return setTimeout(() => {
-        this.scSetOrderState.emit({ processor: 'stripe' });
+        this.scSetProcessor.emit('stripe');
       });
     }
     if (!prev) {
@@ -71,7 +71,7 @@ export class ScPayment {
   @Watch('defaultProcessor')
   handleDefaultChange() {
     if (this.defaultProcessor) {
-      this.scSetOrderState.emit({ processor: this.defaultProcessor });
+      this.scSetProcessor.emit(this.defaultProcessor);
     }
   }
 
@@ -127,14 +127,7 @@ export class ScPayment {
           {this.renderTestModeBadge()}
         </div>
         <sc-toggles collapsible={false} theme="container">
-          <sc-toggle
-            show-control={showPayPal}
-            show-icon={showPayPal}
-            shady
-            borderless
-            open={this.processor === 'stripe'}
-            onScShow={() => this.scSetOrderState.emit({ processor: 'stripe' })}
-          >
+          <sc-toggle show-control={showPayPal} show-icon={showPayPal} shady borderless open={this.processor === 'stripe'} onScShow={() => this.scSetProcessor.emit('stripe')}>
             <span slot="summary" class="sc-payment-toggle-summary">
               <sc-icon name="credit-card" style={{ fontSize: '24px' }}></sc-icon>
               <span>{__('Credit Card', 'surecart')}</span>
@@ -142,7 +135,7 @@ export class ScPayment {
             {this.renderStripePaymentElement()}
           </sc-toggle>
           {showPayPal && (
-            <sc-toggle show-control shady borderless open={this.processor === 'paypal'} onScShow={() => this.scSetOrderState.emit({ processor: 'paypal' })}>
+            <sc-toggle show-control shady borderless open={this.processor === 'paypal'} onScShow={() => this.scSetProcessor.emit('paypal')}>
               <span slot="summary" class="sc-payment-toggle-summary">
                 <sc-icon name="paypal" style={{ width: '80px', fontSize: '24px' }}></sc-icon>
               </span>
@@ -171,7 +164,7 @@ export class ScPayment {
             shady
             borderless
             open={this.processor === 'paypal-card'}
-            onScShow={() => this.scSetOrderState.emit({ processor: 'paypal-card' })}
+            onScShow={() => this.scSetProcessor.emit('paypal-card')}
           >
             <span slot="summary" class="sc-payment-toggle-summary">
               <sc-icon name="credit-card" style={{ fontSize: '24px' }}></sc-icon>
@@ -179,14 +172,7 @@ export class ScPayment {
             </span>
             <div class="sc-payment-instructions">{__('You will be prompted to complete your purchase securely.', 'surecart')}</div>
           </sc-toggle>
-          <sc-toggle
-            data-test-id="paypal-toggle"
-            show-control
-            shady
-            borderless
-            open={this.processor === 'paypal'}
-            onScShow={() => this.scSetOrderState.emit({ processor: 'paypal' })}
-          >
+          <sc-toggle data-test-id="paypal-toggle" show-control shady borderless open={this.processor === 'paypal'} onScShow={() => this.scSetProcessor.emit('paypal')}>
             <span slot="summary" class="sc-payment-toggle-summary">
               <sc-icon name="paypal" style={{ width: '80px', fontSize: '24px' }}></sc-icon>
             </span>

@@ -301,6 +301,9 @@ export namespace Components {
           * Where to go on success
          */
         "successUrl": string;
+        /**
+          * Validate the form.
+         */
         "validate": () => Promise<boolean>;
     }
     interface ScChoice {
@@ -1451,7 +1454,7 @@ export namespace Components {
         /**
           * Default
          */
-        "defaultProcessor": 'stripe' | 'paypal' | 'paypal-card';
+        "defaultProcessor": ProcessorName;
         /**
           * Hide the test mode badge
          */
@@ -1713,6 +1716,10 @@ export namespace Components {
           * The input's value attribute.
          */
         "value": string;
+    }
+    interface ScProcessorProvider {
+        "paymentIntents": { [key: string]: PaymentIntent };
+        "processor": ProcessorName;
     }
     interface ScProductLineItem {
         /**
@@ -2861,6 +2868,12 @@ declare global {
         prototype: HTMLScPriceInputElement;
         new (): HTMLScPriceInputElement;
     };
+    interface HTMLScProcessorProviderElement extends Components.ScProcessorProvider, HTMLStencilElement {
+    }
+    var HTMLScProcessorProviderElement: {
+        prototype: HTMLScProcessorProviderElement;
+        new (): HTMLScProcessorProviderElement;
+    };
     interface HTMLScProductLineItemElement extends Components.ScProductLineItem, HTMLStencilElement {
     }
     var HTMLScProductLineItemElement: {
@@ -3208,6 +3221,7 @@ declare global {
         "sc-price-choice": HTMLScPriceChoiceElement;
         "sc-price-choices": HTMLScPriceChoicesElement;
         "sc-price-input": HTMLScPriceInputElement;
+        "sc-processor-provider": HTMLScProcessorProviderElement;
         "sc-product-line-item": HTMLScProductLineItemElement;
         "sc-provider": HTMLScProviderElement;
         "sc-quantity-select": HTMLScQuantitySelectElement;
@@ -4866,7 +4880,7 @@ declare namespace LocalJSX {
         /**
           * Default
          */
-        "defaultProcessor"?: 'stripe' | 'paypal' | 'paypal-card';
+        "defaultProcessor"?: ProcessorName;
         /**
           * Hide the test mode badge
          */
@@ -4884,9 +4898,9 @@ declare namespace LocalJSX {
          */
         "mode"?: 'test' | 'live';
         /**
-          * Set the order state.
+          * Set the order procesor.
          */
-        "onScSetOrderState"?: (event: CustomEvent<object>) => void;
+        "onScSetProcessor"?: (event: CustomEvent<ProcessorName>) => void;
         /**
           * Checkout Session from sc-checkout.
          */
@@ -4954,10 +4968,6 @@ declare namespace LocalJSX {
          */
         "onScError"?: (event: CustomEvent<object>) => void;
         "onScPaid"?: (event: CustomEvent<void>) => void;
-        /**
-          * Set the order state
-         */
-        "onScSetOrderState"?: (event: CustomEvent<object>) => void;
         /**
           * Set the state machine
          */
@@ -5156,6 +5166,10 @@ declare namespace LocalJSX {
           * The input's value attribute.
          */
         "value"?: string;
+    }
+    interface ScProcessorProvider {
+        "paymentIntents"?: { [key: string]: PaymentIntent };
+        "processor"?: ProcessorName;
     }
     interface ScProductLineItem {
         /**
@@ -5965,6 +5979,7 @@ declare namespace LocalJSX {
         "sc-price-choice": ScPriceChoice;
         "sc-price-choices": ScPriceChoices;
         "sc-price-input": ScPriceInput;
+        "sc-processor-provider": ScProcessorProvider;
         "sc-product-line-item": ScProductLineItem;
         "sc-provider": ScProvider;
         "sc-quantity-select": ScQuantitySelect;
@@ -6097,6 +6112,7 @@ declare module "@stencil/core" {
             "sc-price-choice": LocalJSX.ScPriceChoice & JSXBase.HTMLAttributes<HTMLScPriceChoiceElement>;
             "sc-price-choices": LocalJSX.ScPriceChoices & JSXBase.HTMLAttributes<HTMLScPriceChoicesElement>;
             "sc-price-input": LocalJSX.ScPriceInput & JSXBase.HTMLAttributes<HTMLScPriceInputElement>;
+            "sc-processor-provider": LocalJSX.ScProcessorProvider & JSXBase.HTMLAttributes<HTMLScProcessorProviderElement>;
             "sc-product-line-item": LocalJSX.ScProductLineItem & JSXBase.HTMLAttributes<HTMLScProductLineItemElement>;
             "sc-provider": LocalJSX.ScProvider & JSXBase.HTMLAttributes<HTMLScProviderElement>;
             "sc-quantity-select": LocalJSX.ScQuantitySelect & JSXBase.HTMLAttributes<HTMLScQuantitySelectElement>;

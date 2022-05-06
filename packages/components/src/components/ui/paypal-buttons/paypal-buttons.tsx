@@ -46,9 +46,6 @@ export class ScPaypalButtons {
   /** Has this loaded? */
   @State() loaded: boolean;
 
-  /** Set the order state */
-  @Event() scSetOrderState: EventEmitter<object>;
-
   /** Emit an error */
   @Event() scError: EventEmitter<object>;
 

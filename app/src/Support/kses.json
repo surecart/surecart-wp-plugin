@@ -938,6 +938,14 @@
     "class": true,
     "slot": true
   },
+  "sc-processor-provider": {
+    "payment-intents": true,
+    "processor": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-product-line-item": {
     "amount": true,
     "currency": true,
