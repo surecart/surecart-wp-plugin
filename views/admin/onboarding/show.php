@@ -58,10 +58,6 @@
 					<sc-text style="--font-size: var(--sc-font-size-x-large); --line-height: var(--sc-line-height-dense)">
 					<?php esc_html_e( 'Get started by selecting a creating your first product or creating a new, custom form.', 'surecart' ); ?>
 				</sc-text>
-				<sc-button type="primary" full size="large" href="<?php echo esc_url_raw( $settings_url ); ?>">
-					<sc-icon name="sliders" slot="prefix"></sc-icon>
-					<?php esc_html_e( 'Store Settings', 'surecart' ); ?>
-				</sc-button>
 				<sc-button type="primary" full size="large" href="<?php echo esc_url_raw( $product_url ); ?>">
 					<sc-icon name="shopping-bag" slot="prefix"></sc-icon>
 					<?php esc_html_e( 'Create A Product', 'surecart' ); ?>
@@ -71,7 +67,7 @@
 					<?php esc_html_e( 'Create A Form', 'surecart' ); ?>
 				</sc-button>
 			</sc-card>
-			<sc-button full type="text" size="large" href="<?php echo esc_url_raw( $docs_url ); ?>" target="_blank">
+			<sc-button full type="text" size="large" href="mailto:hello@surecart.com" target="_blank">
 				<sc-icon name="life-buoy" slot="prefix"></sc-icon>
 				<?php esc_html_e( 'Get Help', 'surecart' ); ?>
 				<sc-icon name="external-link" slot="suffix"></sc-icon>
