@@ -7,13 +7,15 @@
 
 ## Properties
 
-| Property      | Attribute     | Description | Type      | Default     |
-| ------------- | ------------- | ----------- | --------- | ----------- |
-| `collapsed`   | `collapsed`   |             | `boolean` | `undefined` |
-| `collapsible` | `collapsible` |             | `boolean` | `false`     |
-| `empty`       | `empty`       |             | `boolean` | `undefined` |
-| `loading`     | `loading`     |             | `boolean` | `undefined` |
-| `order`       | --            |             | `Order`   | `undefined` |
+| Property      | Attribute     | Description | Type      | Default                          |
+| ------------- | ------------- | ----------- | --------- | -------------------------------- |
+| `closedText`  | `closed-text` |             | `string`  | `__('Show Summary', 'surecart')` |
+| `collapsed`   | `collapsed`   |             | `boolean` | `undefined`                      |
+| `collapsible` | `collapsible` |             | `boolean` | `false`                          |
+| `empty`       | `empty`       |             | `boolean` | `undefined`                      |
+| `loading`     | `loading`     |             | `boolean` | `undefined`                      |
+| `openText`    | `open-text`   |             | `string`  | `__('Summary', 'surecart')`      |
+| `order`       | --            |             | `Order`   | `undefined`                      |
 
 
 ## Dependencies
