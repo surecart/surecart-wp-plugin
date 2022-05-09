@@ -17,9 +17,6 @@ export class ScOrderRedirectProvider {
   /** The success url. */
   @Prop() successUrl: string;
 
-  /** The order is confirmed event. */
-  @Event() scConfirmed: EventEmitter<void>;
-
   /** Form state event. */
   @Event() scSetState: EventEmitter<FormStateSetter>;
 

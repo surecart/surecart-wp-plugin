@@ -4556,6 +4556,10 @@ declare namespace LocalJSX {
          */
         "onScError"?: (event: CustomEvent<{ message: string; code?: string; data?: any; additional_errors?: any } | {}>) => void;
         /**
+          * The order is paid event.
+         */
+        "onScOrderPaid"?: (event: CustomEvent<Order>) => void;
+        /**
           * Update the order in the universe store.
          */
         "onScUpdateOrderState"?: (event: CustomEvent<Order>) => void;
@@ -4661,10 +4665,6 @@ declare namespace LocalJSX {
         "value"?: string;
     }
     interface ScOrderRedirectProvider {
-        /**
-          * The order is confirmed event.
-         */
-        "onScConfirmed"?: (event: CustomEvent<void>) => void;
         /**
           * Error event.
          */
