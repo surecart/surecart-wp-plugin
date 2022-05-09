@@ -16,7 +16,7 @@ export default ({ id, customer, updateCustomer, loading }) => {
 				gap: var(--sc-spacing-xxx-large);
 			`}
 		>
-			{id && (
+			{!!id && (
 				<Fragment>
 					<Purchases />
 					<Box
