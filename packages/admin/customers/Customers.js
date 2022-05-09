@@ -122,9 +122,9 @@ export default () => {
 					updateCustomer={updateCustomer}
 					loading={isLoading}
 				/>
-				{id && <Orders id={id} />}
-				{id && <Charges id={id} />}
-				{id && <Subscriptions id={id} />}
+				{!!id && <Orders id={id} />}
+				{!!id && <Charges id={id} />}
+				{!!id && <Subscriptions id={id} />}
 			</Fragment>
 		</Template>
 	);
