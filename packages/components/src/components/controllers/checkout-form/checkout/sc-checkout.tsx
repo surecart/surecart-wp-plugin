@@ -78,6 +78,9 @@ export class ScCheckout {
   /** Holds the payment intents for the checkout. */
   @State() paymentIntents: PaymentIntents = {};
 
+  /** Is this form a duplicate form? (There's another on the page) */
+  @State() isDuplicate: boolean;
+
   /** Order has been updated. */
   @Event() scOrderUpdated: EventEmitter<Order>;
 
@@ -144,6 +147,10 @@ export class ScCheckout {
     Universe.create(this, this.state());
   }
 
+  componentDidLoad() {
+    this.isDuplicate = document.querySelector('sc-checkout') !== this.el;
+  }
+
   state() {
     return {
       processor: this.processor,
@@ -183,6 +190,9 @@ export class ScCheckout {
   }
 
   render() {
+    if (this.isDuplicate) {
+      return <sc-alert open>{__('Due to processor restrictions, only one checkout form is allowed on the page.', 'surecart')}</sc-alert>;
+    }
     return (
       <div
         class={{
