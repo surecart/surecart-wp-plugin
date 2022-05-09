@@ -270,7 +270,6 @@ export class ScStripePaymentRequest {
       ev.complete('fail');
     } finally {
       this.confirming = false;
-      this.scSetState.emit('RESOLVE');
     }
   }
 
