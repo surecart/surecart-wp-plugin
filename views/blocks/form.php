@@ -1,15 +1,8 @@
 <sc-checkout
 	class="checkout"
 	id="<?php echo esc_attr( $id ); ?>"
-	form-id="<?php echo esc_attr( $form_id ); ?>"
 	class="<?php echo esc_attr( $classes ); ?>"
-	modified="<?php echo esc_attr( $modified ); ?>"
-	currency-code="<?php echo esc_attr( $currency_code ?? 'usd' ); ?>"
-	logged-in="<?php echo is_user_logged_in() ? 'true' : 'false'; ?>"
 	style="<?php echo esc_attr( $style ); ?>"
-	mode="<?php echo esc_attr( $mode ); ?>"
-	alignment="<?php echo esc_attr( $align ); ?>"
-	success-url="<?php echo esc_url( $success_url ); ?>"
 >
 	<sc-form>
 		<?php echo filter_block_content( $content, 'post' ); ?>
@@ -23,9 +16,15 @@
 	'sc-checkout',
 	'#' . $id,
 	[
-		'prices'   => $prices,
-		'i18n'     => $i18n,
-		'customer' => $customer,
+		'prices'       => $prices,
+		'customer'     => $customer ?? '',
+		'formId'       => $form_id ?? '',
+		'currencyCode' => $currency_code ?? null,
+		'modified'     => $modified ?? null,
+		'loggedIn'     => is_user_logged_in(),
+		'mode'         => $mode ?? 'live',
+		'alignment'    => $align ?? '',
+		'successUrl'   => esc_url_raw( $success_url ?? \SureCart::pages()->url( 'order-confirmation' ) ),
 	]
 );
 ?>
