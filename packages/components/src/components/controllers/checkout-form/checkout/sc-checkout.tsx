@@ -48,9 +48,6 @@ export class ScCheckout {
   /** Alignment */
   @Prop() alignment: 'center' | 'wide' | 'full';
 
-  /** Translation object. */
-  @Prop() i18n: Object;
-
   /** Is this user logged in? */
   @Prop() loggedIn: boolean;
 
