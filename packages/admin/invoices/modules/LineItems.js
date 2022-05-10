@@ -151,6 +151,21 @@ export default ({ invoice, charge: chargeInput, loading }) => {
 						</Definition>
 					)}
 
+					{!!invoice?.tax_amount && (
+						<Definition title={__('Tax', 'surecart')}>
+							<sc-format-number
+								style={{
+									'font-weight':
+										'var(--sc-font-weight-semibold)',
+									color: 'var(--sc-color-gray-800)',
+								}}
+								type="currency"
+								currency={invoice?.currency}
+								value={invoice?.tax_amount}
+							></sc-format-number>
+						</Definition>
+					)}
+
 					<hr />
 
 					<sc-line-item
