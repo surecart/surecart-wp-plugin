@@ -192,7 +192,6 @@ export class ScCheckout {
       mode: this.mode,
       currencyCode: this.currencyCode,
       paymentMethod: this.paymentMethod,
-      i18n: this.i18n,
     };
   }
 
