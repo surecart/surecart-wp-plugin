@@ -30,7 +30,6 @@ export class ScFormComponentsValidator {
   }
 
   componentWillLoad() {
-    console.log(this.taxEnabled);
     this.hasAddress = !!this.el.querySelector('sc-address');
     if (this.taxEnabled) {
       this.addAddressField();
