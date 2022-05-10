@@ -82,10 +82,10 @@ export class ScChoice {
   async reportValidity() {
     this.invalid = !this.input.checkValidity();
 
-    if (this.type === 'radio') {
+    if (this.required) {
       const choices = this.getAllChoices();
       if (!choices.some(c => c.checked)) {
-        this.input.setCustomValidity(__('Please choose one.', 'surecart'));
+        this.input.setCustomValidity(this.type === 'radio' ? __('Please choose one.', 'surecart') : __('Please choose at least one.', 'surecart'));
         this.invalid = !this.input.checkValidity();
       } else {
         this.input.setCustomValidity('');
@@ -258,7 +258,7 @@ export class ScChoice {
             aria-checked={this.checked ? 'true' : 'false'}
             aria-disabled={this.disabled ? 'true' : 'false'}
             aria-labelledby={this.labelId}
-            required={this.required}
+            // required={this.required}
             onClick={() => this.handleClick()}
             onBlur={() => this.handleBlur()}
             onFocus={() => this.handleFocus()}

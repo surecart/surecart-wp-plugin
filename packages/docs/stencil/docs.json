@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-05-09T21:02:59",
+  "timestamp": "2022-05-10T14:27:49",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.15.1",
@@ -2054,21 +2054,6 @@
           "required": false
         },
         {
-          "name": "i18n",
-          "type": "Object",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "Translation object.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "Object"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
           "name": "loggedIn",
           "type": "boolean",
           "mutable": false,
@@ -2167,6 +2152,22 @@
           "values": [
             {
               "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "taxEnabled",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "tax-enabled",
+          "reflectToAttr": false,
+          "docs": "Is tax enabled?",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
             }
           ],
           "optional": false,
@@ -5859,6 +5860,22 @@
           "values": [
             {
               "type": "Order"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "taxEnabled",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "tax-enabled",
+          "reflectToAttr": false,
+          "docs": "Is tax enabled.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
             }
           ],
           "optional": false,
