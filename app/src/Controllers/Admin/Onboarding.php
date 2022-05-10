@@ -15,7 +15,7 @@ class Onboarding {
 	 * @return string
 	 */
 	public function show() {
-		// if ( ! ApiToken::get() || is_wp_error( \SureCart::account() ) ) {
+		if ( ! ApiToken::get() || is_wp_error( \SureCart::account() ) ) {
 			return \SureCart::view( 'admin/onboarding/install' )->with(
 				[
 					'url' => esc_url(
@@ -33,7 +33,7 @@ class Onboarding {
 					),
 				]
 			);
-		// }
+		}
 
 		// check if the token is valid.
 		$account  = \SureCart::account();
