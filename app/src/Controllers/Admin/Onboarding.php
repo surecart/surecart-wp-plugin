@@ -15,13 +15,25 @@ class Onboarding {
 	 * @return string
 	 */
 	public function show() {
-		if ( ! ApiToken::get() || is_wp_error( \SureCart::account() ) ) {
+		// if ( ! ApiToken::get() || is_wp_error( \SureCart::account() ) ) {
 			return \SureCart::view( 'admin/onboarding/install' )->with(
 				[
-					'url' => esc_url( untrailingslashit( SURECART_APP_URL ) . '/sign_up?return_url=' . esc_url_raw( admin_url( 'admin.php?page=sc-complete-signup' ) ) ),
+					'url' => esc_url(
+						add_query_arg(
+							[
+								'onboarding' => [
+									'account_name'      => get_bloginfo( 'name' ),
+									'account_url'       => get_site_url(),
+									'return_url'        => esc_url_raw( admin_url( 'admin.php?page=sc-complete-signup' ) ),
+									'account_time_zone' => wp_timezone_string(),
+								],
+							],
+							untrailingslashit( SURECART_APP_URL ) . '/sign_up'
+						)
+					),
 				]
 			);
-		}
+		// }
 
 		// check if the token is valid.
 		$account  = \SureCart::account();
