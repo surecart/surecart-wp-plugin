@@ -97,7 +97,7 @@ class RequestService {
 			}
 
 			// add version header.
-			$args['headers']['X-SURECART-WP-PLUGIN-VERSION'] = '0.9.0'; // \SureCart::plugin()->version();
+			$args['headers']['X-SURECART-WP-PLUGIN-VERSION'] = \SureCart::plugin()->version();
 
 			// add referer header.
 			if ( isset( $_SERVER['HTTP_REFERER'] ) ) {
@@ -144,10 +144,15 @@ class RequestService {
 
 			$response_code = wp_remote_retrieve_response_code( $response );
 			$response_body = wp_remote_retrieve_body( $response );
-			$admin_notice  = wp_remote_retrieve_header( $response, 'X-SURECART-WP-ADMIN-NOTICE' );
+			$admin_notice  = (array) wp_remote_retrieve_header( $response, 'X-SURECART-WP-ADMIN-NOTICE' );
 
 			if ( $admin_notice ) {
-				print_r( base64_decode( $admin_notice ) );
+				// we don't care if this fails.
+				try {
+					\SureCart::notices()->showResponseNotice( $admin_notice );
+				} catch ( \Exception $e ) {
+					error_log( $e->getMessage() );
+				}
 			}
 
 			// check for errors.
