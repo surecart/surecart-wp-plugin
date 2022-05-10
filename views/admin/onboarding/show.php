@@ -50,7 +50,7 @@
 		<sc-dashboard-module>
 				<sc-card>
 					<sc-text style="--font-size: var(--sc-font-size-x-large); --line-height: var(--sc-line-height-normal)">
-					<?php esc_html_e( 'Get started by selecting a creating your first product or creating a new, custom form.', 'surecart' ); ?>
+					<?php esc_html_e( 'Get started by creating your first product or creating a new checkout form.', 'surecart' ); ?>
 				</sc-text>
 				<sc-button type="primary" full size="large" href="<?php echo esc_url_raw( $product_url ); ?>">
 					<sc-icon name="shopping-bag" slot="prefix"></sc-icon>
