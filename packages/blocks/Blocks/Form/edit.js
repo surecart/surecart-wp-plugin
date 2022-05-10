@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
+import { applyFilters } from '@wordpress/hooks';
 import { useSelect, useDispatch } from '@wordpress/data';
 import {
 	InnerBlocks,
@@ -30,6 +31,25 @@ import ColorPopup from '../../components/ColorPopup';
 
 const ALLOWED_BLOCKS = [
 	'core/spacer',
+	'core/heading',
+	'core/paragraph',
+	'core/code',
+	'core/shortcode',
+	'core/quote',
+	'core/list',
+	'core/pullquote',
+	'core/verse',
+	'core/image',
+	'core/gallery',
+	'core/media-text',
+	'core/button',
+	'core/table',
+	'core/separator',
+	'core/audio',
+	'core/video',
+	'core/embed',
+	'core/preformatted',
+
 	'surecart/columns',
 	'surecart/input',
 	'surecart/password',
@@ -474,7 +494,10 @@ export default function edit({ clientId, attributes, setAttributes }) {
 							`}
 						>
 							<InnerBlocks
-								allowedBlocks={ALLOWED_BLOCKS}
+								allowedBlocks={applyFilters(
+									'surecart/form/allowed_blocks',
+									ALLOWED_BLOCKS
+								)}
 								templateLock={false}
 								renderAppender={
 									blockCount
