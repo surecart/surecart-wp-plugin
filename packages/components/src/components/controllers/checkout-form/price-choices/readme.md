@@ -11,7 +11,7 @@
 | ---------- | ---------- | ------------------- | --------- | ----------- |
 | `columns`  | `columns`  | Number of columns   | `number`  | `1`         |
 | `label`    | `label`    | Selector label      | `string`  | `undefined` |
-| `required` | `required` | Required by default | `boolean` | `false`     |
+| `required` | `required` | Required by default | `boolean` | `true`      |
 
 
 ## Events
