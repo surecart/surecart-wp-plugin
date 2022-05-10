@@ -62,6 +62,7 @@ class Block extends BaseBlock {
 					'name'  => $user->display_name,
 				],
 				'currency_code' => $attributes['currency'] ?? \SureCart::account()->currency,
+				'tax_enabled'   => \SureCart::account()->tax_protocol->tax_enabled ?? false,
 				'classes'       => $this->getClasses( $attributes ),
 				'style'         => $this->getStyle( $attributes ),
 				'content'       => $content,

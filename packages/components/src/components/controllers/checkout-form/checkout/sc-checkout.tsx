@@ -48,6 +48,9 @@ export class ScCheckout {
   /** Alignment */
   @Prop() alignment: 'center' | 'wide' | 'full';
 
+  /** Is tax enabled? */
+  @Prop() taxEnabled: boolean;
+
   /** Is this user logged in? */
   @Prop() loggedIn: boolean;
 
@@ -237,7 +240,7 @@ export class ScCheckout {
         )}
 
         <Universe.Provider state={this.state()}>
-          <sc-form-components-validator order={this.order} disabled={this.disableComponentsValidation}>
+          <sc-form-components-validator order={this.order} disabled={this.disableComponentsValidation} taxEnabled={this.taxEnabled}>
             <sc-session-provider
               order={this.order}
               prices={this.prices}

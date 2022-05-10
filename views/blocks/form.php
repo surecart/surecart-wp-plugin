@@ -24,6 +24,7 @@
 		'loggedIn'     => is_user_logged_in(),
 		'mode'         => $mode ?? 'live',
 		'alignment'    => $align ?? '',
+		'taxEnabled'   => $tax_enabled ?? false,
 		'successUrl'   => esc_url_raw( $success_url ?? \SureCart::pages()->url( 'order-confirmation' ) ),
 	]
 );
