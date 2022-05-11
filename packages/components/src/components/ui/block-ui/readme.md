@@ -26,6 +26,7 @@
  - [sc-donation-choices](../../controllers/checkout-form/donation-choices)
  - [sc-downloads-list](../downloads-list)
  - [sc-express-payment](../../controllers/checkout-form/express-payment)
+ - [sc-form-state-provider](../../providers/form-state-provider)
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
  - [sc-login-form](../../controllers/login)
  - [sc-orders-list](../../controllers/dashboard/orders-list)
@@ -57,6 +58,7 @@ graph TD;
   sc-donation-choices --> sc-block-ui
   sc-downloads-list --> sc-block-ui
   sc-express-payment --> sc-block-ui
+  sc-form-state-provider --> sc-block-ui
   sc-invoices-list --> sc-block-ui
   sc-login-form --> sc-block-ui
   sc-orders-list --> sc-block-ui

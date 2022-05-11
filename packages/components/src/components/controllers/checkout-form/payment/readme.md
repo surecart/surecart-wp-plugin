@@ -25,9 +25,9 @@
 
 ## Events
 
-| Event             | Description          | Type                  |
-| ----------------- | -------------------- | --------------------- |
-| `scSetOrderState` | Set the order state. | `CustomEvent<object>` |
+| Event            | Description             | Type                                                 |
+| ---------------- | ----------------------- | ---------------------------------------------------- |
+| `scSetProcessor` | Set the order procesor. | `CustomEvent<"paypal" \| "paypal-card" \| "stripe">` |
 
 
 ## Dependencies

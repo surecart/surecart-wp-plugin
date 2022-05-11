@@ -27,22 +27,21 @@
 
 | Event                | Description             | Type                                                                                          |
 | -------------------- | ----------------------- | --------------------------------------------------------------------------------------------- |
-| `scError`            | Update line items event | `CustomEvent<{ message: string; code?: string; data?: any; additional_errors?: any; } \| {}>` |
-| `scPaid`             | Paid event              | `CustomEvent<void>`                                                                           |
-| `scSetState`         | Set the state           | `CustomEvent<string>`                                                                         |
+| `scError`            | Error event             | `CustomEvent<{ message: string; code?: string; data?: any; additional_errors?: any; } \| {}>` |
+| `scSetState`         | Set the state           | `CustomEvent<"EXPIRE" \| "FETCH" \| "FINALIZE" \| "PAID" \| "REJECT" \| "RESOLVE">`           |
 | `scUpdateDraftState` | Update line items event | `CustomEvent<Order>`                                                                          |
 | `scUpdateOrderState` | Update line items event | `CustomEvent<Order>`                                                                          |
 
 
 ## Methods
 
-### `finalize() => Promise<Order | CustomEvent<string>>`
+### `finalize() => Promise<Order | CustomEvent<FormStateSetter>>`
 
 Finalize the order.
 
 #### Returns
 
-Type: `Promise<Order | CustomEvent<string>>`
+Type: `Promise<Order | CustomEvent<FormStateSetter>>`
 
 
 

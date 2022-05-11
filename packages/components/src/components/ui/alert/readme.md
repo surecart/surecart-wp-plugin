@@ -65,6 +65,7 @@ Type: `Promise<void>`
  - [sc-checkout](../../controllers/checkout-form/checkout)
  - [sc-coupon-form](../coupon-form)
  - [sc-dashboard-module](../dashboard-module)
+ - [sc-form-error-provider](../../providers/form-error-provider)
  - [sc-login-form](../../controllers/login)
  - [sc-payment](../../controllers/checkout-form/payment)
  - [sc-payment-method-create](../../controllers/dashboard/payment-method-create)
@@ -85,6 +86,7 @@ graph TD;
   sc-checkout --> sc-alert
   sc-coupon-form --> sc-alert
   sc-dashboard-module --> sc-alert
+  sc-form-error-provider --> sc-alert
   sc-login-form --> sc-alert
   sc-payment --> sc-alert
   sc-payment-method-create --> sc-alert

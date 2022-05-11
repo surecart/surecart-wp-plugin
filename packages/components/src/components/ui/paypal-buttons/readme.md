@@ -21,12 +21,11 @@
 
 ## Events
 
-| Event             | Description           | Type                  |
-| ----------------- | --------------------- | --------------------- |
-| `scError`         | Emit an error         | `CustomEvent<object>` |
-| `scPaid`          |                       | `CustomEvent<void>`   |
-| `scSetOrderState` | Set the order state   | `CustomEvent<object>` |
-| `scSetState`      | Set the state machine | `CustomEvent<string>` |
+| Event        | Description           | Type                  |
+| ------------ | --------------------- | --------------------- |
+| `scError`    | Emit an error         | `CustomEvent<object>` |
+| `scPaid`     |                       | `CustomEvent<void>`   |
+| `scSetState` | Set the state machine | `CustomEvent<string>` |
 
 
 ## Dependencies
