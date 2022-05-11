@@ -71,7 +71,6 @@ const ALLOWED_BLOCKS = [
 ];
 
 export default function edit({ clientId, attributes, setAttributes }) {
-	const [activeProcessors, setActiveProcessors] = useState([]);
 	const [patterns, setPatterns] = useState([]);
 	const UnitControl = __stableUnitControl
 		? __stableUnitControl
@@ -252,23 +251,6 @@ export default function edit({ clientId, attributes, setAttributes }) {
 			false
 		);
 	};
-
-	useEffect(() => {
-		setActiveProcessors(
-			(scBlockData?.processors || [])
-				// find only processors for this mode.
-				.filter(
-					(processor) => processor?.live_mode === (mode === 'live')
-				)
-				// turn them to test so they show up.
-				.map((processor) => {
-					return {
-						...processor,
-						live_mode: false,
-					};
-				})
-		);
-	}, [mode]);
 
 	return (
 		<Fragment>
@@ -479,9 +461,9 @@ export default function edit({ clientId, attributes, setAttributes }) {
 						)}
 					</div>
 					<ScCheckout
-						mode={'test'}
+						mode="test"
 						formId={formId}
-						processors={activeProcessors}
+						processors={scBlockData?.processors}
 						css={css`
 							margin-top: 2em;
 							font-size: ${font_size}px;

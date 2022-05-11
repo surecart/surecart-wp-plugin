@@ -56,13 +56,6 @@ export default ({ className, attributes, setAttributes, context }) => {
 				.filter(
 					(processor) => processor?.live_mode === (mode === 'live')
 				)
-				// turn them to test so they show up.
-				.map((processor) => {
-					return {
-						...processor,
-						live_mode: false,
-					};
-				})
 		);
 	}, [mode]);
 
