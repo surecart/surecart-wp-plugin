@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-05-11T16:32:47",
+  "timestamp": "2022-05-11T17:20:19",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.15.1",
@@ -6296,6 +6296,7 @@
       "filePath": "./src/components/providers/form-error-provider/sc-form-error-provider.tsx",
       "encapsulation": "shadow",
       "tag": "sc-form-error-provider",
+      "readme": "# sc-form-error-provider\n\n\n",
       "docs": "This component listens for a confirmed event and redirects to the success url.",
       "docsTags": [],
       "usage": {},
@@ -6393,6 +6394,7 @@
       "filePath": "./src/components/providers/form-state-provider/sc-form-state-provider.tsx",
       "encapsulation": "shadow",
       "tag": "sc-form-state-provider",
+      "readme": "# sc-form-state-provider\n\n\n",
       "docs": "This component listens for a confirmed event and redirects to the success url.",
       "docsTags": [],
       "usage": {},
@@ -9438,6 +9440,7 @@
       "filePath": "./src/components/providers/order-confirm-provider/sc-order-confirm-provider.tsx",
       "encapsulation": "shadow",
       "tag": "sc-order-confirm-provider",
+      "readme": "# sc-order-confirm-provider\n\n\n",
       "docs": "This component listens to the order status\nand confirms the order when payment is successful.",
       "docsTags": [],
       "usage": {},
@@ -10353,6 +10356,7 @@
       "filePath": "./src/components/providers/order-redirect-provider/sc-order-redirect-provider.tsx",
       "encapsulation": "shadow",
       "tag": "sc-order-redirect-provider",
+      "readme": "# sc-order-redirect-provider\n\n\n",
       "docs": "This component listens for a confirmed event and redirects to the success url.",
       "docsTags": [],
       "usage": {},
