@@ -1,6 +1,6 @@
 <?php
 
-namespace SureCart\Tests\Controllers\Rest;
+namespace SureCart\Tests\Controllers\Middleware;
 
 use SureCart\Middleware\CustomerDashboardMiddleware;
 use SureCart\Models\User;

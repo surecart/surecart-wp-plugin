@@ -92,36 +92,6 @@ class OrderControllerTest extends SureCartUnitTestCase
 		$this->assertTrue($errors->has_errors());
 	}
 
-	public function createOrLoginUser() {
-		$controller = new OrderController();
-		$this->assertFalse($controller->createOrLoginUser('email@email.com', '', null));
-		$this->assertFalse($controller->createOrLoginUser(null, '', 'password'));
-
-		// create.
-		$created = $controller->createOrLoginUser('email@email.com', null, 'password');
-		$this->assertTrue($created);
-		$this->assertNotFalse(get_user_by('email', 'email@email.com'));
-		$current_user = wp_get_current_user();
-		$this->assertSame($current_user->user_email, 'email@email.com');
-
-		// login fail.
-		$user = $this->factory->user->create_and_get([
-			'password' => 'correctpassword'
-		]);
-		$created = $controller->createOrLoginUser($user->user_email, null, 'notthecorrectpassword');
-		$this->assertWPError($created);
-
-
-		// login success
-		$created = $controller->createOrLoginUser($user->user_email, null, 'correctpassword');
-		$this->assertNotFalse($created);
-		$current_user = wp_get_current_user();
-		$this->assertSame($current_user->user_email, $user->user_email);
-	}
-
-	/**
-	 * @group failing
-	 */
 	public function test_linkCustomerId() {
 		$user = User::find(self::factory()->user->create())
 			->setCustomerId('testcustomerid');
