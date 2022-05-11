@@ -125,16 +125,34 @@ class OrderController extends RestController {
 			->where( $request->get_query_params() )
 			->finalize( array_diff_assoc( $request->get_params(), $request->get_query_params() ) );
 
+		// bail if error.
+		if ( is_wp_error( $finalized ) ) {
+			return $finalized;
+		}
+
 		// the order is paid (probably because of a coupon). Link the customer.
-		if ( 'paid' === $finalized->status ) {
-			$linked = $this->linkCustomerId( $finalized, $request );
-			if ( is_wp_error( $linked ) ) {
-				return $linked;
-			}
+		$linked = $this->maybeLinkCustomer( $finalized, $request );
+		if ( is_wp_error( $linked ) ) {
+			return $linked;
 		}
 
 		// return the order.
 		return $finalized;
+	}
+
+	/**
+	 * Link the customer if the order status is paid only.
+	 *
+	 * @param \SureCart\Models\Order $order
+	 * @param \WP_REST_Request       $request
+	 *
+	 * @return \SureCart\Models\Order|\WP_Error
+	 */
+	public function maybeLinkCustomer( $order, $request ) {
+		if ( 'paid' !== $order->status ) {
+			return false;
+		}
+		return $this->linkCustomerId( $order, $request );
 	}
 
 	/**
@@ -164,15 +182,13 @@ class OrderController extends RestController {
 			return $order;
 		}
 
-		// the order must be paid.
-		if ( empty( $order->status ) || 'paid' !== $order->status ) {
-			return new \WP_Error( 'invalid_status', 'The order is not paid.', [ 'status' => 400 ] );
-		}
-
 		// link the customer id to the user.
-		$linked = $this->linkCustomerId( $order, $request );
+		$linked = $this->maybeLinkCustomer( $order, $request );
 		if ( is_wp_error( $linked ) ) {
 			return $linked;
+		}
+		if ( false === $linked ) {
+			return new \WP_Error( 'invalid_status', 'The order is not paid.', [ 'status' => 400 ] );
 		}
 
 		// return the order.
