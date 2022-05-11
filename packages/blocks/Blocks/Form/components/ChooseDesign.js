@@ -3,7 +3,7 @@ import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import Thumbnail from './Thumbnail';
 import { ScButton } from '@surecart/components-react';
-import { useState } from 'react';
+import { useState } from '@wordpress/element';
 import PlaceholderTemplate from './PlaceholderTemplate';
 
 export default ({ templates, template, setTemplate }) => {

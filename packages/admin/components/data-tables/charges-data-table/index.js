@@ -2,11 +2,9 @@
 import { __, _n } from '@wordpress/i18n';
 import DataTable from '../../DataTable';
 import { css, jsx } from '@emotion/core';
-import { store } from '@surecart/data';
 import Refund from './Refund';
 import { Fragment } from '@wordpress/element';
 import { useState } from '@wordpress/element';
-import { select } from '@wordpress/data';
 import PaginationFooter from '../PaginationFooter';
 
 export default ({
@@ -57,6 +55,51 @@ export default ({
 				{__('Refund', 'surecart')}
 			</sc-button>
 		);
+	};
+
+	const renderMethod = (charge) => {
+		if (charge?.payment_method?.card?.brand) {
+			return (
+				<div
+					css={css`
+						display: flex;
+						align-items: center;
+						gap: 1em;
+					`}
+				>
+					<sc-cc-logo
+						style={{ fontSize: '36px' }}
+						brand={charge?.payment_method?.card?.brand}
+					></sc-cc-logo>
+					**** {charge?.payment_method?.card?.last4}
+				</div>
+			);
+		}
+		console.log(charge?.payment_intent);
+
+		if (charge?.payment_intent?.processor_type === 'paypal') {
+			return (
+				<sc-tooltip
+					type="text"
+					style={{ display: 'inline-block' }}
+					text={
+						charge?.payment_intent?.processor_data?.paypal
+							?.payer_email || __('Unknown email', 'surecart')
+					}
+				>
+					<sc-icon
+						name="paypal"
+						style={{
+							fontSize: '56px',
+							lineHeight: '1',
+							height: '28px',
+						}}
+					></sc-icon>
+				</sc-tooltip>
+			);
+		}
+
+		return charge?.payment_intent?.processor_type;
 	};
 
 	return (
@@ -114,21 +157,7 @@ export default ({
 									year="numeric"
 								></sc-format-date>
 							),
-							method: payment_method?.card?.brand && (
-								<div
-									css={css`
-										display: flex;
-										align-items: center;
-										gap: 1em;
-									`}
-								>
-									<sc-cc-logo
-										style={{ fontSize: '36px' }}
-										brand={payment_method?.card?.brand}
-									></sc-cc-logo>
-									**** {payment_method?.card?.last4}
-								</div>
-							),
+							method: renderMethod(charge),
 							status: renderStatusTag(charge),
 							refund: renderRefundButton(charge),
 						};

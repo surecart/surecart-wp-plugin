@@ -10,11 +10,11 @@
 	],
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/Presto-Pay/presto-pay-wp.git",
+		"url": "https://github.com/surecart/surecart-wp.git",
 		"directory": "packages/blocks"
 	},
 	"bugs": {
-		"url": "https://github.com/Presto-Pay/presto-pay-wp/issues"
+		"url": "https://github.com/surecart/surecart-wp/issues"
 	},
 	"engines": {
 		"node": ">=12"
@@ -24,6 +24,7 @@
 	"prettier": "@wordpress/prettier-config",
 	"scripts": {
 		"build": "wp-scripts build",
+		"release": "yarn build",
 		"check-engines": "wp-scripts check-engines",
 		"check-licenses": "wp-scripts check-licenses",
 		"format": "wp-scripts format",

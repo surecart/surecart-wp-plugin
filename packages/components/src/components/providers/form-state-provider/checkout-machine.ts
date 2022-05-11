@@ -24,14 +24,14 @@ export const checkoutMachine = createMachine({
       on: {
         FINALIZE: 'finalizing',
         FETCH: 'updating',
+        REJECT: 'draft',
       },
     },
     updating: {
       on: {
         RESOLVE: 'draft',
-        REJECT: 'draft',
         EXPIRE: 'expired',
-        FINALIZED: 'finalized',
+        REJECT: 'draft',
       },
     },
     finalizing: {
@@ -40,8 +40,14 @@ export const checkoutMachine = createMachine({
         REJECT: 'draft',
       },
     },
+    paid: {
+      on: {
+        CONFIRMED: 'confirmed',
+        REJECT: 'draft',
+      },
+    },
     expired: {},
-    paid: {},
+    confirmed: {},
     failure: {
       on: {
         RETRY: {

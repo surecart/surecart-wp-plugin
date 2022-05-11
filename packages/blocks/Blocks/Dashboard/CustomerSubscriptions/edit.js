@@ -11,7 +11,7 @@ import {
 	ScSubscriptionDetails,
 	ScDashboardModule,
 } from '@surecart/components-react';
-import { Fragment } from 'react';
+import { Fragment } from '@wordpress/element';
 import OverlayLabel from '../../../components/OverlayLabel';
 
 export default ({ attributes, setAttributes }) => {
@@ -64,7 +64,7 @@ export default ({ attributes, setAttributes }) => {
 										oneYearFromNow.getTime() / 1000,
 									latest_invoice: {
 										total_amount: 2000,
-										currency: 'usd',
+										currency: scBlockData?.currency,
 									},
 									price: {
 										recurring_interval_count: 1,
@@ -89,7 +89,7 @@ export default ({ attributes, setAttributes }) => {
 										oneYearFromNow.getTime() / 1000,
 									latest_invoice: {
 										total_amount: 2000,
-										currency: 'usd',
+										currency: scBlockData?.currency,
 									},
 									price: {
 										recurring_interval_count: 1,

@@ -144,6 +144,16 @@ class RequestService {
 
 			$response_code = wp_remote_retrieve_response_code( $response );
 			$response_body = wp_remote_retrieve_body( $response );
+			$admin_notice  = (array) wp_remote_retrieve_header( $response, 'X-SURECART-WP-ADMIN-NOTICE' );
+
+			if ( $admin_notice ) {
+				// we don't care if this fails.
+				try {
+					\SureCart::notices()->showResponseNotice( $admin_notice );
+				} catch ( \Exception $e ) {
+					error_log( $e->getMessage() );
+				}
+			}
 
 			// check for errors.
 			if ( ! in_array( $response_code, [ 200, 201 ], true ) ) {

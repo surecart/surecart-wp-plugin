@@ -26,6 +26,7 @@
 		'alignment'    => $align ?? '',
 		'taxEnabled'   => $tax_enabled ?? false,
 		'successUrl'   => esc_url_raw( $success_url ?? \SureCart::pages()->url( 'order-confirmation' ) ),
+		'processors'   => $processors,
 	]
 );
 ?>

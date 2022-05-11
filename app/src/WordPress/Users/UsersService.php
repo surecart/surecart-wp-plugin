@@ -18,7 +18,23 @@ class UsersService {
 		add_filter( 'rest_user_query', [ $this, 'userMetaQuery' ], 10, 2 );
 		add_filter( 'rest_user_query', [ $this, 'isCustomerQuery' ], 10, 2 );
 		add_filter( 'rest_user_collection_params', [ $this, 'collectionParams' ] );
+		add_filter( 'show_admin_bar', [ $this, 'disableAdminBar' ], 10, 1 );
+
 		$this->registerMeta();
+	}
+
+	/**
+	 * Prevent any user who cannot 'edit_posts' (subscribers, customers etc) from seeing the admin bar.
+	 *
+	 * @param bool $show_admin_bar If should display admin bar.
+	 * @return bool
+	 */
+	public function disableAdminBar( $show_admin_bar ) {
+		if ( apply_filters( 'surecart_disable_admin_bar', true ) && ! ( current_user_can( 'edit_posts' ) || current_user_can( 'manage_sc_shop_settings' ) ) ) {
+			return false;
+		}
+
+		return $show_admin_bar;
 	}
 
 	/**

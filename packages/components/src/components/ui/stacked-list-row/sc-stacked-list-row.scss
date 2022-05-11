@@ -21,7 +21,7 @@
   min-height: 0px;
 
   &[href]:hover {
-    background: var(--sc-color-gray-50);
+    background: var(--sc-stacked-list-row-hover-color, var(--sc-color-gray-50));
   }
 
   &__prefix,

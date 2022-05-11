@@ -7,21 +7,55 @@
 
 ## Properties
 
-| Property                      | Attribute                       | Description                                 | Type                           | Default     |
-| ----------------------------- | ------------------------------- | ------------------------------------------- | ------------------------------ | ----------- |
-| `alignment`                   | `alignment`                     | Alignment                                   | `"center" \| "full" \| "wide"` | `undefined` |
-| `coupon`                      | --                              | Optionally pass a coupon.                   | `Coupon`                       | `undefined` |
-| `currencyCode`                | `currency-code`                 | Currency to use for this checkout.          | `string`                       | `'usd'`     |
-| `customer`                    | --                              | Stores the current customer                 | `Customer`                     | `undefined` |
-| `disableComponentsValidation` | `disable-components-validation` | Should we disable components validation     | `boolean`                      | `undefined` |
-| `formId`                      | `form-id`                       | The checkout form id                        | `number`                       | `undefined` |
-| `loggedIn`                    | `logged-in`                     | Is this user logged in?                     | `boolean`                      | `undefined` |
-| `mode`                        | `mode`                          | Are we in test or live mode.                | `"live" \| "test"`             | `'live'`    |
-| `modified`                    | `modified`                      | When the form was modified.                 | `string`                       | `undefined` |
-| `persistSession`              | `persist-session`               | Where to go on success                      | `boolean`                      | `true`      |
-| `prices`                      | --                              | An array of prices to pre-fill in the form. | `PriceChoice[]`                | `[]`        |
-| `successUrl`                  | `success-url`                   | Where to go on success                      | `string`                       | `''`        |
-| `taxEnabled`                  | `tax-enabled`                   | Is tax enabled?                             | `boolean`                      | `undefined` |
+| Property                      | Attribute                       | Description                                                   | Type                           | Default     |
+| ----------------------------- | ------------------------------- | ------------------------------------------------------------- | ------------------------------ | ----------- |
+| `alignment`                   | `alignment`                     | Alignment                                                     | `"center" \| "full" \| "wide"` | `undefined` |
+| `currencyCode`                | `currency-code`                 | Currency to use for this checkout.                            | `string`                       | `'usd'`     |
+| `customer`                    | --                              | Stores the current customer                                   | `Customer`                     | `undefined` |
+| `disableComponentsValidation` | `disable-components-validation` | Should we disable components validation                       | `boolean`                      | `undefined` |
+| `editLineItems`               | `edit-line-items`               | Can we edit line items?                                       | `boolean`                      | `true`      |
+| `formId`                      | `form-id`                       | The checkout form id                                          | `number`                       | `undefined` |
+| `loggedIn`                    | `logged-in`                     | Is this user logged in?                                       | `boolean`                      | `undefined` |
+| `mode`                        | `mode`                          | Are we in test or live mode.                                  | `"live" \| "test"`             | `'live'`    |
+| `modified`                    | `modified`                      | When the form was modified.                                   | `string`                       | `undefined` |
+| `persistSession`              | `persist-session`               | Whether to persist the session in the browser between visits. | `boolean`                      | `true`      |
+| `prices`                      | --                              | An array of prices to pre-fill in the form.                   | `PriceChoice[]`                | `[]`        |
+| `processors`                  | --                              | Processors enabled for this form.                             | `Processor[]`                  | `undefined` |
+| `removeLineItems`             | `remove-line-items`             | Can we remove line items?                                     | `boolean`                      | `true`      |
+| `successUrl`                  | `success-url`                   | Where to go on success                                        | `string`                       | `''`        |
+| `taxEnabled`                  | `tax-enabled`                   | Is tax enabled?                                               | `boolean`                      | `undefined` |
+
+
+## Events
+
+| Event              | Description               | Type                         |
+| ------------------ | ------------------------- | ---------------------------- |
+| `scOrderError`     | Order has an error.       | `CustomEvent<ResponseError>` |
+| `scOrderFinalized` | Order has been finalized. | `CustomEvent<Order>`         |
+| `scOrderUpdated`   | Order has been updated.   | `CustomEvent<Order>`         |
+
+
+## Methods
+
+### `submit({ skip_validation }?: { skip_validation: boolean; }) => Promise<Order | CustomEvent<import("/Users/andre/sites/surecart/wp-content/plugins/surecart/packages/components/src/types").FormStateSetter>>`
+
+Submit the form
+
+#### Returns
+
+Type: `Promise<Order | CustomEvent<FormStateSetter>>`
+
+
+
+### `validate() => Promise<boolean>`
+
+Validate the form.
+
+#### Returns
+
+Type: `Promise<boolean>`
+
+
 
 
 ## Dependencies
@@ -29,19 +63,29 @@
 ### Depends on
 
 - [sc-alert](../../../ui/alert)
-- [sc-block-ui](../../../ui/block-ui)
+- [sc-form-state-provider](../../../providers/form-state-provider)
+- [sc-form-error-provider](../../../providers/form-error-provider)
 - [sc-form-components-validator](../../../providers/form-components-validator)
 - [sc-session-provider](../../../providers/session-provider)
+- [sc-order-redirect-provider](../../../providers/order-redirect-provider)
+- [sc-order-confirm-provider](../../../providers/order-confirm-provider)
+- [sc-block-ui](../../../ui/block-ui)
 
 ### Graph
 ```mermaid
 graph TD;
   sc-checkout --> sc-alert
-  sc-checkout --> sc-block-ui
+  sc-checkout --> sc-form-state-provider
+  sc-checkout --> sc-form-error-provider
   sc-checkout --> sc-form-components-validator
   sc-checkout --> sc-session-provider
+  sc-checkout --> sc-order-redirect-provider
+  sc-checkout --> sc-order-confirm-provider
+  sc-checkout --> sc-block-ui
   sc-alert --> sc-icon
+  sc-form-state-provider --> sc-block-ui
   sc-block-ui --> sc-spinner
+  sc-form-error-provider --> sc-alert
   sc-form-components-validator --> sc-order-shipping-address
   sc-order-shipping-address --> sc-address
   sc-address --> sc-form-control

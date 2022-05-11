@@ -1,9 +1,8 @@
 import { Config } from '@stencil/core';
-import { promises as fs } from 'fs';
+import { promises as fs, readFileSync } from 'fs';
 import { JsonDocs } from '@stencil/core/internal';
 import { reactOutputTarget } from '@stencil/react-output-target';
 import { sass } from '@stencil/sass';
-import { readFileSync } from 'fs';
 
 export const config: Config = {
   namespace: 'surecart',
@@ -20,7 +19,6 @@ export const config: Config = {
     transform: {
       '^.+\\.(ts|tsx|js|jsx|css)$': '@stencil/core/testing/jest-preprocessor',
     },
-    testRegex: '/src/.*\\.spec\\.(ts|tsx|js)$',
     transformIgnorePatterns: ['node_modules/(?!stencil-fragment)'],
     setupFilesAfterEnv: ['./setup-tests.js'],
   },

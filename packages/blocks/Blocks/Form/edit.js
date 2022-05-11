@@ -461,8 +461,9 @@ export default function edit({ clientId, attributes, setAttributes }) {
 						)}
 					</div>
 					<ScCheckout
-						mode={'test'}
+						mode="test"
 						formId={formId}
+						processors={scBlockData?.processors}
 						css={css`
 							margin-top: 2em;
 							font-size: ${font_size}px;

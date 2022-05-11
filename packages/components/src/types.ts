@@ -71,6 +71,9 @@ export interface File {
   created_at: number;
 }
 
+export type FormState = 'idle' | 'loading' | 'draft' | 'updating' | 'finalizing' | 'paid' | 'failure' | 'expired';
+export type FormStateSetter = 'RESOLVE' | 'REJECT' | 'FINALIZE' | 'PAID' | 'EXPIRE' | 'FETCH';
+
 export interface Product extends Object {
   id: string;
   name: string;
@@ -267,6 +270,21 @@ export interface ProcessorData {
     client_secret?: string;
     type: 'payment' | 'setup';
   };
+  paypal: {
+    account_id: string;
+    client_id: string;
+  };
+}
+
+export interface Processor {
+  live_mode: boolean;
+  processor_data: {
+    account_id: string;
+    recurring_enabled: boolean;
+    client_id: string;
+  };
+  recurring_enabled: boolean;
+  processor_type: 'paypal' | 'stripe';
 }
 
 export interface Purchase {
@@ -412,9 +430,13 @@ export interface ResponseError {
   }>;
 }
 
+export type ProcessorName = 'stripe' | 'paypal' | 'paypal-card';
+
 export interface PaymentIntent extends Object {
   id: string;
   object: 'payment_intent';
+  amount: number;
+  currency: string;
   processor_type: 'stripe' | 'paypal';
   status: 'pending' | 'succeeded' | 'canceled';
   external_intent_id: string;
@@ -423,6 +445,11 @@ export interface PaymentIntent extends Object {
   customer: Customer | string;
   created_at: number;
   updated_at: number;
+}
+
+export interface PaymentIntents {
+  stripe?: PaymentIntent;
+  paypal?: PaymentIntent;
 }
 
 export interface SetupIntent extends Object {

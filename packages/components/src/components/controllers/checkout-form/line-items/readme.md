@@ -7,14 +7,16 @@
 
 ## Properties
 
-| Property        | Attribute   | Description | Type                       | Default     |
-| --------------- | ----------- | ----------- | -------------------------- | ----------- |
-| `editable`      | `editable`  |             | `boolean`                  | `true`      |
-| `loading`       | `loading`   |             | `boolean`                  | `undefined` |
-| `lockedChoices` | --          |             | `PriceChoice[]`            | `[]`        |
-| `order`         | --          |             | `Order`                    | `undefined` |
-| `prices`        | --          |             | `{ [id: string]: Price; }` | `undefined` |
-| `removable`     | `removable` |             | `boolean`                  | `true`      |
+| Property          | Attribute           | Description | Type                       | Default     |
+| ----------------- | ------------------- | ----------- | -------------------------- | ----------- |
+| `editLineItems`   | `edit-line-items`   |             | `boolean`                  | `true`      |
+| `editable`        | `editable`          |             | `boolean`                  | `undefined` |
+| `loading`         | `loading`           |             | `boolean`                  | `undefined` |
+| `lockedChoices`   | --                  |             | `PriceChoice[]`            | `[]`        |
+| `order`           | --                  |             | `Order`                    | `undefined` |
+| `prices`          | --                  |             | `{ [id: string]: Price; }` | `undefined` |
+| `removable`       | `removable`         |             | `boolean`                  | `undefined` |
+| `removeLineItems` | `remove-line-items` |             | `boolean`                  | `true`      |
 
 
 ## Events

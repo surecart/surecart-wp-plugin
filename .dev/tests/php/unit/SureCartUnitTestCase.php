@@ -3,6 +3,7 @@ namespace SureCart\Tests;
 
 use WP_UnitTestCase;
 use SureCart\Request\RequestService;
+
 abstract class SureCartUnitTestCase extends WP_UnitTestCase {
 	public $mock_requests;
 

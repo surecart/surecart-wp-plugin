@@ -1,4 +1,4 @@
-import { Component, Prop, Method, State, Event, EventEmitter, Watch, h } from '@stencil/core';
+import { Component, Prop, Method, State, Event, EventEmitter, Watch, h, Element } from '@stencil/core';
 
 @Component({
   tag: 'sc-alert',
@@ -6,6 +6,8 @@ import { Component, Prop, Method, State, Event, EventEmitter, Watch, h } from '@
   shadow: true,
 })
 export class ScAlert {
+  @Element() el: HTMLScAlertElement;
+
   /** Indicates whether or not the alert is open. You can use this in lieu of the show/hide methods. */
   @Prop({ reflect: true, mutable: true }) open: boolean = false;
 
@@ -21,6 +23,9 @@ export class ScAlert {
    */
   @Prop() duration: number = Infinity;
 
+  /** Scroll into view. */
+  @Prop() scrollOnOpen: boolean;
+
   @State() autoHideTimeout: any;
 
   /** When alert is hidden */
@@ -35,7 +40,6 @@ export class ScAlert {
     if (this.open) {
       return;
     }
-
     this.open = true;
   }
 
@@ -65,8 +69,15 @@ export class ScAlert {
 
   /** Emit event when showing or hiding changes */
   @Watch('open')
-  handleOpenChange(val) {
-    val ? this.scShow.emit() : this.scHide.emit();
+  handleOpenChange() {
+    this.open ? this.scShow.emit() : this.scHide.emit();
+    if (this.open && this.scrollOnOpen) {
+      this.el.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
+  componentDidLoad() {
+    this.handleOpenChange();
   }
 
   iconName() {

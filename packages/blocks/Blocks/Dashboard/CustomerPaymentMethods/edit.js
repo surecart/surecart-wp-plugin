@@ -5,7 +5,7 @@ import {
 	useBlockProps,
 } from '@wordpress/block-editor';
 import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
-import { Fragment } from 'react';
+import { Fragment } from '@wordpress/element';
 import { ScDashboardModule } from '@surecart/components-react';
 import OverlayLabel from '../../../components/OverlayLabel';
 

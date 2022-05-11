@@ -18,17 +18,20 @@ describe('sc-form', () => {
       <sc-button submit>Test CE</sc-button>
     </sc-form>
     `);
-    const ceSubmit = await page.spyOnEvent('ceFormSubmit');
+    const scFormSubmit = await page.spyOnEvent('scFormSubmit');
+    const scSubmit = await page.spyOnEvent('scFormSubmit');
 
     const button = await page.find('button');
     button.click();
     await page.waitForChanges();
-    expect(ceSubmit).toHaveReceivedEventTimes(1);
+    expect(scSubmit).toHaveReceivedEventTimes(1);
+    expect(scFormSubmit).toHaveReceivedEventTimes(1);
 
     const ce_button = await page.find('sc-button');
     ce_button.click();
     await page.waitForChanges();
-    expect(ceSubmit).toHaveReceivedEventTimes(2);
+    expect(scSubmit).toHaveReceivedEventTimes(2);
+    expect(scFormSubmit).toHaveReceivedEventTimes(2);
   });
 
   // we are testing this because JEST doesn't work well with FormData

@@ -18,6 +18,14 @@
 | `order`       | --            |             | `Order`   | `undefined`                      |
 
 
+## Events
+
+| Event    | Description     | Type                |
+| -------- | --------------- | ------------------- |
+| `scHide` | Show the toggle | `CustomEvent<void>` |
+| `scShow` | Show the toggle | `CustomEvent<void>` |
+
+
 ## Dependencies
 
 ### Depends on

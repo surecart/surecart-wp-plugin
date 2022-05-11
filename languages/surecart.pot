@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-05-10T18:07:56+00:00\n"
+"POT-Creation-Date: 2022-05-11T20:23:48+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 
@@ -17,6 +17,7 @@ msgstr ""
 
 #: src/BlockLibrary/BlockServiceProvider.php:93
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:39
+#: src/WordPress/Admin/Notices/AdminNoticesService.php:104
 #: admin/user-profile.php:1
 #: error.php:2
 msgid "SureCart"
@@ -68,8 +69,8 @@ msgid "Status"
 msgstr ""
 
 #: src/Controllers/Admin/Abandoned/AbandonedOrderListTable.php:106
-#: src/Controllers/Admin/Invoices/InvoicesListTable.php:66
-#: src/Controllers/Admin/Orders/OrdersListTable.php:110
+#: src/Controllers/Admin/Invoices/InvoicesListTable.php:67
+#: src/Controllers/Admin/Orders/OrdersListTable.php:111
 msgid "Total"
 msgstr ""
 
@@ -112,8 +113,8 @@ msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:134
 #: src/Controllers/Admin/Customers/CustomersListTable.php:116
-#: src/Controllers/Admin/Invoices/InvoicesListTable.php:78
-#: src/Controllers/Admin/Orders/OrdersListTable.php:124
+#: src/Controllers/Admin/Invoices/InvoicesListTable.php:79
+#: src/Controllers/Admin/Orders/OrdersListTable.php:125
 #: src/Controllers/Admin/Products/ProductsListTable.php:121
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:118
 msgid "Select comment"
@@ -121,8 +122,8 @@ msgstr ""
 
 #. translators: coupon expiration date.
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:222
-#: src/Controllers/Admin/Invoices/InvoicesListTable.php:195
-#: src/Controllers/Admin/Orders/OrdersListTable.php:241
+#: src/Controllers/Admin/Invoices/InvoicesListTable.php:214
+#: src/Controllers/Admin/Orders/OrdersListTable.php:260
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:248
 msgid "Valid until %s"
 msgstr ""
@@ -133,30 +134,30 @@ msgid "%d off"
 msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:245
-#: src/Controllers/Admin/Invoices/InvoicesListTable.php:212
-#: src/Controllers/Admin/Orders/OrdersListTable.php:258
+#: src/Controllers/Admin/Invoices/InvoicesListTable.php:231
+#: src/Controllers/Admin/Orders/OrdersListTable.php:277
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:265
 msgid "No discount."
 msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:260
-#: src/Controllers/Admin/Invoices/InvoicesListTable.php:227
-#: src/Controllers/Admin/Orders/OrdersListTable.php:273
+#: src/Controllers/Admin/Invoices/InvoicesListTable.php:246
+#: src/Controllers/Admin/Orders/OrdersListTable.php:292
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:280
 msgid "Forever"
 msgstr ""
 
 #. translators: number of months.
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:264
-#: src/Controllers/Admin/Invoices/InvoicesListTable.php:231
-#: src/Controllers/Admin/Orders/OrdersListTable.php:277
+#: src/Controllers/Admin/Invoices/InvoicesListTable.php:250
+#: src/Controllers/Admin/Orders/OrdersListTable.php:296
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:284
 msgid "For %d months"
 msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:267
-#: src/Controllers/Admin/Invoices/InvoicesListTable.php:234
-#: src/Controllers/Admin/Orders/OrdersListTable.php:280
+#: src/Controllers/Admin/Invoices/InvoicesListTable.php:253
+#: src/Controllers/Admin/Orders/OrdersListTable.php:299
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:287
 msgid "Once"
 msgstr ""
@@ -306,22 +307,27 @@ msgstr ""
 msgid "Invoice"
 msgstr ""
 
+#: src/Controllers/Admin/Invoices/InvoicesListTable.php:66
+#: src/Controllers/Admin/Orders/OrdersListTable.php:110
+msgid "Method"
+msgstr ""
+
 #. translators: Coupon % off.
-#: src/Controllers/Admin/Invoices/InvoicesListTable.php:204
-#: src/Controllers/Admin/Orders/OrdersListTable.php:250
+#: src/Controllers/Admin/Invoices/InvoicesListTable.php:223
+#: src/Controllers/Admin/Orders/OrdersListTable.php:269
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:257
 msgid "%1d%% off"
 msgstr ""
 
-#: src/Controllers/Admin/Invoices/InvoicesListTable.php:246
-#: src/Controllers/Admin/Orders/OrdersListTable.php:292
+#: src/Controllers/Admin/Invoices/InvoicesListTable.php:265
+#: src/Controllers/Admin/Orders/OrdersListTable.php:311
 msgid "Refunded"
 msgstr ""
 
-#: src/Controllers/Admin/Invoices/InvoicesListTable.php:261
-#: src/Controllers/Admin/Invoices/InvoicesListTable.php:265
-#: src/Controllers/Admin/Orders/OrdersListTable.php:307
-#: src/Controllers/Admin/Orders/OrdersListTable.php:311
+#: src/Controllers/Admin/Invoices/InvoicesListTable.php:280
+#: src/Controllers/Admin/Invoices/InvoicesListTable.php:284
+#: src/Controllers/Admin/Orders/OrdersListTable.php:326
+#: src/Controllers/Admin/Orders/OrdersListTable.php:330
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:189
 msgid "Edit Order"
 msgstr ""
@@ -340,7 +346,7 @@ msgid "Search Orders"
 msgstr ""
 
 #. translators: Customer name.
-#: src/Controllers/Admin/Orders/OrdersListTable.php:314
+#: src/Controllers/Admin/Orders/OrdersListTable.php:333
 msgid "By %s"
 msgstr ""
 
@@ -395,9 +401,17 @@ msgstr ""
 msgid "Copied!"
 msgstr ""
 
-#: src/Controllers/Admin/Settings.php:25
+#: src/Controllers/Admin/Settings.php:26
 #: src/Controllers/Admin/Settings/FrameSettings.php:85
+#: src/Controllers/Admin/Settings/Settings.php:24
+#: src/Controllers/Admin/Settings/Settings.php:47
 msgid "Could not load settings page."
+msgstr ""
+
+#: src/Controllers/Admin/Settings.php:55
+#: src/Controllers/Admin/Settings/Settings.php:76
+#: layouts/partials/admin-settings-sidebar.php:50
+msgid "Connection"
 msgstr ""
 
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:45
@@ -529,7 +543,7 @@ msgstr ""
 #: src/Middleware/EditModelMiddleware.php:24
 #: src/Middleware/LoginMiddleware.php:14
 #: src/Middleware/NonceMiddleware.php:32
-#: src/WordPress/Admin/Notices/AdminNoticesService.php:60
+#: src/WordPress/Admin/Notices/AdminNoticesService.php:67
 msgid "Your session expired - please try again."
 msgstr ""
 
@@ -558,6 +572,10 @@ msgstr ""
 msgid "SureCart Shop Worker"
 msgstr ""
 
+#: src/Permissions/RolesService.php:92
+msgid "SureCart Customer"
+msgstr ""
+
 #: src/Rest/AccountRestServiceProvider.php:46
 #: src/Rest/ChargesRestServiceProvider.php:74
 #: src/Rest/CouponRestServiceProvider.php:46
@@ -565,7 +583,8 @@ msgstr ""
 #: src/Rest/CustomerRestServiceProvider.php:47
 #: src/Rest/FilesRestServiceProvider.php:54
 #: src/Rest/InvoicesRestServiceProvider.php:75
-#: src/Rest/OrderRestServiceProvider.php:77
+#: src/Rest/OrderRestServiceProvider.php:90
+#: src/Rest/PaymentIntentsRestServiceProvider.php:76
 #: src/Rest/PaymentMethodsRestServiceProvider.php:77
 #: src/Rest/PriceRestServiceProvider.php:47
 #: src/Rest/ProductGroupsRestServiceProvider.php:47
@@ -673,35 +692,35 @@ msgstr ""
 msgid "Password"
 msgstr ""
 
-#: src/Rest/OrderRestServiceProvider.php:83
+#: src/Rest/OrderRestServiceProvider.php:96
 msgid "The currency for the session."
 msgstr ""
 
-#: src/Rest/OrderRestServiceProvider.php:87
+#: src/Rest/OrderRestServiceProvider.php:100
 msgid "Metadata for the order."
 msgstr ""
 
-#: src/Rest/OrderRestServiceProvider.php:92
+#: src/Rest/OrderRestServiceProvider.php:105
 msgid "The customer id for the order."
 msgstr ""
 
-#: src/Rest/OrderRestServiceProvider.php:97
+#: src/Rest/OrderRestServiceProvider.php:110
 msgid "The customer for the session."
 msgstr ""
 
-#: src/Rest/OrderRestServiceProvider.php:102
+#: src/Rest/OrderRestServiceProvider.php:115
 msgid "The line items for the session."
 msgstr ""
 
-#: src/Rest/OrderRestServiceProvider.php:106
+#: src/Rest/OrderRestServiceProvider.php:119
 msgid "The discount for the session."
 msgstr ""
 
-#: src/Rest/OrderRestServiceProvider.php:123
+#: src/Rest/OrderRestServiceProvider.php:137
 msgid "Form ID is required."
 msgstr ""
 
-#: src/Rest/OrderRestServiceProvider.php:132
+#: src/Rest/OrderRestServiceProvider.php:146
 msgid "Form ID is invalid."
 msgstr ""
 
@@ -1195,7 +1214,8 @@ msgstr ""
 
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:46
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:63
-msgid "Plugin"
+#: layouts/partials/admin-settings-header.php:19
+msgid "Settings"
 msgstr ""
 
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:54
@@ -1225,6 +1245,7 @@ msgstr ""
 
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:59
 #: admin/subscriptions/index.php:21
+#: layouts/partials/admin-settings-sidebar.php:26
 #: web/dashboard/orders/show.php:58
 msgid "Subscriptions"
 msgstr ""
@@ -1233,11 +1254,7 @@ msgstr ""
 msgid "Forms"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:64
-msgid "Settings"
-msgstr ""
-
-#: src/WordPress/Admin/Notices/AdminNoticesService.php:114
+#: src/WordPress/Admin/Notices/AdminNoticesService.php:159
 msgid "Dismiss Notice"
 msgstr ""
 
@@ -1356,16 +1373,66 @@ msgstr ""
 msgid "This form is not available or has been deleted."
 msgstr ""
 
-#: src/WordPress/Users/UsersService.php:32
+#: src/WordPress/Users/UsersService.php:48
 msgid "Limit result set to users with a customer."
 msgstr ""
 
-#: src/WordPress/Users/UsersService.php:36
+#: src/WordPress/Users/UsersService.php:52
 msgid "Limit result set to users with specific customer ids."
 msgstr ""
 
 #: admin/abandoned-orders/index.php:5
 msgid "Abandoned Orders"
+msgstr ""
+
+#: admin/advanced.php:30
+msgid "Advanced Settings"
+msgstr ""
+
+#: admin/advanced.php:33
+#: admin/connection-invalid.php:28
+#: admin/connection.php:37
+msgid "Save"
+msgstr ""
+
+#: admin/advanced.php:41
+#: admin/plugin.php:95
+msgid "Performance"
+msgstr ""
+
+#: admin/advanced.php:42
+#: admin/plugin.php:96
+msgid "Change your plugin performance settings."
+msgstr ""
+
+#: admin/advanced.php:45
+#: admin/plugin.php:99
+msgid "Use JavaScript ESM Loader"
+msgstr ""
+
+#: admin/advanced.php:46
+#: admin/plugin.php:100
+msgid "This can slightly increase page load speed, but may require you to enable CORS headers for .js files on your CDN. Please check your checkout forms after you enable this option in a private browser window."
+msgstr ""
+
+#: admin/advanced.php:52
+#: admin/plugin.php:106
+msgid "Uninstall"
+msgstr ""
+
+#: admin/advanced.php:53
+#: admin/plugin.php:107
+msgid "Change your plugin uninstall settings."
+msgstr ""
+
+#: admin/advanced.php:56
+#: admin/plugin.php:110
+msgid "Uninstall On Delete"
+msgstr ""
+
+#: admin/advanced.php:57
+#: admin/plugin.php:111
+msgid "Completely remove all plugin data when deleted. This cannot be undone."
 msgstr ""
 
 #: admin/coming-soon.php:48
@@ -1376,6 +1443,47 @@ msgstr ""
 msgid "We are currently working on our Pro features. Please check back once we release new revenue and time saving features."
 msgstr ""
 
+#: admin/connection-invalid.php:25
+msgid "Update Your Connection"
+msgstr ""
+
+#: admin/connection-invalid.php:36
+#: admin/connection.php:45
+#: admin/plugin.php:79
+msgid "Connection Details"
+msgstr ""
+
+#: admin/connection-invalid.php:37
+msgid "Add your API token to connect to SureCart."
+msgstr ""
+
+#: admin/connection-invalid.php:39
+#: admin/connection.php:48
+#: admin/plugin.php:82
+msgid "Api Token"
+msgstr ""
+
+#: admin/connection-invalid.php:39
+#: admin/connection.php:48
+#: admin/plugin.php:82
+msgid "Enter your api token."
+msgstr ""
+
+#: admin/connection-invalid.php:44
+#: admin/connection.php:53
+#: admin/plugin.php:87
+msgid "Find My Api Token"
+msgstr ""
+
+#: admin/connection.php:34
+msgid "Connection Settings"
+msgstr ""
+
+#: admin/connection.php:46
+#: admin/plugin.php:80
+msgid "Update your api token to change or update the connection to SureCart."
+msgstr ""
+
 #: admin/invoices/index.php:9
 msgid "What are Invoices?"
 msgstr ""
@@ -1384,60 +1492,58 @@ msgstr ""
 msgid "Invoices are similar to orders, but are used for payments and plan changes on active subscriptions. In the future you will be able to create an invoice to send out."
 msgstr ""
 
-#: admin/onboarding/complete.php:47
+#: admin/onboarding/complete.php:48
 #: admin/plugin.php:60
+#: layouts/partials/admin-settings-notices.php:22
 msgid "Please enter an API key."
 msgstr ""
 
-#: admin/onboarding/complete.php:55
+#: admin/onboarding/complete.php:56
 msgid "Just one last step!"
 msgstr ""
 
-#: admin/onboarding/complete.php:66
+#: admin/onboarding/complete.php:67
 msgid "Enter your API Token"
 msgstr ""
 
-#: admin/onboarding/complete.php:66
+#: admin/onboarding/complete.php:67
 msgid "Api token"
 msgstr ""
 
-#: admin/onboarding/complete.php:68
+#: admin/onboarding/complete.php:69
 msgid "Complete Installation"
 msgstr ""
 
-#: admin/onboarding/install.php:47
+#: admin/onboarding/install.php:48
 msgid "Welcome to SureCart!"
 msgstr ""
 
-#: admin/onboarding/install.php:53
+#: admin/onboarding/install.php:54
 msgid "Commerce on WordPress has never been easier, faster, or more flexible."
 msgstr ""
 
-#: admin/onboarding/install.php:56
+#: admin/onboarding/install.php:57
 msgid "Set Up My Store"
 msgstr ""
 
-#: admin/onboarding/show.php:47
-msgid "Getting Started With SureCart"
-msgstr ""
-
-#: admin/onboarding/show.php:53
+#: admin/onboarding/show.php:56
 msgid "Get started by creating your first product or creating a new checkout form."
 msgstr ""
 
-#: admin/onboarding/show.php:57
+#: admin/onboarding/show.php:60
 msgid "Create A Product"
 msgstr ""
 
-#: admin/onboarding/show.php:61
+#: admin/onboarding/show.php:64
 msgid "Create A Form"
 msgstr ""
 
-#: admin/onboarding/show.php:66
+#: admin/onboarding/show.php:69
 msgid "Get Help"
 msgstr ""
 
 #: admin/plugin.php:54
+#: layouts/partials/admin-settings-notices.php:16
 msgid "Saved."
 msgstr ""
 
@@ -1449,59 +1555,8 @@ msgstr ""
 msgid "Save Settings"
 msgstr ""
 
-#: admin/plugin.php:79
-msgid "Connection Details"
-msgstr ""
-
-#: admin/plugin.php:80
-msgid "Update your api token to change or update the connection to SureCart."
-msgstr ""
-
-#: admin/plugin.php:82
-msgid "Api Token"
-msgstr ""
-
-#: admin/plugin.php:82
-msgid "Enter your api token."
-msgstr ""
-
-#: admin/plugin.php:87
-msgid "Find My Api Token"
-msgstr ""
-
-#: admin/plugin.php:95
-msgid "Performance"
-msgstr ""
-
-#: admin/plugin.php:96
-msgid "Change your plugin performance settings."
-msgstr ""
-
-#: admin/plugin.php:99
-msgid "Use JavaScript ESM Loader"
-msgstr ""
-
-#: admin/plugin.php:100
-msgid "This can slightly increase page load speed, but may require you to enable CORS headers for .js files on your CDN. Please check your checkout forms after you enable this option in a private browser window."
-msgstr ""
-
-#: admin/plugin.php:106
-msgid "Uninstall"
-msgstr ""
-
-#: admin/plugin.php:107
-msgid "Change your plugin uninstall settings."
-msgstr ""
-
-#: admin/plugin.php:110
-msgid "Uninstall On Delete"
-msgstr ""
-
-#: admin/plugin.php:111
-msgid "Completely remove all plugin data when deleted. This cannot be undone."
-msgstr ""
-
 #: admin/processors.php:31
+#: layouts/partials/admin-settings-sidebar.php:44
 msgid "Processors"
 msgstr ""
 
@@ -1511,41 +1566,31 @@ msgstr ""
 
 #: admin/processors.php:63
 #: admin/processors.php:141
-msgid "Connected"
+msgid "Test and Live Payments Enabled"
 msgstr ""
 
 #: admin/processors.php:66
-msgid "Live Payments Allowed"
+#: admin/processors.php:144
+msgid "Live Payments Enabled"
 msgstr ""
 
 #: admin/processors.php:67
-msgid "Test Payment Not Allowed"
+#: admin/processors.php:145
+msgid "Test Payment Not Enabled"
 msgstr ""
 
 #: admin/processors.php:70
-#: admin/processors.php:215
-msgid "Test Payments Allowed"
+#: admin/processors.php:148
+msgid "Test Payments Enabled"
 msgstr ""
 
 #: admin/processors.php:71
-msgid "Live Payments Not Allowed"
+#: admin/processors.php:149
+msgid "Live Payments Not Enabled"
 msgstr ""
 
 #: admin/processors.php:136
 msgid "Connect with PayPal to add a PayPal express button to your checkout."
-msgstr ""
-
-#: admin/processors.php:143
-#: admin/processors.php:217
-msgid "Not Connected"
-msgstr ""
-
-#: admin/processors.php:207
-msgid "Developer"
-msgstr ""
-
-#: admin/processors.php:211
-msgid "Connect with a PayPal sandbox account to test your integration before going live."
 msgstr ""
 
 #: admin/product-groups/index.php:9
@@ -1574,6 +1619,43 @@ msgstr ""
 
 #: layouts/partials/admin-index-header.php:14
 msgid "Add New"
+msgstr ""
+
+#. translators: Version number.
+#: layouts/partials/admin-settings-header.php:25
+msgid "Version %s"
+msgstr ""
+
+#: layouts/partials/admin-settings-notices.php:10
+msgid "Your API key is incorrect. Please double-check it is correct and update it."
+msgstr ""
+
+#: layouts/partials/admin-settings-sidebar.php:8
+msgid "Store Settings"
+msgstr ""
+
+#: layouts/partials/admin-settings-sidebar.php:14
+msgid "Design & Branding"
+msgstr ""
+
+#: layouts/partials/admin-settings-sidebar.php:20
+msgid "Customer Notifications"
+msgstr ""
+
+#: layouts/partials/admin-settings-sidebar.php:32
+msgid "Customer Portal"
+msgstr ""
+
+#: layouts/partials/admin-settings-sidebar.php:38
+msgid "Taxes"
+msgstr ""
+
+#: layouts/partials/admin-settings-sidebar.php:55
+msgid "Advanced"
+msgstr ""
+
+#: layouts/partials/admin-settings-sidebar.php:60
+msgid "Help"
 msgstr ""
 
 #: web/dashboard/orders/show.php:15

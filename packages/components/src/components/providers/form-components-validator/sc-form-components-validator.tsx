@@ -1,4 +1,4 @@
-import { Component, h, Prop, State, Watch, Element } from '@stencil/core';
+import { Component, h, Prop, Watch, Element, State } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { Order } from '../../../types';
 
@@ -9,6 +9,7 @@ import { Order } from '../../../types';
 export class ScFormComponentsValidator {
   @Element() el: HTMLElement;
 
+  /** Disable validation? */
   @Prop() disabled: boolean;
 
   /** The order */
@@ -22,6 +23,7 @@ export class ScFormComponentsValidator {
 
   @Watch('order')
   handleOrderChange() {
+    // bail if we don't have address invalid error or disabled.
     if (this.disabled) return;
     // make sure to add the address field if it's not there.
     if (this?.order?.tax_status === 'address_invalid') {

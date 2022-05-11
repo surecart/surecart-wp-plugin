@@ -1,5 +1,7 @@
-import { Component, h, Element, Prop, Event, EventEmitter, Method, Listen } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Listen, Method, Prop } from '@stencil/core';
+
 import { serialize } from '../../../functions/form';
+
 @Component({
   tag: 'sc-form',
   styleUrl: 'sc-form.scss',
@@ -51,15 +53,12 @@ export class ScForm {
 
   @Method('submit')
   async submit() {
-    return this.formElement.submit();
+    return this.submitForm();
   }
-
-  // private controls = ['button', 'fieldset', 'input', 'keygen', 'label', 'meter', 'output', 'progress', 'select', 'textarea', 'sc-button', 'sc-price-input', 'sc-input'];
 
   /** Gets all form control elements (native and custom). */
   getFormControls() {
     return [...this.form.querySelectorAll('*')] as HTMLElement[];
-    // return ([...this.form.querySelectorAll('*')] as HTMLElement[]).filter((el: HTMLElement) => this.controls.includes(el.tagName.toLowerCase())) as HTMLElement[];
   }
 
   @Method('validate')
@@ -80,13 +79,31 @@ export class ScForm {
     return true;
   }
 
+  submitForm() {
+    // Calling form.submit() seems to bypass the submit event and constraint validation. Instead, we can inject a
+    // native submit button into the form, click it, then remove it to simulate a standard form submission.
+    const button = document.createElement('button');
+    if (this.formElement) {
+      button.type = 'submit';
+      button.style.position = 'absolute';
+      button.style.width = '0';
+      button.style.height = '0';
+      button.style.clip = 'rect(0 0 0 0)';
+      button.style.clipPath = 'inset(50%)';
+      button.style.overflow = 'hidden';
+      button.style.whiteSpace = 'nowrap';
+      this.formElement.append(button);
+      button.click();
+      button.remove();
+    }
+  }
+
   render() {
     return (
       <div part="base" class="form" role="form">
         <form
           ref={el => (this.formElement = el as HTMLFormElement)}
           onSubmit={async e => {
-            console.log(e);
             e.preventDefault();
             const isValid = await this.validate();
             if (!isValid) {

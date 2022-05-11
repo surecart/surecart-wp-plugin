@@ -35,13 +35,13 @@ describe('sc-coupon-form', () => {
   });
 
   it('Triggers a coupon apply event', async () => {
-    const ceApplyCoupon = await page.spyOnEvent('ceApplyCoupon');
+    const scApplyCoupon = await page.spyOnEvent('scApplyCoupon');
 
     await trigger.click();
     await page.waitForChanges();
     await input.type('TESTCOUPON');
     await button.click();
     await page.waitForChanges();
-    expect(ceApplyCoupon).toHaveReceivedEventDetail('TESTCOUPON');
+    expect(scApplyCoupon).toHaveReceivedEventDetail('TESTCOUPON');
   });
 });
