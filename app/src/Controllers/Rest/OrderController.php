@@ -120,10 +120,21 @@ class OrderController extends RestController {
 			return $errors;
 		}
 
-		$order = new $this->class( [ 'id' => $request['id'] ] );
-		return $order->setProcessor( $request['processor_type'] )
+		$order     = new $this->class( [ 'id' => $request['id'] ] );
+		$finalized = $order->setProcessor( $request['processor_type'] )
 			->where( $request->get_query_params() )
 			->finalize( array_diff_assoc( $request->get_params(), $request->get_query_params() ) );
+
+		// the order is paid (probably because of a coupon). Link the customer.
+		if ( 'paid' === $finalized->status ) {
+			$linked = $this->linkCustomerId( $finalized, $request );
+			if ( is_wp_error( $linked ) ) {
+				return $linked;
+			}
+		}
+
+		// return the order.
+		return $finalized;
 	}
 
 	/**
