@@ -42,6 +42,9 @@ export class ScCheckout {
   /** Alignment */
   @Prop() alignment: 'center' | 'wide' | 'full';
 
+  /** Is tax enabled? */
+  @Prop() taxEnabled: boolean;
+
   /** Is this user logged in? */
   @Prop() loggedIn: boolean;
 
@@ -208,7 +211,7 @@ export class ScCheckout {
             {/* Handles errors in the form. */}
             <sc-form-error-provider order={this.order} onScUpdateError={e => (this.error = e.detail)}>
               {/* Validate components in the form based on order state. */}
-              <sc-form-components-validator order={this.order} disabled={this.disableComponentsValidation}>
+              <sc-form-components-validator order={this.order} disabled={this.disableComponentsValidation} taxEnabled={this.taxEnabled}>
                 {/* Handles the current session. */}
                 <sc-session-provider
                   ref={el => (this.sessionProvider = el as HTMLScSessionProviderElement)}

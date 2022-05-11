@@ -7,10 +7,11 @@
 
 ## Properties
 
-| Property   | Attribute  | Description | Type      | Default     |
-| ---------- | ---------- | ----------- | --------- | ----------- |
-| `disabled` | `disabled` |             | `boolean` | `undefined` |
-| `order`    | --         | The order   | `Order`   | `undefined` |
+| Property     | Attribute     | Description     | Type      | Default     |
+| ------------ | ------------- | --------------- | --------- | ----------- |
+| `disabled`   | `disabled`    |                 | `boolean` | `undefined` |
+| `order`      | --            | The order       | `Order`   | `undefined` |
+| `taxEnabled` | `tax-enabled` | Is tax enabled. | `boolean` | `undefined` |
 
 
 ## Dependencies

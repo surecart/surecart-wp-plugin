@@ -132,6 +132,7 @@ class AssetsService {
 					echo "\n";
 					echo esc_js( "component.$key = " );
 					echo wp_json_encode( $value );
+					echo ';';
 				}
 				?>
 			})();

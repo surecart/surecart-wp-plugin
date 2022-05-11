@@ -141,6 +141,7 @@
     "processors": true,
     "remove-line-items": true,
     "success-url": true,
+    "tax-enabled": true,
     "style": true,
     "id": true,
     "class": true,
@@ -403,6 +404,7 @@
   "sc-form-components-validator": {
     "disabled": true,
     "order": true,
+    "tax-enabled": true,
     "style": true,
     "id": true,
     "class": true,

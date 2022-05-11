@@ -137,6 +137,21 @@ export default ({ order, charge: chargeInput, loading }) => {
 						></sc-format-number>
 					</Definition>
 
+					{!!order?.tax_amount && (
+						<Definition title={__('Tax', 'surecart')}>
+							<sc-format-number
+								style={{
+									'font-weight':
+										'var(--sc-font-weight-semibold)',
+									color: 'var(--sc-color-gray-800)',
+								}}
+								type="currency"
+								currency={order?.currency}
+								value={order?.tax_amount}
+							></sc-format-number>
+						</Definition>
+					)}
+
 					<hr />
 
 					<sc-line-item

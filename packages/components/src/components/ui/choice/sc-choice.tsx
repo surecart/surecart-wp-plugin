@@ -58,7 +58,6 @@ export class ScChoice {
   @Prop() showControl: boolean = true;
 
   @State() hasDefaultSlot: boolean;
-  @State() hasToggleSlot: boolean;
   @State() hasPrice: boolean;
   @State() hasPer: boolean;
   @State() hasDescription: boolean;
@@ -83,10 +82,10 @@ export class ScChoice {
   async reportValidity() {
     this.invalid = !this.input.checkValidity();
 
-    if (this.type === 'radio') {
+    if (this.required) {
       const choices = this.getAllChoices();
       if (!choices.some(c => c.checked)) {
-        this.input.setCustomValidity(__('Please choose one.', 'surecart'));
+        this.input.setCustomValidity(this.type === 'radio' ? __('Please choose one.', 'surecart') : __('Please choose at least one.', 'surecart'));
         this.invalid = !this.input.checkValidity();
       } else {
         this.input.setCustomValidity('');
@@ -199,7 +198,6 @@ export class ScChoice {
     this.hasPer = !!this.el.querySelector('[slot="per"]');
     this.hasDescription = !!this.el.querySelector('[slot="description"]');
     this.hasDefaultSlot = !!this.el.querySelector('[slot="default"]');
-    this.hasToggleSlot = !!this.el.querySelector('[slot="toggle-content"]');
   }
 
   render() {
@@ -218,78 +216,72 @@ export class ScChoice {
         onKeyDown={e => this.handleKeyDown(e)}
         onMouseDown={e => this.handleMouseDown(e)}
       >
-        <span class="choice__header">
-          <span
-            part="control"
-            class={{
-              choice__control: true,
-              choice__checkbox: this.type === 'checkbox',
-              choice__radio: this.type === 'radio',
-            }}
-            hidden={!this.showControl}
-          >
-            <span part="checked-icon" class="choice__icon">
-              {this.type === 'checkbox' ? (
-                <svg viewBox="0 0 16 16">
-                  <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round">
-                    <g stroke="currentColor" stroke-width="2">
-                      <g transform="translate(3.428571, 3.428571)">
-                        <path d="M0,5.71428571 L3.42857143,9.14285714"></path>
-                        <path d="M9.14285714,0 L3.42857143,9.14285714"></path>
-                      </g>
+        <span
+          part="control"
+          class={{
+            choice__control: true,
+            choice__checkbox: this.type === 'checkbox',
+            choice__radio: this.type === 'radio',
+          }}
+          hidden={!this.showControl}
+        >
+          <span part="checked-icon" class="choice__icon">
+            {this.type === 'checkbox' ? (
+              <svg viewBox="0 0 16 16">
+                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round">
+                  <g stroke="currentColor" stroke-width="2">
+                    <g transform="translate(3.428571, 3.428571)">
+                      <path d="M0,5.71428571 L3.42857143,9.14285714"></path>
+                      <path d="M9.14285714,0 L3.42857143,9.14285714"></path>
                     </g>
                   </g>
-                </svg>
-              ) : (
-                <svg viewBox="0 0 16 16">
-                  <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                    <g fill="currentColor">
-                      <circle cx="8" cy="8" r="3.42857143"></circle>
-                    </g>
+                </g>
+              </svg>
+            ) : (
+              <svg viewBox="0 0 16 16">
+                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                  <g fill="currentColor">
+                    <circle cx="8" cy="8" r="3.42857143"></circle>
                   </g>
-                </svg>
-              )}
-            </span>
-            <input
-              id={this.inputId}
-              ref={el => (this.input = el as HTMLInputElement)}
-              type={this.type}
-              name={this.name}
-              value={this.value}
-              checked={this.checked}
-              disabled={this.disabled}
-              aria-checked={this.checked ? 'true' : 'false'}
-              aria-disabled={this.disabled ? 'true' : 'false'}
-              aria-labelledby={this.labelId}
-              required={this.required}
-              onClick={() => this.handleClick()}
-              onBlur={() => this.handleBlur()}
-              onFocus={() => this.handleFocus()}
-            />
+                </g>
+              </svg>
+            )}
           </span>
-          <span part="label" id={this.labelId} class="choice__label">
-            <span class="choice__label-text" hidden={!this.showLabel}>
-              <span class="choice__title" part="title">
-                <slot onSlotchange={() => this.handleSlotChange()}></slot>
-              </span>
-              <span class="choice__description description" part="description" hidden={!this.hasDescription}>
-                <slot name="description" onSlotchange={() => this.handleSlotChange()}></slot>
-              </span>
-            </span>
-
-            <span class="choice__price" hidden={!this.showPrice || (!this.hasPrice && !this.hasPer)}>
-              <span class="choice__title">
-                <slot name="price" onSlotchange={() => this.handleSlotChange()}></slot>
-              </span>
-              <span class="choice__description">
-                <slot name="per" onSlotchange={() => this.handleSlotChange()}></slot>
-              </span>
-            </span>
-          </span>
+          <input
+            id={this.inputId}
+            ref={el => (this.input = el as HTMLInputElement)}
+            type={this.type}
+            name={this.name}
+            value={this.value}
+            checked={this.checked}
+            disabled={this.disabled}
+            aria-checked={this.checked ? 'true' : 'false'}
+            aria-disabled={this.disabled ? 'true' : 'false'}
+            aria-labelledby={this.labelId}
+            // required={this.required}
+            onClick={() => this.handleClick()}
+            onBlur={() => this.handleBlur()}
+            onFocus={() => this.handleFocus()}
+          />
         </span>
+        <span part="label" id={this.labelId} class="choice__label">
+          <span class="choice__label-text" hidden={!this.showLabel}>
+            <span class="choice__title" part="title">
+              <slot onSlotchange={() => this.handleSlotChange()}></slot>
+            </span>
+            <span class="choice__description description" part="description" hidden={!this.hasDescription}>
+              <slot name="description" onSlotchange={() => this.handleSlotChange()}></slot>
+            </span>
+          </span>
 
-        <span class="choice__toggle-content" hidden={!this.hasToggleSlot}>
-          <slot name="toggle-content" onSlotchange={() => this.handleSlotChange()}></slot>
+          <span class="choice__price" hidden={!this.showPrice || (!this.hasPrice && !this.hasPer)}>
+            <span class="choice__title">
+              <slot name="price" onSlotchange={() => this.handleSlotChange()}></slot>
+            </span>{' '}
+            <span class="choice__description">
+              <slot name="per" onSlotchange={() => this.handleSlotChange()}></slot>
+            </span>
+          </span>
         </span>
       </label>
     );

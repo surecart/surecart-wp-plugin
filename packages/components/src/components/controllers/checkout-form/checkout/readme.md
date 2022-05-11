@@ -24,6 +24,7 @@
 | `processors`                  | --                              | Processors enabled for this form.           | `Processor[]`                  | `undefined` |
 | `removeLineItems`             | `remove-line-items`             | Can we remove line items?                   | `boolean`                      | `true`      |
 | `successUrl`                  | `success-url`                   | Where to go on success                      | `string`                       | `''`        |
+| `taxEnabled`                  | `tax-enabled`                   | Is tax enabled?                             | `boolean`                      | `undefined` |
 
 
 ## Events

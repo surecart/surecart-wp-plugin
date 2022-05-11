@@ -15,7 +15,7 @@ export class ScPriceChoices {
   @Prop() columns: number = 1;
 
   /** Required by default */
-  @Prop() required: boolean = false;
+  @Prop() required: boolean = true;
 
   /** Toggle line item event */
   @Event() scRemoveLineItem: EventEmitter<LineItemData>;

@@ -302,6 +302,10 @@ export namespace Components {
          */
         "successUrl": string;
         /**
+          * Is tax enabled?
+         */
+        "taxEnabled": boolean;
+        /**
           * Validate the form.
          */
         "validate": () => Promise<boolean>;
@@ -756,6 +760,10 @@ export namespace Components {
           * The order
          */
         "order": Order;
+        /**
+          * Is tax enabled.
+         */
+        "taxEnabled": boolean;
     }
     interface ScFormControl {
         /**
@@ -3567,6 +3575,10 @@ declare namespace LocalJSX {
           * Where to go on success
          */
         "successUrl"?: string;
+        /**
+          * Is tax enabled?
+         */
+        "taxEnabled"?: boolean;
     }
     interface ScChoice {
         /**
@@ -4094,6 +4106,10 @@ declare namespace LocalJSX {
           * The order
          */
         "order"?: Order;
+        /**
+          * Is tax enabled.
+         */
+        "taxEnabled"?: boolean;
     }
     interface ScFormControl {
         /**

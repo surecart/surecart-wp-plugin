@@ -286,6 +286,7 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 						)}
 						type="number"
 						min={1}
+						max={365}
 						value={price?.trial_duration_days}
 						onScChange={(e) =>
 							updatePrice({
