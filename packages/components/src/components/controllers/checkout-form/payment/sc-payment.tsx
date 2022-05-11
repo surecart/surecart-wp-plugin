@@ -214,9 +214,11 @@ export class ScPayment {
   }
 
   render() {
-    // no payment is required.
-    if (this.order?.line_items?.pagination?.count > 1 && this.order?.total_amount === 0) {
-      return null;
+    // no payment is required if we dont have a subscription and the total amount is 0.
+    if (!hasSubscription(this.order)) {
+      if (this.order?.line_items?.pagination?.count >= 1 && this.order?.total_amount === 0) {
+        return null;
+      }
     }
 
     // we don't have any processors.
