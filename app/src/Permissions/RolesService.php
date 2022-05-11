@@ -86,6 +86,14 @@ class RolesService {
 				'delete_posts' => false,
 			]
 		);
+
+		add_role(
+			'sc_customer',
+			__( 'SureCart Customer', 'surecart' ),
+			[
+				'read' => true,
+			]
+		);
 	}
 
 	/**
