@@ -57,7 +57,7 @@ class OrderRestServiceProvider extends RestServiceProvider implements RestServic
 			$this->endpoint . '/(?P<id>\S+)/confirm/',
 			[
 				[
-					'methods'             => \WP_REST_Server::READABLE,
+					'methods'             => \WP_REST_Server::EDITABLE,
 					'callback'            => $this->callback( $this->controller, 'confirm' ),
 					'permission_callback' => [ $this, 'confirm_permissions_check' ],
 				],

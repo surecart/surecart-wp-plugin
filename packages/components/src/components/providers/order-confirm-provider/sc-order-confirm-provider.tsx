@@ -1,9 +1,10 @@
-import { Component, h, Prop, Event, EventEmitter, Listen } from '@stencil/core';
+import { Component, h, Prop, Event, EventEmitter, Listen, Element } from '@stencil/core';
 import { addQueryArgs } from '@wordpress/url';
 import { Order } from '../../../types';
 import apiFetch from '../../../functions/fetch';
 import { expand } from '../../../services/session';
 import { __ } from '@wordpress/i18n';
+import { parseFormData } from '../../../functions/form-data';
 
 /**
  * This component listens to the order status
@@ -14,6 +15,9 @@ import { __ } from '@wordpress/i18n';
   shadow: true,
 })
 export class ScOrderConfirmProvider {
+  /** The order confirm provider element */
+  @Element() el: HTMLScOrderConfirmProviderElement;
+
   /** The current order. */
   @Prop() order: Order;
 
@@ -37,9 +41,13 @@ export class ScOrderConfirmProvider {
 
   /** Confirm the order. */
   async confirmOrder() {
+    const json = await this.el.querySelector('sc-form').getFormJson();
+    let data = parseFormData(json);
     try {
       const confirmed = (await apiFetch({
+        method: 'PATCH',
         path: addQueryArgs(`surecart/v1/orders/${this.order?.id}/confirm`, [expand]),
+        data,
       })) as Order;
       // make sure we update the state in the central store.
       this.scUpdateOrderState.emit(confirmed);

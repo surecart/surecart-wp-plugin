@@ -1,6 +1,7 @@
 import { Component, Element, Event, EventEmitter, h, Listen, Method, Prop, State, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { removeQueryArgs } from '@wordpress/url';
+import { parseFormData } from '../../../functions/form-data';
 
 import { createOrUpdateOrder, finalizeSession } from '../../../services/session';
 import { FormStateSetter, PaymentIntents, ProcessorName, LineItemData, Order, PriceChoice } from '../../../types';
@@ -102,57 +103,6 @@ export class ScSessionProvider {
     return this.loadUpdate({ line_items });
   }
 
-  parseFormData(data) {
-    const {
-      email,
-      name,
-      password,
-      shipping_city,
-      shipping_country,
-      shipping_line_1,
-      shipping_line_2,
-      shipping_postal_code,
-      shipping_state,
-      billing_city,
-      billing_country,
-      billing_line_1,
-      billing_line_2,
-      billing_postal_code,
-      billing_state,
-      'tax_identifier.number_type': tax_number_type,
-      'tax_identifier.number': tax_number,
-      ...rest
-    } = data;
-
-    const shipping_address = {
-      ...(shipping_city ? { city: shipping_city } : {}),
-      ...(shipping_country ? { country: shipping_country } : {}),
-      ...(shipping_line_1 ? { line_1: shipping_line_1 } : {}),
-      ...(shipping_line_2 ? { line_2: shipping_line_2 } : {}),
-      ...(shipping_postal_code ? { postal_code: shipping_postal_code } : {}),
-      ...(shipping_state ? { state: shipping_state } : {}),
-    };
-
-    const billing_address = {
-      ...(billing_city ? { city: billing_city } : {}),
-      ...(billing_country ? { country: billing_country } : {}),
-      ...(billing_line_1 ? { line_1: billing_line_1 } : {}),
-      ...(billing_line_2 ? { line_2: billing_line_2 } : {}),
-      ...(billing_postal_code ? { postal_code: billing_postal_code } : {}),
-      ...(billing_state ? { state: billing_state } : {}),
-    };
-
-    return {
-      ...(name ? { name } : {}),
-      ...(email ? { email } : {}),
-      ...(password ? { password } : {}),
-      ...(Object.keys(shipping_address || {}).length ? { shipping_address } : {}),
-      ...(Object.keys(billing_address || {}).length ? { billing_address } : {}),
-      ...(tax_number_type && tax_number ? { tax_identifier: { number: tax_number, number_type: tax_number_type } } : {}),
-      ...(Object.keys(rest)?.length ? { metadata: rest } : {}),
-    };
-  }
-
   /**
    * Finalize the order.
    *
@@ -192,7 +142,7 @@ export class ScSessionProvider {
 
     // Get current form state.
     const json = await this.el.querySelector('sc-form').getFormJson();
-    let data = this.parseFormData(json);
+    let data = parseFormData(json);
 
     // first lets make sure the session is updated before we process it.
     try {
