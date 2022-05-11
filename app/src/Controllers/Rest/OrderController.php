@@ -164,12 +164,6 @@ class OrderController extends RestController {
 			return $linked;
 		}
 
-		// maybe login the user if a password is sent.
-		$login = $this->maybeLoginUser( $request->get_param( 'email' ), $request->get_param( 'password' ) );
-		if ( is_wp_error( $login ) ) {
-			return $login;
-		}
-
 		// return the order.
 		return $order;
 	}
