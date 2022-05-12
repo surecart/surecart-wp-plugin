@@ -49,7 +49,7 @@ class IntegrationsController extends RestController {
 				'page'     => $page,
 				'per_page' => $per_page,
 			]
-		)->all();
+		);
 
 		$response = rest_ensure_response( $items );
 		$response->header( 'X-WP-Total', (int) $total );
