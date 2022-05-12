@@ -48,7 +48,7 @@ class RequestService {
 	 *
 	 * @param string $base_path The rest api base path.
 	 */
-	public function __construct( $token = '', $base_path = '/api/v1', $errors_service = null ) {
+	public function __construct( $token = '', $base_path = '/v1', $errors_service = null ) {
 		// error handing service.
 		$this->errors_service = $errors_service ? $errors_service : new ErrorsService();
 		// set the token.
