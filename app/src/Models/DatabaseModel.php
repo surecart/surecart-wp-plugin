@@ -574,7 +574,7 @@ abstract class DatabaseModel implements ArrayAccess, JsonSerializable, Arrayable
 		foreach ( $result as $data ) {
 			$models[] = new static( $data );
 		}
-		return new Collection( $models );
+		return $models;
 	}
 
 	/**
@@ -842,7 +842,7 @@ abstract class DatabaseModel implements ArrayAccess, JsonSerializable, Arrayable
 			}
 			$collection->data = $models;
 		}
-		$this->attributes[ $attribute ] = new Collection( $collection );
+		$this->attributes[ $attribute ] = $collection;
 	}
 
 	/**
