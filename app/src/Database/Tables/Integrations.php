@@ -64,7 +64,7 @@ class Integrations {
 			surecart_model_id varchar(155) NOT NULL,
 			integration_id bigint(20) NOT NULL,
 			created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
-            updated_at TIMESTAMP NOT NULL,
+            updated_at TIMESTAMP NULL,
             deleted_at TIMESTAMP NULL,
 			PRIMARY KEY  (id),
             KEY surecart_model_id (surecart_model_id),

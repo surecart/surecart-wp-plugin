@@ -47,8 +47,9 @@ class Table {
 
 		// use dbDelta to create the table.
 		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
-		dbDelta( "CREATE TABLE $full_table_name ( $columns ) $table_options" );
+		$created = dbDelta( "CREATE TABLE $full_table_name ( $columns ) $table_options" );
 		update_option( "{$name}_database_version", $version );
+		return $created;
 	}
 
 	/**
@@ -59,7 +60,7 @@ class Table {
 	 */
 	public function drop( $name ) {
 		global $wpdb;
-		$dropped = $wpdb->query( $wpdb->prepare( 'DROP TABLE IF EXISTS %s', $name ) );
+		$dropped = $wpdb->query( $wpdb->prepare( 'DROP TABLE IF EXISTS `%s`', $name ) );
 		if ( true === $dropped ) {
 			delete_option( "{$name}_database_version" );
 		}

@@ -109,9 +109,6 @@ class OrderControllerTest extends SureCartUnitTestCase
 	    $controller->maybeLinkCustomer($paid_order, $request);
 	}
 
-	/**
-	 * @group failing
-	 */
 	public function test_finalize() {
 		// finalized order
 		$finalized_order = (object) [
@@ -155,9 +152,6 @@ class OrderControllerTest extends SureCartUnitTestCase
 		$this->assertSame($finalized_order->id, $controller_order->id);
 	}
 
-	/**
-	 * @group failing
-	 */
 	public function test_confirm() {
 		// set up request.
 		$request = new WP_REST_Request('POST', '/surecart/v1/orders/testorder/finalize');
