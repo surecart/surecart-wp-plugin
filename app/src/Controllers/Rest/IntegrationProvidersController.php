@@ -1,0 +1,36 @@
+<?php
+
+namespace SureCart\Controllers\Rest;
+
+/**
+ * Handle integration provider requests through the REST API
+ */
+class IntegrationProvidersController {
+	/**
+	 * List providers for the integration providers for a model.
+	 * This is done through code, so we expose a filter here.
+	 *
+	 * @param \WP_REST_Request $request Rest Request.
+	 *
+	 * @return \WP_REST_Response|\WP_Error
+	 */
+	public function index( \WP_REST_Request $request ) {
+		$providers = apply_filters( 'surecart/integrations/providers', [], $request->get_param( 'model' ), $request );
+		$providers = apply_filters( "surecart/integrations/providers/{$request->get_param( 'model' )}", [], $request->get_param( 'model' ), $request );
+		return rest_ensure_response( $providers );
+	}
+
+	/**
+	 * List the items to choose from when the provider is chosen.
+	 * This is done through code, so we expose a filter here.
+	 *
+	 * @param \WP_REST_Request $request Rest Request.
+	 *
+	 * @return \WP_REST_Response|\WP_Error
+	 */
+	public function items( \WP_REST_Request $request ) {
+		$providers = apply_filters( 'surecart/integrations/providers//items', [], $request->get_param( 'provider' ), $request->get_param( 'model' ), $request );
+		$providers = apply_filters( "surecart/integrations/providers/{$request->get_param( 'provider' )}/items", [], $request->get_param( 'model' ), $request );
+		return rest_ensure_response( $providers );
+	}
+}

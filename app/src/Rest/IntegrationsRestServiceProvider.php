@@ -2,6 +2,7 @@
 
 namespace SureCart\Rest;
 
+use SureCart\Controllers\Rest\IntegrationProvidersController;
 use SureCart\Controllers\Rest\IntegrationsController;
 use SureCart\Rest\RestServiceInterface;
 

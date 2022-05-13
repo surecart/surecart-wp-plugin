@@ -26,7 +26,6 @@ return [
 		\SureCart\WordPress\ShortcodesServiceProvider::class,
 		\SureCart\WordPress\Admin\Menus\AdminMenuPageServiceProvider::class,
 		\SureCart\WordPress\Admin\Notices\AdminNoticesServiceProvider::class,
-		\SureCart\Integrations\DiviServiceProvider::class,
 		\SureCartAppCore\Assets\AssetsServiceProvider::class,
 		\SureCart\Routing\RouteConditionsServiceProvider::class,
 		\SureCart\Routing\AdminRouteServiceProvider::class,
@@ -46,6 +45,7 @@ return [
 		\SureCart\Rest\FilesRestServiceProvider::class,
 		\SureCart\Rest\PurchasesRestServiceProvider::class,
 		\SureCart\Rest\IntegrationsRestServiceProvider::class,
+		\SureCart\Rest\IntegrationProvidersRestServiceProvider::class,
 		\SureCart\Rest\CustomerRestServiceProvider::class,
 		\SureCart\Rest\CustomerLinksRestServiceProvider::class,
 		\SureCart\Rest\PaymentMethodsRestServiceProvider::class,
@@ -63,6 +63,10 @@ return [
 		\SureCart\Rest\OrderRestServiceProvider::class,
 		\SureCart\Rest\InvoicesRestServiceProvider::class,
 		\SureCart\Rest\WebhooksRestServiceProvider::class,
+
+		// integrations.
+		\SureCart\Integrations\DiviServiceProvider::class,
+		\SureCart\Integrations\LearnDash\LearnDashServiceProvider::class,
 	],
 
 	/**
