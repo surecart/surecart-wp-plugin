@@ -51,7 +51,7 @@ export class ScDropdown {
    * Enable this option to prevent the panel from being clipped when the component is placed inside a container with
    * `overflow: auto|scroll`.
    */
-  @Prop() hoist: boolean = true;
+  @Prop() hoist: boolean = false;
 
   /** Determines whether the dropdown should hide when a menu item is selected */
   @Prop({ attribute: 'close-on-select', reflect: true }) closeOnSelect: boolean = true;

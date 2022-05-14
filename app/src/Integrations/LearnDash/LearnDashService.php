@@ -26,8 +26,8 @@ class LearnDashService {
 	 * @return void
 	 */
 	public function bootstrap() {
-		add_filter( "surecart/integrations/providers/{$this->model}", [ $this, 'addToProviderList' ], 9 );
-		add_filter( "surecart/integrations/providers/{$this->slug}/items", [ $this, 'getItems' ], 9 );
+		add_filter( "surecart/integrations/providers/list/{$this->model}", [ $this, 'addToProviderList' ], 9 );
+		add_filter( "surecart/integrations/providers/{$this->slug}/{$this->model}/items", [ $this, 'getItems' ], 9 );
 	}
 
 	/**
@@ -63,6 +63,10 @@ class LearnDashService {
 			$posts   = \learndash_get_posts_by_price_type( 'sfwd-courses', '', true );
 			$items[] = $posts;
 		}
+		$items[] = [
+			'label' => __( 'Test Course', 'surecart' ),
+			'value' => 12,
+		];
 		return $items;
 	}
 }

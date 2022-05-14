@@ -713,13 +713,40 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
+          * The distance in pixels from which to offset the panel away from its trigger.
+         */
+        "distance": number;
+        /**
+          * Enable this option to prevent the panel from being clipped when the component is placed inside a container with `overflow: auto|scroll`.
+         */
+        "hoist": boolean;
+        /**
           * Indicates whether or not the dropdown is open. You can use this in lieu of the show/hide methods.
          */
         "open"?: boolean;
         /**
+          * The placement of the dropdown.
+         */
+        "placement": | 'top'
+    | 'top-start'
+    | 'top-end'
+    | 'bottom'
+    | 'bottom-start'
+    | 'bottom-end'
+    | 'right'
+    | 'right-start'
+    | 'right-end'
+    | 'left'
+    | 'left-start'
+    | 'left-end';
+        /**
           * The placement of the dropdown panel
          */
         "position": 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
+        /**
+          * The distance in pixels from which to offset the panel along its trigger.
+         */
+        "skidding": number;
     }
     interface ScEmpty {
         "icon": string;
@@ -4046,6 +4073,14 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
+          * The distance in pixels from which to offset the panel away from its trigger.
+         */
+        "distance"?: number;
+        /**
+          * Enable this option to prevent the panel from being clipped when the component is placed inside a container with `overflow: auto|scroll`.
+         */
+        "hoist"?: boolean;
+        /**
           * Emitted when the dropdown closes. Calling `event.preventDefault()` will prevent it from being closed.
          */
         "onScHide"?: (event: CustomEvent<void>) => void;
@@ -4058,9 +4093,28 @@ declare namespace LocalJSX {
          */
         "open"?: boolean;
         /**
+          * The placement of the dropdown.
+         */
+        "placement"?: | 'top'
+    | 'top-start'
+    | 'top-end'
+    | 'bottom'
+    | 'bottom-start'
+    | 'bottom-end'
+    | 'right'
+    | 'right-start'
+    | 'right-end'
+    | 'left'
+    | 'left-start'
+    | 'left-end';
+        /**
           * The placement of the dropdown panel
          */
         "position"?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
+        /**
+          * The distance in pixels from which to offset the panel along its trigger.
+         */
+        "skidding"?: number;
     }
     interface ScEmpty {
         "icon"?: string;

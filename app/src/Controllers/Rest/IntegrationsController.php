@@ -30,13 +30,13 @@ class IntegrationsController extends RestController {
 		$integration = new Integration();
 
 		// integration model ids.
-		if ( $request->get_param( 'integration_model_ids' ) ) {
-			$integration = $integration->whereIn( 'integration_model_id', $request->get_param( 'integration_model_ids' ) );
+		if ( $request->get_param( 'integration_ids' ) ) {
+			$integration = $integration->whereIn( 'integration_id', $request->get_param( 'integration_ids' ) );
 		}
 
 		// model ids.
-		if ( $request->get_param( 'surecart_model_ids' ) ) {
-			$integration = $integration->whereIn( 'surecart_model_id', $request->get_param( 'surecart_model_ids' ) );
+		if ( $request->get_param( 'model_ids' ) ) {
+			$integration = $integration->whereIn( 'model_id', $request->get_param( 'model_ids' ) );
 		}
 
 		$total    = $integration->count();

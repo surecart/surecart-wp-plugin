@@ -15,6 +15,13 @@ class Integration extends DatabaseModel {
 	protected $table_name = 'surecart_integrations';
 
 	/**
+	 * The object name
+	 *
+	 * @var string
+	 */
+	protected $object_name = 'integration';
+
+	/**
 	 * Always use integer for integration_id.
 	 *
 	 * @param mixed $value

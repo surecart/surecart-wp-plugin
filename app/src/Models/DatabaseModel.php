@@ -408,7 +408,20 @@ abstract class DatabaseModel implements ArrayAccess, JsonSerializable, Arrayable
 			}
 		}
 
+		$this->attributes['object'] = $this->object_name;
+
 		return apply_filters( "surecart/{$this->object_name}/set_attributes", $this );
+	}
+
+	/**
+	 * Make sure ID is always int.
+	 *
+	 * @param mixed $value Id.
+	 *
+	 * @return void
+	 */
+	public function setIdAttribute( $value ) {
+		$this->attributes['id'] = (int) $value;
 	}
 
 	/**

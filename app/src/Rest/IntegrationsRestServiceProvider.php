@@ -69,7 +69,7 @@ class IntegrationsRestServiceProvider extends RestServiceProvider implements Res
 	 */
 	public function get_collection_params() {
 		return [
-			'surecart_model_ids'    => [
+			'model_ids'       => [
 				'description' => esc_html__( 'The SureCart model id.', 'surecart' ),
 				'type'        => 'array',
 				'items'       => [
@@ -77,18 +77,18 @@ class IntegrationsRestServiceProvider extends RestServiceProvider implements Res
 				],
 				'default'     => [],
 			],
-			'integration_model_ids' => [
+			'integration_ids' => [
 				'type'    => 'array',
 				'items'   => [
 					'type' => 'integer',
 				],
 				'default' => [],
 			],
-			'page'                  => [
+			'page'            => [
 				'description' => esc_html__( 'The page of items you want returned.', 'surecart' ),
 				'type'        => 'integer',
 			],
-			'per_page'              => [
+			'per_page'        => [
 				'description' => esc_html__( 'A limit on the number of items to be returned, between 1 and 100.', 'surecart' ),
 				'type'        => 'integer',
 				'minimum'     => 1,

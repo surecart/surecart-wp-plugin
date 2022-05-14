@@ -32,7 +32,7 @@ class IntegrationProvidersRestServiceProvider extends RestServiceProvider implem
 		// List available providers for a specific model.
 		register_rest_route(
 			"$this->name/v$this->version",
-			$this->endpoint . '/(?P<model>\S+)',
+			$this->endpoint,
 			[
 				[
 					'methods'             => \WP_REST_Server::READABLE,
@@ -45,19 +45,19 @@ class IntegrationProvidersRestServiceProvider extends RestServiceProvider implem
 		);
 
 		// list all item choices for the provider.
-		// register_rest_route(
-		// "$this->name/v$this->version",
-		// $this->endpoint . '/(?P<model>\S+)/(?P<provider>\S+)/',
-		// [
-		// [
-		// 'methods'             => \WP_REST_Server::EDITABLE,
-		// 'callback'            => $this->callback( $this->controller, 'items' ),
-		// 'permission_callback' => [ $this, 'get_items_permission_check' ],
-		// ],
-		// Register our schema callback.
-		// 'schema' => [ $this, 'get_item_schema' ],
-		// ]
-		// );
+		register_rest_route(
+			"$this->name/v$this->version",
+			$this->endpoint . '/(?P<provider>\S+)',
+			[
+				[
+					'methods'             => \WP_REST_Server::READABLE,
+					'callback'            => $this->callback( $this->controller, 'items' ),
+					'permission_callback' => [ $this, 'get_items_permission_check' ],
+				],
+				// Register our schema callback .
+				'schema' => [ $this, 'get_item_schema' ],
+			]
+		);
 	}
 
 	/**
@@ -98,6 +98,10 @@ class IntegrationProvidersRestServiceProvider extends RestServiceProvider implem
 	 */
 	public function get_collection_params() {
 		return [
+			'model'    => [
+				'description' => __( 'The model to get integration providers for.', 'surecart' ),
+				'type'        => 'string',
+			],
 			'page'     => [
 				'description' => esc_html__( 'The page of items you want returned.', 'surecart' ),
 				'type'        => 'integer',

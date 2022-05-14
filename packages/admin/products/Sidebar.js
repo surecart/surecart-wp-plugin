@@ -10,7 +10,7 @@ import Box from '../ui/Box';
 import Definition from '../ui/Definition';
 import Files from './modules/Files';
 import Image from './modules/Image';
-import Integrations from './modules/integrations';
+import Integrations from './modules/integrations/Integrations';
 import Taxes from './modules/Tax';
 import Upgrades from './modules/Upgrades';
 

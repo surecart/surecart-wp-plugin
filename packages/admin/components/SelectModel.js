@@ -16,6 +16,7 @@ export default ({
 	className,
 	onQuery,
 	onFetch,
+	name,
 	prefix,
 	loading,
 }) => {
@@ -39,6 +40,7 @@ export default ({
 			placeholder={placeholder}
 			searchPlaceholder={searchPlaceholder}
 			search
+			name={name}
 			position={position}
 			onScOpen={onFetch}
 			onScClose={onClose}

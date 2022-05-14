@@ -13,6 +13,7 @@ const {
 	coupon,
 	promotion,
 	order,
+	integration,
 	customer,
 	product_group,
 	subscription,
@@ -83,6 +84,7 @@ coupon.define({
 });
 
 product_group.define({});
+integration.define({});
 
 export const normalizeEntities = (data) => {
 	if (entities?.[data?.[0]?.object]) {
