@@ -29,7 +29,31 @@ class IntegrationsRestServiceProvider extends RestServiceProvider implements Res
 	 *
 	 * @var array
 	 */
-	protected $methods = [ 'index', 'create', 'find', 'edit' ];
+	protected $methods = [ 'index', 'create' ];
+
+	public function registerRoutes() {
+		register_rest_route(
+			"$this->name/v$this->version",
+			$this->endpoint . '/(?P<id>\d+)',
+			[
+				[
+					'methods'             => \WP_REST_Server::READABLE,
+					'callback'            => $this->callback( $this->controller, 'find' ),
+					'permission_callback' => [ $this, 'get_item_permissions_check' ],
+				],
+				[
+					'methods'             => \WP_REST_Server::EDITABLE,
+					'callback'            => $this->callback( $this->controller, 'edit' ),
+					'permission_callback' => [ $this, 'update_item_permissions_check' ],
+				],
+				[
+					'methods'             => \WP_REST_Server::DELETABLE,
+					'callback'            => $this->callback( $this->controller, 'delete' ),
+					'permission_callback' => [ $this, 'delete_item_permissions_check' ],
+				],
+			]
+		);
+	}
 
 	/**
 	 * Get our sample schema for a post.
@@ -50,11 +74,17 @@ class IntegrationsRestServiceProvider extends RestServiceProvider implements Res
 			'type'       => 'object',
 			// In JSON Schema you can specify object properties in the properties attribute.
 			'properties' => [
-				'id' => [
+				'id'         => [
 					'description' => esc_html__( 'Unique identifier for the object.', 'surecart' ),
 					'type'        => 'string',
 					'context'     => [ 'view', 'edit', 'embed' ],
 					'readonly'    => true,
+				],
+				'model_name' => [
+					'description' => esc_html__( 'The SureCart model name.', 'surecart' ),
+					'type'        => 'string',
+					'context'     => [ 'view', 'edit', 'embed' ],
+					'required'    => true,
 				],
 			],
 		];

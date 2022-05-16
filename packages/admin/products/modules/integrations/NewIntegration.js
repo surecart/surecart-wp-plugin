@@ -4,29 +4,42 @@ import { css, Global, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
 import { useState, Fragment } from '@wordpress/element';
-
 import { Modal, Button } from '@wordpress/components';
+import { store as coreStore } from '@wordpress/core-data';
 import { ScAlert, ScButton, ScForm } from '@surecart/components-react';
 import SelectIntegration from './SelectIntegration';
+import { useDispatch } from '@wordpress/data';
 
 export default ({ id, onRequestClose }) => {
 	const [saving, setSaving] = useState(false);
 	const [error, setError] = useState(null);
 	const [provider, setProvider] = useState(null);
 	const [item, setItem] = useState(null);
+	const { receiveEntityRecords } = useDispatch(coreStore);
 
-	const onSubmit = async (e) => {
+	const onSubmit = async () => {
 		try {
 			setSaving(true);
-			await apiFetch({
+			const integration = await apiFetch({
 				method: 'POST',
 				path: `surecart/v1/integrations`,
 				data: {
+					model_name: 'product',
 					model_id: id,
 					integration_id: item,
 					provider,
 				},
 			});
+			receiveEntityRecords(
+				'surecart',
+				'integration',
+				integration,
+				{
+					context: 'edit',
+					model_ids: [id],
+				},
+				true
+			);
 			onRequestClose();
 		} catch (e) {
 			console.error(e);
@@ -66,7 +79,10 @@ export default ({ id, onRequestClose }) => {
 						--sc-form-row-spacing: var(--sc-spacing-large);
 					`}
 				>
-					<ScAlert open={error}>{error}</ScAlert>
+					<ScAlert open={error} type="danger">
+						{error}
+					</ScAlert>
+
 					<SelectIntegration
 						model="product"
 						provider={provider}
@@ -92,7 +108,7 @@ export default ({ id, onRequestClose }) => {
 							disabled={saving}
 							loading={saving}
 						>
-							{__('Create', 'surecart')}
+							{__('Add Integration', 'surecart')}
 						</ScButton>
 						<Button onClick={onRequestClose}>
 							{__('Cancel', 'surecart')}

@@ -408,8 +408,6 @@ abstract class DatabaseModel implements ArrayAccess, JsonSerializable, Arrayable
 			}
 		}
 
-		$this->attributes['object'] = $this->object_name;
-
 		return apply_filters( "surecart/{$this->object_name}/set_attributes", $this );
 	}
 
@@ -607,7 +605,7 @@ abstract class DatabaseModel implements ArrayAccess, JsonSerializable, Arrayable
 	public function first() {
 		$this->query = $this->getQuery();
 		$result      = $this->query->one();
-		return new static( $result );
+		return $result ? new static( $result ) : null;
 	}
 
 	/**
@@ -802,7 +800,7 @@ abstract class DatabaseModel implements ArrayAccess, JsonSerializable, Arrayable
 			return false;
 		}
 
-		$deleted = $this->getQuery()->where( 'ID', $this->id )->delete();
+		$deleted = $this->getQuery()->where( 'ID', $id )->delete();
 		if ( false === $deleted ) {
 			return new \WP_Error( 'could_not_delete', 'Could not delete.' );
 		}
@@ -864,7 +862,7 @@ abstract class DatabaseModel implements ArrayAccess, JsonSerializable, Arrayable
 	 * @return array
 	 */
 	public function getAttributes() {
-		return json_decode( wp_json_encode( $this->attributes ), true );
+		return json_decode( wp_json_encode( array_merge( $this->attributes, [ 'object' => $this->object_name ] ) ), true );
 	}
 
 	/**

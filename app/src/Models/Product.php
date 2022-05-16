@@ -34,4 +34,14 @@ class Product extends Model {
 	public function setPricesAttribute( $value ) {
 		$this->setCollection( 'prices', $value, Price::class );
 	}
+
+	/**
+	 * Set the product attribute
+	 *
+	 * @param  string $value Product properties.
+	 * @return void
+	 */
+	public function setPurchaseAttribute( $value ) {
+		$this->setRelation( 'purchase', $value, Purchase::class );
+	}
 }

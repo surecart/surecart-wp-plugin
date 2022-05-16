@@ -10,7 +10,7 @@ use SureCart\Models\Traits\HasPrice;
  * Subscription model
  */
 class Subscription extends Model {
-	use HasCustomer, HasOrder, HasPrice;
+	use HasCustomer, HasOrder, HasPrice, HasPurchase;
 
 	/**
 	 * Rest API endpoint

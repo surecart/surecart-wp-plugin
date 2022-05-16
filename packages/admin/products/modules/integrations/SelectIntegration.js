@@ -1,105 +1,52 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { useState, useEffect } from '@wordpress/element';
+import { useState, Fragment } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-import apiFetch from '@wordpress/api-fetch';
-import { addQueryArgs } from '@wordpress/url';
+import { store as coreStore } from '@wordpress/core-data';
 
 import SelectModel from '../../../components/SelectModel';
-import { store } from '../../../store/data';
-import { ScAlert, ScFormControl } from '@surecart/components-react';
-import { useDispatch, useSelect } from '@wordpress/data';
+import { ScAlert, ScFormControl, ScSkeleton } from '@surecart/components-react';
+import { useSelect } from '@wordpress/data';
 
 export default ({ model, position, provider, setProvider, item, setItem }) => {
-	const [loadingProviders, setLoadingProviders] = useState(false);
-	const [itemChoices, setItemChoices] = useState([]);
-	const [loadingItemChoices, setLoadingItemChoices] = useState(false);
 	const [error, setError] = useState(false);
 
-	const providers = useSelect((select) =>
-		select(store).selectCollection('integration_provider')
-	);
-	const { receiveModels } = useDispatch(store);
-
-	useEffect(() => {
-		fetchProviders();
+	const { providers, loadingProviders } = useSelect((select) => {
+		const queryArgs = [
+			'surecart',
+			'integration_provider',
+			{ context: 'edit', model },
+		];
+		return {
+			providers: select(coreStore).getEntityRecords(...queryArgs),
+			loading: select(coreStore).isResolving(
+				'getEntityRecords',
+				queryArgs
+			),
+		};
 	}, []);
 
-	useEffect(() => {
-		if (provider) {
-			fetchItemChoices();
-		}
-	}, [provider]);
-
-	const fetchProviders = async () => {
-		try {
-			setLoadingProviders(true);
-			const response = await apiFetch({
-				path: addQueryArgs(`surecart/v1/integration_providers`, {
-					context: 'edit',
-					model,
-					per_page: 100,
-				}),
-			});
-			receiveModels(
-				response.map(({ name: providerName, slug }) => ({
-					object: 'integration_provider',
-					id: slug,
-					name: providerName,
-				}))
-			);
-		} catch (e) {
-			console.log(e);
-			setError(e?.message || __('An error occurred', 'surecart'));
-		} finally {
-			setLoadingProviders(false);
-		}
-	};
-
-	const fetchItemChoices = async () => {
-		try {
-			setItemChoices([]);
-			setLoadingItemChoices(true);
-			const response = await apiFetch({
-				path: addQueryArgs(
-					`surecart/v1/integration_providers/${provider}`,
-					{
-						context: 'edit',
-						model,
-						per_page: 100,
-					}
+	const { items, loadingItems } = useSelect(
+		(select) => {
+			const queryArgs = [
+				'surecart',
+				'integration_provider_item',
+				{ context: 'edit', model, provider },
+			];
+			if (!provider) return { items: [], loadingItems: false };
+			return {
+				items: select(coreStore).getEntityRecords(...queryArgs),
+				loadingItems: select(coreStore).isResolving(
+					'getEntityRecords',
+					queryArgs
 				),
-			});
-			setItemChoices(response);
-		} catch (e) {
-			console.log(e);
-			setError(e?.message || __('An error occurred', 'surecart'));
-		} finally {
-			setLoadingItemChoices(false);
-		}
-	};
-
-	const renderItemChoices = () => {
-		return (
-			<div hidden={!provider}>
-				<ScFormControl label={__('Item', 'surecart')} required>
-					<SelectModel
-						placeholder={__('Select an Item', 'surecart')}
-						position={position || 'bottom-left'}
-						choices={itemChoices || []}
-						loading={loadingItemChoices}
-						name="item"
-						required
-						value={item}
-						onSelect={setItem}
-					/>
-				</ScFormControl>
-			</div>
-		);
-	};
+			};
+		},
+		[provider]
+	);
 
 	return (
-		<>
+		<Fragment>
 			<ScAlert type="danger" open={error}>
 				{error}
 			</ScAlert>
@@ -129,7 +76,25 @@ export default ({ model, position, provider, setProvider, item, setItem }) => {
 				</ScFormControl>
 			</div>
 
-			{renderItemChoices()}
-		</>
+			<div hidden={!provider}>
+				<ScFormControl label={__('Item', 'surecart')} required>
+					<SelectModel
+						placeholder={__('Select an Item', 'surecart')}
+						position={position || 'bottom-left'}
+						choices={(items || []).map(({ id, label }) => {
+							return {
+								value: id,
+								label,
+							};
+						})}
+						loading={loadingItems}
+						name="item"
+						required
+						value={item}
+						onSelect={setItem}
+					/>
+				</ScFormControl>
+			</div>
+		</Fragment>
 	);
 };

@@ -9,6 +9,13 @@ use SureCart\Models\Integration;
  */
 class IntegrationsController extends RestController {
 	/**
+	 * The model class.
+	 *
+	 * @var string
+	 */
+	protected $class = Integration::class;
+
+	/**
 	 * Create a product integration.
 	 *
 	 * @param \WP_REST_Request $request Rest Request.
@@ -98,11 +105,6 @@ class IntegrationsController extends RestController {
 	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function delete( \WP_REST_Request $request ) {
-		$model = $this->middleware( new $this->class(), $request );
-		if ( is_wp_error( $model ) ) {
-			return $model;
-		}
-
-		return $model->delete( $request['id'] );
+		return ( new $this->class() )->delete( $request['id'] );
 	}
 }

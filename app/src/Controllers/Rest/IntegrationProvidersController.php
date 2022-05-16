@@ -31,4 +31,17 @@ class IntegrationProvidersController {
 		$providers = apply_filters( "surecart/integrations/providers/{$request->get_param( 'provider' )}/{$request->get_param( 'model' )}/items", [], $request );
 		return rest_ensure_response( $providers );
 	}
+
+	/**
+	 * List the items to choose from when the provider is chosen.
+	 * This is done through code, so we expose a filter here.
+	 *
+	 * @param \WP_REST_Request $request Rest Request.
+	 *
+	 * @return \WP_REST_Response|\WP_Error
+	 */
+	public function item( \WP_REST_Request $request ) {
+		$providers = apply_filters( "surecart/integrations/providers/{$request->get_param( 'provider' )}/item", [], $request['id'], $request );
+		return rest_ensure_response( $providers );
+	}
 }

@@ -22,6 +22,13 @@ class Integration extends DatabaseModel {
 	protected $object_name = 'integration';
 
 	/**
+	 * Fillable items.
+	 *
+	 * @var array
+	 */
+	protected $fillable = [ 'id', 'model_name', 'model_id', 'integration_id', 'integration_slug', 'provider', 'integration_type' ];
+
+	/**
 	 * Always use integer for integration_id.
 	 *
 	 * @param mixed $value

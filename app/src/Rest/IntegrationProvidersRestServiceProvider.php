@@ -10,13 +10,6 @@ use SureCart\Rest\RestServiceInterface;
  */
 class IntegrationProvidersRestServiceProvider extends RestServiceProvider implements RestServiceInterface {
 	/**
-	 * Endpoint.
-	 *
-	 * @var string
-	 */
-	protected $endpoint = 'integration_providers';
-
-	/**
 	 * Rest Controller
 	 *
 	 * @var string
@@ -32,7 +25,7 @@ class IntegrationProvidersRestServiceProvider extends RestServiceProvider implem
 		// List available providers for a specific model.
 		register_rest_route(
 			"$this->name/v$this->version",
-			$this->endpoint,
+			'integration_providers',
 			[
 				[
 					'methods'             => \WP_REST_Server::READABLE,
@@ -47,11 +40,26 @@ class IntegrationProvidersRestServiceProvider extends RestServiceProvider implem
 		// list all item choices for the provider.
 		register_rest_route(
 			"$this->name/v$this->version",
-			$this->endpoint . '/(?P<provider>\S+)',
+			'integration_provider_items',
 			[
 				[
 					'methods'             => \WP_REST_Server::READABLE,
 					'callback'            => $this->callback( $this->controller, 'items' ),
+					'permission_callback' => [ $this, 'get_items_permission_check' ],
+				],
+				// Register our schema callback .
+				'schema' => [ $this, 'get_item_schema' ],
+			]
+		);
+
+		// list all item choices for the provider.
+		register_rest_route(
+			"$this->name/v$this->version",
+			'integration_provider_items/(?P<id>\d+)',
+			[
+				[
+					'methods'             => \WP_REST_Server::READABLE,
+					'callback'            => $this->callback( $this->controller, 'item' ),
 					'permission_callback' => [ $this, 'get_items_permission_check' ],
 				],
 				// Register our schema callback .

@@ -372,6 +372,9 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 		}
 
 		foreach ( $attributes as $key => $value ) {
+			// allow filtering attribute.
+			$value = apply_filters( "surecart/{$this->object_name}/set_attribute", $value, $key, $this );
+
 			// remove api attributes.
 			if ( in_array( $key, [ '_locale', 'rest_route' ], true ) ) {
 				continue;
@@ -387,7 +390,10 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 			}
 		}
 
-		return apply_filters( "surecart/{$this->object_name}/set_attributes", $this );
+		// Do an action.
+		do_action( "surecart/{$this->object_name}/attributes_set", $this );
+
+		return $this;
 	}
 
 	/**
