@@ -19,10 +19,16 @@
 		<sc-breadcrumb><?php esc_html_e( 'Settings' ); ?></sc-breadcrumb>
 	</sc-breadcrumbs>
 
-	<sc-tag>
-	<?php
-	// translators: Version number.
-	echo sprintf( esc_html__( 'Version %s', 'surecart' ), esc_html( \SureCart::plugin()->version() ) );
-	?>
-	</sc-tag>
+	<sc-flex>
+		<sc-button type="text" size="small" href="https://status.surecart.com" target="_blank">
+			<?php esc_html_e( 'SureCart Status' ); ?>
+			<sc-icon name="external-link" slot="suffix"></sc-icon>
+		</sc-button>
+		<sc-tag>
+			<?php
+			// translators: Version number.
+			echo sprintf( esc_html__( 'Version %s', 'surecart' ), esc_html( \SureCart::plugin()->version() ) );
+			?>
+		</sc-tag>
+	</sc-flex>
 </div>
