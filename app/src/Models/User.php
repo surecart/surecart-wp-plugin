@@ -266,6 +266,15 @@ class User implements ArrayAccess, JsonSerializable {
 	}
 
 	/**
+	 * Get the WordPress user.
+	 *
+	 * @return \WP_User|null;
+	 */
+	public function getWPUser() {
+		return $this->user;
+	}
+
+	/**
 	 * Get a specific attribute
 	 *
 	 * @param string $key Attribute name.

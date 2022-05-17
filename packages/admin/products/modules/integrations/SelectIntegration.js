@@ -8,7 +8,14 @@ import SelectModel from '../../../components/SelectModel';
 import { ScAlert, ScFormControl, ScSkeleton } from '@surecart/components-react';
 import { useSelect } from '@wordpress/data';
 
-export default ({ model, position, provider, setProvider, item, setItem }) => {
+export default ({
+	model,
+	position,
+	providerName,
+	setProvider,
+	item,
+	setItem,
+}) => {
 	const [error, setError] = useState(false);
 
 	const { providers, loadingProviders } = useSelect((select) => {
@@ -26,14 +33,16 @@ export default ({ model, position, provider, setProvider, item, setItem }) => {
 		};
 	}, []);
 
+	const provider = providers?.find((p) => p.slug === providerName);
+
 	const { items, loadingItems } = useSelect(
 		(select) => {
 			const queryArgs = [
 				'surecart',
 				'integration_provider_item',
-				{ context: 'edit', model, provider },
+				{ context: 'edit', model, provider: providerName },
 			];
-			if (!provider) return { items: [], loadingItems: false };
+			if (!providerName) return { items: [], loadingItems: false };
 			return {
 				items: select(coreStore).getEntityRecords(...queryArgs),
 				loadingItems: select(coreStore).isResolving(
@@ -42,7 +51,7 @@ export default ({ model, position, provider, setProvider, item, setItem }) => {
 				),
 			};
 		},
-		[provider]
+		[providerName]
 	);
 
 	return (
@@ -67,7 +76,7 @@ export default ({ model, position, provider, setProvider, item, setItem }) => {
 							label: provider.name,
 							value: provider.slug,
 						}))}
-						value={provider}
+						value={providerName}
 						loading={loadingProviders}
 						name="integration"
 						required
@@ -76,8 +85,12 @@ export default ({ model, position, provider, setProvider, item, setItem }) => {
 				</ScFormControl>
 			</div>
 
-			<div hidden={!provider}>
-				<ScFormControl label={__('Item', 'surecart')} required>
+			<div hidden={!providerName}>
+				<ScFormControl
+					label={provider?.item_label || __('Item', 'surecart')}
+					help={provider?.item_help}
+					required
+				>
 					<SelectModel
 						placeholder={__('Select an Item', 'surecart')}
 						position={position || 'bottom-left'}

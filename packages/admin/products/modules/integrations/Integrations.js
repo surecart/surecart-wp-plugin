@@ -31,7 +31,6 @@ export default ({ id }) => {
 		[id]
 	);
 
-	console.log({ integrations });
 	return (
 		<Box
 			loading={loading}

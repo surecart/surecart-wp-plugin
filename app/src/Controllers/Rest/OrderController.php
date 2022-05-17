@@ -174,8 +174,12 @@ class OrderController extends RestController {
 		$order = $order->where(
 			array_merge(
 				$request->get_query_params(),
-				[ 'refresh_status' => true ] // this part is important to sync with the processor for payment.
+				[ 'refresh_status' => true ] // Important: This will force syncing with the processor.
 			)
+		)->with(
+			[
+				'purchases', // Important: we need to make sure we expand the purchase to provide access.
+			]
 		)->find( $request['id'] );
 
 		if ( is_wp_error( $order ) ) {
@@ -190,6 +194,19 @@ class OrderController extends RestController {
 		if ( false === $linked ) {
 			return new \WP_Error( 'invalid_status', 'The order is not paid.', [ 'status' => 400 ] );
 		}
+
+		// purchase created.
+		if ( ! empty( $order->purchases ) ) {
+			foreach ( $order->purchases as $purchase ) {
+				if ( empty( $purchase->revoked ) ) {
+					// broadcast the webhook.
+					\SureCart::actions()->doOnce( 'surecart/purchase_created', $purchase );
+				}
+			}
+		}
+
+		// the order is confirmed.
+		do_action( 'surecart/order/confirmed', $order, $request );
 
 		// return the order.
 		return $order;

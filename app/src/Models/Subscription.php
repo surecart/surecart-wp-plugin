@@ -5,6 +5,7 @@ namespace SureCart\Models;
 use SureCart\Models\Traits\HasCustomer;
 use SureCart\Models\Traits\HasOrder;
 use SureCart\Models\Traits\HasPrice;
+use SureCart\Models\Traits\HasPurchase;
 
 /**
  * Subscription model
@@ -45,12 +46,16 @@ class Subscription extends Model {
 			return new \WP_Error( 'not_saved', 'Please create the subscription.' );
 		}
 
-		$canceled = \SureCart::request(
-			$this->endpoint . '/' . $this->attributes['id'] . '/cancel/',
+		$canceled = $this->with(
+			[
+				'purchase',
+			]
+		)->makeRequest(
 			[
 				'method' => 'PATCH',
 				'query'  => $this->query,
-			]
+			],
+			$this->endpoint . '/' . $this->attributes['id'] . '/cancel/'
 		);
 
 		if ( is_wp_error( $canceled ) ) {
@@ -62,6 +67,11 @@ class Subscription extends Model {
 		$this->fill( $canceled );
 
 		$this->fireModelEvent( 'canceled' );
+
+		// purchase revoked event.
+		if ( ! empty( $this->purchase->revoked ) ) {
+			\SureCart::actions()->doOnce( 'surecart/purchase_revoked', $this->purchase );
+		}
 
 		return $this;
 	}

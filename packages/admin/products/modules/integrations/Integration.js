@@ -13,14 +13,32 @@ import {
 } from '@surecart/components-react';
 import { useState } from '@wordpress/element';
 
-export default ({ integration: savedIntegration }) => {
+export default ({ integration }) => {
 	const [deleting, setDeleting] = useState(false);
-	console.log({ savedIntegration });
-	const { integration_id, provider, id } = savedIntegration;
+	const { integration_id, provider, id } = integration;
 
 	const { deleteEntityRecord } = useDispatch(coreStore);
 
-	const { integration, loading } = useSelect(
+	const { providerData, loading } = useSelect(
+		(select) => {
+			const queryArgs = [
+				'surecart',
+				'integration_provider',
+				provider,
+				{ context: 'edit', id: integration_id },
+			];
+			return {
+				providerData: select(coreStore).getEntityRecord(...queryArgs),
+				loading: select(coreStore).isResolving(
+					'getEntityRecord',
+					queryArgs
+				),
+			};
+		},
+		[integration_id]
+	);
+
+	const { integrationData, loadingIntegrationData } = useSelect(
 		(select) => {
 			const queryArgs = [
 				'surecart',
@@ -29,8 +47,10 @@ export default ({ integration: savedIntegration }) => {
 				{ context: 'edit', provider },
 			];
 			return {
-				integration: select(coreStore).getEntityRecord(...queryArgs),
-				loading: select(coreStore).isResolving(
+				integrationData: select(coreStore).getEntityRecord(
+					...queryArgs
+				),
+				loadingIntegrationData: select(coreStore).isResolving(
 					'getEntityRecord',
 					queryArgs
 				),
@@ -92,9 +112,9 @@ export default ({ integration: savedIntegration }) => {
 								font-weight: bold;
 							`}
 						>
-							{integration?.label}
+							{integrationData?.label}
 						</div>
-						{integration?.provider_label}
+						{providerData?.item_label}
 					</div>
 				</div>
 			)}

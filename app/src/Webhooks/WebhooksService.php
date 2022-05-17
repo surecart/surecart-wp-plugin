@@ -173,4 +173,20 @@ class WebhooksService {
 	public function domainMatches() {
 		return $this->domain_service->domainMatches();
 	}
+
+	/**
+	 * Broadcast the php hook.
+	 * This sets the webhook in a transient so that
+	 * it is not accidentally broadcasted twice.
+	 *
+	 * @return void
+	 */
+	public function broadcast( $event, $model ) {
+		$webhook = get_transient( 'surecart_webhook_' . $event . $model->id, false );
+		if ( false === $webhook ) {
+			// perform the action.
+			do_action( $event, $model );
+			set_transient( 'surecart_webhook_' . $event . $model->id, true, HOUR_IN_SECONDS );
+		}
+	}
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace SureCart\Integrations\LearnDash;
+namespace SureCart\Integrations\User;
 
 use SureCart\Integrations\Contracts\IntegrationInterface;
 use SureCart\Integrations\IntegrationService;
@@ -8,14 +8,14 @@ use SureCart\Integrations\IntegrationService;
 /**
  * Controls the LearnDash integration.
  */
-class LearnDashService extends IntegrationService implements IntegrationInterface {
+class UserService extends IntegrationService implements IntegrationInterface {
 	/**
 	 * Get the slug for the integration.
 	 *
 	 * @return string
 	 */
 	public function getSlug() {
-		return 'learndash-course';
+		return 'user';
 	}
 
 	/**
@@ -42,7 +42,7 @@ class LearnDashService extends IntegrationService implements IntegrationInterfac
 	 * @return string
 	 */
 	public function getName() {
-		return __( 'LearnDash Course', 'surecart' );
+		return __( 'Change WordPress User Role', 'surecart' );
 	}
 
 	/**
@@ -51,7 +51,7 @@ class LearnDashService extends IntegrationService implements IntegrationInterfac
 	 * @return string
 	 */
 	public function getItemLabel() {
-		return __( 'Course Access', 'surecart' );
+		return __( 'Change User Role', 'surecart' );
 	}
 
 	/**
@@ -60,7 +60,7 @@ class LearnDashService extends IntegrationService implements IntegrationInterfac
 	 * @return string
 	 */
 	public function getItemHelp() {
-		return __( 'Enable access to a LearnDash course.', 'surecart' );
+		return __( 'Change the user role of the user who purchased the product.', 'surecart' );
 	}
 
 	/**
@@ -71,41 +71,28 @@ class LearnDashService extends IntegrationService implements IntegrationInterfac
 	 * @return array The items for the integration.
 	 */
 	public function getItems( $items = [] ) {
-		$course_query = new \WP_Query(
-			[
-				'post_type' => 'sfwd-courses',
-				'nopaging'  => true,
-			]
-		);
-
-		if ( ( isset( $course_query->posts ) ) && ( ! empty( $course_query->posts ) ) ) {
-			$items = array_map(
-				function( $post ) {
-					return (object) [
-						'id'    => $post->ID,
-						'label' => $post->post_title,
-					];
-				},
-				$course_query->posts
-			);
+		$roles          = [];
+		$editable_roles = get_editable_roles();
+		foreach ( $editable_roles as $role => $details ) {
+			$sub['id']    = esc_attr( $role );
+			$sub['label'] = translate_user_role( $details['name'] );
+			$roles[]      = $sub;
 		}
-
-		return $items;
+		return $roles;
 	}
 
 	/**
 	 * Get the individual item.
 	 *
+	 * @param string $item The item record.
 	 * @param string $id Id for the record.
 	 *
 	 * @return array The item for the integration.
 	 */
-	public function getItem( $id ) {
-		$course = get_post( $id );
+	public function getItem( $role ) {
 		return [
-			'id'             => $id,
-			'provider_label' => __( 'LearnDash Course', 'surecart' ),
-			'label'          => $course->post_title,
+			'id'    => $role,
+			'label' => wp_roles()->get_names()[ $role ],
 		];
 	}
 
@@ -118,7 +105,7 @@ class LearnDashService extends IntegrationService implements IntegrationInterfac
 	 * @return boolean|void Returns true if the user course access updation was successful otherwise false.
 	 */
 	public function onPurchase( $integration, $wp_user ) {
-		$this->updateAccess( $integration->integration_id, $wp_user, true );
+		$this->toggleRole( $wp_user, $integration->integration_id, true );
 	}
 
 	/**
@@ -130,24 +117,25 @@ class LearnDashService extends IntegrationService implements IntegrationInterfac
 	 * @return boolean|void Returns true if the user course access updation was successful otherwise false.
 	 */
 	public function onPurchaseRevoked( $integration, $wp_user ) {
-		$this->updateAccess( $integration->integration_id, $wp_user, false );
+		$this->toggleRole( $wp_user, $integration->integration_id, false );
 	}
 
 	/**
-	 * Update access to a course.
+	 * Toggle the role
 	 *
-	 * @param integer  $course_id The course id.
-	 * @param \WP_User $wp_user The user.
-	 * @param boolean  $add True to add the user to the course, false to remove.
+	 * @param \WP_User $wp_user  The user object.
+	 * @param string   $role The role.
+	 * @param boolean  $add  True to add the role, false to remove.
 	 *
-	 * @return boolean|void Returns true if the user course access updation was successful otherwise false.
+	 * @return \WP_Role|false
 	 */
-	public function updateAccess( $course_id, $wp_user, $add = true ) {
-		// we don't have learndash installed.
-		if ( ! function_exists( 'ld_update_course_access' ) ) {
+	public function toggleRole( $wp_user, $role, $add = true ) {
+		// make sure the role exists.
+		$role_object = get_role( $role );
+		if ( ! $role_object ) {
 			return;
 		}
-		// update course access.
-		return \ld_update_course_access( $wp_user->ID, $course_id, ! $add );
+		// add or remove the role.
+		return $add ? $wp_user->add_role( $role ) : $wp_user->remove_role( $role );
 	}
 }

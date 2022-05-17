@@ -85,7 +85,7 @@ export default ({ id, onRequestClose }) => {
 
 					<SelectIntegration
 						model="product"
-						provider={provider}
+						providerName={provider}
 						setProvider={setProvider}
 						item={item}
 						setItem={setItem}

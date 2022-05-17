@@ -15,8 +15,21 @@ class IntegrationProvidersController {
 	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function index( \WP_REST_Request $request ) {
-		$providers = apply_filters( "surecart/integrations/providers/list/{$request->get_param( 'model' )}", [], $request->get_param( 'model' ), $request );
+		$providers = apply_filters( "surecart/integrations/providers/list/{$request->get_param( 'model' )}", [], $request );
 		return rest_ensure_response( $providers );
+	}
+
+	/**
+	 * List providers for the integration providers for a model.
+	 * This is done through code, so we expose a filter here.
+	 *
+	 * @param \WP_REST_Request $request Rest Request.
+	 *
+	 * @return \WP_REST_Response|\WP_Error
+	 */
+	public function find( \WP_REST_Request $request ) {
+		$provider = apply_filters( "surecart/integrations/providers/find/{$request->get_param( 'provider' )}", [], $request );
+		return rest_ensure_response( $provider );
 	}
 
 	/**
@@ -28,6 +41,10 @@ class IntegrationProvidersController {
 	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function items( \WP_REST_Request $request ) {
+		if ( $request['id'] ) {
+			return $this->item( $request );
+		}
+
 		$providers = apply_filters( "surecart/integrations/providers/{$request->get_param( 'provider' )}/{$request->get_param( 'model' )}/items", [], $request );
 		return rest_ensure_response( $providers );
 	}
@@ -41,7 +58,7 @@ class IntegrationProvidersController {
 	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function item( \WP_REST_Request $request ) {
-		$providers = apply_filters( "surecart/integrations/providers/{$request->get_param( 'provider' )}/item", [], $request['id'], $request );
-		return rest_ensure_response( $providers );
+		$item = apply_filters( "surecart/integrations/providers/{$request->get_param( 'provider' )}/item", $request['id'], $request );
+		return rest_ensure_response( $item );
 	}
 }

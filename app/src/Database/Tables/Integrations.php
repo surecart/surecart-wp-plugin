@@ -63,7 +63,7 @@ class Integrations {
             id bigint(20) unsigned NOT NULL auto_increment,
 			model_name varchar(155) NULL,
 			model_id varchar(155) NOT NULL,
-			integration_id bigint(20) NULL,
+			integration_id varchar(155) NULL,
 			integration_name varchar(155) NULL,
 			integration_slug varchar(155) NULL,
 			provider varchar(155) NOT NULL,
