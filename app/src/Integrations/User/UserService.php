@@ -3,12 +3,13 @@
 namespace SureCart\Integrations\User;
 
 use SureCart\Integrations\Contracts\IntegrationInterface;
+use SureCart\Integrations\Contracts\PurchaseSyncInterface;
 use SureCart\Integrations\IntegrationService;
 
 /**
  * Controls the LearnDash integration.
  */
-class UserService extends IntegrationService implements IntegrationInterface {
+class UserService extends IntegrationService implements IntegrationInterface, PurchaseSyncInterface {
 	/**
 	 * Get the slug for the integration.
 	 *
@@ -33,7 +34,8 @@ class UserService extends IntegrationService implements IntegrationInterface {
 	 * @return string
 	 */
 	public function getLogo() {
-		return 'learndash';
+		// phpcs:ignore
+		return 'wordpress';
 	}
 
 	/**
@@ -74,9 +76,9 @@ class UserService extends IntegrationService implements IntegrationInterface {
 		$roles          = [];
 		$editable_roles = get_editable_roles();
 		foreach ( $editable_roles as $role => $details ) {
-			$sub['id']    = esc_attr( $role );
-			$sub['label'] = translate_user_role( $details['name'] );
-			$roles[]      = $sub;
+			$sub['id']      = esc_attr( $role );
+			$sub['label']   = translate_user_role( $details['name'] );
+			$roles[ $role ] = $sub;
 		}
 		return $roles;
 	}
@@ -84,8 +86,7 @@ class UserService extends IntegrationService implements IntegrationInterface {
 	/**
 	 * Get the individual item.
 	 *
-	 * @param string $item The item record.
-	 * @param string $id Id for the record.
+	 * @param string $role The item role.
 	 *
 	 * @return array The item for the integration.
 	 */
@@ -97,19 +98,31 @@ class UserService extends IntegrationService implements IntegrationInterface {
 	}
 
 	/**
-	 * Enable Access to the course.
+	 * Add the role when the purchase is created.
 	 *
 	 * @param \SureCart\Models\Integration $integration The integrations.
 	 * @param \WP_User                     $wp_user The user.
 	 *
 	 * @return boolean|void Returns true if the user course access updation was successful otherwise false.
 	 */
-	public function onPurchase( $integration, $wp_user ) {
-		$this->toggleRole( $wp_user, $integration->integration_id, true );
+	public function onPurchaseCreated( $integration, $wp_user ) {
+		$this->toggleRole( $integration->integration_id, $wp_user, true );
 	}
 
 	/**
-	 * Remove a user role.
+	 * Add the role when the purchase is invoked
+	 *
+	 * @param \SureCart\Models\Integration $integration The integrations.
+	 * @param \WP_User                     $wp_user The user.
+	 *
+	 * @return boolean|void Returns true if the user course access updation was successful otherwise false.
+	 */
+	public function onPurchaseInvoked( $integration, $wp_user ) {
+		$this->onPurchaseCreated( $integration, $wp_user );
+	}
+
+	/**
+	 * Remove a user role when the purchase is revoked.
 	 *
 	 * @param \SureCart\Models\Integration $integration The integrations.
 	 * @param \WP_User                     $wp_user The user.
@@ -117,7 +130,7 @@ class UserService extends IntegrationService implements IntegrationInterface {
 	 * @return boolean|void Returns true if the user course access updation was successful otherwise false.
 	 */
 	public function onPurchaseRevoked( $integration, $wp_user ) {
-		$this->toggleRole( $wp_user, $integration->integration_id, false );
+		$this->toggleRole( $integration->integration_id, $wp_user, false );
 	}
 
 	/**
@@ -129,7 +142,7 @@ class UserService extends IntegrationService implements IntegrationInterface {
 	 *
 	 * @return \WP_Role|false
 	 */
-	public function toggleRole( $wp_user, $role, $add = true ) {
+	public function toggleRole( $role, $wp_user, $add = true ) {
 		// make sure the role exists.
 		$role_object = get_role( $role );
 		if ( ! $role_object ) {

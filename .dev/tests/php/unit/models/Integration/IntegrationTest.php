@@ -26,22 +26,23 @@ class IntegrationTest extends SureCartUnitTestCase {
 		$this->assertWPError( $not_found );
 
 		$created = Integration::create([
-			'surecart_model_id' => 'testmodel',
+			'model_id' => 'testmodel',
 			'integration_id' => 1
 		]);
-		$this->assertSame($created->integration_id,1);
-		$this->assertSame($created->surecart_model_id,'testmodel');
-		$this->assertNotEmpty($created->created_at);
+
+		$this->assertSame((int) $created->integration_id,1);
+		$this->assertSame($created->model_id,'testmodel');
 		$this->assertNotEmpty($created->id);
+		$this->assertNotEmpty($created->created_at);
 
 		$found = Integration::find($created->id);
 		$this->assertSame($found->integration_id,$created->integration_id);
-		$this->assertSame($found->surecart_model_id,$created->surecart_model_id);
+		$this->assertSame($found->model_id,$created->model_id);
 		$this->assertSame($found->created_at, $created->created_at);
 		$this->assertSame($found->id, $created->id);
 
 		$integration_2 = Integration::create([
-			'surecart_model_id' => 'testmodel2',
+			'model_id' => 'testmodel2',
 			'integration_id' => 2
 		]);
 
@@ -50,14 +51,12 @@ class IntegrationTest extends SureCartUnitTestCase {
 		$paginate = Integration::order_by('created_at')->paginate(['per_page' => 1, 'page' => 1]);
 		$this->assertCount(2,$get);
 		$this->assertCount(1,$paginate);
-		$this->assertInstanceOf(Collection::class,$paginate);
-		$this->assertInstanceOf(Collection::class,$get);
 
 		// find where.
 		$find = Integration::where('integration_id',2)->first();
-		$this->assertSame($find->integration_id,2);
-		$find_model = Integration::where('surecart_model_id','testmodel')->first();
-		$this->assertSame($find_model->surecart_model_id,'testmodel');
+		$this->assertSame((int)$find->integration_id,2);
+		$find_model = Integration::where('model_id','testmodel')->first();
+		$this->assertSame($find_model->model_id,'testmodel');
 
 		$updated = Integration::where('integration_id',2)->update([
 			'integration_id' => 3
@@ -66,6 +65,6 @@ class IntegrationTest extends SureCartUnitTestCase {
 		$this->assertSame($integration_2->id, $updated->id);
 		$this->assertEmpty($integration_2->updated_at);
 		$this->assertNotEmpty($updated->updated_at);
-		$this->assertSame(3, $updated->integration_id);
+		$this->assertSame(3, (int)$updated->integration_id);
 	}
 }

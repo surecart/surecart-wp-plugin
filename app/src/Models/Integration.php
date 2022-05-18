@@ -26,16 +26,5 @@ class Integration extends DatabaseModel {
 	 *
 	 * @var array
 	 */
-	protected $fillable = [ 'id', 'model_name', 'model_id', 'integration_id', 'integration_slug', 'provider', 'integration_type' ];
-
-	// /**
-	// * Always use integer for integration_id.
-	// *
-	// * @param mixed $value
-	// *
-	// * @return void
-	// */
-	// public function setIntegrationIdAttribute( $value ) {
-	// $this->attributes['integration_id'] = (int) $value;
-	// }
+	protected $fillable = [ 'id', 'model_name', 'model_id', 'integration_id', 'integration_slug', 'provider', 'integration_type', 'created_at', 'updated_at', 'deleted_at' ];
 }

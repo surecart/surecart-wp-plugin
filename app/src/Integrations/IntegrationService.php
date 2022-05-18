@@ -3,6 +3,7 @@
 namespace SureCart\Integrations;
 
 use SureCart\Integrations\Contracts\IntegrationInterface;
+use SureCart\Integrations\Contracts\PurchaseSyncInterface;
 use SureCart\Models\Integration;
 
 /**
@@ -98,146 +99,65 @@ abstract class IntegrationService implements IntegrationInterface {
 		add_filter( "surecart/integrations/providers/{$this->getSlug()}/{$this->getModel()}/items", [ $this, 'getItems' ], 9 );
 		add_filter( "surecart/integrations/providers/{$this->getSlug()}/item", [ $this, 'getItem' ], 9, 2 );
 
-		// purchase actions.
-		if ( method_exists( $this, 'onPurchase' ) ) {
-			add_action( 'surecart/purchase_created', [ $this, '_onPurchase' ], 9 );
-			add_action( 'surecart/purchase_invoked', [ $this, '_onPurchase' ], 9 );
-		}
-		if ( method_exists( $this, 'onPurchaseCreated' ) ) {
-			add_action( 'surecart/purchase_created', [ $this, '_onPurchaseCreated' ], 9 );
-		}
-		if ( method_exists( $this, 'onPurchaseInvoked' ) ) {
-			add_action( 'surecart/purchase_invoked', [ $this, '_onPurchaseInvoked' ], 9 );
-		}
-		if ( method_exists( $this, 'onPurchaseRevoked' ) ) {
-			add_action( 'surecart/purchase_revoked', [ $this, '_onPurchaseRevoked' ], 9 );
+		// implement purchase events if purchase sync interface is implemented.
+		if ( is_subclass_of( $this, PurchaseSyncInterface::class ) ) {
+			add_action( 'surecart/purchase_created', [ $this, 'callMethod' ], 9 );
+			add_action( 'surecart/purchase_invoked', [ $this, 'callMethod' ], 9 );
+			add_action( 'surecart/purchase_revoked', [ $this, 'callMethod' ], 9 );
 		}
 	}
 
+	/**
+	 * Get the method we will call for the action.
+	 *
+	 * @param string $action The action name.
+	 * @return string
+	 */
+	public function getActionMethod( $action ) {
+		switch ( $action ) {
+			case 'surecart/purchase_created':
+				return 'onPurchaseCreated';
+			case 'surecart/purchase_invoked':
+				return 'onPurchaseInvoked';
+			case 'surecart/purchase_revoked':
+				return 'onPurchaseRevoked';
+		}
+		return null;
+	}
 
 	/**
-	 * Register routes for the provider.
+	 * Call the method for the integration.
+	 *
+	 * @param \SureCart\Models\Purchase $purchase The purchase model.
 	 *
 	 * @return void
 	 */
-	public function registerRoutes() {
-		// list all item choices for the provider.
-		register_rest_route(
-			"$this->name/v$this->version",
-			"integration_provider_items/{$this->getSlug()}",
-			[
-				[
-					'methods'             => \WP_REST_Server::READABLE,
-					'callback'            => [ $this, 'getItems' ],
-					'permission_callback' => [ $this, 'get_items_permission_check' ],
-				],
-				// Register our schema callback .
-				'schema' => [ $this, 'get_item_schema' ],
-			]
-		);
+	public function callMethod( $purchase ) {
+		$method = $this->getActionMethod( $this->getCurrentAction() );
+		if ( ! $method ) {
+			return;
+		}
 
-		// get a specific item choice for the provider.
-		register_rest_route(
-			"$this->name/v$this->version",
-			"integration_provider_items/{$this->getSlug()}/(?P<id>\S)",
-			[
-				[
-					'methods'             => \WP_REST_Server::READABLE,
-					'callback'            => [ $this, 'getItem' ],
-					'permission_callback' => [ $this, 'get_items_permission_check' ],
-				],
-				// Register our schema callback .
-				'schema' => [ $this, 'get_item_schema' ],
-			]
-		);
-	}
-
-	/**
-	 * List items permissions check.
-	 *
-	 * @param \WP_REST_Request $request Full details about the request.
-	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
-	 */
-	public function getItemsPermissionsCheck( $request ) {
-		return current_user_can( 'edit', "sc_{$this->getModel()}s" );
-	}
-
-	/**
-	 * Get item permissions check.
-	 *
-	 * @param \WP_REST_Request $request Full details about the request.
-	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
-	 */
-	public function getItemPermissionsCheck( $request ) {
-		return current_user_can( 'edit', "sc_{$this->getModel()}s" );
-	}
-
-	/**
-	 * When a purchase is invoked or created.
-	 *
-	 * @param \SureCart\Models\Purchase $purchase Purchase model.
-	 */
-	public function _onPurchase( $purchase ) {
 		[ $integrations, $wp_user ] = $this->getIntegrationData( $purchase );
-		if ( method_exists( $this, 'onPurchase' ) ) {
-			foreach ( $integrations as $integration ) {
-				if ( ! $integration->id ) {
-					continue;
-				}
-				call_user_func_array( [ $this, 'onPurchase' ], [ $integration, $wp_user ] );
+		if ( ! method_exists( $this, $method ) || empty( $integrations ) ) {
+			return;
+		}
+
+		foreach ( $integrations as $integration ) {
+			if ( ! $integration->id ) {
+				continue;
 			}
+			call_user_func_array( [ $this, $method ], [ $integration, $wp_user ] );
 		}
 	}
 
 	/**
-	 * When a purchase is created.
+	 * Get the current called action.
 	 *
-	 * @param \SureCart\Models\Purchase $purchase Purchase model.
+	 * @return string
 	 */
-	public function _onPurchaseCreated( $purchase ) {
-		[ $integrations, $wp_user ] = $this->getIntegrationData( $purchase );
-		if ( method_exists( $this, 'onPurchaseCreated' ) ) {
-			foreach ( $integrations as $integration ) {
-				if ( ! $integration->id ) {
-					continue;
-				}
-				call_user_func_array( [ $this, 'onPurchaseCreated' ], [ $integration, $wp_user ] );
-			}
-		}
-	}
-
-	/**
-	 * When a purchase is invoked.
-	 *
-	 * @param \SureCart\Models\Purchase $purchase Purchase model.
-	 */
-	public function _onPurchaseInvoked( $purchase ) {
-		[ $integrations, $wp_user ] = $this->getIntegrationData( $purchase );
-		if ( method_exists( $this, 'onPurchaseInvoked' ) ) {
-			foreach ( $integrations as $integration ) {
-				if ( ! $integration->id ) {
-					continue;
-				}
-				call_user_func_array( [ $this, 'onPurchaseInvoked' ], [ $integration, $wp_user ] );
-			}
-		}
-	}
-
-	/**
-	 * When a purchase is revoked.
-	 *
-	 * @param \SureCart\Models\Purchase $purchase Purchase model.
-	 */
-	public function _onPurchaseRevoked( $purchase ) {
-		[ $integrations, $wp_user ] = $this->getIntegrationData( $purchase );
-		if ( method_exists( $this, 'onPurchaseRevoked' ) ) {
-			foreach ( $integrations as $integration ) {
-				if ( ! $integration->id ) {
-					continue;
-				}
-				call_user_func_array( [ $this, 'onPurchaseRevoked' ], [ $integration, $wp_user ] );
-			}
-		}
+	protected function getCurrentAction() {
+		return \current_action();
 	}
 
 	/**
@@ -248,7 +168,7 @@ abstract class IntegrationService implements IntegrationInterface {
 	 *
 	 * @return array The integration data.
 	 */
-	protected function getIntegrationData( $purchase ) {
+	public function getIntegrationData( $purchase ) {
 		// need a user.
 		$user = $purchase->getUser();
 		if ( empty( $user->ID ) ) {
@@ -308,7 +228,6 @@ abstract class IntegrationService implements IntegrationInterface {
 		if ( ! $product_id ) {
 			return [];
 		}
-
 		return (array) Integration::where( 'model_id', $product_id )->andWhere( 'provider', $this->getSlug() )->get();
 	}
 }

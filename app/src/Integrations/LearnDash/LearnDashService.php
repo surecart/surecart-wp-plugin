@@ -3,12 +3,13 @@
 namespace SureCart\Integrations\LearnDash;
 
 use SureCart\Integrations\Contracts\IntegrationInterface;
+use SureCart\Integrations\Contracts\PurchaseSyncInterface;
 use SureCart\Integrations\IntegrationService;
 
 /**
  * Controls the LearnDash integration.
  */
-class LearnDashService extends IntegrationService implements IntegrationInterface {
+class LearnDashService extends IntegrationService implements IntegrationInterface, PurchaseSyncInterface {
 	/**
 	 * Get the slug for the integration.
 	 *
@@ -98,11 +99,14 @@ class LearnDashService extends IntegrationService implements IntegrationInterfac
 	 *
 	 * @param string $id Id for the record.
 	 *
-	 * @return array The item for the integration.
+	 * @return object The item for the integration.
 	 */
 	public function getItem( $id ) {
 		$course = get_post( $id );
-		return [
+		if ( ! $course ) {
+			return [];
+		}
+		return (object) [
 			'id'             => $id,
 			'provider_label' => __( 'LearnDash Course', 'surecart' ),
 			'label'          => $course->post_title,
@@ -117,8 +121,20 @@ class LearnDashService extends IntegrationService implements IntegrationInterfac
 	 *
 	 * @return boolean|void Returns true if the user course access updation was successful otherwise false.
 	 */
-	public function onPurchase( $integration, $wp_user ) {
+	public function onPurchaseCreated( $integration, $wp_user ) {
 		$this->updateAccess( $integration->integration_id, $wp_user, true );
+	}
+
+	/**
+	 * Enable access when purchase is invoked
+	 *
+	 * @param \SureCart\Models\Integration $integration The integrations.
+	 * @param \WP_User                     $wp_user The user.
+	 *
+	 * @return boolean|void Returns true if the user course access updation was successful otherwise false.
+	 */
+	public function onPurchaseInvoked( $integration, $wp_user ) {
+		$this->onPurchaseCreated( $integration, $wp_user );
 	}
 
 	/**
