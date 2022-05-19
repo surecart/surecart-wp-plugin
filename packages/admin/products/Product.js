@@ -72,6 +72,7 @@ export default () => {
 		try {
 			setSaving(true);
 			id ? await updatePage() : await createPage();
+			clearDrafts('integration');
 			addSnackbarNotice({
 				content: __('Saved.'),
 			});
@@ -99,7 +100,8 @@ export default () => {
 			if (saved?.id) {
 				await clearDrafts('product');
 				await clearDrafts('price');
-				return await saveIntegrations(saved?.id);
+				await saveIntegrations(saved?.id);
+				return clearDrafts('integration');
 			}
 		} catch (e) {
 			throw e;
