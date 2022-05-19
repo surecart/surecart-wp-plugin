@@ -14,10 +14,6 @@ module.exports = {
 	guideSidebar: [
 		'guide',
 		{
-			type: 'doc',
-			id: 'guide/purchase-integrations',
-		},
-		{
 			type: 'category',
 			label: 'Purchase Integrations',
 			items: [
