@@ -1,11 +1,9 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
-import { useState, Fragment } from '@wordpress/element';
+import { Fragment, useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { store as coreStore } from '@wordpress/core-data';
 
 import SelectModel from '../../../components/SelectModel';
-import { ScAlert, ScFormControl, ScSkeleton } from '@surecart/components-react';
+import { ScFormControl } from '@surecart/components-react';
 import { useSelect } from '@wordpress/data';
 
 export default ({
@@ -16,8 +14,6 @@ export default ({
 	item,
 	setItem,
 }) => {
-	const [error, setError] = useState(false);
-
 	const { providers, loadingProviders } = useSelect((select) => {
 		const queryArgs = [
 			'surecart',
@@ -33,7 +29,7 @@ export default ({
 		};
 	}, []);
 
-	const provider = providers?.find((p) => p.slug === providerName);
+	const provider = providers?.find((p) => p.name === providerName);
 
 	const { items, loadingItems } = useSelect(
 		(select) => {
@@ -54,12 +50,12 @@ export default ({
 		[providerName]
 	);
 
+	useEffect(() => {
+		setItem('');
+	}, [providerName]);
+
 	return (
 		<Fragment>
-			<ScAlert type="danger" open={error}>
-				{error}
-			</ScAlert>
-
 			<p>
 				{__(
 					'A product purchase will be automatically synced with this item.',
@@ -73,8 +69,9 @@ export default ({
 						placeholder={__('Select An Integration', 'surecart')}
 						position={position || 'bottom-left'}
 						choices={(providers || []).map((provider) => ({
-							label: provider.name,
-							value: provider.slug,
+							label: provider.label,
+							value: provider.name,
+							icon: provider.logo,
 						}))}
 						value={providerName}
 						loading={loadingProviders}

@@ -37,7 +37,7 @@ class IntegrationServiceTest extends SureCartUnitTestCase
 	/**
 	 * Test to make sure we get the correct integration data.
 	 *
-	 * @group failing
+	 * @group integration
 	 */
 	public function test_getIntegrationData() {
 		$stub = $this->getMockForAbstractClass(IntegrationService::class);

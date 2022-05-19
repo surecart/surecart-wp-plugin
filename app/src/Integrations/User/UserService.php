@@ -15,12 +15,13 @@ class UserService extends IntegrationService implements IntegrationInterface, Pu
 	 *
 	 * @return string
 	 */
-	public function getSlug() {
-		return 'user';
+	public function getName() {
+		return 'surecart/user-role';
 	}
 
 	/**
-	 * Get the model for the integration.
+	 * Get the SureCart model used for the integration.
+	 * Only 'product' is supported at this time.
 	 *
 	 * @return string
 	 */
@@ -29,26 +30,26 @@ class UserService extends IntegrationService implements IntegrationInterface, Pu
 	}
 
 	/**
-	 * Get the slug for the integration.
+	 * Get the integration logo url.
+	 * This can be to a png, jpg, or svg for example.
 	 *
 	 * @return string
 	 */
 	public function getLogo() {
-		// phpcs:ignore
-		return 'wordpress';
+		return esc_url_raw( trailingslashit( plugin_dir_url( SURECART_PLUGIN_FILE ) ) . 'images/integrations/wordpress.svg' );
 	}
 
 	/**
-	 * Get the slug for the integration.
+	 * The display name for the integration in the dropdown.
 	 *
 	 * @return string
 	 */
-	public function getName() {
+	public function getLabel() {
 		return __( 'Change WordPress User Role', 'surecart' );
 	}
 
 	/**
-	 * Get the slug for the integration.
+	 * The label for the integration item that will be chosen.
 	 *
 	 * @return string
 	 */
@@ -57,7 +58,7 @@ class UserService extends IntegrationService implements IntegrationInterface, Pu
 	}
 
 	/**
-	 * Get the slug for the integration.
+	 * Help text for the integration item chooser.
 	 *
 	 * @return string
 	 */
@@ -67,6 +68,7 @@ class UserService extends IntegrationService implements IntegrationInterface, Pu
 
 	/**
 	 * Get item listing for the integration.
+	 * These are a list of item the merchant can choose from when adding an integration.
 	 *
 	 * @param array $items The integration items.
 	 *
@@ -136,8 +138,8 @@ class UserService extends IntegrationService implements IntegrationInterface, Pu
 	/**
 	 * Toggle the role
 	 *
-	 * @param \WP_User $wp_user  The user object.
 	 * @param string   $role The role.
+	 * @param \WP_User $wp_user  The user object.
 	 * @param boolean  $add  True to add the role, false to remove.
 	 *
 	 * @return \WP_Role|false

@@ -11,10 +11,17 @@ dispatch(coreStore).addEntities([
 		baseURLParams: { context: 'edit', per_page: 100 },
 	},
 	{
+		name: 'integration_draft',
+		kind: 'surecart',
+		label: __('Integration', 'surecart'),
+		__experimentalNoFetch: true,
+		noFetch: true,
+	},
+	{
 		name: 'integration_provider',
 		kind: 'surecart',
 		label: __('Integration Providers', 'surecart'),
-		key: 'slug',
+		key: 'name',
 		baseURL: 'surecart/v1/integration_providers',
 		baseURLParams: { context: 'edit', per_page: 100 },
 	},

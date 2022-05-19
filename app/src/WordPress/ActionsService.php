@@ -27,7 +27,7 @@ class ActionsService {
 		if ( false === $action ) {
 			// perform the action.
 			do_action( $event, $model );
-			set_transient( 'surecart_action_' . $event . $model->id, true, HOUR_IN_SECONDS );
+			set_transient( 'surecart_action_' . $event . $model->id, true, MINUTE_IN_SECONDS );
 		}
 		return $this;
 	}

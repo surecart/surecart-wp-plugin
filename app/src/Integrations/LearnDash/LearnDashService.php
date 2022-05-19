@@ -15,8 +15,8 @@ class LearnDashService extends IntegrationService implements IntegrationInterfac
 	 *
 	 * @return string
 	 */
-	public function getSlug() {
-		return 'learndash-course';
+	public function getName() {
+		return 'surecart/learndash-course';
 	}
 
 	/**
@@ -34,7 +34,7 @@ class LearnDashService extends IntegrationService implements IntegrationInterfac
 	 * @return string
 	 */
 	public function getLogo() {
-		return 'learndash';
+		return esc_url_raw( trailingslashit( plugin_dir_url( SURECART_PLUGIN_FILE ) ) . 'images/integrations/learndash.svg' );
 	}
 
 	/**
@@ -42,7 +42,7 @@ class LearnDashService extends IntegrationService implements IntegrationInterfac
 	 *
 	 * @return string
 	 */
-	public function getName() {
+	public function getLabel() {
 		return __( 'LearnDash Course', 'surecart' );
 	}
 

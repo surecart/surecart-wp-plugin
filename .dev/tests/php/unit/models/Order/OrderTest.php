@@ -3,11 +3,12 @@
 namespace SureCart\Tests\Models\Order;
 
 use SureCart\Models\Order;
-use SureCart\Models\User;
 use SureCart\Tests\SureCartUnitTestCase;
 
 class OrderTest extends SureCartUnitTestCase
 {
+	use \Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+
 	protected $requests;
 
 	/**
@@ -26,6 +27,20 @@ class OrderTest extends SureCartUnitTestCase
 		$this->setupMockRequests();
 
 		parent::setUp();
+	}
+
+	public function test_orderHasPurchases() {
+		$order = new Order([
+			'id' => 'test',
+			'purchases' => (object)[
+				'data' => [
+					(object)[
+						'id' => 'test_purchase',
+					]
+				]
+			]
+		]);
+		$this->assertInstanceOf(\SureCart\Models\Purchase::class,$order->purchases->data[0]);
 	}
 
 	/**

@@ -2,51 +2,18 @@
 import { css, Global, jsx } from '@emotion/core';
 
 import { __ } from '@wordpress/i18n';
-import apiFetch from '@wordpress/api-fetch';
 import { useState, Fragment } from '@wordpress/element';
 import { Modal, Button } from '@wordpress/components';
-import { store as coreStore } from '@wordpress/core-data';
-import { ScAlert, ScButton, ScForm } from '@surecart/components-react';
+import { ScButton, ScForm } from '@surecart/components-react';
 import SelectIntegration from './SelectIntegration';
-import { useDispatch } from '@wordpress/data';
 
-export default ({ id, onRequestClose }) => {
-	const [saving, setSaving] = useState(false);
-	const [error, setError] = useState(null);
+export default ({ onRequestClose, onCreate }) => {
 	const [provider, setProvider] = useState(null);
 	const [item, setItem] = useState(null);
-	const { receiveEntityRecords } = useDispatch(coreStore);
 
-	const onSubmit = async () => {
-		try {
-			setSaving(true);
-			const integration = await apiFetch({
-				method: 'POST',
-				path: `surecart/v1/integrations`,
-				data: {
-					model_name: 'product',
-					model_id: id,
-					integration_id: item,
-					provider,
-				},
-			});
-			receiveEntityRecords(
-				'surecart',
-				'integration',
-				integration,
-				{
-					context: 'edit',
-					model_ids: [id],
-				},
-				true
-			);
-			onRequestClose();
-		} catch (e) {
-			console.error(e);
-			setError(e?.message || __('An error occurred', 'surecart'));
-		} finally {
-			setSaving(false);
-		}
+	const onSubmit = async (e) => {
+		onCreate({ provider, item });
+		onRequestClose();
 	};
 
 	return (
@@ -67,10 +34,7 @@ export default ({ id, onRequestClose }) => {
 					}
 				`}
 				overlayClassName={'sc-modal-overflow'}
-				onRequestClose={() => {
-					if (saving) return;
-					onRequestClose();
-				}}
+				onRequestClose={onRequestClose}
 				shouldCloseOnClickOutside={false}
 			>
 				<ScForm
@@ -79,10 +43,6 @@ export default ({ id, onRequestClose }) => {
 						--sc-form-row-spacing: var(--sc-spacing-large);
 					`}
 				>
-					<ScAlert open={error} type="danger">
-						{error}
-					</ScAlert>
-
 					<SelectIntegration
 						model="product"
 						providerName={provider}
@@ -105,8 +65,6 @@ export default ({ id, onRequestClose }) => {
 									'--sc-input-border-radius-small',
 							}}
 							submit
-							disabled={saving}
-							loading={saving}
 						>
 							{__('Add Integration', 'surecart')}
 						</ScButton>

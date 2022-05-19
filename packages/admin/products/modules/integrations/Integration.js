@@ -60,9 +60,18 @@ export default ({ integration }) => {
 	);
 
 	const onRemove = async () => {
+		const r = confirm(
+			__(
+				'Are you sure you want to remove this integration? This will affect existing customers who have purchased this product.',
+				'surecart'
+			)
+		);
+		if (!r) return;
 		try {
 			setDeleting(true);
-			await deleteEntityRecord('surecart', 'integration', id);
+			await deleteEntityRecord('surecart', 'integration', id, {
+				throwOnError: true,
+			});
 		} catch (e) {
 			console.error(e);
 			setError(e?.message || __('An error occurred', 'surecart'));
@@ -90,12 +99,38 @@ export default ({ integration }) => {
 							display: flex;
 							align-items: center;
 							justify-content: center;
-							padding: 1em;
-							background: var(--sc-color-gray-200);
-							border-radius: var(--sc-border-radius-small);
 						`}
 					>
-						logo
+						{providerData?.logo ? (
+							<img
+								src={providerData?.logo}
+								css={css`
+									width: 35px;
+									height: 35px;
+									object-fit: contain;
+								`}
+							/>
+						) : (
+							<div
+								css={css`
+									padding: 1em;
+									width: 35px;
+									box-sizing: border-box;
+									height: 35px;
+									display: flex;
+									align-items: center;
+									justify-content: center;
+									line-height: 0;
+									font-size: 18px;
+									background: var(--sc-color-gray-200);
+									border-radius: var(
+										--sc-border-radius-small
+									);
+								`}
+							>
+								{providerData?.name.charAt(0)}
+							</div>
+						)}
 					</div>
 					<div
 						css={css`

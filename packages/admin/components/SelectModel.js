@@ -1,5 +1,4 @@
 import { __ } from '@wordpress/i18n';
-import { useRef } from '@wordpress/element';
 import { ScSelect } from '@surecart/components-react';
 import throttle from 'lodash/throttle';
 
@@ -20,7 +19,6 @@ export default ({
 	prefix,
 	loading,
 }) => {
-	const selectRef = useRef();
 	const findItem = throttle(
 		(value) => {
 			onQuery(value);
@@ -32,7 +30,6 @@ export default ({
 	return (
 		<ScSelect
 			required={required}
-			ref={selectRef}
 			value={value}
 			help={help}
 			className={className}

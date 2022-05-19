@@ -3,8 +3,7 @@ import { css, jsx } from '@emotion/core';
 
 import { __ } from '@wordpress/i18n';
 import { Fragment, useEffect } from '@wordpress/element';
-import { useDispatch, select } from '@wordpress/data';
-import { store as coreStore } from '@wordpress/core-data';
+import { useDispatch } from '@wordpress/data';
 
 import { store as uiStore } from '../store/ui';
 import { store as dataStore } from '../store/data';
@@ -27,10 +26,8 @@ import { ScButton } from '@surecart/components-react';
 import ProductActionsDropdown from './components/ProductActionsDropdown';
 
 export default () => {
-	const { saveModel, saveDraft, clearDrafts, removeDraft } =
-		useDispatch(dataStore);
+	const { saveModel, saveDraft, clearDrafts } = useDispatch(dataStore);
 	const { addSnackbarNotice, addModelErrors } = useDispatch(uiStore);
-	const { saveEntityRecord } = useDispatch(coreStore);
 	const {
 		id,
 		product,
@@ -98,8 +95,7 @@ export default () => {
 			});
 			if (saved?.id) {
 				await clearDrafts('product');
-				await clearDrafts('price');
-				return await saveIntegrations(saved?.id);
+				return await clearDrafts('price');
 			}
 		} catch (e) {
 			throw e;
@@ -119,7 +115,6 @@ export default () => {
 			}),
 			savePrices(),
 			saveDraftPrices(),
-			saveIntegrations(),
 		]);
 	};
 
@@ -173,41 +168,6 @@ export default () => {
 		} finally {
 			setSaving(false);
 		}
-	};
-
-	/**
-	 * Save draft integrations.
-	 */
-	const saveIntegrations = async (id = null) => {
-		const drafts = select(dataStore).selectDrafts('integration');
-		return await Promise.all(
-			(drafts || []).map((draft, index) =>
-				saveIntegration(draft, index, id)
-			)
-		);
-	};
-
-	/**
-	 * Save an individual integration.
-	 */
-	const saveIntegration = async (
-		{ integration_id, model_id, provider },
-		index,
-		id = null
-	) => {
-		await saveEntityRecord(
-			'surecart',
-			'integration',
-			{
-				model_name: 'product',
-				model_id: id ? id : model_id,
-				integration_id,
-				provider,
-			},
-			{ throwOnError: true }
-		);
-		await removeDraft('integration', index);
-		return;
 	};
 
 	const onToggleArchiveProduct = async () => {

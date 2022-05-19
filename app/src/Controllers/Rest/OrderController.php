@@ -186,18 +186,19 @@ class OrderController extends RestController {
 			return $order;
 		}
 
+		if ( 'paid' !== $order->status ) {
+			return new \WP_Error( 'invalid_status', 'The order is not paid.', [ 'status' => 400 ] );
+		}
+
 		// link the customer id to the user.
 		$linked = $this->maybeLinkCustomer( $order, $request );
 		if ( is_wp_error( $linked ) ) {
 			return $linked;
 		}
-		if ( false === $linked ) {
-			return new \WP_Error( 'invalid_status', 'The order is not paid.', [ 'status' => 400 ] );
-		}
 
 		// purchase created.
-		if ( ! empty( $order->purchases ) ) {
-			foreach ( $order->purchases as $purchase ) {
+		if ( ! empty( $order->purchases->data ) ) {
+			foreach ( $order->purchases->data as $purchase ) {
 				if ( empty( $purchase->revoked ) ) {
 					// broadcast the webhook.
 					\SureCart::actions()->doOnce( 'surecart/purchase_created', $purchase );

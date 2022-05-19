@@ -3,6 +3,7 @@ import { ChoiceItem } from '../../../types';
 import Fuse from 'fuse.js';
 import { FormSubmitController } from '../../../functions/form-data';
 import { __ } from '@wordpress/i18n';
+import { isValidURL } from '../../../functions/util';
 
 let id = 0;
 
@@ -283,6 +284,13 @@ export class ScSelectDropdown {
     this.formController?.removeFormData();
   }
 
+  renderIcon(icon) {
+    if (isValidURL(icon)) {
+      return <img src={icon} alt="icon" slot="prefix" class="choice__icon--image" />;
+    }
+    return <sc-icon name={icon} slot="prefix" class="choice__icon" />;
+  }
+
   renderItem(choice: ChoiceItem, index: number) {
     if (choice?.choices?.length) {
       return <sc-menu-label key={index}>{choice.label}</sc-menu-label>;
@@ -291,7 +299,8 @@ export class ScSelectDropdown {
     return (
       <sc-menu-item key={index} checked={this.isChecked(choice)} onClick={() => this.handleSelect(choice.value)} disabled={choice.disabled}>
         {choice.label}
-        {choice?.suffix && <span slot="suffix">{choice.suffix}</span>}
+        {!!choice?.suffix && <span slot="suffix">{choice.suffix}</span>}
+        {!!choice?.icon && this.renderIcon(choice.icon)}
       </sc-menu-item>
     );
   }

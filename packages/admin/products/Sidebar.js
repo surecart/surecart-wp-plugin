@@ -166,7 +166,7 @@ export default ({ id, loading, product, updateProduct, saveProduct }) => {
 				loading={loading}
 			/>
 
-			{!!id && <Integrations id={id} />}
+			<Integrations id={id} />
 
 			{/* <Upgrades
 				product={product}

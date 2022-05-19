@@ -30,6 +30,7 @@ export interface ChoiceItem extends Object {
   disabled?: boolean;
   choices?: ChoiceItem[];
   suffix?: string;
+  icon?: string;
 }
 
 export type ChoiceType = 'all' | 'single' | 'multiple';

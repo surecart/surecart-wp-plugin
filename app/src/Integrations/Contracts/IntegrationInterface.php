@@ -8,7 +8,7 @@ interface IntegrationInterface {
 	 *
 	 * @return string
 	 */
-	public function getSlug();
+	public function getName();
 
 	/**
 	 * Get the model for the integration.
@@ -29,7 +29,7 @@ interface IntegrationInterface {
 	 *
 	 * @return string
 	 */
-	public function getName();
+	public function getLabel();
 
 	/**
 	 * Get the item label for the integration.

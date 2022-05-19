@@ -22,6 +22,7 @@ class OrderControllerTest extends SureCartUnitTestCase
 			'providers' => [
 				\SureCart\Request\RequestServiceProvider::class,
 				\SureCart\Support\Errors\ErrorsServiceProvider::class,
+				\SureCart\WordPress\PluginServiceProvider::class
 			]
 		], false);
 
@@ -152,6 +153,9 @@ class OrderControllerTest extends SureCartUnitTestCase
 		$this->assertSame($finalized_order->id, $controller_order->id);
 	}
 
+	/**
+	 * @group failing
+	 */
 	public function test_confirm() {
 		// set up request.
 		$request = new WP_REST_Request('POST', '/surecart/v1/orders/testorder/finalize');
@@ -185,13 +189,12 @@ class OrderControllerTest extends SureCartUnitTestCase
 		/**
 		 * Paid requests should validate.
 		 */
+		$paid_order =  json_decode(file_get_contents(dirname(__FILE__) . '/paid-order.json'));
+
 		$requests->shouldReceive('makeRequest')
 			->once()
 			->withSomeOfArgs('orders/test_order')
-			->andReturn((object) [
-				'status' => 'paid',
-				'email' => 'test@test.com'
-			]);
+			->andReturn($paid_order);
 
 		// finalize the order.
 		$controller_order = $controller->confirm($request);
@@ -200,6 +203,7 @@ class OrderControllerTest extends SureCartUnitTestCase
 		$this->assertNotWPError($controller_order);
 		$this->assertSame($controller_order->status, 'paid');
 		$this->assertSame($controller_order->email, 'test@test.com');
+		$this->assertNotFalse(did_action('surecart/purchase_created'));
 	}
 
 	public function test_linkCustomerId() {

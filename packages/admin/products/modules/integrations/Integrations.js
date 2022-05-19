@@ -1,10 +1,11 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { ScButton, ScCard, ScStackedList } from '@surecart/components-react';
-import { useSelect } from '@wordpress/data';
+import { useDispatch, useSelect } from '@wordpress/data';
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { store as coreStore } from '@wordpress/core-data';
+import { store as dataStore } from '@surecart/data';
 
 import Box from '../../../ui/Box';
 import NewIntegration from './NewIntegration';
@@ -12,6 +13,7 @@ import Integration from './Integration';
 
 export default ({ id }) => {
 	const [modal, setModal] = useState(false);
+	const { addDraft } = useDispatch(dataStore);
 
 	const { integrations, loading } = useSelect(
 		(select) => {
@@ -31,6 +33,20 @@ export default ({ id }) => {
 		[id]
 	);
 
+	// Add to drafts on create.
+	const onCreate = ({ provider, item }) => {
+		addDraft('integration', {
+			model_name: 'product',
+			model_id: id,
+			integration_id: item,
+			provider,
+		});
+	};
+	// selectDrafts.
+	const drafts = useSelect((select) => {
+		return select(dataStore).selectDrafts('integration');
+	}, []);
+
 	return (
 		<Box
 			loading={loading}
@@ -42,10 +58,22 @@ export default ({ id }) => {
 				</ScButton>
 			}
 		>
-			{!!integrations?.length ? (
+			{!!integrations?.length || !!drafts?.length ? (
 				<ScCard noPadding>
 					<ScStackedList>
 						{(integrations || []).map((integration) => {
+							return (
+								<Integration
+									key={integration?.id}
+									integration={integration}
+									onRemove={() => {
+										deleteIntegration(integration);
+									}}
+								/>
+							);
+						})}
+
+						{(drafts || []).map((integration) => {
 							return (
 								<Integration
 									key={integration?.id}
@@ -74,6 +102,7 @@ export default ({ id }) => {
 			{!!modal && (
 				<NewIntegration
 					id={id}
+					onCreate={onCreate}
 					onRequestClose={() => setModal(false)}
 				/>
 			)}

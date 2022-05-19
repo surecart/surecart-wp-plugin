@@ -5,6 +5,7 @@ namespace SureCart\Integrations;
 use SureCart\Integrations\Contracts\IntegrationInterface;
 use SureCart\Integrations\Contracts\PurchaseSyncInterface;
 use SureCart\Models\Integration;
+use SureCart\Models\Purchase;
 
 /**
  * Base class for integrations to extend.
@@ -15,7 +16,7 @@ abstract class IntegrationService implements IntegrationInterface {
 	 *
 	 * @return string
 	 */
-	public function getSlug() {
+	public function getName() {
 		return '';
 	}
 
@@ -43,7 +44,7 @@ abstract class IntegrationService implements IntegrationInterface {
 	 *
 	 * @return string
 	 */
-	public function getName() {
+	public function getLabel() {
 		return '';
 	}
 
@@ -93,11 +94,11 @@ abstract class IntegrationService implements IntegrationInterface {
 	public function bootstrap() {
 		// index and list.
 		add_filter( "surecart/integrations/providers/list/{$this->getModel()}", [ $this, 'indexProviders' ], 9 );
-		add_filter( "surecart/integrations/providers/find/{$this->getSlug()}", [ $this, 'findProvider' ], 9 );
+		add_filter( "surecart/integrations/providers/find/{$this->getName()}", [ $this, 'findProvider' ], 9 );
 
 		// get items.
-		add_filter( "surecart/integrations/providers/{$this->getSlug()}/{$this->getModel()}/items", [ $this, 'getItems' ], 9 );
-		add_filter( "surecart/integrations/providers/{$this->getSlug()}/item", [ $this, 'getItem' ], 9, 2 );
+		add_filter( "surecart/integrations/providers/{$this->getName()}/{$this->getModel()}/items", [ $this, 'getItems' ], 9 );
+		add_filter( "surecart/integrations/providers/{$this->getName()}/item", [ $this, '_getItem' ], 9, 2 );
 
 		// implement purchase events if purchase sync interface is implemented.
 		if ( is_subclass_of( $this, PurchaseSyncInterface::class ) ) {
@@ -123,6 +124,17 @@ abstract class IntegrationService implements IntegrationInterface {
 				return 'onPurchaseRevoked';
 		}
 		return null;
+	}
+
+	/**
+	 * Get the item.
+	 *
+	 * @return object
+	 */
+	public function _getItem( $id ) {
+		$item       = (object) $this->getItem( $id );
+		$item->logo = esc_url_raw( $this->getLogo() );
+		return $item;
 	}
 
 	/**
@@ -169,14 +181,21 @@ abstract class IntegrationService implements IntegrationInterface {
 	 * @return array The integration data.
 	 */
 	public function getIntegrationData( $purchase ) {
+		if ( is_string( $purchase ) ) {
+			$purchase = Purchase::find( $purchase );
+		}
+		if ( is_wp_error( $purchase ) ) {
+			return;
+		}
+
 		// need a user.
-		$user = $purchase->getUser();
+		$user = $purchase->getUser() ?? null;
 		if ( empty( $user->ID ) ) {
 			return;
 		}
 
 		// get the raw WP User.
-		$wp_user = $user->getWPUser();
+		$wp_user = $user->getWPUser() ?? null;
 		if ( ! $wp_user ) {
 			return;
 		}
@@ -208,8 +227,9 @@ abstract class IntegrationService implements IntegrationInterface {
 	 */
 	public function findProvider() {
 		return [
-			'slug'       => $this->getSlug(),
 			'name'       => $this->getName(),
+			'label'      => $this->getLabel(),
+			'logo'       => esc_url_raw( $this->getLogo() ),
 			'item_label' => $this->getItemLabel(),
 			'item_help'  => $this->getItemHelp(),
 		];
@@ -228,6 +248,6 @@ abstract class IntegrationService implements IntegrationInterface {
 		if ( ! $product_id ) {
 			return [];
 		}
-		return (array) Integration::where( 'model_id', $product_id )->andWhere( 'provider', $this->getSlug() )->get();
+		return (array) Integration::where( 'model_id', $product_id )->andWhere( 'provider', $this->getName() )->get();
 	}
 }

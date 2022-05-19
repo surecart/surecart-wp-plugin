@@ -19,7 +19,7 @@ class IntegrationTest extends SureCartUnitTestCase {
 	}
 
 	/**
-	 * @group failing
+	 * @group integration
 	 */
 	public function test_crud() {
 		$not_found = Integration::find(1);
