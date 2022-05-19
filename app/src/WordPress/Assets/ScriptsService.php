@@ -169,6 +169,9 @@ class ScriptsService {
 				'processors' => (array) \SureCart::account()->processors ?? [],
 				'plugin_url' => \SureCart::core()->assets()->getUrl(),
 				'currency'   => \SureCart::account()->currency,
+				'beta'       => [
+					'stripe_payment_element' => (bool) get_option( 'sc_stripe_payment_element', false ),
+				],
 				'pages'      => [
 					'dashboard' => \SureCart::pages()->url( 'dashboard' ),
 					'checkout'  => \SureCart::pages()->url( 'checkout' ),

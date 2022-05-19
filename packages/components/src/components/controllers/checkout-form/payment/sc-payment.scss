@@ -21,3 +21,12 @@ sc-payment {
 .sc-payment-instructions {
   color: var(--sc-color-gray-600);
 }
+
+.sc-payment {
+  &__stripe-card-element {
+    display: flex !important;
+    flex-direction: column;
+    gap: var(--sc-input-label-margin);
+    position: relative;
+  }
+}

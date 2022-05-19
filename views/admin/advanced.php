@@ -49,6 +49,17 @@
 					</sc-flex>
 
 					<sc-flex flex-direction="column">
+						<sc-text style="--font-size: var(--sc-font-size-large); --font-weight: var(--sc-font-weight-bold); --line-height:1;"><?php esc_html_e( 'Beta Features', 'surecart' ); ?></sc-text>
+						<sc-text style="margin-bottom: 1em; --line-height:1; --color: var(--sc-color-brand-body)"><?php esc_html_e( 'Opt-in to some beta features of the plugin.', 'surecart' ); ?></sc-text>
+						<sc-card>
+							<sc-switch name="stripe-payment-element" <?php checked( $stripe_payment_element, 1 ); ?> value="on">
+								<?php esc_html_e( 'Use the Stripe Payment Element', 'surecart' ); ?>
+								<span slot="description"><?php esc_html_e( "Use Stripe's Payment Element instead of the Card Element in all forms.", 'surecart' ); ?></span>
+							</sc-switch>
+						</sc-card>
+					</sc-flex>
+
+					<sc-flex flex-direction="column">
 						<sc-text style="--font-size: var(--sc-font-size-large); --font-weight: var(--sc-font-weight-bold); --line-height:1;"><?php esc_html_e( 'Uninstall', 'surecart' ); ?></sc-text>
 						<sc-text style="margin-bottom: 1em; --line-height:1; --color: var(--sc-color-brand-body)"><?php esc_html_e( 'Change your plugin uninstall settings.', 'surecart' ); ?></sc-text>
 						<sc-card>

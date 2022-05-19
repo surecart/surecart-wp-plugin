@@ -294,6 +294,10 @@ export namespace Components {
          */
         "removeLineItems": boolean;
         /**
+          * Use the Stripe payment element.
+         */
+        "stripePaymentElement": boolean;
+        /**
           * Submit the form
          */
         "submit": ({ skip_validation }?: { skip_validation: boolean; }) => Promise<Order | CustomEvent<import("/Users/andre/sites/surecart/wp-content/plugins/surecart/packages/components/src/types").FormStateSetter>>;
@@ -1526,6 +1530,10 @@ export namespace Components {
           * Secure notice
          */
         "secureNotice": string;
+        /**
+          * Use the Stripe payment element.
+         */
+        "stripePaymentElement": boolean;
     }
     interface ScPaymentMethodCreate {
         "clientSecret": string;
@@ -1961,6 +1969,10 @@ export namespace Components {
          */
         "setState": (state: string) => void;
         /**
+          * Are we using the Stripe payment element?
+         */
+        "stripePaymentElement": boolean;
+        /**
           * Url to redirect upon success.
          */
         "successUrl": string;
@@ -1983,6 +1995,10 @@ export namespace Components {
         "target": string;
     }
     interface ScStripeElement {
+        /**
+          * Your stripe connected account id.
+         */
+        "accountId": string;
         /**
           * Confirm card payment
          */
@@ -2027,10 +2043,6 @@ export namespace Components {
           * The input's size.
          */
         "size": 'small' | 'medium' | 'large';
-        /**
-          * Your stripe connected account id.
-         */
-        "stripeAccountId": string;
     }
     interface ScStripePaymentElement {
         /**
@@ -3599,6 +3611,10 @@ declare namespace LocalJSX {
          */
         "removeLineItems"?: boolean;
         /**
+          * Use the Stripe payment element.
+         */
+        "stripePaymentElement"?: boolean;
+        /**
           * Where to go on success
          */
         "successUrl"?: string;
@@ -4980,6 +4996,10 @@ declare namespace LocalJSX {
           * Secure notice
          */
         "secureNotice"?: string;
+        /**
+          * Use the Stripe payment element.
+         */
+        "stripePaymentElement"?: boolean;
     }
     interface ScPaymentMethodCreate {
         "clientSecret"?: string;
@@ -5477,6 +5497,10 @@ declare namespace LocalJSX {
          */
         "setState"?: (state: string) => void;
         /**
+          * Are we using the Stripe payment element?
+         */
+        "stripePaymentElement"?: boolean;
+        /**
           * Url to redirect upon success.
          */
         "successUrl"?: string;
@@ -5499,6 +5523,10 @@ declare namespace LocalJSX {
         "target"?: string;
     }
     interface ScStripeElement {
+        /**
+          * Your stripe connected account id.
+         */
+        "accountId"?: string;
         /**
           * Whether this field is disabled
          */
@@ -5537,10 +5565,6 @@ declare namespace LocalJSX {
           * The input's size.
          */
         "size"?: 'small' | 'medium' | 'large';
-        /**
-          * Your stripe connected account id.
-         */
-        "stripeAccountId"?: string;
     }
     interface ScStripePaymentElement {
         /**
