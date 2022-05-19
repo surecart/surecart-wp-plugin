@@ -126,17 +126,34 @@ class ProductsListTable extends ListTable {
 			<?php
 	}
 
+	/**
+	 * Show any integrations.
+	 */
 	public function column_integrations( $product ) {
 		$output       = '';
 		$integrations = Integration::where( 'model_id', $product->id )->get();
 		if ( empty( $integrations ) ) {
 			return '-';
 		}
+
 		foreach ( $integrations as $integration ) {
 			$provider = (object) apply_filters( "surecart/integrations/providers/find/{$integration->provider}", [] );
 			$item     = (object) apply_filters( "surecart/integrations/providers/{$integration->provider}/item", $integration->integration_id );
+
 			if ( ! empty( $item->label ) ) {
-				$output .= '<strong>' . esc_html( $provider->label ) . '</strong> - ' . esc_html( $item->label ) . '<br />';
+				ob_start();
+				?>
+					<sc-tooltip text="<?php echo esc_attr( $provider->label ?? '' ); ?>" type="text" style="display:inline-block; cursor: help">
+						<sc-flex justify-content="flex-start">
+							<?php if ( $provider->logo ) : ?>
+								<img src="<?php echo esc_url( $provider->logo ); ?>" style="width: 18px; height: 18px"/>
+							<?php endif; ?>
+							<?php echo wp_kses_post( $item->label ); ?>
+						</sc-flex>
+					</sc-tooltip>
+					<br />
+				<?php
+				$output .= ob_get_clean();
 			}
 		}
 

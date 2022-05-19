@@ -6,6 +6,7 @@ use SureCart\Support\Currency;
 use SureCart\Support\TimeDate;
 use SureCart\Models\Order;
 use SureCart\Controllers\Admin\Tables\ListTable;
+use SureCart\Models\Integration;
 
 /**
  * Create a new table class that will extend the WP_List_Table
@@ -51,6 +52,49 @@ class OrdersListTable extends ListTable {
 			value="1" />
 	</form>
 		<?php
+	}
+
+	/**
+	 * Show any integrations.
+	 *
+	 * @param \SureCart\Models\Order $order Order.
+	 */
+	public function column_integrations( $order ) {
+		$output = '';
+
+		// no purchases.
+		if ( empty( $order->purchases->data ) ) {
+			return '-';
+		}
+
+		// loop through each purchase.
+		foreach ( $order->purchases->data as $purchase ) {
+			$integrations = Integration::where( 'model_id', $purchase->product )->get();
+			if ( empty( $integrations ) ) {
+				continue;
+			}
+			foreach ( $integrations as $integration ) {
+				$provider = (object) apply_filters( "surecart/integrations/providers/find/{$integration->provider}", [] );
+				$item     = (object) apply_filters( "surecart/integrations/providers/{$integration->provider}/item", $integration->integration_id );
+				if ( ! empty( $item->label ) ) {
+					ob_start();
+					?>
+					<sc-tooltip text="<?php echo esc_attr( $provider->label ?? '' ); ?>" type="text" style="display:inline-block; cursor: help">
+						<sc-flex justify-content="flex-start">
+							<?php if ( $provider->logo ) : ?>
+								<img src="<?php echo esc_url( $provider->logo ); ?>" style="width: 18px; height: 18px"/>
+							<?php endif; ?>
+							<?php echo wp_kses_post( $item->label ); ?>
+						</sc-flex>
+					</sc-tooltip>
+					<br />
+					<?php
+					$output .= ob_get_clean();
+				}
+			}
+		}
+
+		return $output ? $output : '-';
 	}
 
 	/**
@@ -104,12 +148,13 @@ class OrdersListTable extends ListTable {
 		return [
 			// 'cb'          => '<input type="checkbox" />',
 
-			'order'  => __( 'Order', 'surecart' ),
-			'date'   => __( 'Date', 'surecart' ),
-			'status' => __( 'Status', 'surecart' ),
-			'method' => __( 'Method', 'surecart' ),
-			'total'  => __( 'Total', 'surecart' ),
-			'mode'   => '',
+			'order'        => __( 'Order', 'surecart' ),
+			'date'         => __( 'Date', 'surecart' ),
+			'status'       => __( 'Status', 'surecart' ),
+			'method'       => __( 'Method', 'surecart' ),
+			'integrations' => __( 'Integrations', 'surecart' ),
+			'total'        => __( 'Total', 'surecart' ),
+			'mode'         => '',
 			// 'usage' => __( 'Usage', 'surecart' ),
 
 		];
@@ -155,7 +200,7 @@ class OrdersListTable extends ListTable {
 			[
 				'status' => $this->getStatus(),
 			]
-		)->with( [ 'charge', 'payment_intent', 'payment_intent.payment_method', 'payment_method.card' ] )
+		)->with( [ 'charge', 'payment_intent', 'payment_intent.payment_method', 'payment_method.card', 'purchases' ] )
 		->paginate(
 			[
 				'per_page' => $this->get_items_per_page( 'orders' ),
