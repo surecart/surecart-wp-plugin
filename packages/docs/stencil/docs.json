@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-05-11T20:23:42",
+  "timestamp": "2022-05-19T19:26:08",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.15.1",
@@ -138,11 +138,11 @@
           "sc-tooltip"
         ],
         "sc-select": [
+          "sc-icon",
           "sc-menu-label",
           "sc-menu-item",
           "sc-form-control",
           "sc-dropdown",
-          "sc-icon",
           "sc-input",
           "sc-spinner",
           "sc-menu"
@@ -2203,6 +2203,23 @@
           "required": false
         },
         {
+          "name": "stripePaymentElement",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "stripe-payment-element",
+          "reflectToAttr": false,
+          "docs": "Use the Stripe payment element.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "successUrl",
           "type": "string",
           "mutable": false,
@@ -2358,11 +2375,11 @@
           "sc-tooltip"
         ],
         "sc-select": [
+          "sc-icon",
           "sc-menu-label",
           "sc-menu-item",
           "sc-form-control",
           "sc-dropdown",
-          "sc-icon",
           "sc-input",
           "sc-spinner",
           "sc-menu"
@@ -3732,11 +3749,11 @@
           "sc-input"
         ],
         "sc-select": [
+          "sc-icon",
           "sc-menu-label",
           "sc-menu-item",
           "sc-form-control",
           "sc-dropdown",
-          "sc-icon",
           "sc-input",
           "sc-spinner",
           "sc-menu"
@@ -5360,6 +5377,40 @@
           "required": false
         },
         {
+          "name": "distance",
+          "type": "number",
+          "mutable": false,
+          "attr": "distance",
+          "reflectToAttr": false,
+          "docs": "The distance in pixels from which to offset the panel away from its trigger.",
+          "docsTags": [],
+          "default": "10",
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "hoist",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "hoist",
+          "reflectToAttr": false,
+          "docs": "Enable this option to prevent the panel from being clipped when the component is placed inside a container with\n`overflow: auto|scroll`.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "open",
           "type": "boolean",
           "mutable": true,
@@ -5374,6 +5425,68 @@
             }
           ],
           "optional": true,
+          "required": false
+        },
+        {
+          "name": "placement",
+          "type": "\"bottom\" | \"bottom-end\" | \"bottom-start\" | \"left\" | \"left-end\" | \"left-start\" | \"right\" | \"right-end\" | \"right-start\" | \"top\" | \"top-end\" | \"top-start\"",
+          "mutable": false,
+          "attr": "placement",
+          "reflectToAttr": true,
+          "docs": "The placement of the dropdown.",
+          "docsTags": [],
+          "default": "'bottom-start'",
+          "values": [
+            {
+              "value": "bottom",
+              "type": "string"
+            },
+            {
+              "value": "bottom-end",
+              "type": "string"
+            },
+            {
+              "value": "bottom-start",
+              "type": "string"
+            },
+            {
+              "value": "left",
+              "type": "string"
+            },
+            {
+              "value": "left-end",
+              "type": "string"
+            },
+            {
+              "value": "left-start",
+              "type": "string"
+            },
+            {
+              "value": "right",
+              "type": "string"
+            },
+            {
+              "value": "right-end",
+              "type": "string"
+            },
+            {
+              "value": "right-start",
+              "type": "string"
+            },
+            {
+              "value": "top",
+              "type": "string"
+            },
+            {
+              "value": "top-end",
+              "type": "string"
+            },
+            {
+              "value": "top-start",
+              "type": "string"
+            }
+          ],
+          "optional": false,
           "required": false
         },
         {
@@ -5400,6 +5513,23 @@
             {
               "value": "top-right",
               "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "skidding",
+          "type": "number",
+          "mutable": false,
+          "attr": "skidding",
+          "reflectToAttr": false,
+          "docs": "The distance in pixels from which to offset the panel along its trigger.",
+          "docsTags": [],
+          "default": "0",
+          "values": [
+            {
+              "type": "number"
             }
           ],
           "optional": false,
@@ -6027,11 +6157,11 @@
           "sc-tooltip"
         ],
         "sc-select": [
+          "sc-icon",
           "sc-menu-label",
           "sc-menu-item",
           "sc-form-control",
           "sc-dropdown",
-          "sc-icon",
           "sc-input",
           "sc-spinner",
           "sc-menu"
@@ -10593,11 +10723,11 @@
           "sc-tooltip"
         ],
         "sc-select": [
+          "sc-icon",
           "sc-menu-label",
           "sc-menu-item",
           "sc-form-control",
           "sc-dropdown",
-          "sc-icon",
           "sc-input",
           "sc-spinner",
           "sc-menu"
@@ -11967,6 +12097,22 @@
           ],
           "optional": false,
           "required": false
+        },
+        {
+          "name": "stripePaymentElement",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "stripe-payment-element",
+          "reflectToAttr": false,
+          "docs": "Use the Stripe payment element.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
         }
       ],
       "methods": [],
@@ -11988,6 +12134,8 @@
       "dependents": [],
       "dependencies": [
         "sc-order-stripe-payment-element",
+        "sc-stripe-element",
+        "sc-secure-notice",
         "sc-tag",
         "sc-form-control",
         "sc-toggles",
@@ -12000,6 +12148,8 @@
       "dependencyGraph": {
         "sc-payment": [
           "sc-order-stripe-payment-element",
+          "sc-stripe-element",
+          "sc-secure-notice",
           "sc-tag",
           "sc-form-control",
           "sc-toggles",
@@ -12015,6 +12165,13 @@
         "sc-stripe-payment-element": [
           "sc-text",
           "sc-skeleton"
+        ],
+        "sc-stripe-element": [
+          "sc-input",
+          "sc-text"
+        ],
+        "sc-input": [
+          "sc-form-control"
         ],
         "sc-form-control": [
           "sc-tooltip"
@@ -14078,9 +14235,15 @@
           "docs": ""
         }
       ],
-      "dependents": [],
+      "dependents": [
+        "sc-payment"
+      ],
       "dependencies": [],
-      "dependencyGraph": {}
+      "dependencyGraph": {
+        "sc-payment": [
+          "sc-secure-notice"
+        ]
+      }
     },
     {
       "filePath": "./src/components/ui/select/sc-select.tsx",
@@ -14568,22 +14731,22 @@
         "sc-address"
       ],
       "dependencies": [
+        "sc-icon",
         "sc-menu-label",
         "sc-menu-item",
         "sc-form-control",
         "sc-dropdown",
-        "sc-icon",
         "sc-input",
         "sc-spinner",
         "sc-menu"
       ],
       "dependencyGraph": {
         "sc-select": [
+          "sc-icon",
           "sc-menu-label",
           "sc-menu-item",
           "sc-form-control",
           "sc-dropdown",
-          "sc-icon",
           "sc-input",
           "sc-spinner",
           "sc-menu"
@@ -14793,6 +14956,22 @@
           "values": [
             {
               "type": "(state: string) => void"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "stripePaymentElement",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "stripe-payment-element",
+          "reflectToAttr": false,
+          "docs": "Are we using the Stripe payment element?",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
             }
           ],
           "optional": false,
@@ -15351,6 +15530,22 @@
       "usage": {},
       "props": [
         {
+          "name": "accountId",
+          "type": "string",
+          "mutable": false,
+          "attr": "account-id",
+          "reflectToAttr": false,
+          "docs": "Your stripe connected account id.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "disabled",
           "type": "boolean",
           "mutable": false,
@@ -15510,22 +15705,6 @@
           ],
           "optional": false,
           "required": false
-        },
-        {
-          "name": "stripeAccountId",
-          "type": "string",
-          "mutable": false,
-          "attr": "stripe-account-id",
-          "reflectToAttr": false,
-          "docs": "Your stripe connected account id.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
         }
       ],
       "methods": [
@@ -15576,7 +15755,9 @@
       "styles": [],
       "slots": [],
       "parts": [],
-      "dependents": [],
+      "dependents": [
+        "sc-payment"
+      ],
       "dependencies": [
         "sc-input",
         "sc-text"
@@ -15591,6 +15772,9 @@
         ],
         "sc-form-control": [
           "sc-tooltip"
+        ],
+        "sc-payment": [
+          "sc-stripe-element"
         ]
       }
     },

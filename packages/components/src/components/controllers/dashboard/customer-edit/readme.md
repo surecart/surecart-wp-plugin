@@ -53,11 +53,11 @@ graph TD;
   sc-address --> sc-form-control
   sc-address --> sc-select
   sc-address --> sc-input
+  sc-select --> sc-icon
   sc-select --> sc-menu-label
   sc-select --> sc-menu-item
   sc-select --> sc-form-control
   sc-select --> sc-dropdown
-  sc-select --> sc-icon
   sc-select --> sc-input
   sc-select --> sc-spinner
   sc-select --> sc-menu

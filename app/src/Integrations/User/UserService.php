@@ -78,6 +78,9 @@ class UserService extends IntegrationService implements IntegrationInterface, Pu
 		$roles          = [];
 		$editable_roles = get_editable_roles();
 		foreach ( $editable_roles as $role => $details ) {
+			if ( 'administrator' === $role ) {
+				continue; // don't allow admin role.
+			}
 			$sub['id']      = esc_attr( $role );
 			$sub['label']   = translate_user_role( $details['name'] );
 			$roles[ $role ] = $sub;

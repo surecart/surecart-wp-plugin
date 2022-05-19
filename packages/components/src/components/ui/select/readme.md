@@ -84,11 +84,11 @@ Type: `Promise<void>`
 
 ### Depends on
 
+- [sc-icon](../icon)
 - [sc-menu-label](../menu-label)
 - [sc-menu-item](../menu-item)
 - [sc-form-control](../form-control)
 - [sc-dropdown](../dropdown)
-- [sc-icon](../icon)
 - [sc-input](../input)
 - [sc-spinner](../spinner)
 - [sc-menu](../menu)
@@ -96,11 +96,11 @@ Type: `Promise<void>`
 ### Graph
 ```mermaid
 graph TD;
+  sc-select --> sc-icon
   sc-select --> sc-menu-label
   sc-select --> sc-menu-item
   sc-select --> sc-form-control
   sc-select --> sc-dropdown
-  sc-select --> sc-icon
   sc-select --> sc-input
   sc-select --> sc-spinner
   sc-select --> sc-menu
