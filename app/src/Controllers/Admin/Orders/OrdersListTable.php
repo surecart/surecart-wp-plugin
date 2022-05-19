@@ -62,35 +62,10 @@ class OrdersListTable extends ListTable {
 	public function column_integrations( $order ) {
 		$output = '';
 
-		// no purchases.
-		if ( empty( $order->purchases->data ) ) {
-			return '-';
-		}
-
 		// loop through each purchase.
-		foreach ( $order->purchases->data as $purchase ) {
-			$integrations = Integration::where( 'model_id', $purchase->product )->get();
-			if ( empty( $integrations ) ) {
-				continue;
-			}
-			foreach ( $integrations as $integration ) {
-				$provider = (object) apply_filters( "surecart/integrations/providers/find/{$integration->provider}", [] );
-				$item     = (object) apply_filters( "surecart/integrations/providers/{$integration->provider}/item", $integration->integration_id );
-				if ( ! empty( $item->label ) ) {
-					ob_start();
-					?>
-					<sc-tooltip text="<?php echo esc_attr( $provider->label ?? '' ); ?>" type="text" style="display:inline-block; cursor: help">
-						<sc-flex justify-content="flex-start">
-							<?php if ( $provider->logo ) : ?>
-								<img src="<?php echo esc_url( $provider->logo ); ?>" style="width: 18px; height: 18px"/>
-							<?php endif; ?>
-							<?php echo wp_kses_post( $item->label ); ?>
-						</sc-flex>
-					</sc-tooltip>
-					<br />
-					<?php
-					$output .= ob_get_clean();
-				}
+		if ( ! empty( $order->purchases->data ) ) {
+			foreach ( $order->purchases->data as $purchase ) {
+				$output .= $this->productIntegrationsList( $purchase->product );
 			}
 		}
 

@@ -2,6 +2,7 @@
 
 namespace SureCart\Controllers\Admin\Tables;
 
+use SureCart\Models\Integration;
 use SureCart\Support\TimeDate;
 
 // WP_List_Table is not loaded automatically so we need to load it in our application.
@@ -106,5 +107,40 @@ abstract class ListTable extends \WP_List_Table {
 	 */
 	public function column_mode( $model ) {
 		return empty( $model->live_mode ) ? '<sc-tag type="warning">' . __( 'Test', 'surecart' ) . '</sc-tag>' : '';
+	}
+
+	/**
+	 * Show an integrations list based on a product id.
+	 *
+	 * @param string $id
+	 *
+	 * @return void
+	 */
+	public function productIntegrationsList( $id = '', $name = 'product' ) {
+		$output       = '';
+		$integrations = Integration::where( 'model_id', $id )->andWhere( 'model_name', $name )->get();
+		if ( empty( $integrations ) ) {
+			return $output;
+		}
+		foreach ( $integrations as $integration ) {
+			$provider = (object) apply_filters( "surecart/integrations/providers/find/{$integration->provider}", [] );
+			$item     = (object) apply_filters( "surecart/integrations/providers/{$integration->provider}/item", $integration->integration_id );
+			if ( ! empty( $item->label ) ) {
+				ob_start();
+				?>
+				<sc-tooltip text="<?php echo esc_attr( $provider->label ?? '' ); ?>" type="text" style="display:inline-block; cursor: help">
+					<sc-flex justify-content="flex-start">
+					<?php if ( $provider->logo ) : ?>
+							<img src="<?php echo esc_url( $provider->logo ); ?>" style="width: 18px; height: 18px"/>
+						<?php endif; ?>
+					<?php echo wp_kses_post( $item->label ); ?>
+					</sc-flex>
+				</sc-tooltip>
+				<br />
+				<?php
+				$output .= ob_get_clean();
+			}
+		}
+		return $output;
 	}
 }

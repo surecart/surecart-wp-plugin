@@ -99,12 +99,13 @@ class SubscriptionsListTable extends ListTable {
 	 */
 	public function get_columns() {
 		return [
-			'customer' => __( 'Customer', 'surecart' ),
-			'status'   => __( 'Status', 'surecart' ),
-			'plan'     => __( 'Plan', 'surecart' ),
-			'product'  => __( 'Product', 'surecart' ),
-			'created'  => __( 'Created', 'surecart' ),
-			'mode'     => '',
+			'customer'     => __( 'Customer', 'surecart' ),
+			'status'       => __( 'Status', 'surecart' ),
+			'plan'         => __( 'Plan', 'surecart' ),
+			'product'      => __( 'Product', 'surecart' ),
+			'integrations' => __( 'Integrations', 'surecart' ),
+			'created'      => __( 'Created', 'surecart' ),
+			'mode'         => '',
 		];
 	}
 
@@ -127,6 +128,15 @@ class SubscriptionsListTable extends ListTable {
 		return '<a href="' . esc_url( \SureCart::getUrl()->edit( 'product', $subscription->price->product->id ) ) . '">' . $subscription->price->product->name . '</a>';
 	}
 
+	/**
+	 * Show any integrations.
+	 *
+	 * @param \SureCart\Models\Subscription $subscription The subscription model.
+	 */
+	public function column_integrations( $subscription ) {
+		$output = $this->productIntegrationsList( $subscription->purchase->product );
+		return $output ? $output : '-';
+	}
 	/**
 	 * Define which columns are hidden
 	 *
@@ -155,7 +165,7 @@ class SubscriptionsListTable extends ListTable {
 			[
 				'status' => $this->getStatus(),
 			]
-		)->with( [ 'customer', 'price', 'price.product', 'latest_invoice' ] )
+		)->with( [ 'customer', 'price', 'price.product', 'latest_invoice', 'purchase' ] )
 		->paginate(
 			[
 				'per_page' => $this->get_items_per_page( 'subscriptions' ),
