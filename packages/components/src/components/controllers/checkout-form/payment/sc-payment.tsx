@@ -3,6 +3,7 @@ import { __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
 
 import { hasSubscription } from '../../../../functions/line-items';
+import { getProcessorData } from '../../../../functions/processor';
 import { Order, Processor, ProcessorName } from '../../../../types';
 
 @Component({
@@ -46,6 +47,9 @@ export class ScPayment {
 
   /** Hide the test mode badge */
   @Prop() hideTestModeBadge: boolean;
+
+  /** Use the Stripe payment element. */
+  @Prop() stripePaymentElement: boolean;
 
   /** Hold the stripe processor */
   @State() stripe: Processor;
@@ -91,7 +95,22 @@ export class ScPayment {
    * Render the payment element.
    */
   renderStripePaymentElement() {
-    return <sc-order-stripe-payment-element order={this.order} mode={this.mode} processors={this.processors} currency-code={this.currencyCode}></sc-order-stripe-payment-element>;
+    if (this.stripePaymentElement) {
+      return <sc-order-stripe-payment-element order={this.order} mode={this.mode} processors={this.processors} currency-code={this.currencyCode}></sc-order-stripe-payment-element>;
+    }
+    const data = getProcessorData(this.processors, 'stripe', this.mode);
+    return (
+      <div class="sc-payment__stripe-card-element">
+        <sc-stripe-element
+          order={this.order}
+          mode={this.mode}
+          publishableKey={data?.publishable_key}
+          accountId={data?.account_id}
+          secureText={this.secureNotice}
+        ></sc-stripe-element>
+        <sc-secure-notice>{this.secureNotice}</sc-secure-notice>
+      </div>
+    );
   }
 
   /** Should we show the processor */
@@ -240,7 +259,7 @@ export class ScPayment {
             <div>{this.label}</div>
             {this.renderTestModeBadge()}
           </div>
-          <sc-card>{this.renderStripePaymentElement()}</sc-card>
+          {this.stripePaymentElement ? <sc-card>{this.renderStripePaymentElement()}</sc-card> : this.renderStripePaymentElement()}
         </sc-form-control>
       );
     }
@@ -256,4 +275,4 @@ export class ScPayment {
   }
 }
 
-openWormhole(ScPayment, ['processor', 'processors', 'order', 'mode', 'paymentMethod', 'loading', 'busy', 'currencyCode'], false);
+openWormhole(ScPayment, ['processor', 'processors', 'order', 'mode', 'paymentMethod', 'loading', 'busy', 'currencyCode', 'stripePaymentElement'], false);

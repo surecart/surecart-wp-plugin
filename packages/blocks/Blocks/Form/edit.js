@@ -464,6 +464,9 @@ export default function edit({ clientId, attributes, setAttributes }) {
 						mode="test"
 						formId={formId}
 						processors={scBlockData?.processors}
+						stripePaymentElement={
+							scBlockData?.beta?.stripe_payment_element
+						}
 						css={css`
 							margin-top: 2em;
 							font-size: ${font_size}px;
