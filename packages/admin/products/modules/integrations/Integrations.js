@@ -9,10 +9,12 @@ import { store as dataStore } from '@surecart/data';
 
 import Box from '../../../ui/Box';
 import NewIntegration from './NewIntegration';
+import IntegrationHelp from './IntegrationHelp';
 import Integration from './Integration';
 
 export default ({ id }) => {
 	const [modal, setModal] = useState(false);
+	const [guide, setGuide] = useState(false);
 	const { addDraft } = useDispatch(dataStore);
 
 	const { integrations, loading } = useSelect(
@@ -51,6 +53,19 @@ export default ({ id }) => {
 		<Box
 			loading={loading}
 			title={__('Integrations', 'surecart')}
+			header_action={
+				<ScButton
+					onClick={() => setGuide(true)}
+					size="small"
+					circle
+					type="text"
+				>
+					<sc-icon
+						name="help-circle"
+						style={{ fontSize: '18px' }}
+					></sc-icon>
+				</ScButton>
+			}
 			footer={
 				<ScButton onClick={() => setModal(true)}>
 					<sc-icon name="plus" slot="prefix"></sc-icon>
@@ -106,6 +121,11 @@ export default ({ id }) => {
 					onRequestClose={() => setModal(false)}
 				/>
 			)}
+
+			<IntegrationHelp
+				open={guide}
+				onRequestClose={() => setGuide(false)}
+			/>
 		</Box>
 	);
 };
