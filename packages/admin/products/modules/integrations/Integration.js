@@ -4,6 +4,7 @@ import { css, jsx } from '@emotion/core';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import { store as coreStore } from '@wordpress/core-data';
+import { store as dataStore } from '@surecart/data';
 import {
 	ScButton,
 	ScDropdown,
@@ -13,11 +14,12 @@ import {
 } from '@surecart/components-react';
 import { useState } from '@wordpress/element';
 
-export default ({ integration }) => {
+export default ({ integration, index }) => {
 	const [deleting, setDeleting] = useState(false);
 	const { integration_id, provider, id } = integration;
 
 	const { deleteEntityRecord } = useDispatch(coreStore);
+	const { removeDraft } = useDispatch(dataStore);
 
 	const { providerData, loading } = useSelect(
 		(select) => {
@@ -60,6 +62,9 @@ export default ({ integration }) => {
 	);
 
 	const onRemove = async () => {
+		if (!integration?.id) {
+			return removeDraft('integration', index);
+		}
 		const r = confirm(
 			__(
 				'Are you sure you want to remove this integration? This will affect existing customers who have purchased this product.',
@@ -83,7 +88,20 @@ export default ({ integration }) => {
 	return (
 		<sc-stacked-list-row style={{ position: 'relative' }} mobile-size={0}>
 			{loading || deleting ? (
-				<sc-block-ui spinner></sc-block-ui>
+				<div
+					css={css`
+						display: grid;
+						gap: 1em;
+					`}
+				>
+					<sc-skeleton
+						style={{ width: '60px', display: 'inline-block' }}
+					></sc-skeleton>
+					<sc-skeleton
+						style={{ width: '80px', display: 'inline-block' }}
+						slot="price"
+					></sc-skeleton>
+				</div>
 			) : (
 				<div
 					css={css`
