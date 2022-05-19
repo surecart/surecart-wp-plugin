@@ -28,7 +28,15 @@ class IntegrationProvidersController {
 	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function find( \WP_REST_Request $request ) {
-		$provider = apply_filters( "surecart/integrations/providers/find/{$request->get_param( 'provider' )}", [], $request );
+		$provider = apply_filters(
+			"surecart/integrations/providers/find/{$request->get_param( 'provider' )}",
+			[
+				'id'             => null,
+				'label'          => __( 'Not Found', 'surecart' ),
+				'provider_label' => __( 'The integration has been removed or is unavailable.', 'surecart' ),
+			],
+			$request
+		);
 		return rest_ensure_response( $provider );
 	}
 
