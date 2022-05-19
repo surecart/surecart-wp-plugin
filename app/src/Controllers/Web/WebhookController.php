@@ -116,7 +116,7 @@ class WebhookController {
 		$model = new $this->models[ $request['data']['object']['object'] ]( $request['data'] );
 
 		// broadcast the webhook.
-		\SureCart::actions()->doOnce( $event, $model, $request );
+		do_action( $event, $model, $request );
 
 		// return data.
 		return [

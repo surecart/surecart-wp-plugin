@@ -201,7 +201,7 @@ class OrderController extends RestController {
 			foreach ( $order->purchases->data as $purchase ) {
 				if ( empty( $purchase->revoked ) ) {
 					// broadcast the webhook.
-					\SureCart::actions()->doOnce( 'surecart/purchase_created', $purchase );
+					do_action( 'surecart/purchase_created', $purchase );
 				}
 			}
 		}

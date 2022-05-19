@@ -70,7 +70,7 @@ class Subscription extends Model {
 
 		// purchase revoked event.
 		if ( ! empty( $this->purchase->revoked ) ) {
-			\SureCart::actions()->doOnce( 'surecart/purchase_revoked', $this->purchase );
+			do_action( 'surecart_purchase_revoked', $this->purchase );
 		}
 
 		return $this;

@@ -64,7 +64,7 @@ class Purchase extends Model {
 		$this->fireModelEvent( 'revoked' );
 
 		// purchase revoked event.
-		\SureCart::actions()->doOnce( 'surecart/purchase_revoked', $this )->clear( 'surecart/purchase_invoked', $this );
+		do_action( 'surecart_purchase_revoked', $this );
 
 		return $this;
 	}
@@ -106,7 +106,7 @@ class Purchase extends Model {
 		$this->fireModelEvent( 'invoked' );
 
 		// purchase invoked event.
-		\SureCart::actions()->doOnce( 'surecart/purchase_invoked', $this )->clear( 'surecart/purchase_revoked', $this );
+		do_action( 'surecart_purchase_invoked', $this );
 
 		return $this;
 	}
