@@ -81,21 +81,16 @@ export default ({ id }) => {
 								<Integration
 									key={integration?.id}
 									integration={integration}
-									onRemove={() => {
-										deleteIntegration(integration);
-									}}
 								/>
 							);
 						})}
 
-						{(drafts || []).map((integration) => {
+						{(drafts || []).map((integration, index) => {
 							return (
 								<Integration
-									key={integration?.id}
+									key={index}
 									integration={integration}
-									onRemove={() => {
-										deleteIntegration(integration);
-									}}
+									index={index}
 								/>
 							);
 						})}
