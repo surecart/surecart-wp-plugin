@@ -14,6 +14,18 @@ module.exports = {
 	guideSidebar: [
 		'guide',
 		{
+			type: 'doc',
+			id: 'guide/purchase-integrations',
+		},
+		{
+			type: 'category',
+			label: 'Purchase Integrations',
+			items: [
+				'guide/purchase-integrations/overview',
+				'guide/purchase-integrations/creating',
+			],
+		},
+		{
 			type: 'category',
 			label: 'Models',
 			items: [
@@ -21,10 +33,6 @@ module.exports = {
 				'guide/expanding',
 				'guide/inserting-updating',
 			],
-		},
-		{
-			type: 'doc',
-			id: 'guide/purchase-actions',
 		},
 		{
 			type: 'category',

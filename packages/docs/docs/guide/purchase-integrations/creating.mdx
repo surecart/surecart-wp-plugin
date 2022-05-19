@@ -1,0 +1,424 @@
+# Extending The Integration Class
+To make integrating with purchases simple, conventional and reliable, we've provided a base class to extend
+and make your integration. The class and interfaces used require you to provide some basic details as well as
+some methods to override to run during the various purchase model lifecycle events.
+
+The entire integration can be completed in a single class or file in most instances. Extending this class
+also provides a way for SureCart to show your integration in the various user interfaces and allows the
+merchant to select the integration from the list.
+
+## Example: Creating A User Role Switcher
+In this example, we will create a user role switcher integration. In this integration when a purchase is created
+or invoked we will give the customer a chosen role. When a purchase is revoked, we will remove the role.
+
+:::note Example Only
+SureCart already ships with this integration. This is only being shown as an example so you can understand how to build your own.
+:::
+
+### 1. Extend IntegrationService and implement the interfaces
+We'll start start extend the IntegrationService class and implement the required interfaces.
+
+```php
+<?php
+
+namespace MyPlugin\Integrations;
+
+use SureCart\Integrations\Contracts\IntegrationInterface;
+use SureCart\Integrations\Contracts\PurchaseSyncInterface;
+use SureCart\Integrations\IntegrationService;
+
+class UserRoleChangeIntegration extends IntegrationService implements IntegrationInterface, PurchaseSyncInterface {
+}
+
+```
+
+You can see above, that we extend the IntegrationService class, but we also implement 2 interfaces for the class. Your class
+must extend the IntegrationService class and implement these two interfaces in order to work with purchase syncing. These
+interfaces are helpful for your IDE to let you know what methods you need to implement.
+
+In this case, we are implementing a Integration, and one that will sync purchases, so we need both of these interfaces.
+
+### 2. Set our integration details
+In order for our integration to be listed with other integrations, we need to provide some necessary information
+to tell our merchant about it. We'll do that using the required `IntegrationInterface` methods. Let's add those inside
+our php class.
+
+```php
+...
+	/**
+	 * The name for the integration.
+	 * Names have to be structured as namespace/integration-name, where namespace is the name of your plugin or theme.
+	 *
+	 * @return string
+	 */
+	public function getName() {
+		return 'my-plugin/user-role-change';
+	}
+
+	/**
+	 * Get the SureCart model used for the integration.
+	 * Only 'product' is supported at this time.
+	 *
+	 * @return string
+	 */
+	public function getModel() {
+		return 'product';
+	}
+
+	/**
+	 * Get the integration logo url.
+	 * This url needs to be an absolute url to png, jpg, webp or svg.
+	 *
+	 * @return string
+	 */
+	public function getLogo() {
+		return esc_url_raw( trailingslashit( plugin_dir_url( __FILE__ ) ) . 'icon.svg' );
+	}
+
+	/**
+	 * The display name for the integration in the dropdown.
+	 * This is displayed in a dropdown menu when a merchant selects an integration.
+	 *
+	 * @return string
+	 */
+	public function getLabel() {
+		return __( 'Change WordPress User Role', 'surecart' );
+	}
+
+	/**
+	 * The label for the integration item that will be chosen.
+	 * This is displayed in the second dropdown after a person selects your integration.
+	 *
+	 * @return string
+	 */
+	public function getItemLabel() {
+		return __( 'Change User Role', 'surecart' );
+	}
+
+	/**
+	 * Help text for the integration item chooser.
+	 * Additional help text for the integration item chooser.
+	 *
+	 * @return string
+	 */
+	public function getItemHelp() {
+		return __( 'Change the user role of the user who purchased the product.', 'surecart' );
+	}
+...
+```
+
+You can see above, these required functions return string values. Please refer to the comments for each method
+for more information about where and how each is used.
+
+### 3. Populate the integration item chooser
+In order for the integration to be displayed in the integration chooser, we need to provide 2 functions:
+`getItems` and `getItem`. These functions are used to populate the integration item chooser and allow
+SureCart to fetch an individual item.
+
+Items can be thought of as individual records. In this example and item is a role. If you were to build
+and integration with a specific post type, for example the item would be a list of your post type posts.
+
+Individual items are expected to be in this format:
+```php
+ [
+	 'id' => 'item_id', // this is stored as the integration model's integration_id property.
+	 'label' => 'Item Label', // this is shown as a display name for the user for the item.
+ ]
+```
+
+The ID is used as a storage value. Most times this will be a post id or model id. In this case, we are using
+a role slug. Let's implement this logic now.
+
+#### GetItems
+Let's create a `getItems` method and map all user roles to an array of item choices. As with the above,
+we want the savable `id` to be the role name, and the label to be the role display name.
+
+```php
+	...
+	/**
+	 * Get item listing for the integration.
+	 * These are a list of item the merchant can choose from when adding an integration.
+	 *
+	 * @param array $items The integration items.
+	 *
+	 * @return array The items for the integration.
+	 */
+	public function getItems( $items = [] ) {
+		$roles          = [];
+		$editable_roles = get_editable_roles();
+		foreach ( $editable_roles as $role => $details ) {
+			$sub['id']      = esc_attr( $role );
+			$sub['label']   = translate_user_role( $details['name'] );
+			$roles[ $role ] = $sub;
+		}
+		return $roles;
+	}
+	...
+```
+
+#### GetItem
+The IntegrationInterface requires a `getItem` function. This function should return a single item choice which
+is a single array in the item format noted above. In our case we expect the `id` to be the role name, since that is what we defined
+in the `getItems` method.
+
+```php
+...
+	/**
+	 * Get the individual item.
+	 *
+	 * @param string $id The item role.
+	 *
+	 * @return array The item for the integration.
+	 */
+	public function getItem( $id ) {
+		return [
+			'id'    => $id,
+			'label' => wp_roles()->get_names()[ $id ],
+		];
+	}
+...
+```
+
+### 4. Changing the role on Purchase lifecycle events.
+Next, we'll implement the required functions for the PurchaseSyncInterface. These functions
+are run when a purchase lifecycle event takes place, and will allow us to modify the role
+of the user.
+
+The param `$integratinon` contains an `id` attribute. This is the same `id` that you've set
+above in the `getItem` and `getItems` methods above.
+
+```php
+	...
+	/**
+	 * Add the role when the purchase is created.
+	 *
+	 * @param \SureCart\Models\Integration $integration The integrations.
+	 * @param \WP_User                     $wp_user The user.
+	 *
+	 * @return boolean|void Returns true if the user course access updation was successful otherwise false.
+	 */
+	public function onPurchaseCreated( $integration, $wp_user ) {
+		// make sure the role exists.
+		$role_object = get_role( $integration->id );
+		if ( ! $role_object ) {
+			return;
+		}
+		// add the role
+		return $wp_user->add_role( $integration->id );
+	}
+
+	/**
+	 * Add the role when the purchase is invoked
+	 *
+	 * @param \SureCart\Models\Integration $integration The integrations.
+	 * @param \WP_User                     $wp_user The user.
+	 *
+	 * @return boolean|void Returns true if the user course access updation was successful otherwise false.
+	 */
+	public function onPurchaseInvoked( $integration, $wp_user ) {
+		// make sure the role exists.
+		$role_object = get_role( $integration->id );
+		if ( ! $role_object ) {
+			return;
+		}
+		// add the role
+		return $wp_user->add_role( $integration->id );
+	}
+
+	/**
+	 * Remove a user role when the purchase is revoked.
+	 *
+	 * @param \SureCart\Models\Integration $integration The integrations.
+	 * @param \WP_User                     $wp_user The user.
+	 *
+	 * @return boolean|void Returns true if the user course access updation was successful otherwise false.
+	 */
+	public function onPurchaseRevoked( $integration, $wp_user ) {
+		// make sure the role exists.
+		$role_object = get_role( $integration->id );
+		if ( ! $role_object ) {
+			return;
+		}
+		// add the role
+		return $wp_user->remove_role( $integration->id );
+	}
+	...
+```
+
+This can certainly be simplified to be more DRY, which you can see in the full example, below. But it gives You
+a basic idea of how to implement the PurchaseSyncInterface.
+
+### 5. Bootstrap the integration
+The final step is to bootstrap your integration. You will create a new instance of your integration class and
+call the `bootstrap` function.
+
+```php
+(new \MyPlugin\Integrations\UserRoleChangeIntegration())->bootstrap();
+```
+
+## Full Example
+Here is the full example with some refactorings which will give you an idea of
+how to implement an entire integration.
+
+```php
+<?php
+
+namespace MyPlugin\Integrations;
+
+use SureCart\Integrations\Contracts\IntegrationInterface;
+use SureCart\Integrations\Contracts\PurchaseSyncInterface;
+use SureCart\Integrations\IntegrationService;
+
+/**
+ * Controls the LearnDash integration.
+ */
+class UserRoleChangeIntegration extends IntegrationService implements IntegrationInterface, PurchaseSyncInterface {
+	/**
+	 * Get the slug for the integration.
+	 *
+	 * @return string
+	 */
+	public function getName() {
+		return 'my-plugin/user-role-change';
+	}
+
+	/**
+	 * Get the SureCart model used for the integration.
+	 * Only 'product' is supported at this time.
+	 *
+	 * @return string
+	 */
+	public function getModel() {
+		return 'product';
+	}
+
+	/**
+	 * Get the integration logo url.
+	 * This can be to a png, jpg, or svg for example.
+	 *
+	 * @return string
+	 */
+	public function getLogo() {
+		return esc_url_raw( trailingslashit( plugin_dir_url( __FILE__ ) ) . 'icon.svg' );
+	}
+
+	/**
+	 * The display name for the integration in the dropdown.
+	 *
+	 * @return string
+	 */
+	public function getLabel() {
+		return __( 'Change WordPress User Role', 'surecart' );
+	}
+
+	/**
+	 * The label for the integration item that will be chosen.
+	 *
+	 * @return string
+	 */
+	public function getItemLabel() {
+		return __( 'Change User Role', 'surecart' );
+	}
+
+	/**
+	 * Help text for the integration item chooser.
+	 *
+	 * @return string
+	 */
+	public function getItemHelp() {
+		return __( 'Change the user role of the user who purchased the product.', 'surecart' );
+	}
+
+	/**
+	 * Get item listing for the integration.
+	 * These are a list of item the merchant can choose from when adding an integration.
+	 *
+	 * @param array $items The integration items.
+	 *
+	 * @return array The items for the integration.
+	 */
+	public function getItems( $items = [] ) {
+		$roles          = [];
+		$editable_roles = get_editable_roles();
+		foreach ( $editable_roles as $role => $details ) {
+			$sub['id']      = esc_attr( $role );
+			$sub['label']   = translate_user_role( $details['name'] );
+			$roles[ $role ] = $sub;
+		}
+		return $roles;
+	}
+
+	/**
+	 * Get the individual item.
+	 *
+	 * @param string $role The item role.
+	 *
+	 * @return array The item for the integration.
+	 */
+	public function getItem( $role ) {
+		return [
+			'id'    => $role,
+			'label' => wp_roles()->get_names()[ $role ],
+		];
+	}
+
+	/**
+	 * Add the role when the purchase is created.
+	 *
+	 * @param \SureCart\Models\Integration $integration The integrations.
+	 * @param \WP_User                     $wp_user The user.
+	 *
+	 * @return boolean|void Returns true if the user course access updation was successful otherwise false.
+	 */
+	public function onPurchaseCreated( $integration, $wp_user ) {
+		$this->toggleRole( $integration->integration_id, $wp_user, true );
+	}
+
+	/**
+	 * Add the role when the purchase is invoked
+	 *
+	 * @param \SureCart\Models\Integration $integration The integrations.
+	 * @param \WP_User                     $wp_user The user.
+	 *
+	 * @return boolean|void Returns true if the user course access updation was successful otherwise false.
+	 */
+	public function onPurchaseInvoked( $integration, $wp_user ) {
+		$this->onPurchaseCreated( $integration, $wp_user );
+	}
+
+	/**
+	 * Remove a user role when the purchase is revoked.
+	 *
+	 * @param \SureCart\Models\Integration $integration The integrations.
+	 * @param \WP_User                     $wp_user The user.
+	 *
+	 * @return boolean|void Returns true if the user course access updation was successful otherwise false.
+	 */
+	public function onPurchaseRevoked( $integration, $wp_user ) {
+		$this->toggleRole( $integration->integration_id, $wp_user, false );
+	}
+
+	/**
+	 * Toggle the role
+	 *
+	 * @param string   $role The role.
+	 * @param \WP_User $wp_user  The user object.
+	 * @param boolean  $add  True to add the role, false to remove.
+	 *
+	 * @return \WP_Role|false
+	 */
+	public function toggleRole( $role, $wp_user, $add = true ) {
+		// make sure the role exists.
+		$role_object = get_role( $role );
+		if ( ! $role_object ) {
+			return;
+		}
+		// add or remove the role.
+		return $add ? $wp_user->add_role( $role ) : $wp_user->remove_role( $role );
+	}
+}
+
+// bootstrap the integration.
+(new \MyPlugin\Integrations\UserRoleChangeIntegration())->bootstrap();
+
+```
