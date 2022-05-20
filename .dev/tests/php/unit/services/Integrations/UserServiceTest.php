@@ -44,8 +44,9 @@ class UserServiceTest extends SureCartUnitTestCase
 	public function test_getItems() {
 		$editable_roles = get_editable_roles();
 		$items = (new UserService())->getItems();
-		$this->assertSame(count($editable_roles), count($items));
+		$this->assertSame(count($editable_roles) - 1, count($items)); // we remove the admininstrator role.
 		foreach($editable_roles as $role => $details) {
+			if ( $role === 'administrator') continue;
 			$this->assertSame($details['name'], $items[$role]['label']);
 			$this->assertSame($role, $items[$role]['id']);
 		}
