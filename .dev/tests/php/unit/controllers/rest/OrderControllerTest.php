@@ -154,7 +154,8 @@ class OrderControllerTest extends SureCartUnitTestCase
 	}
 
 	/**
-	 * @group failing
+	 * @group rest
+	 * @group integration
 	 */
 	public function test_confirm() {
 		// set up request.
@@ -203,7 +204,8 @@ class OrderControllerTest extends SureCartUnitTestCase
 		$this->assertNotWPError($controller_order);
 		$this->assertSame($controller_order->status, 'paid');
 		$this->assertSame($controller_order->email, 'test@test.com');
-		$this->assertNotFalse(did_action('surecart/purchase_created'));
+		$this->assertSame(1, did_action('surecart/purchase_created'), 'Purchase created action was not called');
+		$this->assertSame(1, did_action('surecart/order_confirmed'), 'Order confirmed action was not called');
 	}
 
 	public function test_linkCustomerId() {
