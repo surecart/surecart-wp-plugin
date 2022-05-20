@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-05-19T19:26:15+00:00\n"
+"POT-Creation-Date: 2022-05-20T21:08:21+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 
@@ -268,8 +268,7 @@ msgid "Created"
 msgstr ""
 
 #: src/Controllers/Admin/Customers/CustomersListTable.php:160
-#: src/Controllers/Admin/Products/ProductsListTable.php:183
-msgid "No products found."
+msgid "No customers found."
 msgstr ""
 
 #: src/Controllers/Admin/Customers/CustomersListTable.php:171
@@ -377,6 +376,10 @@ msgstr ""
 
 #: src/Controllers/Admin/Products/ProductsListTable.php:111
 msgid "Type"
+msgstr ""
+
+#: src/Controllers/Admin/Products/ProductsListTable.php:183
+msgid "No products found."
 msgstr ""
 
 #: src/Controllers/Admin/Products/ProductsListTable.php:203
@@ -490,6 +493,14 @@ msgstr ""
 #: src/WordPress/PostTypes/FormPostTypeService.php:292
 #: admin/user-profile.php:13
 msgid "Test"
+msgstr ""
+
+#: src/Controllers/Rest/IntegrationProvidersController.php:35
+msgid "Not Found"
+msgstr ""
+
+#: src/Controllers/Rest/IntegrationProvidersController.php:36
+msgid "The integration has been removed or is unavailable."
 msgstr ""
 
 #: src/Controllers/Web/DashboardController.php:40
