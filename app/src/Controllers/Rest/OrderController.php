@@ -207,7 +207,7 @@ class OrderController extends RestController {
 		}
 
 		// the order is confirmed.
-		do_action( 'surecart/order/confirmed', $order, $request );
+		do_action( 'surecart/order_confirmed', $order, $request );
 
 		// return the order.
 		return $order;
