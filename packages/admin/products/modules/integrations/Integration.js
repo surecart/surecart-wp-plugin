@@ -2,7 +2,7 @@
 import { css, jsx } from '@emotion/core';
 
 import { useDispatch, useSelect } from '@wordpress/data';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import { store as coreStore } from '@wordpress/core-data';
 import { store as dataStore } from '@surecart/data';
 import {
@@ -84,6 +84,40 @@ export default ({ integration, index }) => {
 			setDeleting(false);
 		}
 	};
+
+	if (!loading && !deleting && !integrationData?.label) {
+		return (
+			<sc-stacked-list-row
+				style={{ position: 'relative' }}
+				mobile-size={0}
+			>
+				<div
+					css={css`
+						overflow: hidden;
+						text-overflow: ellipsis;
+						white-space: nowrap;
+					`}
+				>
+					<div
+						css={css`
+							overflow: hidden;
+							text-overflow: ellipsis;
+							white-space: nowrap;
+							font-weight: bold;
+						`}
+					>
+						{__('Not found', 'surecart')}
+					</div>
+					{sprintf(
+						__(
+							'The provider is not installed or unavailable.',
+							'surecart'
+						)
+					)}
+				</div>
+			</sc-stacked-list-row>
+		);
+	}
 
 	return (
 		<sc-stacked-list-row style={{ position: 'relative' }} mobile-size={0}>
