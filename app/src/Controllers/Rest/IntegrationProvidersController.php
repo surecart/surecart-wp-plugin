@@ -31,7 +31,7 @@ class IntegrationProvidersController {
 		$provider = apply_filters(
 			"surecart/integrations/providers/find/{$request->get_param( 'provider' )}",
 			[
-				'id'             => null,
+				'id'             => $request->get_param( 'id' ),
 				'label'          => __( 'Not Found', 'surecart' ),
 				'provider_label' => __( 'The integration has been removed or is unavailable.', 'surecart' ),
 			],
