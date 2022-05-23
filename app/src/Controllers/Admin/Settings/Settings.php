@@ -34,7 +34,7 @@ class Settings {
 	/**
 	 * Show the settings page.
 	 *
-	 * @return function
+	 * @return function|void
 	 */
 	public function show( $request ) {
 		$session = AccountPortalSession::create(

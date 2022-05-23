@@ -40,7 +40,7 @@ class Encryption {
 	 *
 	 * @since 1.0.0
 	 */
-	public function __construct() {
+	final public function __construct() {
 		$this->key  = $this->getDefaultKey();
 		$this->salt = $this->getDefaultSalt();
 	}

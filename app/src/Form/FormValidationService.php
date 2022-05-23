@@ -45,6 +45,7 @@ class FormValidationService {
 	 */
 	public function validate() {
 		$this->blocks = parse_blocks( $this->content );
+		return true;
 	}
 
 	/**

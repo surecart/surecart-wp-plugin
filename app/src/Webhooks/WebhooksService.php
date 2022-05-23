@@ -76,7 +76,7 @@ class WebhooksService {
 			return add_action(
 				'admin_notices',
 				function() use ( $registered ) {
-					return $this->showWebhooksErrorNotice( $registered );
+					$this->showWebhooksErrorNotice( $registered );
 				}
 			);
 		}
@@ -109,6 +109,7 @@ class WebhooksService {
 	 * Show a notice if webhook creation failed.
 	 *
 	 * @param  \WP_Error $error Error object.
+	 *
 	 * @return void
 	 */
 	public function showWebhooksErrorNotice( \WP_Error $error ) {

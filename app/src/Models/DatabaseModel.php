@@ -541,18 +541,6 @@ abstract class DatabaseModel implements ArrayAccess, JsonSerializable, Arrayable
 	}
 
 	/**
-	 * Make the API request.
-	 *
-	 * @param array  $args Array of arguments.
-	 * @param string $endpoint Optional endpoint override.
-	 *
-	 * @return Model
-	 */
-	protected function doQuery( $args = [], $endpoint = '' ) {
-
-	}
-
-	/**
 	 * Set the pagination args.
 	 *
 	 * @param array $args Pagination args.

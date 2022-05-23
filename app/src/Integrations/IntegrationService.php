@@ -129,6 +129,8 @@ abstract class IntegrationService implements IntegrationInterface {
 	/**
 	 * Get the item.
 	 *
+	 * @param string $id Id for the record.
+	 *
 	 * @return object
 	 */
 	public function _getItem( $id ) {

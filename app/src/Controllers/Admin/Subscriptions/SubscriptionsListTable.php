@@ -132,6 +132,7 @@ class SubscriptionsListTable extends ListTable {
 	 * Show any integrations.
 	 *
 	 * @param \SureCart\Models\Subscription $subscription The subscription model.
+	 * @return string
 	 */
 	public function column_integrations( $subscription ) {
 		$output = $this->productIntegrationsList( $subscription->purchase->product );

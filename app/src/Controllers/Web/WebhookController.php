@@ -2,7 +2,7 @@
 namespace SureCart\Controllers\Web;
 
 use SureCart\Models\Webhook;
-use SureCart\Webhooks\WebHooksHistoryService;
+use SureCart\Webhooks\WebhooksHistoryService;
 use SureCartCore\Responses\RedirectResponse;
 
 /**

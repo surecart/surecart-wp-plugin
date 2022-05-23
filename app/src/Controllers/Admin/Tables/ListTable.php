@@ -112,9 +112,10 @@ abstract class ListTable extends \WP_List_Table {
 	/**
 	 * Show an integrations list based on a product id.
 	 *
-	 * @param string $id
+	 * @param string $id Product id.
+	 * @param string $name Model name.
 	 *
-	 * @return void
+	 * @return string
 	 */
 	public function productIntegrationsList( $id = '', $name = 'product' ) {
 		$output       = '';
