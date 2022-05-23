@@ -154,7 +154,8 @@ abstract class IntegrationService extends AbstractIntegration implements Integra
 			$previous_purchase             = $purchase;
 			$previous_purchase['product']  = $previous['product'];
 			$previous_purchase['quantity'] = $previous['quantity'] ?? 1;
-			return $this->onPurchaseProductUpdated( $purchase, $previous_purchase, $request );
+			$this->onPurchaseProductUpdated( $purchase, $previous_purchase, $request );
+			return;
 		}
 
 		// The quantity has not changed.

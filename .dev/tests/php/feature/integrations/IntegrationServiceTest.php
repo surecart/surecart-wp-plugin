@@ -21,7 +21,7 @@ class IntegrationServiceTest extends SureCartUnitTestCase {
 	}
 
 	/**
-	 * @group failing
+	 * @group integration
 	 *
 	 * @return void
 	 */
@@ -34,11 +34,13 @@ class IntegrationServiceTest extends SureCartUnitTestCase {
 			'quantity' => 1,
 		]);
 
+		$integration = (object) ['id' => 'test', 'integration_id' => 'test_id'];
+		$wp_user = self::factory()->user->create_and_get();
 
-		$service->shouldReceive('onPurchaseQuantityUpdated')->once()->andReturn(null);
+		$service->shouldReceive('onPurchaseQuantityUpdated')->once()->with(1,2, $integration, $wp_user)->andReturn(null);
 		$service->shouldReceive('getIntegrationData')->once()->andReturn([
-			[(object)['id' => 'test', 'integration_id' => 'test_id']],
-			self::factory()->user->create_and_get()
+			[$integration],
+			$wp_user
 		]);
 		$service->onPurchaseUpdated($purchase, [
 			'data' => [
@@ -54,7 +56,7 @@ class IntegrationServiceTest extends SureCartUnitTestCase {
 	}
 
 	/**
-	 * @group failing
+	 * @group integration
 	 *
 	 * @return void
 	 */

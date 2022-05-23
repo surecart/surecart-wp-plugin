@@ -247,13 +247,43 @@ above in the `getItem` and `getItems` methods above.
 	 * Method to run when the quantity updates.
 	 *
 	 * @param integer  $quantity The new quantity.
+	 * @param integer  $previous_quantity The previous quantity.
+	 * @param Purchase $purchase The purchase.
+	 * @param array    $request The request.
+	 *
+	 * @return void
+	 */
+	public function onPurchaseQuantityUpdated( $quantity, $previous_quantity, $purchase, $request ) {
+		// we are not using this, but you could if the purchase quantity is updated.
+	}
+
+	/**
+	 * When a product is added to a purchase. This can happen if a purchase is updated with a new product.
+	 * THIS IS OPTIONAL. If you don't implement this method, the onPurchaseCreated method will be called.
+	 *
+	 * @param integer  $quantity The new quantity.
 	 * @param integer  $previous The previous quantity.
 	 * @param Purchase $purchase The purchase.
 	 * @param array    $request The request.
 	 *
 	 * @return void
 	 */
-	public function onPurchaseQuantityUpdated( $quantity, $previous, $purchase, $request ) {
+	public function onPurchaseProductAdded( $quantity, $previous, $purchase, $request ) {
+		// we are not using this, but you could if the purchase quantity is updated.
+	}
+
+	/**
+	 * When a product is removed from purchase. This can happen if a purchase is updated with a new product.
+	 * THIS IS OPTIONAL. If you don't implement this method, the onPurchaseRevoked method will be called.
+	 *
+	 * @param integer  $quantity The new quantity.
+	 * @param integer  $previous The previous quantity.
+	 * @param Purchase $purchase The purchase.
+	 * @param array    $request The request.
+	 *
+	 * @return void
+	 */
+	public function onPurchaseProductRemoved( $quantity, $previous, $purchase, $request ) {
 		// we are not using this, but you could if the purchase quantity is updated.
 	}
 	...

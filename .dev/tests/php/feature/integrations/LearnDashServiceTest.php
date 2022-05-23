@@ -72,11 +72,4 @@ class LearnDashServiceTest extends SureCartUnitTestCase
 		$service->shouldReceive('onPurchaseInvoked')->once()->with($integration, $wp_user);
 		do_action('surecart/purchase_invoked', $purchase);
 	}
-
-	public function test_purchaseQuantityUpdatedTrigger() {
-		[$service, $integration, $wp_user, $purchase] = $this->purchaseTriggerMocks();
-
-		$service->shouldReceive('onPurchaseInvoked')->once()->with($integration, $wp_user);
-		do_action('surecart/purchase_invoked', $purchase);
-	}
 }
