@@ -98,6 +98,17 @@ abstract class IntegrationService extends AbstractIntegration implements Integra
 	}
 
 	/**
+	 * Map this class methods to specific events.
+	 *
+	 * @var array
+	 */
+	protected $methods_map = [
+		'surecart/purchase_created' => 'onPurchaseCreated',
+		'surecart/purchase_invoked' => 'onPurchaseInvoked',
+		'surecart/purchase_revoked' => 'onPurchaseRevoked',
+	];
+
+	/**
 	 * Bootstrap the integration.
 	 */
 	public function bootstrap() {
@@ -114,28 +125,8 @@ abstract class IntegrationService extends AbstractIntegration implements Integra
 			add_action( 'surecart/purchase_created', [ $this, 'callMethod' ], 9 );
 			add_action( 'surecart/purchase_invoked', [ $this, 'callMethod' ], 9 );
 			add_action( 'surecart/purchase_revoked', [ $this, 'callMethod' ], 9 );
+			add_action( 'surecart/purchase_updated', [ $this, 'onPurchaseUpdated' ], 9, 2 );
 		}
-
-		// handle updated.
-		add_action( 'surecart/purchase_updated', [ $this, 'onPurchaseUpdated' ], 9, 2 );
-	}
-
-	/**
-	 * Get the method we will call for the action.
-	 *
-	 * @param string $action The action name.
-	 * @return string
-	 */
-	public function getActionMethod( $action ) {
-		switch ( $action ) {
-			case 'surecart/purchase_created':
-				return 'onPurchaseCreated';
-			case 'surecart/purchase_invoked':
-				return 'onPurchaseInvoked';
-			case 'surecart/purchase_revoked':
-				return 'onPurchaseRevoked';
-		}
-		return null;
 	}
 
 	/**
@@ -173,14 +164,12 @@ abstract class IntegrationService extends AbstractIntegration implements Integra
 		}
 
 		// run quantity updated method.
-		$integrations = $this->getIntegrationData( $purchase );
-		if ( ! empty( $integrations ) ) {
-			foreach ( $integrations as $integration ) {
-				if ( ! $integration->id ) {
-					continue;
-				}
-				$this->onPurchaseQuantityUpdated( $data['quantity'], $previous['quantity'], $integration, $purchase->getWPUser() );
+		$integrations = (array) $this->getIntegrationData( $purchase ) ?? [];
+		foreach ( $integrations as $integration ) {
+			if ( ! $integration->id ) {
+				continue;
 			}
+			$this->onPurchaseQuantityUpdated( $data['quantity'], $previous['quantity'], $integration, $purchase->getWPUser() );
 		}
 	}
 
@@ -195,25 +184,21 @@ abstract class IntegrationService extends AbstractIntegration implements Integra
 	 */
 	public function onPurchaseProductUpdated( $purchase, $previous_purchase, $request ) {
 		// product added.
-		$integrations = $this->getIntegrationData( $purchase );
-		if ( ! empty( $integrations ) ) {
-			foreach ( (array) $integrations as $integration ) {
-				if ( ! $integration->id ) {
-					continue;
-				}
-				$this->onPurchaseProductAdded( $integration, $purchase->getWPUser(), $request );
+		$integrations = (array) $this->getIntegrationData( $purchase ) ?? [];
+		foreach ( $integrations as $integration ) {
+			if ( ! $integration->id ) {
+				continue;
 			}
+			$this->onPurchaseProductAdded( $integration, $purchase->getWPUser() );
 		}
 
 		// product removed.
-		$integrations = $this->getIntegrationData( $previous_purchase );
-		if ( ! empty( $integrations ) ) {
-			foreach ( (array) $integrations as $integration ) {
-				if ( ! $integration->id ) {
-					continue;
-				}
-				$this->onPurchaseProductRemoved( $integration, $purchase->getWPUser(), $request );
+		$integrations = (array) $this->getIntegrationData( $previous_purchase ) ?? [];
+		foreach ( $integrations as $integration ) {
+			if ( ! $integration->id ) {
+				continue;
 			}
+			$this->onPurchaseProductRemoved( $integration, $purchase->getWPUser() );
 		}
 	}
 
@@ -228,7 +213,7 @@ abstract class IntegrationService extends AbstractIntegration implements Integra
 	 * @return void
 	 */
 	public function onPurchaseQuantityUpdated( $quantity, $previous, $purchase, $request ) {
-		// do nothing.
+		// Allow this to be extended to provide functionality. Do nothing by default.
 	}
 
 	/**
@@ -252,23 +237,17 @@ abstract class IntegrationService extends AbstractIntegration implements Integra
 	 * @return void
 	 */
 	public function callMethod( $purchase ) {
-		$method = $this->getActionMethod( $this->getCurrentAction() );
-		if ( ! $method ) {
+		$method = $this->methods_map[ $this->getCurrentAction() ] ?? null;
+		if ( ! $method || ! method_exists( $this, $method ) ) {
 			return;
 		}
 
-		if ( ! method_exists( $this, $method ) ) {
-			return;
-		}
-
-		$integrations = $this->getIntegrationData( $purchase );
-		if ( ! empty( $integrations ) ) {
-			foreach ( $integrations as $integration ) {
-				if ( ! $integration->id ) {
-					continue;
-				}
-				$this->$method( $integration, $purchase->getWPUser() );
+		$integrations = (array) $this->getIntegrationData( $purchase ) ?? [];
+		foreach ( $integrations as $integration ) {
+			if ( ! $integration->id ) {
+				continue;
 			}
+			$this->$method( $integration, $purchase->getWPUser() );
 		}
 	}
 

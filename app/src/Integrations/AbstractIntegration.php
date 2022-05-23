@@ -94,12 +94,11 @@ abstract class AbstractIntegration {
 	 *
 	 * @param \SureCart\Models\Integration $integration The integrations.
 	 * @param \WP_User                     $wp_user The user.
-	 * @param array                        $request The request.
 	 *
 	 * @return void
 	 */
-	public function onPurchaseProductAdded( $integration, $wp_user, $request ) {
-		$this->onPurchaseCreated( $integration, $wp_user, $request );
+	public function onPurchaseProductAdded( $integration, $wp_user ) {
+		$this->onPurchaseCreated( $integration, $wp_user );
 	}
 
 	/**
@@ -107,12 +106,11 @@ abstract class AbstractIntegration {
 	 *
 	 * @param \SureCart\Models\Integration $integration The integrations.
 	 * @param \WP_User                     $wp_user The user.
-	 * @param array                        $request The request.
 	 *
 	 * @return void
 	 */
-	public function onPurchaseProductRemoved( $integration, $wp_user, $request ) {
-		$this->onPurchaseRevoked( $integration, $wp_user, $request );
+	public function onPurchaseProductRemoved( $integration, $wp_user ) {
+		$this->onPurchaseRevoked( $integration, $wp_user );
 	}
 
 	/**
