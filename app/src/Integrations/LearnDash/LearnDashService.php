@@ -65,6 +65,15 @@ class LearnDashService extends IntegrationService implements IntegrationInterfac
 	}
 
 	/**
+	 * Is this enabled?
+	 *
+	 * @return boolean
+	 */
+	public function enabled() {
+		return defined( 'LEARNDASH_VERSION' );
+	}
+
+	/**
 	 * Get item listing for the integration.
 	 *
 	 * @param array $items The integration items.

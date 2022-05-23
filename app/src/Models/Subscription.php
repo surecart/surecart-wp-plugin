@@ -28,6 +28,41 @@ class Subscription extends Model {
 	protected $object_name = 'subscription';
 
 	/**
+	 * Update the model.
+	 *
+	 * @param array $attributes Attributes to update.
+	 * @return $this|false
+	 */
+	protected function update( $attributes = [] ) {
+		// find existing subscription with purchase record.
+		$existing = ( new Subscription() )->with( [ 'purchase' ] )->find( $attributes['id'] ?? $this->attributes['id'] );
+
+		// do the update and also get the purchase record.
+		$this->with( [ 'purchase' ] );
+		$updated = parent::update( $attributes );
+
+		// do the purchase updated event.
+		do_action(
+			'surecart/purchase_updated',
+			$updated->purchase,
+			[
+				'data' => [
+					'object'              => $updated->purchase->toArray(),
+					'previous_attributes' => array_filter(
+						[
+							// conditionally have the previous product and quantity as the previous attributes.
+							'product'  => $updated->purchase->product_id !== $existing->purchase->product_id ? ( $existing->purchase->product_id ?? null ) : null,
+							'quantity' => $updated->purchase->quantity !== $existing->purchase->quantity ? ( $existing->purchase->quantity ?? 1 ) : null,
+						]
+					),
+				],
+			]
+		);
+
+		return $this;
+	}
+
+	/**
 	 * Cancel a subscription
 	 *
 	 * @param string $id Model id.

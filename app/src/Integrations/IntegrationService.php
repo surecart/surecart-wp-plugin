@@ -89,6 +89,15 @@ abstract class IntegrationService extends AbstractIntegration implements Integra
 	}
 
 	/**
+	 * Enable by default.
+	 *
+	 * @return boolean
+	 */
+	public function enabled() {
+		return true;
+	}
+
+	/**
 	 * Bootstrap the integration.
 	 */
 	public function bootstrap() {
@@ -108,7 +117,7 @@ abstract class IntegrationService extends AbstractIntegration implements Integra
 		}
 
 		// handle updated.
-		add_action( 'surecart/purchase_updated', [ $this, 'onPurchaseUpdated' ], 9 );
+		add_action( 'surecart/purchase_updated', [ $this, 'onPurchaseUpdated' ], 9, 2 );
 	}
 
 	/**
@@ -164,12 +173,14 @@ abstract class IntegrationService extends AbstractIntegration implements Integra
 		}
 
 		// run quantity updated method.
-		[ $integrations, $wp_user ] = $this->getIntegrationData( $purchase );
-		foreach ( $integrations as $integration ) {
-			if ( ! $integration->id ) {
-				continue;
+		$integrations = $this->getIntegrationData( $purchase );
+		if ( ! empty( $integrations ) ) {
+			foreach ( $integrations as $integration ) {
+				if ( ! $integration->id ) {
+					continue;
+				}
+				$this->onPurchaseQuantityUpdated( $data['quantity'], $previous['quantity'], $integration, $purchase->getWPUser() );
 			}
-			$this->onPurchaseQuantityUpdated( $data['quantity'], $previous['quantity'], $integration, $wp_user );
 		}
 	}
 
@@ -184,21 +195,25 @@ abstract class IntegrationService extends AbstractIntegration implements Integra
 	 */
 	public function onPurchaseProductUpdated( $purchase, $previous_purchase, $request ) {
 		// product added.
-		[ $integrations, $wp_user ] = $this->getIntegrationData( $purchase );
-		foreach ( (array) $integrations as $integration ) {
-			if ( ! $integration->id ) {
-				continue;
+		$integrations = $this->getIntegrationData( $purchase );
+		if ( ! empty( $integrations ) ) {
+			foreach ( (array) $integrations as $integration ) {
+				if ( ! $integration->id ) {
+					continue;
+				}
+				$this->onPurchaseProductAdded( $integration, $purchase->getWPUser(), $request );
 			}
-			$this->onPurchaseProductAdded( $integration, $wp_user, $request );
 		}
 
 		// product removed.
-		[ $integrations, $wp_user ] = $this->getIntegrationData( $previous_purchase );
-		foreach ( (array) $integrations as $integration ) {
-			if ( ! $integration->id ) {
-				continue;
+		$integrations = $this->getIntegrationData( $previous_purchase );
+		if ( ! empty( $integrations ) ) {
+			foreach ( (array) $integrations as $integration ) {
+				if ( ! $integration->id ) {
+					continue;
+				}
+				$this->onPurchaseProductRemoved( $integration, $purchase->getWPUser(), $request );
 			}
-			$this->onPurchaseProductRemoved( $integration, $wp_user, $request );
 		}
 	}
 
@@ -242,16 +257,18 @@ abstract class IntegrationService extends AbstractIntegration implements Integra
 			return;
 		}
 
-		[ $integrations, $wp_user ] = $this->getIntegrationData( $purchase );
-		if ( ! method_exists( $this, $method ) || empty( $integrations ) ) {
+		if ( ! method_exists( $this, $method ) ) {
 			return;
 		}
 
-		foreach ( $integrations as $integration ) {
-			if ( ! $integration->id ) {
-				continue;
+		$integrations = $this->getIntegrationData( $purchase );
+		if ( ! empty( $integrations ) ) {
+			foreach ( $integrations as $integration ) {
+				if ( ! $integration->id ) {
+					continue;
+				}
+				$this->$method( $integration, $purchase->getWPUser() );
 			}
-			call_user_func_array( [ $this, $method ], [ $integration, $wp_user ] );
 		}
 	}
 
@@ -262,6 +279,23 @@ abstract class IntegrationService extends AbstractIntegration implements Integra
 	 */
 	protected function getCurrentAction() {
 		return \current_action();
+	}
+
+	/**
+	 * Undocumented function
+	 *
+	 * @param \SureCart\Models\Purchase $purchase Purchase model.
+	 *
+	 * @return void
+	 */
+	public function getWPUser( $purchase ) {
+		if ( is_string( $purchase ) ) {
+			$purchase = Purchase::find( $purchase );
+		}
+		if ( is_wp_error( $purchase ) ) {
+			return;
+		}
+		return $purchase->getWPUser();
 	}
 
 	/**
@@ -280,25 +314,8 @@ abstract class IntegrationService extends AbstractIntegration implements Integra
 			return;
 		}
 
-		// need a user.
-		$user = $purchase->getUser() ?? null;
-		if ( empty( $user->ID ) ) {
-			return;
-		}
-
-		// get the raw WP User.
-		$wp_user = $user->getWPUser() ?? null;
-		if ( ! $wp_user ) {
-			return;
-		}
-
 		// Get the integrations from the purchase.
-		$integrations = $this->getIntegrationsFromPurchase( $purchase );
-		if ( empty( $integrations ) ) {
-			return;
-		}
-
-		return [ $integrations, $wp_user ];
+		return $this->getIntegrationsFromPurchase( $purchase );
 	}
 
 	/**
@@ -321,6 +338,7 @@ abstract class IntegrationService extends AbstractIntegration implements Integra
 		return [
 			'name'       => $this->getName(),
 			'label'      => $this->getLabel(),
+			'disabled'   => ! $this->enabled(),
 			'logo'       => esc_url_raw( $this->getLogo() ),
 			'item_label' => $this->getItemLabel(),
 			'item_help'  => $this->getItemHelp(),

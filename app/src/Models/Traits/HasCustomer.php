@@ -47,6 +47,19 @@ trait HasCustomer {
 	}
 
 	/**
+	 * Get the WordPress user.
+	 *
+	 * @return \WP_User|null;
+	 */
+	public function getWPUser() {
+		$user = $this->getUser() ?? null;
+		if ( empty( $user->ID ) ) {
+			return;
+		}
+		return $user->getWPUser();
+	}
+
+	/**
 	 * Get the customer from the user.
 	 *
 	 * @param \WP_User|int $user_to_check User id or user object to check for ownership.

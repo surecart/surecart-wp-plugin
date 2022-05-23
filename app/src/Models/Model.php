@@ -844,6 +844,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	/**
 	 * Update the model.
 	 *
+	 * @param array $attributes Attributes to update.
 	 * @return $this|false
 	 */
 	protected function update( $attributes = [] ) {

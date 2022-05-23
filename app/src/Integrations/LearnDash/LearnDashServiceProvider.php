@@ -14,11 +14,9 @@ class LearnDashServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function register( $container ) {
-		if ( $this->enabled() ) {
-			$container['surecart.learndash.sync'] = function () {
-				return new LearnDashService();
-			};
-		}
+		$container['surecart.learndash.sync'] = function () {
+			return new LearnDashService();
+		};
 	}
 
 	/**
@@ -27,17 +25,6 @@ class LearnDashServiceProvider implements ServiceProviderInterface {
 	 * @param  \Pimple\Container $container Service Container.
 	 */
 	public function bootstrap( $container ) {
-		if ( $this->enabled() ) {
-			$container['surecart.learndash.sync']->bootstrap();
-		}
-	}
-
-	/**
-	 * Is learndash enabled?
-	 *
-	 * @return boolean
-	 */
-	public function enabled() {
-		return defined('LEARNDASH_VERSION');
+		$container['surecart.learndash.sync']->bootstrap();
 	}
 }

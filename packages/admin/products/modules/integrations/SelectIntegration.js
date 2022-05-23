@@ -72,6 +72,7 @@ export default ({
 							label: provider.label,
 							value: provider.name,
 							icon: provider.logo,
+							disabled: provider.disabled,
 						}))}
 						value={providerName}
 						loading={loadingProviders}
