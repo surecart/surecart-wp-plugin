@@ -47,6 +47,7 @@ export default () => {
 		e.preventDefault();
 		setTimeout(async () => {
 			try {
+				setSaving(true);
 				await saveSubscription({
 					query: {
 						update_behavior,
