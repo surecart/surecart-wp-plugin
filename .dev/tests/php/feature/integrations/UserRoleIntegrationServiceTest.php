@@ -43,7 +43,7 @@ class UserRoleIntegrationServiceTest extends SureCartUnitTestCase
 	}
 
 	/**
-	 * @group failing
+	 * @group integration
 	 */
 	public function test_purchaseCreatedTrigger() {
 		[$service, $integration, $wp_user, $purchase] = $this->purchaseTriggerMocks();
@@ -53,7 +53,7 @@ class UserRoleIntegrationServiceTest extends SureCartUnitTestCase
 	}
 
 	/**
-	 * @group failing
+	 * @group integration
 	 */
 	public function test_purchaseRevokedTrigger() {
 		[$service, $integration, $wp_user, $purchase] = $this->purchaseTriggerMocks();
@@ -64,7 +64,7 @@ class UserRoleIntegrationServiceTest extends SureCartUnitTestCase
 
 
 	/**
-	 * @group failing
+	 * @group integration
 	 */
 	public function test_purchaseInvokedTrigger() {
 		[$service, $integration, $wp_user, $purchase] = $this->purchaseTriggerMocks();

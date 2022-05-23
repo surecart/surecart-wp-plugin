@@ -10,7 +10,7 @@ use SureCart\Models\Purchase;
 /**
  * Base class for integrations to extend.
  */
-abstract class IntegrationService implements IntegrationInterface {
+abstract class IntegrationService extends AbstractIntegration implements IntegrationInterface {
 	/**
 	 * Get the slug for the integration.
 	 *
@@ -106,6 +106,9 @@ abstract class IntegrationService implements IntegrationInterface {
 			add_action( 'surecart/purchase_invoked', [ $this, 'callMethod' ], 9 );
 			add_action( 'surecart/purchase_revoked', [ $this, 'callMethod' ], 9 );
 		}
+
+		// handle updated.
+		add_action( 'surecart/purchase_updated', [ $this, 'onPurchaseUpdated' ], 9 );
 	}
 
 	/**
@@ -124,6 +127,92 @@ abstract class IntegrationService implements IntegrationInterface {
 				return 'onPurchaseRevoked';
 		}
 		return null;
+	}
+
+	/**
+	 * The purchase has been updated.
+	 * This is extendable, but is also abtracted into
+	 * invoke/revoke and quantity update methods.
+	 *
+	 * @param Purchase $purchase The purchase.
+	 * @param array    $request The request.
+	 *
+	 * @return void
+	 */
+	public function onPurchaseUpdated( $purchase, $request ) {
+		$data     = $request['data']['object'] ?? null;
+		$previous = $request['data']['previous_attributes'] ?? null;
+
+		// we need data or a previous.
+		if ( empty( $data ) || empty( $previous ) ) {
+			return;
+		}
+
+		// product has changed, let's revoke access to the old one
+		// and provide access to the new one.
+		if ( ! empty( $previous['product'] ) && $data['product'] !== $previous['product'] ) {
+			$previous_purchase             = $purchase;
+			$previous_purchase['product']  = $previous['product'];
+			$previous_purchase['quantity'] = $previous['quantity'] ?? 1;
+			return $this->onPurchaseProductUpdated( $purchase, $previous_purchase, $request );
+		}
+
+		// The quantity has not changed.
+		if ( (int) $data['quantity'] === (int) $previous['quantity'] ) {
+			return;
+		}
+
+		// run quantity updated method.
+		[ $integrations, $wp_user ] = $this->getIntegrationData( $purchase );
+		foreach ( $integrations as $integration ) {
+			if ( ! $integration->id ) {
+				continue;
+			}
+			$this->onPurchaseQuantityUpdated( $data['quantity'], $previous['quantity'], $integration, $wp_user );
+		}
+	}
+
+	/**
+	 * When the purchase product is updated
+	 *
+	 * @param \SureCart\Models\Purchase $purchase The purchase.
+	 * @param \SureCart\Models\Purchase $previous_purchase The previous purchase.
+	 * @param array                     $request The request.
+	 *
+	 * @return void
+	 */
+	public function onPurchaseProductUpdated( $purchase, $previous_purchase, $request ) {
+		// product added.
+		[ $integrations, $wp_user ] = $this->getIntegrationData( $purchase );
+		foreach ( (array) $integrations as $integration ) {
+			if ( ! $integration->id ) {
+				continue;
+			}
+			$this->onPurchaseProductAdded( $integration, $wp_user, $request );
+		}
+
+		// product removed.
+		[ $integrations, $wp_user ] = $this->getIntegrationData( $previous_purchase );
+		foreach ( (array) $integrations as $integration ) {
+			if ( ! $integration->id ) {
+				continue;
+			}
+			$this->onPurchaseProductRemoved( $integration, $wp_user, $request );
+		}
+	}
+
+	/**
+	 * Method to run when the quantity updates.
+	 *
+	 * @param integer  $quantity The new quantity.
+	 * @param integer  $previous The previous quantity.
+	 * @param Purchase $purchase The purchase.
+	 * @param array    $request The request.
+	 *
+	 * @return void
+	 */
+	public function onPurchaseQuantityUpdated( $quantity, $previous, $purchase, $request ) {
+		// do nothing.
 	}
 
 	/**

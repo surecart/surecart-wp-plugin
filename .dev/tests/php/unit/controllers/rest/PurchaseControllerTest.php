@@ -30,7 +30,7 @@ class PurchaseControllerTest extends SureCartUnitTestCase
 	}
 
 	/**
-	 * @group failing
+	 * @group integration
 	 */
 	public function test_revoke() {
 		// mock requests
@@ -59,7 +59,7 @@ class PurchaseControllerTest extends SureCartUnitTestCase
 	}
 
 	/**
-	 * @group failing
+	 * @group integration
 	 */
 	public function test_invoke() {
 		// mock requests

@@ -242,11 +242,25 @@ above in the `getItem` and `getItems` methods above.
 		// add the role
 		return $wp_user->remove_role( $integration->id );
 	}
+
+	/**
+	 * Method to run when the quantity updates.
+	 *
+	 * @param integer  $quantity The new quantity.
+	 * @param integer  $previous The previous quantity.
+	 * @param Purchase $purchase The purchase.
+	 * @param array    $request The request.
+	 *
+	 * @return void
+	 */
+	public function onPurchaseQuantityUpdated( $quantity, $previous, $purchase, $request ) {
+		// we are not using this, but you could if the purchase quantity is updated.
+	}
 	...
 ```
 
-This can certainly be simplified to be more DRY, which you can see in the full example, below. But it gives You
-a basic idea of how to implement the PurchaseSyncInterface.
+This can certainly be simplified to be more DRY, which you can see in the full example, below. But this gives you
+a basic idea of how to implement purchase syncing.
 
 ### 5. Bootstrap the integration
 The final step is to bootstrap your integration. You will create a new instance of your integration class and
