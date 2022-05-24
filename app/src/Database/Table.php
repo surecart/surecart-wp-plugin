@@ -16,7 +16,7 @@ class Table {
 	 * @return void
 	 */
 	public function create( $name, $columns, $version = 1, $opts = [] ) {
-		$current_version = get_option( "{$name}_database_version", 0 );
+		$current_version = (int) get_option( "{$name}_database_version", 0 );
 
 		if ( $version === $current_version ) {
 			return;
