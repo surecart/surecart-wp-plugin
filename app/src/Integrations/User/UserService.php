@@ -76,7 +76,7 @@ class UserService extends IntegrationService implements IntegrationInterface, Pu
 	 */
 	public function getItems( $items = [] ) {
 		$roles          = [];
-		$editable_roles = get_editable_roles();
+		$editable_roles = \wp_roles()->roles;
 		foreach ( $editable_roles as $role => $details ) {
 			if ( 'administrator' === $role ) {
 				continue; // don't allow admin role.
