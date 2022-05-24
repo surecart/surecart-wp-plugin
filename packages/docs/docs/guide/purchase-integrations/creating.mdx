@@ -286,7 +286,7 @@ do not add these, the `onPurchaseCreated` function and `onPurchaseRevoked` funct
 	 * @return void
 	 */
 	public function onPurchaseProductAdded( $quantity, $previous, $purchase, $request ) {
-		// we are not using this, but you could if the purchase quantity is updated.
+		// if you do not add this, it will default to onPurchaseCreated
 	}
 
 	/**
@@ -301,7 +301,7 @@ do not add these, the `onPurchaseCreated` function and `onPurchaseRevoked` funct
 	 * @return void
 	 */
 	public function onPurchaseProductRemoved( $quantity, $previous, $purchase, $request ) {
-		// we are not using this, but you could if the purchase quantity is updated.
+		// if you do not add this, it will default to onPurchaseRevoked
 	}
 ```
 
