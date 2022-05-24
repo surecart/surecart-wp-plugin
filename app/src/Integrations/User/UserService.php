@@ -70,11 +70,12 @@ class UserService extends IntegrationService implements IntegrationInterface, Pu
 	 * Get item listing for the integration.
 	 * These are a list of item the merchant can choose from when adding an integration.
 	 *
-	 * @param array $items The integration items.
+	 * @param array  $items The integration items.
+	 * @param string $search The search term.
 	 *
 	 * @return array The items for the integration.
 	 */
-	public function getItems( $items = [] ) {
+	public function getItems( $items = [], $search = '' ) {
 		$roles          = [];
 		$editable_roles = \wp_roles()->roles;
 		foreach ( $editable_roles as $role => $details ) {

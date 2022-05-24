@@ -1,4 +1,4 @@
-import { Fragment, useEffect } from '@wordpress/element';
+import { Fragment, useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { store as coreStore } from '@wordpress/core-data';
 
@@ -14,6 +14,7 @@ export default ({
 	item,
 	setItem,
 }) => {
+	const [search, setSearch] = useState(null);
 	const { providers, loadingProviders } = useSelect((select) => {
 		const queryArgs = [
 			'surecart',
@@ -36,7 +37,7 @@ export default ({
 			const queryArgs = [
 				'surecart',
 				'integration_provider_item',
-				{ context: 'edit', model, provider: providerName },
+				{ context: 'edit', model, provider: providerName, search },
 			];
 			if (!providerName) return { items: [], loadingItems: false };
 			return {
@@ -47,7 +48,7 @@ export default ({
 				),
 			};
 		},
-		[providerName]
+		[providerName, search]
 	);
 
 	useEffect(() => {
@@ -99,6 +100,8 @@ export default ({
 							};
 						})}
 						loading={loadingItems}
+						onQuery={setSearch}
+						onFetch={() => setSearch('')}
 						name="item"
 						required
 						value={item}
