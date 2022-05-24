@@ -55,7 +55,10 @@ exports[`sc-payment renders stripe and hides paypal if recurring 1`] = `
             Credit Card
           </span>
         </span>
-        <sc-order-stripe-payment-element currency-code="usd" mode="live"></sc-order-stripe-payment-element>
+        <div class="sc-payment__stripe-card-element">
+          <sc-stripe-element mode="live"></sc-stripe-element>
+          <sc-secure-notice></sc-secure-notice>
+        </div>
       </sc-toggle>
     </sc-toggles>
   </sc-form-control>
@@ -76,7 +79,10 @@ exports[`sc-payment renders stripe and paypal 1`] = `
             Credit Card
           </span>
         </span>
-        <sc-order-stripe-payment-element currency-code="usd" mode="live"></sc-order-stripe-payment-element>
+        <div class="sc-payment__stripe-card-element">
+          <sc-stripe-element mode="live"></sc-stripe-element>
+          <sc-secure-notice></sc-secure-notice>
+        </div>
       </sc-toggle>
       <sc-toggle borderless="" shady="" show-control="">
         <span class="sc-payment-toggle-summary" slot="summary">
@@ -97,9 +103,10 @@ exports[`sc-payment renders stripe only 1`] = `
     <div class="sc-payment-label" slot="label">
       <div></div>
     </div>
-    <sc-card>
-      <sc-order-stripe-payment-element currency-code="usd" mode="live"></sc-order-stripe-payment-element>
-    </sc-card>
+    <div class="sc-payment__stripe-card-element">
+      <sc-stripe-element mode="live"></sc-stripe-element>
+      <sc-secure-notice></sc-secure-notice>
+    </div>
   </sc-form-control>
 </sc-payment>
 `;
