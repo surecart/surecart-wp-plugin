@@ -2,7 +2,6 @@
 
 namespace SureCart\WordPress\Users;
 
-use SureCart\Models\Order;
 use SureCart\Models\User;
 
 /**
@@ -84,7 +83,7 @@ class UsersService {
 				],
 				'single'            => true,
 				'sanitize_callback' => function( $value ) {
-					return (object) array_map( 'sanitize_text_field', (array) $value );
+					return array_filter( array_map( 'sanitize_text_field', (array) $value ) );
 				},
 				'auth_callback'     => function () {
 					return current_user_can( 'edit_sc_customers' );
