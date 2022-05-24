@@ -145,7 +145,7 @@ we want the savable `id` to be the role name, and the label to be the role displ
 	 */
 	public function getItems( $items = [] ) {
 		$roles          = [];
-		$editable_roles = get_editable_roles();
+		$editable_roles = wp_roles()->roles;
 		foreach ( $editable_roles as $role => $details ) {
 			$sub['id']      = esc_attr( $role );
 			$sub['label']   = translate_user_role( $details['name'] );
@@ -242,7 +242,17 @@ above in the `getItem` and `getItems` methods above.
 		// add the role
 		return $wp_user->remove_role( $integration->id );
 	}
+	...
+```
 
+This can certainly be simplified to be more DRY, which you can see in the full example, below. But this gives you
+a basic idea of how to implement purchase syncing.
+
+There are some other optional methods for more specific purchase changes. If you want to change something with the
+purchase quantity changes, you can use the `onPurchaseQuantityUpdated` method:
+
+#### OPTIONAL:
+```php
 	/**
 	 * Method to run when the quantity updates.
 	 *
@@ -256,7 +266,14 @@ above in the `getItem` and `getItems` methods above.
 	public function onPurchaseQuantityUpdated( $quantity, $previous_quantity, $purchase, $request ) {
 		// we are not using this, but you could if the purchase quantity is updated.
 	}
+```
 
+If you want to do something special when a purchase's product changes (i.e. a subscription plan changes),
+then you can use the `onPurchaseProductAdded` and `onPurchaseProductRemoved` methods. By default, if you
+do not add these, the `onPurchaseCreated` function and `onPurchaseRevoked` function will be called, respectively.
+
+#### OPTIONAL:
+```php
 	/**
 	 * When a product is added to a purchase. This can happen if a purchase is updated with a new product.
 	 * THIS IS OPTIONAL. If you don't implement this method, the onPurchaseCreated method will be called.
@@ -286,11 +303,7 @@ above in the `getItem` and `getItems` methods above.
 	public function onPurchaseProductRemoved( $quantity, $previous, $purchase, $request ) {
 		// we are not using this, but you could if the purchase quantity is updated.
 	}
-	...
 ```
-
-This can certainly be simplified to be more DRY, which you can see in the full example, below. But this gives you
-a basic idea of how to implement purchase syncing.
 
 ### 5. Bootstrap the integration
 The final step is to bootstrap your integration. You will create a new instance of your integration class and
@@ -383,7 +396,7 @@ class UserRoleChangeIntegration extends IntegrationService implements Integratio
 	 */
 	public function getItems( $items = [] ) {
 		$roles          = [];
-		$editable_roles = get_editable_roles();
+		$editable_roles = wp_roles()->roles;
 		foreach ( $editable_roles as $role => $details ) {
 			$sub['id']      = esc_attr( $role );
 			$sub['label']   = translate_user_role( $details['name'] );
