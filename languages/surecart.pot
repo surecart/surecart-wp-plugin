@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-05-11T20:23:48+00:00\n"
+"POT-Creation-Date: 2022-05-20T21:08:21+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 
@@ -25,7 +25,7 @@ msgstr ""
 
 #: src/Controllers/Admin/Abandoned/AbandonedOrderListTable.php:48
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:63
-#: src/Controllers/Admin/Products/ProductsListTable.php:65
+#: src/Controllers/Admin/Products/ProductsListTable.php:67
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:60
 msgid "All"
 msgstr ""
@@ -44,15 +44,15 @@ msgid "Search Abanonded Orders"
 msgstr ""
 
 #: src/Controllers/Admin/Abandoned/AbandonedOrderListTable.php:102
-#: src/Controllers/Admin/Orders/OrdersListTable.php:107
+#: src/Controllers/Admin/Orders/OrdersListTable.php:126
 msgid "Order"
 msgstr ""
 
 #: src/Controllers/Admin/Abandoned/AbandonedOrderListTable.php:103
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:123
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:64
-#: src/Controllers/Admin/Orders/OrdersListTable.php:108
-#: src/Controllers/Admin/Products/ProductsListTable.php:110
+#: src/Controllers/Admin/Orders/OrdersListTable.php:127
+#: src/Controllers/Admin/Products/ProductsListTable.php:113
 msgid "Date"
 msgstr ""
 
@@ -62,7 +62,7 @@ msgstr ""
 
 #: src/Controllers/Admin/Abandoned/AbandonedOrderListTable.php:105
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:65
-#: src/Controllers/Admin/Orders/OrdersListTable.php:109
+#: src/Controllers/Admin/Orders/OrdersListTable.php:128
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:104
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:103
 msgid "Status"
@@ -70,7 +70,7 @@ msgstr ""
 
 #: src/Controllers/Admin/Abandoned/AbandonedOrderListTable.php:106
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:67
-#: src/Controllers/Admin/Orders/OrdersListTable.php:111
+#: src/Controllers/Admin/Orders/OrdersListTable.php:131
 msgid "Total"
 msgstr ""
 
@@ -93,7 +93,7 @@ msgstr ""
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:119
 #: src/Controllers/Admin/Customers/CustomersListTable.php:102
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:103
-#: src/Controllers/Admin/Products/ProductsListTable.php:106
+#: src/Controllers/Admin/Products/ProductsListTable.php:108
 #: src/Support/Errors/Translations/attributes.php:11
 msgid "Name"
 msgstr ""
@@ -103,7 +103,7 @@ msgid "Code"
 msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:121
-#: src/Controllers/Admin/Products/ProductsListTable.php:108
+#: src/Controllers/Admin/Products/ProductsListTable.php:110
 msgid "Price"
 msgstr ""
 
@@ -114,17 +114,17 @@ msgstr ""
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:134
 #: src/Controllers/Admin/Customers/CustomersListTable.php:116
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:79
-#: src/Controllers/Admin/Orders/OrdersListTable.php:125
-#: src/Controllers/Admin/Products/ProductsListTable.php:121
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:118
+#: src/Controllers/Admin/Orders/OrdersListTable.php:145
+#: src/Controllers/Admin/Products/ProductsListTable.php:124
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:119
 msgid "Select comment"
 msgstr ""
 
 #. translators: coupon expiration date.
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:222
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:214
-#: src/Controllers/Admin/Orders/OrdersListTable.php:260
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:248
+#: src/Controllers/Admin/Orders/OrdersListTable.php:280
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:258
 msgid "Valid until %s"
 msgstr ""
 
@@ -135,30 +135,30 @@ msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:245
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:231
-#: src/Controllers/Admin/Orders/OrdersListTable.php:277
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:265
+#: src/Controllers/Admin/Orders/OrdersListTable.php:297
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:275
 msgid "No discount."
 msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:260
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:246
-#: src/Controllers/Admin/Orders/OrdersListTable.php:292
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:280
+#: src/Controllers/Admin/Orders/OrdersListTable.php:312
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:290
 msgid "Forever"
 msgstr ""
 
 #. translators: number of months.
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:264
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:250
-#: src/Controllers/Admin/Orders/OrdersListTable.php:296
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:284
+#: src/Controllers/Admin/Orders/OrdersListTable.php:316
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:294
 msgid "For %d months"
 msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:267
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:253
-#: src/Controllers/Admin/Orders/OrdersListTable.php:299
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:287
+#: src/Controllers/Admin/Orders/OrdersListTable.php:319
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:297
 msgid "Once"
 msgstr ""
 
@@ -168,16 +168,16 @@ msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:279
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:61
-#: src/Controllers/Admin/Products/ProductsListTable.php:63
+#: src/Controllers/Admin/Products/ProductsListTable.php:65
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:61
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:301
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:311
 msgid "Active"
 msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:305
 #: src/Controllers/Admin/Customers/CustomersListTable.php:219
-#: src/Controllers/Admin/Products/ProductsListTable.php:311
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:345
+#: src/Controllers/Admin/Products/ProductsListTable.php:322
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:355
 msgid "Edit"
 msgstr ""
 
@@ -191,13 +191,13 @@ msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:337
 #: src/Controllers/Admin/Customers/CustomersListTable.php:235
-#: src/Controllers/Admin/Products/ProductsListTable.php:330
+#: src/Controllers/Admin/Products/ProductsListTable.php:341
 msgid "Un-Archive"
 msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:337
 #: src/Controllers/Admin/Customers/CustomersListTable.php:235
-#: src/Controllers/Admin/Products/ProductsListTable.php:330
+#: src/Controllers/Admin/Products/ProductsListTable.php:341
 msgid "Archive"
 msgstr ""
 
@@ -263,39 +263,38 @@ msgstr ""
 
 #: src/Controllers/Admin/Customers/CustomersListTable.php:104
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:105
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:106
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:107
 msgid "Created"
 msgstr ""
 
 #: src/Controllers/Admin/Customers/CustomersListTable.php:160
-#: src/Controllers/Admin/Products/ProductsListTable.php:172
-msgid "No products found."
+msgid "No customers found."
 msgstr ""
 
 #: src/Controllers/Admin/Customers/CustomersListTable.php:171
-#: src/Controllers/Admin/Products/ProductsListTable.php:221
-#: src/Controllers/Admin/Products/ProductsListTable.php:241
+#: src/Controllers/Admin/Products/ProductsListTable.php:232
+#: src/Controllers/Admin/Products/ProductsListTable.php:252
 msgid "No price"
 msgstr ""
 
 #: src/Controllers/Admin/Customers/CustomersListTable.php:190
-#: src/Controllers/Admin/Products/ProductsListTable.php:260
-#: src/Controllers/Admin/Tables/ListTable.php:74
+#: src/Controllers/Admin/Products/ProductsListTable.php:271
+#: src/Controllers/Admin/Tables/ListTable.php:75
 msgid "Updated"
 msgstr ""
 
 #: src/Controllers/Admin/Customers/CustomersListTable.php:236
-#: src/Controllers/Admin/Products/ProductsListTable.php:331
+#: src/Controllers/Admin/Products/ProductsListTable.php:342
 msgid "Are you sure you want to restore this product? This will be be available to purchase."
 msgstr ""
 
 #: src/Controllers/Admin/Customers/CustomersListTable.php:236
-#: src/Controllers/Admin/Products/ProductsListTable.php:331
+#: src/Controllers/Admin/Products/ProductsListTable.php:342
 msgid "Are you sure you want to archive this product? This will be unavailable for purchase."
 msgstr ""
 
 #: src/Controllers/Admin/Customers/CustomersListTable.php:243
-#: src/Controllers/Admin/Products/ProductsListTable.php:338
+#: src/Controllers/Admin/Products/ProductsListTable.php:349
 msgid "Toggle Product Archive"
 msgstr ""
 
@@ -308,26 +307,26 @@ msgid "Invoice"
 msgstr ""
 
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:66
-#: src/Controllers/Admin/Orders/OrdersListTable.php:110
+#: src/Controllers/Admin/Orders/OrdersListTable.php:129
 msgid "Method"
 msgstr ""
 
 #. translators: Coupon % off.
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:223
-#: src/Controllers/Admin/Orders/OrdersListTable.php:269
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:257
+#: src/Controllers/Admin/Orders/OrdersListTable.php:289
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:267
 msgid "%1d%% off"
 msgstr ""
 
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:265
-#: src/Controllers/Admin/Orders/OrdersListTable.php:311
+#: src/Controllers/Admin/Orders/OrdersListTable.php:331
 msgid "Refunded"
 msgstr ""
 
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:280
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:284
-#: src/Controllers/Admin/Orders/OrdersListTable.php:326
-#: src/Controllers/Admin/Orders/OrdersListTable.php:330
+#: src/Controllers/Admin/Orders/OrdersListTable.php:346
+#: src/Controllers/Admin/Orders/OrdersListTable.php:350
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:189
 msgid "Edit Order"
 msgstr ""
@@ -340,19 +339,25 @@ msgstr ""
 msgid "Invalid API Token"
 msgstr ""
 
-#: src/Controllers/Admin/Orders/OrdersListTable.php:48
+#: src/Controllers/Admin/Orders/OrdersListTable.php:49
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:46
 msgid "Search Orders"
 msgstr ""
 
+#: src/Controllers/Admin/Orders/OrdersListTable.php:130
+#: src/Controllers/Admin/Products/ProductsListTable.php:112
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:106
+msgid "Integrations"
+msgstr ""
+
 #. translators: Customer name.
-#: src/Controllers/Admin/Orders/OrdersListTable.php:333
+#: src/Controllers/Admin/Orders/OrdersListTable.php:353
 msgid "By %s"
 msgstr ""
 
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:62
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:183
-#: src/Controllers/Admin/Products/ProductsListTable.php:64
+#: src/Controllers/Admin/Products/ProductsListTable.php:66
 msgid "Archived"
 msgstr ""
 
@@ -365,39 +370,43 @@ msgstr ""
 msgid "View"
 msgstr ""
 
-#: src/Controllers/Admin/Products/ProductsListTable.php:48
+#: src/Controllers/Admin/Products/ProductsListTable.php:50
 msgid "Search Products"
 msgstr ""
 
-#: src/Controllers/Admin/Products/ProductsListTable.php:109
+#: src/Controllers/Admin/Products/ProductsListTable.php:111
 msgid "Type"
 msgstr ""
 
-#: src/Controllers/Admin/Products/ProductsListTable.php:192
+#: src/Controllers/Admin/Products/ProductsListTable.php:183
+msgid "No products found."
+msgstr ""
+
+#: src/Controllers/Admin/Products/ProductsListTable.php:203
 msgid "Subscription"
 msgstr ""
 
-#: src/Controllers/Admin/Products/ProductsListTable.php:205
+#: src/Controllers/Admin/Products/ProductsListTable.php:216
 msgid "One-Time"
 msgstr ""
 
 #. translators: Price starting at.
-#: src/Controllers/Admin/Products/ProductsListTable.php:228
+#: src/Controllers/Admin/Products/ProductsListTable.php:239
 msgid "Starting at %s"
 msgstr ""
 
 #. translators: Other prices.
-#: src/Controllers/Admin/Products/ProductsListTable.php:230
+#: src/Controllers/Admin/Products/ProductsListTable.php:241
 msgid "and %d other price."
 msgid_plural "and %d other prices."
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Controllers/Admin/Products/ProductsListTable.php:238
+#: src/Controllers/Admin/Products/ProductsListTable.php:249
 msgid "Name your own price"
 msgstr ""
 
-#: src/Controllers/Admin/Products/ProductsListTable.php:298
+#: src/Controllers/Admin/Products/ProductsListTable.php:309
 msgid "Copied!"
 msgstr ""
 
@@ -419,7 +428,7 @@ msgid "Search Subscriptions"
 msgstr ""
 
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:62
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:304
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:314
 msgid "Canceled"
 msgstr ""
 
@@ -438,52 +447,60 @@ msgstr ""
 msgid "Product"
 msgstr ""
 
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:125
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:126
 msgid "No product"
 msgstr ""
 
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:201
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:211
 msgid "week"
 msgid_plural "%d weeks"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:207
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:217
 msgid "month"
 msgid_plural "%d months"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:213
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:223
 msgid "year"
 msgid_plural "%d years"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:307
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:317
 msgid "Trialing"
 msgstr ""
 
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:310
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:320
 msgid "Draft"
 msgstr ""
 
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:318
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:328
 msgid "Update Pending"
 msgstr ""
 
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:335
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:345
 msgid "No name provided"
 msgstr ""
 
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:338
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:348
 msgid "Edit Subscription"
 msgstr ""
 
-#: src/Controllers/Admin/Tables/ListTable.php:108
+#: src/Controllers/Admin/Tables/ListTable.php:109
 #: src/WordPress/PostTypes/FormPostTypeService.php:292
 #: admin/user-profile.php:13
 msgid "Test"
+msgstr ""
+
+#: src/Controllers/Rest/IntegrationProvidersController.php:35
+msgid "Not Found"
+msgstr ""
+
+#: src/Controllers/Rest/IntegrationProvidersController.php:36
+msgid "The integration has been removed or is unavailable."
 msgstr ""
 
 #: src/Controllers/Web/DashboardController.php:40
@@ -539,6 +556,31 @@ msgctxt "Page title"
 msgid "Dashboard"
 msgstr ""
 
+#: src/Integrations/LearnDash/LearnDashService.php:46
+#: src/Integrations/LearnDash/LearnDashService.php:111
+msgid "LearnDash Course"
+msgstr ""
+
+#: src/Integrations/LearnDash/LearnDashService.php:55
+msgid "Course Access"
+msgstr ""
+
+#: src/Integrations/LearnDash/LearnDashService.php:64
+msgid "Enable access to a LearnDash course."
+msgstr ""
+
+#: src/Integrations/User/UserService.php:48
+msgid "Change WordPress User Role"
+msgstr ""
+
+#: src/Integrations/User/UserService.php:57
+msgid "Change User Role"
+msgstr ""
+
+#: src/Integrations/User/UserService.php:66
+msgid "Change the user role of the user who purchased the product."
+msgstr ""
+
 #: src/Middleware/ArchiveModelMiddleware.php:24
 #: src/Middleware/EditModelMiddleware.php:24
 #: src/Middleware/LoginMiddleware.php:14
@@ -582,6 +624,8 @@ msgstr ""
 #: src/Rest/CustomerLinksRestServiceProvider.php:53
 #: src/Rest/CustomerRestServiceProvider.php:47
 #: src/Rest/FilesRestServiceProvider.php:54
+#: src/Rest/IntegrationProvidersRestServiceProvider.php:106
+#: src/Rest/IntegrationsRestServiceProvider.php:78
 #: src/Rest/InvoicesRestServiceProvider.php:75
 #: src/Rest/OrderRestServiceProvider.php:90
 #: src/Rest/PaymentIntentsRestServiceProvider.php:76
@@ -673,15 +717,31 @@ msgid "The URL that the customer should be directed to when the click the link f
 msgstr ""
 
 #: src/Rest/FilesRestServiceProvider.php:73
+#: src/Rest/IntegrationProvidersRestServiceProvider.php:129
+#: src/Rest/IntegrationsRestServiceProvider.php:118
 #: src/Rest/PriceRestServiceProvider.php:98
 #: src/Rest/ProductsRestServiceProvider.php:168
 msgid "The page of items you want returned."
 msgstr ""
 
 #: src/Rest/FilesRestServiceProvider.php:77
+#: src/Rest/IntegrationProvidersRestServiceProvider.php:133
+#: src/Rest/IntegrationsRestServiceProvider.php:122
 #: src/Rest/PriceRestServiceProvider.php:102
 #: src/Rest/ProductsRestServiceProvider.php:172
 msgid "A limit on the number of items to be returned, between 1 and 100."
+msgstr ""
+
+#: src/Rest/IntegrationProvidersRestServiceProvider.php:125
+msgid "The model to get integration providers for."
+msgstr ""
+
+#: src/Rest/IntegrationsRestServiceProvider.php:84
+msgid "The SureCart model name."
+msgstr ""
+
+#: src/Rest/IntegrationsRestServiceProvider.php:103
+msgid "The SureCart model id."
 msgstr ""
 
 #: src/Rest/LoginRestServiceProvider.php:67
@@ -1214,7 +1274,7 @@ msgstr ""
 
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:46
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:63
-#: layouts/partials/admin-settings-header.php:19
+#: layouts/partials/admin-settings-header.php:23
 msgid "Settings"
 msgstr ""
 
@@ -1416,21 +1476,37 @@ msgid "This can slightly increase page load speed, but may require you to enable
 msgstr ""
 
 #: admin/advanced.php:52
+msgid "Beta Features"
+msgstr ""
+
+#: admin/advanced.php:53
+msgid "Opt-in to some beta features of the plugin."
+msgstr ""
+
+#: admin/advanced.php:56
+msgid "Use the Stripe Payment Element"
+msgstr ""
+
+#: admin/advanced.php:57
+msgid "Use Stripe's Payment Element instead of the Card Element in all forms."
+msgstr ""
+
+#: admin/advanced.php:63
 #: admin/plugin.php:106
 msgid "Uninstall"
 msgstr ""
 
-#: admin/advanced.php:53
+#: admin/advanced.php:64
 #: admin/plugin.php:107
 msgid "Change your plugin uninstall settings."
 msgstr ""
 
-#: admin/advanced.php:56
+#: admin/advanced.php:67
 #: admin/plugin.php:110
 msgid "Uninstall On Delete"
 msgstr ""
 
-#: admin/advanced.php:57
+#: admin/advanced.php:68
 #: admin/plugin.php:111
 msgid "Completely remove all plugin data when deleted. This cannot be undone."
 msgstr ""
@@ -1621,8 +1697,20 @@ msgstr ""
 msgid "Add New"
 msgstr ""
 
+#: layouts/partials/admin-settings-header.php:16
+msgid "Cache cleared."
+msgstr ""
+
+#: layouts/partials/admin-settings-header.php:39
+msgid "Clear Account Cache"
+msgstr ""
+
+#: layouts/partials/admin-settings-header.php:42
+msgid "SureCart Status"
+msgstr ""
+
 #. translators: Version number.
-#: layouts/partials/admin-settings-header.php:25
+#: layouts/partials/admin-settings-header.php:48
 msgid "Version %s"
 msgstr ""
 

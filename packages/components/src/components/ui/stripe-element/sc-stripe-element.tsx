@@ -22,7 +22,7 @@ export class ScStripeElement {
   @Prop() order: Order;
 
   /** Your stripe connected account id. */
-  @Prop() stripeAccountId: string;
+  @Prop() accountId: string;
 
   /** Stripe publishable key */
   @Prop() publishableKey: string;
@@ -52,10 +52,10 @@ export class ScStripeElement {
   @State() confirming: boolean;
 
   async componentWillLoad() {
-    if (!this.publishableKey || !this.stripeAccountId) {
+    if (!this.publishableKey || !this.accountId) {
       return;
     }
-    this.stripe = await loadStripe(this.publishableKey, { stripeAccount: this.stripeAccountId });
+    this.stripe = await loadStripe(this.publishableKey, { stripeAccount: this.accountId });
     this.elements = this.stripe.elements();
   }
 

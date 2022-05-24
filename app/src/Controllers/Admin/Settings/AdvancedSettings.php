@@ -17,10 +17,11 @@ class AdvancedSettings {
 	public function show( \SureCartCore\Requests\RequestInterface $request ) {
 		return \SureCart::view( 'admin/advanced' )->with(
 			[
-				'tab'            => $request->query( 'tab' ) ?? '',
-				'uninstall'      => get_option( 'sc_uninstall', false ),
-				'use_esm_loader' => get_option( 'surecart_use_esm_loader', false ),
-				'status'         => $request->query( 'status' ),
+				'tab'                    => $request->query( 'tab' ) ?? '',
+				'uninstall'              => get_option( 'sc_uninstall', false ),
+				'stripe_payment_element' => get_option( 'sc_stripe_payment_element' ),
+				'use_esm_loader'         => get_option( 'surecart_use_esm_loader', false ),
+				'status'                 => $request->query( 'status' ),
 			]
 		);
 	}
@@ -36,6 +37,9 @@ class AdvancedSettings {
 
 		// update uninstall option.
 		update_option( 'sc_uninstall', $request->body( 'uninstall' ) === 'on' );
+
+		// update uninstall option.
+		update_option( 'sc_stripe_payment_element', $request->body( 'stripe-payment-element' ) === 'on' );
 
 		// update performance option.
 		update_option( 'surecart_use_esm_loader', $request->body( 'use_esm_loader' ) === 'on' );

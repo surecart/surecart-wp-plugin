@@ -1,5 +1,6 @@
 import { ScSessionProvider } from '../sc-session-provider';
 import { newSpecPage } from '@stencil/core/testing';
+import { parseFormData } from '../../../../functions/form-data';
 
 jest.mock('../../../../services/session', () => ({
   createOrUpdateOrder: () => Promise.resolve(),
@@ -19,9 +20,8 @@ describe('sc-cart-provider', () => {
 
   describe('Methods', () => {
     it('parseFormData', async () => {
-      const provider = new ScSessionProvider();
       expect(
-        provider.parseFormData({
+        parseFormData({
           email: 'test@test.com',
           name: 'test',
           password: 'password',
@@ -36,7 +36,7 @@ describe('sc-cart-provider', () => {
     });
 
     it('getSessionId', async () => {
-      const provider = new ScSessionProvider();
+      const provider = new ScSessionProvider() as any;
       provider.order = { id: 'test' };
       expect(provider.getSessionId()).toEqual('test');
     });

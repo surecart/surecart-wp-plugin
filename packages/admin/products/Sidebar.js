@@ -1,18 +1,18 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-
-import { __ } from '@wordpress/i18n';
+import { ScSwitch } from '@surecart/components-react';
 import { format } from '@wordpress/date';
 import { Fragment } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
 
+import useCurrentPage from '../mixins/useCurrentPage';
 import Box from '../ui/Box';
 import Definition from '../ui/Definition';
-import { ScSwitch } from '@surecart/components-react';
-import Image from './modules/Image';
-import Upgrades from './modules/Upgrades';
-import Taxes from './modules/Tax';
 import Files from './modules/Files';
-import useCurrentPage from '../mixins/useCurrentPage';
+import Image from './modules/Image';
+import Integrations from './modules/integrations/Integrations';
+import Taxes from './modules/Tax';
+import Upgrades from './modules/Upgrades';
 
 export default ({ id, loading, product, updateProduct, saveProduct }) => {
 	const { isSaving, setSaving } = useCurrentPage('product');
@@ -165,6 +165,8 @@ export default ({ id, loading, product, updateProduct, saveProduct }) => {
 				updateProduct={updateProduct}
 				loading={loading}
 			/>
+
+			<Integrations id={id} />
 
 			{/* <Upgrades
 				product={product}

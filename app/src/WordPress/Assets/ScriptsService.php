@@ -88,7 +88,7 @@ class ScriptsService {
 			'sc-core-data',
 			trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/store/data.js',
 			array_merge( [ 'surecart-components' ], $asset_file['dependencies'] ),
-			filemtime( trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/store/data.js' ),
+			$asset_file['version'],
 			true
 		);
 
@@ -98,7 +98,7 @@ class ScriptsService {
 			'sc-ui-data',
 			trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/store/ui.js',
 			array_merge( [ 'surecart-components' ], $asset_file['dependencies'] ),
-			filemtime( trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/store/ui.js' ),
+			$asset_file['version'],
 			true
 		);
 
@@ -111,7 +111,7 @@ class ScriptsService {
 			'surecart-blocks',
 			trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/blocks/library.js',
 			array_merge( [ 'surecart-components' ], $deps ),
-			filemtime( trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/blocks/library.js' ),
+			$asset_file['version'],
 			true
 		);
 
@@ -133,8 +133,8 @@ class ScriptsService {
 			[
 				'root_url'       => esc_url_raw( get_rest_url() ),
 				'plugin_url'     => \SureCart::core()->assets()->getUrl(),
-				'currency'   => \SureCart::account()->currency,
-				'pages'      => [
+				'currency'       => \SureCart::account()->currency,
+				'pages'          => [
 					'dashboard' => \SureCart::pages()->url( 'dashboard' ),
 					'checkout'  => \SureCart::pages()->url( 'checkout' ),
 				],
@@ -169,6 +169,9 @@ class ScriptsService {
 				'processors' => (array) \SureCart::account()->processors ?? [],
 				'plugin_url' => \SureCart::core()->assets()->getUrl(),
 				'currency'   => \SureCart::account()->currency,
+				'beta'       => [
+					'stripe_payment_element' => (bool) get_option( 'sc_stripe_payment_element', false ),
+				],
 				'pages'      => [
 					'dashboard' => \SureCart::pages()->url( 'dashboard' ),
 					'checkout'  => \SureCart::pages()->url( 'checkout' ),

@@ -6,6 +6,7 @@ use SureCart\Support\Currency;
 use SureCart\Support\TimeDate;
 use SureCart\Models\Order;
 use SureCart\Controllers\Admin\Tables\ListTable;
+use SureCart\Models\Integration;
 
 /**
  * Create a new table class that will extend the WP_List_Table
@@ -51,6 +52,24 @@ class OrdersListTable extends ListTable {
 			value="1" />
 	</form>
 		<?php
+	}
+
+	/**
+	 * Show any integrations.
+	 *
+	 * @param \SureCart\Models\Order $order Order.
+	 */
+	public function column_integrations( $order ) {
+		$output = '';
+
+		// loop through each purchase.
+		if ( ! empty( $order->purchases->data ) ) {
+			foreach ( $order->purchases->data as $purchase ) {
+				$output .= $this->productIntegrationsList( $purchase->product );
+			}
+		}
+
+		return $output ? $output : '-';
 	}
 
 	/**
@@ -104,12 +123,13 @@ class OrdersListTable extends ListTable {
 		return [
 			// 'cb'          => '<input type="checkbox" />',
 
-			'order'  => __( 'Order', 'surecart' ),
-			'date'   => __( 'Date', 'surecart' ),
-			'status' => __( 'Status', 'surecart' ),
-			'method' => __( 'Method', 'surecart' ),
-			'total'  => __( 'Total', 'surecart' ),
-			'mode'   => '',
+			'order'        => __( 'Order', 'surecart' ),
+			'date'         => __( 'Date', 'surecart' ),
+			'status'       => __( 'Status', 'surecart' ),
+			'method'       => __( 'Method', 'surecart' ),
+			'integrations' => __( 'Integrations', 'surecart' ),
+			'total'        => __( 'Total', 'surecart' ),
+			'mode'         => '',
 			// 'usage' => __( 'Usage', 'surecart' ),
 
 		];
@@ -155,7 +175,7 @@ class OrdersListTable extends ListTable {
 			[
 				'status' => $this->getStatus(),
 			]
-		)->with( [ 'charge', 'payment_intent', 'payment_intent.payment_method', 'payment_method.card' ] )
+		)->with( [ 'charge', 'payment_intent', 'payment_intent.payment_method', 'payment_method.card', 'purchases' ] )
 		->paginate(
 			[
 				'per_page' => $this->get_items_per_page( 'orders' ),

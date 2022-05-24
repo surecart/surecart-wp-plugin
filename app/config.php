@@ -13,19 +13,21 @@ return [
 	 */
 	'providers'              => [
 		\SureCartAppCore\AppCore\AppCoreServiceProvider::class,
-		\SureCart\WordPress\TranslationsServiceProvider::class,
+		\SureCartAppCore\Config\ConfigServiceProvider::class,
+		\SureCart\Database\MigrationsServiceProvider::class,
 		\SureCart\Account\AccountServiceProvider::class,
+		\SureCart\WordPress\PluginServiceProvider::class,
+		\SureCart\WordPress\TranslationsServiceProvider::class,
 		\SureCart\WordPress\Pages\PageServiceProvider::class,
 		\SureCart\WordPress\Users\UsersServiceProvider::class,
 		\SureCart\WordPress\Admin\Profile\UserProfileServiceProvider::class,
-		\SureCart\Integrations\DiviServiceProvider::class,
-		\SureCart\WordPress\PluginServiceProvider::class,
-		\SureCartAppCore\Assets\AssetsServiceProvider::class,
-		\SureCartAppCore\Config\ConfigServiceProvider::class,
-		\SureCart\Routing\RouteConditionsServiceProvider::class,
 		\SureCart\WordPress\PostTypes\FormPostTypeServiceProvider::class,
 		\SureCart\WordPress\Assets\AssetsServiceProvider::class,
 		\SureCart\WordPress\ShortcodesServiceProvider::class,
+		\SureCart\WordPress\Admin\Menus\AdminMenuPageServiceProvider::class,
+		\SureCart\WordPress\Admin\Notices\AdminNoticesServiceProvider::class,
+		\SureCartAppCore\Assets\AssetsServiceProvider::class,
+		\SureCart\Routing\RouteConditionsServiceProvider::class,
 		\SureCart\Routing\AdminRouteServiceProvider::class,
 		\SureCart\Permissions\RolesServiceProvider::class,
 		\SureCart\Settings\SettingsServiceProvider::class,
@@ -35,8 +37,6 @@ return [
 		\SureCart\BlockLibrary\BlockServiceProvider::class,
 		\SureCart\Support\Errors\ErrorsServiceProvider::class,
 		\SureCart\Activation\ActivationServiceProvider::class,
-		\SureCart\WordPress\Admin\Menus\AdminMenuPageServiceProvider::class,
-		\SureCart\WordPress\Admin\Notices\AdminNoticesServiceProvider::class,
 
 		// REST providers.
 		\SureCart\Rest\BlockPatternsRestServiceProvider::class,
@@ -44,6 +44,8 @@ return [
 		\SureCart\Rest\LoginRestServiceProvider::class,
 		\SureCart\Rest\FilesRestServiceProvider::class,
 		\SureCart\Rest\PurchasesRestServiceProvider::class,
+		\SureCart\Rest\IntegrationsRestServiceProvider::class,
+		\SureCart\Rest\IntegrationProvidersRestServiceProvider::class,
 		\SureCart\Rest\CustomerRestServiceProvider::class,
 		\SureCart\Rest\CustomerLinksRestServiceProvider::class,
 		\SureCart\Rest\PaymentMethodsRestServiceProvider::class,
@@ -61,6 +63,11 @@ return [
 		\SureCart\Rest\OrderRestServiceProvider::class,
 		\SureCart\Rest\InvoicesRestServiceProvider::class,
 		\SureCart\Rest\WebhooksRestServiceProvider::class,
+
+		// integrations.
+		\SureCart\Integrations\DiviServiceProvider::class,
+		\SureCart\Integrations\LearnDash\LearnDashServiceProvider::class,
+		\SureCart\Integrations\User\UserServiceProvider::class,
 	],
 
 	/**

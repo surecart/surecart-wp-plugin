@@ -157,7 +157,7 @@ class CustomersListTable extends ListTable {
 	 * @return void
 	 */
 	public function no_items() {
-		echo esc_html_e( 'No products found.', 'surecart' );
+		echo esc_html_e( 'No customers found.', 'surecart' );
 	}
 
 	/**

@@ -21,14 +21,15 @@ class UserProfileService {
 	/**
 	 * Show customer info on user profile.
 	 *
-	 * @return function
+	 * @param \WP_User $user The user.
+	 * @return void
 	 */
 	public function showCustomerInfo( $user ) {
 		$user          = User::find( $user->ID );
 		$test_customer = $user->customer( 'test' );
 		$live_customer = $user->customer( 'live' );
 
-		return $this->render(
+		$this->render(
 			'admin/user-profile',
 			[
 				'test_customer'  => $test_customer,
@@ -44,7 +45,7 @@ class UserProfileService {
 	 *
 	 * @param  string|string[]      $views A view or array of views.
 	 * @param  array<string, mixed> $context Context to send.
-	 * @return string
+	 * @return void
 	 */
 	public function render( $views, $context = [] ) {
 		echo wp_kses_post( \SureCart::views()->make( $views )->with( $context )->toString() );

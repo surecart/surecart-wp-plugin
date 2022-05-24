@@ -51,6 +51,9 @@ export class ScSessionProvider {
   /** Holds all available payment intents. */
   @Prop() paymentIntents: PaymentIntents;
 
+  /** Are we using the Stripe payment element? */
+  @Prop() stripePaymentElement: boolean;
+
   /** Update line items event */
   @Event() scUpdateOrderState: EventEmitter<Order>;
 
@@ -155,8 +158,9 @@ export class ScSessionProvider {
 
     // Important: Stripe needs a payment intent ahead of time, or the
     // order will not be attached to the payment.
-    if (this.session.total_amount > 0 && !payment_intent && this.getProcessor() === 'stripe') {
+    if (this.session.total_amount > 0 && !payment_intent && this.getProcessor() === 'stripe' && this.stripePaymentElement) {
       this.scError.emit({ message: 'Something went wrong. Please try again.' });
+      console.error('No payment intent found.');
       return this.scSetState.emit('REJECT');
     }
 

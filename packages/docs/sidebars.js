@@ -15,16 +15,20 @@ module.exports = {
 		'guide',
 		{
 			type: 'category',
+			label: 'Purchase Integrations',
+			items: [
+				'guide/purchase-integrations/overview',
+				'guide/purchase-integrations/creating',
+			],
+		},
+		{
+			type: 'category',
 			label: 'Models',
 			items: [
 				'guide/retrieving',
 				'guide/expanding',
 				'guide/inserting-updating',
 			],
-		},
-		{
-			type: 'doc',
-			id: 'guide/purchase-actions',
 		},
 		{
 			type: 'category',

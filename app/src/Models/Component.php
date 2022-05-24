@@ -25,6 +25,11 @@ class Component {
 	protected $id = '';
 
 	/**
+	 * Prevent php warnings.
+	 */
+	final public function __construct() {}
+
+	/**
 	 * Data to pass to the component.
 	 *
 	 * @param array $args Args to pass.

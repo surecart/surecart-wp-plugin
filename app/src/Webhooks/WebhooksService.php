@@ -76,7 +76,7 @@ class WebhooksService {
 			return add_action(
 				'admin_notices',
 				function() use ( $registered ) {
-					return $this->showWebhooksErrorNotice( $registered );
+					$this->showWebhooksErrorNotice( $registered );
 				}
 			);
 		}
@@ -109,6 +109,7 @@ class WebhooksService {
 	 * Show a notice if webhook creation failed.
 	 *
 	 * @param  \WP_Error $error Error object.
+	 *
 	 * @return void
 	 */
 	public function showWebhooksErrorNotice( \WP_Error $error ) {
@@ -172,5 +173,21 @@ class WebhooksService {
 	 */
 	public function domainMatches() {
 		return $this->domain_service->domainMatches();
+	}
+
+	/**
+	 * Broadcast the php hook.
+	 * This sets the webhook in a transient so that
+	 * it is not accidentally broadcasted twice.
+	 *
+	 * @return void
+	 */
+	public function broadcast( $event, $model ) {
+		$webhook = get_transient( 'surecart_webhook_' . $event . $model->id, false );
+		if ( false === $webhook ) {
+			// perform the action.
+			do_action( $event, $model );
+			set_transient( 'surecart_webhook_' . $event . $model->id, true, HOUR_IN_SECONDS );
+		}
 	}
 }

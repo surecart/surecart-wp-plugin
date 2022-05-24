@@ -29,3 +29,15 @@ export function findElements(selector, base) {
 }
 
 export const capitalize = s => s && s[0].toUpperCase() + s.slice(1);
+
+export const isValidURL = str => {
+  let url;
+
+  try {
+    url = new URL(str);
+  } catch (_) {
+    return false;
+  }
+
+  return url.protocol === 'http:' || url.protocol === 'https:';
+};

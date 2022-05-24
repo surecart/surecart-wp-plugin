@@ -22,19 +22,7 @@ describe('sc-dropdown', () => {
       components: [ScDropdown],
       html: `<sc-dropdown></sc-dropdown>`,
     });
-    expect(page.root).toEqualHtml(`
-      <sc-dropdown close-on-select="">
-        <mock:shadow-root>
-        <div class="dropdown">
-          <span aria-expanded="true" aria-haspopup="true" class="dropdown__trigger" part="trigger">
-            <slot name="trigger"></slot>
-          </span>
-          <div aria-labelledby="menu-button" aria-orientation="vertical" class="dropdown__panel" part="panel" role="menu" tabindex="-1">
-            <slot></slot>
-          </div>
-        </mock:shadow-root>
-      </sc-dropdown>
-    `);
+    expect(page.root).toMatchSnapshot();
   });
 
   it('can be positioned', async () => {
@@ -46,18 +34,18 @@ describe('sc-dropdown', () => {
 
     element.position = 'top-left';
     await page.waitForChanges();
-    expect(page.root).toEqualHtml(withPanelClass('position--top-left'));
+    expect(page.root).toMatchSnapshot();
 
     element.position = 'top-right';
     await page.waitForChanges();
-    expect(page.root).toEqualHtml(withPanelClass('position--top-right'));
+    expect(page.root).toMatchSnapshot();
 
     element.position = 'bottom-left';
     await page.waitForChanges();
-    expect(page.root).toEqualHtml(withPanelClass('position--bottom-left'));
+    expect(page.root).toMatchSnapshot();
 
     element.position = 'bottom-right';
     await page.waitForChanges();
-    expect(page.root).toEqualHtml(withPanelClass('position--bottom-right'));
+    expect(page.root).toMatchSnapshot();
   });
 });

@@ -22,6 +22,7 @@
 | `prices`                      | --                              | An array of prices to pre-fill in the form.                   | `PriceChoice[]`                | `[]`        |
 | `processors`                  | --                              | Processors enabled for this form.                             | `Processor[]`                  | `undefined` |
 | `removeLineItems`             | `remove-line-items`             | Can we remove line items?                                     | `boolean`                      | `true`      |
+| `stripePaymentElement`        | `stripe-payment-element`        | Use the Stripe payment element.                               | `boolean`                      | `false`     |
 | `successUrl`                  | `success-url`                   | Where to go on success                                        | `string`                       | `''`        |
 | `taxEnabled`                  | `tax-enabled`                   | Is tax enabled?                                               | `boolean`                      | `undefined` |
 
@@ -92,11 +93,11 @@ graph TD;
   sc-address --> sc-select
   sc-address --> sc-input
   sc-form-control --> sc-tooltip
+  sc-select --> sc-icon
   sc-select --> sc-menu-label
   sc-select --> sc-menu-item
   sc-select --> sc-form-control
   sc-select --> sc-dropdown
-  sc-select --> sc-icon
   sc-select --> sc-input
   sc-select --> sc-spinner
   sc-select --> sc-menu

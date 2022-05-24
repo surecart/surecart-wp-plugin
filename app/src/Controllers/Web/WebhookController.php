@@ -2,7 +2,7 @@
 namespace SureCart\Controllers\Web;
 
 use SureCart\Models\Webhook;
-use SureCart\Webhooks\WebHooksHistoryService;
+use SureCart\Webhooks\WebhooksHistoryService;
 use SureCartCore\Responses\RedirectResponse;
 
 /**
@@ -115,7 +115,7 @@ class WebhookController {
 		$id    = $this->getObjectId( $request['data'] );
 		$model = new $this->models[ $request['data']['object']['object'] ]( $request['data'] );
 
-		// perform the action.
+		// broadcast the webhook.
 		do_action( $event, $model, $request );
 
 		// return data.

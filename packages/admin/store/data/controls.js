@@ -10,6 +10,7 @@ export const fetch = (options = {}) => {
 		options,
 	};
 };
+
 export const batchSave = (batches) => {
 	return {
 		type: 'BATCH_SAVE',

@@ -105,6 +105,7 @@ abstract class AdminModelEditController {
 
 		// pass app url.
 		$this->data['surecart_app_url'] = defined( 'SURECART_APP_URL' ) ? SURECART_APP_URL : '';
+		$this->data['plugin_url']       = \SureCart::core()->assets()->getUrl();
 
 		if ( in_array( 'currency', $this->with_data ) ) {
 			$this->data['currency_code'] = \SureCart::account()->currency;

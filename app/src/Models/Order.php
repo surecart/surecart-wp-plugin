@@ -10,6 +10,7 @@ use SureCart\Models\Traits\HasDiscount;
 use SureCart\Models\Traits\HasPaymentIntent;
 use SureCart\Models\Traits\HasPaymentMethod;
 use SureCart\Models\Traits\HasProcessorType;
+use SureCart\Models\Traits\HasPurchases;
 use SureCart\Models\Traits\HasShippingAddress;
 
 /**
@@ -22,6 +23,7 @@ class Order extends Model {
 		HasShippingAddress,
 		HasPaymentIntent,
 		HasPaymentMethod,
+		HasPurchases,
 		CanFinalize,
 		HasProcessorType;
 

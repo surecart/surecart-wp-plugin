@@ -6,6 +6,8 @@ use SureCart\Models\Product;
 use SureCart\Support\Currency;
 use SureCart\Support\TimeDate;
 use SureCart\Controllers\Admin\Tables\ListTable;
+use SureCart\Models\Integration;
+
 /**
  * Create a new table class that will extend the WP_List_Table
  */
@@ -103,11 +105,12 @@ class ProductsListTable extends ListTable {
 	public function get_columns() {
 		return [
 			// 'cb'          => '<input type="checkbox" />',
-			'name'  => __( 'Name', 'surecart' ),
+			'name'         => __( 'Name', 'surecart' ),
 			// 'description' => __( 'Description', 'surecart' ),
-			'price' => __( 'Price', 'surecart' ),
-			'type'  => __( 'Type', 'surecart' ),
-			'date'  => __( 'Date', 'surecart' ),
+			'price'        => __( 'Price', 'surecart' ),
+			'type'         => __( 'Type', 'surecart' ),
+			'integrations' => __( 'Integrations', 'surecart' ),
+			'date'         => __( 'Date', 'surecart' ),
 		];
 	}
 
@@ -121,6 +124,14 @@ class ProductsListTable extends ListTable {
 		<label class="screen-reader-text" for="cb-select-<?php echo esc_attr( $product['id'] ); ?>"><?php _e( 'Select comment' ); ?></label>
 		<input id="cb-select-<?php echo esc_attr( $product['id'] ); ?>" type="checkbox" name="delete_comments[]" value="<?php echo esc_attr( $product['id'] ); ?>" />
 			<?php
+	}
+
+	/**
+	 * Show any integrations.
+	 */
+	public function column_integrations( $product ) {
+		$list = $this->productIntegrationsList( $product->id );
+		return $list ? $list : '-';
 	}
 
 	/**

@@ -47,6 +47,7 @@ export default () => {
 		e.preventDefault();
 		setTimeout(async () => {
 			try {
+				setSaving(true);
 				await saveSubscription({
 					query: {
 						update_behavior,
@@ -60,7 +61,9 @@ export default () => {
 					action: 'show',
 					id: id,
 				});
-			} catch (error) {}
+			} catch (error) {
+				setSaving(false);
+			}
 		}, 50);
 	};
 

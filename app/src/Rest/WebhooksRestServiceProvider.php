@@ -2,7 +2,7 @@
 
 namespace SureCart\Rest;
 
-use SureCart\Controllers\Rest\WebhooksController;
+use SureCart\Controllers\Rest\WebhookController;
 use SureCart\Rest\RestServiceInterface;
 
 /**
@@ -21,7 +21,7 @@ class WebhooksRestServiceProvider extends RestServiceProvider implements RestSer
 	 *
 	 * @var string
 	 */
-	protected $controller = WebhooksController::class;
+	protected $controller = WebhookController::class;
 
 	/**
 	 * Get our sample schema for a post.

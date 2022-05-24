@@ -145,6 +145,13 @@ class RequestService {
 			$response_code = wp_remote_retrieve_response_code( $response );
 			$response_body = wp_remote_retrieve_body( $response );
 			$admin_notice  = (array) wp_remote_retrieve_header( $response, 'X-SURECART-WP-ADMIN-NOTICE' );
+			$updated_at    = wp_remote_retrieve_header( $response, 'X-SURECART-ACCOUNT-UPDATED-AT' );
+
+			// make sure to clear the account transient if the account is updated.
+			if ( get_option( 'sc_account_updated_at' ) !== $updated_at ) {
+				\delete_transient( 'surecart_account' );
+				\update_option( 'sc_account_updated_at', $updated_at );
+			}
 
 			if ( $admin_notice ) {
 				// we don't care if this fails.

@@ -2,7 +2,7 @@ import { __, _n } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import { useState } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
-import { ScButton } from '@surecart/components-react';
+import { ScButton, ScTooltip } from '@surecart/components-react';
 import useEntity from '../../../mixins/useEntity';
 
 export default ({ purchase }) => {
@@ -48,28 +48,49 @@ export default ({ purchase }) => {
 		}
 	};
 
-	// TODO: Maybe offer subscription cancelation UI here.
-	if (purchase?.subscription) {
-		return null;
-	}
-
 	return purchase?.revoked ? (
-		<ScButton
-			href="#"
-			onClick={() => toggleRevoke(purchase?.id, false)}
-			size="small"
-			loading={loading}
+		<ScTooltip
+			type="text"
+			text={
+				!!purchase?.subscription
+					? __(
+							'To unrevoke this purchase, the customer must purchase a new subscription.',
+							'surecart'
+					  )
+					: __('Unrevoke access to this purchase', 'surecart')
+			}
 		>
-			{__('Unrevoke', 'surecart')}
-		</ScButton>
+			<ScButton
+				href="#"
+				onClick={() => toggleRevoke(purchase?.id, false)}
+				size="small"
+				loading={loading}
+				disabled={!!purchase?.subscription}
+			>
+				{__('Unrevoke', 'surecart')}
+			</ScButton>
+		</ScTooltip>
 	) : (
-		<ScButton
-			href="#"
-			onClick={() => toggleRevoke(purchase?.id, true)}
-			size="small"
-			loading={loading}
+		<ScTooltip
+			type="text"
+			text={
+				!!purchase?.subscription
+					? __(
+							'To revoke this purchase you must cancel the subscription.',
+							'surecart'
+					  )
+					: __('Revoke access to this purchase', 'surecart')
+			}
 		>
-			{__('Revoke', 'surecart')}
-		</ScButton>
+			<ScButton
+				href="#"
+				onClick={() => toggleRevoke(purchase?.id, true)}
+				size="small"
+				loading={loading}
+				disabled={!!purchase?.subscription}
+			>
+				{__('Revoke', 'surecart')}
+			</ScButton>
+		</ScTooltip>
 	);
 };

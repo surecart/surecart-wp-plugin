@@ -13,7 +13,7 @@ class Settings {
 	/**
 	 * Show the settings page.
 	 *
-	 * @return function
+	 * @return function|void
 	 */
 	public function show( $request ) {
 		$session = AccountPortalSession::create(
@@ -88,6 +88,11 @@ class Settings {
 
 	/**
 	 * Generate the current url.
+	 *
+	 * @param \SureCart\Models\AccountPortalSession $session Session.
+	 * @param string                                $endpoint Endpoint.
+	 *
+	 * @return string
 	 */
 	public function generateURL( $session, $endpoint ) {
 		return trailingslashit( SURECART_APP_URL ) . 'account_portal/' . $session->id . '/' . $endpoint;

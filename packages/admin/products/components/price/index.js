@@ -327,7 +327,7 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 						: null
 				}
 				css={css`
-					.sc-price-copy {
+					/* .sc-price-copy {
 						visibility: hidden;
 						opacity: 0;
 						transition: opacity var(--sc-transition-fast)
@@ -339,7 +339,7 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 							visibility: visible;
 							opacity: 1;
 						}
-					}
+					} */
 				`}
 			/>
 

@@ -294,6 +294,10 @@ export namespace Components {
          */
         "removeLineItems": boolean;
         /**
+          * Use the Stripe payment element.
+         */
+        "stripePaymentElement": boolean;
+        /**
           * Submit the form
          */
         "submit": ({ skip_validation }?: { skip_validation: boolean; }) => Promise<Order | CustomEvent<import("/Users/andre/sites/surecart/wp-content/plugins/surecart/packages/components/src/types").FormStateSetter>>;
@@ -713,13 +717,40 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
+          * The distance in pixels from which to offset the panel away from its trigger.
+         */
+        "distance": number;
+        /**
+          * Enable this option to prevent the panel from being clipped when the component is placed inside a container with `overflow: auto|scroll`.
+         */
+        "hoist": boolean;
+        /**
           * Indicates whether or not the dropdown is open. You can use this in lieu of the show/hide methods.
          */
         "open"?: boolean;
         /**
+          * The placement of the dropdown.
+         */
+        "placement": | 'top'
+    | 'top-start'
+    | 'top-end'
+    | 'bottom'
+    | 'bottom-start'
+    | 'bottom-end'
+    | 'right'
+    | 'right-start'
+    | 'right-end'
+    | 'left'
+    | 'left-start'
+    | 'left-end';
+        /**
           * The placement of the dropdown panel
          */
         "position": 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
+        /**
+          * The distance in pixels from which to offset the panel along its trigger.
+         */
+        "skidding": number;
     }
     interface ScEmpty {
         "icon": string;
@@ -1499,6 +1530,10 @@ export namespace Components {
           * Secure notice
          */
         "secureNotice": string;
+        /**
+          * Use the Stripe payment element.
+         */
+        "stripePaymentElement": boolean;
     }
     interface ScPaymentMethodCreate {
         "clientSecret": string;
@@ -1934,6 +1969,10 @@ export namespace Components {
          */
         "setState": (state: string) => void;
         /**
+          * Are we using the Stripe payment element?
+         */
+        "stripePaymentElement": boolean;
+        /**
           * Url to redirect upon success.
          */
         "successUrl": string;
@@ -1956,6 +1995,10 @@ export namespace Components {
         "target": string;
     }
     interface ScStripeElement {
+        /**
+          * Your stripe connected account id.
+         */
+        "accountId": string;
         /**
           * Confirm card payment
          */
@@ -2000,10 +2043,6 @@ export namespace Components {
           * The input's size.
          */
         "size": 'small' | 'medium' | 'large';
-        /**
-          * Your stripe connected account id.
-         */
-        "stripeAccountId": string;
     }
     interface ScStripePaymentElement {
         /**
@@ -3572,6 +3611,10 @@ declare namespace LocalJSX {
          */
         "removeLineItems"?: boolean;
         /**
+          * Use the Stripe payment element.
+         */
+        "stripePaymentElement"?: boolean;
+        /**
           * Where to go on success
          */
         "successUrl"?: string;
@@ -4046,6 +4089,14 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
+          * The distance in pixels from which to offset the panel away from its trigger.
+         */
+        "distance"?: number;
+        /**
+          * Enable this option to prevent the panel from being clipped when the component is placed inside a container with `overflow: auto|scroll`.
+         */
+        "hoist"?: boolean;
+        /**
           * Emitted when the dropdown closes. Calling `event.preventDefault()` will prevent it from being closed.
          */
         "onScHide"?: (event: CustomEvent<void>) => void;
@@ -4058,9 +4109,28 @@ declare namespace LocalJSX {
          */
         "open"?: boolean;
         /**
+          * The placement of the dropdown.
+         */
+        "placement"?: | 'top'
+    | 'top-start'
+    | 'top-end'
+    | 'bottom'
+    | 'bottom-start'
+    | 'bottom-end'
+    | 'right'
+    | 'right-start'
+    | 'right-end'
+    | 'left'
+    | 'left-start'
+    | 'left-end';
+        /**
           * The placement of the dropdown panel
          */
         "position"?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
+        /**
+          * The distance in pixels from which to offset the panel along its trigger.
+         */
+        "skidding"?: number;
     }
     interface ScEmpty {
         "icon"?: string;
@@ -4926,6 +4996,10 @@ declare namespace LocalJSX {
           * Secure notice
          */
         "secureNotice"?: string;
+        /**
+          * Use the Stripe payment element.
+         */
+        "stripePaymentElement"?: boolean;
     }
     interface ScPaymentMethodCreate {
         "clientSecret"?: string;
@@ -5423,6 +5497,10 @@ declare namespace LocalJSX {
          */
         "setState"?: (state: string) => void;
         /**
+          * Are we using the Stripe payment element?
+         */
+        "stripePaymentElement"?: boolean;
+        /**
           * Url to redirect upon success.
          */
         "successUrl"?: string;
@@ -5445,6 +5523,10 @@ declare namespace LocalJSX {
         "target"?: string;
     }
     interface ScStripeElement {
+        /**
+          * Your stripe connected account id.
+         */
+        "accountId"?: string;
         /**
           * Whether this field is disabled
          */
@@ -5483,10 +5565,6 @@ declare namespace LocalJSX {
           * The input's size.
          */
         "size"?: 'small' | 'medium' | 'large';
-        /**
-          * Your stripe connected account id.
-         */
-        "stripeAccountId"?: string;
     }
     interface ScStripePaymentElement {
         /**

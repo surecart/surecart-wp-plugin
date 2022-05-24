@@ -60,6 +60,9 @@ export class ScCheckout {
   /** Can we remove line items? */
   @Prop() removeLineItems: boolean = true;
 
+  /** Use the Stripe payment element. */
+  @Prop() stripePaymentElement: boolean = false;
+
   /** Stores fetched prices for use throughout component.  */
   @State() pricesEntities: Prices = {};
 
@@ -175,6 +178,9 @@ export class ScCheckout {
       empty: !['loading', 'updating'].includes(this.checkoutState) && !this.order?.line_items?.pagination?.count,
       // checkout states
 
+      // stripe.
+      stripePaymentElement: this.stripePaymentElement,
+
       error: this.error,
       customer: this.customer,
       tax_status: this?.order?.tax_status,
@@ -217,6 +223,7 @@ export class ScCheckout {
                   ref={el => (this.sessionProvider = el as HTMLScSessionProviderElement)}
                   order={this.order}
                   prices={this.prices}
+                  stripePaymentElement={this.stripePaymentElement}
                   paymentIntents={this.paymentIntents}
                   persist={this.persistSession}
                   modified={this.modified}
