@@ -184,7 +184,7 @@ Next, we'll implement the required functions for the PurchaseSyncInterface. Thes
 are run when a purchase lifecycle event takes place, and will allow us to modify the role
 of the user.
 
-The param `$integratinon` contains an `id` attribute. This is the same `id` that you've set
+The param `$integratinon` contains an `integration_id` attribute. This is the same `id` that you've set
 above in the `getItem` and `getItems` methods above.
 
 ```php
@@ -199,12 +199,12 @@ above in the `getItem` and `getItems` methods above.
 	 */
 	public function onPurchaseCreated( $integration, $wp_user ) {
 		// make sure the role exists.
-		$role_object = get_role( $integration->id );
+		$role_object = get_role( $integration->integration_id );
 		if ( ! $role_object ) {
 			return;
 		}
 		// add the role
-		return $wp_user->add_role( $integration->id );
+		return $wp_user->add_role( $integration->integration_id );
 	}
 
 	/**
@@ -217,12 +217,12 @@ above in the `getItem` and `getItems` methods above.
 	 */
 	public function onPurchaseInvoked( $integration, $wp_user ) {
 		// make sure the role exists.
-		$role_object = get_role( $integration->id );
+		$role_object = get_role( $integration->integration_id );
 		if ( ! $role_object ) {
 			return;
 		}
 		// add the role
-		return $wp_user->add_role( $integration->id );
+		return $wp_user->add_role( $integration->integration_id );
 	}
 
 	/**
@@ -235,12 +235,12 @@ above in the `getItem` and `getItems` methods above.
 	 */
 	public function onPurchaseRevoked( $integration, $wp_user ) {
 		// make sure the role exists.
-		$role_object = get_role( $integration->id );
+		$role_object = get_role( $integration->integration_id );
 		if ( ! $role_object ) {
 			return;
 		}
 		// add the role
-		return $wp_user->remove_role( $integration->id );
+		return $wp_user->remove_role( $integration->integration_id );
 	}
 	...
 ```
