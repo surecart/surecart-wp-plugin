@@ -139,7 +139,7 @@ abstract class IntegrationService extends AbstractIntegration implements Integra
 	 *
 	 * @return void
 	 */
-	public function onPurchaseUpdated( $purchase, $request ) {
+	public function onPurchaseUpdated( Purchase $purchase, $request ) {
 		$data     = $request['data']['object'] ?? null;
 		$previous = $request['data']['previous_attributes'] ?? null;
 
@@ -151,9 +151,15 @@ abstract class IntegrationService extends AbstractIntegration implements Integra
 		// product has changed, let's revoke access to the old one
 		// and provide access to the new one.
 		if ( ! empty( $previous['product'] ) && $data['product'] !== $previous['product'] ) {
-			$previous_purchase             = $purchase;
-			$previous_purchase['product']  = $previous['product'];
-			$previous_purchase['quantity'] = $previous['quantity'] ?? 1;
+			$previous_purchase = new Purchase(
+				array_merge(
+					$purchase->toArray(),
+					[
+						'product'  => $previous['product'],
+						'quantity' => $previous['quantity'] ?? 1,
+					]
+				)
+			);
 			$this->onPurchaseProductUpdated( $purchase, $previous_purchase, $request );
 			return;
 		}
@@ -182,7 +188,7 @@ abstract class IntegrationService extends AbstractIntegration implements Integra
 	 *
 	 * @return void
 	 */
-	public function onPurchaseProductUpdated( $purchase, $previous_purchase, $request ) {
+	public function onPurchaseProductUpdated( \SureCart\Models\Purchase $purchase, \SureCart\Models\Purchase $previous_purchase, $request ) {
 		// product added.
 		$integrations = (array) $this->getIntegrationData( $purchase ) ?? [];
 		foreach ( $integrations as $integration ) {
@@ -198,7 +204,7 @@ abstract class IntegrationService extends AbstractIntegration implements Integra
 			if ( ! $integration->id ) {
 				continue;
 			}
-			$this->onPurchaseProductRemoved( $integration, $purchase->getWPUser() );
+			$this->onPurchaseProductRemoved( $integration, $previous_purchase->getWPUser() );
 		}
 	}
 
@@ -258,23 +264,6 @@ abstract class IntegrationService extends AbstractIntegration implements Integra
 	 */
 	protected function getCurrentAction() {
 		return \current_action();
-	}
-
-	/**
-	 * Undocumented function
-	 *
-	 * @param \SureCart\Models\Purchase $purchase Purchase model.
-	 *
-	 * @return void
-	 */
-	public function getWPUser( $purchase ) {
-		if ( is_string( $purchase ) ) {
-			$purchase = Purchase::find( $purchase );
-		}
-		if ( is_wp_error( $purchase ) ) {
-			return;
-		}
-		return $purchase->getWPUser();
 	}
 
 	/**

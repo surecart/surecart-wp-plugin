@@ -40,6 +40,9 @@ class Subscription extends Model {
 		// do the update and also get the purchase record.
 		$this->with( [ 'purchase' ] );
 		$updated = parent::update( $attributes );
+		if ( is_wp_error( $updated ) ) {
+			return $updated;
+		}
 
 		// do the purchase updated event.
 		do_action(

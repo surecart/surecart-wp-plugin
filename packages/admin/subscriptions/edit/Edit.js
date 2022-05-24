@@ -61,7 +61,9 @@ export default () => {
 					action: 'show',
 					id: id,
 				});
-			} catch (error) {}
+			} catch (error) {
+				setSaving(false);
+			}
 		}, 50);
 	};
 

@@ -29,11 +29,8 @@ class UserRoleIntegrationServiceTest extends SureCartUnitTestCase
 	public function purchaseTriggerMocks() {
 		$service = \Mockery::mock(UserService::class)->makePartial();
 		$wp_user = self::factory()->user->create_and_get();
-		$user = \Mockery::mock(User::class)->makePartial();
 		$purchase = \Mockery::mock(Purchase::class)->makePartial();
-
-		$purchase->shouldReceive('getUser')->atLeast()->once()->andReturn($user->find($wp_user->ID));
-		$user->shouldReceive('getWPUser')->atLeast()->once()->andReturn($wp_user);
+		$purchase->shouldReceive('getWPUser')->atLeast()->once()->andReturn($wp_user);
 
 		$integration = (object)['id' => 'test', 'integration_id' => 'test_id'];
 		$service->bootstrap();

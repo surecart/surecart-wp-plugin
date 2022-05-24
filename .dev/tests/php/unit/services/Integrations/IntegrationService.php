@@ -24,33 +24,13 @@ class IntegrationServiceTest extends SureCartUnitTestCase
 	}
 
 	/**
-	 * Test to make sure the action method is called correctly.
-	 */
-	public function test_getActionMethod() {
-		$stub = $this->getMockForAbstractClass(IntegrationService::class);
-		$this->assertSame($stub->getActionMethod('surecart/purchase_created'), 'onPurchaseCreated');
-		$this->assertSame($stub->getActionMethod('surecart/purchase_invoked'), 'onPurchaseInvoked');
-		$this->assertSame($stub->getActionMethod('surecart/purchase_revoked'), 'onPurchaseRevoked');
-	}
-
-
-	/**
 	 * Test to make sure we get the correct integration data.
 	 *
 	 * @group integration
 	 */
 	public function test_getIntegrationData() {
-		$stub = $this->getMockForAbstractClass(IntegrationService::class);
-		$purchase = \Mockery::mock(Purchase::class);
-		$purchase->shouldReceive('getUser')->andReturn(null);
-		$this->assertNull($stub->getIntegrationData($purchase));
-
-		$purchase = \Mockery::mock(Purchase::class);
-		$purchase->shouldReceive('getUser')->andReturn((object)[
-			'user' => (object) [
-				'getUser' => null
-			]
-		]);
-		$this->assertNull($stub->getIntegrationData($purchase));
+		$mock = \Mockery::mock(IntegrationService::class)->makePartial();
+		$mock->shouldReceive('getIntegrationsFromPurchase')->once()->andReturn([]);
+		$this->assertEmpty($mock->getIntegrationData(new Purchase(['id' => 'test'])));
 	}
 }

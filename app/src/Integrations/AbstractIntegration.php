@@ -80,7 +80,7 @@ abstract class AbstractIntegration {
 	 *
 	 * @return void|\WP_Error
 	 */
-	public function onPurchaseProductUpdated( $purchase, $previous_purchase, $request ) {
+	public function onPurchaseProductUpdated( \SureCart\Models\Purchase $purchase, \SureCart\Models\Purchase $previous_purchase, $request ) {
 		return new \WP_Error(
 			'invalid-method',
 			/* translators: %s: Method name. */
@@ -122,7 +122,7 @@ abstract class AbstractIntegration {
 	 *
 	 * @return void
 	 */
-	public function onPurchaseUpdated( $purchase, $request ) {
+	public function onPurchaseUpdated( \SureCart\Models\Purchase $purchase, $request ) {
 		// do nothing as this is not required.
 	}
 }
