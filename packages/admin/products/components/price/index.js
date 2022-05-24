@@ -35,13 +35,6 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 
 	const collapsible = prices?.length > 1;
 
-	const showLifetime = () => {
-		// need to be a recurring product
-		if (!product?.recurring) return false;
-		if (!price?.id) return true;
-		return price?.recurring_interval === 'never';
-	};
-
 	const renderTaxInput = () => {
 		if (!product?.tax_enabled || !scData?.tax_protocol?.tax_enabled)
 			return null;
@@ -150,133 +143,93 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 						}}
 						required
 					/>
-					{price?.recurring_interval !== 'never' && (
-						<ConditionalWrapper
-							condition={price?.id}
-							wrapper={(children) => (
-								<ScTooltip
-									type="text"
-									text={
-										price?.id
-											? __(
-													'To change the interval, create a new price.',
-													'surecart'
-											  )
-											: null
-									}
-								>
-									{children}
-								</ScTooltip>
-							)}
-						>
-							<ScFormControl
-								css={css`
-									flex: 1;
-								`}
-								disabled={price?.id}
-								label={__('Repeat Payment Every', 'surecart')}
-							>
-								<div
-									css={css`
-										display: flex;
-										align-items: center;
-										gap: 0.5em;
-									`}
-								>
-									<ScInput
-										disabled={price?.id}
-										value={price?.recurring_interval_count}
-										onScChange={(e) =>
-											updatePrice({
-												recurring_interval_count:
-													e.target.value,
-											})
-										}
-										type="number"
-										max={
-											price?.recurring_interval === 'year'
-												? 1
-												: null
-										}
-										required
-									/>
-									<ScSelect
-										value={price?.recurring_interval}
-										disabled={price?.id}
-										onScChange={(e) =>
-											updatePrice({
-												recurring_interval:
-													e.target.value,
-											})
-										}
-										choices={[
-											{
-												value: 'day',
-												label: __('Day', 'surecart'),
-											},
-											{
-												value: 'week',
-												label: __('Week', 'surecart'),
-											},
-											{
-												value: 'month',
-												label: __('Month', 'surecart'),
-											},
-											{
-												value: 'year',
-												label: __('Year', 'surecart'),
-											},
-											{
-												value: 'never',
-												label: __(
-													'Lifetime',
-													'surecart'
-												),
-											},
-										]}
-									/>
-								</div>
-							</ScFormControl>
-						</ConditionalWrapper>
-					)}
-				</sc-flex>
-				{showLifetime() && (
-					<div>
-						<ConditionalWrapper
-							condition={price?.id}
-							wrapper={(children) => (
-								<ScTooltip
-									text={
-										price?.id
-											? __(
-													'To change the interval, create a new price.',
-													'surecart'
-											  )
-											: null
-									}
-								>
-									{children}
-								</ScTooltip>
-							)}
-						>
-							<ScSwitch
-								disabled={price?.id}
-								checked={price?.recurring_interval === 'never'}
-								onScChange={(e) =>
-									updatePrice({
-										recurring_interval: e.target.checked
-											? 'never'
-											: 'month',
-									})
+
+					<ConditionalWrapper
+						condition={!!price?.id}
+						wrapper={(children) => (
+							<ScTooltip
+								type="text"
+								text={
+									price?.id
+										? __(
+												'To change the interval, create a new price.',
+												'surecart'
+										  )
+										: null
 								}
 							>
-								{__('Lifetime subscription', 'surecart')}
-							</ScSwitch>
-						</ConditionalWrapper>
-					</div>
-				)}
+								{children}
+							</ScTooltip>
+						)}
+					>
+						<ScFormControl
+							css={css`
+								flex: 1;
+							`}
+							disabled={price?.id}
+							label={__('Repeat Payment Every', 'surecart')}
+						>
+							<div
+								css={css`
+									display: flex;
+									align-items: center;
+									gap: 0.5em;
+								`}
+							>
+								<ScInput
+									disabled={price?.id}
+									value={price?.recurring_interval_count}
+									onScChange={(e) =>
+										updatePrice({
+											recurring_interval_count:
+												e.target.value,
+										})
+									}
+									type="number"
+									max={
+										price?.recurring_interval === 'year'
+											? 1
+											: null
+									}
+									required
+								/>
+								<ScSelect
+									value={price?.recurring_interval}
+									disabled={price?.id}
+									onScChange={(e) =>
+										updatePrice({
+											recurring_interval: e.target.value,
+										})
+									}
+									choices={[
+										{
+											value: 'day',
+											label: __('Day', 'surecart'),
+										},
+										{
+											value: 'week',
+											label: __('Week', 'surecart'),
+										},
+										{
+											value: 'month',
+											label: __('Month', 'surecart'),
+										},
+										{
+											value: 'year',
+											label: __('Year', 'surecart'),
+										},
+										{
+											value: 'never',
+											label: __('Lifetime', 'surecart'),
+										},
+									]}
+								/>
+							</div>
+						</ScFormControl>
+					</ConditionalWrapper>
+				</sc-flex>
 
-				{product?.recurring && (
+				{price?.recurring && (
 					<ScInput
 						label={__('Free Trial Days', 'surecart')}
 						className="sc-free-trial"
@@ -307,13 +260,10 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 				isOpen={isOpen}
 				setIsOpen={setIsOpen}
 				price={price}
-				onArchive={
-					product?.recurring
-						? () =>
-								updatePrice({
-									archived: !price.archived,
-								})
-						: null
+				onArchive={() =>
+					updatePrice({
+						archived: !price.archived,
+					})
 				}
 				onUnArchive={() =>
 					updatePrice({
@@ -321,26 +271,7 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 					})
 				}
 				collapsible={collapsible}
-				onDelete={
-					product?.recurring && !price?.id
-						? () => deletePrice()
-						: null
-				}
-				css={css`
-					/* .sc-price-copy {
-						visibility: hidden;
-						opacity: 0;
-						transition: opacity var(--sc-transition-fast)
-								ease-in-out,
-							visibility var(--sc-transition-fast) ease-in-out;
-					}
-					&:hover {
-						.sc-price-copy {
-							visibility: visible;
-							opacity: 1;
-						}
-					} */
-				`}
+				onDelete={!price?.id ? () => deletePrice() : null}
 			/>
 
 			<div
@@ -353,7 +284,18 @@ export default withConfirm(({ price: priceEntity, prices, product, index }) => {
 					visibility: ${isOpen ? 'visibile' : 'hidden'};
 				`}
 			>
-				{product?.recurring ? renderRecurring() : renderOneTime()}
+				{price?.recurring ? renderRecurring() : renderOneTime()}
+
+				<div>
+					<ScSwitch
+						checked={price?.recurring}
+						onScChange={(e) =>
+							updatePrice({ recurring: e.target.checked })
+						}
+					>
+						{__('Repeat Payment', 'surecart')}
+					</ScSwitch>
+				</div>
 				{renderTaxInput()}
 			</div>
 		</div>

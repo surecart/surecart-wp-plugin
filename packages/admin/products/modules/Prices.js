@@ -94,53 +94,40 @@ export default ({ product, updateProduct, loading }) => {
 				}
 				loading={loading}
 				footer={
-					!loading &&
-					(shouldShowButton || archivedPrices?.length) && (
+					!loading && (
 						<Fragment>
-							{shouldShowButton && (
-								<ScButton
-									onClick={(e) => {
-										e.preventDefault();
-										addPrice({
-											product: id,
-											recurring: false,
-											recurring_interval: 'month',
-											currency:
-												scData?.currency_code || 'usd',
-											recurring_interval_count: 1,
-											archived: false,
-										});
-										setOpen(prices?.length);
-									}}
+							<ScButton
+								onClick={(e) => {
+									e.preventDefault();
+									addPrice({
+										product: id,
+										recurring: false,
+										recurring_interval: 'month',
+										currency:
+											scData?.currency_code || 'usd',
+										recurring_interval_count: 1,
+										archived: false,
+									});
+									setOpen(prices?.length);
+								}}
+							>
+								<svg
+									slot="prefix"
+									xmlns="http://www.w3.org/2000/svg"
+									width="16"
+									height="16"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									strokeWidth="2"
+									strokeLinecap="round"
+									strokeLinejoin="round"
 								>
-									<svg
-										slot="prefix"
-										xmlns="http://www.w3.org/2000/svg"
-										width="16"
-										height="16"
-										viewBox="0 0 24 24"
-										fill="none"
-										stroke="currentColor"
-										strokeWidth="2"
-										strokeLinecap="round"
-										strokeLinejoin="round"
-									>
-										<line
-											x1="12"
-											y1="5"
-											x2="12"
-											y2="19"
-										></line>
-										<line
-											x1="5"
-											y1="12"
-											x2="19"
-											y2="12"
-										></line>
-									</svg>
-									{__('Add Another Price', 'surecart')}
-								</ScButton>
-							)}
+									<line x1="12" y1="5" x2="12" y2="19"></line>
+									<line x1="5" y1="12" x2="19" y2="12"></line>
+								</svg>
+								{__('Add Another Price', 'surecart')}
+							</ScButton>
 							{!!archivedPrices?.length && (
 								<div
 									css={css`
@@ -175,47 +162,6 @@ export default ({ product, updateProduct, loading }) => {
 				}
 			>
 				<ErrorFlash errors={priceErrors} onHide={clearPriceErrors} />
-				{!id && (
-					<ScChoices
-						css={css`
-							margin-bottom: 1em;
-						`}
-						required
-						label={__('Product Type', 'surecart')}
-						style={{ '--columns': 2 }}
-					>
-						<div>
-							<ScChoice
-								checked={!product?.recurring}
-								value="single"
-								onScChange={(e) => {
-									if (!e.target.checked) return;
-									updateProduct({ recurring: false });
-								}}
-							>
-								{__('Single Payment', 'surecart')}
-								<span slot="description">
-									{__('Charge a one-time fee.', 'surecart')}
-								</span>
-							</ScChoice>
-							<ScChoice
-								checked={product?.recurring}
-								value="subscription"
-								onScChange={(e) => {
-									if (!e.target.checked) return;
-									updateProduct({
-										recurring: true,
-									});
-								}}
-							>
-								{__('Subscription', 'surecart')}
-								<span slot="description">
-									{__('Charge an ongoing fee.', 'surecart')}
-								</span>
-							</ScChoice>
-						</div>
-					</ScChoices>
-				)}
 				{renderPrices()}
 			</Box>
 		</div>
