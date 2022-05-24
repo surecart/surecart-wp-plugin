@@ -131,7 +131,9 @@ a role slug. Let's implement this logic now.
 
 #### GetItems
 Let's create a `getItems` method and map all user roles to an array of item choices. As with the above,
-we want the savable `id` to be the role name, and the label to be the role display name.
+we want the savable `id` to be the role name, and the label to be the role display name. The search term
+is also passed, so you can make sure you are querying relevant results. Since we return all roles, we do not
+need this term, but it would be helpful for querying posts, for example.
 
 ```php
 	...
@@ -140,10 +142,11 @@ we want the savable `id` to be the role name, and the label to be the role displ
 	 * These are a list of item the merchant can choose from when adding an integration.
 	 *
 	 * @param array $items The integration items.
+	 * @param string $search The search term.
 	 *
 	 * @return array The items for the integration.
 	 */
-	public function getItems( $items = [] ) {
+	public function getItems( $items = [], $search = '' ) {
 		$roles          = [];
 		$editable_roles = wp_roles()->roles;
 		foreach ( $editable_roles as $role => $details ) {
@@ -391,10 +394,11 @@ class UserRoleChangeIntegration extends IntegrationService implements Integratio
 	 * These are a list of item the merchant can choose from when adding an integration.
 	 *
 	 * @param array $items The integration items.
+	 * @param string $search The search term.
 	 *
 	 * @return array The items for the integration.
 	 */
-	public function getItems( $items = [] ) {
+	public function getItems( $items = [], $search = '' ) {
 		$roles          = [];
 		$editable_roles = wp_roles()->roles;
 		foreach ( $editable_roles as $role => $details ) {

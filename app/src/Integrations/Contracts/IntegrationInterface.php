@@ -48,11 +48,12 @@ interface IntegrationInterface {
 	/**
 	 * Get item listing for the integration.
 	 *
-	 * @param array $items The integration items.
+	 * @param array  $items The integration items.
+	 * @param string $search The search term.
 	 *
 	 * @return array The items for the integration.
 	 */
-	public function getItems( $items = [] );
+	public function getItems( $items = [], $search = '' );
 
 	/**
 	 * Get the individual item.

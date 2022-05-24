@@ -15,7 +15,7 @@ class IntegrationProvidersController {
 	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function index( \WP_REST_Request $request ) {
-		$providers = apply_filters( "surecart/integrations/providers/list/{$request->get_param( 'model' )}", [], $request );
+		$providers = apply_filters( "surecart/integrations/providers/list/{$request->get_param( 'model' )}", [], $request->get_param( 'search' ), $request );
 		return rest_ensure_response( $providers );
 	}
 
@@ -53,7 +53,7 @@ class IntegrationProvidersController {
 			return $this->item( $request );
 		}
 
-		$providers = apply_filters( "surecart/integrations/providers/{$request->get_param( 'provider' )}/{$request->get_param( 'model' )}/items", [], $request );
+		$providers = apply_filters( "surecart/integrations/providers/{$request->get_param( 'provider' )}/{$request->get_param( 'model' )}/items", [], $request->get_param( 'search' ), $request );
 		return rest_ensure_response( $providers );
 	}
 

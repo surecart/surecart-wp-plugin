@@ -69,11 +69,12 @@ abstract class IntegrationService extends AbstractIntegration implements Integra
 	/**
 	 * Get item listing for the integration.
 	 *
-	 * @param array $items The integration items.
+	 * @param array  $items The integration items.
+	 * @param string $search The search query.
 	 *
 	 * @return array The items for the integration.
 	 */
-	public function getItems( $items = [] ) {
+	public function getItems( $items = [], $search = '' ) {
 		return $items;
 	}
 
@@ -117,7 +118,7 @@ abstract class IntegrationService extends AbstractIntegration implements Integra
 		add_filter( "surecart/integrations/providers/find/{$this->getName()}", [ $this, 'findProvider' ], 9 );
 
 		// get items.
-		add_filter( "surecart/integrations/providers/{$this->getName()}/{$this->getModel()}/items", [ $this, 'getItems' ], 9 );
+		add_filter( "surecart/integrations/providers/{$this->getName()}/{$this->getModel()}/items", [ $this, 'getItems' ], 9, 2 );
 		add_filter( "surecart/integrations/providers/{$this->getName()}/item", [ $this, '_getItem' ], 9, 2 );
 
 		// implement purchase events if purchase sync interface is implemented.
