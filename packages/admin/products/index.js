@@ -7,6 +7,11 @@ import { __ } from '@wordpress/i18n';
 import '@admin/schema/register';
 
 /**
+ * Register store.
+ */
+import './store/register';
+
+/**
  * Register integrations store.
  */
 import '@admin/store/integration/register';

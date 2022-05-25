@@ -1,10 +1,5 @@
-import { store } from '@surecart/data';
-import { useState } from 'react';
-import { useSelect } from '@wordpress/data';
+import { useState } from '@wordpress/element';
 import { addQueryArgs } from '@wordpress/url';
-
-import Create from './Create';
-import Show from './Show';
 
 /**
  * Returns the Model Edit URL.
@@ -17,7 +12,7 @@ export function getEditURL(id) {
 	return addQueryArgs(window.location.href, { id });
 }
 
-export default () => {
+export default ({ id }) => {
 	const [historyId, setHistoryId] = useState(null);
 
 	/**
@@ -34,14 +29,9 @@ export default () => {
 		setHistoryId(id);
 	};
 
-	const setId = (id) => {
-		if (id && id !== historyId) {
-			setBrowserURL(id);
-		}
-	};
+	if (id && id !== historyId) {
+		setBrowserURL(id);
+	}
 
-	// get the id from the url.
-	const id = useSelect((select) => select(store).selectPageId());
-
-	return id ? <Show id={id} /> : <Create setId={setId} />;
+	return null;
 };

@@ -278,6 +278,7 @@ export default () => {
 					loading={isLoading}
 				/>
 				<Prices
+					productId={id}
 					product={product}
 					updateProduct={updateProduct}
 					loading={isLoading}

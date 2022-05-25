@@ -1,46 +1,46 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import {
-	ScButton,
-	ScChoice,
-	ScChoices,
-	ScForm,
-	ScInput,
-} from '@surecart/components-react';
-import { useDispatch } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
-import { store as uiStore } from '../store/ui';
-import useCurrentPage from '../mixins/useCurrentPage';
-// template
-import CreateTemplate from '../templates/Model';
+import { useDispatch } from '@wordpress/data';
+import { store as coreStore } from '@wordpress/core-data';
+import { useState } from 'react';
+
+import { ScAlert, ScButton, ScForm, ScInput } from '@surecart/components-react';
+import CreateTemplate from '../templates/CreateModel';
 import Box from '../ui/Box';
-import FlashError from '../components/FlashError';
 
-export default () => {
-	const { product, saveProduct, updateProduct, isSaving, setSaving } =
-		useCurrentPage('product');
-	const { addSnackbarNotice, addModelErrors } = useDispatch(uiStore);
+export default ({ id, setId }) => {
+	const [isSaving, setIsSaving] = useState(false);
+	const [name, setName] = useState('');
+	const [error, setError] = useState('');
+	const { saveEntityRecord } = useDispatch(coreStore);
 
-	// create the product group.
+	// create the product.
 	const onSubmit = async (e) => {
 		e.preventDefault();
 		try {
-			setSaving(true);
-			await saveProduct();
-			addSnackbarNotice({
-				content: __('Created.'),
-			});
+			setIsSaving(true);
+			const product = await saveEntityRecord(
+				'surecart',
+				'product',
+				{
+					name,
+				},
+				{ throwOnError: true }
+			);
+			setId(product.id);
 		} catch (e) {
 			console.error(e);
-			addModelErrors('product_group', e);
-		} finally {
-			setSaving(false);
+			setError(e?.message || __('Something went wrong.', 'surecart'));
+			setIsSaving(false);
 		}
 	};
 
 	return (
-		<CreateTemplate>
-			<FlashError path="product" scrollIntoView />
+		<CreateTemplate id={id}>
+			<ScAlert open={error?.length} type="danger" closable scrollOnOpen>
+				{error}
+			</ScAlert>
 
 			<Box title={__('Create New Product', 'surecart')}>
 				<ScForm onScSubmit={onSubmit}>
@@ -55,58 +55,13 @@ export default () => {
 							className="sc-product-name hydrated"
 							help={__('A name for your product.', 'surecart')}
 							onScChange={(e) => {
-								updateProduct({ name: e.target.value });
+								setName(e.target.value);
 							}}
+							value={name}
 							name="name"
 							required
 							autofocus
 						/>
-
-						<ScChoices
-							css={css`
-								margin-bottom: 1em;
-							`}
-							required
-							label={__('Product Type', 'surecart')}
-							style={{ '--columns': 2 }}
-						>
-							<div>
-								<ScChoice
-									checked={!product?.recurring}
-									value="single"
-									onScChange={(e) => {
-										if (!e.target.checked) return;
-										updateProduct({ recurring: false });
-									}}
-								>
-									{__('Single Payment', 'surecart')}
-									<span slot="description">
-										{__(
-											'Charge a one-time fee.',
-											'surecart'
-										)}
-									</span>
-								</ScChoice>
-								<ScChoice
-									checked={product?.recurring}
-									value="subscription"
-									onScChange={(e) => {
-										if (!e.target.checked) return;
-										updateProduct({
-											recurring: true,
-										});
-									}}
-								>
-									{__('Subscription', 'surecart')}
-									<span slot="description">
-										{__(
-											'Charge an ongoing fee.',
-											'surecart'
-										)}
-									</span>
-								</ScChoice>
-							</div>
-						</ScChoices>
 
 						<div
 							css={css`display: flex gap: var(--sc-spacing-small);`}

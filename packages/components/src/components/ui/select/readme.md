@@ -30,6 +30,7 @@
 | `squaredLeft`       | `squared-left`       |                                                                                                                                                                                                               | `boolean`                         | `undefined`      |
 | `squaredRight`      | `squared-right`      |                                                                                                                                                                                                               | `boolean`                         | `undefined`      |
 | `squaredTop`        | `squared-top`        |                                                                                                                                                                                                               | `boolean`                         | `undefined`      |
+| `unselect`          | `unselect`           | Can we unselect items.                                                                                                                                                                                        | `boolean`                         | `true`           |
 | `value`             | `value`              | The input's value attribute.                                                                                                                                                                                  | `string`                          | `''`             |
 
 

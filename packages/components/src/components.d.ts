@@ -666,6 +666,20 @@ export namespace Components {
         "error": string;
         "heading": string;
     }
+    interface ScDialog {
+        /**
+          * The dialog's label as displayed in the header. You should always include a relevant label even when using `no-header`, as it is required for proper accessibility.
+         */
+        "label": string;
+        /**
+          * Disables the header. This will also remove the default close button, so please ensure you provide an easy, accessible way for users to dismiss the dialog.
+         */
+        "noHeader": boolean;
+        /**
+          * Indicates whether or not the dialog is open. You can use this in lieu of the show/hide methods.
+         */
+        "open": boolean;
+    }
     interface ScDivider {
     }
     interface ScDonationChoices {
@@ -1914,6 +1928,10 @@ export namespace Components {
         "squaredRight": boolean;
         "squaredTop": boolean;
         /**
+          * Can we unselect items.
+         */
+        "unselect": boolean;
+        /**
           * The input's value attribute.
          */
         "value": string;
@@ -2581,6 +2599,12 @@ declare global {
         prototype: HTMLScDashboardModuleElement;
         new (): HTMLScDashboardModuleElement;
     };
+    interface HTMLScDialogElement extends Components.ScDialog, HTMLStencilElement {
+    }
+    var HTMLScDialogElement: {
+        prototype: HTMLScDialogElement;
+        new (): HTMLScDialogElement;
+    };
     interface HTMLScDividerElement extends Components.ScDivider, HTMLStencilElement {
     }
     var HTMLScDividerElement: {
@@ -3203,6 +3227,7 @@ declare global {
         "sc-dashboard-customer-details": HTMLScDashboardCustomerDetailsElement;
         "sc-dashboard-downloads-list": HTMLScDashboardDownloadsListElement;
         "sc-dashboard-module": HTMLScDashboardModuleElement;
+        "sc-dialog": HTMLScDialogElement;
         "sc-divider": HTMLScDividerElement;
         "sc-donation-choices": HTMLScDonationChoicesElement;
         "sc-downloads-list": HTMLScDownloadsListElement;
@@ -4026,6 +4051,29 @@ declare namespace LocalJSX {
     interface ScDashboardModule {
         "error"?: string;
         "heading"?: string;
+    }
+    interface ScDialog {
+        /**
+          * The dialog's label as displayed in the header. You should always include a relevant label even when using `no-header`, as it is required for proper accessibility.
+         */
+        "label"?: string;
+        /**
+          * Disables the header. This will also remove the default close button, so please ensure you provide an easy, accessible way for users to dismiss the dialog.
+         */
+        "noHeader"?: boolean;
+        "onScAfterHide"?: (event: CustomEvent<void>) => void;
+        "onScAfterShow"?: (event: CustomEvent<void>) => void;
+        "onScHide"?: (event: CustomEvent<void>) => void;
+        "onScInitialFocus"?: (event: CustomEvent<void>) => void;
+        /**
+          * Request close event
+         */
+        "onScRequestClose"?: (event: CustomEvent<'close-button' | 'keyboard' | 'overlay'>) => void;
+        "onScShow"?: (event: CustomEvent<void>) => void;
+        /**
+          * Indicates whether or not the dialog is open. You can use this in lieu of the show/hide methods.
+         */
+        "open"?: boolean;
     }
     interface ScDivider {
     }
@@ -5431,6 +5479,10 @@ declare namespace LocalJSX {
         "squaredRight"?: boolean;
         "squaredTop"?: boolean;
         /**
+          * Can we unselect items.
+         */
+        "unselect"?: boolean;
+        /**
           * The input's value attribute.
          */
         "value"?: string;
@@ -6003,6 +6055,7 @@ declare namespace LocalJSX {
         "sc-dashboard-customer-details": ScDashboardCustomerDetails;
         "sc-dashboard-downloads-list": ScDashboardDownloadsList;
         "sc-dashboard-module": ScDashboardModule;
+        "sc-dialog": ScDialog;
         "sc-divider": ScDivider;
         "sc-donation-choices": ScDonationChoices;
         "sc-downloads-list": ScDownloadsList;
@@ -6135,6 +6188,7 @@ declare module "@stencil/core" {
             "sc-dashboard-customer-details": LocalJSX.ScDashboardCustomerDetails & JSXBase.HTMLAttributes<HTMLScDashboardCustomerDetailsElement>;
             "sc-dashboard-downloads-list": LocalJSX.ScDashboardDownloadsList & JSXBase.HTMLAttributes<HTMLScDashboardDownloadsListElement>;
             "sc-dashboard-module": LocalJSX.ScDashboardModule & JSXBase.HTMLAttributes<HTMLScDashboardModuleElement>;
+            "sc-dialog": LocalJSX.ScDialog & JSXBase.HTMLAttributes<HTMLScDialogElement>;
             "sc-divider": LocalJSX.ScDivider & JSXBase.HTMLAttributes<HTMLScDividerElement>;
             "sc-donation-choices": LocalJSX.ScDonationChoices & JSXBase.HTMLAttributes<HTMLScDonationChoicesElement>;
             "sc-downloads-list": LocalJSX.ScDownloadsList & JSXBase.HTMLAttributes<HTMLScDownloadsListElement>;

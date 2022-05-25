@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';
 import {
@@ -6,6 +8,7 @@ import {
 	ScDropdown,
 	ScMenu,
 	ScMenuItem,
+	ScFormatNumber,
 } from '@surecart/components-react';
 import { Icon, box, trash, moreHorizontalMobile } from '@wordpress/icons';
 import { addQueryArgs } from '@wordpress/url';
@@ -13,7 +16,6 @@ import { addQueryArgs } from '@wordpress/url';
 import ToggleHeader from '../../../components/ToggleHeader';
 import { translateInterval } from '../../../util/translations';
 import Copy from './Copy';
-import useCurrentPage from '../../../mixins/useCurrentPage';
 
 export default ({
 	isOpen,
@@ -24,25 +26,46 @@ export default ({
 	collapsible,
 	onDelete,
 }) => {
-	const { product } = useCurrentPage('product');
 	/** Header name */
 	const headerName = () => {
 		return (
 			<Fragment>
-				<sc-format-number
+				<ScFormatNumber
+					css={css`
+						font-weight: bold;
+						font-size: 14px;
+					`}
 					type="currency"
 					currency={price?.currency || scData.currency_code}
 					value={price?.amount}
 				/>
-				{!!product?.recurring &&
-					translateInterval(
+				<span
+					css={css`
+						opacity: 0.75;
+					`}
+				>
+					{translateInterval(
 						price?.recurring_interval_count,
 						price?.recurring_interval,
 						' /',
 						''
 					)}
+					{renderTag()}
+				</span>
 			</Fragment>
 		);
+	};
+
+	const renderTag = () => {
+		if (price?.recurring_period_count && price?.recurring_interval) {
+			return translateInterval(
+				price?.recurring_period_count,
+				price?.recurring_interval,
+				' for',
+				''
+			);
+		}
+		return null;
 	};
 
 	const renderDropdown = () => {
@@ -51,7 +74,7 @@ export default ({
 		}
 
 		return (
-			<ScDropdown slot="suffix" position="bottom-right">
+			<ScDropdown slot="suffix" placement="bottom-end">
 				<ScButton type="text" slot="trigger" circle>
 					<Icon icon={moreHorizontalMobile} />
 				</ScButton>

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-05-24T20:13:11",
+  "timestamp": "2022-05-25T21:06:24",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.15.1",
@@ -4842,6 +4842,170 @@
       }
     },
     {
+      "filePath": "./src/components/ui/sc-dialog/sc-dialog.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-dialog",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "label",
+          "type": "string",
+          "mutable": false,
+          "attr": "label",
+          "reflectToAttr": true,
+          "docs": "The dialog's label as displayed in the header. You should always include a relevant label even when using\n`no-header`, as it is required for proper accessibility.",
+          "docsTags": [],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "noHeader",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "no-header",
+          "reflectToAttr": true,
+          "docs": "Disables the header. This will also remove the default close button, so please ensure you provide an easy,\naccessible way for users to dismiss the dialog.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "open",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "open",
+          "reflectToAttr": true,
+          "docs": "Indicates whether or not the dialog is open. You can use this in lieu of the show/hide methods.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [
+        {
+          "event": "scAfterHide",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        },
+        {
+          "event": "scAfterShow",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        },
+        {
+          "event": "scHide",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        },
+        {
+          "event": "scInitialFocus",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        },
+        {
+          "event": "scRequestClose",
+          "detail": "\"close-button\" | \"keyboard\" | \"overlay\"",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Request close event",
+          "docsTags": []
+        },
+        {
+          "event": "scShow",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        }
+      ],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [
+        {
+          "name": "base",
+          "docs": ""
+        },
+        {
+          "name": "body",
+          "docs": ""
+        },
+        {
+          "name": "close-button",
+          "docs": ""
+        },
+        {
+          "name": "footer",
+          "docs": ""
+        },
+        {
+          "name": "header",
+          "docs": ""
+        },
+        {
+          "name": "overlay",
+          "docs": ""
+        },
+        {
+          "name": "panel",
+          "docs": ""
+        },
+        {
+          "name": "title",
+          "docs": ""
+        }
+      ],
+      "dependents": [],
+      "dependencies": [
+        "sc-icon"
+      ],
+      "dependencyGraph": {
+        "sc-dialog": [
+          "sc-icon"
+        ]
+      }
+    },
+    {
       "filePath": "./src/components/ui/divider/sc-divider.tsx",
       "encapsulation": "shadow",
       "tag": "sc-divider",
@@ -7610,6 +7774,7 @@
         "sc-cc-logo",
         "sc-charges-list",
         "sc-customer-details",
+        "sc-dialog",
         "sc-downloads-list",
         "sc-empty",
         "sc-invoices-list",
@@ -7645,6 +7810,9 @@
           "sc-icon"
         ],
         "sc-customer-details": [
+          "sc-icon"
+        ],
+        "sc-dialog": [
           "sc-icon"
         ],
         "sc-downloads-list": [
@@ -14602,6 +14770,23 @@
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "unselect",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "unselect",
+          "reflectToAttr": false,
+          "docs": "Can we unselect items.",
+          "docsTags": [],
+          "default": "true",
           "values": [
             {
               "type": "boolean"

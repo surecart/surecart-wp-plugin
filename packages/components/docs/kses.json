@@ -322,6 +322,15 @@
     "class": true,
     "slot": true
   },
+  "sc-dialog": {
+    "label": true,
+    "no-header": true,
+    "open": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-divider": {
     "style": true,
     "id": true,
@@ -1031,6 +1040,7 @@
     "squared-left": true,
     "squared-right": true,
     "squared-top": true,
+    "unselect": true,
     "value": true,
     "style": true,
     "id": true,

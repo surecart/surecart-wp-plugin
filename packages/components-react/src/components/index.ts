@@ -34,6 +34,7 @@ export const ScCustomerName = /*@__PURE__*/createReactComponent<JSX.ScCustomerNa
 export const ScDashboardCustomerDetails = /*@__PURE__*/createReactComponent<JSX.ScDashboardCustomerDetails, HTMLScDashboardCustomerDetailsElement>('sc-dashboard-customer-details');
 export const ScDashboardDownloadsList = /*@__PURE__*/createReactComponent<JSX.ScDashboardDownloadsList, HTMLScDashboardDownloadsListElement>('sc-dashboard-downloads-list');
 export const ScDashboardModule = /*@__PURE__*/createReactComponent<JSX.ScDashboardModule, HTMLScDashboardModuleElement>('sc-dashboard-module');
+export const ScDialog = /*@__PURE__*/createReactComponent<JSX.ScDialog, HTMLScDialogElement>('sc-dialog');
 export const ScDivider = /*@__PURE__*/createReactComponent<JSX.ScDivider, HTMLScDividerElement>('sc-divider');
 export const ScDonationChoices = /*@__PURE__*/createReactComponent<JSX.ScDonationChoices, HTMLScDonationChoicesElement>('sc-donation-choices');
 export const ScDownloadsList = /*@__PURE__*/createReactComponent<JSX.ScDownloadsList, HTMLScDownloadsListElement>('sc-downloads-list');

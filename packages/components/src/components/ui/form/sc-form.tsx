@@ -5,7 +5,7 @@ import { serialize } from '../../../functions/form';
 @Component({
   tag: 'sc-form',
   styleUrl: 'sc-form.scss',
-  shadow: false,
+  shadow: true,
 })
 export class ScForm {
   @Element() form: HTMLElement;

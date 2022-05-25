@@ -114,7 +114,7 @@ export class ScButton {
   }
 
   submitForm() {
-    const form = this.button.closest('form');
+    const form = this.button.closest('sc-form')?.shadowRoot?.querySelector('form') || this.button.closest('form');
     // Calling form.submit() seems to bypass the submit event and constraint validation. Instead, we can inject a
     // native submit button into the form, click it, then remove it to simulate a standard form submission.
     const button = document.createElement('button');
