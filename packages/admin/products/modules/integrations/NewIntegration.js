@@ -6,14 +6,39 @@ import { useState, Fragment } from '@wordpress/element';
 import { Modal, Button } from '@wordpress/components';
 import { ScButton, ScForm } from '@surecart/components-react';
 import SelectIntegration from './SelectIntegration';
+import Error from '../../../components/Error';
+import { useDispatch } from '@wordpress/data';
+import { store as coreStore } from '@wordpress/core-data';
 
-export default ({ onRequestClose, onCreate }) => {
+export default ({ onRequestClose, id }) => {
 	const [provider, setProvider] = useState(null);
 	const [item, setItem] = useState(null);
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState(null);
+
+	const { saveEntityRecord } = useDispatch(coreStore);
 
 	const onSubmit = async (e) => {
-		onCreate({ provider, item });
-		onRequestClose();
+		try {
+			setError(null);
+			setLoading(true);
+			await saveEntityRecord(
+				'surecart',
+				'integration',
+				{
+					model_name: 'product',
+					model_id: id,
+					integration_id: item,
+					provider,
+				},
+				{ throwOnError: true }
+			);
+			onRequestClose();
+		} catch (e) {
+			console.error(e);
+			setError(e);
+			setLoading(false);
+		}
 	};
 
 	return (
@@ -43,6 +68,8 @@ export default ({ onRequestClose, onCreate }) => {
 						--sc-form-row-spacing: var(--sc-spacing-large);
 					`}
 				>
+					<Error error={error} setError={setError} />
+
 					<SelectIntegration
 						model="product"
 						providerName={provider}
@@ -64,6 +91,8 @@ export default ({ onRequestClose, onCreate }) => {
 								'--button-border-radius':
 									'--sc-input-border-radius-small',
 							}}
+							busy={loading}
+							disabled={loading}
 							submit
 						>
 							{__('Add Integration', 'surecart')}
@@ -72,6 +101,7 @@ export default ({ onRequestClose, onCreate }) => {
 							{__('Cancel', 'surecart')}
 						</Button>
 					</div>
+					{loading && <sc-block-ui></sc-block-ui>}
 				</ScForm>
 			</Modal>
 		</Fragment>

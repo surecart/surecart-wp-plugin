@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-05-25T21:06:32+00:00\n"
+"POT-Creation-Date: 2022-05-26T20:44:56+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 
@@ -1043,7 +1043,7 @@ msgid "Please add at least one product."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:15
-#: src/Support/Errors/Translations/codes.php:21
+#: src/Support/Errors/Translations/codes.php:22
 msgid "Please fill out your address."
 msgstr ""
 
@@ -1056,22 +1056,26 @@ msgid "You cannot add a one-time product to a subscription."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:18
-msgid "A price with this currency and recurring interval already exists. Please create a new product to create this price."
+msgid "The price cannot be blank."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:19
-msgid "This promotion code already exists. Please archive the old code or use a different code."
+msgid "A price with this currency and recurring interval already exists. Please create a new product to create this price."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:20
+msgid "This promotion code already exists. Please archive the old code or use a different code."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:21
 msgid "This product has prices that are currently being used. Please archive the product instead."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:22
+#: src/Support/Errors/Translations/codes.php:23
 msgid "The prices in this checkout session have changed. Please recheck it before submitting again."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:23
+#: src/Support/Errors/Translations/codes.php:24
 msgid "This coupon code is invalid."
 msgstr ""
 

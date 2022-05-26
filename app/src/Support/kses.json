@@ -14,6 +14,7 @@
     "closable": true,
     "duration": true,
     "open": true,
+    "scroll-margin": true,
     "scroll-on-open": true,
     "type": true,
     "style": true,

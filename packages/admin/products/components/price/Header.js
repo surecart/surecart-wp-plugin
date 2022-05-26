@@ -42,6 +42,7 @@ export default ({
 				<span
 					css={css`
 						opacity: 0.75;
+						line-height: 1;
 					`}
 				>
 					{translateInterval(
@@ -50,22 +51,26 @@ export default ({
 						' /',
 						''
 					)}
-					{renderTag()}
+					{price?.recurring_period_count &&
+						price?.recurring_interval &&
+						translateInterval(
+							price?.recurring_period_count,
+							price?.recurring_interval,
+							' for',
+							''
+						)}
 				</span>
+
+				{!!price?.ad_hoc && (
+					<>
+						{' '}
+						<sc-tag type="info" size="small">
+							{__('Pay what you want', 'surecart')}
+						</sc-tag>
+					</>
+				)}
 			</Fragment>
 		);
-	};
-
-	const renderTag = () => {
-		if (price?.recurring_period_count && price?.recurring_interval) {
-			return translateInterval(
-				price?.recurring_period_count,
-				price?.recurring_interval,
-				' for',
-				''
-			);
-		}
-		return null;
 	};
 
 	const renderDropdown = () => {
@@ -115,17 +120,21 @@ export default ({
 	/** Action buttons */
 	const buttons = (
 		<div>
-			{!!scData?.checkout_page_url && !!price?.id && !price?.ad_hoc && (
-				<Copy
-					className={'sc-price-copy'}
-					url={addQueryArgs(scData?.checkout_page_url, {
-						line_items: [{ price_id: price?.id, quantity: 1 }],
-					})}
-				></Copy>
-			)}
-
-			{price?.archived && (
+			{price?.archived ? (
 				<ScTag type="warning">{__('Archived', 'surecart')}</ScTag>
+			) : (
+				<>
+					{!!scData?.checkout_page_url && (
+						<Copy
+							className={'sc-price-copy'}
+							url={addQueryArgs(scData?.checkout_page_url, {
+								line_items: [
+									{ price_id: price?.id, quantity: 1 },
+								],
+							})}
+						></Copy>
+					)}
+				</>
 			)}
 			{renderDropdown()}
 		</div>

@@ -164,11 +164,10 @@ export class ScPriceInput {
           <span style={{ opacity: '0.5' }} slot="prefix">
             {getCurrencySymbol(this.currencyCode)}
           </span>
-          {this.showCode && this?.currencyCode && (
-            <span style={{ opacity: '0.5' }} slot="suffix">
-              {this.currencyCode.toUpperCase()}
-            </span>
-          )}
+
+          <span slot="suffix">
+            <slot name="suffix">{this.showCode && this?.currencyCode && <span style={{ opacity: '0.5' }}>{this.currencyCode.toUpperCase()}</span>}</slot>
+          </span>
         </sc-input>
       </div>
     );

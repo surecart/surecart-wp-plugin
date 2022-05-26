@@ -15,7 +15,6 @@ import Integration from './Integration';
 export default ({ id }) => {
 	const [modal, setModal] = useState(false);
 	const [guide, setGuide] = useState(false);
-	const { addDraft } = useDispatch(dataStore);
 
 	const { integrations, loading } = useSelect(
 		(select) => {
@@ -34,20 +33,6 @@ export default ({ id }) => {
 		},
 		[id]
 	);
-
-	// Add to drafts on create.
-	const onCreate = ({ provider, item }) => {
-		addDraft('integration', {
-			model_name: 'product',
-			model_id: id,
-			integration_id: item,
-			provider,
-		});
-	};
-	// selectDrafts.
-	const drafts = useSelect((select) => {
-		return select(dataStore).selectDrafts('integration');
-	}, []);
 
 	return (
 		<Box
@@ -73,27 +58,12 @@ export default ({ id }) => {
 				</ScButton>
 			}
 		>
-			{!!integrations?.length || !!drafts?.length ? (
+			{!!integrations?.length ? (
 				<ScCard noPadding>
 					<ScStackedList>
-						{(integrations || []).map((integration) => {
-							return (
-								<Integration
-									key={integration?.id}
-									integration={integration}
-								/>
-							);
-						})}
-
-						{(drafts || []).map((integration, index) => {
-							return (
-								<Integration
-									key={index}
-									integration={integration}
-									index={index}
-								/>
-							);
-						})}
+						{(integrations || []).map(({ id }) => (
+							<Integration key={id} id={id} />
+						))}
 					</ScStackedList>
 				</ScCard>
 			) : (
@@ -112,7 +82,6 @@ export default ({ id }) => {
 			{!!modal && (
 				<NewIntegration
 					id={id}
-					onCreate={onCreate}
 					onRequestClose={() => setModal(false)}
 				/>
 			)}

@@ -39,7 +39,7 @@ export default ({ id, setId }) => {
 	return (
 		<CreateTemplate id={id}>
 			<ScAlert open={error?.length} type="danger" closable scrollOnOpen>
-				{error}
+				<span slot="title">{error}</span>
 			</ScAlert>
 
 			<Box title={__('Create New Product', 'surecart')}>

@@ -1,22 +1,37 @@
-import { __ } from '@wordpress/i18n';
-import { ScButton } from '@surecart/components-react';
+/**
+ * WordPress dependencies
+ */
 import { useSelect } from '@wordpress/data';
+import { __ } from '@wordpress/i18n';
+import { store as coreStore } from '@wordpress/core-data';
+import { ScButton } from '@surecart/components-react';
 
-import { store as uiStore } from '../../store/ui';
+export default function SaveButton({ onSave, children, busy }) {
+	const { isDirty, isSaving } = useSelect((select) => {
+		const { __experimentalGetDirtyEntityRecords, isSavingEntityRecord } =
+			select(coreStore);
+		const dirtyEntityRecords = __experimentalGetDirtyEntityRecords();
+		return {
+			isDirty: dirtyEntityRecords.length > 0,
+			isSaving: dirtyEntityRecords.some((record) =>
+				isSavingEntityRecord(record.kind, record.name, record.key)
+			),
+		};
+	}, []);
 
-export default ({ style, children }) => {
-	const isSaving = useSelect((select) => select(uiStore).isSaving());
+	const disabled = !isDirty || isSaving;
 
 	return (
 		<ScButton
 			type="primary"
 			submit
-			style={style}
-			className={'sc-save-model'}
-			disabled={isSaving}
-			loading={isSaving}
+			style={{ '--button-border-radius': '2px' }}
+			aria-disabled={disabled}
+			disabled={disabled || isSaving || busy}
+			busy={isSaving || busy}
+			onClick={disabled ? undefined : onSave}
 		>
 			{children}
 		</ScButton>
 	);
-};
+}

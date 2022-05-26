@@ -3,8 +3,8 @@ import { useState } from 'react';
 import { useSelect } from '@wordpress/data';
 import { addQueryArgs } from '@wordpress/url';
 
-import Create from './Create';
-import Show from './Show';
+import CreateProduct from './CreateProduct';
+import EditProduct from './EditProduct';
 
 /**
  * Returns the Model Edit URL.
@@ -43,5 +43,5 @@ export default () => {
 	// get the id from the url.
 	const id = useSelect((select) => select(store).selectPageId());
 
-	return id ? <Show id={id} /> : <Create setId={setId} />;
+	return id ? <EditProduct id={id} /> : <CreateProduct setId={setId} />;
 };

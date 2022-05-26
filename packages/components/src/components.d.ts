@@ -45,6 +45,10 @@ export namespace Components {
          */
         "open": boolean;
         /**
+          * Scroll margin
+         */
+        "scrollMargin": string;
+        /**
           * Scroll into view.
          */
         "scrollOnOpen": boolean;
@@ -3374,6 +3378,10 @@ declare namespace LocalJSX {
           * Indicates whether or not the alert is open. You can use this in lieu of the show/hide methods.
          */
         "open"?: boolean;
+        /**
+          * Scroll margin
+         */
+        "scrollMargin"?: string;
         /**
           * Scroll into view.
          */

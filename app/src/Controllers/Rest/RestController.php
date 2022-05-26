@@ -21,7 +21,7 @@ abstract class RestController {
 	 *
 	 * @return \SureCart\Models\Model
 	 */
-	protected function middleware( \SureCart\Models\Model $class, \WP_REST_Request $request ) {
+	protected function middleware( $class, \WP_REST_Request $request ) {
 		return apply_filters( 'surecart/request/model', $class, $request );
 	}
 

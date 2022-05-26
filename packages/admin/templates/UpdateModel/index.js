@@ -3,32 +3,20 @@ import { css, jsx, Global } from '@emotion/core';
 
 import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';
-import { SnackbarList, Tooltip } from '@wordpress/components';
+import { SnackbarList } from '@wordpress/components';
 import { PostLockedModal } from '@wordpress/editor';
-import StatusBadge from '../components/StatusBadge';
-import BrowserUrl from '../components/browser-url';
-import UnsavedChangesWarning from '../components/unsaved-changes-warning';
-import ErrorBoundary from '../components/error-boundary';
-import { ScForm, ScButton } from '@surecart/components-react';
-import useSnackbar from '../hooks/useSnackbar';
-import admin from '../styles/admin';
+import UnsavedChangesWarning from './UnsavedChangesWarning';
+import ErrorBoundary from '../../components/error-boundary';
+import { ScForm } from '@surecart/components-react';
+import useSnackbar from '../../hooks/useSnackbar';
+import admin from '../../styles/admin';
 
 export default ({
 	children,
-	pageModelName,
 	title,
 	button,
 	footer,
-	noticeUI,
-	backUrl,
-	backButtonType,
-	backText,
-	status,
-	notices,
-	removeNotice,
 	onSubmit,
-	onInvalid,
-	loading,
 	sidebar,
 	onError,
 }) => {
@@ -42,17 +30,18 @@ export default ({
 					#wpwrap {
 						background-color: var(--sc-color-gray-100);
 					}
+					#wpcontent {
+						padding: 0;
+					}
 				`}
 			/>
 			<ErrorBoundary onError={onError}>
-				<BrowserUrl path={pageModelName} />
 				<UnsavedChangesWarning />
 				<ScForm
 					className="sc-model-form"
 					onScFormSubmit={onSubmit}
 					css={css`
 						font-size: 14px;
-						margin-right: 20px;
 
 						button {
 							font-size: 13px;
@@ -114,10 +103,11 @@ export default ({
 					<div
 						css={css`
 							position: sticky;
-							background: #fff;
-							margin-left: -20px;
-							margin-bottom: 30px;
+							/* background: #fff; */
+							background-color: rgba(255, 255, 255, 0.75);
+							backdrop-filter: blur(5px);
 							top: 32px;
+							width: 100%;
 							z-index: 4;
 							margin-bottom: var(
 								--sc-spacing-xx-large
@@ -143,40 +133,6 @@ export default ({
 									column-gap: 1em;
 								`}
 							>
-								{!!backUrl && (
-									<Tooltip
-										text={
-											backText ||
-											__('Go back.', 'surecart')
-										}
-									>
-										{backButtonType === 'icon' ? (
-											<a
-												href={backUrl}
-												css={css`
-													color: black;
-													display: flex;
-													align-items: center;
-													cursor: pointer;
-													padding: 0.5em 1em;
-													border-right: 1px solid
-														#dcdcdc;
-												`}
-											>
-												<sc-icon name="x"></sc-icon>
-											</a>
-										) : (
-											<ScButton
-												circle
-												size="small"
-												href={backUrl}
-											>
-												&larr;
-											</ScButton>
-										)}
-									</Tooltip>
-								)}
-
 								<h1
 									css={css`
 										margin: 0;
@@ -185,21 +141,9 @@ export default ({
 								>
 									{title}
 								</h1>
-								{!loading && status && (
-									<StatusBadge status={status} />
-								)}
 							</div>
 
 							{button}
-						</div>
-						<div
-							css={css`
-								.components-notice {
-									margin: 0;
-								}
-							`}
-						>
-							{noticeUI}
 						</div>
 					</div>
 

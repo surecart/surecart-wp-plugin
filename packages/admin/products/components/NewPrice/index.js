@@ -182,6 +182,7 @@ export default ({ onRequestClose, productId }) => {
 					</ScButton>
 				</div>
 			</ScForm>
+			{loading && <sc-block-ui spinner></sc-block-ui>}
 		</Modal>
 	);
 };

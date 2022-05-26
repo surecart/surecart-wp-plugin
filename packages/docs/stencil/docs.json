@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-05-25T21:06:24",
+  "timestamp": "2022-05-26T20:46:26",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.15.1",
@@ -213,6 +213,23 @@
           "values": [
             {
               "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "scrollMargin",
+          "type": "string",
+          "mutable": false,
+          "attr": "scroll-margin",
+          "reflectToAttr": false,
+          "docs": "Scroll margin",
+          "docsTags": [],
+          "default": "'0px'",
+          "values": [
+            {
+              "type": "string"
             }
           ],
           "optional": false,
@@ -4845,6 +4862,7 @@
       "filePath": "./src/components/ui/sc-dialog/sc-dialog.tsx",
       "encapsulation": "shadow",
       "tag": "sc-dialog",
+      "readme": "# sc-dialog\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -6083,7 +6101,7 @@
     },
     {
       "filePath": "./src/components/ui/form/sc-form.tsx",
-      "encapsulation": "none",
+      "encapsulation": "shadow",
       "tag": "sc-form",
       "readme": "# ce-form\n\n\n",
       "docs": "",
