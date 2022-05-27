@@ -77,13 +77,14 @@ export default ({
 						' Every',
 						''
 					)}
-					{price?.recurring_period_count &&
-						price?.recurring_interval &&
+					{!!price?.recurring_period_count &&
+						!!price?.recurring_interval &&
 						translateInterval(
-							price?.recurring_period_count,
+							price?.recurring_period_count || 0,
 							price?.recurring_interval,
 							' for',
-							''
+							'',
+							true
 						)}
 				</div>
 			</Fragment>

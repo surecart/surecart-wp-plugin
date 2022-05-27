@@ -13,10 +13,12 @@ import Tax from '../../../components/price/parts/Tax';
 import Subscription from '../../../components/price/Subscription';
 import Multiple from '../../../components/price/Multiple';
 import OneTime from '../../../components/price/OneTime';
+import Error from '../../../../components/Error';
 
 export default ({ id, prices, product }) => {
 	// are the price details open?
 	const [isOpen, setIsOpen] = useState(true);
+	const [error, setError] = useState(null);
 
 	// use the price entity.
 	const {
@@ -26,21 +28,48 @@ export default ({ id, prices, product }) => {
 		savePrice,
 		savingPrice,
 		deletingPrice,
+		savePriceError,
 	} = useEntity('price', id);
 
 	// toggle the archive.
-	const toggleArchive = async (archived) => {
+	const toggleArchive = async () => {
 		try {
-			await savePrice({ archived }, { throwOnError: true });
+			await savePrice(
+				{ archived: !price?.archived },
+				{ throwOnError: true }
+			);
 		} catch (e) {
 			console.error(e);
+			setError(e);
+		}
+	};
+
+	/**
+	 * Toggle product delete.
+	 */
+	const onDelete = async () => {
+		const r = confirm(
+			__(
+				'Permanently delete this price? You cannot undo this action.',
+				'surecart'
+			)
+		);
+		if (!r) return;
+
+		try {
+			setError(null);
+			throw { message: 'test' };
+			await deletePrice({ throwOnError: true });
+		} catch (e) {
+			console.error(e);
+			setError(e);
 		}
 	};
 
 	// get the price type.
 	const getPriceType = () => {
 		if (price?.recurring_interval) {
-			if (price?.recurring_period_count) {
+			if (price?.recurring_period_count !== null) {
 				return 'multiple';
 			}
 			return 'subscription';
@@ -63,10 +92,12 @@ export default ({ id, prices, product }) => {
 				isOpen={isOpen}
 				setIsOpen={setIsOpen}
 				price={price}
-				onArchive={() => toggleArchive(!price?.archived)}
-				onDelete={() => deletePrice(price)}
+				onArchive={toggleArchive}
+				onDelete={onDelete}
 				collapsible={prices?.length > 1}
 			/>
+
+			<Error error={savePriceError || error} setError={setError} />
 
 			<div
 				css={css`

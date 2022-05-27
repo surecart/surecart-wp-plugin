@@ -23,12 +23,14 @@ export default ({ price, updatePrice, locked }) => {
 							'every',
 							''
 						)}
-						{price?.recurring_period_count &&
+						{!!price?.recurring_period_count &&
+							!!price?.recurring_interval &&
 							translateInterval(
 								price?.recurring_period_count,
 								price?.recurring_interval,
 								' for',
-								''
+								'',
+								true
 							)}
 					</span>
 				}

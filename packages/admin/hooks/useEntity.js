@@ -8,39 +8,46 @@ import { store as coreStore } from '@wordpress/core-data';
  */
 import { camelName } from '../util';
 
-export default (type, id, name = 'surecart') => {
+export default (type, id, query = {}, name = 'surecart') => {
 	// dispatchers.
 	const { editEntityRecord, deleteEntityRecord, saveEntityRecord } =
 		useDispatch(coreStore);
 
 	// the entity data.
-	const entityData = [name, type, id];
+	const entityData = [name, type, id, query];
 
 	/** Get entity info. */
-	const { item, itemError, hasLoadedItem, savingItem, deletingItem } =
-		useSelect(
-			(select) => {
-				return {
-					item:
-						id &&
-						select(coreStore).getEditedEntityRecord(...entityData),
-					hasLoadedItem: select(coreStore).hasFinishedResolution(
-						'getEditedEntityRecord',
-						[...entityData]
-					),
-					itemError: select(coreStore).getResolutionError(
-						...entityData
-					),
-					savingItem: select(coreStore).isSavingEntityRecord(
-						...entityData
-					),
-					deletingItem: select(coreStore).isDeletingEntityRecord(
-						...entityData
-					),
-				};
-			},
-			[id]
-		);
+	const {
+		item,
+		itemError,
+		hasLoadedItem,
+		savingItem,
+		deletingItem,
+		saveError,
+	} = useSelect(
+		(select) => {
+			return {
+				item:
+					id &&
+					select(coreStore).getEditedEntityRecord(...entityData),
+				hasLoadedItem: select(coreStore).hasFinishedResolution(
+					'getEditedEntityRecord',
+					[...entityData]
+				),
+				itemError: select(coreStore).getResolutionError(...entityData),
+				savingItem: select(coreStore).isSavingEntityRecord(
+					...entityData
+				),
+				saveError: select(coreStore).getLastEntitySaveError(
+					...entityData
+				),
+				deletingItem: select(coreStore).isDeletingEntityRecord(
+					...entityData
+				),
+			};
+		},
+		[id]
+	);
 
 	/** Edit the entity. */
 	const editEntity = (data) => editEntityRecord(name, type, id, data);
@@ -71,6 +78,9 @@ export default (type, id, name = 'surecart') => {
 		// updating.
 		savingItem,
 		[`saving${ucName}`]: savingItem,
+
+		saveError,
+		[`save${ucName}Error`]: saveError,
 
 		// deleting.
 		deletingItem,
