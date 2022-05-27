@@ -58,7 +58,6 @@ export default ({ id, prices, product }) => {
 
 		try {
 			setError(null);
-			throw { message: 'test' };
 			await deletePrice({ throwOnError: true });
 		} catch (e) {
 			console.error(e);
