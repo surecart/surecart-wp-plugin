@@ -13,8 +13,8 @@ import {
 import { Icon, box, trash, moreHorizontalMobile } from '@wordpress/icons';
 import { addQueryArgs } from '@wordpress/url';
 
-import ToggleHeader from '../../../components/ToggleHeader';
-import { translateInterval } from '../../../util/translations';
+import ToggleHeader from '../../../../components/ToggleHeader';
+import { translateInterval } from '../../../../util/translations';
 import Copy from './Copy';
 
 export default ({
@@ -26,6 +26,29 @@ export default ({
 	collapsible,
 	onDelete,
 }) => {
+	const collapsedDetails = () => {
+		if (isOpen) return null;
+		return (
+			<>
+				{!!price?.ad_hoc && (
+					<>
+						{' '}
+						<sc-tag type="success" size="small">
+							{__('Pay what you want', 'surecart')}
+						</sc-tag>
+					</>
+				)}
+				{!!price?.trial_duration_days && (
+					<>
+						{' '}
+						<sc-tag type="info" size="small">
+							{__('Free Trial', 'surecart')}
+						</sc-tag>
+					</>
+				)}
+			</>
+		);
+	};
 	/** Header name */
 	const headerName = () => {
 		return (
@@ -39,7 +62,10 @@ export default ({
 					currency={price?.currency || scData.currency_code}
 					value={price?.amount}
 				/>
-				<span
+
+				{collapsedDetails()}
+
+				<div
 					css={css`
 						opacity: 0.75;
 						line-height: 1;
@@ -48,7 +74,7 @@ export default ({
 					{translateInterval(
 						price?.recurring_interval_count,
 						price?.recurring_interval,
-						' /',
+						' Every',
 						''
 					)}
 					{price?.recurring_period_count &&
@@ -59,16 +85,7 @@ export default ({
 							' for',
 							''
 						)}
-				</span>
-
-				{!!price?.ad_hoc && (
-					<>
-						{' '}
-						<sc-tag type="info" size="small">
-							{__('Pay what you want', 'surecart')}
-						</sc-tag>
-					</>
-				)}
+				</div>
 			</Fragment>
 		);
 	};

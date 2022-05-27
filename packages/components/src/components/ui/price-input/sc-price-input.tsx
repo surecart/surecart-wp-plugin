@@ -123,6 +123,10 @@ export class ScPriceInput {
     this.value = this.scInput.value ? (parseFloat(this.scInput.value) * 100).toFixed(2).toString() : '';
   }
 
+  handleInput() {
+    this.value = this.scInput.value ? (parseFloat(this.scInput.value) * 100).toFixed(2).toString() : '';
+  }
+
   componentDidLoad() {
     this.handleFocusChange();
     this.formController = new FormSubmitController(this.el).addFormData();
@@ -159,6 +163,7 @@ export class ScPriceInput {
           autofocus={this.autofocus}
           inputmode={'decimal'}
           onScChange={() => this.handleChange()}
+          onScInput={() => this.handleInput()}
           value={(parseFloat(this.value) / 100).toString()}
         >
           <span style={{ opacity: '0.5' }} slot="prefix">

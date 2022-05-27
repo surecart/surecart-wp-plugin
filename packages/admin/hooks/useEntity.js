@@ -17,33 +17,36 @@ export default (type, id, name = 'surecart') => {
 	const entityData = [name, type, id];
 
 	/** Get entity info. */
-	const { item, hasLoadedItem, savingItem, deleteingItem } = useSelect(
-		(select) => {
-			return {
-				item:
-					id &&
-					select(coreStore).getEditedEntityRecord(...entityData),
-				hasLoadedItem: select(coreStore).hasFinishedResolution(
-					'getEditedEntityRecord',
-					[...entityData]
-				),
-				savingItem: select(coreStore).isSavingEntityRecord(
-					...entityData
-				),
-				deletingItem: select(coreStore).isDeletingEntityRecord(
-					...entityData
-				),
-			};
-		},
-		[id]
-	);
+	const { item, itemError, hasLoadedItem, savingItem, deletingItem } =
+		useSelect(
+			(select) => {
+				return {
+					item:
+						id &&
+						select(coreStore).getEditedEntityRecord(...entityData),
+					hasLoadedItem: select(coreStore).hasFinishedResolution(
+						'getEditedEntityRecord',
+						[...entityData]
+					),
+					itemError: select(coreStore).getResolutionError(
+						...entityData
+					),
+					savingItem: select(coreStore).isSavingEntityRecord(
+						...entityData
+					),
+					deletingItem: select(coreStore).isDeletingEntityRecord(
+						...entityData
+					),
+				};
+			},
+			[id]
+		);
 
 	/** Edit the entity. */
 	const editEntity = (data) => editEntityRecord(name, type, id, data);
 
 	/** Delete the entity. */
 	const deleteEntity = (options = {}) => {
-		console.log({ options });
 		return deleteEntityRecord(name, type, id, {}, options);
 	};
 
@@ -58,6 +61,9 @@ export default (type, id, name = 'surecart') => {
 		item,
 		[type]: item,
 
+		itemError,
+		[`${ucName}Error`]: itemError,
+
 		// loaded.
 		hasLoadedItem,
 		[`hasLoaded${ucName}`]: hasLoadedItem,
@@ -67,8 +73,8 @@ export default (type, id, name = 'surecart') => {
 		[`saving${ucName}`]: savingItem,
 
 		// deleting.
-		deleteingItem,
-		[`deleting${ucName}`]: deleteingItem,
+		deletingItem,
+		[`deleting${ucName}`]: deletingItem,
 
 		// data.
 		entityData,

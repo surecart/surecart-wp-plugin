@@ -2,17 +2,22 @@
 import { css, Global, jsx } from '@emotion/core';
 
 import { __ } from '@wordpress/i18n';
-import { Modal, Button } from '@wordpress/components';
+import { Modal } from '@wordpress/components';
 import { useState, useEffect } from '@wordpress/element';
 import { useDispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 
-import { ScButton, ScForm, ScSelect } from '@surecart/components-react';
-import OneTime from './OneTime';
-import Subscription from './Subscription';
-import Multiple from './Multiple';
+import {
+	ScButton,
+	ScForm,
+	ScSelect,
+	ScSwitch,
+} from '@surecart/components-react';
+import OneTime from '../../../components/price/OneTime';
+import Multiple from '../../../components/price/Multiple';
+import Subscription from '../../../components/price/Subscription';
 
-export default ({ onRequestClose, productId }) => {
+export default ({ onRequestClose, product }) => {
 	const [error, setError] = useState(null);
 	const [additionalErrors, setAdditionalErrors] = useState([]);
 	const [loading, setLoading] = useState(false);
@@ -44,7 +49,7 @@ export default ({ onRequestClose, productId }) => {
 				'price',
 				{
 					...price,
-					product: productId,
+					product: product?.id,
 				},
 				{ throwOnError: true }
 			);
@@ -166,20 +171,49 @@ export default ({ onRequestClose, productId }) => {
 					css={css`
 						display: flex;
 						align-items: center;
+						justify-content: space-between;
 						gap: 0.5em;
 					`}
 				>
-					<ScButton
-						type="primary"
-						isBusy={loading}
-						disabled={loading}
-						submit
+					<div
+						css={css`
+							display: flex;
+							align-items: center;
+							gap: 0.5em;
+						`}
 					>
-						{__('Create Price', 'surecart')}
-					</ScButton>
-					<ScButton type="text" onClick={onClose}>
-						{__('Cancel', 'surecart')}
-					</ScButton>
+						<ScButton
+							type="primary"
+							isBusy={loading}
+							disabled={loading}
+							submit
+						>
+							{__('Create Price', 'surecart')}
+						</ScButton>
+						<ScButton type="text" onClick={onClose}>
+							{__('Cancel', 'surecart')}
+						</ScButton>
+					</div>
+
+					{product?.tax_enabled && scData?.tax_protocol?.tax_enabled && (
+						<ScSwitch
+							style={{
+								marginTop: '0.5em',
+								display: 'inline-block',
+							}}
+							checked={price?.tax_behavior === 'inclusive'}
+							onScChange={() =>
+								updatePrice({
+									tax_behavior:
+										price?.tax_behavior === 'inclusive'
+											? 'exclusive'
+											: 'inclusive',
+								})
+							}
+						>
+							{__('Tax is included', 'surecart')}
+						</ScSwitch>
+					)}
 				</div>
 			</ScForm>
 			{loading && <sc-block-ui spinner></sc-block-ui>}

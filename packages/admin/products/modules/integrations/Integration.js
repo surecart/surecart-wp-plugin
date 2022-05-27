@@ -39,7 +39,7 @@ export default ({ id }) => {
 		[integration_id]
 	);
 
-	const { integrationData } = useSelect(
+	const { integrationData, integrationDataResolved } = useSelect(
 		(select) => {
 			const queryArgs = [
 				'surecart',
@@ -51,10 +51,9 @@ export default ({ id }) => {
 				integrationData: select(coreStore).getEntityRecord(
 					...queryArgs
 				),
-				loadingIntegrationData: select(coreStore).isResolving(
-					'getEntityRecord',
-					queryArgs
-				),
+				integrationDataResolved: select(
+					coreStore
+				).hasFinishedResolution('getEntityRecord', queryArgs),
 			};
 		},
 		[integration_id]
@@ -76,7 +75,7 @@ export default ({ id }) => {
 		}
 	};
 
-	if (!loading && !deletingIntegration && !integrationData?.label) {
+	if (integration_id && integrationDataResolved && !integrationData?.label) {
 		return (
 			<sc-stacked-list-row
 				style={{ position: 'relative' }}

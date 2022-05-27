@@ -97,9 +97,9 @@ export default ({ onRequestClose, id }) => {
 						>
 							{__('Add Integration', 'surecart')}
 						</ScButton>
-						<Button onClick={onRequestClose}>
+						<ScButton type="text" onClick={onRequestClose}>
 							{__('Cancel', 'surecart')}
-						</Button>
+						</ScButton>
 					</div>
 					{loading && <sc-block-ui></sc-block-ui>}
 				</ScForm>

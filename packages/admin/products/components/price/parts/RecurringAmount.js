@@ -2,29 +2,48 @@
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 
-import {
-	ScPriceInput,
-	ScSelect,
-	ScFormControl,
-	ScInput,
-} from '@surecart/components-react';
+import { ScSelect, ScFormControl, ScInput } from '@surecart/components-react';
+import SingleAmount from './SingleAmount';
+import { translateInterval } from '../../../../util/translations';
 
-export default ({ price, updatePrice }) => {
+export default ({ price, updatePrice, locked }) => {
+	if (locked) {
+		return (
+			<SingleAmount
+				css={css`
+					flex: 1;
+				`}
+				price={price}
+				updatePrice={updatePrice}
+				suffix={
+					<span style={{ opacity: '0.5' }}>
+						{translateInterval(
+							price?.recurring_interval_count,
+							price?.recurring_interval,
+							'every',
+							''
+						)}
+						{price?.recurring_period_count &&
+							translateInterval(
+								price?.recurring_period_count,
+								price?.recurring_interval,
+								' for',
+								''
+							)}
+					</span>
+				}
+			/>
+		);
+	}
+
 	return (
 		<sc-flex style={{ flexWrap: 'wrap' }}>
-			<ScPriceInput
+			<SingleAmount
 				css={css`
 					flex: 1 1 50%;
 				`}
-				label={__('Price', 'surecart')}
-				className="sc-price-amount"
-				currencyCode={scData.currency_code}
-				value={price?.amount}
-				name="price"
-				onScChange={(e) => {
-					updatePrice({ amount: e.target.value });
-				}}
-				required
+				price={price}
+				updatePrice={updatePrice}
 			/>
 			<ScFormControl
 				css={css`

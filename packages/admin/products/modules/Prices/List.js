@@ -1,4 +1,4 @@
-import Price from '../../components/price';
+import Price from './Price';
 
 export default ({ prices, product, children }) => {
 	if (!prices || !prices.length) {

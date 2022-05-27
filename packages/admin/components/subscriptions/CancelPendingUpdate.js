@@ -8,6 +8,7 @@ import { useEffect } from 'react';
 import { store } from '../../store/data';
 import { translateInterval } from '../../util/translations';
 import { select, useSelect } from '@wordpress/data';
+import { ScButton } from '@surecart/components-react';
 
 export default ({
 	pending,
@@ -189,12 +190,15 @@ export default ({
 								gap: 0.5em;
 							`}
 						>
-							<Button isPrimary isBusy={loading} type="submit">
+							<ScButton type="primary" busy={loading} submit>
 								{__('Delete Update', 'surecart')}
-							</Button>
-							<Button onClick={() => setModal(false)}>
+							</ScButton>
+							<ScButton
+								type="text"
+								onClick={() => setModal(false)}
+							>
 								{__('Keep Update', 'surecart')}
-							</Button>
+							</ScButton>
 						</div>
 					</ScForm>
 				</Modal>

@@ -69,7 +69,6 @@ export default ({ id, setId }) => {
 							<ScButton type="primary" submit loading={isSaving}>
 								{__('Create', 'surecart')}
 							</ScButton>
-
 							<ScButton
 								href={'admin.php?page=sc-products'}
 								type="text"

@@ -7,7 +7,6 @@ export default ({ price, updatePrice, product }) => {
 
 	return (
 		<ScSwitch
-			style={{ marginTop: '0.5em', display: 'inline-block' }}
 			checked={price?.tax_behavior === 'inclusive'}
 			onScChange={() =>
 				updatePrice({

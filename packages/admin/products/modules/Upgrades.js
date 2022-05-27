@@ -10,7 +10,7 @@ import SelectProductGroup from '../../components/SelectProductGroup';
 import useEntities from '../../mixins/useEntities';
 import apiFetch from '@wordpress/api-fetch';
 
-import { ScForm, ScInput } from '@surecart/components-react';
+import { ScButton, ScForm, ScInput } from '@surecart/components-react';
 
 export default ({ loading, product, updateProduct }) => {
 	const [saving, setSaving] = useState(false);
@@ -120,12 +120,15 @@ export default ({ loading, product, updateProduct }) => {
 								gap: 0.5em;
 							`}
 						>
-							<Button isPrimary isBusy={saving} type="submit">
+							<ScButton type="primary" busy={saving} submit>
 								{__('Create', 'surecart')}
-							</Button>
-							<Button onClick={() => setModal(false)}>
+							</ScButton>
+							<ScButton
+								type="text"
+								onClick={() => setModal(false)}
+							>
 								{__('Cancel', 'surecart')}
-							</Button>
+							</ScButton>
 						</div>
 					</ScForm>
 				</Modal>

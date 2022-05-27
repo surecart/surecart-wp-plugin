@@ -10,7 +10,7 @@ import { store as coreStore } from '@wordpress/core-data';
 // components.
 import { ScButton } from '@surecart/components-react';
 import Box from '../../../ui/Box';
-import NewPrice from '../../components/NewPrice';
+import NewPrice from './NewPrice';
 import List from './List';
 import ShowArchivedToggle from './ShowArchivedToggle';
 
@@ -40,30 +40,37 @@ export default ({ product, productId, loading }) => {
 		[productId]
 	);
 
+	const footer = () => {
+		if (!archivedPrices?.length && !activePrices?.length) {
+			return null;
+		}
+
+		return (
+			<>
+				{!!activePrices?.length && (
+					<ScButton onClick={() => setNewPriceModal(true)}>
+						<sc-icon name="plus"></sc-icon>
+						{__('Add Another Price', 'surecart')}
+					</ScButton>
+				)}
+
+				{!!archivedPrices?.length && (
+					<ShowArchivedToggle
+						prices={archivedPrices}
+						show={showArchived}
+						setShow={setShowArchived}
+					/>
+				)}
+			</>
+		);
+	};
+
 	return (
 		<>
 			<Box
 				title={__('Pricing', 'surecart')}
 				loading={loading}
-				footer={
-					!loading && (
-						<Fragment>
-							{!!activePrices?.length && (
-								<ScButton
-									onClick={() => setNewPriceModal(true)}
-								>
-									<sc-icon name="plus"></sc-icon>
-									{__('Add Another Price', 'surecart')}
-								</ScButton>
-							)}
-							<ShowArchivedToggle
-								prices={archivedPrices}
-								show={showArchived}
-								setShow={setShowArchived}
-							/>
-						</Fragment>
-					)
-				}
+				footer={footer()}
 			>
 				<div
 					css={css`
@@ -120,7 +127,7 @@ export default ({ product, productId, loading }) => {
 			{!!newPriceModal && product?.id && (
 				<NewPrice
 					onRequestClose={() => setNewPriceModal(false)}
-					productId={product?.id}
+					product={product}
 				/>
 			)}
 		</>

@@ -15,8 +15,8 @@ import Prices from './modules/Prices';
 
 // components
 import Sidebar from './Sidebar';
-import ProductActionsDropdown from './components/ProductActionsDropdown';
-import SaveButton from './components/SaveButton';
+import ProductActionsDropdown from './components/product/ActionsDropdown';
+import SaveButton from './components/product/SaveButton';
 import Logo from '../templates/Logo';
 import Error from '../components/Error';
 
@@ -26,6 +26,8 @@ import useSnackbar from '../hooks/useSnackbar';
 
 export default ({ id }) => {
 	const [error, setError] = useState(null);
+	const { addSnackbarNotice } = useSnackbar();
+	const { saveEditedEntityRecord } = useDispatch(coreStore);
 	const {
 		product,
 		saveProduct,
@@ -34,12 +36,8 @@ export default ({ id }) => {
 		hasLoadedProduct,
 		deletingProduct,
 		savingProduct,
+		productError,
 	} = useEntity('product', id);
-
-	const { addSnackbarNotice } = useSnackbar();
-
-	// save edited entity records.
-	const { saveEditedEntityRecord } = useDispatch(coreStore);
 
 	/**
 	 * Handle the form submission
@@ -188,12 +186,16 @@ export default ({ id }) => {
 					loading={!hasLoadedProduct}
 					product={product}
 					updateProduct={editProduct}
-					saveProduct={saveProduct}
+					isSaving={savingProduct}
 				/>
 			}
 		>
 			<Fragment>
-				<Error error={error} setError={setError} margin="80px" />
+				<Error
+					error={productError || error}
+					setError={setError}
+					margin="80px"
+				/>
 
 				<Details
 					product={product}

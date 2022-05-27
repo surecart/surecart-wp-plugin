@@ -18,11 +18,9 @@ export default ({
 	loading,
 	product,
 	updateProduct,
-	saveProduct,
+	isSaving,
 	onToggleArchiveProduct,
 }) => {
-	const { isSaving, setSaving } = useCurrentPage('product');
-
 	return (
 		<Fragment>
 			<Box
@@ -52,6 +50,7 @@ export default ({
 							}}
 						/>
 					</Definition>
+
 					{!!product?.archived_at && (
 						<Definition
 							css={css`
@@ -65,6 +64,7 @@ export default ({
 							)}
 						</Definition>
 					)}
+
 					{!!product?.updated_at && (
 						<Definition title={__('Last Updated', 'surecart')}>
 							{format(
@@ -73,6 +73,7 @@ export default ({
 							)}
 						</Definition>
 					)}
+
 					{!!product?.created_at && (
 						<Definition title={__('Created On', 'surecart')}>
 							{format(
