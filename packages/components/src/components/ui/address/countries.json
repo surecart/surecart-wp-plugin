@@ -2,12 +2,12 @@
   "AU": [
     { "value": "ACT", "label": "Australian Capital Territory" },
     { "value": "NSW", "label": "New South Wales" },
-    { "value": "NT", "label": "orthern Territory" },
+    { "value": "NT", "label": "Northern Territory" },
     { "value": "QLD", "label": "Queensland" },
-    { "value": "SA", "label": "outh Australia" },
+    { "value": "SA", "label": "South Australia" },
     { "value": "TAS", "label": "Tasmania" },
     { "value": "VIC", "label": "Victoria" },
-    { "value": "WA", "label": "estern Australia" }
+    { "value": "WA", "label": "Western Australia" }
   ],
   "BR": [
     { "value": "AC", "label": "Acre" },
