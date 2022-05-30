@@ -49,7 +49,7 @@ export default ({ product, productId, loading }) => {
 			<>
 				{!!activePrices?.length && (
 					<ScButton onClick={() => setNewPriceModal(true)}>
-						<sc-icon name="plus"></sc-icon>
+						<sc-icon name="plus" slot="prefix"></sc-icon>
 						{__('Add Another Price', 'surecart')}
 					</ScButton>
 				)}
