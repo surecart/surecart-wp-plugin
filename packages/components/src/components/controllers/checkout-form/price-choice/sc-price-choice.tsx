@@ -197,9 +197,6 @@ export class ScPriceChoice {
   }
 
   renderPrice() {
-    if (this.price?.ad_hoc) {
-      return <span slot="per">{__('Name your price', 'surecart')}</span>;
-    }
     return (
       <Fragment>
         <span slot="price">
@@ -244,14 +241,14 @@ export class ScPriceChoice {
           {this.description && <span slot="description">{this.description}</span>}
           {this.renderPrice()}
         </sc-choice>
-        {this.showAdHoc() &&
+        {/* {this.showAdHoc() &&
           (this.adHocErrorMessage ? (
             <sc-tooltip text={this.adHocErrorMessage} type="danger" padding={10} freeze open onClick={() => (this.adHocErrorMessage = '')}>
               {this.renderAdHoc()}
             </sc-tooltip>
           ) : (
             this.renderAdHoc()
-          ))}
+          ))} */}
       </Fragment>
     );
   }
