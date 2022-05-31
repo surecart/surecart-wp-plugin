@@ -18,6 +18,7 @@ import Charges from './modules/Charges';
 import Subscriptions from './modules/Subscriptions';
 import useCurrentPage from '../mixins/useCurrentPage';
 import { useEffect } from 'react';
+import Logo from '../templates/Logo';
 
 export default () => {
 	const onSubmit = async (e) => {
@@ -65,9 +66,21 @@ export default () => {
 			backUrl={'admin.php?page=sc-invoices'}
 			backText={__('Back to All Invoices', 'surecart')}
 			title={
-				id
-					? __('Edit Invoice', 'surecart')
-					: __('Create Invoice', 'surecart')
+				<sc-breadcrumbs>
+					<sc-breadcrumb>
+						<Logo display="block" />
+					</sc-breadcrumb>
+					<sc-breadcrumb href="admin.php?page=sc-invoices">
+						{__('Invoices', 'surecart')}
+					</sc-breadcrumb>
+					<sc-breadcrumb>
+						<sc-flex style={{ gap: '1em' }}>
+							{id
+								? __('Edit Invoice', 'surecart')
+								: __('Create Invoice', 'surecart')}
+						</sc-flex>
+					</sc-breadcrumb>
+				</sc-breadcrumbs>
 			}
 			sidebar={<Sidebar customer={customer} loading={isLoading} />}
 		>
