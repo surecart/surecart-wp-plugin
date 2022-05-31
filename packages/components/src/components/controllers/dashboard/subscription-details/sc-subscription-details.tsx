@@ -1,8 +1,9 @@
 import { Component, h, Prop, State, Watch } from '@stencil/core';
-import { sprintf, __ } from '@wordpress/i18n';
-import { translatedInterval } from '../../../../functions/price';
+import { __, sprintf } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
+
 import apiFetch from '../../../../functions/fetch';
+import { intervalString } from '../../../../functions/price';
 import { Invoice, Price, Product, Subscription } from '../../../../types';
 
 @Component({
@@ -107,8 +108,8 @@ export class ScSubscriptionDetails {
             type="currency"
             currency={(this.subscription?.latest_invoice as Invoice)?.currency}
             value={(this.subscription?.latest_invoice as Invoice)?.total_amount}
-          ></sc-format-number>
-          {translatedInterval(this.subscription?.price?.recurring_interval_count || 0, this.subscription?.price?.recurring_interval, '/', '')}
+          ></sc-format-number>{' '}
+          {intervalString(this.subscription?.price)}
         </div>
         {!this.hideRenewalText && <div>{this.renderRenewalText()}</div>}
       </div>

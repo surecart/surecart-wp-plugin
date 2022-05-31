@@ -1,10 +1,11 @@
 import { Component, Element, h, Prop, State, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
+
 import apiFetch from '../../../../functions/fetch';
-import { Product, Subscription, ProductGroup, Price } from '../../../../types';
 import { onFirstVisible } from '../../../../functions/lazy';
-import { translatedInterval } from '../../../../functions/price';
+import { intervalString } from '../../../../functions/price';
+import { Price, Product, ProductGroup, Subscription } from '../../../../types';
 
 @Component({
   tag: 'sc-subscription-switch',
@@ -179,8 +180,7 @@ export class ScSubscriptionSwitch {
                   <strong>{product?.name}</strong>
                 </div>
                 <div slot="description">
-                  <sc-format-number type="currency" currency={price?.currency || 'usd'} value={price.amount}></sc-format-number>{' '}
-                  {translatedInterval(price?.recurring_interval_count, price?.recurring_interval, ' /')}
+                  <sc-format-number type="currency" currency={price?.currency || 'usd'} value={price.amount}></sc-format-number> {intervalString(price)}
                 </div>
                 {currentPlan && (
                   <sc-tag type="warning" slot="price">

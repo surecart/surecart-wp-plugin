@@ -48,6 +48,7 @@ export interface Price {
   ad_hoc: boolean;
   ad_hoc_max_amount: number;
   ad_hoc_min_amount: number;
+  recurring_period_count: number;
   archived: boolean;
   product_id?: string;
   archived_at?: string;

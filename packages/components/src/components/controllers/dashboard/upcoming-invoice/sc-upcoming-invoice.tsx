@@ -2,7 +2,7 @@ import { Component, Element, Fragment, h, Prop, State } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import apiFetch from '../../../../functions/fetch';
 import { Invoice, PaymentMethod, Price, Product, Subscription } from '../../../../types';
-import { translatedInterval } from '../../../../functions/price';
+import { intervalString } from '../../../../functions/price';
 import { onFirstVisible } from '../../../../functions/lazy';
 import { addQueryArgs } from '@wordpress/url';
 import { capitalize } from '../../../../functions/util';
@@ -189,8 +189,7 @@ export class ScUpcomingInvoice {
       <div class="new-plan">
         <div class="new-plan__heading">{this.renderName(this.price)}</div>
         <div>
-          <sc-format-number type="currency" currency={(this?.price as Price)?.currency} value={(this?.price as Price)?.amount}></sc-format-number>
-          {translatedInterval(this?.price?.recurring_interval_count || 0, this?.price?.recurring_interval, ' /', '')}
+          <sc-format-number type="currency" currency={(this?.price as Price)?.currency} value={(this?.price as Price)?.amount}></sc-format-number> {intervalString(this.price)}
         </div>
         <div style={{ fontSize: 'var(--sc-font-size-small)' }}>{this.renderRenewalText()}</div>
       </div>
@@ -222,7 +221,7 @@ export class ScUpcomingInvoice {
           quantity={1}
           amount={this.price.amount}
           currency={this.invoice?.currency}
-          interval={translatedInterval(this.price.recurring_interval_count, this.price.recurring_interval)}
+          interval={intervalString(this.price)}
           onScUpdateQuantity={e => this.updateQuantity(e)}
         ></sc-product-line-item>
 
