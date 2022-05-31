@@ -82,6 +82,7 @@ export default ({ price, updatePrice, locked }) => {
 					<ScSelect
 						value={price?.recurring_interval}
 						disabled={price?.id}
+						unselect={false}
 						css={css`
 							min-width: 95px;
 							flex: 1;
