@@ -10,6 +10,49 @@ use SureCart\Integrations\IntegrationService;
  * Controls the LearnDash integration.
  */
 class TutorLMSService extends IntegrationService implements IntegrationInterface, PurchaseSyncInterface {
+
+	public function bootstrap() {
+		parent::bootstrap();
+		add_filter( 'tutor_monetization_options', [ $this, 'addMonitizationOption' ] );
+		add_filter( 'get_tutor_course_price', array( $this, 'showTutorPrice' ), 10, 2 );
+	}
+
+	/**
+	 * Add SureCart to monitization options.
+	 *
+	 * @param array $arr array of monitization options.
+	 *
+	 * @return array
+	 */
+	public function addMonitizationOption( $arr ) {
+		$arr['surecart'] = __( 'SureCart', 'surecart' );
+		return $arr;
+	}
+
+	public function showTutorPrice( $price, $course_id ) {
+		$product_id = tutor_utils()->get_course_product_id( $course_id );
+
+		return 'surecart price';
+	}
+
+	/**
+	 * TODO: Need to save tutorLMS product id when surecart product is created.
+	 */
+	public function saveCourseMeta( $post_ID ) {
+		$product_id = tutor_utils()->avalue_dot( '_tutor_course_product_id', tutor_sanitize_data( $_POST ) );
+
+		if ( $product_id !== '-1' ) {
+			$product_id = (int) $product_id;
+			if ( $product_id ) {
+				update_post_meta( $post_ID, '_tutor_course_product_id', $product_id );
+				update_post_meta( $product_id, '_tutor_product', 'yes' );
+			}
+		} else {
+			delete_post_meta( $post_ID, '_tutor_course_product_id' );
+		}
+	}
+
+
 	/**
 	 * Get the slug for the integration.
 	 *
