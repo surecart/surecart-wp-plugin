@@ -1,19 +1,17 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
 
-import Header from './Header';
-
+import Error from '../../../../components/Error';
 // hocs
 import useEntity from '../../../../hooks/useEntity';
-
+import Multiple from '../../../components/price/Multiple';
+import OneTime from '../../../components/price/OneTime';
 // components
 import Tax from '../../../components/price/parts/Tax';
 import Subscription from '../../../components/price/Subscription';
-import Multiple from '../../../components/price/Multiple';
-import OneTime from '../../../components/price/OneTime';
-import Error from '../../../../components/Error';
+import Header from './Header';
 
 export default ({ id, prices, product }) => {
 	// are the price details open?
@@ -33,6 +31,19 @@ export default ({ id, prices, product }) => {
 
 	// toggle the archive.
 	const toggleArchive = async () => {
+		const r = confirm(
+			price?.archived
+				? __(
+						'Un-Archive this price? This will make the product purchaseable again.',
+						'surecart'
+				  )
+				: __(
+						'Archive this price? This product will not be purchaseable and all unsaved changes will be lost.',
+						'surecart'
+				  )
+		);
+		if (!r) return;
+
 		try {
 			await savePrice(
 				{ archived: !price?.archived },
