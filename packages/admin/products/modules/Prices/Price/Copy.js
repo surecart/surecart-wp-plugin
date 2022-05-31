@@ -12,6 +12,7 @@ export default ({ url, className }) => {
 				setContent('');
 			}, 2000);
 		} catch (err) {
+			console.error(err);
 			alert(__('Error copying to clipboard', 'surecart'));
 		}
 	};
