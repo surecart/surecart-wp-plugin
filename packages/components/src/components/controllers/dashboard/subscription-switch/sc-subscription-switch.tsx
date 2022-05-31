@@ -28,14 +28,17 @@ export class ScSubscriptionSwitch {
   @State() prices: Array<Price>;
 
   /** Filter state */
-  @State() filter: 'month' | 'week' | 'year' | 'never' = 'month';
+  @State() filter: 'month' | 'week' | 'year' | 'never' | 'split' = 'month';
 
   @State() hasFilters: {
+    split: boolean;
     month: boolean;
     week: boolean;
     year: boolean;
     never: boolean;
   };
+
+  @State() showFilters: boolean;
 
   /** Loading state */
   @State() loading: boolean;
@@ -71,15 +74,18 @@ export class ScSubscriptionSwitch {
       .map(product => (product as Product)?.prices?.data)
       .flat()
       .filter((v, i, a) => a.findIndex(t => t.id === v.id) === i); // remove duplicates.
+
+    this.showFilters = this.prices?.length > 4;
   }
 
   @Watch('prices')
   handlePricesChange() {
     this.hasFilters = {
       ...this.hasFilters,
-      month: this.prices.some(price => price.recurring_interval === 'month'),
+      split: this.prices.some(price => price.recurring_interval === 'month' && price?.recurring_period_count),
+      month: this.prices.some(price => price.recurring_interval === 'month' && !price?.recurring_period_count),
       year: this.prices.some(price => price.recurring_interval === 'year'),
-      never: this.prices.some(price => price.recurring_interval === 'never'),
+      never: this.prices.some(price => price.recurring_interval === 'never' || !price.recurring_interval),
     };
   }
 
@@ -114,6 +120,8 @@ export class ScSubscriptionSwitch {
 
   async handleSubmit(e) {
     const { plan } = await e.target.getFormJson();
+    const currentPlan = this.subscription?.price as Price;
+    if (plan === currentPlan.id) return;
     this.busy = true;
     window.location.assign(
       addQueryArgs(window.location.href, {
@@ -126,6 +134,7 @@ export class ScSubscriptionSwitch {
   renderSwitcher() {
     const hasMultipleFilters = Object.values(this.hasFilters || {}).filter(v => !!v).length > 1;
     if (!hasMultipleFilters) return;
+    if (!this.showFilters) return;
 
     return (
       <sc-flex slot="end" class="subscriptions-switch__switcher">
@@ -149,6 +158,11 @@ export class ScSubscriptionSwitch {
             {__('Lifetime', 'surecart')}
           </sc-button>
         )}
+        {this.hasFilters.split && (
+          <sc-button onClick={() => (this.filter = 'split')} size="small" type={this.filter === 'split' ? 'default' : 'text'}>
+            {__('Installments', 'surecart')}
+          </sc-button>
+        )}
       </sc-flex>
     );
   }
@@ -163,6 +177,22 @@ export class ScSubscriptionSwitch {
     );
   }
 
+  isHidden(price: Price) {
+    if (!this.showFilters) return false;
+
+    let hidden = this.filter !== price.recurring_interval;
+
+    if (this.filter === 'never' && !price?.recurring_interval) {
+      hidden = false;
+    }
+
+    if (this.filter === 'split' && price?.recurring_period_count) {
+      hidden = false;
+    }
+
+    return hidden;
+  }
+
   renderContent() {
     if (this.loading) {
       return this.renderLoading();
@@ -174,8 +204,9 @@ export class ScSubscriptionSwitch {
           {(this.prices || []).map(price => {
             const currentPlan = (this.subscription?.price as Price)?.id === price?.id;
             const product = this.products.find(product => product.id === price?.product);
+
             return (
-              <sc-choice key={price?.id} checked={currentPlan} name="plan" value={price?.id} hidden={this.filter !== price.recurring_interval}>
+              <sc-choice key={price?.id} checked={currentPlan} name="plan" value={price?.id} hidden={this.isHidden(price)}>
                 <div>
                   <strong>{product?.name}</strong>
                 </div>
