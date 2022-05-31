@@ -199,6 +199,15 @@ export class ScSubscriptionSwitch {
     // we are not loading and we don't have enough prices to switch.
     if (!this.loading && this.prices?.length < 2) return null;
 
+    // subscription is a payment plan.
+    if (this.subscription?.remaining_period_count) {
+      return (
+        <sc-alert type="info" open>
+          {__('To make changes to your payment plan, please contact us.', 'surecart')}
+        </sc-alert>
+      );
+    }
+
     return (
       <sc-dashboard-module heading={this.heading || __('Update Plan', 'surecart')} class="subscription-switch" error={this.error}>
         <span slot="end">{this.renderSwitcher()}</span>
