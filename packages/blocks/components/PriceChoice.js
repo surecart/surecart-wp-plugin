@@ -62,8 +62,6 @@ export default ({
 		);
 	};
 
-	console.log({ onNew });
-
 	return (
 		<sc-table-row>
 			<sc-table-cell
