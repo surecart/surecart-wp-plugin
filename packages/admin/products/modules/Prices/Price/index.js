@@ -15,7 +15,7 @@ import Header from './Header';
 
 export default ({ id, prices, product }) => {
 	// are the price details open?
-	const [isOpen, setIsOpen] = useState(true);
+	const [isOpen, setIsOpen] = useState(false);
 	const [error, setError] = useState(null);
 
 	// use the price entity.
