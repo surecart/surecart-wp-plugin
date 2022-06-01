@@ -2193,7 +2193,7 @@ export namespace Components {
          */
         "status": SubscriptionStatus;
         /**
-          * The tag's statux type.
+          * The tag's status type.
          */
         "subscription": Subscription;
     }
@@ -5766,7 +5766,7 @@ declare namespace LocalJSX {
          */
         "status"?: SubscriptionStatus;
         /**
-          * The tag's statux type.
+          * The tag's status type.
          */
         "subscription"?: Subscription;
     }

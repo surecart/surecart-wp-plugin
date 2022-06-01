@@ -364,7 +364,7 @@ export interface SubscriptionProtocol {
   updated_at: number;
 }
 
-export type SubscriptionStatus = 'incomplete' | 'trialing' | 'active' | 'past_due' | 'canceled' | 'unpaid';
+export type SubscriptionStatus = 'incomplete' | 'trialing' | 'active' | 'past_due' | 'canceled' | 'unpaid' | 'completed';
 
 export type OrderStatus = 'draft' | 'finalized' | 'paid' | 'completed';
 

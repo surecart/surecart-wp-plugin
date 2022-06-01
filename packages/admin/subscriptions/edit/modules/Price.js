@@ -1,10 +1,10 @@
 /** @jsx jsx */
 import { __ } from '@wordpress/i18n';
 import DataTable from '../../../components/DataTable';
-import { translateInterval } from '@scripts/admin/util/translations';
 import { css, jsx } from '@emotion/core';
 import { ScInput } from '@surecart/components-react';
 import PriceSelector from '@admin/components/PriceSelector';
+import { intervalString } from '../../../util/translations';
 
 export default ({
 	subscription,
@@ -56,12 +56,9 @@ export default ({
 										value={price?.amount}
 										currency={price?.currency}
 									/>
-									{translateInterval(
-										price?.recurring_interval_count,
-										price?.recurring_interval,
-										' /',
-										''
-									)}
+									{intervalString(price, {
+										labels: { interval: '/' },
+									})}
 								</div>
 							</div>
 							<sc-button
@@ -111,12 +108,9 @@ export default ({
 								value={price?.amount * subscription?.quantity}
 								currency={price?.currency}
 							/>
-							{translateInterval(
-								price?.recurring_interval_count,
-								price?.recurring_interval,
-								' /',
-								''
-							)}
+							{intervalString(price, {
+								labels: { interval: '/' },
+							})}
 						</div>
 					),
 				},

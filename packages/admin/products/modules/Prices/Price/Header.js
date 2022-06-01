@@ -14,7 +14,7 @@ import { Icon, box, trash, moreHorizontalMobile } from '@wordpress/icons';
 import { addQueryArgs } from '@wordpress/url';
 
 import ToggleHeader from '../../../../components/ToggleHeader';
-import { translateInterval } from '../../../../util/translations';
+import { intervalString } from '../../../../util/translations';
 import Copy from './Copy';
 
 export default ({
@@ -71,21 +71,9 @@ export default ({
 						line-height: 1;
 					`}
 				>
-					{translateInterval(
-						price?.recurring_interval_count,
-						price?.recurring_interval,
-						' Every',
-						''
-					)}
-					{!!price?.recurring_period_count &&
-						!!price?.recurring_interval &&
-						translateInterval(
-							price?.recurring_period_count || 0,
-							price?.recurring_interval,
-							' for',
-							'',
-							true
-						)}
+					{intervalString(price, {
+						labels: { interval: __('Every', 'surecart') },
+					})}
 				</div>
 			</Fragment>
 		);

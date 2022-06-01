@@ -1,10 +1,12 @@
+import { ScDivider, ScMenuItem, ScSelect } from '@surecart/components-react';
+import { useRef } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-import { useEffect, useRef } from '@wordpress/element';
-import { ScSelect, ScDivider, ScMenuItem } from '@surecart/components-react';
 import throttle from 'lodash/throttle';
-import { translateInterval } from '../../admin/util/translations';
-import { formatNumber } from '../../admin/util';
+
 import { styles } from '../../admin/styles/admin';
+import { formatNumber } from '../../admin/util';
+import { intervalString } from '../../admin/util/translations';
+
 export default ({
 	open,
 	required,
@@ -79,12 +81,9 @@ export default ({
 							label: price?.ad_hoc
 								? __('Name Your Price', 'surecart')
 								: formatNumber(price.amount, price.currency),
-							suffix: translateInterval(
-								price?.recurring_interval_count,
-								price?.recurring_interval,
-								'every',
-								'once'
-							),
+							suffix: intervalString(price, {
+								showOnce: true,
+							}),
 						};
 					}),
 			};

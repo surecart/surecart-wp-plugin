@@ -2,8 +2,8 @@
 import { __ } from '@wordpress/i18n';
 import DataTable from '../../../components/DataTable';
 import { addQueryArgs } from '@wordpress/url';
-import { translateInterval } from '@scripts/admin/util/translations';
 import { css, jsx } from '@emotion/core';
+import { intervalString } from '../../../util/translations';
 
 export default ({ product, price, subscription, loading }) => {
 	return (
@@ -45,12 +45,9 @@ export default ({ product, price, subscription, loading }) => {
 									value={price?.amount}
 									currency={price?.currency}
 								/>
-								{translateInterval(
-									price?.recurring_interval_count,
-									price?.recurring_interval,
-									' /',
-									''
-								)}
+								{intervalString(price, {
+									labels: { interval: '/' },
+								})}
 							</div>
 						</div>
 					),
@@ -67,12 +64,9 @@ export default ({ product, price, subscription, loading }) => {
 								value={price?.amount * subscription?.quantity}
 								currency={price?.currency}
 							/>
-							{translateInterval(
-								price?.recurring_interval_count,
-								price?.recurring_interval,
-								' /',
-								''
-							)}
+							{intervalString(price, {
+								labels: { interval: '/' },
+							})}
 						</div>
 					),
 					actions: !Object.keys(subscription?.pending_update || {})

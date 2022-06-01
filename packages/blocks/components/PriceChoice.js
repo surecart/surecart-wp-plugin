@@ -1,17 +1,17 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { __ } from '@wordpress/i18n';
-
 import {
-	ScInput,
 	ScButton,
 	ScDropdown,
+	ScInput,
 	ScMenu,
 	ScMenuItem,
 } from '@surecart/components-react';
-import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
-import { translateInterval } from '@scripts/admin/util/translations';
+import { useSelect } from '@wordpress/data';
+import { __ } from '@wordpress/i18n';
+import { intervalString } from '../../admin/util/translations';
+
 import PriceSelector from './PriceSelector';
 
 export default ({
@@ -95,12 +95,10 @@ export default ({
 					`}
 				>
 					{price &&
-						translateInterval(
-							price?.recurring_interval_count,
-							price?.recurring_interval,
-							' /',
-							'once'
-						)}
+						intervalString(price, {
+							showOnce: true,
+							labels: { interval: '/' },
+						})}
 				</span>
 			</sc-table-cell>
 			<sc-table-cell>

@@ -3,7 +3,7 @@ import { __ } from '@wordpress/i18n';
 import { css, jsx } from '@emotion/core';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { store } from '../../store/data';
-import { translateInterval } from '../../util/translations';
+import { intervalString } from '../../util/translations';
 import { ScButton } from '@surecart/components-react';
 
 export default ({ product }) => {
@@ -42,12 +42,9 @@ export default ({ product }) => {
 									value={price?.amount}
 									currency={price?.currency}
 								/>
-								{translateInterval(
-									price?.recurring_interval_count,
-									price?.recurring_interval,
-									' /',
-									''
-								)}
+								{intervalString(price, {
+									labels: { interval: '/' },
+								})}
 							</div>
 						);
 					})}

@@ -1,13 +1,13 @@
 /** @jsx jsx */
 import { __ } from '@wordpress/i18n';
-import { Modal, Button } from '@wordpress/components';
+import { Modal } from '@wordpress/components';
 import { ScForm } from '@surecart/components-react';
 import { css, jsx } from '@emotion/core';
 import { useState, Fragment } from '@wordpress/element';
 import { useEffect } from 'react';
 import { store } from '../../store/data';
-import { translateInterval } from '../../util/translations';
-import { select, useSelect } from '@wordpress/data';
+import { intervalString } from '../../util/translations';
+import { useSelect } from '@wordpress/data';
 import { ScButton } from '@surecart/components-react';
 
 export default ({
@@ -101,12 +101,9 @@ export default ({
 							}
 							currency={currentPrice?.currency}
 						/>
-						{translateInterval(
-							currentPrice?.recurring_interval_count,
-							currentPrice?.recurring_interval,
-							' /',
-							''
-						)}
+						{intervalString(currentPrice, {
+							labels: { interval: '/' },
+						})}
 					</div>
 				</div>
 				<div
@@ -128,12 +125,9 @@ export default ({
 							}
 							currency={pendingPrice?.currency}
 						/>
-						{translateInterval(
-							pendingPrice?.recurring_interval_count,
-							pendingPrice?.recurring_interval,
-							' /',
-							''
-						)}
+						{intervalString(pendingPrice, {
+							labels: { interval: '/' },
+						})}
 					</div>
 				</div>
 			</div>

@@ -40,3 +40,48 @@ export const translateInterval = (
 			return fallback;
 	}
 };
+
+export const intervalString = (price, options = {}) => {
+	if (!price) {
+		return '';
+	}
+	const { showOnce, labels } = options;
+	const {
+		interval = __('every', 'surecart'),
+		period = __('for', 'surecart'),
+	} = labels || {};
+	return `${intervalCountString(
+		price,
+		interval,
+		!!showOnce ? __('once', 'surecart') : ''
+	)} ${periodCountString(price, period)}`;
+};
+
+export const intervalCountString = (
+	price,
+	prefix,
+	fallback = __('once', 'surecart')
+) => {
+	if (!price.recurring_interval_count || !price.recurring_interval) {
+		return '';
+	}
+	return translateInterval(
+		price.recurring_interval_count,
+		price.recurring_interval,
+		` ${prefix}`,
+		fallback
+	);
+};
+
+export const periodCountString = (price, prefix, fallback = '') => {
+	if (!price?.recurring_period_count || !price?.recurring_interval) {
+		return '';
+	}
+	return translateInterval(
+		price?.recurring_period_count || 0,
+		price?.recurring_interval,
+		` ${prefix}`,
+		fallback,
+		true
+	);
+};

@@ -4,7 +4,7 @@ import { __ } from '@wordpress/i18n';
 
 import { ScSelect, ScFormControl, ScInput } from '@surecart/components-react';
 import SingleAmount from './SingleAmount';
-import { translateInterval } from '../../../../util/translations';
+import { intervalString } from '../../../../util/translations';
 
 export default ({ price, updatePrice, locked }) => {
 	if (locked) {
@@ -17,21 +17,7 @@ export default ({ price, updatePrice, locked }) => {
 				updatePrice={updatePrice}
 				suffix={
 					<span style={{ opacity: '0.5' }}>
-						{translateInterval(
-							price?.recurring_interval_count,
-							price?.recurring_interval,
-							'every',
-							''
-						)}
-						{!!price?.recurring_period_count &&
-							!!price?.recurring_interval &&
-							translateInterval(
-								price?.recurring_period_count,
-								price?.recurring_interval,
-								' for',
-								'',
-								true
-							)}
+						{intervalString(price)}
 					</span>
 				}
 			/>

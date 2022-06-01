@@ -2,9 +2,9 @@ import { __ } from '@wordpress/i18n';
 import { useRef } from '@wordpress/element';
 import { ScSelect, ScDivider, ScMenuItem } from '@surecart/components-react';
 import throttle from 'lodash/throttle';
-import { translateInterval } from '../../admin/util/translations';
 import { formatNumber } from '../../admin/util';
 import { styles } from '../../admin/styles/admin';
+import { intervalString } from '../util/translations';
 
 export default ({
 	open,
@@ -50,12 +50,7 @@ export default ({
 						label: `${formatNumber(price.amount, price.currency)}${
 							price?.archived ? ' (Archived)' : ''
 						}`,
-						suffix: translateInterval(
-							price?.recurring_interval_count,
-							price?.recurring_interval,
-							'every',
-							'once'
-						),
+						suffix: intervalString(price, { showOnce: true }),
 					};
 				}),
 		};
