@@ -68,7 +68,7 @@ export const intervalString = (price: Price, options: IntervalOptions = {}) => {
     return '';
   }
   const { showOnce, labels } = options;
-  const { interval = __('Every', 'surecart'), period = __('for', 'surecart') } = labels || {};
+  const { interval = __('every', 'surecart'), period = __('for', 'surecart') } = labels || {};
   return `${intervalCountString(price, interval, !!showOnce ? __('once', 'surecart') : '')} ${periodCountString(price, period)}`;
 };
 

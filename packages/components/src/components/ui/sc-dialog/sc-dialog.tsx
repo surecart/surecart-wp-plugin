@@ -171,7 +171,7 @@ export class ScDialog {
         }}
         onKeyDown={e => this.handleKeyDown(e)}
       >
-        <div part="overlay" class="dialog__overlay" onClick={() => this.requestClose('overlay')} tabindex="-1"></div>
+        <div part="overlay" class="dialog__overlay" onClick={() => this.requestClose('overlay')} ref={el => (this.overlay = el as HTMLElement)} tabindex="-1"></div>
         <div
           part="panel"
           class="dialog__panel"
@@ -180,6 +180,7 @@ export class ScDialog {
           aria-hidden={this.open ? 'false' : 'true'}
           aria-label={this.noHeader || this.label}
           aria-labelledby={!this.noHeader || 'title'}
+          ref={el => (this.panel = el as HTMLElement)}
           tabindex="0"
         >
           {!this.noHeader && (
@@ -187,14 +188,16 @@ export class ScDialog {
               <h2 part="title" class="dialog__title" id="title">
                 <slot name="label"> {this.label.length > 0 ? this.label : String.fromCharCode(65279)} </slot>
               </h2>
-              <sc-icon
-                part="close-button"
-                exportparts="base:close-button__base"
-                class="dialog__close"
-                name="x"
-                label={__('Close', 'surecart')}
-                onClick={() => this.requestClose('close-button')}
-              ></sc-icon>
+              <sc-button type="text" circle>
+                <sc-icon
+                  part="close-button"
+                  exportparts="base:close-button__base"
+                  class="dialog__close"
+                  name="x"
+                  label={__('Close', 'surecart')}
+                  onClick={() => this.requestClose('close-button')}
+                ></sc-icon>
+              </sc-button>
             </header>
           )}
           <div part="body" class="dialog__body">
@@ -214,7 +217,7 @@ setDefaultAnimation('dialog.show', {
     { opacity: 0, transform: 'scale(0.8)' },
     { opacity: 1, transform: 'scale(1)' },
   ],
-  options: { duration: 250, easing: 'ease' },
+  options: { duration: 150, easing: 'ease' },
 });
 
 setDefaultAnimation('dialog.hide', {
@@ -222,20 +225,20 @@ setDefaultAnimation('dialog.hide', {
     { opacity: 1, transform: 'scale(1)' },
     { opacity: 0, transform: 'scale(0.8)' },
   ],
-  options: { duration: 250, easing: 'ease' },
+  options: { duration: 150, easing: 'ease' },
 });
 
 setDefaultAnimation('dialog.denyClose', {
   keyframes: [{ transform: 'scale(1)' }, { transform: 'scale(1.02)' }, { transform: 'scale(1)' }],
-  options: { duration: 250 },
+  options: { duration: 150 },
 });
 
 setDefaultAnimation('dialog.overlay.show', {
   keyframes: [{ opacity: 0 }, { opacity: 1 }],
-  options: { duration: 250 },
+  options: { duration: 150 },
 });
 
 setDefaultAnimation('dialog.overlay.hide', {
   keyframes: [{ opacity: 1 }, { opacity: 0 }],
-  options: { duration: 250 },
+  options: { duration: 150 },
 });

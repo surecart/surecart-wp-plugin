@@ -347,8 +347,10 @@ export interface Subscription extends Object {
   current_period_start_at: number | false;
   remaining_period_count: number | null;
   ended_at: number;
+  end_behavior: 'cancel' | 'complete';
   payment_method: PaymentMethod | string;
   price: Price;
+  ad_hoc_amount: number;
   created_at: number;
   updated_at: number;
 }

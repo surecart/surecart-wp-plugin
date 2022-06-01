@@ -20,7 +20,7 @@ export class ScForm {
    * this event, since it doen't send a GET or POST request like native forms. To "prevent" submission, use a conditional
    * around the XHR request you use to submit the form's data with.
    */
-  @Event() scSubmit: EventEmitter<void>;
+  @Event({ bubbles: true }) scSubmit: EventEmitter<void>;
 
   /**
    * Backwards compat.

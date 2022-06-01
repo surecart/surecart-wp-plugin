@@ -2,6 +2,7 @@
 namespace SureCartBlocks\Controllers;
 
 use SureCart\Models\Component;
+use SureCart\Models\Price;
 use SureCart\Models\Subscription;
 use SureCart\Models\SubscriptionProtocol;
 use SureCart\Models\User;
@@ -159,6 +160,71 @@ class SubscriptionController extends BaseController {
 	}
 
 	/**
+	 * Confirm the ad_hoc amount.
+	 *
+	 * @return void
+	 */
+	public function confirm_amount() {
+		$subscription = Subscription::with(
+			[
+				'price',
+				'price.product',
+				'latest_invoice',
+				'product',
+			]
+		)->find( $this->getId() );
+		$price        = Price::find( $this->getParam( 'price_id' ) );
+		ob_start();
+		?>
+
+		<sc-spacing style="--spacing: var(--sc-spacing-xx-large)">
+			<sc-breadcrumbs>
+				<sc-breadcrumb href="<?php echo esc_url( add_query_arg( [ 'tab' => $this->getTab() ], \SureCart::pages()->url( 'dashboard' ) ) ); ?>">
+					<?php esc_html_e( 'Dashboard', 'surecart' ); ?>
+				</sc-breadcrumb>
+				<sc-breadcrumb href="
+				<?php
+				echo esc_url(
+					add_query_arg(
+						[
+							'tab'    => $this->getTab(),
+							'action' => 'edit',
+							'model'  => 'subscription',
+							'id'     => $this->getId(),
+						],
+						\SureCart::pages()->url( 'dashboard' )
+					)
+				);
+				?>
+				">
+					<?php esc_html_e( 'Subscription', 'surecart' ); ?>
+				</sc-breadcrumb>
+				<sc-breadcrumb>
+					<?php esc_html_e( 'Enter Amount', 'surecart' ); ?>
+				</sc-breadcrumb>
+			</sc-breadcrumbs>
+
+			<?php
+
+			echo wp_kses_post(
+				Component::tag( 'sc-subscription-ad-hoc-confirm' )
+				->id( 'subscription-ad-hoc-confirm' )
+				->with(
+					[
+						'heading' => __( 'Enter An Amount', 'surecart' ),
+						'price'   => $price,
+					]
+				)->render()
+			);
+			?>
+
+	</sc-spacing>
+
+		<?php
+		return ob_get_clean();
+	}
+
+	/**
 	 * Confirm changing subscription
 	 *
 	 * @return function
@@ -196,7 +262,11 @@ class SubscriptionController extends BaseController {
 			</sc-breadcrumbs>
 
 			<?php
-			$terms = $this->getTermsText();
+			$terms            = $this->getTermsText();
+			$quantity_enabled = (bool) \SureCart::account()->portal_protocol->subscription_quantity_updates_enabled;
+			if ( $this->getParam( 'ad_hoc_amount' ) ) {
+				$quantity_enabled = false;
+			}
 
 			echo wp_kses_post(
 				Component::tag( 'sc-upcoming-invoice' )
@@ -206,8 +276,9 @@ class SubscriptionController extends BaseController {
 						'heading'                => __( 'New Plan', 'surecart' ),
 						'subscriptionId'         => $this->getId(),
 						'priceId'                => $this->getParam( 'price_id' ),
+						'adHocAmount'            => $this->getParam( 'ad_hoc_amount' ),
 						'successUrl'             => esc_url_raw( $back ),
-						'quantityUpdatesEnabled' => \SureCart::account()->portal_protocol->subscription_quantity_updates_enabled,
+						'quantityUpdatesEnabled' => (bool) $quantity_enabled,
 						'quantity'               => 1,
 					]
 				)->render( $terms ? '<span slot="terms">' . wp_kses_post( $terms ) . '</span>' : '' )

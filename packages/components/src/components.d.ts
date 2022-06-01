@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Address, ChoiceItem, Customer, DiscountResponse, FormState, FormStateSetter, Invoice, LineItem, LineItemData, Order, OrderStatus, PaymentIntent, PaymentIntents, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, ProductGroup, Products, Purchase, ResponseError, Subscription, SubscriptionStatus, TaxStatus, WordPressUser } from "./types";
+import { Address, ChoiceItem, Customer, DiscountResponse, FormState, FormStateSetter, Invoice, LineItem, LineItemData, Order, OrderStatus, PaymentIntent, PaymentIntents, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, Purchase, ResponseError, Subscription, SubscriptionStatus, TaxStatus, WordPressUser } from "./types";
 import { IconLibraryMutator, IconLibraryResolver } from "./components/ui/icon/library";
 export namespace Components {
     interface ScAddress {
@@ -2148,12 +2148,23 @@ export namespace Components {
          */
         "subscriptionId": string;
     }
+    interface ScSubscriptionAdHocConfirm {
+        "heading": string;
+        "price": Price;
+    }
     interface ScSubscriptionCancel {
         "backUrl": string;
         "heading": string;
         "subscription": Subscription;
         "subscriptionId": string;
         "successUrl": string;
+    }
+    interface ScSubscriptionChoice {
+        "amount": number;
+        "isCurrent": boolean;
+        "isHidden": boolean;
+        "price": Price;
+        "product": Product;
     }
     interface ScSubscriptionDetails {
         "hideRenewalText": boolean;
@@ -2413,6 +2424,7 @@ export namespace Components {
         "total": 'total' | 'subtotal' | 'amount_due';
     }
     interface ScUpcomingInvoice {
+        "adHocAmount": number;
         "discount": {
     promotion_code?: string;
     coupon?: string;
@@ -3047,11 +3059,23 @@ declare global {
         prototype: HTMLScSubscriptionElement;
         new (): HTMLScSubscriptionElement;
     };
+    interface HTMLScSubscriptionAdHocConfirmElement extends Components.ScSubscriptionAdHocConfirm, HTMLStencilElement {
+    }
+    var HTMLScSubscriptionAdHocConfirmElement: {
+        prototype: HTMLScSubscriptionAdHocConfirmElement;
+        new (): HTMLScSubscriptionAdHocConfirmElement;
+    };
     interface HTMLScSubscriptionCancelElement extends Components.ScSubscriptionCancel, HTMLStencilElement {
     }
     var HTMLScSubscriptionCancelElement: {
         prototype: HTMLScSubscriptionCancelElement;
         new (): HTMLScSubscriptionCancelElement;
+    };
+    interface HTMLScSubscriptionChoiceElement extends Components.ScSubscriptionChoice, HTMLStencilElement {
+    }
+    var HTMLScSubscriptionChoiceElement: {
+        prototype: HTMLScSubscriptionChoiceElement;
+        new (): HTMLScSubscriptionChoiceElement;
     };
     interface HTMLScSubscriptionDetailsElement extends Components.ScSubscriptionDetails, HTMLStencilElement {
     }
@@ -3305,7 +3329,9 @@ declare global {
         "sc-stripe-payment-element": HTMLScStripePaymentElementElement;
         "sc-stripe-payment-request": HTMLScStripePaymentRequestElement;
         "sc-subscription": HTMLScSubscriptionElement;
+        "sc-subscription-ad-hoc-confirm": HTMLScSubscriptionAdHocConfirmElement;
         "sc-subscription-cancel": HTMLScSubscriptionCancelElement;
+        "sc-subscription-choice": HTMLScSubscriptionChoiceElement;
         "sc-subscription-details": HTMLScSubscriptionDetailsElement;
         "sc-subscription-payment": HTMLScSubscriptionPaymentElement;
         "sc-subscription-renew": HTMLScSubscriptionRenewElement;
@@ -5721,12 +5747,23 @@ declare namespace LocalJSX {
          */
         "subscriptionId"?: string;
     }
+    interface ScSubscriptionAdHocConfirm {
+        "heading"?: string;
+        "price"?: Price;
+    }
     interface ScSubscriptionCancel {
         "backUrl"?: string;
         "heading"?: string;
         "subscription"?: Subscription;
         "subscriptionId"?: string;
         "successUrl"?: string;
+    }
+    interface ScSubscriptionChoice {
+        "amount"?: number;
+        "isCurrent"?: boolean;
+        "isHidden"?: boolean;
+        "price"?: Price;
+        "product"?: Product;
     }
     interface ScSubscriptionDetails {
         "hideRenewalText"?: boolean;
@@ -6009,6 +6046,7 @@ declare namespace LocalJSX {
         "total"?: 'total' | 'subtotal' | 'amount_due';
     }
     interface ScUpcomingInvoice {
+        "adHocAmount"?: number;
         "discount"?: {
     promotion_code?: string;
     coupon?: string;
@@ -6137,7 +6175,9 @@ declare namespace LocalJSX {
         "sc-stripe-payment-element": ScStripePaymentElement;
         "sc-stripe-payment-request": ScStripePaymentRequest;
         "sc-subscription": ScSubscription;
+        "sc-subscription-ad-hoc-confirm": ScSubscriptionAdHocConfirm;
         "sc-subscription-cancel": ScSubscriptionCancel;
+        "sc-subscription-choice": ScSubscriptionChoice;
         "sc-subscription-details": ScSubscriptionDetails;
         "sc-subscription-payment": ScSubscriptionPayment;
         "sc-subscription-renew": ScSubscriptionRenew;
@@ -6270,7 +6310,9 @@ declare module "@stencil/core" {
             "sc-stripe-payment-element": LocalJSX.ScStripePaymentElement & JSXBase.HTMLAttributes<HTMLScStripePaymentElementElement>;
             "sc-stripe-payment-request": LocalJSX.ScStripePaymentRequest & JSXBase.HTMLAttributes<HTMLScStripePaymentRequestElement>;
             "sc-subscription": LocalJSX.ScSubscription & JSXBase.HTMLAttributes<HTMLScSubscriptionElement>;
+            "sc-subscription-ad-hoc-confirm": LocalJSX.ScSubscriptionAdHocConfirm & JSXBase.HTMLAttributes<HTMLScSubscriptionAdHocConfirmElement>;
             "sc-subscription-cancel": LocalJSX.ScSubscriptionCancel & JSXBase.HTMLAttributes<HTMLScSubscriptionCancelElement>;
+            "sc-subscription-choice": LocalJSX.ScSubscriptionChoice & JSXBase.HTMLAttributes<HTMLScSubscriptionChoiceElement>;
             "sc-subscription-details": LocalJSX.ScSubscriptionDetails & JSXBase.HTMLAttributes<HTMLScSubscriptionDetailsElement>;
             "sc-subscription-payment": LocalJSX.ScSubscriptionPayment & JSXBase.HTMLAttributes<HTMLScSubscriptionPaymentElement>;
             "sc-subscription-renew": LocalJSX.ScSubscriptionRenew & JSXBase.HTMLAttributes<HTMLScSubscriptionRenewElement>;

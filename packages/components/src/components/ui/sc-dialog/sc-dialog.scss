@@ -5,6 +5,9 @@
   --footer-spacing: var(--sc-spacing-large);
   display: contents;
 }
+[hidden] {
+  display: none !important;
+}
 .dialog {
   display: flex;
   align-items: center;

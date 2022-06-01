@@ -1,11 +1,12 @@
 import { Component, Element, Fragment, h, Prop, State } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
-import apiFetch from '../../../../functions/fetch';
-import { Invoice, PaymentMethod, Price, Product, Subscription } from '../../../../types';
-import { intervalString } from '../../../../functions/price';
-import { onFirstVisible } from '../../../../functions/lazy';
 import { addQueryArgs } from '@wordpress/url';
+
+import apiFetch from '../../../../functions/fetch';
+import { onFirstVisible } from '../../../../functions/lazy';
+import { intervalString } from '../../../../functions/price';
 import { capitalize } from '../../../../functions/util';
+import { Invoice, PaymentMethod, Price, Product, Subscription } from '../../../../types';
 
 @Component({
   tag: 'sc-upcoming-invoice',
@@ -26,6 +27,7 @@ export class ScUpcomingInvoice {
   };
   @Prop({ mutable: true }) payment_method: PaymentMethod;
   @Prop() quantityUpdatesEnabled: boolean = true;
+  @Prop() adHocAmount: number;
 
   /** Loading state */
   @State() loading: boolean;
@@ -72,10 +74,11 @@ export class ScUpcomingInvoice {
     if (!this.subscriptionId) return;
     this.invoice = (await apiFetch({
       path: addQueryArgs(`surecart/v1/subscriptions/${this.subscriptionId}/upcoming_invoice/`, {
-        expand: ['invoice.subscription', 'subscription.payment_method', 'payment_method.card', 'invoice.discount'],
+        expand: ['invoice.subscription', 'subscription.price', 'subscription.payment_method', 'payment_method.card', 'invoice.discount'],
         subscription: {
           price: this.priceId,
           quantity: this.quantity,
+          ...(this.adHocAmount ? { ad_hoc_amount: this.adHocAmount } : {}),
           ...(this.discount ? { discount: this.discount } : {}),
         },
       }),
@@ -121,6 +124,7 @@ export class ScUpcomingInvoice {
         data: {
           price: this.priceId,
           quantity: this.quantity,
+          ...(this.adHocAmount ? { ad_hoc_amount: this.adHocAmount } : {}),
           ...(this.discount ? { discount: this.discount } : {}),
         },
       });
@@ -189,7 +193,8 @@ export class ScUpcomingInvoice {
       <div class="new-plan">
         <div class="new-plan__heading">{this.renderName(this.price)}</div>
         <div>
-          <sc-format-number type="currency" currency={(this?.price as Price)?.currency} value={(this?.price as Price)?.amount}></sc-format-number> {intervalString(this.price)}
+          <sc-format-number type="currency" currency={(this?.invoice as Invoice)?.currency} value={(this?.invoice as Invoice)?.total_amount}></sc-format-number>{' '}
+          {intervalString(this.price)}
         </div>
         <div style={{ fontSize: 'var(--sc-font-size-small)' }}>{this.renderRenewalText()}</div>
       </div>
@@ -219,7 +224,7 @@ export class ScUpcomingInvoice {
           editable={this.quantityUpdatesEnabled}
           removable={false}
           quantity={1}
-          amount={this.price.amount}
+          amount={this.adHocAmount}
           currency={this.invoice?.currency}
           interval={intervalString(this.price)}
           onScUpdateQuantity={e => this.updateQuantity(e)}
@@ -303,23 +308,25 @@ export class ScUpcomingInvoice {
           </sc-alert>
         )}
 
-        <sc-dashboard-module heading={__('New Plan', 'surecart')} class="plan-preview" error={this.error}>
-          <sc-card>{this.renderContent()}</sc-card>
-        </sc-dashboard-module>
+        <Fragment>
+          <sc-dashboard-module heading={__('New Plan', 'surecart')} class="plan-preview" error={this.error}>
+            <sc-card>{this.renderContent()}</sc-card>
+          </sc-dashboard-module>
 
-        <sc-dashboard-module heading={__('Summary', 'surecart')} class="plan-summary">
-          <sc-form onScFormSubmit={() => this.onSubmit()}>
-            <sc-card>{this.renderSummary()}</sc-card>
+          <sc-dashboard-module heading={__('Summary', 'surecart')} class="plan-summary">
+            <sc-form onScFormSubmit={() => this.onSubmit()}>
+              <sc-card>{this.renderSummary()}</sc-card>
 
-            <sc-button type="primary" full submit loading={this.loading || this.busy} disabled={this.loading || this.busy}>
-              {__('Confirm', 'surecart')}
-            </sc-button>
-          </sc-form>
-        </sc-dashboard-module>
+              <sc-button type="primary" full submit loading={this.loading || this.busy} disabled={this.loading || this.busy}>
+                {__('Confirm', 'surecart')}
+              </sc-button>
+            </sc-form>
+          </sc-dashboard-module>
 
-        <sc-text style={{ '--text-align': 'center', '--font-size': 'var(--sc-font-size-small)', '--line-height': 'var(--sc-line-height-normal)' }}>
-          <slot name="terms"></slot>
-        </sc-text>
+          <sc-text style={{ '--text-align': 'center', '--font-size': 'var(--sc-font-size-small)', '--line-height': 'var(--sc-line-height-normal)' }}>
+            <slot name="terms"></slot>
+          </sc-text>
+        </Fragment>
 
         {this.busy && <sc-block-ui></sc-block-ui>}
       </div>

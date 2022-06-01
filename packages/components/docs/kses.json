@@ -1159,12 +1159,31 @@
     "class": true,
     "slot": true
   },
+  "sc-subscription-ad-hoc-confirm": {
+    "heading": true,
+    "price": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-subscription-cancel": {
     "back-url": true,
     "heading": true,
     "subscription": true,
     "subscription-id": true,
     "success-url": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-subscription-choice": {
+    "amount": true,
+    "is-current": true,
+    "is-hidden": true,
+    "price": true,
+    "product": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1368,6 +1387,7 @@
     "slot": true
   },
   "sc-upcoming-invoice": {
+    "ad-hoc-amount": true,
     "discount": true,
     "heading": true,
     "payment_method": true,

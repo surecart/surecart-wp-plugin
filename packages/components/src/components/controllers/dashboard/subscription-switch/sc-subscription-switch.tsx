@@ -4,7 +4,6 @@ import { addQueryArgs } from '@wordpress/url';
 
 import apiFetch from '../../../../functions/fetch';
 import { onFirstVisible } from '../../../../functions/lazy';
-import { intervalString } from '../../../../functions/price';
 import { Price, Product, ProductGroup, Subscription } from '../../../../types';
 
 @Component({
@@ -120,8 +119,20 @@ export class ScSubscriptionSwitch {
 
   async handleSubmit(e) {
     const { plan } = await e.target.getFormJson();
+    const price = this.prices.find(p => p.id === plan);
     const currentPlan = this.subscription?.price as Price;
-    if (plan === currentPlan.id) return;
+    if (price?.id === currentPlan.id && !price?.ad_hoc) return;
+
+    if (price?.ad_hoc) {
+      this.busy = true;
+      return window.location.assign(
+        addQueryArgs(window.location.href, {
+          action: 'confirm_amount',
+          price_id: plan,
+        }),
+      );
+    }
+
     this.busy = true;
     window.location.assign(
       addQueryArgs(window.location.href, {
@@ -204,21 +215,23 @@ export class ScSubscriptionSwitch {
           {(this.prices || []).map(price => {
             const currentPlan = (this.subscription?.price as Price)?.id === price?.id;
             const product = this.products.find(product => product.id === price?.product);
+            let amount;
+
+            if (price?.ad_hoc) {
+              if (currentPlan) {
+                amount = this.subscription?.ad_hoc_amount;
+              }
+            }
 
             return (
-              <sc-choice key={price?.id} checked={currentPlan} name="plan" value={price?.id} hidden={this.isHidden(price)}>
-                <div>
-                  <strong>{product?.name}</strong>
-                </div>
-                <div slot="description">
-                  <sc-format-number type="currency" currency={price?.currency || 'usd'} value={price.amount}></sc-format-number> {intervalString(price)}
-                </div>
-                {currentPlan && (
-                  <sc-tag type="warning" slot="price">
-                    {__('Current Plan', 'surecart')}
-                  </sc-tag>
-                )}
-              </sc-choice>
+              <sc-subscription-choice
+                key={price?.id}
+                price={price}
+                product={product}
+                isCurrent={currentPlan}
+                isHidden={this.isHidden(price)}
+                amount={amount}
+              ></sc-subscription-choice>
             );
           })}
         </div>
