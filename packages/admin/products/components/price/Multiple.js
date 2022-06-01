@@ -1,9 +1,11 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { __ } from '@wordpress/i18n';
 import { ScInput } from '@surecart/components-react';
-import Amount from './parts/Amount';
+import { __ } from '@wordpress/i18n';
+
 import AdHoc from './parts/AdHoc';
+import Amount from './parts/Amount';
+import Trial from './parts/Trial';
 
 export default ({ price, updatePrice }) => {
 	return (
@@ -33,24 +35,13 @@ export default ({ price, updatePrice }) => {
 						<span slot="suffix">{__('Payments', 'surecart')}</span>
 					</ScInput>
 				)}
-				<ScInput
-					label={__('Free Trial Days', 'surecart')}
-					className="sc-free-trial"
+				<Trial
 					css={css`
 						flex: 1;
 					`}
-					type="number"
-					min={1}
-					max={365}
-					value={price?.trial_duration_days}
-					onScChange={(e) =>
-						updatePrice({
-							trial_duration_days: parseInt(e.target.value),
-						})
-					}
-				>
-					<span slot="suffix">{__('Days', 'surecart')}</span>
-				</ScInput>
+					price={price}
+					updatePrice={updatePrice}
+				/>
 			</sc-flex>
 		</>
 	);
