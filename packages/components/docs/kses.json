@@ -1178,17 +1178,6 @@
     "class": true,
     "slot": true
   },
-  "sc-subscription-choice": {
-    "amount": true,
-    "is-current": true,
-    "is-hidden": true,
-    "price": true,
-    "product": true,
-    "style": true,
-    "id": true,
-    "class": true,
-    "slot": true
-  },
   "sc-subscription-details": {
     "hide-renewal-text": true,
     "pending-price": true,
@@ -1233,6 +1222,7 @@
     "slot": true
   },
   "sc-subscription-switch": {
+    "filter-above": true,
     "heading": true,
     "product-group-id": true,
     "product-id": true,

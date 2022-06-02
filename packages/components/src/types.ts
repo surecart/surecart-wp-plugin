@@ -339,6 +339,7 @@ export interface Subscription extends Object {
   customer: Customer;
   discount: DiscountResponse;
   pending_update: {
+    ad_hoc_amount?: number;
     price?: string;
     quantity?: number;
   };
