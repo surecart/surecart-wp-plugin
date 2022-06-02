@@ -37,7 +37,13 @@ export default ({
 			const queryArgs = [
 				'surecart',
 				'integration_provider_item',
-				{ context: 'edit', model, provider: providerName, search },
+				{
+					context: 'edit',
+					per_page: 100, // let's get as many as we can by default.
+					model,
+					provider: providerName,
+					search,
+				},
 			];
 			if (!providerName) return { items: [], loadingItems: false };
 			return {
@@ -54,6 +60,8 @@ export default ({
 	useEffect(() => {
 		setItem('');
 	}, [providerName]);
+
+	console.log({ items });
 
 	return (
 		<Fragment>
