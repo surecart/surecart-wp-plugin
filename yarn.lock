@@ -4933,7 +4933,7 @@ __metadata:
     cross-env: ^7.0.2
     css-loader: ^3.5.3
     cssnano: ^4.1.10
-    cypress: ^9.1.0
+    cypress: ^10.0.1
     cypress-file-upload: ^5.0.8
     cypress-log-to-output: ^1.1.2
     dot-prop-immutable: ^2.1.1
@@ -11289,9 +11289,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress@npm:^9.1.0":
-  version: 9.5.0
-  resolution: "cypress@npm:9.5.0"
+"cypress@npm:^10.0.1":
+  version: 10.0.1
+  resolution: "cypress@npm:10.0.1"
   dependencies:
     "@cypress/request": ^2.88.10
     "@cypress/xvfb": ^1.2.4
@@ -11325,7 +11325,7 @@ __metadata:
     listr2: ^3.8.3
     lodash: ^4.17.21
     log-symbols: ^4.0.0
-    minimist: ^1.2.5
+    minimist: ^1.2.6
     ospath: ^1.2.2
     pretty-bytes: ^5.6.0
     proxy-from-env: 1.0.0
@@ -11337,7 +11337,7 @@ __metadata:
     yauzl: ^2.10.0
   bin:
     cypress: bin/cypress
-  checksum: 0a4ef1413676e37c19526e86dba7bc82420b9afa840b2a68b94e749b878e6b394f4e64bb099bca12c44f4520e7a1cb07ab17d6c9ccf87746bc1bfc3c9555f334
+  checksum: 77327168729bc39142dc0c3b5dc7f81cba36be087c532e907ee11ccda1fcb60f5d5bbc8ea28ac761b263be94d85d041b4c4de065cea3ed58d4a4151ca1e63863
   languageName: node
   linkType: hard
 
@@ -20155,7 +20155,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"minimist@npm:~1.2.5":
+"minimist@npm:^1.2.6, minimist@npm:~1.2.5":
   version: 1.2.6
   resolution: "minimist@npm:1.2.6"
   checksum: d15428cd1e11eb14e1233bcfb88ae07ed7a147de251441d61158619dfb32c4d7e9061d09cab4825fdee18ecd6fce323228c8c47b5ba7cd20af378ca4048fb3fb
