@@ -165,15 +165,7 @@ class SubscriptionController extends BaseController {
 	 * @return void
 	 */
 	public function confirm_amount() {
-		$subscription = Subscription::with(
-			[
-				'price',
-				'price.product',
-				'latest_invoice',
-				'product',
-			]
-		)->find( $this->getId() );
-		$price        = Price::find( $this->getParam( 'price_id' ) );
+		$price = Price::find( $this->getParam( 'price_id' ) );
 		ob_start();
 		?>
 
@@ -413,11 +405,12 @@ class SubscriptionController extends BaseController {
 
 		$confirm_subscription_url = add_query_arg(
 			[
-				'tab'      => $this->getTab(),
-				'action'   => 'confirm',
-				'model'    => 'subscription',
-				'id'       => $this->getId(),
-				'price_id' => $this->getParam( 'price_id' ),
+				'tab'           => $this->getTab(),
+				'action'        => 'confirm',
+				'model'         => 'subscription',
+				'ad_hoc_amount' => $this->getParam( 'ad_hoc_amount' ),
+				'id'            => $this->getId(),
+				'price_id'      => $this->getParam( 'price_id' ),
 			],
 			\SureCart::pages()->url( 'dashboard' )
 		);
