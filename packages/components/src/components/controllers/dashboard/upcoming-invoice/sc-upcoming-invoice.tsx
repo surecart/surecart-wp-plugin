@@ -74,7 +74,16 @@ export class ScUpcomingInvoice {
     if (!this.subscriptionId) return;
     this.invoice = (await apiFetch({
       path: addQueryArgs(`surecart/v1/subscriptions/${this.subscriptionId}/upcoming_invoice/`, {
-        expand: ['invoice.subscription', 'subscription.price', 'subscription.payment_method', 'payment_method.card', 'invoice.discount'],
+        expand: [
+          'invoice.subscription',
+          'subscription.price',
+          'subscription.payment_method',
+          'payment_method.card',
+          'invoice.discount',
+          'invoice.invoice_items',
+          'invoice_item.price',
+          'price.product',
+        ],
         subscription: {
           price: this.priceId,
           quantity: this.quantity,
@@ -218,17 +227,19 @@ export class ScUpcomingInvoice {
 
     return (
       <Fragment>
-        <sc-product-line-item
-          imageUrl={(this.price?.product as Product)?.image_url}
-          name={(this.price?.product as Product)?.name}
-          editable={this.quantityUpdatesEnabled}
-          removable={false}
-          quantity={1}
-          amount={this.adHocAmount}
-          currency={this.invoice?.currency}
-          interval={intervalString(this.price)}
-          onScUpdateQuantity={e => this.updateQuantity(e)}
-        ></sc-product-line-item>
+        {this.invoice.invoice_items?.data.map(item => (
+          <sc-product-line-item
+            imageUrl={(item.price?.product as Product)?.image_url}
+            name={(item.price?.product as Product)?.name}
+            editable={this.quantityUpdatesEnabled}
+            removable={false}
+            quantity={item?.quantity}
+            amount={item?.total_amount}
+            currency={item?.price?.currency}
+            interval={intervalString(item?.price)}
+            onScUpdateQuantity={e => this.updateQuantity(e)}
+          ></sc-product-line-item>
+        ))}
 
         <sc-line-item>
           <span slot="description">{__('Subtotal', 'surecart')}</span>
