@@ -8,7 +8,6 @@ import { store as uiStore } from '../store/ui';
 import { store as dataStore } from '../store/data';
 
 import Template from '../templates/SingleModel';
-import SaveButton from './components/SaveButton';
 
 // modules
 import Name from './modules/Name';
@@ -20,13 +19,13 @@ import Limits from './modules/Limits';
 import Sidebar from './Sidebar';
 
 // hocs
-import withConfirm from '../hocs/withConfirm';
 import { useEffect } from 'react';
 import ErrorFlash from '../components/ErrorFlash';
 import useCurrentPage from '../mixins/useCurrentPage';
 import useEntities from '../mixins/useEntities';
 import { useDispatch } from '@wordpress/data';
 import { ScButton } from '@surecart/components-react';
+import ActionsDropdown from './components/coupon/ActionsDropdown';
 
 export default () => {
 	const { saveModel, saveDraft, clearDrafts } = useDispatch(dataStore);
@@ -36,6 +35,7 @@ export default () => {
 		coupon,
 		updateCoupon,
 		saveCoupon,
+		deleteCoupon,
 		saving,
 		setSaving,
 		isSaving,
@@ -162,6 +162,23 @@ export default () => {
 		}
 	};
 
+	// delete promotion
+	const onDelete = async () => {
+		try {
+			const r = confirm(
+				__(
+					'Are you sure you want to delete this Coupon code?',
+					'surecart'
+				)
+			);
+			if (!r) return;
+			setSaving(true);
+			await deleteCoupon();
+		} finally {
+			setSaving(false);
+		}
+	};
+
 	return (
 		<Template
 			onSubmit={onSubmit}
@@ -186,6 +203,7 @@ export default () => {
 							gap: 0.5em;
 						`}
 					>
+						{/* <ActionsDropdown coupon={coupon} onDelete={onDelete} /> */}
 						<ScButton
 							class="sc-save-model"
 							type="primary"
