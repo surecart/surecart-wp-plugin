@@ -198,7 +198,7 @@ export default ({
 												size="small"
 												href={backUrl}
 											>
-												&larr;
+												<sc-icon name="arrow-left"></sc-icon>
 											</ScButton>
 										)}
 									</Tooltip>

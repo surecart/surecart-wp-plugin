@@ -23,6 +23,7 @@ import Error from '../components/Error';
 // hocs
 import useEntity from '../hooks/useEntity';
 import useSnackbar from '../hooks/useSnackbar';
+import { ScButton } from '@surecart/components-react';
 
 export default ({ id }) => {
 	const [error, setError] = useState(null);
@@ -156,27 +157,42 @@ export default ({ id }) => {
 		<UpdateModel
 			onSubmit={onSubmit}
 			title={
-				<sc-breadcrumbs>
-					<sc-breadcrumb>
-						<Logo display="block" />
-					</sc-breadcrumb>
-					<sc-breadcrumb href="admin.php?page=sc-products">
-						{__('Products', 'surecart')}
-					</sc-breadcrumb>
-					<sc-breadcrumb>
-						<sc-flex style={{ gap: '1em' }}>
-							{__('Edit Product', 'surecart')}
-							{product?.archived && (
-								<>
-									{' '}
-									<sc-tag type="warning">
-										{__('Archived', 'surecart')}
-									</sc-tag>
-								</>
-							)}
-						</sc-flex>
-					</sc-breadcrumb>
-				</sc-breadcrumbs>
+				<div
+					css={css`
+						display: flex;
+						align-items: center;
+						gap: 1em;
+					`}
+				>
+					<ScButton
+						circle
+						size="small"
+						href="admin.php?page=sc-products"
+					>
+						<sc-icon name="arrow-left"></sc-icon>
+					</ScButton>
+					<sc-breadcrumbs>
+						<sc-breadcrumb>
+							<Logo display="block" />
+						</sc-breadcrumb>
+						<sc-breadcrumb href="admin.php?page=sc-products">
+							{__('Products', 'surecart')}
+						</sc-breadcrumb>
+						<sc-breadcrumb>
+							<sc-flex style={{ gap: '1em' }}>
+								{__('Edit Product', 'surecart')}
+								{product?.archived && (
+									<>
+										{' '}
+										<sc-tag type="warning">
+											{__('Archived', 'surecart')}
+										</sc-tag>
+									</>
+								)}
+							</sc-flex>
+						</sc-breadcrumb>
+					</sc-breadcrumbs>
+				</div>
 			}
 			button={button}
 			sidebar={
