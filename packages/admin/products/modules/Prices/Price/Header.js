@@ -34,7 +34,7 @@ export default ({
 					<>
 						{' '}
 						<sc-tag type="success" size="small">
-							{__('Pay what you want', 'surecart')}
+							{__('Custom Amount', 'surecart')}
 						</sc-tag>
 					</>
 				)}
