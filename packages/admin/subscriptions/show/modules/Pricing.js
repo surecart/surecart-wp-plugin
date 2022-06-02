@@ -42,7 +42,10 @@ export default ({ product, price, subscription, loading }) => {
 							<div style={{ opacity: 0.5 }}>
 								<sc-format-number
 									type="currency"
-									value={price?.amount}
+									value={
+										subscription?.ad_hoc_amount ||
+										price?.amount
+									}
 									currency={price?.currency}
 								/>
 								{intervalString(price, {
@@ -59,14 +62,19 @@ export default ({ product, price, subscription, loading }) => {
 								justify-content: flex-end;
 							`}
 						>
-							<sc-format-number
-								type="currency"
-								value={price?.amount * subscription?.quantity}
-								currency={price?.currency}
-							/>
-							{intervalString(price, {
-								labels: { interval: '/' },
-							})}
+							<div>
+								<sc-format-number
+									type="currency"
+									value={
+										subscription?.ad_hoc_amount ||
+										price?.amount * subscription?.quantity
+									}
+									currency={price?.currency}
+								/>{' '}
+								{intervalString(price, {
+									labels: { interval: '/' },
+								})}
+							</div>
 						</div>
 					),
 					actions: !Object.keys(subscription?.pending_update || {})

@@ -120,8 +120,11 @@ export default ({
 						<sc-format-number
 							type="currency"
 							value={
+								pending?.ad_hoc_amount ||
 								pendingPrice?.amount *
-								(pending?.quantity || current?.quantity || 1)
+									(pending?.quantity ||
+										current?.quantity ||
+										1)
 							}
 							currency={pendingPrice?.currency}
 						/>

@@ -13,7 +13,7 @@ export default ({ subscription }) => {
 
 	const { price, fetchPrice, getRelation, isLoading } = useEntity(
 		'price',
-		price_id || null
+		price_id || subscription?.price
 	);
 	const product = getRelation('product');
 
@@ -64,7 +64,10 @@ export default ({ subscription }) => {
 							>
 								<sc-format-number
 									type="currency"
-									value={price?.amount}
+									value={
+										pending_update?.ad_hoc_amount ||
+										price?.amount
+									}
 									currency={price?.currency}
 								/>
 								{intervalString(price, {
