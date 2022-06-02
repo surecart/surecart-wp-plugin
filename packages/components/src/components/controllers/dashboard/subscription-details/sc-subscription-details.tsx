@@ -67,13 +67,28 @@ export class ScSubscriptionDetails {
     }
 
     if (this.hasPendingUpdate) {
-      return this.pendingPrice ? (
+      if (!this.pendingPrice) {
+        return <sc-skeleton></sc-skeleton>;
+      }
+
+      if (this.subscription?.pending_update?.ad_hoc_amount) {
+        return (
+          <span>
+            {__('Your plan switches to', 'surecart')}{' '}
+            <strong>
+              <sc-format-number type="currency" currency={this.pendingPrice?.currency} value={this.subscription?.pending_update?.ad_hoc_amount}></sc-format-number>{' '}
+              {intervalString(this.subscription?.price)}
+            </strong>{' '}
+            {__('on', 'surecart')}{' '}
+            <sc-format-date date={this.subscription.current_period_end_at as number} type="timestamp" month="long" day="numeric" year="numeric"></sc-format-date>
+          </span>
+        );
+      }
+      return (
         <span>
           {__('Your plan switches to', 'surecart')} <strong>{(this.pendingPrice.product as Product).name}</strong> {__('on', 'surecart')}{' '}
           <sc-format-date date={this.subscription.current_period_end_at as number} type="timestamp" month="long" day="numeric" year="numeric"></sc-format-date>
         </span>
-      ) : (
-        <sc-skeleton></sc-skeleton>
       );
     }
 
