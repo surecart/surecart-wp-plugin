@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-05-26T20:46:26",
+  "timestamp": "2022-06-02T17:24:00",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.15.1",
@@ -367,6 +367,7 @@
         "sc-stripe-payment-request",
         "sc-subscription-cancel",
         "sc-subscription-renew",
+        "sc-subscription-switch",
         "sc-upcoming-invoice"
       ],
       "dependencies": [
@@ -407,6 +408,9 @@
           "sc-alert"
         ],
         "sc-subscription-renew": [
+          "sc-alert"
+        ],
+        "sc-subscription-switch": [
           "sc-alert"
         ],
         "sc-upcoming-invoice": [
@@ -601,6 +605,7 @@
         "sc-payment-method-create",
         "sc-payment-methods-list",
         "sc-subscription",
+        "sc-subscription-ad-hoc-confirm",
         "sc-subscription-cancel",
         "sc-subscription-payment",
         "sc-subscription-renew",
@@ -660,6 +665,9 @@
           "sc-block-ui"
         ],
         "sc-subscription": [
+          "sc-block-ui"
+        ],
+        "sc-subscription-ad-hoc-confirm": [
           "sc-block-ui"
         ],
         "sc-subscription-cancel": [
@@ -1224,6 +1232,7 @@
         "sc-coupon-form",
         "sc-customer-details",
         "sc-customer-edit",
+        "sc-dialog",
         "sc-donation-choices",
         "sc-downloads-list",
         "sc-invoices-list",
@@ -1234,6 +1243,7 @@
         "sc-payment-method-create",
         "sc-payment-methods-list",
         "sc-subscription",
+        "sc-subscription-ad-hoc-confirm",
         "sc-subscription-cancel",
         "sc-subscription-payment",
         "sc-subscription-renew",
@@ -1264,6 +1274,9 @@
         "sc-customer-edit": [
           "sc-button"
         ],
+        "sc-dialog": [
+          "sc-button"
+        ],
         "sc-donation-choices": [
           "sc-button"
         ],
@@ -1292,6 +1305,9 @@
           "sc-button"
         ],
         "sc-subscription": [
+          "sc-button"
+        ],
+        "sc-subscription-ad-hoc-confirm": [
           "sc-button"
         ],
         "sc-subscription-cancel": [
@@ -1480,6 +1496,7 @@
         "sc-payment-method-create",
         "sc-payment-methods-list",
         "sc-subscription",
+        "sc-subscription-ad-hoc-confirm",
         "sc-subscription-cancel",
         "sc-subscription-payment",
         "sc-subscription-renew",
@@ -1522,6 +1539,9 @@
           "sc-card"
         ],
         "sc-subscription": [
+          "sc-card"
+        ],
+        "sc-subscription-ad-hoc-confirm": [
           "sc-card"
         ],
         "sc-subscription-cancel": [
@@ -4785,6 +4805,7 @@
         "sc-orders-list",
         "sc-payment-methods-list",
         "sc-subscription",
+        "sc-subscription-ad-hoc-confirm",
         "sc-subscription-cancel",
         "sc-subscription-payment",
         "sc-subscription-renew",
@@ -4827,6 +4848,9 @@
           "sc-dashboard-module"
         ],
         "sc-subscription": [
+          "sc-dashboard-module"
+        ],
+        "sc-subscription-ad-hoc-confirm": [
           "sc-dashboard-module"
         ],
         "sc-subscription-cancel": [
@@ -5015,11 +5039,16 @@
       ],
       "dependents": [],
       "dependencies": [
+        "sc-button",
         "sc-icon"
       ],
       "dependencyGraph": {
         "sc-dialog": [
+          "sc-button",
           "sc-icon"
+        ],
+        "sc-button": [
+          "sc-spinner"
         ]
       }
     },
@@ -6220,6 +6249,7 @@
         "sc-customer-edit",
         "sc-login-form",
         "sc-payment-method-create",
+        "sc-subscription-ad-hoc-confirm",
         "sc-subscription-payment",
         "sc-subscription-switch",
         "sc-upcoming-invoice",
@@ -6235,6 +6265,9 @@
           "sc-form"
         ],
         "sc-payment-method-create": [
+          "sc-form"
+        ],
+        "sc-subscription-ad-hoc-confirm": [
           "sc-form"
         ],
         "sc-subscription-payment": [
@@ -7804,6 +7837,7 @@
         "sc-product-line-item",
         "sc-select",
         "sc-subscription",
+        "sc-subscription-ad-hoc-confirm",
         "sc-subscription-switch",
         "sc-subscriptions-list",
         "sc-toggle",
@@ -7864,6 +7898,9 @@
           "sc-icon"
         ],
         "sc-subscription": [
+          "sc-icon"
+        ],
+        "sc-subscription-ad-hoc-confirm": [
           "sc-icon"
         ],
         "sc-subscription-switch": [
@@ -13107,8 +13144,7 @@
         "sc-alert",
         "sc-format-number",
         "sc-choice",
-        "sc-skeleton",
-        "sc-tooltip"
+        "sc-skeleton"
       ],
       "dependencyGraph": {
         "sc-price-choice": [
@@ -13116,8 +13152,7 @@
           "sc-alert",
           "sc-format-number",
           "sc-choice",
-          "sc-skeleton",
-          "sc-tooltip"
+          "sc-skeleton"
         ],
         "sc-price-input": [
           "sc-input"
@@ -13715,7 +13750,8 @@
       "dependents": [
         "sc-custom-order-price-input",
         "sc-donation-choices",
-        "sc-price-choice"
+        "sc-price-choice",
+        "sc-subscription-ad-hoc-confirm"
       ],
       "dependencies": [
         "sc-input"
@@ -13737,6 +13773,9 @@
           "sc-price-input"
         ],
         "sc-price-choice": [
+          "sc-price-input"
+        ],
+        "sc-subscription-ad-hoc-confirm": [
           "sc-price-input"
         ]
       }
@@ -16583,15 +16622,105 @@
           "sc-subscription-status-badge",
           "sc-format-date",
           "sc-skeleton",
+          "sc-format-number",
           "sc-text",
-          "sc-tag",
-          "sc-format-number"
+          "sc-tag"
         ],
         "sc-dashboard-module": [
           "sc-alert"
         ],
         "sc-alert": [
           "sc-icon"
+        ],
+        "sc-button": [
+          "sc-spinner"
+        ],
+        "sc-block-ui": [
+          "sc-spinner"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/controllers/dashboard/subscription-ad-hoc-confirm/sc-subscription-ad-hoc-confirm.tsx",
+      "encapsulation": "none",
+      "tag": "sc-subscription-ad-hoc-confirm",
+      "readme": "# sc-subscription-ad-hoc-confirm\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "heading",
+          "type": "string",
+          "mutable": false,
+          "attr": "heading",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "price",
+          "type": "Price",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Price"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "sc-dashboard-module",
+        "sc-card",
+        "sc-form",
+        "sc-price-input",
+        "sc-button",
+        "sc-icon",
+        "sc-block-ui"
+      ],
+      "dependencyGraph": {
+        "sc-subscription-ad-hoc-confirm": [
+          "sc-dashboard-module",
+          "sc-card",
+          "sc-form",
+          "sc-price-input",
+          "sc-button",
+          "sc-icon",
+          "sc-block-ui"
+        ],
+        "sc-dashboard-module": [
+          "sc-alert"
+        ],
+        "sc-alert": [
+          "sc-icon"
+        ],
+        "sc-price-input": [
+          "sc-input"
+        ],
+        "sc-input": [
+          "sc-form-control"
+        ],
+        "sc-form-control": [
+          "sc-tooltip"
         ],
         "sc-button": [
           "sc-spinner"
@@ -16722,9 +16851,9 @@
           "sc-subscription-status-badge",
           "sc-format-date",
           "sc-skeleton",
+          "sc-format-number",
           "sc-text",
-          "sc-tag",
-          "sc-format-number"
+          "sc-tag"
         ],
         "sc-subscription-status-badge": [
           "sc-format-date",
@@ -16816,18 +16945,18 @@
         "sc-subscription-status-badge",
         "sc-format-date",
         "sc-skeleton",
+        "sc-format-number",
         "sc-text",
-        "sc-tag",
-        "sc-format-number"
+        "sc-tag"
       ],
       "dependencyGraph": {
         "sc-subscription-details": [
           "sc-subscription-status-badge",
           "sc-format-date",
           "sc-skeleton",
+          "sc-format-number",
           "sc-text",
-          "sc-tag",
-          "sc-format-number"
+          "sc-tag"
         ],
         "sc-subscription-status-badge": [
           "sc-format-date",
@@ -17133,9 +17262,9 @@
           "sc-subscription-status-badge",
           "sc-format-date",
           "sc-skeleton",
+          "sc-format-number",
           "sc-text",
-          "sc-tag",
-          "sc-format-number"
+          "sc-tag"
         ],
         "sc-subscription-status-badge": [
           "sc-format-date",
@@ -17226,7 +17355,7 @@
         },
         {
           "name": "status",
-          "type": "\"active\" | \"canceled\" | \"incomplete\" | \"past_due\" | \"trialing\" | \"unpaid\"",
+          "type": "\"active\" | \"canceled\" | \"completed\" | \"incomplete\" | \"past_due\" | \"trialing\" | \"unpaid\"",
           "mutable": false,
           "attr": "status",
           "reflectToAttr": false,
@@ -17239,6 +17368,10 @@
             },
             {
               "value": "canceled",
+              "type": "string"
+            },
+            {
+              "value": "completed",
               "type": "string"
             },
             {
@@ -17266,7 +17399,7 @@
           "type": "Subscription",
           "mutable": false,
           "reflectToAttr": false,
-          "docs": "The tag's statux type.",
+          "docs": "The tag's status type.",
           "docsTags": [],
           "values": [
             {
@@ -17313,6 +17446,23 @@
       "docsTags": [],
       "usage": {},
       "props": [
+        {
+          "name": "filterAbove",
+          "type": "number",
+          "mutable": false,
+          "attr": "filter-above",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "4",
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
         {
           "name": "heading",
           "type": "string",
@@ -17406,6 +17556,7 @@
         "sc-choices",
         "sc-format-number",
         "sc-tag",
+        "sc-alert",
         "sc-dashboard-module",
         "sc-form",
         "sc-icon",
@@ -17420,6 +17571,7 @@
           "sc-choices",
           "sc-format-number",
           "sc-tag",
+          "sc-alert",
           "sc-dashboard-module",
           "sc-form",
           "sc-icon",
@@ -17434,11 +17586,11 @@
         "sc-form-control": [
           "sc-tooltip"
         ],
-        "sc-dashboard-module": [
-          "sc-alert"
-        ],
         "sc-alert": [
           "sc-icon"
+        ],
+        "sc-dashboard-module": [
+          "sc-alert"
         ],
         "sc-block-ui": [
           "sc-spinner"
@@ -17568,9 +17720,9 @@
           "sc-subscription-status-badge",
           "sc-format-date",
           "sc-skeleton",
+          "sc-format-number",
           "sc-text",
-          "sc-tag",
-          "sc-format-number"
+          "sc-tag"
         ],
         "sc-subscription-status-badge": [
           "sc-format-date",
@@ -19060,15 +19212,11 @@
         }
       ],
       "dependents": [
-        "sc-form-control",
-        "sc-price-choice"
+        "sc-form-control"
       ],
       "dependencies": [],
       "dependencyGraph": {
         "sc-form-control": [
-          "sc-tooltip"
-        ],
-        "sc-price-choice": [
           "sc-tooltip"
         ]
       }
@@ -19162,6 +19310,22 @@
       "docsTags": [],
       "usage": {},
       "props": [
+        {
+          "name": "adHocAmount",
+          "type": "number",
+          "mutable": false,
+          "attr": "ad-hoc-amount",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
         {
           "name": "discount",
           "type": "{ promotion_code?: string; coupon?: string; }",

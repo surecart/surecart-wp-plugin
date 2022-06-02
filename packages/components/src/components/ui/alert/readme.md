@@ -74,6 +74,7 @@ Type: `Promise<void>`
  - [sc-stripe-payment-request](../stripe-payment-request)
  - [sc-subscription-cancel](../../controllers/dashboard/subscription-cancel)
  - [sc-subscription-renew](../../controllers/dashboard/subscription-renew)
+ - [sc-subscription-switch](../../controllers/dashboard/subscription-switch)
  - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
 
 ### Depends on
@@ -95,6 +96,7 @@ graph TD;
   sc-stripe-payment-request --> sc-alert
   sc-subscription-cancel --> sc-alert
   sc-subscription-renew --> sc-alert
+  sc-subscription-switch --> sc-alert
   sc-upcoming-invoice --> sc-alert
   style sc-alert fill:#f9f,stroke:#333,stroke-width:4px
 ```

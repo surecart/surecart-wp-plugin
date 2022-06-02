@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-05-26T20:44:56+00:00\n"
+"POT-Creation-Date: 2022-06-02T17:24:08+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 
@@ -86,6 +86,12 @@ msgstr ""
 msgid "Not Recovered"
 msgstr ""
 
+#: src/Controllers/Admin/Coupons/CouponsController.php:23
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:55
+#: admin/coupons/index.php:6
+msgid "Coupons"
+msgstr ""
+
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:59
 msgid "Search Coupons"
 msgstr ""
@@ -116,7 +122,7 @@ msgstr ""
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:79
 #: src/Controllers/Admin/Orders/OrdersListTable.php:145
 #: src/Controllers/Admin/Products/ProductsListTable.php:124
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:119
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:121
 msgid "Select comment"
 msgstr ""
 
@@ -124,7 +130,7 @@ msgstr ""
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:222
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:214
 #: src/Controllers/Admin/Orders/OrdersListTable.php:280
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:259
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:303
 msgid "Valid until %s"
 msgstr ""
 
@@ -136,14 +142,14 @@ msgstr ""
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:245
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:231
 #: src/Controllers/Admin/Orders/OrdersListTable.php:297
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:276
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:320
 msgid "No discount."
 msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:260
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:246
 #: src/Controllers/Admin/Orders/OrdersListTable.php:312
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:291
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:335
 msgid "Forever"
 msgstr ""
 
@@ -151,14 +157,14 @@ msgstr ""
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:264
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:250
 #: src/Controllers/Admin/Orders/OrdersListTable.php:316
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:295
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:339
 msgid "For %d months"
 msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:267
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:253
 #: src/Controllers/Admin/Orders/OrdersListTable.php:319
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:298
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:342
 msgid "Once"
 msgstr ""
 
@@ -170,14 +176,13 @@ msgstr ""
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:61
 #: src/Controllers/Admin/Products/ProductsListTable.php:65
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:61
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:312
 msgid "Active"
 msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:305
 #: src/Controllers/Admin/Customers/CustomersListTable.php:219
 #: src/Controllers/Admin/Products/ProductsListTable.php:322
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:356
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:400
 msgid "Edit"
 msgstr ""
 
@@ -243,13 +248,19 @@ msgstr ""
 msgid "Move to Trash"
 msgstr ""
 
-#: src/Controllers/Admin/Customers/CustomersController.php:60
-#: src/Controllers/Admin/Products/ProductsController.php:58
+#: src/Controllers/Admin/Customers/CustomersController.php:24
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:58
+#: admin/customers/index.php:7
+msgid "Customers"
+msgstr ""
+
+#: src/Controllers/Admin/Customers/CustomersController.php:68
+#: src/Controllers/Admin/Products/ProductsController.php:66
 msgid "Product archived."
 msgstr ""
 
-#: src/Controllers/Admin/Customers/CustomersController.php:60
-#: src/Controllers/Admin/Products/ProductsController.php:58
+#: src/Controllers/Admin/Customers/CustomersController.php:68
+#: src/Controllers/Admin/Products/ProductsController.php:66
 msgid "Product restored."
 msgstr ""
 
@@ -263,7 +274,7 @@ msgstr ""
 
 #: src/Controllers/Admin/Customers/CustomersListTable.php:104
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:105
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:107
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:109
 msgid "Created"
 msgstr ""
 
@@ -314,7 +325,7 @@ msgstr ""
 #. translators: Coupon % off.
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:223
 #: src/Controllers/Admin/Orders/OrdersListTable.php:289
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:268
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:312
 msgid "%1d%% off"
 msgstr ""
 
@@ -329,6 +340,12 @@ msgstr ""
 #: src/Controllers/Admin/Orders/OrdersListTable.php:350
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:189
 msgid "Edit Order"
+msgstr ""
+
+#: src/Controllers/Admin/Invoices/InvoicesViewController.php:21
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:57
+#: admin/invoices/index.php:21
+msgid "Invoices"
 msgstr ""
 
 #: src/Controllers/Admin/Onboarding.php:46
@@ -355,6 +372,12 @@ msgstr ""
 msgid "By %s"
 msgstr ""
 
+#: src/Controllers/Admin/Orders/OrdersViewController.php:21
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:56
+#: admin/orders/index.php:7
+msgid "Orders"
+msgstr ""
+
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:62
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:183
 #: src/Controllers/Admin/Products/ProductsListTable.php:66
@@ -362,7 +385,7 @@ msgid "Archived"
 msgstr ""
 
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:183
-#: src/WordPress/PostTypes/FormPostTypeService.php:296
+#: src/WordPress/PostTypes/FormPostTypeService.php:321
 msgid "Live"
 msgstr ""
 
@@ -370,11 +393,18 @@ msgstr ""
 msgid "View"
 msgstr ""
 
+#: src/Controllers/Admin/Products/ProductsController.php:24
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:54
+#: admin/products/index.php:29
+msgid "Products"
+msgstr ""
+
 #: src/Controllers/Admin/Products/ProductsListTable.php:50
 msgid "Search Products"
 msgstr ""
 
 #: src/Controllers/Admin/Products/ProductsListTable.php:111
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:108
 msgid "Type"
 msgstr ""
 
@@ -383,6 +413,7 @@ msgid "No products found."
 msgstr ""
 
 #: src/Controllers/Admin/Products/ProductsListTable.php:203
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:220
 msgid "Subscription"
 msgstr ""
 
@@ -423,12 +454,19 @@ msgstr ""
 msgid "Connection"
 msgstr ""
 
+#: src/Controllers/Admin/Subscriptions/SubscriptionsController.php:23
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:59
+#: admin/subscriptions/index.php:23
+#: layouts/partials/admin-settings-sidebar.php:26
+#: web/dashboard/orders/show.php:58
+msgid "Subscriptions"
+msgstr ""
+
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:45
 msgid "Search Subscriptions"
 msgstr ""
 
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:62
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:315
 msgid "Canceled"
 msgstr ""
 
@@ -447,50 +485,92 @@ msgstr ""
 msgid "Product"
 msgstr ""
 
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:126
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:107
+msgid "Remaining Payments"
+msgstr ""
+
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:128
 msgid "No product"
 msgstr ""
 
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:212
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:205
+msgid "None"
+msgstr ""
+
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:222
+msgid "Payment Plan"
+msgstr ""
+
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:240
+msgid "for"
+msgstr ""
+
+#. translators: number of days.
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:250
+msgid "%d day"
+msgid_plural "%d days"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: number of days.
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:250
+msgid "day"
+msgid_plural "%d days"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: number of weeks.
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:256
+msgid "%d week"
+msgid_plural "%d weeks"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: number of weeks.
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:256
 msgid "week"
 msgid_plural "%d weeks"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:218
+#. translators: number of months
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:262
+msgid "%d month"
+msgid_plural "%d months"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: number of months
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:262
 msgid "month"
 msgid_plural "%d months"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:224
+#. translators: number of yearls
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:268
+msgid "%d year"
+msgid_plural "%d years"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: number of yearls
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:268
 msgid "year"
 msgid_plural "%d years"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:318
-msgid "Trialing"
-msgstr ""
-
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:321
-msgid "Draft"
-msgstr ""
-
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:329
-msgid "Update Pending"
-msgstr ""
-
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:346
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:390
 msgid "No name provided"
 msgstr ""
 
-#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:349
+#: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:393
 msgid "Edit Subscription"
 msgstr ""
 
 #: src/Controllers/Admin/Tables/ListTable.php:109
-#: src/WordPress/PostTypes/FormPostTypeService.php:292
+#: src/WordPress/PostTypes/FormPostTypeService.php:317
 #: admin/user-profile.php:13
 msgid "Test"
 msgstr ""
@@ -1068,7 +1148,7 @@ msgid "This promotion code already exists. Please archive the old code or use a 
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:21
-msgid "This product has prices that are currently being used. Please archive the product instead."
+msgid "This product has prices that are currently being used. Please archive the product instead if it is not already archived."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:23
@@ -1077,6 +1157,22 @@ msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:24
 msgid "This coupon code is invalid."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:25
+msgid "This price is currently being used in subscriptions or checkout sessions. Please archive the price and create another one."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:26
+msgid "The maximum price must be smaller."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:27
+msgid "The minimum price must be smaller."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:28
+msgid "The maximum price must be greater than the minimum price."
 msgstr ""
 
 #. translators: attribute.
@@ -1290,39 +1386,8 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:54
-#: admin/products/index.php:29
-msgid "Products"
-msgstr ""
-
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:55
-#: admin/coupons/index.php:5
-msgid "Coupons"
-msgstr ""
-
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:56
-#: admin/orders/index.php:8
-msgid "Orders"
-msgstr ""
-
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:57
-#: admin/invoices/index.php:22
-msgid "Invoices"
-msgstr ""
-
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:58
-#: admin/customers/index.php:7
-msgid "Customers"
-msgstr ""
-
-#: src/WordPress/Admin/Menus/AdminMenuPageService.php:59
-#: admin/subscriptions/index.php:21
-#: layouts/partials/admin-settings-sidebar.php:26
-#: web/dashboard/orders/show.php:58
-msgid "Subscriptions"
-msgstr ""
-
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:62
+#: src/WordPress/PostTypes/FormPostTypeService.php:81
 msgid "Forms"
 msgstr ""
 
@@ -1342,102 +1407,102 @@ msgstr ""
 msgid "Order Confirmation"
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:104
+#: src/WordPress/PostTypes/FormPostTypeService.php:129
 msgid "Default"
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:179
+#: src/WordPress/PostTypes/FormPostTypeService.php:204
 msgctxt "post type general name"
 msgid "Checkout Forms"
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:180
+#: src/WordPress/PostTypes/FormPostTypeService.php:205
 msgctxt "post type singular name"
 msgid "Checkout Form"
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:181
+#: src/WordPress/PostTypes/FormPostTypeService.php:206
 msgctxt "Checkout Form"
 msgid "Add New"
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:182
+#: src/WordPress/PostTypes/FormPostTypeService.php:207
 msgid "Add new Checkout Form"
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:183
+#: src/WordPress/PostTypes/FormPostTypeService.php:208
 msgid "New Checkout Form"
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:184
+#: src/WordPress/PostTypes/FormPostTypeService.php:209
 msgid "Edit Checkout Form"
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:185
+#: src/WordPress/PostTypes/FormPostTypeService.php:210
 msgid "View Checkout Form"
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:186
+#: src/WordPress/PostTypes/FormPostTypeService.php:211
 msgid "All Checkout Forms"
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:187
+#: src/WordPress/PostTypes/FormPostTypeService.php:212
 msgid "Search Checkout Forms"
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:188
+#: src/WordPress/PostTypes/FormPostTypeService.php:213
 msgid "No checkout forms found."
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:189
+#: src/WordPress/PostTypes/FormPostTypeService.php:214
 msgid "No checkout forms found in Trash."
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:190
+#: src/WordPress/PostTypes/FormPostTypeService.php:215
 msgid "Filter checkout forms list"
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:191
+#: src/WordPress/PostTypes/FormPostTypeService.php:216
 msgid "Checkout Forms list navigation"
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:192
+#: src/WordPress/PostTypes/FormPostTypeService.php:217
 msgid "Checkout Forms list"
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:193
+#: src/WordPress/PostTypes/FormPostTypeService.php:218
 msgid "Checkout Form published."
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:194
+#: src/WordPress/PostTypes/FormPostTypeService.php:219
 msgid "Checkout Form published privately."
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:195
+#: src/WordPress/PostTypes/FormPostTypeService.php:220
 msgid "Checkout Form reverted to draft."
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:196
+#: src/WordPress/PostTypes/FormPostTypeService.php:221
 msgid "Checkout Form scheduled."
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:197
+#: src/WordPress/PostTypes/FormPostTypeService.php:222
 msgid "Checkout Form updated."
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:249
+#: src/WordPress/PostTypes/FormPostTypeService.php:274
 msgid "Published In"
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:250
+#: src/WordPress/PostTypes/FormPostTypeService.php:275
 msgid "Mode"
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:251
+#: src/WordPress/PostTypes/FormPostTypeService.php:276
 msgid "Shortcode"
 msgstr ""
 
-#: src/WordPress/PostTypes/FormPostTypeService.php:320
+#: src/WordPress/PostTypes/FormPostTypeService.php:345
 msgid "(no title)"
 msgstr ""
 
@@ -1572,11 +1637,11 @@ msgstr ""
 msgid "Update your api token to change or update the connection to SureCart."
 msgstr ""
 
-#: admin/invoices/index.php:9
+#: admin/invoices/index.php:8
 msgid "What are Invoices?"
 msgstr ""
 
-#: admin/invoices/index.php:10
+#: admin/invoices/index.php:9
 msgid "Invoices are similar to orders, but are used for payments and plan changes on active subscriptions. In the future you will be able to create an invoice to send out."
 msgstr ""
 

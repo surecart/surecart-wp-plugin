@@ -44,12 +44,15 @@
 
 ### Depends on
 
+- [sc-button](../button)
 - [sc-icon](../icon)
 
 ### Graph
 ```mermaid
 graph TD;
+  sc-dialog --> sc-button
   sc-dialog --> sc-icon
+  sc-button --> sc-spinner
   style sc-dialog fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
