@@ -283,7 +283,11 @@ export class ScSubscriptionSwitch {
 
   render() {
     // we are not loading and we don't have enough prices to switch.
-    if (!this.loading && this.prices?.length < 2) return null;
+    if (!this.loading && this.prices?.length < 2) {
+      if (!this.prices?.[0]?.ad_hoc) {
+        return null;
+      }
+    }
 
     // subscription is a payment plan.
     if (this.subscription?.remaining_period_count) {
