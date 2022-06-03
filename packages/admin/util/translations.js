@@ -78,7 +78,7 @@ export const periodCountString = (price, prefix, fallback = '') => {
 		return '';
 	}
 	return translateInterval(
-		price?.recurring_period_count || 0,
+		(price?.recurring_period_count || 0) * price?.recurring_interval_count,
 		price?.recurring_interval,
 		` ${prefix}`,
 		fallback,
