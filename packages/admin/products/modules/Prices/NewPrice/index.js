@@ -111,7 +111,7 @@ export default ({ onRequestClose, product }) => {
 						box-sizing: border-box;
 						.components-modal__content,
 						.components-modal__frame {
-							overflow: visible !important;
+							/* overflow: visible !important; */
 							box-sizing: border-box;
 							max-width: 600px !important;
 							width: 100%;
