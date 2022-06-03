@@ -4,7 +4,7 @@ import { removeQueryArgs } from '@wordpress/url';
 import { parseFormData } from '../../../functions/form-data';
 
 import { createOrUpdateOrder, finalizeSession } from '../../../services/session';
-import { FormStateSetter, PaymentIntents, ProcessorName, LineItemData, Order, PriceChoice } from '../../../types';
+import { FormStateSetter, PaymentIntents, ProcessorName, LineItemData, Order, PriceChoice, LineItem } from '../../../types';
 import { getSessionId, getURLCoupon, getURLLineItems, populateInputs, removeSessionId, setSessionId } from './helpers/session';
 
 @Component({
@@ -283,23 +283,52 @@ export class ScSessionProvider {
 
   /** Find or create session on load. */
   componentDidLoad() {
-    const line_items = getURLLineItems();
-    const promotion_code = getURLCoupon();
+    this.findOrCreateOrder();
+  }
 
-    if (line_items && line_items?.length) {
-      // remove line items from url
+  /** Find or create an order */
+  findOrCreateOrder() {
+    // get initial data from the url
+    const initial_data = this.getInitialDataFromUrl() as { line_items?: LineItem[]; discount?: { promotion_code: string } };
+
+    // remove from window
+    if (initial_data?.discount?.promotion_code) {
+      window.history.replaceState({}, document.title, removeQueryArgs(window.location.href, 'coupon'));
+    }
+    if (initial_data?.line_items?.length) {
       window.history.replaceState({}, document.title, removeQueryArgs(window.location.href, 'line_items'));
-      return this.loadUpdate({ line_items });
     }
 
+    // we have line items, don't load any existing session.
+    if (initial_data?.line_items?.length) {
+      return this.fetch(initial_data);
+    }
+
+    // check if we have an existing session.
     const id = getSessionId(this.groupId, this.order, this.modified);
 
     // fetch or initialize a session.
-    if (id && this.persist) {
-      this.fetch({ ...(promotion_code ? { discount: { promotion_code } } : {}) });
-    } else {
-      this.initialize({ ...(promotion_code ? { discount: { promotion_code } } : {}) });
-    }
+    return id && this.persist ? this.fetch(initial_data) : this.initialize(initial_data);
+  }
+
+  getInitialDataFromUrl() {
+    let initial_data = {};
+
+    // Coupon code.
+    const promotion_code = getURLCoupon();
+    initial_data = {
+      ...initial_data,
+      ...(promotion_code ? { discount: { promotion_code } } : {}),
+    };
+
+    // Line items.
+    const line_items = getURLLineItems();
+    initial_data = {
+      ...initial_data,
+      ...(line_items && line_items?.length ? { line_items } : {}),
+    };
+
+    return initial_data;
   }
 
   /** Looks through children and finds items needed for initial session. */

@@ -32,6 +32,7 @@ export default () => {
 		coupon,
 		updateCoupon,
 		saveCoupon,
+		deleteCoupon,
 		saving,
 		setSaving,
 		isSaving,
@@ -158,6 +159,23 @@ export default () => {
 		}
 	};
 
+	// delete promotion
+	const onDelete = async () => {
+		try {
+			const r = confirm(
+				__(
+					'Are you sure you want to delete this Coupon code?',
+					'surecart'
+				)
+			);
+			if (!r) return;
+			setSaving(true);
+			await deleteCoupon();
+		} finally {
+			setSaving(false);
+		}
+	};
+
 	return (
 		<Template
 			onSubmit={onSubmit}
@@ -194,6 +212,7 @@ export default () => {
 							gap: 0.5em;
 						`}
 					>
+						{/* <ActionsDropdown coupon={coupon} onDelete={onDelete} /> */}
 						<ScButton
 							class="sc-save-model"
 							type="primary"
