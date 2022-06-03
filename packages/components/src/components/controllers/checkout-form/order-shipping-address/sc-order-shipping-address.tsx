@@ -1,6 +1,5 @@
 import { Component, Prop, h, Watch, State, Event, EventEmitter } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
-import { isAddressCompleteEnough } from '../../../../functions/address';
 import { Address, Order, TaxStatus } from '../../../../types';
 
 @Component({
@@ -26,6 +25,9 @@ export class ScOrderShippingAddress {
 
   /** Tax status of the order */
   @Prop() taxStatus: TaxStatus;
+
+  /** Is shipping enabled for this order? */
+  @Prop() shippingEnabled: boolean;
 
   /** Make a request to update the order. */
   @Event() scUpdateOrder: EventEmitter<Partial<Order>>;
@@ -69,11 +71,9 @@ export class ScOrderShippingAddress {
   updateAddressState(address: Partial<Address>) {
     if (address === this.address) return;
     this.address = address;
-    if (isAddressCompleteEnough(this.address) && this.taxStatus !== 'disabled') {
-      this.scUpdateOrder.emit({
-        shipping_address: this.address as Address,
-      });
-    }
+    this.scUpdateOrder.emit({
+      shipping_address: this.address as Address,
+    });
   }
 
   componentWillLoad() {
@@ -101,24 +101,19 @@ export class ScOrderShippingAddress {
   }
 
   render() {
-    return (
-      <sc-address
-        label={this.label}
-        required={this.required}
-        loading={this.loading}
-        address={this.address}
-        onScChangeAddress={e => this.updateAddressState(e.detail)}
-        names={{
-          country: 'shipping_country',
-          line_1: 'shipping_line_1',
-          line_2: 'shipping_line_2',
-          city: 'shipping_city',
-          postal_code: 'shipping_postal_code',
-          state: 'shipping_state',
-        }}
-      ></sc-address>
-    );
+    if (this.shippingEnabled) {
+      return (
+        <sc-address
+          label={this.label}
+          required={this.required}
+          loading={this.loading}
+          address={this.address}
+          onScChangeAddress={e => this.updateAddressState(e.detail)}
+        ></sc-address>
+      );
+    }
+    return <sc-compact-address label={this.label} required={this.required} address={this.address} onScChangeAddress={e => this.updateAddressState(e.detail)}></sc-compact-address>;
   }
 }
 
-openWormhole(ScOrderShippingAddress, ['shippingAddress', 'loading', 'customerShippingAddress', 'taxStatus'], false);
+openWormhole(ScOrderShippingAddress, ['shippingAddress', 'loading', 'customerShippingAddress', 'taxStatus', 'shippingEnabled'], false);

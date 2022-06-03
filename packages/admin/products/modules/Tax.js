@@ -63,6 +63,7 @@ export default ({ loading, product, updateProduct }) => {
 			</div>
 		);
 	};
+
 	return (
 		<Box
 			loading={loading}
@@ -74,10 +75,23 @@ export default ({ loading, product, updateProduct }) => {
 						justify-content: space-between;
 					`}
 				>
-					{__('Taxes', 'surecart')}
+					{__('Tax and Shipping', 'surecart')}
 				</div>
 			}
 		>
+			<Definition
+				title={__('This product requires shipping', 'surecart')}
+			>
+				<ScSwitch
+					checked={product?.shipping_enabled}
+					onScChange={(e) =>
+						updateProduct({
+							shipping_enabled: !!e.target.checked,
+						})
+					}
+				/>
+			</Definition>
+
 			{renderTaxInput()}
 		</Box>
 	);

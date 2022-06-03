@@ -255,6 +255,7 @@ export interface Order extends Object {
   discount?: DiscountResponse;
   billing_address?: string | Address;
   shipping_address?: string | Address;
+  shipping_enabled?: boolean;
   processor_data?: ProcessorData;
   tax_identifier?: {
     number: string;

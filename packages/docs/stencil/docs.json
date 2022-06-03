@@ -1,5 +1,5 @@
 {
-  "timestamp": "2022-05-24T20:13:11",
+  "timestamp": "2022-06-03T21:12:13",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.15.1",
@@ -2364,7 +2364,8 @@
           "sc-order-shipping-address"
         ],
         "sc-order-shipping-address": [
-          "sc-address"
+          "sc-address",
+          "sc-compact-address"
         ],
         "sc-address": [
           "sc-form-control",
@@ -2386,6 +2387,11 @@
         ],
         "sc-input": [
           "sc-form-control"
+        ],
+        "sc-compact-address": [
+          "sc-form-control",
+          "sc-select",
+          "sc-input"
         ],
         "sc-session-provider": [
           "sc-line-items-provider"
@@ -3016,6 +3022,136 @@
         ],
         "sc-wordpress-user-edit": [
           "sc-columns"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/ui/sc-compact-address/sc-compact-address.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-compact-address",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "address",
+          "type": "{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
+          "mutable": true,
+          "reflectToAttr": false,
+          "docs": "The address.",
+          "docsTags": [],
+          "default": "{\n    country: '',\n    city: '',\n    line_1: '',\n    line_2: '',\n    postal_code: '',\n    state: '',\n  }",
+          "values": [
+            {
+              "type": "{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "label",
+          "type": "string",
+          "mutable": false,
+          "attr": "label",
+          "reflectToAttr": false,
+          "docs": "Label for the address",
+          "docsTags": [],
+          "default": "__('Country or region', 'surecart')",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "names",
+          "type": "{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "{\n    country: 'shipping_country',\n    city: 'shipping_country',\n    line_1: 'shipping_line_1',\n    line_2: 'shipping_line_2',\n    postal_code: 'shipping_postal_code',\n    state: 'shipping_state',\n  }",
+          "values": [
+            {
+              "type": "{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "required",
+          "reflectToAttr": false,
+          "docs": "Is this required?",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [
+        {
+          "event": "scChangeAddress",
+          "detail": "{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Address change event.",
+          "docsTags": []
+        }
+      ],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [
+        {
+          "name": "control",
+          "docs": ""
+        }
+      ],
+      "dependents": [
+        "sc-order-shipping-address"
+      ],
+      "dependencies": [
+        "sc-form-control",
+        "sc-select",
+        "sc-input"
+      ],
+      "dependencyGraph": {
+        "sc-compact-address": [
+          "sc-form-control",
+          "sc-select",
+          "sc-input"
+        ],
+        "sc-form-control": [
+          "sc-tooltip"
+        ],
+        "sc-select": [
+          "sc-icon",
+          "sc-menu-label",
+          "sc-menu-item",
+          "sc-form-control",
+          "sc-dropdown",
+          "sc-input",
+          "sc-spinner",
+          "sc-menu"
+        ],
+        "sc-input": [
+          "sc-form-control"
+        ],
+        "sc-order-shipping-address": [
+          "sc-compact-address"
         ]
       }
     },
@@ -4472,7 +4608,7 @@
         },
         {
           "event": "scUpdateOrderState",
-          "detail": "{ id?: string; status?: \"finalized\" | \"draft\" | \"paid\"; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; email?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; tax_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; line_items?: lineItems; metadata?: Object; payment_intent?: PaymentIntent; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_address?: string | Address; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
+          "detail": "{ id?: string; status?: \"finalized\" | \"draft\" | \"paid\"; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; email?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; tax_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; line_items?: lineItems; metadata?: Object; payment_intent?: PaymentIntent; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_address?: string | Address; shipping_enabled?: boolean; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
           "bubbles": true,
           "cancelable": true,
           "composed": true,
@@ -6146,7 +6282,8 @@
           "sc-order-shipping-address"
         ],
         "sc-order-shipping-address": [
-          "sc-address"
+          "sc-address",
+          "sc-compact-address"
         ],
         "sc-address": [
           "sc-form-control",
@@ -6168,6 +6305,11 @@
         ],
         "sc-input": [
           "sc-form-control"
+        ],
+        "sc-compact-address": [
+          "sc-form-control",
+          "sc-select",
+          "sc-input"
         ],
         "sc-checkout": [
           "sc-form-components-validator"
@@ -6394,6 +6536,7 @@
       "dependents": [
         "sc-address",
         "sc-choices",
+        "sc-compact-address",
         "sc-input",
         "sc-payment",
         "sc-select"
@@ -6409,6 +6552,9 @@
           "sc-form-control"
         ],
         "sc-choices": [
+          "sc-form-control"
+        ],
+        "sc-compact-address": [
           "sc-form-control"
         ],
         "sc-input": [
@@ -8472,6 +8618,7 @@
       ],
       "dependents": [
         "sc-address",
+        "sc-compact-address",
         "sc-coupon-form",
         "sc-customer-edit",
         "sc-customer-email",
@@ -8496,6 +8643,9 @@
           "sc-tooltip"
         ],
         "sc-address": [
+          "sc-input"
+        ],
+        "sc-compact-address": [
           "sc-input"
         ],
         "sc-coupon-form": [
@@ -10647,6 +10797,22 @@
           "required": false
         },
         {
+          "name": "shippingEnabled",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "shipping-enabled",
+          "reflectToAttr": false,
+          "docs": "Is shipping enabled for this order?",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "taxStatus",
           "type": "\"address_invalid\" | \"calculated\" | \"disabled\" | \"estimated\" | \"reverse_charged\" | \"tax_registration_not_found\" | \"tax_zone_not_found\"",
           "mutable": false,
@@ -10692,7 +10858,7 @@
       "events": [
         {
           "event": "scUpdateOrder",
-          "detail": "{ id?: string; status?: \"finalized\" | \"draft\" | \"paid\"; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; email?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; tax_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; line_items?: lineItems; metadata?: Object; payment_intent?: PaymentIntent; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_address?: string | Address; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
+          "detail": "{ id?: string; status?: \"finalized\" | \"draft\" | \"paid\"; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; email?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; tax_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; line_items?: lineItems; metadata?: Object; payment_intent?: PaymentIntent; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_address?: string | Address; shipping_enabled?: boolean; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
           "bubbles": true,
           "cancelable": true,
           "composed": true,
@@ -10708,11 +10874,13 @@
         "sc-form-components-validator"
       ],
       "dependencies": [
-        "sc-address"
+        "sc-address",
+        "sc-compact-address"
       ],
       "dependencyGraph": {
         "sc-order-shipping-address": [
-          "sc-address"
+          "sc-address",
+          "sc-compact-address"
         ],
         "sc-address": [
           "sc-form-control",
@@ -10734,6 +10902,11 @@
         ],
         "sc-input": [
           "sc-form-control"
+        ],
+        "sc-compact-address": [
+          "sc-form-control",
+          "sc-select",
+          "sc-input"
         ],
         "sc-form-components-validator": [
           "sc-order-shipping-address"
@@ -11494,7 +11667,7 @@
       "props": [
         {
           "name": "order",
-          "type": "{ id?: string; status?: \"finalized\" | \"draft\" | \"paid\"; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; email?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; tax_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; line_items?: lineItems; metadata?: Object; payment_intent?: PaymentIntent; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_address?: string | Address; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
+          "type": "{ id?: string; status?: \"finalized\" | \"draft\" | \"paid\"; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; email?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; tax_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; line_items?: lineItems; metadata?: Object; payment_intent?: PaymentIntent; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_address?: string | Address; shipping_enabled?: boolean; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
           "mutable": false,
           "reflectToAttr": false,
           "docs": "The order",
@@ -11531,7 +11704,7 @@
               "type": "Address; shipping_address?: string"
             },
             {
-              "type": "Address; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }"
+              "type": "Address; shipping_enabled?: boolean; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }"
             }
           ],
           "optional": false,
@@ -11559,7 +11732,7 @@
       "events": [
         {
           "event": "scUpdateOrder",
-          "detail": "{ id?: string; status?: \"finalized\" | \"draft\" | \"paid\"; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; email?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; tax_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; line_items?: lineItems; metadata?: Object; payment_intent?: PaymentIntent; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_address?: string | Address; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
+          "detail": "{ id?: string; status?: \"finalized\" | \"draft\" | \"paid\"; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; email?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; tax_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; line_items?: lineItems; metadata?: Object; payment_intent?: PaymentIntent; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_address?: string | Address; shipping_enabled?: boolean; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
           "bubbles": true,
           "cancelable": true,
           "composed": true,
@@ -14728,7 +14901,8 @@
         }
       ],
       "dependents": [
-        "sc-address"
+        "sc-address",
+        "sc-compact-address"
       ],
       "dependencies": [
         "sc-icon",
@@ -14758,6 +14932,9 @@
           "sc-form-control"
         ],
         "sc-address": [
+          "sc-select"
+        ],
+        "sc-compact-address": [
           "sc-select"
         ]
       }

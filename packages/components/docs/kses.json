@@ -194,6 +194,16 @@
     "class": true,
     "slot": true
   },
+  "sc-compact-address": {
+    "address": true,
+    "label": true,
+    "names": true,
+    "required": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-consumer": {
     "renderer": true,
     "style": true,
@@ -751,6 +761,7 @@
     "loading": true,
     "required": true,
     "shipping-address": true,
+    "shipping-enabled": true,
     "tax-status": true,
     "style": true,
     "id": true,
