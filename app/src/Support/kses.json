@@ -1042,6 +1042,7 @@
     "squared-left": true,
     "squared-right": true,
     "squared-top": true,
+    "unselect": true,
     "value": true,
     "style": true,
     "id": true,

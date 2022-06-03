@@ -49,7 +49,7 @@ export class ScCompactAddress {
   /** When the state changes, we want to update city and postal fields. */
   @Watch('address')
   handleAddressChange() {
-    if (!Object.keys(this.address)?.length) return;
+    if (!this.address.country) return;
     this.setRegions();
     this.scChangeAddress.emit(this.address);
     this.showState = ['US', 'CA'].includes(this.address.country);
@@ -61,7 +61,11 @@ export class ScCompactAddress {
   }
 
   clearAddress() {
-    this.address = {};
+    this.address = {
+      country: null,
+      postal_code: null,
+      state: null,
+    };
   }
 
   /** Set the regions based on the country. */
@@ -94,6 +98,7 @@ export class ScCompactAddress {
             placeholder={__('Select Your Country', 'surecart')}
             name={this.names.country}
             search
+            unselect={false}
             squared-bottom={this.showState || this.showPostal}
             required={this.required}
           />
@@ -110,6 +115,7 @@ export class ScCompactAddress {
               hidden={!this.showState}
               search
               squared-top
+              unselect={false}
               squared-right={this.showPostal}
             />
             <sc-input
@@ -122,6 +128,7 @@ export class ScCompactAddress {
               value={this?.address?.postal_code}
               squared={!!this?.regions?.length}
               squared-top
+              maxlength={5}
               squared-left={this.showState}
             />
           </div>

@@ -1933,6 +1933,10 @@ export namespace Components {
         "squaredRight": boolean;
         "squaredTop": boolean;
         /**
+          * Can we unselect items.
+         */
+        "unselect": boolean;
+        /**
           * The input's value attribute.
          */
         "value": string;
@@ -5479,6 +5483,10 @@ declare namespace LocalJSX {
         "squaredLeft"?: boolean;
         "squaredRight"?: boolean;
         "squaredTop"?: boolean;
+        /**
+          * Can we unselect items.
+         */
+        "unselect"?: boolean;
         /**
           * The input's value attribute.
          */

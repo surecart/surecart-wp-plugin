@@ -41,6 +41,9 @@ export class ScSelectDropdown {
   /** The input's value attribute. */
   @Prop({ mutable: true }) choices: Array<ChoiceItem> = [];
 
+  /** Can we unselect items. */
+  @Prop() unselect: boolean = true;
+
   /* Is it required */
   @Prop({ reflect: true }) required: boolean;
 
@@ -172,7 +175,7 @@ export class ScSelectDropdown {
   }
 
   handleSelect(value) {
-    if (this.value === value) {
+    if (this.value === value && this.unselect) {
       this.value = '';
     } else {
       this.value = value;
