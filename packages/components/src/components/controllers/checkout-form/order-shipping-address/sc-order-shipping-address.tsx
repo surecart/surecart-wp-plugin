@@ -34,12 +34,12 @@ export class ScOrderShippingAddress {
 
   /** Address to pass to the component */
   @State() address: Partial<Address> = {
-    country: '',
-    city: '',
-    line_1: '',
-    line_2: '',
-    postal_code: '',
-    state: '',
+    country: null,
+    city: null,
+    line_1: null,
+    line_2: null,
+    postal_code: null,
+    state: null,
   };
 
   /** When the customer shipping address changes, we want to use that instead of what's entered, if we have empty fields. */
@@ -112,7 +112,7 @@ export class ScOrderShippingAddress {
         ></sc-address>
       );
     }
-    return <sc-compact-address label={this.label} required={this.required} address={this.address} onScChangeAddress={e => this.updateAddressState(e.detail)}></sc-compact-address>;
+    return <sc-compact-address required={this.required} address={this.address} onScChangeAddress={e => this.updateAddressState(e.detail)}></sc-compact-address>;
   }
 }
 

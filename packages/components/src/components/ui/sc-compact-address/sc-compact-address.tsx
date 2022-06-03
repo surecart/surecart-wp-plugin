@@ -6,17 +6,17 @@ import { __ } from '@wordpress/i18n';
 @Component({
   tag: 'sc-compact-address',
   styleUrl: 'sc-compact-address.scss',
-  shadow: true,
+  shadow: false,
 })
 export class ScCompactAddress {
   /** The address. */
   @Prop({ mutable: true }) address: Partial<Address> = {
-    country: '',
-    city: '',
-    line_1: '',
-    line_2: '',
-    postal_code: '',
-    state: '',
+    country: null,
+    city: null,
+    line_1: null,
+    line_2: null,
+    postal_code: null,
+    state: null,
   };
 
   @Prop() names: Partial<Address> = {
@@ -49,6 +49,7 @@ export class ScCompactAddress {
   /** When the state changes, we want to update city and postal fields. */
   @Watch('address')
   handleAddressChange() {
+    if (!Object.keys(this.address)?.length) return;
     this.setRegions();
     this.scChangeAddress.emit(this.address);
     this.showState = ['US', 'CA'].includes(this.address.country);
@@ -60,14 +61,7 @@ export class ScCompactAddress {
   }
 
   clearAddress() {
-    this.address = {
-      country: '',
-      city: '',
-      line_1: '',
-      line_2: '',
-      postal_code: '',
-      state: '',
-    };
+    this.address = {};
   }
 
   /** Set the regions based on the country. */
@@ -81,6 +75,10 @@ export class ScCompactAddress {
     }
   }
 
+  componentDidLoad() {
+    this.handleAddressChange();
+  }
+
   render() {
     return (
       <div class="sc-address">
@@ -89,7 +87,7 @@ export class ScCompactAddress {
             value={this.address?.country}
             onScChange={(e: any) => {
               this.clearAddress();
-              this.updateAddress({ country: e.target.value });
+              this.updateAddress({ country: e.target.value || null });
             }}
             choices={this.countryChoices}
             autocomplete={'country-name'}
@@ -106,7 +104,7 @@ export class ScCompactAddress {
               name={this.names.state}
               autocomplete={'address-level1'}
               value={this?.address?.state}
-              onScChange={(e: any) => this.updateAddress({ state: e.target.value })}
+              onScChange={(e: any) => this.updateAddress({ state: e.target.value || null })}
               choices={this.regions}
               required={this.required && !!this.showState}
               hidden={!this.showState}
@@ -117,9 +115,9 @@ export class ScCompactAddress {
             <sc-input
               placeholder={__('Postal Code/Zip', 'surecart')}
               name={this.names.postal_code}
-              onScChange={(e: any) => this.updateAddress({ postal_code: e.target.value })}
+              onScChange={(e: any) => this.updateAddress({ postal_code: e.target.value || null })}
               autocomplete={'postal-code'}
-              required={this.required && !this.showPostal}
+              required={this.required && !!this.showPostal}
               hidden={!this.showPostal}
               value={this?.address?.postal_code}
               squared={!!this?.regions?.length}
