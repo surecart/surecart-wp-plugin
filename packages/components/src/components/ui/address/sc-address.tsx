@@ -11,12 +11,12 @@ import { Address } from '../../../types';
 export class ScAddress {
   /** The address. */
   @Prop({ mutable: true }) address: Partial<Address> = {
-    country: '',
-    city: '',
-    line_1: '',
-    line_2: '',
-    postal_code: '',
-    state: '',
+    country: null,
+    city: null,
+    line_1: null,
+    line_2: null,
+    postal_code: null,
+    state: null,
   };
 
   @Prop() names: Partial<Address> = {
@@ -29,7 +29,7 @@ export class ScAddress {
   };
 
   /** Is this loading?  */
-  @Prop() loading: boolean = true;
+  @Prop() loading: boolean = false;
 
   /** The label for the field. */
   @Prop() label: string;
@@ -55,10 +55,26 @@ export class ScAddress {
   /** When the state changes, we want to update city and postal fields. */
   @Watch('address')
   handleAddressChange() {
+    if (!this.address.country) return;
     this.setRegions();
     this.showPostal = hasPostal(this.address.country);
     this.showCity = hasCity(this.address.country);
     this.scChangeAddress.emit(this.address);
+  }
+
+  updateAddress(address: Partial<Address>) {
+    this.address = { ...this.address, ...address };
+  }
+
+  clearAddress() {
+    this.address = {
+      country: null,
+      city: null,
+      line_1: null,
+      line_2: null,
+      postal_code: null,
+      state: null,
+    };
   }
 
   /** Set the regions based on the country. */
@@ -70,21 +86,6 @@ export class ScAddress {
     } else {
       this.regions = [];
     }
-  }
-
-  updateAddress(address: Partial<Address>) {
-    this.address = { ...this.address, ...address };
-  }
-
-  clearAddress() {
-    this.address = {
-      country: '',
-      city: '',
-      line_1: '',
-      line_2: '',
-      postal_code: '',
-      state: '',
-    };
   }
 
   componentWillLoad() {
@@ -108,13 +109,14 @@ export class ScAddress {
             placeholder={__('Country', 'surecart')}
             name={this.names.country}
             search
+            unselect={false}
             squared-bottom
             required={this.required}
           />
 
           <sc-input
             value={this?.address?.line_1}
-            onScChange={(e: any) => this.updateAddress({ line_1: e.target.value })}
+            onScChange={(e: any) => this.updateAddress({ line_1: e.target.value || null })}
             autocomplete="street-address"
             placeholder={__('Address', 'surecart')}
             name={this.names.line_1}
@@ -127,7 +129,7 @@ export class ScAddress {
               placeholder={__('City', 'surecart')}
               name={this.names.city}
               value={this?.address?.city}
-              onScChange={(e: any) => this.updateAddress({ city: e.target.value })}
+              onScChange={(e: any) => this.updateAddress({ city: e.target.value || null })}
               required={this.required && this.showCity}
               hidden={!this.showCity}
               squared={!!this?.regions?.length}
@@ -138,7 +140,7 @@ export class ScAddress {
             <sc-input
               placeholder={__('Postal Code/Zip', 'surecart')}
               name={this.names.postal_code}
-              onScChange={(e: any) => this.updateAddress({ postal_code: e.target.value })}
+              onScChange={(e: any) => this.updateAddress({ postal_code: e.target.value || null })}
               autocomplete={'postal-code'}
               required={this.required && this.showPostal}
               hidden={!this.showPostal}
@@ -154,7 +156,7 @@ export class ScAddress {
             name={this.names.state}
             autocomplete={'address-level1'}
             value={this?.address?.state}
-            onScChange={(e: any) => this.updateAddress({ state: e.target.value })}
+            onScChange={(e: any) => this.updateAddress({ state: e.target.value || null })}
             choices={this.regions}
             required={this.required && !!this?.regions?.length}
             hidden={!this?.regions?.length || !this.address?.country}
@@ -162,6 +164,7 @@ export class ScAddress {
             squared-top
           />
         </sc-form-control>
+        {this.loading && <sc-block-ui></sc-block-ui>}
       </div>
     );
   }

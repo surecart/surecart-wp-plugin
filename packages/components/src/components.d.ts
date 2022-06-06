@@ -428,6 +428,10 @@ export namespace Components {
           * Label for the address
          */
         "label": string;
+        /**
+          * Is this loading
+         */
+        "loading": boolean;
         "names": Partial<Address>;
         /**
           * Is this required?
@@ -3767,6 +3771,10 @@ declare namespace LocalJSX {
           * Label for the address
          */
         "label"?: string;
+        /**
+          * Is this loading
+         */
+        "loading"?: boolean;
         "names"?: Partial<Address>;
         /**
           * Address change event.

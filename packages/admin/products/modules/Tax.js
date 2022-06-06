@@ -79,6 +79,7 @@ export default ({ loading, product, updateProduct }) => {
 				</div>
 			}
 		>
+			{renderTaxInput()}
 			<Definition
 				title={__('This product requires shipping', 'surecart')}
 			>
@@ -91,8 +92,6 @@ export default ({ loading, product, updateProduct }) => {
 					}
 				/>
 			</Definition>
-
-			{renderTaxInput()}
 		</Box>
 	);
 };

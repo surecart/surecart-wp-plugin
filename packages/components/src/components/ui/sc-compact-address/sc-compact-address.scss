@@ -11,13 +11,14 @@ sc-address {
   }
 
   &--loading {
-    min-height: 230px;
+    min-height: 70px;
+
+    sc-skeleton {
+      display: block;
+      margin-bottom: 1em;
+    }
   }
 
-  sc-skeleton {
-    display: block;
-    margin-bottom: 1em;
-  }
 
   &__control {
     display: block;

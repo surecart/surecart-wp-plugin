@@ -5,13 +5,78 @@ exports[`sc-address renders 1`] = `
   <div class="sc-address">
     <sc-form-control class="sc-address__control" part="control" required="">
       <sc-select autocomplete="country-name" name="shipping_country" placeholder="Country" required="" search="" squared-bottom="" value="US"></sc-select>
-      <sc-input autocomplete="street-address" name="shipping_line_1" placeholder="Address" required="" squared="" value=""></sc-input>
+      <sc-input autocomplete="street-address" name="shipping_line_1" placeholder="Address" required="" squared=""></sc-input>
       <div class="sc-address__columns">
-        <sc-input name="shipping_country" placeholder="City" required="" squared="" squared-right="" squared-top="" value="" style="margin-right: -1px;"></sc-input>
-        <sc-input autocomplete="postal-code" name="shipping_postal_code" placeholder="Postal Code/Zip" required="" squared="" squared-left="" squared-top="" value=""></sc-input>
+        <sc-input name="shipping_country" placeholder="City" required="" squared="" squared-right="" squared-top="" style="margin-right: -1px;"></sc-input>
+        <sc-input autocomplete="postal-code" name="shipping_postal_code" placeholder="Postal Code/Zip" required="" squared="" squared-left="" squared-top=""></sc-input>
       </div>
-      <sc-select autocomplete="address-level1" name="shipping_state" placeholder="State/Province/Region" required="" search="" squared-top="" value=""></sc-select>
+      <sc-select autocomplete="address-level1" name="shipping_state" placeholder="State/Province/Region" required="" search="" squared-top=""></sc-select>
     </sc-form-control>
+  </div>
+</sc-address>
+`;
+
+exports[`sc-address renders CA address fields 1`] = `
+<sc-address required="">
+  <div class="sc-address">
+    <sc-form-control class="sc-address__control" part="control" required="">
+      <sc-select autocomplete="country-name" name="shipping_country" placeholder="Country" required="" search="" squared-bottom="" value="CA"></sc-select>
+      <sc-input autocomplete="street-address" name="shipping_line_1" placeholder="Address" required="" squared="" value="303 Park Ave"></sc-input>
+      <div class="sc-address__columns">
+        <sc-input name="shipping_country" placeholder="City" required="" squared="" squared-right="" squared-top="" value="Monona" style="margin-right: -1px;"></sc-input>
+        <sc-input autocomplete="postal-code" name="shipping_postal_code" placeholder="Postal Code/Zip" required="" squared="" squared-left="" squared-top="" value="12345"></sc-input>
+      </div>
+      <sc-select autocomplete="address-level1" name="shipping_state" placeholder="State/Province/Region" required="" search="" squared-top="" value="WI"></sc-select>
+    </sc-form-control>
+  </div>
+</sc-address>
+`;
+
+exports[`sc-address renders EU address fields 1`] = `
+<sc-address required="">
+  <div class="sc-address">
+    <sc-form-control class="sc-address__control" part="control" required="">
+      <sc-select autocomplete="country-name" name="shipping_country" placeholder="Country" required="" search="" squared-bottom="" value="US"></sc-select>
+      <sc-input autocomplete="street-address" name="shipping_line_1" placeholder="Address" required="" squared="" value="303 Park Ave"></sc-input>
+      <div class="sc-address__columns">
+        <sc-input name="shipping_country" placeholder="City" required="" squared="" squared-right="" squared-top="" value="Monona" style="margin-right: -1px;"></sc-input>
+        <sc-input autocomplete="postal-code" name="shipping_postal_code" placeholder="Postal Code/Zip" required="" squared="" squared-left="" squared-top="" value="12345"></sc-input>
+      </div>
+      <sc-select autocomplete="address-level1" name="shipping_state" placeholder="State/Province/Region" required="" search="" squared-top="" value="WI"></sc-select>
+    </sc-form-control>
+  </div>
+</sc-address>
+`;
+
+exports[`sc-address renders US address fields 1`] = `
+<sc-address required="">
+  <div class="sc-address">
+    <sc-form-control class="sc-address__control" part="control" required="">
+      <sc-select autocomplete="country-name" name="shipping_country" placeholder="Country" required="" search="" squared-bottom="" value="US"></sc-select>
+      <sc-input autocomplete="street-address" name="shipping_line_1" placeholder="Address" required="" squared="" value="303 Park Ave"></sc-input>
+      <div class="sc-address__columns">
+        <sc-input name="shipping_country" placeholder="City" required="" squared="" squared-right="" squared-top="" value="Monona" style="margin-right: -1px;"></sc-input>
+        <sc-input autocomplete="postal-code" name="shipping_postal_code" placeholder="Postal Code/Zip" required="" squared="" squared-left="" squared-top="" value="12345"></sc-input>
+      </div>
+      <sc-select autocomplete="address-level1" name="shipping_state" placeholder="State/Province/Region" required="" search="" squared-top="" value="WI"></sc-select>
+    </sc-form-control>
+  </div>
+</sc-address>
+`;
+
+exports[`sc-address renders loading 1`] = `
+<sc-address loading="true" required="">
+  <div class="sc-address">
+    <sc-form-control class="sc-address__control" part="control" required="">
+      <sc-select autocomplete="country-name" name="shipping_country" placeholder="Country" required="" search="" squared-bottom="" value="US"></sc-select>
+      <sc-input autocomplete="street-address" name="shipping_line_1" placeholder="Address" required="" squared=""></sc-input>
+      <div class="sc-address__columns">
+        <sc-input name="shipping_country" placeholder="City" required="" squared="" squared-right="" squared-top="" style="margin-right: -1px;"></sc-input>
+        <sc-input autocomplete="postal-code" name="shipping_postal_code" placeholder="Postal Code/Zip" required="" squared="" squared-left="" squared-top=""></sc-input>
+      </div>
+      <sc-select autocomplete="address-level1" name="shipping_state" placeholder="State/Province/Region" required="" search="" squared-top=""></sc-select>
+    </sc-form-control>
+    <sc-block-ui></sc-block-ui>
   </div>
 </sc-address>
 `;

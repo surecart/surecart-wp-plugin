@@ -1,10 +1,11 @@
 import { Component, Prop, h, Watch, State, Event, EventEmitter } from '@stencil/core';
+import { __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
 import { Address, Order, TaxStatus } from '../../../../types';
 
 @Component({
   tag: 'sc-order-shipping-address',
-  styleUrl: 'sc-order-shipping-address.css',
+  styleUrl: 'sc-order-shipping-address.scss',
   shadow: false,
 })
 export class ScOrderShippingAddress {
@@ -45,31 +46,33 @@ export class ScOrderShippingAddress {
   /** When the customer shipping address changes, we want to use that instead of what's entered, if we have empty fields. */
   @Watch('customerShippingAddress')
   handleCustomerAddressChange(val, old) {
-    if (!Object.keys(this.shippingAddress || {}).length) {
-      // update local address if changes.
-      Object.keys(this.address).forEach(key => {
-        if (val?.[key] !== old?.[key]) {
-          if (!val?.[key]) return; // don't allow resetting to empty.
-          this.address = { ...this.address, [key]: val?.[key] };
-        }
-      });
+    // if the shipping address is blank, use the customer address.
+    if (!Object.keys(this.shippingAddress || {}).length && !old) {
+      this.address = { ...this.address, ...val };
     }
   }
 
   /** When the shipping address changes, we want to update the passed address to match. */
   @Watch('shippingAddress')
   handleShippingChange(val, old) {
-    // update local address if changes.
-    Object.keys(this.address).forEach(key => {
-      if (val?.[key] !== old?.[key]) {
-        if (!val?.[key]) return; // don't allow resetting to empty.
-        this.address = { ...this.address, [key]: val?.[key] };
+    console.log({ val });
+    // let's only update it the first time.
+    if (!old) {
+      if (!val?.country) {
+        const country = navigator?.language?.slice(-2).toUpperCase();
+        if (country) {
+          this.address = {
+            ...this.address,
+            country,
+          };
+        }
       }
-    });
+      this.address = { ...this.address, ...val };
+    }
   }
 
   updateAddressState(address: Partial<Address>) {
-    if (address === this.address) return;
+    if (address === this.address) return; // no change, don't update.
     this.address = address;
     this.scUpdateOrder.emit({
       shipping_address: this.address as Address,
@@ -77,17 +80,6 @@ export class ScOrderShippingAddress {
   }
 
   componentWillLoad() {
-    // if we have a shipping address on load, update the passed address.
-    if (this.shippingAddress) {
-      this.address = {
-        ...(this.shippingAddress?.country ? { county: this.shippingAddress?.country } : {}),
-        ...(this.shippingAddress?.state ? { state: this.shippingAddress.state } : {}),
-        ...(this.shippingAddress?.city ? { city: this.shippingAddress.city } : {}),
-        ...(this.shippingAddress?.postal_code ? { postal_code: this.shippingAddress.postal_code } : {}),
-        ...(this.shippingAddress?.line_1 ? { line_1: this.shippingAddress.line_1 } : {}),
-      };
-    }
-
     /** Set the country by browser language if not set. */
     if (!this.address?.country) {
       const country = navigator?.language?.slice(-2).toUpperCase();
@@ -104,7 +96,7 @@ export class ScOrderShippingAddress {
     if (this.shippingEnabled) {
       return (
         <sc-address
-          label={this.label}
+          label={__('Shipping Address', 'surecart')}
           required={this.required}
           loading={this.loading}
           address={this.address}
@@ -112,7 +104,9 @@ export class ScOrderShippingAddress {
         ></sc-address>
       );
     }
-    return <sc-compact-address required={this.required} address={this.address} onScChangeAddress={e => this.updateAddressState(e.detail)}></sc-compact-address>;
+    return (
+      <sc-compact-address required={this.required} loading={this.loading} address={this.address} onScChangeAddress={e => this.updateAddressState(e.detail)}></sc-compact-address>
+    );
   }
 }
 

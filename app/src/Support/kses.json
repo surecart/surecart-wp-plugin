@@ -197,6 +197,7 @@
   "sc-compact-address": {
     "address": true,
     "label": true,
+    "loading": true,
     "names": true,
     "required": true,
     "style": true,

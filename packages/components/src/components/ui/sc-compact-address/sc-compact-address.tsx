@@ -34,6 +34,9 @@ export class ScCompactAddress {
   /** Is this required? */
   @Prop() required: boolean;
 
+  /** Is this loading */
+  @Prop() loading: boolean;
+
   /** Address change event. */
   @Event() scChangeAddress: EventEmitter<Partial<Address>>;
 
@@ -79,8 +82,12 @@ export class ScCompactAddress {
     }
   }
 
-  componentDidLoad() {
+  componentWillLoad() {
     this.handleAddressChange();
+    const country = this.countryChoices.find(country => country.value === this.address.country)?.value;
+    if (country) {
+      this.updateAddress({ country });
+    }
   }
 
   render() {
@@ -133,6 +140,7 @@ export class ScCompactAddress {
             />
           </div>
         </sc-form-control>
+        {this.loading && <sc-block-ui></sc-block-ui>}
       </div>
     );
   }
