@@ -55,7 +55,6 @@ export class ScOrderShippingAddress {
   /** When the shipping address changes, we want to update the passed address to match. */
   @Watch('shippingAddress')
   handleShippingChange(val, old) {
-    console.log({ val });
     // let's only update it the first time.
     if (!old) {
       if (!val?.country) {

@@ -21,7 +21,7 @@ export class ScCompactAddress {
 
   @Prop() names: Partial<Address> = {
     country: 'shipping_country',
-    city: 'shipping_country',
+    city: 'shipping_city',
     line_1: 'shipping_line_1',
     line_2: 'shipping_line_2',
     postal_code: 'shipping_postal_code',
@@ -66,6 +66,9 @@ export class ScCompactAddress {
   clearAddress() {
     this.address = {
       country: null,
+      line_1: null,
+      line_2: null,
+      city: null,
       postal_code: null,
       state: null,
     };
