@@ -423,6 +423,25 @@ export namespace Components {
          */
         "verticalAlignment": string;
     }
+    interface ScCompactAddress {
+        /**
+          * The address.
+         */
+        "address": Partial<Address>;
+        /**
+          * Label for the address
+         */
+        "label": string;
+        /**
+          * Is this loading
+         */
+        "loading": boolean;
+        "names": Partial<Address>;
+        /**
+          * Is this required?
+         */
+        "required": boolean;
+    }
     interface ScConsumer {
         "renderer": any;
     }
@@ -1366,6 +1385,10 @@ export namespace Components {
           * Holds the customer's billing address
          */
         "shippingAddress": Address;
+        /**
+          * Is shipping enabled for this order?
+         */
+        "shippingEnabled": boolean;
         /**
           * Tax status of the order
          */
@@ -2549,6 +2572,12 @@ declare global {
         prototype: HTMLScColumnsElement;
         new (): HTMLScColumnsElement;
     };
+    interface HTMLScCompactAddressElement extends Components.ScCompactAddress, HTMLStencilElement {
+    }
+    var HTMLScCompactAddressElement: {
+        prototype: HTMLScCompactAddressElement;
+        new (): HTMLScCompactAddressElement;
+    };
     interface HTMLScConsumerElement extends Components.ScConsumer, HTMLStencilElement {
     }
     var HTMLScConsumerElement: {
@@ -3233,6 +3262,7 @@ declare global {
         "sc-choices": HTMLScChoicesElement;
         "sc-column": HTMLScColumnElement;
         "sc-columns": HTMLScColumnsElement;
+        "sc-compact-address": HTMLScCompactAddressElement;
         "sc-consumer": HTMLScConsumerElement;
         "sc-coupon-form": HTMLScCouponFormElement;
         "sc-custom-order-price-input": HTMLScCustomOrderPriceInputElement;
@@ -3773,6 +3803,29 @@ declare namespace LocalJSX {
           * The vertical alignment of the columns.
          */
         "verticalAlignment"?: string;
+    }
+    interface ScCompactAddress {
+        /**
+          * The address.
+         */
+        "address"?: Partial<Address>;
+        /**
+          * Label for the address
+         */
+        "label"?: string;
+        /**
+          * Is this loading
+         */
+        "loading"?: boolean;
+        "names"?: Partial<Address>;
+        /**
+          * Address change event.
+         */
+        "onScChangeAddress"?: (event: CustomEvent<Partial<Address>>) => void;
+        /**
+          * Is this required?
+         */
+        "required"?: boolean;
     }
     interface ScConsumer {
         "onMountConsumer"?: (event: CustomEvent<any>) => void;
@@ -4862,6 +4915,10 @@ declare namespace LocalJSX {
           * Holds the customer's billing address
          */
         "shippingAddress"?: Address;
+        /**
+          * Is shipping enabled for this order?
+         */
+        "shippingEnabled"?: boolean;
         /**
           * Tax status of the order
          */
@@ -6072,6 +6129,7 @@ declare namespace LocalJSX {
         "sc-choices": ScChoices;
         "sc-column": ScColumn;
         "sc-columns": ScColumns;
+        "sc-compact-address": ScCompactAddress;
         "sc-consumer": ScConsumer;
         "sc-coupon-form": ScCouponForm;
         "sc-custom-order-price-input": ScCustomOrderPriceInput;
@@ -6206,6 +6264,7 @@ declare module "@stencil/core" {
             "sc-choices": LocalJSX.ScChoices & JSXBase.HTMLAttributes<HTMLScChoicesElement>;
             "sc-column": LocalJSX.ScColumn & JSXBase.HTMLAttributes<HTMLScColumnElement>;
             "sc-columns": LocalJSX.ScColumns & JSXBase.HTMLAttributes<HTMLScColumnsElement>;
+            "sc-compact-address": LocalJSX.ScCompactAddress & JSXBase.HTMLAttributes<HTMLScCompactAddressElement>;
             "sc-consumer": LocalJSX.ScConsumer & JSXBase.HTMLAttributes<HTMLScConsumerElement>;
             "sc-coupon-form": LocalJSX.ScCouponForm & JSXBase.HTMLAttributes<HTMLScCouponFormElement>;
             "sc-custom-order-price-input": LocalJSX.ScCustomOrderPriceInput & JSXBase.HTMLAttributes<HTMLScCustomOrderPriceInputElement>;

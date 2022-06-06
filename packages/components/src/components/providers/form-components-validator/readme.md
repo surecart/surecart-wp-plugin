@@ -29,6 +29,7 @@
 graph TD;
   sc-form-components-validator --> sc-order-shipping-address
   sc-order-shipping-address --> sc-address
+  sc-order-shipping-address --> sc-compact-address
   sc-address --> sc-form-control
   sc-address --> sc-select
   sc-address --> sc-input
@@ -42,6 +43,9 @@ graph TD;
   sc-select --> sc-spinner
   sc-select --> sc-menu
   sc-input --> sc-form-control
+  sc-compact-address --> sc-form-control
+  sc-compact-address --> sc-select
+  sc-compact-address --> sc-input
   sc-checkout --> sc-form-components-validator
   style sc-form-components-validator fill:#f9f,stroke:#333,stroke-width:4px
 ```

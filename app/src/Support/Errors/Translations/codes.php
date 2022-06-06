@@ -22,6 +22,7 @@ return [
 	'order.shipping_address.invalid_tax_address'        => __( 'Please fill out your address.', 'surecart' ),
 	'order.line_items.old_price_versions'               => __( 'The prices in this checkout session have changed. Please recheck it before submitting again.', 'surecart' ),
 	'order.discount.coupon.blank'                       => __( 'This coupon code is invalid.', 'surecart' ),
+	'order.shipping_address.postal_code.invalid'        => __( 'Your postal code is not valid.', 'surecart' ),
 	'price_version.restrict_dependent_destroy.has_many' => __( 'This price is currently being used in subscriptions or checkout sessions. Please archive the price and create another one.', 'surecart' ),
 	'price.ad_hoc_max_amount.less_than'                 => __( 'The maximum price must be smaller.', 'surecart' ),
 	'price.ad_hoc_min_amount.less_than'                 => __( 'The minimum price must be smaller.', 'surecart' ),

@@ -89,7 +89,6 @@ export class ScSessionProvider {
   }
 
   @Listen('scUpdateOrder')
-  @Listen('scUpdateSession')
   handleUpdateSession(e) {
     const data = e.detail;
     this.loadUpdate(data);
