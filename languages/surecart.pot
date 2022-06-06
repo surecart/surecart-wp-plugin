@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-06-02T17:24:08+00:00\n"
+"POT-Creation-Date: 2022-06-06T17:20:37+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 
@@ -1160,18 +1160,22 @@ msgid "This coupon code is invalid."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:25
-msgid "This price is currently being used in subscriptions or checkout sessions. Please archive the price and create another one."
+msgid "Your postal code is not valid."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:26
-msgid "The maximum price must be smaller."
+msgid "This price is currently being used in subscriptions or checkout sessions. Please archive the price and create another one."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:27
-msgid "The minimum price must be smaller."
+msgid "The maximum price must be smaller."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:28
+msgid "The minimum price must be smaller."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:29
 msgid "The maximum price must be greater than the minimum price."
 msgstr ""
 

@@ -4906,7 +4906,10 @@ declare namespace LocalJSX {
         /**
           * Make a request to update the order.
          */
-        "onScUpdateOrder"?: (event: CustomEvent<Partial<Order>>) => void;
+        "onScUpdateOrder"?: (event: CustomEvent<{
+    data: Partial<Order>;
+    options?: { silent?: boolean };
+  }>) => void;
         /**
           * Is this required (defaults to true)
          */
@@ -5039,7 +5042,10 @@ declare namespace LocalJSX {
         /**
           * Make a request to update the order.
          */
-        "onScUpdateOrder"?: (event: CustomEvent<Partial<Order>>) => void;
+        "onScUpdateOrder"?: (event: CustomEvent<{
+    data: Partial<Order>;
+    options?: { silent?: boolean };
+  }>) => void;
         /**
           * The order
          */

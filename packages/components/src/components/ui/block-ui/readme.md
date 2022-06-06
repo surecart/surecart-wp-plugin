@@ -18,8 +18,10 @@
 
 ### Used by
 
+ - [sc-address](../address)
  - [sc-charges-list](../../controllers/dashboard/charges-list)
  - [sc-checkout](../../controllers/checkout-form/checkout)
+ - [sc-compact-address](../sc-compact-address)
  - [sc-coupon-form](../coupon-form)
  - [sc-custom-order-price-input](../../controllers/checkout-form/custom-order-price-input)
  - [sc-customer-edit](../../controllers/dashboard/customer-edit)
@@ -51,8 +53,10 @@
 ```mermaid
 graph TD;
   sc-block-ui --> sc-spinner
+  sc-address --> sc-block-ui
   sc-charges-list --> sc-block-ui
   sc-checkout --> sc-block-ui
+  sc-compact-address --> sc-block-ui
   sc-coupon-form --> sc-block-ui
   sc-custom-order-price-input --> sc-block-ui
   sc-customer-edit --> sc-block-ui

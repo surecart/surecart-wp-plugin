@@ -16,7 +16,10 @@ export class ScOrderTaxIdInput {
   @Prop() show: boolean = false;
 
   /** Make a request to update the order. */
-  @Event() scUpdateOrder: EventEmitter<Partial<Order>>;
+  @Event() scUpdateOrder: EventEmitter<{
+    data: Partial<Order>;
+    options?: { silent?: boolean };
+  }>;
 
   render() {
     if (this.order?.tax_identifier?.number && this.order?.tax_identifier?.number_type) {
@@ -28,7 +31,7 @@ export class ScOrderTaxIdInput {
           onScChange={e => {
             const tax_identifier = e.detail;
             this.scUpdateOrder.emit({
-              tax_identifier,
+              data: { tax_identifier },
             });
           }}
         ></sc-tax-id-input>
@@ -44,7 +47,7 @@ export class ScOrderTaxIdInput {
         onScChange={e => {
           const tax_identifier = e.detail;
           this.scUpdateOrder.emit({
-            tax_identifier,
+            data: { tax_identifier },
           });
         }}
       ></sc-tax-id-input>

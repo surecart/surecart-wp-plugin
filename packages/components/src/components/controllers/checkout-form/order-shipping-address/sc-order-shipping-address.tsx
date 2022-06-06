@@ -31,7 +31,10 @@ export class ScOrderShippingAddress {
   @Prop() shippingEnabled: boolean;
 
   /** Make a request to update the order. */
-  @Event() scUpdateOrder: EventEmitter<Partial<Order>>;
+  @Event() scUpdateOrder: EventEmitter<{
+    data: Partial<Order>;
+    options?: { silent?: boolean };
+  }>;
 
   /** Address to pass to the component */
   @State() address: Partial<Address> = {
@@ -74,7 +77,12 @@ export class ScOrderShippingAddress {
     if (address === this.address) return; // no change, don't update.
     this.address = address;
     this.scUpdateOrder.emit({
-      shipping_address: this.address as Address,
+      data: {
+        shipping_address: this.address as Address,
+      },
+      options: {
+        silent: true,
+      },
     });
   }
 

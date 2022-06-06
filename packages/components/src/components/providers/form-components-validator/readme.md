@@ -33,6 +33,7 @@ graph TD;
   sc-address --> sc-form-control
   sc-address --> sc-select
   sc-address --> sc-input
+  sc-address --> sc-block-ui
   sc-form-control --> sc-tooltip
   sc-select --> sc-icon
   sc-select --> sc-menu-label
@@ -43,9 +44,11 @@ graph TD;
   sc-select --> sc-spinner
   sc-select --> sc-menu
   sc-input --> sc-form-control
+  sc-block-ui --> sc-spinner
   sc-compact-address --> sc-form-control
   sc-compact-address --> sc-select
   sc-compact-address --> sc-input
+  sc-compact-address --> sc-block-ui
   sc-checkout --> sc-form-components-validator
   style sc-form-components-validator fill:#f9f,stroke:#333,stroke-width:4px
 ```
