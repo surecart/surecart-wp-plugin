@@ -8,14 +8,7 @@ if ( ! $is_logged_in && ! $enable_guest_course_cart ) {
 ?>
 
 
-<?php foreach ( $products as $product ) : ?>
-	<?php
-	// need prices.
-	if ( empty( $product->prices->data ) ) {
-		continue;
-	}
-	?>
-	<?php foreach ( $product->prices->data as $price ) : ?>
+<?php foreach ( $prices as $price ) : ?>
 		<a class="tutor-btn tutor-btn-primary tutor-btn-lg tutor-btn-block tutor-mt-24 tutor-add-to-cart-button <?php echo sanitize_html_class( $required_loggedin_class ); ?>"
 			href="
 			<?php
@@ -41,4 +34,3 @@ if ( ! $is_logged_in && ! $enable_guest_course_cart ) {
 		<sc-format-interval value="<?php echo (int) $price->recurring_interval_count; ?>" interval="<?php echo esc_attr( $price->recurring_interval ); ?>"></sc-format-interval>
 	</a>
 	<?php endforeach; ?>
-<?php endforeach; ?>
