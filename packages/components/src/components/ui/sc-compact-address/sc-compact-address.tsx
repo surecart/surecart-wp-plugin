@@ -136,7 +136,6 @@ export class ScCompactAddress {
               required={this.required && !!this.showPostal}
               hidden={!this.showPostal}
               value={this?.address?.postal_code}
-              squared={!!this?.regions?.length}
               squared-top
               maxlength={5}
               squared-left={this.showState}
