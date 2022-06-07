@@ -15,7 +15,7 @@ import Prices from './modules/Prices';
 
 // components
 import Sidebar from './Sidebar';
-import ProductActionsDropdown from './components/product/ActionsDropdown';
+import ActionsDropdown from './components/product/ActionsDropdown';
 import SaveButton from './components/product/SaveButton';
 import Logo from '../templates/Logo';
 import Error from '../components/Error';
@@ -142,7 +142,7 @@ export default ({ id }) => {
 				gap: 0.5em;
 			`}
 		>
-			<ProductActionsDropdown
+			<ActionsDropdown
 				product={product}
 				onDelete={onDeleteProduct}
 				onToggleArchive={onToggleArchiveProduct}
