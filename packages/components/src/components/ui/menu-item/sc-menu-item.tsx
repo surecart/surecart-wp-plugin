@@ -17,7 +17,7 @@ export class ScMenuItem {
   @Prop({ reflect: true }) checked: boolean = false;
 
   /** A unique value to store in the menu item. This can be used as a way to identify menu items when selected. */
-  @Prop() value: string = '';
+  @Prop({ reflect: true }) value: string = '';
 
   /** Draws the menu item in a disabled state. */
   @Prop({ reflect: true }) disabled: boolean = false;

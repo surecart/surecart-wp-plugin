@@ -12,6 +12,7 @@
 | `closable`     | `closable`       | Makes the alert closable.                                                                                                                                                                                             | `boolean`                                                   | `false`     |
 | `duration`     | `duration`       | The length of time, in milliseconds, the alert will show before closing itself. If the user interacts with the alert before it closes (e.g. moves the mouse over it), the timer will restart. Defaults to `Infinity`. | `number`                                                    | `Infinity`  |
 | `open`         | `open`           | Indicates whether or not the alert is open. You can use this in lieu of the show/hide methods.                                                                                                                        | `boolean`                                                   | `false`     |
+| `scrollMargin` | `scroll-margin`  | Scroll margin                                                                                                                                                                                                         | `string`                                                    | `'0px'`     |
 | `scrollOnOpen` | `scroll-on-open` | Scroll into view.                                                                                                                                                                                                     | `boolean`                                                   | `undefined` |
 | `type`         | `type`           | The type of alert.                                                                                                                                                                                                    | `"danger" \| "info" \| "primary" \| "success" \| "warning"` | `'primary'` |
 
@@ -73,6 +74,7 @@ Type: `Promise<void>`
  - [sc-stripe-payment-request](../stripe-payment-request)
  - [sc-subscription-cancel](../../controllers/dashboard/subscription-cancel)
  - [sc-subscription-renew](../../controllers/dashboard/subscription-renew)
+ - [sc-subscription-switch](../../controllers/dashboard/subscription-switch)
  - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
 
 ### Depends on
@@ -94,6 +96,7 @@ graph TD;
   sc-stripe-payment-request --> sc-alert
   sc-subscription-cancel --> sc-alert
   sc-subscription-renew --> sc-alert
+  sc-subscription-switch --> sc-alert
   sc-upcoming-invoice --> sc-alert
   style sc-alert fill:#f9f,stroke:#333,stroke-width:4px
 ```

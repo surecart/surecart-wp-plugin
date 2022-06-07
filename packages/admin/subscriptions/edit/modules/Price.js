@@ -1,10 +1,10 @@
 /** @jsx jsx */
 import { __ } from '@wordpress/i18n';
 import DataTable from '../../../components/DataTable';
-import { translateInterval } from '@scripts/admin/util/translations';
 import { css, jsx } from '@emotion/core';
-import { ScInput } from '@surecart/components-react';
+import { ScInput, ScPriceInput } from '@surecart/components-react';
 import PriceSelector from '@admin/components/PriceSelector';
+import { intervalString } from '../../../util/translations';
 
 export default ({
 	subscription,
@@ -41,42 +41,59 @@ export default ({
 			items={[
 				{
 					product: subscription?.price ? (
-						<div
-							css={css`
-								display: flex;
-								align-items: center;
-								gap: 1em;
-							`}
-						>
-							<div>
-								{product?.name}
-								<div style={{ opacity: 0.5 }}>
-									<sc-format-number
-										type="currency"
-										value={price?.amount}
-										currency={price?.currency}
-									/>
-									{translateInterval(
-										price?.recurring_interval_count,
-										price?.recurring_interval,
-										' /',
-										''
-									)}
-								</div>
-							</div>
-							<sc-button
-								size="small"
-								onClick={() =>
-									updateSubscription({ price: null })
-								}
+						<div>
+							<div
+								css={css`
+									display: flex;
+									align-items: center;
+									gap: 1em;
+								`}
 							>
-								Change
-							</sc-button>
+								{price?.ad_hoc ? (
+									<ScPriceInput
+										label={product?.name}
+										value={
+											subscription?.ad_hoc_amount ||
+											price?.amount
+										}
+										onScChange={(e) =>
+											updateSubscription({
+												ad_hoc_amount: e.target.value,
+											})
+										}
+									/>
+								) : (
+									<div>
+										{product?.name}
+										<div style={{ opacity: 0.5 }}>
+											<sc-format-number
+												type="currency"
+												value={
+													subscription?.ad_hoc_amount ||
+													price?.amount
+												}
+												currency={price?.currency}
+											/>
+											{intervalString(price, {
+												labels: { interval: '/' },
+											})}
+										</div>
+									</div>
+								)}
+
+								<sc-button
+									size="small"
+									onClick={() =>
+										updateSubscription({ price: null })
+									}
+								>
+									{__('Change', 'surecart')}
+								</sc-button>
+							</div>
 						</div>
 					) : (
 						<PriceSelector
 							open
-							ad_hoc={false}
 							value={price?.id}
 							onSelect={(price) => {
 								updateSubscription({ price });
@@ -93,6 +110,7 @@ export default ({
 							value={subscription?.quantity}
 							onScChange={(e) => {
 								updateSubscription({
+									price,
 									quantity: e.target.value,
 								});
 							}}
@@ -106,17 +124,19 @@ export default ({
 								justify-content: flex-end;
 							`}
 						>
-							<sc-format-number
-								type="currency"
-								value={price?.amount * subscription?.quantity}
-								currency={price?.currency}
-							/>
-							{translateInterval(
-								price?.recurring_interval_count,
-								price?.recurring_interval,
-								' /',
-								''
-							)}
+							<div>
+								<sc-format-number
+									type="currency"
+									value={
+										subscription?.ad_hoc_amount ||
+										price?.amount * subscription?.quantity
+									}
+									currency={price?.currency}
+								/>{' '}
+								{intervalString(price, {
+									labels: { interval: '/' },
+								})}
+							</div>
 						</div>
 					),
 				},

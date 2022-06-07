@@ -1,8 +1,10 @@
-import { translatedInterval } from '../../../../functions/price';
-import { Order, Product } from '../../../../types';
 import { Component, h, Prop } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
+
+import { hasSubscription } from '../../../../functions/line-items';
+import { intervalString } from '../../../../functions/price';
+import { Order, Product } from '../../../../types';
 
 @Component({
   tag: 'sc-order-confirmation-line-items',
@@ -41,7 +43,7 @@ export class ScOrderConfirmationLineItems {
                 amount={item.ad_hoc_amount !== null ? item.ad_hoc_amount : item.price.amount}
                 currency={this.order?.currency}
                 trialDurationDays={item?.price?.trial_duration_days}
-                interval={translatedInterval(item.price.recurring_interval_count, item.price.recurring_interval, '', '')}
+                interval={intervalString(item?.price, { showOnce: hasSubscription(this.order) })}
               ></sc-product-line-item>
             );
           })}

@@ -48,6 +48,7 @@ export interface Price {
   ad_hoc: boolean;
   ad_hoc_max_amount: number;
   ad_hoc_min_amount: number;
+  recurring_period_count: number;
   archived: boolean;
   product_id?: string;
   archived_at?: string;
@@ -255,6 +256,7 @@ export interface Order extends Object {
   discount?: DiscountResponse;
   billing_address?: string | Address;
   shipping_address?: string | Address;
+  shipping_enabled?: boolean;
   processor_data?: ProcessorData;
   tax_identifier?: {
     number: string;
@@ -338,15 +340,19 @@ export interface Subscription extends Object {
   customer: Customer;
   discount: DiscountResponse;
   pending_update: {
+    ad_hoc_amount?: number;
     price?: string;
     quantity?: number;
   };
   cancel_at_period_end: number | false;
   current_period_end_at: number | false;
   current_period_start_at: number | false;
+  remaining_period_count: number | null;
   ended_at: number;
+  end_behavior: 'cancel' | 'complete';
   payment_method: PaymentMethod | string;
   price: Price;
+  ad_hoc_amount: number;
   created_at: number;
   updated_at: number;
 }
@@ -362,7 +368,7 @@ export interface SubscriptionProtocol {
   updated_at: number;
 }
 
-export type SubscriptionStatus = 'incomplete' | 'trialing' | 'active' | 'past_due' | 'canceled' | 'unpaid';
+export type SubscriptionStatus = 'incomplete' | 'trialing' | 'active' | 'past_due' | 'canceled' | 'unpaid' | 'completed';
 
 export type OrderStatus = 'draft' | 'finalized' | 'paid' | 'completed';
 

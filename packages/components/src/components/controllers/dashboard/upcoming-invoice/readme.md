@@ -9,6 +9,7 @@
 
 | Property                 | Attribute                  | Description | Type                                            | Default     |
 | ------------------------ | -------------------------- | ----------- | ----------------------------------------------- | ----------- |
+| `adHocAmount`            | `ad-hoc-amount`            |             | `number`                                        | `undefined` |
 | `discount`               | --                         |             | `{ promotion_code?: string; coupon?: string; }` | `undefined` |
 | `heading`                | `heading`                  |             | `string`                                        | `undefined` |
 | `payment_method`         | --                         |             | `PaymentMethod`                                 | `undefined` |

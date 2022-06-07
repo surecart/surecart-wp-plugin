@@ -5,24 +5,25 @@ import {
 	ScMenu,
 	ScMenuItem,
 } from '@surecart/components-react';
+import { store as uiStore } from '@surecart/ui-data';
+import { useDispatch } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
-import { Fragment, useEffect } from 'react';
-import ErrorFlash from '../../components/ErrorFlash';
 import { addQueryArgs } from '@wordpress/url';
+import { Fragment, useEffect } from 'react';
 
+import ErrorFlash from '../../components/ErrorFlash';
+import useCurrentPage from '../../mixins/useCurrentPage';
+import Logo from '../../templates/Logo';
 // template
 import Template from '../../templates/SingleModel';
-import useCurrentPage from '../../mixins/useCurrentPage';
+import Cancel from './modules/Cancel';
 import Details from './modules/Details';
 import Invoices from './modules/Invoices';
 import Orders from './modules/Orders';
-import Pricing from './modules/Pricing';
-import Cancel from './modules/Cancel';
-import Sidebar from './Sidebar';
 import PendingUpdate from './modules/PendingUpdate';
+import Pricing from './modules/Pricing';
 import UpdatePending from './modules/UpdatePending';
-import { useDispatch } from '@wordpress/data';
-import { store as uiStore } from '@surecart/ui-data';
+import Sidebar from './Sidebar';
 
 export default () => {
 	const { addSnackbarNotice, addModelErrors } = useDispatch(uiStore);
@@ -128,7 +129,21 @@ export default () => {
 			pageModelName={'subscriptions'}
 			backUrl={'admin.php?page=sc-subscriptions'}
 			backText={__('Back to all subscriptions.', 'surecart')}
-			title={__('Subscription', 'surecart')}
+			title={
+				<sc-breadcrumbs>
+					<sc-breadcrumb>
+						<Logo display="block" />
+					</sc-breadcrumb>
+					<sc-breadcrumb href="admin.php?page=sc-subscriptions">
+						{__('Subscriptions', 'surecart')}
+					</sc-breadcrumb>
+					<sc-breadcrumb>
+						<sc-flex style={{ gap: '1em' }}>
+							{__('Subscription', 'surecart')}
+						</sc-flex>
+					</sc-breadcrumb>
+				</sc-breadcrumbs>
+			}
 			sidebar={<Sidebar loading={isLoading} />}
 			button={
 				isLoading ? (

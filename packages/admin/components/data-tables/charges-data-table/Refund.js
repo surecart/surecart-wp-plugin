@@ -3,6 +3,7 @@ import { __ } from '@wordpress/i18n';
 import { Modal, Button } from '@wordpress/components';
 import {
 	ScAlert,
+	ScButton,
 	ScForm,
 	ScFormControl,
 	ScPriceInput,
@@ -130,12 +131,12 @@ export default ({ charge, onRequestClose }) => {
 						gap: 0.5em;
 					`}
 				>
-					<Button isPrimary isBusy={loading} type="submit">
+					<ScButton type="primary" busy={loading} submit>
 						{__('Refund', 'surecart')}
-					</Button>
-					<Button onClick={onRequestClose}>
+					</ScButton>
+					<ScButton type="text" onClick={onRequestClose}>
 						{__('Cancel', 'surecart')}
-					</Button>
+					</ScButton>
 				</div>
 
 				{loading && (

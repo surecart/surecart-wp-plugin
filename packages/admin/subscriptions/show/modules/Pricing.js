@@ -2,8 +2,8 @@
 import { __ } from '@wordpress/i18n';
 import DataTable from '../../../components/DataTable';
 import { addQueryArgs } from '@wordpress/url';
-import { translateInterval } from '@scripts/admin/util/translations';
 import { css, jsx } from '@emotion/core';
+import { intervalString } from '../../../util/translations';
 
 export default ({ product, price, subscription, loading }) => {
 	return (
@@ -42,15 +42,15 @@ export default ({ product, price, subscription, loading }) => {
 							<div style={{ opacity: 0.5 }}>
 								<sc-format-number
 									type="currency"
-									value={price?.amount}
+									value={
+										subscription?.ad_hoc_amount ||
+										price?.amount
+									}
 									currency={price?.currency}
 								/>
-								{translateInterval(
-									price?.recurring_interval_count,
-									price?.recurring_interval,
-									' /',
-									''
-								)}
+								{intervalString(price, {
+									labels: { interval: '/' },
+								})}
 							</div>
 						</div>
 					),
@@ -62,17 +62,19 @@ export default ({ product, price, subscription, loading }) => {
 								justify-content: flex-end;
 							`}
 						>
-							<sc-format-number
-								type="currency"
-								value={price?.amount * subscription?.quantity}
-								currency={price?.currency}
-							/>
-							{translateInterval(
-								price?.recurring_interval_count,
-								price?.recurring_interval,
-								' /',
-								''
-							)}
+							<div>
+								<sc-format-number
+									type="currency"
+									value={
+										subscription?.ad_hoc_amount ||
+										price?.amount * subscription?.quantity
+									}
+									currency={price?.currency}
+								/>{' '}
+								{intervalString(price, {
+									labels: { interval: '/' },
+								})}
+							</div>
 						</div>
 					),
 					actions: !Object.keys(subscription?.pending_update || {})

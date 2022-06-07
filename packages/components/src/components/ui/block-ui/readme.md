@@ -18,8 +18,10 @@
 
 ### Used by
 
+ - [sc-address](../address)
  - [sc-charges-list](../../controllers/dashboard/charges-list)
  - [sc-checkout](../../controllers/checkout-form/checkout)
+ - [sc-compact-address](../sc-compact-address)
  - [sc-coupon-form](../coupon-form)
  - [sc-custom-order-price-input](../../controllers/checkout-form/custom-order-price-input)
  - [sc-customer-edit](../../controllers/dashboard/customer-edit)
@@ -33,6 +35,7 @@
  - [sc-payment-method-create](../../controllers/dashboard/payment-method-create)
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
  - [sc-subscription](../../controllers/dashboard/subscription)
+ - [sc-subscription-ad-hoc-confirm](../../controllers/dashboard/subscription-ad-hoc-confirm)
  - [sc-subscription-cancel](../../controllers/dashboard/subscription-cancel)
  - [sc-subscription-payment](../../controllers/dashboard/subscription-payment)
  - [sc-subscription-renew](../../controllers/dashboard/subscription-renew)
@@ -50,8 +53,10 @@
 ```mermaid
 graph TD;
   sc-block-ui --> sc-spinner
+  sc-address --> sc-block-ui
   sc-charges-list --> sc-block-ui
   sc-checkout --> sc-block-ui
+  sc-compact-address --> sc-block-ui
   sc-coupon-form --> sc-block-ui
   sc-custom-order-price-input --> sc-block-ui
   sc-customer-edit --> sc-block-ui
@@ -65,6 +70,7 @@ graph TD;
   sc-payment-method-create --> sc-block-ui
   sc-payment-methods-list --> sc-block-ui
   sc-subscription --> sc-block-ui
+  sc-subscription-ad-hoc-confirm --> sc-block-ui
   sc-subscription-cancel --> sc-block-ui
   sc-subscription-payment --> sc-block-ui
   sc-subscription-renew --> sc-block-ui

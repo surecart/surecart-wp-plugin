@@ -1,32 +1,28 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-
-import { __ } from '@wordpress/i18n';
+import { ScButton } from '@surecart/components-react';
+import { useDispatch } from '@wordpress/data';
 import { Fragment } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
+import { useEffect } from 'react';
 
-import { store as uiStore } from '../store/ui';
-import { store as dataStore } from '../store/data';
-
-import Template from '../templates/SingleModel';
-import SaveButton from './components/SaveButton';
-
-// modules
-import Name from './modules/Name';
-import Codes from './modules/Codes';
-import Types from './modules/Types';
-import Limits from './modules/Limits';
-
-// parts
-import Sidebar from './Sidebar';
-
+import ErrorFlash from '../components/ErrorFlash';
 // hocs
 import withConfirm from '../hocs/withConfirm';
-import { useEffect } from 'react';
-import ErrorFlash from '../components/ErrorFlash';
 import useCurrentPage from '../mixins/useCurrentPage';
 import useEntities from '../mixins/useEntities';
-import { useDispatch } from '@wordpress/data';
-import { ScButton } from '@surecart/components-react';
+import { store as dataStore } from '../store/data';
+import { store as uiStore } from '../store/ui';
+import Logo from '../templates/Logo';
+import Template from '../templates/SingleModel';
+import SaveButton from './components/SaveButton';
+import Codes from './modules/Codes';
+import Limits from './modules/Limits';
+// modules
+import Name from './modules/Name';
+import Types from './modules/Types';
+// parts
+import Sidebar from './Sidebar';
 
 export default () => {
 	const { saveModel, saveDraft, clearDrafts } = useDispatch(dataStore);
@@ -36,6 +32,7 @@ export default () => {
 		coupon,
 		updateCoupon,
 		saveCoupon,
+		deleteCoupon,
 		saving,
 		setSaving,
 		isSaving,
@@ -162,13 +159,42 @@ export default () => {
 		}
 	};
 
+	// delete promotion
+	const onDelete = async () => {
+		try {
+			const r = confirm(
+				__(
+					'Are you sure you want to delete this Coupon code?',
+					'surecart'
+				)
+			);
+			if (!r) return;
+			setSaving(true);
+			await deleteCoupon();
+		} finally {
+			setSaving(false);
+		}
+	};
+
 	return (
 		<Template
 			onSubmit={onSubmit}
 			pageModelName={'coupon'}
 			backUrl={'admin.php?page=sc-coupons'}
 			backText={__('Back to All Coupons', 'surecart')}
-			title={title()}
+			title={
+				<sc-breadcrumbs>
+					<sc-breadcrumb>
+						<Logo display="block" />
+					</sc-breadcrumb>
+					<sc-breadcrumb href="admin.php?page=sc-coupons">
+						{__('Coupons', 'surecart')}
+					</sc-breadcrumb>
+					<sc-breadcrumb>
+						<sc-flex style={{ gap: '1em' }}>{title()}</sc-flex>
+					</sc-breadcrumb>
+				</sc-breadcrumbs>
+			}
 			button={
 				isLoading ? (
 					<sc-skeleton
@@ -186,6 +212,7 @@ export default () => {
 							gap: 0.5em;
 						`}
 					>
+						{/* <ActionsDropdown coupon={coupon} onDelete={onDelete} /> */}
 						<ScButton
 							class="sc-save-model"
 							type="primary"

@@ -4,12 +4,12 @@ import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';
 import Box from '../../ui/Box';
-import { translateInterval } from '../../util/translations';
 import { ScButton } from '@surecart/components-react';
 import Definition from '../../ui/Definition';
 
 import useSubscriptionItemsData from '../hooks/useSubscriptionItemsData';
 import useSubscriptionData from '../hooks/useSubscriptionData';
+import { intervalString } from '../../../util/translations';
 
 export default () => {
 	const { subscription, loading } = useSubscriptionData();
@@ -63,10 +63,7 @@ export default () => {
 								trialDurationDays={
 									item?.price?.trial_duration_days
 								}
-								interval={translateInterval(
-									item?.price?.recurring_interval_count,
-									item?.price?.recurring_interval
-								)}
+								interval={intervalString(item?.price)}
 							></sc-product-line-item>
 						);
 					})}

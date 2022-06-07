@@ -89,9 +89,11 @@ graph TD;
   sc-form-error-provider --> sc-alert
   sc-form-components-validator --> sc-order-shipping-address
   sc-order-shipping-address --> sc-address
+  sc-order-shipping-address --> sc-compact-address
   sc-address --> sc-form-control
   sc-address --> sc-select
   sc-address --> sc-input
+  sc-address --> sc-block-ui
   sc-form-control --> sc-tooltip
   sc-select --> sc-icon
   sc-select --> sc-menu-label
@@ -102,6 +104,10 @@ graph TD;
   sc-select --> sc-spinner
   sc-select --> sc-menu
   sc-input --> sc-form-control
+  sc-compact-address --> sc-form-control
+  sc-compact-address --> sc-select
+  sc-compact-address --> sc-input
+  sc-compact-address --> sc-block-ui
   sc-session-provider --> sc-line-items-provider
   style sc-checkout fill:#f9f,stroke:#333,stroke-width:4px
 ```

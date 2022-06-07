@@ -2,18 +2,26 @@
 
 namespace SureCart\Controllers\Admin\Invoices;
 
+use SureCart\Controllers\Admin\AdminController;
 use SureCart\Controllers\Admin\Invoices\InvoicesListTable;
 
 /**
  * Handles product admin requests.
  */
-class InvoicesViewController {
+class InvoicesViewController extends AdminController {
 	/**
 	 * Invoices index.
 	 */
 	public function index() {
 		$table = new InvoicesListTable();
 		$table->prepare_items();
+		$this->withHeader(
+			[
+				'invoices' => [
+					'title' => __( 'Invoices', 'surecart' ),
+				],
+			]
+		);
 		return \SureCart::view( 'admin/invoices/index' )->with(
 			[
 				'table' => $table,

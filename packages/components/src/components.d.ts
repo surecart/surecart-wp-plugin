@@ -45,6 +45,10 @@ export namespace Components {
          */
         "open": boolean;
         /**
+          * Scroll margin
+         */
+        "scrollMargin": string;
+        /**
           * Scroll into view.
          */
         "scrollOnOpen": boolean;
@@ -419,6 +423,25 @@ export namespace Components {
          */
         "verticalAlignment": string;
     }
+    interface ScCompactAddress {
+        /**
+          * The address.
+         */
+        "address": Partial<Address>;
+        /**
+          * Label for the address
+         */
+        "label": string;
+        /**
+          * Is this loading
+         */
+        "loading": boolean;
+        "names": Partial<Address>;
+        /**
+          * Is this required?
+         */
+        "required": boolean;
+    }
     interface ScConsumer {
         "renderer": any;
     }
@@ -665,6 +688,20 @@ export namespace Components {
     interface ScDashboardModule {
         "error": string;
         "heading": string;
+    }
+    interface ScDialog {
+        /**
+          * The dialog's label as displayed in the header. You should always include a relevant label even when using `no-header`, as it is required for proper accessibility.
+         */
+        "label": string;
+        /**
+          * Disables the header. This will also remove the default close button, so please ensure you provide an easy, accessible way for users to dismiss the dialog.
+         */
+        "noHeader": boolean;
+        /**
+          * Indicates whether or not the dialog is open. You can use this in lieu of the show/hide methods.
+         */
+        "open": boolean;
     }
     interface ScDivider {
     }
@@ -1349,6 +1386,10 @@ export namespace Components {
          */
         "shippingAddress": Address;
         /**
+          * Is shipping enabled for this order?
+         */
+        "shippingEnabled": boolean;
+        /**
           * Tax status of the order
          */
         "taxStatus": TaxStatus;
@@ -1914,6 +1955,10 @@ export namespace Components {
         "squaredRight": boolean;
         "squaredTop": boolean;
         /**
+          * Can we unselect items.
+         */
+        "unselect": boolean;
+        /**
           * The input's value attribute.
          */
         "value": string;
@@ -2126,6 +2171,10 @@ export namespace Components {
          */
         "subscriptionId": string;
     }
+    interface ScSubscriptionAdHocConfirm {
+        "heading": string;
+        "price": Price;
+    }
     interface ScSubscriptionCancel {
         "backUrl": string;
         "heading": string;
@@ -2171,11 +2220,12 @@ export namespace Components {
          */
         "status": SubscriptionStatus;
         /**
-          * The tag's statux type.
+          * The tag's status type.
          */
         "subscription": Subscription;
     }
     interface ScSubscriptionSwitch {
+        "filterAbove": number;
         "heading": string;
         "productGroupId": ProductGroup;
         "productId": string;
@@ -2391,6 +2441,7 @@ export namespace Components {
         "total": 'total' | 'subtotal' | 'amount_due';
     }
     interface ScUpcomingInvoice {
+        "adHocAmount": number;
         "discount": {
     promotion_code?: string;
     coupon?: string;
@@ -2521,6 +2572,12 @@ declare global {
         prototype: HTMLScColumnsElement;
         new (): HTMLScColumnsElement;
     };
+    interface HTMLScCompactAddressElement extends Components.ScCompactAddress, HTMLStencilElement {
+    }
+    var HTMLScCompactAddressElement: {
+        prototype: HTMLScCompactAddressElement;
+        new (): HTMLScCompactAddressElement;
+    };
     interface HTMLScConsumerElement extends Components.ScConsumer, HTMLStencilElement {
     }
     var HTMLScConsumerElement: {
@@ -2580,6 +2637,12 @@ declare global {
     var HTMLScDashboardModuleElement: {
         prototype: HTMLScDashboardModuleElement;
         new (): HTMLScDashboardModuleElement;
+    };
+    interface HTMLScDialogElement extends Components.ScDialog, HTMLStencilElement {
+    }
+    var HTMLScDialogElement: {
+        prototype: HTMLScDialogElement;
+        new (): HTMLScDialogElement;
     };
     interface HTMLScDividerElement extends Components.ScDivider, HTMLStencilElement {
     }
@@ -3019,6 +3082,12 @@ declare global {
         prototype: HTMLScSubscriptionElement;
         new (): HTMLScSubscriptionElement;
     };
+    interface HTMLScSubscriptionAdHocConfirmElement extends Components.ScSubscriptionAdHocConfirm, HTMLStencilElement {
+    }
+    var HTMLScSubscriptionAdHocConfirmElement: {
+        prototype: HTMLScSubscriptionAdHocConfirmElement;
+        new (): HTMLScSubscriptionAdHocConfirmElement;
+    };
     interface HTMLScSubscriptionCancelElement extends Components.ScSubscriptionCancel, HTMLStencilElement {
     }
     var HTMLScSubscriptionCancelElement: {
@@ -3193,6 +3262,7 @@ declare global {
         "sc-choices": HTMLScChoicesElement;
         "sc-column": HTMLScColumnElement;
         "sc-columns": HTMLScColumnsElement;
+        "sc-compact-address": HTMLScCompactAddressElement;
         "sc-consumer": HTMLScConsumerElement;
         "sc-coupon-form": HTMLScCouponFormElement;
         "sc-custom-order-price-input": HTMLScCustomOrderPriceInputElement;
@@ -3203,6 +3273,7 @@ declare global {
         "sc-dashboard-customer-details": HTMLScDashboardCustomerDetailsElement;
         "sc-dashboard-downloads-list": HTMLScDashboardDownloadsListElement;
         "sc-dashboard-module": HTMLScDashboardModuleElement;
+        "sc-dialog": HTMLScDialogElement;
         "sc-divider": HTMLScDividerElement;
         "sc-donation-choices": HTMLScDonationChoicesElement;
         "sc-downloads-list": HTMLScDownloadsListElement;
@@ -3276,6 +3347,7 @@ declare global {
         "sc-stripe-payment-element": HTMLScStripePaymentElementElement;
         "sc-stripe-payment-request": HTMLScStripePaymentRequestElement;
         "sc-subscription": HTMLScSubscriptionElement;
+        "sc-subscription-ad-hoc-confirm": HTMLScSubscriptionAdHocConfirmElement;
         "sc-subscription-cancel": HTMLScSubscriptionCancelElement;
         "sc-subscription-details": HTMLScSubscriptionDetailsElement;
         "sc-subscription-payment": HTMLScSubscriptionPaymentElement;
@@ -3349,6 +3421,10 @@ declare namespace LocalJSX {
           * Indicates whether or not the alert is open. You can use this in lieu of the show/hide methods.
          */
         "open"?: boolean;
+        /**
+          * Scroll margin
+         */
+        "scrollMargin"?: string;
         /**
           * Scroll into view.
          */
@@ -3728,6 +3804,29 @@ declare namespace LocalJSX {
          */
         "verticalAlignment"?: string;
     }
+    interface ScCompactAddress {
+        /**
+          * The address.
+         */
+        "address"?: Partial<Address>;
+        /**
+          * Label for the address
+         */
+        "label"?: string;
+        /**
+          * Is this loading
+         */
+        "loading"?: boolean;
+        "names"?: Partial<Address>;
+        /**
+          * Address change event.
+         */
+        "onScChangeAddress"?: (event: CustomEvent<Partial<Address>>) => void;
+        /**
+          * Is this required?
+         */
+        "required"?: boolean;
+    }
     interface ScConsumer {
         "onMountConsumer"?: (event: CustomEvent<any>) => void;
         "renderer"?: any;
@@ -4026,6 +4125,29 @@ declare namespace LocalJSX {
     interface ScDashboardModule {
         "error"?: string;
         "heading"?: string;
+    }
+    interface ScDialog {
+        /**
+          * The dialog's label as displayed in the header. You should always include a relevant label even when using `no-header`, as it is required for proper accessibility.
+         */
+        "label"?: string;
+        /**
+          * Disables the header. This will also remove the default close button, so please ensure you provide an easy, accessible way for users to dismiss the dialog.
+         */
+        "noHeader"?: boolean;
+        "onScAfterHide"?: (event: CustomEvent<void>) => void;
+        "onScAfterShow"?: (event: CustomEvent<void>) => void;
+        "onScHide"?: (event: CustomEvent<void>) => void;
+        "onScInitialFocus"?: (event: CustomEvent<void>) => void;
+        /**
+          * Request close event
+         */
+        "onScRequestClose"?: (event: CustomEvent<'close-button' | 'keyboard' | 'overlay'>) => void;
+        "onScShow"?: (event: CustomEvent<void>) => void;
+        /**
+          * Indicates whether or not the dialog is open. You can use this in lieu of the show/hide methods.
+         */
+        "open"?: boolean;
     }
     interface ScDivider {
     }
@@ -4784,7 +4906,10 @@ declare namespace LocalJSX {
         /**
           * Make a request to update the order.
          */
-        "onScUpdateOrder"?: (event: CustomEvent<Partial<Order>>) => void;
+        "onScUpdateOrder"?: (event: CustomEvent<{
+    data: Partial<Order>;
+    options?: { silent?: boolean };
+  }>) => void;
         /**
           * Is this required (defaults to true)
          */
@@ -4793,6 +4918,10 @@ declare namespace LocalJSX {
           * Holds the customer's billing address
          */
         "shippingAddress"?: Address;
+        /**
+          * Is shipping enabled for this order?
+         */
+        "shippingEnabled"?: boolean;
         /**
           * Tax status of the order
          */
@@ -4913,7 +5042,10 @@ declare namespace LocalJSX {
         /**
           * Make a request to update the order.
          */
-        "onScUpdateOrder"?: (event: CustomEvent<Partial<Order>>) => void;
+        "onScUpdateOrder"?: (event: CustomEvent<{
+    data: Partial<Order>;
+    options?: { silent?: boolean };
+  }>) => void;
         /**
           * The order
          */
@@ -5431,6 +5563,10 @@ declare namespace LocalJSX {
         "squaredRight"?: boolean;
         "squaredTop"?: boolean;
         /**
+          * Can we unselect items.
+         */
+        "unselect"?: boolean;
+        /**
           * The input's value attribute.
          */
         "value"?: string;
@@ -5661,6 +5797,10 @@ declare namespace LocalJSX {
          */
         "subscriptionId"?: string;
     }
+    interface ScSubscriptionAdHocConfirm {
+        "heading"?: string;
+        "price"?: Price;
+    }
     interface ScSubscriptionCancel {
         "backUrl"?: string;
         "heading"?: string;
@@ -5706,11 +5846,12 @@ declare namespace LocalJSX {
          */
         "status"?: SubscriptionStatus;
         /**
-          * The tag's statux type.
+          * The tag's status type.
          */
         "subscription"?: Subscription;
     }
     interface ScSubscriptionSwitch {
+        "filterAbove"?: number;
         "heading"?: string;
         "productGroupId"?: ProductGroup;
         "productId"?: string;
@@ -5949,6 +6090,7 @@ declare namespace LocalJSX {
         "total"?: 'total' | 'subtotal' | 'amount_due';
     }
     interface ScUpcomingInvoice {
+        "adHocAmount"?: number;
         "discount"?: {
     promotion_code?: string;
     coupon?: string;
@@ -5993,6 +6135,7 @@ declare namespace LocalJSX {
         "sc-choices": ScChoices;
         "sc-column": ScColumn;
         "sc-columns": ScColumns;
+        "sc-compact-address": ScCompactAddress;
         "sc-consumer": ScConsumer;
         "sc-coupon-form": ScCouponForm;
         "sc-custom-order-price-input": ScCustomOrderPriceInput;
@@ -6003,6 +6146,7 @@ declare namespace LocalJSX {
         "sc-dashboard-customer-details": ScDashboardCustomerDetails;
         "sc-dashboard-downloads-list": ScDashboardDownloadsList;
         "sc-dashboard-module": ScDashboardModule;
+        "sc-dialog": ScDialog;
         "sc-divider": ScDivider;
         "sc-donation-choices": ScDonationChoices;
         "sc-downloads-list": ScDownloadsList;
@@ -6076,6 +6220,7 @@ declare namespace LocalJSX {
         "sc-stripe-payment-element": ScStripePaymentElement;
         "sc-stripe-payment-request": ScStripePaymentRequest;
         "sc-subscription": ScSubscription;
+        "sc-subscription-ad-hoc-confirm": ScSubscriptionAdHocConfirm;
         "sc-subscription-cancel": ScSubscriptionCancel;
         "sc-subscription-details": ScSubscriptionDetails;
         "sc-subscription-payment": ScSubscriptionPayment;
@@ -6125,6 +6270,7 @@ declare module "@stencil/core" {
             "sc-choices": LocalJSX.ScChoices & JSXBase.HTMLAttributes<HTMLScChoicesElement>;
             "sc-column": LocalJSX.ScColumn & JSXBase.HTMLAttributes<HTMLScColumnElement>;
             "sc-columns": LocalJSX.ScColumns & JSXBase.HTMLAttributes<HTMLScColumnsElement>;
+            "sc-compact-address": LocalJSX.ScCompactAddress & JSXBase.HTMLAttributes<HTMLScCompactAddressElement>;
             "sc-consumer": LocalJSX.ScConsumer & JSXBase.HTMLAttributes<HTMLScConsumerElement>;
             "sc-coupon-form": LocalJSX.ScCouponForm & JSXBase.HTMLAttributes<HTMLScCouponFormElement>;
             "sc-custom-order-price-input": LocalJSX.ScCustomOrderPriceInput & JSXBase.HTMLAttributes<HTMLScCustomOrderPriceInputElement>;
@@ -6135,6 +6281,7 @@ declare module "@stencil/core" {
             "sc-dashboard-customer-details": LocalJSX.ScDashboardCustomerDetails & JSXBase.HTMLAttributes<HTMLScDashboardCustomerDetailsElement>;
             "sc-dashboard-downloads-list": LocalJSX.ScDashboardDownloadsList & JSXBase.HTMLAttributes<HTMLScDashboardDownloadsListElement>;
             "sc-dashboard-module": LocalJSX.ScDashboardModule & JSXBase.HTMLAttributes<HTMLScDashboardModuleElement>;
+            "sc-dialog": LocalJSX.ScDialog & JSXBase.HTMLAttributes<HTMLScDialogElement>;
             "sc-divider": LocalJSX.ScDivider & JSXBase.HTMLAttributes<HTMLScDividerElement>;
             "sc-donation-choices": LocalJSX.ScDonationChoices & JSXBase.HTMLAttributes<HTMLScDonationChoicesElement>;
             "sc-downloads-list": LocalJSX.ScDownloadsList & JSXBase.HTMLAttributes<HTMLScDownloadsListElement>;
@@ -6208,6 +6355,7 @@ declare module "@stencil/core" {
             "sc-stripe-payment-element": LocalJSX.ScStripePaymentElement & JSXBase.HTMLAttributes<HTMLScStripePaymentElementElement>;
             "sc-stripe-payment-request": LocalJSX.ScStripePaymentRequest & JSXBase.HTMLAttributes<HTMLScStripePaymentRequestElement>;
             "sc-subscription": LocalJSX.ScSubscription & JSXBase.HTMLAttributes<HTMLScSubscriptionElement>;
+            "sc-subscription-ad-hoc-confirm": LocalJSX.ScSubscriptionAdHocConfirm & JSXBase.HTMLAttributes<HTMLScSubscriptionAdHocConfirmElement>;
             "sc-subscription-cancel": LocalJSX.ScSubscriptionCancel & JSXBase.HTMLAttributes<HTMLScSubscriptionCancelElement>;
             "sc-subscription-details": LocalJSX.ScSubscriptionDetails & JSXBase.HTMLAttributes<HTMLScSubscriptionDetailsElement>;
             "sc-subscription-payment": LocalJSX.ScSubscriptionPayment & JSXBase.HTMLAttributes<HTMLScSubscriptionPaymentElement>;

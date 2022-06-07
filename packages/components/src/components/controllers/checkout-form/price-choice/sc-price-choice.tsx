@@ -1,10 +1,11 @@
-import { isPriceInOrder } from '../../../../functions/line-items';
-import { translatedInterval } from '../../../../functions/price';
-import { getPricesAndProducts } from '../../../../services/fetch';
-import { Order, LineItemData, Price, Prices, Products, ResponseError, Product } from '../../../../types';
-import { Component, h, Prop, Event, EventEmitter, Watch, Fragment, State, Host } from '@stencil/core';
+import { Component, Event, EventEmitter, Fragment, h, Host, Prop, State, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
+
+import { isPriceInOrder } from '../../../../functions/line-items';
+import { intervalString } from '../../../../functions/price';
+import { getPricesAndProducts } from '../../../../services/fetch';
+import { LineItemData, Order, Price, Prices, Product, Products, ResponseError } from '../../../../types';
 
 @Component({
   tag: 'sc-price-choice',
@@ -176,7 +177,7 @@ export class ScPriceChoice {
         ref={el => (this.adHocInput = el as HTMLScPriceInputElement)}
         required
         label={'Enter an amount'}
-        value={this.getLineItem()?.ad_hoc_amount.toString()}
+        value={(this.getLineItem()?.ad_hoc_amount || this.getLineItem()?.total_amount).toString()}
         onScChange={e => this.onChangeAdHoc(e)}
         min={this.price.ad_hoc_min_amount}
         max={this.price.ad_hoc_max_amount}
@@ -196,15 +197,12 @@ export class ScPriceChoice {
   }
 
   renderPrice() {
-    if (this.price?.ad_hoc) {
-      return <span slot="per">Name your price</span>;
-    }
     return (
       <Fragment>
         <span slot="price">
           <sc-format-number type="currency" value={this.price.amount} currency={this.price.currency}></sc-format-number>
         </span>
-        <span slot="per">{translatedInterval(this.price.recurring_interval_count, this.price.recurring_interval, '/', '')}</span>
+        <span slot="per">{intervalString(this.price, { labels: { interval: '/', period: __('for', 'surecart') } })}</span>
       </Fragment>
     );
   }
@@ -243,14 +241,14 @@ export class ScPriceChoice {
           {this.description && <span slot="description">{this.description}</span>}
           {this.renderPrice()}
         </sc-choice>
-        {this.showAdHoc() &&
+        {/* {this.showAdHoc() &&
           (this.adHocErrorMessage ? (
             <sc-tooltip text={this.adHocErrorMessage} type="danger" padding={10} freeze open onClick={() => (this.adHocErrorMessage = '')}>
               {this.renderAdHoc()}
             </sc-tooltip>
           ) : (
             this.renderAdHoc()
-          ))}
+          ))} */}
       </Fragment>
     );
   }

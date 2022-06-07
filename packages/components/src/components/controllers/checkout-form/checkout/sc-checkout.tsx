@@ -167,6 +167,7 @@ export class ScCheckout {
       successUrl: this.successUrl,
 
       order: this.order,
+      shippingEnabled: this.order?.shipping_enabled,
       lineItems: this.order?.line_items?.data || [],
       editLineItems: this.editLineItems,
       removeLineItems: this.removeLineItems,

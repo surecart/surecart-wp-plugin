@@ -78,7 +78,16 @@ class IntegrationsController extends RestController {
 			return $model;
 		}
 
-		return $model->where( $request->get_query_params() )->find( $request['id'] );
+		return $model->where(
+			array_filter(
+				[
+					'model_id'       => $request->get_param( 'model_id' ),
+					'integration_id' => $request->get_param( 'integration_id' ),
+					'model_name'     => $request->get_param( 'model_name' ),
+					'provider'       => $request->get_param( 'provider' ),
+				]
+			)
+		)->find( $request['id'] );
 	}
 
 	/**
