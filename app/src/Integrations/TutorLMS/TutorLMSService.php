@@ -232,12 +232,7 @@ class TutorLMSService extends IntegrationService implements IntegrationInterface
 			return;
 		}
 
-		// enroll.
-		$has_any_enrolled = tutor_utils()->has_any_enrolled( $course_id, $wp_user->ID );
-		if ( ! $has_any_enrolled ) {
-			tutor_utils()->do_enroll( $course_id, 0, $wp_user->ID );
-		}
-
+		tutor_utils()->do_enroll( $course_id, 0, $wp_user->ID );
 		tutor_utils()->complete_course_enroll( 0 );
 		return;
 	}
