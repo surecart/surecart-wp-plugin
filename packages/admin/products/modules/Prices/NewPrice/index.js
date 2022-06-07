@@ -146,7 +146,7 @@ export default ({ onRequestClose, product }) => {
 						},
 						{
 							value: 'multiple',
-							label: __('Multiple Payments', 'surecart'),
+							label: __('Payment Plan', 'surecart'),
 						},
 						{
 							value: 'subscription',
