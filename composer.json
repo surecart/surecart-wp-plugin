@@ -74,7 +74,8 @@
 		"allow-plugins": {
 			"dealerdirect/phpcodesniffer-composer-installer": true,
 			"composer/installers": true,
-			"typisttech/imposter-plugin": true
+			"typisttech/imposter-plugin": true,
+			"roots/wordpress-core-installer": true
 		}
 	}
 }

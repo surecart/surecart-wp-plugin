@@ -1,10 +1,13 @@
 <?php
 namespace SureCart\Integrations\ThriveAutomator;
 
-use SureCart\Integrations\ThriveAutomator\Fields\ProductDataField;
-use SureCart\Integrations\ThriveAutomator\Fields\PurchaseIdDataField;
-use SureCart\Integrations\ThriveAutomator\DataObjects\PurchaseData;
+// use SureCart\Integrations\ThriveAutomator\ActionFields\ProductsField;
+// use SureCart\Integrations\ThriveAutomator\Actions\OrderStatusUpdate;
+use SureCart\Integrations\ThriveAutomator\DataObjects\ProductData;
+use SureCart\Integrations\ThriveAutomator\Fields\ProductNameField;
 use SureCart\Integrations\ThriveAutomator\Triggers\PurchaseCreatedTrigger;
+use SureCart\Integrations\ThriveAutomator\Triggers\PurchaseRevokedTrigger;
+use SureCart\Integrations\ThriveAutomator\Triggers\PurchaseInvokedTrigger;
 
 /**
  * Bootstrap the Thrive Automator integration.
@@ -21,12 +24,16 @@ class ThriveAutomatorService {
 		}
 		// app.
 		thrive_automator_register_app( ThriveAutomatorApp::class );
-		// trigger.
-		thrive_automator_register_trigger( PurchaseCreatedTrigger::class );
-		thrive_automator_register_action( PurchaseRevokeAction::class );
 
-		thrive_automator_register_data_object( PurchaseData::class );
-		thrive_automator_register_data_field( PurchaseIdDataField::class );
-		thrive_automator_register_data_field( ProductDataField::class );
+		// triggers.
+		thrive_automator_register_trigger( PurchaseCreatedTrigger::class );
+		thrive_automator_register_trigger( PurchaseRevokedTrigger::class );
+		thrive_automator_register_trigger( PurchaseInvokedTrigger::class );
+
+		// fields.
+		thrive_automator_register_data_field( ProductNameField::class );
+
+		// data objects.
+		thrive_automator_register_data_object( ProductData::class );
 	}
 }

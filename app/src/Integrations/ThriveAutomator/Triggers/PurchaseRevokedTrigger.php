@@ -4,20 +4,19 @@ namespace SureCart\Integrations\ThriveAutomator\Triggers;
 
 use SureCart\Integrations\ThriveAutomator\DataObjects\ProductData;
 use SureCart\Integrations\ThriveAutomator\ThriveAutomatorApp;
-use Thrive\Automator\Items\Data_Object;
 use Thrive\Automator\Items\Trigger;
 
 /**
- * Handles the purchase created event.
+ * Handles the purchase revoked event.
  */
-class PurchaseCreatedTrigger extends Trigger {
+class PurchaseRevokedTrigger extends Trigger {
 	/**
 	 * Get the trigger identifier
 	 *
 	 * @return string
 	 */
 	public static function get_id() {
-		return 'surecart/purchase_created';
+		return 'surecart/purchase_revoked';
 	}
 
 	/**
@@ -26,7 +25,7 @@ class PurchaseCreatedTrigger extends Trigger {
 	 * @return string
 	 */
 	public static function get_wp_hook() {
-		return 'surecart/purchase_created';
+		return 'surecart/purchase_revoked';
 	}
 
 	/**
@@ -44,7 +43,7 @@ class PurchaseCreatedTrigger extends Trigger {
 	 * @return array
 	 */
 	public static function get_provided_data_objects() {
-		return [ ProductData::get_id(), 'user_data' ];
+		return [ ProductData::get_id() ];
 	}
 
 	/**
@@ -62,7 +61,7 @@ class PurchaseCreatedTrigger extends Trigger {
 	 * @return string
 	 */
 	public static function get_name() {
-		return __( 'Product purchase completed', 'surecart' );
+		return __( 'Purchase is revoked', 'surecart' );
 	}
 
 	/**
@@ -71,7 +70,7 @@ class PurchaseCreatedTrigger extends Trigger {
 	 * @return string
 	 */
 	public static function get_description() {
-		return 'This trigger will be fired when someone first purchases a product.';
+		return 'This trigger will be fired when a purchase is revoked.';
 	}
 
 	/**
@@ -81,22 +80,5 @@ class PurchaseCreatedTrigger extends Trigger {
 	 */
 	public static function get_image() {
 		return esc_url( trailingslashit( plugin_dir_url( SURECART_PLUGIN_FILE ) ) . 'app/src/Integrations/ThriveAutomator/images/icon.svg' );
-	}
-
-
-	public function process_params( $params = array() ) {
-		$data = array();
-
-		if ( ! empty( $params[1] ) ) {
-
-			$data_object_classes = Data_Object::get();
-
-			list ( $product, $user ) = $params;
-
-			$data['surecart/product_data'] = empty( $data_object_classes['surecart/product_data'] ) ? $product : new $data_object_classes['surecart/product_data']( $product );
-			$data['user_data']             = empty( $data_object_classes['user_data'] ) ? null : new $data_object_classes['user_data']( $user );
-		}
-
-		return $data;
 	}
 }
