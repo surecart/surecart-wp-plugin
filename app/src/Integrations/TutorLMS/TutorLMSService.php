@@ -8,6 +8,7 @@ use SureCart\Integrations\IntegrationService;
 use SureCart\Models\Integration;
 use SureCart\Models\Price;
 use SureCart\Models\Product;
+use SureCart\Support\Currency;
 
 /**
  * Controls the LearnDash integration.
@@ -19,6 +20,48 @@ class TutorLMSService extends IntegrationService implements IntegrationInterface
 
 		add_filter( 'tutor/course/single/entry-box/free', [ $this, 'purchaseButton' ], 10, 2 );
 		add_filter( 'tutor/course/single/entry-box/purchasable', [ $this, 'purchaseButton' ], 10, 2 );
+		add_filter( 'get_tutor_course_price', [ $this, 'coursePrice' ], 10, 2 );
+	}
+
+	/**
+	 * The course price.
+	 *
+	 * @param string  $price The price string.
+	 * @param integer $course_id The course id.
+	 *
+	 * @return string
+	 */
+	public function coursePrice( $price, $course_id ) {
+		$integrations = Integration::where( 'integration_id', $course_id )->andWhere( 'model_name', 'product' )->get();
+
+		// we have no integrations.
+		if ( empty( $integrations ) ) {
+			return $price;
+		}
+
+		// get the first product.
+		$product = Product::find( $integrations[0]->model_id );
+		if ( is_wp_error( $product ) ) {
+			return $product;
+		}
+
+		// there is no price.
+		if ( empty( $product->metrics->prices_count ) ) {
+			return esc_html__( 'No price', 'surecart' );
+		}
+
+		// get the min amount.
+		if ( ! empty( $product->metrics->min_price_amount ) ) {
+			return Currency::format( $product->metrics->min_price_amount, $product->metrics->currency ?? 'usd' );
+		}
+
+		// there is a price, but no min amount.
+		if ( 1 === $product->metrics->prices_count ) {
+			return esc_html__( 'Name your own price', 'surecart' );
+		}
+
+		// no price.
+		return esc_html__( 'No price', 'surecart' );
 	}
 
 	/**
@@ -234,6 +277,5 @@ class TutorLMSService extends IntegrationService implements IntegrationInterface
 
 		tutor_utils()->do_enroll( $course_id, 0, $wp_user->ID );
 		tutor_utils()->complete_course_enroll( 0 );
-		return;
 	}
 }
