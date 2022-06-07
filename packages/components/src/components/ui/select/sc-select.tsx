@@ -201,7 +201,9 @@ export class ScSelectDropdown {
 
   @Watch('value')
   handleValueChange() {
-    this.invalid = !this.input.checkValidity();
+    if (this.input) {
+      this.invalid = !this.input.checkValidity();
+    }
   }
 
   @Watch('open')
