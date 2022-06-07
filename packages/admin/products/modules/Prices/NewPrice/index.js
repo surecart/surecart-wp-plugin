@@ -142,7 +142,7 @@ export default ({ onRequestClose, product }) => {
 					choices={[
 						{
 							value: 'once',
-							label: __('One-time Payment', 'surecart'),
+							label: __('One Time', 'surecart'),
 						},
 						{
 							value: 'multiple',
