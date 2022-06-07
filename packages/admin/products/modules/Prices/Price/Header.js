@@ -30,14 +30,6 @@ export default ({
 		if (isOpen) return null;
 		return (
 			<>
-				{!!price?.ad_hoc && (
-					<>
-						{' '}
-						<sc-tag type="success" size="small">
-							{__('Custom Amount', 'surecart')}
-						</sc-tag>
-					</>
-				)}
 				{!!price?.trial_duration_days && (
 					<>
 						{' '}
@@ -49,31 +41,74 @@ export default ({
 			</>
 		);
 	};
+
+	const priceType = () => {
+		if (price?.recurring_interval) {
+			if (price?.recurring_period_count) {
+				return (
+					<sc-tag
+						type="primary"
+						size="small"
+						style={{
+							'--sc-tag-primary-background-color': '#f3e8ff',
+							'--sc-tag-primary-color': '#6b21a8',
+						}}
+					>
+						{__('Payment Plan', 'surecart')}
+					</sc-tag>
+				);
+			}
+			return (
+				<sc-tag type="success" size="small">
+					{__('Subscription', 'surecart')}
+				</sc-tag>
+			);
+		}
+		return (
+			<sc-tag type="info" size="small">
+				{__('One Time', 'surecart')}
+			</sc-tag>
+		);
+	};
+
 	/** Header name */
 	const headerName = () => {
 		return (
 			<Fragment>
-				<ScFormatNumber
-					css={css`
-						font-weight: bold;
-						font-size: 14px;
-					`}
-					type="currency"
-					currency={price?.currency || scData.currency_code}
-					value={price?.amount}
-				/>
+				{price?.ad_hoc ? (
+					__('Custom Amount', 'surecart')
+				) : (
+					<ScFormatNumber
+						css={css`
+							font-weight: bold;
+							font-size: 14px;
+						`}
+						type="currency"
+						currency={price?.currency || scData.currency_code}
+						value={price?.amount}
+					/>
+				)}
 
 				{collapsedDetails()}
 
 				<div
 					css={css`
-						opacity: 0.75;
-						line-height: 1;
+						display: flex;
+						align-items: center;
+						gap: 0.5em;
 					`}
 				>
-					{intervalString(price, {
-						labels: { interval: __('Every', 'surecart') },
-					})}
+					{priceType()}
+					<div
+						css={css`
+							opacity: 0.75;
+							line-height: 1;
+						`}
+					>
+						{intervalString(price, {
+							labels: { interval: __('Every', 'surecart') },
+						})}
+					</div>
 				</div>
 			</Fragment>
 		);
