@@ -5,6 +5,8 @@ namespace SureCart\Integrations\TutorLMS;
 use SureCart\Integrations\Contracts\IntegrationInterface;
 use SureCart\Integrations\Contracts\PurchaseSyncInterface;
 use SureCart\Integrations\IntegrationService;
+use SureCart\Models\Integration;
+use SureCart\Models\Product;
 
 /**
  * Controls the LearnDash integration.
@@ -13,8 +15,76 @@ class TutorLMSService extends IntegrationService implements IntegrationInterface
 
 	public function bootstrap() {
 		parent::bootstrap();
-		add_filter( 'tutor_monetization_options', [ $this, 'addMonitizationOption' ] );
-		add_filter( 'get_tutor_course_price', array( $this, 'showTutorPrice' ), 10, 2 );
+
+		add_action( 'surecart/integrations/create', [ $this, 'maybeStoreProductId' ] );
+		/**
+		 * Is Course Purchasable
+		 */
+		// add_filter( 'is_course_purchasable', array( $this, 'is_course_purchasable' ), 10, 2 );
+		// add_filter( 'get_tutor_course_price', array( $this, 'get_tutor_course_price' ), 10, 2 );
+		// add_filter( 'tutor_course_sell_by', array( $this, 'tutor_course_sell_by' ) );
+		// add_filter( 'tutor_get_template_path', [ $this, 'templatePath' ] );
+		add_filter( 'tutor/course/single/entry-box/free', [ $this, 'purchaseButton' ], 10, 2 );
+	}
+
+	/**
+	 * If we have integrations, use them
+	 */
+	public function purchaseButton( $output, $id ) {
+		$integrations = Integration::where( 'integration_id', $id )->get();
+
+		// if we have integrations.
+		if ( ! empty( $integrations ) ) {
+			\SureCart::assets()->enqueueComponents();
+			// get the product ids.
+			$product_ids = array_column( $integrations, 'model_id' );
+			$products    = Product::where( [ 'ids' => $product_ids ] )->with( [ 'prices' ] )->get();
+			if ( ! empty( $products ) ) {
+				include 'add-to-cart-surecart.php';
+				return;
+			}
+		}
+		return $output;
+	}
+
+	public function is_course_purchasable( $bool, $course_id ) {
+		return true;
+		// $course_id = tutor_utils()->get_post_id($course_id);
+		// $has_product_id = get_post_meta($course_id, '_tutor_course_product_id', true);
+		// if ($has_product_id) {
+		// return true;
+		// }
+		// return false;
+	}
+
+	public function get_tutor_course_price( $price, $course_id ) {
+		return '123';
+	}
+
+	public function tutor_course_sell_by() {
+		return 'surecart';
+	}
+
+	public function templatePath( $path ) {
+		if ( false !== strpos( $path, 'add-to-cart-surecart' ) ) {
+			return dirname( __FILE__ ) . '/add-to-cart-surecart.php';
+		}
+		return $path;
+	}
+
+	/**
+	 * Maybe store the TutorLMS product id when the integration is saved.
+	 */
+	public function maybeStoreProductId( $args ) {
+		if ( empty( $args['provider'] ) || empty( $args['integration_id'] ) || empty( $args['model_id'] ) ) {
+			return;
+		}
+		$integrations = Integration::where( 'integration_id', $args['integration_id'] )->first();
+
+		if ( 'surecart/tutor-course' === $args['provider'] ) {
+			update_post_meta( (int) $args['integration_id'], '_tutor_course_product_id', $args['model_id'] );
+		}
+
 	}
 
 	/**
