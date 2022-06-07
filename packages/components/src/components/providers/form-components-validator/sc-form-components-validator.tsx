@@ -32,7 +32,9 @@ export class ScFormComponentsValidator {
   }
 
   componentWillLoad() {
-    this.hasAddress = !!this.el.querySelector('sc-address');
+    this.hasAddress = !!this.el.querySelector('sc-order-shipping-address');
+
+    // automatically add address field if tax is enabled.
     if (this.taxEnabled) {
       this.addAddressField();
     }
