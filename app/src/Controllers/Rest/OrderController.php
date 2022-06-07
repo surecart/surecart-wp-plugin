@@ -26,7 +26,7 @@ class OrderController extends RestController {
 	 *
 	 * @return \SureCart\Models\Model|\WP_Error
 	 */
-	protected function middleware( \SureCart\Models\Model $class, \WP_REST_Request $request ) {
+	protected function middleware( $class, \WP_REST_Request $request ) {
 		$class = $this->setMode( $class, $request );
 		if ( is_wp_error( $class ) ) {
 			return $class;

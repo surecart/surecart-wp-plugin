@@ -1,10 +1,8 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 
 import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
-import { translateInterval } from '@scripts/admin/util/translations';
+import { intervalString } from '../../admin/util/translations';
 
 export default ({ id, quantity }) => {
 	// get price from choice.
@@ -50,12 +48,10 @@ export default ({ id, quantity }) => {
 					value={price.amount}
 				></sc-format-number>
 				{price &&
-					translateInterval(
-						price?.recurring_interval_count,
-						price?.recurring_interval,
-						' /',
-						' once'
-					)}
+					intervalString(price, {
+						showOnce: true,
+						labels: { interval: '/' },
+					})}
 			</div>
 		</sc-stacked-list-row>
 	);

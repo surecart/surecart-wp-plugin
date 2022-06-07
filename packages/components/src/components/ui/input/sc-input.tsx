@@ -211,7 +211,9 @@ export class ScInput {
 
   @Watch('value')
   handleValueChange() {
-    this.invalid = !this.input.checkValidity();
+    if (this.input) {
+      this.invalid = !this.input.checkValidity();
+    }
   }
 
   componentDidLoad() {

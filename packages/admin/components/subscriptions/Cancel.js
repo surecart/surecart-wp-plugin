@@ -5,6 +5,7 @@ import { ScForm } from '@surecart/components-react';
 import { css, jsx } from '@emotion/core';
 import { useState, Fragment } from '@wordpress/element';
 import { useEffect } from 'react';
+import { ScButton } from '@surecart/components-react';
 
 export default ({ onCancel, subscription, loading, error, children, open }) => {
 	const [modal, setModal] = useState(false);
@@ -81,12 +82,15 @@ export default ({ onCancel, subscription, loading, error, children, open }) => {
 								gap: 0.5em;
 							`}
 						>
-							<Button isPrimary isBusy={loading} type="submit">
+							<ScButton type="primary" busy={loading} submit>
 								{__('Cancel Subscription', 'surecart')}
-							</Button>
-							<Button onClick={() => setModal(false)}>
+							</ScButton>
+							<ScButton
+								type="text"
+								onClick={() => setModal(false)}
+							>
 								{__("Don't Cancel", 'surecart')}
-							</Button>
+							</ScButton>
 						</div>
 					</ScForm>
 				</Modal>

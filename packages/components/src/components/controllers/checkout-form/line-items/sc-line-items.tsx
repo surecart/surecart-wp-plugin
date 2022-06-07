@@ -1,9 +1,10 @@
-import { translatedInterval } from '../../../../functions/price';
-import { Order, LineItem, LineItemData, PriceChoice, Prices, Product } from '../../../../types';
-import { Component, h, Prop, Event, EventEmitter } from '@stencil/core';
-import { openWormhole } from 'stencil-wormhole';
-import { hasSubscription } from '../../../../functions/line-items';
+import { Component, Event, EventEmitter, h, Prop } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
+import { openWormhole } from 'stencil-wormhole';
+
+import { hasSubscription } from '../../../../functions/line-items';
+import { intervalString } from '../../../../functions/price';
+import { LineItem, LineItemData, Order, PriceChoice, Prices, Product } from '../../../../types';
 
 @Component({
   tag: 'sc-line-items',
@@ -88,13 +89,13 @@ export class ScLineItems {
               key={item.id}
               imageUrl={(item?.price?.product as Product)?.image_url}
               name={(item?.price?.product as Product)?.name}
-              editable={this.isEditable() && !item?.ad_hoc_amount}
+              editable={this.isEditable() && !item?.price?.ad_hoc}
               removable={this.isRemovable()}
               quantity={item.quantity}
               amount={item.ad_hoc_amount !== null ? item.ad_hoc_amount : item.price.amount * item.quantity}
               currency={this.order?.currency}
               trialDurationDays={item?.price?.trial_duration_days}
-              interval={translatedInterval(item.price.recurring_interval_count, item.price.recurring_interval, __('every', 'surecart'), hasSubscription(this.order) ? 'once' : '')}
+              interval={!!item?.price && intervalString(item?.price, { showOnce: hasSubscription(this.order) })}
               onScUpdateQuantity={e => this.updateQuantity(item, e.detail)}
               onScRemove={() => this.removeLineItem(item)}
             ></sc-product-line-item>

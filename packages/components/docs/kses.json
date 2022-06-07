@@ -14,6 +14,7 @@
     "closable": true,
     "duration": true,
     "open": true,
+    "scroll-margin": true,
     "scroll-on-open": true,
     "type": true,
     "style": true,
@@ -194,6 +195,17 @@
     "class": true,
     "slot": true
   },
+  "sc-compact-address": {
+    "address": true,
+    "label": true,
+    "loading": true,
+    "names": true,
+    "required": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-consumer": {
     "renderer": true,
     "style": true,
@@ -317,6 +329,15 @@
   "sc-dashboard-module": {
     "error": true,
     "heading": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-dialog": {
+    "label": true,
+    "no-header": true,
+    "open": true,
     "style": true,
     "id": true,
     "class": true,
@@ -751,6 +772,7 @@
     "loading": true,
     "required": true,
     "shipping-address": true,
+    "shipping-enabled": true,
     "tax-status": true,
     "style": true,
     "id": true,
@@ -1031,6 +1053,7 @@
     "squared-left": true,
     "squared-right": true,
     "squared-top": true,
+    "unselect": true,
     "value": true,
     "style": true,
     "id": true,
@@ -1148,6 +1171,14 @@
     "class": true,
     "slot": true
   },
+  "sc-subscription-ad-hoc-confirm": {
+    "heading": true,
+    "price": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-subscription-cancel": {
     "back-url": true,
     "heading": true,
@@ -1203,6 +1234,7 @@
     "slot": true
   },
   "sc-subscription-switch": {
+    "filter-above": true,
     "heading": true,
     "product-group-id": true,
     "product-id": true,
@@ -1357,6 +1389,7 @@
     "slot": true
   },
   "sc-upcoming-invoice": {
+    "ad-hoc-amount": true,
     "discount": true,
     "heading": true,
     "payment_method": true,

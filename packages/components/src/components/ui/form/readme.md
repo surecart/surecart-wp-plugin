@@ -78,6 +78,7 @@ Type: `Promise<boolean>`
  - [sc-customer-edit](../../controllers/dashboard/customer-edit)
  - [sc-login-form](../../controllers/login)
  - [sc-payment-method-create](../../controllers/dashboard/payment-method-create)
+ - [sc-subscription-ad-hoc-confirm](../../controllers/dashboard/subscription-ad-hoc-confirm)
  - [sc-subscription-payment](../../controllers/dashboard/subscription-payment)
  - [sc-subscription-switch](../../controllers/dashboard/subscription-switch)
  - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
@@ -90,6 +91,7 @@ graph TD;
   sc-customer-edit --> sc-form
   sc-login-form --> sc-form
   sc-payment-method-create --> sc-form
+  sc-subscription-ad-hoc-confirm --> sc-form
   sc-subscription-payment --> sc-form
   sc-subscription-switch --> sc-form
   sc-upcoming-invoice --> sc-form

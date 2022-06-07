@@ -6,7 +6,7 @@ import { Spinner, Button } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { addQueryArgs } from '@wordpress/url';
-import { translateInterval } from '../../../../admin/util/translations';
+import { intervalString } from '../../../../admin/util/translations';
 
 export default ({ price_id }) => {
 	const { price, product, loading } = useSelect((select) => {
@@ -60,12 +60,7 @@ export default ({ price_id }) => {
 							currency={price?.currency}
 							value={price?.amount}
 						></sc-format-number>{' '}
-						{translateInterval(
-							price?.recurring_interval_count,
-							price?.recurring_interval,
-							'every',
-							'once'
-						)}
+						{intervalString(price)}
 					</>
 				)}
 			</p>

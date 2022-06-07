@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { __ } from '@wordpress/i18n';
 import { Modal, Button } from '@wordpress/components';
-import { ScForm } from '@surecart/components-react';
+import { ScButton, ScForm } from '@surecart/components-react';
 import { css, jsx } from '@emotion/core';
 import apiFetch from '@wordpress/api-fetch';
 import { useState } from '@wordpress/element';
@@ -120,12 +120,15 @@ export default ({ subscription, children }) => {
 								gap: 0.5em;
 							`}
 						>
-							<Button isPrimary isBusy={loading} type="submit">
+							<ScButton type="primary" busy={loading} submit>
 								{__('Cancel Subscription', 'surecart')}
-							</Button>
-							<Button onClick={() => setModal(false)}>
+							</ScButton>
+							<ScButton
+								type="text"
+								onClick={() => setModal(false)}
+							>
 								{__("Don't Cancel", 'surecart')}
-							</Button>
+							</ScButton>
 						</div>
 					</ScForm>
 				</Modal>

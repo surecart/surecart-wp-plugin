@@ -89,10 +89,13 @@ export class ScSessionProvider {
   }
 
   @Listen('scUpdateOrder')
-  @Listen('scUpdateSession')
   handleUpdateSession(e) {
-    const data = e.detail;
-    this.loadUpdate(data);
+    const { data, options } = e.detail;
+    if (options.silent) {
+      this.update({ ...this.defaultFormData(), ...data });
+    } else {
+      this.loadUpdate(data);
+    }
   }
 
   @Watch('prices')

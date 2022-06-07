@@ -37,6 +37,7 @@
  - [sc-payment-method-create](../../controllers/dashboard/payment-method-create)
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
  - [sc-subscription](../../controllers/dashboard/subscription)
+ - [sc-subscription-ad-hoc-confirm](../../controllers/dashboard/subscription-ad-hoc-confirm)
  - [sc-subscription-cancel](../../controllers/dashboard/subscription-cancel)
  - [sc-subscription-payment](../../controllers/dashboard/subscription-payment)
  - [sc-subscription-renew](../../controllers/dashboard/subscription-renew)
@@ -60,6 +61,7 @@ graph TD;
   sc-payment-method-create --> sc-card
   sc-payment-methods-list --> sc-card
   sc-subscription --> sc-card
+  sc-subscription-ad-hoc-confirm --> sc-card
   sc-subscription-cancel --> sc-card
   sc-subscription-payment --> sc-card
   sc-subscription-renew --> sc-card

@@ -1,0 +1,48 @@
+sc-address {
+  display: block;
+}
+
+.sc-address {
+  display: block;
+  position: relative;
+
+  [hidden] {
+    display: none;
+  }
+
+  &--loading {
+    min-height: 70px;
+
+    sc-skeleton {
+      display: block;
+      margin-bottom: 1em;
+    }
+  }
+
+
+  &__control {
+    display: block;
+
+    > * {
+      margin-bottom: -1px;
+    }
+  }
+
+  &__columns {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    > * {
+      flex: 1;
+      width: 50%;
+      margin-left: -1px;
+
+      &:first-child {
+        margin-left: 0;
+      }
+    }
+  }
+}

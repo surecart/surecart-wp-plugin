@@ -36,10 +36,13 @@ export class ScSelectDropdown {
   @Prop() searchPlaceholder: string = '';
 
   /** The input's value attribute. */
-  @Prop({ mutable: true }) value = '';
+  @Prop({ mutable: true, reflect: true }) value = '';
 
   /** The input's value attribute. */
   @Prop({ mutable: true }) choices: Array<ChoiceItem> = [];
+
+  /** Can we unselect items. */
+  @Prop() unselect: boolean = true;
 
   /* Is it required */
   @Prop({ reflect: true }) required: boolean;
@@ -51,7 +54,7 @@ export class ScSelectDropdown {
   @Prop() search: boolean;
 
   /** The input's name attribute. */
-  @Prop() name: string;
+  @Prop({ reflect: true }) name: string;
 
   /** Some help text for the input. */
   @Prop() help: string;
@@ -172,7 +175,7 @@ export class ScSelectDropdown {
   }
 
   handleSelect(value) {
-    if (this.value === value) {
+    if (this.value === value && this.unselect) {
       this.value = '';
     } else {
       this.value = value;
@@ -198,7 +201,9 @@ export class ScSelectDropdown {
 
   @Watch('value')
   handleValueChange() {
-    this.invalid = !this.input.checkValidity();
+    if (this.input) {
+      this.invalid = !this.input.checkValidity();
+    }
   }
 
   @Watch('open')
@@ -297,7 +302,7 @@ export class ScSelectDropdown {
     }
 
     return (
-      <sc-menu-item key={index} checked={this.isChecked(choice)} onClick={() => this.handleSelect(choice.value)} disabled={choice.disabled}>
+      <sc-menu-item key={index} checked={this.isChecked(choice)} value={choice?.value} onClick={() => this.handleSelect(choice.value)} disabled={choice.disabled}>
         {choice.label}
         {!!choice?.suffix && <span slot="suffix">{choice.suffix}</span>}
         {!!choice?.icon && this.renderIcon(choice.icon)}

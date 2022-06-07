@@ -13,8 +13,8 @@ import {
 import { Icon, trash, moreHorizontalMobile } from '@wordpress/icons';
 import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
-import { translateInterval } from '@scripts/admin/util/translations';
 import PriceSelector from './PriceSelector';
+import { intervalString } from '../../../../admin/util/translations';
 
 export default ({ choice, onUpdate, onSelect, onRemove, onNew }) => {
 	// get price from choice.
@@ -56,12 +56,9 @@ export default ({ choice, onUpdate, onSelect, onRemove, onNew }) => {
 					}
 					currency={price?.currency}
 				/>
-				{translateInterval(
-					price?.recurring_interval_count,
-					price?.recurring_interval,
-					' /',
-					''
-				)}
+				{intervalString(price, {
+					labels: { interval: '/' },
+				})}
 			</Fragment>
 		);
 	};

@@ -1,23 +1,21 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-
-import { __ } from '@wordpress/i18n';
-import { Fragment } from '@wordpress/element';
 import { dispatch } from '@wordpress/data';
-import { store } from './store';
-import Sidebar from './Sidebar';
-import FlashError from '../components/FlashError';
+import { Fragment } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
+import { useEffect } from 'react';
 
+import FlashError from '../components/FlashError';
+import useCurrentPage from '../mixins/useCurrentPage';
+import Logo from '../templates/Logo';
 // template
 import Template from '../templates/SingleModel';
-
-import Details from './modules/Details';
-
-import LineItems from './modules/LineItems';
 import Charges from './modules/Charges';
+import Details from './modules/Details';
+import LineItems from './modules/LineItems';
 import Subscriptions from './modules/Subscriptions';
-import useCurrentPage from '../mixins/useCurrentPage';
-import { useEffect } from 'react';
+import Sidebar from './Sidebar';
+import { store } from './store';
 
 export default () => {
 	const onSubmit = async (e) => {
@@ -65,9 +63,21 @@ export default () => {
 			backUrl={'admin.php?page=sc-invoices'}
 			backText={__('Back to All Invoices', 'surecart')}
 			title={
-				id
-					? __('Edit Invoice', 'surecart')
-					: __('Create Invoice', 'surecart')
+				<sc-breadcrumbs>
+					<sc-breadcrumb>
+						<Logo display="block" />
+					</sc-breadcrumb>
+					<sc-breadcrumb href="admin.php?page=sc-invoices">
+						{__('Invoices', 'surecart')}
+					</sc-breadcrumb>
+					<sc-breadcrumb>
+						<sc-flex style={{ gap: '1em' }}>
+							{id
+								? __('View Invoice', 'surecart')
+								: __('Create Invoice', 'surecart')}
+						</sc-flex>
+					</sc-breadcrumb>
+				</sc-breadcrumbs>
 			}
 			sidebar={<Sidebar customer={customer} loading={isLoading} />}
 		>

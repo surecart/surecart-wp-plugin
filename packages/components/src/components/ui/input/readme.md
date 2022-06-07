@@ -120,6 +120,7 @@ Type: `Promise<void>`
 ### Used by
 
  - [sc-address](../address)
+ - [sc-compact-address](../sc-compact-address)
  - [sc-coupon-form](../coupon-form)
  - [sc-customer-edit](../../controllers/dashboard/customer-edit)
  - [sc-customer-email](../../controllers/checkout-form/customer-email)
@@ -143,6 +144,7 @@ graph TD;
   sc-input --> sc-form-control
   sc-form-control --> sc-tooltip
   sc-address --> sc-input
+  sc-compact-address --> sc-input
   sc-coupon-form --> sc-input
   sc-customer-edit --> sc-input
   sc-customer-email --> sc-input

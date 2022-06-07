@@ -1,10 +1,15 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
+import { ScButton } from '@surecart/components-react';
+import { useDispatch } from '@wordpress/data';
 import { Fragment } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
+import { useEffect } from 'react';
 
 import FlashError from '../components/FlashError';
+import useCurrentPage from '../mixins/useCurrentPage';
 import { store as uiStore } from '../store/ui';
+import Logo from '../templates/Logo';
 // hooks
 import Template from '../templates/SingleModel';
 import Charges from './modules/Charges';
@@ -13,10 +18,6 @@ import Orders from './modules/Orders';
 import Subscriptions from './modules/Subscriptions';
 // parts
 import Sidebar from './Sidebar';
-import useCurrentPage from '../mixins/useCurrentPage';
-import { useEffect } from 'react';
-import { ScButton } from '@surecart/components-react';
-import { useDispatch } from '@wordpress/data';
 
 export default () => {
 	const {
@@ -80,7 +81,19 @@ export default () => {
 			onSubmit={onSubmit}
 			backUrl={'admin.php?page=sc-customers'}
 			backText={__('Back to All Customers', 'surecart')}
-			title={title()}
+			title={
+				<sc-breadcrumbs>
+					<sc-breadcrumb>
+						<Logo display="block" />
+					</sc-breadcrumb>
+					<sc-breadcrumb href="admin.php?page=sc-customers">
+						{__('Customers', 'surecart')}
+					</sc-breadcrumb>
+					<sc-breadcrumb>
+						<sc-flex style={{ gap: '1em' }}>{title()}</sc-flex>
+					</sc-breadcrumb>
+				</sc-breadcrumbs>
+			}
 			button={
 				isLoading ? (
 					<sc-skeleton
