@@ -52,7 +52,6 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	 */
 	protected $endpoint = '';
 
-
 	/**
 	 * Object name
 	 *
@@ -95,20 +94,12 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	 */
 	protected $limit = 20;
 
-
 	/**
 	 * Default collection offset.
 	 *
 	 * @var integer
 	 */
 	protected $offset = 0;
-
-	/**
-	 * The default transient cache time
-	 *
-	 * @var integer
-	 */
-	protected $transient_cache_time = 5 * MINUTE_IN_SECONDS;
 
 	/**
 	 * Model constructor
@@ -643,6 +634,8 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	 * @return array|\WP_Error;
 	 */
 	protected function get() {
+		$this->query['limit'] = 100;
+
 		$items = $this->makeRequest();
 
 		if ( $this->isError( $items ) ) {
@@ -695,23 +688,6 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 		$this->fill( $attributes );
 
 		return $this;
-	}
-
-	/**
-	 * Return a cached version of the model.
-	 *
-	 * @param string $id Id of the model.
-	 *
-	 * @return $this
-	 */
-	protected function findCached( $id = '' ) {
-		$cache_key = 'sc_cached_request' . wp_json_encode( $this->prepareRequest( [ 'id' => $id ] ) );
-		$value     = get_transient( $cache_key );
-		if ( false === $value ) {
-			$value = $this->find( $id );
-			set_transient( $cache_key, $value, apply_filters( 'sc_cached_request_transient_time', $this->transient_cache_time, $this ) );
-		}
-		return $value;
 	}
 
 	/**
