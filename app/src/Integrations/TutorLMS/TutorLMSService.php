@@ -20,7 +20,74 @@ class TutorLMSService extends IntegrationService implements IntegrationInterface
 
 		add_filter( 'tutor/course/single/entry-box/free', [ $this, 'purchaseButton' ], 10, 2 );
 		add_filter( 'tutor/course/single/entry-box/purchasable', [ $this, 'purchaseButton' ], 10, 2 );
-		add_filter( 'get_tutor_course_price', [ $this, 'coursePrice' ], 10, 2 );
+		add_filter( 'get_tutor_course_price', [ $this, 'coursePrice' ], 11, 2 );
+
+		add_action( 'surecart/models/price/updated', [ $this, 'clearPriceCache' ], 10, 2 );
+		add_action( 'surecart/models/price/created', [ $this, 'clearPriceCache' ], 10, 2 );
+	}
+
+	/**
+	 * Clear the price cache.
+	 *
+	 * @param \SureCart\Models\Price $price The price model.
+	 *
+	 * @return void
+	 */
+	public function clearPriceCache( $price ) {
+		if ( empty( $price->product ) ) {
+			return;
+		}
+
+		// get the product id.
+		$product_id = is_a( $price->product, Product::class ) ? $price->product->id : $price->product;
+
+		delete_transient( 'surecart_tutor_lms_product_' . $product_id );
+	}
+
+	/**
+	 * Get cached product prices.
+	 *
+	 * @param array $product_ids The product ids.
+	 *
+	 * @return array
+	 */
+	public function getCachedProductsPrices( $product_ids = [] ) {
+		$prices = [];
+		foreach ( $product_ids as $product_id ) {
+			$prices = array_merge( $prices, $this->getCachedProductPrices( $product_id ) );
+		}
+		return $prices;
+	}
+
+	/**
+	 * Get the cached prices.
+	 *
+	 * @param string $product_id The product id.
+	 *
+	 * @return array
+	 */
+	public function getCachedProductPrices( $product_id ) {
+		// cache key.
+		$cache_key = 'surecart_tutor_lms_product_' . $product_id;
+
+		// get the transient.
+		$prices = get_transient( $cache_key );
+
+		// if we do not have a transient.
+		if ( false === $prices ) {
+			// get purchasable prices for product.
+			$prices = Price::where(
+				[
+					'product_ids' => [ $product_id ],
+					'archived'    => false,
+				]
+			)->get();
+
+			// store in transient.
+			set_transient( $cache_key, $prices, apply_filters( 'surecart_tutor_lms_product_cache_time', DAY_IN_SECONDS, $this ) );
+		}
+
+		return $prices;
 	}
 
 	/**
@@ -39,64 +106,70 @@ class TutorLMSService extends IntegrationService implements IntegrationInterface
 			return $price;
 		}
 
+		if ( empty( $integrations[0]->model_id ) ) {
+			return $price;
+		}
+
 		// get the first product.
-		$product = Product::find( $integrations[0]->model_id );
-		if ( is_wp_error( $product ) ) {
-			return $product;
+		$prices = $this->getCachedProductPrices( $integrations[0]->model_id );
+		if ( is_wp_error( $prices ) ) {
+			return $prices;
 		}
 
 		// there is no price.
-		if ( empty( $product->metrics->prices_count ) ) {
+		if ( empty( $prices ) ) {
 			return esc_html__( 'No price', 'surecart' );
 		}
 
-		// get the min amount.
-		if ( ! empty( $product->metrics->min_price_amount ) ) {
-			return Currency::format( $product->metrics->min_price_amount, $product->metrics->currency ?? 'usd' );
-		}
-
-		// there is a price, but no min amount.
-		if ( 1 === $product->metrics->prices_count ) {
-			return esc_html__( 'Name your own price', 'surecart' );
+		$price_array = [];
+		foreach ( $prices as $price ) {
+			if ( $price->ad_hoc ) {
+				$price_array[] = esc_html__( 'Custom amount', 'surecart' );
+			} else {
+				$price_array[] = Currency::format( $price->amount, $price->currency ?? 'usd' );
+			}
 		}
 
 		// no price.
-		return esc_html__( 'No price', 'surecart' );
+		return implode( ', ', $price_array );
 	}
 
 	/**
 	 * Show our purchase button if we have an integration.
+	 *
+	 * @param string  $output The button HTML.
+	 * @param integer $id The course id.
+	 *
+	 * @return string
 	 */
 	public function purchaseButton( $output, $id ) {
+		// check first to see if we have any integrations.
 		$integrations = Integration::where( 'integration_id', $id )->andWhere( 'model_name', 'product' )->get();
-
 		if ( empty( $integrations ) ) {
 			return $output;
 		}
 
-		// if we have integrations.
+		// Get the model ids from the integrations.
 		$product_ids = array_column( $integrations, 'model_id' );
-
 		if ( empty( $product_ids ) ) {
+			return $output;
+		}
+
+		// get purchasable prices from cache.
+		$prices = $this->getCachedProductsPrices( $product_ids );
+		if ( empty( $prices ) ) {
 			return $output;
 		}
 
 		// add our components.
 		\SureCart::assets()->enqueueComponents();
 
-		// get purchasable prices.
-		$prices = Price::where(
-			[
-				'product_ids' => array_column( $integrations, 'model_id' ),
-				'archived'    => false,
-			]
-		)->get();
-
-		if ( empty( $prices ) ) {
-			return $output;
-		}
+		// template.
+		ob_start();
 
 		include 'add-to-cart-surecart.php';
+
+		return ob_get_clean();
 	}
 
 	/**
