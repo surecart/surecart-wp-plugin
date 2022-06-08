@@ -104,11 +104,11 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	protected $offset = 0;
 
 	/**
-	 * The default transient cache time
+	 * Is this cachable?
 	 *
-	 * @var integer
+	 * @var boolean
 	 */
-	protected $transient_cache_time = 5 * MINUTE_IN_SECONDS;
+	protected $cachable = false;
 
 	/**
 	 * Model constructor
@@ -595,7 +595,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 		// add query vars.
 		$args['query'] = $this->query;
 
-		return [ $endpoint, $args ];
+		return [ $endpoint, $args, $this->cachable ];
 	}
 
 	/**
@@ -695,23 +695,6 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 		$this->fill( $attributes );
 
 		return $this;
-	}
-
-	/**
-	 * Return a cached version of the model.
-	 *
-	 * @param string $id Id of the model.
-	 *
-	 * @return $this
-	 */
-	protected function findCached( $id = '' ) {
-		$cache_key = 'sc_cached_request' . wp_json_encode( $this->prepareRequest( [ 'id' => $id ] ) );
-		$value     = get_transient( $cache_key );
-		if ( false === $value ) {
-			$value = $this->find( $id );
-			set_transient( $cache_key, $value, apply_filters( 'sc_cached_request_transient_time', $this->transient_cache_time, $this ) );
-		}
-		return $value;
 	}
 
 	/**
