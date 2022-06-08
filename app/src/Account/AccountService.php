@@ -31,6 +31,15 @@ class AccountService {
 	}
 
 	/**
+	 * Clear account cache.
+	 *
+	 * @return boolean
+	 */
+	public function clearCache() {
+		return delete_transient( 'surecart_account' );
+	}
+
+	/**
 	 * Get the account model attribute
 	 *
 	 * @param string $attribute Attribute name.
