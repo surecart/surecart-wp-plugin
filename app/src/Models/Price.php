@@ -23,6 +23,20 @@ class Price extends Model {
 	protected $object_name = 'price';
 
 	/**
+	 * Is this cachable?
+	 *
+	 * @var boolean
+	 */
+	protected $cachable = true;
+
+	/**
+	 * Clear cache when products are updated.
+	 *
+	 * @var string
+	 */
+	protected $cache_key = 'products_updated_at';
+
+	/**
 	 * Set the WP Attachment based on the saved id
 	 *
 	 * @param object $meta Meta value.

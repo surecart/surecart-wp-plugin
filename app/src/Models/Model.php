@@ -102,6 +102,20 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	protected $offset = 0;
 
 	/**
+	 * Is this cachable?
+	 *
+	 * @var boolean
+	 */
+	protected $cachable = false;
+
+	/**
+	 * Is this cachable?
+	 *
+	 * @var boolean
+	 */
+	protected $cache_key = '';
+
+	/**
 	 * Model constructor
 	 *
 	 * @param array $attributes Optional attributes.
@@ -586,7 +600,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 		// add query vars.
 		$args['query'] = $this->query;
 
-		return [ $endpoint, $args ];
+		return [ $endpoint, $args, $this->cachable, $this->cache_key ];
 	}
 
 	/**
@@ -814,6 +828,11 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 		// fire event.
 		$this->fireModelEvent( 'created' );
 
+		// clear cache if cachable.
+		if ( $this->cachable ) {
+			\SureCart::account()->clearCache();
+		}
+
 		return $this;
 	}
 
@@ -855,6 +874,10 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 		$this->fill( $updated );
 
 		$this->fireModelEvent( 'updated' );
+
+		if ( $this->cachable ) {
+			\SureCart::account()->clearCache();
+		}
 
 		return $this;
 	}

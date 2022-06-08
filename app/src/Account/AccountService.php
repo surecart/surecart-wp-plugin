@@ -26,8 +26,17 @@ class AccountService {
 		$this->account = get_transient( 'surecart_account' );
 		if ( false === $this->account ) {
 			$this->account = Account::with( [ 'brand', 'portal_protocol', 'tax_protocol' ] )->find();
-			set_transient( 'surecart_account', $this->account, DAY_IN_SECONDS );
+			set_transient( 'surecart_account', $this->account, 60 );
 		}
+	}
+
+	/**
+	 * Clear account cache.
+	 *
+	 * @return boolean
+	 */
+	public function clearCache() {
+		return delete_transient( 'surecart_account' );
 	}
 
 	/**
