@@ -47,6 +47,23 @@ class RequestCacheService {
 	}
 
 	/**
+	 * Can we use transient caching.
+	 *
+	 * @return boolean
+	 */
+	public function canUseTransient() {
+		$expand = $this->args['query']['expand'] ?? [];
+		// if any expand has nested expansion, do not cache.
+		foreach ( $expand as $item ) {
+			if ( strpos( '.', $item ) !== false ) {
+				return false;
+			}
+		}
+		return true;
+
+	}
+
+	/**
 	 * Get the object cache key.
 	 *
 	 * @return string
@@ -130,6 +147,10 @@ class RequestCacheService {
 	 * @return boolean
 	 */
 	public function setTransientCache( $data ) {
+		if ( ! $this->canUseTransient() ) {
+			return false;
+		}
+
 		$transient_cache_key = $this->getTransientCacheKey();
 		if ( $transient_cache_key ) {
 			return set_transient( $transient_cache_key, $data, 60 * MINUTE_IN_SECONDS );
@@ -143,6 +164,9 @@ class RequestCacheService {
 	 * @return mixed
 	 */
 	public function getTransientCache() {
+		if ( ! $this->canUseTransient() ) {
+			return false;
+		}
 		return get_transient( $this->getTransientCacheKey() );
 	}
 }
