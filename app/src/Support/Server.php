@@ -7,6 +7,22 @@ namespace SureCart\Support;
  */
 class Server {
 	/**
+	 * The url of the site.
+	 *
+	 * @return string
+	 */
+	protected $url = '';
+
+	/**
+	 * Get the url of the site
+	 *
+	 * @param string $url The url for the site.
+	 */
+	public function __construct( $url ) {
+		$this->url = $url;
+	}
+
+	/**
 	 * Are we on the localhost?
 	 *
 	 * @return boolean
@@ -31,8 +47,8 @@ class Server {
 	 * @return boolean
 	 */
 	public function isLocalDomain() {
-		$tld = end( explode( '.', wp_parse_url( get_site_url(), PHP_URL_HOST ) ) );
-		return in_array( $tld, array( 'local', 'test' ), true );
+		$parsed = explode( '.', wp_parse_url( $this->url, PHP_URL_HOST ) );
+		return in_array( end( $parsed ), array( 'local', 'test' ), true );
 	}
 
 	/**
