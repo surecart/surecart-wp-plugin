@@ -12,7 +12,7 @@
 | `country` | `country` | Label for the field.  | `string`  | `undefined` |
 | `number`  | `number`  | Tax ID Number         | `string`  | `null`      |
 | `show`    | `show`    | Force show the field. | `boolean` | `false`     |
-| `type`    | `type`    | Type of tax id        | `string`  | `null`      |
+| `type`    | `type`    | Type of tax id        | `string`  | `'other'`   |
 
 
 ## Events

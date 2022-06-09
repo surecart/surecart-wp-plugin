@@ -22,7 +22,7 @@ class RolesService {
 	 */
 	public function delete() {
 		$this->removeRoles();
-		$this->removeCaps();
+		// $this->removeCaps();
 	}
 
 	/**
