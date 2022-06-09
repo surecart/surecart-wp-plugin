@@ -18,20 +18,15 @@ describe('sc-form', () => {
       <sc-button submit>Test CE</sc-button>
     </sc-form>
     `);
-    const scFormSubmit = await page.spyOnEvent('scFormSubmit');
-    const scSubmit = await page.spyOnEvent('scFormSubmit');
-
-    const button = await page.find('button');
-    button.click();
-    await page.waitForChanges();
-    expect(scSubmit).toHaveReceivedEventTimes(1);
-    expect(scFormSubmit).toHaveReceivedEventTimes(1);
+    const form = await page.find('sc-form');
+    const scFormSubmit = await form.spyOnEvent('scFormSubmit');
+    const scSubmit = await form.spyOnEvent('scSubmit');
 
     const ce_button = await page.find('sc-button');
     ce_button.click();
     await page.waitForChanges();
-    expect(scSubmit).toHaveReceivedEventTimes(2);
-    expect(scFormSubmit).toHaveReceivedEventTimes(2);
+    expect(scSubmit).toHaveReceivedEventTimes(1);
+    expect(scFormSubmit).toHaveReceivedEventTimes(1);
   });
 
   // we are testing this because JEST doesn't work well with FormData
@@ -82,12 +77,6 @@ describe('sc-form', () => {
       ce_choice: 'CE Choice',
       ce_check_choice: 'CE Choice Check',
       ce_check_choice_1: 'CE Choice Check 1',
-
-      radio: 'Radio',
-      checkbox: 'Checkbox',
-      input: 'Input',
-      select: 'select',
-      textarea: 'Text Area',
     });
   });
 });

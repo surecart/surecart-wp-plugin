@@ -21,7 +21,7 @@ exports[`sc-compact-address renders CA address fields 1`] = `
       <sc-select autocomplete="country-name" name="shipping_country" placeholder="Select Your Country" search="" squared-bottom="" value="CA"></sc-select>
       <div class="sc-address__columns">
         <sc-select autocomplete="address-level1" name="shipping_state" placeholder="Province/Region" search="" squared-top="" value="WI"></sc-select>
-        <sc-input autocomplete="postal-code" hidden="" maxlength="5" name="shipping_postal_code" placeholder="Postal Code/Zip" squared="" squared-left="" squared-top="" value="12345"></sc-input>
+        <sc-input autocomplete="postal-code" hidden="" maxlength="5" name="shipping_postal_code" placeholder="Postal Code/Zip" squared-left="" squared-top="" value="12345"></sc-input>
       </div>
     </sc-form-control>
   </div>
@@ -49,7 +49,7 @@ exports[`sc-compact-address renders US address fields 1`] = `
       <sc-select autocomplete="country-name" name="shipping_country" placeholder="Select Your Country" search="" squared-bottom="" value="US"></sc-select>
       <div class="sc-address__columns">
         <sc-select autocomplete="address-level1" name="shipping_state" placeholder="State" search="" squared-right="" squared-top="" value="WI"></sc-select>
-        <sc-input autocomplete="postal-code" maxlength="5" name="shipping_postal_code" placeholder="Postal Code/Zip" squared="" squared-left="" squared-top="" value="12345"></sc-input>
+        <sc-input autocomplete="postal-code" maxlength="5" name="shipping_postal_code" placeholder="Postal Code/Zip" squared-left="" squared-top="" value="12345"></sc-input>
       </div>
     </sc-form-control>
   </div>

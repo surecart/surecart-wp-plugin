@@ -120,4 +120,32 @@ exports[`sc-tax-id-input Renders UK VAT Tax Type 1`] = `
 </sc-tax-id-input>
 `;
 
-exports[`sc-tax-id-input renders 1`] = `<sc-tax-id-input></sc-tax-id-input>`;
+exports[`sc-tax-id-input renders 1`] = `
+<sc-tax-id-input>
+  <input name="tax_identifier.number_type" type="hidden">
+  <sc-input label="Tax ID" name="tax_identifier.number">
+    <sc-dropdown position="bottom-right" slot="suffix">
+      <sc-button caret="" slot="trigger" type="text">
+        Other
+      </sc-button>
+      <sc-menu>
+        <sc-menu-item>
+          CA GST
+        </sc-menu-item>
+        <sc-menu-item>
+          AU ABN
+        </sc-menu-item>
+        <sc-menu-item>
+          UK VAT
+        </sc-menu-item>
+        <sc-menu-item>
+          EU VAT
+        </sc-menu-item>
+        <sc-menu-item>
+          Other
+        </sc-menu-item>
+      </sc-menu>
+    </sc-dropdown>
+  </sc-input>
+</sc-tax-id-input>
+`;

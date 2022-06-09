@@ -7,12 +7,6 @@ describe('sc-dialog', () => {
       components: [ScDialog],
       html: `<sc-dialog></sc-dialog>`,
     });
-    expect(page.root).toEqualHtml(`
-      <sc-dialog>
-        <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
-      </sc-dialog>
-    `);
+    expect(page.root).toMatchSnapshot();
   });
 });
