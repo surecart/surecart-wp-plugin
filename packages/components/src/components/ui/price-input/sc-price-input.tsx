@@ -1,6 +1,7 @@
 import { Component, Prop, Event, EventEmitter, h, Method, Watch, Element } from '@stencil/core';
 import { getCurrencySymbol } from '../../../functions/price';
 import { FormSubmitController } from '../../../functions/form-data';
+import { isZeroDecimal, maybeConvertAmount } from '../../util/format-number/functions/utils';
 
 /**
  * @part base - The elements base wrapper.
@@ -120,11 +121,16 @@ export class ScPriceInput {
   }
 
   handleChange() {
-    this.value = this.scInput.value ? (parseFloat(this.scInput.value) * 100).toFixed(2).toString() : '';
+    this.updateValue();
   }
 
   handleInput() {
-    this.value = this.scInput.value ? (parseFloat(this.scInput.value) * 100).toFixed(2).toString() : '';
+    this.updateValue();
+  }
+
+  updateValue() {
+    const val = isZeroDecimal(this.currencyCode) ? parseFloat(this.scInput.value) : (parseFloat(this.scInput.value) * 100).toFixed(2);
+    this.value = this.scInput.value ? val.toString() : '';
   }
 
   componentDidLoad() {
@@ -164,7 +170,7 @@ export class ScPriceInput {
           inputmode={'decimal'}
           onScChange={() => this.handleChange()}
           onScInput={() => this.handleInput()}
-          value={(parseFloat(this.value) / 100).toString()}
+          value={maybeConvertAmount(parseFloat(this.value), this.currencyCode).toString()}
         >
           <span style={{ opacity: '0.5' }} slot="prefix">
             {getCurrencySymbol(this.currencyCode)}

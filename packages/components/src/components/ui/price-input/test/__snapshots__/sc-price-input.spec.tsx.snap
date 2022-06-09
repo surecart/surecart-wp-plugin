@@ -8,6 +8,9 @@ exports[`sc-price-input renders 1`] = `
         <span slot="prefix" style="opacity: 0.5;">
           $
         </span>
+        <span slot="suffix">
+          <slot name="suffix"></slot>
+        </span>
       </sc-input>
     </div>
   </mock:shadow-root>

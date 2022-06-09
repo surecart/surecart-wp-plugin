@@ -15,7 +15,7 @@ export class ScTaxIdInput {
   @Prop() show: boolean = false;
 
   /** Type of tax id */
-  @Prop({ mutable: true }) type: string = null;
+  @Prop({ mutable: true }) type: string = 'other';
 
   /** Tax ID Number */
   @Prop({ mutable: true }) number: string = null;
@@ -25,17 +25,6 @@ export class ScTaxIdInput {
 
   /** Set the checkout state. */
   @Event() scSetState: EventEmitter<string>;
-
-  @Watch('type')
-  handleTypeChange() {
-    this.maybeForceShow();
-  }
-
-  maybeForceShow() {
-    if (this.show && this.type === null) {
-      this.type = 'other';
-    }
-  }
 
   @Watch('number')
   @Watch('type')
@@ -54,22 +43,17 @@ export class ScTaxIdInput {
   }
 
   componentWillLoad() {
-    this.maybeForceShow();
     this.type = getType(this.country);
   }
 
   render() {
-    if (this.type === null) {
-      return null;
-    }
-
     return (
       <Fragment>
         <input type="hidden" name="tax_identifier.number_type" value={this.type} />
-        <sc-input label={zones?.[this?.type]?.label} name="tax_identifier.number" value={this.number} onScChange={(e: any) => (this.number = e.target.value)}>
+        <sc-input label={zones?.[this?.type || 'other']?.label} name="tax_identifier.number" value={this.number} onScChange={(e: any) => (this.number = e.target.value)}>
           <sc-dropdown slot="suffix" position="bottom-right">
             <sc-button type="text" slot="trigger" caret loading={false}>
-              {zones?.[this?.type]?.label_small}
+              {zones?.[this?.type || 'other']?.label_small}
             </sc-button>
             <sc-menu>
               {Object.keys(zones || {}).map(name => (

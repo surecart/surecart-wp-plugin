@@ -10,7 +10,7 @@ export default ({ className, price, updatePrice, suffix }) => {
 					? __('Default Price', 'surecart')
 					: __('Price', 'surecart')
 			}
-			currencyCode={scData.currency_code}
+			currencyCode={price?.currency || scData.currency_code}
 			value={price?.amount}
 			name="price"
 			onScInput={(e) => {
