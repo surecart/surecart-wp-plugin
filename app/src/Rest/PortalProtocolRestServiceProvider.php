@@ -2,6 +2,7 @@
 
 namespace SureCart\Rest;
 
+use SureCart\Controllers\Rest\PortalProtocolController;
 use SureCart\Controllers\Rest\SubscriptionProtocolController;
 use SureCart\Models\User;
 use SureCart\Rest\RestServiceInterface;
@@ -9,20 +10,20 @@ use SureCart\Rest\RestServiceInterface;
 /**
  * Service provider for Price Rest Requests
  */
-class SubscriptionProtocolRestServiceProvider extends RestServiceProvider implements RestServiceInterface {
+class PortalProtocolRestServiceProvider extends RestServiceProvider implements RestServiceInterface {
 	/**
 	 * Endpoint.
 	 *
 	 * @var string
 	 */
-	protected $endpoint = 'subscription_protocol';
+	protected $endpoint = 'portal_protocol';
 
 	/**
 	 * Rest Controller
 	 *
 	 * @var string
 	 */
-	protected $controller = SubscriptionProtocolController::class;
+	protected $controller = PortalProtocolController::class;
 
 	/**
 	 * Methods allowed for the model.
@@ -78,35 +79,37 @@ class SubscriptionProtocolRestServiceProvider extends RestServiceProvider implem
 			'type'       => 'object',
 			// In JSON Schema you can specify object properties in the properties attribute.
 			'properties' => [
-				'id'                         => [
+				'id'                                    => [
 					'description' => esc_html__( 'Unique identifier for the object.', 'surecart' ),
 					'type'        => 'string',
 					'context'     => [ 'edit' ],
 					'readonly'    => true,
 				],
-				'created_at'                 => [
+				'created_at'                            => [
 					'type'    => 'integer',
 					'context' => [ 'edit' ],
 				],
-				'updated_at'                 => [
+				'updated_at'                            => [
 					'type'    => 'integer',
 					'context' => [ 'edit' ],
 				],
-				'payment_retry_window_weeks' => [
-					'description' => esc_html__( 'Payment retry window in weeks.', 'surecart' ),
-					'type'        => 'integer',
-					'context'     => [ 'edit' ],
+				'subscription_cancellations_enabled'    => [
+					'description' => esc_html__( 'Whether or not customers can cancel subscriptions from the customer portal.', 'surecart' ),
+					'type'        => 'boolean',
+					'context'     => [ 'view', 'edit' ],
 				],
-				'cancel_behavior'            => [
-					'description' => esc_html__( 'Cancel behavior. Either pending or immediate.', 'surecart' ),
-					'type'        => 'string',
+				'subscription_updates_enabled'          => [
+					'description' => esc_html__( 'Whether or not customers can make subscription changes from the customer portal.', 'surecart' ),
+					'type'        => 'boolean',
+					'context'     => [ 'view', 'edit' ],
 				],
-				'downgrade_behavior'         => [
-					'description' => esc_html__( 'Downgrade behavior. Either pending or immediate.', 'surecart' ),
-					'type'        => 'string',
+				'subscription_quantity_updates_enabled' => [
+					'description' => esc_html__( 'Whether or not customers can change subscription quantities from the customer portal.', 'surecart' ),
+					'type'        => 'boolean',
+					'context'     => [ 'view', 'edit' ],
 				],
-				'upgrade_behavior'           => [
-					'description' => esc_html__( 'Upgrade behavior. Either pending or immediate.', 'surecart' ),
+				'terms_url'                             => [
+					'description' => esc_html__( 'The terms of service link that is shown to customers on the customer portal.', 'surecart' ),
 					'type'        => 'string',
 				],
 			],

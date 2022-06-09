@@ -63,6 +63,8 @@ export default (type, id, query = {}, name = 'surecart') => {
 
 	const ucName = camelName(type);
 
+	console.log({ ucName });
+
 	return {
 		// item.
 		item,
@@ -91,15 +93,15 @@ export default (type, id, query = {}, name = 'surecart') => {
 		[`${item}Data`]: entityData,
 
 		// save.
-		saveEntity,
+		saveItem: saveEntity,
 		[`save${ucName}`]: saveEntity,
 
 		// edit
-		editEntity,
+		editItem: editEntity,
 		[`edit${ucName}`]: editEntity,
 
 		// delete.
-		deleteEntity,
+		deleteItem: deleteEntity,
 		[`delete${ucName}`]: deleteEntity,
 	};
 };

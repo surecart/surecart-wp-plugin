@@ -1,16 +1,6 @@
-/**
- * Internal dependencies
- */
-import reducer from './reducer';
-import * as selectors from './selectors';
-import * as actions from './actions';
-import controls from './controls';
-import resolvers from './resolvers';
+import { render } from '@wordpress/element';
+import './store/register';
 
-export default {
-	reducer,
-	selectors,
-	controls,
-	resolvers,
-	actions,
-};
+import StoreSettings from './StoreSettings';
+
+render(<StoreSettings />, document.getElementById('app'));

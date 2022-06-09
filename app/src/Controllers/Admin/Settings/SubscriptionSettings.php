@@ -5,11 +5,25 @@ namespace SureCart\Controllers\Admin\Settings;
 /**
  * Controls the settings page.
  */
-class SubscriptionSettings extends FrameSettings {
+class SubscriptionSettings extends BaseSettings {
 	/**
-	 * The endpoint for the frame.
+	 * Show the page.
 	 *
-	 * @var string
+	 * @param \SureCartCore\Requests\RequestInterface $request Request.
+	 * @return function
 	 */
-	protected $endpoint = 'subscription_protocol';
+	public function show( \SureCartCore\Requests\RequestInterface $request ) {
+		add_action( 'admin_enqueue_scripts', [ $this, 'showScripts' ] );
+
+		return \SureCart::view( 'admin/page' )->with(
+			[
+				'tab'    => $request->query( 'tab' ) ?? '',
+				'status' => $request->query( 'status' ),
+			]
+		);
+	}
+
+	public function showScripts() {
+		$this->enqueue( 'surecart/scripts/admin/subscription', 'admin/settings/subscription' );
+	}
 }

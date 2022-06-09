@@ -40,10 +40,6 @@ module.exports = {
 			__dirname,
 			'packages/admin/invoices/index.js'
 		),
-		['admin/settings']: path.resolve(
-			__dirname,
-			'packages/admin/settings/index.js'
-		),
 		['admin/product-groups']: path.resolve(
 			__dirname,
 			'packages/admin/product-groups/index.js'
@@ -55,6 +51,18 @@ module.exports = {
 		['admin/subscriptions/edit']: path.resolve(
 			__dirname,
 			'packages/admin/subscriptions/edit/index.js'
+		),
+		['admin/settings/store']: path.resolve(
+			__dirname,
+			'packages/admin/settings/store/index.js'
+		),
+		['admin/settings/subscription']: path.resolve(
+			__dirname,
+			'packages/admin/settings/subscription/index.js'
+		),
+		['admin/settings/portal']: path.resolve(
+			__dirname,
+			'packages/admin/settings/portal/index.js'
 		),
 		['store/data']: path.resolve(
 			__dirname,

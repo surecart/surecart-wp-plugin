@@ -14,12 +14,17 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
+
+  &__text {
+    display: grid;
+    gap: calc( var(--sc-dashboard-module-spacing, 1em) / 2);
+  }
 }
 
 .heading__title {
-  font-size: var(--sc-font-size-x-large);
-  font-weight: var(--sc-font-weight-bold);
-  line-height: var(--sc-line-height-dense);
+  font-size: var(--sc-dashbaord-module-heading-size, var(--sc-font-size-x-large));
+  font-weight: var(--sc-dashbaord-module-heading-weight, var(--sc-font-weight-bold));
+  line-height: var(--sc-dashbaord-module-heading-line-height,  var(--sc-line-height-dense));
 }
 
 .heading__description {

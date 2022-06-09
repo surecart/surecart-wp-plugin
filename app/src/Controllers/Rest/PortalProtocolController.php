@@ -2,19 +2,19 @@
 
 namespace SureCart\Controllers\Rest;
 
-use SureCart\Models\Account;
+use SureCart\Models\PortalProtocol;
 
 /**
- * Handle coupon requests through the REST API
+ * Handle Price requests through the REST API
  */
-class AccountController {
+class PortalProtocolController {
 	/**
-	 * Find account.
+	 * Find model.
 	 *
 	 * @return Model
 	 */
 	public function find( \WP_REST_Request $request ) {
-		return Account::find();
+		return PortalProtocol::find();
 	}
 
 	/**
@@ -25,6 +25,6 @@ class AccountController {
 	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function edit( \WP_REST_Request $request ) {
-		return Account::update( array_diff_assoc( $request->get_params(), $request->get_query_params() ) );
+		return PortalProtocol::update( array_diff_assoc( $request->get_params(), $request->get_query_params() ) );
 	}
 }
