@@ -26,8 +26,7 @@ export default ({
 	collapsible,
 	onDelete,
 }) => {
-	const collapsedDetails = () => {
-		if (isOpen) return null;
+	const trial = () => {
 		return (
 			<>
 				{!!price?.trial_duration_days && (
@@ -74,22 +73,16 @@ export default ({
 	/** Header name */
 	const headerName = () => {
 		return (
-			<Fragment>
-				{price?.ad_hoc ? (
-					__('Custom Amount', 'surecart')
-				) : (
-					<ScFormatNumber
-						css={css`
-							font-weight: bold;
-							font-size: 14px;
-						`}
-						type="currency"
-						currency={price?.currency || scData.currency_code}
-						value={price?.amount}
-					/>
-				)}
-
-				{collapsedDetails()}
+			<div
+				css={css`
+					display: grid;
+					gap: 4px;
+				`}
+			>
+				<div>
+					{priceType()}
+					{trial()}
+				</div>
 
 				<div
 					css={css`
@@ -98,7 +91,19 @@ export default ({
 						gap: 0.5em;
 					`}
 				>
-					{priceType()}
+					{price?.ad_hoc ? (
+						__('Custom Amount', 'surecart')
+					) : (
+						<ScFormatNumber
+							css={css`
+								font-weight: bold;
+								font-size: 14px;
+							`}
+							type="currency"
+							currency={price?.currency || scData.currency_code}
+							value={price?.amount}
+						/>
+					)}{' '}
 					<div
 						css={css`
 							opacity: 0.75;
@@ -106,11 +111,11 @@ export default ({
 						`}
 					>
 						{intervalString(price, {
-							labels: { interval: __('Every', 'surecart') },
+							labels: { interval: __('every', 'surecart') },
 						})}
 					</div>
 				</div>
-			</Fragment>
+			</div>
 		);
 	};
 

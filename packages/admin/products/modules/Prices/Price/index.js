@@ -90,12 +90,10 @@ export default ({ id, prices, product }) => {
 	return (
 		<div
 			css={css`
-				padding: var(--sc-spacing-large);
 				border: 1px solid var(--sc-color-gray-300);
 				border-radius: var(--sc-border-radius-medium);
 				box-shadow: var(--sc-shadow-small);
 				display: grid;
-				gap: 1em;
 			`}
 		>
 			<Header
@@ -104,6 +102,9 @@ export default ({ id, prices, product }) => {
 				price={price}
 				onArchive={toggleArchive}
 				onDelete={onDelete}
+				css={css`
+					padding: var(--sc-spacing-large);
+				`}
 				collapsible={prices?.length > 1}
 			/>
 
@@ -112,6 +113,9 @@ export default ({ id, prices, product }) => {
 			<div
 				css={css`
 					gap: var(--sc-form-row-spacing);
+					border-top: 1px solid var(--sc-color-gray-300);
+					padding: var(--sc-spacing-large);
+					background: var(--sc-color-gray-50);
 					display: ${isOpen ? 'grid' : 'none'};
 				`}
 			>
