@@ -19,15 +19,31 @@ class AccountService {
 	 * Since this is loaded in a service container, its
 	 * cached so it only fetches once, no matter how many calls.
 	 *
-	 * This is also cached in a 10 second transient to prevent
+	 * This is also cached in a 60 second transient to prevent
 	 * rate limited calls to the API.
+	 *
+	 * @param \SureCart\Support\Server $server The server utility to use.
 	 */
-	public function __construct() {
+	public function __construct( \SureCart\Support\Server $server ) {
+		// don't cache on localhost.
+		if ( $server->isLocalHost() ) {
+			return $this->fetchAccount();
+		}
+
 		$this->account = get_transient( 'surecart_account' );
 		if ( false === $this->account ) {
-			$this->account = Account::with( [ 'brand', 'portal_protocol', 'tax_protocol' ] )->find();
+			$this->fetchAccount();
 			set_transient( 'surecart_account', $this->account, 60 );
 		}
+	}
+
+	/**
+	 * Fetch the account.
+	 *
+	 * @return void
+	 */
+	protected function fetchAccount() {
+		$this->account = Account::with( [ 'brand', 'portal_protocol', 'tax_protocol' ] )->find();
 	}
 
 	/**
