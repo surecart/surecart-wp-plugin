@@ -26,7 +26,6 @@ export default (type, id, query = {}, name = 'surecart') => {
 		saveError,
 	} = useSelect(
 		(select) => {
-			console.log(select(coreStore).getEditedEntityRecord(...entityData));
 			return {
 				item: select(coreStore)?.getEditedEntityRecord?.(...entityData),
 				hasLoadedItem: select(coreStore)?.hasFinishedResolution?.(
